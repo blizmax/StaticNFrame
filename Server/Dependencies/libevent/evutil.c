@@ -1053,7 +1053,7 @@ evutil_getaddrinfo_common_(const char *nodename, const char *servname,
 		struct sockaddr_in sin;
 		memset(&sin, 0, sizeof(sin));
 		if (1==evutil_inet_pton(AF_INET, nodename, &sin.sin_addr)) {
-			/* Got an ipv6 address. */
+			/* Got an ipv4 address. */
 			sin.sin_family = AF_INET;
 			sin.sin_port = htons(port);
 			*res = evutil_new_addrinfo_((struct sockaddr*)&sin,
@@ -2593,7 +2593,7 @@ evutil_accept4_(evutil_socket_t sockfd, struct sockaddr *addr,
 }
 
 /* Internal function: Set fd[0] and fd[1] to a pair of fds such that writes on
- * fd[0] get read from fd[1].  Make both fds nonblocking and close-on-exec.
+ * fd[1] get read from fd[0].  Make both fds nonblocking and close-on-exec.
  * Return 0 on success, -1 on failure.
  */
 int
