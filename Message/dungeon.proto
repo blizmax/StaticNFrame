@@ -1,0 +1,316 @@
+option java_package = "proto.message";
+package proto.message;
+
+import "common.proto";
+
+/*
+enum Dungeon_CS_MsgID
+{
+	Dungeon_CS_EnterDungeonOK 		= 3500,     		//进入副本
+	Dungeon_CS_RequestEnterDungeon 	= 3501,     		//请求进入副本
+	Dungeon_CS_PassStory 			= 3502,     		//跳过剧情
+	Dungeon_CS_LeaveDungeon 		= 3503,     		//离开副本
+	Dungeon_CS_RequestEvent 		= 3504,     		//请求副本事件
+	Dungeon_CS_Relive               = 3505,             //副本中复活
+	Dungeon_CS_RequestEnterDungeonAgain  = 3506,             //再来一次
+	
+	Dungeon_CS_GameStoryStart	 	= 3508, 			//获取副本信息
+	Dungeon_CS_GameStoryEnd	 		= 3507, 			//获取副本信息
+	
+	Dungeon_CS_GetDungeonInfo 		= 3530, 			//获取副本信息
+	
+	Dungeon_CS_ChangeDungeonSceneOK = 3532, 			//客户端加载跳转副本场景成功
+	
+	
+
+	Dungeon_CS_StarUp = 3533, //升星副本(材料副本)
+	Dungeon_CS_Sweep = 3534, //扫荡(材料副本)
+	
+	Dungeon_CS_TakeGradeSReward = 3535,	//领取S评分次数奖励
+}
+
+enum Dungeon_SC_MsgID
+{
+	Dungeon_SC_EnterDungeon 		= 3500,				//进入副本Ok
+	Dungeon_SC_Story        		= 3501,             //剧情播放
+	Dungeon_SC_Customs      		= 3502，			//光幕
+	Dungeon_SC_Result      			= 3503，			//副本结束结果
+	
+	Dungeon_SC_MonsterNum           = 3505,              //怪物波数
+	
+	Dungeon_SC_ChangeCamp           = 3506,              //改阵容	
+	Dungeon_SC_PretendStart         = 3507,              //怪物波数
+	Dungeon_SC_PretendEnd           = 3508,              //怪物波数
+	
+	Dungeon_SC_GetDungeonInfo 		= 3530, 			//获取副本信息
+	Dungeon_SC_RequestEnterDungeon 	= 3531,     		//请求进入副本
+	
+	Dungeon_SC_ChangeDungeonScene 	= 3532,				//通知副本里切换场景
+	
+	Dungeon_SC_StarUp = 3533, //升星副本(材料副本)
+	Dungeon_SC_Sweep = 3534, //扫荡(材料副本)
+	
+	
+	eDungeon_SC_TimerStart = 3535, //多人副本  开始进入倒计时
+	
+	Dungeon_SC_TakeGradeSReward = 3536,	//领取S评分次数奖励
+
+}
+*/
+
+message Dungeon_SC_EnterDungeon
+{
+	required uint32 	DungeonID  		= 1;   	//副本唯一Id
+	optional Point3D 	Pt   			= 2;    //出生的坐标
+	optional float		Dir         	= 3;    //朝向
+	optional uint32     DungeonProId    = 4;    //副本表格Id
+	optional uint32     Layer    		= 5;    //当前层
+}
+
+
+
+message Dungeon_CS_EnterDungeonOK
+{
+	required uint32 	DungeonID  		= 1;   	//副本唯一Id
+}	
+
+message Dungeon_SC_Story
+{
+	required uint32 	StoryID  		= 1;   	//副本Id
+}	
+
+message Dungeon_SC_Customs
+{
+	required uint32 	CustomsID  		= 1;   	//光幕Id
+	required int32      Type            = 2;    //1：打开光幕  0：关闭光幕
+}
+
+message Dungeon_CS_RequestEnterDungeon
+{
+	optional uint32     DungeonProId    = 1;    //副本表格Id
+}
+
+message Game2Battle_RequestEnterDungeon
+{
+	optional uint32     DungeonProId    = 1;    //副本表格Id
+	optional uint32     uiFirst    = 2;    //是否首次
+	optional uint32     uiAgain   = 3;    //是否重新挑战
+	optional uint32     DungeonAssignId    = 4;    //副本序列Id  直接进入创建好的副本
+	required BattlePlayerInfo sPlyInfo  = 5;				//玩家信息	
+	optional BattleBoatInfo sBoatInfo  = 6;				//船舰信息
+	optional uint32     uiBattleLink   = 7;    //指定的battlelink（多人副本用）
+}
+message Battle2Game_AckEnterDungeon
+{
+	required uint32 	DungeonID  		= 1;   	//副本唯一Id
+	optional Point3D 	Pt   			= 2;    //出生的坐标
+	optional float		Dir         	= 3;    //朝向
+	optional uint32     DungeonProId    = 4;    //副本表格Id
+	optional uint32     Layer    		= 5;    //当前层
+	optional int32 result 				= 6; //结果
+}
+
+message Dungeon_SC_RequestEnterDungeon
+{
+	optional int32 result 				= 1; //结果
+	repeated string charname_list 		= 2; //角色名字列表(有玩家没有开启副本使用)
+}
+
+message Dungeon_CS_PassStory
+{
+	
+}
+
+message Dungeon_CS_LeaveDungeon
+{
+}
+
+message DungeonGrade
+{
+	optional int32 gtype = 1; //评级类型(1:通关时间 2:被攻击数 3:玩家剩余HP 4:NPC剩余HP 5:所有玩家死亡次数 10:未完成的任务数量)
+	optional int32 value = 2; //具体数值
+	optional int32 grade = 3; //评级(1:S 2:A 3:B 4:C 5:D)
+}
+
+message RewardItem
+{
+	optional int32 id 	= 1; //物品ID
+	optional int32 num 	= 2; //物品数量
+}
+
+message Dungeon_SC_Result
+{ 
+	required uint32 	rt  			= 1; //0:失败 1:胜利
+	optional int32 dungeon_id 			= 2; //副本ID
+	required int32 total_grade 			= 3; //最终评价(1:S 2:A 3:B 4:C 5:D)
+	repeated DungeonGrade grade_list 	= 4; //评级列表
+	repeated RewardItem item_list 		= 5; //奖励物品
+	repeated RewardItem extra_list 		= 6; //额外奖励物品
+}
+
+message Dungeon_CS_RequestEvent
+{ 
+	optional uint32 	rt  		= 1;   	//事件类型.
+	optional uint32 	value  		= 2;   	//事件参数.
+}
+
+message Dungeon_CS_Relive
+{ 
+	required uint32 	type  		= 1;   	//复活类型.1=原地复活  2=复活点复活
+}
+
+message Dungeon_SC_MonsterNum
+{ 
+	required int32 	MonsterNum  = 1;   
+}
+
+message Dungeon_SC_ChangeCamp
+{ 
+	required uint32 ID 	  = 1;
+	optional int32  camp  = 2;
+}
+
+message Dungeon_SC_PretendStart
+{ 
+	required int32 	 camp = 1; 
+	optional uint32  bodyId = 2;
+}
+
+message Dungeon_SC_PretendEnd
+{ 
+	required int32 	camp  = 1;   
+}
+
+
+
+//*******************************************************副本外围*************************************
+
+//通关副本信息
+message PassDungeon
+{
+	optional int32 id 				= 1; //副本ID
+	optional int32 grade 			= 2; //评级(1:S 2:A 3:B 4:C 5:D)
+	optional int32 reward_times 	= 3; //副本奖励次数
+	optional int32 enter_times		= 4; //副本进入次数
+}
+
+//试炼信息
+message TrialInfo
+{
+	optional uint32 uiSweep			= 1;//今日是否扫荡
+	optional uint32 uiCurFloor		= 2;//当前试炼层数
+}
+
+//单人剧情副本
+message SingleStoryDungeon
+{
+	optional int32 open_id 			= 1; //开启的ID
+	repeated PassDungeon pass_list 	= 2; //通关的副本列表
+}
+
+message Dungeon_CS_GetDungeonInfo
+{
+}
+
+message Dungeon_CS_RequestEnterDungeonAgain
+{
+}
+
+
+message Dungeon_SC_GetDungeonInfo
+{
+	optional SingleStoryDungeon single_ordinary = 1; //单人普通
+	optional SingleStoryDungeon single_elite 	= 2; //单人精英
+	
+	optional SingleStoryDungeon Trial 			= 3; //多人试炼副本
+	repeated PassDungeon material_list 	= 4; //通关的材料副本
+	repeated TrialInfo single_trial	= 5;			//个人试炼
+	
+	repeated PassDungeon other	= 6;			//通关的其他副本
+	
+	optional uint32 grade_S_count = 7;		//副本S次数
+	repeated IDNum grade_S_rewardtimes = 8;		//副本S次数奖励领取进度
+}
+
+message Dungeon_SC_ChangeDungeonScene
+{
+	optional uint32 	dungeon_scene_id  	= 1; //副本场景表格ID
+	optional Point3D 	Pt   				= 2; //出生的坐标
+	optional float		Dir         		= 3; //朝向
+	optional uint32     Layer    			= 4; //层级
+}
+
+message Dungeon_CS_ChangeDungeonSceneOK
+{
+
+}
+
+//升星副本(材料副本)
+message Dungeon_CS_StarUp
+{
+	optional int32 id 				= 1; //副本ID
+}
+
+
+
+//升星副本(材料副本)
+message Dungeon_SC_StarUp
+{
+	optional int32 result 			= 1; //结果
+	optional int32 id 				= 2; //副本ID
+	required int32 grade 		= 3; //最终评价(固定为0， 代表只是开启了 还没有通关过)
+}
+
+
+//扫荡
+message Dungeon_CS_Sweep
+{
+	optional int32 id 				= 1; //副本ID
+}
+
+
+
+//扫荡
+message Dungeon_SC_Sweep
+{
+	optional int32 result 			= 1; //结果
+	optional int32 dungeon_id 			= 2; //副本ID
+	repeated RewardItem item_list 		= 3; //奖励物品
+	repeated RewardItem extra_list 		= 4; //额外奖励物品
+}
+
+
+message Game2Battle_CreateDungeon
+{
+	optional uint32 uiDungeonId			= 1; //副本ID
+}
+
+message Battle2Game_CreateDungeon
+{
+	optional uint32 uiDungeonId			= 1; //副本表格ID
+	optional uint32 uiDungeonAssignId	= 2; //副本序列ID
+	optional string ip 		= 3; //battle IP
+	optional int32  port 	= 4; //battle 端口
+	
+}
+
+
+message Dungeon_SC_TimerStart
+{
+	optional uint32 	dungeon_scene_id  	= 1; //副本场景表格ID
+	optional string ip 		= 2; //battle IP
+	optional int32  port 	= 3; //battle 端口
+}
+
+
+message Dungeon_CS_TakeGradeSReward
+{
+	optional uint32    index = 1; //领取哪一个奖励
+}
+
+message Dungeon_SC_TakeGradeSReward
+{
+	optional uint32    index = 1; //领取哪一个奖励
+	optional uint32   result = 2 ; //回复  0成功  1失败
+}
+

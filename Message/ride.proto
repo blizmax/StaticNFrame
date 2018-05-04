@@ -1,0 +1,136 @@
+option java_package = "proto.message";
+package proto.message;
+
+import "common.proto";
+/*
+enum Ride_CS_MsgID
+{
+	Ride_CS_GetRideInfo = 4600, //请求坐骑数据
+	Ride_CS_Upgrade = 4601, // 升阶
+	Ride_CS_UpgSkill = 4602, // 升级技能
+	Ride_CS_OpenEquipCell = 4603, //开启装备格子
+	Ride_CS_PutOnRideEquip = 4604, //穿装备
+	Ride_CS_GetOffRideEquip = 4605, //脱装备
+	Ride_CS_RideStatus = 4606， //上马下马
+	Ride_CS_Eat = 4607 ,//吃丹
+	Ride_CS_SkillOpen = 4608, //打书
+}
+
+enum Ride_SC_MsgID
+{
+	Ride_SC_GetRideInfo = 4600, //请求坐骑数据
+	Ride_SC_Upgrade = 4601, // 升阶
+	Ride_SC_UpgSkill = 4602, // 升级技能
+	Ride_SC_OpenEquipCell = 4603, //开启装备格子
+	Ride_SC_PutOnRideEquip = 4604, //穿装备
+	Ride_SC_GetOffRideEquip = 4605, //脱装备
+	Ride_SC_RideStatus = 4606， //上马下马
+	Ride_SC_Eat = 4607 ,//吃丹
+	Ride_SC_SkillOpen = 4608, //打书
+}
+*/
+
+message ProtoRideEquipCell
+{
+	required uint32 equipid = 1; //装备ID
+	required bool isOpen  = 2; //是否激活
+}
+message ProtoRideAllCellInfo
+{
+	optional int32 nID = 1;
+	optional int32 nLucky = 2;
+	repeated int32 nSkill = 3;
+	repeated ProtoRideEquipCell equips = 4; //坐骑装备
+	repeated Equip rideequipgird_list   = 5; //装备格子的信息
+	optional uint32 eatFoodId = 6; //食物ID
+	optional uint32 eatFoodNum = 7 ;// 食物数量
+	repeated uint32 skillbooks = 8;//打书信息
+}
+message Ride_CS_GetRideInfo
+{
+}
+message Ride_SC_GetRideInfo
+{
+	required int32 nID = 1;
+	required int32 nLucky = 2;
+	repeated int32 nSkill = 3;
+	repeated ProtoRideEquipCell equips = 4; //坐骑装备
+	repeated Equip rideequipgird_list   = 5; //装备格子的信息
+	optional uint32 eatFoodId = 6; //食物ID
+	optional uint32 eatFoodNum = 7 ;// 食物数量
+	repeated uint32 skillbooks = 8;//打书信息
+}
+message Ride_CS_Upgrade
+{
+}
+message Ride_SC_Upgrade
+{
+	required int32 ret  = 1;
+}
+
+message Ride_CS_UpgSkill
+{
+	required int32 skillid = 1;
+
+}
+message Ride_SC_UpgSkill
+{
+	required int32 ret  = 1;
+}
+message Ride_CS_OpenEquipCell
+{
+	required int32 cellid = 1;
+}
+message Ride_SC_OpenEquipCell
+{
+	required int32 ret  = 1;
+}
+
+message Ride_CS_PutOnRideEquip
+{
+	optional uint64 uuid			= 1; //装备唯一ID
+}
+
+message Ride_SC_PutOnRideEquip
+{
+	optional int32 result			= 1; //结果
+	repeated Equip equip_list		= 2; //变化的装备(穿上/替换)
+}
+
+message Ride_CS_GetOffRideEquip
+{
+	optional uint64 uuid			= 1; //装备唯一ID
+}
+
+message Ride_SC_GetOffRideEquip
+{
+	optional int32 result			= 1; //结果
+	optional Equip getoff_equip		= 2; //卸下的装备
+}
+
+message Ride_CS_RideStatus
+{
+	required bool status  = 1;// true 上马  false 下马
+}
+message Ride_SC_RideStatus
+{
+	required int32 ret  = 1;
+	required bool status  = 2;// true 上马  false 下马
+}
+
+message Ride_CS_Eat
+{
+}
+message Ride_SC_Eat
+{
+	optional int32 result			= 1; //结果
+}
+
+message Ride_CS_SkillOpen
+{
+	optional uint32 bookItemId =  1;
+}
+message Ride_SC_SkillOpen
+{
+	optional int32 result			= 1; //结果
+}

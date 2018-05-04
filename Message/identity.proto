@@ -1,0 +1,155 @@
+option java_package = "proto.message";
+package proto.message;
+
+/*
+enum Identity_CS_MsgID
+{
+	Identity_CS_GetIdentityInfo	= 3100, //获取身份信息
+	Identity_CS_SelectIdentity 	= 3101, //选择身份
+	Identity_CS_ResetIdentity 	= 3102, //重置身份
+	Identity_CS_ActivateTalent 	= 3103, //激活天赋
+	Identity_CS_UpTalent		= 3104, //提升天赋
+	Identity_CS_SynthesisItem	= 3105, //合成物品
+}
+
+enum Identity_SC_MsgID
+{
+	Identity_SC_GetIdentityInfo	= 3100, //获取身份信息
+	Identity_SC_SelectIdentity 	= 3101, //选择身份
+	Identity_SC_ResetIdentity 	= 3102, //重置身份
+	Identity_SC_ActivateTalent 	= 3103, //激活天赋
+	Identity_SC_UpTalent		= 3104, //提升天赋
+	Identity_SC_SynthesisItem	= 3105, //合成物品
+}
+*/
+
+//身份类型
+enum eIdentityType
+{
+	eIdentity_Null			= 0; //空
+	eIdentity_Killer		= 1; //杀手
+	eIdentity_Hunter		= 2; //猎手
+	eIdentity_Pirate		= 3; //海盗
+	eIdentity_Businessman	= 4; //商人
+	eIdentity_Smugglers		= 5; //走私犯
+}
+
+//身份天赋类型
+enum eIdyTalentType
+{
+	eIdyTalent_Special			= 0; //特殊效果
+	eIdyTalent_DoubleSword		= 1; //双剑
+	eIdyTalent_BoxingBlade		= 2; //拳刃
+	eIdyTalent_Rifle			= 3; //步枪
+	eIdyTalent_Axe				= 4; //斧头
+	eIdyTalent_DeputyWeapon		= 5; //副武器
+	eIdyTalent_Helmet			= 6; //头盔
+	eIdyTalent_Cuirass			= 7; //胸甲
+	eIdyTalent_Belt				= 8; //腰带
+	eIdyTalent_LegArmor			= 9; //腿甲
+	eIdyTalent_Shoes			= 10; //鞋子
+
+	eIdyTalent_MainSail 		= 11; //主帆
+	eIdyTalent_SideGun 			= 12; //侧炮
+	eIdyTalent_SternRudder 		= 13; //船尾舵
+	eIdyTalent_ChainGun 		= 14; //链炮
+	eIdyTalent_Rudder 			= 15; //方向舵
+	eIdyTalent_Mortar 			= 16; //迫击炮
+	eIdyTalent_ArmoredHull 		= 17; //船身装甲
+	eIdyTalent_Ram 				= 18; //撞角
+	eIdyTalent_Keel 			= 19; //龙骨
+	eIdyTalent_CyclotronGun 	= 20; //回旋炮
+	eIdyTalent_ItemQuality 		= 21; //消耗品
+}
+
+//身份信息
+message Identity
+{
+	required eIdentityType itype 	= 1; //身份类型
+	repeated int32 talent_list 		= 2; //天赋列表
+}
+
+//*********************************************************************
+
+message Identity_CS_GetIdentityInfo
+{
+	
+}
+
+message Identity_SC_GetIdentityInfo
+{
+	optional int32 points 			= 1; //身份点数
+	optional int32 vigor 			= 2; //精力值
+	repeated Identity identity_list = 3; //身份列表
+}
+
+message Identity_CS_SelectIdentity
+{
+	required eIdentityType itype 	= 1; //身份类型
+}
+
+message Identity_SC_SelectIdentity
+{
+	optional int32 result 			= 1; //结果
+	optional int32 points 			= 2; //点数
+	optional Identity identity 		= 3; //身份信息
+
+}
+
+message Identity_CS_ResetIdentity
+{
+	required eIdentityType itype 	= 1; //身份类型
+}
+
+message Identity_SC_ResetIdentity
+{
+	optional int32 result 			= 1; //结果
+	optional int32 points 			= 2; //点数
+	required eIdentityType itype 	= 3; //重置的身份类型
+}
+
+message Identity_CS_ActivateTalent
+{
+	required eIdentityType itype 	= 1; //身份类型
+	optional int32 talent_id 		= 2; //天赋ID
+}
+
+message Identity_SC_ActivateTalent
+{
+	optional int32 result 			= 1; //结果
+	optional int32 points 			= 2; //点数
+	required eIdentityType itype 	= 3; //身份类型
+	optional int32 talent_id 		= 4; //天赋信息
+}
+
+message Identity_CS_UpTalent
+{
+	required eIdentityType itype 	= 1; //身份类型
+	optional int32 talent_id 		= 2; //天赋ID
+}
+
+message Identity_SC_UpTalent
+{
+	optional int32 result 			= 1; //结果
+	optional int32 points 			= 2; //点数
+	required eIdentityType itype 	= 3; //身份类型
+	optional int32 talent_id_bef 	= 4; //升级前的天赋ID
+	optional int32 talent_id_now 	= 5; //升级后的天赋ID
+}
+
+message Identity_CS_SynthesisItem
+{
+	required eIdentityType itype 	= 1; //身份类型
+	optional int32 item_id			= 2; //物品ID
+}
+
+message Identity_SC_SynthesisItem
+{
+	optional int32 result 			= 1; //结果
+	optional int32 vigor 			= 2; //剩余精力值
+	required eIdentityType itype 	= 3; //身份类型
+	optional int32 item_id			= 4; //物品ID
+	repeated int32 talent_id_list	= 5; //触发效果的天赋ID列表
+}
+
+

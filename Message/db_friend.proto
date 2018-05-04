@@ -1,0 +1,26 @@
+package proto.message;
+
+// 每日友谊值
+message ProtoDbFriendDayShip
+{
+    optional int32 type = 1; // 类型
+    optional int32 count = 2; // 计数
+}
+
+message ProtoDbFriendShip
+{
+    optional uint64 charId 		= 1; 	//玩家uid
+    optional int32 friendShip 	= 2; 	//友谊值
+    optional int32 delTime 		= 3; 	//好友删除时间
+    repeated ProtoDbFriendDayShip dayShip = 4; //每日友谊值计数
+	optional int32 friendlev	= 5; //等级
+	optional int32 friendpro	= 6; //职业
+}
+
+message ProtoAllFriendInfo
+{
+    repeated uint64 friendList = 1; // 好友列表
+    repeated uint64 blackList = 2; // 黑名单列表
+    repeated ProtoDbFriendShip friendShipList = 3; // 友谊值
+    optional int32 cleanTime = 4; // 清理时间
+}

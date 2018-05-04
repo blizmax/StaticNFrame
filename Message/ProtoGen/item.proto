@@ -1,0 +1,736 @@
+option java_package = "proto.message";
+package proto.message;
+
+import "common.proto";
+
+/*
+
+enum eItem_CS_MsgID
+{
+	//背包
+
+	eItem_CS_GetBagInfo				= eMsgId_Item_Begin, //获取背包信息
+	eItem_CS_UseBagItem				= 2301, //使用背包物品
+	eItem_CS_SellItem				= 2302, //出售物品
+	eItem_CS_DiscardItem			= 2303, //丢弃物品
+	eItem_CS_AddBagGird				= 2304, //增加背包格子
+	eItem_CS_GetTempBagInfo			= 2305, //获取临时背包信息
+	eItem_CS_GetBackItem			= 2306, //临时背包取回单个物品
+	eItem_CS_GetBackAllItem			= 2307, //临时背包一键取回所有物品
+	eItem_CS_QueryChatItem			= 2308, //查看聊天超链的物品信息
+	eItem_CS_SetItemIDPos			= 2309, //设置物品ID位置
+
+	//仓库
+
+	eItem_CS_GetStoreInfo			= 2320, //获取仓库信息
+	eItem_CS_ActivateStore			= 2321, //激活仓库
+	eItem_CS_InToStore				= 2323, //物品放入仓库
+	eItem_CS_OutFromStore			= 2322, //从仓库中取出物品
+
+	//装备
+
+	eItem_CS_PutOnEquip				= 2330, //穿装备
+	eItem_CS_GetOffEquip			= 2331, //脱装备
+	eItem_CS_StrengthEquip			= 2332, //改良(强化)装备
+	eItem_CS_IncreaseEquip			= 2333, //精修(增幅)装备
+	eItem_CS_ResolveEquip			= 2334, //分解装备
+	eItem_CS_EnchantEquip			= 2335, //附魔(精炼)装备
+	eItem_CS_EquipOrdRepair			= 2336, //装备普通修理
+	eItem_CS_EquipSpeRepair			= 2337, //装备特殊修理
+	eItem_CS_JewelryExchange		= 2338, //装备首饰兑换
+	eItem_CS_IntegralExchange		= 2339, //积分兑换
+	eItem_CS_MoneyExchange			= 2340, //货币兑换
+	eItem_CS_GetIntegralPrice		= 2341, //获取积分兑换价格
+	
+	
+
+	//新装备
+	eItem_CS_EquipStrength = 2350,	//强化
+	eItem_CS_EquipStarUp = 2351,	//升星
+	eItem_CS_EquipInlay = 2352,	//镶嵌
+	eItem_CS_EquipLevelUp = 2353,	//装备升级
+	eItem_CS_EquipQualityUp = 2354,	//装备提品
+	eItem_CS_EquipRandAttr = 2355,	//装备位置附魔
+	eItem_CS_EquipRefine = 2356,	//装备位置精炼
+	
+
+	eItem_CS_EquipActiveSuit = 2357,	//激活套装属性
+	
+	eItem_CS_EquipExchange = 2358,	//橙装兑换
+	eItem_CS_Compose = 2359,	//装备合成
+	eItem_CS_Compose_Gem = 2360,	//镶嵌位宝石升级
+	eItem_CS_Num
+};
+
+enum eItem_SC_MsgID
+{
+	//背包
+
+	eItem_SC_GetBagInfo				= 2300, //获取背包信息
+	eItem_SC_UseBagItem				= 2301, //使用背包物品
+	eItem_SC_SellItem				= 2302, //出售物品
+	eItem_SC_DiscardItem			= 2303, //丢弃物品
+	eItem_SC_AddBagGird				= 2304, //增加背包格子
+	eItem_SC_GetTempBagInfo			= 2305, //获取临时背包信息
+	eItem_SC_GetBackItem			= 2306, //临时背包取回单个物品
+	eItem_SC_GetBackAllItem			= 2307, //临时背包一键取回所有物品
+	eItem_SC_QueryChatItem			= 2308, //查看聊天超链的物品信息
+	eItem_SC_SetItemIDPos			= 2309, //设置物品ID位置
+
+	eItem_SC_UpdateBag				= 2310, //更新整个背包
+	eItem_SC_UpdateChangeItem		= 2311, //更新变动的物品
+	eItem_SC_UpTempBag				= 2312, //更新整个临时背包
+	eItem_SC_UpTempBagItem			= 2313, //更新临时背包中变动的物品
+	eItem_SC_UpSpecialItem			= 2314, //更新特殊物品数量
+
+	eItem_SC_DropItem				= 2315, //掉落物品
+	eItem_SC_GetItemTips			= 2316, //获得物品tips
+
+	//仓库
+
+	eItem_SC_GetStoreInfo			= 2320, //获取仓库信息
+	eItem_SC_ActivateStore			= 2321, //激活仓库
+	eItem_SC_InToStore				= 2322, //物品放入仓库
+	eItem_SC_OutFromStore			= 2323, //从仓库中取出物品
+
+	//装备
+
+	eItem_SC_PutOnEquip				= 2330, //穿装备 	
+	eItem_SC_GetOffEquip			= 2331, //脱装备
+	eItem_SC_StrengthEquip			= 2332, //改良(强化)装备
+	eItem_SC_IncreaseEquip			= 2333, //精修(增幅)装备
+	eItem_SC_ResolveEquip			= 2334, //分解装备
+	eItem_SC_EnchantEquip			= 2335, //附魔(精炼)装备
+	eItem_SC_EquipOrdRepair			= 2336, //装备普通修理
+	eItem_SC_EquipSpeRepair			= 2337, //装备特殊修理
+	eItem_SC_JewelryExchange		= 2338, //装备首饰兑换
+	eItem_SC_IntegralExchange		= 2339, //积分兑换
+	eItem_SC_MoneyExchange			= 2340, //货币兑换
+	eItem_SC_GetIntegralPrice		= 2341, //获取积分兑换价格
+
+
+	//新装备
+	eItem_SC_EquipStrength = 2350,	//强化
+	eItem_SC_EquipStarUp = 2351,	//升星
+	eItem_SC_EquipInlay = 2352,	//镶嵌
+	eItem_SC_EquipLevelUp = 2353,	//装备升级
+	eItem_SC_EquipQualityUp = 2354,	//装备提品
+	eItem_SC_EquipRandAttr = 2355,	//装备位置附魔
+	eItem_SC_EquipRefine = 2356,	//装备位置精炼
+
+	eItem_SC_EquipActiveSuit = 2357,	//激活套装属性
+
+	eItem_SC_EquipExchange = 2358,	//橙装兑换
+	eItem_SC_Compose = 2359,	//装备合成
+	eItem_SC_SendRideEquipInfo				= 2360, //发送坐骑装备信息
+	eItem_SC_SendPetEquipInfo = 2361, //发送宠物信息
+	eItem_SC_Compose_Gem = 2362,	//镶嵌位宝石合成合成
+	eItem_SC_Num
+};
+
+//特殊的物品类型
+enum eSpecialItemType
+{
+	eSpecialItem_Silver				= 1; //银元
+	eSpecialItem_Gold				= 2; //金币
+	eSpecialItem_Diamond			= 3; //钻石
+	eSpecialItem_Energy				= 4; //体力
+	eSpecialItem_Exp				= 5; //经验
+	eSpecialItem_Vigor				= 6; //精力
+	eSpecialItem_IdyPoints			= 7; //身份点数
+	eSpecialItem_Friendship			= 8; //友谊值
+	eSpecialItem_TalPoints			= 9; //天赋点数
+	eSpecialItem_GuildMoney			= 10; //公会资金
+	eSpecialItem_GuildBonus			= 11; //公会分红
+	eSpecialItem_GuildContribution 	= 12; //公会贡献
+	eSpecialItem_Honour				= 13; //荣誉值
+	eSpecialItem_AchievePoints		= 14; //成就点
+	eSpecialItem_TutorScore			= 15; //导师积分
+	eSpecialItem_FestivalScore		= 16; //节日积分
+	eSpecialItem_Friendly			= 17; //友善值
+	eSpecialItem_ReturnScore		= 18; //回归积分
+};
+
+*/
+
+//物品
+message Item
+{
+	optional uint64 uuid 		= 1; //物品唯一ID
+	optional uint64 gain_time 	= 2; //获得时间
+	optional int32 id 			= 3; //物品ID
+	optional int32 num			= 4; //物品数量
+	optional int32 parameter 	= 5; //参数(使用物品时用到)
+
+	optional int32 source 		= 6; //物品来源(0:默认 1:拍卖行)
+	optional int32 frozen_time 	= 7; //冻结到期时间
+
+	optional int32 qualitey 	= 8; //物品品质
+	optional int32 bind 		= 9; //是否绑定  1是 0否
+}
+
+//特殊物品
+message MoneyItem
+{
+	required int32 silver 				= 1;	//银币
+	required int32 gold 				= 2; 	//金币
+	required int32 diamond 				= 3; 	//钻石
+	required int32 energy 				= 4; 	//体力
+	required int32 exp 					= 5; 	//经验
+	required int32 vigor 				= 6; 	//精力
+	required int32 idy_points			= 7; 	//身份点数
+	required int32 friendship			= 8; 	//友谊值
+	required int32 tal_points			= 9; 	//天赋点数
+	required int32 guild_money			= 10; 	//公会资金
+	required int32 guild_bonus			= 11; 	//公会分红
+	required int32 guild_contribution 	= 12; 	//公会贡献
+	required int32 honour				= 13; 	//荣誉值
+	required int32 achieve_points		= 14; 	//成就点数
+	required int32 tutor_score			= 15; 	//导师积分
+	required int32 festival_score		= 16; 	//节日积分
+	required int32 friendly				= 17; 	//友善值
+	required int32 return_score			= 18; 	//回归积分
+	required int32 awaken_point			= 19; 	//觉醒系统使用的元神积分
+}
+
+
+//装备格子附魔信息
+message SRandAttr
+{
+	optional uint32 uiAttrId		= 1;	//属性ID
+	optional uint32 uiAttrVal		= 2;	//属性值
+	optional uint32 uiRefineLevel	= 3;	//精炼等级
+}
+
+//装备格子的信息
+message EquipGird
+{
+	optional uint32 uiGirdPos			= 1;	//位置
+	optional uint32 uiUpgradeLevel		= 2;	//强化等级
+	optional uint32 uiStarLevel			= 3;	//星级
+	repeated uint32 vecGem				= 4;	//镶嵌宝石  0锁定   1可镶嵌  镶嵌了为宝石ID
+	repeated SRandAttr vecRandAttr		= 5;	//附魔属性强化等级
+	optional uint32 uiStarUpCount		= 6;	//升星次数
+	optional uint32 uiBestEquip			= 7;	//曾经装备过的最高品质的装备ID
+}
+
+message EquipSuit
+{
+	optional uint32 uiSuitId			= 1;	//套装ID
+	repeated uint32 uiSuitAttr			= 2; // 激活的属性ID
+}
+
+//***************************************************背包***********************************************
+
+message Item_CS_GetBagInfo
+{
+}
+
+message Item_SC_GetBagInfo
+{
+	optional int32 result			= 1; //结果
+	optional int32 grid_num_max 	= 2; //背包格子的最大值
+	optional int32 grid_num			= 3; //背包格子数
+	optional int32 buy_times		= 4; //背包格子购买次数
+	repeated Item item_list			= 5; //背包中的物品
+	repeated Equip equip_list		= 6; //背包中的装备
+	repeated EquipGird equipgird_list	= 7; //装备格子的信息
+	repeated EquipSuit suit_list   = 8;	//激活的套装ID
+}
+
+message Item_CS_UseBagItem
+{
+	optional uint64 uuid 			= 1; //物品唯一ID
+}
+
+message Item_SC_UseBagItem
+{
+	optional int32 result			= 1; //结果
+	optional uint64 item_uuid 		= 2; //物品唯一ID
+	optional int32 item_id 			= 3; //物品ID
+}
+
+message Item_CS_SellItem
+{
+	optional uint64 uuid			= 1; //物品唯一ID
+	optional int32 item_num 		= 2; //出售物品数量
+}
+
+message Item_SC_SellItem
+{
+	optional int32 result			= 1; //结果
+	optional int32 item_id 			= 2; //物品ID
+	optional int32 item_num 		= 3; //物品数量
+}
+
+message Item_CS_DiscardItem
+{
+	optional uint64 uuid			= 1; //物品唯一ID
+}
+
+message Item_SC_DiscardItem
+{
+	optional int32 result			= 1; //结果
+}
+
+message Item_CS_AddBagGird
+{
+	
+}
+
+message Item_SC_AddBagGird
+{
+	optional int32 result			= 1; //结果
+	optional int32 gird_num			= 2; //格子数量
+	optional int32 buy_times 		= 3; //购买次数
+}
+
+message Item_CS_GetTempBagInfo
+{
+	
+}
+
+message Item_SC_GetTempBagInfo
+{
+	optional int32 grid_num			= 1; //临时背包格子数
+	repeated Item item_list			= 2; //临时背包中的物品
+	repeated Equip equip_list		= 3; //临时背包中的装备
+}
+
+message Item_CS_GetBackItem
+{
+	optional uint64 uuid 			= 2; //物品唯一ID
+}
+
+message Item_SC_GetBackItem
+{
+	optional int32 result			= 1; //结果
+	optional uint64 uuid 			= 2; //物品唯一ID
+}
+
+message Item_CS_GetBackAllItem
+{
+}
+
+message Item_CS_QueryChatItem
+{
+	optional uint64 charid 			= 1; //玩家唯一ID
+	optional uint64 uuid 			= 2; //物品唯一ID
+}
+
+message Item_SC_QueryChatItem
+{
+	optional int32 result			= 1; //结果
+	optional Item item				= 2; //临时背包中的物品
+	optional Equip equip			= 3; //临时背包中的装备
+}
+
+message Item_CS_SetItemIDPos
+{
+	optional int32 item_id 			= 1; //物品ID
+	optional int32 pos 				= 2; //位置
+}
+
+message Item_SC_SetItemIDPos
+{
+	optional int32 result			= 1; //结果
+	optional int32 item_id 			= 2; //物品ID
+	optional int32 pos 				= 3; //位置
+}
+
+message Item_SC_GetBackAllItem
+{
+	optional int32 result			= 1; //结果
+	repeated uint64 uuid_list 		= 2; //取回的物品唯一ID
+}
+
+message Item_SC_UpdateBag
+{
+	optional int32 grid_num			= 1; //背包格子数
+	repeated Item item_list			= 2; //背包中的物品
+	repeated Equip equip_list		= 3; //背包中的装备
+}
+
+message Item_SC_UpdateChangeItem
+{
+	optional int32 bag_type			= 1; //背包类型(0:背包 其他值:仓库ID)
+	repeated uint64  del_item_list 	= 2; //删除的物品
+	repeated Item item_list			= 3; //变动的物品(新获得物品添加到背包)
+	repeated Equip equip_list		= 4; //变动的装备(新获得装备添加到背包)
+}
+
+message Item_SC_UpTempBag
+{
+	optional int32 grid_num			= 1; //临时背包格子数
+	repeated Item item_list			= 2; //临时背包中的物品
+	repeated Equip equip_list		= 3; //临时背包中的装备
+}
+
+message Item_SC_UpTempBagItem
+{
+	repeated uint64  del_item_list 	= 1; //删除的物品
+	repeated Item item_list			= 2; //变动的物品(新获得物品添加到背包)
+	repeated Equip equip_list		= 3; //变动的装备(新获得装备添加到背包)
+}
+
+message Item_SC_UpSpecialItem
+{
+	optional int32 stype 	= 1; //特殊物品类型 (500 + eSpecialItemType)
+	optional int32 num 		= 2; //特殊物品数量
+}
+
+message DropItemNum
+{
+	optional int32 id 	= 1; //ID
+	optional int32 num 	= 2; //数量
+}
+
+message Item_SC_DropItem
+{
+	optional uint32 npc_id 			= 1; //NPC ID
+	repeated DropItemNum item_list 	= 2; //物品列表
+}
+
+message Item_SC_GetItemTips
+{
+	repeated IDNum item_list = 1; //获得物品列表
+}
+
+//*************************************************仓库*********************************************
+
+message Item_CS_GetStoreInfo
+{
+}
+
+message StoreInfo
+{
+	optional int32 id 				= 1; //仓库ID
+	optional int32 grid_num			= 2; //仓库格子数
+	repeated Item item_list			= 3; //仓库中的物品
+	repeated Equip equip_list		= 4; //仓库中的装备
+}
+
+message Item_SC_GetStoreInfo
+{
+	optional int32 result			= 1; //结果
+	optional int32 store_num 		= 2; //仓库总数
+	repeated StoreInfo store_list 	= 3; //仓库列表
+}
+
+message Item_CS_ActivateStore
+{
+	
+}
+
+message Item_SC_ActivateStore
+{
+	optional int32 result			= 1; //结果
+	optional int32 store_id 		= 2; //仓库ID
+	optional int32 gird_num			= 3; //仓库格子数量
+}
+
+message Item_CS_InToStore
+{
+	optional uint64 uuid			= 1; //物品唯一ID
+	optional int32 storeid			= 2; //仓库ID
+}
+
+message Item_SC_InToStore
+{
+	optional int32 result			= 1; //结果
+}
+
+message Item_CS_OutFromStore
+{
+	optional uint64 uuid			= 1; //物品唯一ID
+	optional int32 storeid			= 2; //仓库ID
+}
+
+message Item_SC_OutFromStore
+{
+	optional int32 result			= 1; //结果
+}
+
+//****************************************************装备**************************************************
+
+message Item_CS_PutOnEquip
+{
+	optional uint64 uuid			= 1; //装备唯一ID
+}
+
+message Item_SC_PutOnEquip
+{
+	optional int32 result			= 1; //结果
+	repeated Equip equip_list		= 2; //变化的装备(穿上/替换)
+}
+
+message Item_CS_GetOffEquip
+{
+	optional uint64 uuid			= 1; //装备唯一ID
+}
+
+message Item_SC_GetOffEquip
+{
+	optional int32 result			= 1; //结果
+	optional Equip getoff_equip		= 2; //卸下的装备
+}
+
+
+//强化
+message Item_CS_EquipStrength
+{
+	optional uint32 uiEquipPos			= 1; //装备位置
+}
+
+message Item_SC_EquipStrength
+{
+	optional int32 result			= 1; //结果
+	optional uint32 uiEquipPos		= 2; //装备位置
+	optional uint32 uiNewLevel		= 3; //新的等级
+}
+
+
+//升星
+message Item_CS_EquipStarUp
+{
+	optional uint32 uiEquipPos			= 1; //装备位置
+}
+
+message Item_SC_EquipStarUp
+{
+	optional int32 result			= 1; //结果
+	optional uint32 uiEquipPos		= 2; //装备位置
+	optional uint32 uiNewLevel		= 3; //新的等级
+}
+
+//镶嵌
+message Item_CS_EquipInlay
+{
+	optional uint32 uiEquipPos			= 1; //装备位置
+	optional uint32 uiInlayPos			= 2; //镶嵌位置
+	optional uint64 uiGemUUID			= 3; //宝石唯一ID (传1 代表激活这个镶嵌位)
+}
+
+
+message Item_SC_EquipInlay
+{
+	optional int32 result			= 1; //结果
+	optional uint32 uiEquipPos		= 2; //装备位置
+	optional uint32 uiInlayPos		= 3; //镶嵌位置
+	optional uint32 uiGemId			= 4; //镶嵌宝石  0锁定   1可镶嵌  镶嵌了为宝石ID
+}
+
+//装备升级
+message Item_CS_EquipLevelUp
+{
+	optional uint64 uiTargetUUID	= 1; //待升级的装备唯一ID
+	repeated uint64 uiMaterialUUID	= 2; //材料装备唯一ID
+}
+
+message Item_SC_EquipLevelUp
+{
+	optional int32 result			= 1; //结果
+	optional Equip equip			= 2; //更新的装备信息
+}
+
+
+//装备提品
+message Item_CS_EquipQualityUp
+{
+	optional uint64 uuid	= 1; //装备唯一ID
+}
+
+message Item_SC_EquipQualityUp
+{
+	optional int32 result			= 1; //结果
+	optional Equip equip			= 2; //提品后的装备
+}
+
+message Item_CS_IncreaseEquip
+{
+	optional uint64 uuid			= 1; //装备唯一ID
+}
+
+message Item_SC_IncreaseEquip
+{
+	optional int32 result			= 1; //结果
+	optional Equip equip			= 2; //装备
+}
+
+message Item_CS_ResolveEquip
+{
+	optional uint64 uuid			= 1; //装备唯一ID
+}
+
+message Item_SC_ResolveEquip
+{
+	optional int32 result			= 1; //结果
+	optional int32 item_id 			= 2; //分解的物品ID
+}
+
+//装备位置附魔
+message Item_CS_EquipRandAttr
+{
+	optional uint32 uiEquipPos		= 1; //装备位置
+	repeated int32 vecLockPos 		= 2; //锁住的属性位置
+}
+
+message Item_SC_EquipRandAttr
+{
+	optional int32 result			= 1; //结果
+	optional uint32 uiEquipPos		= 2; //装备位置
+	repeated SRandAttr vecRandAttr	= 3; //新的附魔属性
+}
+
+//装备位置精炼
+message Item_CS_EquipRefine
+{
+	optional uint32 uiEquipPos		= 1; //装备位置
+	repeated int32 vecRefinePos 	= 2; //精炼的属性位置
+}
+
+message Item_SC_EquipRefine
+{
+	optional int32 result			= 1; //结果
+	optional uint32 uiEquipPos		= 2; //装备位置
+	repeated SRandAttr vecRandAttr	= 3; //新的属性
+}
+
+
+//激活套装
+message Item_CS_EquipActiveSuit
+{	
+	optional uint32 uiSuitId		= 1; //套装ID
+	optional uint32 uiStep 			= 2; //激活第几步  1 2 3
+}
+
+message Item_SC_EquipActiveSuit
+{
+	optional int32 result			= 1; //结果
+	optional uint32 uiSuitId		= 2; //套装ID
+	optional uint32 uiStep 			= 3; //激活第几步  1 2 3
+}
+
+//橙装兑换
+message Item_CS_EquipExchange
+{
+	optional uint32 uiExchangeId	= 1; //兑换表ID
+}
+
+message Item_SC_EquipExchange
+{
+	optional int32 result			= 1; //结果
+}
+
+//合成 
+message Item_CS_Compose
+{
+	optional uint32 uiTableId	= 1; //合成表ID
+	
+	//合成类型为1时数量才有用
+	optional uint32 uiNum	= 2; //合成数量
+	
+	//当合成类型为2时用
+	repeated uint64 uiMaterialUUID	= 3; //材料装备唯一ID
+}
+
+message Item_SC_Compose
+{
+	optional int32 result			= 1; //结果
+}
+
+//镶嵌位宝石的升级
+message Item_CS_Compose_Gem
+{
+	optional uint32 uiEquipPos			= 1; //装备位置
+	optional uint32 uiInlayPos			= 2; //要升级的镶嵌位置
+	repeated uint64 vecMaterialUUID		= 3; //材料装备唯一ID
+	repeated uint32 vecMaterialNum		= 4; //对应的数量
+}
+
+message Item_SC_Compose_Gem
+{
+	optional int32 result			= 1; //结果
+	optional uint32 uiEquipPos			= 2; //装备位置
+	optional uint32 uiInlayPos			= 3; //要升级的镶嵌位置
+	optional uint32 uiNewGemId			= 4; //升级后的宝石ID
+}
+message Item_CS_EquipOrdRepair
+{
+	optional uint64 uuid			= 1; //装备唯一ID
+}
+
+message Item_SC_EquipOrdRepair
+{
+	optional int32 result			= 1; //结果
+	optional Equip equip			= 2; //装备 
+}
+
+message Item_CS_EquipSpeRepair
+{
+	optional uint64 uuid			= 1; //装备唯一ID
+}
+
+message Item_SC_EquipSpeRepair
+{
+	optional int32 result			= 1; //结果
+	optional Equip equip			= 2; //装备 
+}
+
+message Item_CS_JewelryExchange
+{
+	optional int32 pro_id 			= 1; //兑换表格ID
+}
+
+message Item_SC_JewelryExchange
+{
+	optional int32 result 			= 1; //结果
+	optional int32 pro_id 			= 2; //兑换表格ID
+}
+
+message Item_CS_IntegralExchange
+{
+	optional int32 pro_id 			= 1; //积分表格ID
+	optional int32 num 				= 2; //兑换数量
+}
+
+message Item_SC_IntegralExchange
+{
+	optional int32 result 			= 1; //结果
+	optional int32 pro_id 			= 2; //积分表格ID
+	optional int32 buy_times 		= 3; //已购买的次数
+}
+
+message Item_CS_MoneyExchange
+{
+	optional int32 pro_id 			= 1; //兑换表表格ID
+	optional int32 num 				= 2; //兑换数量
+}
+
+message Item_SC_MoneyExchange
+{
+	optional int32 result 			= 1; //结果
+}
+
+message IntegralPrice
+{
+	optional uint32 pro_id 		= 1; //积分兑换表格ID
+	optional int32 item_id 		= 2; //所需积分物品ID
+	optional int32 item_num 	= 3; //所需积分数量
+	optional int32 buy_times 	= 4; //已购买次数
+}
+
+message IntegralTimes
+{
+	optional uint32 pro_id 		= 1; //积分兑换表格ID
+	optional int32 buy_times 	= 2; //已购买次数 
+}
+
+message Item_CS_GetIntegralPrice
+{
+}
+
+message Item_SC_GetIntegralPrice
+{
+	repeated IntegralPrice integral_price_list = 1; //积分价格列表
+}

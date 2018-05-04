@@ -1,0 +1,56 @@
+option java_package = "proto.message";
+package proto.message;
+import "common.proto";
+/*
+enum eRecoverSrcMsg_CS
+{
+//	eMsgId_RecoverSrc_Begin = 4950, //资源追回
+	eRecoverSrcMsg_CS_RequestData = 4950, // 请求数据
+	eRecoverSrcMsg_CS_RequestRecover = 4951,  //请求追回
+//	eMsgId_RecoverSrc_End = 4970,    //资源追回
+};
+
+enum eRecoverSrcMsg_SC
+{
+	//eMsgId_RecoverSrc_Begin = 4950,	//资源追回
+	eRecoverSrcMsg_SC_AckData = 4950,			// 请求数据
+	eRecoverSrcMsg_SC_AckRecover = 4951,	//请求追回
+//	eMsgId_RecoverSrc_End = 4970,		//资源追回
+};
+*/
+
+message RecoverSrc
+{
+	optional uint32 restype = 1;		//资源类型
+	optional uint32 counts = 2;			//可追回次数
+	optional uint64 getrestime = 3;		//重置时间
+	optional uint64 lastjointime =4;	//上次参活动与时间
+	optional uint32 isopen =5;			//系统未开放 或者副本未开放的标识
+	optional uint64 offtime = 6;		//离线时长
+}
+
+message RecoverList
+{
+	repeated RecoverSrc data_rec =1;
+}
+
+message RecoverSrcMsg_CS_RequestData
+{}
+
+message RecoverSrcMsg_SC_AckData
+{
+	optional uint32 result = 1;
+	optional RecoverList data = 2;
+}
+
+message RecoverSrcMsg_CS_RequestRecover
+{
+	optional uint32 restype =1; //资源类型
+	optional uint32 way=2;		//追回方式
+}
+
+message RecoverSrcMsg_SC_AckRecover
+{
+	optional uint32 result =1;
+}
+

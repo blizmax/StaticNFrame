@@ -1,0 +1,113 @@
+option java_package = "proto.message";
+package proto.message;
+
+import "item.proto";
+
+/*
+enum Rank_CS_MsgID
+{
+	Rank_CS_GetRankInfo 	= 3930, //获取排行榜信息
+}
+
+enum Rank_SC_MsgID
+{
+	Rank_SC_GetRankInfo 	= 3930, //获取排行榜信息
+	Rank_SC_PVPRankInfo 	= 3931, //PVP排行榜信息
+}
+*/
+
+//排行类型
+enum eRankType
+{
+	eRankType_PlayerLevel 			= 1; //玩家等级
+	eRankType_PlayerCombat 			= 2; //玩家战力
+	eRankType_BoatLevel 			= 3; //船舰等级
+	eRankType_WeaponCombat 			= 4; //武器战力
+	eRankType_HelmetCombat			= 5; //帽子战力
+	eRankType_CoatCombat 			= 6; //衣服战力
+	eRankType_TrousersCombat 		= 7; //裤子战力
+	eRankType_BeltCombat 			= 8; //腰带战力
+	eRankType_ShoeCombat 			= 9; //鞋子战力
+	eRankType_FriendShip 			= 10; //助人值
+	eRankType_TuorValue 			= 11; //导师值
+	eRankType_StudentNum 			= 12; //学生数量
+	eRankType_GuildCombat 			= 13; //公会总战力
+	eRankType_GuildWeek 			= 14; //公会周贡献
+	eRankType_Parkour 				= 15; //跑酷
+	eRankType_Tower40DoubleSwords 	= 16; //爬塔(双剑)
+	eRankType_Tower40Battleax 		= 17; //爬塔(巨斧)
+	eRankType_Tower40Bladefist 		= 18; //爬塔(拳刃)
+	eRankType_Tower40Rifle 			= 19; //爬塔(步枪)
+	eRankType_Tower60DoubleSwords 	= 20; //爬塔(双剑)
+	eRankType_Tower60Battleax 		= 21; //爬塔(巨斧)
+	eRankType_Tower60Bladefist 		= 22; //爬塔(拳刃)
+	eRankType_Tower60Rifle 			= 23; //爬塔(步枪)
+
+	eRankType_SingleArena 			= 24; //单人竞技场
+	eRankType_MultiInterServer1 	= 25; //多人跨服预备组
+	eRankType_MultiInterServer2 	= 26; //多人跨服新兵组
+	eRankType_MultiInterServer3 	= 27; //多人跨服精英组
+	eRankType_MultiInterServer4 	= 28; //多人跨服大师组
+	eRankType_MultiThisServer1 		= 29; //多人本服预备组
+	eRankType_MultiThisServer2 		= 30; //多人本服新兵组
+	eRankType_MultiThisServer3 		= 31; //多人本服精英组
+	eRankType_MultiThisServer4 		= 32; //多人本服大师组
+
+	eRankType_SingleArenaDay 		= 33; //单人竞技场(当日)
+	eRankType_MultiInterServer1Day 	= 34; //多人跨服预备组(当日)
+	eRankType_MultiInterServer2Day 	= 35; //多人跨服新兵组(当日)
+	eRankType_MultiInterServer3Day 	= 36; //多人跨服精英组(当日)
+	eRankType_MultiInterServer4Day 	= 37; //多人跨服大师组(当日)
+}
+
+message RankPlayer
+{
+	optional uint64 charid 		= 1; //玩家唯一ID
+	optional string charname 	= 2; //玩家名字
+	optional int32 rank_type 	= 3; //排行类型(eRankType)
+	optional int32 rank_ranking = 4; //排行名次
+	optional int32 rank_value 	= 5; //排行具体数值(根据 eRankType)
+	optional string guild_name 	= 6; //公会名
+	optional int32 parameter 	= 7; //参数
+
+	optional Equip equip_info 	= 8; //装备信息(装备排行时使用，其他排行为NULL)
+}
+
+message Rank_CS_GetRankInfo
+{
+	required eRankType rank_type 	= 1; //排行类型
+	optional int32 ranking_start 	= 2; //开始名次
+	optional int32 rankint_end 		= 3; //结束名次
+}
+
+message Rank_SC_GetRankInfo
+{
+	required eRankType rank_type 	= 1; //排行类型
+	optional int32 total_num 		= 2; //排行榜总数量
+	repeated RankPlayer rank_list	= 3; //排行榜列表
+	optional RankPlayer rank_self	= 4; //自己的排名
+}
+
+message PVPRankPlayer
+{
+	optional uint64 charid 		= 1; //玩家唯一ID
+	optional string charname 	= 2; //玩家名字
+	optional int32 rank 		= 3; //排名
+	optional int32 score 		= 4; //积分
+	optional int32 win_num 		= 5; //胜场
+	optional int32 total_num 	= 6; //总场
+}
+
+message Rank_SC_PVPRankInfo
+{
+	required eRankType rank_type 		= 1; //排行类型
+	optional int32 total_num 			= 2; //排行榜总数量
+	repeated PVPRankPlayer rank_list	= 3; //排行榜列表
+	optional PVPRankPlayer rank_self	= 4; //自己的排名
+	optional int32 refresh_time 		= 5; //距离下次刷新时间差(秒)
+}
+
+
+
+
+

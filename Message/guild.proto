@@ -1,0 +1,922 @@
+option java_package = "proto.message";
+package proto.message;
+import "common.proto";
+/*
+enum eGuildMSG_CS
+{
+	eGuildMSG_CS_Begin 				     	=3800,
+	eGuildMSG_CS_ReqGuildList		     	=3801,					//请求公会列表
+	eGuildMSG_CS_ReqCreate			     	=3802,						//请求创建公会
+	eGuildMSG_CS_ReqJoin			     	=3803,						//请求加入公会
+	eGuildMSG_CS_ReqQuickJoin		     	=3804,					//请求快速加入公会
+	eGuildMSG_CS_ReqFind			     	=3805,						//请求查询公会
+	eGuildMSG_CS_ReqGuildInfo		     	=3806,					//请求公会信息
+	eGuildMSG_CS_ReqMemberInfo		     	=3807,					//请求成员信息
+	eGuildMSG_CS_ReqMemberList		     	=3808,					//请求成员列表
+	eGuildMSG_CS_ReqQuit			     	=3809,						//请求退出公会
+	eGuildMSG_CS_ReqSetJoin			     	=3810,					//请求设置入会条件
+	eGuildMSG_CS_ReqJoinList		     	=3811,					//请求申请列表
+	eGuildMSG_CS_ReqOpreatJoiniList	     	=3812,			//请求操作申请列表
+	eGuildMSG_CS_ReqKickOut			     	=3813,					//请求提出成员
+	eGuildMSG_CS_ReqAppointment		     	=3814,				//请求任免职位
+	eGuildMSG_CS_ReqSetGuildPlacard      	=3815,			//请求设置公会公告
+	eGuildMSG_CS_ReqSetRefrishMultiple   	=3816,			//请求设置商店刷新倍数
+	eGuildMSG_CS_ReqIncreaseBuilding	 	=3817,			//请求升级公会设施
+	eGuildMSG_CS_ReqDonate				 	=3818,						//请求捐献
+	eGuildMSG_CS_ReqGetWages				=3819,					//请求获取俸禄
+	eGuildMSG_CS_ReqImpeachment				=3820,				//请求弹劾
+	eGuildMSG_CS_ReqCancelImpeachment		=3821,			//取消弹劾
+	eGuildMSG_CS_ReqResponse				=3822,					//回应弹劾
+	eGuildMSG_CS_ReqMergeGuild				=3823,					//请求合并公会
+	eGuildMSG_CS_ReqMergeGuildList			=3824,				//请求合并列表
+	eGuildMSG_CS_ReqClearMergeList			=3825,				//请求清空合并列表
+	eGuildMSG_CS_ReqOpreatMergeList			=3826,			//请求操作合并列表
+	eGuildMSG_CS_ReqShopInfo				=3827,					//请求公会商店
+	eGuildMSG_CS_ReqBuyShopItem				=3828,				//请求购买商店物品
+	eGuildMSG_CS_ReqChangeName				=3829,					//请求公会更名
+	eGuildMSG_CS_ReqEnterFort				=3830,					//进入公会要塞
+	eGuildMSG_CS_EnterFortSuccess			=3831,				//客户端加载场景完毕后开始同步数据
+	eGuildMSG_CS_ReqCancelJoin				=3832,					//取消申请加入公会
+	eGuildMSG_CS_ReqEnterGuildIntruder		=3833,			//申请加入公会入侵
+	eGuildMSG_CS_ReqEnterGuildIntruderOK	=3834,		//加入公会入侵ok
+	eGuildMSG_CS_ReqLeaveGuildIntruder		=3835,			//离开公会入侵
+	eGuildMSG_CS_ReqImpeachInfo				=3836,				//请求弹劾信息
+	eGuildMSG_CS_ReqMergeInfo				=3837,					//请求合并信息
+	eGuildMSG_CS_ReqCancelMerge				=3838,				//请求取消合并公会
+	eGuildMSG_CS_ReqSetBossOpen				=3839,				//请求设置公会boss开启时间
+	eGuildMSG_CS_ReqJoinBossBattle			=3840,				//请求加入boss战
+	eGuildMSG_CS_ReqBossInfo				=3841,                   //请求公会boss信息
+	eGuildMSG_CS_ReqInvitePlayer			=3842,				//邀请玩家加入公会
+	eGuildMSG_CS_ReqInviteJoin				=3843,				//同意邀请入会
+	eGuildMSG_CS_ReqGuildWarehouse			=3844,		//仓库物品
+	eGuildMSG_CS_ReqDonateEquip				=3845,		//捐献装备
+	eGuildMSG_CS_ReqConversionEquip			=3846,		//兑换装备
+	eGuildMSG_CS_ReqBugGuildGrid			=3847,		//购买格子
+	eGuildMSG_CS_ReqDelGuildEquip			=3848,		//销毁装备
+	eGuildMSG_CS_ReqGuildEquipRecord		=3849,		//装备捐献记录
+	eGuildMSG_CS_End = eMsgId_Guild_End
+};
+
+enum eGuildMSG_SC
+{
+	eGuildMSG_SC_Bigin= eMsgId_Guild_Begin  =3800,
+	eGuildMSG_SC_AckGuildList               =3801,
+	eGuildMSG_SC_AckCreate                  =3802,
+	eGuildMSG_SC_AckJoin                    =3803,
+	eGuildMSG_SC_AckQuickJoin               =3804,
+	eGuildMSG_SC_AckFind                    =3805,
+	eGuildMSG_SC_AckGuildInfo               =3806,
+	eGuildMSG_SC_AckMemberInfo              =3807,
+	eGuildMSG_SC_AckMemberList              =3808,
+	eGuildMSG_SC_AckQuit                    =3809,
+	eGuildMSG_SC_AckSetJoin                 =3810,
+	eGuildMSG_SC_AckJoinList                =3811,
+	eGuildMSG_SC_AckOpreatJoiniList         =3812,
+	eGuildMSG_SC_AckKickOut                 =3813,
+	eGuildMSG_SC_AckAppointment             =3814,
+	eGuildMSG_SC_AckSetGuildPlacard         =3815,
+	eGuildMSG_SC_AckSetRefrishMultiple      =3816,
+	eGuildMSG_SC_AckIncreaseBuilding        =3817,
+	eGuildMSG_SC_AckDonate                  =3818,
+	eGuildMSG_SC_AckGetWages                =3819,
+	eGuildMSG_SC_AckImpeachment             =3820,
+	eGuildMSG_SC_AckCancelImpeachment       =3821,
+	eGuildMSG_SC_AckResponse                =3822,
+	eGuildMSG_SC_AckMergeGuild              =3823,
+	eGuildMSG_SC_AckMergeGuildList          =3824,
+	eGuildMSG_SC_AckClearMergeList          =3825,
+	eGuildMSG_SC_AckOpreatMergeList         =3826,
+	eGuildMSG_SC_AckShopInfo                =3827,
+	eGuildMSG_SC_AckBuyShopItem             =3828,
+	eGuildMSG_SC_AckChangeName              =3829,
+	eGuildMSG_SC_NotifyUpdateGuildInfo      =3830,
+	eGuildMSG_SC_AckEnterFort			    =3831,
+	eGuildMSG_SC_AckCancelJoin		        =3832,
+	eGuildMSG_SC_AckEnterGuildIntruder  	=3833,	//进入公会入侵地图
+	eGuildMSG_SC_AckGuildIntruderEnd    	=3834,	//公会入侵结束
+	eGuildMSG_SC_AckGuildIntruderInit    	=3835,	//公会入侵初始时间
+	eGuildMSG_SC_AckGuildIntruderTime    	=3836,	//公会入侵波数
+	eGuildMSG_SC_GuildIntruderReward    	=3837,	//公会入侵奖励
+	eGuildMSG_SC_AckImpeachInfo				=3838,	//回复弹劾信息
+	eGuildMSG_SC_AckMergeInfo				=3839,	//回复合并信息
+	eGuildMSG_SC_AckCancelMerge			 	=3840,	//取消合并
+	eGuildMSG_SC_NotifyStopImpeachment		=3841,	//弹劾结束
+	eGuildMSG_SC_NotifyContext				=3842,	//公会公共提示
+	eGuildMSG_SC_AckSetBossOpen			 	=3843,	
+	eGuildMSG_SC_AckBossInfo				=3844,
+	eGuildMSG_SC_NotifyBossOpen				=3845,	//公会boss开启
+	eGuildMSG_SC_AckInvitePlayer			=3846,	//邀请玩家加入公会
+	eGuildMSG_SC_NotifyInvitePlayer			=3847,	//通知受邀的玩家
+	eGuildMSG_SC_AckInviteJoin				=3848,	//同意邀请入会
+	eGuildMSG_SC_AckGuildWarehouse			=3849,		//仓库物品
+	eGuildMSG_SC_AckDonateEquip				=3850,		//捐献装备
+	eGuildMSG_SC_AckConversionEquip			=3851,		//兑换装备
+	eGuildMSG_SC_AckBugGuildGrid			=3852,		//购买格子
+	eGuildMSG_SC_AckDelGuildEquip			=3853,		//销毁装备
+	eGuildMSG_SC_AckGuildEquipRecord		=3854,		//装备捐献记录
+	eGuildMSG_SC_End= eMsgId_Guild_End
+};
+
+*/
+
+//公会成员职位
+enum eOffice
+{
+	eOffice_Chairman		= 1; //会长
+	eOffice_ViceChairman	= 2; //副会长
+	eOffice_Elders			= 3; //长老
+	eOffice_Elite			= 4; //精英
+	eOffice_Baby			= 5; //宝贝
+	eOffice_Ordinary		= 6; //普通成员
+}
+
+//职位权限枚举
+enum ePurview
+{
+	ePurview_Appointment	= 1;		//职位任免
+	ePurview_JoinSupervise	= 2;		//管理入会
+	ePurview_SetPlacard		= 4;		//设置公告
+	ePurview_UniteGuild		= 8;		//合并公会
+	ePurview_Upgrade		= 16;		//建筑升级	
+	ePurview_OpenActivity	= 32;		//开启活动
+	ePurview_OpenBattle		= 64;		//报名攻城战
+	ePurview_KickOut	    = 128;		//踢出成员
+}
+
+
+//数据刷新下发
+enum eNotifyType
+{
+	eNotifyType_JoinSuccess 		= 1;	//入会成功
+	eNotifyType_ReqListUpdate 		= 2;	//请求列表更新
+	eNotifyType_MergerListUpdate 	= 3;	//合并列表更新
+	eNotifyType_Quit				= 4;	//退出公会
+	eNotifyType_UpdateMemData		= 5;	//成员数据更新
+	eNotifyType_UpdateGuildData		= 6;	//公会数据更新
+	eNotifyType_ReLoadGuildData		= 7;    //重新加载公会信息
+	eNotifyType_OtherCancelMerger	= 8;    //被请求对方清空合并列表后通知请求方更新状态
+}
+
+//踢出列表
+message KickoutInfo
+{
+	optional uint64	playerid		= 1;
+	optional uint64 outtimes		= 2;
+}
+
+//公会列表信息
+message GuildListInfo
+{		
+	optional uint32		rangking    	= 1;	//排名
+	optional uint64		guildid			= 2;	//ID
+	optional string  	guildname		= 3;	//公会名字
+	optional uint32		guildlevel		= 4;	//公会等级
+	optional uint32		guildmember		= 5;	//当前成员数
+	optional string		guilddeclaration = 6;   //公会宣言
+	optional string		ownername		= 7;	//会长名字	
+	optional uint64		guildthrive		= 8;	//公会繁荣度	
+	optional uint32     joincombat		= 9;	//加入战力条件
+	optional bool       canjoin			= 10;	//是否可加入
+	optional bool 		isreqjoin		= 11;	//是否申请过加入
+	optional bool       isaudit			= 12;	//是否需要审核加入
+	repeated KickoutInfo kickinfolist 	= 13;   //已经踢出列表
+	optional uint64 	ownerid			= 14;	//会长ID	
+}
+
+//申请列表信息
+message ReqInfo
+{
+	optional string	strname			=1; //名字
+	optional uint32	level			=2; //等级
+	optional uint32	profession		=3; //职业
+	optional uint64 playerid  		=4; //玩家ID
+	optional uint32 combatvalue		=5; //战斗力
+	optional uint32 dhlev			=6; //猎魔人等级
+}
+
+//商品列表
+message GuildShopInfo
+{
+	optional uint32	itemid			=1; //物品ID
+	optional uint32 counts			=2; //剩余数量	
+}
+
+//公会援助
+message QuestHelpInfo
+{
+	required uint32 playerid        = 1;//玩家ID
+	required int32 questid  		= 2;//任务ID
+	required int32 loopnum			= 3;//轮数
+	required int32 status 			= 4;//状态
+	required uint32 helperId		= 5;//帮助者ID
+}
+
+//公会弹劾信息
+message ImpeachInfo
+{
+	optional uint64    impeachtime	= 1; //弹劾到期时间
+	repeated uint64    impeachid	= 2; //弹劾者id
+	repeated string    impeachname  = 3; //名字
+}
+
+
+message BossDamage
+{
+	optional uint64 playerid=1;
+	optional string name=2;
+	optional uint32 value =3;
+	optional uint64 time=4;
+	optional uint32 job =5;
+}
+
+message GuildBoss
+{
+	optional uint32 bossid 			=1;	 //boss编号
+	optional uint32 hppercent 		=2;	 //剩余血量比 	
+	optional uint64 starttimes		=3;  //开始时间
+	optional uint64 resettime 		=4;	 //重置时间
+	repeated uint32 rewordlist		=5;	 //血量奖励记录
+	repeated BossDamage ranklist 	=6;  //伤害排行榜
+	optional uint32 guildlev		=7;	 //公会当前等级
+	optional uint64 guildid			=8;	 //公会ID
+	optional uint64 fightime		=9;  //公会boss上次开战时间记录
+	optional uint32 changecounts	=10; //修改时间次数(每日更新)
+	optional uint32 dfHour			=11; //默认开启时间点
+	optional uint32 dfMinu			=12; //默认开启时间点
+}
+
+
+message RecordData
+{
+	optional uint32 type = 1; //0存入 1取出
+	optional string name = 2; //玩家名字
+	optional uint32 equipid = 3; //装备ID
+	optional uint64 time = 4; //时间
+}
+
+//DB存储用数据
+message MixGuildData
+{
+	optional uint64 levuptime  			=1; //总部升级时间
+	optional uint64 ownerid  			=2; //会长ID
+	optional string guildplacard  		=3; //公会布告
+	optional bool 	canjoin  			=4; //可否加入
+	optional uint32 joincombat  		=5; //加入等级条件
+	optional uint64 resources  			=6; //公会资金
+	repeated uint32	buildlist			=7; //公会建筑
+	repeated ReqInfo reqlist			=8; //申请列表	
+	repeated GuildShopInfo shopinfo 	=9; //商品列表
+	optional uint32	refrishmultiple 	=10; //刷新倍数
+	optional uint64 refrishtime			=11; //下次刷新时间
+	repeated KickoutInfo kickinfolist 	=12; //已经踢出列表
+	optional uint32 weekmissioncounts 	=15; //每周完成任务总数
+	repeated uint64 onlinecounts 		=16; //每日上线人数表
+	repeated QuestHelpInfo helpinfo 	=19; //请求援助物品记录
+	optional bool       isaudit			=20; //是否需要审核加入
+	optional ImpeachInfo impinfo		=21; //弹劾信息
+	optional string guilddeclaration  	=22; //公会宣言
+	optional uint64 lastcosttime		=23; //上次扣除维护金的时间(10天内没有正常扣除删除公会)
+	optional uint64 boomtime			=24; //上次繁荣度大于一级的时间(持续10天删除公会)
+	optional uint64 settlementtime		=25; //下次清算资源时间
+	optional GuildBoss bossinfo			=26; //公会boss信息
+	optional uint32 maxitem				=27; //最大仓库格子数
+	repeated Equip	guildequip			=28; //仓库物品
+	optional uint32 buygridcounts		=29; //购买仓库格子次数
+	repeated RecordData depositlist		=30; //存放记录
+	repeated RecordData	fetchlist		=31; //取出记录
+	
+}
+
+//公会数据
+message GuildData
+{
+	optional uint64 		guildid			= 1;	//公会ID
+	optional string  		guildname		= 2;	//公会名字
+	optional uint32			guildlevel		= 3;	//公会等级
+	optional string			ownername		= 4;	//会长名字
+	optional uint32			prosperity		= 5;	//公会繁荣度
+	optional MixGuildData  	mixinfo			= 6;	//公会其他信息
+}
+
+
+//DB存储用数据
+message MixMemberDate
+{
+	optional uint64 getwagetime			=1;  //领俸禄时间
+	optional uint64 jointime			=2;  //入会时间
+	optional uint64 offlinetime			=3;  //上次下线时间
+	optional uint64 buyitemtime			=4;  //上次购买时间
+	optional uint32 buyitemcounts		=5;  //已购买物品数量
+	optional uint32 pendingwage			=6;  //等待领取的俸禄
+	optional uint32 currbasewage		=7;  //本周俸禄基数
+	optional uint64 accumulated			=8;  //历史贡献
+	optional uint32 weekcontribution	=9;  //本周贡献
+	optional uint32 landbattlecounts	=10;  //陆战次数
+	optional uint32 navalbattlecounts	=11;  //海战次数
+	optional uint64 impeachmenttime 	=12;  //弹劾发起时间
+	optional uint32 combatvalue			=13; //战力值
+	optional uint32 alivevalue			=14; //当天活跃度
+	optional uint32 donate				=15; //装备捐献值
+	repeated uint32 tbrewardlist		=16; //领地奖励领取
+}
+
+//公会成员数据
+message GuildMemberData
+{
+	optional uint64 		playerid		= 1;	//playerID
+	optional string         strname			= 2;	//名字
+	optional uint32			level			= 3;	//等级
+	optional uint64 		guildid			= 4;	//公会ID
+	optional uint32			guildoffice		= 5;	//公会职位
+	optional uint32			guildmoney		= 6;	//公会贡献
+	optional uint32			profession		= 7; 	//职业
+	optional MixMemberDate	mixinfo			= 8;	//其他信息
+	optional uint32 		dhlev			= 9; 	//猎魔人等级
+}
+
+//成员列表信息
+message MemberListInfo
+{
+	optional uint64 playerid			=1;	//playerID
+	optional string strname				=2;	//名字
+	optional uint32	level				=3;	//等级
+	optional uint32	profession			=4; //职业
+	optional uint32	guildoffice			=5;	//公会职位
+	optional uint64 jointime			=6;  //入会时间
+	optional uint64 offlinetime			=7;  //上次下线时间
+	optional uint64 accumulated			=8;  //历史贡献
+	optional uint32 weekcontribution	=9;  //本周贡献
+	optional uint32 landbattlecounts	=10;  //陆战次数
+	optional uint32 navalbattlecounts	=11;  //海战次数	
+	optional bool	isonline			=12; //是否在线
+	optional uint32 combatvalue			=13; //战力值
+	optional uint32 dhlev				=14; //猎魔人等级
+}
+
+//公会合并申请列表
+message UniteGuildData
+{
+	optional uint32 ranking   		= 1;  //发起方公会排名
+	optional string guildname 		= 2;  //发起方名字
+	optional uint64 reqplayerid 	= 3;  //发起方会长ID
+	optional uint64 reqguildid		= 4;  //发起方公会ID
+	optional uint32 guildlev  		= 5;  //发起方等级
+	optional uint32 membernum 		= 6;  //发起方会员人数
+	optional string ackguildname 	= 7;  //接收方会名称
+	optional uint64 ackplayerid		= 8;  //接收方会长ID
+	optional uint64 ackguildid		= 9;  //接收方公会ID
+	optional uint32 whomaster		= 10; //主导方(非消失方) 1表示发起方为主导 2表示接收方为主导
+	optional uint64 endtime			= 11; //结束时间戳
+}
+
+//已使用的公会名字
+message GuildUsedName
+{
+	repeated string guildusedname = 1; 
+}
+
+
+message GUsedName
+{
+	optional string guildusedname = 1; 
+}
+
+//*************客户端协议部分********************
+
+//请求公会列表
+message GuildMSG_CS_ReqGuildList
+{
+	optional uint32 pagenum = 1;			//请求第几页信息
+}
+//返回公会列表
+message GuildMSG_SC_AckGuildList
+{
+	optional uint32			result		= 1; //当前服务器有几页公会数据
+	repeated GuildListInfo 	infolist 	= 2; //请求页的列表数据
+}
+
+//请求创建公会
+message GuildMSG_CS_ReqCreate
+{
+	optional string  guildname 	= 1; //名字
+	optional string  guilddeclaration 	= 2;   //招人宣言
+}
+//回复创建结果
+message GuildMSG_SC_AckCreate
+{
+	optional uint32  reslut 	= 1; //创建公会结果
+}
+
+//申请加入公会
+message GuildMSG_CS_ReqJoin
+{
+	optional uint64 guildid		=1;
+}
+//申请结果
+message GuildMSG_SC_AckJoin
+{
+	optional uint32  reslut 	= 1;
+	optional uint64  timesup	=2;
+}
+
+//快捷加入
+message GuildMSG_CS_ReqQuickJoin
+{
+}
+message GuildMSG_SC_AckQuickJoin
+{
+optional uint32  reslut 	= 1;
+}
+
+//请求搜索公会
+message GuildMSG_CS_ReqFind
+{
+	optional string         guildname			= 1;	//名字
+	optional uint64 		guildid			= 2;	//公会ID
+}
+//返回搜索结果
+message GuildMSG_SC_AckFind
+{
+	optional uint32  counts 	= 1; //结果数
+	repeated GuildListInfo 	infolist =2; //公会内容
+}
+
+//请求公会详细信息
+message GuildMSG_CS_ReqGuildInfo
+{
+}
+
+//回复公会信息
+message GuildMSG_SC_AckGuildInfo
+{
+	optional uint32	   result		= 1; //结果
+	optional uint32    membercounts = 2; //成员个数
+	optional uint32    rangking		= 3; //排名
+	optional GuildData guildinfo	= 6; //公会信息
+}
+
+//请求成员详细信息
+message GuildMSG_CS_ReqMemberInfo
+{
+	optional int64  playerID  = 1; // 0为查询自己
+}
+//回复
+message GuildMSG_SC_AckMemberInfo
+{
+	optional uint32	   result		= 1; //结果
+	optional GuildMemberData memberinfo =2;
+}
+
+
+//请求成员列表详细信息
+message GuildMSG_CS_ReqMemberList
+{
+	optional uint32  pagenum =1;    
+	optional int32  isInTeam = 2; // 0, 忽略 1,只发没有队伍的
+}
+//回复
+message GuildMSG_SC_AckMemberList
+{
+	optional uint32  pagenum =1;
+	repeated MemberListInfo memberinfo =2;
+}
+
+
+//退出公会
+message GuildMSG_CS_ReqQuit
+{
+}
+//结果
+message GuildMSG_SC_AckQuit
+{
+	optional uint32  result 	= 1;
+}
+
+//设置公会进入条件
+message GuildMSG_CS_ReqSetJoin
+{
+	optional bool  		isopen 	= 1;
+	optional uint32  	joincombatser = 2;
+	optional bool 		isaudit = 3;
+}
+//设置结果
+message GuildMSG_SC_AckSetJoin
+{
+	optional uint32  	result = 1;
+}
+
+//请求申请列表
+message GuildMSG_CS_ReqJoinList
+{
+	optional uint32 pagenum = 1;			//请求第几页信息
+}
+//回复结果
+message GuildMSG_SC_AckJoinList
+{
+	optional uint32			result		= 1; //当前服务器有几页数据
+	repeated ReqInfo 		infolist 	= 2; //请求页的列表数据
+}
+
+//请求操作申请列表
+message GuildMSG_CS_ReqOpreatJoiniList
+{
+	optional bool			isdel	= 1; //（true 同意 false不同意 加入）
+	optional uint32			allopreate = 2;	//0不做任何事情，1全部加入 ，2全部拒绝
+	repeated uint64			playeridlist =3; //待处理列表
+}
+//操作结果
+message GuildMSG_SC_AckOpreatJoiniList
+{
+	optional uint32			result		= 1;
+}
+
+//请求踢人
+message GuildMSG_CS_ReqKickOut
+{
+	optional uint64			playerid =1;	
+}
+//结果
+message GuildMSG_SC_AckKickOut
+{
+	optional uint32			result		= 1;
+}
+
+//请求设置职位
+message GuildMSG_CS_ReqAppointment
+{
+	optional uint64			playerid =1;
+	optional uint32			office 	 =2;
+}
+//结果
+message GuildMSG_SC_AckAppointment
+{
+	optional uint32			result		= 1;
+}
+
+//请求设置公会公告
+message GuildMSG_CS_ReqSetGuildPlacard
+{
+	optional uint32 	type =1	;  //1 代表公会宣言 2代表公会公告	
+	optional string    context =2;
+}
+
+//结果
+message GuildMSG_SC_AckSetGuildPlacard
+{
+	optional uint32			result		= 1;
+}
+
+//请求设置商店刷新倍数
+message GuildMSG_CS_ReqSetRefrishMultiple
+{
+	optional uint32			multiple		= 1;
+}
+//结果
+message GuildMSG_SC_AckSetRefrishMultiple
+{
+	optional uint32			result		= 1;
+}
+
+//请求升级建筑
+message GuildMSG_CS_ReqIncreaseBuilding
+{
+	optional uint32			buildingtype	= 1;
+}
+//结果
+message GuildMSG_SC_AckIncreaseBuilding
+{
+	optional uint32			result		= 1;
+}
+
+//请求捐献
+message GuildMSG_CS_ReqDonate
+{
+	optional uint32			itemid		= 1;
+	optional uint32			counts		= 2;
+}
+//结果
+message GuildMSG_SC_AckDonate
+{
+	optional uint32			result		= 1;
+}
+
+//请求获得俸禄
+message GuildMSG_CS_ReqGetWages
+{
+}
+//结果
+message GuildMSG_SC_AckGetWages
+{
+	optional uint32			result		= 1;
+}
+
+//请求弹劾信息
+message GuildMSG_CS_ReqImpeachInfo
+{
+}
+
+//结果
+message GuildMSG_SC_AckImpeachInfo
+{
+	optional uint32		 result		= 1;
+	optional ImpeachInfo impdata	= 2;
+}
+
+//请求弹劾
+message GuildMSG_CS_ReqImpeachment
+{
+	
+}
+//结果
+message GuildMSG_SC_AckImpeachment
+{
+	optional uint32		 result	  = 1;
+	optional ImpeachInfo impdata  = 2;
+}
+
+//取消弹劾
+message GuildMSG_CS_ReqCancelImpeachment
+{
+
+}
+
+message GuildMSG_SC_AckCancelImpeachment
+{
+	optional uint32			result		= 1;
+}
+
+//响应弹劾
+message GuildMSG_CS_ReqResponse
+{
+}
+
+message GuildMSG_SC_AckResponse
+{
+	optional uint32			result		= 1;
+}
+
+//请求合并信息
+message GuildMSG_CS_ReqMergeInfo
+{
+}
+//回复合并信息
+message GuildMSG_SC_AckMergeInfo
+{
+	optional uint32			result		= 1;
+	optional UniteGuildData	data		= 2;
+}
+
+//请求合并公会
+message GuildMSG_CS_ReqMergeGuild
+{
+	optional uint64 recvguildid = 1;
+	optional uint64 masterid	= 2;
+}
+//结果
+message GuildMSG_SC_AckMergeGuild
+{
+	optional uint32			result		= 1;
+}
+//请求合并列表
+message GuildMSG_CS_ReqMergeGuildList
+{}
+//回馈
+message GuildMSG_SC_AckMergeGuildList
+{
+	repeated UniteGuildData datalist =1 ;
+}
+
+//被邀请合并方回应合并请求
+message GuildMSG_CS_ReqOpreatMergeList
+{
+	optional uint64   uniteguild = 1;		//请求合并方ID
+}
+message GuildMSG_SC_AckOpreatMergeList
+{
+	optional uint32	  result = 1;
+}
+
+//清空合并请求
+message GuildMSG_CS_ReqClearMergeList
+{
+}
+message GuildMSG_SC_AckClearMergeList
+{
+	optional uint32	  result = 1;
+}
+
+//取消合并
+message GuildMSG_CS_ReqCancelMerge
+{
+}
+message GuildMSG_SC_AckCancelMerge
+{
+	optional uint32	  result = 1;
+}
+
+//请求商店信息
+message GuildMSG_CS_ReqShopInfo
+{
+}
+//结果
+message GuildMSG_SC_AckShopInfo
+{
+	optional uint32			result		= 1;
+	repeated GuildShopInfo shopinfo		= 2;
+}
+
+//请求购买公会物品
+message GuildMSG_CS_ReqBuyShopItem
+{
+	optional uint32			itemid		= 1;
+	optional uint32			counts		= 2;
+}
+//结果
+message GuildMSG_SC_AckBuyShopItem
+{
+	optional uint32			result		= 1;
+}
+
+//更名
+message GuildMSG_CS_ReqChangeName
+{
+	optional string newname =1;
+}
+message GuildMSG_SC_AckChangeName
+{
+	optional uint32	result		= 1;
+}
+
+//通知客户端刷新公会数据
+message GuildMSG_SC_NotifyUpdateGuildInfo
+{
+	optional uint32	result		= 1;
+	optional string strValue	= 2;
+	optional uint64	uValue		= 3;
+}
+
+//进入公会要塞
+message GuildMSG_CS_ReqEnterFort
+{
+}
+
+message GuildMSG_SC_AckEnterFort
+{
+	optional uint32		result		= 1;
+	required uint32 	mapid  		= 2;   	//地图Id
+	optional Point3D 	pt   		= 3;    //出生的坐标
+	optional float		dir         = 4;    //朝向
+	optional int32		layer       = 5;    //层级
+}
+
+//客户端公会场景加载完毕
+message GuildMSG_CS_EnterFortSuccess
+{
+}
+
+//取消申请加入公会
+message GuildMSG_CS_ReqCancelJoin
+{
+	optional uint64 guildid = 1;
+}
+message GuildMSG_SC_AckCancelJoin
+{
+	optional uint32	result	= 1;
+}
+
+//申请加入公会入侵
+message GuildMSG_CS_ReqEnterGuildIntruder
+{
+}
+
+//加入公会入侵ok
+message GuildMSG_CS_ReqEnterGuildIntruderOK
+{
+}
+//离开公会入侵
+message GuildMSG_CS_ReqLeaveGuildIntruder
+{
+}
+
+//进入公会入侵地图
+message GuildMSG_SC_AckEnterGuildIntruder
+{
+	required uint32 	mapid  		= 1;   	//地图Id
+	optional Point3D 	pt   		= 2;    //出生的坐标
+	optional float		dir         = 3;    //朝向
+	optional int32		layer       = 4;    //层级
+}
+
+//公会入侵结束
+message GuildMSG_SC_AckGuildIntruderEnd
+{
+}
+
+//公会入侵初始时间
+message GuildMSG_SC_AckGuildIntruderInit
+{
+	required int32 	surplustime  	= 1;   	//剩余时间
+	optional int32 	times   		= 2;    //怪物波数
+	optional int32 reward_percent 	= 3; 	//奖励加成百分比(扩大10000倍)
+	repeated IDTimes chest_list 	= 4; 	//开启宝箱记录列表
+}
+
+//公会入侵波数
+message GuildMSG_SC_AckGuildIntruderTime
+{
+	optional int32 	times   		= 1;    //怪物波数
+}
+
+message GuildMSG_SC_GuildIntruderReward
+{
+	optional int32 reward_percent 	= 1; 	//奖励加成百分比(扩大了10000倍)
+}
+
+message GuildMSG_SC_NotifyStopImpeachment
+{
+	optional uint32 result=1;			//结束原因 1 弹劾成功 2 会长上线
+	optional string ownnername =2;		//会长名字
+}
+
+message GuildMSG_SC_NotifyContext
+{
+	optional uint32 contextid =1;
+	optional string contextpar = 2;
+}
+
+message GuildMSG_CS_ReqSetBossOpen	
+{
+	optional uint32 isToday=1;  //0表示今天 1表示明天
+	optional uint32 hour =2;  //预约时间小时(0-23)
+	optional uint32 minu =3;  //预约时间分钟(0-59)
+}
+
+message GuildMSG_SC_AckBossInfo
+{
+	optional uint32 result=1;
+	optional GuildBoss info =2;
+}
+
+message GuildMSG_SC_NotifyBossDie
+{
+	optional uint32 status =1;   //0代表boss 死亡 , 1代表副本时间到5秒退出副本
+}
+
+message GuildMSG_CS_ReqInvitePlayer
+{
+	optional uint64 playerid =1;
+}
+
+message GuildMSG_SC_AckInvitePlayer
+{
+	optional uint32 result =1;
+}
+
+message GuildMSG_SC_NotifyInvitePlayer
+{
+	optional string   inviter =1;	//邀请人名字
+	optional uint64	  guildid =2;	//公会ID
+	optional string	  guildname =3; //公会名字
+}
+
+message GuildMSG_CS_ReqInviteJoin
+{
+	optional uint32	  isJoin 	=1;	//1同意邀请 0拒绝邀请
+	optional uint64	  guildid 	=2;	//公会ID
+}
+
+message GuildMSG_SC_AckInviteJoin
+{
+	optional uint32 result =1;
+}
+
+message GuildMSG_CS_ReqGuildWarehouse			
+{
+}
+message GuildMSG_SC_AckGuildWarehouse
+{
+	repeated Equip guildequip =1;
+	optional uint32 gridnum =2;		//当前最大格子数
+	optional uint32 buynum =3;		//购买次数
+}
+
+message	GuildMSG_CS_ReqDonateEquip		
+{
+	optional uint64 equipuuid =1;
+}
+message	GuildMSG_CS_ReqConversionEquip	
+{
+	optional uint64 equipuuid =1;
+}
+message GuildMSG_CS_ReqDelGuildEquip
+{
+	repeated uint64 equiplist =1;
+}
+message GuildMSG_SC_AckGuildEquipRecord
+{
+	repeated RecordData depositlist		=1; //存放记录
+	repeated RecordData	fetchlist		=2; //取出记录
+}
+
+
+

@@ -1,0 +1,284 @@
+option java_package = "proto.message";
+package proto.message;
+
+import "common.proto";
+import "item.proto";
+import "activity.proto";
+
+/*
+客户端到服务器
+enum eLogin_FromGateway_Msg
+{
+	eLogin_CS_ClientLoadOk = 2001,  	//客户端加载OK
+	eLogin_CS_ChangePlayerName = 2010,  //改名字
+
+	eLogin_CS_Num
+};
+
+//服务器到客户端
+enum eLogin_ToGateway_Msg
+{
+	ELogin_STC_QueryPlayerData = 2001,
+	ELogin_STC_CreateChar      = 2002,
+	ELogin_STC_PlayerData      = 2003,
+	ELogin_STC_Sync_Self       = 2004,
+	ELogin_STC_Sync_Other      = 2005,
+	ELogin_STC_Sync_AnotherLogin= 2006,
+	ELogin_STC_EnterScene		= 2007,    //进入场景
+	ELogin_STC_ClientLoadOK		= 2008,    //客户端加载OK
+	
+	
+	ELogin_STC_ChangePlayerName = 2009,  //改名字
+
+	
+	ELogin_STC_NotifyActivity = 2011, //通知活动地址
+
+
+	ETGW_Att_Num
+};
+
+
+*/
+
+
+//玩家登陆账号每个服务器角色显示的信息
+message CharShow
+{
+	optional int32 server_id 	= 1; //服务器ID
+	optional int32 career 		= 2; //角色职业
+	optional int32 level 		= 3; //角色等级
+	optional int32 dhlevel 		= 4; //角色猎魔等级
+}
+
+message CharShowInfo
+{
+	optional int32 last_server_id 	= 1; //上一次进入的服务器ID
+	repeated CharShow char_list 	= 2; //服务器角色显示列表
+}
+
+//账号信息
+message AccountInfo
+{
+	optional string account 			= 1; //账号
+	optional string password 			= 2; //密码
+	optional CharShowInfo char_show_info= 3; //服务器角色显示信息	
+}
+	  
+//请求服务器列表  			msgId: 900
+message Login_CTS_ReqServerList 
+{
+	required string account 	= 1; //账号
+	required string pwd 		= 2; //密码required string 
+}
+
+message Login_STC_ReqPlayerList
+{
+    repeated CharShow datalist =1;
+}
+	 
+//服务器列表
+message Login_ServerList 
+{
+    required string ServerName 		= 1; //服务器名字
+    required int32  ServerID 		= 2; //服务器Id
+	required int32  Status 			= 3; //状态 1: 流畅, 2: 正常, 3: 拥挤, 4: 爆满, 5: 服务器维护
+	required int32 start_time 		= 4; //开服时间
+ 	required CharShow char_show 	= 5; //角色显示信息
+	required int32 area_id 			= 6; //所在大区ID
+	required string area_name 		= 7; //所在大区名字
+	required int32 is_recommend 	= 8; //是否推荐(1:是 0:否)
+	optional int32 is_newserver 	= 9; //是否新服(1:是 0:否)
+}
+	  
+//返回服务器列表 			msgId: 900
+message Login_STC_ServerList 
+{
+    repeated Login_ServerList listSev 	= 1; //服务器列表
+    required int32  last_server_id 		= 2; //上一次登陆服务器ID
+    required int32 cur_time 			= 3; //当前时间
+}
+	  
+//登陆验证账号和密码 		msgId: 901
+message Login_CTS_CheckAccount
+{
+	required string account = 1;		//账号
+	required string pwd = 2;			//密码
+}
+	  
+//返回登陆验证账号和密码 	msgId: 901
+message Login_STC_CheckAccountRe
+{
+    required int32 nErr = 1;             //0：成功，1：账号或者密码错误
+}
+	
+//选择服务器  			msgId: 902
+message Login_CTS_SelectServer
+{
+	required int32  ServerID = 1;			//服务器Id
+}
+	
+//返回选择服务器的IP  	msgId: 902
+message Login_STC_SelectServer
+{
+	optional int32 result 	= 1; //结果
+	optional string ip 		= 2; //Gateway IP
+	optional int32  port 	= 3; //Gateway 端口
+}
+
+//注册账号 msgId: 903
+message Login_CTS_Register
+{
+    optional string account 	= 1;
+    optional string password 	= 2;
+}
+
+// msgId: 903
+message Login_STC_Register
+{
+	optional int32 Result 	= 1;    
+}
+
+//请求服务器版本 msgId: 904
+message Login_CTS_Version
+{
+}
+
+//请求服务器版本 msgId: 904
+message Login_STC_Version
+{
+	optional string version = 1; //版本号    
+}
+	
+//--------连接网关以后的消息---------//
+//请求角色数据  	msgId: 2001
+message Login_CTS_QueryPlayerData
+{
+	required string Account = 1;				//账号
+	required int32  ServerId = 2;				//服务器Id
+}
+
+//返回请求角色数据 msgId: 2001
+message Login_STC_QueryPlayerData
+{
+	required int32  rt = 1;				//0：成功 1：需要创建角色 2：还未登陆，获取角色信息失败
+}
+	
+//请求创建角色  msgId: 2002
+message Login_CTS_CreateChar
+{
+	required int32  ServerId 	= 1;					//服务器Id
+	required int32  sex 		= 2;					//性别
+	required int32  weapon 		= 3;					//武器Id
+	required string CharName 	= 4;     				//角色名字
+	required string account 	= 5;     				//账号
+}
+	
+//返回创建角色  msgId:2002
+message Login_STC_CreateChar
+{
+	required int32  rt = 1;				//0：成功 1：角色名重复 2：角色名字不符合规定
+}
+	
+//返回玩家数据 msgId: 2003
+message Login_STC_PlayerData
+{
+	required uint64 charid 			= 1; 		//玩家唯一ID
+	required int32 sex 				= 2;		//性别
+	required int32 weapon 			= 3;		//武器Id
+	required string charname 		= 4; 		//角色名字
+	required uint32  playerid 		= 5;		//玩家ID（会变得Id）
+	required int32 level 			= 6; 		//玩家等级
+	required MoneyItem money_item 	= 7; 		//特殊物品
+	repeated Equip equip_list 		= 8; 		//已穿戴的装备列表
+	optional int32 cur_time  		= 9; 		//服务器当前时间
+	optional uint32 questioncounts	= 10; 		//今天答题次数
+	optional uint32 rightcounts 	= 11; 		//答题答对次数
+	optional uint32 rewardstate 	= 12;		//奖励领取状态 1 代表领取过第一个奖励 2代表领取第二个奖励  3代表全部领取
+	repeated IDNum button_id_list 	= 13; 		//已开启的按钮ID，表格中默认的客户端遍历去读取
+	repeated ActivityIDTimes activity_list = 14;//活动数据
+	optional uint64 guildid 		= 15;		//
+	optional uint32 MoveSpeed 		= 16; 		//移动速度
+	repeated uint32 jewelry_id_list = 17; 		//首饰ID列表
+	optional int32 titleID			= 18;		//称号id
+	optional int32 activity_loop 	= 19; 		//活动循环交替对应数字
+	optional int32 vip_level 		= 20; 		//vip等级
+	optional int32 relive_times 	= 21; 		//当日已复活次数
+	optional string titlename   	= 22; 		// 称号要使用的名称 有可能是公会名 有可能是导师名
+	optional int32 titleishide 		= 23;
+	repeated int32 posid_list 		= 24; 		//快捷栏位置物品ID列表
+	optional int32 guild_office 	= 25; 		//公会职位
+	optional int32 trial_dungeon_id = 26; 		//试炼副本ID
+	optional int32 cur_identity 	= 27; 		//当前身份
+	optional int32 cur_MultiChivalrous 	= 28; 		//今天多人副本获得的侠义值
+	optional int32 cur_EpicChivalrous 	= 29; 		//今天史诗副本获得的侠义值
+	optional uint32 uiSuitId			= 30;		//当前穿戴的套装ID
+	optional BattleBoatInfo boat_info = 31;		//船舰信息
+	optional uint32 uiAttackMode	= 32;		//当前PK模式
+	optional string finishkey = 33;//新手引导用
+	optional uint32 guidepart = 34; //新手引导用
+	optional uint32 createtime = 35; //创建角色的时间
+}
+
+
+//进入场景 msgId: 2007
+message Login_STC_EnterScene
+{
+	optional int32 mapid  		= 1; 			//地图Id
+	required Point3D pt         = 2;            //坐标
+	required float dir        	= 3;            //朝向
+	optional int32 layer        = 4;            //层级
+	optional string ip 		= 5; //battle IP
+	optional int32  port 	= 6; //battle 端口
+}
+
+
+
+//玩家同步数据
+message player_sync_data
+{
+	required int32  sex 		= 1;					//性别
+	required int32  weapon 		= 2;					//武器Id
+	required string CharName 	= 3;     				//角色名字
+}
+	
+//返回登陆者的其他玩家数据 msgId：2004 
+message Login_STC_Sync_Self
+{
+	repeated  player_sync_data  otherData = 1;
+}
+
+//返回告诉其他玩家登陆者的信息 msgId:2005
+message Login_STC_Sync_Other
+{
+	required  player_sync_data  LoginData = 2;
+}
+
+//玩家在另一地点登陆 msgId: 2006
+message Login_STC_AnotherLogin
+{    
+}
+
+//玩家在另一地点登陆 msgId: 2008
+message Login_STC_ClientLoadOK
+{    
+	required int32 Branch = 1;   //分线
+}
+
+//返回创建角色  msgId:2010
+message Login_CS_ChangePlayerName
+{
+	required string  charname = 1;			//角色名字
+}
+
+//返回修改名字 msgId:2009
+message Login_STC_ChangePlayerName
+{
+	required int32  rt = 1;				//0：成功 1：角色名重复 2：角色名字不符合规定
+	optional string charname = 2;       //角色新的名字
+}
+
+message Login_STC_NotifyActivity
+{
+	optional string ActivityHost = 1;       //host 192.168.1.181
+	optional string ActivityPath = 2;       //path Activity
+}

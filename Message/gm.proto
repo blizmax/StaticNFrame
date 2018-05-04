@@ -1,0 +1,24 @@
+option java_package = "proto.message";
+package proto.message;
+
+/*
+enum GM_CS_MsgID
+{
+	eGM_CS_GMOper 	= 2850, //GM操作
+}
+
+enum GM_SC_MsgID
+{
+	eGM_SC_GMOper 	= 2850, //GM操作
+}
+*/
+
+message GM_CS_GMOper
+{
+	optional string content = 1; //GM字符串内容
+}
+
+message GM_SC_GMOper
+{
+	optional int32 result = 1; //结果
+}

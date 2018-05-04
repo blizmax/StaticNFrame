@@ -1,0 +1,102 @@
+option java_package = "proto.message";
+package proto.message;
+
+import "common.proto";
+import "identity.proto";
+import "achieve.proto";
+import "tower.proto";
+import "item.proto";
+import "mail.proto";
+import "support.proto";
+import "welfare.proto";
+import "avatar.proto";
+import "soulbox.proto";
+import "recoversrc.proto";
+import "shop.proto";
+
+enum MatchType
+{
+	PrivateMatch = 0;
+	UnionMatch = 1;
+	PublicMatch = 2;
+}
+	
+//******************************小模块proto数据********************************
+message DataInfo
+{
+	optional int32 map_id 				= 1; 	//地图ID	
+	optional Point3D pt 				= 2; 	//点
+	optional float dir 					= 3; 	//方向
+	optional int32 layerId          	= 4; 	//地图层
+	optional int32		DungeonID 		= 5;  	//副本ID
+	optional int32		RecordMapId 	= 6;   	//副本之前地图ID
+	optional int32		RecordLayerId 	= 7;  	//地图层
+	optional Point3D	RecordPt 		= 8;	//地图坐标
+	optional float		RecordDir 		= 9;	//朝上
+	optional int32 reset_time_day 		= 10; 	//重置时间(天)
+	optional int32 reset_time_week  	= 11; 	//重置时间(周)
+	optional int32 vigor 				= 12; 	//精力
+	optional int32 lucky_value 			= 13; 	//幸运值(用于装备精炼)
+	repeated uint64 auction_item_list 	= 14; 	//拍卖的物品列表
+	repeated uint64 attention_item_list = 15; 	//关注的物品列表
+	optional int32 idy_points 			= 16; 	//身份点数
+	repeated Identity identity_list 	= 17; 	//身份列表
+	optional int32 tal_points 			= 18; 	//天赋点数
+	optional int32 tal_item_times 		= 19; 	//天赋药水使用次数
+	optional uint32 questioncounts		= 20; 	//今天答题次数
+	optional uint32 rightcounts 		= 21; 	//答题答对次数
+	optional uint32 rewardstate			= 22; 	//奖励领取状态 1 代表领取过第一个奖励 2代表领取第二个奖励  3代表全部领取
+	repeated int32 open_button_list 	= 23; 	//开启的系统按钮
+	repeated int32 open_button_reward 	= 24; 	//开启的系统按钮
+	optional MailBoxData maildata		= 25; 	//邮件操作记录数据
+	optional uint32 role_create_time    = 26; 	//角色创建时间
+	optional uint32 total_online_sec    = 27; 	//角色总在线时长
+	repeated SupportData support_data   = 28; 	//援助信息数据
+	optional int32 relive_times 		= 29; 	//当日已复活次数
+	optional uint32 guild_contribution	= 30;	//公会贡献值
+	optional bool ignore_teaminvite		= 31;	//是否屏蔽组队信息
+	optional uint64 offline_tick    	= 32; 	//角色本次离线时间
+	repeated PointData point_data    	= 33; 	//积分系统信息
+	optional uint32 xpskillenergy		= 34; 	//怒气技能值
+	optional int32 avatar_id_on 		= 35; 	//已穿戴时装ID
+	optional int32 colour_id_on 		= 36; 	//已选择的时装颜色ID
+	repeated Avatar avatar_list			= 37; 	//时装列表
+	repeated int32 posid_list 			= 38; 	//快捷栏位置物品ID列表
+	optional uint32	offpvpcounts		= 39; 	//离线pvp次数
+	optional uint32 offpvpbuycounts		= 40;	//购买次数
+	optional uint64 offpvprewordtime	= 41;   //下次领取奖励时间
+	optional int32 awaken_points 		= 42; 	//觉醒点数
+	optional int32 soulvalue			= 43;	//灵魂点数
+	optional SuolBoxInfo souldata		= 44;   //魂匣数据
+	optional int32 cur_MultiChivalrous 	= 45; 	//今天多人副本获得的侠义值
+	optional int32 cur_EpicChivalrous 	= 46; 	//今天史诗副本获得的侠义值
+	optional RecoverList recover_data   = 47;   //资源追回
+	optional int32  diamondbind   		= 48;   //绑钻
+	optional uint32 livelyupid 			= 49;	//威望ID
+	optional uint32 liveupexp 			= 50;	//当前威望值
+	optional uint32 dayamass 			= 51;	//当前填累积获得的威望值
+	optional uint32 honor  				= 52; 	//荣耀值
+	optional uint32 offpvprewordid 		= 53; 	//离线奖励ID
+	optional uint32 attackmode 			= 54; 	//攻击模式
+	optional string finishkey 			= 55;	//新手引导用
+	optional uint32 guidepart 			= 56; 	//新手引导用
+	optional uint32 mintage 			= 57; 	//铸币
+	optional int32 dhbuycounts			= 58;   //购买猎魔兑换次数
+	repeated uint32 dhdropidlist		= 59;	//挑战成功后的奖励 
+	optional uint32 dhlev				= 60; //猎魔等级
+	optional int32 dhexp				= 61; //猎魔当前经验
+	optional int32 dhcounts				= 62; //兑换次数
+	optional Potential	 sPotential 	= 63; //潜能
+	optional SecretStoreInfo ssinfo		= 64; //神秘商店	
+	optional uint64 lastofftime			= 65; //上次离线时间
+	optional uint64 accumulateofftime	= 66; //离线时间累积(秒)
+	optional uint64 ableacotime			= 67; //可累计存储时间	
+	optional int32 roulette_score		= 68; //幸运大转盘积分	
+	optional uint64 offlinetime			= 69; //离线时间
+	repeated uint32 guildbossid			= 70; //已经打过的boss列表
+	optional uint64 offexpnum			= 71; //已经累计的离线经验值
+	optional uint32 friendly			= 72; //援助值
+	optional uint32 dreadcounts 		= 73; //恐惧地宫
+	optional MatchType match_type		= 74; //所在Match服的类型
+}
+	  

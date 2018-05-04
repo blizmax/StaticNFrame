@@ -1,0 +1,132 @@
+package proto.message;
+import "common.proto";
+import "dungeon.proto";
+/*
+enum eTower_CS_MsgID
+{
+	Tower_CS_EnterTowerOk 		= 5216,     // 进入爬塔OK
+	Tower_CS_UserBuffer 		= 5217,     // 使用Buffer 
+	Tower_CS_LeaveTower 		= 5218,     // 离开爬塔 
+	Tower_CS_ReqEnterTower 		= 5219,     // 进入爬塔
+
+	Tower_CS_GetTowerInfo 		= 3990,     // 获取爬塔信息
+	Tower_CS_GetTowerRankTime 	= 3991,     // 获取爬塔排行榜的某一层的时间
+};
+
+enum eTower_SC_MsgID
+{
+	Tower_SC_EnterTower 		= 6524,		// 进入爬塔
+	Tower_SC_AddTowerBuffer 	= 6525,     // 增加Buffer
+	Tower_SC_DelTowerBuffer 	= 6526,     // 删除Buffer
+	Tower_SC_NewFloor 			= 6527,     // 新的层级
+	Tower_SC_EndTower 			= 6528,     // 结束爬塔
+
+	Tower_SC_GetTowerInfo 		= 3990,     // 获取爬塔信息
+	Tower_SC_GetTowerRankTime 	= 3991,     // 获取爬塔排行榜的某一层的时间
+}; 
+*/
+
+message TowerRecord
+{
+	optional int32 floor 		= 1; //层数
+	optional int32 pass_time 	= 2; //通关时间
+}  
+
+// 进入爬塔OK
+message Tower_CS_EnterTowerOk    
+{
+}
+
+// 进入爬塔
+message Tower_SC_EnterTower
+{
+	required uint32 	mapid  		= 1;   	//地图Id
+	optional Point3D 	pt   		= 2;    //出生的坐标
+	optional float		dir         = 3;    //朝向
+	optional int32		layer       = 4;    //层级
+	optional int32 		team 		= 5; 	//队伍
+}
+
+// 使用Buffer
+message Tower_CS_UserBuffer    
+{
+	required uint32 	bufferId  		= 1;   	//buffer  唯一ID
+}
+
+// 增加Buffer
+message Tower_SC_AddTowerBuffer
+{
+	required uint32 	bufferId  		= 1;   	//buffer  唯一ID
+	required uint32 	bufferProId  	= 2;   	//buffer表格ID
+	optional Point3D 	pt   			= 3;    //出生的坐标
+	optional float		dir         	= 4;    //朝向
+}
+
+// 删除Buffer
+message Tower_SC_DelTowerBuffer    
+{
+	required uint32 	bufferId  		= 1;   	//buffer  唯一ID
+}
+
+//新的层级
+message Tower_SC_NewFloor    
+{
+	required int32 	curFloor  		= 1;   	//当前层级(海战填表格ID)
+	required int32 	nPassTime  		= 2;   	//当前通关时长(海战时间累加)
+	required int32 	nBestTime  		= 3;   	//最佳通关时长
+	optional int32 floor_id 		= 4; 	//当前层的表格ID
+}
+
+//离开爬塔
+message Tower_CS_LeaveTower    
+{
+}
+
+//结束爬塔
+message Tower_SC_EndTower    
+{
+	required int32 rt 				= 1; //0：失败 1：成功
+	optional int32 pass_time 		= 2; //通关时间
+	optional int32 rank 			= 3; //职业排名
+	optional int32 times 			= 4; //当日剩余挑战次数
+	
+	optional int32 floor 			= 5; //层数
+	optional int32 new_record 		= 6; //是否新纪录(0:否 1:是)
+	repeated RewardItem item_list 	= 7; //奖励物品
+}
+
+//进入爬塔
+message Tower_CS_ReqEnterTower    
+{
+	optional int32 activityid 	=1;
+	optional int32 nfloor		=2;
+}
+
+//获取爬塔信息
+message Tower_CS_GetTowerInfo
+{
+	optional int32 usual_id 		= 1; //活动ID
+}
+
+message Tower_SC_GetTowerInfo
+{
+	optional int32 usual_id 		= 1; //活动ID
+	repeated TowerRecord tower_list = 2; //爬塔记录
+	optional int32 times 			= 3; //当日剩余挑战次数
+}
+
+//获取爬塔排行榜的某一层的时间
+message Tower_CS_GetTowerRankTime
+{
+	optional int32 usual_id 		= 1; //活动ID
+	optional int32 floor 			= 2; //层数
+}
+
+message Tower_SC_GetTowerRankTime
+{
+	optional int32 usual_id 		= 1; //活动ID
+	optional int32 floor 			= 2; //层数
+	optional int32 pass_time 		= 3; //通关时间
+}
+
+

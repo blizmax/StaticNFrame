@@ -1,0 +1,22 @@
+package proto.message;
+
+//客户端到服务器
+enum eLogin_FromGateway_Msg
+{
+	ELogin_CTS_GAMESERVER_QueryPlayerData		= 2001; //获取玩家数据
+	ELogin_CTS_GAMESERVER_CreateChar			= 2002;
+	ELogin_CTS_GAMESERVER_ChangePlayerName 		= 2010;  //改名字
+	ELogin_CTS_GAMESERVER_ClientLoadOK          = 2103;
+};
+
+//服务器到客户端
+enum eLogin_ToGateway_Msg
+{
+	ELogin_STC_QueryPlayerData		= 2001;
+	ELogin_STC_CreateChar			= 2002;
+	ELogin_STC_PlayerData			= 2003;
+	ELogin_STC_Sync_Self			= 2004;
+	ELogin_STC_Sync_Other 			= 2005;
+	ELogin_STC_EnterScene 			= 2007;    //进入场景
+	eLogin_STC_AddPlayer			= 2101;
+};

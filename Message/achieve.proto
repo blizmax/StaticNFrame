@@ -1,0 +1,71 @@
+option java_package = "proto.message";
+package proto.message;
+
+/*
+enum Achieve_CS_MsgID
+{
+	Achieve_CS_GetAchieveInfo 	= 3900, //获取成就信息
+	Achieve_CS_GetAchieveReward	= 3901, //领取成就奖励
+	Achieve_CS_Upgrade	= 3902,	 		//升级
+}
+
+enum Achieve_SC_MsgID
+{
+	Achieve_SC_GetAchieveInfo 	= 3900, //获取成就信息
+	Achieve_SC_GetAchieveReward	= 3901, //领取成就奖励
+
+	Achieve_SC_UpdateAchieve 	= 3911, //更新成就
+}
+*/
+
+
+message Achieve_CS_GetAchieveInfo
+{
+	
+}
+
+message AchieveInfo
+{
+	optional int32 id 			= 1; //ID
+	optional int32 con_num 		= 2; //条件数量
+	optional int32 status 		= 3; //状态(1:已完成 2:已领取)
+}
+
+message Achieve_SC_GetAchieveInfo
+{
+	optional int32 points 				= 1; //成就点数
+	repeated AchieveInfo achieve_list 	= 2; //成就列表
+	repeated int32 points_id_list 		= 3; //已领取的成就点数ID列表
+	optional int32 cup_id				= 4; //成就奖杯ID
+}
+
+message Achieve_CS_GetAchieveReward
+{
+	optional int32 id 		= 1; //ID
+}
+
+message Achieve_SC_GetAchieveReward
+{
+	optional int32 result 	= 1; //结果
+	optional int32 id 		= 2; //ID
+	optional int32 status 	= 3; //状态(0:未完成 1:已完成 2:已领取 -1:成就点数领取时使用)
+	optional int32 points 	= 4; //总成就点数
+}
+
+message Achieve_SC_UpdateAchieve
+{
+	optional int32 id 		= 1; //ID
+	optional int32 con_num 	= 2; //条件数量
+	optional int32 status 	= 3; //状态(1:已完成 2:已领取)
+}
+
+message Achieve_CS_Upgrade
+{
+}
+
+message Achieve_SC_Upgrade
+{
+	required int32 ret = 1;		//升级成功则返回0
+	optional int32 cup_id = 2;	//如果升级成功，则有
+	optional int32 points = 3;	//如果升级成功，则有，总成就点数
+}

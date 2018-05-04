@@ -1,0 +1,48 @@
+option java_package = "proto.message";
+package proto.message;
+
+/*
+enum Treasure_CS_MsgID
+{
+	Treasure_CS_Synthesis 		= 2830, //合成藏宝图
+	Treasure_CS_UseTreasure 	= 2831, //使用宝图
+}
+
+enum Treasure_SC_MsgID
+{
+	Treasure_SC_Synthesis 		= 2830, //合成藏宝图
+	Treasure_SC_UseTreasure 	= 2831, //使用宝图
+
+	Treasure_SC_UpdateEvent 	= 2840, //更新藏宝图事件
+}
+
+*/
+
+message Treasure_CS_Synthesis
+{
+	optional int32 treasure_map_id = 1; //宝图ID
+}
+
+message Treasure_SC_Synthesis
+{
+	optional int32 result 			= 1; //结果
+	optional int32 treasure_map_id 	= 2; //宝图ID
+	optional int32 treasure_id 		= 3; //藏宝表格ID
+}
+
+message Treasure_CS_UseTreasure
+{
+	optional uint64 uuid 			= 1; //物品唯一ID
+}
+
+message Treasure_SC_UseTreasure
+{
+	optional int32 result 			= 1; //结果
+	optional uint64 uuid 			= 2; //物品唯一ID
+}
+
+message Treasure_SC_UpdateEvent
+{
+	optional int32 event_type 		= 1; //事件类型(1:直接加背包物品 2:帅怪)
+	optional int32 result 			= 2; //事件结果(0:成功 1:失败)
+}

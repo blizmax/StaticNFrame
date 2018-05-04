@@ -1,0 +1,59 @@
+option java_package = "proto.message";
+package proto.message;
+/*
+enum SoulBox_CS_Msg
+{
+	//eMsgId_SoulBox_Begin = 4900,
+	eSoulBox_CS_RequestData = 4901 ,
+	eSoulBox_CS_RequestUpgradeBox = 4902,
+	eSoulBox_CS_RequestUpgradeSuper = 4903,
+	//eMsgId_SoulBox_End =4950 ,
+};
+
+enum SoulBox_SC_Msg
+{
+	//eMsgId_SoulBox_Begin = 4900,
+	eSoulBox_SC_AckData  = 4901,
+	eSoulBox_SC_AckUpgradeBox = 4902,
+	eSoulBox_SC_AckUpgradeSuper = 4903,
+	//eMsgId_SoulBox_End =4950 ,
+};
+*/
+
+message SuolBoxInfo
+{
+ 	optional uint32 boxid=1;
+	repeated uint32 superid=2;
+}
+
+message SoulBox_CS_RequestData
+{
+}
+
+message SoulBox_SC_AckData
+{
+	optional uint32 result = 1;
+	optional SuolBoxInfo data  = 2;
+}
+
+message SoulBox_CS_RequestUpgradeBox
+{
+
+}
+
+message SoulBox_SC_AckUpgradeBox
+{
+	optional uint32 result = 1;
+	optional uint32 newid  = 2;
+}
+
+message SoulBox_CS_RequestUpgradeSuper
+{
+	optional uint32 nID =1;
+}
+
+message SoulBox_SC_AckUpgradeSuper
+{
+	optional uint32 result = 1;
+	optional uint32 newid  = 2;
+}

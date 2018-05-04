@@ -1,0 +1,478 @@
+enum eErrorType
+{
+	eError_Success					= 0; //成功
+    eError_Failed                   = 1; //失败
+	eError_Login_AccountNotExist	= 2; //账号不存在
+	eError_Login_PasswordError		= 3; //密码错误
+    eError_Config                   = 4; //配置错误
+    eError_Data                     = 5; //数据错误
+    eError_Operate                  = 6; //操作错误
+    eError_LevelLack                = 7; //等级不足
+    eError_itemLack                 = 8; //道具数量不足
+    eError_PlayerOffLine            = 9; //角色不在线
+    eError_StringLenLimit           = 10; //字符串长度超出限制
+    eError_IllegalCharacter			= 11; //出现非法字符
+	eError_PlayerNotExist			= 12; //玩家不存在
+	eError_SystemNotOpen			= 13; //系统未开启
+	eError_AccountHasExist			= 14; //账号已存在
+	eError_ServerMaintenance		= 15; //服务器维护中
+
+	eError_Item_NotEnough			= 20; //物品不足
+	eError_Silver_NotEnough			= 21; //银币不足
+	eError_Gold_NotEnough			= 22; //金币不足
+	eError_Diamond_NotEnough		= 23; //钻石不足
+	eError_Energy_NotEnough			= 24; //体力不足
+	eError_Exp_NotEnough			= 25; //经验不足
+	eError_Vigor_NotEnough			= 26; //精力不足
+	eError_IdyPoints_NotEnough		= 27; //身份点数不足
+	eError_Friend_NotEnough			= 28; //友谊值不足
+	eError_TalPoints_NotEnough		= 29; //天赋点数不足
+	eError_PlayerLevel_NotEnough	= 30; //玩家等级不足
+	eError_InPkStatusOperateFail	= 31;//在PK状态 操作失败
+	eError_VipLevel_NotEnough		= 32; //VIP等级不足
+	eError_Times_NotEnough			= 33; //可用次数不足
+
+	eError_Login_NameCanNotNull		= 40; //名字不能为空
+	eError_Login_NameHasUsed		= 41; //名字已使用
+	eError_Login_CharHasExist		= 42; //角色已经存在
+	
+	// 货币
+	eError_Money_MoneyNotEnough		= 50; //货币不足
+	eError_Money_GoldNotEnough		= 51; //金币不足
+	eError_Money_DiamondNotEnough	= 52; //钻石不足
+	eError_Money_SilverNotEnough	= 53; //银元不足
+
+	// 玩家
+	eError_Player_Offline			= 60; //玩家已下线
+
+    // 物品
+	eError_Item_StoreNotOpen		= 100; //仓库未开放
+	eError_Item_ItemNotExist		= 101; //物品不存在
+	eError_Item_NullGirdNotEnough	= 102; //背包格子不够
+	eError_Item_ItemNotEnough		= 103; //物品不足
+	eError_Item_BagGirdMax			= 104; //背包格子已达最大值
+	eError_Item_StoreNumMax			= 105; //仓库数量已达最大值
+	eError_Item_CanNotResolve		= 106; //此物品不能分解
+	eError_Item_CanNotSell			= 107; //此物品不能出售
+	eError_Item_CanNotDiscard		= 108; //此物品不能丢弃
+	eError_Item_CanNotAuction		= 109; //此物品不能拍卖
+	eError_Item_CanNotUse			= 110; //此物品不能使用
+	eError_Item_HasNoIdentity		= 111; //没有可重置的身份
+	eError_Item_IncreaseToMax		= 112; //装备已精修到最高级
+	eError_Item_PlayerOffline		= 113; //玩家已下线
+	eError_Item_OverLockEffNum		= 114; //超过锁住属性数量
+	eError_Item_NotCanEnchant		= 115; //此装备不能精炼
+	eError_Item_StrengthLvMax		= 116; //装备已达最大强化等级
+	eError_Item_JewelryConNotEnough = 117; //首饰兑换条件不足
+	eError_Item_IntegralConNotEnough= 118; //积分兑换条件不足
+	eError_Item_MoneyConNotEnough	= 119; //货币兑换条件不足
+	
+	// 身份相关
+	eError_Identity_HasExist		= 120; //身份已存在
+	eError_Identity_PointsNotEnough = 121; //身份点数不够
+	eError_Identity_NotMatching		= 122; //天赋ID与身份不匹配
+	eError_Identity_LevelMax		= 123; //天赋已是最高等级
+	eError_Identity_HasActivate		= 124; //天赋已被激活
+	eError_Identity_TalentNotEnough = 125; //天赋条件不足
+	eError_Identity_EnergyNotEnough = 126; //精力值不足
+	eError_Identity_TalentNotExist  = 127; //天赋不存在
+
+	// 商城
+	eError_Shop_VIPLevelNotEnough	= 130; //VIP等级不够
+	eError_Shop_VIPLevelHasBuy		= 131; //已购买此VIP等级的礼包
+	eError_Shop_VIPLevelHasFree		= 132; //已领取此VIP等级的礼包
+	eError_Shop_BeyondNum			= 133; //超出规定数量
+	eError_Shop_NotInActivityTime	= 134; //不在活动时间内
+
+	//拍卖行
+	eError_Auction_ItemNotEnough	= 140; //物品不足
+	eError_Auction_BeyondAttLimit	= 141; //超过拍卖行关注限制数量
+	eError_Auction_NotDeadline		= 142; //拍卖的物品还没到期
+	eError_Auction_CanNotAuction	= 143; //此物品不能拍卖
+	eError_Auction_InShow			= 144; //物品在公示期，不能购买
+	eError_Auction_HasAttention		= 145; //此物品已被关注过
+	eError_Auction_NotFindAttention = 146; //没有找到关注的物品
+	eError_Auction_NotBuySelfItem	= 147; //不能购买自己上架的物品
+	eError_Auction_NotBuyFrozenItem	= 148; //不能购买冻结期的物品
+	eError_Auction_NotAttSelfItem	= 149; //不能关注自己上架的物品
+	eError_Auction_BeyondAucLimit	= 150; //超过拍卖行上架限制数量
+	eError_Auction_BeyondNumLimit	= 151; //超过普通物品拍卖限制数量
+
+	eError_Item_IntegralTimesMax	= 160; //超过积分兑换次数上限
+	eError_Item_JewelryHasExchange	= 161; //此装备首饰已兑换过，不能再兑换
+	eError_Item_NotIntoStore		= 162; //此物品不能放入仓库
+	eError_Item_EquipDamage			= 163; //装备已损
+	eError_Item_UseItemNotCD		= 164; //CD未冷却，不能使用物品
+	eError_Item_UseItemHPFull		= 165; //血量已满，不能使用物品
+	eError_Item_UseItemPlayerDie	= 166; //玩家已死亡，不能使用物品
+	eError_Item_UseItemSceneNotMatch= 167; //不能在本场景内使用此物品
+	eError_Item_PutonEquipCareer	= 168; //穿装备职业不匹配
+	eError_Item_MaxUseLimit = 169; //到达总使用上限
+	eError_Item_TodayUseLimit = 170; //到达今日使用上限
+
+	//宝图
+	eError_Treasure_NotTreasure		= 180; //此物品不是宝图
+
+	//活动
+	eError_Activity_NotOpen			= 190; //活动未开启
+	eError_Activity_NotJoinGuild	= 191; //玩家没有加入公会
+	eError_Activity_ChestTimesLimit	= 192; //已达到开启宝箱次数限制
+	eError_Activity_JoinGuild24Hour = 193; //入会不到24小时
+    eError_Activity_AwardNotExist	= 194, //活动奖励不存在
+    eError_Activity_AwardReceived	= 195, //活动奖励已领取
+
+    // 任务相关
+    eError_Quest_ReceiveLack        = 200; // 未达到领取任务条件
+    eError_Quest_FinishLack         = 201; // 未达到完成任务条件
+    eError_Quest_DayLimit           = 202; // 今日不能再领取
+    eError_Quest_Finished           = 203; // 任务已经完成过
+    eError_Quest_HaveKind           = 204; // 有该种类任务正在进行中
+    eError_Quest_NotGiveUp          = 205; // 不能放弃任务
+    eError_Quest_NotAdd             = 206; // 不能领取任务
+    eError_Quest_LevelLack          = 207; // 未达到接取任务等级
+    eError_Quest_WeekLimit          = 208; // 本周已领取周环任务，请下周再来吧
+    eError_Quest_ServerLvLimit      = 209; // 只有低于服务器最高等级的玩家才可接取任务
+    eError_Quest_HelpOtherItemNoSelf = 210; // 不能完成自己发布的援助物品请求
+    eError_Quest_HelpOtherItemNotExist = 211;// 任务已经被他人抢先完成
+    eError_Quest_HelpOtherItemTypeError = 212;// 任务类型不匹配
+    eError_Quest_QuestionProgressUpdate = 213;// 审问任务进度+1 该错误码不是错误。
+    eError_Quest_NotAddOfGuild             = 214; // 不是公会成员无法领取公会任务
+    eError_Quest_NotAddOfLoopQuest             = 215; // 不是没有适合当前等级的环任务了
+    eError_Quest_NotAddOfLackMan             = 216; // 人数不足不能接取任务
+    
+
+    // 技能相关
+    eError_Skill_LvLessPlyLv        = 300; // 技能等级无法超过主角等级
+    eError_Skill_LessPlyLvUp        = 301; // 技能升级主角等级不足
+    eError_Skill_LessPlyLvMarkUp    = 302; // 技能印记升级主角等级不足
+
+    // 舰船相关
+    eError_Boat_StageLvLimit        = 320; // 很抱歉，已达当前阶段部件最高级，升级失败
+    eError_Boat_EvolveLimit         = 321; // 很抱歉，已达最大进化次数，进化失败
+    eError_Boat_FashionNoHave       = 322; // 很抱歉，未拥有该时装
+    eError_Boat_FashionStageLack    = 323; // 很抱歉，航船阶段不足
+    eError_Boat_FashionTypeError    = 324; // 很抱歉，航船类型不匹配
+
+	eError_Boat_SkillNotExist		= 325; //技能不存在
+	eError_Boat_EnemyNotExist		= 326; //敌人不存在
+	eError_Boat_SkillCD				= 327; //技能CD冷却中
+	eError_Boat_SkillSafetyArea		= 328; //不能在安全区域使用技能
+	eError_Boat_HasDie				= 329; //玩家已死亡
+
+	eError_Boat_PartIDError			= 330; //部件ID有误
+	eError_Boat_PartReachMaxLv		= 331; //部件已达最大等级
+	eError_Boat_StageNotEnough		= 332; //阶段条件不足
+	eError_Boat_MainLvNotEnough		= 333; //主舰等级条件不足
+	eError_Boat_ReachMaxStage		= 334; //船舰已达最大阶段
+	eError_Boat_PartNotEnough		= 335; //升级部件条件不足
+	eError_Boat_PartLevelMax		= 336; //部件到达最高级
+	eError_Boat_SkinIDError			= 337; //皮肤ID错误
+	eError_Boat_SkillIDError		= 338; //技能ID错误
+	eError_Boat_SkillReachMaxLv		= 339; //技能已达最大等级
+	eError_Boat_ActiveNotEnough 	= 340; //船舰皮肤激活条件不足
+	eError_Boat_SkinTimesOver	 	= 341; //皮肤过期
+	eError_Boat_UpgradeFaild  		= 342; //进阶失败
+
+	//成就
+	eError_Achieve_NotReachCon		= 350; //此成就没有达成
+	eError_Achieve_HasGetReward		= 351; //已领取过成就奖励
+
+	//匹配
+	eError_Match_BattIDNotExist		= 360; //战场ID不存在
+	eError_Match_HasGetPVPReward	= 361; //已领取过PVP奖励
+	eError_Match_RewardConNotEnough = 362; //领取PVP奖励条件不足
+	eError_Match_PersonsNotMatch	= 363; //人数不匹配
+	eError_Match_InMatch			= 364; //玩家已在匹配中
+	eError_Match_NotInMatch			= 365; //玩家不在匹配状态
+	eError_Match_InPVP				= 366; //玩家已在PVP战斗中					
+	eError_Match_CreateMatch		= 367; //创建匹配失败
+	eError_Match_AddPlayer			= 368; //增加玩家失败
+	eError_Item_GuildError			= 369; //不是会长
+	
+	
+
+	//战斗
+	eError_Attack_NotHaveSkill      = 400;  //没有该技能
+	eError_Attack_CDing             = 401;  //技能CD中
+	eError_Attack_TPNotEnough		= 402;  //TP不足
+	eError_Attack_ReachReliveMax	= 403;  //已达到复活上限
+	eError_Attack_XPNotEnough		= 404;	//怒气不足
+
+	//副本
+	eError_Dungeon_NotOpen			= 420; //副本未开启
+	eError_Dungeon_PersonsNotMatch	= 421; //副本人数不匹配
+	eError_Dungeon_TeamNotOpen		= 422; //队伍中有人未开启此副本
+	eError_Dungeon_EnterConNotEnough= 423; //进入副本条件不足
+	eError_Dungeon_SystemNotOpen	= 424; //系统未开放此副本，进入副本失败
+	eError_Dungeon_GradeSNotEnough	= 425; //S评分次数不足，进入副本失败
+	eError_Dungeon_NotGetTask		= 426; //相关任务未接取，进入副本失败
+	eError_Dungeon_NoAvailableTime	= 427, //没有可用的次数
+	eError_Dungeon_Grade_NotS		= 428, //未达到S级评分
+	eError_Dungeon_NeedSweep		= 429, //请先扫荡
+
+	//组队
+	eError_Team_NotHaveTeam         = 500;  //没有队伍
+	eError_Team_OnlyLeaderDo        = 501;  //只有队长能操作
+	eError_Team_TeamFull            = 502;  //队伍已满
+	eError_Team_LevelUnfit          = 503;  //等级不适合
+	eError_Team_InTeam              = 504;  //已在队伍中
+	eError_Team_InTeamApplyList     = 505;  //已在申请列表中
+	eError_Team_SetTeamObj          = 506;  //请先设置队伍目标
+	eError_Team_SelectTeamObj       = 507;  //请先选择队伍目标
+	eError_Team_TampError           = 508;  //需队伍内人数大于1时队长才可暂离
+	eError_Team_AppointTampError    = 509;  //暂离状态的玩家无法被委任为队长
+	eError_Team_NeedSameGuild       = 510;  //当前队伍目标要求同公会玩家
+	eError_Team_JoinTeamSucceed     = 511;  //你加入了%s的队伍
+	eError_Team_OtherPlayerIgnore     	= 512;  //对方玩家屏蔽组队邀请
+	eError_Team_InDungeonIDCannotInvite = 513;  //对方在副本中 无法邀请
+	eError_Team_NotInSameGuild     		= 514;  //队伍中有非本帮会成员
+	eError_Team_LeaderInGuild     		= 515;  //队长在公会场景中
+	eError_Team_InDungeonIDCannotFollow = 516;  //对方在副本中 无法跟随
+	eError_Team_OtherPlayerNotOpenTeam  = 517;  // 对方未开启组队系统，无法邀请
+	eError_Team_NotReady = 518,  // 对方未准备
+	eError_Team_BranchFull = 519,// 分线满了 无法切换去队长分线
+	eError_Team_NotFindTeam = 520,// 队伍不存在
+    eError_Team_MemberOffline 		= 521,	//队伍中有成员处于离线状态
+    eError_Team_EnteringDungeon		= 522,	//队伍正在进入副本
+    eError_Team_AllNoRewardTime		= 523,	//队伍成员均无奖励次数
+
+	//猎魔人
+	eError_DH_MaxBuy = 550,         //到达当日最大购买次数
+	eError_DH_LevelLow = 551,       //未达到最低猎魔等级要求
+	eError_DH_NotCounts = 552,      //没有兑换次数
+	eError_DH_MaxLevel  = 553,      //到达猎魔最大等级
+	eError_DH_NotPassDungeon = 554, //没有通过猎魔人试炼副本
+	eError_DH_LowExp = 555, //升级经验不足
+	eError_DH_DataError = 556, //无法获取猎魔信息
+	eError_DH_NotLeader = 557, //不是队长无法开启副本
+	eError_DH_PassDungeon = 558, //已经通关了试炼副本
+
+    //天赋
+	eError_Talent_AlreadyUnlock     = 600;  //天赋已经解锁
+	eError_Talent_NotUnlock         = 601;  //天赋未解锁
+	eError_Talent_PointLack         = 602;  //天赋点数不足
+	eError_Talent_NotInputPoint     = 603;  //该阶段不能再投入天赋点
+	eError_Talent_TabsLimit         = 604;  //天赋页已达上限，你可选择分解该物品
+	eError_Talent_InputPointLack    = 605;  //投入天赋点数不足
+	eError_Talent_TabsUnUsing       = 606;  //天赋页未启用
+	eError_Talent_NotNeedReset      = 607;  //当前未进行天赋点分配，无需重置
+	eError_Talent_TalItemTimesMax	= 608;  //天赋药水使用次数达到上限
+
+	//爬塔
+	eError_Tower_FloorNotPass		= 620; //爬塔所选择层数没有通关，不能直接进入
+	eError_Tower_TimesNotEnough		= 621; //爬塔挑战次数不够
+
+    //好友
+	eError_Friend_AlreadyIsFriend   = 700;  //该玩家已经是你的好友
+	eError_Friend_FriendMax         = 701;  //当前好友人数已达上限
+	eError_Friend_PeerFriendMax     = 702;  //对方好友栏已满
+	eError_Friend_BeforeRemoveBlack = 703;  //请先将该玩家移除黑名单
+	eError_Friend_BlackMax          = 704;  //黑名单中的成员已满
+	eError_Friend_NotIsPeerFriend   = 705;  //对方尚未添加你为好友
+	eError_Friend_NotFriend         = 706;  //对方不是你的好友
+	eError_Friend_NotAddself        = 707;  //不能添加自己为好友
+	eError_Friend_NotAddselfBlack   = 708;  //不能添加自己为黑名单
+	eError_Friend_IsInBlack         = 709;  //对方已屏蔽你
+	eError_Friend_NotFind           = 710;  //未找到玩家
+	eError_Friend_NotOnline		= 711;  //对方不在线,已添加
+
+	//聊天
+	eError_Chat_NotTeam             = 800;  //没有队伍
+	eError_Chat_NotCorps            = 801;  //没有公会
+	
+	//公会
+	eError_Guild_GuildNull			= 808; //公会不存在
+	eError_Guild_MemberNull			= 809; //不是公会成员
+	eError_Guild_NameUsed			= 810; //公会名字重复
+	eError_Guild_BadName			= 811; //名字包含敏感词
+	eError_Guild_BadID				= 812; //公会ID重复
+	eError_Guild_HasGuild			= 813; //已有公会
+	eError_Guild_RefuseJoin			= 814; //公会关闭加入
+	eError_Guild_LowLevel			= 815; //入会等级不足
+	eError_Guild_ReqJoinRefuse		= 816; //被踢出后指定时间内不允许加入同一个公会
+	eError_Guild_QuikJoinFailed		= 817; //快速加入无符合条件公会
+	eError_Guild_QuitCH				= 818; //会长无法退出公会
+	eError_Guild_ReqJoinFull		= 819; //申请队列已满
+	eError_Guild_ReqJoinReJoin		= 820; //重复申请
+	eError_Guild_NotPurview			= 821; //无权限执行操作
+	eError_Guild_KickSelf			= 822; //不能踢出自己
+	eError_Guild_HighOffice			= 823; //不能任免比自己高的职位
+	eError_Guild_BuildLelLow		= 824; //建筑总等级不足
+	eError_Guild_NeedMoreMoney		= 825; //需要更多公会资金
+	eError_Guild_BuildingNull		= 826; //建筑信息无法获取
+	eError_Guild_WagesNull			= 827; //无俸禄可领取
+	eError_Guild_ImpeachmentCD		= 828; //弹劾CD中
+	eError_Guild_JoinNotLong		= 829; //入会不到七天
+	eError_Guild_NotEnoughTime		= 830; //还不能弹劾会长
+	eError_Guild_Impeachmenting		= 831; //弹劾中
+	eError_Guild_NotInImp			= 832; //未开启弹劾
+	eError_Guild_NotResponse		= 833; //发起人或者会长不能响应弹劾
+	eError_Guild_InResponsed		= 834; //重复响应弹劾
+	eError_Guild_NotSponsor			= 835; //不是弹劾发起人
+	eError_Guild_MaxElders			= 836; //最大长老
+	eError_Guild_MaxElite			= 837; //最大精英
+	eError_Guild_MaxVc				= 838; //副会长
+	eError_Guild_MaxMerge			= 839; //超过合并公会人数上限
+	eError_Guild_ReMerge			= 840; //已有申请合并在进行
+	eError_Guild_NoMerge			= 841; //健康度过高不能申请合并
+	eError_Guild_MergeTimeOut		= 842; //合并超时
+	eError_Guild_KickImp			= 843; //不能提出弹劾者
+	eError_Guild_NotInMerge			= 844; //还没有合并请求
+	eError_Guild_MergeData			= 845; //合并数据已失效
+	eError_Guild_OpenTimeError  	= 846, //boss开启时间不合法
+    eError_Guild_QuitError  		= 847, //boss时间不允许退出公会
+	eError_Guild_InvitaMemFull      = 848, //您所在的公会成员已满，邀请失败
+    eError_Guild_InvitaHasGuild     = 849, //对方已有公会，邀请失败
+    eError_Guild_InvitaNoOpen       = 850,//对方尚未开启公会功能，无法邀请
+    eError_Guild_JoinMemFull  		= 851,// 接受者提示：“很抱歉，该公会已满员，无法加入”
+	eError_Guild_EquipNotExist = 852, //该装备已经被其它成员领取，领取失败
+    eError_Guild_EquipMax = 853,        //公会仓库已满提示
+	
+	//随机宝箱
+	eError_RandomChest_OpenedByOther   	= 860; //已被别人抢先打开
+	eError_RandomChest_SelfCreate      	= 861; //不能领自己创建的走私宝箱
+	eError_RandomChest_OverLimit       	= 862; //超过领取次数限制
+	eError_RandomChest_NotEnoughKey    	= 863; //没有足够的钥匙
+
+	//签到
+	eError_Sign_TodayIsSigned    		= 890; //今日已经签到
+	eError_Sign_SignSupplyNotEnough    	= 891; //补签次数不够
+	eError_Sign_TodayNotSigned    		= 892; //今日还没签到，不可以使用补签
+	eError_Sign_SignSupplyOverToday    	= 893; //补签超过可签最大值
+	
+	//抽奖
+	eError_Sign_LotteryNotEnough  		= 895;//抽奖次数不足
+
+	//福利
+	eError_Welfare_HasBuyDiscountGift	= 900; //已经购买过折扣礼包
+	eError_Welfare_AwardNotReady   		= 910; //奖励还没到时间
+	eError_Welfare_AwardRecived    		= 911; //奖励已经领取过
+	eError_Welfare_AwardOverTime   		= 912; //奖励已经过时
+	
+	//时装
+	eError_Avatar_AvatarHasActivate		= 920; //时装已被激活
+	eError_Avatar_AvatarNotActivate		= 921; //时装没有被激活
+	eError_Avatar_AvatarHasEquipon		= 922; //时装已被穿上
+	eError_Avatar_AvatarNotEquipon		= 923; //时装没有穿上
+	eError_Avatar_ColourHasActivate		= 924; //时装颜色已激活
+	eError_Avatar_ColourNotActivate		= 925; //时装颜色未激活
+	eError_Avatar_HasSelectColour		= 926; //时装已选择该颜色
+
+	//地图
+	eError_Map_BranchFull 				= 950; //分线已经满了
+	eError_Map_CannotStayHere 			= 951; //无法继续停留在当前场景
+	eError_Map_ChangeMapLevelNotEnough	= 952; //切换地图等级不足
+	eError_Map_ChangeMapTaskNotEnough	= 953; //切换地图任务条件不满足
+
+	//公会海战
+	eError_GuildSeaWar_NotJoin			= 1000; // 公会没有参加公会海战
+	eError_GuildSeaWar_StatusError		= 1001; // 时间段不正确
+	eError_GuildSeaWar_SignReady		= 1002; // 已经报名了
+	eError_GuildSeaWar_NotEnoughWood	= 1003; // 木头不足
+	eError_GuildSeaWar_CannotRepair		= 1004; // 无法修复
+	eError_GuildSeaWar_HasControler		= 1005; // 已经有人控制
+	eError_GuildSeaWar_HasStart			= 1006; // 公会海战已经开始不能进入
+	eError_GuildSeaWar_HasEnd			= 1007; // 公会海战已结束
+	eError_GuildSeaWar_NotStart			= 1008; // 公会海战没有开始
+	eError_GuildSeaWar_NotWatchTime		= 1009; // 不是观战时段
+	eError_GuildSeaWar_NotFindBoat		= 1010; // 没有找到控制船只
+
+	//神器系统
+	eError_GodWeapon_NotAcive = 1101; //未激活
+	eError_GodWeapon_AlreadyAcive = 1102; //已激活
+	eError_GodWeapon_IsUsed = 1103; //已经在使用
+	eError_GodWeapon_ItemNotEnough = 1104;//材料不够
+	eError_GodWeapon_CellIdNotFind = 1105;//格子ID找不到
+	eError_GodWeapon_GodWeaponNotFind = 1106; //神器找不到
+	
+	eError_GodWeapon_NextGodWeaponNotFind = 1107; //下一等级神器找不到
+	eError_GodWeapon_ActiveFailed = 1108;//激活失败
+	eError_GodWeapon_UseFaild = 1109; // 使用失败
+	eError_GodWeapon_UpgradeStarFaild = 1110; //升星失败
+	eError_GodWeapon_StrengthFaild = 1111; //强化失败
+	eError_GodWeapon_UpgSkillFaild = 1112; //升级技能失败
+	//坐骑系统
+	eError_Ride_RideNotFind = 1200; //神器找不到
+	
+	eError_Ride_NextRideNotFind = 1201; //下一等级神器找不到
+	eError_Ride_ActiveFailed = 1202;//激活失败
+	eError_Ride_UseFailed = 1203; // 使用失败
+	eError_Ride_UpgradeStarFailed = 1204; //升星失败
+	eError_Ride_StrengthFailed = 1205; //强化失败
+	eError_Ride_PutOnEquipFailed = 1206;//穿装备失败
+	eError_Ride_StageNotEnough = 1207;//坐骑等级不足
+	//宠物系统
+	eError_Pet_NotAcive = 1301; //未激活
+	eError_Pet_AlreadyAcive = 1302; //已激活
+	eError_Pet_IsUsed = 1303; //已经在使用
+	eError_Pet_ItemNotEnough = 1304;//材料不够
+	eError_Pet_CellIdNotFind = 1305;//格子ID找不到
+	eError_Pet_PetNotFind = 1306; //神器找不到
+	
+	eError_Pet_NextPetNotFind = 1307; //下一等级神器找不到
+	eError_Pet_ActiveFailed = 1308;//激活失败
+	eError_Pet_UseFailed = 1309; // 使用失败
+	eError_Pet_UpgradeStarFailed = 1310; //升星失败
+	eError_Pet_StrengthFailed = 1311; //强化失败
+	eError_Pet_PutOnEquipFailed = 1312;//穿装备失败
+	//觉醒系统
+	eError_Awaken_AwakenNotFind = 1400; //觉醒找不到
+	eError_Awaken_NextAwakenNotFind = 1401;  //下一级觉醒找不到
+	eError_Awaken_UpgradeFailed = 1402;//进阶失败
+	eError_Awaken_ResetFailed = 1403;// 重置失败
+	eError_Awaken_UpgTalentFailed = 1404;//升级天赋失败 
+	eError_Awaken_NowInTranform = 1405;//已经在变身状态
+	eError_Awaken_TranformInCD = 1406;//变身技能在CD
+	
+	//离线竞技场
+	eError_OffPVP_CountsNot = 1420;		//离线pvp次数不足
+	eError_OffPVP_CountsBuyMAX = 1421;  //购买次数超上限
+	eError_OffPVP_GetReword=1422;		//已领取奖励
+	//佣兵系统
+	eError_Mer_NotAcive = 1451; //未激活
+	eError_Mer_AlreadyAcive = 1452; //已激活
+	eError_Mer_IsUsed = 1453; //已经在使用
+	eError_Mer_ItemNotEnough = 1454;//材料不够
+	eError_Mer_CellIdNotFind = 1455;//格子ID找不到
+	eError_Mer_MerNotFind = 1456; //神器找不到
+	
+	eError_Mer_NextMerNotFind = 1457; //下一等级神器找不到
+	eError_Mer_ActiveFailed = 1458;//激活失败
+	eError_Mer_UseFailed = 1459; // 使用失败
+	eError_Mer_UpgradeStarFailed = 1460; //升星失败
+	eError_Mer_StrengthFailed = 1461; //强化失败
+	eError_Mer_PutOnEquipFailed = 1462;//穿装备失败
+	//房间系统
+	eError_Room_NotInRoom         = 1500;  //当前不在房间里
+	eError_Room_OnlyLeaderDo        = 1501;  //只有房主能操作
+	eError_Room_RoomFull            = 1502;  //队伍已满
+	eError_Room_LevelUnfit          = 1503;  //等级不适合
+	eError_Room_InRoom              = 1504;  //已在队伍中
+	eError_Room_InRoomApplyList     = 1505;  //已在申请列表中
+	eError_Room_SetRoomObj          = 1506;  //请先设置队伍目标
+	eError_Room_SelectRoomObj       = 1507;  //请先选择队伍目标
+	eError_Room_JoinRoomSucceed     = 1508;  //你加入了%s的队伍
+	eError_Room_OtherPlayerIgnore     	= 1509;  //对方玩家屏蔽组队邀请
+	eError_Room_InDungeonIDCannotInvite = 1510;  //对方在副本中 无法邀请
+	eError_Room_OtherPlayerNotOpenRoom  = 1511;  // 对方未开启组队系统，无法邀请
+	eError_Room_NotReady = 1512,  // 对方未准备
+	eError_Room_NotFindRoom = 1513,// 队伍不存在
+	eError_Activity_RankNoReward = 1514, //奖品已领完
+	//吃丹
+	eError_Eat_TableNotFind = 1600,//吃丹表丢失
+	eError_Eat_OverMax = 1601,//超过最大吃丹数量
+	eError_Eat_ItemNotEnough = 1602,//背包里面丹药数量不足
+	//打书
+	eError_SkillOpen_NotFindBook = 1650,//找不到要打的那本书
+	eError_SkillOpen_BookSkillNotFind = 1651,//找不到书里面填写的技能
+	eError_SkillOpen_ItemNotEnough = 1652,//背包里面技能书数量不足
+
+	eError_Boss_BossDeath			= 1654; //Boss已死亡
+
+    //遗落宝藏
+    eError_LostTreasure_StoreGridNotEnough = 1660; //宝藏仓库格子不足
+ 	eError_VIP_BuyLvLowthenNow = 1700;//要买的VIP等级比当前等级低
+ 	eError_VIP_BuyLvNotlegal = 1701;//要买的VIP等级比当前等级低
+
+	
+}

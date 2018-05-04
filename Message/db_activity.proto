@@ -1,0 +1,66 @@
+option java_package = "proto.message";
+package proto.message;
+
+import "common.proto";
+import "match.proto";
+import "activity.proto";
+import "tower.proto";
+import "parkour.proto";
+import "marketing.proto";
+
+message DBTowerInfo
+{
+	repeated TowerRecord tower40_list 		= 1; //爬塔数据
+	repeated TowerRecord tower60_list 		= 2; //爬塔数据
+	optional uint32 tower_floor 			= 3; //爬塔层数
+	optional uint32 tower_bufferid 			= 4; //爬塔bufffer
+	optional uint32 tower_time 				= 5; //爬塔离开时间
+	optional int32 tower_times 				= 6; //爬塔每日限制次数
+}
+
+
+//******************************usual有关活动数据********************************
+message ActivityInfo
+{
+	repeated ActivityIDTimes act_list 		= 1; //活动数据
+	repeated IDTimes salvage_list 			= 2; //打捞船只记录
+	repeated IDTimes chest_list 			= 3; //开启宝箱记录
+	repeated ActivityData activitydata		= 4; //玩家运营活动的数据
+}
+	  
+//活动状态记录
+message ActivityState
+{
+	optional  uint32    uiActivityId = 1;
+	optional  uint32    uiState = 2;
+}  
+
+message Activity_DiamondDouble_Data
+{
+	optional  int32					id = 1;
+	optional  Activity_DiamondDouble   data = 2; //记录列表
+}
+
+//钻石翻倍的历史记录
+message Activity_DiamondDouble
+{
+	
+	repeated  DiamondDoubleHistory   data = 1; //记录列表
+}
+
+
+message Activity_Roulette_Data
+{
+	optional  int32					id = 1;
+	optional  Activity_Roulette   data = 2; //记录列表
+}
+
+message Activity_Roulette
+{
+	repeated  RouletteHistory   data = 1; //记录列表
+}
+
+message Activity_LostTreasure
+{
+	optional LostTreasure data = 1;
+}

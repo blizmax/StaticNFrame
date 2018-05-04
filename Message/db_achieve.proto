@@ -1,0 +1,12 @@
+option java_package = "proto.message";
+package proto.message;
+
+import "achieve.proto";
+
+message DBAchieveInfo
+{
+	optional int32 achieve_points 		= 1; 	//成就点数
+	repeated AchieveInfo achieve_list 	= 2; 	//成就列表
+	repeated int32 achieve_pt_id_list 	= 3; 	//已领取的成就点数ID列表
+	optional uint32 cup_id				= 4;	//成就奖杯
+}

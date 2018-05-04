@@ -1,0 +1,68 @@
+option java_package = "proto.message";
+package proto.message;
+
+/*
+enum Activity_CS_MsgID
+{
+	Activity_CS_EnterActivity 		= 3975, //请求进入活动
+
+	Activity_CS_GetOpenActivity 	= 3977, //获取已开启的活动
+}
+
+enum Achieve_SC_MsgID
+{
+	Activity_SC_EnterActivity 		= 3975, //请求进入活动
+
+	Activity_SC_UpdateRewardTimes 	= 3976, //更新活动奖励次数
+
+	Activity_SC_GetOpenActivity 	= 3977, //获取已开启的活动
+
+	Activity_SC_UpdteActivityStatus = 3978, //更新活动状态
+}
+*/
+
+//活动数据
+message ActivityIDTimes
+{
+	optional int32 usual_id 	= 1; //usual表格ID
+	optional int32 reward_times = 2; //已获得奖励次数
+}
+
+message Activity_CS_EnterActivity
+{
+	optional int32 usual_id 	= 1; //usual表格ID
+	optional int32 parameter 	= 2; //参数
+}
+
+message Activity_SC_EnterActivity
+{
+	optional int32 result 		= 1; //结果
+	optional int32 usual_id 	= 2; //usual表格ID
+}
+
+message Activity_SC_UpdateRewardTimes
+{
+	repeated ActivityIDTimes activity_list = 1; //活动列表
+}
+
+message Activity_CS_GetOpenActivity
+{
+	
+}
+
+message Activity_SC_GetOpenActivity
+{
+	repeated uint32 usual_id_list 		= 1; //usual表ID列表
+}
+
+//活动状态
+message ActivityStatus
+{
+	optional uint32 usual_id 			= 1; //usual表ID
+	optional int32 status 				= 2; //活动状态(0:关闭状态 1:开启状态)
+}
+
+message Activity_SC_UpdteActivityStatus
+{
+	repeated ActivityStatus usual_list = 1; //活动列表
+}

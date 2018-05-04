@@ -1,0 +1,95 @@
+option java_package = "proto.message";
+package proto.message;
+
+import "dungeon.proto";
+
+/*
+enum Parkour_CS_MsgID
+{
+	Parkour_CS_GetInfo 		= 3965, //获取跑酷相关信息
+	Parkour_CS_ReqBegin 	= 3966, //请求开始挑战
+	Parkour_CS_Finish 		= 3967, //完成一次跑酷
+	Parkour_CS_UsePotion 		= 3968, //使用药水
+}
+
+enum Parkour_SC_MsgID
+{
+	Parkour_SC_GetInfo 		= 3965, //返回获取跑酷相关信息（更新跑酷相关信息给客户端）
+	Parkour_SC_ReqBegin 	= 3966, //返回请求开始挑战
+	Parkour_SC_UsePotion 		= 3968, //使用药水
+}
+*/
+
+// 请求获取跑酷相关信息
+message Parkour_CS_GetInfo
+{
+
+}
+
+// 请求开始挑战
+message Parkour_CS_ReqBegin
+{
+
+}
+
+message ParkourRank
+{
+	message RecordItem
+	{
+		required int32 ranking = 1; // 名次
+		required string name = 2; // 名字
+		required int32 score = 3; // 得分
+	}
+
+	repeated RecordItem item = 1; // 排行榜中的一行  
+}
+
+// 更新跑酷相关信息给客户端
+message Parkour_SC_GetInfo
+{
+	message Path
+	{
+		repeated int32 check = 1; // check点
+	}
+
+	required int32 result = 1; // 结果
+	optional int32 weekday = 2; // 周几
+	optional ParkourInfo parkour = 3; // 跑酷信息
+	optional int32 leftTime = 4; // 距离活动结束的剩余时间
+	optional int32 dungonid1 = 5; // 今日限时奔跑副本id
+	optional int32 dungonid2 = 6; // 今日抓捕邮差副本id
+	optional ParkourRank rank = 7; // 今日跑酷排行榜
+}
+
+// 返回请求开始挑战
+message Parkour_SC_ReqBegin
+{
+	required int32 result = 1; // 结果
+}
+
+// 完成一次跑酷请求奖励
+message Parkour_CS_Finish
+{
+	required int32 point = 1; // 获得分数
+	required int32 parkourType = 2; // 跑酷类型   1 ： 限时奔跑   2 ： 抓捕邮差
+	optional int32 item1num = 3; // 道具1剩余数量
+	optional int32 item2num = 4; // 道具2剩余数量
+}
+
+// 跑酷数据
+message ParkourInfo
+{
+	required int32 dayTimes = 1; //本日已挑战次数
+	optional int32 item1Num = 2; //道具1剩余个数
+	optional int32 item2Num = 3; //道具2剩余个数
+	optional int32 highest1 = 4; //该玩家抓捕邮差历史最高得分
+	optional int32 highest2 = 5; //该玩家限时奔跑历史最高得分
+}
+message Parkour_CS_UsePotion
+{
+	required int32 potionindex = 1;//使用药水1: 使用物品1  2:使用物品2
+}
+message Parkour_SC_UsePotion
+{
+	required int32 result=1;//结果
+}

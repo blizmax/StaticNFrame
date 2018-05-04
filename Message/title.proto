@@ -1,0 +1,207 @@
+option java_package = "proto.message";
+package proto.message;
+
+
+/*
+enum Title_CS_MsgID
+{
+	Title_CS_GetTitleList 			= 4100,		// 获取已获得称号列表
+	Title_CS_GetTitleDetail 		= 4101,		// 获取称号详细信息
+	Title_CS_ChangeTitle	 		= 4102,		// 请求更换称号
+	Title_CS_HideTitle	 		= 4103,		// 请求隐藏称号
+	
+	
+}
+
+enum Title_SC_MsgID
+{
+	Title_SC_GetTitleList 			= 4100,		// 更新已获得称号列表
+	Title_SC_GetTitleDetail 		= 4101,		// 返回称号详细信息
+	Title_SC_ChangeTitle	 		= 4102,		// 返回请求更换称号
+	Title_SC_HideTitle	 		= 4103,		// 请求隐藏称号
+	
+
+	Title_SC_NewTitle				= 4121,		// 通知客户端获得新称号
+}
+*/
+
+//称号达成条件类型
+enum eTitleConType
+{
+	eTitleCon_NotDefine				= 0; //未定义
+	eTitleCon_Capacity 				= 1; //角色战斗力达到%s
+	eTitleCon_QualityEquipNum		= 2; //%s品质的装备$s件
+	eTitleCon_LevelEquipNum			= 3; //强化等级达到%s的装备%s件
+	eTitleCon_RefineEquipNum		= 4; //精练达到%s的装备%s件
+	eTitleCon_TypeEquipQuality		= 5; //指定%s类型的装备品质达到%s
+	eTitleCon_AttributeEquipNum		= 6; //改造属性条目达到%s条的装备%s件
+	eTitleCon_LevelSkillNum 		= 7; //等级达到%s级的主动技能%s个
+	eTitleCon_LevelStampNum			= 8; //%s级的技能印记%s个
+	eTitleCon_TalentNum				= 9; //解锁%s个天赋
+	eTitleCon_TalentPageNum			= 10; //拥有%s个天赋页
+	eTitleCon_LevelShipPartNum		= 11; //%s个船只部件升级至%s级
+	eTitleCon_LevelShipSkillNum		= 12; //%s个船只技能升级到%s级
+	eTitleCon_ShipStep				= 13; //船只进价至%s阶
+	eTitleCon_ShipEvolutionTimes	= 14; //拥有已进化%s次的船只
+	eTitleCon_IdentitySkill			= 15; //玩家身份技能激活%s
+	eTitleCon_TeacherReputation		= 16; //导师声望值达到%s
+	eTitleCon_BecomeAStutent		= 17; //成为别人学徒时获得
+	eTitleCon_GuildPosition			= 18; //成为公会%s职位
+	eTitleCon_ItemNum				= 19; //获得%s道具%s数量
+	eTitleCon_LevelPassiveSkillNum 	= 20; //等级达到%s级的被动技能%s个
+	eTitleCon_ItemByMail				= 21; //获得称号道具 不入背包
+	eTitleCon_AwakenStage =  22;//觉醒达到%s阶
+	eTitleCon_AwakenTalentLevel = 23;//%s个觉醒天赋达到%s级
+	eTitleCon_AchievePoint = 24;//成就点数达到%s点
+	eTitleCon_EquipStar = 25;//装备总星级达到%s星
+	eTitleCon_LoginDay = 26;//表示累计登录天数
+	eTitleCon_TotalCharge =27;//表示累计充值金额
+	eTitleCon_SingleCharge =28;//单笔充值金额
+	eTitleCon_TotalUseItemNum = 29;//累计消耗%s道具%s数量
+	eTitleCon_RideStage =30;//坐骑达到%s阶
+	eTitleCon_PetActive = 31;//宠物激活数量
+	eTitleCon_MercenaryActive =32;//佣兵激活数量
+	eTitleCon_GodWeaponActive =33;//神器激活数量
+	eTitleCon_ZodicLight = 34;//星座点亮星座
+	eTitleCon_SoulCaseStage = 35;//魂匣品阶
+	eTitleCon_HereSoulActiveNum =36;//英魂激活数量
+	eTitleCon_EquipLayGemLv = 37;//装备镶嵌宝石总等级
+	eTitleCon_ActiveSuit = 38;//.激活套装装备
+	eTitleCon_GetRandAttr=39;//获得附魔总条数
+	eTitleCon_GetRefine=40;//精炼总加成比例
+	eTitleCon_Arena =41;//竞技场排名区间
+	eTitleCon_SIngleArena=42;//单人竞技场段位
+	eTitleCon_WorldBossGold=43;//世界BOSS竞拍获得金币数量
+	eTitleCon_ItemDungeonTimes=44;//.材料副本完成的数量
+	eTitleCon_SkinActive= 45;//.角色激活皮肤数量
+	eTitleCon_BoatSkinActive = 46;//船舰激活皮肤数量
+	eTitleCon_Renown=47;//威望达到%s阶
+	eTitleCon_DailyLoopQuest = 48;//累计完成日常环任务数量
+	eTitleCon_Sign = 49;//累计签到%s天
+	eTitleCon_AuctionUseGold=50;//拍卖行购买物品花费金币数量
+	eTitleCon_AuctionGetGold = 51;//拍卖行出售物品获得金币数量
+	eTitleCon_UseItem = 52;//使用物品获得
+
+	
+	eTitleCon_MaxNum				= 53; //最大数量
+}
+
+//称号有效期类型
+enum eTitleDeadLine
+{
+    eTitleDeadLine_Forever 			= 1; //永久
+    eTitleDeadLine_Temporory 		= 2; //临时
+    eTitleDeadLine_Time 			= 3; //限时
+    eTitleDeadLine_UntilTime 			= 4; //到某个时间点 消失
+};
+
+
+
+// 获取已获得称号列表
+message Title_CS_GetTitleList
+{
+
+}
+
+// 获取称号详细信息
+message Title_CS_GetTitleDetail
+{
+	required	int32				titleID			= 1;	//称号ID
+}
+
+// 请求更换称号
+message Title_CS_ChangeTitle
+{
+	required	int32				titleID			= 1;	//称号ID
+}
+
+message TitleClientProgress
+{
+	optional   int32 param = 1;
+	optional   int64 val = 2;
+}
+message TitleClientData
+{
+	required	int32				titleID			= 1;	//称号ID
+	required	int64				expireTime		= 2;	//服务器到期时间(截止时间戳，或者没有到期时间填0)
+	required	bool				new				= 3;	//是否是新激活
+	repeated 	TitleClientProgress		progress		=4;//进度信息
+}
+
+// 返回称号详细信息
+message Title_SC_GetTitleDetail
+{
+	required	int32				titleID			= 1;	//称号ID
+	repeated	int32				process_list	= 3;	//解锁条件进度数值列表
+}
+
+// 更新已获得称号列表
+message Title_SC_GetTitleList
+{
+	repeated	TitleClientData		title_list		= 1;	//称号列表
+}
+
+// 返回请求跟换称号
+message Title_SC_ChangeTitle
+{
+	required	int32				result			= 1;	//返回结果
+	optional	int32				titleID			= 2;	//当前使用中称号ID
+}
+
+message Title_SC_UpdataCurTitle
+{
+	required	int32				titleID			= 1;	//当前使用中称号ID
+}
+
+message Title_SC_NewTitle
+{
+	required	int32				titleID			= 1;	//新获得称号id
+}
+
+message Title_CS_HideTitle
+{
+	required 	int32				ishide         =1;// 1,隐藏当前称号，0. 取消隐藏 （手动切换称号会自动取消隐藏，自动过期会保留隐藏）
+}
+message Title_SC_HideTitle
+{
+	required 	int32 	result = 1;//返回结果
+}
+
+message TitleInfo
+{
+	required	int32				titleID			= 1;	//称号ID
+	required	int32				attributeID		= 2;	//属性唯一ID
+	optional	int64				expireTime		= 3;	//到期时间
+	optional	bool				new				= 4;	//新激活
+}
+
+message TitleDataDetail
+{
+	required	int32				key				= 1;
+	required	int32				value			= 2;
+}
+
+message TitleDataRecord
+{
+	required	int32			num		        = 1;
+	repeated	TitleDataDetail		detail			= 2;
+	optional 	int32 			condition 		= 3;
+}
+
+
+// 存取数据库
+message TitleData
+{
+	repeated	TitleInfo			title_list		= 1;	//称号列表
+	optional	int32				curTitleID		= 2;	//当前使用中的称号id
+	repeated	TitleDataRecord		record_list		= 3;	//称号条件相关数据记录
+	optional  	int32 			is_hide 		= 4; 	//是否隐藏
+}
+
+message TitleOffLineData
+{
+	required	uint64				ID				= 1;
+	required	uint64				playerID		= 2;	//玩家唯一ID
+	required	int32				titleID			= 3;	//称号ID
+	optional	uint64				expireTime		= 4;	//到期时间（0表示不会到期）
+}

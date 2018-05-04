@@ -1,0 +1,107 @@
+package proto.message;
+
+import "common.proto";
+
+/*
+enum Boat_CS_MsgID
+{
+	eBoat_CS_GetBoatInfo 		= 3200, //获取舰船信息
+	eBoat_CS_UpBoat 				= 3201, //船舰进阶
+	eBoat_CS_SkillUpgrade 		= 3202, //技能升级
+	eBoat_CS_SkinChange 			= 3203, //更换时装
+	eBoat_CS_UpBoatPart			= 3204, //部件升级
+	eBoat_CS_ActiveFashion		= 3205, //激活皮肤
+}
+    
+enum Boat_SC_MsgID  
+{   
+	//船舰养成
+	eBoat_SC_GetBoatInfo 		= 3200, //获取舰船信息   
+	eBoat_SC_UpBoatResult		= 3201, //船舰进阶
+	eBoat_SC_SkillUpgrade 		= 3202, //技能升级
+	eBoat_SC_SkinChangeResult 	= 3203, //更换时装
+	eBoat_SC_UpBoatPartResult	= 3204, //部件升级
+	eBoat_SC_ActiveFashionResult	= 3205, //激活皮肤结果
+    eBoat_SC_UpdateBoatInfo 		= 3206, //主动同步舰船所有信息到客户端
+}   
+*/  
+
+message SkinInfo
+{
+	required int32 skinid =1; 		//皮肤ID	
+	required int64 validitytime=2;  //到期时间  -1为永久, 其余为到期时间(单位秒)
+	optional uint32 attid = 3;
+}
+   
+// 主舰信息 
+message BoatAllData   
+{   
+    optional int32 boatid 		= 1; //船舰id
+    optional int32 lucky 		= 2; //进阶幸运值
+	optional uint64 uptime		= 3; //进阶时间
+    optional int32 skinonid 	= 4; //已穿戴时装ID
+    repeated SkinInfo skinlist 	= 5; //拥有皮肤列表
+	repeated int32 partid		= 6; //船舰部位ID
+	repeated int32 landskill	= 7; //陆战技能
+	repeated int32 seaskill		= 8; //海战技能
+	optional bool isActive=9;		 //系统是否激活
+}
+
+message Boat_CS_GetBoatInfo
+{
+}
+message Boat_SC_GetBoatInfo
+{
+	optional int32 result=1;
+	optional BoatAllData data=2;
+}
+
+message Boat_CS_UpBoat
+{
+
+}
+
+message Boat_SC_UpBoatResult
+{
+	optional int32 result=1;
+	optional int32 lucky=2;		//操作成功后幸运值变更
+	optional int32 boatid = 3;	//操作成功后的ID
+}
+
+message Boat_CS_SkinChange
+{
+	optional int32 skinid=1;	//要更换的皮肤ID
+}
+
+message Boat_SC_SkinChangeResult
+{
+	optional int32 result=1;
+}
+
+
+message Boat_CS_UpBoatPart
+{
+	optional int32 partid =1; //值为 1-10 对应的船舰部位
+}
+
+message Boat_SC_UpBoatPartResult
+{
+	optional int32 result=1;
+	optional int32 partid=2;  //升级后的 部件ID
+}
+
+message Boat_CS_ActiveFashion
+{
+	optional int32 skinid=1;   //激活的皮肤
+	optional int32 timetype=2; //时间类型   参数 timetype 填数据表中的激活方式的数组下标
+}
+
+message Boat_SC_ActiveFashionResult
+{
+	optional int32 result =1;
+}
+
+message Boat_SC_UpdateBoatInfo
+{
+	optional BoatAllData data=1;
+}

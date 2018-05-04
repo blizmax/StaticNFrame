@@ -1,0 +1,104 @@
+option java_package = "proto.message";
+package proto.message;
+
+/*
+enum Avatar_CS_MsgID
+{
+	Avatar_CS_GetAvatarInfo 	= 4400; //获取时装数据
+	Avatar_CS_ActivateAvatar 	= 4401; //激活时装
+	Avatar_CS_PutOnAvatar 		= 4402; //穿上时装
+	Avatar_CS_GetOffAvatar 		= 4403; //脱下时装
+	Avatar_CS_ActivateColour 	= 4404; //激活颜色
+	Avatar_CS_SelectColour 		= 4405; //选择颜色
+}
+
+enum Avatar_SC_MsgID
+{
+	Avatar_SC_GetAvatarInfo 	= 4400; //获取时装数据
+	Avatar_SC_ActivateAvatar 	= 4401; //激活时装
+	Avatar_SC_PutOnAvatar 		= 4402; //穿上时装
+	Avatar_SC_GetOffAvatar 		= 4403; //脱下时装
+	Avatar_SC_ActivateColour 	= 4404; //激活颜色
+	Avatar_SC_SelectColour 		= 4405; //选择颜色
+}
+*/
+
+//时装数据
+message Avatar
+{
+	optional int32 id 				= 1; //时装表格ID
+	optional uint64 deadline_time 	= 2; //到期时间(根据ID去判断是否有期限)
+	repeated int32 colour_list 		= 3; //已激活的颜色列表
+}
+
+message Avatar_CS_GetAvatarInfo
+{
+}
+
+message Avatar_SC_GetAvatarInfo
+{
+	optional int32 avatar_id_on 	= 1; //已穿戴的
+	optional int32 colour_id_on 	= 2; //选择的时装颜色	
+	repeated Avatar avatar_list 	= 3; //时装列表
+}
+
+message Avatar_CS_ActivateAvatar
+{
+	optional int32 id 				= 1; //时装表格ID
+}
+
+message Avatar_SC_ActivateAvatar
+{
+	optional int32 result 			= 1; //结果
+	optional Avatar avatar_info 	= 2; //时装数据
+}
+
+message Avatar_CS_PutOnAvatar
+{
+	optional int32 avatar_id 		= 1; //时装ID
+	optional int32 colour_id 		= 3; //激活颜色ID(1,2,3,4)
+}
+
+message Avatar_SC_PutOnAvatar
+{
+	optional int32 result 			= 1; //结果
+	optional int32 avatar_id_on 	= 2; //已穿戴的
+	optional int32 colour_id_on 	= 3; //选择的时装颜色
+}
+
+message Avatar_CS_GetOffAvatar
+{
+	optional int32 avatar_id 		= 1; //时装ID
+}
+
+message Avatar_SC_GetOffAvatar
+{
+	optional int32 result 			= 1; //结果
+	optional int32 avatar_id 		= 2; //时装ID
+}
+
+message Avatar_CS_ActivateColour
+{
+	optional int32 avatar_id 		= 1; //时装ID
+	optional int32 colour_id 		= 2; //激活颜色ID(1,2,3,4)
+}
+
+message Avatar_SC_ActivateColour
+{
+	optional int32 result 			= 1; //结果
+	optional int32 avatar_id 		= 2; //时装ID
+	optional int32 colour_id 		= 3; //激活颜色ID(1,2,3,4)
+}
+
+message Avatar_CS_SelectColour
+{
+	optional int32 avatar_id 		= 1; //时装ID
+	optional int32 colour_id 		= 2; //颜色ID(1,2,3,4)
+}
+
+message Avatar_SC_SelectColour
+{
+	optional int32 result 			= 1; //结果
+	optional int32 avatar_id 		= 2; //时装ID
+	optional int32 colour_id 		= 3; //颜色ID(1,2,3,4)
+}

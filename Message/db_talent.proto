@@ -1,0 +1,24 @@
+package proto.message;
+
+message ProtoDbTalentPoint
+{
+    required int32 type = 1; // 类型
+    required int32 stage = 2; // 阶段
+    required int32 point = 3; // 点数
+}
+
+message ProtoDbTalentInfo
+{
+    required int32 tabs = 1; // 页签
+    required int32 point = 2; // 可用点数
+    required int32 resetNum = 3; // 重置次数
+    repeated int32 talentList = 4; // 天赋列表
+    repeated ProtoDbTalentPoint pointList = 5; // 已投入点数
+}
+
+message AllTalentInfo
+{
+    repeated int32 talentUnLockList = 1; // 解锁列表
+    repeated ProtoDbTalentInfo tabsList = 2;
+}
+

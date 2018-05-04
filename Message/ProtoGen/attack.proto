@@ -1,0 +1,202 @@
+option java_package = "proto.message";
+package proto.message;
+
+import "common.proto";
+
+/*
+enum Attack_CS_MsgID
+{
+	Attack_CS_PlayerExcuteSkill = 3000,     //玩家释放技能
+	Attack_CS_RequestHurt 		= 3001,     //玩家请求伤害
+	Attack_CS_BlockSkillStart	= 3002,     //玩家放格挡技能开始
+	Attack_CS_BlockSkillEnd		= 3003,     //玩家放格挡技能结束
+	Attack_CS_Relive      		= 3004,    	//死亡复活
+	
+	
+}
+
+enum Attack_SC_MsgID
+{
+	Attack_SC_ExcuteSkillSelf   = 3000,    	// 释放技能返回给自己的消息
+	Attack_SC_ExcuteSkillOther  = 3001,    	// 释放技能返回给同步区域其他玩家的消息
+	Attack_SC_UpdateHurtData    = 3002,    	// 升级技能
+    Attack_SC_AttackBack        = 3003,    	// 击退
+	
+	Attack_SC_AddBuffer         = 3004,    	//加buffer
+	Attack_SC_DelBuffer			= 3005，   	//减buffer
+	Attack_SC_UpdateBuffer		= 3006，	//更新buffer
+	Attack_SC_AttackSprint     	= 3007,    	//冲刺
+	Attack_SC_AttackDie     	= 3008,    	//非正常死亡
+	Attack_SC_BlockSkill		= 3009,     //玩家放格挡技能返回
+	Attack_SC_BlockSkillStart	= 3009,     //玩家放格挡技能开始
+	Attack_SC_BlockSkillEnd		= 3010,     //玩家放格挡技能结束
+	Attack_SC_UpdateAttacking	= 3011,     //是否是战斗状态
+	Attack_SC_Strike            = 3012,     //反击
+	Attack_SC_Die            	= 3013,     //死亡
+	Attack_SC_Shout            	= 3014,     //喊话
+	
+	Attack_SC_ClearSkillId      = 3015,     //清空技能CD
+	
+	Attack_SC_UpdateTP      	= 3020,    	//更新TP值
+
+	
+}
+
+enum  eCharStatus
+{
+	eCharStatus_Bat			= 0,		//霸体
+	eCharStatus_Unmatched	= 1,		//无敌
+	eCharStatus_Cloaked		= 2,		//隐身
+	eCharStatus_Giddiness	= 3,		//眩晕
+	
+	eCharStatus_Num
+};
+
+*/
+
+message Attack_CS_PlayerExcuteSkill
+{
+    required int32 		PlayerSkillId 	= 1; 	//PayerSkill的表格Id
+	optional uint32 	SkillId         = 2; 	//第几段技能Id	
+	optional float 		Dir 			= 3;	//朝向
+	optional Point3D 	pt      		= 4;	//冲刺的坐标
+	optional uint32	    targetID	 	= 5; //攻击的目标(无目标传0)
+}
+
+message Attack_CS_RequestHurt
+{
+    required int32 	PlayerSkillId 	= 1; 	//PayerSkill的表格Id
+	optional uint32 SkillId         = 2; 	//第几段技能Id	
+	repeated uint32 ListDesId 		= 3;	//攻击目标
+}
+
+message Attack_CS_AttackSprint
+{
+	optional uint32		SkillId   	= 2;		//技能Id
+	optional Point3D	pt      	= 3;		//冲刺的坐标
+}
+
+message Attack_SC_ExcuteSkillSelf
+{
+	required int32 PlayerSkillId 	= 1; 		//PayerSkill的表格Id
+    required int32 SkillId 			= 2; 		//Skill的表格Id
+	required int32 error			= 3;       	//参考错误列表
+}
+
+message Attack_SC_ExcuteSkillOther
+{
+	required uint32 	CharId	= 1;       	//角色Id（玩家或者NPC）
+	required int32 		SkillId = 2; 		//Skill的表格Id
+	optional float  	dir 	= 3;        //角色的朝向
+	optional Point3D 	pt      = 4;		//冲刺的坐标
+	optional uint32	    targetID	 = 5; //攻击的目标(无目标为0)
+}
+
+message Attack_SC_UpdateHurtData
+{
+	required uint32 CharId	= 1;        //角色Id（玩家或者NPC）
+    required int32 	nHurt 	= 2; 		//伤害值
+	optional int32  nCurHP 	= 3;		//当前的HP(当前HP小于等于0时候，播放死亡动画，服务器不单独发送死亡消息)
+	optional int32  SkillId = 4;        //技能Id
+	optional int32  nMaxHP 	= 5;        //最大HP
+}
+
+message Attack_SC_AttackBack
+{
+	required uint32 	CharId		= 1;        //角色Id（玩家或者NPC）
+	optional uint32		AttCharId 	= 2;		//攻击者Id
+	optional uint32		SkillId   	= 3;		//技能Id
+	optional Point3D	pt      	= 4;		//击退的坐标
+	optional float      Dir 		= 5;        //朝向
+	optional int32		nTime       = 6;		//时间       
+}
+
+message Attack_SC_AddBuffer
+{
+	required uint32 	CharId		= 1;        //角色Id（玩家或者NPC）
+	optional uint32		BufferId 	= 2;		//BufferId
+	optional uint64     Status      = 3;        //状态（参见 eCharStatus，移位操作的）
+	optional int32      LastTime    = 4;        //持续时间
+}
+
+message Attack_SC_DelBuffer
+{
+	required uint32 	CharId		= 1;        //角色Id（玩家或者NPC）
+	optional uint32		BufferId 	= 2;		//BufferId
+	optional uint64     Status      = 3;        //状态（参见 eCharStatus，移位操作的）
+}
+
+message Attack_SC_UpdateBuffer
+{
+	required uint32 	CharId		= 1;        //角色Id（玩家或者NPC）
+	optional uint32		BufferId 	= 2;		//BufferId
+	optional int32      LastTime    = 3;        //持续时间
+}
+
+message Attack_SC_AttackDie
+{
+	required uint32 	CharId		= 1;        //角色Id（玩家或者NPC）
+}
+
+message Attack_CS_BlockSkillStart
+{
+	required float   dir 	= 1;     //朝上
+	optional Point3D pt 	= 2;	 //坐标
+	
+}
+
+message Attack_CS_BlockSkillEnd
+{
+}
+
+message Attack_SC_BlockSkillStart
+{
+	required uint32 	CharId	= 1;        //角色Id（玩家或者NPC）
+	optional float  	dir 	= 2;     	//朝上
+	optional Point3D 	pt 		= 3;	 	//坐标
+	
+}
+
+message Attack_SC_BlockSkillEnd
+{
+	required uint32 	CharId	= 1;        //角色Id（玩家或者NPC）
+}
+
+message Attack_SC_UpdateAttacking
+{
+	required bool 	attacking	= 1;        //是否是战斗状态
+}
+
+message Attack_SC_UpdateTP
+{
+	optional int32 charid 		= 1; //角色ID(boss ID)
+	optional int32 total_num 	= 2; //总数量
+	optional int32 cur_num 		= 3; //当前数量
+}	
+
+
+message Attack_SC_Strike
+{
+}
+
+message Attack_SC_Die
+{
+	optional int32 charid 		= 1; //角色ID
+}	
+
+message Attack_SC_Shout
+{
+	optional int32 nID 		= 1; //喊话ID
+}	
+
+message Attack_CS_Relive
+{
+	required uint32 type  		= 1;   	//复活类型.1=原地复活  2=复活点复活
+}
+
+message Attack_SC_ClearSkillId
+{
+	required uint32 SkillId  	= 1;  
+}
+
+

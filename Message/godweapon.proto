@@ -1,0 +1,65 @@
+option java_package = "proto.message";
+package proto.message;
+
+import "common.proto";
+/*
+enum GodWeapon_CS_MsgID
+{
+	GodWeapon_CS_GetGodWeaponInfo = 4500, //请求神器数据
+	GodWeapon_CS_OperaCell = 4502, // 操作格子
+}
+
+enum GodWeapon_SC_MsgID
+{
+	GodWeapon_SC_GetGodWeaponInfo = 4500, //请求神器数据
+	GodWeapon_SC_UpdateSingleGodWeaponInfo = 4501, //更新单个神器数据
+	GodWeapon_SC_OperaCell = 4502, // 操作格子
+}
+*/
+
+// 神器格子信息
+message ProtoGodWeaponCellInfo
+{
+	required uint32 cellId = 1;    //格子ID	
+	required bool isActive = 2;      //是否激活
+	// 已经激活
+	optional bool isUse = 3;       //是否使用
+	optional uint32 godweaponId = 4; //神器ID
+	optional uint32 strLv = 5; //强化等级
+	optional uint32 luckyValue = 6; //当前幸运值
+	optional uint32 skillId = 7; //当前技能ID
+	// 未激活
+	optional uint32 activeType = 8;//激活类型
+	optional uint32 activeNowValue = 9;//当前数值
+
+	optional uint32 eatFoodId = 10; //食物ID
+	optional uint32 eatFoodNum = 11 ;// 食物数量
+}
+message ProtoGodWeaponAllCellInfo
+{
+	repeated ProtoGodWeaponCellInfo allInfo = 1;//所有格子信息
+}
+
+message GodWeapon_CS_GetGodWeaponInfo
+{}
+message GodWeapon_SC_GetGodWeaponInfo
+{
+	repeated ProtoGodWeaponCellInfo infoList = 1;//神器信息 
+}
+message GodWeapon_SC_UpdateSingleGodWeaponInfo//更新单个神器数据
+{
+	optional ProtoGodWeaponCellInfo info = 1;//神器信息
+}
+message GodWeapon_CS_OperaCell
+{
+	required uint32 cellId = 1; //格子ID  
+	required uint32 operaType = 2; //操作类型  1.激活，2.使用， 3. 升星 4. 强化 5. 升级技能 6.吃丹
+	
+}
+message GodWeapon_SC_OperaCell 
+{
+	required int32 ret  = 1;
+}
+
+
+

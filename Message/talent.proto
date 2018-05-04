@@ -1,0 +1,114 @@
+package proto.message;
+
+/*
+enum Talent_CS_MsgID
+{
+	Talent_CS_Unlock = 3400,                // 解锁天赋
+	Talent_CS_Up = 3401,                    // 升级天赋
+	Talent_CS_Reset = 3402,                 // 重置天赋
+	Talent_CS_Using = 3403,                 // 启用
+	Talent_CS_AddTabs = 3404,               // 增加标签页
+}
+
+enum Talent_SC_MsgID
+{
+	Talent_SC_Unlock = 3400,                // 返回解锁天赋
+	Talent_SC_Up = 3401,                    // 返回升级天赋
+	Talent_SC_Reset = 3402,                 // 返回重置天赋
+	Talent_SC_Using = 3403,                 // 返回启用
+	Talent_SC_AddTabs = 3404,               // 返回增加标签页
+    
+    Talent_SC_UpdateTalentInfo = 3410,      // 主动同步天赋所有信息到客户端
+    Talent_SC_UpdateTalentPoint = 3411,     // 主动同步天赋点数到客户端
+}
+*/
+
+// 天赋信息
+message ProtoTalentInfo
+{
+    required int32 tabs = 1; // 页签
+    required int32 point = 2; // 可用点数
+    repeated int32 talentList = 3; // 天赋列表
+}
+
+// 解锁天赋
+message Talent_CS_Unlock
+{
+    required int32 talentId = 1; // 天赋id
+    required int32 tabs = 2; // 页签
+}
+
+// 返回解锁天赋
+message Talent_SC_Unlock
+{
+	required int32 result = 1;
+    optional int32 talentId = 2; // 新天赋id
+}
+
+// 升级天赋
+message Talent_CS_Up
+{
+    required int32 talentId = 1; // 天赋id
+    required int32 tabs = 2; // 页签
+}
+
+// 返回升级天赋
+message Talent_SC_Up
+{
+	required int32 result = 1;
+    optional int32 talentId = 2; // 新天赋id
+    optional int32 point = 3; // 新点数
+    optional int32 tabs = 4; // 页签
+}
+
+// 重置天赋
+message Talent_CS_Reset
+{
+    required int32 tabs = 1; // 页签
+}
+
+// 返回重置天赋
+message Talent_SC_Reset
+{
+	required int32 result = 1;
+    optional ProtoTalentInfo tabsInfo = 2;
+}
+
+// 启用
+message Talent_CS_Using
+{
+    required int32 tabs = 1; // 页签
+}
+
+// 返回启用
+message Talent_SC_Using
+{
+	required int32 result = 1;
+    optional int32 tabs = 2; // 页签
+}
+
+// 增加标签页
+message Talent_CS_AddTabs
+{
+}
+
+// 返回增加标签页
+message Talent_SC_AddTabs
+{
+	required int32 result = 1;
+    optional ProtoTalentInfo tabsInfo = 2;
+}
+
+// 主动同步天赋信息到客户端
+message Talent_SC_UpdateTalentInfo
+{
+    required int32 nowTabe = 1; // 当前启用页
+    required int32 tabsMax = 2; // 最大页签
+    repeated ProtoTalentInfo tabsList = 3; // 天赋页列表信息
+}
+
+// 主动同步天赋点数到客户端
+message Talent_SC_UpdateTalentPoint
+{
+    repeated ProtoTalentInfo tabsPoint = 1; // 天赋页点数信息
+}

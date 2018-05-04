@@ -1,0 +1,28 @@
+option java_package = "proto.message";
+package proto.message;
+
+import "shop.proto";
+
+message ShopInfo
+{
+	repeated ShopItemBuy shop_item_list = 3; //商会购买信息
+	repeated MallItemBuy mall_item_list = 4; //商城购买信息
+	repeated MallItemBuy integral_item  = 5; //兑换购买信息
+	repeated MallItemBuy fastbuy_time  = 6; //快速购买信息
+}
+
+//商会物品信息
+message DBShopItem
+{
+	optional int32 id 				= 1; //ID
+	optional int32 buy_times 		= 2; //购买次数
+	optional int32 sell_times 		= 3; //出售次数
+	optional int32 price 			= 4; //前一天的最终价格
+}
+
+message DBShopIntegral
+{
+	optional int32 id 				= 1; //ID
+	optional int32 buy_times 		= 2; //购买次数
+	optional int32 price 			= 3; //前一天的最终价格
+}

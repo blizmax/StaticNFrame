@@ -1,0 +1,37 @@
+option java_package = "proto.message";
+package proto.message;
+
+/*
+enum ServerInfo_CS_MsgID
+{
+	ServerInfo_CS_ServerLevel 		= 4090, //客户端请求获取服务器等级
+	ServerInfo_CS_ServerTime 		= 4091, //客户端请求获取服务器时间
+}
+
+enum ServerInfo_SC_MsgID
+{
+	ServerInfo_SC_ServerLevel 		= 4090, //向客户端发送服务器当前等级（主动或返回请求）
+	ServerInfo_SC_ServerTime 		= 4091, //向客户端发送服务器当前时间（主动或返回请求）
+}
+*/
+
+message ServerInfo_CS_ServerLevel
+{
+
+}
+
+message ServerInfo_CS_ServerTime
+{
+
+}
+
+message ServerInfo_SC_ServerLevel
+{
+	required int32 level 			= 1;	//服务器等级
+	optional int32 dayLevelUp 		= 2;	//服务器升级还需天数（0代表已达到最高等级）
+}
+
+message ServerInfo_SC_ServerTime
+{
+	required uint64 time 			= 1;	//服务器当前时间
+}
