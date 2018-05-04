@@ -31,19 +31,17 @@ cd ../
 # compiling Theron
 cd Theron
 make library mode=debug boost=off c++11=on posix=on shared=on
-cp -r -f ./Lib/libtherond.a ../../Lib/Debug/
-cp -r -f ./Lib/libtherond.a ../../Lib/
+cp -r -f ./Lib/libtheron.a ../../Lib/Debug/
 make clean
 make library mode=release boost=off c++11=on posix=on shared=on
 cp -r -f ./Lib/libtheron.a ../../Lib/Release/
-cp -r -f ./Lib/libtheron.a ../../Lib/
 make clean
 cd ../
 
 # TODO: other libs
 cd gperftools
 chmod a+x ./configure
-./configure --enable-frame-pointers
+./configure
 make
 cp -R -f ./src/.libs/*.a ../../Lib/Debug/
 cp -R -f ./src/.libs/*.a ../../Lib/Release/
