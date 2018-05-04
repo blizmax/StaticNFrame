@@ -396,25 +396,25 @@ inline bool IsZeroDouble(const double dValue, double epsilon = 1e-15)
     return std::abs(dValue) <= epsilon;
 }
 
-//ºÁÃë
+//ï¿½ï¿½ï¿½ï¿½
 inline int64_t NFGetTime()
 {
     return std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch()).count();
 }
 
-//Ãë
+//ï¿½ï¿½
 inline int64_t NFGetSecondTime()
 {
     return std::chrono::duration_cast<std::chrono::seconds>(std::chrono::system_clock::now().time_since_epoch()).count();
 }
 
-//Î¢Ãî
+//Î¢ï¿½ï¿½
 inline int64_t NFGetMicroSecondTime()
 {
     return std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::system_clock::now().time_since_epoch()).count();
 }
 
-//ÄÉÃë
+//ï¿½ï¿½ï¿½ï¿½
 inline int64_t NFGetNanoSeccondTime()
 {
     return std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::system_clock::now().time_since_epoch()).count();
