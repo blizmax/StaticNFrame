@@ -43,8 +43,12 @@ cd gperftools
 chmod a+x ./configure
 ./configure
 make
-cp -R -f ./src/.libs/*.a ../../Lib/Debug/
-cp -R -f ./src/.libs/*.a ../../Lib/Release/
+cp -R -f ./.libs/libtcmalloc.a ../../Lib/Debug/
+cp -R -f ./.libs/libtcmalloc.a ../../Lib/Release/
+cp -R -f ./.libs/libprofiler.a ../../Lib/Debug/
+cp -R -f ./.libs/libprofiler.a ../../Lib/Release/
+cp -R -f ./.libs/libtcmalloc_minimal.a ../../Lib/Debug/
+cp -R -f ./.libs/libtcmalloc_minimal.a ../../Lib/Release/
 cd ../
 
 
