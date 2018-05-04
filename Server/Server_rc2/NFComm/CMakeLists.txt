@@ -18,10 +18,11 @@ ADD_SUBDIRECTORY("NFMessageDefine")
 PROJECT(NFNetPlugin)
 ADD_SUBDIRECTORY("NFNetPlugin")
 
-PROJECT(NFPluginLoader)
-ADD_SUBDIRECTORY("NFPluginLoader")
 
 PROJECT(NFPluginModule)
 ADD_SUBDIRECTORY("NFPluginModule")
+
+PROJECT(NFPluginLoader)
+ADD_SUBDIRECTORY("NFPluginLoader")
 
 

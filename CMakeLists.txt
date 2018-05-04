@@ -41,11 +41,11 @@ include_directories( ${INCLUDE_DIR} )
 	
 link_directories( ${LIB_DIR} )
 
-PROJECT(NFComm)
-ADD_SUBDIRECTORY("Server/Server_rc2/NFComm")
+PROJECT(Dependencies)
+ADD_SUBDIRECTORY("Server/Dependencies")
 
 PROJECT(NFTest)
 ADD_SUBDIRECTORY("Server/Server_rc2/NFTest")
 
-PROJECT(Dependencies)
-ADD_SUBDIRECTORY("Server/Dependencies")
+PROJECT(NFComm)
+ADD_SUBDIRECTORY("Server/Server_rc2/NFComm")
