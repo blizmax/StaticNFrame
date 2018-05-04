@@ -1,0 +1,9 @@
+CMAKE_MINIMUM_REQUIRED(VERSION 2.8)
+
+PROJECT(g3dlite)
+ADD_SUBDIRECTORY("g3dlite")
+
+PROJECT(navigation)
+ADD_SUBDIRECTORY("navigation")
+
+
