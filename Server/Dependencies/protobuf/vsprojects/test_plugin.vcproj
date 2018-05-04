@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="Windows-1252"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
-	Version="8.00"
+	Version="9.00"
 	Name="test_plugin"
 	ProjectGUID="{CBBD34E5-02B0-40D5-B6D8-BFEA83E18B32}"
 	RootNamespace="test_plugin"
 	Keyword="Win32Proj"
-	TargetFrameworkVersion="196613"
+	TargetFrameworkVersion="131072"
 	>
 	<Platforms>
 		<Platform
@@ -69,6 +69,8 @@
 				LinkIncremental="2"
 				GenerateDebugInformation="true"
 				SubSystem="1"
+				RandomizedBaseAddress="1"
+				DataExecutionPrevention="0"
 				TargetMachine="1"
 			/>
 			<Tool
@@ -145,6 +147,8 @@
 				SubSystem="1"
 				OptimizeReferences="2"
 				EnableCOMDATFolding="2"
+				RandomizedBaseAddress="1"
+				DataExecutionPrevention="0"
 				TargetMachine="1"
 			/>
 			<Tool
@@ -178,11 +182,11 @@
 			Filter="h;hpp;hxx;hm;inl;inc;xsd"
 			>
 			<File
-				RelativePath="..\src\google\protobuf\compiler\mock_code_generator.h"
+				RelativePath="..\src\google\protobuf\testing\file.h"
 				>
 			</File>
 			<File
-				RelativePath="..\src\google\protobuf\testing\file.h"
+				RelativePath="..\src\google\protobuf\compiler\mock_code_generator.h"
 				>
 			</File>
 		</Filter>
@@ -191,7 +195,7 @@
 			Filter="cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx"
 			>
 			<File
-				RelativePath="..\src\google\protobuf\compiler\test_plugin.cc"
+				RelativePath="..\src\google\protobuf\testing\file.cc"
 				>
 			</File>
 			<File
@@ -199,7 +203,7 @@
 				>
 			</File>
 			<File
-				RelativePath="..\src\google\protobuf\testing\file.cc"
+				RelativePath="..\src\google\protobuf\compiler\test_plugin.cc"
 				>
 			</File>
 		</Filter>

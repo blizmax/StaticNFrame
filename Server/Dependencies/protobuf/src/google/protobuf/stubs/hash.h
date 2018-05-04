@@ -32,6 +32,8 @@
 //
 // Deals with the fact that hash_map is not defined everywhere.
 
+#define _SILENCE_STDEXT_HASH_DEPRECATION_WARNINGS 1
+
 #ifndef GOOGLE_PROTOBUF_STUBS_HASH_H__
 #define GOOGLE_PROTOBUF_STUBS_HASH_H__
 

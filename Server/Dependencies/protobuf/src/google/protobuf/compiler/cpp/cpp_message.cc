@@ -32,7 +32,6 @@
 //  Based on original Protocol Buffers design by
 //  Sanjay Ghemawat, Jeff Dean, and others.
 
-
 #include <algorithm>
 #include <google/protobuf/stubs/hash.h>
 #include <map>

@@ -21,18 +21,6 @@
     <ClInclude Include="..\src\google\protobuf\compiler\command_line_interface.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\google\protobuf\compiler\subprocess.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\google\protobuf\compiler\zip_writer.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\google\protobuf\compiler\plugin.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\google\protobuf\compiler\plugin.pb.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\src\google\protobuf\compiler\cpp\cpp_enum.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -72,6 +60,9 @@
     <ClInclude Include="..\src\google\protobuf\compiler\cpp\cpp_string_field.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\src\google\protobuf\compiler\java\java_doc_comment.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="..\src\google\protobuf\compiler\java\java_enum.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -108,13 +99,19 @@
     <ClInclude Include="..\src\google\protobuf\compiler\java\java_string_field.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\google\protobuf\compiler\java\java_doc_comment.h">
+    <ClInclude Include="..\src\google\protobuf\compiler\plugin.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\google\protobuf\compiler\plugin.pb.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\src\google\protobuf\compiler\python\python_generator.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="config.h">
+    <ClInclude Include="..\src\google\protobuf\compiler\subprocess.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\google\protobuf\compiler\zip_writer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -126,18 +123,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\src\google\protobuf\compiler\command_line_interface.cc">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\google\protobuf\compiler\subprocess.cc">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\google\protobuf\compiler\zip_writer.cc">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\google\protobuf\compiler\plugin.cc">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\google\protobuf\compiler\plugin.pb.cc">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\src\google\protobuf\compiler\cpp\cpp_enum.cc">
@@ -212,7 +197,19 @@
     <ClCompile Include="..\src\google\protobuf\compiler\java\java_string_field.cc">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\google\protobuf\compiler\plugin.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\google\protobuf\compiler\plugin.pb.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="..\src\google\protobuf\compiler\python\python_generator.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\google\protobuf\compiler\subprocess.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\google\protobuf\compiler\zip_writer.cc">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
