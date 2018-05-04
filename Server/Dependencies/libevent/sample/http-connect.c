@@ -11,7 +11,6 @@
 #define VERIFY(cond) do {                       \
 	if (!(cond)) {                              \
 		fprintf(stderr, "[error] %s\n", #cond); \
-		exit(EXIT_FAILURE);                     \
 	}                                           \
 } while (0);                                    \
 
@@ -27,11 +26,8 @@ static void get_cb(struct evhttp_request *req, void *arg)
 {
 	ev_ssize_t len;
 	struct evbuffer *evbuf;
-	struct evhttp_connection *evcon;
 
 	VERIFY(req);
-	evcon = evhttp_request_get_connection(req);
-	VERIFY(evcon);
 
 	evbuf = evhttp_request_get_input_buffer(req);
 	len = evbuffer_get_length(evbuf);
@@ -76,7 +72,7 @@ int main(int argc, const char **argv)
 	}
 
 	{
-		VERIFY(proxy = evhttp_uri_parse(argv[1]));
+		proxy = evhttp_uri_parse(argv[1]);
 		VERIFY(evhttp_uri_get_host(proxy));
 		VERIFY(evhttp_uri_get_port(proxy) > 0);
 	}

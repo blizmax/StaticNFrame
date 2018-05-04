@@ -154,12 +154,12 @@ main(int c, char **v) {
 		const char *ns;
 	};
 	struct options o;
-	int opt;
+	char opt;
 	struct event_base *event_base = NULL;
 	struct evdns_base *evdns_base = NULL;
 
 	memset(&o, 0, sizeof(o));
-
+	
 	if (c < 2) {
 		fprintf(stderr, "syntax: %s [-x] [-v] [-c resolv.conf] [-s ns] hostname\n", v[0]);
 		fprintf(stderr, "syntax: %s [-T]\n", v[0]);
@@ -252,8 +252,6 @@ main(int c, char **v) {
 	}
 	fflush(stdout);
 	event_base_dispatch(event_base);
-	evdns_base_free(evdns_base, 1);
-	event_base_free(event_base);
 	return 0;
 }
 

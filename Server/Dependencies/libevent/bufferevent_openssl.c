@@ -63,6 +63,7 @@
 #include "bufferevent-internal.h"
 #include "log-internal.h"
 
+#include <openssl/bio.h>
 #include <openssl/ssl.h>
 #include <openssl/err.h>
 #include "openssl-compat.h"
@@ -353,11 +354,11 @@ static inline struct bufferevent_openssl *
 upcast(struct bufferevent *bev)
 {
 	struct bufferevent_openssl *bev_o;
-	if (!BEV_IS_OPENSSL(bev))
+	if (bev->be_ops != &bufferevent_ops_openssl)
 		return NULL;
 	bev_o = (void*)( ((char*)bev) -
 			 evutil_offsetof(struct bufferevent_openssl, bev.bev));
-	EVUTIL_ASSERT(BEV_IS_OPENSSL(&bev_o->bev.bev));
+	EVUTIL_ASSERT(bev_o->bev.bev.be_ops == &bufferevent_ops_openssl);
 	return bev_o;
 }
 
@@ -802,7 +803,7 @@ consider_reading(struct bufferevent_openssl *bev_ssl)
 
 		if (bev_ssl->bev.read_suspended)
 			break;
-
+        
 		/* Read all pending data.  This won't hit the network
 		 * again, and will (most importantly) put us in a state
 		 * where we don't need to read anything else until the
@@ -1266,15 +1267,11 @@ be_openssl_set_fd(struct bufferevent_openssl *bev_ssl,
 
 	switch (state) {
 	case BUFFEREVENT_SSL_ACCEPTING:
-		if (!SSL_clear(bev_ssl->ssl))
-			return -1;
 		SSL_set_accept_state(bev_ssl->ssl);
 		if (set_handshake_callbacks(bev_ssl, fd) < 0)
 			return -1;
 		break;
 	case BUFFEREVENT_SSL_CONNECTING:
-		if (!SSL_clear(bev_ssl->ssl))
-			return -1;
 		SSL_set_connect_state(bev_ssl->ssl);
 		if (set_handshake_callbacks(bev_ssl, fd) < 0)
 			return -1;

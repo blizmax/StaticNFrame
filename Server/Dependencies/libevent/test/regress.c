@@ -848,36 +848,18 @@ simple_child_read_cb(evutil_socket_t fd, short event, void *arg)
 
 	called++;
 }
-
-#define TEST_FORK_EXIT_SUCCESS 76
-static void fork_wait_check(int pid)
-{
-	int status;
-
-	TT_BLATHER(("Before waitpid"));
-
-#ifdef WNOWAIT
-	if ((waitpid(pid, &status, WNOWAIT) == -1 && errno == EINVAL) &&
-#else
-	if (
-#endif
-	    waitpid(pid, &status, 0) == -1) {
-		perror("waitpid");
-		exit(1);
-	}
-	TT_BLATHER(("After waitpid"));
-
-	if (WEXITSTATUS(status) != TEST_FORK_EXIT_SUCCESS) {
-		fprintf(stdout, "FAILED (exit): %d\n", WEXITSTATUS(status));
-		exit(1);
-	}
-}
 static void
 test_fork(void)
 {
 	char c;
+	int status;
 	struct event ev, sig_ev, usr_ev, existing_ev;
 	pid_t pid;
+	int wait_flags = 0;
+
+#ifdef EVENT__HAVE_WAITPID_WITH_WNOWAIT
+	wait_flags |= WNOWAIT;
+#endif
 
 	setup_test("After fork: ");
 
@@ -940,7 +922,7 @@ test_fork(void)
 		/* we do not send an EOF; simple_read_cb requires an EOF
 		 * to set test_ok.  we just verify that the callback was
 		 * called. */
-		exit(test_ok != 0 || called != 2 ? -2 : TEST_FORK_EXIT_SUCCESS);
+		exit(test_ok != 0 || called != 2 ? -2 : 76);
 	}
 
 	/** wait until client read first message */
@@ -951,7 +933,17 @@ test_fork(void)
 		tt_fail_perror("write");
 	}
 
-	fork_wait_check(pid);
+	TT_BLATHER(("Before waitpid"));
+	if (waitpid(pid, &status, wait_flags) == -1) {
+		perror("waitpid");
+		exit(1);
+	}
+	TT_BLATHER(("After waitpid"));
+
+	if (WEXITSTATUS(status) != 76) {
+		fprintf(stdout, "FAILED (exit): %d\n", WEXITSTATUS(status));
+		exit(1);
+	}
 
 	/* test that the current event loop still works */
 	if (write(pair[0], TEST1, strlen(TEST1)+1) < 0) {
@@ -997,9 +989,9 @@ static void
 del_wait_cb(evutil_socket_t fd, short event, void *arg)
 {
 	struct timeval delay = { 0, 300*1000 };
-	TT_BLATHER(("Sleeping: %i", test_ok));
+	TT_BLATHER(("Sleeping"));
 	evutil_usleep_(&delay);
-	++test_ok;
+	test_ok = 1;
 }
 
 static void
@@ -1010,7 +1002,7 @@ test_del_wait(void)
 
 	setup_test("event_del will wait: ");
 
-	event_set(&ev, pair[1], EV_READ|EV_PERSIST, del_wait_cb, &ev);
+	event_set(&ev, pair[1], EV_READ, del_wait_cb, &ev);
 	event_add(&ev, NULL);
 
 	pthread_create(&thread, NULL, del_wait_thread, NULL);
@@ -1034,38 +1026,8 @@ test_del_wait(void)
 
 	pthread_join(thread, NULL);
 
-	tt_int_op(test_ok, ==, 1);
-
 	end:
 	;
-}
-
-static void null_cb(evutil_socket_t fd, short what, void *arg) {}
-static void* test_del_notify_thread(void *arg)
-{
-	event_dispatch();
-	return NULL;
-}
-static void
-test_del_notify(void)
-{
-	struct event ev;
-	pthread_t thread;
-
-	test_ok = 1;
-
-	event_set(&ev, -1, EV_READ, null_cb, &ev);
-	event_add(&ev, NULL);
-
-	pthread_create(&thread, NULL, test_del_notify_thread, NULL);
-
-	{
-		struct timeval delay = { 0, 1000 };
-		evutil_usleep_(&delay);
-	}
-
-	event_del(&ev);
-	pthread_join(thread, NULL);
 }
 #endif
 
@@ -1878,8 +1840,7 @@ static void send_a_byte_cb(evutil_socket_t fd, short what, void *arg)
 {
 	evutil_socket_t *sockp = arg;
 	(void) fd; (void) what;
-	if (write(*sockp, "A", 1) < 0)
-		tt_fail_perror("write");
+	(void) write(*sockp, "A", 1);
 }
 struct read_not_timeout_param
 {
@@ -3474,13 +3435,12 @@ struct testcase_t main_testcases[] = {
 
 	BASIC(active_by_fd, TT_FORK|TT_NEED_BASE|TT_NEED_SOCKETPAIR),
 
-#if !defined(_WIN32) && !defined(__APPLE__)
+#ifndef _WIN32
 	LEGACY(fork, TT_ISOLATED),
 #endif
 #ifdef EVENT__HAVE_PTHREADS
 	/** TODO: support win32 */
 	LEGACY(del_wait, TT_ISOLATED|TT_NEED_THREADS),
-	LEGACY(del_notify, TT_ISOLATED|TT_NEED_THREADS),
 #endif
 
 	END_OF_TESTCASES

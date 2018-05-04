@@ -18,7 +18,7 @@ ACLOCAL_AMFLAGS = -I m4
 # will increment for each series until we revise our interfaces enough
 # that we can seriously expect ABI compatibility between series.
 #
-RELEASE = -release 2.2
+RELEASE = -release 2.1
 
 # This is the version info for the libevent binary API.  It has three
 # numbers:
@@ -38,7 +38,7 @@ RELEASE = -release 2.2
 #
 # Once an RC is out, DO NOT MAKE ANY ABI-BREAKING CHANGES IN THAT SERIES
 # UNLESS YOU REALLY REALLY HAVE TO.
-VERSION_INFO = 1:0:0
+VERSION_INFO = 6:2:0
 
 # History:          RELEASE    VERSION_INFO
 #  2.0.1-alpha --     2.0        1:0:0
@@ -72,9 +72,6 @@ VERSION_INFO = 1:0:0
 #  2.1.6-beta  --     2.1        6:0:0 (ABI changed slightly)
 #  2.1.7-beta  --     2.1        6:1:0 (ABI changed slightly)
 #  2.1.8-stable--     2.1        6:2:0 (ABI changed slightly)
-#
-# For Libevent 2.2:
-#  2.2.0-alpha --     2.2        1:0:0
 
 # ABI version history for this package effectively restarts every time
 # we change RELEASE.  Version 1.4.x had RELEASE of 1.4.
@@ -231,11 +228,7 @@ NO_UNDEFINED =
 MAYBE_CORE =
 endif
 
-AM_CFLAGS = $(LIBEVENT_CFLAGS)
-AM_CPPFLAGS = -I$(srcdir)/compat -I./include -I$(srcdir)/include $(SYS_INCLUDES) $(LIBEVENT_CPPFLAGS)
-AM_LDFLAGS = $(LIBEVENT_LDFLAGS)
-
-GENERIC_LDFLAGS = -version-info $(VERSION_INFO) $(RELEASE) $(NO_UNDEFINED) $(AM_LDFLAGS)
+GENERIC_LDFLAGS = -version-info $(VERSION_INFO) $(RELEASE) $(NO_UNDEFINED)
 
 libevent_la_SOURCES = $(CORE_SRC) $(EXTRAS_SRC)
 libevent_la_LIBADD = @LTLIBOBJS@ $(SYS_LIBS)
@@ -272,6 +265,7 @@ noinst_HEADERS +=				\
 	defer-internal.h			\
 	epolltable-internal.h			\
 	evbuffer-internal.h			\
+	evconfig-private.h			\
 	event-internal.h			\
 	evmap-internal.h			\
 	evrpc-internal.h			\
@@ -289,7 +283,7 @@ noinst_HEADERS +=				\
 	ratelim-internal.h			\
 	strlcpy-internal.h			\
 	time-internal.h				\
-	util-internal.h				\
+	util-internal.h \
 	openssl-compat.h
 
 EVENT1_HDRS = \
@@ -304,6 +298,8 @@ include_HEADERS = $(EVENT1_HDRS)
 else
 noinst_HEADERS += $(EVENT1_HDRS)
 endif
+
+AM_CPPFLAGS = -I$(srcdir)/compat -I$(srcdir)/include -I./include $(SYS_INCLUDES)
 
 verify: check
 

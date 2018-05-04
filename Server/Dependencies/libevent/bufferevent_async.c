@@ -104,7 +104,7 @@ static inline struct bufferevent_async *
 upcast(struct bufferevent *bev)
 {
 	struct bufferevent_async *bev_a;
-	if (!BEV_IS_ASYNC(bev))
+	if (bev->be_ops != &bufferevent_ops_async)
 		return NULL;
 	bev_a = EVUTIL_UPCAST(bev, struct bufferevent_async, bev.bev);
 	return bev_a;
