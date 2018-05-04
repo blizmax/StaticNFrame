@@ -3823,7 +3823,7 @@ private:
 
         struct ::tm timeinfo = base::utils::DateTime::getCurrentTm();
         std::size_t lastRollingHour = unsafeGetConfigByRef(level, &m_fileLastTimeMap, "lastRollingTime");
-        if (lastRollingHour != timeinfo.tm_hour)
+        if (lastRollingHour != (std::size_t)timeinfo.tm_hour)
         {
             ////std::string fname = unsafeGetConfigByRef(level, &m_filenameMap, "filename");
             ////fs->close();
