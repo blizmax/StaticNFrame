@@ -2,6 +2,11 @@
 | - | - | 
 | master | [![Build Status](https://travis-ci.org/yigao/StaticNFrame.svg?branch=master)](https://travis-ci.org/yigao/StaticNFrame) |
 
+<a href="https://scan.coverity.com/projects/yigao-staticnframe">
+  <img alt="Coverity Scan Build Status"
+       src="https://scan.coverity.com/projects/15695/badge.svg"/>
+</a>
+
 
 **Copyright © [Static Game NFrame](https://StaticNFrame.com "Static Game NFrame")**    
 Website: https://StaticNFrame.com
