@@ -33,12 +33,6 @@ StaticNFrame is a lightweight, agility, scalable, distributed plugin framework w
 Please [create a new issue](https://github.com/yigao/StaticNFrame/issues) to ask a question.
 
 
-## Architecture
-
-### App Architecture:
-
-![App Architecture](https://github.com/yigao/StaticNFrame/tree/master/Docs/asserts/imgs/AppArchitecture.png)
-
 ## Get the Sources:
 
 git clone https://github.com/yigao/StaticNFrame.git
