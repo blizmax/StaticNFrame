@@ -3,7 +3,6 @@ sudo: required
 os:
 - linux
 addons:
-  ssh_known_hosts: 192.168.2.183
   sonarcloud:
       organization: "StaticNFrame"
       token:
@@ -14,6 +13,8 @@ addons:
     packages:
     - cmake-data
     - cmake
+    - automake
+    - ccache
 compiler:
 - gcc
 branches:
@@ -37,8 +38,9 @@ script:
    - cd build
    - rm * -rf
    - cmake -DCMAKE_BUILD_TYPE=Debug ../../
-   - build-wrapper-linux-x86-64 --out-dir bw-output make all
-   - sonar-scanner
+   - make
+   #- build-wrapper-linux-x86-64 --out-dir bw-output make all
+   #- sonar-scanner
 cache:
   directories:
     - '$HOME/.sonar/cache'
