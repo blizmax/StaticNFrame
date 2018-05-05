@@ -82,8 +82,7 @@ Using Visual Studio 2015
 1. Pull all source
 2. Run command line 
 ```batch
-cd path/to/ARK
-cd Dep
+cd StaticNFrame/Server/Dependencies
 build_dep.bat
 ```
 3. Open the solution: `Server/StaticNFrame.sln`
@@ -101,7 +100,7 @@ build_dep.bat
 - automake
 
 Using CMake
-1.sudo install.sh
+1. sudo install.sh
 2. build_dep.sh
 3. build.sh
 
@@ -109,7 +108,7 @@ Using CMake
 
 [English](https://github.com/yigao/StaticNFrame/tree/master/Docs/doc_EN.md)
 
-[Mandarin](https://github.com/yigao/StaticNFrame/tree/master/Docs/doc_ZH.md)
+[Chinese](https://github.com/yigao/StaticNFrame/tree/master/Docs/doc_ZH.md)
 
 ## Examples
 
