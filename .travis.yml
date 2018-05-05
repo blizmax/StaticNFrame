@@ -1,6 +1,5 @@
 language: cpp
-sudo: required
 before_install: 
-        sudo yum install automake
+         - sudo yum install automake
 install:./build_dep.sh
 script: ./build.sh
