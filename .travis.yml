@@ -4,9 +4,10 @@ os:
 - linux
 addons:
   sonarcloud:
-      organization: "yigao"
+      projectKey: "StaticNFrame"
+      organization: "yigao-github"
       token:
-           secure: "WzyNBGoWtX7xLz2qS2it9DuBzfLeAOILaAMgOoe2bx5sABRUnENuX8CGPUtbKU3bqzrQIqIVKDTHrj8UtXNmq6YL+gcRtHBhi2cf3v9gktsyJMHkd+lDCCPjaDnSzfTpy/id0x+Pn4yzgQavSPLvUYL/ny8aTfPT/IQQF/qP4U4eV2FctqcMs3WxtPaCV3LdGVbSqbyV2Gs2zPtHIhE32V9N/HZLhrrUkfvZjwKb/CyAugyMCtDfyB2W6DAIweb6JBMI5/BaWGlrDM6uS5n4luGuHUzT++I98CApL1LLkE4AdXl2pIl3H8eLeuo8gn9SlBikbiCrKme9swnLL9djom4o8yO3SsM2byfKeao1AZGu7XRLxhYCFIuMxegMFZQD5yhZeH9KeGDrXIf8W+DXmqm7+cWBv1H8AHE/oPpZBTzh81uEJ6t6w2e8OBrzGvYH47iOPhv5Za6SGyimypHzM7aTEdJ1cnXz/veWDpI2QpGLVgyWXuyo4DfYIhfg/+65S++RjgVm/IEwEafrlJClfy79dxuQfnuryw8e0dWePjmoUx5taMeg1+ZneaOpZeCvmdaX0w5zJJCkQUDhPbRvQQsdcYXXH+o1DqoQV+yS2C/UDJGnA429TkGe0+mba+WpuzjVZCDv6L974JmBOIqPliLJlVbw4Q93iZfjCub5Z+A="
+          secure: "WzyNBGoWtX7xLz2qS2it9DuBzfLeAOILaAMgOoe2bx5sABRUnENuX8CGPUtbKU3bqzrQIqIVKDTHrj8UtXNmq6YL+gcRtHBhi2cf3v9gktsyJMHkd+lDCCPjaDnSzfTpy/id0x+Pn4yzgQavSPLvUYL/ny8aTfPT/IQQF/qP4U4eV2FctqcMs3WxtPaCV3LdGVbSqbyV2Gs2zPtHIhE32V9N/HZLhrrUkfvZjwKb/CyAugyMCtDfyB2W6DAIweb6JBMI5/BaWGlrDM6uS5n4luGuHUzT++I98CApL1LLkE4AdXl2pIl3H8eLeuo8gn9SlBikbiCrKme9swnLL9djom4o8yO3SsM2byfKeao1AZGu7XRLxhYCFIuMxegMFZQD5yhZeH9KeGDrXIf8W+DXmqm7+cWBv1H8AHE/oPpZBTzh81uEJ6t6w2e8OBrzGvYH47iOPhv5Za6SGyimypHzM7aTEdJ1cnXz/veWDpI2QpGLVgyWXuyo4DfYIhfg/+65S++RjgVm/IEwEafrlJClfy79dxuQfnuryw8e0dWePjmoUx5taMeg1+ZneaOpZeCvmdaX0w5zJJCkQUDhPbRvQQsdcYXXH+o1DqoQV+yS2C/UDJGnA429TkGe0+mba+WpuzjVZCDv6L974JmBOIqPliLJlVbw4Q93iZfjCub5Z+A="
   apt:
     sources:
     - george-edison55-precise-backports
