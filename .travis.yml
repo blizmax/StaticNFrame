@@ -31,14 +31,14 @@ before_install:
 - cd ..
 - rm -rf automake-1.15
 - cd ..
-install: ./build_dep.sh
+#install: ./build_dep.sh
 script: 
    - cd Product
    - mkdir build
    - cd build
    - rm * -rf
    - cmake -DCMAKE_BUILD_TYPE=Debug ../../
-   - make
+   #- make
    - build-wrapper-linux-x86-64 --out-dir bw-output make all
    - sonar-scanner
 cache:
