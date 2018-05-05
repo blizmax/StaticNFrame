@@ -7,7 +7,7 @@ addons:
     sources:
       #- ubuntu-toolchain-r-test
        - george-edison55-precise-backports
-      packages:
+    packages:
       #- g++-4.9
        - cmake-data
        - cmake
