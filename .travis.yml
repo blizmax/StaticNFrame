@@ -31,7 +31,7 @@ before_install:
 - cd ..
 - rm -rf automake-1.15
 - cd ..
-#install: ./build_dep.sh
+install: ./build_dep.sh
 script: 
    - cd Product
    - mkdir build
