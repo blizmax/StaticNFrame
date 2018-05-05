@@ -4,9 +4,9 @@ os:
 - linux
 addons:
   sonarcloud:
-      organization: "StaticNFrame"
+      organization: "yigao"
       token:
-           secure: "yzDa7TTCWijvwOayC6Ddj6pYBCBdaMTMuqF6RtusZQFLSmOCqmlxGzGbe6epRsu8g3+eKojUq3zzpyCnOQT6qGrDdCNlCuf7UYqwe+uCjBtUM9+DloeuA9I5V4wuQoCDdYZhucji9EfSjSS5Rz+BI6t6RqrXlf6PBy7vR0E721z83Bsls7inclCYYkOpX+oSLMKE/p7F6gQnD0vEQPvRevaVnkQsuBZKOikAgYmPF44bD3kwMV8leuA7jJyGkqPEA+RYD+2wMQPGEb3oN/u/ieSyXRx/3XdGOQ0fN0/7ILD7pmuesUmbF6gMLM9a/9HeKBLrP+s4T0HsL85tWF/9NHD6exQ40tSjmnCRQWU8Ls/164ikfM8mkOT9Ges4pAD4ILZxjl1jP8wFUl7u6fTmTOBd23QFku3i5OTOGeu59Wc8K+IZbnapoGy1vJ9ZX7rF2GoODkTW6dVwAV3JoyIU4ShDPu9UCLtHt/PG2Ac8duoJEBvrP2FbErKU9hvdUBuZVrKRxlwdlFuDd4tzghtXWyyG2xgGkOM9Y//0ORdhV07zIG3OyoG2e9ihpnH1xPeom1SBRAEzfN8t0pvarTTtpC5e6j5sNznnAXUl8wYNP3Pl2JnOTYuGcU3BCEXiCpbNZsi3elq9HS3FAYhJcvMzpCecMRJ8AZUH8zKCwNvARXA="
+           secure: "WzyNBGoWtX7xLz2qS2it9DuBzfLeAOILaAMgOoe2bx5sABRUnENuX8CGPUtbKU3bqzrQIqIVKDTHrj8UtXNmq6YL+gcRtHBhi2cf3v9gktsyJMHkd+lDCCPjaDnSzfTpy/id0x+Pn4yzgQavSPLvUYL/ny8aTfPT/IQQF/qP4U4eV2FctqcMs3WxtPaCV3LdGVbSqbyV2Gs2zPtHIhE32V9N/HZLhrrUkfvZjwKb/CyAugyMCtDfyB2W6DAIweb6JBMI5/BaWGlrDM6uS5n4luGuHUzT++I98CApL1LLkE4AdXl2pIl3H8eLeuo8gn9SlBikbiCrKme9swnLL9djom4o8yO3SsM2byfKeao1AZGu7XRLxhYCFIuMxegMFZQD5yhZeH9KeGDrXIf8W+DXmqm7+cWBv1H8AHE/oPpZBTzh81uEJ6t6w2e8OBrzGvYH47iOPhv5Za6SGyimypHzM7aTEdJ1cnXz/veWDpI2QpGLVgyWXuyo4DfYIhfg/+65S++RjgVm/IEwEafrlJClfy79dxuQfnuryw8e0dWePjmoUx5taMeg1+ZneaOpZeCvmdaX0w5zJJCkQUDhPbRvQQsdcYXXH+o1DqoQV+yS2C/UDJGnA429TkGe0+mba+WpuzjVZCDv6L974JmBOIqPliLJlVbw4Q93iZfjCub5Z+A="
   apt:
     sources:
     - george-edison55-precise-backports
@@ -39,8 +39,8 @@ script:
    - rm * -rf
    - cmake -DCMAKE_BUILD_TYPE=Debug ../../
    - make
-   #- build-wrapper-linux-x86-64 --out-dir bw-output make all
-   #- sonar-scanner
+   - build-wrapper-linux-x86-64 --out-dir bw-output make all
+   - sonar-scanner
 cache:
   directories:
     - '$HOME/.sonar/cache'
