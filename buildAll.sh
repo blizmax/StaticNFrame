@@ -1,6 +1,6 @@
 cd Server/Dependencies/
 chmod a+x ./build_dep.sh
-./buildDep.sh
+./build_dep.sh
 cd ../../
 
 cd Product

@@ -1,8 +1,3 @@
-cd Server/Dependencies/libevent
-chmod a+x ./configure
-./configure CPPFLAGS=-fPIC --disable-shared --disable-openssl
-cd ../../../
-
 cd Product
 mkdir build
 cd build

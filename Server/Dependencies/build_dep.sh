@@ -26,6 +26,10 @@ make
 cp -R -f ./src/.libs/*.a ../../Lib/Debug/
 cp -R -f ./src/.libs/*.a ../../Lib/Release/
 
+
+cp -R -f ./src/.libs/*.so* ../../Lib/Debug/
+cp -R -f ./src/.libs/*.so* ../../Lib/Release/
+
 cd ../
 
 # compiling Theron
