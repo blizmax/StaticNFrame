@@ -1,5 +1,22 @@
-language: c++
+language: cpp
+sudo: required
+os:
+  - linux
+compiler:
+  - gcc
+branches:
+  only:
+  - master
 before_install:
-    - sudo apt-get install automake
+    - cd Tools
+    - tar -xvf automake-1.15.tar.gz
+    - cd automake-1.15
+    - chmod a+x ./configure
+    - ./configure 
+    - make
+    - make install
+    - cd ..
+    - rm -rf automake-1.15
+    - cd ..
 install: ./build_dep.sh
 script: ./build.sh
