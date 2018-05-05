@@ -1,34 +1,36 @@
 language: cpp
 sudo: required
 os:
-  - linux
+- linux
 addons:
-  ssh_known_hosts: 192.168.2.183 # 请替换成自己的服务器I
+  ssh_known_hosts: 192.168.2.183
   apt:
     sources:
-      #- ubuntu-toolchain-r-test
-       - george-edison55-precise-backports
+    - george-edison55-precise-backports
     packages:
-      #- g++-4.9
-       - cmake-data
-       - cmake
+    - cmake-data
+    - cmake
 compiler:
-  - gcc
+- gcc
 branches:
   only:
   - master
 before_install:
-    - openssl aes-256-cbc -K $encrypted_7eb6e0528deb_key -iv $encrypted_7eb6e0528deb_iv -in id_rsa.enc -out ~/.ssh/id_rsa -d
-    - chmod 600 ~/.ssh/id_rsa
-    - cd Tools
-    - tar -xvf automake-1.15.tar.gz
-    - cd automake-1.15
-    - chmod a+x ./configure
-    - ./configure 
-    - make
-    - sudo make install
-    - cd ..
-    - rm -rf automake-1.15
-    - cd ..
+- openssl aes-256-cbc -K $encrypted_7eb6e0528deb_key -iv $encrypted_7eb6e0528deb_iv
+  -in id_rsa.enc -out ~/.ssh/id_rsa -d
+- chmod 600 ~/.ssh/id_rsa
+- cd Tools
+- tar -xvf automake-1.15.tar.gz
+- cd automake-1.15
+- chmod a+x ./configure
+- ./configure
+- make
+- sudo make install
+- cd ..
+- rm -rf automake-1.15
+- cd ..
 install: ./build_dep.sh
 script: ./build.sh
+env:
+  global:
+    secure: OIpTHUqLqCBnI230LizQm5FCYqQHM1POtFQefz41HtHanb95cBgDXUh1k6i+FOjoVEnH8Tx+L4D2AsHwbKA00ezTLn8XgffjSkoCn9s+npbPtcP8xJy5D6N2ifbDrkgpVmtCzP+n5SugIfDMvJkkEdEiHrQckFnZ3GDj52+jTHFjZC/v7+nDjRxfZXuzQlpGHPcAYx9MGtGa9Fi1CHjdEqJuC0zC6N7AvCXB4ni136Bkp9LOXpn4cda9tRtmD5CeD5BPpPaiwgYvhzdEaIGZJiHY+rrP5SOPDN2d7TaZYUOWcR/8UOS4zA7pMdBxSjic7sNv9qFeYnZd4sT2Pm4jbL8SJE20m63UPmFgjqfuy0OmL8QdilmYnNnAmtcNOx6bxnfoP+95Zt9pLTnfBDdd6UXl5E8Gp1qn8HuXa25cZFqu8UffgFM2KICu9bSmP+T9HkXUCf63RtkpbXOU6+xEJgG5ioAXX3FpTTBSm3meqtzMYh/LXRu8TE22VwO2un6eFrWFZueEIasYLdVRj74t9GkTs7COVj9dwnLD8qGJ++cMBVAFaRsy7CiF4tsftTNFAD2jU/o++LQavz+2yBEk06q/lHO2aYCGn8E13NgPEETaIOhhz9bOMedlAdeexs5X/hPmzRSq0CnTkjnEZpgKRY4UOIkTt9JB4v8Y+QcBB7w=
