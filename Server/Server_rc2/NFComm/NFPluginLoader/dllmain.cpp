@@ -9,7 +9,7 @@
 #pragma comment( lib, "Theron.lib" )
 #pragma comment( lib, "g3dlite.lib" )
 //#pragma comment( lib, "libtcmalloc_minimal.lib" )
-#pragma comment( lib, "user32.lib")		//windowsÎÊÌâ
+#pragma comment( lib, "user32.lib")		//windowsï¿½ï¿½ï¿½ï¿½
 
 /////////////////////////////////////////////////////////////////
 #pragma comment( lib, "NFCore.lib" )
@@ -21,7 +21,4 @@
 #pragma comment( lib, "NFActorPlugin.lib" )
 #pragma comment( lib, "NFNetPlugin.lib" )
 #pragma comment( lib, "NFTestPlugin.lib" )
-#elif NF_PLATFORM == NF_PLATFORM_LINUX || NF_PLATFORM == NF_PLATFORM_ANDROID
-#pragma comment( lib, "NFCore.a" )
-#elif NF_PLATFORM == NF_PLATFORM_APPLE || NF_PLATFORM == NF_PLATFORM_APPLE_IOS
 #endif
