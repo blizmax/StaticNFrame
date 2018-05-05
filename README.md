@@ -183,3 +183,5 @@ Our team has always specialized in the agile development and try to help differe
 #### The relationship with NF
 
 This branch come from [NF](https://github.com/ketoo/NoahGameFrame), we used to be the **CORE DEVELOPERS** of NF. We create **ARK** because some different design philosophies, through our new ideas and modifications, now this project is a fresh project which has many different features.
+
+[![Build Status](https://travis-ci.org/yigao/StaticNFrame.svg?branch=master)](https://travis-ci.org/yigao/StaticNFrame)
