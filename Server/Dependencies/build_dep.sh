@@ -4,6 +4,7 @@ echo Building dependencies...
 cd libevent
 chmod a+x ./configure
 ./configure CPPFLAGS=-fPIC --disable-shared --disable-openssl
+make clean
 make
 
 cp -R -f ./.libs/*.a ../../Lib/Debug/
@@ -12,6 +13,7 @@ cd ../
 
 # compiling lua 
 cd lua
+make clean
 make all
 cp -R -f ./*.a ../../Lib/Debug/
 cp -R -f ./*.a ../../Lib/Release/
@@ -21,6 +23,7 @@ cd ../
 cd protobuf
 chmod a+x ./configure
 ./configure CXXFLAGS=-fPIC
+make clean
 make
 
 cp -R -f ./src/.libs/*.a ../../Lib/Debug/
@@ -34,6 +37,7 @@ cd ../
 
 # compiling Theron
 cd Theron
+make clean
 make library mode=debug boost=off c++11=on posix=on shared=on
 cp -r -f ./Lib/libtheron.a ../../Lib/Debug/
 make clean
@@ -46,6 +50,7 @@ cd ../
 cd gperftools
 chmod a+x ./configure
 ./configure
+make clean
 make
 cp -R -f ./.libs/libtcmalloc.a ../../Lib/Debug/
 cp -R -f ./.libs/libtcmalloc.a ../../Lib/Release/

@@ -7,20 +7,16 @@
 
 | Branch | Build Status |
 | - | - | 
-| master | [![Build Status](https://travis-ci.org/ArkGame/ARK.svg?branch=master)](https://travis-ci.org/ArkGame/ARK) |
-| develop | [![Build Status](https://travis-ci.org/ArkGame/ARK.svg?branch=develop)](https://travis-ci.org/ArkGame/ARK) |
+| master | [![Build Status](https://travis-ci.org/yigao/StaticNFrame.svg?branch=master)](https://travis-ci.org/yigao/StaticNFrame) |
 
-**Copyright © [ARK Game](https://arkgame.net "ARK Game")**    
-Website: https://arkgame.net  
-Github: https://github.com/ArkGame/ARK  
-Gitee(码云): https://gitee.com/ArkGame/ARK  
 
-##### Wanna get the newest features? Please switch to the develop branch.
+**Copyright © [Static Game NFrame](https://StaticNFrame.com "Static Game NFrame")**    
+Website: https://StaticNFrame.com
+Github: https://github.com/yigao/StaticNFrame  
+Gitee(码云): https://gitee.com/xiaoyi445/StaticNFrame
 
-**<font color=red>If you wanna commit PR or report issue, please refer to [Contribution Guide](https://github.com/ArkGame/ARK/blob/master/CONTRIBUTING.md)</font>**.
-
-## ARK
-ARK is a lightweight, agility, scalable, distributed plugin framework written by C++，make it easier and faster to create your own game server, can be used to develop MMO RPG, ARPG, Round play, chess games. Inspired by UnrealEngine and Ogre.
+## StaticNFrame 
+StaticNFrame is a lightweight, agility, scalable, distributed plugin framework written by C++，make it easier and faster to create your own game server, can be used to develop MMO RPG, ARPG, Round play, chess games. Inspired by UnrealEngine and Ogre.
 
 ## Features
 
@@ -41,30 +37,28 @@ ARK is a lightweight, agility, scalable, distributed plugin framework written by
 
 ### FAQ
 
-Please [create a new issue](https://github.com/ArkGame/ARK/issues) to ask a question.
+Please [create a new issue](https://github.com/yigao/StaticNFrame/issues) to ask a question.
 
 
 ## Architecture
 
 ### App Architecture:
 
-![App Architecture](https://raw.githubusercontent.com/ArkGame/ARK/master/Docs/asserts/imgs/AppArchitecture.png)
+![App Architecture](https://github.com/yigao/StaticNFrame/tree/master/Docs/asserts/imgs/AppArchitecture.png)
 
 ## Get the Sources:
 
-git clone https://github.com/ArkGame/ARK.git
+git clone https://github.com/yigao/StaticNFrame.git
 
 or
 
-svn checkout https://github.com/ArkGame/ARK
+svn checkout https://github.com/yigao/StaticNFrame
 
 ## Dependencies
 
 - libevent master
 - easylogging++ 9.80
-- mysql++ 3.2.2
 - google protobuf 3.5.x
-- evpp 0.7.0
 - gperftools master
 
 ## Supported Compilers
@@ -84,7 +78,7 @@ svn checkout https://github.com/ArkGame/ARK
 - CMake 3.0 +
 
 ##### Step:
-Using Visual Studio 2017
+Using Visual Studio 2015
 1. Pull all source
 2. Run command line 
 ```batch
@@ -92,30 +86,9 @@ cd path/to/ARK
 cd Dep
 build_dep.bat
 ```
-3. Open the solution: `Frame/ARK.sln`
-4. Build the solution`ARK.sln`
-5. Run `ARK\Bin\Server\DataConfig\Tool\gen-config.bat` to generate configuration files
-6. Run the binary file by `Bin/Server/Debug/Run.bat`
-
-Using CMake
-1. Pull all source
-2. Run command line
-```batch
-cd path/to/ARK
-cd Dep
-build_dep.bat
-cd ../
-md build
-cd build
-cmake -G "Visual Studio 15 Win64" ..
-```
-4. Start `ARK.sln`
-5. Run `ARK\Bin\Server\DataConfig\Tool\gen-config.bat` to generate configuration files
-6. Run the binary file by `Bin/Server/Debug/Run.bat`
-
-> Note
-> - If you are using VS2015, please use `Dep/build_dep_vs2015.bat`
-> - If you are using VS2017, please change `%VS150COMNTOOLS%` in `Dep/build_dep.bat` to `YOUR-COMPILER-PATH`.
+3. Open the solution: `Server/StaticNFrame.sln`
+4. Build the solution`StaticNFrame.sln`
+5. Run the binary file by `Product/Debug/Run.bat`
 
 ### linux
 
@@ -128,43 +101,19 @@ cmake -G "Visual Studio 15 Win64" ..
 - automake
 
 Using CMake
-1. pull all source
-2. Use bash
-```shell
-cd Dep
-./build_dep.sh
-cd ../
-mkdir build && cd build
-cmake -G "Unix Makefiles" ..
-make
-```
-> Note
-> - If you need build debug, please add `-DCMAKE_BUILD_TYPE="Debug"` in cmake command.
-> - To accelerate building, you can use `make -j` to run multiple complication jobs simultaneously. However, that may exhaust the memory.
-3. Run `ARK\Bin\Server\DataConfig\Tool\gen-config.sh` to generate configuration files
-4. Run the binary file by `Bin/Server/Debug/rund.sh`
+1.sudo install.sh
+2. build_dep.sh
+3. build.sh
 
 ## Documents
 
-[English](https://github.com/ArkGame/ARK/blob/master/Docs/doc_EN.md)
+[English](https://github.com/yigao/StaticNFrame/tree/master/Docs/doc_EN.md)
 
-[Mandarin](https://github.com/ArkGame/ARK/blob/master/Docs/doc_ZH.md)
+[Mandarin](https://github.com/yigao/StaticNFrame/tree/master/Docs/doc_ZH.md)
 
 ## Examples
 
 Please see `Frame/Examples`.
-
-## Plan
-
-View our [lastest plan](https://github.com/ArkGame/ARK/blob/master/Docs/plan.md)
-
-## Unity3D client
-
-[Unity3D Client](https://github.com/ArkGame/ArkClient-Unity3D)
-
-## License
-
-The ARK project is currently available under the [Apache License](https://github.com/ArkGame/ARK/blob/master/LICENSE).
 
 ----------
 
@@ -184,4 +133,3 @@ Our team has always specialized in the agile development and try to help differe
 
 This branch come from [NF](https://github.com/ketoo/NoahGameFrame), we used to be the **CORE DEVELOPERS** of NF. We create **ARK** because some different design philosophies, through our new ideas and modifications, now this project is a fresh project which has many different features.
 
-[![Build Status](https://travis-ci.org/yigao/StaticNFrame.svg?branch=master)](https://travis-ci.org/yigao/StaticNFrame)
