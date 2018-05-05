@@ -1,3 +1,5 @@
 language: c++
+before_install:
+    - sudo apt-get install automake
 install: ./build_dep.sh
 script: ./build.sh
