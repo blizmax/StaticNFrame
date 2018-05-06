@@ -3,11 +3,19 @@ sudo: required
 os:
 - linux
 addons:
-  sonarcloud:
-      projectKey: "StaticNFrame"
-      organization: "yigao-github"
-      token:
-          secure: "WzyNBGoWtX7xLz2qS2it9DuBzfLeAOILaAMgOoe2bx5sABRUnENuX8CGPUtbKU3bqzrQIqIVKDTHrj8UtXNmq6YL+gcRtHBhi2cf3v9gktsyJMHkd+lDCCPjaDnSzfTpy/id0x+Pn4yzgQavSPLvUYL/ny8aTfPT/IQQF/qP4U4eV2FctqcMs3WxtPaCV3LdGVbSqbyV2Gs2zPtHIhE32V9N/HZLhrrUkfvZjwKb/CyAugyMCtDfyB2W6DAIweb6JBMI5/BaWGlrDM6uS5n4luGuHUzT++I98CApL1LLkE4AdXl2pIl3H8eLeuo8gn9SlBikbiCrKme9swnLL9djom4o8yO3SsM2byfKeao1AZGu7XRLxhYCFIuMxegMFZQD5yhZeH9KeGDrXIf8W+DXmqm7+cWBv1H8AHE/oPpZBTzh81uEJ6t6w2e8OBrzGvYH47iOPhv5Za6SGyimypHzM7aTEdJ1cnXz/veWDpI2QpGLVgyWXuyo4DfYIhfg/+65S++RjgVm/IEwEafrlJClfy79dxuQfnuryw8e0dWePjmoUx5taMeg1+ZneaOpZeCvmdaX0w5zJJCkQUDhPbRvQQsdcYXXH+o1DqoQV+yS2C/UDJGnA429TkGe0+mba+WpuzjVZCDv6L974JmBOIqPliLJlVbw4Q93iZfjCub5Z+A="
+addons:
+  coverity_scan:
+    project:
+      name: "yigao/StaticNFrame"
+      description: "Static Game Frame"
+    notification_email: 445267987@qq.com
+    build_command_prepend:
+                   - cd product
+                   - mkdir build
+                   - cd build
+                   - cmake -DCMAKE_BUILD_TYPE=Debug ../../  
+    build_command: "make"
+    branch_pattern: master
   apt:
     sources:
     - george-edison55-precise-backports
@@ -32,16 +40,13 @@ before_install:
 - cd ..
 - rm -rf automake-1.15
 - cd ..
+- echo -n | openssl s_client -connect https://scan.coverity.com:443 | sed -ne '/-BEGIN CERTIFICATE-/,/-END CERTIFICATE-/p' | sudo tee -a /etc/ssl/certs/ca-
 install: ./build_dep.sh
 script: 
-   - cd Product
-   - mkdir build
-   - cd build
-   - rm * -rf
-   - cmake -DCMAKE_BUILD_TYPE=Debug ../../
-   #- make
-   - build-wrapper-linux-x86-64 --out-dir bw-output make all
-   - sonar-scanner
-cache:
-  directories:
-    - '$HOME/.sonar/cache'
+   - make
+
+env:
+  global:
+   # The next declaration is the encrypted COVERITY_SCAN_TOKEN, created
+   #    #   via the "travis encrypt" command using the project repo's public key
+   - secure: "OByBxV9vA3AjzWyhfLagqsyVqrPQx5YQ4fSLdGKfwN7Yb8MN9LDlsxt790+tHT3NZMcPJKzp2h/XcV0Oa0j6tBcqZQONFdGaXM7VFBQ2aXuKBid3YGCVSNPztDhe3ffT0zPEwAyiI4LfouBcmtEQdoULlPhtcJbg+H9IICKlYfnb8ksYMpbpr+EpbK4Oye+aS5+aRnQrI3NSHsYgbRS3S36xoKeGZHaL22lc5aZhfwpis3UZauJWKOkfoIYYjv70LGdyDa8JXMm7piZCfNmndtpuwHAemojGtSESu7J8/233q1y/0iXdDFQnsppDa3fxnMXs/jB4RqtjVoqWrYj26IN85lMyhfBdBkCi8Jb8+a11yuKjhuodqmXSomzDOypWrHrJx7x/Ej7g0E31hIIRsNZG5IDOk99HWIEFhK6mnG/mzwqMU/99/x8ZaY8ugwJMy27TgbEOJUClpsYJp6C76KL2Y7asYVj3Tv01548KlZfPs08/o63Psdx9QYkGdcmumzIn04S7QTuMljwocnxrHGlpk7sOnyhbx2fFv1MWJ4Uc6gUZ5TXqfglKcmLbCu1ADssGDpV3WYNpcuobWFX5r3qUU4oIzSbLrH4yumFhnU+lsqjgbfEgeAXBqmQIr3YrQ7Ya4YS6ozeOzESABPHVhkbAlBfyu86Xq1CaeY/y8bU="
