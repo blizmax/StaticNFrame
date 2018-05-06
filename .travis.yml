@@ -3,18 +3,17 @@ sudo: required
 os:
 - linux
 addons:
-addons:
   coverity_scan:
     project:
-      name: "yigao/StaticNFrame"
-      description: "Static Game Frame"
+      name: yigao/StaticNFrame
+      description: Static Game Frame
     notification_email: 445267987@qq.com
     build_command_prepend:
-                   - cd product
-                   - mkdir build
-                   - cd build
-                   - cmake -DCMAKE_BUILD_TYPE=Debug ../../  
-    build_command: "make"
+    - cd product
+    - mkdir build
+    - cd build
+    - cmake -DCMAKE_BUILD_TYPE=Debug ../../
+    build_command: make
     branch_pattern: master
   apt:
     sources:
@@ -23,7 +22,6 @@ addons:
     - cmake-data
     - cmake
     - automake
-
 compiler:
 - gcc
 branches:
@@ -40,13 +38,11 @@ before_install:
 - cd ..
 - rm -rf automake-1.15
 - cd ..
-- echo -n | openssl s_client -connect https://scan.coverity.com:443 | sed -ne '/-BEGIN CERTIFICATE-/,/-END CERTIFICATE-/p' | sudo tee -a /etc/ssl/certs/ca-
+- echo -n | openssl s_client -connect https://scan.coverity.com:443 | sed -ne '/-BEGIN
+  CERTIFICATE-/,/-END CERTIFICATE-/p' | sudo tee -a /etc/ssl/certs/ca-
 install: ./build_dep.sh
-script: 
-   - make
-
+script:
+- make
 env:
   global:
-   # The next declaration is the encrypted COVERITY_SCAN_TOKEN, created
-   #    #   via the "travis encrypt" command using the project repo's public key
-   - secure: "OByBxV9vA3AjzWyhfLagqsyVqrPQx5YQ4fSLdGKfwN7Yb8MN9LDlsxt790+tHT3NZMcPJKzp2h/XcV0Oa0j6tBcqZQONFdGaXM7VFBQ2aXuKBid3YGCVSNPztDhe3ffT0zPEwAyiI4LfouBcmtEQdoULlPhtcJbg+H9IICKlYfnb8ksYMpbpr+EpbK4Oye+aS5+aRnQrI3NSHsYgbRS3S36xoKeGZHaL22lc5aZhfwpis3UZauJWKOkfoIYYjv70LGdyDa8JXMm7piZCfNmndtpuwHAemojGtSESu7J8/233q1y/0iXdDFQnsppDa3fxnMXs/jB4RqtjVoqWrYj26IN85lMyhfBdBkCi8Jb8+a11yuKjhuodqmXSomzDOypWrHrJx7x/Ej7g0E31hIIRsNZG5IDOk99HWIEFhK6mnG/mzwqMU/99/x8ZaY8ugwJMy27TgbEOJUClpsYJp6C76KL2Y7asYVj3Tv01548KlZfPs08/o63Psdx9QYkGdcmumzIn04S7QTuMljwocnxrHGlpk7sOnyhbx2fFv1MWJ4Uc6gUZ5TXqfglKcmLbCu1ADssGDpV3WYNpcuobWFX5r3qUU4oIzSbLrH4yumFhnU+lsqjgbfEgeAXBqmQIr3YrQ7Ya4YS6ozeOzESABPHVhkbAlBfyu86Xq1CaeY/y8bU="
+    secure: R7J+ic8/enGCBG2PcFm+qyilb5ac8/tMSYVXkH2Q64THbW8FB9JWcOMbbz8kAhiIteOsRmsMcdbGnNp5ygjbclGdIRVrIFudN3oA1M5QLmzKI3PnivdSATNlH4mrDWwcSdjIQn22GzsMX+ugHEXImeBN8AaMnbr8Qa2NdVcrv8AFRMS1d+WjBi4fraZWLWws40KT1j1cpNom0MwuWKhokQ88UKGsngegJoebxKw4yeAoHyYQbwOPhP59NVQlzvxq1pKuHNCxM0046KZEgXKj0iOQgPU4cVINnN2p15tlq201z6KJjHA0zCPSaBC9kU+02dQJ1/smsCn8j0S/0MTbA5+9Do/RIBNQg3YOyQLOBwiw/HBYcItLtO4FTDnC/YFKuTO1+9waEnscafJFqXdSN+QjSm8nbWF9CaKPRLQ2i2lt/iRz07tJy/R8WZRGdK/l7eOWrFJlfoUY/BI5dQDSW9wHFau7F8LZubufHavBC5sd+T4ZDQ0/idkXPkxAtOIcNX9eqa8Et8wHnaf27S0Fgv9mG4a5hbHUIiinFQaRUOVob0A47ojYKjEbtP90d1WdAFzMQVQi6x7liln+mSv7t5CVfGfGGNSKPKhRGT9i5P/K1IEK17B+tg3nQCXc2BZ6fkCH+LJfoT2WnuJFhjnPYF+sNWap9ZRbstR0OMulZ18=
