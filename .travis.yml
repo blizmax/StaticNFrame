@@ -23,7 +23,7 @@ before_install:
   - chmod a+x ./install.sh
   - sudo ./install.sh
 
-#install: ./build_dep.sh
+install: ./build_dep.sh
 
 #
 # Build Matrix
