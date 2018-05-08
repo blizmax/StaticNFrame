@@ -4,6 +4,7 @@
 #include <algorithm>
 #include <iostream>
 #include <functional>
+#include <cstdarg>
 
 #include "NFStringUtility.h"
 
