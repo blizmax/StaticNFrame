@@ -8,8 +8,8 @@
 #pragma comment( lib, "libprotobuf.lib" )
 #pragma comment( lib, "Theron.lib" )
 #pragma comment( lib, "g3dlite.lib" )
-//#pragma comment( lib, "libtcmalloc_minimal.lib" )
-#pragma comment( lib, "user32.lib")		//windows����
+#pragma comment( lib, "libtcmalloc_minimal.lib" )
+#pragma comment( lib, "user32.lib")		
 
 /////////////////////////////////////////////////////////////////
 #pragma comment( lib, "NFCore.lib" )
