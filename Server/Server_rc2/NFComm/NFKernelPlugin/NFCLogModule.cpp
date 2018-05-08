@@ -10,7 +10,7 @@
 #include <stdarg.h>
 #include "NFCLogModule.h"
 
-//#define ELPP_THREAD_SAFE                              //²»ÐèÒª¿ªÆô
+//#define ELPP_THREAD_SAFE                              //ï¿½ï¿½ï¿½ï¿½Òªï¿½ï¿½ï¿½ï¿½
 #include "easylogging++.h"
 #include "termcolor.hpp"
 #include "NFComm/NFPluginModule/NFIPluginManager.h"
@@ -75,9 +75,9 @@ NFCLogModule::NFCLogModule(NFIPluginManager* p)
 
 #else
 #ifdef NF_DEBUG_MODE
-    strAppLogName = pPluginManager->GetConfigPath() + "NFDataCfg/Debug/logconfig/" + strLogConfigName + ".conf";
+    strAppLogName = pPluginManager->GetConfigPath() + "Config/logconfig/" + strLogConfigName + ".conf";
 #else
-    strAppLogName = pPluginManager->GetConfigPath() + "NFDataCfg/Release/logconfig/" + strLogConfigName + ".conf";
+    strAppLogName = pPluginManager->GetConfigPath() + "Config/logconfig/" + strLogConfigName + ".conf";
 #endif
 #endif
 
