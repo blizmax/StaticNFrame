@@ -1236,3 +1236,17 @@ bool NFStringUtility::Bin2Hex(const char* bin_str, std::string* hex_str)
     return true;
 }
 
+#define TEMP_SIZE 102400
+
+std::string NFStringUtility::Format(std::string sz, ...)
+{
+	char sTemp[TEMP_SIZE];
+	va_list argList;
+	va_start(argList, sz);
+	//vsprintf_s(sTemp, sizeof(sTemp), sz.c_str(), argList);
+    vsnprintf(sTemp, sizeof(sTemp), sz.c_str(), argList);
+	va_end(argList);
+	return sTemp;
+
+};
+
