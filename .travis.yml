@@ -17,8 +17,7 @@ branches:
   - master
 
 before_install:
-  - cd $TRAVIS_BUILD_DIR/Tools
-  - chmod a+x install.sh
+  - chmod a+x ./install.sh
   - sudo ./install.sh
 
 install: ./build_dep.sh
