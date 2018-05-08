@@ -189,16 +189,20 @@ void NFProfiler::OutputNode(
 
     char* writePos = line + indentLength;
     int freeSize = NFCountArray(line) - indentLength;
-    snprintf(
-        writePos,
-        freeSize,
-        "+-[%5.2f%% %6.3fms count=%u]----%s%s\r\n",
-        node.sampleTime * 100.f / totalTime,
-        node.sampleTime / 1000000.f,
-        node.sampleCount,
-        node.name,
-        (node.parentIndex == PROFILER_MULTI_PARENT) ? "<multi parent>" : ""
-    );
+	if (totalTime > 0)
+	{
+		snprintf(
+			writePos,
+			freeSize,
+			"+-[%5.2f%% %6.3fms count=%u]----%s%s\r\n",
+			node.sampleTime * 100.f / totalTime,
+			node.sampleTime / 1000000.f,
+			node.sampleCount,
+			node.name,
+			(node.parentIndex == PROFILER_MULTI_PARENT) ? "<multi parent>" : ""
+		);
+	}
+
     writePos[freeSize - 1] = '\0';
     report->append(line);
 
@@ -256,7 +260,7 @@ bool NFProfiler::OutputTopProfilerTimer()
     CALL_TREE_NODE head;
     std::vector<CALL_TREE_NODE> tree;
 
-    long long totalTime = 0;
+    long long totalTime = 0LL;
     for (unsigned i = 0; i < mTimerCount; ++i)
     {
         PROFILE_TIMER* timer = mTimers[i];

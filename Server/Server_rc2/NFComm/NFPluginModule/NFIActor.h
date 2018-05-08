@@ -58,6 +58,7 @@ public:
     NFIActor(Theron::Framework& framework) : Theron::Actor(framework)
     {
         RegisterHandler(this, &NFIActor::DefaultHandler);
+		m_pActorModule = nullptr;
     }
 
     virtual ~NFIActor() {}

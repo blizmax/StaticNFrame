@@ -15,6 +15,7 @@ class NFThread
 public:
     NFThread()
     {
+		m_running = false;
     }
 
     ~NFThread()

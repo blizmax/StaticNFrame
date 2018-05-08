@@ -224,7 +224,7 @@ bool NFFileUtility::Mkdir(const string& dirpath) {
 #endif
 
 		// next dir
-		nCurSplit = nNextSplit + 1;
+		//nCurSplit = nNextSplit + 1;
 
 	} while (nNextSplit != string::npos);
 
@@ -309,9 +309,14 @@ bool NFFileUtility::ReadFileContent(const std::string& strFileName, std::string&
 
 	fseek(fp, 0, SEEK_END);
 	const long filelength = ftell(fp);
+	if (filelength < 0)
+	{
+		fclose(fp);
+		return false;
+	}
 	fseek(fp, 0, SEEK_SET);
-	strContent.resize(filelength);
-	fread((void*)strContent.data(), filelength, 1, fp);
+	strContent.resize((size_t)filelength);
+	fread((void*)strContent.data(), (size_t)filelength, 1, fp);
 	fclose(fp);
 
 	return true;

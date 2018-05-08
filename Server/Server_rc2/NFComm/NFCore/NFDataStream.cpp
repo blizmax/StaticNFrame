@@ -9,6 +9,7 @@
 #include "NFDataStream.h"
 
 #include <algorithm>
+#include <iostream>
 
 #if NF_PLATFORM == NF_PLATFORM_WIN
 #include <direct.h>
@@ -110,10 +111,14 @@ static void createDir(const string& strFileName) {
 		if (nCurSplit != 0 && nCurSplit != string::npos) {
 			// current dir
 #if NF_PLATFORM == NF_PLATFORM_WIN
-			_mkdir(strPathName.substr(0, nCurSplit).c_str());
+			int ret = _mkdir(strPathName.substr(0, nCurSplit).c_str());
 #else
-			mkdir(strPathName.substr(0, nCurSplit).c_str(), 0777);
+			int ret = mkdir(strPathName.substr(0, nCurSplit).c_str(), 0777) < 0)
 #endif
+			if (ret < 0)
+			{
+				std::cout << "create dir:" << strFileName << " failed" << std::endl;
+			}
 		}
 
 		nNextSplit = nCurSplit + 1;

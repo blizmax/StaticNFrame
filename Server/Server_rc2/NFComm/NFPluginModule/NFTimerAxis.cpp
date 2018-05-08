@@ -246,7 +246,7 @@ void NFFixTimerAxis::UpdateFix()
 			}
 
 			// ´¥·¢¶¨Ê±Æ÷
-			if (now - pFixTimer->nLastSec >= (pFixTimer->nInterDays * FIX_AXIS_ONE_DAY_SECOND))
+			if (now - pFixTimer->nLastSec >= ((uint64_t)pFixTimer->nInterDays * FIX_AXIS_ONE_DAY_SECOND))
 			{
 				pFixTimer->pHandler->OnTimer(pFixTimer->nTimerID);
 				pFixTimer = *it;

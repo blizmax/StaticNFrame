@@ -368,10 +368,27 @@ void NFClient::SetSocketId(SOCKET nSocket)
 {
 	m_nSocket = nSocket;
 	int tcp_nodelay = 1;
-	setsockopt(nSocket, IPPROTO_TCP, TCP_NODELAY, (const char *)&tcp_nodelay, sizeof(tcp_nodelay));
+	int ret = 0;
+	ret = setsockopt(nSocket, IPPROTO_TCP, TCP_NODELAY, (const char *)&tcp_nodelay, sizeof(tcp_nodelay));
+	if (ret < 0)
+	{
+		std::cout << "setsockopt TCP_NODELAY failed" << std::endl;
+	}
 	int bufflen = 65536;
-	setsockopt(nSocket, SOL_SOCKET, SO_RCVBUF, (const char *)&bufflen, sizeof(bufflen));
-	setsockopt(nSocket, SOL_SOCKET, SO_SNDBUF, (const char *)&bufflen, sizeof(bufflen));
+	ret = setsockopt(nSocket, SOL_SOCKET, SO_RCVBUF, (const char *)&bufflen, sizeof(bufflen));
+	if (ret < 0)
+	{
+		std::cout << "setsockopt SO_RCVBUF failed" << std::endl;
+	}
+	ret = setsockopt(nSocket, SOL_SOCKET, SO_SNDBUF, (const char *)&bufflen, sizeof(bufflen));
+	if (ret < 0)
+	{
+		std::cout << "setsockopt SO_SNDBUF failed" << std::endl;
+	}
 
-	evutil_make_socket_nonblocking(nSocket);
+	ret = evutil_make_socket_nonblocking(nSocket);
+	if (ret < 0)
+	{
+		std::cout << "evutil_make_socket_nonblocking failed" << std::endl;
+	}
 }

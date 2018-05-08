@@ -19,7 +19,7 @@
 
 #define LOG_BUFFER_LENGTH (1024 * 10)
 
-INITIALIZE_EASYLOGGINGPP
+INITIALIZE_EASYLOGGINGPP;
 
 unsigned int NFCLogModule::idx = 0;
 
@@ -47,7 +47,11 @@ void NFCLogModule::rolloutHandler(const char* filename, std::size_t size)
     if (!CheckLogFileExist(filename))
     {
         stream << filename << "." << idx;
-        rename(filename, stream.str().c_str());
+        int ret = rename(filename, stream.str().c_str());
+		if (ret < 0)
+		{
+			std::cout << "rename file:" << filename << " failed!" << std::endl;
+		}
     }
 }
 
@@ -287,22 +291,26 @@ bool NFCLogModule::ChangeLogLevel(const std::string& strLevel)
             el::Configuration errorConfiguration(el::Level::Error, el::ConfigurationType::Enabled, "false");
             pConfigurations->set(&errorConfiguration);
         }
+		break;
         case el::Level::Error:
         {
             el::Configuration warnConfiguration(el::Level::Warning, el::ConfigurationType::Enabled, "false");
             pConfigurations->set(&warnConfiguration);
         }
+		break;
         case el::Level::Warning:
         {
             el::Configuration infoConfiguration(el::Level::Info, el::ConfigurationType::Enabled, "false");
             pConfigurations->set(&infoConfiguration);
         }
+		break;
         case el::Level::Info:
         {
             el::Configuration debugConfiguration(el::Level::Debug, el::ConfigurationType::Enabled, "false");
             pConfigurations->set(&debugConfiguration);
 
         }
+		break;
         case el::Level::Debug:
             break;
         default:
