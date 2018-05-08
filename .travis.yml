@@ -47,7 +47,7 @@ script:
     - rm ./* -rf
     - cmake -DCMAKE_BUILD_TYPE=Debug ../../
     - build-wrapper-linux-x86-64 --out-dir bw-output make
-    - sonar-scanner -Dsonar.organization=yigao-github
+    - sonar-scanner -X -Dsonar.organization=yigao-github
 
 cache:
     directories:
