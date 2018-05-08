@@ -113,7 +113,7 @@ static void createDir(const string& strFileName) {
 #if NF_PLATFORM == NF_PLATFORM_WIN
 			int ret = _mkdir(strPathName.substr(0, nCurSplit).c_str());
 #else
-			int ret = mkdir(strPathName.substr(0, nCurSplit).c_str(), 0777) < 0);
+			int ret = mkdir(strPathName.substr(0, nCurSplit).c_str(), 0777);
 #endif
 			if (ret < 0)
 			{
