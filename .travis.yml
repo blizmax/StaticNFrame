@@ -1,6 +1,9 @@
 language: cpp
 sudo: required
 
+os:
+  - linux
+
 addons:
   apt:
     sources:
@@ -22,6 +25,9 @@ before_install:
 
 install: ./build_dep.sh
 
+#
+# Build Matrix
+#
 matrix:
   #
   #  Build and sonarcloud
