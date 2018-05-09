@@ -4,7 +4,7 @@ add_compile_options(-std=c++11)
 
 if( CMAKE_BUILD_TYPE MATCHES "Debug" )
 	set(CMAKE_C_FLAGS  "${CMAKE_C_FLAGS} -fPIC")
-	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -O0 -Wall -g -ggdb -DDEBUG -fPIC")
+	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -O0 -Wall -g -ggdb -D_DEBUG -fPIC")
 else()
 	set(CMAKE_BUILD_TYPE "Release")
 	set(CMAKE_C_FLAGS  "${CMAKE_C_FLAGS} -fPIC")

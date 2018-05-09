@@ -46,7 +46,6 @@ bool NFCTestKernelModule::Shut()
 
 void NFCTestKernelModule::OnTimer(uint32_t nTimerID)
 {
-	static bool flag = true;
 	if (nTimerID == eTimer_test)
 	{
 		LogWarning(eTimer_test, "eTimer_test", "use Time:" + lexical_cast<std::string>(NFGetTime()-lastTime));

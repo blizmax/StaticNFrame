@@ -30,7 +30,7 @@
     pManager->AddModule( #classBaseName, pRegisterModule##className );AddModule( #classBaseName, pRegisterModule##className );
 
 #define UNREGISTER_MODULE(pManager, classBaseName, className) NFIModule* pUnRegisterModule##className =  \
-    dynamic_cast<NFIModule*>( pManager->FindModule( #classBaseName )); \
+    dynamic_cast<NFIModule*>( pManager->FindModule( typeid(classBaseName).name() )); \
 	pManager->RemoveModule( #classBaseName ); RemoveModule( #classBaseName ); delete pUnRegisterModule##className;
 
 

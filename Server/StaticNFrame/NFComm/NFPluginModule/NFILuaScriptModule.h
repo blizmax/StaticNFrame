@@ -130,7 +130,6 @@ public:
 	bool GetLuaTableValue(const LuaIntf::LuaRef& table, const KEY& keyName, VALUE& value)
 	{
 		try {
-			bool result = false;
 			LuaIntf::LuaRef valueRef = table[keyName];
 			if (!valueRef.isValid())
 			{

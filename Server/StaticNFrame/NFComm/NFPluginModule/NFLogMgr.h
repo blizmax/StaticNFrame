@@ -7,7 +7,7 @@ class NFLogMgr : public NFSingleton<NFLogMgr>
 {
 public:
 	NFLogMgr();
-	~NFLogMgr();
+	virtual ~NFLogMgr();
 public:
 	bool Init(NFILogModule* p);
 	void UnInit();
