@@ -1,6 +1,6 @@
 #include "NFCTestClientModule.h"
 #include "NFComm/NFPluginModule/NFIPluginManager.h"
-#include "NFComm/NFMessageDefine/NFMsgDefine.h"
+#include "NFMessageDefine/NFMsgDefine.h"
 #include "NFComm/NFPluginModule/NFLogMgr.h"
 #include "NFComm/NFCore/NFRandom.hpp"
 #include "NFComm/NFCore/NFBuffer.h"
