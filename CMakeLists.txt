@@ -36,7 +36,7 @@ SET(INCLUDE_DIR "./" "/usr/local/include"
 	"${CMAKE_SOURCE_DIR}/Server/Dependencies"
 	"${CMAKE_SOURCE_DIR}/Server/Dependencies/protobuf/src"
 	"${CMAKE_SOURCE_DIR}/Server/Dependencies/navigation"
-	"${CMAKE_SOURCE_DIR}/Server/Server_rc2/")
+	"${CMAKE_SOURCE_DIR}/Server/StaticNFrame/")
 
 
 if (CMAKE_BUILD_TYPE MATCHES "Release")
@@ -44,15 +44,13 @@ if (CMAKE_BUILD_TYPE MATCHES "Release")
 			"/usr/local/lib"
 			"/usr/lib64"
 			"/usr/local/lib64"
-			"${CMAKE_SOURCE_DIR}/Product/Lib"
-			"${CMAKE_SOURCE_DIR}/Server/Lib/Release")
+			"${CMAKE_SOURCE_DIR}/Product/Lib/Release")
 else()
 	SET(LIB_DIR "/usr/lib"
 		"/usr/local/lib"
 		"/usr/lib64"
 		"/usr/local/lib64"
-		"${CMAKE_SOURCE_DIR}/Product/Lib"
-		"${CMAKE_SOURCE_DIR}/Server/Lib/Debug")
+		"${CMAKE_SOURCE_DIR}/Product/Lib/Debug")
 endif()
 
 SET(LIB_LINK_DEP libevent_core.a libevent_extra.a libtheron.a
@@ -68,8 +66,14 @@ link_directories( ${LIB_DIR} )
 PROJECT(Dependencies)
 ADD_SUBDIRECTORY("Server/Dependencies")
 
-PROJECT(NFTest)
-ADD_SUBDIRECTORY("Server/Server_rc2/NFTest")
+PROJECT(NFMessageDefine)
+ADD_SUBDIRECTORY("Server/NFMessageDefine")
 
 PROJECT(NFComm)
-ADD_SUBDIRECTORY("Server/Server_rc2/NFComm")
+ADD_SUBDIRECTORY("Server/StaticNFrame/NFComm")
+
+PROJECT(NFTest)
+ADD_SUBDIRECTORY("Server/StaticNFrame/NFTest")
+
+PROJECT(NFPluginLoader)
+ADD_SUBDIRECTORY("Server/StaticNFrame/NFPluginLoader")

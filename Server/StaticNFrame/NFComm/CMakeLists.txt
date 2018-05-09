@@ -22,7 +22,4 @@ ADD_SUBDIRECTORY("NFNetPlugin")
 PROJECT(NFPluginModule)
 ADD_SUBDIRECTORY("NFPluginModule")
 
-PROJECT(NFPluginLoader)
-ADD_SUBDIRECTORY("NFPluginLoader")
-
 
