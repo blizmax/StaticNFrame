@@ -294,10 +294,7 @@ void NFCPluginManager::SetLogConfigName(const std::string& strName)
 
 void NFCPluginManager::AddModule(const std::string& strModuleName, NFIModule* pModule)
 {
-    if (!FindModule(strModuleName))
-    {
-        mModuleInstanceMap.insert(ModuleInstanceMap::value_type(strModuleName, pModule));
-    }
+	mModuleInstanceMap.insert(ModuleInstanceMap::value_type(strModuleName, pModule));
 }
 
 void NFCPluginManager::RemoveModule(const std::string& strModuleName)
