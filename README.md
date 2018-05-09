@@ -1,6 +1,6 @@
-| Branch | Build Status | SonarCloud | CoverityScan |
+| Branch | Build Status | CoverityScan | SonarCloud |
 | - | - | - | - |
-| master | [![Build Status](https://travis-ci.org/yigao/StaticNFrame.svg?branch=master)](https://travis-ci.org/yigao/StaticNFrame) |     [![SonarCloud](https://sonarcloud.io/api/project_badges/measure?project=StaticNFrame&metric=alert_status) | [![CoverityScan](https://scan.coverity.com/projects/15695/badge.svg)](https://scan.coverity.com/projects/yigao-staticnframe) |
+| master | [![Build Status](https://travis-ci.org/yigao/StaticNFrame.svg?branch=master)](https://travis-ci.org/yigao/StaticNFrame) |      [![CoverityScan](https://scan.coverity.com/projects/15695/badge.svg)](https://scan.coverity.com/projects/yigao-staticnframe) | [![SonarCloud](https://sonarcloud.io/api/project_badges/measure?project=StaticNFrame&metric=alert_status) |
 
 **Copyright © [Static Game NFrame](https://StaticNFrame.com "Static Game NFrame")**    
 Website: https://StaticNFrame.com
