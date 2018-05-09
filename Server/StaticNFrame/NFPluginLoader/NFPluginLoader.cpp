@@ -306,6 +306,5 @@ int main(int argc, char* argv[])
 
     NFCPluginManager::GetSingletonPtr()->ReleaseInstance();
 
-    system("PAUSE");
     return 0;
 }
