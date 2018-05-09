@@ -13,7 +13,7 @@
 class NFTestPlugin : public NFIPlugin
 {
 public:
-    NFTestPlugin(NFIPluginManager* p)
+    explicit NFTestPlugin(NFIPluginManager* p)
     {
         pPluginManager = p;
     }

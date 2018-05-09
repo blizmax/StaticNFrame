@@ -14,7 +14,8 @@
 class NFCTimerModule : public NFITimerModule
 {
 public:
-    NFCTimerModule(NFIPluginManager* p);
+    explicit NFCTimerModule(NFIPluginManager* p);
+	virtual ~NFCTimerModule() { }
 public:
     virtual bool Init();
 

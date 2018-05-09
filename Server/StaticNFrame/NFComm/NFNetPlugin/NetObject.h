@@ -60,7 +60,6 @@ public:
 protected:
 	struct bufferevent* m_pBev;			//读写事件对象
 	uint32_t			m_usLinkId;					//分配的Id
-	stMsgFlag			m_flag;
 	SOCKET				m_nSocket;
 	uint32_t			m_usConn;
 	NFBuffer			m_buffer;

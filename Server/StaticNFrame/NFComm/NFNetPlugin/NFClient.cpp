@@ -2,18 +2,10 @@
 #include "NFComm/NFCore/NFPlatform.h"
 #include "NFComm/NFPluginModule/NFLogMgr.h"
 
-//#include "JyThread.h"
-
 void NFClient::conn_recvcb(struct bufferevent* pEv, void *pArg)
 {
 	NFClient*	pClient = (NFClient*)pArg;
 	if (pClient == nullptr) return;
-
-	time_t curTime = (time_t)NFGetTime();
-	time_t val = curTime - pClient->GetOnRecvTime();
-// 	if (val > 50) {
-// 		LOG(ERROR) << "RecvProc delayed time: " << val;
-// 	}
 
 	if (!pClient->OnRecvData(pEv))
 	{
@@ -24,7 +16,7 @@ void NFClient::conn_recvcb(struct bufferevent* pEv, void *pArg)
 
 void NFClient::conn_writecb(struct bufferevent* pEv, void *pArg)
 {
-
+	// Intentionally unimplemented...
 }
 
 void NFClient::conn_eventcb(struct bufferevent* pEv, short what, void *pArg)
@@ -53,37 +45,20 @@ void NFClient::conn_eventcb(struct bufferevent* pEv, short what, void *pArg)
 #endif
 		p->OnDisConnectLib();
 		LogWarning(0, "NetWarning", " CloseProc Error Code " + std::string(evutil_socket_error_to_string(EVUTIL_SOCKET_ERROR())));
-		//LOG(WARNING)<< " CloseProc Error Code "<< evutil_socket_error_to_string(EVUTIL_SOCKET_ERROR());
 	}
 }
-
-/*
-uint32_t STDCALL OnClientThread(void * data)
-{
-	NFClient* pClient = (NFClient*)data;
-	if (pClient){
-		pClient->Connect();
-	}
-	event_base_dispatch(pClient->GetMainBase());
-	return 0;
-}
-*/
 
 bool  NFClient::OnceLoop()
 {
-	if (m_bUseThread == false)
+	if (m_bUseThread == false && m_pMainBase)
 	{
-		if (m_pMainBase)
-		{
-			event_base_loop(m_pMainBase, EVLOOP_ONCE | EVLOOP_NONBLOCK);
-		}
+		event_base_loop(m_pMainBase, EVLOOP_ONCE | EVLOOP_NONBLOCK);
 	}
 	return true;
 }
 
 NFClient::NFClient()
 {
-	// TODO Auto-generated constructor stub
 	m_usPort = 0;
 	m_eStatus = eConnectStatus_UnConnect;
 	m_pMainBase=NULL;
@@ -95,8 +70,8 @@ NFClient::NFClient()
 	m_bUseThread = true;
 }
 
-NFClient::NFClient(uint32_t nId, const stClientFlag& flag):m_flag(flag) {
-	// TODO Auto-generated constructor stub
+NFClient::NFClient(uint32_t nId, const stClientFlag& flag):m_flag(flag) 
+{
 	m_usPort = 0;
 	m_eStatus = eConnectStatus_UnConnect;
 	m_pMainBase=NULL;
@@ -105,7 +80,6 @@ NFClient::NFClient(uint32_t nId, const stClientFlag& flag):m_flag(flag) {
 	m_pTimeoutEve = NULL;
 	m_tOnRecvTime=0;
 	m_bUseThread = true;
-	//m_flag = flag;
 	m_usLinkId = nId;
 	m_pingTime = 0;
 }
@@ -122,14 +96,12 @@ bool NFClient::Init()
 {
 	NetObject::Init();
 	m_pMainBase = event_base_new();
-	if (NULL == m_pMainBase) {
+	if (NULL == m_pMainBase) 
+	{
 		LogError(0, "NetError", "error: client event_base_new failed!");
-		//LOG(ERROR)<<"error: client event_base_new failed!";
 		return false;
 	}
-	//获取libevent使用的网络模型
-	//const char* szNetWorkIO = event_base_get_method(m_pMainBase);
-	//LOG(WARNING)<< "net type: "<< szNetWorkIO;
+
 	if (m_bUseThread)
 	{
 		StartThread();
@@ -195,9 +167,6 @@ void NFClient::ProcessMsgLogicThread()
 		}
 		break;
 		default:
-		{
-
-		}
 		break;
 		}
 		NFSafeDelete(pBuff);

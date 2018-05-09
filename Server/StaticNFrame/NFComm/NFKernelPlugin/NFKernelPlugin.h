@@ -13,10 +13,12 @@
 class NFKernelPlugin : public NFIPlugin
 {
 public:
-    NFKernelPlugin(NFIPluginManager* p)
+    explicit NFKernelPlugin(NFIPluginManager* p)
     {
         pPluginManager = p;
     }
+
+	virtual ~NFKernelPlugin() { }
 
     virtual const int GetPluginVersion();
 

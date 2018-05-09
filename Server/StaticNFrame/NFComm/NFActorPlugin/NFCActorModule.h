@@ -22,7 +22,7 @@ class NFCActorModule
     : public NFIActorModule
 {
 public:
-    NFCActorModule(NFIPluginManager* p);
+    explicit NFCActorModule(NFIPluginManager* p);
     virtual ~NFCActorModule();
 
     virtual bool Init();
@@ -37,6 +37,8 @@ public:
 
     virtual bool Execute();
 
+//////////////////////////////////////////////////////////////////////////////
+
     virtual int RequireActor();
 
     virtual bool SendMsgToActor(const int nActorIndex, uint64_t objectID, const int nEventID, const std::string& strArg);
@@ -47,7 +49,7 @@ public:
 
     virtual NFIActor* GetActor(const int nActorIndex);
 
-public:
+///////////////////////////////////////////////////////////////////////////////////////////
 
     virtual bool AddEndFunc(const int nActorIndex, const int nSubMsgID, ACTOR_PROCESS_FUNCTOR functorPtr);
 

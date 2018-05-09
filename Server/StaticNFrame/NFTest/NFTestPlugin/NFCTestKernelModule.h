@@ -44,7 +44,8 @@ class NFCTestKernelModule : public NFITestKernelModule, NFTimerObj, NFEventObj
 		eTimer_test = 1,
 	};
 public:
-    NFCTestKernelModule(NFIPluginManager* p);
+    explicit NFCTestKernelModule(NFIPluginManager* p);
+	virtual ~NFCTestKernelModule() { }
 public:
     virtual bool Init();
 

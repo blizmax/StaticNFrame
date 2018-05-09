@@ -149,17 +149,14 @@ void NFCNetClientModule::CloseServer(const uint32_t unLinkId)
 	uint32_t serverType = GetServerTypeFromUnlinkId(unLinkId);
 	uint32_t serverIndex = GetServerIndexFromUnlinkId(unLinkId);
 
-	if (serverType < NF_ST_MAX)
+	if (serverType < NF_ST_MAX && serverIndex < mxServerMap[serverType].size())
 	{
-		if (serverIndex < mxServerMap[serverType].size())
+		NFClient* pClient = mxServerMap[serverType][serverIndex];
+		if (pClient)
 		{
-			NFClient* pClient = mxServerMap[serverType][serverIndex];
-			if (pClient)
-			{
-				pClient->Shut();
-				NFSafeDelete(pClient);
-				mxServerMap[serverType][serverIndex] = nullptr;
-			}
+			pClient->Shut();
+			NFSafeDelete(pClient);
+			mxServerMap[serverType][serverIndex] = nullptr;
 		}
 	}
 }
@@ -217,19 +214,16 @@ void NFCNetClientModule::SendByServerID(const uint32_t unLinkId, const uint32_t 
 	uint32_t serverType = GetServerTypeFromUnlinkId(unLinkId);
 	uint32_t serverIndex = GetServerIndexFromUnlinkId(unLinkId);
 
-	if (serverType < NF_ST_MAX)
+	if (serverType < NF_ST_MAX && serverIndex < mxServerMap[serverType].size())
 	{
-		if (serverIndex < mxServerMap[serverType].size())
+		NFClient* pClient = mxServerMap[serverType][serverIndex];
+		if (pClient)
 		{
-			NFClient* pClient = mxServerMap[serverType][serverIndex];
-			if (pClient)
-			{
-				SendMsg(pClient, nMsgID, msg, nLen, nPlayerID);
-			}
-			else
-			{
-				assert(0);
-			}
+			SendMsg(pClient, nMsgID, msg, nLen, nPlayerID);
+		}
+		else
+		{
+			assert(0);
 		}
 	}
 }

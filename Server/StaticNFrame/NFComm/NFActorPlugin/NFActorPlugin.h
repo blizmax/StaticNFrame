@@ -5,10 +5,12 @@
 class NFActorPlugin : public NFIPlugin
 {
 public:
-    NFActorPlugin(NFIPluginManager* p)
+    explicit NFActorPlugin(NFIPluginManager* p)
     {
         pPluginManager = p;
     }
+
+	virtual ~NFActorPlugin() { }
 
     virtual const int GetPluginVersion();
 

@@ -47,7 +47,7 @@ class NFCEventModule
 {
 	typedef EventTemplate< NFEventObj, OnEventExecuteObj > TEXECUTE_CENTER;
 public:
-    NFCEventModule(NFIPluginManager* p)
+    explicit NFCEventModule(NFIPluginManager* p)
     {
         pPluginManager = p;
     }

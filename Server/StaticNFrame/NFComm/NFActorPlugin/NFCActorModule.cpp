@@ -16,7 +16,6 @@ NFCActorModule::NFCActorModule(NFIPluginManager* p)
     srand((unsigned)time(NULL));
 
     m_pFramework = NF_NEW Theron::Framework(std::thread::hardware_concurrency());
-    //m_pFramework = NF_NEW Theron::Framework(1);
 
     m_pMainActor = NF_NEW NFCActor(*m_pFramework, this);
 }
@@ -116,9 +115,6 @@ bool NFCActorModule::ExecuteEvent()
         if (xMsg.msgType != NFIActorMessage::ACTOR_MSG_TYPE_COMPONENT && xMsg.xEndFuncptr != nullptr)
         {
             xMsg.xEndFuncptr(xMsg.self, xMsg.nFormActor, xMsg.nMsgID, xMsg.data);
-
-            //Actor can be reused in ActorPool mode, so we don't release it.
-            //m_pActorManager->ReleaseActor(xMsg.nFormActor);
         }
 
         bRet = mxQueue.Pop(xMsg);

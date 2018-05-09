@@ -6,13 +6,15 @@
 class NFCTestClientModule : public NFIModule, NFTimerObj 
 {
 public:
-	NFCTestClientModule(NFIPluginManager* p)
+	explicit NFCTestClientModule(NFIPluginManager* p)
 	{
 		pPluginManager = p;
 		m_usId = 0;
 		m_serverId = 0;
 		m_pNetClientModule = nullptr;
 	}
+
+	virtual ~NFCTestClientModule() { }
 public:
     virtual bool Init();
 

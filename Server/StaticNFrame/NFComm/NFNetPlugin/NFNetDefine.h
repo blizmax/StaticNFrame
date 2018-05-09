@@ -80,7 +80,6 @@ struct stServerFlag
 
 struct stClientFlag
 {
-	stMsgFlag		flag;
 	bool			bAutoConnect; //自动重连
 	bool			bEncrypt;
 	uint16_t		nPort;

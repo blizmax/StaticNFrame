@@ -9,9 +9,9 @@
 class NFCNetClientModule: public NFINetClientModule
 {
 public:
-	NFCNetClientModule(NFIPluginManager* p);
+	explicit NFCNetClientModule(NFIPluginManager* p);
 	virtual ~NFCNetClientModule();
-public:
+/////////////////////////////////////////////////////////////////////
 	virtual bool Init() override;
 
 	virtual bool AfterInit() override;
@@ -23,7 +23,9 @@ public:
 	virtual bool Execute() override;
 
 	virtual bool Finalize() override;
-public:
+
+///////////////////////////////////////////////////////////////////////
+
 	virtual uint32_t AddServer(NF_SERVER_TYPES eServerType, const std::string& strIp, const int nPort, bool useThread = true);
 
 	virtual void CloseServer(const uint32_t unLinkId);
@@ -32,8 +34,8 @@ public:
 
 	virtual void CloseAllServer();
 
-public:
-    ////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+
 	virtual void SendByServerID(const uint32_t unLinkId, const uint32_t nMsgID, const std::string& strData, const uint64_t nPlayerID);
 
 	virtual void SendByServerID(const uint32_t unLinkId, const uint32_t nMsgID, const char* msg, const uint32_t nLen, const uint64_t nPlayerID);
@@ -57,7 +59,9 @@ protected:
 	int OnConnected(const eMsgType nEvent, const uint32_t unLinkId);
 
 	int OnDisConnected(const eMsgType nEvent, const uint32_t unLinkId);
-protected:
+
+////////////////////////////////////////////////////////////////////////////////
+
 	virtual uint32_t GetFreeUnLinkId(NF_SERVER_TYPES eServerType);
 
 	void SendMsg(NFClient* pClient, const uint32_t nMsgID, const char* msg, const uint32_t nLen, const uint64_t nPlayerID);	
@@ -65,6 +69,7 @@ protected:
 	void OnReceiveNetPack(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen);
 
 	void OnSocketNetEvent(const eMsgType nEvent, const uint32_t unLinkId);
+
 private:
     std::vector<std::vector<NFClient*>> mxServerMap;
 	NFBuffer	mxSendBuffer;

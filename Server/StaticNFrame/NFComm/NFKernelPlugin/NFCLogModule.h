@@ -16,8 +16,7 @@ class NFCLogModule
     : public NFILogModule
 {
 public:
-
-    NFCLogModule(NFIPluginManager* p);
+    explicit NFCLogModule(NFIPluginManager* p);
     virtual ~NFCLogModule() {}
 
     virtual bool Awake();

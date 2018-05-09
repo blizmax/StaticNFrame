@@ -7,9 +7,9 @@
 
 struct stMsg
 {
-	stMsg() { wCmdID = 0; wSZ = 0; ulValue = 0; }
-	stMsg(uint16_t wCmd) { wCmdID = wCmd; wSZ = 0; ulValue = 0; }
-	uint32_t		wSZ;
+public:
+	stMsg():wSZ(0),wCmdID(0),ulValue(0) { }
+	uint32_t	wSZ;
 	uint16_t	wCmdID;
 	uint64_t	ulValue;
 };

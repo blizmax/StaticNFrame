@@ -13,7 +13,7 @@
 class NFNetPlugin : public NFIPlugin
 {
 public:
-    NFNetPlugin(NFIPluginManager* p)
+    explicit NFNetPlugin(NFIPluginManager* p)
     {
         pPluginManager = p;
     }

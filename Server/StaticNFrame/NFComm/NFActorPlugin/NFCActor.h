@@ -40,7 +40,7 @@ protected:
     //the purpose is to push message to main thread
     virtual void HandlerEx(const NFIActorMessage& message, const Theron::Address& from);
 
-protected:
+private:
     std::map<std::string, NFIComponent*> mxComponent;
 
     std::map<int, ACTOR_PROCESS_FUNCTOR> mxProcessFuntor;

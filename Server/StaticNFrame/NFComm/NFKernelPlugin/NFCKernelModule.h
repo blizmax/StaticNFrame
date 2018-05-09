@@ -23,7 +23,7 @@ class NFITimerModule;
 class NFCKernelModule : public NFIKernelModule
 {
 public:
-    NFCKernelModule(NFIPluginManager* p);
+    explicit NFCKernelModule(NFIPluginManager* p);
     virtual ~NFCKernelModule();
 
     virtual bool Init();
