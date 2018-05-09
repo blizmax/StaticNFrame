@@ -9,8 +9,8 @@ void NFClient::conn_recvcb(struct bufferevent* pEv, void *pArg)
 	NFClient*	pClient = (NFClient*)pArg;
 	if (pClient == nullptr) return;
 
-	time_t curTime = (time_t)NFGetTime();
-	time_t val = curTime - pClient->GetOnRecvTime();
+//	time_t curTime = (time_t)NFGetTime();
+//	time_t val = curTime - pClient->GetOnRecvTime();
 // 	if (val > 50) {
 // 		LOG(ERROR) << "RecvProc delayed time: " << val;
 // 	}
