@@ -22,6 +22,7 @@ branches:
 before_install:
   - chmod a+x ./install.sh
   - sudo ./install.sh
+  - echo -n | openssl s_client -connect https://scan.coverity.com:443 | sed -ne '/-BEGIN CERTIFICATE-/,/-END CERTIFICATE-/p' | sudo tee -a /etc/ssl/certs/ca-
 
 install: ./build_dep.sh
 
@@ -52,4 +53,29 @@ matrix:
 
     cache:
          directories:
-              - '$HOME/.sonar/cache' 
+              - '$HOME/.sonar/cache'
+
+
+
+
+  - os: linux
+
+    coverity_scan:
+      project:
+        name: yigao/StaticNFrame
+        description: Static Game Frame
+    notification_email: 445267987@qq.com
+    build_command_prepend: "cd Product; mkdir build; cd build; rm ./* -rf; cmake -DCMAKE_BUILD_TYPE=Debug ../../"
+    build_command: "make"
+    branch_pattern: master
+	
+    script:
+       - export
+       - if [ "${COVERITY_SCAN_BRANCH}" != 1 ]; then 
+           cd Product; mkdir build; cd build; rm ./* -rf; cmake -DCMAKE_BUILD_TYPE=Debug ../../; make;
+         fi
+
+    env:
+    global:
+        secure: R7J+ic8/enGCBG2PcFm+qyilb5ac8/tMSYVXkH2Q64THbW8FB9JWcOMbbz8kAhiIteOsRmsMcdbGnNp5ygjbclGdIRVrIFudN3oA1M5QLmzKI3PnivdSATNlH4mrDWwcSdjIQn22GzsMX+ugHEXImeBN8AaMnbr8Qa2NdVcrv8AFRMS1d+WjBi4fraZWLWws40KT1j1cpNom0MwuWKhokQ88UKGsngegJoebxKw4yeAoHyYQbwOPhP59NVQlzvxq1pKuHNCxM0046KZEgXKj0iOQgPU4cVINnN2p15tlq201z6KJjHA0zCPSaBC9kU+02dQJ1/smsCn8j0S/0MTbA5+9Do/RIBNQg3YOyQLOBwiw/HBYcItLtO4FTDnC/YFKuTO1+9waEnscafJFqXdSN+QjSm8nbWF9CaKPRLQ2i2lt/iRz07tJy/R8WZRGdK/l7eOWrFJlfoUY/BI5dQDSW9wHFau7F8LZubufHavBC5sd+T4ZDQ0/idkXPkxAtOIcNX9eqa8Et8wHnaf27S0Fgv9mG4a5hbHUIiinFQaRUOVob0A47ojYKjEbtP90d1WdAFzMQVQi6x7liln+mSv7t5CVfGfGGNSKPKhRGT9i5P/K1IEK17B+tg3nQCXc2BZ6fkCH+LJfoT2WnuJFhjnPYF+sNWap9ZRbstR0OMulZ18=
+	
