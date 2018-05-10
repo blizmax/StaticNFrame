@@ -28,28 +28,28 @@ install: ./build_dep.sh
 #
 # Build Matrix
 #
-#matrix:
+matrix:
   #
   #  Build and sonarcloud
   #    
-#  - os: linux
+  - os: linux
   
-addons:
-   sonarcloud:
-       organization: "yigao-github"
-       token:
-            secure: "OSl/BVFjAozurwWeg0P2x2ToEXl/vTgtjEoRt9W6UWLo2KPOb1/p1Jn7fbm3MAxHadiT6d5Z3bcIegNmf5oah4EwpdNlSiqKHcrayHC33sCITpyW5eNnhaTgMMuT0iTDTjsiL18xHHJem1cOaaOOP2wr1FouTzOtzRQnbBmix3kOGEyGSPFE4UcTf31vxDzlaatWhpNJ1yYPjAsojMREumFXBFuRxCjGhe0xmw9PNO0iyWVMRk1CkDESLnuCdoi1kug6ZVWWYK6CMksdqPx60/sP2np3F65uSjHrrhWfG5iyBdirgY+OEiW8jeZ3A+2n0Sb6+1Z0QSs1DnpG6D0P2WNbMnfBLGnLkxNWiWlLrQKjS2nMkdZP0Mx83MIl7PqFNDK/ReA9xBXoC2B18QYMuPzTp8yJ22xwUrdrpPQwtTCwoej4J8Ec1GlMG0qtv/6HDo3mB+qrwP+ZThY570fLR/gm96kTKkLvOeQJl+BrUmY+/MfCdBW6M9BtuLxvGs6JzJAJAXFaSMKz11fFoLoJCm0/M93CECc3rUMk0ralaqUMLEIYkT4qxn/mAWgwpuQ4m1NMXP8xLB7W7VLWhYe+Wb2hsx6as1i8j3b6L1y84c8HfNH+DAyCa0hJRUoD/nGf6dj/wm42VPALg/+Zf7DxfUoKYGtceOk6KMqssuLEx1Q="
+    addons:
+       sonarcloud:
+           organization: "yigao-github"
+           token:
+              secure: "OSl/BVFjAozurwWeg0P2x2ToEXl/vTgtjEoRt9W6UWLo2KPOb1/p1Jn7fbm3MAxHadiT6d5Z3bcIegNmf5oah4EwpdNlSiqKHcrayHC33sCITpyW5eNnhaTgMMuT0iTDTjsiL18xHHJem1cOaaOOP2wr1FouTzOtzRQnbBmix3kOGEyGSPFE4UcTf31vxDzlaatWhpNJ1yYPjAsojMREumFXBFuRxCjGhe0xmw9PNO0iyWVMRk1CkDESLnuCdoi1kug6ZVWWYK6CMksdqPx60/sP2np3F65uSjHrrhWfG5iyBdirgY+OEiW8jeZ3A+2n0Sb6+1Z0QSs1DnpG6D0P2WNbMnfBLGnLkxNWiWlLrQKjS2nMkdZP0Mx83MIl7PqFNDK/ReA9xBXoC2B18QYMuPzTp8yJ22xwUrdrpPQwtTCwoej4J8Ec1GlMG0qtv/6HDo3mB+qrwP+ZThY570fLR/gm96kTKkLvOeQJl+BrUmY+/MfCdBW6M9BtuLxvGs6JzJAJAXFaSMKz11fFoLoJCm0/M93CECc3rUMk0ralaqUMLEIYkT4qxn/mAWgwpuQ4m1NMXP8xLB7W7VLWhYe+Wb2hsx6as1i8j3b6L1y84c8HfNH+DAyCa0hJRUoD/nGf6dj/wm42VPALg/+Zf7DxfUoKYGtceOk6KMqssuLEx1Q="
 
-script:
-    - cd $TRAVIS_BUILD_DIR/Product
-    - mkdir build
-    - cd build
-    - rm ./* -rf
-    - cmake -DCMAKE_BUILD_TYPE=Debug ../../
-    - build-wrapper-linux-x86-64 --out-dir bw-output make
-    - cd $TRAVIS_BUILD_DIR
-    - sonar-scanner -X -Dsonar.organization=yigao-github
+    script:
+        - cd $TRAVIS_BUILD_DIR/Product
+        - mkdir build
+        - cd build
+        - rm ./* -rf
+        - cmake -DCMAKE_BUILD_TYPE=Debug ../../
+        - build-wrapper-linux-x86-64 --out-dir bw-output make
+        - cd $TRAVIS_BUILD_DIR
+        - sonar-scanner -X -Dsonar.organization=yigao-github
 
-cache:
-    directories:
-        - '$HOME/.sonar/cache' 
+    cache:
+         directories:
+              - '$HOME/.sonar/cache' 
