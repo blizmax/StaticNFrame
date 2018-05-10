@@ -1,52 +1,48 @@
 language: cpp
 sudo: required
-
 os:
-  - linux
-
+- linux
 addons:
+  coverity_scan:
+    project:
+      name: yigao/StaticNFrame
+      description: Static Game Frame
+    notification_email: 445267987@qq.com
+    build_command_prepend: "cd Product; mkdir build; cd build; cmake -DCMAKE_BUILD_TYPE=Debug ../../"
+    build_command: "make"
+    branch_pattern: master
   apt:
     sources:
     - george-edison55-precise-backports
     packages:
+    - cmake-data
     - cmake
     - automake
-
 compiler:
 - gcc
-
 branches:
   only:
   - master
-
 before_install:
-  - chmod a+x ./install.sh
-  - sudo ./install.sh
-  - echo -n | openssl s_client -connect https://scan.coverity.com:443 | sed -ne '/-BEGIN CERTIFICATE-/,/-END CERTIFICATE-/p' | sudo tee -a /etc/ssl/certs/ca-
-
-
+- cd Tools
+- tar -xvf automake-1.15.tar.gz
+- cd automake-1.15
+- chmod a+x ./configure
+- ./configure
+- make
+- sudo make install
+- cd ..
+- rm -rf automake-1.15
+- cd ..
+- echo -n | openssl s_client -connect https://scan.coverity.com:443 | sed -ne '/-BEGIN
+  CERTIFICATE-/,/-END CERTIFICATE-/p' | sudo tee -a /etc/ssl/certs/ca-
 install: ./build_dep.sh
-
-#
-#  Build and sonarcloud
-#    
-
-addons:
-    sonarcloud:
-        organization: "yigao-github"
-        token:
-            secure: "OSl/BVFjAozurwWeg0P2x2ToEXl/vTgtjEoRt9W6UWLo2KPOb1/p1Jn7fbm3MAxHadiT6d5Z3bcIegNmf5oah4EwpdNlSiqKHcrayHC33sCITpyW5eNnhaTgMMuT0iTDTjsiL18xHHJem1cOaaOOP2wr1FouTzOtzRQnbBmix3kOGEyGSPFE4UcTf31vxDzlaatWhpNJ1yYPjAsojMREumFXBFuRxCjGhe0xmw9PNO0iyWVMRk1CkDESLnuCdoi1kug6ZVWWYK6CMksdqPx60/sP2np3F65uSjHrrhWfG5iyBdirgY+OEiW8jeZ3A+2n0Sb6+1Z0QSs1DnpG6D0P2WNbMnfBLGnLkxNWiWlLrQKjS2nMkdZP0Mx83MIl7PqFNDK/ReA9xBXoC2B18QYMuPzTp8yJ22xwUrdrpPQwtTCwoej4J8Ec1GlMG0qtv/6HDo3mB+qrwP+ZThY570fLR/gm96kTKkLvOeQJl+BrUmY+/MfCdBW6M9BtuLxvGs6JzJAJAXFaSMKz11fFoLoJCm0/M93CECc3rUMk0ralaqUMLEIYkT4qxn/mAWgwpuQ4m1NMXP8xLB7W7VLWhYe+Wb2hsx6as1i8j3b6L1y84c8HfNH+DAyCa0hJRUoD/nGf6dj/wm42VPALg/+Zf7DxfUoKYGtceOk6KMqssuLEx1Q="
-
 script:
-        - cd $TRAVIS_BUILD_DIR/Product
-        - mkdir build
-        - cd build
-        - rm ./* -rf
-        - cmake -DCMAKE_BUILD_TYPE=Debug ../../
-        - build-wrapper-linux-x86-64 --out-dir bw-output make
-        - cd $TRAVIS_BUILD_DIR
-        - sonar-scanner -X -Dsonar.organization=yigao-github
+  - export
+  - if [ "${COVERITY_SCAN_BRANCH}" != 1 ]; then 
+       cd Product; mkdir build; cd build; cmake -DCMAKE_BUILD_TYPE=Debug ../../; make;
+    fi
 
-cache:
-    directories:
-        - '$HOME/.sonar/cache'
+env:
+  global:
+    secure: R7J+ic8/enGCBG2PcFm+qyilb5ac8/tMSYVXkH2Q64THbW8FB9JWcOMbbz8kAhiIteOsRmsMcdbGnNp5ygjbclGdIRVrIFudN3oA1M5QLmzKI3PnivdSATNlH4mrDWwcSdjIQn22GzsMX+ugHEXImeBN8AaMnbr8Qa2NdVcrv8AFRMS1d+WjBi4fraZWLWws40KT1j1cpNom0MwuWKhokQ88UKGsngegJoebxKw4yeAoHyYQbwOPhP59NVQlzvxq1pKuHNCxM0046KZEgXKj0iOQgPU4cVINnN2p15tlq201z6KJjHA0zCPSaBC9kU+02dQJ1/smsCn8j0S/0MTbA5+9Do/RIBNQg3YOyQLOBwiw/HBYcItLtO4FTDnC/YFKuTO1+9waEnscafJFqXdSN+QjSm8nbWF9CaKPRLQ2i2lt/iRz07tJy/R8WZRGdK/l7eOWrFJlfoUY/BI5dQDSW9wHFau7F8LZubufHavBC5sd+T4ZDQ0/idkXPkxAtOIcNX9eqa8Et8wHnaf27S0Fgv9mG4a5hbHUIiinFQaRUOVob0A47ojYKjEbtP90d1WdAFzMQVQi6x7liln+mSv7t5CVfGfGGNSKPKhRGT9i5P/K1IEK17B+tg3nQCXc2BZ6fkCH+LJfoT2WnuJFhjnPYF+sNWap9ZRbstR0OMulZ18=
