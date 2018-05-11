@@ -184,6 +184,7 @@
     <ClCompile Include="NFBuffer.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="NFLikely.h" />
     <ClInclude Include="NFBase64.h" />
     <ClInclude Include="NFNetBuffer.h" />
     <ClInclude Include="NFConsistentHash.hpp" />

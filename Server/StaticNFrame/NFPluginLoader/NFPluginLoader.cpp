@@ -215,11 +215,8 @@ void ProcessParameter(int argc, char* argv[])
             }
         }
 
-        int nAppID = 0;
-        if (NF_StrTo(strAppID, nAppID))
-        {
-            NFCPluginManager::GetSingletonPtr()->SetAppID(nAppID);
-        }
+        int nAppID = lexical_cast<int>(strAppID);
+        NFCPluginManager::GetSingletonPtr()->SetAppID(nAppID);
     }
 
     if (strArgvList.find("Path=") != string::npos)

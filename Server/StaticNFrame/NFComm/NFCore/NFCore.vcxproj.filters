@@ -152,5 +152,8 @@
     <ClInclude Include="NFSimpleBuffer.h">
       <Filter>Common</Filter>
     </ClInclude>
+    <ClInclude Include="NFLikely.h">
+      <Filter>Common</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
