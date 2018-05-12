@@ -274,6 +274,19 @@ public:
     static bool Bin2Hex(const char* bin_str, std::string* hex_str);
 
 	static std::string Format(std::string sz, ...);
+
+	// Return a C++ string
+	static std::string StringPrintf(const char* format, ...);
+
+	// Store result into a supplied string and return it
+	static const std::string& SStringPrintf(std::string* dst, const char* format, ...);
+
+	// Append result to a supplied string
+	static void StringAppendF(std::string* dst, const char* format, ...);
+
+	// Lower-level routine that takes a va_list and appends to a specified
+	// string.  All other routines are just convenience wrappers around it.
+	static void StringAppendV(std::string* dst, const char* format, va_list ap);
 };
 
 class _NFExport NFStringUtilW {
