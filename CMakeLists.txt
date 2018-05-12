@@ -14,13 +14,6 @@ endif()
 message("PROJECT_SOURCE_DIR = ${PROJECT_SOURCE_DIR}")
 message("CMAKE_SOURCE_DIR = ${CMAKE_SOURCE_DIR}")
 
-
-add_definitions(
-	-DELPP_NO_DEFAULT_LOG_FILE
-	-DELPP_FEATURE_ALL
-)
-
-
 SET(INCLUDE_DIR "./" "/usr/local/include"
 	"${CMAKE_SOURCE_DIR}/Server"
 	"${CMAKE_SOURCE_DIR}/Server/Dependencies/lua"
