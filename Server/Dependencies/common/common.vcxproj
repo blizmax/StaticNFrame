@@ -21,6 +21,7 @@
   <ItemGroup>
     <ClInclude Include="easylogging++.h" />
     <ClInclude Include="lexical_cast.hpp" />
+    <ClInclude Include="logconfig.h" />
     <ClInclude Include="optional.hpp" />
     <ClInclude Include="variant.hpp" />
   </ItemGroup>
@@ -92,7 +93,7 @@
       </PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;ELPP_NO_DEFAULT_LOG_FILE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
     </ClCompile>
@@ -123,7 +124,7 @@
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;ELPP_NO_DEFAULT_LOG_FILE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
     </ClCompile>

@@ -10,7 +10,7 @@
 #include <stdarg.h>
 #include "NFCLogModule.h"
 
-//#define ELPP_THREAD_SAFE                              //
+
 #include "common/easylogging++.h"
 #include "termcolor.hpp"
 #include "NFComm/NFPluginModule/NFIPluginManager.h"
@@ -22,6 +22,16 @@
 INITIALIZE_EASYLOGGINGPP;
 
 unsigned int NFCLogModule::idx = 0;
+
+#ifdef ELPP_FEATURE_ALL
+void NFCLogModule::LogCrashHandler(int sig)
+{
+    // FOLLOWING LINE IS OPTIONAL
+    el::Helpers::logCrashReason(sig, true);
+    // FOLLOWING LINE IS ABSOLUTELY NEEDED AT THE END IN ORDER TO ABORT APPLICATION
+    el::Helpers::crashAbort(sig);
+}
+#endif
 
 bool NFCLogModule::CheckLogFileExist(const char* filename)
 {
@@ -90,6 +100,9 @@ NFCLogModule::NFCLogModule(NFIPluginManager* p)
 
     el::Loggers::reconfigureAllLoggers(conf);
     el::Helpers::installPreRollOutCallback(rolloutHandler);
+#ifdef ELPP_FEATURE_ALL
+	el::Helpers::setCrashHandler(NFCLogModule::LogCrashHandler);
+#endif
 }
 
 bool NFCLogModule::Awake()
@@ -99,6 +112,9 @@ bool NFCLogModule::Awake()
 
 bool NFCLogModule::Init()
 {
+	std::string *p = new std::string();
+	delete p;
+	p->clear();
     return true;
 }
 
