@@ -1,6 +1,7 @@
 #include "NFComm/NFCore/NFPlatform.h"
 
 #if NF_PLATFORM == NF_PLATFORM_WIN
+#pragma comment( lib, "common.lib")		
 #pragma comment( lib, "lua.lib" )
 #pragma comment( lib, "navigation.lib" )
 #pragma comment( lib, "libevent.lib" )
