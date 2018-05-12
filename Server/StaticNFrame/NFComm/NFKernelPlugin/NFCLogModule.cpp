@@ -10,7 +10,7 @@
 #include <stdarg.h>
 #include "NFCLogModule.h"
 
-//#define ELPP_THREAD_SAFE                              //����Ҫ����
+//#define ELPP_THREAD_SAFE                              //
 #include "common/easylogging++.h"
 #include "termcolor.hpp"
 #include "NFComm/NFPluginModule/NFIPluginManager.h"
