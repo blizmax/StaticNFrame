@@ -11,7 +11,7 @@
 #include "NFCLogModule.h"
 
 //#define ELPP_THREAD_SAFE                              //����Ҫ����
-#include "easylogging++.h"
+#include "common/easylogging++.h"
 #include "termcolor.hpp"
 #include "NFComm/NFPluginModule/NFIPluginManager.h"
 #include "NFComm/NFCore/NFProfiler.h"

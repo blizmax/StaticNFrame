@@ -1,7 +1,7 @@
 // -------------------------------------------------------------------------
-//    @FileName         :    NFError.cpp
+//    @FileName         :    NFError.cpp 
 //    @Author           :    GaoYi
-//    @Date             :    2017-05-12
+//    @Date             :    2017-04-01
 //    @Email			:    445267987@qq.com
 //    @Module           :    NFCore
 //

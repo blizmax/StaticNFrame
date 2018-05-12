@@ -1,11 +1,11 @@
-#pragma once
-
-/*
-* NFDeclareProperty.h
-*
-*  Created on: Sep 1, 2017
-*      Author: gaoyi
-*/
+// -------------------------------------------------------------------------
+//    @FileName         :    NFDeclareProperty.h
+//    @Author           :    GaoYi
+//    @Date             :    2017-04-01
+//    @Email			:    445267987@qq.com
+//    @Module           :    NFCore
+//
+// -------------------------------------------------------------------------
 
 #pragma once
 
