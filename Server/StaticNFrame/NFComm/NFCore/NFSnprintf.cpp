@@ -6,8 +6,6 @@
 //
 // -------------------------------------------------------------------------
 
-#pragma once
-
 #include "NFPlatform.h"
 #include "NFSnprintf.h"
 

@@ -5,10 +5,18 @@ add_compile_options(-std=c++11)
 if( CMAKE_BUILD_TYPE MATCHES "Release" )
 	set(CMAKE_BUILD_TYPE "Release")
 	set(CMAKE_C_FLAGS  "${CMAKE_C_FLAGS} -fPIC")
-	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}  -fPIC -std=c++11 -O3 -Wall -DNDEBUG")
+	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}  -fPIC -std=c++11 -O3 -Wall")
+	add_definitions(
+        -DNDEBUG
+        -fPIC
+    )
 else()
 	set(CMAKE_C_FLAGS  "${CMAKE_C_FLAGS} -fPIC")
-	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -O0 -Wall -g -ggdb -D_DEBUG -fPIC")
+	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -O0 -Wall -g -ggdb -fPIC")
+	add_definitions(
+        -D_DEBUG
+        -fPIC
+    )
 endif()
 
 message("PROJECT_SOURCE_DIR = ${PROJECT_SOURCE_DIR}")
@@ -42,27 +50,20 @@ else()
 		"${CMAKE_SOURCE_DIR}/Product/Lib/Debug")
 endif()
 
-SET(LIB_LINK_DEP libevent_core.a libevent_extra.a libtheron.a
-		libevent.a liblua.a libprofiler.a libtcmalloc_minimal.a libtheron.a libevent_pthreads.a protobuf pthread dl rt)
+SET(LIB_LINK_DEP pthread dl rt libevent_core.a libevent_extra.a libtheron.a
+		libevent.a liblua.a libprofiler.a libtcmalloc_minimal.a libtheron.a libevent_pthreads.a protobuf)
 		
 SET(LIB_LINK_NF libCommon.a libG3Dlite.a libNavigation.a libNFActorPlugin.a libNFCore.a libNFKernelPlugin.a
 				libNFMath.a libNFMessageDefine.a libNFNetPlugin.a libNFPluginModule.a libNFTestPlugin.a)
 	
 include_directories( ${INCLUDE_DIR} )
 	
+
 link_directories( ${LIB_DIR} )
 
-PROJECT(Dependencies)
+
 ADD_SUBDIRECTORY("Server/Dependencies")
-
-PROJECT(NFMessageDefine)
 ADD_SUBDIRECTORY("Server/NFMessageDefine")
-
-PROJECT(NFComm)
 ADD_SUBDIRECTORY("Server/StaticNFrame/NFComm")
-
-PROJECT(NFTest)
 ADD_SUBDIRECTORY("Server/StaticNFrame/NFTest")
-
-PROJECT(NFPluginLoader)
 ADD_SUBDIRECTORY("Server/StaticNFrame/NFPluginLoader")

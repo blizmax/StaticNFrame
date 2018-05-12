@@ -114,8 +114,9 @@ bool NFCLogModule::Init()
 {
 	std::string *p = new std::string();
 	delete p;
+	p = nullptr;
 	p->clear();
-    return true;
+   return true;
 }
 
 bool NFCLogModule::Finalize()

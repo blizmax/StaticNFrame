@@ -9,7 +9,7 @@ addons:
       description: Static Game Frame
     notification_email: 445267987@qq.com
     build_command_prepend: "cd Product; mkdir build; cd build; cmake -DCMAKE_BUILD_TYPE=Debug ../../"
-    build_command: "make"
+    build_command: "make -j4"
     branch_pattern: master
   apt:
     sources:
@@ -40,7 +40,7 @@ install: ./build_dep.sh
 script:
   - export
   - if [ "${COVERITY_SCAN_BRANCH}" != 1 ]; then 
-       cd Product; mkdir build; cd build; cmake -DCMAKE_BUILD_TYPE=Debug ../../; make;
+       cd Product; mkdir build; cd build; cmake -DCMAKE_BUILD_TYPE=Debug ../../; make -j4;
     fi
 
 env:
