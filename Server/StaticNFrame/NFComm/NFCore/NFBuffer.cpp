@@ -1,3 +1,12 @@
+// -------------------------------------------------------------------------
+//    @FileName         :    NFBuffer.cpp
+//    @Author           :    GaoYi
+//    @Date             :    2017-04-01
+//    @Email			:    445267987@qq.com
+//    @Module           :    NFCore
+//
+// -------------------------------------------------------------------------
+
 #include "NFBuffer.h"
 #include <iostream>
 #include <algorithm>

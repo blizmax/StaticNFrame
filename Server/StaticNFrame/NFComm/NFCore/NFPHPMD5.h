@@ -63,12 +63,6 @@ typedef unsigned int php_uint32;
 extern "C" {
 #endif
 
-#ifdef _NFExport
-#define PHPAPI _NFExport
-#else
-#define PHPAPI 
-#endif
-
 	/* MD5 context. */
 	typedef struct {
 		php_uint32 state[4];				/* state (ABCD) */
@@ -76,11 +70,11 @@ extern "C" {
 		unsigned char buffer[64];	/* input buffer */
 	} PHP_MD5_CTX;
 
-	PHPAPI void make_digest(char *md5str, unsigned char *digest);
-	PHPAPI void make_digest_ex(char *md5str, unsigned char *digest, int len);
-	PHPAPI void PHP_MD5Init(PHP_MD5_CTX *);
-	PHPAPI void PHP_MD5Update(PHP_MD5_CTX *, const unsigned char *, unsigned int);
-	PHPAPI void PHP_MD5Final(unsigned char[16], PHP_MD5_CTX *);
+	_NFExport void make_digest(char *md5str, unsigned char *digest);
+	_NFExport void make_digest_ex(char *md5str, unsigned char *digest, int len);
+	_NFExport void PHP_MD5Init(PHP_MD5_CTX *);
+	_NFExport void PHP_MD5Update(PHP_MD5_CTX *, const unsigned char *, unsigned int);
+	_NFExport void PHP_MD5Final(unsigned char[16], PHP_MD5_CTX *);
 
 #ifdef __cplusplus
 };

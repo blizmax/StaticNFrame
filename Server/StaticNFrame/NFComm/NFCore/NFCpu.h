@@ -10,7 +10,7 @@
 #include  <stdio.h>
 
 //在windows下获得CPU使用率的方法
-class CpuUsage
+class _NFExport CpuUsage
 {
 public:
 	CpuUsage() :m_nCpuUsage(-1), IsFirstRun(true), m_lRunCount(0)

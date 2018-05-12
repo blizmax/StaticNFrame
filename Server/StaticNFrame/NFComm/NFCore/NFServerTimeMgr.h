@@ -1,11 +1,12 @@
 #pragma once
 
 #include "NFSingleton.hpp"
+#include "NFPlatform.h"
 
 #define MILLISECOND 1000.0f   // 秒和毫秒换算的单位
 #define GAME_FPS    NFServerTime::GetFPS()
 
-class NFServerTimeMgr : public NFSingleton<NFServerTimeMgr> 
+class _NFExport NFServerTimeMgr : public NFSingleton<NFServerTimeMgr> 
 {
 public:
     NFServerTimeMgr();

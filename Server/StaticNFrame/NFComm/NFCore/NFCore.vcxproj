@@ -165,6 +165,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="NFBase64.cpp" />
+    <ClCompile Include="NFError.cpp" />
     <ClCompile Include="NFNetBuffer.cpp" />
     <ClCompile Include="NFCpu.cpp" />
     <ClCompile Include="NFCRC16.cpp" />
@@ -178,12 +179,14 @@
     <ClCompile Include="NFProfiler.cpp" />
     <ClCompile Include="NFRandom.cpp" />
     <ClCompile Include="NFSHA1.cpp" />
+    <ClCompile Include="NFSnprintf.cpp" />
     <ClCompile Include="NFStat.cpp" />
     <ClCompile Include="NFStringUtility.cpp" />
     <ClCompile Include="NFServerTimeMgr.cpp" />
     <ClCompile Include="NFBuffer.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="NFError.h" />
     <ClInclude Include="NFLikely.h" />
     <ClInclude Include="NFBase64.h" />
     <ClInclude Include="NFNetBuffer.h" />
@@ -201,6 +204,7 @@
     <ClInclude Include="NFMD5.h" />
     <ClInclude Include="NFMemManager.hpp" />
     <ClInclude Include="NFMMOMD5.h" />
+    <ClInclude Include="NFNonCopyable.h" />
     <ClInclude Include="NFPHPMD5.h" />
     <ClInclude Include="NFPlatform.h" />
     <ClInclude Include="NFProfiler.h" />
@@ -210,6 +214,7 @@
     <ClInclude Include="NFSingleton.hpp" />
     <ClInclude Include="NFSlice.hpp" />
     <ClInclude Include="NFSimpleBuffer.h" />
+    <ClInclude Include="NFSnprintf.h" />
     <ClInclude Include="NFStat.h" />
     <ClInclude Include="NFStringUtility.h" />
     <ClInclude Include="NFServerTimeMgr.h" />

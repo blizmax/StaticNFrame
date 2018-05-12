@@ -60,6 +60,12 @@
     <ClCompile Include="NFBuffer.cpp">
       <Filter>Common</Filter>
     </ClCompile>
+    <ClCompile Include="NFSnprintf.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
+    <ClCompile Include="NFError.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="NFBase64.h">
@@ -153,6 +159,15 @@
       <Filter>Common</Filter>
     </ClInclude>
     <ClInclude Include="NFLikely.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="NFNonCopyable.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="NFSnprintf.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="NFError.h">
       <Filter>Common</Filter>
     </ClInclude>
   </ItemGroup>
