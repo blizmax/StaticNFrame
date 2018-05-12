@@ -2,13 +2,13 @@ CMAKE_MINIMUM_REQUIRED(VERSION 2.8)
 
 add_compile_options(-std=c++11)
 
-if( CMAKE_BUILD_TYPE MATCHES "Debug" )
-	set(CMAKE_C_FLAGS  "${CMAKE_C_FLAGS} -fPIC")
-	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -O0 -Wall -g -ggdb -D_DEBUG -fPIC")
-else()
+if( CMAKE_BUILD_TYPE MATCHES "Release" )
 	set(CMAKE_BUILD_TYPE "Release")
 	set(CMAKE_C_FLAGS  "${CMAKE_C_FLAGS} -fPIC")
 	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}  -fPIC -std=c++11 -O3 -Wall -DNDEBUG")
+else()
+	set(CMAKE_C_FLAGS  "${CMAKE_C_FLAGS} -fPIC")
+	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -O0 -Wall -g -ggdb -D_DEBUG -fPIC")
 endif()
 
 message("PROJECT_SOURCE_DIR = ${PROJECT_SOURCE_DIR}")
