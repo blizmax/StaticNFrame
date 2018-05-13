@@ -4,4 +4,7 @@
     <ClCompile Include="NFUnitTest.cpp" />
     <ClCompile Include="dllmain.cpp" />
   </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="NFCore_Test.h" />
+  </ItemGroup>
 </Project>

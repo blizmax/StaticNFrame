@@ -20,12 +20,14 @@
 
 #include "NFComm/NFCore/NFPlatform.h"
 #include "googletest/googletest/include/gtest/gtest.h"
+#include "NFCore_Test.h"
 
 
 int main(int argc, char** argv)
 {
 	testing::InitGoogleTest(&argc, argv);
 	RUN_ALL_TESTS();
+	NFSLEEP(10000);
     return 0;
 }
 
