@@ -189,6 +189,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="NFError.h" />
+    <ClInclude Include="NFHash.hpp" />
     <ClInclude Include="NFJson.h" />
     <ClInclude Include="NFLikely.h" />
     <ClInclude Include="NFBase64.h" />

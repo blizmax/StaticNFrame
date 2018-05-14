@@ -8,16 +8,17 @@
 #include <iostream>
 
 #include "NFComm/NFCore/NFPlatform.h"
+#include "NFComm/NFCore/NFHash.hpp"
 
 using namespace std;
 
-//�¼�����������
+
 #define EVENT_FIRE_MAX_LAYER 20
 
-//�¼�����������(�����¼�Ƕ�ײ���̫�������ѭ��) 
+
 #define EVENT_REF_MAX_CNT 5
 
-//key����
+
 struct SKey
 {
 public:
@@ -27,13 +28,13 @@ public:
 		nEventID = 0;
 		bySrcType = 0;
 	}
-	uint64_t nSrcID;		//ԴID(�����UID)
-	uint16_t nEventID;		//�¼�ID
-	uint8_t  bySrcType;		//Դ���ͣ���ͬ���������ͣ�
+	uint64_t nSrcID;		//
+	uint16_t nEventID;		//
+	uint8_t  bySrcType;		//
 };
 
 
-//�¼�key
+//
 struct SEventKey
 {
 public:
@@ -96,24 +97,23 @@ namespace std {
 	{
 		size_t  operator()(const SEventKey &eventKey) const
 		{
-			return ((hash<uint64_t>()(eventKey.eKey.nSrcID)) ^ (hash<uint16_t>()(eventKey.eKey.nEventID) << 1)) ^ (hash<uint8_t>()(eventKey.eKey.bySrcType) << 1);
-			//return hash<uint64_t>()(eventKey.nKey);
+			return hash_combine(eventKey.eKey.nSrcID, eventKey.eKey.nEventID, eventKey.eKey.bySrcType);
 		}
 	};
 }
 
-//�¼�ģ��
+//
 template<class TEventSink,class TEventObj>
 class EventTemplate
 {
 private:
-	//������Ϣ
+	//
 	struct SubscribeInfo 
 	{
 		TEventSink *pSink;		//
-		std::string szDesc;		//��������
-		int32_t nRefCount;		//���ô���
-		bool bRemoveFlag;		//�Ƿ���Ҫ�Ƴ���־
+		std::string szDesc;		//
+		int32_t nRefCount;		//
+		bool bRemoveFlag;		//
 		SubscribeInfo(TEventSink *pParamSink, const std::string& desc):szDesc(desc)
 		{
 			pSink = pParamSink;
@@ -131,15 +131,15 @@ private:
 		}
 	};
 	
-	//������Ϣ�б�
+	//
 	typedef std::list<SubscribeInfo> TLIST_SUBCRIBLE;
-	//���ж�����Ϣ
+	//
 	typedef std::unordered_map<SEventKey, TLIST_SUBCRIBLE*> TMAP_ALL_SUBSCRIBEOBJ;
 
-	//����key�б�
+	//
 	typedef std::set<SEventKey> TSET_SUBSCRIBEKEY;
 
-	//���ж���key
+	//
 	typedef std::unordered_map<void*, TSET_SUBSCRIBEKEY*> TMAP_ALL_SUBSCRIBEKEY;
 
 public:
@@ -171,7 +171,7 @@ public:
 		m_mapAllSubscribeObj.clear();
 	}
 
-	//�����¼�
+	//
 	bool Subscribe(TEventSink *pSink, uint16_t nEventID, uint64_t nSrcID, uint8_t bySrcType, const std::string& desc)
 	{
 		if (nullptr == pSink) return false;
@@ -201,7 +201,7 @@ public:
 			pAllSubscribeKey->insert(skey);
 		}
 
-		//������Ϣ
+		//
 		SubscribeInfo info(pSink, desc);
 		typename TMAP_ALL_SUBSCRIBEOBJ::iterator iterObj = m_mapAllSubscribeObj.find(skey);
 		if (iterObj != m_mapAllSubscribeObj.end())
@@ -219,7 +219,7 @@ public:
 		return true;
 	}
 
-	//ȡ�������¼�
+	//
 	bool UnSubscribe(TEventSink *pSink, uint16_t nEventID, uint64_t nSrcID, uint8_t bySrcType)
 	{
 		if (nullptr == pSink)
@@ -250,13 +250,13 @@ public:
 			NFSafeDelete(pSetSubscribeKey);
 		}
 
-		//��������Ϣ
+		//
 		DelSubcribeInfo(pSink, skey);
 
 		return true;
 	}
 
-	//ȡ�����ж���
+	//
 	bool UnSubscribeAll(TEventSink *pSink)
 	{
 		if (nullptr == pSink)
@@ -308,7 +308,7 @@ public:
 
 
 private:
-	//ɾ��������Ϣ
+	//
 	bool DelSubcribeInfo(TEventSink *pSink, const SEventKey &skey)
 	{
 		typename TMAP_ALL_SUBSCRIBEOBJ::iterator iter = m_mapAllSubscribeObj.find(skey);
@@ -347,7 +347,7 @@ private:
 		m_nFireLayer++;
 		if (m_nFireLayer >= EVENT_FIRE_MAX_LAYER)
 		{
-			//���ش�����ѭ������....������Ҫ��ӡ������־
+			//
 			std::cerr << "[Event] m_nFireLayer >= EVENT_FIRE_MAX_LAYER.....nEventID:" <<
 				nEventID << ",nSrcID:" << nSrcID << ",bySrcType:" << bySrcType << ", firelayer:" << m_nFireLayer;
 			m_nFireLayer--;
@@ -364,7 +364,7 @@ private:
 				SubscribeInfo *pSubscribeInfo = &(*iter);
 				if (pSubscribeInfo->nRefCount >= EVENT_REF_MAX_CNT)
 				{
-					//�������⣬ͬһ�¼���Ƕ�׵���̫���,������Ҫ��ӡ������־
+					//
 					std::cerr << "[Event] pSubscribeInfo->nRefCount >= EVENT_REF_MAX_CNT....eventid:" << nEventID << ",srcid:" << nSrcID << ",type:" << bySrcType << ",refcount:" << pSubscribeInfo->nRefCount << ",removeflag:" << (int32_t)pSubscribeInfo->bRemoveFlag << ",szdesc:" << pSubscribeInfo->szDesc;
 					m_nFireLayer--;
 					return false;
@@ -380,7 +380,7 @@ private:
 					}
 					catch (...)
 					{
-						//�쳣���¼������쳣,��Ҫ��ӡ�쳣��־
+						//
 						std::cerr << "[Event] pSubscribeInfo->nRefCount >= EVENT_REF_MAX_CNT....eventid:" << nEventID << ",srcid:" << nSrcID << ",type:" << bySrcType << ",refcount:" << pSubscribeInfo->nRefCount << ",removeflag:" << (int32_t)pSubscribeInfo->bRemoveFlag << ",szdesc:" << pSubscribeInfo->szDesc;
 						m_nFireLayer--;
 						return false;
@@ -426,12 +426,12 @@ private:
 	}
 
 private:
-	//�����¼�����
+	//
 	TEventObj m_FireEventObj;
-	//�¼�����map
+	//
 	TMAP_ALL_SUBSCRIBEOBJ m_mapAllSubscribeObj;
-	//�����¼�key map
+	//
 	TMAP_ALL_SUBSCRIBEKEY m_mapAllSubscribeKey;
-	//���Ͳ���
+	//
 	int32_t m_nFireLayer;
 };

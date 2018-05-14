@@ -21,3 +21,5 @@
 /.cproject
 /.project
 /.settings/
+/Server/*.db
+/Server/*.opendb

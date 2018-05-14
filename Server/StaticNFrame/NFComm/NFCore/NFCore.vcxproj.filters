@@ -182,5 +182,8 @@
     <ClInclude Include="NFObject.h">
       <Filter>Common</Filter>
     </ClInclude>
+    <ClInclude Include="NFHash.hpp">
+      <Filter>Common</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
