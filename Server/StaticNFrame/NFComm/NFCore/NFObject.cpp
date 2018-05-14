@@ -47,9 +47,10 @@ protected:
     bool Equals(const NFObjectValue * other) const override {
         return m_value == static_cast<const NFValue<tag, T> *>(other)->m_value;
     }
-    bool Less(const NFObjectValue * other) const override {
-        return m_value < static_cast<const NFValue<tag, T> *>(other)->m_value;
-    }
+
+	bool Less(const NFObjectValue * other) const override {
+		return m_value < static_cast<const NFValue<tag, T> *>(other)->m_value;
+	}
 
     const T m_value;
 };
@@ -64,7 +65,7 @@ protected:
     int64_t  Int64Value() const override  { return static_cast<int64_t>(m_value); }
 	uint64_t Uint64Value() const override { return static_cast<uint64_t>(m_value); }
     bool Equals(const NFObjectValue * other) const override { return m_value == other->DoubleValue(); }
-    bool Less(const NFObjectValue * other)   const override { return m_value <  other->DoubleValue(); }
+	bool Less(const NFObjectValue * other)   const override { return m_value <  other->DoubleValue(); }
 public:
     explicit NFObjectDouble(double value) : NFValue(value) {}
 };
@@ -79,7 +80,7 @@ protected:
     int64_t  Int64Value() const override  { return (int64_t)(m_value); }
 	uint64_t Uint64Value() const override { return (uint64_t)(m_value); }
     bool Equals(const NFObjectValue * other) const override { return m_value == other->Int64Value(); }
-    bool Less(const NFObjectValue * other)   const override { return m_value <  other->Int64Value(); }
+	bool Less(const NFObjectValue * other)   const override { return m_value <  other->Int64Value(); }
 public:
     explicit NFObjectInt(int value) : NFValue(value) {}
 };
@@ -221,4 +222,26 @@ const NFObject & NFObjectMapObject::operator[] (const string &key) const {
 const NFObject & NFObjectArray::operator[] (size_t i) const {
     if (i >= m_value.size()) return StaticNull();
     else return m_value[i];
+}
+
+/* * * * * * * * * * * * * * * * * * * *
+* Comparison
+*/
+
+bool NFObject::operator== (const NFObject &other) const {
+	if (m_ptr == other.m_ptr)
+		return true;
+	if (m_ptr->Type() != other.m_ptr->Type())
+		return false;
+
+	return m_ptr->Equals(other.m_ptr.get());
+}
+
+bool NFObject::operator< (const NFObject &other) const {
+	if (m_ptr == other.m_ptr)
+		return false;
+	if (m_ptr->Type() != other.m_ptr->Type())
+		return m_ptr->Type() < other.m_ptr->Type();
+
+	return m_ptr->Less(other.m_ptr.get());
 }

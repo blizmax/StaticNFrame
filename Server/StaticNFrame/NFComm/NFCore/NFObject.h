@@ -107,6 +107,13 @@ public:
     const NFObject & operator[](size_t i) const;
     // Return a reference to obj[key] if this is an object, Json() otherwise.
     const NFObject & operator[](const std::string &key) const;
+
+	bool operator== (const NFObject &rhs) const;
+	bool operator<  (const NFObject &rhs) const;
+	bool operator!= (const NFObject &rhs) const { return !(*this == rhs); }
+	bool operator<= (const NFObject &rhs) const { return !(rhs < *this); }
+	bool operator>  (const NFObject &rhs) const { return  (rhs < *this); }
+	bool operator>= (const NFObject &rhs) const { return !(*this < rhs); }
 private:
 	 /**
      * Êý¾ÝÖ¸Õë
@@ -119,9 +126,10 @@ protected:
     friend class NFObject;
 	friend class NFObjectDouble;
 	friend class NFObjectInt;
+	friend class NFObjectList;
     virtual NFObject::NFObjectType Type() const = 0;
     virtual bool Equals(const NFObjectValue * other) const = 0;
-    virtual bool Less(const NFObjectValue * other) const = 0;
+	virtual bool Less(const NFObjectValue * other) const = 0;
     virtual double   DoubleValue() const;
     virtual float    FloatValue() const;
     virtual int32_t  Int32Value() const;

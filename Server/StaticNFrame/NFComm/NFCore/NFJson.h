@@ -59,13 +59,6 @@ public:
     template <class T, class = decltype(&T::to_json)>
     NFJson(const T & t) : NFJson(t.to_json()) {}
 
-    // Implicit constructor: map-like objects (std::map, std::unordered_map, etc)
-	NFJson(const std::unordered_map<std::string, NFJson>& m);
-
-    // Implicit constructor: vector-like objects (std::list, std::vector, std::set, etc)
-	NFJson(const std::list<NFJson>& v);
-	NFJson(const std::set<NFJson>& v);
-
     // This prevents Json(some_pointer) from accidentally producing a bool. Use
     // Json(bool(some_pointer)) if that behavior is desired.
     NFJson(void *) = delete;
