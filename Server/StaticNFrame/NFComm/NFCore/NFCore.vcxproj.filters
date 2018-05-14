@@ -69,6 +69,9 @@
     <ClCompile Include="NFJson.cpp">
       <Filter>Common</Filter>
     </ClCompile>
+    <ClCompile Include="NFObject.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="NFBase64.h">
@@ -174,6 +177,9 @@
       <Filter>Common</Filter>
     </ClInclude>
     <ClInclude Include="NFJson.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="NFObject.h">
       <Filter>Common</Filter>
     </ClInclude>
   </ItemGroup>
