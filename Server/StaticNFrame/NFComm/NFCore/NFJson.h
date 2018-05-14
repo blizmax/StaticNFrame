@@ -2,6 +2,8 @@
 
 #include <string>
 #include <vector>
+#include <list>
+#include <set>
 #include <map>
 #include <unordered_map>
 #include <memory>
@@ -58,17 +60,11 @@ public:
     NFJson(const T & t) : NFJson(t.to_json()) {}
 
     // Implicit constructor: map-like objects (std::map, std::unordered_map, etc)
-    template <class M, typename std::enable_if<
-        std::is_constructible<std::string, decltype(std::declval<M>().begin()->first)>::value
-        && std::is_constructible<NFJson, decltype(std::declval<M>().begin()->second)>::value,
-            int>::type = 0>
-    NFJson(const M & m) : NFJson(object(m.begin(), m.end())) {}
+	NFJson(const std::unordered_map<std::string, NFJson>& m);
 
     // Implicit constructor: vector-like objects (std::list, std::vector, std::set, etc)
-    template <class V, typename std::enable_if<
-        std::is_constructible<NFJson, decltype(*std::declval<V>().begin())>::value,
-            int>::type = 0>
-    NFJson(const V & v) : NFJson(array(v.begin(), v.end())) {}
+	NFJson(const std::list<NFJson>& v);
+	NFJson(const std::set<NFJson>& v);
 
     // This prevents Json(some_pointer) from accidentally producing a bool. Use
     // Json(bool(some_pointer)) if that behavior is desired.
