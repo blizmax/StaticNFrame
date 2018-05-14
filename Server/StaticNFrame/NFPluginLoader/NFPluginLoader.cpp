@@ -108,10 +108,37 @@ void CreateBackThread()
     std::cout << "CreateBackThread, thread ID = " << gThread.get_id() << std::endl;
 }
 
+static void sig_usr(int signo)
+{
+#if NF_PLATFORM != NF_PLATFORM_WIN
+	switch (signo)
+	{
+	case SIGUSR1:
+	{
+		NFCPluginManager::GetSingletonPtr()->BeforeShut();
+		NFCPluginManager::GetSingletonPtr()->Shut();
+		NFCPluginManager::GetSingletonPtr()->Finalize();
+
+		NFCPluginManager::GetSingletonPtr()->ReleaseInstance();
+	}
+	break;
+	case SIGUSR2:
+	{
+	}
+	break;
+	default:
+		break;
+	}
+#endif
+}
+
 void InitDaemon()
 {
 #if NF_PLATFORM != NF_PLATFORM_WIN
     daemon(1, 0);
+
+	signal(SIGUSR1, sig_usr);
+	signal(SIGUSR2, sig_usr);
 
     // ignore signals
     signal(SIGINT,  SIG_IGN);

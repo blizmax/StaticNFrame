@@ -166,6 +166,7 @@
   <ItemGroup>
     <ClCompile Include="NFBase64.cpp" />
     <ClCompile Include="NFError.cpp" />
+    <ClCompile Include="NFJson.cpp" />
     <ClCompile Include="NFNetBuffer.cpp" />
     <ClCompile Include="NFCpu.cpp" />
     <ClCompile Include="NFCRC16.cpp" />
@@ -187,6 +188,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="NFError.h" />
+    <ClInclude Include="NFJson.h" />
     <ClInclude Include="NFLikely.h" />
     <ClInclude Include="NFBase64.h" />
     <ClInclude Include="NFNetBuffer.h" />
