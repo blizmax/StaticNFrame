@@ -167,6 +167,7 @@
     <ClCompile Include="NFBase64.cpp" />
     <ClCompile Include="NFError.cpp" />
     <ClCompile Include="NFJson.cpp" />
+    <ClCompile Include="NFMutex.cpp" />
     <ClCompile Include="NFNetBuffer.cpp" />
     <ClCompile Include="NFCpu.cpp" />
     <ClCompile Include="NFCRC16.cpp" />
@@ -193,6 +194,8 @@
     <ClInclude Include="NFJson.h" />
     <ClInclude Include="NFLikely.h" />
     <ClInclude Include="NFBase64.h" />
+    <ClInclude Include="NFMacros.h" />
+    <ClInclude Include="NFMutex.h" />
     <ClInclude Include="NFNetBuffer.h" />
     <ClInclude Include="NFConsistentHash.hpp" />
     <ClInclude Include="NFCpu.h" />
@@ -212,6 +215,7 @@
     <ClInclude Include="NFObject.h" />
     <ClInclude Include="NFPHPMD5.h" />
     <ClInclude Include="NFPlatform.h" />
+    <ClInclude Include="NFPlatformMacros.h" />
     <ClInclude Include="NFProfiler.h" />
     <ClInclude Include="NFQueue.hpp" />
     <ClInclude Include="NFRandom.hpp" />

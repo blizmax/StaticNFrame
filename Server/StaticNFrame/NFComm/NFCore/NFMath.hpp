@@ -13,9 +13,5 @@
 #include <string>
 
 
-class NFMath
-{
-
-};
 
 #endif

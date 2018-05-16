@@ -245,7 +245,7 @@ public:
 	{
 		if (m_mapModule.find(moduleName) != m_mapModule.end())
 		{
-			NFASSERT(false, moduleName + " Has Registerd! Exit!", __FILE__, __FUNCTION__);
+			NF_ASSERT_MSG(false, moduleName + " Has Registerd! Exit!");
 			exit(0);
 		}
 

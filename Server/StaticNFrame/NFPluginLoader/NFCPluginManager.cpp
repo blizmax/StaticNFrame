@@ -95,7 +95,7 @@ bool NFCPluginManager::LoadPluginConfig()
 	NFPluginConfig* pConfig = NFConfigMgr::Instance()->GetPluginConfig(mstrAppName);
 	if (pConfig == nullptr)
 	{
-		NFASSERT(0, "There are no plugin:" + mstrAppName, __FILE__, __FUNCTION__);
+		NF_ASSERT_MSG(0, "There are no plugin:" + mstrAppName);
         return false;
 	}
 

@@ -72,6 +72,9 @@
     <ClCompile Include="NFObject.cpp">
       <Filter>Common</Filter>
     </ClCompile>
+    <ClCompile Include="NFMutex.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="NFBase64.h">
@@ -183,6 +186,15 @@
       <Filter>Common</Filter>
     </ClInclude>
     <ClInclude Include="NFHash.hpp">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="NFMutex.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="NFMacros.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="NFPlatformMacros.h">
       <Filter>Common</Filter>
     </ClInclude>
   </ItemGroup>

@@ -53,7 +53,7 @@
 
 NFSHA1::NFSHA1()
 {
-	memset(Message_Block, 0, NFCountArray(Message_Block));
+	memset(Message_Block, 0, NF_ARRAYSIZE(Message_Block));
     SHAInit();
 }
 

@@ -19,9 +19,9 @@ void NFProfiler::BeginProfiler(PROFILE_TIMER* timer)
         return;
     }
 
-    if (!timer || (mStackLevel == NFCountArray(mStacks)))
+    if (!timer || (mStackLevel == NF_ARRAYSIZE(mStacks)))
     {
-        NFASSERT(false, "", __FILE__, __FUNCTION__);
+        NF_ASSERT_MSG(false, "");
         return;
     }
 
@@ -59,7 +59,7 @@ void NFProfiler::EndProfiler()
 
     if (mStackLevel == 0)
     {
-        NFASSERT(false, "Not match BeginProfile()", __FILE__, __FUNCTION__);
+        NF_ASSERT_MSG(false, "Not match BeginProfile()");
         return;
     }
 
@@ -197,7 +197,7 @@ void NFProfiler::OutputNode(
     }
 
     char* writePos = line + indentLength;
-    int freeSize = NFCountArray(line) - indentLength;
+    int freeSize = NF_ARRAYSIZE(line) - indentLength;
 	if (totalTime > 0)
 	{
 		snprintf(
@@ -215,7 +215,7 @@ void NFProfiler::OutputNode(
     writePos[freeSize - 1] = '\0';
     report->append(line);
 
-    if (report->length() + NFCountArray(line) >= (unsigned)4092)
+    if (report->length() + NF_ARRAYSIZE(line) >= (unsigned)4092)
     {
         printf("profile:\r\n%s", report->c_str());
         report->clear();
