@@ -11,42 +11,20 @@
 
 #define NF_PLATFORM_WIN 1
 #define NF_PLATFORM_LINUX 2
-#define NF_PLATFORM_APPLE 3
-#define NF_PLATFORM_SYMBIAN 4
-#define NF_PLATFORM_APPLE_IOS 5
-#define NF_PLATFORM_ANDROID 6
 
 #define NF_COMPILER_MSVC 1
 #define NF_COMPILER_GNUC 2
-#define NF_COMPILER_BORL 3
-#define NF_COMPILER_WINSCW 4
-#define NF_COMPILER_GCCE 5
 
 #define NF_ENDIAN_LITTLE 1
 #define NF_ENDIAN_BIG 2
-
-#define NF_ENABLE_SSL 0
-
-#if NF_ENABLE_SSL
-#define EVENT__HAVE_OPENSSL
-#endif
-
 
 #define NF_ARCHITECTURE_32 1
 #define NF_ARCHITECTURE_64 2
 
 
-
 /* Finds the compiler type and version.
 */
-#if defined( __GCCE__ )
-#   define NF_COMPILER NF_COMPILER_GCCE
-#   define NF_COMP_VER _MSC_VER
-//# include <staticlibinit_gcce.h> // This is a GCCE toolchain workaround needed when compiling with GCCE
-#elif defined( __WINSCW__ )
-#   define NF_COMPILER NF_COMPILER_WINSCW
-#   define NF_COMP_VER _MSC_VER
-#elif defined( _MSC_VER )
+#if defined( _MSC_VER )
 #   define NF_COMPILER NF_COMPILER_MSVC
 #   define NF_COMP_VER _MSC_VER
 #elif defined( __GNUC__ )
@@ -54,14 +32,8 @@
 #   define NF_COMP_VER (((__GNUC__)*100) + \
                         (__GNUC_MINOR__*10) + \
                         __GNUC_PATCHLEVEL__)
-
-#elif defined( __BORLANDC__ )
-#   define NF_COMPILER NF_COMPILER_BORL
-#   define NF_COMP_VER __BCPLUSPLUS__
-#   define __FUNCTION__ __FUNC__
 #else
 #   pragma error "No known compiler. Abort! Abort!"
-
 #endif
 
 /* See if we can use __forceinline or if we need to use __inline instead */
@@ -79,51 +51,30 @@
 
 /* Finds the current platform */
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-#if defined( __SYMBIAN32__ )
-#   define NF_PLATFORM NF_PLATFORM_SYMBIAN
-//////////////////////////////////////////////////////////////////////////
-#elif defined( __WIN32__ ) || defined( _WIN32 ) || defined(_WINDOWS) || defined(WIN) || defined(_WIN64) || defined( __WIN64__ )
+#if defined( __WIN32__ ) || defined( _WIN32 ) || defined(_WINDOWS) || defined(WIN) || defined(_WIN64) || defined( __WIN64__ )
 #   define NF_PLATFORM NF_PLATFORM_WIN
 //////////////////////////////////////////////////////////////////////////
-#elif defined( __APPLE_CC__) || defined(__APPLE__) || defined(__OSX__)
-// Device                                                     Simulator
-// Both requiring OS version 4.0 or greater
-#   if __ENVIRONMENT_IPHONE_OS_VERSION_MIN_REQUIRED__ >= 40000 || __IPHONE_OS_VERSION_MIN_REQUIRED >= 40000
-#       define NF_PLATFORM NF_PLATFORM_APPLE_IOS
-#   else
-#       define NF_PLATFORM NF_PLATFORM_APPLE
-#   endif
-//////////////////////////////////////////////////////////////////////////
-#elif defined(linux) && defined(__arm__)
-// TODO: This is NOT the correct way to detect the Tegra 2 platform but it works for now.
-// It doesn't appear that GCC defines any platform specific macros.
-#   define NF_PLATFORM NF_PLATFORM_TEGRA2
-#elif defined(__ANDROID__)
-#   define NF_PLATFORM NF_PLATFORM_ANDROID
-//////////////////////////////////////////////////////////////////////////
-#elif defined( __native_client__ )
-#   define NF_PLATFORM NF_PLATFORM_NACL
-#   ifndef NF_STATIC_LIB
-#       error NF must be built as static for NaCl (NF_STATIC=true in cmake)
-#   endif
-#   ifdef NF_BUILD_RENDERSYSTEM_D3D9
-#       error d3d9 is nor supported on NaCl (ONF_BUILD_RENDERSYSTEM_D3D9 false in cmake)
-#   endif
-#   ifdef NF_BUILD_RENDERSYSTEM_GL
-#       error gl is nor supported on NaCl (ONF_BUILD_RENDERSYSTEM_GL=false in cmake)
-#   endif
-#   ifndef NF_BUILD_RENDERSYSTEM_GLES2
-#       error GLES2 render system is needed for NaCl (ONF_BUILD_RENDERSYSTEM_GLES2=false in cmake)
-#   endif
 #else
 #   define NF_PLATFORM NF_PLATFORM_LINUX
 #endif
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /* Find the arch type */
-#if defined(__x86_64__) || defined(_M_X64) || defined(__powerpc64__) || defined(__alpha__) || defined(__ia64__) || defined(__s390__) || defined(__s390x__)
+#if NF_PLATFORM == NF_PLATFORM_WIN
+
+#if defined(_WIN64) || defined(__WIN64__)
 #   define NF_ARCH_TYPE NF_ARCHITECTURE_64
 #else
 #   define NF_ARCH_TYPE NF_ARCHITECTURE_32
+#endif
+
+#elif NF_PLATFORM == NF_PLATFORM_LINUX
+
+#if defined(__x86_64__)
+#   define NF_ARCH_TYPE NF_ARCHITECTURE_64
+#else
+#   define NF_ARCH_TYPE NF_ARCHITECTURE_32
+#endif
+
 #endif
 
 
@@ -192,7 +143,7 @@
 
 //----------------------------------------------------------------------------
 // Linux/Apple/iOs/Android/Symbian/Tegra2/NaCl Settings
-#if NF_PLATFORM == NF_PLATFORM_LINUX || NF_PLATFORM == NF_PLATFORM_APPLE || NF_PLATFORM == NF_PLATFORM_APPLE_IOS || NF_PLATFORM == NF_PLATFORM_ANDROID || NF_PLATFORM == NF_PLATFORM_TEGRA2 || NF_PLATFORM == NF_PLATFORM_NACL
+#if NF_PLATFORM == NF_PLATFORM_LINUX
 
 //#include <syswait.h>
 
