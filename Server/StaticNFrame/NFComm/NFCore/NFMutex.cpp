@@ -76,7 +76,7 @@ NFMutex::~NFMutex()
 	delete mInternal;
 }
 
-NFMutex::Lock()
+void NFMutex::Lock()
 {
 	int result = pthread_mutex_lock(&mInternal->mMutex);
 	if (result != 0)
@@ -85,7 +85,7 @@ NFMutex::Lock()
 	}
 }
 
-NFMutex::Unlock()
+void NFMutex::Unlock()
 {
 	int result = pthread_mutex_unlock(&mInternal->mMutex);
 	if (result != 0)
