@@ -11,6 +11,7 @@
 
 #include "NFComm/NFPluginModule/NFILogModule.h"
 #include "NFComm/NFCore/NFSimpleBuffer.h"
+#include "NFComm/NFCore/NFDateTime.hpp"
 
 class NFCLogModule
     : public NFILogModule
@@ -41,11 +42,12 @@ public:
 protected:
     virtual bool Log(const NF_LOG_LEVEL nll, const char* format, ...);
 
-    static bool CheckLogFileExist(const char* filename);
+    static std::string GetNewLogFile(const std::string& oldFile);
     static void rolloutHandler(const char* filename, std::size_t size);
 	static void LogCrashHandler(int sig);
 private:
     static unsigned int idx;
+	static NFDateTime mLastDateTime;
     uint64_t mnLogCountTotal;
     std::string strLogConfigName;
     std::string strAppLogName;

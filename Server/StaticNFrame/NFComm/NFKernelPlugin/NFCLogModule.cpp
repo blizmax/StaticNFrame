@@ -6,7 +6,6 @@
 //    @Desc             :
 // -------------------------------------------------------------------------
 
-#define GLOG_NO_ABBREVIATED_SEVERITIES
 #include <stdarg.h>
 #include "NFCLogModule.h"
 
@@ -15,6 +14,9 @@
 #include "termcolor.hpp"
 #include "NFComm/NFPluginModule/NFIPluginManager.h"
 #include "NFComm/NFCore/NFProfiler.h"
+#include "NFComm/NFCore/NFDateTime.hpp"
+#include "NFComm/NFCore/NFStringUtility.h"
+#include "NFComm/NFCore/NFFileUtility.h"
 
 
 #define LOG_BUFFER_LENGTH (1024 * 10)
@@ -22,6 +24,7 @@
 INITIALIZE_EASYLOGGINGPP;
 
 unsigned int NFCLogModule::idx = 0;
+NFDateTime NFCLogModule::mLastDateTime = NFDateTime::Now();
 
 #ifdef ELPP_FEATURE_ALL
 void NFCLogModule::LogCrashHandler(int sig)
@@ -33,20 +36,20 @@ void NFCLogModule::LogCrashHandler(int sig)
 }
 #endif
 
-bool NFCLogModule::CheckLogFileExist(const char* filename)
+std::string NFCLogModule::GetNewLogFile(const std::string& oldFile)
 {
-	if (filename == nullptr) return false;
-
-    std::stringstream stream;
-    stream << filename << "." << ++idx;
-    std::fstream file;
-    file.open(stream.str(), std::ios::in);
-    if (file)
-    {
-        return CheckLogFileExist(filename);
-    }
-
-    return false;
+	std::string filePath;
+	std::string fileName;
+	filePath = NFFileUtility::GetFileDirName(oldFile);
+	fileName = NFFileUtility::GetFileNameWithoutExt(oldFile);
+	while (true)
+	{
+		std::string newFileName = filePath + fileName + "_" + mLastDateTime.GetTimeStringToMinute("_")+ "_" + lexical_cast<std::string>(idx++) + ".log";
+		if (!NFFileUtility::IsFileExist(newFileName))
+		{
+			return newFileName;
+		}
+	}
 }
 
 void NFCLogModule::rolloutHandler(const char* filename, std::size_t size)
@@ -54,15 +57,17 @@ void NFCLogModule::rolloutHandler(const char* filename, std::size_t size)
 	if (filename == nullptr) return;
 
     std::stringstream stream;
-    if (!CheckLogFileExist(filename))
+	
+	std::string newFileName = GetNewLogFile(filename);
+    if (!newFileName.empty())
     {
-        stream << filename << "." << idx;
-        int ret = rename(filename, stream.str().c_str());
+        int ret = rename(filename, newFileName.c_str());
 		if (ret < 0)
 		{
 			std::cout << "rename file:" << filename << " failed!" << std::endl;
 		}
     }
+	mLastDateTime = NFDateTime::Now();
 }
 
 NFCLogModule::NFCLogModule(NFIPluginManager* p)
@@ -112,10 +117,6 @@ bool NFCLogModule::Awake()
 
 bool NFCLogModule::Init()
 {
-	std::string *p = new std::string();
-	delete p;
-	p = nullptr;
-	p->clear();
    return true;
 }
 

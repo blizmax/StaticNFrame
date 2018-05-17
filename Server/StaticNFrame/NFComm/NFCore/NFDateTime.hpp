@@ -489,6 +489,21 @@ public:
         return GetShortDateString() + std::string(" - ") + GetShortTimeString();
     }
 
+	/**
+	 * @brief 凭借时间生成一个字符串，精确到分钟
+	 * 比如GetTimeStringToMinute("_"), 生成:2018_5_17_18_58
+	 *  
+	 * @param str  用来分割的字符串
+	 * @return     返回拼接的时间字符串 
+	 */
+	std::string GetTimeStringToMinute(const std::string& str)
+	{
+		std::stringstream stream;
+		stream << GetYear() << str << GetMonth() << str << GetDay();
+		stream << str << GetHour() << str << GetMinute();
+		return stream.str();
+	}
+
     std::string GetShortTimeString()
     {
         std::stringstream ss(std::stringstream::in | std::stringstream::out);
@@ -518,7 +533,7 @@ public:
     }
 
 protected:
-    NFDateTime()):summertime(false), leapyear(false)
+    NFDateTime():summertime(false), leapyear(false)
     {
         this->day = 0;
         this->month = 0;
