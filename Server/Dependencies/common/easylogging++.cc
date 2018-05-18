@@ -1797,11 +1797,16 @@ std::string TypedConfigurations::resolveFilename(const std::string& filename) {
 //////////////////////////////////////////////////////////////////////////
 bool TypedConfigurations::CompareDateTimeForRollingLog(Level level, std::string file){
 	struct timeval currentTime;
-	base::utils::DateTime::gettimeofday(&currentTime);
+  base::utils::DateTime::gettimeofday(&currentTime);
+#if ELPP_OS_WINDOWS
 	struct::_stat buf;
-	_stat(file.c_str(), &buf);
+  _stat(file.c_str(), &buf);
+#else
+	struct::stat buf;
+  stat(file.c_str(), &buf);
+#endif
 	std::size_t logFileRollingTime = unsafeGetConfigByRef(level, &m_logFileRollingTimeMap, "logFileRollingTime");
-	if (buf.st_mtime + logFileRollingTime < currentTime.tv_sec)
+	if (buf.st_atime + logFileRollingTime < currentTime.tv_sec)
 	{
 		return false;
 	}
@@ -1877,7 +1882,10 @@ bool TypedConfigurations::unsafeValidateFileRollingBaseOnDateTime(Level level, c
 
 	std::string fname = unsafeGetConfigByRef(level, &m_filenameMap, "filename");
 	if (!CompareDateTimeForRollingLog(level, fname)){
-		fs->close();
+    fs->close();
+
+    std::size_t currFileSize = base::utils::File::getSizeOfFile(fs);
+    PreRollOutCallback(fname.c_str(), currFileSize);
 
 		m_logStreamsReference->erase(fname);
 		m_fileStreamMap.erase(level);
