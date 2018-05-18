@@ -314,9 +314,11 @@
 #if ELPP_OS_UNIX
 #   include <sys/stat.h>
 #   include <sys/time.h>
+#   include <sys/types.h>
 #elif ELPP_OS_WINDOWS
 #   include <direct.h>
 #   include <windows.h>
+#   include <sys/stat.h>
 #   if defined(WIN32_LEAN_AND_MEAN)
 #      if defined(ELPP_WINSOCK2)
 #         include <winsock2.h>
@@ -612,6 +614,9 @@ enum class ConfigurationType : base::type::EnumType {
     MaxLogFileSize = 128,
    /// @brief Specifies number of log entries to hold until we flush pending log data
     LogFlushThreshold = 256,
+	/// @detail Specified Time format for rolling log file
+	/// modify by Fish
+	LogFileRollingTime = 512,
    /// @brief Represents unknown configuration
     Unknown = 1010
 };
@@ -643,6 +648,7 @@ public:
         if (configurationType == ConfigurationType::PerformanceTracking) return "PERFORMANCE_TRACKING";
         if (configurationType == ConfigurationType::MaxLogFileSize) return "MAX_LOG_FILE_SIZE";
         if (configurationType == ConfigurationType::LogFlushThreshold) return "LOG_FLUSH_THRESHOLD";
+		if (configurationType == ConfigurationType::LogFileRollingTime) return "LOG_FILE_ROLLING_TIME";	/// modify by Fish
         return "UNKNOWN";
     }
     /// @brief Converts from configStr to ConfigurationType
@@ -667,6 +673,9 @@ public:
             return ConfigurationType::MaxLogFileSize;
         if ((strcmp(configStr, "LOG_FLUSH_THRESHOLD") == 0) || (strcmp(configStr, "log_flush_threshold") == 0))
             return ConfigurationType::LogFlushThreshold;
+		if ((strcmp(configStr, "LOG_FILE_ROLLING_TIME") == 0) 
+			|| (strcmp(configStr, "log_file_rolling_time") == 0))
+			return ConfigurationType::LogFileRollingTime;						/// modify by Fish
         return ConfigurationType::Unknown;
     }
     /// @brief Applies specified function to each configuration type starting from startIndex
@@ -687,36 +696,40 @@ public:
 /// @brief Flags used while writing logs. This flags are set by user
 enum class LoggingFlag : base::type::EnumType {
     /// @brief Makes sure we have new line for each container log entry
-    NewLineForContainer = 1,
-    /// @brief Makes sure if -vmodule is used and does not specifies a module, then verbose
-    /// logging is allowed via that module.
-    AllowVerboseIfModuleNotSpecified = 2,
-    /// @brief When handling crashes by default, detailed crash reason will be logged as well
-    LogDetailedCrashReason = 4,
-    /// @brief Allows to disable application abortion when logged using FATAL level
-    DisableApplicationAbortOnFatalLog = 8,
-    /// @brief Flushes log with every log-entry (performance sensative) - Disabled by default
-    ImmediateFlush = 16,
-    /// @brief Enables strict file rolling
-    StrictLogFileSizeCheck = 32,
-    /// @brief Make terminal output colorful for supported terminals
-    ColoredTerminalOutput = 64,
-    /// @brief Supports use of multiple logging in same macro, e.g, CLOG(INFO, "default", "network")
-    MultiLoggerSupport = 128,
-    /// @brief Disables comparing performance tracker's checkpoints
-    DisablePerformanceTrackingCheckpointComparison = 256,
-    /// @brief Disable VModules
-    DisableVModules = 512,
-    /// @brief Disable VModules extensions
-    DisableVModulesExtensions = 1024,
-    /// @brief Enables hierarchical logging
-    HierarchicalLogging = 2048,
-    /// @brief Creates logger automatically when not available
-    CreateLoggerAutomatically = 4096,
-    /// @brief Adds spaces b/w logs that separated by left-shift operator
-    AutoSpacing = 8192,
-    /// @brief Preserves time format and does not convert it to sec, hour etc (performance tracking only)
-    FixedTimeFormat = 16384
+	NewLineForContainer = 1,
+	/// @brief Makes sure if -vmodule is used and does not specifies a module, then verbose
+	/// logging is allowed via that module.
+	AllowVerboseIfModuleNotSpecified = 2,
+	/// @brief When handling crashes by default, detailed crash reason will be logged as well
+	LogDetailedCrashReason = 4,
+	/// @brief Allows to disable application abortion when logged using FATAL level
+	DisableApplicationAbortOnFatalLog = 8,
+	/// @brief Flushes log with every log-entry (performance sensative) - Disabled by default
+	ImmediateFlush = 16,
+	/// @brief Enables strict file rolling
+	StrictLogFileSizeCheck = 32,
+	/// @brief Make terminal output colorful for supported terminals
+	ColoredTerminalOutput = 64,
+	/// @brief Supports use of multiple logging in same macro, e.g, CLOG(INFO, "default", "network")
+	MultiLoggerSupport = 128,
+	/// @brief Disables comparing performance tracker's checkpoints
+	DisablePerformanceTrackingCheckpointComparison = 256,
+	/// @brief Disable VModules
+	DisableVModules = 512,
+	/// @brief Disable VModules extensions
+	DisableVModulesExtensions = 1024,
+	/// @brief Enables hierarchical logging
+	HierarchicalLogging = 2048,
+	/// @brief Creates logger automatically when not available
+	CreateLoggerAutomatically = 4096,
+	/// @brief Adds spaces b/w logs that separated by left-shift operator
+	AutoSpacing = 8192,
+	/// @brief Preserves time format and does not convert it to sec, hour etc (performance tracking only)
+	FixedTimeFormat = 16384,
+
+	/// modify by Fish
+	/// @brief Enables strict file rolling base on date time
+	StrictLogFileTimeCheck = 32768
 };
 namespace base {
 /// @brief Namespace containing constants used internally.
@@ -843,9 +856,22 @@ namespace consts {
     static const int kCrashSignalsCount                          =      sizeof(kCrashSignals) / sizeof(kCrashSignals[0]);
 }  // namespace consts
 }  // namespace base
-typedef std::function<void(const char*, std::size_t)> PreRollOutCallback;
+
+/// modify by Fish
+//////////////////////////////////////////////////////////////////////////
 namespace base {
-static inline void defaultPreRollOutCallback(const char*, std::size_t) {}
+	/// @brief Enum to how to roll log file
+	enum class RollingLogFileBasis : base::type::EnumType {
+		RollLog_FileSize = 0, RollLog_DateTime = 1
+	};
+}
+//////////////////////////////////////////////////////////////////////////
+
+/// modify by Fish
+typedef std::function<void(const char*, std::size_t, el::base::RollingLogFileBasis)> PreRollOutCallback;
+namespace base {
+	/// modify by Fish
+	static inline void defaultPreRollOutCallback(const char*, std::size_t, el::base::RollingLogFileBasis) {}
 /// @brief Enum to represent timestamp unit
 enum class TimestampUnit : base::type::EnumType {
     Microsecond = 0, Millisecond = 1, Second = 2, Minute = 3, Hour = 4, Day = 5
@@ -1592,6 +1618,18 @@ public:
 #endif  // ELPP_OS_WINDOWS
     }
 
+	/// modify by Fish
+	//////////////////////////////////////////////////////////////////////////
+	static inline struct ::tm getCurrentDateTime() {
+		struct timeval currTime;
+		gettimeofday(&currTime);
+		struct ::tm timeInfo;
+		buildTimeInfo(&currTime, &timeInfo);
+		return timeInfo;
+	}
+	//////////////////////////////////////////////////////////////////////////
+	
+
     /// @brief Gets current date and time with milliseconds.
     /// @param format User provided date/time format
     /// @param msWidth A pointer to base::MillisecondsWidth from configuration (non-null)
@@ -1976,8 +2014,8 @@ protected:
     inline void unregister(const T_Key& uniqKey) {
         T_Ptr* existing = get(uniqKey);
         if (existing != nullptr) {
+			this->list().erase(uniqKey);
             base::utils::safeDelete(existing);
-            this->list().erase(uniqKey);
         }
     }
 
@@ -2607,6 +2645,7 @@ public:
         setGlobally(ConfigurationType::PerformanceTracking, std::string("true"), true);
         setGlobally(ConfigurationType::MaxLogFileSize, std::string("0"), true);
         setGlobally(ConfigurationType::LogFlushThreshold, std::string("0"), true);
+		setGlobally(ConfigurationType::LogFileRollingTime, std::string("day"), true);				/// modify by Fish
 
         setGlobally(ConfigurationType::Format, std::string("%datetime %level [%logger] %msg"), true);
         set(Level::Debug, ConfigurationType::Format, std::string("%datetime %level [%logger] [%user@%host] [%func] [%loc] %msg"));
@@ -2635,6 +2674,7 @@ public:
         unsafeSetIfNotExist(Level::Global, ConfigurationType::MillisecondsWidth, std::string("3"));
         unsafeSetIfNotExist(Level::Global, ConfigurationType::PerformanceTracking, std::string("true"));
         unsafeSetIfNotExist(Level::Global, ConfigurationType::MaxLogFileSize, std::string("0"));
+		unsafeSetIfNotExist(Level::Global, ConfigurationType::LogFileRollingTime, std::string("day"));	/// modify by Fish
         unsafeSetIfNotExist(Level::Global, ConfigurationType::Format, std::string("%datetime %level [%logger] %msg"));
         unsafeSetIfNotExist(Level::Debug, ConfigurationType::Format, 
             std::string("%datetime %level [%logger] [%user@%host] [%func] [%loc] %msg"));
@@ -2917,6 +2957,11 @@ public:
         return getConfigByVal<std::size_t>(level, &m_maxLogFileSizeMap, "maxLogFileSize");
     }
 
+	/// modify by Fish
+	inline std::size_t dateTimeFormatForRollingLog(Level level) {
+		return getConfigByVal<std::size_t>(level, &m_maxLogFileSizeMap, "dateTimeFormatForRollingLog");
+	}
+
     inline std::size_t logFlushThreshold(Level level) {
         return getConfigByVal<std::size_t>(level, &m_logFlushThresholdMap, "logFlushThreshold");
     }
@@ -2934,6 +2979,16 @@ private:
     std::map<Level, std::size_t> m_maxLogFileSizeMap;
     std::map<Level, std::size_t> m_logFlushThresholdMap;
     base::LogStreamsReferenceMap* m_logStreamsReference;
+
+	/// modify by Fish
+	//////////////////////////////////////////////////////////////////////////
+	std::map<Level, std::string> m_logFileRollingTimeMap;
+
+#ifdef ELPP_NAME_LOG_FILE_AFTER_TIME
+	std::map<Level, std::string> m_logFileFullNameMap;
+#endif
+	//////////////////////////////////////////////////////////////////////////
+	
 
     friend class el::Helpers;
     friend class el::base::MessageBuilder;
@@ -3044,9 +3099,16 @@ private:
 #if !defined(ELPP_NO_DEFAULT_LOG_FILE)
                 withFileSizeLimit.push_back(conf);
 #endif  // !defined(ELPP_NO_DEFAULT_LOG_FILE)
-            } else if (conf->configurationType() == ConfigurationType::LogFlushThreshold) {
+			}else if (conf->configurationType() == ConfigurationType::LogFlushThreshold) {
                 setValue(conf->level(), static_cast<std::size_t>(getULong(conf->value())), &m_logFlushThresholdMap);
             }
+
+			/// modify by Fish
+			//////////////////////////////////////////////////////////////////////////
+			else if (conf->configurationType() == ConfigurationType::LogFileRollingTime) {
+				setValue(conf->level(), conf->value(), &m_logFileRollingTimeMap);
+			}
+			//////////////////////////////////////////////////////////////////////////
         }
         // As mentioned early, we will now set filename configuration in separate loop to deal with non-existent files
         for (Configurations::const_iterator it = configurations->begin(); it != configurations->end(); ++it) {
@@ -3055,11 +3117,16 @@ private:
                 insertFile(conf->level(), conf->value());
             }
         }
+
+		/// modify by Fish
+		/// 下面的代码调试发现并没有实际意义，注释掉
+		/*
         for (std::vector<Configuration*>::iterator conf = withFileSizeLimit.begin();
                 conf != withFileSizeLimit.end(); ++conf) {
                 // This is not unsafe as mutex is locked in currect scope
                 unsafeValidateFileRolling((*conf)->level(), base::defaultPreRollOutCallback);
         }
+		*/
     }
 
     unsigned long getULong(std::string confVal) {
@@ -3114,6 +3181,41 @@ private:
         return resultingFilename;
     }
 
+	/// modify by Fish
+	//////////////////////////////////////////////////////////////////////////
+	bool CompareDateTimeForRollingLog(Level level, std::string file){
+		struct::tm currentTime = base::utils::DateTime::getCurrentDateTime();
+		struct::tm modifyTime;
+		struct::_stat buf;
+		_stat(file.c_str(), &buf);
+		localtime_s(&modifyTime, &buf.st_mtime);
+
+		std::string logFileRollingTime = unsafeGetConfigByRef(level, &m_logFileRollingTimeMap, "logFileRollingTime");
+		if ((strcmp(logFileRollingTime.c_str(), "MONTH") == 0) || (strcmp(logFileRollingTime.c_str(), "month") == 0)){
+			return currentTime.tm_year == modifyTime.tm_year && currentTime.tm_mon == modifyTime.tm_mon;
+		}
+		else if ((strcmp(logFileRollingTime.c_str(), "DAY") == 0) || (strcmp(logFileRollingTime.c_str(), "day") == 0)){
+			return currentTime.tm_year == modifyTime.tm_year && currentTime.tm_mon == modifyTime.tm_mon
+				&& currentTime.tm_mday == modifyTime.tm_mday;
+		}
+		else if ((strcmp(logFileRollingTime.c_str(), "HOUR") == 0) || (strcmp(logFileRollingTime.c_str(), "hour") == 0)){
+			return currentTime.tm_year == modifyTime.tm_year && currentTime.tm_mon == modifyTime.tm_mon
+				&& currentTime.tm_mday == modifyTime.tm_mday &&currentTime.tm_hour == modifyTime.tm_hour;
+		}
+		else if ((strcmp(logFileRollingTime.c_str(), "MINUTE") == 0) || (strcmp(logFileRollingTime.c_str(), "minute") == 0)){
+			return currentTime.tm_year == modifyTime.tm_year && currentTime.tm_mon == modifyTime.tm_mon
+				&& currentTime.tm_mday == modifyTime.tm_mday &&currentTime.tm_hour == modifyTime.tm_hour
+				&& currentTime.tm_min == modifyTime.tm_min;
+		}
+		else{
+			ELPP_ASSERT(false, "Unrecognized log file rolling time ["<< logFileRollingTime.c_str() << "]");
+		}
+
+		return true;
+	}
+	//////////////////////////////////////////////////////////////////////////
+	
+
     void insertFile(Level level, const std::string& fullFilename) {
         std::string resolvedFilename = resolveFilename(fullFilename);
         if (resolvedFilename.empty()) {
@@ -3149,6 +3251,10 @@ private:
         // If we dont have file conf for any level, create it for Level::Global first
         // otherwise create for specified level
         create(m_filenameMap.empty() && m_fileStreamMap.empty() ? Level::Global : level);
+
+#ifdef ELPP_NAME_LOG_FILE_AFTER_TIME
+		m_logFileFullNameMap[level] = fullFilename;
+#endif
     }
 
     bool unsafeValidateFileRolling(Level level, const PreRollOutCallback& PreRollOutCallback) {
@@ -3163,7 +3269,7 @@ private:
             ELPP_INTERNAL_INFO(1, "Truncating log file [" << fname << "] as a result of configurations for level ["
                     << LevelHelper::convertToString(level) << "]");
             fs->close();
-            PreRollOutCallback(fname.c_str(), currFileSize);
+            PreRollOutCallback(fname.c_str(), currFileSize, base::RollingLogFileBasis::RollLog_FileSize);
             fs->open(fname, std::fstream::out | std::fstream::trunc);
             return true;
         }
@@ -3174,6 +3280,46 @@ private:
         base::threading::ScopedLock scopedLock(lock());
         return unsafeValidateFileRolling(level, PreRollOutCallback);
     }
+
+	/// modify by Fish
+	//////////////////////////////////////////////////////////////////////////
+	bool unsafeValidateFileRollingBaseOnDateTime(Level level, const PreRollOutCallback& PreRollOutCallback) {
+		base::type::fstream_t* fs = unsafeGetConfigByRef(level, &m_fileStreamMap, "fileStream").get();
+		if (fs == nullptr) {
+			return true;
+		}
+
+		std::string fname = unsafeGetConfigByRef(level, &m_filenameMap, "filename");
+		if (!CompareDateTimeForRollingLog(level, fname)){
+#ifdef ELPP_NAME_LOG_FILE_AFTER_TIME
+			fs->close();
+
+			m_logStreamsReference->erase(fname);
+			m_fileStreamMap.erase(level);
+			m_filenameMap.erase(level);
+
+			std::string logFileFullName = unsafeGetConfigByRef(level, &m_logFileFullNameMap, "logFileFullName");
+			insertFile(level, logFileFullName);
+#else
+			std::size_t currFileSize = base::utils::File::getSizeOfFile(fs);
+			ELPP_INTERNAL_INFO(1, "Truncating log file [" << fname << "] as a result of configurations for level ["
+				<< LevelHelper::convertToString(level) << "]");
+			fs->close();
+			PreRollOutCallback(fname.c_str(), currFileSize, base::RollingLogFileBasis::RollLog_DateTime);
+			fs->open(fname, std::fstream::out | std::fstream::trunc);
+#endif
+			return true;
+		}
+
+		return false;
+	}
+
+	bool validateFileRollingBaseOnDateTime(Level level, const PreRollOutCallback& PreRollOutCallback) {
+		base::threading::ScopedLock scopedLock(lock());
+		return unsafeValidateFileRollingBaseOnDateTime(level, PreRollOutCallback);
+	}
+	//////////////////////////////////////////////////////////////////////////
+	
 };
 /// @brief Class that keeps record of current line hit for occasional logging
 class HitCounter {
@@ -4465,9 +4611,18 @@ public:
         // We minimize the time of ELPP's lock - this lock is released after log is written
         base::threading::ScopedLock scopedLock(ELPP->lock());
         base::TypedConfigurations* tc = m_logMessage.logger()->m_typedConfigurations;
-        if (ELPP->hasFlag(LoggingFlag::StrictLogFileSizeCheck)) {
-            tc->validateFileRolling(m_logMessage.level(), ELPP->preRollOutCallback());
-        }
+		if (ELPP->hasFlag(LoggingFlag::StrictLogFileSizeCheck)) {
+			tc->validateFileRolling(m_logMessage.level(), ELPP->preRollOutCallback());
+		}
+
+		/// modify by Fish
+		//////////////////////////////////////////////////////////////////////////
+		if (ELPP->hasFlag(LoggingFlag::StrictLogFileTimeCheck)) {
+			tc->validateFileRollingBaseOnDateTime(m_logMessage.level(), ELPP->preRollOutCallback());
+		}
+		//////////////////////////////////////////////////////////////////////////
+		
+        
         LogDispatchCallback* callback = nullptr;
         LogDispatchData data;
         for (const std::pair<std::string, base::type::LogDispatchCallbackPtr>& h 
@@ -5771,6 +5926,15 @@ public:
         if (logger == nullptr) return;
         logger->m_typedConfigurations->validateFileRolling(level, ELPP->preRollOutCallback());
     }
+
+	/// modify by Fish
+	//////////////////////////////////////////////////////////////////////////
+	static inline void validateFileRollingBaseOnDateTime(Logger* logger, Level level) {
+		if (logger == nullptr) return;
+		logger->m_typedConfigurations->unsafeValidateFileRollingBaseOnDateTime(level, ELPP->preRollOutCallback());
+	}
+	//////////////////////////////////////////////////////////////////////////
+	
 };
 /// @brief Static helpers to deal with loggers and their configurations
 class Loggers : base::StaticClass {
@@ -6003,7 +6167,12 @@ public:
 /// @see el::base::PerformanceTracker::checkpoint
 // Note: Do not surround this definition with null macro because of obj instance
 #define TIMED_SCOPE(obj, blockname) el::base::PerformanceTracker obj(blockname, ELPP_MIN_UNIT)
-#define TIMED_BLOCK(obj, blockName) for (struct { int i; el::base::PerformanceTracker timer; } obj = { 0, \
+
+typedef struct st_PerformanceTracker{
+	int i; 
+	el::base::PerformanceTracker timer;
+} TIME_BLOCK_PERFORMANCE_TRACKER;
+#define TIMED_BLOCK(obj, blockName) for (TIME_BLOCK_PERFORMANCE_TRACKER obj = { 0, \
     el::base::PerformanceTracker(blockName, ELPP_MIN_UNIT) }; obj.i < 1; ++obj.i)
 /// @brief Performance tracked function. Performance gets written when goes out of scope using
 ///        'performance' logger.
@@ -6648,6 +6817,7 @@ static T* checkNotNull(T* ptr, const char* name, const char* loggers, ...) {
     }
 // NOTE: no ELPP_INITI_BASIC_DECLR when sharing - causes double free corruption on external symbols
 #define SHARE_EASYLOGGINGPP(initializedStorage)\
+	ELPP_INITI_BASIC_DECLR\
     namespace el {\
         namespace base {\
             el::base::type::StoragePointer elStorage(initializedStorage);\

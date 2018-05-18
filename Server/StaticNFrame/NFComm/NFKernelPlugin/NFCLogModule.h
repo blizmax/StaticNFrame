@@ -47,7 +47,6 @@ protected:
 	static void LogCrashHandler(int sig);
 private:
     static unsigned int idx;
-	static NFDateTime mLastDateTime;
     uint64_t mnLogCountTotal;
     std::string strLogConfigName;
     std::string strAppLogName;

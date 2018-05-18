@@ -24,7 +24,6 @@
 INITIALIZE_EASYLOGGINGPP;
 
 unsigned int NFCLogModule::idx = 0;
-NFDateTime NFCLogModule::mLastDateTime = NFDateTime::Now();
 
 #ifdef ELPP_FEATURE_ALL
 void NFCLogModule::LogCrashHandler(int sig)
@@ -44,7 +43,7 @@ std::string NFCLogModule::GetNewLogFile(const std::string& oldFile)
     fileName = NFFileUtility::GetFileNameWithoutExt(fileName);
 	while (true)
 	{
-		std::string newFileName = filePath + fileName + "_" + mLastDateTime.GetTimeStringToMinute("_")+ "_" + lexical_cast<std::string>(idx++) + ".log";
+		std::string newFileName = filePath + fileName + "_" + lexical_cast<std::string>(idx++) + ".log";
 		if (!NFFileUtility::IsFileExist(newFileName))
 		{
 			return newFileName;
@@ -67,7 +66,6 @@ void NFCLogModule::rolloutHandler(const char* filename, std::size_t size)
 			std::cout << "rename file:" << filename << " failed!" << std::endl;
 		}
     }
-	mLastDateTime = NFDateTime::Now();
 }
 
 NFCLogModule::NFCLogModule(NFIPluginManager* p)
@@ -96,8 +94,11 @@ NFCLogModule::NFCLogModule(NFIPluginManager* p)
 #endif
 #endif
 
+	//按文件大小滚动
     el::Loggers::addFlag(el::LoggingFlag::StrictLogFileSizeCheck);
     el::Loggers::addFlag(el::LoggingFlag::DisableApplicationAbortOnFatalLog);
+	//按时间长度滚动，单位s
+	el::Loggers::addFlag(el::LoggingFlag::StrictLogFileTimeCheck);
 
     el::Configurations conf(strAppLogName);
 

@@ -19,7 +19,7 @@ NFCTestKernelModule::NFCTestKernelModule(NFIPluginManager* p)
 bool NFCTestKernelModule::Init()
 {
 	lastTime = NFGetTime();
-	SetTimer(eTimer_test, 1000, 10);
+	SetTimer(eTimer_test, 1000, 100);
 	Subscribe(NFEVENT_TEST, eTimer_test, 0, "NFCTestKernelModule");
     return true;
 }

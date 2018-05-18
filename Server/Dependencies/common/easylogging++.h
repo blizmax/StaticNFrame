@@ -369,9 +369,11 @@ ELPP_INTERNAL_DEBUGGING_OUT_INFO << ELPP_INTERNAL_DEBUGGING_MSG(internalInfoStre
 #if ELPP_OS_UNIX
 #   include <sys/stat.h>
 #   include <sys/time.h>
+#   include <sys/types.h>		//add by gaoyi
 #elif ELPP_OS_WINDOWS
 #   include <direct.h>
 #   include <windows.h>
+#   include <sys/stat.h>		//add by gaoyi
 #  if defined(WIN32_LEAN_AND_MEAN)
 #      if defined(ELPP_WINSOCK2)
 #         include <winsock2.h>
@@ -656,6 +658,8 @@ enum class ConfigurationType : base::type::EnumType {
   MaxLogFileSize = 128,
   /// @brief Specifies number of log entries to hold until we flush pending log data
   LogFlushThreshold = 256,
+  /// @brief specified time format for rolling log file add by gaoyi
+  LogFileRollingTime = 512,		//add by gaoyi
   /// @brief Represents unknown configuration
   Unknown = 1010
 };
@@ -720,7 +724,10 @@ enum class LoggingFlag : base::type::EnumType {
   /// @brief Adds spaces b/w logs that separated by left-shift operator
   AutoSpacing = 8192,
   /// @brief Preserves time format and does not convert it to sec, hour etc (performance tracking only)
-  FixedTimeFormat = 16384
+  FixedTimeFormat = 16384,
+  /// add by gaoyi
+  /// @brief Enables strict file rolling base on date time
+  StrictLogFileTimeCheck = 32768,		//add by gaoyi
 };
 namespace base {
 /// @brief Namespace containing constants used internally.
@@ -1177,6 +1184,17 @@ class DateTime : base::StaticClass {
   /// @detail For unix system it uses gettimeofday(timeval*, timezone*) and for Windows, a seperate implementation is provided
   /// @param [in,out] tv Pointer that gets updated
   static void gettimeofday(struct timeval* tv);
+
+  	/// modify by gaoyi
+	//////////////////////////////////////////////////////////////////////////
+  static inline struct ::tm getCurrentDateTime() {
+		struct timeval currTime;
+		gettimeofday(&currTime);
+		struct ::tm timeInfo;
+		buildTimeInfo(&currTime, &timeInfo);
+		return timeInfo;
+	}
+	//////////////////////////////////////////////////////////////////////////
 
   /// @brief Gets current date and time with a subsecond part.
   /// @param format User provided date/time format
@@ -1921,6 +1939,7 @@ class TypedConfigurations : public base::threading::ThreadSafe {
   base::type::fstream_t* fileStream(Level level);
   std::size_t maxLogFileSize(Level level);
   std::size_t logFlushThreshold(Level level);
+  std::size_t dateTimeFormatForRollingLog(Level level); //add by gaoyi
 
  private:
   Configurations* m_configurations;
@@ -1933,6 +1952,8 @@ class TypedConfigurations : public base::threading::ThreadSafe {
   std::unordered_map<Level, bool> m_performanceTrackingMap;
   std::unordered_map<Level, base::FileStreamPtr> m_fileStreamMap;
   std::unordered_map<Level, std::size_t> m_maxLogFileSizeMap;
+  std::unordered_map<Level, std::size_t> m_logFileRollingTimeMap;	//add by gaoyi
+  std::unordered_map<Level, std::string> m_logFileFullNameMap;				//add by gaoyi
   std::unordered_map<Level, std::size_t> m_logFlushThresholdMap;
   base::LogStreamsReferenceMap* m_logStreamsReference;
 
@@ -2015,7 +2036,14 @@ class TypedConfigurations : public base::threading::ThreadSafe {
   unsigned long getULong(std::string confVal);
   std::string resolveFilename(const std::string& filename);
   void insertFile(Level level, const std::string& fullFilename);
+  bool CompareDateTimeForRollingLog(Level level, std::string file);	//add by gaoyi
   bool unsafeValidateFileRolling(Level level, const PreRollOutCallback& preRollOutCallback);
+  bool unsafeValidateFileRollingBaseOnDateTime(Level level, const PreRollOutCallback& PreRollOutCallback); //add by gaoyi
+  //add by gaoyi
+  bool validateFileRollingBaseOnDateTime(Level level, const PreRollOutCallback& PreRollOutCallback) {
+	base::threading::ScopedLock scopedLock(lock());
+	return unsafeValidateFileRollingBaseOnDateTime(level, PreRollOutCallback);
+  }
 
   inline bool validateFileRolling(Level level, const PreRollOutCallback& preRollOutCallback) {
     base::threading::ScopedLock scopedLock(lock());
@@ -3769,6 +3797,13 @@ class Helpers : base::StaticClass {
     if (logger == nullptr) return;
     logger->m_typedConfigurations->validateFileRolling(level, ELPP->preRollOutCallback());
   }
+  /// add by gaoyi
+  //////////////////////////////////////////////////////////////////////////
+  static inline void validateFileRollingBaseOnDateTime(Logger* logger, Level level) {
+	if (logger == nullptr) return;
+	logger->m_typedConfigurations->unsafeValidateFileRollingBaseOnDateTime(level, ELPP->preRollOutCallback());
+  }
+  //////////////////////////////////////////////////////////////////////////
 };
 /// @brief Static helpers to deal with loggers and their configurations
 class Loggers : base::StaticClass {

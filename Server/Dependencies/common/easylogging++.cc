@@ -195,6 +195,7 @@ const char* ConfigurationTypeHelper::convertToString(ConfigurationType configura
   if (configurationType == ConfigurationType::PerformanceTracking) return "PERFORMANCE_TRACKING";
   if (configurationType == ConfigurationType::MaxLogFileSize) return "MAX_LOG_FILE_SIZE";
   if (configurationType == ConfigurationType::LogFlushThreshold) return "LOG_FLUSH_THRESHOLD";
+  if (configurationType == ConfigurationType::LogFileRollingTime) return "LOG_FILE_ROLLING_TIME";	//add by gaoyi
   return "UNKNOWN";
 }
 
@@ -214,6 +215,7 @@ static struct ConfigurationStringToTypeItem configStringToTypeMap[] = {
   { "performance_tracking", ConfigurationType::PerformanceTracking },
   { "max_log_file_size", ConfigurationType::MaxLogFileSize },
   { "log_flush_threshold", ConfigurationType::LogFlushThreshold },
+  { "log_file_rolling_time", ConfigurationType::LogFileRollingTime },	//add by gaoyi
 };
 
 ConfigurationType ConfigurationTypeHelper::convertFromString(const char* configStr) {
@@ -375,6 +377,7 @@ void Configurations::setToDefault(void) {
   setGlobally(ConfigurationType::PerformanceTracking, std::string("true"), true);
   setGlobally(ConfigurationType::MaxLogFileSize, std::string("0"), true);
   setGlobally(ConfigurationType::LogFlushThreshold, std::string("0"), true);
+  setGlobally(ConfigurationType::LogFileRollingTime, std::string("0"), true);	//add by gaoyi
 
   setGlobally(ConfigurationType::Format, std::string("%datetime %level [%logger] %msg"), true);
   set(Level::Debug, ConfigurationType::Format,
@@ -398,6 +401,7 @@ void Configurations::setRemainingToDefault(void) {
   unsafeSetIfNotExist(Level::Global, ConfigurationType::SubsecondPrecision, std::string("3"));
   unsafeSetIfNotExist(Level::Global, ConfigurationType::PerformanceTracking, std::string("true"));
   unsafeSetIfNotExist(Level::Global, ConfigurationType::MaxLogFileSize, std::string("0"));
+  unsafeSetIfNotExist(Level::Global, ConfigurationType::LogFileRollingTime, std::string("0"));	//add by gaoyi
   unsafeSetIfNotExist(Level::Global, ConfigurationType::Format, std::string("%datetime %level [%logger] %msg"));
   unsafeSetIfNotExist(Level::Debug, ConfigurationType::Format,
                       std::string("%datetime %level [%logger] [%user@%host] [%func] [%loc] %msg"));
@@ -1668,6 +1672,11 @@ std::size_t TypedConfigurations::maxLogFileSize(Level level) {
   return getConfigByVal<std::size_t>(level, &m_maxLogFileSizeMap, "maxLogFileSize");
 }
 
+/// modify by gaoyi
+inline std::size_t TypedConfigurations::dateTimeFormatForRollingLog(Level level) {
+	return getConfigByVal<std::size_t>(level, &m_maxLogFileSizeMap, "dateTimeFormatForRollingLog");
+}
+
 std::size_t TypedConfigurations::logFlushThreshold(Level level) {
   return getConfigByVal<std::size_t>(level, &m_logFlushThresholdMap, "logFlushThreshold");
 }
@@ -1711,6 +1720,10 @@ void TypedConfigurations::build(Configurations* configurations) {
     } else if (conf->configurationType() == ConfigurationType::LogFlushThreshold) {
       setValue(conf->level(), static_cast<std::size_t>(getULong(conf->value())), &m_logFlushThresholdMap);
     }
+	//add by gaoyi
+	else if (conf->configurationType() == ConfigurationType::LogFileRollingTime) {
+		setValue(conf->level(), static_cast<std::size_t>(getULong(conf->value())), &m_logFileRollingTimeMap);
+	}
   }
   // As mentioned earlier, we will now set filename configuration in separate loop to deal with non-existent files
   for (Configurations::const_iterator it = configurations->begin(); it != configurations->end(); ++it) {
@@ -1780,6 +1793,22 @@ std::string TypedConfigurations::resolveFilename(const std::string& filename) {
   return resultingFilename;
 }
 
+/// modify by gaoyi
+//////////////////////////////////////////////////////////////////////////
+bool TypedConfigurations::CompareDateTimeForRollingLog(Level level, std::string file){
+	struct timeval currentTime;
+	base::utils::DateTime::gettimeofday(&currentTime);
+	struct::_stat buf;
+	_stat(file.c_str(), &buf);
+	std::size_t logFileRollingTime = unsafeGetConfigByRef(level, &m_logFileRollingTimeMap, "logFileRollingTime");
+	if (buf.st_mtime + logFileRollingTime < currentTime.tv_sec)
+	{
+		return false;
+	}
+	return true;
+}
+//////////////////////////////////////////////////////////////////////////
+
 void TypedConfigurations::insertFile(Level level, const std::string& fullFilename) {
   std::string resolvedFilename = resolveFilename(fullFilename);
   if (resolvedFilename.empty()) {
@@ -1815,6 +1844,8 @@ void TypedConfigurations::insertFile(Level level, const std::string& fullFilenam
   // If we dont have file conf for any level, create it for Level::Global first
   // otherwise create for specified level
   create(m_filenameMap.empty() && m_fileStreamMap.empty() ? Level::Global : level);
+
+  m_logFileFullNameMap[level] = fullFilename; //add by gaoyi
 }
 
 bool TypedConfigurations::unsafeValidateFileRolling(Level level, const PreRollOutCallback& preRollOutCallback) {
@@ -1835,6 +1866,31 @@ bool TypedConfigurations::unsafeValidateFileRolling(Level level, const PreRollOu
   }
   return false;
 }
+
+/// add by gaoyi
+//////////////////////////////////////////////////////////////////////////
+bool TypedConfigurations::unsafeValidateFileRollingBaseOnDateTime(Level level, const PreRollOutCallback& PreRollOutCallback) {
+	base::type::fstream_t* fs = unsafeGetConfigByRef(level, &m_fileStreamMap, "fileStream").get();
+	if (fs == nullptr) {
+		return true;
+	}
+
+	std::string fname = unsafeGetConfigByRef(level, &m_filenameMap, "filename");
+	if (!CompareDateTimeForRollingLog(level, fname)){
+		fs->close();
+
+		m_logStreamsReference->erase(fname);
+		m_fileStreamMap.erase(level);
+		m_filenameMap.erase(level);
+
+		std::string logFileFullName = unsafeGetConfigByRef(level, &m_logFileFullNameMap, "logFileFullName");
+		insertFile(level, logFileFullName);
+		return true;
+	}
+
+	return false;
+}
+//////////////////////////////////////////////////////////////////////////
 
 // RegisteredHitCounters
 
@@ -2483,6 +2539,12 @@ void LogDispatcher::dispatch(void) {
   if (ELPP->hasFlag(LoggingFlag::StrictLogFileSizeCheck)) {
     tc->validateFileRolling(m_logMessage->level(), ELPP->preRollOutCallback());
   }
+  //add by gaoyi
+  /////////////////////////////////////////////
+  if (ELPP->hasFlag(LoggingFlag::StrictLogFileTimeCheck)) {
+    tc->validateFileRollingBaseOnDateTime(m_logMessage->level(), ELPP->preRollOutCallback());
+  }
+  ///////////////////////////////////////////
   LogDispatchCallback* callback = nullptr;
   LogDispatchData data;
   for (const std::pair<std::string, base::type::LogDispatchCallbackPtr>& h
