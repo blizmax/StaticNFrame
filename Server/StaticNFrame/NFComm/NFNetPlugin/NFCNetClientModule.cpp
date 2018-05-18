@@ -123,7 +123,6 @@ uint32_t NFCNetClientModule::AddServer(NF_SERVER_TYPES eServerType, const std::s
 		flag.nPort = nPort;
 
 		NFClient* pClient = NF_NEW NFClient(usId, flag);
-		pClient->SetUseThread(useThread);
 		pClient->SetRecvCB(this, &NFCNetClientModule::OnReceiveNetPack);
 		pClient->SetEventCB(this, &NFCNetClientModule::OnSocketNetEvent);
 		if (pClient->Init())

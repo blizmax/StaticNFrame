@@ -6,5 +6,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="NFCore_Test.h" />
+    <ClInclude Include="NFThread_Test.h" />
   </ItemGroup>
 </Project>

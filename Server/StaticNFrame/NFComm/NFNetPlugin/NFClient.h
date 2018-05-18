@@ -17,7 +17,7 @@ enum eConnectStatus
 
 //uint32_t STDCALL OnClientThread(void * data);
 
-class NFClient : public NetObject, public NFINet 
+class NFClient : public NetObject
 {
 public:
 	NFClient();
@@ -73,9 +73,6 @@ public:
 	void			PingTime(uint64_t val) { m_pingTime = val; }
 	time_t			GetOnRecvTime() const { return m_tOnRecvTime; }
 	void			SetOnRecvTime(time_t val) { m_tOnRecvTime = val; }
-	void			SetUseThread(bool v) { m_bUseThread = v; }
-	bool			IsUseThread() const { return m_bUseThread; }
-	bool			OnceLoop();
 public:
 	void			OnClientThread();
 private:
@@ -87,7 +84,6 @@ private:
 	uint64_t					m_pingTime;
 	event*						m_pTimeoutEve;
 	time_t						m_tOnRecvTime;           //移动响应时间
-	bool						m_bUseThread;
 	NFThread					m_thread;       //线程对象
 private:
 	NET_RECEIVE_FUNCTOR			mRecvCB;

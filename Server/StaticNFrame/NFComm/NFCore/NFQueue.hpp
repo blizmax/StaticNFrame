@@ -15,37 +15,10 @@
 #include <mutex>
 #include <atomic>
 #include "NFComm/NFCore/NFPlatform.h"
-
-class NFLock
-{
-public:
-    explicit NFLock()
-    {
-        flag.clear();
-    }
-
-    ~NFLock()
-    {
-    }
-    void lock()
-    {
-        while (flag.test_and_set(std::memory_order_acquire));
-    }
-
-    void unlock()
-    {
-        flag.clear(std::memory_order_release);
-    }
-
-protected:
-    mutable std::atomic_flag flag;
-private:
-    NFLock& operator=(const NFLock& src);
-	NFLock(const NFLock& lock);
-};
+#include "NFComm/NFCore/NFMutex.h"
 
 template<typename T>
-class NFQueueVector : public NFLock
+class NFQueueVector
 {
 public:
     NFQueueVector()
@@ -58,48 +31,37 @@ public:
 
     bool Push(const T& object)
     {
-        lock();
-
+		NFMutexLock lock(&mMutex);
         mList.push_back(object);
-
-        unlock();
-
         return true;
     }
 
     bool Pop(std::vector<T>& vecObj)
     {
-        lock();
+		NFMutexLock lock(&mMutex);
 		mList.swap(vecObj);
-        unlock();
-
         return true;
     }
 
 	bool Pop(T& object)
     {
-        lock();
-
+		NFMutexLock lock(&mMutex);
         if (mList.empty())
         {
-            unlock();
-
             return false;
         }
-
         object = mList.front();
         mList.pop_front();
-
-        unlock();
 
         return true;
     }
 private:
     std::vector<T> mList;
+	NFMutex mMutex;
 };
 
 template<typename T>
-class NFQueue : public NFLock
+class NFQueue
 {
 public:
     NFQueue()
@@ -112,45 +74,35 @@ public:
 
     bool Push(const T& object)
     {
-        lock();
-
+		NFMutexLock lock(&mMutex);
         mList.push_back(object);
-
-        unlock();
-
         return true;
     }
 
     bool Pop(std::vector<T>& vecObj)
     {
-        lock();
+		NFMutexLock lock(&mMutex);
 		mList.swap(vecObj);
-        unlock();
-
         return true;
     }
 
 	bool Pop(T& object)
     {
-        lock();
-
+		NFMutexLock lock(&mMutex);
         if (mList.empty())
         {
-            unlock();
-
             return false;
         }
 
         object = mList.front();
         mList.pop_front();
 
-        unlock();
-
         return true;
     }
 
 private:
     std::list<T> mList;
+	NFMutex mMutex;
 };
 
 #endif

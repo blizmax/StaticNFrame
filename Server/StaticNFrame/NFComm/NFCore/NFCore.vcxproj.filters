@@ -4,6 +4,9 @@
     <Filter Include="Common">
       <UniqueIdentifier>{1d735360-b356-404c-91c6-cf948839fc38}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Thread">
+      <UniqueIdentifier>{e54e8f31-f7d0-4e69-a965-9b820c6b9d08}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="NFBase64.cpp">
@@ -73,7 +76,7 @@
       <Filter>Common</Filter>
     </ClCompile>
     <ClCompile Include="NFMutex.cpp">
-      <Filter>Common</Filter>
+      <Filter>Thread</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -128,9 +131,6 @@
     <ClInclude Include="NFProfiler.h">
       <Filter>Common</Filter>
     </ClInclude>
-    <ClInclude Include="NFQueue.hpp">
-      <Filter>Common</Filter>
-    </ClInclude>
     <ClInclude Include="NFRandom.hpp">
       <Filter>Common</Filter>
     </ClInclude>
@@ -156,9 +156,6 @@
       <Filter>Common</Filter>
     </ClInclude>
     <ClInclude Include="NFNetBuffer.h">
-      <Filter>Common</Filter>
-    </ClInclude>
-    <ClInclude Include="NFThread.hpp">
       <Filter>Common</Filter>
     </ClInclude>
     <ClInclude Include="NFBuffer.h">
@@ -188,14 +185,20 @@
     <ClInclude Include="NFHash.hpp">
       <Filter>Common</Filter>
     </ClInclude>
-    <ClInclude Include="NFMutex.h">
-      <Filter>Common</Filter>
-    </ClInclude>
     <ClInclude Include="NFMacros.h">
       <Filter>Common</Filter>
     </ClInclude>
     <ClInclude Include="NFPlatformMacros.h">
       <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="NFThread.hpp">
+      <Filter>Thread</Filter>
+    </ClInclude>
+    <ClInclude Include="NFQueue.hpp">
+      <Filter>Thread</Filter>
+    </ClInclude>
+    <ClInclude Include="NFMutex.h">
+      <Filter>Thread</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

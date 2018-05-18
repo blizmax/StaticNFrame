@@ -48,15 +48,6 @@ void NFClient::conn_eventcb(struct bufferevent* pEv, short what, void *pArg)
 	}
 }
 
-bool  NFClient::OnceLoop()
-{
-	if (m_bUseThread == false && m_pMainBase)
-	{
-		event_base_loop(m_pMainBase, EVLOOP_ONCE | EVLOOP_NONBLOCK);
-	}
-	return true;
-}
-
 NFClient::NFClient()
 {
 	m_usPort = 0;
@@ -67,7 +58,6 @@ NFClient::NFClient()
 	m_pingTime = 0;
 	m_pTimeoutEve = NULL;
 	m_tOnRecvTime=0;
-	m_bUseThread = true;
 }
 
 NFClient::NFClient(uint32_t nId, const stClientFlag& flag):m_flag(flag) 
@@ -79,7 +69,6 @@ NFClient::NFClient(uint32_t nId, const stClientFlag& flag):m_flag(flag)
 	m_unDisConnTime = 0;
 	m_pTimeoutEve = NULL;
 	m_tOnRecvTime=0;
-	m_bUseThread = true;
 	m_usLinkId = nId;
 	m_pingTime = 0;
 }
@@ -102,14 +91,7 @@ bool NFClient::Init()
 		return false;
 	}
 
-	if (m_bUseThread)
-	{
-		StartThread();
-	}
-	else
-	{
-		Connect();
-	}
+	StartThread();
 	return true;
 }
 
@@ -122,10 +104,6 @@ bool NFClient::Shut()
 
 bool NFClient::Execute()
 {
-	if (m_bUseThread == false)
-	{
-		OnceLoop();
-	}
 	ProcessMsgLogicThread();
 	return true;
 }
