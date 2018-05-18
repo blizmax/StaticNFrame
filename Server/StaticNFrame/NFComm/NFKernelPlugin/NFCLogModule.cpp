@@ -40,7 +40,8 @@ std::string NFCLogModule::GetNewLogFile(const std::string& oldFile)
 {
 	std::string filePath;
 	std::string fileName;
-	NFFileUtility::SplitFileName(oldFile, fileName, filePath, true);
+    NFFileUtility::SplitFileName(oldFile, fileName, filePath, true);
+    fileName = NFFileUtility::GetFileNameWithoutExt(fileName);
 	while (true)
 	{
 		std::string newFileName = filePath + fileName + "_" + mLastDateTime.GetTimeStringToMinute("_")+ "_" + lexical_cast<std::string>(idx++) + ".log";
