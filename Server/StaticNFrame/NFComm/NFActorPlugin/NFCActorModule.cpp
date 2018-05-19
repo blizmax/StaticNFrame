@@ -22,12 +22,8 @@ NFCActorModule::NFCActorModule(NFIPluginManager* p)
 
 NFCActorModule::~NFCActorModule()
 {
-	if (m_pMainActor)
-	{
-		delete m_pMainActor;
-	}
+	delete m_pMainActor;
     m_pMainActor = nullptr;
-
     delete m_pFramework;
     m_pFramework = NULL;
 }

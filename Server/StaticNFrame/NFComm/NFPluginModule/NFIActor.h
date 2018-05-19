@@ -91,7 +91,7 @@ protected:
     virtual void Handler(const NFIActorMessage& message, const Theron::Address& from) {};
 
 private:
-    void DefaultHandler(const NFIActorMessage& message, const Theron::Address from)
+    void DefaultHandler(const NFIActorMessage& message, const Theron::Address from) //-V801
     {
         if (message.msgType == NFIActorMessage::ACTOR_MSG_TYPE_COMPONENT)
         {

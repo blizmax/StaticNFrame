@@ -134,7 +134,7 @@ public:
 
     long long GetTotalMilliseconds() const
     {
-        return milliseconds + seconds * FACTOR_SEC_TO_MILLI + minutes * FACTOR_MIN_TO_MILLI + hours * FACTOR_HOUR_TO_MILLI + days * FACTOR_DAY_TO_MILLI;
+        return milliseconds + (long long)seconds * FACTOR_SEC_TO_MILLI + (long long)minutes * FACTOR_MIN_TO_MILLI + (long long)hours * FACTOR_HOUR_TO_MILLI + (long long)days * FACTOR_DAY_TO_MILLI;
     }
 
     //updated : GetTotalXXXXs never return double

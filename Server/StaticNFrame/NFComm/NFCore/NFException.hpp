@@ -13,19 +13,20 @@
 #include <cstring>
 #include <stdio.h>
 #include <stdarg.h>
+#include "NFStringUtility.h"
 
 class NFException
 {
 public:
     NFException(const char* format, ...)
     {
-        char buf[1024] = {0};
-        va_list args;
-        va_start(args, format);
-        vsprintf(buf, format, args);
-        message = std::string(buf);
-        va_end(args);
+		va_list ap;
+		va_start(ap, format);
+		std::string result;
+		NFStringUtility::StringAppendV(&message, format, ap);
+		va_end(ap);
     }
+
     std::string GetMessage()
     {
         return message;

@@ -232,8 +232,8 @@ bool NFNavMeshHandle::Create(const std::string& path)
 
 	dtNavMesh* mesh = dtAllocNavMesh();
 	if (!mesh) {
-		// 			ERROR_MSG("NavMeshHandle::create: dtAllocNavMesh is failed!\n");
-		// 			fclose(fp);
+		//ERROR_MSG("NavMeshHandle::create: dtAllocNavMesh is failed!\n");
+		fclose(fp);
 		delete[] pBuf;
 		pBuf = NULL;
 		return false;

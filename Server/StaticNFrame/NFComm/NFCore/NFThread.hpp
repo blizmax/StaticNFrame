@@ -27,7 +27,7 @@ public:
 		m_running = false;
     }
 
-    ~NFThread()
+    virtual ~NFThread()
     {
         StopThread();
     }
