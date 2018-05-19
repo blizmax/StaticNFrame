@@ -1800,10 +1800,10 @@ bool TypedConfigurations::CompareDateTimeForRollingLog(Level level, std::string 
   base::utils::DateTime::gettimeofday(&currentTime);
 #if ELPP_OS_WINDOWS
 	struct::_stat buf;
-  _stat(file.c_str(), &buf);
+	_stat(file.c_str(), &buf);
 #else
 	struct::stat buf;
-  stat(file.c_str(), &buf);
+	stat(file.c_str(), &buf);
 #endif
 	std::size_t logFileRollingTime = unsafeGetConfigByRef(level, &m_logFileRollingTimeMap, "logFileRollingTime");
 	if (buf.st_atime + logFileRollingTime < currentTime.tv_sec)
