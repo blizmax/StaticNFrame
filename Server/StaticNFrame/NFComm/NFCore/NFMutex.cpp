@@ -9,6 +9,8 @@
 
 #include "NFMutex.h"
 
+#define THREAD_CPP11	1
+
 #if NF_PLATFORM == NF_PLATFORM_WIN
 #include <windows.h>
 
@@ -56,6 +58,37 @@ void NFMutex::AssertHeld()
 #endif
 }
 
+#elif THREAD_CPP11
+#include <thread>
+#include <mutex>
+struct NFMutex::NFInternal
+{
+	std::mutex mMutex;
+};
+
+NFMutex::NFMutex() :mInternal(new NFInternal)
+{
+}
+
+NFMutex::~NFMutex()
+{
+	delete mInternal;
+}
+
+void NFMutex::Lock()
+{
+	mInternal->mMutex.lock();
+}
+
+void NFMutex::Unlock()
+{
+	mInternal->mMutex.unlock();
+}
+
+void NFMutex::AssertHeld()
+{
+
+}
 #else
 
 #include <pthread.h>
