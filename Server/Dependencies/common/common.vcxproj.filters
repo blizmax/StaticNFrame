@@ -5,7 +5,7 @@
     <ClInclude Include="lexical_cast.hpp" />
     <ClInclude Include="optional.hpp" />
     <ClInclude Include="variant.hpp" />
-    <ClInclude Include="logconfig.h" />
+    <ClInclude Include="easylogging++_config.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="easylogging++.cc" />

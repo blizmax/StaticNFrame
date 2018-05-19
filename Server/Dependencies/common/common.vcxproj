@@ -21,7 +21,7 @@
   <ItemGroup>
     <ClInclude Include="easylogging++.h" />
     <ClInclude Include="lexical_cast.hpp" />
-    <ClInclude Include="logconfig.h" />
+    <ClInclude Include="easylogging++_config.h" />
     <ClInclude Include="optional.hpp" />
     <ClInclude Include="variant.hpp" />
   </ItemGroup>
