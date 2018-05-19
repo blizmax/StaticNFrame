@@ -55,8 +55,6 @@ void NFCLogModule::rolloutHandler(const char* filename, std::size_t size)
 {
 	if (filename == nullptr) return;
 
-    std::stringstream stream;
-	
 	std::string newFileName = GetNewLogFile(filename);
     if (!newFileName.empty())
     {
