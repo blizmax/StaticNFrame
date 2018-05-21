@@ -1806,7 +1806,7 @@ bool TypedConfigurations::CompareDateTimeForRollingLog(Level level, std::string 
 	stat(file.c_str(), &buf);
 #endif
 	std::size_t logFileRollingTime = unsafeGetConfigByRef(level, &m_logFileRollingTimeMap, "logFileRollingTime");
-	if (buf.st_atime + logFileRollingTime < currentTime.tv_sec)
+	if ((uint64_t)buf.st_atime + (uint64_t)logFileRollingTime < (uint64_t)currentTime.tv_sec)
 	{
 		return false;
 	}
