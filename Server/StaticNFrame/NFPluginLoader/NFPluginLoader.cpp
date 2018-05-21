@@ -159,8 +159,8 @@ void PrintfLogo()
     std::cout << "**                                            **" << std::endl;
     std::cout << "************************************************" << std::endl;
     std::cout << "\n" << std::endl;
-    std::cout << "--Daemon=1 Run it as daemon mode, only on linux" << std::endl;
-    std::cout << "--XButton=1 Close the 'X' button, only on windows" << std::endl;
+    std::cout << "--Daemon or -d Run it as daemon mode, only on linux" << std::endl;
+    std::cout << "--XButton or -x1 Close the 'X' button, only on windows" << std::endl;
     std::cout << "--Plugin=Plugin.lua Load the plugin when programs be launched" << std::endl;
     std::cout << "--Server=AllServer Load the AllServer plugin when programs be launched" << std::endl;
     std::cout << "--ID=number(0) Load the number Server when programs be launched" << std::endl;
@@ -182,22 +182,19 @@ void ProcessParameter(int argc, char* argv[])
 	cmdParser.Add<std::string>("Path", 'P', "Config Path", false, "../");
 	cmdParser.Add<std::string>("Plugin", 'p', "Plugin Config", false, "Plugin.lua");
 
-#if NF_PLATFORM == NF_PLATFORM_WIN
-	cmdParser.Add<bool>("XButton", 'x', "Close the 'X' button, only on windows", false, false);
-#else
-	cmdParser.Add<bool>("Daemon", 'd', "Run it as daemon mode, only on linux", false, false);
-#endif
+	cmdParser.Add("XButton", 'x', "Close the 'X' button, only on windows");
+	cmdParser.Add("Daemon", 'd', "Run it as daemon mode, only on linux");
 
 	cmdParser.ParseCheck(argc, argv);
 
 #if NF_PLATFORM == NF_PLATFORM_WIN
-    if (cmdParser.Get<bool>("XButton"))
+    if (cmdParser.Exist("XButton"))
     {
         CloseXButton();
     }
 #else
     //run it as a daemon process
-    if (cmdParser.Get<bool>("Daemon"))
+    if (cmdParser.Exist("Daemon"))
     {
         InitDaemon();
     }

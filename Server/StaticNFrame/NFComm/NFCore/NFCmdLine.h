@@ -20,6 +20,7 @@
 #include <algorithm>
 #include <cstdlib>
 #include "NFPlatform.h"
+#include "NFStringUtility.h"
 
 namespace NFCmdLine{
 
@@ -299,9 +300,11 @@ public:
   void Add(const std::string &name,
            char short_name=0,
            const std::string &desc=""){
-    if (options.count(name)) throw NFCmdLine_Error("multiple definition: "+name);
-    options[name]=new NFOptionWithoutValue(name, short_name, desc);
-    ordered.push_back(options[name]);
+	std::string lowerName = name;
+	NFStringUtility::ToLower(lowerName);
+    if (options.count(lowerName)) throw NFCmdLine_Error("multiple definition: "+lowerName);
+    options[lowerName]= new NFOptionWithoutValue(lowerName, short_name, desc);
+    ordered.push_back(options[lowerName]);
   }
 
   template <class T>
@@ -310,7 +313,9 @@ public:
            const std::string &desc="",
            bool need=true,
            const T def=T()){
-    Add(name, short_name, desc, need, def, NFDefaultReader<T>());
+	std::string lowerName = name;
+	NFStringUtility::ToLower(lowerName);
+    Add(lowerName, short_name, desc, need, def, NFDefaultReader<T>());
   }
 
   template <class T, class F>
@@ -320,9 +325,11 @@ public:
            bool need=true,
            const T def = T(),
            F reader = NFDefaultReader<T>()){
-    if (options.count(name)) throw NFCmdLine_Error("multiple definition: "+name);
-    options[name]=new NFOptionWithValueWithReader<T, F>(name, short_name, need, def, desc, reader);
-    ordered.push_back(options[name]);
+	std::string lowerName = name;
+	NFStringUtility::ToLower(lowerName);
+    if (options.count(lowerName)) throw NFCmdLine_Error("multiple definition: "+lowerName);
+    options[lowerName]=new NFOptionWithValueWithReader<T, F>(lowerName, short_name, need, def, desc, reader);
+    ordered.push_back(options[lowerName]);
   }
 
   void Footer(const std::string &f){
@@ -334,15 +341,19 @@ public:
   }
 
   bool Exist(const std::string &name) const {
-    if (options.count(name)==0) throw NFCmdLine_Error("there is no flag: --"+name);
-    return options.find(name)->second->has_set();
+	std::string lowerName = name;
+	NFStringUtility::ToLower(lowerName);
+    if (options.count(lowerName)==0) throw NFCmdLine_Error("there is no flag: --"+lowerName);
+    return options.find(lowerName)->second->has_set();
   }
 
   template <class T>
   const T &Get(const std::string &name) const {
-    if (options.count(name)==0) throw NFCmdLine_Error("there is no flag: --"+name);
-    const NFOptionWithValue<T> *p=dynamic_cast<const NFOptionWithValue<T>*>(options.find(name)->second);
-    if (p==NULL) throw NFCmdLine_Error("type mismatch flag '"+name+"'");
+	std::string lowerName = name;
+	NFStringUtility::ToLower(lowerName);
+    if (options.count(lowerName)==0) throw NFCmdLine_Error("there is no flag: --"+lowerName);
+    const NFOptionWithValue<T> *p=dynamic_cast<const NFOptionWithValue<T>*>(options.find(lowerName)->second);
+    if (p==NULL) throw NFCmdLine_Error("type mismatch flag '"+lowerName+"'");
     return p->get();
   }
 
@@ -433,11 +444,13 @@ public:
         const char *p=strchr(argv[i]+2, '=');
         if (p){
           std::string name(argv[i]+2, p);
+		  NFStringUtility::ToLower(name); 
           std::string val(p+1);
           SetOption(name, val);
         }
         else{
-          std::string name(argv[i]+2);
+          std::string name(argv[i]+2); 
+		  NFStringUtility::ToLower(name); 
           if (options.count(name)==0){
             errors.push_back("undefined option: --"+name);
             continue;
@@ -579,23 +592,27 @@ private:
   }
 
   void SetOption(const std::string &name){
-    if (options.count(name)==0){
-      errors.push_back("undefined option: --"+name);
+	std::string lowerName = name;
+	NFStringUtility::ToLower(lowerName);
+    if (options.count(lowerName)==0){
+      errors.push_back("undefined option: --"+lowerName);
       return;
     }
-    if (!options[name]->set()){
-      errors.push_back("option needs value: --"+name);
+    if (!options[lowerName]->set()){
+      errors.push_back("option needs value: --"+lowerName);
       return;
     }
   }
 
   void SetOption(const std::string &name, const std::string &value){
-    if (options.count(name)==0){
-      errors.push_back("undefined option: --"+name);
+	std::string lowerName = name;
+	NFStringUtility::ToLower(lowerName);
+    if (options.count(lowerName)==0){
+      errors.push_back("undefined option: --"+lowerName);
       return;
     }
-    if (!options[name]->set(value)){
-      errors.push_back("option value is invalid: --"+name+"="+value);
+    if (!options[lowerName]->set(value)){
+      errors.push_back("option value is invalid: --"+lowerName+"="+value);
       return;
     }
   }

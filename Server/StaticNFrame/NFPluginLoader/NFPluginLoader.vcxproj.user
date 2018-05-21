@@ -6,7 +6,7 @@
     <LocalDebuggerWorkingDirectory>$(SolutionDir)\_Out\$(Configuration)\</LocalDebuggerWorkingDirectory>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <LocalDebuggerCommandArguments>--Server=AllServer --ID=6 --Path=../</LocalDebuggerCommandArguments>
+    <LocalDebuggerCommandArguments>--Server=AllServer --ID=6 --Path=../ -x</LocalDebuggerCommandArguments>
     <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
     <LocalDebuggerWorkingDirectory>$(SolutionDir)../Product/run/$(Configuration)/</LocalDebuggerWorkingDirectory>
   </PropertyGroup>
