@@ -17,10 +17,11 @@
 #include <functional>
 #include <atomic>
 
-#include "NFCPluginManager.h"
+#include "NFComm/NFPluginModule/NFCPluginManager.h"
 #include "NFComm/NFCore/NFPlatform.h"
 #include "NFComm/NFCore/NFServerTimeMgr.h"
 #include "NFComm/NFCore/NFProfiler.h"
+#include "NFComm/NFCore/NFCmdLine.h"
 
 #if NF_PLATFORM == NF_PLATFORM_LINUX
 #include <unistd.h>
@@ -32,16 +33,8 @@
 
 bool bExitApp = false;
 std::thread gThread;
-std::string strArgvList;
-std::string strPluginName;
-std::string strDataPath;
-std::string strAppName;
-std::string strAppID;
-std::string strTitleName;
 
 #if NF_PLATFORM == NF_PLATFORM_WIN
-
-#pragma comment( lib, "DbgHelp" )
 
 void CreateDumpFile(const std::string& strDumpFilePathName, EXCEPTION_POINTERS* pException)
 {
@@ -160,16 +153,19 @@ void PrintfLogo()
     std::cout << "\n" << std::endl;
     std::cout << "************************************************" << std::endl;
     std::cout << "**                                            **" << std::endl;
-    std::cout << "**                 NoahFrame                  **" << std::endl;
-    std::cout << "**   Copyright (c) 2011, LvSheng.Huang        **" << std::endl;
+    std::cout << "**                StaticNFrame                **" << std::endl;
+    std::cout << "**          Copyright (c) 2018, Yi.Gao        **" << std::endl;
     std::cout << "**             All rights reserved.           **" << std::endl;
     std::cout << "**                                            **" << std::endl;
     std::cout << "************************************************" << std::endl;
     std::cout << "\n" << std::endl;
-    std::cout << "-d Run itas daemon mode, only on linux" << std::endl;
-    std::cout << "-x Close the 'X' button, only on windows" << std::endl;
-    std::cout << "Instance: name.xml File's name to instead of \"Plugin.xml\" when programs be launched, all platform" << std::endl;
-    std::cout << "Instance: \"ID=number\", \"Server=GameServer\"  when programs be launched, all platform" << std::endl;
+    std::cout << "--Daemon=1 Run it as daemon mode, only on linux" << std::endl;
+    std::cout << "--XButton=1 Close the 'X' button, only on windows" << std::endl;
+    std::cout << "--Plugin=Plugin.lua Load the plugin when programs be launched" << std::endl;
+    std::cout << "--Server=AllServer Load the AllServer plugin when programs be launched" << std::endl;
+    std::cout << "--ID=number(0) Load the number Server when programs be launched" << std::endl;
+    std::cout << "--PATH=../ Load the Config Path when programs be launched" << std::endl;
+    std::cout << "Input 'Exit' Programs will exit when it runs" << std::endl;
     std::cout << "\n" << std::endl;
 
 #if NF_PLATFORM == NF_PLATFORM_WIN
@@ -179,20 +175,29 @@ void PrintfLogo()
 
 void ProcessParameter(int argc, char* argv[])
 {
-    for (int i = 0; i < argc; i++)
-    {
-        strArgvList += " ";
-        strArgvList += argv[i];
-    }
+	NFCmdLine::NFParser cmdParser;
+
+	cmdParser.Add<std::string>("Server", 'S', "Server Name", true, "AllServer");
+	cmdParser.Add<int>("ID", 'I', "Server ID", true, 0);
+	cmdParser.Add<std::string>("Path", 'P', "Config Path", false, "../");
+	cmdParser.Add<std::string>("Plugin", 'p', "Plugin Config", false, "Plugin.lua");
 
 #if NF_PLATFORM == NF_PLATFORM_WIN
-    if (strArgvList.find("-x") != string::npos)
+	cmdParser.Add<bool>("XButton", 'x', "Close the 'X' button, only on windows", false, false);
+#else
+	cmdParser.Add<bool>("Daemon", 'd', "Run it as daemon mode, only on linux", false, false);
+#endif
+
+	cmdParser.ParseCheck(argc, argv);
+
+#if NF_PLATFORM == NF_PLATFORM_WIN
+    if (cmdParser.Get<bool>("XButton"))
     {
         CloseXButton();
     }
 #else
     //run it as a daemon process
-    if (strArgvList.find("-d") != string::npos)
+    if (cmdParser.Get<bool>("Daemon"))
     {
         InitDaemon();
     }
@@ -201,73 +206,16 @@ void ProcessParameter(int argc, char* argv[])
     signal(SIGCHLD, SIG_IGN);
 #endif
 
-    if (strArgvList.find(".xml") != string::npos)
-    {
-        for (int i = 0; i < argc; i++)
-        {
-            strPluginName = argv[i];
-            if (strPluginName.find(".xml") != string::npos)
-            {
-                break;
-            }
-        }
+	std::string strPluginName = cmdParser.Get<std::string>("Plugin");
+    NFCPluginManager::GetSingletonPtr()->SetConfigName(strPluginName);
+	std::string strAppName = cmdParser.Get<std::string>("Server");
+    NFCPluginManager::GetSingletonPtr()->SetAppName(strAppName);
+    int nAppID = cmdParser.Get<int>("ID");
+    NFCPluginManager::GetSingletonPtr()->SetAppID(nAppID);
+	std::string strDataPath = cmdParser.Get<std::string>("Path");
+    NFCPluginManager::GetSingletonPtr()->SetConfigPath(strDataPath);
 
-        NFCPluginManager::GetSingletonPtr()->SetConfigName(strPluginName);
-    }
-
-    if (strArgvList.find("Server=") != string::npos)
-    {
-        for (int i = 0; i < argc; i++)
-        {
-            strAppName = argv[i];
-            if (strAppName.find("Server=") != string::npos)
-            {
-                strAppName.erase(0, 7);
-                break;
-            }
-        }
-
-        NFCPluginManager::GetSingletonPtr()->SetAppName(strAppName);
-    }
-
-    if (strArgvList.find("ID=") != string::npos)
-    {
-        for (int i = 0; i < argc; i++)
-        {
-            strAppID = argv[i];
-            if (strAppID.find("ID=") != string::npos)
-            {
-                strAppID.erase(0, 3);
-                break;
-            }
-        }
-
-        int nAppID = lexical_cast<int>(strAppID);
-        NFCPluginManager::GetSingletonPtr()->SetAppID(nAppID);
-    }
-
-    if (strArgvList.find("Path=") != string::npos)
-    {
-        for (int i = 0; i < argc; i++)
-        {
-            strDataPath = argv[i];
-            if (strDataPath.find("Path=") != string::npos)
-            {
-                strDataPath.erase(0, 5);
-                break;
-            }
-        }
-
-        NFCPluginManager::GetSingletonPtr()->SetConfigPath(strDataPath);
-    }
-    else
-    {
-        NFCPluginManager::GetSingletonPtr()->SetConfigPath("../");
-    }
-
-    strTitleName = strAppName + strAppID;// +" PID" + NFGetPID();
-    strTitleName.replace(strTitleName.find("Server"), 6, "");
-    strTitleName = "NF" + strTitleName;
+    std::string strTitleName = "NF" + strAppName + lexical_cast<std::string>(nAppID);// +" PID" + NFGetPID();
 #if NF_PLATFORM == NF_PLATFORM_WIN
     SetConsoleTitle(strTitleName.c_str());
 #elif NF_PLATFORM == NF_PLATFORM_LINUX

@@ -1,4 +1,4 @@
-#include "NFCPluginManager.h"
+#include "NFComm/NFPluginModule/NFCPluginManager.h"
 
 #include "NFComm/NFCore/NFServerTimeMgr.h"
 

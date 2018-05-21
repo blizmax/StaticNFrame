@@ -11,6 +11,7 @@
 #pragma comment( lib, "g3dlite.lib" )
 #pragma comment( lib, "libtcmalloc_minimal.lib" )
 #pragma comment( lib, "user32.lib")		
+#pragma comment( lib, "Dbghelp.lib" )
 
 /////////////////////////////////////////////////////////////////
 #pragma comment( lib, "NFCore.lib" )

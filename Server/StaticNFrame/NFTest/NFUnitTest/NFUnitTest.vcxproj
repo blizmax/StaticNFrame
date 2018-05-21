@@ -161,7 +161,8 @@
     <ClCompile Include="NFUnitTest.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="NFCore_Test.h" />
+    <ClInclude Include="NFAlgorithm_Test.h" />
+    <ClInclude Include="NFFileString_Test.h" />
     <ClInclude Include="NFThread_Test.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

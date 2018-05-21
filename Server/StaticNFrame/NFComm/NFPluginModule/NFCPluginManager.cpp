@@ -34,9 +34,9 @@ NFCPluginManager::NFCPluginManager() : NFIPluginManager()
     mstrConfigPath = "../";
 
 #ifdef NF_DEBUG_MODE
-    mstrConfigName = "Config/Plugin.xml";
+    mstrConfigName = "Config/Plugin.lua";
 #else
-    mstrConfigName = "Config/Plugin.xml";
+    mstrConfigName = "Config/Plugin.lua";
 #endif
 
     //    注册AllServer
@@ -192,7 +192,7 @@ bool NFCPluginManager::Execute()
 
 	//采用固定帧率
 	endTime = NFGetTime();
-	uint64_t cost = (uint32_t)(endTime > startTime ? (endTime - startTime) : 0);
+	uint32_t cost = (uint32_t)(endTime > startTime ? (endTime - startTime) : 0);
 	uint32_t sleepTime = mFrameTime > cost ? (mFrameTime - cost) : 0;
 	if (sleepTime > 0)
 	{
@@ -250,15 +250,10 @@ void NFCPluginManager::SetConfigName(const std::string& strFileName)
         return;
     }
 
-    if (strFileName.find(".xml") == string::npos)
-    {
-        return;
-    }
-
 #ifdef NF_DEBUG_MODE
-    mstrConfigName = "NFDataCfg/Debug/" + strFileName;
+    mstrConfigName = "Config/" + strFileName;
 #else
-    mstrConfigName = "NFDataCfg/Release/" + strFileName;
+    mstrConfigName = "Config/" + strFileName;
 #endif
 }
 

@@ -42,6 +42,9 @@
     <ClInclude Include="NFConfigMgr.h">
       <Filter>Lua</Filter>
     </ClInclude>
+    <ClInclude Include="NFCPluginManager.h">
+      <Filter>PluginManager</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Event">
@@ -55,6 +58,9 @@
     </Filter>
     <Filter Include="Lua">
       <UniqueIdentifier>{6b10868d-67a9-4369-bde2-f665968c9e9e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="PluginManager">
+      <UniqueIdentifier>{bdfa0e36-a558-48c1-8d1d-4fdc9ad68d24}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -79,6 +85,9 @@
     <ClCompile Include="NFServerDefine.cpp" />
     <ClCompile Include="NFConfigMgr.cpp">
       <Filter>Lua</Filter>
+    </ClCompile>
+    <ClCompile Include="NFCPluginManager.cpp">
+      <Filter>PluginManager</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

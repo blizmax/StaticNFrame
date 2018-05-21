@@ -20,9 +20,9 @@
 
 #include "NFComm/NFCore/NFPlatform.h"
 #include "googletest/googletest/include/gtest/gtest.h"
-#include "NFCore_Test.h"
+#include "NFAlgorithm_Test.h"
 #include "NFThread_Test.h"
-
+#include "NFFileString_Test.h"
 
 int main(int argc, char** argv)
 {

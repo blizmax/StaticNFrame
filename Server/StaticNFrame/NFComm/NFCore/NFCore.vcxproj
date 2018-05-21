@@ -189,6 +189,7 @@
     <ClCompile Include="NFBuffer.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="NFCmdLine.h" />
     <ClInclude Include="NFError.h" />
     <ClInclude Include="NFHash.hpp" />
     <ClInclude Include="NFJson.h" />

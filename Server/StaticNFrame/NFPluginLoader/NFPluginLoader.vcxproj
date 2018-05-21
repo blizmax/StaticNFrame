@@ -191,12 +191,8 @@
     <PostBuildEvent />
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="NFCPluginManager.h" />
-  </ItemGroup>
-  <ItemGroup>
     <ClCompile Include="dllmain.cpp" />
     <ClCompile Include="NFCLoadStaticPlugin.cpp" />
-    <ClCompile Include="NFCPluginManager.cpp" />
     <ClCompile Include="NFPluginLoader.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

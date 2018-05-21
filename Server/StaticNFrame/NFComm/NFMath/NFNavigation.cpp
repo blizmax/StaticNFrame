@@ -39,17 +39,6 @@ NFNavigationHandle* NFNavigation::FindNavigation(const std::string& name)
 	itmapNavigate iter = m_mapNavhandles.find(name);
 	if (iter != m_mapNavhandles.end())
 	{
-		//if (iter->second->type() == NFNavigationHandle::NAV_MESH) {
-		//	return iter->second;
-		//}
-		// 		else if (iter->second->type() == NavigationHandle::NAV_TILE)
-		// 		{
-		// 			// ����tile��Ҫ����ײ�� ÿһ��space����Ҫһ���µ����ݣ� ����������ÿ����ķ�ʽ�����ӹ����ٶ�
-		// 			NavTileHandle* pNavTileHandle = new NavTileHandle(*(KBEngine::NavTileHandle*)iter->second.get());
-		// // 			DEBUG_MSG(fmt::format("Navigation::findNavigation: copy NavTileHandle({:p})!\n", (void*)pNavTileHandle));
-		// // 			return NavigationHandlePtr(pNavTileHandle);
-		// 		}
-
 		return iter->second;
 	}
 

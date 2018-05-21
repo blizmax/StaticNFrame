@@ -200,5 +200,8 @@
     <ClInclude Include="NFMutex.h">
       <Filter>Thread</Filter>
     </ClInclude>
+    <ClInclude Include="NFCmdLine.h">
+      <Filter>Common</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

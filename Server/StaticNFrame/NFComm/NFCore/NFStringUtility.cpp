@@ -15,6 +15,10 @@
 
 #include "NFStringUtility.h"
 
+#if NF_PLATFORM == NF_PLATFORM_LINUX
+#include <cxxabi.h>
+#endif
+
 struct NoCaseCompareChar {
 	bool operator()(char l, char r)const {
 		bool bEqual = (l == r);
@@ -1343,5 +1347,23 @@ void NFStringUtility::StringAppendF(std::string* dst, const char* format, ...) {
 	va_start(ap, format);
 	StringAppendV(dst, format, ap);
 	va_end(ap);
+}
+
+std::string NFStringUtility::Demangle(const std::string &name)
+{
+#if NF_PLATFORM == NF_PLATFORM_LINUX
+	int status = 0;
+	char *p = abi::__cxa_demangle(name.c_str(), 0, 0, &status);
+	std::string ret(p);
+	free(p);
+	return ret;
+#else
+	char buffer[1024];
+	DWORD length = UnDecorateSymbolName(name.c_str(), buffer, sizeof(buffer), 0);
+	if (length > 0)
+		return std::string(buffer, length);
+	else
+		return name;
+#endif
 }
 

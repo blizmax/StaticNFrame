@@ -27,6 +27,7 @@
 
 #include <list>
 #include <string>
+#include <cstring>
 
 // File access utility class which provides many help methods 
 // to make it easy to do operations against file.

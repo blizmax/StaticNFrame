@@ -11,6 +11,9 @@
 
 #include <string>
 #include <vector>
+#include <cstring>
+#include <ctype.h>
+#include <wctype.h>
 
 #include "NFSlice.hpp"
 
@@ -287,6 +290,25 @@ public:
 	// Lower-level routine that takes a va_list and appends to a specified
 	// string.  All other routines are just convenience wrappers around it.
 	static void StringAppendV(std::string* dst, const char* format, va_list ap);
+
+	/**
+	 * @brief 获得typeinfo.name(T)的类型名字
+	 *  
+	 * @param name  对类型T,获得typeinfo<T>.name()的名字
+	 * @return      获得typeinfo.name(T)的类型名字
+	 */
+	static std::string Demangle(const std::string &name);
+
+	/**
+	 * @brief 获得类型T的类型名字
+	 *  
+	 * @return      获得typeinfo.name(T)的类型名字
+	 */
+	template <class T>
+	static std::string GetTypeName()
+	{
+		return Demangle(typeid(T).name());
+	}
 };
 
 class _NFExport NFStringUtilW {

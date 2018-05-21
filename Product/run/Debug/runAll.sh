@@ -1,1 +1,1 @@
-./NFPluginLoader Server=AllServer ID=6 PATH=../
+./NFPluginLoader Server=AllServer ID=6 Path=../

@@ -157,6 +157,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="NFCPluginManager.h" />
     <ClInclude Include="NFEventDefine.h" />
     <ClInclude Include="NFILuaScriptModule.h" />
     <ClInclude Include="NFINetClientModule.h" />
@@ -182,6 +183,7 @@
     <ClInclude Include="NFTimerAxis.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="NFCPluginManager.cpp" />
     <ClCompile Include="NFEventMgr.cpp" />
     <ClCompile Include="NFEventObj.cpp" />
     <ClCompile Include="NFLogMgr.cpp" />
