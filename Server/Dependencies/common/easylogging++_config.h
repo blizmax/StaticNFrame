@@ -12,7 +12,7 @@
 //用来配置easylogging, 比在编译时加方便
 
 //#define ELPP_THREAD_SAFE                              //
-#define ELPP_NO_DEFAULT_LOG_FILE						//不要默认的那个LOG文件
+#define ELPP_NO_DEFAULT_LOG_FILE						1//不要默认的那个LOG文件
 #define ELPP_FEATURE_ALL								//崩溃时方便打印LOG
 //#define ELPP_STACKTRACE
 

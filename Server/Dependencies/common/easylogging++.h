@@ -18,7 +18,7 @@
 #ifndef EASYLOGGINGPP_H
 #define EASYLOGGINGPP_H
 
-#include "easylogging++.h"
+#include "easylogging++_config.h"
 
 // Compilers and C++0x/C++11 Evaluation
 #if __cplusplus >= 201103L
