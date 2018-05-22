@@ -1,3 +1,12 @@
+// -------------------------------------------------------------------------
+//    @FileName         :    NFEventObj.h
+//    @Author           :    GaoYi
+//    @Date             :    2017-04-01
+//    @Email			:    445267987@qq.com
+//    @Module           :    NFCore
+//
+// -------------------------------------------------------------------------
+
 #pragma once
 
 #include <string>
@@ -17,21 +26,69 @@ class NFEventContext
 
 };
 
-//执行事件
+/** 
+ *@brief 事件系统对象，所有想使用事件系统的都必须继承这个对象
+ */
 class NFEventObj
 {
 public:
+	/** 
+	 *@brief 构造函数
+	 */
 	NFEventObj();
+
+	/** 
+	 *@brief 析构函数
+	 */
 	virtual ~NFEventObj();
 public:
+	/**
+	* @brief 收到事件函数, 对收到的事件进行处理
+	*  
+	* @param nEventID		事件ID
+	* @param nSrcID			事件源ID，一般都是玩家，生物唯一id
+	* @param bySrcType		事件源类型，玩家类型，怪物类型之类的
+	* @param pEventContext	发过来的事件数据
+	* @return				
+	*/
 	virtual void OnExecute(uint16_t nEventID, uint64_t nSrcID, uint8_t bySrcType, NFEventContext* pEventContext) = 0;
 public:
-	//发送执行事件
+	/**
+	* @brief 发送事件,并执行收到事件的对象的对应函数
+	*  
+	* @param nEventID		事件ID
+	* @param nSrcID			事件源ID，一般都是玩家，生物唯一id
+	* @param bySrcType		事件源类型，玩家类型，怪物类型之类的 
+	* @param pEventContext	事件传输的数据
+	* @return				执行是否成功 
+	*/
 	void FireExecute(uint16_t nEventID,uint64_t nSrcID, uint8_t bySrcType, NFEventContext* pEventContext);
-	//订阅执行事件
+
+	/**
+	* @brief 订阅事件
+	*  
+	* @param nEventID	事件ID
+	* @param nSrcID		事件源ID，一般都是玩家，生物唯一id
+	* @param bySrcType	事件源类型，玩家类型，怪物类型之类的
+	* @param desc		事件描述，用于打印，获取信息，查看BUG之类的
+	* @return			订阅事件是否成功 
+	*/
 	bool Subscribe(uint16_t nEventID, uint64_t nSrcID, uint8_t bySrcType, const std::string& desc);
-	//取消订阅执行事件
+
+	/**
+	* @brief 取消订阅事件
+	*  
+	* @param nEventID	事件ID
+	* @param nSrcID		事件源ID，一般都是玩家，生物唯一id
+	* @param bySrcType	事件源类型，玩家类型，怪物类型之类的
+	* @return			取消订阅事件是否成功 
+	*/
 	bool UnSubscribe(uint16_t nEventID, uint64_t nSrcID, uint8_t bySrcType);
-	//取消所有执行事件的订阅
+
+	/**
+	* @brief 取消NFEventObj所有订阅事件
+	*  
+	* @return			取消订阅事件是否成功 
+	*/
 	bool UnSubscribeAll();
 };

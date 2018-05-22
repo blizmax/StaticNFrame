@@ -4,10 +4,10 @@
 #include "NFMacros.h"
 #include "NFPlatformMacros.h"
 
-
 #include <stdint.h>
 #include <chrono>
 #include <string>
+#include <memory>
 
 #ifndef NDEBUG
 #include <assert.h>

@@ -9,7 +9,8 @@
 #include "NFCTestKernelModule.h"
 #include "NFComm/NFPluginModule/NFIPluginManager.h"
 #include "NFComm/NFPluginModule/NFLogMgr.h"
-#include "NFComm/NFPluginModule/NFEventDefine.h"
+#include <memory>
+
 
 NFCTestKernelModule::NFCTestKernelModule(NFIPluginManager* p)
 {
@@ -18,14 +19,42 @@ NFCTestKernelModule::NFCTestKernelModule(NFIPluginManager* p)
 
 bool NFCTestKernelModule::Init()
 {
-	lastTime = NFGetTime();
-	SetTimer(eTimer_test, 1000, 100);
-	Subscribe(NFEVENT_TEST, eTimer_test, 0, "NFCTestKernelModule");
+	NF_SHARE_PTR<NFTestObject> pObject = NF_SHARE_PTR<NFTestObject>(NF_NEW NFTestObject());
+	NF_SHARE_PTR<NFTestObject> pObject1 = NF_SHARE_PTR<NFTestObject>(NF_NEW NFTestObject());
+	lastTime = 123456789;
+	Subscribe(NFEVENT_TEST, lastTime, eEvent_one_cycle, __FUNCTION__);
+	Subscribe(NFEVENT_TEST, lastTime, eEvent_one_cycle, __FUNCTION__);
+	Subscribe(NFEVENT_TEST, lastTime, eEvent_two, __FUNCTION__);
+	Subscribe(NFEVENT_TEST, lastTime, eEvent_three, __FUNCTION__);
+	Subscribe(NFEVENT_TEST1, lastTime, eEvent_one_cycle, __FUNCTION__);
+	Subscribe(NFEVENT_TEST2, lastTime, eEvent_one_cycle, __FUNCTION__);
+	Subscribe(NFEVENT_TEST, 0, eEvent_one_cycle, __FUNCTION__);
+	Subscribe(NFEVENT_TEST2, 4, eEvent_one_cycle, __FUNCTION__);
+	Subscribe(NFEVENT_TEST2, 5, eEvent_one_cycle, __FUNCTION__);
+	FireExecute(NFEVENT_TEST, lastTime, eEvent_one_cycle, NULL);
+	pObject->UnSubscribeAll();
+	pObject1->UnSubscribe(NFEVENT_TEST, lastTime, eEvent_one_cycle);
+	pObject1->UnSubscribe(NFEVENT_TEST, lastTime, eEvent_two);
+	pObject1->UnSubscribe(NFEVENT_TEST, lastTime, eEvent_three);
     return true;
 }
 
 bool NFCTestKernelModule::AfterInit()
 {
+	this->FireExecute(NFEVENT_TEST, lastTime, eEvent_one_cycle, NULL);
+	this->FireExecute(NFEVENT_TEST, 1, eEvent_one_cycle, NULL);
+	this->FireExecute(NFEVENT_TEST, 2, eEvent_one_cycle, NULL);
+	this->UnSubscribe(NFEVENT_TEST, 0, eEvent_one_cycle);
+	this->UnSubscribe(NFEVENT_TEST, 0, eEvent_one_cycle);
+	this->FireExecute(NFEVENT_TEST, 3, eEvent_one_cycle, NULL);
+	this->FireExecute(NFEVENT_TEST, 4, eEvent_one_cycle, NULL);
+	this->FireExecute(NFEVENT_TEST, lastTime, eEvent_two, NULL);
+	this->FireExecute(NFEVENT_TEST, lastTime, eEvent_three, NULL);
+	this->FireExecute(NFEVENT_TEST1, lastTime, eEvent_one_cycle, NULL);
+	this->FireExecute(NFEVENT_TEST2, lastTime, eEvent_one_cycle, NULL);
+	this->FireExecute(NFEVENT_TEST2, 4, eEvent_one_cycle, NULL);
+	this->FireExecute(NFEVENT_TEST2, 5, eEvent_one_cycle, NULL);
+	this->UnSubscribeAll();
     return true;
 }
 
@@ -55,18 +84,19 @@ void NFCTestKernelModule::OnTimer(uint32_t nTimerID)
 
 void NFCTestKernelModule::OnExecute(uint16_t nEventID, uint64_t nSrcID, uint8_t bySrcType, NFEventContext* pEventContext)
 {
-	if (nEventID == NFEVENT_TEST)
+	std::cout << __FUNCTION__ << "::";
+	std::cout << "--nEventID:" << nEventID;
+	std::cout << "--nSrcID:" << nSrcID;
+	std::cout << "--bySrcType:" << (uint32_t)bySrcType;
+	std::cout << std::endl;
+	if (nEventID == NFEVENT_TEST2 && nSrcID == 4 && bySrcType == eEvent_one_cycle)
 	{
-		NFTestEvent* pEvent = static_cast<NFTestEvent*>(pEventContext);
-		if (pEvent)
-		{
-			std::cout << "nEventID:" << nEventID << ", nSrcID:" << nSrcID << ", bySrcType:" << bySrcType << std::endl;
-		}
-		//为什么能转换过来
-		NFTestEvent0* pEvent0 = static_cast<NFTestEvent0*>(pEventContext);
-		if (pEvent0)
-		{
-			std::cout << "nEventID:" << nEventID << ", nSrcID:" << nSrcID << ", bySrcType:" << bySrcType << std::endl;
-		}
+		this->FireExecute(NFEVENT_TEST2, 4, eEvent_one_cycle, NULL);
+		this->UnSubscribe(nEventID, nSrcID, bySrcType);
+	}
+	if (nEventID == NFEVENT_TEST2 && nSrcID == 5 && bySrcType == eEvent_one_cycle)
+	{
+		this->UnSubscribe(nEventID, nSrcID, bySrcType);
+		this->FireExecute(NFEVENT_TEST2, 5, eEvent_one_cycle, NULL);
 	}
 }

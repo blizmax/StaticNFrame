@@ -1,9 +1,18 @@
+// -------------------------------------------------------------------------
+//    @FileName         :    NFBuffer.h
+//    @Author           :    GaoYi
+//    @Date             :    2017-04-01
+//    @Email			:    445267987@qq.com
+//    @Module           :    NFCore
+//
+// -------------------------------------------------------------------------
 
 #pragma once
 #include <stdint.h>
 #include <list>
 #include <set>
 #include <unordered_map>
+#include <unordered_set>
 #include <algorithm>
 #include <iostream>
 
@@ -11,71 +20,85 @@
 #include "NFComm/NFCore/NFHash.hpp"
 
 using namespace std;
+class NFEventContext;
 
-
+/** 
+ *@brief  对所有事件最大嵌套层数支持20层. 
+ * 比如在Fire一个事件里，又Fire了别的事件，不断嵌套
+ */
 #define EVENT_FIRE_MAX_LAYER 20
 
-
+/** 
+ *@brief  对单一事件最大嵌套层数支持5层.
+ * 比如在Fire一个事件里，又对这个事件经行了Fire
+ */
 #define EVENT_REF_MAX_CNT 5
 
-
-struct SKey
+/** 
+ *@brief 事件key类
+ */
+struct SEventKey
 {
 public:
-	SKey()
+	/** 
+	*@brief 事件主要的key，主要指玩家，生物唯一id
+	*/
+	uint64_t nSrcID;
+	/** 
+	*@brief 事件Id
+	*/
+	uint16_t nEventID;
+	/** 
+	*@brief src类型, 用来区别玩家，怪物的类型
+	*/
+	uint8_t  bySrcType;	
+public:
+	/** 
+	*@brief 构造函数
+	*/
+	SEventKey()
 	{
 		nSrcID = 0;
 		nEventID = 0;
 		bySrcType = 0;
 	}
-	uint64_t nSrcID;		//
-	uint16_t nEventID;		//
-	uint8_t  bySrcType;		//
-};
 
-
-//
-struct SEventKey
-{
-public:
-	SKey eKey;
-	//uint64_t nKey;
-public:
-	SEventKey()
-	{
-		//nKey = 0;
-	}
+	/** 
+	*@brief 判断是否相等
+	*/
 	bool operator == (const SEventKey &eventKey) const 
 	{
-		return ((eKey.nSrcID == eventKey.eKey.nSrcID) &&
-			(eKey.nEventID == eventKey.eKey.nEventID) &&
-			(eKey.bySrcType == eventKey.eKey.bySrcType));
-		//return nKey == eventKey.nKey;
+		return ((nSrcID == eventKey.nSrcID) &&
+			(nEventID == eventKey.nEventID) &&
+			(bySrcType == eventKey.bySrcType));
 	}
 
+	/** 
+	*@brief 判断是否小于, 不知道有没有更好的判断小于的方法
+	*/
 	bool operator < (const SEventKey &eventKey) const
 	{
-		if (eKey.nSrcID < eventKey.eKey.nSrcID)
+		if (nSrcID < eventKey.nSrcID)
 		{
 			return true;
 		}
-		else if (eKey.nSrcID > eventKey.eKey.nSrcID)
+		else if (nSrcID > eventKey.nSrcID)
 		{
 			return false;
 		}
 		else
 		{
-			if (eKey.nEventID < eventKey.eKey.nEventID)
+			if (nEventID < eventKey.nEventID)
 			{
 				return true;
 			}
-			else if (eKey.nEventID > eventKey.eKey.nEventID)
+			else if (nEventID > eventKey.nEventID)
 			{
 				return false;
 			}
 			else
 			{
-				if (eKey.bySrcType < eventKey.eKey.bySrcType)
+				if (bySrcType < eventKey.bySrcType)
 				{
 					return true;
 				}
@@ -85,210 +108,247 @@ public:
 				}
 			}
 		}
-		//return nKey < eventKey.nKey;
 	}
-	
 }; 
 
-class NFEventContext;
-
+/** 
+*@brief 求hash值
+*/
 namespace std {
 	template<> struct hash < SEventKey >
 	{
 		size_t  operator()(const SEventKey &eventKey) const
 		{
-			return hash_combine(eventKey.eKey.nSrcID, eventKey.eKey.nEventID, eventKey.eKey.bySrcType);
+			return NFHash::hash_combine(eventKey.nSrcID, eventKey.nEventID, eventKey.bySrcType);
 		}
 	};
 }
 
-//
+/** 
+ *@brief 事件系统模版类
+ */
 template<class TEventSink,class TEventObj>
-class EventTemplate
+class NFEventTemplate
 {
 private:
-	//
+	/** 
+	 *@brief 事件描述信息
+	 */
 	struct SubscribeInfo 
 	{
-		TEventSink *pSink;		//
-		std::string szDesc;		//
-		int32_t nRefCount;		//
-		bool bRemoveFlag;		//
+		/** 
+		*@brief 事件对象
+		*/
+		TEventSink *pSink;
+
+		/** 
+		*@brief 描述信息
+		*/
+		std::string szDesc;
+
+		/** 
+		*@brief 引用次数
+		*/
+		int32_t nRefCount;
+
+		/** 
+		*@brief 移除标志
+		*/
+		bool bRemoveFlag;
+
+		/** 
+		*@brief 构造函数
+		*/
 		SubscribeInfo(TEventSink *pParamSink, const std::string& desc):szDesc(desc)
 		{
 			pSink = pParamSink;
-			//szDesc = desc;
+			szDesc = desc;
 			nRefCount = 0;
 			bRemoveFlag = false;
 		}
+
+		/** 
+		*@brief 增加引用
+		*/
 		void Add()
 		{
 			nRefCount++;
 		}
+
+		/** 
+		*@brief 减少引用
+		*/
 		void Sub()
 		{
 			--nRefCount;
 		}
 	};
-	
-	//
-	typedef std::list<SubscribeInfo> TLIST_SUBCRIBLE;
-	//
-	typedef std::unordered_map<SEventKey, TLIST_SUBCRIBLE*> TMAP_ALL_SUBSCRIBEOBJ;
-
-	//
-	typedef std::set<SEventKey> TSET_SUBSCRIBEKEY;
-
-	//
-	typedef std::unordered_map<void*, TSET_SUBSCRIBEKEY*> TMAP_ALL_SUBSCRIBEKEY;
-
 public:
-
-	EventTemplate()
+	/** 
+	*@brief 构造函数
+	*/
+	NFEventTemplate()
 	{
 		m_nFireLayer = 0;
 	}
 
-	virtual ~EventTemplate()
+	/** 
+	*@brief 析构函数
+	*/
+	virtual ~NFEventTemplate()
 	{
-		typename TMAP_ALL_SUBSCRIBEKEY::iterator iterA = m_mapAllSubscribeKey.begin();
-		typename TMAP_ALL_SUBSCRIBEOBJ::iterator iterB = m_mapAllSubscribeObj.begin();
-
-		for (; iterA != m_mapAllSubscribeKey.end(); ++iterA)
-		{
-			TSET_SUBSCRIBEKEY *pSetSubcribeKey = iterA->second;
-			pSetSubcribeKey->clear();
-			NFSafeDelete(pSetSubcribeKey);
-		}
 		m_mapAllSubscribeKey.clear();
-		
-		for (; iterB != m_mapAllSubscribeObj.end(); ++iterB)
-		{
-			TLIST_SUBCRIBLE *pLstSubcribe = iterB->second;
-			pLstSubcribe->clear();
-			NFSafeDelete(pLstSubcribe);
-		}
 		m_mapAllSubscribeObj.clear();
 	}
 
-	//
+	/**
+	* @brief 订阅事件
+	*  
+	* @param pSink		订阅对象 
+	* @param nEventID	事件ID
+	* @param nSrcID		事件源ID，一般都是玩家，生物唯一id
+	* @param bySrcType	事件源类型，玩家类型，怪物类型之类的
+	* @param desc		事件描述，用于打印，获取信息，查看BUG之类的
+	* @return			订阅事件是否成功 
+	*/	
 	bool Subscribe(TEventSink *pSink, uint16_t nEventID, uint64_t nSrcID, uint8_t bySrcType, const std::string& desc)
 	{
 		if (nullptr == pSink) return false;
 
 		SEventKey skey;
-		skey.eKey.nEventID = nEventID;
-		skey.eKey.nSrcID = nSrcID;
-		skey.eKey.bySrcType = bySrcType;
-		//skey.nKey = EVENT_KEY(nSrcID, nEventID, bySrcType);
+		skey.nEventID = nEventID;
+		skey.nSrcID = nSrcID;
+		skey.bySrcType = bySrcType;
 
-		TMAP_ALL_SUBSCRIBEKEY::iterator iter = m_mapAllSubscribeKey.find(pSink);
+		/** 
+		*@brief 先判断指针pSink对象有没有注册，然后把skey放入
+		*       这个指针的的集合里，如果skey已经存在，
+		*       说明已经存入，直接退出
+		*/
+		auto iter = m_mapAllSubscribeKey.find(pSink);
 		if (iter == m_mapAllSubscribeKey.end())
 		{
-			TSET_SUBSCRIBEKEY *psetKey = new TSET_SUBSCRIBEKEY();
-			psetKey->insert(skey);
-			m_mapAllSubscribeKey.emplace(pSink, psetKey);
-			//m_mapAllSubscribeKey.insert(TMAP_ALL_SUBSCRIBEKEY::value_type(pSink, psetKey));
+			m_mapAllSubscribeKey[pSink].insert(skey);
 		}
 		else
 		{
-			TSET_SUBSCRIBEKEY *pAllSubscribeKey = iter->second;
-			TSET_SUBSCRIBEKEY::iterator iterSet = pAllSubscribeKey->find(skey);
-			if (iterSet != pAllSubscribeKey->end())
+			auto iterSet = iter->second.find(skey);
+			if (iterSet != iter->second.end())
 			{
 				return true;
 			}
-			pAllSubscribeKey->insert(skey);
+			iter->second.insert(skey);
 		}
 
-		//
+		/** 
+		*@brief 判断skey有没有存在，把对象存入skey的链表里
+		*/
 		SubscribeInfo info(pSink, desc);
-		typename TMAP_ALL_SUBSCRIBEOBJ::iterator iterObj = m_mapAllSubscribeObj.find(skey);
+		auto iterObj = m_mapAllSubscribeObj.find(skey);
 		if (iterObj != m_mapAllSubscribeObj.end())
 		{
-			TLIST_SUBCRIBLE *pListSubscribe = iterObj->second;
-			pListSubscribe->push_back(info);
+			iterObj->second.push_back(info);
 		}
 		else
 		{
-			TLIST_SUBCRIBLE *pListSubscribe = new TLIST_SUBCRIBLE();
-			pListSubscribe->push_back(info);
-			m_mapAllSubscribeObj.emplace(skey, pListSubscribe);
-			//m_mapAllSubscribeObj.insert(typename TMAP_ALL_SUBSCRIBEOBJ::value_type(skey, pListSubscribe));
+			m_mapAllSubscribeObj[skey].push_back(info);
 		}
 		return true;
 	}
 
-	//
+	/**
+	* @brief 取消订阅事件
+	*  
+	* @param pSink		订阅对象 
+	* @param nEventID	事件ID
+	* @param nSrcID		事件源ID，一般都是玩家，生物唯一id
+	* @param bySrcType	事件源类型，玩家类型，怪物类型之类的
+	* @return			取消订阅事件是否成功 
+	*/
 	bool UnSubscribe(TEventSink *pSink, uint16_t nEventID, uint64_t nSrcID, uint8_t bySrcType)
 	{
-		if (nullptr == pSink)
-		{
-			return false;
-		}
+		if (nullptr == pSink) return false;
 
 		SEventKey skey;
-		skey.eKey.nEventID = nEventID;
-		skey.eKey.nSrcID = nSrcID;
-		skey.eKey.bySrcType = bySrcType;
-		//skey.nKey = EVENT_KEY(nSrcID, nEventID, bySrcType);
+		skey.nEventID = nEventID;
+		skey.nSrcID = nSrcID;
+		skey.bySrcType = bySrcType;
 
-		TMAP_ALL_SUBSCRIBEKEY::iterator iter = m_mapAllSubscribeKey.find(pSink);
+		/** 
+		*@brief 判断pSink指针对象有没有存在，不存在直接退出
+		*		存在的话，删除对应的key, 如果pSink集合为空的话，
+		*       删除pSink
+		*/
+		auto iter = m_mapAllSubscribeKey.find(pSink);
 		if (iter == m_mapAllSubscribeKey.end())
 		{
 			return false;
 		}
-		TSET_SUBSCRIBEKEY *pSetSubscribeKey = iter->second;
-		if (pSetSubscribeKey->find(skey) == pSetSubscribeKey->end())
+
+		if (iter->second.find(skey) == iter->second.end())
 		{
 			return false;
 		}
-		pSetSubscribeKey->erase(skey);
-		if (0 == pSetSubscribeKey->size())
+
+		iter->second.erase(skey);
+		if (iter->second.empty())
 		{
 			m_mapAllSubscribeKey.erase(iter);
-			NFSafeDelete(pSetSubscribeKey);
 		}
 
-		//
+		/** 
+		*@brief 删除skey链表里的pSink
+		*/
 		DelSubcribeInfo(pSink, skey);
 
 		return true;
 	}
 
-	//
+	/**
+	* @brief 取消pSink所有订阅事件
+	*  
+	* @param pSink		订阅对象 
+	* @return			取消订阅事件是否成功 
+	*/
 	bool UnSubscribeAll(TEventSink *pSink)
 	{
-		if (nullptr == pSink)
-		{
-			return false;
-		}
-		TMAP_ALL_SUBSCRIBEKEY::iterator iter = m_mapAllSubscribeKey.find(pSink);
+		if (nullptr == pSink) return false;
+
+		auto iter = m_mapAllSubscribeKey.find(pSink);
 		if (iter == m_mapAllSubscribeKey.end())
 		{
 			return false;
 		}
-		TSET_SUBSCRIBEKEY *pSubscribeKey = iter->second;
-		TSET_SUBSCRIBEKEY::iterator iterSet = pSubscribeKey->begin();
-		for (; iterSet != pSubscribeKey->end(); ++iterSet)
+
+		for (auto iterSet = iter->second.begin(); iterSet != iter->second.end(); ++iterSet)
 		{
 			DelSubcribeInfo(pSink, (*iterSet));
 		}
 		m_mapAllSubscribeKey.erase(iter);
-		NFSafeDelete(pSubscribeKey);
-		pSubscribeKey = nullptr;
 
 		return true;
 	}
 
+	/**
+	* @brief 发送事件,并执行收到事件的对象的对应函数
+	*  
+	* @param nEventID		事件ID
+	* @param nSrcID			事件源ID，一般都是玩家，生物唯一id
+	* @param bySrcType		事件源类型，玩家类型，怪物类型之类的 
+	* @param pEventContext	事件传输的数据
+	* @return				执行是否成功 
+	*/
 	bool Fire(uint16_t nEventID, uint64_t nSrcID, uint8_t bySrcType, NFEventContext* pEventContext)
 	{
 		SEventKey skey;
-		skey.eKey.nEventID = nEventID;
-		skey.eKey.nSrcID = nSrcID;
-		skey.eKey.bySrcType = bySrcType;
-		//skey.nKey = EVENT_KEY(nSrcID, nEventID, bySrcType);
-		if (skey.eKey.nSrcID != 0)
+		skey.nEventID = nEventID;
+		skey.nSrcID = nSrcID;
+		skey.bySrcType = bySrcType;
+
+		/**
+		* @brief 先执行完全匹配的
+		*/
+		if (skey.nSrcID != 0)
 		{
 			bool bRes = Fire(skey, nEventID, nSrcID, bySrcType, pEventContext);
 			if (!bRes)
@@ -296,8 +356,13 @@ public:
 				return false;
 			}
 		}
-		skey.eKey.nSrcID = 0;
-		//skey.nKey = EVENT_KEY(skey.eKey.nSrcID, nEventID, bySrcType);
+
+		/**
+		* @brief 再执行， 针对整个事件nEventID,类型为bySrcType
+		* 比如订阅时，订阅了所有玩家类的事件，而不是对一个玩家的事件，
+		* 订阅时将nSrcId=0，会受到所有玩家产生的该类事件
+		*/
+		skey.nSrcID = 0;
 		bool bRes = Fire(skey, nEventID, nSrcID, bySrcType, pEventContext);
 		if (!bRes)
 		{
@@ -305,25 +370,27 @@ public:
 		}
 		return true;
 	}
-
-
 private:
-	//
+	/**
+	* @brief 删除skey的链表里的pSink
+	*  
+	* @param pSink		订阅对象 
+	* @param SEventKey	事件合成key
+	* @return			删除skey的链表里的pSink是否成功
+	*/
 	bool DelSubcribeInfo(TEventSink *pSink, const SEventKey &skey)
 	{
-		typename TMAP_ALL_SUBSCRIBEOBJ::iterator iter = m_mapAllSubscribeObj.find(skey);
+		auto iter = m_mapAllSubscribeObj.find(skey);
 		if (iter != m_mapAllSubscribeObj.end())
 		{
-			TLIST_SUBCRIBLE *pListSubscribe = iter->second;
-			typename TLIST_SUBCRIBLE::iterator iterLst = pListSubscribe->begin();
-			for (; iterLst != pListSubscribe->end(); ++iterLst)
+			for (auto iterLst = iter->second.begin(); iterLst != iter->second.end(); ++iterLst)
 			{
 				SubscribeInfo &sInfo = (*iterLst);
 				if (sInfo.pSink == pSink)
 				{
 					if (sInfo.nRefCount == 0)
 					{
-						pListSubscribe->erase(iterLst);
+						iter->second.erase(iterLst);
 					}
 					else
 					{
@@ -332,39 +399,44 @@ private:
 					break;
 				}
 			}
-			if (0 == pListSubscribe->size())
+			if (iter->second.empty())
 			{
 				m_mapAllSubscribeObj.erase(iter);
-				NFSafeDelete(pListSubscribe);
 			}
 		}
 
 		return true;
 	}
 
+	/**
+	* @brief 执行所有订阅事件key的函数
+	*  
+	* @param skey			事件合成key，skey.nsrcid可能为0，可能=nEventID		
+	* @param nEventID		事件ID
+	* @param nSrcID			事件源ID，一般都是玩家，生物唯一id
+	* @param bySrcType		事件源类型，玩家类型，怪物类型之类的 
+	* @param pEventContext	事件传输的数据
+	* @return				执行是否成功 
+	*/
 	bool Fire(const SEventKey &skey, uint16_t nEventID, uint64_t nSrcID, uint8_t bySrcType, NFEventContext* pEventContex)
 	{
 		m_nFireLayer++;
 		if (m_nFireLayer >= EVENT_FIRE_MAX_LAYER)
 		{
-			//
 			std::cerr << "[Event] m_nFireLayer >= EVENT_FIRE_MAX_LAYER.....nEventID:" <<
 				nEventID << ",nSrcID:" << nSrcID << ",bySrcType:" << bySrcType << ", firelayer:" << m_nFireLayer;
 			m_nFireLayer--;
 			return false;
 		}
 
-		typename TMAP_ALL_SUBSCRIBEOBJ::iterator iterLst = m_mapAllSubscribeObj.find(skey);
+		auto iterLst = m_mapAllSubscribeObj.find(skey);
 		if (iterLst != m_mapAllSubscribeObj.end())
 		{
-			TLIST_SUBCRIBLE *pLstSubscribe = iterLst->second;
-			typename TLIST_SUBCRIBLE::iterator iter = pLstSubscribe->begin();
-			for (; iter != pLstSubscribe->end();)
+			for (auto iter = iterLst->second.begin(); iter != iterLst->second.end();)
 			{
 				SubscribeInfo *pSubscribeInfo = &(*iter);
 				if (pSubscribeInfo->nRefCount >= EVENT_REF_MAX_CNT)
 				{
-					//
 					std::cerr << "[Event] pSubscribeInfo->nRefCount >= EVENT_REF_MAX_CNT....eventid:" << nEventID << ",srcid:" << nSrcID << ",type:" << bySrcType << ",refcount:" << pSubscribeInfo->nRefCount << ",removeflag:" << (int32_t)pSubscribeInfo->bRemoveFlag << ",szdesc:" << pSubscribeInfo->szDesc;
 					m_nFireLayer--;
 					return false;
@@ -387,7 +459,7 @@ private:
 					}
 					if (pSubscribeInfo->bRemoveFlag && 0 == pSubscribeInfo->nRefCount)
 					{
-						iter = pLstSubscribe->erase(iter);
+						iter = iterLst->second.erase(iter);
 					}
 					else
 					{
@@ -403,7 +475,7 @@ private:
 				{
 					if (0 == pSubscribeInfo->nRefCount)
 					{
-						iter = pLstSubscribe->erase(iter);
+						iter = iterLst->second.erase(iter);
 					}
 					else
 					{
@@ -412,10 +484,9 @@ private:
 				}
 			} // end of for (; iter != pLstSubscribe->end();)
 
-			if (0 == pLstSubscribe->size())
+			if (iterLst->second.empty())
 			{
 				m_mapAllSubscribeObj.erase(iterLst);
-				NFSafeDelete(pLstSubscribe);
 			}
 
 		} // enf of if (iterLst != m_mapAllSubscribeObj.end())
@@ -429,9 +500,9 @@ private:
 	//
 	TEventObj m_FireEventObj;
 	//
-	TMAP_ALL_SUBSCRIBEOBJ m_mapAllSubscribeObj;
+	std::unordered_map<SEventKey, std::list<SubscribeInfo>> m_mapAllSubscribeObj;
 	//
-	TMAP_ALL_SUBSCRIBEKEY m_mapAllSubscribeKey;
+	std::unordered_map<void*, std::unordered_set<SEventKey>> m_mapAllSubscribeKey;
 	//
 	int32_t m_nFireLayer;
 };

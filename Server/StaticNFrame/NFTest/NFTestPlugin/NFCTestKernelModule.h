@@ -11,6 +11,9 @@
 #include "NFComm/NFPluginModule/NFIModule.h"
 #include "NFComm/NFPluginModule/NFTimerObj.h"
 #include "NFComm/NFPluginModule/NFEventObj.h"
+#include "NFComm/NFPluginModule/NFEventDefine.h"
+
+#include <iostream>
 
 class NFITestKernelModule : public NFIModule
 {
@@ -37,12 +40,40 @@ public:
 	std::string c;
 };
 
+enum eEventType
+{
+	eEvent_one_cycle = 1,
+	eEvent_two = 2,
+	eEvent_three = 3,
+};
+
+class NFTestObject : public NFEventObj
+{
+public:
+	NFTestObject()
+	{
+		Subscribe(NFEVENT_TEST, 123456789, eEvent_one_cycle, __FUNCTION__);
+		Subscribe(NFEVENT_TEST, 123456789, eEvent_two, __FUNCTION__);
+		Subscribe(NFEVENT_TEST, 123456789, eEvent_three, __FUNCTION__);
+	}
+
+	virtual void OnExecute(uint16_t nEventID, uint64_t nSrcID, uint8_t bySrcType, NFEventContext* pEventContext)
+	{
+		std::cout << __FUNCTION__ << "::";
+		std::cout << "--nEventID:" << nEventID;
+		std::cout << "--nSrcID:" << nSrcID;
+		std::cout << "--bySrcType:" << (uint32_t)bySrcType;
+		std::cout << std::endl;
+	}
+};
+
 class NFCTestKernelModule : public NFITestKernelModule, NFTimerObj, NFEventObj
 {
 	enum eTimer
 	{
 		eTimer_test = 1,
 	};
+
 public:
     explicit NFCTestKernelModule(NFIPluginManager* p);
 	virtual ~NFCTestKernelModule() { }
