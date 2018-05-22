@@ -76,7 +76,7 @@ class NFCTestKernelModule : public NFITestKernelModule, NFTimerObj, NFEventObj
 
 public:
     explicit NFCTestKernelModule(NFIPluginManager* p);
-	virtual ~NFCTestKernelModule() { }
+	virtual ~NFCTestKernelModule() { delete m_pObject; }
 public:
     virtual bool Init();
 
@@ -93,4 +93,5 @@ public:
 	virtual void OnExecute(uint16_t nEventID, uint64_t nSrcID, uint8_t bySrcType, NFEventContext* pEventContext);
 protected:
 	uint64_t lastTime = 0;
+	NFTestObject* m_pObject;
 };

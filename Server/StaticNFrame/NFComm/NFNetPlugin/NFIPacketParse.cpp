@@ -15,10 +15,7 @@ NFIPacketParse* NFIPacketParse::m_pPacketParse = CreatePacketParse(0);
 
 void NFIPacketParse::DeletePacketParse(NFIPacketParse* pPacketParse)
 {
-	if (pPacketParse)
-	{
-		delete pPacketParse;
-	}
+	delete pPacketParse;
 }
 
 NFIPacketParse* NFIPacketParse::CreatePacketParse(int parseType)

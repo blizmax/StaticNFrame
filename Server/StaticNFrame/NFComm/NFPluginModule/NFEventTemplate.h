@@ -247,11 +247,11 @@ public:
 		auto iterObj = m_mapAllSubscribeObj.find(skey);
 		if (iterObj != m_mapAllSubscribeObj.end())
 		{
-			iterObj->second.push_back(info);
+			iterObj->second.push_front(info);
 		}
 		else
 		{
-			m_mapAllSubscribeObj[skey].push_back(info);
+			m_mapAllSubscribeObj[skey].push_front(info);
 		}
 		return true;
 	}
@@ -338,6 +338,15 @@ public:
 	* @param pEventContext	事件传输的数据
 	* @return				执行是否成功 
 	*/
+	/*
+	* 几个威胁，可能导致问题, 但不会导致崩溃, 可能与你预想的不一样:
+	* 问题1:假设我在Fire事件里，相同的key，删除不同的pSink, 
+	*		可能导致将要执行的事件被删除，这可能与你预想的设计不一样
+	* 问题2:假设我在Fire事件里，相同的key，删除相同的pSink, 由于事件系统利用SubscribeInfo的Add,Sub引用计数做了预防，
+	*       迭代器不会立马被删除，不会导致std::list迭代器失效， 这样删除不会导致问题
+	* 问题3:假设我在Fire事件里， Fire了别的事件，会导致迭代问题，事件系统已经了做了预付， 相同的事件，最多迭代5次，
+	*       所有的Fire事件最多迭代20次
+	*/
 	bool Fire(uint16_t nEventID, uint64_t nSrcID, uint8_t bySrcType, NFEventContext* pEventContext)
 	{
 		SEventKey skey;
@@ -423,8 +432,9 @@ private:
 		m_nFireLayer++;
 		if (m_nFireLayer >= EVENT_FIRE_MAX_LAYER)
 		{
-			std::cerr << "[Event] m_nFireLayer >= EVENT_FIRE_MAX_LAYER.....nEventID:" <<
-				nEventID << ",nSrcID:" << nSrcID << ",bySrcType:" << bySrcType << ", firelayer:" << m_nFireLayer;
+			std::cerr << "[Event] m_nFireLayer >= EVENT_FIRE_MAX_LAYER.....nEventID:" 
+				<< nEventID << ",nSrcID:" << nSrcID << ",bySrcType:" 
+				<< bySrcType << ", firelayer:" << m_nFireLayer << std::endl;;
 			m_nFireLayer--;
 			return false;
 		}
@@ -437,7 +447,9 @@ private:
 				SubscribeInfo *pSubscribeInfo = &(*iter);
 				if (pSubscribeInfo->nRefCount >= EVENT_REF_MAX_CNT)
 				{
-					std::cerr << "[Event] pSubscribeInfo->nRefCount >= EVENT_REF_MAX_CNT....eventid:" << nEventID << ",srcid:" << nSrcID << ",type:" << bySrcType << ",refcount:" << pSubscribeInfo->nRefCount << ",removeflag:" << (int32_t)pSubscribeInfo->bRemoveFlag << ",szdesc:" << pSubscribeInfo->szDesc;
+					std::cerr << "[Event] pSubscribeInfo->nRefCount >= EVENT_REF_MAX_CNT....eventid:"
+						<< nEventID << ",srcid:" << nSrcID << ",type:" << bySrcType << ",refcount:"
+						<< pSubscribeInfo->nRefCount << ",removeflag:" << (int32_t)pSubscribeInfo->bRemoveFlag << ",szdesc:" << pSubscribeInfo->szDesc << std::endl;
 					m_nFireLayer--;
 					return false;
 				}

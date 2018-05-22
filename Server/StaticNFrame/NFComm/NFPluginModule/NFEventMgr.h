@@ -57,6 +57,15 @@ public:
 	* @param pEventContext	事件传输的数据
 	* @return				执行是否成功 
 	*/
+	/*
+	* 几个威胁，可能导致问题, 但不会导致崩溃, 可能与你预想的不一样:
+	* 问题1:假设我在Fire事件里，相同的key，删除不同的pSink, 
+	*		可能导致将要执行的事件被删除，这可能与你预想的设计不一样
+	* 问题2:假设我在Fire事件里，相同的key，删除相同的pSink, 由于事件系统利用SubscribeInfo的Add,Sub引用计数做了预防，
+	*       迭代器不会立马被删除，不会导致std::list迭代器失效， 这样删除不会导致问题
+	* 问题3:假设我在Fire事件里， Fire了别的事件，会导致迭代问题，事件系统已经了做了预付， 相同的事件，最多迭代5次，
+	*       所有的Fire事件最多迭代20次
+	*/
 	void FireExecute(uint16_t nEventID,uint64_t nSrcID,uint8_t bySrcType, NFEventContext* pEventContext);
 
 	/**

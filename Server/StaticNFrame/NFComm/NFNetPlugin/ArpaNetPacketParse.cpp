@@ -48,7 +48,7 @@ int ArpgNetPacketParse::DeCodeImpl(const char* strData, const uint32_t unLen, ch
 		return 1;
 	}
 
-	packHead = (stMsg*)strData;
+	packHead = (stMsg*)strData; //-V519
 
 	outData = (char*)(strData + sizeof(stMsg));
 	outLen = (uint32_t)dwMsgSz - sizeof(stMsg);
