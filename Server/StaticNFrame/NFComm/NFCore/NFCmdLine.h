@@ -292,9 +292,10 @@ public:
   NFParser(){
   }
   ~NFParser(){
-    for (std::map<std::string, NFOptionBase*>::iterator p=options.begin();
-         p!=options.end(); p++)
-      delete p->second;
+	  for (auto p = options.begin(); p != options.end(); ++p)
+	  {
+		delete p->second;
+	  }
   }
 
   void Add(const std::string &name,
@@ -344,17 +345,30 @@ public:
 	std::string lowerName = name;
 	NFStringUtility::ToLower(lowerName);
     if (options.count(lowerName)==0) throw NFCmdLine_Error("there is no flag: --"+lowerName);
-    return options.find(lowerName)->second->has_set();
+	auto it = options.find(lowerName);
+	if (it != options.end())
+	{
+		if (it->second)
+		{
+			return it->second->has_set();
+		}
+	}
+    return false;
   }
 
   template <class T>
   const T &Get(const std::string &name) const {
 	std::string lowerName = name;
 	NFStringUtility::ToLower(lowerName);
-    if (options.count(lowerName)==0) throw NFCmdLine_Error("there is no flag: --"+lowerName);
-    const NFOptionWithValue<T> *p=dynamic_cast<const NFOptionWithValue<T>*>(options.find(lowerName)->second);
-    if (p==NULL) throw NFCmdLine_Error("type mismatch flag '"+lowerName+"'");
-    return p->get();
+
+	auto it = options.find(lowerName);
+	if (it == options.end()) throw NFCmdLine_Error("there is no flag: --"+lowerName);
+	if (it->second == nullptr) throw NFCmdLine_Error("there is no flag: --"+lowerName);
+
+	const NFOptionWithValue<T> *p=dynamic_cast<const NFOptionWithValue<T>*>(it->second);
+	if (p==NULL) throw NFCmdLine_Error("type mismatch flag '"+lowerName+"'");
+
+	return p->get();
   }
 
   const std::vector<std::string> &Rest() const {
@@ -374,7 +388,7 @@ public:
 
       if (arg[i]==' ' && !in_quote){
         args.push_back(buf);
-        buf="";
+        buf.clear();
         continue;
       }
 
@@ -421,17 +435,16 @@ public:
       errors.push_back("argument number must be longer than 0");
       return false;
     }
-    if (prog_name=="")
+    if (prog_name.empty())
       prog_name=argv[0];
 
     std::map<char, std::string> lookup;
-    for (std::map<std::string, NFOptionBase*>::iterator p=options.begin();
-         p!=options.end(); p++){
+    for (auto p = options.begin(); p != options.end(); ++p) {
       if (p->first.length()==0) continue;
       char initial=p->second->short_name();
       if (initial){
         if (lookup.count(initial)>0){
-          lookup[initial]="";
+          lookup[initial].clear();
           errors.push_back(std::string("short option '")+initial+"' is ambiguous");
           return false;
         }
@@ -479,7 +492,7 @@ public:
             errors.push_back(std::string("undefined short option: -")+argv[i][j-1]);
             continue;
           }
-          if (lookup[argv[i][j-1]]==""){
+          if (lookup[argv[i][j-1]].empty()){
             errors.push_back(std::string("ambiguous short option: -")+argv[i][j-1]);
             continue;
           }
@@ -490,7 +503,7 @@ public:
           errors.push_back(std::string("undefined short option: -")+last);
           continue;
         }
-        if (lookup[last]==""){
+        if (lookup[last].empty()){
           errors.push_back(std::string("ambiguous short option: -")+last);
           continue;
         }
@@ -508,10 +521,13 @@ public:
       }
     }
 
-    for (std::map<std::string, NFOptionBase*>::iterator p=options.begin();
-         p!=options.end(); p++)
-      if (!p->second->valid())
-        errors.push_back("need option: --"+std::string(p->first));
+	for (auto p = options.begin(); p != options.end(); p++)
+	{
+		if (!p->second->valid())
+		{
+			errors.push_back("need option: --"+std::string(p->first));
+		}
+	}
 
     return errors.size()==0;
   }
@@ -755,9 +771,9 @@ private:
     }
 
   protected:
-    std::string full_description(const std::string &desc){
+    std::string full_description(const std::string &xdesc){
       return
-        desc+" ("+NFDetail::readable_typename<T>()+
+        xdesc+" ("+NFDetail::readable_typename<T>()+
         (need?"":" [="+NFDetail::default_value<T>(def)+"]")
         +")";
     }

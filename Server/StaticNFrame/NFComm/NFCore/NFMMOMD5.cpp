@@ -10,7 +10,7 @@
 #include "NFMMOMD5.h"
 
 /* Define the static member of MD5. */
-const byte NFMMOMD5::PADDING[64] = { 0x80 };
+const byte NFMMOMD5::PADDING[64] = { 0x80 }; //-V1009
 const char NFMMOMD5::HEX_NUMBERS[16] = {
 	'0', '1', '2', '3',
 	'4', '5', '6', '7',

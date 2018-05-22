@@ -342,7 +342,7 @@ inline void _stringUtilSplitSliceToSlice(
 			ret.push_back(NFSlice(str.data() + start, pos - start));
 			start = pos + 1;
 		}
-	} while (p);
+	} while (true);
 }
 
 
@@ -379,7 +379,7 @@ inline void _stringUtilSplitSliceToSlice(
 			ret[numSplits++] = (NFSlice(str.data() + start, pos - start));
 			start = pos + 1;
 		}
-	} while (p);
+	} while (true);
 
 	slices_count = numSplits;
 }

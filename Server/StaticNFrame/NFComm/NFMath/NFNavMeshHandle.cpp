@@ -278,7 +278,7 @@ bool NFNavMeshHandle::Create(const std::string& path)
 
 		status = mesh->addTile(tileData
 			, size
-			, (safeStorage ? DT_TILE_FREE_DATA : 0)
+			, (safeStorage ? DT_TILE_FREE_DATA : 0) //-V547
 			, tileHeader.tileRef
 			, 0);
 

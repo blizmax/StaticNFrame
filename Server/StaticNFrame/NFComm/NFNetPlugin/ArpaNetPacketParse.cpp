@@ -38,7 +38,7 @@ int ArpgNetPacketParse::DeCodeImpl(const char* strData, const uint32_t unLen, ch
 		return -1;
 	}
 
-	if (dwMsgSz < 0 || dwMsgSz >= MAX_RECV_BUFFER_SIZE)
+	if (dwMsgSz < 0 || dwMsgSz >= MAX_RECV_BUFFER_SIZE) //-V560
 	{
 		return -1;
 	}

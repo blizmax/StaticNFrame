@@ -19,7 +19,10 @@
 class _NFExport NFINIReader
 {
 public:
-    explicit NFINIReader(){}
+    explicit NFINIReader()
+	{
+		memset(m_last_error, 0, sizeof(m_last_error));
+	}
     ~NFINIReader() {}
 
     /// @brief ½âÎöÎÄ¼ş

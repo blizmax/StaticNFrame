@@ -31,7 +31,7 @@ void NFCRC32::InitTable(uint32_t* table) {
 	uint32_t crc, temp;
 	(void)crc;
 
-	for (i = 0; i < 256; i++) {
+	for (i = 0; i < 256; i++) { //-V756
 		temp = Reflect(i, 8);
 		table[i] = temp << 24;
 

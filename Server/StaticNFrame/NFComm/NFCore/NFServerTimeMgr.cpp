@@ -56,7 +56,7 @@ bool NFServerTimeMgr::Update(uint64_t tick)
 
     ++ms_frames;
 
-    if (ms_lastUnixSec - ms_unixSec > 0) 
+    if (ms_lastUnixSec > ms_unixSec) 
 	{
         ms_secs += ms_unixSec - ms_lastUnixSec;
         ms_lastUnixSec = ms_unixSec;

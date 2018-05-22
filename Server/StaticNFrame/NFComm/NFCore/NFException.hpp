@@ -22,7 +22,6 @@ public:
     {
 		va_list ap;
 		va_start(ap, format);
-		std::string result;
 		NFStringUtility::StringAppendV(&message, format, ap);
 		va_end(ap);
     }

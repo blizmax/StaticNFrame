@@ -21,13 +21,13 @@
 #include "NFPlatform.h"
 
 //for timespan
-#define FACTOR_SEC_TO_MILLI                     1000
-#define FACTOR_MIN_TO_MILLI                60 * 1000
-#define FACTOR_MIN_TO_SEC                         60
-#define FACTOR_HOUR_TO_MILLI          60 * 60 * 1000
-#define FACTOR_HOUR_TO_MIN                        60
-#define FACTOR_DAY_TO_MILLI      24 * 60 * 60 * 1000
-#define FACTOR_DAY_TO_HOUR                        24
+#define FACTOR_SEC_TO_MILLI                     (1000)
+#define FACTOR_MIN_TO_MILLI                (60 * 1000)
+#define FACTOR_MIN_TO_SEC                         (60)
+#define FACTOR_HOUR_TO_MILLI          (60 * 60 * 1000)
+#define FACTOR_HOUR_TO_MIN                        (60)
+#define FACTOR_DAY_TO_MILLI      (24 * 60 * 60 * 1000)
+#define FACTOR_DAY_TO_HOUR                        (24)
 ///////////////////////////////
 //for datetime
 #define SINCE_YEAR               1900
@@ -113,28 +113,28 @@ public:
 
     int GetMilliseconds() const
     {
-        return milliseconds;
+        return mMilliseconds;
     }
     int GetSeconds() const
     {
-        return seconds;
+        return mSeconds;
     }
     int GetMinutes() const
     {
-        return minutes;
+        return mMinutes;
     }
     int GetHours() const
     {
-        return hours;
+        return mHours;
     }
     int GetDays() const
     {
-        return days;
+        return mDays;
     }
 
     long long GetTotalMilliseconds() const
     {
-        return milliseconds + (long long)seconds * FACTOR_SEC_TO_MILLI + (long long)minutes * FACTOR_MIN_TO_MILLI + (long long)hours * FACTOR_HOUR_TO_MILLI + (long long)days * FACTOR_DAY_TO_MILLI;
+        return mMilliseconds + (long long)mSeconds * FACTOR_SEC_TO_MILLI + (long long)mMinutes * FACTOR_MIN_TO_MILLI + (long long)mHours * FACTOR_HOUR_TO_MILLI + (long long)mDays * FACTOR_DAY_TO_MILLI;
     }
 
     //updated : GetTotalXXXXs never return double
@@ -185,20 +185,20 @@ public:
 
     void Init(int days, int hours, int minutes, int seconds, int milliseconds)
     {
-        this->days = days;
-        this->hours = hours;
-        this->minutes = minutes;
-        this->seconds = seconds;
-        this->milliseconds = milliseconds;
+        this->mDays = days;
+        this->mHours = hours;
+        this->mMinutes = minutes;
+        this->mSeconds = seconds;
+        this->mMilliseconds = milliseconds;
     }
 
 protected:
 
-    int milliseconds;
-    int seconds;
-    int minutes;
-    int hours;
-    int days;
+    int mMilliseconds;
+    int mSeconds;
+    int mMinutes;
+    int mHours;
+    int mDays;
 };
 
 //////////////////////////////////////////////
@@ -234,22 +234,22 @@ public:
         December
     };
 
-    NFDateTime(int day, int month, int year):summertime(false), leapyear(false)
+    NFDateTime(int day, int month, int year):mSummertime(false), mLeapyear(false)
     {
         Init(day, month, year, 0, 0, 0, 0);
     }
 
-    NFDateTime(int day, int month, int year, int hour, int minute, int second):summertime(false), leapyear(false)
+    NFDateTime(int day, int month, int year, int hour, int minute, int second):mSummertime(false), mLeapyear(false)
     {
         Init(day, month, year, hour, minute, second, 0);
     }
 
-    NFDateTime(int day, int month, int year, int hour, int minute, int second, int millisecond):summertime(false), leapyear(false)
+    NFDateTime(int day, int month, int year, int hour, int minute, int second, int millisecond):mSummertime(false), mLeapyear(false)
     {
         Init(day, month, year, hour, minute, second, millisecond);
     }
 
-    NFDateTime(time_t timestamp):summertime(false), leapyear(false)
+    NFDateTime(time_t timestamp):mSummertime(false), mLeapyear(false)
     {
         SetWithTimestamp(timestamp);
     }
@@ -272,32 +272,32 @@ public:
 
     int GetYear() const
     {
-        return year;
+        return mYear;
     }
     int GetMonth() const
     {
-        return month;
+        return mMonth;
     }
     int GetDay() const
     {
-        return day;
+        return mDay;
     }
 
     int GetHour() const
     {
-        return hour;
+        return mHour;
     }
     int GetMinute() const
     {
-        return minute;
+        return mMinute;
     }
     int GetSecond() const
     {
-        return second;
+        return mSecond;
     }
     int GetMillisecond() const
     {
-        return millisecond;
+        return mMillisecond;
     }
 
 
@@ -311,12 +311,12 @@ public:
     {
         time_t rawtime(0);
         struct tm* time = localtime(&rawtime);
-        time->tm_year = year - SINCE_YEAR;
-        time->tm_mon = month - 1;
-        time->tm_mday = day;
-        time->tm_hour = hour;
-        time->tm_min = minute;
-        time->tm_sec = second;
+        time->tm_year = mYear - SINCE_YEAR;
+        time->tm_mon = mMonth - 1;
+        time->tm_mday = mDay;
+        time->tm_hour = mHour;
+        time->tm_min = mMinute;
+        time->tm_sec = mSecond;
         return mktime(time);
     }
 
@@ -324,12 +324,12 @@ public:
     {
         time_t rawtime(0);
         struct tm* time = localtime(&rawtime);
-        time->tm_year = year - SINCE_YEAR;
-        time->tm_mon = month - 1;
-        time->tm_mday = day;
-        time->tm_hour = hour;
-        time->tm_min = minute;
-        time->tm_sec = second;
+        time->tm_year = mYear - SINCE_YEAR;
+        time->tm_mon = mMonth - 1;
+        time->tm_mday = mDay;
+        time->tm_hour = mHour;
+        time->tm_min = mMinute;
+        time->tm_sec = mSecond;
         mktime(time);
         return *time;
     }
@@ -341,43 +341,43 @@ public:
 
     void AddYears(int years)
     {
-        year += years;
+        mYear += years;
     }
 
     void AddMonths(int months)
     {
         AddYears(months / MAX_MONTH);
-        month += months % MAX_MONTH;
+        mMonth += months % MAX_MONTH;
     }
 
     void AddDays(int days)
     {
         AddMonths(days / MAX_DAY);
-        day += days % MAX_DAY;
+        mDay += days % MAX_DAY;
     }
 
     void AddHours(int hours)
     {
         AddDays(hours / MAX_HOUR);
-        hour += hours % MAX_HOUR;
+        mHour += hours % MAX_HOUR;
     }
 
     void AddMinutes(int minutes)
     {
         AddHours(int(minutes / MAX_MINUTE));
-        minute += minutes % MAX_MINUTE;
+        mMinute += minutes % MAX_MINUTE;
     }
 
     void AddSeconds(long long seconds)
     {
         AddMinutes(int(seconds / MAX_SECOND));
-        second += int(seconds % MAX_SECOND);
+        mSecond += int(seconds % MAX_SECOND);
     }
 
     void AddMilliseconds(long long milliseconds)
     {
         AddSeconds(milliseconds / MAX_MILLISECOND);
-        millisecond += milliseconds % MAX_MILLISECOND;
+        mMillisecond += milliseconds % MAX_MILLISECOND;
     }
 
     static bool IsYearLeapYear(int year)
@@ -387,11 +387,11 @@ public:
 
     bool IsSummertime()
     {
-        return IsYearLeapYear(year);
+        return IsYearLeapYear(mYear);
     }
     bool IsLeapYear()
     {
-        return IsDateSummertime(day, month);
+        return IsDateSummertime(mDay, mMonth);
     }
 
     static bool IsDateSummertime(int day, int month)
@@ -411,7 +411,7 @@ public:
     {
         if (IsValidWeekday(day))
         {
-            return dayNames[day - 1];
+            return mDayNames[day - 1];
         }
         else
         {
@@ -423,7 +423,7 @@ public:
     {
         if (IsValidMonth(month))
         {
-            return monthNames[month - 1];
+            return mMonthNames[month - 1];
         }
         else
         {
@@ -443,7 +443,7 @@ public:
 
     int GetDaysOfMonth(int month)
     {
-        return IsValidMonth(month) ? daysOfMonth[month] : -1;
+        return IsValidMonth(month) ? mDaysOfMonth[month] : -1;
     }
 
     bool operator<(const NFDateTime& dt) const
@@ -507,42 +507,42 @@ public:
     std::string GetShortTimeString()
     {
         std::stringstream ss(std::stringstream::in | std::stringstream::out);
-        ss << std::setfill('0') << std::setw(2) << hour << ":" << std::setw(2) << minute << ":" << std::setw(2) << second;
+        ss << std::setfill('0') << std::setw(2) << mHour << ":" << std::setw(2) << mMinute << ":" << std::setw(2) << mSecond;
         return ss.str();
     }
 
     std::string GetLongTimeString()
     {
         std::stringstream ss(std::stringstream::in | std::stringstream::out);
-        ss << std::setfill('0') << std::setw(2) << hour << ":" << std::setw(2) << minute << ":" << std::setw(2) << second << ":" << std::setw(2) << millisecond;
+        ss << std::setfill('0') << std::setw(2) << mHour << ":" << std::setw(2) << mMinute << ":" << std::setw(2) << mSecond << ":" << std::setw(2) << mMillisecond;
         return ss.str();
     }
 
     std::string GetShortDateString()
     {
         std::stringstream ss(std::stringstream::in | std::stringstream::out);
-        ss << std::setfill('0') << std::setw(2) << day << "." << std::setw(2) << month << "." << year;
+        ss << std::setfill('0') << std::setw(2) << mDay << "." << std::setw(2) << mMonth << "." << mYear;
         return ss.str();
     }
 
     std::string GetLongDateString()
     {
         std::stringstream ss(std::stringstream::in | std::stringstream::out);
-        ss << GetNameOfDay(GetDayOfWeek()) << ", " << GetNameOfMonth(month) << " " << day << ", " << year;
+        ss << GetNameOfDay(GetDayOfWeek()) << ", " << GetNameOfMonth(mMonth) << " " << mDay << ", " << mYear;
         return ss.str();
     }
 
 protected:
-    NFDateTime():summertime(false), leapyear(false)
+    NFDateTime():mSummertime(false), mLeapyear(false)
     {
-        this->day = 0;
-        this->month = 0;
-        this->year = 0;
+        this->mDay = 0;
+        this->mMonth = 0;
+        this->mYear = 0;
 
-        this->hour = 0;
-        this->minute = 0;
-        this->second = 0;
-        this->millisecond = 0;
+        this->mHour = 0;
+        this->mMinute = 0;
+        this->mSecond = 0;
+        this->mMillisecond = 0;
 
         InitMonths();
         InitMonthNames();
@@ -551,7 +551,7 @@ protected:
 
     void Init(int day, int month, int year, int hour, int minute, int second, int millisecond)
     {
-        this->year = year;
+        this->mYear = year;
 
         InitMonths();
         InitMonthNames();
@@ -587,57 +587,57 @@ protected:
             throw NFException("Millisecond %d is not in valid range ( %d - %d )", millisecond, MIN_MILLISECOND, MAX_MILLISECOND);
         }
 
-        this->day = day;
-        this->month = month;
+        this->mDay = day;
+        this->mMonth = month;
 
-        this->hour = hour;
-        this->minute = minute;
-        this->second = second;
-        this->millisecond = millisecond;
+        this->mHour = hour;
+        this->mMinute = minute;
+        this->mSecond = second;
+        this->mMillisecond = millisecond;
     }
 
     void InitMonths()
     {
         // Perhaps an algorithm would be more efficient
-        daysOfMonth[Month::January] = 31;
-        daysOfMonth[Month::February] = IsLeapYear() ? 29 : 28; // In a leapyear 29 else 28
-        daysOfMonth[Month::March] = 31;
-        daysOfMonth[Month::April] = 30;
-        daysOfMonth[Month::May] = 31;
-        daysOfMonth[Month::June] = 30;
-        daysOfMonth[Month::July] = 31;
-        daysOfMonth[Month::August] = 31;
-        daysOfMonth[Month::September] = 30;
-        daysOfMonth[Month::October] = 31;
-        daysOfMonth[Month::November] = 30;
-        daysOfMonth[Month::December] = 31;
+        mDaysOfMonth[Month::January] = 31;
+        mDaysOfMonth[Month::February] = IsLeapYear() ? 29 : 28; // In a leapyear 29 else 28
+        mDaysOfMonth[Month::March] = 31;
+        mDaysOfMonth[Month::April] = 30;
+        mDaysOfMonth[Month::May] = 31;
+        mDaysOfMonth[Month::June] = 30;
+        mDaysOfMonth[Month::July] = 31;
+        mDaysOfMonth[Month::August] = 31;
+        mDaysOfMonth[Month::September] = 30;
+        mDaysOfMonth[Month::October] = 31;
+        mDaysOfMonth[Month::November] = 30;
+        mDaysOfMonth[Month::December] = 31;
     }
 
     void InitMonthNames()
     {
-        monthNames[Month::January] = "January";
-        monthNames[Month::February] = "February";
-        monthNames[Month::March] = "March";
-        monthNames[Month::April] = "April";
-        monthNames[Month::May] = "May";
-        monthNames[Month::June] = "June";
-        monthNames[Month::July] = "July";
-        monthNames[Month::August] = "August";
-        monthNames[Month::September] = "September";
-        monthNames[Month::October] = "October";
-        monthNames[Month::November] = "November";
-        monthNames[Month::December] = "December";
+        mMonthNames[Month::January] = "January";
+        mMonthNames[Month::February] = "February";
+        mMonthNames[Month::March] = "March";
+        mMonthNames[Month::April] = "April";
+        mMonthNames[Month::May] = "May";
+        mMonthNames[Month::June] = "June";
+        mMonthNames[Month::July] = "July";
+        mMonthNames[Month::August] = "August";
+        mMonthNames[Month::September] = "September";
+        mMonthNames[Month::October] = "October";
+        mMonthNames[Month::November] = "November";
+        mMonthNames[Month::December] = "December";
     }
 
     void InitDayNames()
     {
-        dayNames[Day::Monday] = "Monday";
-        dayNames[Day::Thuesday] = "Thuesday";
-        dayNames[Day::Wednesday] = "Wednesday";
-        dayNames[Day::Thursday] = "Thursday";
-        dayNames[Day::Friday] = "Friday";
-        dayNames[Day::Saturday] = "Saturday";
-        dayNames[Day::Sunday] = "Sunday";
+        mDayNames[Day::Monday] = "Monday";
+        mDayNames[Day::Thuesday] = "Thuesday";
+        mDayNames[Day::Wednesday] = "Wednesday";
+        mDayNames[Day::Thursday] = "Thursday";
+        mDayNames[Day::Friday] = "Friday";
+        mDayNames[Day::Saturday] = "Saturday";
+        mDayNames[Day::Sunday] = "Sunday";
     }
 
     bool IsValidWeekday(int day)
@@ -688,20 +688,20 @@ protected:
     }
 
 protected:
-    int daysOfMonth[MAX_MONTH];
-    std::string monthNames[MAX_MONTH];
-    std::string dayNames[MAX_DAY];
+    int mDaysOfMonth[MAX_MONTH];
+    std::string mMonthNames[MAX_MONTH];
+    std::string mDayNames[MAX_DAY];
 
-    int year;
-    int month;
-    int day;
-    int hour;
-    int minute;
-    int second;
-    int millisecond;
+    int mYear;
+    int mMonth;
+    int mDay;
+    int mHour;
+    int mMinute;
+    int mSecond;
+    int mMillisecond;
 
-    bool summertime;
-    bool leapyear;
+    bool mSummertime;
+    bool mLeapyear;
 };
 
 #endif
