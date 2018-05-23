@@ -57,7 +57,7 @@ class NFObjectDouble final : public NFValue<NFObject::NUMBER, double>
 {
 protected:
 	double   DoubleValue() const override { return m_value; }
-	float    FloatValue() const override { return (float)m_value; }
+	float    FloatValue() const override { return static_cast<float>(m_value); }
 	int32_t  Int32Value() const override { return static_cast<int32_t>(m_value); }
 	uint32_t Uint32Value() const override { return static_cast<uint32_t>(m_value); }
 	int64_t  Int64Value() const override { return static_cast<int64_t>(m_value); }
@@ -71,12 +71,12 @@ public:
 class NFObjectInt final : public NFValue<NFObject::NUMBER, int64_t>
 {
 protected:
-	double   DoubleValue() const override { return (double)m_value; }
-	float    FloatValue() const override { return (float)m_value; }
-	int32_t  Int32Value() const override { return (int32_t)(m_value); }
-	uint32_t Uint32Value() const override { return (uint32_t)(m_value); }
-	int64_t  Int64Value() const override { return (int64_t)(m_value); }
-	uint64_t Uint64Value() const override { return (uint64_t)(m_value); }
+	double   DoubleValue() const override { return static_cast<double>(m_value); }
+	float    FloatValue() const override { return static_cast<float>(m_value); }
+	int32_t  Int32Value() const override { return static_cast<int32_t>(m_value); }
+	uint32_t Uint32Value() const override { return static_cast<uint32_t>(m_value); }
+	int64_t  Int64Value() const override { return static_cast<int64_t>(m_value); }
+	uint64_t Uint64Value() const override { return static_cast<uint64_t>(m_value); }
 	bool Equals(const NFObjectValue * other) const override { return m_value == other->Int64Value(); }
 	bool Less(const NFObjectValue * other)   const override { return m_value < other->Int64Value(); }
 public:

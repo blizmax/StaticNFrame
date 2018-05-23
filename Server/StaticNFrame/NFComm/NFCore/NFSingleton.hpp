@@ -28,7 +28,7 @@ public:
 #endif
 	}
 
-	~NFSingleton()
+	virtual ~NFSingleton()
 	{
 	}
 
@@ -36,7 +36,7 @@ public:
 
 	static T* GetSingletonPtr()
 	{
-		if (NULL == m_pInstance)
+		if (nullptr == m_pInstance)
 		{
 			m_pInstance = new T;
 		}
@@ -73,6 +73,6 @@ private:
 };
 
 template <class T>
-T* NFSingleton<T>::m_pInstance = NULL;
+T* NFSingleton<T>::m_pInstance = nullptr;
 
 #endif

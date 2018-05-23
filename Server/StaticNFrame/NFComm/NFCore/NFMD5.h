@@ -27,7 +27,7 @@ public:
 	}
 
 	void Update(const void* data, size_t data_len) {
-		PHP_MD5Update(&md5_ctx, (const unsigned char*)data, data_len);
+		PHP_MD5Update(&md5_ctx, static_cast<const unsigned char*>(data), data_len);
 	}
 
 	template<typename string_t>
@@ -43,13 +43,13 @@ public:
 
 	string Finalize() {
 		string m(kBinDigestLength, '\0');
-		Finalize((unsigned char*)&m[0]);
+		Finalize(reinterpret_cast<unsigned char*>(&m[0]));
 		return m;
 	}
 
 	string Finalizeh() {
 		string m(kHexDigestLength, '\0');
-		Finalize((unsigned char*)&m[0]);
+		Finalize(reinterpret_cast<unsigned char*>(&m[0]));
 		//m.resize(kHexDigestLength);
 		return m;
 	}
@@ -105,7 +105,7 @@ inline void NFMD5::Finalizeh(char hex33[33]) {
 inline void NFMD5::Sum(const void* data, size_t data_len, unsigned char binary16_digest[16]) {
 	PHP_MD5_CTX ctx;
 	PHP_MD5Init(&ctx);
-	PHP_MD5Update(&ctx, (const unsigned char*)data, data_len);
+	PHP_MD5Update(&ctx, static_cast<const unsigned char*>(data), data_len);
 	PHP_MD5Final(binary16_digest, &ctx);
 }
 
@@ -116,7 +116,7 @@ inline string NFMD5::Sum(const string& d) {
 inline void NFMD5::Sumh(const void* data, size_t data_len, char hex33[/*33*/]) {
 	PHP_MD5_CTX ctx;
 	PHP_MD5Init(&ctx);
-	PHP_MD5Update(&ctx, (const unsigned char*)data, data_len);
+	PHP_MD5Update(&ctx, static_cast<const unsigned char*>(data), data_len);
 	unsigned char* binary = reinterpret_cast<unsigned char*>(hex33 + kBinDigestLength);
 	PHP_MD5Final(binary, &ctx);
 	Bin2Hex(binary, kBinDigestLength, hex33);
@@ -235,7 +235,7 @@ inline int NFMD5::DehexChar(char c) {
 		/* F */ -1,-1,-1,-1, -1,-1,-1,-1, -1,-1,-1,-1, -1,-1,-1,-1
 	};
 
-	return hex2dec_table[(int)c];
+	return hex2dec_table[static_cast<int>(c)];
 }
 
 inline bool NFMD5::IsValid(const char* hexmd5, size_t hexmd5_length) {
@@ -262,7 +262,7 @@ inline bool NFMD5::IsValid(const char* hexmd5, size_t hexmd5_length) {
 		0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
 
 	for (size_t i = 0; i < hexmd5_length; ++i) {
-		if (valid_chars[(int)hexmd5[i]] == 0) {
+		if (valid_chars[static_cast<int>(hexmd5[i])] == 0) {
 			return false;
 		}
 	}

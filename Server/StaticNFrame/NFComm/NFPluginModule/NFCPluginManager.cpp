@@ -98,7 +98,7 @@ bool NFCPluginManager::LoadPluginConfig()
 		return false;
 	}
 
-	for (int i = 0; i < (int)pConfig->mVecPlugins.size(); i++)
+	for (size_t i = 0; i < pConfig->mVecPlugins.size(); i++)
 	{
 		std::string strPluginName = pConfig->mVecPlugins[i];
 		mPluginNameMap.emplace(strPluginName, true);
@@ -148,7 +148,7 @@ void NFCPluginManager::UnRegistered(NFIPlugin* plugin)
 
 		it->second->Uninstall();
 		NFSafeDelete(it->second);
-		it->second = NULL;
+		it->second = nullptr;
 		mPluginInstanceMap.erase(it);
 	}
 }
@@ -161,7 +161,7 @@ NFIPlugin* NFCPluginManager::FindPlugin(const std::string& strPluginName)
 		return it->second;
 	}
 
-	return NULL;
+	return nullptr;
 }
 
 bool NFCPluginManager::Execute()
@@ -181,7 +181,7 @@ bool NFCPluginManager::Execute()
 		bRet = bRet && tembRet;
 	}
 
-	for (auto iter = mModuleAloneMultiMap.begin(); iter != mModuleAloneMultiMap.end(); iter++)
+	for (auto iter = mModuleAloneMultiMap.begin(); iter != mModuleAloneMultiMap.end(); ++iter)
 	{
 		bool tembRet = iter->second->Execute();
 		bRet = bRet && tembRet;
@@ -191,7 +191,7 @@ bool NFCPluginManager::Execute()
 
 	//采用固定帧率
 	endTime = NFGetTime();
-	uint32_t cost = (uint32_t)(endTime > startTime ? (endTime - startTime) : 0);
+	uint32_t cost = static_cast<uint32_t>(endTime > startTime ? (endTime - startTime) : 0);
 	uint32_t sleepTime = mFrameTime > cost ? (mFrameTime - cost) : 0;
 	if (sleepTime > 0)
 	{
@@ -329,7 +329,7 @@ NFIModule* NFCPluginManager::FindModule(const std::string& strModuleName)
 		return it->second;
 	}
 
-	return NULL;
+	return nullptr;
 }
 
 bool NFCPluginManager::AfterInit()
@@ -350,7 +350,7 @@ bool NFCPluginManager::CheckConfig()
 		itCheckInstance->second->CheckConfig();
 	}
 
-	for (auto it = mModuleAloneMultiMap.begin(); it != mModuleAloneMultiMap.end(); it++)
+	for (auto it = mModuleAloneMultiMap.begin(); it != mModuleAloneMultiMap.end(); ++it)
 	{
 		it->second->CheckConfig();
 	}
@@ -380,7 +380,7 @@ bool NFCPluginManager::BeforeShut()
 		itBeforeInstance->second->BeforeShut();
 	}
 
-	for (auto it = mModuleAloneMultiMap.begin(); it != mModuleAloneMultiMap.end(); it++)
+	for (auto it = mModuleAloneMultiMap.begin(); it != mModuleAloneMultiMap.end(); ++it)
 	{
 		it->second->BeforeShut();
 	}
@@ -396,7 +396,7 @@ bool NFCPluginManager::Shut()
 		itInstance->second->Shut();
 	}
 
-	for (auto it = mModuleAloneMultiMap.begin(); it != mModuleAloneMultiMap.end(); it++)
+	for (auto it = mModuleAloneMultiMap.begin(); it != mModuleAloneMultiMap.end(); ++it)
 	{
 		it->second->Shut();
 	}
@@ -412,13 +412,13 @@ bool NFCPluginManager::Finalize()
 		itInstance->second->Finalize();
 	}
 
-	for (auto it = mModuleAloneMultiMap.begin(); it != mModuleAloneMultiMap.end(); it++)
+	for (auto it = mModuleAloneMultiMap.begin(); it != mModuleAloneMultiMap.end(); ++it)
 	{
 		it->second->Finalize();
 	}
 
 	//先析构掉独立的module
-	for (auto it = mModuleAloneMultiMap.begin(); it != mModuleAloneMultiMap.end(); it++)
+	for (auto it = mModuleAloneMultiMap.begin(); it != mModuleAloneMultiMap.end(); ++it)
 	{
 		NFSafeDelete(it->second);
 		it->second = nullptr;

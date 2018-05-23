@@ -16,7 +16,7 @@
 class NFSimpleBuffer {
 public:
 	// Create an empty slice.
-	NFSimpleBuffer() : data_(NULL), size_(0) {}
+	NFSimpleBuffer() : data_(nullptr), size_(0) {}
 
 	// Create a slice that refers to d[0,n-1].
 	NFSimpleBuffer(const char* d, size_t n)
@@ -31,7 +31,7 @@ public:
 		{
 			data_ = new char[n];
 			size_ = n;
-			memcpy((void*)data_, d, n);
+			memcpy(static_cast<void*>(data_), d, n);
 		}
 	}
 
@@ -52,7 +52,7 @@ public:
 
 	// Return true if the length of the referenced data is zero
 	bool empty() const {
-		return data_ == NULL;
+		return data_ == nullptr;
 	}
 
 	void clear() {
@@ -60,7 +60,7 @@ public:
 		{
 			delete[] data_;
 			size_ = 0;
-			data_ = NULL;
+			data_ = nullptr;
 		}
 	}
 

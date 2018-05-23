@@ -5,7 +5,7 @@
 static float frand()
 {
 	//	return ((float)(rand() & 0xffff)/(float)0xffff);
-	return (float)rand() / (float)RAND_MAX;
+	return static_cast<float>(rand()) / static_cast<float>(RAND_MAX);
 }
 
 //-------------------------------------------------------------------------------------
@@ -31,7 +31,7 @@ NFNavMeshHandle::~NFNavMeshHandle()
 //-------------------------------------------------------------------------------------
 int NFNavMeshHandle::FindStraightPath(int layer, const NFVector3& start, const NFVector3& end, std::vector<NFVector3>& paths)
 {
-	if (layer >= (int)navmeshQuery_layers.size()) {
+	if (layer >= static_cast<int>(navmeshQuery_layers.size())) {
 		//ERROR_MSG(fmt::format("NavMeshHandle::findStraightPath: not found layer({})\n",  layer));
 		return NAV_ERROR;
 	}
@@ -105,7 +105,7 @@ int NFNavMeshHandle::FindStraightPath(int layer, const NFVector3& start, const N
 //-------------------------------------------------------------------------------------
 int NFNavMeshHandle::RayCast(int layer, const NFVector3& start, const NFVector3& end, std::vector<NFVector3>& hitPointVec)
 {
-	if (layer >= (int)navmeshQuery_layers.size()) {
+	if (layer >= static_cast<int>(navmeshQuery_layers.size())) {
 		return NAV_ERROR;
 	}
 	dtNavMeshQuery* navmeshQuery = navmeshQuery_layers[layer];
@@ -201,7 +201,7 @@ bool NFNavMeshHandle::Create(const std::string& path)
 
 		fclose(fp);
 		delete[] pBuf;
-		pBuf = NULL;
+		pBuf = nullptr;
 		return false;
 	}
 
@@ -211,7 +211,7 @@ bool NFNavMeshHandle::Create(const std::string& path)
 
 		fclose(fp);
 		delete[] pBuf;
-		pBuf = NULL;
+		pBuf = nullptr;
 		return false;
 	}
 
@@ -224,7 +224,7 @@ bool NFNavMeshHandle::Create(const std::string& path)
 
 		fclose(fp);
 		delete[] pBuf;
-		pBuf = NULL;
+		pBuf = nullptr;
 		return false;
 	}
 
@@ -233,7 +233,7 @@ bool NFNavMeshHandle::Create(const std::string& path)
 		//ERROR_MSG("NavMeshHandle::create: dtAllocNavMesh is failed!\n");
 		fclose(fp);
 		delete[] pBuf;
-		pBuf = NULL;
+		pBuf = nullptr;
 		return false;
 	}
 	dtStatus status = mesh->init(&header.params);
@@ -242,7 +242,7 @@ bool NFNavMeshHandle::Create(const std::string& path)
 		//ERROR_MSG(fmt::format("NavMeshHandle::create: mesh init is error({})!\n", status));
 		fclose(fp);
 		delete[] pBuf;
-		pBuf = NULL;
+		pBuf = nullptr;
 		return false;
 	}
 
@@ -264,7 +264,7 @@ bool NFNavMeshHandle::Create(const std::string& path)
 		}
 
 		unsigned char* tileData =
-			(unsigned char*)dtAlloc(size, DT_ALLOC_PERM);
+			static_cast<unsigned char*>(dtAlloc(size, DT_ALLOC_PERM));
 		if (!tileData)
 		{
 			success = false;
@@ -278,7 +278,7 @@ bool NFNavMeshHandle::Create(const std::string& path)
 			, size
 			, (safeStorage ? DT_TILE_FREE_DATA : 0) //-V547
 			, tileHeader.tileRef
-			, 0);
+			, nullptr);
 
 		if (dtStatusFailed(status))
 		{
@@ -289,7 +289,7 @@ bool NFNavMeshHandle::Create(const std::string& path)
 
 	fclose(fp);
 	delete[] pBuf;
-	pBuf = NULL;
+	pBuf = nullptr;
 
 	if (!success)
 	{
@@ -334,7 +334,7 @@ bool NFNavMeshHandle::Create(const std::string& path)
 int NFNavMeshHandle::FindRandomPointAroundCircle(int layer, const NFVector3& centerPos,
 	std::vector<NFVector3>& points, int max_points, float maxRadius)
 {
-	if (layer >= (int)navmeshQuery_layers.size()) {
+	if (layer >= static_cast<int>(navmeshQuery_layers.size())) {
 		return NAV_ERROR;
 	}
 	dtNavMeshQuery* navmeshQuery = navmeshQuery_layers[layer];
@@ -360,7 +360,7 @@ int NFNavMeshHandle::FindRandomPointAroundCircle(int layer, const NFVector3& cen
 			}
 		}
 
-		return (int)points.size();
+		return static_cast<int>(points.size());
 	}
 
 	const float extents[3] = { 2.f, 4.f, 2.f };
@@ -395,12 +395,12 @@ int NFNavMeshHandle::FindRandomPointAroundCircle(int layer, const NFVector3& cen
 			points.push_back(currpos);
 		}
 	}
-	return (int)points.size();
+	return static_cast<int>(points.size());
 }
 
 bool NFNavMeshHandle::IsValidPos(int layer, const NFVector3& pos)
 {
-	if (layer >= (int)navmeshQuery_layers.size())
+	if (layer >= static_cast<int>(navmeshQuery_layers.size()))
 	{
 		return NAV_ERROR;
 	}
@@ -427,7 +427,7 @@ bool NFNavMeshHandle::IsValidPos(int layer, const NFVector3& pos)
 
 void NFNavMeshHandle::GetValidPos(int layer, const NFVector3& pos, NFVector3& out)
 {
-	if (layer >= (int)navmeshQuery_layers.size())
+	if (layer >= static_cast<int>(navmeshQuery_layers.size()))
 	{
 		return;
 	}
@@ -456,29 +456,29 @@ void NFNavMeshHandle::GetValidPos(int layer, const NFVector3& pos, NFVector3& ou
 
 int NFNavMeshHandle::GetTitelWidth(int layer)
 {
-	if (layer >= (int)navmeshQuery_layers.size())
+	if (layer >= static_cast<int>(navmeshQuery_layers.size()))
 	{
 		return NAV_ERROR;
 	}
 	dtNavMeshQuery* navmeshQuery = navmeshQuery_layers[layer];
 
-	return (int)navmeshQuery->getAttachedNavMesh()->GetTileWidth() * navmeshQuery->getAttachedNavMesh()->getMaxTiles();
+	return static_cast<int>(navmeshQuery->getAttachedNavMesh()->GetTileWidth()) * navmeshQuery->getAttachedNavMesh()->getMaxTiles();
 }
 
 int NFNavMeshHandle::GetTitelHeight(int layer)
 {
-	if (layer >= (int)navmeshQuery_layers.size())
+	if (layer >= static_cast<int>(navmeshQuery_layers.size()))
 	{
 		return NAV_ERROR;
 	}
 	dtNavMeshQuery* navmeshQuery = navmeshQuery_layers[layer];
 
-	return (int)navmeshQuery->getAttachedNavMesh()->GetTileHeight() * navmeshQuery->getAttachedNavMesh()->getMaxTiles();
+	return static_cast<int>(navmeshQuery->getAttachedNavMesh()->GetTileHeight()) * navmeshQuery->getAttachedNavMesh()->getMaxTiles();
 }
 
 NFVector3 NFNavMeshHandle::GetOriginPos(int layer)
 {
-	if (layer >= (int)navmeshQuery_layers.size())
+	if (layer >= static_cast<int>(navmeshQuery_layers.size()))
 	{
 		return NFVector3();
 	}

@@ -40,11 +40,13 @@ void NFCEventModule::FireExecute(uint16_t nEventID, uint64_t nSrcID, uint8_t byS
 {
 	m_ExecuteCenter.Fire(nEventID, nSrcID, bySrcType, pEventContext);
 }
+
 //订阅执行事件
 bool NFCEventModule::Subscribe(NFEventObj *pSink, uint16_t nEventID, uint64_t nSrcID, uint8_t bySrcType, const std::string& desc)
 {
 	return m_ExecuteCenter.Subscribe(pSink, nEventID, nSrcID, bySrcType, desc);
 }
+
 //取消订阅执行事件
 bool NFCEventModule::UnSubscribe(NFEventObj *pSink, uint16_t nEventID, uint64_t nSrcID, uint8_t bySrcType)
 {

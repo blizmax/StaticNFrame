@@ -48,7 +48,7 @@ public:
 		{
 			if (!TIsDerived<T, NFIModule>::Result)
 			{
-				return NULL;
+				return nullptr;
 			}
 			//TODO OSX上dynamic_cast返回了NULL
 #if NF_PLATFORM == NF_PLATFORM_APPLE
@@ -56,12 +56,12 @@ public:
 #else
 			T* pT = dynamic_cast<T*>(pLogicModule);
 #endif
-			assert(NULL != pT);
+			assert(nullptr != pT);
 
 			return pT;
 		}
-		assert(NULL);
-		return NULL;
+		assert(nullptr);
+		return nullptr;
 	}
 
 	template <typename T>
@@ -72,7 +72,7 @@ public:
 		{
 			if (!TIsDerived<T, NFIModule>::Result)
 			{
-				return NULL;
+				return nullptr;
 			}
 			//TODO OSX上dynamic_cast返回了NULL
 #if NF_PLATFORM == NF_PLATFORM_APPLE
@@ -80,12 +80,12 @@ public:
 #else
 			T* pT = dynamic_cast<T*>(pLogicModule);
 #endif
-			assert(NULL != pT);
+			assert(nullptr != pT);
 
 			return pT;
 		}
-		assert(NULL);
-		return NULL;
+		assert(nullptr);
+		return nullptr;
 	}
 
 	virtual void RegisteredStaticPlugin(const std::string& strPluginName, const CREATE_PLUGIN_FUNCTION& createFunc) = 0;

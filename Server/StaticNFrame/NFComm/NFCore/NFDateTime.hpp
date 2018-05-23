@@ -133,7 +133,7 @@ public:
 
 	long long GetTotalMilliseconds() const
 	{
-		return mMilliseconds + (long long)mSeconds * FACTOR_SEC_TO_MILLI + (long long)mMinutes * FACTOR_MIN_TO_MILLI + (long long)mHours * FACTOR_HOUR_TO_MILLI + (long long)mDays * FACTOR_DAY_TO_MILLI;
+		return mMilliseconds + static_cast<long long>(mSeconds) * FACTOR_SEC_TO_MILLI + static_cast<long long>(mMinutes) * FACTOR_MIN_TO_MILLI + static_cast<long long>(mHours) * FACTOR_HOUR_TO_MILLI + (long long)mDays * FACTOR_DAY_TO_MILLI;
 	}
 
 	//updated : GetTotalXXXXs never return double
@@ -266,7 +266,7 @@ public:
 
 	void SetNow()
 	{
-		SetWithTimestamp(time(0));
+		SetWithTimestamp(time(nullptr));
 	}
 
 	int GetYear() const
@@ -383,11 +383,11 @@ public:
 		return ((year % 4 == 0) && (year % 100 != 0)) || (year % 400 == 0);
 	}
 
-	bool IsSummertime()
+	bool IsSummertime() const
 	{
 		return IsYearLeapYear(mYear);
 	}
-	bool IsLeapYear()
+	bool IsLeapYear() const
 	{
 		return IsDateSummertime(mDay, mMonth);
 	}
@@ -429,12 +429,12 @@ public:
 		}
 	}
 
-	Day GetDayOfWeek()
+	Day GetDayOfWeek() const
 	{
 		return static_cast<NFDateTime::Day>(GetTMStruct().tm_wday);
 	}
 
-	int GetDayOfYear()
+	int GetDayOfYear() const
 	{
 		return GetTMStruct().tm_yday;
 	}
@@ -481,7 +481,7 @@ public:
 		Add(&ts);
 	}
 
-	std::string GetAsString()
+	std::string GetAsString() const
 	{
 		return GetShortDateString() + std::string(" - ") + GetShortTimeString();
 	}
@@ -493,7 +493,7 @@ public:
 	 * @param str  用来分割的字符串
 	 * @return     返回拼接的时间字符串
 	 */
-	std::string GetTimeStringToMinute(const std::string& str)
+	std::string GetTimeStringToMinute(const std::string& str) const
 	{
 		std::stringstream stream;
 		stream << GetYear() << str << GetMonth() << str << GetDay();
@@ -501,21 +501,21 @@ public:
 		return stream.str();
 	}
 
-	std::string GetShortTimeString()
+	std::string GetShortTimeString() const
 	{
 		std::stringstream ss(std::stringstream::in | std::stringstream::out);
 		ss << std::setfill('0') << std::setw(2) << mHour << ":" << std::setw(2) << mMinute << ":" << std::setw(2) << mSecond;
 		return ss.str();
 	}
 
-	std::string GetLongTimeString()
+	std::string GetLongTimeString() const
 	{
 		std::stringstream ss(std::stringstream::in | std::stringstream::out);
 		ss << std::setfill('0') << std::setw(2) << mHour << ":" << std::setw(2) << mMinute << ":" << std::setw(2) << mSecond << ":" << std::setw(2) << mMillisecond;
 		return ss.str();
 	}
 
-	std::string GetShortDateString()
+	std::string GetShortDateString() const
 	{
 		std::stringstream ss(std::stringstream::in | std::stringstream::out);
 		ss << std::setfill('0') << std::setw(2) << mDay << "." << std::setw(2) << mMonth << "." << mYear;
@@ -637,7 +637,7 @@ protected:
 		mDayNames[Day::Sunday] = "Sunday";
 	}
 
-	bool IsValidWeekday(int day)
+	static bool IsValidWeekday(int day)
 	{
 		return day >= MIN_WEEKDAY && day <= MAX_WEEKDAY;
 	}
@@ -654,32 +654,32 @@ protected:
 		}
 	}
 
-	bool IsValidMonth(int month)
+	static bool IsValidMonth(int month)
 	{
 		return month >= MIN_MONTH && month <= MAX_MONTH;
 	}
 
-	bool IsValidYear(int year)
+	static bool IsValidYear(int year)
 	{
 		return year >= 0;
 	}
 
-	bool IsValidHour(int hour)
+	static bool IsValidHour(int hour)
 	{
 		return hour >= MIN_HOUR && hour <= MAX_HOUR;
 	}
 
-	bool IsValidMinute(int minute)
+	static bool IsValidMinute(int minute)
 	{
 		return minute >= MIN_MINUTE && minute <= MAX_MINUTE;
 	}
 
-	bool IsValidSecond(int second)
+	static bool IsValidSecond(int second)
 	{
 		return second >= MIN_SECOND && second <= MAX_SECOND;
 	}
 
-	bool IsValidMillisecond(int millisecond)
+	static bool IsValidMillisecond(int millisecond)
 	{
 		return millisecond >= MIN_MILLISECOND && millisecond <= MAX_MILLISECOND;
 	}

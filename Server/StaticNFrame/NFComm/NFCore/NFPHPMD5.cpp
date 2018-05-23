@@ -174,13 +174,13 @@ _NFExport void PHP_MD5Update(PHP_MD5_CTX * context, const unsigned char *input,
 	unsigned int i, index, partLen;
 
 	/* Compute number of bytes mod 64 */
-	index = (unsigned int)((context->count[0] >> 3) & 0x3F);
+	index = static_cast<unsigned int>((context->count[0] >> 3) & 0x3F);
 
 	/* Update number of bits */
-	if ((context->count[0] += ((php_uint32)inputLen << 3))
-		< ((php_uint32)inputLen << 3))
+	if ((context->count[0] += (static_cast<php_uint32>(inputLen) << 3))
+		< (static_cast<php_uint32>(inputLen) << 3))
 		context->count[1]++;
-	context->count[1] += ((php_uint32)inputLen >> 29);
+	context->count[1] += (static_cast<php_uint32>(inputLen) >> 29);
 
 	partLen = 64 - index;
 
@@ -188,7 +188,7 @@ _NFExport void PHP_MD5Update(PHP_MD5_CTX * context, const unsigned char *input,
 	*/
 	if (inputLen >= partLen) {
 		memcpy
-			((unsigned char*)& context->buffer[index], input, partLen);
+			(static_cast<unsigned char*>(& context->buffer[index]), input, partLen);
 		MD5Transform(context->state, context->buffer);
 
 		for (i = partLen; i + 63 < inputLen; i += 64)
@@ -201,7 +201,7 @@ _NFExport void PHP_MD5Update(PHP_MD5_CTX * context, const unsigned char *input,
 
 	/* Buffer remaining input */
 	memcpy
-		((unsigned char*)& context->buffer[index], &input[i],
+		(static_cast<unsigned char*>(& context->buffer[index]), &input[i],
 			inputLen - i);
 }
 /* }}} */
@@ -220,7 +220,7 @@ _NFExport void PHP_MD5Final(unsigned char digest[16], PHP_MD5_CTX * context)
 
 	/* Pad out to 56 mod 64.
 	*/
-	index = (unsigned int)((context->count[0] >> 3) & 0x3f);
+	index = static_cast<unsigned int>((context->count[0] >> 3) & 0x3f);
 	padLen = (index < 56) ? (56 - index) : (120 - index);
 	PHP_MD5Update(context, PADDING, padLen);
 
@@ -232,7 +232,7 @@ _NFExport void PHP_MD5Final(unsigned char digest[16], PHP_MD5_CTX * context)
 
 	/* Zeroize sensitive information.
 	*/
-	memset((unsigned char*)context, 0, sizeof(*context));
+	memset(reinterpret_cast<unsigned char*>(context), 0, sizeof(*context));
 }
 /* }}} */
 
@@ -323,7 +323,7 @@ static void MD5Transform(php_uint32 state[4], const unsigned char block[64])
 	state[3] += d;
 
 	/* Zeroize sensitive information. */
-	memset((unsigned char*)x, 0, sizeof(x));
+	memset(reinterpret_cast<unsigned char*>(x), 0, sizeof(x));
 }
 /* }}} */
 
@@ -336,10 +336,10 @@ static void Encode(unsigned char * output, php_uint32 * input, unsigned int len)
 	unsigned int i, j;
 
 	for (i = 0, j = 0; j < len; i++, j += 4) {
-		output[j] = (unsigned char)(input[i] & 0xff);
-		output[j + 1] = (unsigned char)((input[i] >> 8) & 0xff);
-		output[j + 2] = (unsigned char)((input[i] >> 16) & 0xff);
-		output[j + 3] = (unsigned char)((input[i] >> 24) & 0xff);
+		output[j] = static_cast<unsigned char>(input[i] & 0xff);
+		output[j + 1] = static_cast<unsigned char>((input[i] >> 8) & 0xff);
+		output[j + 2] = static_cast<unsigned char>((input[i] >> 16) & 0xff);
+		output[j + 3] = static_cast<unsigned char>((input[i] >> 24) & 0xff);
 	}
 }
 /* }}} */
@@ -353,8 +353,8 @@ static void Decode(php_uint32 * output, const unsigned char * input, unsigned in
 	unsigned int i, j;
 
 	for (i = 0, j = 0; j < len; i++, j += 4)
-		output[i] = ((php_uint32)input[j]) | (((php_uint32)input[j + 1]) << 8) |
-		(((php_uint32)input[j + 2]) << 16) | (((php_uint32)input[j + 3]) << 24);
+		output[i] = static_cast<php_uint32>(input[j]) | (static_cast<php_uint32>(input[j + 1]) << 8) |
+		(static_cast<php_uint32>(input[j + 2]) << 16) | (static_cast<php_uint32>(input[j + 3]) << 24);
 }
 /* }}} */
 

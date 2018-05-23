@@ -145,7 +145,7 @@ namespace NFHash
 			key = key ^ (key >> 11);
 			key = key + (key << 6);
 			key = key ^ (key >> 22);
-			return (uint32_t)key;
+			return static_cast<uint32_t>(key);
 		}
 
 		/*

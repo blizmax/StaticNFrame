@@ -17,12 +17,12 @@ NF_EXPORT void DllStopPlugin(NFIPluginManager* pm)
 
 //////////////////////////////////////////////////////////////////////////
 
-const int NFActorPlugin::GetPluginVersion()
+int NFActorPlugin::GetPluginVersion()
 {
 	return 0;
 }
 
-const std::string NFActorPlugin::GetPluginName()
+std::string NFActorPlugin::GetPluginName()
 {
 	return GET_CLASS_NAME(NFActorPlugin);
 }

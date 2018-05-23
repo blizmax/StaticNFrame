@@ -85,11 +85,11 @@ public:
 		mStackLevel = 0;
 		mIsOpenProfiler = true;
 		mProfileThreadID = 0;
-		for (int i = 0; i < (int)PROFILER_MAX_TIMER_COUNT; i++)
+		for (int i = 0; i < static_cast<int>(PROFILER_MAX_TIMER_COUNT); i++)
 		{
 			mTimers[i] = nullptr;
 		}
-		for (int i = 0; i < (int)PROFILER_MAX_STACK_LEVEL; i++)
+		for (int i = 0; i < static_cast<int>(PROFILER_MAX_STACK_LEVEL); i++)
 		{
 			mStacks[i] = nullptr;
 		}

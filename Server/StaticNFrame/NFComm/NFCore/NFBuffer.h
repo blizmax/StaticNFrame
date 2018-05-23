@@ -9,7 +9,8 @@
 
 #pragma once
 
-#include <cstring>
+#include <cstdint>
+#include <cstddef>
 
 /////////////////////////////////////////////////
 /**
@@ -29,22 +30,12 @@ public:
 	 * @brief 构造函数.
 	 *
 	 */
-	NFBuffer() :
-		_readPos(0),
-		_writePos(0),
-		_capacity(0),
-		_buffer(NULL),
-		_highWaterPercent(50)
-	{
-	}
+	NFBuffer();
 
 	/**
 	 * @brief 析构函数.
 	 */
-	~NFBuffer()
-	{
-		delete[] _buffer;
-	}
+	~NFBuffer();
 
 private:
 	/**
@@ -68,7 +59,7 @@ public:
 	 *
 	 * @param bytes 要调整的字节数
 	 */
-	void Produce(std::size_t bytes) { _writePos += bytes; }
+	void Produce(std::size_t bytes);
 
 	/**
 	 * @brief 从缓冲取出数据,深拷贝,调整读游标
@@ -85,7 +76,7 @@ public:
 	 * @param buf   接收数据的指针
 	 * @param size  接收数据的大小
 	 */
-	void PeekData(void*& buf, std::size_t& size);
+	void PeekData(void*& buf, std::size_t& size) const;
 
 	/**
 	 * @brief 调整缓冲区读游标
@@ -99,21 +90,21 @@ public:
 	 *
 	 * @return 缓冲区可读数据起始地址
 	 */
-	char* ReadAddr() { return &_buffer[_readPos]; }
+	char* ReadAddr() const;
 
 	/**
 	 * @brief 缓冲区可写起始地址
 	 *
 	 * @return 缓冲区可写起始地址
 	 */
-	char* WriteAddr() { return &_buffer[_writePos]; }
+	char* WriteAddr() const;
 
 	/**
 	 * @brief 缓冲区是否有数据
 	 *
 	 * @return True:缓冲区没有数据
 	 */
-	bool IsEmpty() const { return ReadableSize() == 0; }
+	bool IsEmpty() const;
 
 	/**
 	 * @brief 缓冲区数据大小
@@ -134,7 +125,7 @@ public:
 	 *
 	 * @return 缓冲区占用内存字节数
 	 */
-	std::size_t Capacity() const { return _capacity; }
+	std::size_t Capacity() const;
 
 	/**
 	 * @brief 当内存占用在数据大小两倍以上，尝试释放内存(并不是清除数据)
@@ -168,6 +159,7 @@ public:
 	 * @param percents 负载率[10,100)
 	 */
 	void SetHighWaterPercent(size_t percents);
+
 	/**
 	 * 缓冲区大小上限
 	 */
@@ -177,7 +169,6 @@ public:
 	 * 缓冲区默认大小
 	 */
 	static const std::size_t kDefaultSize;
-
 private:
 	/**
 	 * 读游标
@@ -209,5 +200,5 @@ private:
 	 *
 	 * @param ptr 将要设置的指针
 	 */
-	void ResetBuffer(void* ptr = NULL);
+	void ResetBuffer(void* ptr = nullptr);
 };

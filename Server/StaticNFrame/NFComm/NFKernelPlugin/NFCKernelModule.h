@@ -26,16 +26,16 @@ public:
 	explicit NFCKernelModule(NFIPluginManager* p);
 	virtual ~NFCKernelModule();
 
-	virtual bool Init();
-	virtual bool Shut();
+	virtual bool Init() override;
+	virtual bool Shut() override;
 
-	virtual bool BeforeShut();
+	virtual bool BeforeShut() override;
 
-	virtual bool AfterInit();
+	virtual bool AfterInit() override;
 
-	virtual bool Execute();
+	virtual bool Execute() override;
 protected:
-	void ProcessMemFree();
+	static void ProcessMemFree();
 };
 
 #endif

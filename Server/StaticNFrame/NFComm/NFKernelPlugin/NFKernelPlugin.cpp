@@ -30,12 +30,12 @@ NF_EXPORT void DllStopPlugin(NFIPluginManager* pm)
 
 //////////////////////////////////////////////////////////////////////////
 
-const int NFKernelPlugin::GetPluginVersion()
+int NFKernelPlugin::GetPluginVersion()
 {
 	return 0;
 }
 
-const std::string NFKernelPlugin::GetPluginName()
+std::string NFKernelPlugin::GetPluginName()
 {
 	return GET_CLASS_NAME(NFKernelPlugin);
 }

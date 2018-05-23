@@ -152,7 +152,7 @@ int NFCpu::GetCurCpuUseage()
 	Sleep(1000);
 	int nCpuRoteEnd = objCpu.GetUsage();
 
-	return (int)((nCpuRoteEnd - nCpuRoteBegin) / 2);
+	return static_cast<int>((nCpuRoteEnd - nCpuRoteBegin) / 2);
 #else
 	return 0;
 #endif
@@ -166,8 +166,8 @@ int NFCpu::GetCurMemorySize()
 
 	if (::GetProcessMemoryInfo(::GetCurrentProcess(), &pmc, sizeof(pmc)))
 	{
-		int nWorkSize = (int)pmc.WorkingSetSize;
-		int nPageSize = (int)pmc.PagefileUsage;
+		int nWorkSize = static_cast<int>(pmc.WorkingSetSize);
+		int nPageSize = static_cast<int>(pmc.PagefileUsage);
 		return nWorkSize + nPageSize;
 	}
 

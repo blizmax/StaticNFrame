@@ -14,13 +14,11 @@
 
 class NFIComponent
 {
-private:
-	NFIComponent()
+	NFIComponent() : mbEnable(false), mSelf(nullptr)
 	{
 	}
-
 public:
-	NFIComponent(const std::string& strName) :mstrName(strName)
+	explicit NFIComponent(const std::string& strName) :mstrName(strName)
 	{
 		mbEnable = true;
 		//mstrName = strName;

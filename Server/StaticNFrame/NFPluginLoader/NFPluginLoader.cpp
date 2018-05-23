@@ -39,21 +39,21 @@ std::thread gThread;
 void CreateDumpFile(const std::string& strDumpFilePathName, EXCEPTION_POINTERS* pException)
 {
 	//Dump
-	HANDLE hDumpFile = CreateFile(strDumpFilePathName.c_str(), GENERIC_WRITE, 0, NULL, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);
+	HANDLE hDumpFile = CreateFile(strDumpFilePathName.c_str(), GENERIC_WRITE, 0, nullptr, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, nullptr);
 
 	MINIDUMP_EXCEPTION_INFORMATION dumpInfo;
 	dumpInfo.ExceptionPointers = pException;
 	dumpInfo.ThreadId = GetCurrentThreadId();
 	dumpInfo.ClientPointers = TRUE;
 
-	MiniDumpWriteDump(GetCurrentProcess(), GetCurrentProcessId(), hDumpFile, MiniDumpNormal, &dumpInfo, NULL, NULL);
+	MiniDumpWriteDump(GetCurrentProcess(), GetCurrentProcessId(), hDumpFile, MiniDumpNormal, &dumpInfo, nullptr, nullptr);
 
 	CloseHandle(hDumpFile);
 }
 
 long ApplicationCrashHandler(EXCEPTION_POINTERS* pException)
 {
-	time_t t = time(0);
+	time_t t = time(nullptr);
 	char szDmupName[MAX_PATH];
 	tm* ptm = localtime(&t);
 

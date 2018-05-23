@@ -8,9 +8,6 @@
 // -------------------------------------------------------------------------
 
 #include <stdlib.h>
-#include <string.h>
-#include <assert.h>
-
 #include "NFBase64.h"
 
 static char Base64_code[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
@@ -55,15 +52,15 @@ unsigned char NFBase64::Chr2Base(char c)
 {
 	if (c >= 'A' && c <= 'Z')
 	{
-		return (unsigned char)(c - 'A');
+		return static_cast<unsigned char>(c - 'A');
 	}
 	else if (c >= 'a' && c <= 'z')
 	{
-		return (unsigned char)(c - 'a' + 26);
+		return static_cast<unsigned char>(c - 'a' + 26);
 	}
 	else if (c >= '0' && c <= '9')
 	{
-		return (unsigned char)(c - '0' + 52);
+		return static_cast<unsigned char>(c - '0' + 52);
 	}
 	else if (c == '+')
 	{
@@ -86,9 +83,9 @@ bool NFBase64::Encode(const std::string& src, std::string* dst)
 		return false;
 	}
 
-	dst->resize(Base64EncodeLen((int)src.size()));
+	dst->resize(Base64EncodeLen(static_cast<int>(src.size())));
 
-	int c = -1;
+	int c;
 
 	unsigned char* p = reinterpret_cast<unsigned char*>(&(*dst)[0]);
 	unsigned char* s = p;
@@ -144,11 +141,11 @@ bool NFBase64::Decode(const std::string& src, std::string* dst)
 		return false;
 	}
 
-	dst->resize(Base64DecodeLen((int)src.size()));
+	dst->resize(Base64DecodeLen(static_cast<int>(src.size())));
 
 	unsigned char* p = reinterpret_cast<unsigned char*>(&(*dst)[0]);
 	unsigned char* q = p;
-	unsigned char c = 0;
+	unsigned char c;
 	unsigned char t = 0;
 
 	for (size_t i = 0; i < src.size(); i++)
@@ -179,17 +176,17 @@ bool NFBase64::Decode(const std::string& src, std::string* dst)
 			t = c << 2;
 			break;
 		case 1:
-			*p = (unsigned char)(t | (c >> 4));
+			*p = static_cast<unsigned char>(t | (c >> 4));
 			p++;
-			t = (unsigned char)(c << 4);
+			t = static_cast<unsigned char>(c << 4);
 			break;
 		case 2:
-			*p = (unsigned char)(t | (c >> 2));
+			*p = static_cast<unsigned char>(t | (c >> 2));
 			p++;
-			t = (unsigned char)(c << 6);
+			t = static_cast<unsigned char>(c << 6);
 			break;
 		case 3:
-			*p = (unsigned char)(t | c);
+			*p = static_cast<unsigned char>(t | c);
 			p++;
 			break;
 		default:
@@ -197,7 +194,7 @@ bool NFBase64::Decode(const std::string& src, std::string* dst)
 		}
 	}
 
-	dst->resize((size_t)(p - q));
+	dst->resize(static_cast<size_t>(p - q));
 
 	return true;
 }

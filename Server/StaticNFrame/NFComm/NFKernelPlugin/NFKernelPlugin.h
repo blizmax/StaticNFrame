@@ -20,11 +20,11 @@ public:
 
 	virtual ~NFKernelPlugin() { }
 
-	virtual const int GetPluginVersion();
+	virtual int GetPluginVersion() override;
 
-	virtual const std::string GetPluginName();
+	virtual std::string GetPluginName() override;
 
-	virtual void Install();
+	virtual void Install() override;
 
-	virtual void Uninstall();
+	virtual void Uninstall() override;
 };

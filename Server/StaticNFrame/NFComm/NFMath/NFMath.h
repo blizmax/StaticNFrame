@@ -93,11 +93,11 @@ inline int8_t angle2int8(float v, bool half = false)
 	int8_t angle = 0;
 	if (!half)
 	{
-		angle = (int8_t)floorf((v * 128.f) / float(NF_PI) + 0.5f);
+		angle = static_cast<int8_t>(floorf((v * 128.f) / float(NF_PI) + 0.5f));
 	}
 	else
 	{
-		angle = (int8_t)NFClamp(floorf((v * 254.f) / float(NF_PI) + 0.5f), -128.f, 127.f);
+		angle = static_cast<int8_t>(NFClamp(floorf((v * 254.f) / float(NF_PI) + 0.5f), -128.f, 127.f));
 	}
 
 	return angle;

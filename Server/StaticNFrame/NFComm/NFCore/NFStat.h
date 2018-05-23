@@ -96,14 +96,10 @@ public:
 	const MessageStatResult* GetAllMessageResults();
 
 	/// @brief 获取所有消息数
-	uint32_t GetAllMessageCounts() {
-		return m_message_counts;
-	}
+	uint32_t GetAllMessageCounts() const;
 
 	/// @brief 获取所有失败的消息数
-	uint32_t GetAllFailureMessageCounts() {
-		return m_failure_message_counts;
-	}
+	uint32_t GetAllFailureMessageCounts() const;
 
 private:
 	// 资源类统计中的临时数据
@@ -116,7 +112,7 @@ private:
 		ResourceStatTempData() {
 			_count = 0;
 			_total_value = 0;
-			_result = NULL;
+			_result = nullptr;
 		}
 	};
 
@@ -132,12 +128,12 @@ private:
 			_total_count = 0;
 			_failure_count = 0;
 			_total_cost_ms = 0;
-			_result = NULL;
+			_result = nullptr;
 		}
 	};
 
-	void CalculateResourceStatResult(ResourceStatTempData* resource_stat_temp);
-	void CalculateMessageStatResult(MessageStatTempData* message_stat_temp);
+	static void CalculateResourceStatResult(ResourceStatTempData* resource_stat_temp);
+	static void CalculateMessageStatResult(MessageStatTempData* message_stat_temp);
 
 private:
 	uint32_t m_message_counts;

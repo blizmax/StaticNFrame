@@ -35,15 +35,15 @@ public:
 	NFNavMeshHandle();
 	virtual ~NFNavMeshHandle();
 
-	int FindStraightPath(int layer, const NFVector3& start, const NFVector3& end, std::vector<NFVector3>& paths);
-	int RayCast(int layer, const NFVector3& start, const NFVector3& end, std::vector<NFVector3>& hitPointVec);
+	virtual int FindStraightPath(int layer, const NFVector3& start, const NFVector3& end, std::vector<NFVector3>& paths) override;
+	virtual int RayCast(int layer, const NFVector3& start, const NFVector3& end, std::vector<NFVector3>& hitPointVec) override;
 
 	virtual NFNavigationHandle::NAV_TYPE Type() const { return NAV_MESH; }
 
-	bool Create(const std::string& name);
+	virtual bool Create(const std::string& name) override;
 
-	int FindRandomPointAroundCircle(int layer, const NFVector3& centerPos,
-		std::vector<NFVector3>& points, int max_points, float maxRadius);
+	virtual int FindRandomPointAroundCircle(int layer, const NFVector3& centerPos,
+		std::vector<NFVector3>& points, int max_points, float maxRadius) override;
 
 	bool  IsValidPos(int layer, const NFVector3& pos);
 	void  GetValidPos(int layer, const NFVector3& pos, NFVector3& out);

@@ -51,7 +51,7 @@ bool NFServerTimeMgr::Update(uint64_t tick)
 {
 	ms_lastTick = ms_curTick;
 	ms_curTick = tick;
-	ms_deltaTick = (int)(ms_curTick - ms_lastTick);
+	ms_deltaTick = static_cast<int>(ms_curTick - ms_lastTick);
 	ms_unixSec = NFGetSecondTime();
 
 	++ms_frames;

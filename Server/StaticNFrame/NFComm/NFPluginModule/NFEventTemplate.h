@@ -39,20 +39,21 @@ class NFEventContext;
  */
 struct SEventKey
 {
-public:
 	/**
 	*@brief 事件主要的key，主要指玩家，生物唯一id
 	*/
 	uint64_t nSrcID;
+
 	/**
 	*@brief 事件Id
 	*/
 	uint16_t nEventID;
+
 	/**
 	*@brief src类型, 用来区别玩家，怪物的类型
 	*/
 	uint8_t  bySrcType;
-public:
+
 	/**
 	*@brief 构造函数
 	*/
@@ -449,7 +450,7 @@ private:
 				{
 					std::cerr << "[Event] pSubscribeInfo->nRefCount >= EVENT_REF_MAX_CNT....eventid:"
 						<< nEventID << ",srcid:" << nSrcID << ",type:" << bySrcType << ",refcount:"
-						<< pSubscribeInfo->nRefCount << ",removeflag:" << (int32_t)pSubscribeInfo->bRemoveFlag << ",szdesc:" << pSubscribeInfo->szDesc << std::endl;
+						<< pSubscribeInfo->nRefCount << ",removeflag:" << static_cast<int32_t>(pSubscribeInfo->bRemoveFlag) << ",szdesc:" << pSubscribeInfo->szDesc << std::endl;
 					m_nFireLayer--;
 					return false;
 				}
@@ -465,7 +466,7 @@ private:
 					catch (...)
 					{
 						//
-						std::cerr << "[Event] pSubscribeInfo->nRefCount >= EVENT_REF_MAX_CNT....eventid:" << nEventID << ",srcid:" << nSrcID << ",type:" << bySrcType << ",refcount:" << pSubscribeInfo->nRefCount << ",removeflag:" << (int32_t)pSubscribeInfo->bRemoveFlag << ",szdesc:" << pSubscribeInfo->szDesc;
+						std::cerr << "[Event] pSubscribeInfo->nRefCount >= EVENT_REF_MAX_CNT....eventid:" << nEventID << ",srcid:" << nSrcID << ",type:" << bySrcType << ",refcount:" << pSubscribeInfo->nRefCount << ",removeflag:" << static_cast<int32_t>(pSubscribeInfo->bRemoveFlag) << ",szdesc:" << pSubscribeInfo->szDesc;
 						m_nFireLayer--;
 						return false;
 					}

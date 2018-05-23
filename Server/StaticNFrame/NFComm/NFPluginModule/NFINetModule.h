@@ -127,9 +127,9 @@ protected:
 			}
 			else
 			{
-				for (auto it = mxCallBack[eServerType].mxCallBackList.begin(); it != mxCallBack[eServerType].mxCallBackList.end(); ++it)
+				for (auto iterator = mxCallBack[eServerType].mxCallBackList.begin(); iterator != mxCallBack[eServerType].mxCallBackList.end(); ++iterator)
 				{
-					NET_RECEIVE_FUNCTOR& pFun = *it;
+					NET_RECEIVE_FUNCTOR& pFun = *iterator;
 					pFun(unLinkId, valueId, nMsgId, msg, nLen);
 				}
 			}

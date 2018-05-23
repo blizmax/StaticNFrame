@@ -73,7 +73,7 @@ unsigned int NFCRC32::Sum(const void* d, size_t len) {
 	}
 
 	unsigned int CRC = 0xFFFFFFFF;
-	const uint8_t* p = (const uint8_t*)d;
+	const uint8_t* p = static_cast<const uint8_t*>(d);
 
 	for (size_t i = 0; i < len; i++) {
 		CRC = table[(CRC ^ (*(p + i))) & 0xff] ^ (CRC >> 8);

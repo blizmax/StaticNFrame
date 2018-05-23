@@ -24,7 +24,7 @@ string NFFileUtility::Clean(const string& path) {
 
 	// in case of root dir.
 	if (path[0] == '/') {
-		newpath << (char)'/';
+		newpath << static_cast<char>('/');
 	}
 
 	// erase null.
@@ -57,7 +57,7 @@ string NFFileUtility::Clean(const string& path) {
 		if (++it == ite) {
 			break;
 		}
-		newpath << (char)'/';
+		newpath << static_cast<char>('/');
 	}
 
 	return newpath.str();
@@ -204,15 +204,15 @@ bool NFFileUtility::Unlink(const string& filepath) {
 }
 
 bool NFFileUtility::Mkdir(const string& dirpath) {
-	size_t nCurSplit = 0, nNextSplit = 0;
+	size_t nCurSplit;
+	size_t nNextSplit = 0;
 
-	int iret = 0;
-	(void)iret;
+	int iret;
 
 	do {
 		// get current dir name.
-		nCurSplit = dirpath.find_first_of((string::value_type)'/', nNextSplit);
-		nNextSplit = dirpath.find_first_of((string::value_type)'/', nCurSplit + 1);
+		nCurSplit = dirpath.find_first_of(static_cast<string::value_type>('/'), nNextSplit);
+		nNextSplit = dirpath.find_first_of(static_cast<string::value_type>('/'), nCurSplit + 1);
 
 #if NF_PLATFORM == NF_PLATFORM_WIN
 		// current dir
@@ -313,8 +313,8 @@ bool NFFileUtility::ReadFileContent(const std::string& strFileName, std::string&
 		return false;
 	}
 	fseek(fp, 0, SEEK_SET);
-	strContent.resize((size_t)filelength);
-	fread((void*)strContent.data(), (size_t)filelength, 1, fp);
+	strContent.resize(static_cast<size_t>(filelength));
+	fread((void*)strContent.data(), static_cast<size_t>(filelength), 1, fp);
 	fclose(fp);
 
 	return true;
@@ -352,7 +352,7 @@ bool NFFileUtility::WriteFile(const char* filepath, const void* content, const s
 #endif
 	FILE* fp = ::fopen(filepath, mode);
 
-	if (fp == NULL) {
+	if (fp == nullptr) {
 		fprintf(stderr, "%s : could not open file \"%s\" for write\n", __func__, filepath);
 		return false;
 	}

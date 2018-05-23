@@ -6,7 +6,7 @@
 NetObject::NetObject()
 {
 	m_nSocket = INVALID_SOCKET;
-	m_pBev = NULL;
+	m_pBev = nullptr;
 	m_usConn = 0;
 	m_usLinkId = 0;
 }
@@ -58,7 +58,7 @@ bool  NetObject::OnRecvData(bufferevent* pBufEv)
 		return false;
 	}
 
-	int32_t  ilen = (int32_t)evbuffer_get_length(pEvbuff);
+	int32_t  ilen = static_cast<int32_t>(evbuffer_get_length(pEvbuff));
 	if (ilen <= 0) {
 		return true;
 	}

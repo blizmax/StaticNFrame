@@ -16,17 +16,17 @@ public:
 
 	virtual ~NFCTestClientModule() { }
 public:
-	virtual bool Init();
+	virtual bool Init() override;
 
-	virtual bool AfterInit();
+	virtual bool AfterInit() override;
 
-	virtual bool Execute();
+	virtual bool Execute() override;
 
-	virtual bool BeforeShut();
+	virtual bool BeforeShut() override;
 
-	virtual bool Shut();
+	virtual bool Shut() override;
 
-	virtual void OnTimer(uint32_t nTimerID);
+	virtual void OnTimer(uint32_t nTimerID) override;
 protected:
 	void OnProxySocketEvent(const eMsgType nEvent, const uint32_t unLinkId);
 	void OnHandleOtherMessage(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen);

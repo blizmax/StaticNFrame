@@ -10,9 +10,6 @@
 #define NFC_ACTOR_H
 
 #include <map>
-#include <string>
-#include "NFComm/NFCore/NFSingleton.hpp"
-#include "NFComm/NFCore/NFPlatform.h"
 #include "NFComm/NFPluginModule/NFIActor.h"
 #include "NFComm/NFPluginModule/NFIComponent.h"
 #include "NFComm/NFPluginModule/NFIActorModule.h"
@@ -24,20 +21,20 @@ public:
 	NFCActor(Theron::Framework& framework, NFIActorModule* pModule);
 	virtual ~NFCActor();
 
-	virtual void AddComponent(NFIComponent* pComponent);
-	virtual NFIComponent* FindComponent(const std::string& strComponentName);
+	virtual void AddComponent(NFIComponent* pComponent) override;
+	virtual NFIComponent* FindComponent(const std::string& strComponentName) override;
 
-	virtual bool AddBeginFunc(const int nSubMsgID, ACTOR_PROCESS_FUNCTOR xBeginFunctor);
-	virtual bool AddEndFunc(const int nSubMsgID, ACTOR_PROCESS_FUNCTOR xEndFunctor);
+	virtual bool AddBeginFunc(const int nSubMsgID, ACTOR_PROCESS_FUNCTOR xBeginFunctor) override;
+	virtual bool AddEndFunc(const int nSubMsgID, ACTOR_PROCESS_FUNCTOR xEndFunctor) override;
 
-	virtual bool SendMsg(const Theron::Address& address, const NFIActorMessage& message);
+	virtual bool SendMsg(const Theron::Address& address, const NFIActorMessage& message) override;
 
 protected:
 	//handler in component
-	virtual void Handler(const NFIActorMessage& message, const Theron::Address& from);
+	virtual void Handler(const NFIActorMessage& message, const Theron::Address& from) override;
 
 	//the purpose is to push message to main thread
-	virtual void HandlerEx(const NFIActorMessage& message, const Theron::Address& from);
+	virtual void HandlerEx(const NFIActorMessage& message, const Theron::Address& from) override;
 
 private:
 	std::map<std::string, NFIComponent*> mxComponent;

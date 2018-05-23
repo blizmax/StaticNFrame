@@ -28,12 +28,12 @@ NF_EXPORT void DllStopPlugin(NFIPluginManager* pm)
 
 //////////////////////////////////////////////////////////////////////////
 
-const int NFTestPlugin::GetPluginVersion()
+int NFTestPlugin::GetPluginVersion()
 {
 	return 0;
 }
 
-const std::string NFTestPlugin::GetPluginName()
+std::string NFTestPlugin::GetPluginName()
 {
 	return GET_CLASS_NAME(NFTestPlugin);
 }

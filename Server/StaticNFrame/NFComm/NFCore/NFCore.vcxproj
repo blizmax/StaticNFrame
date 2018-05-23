@@ -198,7 +198,6 @@
     <ClInclude Include="NFMacros.h" />
     <ClInclude Include="NFMutex.h" />
     <ClInclude Include="NFNetBuffer.h" />
-    <ClInclude Include="NFConsistentHash.hpp" />
     <ClInclude Include="NFCpu.h" />
     <ClInclude Include="NFCRC16.h" />
     <ClInclude Include="NFCRC32.h" />

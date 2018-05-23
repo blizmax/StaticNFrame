@@ -26,7 +26,7 @@ public:
 		va_end(ap);
 	}
 
-	std::string GetMessage()
+	std::string GetMessage() const
 	{
 		return message;
 	}

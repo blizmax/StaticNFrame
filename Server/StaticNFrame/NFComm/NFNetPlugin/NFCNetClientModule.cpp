@@ -44,9 +44,9 @@ bool NFCNetClientModule::BeforeShut()
 
 bool NFCNetClientModule::Shut()
 {
-	for (int i = 0; i < (int)mxServerMap.size(); i++)
+	for (size_t i = 0; i < mxServerMap.size(); i++)
 	{
-		for (int j = 0; j < (int)mxServerMap[i].size(); j++)
+		for (size_t j = 0; j < mxServerMap[i].size(); j++)
 		{
 			if (mxServerMap[i][j])
 			{
@@ -61,9 +61,9 @@ bool NFCNetClientModule::Shut()
 
 bool NFCNetClientModule::Finalize()
 {
-	for (int i = 0; i < (int)mxServerMap.size(); i++)
+	for (size_t i = 0; i < mxServerMap.size(); i++)
 	{
-		for (int j = 0; j < (int)mxServerMap[i].size(); j++)
+		for (size_t j = 0; j < mxServerMap[i].size(); j++)
 		{
 			if (mxServerMap[i][j])
 			{
@@ -91,13 +91,13 @@ uint32_t NFCNetClientModule::GetFreeUnLinkId(NF_SERVER_TYPES eServerType)
 		}
 		else
 		{
-			uint32_t sz = (uint32_t)mxServerMap[eServerType].size();
+			size_t sz = mxServerMap[eServerType].size();
 			if (sz >= MAX_SERVER_TYPE_CLIENT_COUNT)
 			{
 				return 0;
 			}
 
-			for (uint32_t index = 0; index < sz; index++)
+			for (size_t index = 0; index < sz; index++)
 			{
 				if (mxServerMap[eServerType][index] == nullptr)
 				{
@@ -163,7 +163,7 @@ void NFCNetClientModule::CloseServerByServerType(NF_SERVER_TYPES eServerType)
 {
 	if (eServerType >= 0 && eServerType < NF_ST_MAX)
 	{
-		for (int j = 0; j < (int)mxServerMap[eServerType].size(); j++)
+		for (size_t j = 0; j < mxServerMap[eServerType].size(); j++)
 		{
 			if (mxServerMap[eServerType][j])
 			{
@@ -177,9 +177,9 @@ void NFCNetClientModule::CloseServerByServerType(NF_SERVER_TYPES eServerType)
 
 void NFCNetClientModule::CloseAllServer()
 {
-	for (int i = 0; i < (int)mxServerMap.size(); i++)
+	for (size_t i = 0; i < mxServerMap.size(); i++)
 	{
-		for (int j = 0; j < (int)mxServerMap[i].size(); j++)
+		for (size_t j = 0; j < mxServerMap[i].size(); j++)
 		{
 			if (mxServerMap[i][j])
 			{
@@ -244,9 +244,9 @@ void NFCNetClientModule::SendToAllServer(const uint32_t nMsgID, const std::strin
 
 void NFCNetClientModule::SendToAllServer(const uint32_t nMsgID, const char* msg, const uint32_t nLen, const uint64_t nPlayerID)
 {
-	for (int i = 0; i < (int)mxServerMap.size(); i++)
+	for (size_t i = 0; i < mxServerMap.size(); i++)
 	{
-		for (int j = 0; j < (int)mxServerMap[i].size(); j++)
+		for (size_t j = 0; j < mxServerMap[i].size(); j++)
 		{
 			if (mxServerMap[i][j])
 			{
@@ -276,7 +276,7 @@ void NFCNetClientModule::SendToAllServer(NF_SERVER_TYPES eServerType, const uint
 {
 	if (eServerType >= 0 && eServerType < NF_ST_MAX)
 	{
-		for (int j = 0; j < (int)mxServerMap[eServerType].size(); j++)
+		for (size_t j = 0; j < mxServerMap[eServerType].size(); j++)
 		{
 			if (mxServerMap[eServerType][j])
 			{
@@ -299,9 +299,9 @@ void NFCNetClientModule::SendToAllServerByPB(NF_SERVER_TYPES eServerType, const 
 
 void NFCNetClientModule::ProcessExecute()
 {
-	for (int i = 0; i < (int)mxServerMap.size(); i++)
+	for (size_t i = 0; i < mxServerMap.size(); i++)
 	{
-		for (int j = 0; j < (int)mxServerMap[i].size(); j++)
+		for (size_t j = 0; j < mxServerMap[i].size(); j++)
 		{
 			if (mxServerMap[i][j])
 			{

@@ -55,7 +55,7 @@ uint32_t NFRandomUInt(uint32_t min, uint32_t max)
 
 int32_t NFRandomAInt()
 {
-	return (int32_t)NFRandomUInt(g_nNull, g_nPar7);
+	return static_cast<int32_t>(NFRandomUInt(g_nNull, g_nPar7));
 }
 
 int32_t NFRandomInt(int32_t min, int32_t max)
@@ -65,7 +65,7 @@ int32_t NFRandomInt(int32_t min, int32_t max)
 		return max;
 	}
 
-	return min + (int32_t)(NFRandomAUInt() % (max - min + g_nOne));
+	return min + static_cast<int32_t>(NFRandomAUInt() % (max - min + g_nOne));
 }
 
 float NFRandomFloat(float min, float max)
@@ -94,11 +94,11 @@ double NFRandomDouble(double min, double max)
 const char* NFRandomChar(size_t nChar)
 {
 	if (nChar == 0)
-		return 0;
+		return nullptr;
 	static std::vector<char> s_aStr;
 	s_aStr.resize(nChar + 1);
 	for (size_t i = 0; i < nChar; i++)
-		s_aStr[i] = (char)NFRandomUInt(1, 0xff);
+		s_aStr[i] = static_cast<char>(NFRandomUInt(1, 0xff));
 	s_aStr[nChar] = 0;
 	return &s_aStr.front();
 }
@@ -107,14 +107,14 @@ const char* NFRandomChar(size_t nChar)
 const char* NFRandomEnglish(size_t nChar)
 {
 	if (nChar == 0)
-		return 0;
+		return nullptr;
 	static std::vector<char> s_aStr;
 	s_aStr.resize(nChar + 1);
 	for (size_t i = 0; i < nChar; i++) {
 		if (NFRandomAInt() % 2 == 0)
-			s_aStr[i] = (char)NFRandomUInt('A', 'Z');
+			s_aStr[i] = static_cast<char>(NFRandomUInt('A', 'Z'));
 		else
-			s_aStr[i] = (char)NFRandomUInt('a', 'z');
+			s_aStr[i] = static_cast<char>(NFRandomUInt('a', 'z'));
 	}
 	s_aStr[nChar] = 0;
 	return &s_aStr.front();

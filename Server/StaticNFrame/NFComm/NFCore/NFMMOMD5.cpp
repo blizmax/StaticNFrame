@@ -35,7 +35,7 @@ NFMMOMD5::NFMMOMD5(const string& message) {
 	state[3] = 0x10325476;
 
 	/* Initialization the object according to message. */
-	init((const byte*)message.c_str(), message.length());
+	init(reinterpret_cast<const byte*>(message.c_str()), message.length());
 }
 
 /**
@@ -61,7 +61,7 @@ const byte* NFMMOMD5::getDigest() {
 		encode(count, bits, 8);
 
 		/* Pad out to 56 mod 64. */
-		index = (bit32)((count[0] >> 3) & 0x3f);
+		index = static_cast<bit32>((count[0] >> 3) & 0x3f);
 		padLen = (index < 56) ? (56 - index) : (120 - index);
 		init(PADDING, padLen);
 
@@ -93,13 +93,13 @@ void NFMMOMD5::init(const byte* input, size_t len) {
 	finished = false;
 
 	/* Compute number of bytes mod 64 */
-	index = (bit32)((count[0] >> 3) & 0x3f);
+	index = static_cast<bit32>((count[0] >> 3) & 0x3f);
 
 	/* update number of bits */
-	if ((count[0] += ((bit32)len << 3)) < ((bit32)len << 3)) {
+	if ((count[0] += (static_cast<bit32>(len) << 3)) < (static_cast<bit32>(len) << 3)) {
 		++count[1];
 	}
-	count[1] += ((bit32)len >> 29);
+	count[1] += (static_cast<bit32>(len) >> 29);
 
 	partLen = 64 - index;
 
@@ -221,10 +221,10 @@ void NFMMOMD5::transform(const byte block[64]) {
 */
 void NFMMOMD5::encode(const bit32* input, byte* output, size_t length) {
 	for (size_t i = 0, j = 0; j < length; ++i, j += 4) {
-		output[j] = (byte)(input[i] & 0xff);
-		output[j + 1] = (byte)((input[i] >> 8) & 0xff);
-		output[j + 2] = (byte)((input[i] >> 16) & 0xff);
-		output[j + 3] = (byte)((input[i] >> 24) & 0xff);
+		output[j] = static_cast<byte>(input[i] & 0xff);
+		output[j + 1] = static_cast<byte>((input[i] >> 8) & 0xff);
+		output[j + 2] = static_cast<byte>((input[i] >> 16) & 0xff);
+		output[j + 3] = static_cast<byte>((input[i] >> 24) & 0xff);
 	}
 }
 
@@ -240,8 +240,8 @@ void NFMMOMD5::encode(const bit32* input, byte* output, size_t length) {
 */
 void NFMMOMD5::decode(const byte* input, bit32* output, size_t length) {
 	for (size_t i = 0, j = 0; j < length; ++i, j += 4) {
-		output[i] = ((bit32)input[j]) | (((bit32)input[j + 1]) << 8) |
-			(((bit32)input[j + 2]) << 16) | (((bit32)input[j + 3]) << 24);
+		output[i] = static_cast<bit32>(input[j]) | (static_cast<bit32>(input[j + 1]) << 8) |
+			(static_cast<bit32>(input[j + 2]) << 16) | (static_cast<bit32>(input[j + 3]) << 24);
 	}
 }
 

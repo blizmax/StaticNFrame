@@ -45,16 +45,17 @@ public:
 	virtual bool Shut() override;
 	virtual bool Execute() override;
 public:
-	virtual bool Ping(const stMsg* pMsg);
+	virtual bool Ping(const stMsg* pMsg) override;
 	virtual void ProcessMsgLogicThread();
 public:
-	const string& GetName()const { return m_strName; }
-	stClientFlag& Getflag() { return m_flag; }
+	const string& GetName() const;
+
+	stClientFlag& Getflag();
 	void		CheckConnect();
-	bool		IsSuspend()const { return m_flag.sSuspend > 0; }
+	bool		IsSuspend() const;
 public:
 	void		StartThread();
-	event_base*	GetMainBase() { return m_pMainBase; }
+	event_base* GetMainBase() const;
 	bool		Send(const void* pData, uint32_t unSize);
 	void		SendConnected();
 	void		SetSocketId(SOCKET nSocket);
@@ -65,14 +66,20 @@ public:
 	void		OnConnectLib(SOCKET nSocket);
 	void		OnDisConnectLib();
 public:
-	eConnectStatus	GetStatus() const { return m_eStatus; }
-	void			SetStatus(eConnectStatus val) { m_eStatus = val; }
-	bool			IsConnectOK() { return m_eStatus == eConnectStatus_ConnectOk; }
-	uint64_t		GetPingTime() const { return m_pingTime; }
-	void			PingTime(uint64_t val) { m_pingTime = val; }
-	time_t			GetOnRecvTime() const { return m_tOnRecvTime; }
-	void			SetOnRecvTime(time_t val) { m_tOnRecvTime = val; }
-public:
+	eConnectStatus GetStatus() const;
+
+	void SetStatus(eConnectStatus val);
+
+	bool IsConnectOK() const;
+
+	virtual uint64_t GetPingTime() const override;
+
+	void PingTime(uint64_t val);
+
+	time_t GetOnRecvTime() const;
+
+	void SetOnRecvTime(time_t val);
+
 	void			OnClientThread();
 private:
 	event_base*					m_pMainBase;

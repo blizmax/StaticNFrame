@@ -28,6 +28,20 @@ inline static std::size_t RoundUp2Power(std::size_t size)
 const std::size_t NFBuffer::kMaxBufferSize = std::numeric_limits<std::size_t>::max() / 2;
 const std::size_t NFBuffer::kDefaultSize = 128;
 
+NFBuffer::NFBuffer() :
+	_readPos(0),
+	_writePos(0),
+	_capacity(0),
+	_buffer(nullptr),
+	_highWaterPercent(50)
+{
+}
+
+NFBuffer::~NFBuffer()
+{
+	delete[] _buffer;
+}
+
 std::size_t NFBuffer::PushData(const void* data, std::size_t size)
 {
 	if (!data || size == 0)
@@ -41,6 +55,11 @@ std::size_t NFBuffer::PushData(const void* data, std::size_t size)
 	Produce(size);
 
 	return size;
+}
+
+void NFBuffer::Produce(std::size_t bytes)
+{
+	_writePos += bytes;
 }
 
 std::size_t NFBuffer::PopData(void* buf, std::size_t size)
@@ -60,7 +79,7 @@ std::size_t NFBuffer::PopData(void* buf, std::size_t size)
 	return size;
 }
 
-void NFBuffer::PeekData(void*& buf, std::size_t& size)
+void NFBuffer::PeekData(void*& buf, std::size_t& size) const
 {
 	buf = ReadAddr();
 	size = ReadableSize();
@@ -73,6 +92,21 @@ void NFBuffer::Consume(std::size_t bytes)
 	_readPos += bytes;
 	if (IsEmpty())
 		Clear();
+}
+
+char* NFBuffer::ReadAddr() const
+{
+	return &_buffer[_readPos];
+}
+
+char* NFBuffer::WriteAddr() const
+{
+	return &_buffer[_writePos];
+}
+
+bool NFBuffer::IsEmpty() const
+{
+	return ReadableSize() == 0;
 }
 
 void NFBuffer::AssureSpace(std::size_t needsize)
@@ -122,6 +156,11 @@ void NFBuffer::AssureSpace(std::size_t needsize)
 	_writePos = dataSize;
 
 	assert(needsize <= WritableSize());
+}
+
+std::size_t NFBuffer::Capacity() const
+{
+	return _capacity;
 }
 
 void NFBuffer::Shrink()

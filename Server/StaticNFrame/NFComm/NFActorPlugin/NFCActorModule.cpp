@@ -8,12 +8,13 @@
 
 #include "NFCActorModule.h"
 #include "NFComm/NFCore/NFProfiler.h"
+#include "NFCActor.h"
 
 NFCActorModule::NFCActorModule(NFIPluginManager* p)
 {
 	pPluginManager = p;
 
-	srand((unsigned)time(NULL));
+	srand(static_cast<unsigned>(time(nullptr)));
 
 	m_pFramework = NF_NEW Theron::Framework(std::thread::hardware_concurrency());
 
@@ -25,7 +26,7 @@ NFCActorModule::~NFCActorModule()
 	delete m_pMainActor;
 	m_pMainActor = nullptr;
 	delete m_pFramework;
-	m_pFramework = NULL;
+	m_pFramework = nullptr;
 }
 
 bool NFCActorModule::Init()
@@ -50,7 +51,7 @@ bool NFCActorModule::Shut()
 
 bool NFCActorModule::Finalize()
 {
-	for (auto it = mxActorMap.begin(); it != mxActorMap.end(); it++)
+	for (auto it = mxActorMap.begin(); it != mxActorMap.end(); ++it)
 	{
 		delete it->second;
 	}
@@ -102,7 +103,7 @@ bool NFCActorModule::HandlerEx(const NFIActorMessage& message, const int from)
 bool NFCActorModule::ExecuteEvent()
 {
 	NFIActorMessage xMsg;
-	bool bRet = false;
+	bool bRet;
 	bRet = mxQueue.Pop(xMsg);
 	while (bRet)
 	{

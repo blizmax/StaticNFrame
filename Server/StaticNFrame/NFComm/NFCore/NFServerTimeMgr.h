@@ -21,13 +21,13 @@ public:
 	NFServerTimeMgr();
 	virtual ~NFServerTimeMgr();
 public:
-	bool Init(int fps);
-	bool UnInit();
-	bool Update(uint64_t tick);
+	static bool Init(int fps);
+	static bool UnInit();
+	static bool Update(uint64_t tick);
 
 public:
 	static uint64_t StartTick() { return ms_startTick; }
-	static uint32_t CurElapse() { return (uint32_t)(ms_curTick - ms_startTick); }
+	static uint32_t CurElapse() { return static_cast<uint32_t>(ms_curTick - ms_startTick); }
 	static uint64_t Tick() { return ms_curTick; }
 	static uint64_t LastTick() { return ms_lastTick; }
 	static int DeltaTick() { return ms_deltaTick; }
@@ -36,7 +36,7 @@ public:
 	static uint64_t Secs() { return ms_secs; }
 	static int      GetFPS() { return ms_fps; }
 	// 获得当日已过秒数(首日有16小时要去除)
-	static uint32_t CurDaySec() { return ((uint32_t)UnixSec() - 57600) % DayTotalSec(); };
+	static uint32_t CurDaySec() { return (static_cast<uint32_t>(UnixSec()) - 57600) % DayTotalSec(); };
 	// 每日总秒数
 	static uint32_t DayTotalSec() { return msc_daySec; };
 

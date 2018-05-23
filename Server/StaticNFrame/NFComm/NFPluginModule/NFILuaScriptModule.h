@@ -26,7 +26,7 @@ public:
 	{
 	}
 public:
-	lua_State* GetLuaState()
+	lua_State* GetLuaState() const
 	{
 		return l.state();
 	}
@@ -97,7 +97,7 @@ public:
 		return false;
 	}
 public:
-	bool TryRunGlobalScriptFunc(const std::string& strFuncName)
+	bool TryRunGlobalScriptFunc(const std::string& strFuncName) const
 	{
 		try {
 			LuaIntf::LuaRef func(l, strFuncName.c_str());

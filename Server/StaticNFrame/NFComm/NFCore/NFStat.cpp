@@ -115,6 +115,16 @@ const MessageStatResult* NFStat::GetAllMessageResults() {
 	return &m_message_stat_result;
 }
 
+uint32_t NFStat::GetAllMessageCounts() const
+{
+	return m_message_counts;
+}
+
+uint32_t NFStat::GetAllFailureMessageCounts() const
+{
+	return m_failure_message_counts;
+}
+
 void NFStat::CalculateResourceStatResult(ResourceStatTempData* resource_stat_temp) {
 	if (0 == resource_stat_temp->_count) {
 		return;

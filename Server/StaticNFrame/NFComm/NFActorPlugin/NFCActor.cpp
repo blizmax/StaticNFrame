@@ -7,7 +7,6 @@
 // -------------------------------------------------------------------------
 
 #include "NFCActor.h"
-#include "NFComm/NFPluginModule/NFIPluginManager.h"
 
 NFCActor::NFCActor(Theron::Framework& framework, NFIActorModule* pModule)
 	: NFIActor(framework)
@@ -17,9 +16,9 @@ NFCActor::NFCActor(Theron::Framework& framework, NFIActorModule* pModule)
 
 NFCActor::~NFCActor()
 {
-	NFIComponent* pCompnent = nullptr;
+	NFIComponent* pCompnent;
 
-	for (auto it = mxComponent.begin(); it != mxComponent.end(); it++)
+	for (auto it = mxComponent.begin(); it != mxComponent.end(); ++it)
 	{
 		pCompnent = it->second;
 		if (pCompnent)
@@ -109,9 +108,9 @@ void NFCActor::Handler(const NFIActorMessage& message, const Theron::Address& fr
 	}
 	else
 	{
-		for (auto it = mxComponent.begin(); it != mxComponent.end(); it++)
+		for (auto iterator = mxComponent.begin(); iterator != mxComponent.end(); ++iterator)
 		{
-			NFIComponent* pComponent = it->second;
+			NFIComponent* pComponent = iterator->second;
 			if (pComponent && pComponent->Enable())
 			{
 				pComponent->OnASyncEvent(message.self, message.nFormActor, message.nMsgID, strData);

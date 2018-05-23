@@ -98,7 +98,7 @@ bool NFFixTimerAxis::SetFixTimer(uint32_t nTimerID, uint64_t nStartTime, uint32_
 		//
 		pFixTimer->nLastSec = GetMorningTime(nowTime) - pFixTimer->nInterDays * FIX_AXIS_ONE_DAY_SECOND + pFixTimer->nStartTime;
 	}
-	pFixTimer->nGridIndex = (uint32_t)(pFixTimer->nStartTime / FIX_AXIS_ONE_HOUR_SECOND);
+	pFixTimer->nGridIndex = static_cast<uint32_t>(pFixTimer->nStartTime / FIX_AXIS_ONE_HOUR_SECOND);
 
 	pFixTimerList->push_back(pFixTimer);
 
@@ -240,7 +240,7 @@ void NFFixTimerAxis::UpdateFix()
 			}
 
 			// ´¥·¢¶¨Ê±Æ÷
-			if (now - pFixTimer->nLastSec >= ((uint64_t)pFixTimer->nInterDays * FIX_AXIS_ONE_DAY_SECOND))
+			if (now - pFixTimer->nLastSec >= (static_cast<uint64_t>(pFixTimer->nInterDays) * FIX_AXIS_ONE_DAY_SECOND))
 			{
 				pFixTimer->pHandler->OnTimer(pFixTimer->nTimerID);
 				pFixTimer = *it;
@@ -289,7 +289,7 @@ NFTimerAxis::NFTimerAxis()
 	}
 
 	m_TimerAxisSec.resize(TIME_AXIS_SECLENGTH);
-	m_nInitSec = time(0);
+	m_nInitSec = time(nullptr);
 	m_nLastSec = m_nInitSec;
 	for (uint32_t i = 0; i < m_TimerAxisSec.size(); ++i)
 	{
@@ -584,8 +584,8 @@ void NFTimerAxis::Update()
 		return;
 	}
 
-	uint32_t start_grid = ((uint32_t)(m_nLastTick - m_nInitTick) / TIME_GRID) % m_TimerAxis.size();
-	uint32_t cur_grid = ((uint32_t)(now - m_nInitTick) / TIME_GRID) % m_TimerAxis.size();
+	uint32_t start_grid = (static_cast<uint32_t>(m_nLastTick - m_nInitTick) / TIME_GRID) % m_TimerAxis.size();
+	uint32_t cur_grid = (static_cast<uint32_t>(now - m_nInitTick) / TIME_GRID) % m_TimerAxis.size();
 
 	m_nLastTick = now;
 
@@ -624,7 +624,7 @@ void NFTimerAxis::Update()
 			{
 				pTimer->nLastTick = now;
 			}
-			if ((uint32_t)(now - pTimer->nLastTick) >= pTimer->nInterVal)
+			if (static_cast<uint32_t>(now - pTimer->nLastTick) >= pTimer->nInterVal)
 			{
 				BEGIN_PROFILE("pTimer->pHandler->OnTimer");
 				pTimer->pHandler->OnTimer(pTimer->nTimerID);
@@ -657,7 +657,7 @@ void NFTimerAxis::Update()
 					{
 						pTimer->nLastTick = m_nLastTick;
 					}
-					uint32_t nTemp = (uint32_t)((pTimer->nLastTick - m_nInitTick) + pTimer->nInterVal);
+					uint32_t nTemp = static_cast<uint32_t>((pTimer->nLastTick - m_nInitTick) + pTimer->nInterVal);
 					pTimer->nGridIndex = (nTemp / TIME_GRID) % m_TimerAxis.size();
 					m_TimerAxis[pTimer->nGridIndex]->push_back(pTimer);
 					pTimer->pos = --m_TimerAxis[pTimer->nGridIndex]->end();
@@ -693,8 +693,8 @@ void NFTimerAxis::UpdateSec()
 		return;
 	}
 
-	uint32_t start_grid = ((uint32_t)(m_nLastSec - m_nInitSec)) % m_TimerAxisSec.size();
-	uint32_t cur_grid = ((uint32_t)(now - m_nInitSec)) % m_TimerAxisSec.size();
+	uint32_t start_grid = static_cast<uint32_t>(m_nLastSec - m_nInitSec) % m_TimerAxisSec.size();
+	uint32_t cur_grid = static_cast<uint32_t>(now - m_nInitSec) % m_TimerAxisSec.size();
 
 	m_nLastSec = now;
 

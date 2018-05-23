@@ -412,7 +412,7 @@ namespace {
 		void consume_garbage() {
 			consume_whitespace();
 			if (strategy == JsonParse::COMMENTS) {
-				bool comment_found = false;
+				bool comment_found;
 				do {
 					comment_found = consume_comment();
 					if (failed) return;
@@ -428,9 +428,9 @@ namespace {
 		 */
 		char get_next_token() {
 			consume_garbage();
-			if (failed) return (char)0;
+			if (failed) return static_cast<char>(0);
 			if (i == str.size())
-				return fail("unexpected end of input", (char)0);
+				return fail("unexpected end of input", static_cast<char>(0));
 
 			return str[i++];
 		}
@@ -439,7 +439,7 @@ namespace {
 		 *
 		 * Encode pt as UTF-8 and add it to out.
 		 */
-		void encode_utf8(long pt, string & out) {
+		static void encode_utf8(long pt, string & out) {
 			if (pt < 0)
 				return;
 

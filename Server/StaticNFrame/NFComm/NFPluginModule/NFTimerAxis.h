@@ -30,7 +30,7 @@ public:
 	//更新固定时间的定时器
 	void UpdateFix();
 private:
-	uint64_t GetMorningTime(uint64_t nTimeSec);
+	static uint64_t GetMorningTime(uint64_t nTimeSec);
 
 protected:
 	struct FixTimer
@@ -56,7 +56,7 @@ protected:
 	};
 
 	//重置定时器在时间轴上的位置
-	bool ResetFixTimerPos(FixTimer *pTimer);
+	static bool ResetFixTimerPos(FixTimer *pTimer);
 
 	typedef std::list<FixTimer*> FIXTIMER_LIST;
 	typedef std::vector<FIXTIMER_LIST*> FIXTIMER_AXIS;
@@ -103,7 +103,7 @@ private:
 	void UpdateSec();
 
 protected:
-	uint64_t GetTick() { return NFGetTime(); }
+	static uint64_t GetTick() { return NFGetTime(); }
 
 	struct Timer
 	{
@@ -128,7 +128,7 @@ protected:
 	};
 
 	//重置定时器在时间轴上的位置
-	bool ResetTimerPos(Timer *pTimer);
+	static bool ResetTimerPos(Timer *pTimer);
 
 	typedef std::list<Timer*>			TIMER_LIST;		//某个刻度中定时器列表
 	typedef std::vector<TIMER_LIST*>	TIMER_AXIS;		//所有事件轴的定时器

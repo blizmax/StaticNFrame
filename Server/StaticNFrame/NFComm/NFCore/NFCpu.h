@@ -21,7 +21,7 @@
 class _NFExport CpuUsage
 {
 public:
-	CpuUsage() :m_nCpuUsage(-1), IsFirstRun(true), m_lRunCount(0)
+	CpuUsage() :IsFirstRun(true), m_nCpuUsage(-1), m_lRunCount(0)
 	{
 		ZeroMemory(&m_ftPrevSysKernel, sizeof(FILETIME));
 		ZeroMemory(&m_ftPrevSysUser, sizeof(FILETIME));
@@ -64,7 +64,7 @@ public:
 
 				if (nTotalSys > 0)
 				{
-					m_nCpuUsage = (short)((100.0 * nTotalProc) / nTotalSys);
+					m_nCpuUsage = static_cast<short>((100.0 * nTotalProc) / nTotalSys);
 				}
 			}
 
@@ -82,7 +82,7 @@ public:
 		return nCpuCopy;
 	}
 private:
-	ULONGLONG SubtractTimes(const FILETIME& ftA, const FILETIME& ftB)
+	static ULONGLONG SubtractTimes(const FILETIME& ftA, const FILETIME& ftB)
 	{
 		LARGE_INTEGER a, b;
 		a.LowPart = ftA.dwLowDateTime;

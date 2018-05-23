@@ -97,7 +97,7 @@ _NFExport const char* NFRandomEnglish(size_t nChar);;
 template<typename T>
 _NFExport T NFRandInt(T min, T max)
 {
-	static std::default_random_engine generator((uint32_t)time(NULL));
+	static std::default_random_engine generator(static_cast<uint32_t>(time(nullptr)));
 	std::uniform_int_distribution<T> distribution(min, max - 1);
 	return distribution(generator);
 }
@@ -105,7 +105,7 @@ _NFExport T NFRandInt(T min, T max)
 template<typename T>
 _NFExport T NFRandReal(T min, T max)
 {
-	static std::default_random_engine generator(time(NULL));
+	static std::default_random_engine generator(time(nullptr));
 	std::uniform_real_distribution<T> distribution(min, max);
 	return distribution(generator);
 }

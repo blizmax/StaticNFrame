@@ -11,8 +11,7 @@
 
 #define THERON_USE_STD_THREADS 1
 
-#include <map>
-#include <string>
+#include "NFComm/NFCore/NFPlatform.h"
 #include <Theron/Theron.h>
 #include <functional>
 #include "NFIModule.h"
@@ -48,14 +47,12 @@ public:
 	uint64_t self;
 	//////////////////////////////////////////////////////////////////////////
 	ACTOR_PROCESS_FUNCTOR xEndFuncptr;
-protected:
-private:
 };
 
 class NFIActor : public Theron::Actor
 {
 public:
-	NFIActor(Theron::Framework& framework) : Theron::Actor(framework)
+	explicit NFIActor(Theron::Framework& framework) : Theron::Actor(framework)
 	{
 		RegisterHandler(this, &NFIActor::DefaultHandler);
 		m_pActorModule = nullptr;

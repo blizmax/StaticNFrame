@@ -105,10 +105,10 @@ private:
 	void transform(const byte block[64]);
 
 	/* Encodes input (usigned long) into output (byte). */
-	void encode(const bit32* input, byte* output, size_t length);
+	static void encode(const bit32* input, byte* output, size_t length);
 
 	/* Decodes input (byte) into output (usigned long). */
-	void decode(const byte* input, bit32* output, size_t length);
+	static void decode(const byte* input, bit32* output, size_t length);
 
 private:
 	/* Flag for mark whether calculate finished. */

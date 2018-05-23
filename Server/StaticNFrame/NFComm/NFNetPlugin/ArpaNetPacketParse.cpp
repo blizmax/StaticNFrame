@@ -25,13 +25,13 @@ int ArpgNetPacketParse::DeCodeImpl(const char* strData, const uint32_t unLen, ch
 
 	stMsg* packHead = nullptr;
 
-	if (unLen < (uint32_t)sizeof(stMsg))
+	if (unLen < static_cast<uint32_t>(sizeof(stMsg)))
 	{
 		return 1;
 	}
 
 	int32_t dwMsgSz = *((int32_t*)strData);
-	if (dwMsgSz < (int32_t)sizeof(stMsg))
+	if (dwMsgSz < static_cast<int32_t>(sizeof(stMsg)))
 	{
 		return -1;
 	}
@@ -41,17 +41,17 @@ int ArpgNetPacketParse::DeCodeImpl(const char* strData, const uint32_t unLen, ch
 		return -1;
 	}
 
-	if (dwMsgSz > (int32_t)unLen)
+	if (dwMsgSz > static_cast<int32_t>(unLen))
 	{
 		return 1;
 	}
 
 	packHead = (stMsg*)strData; //-V519
 
-	outData = (char*)(strData + sizeof(stMsg));
-	outLen = (uint32_t)dwMsgSz - sizeof(stMsg);
+	outData = const_cast<char*>(strData + sizeof(stMsg));
+	outLen = static_cast<uint32_t>(dwMsgSz) - sizeof(stMsg);
 	nMsgId = packHead->wCmdID;
-	allLen = (uint32_t)dwMsgSz;
+	allLen = static_cast<uint32_t>(dwMsgSz);
 	return 0;
 }
 

@@ -91,5 +91,5 @@ private:
 	void PadMessage();
 
 	// Performs a circular left shift operation
-	inline unsigned CircularShift(int bits, unsigned word);
+	static inline unsigned CircularShift(int bits, unsigned word);
 };

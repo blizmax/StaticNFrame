@@ -83,9 +83,6 @@
     <ClInclude Include="NFBase64.h">
       <Filter>Common</Filter>
     </ClInclude>
-    <ClInclude Include="NFConsistentHash.hpp">
-      <Filter>Common</Filter>
-    </ClInclude>
     <ClInclude Include="NFCpu.h">
       <Filter>Common</Filter>
     </ClInclude>

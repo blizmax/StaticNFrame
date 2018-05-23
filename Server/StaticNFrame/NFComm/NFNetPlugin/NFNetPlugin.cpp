@@ -26,12 +26,12 @@ NF_EXPORT void DllStopPlugin(NFIPluginManager* pm)
 
 //////////////////////////////////////////////////////////////////////////
 
-const int NFNetPlugin::GetPluginVersion()
+int NFNetPlugin::GetPluginVersion()
 {
 	return 0;
 }
 
-const std::string NFNetPlugin::GetPluginName()
+std::string NFNetPlugin::GetPluginName()
 {
 	return GET_CLASS_NAME(NFNetPlugin);
 }

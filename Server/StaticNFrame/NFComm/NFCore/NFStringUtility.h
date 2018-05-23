@@ -332,18 +332,18 @@ inline void NFStringUtility::Explode(const _Tx& source, const _Tx& delim, std::v
 
 	p1 = str;
 	size_t delim_len = delim.size();
-	p2 = (const char*)memmem(str, len, delim.data(), delim_len);
-	if (p2 == NULL) {
+	p2 = static_cast<const char*>(memmem(str, len, delim.data(), delim_len));
+	if (p2 == nullptr) {
 		return_value.push_back(_Ty(str, len));
 	}
 	else {
 		do {
 			return_value.push_back(_Ty(p1, p2 - p1));
 			p1 = p2 + delim_len;
-		} while ((p2 = (char*)memmem(p1, len - (p1 - str), delim.data(), delim_len)) != NULL && (limit == -1 || --limit > 1));
+		} while ((p2 = static_cast<char*>(memmem(p1, len - (p1 - str), delim.data(), delim_len))) != nullptr && (limit == -1 || --limit > 1));
 
 		if (p1 < endp) {
-			if ((p2 = (char*)memmem(p1, len - (p1 - str), delim.data(), delim_len)) != NULL) {
+			if ((p2 = static_cast<char*>(memmem(p1, len - (p1 - str), delim.data(), delim_len))) != nullptr) {
 				endp = p2;
 			}
 			return_value.push_back(_Ty(p1, endp - p1));
@@ -358,7 +358,7 @@ inline void NFStringUtility::Trim(_StringType& str, char c, bool left /*= true*/
 		return;
 	}
 
-	int stop_pos = (int)str.size() - 1;//included
+	int stop_pos = static_cast<int>(str.size()) - 1;//included
 	if (right) {
 		for (; stop_pos >= 0; --stop_pos) {
 			if (str[stop_pos] != c) {
@@ -381,7 +381,7 @@ inline void NFStringUtility::Trim(_StringType& str, char c, bool left /*= true*/
 		}
 	}
 
-	if (start_pos == 0 && stop_pos == (int)str.size() - 1) {
+	if (start_pos == 0 && stop_pos == static_cast<int>(str.size()) - 1) {
 		return;
 	}
 

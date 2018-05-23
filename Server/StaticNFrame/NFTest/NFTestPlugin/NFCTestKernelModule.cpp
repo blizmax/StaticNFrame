@@ -39,7 +39,7 @@ bool NFCTestKernelModule::Init()
 	Subscribe(NFEVENT_TEST2, 10, eEvent_one_cycle, __FUNCTION__);
 	Subscribe(NFEVENT_TEST2, 11, eEvent_one_cycle, __FUNCTION__);
 	Subscribe(NFEVENT_TEST2, 12, eEvent_one_cycle, __FUNCTION__);
-	FireExecute(NFEVENT_TEST, lastTime, eEvent_one_cycle, NULL);
+	FireExecute(NFEVENT_TEST, lastTime, eEvent_one_cycle, nullptr);
 	pObject->UnSubscribeAll();
 	pObject1->UnSubscribe(NFEVENT_TEST, lastTime, eEvent_one_cycle);
 	pObject1->UnSubscribe(NFEVENT_TEST, lastTime, eEvent_two);
@@ -49,21 +49,21 @@ bool NFCTestKernelModule::Init()
 
 bool NFCTestKernelModule::AfterInit()
 {
-	this->FireExecute(NFEVENT_TEST, lastTime, eEvent_one_cycle, NULL);
-	this->FireExecute(NFEVENT_TEST, 1, eEvent_one_cycle, NULL);
-	this->FireExecute(NFEVENT_TEST, 2, eEvent_one_cycle, NULL);
+	this->FireExecute(NFEVENT_TEST, lastTime, eEvent_one_cycle, nullptr);
+	this->FireExecute(NFEVENT_TEST, 1, eEvent_one_cycle, nullptr);
+	this->FireExecute(NFEVENT_TEST, 2, eEvent_one_cycle, nullptr);
 	this->UnSubscribe(NFEVENT_TEST, 0, eEvent_one_cycle);
 	this->UnSubscribe(NFEVENT_TEST, 0, eEvent_one_cycle);
-	this->FireExecute(NFEVENT_TEST, 3, eEvent_one_cycle, NULL);
-	this->FireExecute(NFEVENT_TEST, 4, eEvent_one_cycle, NULL);
-	this->FireExecute(NFEVENT_TEST, lastTime, eEvent_two, NULL);
-	this->FireExecute(NFEVENT_TEST, lastTime, eEvent_three, NULL);
-	this->FireExecute(NFEVENT_TEST1, lastTime, eEvent_one_cycle, NULL);
-	this->FireExecute(NFEVENT_TEST2, lastTime, eEvent_one_cycle, NULL);
-	this->FireExecute(NFEVENT_TEST2, 4, eEvent_one_cycle, NULL);
-	this->FireExecute(NFEVENT_TEST2, 5, eEvent_one_cycle, NULL);
-	this->FireExecute(NFEVENT_TEST2, 6, eEvent_one_cycle, NULL);
-	this->FireExecute(NFEVENT_TEST2, 7, eEvent_one_cycle, NULL);
+	this->FireExecute(NFEVENT_TEST, 3, eEvent_one_cycle, nullptr);
+	this->FireExecute(NFEVENT_TEST, 4, eEvent_one_cycle, nullptr);
+	this->FireExecute(NFEVENT_TEST, lastTime, eEvent_two, nullptr);
+	this->FireExecute(NFEVENT_TEST, lastTime, eEvent_three, nullptr);
+	this->FireExecute(NFEVENT_TEST1, lastTime, eEvent_one_cycle, nullptr);
+	this->FireExecute(NFEVENT_TEST2, lastTime, eEvent_one_cycle, nullptr);
+	this->FireExecute(NFEVENT_TEST2, 4, eEvent_one_cycle, nullptr);
+	this->FireExecute(NFEVENT_TEST2, 5, eEvent_one_cycle, nullptr);
+	this->FireExecute(NFEVENT_TEST2, 6, eEvent_one_cycle, nullptr);
+	this->FireExecute(NFEVENT_TEST2, 7, eEvent_one_cycle, nullptr);
 	this->UnSubscribeAll();
 	return true;
 }
@@ -97,17 +97,17 @@ void NFCTestKernelModule::OnExecute(uint16_t nEventID, uint64_t nSrcID, uint8_t 
 	std::cout << __FUNCTION__ << "::";
 	std::cout << "--nEventID:" << nEventID;
 	std::cout << "--nSrcID:" << nSrcID;
-	std::cout << "--bySrcType:" << (uint32_t)bySrcType;
+	std::cout << "--bySrcType:" << static_cast<uint32_t>(bySrcType);
 	std::cout << std::endl;
 	if (nEventID == NFEVENT_TEST2 && nSrcID == 4 && bySrcType == eEvent_one_cycle)
 	{
-		this->FireExecute(NFEVENT_TEST2, 4, eEvent_one_cycle, NULL);
+		this->FireExecute(NFEVENT_TEST2, 4, eEvent_one_cycle, nullptr);
 		this->UnSubscribe(nEventID, nSrcID, bySrcType);
 	}
 	if (nEventID == NFEVENT_TEST2 && nSrcID == 5 && bySrcType == eEvent_one_cycle)
 	{
 		this->UnSubscribe(nEventID, nSrcID, bySrcType);
-		this->FireExecute(NFEVENT_TEST2, 5, eEvent_one_cycle, NULL);
+		this->FireExecute(NFEVENT_TEST2, 5, eEvent_one_cycle, nullptr);
 	}
 	if (nEventID == NFEVENT_TEST2 && nSrcID == 6 && bySrcType == eEvent_one_cycle)
 	{
@@ -116,26 +116,26 @@ void NFCTestKernelModule::OnExecute(uint16_t nEventID, uint64_t nSrcID, uint8_t 
 	}
 	if (nEventID == NFEVENT_TEST2 && nSrcID == 7 && bySrcType == eEvent_one_cycle)
 	{
-		this->FireExecute(NFEVENT_TEST2, 8, eEvent_one_cycle, NULL);
+		this->FireExecute(NFEVENT_TEST2, 8, eEvent_one_cycle, nullptr);
 	}
 	if (nEventID == NFEVENT_TEST2 && nSrcID == 8 && bySrcType == eEvent_one_cycle)
 	{
-		this->FireExecute(NFEVENT_TEST2, 9, eEvent_one_cycle, NULL);
+		this->FireExecute(NFEVENT_TEST2, 9, eEvent_one_cycle, nullptr);
 	}
 	if (nEventID == NFEVENT_TEST2 && nSrcID == 9 && bySrcType == eEvent_one_cycle)
 	{
-		this->FireExecute(NFEVENT_TEST2, 10, eEvent_one_cycle, NULL);
+		this->FireExecute(NFEVENT_TEST2, 10, eEvent_one_cycle, nullptr);
 	}
 	if (nEventID == NFEVENT_TEST2 && nSrcID == 10 && bySrcType == eEvent_one_cycle)
 	{
-		this->FireExecute(NFEVENT_TEST2, 11, eEvent_one_cycle, NULL);
+		this->FireExecute(NFEVENT_TEST2, 11, eEvent_one_cycle, nullptr);
 	}
 	if (nEventID == NFEVENT_TEST2 && nSrcID == 11 && bySrcType == eEvent_one_cycle)
 	{
-		this->FireExecute(NFEVENT_TEST2, 12, eEvent_one_cycle, NULL);
+		this->FireExecute(NFEVENT_TEST2, 12, eEvent_one_cycle, nullptr);
 	}
 	if (nEventID == NFEVENT_TEST2 && nSrcID == 12 && bySrcType == eEvent_one_cycle)
 	{
-		this->FireExecute(NFEVENT_TEST2, 7, eEvent_one_cycle, NULL);
+		this->FireExecute(NFEVENT_TEST2, 7, eEvent_one_cycle, nullptr);
 	}
 }

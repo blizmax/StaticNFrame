@@ -111,9 +111,9 @@ namespace NFCmdLine {
 
 	class NFCmdLine_Error : public std::exception {
 	public:
-		NFCmdLine_Error(const std::string &msg) : msg(msg) {}
-		~NFCmdLine_Error() throw() {}
-		const char *what() const throw() { return msg.c_str(); }
+		explicit NFCmdLine_Error(const std::string &msg) : msg(msg) {}
+		virtual ~NFCmdLine_Error() throw() {}
+		const char *what() const throw() override { return msg.c_str(); }
 	private:
 		std::string msg;
 	};
@@ -363,7 +363,7 @@ namespace NFCmdLine {
 			if (it->second == nullptr) throw NFCmdLine_Error("there is no flag: --" + lowerName);
 
 			const NFOptionWithValue<T> *p = dynamic_cast<const NFOptionWithValue<T>*>(it->second);
-			if (p == NULL) throw NFCmdLine_Error("type mismatch flag '" + lowerName + "'");
+			if (p == nullptr) throw NFCmdLine_Error("type mismatch flag '" + lowerName + "'");
 
 			return p->get();
 		}
@@ -518,7 +518,7 @@ namespace NFCmdLine {
 				}
 			}
 
-			for (auto p = options.begin(); p != options.end(); p++)
+			for (auto p = options.begin(); p != options.end(); ++p)
 			{
 				if (!p->second->valid())
 				{
@@ -590,8 +590,8 @@ namespace NFCmdLine {
 		}
 
 	private:
-
-		void Check(int argc, bool ok) {
+		void Check(int argc, bool ok) const
+		{
 			if ((argc == 1 && !ok) || Exist("help")) {
 				std::cerr << Usage();
 				exit(0);
@@ -604,7 +604,8 @@ namespace NFCmdLine {
 			}
 		}
 
-		void SetOption(const std::string &name) {
+		void SetOption(const std::string &name)
+		{
 			std::string lowerName = name;
 			NFStringUtility::ToLower(lowerName);
 			if (options.count(lowerName) == 0) {
@@ -617,7 +618,8 @@ namespace NFCmdLine {
 			}
 		}
 
-		void SetOption(const std::string &name, const std::string &value) {
+		void SetOption(const std::string &name, const std::string &value)
+		{
 			std::string lowerName = name;
 			NFStringUtility::ToLower(lowerName);
 			if (options.count(lowerName) == 0) {
@@ -630,7 +632,8 @@ namespace NFCmdLine {
 			}
 		}
 
-		class NFOptionBase {
+		class NFOptionBase
+		{
 		public:
 			virtual ~NFOptionBase() {}
 
@@ -656,42 +659,54 @@ namespace NFCmdLine {
 			}
 			~NFOptionWithoutValue() {}
 
-			bool has_value() const { return false; }
+			virtual bool has_value() const override
+			{
+				return false;
+			}
 
-			bool set() {
+			virtual bool set() override
+			{
 				has = true;
 				return true;
 			}
 
-			bool set(const std::string &) {
+			virtual bool set(const std::string &) override
+			{
 				return false;
 			}
 
-			bool has_set() const {
+			virtual bool has_set() const override
+			{
 				return has;
 			}
 
-			bool valid() const {
+			virtual bool valid() const override
+			{
 				return true;
 			}
 
-			bool must() const {
+			virtual bool must() const override
+			{
 				return false;
 			}
 
-			const std::string &name() const {
+			virtual const std::string &name() const override
+			{
 				return nam;
 			}
 
-			char short_name() const {
+			virtual char short_name() const override
+			{
 				return snam;
 			}
 
-			const std::string &description() const {
+			virtual const std::string &description() const override
+			{
 				return desc;
 			}
 
-			std::string short_description() const {
+			virtual std::string short_description() const override
+			{
 				return "--" + nam;
 			}
 
@@ -720,13 +735,18 @@ namespace NFCmdLine {
 				return actual;
 			}
 
-			bool has_value() const { return true; }
+			virtual bool has_value() const override
+			{
+				return true;
+			}
 
-			bool set() {
+			virtual bool set() override
+			{
 				return false;
 			}
 
-			bool set(const std::string &value) {
+			virtual bool set(const std::string &value) override
+			{
 				try {
 					actual = read(value);
 					has = true;
@@ -738,32 +758,39 @@ namespace NFCmdLine {
 				return true;
 			}
 
-			bool has_set() const {
+			virtual bool has_set() const override
+			{
 				return has;
 			}
 
-			bool valid() const {
+			virtual bool valid() const override
+			{
 				if (need && !has) return false;
 				return true;
 			}
 
-			bool must() const {
+			virtual bool must() const override
+			{
 				return need;
 			}
 
-			const std::string &name() const {
+			virtual const std::string &name() const override
+			{
 				return nam;
 			}
 
-			char short_name() const {
+			virtual char short_name() const override
+			{
 				return snam;
 			}
 
-			const std::string &description() const {
+			virtual const std::string &description() const override
+			{
 				return desc;
 			}
 
-			std::string short_description() const {
+			virtual std::string short_description() const override
+			{
 				return "--" + nam + "=" + NFDetail::readable_typename<T>();
 			}
 
@@ -800,7 +827,8 @@ namespace NFCmdLine {
 			}
 
 		private:
-			T read(const std::string &s) {
+			virtual T read(const std::string &s) override
+			{
 				return reader(s);
 			}
 

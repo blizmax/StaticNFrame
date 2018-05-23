@@ -48,11 +48,11 @@ int32_t NFINIReader::ParseFile(FILE* file)
 
 	int32_t line_no = 0;
 	std::string utf8bom;
-	utf8bom.push_back(0xEF);
-	utf8bom.push_back(0xBB);
-	utf8bom.push_back(0xBF);
-	std::map<std::string, std::string>* fields_map = NULL;
-	while (fgets(buff, MAX_BUFF_LEN, file) != NULL)
+	utf8bom.push_back(static_cast<char>(0xEF));
+	utf8bom.push_back(static_cast<char>(0xBB));
+	utf8bom.push_back(static_cast<char>(0xBF));
+	std::map<std::string, std::string>* fields_map = nullptr;
+	while (fgets(buff, MAX_BUFF_LEN, file) != nullptr)
 	{
 		line_no++;
 		std::string line(buff);
@@ -145,7 +145,7 @@ int32_t NFINIReader::GetInt32(const std::string& section, const std::string& nam
 	std::string value = Get(section, name, "");
 
 	const char* begin = value.c_str();
-	char* end = NULL;
+	char* end = nullptr;
 
 	int32_t n = strtol(begin, &end, 0);
 	return end > begin ? n : default_value;
@@ -155,7 +155,7 @@ uint32_t NFINIReader::GetUInt32(const std::string& section, const std::string& n
 {
 	std::string value = Get(section, name, "");
 	const char* begin = value.c_str();
-	char* end = NULL;
+	char* end = nullptr;
 
 	int32_t n = strtol(begin, &end, 0);
 	if (end > begin && n >= 0)
@@ -169,7 +169,7 @@ int64_t NFINIReader::GetInt64(const std::string& section, const std::string& nam
 {
 	std::string value = Get(section, name, "");
 	const char* begin = value.c_str();
-	char* end = NULL;
+	char* end = nullptr;
 
 	int64_t n = strtoll(begin, &end, 0);
 	return end > begin ? n : default_value;
@@ -179,7 +179,7 @@ uint64_t NFINIReader::GetUInt64(const std::string& section, const std::string& n
 {
 	std::string value = Get(section, name, "");
 	const char* begin = value.c_str();
-	char* end = NULL;
+	char* end = nullptr;
 
 	int64_t n = strtoll(begin, &end, 0);
 	if (end > begin && n >= 0)
@@ -193,7 +193,7 @@ double NFINIReader::GetReal(const std::string& section, const std::string& name,
 {
 	std::string value = Get(section, name, "");
 	const char* begin = value.c_str();
-	char* end = NULL;
+	char* end = nullptr;
 	double n = strtod(begin, &end);
 	return end > begin ? n : default_value;
 }

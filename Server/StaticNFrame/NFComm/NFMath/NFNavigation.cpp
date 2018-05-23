@@ -40,7 +40,7 @@ NFNavigationHandle* NFNavigation::FindNavigation(const std::string& name)
 		return iter->second;
 	}
 
-	return NULL;
+	return nullptr;
 }
 
 //-------------------------------------------------------------------------------------
@@ -53,7 +53,7 @@ bool NFNavigation::HasNavigation(const std::string& name)
 NFNavigationHandle* NFNavigation::LoadNavigation(const std::string& name)
 {
 	if (name.empty())
-		return NULL;
+		return nullptr;
 
 	itmapNavigate iter = m_mapNavhandles.find(name);
 	if (iter != m_mapNavhandles.end())
@@ -70,8 +70,8 @@ NFNavigationHandle* NFNavigation::LoadNavigation(const std::string& name)
 	else
 	{
 		delete pNavigationHandle_;
-		pNavigationHandle_ = NULL;
+		pNavigationHandle_ = nullptr;
 	}
-	return NULL;
+	return nullptr;
 }
 //-------------------------------------------------------------------------------------

@@ -121,7 +121,7 @@ void stringUtil_trim_charptr(_StringType& str, typename _StringType::const_point
 		return;
 	}
 
-	size_t stop_pos = (size_t)str.size() - 1;//included
+	size_t stop_pos = static_cast<size_t>(str.size()) - 1;//included
 	if (right) {
 		stop_pos = str.find_last_not_of(delims);
 	}
@@ -154,7 +154,7 @@ void stringUtil_trim_string(_StringType& str, const _StringType& delims, bool le
 		return;
 	}
 
-	size_t stop_pos = (size_t)str.size() - 1;//included
+	size_t stop_pos = static_cast<size_t>(str.size()) - 1;//included
 	if (right) {
 		stop_pos = str.find_last_not_of(delims);
 	}
@@ -308,11 +308,11 @@ inline void _stringUtilSplitSliceToSlice(
 	size_t start, pos;
 	start = 0;
 
-	const char* p = NULL;
+	const char* p = nullptr;
 	do {
 		//fix strchr compile warning
 #if NF_PLATFORM == NF_PLATFORM_WIN
-		p = (const char*)memchr(start + const_cast<char*>(str.data()), delim, str.size() - start);
+		p = static_cast<const char*>(memchr(start + const_cast<char*>(str.data()), delim, str.size() - start));
 #else
 		p = (const char*)memchr(start + str.data(), delim, str.size() - start);
 #endif
@@ -345,11 +345,11 @@ inline void _stringUtilSplitSliceToSlice(
 	size_t start, pos;
 	start = 0;
 
-	const char* p = NULL;
+	const char* p = nullptr;
 	do {
 		//fix strchr compile warning
 #if NF_PLATFORM == NF_PLATFORM_WIN
-		p = (const char*)memchr(start + const_cast<char*>(str.data()), delim, str.size() - start);
+		p = static_cast<const char*>(memchr(start + const_cast<char*>(str.data()), delim, str.size() - start));
 #else
 		p = (const char*)memchr(start + str.data(), delim, str.size() - start);
 #endif
@@ -479,7 +479,7 @@ void _replace(_String& str, const _String& needle, const _String& new_value, siz
 	while (pos != _String::npos) {
 		str.replace(pos, needle.size(), new_value);
 		pos = str.find(needle, pos);
-		if (++i >= (size_t)(replace_count)) {
+		if (++i >= static_cast<size_t>(replace_count)) {
 			break;
 		}
 	}
@@ -696,10 +696,10 @@ bool NFStringUtility::URLEncode(const char* url, size_t url_len, char* edcoded_u
 	unsigned char* to, *start, *to_end;
 	unsigned char const* from, *end;
 
-	start = to = (unsigned char*)(edcoded_url);
+	start = to = reinterpret_cast<unsigned char*>(edcoded_url);
 	to_end = to + edcoded_url_len;
 
-	from = (unsigned char const*)url;
+	from = reinterpret_cast<unsigned char const*>(url);
 	end = from + url_len;
 
 	while (from < end) {
@@ -745,13 +745,13 @@ static int php_htoi(const char* s) {
 	int value;
 	int c;
 
-	c = ((const unsigned char*)s)[0];
+	c = reinterpret_cast<const unsigned char*>(s)[0];
 	if (isupper(c)) {
 		c = tolower(c);
 	}
 	value = (c >= '0' && c <= '9' ? c - '0' : c - 'a' + 10) * 16;
 
-	c = ((const unsigned char*)s)[1];
+	c = reinterpret_cast<const unsigned char*>(s)[1];
 	if (isupper(c)) {
 		c = tolower(c);
 	}
@@ -797,14 +797,14 @@ void NFStringUtility::URLDecode(const std::string& str, std::string& out) {
 void NFStringUtility::URLDecode(const char* encoded_url, size_t encoded_url_len, char* decoded_url, size_t& decoded_url_len) {
 	char* dest = decoded_url;
 	const char* data = encoded_url;
-	int len = (int)encoded_url_len;
+	int len = static_cast<int>(encoded_url_len);
 	while (len--) {
 		if (*data == '+') {
 			*dest = ' ';
 		}
-		else if (*data == '%' && len >= 2 && isxdigit((int)* (data + 1))
-			&& isxdigit((int)* (data + 2))) {
-			*dest = (char)php_htoi(data + 1);
+		else if (*data == '%' && len >= 2 && isxdigit(static_cast<int>(* (data + 1)))
+			&& isxdigit(static_cast<int>(* (data + 2)))) {
+			*dest = static_cast<char>(php_htoi(data + 1));
 			data += 2;
 			len -= 2;
 		}
@@ -857,7 +857,7 @@ std::string NFStringUtility::Rot13(const std::string& s) {
 
 std::string NFStringUtility::Rot13(const char* str, size_t len) {
 	std::string ret;
-	if (str == NULL || len == 0) {
+	if (str == nullptr || len == 0) {
 		return ret;
 	}
 
@@ -1277,7 +1277,7 @@ void NFStringUtility::StringAppendV(std::string* dst, const char* format, va_lis
 			// Error or MSVC running out of space.  MSVC 8.0 and higher
 			// can be asked about space needed with the special idiom below:
 			va_copy(backup_ap, ap);
-			result = vsnprintf(NULL, 0, format, backup_ap);
+			result = vsnprintf(nullptr, 0, format, backup_ap);
 			va_end(backup_ap);
 		}
 

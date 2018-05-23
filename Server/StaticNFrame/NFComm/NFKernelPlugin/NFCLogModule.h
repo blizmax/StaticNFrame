@@ -20,23 +20,23 @@ public:
 	explicit NFCLogModule(NFIPluginManager* p);
 	virtual ~NFCLogModule() {}
 
-	virtual bool Awake();
-	virtual bool Init();
-	virtual bool Shut();
-	virtual bool Finalize();
+	virtual bool Awake() override;
+	virtual bool Init() override;
+	virtual bool Shut() override;
+	virtual bool Finalize() override;
 
-	virtual bool BeforeShut();
-	virtual bool AfterInit();
+	virtual bool BeforeShut() override;
+	virtual bool AfterInit() override;
 
-	virtual bool Execute();
+	virtual bool Execute() override;
 
 	///////////////////////////////////////////////////////////////////////
 	virtual void LogStack();
 
 	virtual bool LogNormal(const NF_LOG_LEVEL nll, const uint64_t ident, const std::string& strInfo, const char* func = "", int line = 0);
-	virtual bool LogNormal(const NF_LOG_LEVEL nll, const uint64_t ident, const std::string& strInfo, const int64_t nDesc, const char* func = "", int line = 0);
-	virtual bool LogNormal(const NF_LOG_LEVEL nll, const uint64_t ident, const std::string& strInfo, const std::string& strDesc, const char* func = "", int line = 0);
-	virtual bool LogNormal(const NF_LOG_LEVEL nll, const uint64_t ident, const std::ostringstream& stream, const char* func = "", int line = 0);
+	virtual bool LogNormal(const NF_LOG_LEVEL nll, const uint64_t ident, const std::string& strInfo, const int64_t nDesc, const char* func = "", int line = 0) override;
+	virtual bool LogNormal(const NF_LOG_LEVEL nll, const uint64_t ident, const std::string& strInfo, const std::string& strDesc, const char* func = "", int line = 0) override;
+	virtual bool LogNormal(const NF_LOG_LEVEL nll, const uint64_t ident, const std::ostringstream& stream, const char* func = "", int line = 0) override;
 
 	virtual bool ChangeLogLevel(const std::string& strLevel);
 protected:

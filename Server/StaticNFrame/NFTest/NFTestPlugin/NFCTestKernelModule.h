@@ -56,12 +56,12 @@ public:
 		Subscribe(NFEVENT_TEST, 123456789, eEvent_three, __FUNCTION__);
 	}
 
-	virtual void OnExecute(uint16_t nEventID, uint64_t nSrcID, uint8_t bySrcType, NFEventContext* pEventContext)
+	virtual void OnExecute(uint16_t nEventID, uint64_t nSrcID, uint8_t bySrcType, NFEventContext* pEventContext) override
 	{
 		std::cout << __FUNCTION__ << "::";
 		std::cout << "--nEventID:" << nEventID;
 		std::cout << "--nSrcID:" << nSrcID;
-		std::cout << "--bySrcType:" << (uint32_t)bySrcType;
+		std::cout << "--bySrcType:" << static_cast<uint32_t>(bySrcType);
 		std::cout << std::endl;
 	}
 };
@@ -77,19 +77,19 @@ public:
 	explicit NFCTestKernelModule(NFIPluginManager* p);
 	virtual ~NFCTestKernelModule() { delete m_pObject; }
 public:
-	virtual bool Init();
+	virtual bool Init() override;
 
-	virtual bool AfterInit();
+	virtual bool AfterInit() override;
 
-	virtual bool Execute();
+	virtual bool Execute() override;
 
-	virtual bool BeforeShut();
+	virtual bool BeforeShut() override;
 
-	virtual bool Shut();
+	virtual bool Shut() override;
 public:
-	virtual void OnTimer(uint32_t nTimerID);
+	virtual void OnTimer(uint32_t nTimerID) override;
 
-	virtual void OnExecute(uint16_t nEventID, uint64_t nSrcID, uint8_t bySrcType, NFEventContext* pEventContext);
+	virtual void OnExecute(uint16_t nEventID, uint64_t nSrcID, uint8_t bySrcType, NFEventContext* pEventContext) override;
 protected:
 	uint64_t lastTime = 0;
 	NFTestObject* m_pObject;

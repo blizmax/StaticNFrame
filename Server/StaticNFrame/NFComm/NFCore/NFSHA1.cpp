@@ -76,7 +76,7 @@ void NFSHA1::SHAInit()
 // space of lpSHACode_Output must be >= 20 bytes;
 bool NFSHA1::Encode2Hex(const char* lpData_Input, char* lpSHACode_Output)
 {
-	if (lpData_Input == NULL || lpSHACode_Output == NULL)
+	if (lpData_Input == nullptr || lpSHACode_Output == nullptr)
 	{
 		return false;
 	}
@@ -121,7 +121,7 @@ bool NFSHA1::Encode2Hex(const char* lpData_Input, char* lpSHACode_Output)
 
 bool NFSHA1::Encode2Ascii(const char* lpData_Input, char* lpSHACode_Output)
 {
-	if (lpData_Input == NULL || lpSHACode_Output == NULL)
+	if (lpData_Input == nullptr || lpSHACode_Output == nullptr)
 	{
 		return false;
 	}
@@ -158,10 +158,10 @@ bool NFSHA1::Encode2Ascii(const char* lpData_Input, char* lpSHACode_Output)
 	// copy result to output
 	for (int i = 0; i < 5; i++)
 	{
-		memcpy(lpSHACode_Output + i * 4, (char*)&H[i] + 3, 1); // NOLINT
-		memcpy(lpSHACode_Output + i * 4 + 1, (char*)&H[i] + 2, 1); // NOLINT
-		memcpy(lpSHACode_Output + i * 4 + 2, (char*)&H[i] + 1, 1); // NOLINT
-		memcpy(lpSHACode_Output + i * 4 + 3, (char*)&H[i] + 0, 1); // NOLINT
+		memcpy(lpSHACode_Output + i * 4, reinterpret_cast<char*>(&H[i]) + 3, 1); // NOLINT
+		memcpy(lpSHACode_Output + i * 4 + 1, reinterpret_cast<char*>(&H[i]) + 2, 1); // NOLINT
+		memcpy(lpSHACode_Output + i * 4 + 2, reinterpret_cast<char*>(&H[i]) + 1, 1); // NOLINT
+		memcpy(lpSHACode_Output + i * 4 + 3, reinterpret_cast<char*>(&H[i]) + 0, 1); // NOLINT
 	}
 
 	return true;
@@ -171,11 +171,11 @@ void NFSHA1::AddDataLen(int nDealDataLen)
 {
 	Message_Block_Index = nDealDataLen;
 
-	if ((Length_Low += ((unsigned int)nDealDataLen << 3)) < ((unsigned int)nDealDataLen << 3))
+	if ((Length_Low += (static_cast<unsigned int>(nDealDataLen) << 3)) < (static_cast<unsigned int>(nDealDataLen) << 3))
 	{
 		Length_High++;
 	}
-	Length_High += ((unsigned int)nDealDataLen >> 29);
+	Length_High += (static_cast<unsigned int>(nDealDataLen) >> 29);
 }
 
 /*
@@ -216,10 +216,10 @@ void NFSHA1::ProcessMessageBlock()
 	 */
 	for (t = 0; t < 16; t++)
 	{
-		W[t] = ((unsigned)Message_Block[t * 4]) << 24;
-		W[t] |= ((unsigned)Message_Block[t * 4 + 1]) << 16;
-		W[t] |= ((unsigned)Message_Block[t * 4 + 2]) << 8;
-		W[t] |= ((unsigned)Message_Block[t * 4 + 3]);
+		W[t] = static_cast<unsigned>(Message_Block[t * 4]) << 24;
+		W[t] |= static_cast<unsigned>(Message_Block[t * 4 + 1]) << 16;
+		W[t] |= static_cast<unsigned>(Message_Block[t * 4 + 2]) << 8;
+		W[t] |= static_cast<unsigned>(Message_Block[t * 4 + 3]);
 	}
 
 	for (t = 16; t < 80; t++)
