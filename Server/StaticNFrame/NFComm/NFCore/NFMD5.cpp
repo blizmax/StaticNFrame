@@ -11,7 +11,7 @@
 #include "NFRandom.hpp"
 
 string NFMD5::GenBinMD5(const size_t random_data_len) {
-	thread_local static NFRandom rand(uint32_t(NFGetTime()/1000));
+	thread_local static NFRandom rand(uint32_t(NFGetTime() / 1000));
 	string data;
 	data.resize(random_data_len);
 

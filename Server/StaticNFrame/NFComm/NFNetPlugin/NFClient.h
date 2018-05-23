@@ -6,7 +6,6 @@
 #include <thread>
 #include "NFComm/NFCore/NFThread.hpp"
 
-
 enum eConnectStatus
 {
 	eConnectStatus_UnConnect,    //未连接
@@ -25,16 +24,16 @@ public:
 	virtual ~NFClient();
 public:
 	template<typename BaseType>
-    void SetRecvCB(BaseType* pBaseType, void (BaseType::*handleRecieve)(const uint32_t unLinkId, const uint64_t valueId, const uint32_t nMsgId, const char* msg, const uint32_t nLen))
-    {
-        mRecvCB = std::bind(handleRecieve, pBaseType, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3, std::placeholders::_4, std::placeholders::_5);
-    }
+	void SetRecvCB(BaseType* pBaseType, void (BaseType::*handleRecieve)(const uint32_t unLinkId, const uint64_t valueId, const uint32_t nMsgId, const char* msg, const uint32_t nLen))
+	{
+		mRecvCB = std::bind(handleRecieve, pBaseType, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3, std::placeholders::_4, std::placeholders::_5);
+	}
 
 	template<typename BaseType>
-    void SetEventCB(BaseType* pBaseType, void (BaseType::*handleEvent)(const eMsgType nEvent, const uint32_t unLinkId))
-    {
-        mEventCB = std::bind(handleEvent, pBaseType, std::placeholders::_1, std::placeholders::_2);
-    }
+	void SetEventCB(BaseType* pBaseType, void (BaseType::*handleEvent)(const eMsgType nEvent, const uint32_t unLinkId))
+	{
+		mEventCB = std::bind(handleEvent, pBaseType, std::placeholders::_1, std::placeholders::_2);
+	}
 public:
 	static void conn_recvcb(struct bufferevent* pEv, void *pArg);
 	static void conn_eventcb(struct bufferevent* pEv, short events, void *pArg);
@@ -50,7 +49,7 @@ public:
 	virtual void ProcessMsgLogicThread();
 public:
 	const string& GetName()const { return m_strName; }
-    stClientFlag& Getflag() { return m_flag; }
+	stClientFlag& Getflag() { return m_flag; }
 	void		CheckConnect();
 	bool		IsSuspend()const { return m_flag.sSuspend > 0; }
 public:
@@ -66,7 +65,7 @@ public:
 	void		OnConnectLib(SOCKET nSocket);
 	void		OnDisConnectLib();
 public:
-  	eConnectStatus	GetStatus() const { return m_eStatus; }
+	eConnectStatus	GetStatus() const { return m_eStatus; }
 	void			SetStatus(eConnectStatus val) { m_eStatus = val; }
 	bool			IsConnectOK() { return m_eStatus == eConnectStatus_ConnectOk; }
 	uint64_t		GetPingTime() const { return m_pingTime; }
@@ -80,7 +79,7 @@ private:
 	SOCKET						m_nSocketId;
 	uint16_t					m_usPort;
 	eConnectStatus				m_eStatus;
-	time_t						m_unDisConnTime;   
+	time_t						m_unDisConnTime;
 	uint64_t					m_pingTime;
 	event*						m_pTimeoutEve;
 	time_t						m_tOnRecvTime;           //移动响应时间

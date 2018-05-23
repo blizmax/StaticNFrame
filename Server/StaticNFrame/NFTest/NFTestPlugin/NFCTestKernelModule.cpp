@@ -11,10 +11,9 @@
 #include "NFComm/NFPluginModule/NFLogMgr.h"
 #include <memory>
 
-
 NFCTestKernelModule::NFCTestKernelModule(NFIPluginManager* p)
 {
-    pPluginManager = p;
+	pPluginManager = p;
 	m_pObject = nullptr;
 }
 
@@ -45,7 +44,7 @@ bool NFCTestKernelModule::Init()
 	pObject1->UnSubscribe(NFEVENT_TEST, lastTime, eEvent_one_cycle);
 	pObject1->UnSubscribe(NFEVENT_TEST, lastTime, eEvent_two);
 	pObject1->UnSubscribe(NFEVENT_TEST, lastTime, eEvent_three);
-    return true;
+	return true;
 }
 
 bool NFCTestKernelModule::AfterInit()
@@ -66,29 +65,29 @@ bool NFCTestKernelModule::AfterInit()
 	this->FireExecute(NFEVENT_TEST2, 6, eEvent_one_cycle, NULL);
 	this->FireExecute(NFEVENT_TEST2, 7, eEvent_one_cycle, NULL);
 	this->UnSubscribeAll();
-    return true;
+	return true;
 }
 
 bool NFCTestKernelModule::Execute()
 {
-    return true;
+	return true;
 }
 
 bool NFCTestKernelModule::BeforeShut()
 {
-    return true;
+	return true;
 }
 
 bool NFCTestKernelModule::Shut()
 {
-    return true;
+	return true;
 }
 
 void NFCTestKernelModule::OnTimer(uint32_t nTimerID)
 {
 	if (nTimerID == eTimer_test)
 	{
-		LogWarning(eTimer_test, "eTimer_test", "use Time:" + lexical_cast<std::string>(NFGetTime()-lastTime));
+		LogWarning(eTimer_test, "eTimer_test", "use Time:" + lexical_cast<std::string>(NFGetTime() - lastTime));
 		lastTime = NFGetTime();
 	}
 }

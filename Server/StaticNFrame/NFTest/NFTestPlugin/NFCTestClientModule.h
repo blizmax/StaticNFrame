@@ -3,7 +3,7 @@
 #include "NFComm/NFPluginModule/NFINetClientModule.h"
 #include "NFComm/NFPluginModule/NFTimerObj.h"
 
-class NFCTestClientModule : public NFIModule, NFTimerObj 
+class NFCTestClientModule : public NFIModule, NFTimerObj
 {
 public:
 	explicit NFCTestClientModule(NFIPluginManager* p)
@@ -16,13 +16,13 @@ public:
 
 	virtual ~NFCTestClientModule() { }
 public:
-    virtual bool Init();
+	virtual bool Init();
 
-    virtual bool AfterInit();
+	virtual bool AfterInit();
 
-    virtual bool Execute();
+	virtual bool Execute();
 
-    virtual bool BeforeShut();
+	virtual bool BeforeShut();
 
 	virtual bool Shut();
 

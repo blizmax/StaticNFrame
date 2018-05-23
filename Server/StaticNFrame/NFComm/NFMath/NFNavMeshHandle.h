@@ -10,7 +10,6 @@
 #include <string>
 #include <vector>
 
-
 struct NavMeshSetHeader
 {
 	int version;
@@ -39,7 +38,7 @@ public:
 	int FindStraightPath(int layer, const NFVector3& start, const NFVector3& end, std::vector<NFVector3>& paths);
 	int RayCast(int layer, const NFVector3& start, const NFVector3& end, std::vector<NFVector3>& hitPointVec);
 
-	virtual NFNavigationHandle::NAV_TYPE Type() const{ return NAV_MESH; }
+	virtual NFNavigationHandle::NAV_TYPE Type() const { return NAV_MESH; }
 
 	bool Create(const std::string& name);
 
@@ -47,14 +46,12 @@ public:
 		std::vector<NFVector3>& points, int max_points, float maxRadius);
 
 	bool  IsValidPos(int layer, const NFVector3& pos);
-	void  GetValidPos(int layer,const NFVector3& pos, NFVector3& out);
+	void  GetValidPos(int layer, const NFVector3& pos, NFVector3& out);
 
 	int		GetTitelWidth(int layer);
 	int		GetTitelHeight(int layer);
 	NFVector3	GetOriginPos(int layer);
 
-
 	std::vector<dtNavMesh*> navmesh_layers;
 	std::vector<dtNavMeshQuery*> navmeshQuery_layers;
 };
-

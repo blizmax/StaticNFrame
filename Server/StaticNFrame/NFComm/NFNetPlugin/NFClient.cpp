@@ -24,7 +24,7 @@ void NFClient::conn_eventcb(struct bufferevent* pEv, short what, void *pArg)
 	NFClient* p = (NFClient*)pArg;
 	if (p == nullptr) return;
 
-	if (what & BEV_EVENT_CONNECTED){
+	if (what & BEV_EVENT_CONNECTED) {
 		p->OnConnectLib(static_cast<SOCKET>(bufferevent_getfd(pEv)));
 	}
 	if (what & BEV_EVENT_EOF)
@@ -52,30 +52,30 @@ NFClient::NFClient()
 {
 	m_usPort = 0;
 	m_eStatus = eConnectStatus_UnConnect;
-	m_pMainBase=NULL;
+	m_pMainBase = NULL;
 	m_nSocketId = INVALID_SOCKET;
 	m_unDisConnTime = 0;
 	m_pingTime = 0;
 	m_pTimeoutEve = NULL;
-	m_tOnRecvTime=0;
+	m_tOnRecvTime = 0;
 }
 
-NFClient::NFClient(uint32_t nId, const stClientFlag& flag):m_flag(flag) 
+NFClient::NFClient(uint32_t nId, const stClientFlag& flag) :m_flag(flag)
 {
 	m_usPort = 0;
 	m_eStatus = eConnectStatus_UnConnect;
-	m_pMainBase=NULL;
+	m_pMainBase = NULL;
 	m_nSocketId = INVALID_SOCKET;
 	m_unDisConnTime = 0;
 	m_pTimeoutEve = NULL;
-	m_tOnRecvTime=0;
+	m_tOnRecvTime = 0;
 	m_usLinkId = nId;
 	m_pingTime = 0;
 }
 
-NFClient::~NFClient() 
+NFClient::~NFClient()
 {
-    bufferevent_free(m_pBev);
+	bufferevent_free(m_pBev);
 	event_base_free(m_pMainBase);
 	m_pMainBase = NULL;
 	m_pBev = NULL;
@@ -85,7 +85,7 @@ bool NFClient::Init()
 {
 	NetObject::Init();
 	m_pMainBase = event_base_new();
-	if (NULL == m_pMainBase) 
+	if (NULL == m_pMainBase)
 	{
 		LogError(0, "NetError", "error: client event_base_new failed!");
 		return false;
@@ -145,7 +145,7 @@ void NFClient::ProcessMsgLogicThread()
 		}
 		break;
 		default:
-		break;
+			break;
 		}
 		NFSafeDelete(pBuff);
 	}
@@ -153,25 +153,25 @@ void NFClient::ProcessMsgLogicThread()
 
 void NFClient::CheckConnect()
 {
-	if (m_flag.bAutoConnect){
+	if (m_flag.bAutoConnect) {
 		NFClient::Reconnect();
 	}
 }
 
 bool NFClient::Send(const void* pData, uint32_t unSize)
 {
-	if (IsConnectOK() && bufferevent_get_enabled(m_pBev) != 0){
-// 		int32 size = evbuffer_get_length(bufferevent_get_output(m_pBev));
-// 		if (size > 4096) {
-// 			LOG(ERROR) << "connector libevent chache too big close size: " << size << " LinkId: " << GetId();
-// 		}
+	if (IsConnectOK() && bufferevent_get_enabled(m_pBev) != 0) {
+		// 		int32 size = evbuffer_get_length(bufferevent_get_output(m_pBev));
+		// 		if (size > 4096) {
+		// 			LOG(ERROR) << "connector libevent chache too big close size: " << size << " LinkId: " << GetId();
+		// 		}
 		int nRet = bufferevent_write(m_pBev, pData, unSize);
 		if (nRet == -1) {
 			LogError(0, "NetError", "send msg error !");
 			//LError("NetLog", "send msg error !");
 		}
- 		return true;
- 	}
+		return true;
+	}
 	return false;
 }
 
@@ -210,7 +210,7 @@ void NFClient::timeout_ping(int fd, short event, void* params)
 	NFClient* p = (NFClient*)params;
 	if (p == nullptr) return;
 
-	if (p->GetStatus() == eConnectStatus_ConnectOk){
+	if (p->GetStatus() == eConnectStatus_ConnectOk) {
 		//stMsg msg(MSG_Net_Ping);
 		//msg.wSZ = sizeof(msg);
 		//p->PingTime(NFGetTime());
@@ -220,10 +220,10 @@ void NFClient::timeout_ping(int fd, short event, void* params)
 
 bool NFClient::Connect()
 {
-    if (m_pBev){
+	if (m_pBev) {
 		bufferevent_free(m_pBev);
 		m_pBev = NULL;
-    }
+	}
 	m_pBev = bufferevent_socket_new(GetMainBase(), -1, BEV_OPT_CLOSE_ON_FREE | BEV_OPT_THREADSAFE);
 	struct sockaddr_in  sin;
 	memset(&sin, 0, sizeof(sin));
@@ -239,9 +239,8 @@ bool NFClient::Connect()
 	bufferevent_enable(m_pBev, EV_WRITE | EV_READ);
 	event_set_log_callback(&NFClient::log_cb);
 
-
 	if (bufferevent_socket_connect(m_pBev, (struct sockaddr*)&sin, sizeof(sin)) < 0) {
-		LogError(0, "NetError", "connect failed! IP: " + m_flag.strIP+ " port:" + lexical_cast<std::string>(m_flag.nPort));
+		LogError(0, "NetError", "connect failed! IP: " + m_flag.strIP + " port:" + lexical_cast<std::string>(m_flag.nPort));
 		//LError("NetLog", "connect failed! IP: " << m_strIP << " port: " << m_usPort);
 		return false;
 	}
@@ -261,21 +260,21 @@ bool NFClient::Connect()
 void NFClient::OnClientThread()
 {
 	Connect();
-	event_base_dispatch(GetMainBase());	
+	event_base_dispatch(GetMainBase());
 }
 
 void NFClient::StartThread()
 {
-//	m_thread = std::make_shared<std::thread>(&NFClient::OnClientThread, this);
-//	m_thread.StopThread();
+	//	m_thread = std::make_shared<std::thread>(&NFClient::OnClientThread, this);
+	//	m_thread.StopThread();
 	m_thread.StartThread(this, &NFClient::OnClientThread);
 }
 
 bool NFClient::Reconnect()
 {
-	if (eConnectStatus_Disconnect == m_eStatus){
+	if (eConnectStatus_Disconnect == m_eStatus) {
 		time_t nCurTime = time(NULL);
-		if (nCurTime - m_unDisConnTime > 5){     //5sÖØÆô
+		if (nCurTime - m_unDisConnTime > 5) {     //5sÖØÆô
 			SetStatus(eConnectStatus_Connecting);
 			StartThread();
 		}
@@ -284,17 +283,16 @@ bool NFClient::Reconnect()
 	return false;
 }
 
-
 bool NFClient::Ping(const stMsg* pMsg)
 {
 	int32_t ntime = (int32_t)(NFGetTime() - GetPingTime());
-	
+
 	if (ntime > 50)
 	{
-		LogWarning(0, "NetWarning", "Ping time : " + lexical_cast<std::string>(ntime/2));
+		LogWarning(0, "NetWarning", "Ping time : " + lexical_cast<std::string>(ntime / 2));
 		//LOG(WARNING)<<" Ping time : "<< ntime/2;
 	}
-	
+
 	return true;
 }
 
@@ -305,7 +303,7 @@ void NFClient::OnConnectLib(SOCKET nSocket)
 	SetStatus(eConnectStatus_ConnectOk);
 }
 
-void NFClient::OnDisConnectLib ()
+void NFClient::OnDisConnectLib()
 {
 	SendDisconnect();
 	Close();

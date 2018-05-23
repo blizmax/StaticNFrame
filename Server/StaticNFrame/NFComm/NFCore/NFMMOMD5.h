@@ -84,7 +84,7 @@ typedef unsigned char byte;
 /* Define of byte. */
 typedef unsigned int bit32;
 
-class _NFExport NFMMOMD5 
+class _NFExport NFMMOMD5
 {
 public:
 	/* Construct a MD5 object with a string. */

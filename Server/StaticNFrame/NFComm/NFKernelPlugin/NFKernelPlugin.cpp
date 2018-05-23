@@ -18,13 +18,12 @@
 
 NF_EXPORT void DllStartPlugin(NFIPluginManager* pm)
 {
-    CREATE_PLUGIN(pm, NFKernelPlugin)
-
+	CREATE_PLUGIN(pm, NFKernelPlugin)
 };
 
 NF_EXPORT void DllStopPlugin(NFIPluginManager* pm)
 {
-    DESTROY_PLUGIN(pm, NFKernelPlugin)
+	DESTROY_PLUGIN(pm, NFKernelPlugin)
 };
 
 #endif
@@ -33,26 +32,26 @@ NF_EXPORT void DllStopPlugin(NFIPluginManager* pm)
 
 const int NFKernelPlugin::GetPluginVersion()
 {
-    return 0;
+	return 0;
 }
 
 const std::string NFKernelPlugin::GetPluginName()
 {
-    return GET_CLASS_NAME(NFKernelPlugin);
+	return GET_CLASS_NAME(NFKernelPlugin);
 }
 
 void NFKernelPlugin::Install()
 {
 	REGISTER_MODULE(pPluginManager, NFILogModule, NFCLogModule)
-    REGISTER_MODULE(pPluginManager, NFITimerModule, NFCTimerModule);
-    REGISTER_MODULE(pPluginManager, NFIEventModule, NFCEventModule);
-    REGISTER_MODULE(pPluginManager, NFIKernelModule, NFCKernelModule);
+		REGISTER_MODULE(pPluginManager, NFITimerModule, NFCTimerModule);
+	REGISTER_MODULE(pPluginManager, NFIEventModule, NFCEventModule);
+	REGISTER_MODULE(pPluginManager, NFIKernelModule, NFCKernelModule);
 }
 
 void NFKernelPlugin::Uninstall()
 {
-    UNREGISTER_MODULE(pPluginManager, NFIKernelModule, NFCKernelModule);
-    UNREGISTER_MODULE(pPluginManager, NFIEventModule, NFCEventModule);
-    UNREGISTER_MODULE(pPluginManager, NFITimerModule, NFCTimerModule);
+	UNREGISTER_MODULE(pPluginManager, NFIKernelModule, NFCKernelModule);
+	UNREGISTER_MODULE(pPluginManager, NFIEventModule, NFCEventModule);
+	UNREGISTER_MODULE(pPluginManager, NFITimerModule, NFCTimerModule);
 	UNREGISTER_MODULE(pPluginManager, NFILogModule, NFCLogModule)
 }

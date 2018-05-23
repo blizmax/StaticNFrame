@@ -61,144 +61,143 @@
 class NFTimeSpan
 {
 public:
-    NFTimeSpan(int seconds)
-    {
-        Init(0, 0, 0, seconds, 0);
-    }
+	NFTimeSpan(int seconds)
+	{
+		Init(0, 0, 0, seconds, 0);
+	}
 
-    NFTimeSpan(int hours, int minutes, int seconds)
-    {
-        Init(0, hours, minutes, seconds, 0);
-    }
+	NFTimeSpan(int hours, int minutes, int seconds)
+	{
+		Init(0, hours, minutes, seconds, 0);
+	}
 
-    NFTimeSpan(int days, int hours, int minutes, int seconds)
-    {
-        Init(days, hours, minutes, seconds, 0);
-    }
+	NFTimeSpan(int days, int hours, int minutes, int seconds)
+	{
+		Init(days, hours, minutes, seconds, 0);
+	}
 
-    NFTimeSpan(int days, int hours, int minutes, int seconds, int milliseconds)
-    {
-        Init(days, hours, minutes, seconds, milliseconds);
-    }
+	NFTimeSpan(int days, int hours, int minutes, int seconds, int milliseconds)
+	{
+		Init(days, hours, minutes, seconds, milliseconds);
+	}
 
-    virtual ~NFTimeSpan()
-    {
+	virtual ~NFTimeSpan()
+	{
+	}
 
-    }
+	static NFTimeSpan FromMilliseconds(int milliseconds)
+	{
+		return NFTimeSpan(0, 0, 0, 0, milliseconds);
+	}
 
-    static NFTimeSpan FromMilliseconds(int milliseconds)
-    {
-        return NFTimeSpan(0, 0, 0, 0, milliseconds);
-    }
+	static NFTimeSpan FromSeconds(int seconds)
+	{
+		return NFTimeSpan(0, 0, 0, seconds, 0);
+	}
 
-    static NFTimeSpan FromSeconds(int seconds)
-    {
-        return NFTimeSpan(0, 0, 0, seconds, 0);
-    }
+	static NFTimeSpan FromMinutes(int minutes)
+	{
+		return NFTimeSpan(0, 0, minutes, 0, 0);
+	}
 
-    static NFTimeSpan FromMinutes(int minutes)
-    {
-        return NFTimeSpan(0, 0, minutes, 0, 0);
-    }
+	static NFTimeSpan FromHours(int hours)
+	{
+		return NFTimeSpan(0, hours, 0, 0, 0);
+	}
 
-    static NFTimeSpan FromHours(int hours)
-    {
-        return NFTimeSpan(0, hours, 0, 0, 0);
-    }
+	static NFTimeSpan FromDays(int days)
+	{
+		return NFTimeSpan(days, 0, 0, 0, 0);
+	}
 
-    static NFTimeSpan FromDays(int days)
-    {
-        return NFTimeSpan(days, 0, 0, 0, 0);
-    }
+	int GetMilliseconds() const
+	{
+		return mMilliseconds;
+	}
+	int GetSeconds() const
+	{
+		return mSeconds;
+	}
+	int GetMinutes() const
+	{
+		return mMinutes;
+	}
+	int GetHours() const
+	{
+		return mHours;
+	}
+	int GetDays() const
+	{
+		return mDays;
+	}
 
-    int GetMilliseconds() const
-    {
-        return mMilliseconds;
-    }
-    int GetSeconds() const
-    {
-        return mSeconds;
-    }
-    int GetMinutes() const
-    {
-        return mMinutes;
-    }
-    int GetHours() const
-    {
-        return mHours;
-    }
-    int GetDays() const
-    {
-        return mDays;
-    }
+	long long GetTotalMilliseconds() const
+	{
+		return mMilliseconds + (long long)mSeconds * FACTOR_SEC_TO_MILLI + (long long)mMinutes * FACTOR_MIN_TO_MILLI + (long long)mHours * FACTOR_HOUR_TO_MILLI + (long long)mDays * FACTOR_DAY_TO_MILLI;
+	}
 
-    long long GetTotalMilliseconds() const
-    {
-        return mMilliseconds + (long long)mSeconds * FACTOR_SEC_TO_MILLI + (long long)mMinutes * FACTOR_MIN_TO_MILLI + (long long)mHours * FACTOR_HOUR_TO_MILLI + (long long)mDays * FACTOR_DAY_TO_MILLI;
-    }
+	//updated : GetTotalXXXXs never return double
+	long long GetTotalSeconds() const
+	{
+		return GetTotalMilliseconds() / FACTOR_SEC_TO_MILLI;
+	}
 
-    //updated : GetTotalXXXXs never return double
-    long long GetTotalSeconds() const
-    {
-        return GetTotalMilliseconds() / FACTOR_SEC_TO_MILLI;
-    }
+	long long GetTotalMinutes() const
+	{
+		return GetTotalSeconds() / FACTOR_MIN_TO_SEC;
+	}
 
-    long long GetTotalMinutes() const
-    {
-        return GetTotalSeconds() / FACTOR_MIN_TO_SEC;
-    }
+	long long GetTotalHours() const
+	{
+		return GetTotalMinutes() / FACTOR_HOUR_TO_MIN;
+	}
 
-    long long GetTotalHours() const
-    {
-        return GetTotalMinutes() / FACTOR_HOUR_TO_MIN;
-    }
+	long long GetTotalDays() const
+	{
+		return GetTotalHours() / FACTOR_DAY_TO_HOUR;
+	}
 
-    long long GetTotalDays() const
-    {
-        return GetTotalHours() / FACTOR_DAY_TO_HOUR;
-    }
+	bool operator<(const NFTimeSpan& ts) const
+	{
+		return GetTotalMilliseconds() < ts.GetTotalMilliseconds();
+	}
 
-    bool operator<(const NFTimeSpan& ts) const
-    {
-        return GetTotalMilliseconds() < ts.GetTotalMilliseconds();
-    }
+	bool operator>(const NFTimeSpan& ts) const
+	{
+		return GetTotalMilliseconds() > ts.GetTotalMilliseconds();
+	}
 
-    bool operator>(const NFTimeSpan& ts) const
-    {
-        return GetTotalMilliseconds() > ts.GetTotalMilliseconds();
-    }
+	bool operator<=(const NFTimeSpan& ts) const
+	{
+		return GetTotalMilliseconds() <= ts.GetTotalMilliseconds();
+	}
 
-    bool operator<=(const NFTimeSpan& ts) const
-    {
-        return GetTotalMilliseconds() <= ts.GetTotalMilliseconds();
-    }
+	bool operator>=(const NFTimeSpan& ts) const
+	{
+		return GetTotalMilliseconds() >= ts.GetTotalMilliseconds();
+	}
 
-    bool operator>=(const NFTimeSpan& ts) const
-    {
-        return GetTotalMilliseconds() >= ts.GetTotalMilliseconds();
-    }
+	bool operator==(const NFTimeSpan& ts) const
+	{
+		return GetTotalMilliseconds() == ts.GetTotalMilliseconds();
+	}
 
-    bool operator==(const NFTimeSpan& ts) const
-    {
-        return GetTotalMilliseconds() == ts.GetTotalMilliseconds();
-    }
-
-    void Init(int days, int hours, int minutes, int seconds, int milliseconds)
-    {
-        this->mDays = days;
-        this->mHours = hours;
-        this->mMinutes = minutes;
-        this->mSeconds = seconds;
-        this->mMilliseconds = milliseconds;
-    }
+	void Init(int days, int hours, int minutes, int seconds, int milliseconds)
+	{
+		this->mDays = days;
+		this->mHours = hours;
+		this->mMinutes = minutes;
+		this->mSeconds = seconds;
+		this->mMilliseconds = milliseconds;
+	}
 
 protected:
 
-    int mMilliseconds;
-    int mSeconds;
-    int mMinutes;
-    int mHours;
-    int mDays;
+	int mMilliseconds;
+	int mSeconds;
+	int mMinutes;
+	int mHours;
+	int mDays;
 };
 
 //////////////////////////////////////////////
@@ -207,294 +206,292 @@ class NFDateTime
 {
 public:
 
-    enum Day
-    {
-        Monday,
-        Thuesday,
-        Wednesday,
-        Thursday,
-        Friday,
-        Saturday,
-        Sunday
-    };
+	enum Day
+	{
+		Monday,
+		Thuesday,
+		Wednesday,
+		Thursday,
+		Friday,
+		Saturday,
+		Sunday
+	};
 
-    enum Month
-    {
-        January,
-        February,
-        March,
-        April,
-        May,
-        June,
-        July,
-        August,
-        September,
-        October,
-        November,
-        December
-    };
+	enum Month
+	{
+		January,
+		February,
+		March,
+		April,
+		May,
+		June,
+		July,
+		August,
+		September,
+		October,
+		November,
+		December
+	};
 
-    NFDateTime(int day, int month, int year):mSummertime(false), mLeapyear(false)
-    {
-        Init(day, month, year, 0, 0, 0, 0);
-    }
+	NFDateTime(int day, int month, int year) :mSummertime(false), mLeapyear(false)
+	{
+		Init(day, month, year, 0, 0, 0, 0);
+	}
 
-    NFDateTime(int day, int month, int year, int hour, int minute, int second):mSummertime(false), mLeapyear(false)
-    {
-        Init(day, month, year, hour, minute, second, 0);
-    }
+	NFDateTime(int day, int month, int year, int hour, int minute, int second) :mSummertime(false), mLeapyear(false)
+	{
+		Init(day, month, year, hour, minute, second, 0);
+	}
 
-    NFDateTime(int day, int month, int year, int hour, int minute, int second, int millisecond):mSummertime(false), mLeapyear(false)
-    {
-        Init(day, month, year, hour, minute, second, millisecond);
-    }
+	NFDateTime(int day, int month, int year, int hour, int minute, int second, int millisecond) :mSummertime(false), mLeapyear(false)
+	{
+		Init(day, month, year, hour, minute, second, millisecond);
+	}
 
-    NFDateTime(time_t timestamp):mSummertime(false), mLeapyear(false)
-    {
-        SetWithTimestamp(timestamp);
-    }
+	NFDateTime(time_t timestamp) :mSummertime(false), mLeapyear(false)
+	{
+		SetWithTimestamp(timestamp);
+	}
 
-    ~NFDateTime()
-    {
-    }
+	~NFDateTime()
+	{
+	}
 
-    static NFDateTime Now()
-    {
-        NFDateTime dt;
-        dt.SetNow();
-        return dt;
-    }
+	static NFDateTime Now()
+	{
+		NFDateTime dt;
+		dt.SetNow();
+		return dt;
+	}
 
-    void SetNow()
-    {
-        SetWithTimestamp(time(0));
-    }
+	void SetNow()
+	{
+		SetWithTimestamp(time(0));
+	}
 
-    int GetYear() const
-    {
-        return mYear;
-    }
-    int GetMonth() const
-    {
-        return mMonth;
-    }
-    int GetDay() const
-    {
-        return mDay;
-    }
+	int GetYear() const
+	{
+		return mYear;
+	}
+	int GetMonth() const
+	{
+		return mMonth;
+	}
+	int GetDay() const
+	{
+		return mDay;
+	}
 
-    int GetHour() const
-    {
-        return mHour;
-    }
-    int GetMinute() const
-    {
-        return mMinute;
-    }
-    int GetSecond() const
-    {
-        return mSecond;
-    }
-    int GetMillisecond() const
-    {
-        return mMillisecond;
-    }
+	int GetHour() const
+	{
+		return mHour;
+	}
+	int GetMinute() const
+	{
+		return mMinute;
+	}
+	int GetSecond() const
+	{
+		return mSecond;
+	}
+	int GetMillisecond() const
+	{
+		return mMillisecond;
+	}
 
+	void SetWithTimestamp(time_t timestamp)
+	{
+		struct tm time = *localtime(&timestamp);
+		Init(time.tm_mday, time.tm_mon + 1, time.tm_year + SINCE_YEAR, time.tm_hour, time.tm_min, time.tm_sec, 0);
+	}
 
-    void SetWithTimestamp(time_t timestamp)
-    {
-        struct tm time = *localtime(&timestamp);
-        Init(time.tm_mday, time.tm_mon + 1, time.tm_year + SINCE_YEAR, time.tm_hour, time.tm_min, time.tm_sec, 0);
-    }
+	time_t GetTimestamp() const
+	{
+		time_t rawtime(0);
+		struct tm* time = localtime(&rawtime);
+		time->tm_year = mYear - SINCE_YEAR;
+		time->tm_mon = mMonth - 1;
+		time->tm_mday = mDay;
+		time->tm_hour = mHour;
+		time->tm_min = mMinute;
+		time->tm_sec = mSecond;
+		return mktime(time);
+	}
 
-    time_t GetTimestamp() const
-    {
-        time_t rawtime(0);
-        struct tm* time = localtime(&rawtime);
-        time->tm_year = mYear - SINCE_YEAR;
-        time->tm_mon = mMonth - 1;
-        time->tm_mday = mDay;
-        time->tm_hour = mHour;
-        time->tm_min = mMinute;
-        time->tm_sec = mSecond;
-        return mktime(time);
-    }
+	struct tm GetTMStruct() const
+	{
+		time_t rawtime(0);
+		struct tm* time = localtime(&rawtime);
+		time->tm_year = mYear - SINCE_YEAR;
+		time->tm_mon = mMonth - 1;
+		time->tm_mday = mDay;
+		time->tm_hour = mHour;
+		time->tm_min = mMinute;
+		time->tm_sec = mSecond;
+		mktime(time);
+		return *time;
+	}
 
-    struct tm GetTMStruct() const
-    {
-        time_t rawtime(0);
-        struct tm* time = localtime(&rawtime);
-        time->tm_year = mYear - SINCE_YEAR;
-        time->tm_mon = mMonth - 1;
-        time->tm_mday = mDay;
-        time->tm_hour = mHour;
-        time->tm_min = mMinute;
-        time->tm_sec = mSecond;
-        mktime(time);
-        return *time;
-    }
+	void Add(const NFTimeSpan* ts)
+	{
+		AddMilliseconds(ts->GetTotalMilliseconds());
+	}
 
-    void Add(const NFTimeSpan* ts)
-    {
-        AddMilliseconds(ts->GetTotalMilliseconds());
-    }
+	void AddYears(int years)
+	{
+		mYear += years;
+	}
 
-    void AddYears(int years)
-    {
-        mYear += years;
-    }
+	void AddMonths(int months)
+	{
+		AddYears(months / MAX_MONTH);
+		mMonth += months % MAX_MONTH;
+	}
 
-    void AddMonths(int months)
-    {
-        AddYears(months / MAX_MONTH);
-        mMonth += months % MAX_MONTH;
-    }
+	void AddDays(int days)
+	{
+		AddMonths(days / MAX_DAY);
+		mDay += days % MAX_DAY;
+	}
 
-    void AddDays(int days)
-    {
-        AddMonths(days / MAX_DAY);
-        mDay += days % MAX_DAY;
-    }
+	void AddHours(int hours)
+	{
+		AddDays(hours / MAX_HOUR);
+		mHour += hours % MAX_HOUR;
+	}
 
-    void AddHours(int hours)
-    {
-        AddDays(hours / MAX_HOUR);
-        mHour += hours % MAX_HOUR;
-    }
+	void AddMinutes(int minutes)
+	{
+		AddHours(int(minutes / MAX_MINUTE));
+		mMinute += minutes % MAX_MINUTE;
+	}
 
-    void AddMinutes(int minutes)
-    {
-        AddHours(int(minutes / MAX_MINUTE));
-        mMinute += minutes % MAX_MINUTE;
-    }
+	void AddSeconds(long long seconds)
+	{
+		AddMinutes(int(seconds / MAX_SECOND));
+		mSecond += int(seconds % MAX_SECOND);
+	}
 
-    void AddSeconds(long long seconds)
-    {
-        AddMinutes(int(seconds / MAX_SECOND));
-        mSecond += int(seconds % MAX_SECOND);
-    }
+	void AddMilliseconds(long long milliseconds)
+	{
+		AddSeconds(milliseconds / MAX_MILLISECOND);
+		mMillisecond += milliseconds % MAX_MILLISECOND;
+	}
 
-    void AddMilliseconds(long long milliseconds)
-    {
-        AddSeconds(milliseconds / MAX_MILLISECOND);
-        mMillisecond += milliseconds % MAX_MILLISECOND;
-    }
+	static bool IsYearLeapYear(int year)
+	{
+		return ((year % 4 == 0) && (year % 100 != 0)) || (year % 400 == 0);
+	}
 
-    static bool IsYearLeapYear(int year)
-    {
-        return ((year % 4 == 0) && (year % 100 != 0)) || (year % 400 == 0);
-    }
+	bool IsSummertime()
+	{
+		return IsYearLeapYear(mYear);
+	}
+	bool IsLeapYear()
+	{
+		return IsDateSummertime(mDay, mMonth);
+	}
 
-    bool IsSummertime()
-    {
-        return IsYearLeapYear(mYear);
-    }
-    bool IsLeapYear()
-    {
-        return IsDateSummertime(mDay, mMonth);
-    }
+	static bool IsDateSummertime(int day, int month)
+	{
+		// FIXME: include day in calculation
+		if (month >= SUMMERTIME_BEGIN_MONTH && month <= SUMMERTIME_END_MONTH)
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
 
-    static bool IsDateSummertime(int day, int month)
-    {
-        // FIXME: include day in calculation
-        if (month >= SUMMERTIME_BEGIN_MONTH && month <= SUMMERTIME_END_MONTH)
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
-    }
+	std::string GetNameOfDay(int day)
+	{
+		if (IsValidWeekday(day))
+		{
+			return mDayNames[day - 1];
+		}
+		else
+		{
+			throw NFException("Day %d is not in valid weekday range ( %d - %d )", day, MIN_WEEKDAY, MAX_WEEKDAY);
+		}
+	}
 
-    std::string GetNameOfDay(int day)
-    {
-        if (IsValidWeekday(day))
-        {
-            return mDayNames[day - 1];
-        }
-        else
-        {
-            throw NFException("Day %d is not in valid weekday range ( %d - %d )", day, MIN_WEEKDAY, MAX_WEEKDAY);
-        }
-    }
+	std::string GetNameOfMonth(int month)
+	{
+		if (IsValidMonth(month))
+		{
+			return mMonthNames[month - 1];
+		}
+		else
+		{
+			throw NFException("Month %d is not in valid range ( %d - %d )", month, MIN_MONTH, MAX_MONTH);
+		}
+	}
 
-    std::string GetNameOfMonth(int month)
-    {
-        if (IsValidMonth(month))
-        {
-            return mMonthNames[month - 1];
-        }
-        else
-        {
-            throw NFException("Month %d is not in valid range ( %d - %d )", month, MIN_MONTH, MAX_MONTH);
-        }
-    }
+	Day GetDayOfWeek()
+	{
+		return static_cast<NFDateTime::Day>(GetTMStruct().tm_wday);
+	}
 
-    Day GetDayOfWeek()
-    {
-        return static_cast<NFDateTime::Day>(GetTMStruct().tm_wday);
-    }
+	int GetDayOfYear()
+	{
+		return GetTMStruct().tm_yday;
+	}
 
-    int GetDayOfYear()
-    {
-        return GetTMStruct().tm_yday;
-    }
+	int GetDaysOfMonth(int month)
+	{
+		return IsValidMonth(month) ? mDaysOfMonth[month] : -1;
+	}
 
-    int GetDaysOfMonth(int month)
-    {
-        return IsValidMonth(month) ? mDaysOfMonth[month] : -1;
-    }
+	bool operator<(const NFDateTime& dt) const
+	{
+		return GetTimestamp() < dt.GetTimestamp();
+	}
 
-    bool operator<(const NFDateTime& dt) const
-    {
-        return GetTimestamp() < dt.GetTimestamp();
-    }
+	bool operator>(const NFDateTime& dt) const
+	{
+		return GetTimestamp() > dt.GetTimestamp();
+	}
 
-    bool operator>(const NFDateTime& dt) const
-    {
-        return GetTimestamp() > dt.GetTimestamp();
-    }
+	bool operator<=(const NFDateTime& dt) const
+	{
+		return GetTimestamp() <= dt.GetTimestamp();
+	}
 
-    bool operator<=(const NFDateTime& dt) const
-    {
-        return GetTimestamp() <= dt.GetTimestamp();
-    }
+	bool operator>=(const NFDateTime& dt) const
+	{
+		return GetTimestamp() >= dt.GetTimestamp();
+	}
 
-    bool operator>=(const NFDateTime& dt) const
-    {
-        return GetTimestamp() >= dt.GetTimestamp();
-    }
+	bool operator==(const NFDateTime& dt) const
+	{
+		return GetTimestamp() == dt.GetTimestamp();
+	}
 
-    bool operator==(const NFDateTime& dt) const
-    {
-        return GetTimestamp() == dt.GetTimestamp();
-    }
+	NFDateTime operator+(const NFTimeSpan& ts)
+	{
+		NFDateTime* tmp = this;
+		tmp->Add(&ts);
+		return *tmp;
+	}
 
-    NFDateTime operator+(const NFTimeSpan& ts)
-    {
-        NFDateTime* tmp = this;
-        tmp->Add(&ts);
-        return *tmp;
-    }
+	void operator+=(const NFTimeSpan& ts)
+	{
+		Add(&ts);
+	}
 
-    void operator+=(const NFTimeSpan& ts)
-    {
-        Add(&ts);
-    }
-
-
-    std::string GetAsString()
-    {
-        return GetShortDateString() + std::string(" - ") + GetShortTimeString();
-    }
+	std::string GetAsString()
+	{
+		return GetShortDateString() + std::string(" - ") + GetShortTimeString();
+	}
 
 	/**
 	 * @brief 凭借时间生成一个字符串，精确到分钟
 	 * 比如GetTimeStringToMinute("_"), 生成:2018_5_17_18_58
-	 *  
+	 *
 	 * @param str  用来分割的字符串
-	 * @return     返回拼接的时间字符串 
+	 * @return     返回拼接的时间字符串
 	 */
 	std::string GetTimeStringToMinute(const std::string& str)
 	{
@@ -504,207 +501,204 @@ public:
 		return stream.str();
 	}
 
-    std::string GetShortTimeString()
-    {
-        std::stringstream ss(std::stringstream::in | std::stringstream::out);
-        ss << std::setfill('0') << std::setw(2) << mHour << ":" << std::setw(2) << mMinute << ":" << std::setw(2) << mSecond;
-        return ss.str();
-    }
+	std::string GetShortTimeString()
+	{
+		std::stringstream ss(std::stringstream::in | std::stringstream::out);
+		ss << std::setfill('0') << std::setw(2) << mHour << ":" << std::setw(2) << mMinute << ":" << std::setw(2) << mSecond;
+		return ss.str();
+	}
 
-    std::string GetLongTimeString()
-    {
-        std::stringstream ss(std::stringstream::in | std::stringstream::out);
-        ss << std::setfill('0') << std::setw(2) << mHour << ":" << std::setw(2) << mMinute << ":" << std::setw(2) << mSecond << ":" << std::setw(2) << mMillisecond;
-        return ss.str();
-    }
+	std::string GetLongTimeString()
+	{
+		std::stringstream ss(std::stringstream::in | std::stringstream::out);
+		ss << std::setfill('0') << std::setw(2) << mHour << ":" << std::setw(2) << mMinute << ":" << std::setw(2) << mSecond << ":" << std::setw(2) << mMillisecond;
+		return ss.str();
+	}
 
-    std::string GetShortDateString()
-    {
-        std::stringstream ss(std::stringstream::in | std::stringstream::out);
-        ss << std::setfill('0') << std::setw(2) << mDay << "." << std::setw(2) << mMonth << "." << mYear;
-        return ss.str();
-    }
+	std::string GetShortDateString()
+	{
+		std::stringstream ss(std::stringstream::in | std::stringstream::out);
+		ss << std::setfill('0') << std::setw(2) << mDay << "." << std::setw(2) << mMonth << "." << mYear;
+		return ss.str();
+	}
 
-    std::string GetLongDateString()
-    {
-        std::stringstream ss(std::stringstream::in | std::stringstream::out);
-        ss << GetNameOfDay(GetDayOfWeek()) << ", " << GetNameOfMonth(mMonth) << " " << mDay << ", " << mYear;
-        return ss.str();
-    }
-
-protected:
-    NFDateTime():mSummertime(false), mLeapyear(false)
-    {
-        this->mDay = 0;
-        this->mMonth = 0;
-        this->mYear = 0;
-
-        this->mHour = 0;
-        this->mMinute = 0;
-        this->mSecond = 0;
-        this->mMillisecond = 0;
-
-        InitMonths();
-        InitMonthNames();
-        InitDayNames();
-    }
-
-    void Init(int day, int month, int year, int hour, int minute, int second, int millisecond)
-    {
-        this->mYear = year;
-
-        InitMonths();
-        InitMonthNames();
-        InitDayNames();
-
-        if (!IsValidMonth(month))
-        {
-            throw NFException("Month %d is not in range", month);
-        }
-
-        if (!IsValidDayOfMonth(day, month))
-        {
-            throw NFException("Day %d is not in month %d's range", day, month);
-        }
-
-        if (!IsValidHour(hour))
-        {
-            throw NFException("Hour %d is not in valid range ( %d - %d )", hour, MIN_HOUR, MAX_HOUR);
-        }
-
-        if (!IsValidMinute(minute))
-        {
-            throw NFException("Minute %d is not in valid range ( %d - %d )", minute, MIN_MINUTE, MAX_MINUTE);
-        }
-
-        if (!IsValidSecond(second))
-        {
-            throw NFException("Second %d is not in valid range ( %d - %d )", second, MIN_SECOND, MAX_SECOND);
-        }
-
-        if (!IsValidMillisecond(millisecond))
-        {
-            throw NFException("Millisecond %d is not in valid range ( %d - %d )", millisecond, MIN_MILLISECOND, MAX_MILLISECOND);
-        }
-
-        this->mDay = day;
-        this->mMonth = month;
-
-        this->mHour = hour;
-        this->mMinute = minute;
-        this->mSecond = second;
-        this->mMillisecond = millisecond;
-    }
-
-    void InitMonths()
-    {
-        // Perhaps an algorithm would be more efficient
-        mDaysOfMonth[Month::January] = 31;
-        mDaysOfMonth[Month::February] = IsLeapYear() ? 29 : 28; // In a leapyear 29 else 28
-        mDaysOfMonth[Month::March] = 31;
-        mDaysOfMonth[Month::April] = 30;
-        mDaysOfMonth[Month::May] = 31;
-        mDaysOfMonth[Month::June] = 30;
-        mDaysOfMonth[Month::July] = 31;
-        mDaysOfMonth[Month::August] = 31;
-        mDaysOfMonth[Month::September] = 30;
-        mDaysOfMonth[Month::October] = 31;
-        mDaysOfMonth[Month::November] = 30;
-        mDaysOfMonth[Month::December] = 31;
-    }
-
-    void InitMonthNames()
-    {
-        mMonthNames[Month::January] = "January";
-        mMonthNames[Month::February] = "February";
-        mMonthNames[Month::March] = "March";
-        mMonthNames[Month::April] = "April";
-        mMonthNames[Month::May] = "May";
-        mMonthNames[Month::June] = "June";
-        mMonthNames[Month::July] = "July";
-        mMonthNames[Month::August] = "August";
-        mMonthNames[Month::September] = "September";
-        mMonthNames[Month::October] = "October";
-        mMonthNames[Month::November] = "November";
-        mMonthNames[Month::December] = "December";
-    }
-
-    void InitDayNames()
-    {
-        mDayNames[Day::Monday] = "Monday";
-        mDayNames[Day::Thuesday] = "Thuesday";
-        mDayNames[Day::Wednesday] = "Wednesday";
-        mDayNames[Day::Thursday] = "Thursday";
-        mDayNames[Day::Friday] = "Friday";
-        mDayNames[Day::Saturday] = "Saturday";
-        mDayNames[Day::Sunday] = "Sunday";
-    }
-
-    bool IsValidWeekday(int day)
-    {
-        return day >= MIN_WEEKDAY && day <= MAX_WEEKDAY;
-    }
-
-    bool IsValidDayOfMonth(int day, int month)
-    {
-        if (IsValidMonth(month))
-        {
-            return day >= 1 && day <= GetDaysOfMonth(month);
-        }
-        else
-        {
-            return false;
-        }
-    }
-
-    bool IsValidMonth(int month)
-    {
-        return month >= MIN_MONTH && month <= MAX_MONTH;
-    }
-
-    bool IsValidYear(int year)
-    {
-        return year >= 0;
-    }
-
-    bool IsValidHour(int hour)
-    {
-        return hour >= MIN_HOUR && hour <= MAX_HOUR;
-    }
-
-    bool IsValidMinute(int minute)
-    {
-        return minute >= MIN_MINUTE && minute <= MAX_MINUTE;
-    }
-
-    bool IsValidSecond(int second)
-    {
-        return second >= MIN_SECOND && second <= MAX_SECOND;
-    }
-
-    bool IsValidMillisecond(int millisecond)
-    {
-        return millisecond >= MIN_MILLISECOND && millisecond <= MAX_MILLISECOND;
-    }
+	std::string GetLongDateString()
+	{
+		std::stringstream ss(std::stringstream::in | std::stringstream::out);
+		ss << GetNameOfDay(GetDayOfWeek()) << ", " << GetNameOfMonth(mMonth) << " " << mDay << ", " << mYear;
+		return ss.str();
+	}
 
 protected:
-    int mDaysOfMonth[MAX_MONTH];
-    std::string mMonthNames[MAX_MONTH];
-    std::string mDayNames[MAX_DAY];
+	NFDateTime() :mSummertime(false), mLeapyear(false)
+	{
+		this->mDay = 0;
+		this->mMonth = 0;
+		this->mYear = 0;
 
-    int mYear;
-    int mMonth;
-    int mDay;
-    int mHour;
-    int mMinute;
-    int mSecond;
-    int mMillisecond;
+		this->mHour = 0;
+		this->mMinute = 0;
+		this->mSecond = 0;
+		this->mMillisecond = 0;
 
-    bool mSummertime;
-    bool mLeapyear;
+		InitMonths();
+		InitMonthNames();
+		InitDayNames();
+	}
+
+	void Init(int day, int month, int year, int hour, int minute, int second, int millisecond)
+	{
+		this->mYear = year;
+
+		InitMonths();
+		InitMonthNames();
+		InitDayNames();
+
+		if (!IsValidMonth(month))
+		{
+			throw NFException("Month %d is not in range", month);
+		}
+
+		if (!IsValidDayOfMonth(day, month))
+		{
+			throw NFException("Day %d is not in month %d's range", day, month);
+		}
+
+		if (!IsValidHour(hour))
+		{
+			throw NFException("Hour %d is not in valid range ( %d - %d )", hour, MIN_HOUR, MAX_HOUR);
+		}
+
+		if (!IsValidMinute(minute))
+		{
+			throw NFException("Minute %d is not in valid range ( %d - %d )", minute, MIN_MINUTE, MAX_MINUTE);
+		}
+
+		if (!IsValidSecond(second))
+		{
+			throw NFException("Second %d is not in valid range ( %d - %d )", second, MIN_SECOND, MAX_SECOND);
+		}
+
+		if (!IsValidMillisecond(millisecond))
+		{
+			throw NFException("Millisecond %d is not in valid range ( %d - %d )", millisecond, MIN_MILLISECOND, MAX_MILLISECOND);
+		}
+
+		this->mDay = day;
+		this->mMonth = month;
+
+		this->mHour = hour;
+		this->mMinute = minute;
+		this->mSecond = second;
+		this->mMillisecond = millisecond;
+	}
+
+	void InitMonths()
+	{
+		// Perhaps an algorithm would be more efficient
+		mDaysOfMonth[Month::January] = 31;
+		mDaysOfMonth[Month::February] = IsLeapYear() ? 29 : 28; // In a leapyear 29 else 28
+		mDaysOfMonth[Month::March] = 31;
+		mDaysOfMonth[Month::April] = 30;
+		mDaysOfMonth[Month::May] = 31;
+		mDaysOfMonth[Month::June] = 30;
+		mDaysOfMonth[Month::July] = 31;
+		mDaysOfMonth[Month::August] = 31;
+		mDaysOfMonth[Month::September] = 30;
+		mDaysOfMonth[Month::October] = 31;
+		mDaysOfMonth[Month::November] = 30;
+		mDaysOfMonth[Month::December] = 31;
+	}
+
+	void InitMonthNames()
+	{
+		mMonthNames[Month::January] = "January";
+		mMonthNames[Month::February] = "February";
+		mMonthNames[Month::March] = "March";
+		mMonthNames[Month::April] = "April";
+		mMonthNames[Month::May] = "May";
+		mMonthNames[Month::June] = "June";
+		mMonthNames[Month::July] = "July";
+		mMonthNames[Month::August] = "August";
+		mMonthNames[Month::September] = "September";
+		mMonthNames[Month::October] = "October";
+		mMonthNames[Month::November] = "November";
+		mMonthNames[Month::December] = "December";
+	}
+
+	void InitDayNames()
+	{
+		mDayNames[Day::Monday] = "Monday";
+		mDayNames[Day::Thuesday] = "Thuesday";
+		mDayNames[Day::Wednesday] = "Wednesday";
+		mDayNames[Day::Thursday] = "Thursday";
+		mDayNames[Day::Friday] = "Friday";
+		mDayNames[Day::Saturday] = "Saturday";
+		mDayNames[Day::Sunday] = "Sunday";
+	}
+
+	bool IsValidWeekday(int day)
+	{
+		return day >= MIN_WEEKDAY && day <= MAX_WEEKDAY;
+	}
+
+	bool IsValidDayOfMonth(int day, int month)
+	{
+		if (IsValidMonth(month))
+		{
+			return day >= 1 && day <= GetDaysOfMonth(month);
+		}
+		else
+		{
+			return false;
+		}
+	}
+
+	bool IsValidMonth(int month)
+	{
+		return month >= MIN_MONTH && month <= MAX_MONTH;
+	}
+
+	bool IsValidYear(int year)
+	{
+		return year >= 0;
+	}
+
+	bool IsValidHour(int hour)
+	{
+		return hour >= MIN_HOUR && hour <= MAX_HOUR;
+	}
+
+	bool IsValidMinute(int minute)
+	{
+		return minute >= MIN_MINUTE && minute <= MAX_MINUTE;
+	}
+
+	bool IsValidSecond(int second)
+	{
+		return second >= MIN_SECOND && second <= MAX_SECOND;
+	}
+
+	bool IsValidMillisecond(int millisecond)
+	{
+		return millisecond >= MIN_MILLISECOND && millisecond <= MAX_MILLISECOND;
+	}
+
+protected:
+	int mDaysOfMonth[MAX_MONTH];
+	std::string mMonthNames[MAX_MONTH];
+	std::string mDayNames[MAX_DAY];
+
+	int mYear;
+	int mMonth;
+	int mDay;
+	int mHour;
+	int mMinute;
+	int mSecond;
+	int mMillisecond;
+
+	bool mSummertime;
+	bool mLeapyear;
 };
 
 #endif
-
-
-

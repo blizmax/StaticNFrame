@@ -17,7 +17,6 @@
 
 class NFITestKernelModule : public NFIModule
 {
-
 };
 
 class NFTestEvent0 : public NFEventContext
@@ -27,7 +26,7 @@ public:
 public:
 	int a;
 	std::string b;
-	int c;	
+	int c;
 };
 
 class NFTestEvent : public NFEventContext
@@ -75,18 +74,18 @@ class NFCTestKernelModule : public NFITestKernelModule, NFTimerObj, NFEventObj
 	};
 
 public:
-    explicit NFCTestKernelModule(NFIPluginManager* p);
+	explicit NFCTestKernelModule(NFIPluginManager* p);
 	virtual ~NFCTestKernelModule() { delete m_pObject; }
 public:
-    virtual bool Init();
+	virtual bool Init();
 
-    virtual bool AfterInit();
+	virtual bool AfterInit();
 
-    virtual bool Execute();
+	virtual bool Execute();
 
-    virtual bool BeforeShut();
+	virtual bool BeforeShut();
 
-    virtual bool Shut();
+	virtual bool Shut();
 public:
 	virtual void OnTimer(uint32_t nTimerID);
 

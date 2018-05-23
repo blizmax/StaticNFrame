@@ -83,7 +83,6 @@ public:
 		Trim(str, delims, false, true);
 	}
 
-
 	// @brief trim a char
 	template<class _StringType> static void Trim(_StringType& str, char c, bool left = true, bool right = true);
 	template<class _StringType> static void TrimLeft(_StringType& str, char c) {
@@ -184,14 +183,12 @@ public:
 	static bool EndsWith(const std::string& str, const std::string& pattern, bool case_sensitive = true);
 	static bool EndsWith(const std::wstring& str, const std::wstring& pattern, bool case_sensitive = true);
 
-
 	// Simple pattern-matching routine allowing a wild card pattern.
 	// @param str String to test
 	// @param pattern Pattern to match against; which can include simple '*' wildcards
 	// @param case_sensitive Whether the match is case sensitive or not
 	static bool Match(const std::string& str, const std::string& pattern, bool case_sensitive = true);
 	static bool Match(const std::wstring& str, const std::wstring& pattern, bool case_sensitive = true);
-
 
 	// @brief Reports whether a char or a substr is within mother
 	// @param mother, the mother string to test
@@ -202,7 +199,6 @@ public:
 	static bool Contains(const std::wstring& mother, wchar_t pattern, bool case_sensitive = true);
 	static bool Contains(const std::string& mother, const std::string& pattern, bool case_sensitive = true);
 	static bool Contains(const std::wstring& mother, const std::wstring& pattern, bool case_sensitive = true);
-
 
 	// @brief This function is convenient when encoding a string
 	//     to be used in a query part of a URL, as a convenient way
@@ -223,7 +219,6 @@ public:
 	}
 	static void URLEncode(const char* url, size_t url_len, std::string& out);
 
-
 	static string URLDecode(const std::string& str) {
 		std::string out;
 		URLDecode(str, out);
@@ -239,42 +234,42 @@ public:
 	// query whether parameter string is a float number string or not.
 	static bool IsFloatNumber(std::string& s);
 
-    static void Split(const std::string& str,
-                      const std::string& delim,
-                      std::vector<std::string>* result);
+	static void Split(const std::string& str,
+		const std::string& delim,
+		std::vector<std::string>* result);
 
-    static std::string& Ltrim(std::string& str); // NOLINT
+	static std::string& Ltrim(std::string& str); // NOLINT
 
-    static std::string& Rtrim(std::string& str); // NOLINT
+	static std::string& Rtrim(std::string& str); // NOLINT
 
-    static std::string& LRTrim(std::string& str); // NOLINT
+	static std::string& LRTrim(std::string& str); // NOLINT
 
-    static void LRTrim(std::vector<std::string>* str_list);
+	static void LRTrim(std::vector<std::string>* str_list);
 
-    // 子串替换
-    static void StringReplace(const std::string& sub_str1,
-                              const std::string& sub_str2, std::string* str);
+	// 子串替换
+	static void StringReplace(const std::string& sub_str1,
+		const std::string& sub_str2, std::string* str);
 
-    static void UrlEncode(const std::string& src_str, std::string* dst_str);
+	static void UrlEncode(const std::string& src_str, std::string* dst_str);
 
-    static void UrlDecode(const std::string& src_str, std::string* dst_str);
+	static void UrlDecode(const std::string& src_str, std::string* dst_str);
 
-    // 大小写转换
-    static void ToUpper(std::string* str);
+	// 大小写转换
+	static void ToUpper(std::string* str);
 
-    static void ToLower(std::string* str);
+	static void ToLower(std::string* str);
 
 	static std::string ToLower(const std::string& str);
 
-    // 去头去尾
-    static bool StripSuffix(std::string* str, const std::string& suffix);
+	// 去头去尾
+	static bool StripSuffix(std::string* str, const std::string& suffix);
 
-    static bool StripPrefix(std::string* str, const std::string& prefix);
+	static bool StripPrefix(std::string* str, const std::string& prefix);
 
-    // bin和hex转换
-    static bool Hex2Bin(const char* hex_str, std::string* bin_str);
+	// bin和hex转换
+	static bool Hex2Bin(const char* hex_str, std::string* bin_str);
 
-    static bool Bin2Hex(const char* bin_str, std::string* hex_str);
+	static bool Bin2Hex(const char* bin_str, std::string* hex_str);
 
 	static std::string Format(std::string sz, ...);
 
@@ -293,7 +288,7 @@ public:
 
 	/**
 	 * @brief 获得typeinfo.name(T)的类型名字
-	 *  
+	 *
 	 * @param name  对类型T,获得typeinfo<T>.name()的名字
 	 * @return      获得typeinfo.name(T)的类型名字
 	 */
@@ -301,7 +296,7 @@ public:
 
 	/**
 	 * @brief 获得类型T的类型名字
-	 *  
+	 *
 	 * @return      获得typeinfo.name(T)的类型名字
 	 */
 	template <class T>
@@ -357,7 +352,7 @@ inline void NFStringUtility::Explode(const _Tx& source, const _Tx& delim, std::v
 }
 
 template<class _StringType>
-inline void NFStringUtility::Trim(_StringType& str, char c, bool left /*= true*/, bool right /*= true*/) 
+inline void NFStringUtility::Trim(_StringType& str, char c, bool left /*= true*/, bool right /*= true*/)
 {
 	if (str.empty()) {
 		return;

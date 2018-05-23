@@ -14,7 +14,7 @@
 class NFITimerModule : public NFIModule
 {
 public:
-		//设置定时器
+	//设置定时器
 	virtual bool SetTimer(uint32_t nTimerID, uint64_t nInterVal, NFTimerObj *handler, uint32_t nCallCount = INFINITY_CALL) = 0;
 
 	//关闭定时器

@@ -12,27 +12,27 @@
 
 bool NFCEventModule::Init()
 {
-    return true;
+	return true;
 }
 
 bool NFCEventModule::AfterInit()
 {
-    return true;
+	return true;
 }
 
 bool NFCEventModule::BeforeShut()
 {
-    return true;
+	return true;
 }
 
 bool NFCEventModule::Shut()
 {
-    return true;
+	return true;
 }
 
 bool NFCEventModule::Execute()
 {
-    return true;
+	return true;
 }
 
 //发送执行事件
@@ -57,4 +57,3 @@ bool NFCEventModule::UnSubscribeAll(NFEventObj *pSink)
 	m_ExecuteCenter.UnSubscribeAll(pSink);
 	return true;
 }
-

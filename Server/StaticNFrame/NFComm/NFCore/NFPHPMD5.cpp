@@ -85,7 +85,6 @@ documentation and/or software.
 /* Constants for MD5Transform routine.
 */
 
-
 #define S11 7
 #define S12 12
 #define S13 17
@@ -189,7 +188,7 @@ _NFExport void PHP_MD5Update(PHP_MD5_CTX * context, const unsigned char *input,
 	*/
 	if (inputLen >= partLen) {
 		memcpy
-		((unsigned char*)& context->buffer[index], input, partLen);
+			((unsigned char*)& context->buffer[index], input, partLen);
 		MD5Transform(context->state, context->buffer);
 
 		for (i = partLen; i + 63 < inputLen; i += 64)
@@ -202,8 +201,8 @@ _NFExport void PHP_MD5Update(PHP_MD5_CTX * context, const unsigned char *input,
 
 	/* Buffer remaining input */
 	memcpy
-	((unsigned char*)& context->buffer[index], &input[i],
-		inputLen - i);
+		((unsigned char*)& context->buffer[index], &input[i],
+			inputLen - i);
 }
 /* }}} */
 

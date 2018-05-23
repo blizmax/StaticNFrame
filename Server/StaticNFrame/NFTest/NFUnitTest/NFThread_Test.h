@@ -66,11 +66,11 @@ public:
 		for (int i = 0; i < 1000000; i++)
 		{
 #ifdef USE_MUTEX
-		mMutex.lock();
+			mMutex.lock();
 #endif
 			count++;
 #ifdef USE_MUTEX
-		mMutex.unlock();
+			mMutex.unlock();
 #endif
 		}
 	}

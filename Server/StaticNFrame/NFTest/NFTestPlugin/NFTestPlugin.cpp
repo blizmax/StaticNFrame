@@ -16,13 +16,12 @@
 
 NF_EXPORT void DllStartPlugin(NFIPluginManager* pm)
 {
-    CREATE_PLUGIN(pm, NFTestPlugin)
-
+	CREATE_PLUGIN(pm, NFTestPlugin)
 };
 
 NF_EXPORT void DllStopPlugin(NFIPluginManager* pm)
 {
-    DESTROY_PLUGIN(pm, NFTestPlugin)
+	DESTROY_PLUGIN(pm, NFTestPlugin)
 };
 
 #endif
@@ -31,12 +30,12 @@ NF_EXPORT void DllStopPlugin(NFIPluginManager* pm)
 
 const int NFTestPlugin::GetPluginVersion()
 {
-    return 0;
+	return 0;
 }
 
 const std::string NFTestPlugin::GetPluginName()
 {
-    return GET_CLASS_NAME(NFTestPlugin);
+	return GET_CLASS_NAME(NFTestPlugin);
 }
 
 void NFTestPlugin::Install()

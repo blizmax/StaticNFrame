@@ -53,11 +53,9 @@ class NFConfigMgr : public NFSingleton<NFConfigMgr>, public NFILuaScriptModule
 public:
 	NFConfigMgr()
 	{
-		
 	}
 	virtual ~NFConfigMgr()
 	{
-
 	}
 public:
 	int Init(NFIPluginManager* p)

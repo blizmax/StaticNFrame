@@ -39,7 +39,7 @@ public:
 
 	template<typename T>
 	bool GetValue(const std::string& keyName, T& value) const
-	{	
+	{
 		LuaIntf::LuaRef ref = GetGlobal(keyName);
 		if (!ref.isValid())
 		{
@@ -54,7 +54,7 @@ public:
 		{
 			std::cout << e.what() << std::endl;
 		}
-		
+
 		return true;
 	}
 public:
@@ -73,12 +73,12 @@ public:
 
 	bool TryLoadScriptFile(const std::string& strFileName)
 	{
-		try { 
-			l.doFile(strFileName.c_str()); 
+		try {
+			l.doFile(strFileName.c_str());
 			return true;
 		}
-		catch (LuaIntf::LuaException& e) 
-		{ 
+		catch (LuaIntf::LuaException& e)
+		{
 			std::cout << e.what() << std::endl;
 		}
 		return false;
@@ -86,12 +86,12 @@ public:
 
 	bool TryAddPackagePath(const std::string& strFilePath)
 	{
-		try { 
+		try {
 			l.addPackagePath(strFilePath);
 			return true;
 		}
-		catch (LuaIntf::LuaException& e) 
-		{ 
+		catch (LuaIntf::LuaException& e)
+		{
 			std::cout << e.what() << std::endl;
 		}
 		return false;
@@ -114,13 +114,13 @@ public:
 	template<typename... Arg>
 	bool TryRunGlobalScriptFunc(const std::string& strFuncName, Arg&&... args)
 	{
-		try { 
-			LuaIntf::LuaRef func(l, strFuncName.c_str());  
+		try {
+			LuaIntf::LuaRef func(l, strFuncName.c_str());
 			func.call<LuaIntf::LuaRef>(std::forward<Arg>(args)...);
 			return true;
 		}
-		catch (LuaIntf::LuaException& e) 
-		{ 
+		catch (LuaIntf::LuaException& e)
+		{
 			std::cout << e.what() << std::endl;
 		}
 		return false;

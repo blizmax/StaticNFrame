@@ -2,8 +2,6 @@
 #include "NFComm/NFCore/NFProfiler.h"
 #include "NFComm/NFCore/NFPlatform.h"
 
-
-
 #define FIX_AXIS_ONE_DAY_HOUR 24
 #define FIX_AXIS_ONE_HOUR_SECOND (60 * 60)
 #define FIX_AXIS_ONE_DAY_SECOND (60*60*24)
@@ -38,7 +36,7 @@ NFFixTimerAxis::~NFFixTimerAxis()
 }
 
 //设置固定时间的定时器
-bool NFFixTimerAxis::SetFixTimer(uint32_t nTimerID,uint64_t nStartTime, uint32_t nInterDays, NFTimerObj *handler, uint32_t nCallCount /*= INFINITY_CALL*/)
+bool NFFixTimerAxis::SetFixTimer(uint32_t nTimerID, uint64_t nStartTime, uint32_t nInterDays, NFTimerObj *handler, uint32_t nCallCount /*= INFINITY_CALL*/)
 {
 	if (nullptr == handler)
 	{
@@ -52,8 +50,6 @@ bool NFFixTimerAxis::SetFixTimer(uint32_t nTimerID,uint64_t nStartTime, uint32_t
 	{
 		nInterDays = 1;
 	}
-
-
 
 	bool bNeedFind = true;
 	void **ppFixTimerInfo = handler->GetFixTimerInfoPtr();
@@ -89,7 +85,6 @@ bool NFFixTimerAxis::SetFixTimer(uint32_t nTimerID,uint64_t nStartTime, uint32_t
 	pFixTimer->nCallCount = nCallCount;
 	pFixTimer->pHandler = handler;
 
-
 	uint64_t nowTime = NFGetSecondTime();
 	uint64_t nowDaySecs = nowTime % FIX_AXIS_ONE_DAY_SECOND;
 	//为了在接下来的固定时间点立刻生效，构造pTimer 最近一次回调时间
@@ -111,7 +106,6 @@ bool NFFixTimerAxis::SetFixTimer(uint32_t nTimerID,uint64_t nStartTime, uint32_t
 	pFixTimer->pos = --m_FixTimerAxis[pFixTimer->nGridIndex]->end();
 
 	return true;
-
 }
 //关闭固定时间定时器
 bool NFFixTimerAxis::KillFixTimer(uint32_t nTimerID, NFTimerObj *handler)
@@ -267,7 +261,6 @@ void NFFixTimerAxis::UpdateFix()
 					it = pTimerList->erase(it);
 					continue;
 				}
-
 			}
 
 			++it;
@@ -283,9 +276,6 @@ void NFFixTimerAxis::UpdateFix()
 		//}while(i!=cur_grid);
 	} while (i != cur_grid);
 }
-
-
-
 
 NFTimerAxis::NFTimerAxis()
 {
@@ -404,8 +394,6 @@ bool NFTimerAxis::SetTimerSec(uint32_t nTimerID, uint64_t nInterVal, NFTimerObj 
 	pTimer->pos = --m_TimerAxisSec[pTimer->nGridIndex]->end();
 
 	return true;
-
-
 }
 
 bool NFTimerAxis::SetTimer(uint32_t nTimerID, uint64_t nInterVal, NFTimerObj *handler, uint32_t nCallCount /*= INFINITY_CALL*/)
@@ -420,14 +408,14 @@ bool NFTimerAxis::SetTimer(uint32_t nTimerID, uint64_t nInterVal, NFTimerObj *ha
 		//错误，调用次数为0，需要打印日志
 		return false;
 	}
-	if (nInterVal < TIMER_AXIS_CHECK_FREQUENCE )
+	if (nInterVal < TIMER_AXIS_CHECK_FREQUENCE)
 	{
 		nInterVal = TIMER_AXIS_CHECK_FREQUENCE;
 	}
 	if (nInterVal >= 2000)
 	{
 		//间隔大于两秒的当做秒刻度时间轴
-		return SetTimerSec(nTimerID,nInterVal / 1000,handler,nCallCount);
+		return SetTimerSec(nTimerID, nInterVal / 1000, handler, nCallCount);
 	}
 
 	bool bNeedFind = true;
@@ -453,7 +441,7 @@ bool NFTimerAxis::SetTimer(uint32_t nTimerID, uint64_t nInterVal, NFTimerObj *ha
 				return false;
 			}
 		}
-	}	
+	}
 
 	CheckTick();
 	pTimer = new Timer();
@@ -515,7 +503,6 @@ bool NFTimerAxis::KillTimer(uint32_t nTimerID, NFTimerObj *handler)
 	}
 
 	return false;
-
 }
 
 //关闭所有定时器
@@ -600,7 +587,6 @@ void NFTimerAxis::Update()
 	uint32_t start_grid = ((uint32_t)(m_nLastTick - m_nInitTick) / TIME_GRID) % m_TimerAxis.size();
 	uint32_t cur_grid = ((uint32_t)(now - m_nInitTick) / TIME_GRID) % m_TimerAxis.size();
 
-
 	m_nLastTick = now;
 
 	uint32_t i = start_grid;
@@ -626,7 +612,7 @@ void NFTimerAxis::Update()
 				it = TimerList->erase(it);
 				continue;
 			}
-			if (pTimer->nCallCount== 0)
+			if (pTimer->nCallCount == 0)
 			{
 				it = TimerList->erase(it);
 				NFSafeDelete(pTimer);
@@ -678,7 +664,6 @@ void NFTimerAxis::Update()
 				}
 
 				continue;
-
 			} // end of if ((uint32_t)(now - pTimer->nLastTick) >= pTimer->nInterVal)
 
 			++it;
@@ -693,13 +678,10 @@ void NFTimerAxis::Update()
 		{
 			i = (i + 1) % m_TimerAxis.size();
 		}
-
-		
 	} while (bFlag);
 
 	//更新秒定时器
 	UpdateSec();
-
 }
 
 void NFTimerAxis::UpdateSec()
@@ -714,8 +696,6 @@ void NFTimerAxis::UpdateSec()
 	uint32_t start_grid = ((uint32_t)(m_nLastSec - m_nInitSec)) % m_TimerAxisSec.size();
 	uint32_t cur_grid = ((uint32_t)(now - m_nInitSec)) % m_TimerAxisSec.size();
 
-
-
 	m_nLastSec = now;
 
 	uint32_t i = start_grid;
@@ -728,7 +708,6 @@ void NFTimerAxis::UpdateSec()
 		iCount++;
 		if (iCount == 60)
 		{
-			
 		}
 		// 遍历当前时间刻度中的所有待触发定时器
 		TIMER_LIST * TimerList = m_TimerAxisSec[i];
@@ -766,10 +745,10 @@ void NFTimerAxis::UpdateSec()
 				}
 
 				pTimer->nLastTick = now;
-			    if (pTimer->nCallCount > 0)
-			    {
+				if (pTimer->nCallCount > 0)
+				{
 					pTimer->nCallCount -= 1;
-			    }
+				}
 
 				if (pTimer->nCallCount == 0)
 				{
@@ -793,9 +772,7 @@ void NFTimerAxis::UpdateSec()
 					pTimer->pos = --m_TimerAxisSec[pTimer->nGridIndex]->end();
 				}
 
-
 				continue;
-
 			}
 
 			++it;
@@ -809,8 +786,7 @@ void NFTimerAxis::UpdateSec()
 		else
 		{
 			i = (i + 1) % m_TimerAxisSec.size();
-		}		
-
+		}
 	} while (bFlag);
 }
 

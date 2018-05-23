@@ -45,10 +45,8 @@ public:
 	}
 };
 
-
 typedef std::unordered_map<std::string, ResourceStatItem> ResourceStatResult;
 typedef std::unordered_map<std::string, MessageStatItem> MessageStatResult;
-
 
 /// @brief 基础的统计模块，只提供数据的记录和计算，数据的使用交给调用者
 class _NFExport NFStat {

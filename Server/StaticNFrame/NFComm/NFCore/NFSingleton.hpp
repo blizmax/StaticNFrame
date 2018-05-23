@@ -14,63 +14,62 @@
 template <class T>
 class NFSingleton
 {
-
 public:
 
-    NFSingleton()
-    {
-        //assert( !m_instance );
+	NFSingleton()
+	{
+		//assert( !m_instance );
 
 #if defined( _MSC_VER ) && _MSC_VER < 1200
-        int offset = (int)(T*)1 - (int)(Singleton <T>*)(T*)1;
-        m_pInstance = (T*)((int)this + offset);
+		int offset = (int)(T*)1 - (int)(Singleton <T>*)(T*)1;
+		m_pInstance = (T*)((int)this + offset);
 #else
-        m_pInstance = static_cast< T* >(this);
+		m_pInstance = static_cast<T*>(this);
 #endif
-    }
+	}
 
-    ~NFSingleton()
-    {
-    }
+	~NFSingleton()
+	{
+	}
 
 public:
 
-    static T* GetSingletonPtr()
-    {
-        if (NULL == m_pInstance)
-        {
-            m_pInstance = new T;
-        }
+	static T* GetSingletonPtr()
+	{
+		if (NULL == m_pInstance)
+		{
+			m_pInstance = new T;
+		}
 
-        return m_pInstance;
-    }
+		return m_pInstance;
+	}
 
-    static T& GetSingletonRef()
-    {
-        return *GetSingletonPtr();
-    }
+	static T& GetSingletonRef()
+	{
+		return *GetSingletonPtr();
+	}
 
-    static T* Instance()
-    {
-        return GetSingletonPtr();
-    }
+	static T* Instance()
+	{
+		return GetSingletonPtr();
+	}
 
-    static T& InstanceRef()
-    {
-        return GetSingletonRef();
-    }
+	static T& InstanceRef()
+	{
+		return GetSingletonRef();
+	}
 
-    static void ReleaseInstance()
-    {
+	static void ReleaseInstance()
+	{
 		if (m_pInstance)
 		{
 			delete m_pInstance;
 			m_pInstance = NULL;
 		}
-    }
+	}
 
 private:
-    static T* m_pInstance;
+	static T* m_pInstance;
 };
 
 template <class T>

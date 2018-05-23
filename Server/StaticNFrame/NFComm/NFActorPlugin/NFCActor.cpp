@@ -10,15 +10,15 @@
 #include "NFComm/NFPluginModule/NFIPluginManager.h"
 
 NFCActor::NFCActor(Theron::Framework& framework, NFIActorModule* pModule)
-    : NFIActor(framework)
+	: NFIActor(framework)
 {
-    m_pActorModule = pModule;
+	m_pActorModule = pModule;
 }
 
 NFCActor::~NFCActor()
 {
-	NFIComponent* pCompnent = nullptr; 
-	
+	NFIComponent* pCompnent = nullptr;
+
 	for (auto it = mxComponent.begin(); it != mxComponent.end(); it++)
 	{
 		pCompnent = it->second;
@@ -33,8 +33,8 @@ NFCActor::~NFCActor()
 	}
 
 	mxComponent.clear();
-    mxProcessFuntor.clear();
-    mxEndProcessFuntor.clear();
+	mxProcessFuntor.clear();
+	mxEndProcessFuntor.clear();
 }
 
 void NFCActor::HandlerEx(const NFIActorMessage& message, const Theron::Address& from)
@@ -49,13 +49,13 @@ void NFCActor::AddComponent(NFIComponent* pComponent)
 {
 	if (pComponent == nullptr) return;
 
-    mxComponent.emplace(pComponent->GetComponentName(), pComponent);
-    pComponent->SetActor(this);
+	mxComponent.emplace(pComponent->GetComponentName(), pComponent);
+	pComponent->SetActor(this);
 
-    pComponent->Awake();
-    pComponent->Init();
-    pComponent->AfterInit();
-    pComponent->ReadyExecute();
+	pComponent->Awake();
+	pComponent->Init();
+	pComponent->AfterInit();
+	pComponent->ReadyExecute();
 }
 
 NFIComponent* NFCActor::FindComponent(const std::string& strComponentName)
@@ -70,89 +70,89 @@ NFIComponent* NFCActor::FindComponent(const std::string& strComponentName)
 
 bool NFCActor::AddBeginFunc(const int nSubMsgID, ACTOR_PROCESS_FUNCTOR xBeginFunctor)
 {
-    if (mxProcessFuntor.find(nSubMsgID) != mxProcessFuntor.end())
-    {
-        return false;
-    }
+	if (mxProcessFuntor.find(nSubMsgID) != mxProcessFuntor.end())
+	{
+		return false;
+	}
 
-    mxProcessFuntor.emplace(nSubMsgID, xBeginFunctor);
-    return true;
+	mxProcessFuntor.emplace(nSubMsgID, xBeginFunctor);
+	return true;
 }
 
 bool NFCActor::AddEndFunc(const int nSubMsgID, ACTOR_PROCESS_FUNCTOR xEndFunctor)
 {
-    if (mxEndProcessFuntor.find(nSubMsgID) != mxEndProcessFuntor.end())
-    {
-        return false;
-    }
+	if (mxEndProcessFuntor.find(nSubMsgID) != mxEndProcessFuntor.end())
+	{
+		return false;
+	}
 
-    if (nSubMsgID >= 0)
-    {
-        mxEndProcessFuntor.emplace(nSubMsgID, xEndFunctor);
-    }
-    else
-    {
-        mxDefaultEndProcessFuntor = xEndFunctor;
-    }
+	if (nSubMsgID >= 0)
+	{
+		mxEndProcessFuntor.emplace(nSubMsgID, xEndFunctor);
+	}
+	else
+	{
+		mxDefaultEndProcessFuntor = xEndFunctor;
+	}
 
-    return true;
+	return true;
 }
 
 void NFCActor::Handler(const NFIActorMessage& message, const Theron::Address& from)
 {
-    std::string strData = message.data;
+	std::string strData = message.data;
 
 	auto it = mxProcessFuntor.find(message.nMsgID);
 	if (it != mxProcessFuntor.end())
 	{
 		it->second(message.self, message.nFormActor, message.nMsgID, strData);
 	}
-    else
-    {
-        for (auto it = mxComponent.begin(); it != mxComponent.end(); it++)
-        {
+	else
+	{
+		for (auto it = mxComponent.begin(); it != mxComponent.end(); it++)
+		{
 			NFIComponent* pComponent = it->second;
-            if (pComponent && pComponent->Enable())
-            {
-                pComponent->OnASyncEvent(message.self, message.nFormActor, message.nMsgID, strData);
-            }
-        }
-    }
+			if (pComponent && pComponent->Enable())
+			{
+				pComponent->OnASyncEvent(message.self, message.nFormActor, message.nMsgID, strData);
+			}
+		}
+	}
 
-    ////////////////////////////////////////////////////////
-    // must return message
-    NFIActorMessage xReturnMessage;
+	////////////////////////////////////////////////////////
+	// must return message
+	NFIActorMessage xReturnMessage;
 
 	auto iter = mxEndProcessFuntor.find(message.nMsgID);
-    if (iter != mxEndProcessFuntor.end())
-    {
-        xReturnMessage.xEndFuncptr = iter->second;
-    }
-    else
-    {
-        //default end function
-        if (mxDefaultEndProcessFuntor != nullptr)
-        {
-            xReturnMessage.xEndFuncptr = mxDefaultEndProcessFuntor;
-        }
-    }
+	if (iter != mxEndProcessFuntor.end())
+	{
+		xReturnMessage.xEndFuncptr = iter->second;
+	}
+	else
+	{
+		//default end function
+		if (mxDefaultEndProcessFuntor != nullptr)
+		{
+			xReturnMessage.xEndFuncptr = mxDefaultEndProcessFuntor;
+		}
+	}
 
-    //如果返回函数不存在，就不再发消息给Main Actor, 减少后面的COPY
-    if (xReturnMessage.xEndFuncptr == nullptr)
-    {
-        return;
-    }
+	//如果返回函数不存在，就不再发消息给Main Actor, 减少后面的COPY
+	if (xReturnMessage.xEndFuncptr == nullptr)
+	{
+		return;
+	}
 
-    xReturnMessage.msgType = NFIActorMessage::ACTOR_MSG_TYPE_END_FUNC;
-    xReturnMessage.nMsgID = message.nMsgID;
-    xReturnMessage.data = std::move(strData);       //减少COPY
-    xReturnMessage.self = message.self;
-    xReturnMessage.nFormActor = this->GetAddress().AsInteger();
+	xReturnMessage.msgType = NFIActorMessage::ACTOR_MSG_TYPE_END_FUNC;
+	xReturnMessage.nMsgID = message.nMsgID;
+	xReturnMessage.data = std::move(strData);       //减少COPY
+	xReturnMessage.self = message.self;
+	xReturnMessage.nFormActor = this->GetAddress().AsInteger();
 
-    Send(xReturnMessage, from);
+	Send(xReturnMessage, from);
 }
 
 bool NFCActor::SendMsg(const Theron::Address& address, const NFIActorMessage& message)
 {
-    return Send(message, address);
+	return Send(message, address);
 }

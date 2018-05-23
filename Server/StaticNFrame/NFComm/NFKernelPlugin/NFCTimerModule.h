@@ -14,18 +14,18 @@
 class NFCTimerModule : public NFITimerModule
 {
 public:
-    explicit NFCTimerModule(NFIPluginManager* p);
+	explicit NFCTimerModule(NFIPluginManager* p);
 	virtual ~NFCTimerModule() { }
 public:
-    virtual bool Init();
+	virtual bool Init();
 
-    virtual bool AfterInit();
+	virtual bool AfterInit();
 
-    virtual bool Execute();
+	virtual bool Execute();
 
-    virtual bool BeforeShut();
+	virtual bool BeforeShut();
 
-    virtual bool Shut();
+	virtual bool Shut();
 public:
 	//…Ë÷√∂® ±∆˜
 	virtual bool SetTimer(uint32_t nTimerID, uint64_t nInterVal, NFTimerObj *handler, uint32_t nCallCount = INFINITY_CALL);

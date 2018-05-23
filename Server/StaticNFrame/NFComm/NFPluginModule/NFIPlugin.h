@@ -20,7 +20,7 @@
     assert((TIsDerived<classBaseName, NFIModule>::Result)); \
     assert((TIsDerived<className, classBaseName>::Result)); \
     pManager->RegisterAloneModule(#classBaseName, [] (NFIPluginManager* pMan) ->NFIModule* { return NF_NEW className(pMan);}); \
-     
+
 #define REGISTER_MODULE(pManager, classBaseName, className)  \
     assert((TIsDerived<classBaseName, NFIModule>::Result)); \
     assert((TIsDerived<className, classBaseName>::Result)); \
@@ -33,7 +33,6 @@
     dynamic_cast<NFIModule*>( pManager->FindModule( typeid(classBaseName).name() )); \
 	pManager->RemoveModule( #classBaseName ); RemoveModule( #classBaseName ); delete pUnRegisterModule##className;
 
-
 #define REGISTER_STATIC_PLUGIN(pManager, className)  pManager->RegisteredStaticPlugin(#className, [] (NFIPluginManager* pMan) ->NFIPlugin* { return NF_NEW className(pMan);});
 
 class NFIPluginManager;
@@ -41,17 +40,16 @@ class NFIPluginManager;
 class NFIPlugin : public NFIModule,
 	public std::map<std::string, NFIModule>
 {
-
 public:
-    NFIPlugin()
-    {
-    }
+	NFIPlugin()
+	{
+	}
 
-    virtual const int GetPluginVersion() = 0;
+	virtual const int GetPluginVersion() = 0;
 
-    virtual const std::string GetPluginName() = 0;
+	virtual const std::string GetPluginName() = 0;
 
-    virtual void Install() = 0;
+	virtual void Install() = 0;
 
 	virtual bool Awake()
 	{
@@ -69,10 +67,10 @@ public:
 			}
 		}
 		return true;
-    }
+	}
 
-    virtual bool Init()
-    {
+	virtual bool Init()
+	{
 		for (int i = 0; i < (int)m_vecModule.size(); i++)
 		{
 			NFIModule* pModule = m_vecModule[i];;
@@ -87,10 +85,10 @@ public:
 			}
 		}
 		return true;
-    }
+	}
 
-    virtual bool AfterInit()
-    {
+	virtual bool AfterInit()
+	{
 		for (int i = 0; i < (int)m_vecModule.size(); i++)
 		{
 			NFIModule* pModule = m_vecModule[i];
@@ -105,10 +103,10 @@ public:
 			}
 		}
 		return true;
-    }
+	}
 
-    virtual bool CheckConfig()
-    {
+	virtual bool CheckConfig()
+	{
 		for (int i = 0; i < (int)m_vecModule.size(); i++)
 		{
 			NFIModule* pModule = m_vecModule[i];
@@ -123,11 +121,11 @@ public:
 			}
 		}
 
-        return true;
-    }
+		return true;
+	}
 
-    virtual bool ReadyExecute()
-    {
+	virtual bool ReadyExecute()
+	{
 		for (int i = 0; i < (int)m_vecModule.size(); i++)
 		{
 			NFIModule* pModule = m_vecModule[i];
@@ -142,11 +140,11 @@ public:
 			}
 		}
 
-        return true;
-    }
+		return true;
+	}
 
-    virtual bool Execute()
-    {
+	virtual bool Execute()
+	{
 		for (int i = 0; i < (int)m_vecModule.size(); i++)
 		{
 			NFIModule* pModule = m_vecModule[i];
@@ -161,11 +159,11 @@ public:
 			}
 		}
 
-        return true;
-    }
+		return true;
+	}
 
-    virtual bool BeforeShut()
-    {
+	virtual bool BeforeShut()
+	{
 		for (int i = 0; i < (int)m_vecModule.size(); i++)
 		{
 			NFIModule* pModule = m_vecModule[i];
@@ -179,11 +177,11 @@ public:
 				}
 			}
 		}
-        return true;
-    }
+		return true;
+	}
 
-    virtual bool Shut()
-    {
+	virtual bool Shut()
+	{
 		for (int i = 0; i < (int)m_vecModule.size(); i++)
 		{
 			NFIModule* pModule = m_vecModule[i];
@@ -198,11 +196,11 @@ public:
 			}
 		}
 
-        return true;
-    }
+		return true;
+	}
 
-    virtual bool Finalize()
-    {
+	virtual bool Finalize()
+	{
 		for (int i = 0; i < (int)m_vecModule.size(); i++)
 		{
 			NFIModule* pModule = m_vecModule[i];
@@ -217,11 +215,11 @@ public:
 			}
 		}
 
-        return true;
-    }
+		return true;
+	}
 
-    virtual bool OnReloadPlugin()
-    {
+	virtual bool OnReloadPlugin()
+	{
 		for (int i = 0; i < (int)m_vecModule.size(); i++)
 		{
 			NFIModule* pModule = m_vecModule[i];
@@ -236,10 +234,10 @@ public:
 			}
 		}
 
-        return true;
-    }
+		return true;
+	}
 
-    virtual void Uninstall() = 0;
+	virtual void Uninstall() = 0;
 
 	virtual void AddModule(const std::string& moduleName, NFIModule* pModule)
 	{

@@ -53,7 +53,7 @@ bool NFCPluginManager::ReleaseSingletion()
 	//ÊÍ·ÅLOG
 	NFLogMgr::Instance()->UnInit();
 	NFLogMgr::Instance()->ReleaseInstance();
-	
+
 	return true;
 }
 

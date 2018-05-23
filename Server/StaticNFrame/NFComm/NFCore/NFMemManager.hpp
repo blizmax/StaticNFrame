@@ -43,33 +43,27 @@
 
 #endif
 
-class NFMemManager: public NFSingleton<NFMemManager>
+class NFMemManager : public NFSingleton<NFMemManager>
 {
 public:
-    NFMemManager()
-    {
+	NFMemManager()
+	{
+	}
 
-    }
-
-    ~NFMemManager()
-    {
-
-    }
-
+	~NFMemManager()
+	{
+	}
 
 public:
-    void FreeMem()
-    {
-
+	void FreeMem()
+	{
 #ifdef NF_USE_TCMALLOC
 
-        MallocExtension::instance()->ReleaseFreeMemory();
+		MallocExtension::instance()->ReleaseFreeMemory();
 #endif
-
-    }
+	}
 
 private:
-
 };
 
 #endif

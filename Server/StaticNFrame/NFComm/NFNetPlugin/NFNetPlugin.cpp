@@ -14,28 +14,26 @@
 
 NF_EXPORT void DllStartPlugin(NFIPluginManager* pm)
 {
-    CREATE_PLUGIN(pm, NFNetPlugin)
-
+	CREATE_PLUGIN(pm, NFNetPlugin)
 };
 
 NF_EXPORT void DllStopPlugin(NFIPluginManager* pm)
 {
-    DESTROY_PLUGIN(pm, NFNetPlugin)
+	DESTROY_PLUGIN(pm, NFNetPlugin)
 };
 
 #endif
-
 
 //////////////////////////////////////////////////////////////////////////
 
 const int NFNetPlugin::GetPluginVersion()
 {
-    return 0;
+	return 0;
 }
 
 const std::string NFNetPlugin::GetPluginName()
 {
-    return GET_CLASS_NAME(NFNetPlugin);
+	return GET_CLASS_NAME(NFNetPlugin);
 }
 
 void NFNetPlugin::Install()

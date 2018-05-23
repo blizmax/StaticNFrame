@@ -29,7 +29,7 @@
 #include <string>
 #include <cstring>
 
-// File access utility class which provides many help methods 
+// File access utility class which provides many help methods
 // to make it easy to do operations against file.
 class _NFExport NFFileUtility {
 public:
@@ -224,7 +224,6 @@ inline bool NFFileUtility::IsAbsolutePath(const string& path) {
 #else
 	return path[0] == '/';
 #endif
-
 }
 
 inline string NFFileUtility::GetAbsolutePathName(const string& strPathName) {
@@ -241,7 +240,6 @@ inline string NFFileUtility::GetAbsolutePathName(const string& strPathName) {
 		getcwd(szDir, _MAX_PATH);
 		strTmp = string(szDir) + ("/") + strTmp;
 #endif
-
 	}
 
 	// convert file name here.
@@ -393,7 +391,6 @@ inline bool NFFileUtility::Rmdir(const char* strDirName) {
 	{
 		return true;
 	}
-
 
 	return false;
 }

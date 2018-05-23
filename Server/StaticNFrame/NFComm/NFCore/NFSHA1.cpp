@@ -50,11 +50,10 @@
 
 #include "NFSHA1.h"
 
-
 NFSHA1::NFSHA1()
 {
 	memset(Message_Block, 0, NF_ARRAYSIZE(Message_Block));
-    SHAInit();
+	SHAInit();
 }
 
 NFSHA1::~NFSHA1()
@@ -63,122 +62,121 @@ NFSHA1::~NFSHA1()
 
 void NFSHA1::SHAInit()
 {
-    Length_Low                = 0;
-    Length_High                = 0;
-    Message_Block_Index        = 0;
+	Length_Low = 0;
+	Length_High = 0;
+	Message_Block_Index = 0;
 
-    H[0]        = 0x67452301;
-    H[1]        = 0xEFCDAB89;
-    H[2]        = 0x98BADCFE;
-    H[3]        = 0x10325476;
-    H[4]        = 0xC3D2E1F0;
+	H[0] = 0x67452301;
+	H[1] = 0xEFCDAB89;
+	H[2] = 0x98BADCFE;
+	H[3] = 0x10325476;
+	H[4] = 0xC3D2E1F0;
 }
 
 // space of lpSHACode_Output must be >= 20 bytes;
 bool NFSHA1::Encode2Hex(const char* lpData_Input, char* lpSHACode_Output)
 {
-    if (lpData_Input == NULL || lpSHACode_Output == NULL)
-    {
-        return false;
-    }
+	if (lpData_Input == NULL || lpSHACode_Output == NULL)
+	{
+		return false;
+	}
 
-    SHAInit();
+	SHAInit();
 
-    // One times analyse 64Bytes, 512 bits.
-    int nInputLen = strlen(lpData_Input);
-    int nDealDataLen = 0;                            //    the length of can-deal-data, this times;
-    for (int pos = 0 ; pos <= nInputLen ; pos += 64)
-    {
-        if (nInputLen - pos >= 64)
-        {
-            nDealDataLen = 64;                        // input-data is enough fill 64bytes,
-            memset(Message_Block, 0, sizeof(Message_Block));
-            memcpy(Message_Block, lpData_Input + pos, nDealDataLen);
+	// One times analyse 64Bytes, 512 bits.
+	int nInputLen = strlen(lpData_Input);
+	int nDealDataLen = 0;                            //    the length of can-deal-data, this times;
+	for (int pos = 0; pos <= nInputLen; pos += 64)
+	{
+		if (nInputLen - pos >= 64)
+		{
+			nDealDataLen = 64;                        // input-data is enough fill 64bytes,
+			memset(Message_Block, 0, sizeof(Message_Block));
+			memcpy(Message_Block, lpData_Input + pos, nDealDataLen);
 
-            AddDataLen(nDealDataLen);
-            ProcessMessageBlock();
-            AddDataLen(0);
-        }
-        else
-        {
-            nDealDataLen = nInputLen - pos;
-            // input-data isn't enough fill 64bytes,need fill 0x8000000000 and lenth of real-data.
-            memset(Message_Block, 0, sizeof(Message_Block));
-            memcpy(Message_Block, lpData_Input + pos, nDealDataLen);
+			AddDataLen(nDealDataLen);
+			ProcessMessageBlock();
+			AddDataLen(0);
+		}
+		else
+		{
+			nDealDataLen = nInputLen - pos;
+			// input-data isn't enough fill 64bytes,need fill 0x8000000000 and lenth of real-data.
+			memset(Message_Block, 0, sizeof(Message_Block));
+			memcpy(Message_Block, lpData_Input + pos, nDealDataLen);
 
-            AddDataLen(nDealDataLen);
-            PadMessage();
-        }
-    }
+			AddDataLen(nDealDataLen);
+			PadMessage();
+		}
+	}
 
-    // copy result to output
-    for (int i = 0; i < 5; i++)
-    {
-        sprintf(&(lpSHACode_Output[8 * i]), "%08x", H[i]); // NOLINT
-    }
+	// copy result to output
+	for (int i = 0; i < 5; i++)
+	{
+		sprintf(&(lpSHACode_Output[8 * i]), "%08x", H[i]); // NOLINT
+	}
 
-    return true;
+	return true;
 }
 
 bool NFSHA1::Encode2Ascii(const char* lpData_Input, char* lpSHACode_Output)
 {
-    if (lpData_Input == NULL || lpSHACode_Output == NULL)
-    {
-        return false;
-    }
+	if (lpData_Input == NULL || lpSHACode_Output == NULL)
+	{
+		return false;
+	}
 
-    SHAInit();
+	SHAInit();
 
-    // One times analyse 64Bytes, 512 bits.
-    int nInputLen = strlen(lpData_Input);
-    int nDealDataLen = 0;                            //    the length of can-deal-data, this times;
-    for (int pos = 0 ; pos <= nInputLen; pos += 64)
-    {
-        if (nInputLen - pos >= 64)
-        {
-            nDealDataLen = 64;                        // input-data is enough fill 64bytes,
-            memset(Message_Block, 0, sizeof(Message_Block));
-            memcpy(Message_Block, lpData_Input + pos, nDealDataLen);
+	// One times analyse 64Bytes, 512 bits.
+	int nInputLen = strlen(lpData_Input);
+	int nDealDataLen = 0;                            //    the length of can-deal-data, this times;
+	for (int pos = 0; pos <= nInputLen; pos += 64)
+	{
+		if (nInputLen - pos >= 64)
+		{
+			nDealDataLen = 64;                        // input-data is enough fill 64bytes,
+			memset(Message_Block, 0, sizeof(Message_Block));
+			memcpy(Message_Block, lpData_Input + pos, nDealDataLen);
 
-            AddDataLen(nDealDataLen);
-            ProcessMessageBlock();
-            AddDataLen(0);
-        }
-        else
-        {
-            nDealDataLen = nInputLen - pos;
-            // input-data isn't enough fill 64bytes,need fill 0x8000000000 and lenth of real-data.
-            memset(Message_Block, 0, sizeof(Message_Block));
-            memcpy(Message_Block, lpData_Input + pos, nDealDataLen);
+			AddDataLen(nDealDataLen);
+			ProcessMessageBlock();
+			AddDataLen(0);
+		}
+		else
+		{
+			nDealDataLen = nInputLen - pos;
+			// input-data isn't enough fill 64bytes,need fill 0x8000000000 and lenth of real-data.
+			memset(Message_Block, 0, sizeof(Message_Block));
+			memcpy(Message_Block, lpData_Input + pos, nDealDataLen);
 
-            AddDataLen(nDealDataLen);
-            PadMessage();
-        }
-    }
+			AddDataLen(nDealDataLen);
+			PadMessage();
+		}
+	}
 
-    // copy result to output
-    for (int i = 0; i < 5; i++)
-    {
-        memcpy(lpSHACode_Output + i * 4, (char*)&H[i] + 3, 1); // NOLINT
-        memcpy(lpSHACode_Output + i * 4 + 1, (char*)&H[i] + 2, 1); // NOLINT
-        memcpy(lpSHACode_Output + i * 4 + 2, (char*)&H[i] + 1, 1); // NOLINT
-        memcpy(lpSHACode_Output + i * 4 + 3, (char*)&H[i] + 0, 1); // NOLINT
-    }
+	// copy result to output
+	for (int i = 0; i < 5; i++)
+	{
+		memcpy(lpSHACode_Output + i * 4, (char*)&H[i] + 3, 1); // NOLINT
+		memcpy(lpSHACode_Output + i * 4 + 1, (char*)&H[i] + 2, 1); // NOLINT
+		memcpy(lpSHACode_Output + i * 4 + 2, (char*)&H[i] + 1, 1); // NOLINT
+		memcpy(lpSHACode_Output + i * 4 + 3, (char*)&H[i] + 0, 1); // NOLINT
+	}
 
-    return true;
+	return true;
 }
 
 void NFSHA1::AddDataLen(int nDealDataLen)
 {
-    Message_Block_Index = nDealDataLen;
+	Message_Block_Index = nDealDataLen;
 
-    if ((Length_Low += ((unsigned int)nDealDataLen << 3)) < ((unsigned int)nDealDataLen << 3))
-    {
-        Length_High++;
-    }
-    Length_High += ((unsigned int)nDealDataLen >> 29);
+	if ((Length_Low += ((unsigned int)nDealDataLen << 3)) < ((unsigned int)nDealDataLen << 3))
+	{
+		Length_High++;
+	}
+	Length_High += ((unsigned int)nDealDataLen >> 29);
 }
-
 
 /*
  *    ProcessMessageBlock
@@ -201,90 +199,90 @@ void NFSHA1::AddDataLen(int nDealDataLen)
  */
 void NFSHA1::ProcessMessageBlock()
 {
-    const unsigned K[] =                   // Constants defined for SHA-1
-    {
-        0x5A827999,
-        0x6ED9EBA1,
-        0x8F1BBCDC,
-        0xCA62C1D6
-    };
-    int         t;                            // Loop counter
-    unsigned     temp;                        // Temporary word value
-    unsigned    W[80];                        // Word sequence
-    unsigned    A, B, C, D, E;                // Word buffers
+	const unsigned K[] =                   // Constants defined for SHA-1
+	{
+		0x5A827999,
+		0x6ED9EBA1,
+		0x8F1BBCDC,
+		0xCA62C1D6
+	};
+	int         t;                            // Loop counter
+	unsigned     temp;                        // Temporary word value
+	unsigned    W[80];                        // Word sequence
+	unsigned    A, B, C, D, E;                // Word buffers
 
-    /*
-     *    Initialize the first 16 words in the array W
-     */
-    for (t = 0 ; t < 16 ; t++)
-    {
-        W[t] = ((unsigned) Message_Block[t * 4]) << 24;
-        W[t] |= ((unsigned) Message_Block[t * 4 + 1]) << 16;
-        W[t] |= ((unsigned) Message_Block[t * 4 + 2]) << 8;
-        W[t] |= ((unsigned) Message_Block[t * 4 + 3]);
-    }
+	/*
+	 *    Initialize the first 16 words in the array W
+	 */
+	for (t = 0; t < 16; t++)
+	{
+		W[t] = ((unsigned)Message_Block[t * 4]) << 24;
+		W[t] |= ((unsigned)Message_Block[t * 4 + 1]) << 16;
+		W[t] |= ((unsigned)Message_Block[t * 4 + 2]) << 8;
+		W[t] |= ((unsigned)Message_Block[t * 4 + 3]);
+	}
 
-    for (t = 16 ; t < 80 ; t++)
-    {
-        W[t] = CircularShift(1, W[t - 3] ^ W[t - 8] ^ W[t - 14] ^ W[t - 16]);
-    }
+	for (t = 16; t < 80; t++)
+	{
+		W[t] = CircularShift(1, W[t - 3] ^ W[t - 8] ^ W[t - 14] ^ W[t - 16]);
+	}
 
-    A = H[0];
-    B = H[1];
-    C = H[2];
-    D = H[3];
-    E = H[4];
+	A = H[0];
+	B = H[1];
+	C = H[2];
+	D = H[3];
+	E = H[4];
 
-    for (t = 0 ; t < 20 ; t++)
-    {
-        temp = CircularShift(5, A) + ((B & C) | ((~B) & D)) + E + W[t] + K[0];
-        temp &= 0xFFFFFFFF;
-        E = D;
-        D = C;
-        C = CircularShift(30, B);
-        B = A;
-        A = temp;
-    }
+	for (t = 0; t < 20; t++)
+	{
+		temp = CircularShift(5, A) + ((B & C) | ((~B) & D)) + E + W[t] + K[0];
+		temp &= 0xFFFFFFFF;
+		E = D;
+		D = C;
+		C = CircularShift(30, B);
+		B = A;
+		A = temp;
+	}
 
-    for (t = 20 ; t < 40 ; t++)
-    {
-        temp = CircularShift(5, A) + (B ^ C ^ D) + E + W[t] + K[1];
-        temp &= 0xFFFFFFFF;
-        E = D;
-        D = C;
-        C = CircularShift(30, B);
-        B = A;
-        A = temp;
-    }
+	for (t = 20; t < 40; t++)
+	{
+		temp = CircularShift(5, A) + (B ^ C ^ D) + E + W[t] + K[1];
+		temp &= 0xFFFFFFFF;
+		E = D;
+		D = C;
+		C = CircularShift(30, B);
+		B = A;
+		A = temp;
+	}
 
-    for (t = 40 ; t < 60 ; t++)
-    {
-        temp = CircularShift(5, A) +
-               ((B & C) | (B & D) | (C & D)) + E + W[t] + K[2];
-        temp &= 0xFFFFFFFF;
-        E = D;
-        D = C;
-        C = CircularShift(30, B);
-        B = A;
-        A = temp;
-    }
+	for (t = 40; t < 60; t++)
+	{
+		temp = CircularShift(5, A) +
+			((B & C) | (B & D) | (C & D)) + E + W[t] + K[2];
+		temp &= 0xFFFFFFFF;
+		E = D;
+		D = C;
+		C = CircularShift(30, B);
+		B = A;
+		A = temp;
+	}
 
-    for (t = 60 ; t < 80; t++)
-    {
-        temp = CircularShift(5, A) + (B ^ C ^ D) + E + W[t] + K[3];
-        temp &= 0xFFFFFFFF;
-        E = D;
-        D = C;
-        C = CircularShift(30, B);
-        B = A;
-        A = temp;
-    }
+	for (t = 60; t < 80; t++)
+	{
+		temp = CircularShift(5, A) + (B ^ C ^ D) + E + W[t] + K[3];
+		temp &= 0xFFFFFFFF;
+		E = D;
+		D = C;
+		C = CircularShift(30, B);
+		B = A;
+		A = temp;
+	}
 
-    H[0] = (H[0] + A) & 0xFFFFFFFF;
-    H[1] = (H[1] + B) & 0xFFFFFFFF;
-    H[2] = (H[2] + C) & 0xFFFFFFFF;
-    H[3] = (H[3] + D) & 0xFFFFFFFF;
-    H[4] = (H[4] + E) & 0xFFFFFFFF;
+	H[0] = (H[0] + A) & 0xFFFFFFFF;
+	H[1] = (H[1] + B) & 0xFFFFFFFF;
+	H[2] = (H[2] + C) & 0xFFFFFFFF;
+	H[3] = (H[3] + D) & 0xFFFFFFFF;
+	H[4] = (H[4] + E) & 0xFFFFFFFF;
 }
 
 /*
@@ -310,50 +308,49 @@ void NFSHA1::ProcessMessageBlock()
  */
 void NFSHA1::PadMessage()
 {
-    /*
-     *    Check to see if the current message block is too small to hold
-     *    the initial padding bits and length.  If so, we will pad the
-     *    block, process it, and then continue padding into a second block.
-     */
-    if (Message_Block_Index > 55)
-    {
-        Message_Block[Message_Block_Index++] = 0x80;
-        while (Message_Block_Index < 64)
-        {
-            Message_Block[Message_Block_Index++] = 0;
-        }
+	/*
+	 *    Check to see if the current message block is too small to hold
+	 *    the initial padding bits and length.  If so, we will pad the
+	 *    block, process it, and then continue padding into a second block.
+	 */
+	if (Message_Block_Index > 55)
+	{
+		Message_Block[Message_Block_Index++] = 0x80;
+		while (Message_Block_Index < 64)
+		{
+			Message_Block[Message_Block_Index++] = 0;
+		}
 
-        ProcessMessageBlock();
+		ProcessMessageBlock();
 
-        while (Message_Block_Index < 56)
-        {
-            Message_Block[Message_Block_Index++] = 0;
-        }
-    }
-    else
-    {
-        Message_Block[Message_Block_Index++] = 0x80;
-        while (Message_Block_Index < 56)
-        {
-            Message_Block[Message_Block_Index++] = 0;
-        }
-    }
+		while (Message_Block_Index < 56)
+		{
+			Message_Block[Message_Block_Index++] = 0;
+		}
+	}
+	else
+	{
+		Message_Block[Message_Block_Index++] = 0x80;
+		while (Message_Block_Index < 56)
+		{
+			Message_Block[Message_Block_Index++] = 0;
+		}
+	}
 
-    /*
-     *    Store the message length as the last 8 octets
-     */
-    Message_Block[56] = (Length_High >> 24) & 0xFF;
-    Message_Block[57] = (Length_High >> 16) & 0xFF;
-    Message_Block[58] = (Length_High >> 8) & 0xFF;
-    Message_Block[59] = (Length_High) & 0xFF;
-    Message_Block[60] = (Length_Low >> 24) & 0xFF;
-    Message_Block[61] = (Length_Low >> 16) & 0xFF;
-    Message_Block[62] = (Length_Low >> 8) & 0xFF;
-    Message_Block[63] = (Length_Low) & 0xFF;
+	/*
+	 *    Store the message length as the last 8 octets
+	 */
+	Message_Block[56] = (Length_High >> 24) & 0xFF;
+	Message_Block[57] = (Length_High >> 16) & 0xFF;
+	Message_Block[58] = (Length_High >> 8) & 0xFF;
+	Message_Block[59] = (Length_High)& 0xFF;
+	Message_Block[60] = (Length_Low >> 24) & 0xFF;
+	Message_Block[61] = (Length_Low >> 16) & 0xFF;
+	Message_Block[62] = (Length_Low >> 8) & 0xFF;
+	Message_Block[63] = (Length_Low)& 0xFF;
 
-    ProcessMessageBlock();
+	ProcessMessageBlock();
 }
-
 
 /*
  *    CircularShift
@@ -375,7 +372,5 @@ void NFSHA1::PadMessage()
  */
 unsigned NFSHA1::CircularShift(int bits, unsigned word)
 {
-    return ((word << bits) & 0xFFFFFFFF) | ((word & 0xFFFFFFFF) >> (32 - bits));
+	return ((word << bits) & 0xFFFFFFFF) | ((word & 0xFFFFFFFF) >> (32 - bits));
 }
-
-

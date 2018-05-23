@@ -13,16 +13,16 @@
 class NFTestPlugin : public NFIPlugin
 {
 public:
-    explicit NFTestPlugin(NFIPluginManager* p)
-    {
-        pPluginManager = p;
-    }
+	explicit NFTestPlugin(NFIPluginManager* p)
+	{
+		pPluginManager = p;
+	}
 
-    virtual const int GetPluginVersion();
+	virtual const int GetPluginVersion();
 
-    virtual const std::string GetPluginName();
+	virtual const std::string GetPluginName();
 
-    virtual void Install();
+	virtual void Install();
 
-    virtual void Uninstall();
+	virtual void Uninstall();
 };

@@ -21,7 +21,6 @@
 #include <Ws2tcpip.h>
 #endif
 
-
 #ifdef _WIN32
 #define ArkGetLastError		    WSAGetLastError
 typedef int Socklen_t;

@@ -15,10 +15,10 @@
 
 class NFSimpleBuffer {
 public:
-    // Create an empty slice.
-    NFSimpleBuffer() : data_(NULL), size_(0) {}
+	// Create an empty slice.
+	NFSimpleBuffer() : data_(NULL), size_(0) {}
 
-    // Create a slice that refers to d[0,n-1].
+	// Create a slice that refers to d[0,n-1].
 	NFSimpleBuffer(const char* d, size_t n)
 	{
 		Init(d, n);
@@ -64,21 +64,21 @@ public:
 		}
 	}
 
-    // Return a pointer to the beginning of the referenced data
-    char* data() const {
-        return data_;
-    }
+	// Return a pointer to the beginning of the referenced data
+	char* data() const {
+		return data_;
+	}
 
-    // Return the length (in bytes) of the referenced data
-    size_t size() const {
-        return size_;
-    }
+	// Return the length (in bytes) of the referenced data
+	size_t size() const {
+		return size_;
+	}
 
-    // Return a string that contains the copy of the referenced data.
-    std::string ToString() const {
-        return std::string(data_, size_);
-    }
+	// Return a string that contains the copy of the referenced data.
+	std::string ToString() const {
+		return std::string(data_, size_);
+	}
 private:
-    char* data_;
-    size_t size_;
+	char* data_;
+	size_t size_;
 };

@@ -75,7 +75,6 @@ private:
 	uint32_t seed_;
 };
 
-
 _NFExport void NFRandomSeed();
 
 _NFExport int32_t NFRandomAInt();
@@ -99,7 +98,7 @@ template<typename T>
 _NFExport T NFRandInt(T min, T max)
 {
 	static std::default_random_engine generator((uint32_t)time(NULL));
-	std::uniform_int_distribution<T> distribution(min, max-1);
+	std::uniform_int_distribution<T> distribution(min, max - 1);
 	return distribution(generator);
 }
 

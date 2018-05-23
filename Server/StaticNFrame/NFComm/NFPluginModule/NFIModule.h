@@ -15,20 +15,20 @@ template<typename DerivedType, typename BaseType>
 class TIsDerived
 {
 public:
-    static int AnyFunction(BaseType* base)
-    {
-        return 1;
-    }
+	static int AnyFunction(BaseType* base)
+	{
+		return 1;
+	}
 
-    static  char AnyFunction(void* t2)
-    {
-        return 0;
-    }
+	static  char AnyFunction(void* t2)
+	{
+		return 0;
+	}
 
-    enum
-    {
-        Result = (sizeof(int) == sizeof(AnyFunction((DerivedType*)NULL))),
-    };
+	enum
+	{
+		Result = (sizeof(int) == sizeof(AnyFunction((DerivedType*)NULL))),
+	};
 };
 
 class NFIPluginManager;
@@ -36,76 +36,75 @@ class NFIPluginManager;
 class NFIModule
 {
 public:
-    NFIModule()
-    {
-    }
+	NFIModule()
+	{
+	}
 
-    virtual ~NFIModule() {}
+	virtual ~NFIModule() {}
 
 	virtual bool RegisterLua()
 	{
 		return true;
 	}
 
-    virtual bool Awake()
-    {
-        return true;
-    }
+	virtual bool Awake()
+	{
+		return true;
+	}
 
-    virtual bool Init()
-    {
+	virtual bool Init()
+	{
+		return true;
+	}
 
-        return true;
-    }
+	virtual bool AfterInit()
+	{
+		return true;
+	}
 
-    virtual bool AfterInit()
-    {
-        return true;
-    }
+	virtual bool CheckConfig()
+	{
+		return true;
+	}
 
-    virtual bool CheckConfig()
-    {
-        return true;
-    }
+	virtual bool ReadyExecute()
+	{
+		return true;
+	}
 
-    virtual bool ReadyExecute()
-    {
-        return true;
-    }
+	virtual bool Execute()
+	{
+		return true;
+	}
 
-    virtual bool Execute()
-    {
-        return true;
-    }
+	virtual bool BeforeShut()
+	{
+		return true;
+	}
 
-    virtual bool BeforeShut()
-    {
-        return true;
-    }
+	virtual bool Shut()
+	{
+		return true;
+	}
 
-    virtual bool Shut()
-    {
-        return true;
-    }
+	virtual bool Finalize()
+	{
+		return true;
+	}
 
-    virtual bool Finalize()
-    {
-        return true;
-    }
+	virtual bool OnReloadPlugin()
+	{
+		return true;
+	}
 
-    virtual bool OnReloadPlugin()
-    {
-        return true;
-    }
+	virtual NFIPluginManager* GetPluginManager() const
+	{
+		return pPluginManager;
+	}
 
-    virtual NFIPluginManager* GetPluginManager() const
-    {
-        return pPluginManager;
-    }
-
-    std::string strName;
+	std::string strName;
 
 protected:
-    NFIPluginManager* pPluginManager = NULL;
+	NFIPluginManager* pPluginManager = NULL;
 };
 #endif

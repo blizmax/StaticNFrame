@@ -12,6 +12,4 @@
 #include <iostream>
 #include <string>
 
-
-
 #endif

@@ -87,7 +87,6 @@ void NFMutex::Unlock()
 
 void NFMutex::AssertHeld()
 {
-
 }
 #else
 
@@ -98,7 +97,7 @@ struct NFMutex::NFInternal
 	pthread_mutex_t mMutex;
 };
 
-NFMutex::NFMutex(): mInternal(new NFInternal)
+NFMutex::NFMutex() : mInternal(new NFInternal)
 {
 	pthread_mutex_init(&mInternal->mMutex, NULL);
 }
@@ -128,8 +127,8 @@ void NFMutex::Unlock()
 }
 
 void NFMutex::AssertHeld() {
-  // pthreads dosn't provide a way to check which thread holds the mutex.
-  // TODO(kenton):  Maybe keep track of locking thread ID like with WIN32?
+	// pthreads dosn't provide a way to check which thread holds the mutex.
+	// TODO(kenton):  Maybe keep track of locking thread ID like with WIN32?
 }
 
 #endif

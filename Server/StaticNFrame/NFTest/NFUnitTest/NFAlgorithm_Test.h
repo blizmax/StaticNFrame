@@ -32,14 +32,12 @@
 #include "NFComm/NFCore/NFPlatform.h"
 #include "googletest/googletest/include/gtest/gtest.h"
 
-
 #include "NFComm/NFCore/NFBase64.h"
 #include "NFComm/NFCore/NFCRC32.h"
 #include "NFComm/NFCore/NFCRC16.h"
 #include "NFComm/NFCore/NFSHA1.h"
 #include "NFComm/NFCore/NFMD5.h"
 #include "NFComm/NFCore/NFMMOMD5.h"
-
 
 TEST(NF_Core, NF_BASE64)
 {

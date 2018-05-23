@@ -1,7 +1,7 @@
 #include "NFTimerObj.h"
 #include "NFTimerMgr.h"
 
-NFTimerObj::NFTimerObj() :m_pTimerInfoPtr(nullptr), m_pFixTimerInfoPtr(nullptr){}
+NFTimerObj::NFTimerObj() :m_pTimerInfoPtr(nullptr), m_pFixTimerInfoPtr(nullptr) {}
 NFTimerObj::~NFTimerObj()
 {
 	NFTimerMgr::Instance()->KillAllTimer(this);

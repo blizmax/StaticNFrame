@@ -97,7 +97,6 @@ inline bool operator<(const NFSlice& x, const NFSlice& y) {
 	return x.compare(y) < 0;
 }
 
-
 inline int NFSlice::compare(const NFSlice& b) const {
 	const size_t min_len = (size_ < b.size_) ? size_ : b.size_;
 	int r = memcmp(data_, b.data_, min_len);

@@ -18,34 +18,33 @@
 #include "NFComm/NFPluginModule/NFIActorModule.h"
 
 class NFCActor
-    : public NFIActor
+	: public NFIActor
 {
 public:
-    NFCActor(Theron::Framework& framework, NFIActorModule* pModule);
-    virtual ~NFCActor();
+	NFCActor(Theron::Framework& framework, NFIActorModule* pModule);
+	virtual ~NFCActor();
 
+	virtual void AddComponent(NFIComponent* pComponent);
+	virtual NFIComponent* FindComponent(const std::string& strComponentName);
 
-    virtual void AddComponent(NFIComponent* pComponent);
-    virtual NFIComponent* FindComponent(const std::string& strComponentName);
+	virtual bool AddBeginFunc(const int nSubMsgID, ACTOR_PROCESS_FUNCTOR xBeginFunctor);
+	virtual bool AddEndFunc(const int nSubMsgID, ACTOR_PROCESS_FUNCTOR xEndFunctor);
 
-    virtual bool AddBeginFunc(const int nSubMsgID, ACTOR_PROCESS_FUNCTOR xBeginFunctor);
-    virtual bool AddEndFunc(const int nSubMsgID, ACTOR_PROCESS_FUNCTOR xEndFunctor);
-
-    virtual bool SendMsg(const Theron::Address& address, const NFIActorMessage& message);
+	virtual bool SendMsg(const Theron::Address& address, const NFIActorMessage& message);
 
 protected:
-    //handler in component
-    virtual void Handler(const NFIActorMessage& message, const Theron::Address& from);
+	//handler in component
+	virtual void Handler(const NFIActorMessage& message, const Theron::Address& from);
 
-    //the purpose is to push message to main thread
-    virtual void HandlerEx(const NFIActorMessage& message, const Theron::Address& from);
+	//the purpose is to push message to main thread
+	virtual void HandlerEx(const NFIActorMessage& message, const Theron::Address& from);
 
 private:
-    std::map<std::string, NFIComponent*> mxComponent;
+	std::map<std::string, NFIComponent*> mxComponent;
 
-    std::map<int, ACTOR_PROCESS_FUNCTOR> mxProcessFuntor;
-    std::map<int, ACTOR_PROCESS_FUNCTOR> mxEndProcessFuntor;
+	std::map<int, ACTOR_PROCESS_FUNCTOR> mxProcessFuntor;
+	std::map<int, ACTOR_PROCESS_FUNCTOR> mxEndProcessFuntor;
 
-    ACTOR_PROCESS_FUNCTOR mxDefaultEndProcessFuntor;
+	ACTOR_PROCESS_FUNCTOR mxDefaultEndProcessFuntor;
 };
 #endif

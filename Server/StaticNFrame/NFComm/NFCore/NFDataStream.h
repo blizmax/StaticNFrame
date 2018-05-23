@@ -41,7 +41,7 @@ public:
 
 	~NFDataStream();
 
-	uint32_t Capacity() const {	return capacity_; }
+	uint32_t Capacity() const { return capacity_; }
 
 	// Assure convert to text.
 	// @note Add ending null to the stream, but do not change the data size.
@@ -135,7 +135,7 @@ public:
 	NFDataStream& SeekReadIndex(int32_t offset);
 
 	uint32_t GetWriteIndex() const { return write_index_; }
-	uint32_t GetReadIndex() const {	return read_index_; }
+	uint32_t GetReadIndex() const { return read_index_; }
 
 	void ResetMemory();
 
@@ -253,10 +253,10 @@ public:
 	template< typename _Kt >
 	NFDataStream& operator >> (std::list< _Kt>& val);
 
-// 	template< typename _Kt >
-// 	DataStream& operator<<(const std::list< _Kt>& val);
-// 	template< typename _Kt >
-// 	DataStream& operator >> (std::list< _Kt>& val);
+	// 	template< typename _Kt >
+	// 	DataStream& operator<<(const std::list< _Kt>& val);
+	// 	template< typename _Kt >
+	// 	DataStream& operator >> (std::list< _Kt>& val);
 
 	template<  typename _Kt, typename _Val >
 	NFDataStream& operator<<(const std::map< _Kt, _Val >& val);
@@ -336,7 +336,6 @@ inline NFDataStream& operator >> (NFDataStream& file, Struct2Element<TE1, TE2 >&
 	return file;
 }
 
-
 // Serialize Struct2Element
 template<typename TE1, typename TE2, typename TE3 >
 inline NFDataStream& operator<< (NFDataStream& file, const Struct3Element<TE1, TE2, TE3 >& val) {
@@ -373,7 +372,6 @@ inline NFDataStream& operator >> (NFDataStream& file, Struct4Element<TE1, TE2, T
 	return file;
 }
 
-
 // DataStream Implementation
 
 inline NFDataStream::NFDataStream()
@@ -383,7 +381,6 @@ inline NFDataStream::NFDataStream()
 	, write_index_(0)
 	, read_index_(0)
 	, status_(0) {
-
 }
 
 inline NFDataStream::NFDataStream(size_t nBufferSize)
@@ -503,7 +500,7 @@ inline NFDataStream& NFDataStream::SeekWriteIndex(int32_t offset)
 	}
 	else {
 		// pre-allocate size.
-		if (new_pos >(int64_t)write_index_) {
+		if (new_pos > (int64_t)write_index_) {
 			if (!Expand((uint32_t)new_pos - write_index_)) {
 				return *this;
 			}
@@ -523,10 +520,8 @@ inline NFDataStream& NFDataStream::SeekReadIndex(int32_t offset)
 	if (nNewPos > (int32_t)write_index_) {
 		read_index_ = write_index_;
 		SetStatus(kReadBad);
-
 	}
 	else if (nNewPos < 0) {
-
 		read_index_ = 0;
 		SetStatus(kReadBad);
 	}
@@ -629,7 +624,6 @@ inline bool NFDataStream::Resize(size_t nSize) {
 	return true;
 }
 
-
 inline bool NFDataStream::Expand(uint32_t delta) {
 	uint32_t new_size = write_index_ + delta + 1;
 
@@ -648,7 +642,6 @@ inline bool NFDataStream::Expand(uint32_t delta) {
 			memcpy(new_buffer, buffer_, capacity_);
 		}
 
-
 		if (self_created_) {
 			free(buffer_);
 		}
@@ -660,7 +653,6 @@ inline bool NFDataStream::Expand(uint32_t delta) {
 
 	return true;
 }
-
 
 inline bool NFDataStream::Reserve(size_t new_size) {
 	if (new_size > capacity_) {
@@ -677,7 +669,6 @@ inline bool NFDataStream::Reserve(size_t new_size) {
 			memcpy(new_buf, buffer_, write_index_);
 		}
 
-
 		if (self_created_) {
 			// the old buffer is created by myself, so free it
 			free(buffer_);
@@ -689,7 +680,6 @@ inline bool NFDataStream::Reserve(size_t new_size) {
 
 	return true;
 }
-
 
 template< typename T>
 NFDataStream& NFDataStream::InternalWriteType(const T& val, std::true_type) {
@@ -747,7 +737,6 @@ NFDataStream& NFDataStream::operator<<(const T& val) {
 	//return *this;
 }
 
-
 template< typename T>
 NFDataStream& NFDataStream::operator >> (T& val) {
 	typedef  typename std::is_pod<T>::type T_type;
@@ -803,7 +792,6 @@ inline NFDataStream& NFDataStream::operator >> (string& val) {
 			// assure last character is null
 			val[nSize] = (char)0;
 		}
-
 	}
 	else {
 		SetStatus(kReadBad);
@@ -853,13 +841,11 @@ inline NFDataStream& NFDataStream::operator >> (NFDataStream& val) {
 	return *this;
 }
 
-
 template<  typename _Kt, typename _Val >
 NFDataStream& NFDataStream::operator >> (std::pair<_Kt, _Val>& val) {
 	(*this) >> val.first >> val.second;
 	return *this;
 }
-
 
 template< typename _Kt >
 inline NFDataStream& NFDataStream::operator<<(const std::vector< _Kt>& val) {
@@ -966,44 +952,44 @@ inline NFDataStream& NFDataStream::operator >> (std::list< _Kt>& val) {
 // template< typename _Kt >
 // inline DataStream& DataStream::operator<<(const list< _Kt>& val) {
 // 	*this << (uint32_t)val.size();
-// 
+//
 // 	auto it(val.begin()), ite(val.end());
 // 	for (; it != ite; ++it) {
 // 		*this << (const _Kt&)*it;
 // 	}
-// 
+//
 // 	return *this;
 // }
-// 
-// 
+//
+//
 // template< typename _Kt >
 // inline DataStream& DataStream::operator >> (list< _Kt>& val) {
 // 	// check whether the file is bad.
 // 	if (IsReadBad()) {
 // 		return *this;
 // 	}
-// 
+//
 // 	// 1. read length
 // 	uint32_t nSize = 0;
 // 	*this >> (uint32_t&)nSize;
-// 
+//
 // 	if (GetReadableSize() < nSize) {
 // 		SetStatus(kReadBad);
 // 		return *this;
 // 	}
-// 
+//
 // 	val.clear();
-// 
+//
 // 	for (uint32_t i = 0; i < nSize; ++i) {
 // 		if (GetReadableSize() == 0) {
 // 			SetStatus(kReadBad);
 // 			break;
 // 		}
-// 
+//
 // 		val.push_back(_Kt());
 // 		*this >> (_Kt&)val.back();
 // 	}
-// 
+//
 // 	return *this;
 // }
 

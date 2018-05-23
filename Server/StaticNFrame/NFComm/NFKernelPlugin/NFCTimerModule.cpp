@@ -11,36 +11,36 @@
 
 NFCTimerModule::NFCTimerModule(NFIPluginManager* p)
 {
-    pPluginManager = p;
+	pPluginManager = p;
 }
 
 bool NFCTimerModule::Init()
 {
 	mTimerAxis.Init();
-    return true;
+	return true;
 }
 
 bool NFCTimerModule::AfterInit()
 {
-    return true;
+	return true;
 }
 
 bool NFCTimerModule::Execute()
 {
 	mTimerAxis.Update();
 	mTimerAxis.UpdateFix();
-    return true;
+	return true;
 }
 
 bool NFCTimerModule::BeforeShut()
 {
-    return true;
+	return true;
 }
 
 bool NFCTimerModule::Shut()
 {
 	mTimerAxis.UnInit();
-    return true;
+	return true;
 }
 
 //…Ë÷√∂® ±∆˜

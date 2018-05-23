@@ -15,7 +15,7 @@
 #include "NFIModule.h"
 
 class NFIKernelModule
-    : public NFIModule
+	: public NFIModule
 {
 public:
 };

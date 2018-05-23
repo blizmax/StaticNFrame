@@ -5,12 +5,12 @@
 
 NF_EXPORT void DllStartPlugin(NFIPluginManager* pm)
 {
-    CREATE_PLUGIN(pm, NFActorPlugin)
+	CREATE_PLUGIN(pm, NFActorPlugin)
 };
 
 NF_EXPORT void DllStopPlugin(NFIPluginManager* pm)
 {
-    DESTROY_PLUGIN(pm, NFActorPlugin)
+	DESTROY_PLUGIN(pm, NFActorPlugin)
 };
 
 #endif
@@ -19,20 +19,20 @@ NF_EXPORT void DllStopPlugin(NFIPluginManager* pm)
 
 const int NFActorPlugin::GetPluginVersion()
 {
-    return 0;
+	return 0;
 }
 
 const std::string NFActorPlugin::GetPluginName()
 {
-    return GET_CLASS_NAME(NFActorPlugin);
+	return GET_CLASS_NAME(NFActorPlugin);
 }
 
 void NFActorPlugin::Install()
 {
-    REGISTER_MODULE(pPluginManager, NFIActorModule, NFCActorModule)
+	REGISTER_MODULE(pPluginManager, NFIActorModule, NFCActorModule)
 }
 
 void NFActorPlugin::Uninstall()
 {
-    UNREGISTER_MODULE(pPluginManager, NFIActorModule, NFCActorModule)
+	UNREGISTER_MODULE(pPluginManager, NFIActorModule, NFCActorModule)
 }

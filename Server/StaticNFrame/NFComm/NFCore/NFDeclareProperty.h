@@ -15,7 +15,6 @@ private: \
     Class(const Class&); \
     const Class& operator=(const Class&);
 
-
 /** BOOL型属性接口 */
 #define DECLARE_PROPERTY_BOOL_VARIANT(name, get_func, set_func) \
     protected: \
@@ -31,7 +30,7 @@ private: \
     public: \
     virtual bool get_func() const = 0; \
     virtual void set_func(const bool value) = 0;\
-     
+
 // 默认参数
 #define DECLARE_PROPERTY_BOOL(name) DECLARE_PROPERTY_BOOL_VARIANT(name, Get##name, Set##name)
 
@@ -52,13 +51,11 @@ private: \
     public: \
     virtual int32_t get_func() const = 0; \
     virtual void set_func(const int32_t value) = 0;\
-     
 
 // 默认参数
 #define DECLARE_PROPERTY_INT32(name) DECLARE_PROPERTY_INT32_VARIANT(name, Get##name, Set##name)
 
 #define DECLARE_PROPERTY_INT32_NULL(name) DECLARE_PROPERTY_UINT32_VARIANT_NULL(name, Get##name, Set##name)
-
 
 /** INT型属性接口 */
 #define DECLARE_PROPERTY_UINT32_VARIANT(name, get_func, set_func) \
@@ -75,7 +72,6 @@ private: \
     public: \
     virtual uint32_t get_func() const = 0; \
     virtual void set_func(const uint32_t value) = 0;\
-
 
 // 默认参数
 #define DECLARE_PROPERTY_UINT32(name) DECLARE_PROPERTY_UINT32_VARIANT(name, Get##name, Set##name)
@@ -99,7 +95,6 @@ private: \
     public: \
     virtual int64_t get_func() const = 0; \
     virtual void set_func(const int64_t value) = 0;\
-     
 
 // 默认参数
 #define DECLARE_PROPERTY_INT64(name) DECLARE_PROPERTY_INT64_VARIANT(name, Get##name, Set##name)
@@ -122,7 +117,6 @@ private: \
     public: \
     virtual uint64_t get_func() const = 0; \
     virtual void set_func(const uint64_t value) = 0;\
-     
 
 // 默认参数
 #define DECLARE_PROPERTY_UINT64(name) DECLARE_PROPERTY_UINT64_VARIANT(name, Get##name, Set##name)
@@ -145,7 +139,6 @@ private: \
     public: \
     virtual float get_func() const = 0; \
     virtual void set_func(const float value) = 0; \
-     
 
 // 默认参数
 #define DECLARE_PROPERTY_FLOAT(name) DECLARE_PROPERTY_FLOAT_VARIANT(name, Get##name, Set##name)
@@ -169,7 +162,6 @@ private: \
     public: \
     virtual double get_func() const = 0;\
     virtual void set_func(const double value) = 0; \
-     
 
 // 默认参数
 #define DECLARE_PROPERTY_DOUBLE(name) DECLARE_PROPERTY_DOUBLE_VARIANT(name, Get##name, Set##name)
@@ -192,7 +184,6 @@ private: \
     public: \
     virtual const std::string& get_func() const = 0;\
     virtual void set_func(const std::string& value) = 0;\
-     
 
 // 默认参数
 #define DECLARE_PROPERTY_STRING(name) DECLARE_PROPERTY_STRING_VARIANT(name, Get##name, Set##name)
@@ -216,7 +207,6 @@ private: \
     virtual const object_type* get_func() const = 0; \
     virtual object_type* get_func() = 0; \
     virtual void set_func(object_type* value) = 0; \
-     
 
 // 默认参数
 #define DECLARE_PROPERTY_OBJECT_PTR(object_type, name) DECLARE_PROPERTY_OBJECT_VARIANT_PTR(object_type, name, Get##name, Set##name)
@@ -241,7 +231,7 @@ private: \
     virtual const object_type& get_func() const = 0; \
     virtual object_type& get_func() = 0; \
     virtual void set_func(const object_type& value) = 0; \
-     
+
 // 默认参数
 #define DECLARE_PROPERTY_OBJECT(object_type, name) DECLARE_PROPERTY_OBJECT_VARIANT(object_type, name, Get##name, Set##name)
 

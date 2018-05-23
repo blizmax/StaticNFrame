@@ -4,7 +4,6 @@
 
 #include <vector>
 
-
 class NFNavigationHandle
 {
 public:
@@ -23,7 +22,7 @@ public:
 		NAV_OBJECT_STATE_MOVEOVER = 2,	// 移动已经结束了
 	};
 public:
-	NFNavigationHandle():name()
+	NFNavigationHandle() :name()
 	{
 	}
 
@@ -31,7 +30,7 @@ public:
 	{
 	}
 public:
-	virtual NFNavigationHandle::NAV_TYPE type() const{ return NAV_UNKNOWN; }
+	virtual NFNavigationHandle::NAV_TYPE type() const { return NAV_UNKNOWN; }
 
 	virtual int FindStraightPath(int layer, const NFVector3& start, const NFVector3& end, std::vector<NFVector3>& paths) = 0;
 	virtual int RayCast(int layer, const NFVector3& start, const NFVector3& end, std::vector<NFVector3>& hitPointVec) = 0;
@@ -43,4 +42,3 @@ public:
 protected:
 	std::string name;
 };
-

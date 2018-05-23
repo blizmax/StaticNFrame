@@ -2,18 +2,17 @@
 
 NFTimerMgr::NFTimerMgr()
 {
-    m_pTimerModule = nullptr;
+	m_pTimerModule = nullptr;
 }
 
 NFTimerMgr::~NFTimerMgr()
 {
-
 }
 
 bool NFTimerMgr::Init(NFITimerModule* pTimerModule)
 {
 	m_pTimerModule = pTimerModule;
-    return true;
+	return true;
 }
 
 void NFTimerMgr::UnInit()

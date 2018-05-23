@@ -21,7 +21,6 @@
 #define NF_ARCHITECTURE_32 1
 #define NF_ARCHITECTURE_64 2
 
-
 /* Finds the compiler type and version.
 */
 #if defined( _MSC_VER )
@@ -76,7 +75,6 @@
 #endif
 
 #endif
-
 
 //----------------------------------------------------------------------------
 // Windows Settings
@@ -175,7 +173,6 @@
 #define NF_EXPORT extern "C" __attribute ((visibility("default")))
 
 #endif
-
 
 //----------------------------------------------------------------------------
 // Endian Settings

@@ -13,18 +13,18 @@
 class NFKernelPlugin : public NFIPlugin
 {
 public:
-    explicit NFKernelPlugin(NFIPluginManager* p)
-    {
-        pPluginManager = p;
-    }
+	explicit NFKernelPlugin(NFIPluginManager* p)
+	{
+		pPluginManager = p;
+	}
 
 	virtual ~NFKernelPlugin() { }
 
-    virtual const int GetPluginVersion();
+	virtual const int GetPluginVersion();
 
-    virtual const std::string GetPluginName();
+	virtual const std::string GetPluginName();
 
-    virtual void Install();
+	virtual void Install();
 
-    virtual void Uninstall();
+	virtual void Uninstall();
 };

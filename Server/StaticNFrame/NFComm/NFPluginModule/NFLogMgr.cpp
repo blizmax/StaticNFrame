@@ -7,7 +7,6 @@ NFLogMgr::NFLogMgr()
 
 NFLogMgr::~NFLogMgr()
 {
-
 }
 
 bool NFLogMgr::Init(NFILogModule* p)

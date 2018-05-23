@@ -1,7 +1,5 @@
-
 #include "NFNavigation.h"
 #include "NFNavMeshHandle.h"
-
 
 //-------------------------------------------------------------------------------------
 NFNavigation::NFNavigation()
@@ -76,4 +74,4 @@ NFNavigationHandle* NFNavigation::LoadNavigation(const std::string& name)
 	}
 	return NULL;
 }
-//-------------------------------------------------------------------------------------		
+//-------------------------------------------------------------------------------------

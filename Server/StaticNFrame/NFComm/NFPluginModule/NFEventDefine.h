@@ -9,7 +9,6 @@ enum NFEventDefine
 	NFEVENT_TEST2 = 2, //测试事件， 用来测试
 };
 
-
 class NFTestEventContext : public NFEventContext
 {
 public:

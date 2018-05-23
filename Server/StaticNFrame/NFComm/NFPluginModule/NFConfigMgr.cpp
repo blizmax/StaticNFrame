@@ -83,7 +83,7 @@ bool NFConfigMgr::Init()
 		if (!GetLuaTableValue(serverPluginRef, DEFINE_LUA_STRING_SERVER_TYPE, pConfig->mServerType))
 		{
 			std::cerr << DEFINE_LUA_STRING_SERVER_PLUGINS << " can't find int server:" << serverPluginName << " int the table " << DEFINE_LUA_STRING_LOAD_PLUGIN << " in the plugin.lua" << std::endl;
-			assert(0);	
+			assert(0);
 		}
 
 		if (pConfig->mServerType >= NF_ST_MAX)

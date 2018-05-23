@@ -7,7 +7,7 @@
 #include <limits>
 #include "NFComm/NFCore/NFPlatform.h"
 
-// windows include	
+// windows include
 #if NF_PLATFORM == NF_PLATFORM_WIN
 #else
 // linux include
@@ -31,7 +31,7 @@ typedef G3D::Vector4							Vector4;
 #define NF_2PI									6.2831853071796
 #define NF_DegreeToRadian						G3D::toRadians
 #define NF_RadianToDegree						G3D::toRadians
-	
+
 #define NFVec2Length(v)							(v)->length()
 #define NFVec2LengthSq(v)						(v)->squaredLength()
 #define NFVec2Normalize(v, vv)					(v)->normalise()
@@ -91,28 +91,28 @@ inline float int82angle(int8_t angle, bool half = false)
 inline int8_t angle2int8(float v, bool half = false)
 {
 	int8_t angle = 0;
-	if(!half)
+	if (!half)
 	{
 		angle = (int8_t)floorf((v * 128.f) / float(NF_PI) + 0.5f);
 	}
 	else
 	{
-		angle = (int8_t)NFClamp(floorf( (v * 254.f) / float(NF_PI) + 0.5f ), -128.f, 127.f );
+		angle = (int8_t)NFClamp(floorf((v * 254.f) / float(NF_PI) + 0.5f), -128.f, 127.f);
 	}
 
 	return angle;
 }
 
-typedef Vector2													NFVector2;												// 表示3D位置变量类型	
-typedef Vector3													NFVector3;												// 表示3D位置变量类型	
-typedef Vector4													NFVector4;												// 表示3D位置变量类型	
+typedef Vector2													NFVector2;												// 表示3D位置变量类型
+typedef Vector3													NFVector3;												// 表示3D位置变量类型
+typedef Vector4													NFVector4;												// 表示3D位置变量类型
 
 struct Direction3D																										// 表示方向位置变量类型
 {
-	Direction3D():dir(0.f, 0.f, 0.f) {};
-	Direction3D(const Vector3 & v):dir(v){}
-	Direction3D(float r, float p, float y):dir(r, p, y){}
-	Direction3D(const Direction3D & v) :dir(v.dir){}
+	Direction3D() :dir(0.f, 0.f, 0.f) {};
+	Direction3D(const Vector3 & v) :dir(v) {}
+	Direction3D(float r, float p, float y) :dir(r, p, y) {}
+	Direction3D(const Direction3D & v) :dir(v.dir) {}
 
 	Direction3D& operator=(const Direction3D& v)
 	{
@@ -120,13 +120,13 @@ struct Direction3D																										// 表示方向位置变量类型
 		return *this;
 	}
 
-	float roll() const{ return dir.x; }		
-	float pitch() const{ return dir.y; }		
-	float yaw() const{ return dir.z; }		
+	float roll() const { return dir.x; }
+	float pitch() const { return dir.y; }
+	float yaw() const { return dir.z; }
 
-	void roll(float v){ dir.x = v; }		
-	void pitch(float v){ dir.y = v; }		
-	void yaw(float v){ dir.z = v; }	
+	void roll(float v) { dir.x = v; }
+	void pitch(float v) { dir.y = v; }
+	void yaw(float v) { dir.z = v; }
 
 	// roll, pitch, yaw
 	Vector3 dir;
@@ -136,12 +136,12 @@ struct Direction3D																										// 表示方向位置变量类型
 #define floatEqual(v1, v2) (abs(v1 - v2) < std::numeric_limits<float>::epsilon())
 inline bool almostEqual(const float f1, const float f2, const float epsilon = 0.0004f)
 {
-	return fabsf( f1 - f2 ) < epsilon;
+	return fabsf(f1 - f2) < epsilon;
 }
 
 inline bool almostEqual(const double d1, const double d2, const double epsilon = 0.0004)
 {
-	return fabs( d1 - d2 ) < epsilon;
+	return fabs(d1 - d2) < epsilon;
 }
 
 inline bool almostZero(const float f, const float epsilon = 0.0004f)
@@ -157,12 +157,12 @@ inline bool almostZero(const double d, const double epsilon = 0.0004)
 template<typename T>
 inline bool almostEqual(const T& c1, const T& c2, const float epsilon = 0.0004f)
 {
-	if( c1.size() != c2.size() )
+	if (c1.size() != c2.size())
 		return false;
 	typename T::const_iterator iter1 = c1.begin();
 	typename T::const_iterator iter2 = c2.begin();
-	for( ; iter1 != c1.end(); ++iter1, ++iter2 )
-		if( !almostEqual( *iter1, *iter2, epsilon ) )
+	for (; iter1 != c1.end(); ++iter1, ++iter2)
+		if (!almostEqual(*iter1, *iter2, epsilon))
 			return false;
 	return true;
 }

@@ -1,4 +1,3 @@
-
 #include "NFEventMgr.h"
 
 #include "NFComm/NFPluginModule/NFIEventModule.h"
@@ -10,7 +9,6 @@ NFEventMgr::NFEventMgr()
 
 NFEventMgr::~NFEventMgr()
 {
-
 }
 
 bool NFEventMgr::Init(NFIEventModule* pEventModule)

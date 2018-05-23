@@ -6,7 +6,6 @@
 #include "NFNavigationHandle.h"
 #include <map>
 
-
 /*
 	������
 */

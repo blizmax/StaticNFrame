@@ -24,11 +24,11 @@ static const uint32_t g_nPar7 = 0x7fffffff;
 inline uint32_t NFGetSeed()
 {
 #ifdef _WIN32
-    __asm _emit 0x0F
-    __asm _emit 0x31
+	__asm _emit 0x0F
+	__asm _emit 0x31
 #else
-    __asm__ __volatile__(".byte 0x0F");
-    __asm__ __volatile__(".byte 0x31");
+	__asm__ __volatile__(".byte 0x0F");
+	__asm__ __volatile__(".byte 0x31");
 #endif
 }
 

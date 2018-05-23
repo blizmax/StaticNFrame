@@ -19,50 +19,50 @@
 #include "NFComm/NFCore/NFQueue.hpp"
 
 class NFCActorModule
-    : public NFIActorModule
+	: public NFIActorModule
 {
 public:
-    explicit NFCActorModule(NFIPluginManager* p);
-    virtual ~NFCActorModule();
+	explicit NFCActorModule(NFIPluginManager* p);
+	virtual ~NFCActorModule();
 
-    virtual bool Init();
+	virtual bool Init();
 
-    virtual bool AfterInit();
+	virtual bool AfterInit();
 
-    virtual bool BeforeShut();
+	virtual bool BeforeShut();
 
-    virtual bool Shut();
+	virtual bool Shut();
 
-    virtual bool Finalize();
+	virtual bool Finalize();
 
-    virtual bool Execute();
+	virtual bool Execute();
 
-//////////////////////////////////////////////////////////////////////////////
+	//////////////////////////////////////////////////////////////////////////////
 
-    virtual int RequireActor();
+	virtual int RequireActor();
 
-    virtual bool SendMsgToActor(const int nActorIndex, uint64_t objectID, const int nEventID, const std::string& strArg);
+	virtual bool SendMsgToActor(const int nActorIndex, uint64_t objectID, const int nEventID, const std::string& strArg);
 
-    virtual bool HandlerEx(const NFIActorMessage& message, const int from);
+	virtual bool HandlerEx(const NFIActorMessage& message, const int from);
 
-    virtual bool ReleaseActor(const int nActorIndex);
+	virtual bool ReleaseActor(const int nActorIndex);
 
-    virtual NFIActor* GetActor(const int nActorIndex);
+	virtual NFIActor* GetActor(const int nActorIndex);
 
-///////////////////////////////////////////////////////////////////////////////////////////
+	///////////////////////////////////////////////////////////////////////////////////////////
 
-    virtual bool AddEndFunc(const int nActorIndex, const int nSubMsgID, ACTOR_PROCESS_FUNCTOR functorPtr);
+	virtual bool AddEndFunc(const int nActorIndex, const int nSubMsgID, ACTOR_PROCESS_FUNCTOR functorPtr);
 
-    virtual bool AddComponent(const int nActorIndex, NFIComponent* pComponent);
+	virtual bool AddComponent(const int nActorIndex, NFIComponent* pComponent);
 
-    virtual bool ExecuteEvent();
+	virtual bool ExecuteEvent();
 private:
 
-    Theron::Framework* m_pFramework;
-    NFIActor* m_pMainActor;
-    std::map<int, NFIActor*> mxActorMap;
+	Theron::Framework* m_pFramework;
+	NFIActor* m_pMainActor;
+	std::map<int, NFIActor*> mxActorMap;
 
-    NFQueue<NFIActorMessage> mxQueue;
+	NFQueue<NFIActorMessage> mxQueue;
 };
 
 #endif

@@ -76,13 +76,12 @@ bool NFDataStream::ReadFile(/*const string& strFileName*/ const string& strPathN
 	size_t remain = capacity_;
 
 	while (remain > 0 && !feof(pf)) {
-
 		size_t readn = fread(buffer_ + (capacity_ - remain),
 			sizeof(char), remain, pf);
 
 		remain -= readn;
 
-		if (ferror(pf)) 
+		if (ferror(pf))
 		{
 			fclose(pf);
 			return false;
@@ -123,7 +122,6 @@ static void createDir(const string& strFileName) {
 		}
 
 		nNextSplit = nCurSplit + 1;
-
 	} while (nCurSplit != string::npos);
 }
 

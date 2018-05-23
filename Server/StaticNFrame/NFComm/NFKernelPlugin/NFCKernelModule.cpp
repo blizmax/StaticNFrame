@@ -14,7 +14,7 @@
 
 NFCKernelModule::NFCKernelModule(NFIPluginManager* p)
 {
-    pPluginManager = p;
+	pPluginManager = p;
 }
 
 NFCKernelModule::~NFCKernelModule()
@@ -23,34 +23,33 @@ NFCKernelModule::~NFCKernelModule()
 
 bool NFCKernelModule::Init()
 {
-    return true;
+	return true;
 }
 
 bool NFCKernelModule::Execute()
 {
 	BEGIN_PROFILE(__FUNCTION__);
-    ProcessMemFree();
+	ProcessMemFree();
 	END_PROFILE();
-    return true;
+	return true;
 }
 
 bool NFCKernelModule::BeforeShut()
 {
-    return true;
+	return true;
 }
 
 bool NFCKernelModule::Shut()
 {
-    return true;
+	return true;
 }
 
 bool NFCKernelModule::AfterInit()
 {
-    return true;
+	return true;
 }
-
 
 void NFCKernelModule::ProcessMemFree()
 {
-    NFMemManager::GetSingletonPtr()->FreeMem();
+	NFMemManager::GetSingletonPtr()->FreeMem();
 }

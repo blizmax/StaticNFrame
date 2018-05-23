@@ -9,7 +9,7 @@ bool NFCTestClientModule::Init()
 {
 	m_pNetClientModule = pPluginManager->FindModule<NFINetClientModule>();
 	m_serverId = 1001;
-    return true;
+	return true;
 }
 
 bool NFCTestClientModule::AfterInit()
@@ -24,7 +24,7 @@ bool NFCTestClientModule::AfterInit()
 	//m_pNetClientModule->AddServer(NF_ST_PROXY, "192.168.1.15", 7002);
 	//m_pNetClientModule->AddServer(NF_ST_LOGIN, "192.168.1.15", 7002);
 	//SetTimer(0, 1000, 1);
-    return true;
+	return true;
 }
 
 void NFCTestClientModule::OnTimer(uint32_t nTimerID)
@@ -36,17 +36,17 @@ void NFCTestClientModule::OnTimer(uint32_t nTimerID)
 
 bool NFCTestClientModule::Execute()
 {
-    return true;
+	return true;
 }
 
 bool NFCTestClientModule::BeforeShut()
 {
-    return true;
+	return true;
 }
 
 bool NFCTestClientModule::Shut()
 {
-    return true;
+	return true;
 }
 
 void NFCTestClientModule::OnProxySocketEvent(const eMsgType nEvent, const uint32_t unLinkId)
@@ -63,13 +63,12 @@ void NFCTestClientModule::OnProxySocketEvent(const eMsgType nEvent, const uint32
 	}
 	else
 	{
-		
 	}
 }
 
 void NFCTestClientModule::OnHandleOtherMessage(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen)
 {
-	LogWarning(playerId, "Message Not Registed", lexical_cast<std::string>(nMsgId)+" | msg Len:" + lexical_cast<std::string>(nLen));
+	LogWarning(playerId, "Message Not Registed", lexical_cast<std::string>(nMsgId) + " | msg Len:" + lexical_cast<std::string>(nLen));
 }
 
 void NFCTestClientModule::OnHandleQueryPlayerData(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen)
@@ -89,8 +88,8 @@ void  NFCTestClientModule::SendCreateChar()
 	proReq.set_account(m_account);
 	proReq.set_charname(m_charName);
 	proReq.set_serverid(m_serverId);
-	proReq.set_weapon(NFRandInt(1,4));
-	proReq.set_sex(NFRandInt(1,3));
+	proReq.set_weapon(NFRandInt(1, 4));
+	proReq.set_sex(NFRandInt(1, 3));
 
 	m_pNetClientModule->SendToServerByPB(m_usId, proto::message::ELogin_CTS_GAMESERVER_CreateChar, proReq, 0);
 }

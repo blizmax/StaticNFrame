@@ -5,19 +5,15 @@
 #include "NFComm/NFCore/NFPlatform.h"
 #include "NFTimerObj.h"
 
-
 //时间轴检查频率 ms
-#define TIMER_AXIS_CHECK_FREQUENCE 32	
+#define TIMER_AXIS_CHECK_FREQUENCE 32
 //时间轴刻度
 #define TIME_GRID 64
 //时间轴长度
-#define TIME_AXIS_LENGTH			120000		// 毫秒为单位的 
+#define TIME_AXIS_LENGTH			120000		// 毫秒为单位的
 #define TIME_AXIS_SECLENGTH			108000		// 秒为单位的支持到30个小时
 #define INVALID_TIMER				0xffffffff  // 无效定时器
 #define INFINITY_CALL				0xffffffff	// 调用无限次
-
-
-
 
 class NFFixTimerAxis
 {
@@ -28,7 +24,7 @@ public:
 	//设置固定时间的定时器
 	bool SetFixTimer(uint32_t nTimerID, uint64_t nStartTime, uint32_t nInterDays, NFTimerObj *handler, uint32_t nCallCount = INFINITY_CALL);
 	//关闭固定时间定时器
-	bool KillFixTimer(uint32_t nTimerID,NFTimerObj *handler);
+	bool KillFixTimer(uint32_t nTimerID, NFTimerObj *handler);
 	//关闭所有固定时间定时器
 	bool KillAllFixTimer(NFTimerObj *handler);
 	//更新固定时间的定时器
@@ -37,7 +33,7 @@ private:
 	uint64_t GetMorningTime(uint64_t nTimeSec);
 
 protected:
-	struct FixTimer 
+	struct FixTimer
 	{
 		uint32_t nTimerID;		//定时器ID
 		uint32_t nInterDays;	//间隔天数
@@ -70,13 +66,12 @@ protected:
 	uint64_t m_nLastSec;			//最近更新时间
 };
 
-
 //时间轴
 class NFTimerAxis
 {
 public:
 	NFTimerAxis();
-	virtual ~NFTimerAxis();	
+	virtual ~NFTimerAxis();
 
 	bool Init();
 	bool UnInit();
@@ -110,7 +105,7 @@ private:
 protected:
 	uint64_t GetTick() { return NFGetTime(); }
 
-	struct Timer 
+	struct Timer
 	{
 		uint32_t nTimerID;		//定时器ID
 		uint64_t nInterVal;		//间隔
@@ -137,7 +132,6 @@ protected:
 
 	typedef std::list<Timer*>			TIMER_LIST;		//某个刻度中定时器列表
 	typedef std::vector<TIMER_LIST*>	TIMER_AXIS;		//所有事件轴的定时器
-
 
 	TIMER_AXIS  m_TimerAxis;		//毫秒事件轴
 	uint64_t    m_nInitTick;		//毫秒时间轴初始Tick

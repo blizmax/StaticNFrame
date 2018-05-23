@@ -16,6 +16,6 @@ protected:
 	NFNonCopyable() {}
 	~NFNonCopyable() {}
 private:
-	NFNonCopyable( const NFNonCopyable& );
-	const NFNonCopyable& operator=( const NFNonCopyable& );
+	NFNonCopyable(const NFNonCopyable&);
+	const NFNonCopyable& operator=(const NFNonCopyable&);
 };

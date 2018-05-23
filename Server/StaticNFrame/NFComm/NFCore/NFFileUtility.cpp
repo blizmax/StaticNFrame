@@ -111,7 +111,6 @@ string NFFileUtility::NormalizePath(const string& init, bool with_trailing_slash
 	return path;
 }
 
-
 wstring NFFileUtility::NormalizePath(const wstring& init, bool with_trailing_slash /*= true*/) {
 	if (init.length() < 1) {
 		return init;
@@ -211,7 +210,6 @@ bool NFFileUtility::Mkdir(const string& dirpath) {
 	(void)iret;
 
 	do {
-
 		// get current dir name.
 		nCurSplit = dirpath.find_first_of((string::value_type)'/', nNextSplit);
 		nNextSplit = dirpath.find_first_of((string::value_type)'/', nCurSplit + 1);
@@ -226,7 +224,6 @@ bool NFFileUtility::Mkdir(const string& dirpath) {
 
 		// next dir
 		//nCurSplit = nNextSplit + 1;
-
 	} while (nNextSplit != string::npos);
 
 	return true;

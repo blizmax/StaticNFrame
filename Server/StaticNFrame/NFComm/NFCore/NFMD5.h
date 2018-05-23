@@ -74,18 +74,18 @@ public:
 	static string GenBinMD5(const size_t random_data_len = 8);
 
 	// @brief Convert a binary buffer to a hex format
-	// @param[in] binary - 
-	// @param[in] binary_len - 
+	// @param[in] binary -
+	// @param[in] binary_len -
 	// @param[in] hex - At least with length of binary_len*2
-	// @return void - 
+	// @return void -
 	static void Bin2Hex(const void* binary, size_t binary_len, char* hex);
 	static string Bin2Hex(const void* binary, size_t binary_len);
 
 	// @brief Convert a hex format buffer to binary
-	// @param[in] hex - 
-	// @param[in] hex_len - 
+	// @param[in] hex -
+	// @param[in] hex_len -
 	// @param[in] binary - At least with length of hex_len/2
-	// @return bool - 
+	// @return bool -
 	static bool Hex2Bin(const char* hex, const size_t hex_len, void* binary);
 	static string Hex2Bin(const char* hex, const size_t hex_len);
 
@@ -95,7 +95,6 @@ public:
 private:
 	PHP_MD5_CTX   md5_ctx;
 };
-
 
 inline void NFMD5::Finalizeh(char hex33[33]) {
 	unsigned char binary16_digest[kBinDigestLength];

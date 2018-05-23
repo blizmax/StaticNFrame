@@ -22,38 +22,38 @@
 using namespace std;
 class NFEventContext;
 
-/** 
- *@brief  对所有事件最大嵌套层数支持20层. 
+/**
+ *@brief  对所有事件最大嵌套层数支持20层.
  * 比如在Fire一个事件里，又Fire了别的事件，不断嵌套
  */
 #define EVENT_FIRE_MAX_LAYER 20
 
-/** 
+ /**
  *@brief  对单一事件最大嵌套层数支持5层.
  * 比如在Fire一个事件里，又对这个事件经行了Fire
  */
 #define EVENT_REF_MAX_CNT 5
 
-/** 
+ /**
  *@brief 事件key类
  */
 struct SEventKey
 {
 public:
-	/** 
+	/**
 	*@brief 事件主要的key，主要指玩家，生物唯一id
 	*/
 	uint64_t nSrcID;
-	/** 
+	/**
 	*@brief 事件Id
 	*/
 	uint16_t nEventID;
-	/** 
+	/**
 	*@brief src类型, 用来区别玩家，怪物的类型
 	*/
-	uint8_t  bySrcType;	
+	uint8_t  bySrcType;
 public:
-	/** 
+	/**
 	*@brief 构造函数
 	*/
 	SEventKey()
@@ -63,17 +63,17 @@ public:
 		bySrcType = 0;
 	}
 
-	/** 
+	/**
 	*@brief 判断是否相等
 	*/
-	bool operator == (const SEventKey &eventKey) const 
+	bool operator == (const SEventKey &eventKey) const
 	{
 		return ((nSrcID == eventKey.nSrcID) &&
 			(nEventID == eventKey.nEventID) &&
 			(bySrcType == eventKey.bySrcType));
 	}
 
-	/** 
+	/**
 	*@brief 判断是否小于, 不知道有没有更好的判断小于的方法
 	*/
 	bool operator < (const SEventKey &eventKey) const
@@ -109,9 +109,9 @@ public:
 			}
 		}
 	}
-}; 
+};
 
-/** 
+/**
 *@brief 求hash值
 */
 namespace std {
@@ -124,42 +124,42 @@ namespace std {
 	};
 }
 
-/** 
+/**
  *@brief 事件系统模版类
  */
-template<class TEventSink,class TEventObj>
+template<class TEventSink, class TEventObj>
 class NFEventTemplate
 {
 private:
-	/** 
+	/**
 	 *@brief 事件描述信息
 	 */
-	struct SubscribeInfo 
+	struct SubscribeInfo
 	{
-		/** 
+		/**
 		*@brief 事件对象
 		*/
 		TEventSink *pSink;
 
-		/** 
+		/**
 		*@brief 描述信息
 		*/
 		std::string szDesc;
 
-		/** 
+		/**
 		*@brief 引用次数
 		*/
 		int32_t nRefCount;
 
-		/** 
+		/**
 		*@brief 移除标志
 		*/
 		bool bRemoveFlag;
 
-		/** 
+		/**
 		*@brief 构造函数
 		*/
-		SubscribeInfo(TEventSink *pParamSink, const std::string& desc):szDesc(desc)
+		SubscribeInfo(TEventSink *pParamSink, const std::string& desc) :szDesc(desc)
 		{
 			pSink = pParamSink;
 			szDesc = desc;
@@ -167,7 +167,7 @@ private:
 			bRemoveFlag = false;
 		}
 
-		/** 
+		/**
 		*@brief 增加引用
 		*/
 		void Add()
@@ -175,7 +175,7 @@ private:
 			nRefCount++;
 		}
 
-		/** 
+		/**
 		*@brief 减少引用
 		*/
 		void Sub()
@@ -184,7 +184,7 @@ private:
 		}
 	};
 public:
-	/** 
+	/**
 	*@brief 构造函数
 	*/
 	NFEventTemplate()
@@ -192,7 +192,7 @@ public:
 		m_nFireLayer = 0;
 	}
 
-	/** 
+	/**
 	*@brief 析构函数
 	*/
 	virtual ~NFEventTemplate()
@@ -203,14 +203,14 @@ public:
 
 	/**
 	* @brief 订阅事件
-	*  
-	* @param pSink		订阅对象 
+	*
+	* @param pSink		订阅对象
 	* @param nEventID	事件ID
 	* @param nSrcID		事件源ID，一般都是玩家，生物唯一id
 	* @param bySrcType	事件源类型，玩家类型，怪物类型之类的
 	* @param desc		事件描述，用于打印，获取信息，查看BUG之类的
-	* @return			订阅事件是否成功 
-	*/	
+	* @return			订阅事件是否成功
+	*/
 	bool Subscribe(TEventSink *pSink, uint16_t nEventID, uint64_t nSrcID, uint8_t bySrcType, const std::string& desc)
 	{
 		if (nullptr == pSink) return false;
@@ -220,7 +220,7 @@ public:
 		skey.nSrcID = nSrcID;
 		skey.bySrcType = bySrcType;
 
-		/** 
+		/**
 		*@brief 先判断指针pSink对象有没有注册，然后把skey放入
 		*       这个指针的的集合里，如果skey已经存在，
 		*       说明已经存入，直接退出
@@ -240,7 +240,7 @@ public:
 			iter->second.insert(skey);
 		}
 
-		/** 
+		/**
 		*@brief 判断skey有没有存在，把对象存入skey的链表里
 		*/
 		SubscribeInfo info(pSink, desc);
@@ -258,12 +258,12 @@ public:
 
 	/**
 	* @brief 取消订阅事件
-	*  
-	* @param pSink		订阅对象 
+	*
+	* @param pSink		订阅对象
 	* @param nEventID	事件ID
 	* @param nSrcID		事件源ID，一般都是玩家，生物唯一id
 	* @param bySrcType	事件源类型，玩家类型，怪物类型之类的
-	* @return			取消订阅事件是否成功 
+	* @return			取消订阅事件是否成功
 	*/
 	bool UnSubscribe(TEventSink *pSink, uint16_t nEventID, uint64_t nSrcID, uint8_t bySrcType)
 	{
@@ -274,7 +274,7 @@ public:
 		skey.nSrcID = nSrcID;
 		skey.bySrcType = bySrcType;
 
-		/** 
+		/**
 		*@brief 判断pSink指针对象有没有存在，不存在直接退出
 		*		存在的话，删除对应的key, 如果pSink集合为空的话，
 		*       删除pSink
@@ -296,7 +296,7 @@ public:
 			m_mapAllSubscribeKey.erase(iter);
 		}
 
-		/** 
+		/**
 		*@brief 删除skey链表里的pSink
 		*/
 		DelSubcribeInfo(pSink, skey);
@@ -306,9 +306,9 @@ public:
 
 	/**
 	* @brief 取消pSink所有订阅事件
-	*  
-	* @param pSink		订阅对象 
-	* @return			取消订阅事件是否成功 
+	*
+	* @param pSink		订阅对象
+	* @return			取消订阅事件是否成功
 	*/
 	bool UnSubscribeAll(TEventSink *pSink)
 	{
@@ -331,16 +331,16 @@ public:
 
 	/**
 	* @brief 发送事件,并执行收到事件的对象的对应函数
-	*  
+	*
 	* @param nEventID		事件ID
 	* @param nSrcID			事件源ID，一般都是玩家，生物唯一id
-	* @param bySrcType		事件源类型，玩家类型，怪物类型之类的 
+	* @param bySrcType		事件源类型，玩家类型，怪物类型之类的
 	* @param pEventContext	事件传输的数据
-	* @return				执行是否成功 
+	* @return				执行是否成功
 	*/
 	/*
 	* 几个威胁，可能导致问题, 但不会导致崩溃, 可能与你预想的不一样:
-	* 问题1:假设我在Fire事件里，相同的key，删除不同的pSink, 
+	* 问题1:假设我在Fire事件里，相同的key，删除不同的pSink,
 	*		可能导致将要执行的事件被删除，这可能与你预想的设计不一样
 	* 问题2:假设我在Fire事件里，相同的key，删除相同的pSink, 由于事件系统利用SubscribeInfo的Add,Sub引用计数做了预防，
 	*       迭代器不会立马被删除，不会导致std::list迭代器失效， 这样删除不会导致问题
@@ -382,8 +382,8 @@ public:
 private:
 	/**
 	* @brief 删除skey的链表里的pSink
-	*  
-	* @param pSink		订阅对象 
+	*
+	* @param pSink		订阅对象
 	* @param SEventKey	事件合成key
 	* @return			删除skey的链表里的pSink是否成功
 	*/
@@ -419,21 +419,21 @@ private:
 
 	/**
 	* @brief 执行所有订阅事件key的函数
-	*  
-	* @param skey			事件合成key，skey.nsrcid可能为0，可能=nEventID		
+	*
+	* @param skey			事件合成key，skey.nsrcid可能为0，可能=nEventID
 	* @param nEventID		事件ID
 	* @param nSrcID			事件源ID，一般都是玩家，生物唯一id
-	* @param bySrcType		事件源类型，玩家类型，怪物类型之类的 
+	* @param bySrcType		事件源类型，玩家类型，怪物类型之类的
 	* @param pEventContext	事件传输的数据
-	* @return				执行是否成功 
+	* @return				执行是否成功
 	*/
 	bool Fire(const SEventKey &skey, uint16_t nEventID, uint64_t nSrcID, uint8_t bySrcType, NFEventContext* pEventContex)
 	{
 		m_nFireLayer++;
 		if (m_nFireLayer >= EVENT_FIRE_MAX_LAYER)
 		{
-			std::cerr << "[Event] m_nFireLayer >= EVENT_FIRE_MAX_LAYER.....nEventID:" 
-				<< nEventID << ",nSrcID:" << nSrcID << ",bySrcType:" 
+			std::cerr << "[Event] m_nFireLayer >= EVENT_FIRE_MAX_LAYER.....nEventID:"
+				<< nEventID << ",nSrcID:" << nSrcID << ",bySrcType:"
 				<< bySrcType << ", firelayer:" << m_nFireLayer << std::endl;;
 			m_nFireLayer--;
 			return false;
@@ -500,7 +500,6 @@ private:
 			{
 				m_mapAllSubscribeObj.erase(iterLst);
 			}
-
 		} // enf of if (iterLst != m_mapAllSubscribeObj.end())
 
 		m_nFireLayer--;

@@ -23,19 +23,19 @@ class NFITimerModule;
 class NFCKernelModule : public NFIKernelModule
 {
 public:
-    explicit NFCKernelModule(NFIPluginManager* p);
-    virtual ~NFCKernelModule();
+	explicit NFCKernelModule(NFIPluginManager* p);
+	virtual ~NFCKernelModule();
 
-    virtual bool Init();
-    virtual bool Shut();
+	virtual bool Init();
+	virtual bool Shut();
 
-    virtual bool BeforeShut();
+	virtual bool BeforeShut();
 
-    virtual bool AfterInit();
+	virtual bool AfterInit();
 
-    virtual bool Execute();
+	virtual bool Execute();
 protected:
-    void ProcessMemFree();
+	void ProcessMemFree();
 };
 
 #endif

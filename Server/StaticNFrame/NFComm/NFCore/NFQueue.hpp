@@ -21,42 +21,42 @@ template<typename T>
 class NFQueueVector
 {
 public:
-    NFQueueVector()
-    {
-    }
+	NFQueueVector()
+	{
+	}
 
-    virtual ~NFQueueVector()
-    {
-    }
+	virtual ~NFQueueVector()
+	{
+	}
 
-    bool Push(const T& object)
-    {
+	bool Push(const T& object)
+	{
 		NFMutexLock lock(&mMutex);
-        mList.push_back(object);
-        return true;
-    }
+		mList.push_back(object);
+		return true;
+	}
 
-    bool Pop(std::vector<T>& vecObj)
-    {
+	bool Pop(std::vector<T>& vecObj)
+	{
 		NFMutexLock lock(&mMutex);
 		mList.swap(vecObj);
-        return true;
-    }
+		return true;
+	}
 
 	bool Pop(T& object)
-    {
+	{
 		NFMutexLock lock(&mMutex);
-        if (mList.empty())
-        {
-            return false;
-        }
-        object = mList.front();
-        mList.pop_front();
+		if (mList.empty())
+		{
+			return false;
+		}
+		object = mList.front();
+		mList.pop_front();
 
-        return true;
-    }
+		return true;
+	}
 private:
-    std::vector<T> mList;
+	std::vector<T> mList;
 	NFMutex mMutex;
 };
 
@@ -64,44 +64,44 @@ template<typename T>
 class NFQueue
 {
 public:
-    NFQueue()
-    {
-    }
+	NFQueue()
+	{
+	}
 
-    virtual ~NFQueue()
-    {
-    }
+	virtual ~NFQueue()
+	{
+	}
 
-    bool Push(const T& object)
-    {
+	bool Push(const T& object)
+	{
 		NFMutexLock lock(&mMutex);
-        mList.push_back(object);
-        return true;
-    }
+		mList.push_back(object);
+		return true;
+	}
 
-    bool Pop(std::vector<T>& vecObj)
-    {
+	bool Pop(std::vector<T>& vecObj)
+	{
 		NFMutexLock lock(&mMutex);
 		mList.swap(vecObj);
-        return true;
-    }
+		return true;
+	}
 
 	bool Pop(T& object)
-    {
+	{
 		NFMutexLock lock(&mMutex);
-        if (mList.empty())
-        {
-            return false;
-        }
+		if (mList.empty())
+		{
+			return false;
+		}
 
-        object = mList.front();
-        mList.pop_front();
+		object = mList.front();
+		mList.pop_front();
 
-        return true;
-    }
+		return true;
+	}
 
 private:
-    std::list<T> mList;
+	std::list<T> mList;
 	NFMutex mMutex;
 };
 

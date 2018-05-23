@@ -60,7 +60,7 @@ int NFSafeVsnprintf(char *buf, size_t size, const char *fmt, va_list ap)
 	}
 
 	int   ret = ::_vsnprintf(buf, size, fmt, ap);
-	if (ret < 0 || ret >= (int) size)
+	if (ret < 0 || ret >= (int)size)
 	{
 		buf[size - 1] = 0;
 		return -1;

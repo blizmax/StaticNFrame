@@ -3,13 +3,13 @@
 #include "NFComm/NFPluginModule/NFITimerModule.h"
 #include "NFComm/NFCore/NFSingleton.hpp"
 
-class NFTimerMgr : public NFSingleton<NFTimerMgr> 
+class NFTimerMgr : public NFSingleton<NFTimerMgr>
 {
 public:
-    NFTimerMgr();
+	NFTimerMgr();
 	virtual ~NFTimerMgr();
 public:
-    virtual bool Init(NFITimerModule* pTimerModule);
+	virtual bool Init(NFITimerModule* pTimerModule);
 	virtual void UnInit();
 public:
 	//…Ë÷√∂® ±∆˜

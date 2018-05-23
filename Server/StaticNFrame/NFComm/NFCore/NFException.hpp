@@ -18,20 +18,20 @@
 class NFException
 {
 public:
-    NFException(const char* format, ...)
-    {
+	NFException(const char* format, ...)
+	{
 		va_list ap;
 		va_start(ap, format);
 		NFStringUtility::StringAppendV(&message, format, ap);
 		va_end(ap);
-    }
+	}
 
-    std::string GetMessage()
-    {
-        return message;
-    }
+	std::string GetMessage()
+	{
+		return message;
+	}
 protected:
-    std::string message;
+	std::string message;
 };
 
 #endif

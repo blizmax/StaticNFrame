@@ -112,24 +112,24 @@ private:
 class _NFExport NFCpu
 {
 public:
-    /// @brief 获取当前进程的cpu使用时间
-    static long long GetCurCpuTime();
+	/// @brief 获取当前进程的cpu使用时间
+	static long long GetCurCpuTime();
 
-    /// @brief 获取整个系统的cpu使用时间
-    static long long GetTotalCpuTime();
+	/// @brief 获取整个系统的cpu使用时间
+	static long long GetTotalCpuTime();
 
-    /// @brief 计算进程的cpu使用率
-    /// @param cur_cpu_time_start 当前进程cpu使用时间段-start
-    /// @param cur_cpu_time_stop 当前进程cpu使用时间段-stop
-    /// @param total_cpu_time_start 整个系统cpu使用时间段-start
-    /// @param total_cpu_time_start 整个系统cpu使用时间段-stop
-    static float CalculateCurCpuUseage(long long cur_cpu_time_start, long long cur_cpu_time_stop,
-                                       long long total_cpu_time_start, long long total_cpu_time_stop);
+	/// @brief 计算进程的cpu使用率
+	/// @param cur_cpu_time_start 当前进程cpu使用时间段-start
+	/// @param cur_cpu_time_stop 当前进程cpu使用时间段-stop
+	/// @param total_cpu_time_start 整个系统cpu使用时间段-start
+	/// @param total_cpu_time_start 整个系统cpu使用时间段-stop
+	static float CalculateCurCpuUseage(long long cur_cpu_time_start, long long cur_cpu_time_stop,
+		long long total_cpu_time_start, long long total_cpu_time_stop);
 
-    /// @brief 获取进程当前内存使用情况
-    /// @param vm_size_kb 输出参数，虚存，单位为K
-    /// @param rss_size_kb 输出参数，物理内存，单位为K
-    static int GetCurMemoryUsage(int* vm_size_kb, int* rss_size_kb);
+	/// @brief 获取进程当前内存使用情况
+	/// @param vm_size_kb 输出参数，虚存，单位为K
+	/// @param rss_size_kb 输出参数，物理内存，单位为K
+	static int GetCurMemoryUsage(int* vm_size_kb, int* rss_size_kb);
 
 	/// @brief 计算进程的cpu使用率
 	static int GetCurCpuUseage();
@@ -137,4 +137,3 @@ public:
 	/// @brief 获取进程当前内存使用情况
 	static int GetCurMemorySize();
 };
-

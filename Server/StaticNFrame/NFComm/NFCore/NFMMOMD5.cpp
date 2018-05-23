@@ -88,7 +88,6 @@ const byte* NFMMOMD5::getDigest() {
 *
 */
 void NFMMOMD5::init(const byte* input, size_t len) {
-
 	bit32 i, index, partLen;
 
 	finished = false;
@@ -106,7 +105,6 @@ void NFMMOMD5::init(const byte* input, size_t len) {
 
 	/* transform as many times as possible. */
 	if (len >= partLen) {
-
 		memcpy(&buffer[index], input, partLen);
 		transform(buffer);
 
@@ -114,7 +112,6 @@ void NFMMOMD5::init(const byte* input, size_t len) {
 			transform(&input[i]);
 		}
 		index = 0;
-
 	}
 	else {
 		i = 0;
@@ -130,7 +127,6 @@ void NFMMOMD5::init(const byte* input, size_t len) {
 * @param {block} the message block.
 */
 void NFMMOMD5::transform(const byte block[64]) {
-
 	bit32 a = state[0], b = state[1], c = state[2], d = state[3], x[16];
 
 	decode(block, x, 64);
@@ -224,7 +220,6 @@ void NFMMOMD5::transform(const byte block[64]) {
 *
 */
 void NFMMOMD5::encode(const bit32* input, byte* output, size_t length) {
-
 	for (size_t i = 0, j = 0; j < length; ++i, j += 4) {
 		output[j] = (byte)(input[i] & 0xff);
 		output[j + 1] = (byte)((input[i] >> 8) & 0xff);
@@ -249,7 +244,6 @@ void NFMMOMD5::decode(const byte* input, bit32* output, size_t length) {
 			(((bit32)input[j + 2]) << 16) | (((bit32)input[j + 3]) << 24);
 	}
 }
-
 
 /**
 * @Convert digest to string value.

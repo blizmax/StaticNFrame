@@ -13,16 +13,16 @@
 class NFNetPlugin : public NFIPlugin
 {
 public:
-    explicit NFNetPlugin(NFIPluginManager* p)
-    {
-        pPluginManager = p;
-    }
+	explicit NFNetPlugin(NFIPluginManager* p)
+	{
+		pPluginManager = p;
+	}
 
-    virtual const int GetPluginVersion();
+	virtual const int GetPluginVersion();
 
-    virtual const std::string GetPluginName();
+	virtual const std::string GetPluginName();
 
-    virtual void Install();
+	virtual void Install();
 
-    virtual void Uninstall();
+	virtual void Uninstall();
 };

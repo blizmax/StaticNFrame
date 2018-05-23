@@ -11,7 +11,6 @@ NetObject::NetObject()
 	m_usLinkId = 0;
 }
 
-
 NetObject::~NetObject()
 {
 }
@@ -29,7 +28,7 @@ int NetObject::Dismantle()
 	uint32_t allLen = 0;
 	uint32_t nMsgId = 0;
 	uint64_t nValue = 0;
-	int ret = NFIPacketParse::DeCode(m_buffer.ReadAddr(),m_buffer.ReadableSize(), outData, outLen, allLen, nMsgId, nValue);
+	int ret = NFIPacketParse::DeCode(m_buffer.ReadAddr(), m_buffer.ReadableSize(), outData, outLen, allLen, nMsgId, nValue);
 	if (ret < 0)
 	{
 		bufferevent_disable(m_pBev, EV_READ | EV_WRITE);
@@ -55,12 +54,12 @@ bool  NetObject::OnRecvData(bufferevent* pBufEv)
 		return false;
 	}
 	struct evbuffer * pEvbuff = bufferevent_get_input(pBufEv);
-	if (NULL == pEvbuff){
+	if (NULL == pEvbuff) {
 		return false;
 	}
 
 	int32_t  ilen = (int32_t)evbuffer_get_length(pEvbuff);
-	if (ilen <= 0){
+	if (ilen <= 0) {
 		return true;
 	}
 
