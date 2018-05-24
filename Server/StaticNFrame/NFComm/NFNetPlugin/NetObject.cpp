@@ -3,22 +3,20 @@
 #include "NFComm/NFPluginModule/NFLogMgr.h"
 #include "NFIPacketParse.h"
 
-NetObject::NetObject()
+NetObject::NetObject(): m_pBev(nullptr), m_usLinkId(0), m_eStatus(), m_lastRecvTime(0), m_lastDisconnetTime(0), m_lastPingTime(0)
 {
-	m_nSocket = INVALID_SOCKET;
-	m_pBev = nullptr;
-	m_usConn = 0;
-	m_usLinkId = 0;
+	m_eStatus = eConnectStatus_UnConnect;
+	m_nSocketId = INVALID_SOCKET;
+	m_buffer.AssureSpace(MAX_RECV_BUFFER_SIZE);
 }
 
 NetObject::~NetObject()
 {
-}
-
-bool NetObject::Init()
-{
-	m_buffer.AssureSpace(MAX_RECV_BUFFER_SIZE);
-	return true;
+	bufferevent_free(m_pBev);
+	m_eStatus = eConnectStatus_UnConnect;
+	m_nSocketId = INVALID_SOCKET;
+	m_buffer.Clear();
+	m_pBev = nullptr;
 }
 
 int NetObject::Dismantle()
@@ -32,8 +30,8 @@ int NetObject::Dismantle()
 	if (ret < 0)
 	{
 		bufferevent_disable(m_pBev, EV_READ | EV_WRITE);
-		evutil_closesocket(m_nSocket);
-		m_nSocket = INVALID_SOCKET;
+		evutil_closesocket(m_nSocketId);
+		m_nSocketId = INVALID_SOCKET;
 		return -1;
 	}
 	else if (ret > 0)
@@ -46,6 +44,16 @@ int NetObject::Dismantle()
 		m_buffer.Consume(allLen);
 		return 0;
 	}
+}
+
+bufferevent* NetObject::GetBev() const
+{
+	return m_pBev;
+}
+
+uint32_t NetObject::GetLinkId() const
+{
+	return m_usLinkId;
 }
 
 bool  NetObject::OnRecvData(bufferevent* pBufEv)
@@ -90,32 +98,81 @@ bool  NetObject::OnRecvData(bufferevent* pBufEv)
 	return true;
 }
 
-void NetObject::OnHandleMsgPeer(eMsgType type, uint32_t usLink, char* pBuf, uint32_t sz, uint32_t nMsgId, uint64_t nValue)
+eConnectStatus NetObject::GetStatus() const
 {
-	NFThreadNetMsg* pNetMsg = new NFThreadNetMsg();
-	pNetMsg->usLink = usLink;
-	pNetMsg->eType = type;
-	pNetMsg->nMsgId = nMsgId;
-	pNetMsg->nValue = nValue;
-	pNetMsg->nBuffer.Init(pBuf, sz);
-
-	m_threadNetMsgs.Push(pNetMsg);
+	return m_eStatus;
 }
 
-void NetObject::FlushData()
+void NetObject::SetStatus(eConnectStatus val)
 {
-	if (NULL == m_pBev) {
-		return;
-	}
-	int size = evbuffer_get_length(bufferevent_get_output(m_pBev));
-	if (size > 0)
+	m_eStatus = val;
+}
+
+bool NetObject::IsConnectOK() const
+{
+	return m_eStatus == eConnectStatus_ConnectOk;
+}
+
+uint64_t NetObject::GetLastRecvTime() const
+{
+	return m_lastRecvTime;
+}
+
+void NetObject::SetLastRecvTime(uint64_t val)
+{
+	m_lastRecvTime = val;
+}
+
+uint64_t NetObject::GetLastPingTime() const
+{
+	return m_lastPingTime;
+}
+
+void NetObject::SetLastPingTime(uint64_t val)
+{
+	m_lastPingTime = val;
+}
+
+void NetObject::SetSocketId(SOCKET nSocket)
+{
+	m_nSocketId = nSocket;
+	int tcp_nodelay = 1;
+	int ret = 0;
+	ret = setsockopt(nSocket, IPPROTO_TCP, TCP_NODELAY, reinterpret_cast<const char *>(&tcp_nodelay), sizeof(tcp_nodelay));
+	if (ret < 0)
 	{
-		evbuffer_unfreeze(bufferevent_get_output(m_pBev), 1);
-		evbuffer_write(bufferevent_get_output(m_pBev), m_nSocket);
+		std::cout << "setsockopt TCP_NODELAY failed" << std::endl;
+	}
+	int bufflen = 65536;
+	ret = setsockopt(nSocket, SOL_SOCKET, SO_RCVBUF, reinterpret_cast<const char *>(&bufflen), sizeof(bufflen));
+	if (ret < 0)
+	{
+		std::cout << "setsockopt SO_RCVBUF failed" << std::endl;
+	}
+	ret = setsockopt(nSocket, SOL_SOCKET, SO_SNDBUF, reinterpret_cast<const char *>(&bufflen), sizeof(bufflen));
+	if (ret < 0)
+	{
+		std::cout << "setsockopt SO_SNDBUF failed" << std::endl;
+	}
+
+	ret = evutil_make_socket_nonblocking(nSocket);
+	if (ret < 0)
+	{
+		std::cout << "evutil_make_socket_nonblocking failed" << std::endl;
 	}
 }
 
-void NetObject::Reset()
+bool NetObject::Send(const void* pData, uint32_t unSize)
 {
-	m_buffer.Clear();
+	if (IsConnectOK() && bufferevent_get_enabled(m_pBev) != 0) 
+	{
+		int nRet = bufferevent_write(m_pBev, pData, unSize);
+		if (nRet < 0) 
+		{
+			LogError(0, "NetError", "send msg error !");
+			return false;
+		}
+		return true;
+	}
+	return false;
 }

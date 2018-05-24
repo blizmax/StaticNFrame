@@ -39,6 +39,14 @@ typedef struct linger 		    LINGER;
 #define MAX_SEND_BUFFER_SIZE (1024 * 100)
 #define MAX_RECV_BUFFER_SIZE (1024 * 100)
 
+enum eConnectStatus
+{
+	eConnectStatus_UnConnect,    //未连接
+	eConnectStatus_Connecting,	 //连接中
+	eConnectStatus_ConnectOk,	 //连接OK
+	eConnectStatus_Disconnect,   //断开连接
+};
+
 struct stMsgFlag
 {
 	uint32_t		nInitRcvBufSZ;			//接受消息的缓冲区初始值
@@ -55,9 +63,8 @@ struct stMsgFlag
 	}
 };
 
-struct stServerFlag
+struct NFServerFlag
 {
-	stMsgFlag			flag;
 	uint32_t			nMaxConnectNum;   //最大链接数
 	uint32_t			nInitConnectNum;  //初始链接个数
 	uint32_t			nWorkThreadNum;   //工作线程个数
@@ -65,7 +72,7 @@ struct stServerFlag
 	bool				bEncrypt;		  //是否加密
 	uint32_t			nMaxMsgNumMinPer; //每一分钟最大的消息包数
 	uint32_t			nTimeoutDisconnect;  //超时断开连接断开连接
-	stServerFlag()
+	NFServerFlag()
 	{
 		nInitConnectNum = 10;
 		nWorkThreadNum = 1;
@@ -77,14 +84,14 @@ struct stServerFlag
 	}
 };
 
-struct stClientFlag
+struct NFClientFlag
 {
 	bool			bAutoConnect; //自动重连
 	bool			bEncrypt;
 	uint16_t		nPort;
 	std::string		strIP;
 	uint16_t		sSuspend;
-	stClientFlag() {
+	NFClientFlag() {
 		nPort = 0;
 		bAutoConnect = false;
 		bEncrypt = false;

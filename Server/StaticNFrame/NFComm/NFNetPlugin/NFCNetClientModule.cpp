@@ -2,25 +2,12 @@
 #include <iostream>
 #include "NFIPacketParse.h"
 
-#include "event2/thread.h"
 
 NFCNetClientModule::NFCNetClientModule(NFIPluginManager* p)
 {
 	pPluginManager = p;
 	mxServerMap.resize(NF_ST_MAX);
 	mxSendBuffer.AssureSpace(MAX_SEND_BUFFER_SIZE);
-#ifdef WIN32
-	WSADATA wsaData;
-	int nResult = WSAStartup(0x0201, &wsaData);
-	if (nResult)
-	{
-		std::cout << "WSAStartup failed with error code:" << nResult << std::endl;
-		return;
-	}
-	evthread_use_windows_threads();
-#else
-	evthread_use_pthreads();
-#endif
 }
 
 NFCNetClientModule::~NFCNetClientModule()
@@ -117,7 +104,7 @@ uint32_t NFCNetClientModule::AddServer(NF_SERVER_TYPES eServerType, const std::s
 		uint32_t usId = GetFreeUnLinkId(eServerType);
 		uint32_t index = GetServerIndexFromUnlinkId(usId);
 
-		stClientFlag flag;
+		NFClientFlag flag;
 		flag.strIP = strIp;
 		flag.nPort = nPort;
 

@@ -2,9 +2,6 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <ClCompile Include="NFNetPlugin.cpp" />
-    <ClCompile Include="NFClient.cpp">
-      <Filter>NFClient</Filter>
-    </ClCompile>
     <ClCompile Include="NetObject.cpp">
       <Filter>NFNet</Filter>
     </ClCompile>
@@ -15,12 +12,15 @@
     <ClCompile Include="NFIPacketParse.cpp">
       <Filter>PacketParse</Filter>
     </ClCompile>
+    <ClCompile Include="NFThreadClient.cpp">
+      <Filter>NFClient</Filter>
+    </ClCompile>
+    <ClCompile Include="NFClient.cpp">
+      <Filter>NFClient</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="NFNetPlugin.h" />
-    <ClInclude Include="NFClient.h">
-      <Filter>NFClient</Filter>
-    </ClInclude>
     <ClInclude Include="NFINet.h">
       <Filter>NFNet</Filter>
     </ClInclude>
@@ -36,6 +36,12 @@
     </ClInclude>
     <ClInclude Include="NFIPacketParse.h">
       <Filter>PacketParse</Filter>
+    </ClInclude>
+    <ClInclude Include="NFThreadClient.h">
+      <Filter>NFClient</Filter>
+    </ClInclude>
+    <ClInclude Include="NFClient.h">
+      <Filter>NFClient</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

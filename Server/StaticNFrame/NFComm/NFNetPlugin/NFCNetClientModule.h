@@ -3,6 +3,7 @@
 #include "NFComm/NFPluginModule/NFINetClientModule.h"
 #include "NFComm/NFPluginModule/NFServerDefine.h"
 #include "NFClient.h"
+#include "NFThreadClient.h"
 #include "NFComm/NFCore/NFDataStream.h"
 #include "NFComm/NFCore/NFBuffer.h"
 

@@ -57,13 +57,13 @@ int32_t NFINIReader::ParseFile(FILE* file)
 		line_no++;
 		std::string line(buff);
 
-		// 0. 鏀寔UTF-8 BOM
+		// 0. 支持UTF-8 BOM
 		if (1 == line_no && line.find_first_of(utf8bom) == 0)
 		{
 			line.erase(0, 3);
 		}
 
-		// 1. 鍘绘帀娉ㄩ噴
+		// 1. 去掉注释
 		for (size_t i = 0; i < line.length(); ++i)
 		{
 			if (';' == line[i] || '#' == line[i])
@@ -73,9 +73,9 @@ int32_t NFINIReader::ParseFile(FILE* file)
 			}
 		}
 
-		// 2. 鍘绘帀棣栧熬绌烘牸
+		// 2. 去掉首尾空格
 		NFStringUtility::Trim(line);
-		// 3. 鍘绘帀绌鸿
+		// 3. 去掉空行
 		if (line.empty())
 		{
 			continue;
