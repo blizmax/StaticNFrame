@@ -33,7 +33,8 @@ namespace NFHash
 	// into a single hash.
 	inline uint64_t hash_128_to_64(
 		const uint64_t upper,
-		const uint64_t lower) noexcept {
+		const uint64_t lower) noexcept
+	{
 		// Murmur-inspired hashing.
 		const uint64_t kMul = 0x9ddfea08eb382d69ULL;
 		uint64_t a = (lower ^ upper) * kMul;
@@ -46,16 +47,19 @@ namespace NFHash
 
 	// Never used, but gcc demands it.
 	template <class Hasher>
-	inline size_t hash_combine_generic() {
+	inline size_t hash_combine_generic()
+	{
 		return 0;
 	}
 
 	template <
 		class Iter,
-		class Hash = std::hash<typename std::iterator_traits<Iter>::value_type >>
-		uint64_t
-		hash_range(Iter begin, Iter end, uint64_t hash = 0, Hash hasher = Hash()) {
-		for (; begin != end; ++begin) {
+		class Hash = std::hash<typename std::iterator_traits<Iter>::value_type>>
+	uint64_t
+	hash_range(Iter begin, Iter end, uint64_t hash = 0, Hash hasher = Hash())
+	{
+		for (; begin != end; ++begin)
+		{
 			hash = hash_128_to_64(hash, hasher(*begin));
 		}
 		return hash;
@@ -64,16 +68,21 @@ namespace NFHash
 	inline uint32_t twang_32from64(uint64_t key) noexcept;
 
 	template <class Hasher, typename T, typename... Ts>
-	size_t hash_combine_generic(const T& t, const Ts&... ts) {
+	size_t hash_combine_generic(const T& t, const Ts&... ts)
+	{
 		size_t seed = Hasher::hash(t);
-		if (sizeof...(ts) == 0) {
+		if (sizeof...(ts) == 0)
+		{
 			return seed;
 		}
 		size_t remainder = hash_combine_generic<Hasher>(ts...);
-		/* static */ if (sizeof(size_t) == sizeof(uint32_t)) {
+		/* static */
+		if (sizeof(size_t) == sizeof(uint32_t))
+		{
 			return twang_32from64((uint64_t(seed) << 32) | remainder);
 		}
-		else {
+		else
+		{
 			return static_cast<size_t>(hash_128_to_64(seed, remainder));
 		}
 	}
@@ -82,19 +91,22 @@ namespace NFHash
 	// to be a very good hash function; provided std::hash doesn't collide on
 	// the individual inputs, you are fine, but that won't be true for, say,
 	// strings or pairs
-	class StdHasher {
+	class StdHasher
+	{
 	public:
 		// The standard requires all explicit and partial specializations of std::hash
 		// supplied by either the standard library or by users to be default
 		// constructible.
 		template <typename T>
-		static size_t hash(const T& t) noexcept(noexcept(std::hash<T>()(t))) {
+		static size_t hash(const T& t) noexcept(noexcept(std::hash<T>()(t)))
+		{
 			return std::hash<T>()(t);
 		}
 	};
 
 	template <typename T, typename... Ts>
-	size_t hash_combine(const T& t, const Ts&... ts) {
+	size_t hash_combine(const T& t, const Ts&... ts)
+	{
 		return hash_combine_generic<StdHasher>(t, ts...);
 	}
 
@@ -104,7 +116,8 @@ namespace NFHash
 	* Thomas Wang 64 bit mix hash function
 	*/
 
-	inline uint64_t twang_mix64(uint64_t key) noexcept {
+	inline uint64_t twang_mix64(uint64_t key) noexcept
+	{
 		key = (~key) + (key << 21); // key *= (1 << 21) - 1; key -= 1;
 		key = key ^ (key >> 24);
 		key = key + (key << 3) + (key << 8); // key *= 1 + (1 << 3) + (1 << 8)
@@ -121,7 +134,8 @@ namespace NFHash
 	* Note that twang_unmix64 is significantly slower than twang_mix64.
 	*/
 
-	inline uint64_t twang_unmix64(uint64_t key) noexcept {
+	inline uint64_t twang_unmix64(uint64_t key) noexcept
+	{
 		// See the comments in jenkins_rev_unmix32 for an explanation as to how this
 		// was generated
 		key *= 4611686016279904257U;
@@ -138,7 +152,8 @@ namespace NFHash
 	* Thomas Wang downscaling hash function
 	*/
 
-	inline uint32_t twang_32from64(uint64_t key) noexcept {
+	inline uint32_t twang_32from64(uint64_t key) noexcept
+	{
 		key = (~key) + (key << 18);
 		key = key ^ (key >> 31);
 		key = key * 21;
@@ -152,7 +167,8 @@ namespace NFHash
 	* Robert Jenkins' reversible 32 bit mix hash function
 	*/
 
-	inline uint32_t jenkins_rev_mix32(uint32_t key) noexcept {
+	inline uint32_t jenkins_rev_mix32(uint32_t key) noexcept
+	{
 		key += (key << 12); // key *= (1 + (1 << 12))
 		key ^= (key >> 22);
 		key += (key << 4); // key *= (1 + (1 << 4))
@@ -172,7 +188,8 @@ namespace NFHash
 	* jenkins_rev_mix32.
 	*/
 
-	inline uint32_t jenkins_rev_unmix32(uint32_t key) noexcept {
+	inline uint32_t jenkins_rev_unmix32(uint32_t key) noexcept
+	{
 		// These are the modular multiplicative inverses (in Z_2^32) of the
 		// multiplication factors in jenkins_rev_mix32, in reverse order.  They were
 		// computed using the Extended Euclidean algorithm, see
@@ -206,11 +223,13 @@ namespace NFHash
 
 	inline uint32_t fnv32(
 		const char* buf,
-		uint32_t hash = FNV_32_HASH_START) noexcept {
+		uint32_t hash = FNV_32_HASH_START) noexcept
+	{
 		// forcing signed char, since other platforms can use unsigned
 		const signed char* s = reinterpret_cast<const signed char*>(buf);
 
-		for (; *s; ++s) {
+		for (; *s; ++s)
+		{
 			hash +=
 				(hash << 1) + (hash << 4) + (hash << 7) + (hash << 8) + (hash << 24);
 			hash ^= *s;
@@ -221,11 +240,13 @@ namespace NFHash
 	inline uint32_t fnv32_buf(
 		const void* buf,
 		size_t n,
-		uint32_t hash = FNV_32_HASH_START) noexcept {
+		uint32_t hash = FNV_32_HASH_START) noexcept
+	{
 		// forcing signed char, since other platforms can use unsigned
 		const signed char* char_buf = reinterpret_cast<const signed char*>(buf);
 
-		for (size_t i = 0; i < n; ++i) {
+		for (size_t i = 0; i < n; ++i)
+		{
 			hash +=
 				(hash << 1) + (hash << 4) + (hash << 7) + (hash << 8) + (hash << 24);
 			hash ^= char_buf[i];
@@ -236,17 +257,20 @@ namespace NFHash
 
 	inline uint32_t fnv32(
 		const std::string& str,
-		uint32_t hash = FNV_32_HASH_START) noexcept {
+		uint32_t hash = FNV_32_HASH_START) noexcept
+	{
 		return fnv32_buf(str.data(), str.size(), hash);
 	}
 
 	inline uint64_t fnv64(
 		const char* buf,
-		uint64_t hash = FNV_64_HASH_START) noexcept {
+		uint64_t hash = FNV_64_HASH_START) noexcept
+	{
 		// forcing signed char, since other platforms can use unsigned
 		const signed char* s = reinterpret_cast<const signed char*>(buf);
 
-		for (; *s; ++s) {
+		for (; *s; ++s)
+		{
 			hash += (hash << 1) + (hash << 4) + (hash << 5) + (hash << 7) +
 				(hash << 8) + (hash << 40);
 			hash ^= *s;
@@ -257,11 +281,13 @@ namespace NFHash
 	inline uint64_t fnv64_buf(
 		const void* buf,
 		size_t n,
-		uint64_t hash = FNV_64_HASH_START) noexcept {
+		uint64_t hash = FNV_64_HASH_START) noexcept
+	{
 		// forcing signed char, since other platforms can use unsigned
 		const signed char* char_buf = reinterpret_cast<const signed char*>(buf);
 
-		for (size_t i = 0; i < n; ++i) {
+		for (size_t i = 0; i < n; ++i)
+		{
 			hash += (hash << 1) + (hash << 4) + (hash << 5) + (hash << 7) +
 				(hash << 8) + (hash << 40);
 			hash ^= char_buf[i];
@@ -271,17 +297,20 @@ namespace NFHash
 
 	inline uint64_t fnv64(
 		const std::string& str,
-		uint64_t hash = FNV_64_HASH_START) noexcept {
+		uint64_t hash = FNV_64_HASH_START) noexcept
+	{
 		return fnv64_buf(str.data(), str.size(), hash);
 	}
 
 	inline uint64_t fnva64_buf(
 		const void* buf,
 		size_t n,
-		uint64_t hash = FNVA_64_HASH_START) noexcept {
+		uint64_t hash = FNVA_64_HASH_START) noexcept
+	{
 		const uint8_t* char_buf = reinterpret_cast<const uint8_t*>(buf);
 
-		for (size_t i = 0; i < n; ++i) {
+		for (size_t i = 0; i < n; ++i)
+		{
 			hash ^= char_buf[i];
 			hash += (hash << 1) + (hash << 4) + (hash << 5) + (hash << 7) +
 				(hash << 8) + (hash << 40);
@@ -291,7 +320,10 @@ namespace NFHash
 
 	inline uint64_t fnva64(
 		const std::string& str,
-		uint64_t hash = FNVA_64_HASH_START) noexcept {
+		uint64_t hash = FNVA_64_HASH_START) noexcept
+	{
 		return fnva64_buf(str.data(), str.size(), hash);
 	}
-}	//namespace NFHash
+} //namespace NFHash
+
+

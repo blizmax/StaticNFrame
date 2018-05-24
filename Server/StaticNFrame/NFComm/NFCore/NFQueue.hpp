@@ -17,7 +17,7 @@
 #include "NFComm/NFCore/NFPlatform.h"
 #include "NFComm/NFCore/NFMutex.h"
 
-template<typename T>
+template <typename T>
 class NFQueueVector
 {
 public:
@@ -55,12 +55,13 @@ public:
 
 		return true;
 	}
+
 private:
 	std::vector<T> mList;
 	NFMutex mMutex;
 };
 
-template<typename T>
+template <typename T>
 class NFQueue
 {
 public:
@@ -106,3 +107,4 @@ private:
 };
 
 #endif
+

@@ -14,7 +14,7 @@
 #define NF_ASSERT(condition)					if (!(condition)) NFAssertFail(__FILE__, __LINE__); else { }
 #define NF_ASSERT_MSG(condition, msg)			if (!(condition)) NFAssertFail(__FILE__, __LINE__, msg); else { }
 
-inline void NFAssertFail(const char *const file, const unsigned int line, const std::string& message)
+inline void NFAssertFail(const char*const file, const unsigned int line, const std::string& message)
 {
 	fprintf(stderr, "FAIL in %s (%d)", file, line);
 	if (!message.empty())
@@ -68,10 +68,12 @@ inline void NFAssertFail(const char *const file, const unsigned int line, const 
 #define NFSLEEP(s) Sleep(s)
 #define NFGetPID() lexical_cast<std::string>(getpid())
 typedef unsigned int NF_THREAD_ID;
+
 inline NF_THREAD_ID ThreadId()
 {
 	return GetCurrentThreadId();
 }
+
 inline struct tm* localtime_r(const time_t* timep, struct tm* result)
 {
 	localtime_s(result, timep);
@@ -152,3 +154,4 @@ inline int64_t NFGetNanoSeccondTime()
 }
 
 #endif
+

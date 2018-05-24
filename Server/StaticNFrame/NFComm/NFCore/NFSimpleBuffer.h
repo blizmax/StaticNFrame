@@ -13,10 +13,13 @@
 #include <assert.h>
 #include <string>
 
-class NFSimpleBuffer {
+class NFSimpleBuffer
+{
 public:
 	// Create an empty slice.
-	NFSimpleBuffer() : data_(nullptr), size_(0) {}
+	NFSimpleBuffer() : data_(nullptr), size_(0)
+	{
+	}
 
 	// Create a slice that refers to d[0,n-1].
 	NFSimpleBuffer(const char* d, size_t n)
@@ -51,11 +54,13 @@ public:
 	}
 
 	// Return true if the length of the referenced data is zero
-	bool empty() const {
+	bool empty() const
+	{
 		return data_ == nullptr;
 	}
 
-	void clear() {
+	void clear()
+	{
 		if (data_)
 		{
 			delete[] data_;
@@ -65,20 +70,25 @@ public:
 	}
 
 	// Return a pointer to the beginning of the referenced data
-	char* data() const {
+	char* data() const
+	{
 		return data_;
 	}
 
 	// Return the length (in bytes) of the referenced data
-	size_t size() const {
+	size_t size() const
+	{
 		return size_;
 	}
 
 	// Return a string that contains the copy of the referenced data.
-	std::string ToString() const {
+	std::string ToString() const
+	{
 		return std::string(data_, size_);
 	}
+
 private:
 	char* data_;
 	size_t size_;
 };
+

@@ -110,7 +110,8 @@ const char* NFRandomEnglish(size_t nChar)
 		return nullptr;
 	static std::vector<char> s_aStr;
 	s_aStr.resize(nChar + 1);
-	for (size_t i = 0; i < nChar; i++) {
+	for (size_t i = 0; i < nChar; i++)
+	{
 		if (NFRandomAInt() % 2 == 0)
 			s_aStr[i] = static_cast<char>(NFRandomUInt('A', 'Z'));
 		else
@@ -119,3 +120,4 @@ const char* NFRandomEnglish(size_t nChar)
 	s_aStr[nChar] = 0;
 	return &s_aStr.front();
 }
+

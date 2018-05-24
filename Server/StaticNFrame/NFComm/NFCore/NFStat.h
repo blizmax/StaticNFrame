@@ -15,13 +15,15 @@
 #include <stdint.h>
 
 /// @brief 资源类统计结果
-class _NFExport ResourceStatItem {
+class _NFExport ResourceStatItem
+{
 public:
 	float _average_value;
 	float _max_value;
 	float _min_value;
 
-	ResourceStatItem() {
+	ResourceStatItem()
+	{
 		_average_value = 0;
 		_max_value = 0;
 		_min_value = 0;
@@ -29,7 +31,8 @@ public:
 };
 
 /// @brief 消息类统计结果
-class _NFExport MessageStatItem {
+class _NFExport MessageStatItem
+{
 public:
 	float _failure_rate;
 	std::unordered_map<int32_t, uint32_t> _result;
@@ -37,7 +40,8 @@ public:
 	uint32_t _max_cost_ms;
 	uint32_t _min_cost_ms;
 
-	MessageStatItem() {
+	MessageStatItem()
+	{
 		_failure_rate = 0;
 		_average_cost_ms = 0;
 		_max_cost_ms = 0;
@@ -49,11 +53,16 @@ typedef std::unordered_map<std::string, ResourceStatItem> ResourceStatResult;
 typedef std::unordered_map<std::string, MessageStatItem> MessageStatResult;
 
 /// @brief 基础的统计模块，只提供数据的记录和计算，数据的使用交给调用者
-class _NFExport NFStat {
+class _NFExport NFStat
+{
 public:
-	NFStat() : m_message_counts(0), m_failure_message_counts(0) {}
+	NFStat() : m_message_counts(0), m_failure_message_counts(0)
+	{
+	}
 
-	~NFStat() {}
+	~NFStat()
+	{
+	}
 
 	/// @brief 清理已经记录的数据
 	void Clear();
@@ -103,13 +112,15 @@ public:
 
 private:
 	// 资源类统计中的临时数据
-	class ResourceStatTempData {
+	class ResourceStatTempData
+	{
 	public:
 		uint32_t _count;
-		float    _total_value;
+		float _total_value;
 		ResourceStatItem* _result;
 
-		ResourceStatTempData() {
+		ResourceStatTempData()
+		{
 			_count = 0;
 			_total_value = 0;
 			_result = nullptr;
@@ -117,14 +128,16 @@ private:
 	};
 
 	// 消息类统计中的临时数据
-	class MessageStatTempData {
+	class MessageStatTempData
+	{
 	public:
 		int64_t _total_count;
 		int64_t _total_cost_ms;
-		float   _failure_count;
+		float _failure_count;
 		MessageStatItem* _result;
 
-		MessageStatTempData() {
+		MessageStatTempData()
+		{
 			_total_count = 0;
 			_failure_count = 0;
 			_total_cost_ms = 0;
@@ -139,11 +152,12 @@ private:
 	uint32_t m_message_counts;
 	uint32_t m_failure_message_counts;
 	ResourceStatResult m_resource_stat_result;
-	MessageStatResult  m_message_stat_result;
+	MessageStatResult m_message_stat_result;
 
 	// 统计过程中的临时数据
 	typedef std::unordered_map<std::string, ResourceStatTempData> ResourceStatTemp;
 	typedef std::unordered_map<std::string, MessageStatTempData> MessageStatTemp;
-	ResourceStatTemp   m_resource_stat_temp;
-	MessageStatTemp    m_message_stat_temp;
+	ResourceStatTemp m_resource_stat_temp;
+	MessageStatTemp m_message_stat_temp;
 };
+

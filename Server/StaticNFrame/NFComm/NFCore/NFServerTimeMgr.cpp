@@ -13,19 +13,21 @@
 uint64_t NFServerTimeMgr::ms_startTick = 0;
 uint64_t NFServerTimeMgr::ms_curTick = 0;
 uint64_t NFServerTimeMgr::ms_lastTick = 0;
-int      NFServerTimeMgr::ms_deltaTick = 0;
+int NFServerTimeMgr::ms_deltaTick = 0;
 uint64_t NFServerTimeMgr::ms_unixSec = 0;
 uint64_t NFServerTimeMgr::ms_frames = 0;
 uint64_t NFServerTimeMgr::ms_secs = 0;
-bool     NFServerTimeMgr::ms_perSecFirstFrame = 0;
+bool NFServerTimeMgr::ms_perSecFirstFrame = 0;
 uint64_t NFServerTimeMgr::ms_lastUnixSec = 0;
-int      NFServerTimeMgr::ms_fps = 0;
+int NFServerTimeMgr::ms_fps = 0;
 
 NFServerTimeMgr::NFServerTimeMgr()
-{}
+{
+}
 
 NFServerTimeMgr::~NFServerTimeMgr()
-{}
+{
+}
 
 bool NFServerTimeMgr::Init(int fps)
 {
@@ -69,3 +71,4 @@ bool NFServerTimeMgr::Update(uint64_t tick)
 
 	return true;
 }
+

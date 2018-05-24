@@ -72,7 +72,7 @@ unsigned char NFBase64::Chr2Base(char c)
 	}
 	else
 	{
-		return 64;    //  无效字符
+		return 64; //  无效字符
 	}
 }
 
@@ -128,7 +128,7 @@ bool NFBase64::Encode(const std::string& src, std::string* dst)
 		p += 4; // 编码后的数据指针相应的移动
 	}
 
-	*p = 0;   // 防野指针
+	*p = 0; // 防野指针
 	dst->resize(p - s);
 
 	return true;
@@ -162,9 +162,10 @@ bool NFBase64::Decode(const std::string& src, std::string* dst)
 			}
 			else
 			{
-				c = 65;    //  字符串结束
+				c = 65; //  字符串结束
 			}
-		} while (c == 64);    //  跳过无效字符，如回车等
+		}
+		while (c == 64); //  跳过无效字符，如回车等
 
 		if (c == 65)
 		{
@@ -208,3 +209,4 @@ int NFBase64::Base64DecodeLen(int n)
 {
 	return n / 4 * 3 + 2;
 }
+

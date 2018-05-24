@@ -19,11 +19,11 @@
  *@brief  字节流缓冲区封装类.
  *
  */
- /////////////////////////////////////////////////
+/////////////////////////////////////////////////
 
- /**
-  *@brief  字节流缓冲区封装类.
-  */
+/**
+ *@brief  字节流缓冲区封装类.
+ */
 class NFBuffer
 {
 public:
@@ -112,14 +112,14 @@ public:
 	 *
 	 * @return 缓冲区数据字节数
 	 */
-	std::size_t ReadableSize() const { return _writePos - _readPos; }
+	std::size_t ReadableSize() const;
 
 	/**
 	 * @brief 缓冲区可写空间大小
 	 *
 	 * @return 缓冲区可写空间字节数
 	 */
-	std::size_t WritableSize() const { return _capacity - _writePos; }
+	std::size_t WritableSize() const;
 
 	/**
 	 * @brief 缓冲区占用内存大小
@@ -203,3 +203,4 @@ private:
 	 */
 	void ResetBuffer(void* ptr = nullptr);
 };
+

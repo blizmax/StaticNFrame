@@ -19,35 +19,47 @@
 #include <cxxabi.h>
 #endif
 
-struct NoCaseCompareChar {
-	bool operator()(char l, char r)const {
+struct NoCaseCompareChar
+{
+	bool operator()(char l, char r) const
+	{
 		bool bEqual = (l == r);
-		if (bEqual) {
+		if (bEqual)
+		{
 			return true;
 		}
-		if (isalpha(static_cast<unsigned char>(l))) {
-			if (isupper(static_cast<unsigned char>(l))) {
+		if (isalpha(static_cast<unsigned char>(l)))
+		{
+			if (isupper(static_cast<unsigned char>(l)))
+			{
 				return l == toupper(r);
 			}
-			else {
+			else
+			{
 				return l == tolower(r);
 			}
 		}
 
 		return bEqual;
 	}
-	bool operator()(wchar_t l, wchar_t r)const {
+
+	bool operator()(wchar_t l, wchar_t r) const
+	{
 		bool bEqual = (l == r);
 
-		if (bEqual) {
+		if (bEqual)
+		{
 			return true;
 		}
 
-		if (iswalpha(l)) {
-			if (iswupper(l)) {
+		if (iswalpha(l))
+		{
+			if (iswupper(l))
+			{
 				return l == static_cast<wchar_t>(towupper(r));
 			}
-			else {
+			else
+			{
 				return l == static_cast<wchar_t>(towlower(r));
 			}
 		}
@@ -56,120 +68,153 @@ struct NoCaseCompareChar {
 	}
 } no_case_compare_char;
 
-template<class T>
-bool stringUtil_StartsWith(const T& str, const T& pattern, bool case_sensitive) {
+template <class T>
+bool stringUtil_StartsWith(const T& str, const T& pattern, bool case_sensitive)
+{
 	//H_ASSERT( str.length() >= pattern.length() );
-	if (str.length() < pattern.length()) {
+	if (str.length() < pattern.length())
+	{
 		return false;
 	}
 
-	if (case_sensitive) {
+	if (case_sensitive)
+	{
 		return std::equal(pattern.begin(), pattern.end(), str.begin());
 	}
-	else {
+	else
+	{
 		return std::equal(pattern.begin(), pattern.end(), str.begin(), no_case_compare_char);
 	}
 }
 
-template<class T>
-bool stringUtil_EndsWith(const T& str, const T& pattern, bool case_sensitive) {
+template <class T>
+bool stringUtil_EndsWith(const T& str, const T& pattern, bool case_sensitive)
+{
 	//H_ASSERT( str.length() >= pattern.length() );
-	if (str.length() < pattern.length()) {
+	if (str.length() < pattern.length())
+	{
 		return false;
 	}
 
-	if (case_sensitive) {
+	if (case_sensitive)
+	{
 		return equal(pattern.rbegin(), pattern.rend(), str.rbegin());
 	}
-	else {
+	else
+	{
 		return equal(pattern.rbegin(), pattern.rend(), str.rbegin(), no_case_compare_char);
 	}
 }
 
-template<class T>
-struct nocase_equal_char {
+template <class T>
+struct nocase_equal_char
+{
 	T m_c;
-	nocase_equal_char(T c) : m_c(c) {
+
+	nocase_equal_char(T c) : m_c(c)
+	{
 	}
-	bool operator()(T c) {
+
+	bool operator()(T c)
+	{
 		return no_case_compare_char(m_c, c);
 	}
 };
 
-template<class T>
-bool stringUtil_contains(const T& str, typename T::value_type c, bool case_sensitive) {
-	if (case_sensitive) {
+template <class T>
+bool stringUtil_contains(const T& str, typename T::value_type c, bool case_sensitive)
+{
+	if (case_sensitive)
+	{
 		return str.find(c, 0) != T::npos;
 	}
-	else {
+	else
+	{
 		return str.end() != std::find_if(str.begin(), str.end(), nocase_equal_char<typename T::value_type>(c));
 	}
 }
-template<class T>
-bool stringUtil_contains(const T& strL, const T& strR, bool case_sensitive) {
-	if (case_sensitive) {
+
+template <class T>
+bool stringUtil_contains(const T& strL, const T& strR, bool case_sensitive)
+{
+	if (case_sensitive)
+	{
 		return strL.end() != std::search(strL.begin(), strL.end(), strR.begin(), strR.end());
 	}
-	else {
+	else
+	{
 		return strL.end() != std::search(strL.begin(), strL.end(), strR.begin(), strR.end(), no_case_compare_char);
 	}
 }
 
-template<class _StringType>
-void stringUtil_trim_charptr(_StringType& str, typename _StringType::const_pointer delims, bool left, bool right) {
-	if (str.empty()) {
+template <class _StringType>
+void stringUtil_trim_charptr(_StringType& str, typename _StringType::const_pointer delims, bool left, bool right)
+{
+	if (str.empty())
+	{
 		return;
 	}
 
 	size_t stop_pos = static_cast<size_t>(str.size()) - 1;//included
-	if (right) {
+	if (right)
+	{
 		stop_pos = str.find_last_not_of(delims);
 	}
 
-	if (stop_pos == _StringType::npos) {
+	if (stop_pos == _StringType::npos)
+	{
 		str = _StringType();
 		return;
 	}
 
 	size_t start_pos = 0;//included
-	if (left) {
+	if (left)
+	{
 		start_pos = str.find_first_not_of(delims);
 	}
 
-	if (start_pos == 0 && stop_pos == str.size() - 1) {
+	if (start_pos == 0 && stop_pos == str.size() - 1)
+	{
 		return;
 	}
 
 	str = _StringType(str.data() + start_pos, stop_pos + 1 - start_pos);
 }
 
-template<class _StringType>
-void stringUtil_trim_string(_StringType& str, const _StringType& delims, bool left, bool right) {
+template <class _StringType>
+void stringUtil_trim_string(_StringType& str, const _StringType& delims, bool left, bool right)
+{
 #if 1
-	if (str.empty()) {
+	if (str.empty())
+	{
 		return;
 	}
 
-	if (str.empty()) {
+	if (str.empty())
+	{
 		return;
 	}
 
 	size_t stop_pos = static_cast<size_t>(str.size()) - 1;//included
-	if (right) {
+	if (right)
+	{
 		stop_pos = str.find_last_not_of(delims);
 	}
 
-	if (stop_pos == _StringType::npos) {
+	if (stop_pos == _StringType::npos)
+	{
 		str = _StringType();
 		return;
 	}
 
 	size_t start_pos = 0;//included
-	if (left) {
+	if (left)
+	{
 		start_pos = str.find_first_not_of(delims);
 	}
 
-	if (start_pos == 0 && stop_pos == str.size() - 1) {
+	if (start_pos == 0 && stop_pos == str.size() - 1)
+	{
 		return;
 	}
 
@@ -189,34 +234,39 @@ void stringUtil_trim_string(_StringType& str, const _StringType& delims, bool le
 #endif
 }
 
-template< class _StringVector,
-	class StringType,
-	class _DelimType>
-	inline void _stringUtilSplit(
-		_StringVector& ret,
-		const StringType& str,
-		const _DelimType& delims,
-		unsigned int maxSplits) {
+template <class _StringVector,
+          class StringType,
+          class _DelimType>
+inline void _stringUtilSplit(
+	_StringVector& ret,
+	const StringType& str,
+	const _DelimType& delims,
+	unsigned int maxSplits)
+{
 	unsigned int numSplits = 0;
 
 	// Use STL methods
 	size_t start, pos;
 	start = 0;
 
-	do {
+	do
+	{
 		pos = str.find_first_of(delims, start);
 
-		if (pos == start) {
+		if (pos == start)
+		{
 			ret.push_back(StringType());
 			start = pos + 1;
 		}
-		else if (pos == StringType::npos || (maxSplits && numSplits + 1 == maxSplits)) {
+		else if (pos == StringType::npos || (maxSplits && numSplits + 1 == maxSplits))
+		{
 			// Copy the rest of the string
 			ret.push_back(StringType());
 			*(ret.rbegin()) = StringType(str.data() + start, str.size() - start);
 			break;
 		}
-		else {
+		else
+		{
 			// Copy up to delimiter
 			//ret.push_back( str.substr( start, pos - start ) );
 			ret.push_back(StringType());
@@ -225,36 +275,42 @@ template< class _StringVector,
 		}
 
 		++numSplits;
-	} while (pos != StringType::npos);
+	}
+	while (pos != StringType::npos);
 }
 
-template< class _SliceVector,
-	class StringType,
-	class _DelimType>
-	void _stringUtilSplitStringToSlice(
-		_SliceVector& ret,
-		const StringType& str,
-		const _DelimType& delims,
-		unsigned int maxSplits) {
+template <class _SliceVector,
+          class StringType,
+          class _DelimType>
+void _stringUtilSplitStringToSlice(
+	_SliceVector& ret,
+	const StringType& str,
+	const _DelimType& delims,
+	unsigned int maxSplits)
+{
 	unsigned int numSplits = 0;
 
 	// Use STL methods
 	size_t start, pos;
 	start = 0;
 
-	do {
+	do
+	{
 		pos = str.find_first_of(delims, start);
 
-		if (pos == start) {
+		if (pos == start)
+		{
 			ret.push_back(NFSlice());
 			start = pos + 1;
 		}
-		else if (pos == StringType::npos || (maxSplits && numSplits + 1 == maxSplits)) {
+		else if (pos == StringType::npos || (maxSplits && numSplits + 1 == maxSplits))
+		{
 			// Copy the rest of the string
 			ret.push_back(NFSlice(str.data() + start, str.size() - start));
 			break;
 		}
-		else {
+		else
+		{
 			// Copy up to delimiter
 			//ret.push_back( str.substr( start, pos - start ) );
 			ret.push_back(NFSlice(str.data() + start, pos - start));
@@ -262,40 +318,47 @@ template< class _SliceVector,
 		}
 
 		++numSplits;
-	} while (pos != StringType::npos);
+	}
+	while (pos != StringType::npos);
 }
 
-template< class StringType,
-	class _DelimType>
-	inline void _stringUtilSplitStringToSlice(
-		const StringType& str,
-		const _DelimType& delims,
-		NFSlice* ret, size_t& slices_count) {
+template <class StringType,
+          class _DelimType>
+inline void _stringUtilSplitStringToSlice(
+	const StringType& str,
+	const _DelimType& delims,
+	NFSlice* ret, size_t& slices_count)
+{
 	unsigned int numSplits = 0;
 
 	// Use STL methods
 	size_t start, pos;
 	start = 0;
 
-	do {
+	do
+	{
 		pos = str.find_first_of(delims, start);
 
-		if (pos == start) {
+		if (pos == start)
+		{
 			ret[numSplits++] = NFSlice();
 			start = pos + 1;
 		}
-		else if (pos == StringType::npos || (numSplits + 1 == slices_count)) {
+		else if (pos == StringType::npos || (numSplits + 1 == slices_count))
+		{
 			// Copy the rest of the string
 			ret[numSplits++] = (NFSlice(str.data() + start, str.size() - start));
 			break;
 		}
-		else {
+		else
+		{
 			// Copy up to delimiter
 			//ret.push_back( str.substr( start, pos - start ) );
 			ret[numSplits++] = (NFSlice(str.data() + start, pos - start));
 			start = pos + 1;
 		}
-	} while (pos != StringType::npos);
+	}
+	while (pos != StringType::npos);
 
 	slices_count = numSplits;
 }
@@ -303,13 +366,15 @@ template< class StringType,
 inline void _stringUtilSplitSliceToSlice(
 	const NFSlice& str,
 	const char& delim,
-	std::vector<NFSlice>& ret, unsigned int maxSplits) {
+	std::vector<NFSlice>& ret, unsigned int maxSplits)
+{
 	// Use STL methods
 	size_t start, pos;
 	start = 0;
 
 	const char* p = nullptr;
-	do {
+	do
+	{
 		//fix strchr compile warning
 #if NF_PLATFORM == NF_PLATFORM_WIN
 		p = static_cast<const char*>(memchr(start + const_cast<char*>(str.data()), delim, str.size() - start));
@@ -317,28 +382,33 @@ inline void _stringUtilSplitSliceToSlice(
 		p = (const char*)memchr(start + str.data(), delim, str.size() - start);
 #endif
 
-		if (!p || p >= str.data() + str.size() || ((maxSplits) && (ret.size() + 1 == maxSplits))) {
+		if (!p || p >= str.data() + str.size() || ((maxSplits) && (ret.size() + 1 == maxSplits)))
+		{
 			ret.push_back(NFSlice(str.data() + start, str.size() - start));
 			break;
 		}
 
 		pos = p - str.data();
 
-		if (pos == start) {
+		if (pos == start)
+		{
 			ret.push_back(NFSlice());
 			start = pos + 1;
 		}
-		else {
+		else
+		{
 			ret.push_back(NFSlice(str.data() + start, pos - start));
 			start = pos + 1;
 		}
-	} while (true);
+	}
+	while (true);
 }
 
 inline void _stringUtilSplitSliceToSlice(
 	const NFSlice& str,
 	const char& delim,
-	NFSlice* ret, size_t& slices_count) {
+	NFSlice* ret, size_t& slices_count)
+{
 	unsigned int numSplits = 0;
 
 	// Use STL methods
@@ -346,37 +416,44 @@ inline void _stringUtilSplitSliceToSlice(
 	start = 0;
 
 	const char* p = nullptr;
-	do {
+	do
+	{
 		//fix strchr compile warning
 #if NF_PLATFORM == NF_PLATFORM_WIN
 		p = static_cast<const char*>(memchr(start + const_cast<char*>(str.data()), delim, str.size() - start));
 #else
 		p = (const char*)memchr(start + str.data(), delim, str.size() - start);
 #endif
-		if (!p || p >= str.data() + str.size() || (numSplits == slices_count - 1)) {
+		if (!p || p >= str.data() + str.size() || (numSplits == slices_count - 1))
+		{
 			ret[numSplits++] = (NFSlice(str.data() + start, str.size() - start));
 			break;
 		}
 
 		pos = p - str.data();
 
-		if (pos == start) {
+		if (pos == start)
+		{
 			ret[numSplits++] = NFSlice();
 			start = pos + 1;
 		}
-		else {
+		else
+		{
 			ret[numSplits++] = (NFSlice(str.data() + start, pos - start));
 			start = pos + 1;
 		}
-	} while (true);
+	}
+	while (true);
 
 	slices_count = numSplits;
 }
 
-template<typename StringType>
-void stringUtil_Split(const StringType& src, StringType& left, StringType& right, typename StringType::const_pointer pDelims, size_t nDelimsLength) {
+template <typename StringType>
+void stringUtil_Split(const StringType& src, StringType& left, StringType& right, typename StringType::const_pointer pDelims, size_t nDelimsLength)
+{
 	typename StringType::const_iterator iter = find_first_of(src.begin(), src.end(), pDelims, pDelims + nDelimsLength);
-	if (src.end() == iter) {
+	if (src.end() == iter)
+	{
 		return;
 	}
 
@@ -387,133 +464,168 @@ void stringUtil_Split(const StringType& src, StringType& left, StringType& right
 
 const string NFStringUtility::kEmpty;
 
-void NFStringUtility::Trim(std::string& str, const char* delims, bool left, bool right) {
-	stringUtil_trim_charptr(str, delims, left, right);
-}
-void NFStringUtility::Trim(std::wstring& str, const wchar_t* delims, bool left, bool right) {
+void NFStringUtility::Trim(std::string& str, const char* delims, bool left, bool right)
+{
 	stringUtil_trim_charptr(str, delims, left, right);
 }
 
-void NFStringUtility::Trim(string& str, bool left, bool right) {
+void NFStringUtility::Trim(std::wstring& str, const wchar_t* delims, bool left, bool right)
+{
+	stringUtil_trim_charptr(str, delims, left, right);
+}
+
+void NFStringUtility::Trim(string& str, bool left, bool right)
+{
 	//const char* delims = " \t\r\n";
 	static const std::string delims("\0 \t\r\n\v", 6);
 	NFStringUtility::Trim(str, delims, left, right);
 }
 
-void NFStringUtility::Trim(std::string& str, const std::string& delims, bool left, bool right) {
+void NFStringUtility::Trim(std::string& str, const std::string& delims, bool left, bool right)
+{
 	stringUtil_trim_string(str, delims, left, right);
 }
 
-void NFStringUtility::Trim(std::wstring& str, bool left, bool right) {
+void NFStringUtility::Trim(std::wstring& str, bool left, bool right)
+{
 	//const wchar_t* delims = L" \t\r\n";
 	static const std::wstring delims(L"\0 \t\r\n\v", 6);
 	Trim(str, delims, left, right);
 }
 
-void NFStringUtility::Trim(std::wstring& str, const std::wstring& delims, bool left, bool right) {
+void NFStringUtility::Trim(std::wstring& str, const std::wstring& delims, bool left, bool right)
+{
 	stringUtil_trim_string(str, delims, left, right);
 }
 
-void NFStringUtility::Split(std::vector<std::string>& ret, const std::string& str, const std::string& delims, unsigned int maxSplits) {
+void NFStringUtility::Split(std::vector<std::string>& ret, const std::string& str, const std::string& delims, unsigned int maxSplits)
+{
 	_stringUtilSplit(ret, str, delims, maxSplits);
 }
 
-void NFStringUtility::Split(std::vector<std::string>& ret, const std::string& str, const std::string::value_type& delims, unsigned int maxSplits) {
+void NFStringUtility::Split(std::vector<std::string>& ret, const std::string& str, const std::string::value_type& delims, unsigned int maxSplits)
+{
 	_stringUtilSplit(ret, str, delims, maxSplits);
 }
 
-void NFStringUtility::Split(std::vector<std::wstring>& ret, const std::wstring& str, const std::wstring& delims, unsigned int maxSplits) {
+void NFStringUtility::Split(std::vector<std::wstring>& ret, const std::wstring& str, const std::wstring& delims, unsigned int maxSplits)
+{
 	_stringUtilSplit(ret, str, delims, maxSplits);
 }
 
-void NFStringUtility::Split(std::vector<std::wstring>& ret, const std::wstring& str, const std::wstring::value_type& delims, unsigned int maxSplits) {
+void NFStringUtility::Split(std::vector<std::wstring>& ret, const std::wstring& str, const std::wstring::value_type& delims, unsigned int maxSplits)
+{
 	_stringUtilSplit(ret, str, delims, maxSplits);
 }
 
-void NFStringUtility::Split(std::vector<NFSlice>& ret, const std::string& str, int delims, unsigned int maxSplits) {
+void NFStringUtility::Split(std::vector<NFSlice>& ret, const std::string& str, int delims, unsigned int maxSplits)
+{
 	_stringUtilSplitStringToSlice(ret, str, delims, maxSplits);
 }
-void NFStringUtility::Split(std::vector<NFSlice>& ret, const std::string& str, const std::string& delims, unsigned int maxSplits) {
+
+void NFStringUtility::Split(std::vector<NFSlice>& ret, const std::string& str, const std::string& delims, unsigned int maxSplits)
+{
 	_stringUtilSplitStringToSlice(ret, str, delims, maxSplits);
 }
 
-void NFStringUtility::Split(const std::string& str, int delims, NFSlice slices[], size_t& slice_count) {
-	_stringUtilSplitStringToSlice(str, delims, slices, slice_count);
-}
-void NFStringUtility::Split(const std::string& str, const std::string& delims, NFSlice slices[], size_t& slice_count) {
+void NFStringUtility::Split(const std::string& str, int delims, NFSlice slices[], size_t& slice_count)
+{
 	_stringUtilSplitStringToSlice(str, delims, slices, slice_count);
 }
 
-void NFStringUtility::Split(const NFSlice& str, int delims, NFSlice slices[], size_t& slice_count) {
+void NFStringUtility::Split(const std::string& str, const std::string& delims, NFSlice slices[], size_t& slice_count)
+{
+	_stringUtilSplitStringToSlice(str, delims, slices, slice_count);
+}
+
+void NFStringUtility::Split(const NFSlice& str, int delims, NFSlice slices[], size_t& slice_count)
+{
 	_stringUtilSplitSliceToSlice(str, delims, slices, slice_count);
 }
 
-void NFStringUtility::Split(const NFSlice& str, int delims, std::vector<NFSlice>& slices, unsigned int maxSplits) {
+void NFStringUtility::Split(const NFSlice& str, int delims, std::vector<NFSlice>& slices, unsigned int maxSplits)
+{
 	_stringUtilSplitSliceToSlice(str, delims, slices, maxSplits);
 }
 
-void NFStringUtility::Split(const std::string& src, std::string& left, std::string& right, const char* delims/* = "\t\n "*/) {
+void NFStringUtility::Split(const std::string& src, std::string& left, std::string& right, const char* delims/* = "\t\n "*/)
+{
 	stringUtil_Split(src, left, right, delims, strlen(delims));
 }
 
-void NFStringUtility::Split(const std::string& src, std::string& left, std::string& right, const std::string& delims/* = "\t\n "*/) {
+void NFStringUtility::Split(const std::string& src, std::string& left, std::string& right, const std::string& delims/* = "\t\n "*/)
+{
 	Split(src, left, right, delims.c_str());
 }
 
-void NFStringUtility::Split(const std::wstring& src, std::wstring& left, std::wstring& right, const wchar_t* delims/* = L"\t\n "*/) {
+void NFStringUtility::Split(const std::wstring& src, std::wstring& left, std::wstring& right, const wchar_t* delims/* = L"\t\n "*/)
+{
 	stringUtil_Split(src, left, right, delims, wcslen(delims));
 }
 
-void NFStringUtility::Split(const std::wstring& src, std::wstring& left, std::wstring& right, const std::wstring& delims/* = L"\t\n "*/) {
+void NFStringUtility::Split(const std::wstring& src, std::wstring& left, std::wstring& right, const std::wstring& delims/* = L"\t\n "*/)
+{
 	Split(src, left, right, delims.c_str());
 }
 
-template< typename _String >
-void _replace(_String& str, const _String& needle, const _String& new_value, size_t start_pos/* = 0*/, int replace_count /*= -1 */) {
-	if (0 == replace_count) {
+template <typename _String>
+void _replace(_String& str, const _String& needle, const _String& new_value, size_t start_pos/* = 0*/, int replace_count /*= -1 */)
+{
+	if (0 == replace_count)
+	{
 		return;
 	}
 
 	size_t i = 0;
 	size_t pos = str.find(needle, start_pos);
-	while (pos != _String::npos) {
+	while (pos != _String::npos)
+	{
 		str.replace(pos, needle.size(), new_value);
 		pos = str.find(needle, pos);
-		if (++i >= static_cast<size_t>(replace_count)) {
+		if (++i >= static_cast<size_t>(replace_count))
+		{
 			break;
 		}
 	}
 }
 
-void NFStringUtility::Replace(std::string& str, const std::string& needle, const std::string& new_value, size_t start_pos/* = 0*/, int replace_count /*= -1 */) {
+void NFStringUtility::Replace(std::string& str, const std::string& needle, const std::string& new_value, size_t start_pos/* = 0*/, int replace_count /*= -1 */)
+{
 	return _replace(str, needle, new_value, start_pos, replace_count);
 }
 
-void NFStringUtility::Replace(std::wstring& str, const std::wstring& needle, const std::wstring& new_value, size_t start_pos/* = 0*/, int replace_count /*= -1 */) {
+void NFStringUtility::Replace(std::wstring& str, const std::wstring& needle, const std::wstring& new_value, size_t start_pos/* = 0*/, int replace_count /*= -1 */)
+{
 	return _replace(str, needle, new_value, start_pos, replace_count);
 }
 
-bool NFStringUtility::StartsWith(const std::string& str, const std::string& pattern, bool case_sensitive) {
+bool NFStringUtility::StartsWith(const std::string& str, const std::string& pattern, bool case_sensitive)
+{
 	return stringUtil_StartsWith(str, pattern, case_sensitive);
 }
 
-bool NFStringUtility::StartsWith(const std::wstring& str, const std::wstring& pattern, bool case_sensitive) {
+bool NFStringUtility::StartsWith(const std::wstring& str, const std::wstring& pattern, bool case_sensitive)
+{
 	return stringUtil_StartsWith(str, pattern, case_sensitive);
 }
 
-bool NFStringUtility::EndsWith(const std::string& str, const std::string& pattern, bool case_sensitive) {
+bool NFStringUtility::EndsWith(const std::string& str, const std::string& pattern, bool case_sensitive)
+{
 	return stringUtil_EndsWith(str, pattern, case_sensitive);
 }
 
-bool NFStringUtility::EndsWith(const std::wstring& str, const std::wstring& pattern, bool case_sensitive) {
+bool NFStringUtility::EndsWith(const std::wstring& str, const std::wstring& pattern, bool case_sensitive)
+{
 	return stringUtil_EndsWith(str, pattern, case_sensitive);
 }
 
-bool NFStringUtility::Match(const std::string& str, const std::string& pattern, bool caseSensitive) {
+bool NFStringUtility::Match(const std::string& str, const std::string& pattern, bool caseSensitive)
+{
 	std::string tmpStr = str;
 	std::string tmpPattern = pattern;
 
-	if (!caseSensitive) {
+	if (!caseSensitive)
+	{
 		NFStringUtility::ToLower(tmpStr);
 		NFStringUtility::ToLower(tmpPattern);
 	}
@@ -522,37 +634,47 @@ bool NFStringUtility::Match(const std::string& str, const std::string& pattern, 
 	std::string::const_iterator patIt = tmpPattern.begin();
 	std::string::const_iterator lastWildCardIt = tmpPattern.end();
 
-	while (strIt != tmpStr.end() && patIt != tmpPattern.end()) {
-		if (*patIt == '*') {
+	while (strIt != tmpStr.end() && patIt != tmpPattern.end())
+	{
+		if (*patIt == '*')
+		{
 			lastWildCardIt = patIt;
 			// Skip over looking for next character
 			++patIt;
 
-			if (patIt == tmpPattern.end()) {
+			if (patIt == tmpPattern.end())
+			{
 				// Skip right to the end since * matches the entire rest of the string
 				strIt = tmpStr.end();
 			}
-			else {
+			else
+			{
 				// scan until we find next pattern character
-				while (strIt != tmpStr.end() && *strIt != *patIt) {
+				while (strIt != tmpStr.end() && *strIt != *patIt)
+				{
 					++strIt;
 				}
 			}
 		}
-		else {
-			if (*patIt != *strIt) {
-				if (lastWildCardIt != tmpPattern.end()) {
+		else
+		{
+			if (*patIt != *strIt)
+			{
+				if (lastWildCardIt != tmpPattern.end())
+				{
 					// The last wildcard can match this incorrect sequence
 					// rewind pattern to wildcard and keep searching
 					patIt = lastWildCardIt;
 					lastWildCardIt = tmpPattern.end();
 				}
-				else {
+				else
+				{
 					// no wildwards left
 					return false;
 				}
 			}
-			else {
+			else
+			{
 				++patIt;
 				++strIt;
 			}
@@ -560,19 +682,23 @@ bool NFStringUtility::Match(const std::string& str, const std::string& pattern, 
 	}
 
 	// If we reached the end of both the pattern and the string, we succeeded
-	if (patIt == tmpPattern.end() && strIt == tmpStr.end()) {
+	if (patIt == tmpPattern.end() && strIt == tmpStr.end())
+	{
 		return true;
 	}
-	else {
+	else
+	{
 		return false;
 	}
 }
 
-bool NFStringUtility::Match(const std::wstring& str, const std::wstring& pattern, bool caseSensitive) {
+bool NFStringUtility::Match(const std::wstring& str, const std::wstring& pattern, bool caseSensitive)
+{
 	std::wstring tmpStr = str;
 	std::wstring tmpPattern = pattern;
 
-	if (!caseSensitive) {
+	if (!caseSensitive)
+	{
 		NFStringUtility::ToLower(tmpStr);
 		NFStringUtility::ToLower(tmpPattern);
 	}
@@ -581,37 +707,47 @@ bool NFStringUtility::Match(const std::wstring& str, const std::wstring& pattern
 	std::wstring::const_iterator patIt = tmpPattern.begin();
 	std::wstring::const_iterator lastWildCardIt = tmpPattern.end();
 
-	while (strIt != tmpStr.end() && patIt != tmpPattern.end()) {
-		if (*patIt == L'*') {
+	while (strIt != tmpStr.end() && patIt != tmpPattern.end())
+	{
+		if (*patIt == L'*')
+		{
 			lastWildCardIt = patIt;
 			// Skip over looking for next character
 			++patIt;
 
-			if (patIt == tmpPattern.end()) {
+			if (patIt == tmpPattern.end())
+			{
 				// Skip right to the end since * matches the entire rest of the string
 				strIt = tmpStr.end();
 			}
-			else {
+			else
+			{
 				// scan until we find next pattern character
-				while (strIt != tmpStr.end() && *strIt != *patIt) {
+				while (strIt != tmpStr.end() && *strIt != *patIt)
+				{
 					++strIt;
 				}
 			}
 		}
-		else {
-			if (*patIt != *strIt) {
-				if (lastWildCardIt != tmpPattern.end()) {
+		else
+		{
+			if (*patIt != *strIt)
+			{
+				if (lastWildCardIt != tmpPattern.end())
+				{
 					// The last wildcard can match this incorrect sequence
 					// rewind pattern to wildcard and keep searching
 					patIt = lastWildCardIt;
 					lastWildCardIt = tmpPattern.end();
 				}
-				else {
+				else
+				{
 					// no wildwards left
 					return false;
 				}
 			}
-			else {
+			else
+			{
 				++patIt;
 				++strIt;
 			}
@@ -619,33 +755,40 @@ bool NFStringUtility::Match(const std::wstring& str, const std::wstring& pattern
 	}
 
 	// If we reached the end of both the pattern and the string, we succeeded
-	if (patIt == tmpPattern.end() && strIt == tmpStr.end()) {
+	if (patIt == tmpPattern.end() && strIt == tmpStr.end())
+	{
 		return true;
 	}
-	else {
+	else
+	{
 		return false;
 	}
 }
 
-bool NFStringUtility::Contains(const std::string& motherStr, char pattern, bool caseSensitive) {
+bool NFStringUtility::Contains(const std::string& motherStr, char pattern, bool caseSensitive)
+{
 	return stringUtil_contains(motherStr, pattern, caseSensitive);
 }
 
-bool NFStringUtility::Contains(const std::wstring& motherStr, wchar_t pattern, bool caseSensitive) {
+bool NFStringUtility::Contains(const std::wstring& motherStr, wchar_t pattern, bool caseSensitive)
+{
 	return stringUtil_contains(motherStr, pattern, caseSensitive);
 }
 
-bool NFStringUtility::Contains(const std::string& motherStr, const std::string& pattern, bool caseSensitive) {
+bool NFStringUtility::Contains(const std::string& motherStr, const std::string& pattern, bool caseSensitive)
+{
 	return stringUtil_contains(motherStr, pattern, caseSensitive);
 }
 
-bool NFStringUtility::Contains(const wstring& motherStr, const wstring& pattern, bool caseSensitive) {
+bool NFStringUtility::Contains(const wstring& motherStr, const wstring& pattern, bool caseSensitive)
+{
 	return stringUtil_contains(motherStr, pattern, caseSensitive);
 }
 
 static unsigned char hexchars[] = "0123456789ABCDEF";
 
-void NFStringUtility::URLEncode(const char* url, size_t url_len, std::string& strDest) {
+void NFStringUtility::URLEncode(const char* url, size_t url_len, std::string& strDest)
+{
 #if 1
 	size_t encoded_url_len = url_len * 3;
 	strDest.resize(encoded_url_len);
@@ -689,12 +832,13 @@ void NFStringUtility::URLEncode(const char* url, size_t url_len, std::string& st
 #endif
 }
 
-bool NFStringUtility::URLEncode(const char* url, size_t url_len, char* edcoded_url, size_t& edcoded_url_len) {
+bool NFStringUtility::URLEncode(const char* url, size_t url_len, char* edcoded_url, size_t& edcoded_url_len)
+{
 	//copy from php source code : ext/standard/url.c: PHPAPI char *php_url_encode(char const *s, int len, int *new_length)
 
 	unsigned char c;
-	unsigned char* to, *start, *to_end;
-	unsigned char const* from, *end;
+	unsigned char *to, *start, *to_end;
+	unsigned char const *from, *end;
 
 	start = to = reinterpret_cast<unsigned char*>(edcoded_url);
 	to_end = to + edcoded_url_len;
@@ -702,36 +846,46 @@ bool NFStringUtility::URLEncode(const char* url, size_t url_len, char* edcoded_u
 	from = reinterpret_cast<unsigned char const*>(url);
 	end = from + url_len;
 
-	while (from < end) {
+	while (from < end)
+	{
 		c = *from++;
 
-		if (c == ' ') {
-			if (to < to_end) {
+		if (c == ' ')
+		{
+			if (to < to_end)
+			{
 				*to++ = '+';
 			}
-			else {
+			else
+			{
 				return false;
 			}
 		}
 		else if ((c < '0' && c != '-' && c != '.') ||
 			(c < 'A' && c > '9') ||
 			(c > 'Z' && c < 'a' && c != '_') ||
-			(c > 'z')) {
-			if (to + 2 < to_end) {
+			(c > 'z'))
+		{
+			if (to + 2 < to_end)
+			{
 				to[0] = '%';
 				to[1] = hexchars[c >> 4];
 				to[2] = hexchars[c & 15];
 				to += 3;
 			}
-			else {
+			else
+			{
 				return false;
 			}
 		}
-		else {
-			if (to < to_end) {
+		else
+		{
+			if (to < to_end)
+			{
 				*to++ = c;
 			}
-			else {
+			else
+			{
 				return false;
 			}
 		}
@@ -741,18 +895,21 @@ bool NFStringUtility::URLEncode(const char* url, size_t url_len, char* edcoded_u
 	return true;
 }
 
-static int php_htoi(const char* s) {
+static int php_htoi(const char* s)
+{
 	int value;
 	int c;
 
 	c = reinterpret_cast<const unsigned char*>(s)[0];
-	if (isupper(c)) {
+	if (isupper(c))
+	{
 		c = tolower(c);
 	}
 	value = (c >= '0' && c <= '9' ? c - '0' : c - 'a' + 10) * 16;
 
 	c = reinterpret_cast<const unsigned char*>(s)[1];
-	if (isupper(c)) {
+	if (isupper(c))
+	{
 		c = tolower(c);
 	}
 	value += c >= '0' && c <= '9' ? c - '0' : c - 'a' + 10;
@@ -760,7 +917,8 @@ static int php_htoi(const char* s) {
 	return (value);
 }
 
-void NFStringUtility::URLDecode(const std::string& str, std::string& out) {
+void NFStringUtility::URLDecode(const std::string& str, std::string& out)
+{
 	//copy from php source code : ext/standard/url.c: PHPAPI int php_url_decode(char *str, int len)
 #if 1
 	URLDecode(str.data(), str.size(), out);
@@ -794,21 +952,26 @@ void NFStringUtility::URLDecode(const std::string& str, std::string& out) {
 #endif
 }
 
-void NFStringUtility::URLDecode(const char* encoded_url, size_t encoded_url_len, char* decoded_url, size_t& decoded_url_len) {
+void NFStringUtility::URLDecode(const char* encoded_url, size_t encoded_url_len, char* decoded_url, size_t& decoded_url_len)
+{
 	char* dest = decoded_url;
 	const char* data = encoded_url;
 	int len = static_cast<int>(encoded_url_len);
-	while (len--) {
-		if (*data == '+') {
+	while (len--)
+	{
+		if (*data == '+')
+		{
 			*dest = ' ';
 		}
 		else if (*data == '%' && len >= 2 && isxdigit(static_cast<int>(*(data + 1)))
-			&& isxdigit(static_cast<int>(*(data + 2)))) {
+			&& isxdigit(static_cast<int>(*(data + 2))))
+		{
 			*dest = static_cast<char>(php_htoi(data + 1));
 			data += 2;
 			len -= 2;
 		}
-		else {
+		else
+		{
 			*dest = *data;
 		}
 		data++;
@@ -818,46 +981,57 @@ void NFStringUtility::URLDecode(const char* encoded_url, size_t encoded_url_len,
 	decoded_url_len = dest - decoded_url;
 }
 
-void NFStringUtility::URLDecode(const char* encoded_url, size_t encoded_url_len, std::string& out) {
+void NFStringUtility::URLDecode(const char* encoded_url, size_t encoded_url_len, std::string& out)
+{
 	out.resize(encoded_url_len);
 	size_t decoded_url_len = encoded_url_len;
 	URLDecode(encoded_url, encoded_url_len, &out[0], decoded_url_len);
 	out.resize(decoded_url_len);
 }
 
-bool NFStringUtility::Equals(const std::string& str1, const std::string& str2, bool case_sensitive /*= true */) {
-	if (case_sensitive) {
+bool NFStringUtility::Equals(const std::string& str1, const std::string& str2, bool case_sensitive /*= true */)
+{
+	if (case_sensitive)
+	{
 		return (str1 == str2) ? true : false;
 	}
-	else {
+	else
+	{
 		return EqualsIgnoreCase(str1, str2);
 	}
 }
 
-bool NFStringUtility::EqualsIgnoreCase(const std::string& str1, const std::string& str2) {
-	if (str1.length() == str2.length()) {
+bool NFStringUtility::EqualsIgnoreCase(const std::string& str1, const std::string& str2)
+{
+	if (str1.length() == str2.length())
+	{
 		return std::equal(str1.begin(), str1.end(), str2.begin(), no_case_compare_char);
 	}
 	return false;
 }
 
-bool NFStringUtility::IsFloatNumber(std::string& s) {
+bool NFStringUtility::IsFloatNumber(std::string& s)
+{
 	if (s.find('.') != std::string::npos
 		|| s.find('e') != std::string::npos
-		|| s.find('E') != std::string::npos) {
+		|| s.find('E') != std::string::npos)
+	{
 		return true;
 	}
 
 	return false;
 }
 
-std::string NFStringUtility::Rot13(const std::string& s) {
+std::string NFStringUtility::Rot13(const std::string& s)
+{
 	return Rot13(s.data(), s.size());
 }
 
-std::string NFStringUtility::Rot13(const char* str, size_t len) {
+std::string NFStringUtility::Rot13(const char* str, size_t len)
+{
 	std::string ret;
-	if (str == nullptr || len == 0) {
+	if (str == nullptr || len == 0)
+	{
 		return ret;
 	}
 
@@ -866,62 +1040,79 @@ std::string NFStringUtility::Rot13(const char* str, size_t len) {
 	char* res = &ret[0];
 	unsigned char c, e;
 
-	for (size_t i = 0; i < len; i++) {
+	for (size_t i = 0; i < len; i++)
+	{
 		c = str[i];
-		if (c >= 'A' && c <= 'Z') {
-			if ((e = c + rot) <= 'Z') {
+		if (c >= 'A' && c <= 'Z')
+		{
+			if ((e = c + rot) <= 'Z')
+			{
 				res[i] = e;
 			}
-			else {
+			else
+			{
 				res[i] = c - rot;
 			}
 		}
-		else if (c >= 'a' && c <= 'z') {
-			if ((e = c + rot) <= 'z') {
+		else if (c >= 'a' && c <= 'z')
+		{
+			if ((e = c + rot) <= 'z')
+			{
 				res[i] = e;
 			}
-			else {
+			else
+			{
 				res[i] = c - rot;
 			}
 		}
-		else {
+		else
+		{
 			res[i] = str[i];
 		}
 	}
 	return ret;
 }
 
-void NFStringUtilW::Split(std::vector<std::wstring>& ret, const std::wstring& str, const std::wstring& delims, unsigned int maxSplits) {
+void NFStringUtilW::Split(std::vector<std::wstring>& ret, const std::wstring& str, const std::wstring& delims, unsigned int maxSplits)
+{
 	_stringUtilSplit(ret, str, delims, maxSplits);
 }
 
-void NFStringUtility::ToLower(std::string& str) {
-	std::transform(str.begin(), str.end(), str.begin(), [](unsigned char c) {
-		return tolower(c);
-	});
+void NFStringUtility::ToLower(std::string& str)
+{
+	std::transform(str.begin(), str.end(), str.begin(), [](unsigned char c)
+	               {
+		               return tolower(c);
+	               });
 }
 
-void NFStringUtility::ToLower(std::wstring& str) {
-	std::transform(str.begin(), str.end(), str.begin(), [](wchar_t c) {
-		return towlower(c);
-	});
+void NFStringUtility::ToLower(std::wstring& str)
+{
+	std::transform(str.begin(), str.end(), str.begin(), [](wchar_t c)
+	               {
+		               return towlower(c);
+	               });
 }
 
-void NFStringUtility::ToUpper(std::string& str) {
-	std::transform(str.begin(), str.end(), str.begin(), [](unsigned char c) {
-		return toupper(c);
-	});
+void NFStringUtility::ToUpper(std::string& str)
+{
+	std::transform(str.begin(), str.end(), str.begin(), [](unsigned char c)
+	               {
+		               return toupper(c);
+	               });
 }
 
-void NFStringUtility::ToUpper(std::wstring& str) {
-	std::transform(str.begin(), str.end(), str.begin(), [](wchar_t c) {
-		return towupper(c);
-	});
+void NFStringUtility::ToUpper(std::wstring& str)
+{
+	std::transform(str.begin(), str.end(), str.begin(), [](wchar_t c)
+	               {
+		               return towupper(c);
+	               });
 }
 
 void NFStringUtility::Split(const std::string& str,
-	const std::string& delim,
-	std::vector<std::string>* result)
+                            const std::string& delim,
+                            std::vector<std::string>* result)
 {
 	if (str.empty())
 	{
@@ -952,23 +1143,23 @@ void NFStringUtility::Split(const std::string& str,
 	}
 }
 
-std::string& NFStringUtility::Ltrim(std::string& str)   // NOLINT
+std::string& NFStringUtility::Ltrim(std::string& str) // NOLINT
 {
 	std::string::iterator it = find_if(str.begin(), str.end(), std::not1(std::ptr_fun(::isspace)));
 	str.erase(str.begin(), it);
 	return str;
 }
 
-std::string& NFStringUtility::Rtrim(std::string& str)   // NOLINT
+std::string& NFStringUtility::Rtrim(std::string& str) // NOLINT
 {
 	std::string::reverse_iterator it = find_if(str.rbegin(),
-		str.rend(), std::not1(std::ptr_fun(::isspace)));
+	                                           str.rend(), std::not1(std::ptr_fun(::isspace)));
 
 	str.erase(it.base(), str.end());
 	return str;
 }
 
-std::string& NFStringUtility::LRTrim(std::string& str)   // NOLINT
+std::string& NFStringUtility::LRTrim(std::string& str) // NOLINT
 {
 	return Rtrim(Ltrim(str));
 }
@@ -988,7 +1179,7 @@ void NFStringUtility::LRTrim(std::vector<std::string>* str_list)
 }
 
 void NFStringUtility::StringReplace(const std::string& sub_str1,
-	const std::string& sub_str2, std::string* str)
+                                    const std::string& sub_str2, std::string* str)
 {
 	std::string::size_type pos = 0;
 	std::string::size_type a = sub_str1.size();
@@ -1083,7 +1274,7 @@ static const char HEX2DEC[256] =
 	-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
 	-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
 	-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-	0 ,  1,  2,  3,  4,  5,  6,  7,  8,  9, -1, -1, -1, -1, -1, -1,
+	0 , 1, 2, 3, 4, 5, 6, 7, 8, 9, -1, -1, -1, -1, -1, -1,
 	-1, 10, 11, 12, 13, 14, 15, -1, -1, -1, -1, -1, -1, -1, -1, -1,
 	-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
 	-1, 10, 11, 12, 13, 14, 15, -1, -1, -1, -1, -1, -1, -1, -1, -1,
@@ -1243,7 +1434,10 @@ std::string NFStringUtility::Format(std::string sz, ...)
 };
 
 #ifdef _MSC_VER
-enum { IS_COMPILER_MSVC = 1 };
+enum
+{
+	IS_COMPILER_MSVC = 1
+};
 #ifndef va_copy
 // Define va_copy for MSVC. This is a hack, assuming va_list is simply a
 // pointer into the stack and is safe to copy.
@@ -1253,7 +1447,8 @@ enum { IS_COMPILER_MSVC = 1 };
 enum { IS_COMPILER_MSVC = 0 };
 #endif
 
-void NFStringUtility::StringAppendV(std::string* dst, const char* format, va_list ap) {
+void NFStringUtility::StringAppendV(std::string* dst, const char* format, va_list ap)
+{
 	// First try with a small fixed size buffer
 	static const int kSpaceLength = 10240;
 	char space[kSpaceLength];
@@ -1266,14 +1461,17 @@ void NFStringUtility::StringAppendV(std::string* dst, const char* format, va_lis
 	int result = vsnprintf(space, kSpaceLength, format, backup_ap);
 	va_end(backup_ap);
 
-	if (result < kSpaceLength) {
-		if (result >= 0) {
+	if (result < kSpaceLength)
+	{
+		if (result >= 0)
+		{
 			// Normal case -- everything fit.
 			dst->append(space, result);
 			return;
 		}
 
-		if (IS_COMPILER_MSVC) {
+		if (IS_COMPILER_MSVC)
+		{
 			// Error or MSVC running out of space.  MSVC 8.0 and higher
 			// can be asked about space needed with the special idiom below:
 			va_copy(backup_ap, ap);
@@ -1281,7 +1479,8 @@ void NFStringUtility::StringAppendV(std::string* dst, const char* format, va_lis
 			va_end(backup_ap);
 		}
 
-		if (result < 0) {
+		if (result < 0)
+		{
 			// Just an error.
 			return;
 		}
@@ -1297,14 +1496,16 @@ void NFStringUtility::StringAppendV(std::string* dst, const char* format, va_lis
 	result = vsnprintf(buf, length, format, backup_ap);
 	va_end(backup_ap);
 
-	if (result >= 0 && result < length) {
+	if (result >= 0 && result < length)
+	{
 		// It fit
 		dst->append(buf, result);
 	}
 	delete[] buf;
 }
 
-std::string NFStringUtility::StringPrintf(const char* format, ...) {
+std::string NFStringUtility::StringPrintf(const char* format, ...)
+{
 	va_list ap;
 	va_start(ap, format);
 	std::string result;
@@ -1313,7 +1514,8 @@ std::string NFStringUtility::StringPrintf(const char* format, ...) {
 	return result;
 }
 
-const std::string& NFStringUtility::SStringPrintf(std::string* dst, const char* format, ...) {
+const std::string& NFStringUtility::SStringPrintf(std::string* dst, const char* format, ...)
+{
 	va_list ap;
 	va_start(ap, format);
 	dst->clear();
@@ -1322,14 +1524,15 @@ const std::string& NFStringUtility::SStringPrintf(std::string* dst, const char* 
 	return *dst;
 }
 
-void NFStringUtility::StringAppendF(std::string* dst, const char* format, ...) {
+void NFStringUtility::StringAppendF(std::string* dst, const char* format, ...)
+{
 	va_list ap;
 	va_start(ap, format);
 	StringAppendV(dst, format, ap);
 	va_end(ap);
 }
 
-std::string NFStringUtility::Demangle(const std::string &name)
+std::string NFStringUtility::Demangle(const std::string& name)
 {
 #if NF_PLATFORM == NF_PLATFORM_LINUX
 	int status = 0;
@@ -1346,3 +1549,4 @@ std::string NFStringUtility::Demangle(const std::string &name)
 		return name;
 #endif
 }
+

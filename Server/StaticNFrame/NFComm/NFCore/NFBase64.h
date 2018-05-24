@@ -20,12 +20,16 @@ public:
 	* @brief 构造函数.
 	*
 	*/
-	NFBase64() {}
+	NFBase64()
+	{
+	}
 
 	/**
 	* @brief 析构函数.
 	*/
-	virtual ~NFBase64() {}
+	virtual ~NFBase64()
+	{
+	}
 
 	/**
 	* @brief Base64位编码
@@ -78,3 +82,4 @@ private:
 	*/
 	inline static int Base64DecodeLen(int n);
 };
+

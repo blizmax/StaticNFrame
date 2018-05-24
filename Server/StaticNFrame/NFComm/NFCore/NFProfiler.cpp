@@ -254,7 +254,7 @@ void NFProfiler::OutputCallTree(
 	long long other = node.sampleTime - childTime;
 	if (other > minShowTime)
 	{
-		CALL_TREE_NODE otherNode = { 0 };
+		CALL_TREE_NODE otherNode = {0};
 		otherNode.name = "<other: code not be sample and sampled but too small>";
 		otherNode.sampleCount = node.sampleCount;
 		otherNode.sampleTime = other;
@@ -287,3 +287,4 @@ bool NFProfiler::OutputTopProfilerTimer()
 	printf("profile:\r\n%s", report.c_str());
 	return true;
 }
+

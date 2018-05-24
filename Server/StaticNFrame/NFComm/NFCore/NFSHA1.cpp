@@ -85,12 +85,12 @@ bool NFSHA1::Encode2Hex(const char* lpData_Input, char* lpSHACode_Output)
 
 	// One times analyse 64Bytes, 512 bits.
 	int nInputLen = strlen(lpData_Input);
-	int nDealDataLen = 0;                            //    the length of can-deal-data, this times;
+	int nDealDataLen = 0; //    the length of can-deal-data, this times;
 	for (int pos = 0; pos <= nInputLen; pos += 64)
 	{
 		if (nInputLen - pos >= 64)
 		{
-			nDealDataLen = 64;                        // input-data is enough fill 64bytes,
+			nDealDataLen = 64; // input-data is enough fill 64bytes,
 			memset(Message_Block, 0, sizeof(Message_Block));
 			memcpy(Message_Block, lpData_Input + pos, nDealDataLen);
 
@@ -130,12 +130,12 @@ bool NFSHA1::Encode2Ascii(const char* lpData_Input, char* lpSHACode_Output)
 
 	// One times analyse 64Bytes, 512 bits.
 	int nInputLen = strlen(lpData_Input);
-	int nDealDataLen = 0;                            //    the length of can-deal-data, this times;
+	int nDealDataLen = 0; //    the length of can-deal-data, this times;
 	for (int pos = 0; pos <= nInputLen; pos += 64)
 	{
 		if (nInputLen - pos >= 64)
 		{
-			nDealDataLen = 64;                        // input-data is enough fill 64bytes,
+			nDealDataLen = 64; // input-data is enough fill 64bytes,
 			memset(Message_Block, 0, sizeof(Message_Block));
 			memcpy(Message_Block, lpData_Input + pos, nDealDataLen);
 
@@ -199,17 +199,17 @@ void NFSHA1::AddDataLen(int nDealDataLen)
  */
 void NFSHA1::ProcessMessageBlock()
 {
-	const unsigned K[] =                   // Constants defined for SHA-1
-	{
-		0x5A827999,
-		0x6ED9EBA1,
-		0x8F1BBCDC,
-		0xCA62C1D6
-	};
-	int         t;                            // Loop counter
-	unsigned     temp;                        // Temporary word value
-	unsigned    W[80];                        // Word sequence
-	unsigned    A, B, C, D, E;                // Word buffers
+	const unsigned K[] = // Constants defined for SHA-1
+		{
+			0x5A827999,
+			0x6ED9EBA1,
+			0x8F1BBCDC,
+			0xCA62C1D6
+		};
+	int t; // Loop counter
+	unsigned temp; // Temporary word value
+	unsigned W[80]; // Word sequence
+	unsigned A, B, C, D, E; // Word buffers
 
 	/*
 	 *    Initialize the first 16 words in the array W
@@ -374,3 +374,4 @@ unsigned NFSHA1::CircularShift(int bits, unsigned word)
 {
 	return ((word << bits) & 0xFFFFFFFF) | ((word & 0xFFFFFFFF) >> (32 - bits));
 }
+

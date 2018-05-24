@@ -45,50 +45,79 @@ public:
 	static void Trim(std::string& str, const char* cutset, bool left = true, bool right = true);
 	static void Trim(std::wstring& str, const wchar_t* cutset, bool left = true, bool right = true);
 
-	static void TrimLeft(std::string& str) {
+	static void TrimLeft(std::string& str)
+	{
 		Trim(str, true, false);
 	}
-	static void TrimLeft(std::wstring& str) {
+
+	static void TrimLeft(std::wstring& str)
+	{
 		Trim(str, true, false);
 	}
-	static void TrimLeft(std::string& str, const std::string& delims) {
-		Trim(str, delims, true, false);
-	}
-	static void TrimLeft(std::wstring& str, const std::wstring& delims) {
-		Trim(str, delims, true, false);
-	}
-	static void TrimLeft(std::string& str, const char* delims) {
-		Trim(str, delims, true, false);
-	}
-	static void TrimLeft(std::wstring& str, const wchar_t* delims) {
+
+	static void TrimLeft(std::string& str, const std::string& delims)
+	{
 		Trim(str, delims, true, false);
 	}
 
-	static void TrimRight(std::string& str) {
+	static void TrimLeft(std::wstring& str, const std::wstring& delims)
+	{
+		Trim(str, delims, true, false);
+	}
+
+	static void TrimLeft(std::string& str, const char* delims)
+	{
+		Trim(str, delims, true, false);
+	}
+
+	static void TrimLeft(std::wstring& str, const wchar_t* delims)
+	{
+		Trim(str, delims, true, false);
+	}
+
+	static void TrimRight(std::string& str)
+	{
 		Trim(str, false, true);
 	}
-	static void TrimRight(std::wstring& str) {
+
+	static void TrimRight(std::wstring& str)
+	{
 		Trim(str, false, true);
 	}
-	static void TrimRight(std::string& str, const std::string& delims) {
+
+	static void TrimRight(std::string& str, const std::string& delims)
+	{
 		Trim(str, delims, false, true);
 	}
-	static void TrimRight(std::wstring& str, const std::wstring& delims) {
+
+	static void TrimRight(std::wstring& str, const std::wstring& delims)
+	{
 		Trim(str, delims, false, true);
 	}
-	static void TrimRight(std::string& str, const char* delims) {
+
+	static void TrimRight(std::string& str, const char* delims)
+	{
 		Trim(str, delims, false, true);
 	}
-	static void TrimRight(std::wstring& str, const wchar_t* delims) {
+
+	static void TrimRight(std::wstring& str, const wchar_t* delims)
+	{
 		Trim(str, delims, false, true);
 	}
 
 	// @brief trim a char
-	template<class _StringType> static void Trim(_StringType& str, char c, bool left = true, bool right = true);
-	template<class _StringType> static void TrimLeft(_StringType& str, char c) {
+	template <class _StringType>
+	static void Trim(_StringType& str, char c, bool left = true, bool right = true);
+
+	template <class _StringType>
+	static void TrimLeft(_StringType& str, char c)
+	{
 		Trim(str, c, true, false);
 	}
-	template<class _StringType> static void TrimRight(_StringType& str, char c) {
+
+	template <class _StringType>
+	static void TrimRight(_StringType& str, char c)
+	{
 		Trim(str, c, false, true);
 	}
 
@@ -153,7 +182,7 @@ public:
 	static void Split(const std::string& src, std::string& left, std::string& right, const char* cutset = "\t\n ");
 	static void Split(const std::wstring& src, std::wstring& left, std::wstring& right, const wchar_t* cutset = L"\t\n ");
 
-	template<class _SourceStringType, class _SubStringType>
+	template <class _SourceStringType, class _SubStringType>
 	static void Explode(const _SourceStringType& source, const _SourceStringType& cutset, std::vector<_SubStringType>& return_value, int limit = -1);
 
 	static void ToLower(std::string& str);
@@ -209,25 +238,34 @@ public:
 	// @param[in,out] size_t & edcoded_url_len -
 	// @return bool -
 	static bool URLEncode(const char* url, size_t url_len, char* edcoded_url, size_t& edcoded_url_len);
-	static std::string URLEncode(const std::string& str) {
+
+	static std::string URLEncode(const std::string& str)
+	{
 		std::string out;
 		URLEncode(str, out);
 		return out;
 	}
-	static void URLEncode(const std::string& str, std::string& out) {
+
+	static void URLEncode(const std::string& str, std::string& out)
+	{
 		URLEncode(str.data(), str.size(), out);
 	}
+
 	static void URLEncode(const char* url, size_t url_len, std::string& out);
 
-	static string URLDecode(const std::string& str) {
+	static string URLDecode(const std::string& str)
+	{
 		std::string out;
 		URLDecode(str, out);
 		return out;
 	}
+
 	static void URLDecode(const std::string& str, std::string& out);
 	static void URLDecode(const char* encoded_url, size_t encoded_url_len, std::string& out);
 	static void URLDecode(const char* encoded_url, size_t encoded_url_len, char* decoded_url, size_t& decoded_url_len);
-	static void URLDecode(std::string& str) {
+
+	static void URLDecode(std::string& str)
+	{
 		URLDecode(str, str);
 	}
 
@@ -235,8 +273,8 @@ public:
 	static bool IsFloatNumber(std::string& s);
 
 	static void Split(const std::string& str,
-		const std::string& delim,
-		std::vector<std::string>* result);
+	                  const std::string& delim,
+	                  std::vector<std::string>* result);
 
 	static std::string& Ltrim(std::string& str); // NOLINT
 
@@ -248,7 +286,7 @@ public:
 
 	// 子串替换
 	static void StringReplace(const std::string& sub_str1,
-		const std::string& sub_str2, std::string* str);
+	                          const std::string& sub_str2, std::string* str);
 
 	static void UrlEncode(const std::string& src_str, std::string* dst_str);
 
@@ -292,7 +330,7 @@ public:
 	 * @param name  对类型T,获得typeinfo<T>.name()的名字
 	 * @return      获得typeinfo.name(T)的类型名字
 	 */
-	static std::string Demangle(const std::string &name);
+	static std::string Demangle(const std::string& name);
 
 	/**
 	 * @brief 获得类型T的类型名字
@@ -306,26 +344,32 @@ public:
 	}
 };
 
-class _NFExport NFStringUtilW {
+class _NFExport NFStringUtilW
+{
 public:
-	static void ToLower(std::wstring& str) {
+	static void ToLower(std::wstring& str)
+	{
 		std::transform(str.begin(), str.end(), str.begin(), towlower);
 	}
-	static void ToUpper(std::wstring& str) {
+
+	static void ToUpper(std::wstring& str)
+	{
 		std::transform(str.begin(), str.end(), str.begin(), towupper);
 	}
 
 	static void Split(std::vector<std::wstring>& resultSubstrsVec, const std::wstring& str, const std::wstring& delims = L"\t\n ", unsigned int maxSplits = 0);
 };
 
-template<class _Tx, class _Ty>
-inline void NFStringUtility::Explode(const _Tx& source, const _Tx& delim, std::vector<_Ty>& return_value, int limit) {
-	const char* p1, *p2, *endp;
+template <class _Tx, class _Ty>
+inline void NFStringUtility::Explode(const _Tx& source, const _Tx& delim, std::vector<_Ty>& return_value, int limit)
+{
+	const char *p1, *p2, *endp;
 	const char* str = source.data();
 	size_t len = source.size();
 	endp = str + source.size();
 
-	if (limit == 0 || limit == 1) {
+	if (limit == 0 || limit == 1)
+	{
 		return_value.push_back(_Ty(str, endp - str));
 		return;
 	}
@@ -333,17 +377,23 @@ inline void NFStringUtility::Explode(const _Tx& source, const _Tx& delim, std::v
 	p1 = str;
 	size_t delim_len = delim.size();
 	p2 = static_cast<const char*>(memmem(str, len, delim.data(), delim_len));
-	if (p2 == nullptr) {
+	if (p2 == nullptr)
+	{
 		return_value.push_back(_Ty(str, len));
 	}
-	else {
-		do {
+	else
+	{
+		do
+		{
 			return_value.push_back(_Ty(p1, p2 - p1));
 			p1 = p2 + delim_len;
-		} while ((p2 = static_cast<char*>(memmem(p1, len - (p1 - str), delim.data(), delim_len))) != nullptr && (limit == -1 || --limit > 1));
+		}
+		while ((p2 = static_cast<char*>(memmem(p1, len - (p1 - str), delim.data(), delim_len))) != nullptr && (limit == -1 || --limit > 1));
 
-		if (p1 < endp) {
-			if ((p2 = static_cast<char*>(memmem(p1, len - (p1 - str), delim.data(), delim_len))) != nullptr) {
+		if (p1 < endp)
+		{
+			if ((p2 = static_cast<char*>(memmem(p1, len - (p1 - str), delim.data(), delim_len))) != nullptr)
+			{
 				endp = p2;
 			}
 			return_value.push_back(_Ty(p1, endp - p1));
@@ -351,39 +401,49 @@ inline void NFStringUtility::Explode(const _Tx& source, const _Tx& delim, std::v
 	}
 }
 
-template<class _StringType>
+template <class _StringType>
 inline void NFStringUtility::Trim(_StringType& str, char c, bool left /*= true*/, bool right /*= true*/)
 {
-	if (str.empty()) {
+	if (str.empty())
+	{
 		return;
 	}
 
 	int stop_pos = static_cast<int>(str.size()) - 1;//included
-	if (right) {
-		for (; stop_pos >= 0; --stop_pos) {
-			if (str[stop_pos] != c) {
+	if (right)
+	{
+		for (; stop_pos >= 0; --stop_pos)
+		{
+			if (str[stop_pos] != c)
+			{
 				break;
 			}
 		}
 	}
 
-	if (stop_pos < 0) {
+	if (stop_pos < 0)
+	{
 		str = _StringType();
 		return;
 	}
 
 	int start_pos = 0;//included
-	if (left) {
-		for (; start_pos <= stop_pos; ++start_pos) {
-			if (str[start_pos] != c) {
+	if (left)
+	{
+		for (; start_pos <= stop_pos; ++start_pos)
+		{
+			if (str[start_pos] != c)
+			{
 				break;
 			}
 		}
 	}
 
-	if (start_pos == 0 && stop_pos == static_cast<int>(str.size()) - 1) {
+	if (start_pos == 0 && stop_pos == static_cast<int>(str.size()) - 1)
+	{
 		return;
 	}
 
 	str = _StringType(str.data() + start_pos, stop_pos + 1 - start_pos);
 }
+

@@ -13,9 +13,16 @@
 class _NFExport NFNonCopyable
 {
 protected:
-	NFNonCopyable() {}
-	~NFNonCopyable() {}
+	NFNonCopyable()
+	{
+	}
+
+	~NFNonCopyable()
+	{
+	}
+
 private:
 	NFNonCopyable(const NFNonCopyable&);
 	const NFNonCopyable& operator=(const NFNonCopyable&);
 };
+

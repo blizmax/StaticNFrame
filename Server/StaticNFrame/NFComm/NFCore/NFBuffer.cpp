@@ -109,6 +109,16 @@ bool NFBuffer::IsEmpty() const
 	return ReadableSize() == 0;
 }
 
+std::size_t NFBuffer::ReadableSize() const
+{
+	return _writePos - _readPos;
+}
+
+std::size_t NFBuffer::WritableSize() const
+{
+	return _capacity - _writePos;
+}
+
 void NFBuffer::AssureSpace(std::size_t needsize)
 {
 	if (WritableSize() >= needsize)
@@ -218,3 +228,4 @@ void NFBuffer::SetHighWaterPercent(size_t percents)
 
 	_highWaterPercent = percents;
 }
+

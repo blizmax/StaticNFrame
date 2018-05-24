@@ -9,22 +9,22 @@
 #include "NFPlatform.h"
 #include "NFSnprintf.h"
 
-#if  NF_PLATFORM_WIN == NF_PLATFORM
+#if NF_PLATFORM_WIN == NF_PLATFORM
 #include <stdarg.h>
 
 # ifdef __STDC_WANT_SECURE_LIB__
 
-int NFSafeSnprintf(char *buf, size_t size, const char *fmt, ...)
+int NFSafeSnprintf(char* buf, size_t size, const char* fmt, ...)
 {
 	va_list ap;
 
 	va_start(ap, fmt);
-	int ret = NFSafeVsnprintf(buf, size, fmt, ap);  // 调用 NFSafeVsnprintf
+	int ret = NFSafeVsnprintf(buf, size, fmt, ap); // 调用 NFSafeVsnprintf
 	va_end(ap);
 	return ret;
 }
 
-int NFSafeVsnprintf(char *buf, size_t size, const char *fmt, va_list ap)
+int NFSafeVsnprintf(char* buf, size_t size, const char* fmt, va_list ap)
 {
 	if (size == 0)
 	{
@@ -71,6 +71,7 @@ int NFSafeVsnprintf(char *buf, size_t size, const char *fmt, va_list ap)
 
 # endif // __STDC_WANT_SECURE_LIB__
 
+
 #else
 
 int NFSafeSnprintf(char *buf, size_t size, const char *fmt, ...)
@@ -89,3 +90,5 @@ int NFSafeVsnprintf(char *buf, size_t size, const char *fmt, va_list ap)
 }
 
 #endif // !ACL_WINDOWS
+
+

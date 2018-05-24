@@ -114,18 +114,22 @@ public:
 	{
 		return mMilliseconds;
 	}
+
 	int GetSeconds() const
 	{
 		return mSeconds;
 	}
+
 	int GetMinutes() const
 	{
 		return mMinutes;
 	}
+
 	int GetHours() const
 	{
 		return mHours;
 	}
+
 	int GetDays() const
 	{
 		return mDays;
@@ -233,22 +237,22 @@ public:
 		December
 	};
 
-	NFDateTime(int day, int month, int year) :mSummertime(false), mLeapyear(false)
+	NFDateTime(int day, int month, int year) : mSummertime(false), mLeapyear(false)
 	{
 		Init(day, month, year, 0, 0, 0, 0);
 	}
 
-	NFDateTime(int day, int month, int year, int hour, int minute, int second) :mSummertime(false), mLeapyear(false)
+	NFDateTime(int day, int month, int year, int hour, int minute, int second) : mSummertime(false), mLeapyear(false)
 	{
 		Init(day, month, year, hour, minute, second, 0);
 	}
 
-	NFDateTime(int day, int month, int year, int hour, int minute, int second, int millisecond) :mSummertime(false), mLeapyear(false)
+	NFDateTime(int day, int month, int year, int hour, int minute, int second, int millisecond) : mSummertime(false), mLeapyear(false)
 	{
 		Init(day, month, year, hour, minute, second, millisecond);
 	}
 
-	NFDateTime(time_t timestamp) :mSummertime(false), mLeapyear(false)
+	NFDateTime(time_t timestamp) : mSummertime(false), mLeapyear(false)
 	{
 		SetWithTimestamp(timestamp);
 	}
@@ -273,10 +277,12 @@ public:
 	{
 		return mYear;
 	}
+
 	int GetMonth() const
 	{
 		return mMonth;
 	}
+
 	int GetDay() const
 	{
 		return mDay;
@@ -286,14 +292,17 @@ public:
 	{
 		return mHour;
 	}
+
 	int GetMinute() const
 	{
 		return mMinute;
 	}
+
 	int GetSecond() const
 	{
 		return mSecond;
 	}
+
 	int GetMillisecond() const
 	{
 		return mMillisecond;
@@ -387,6 +396,7 @@ public:
 	{
 		return IsYearLeapYear(mYear);
 	}
+
 	bool IsLeapYear() const
 	{
 		return IsDateSummertime(mDay, mMonth);
@@ -530,7 +540,7 @@ public:
 	}
 
 protected:
-	NFDateTime() :mSummertime(false), mLeapyear(false)
+	NFDateTime() : mSummertime(false), mLeapyear(false)
 	{
 		this->mDay = 0;
 		this->mMonth = 0;
@@ -702,3 +712,4 @@ protected:
 };
 
 #endif
+

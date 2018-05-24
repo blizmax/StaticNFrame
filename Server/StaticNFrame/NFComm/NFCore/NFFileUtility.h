@@ -31,7 +31,8 @@
 
 // File access utility class which provides many help methods
 // to make it easy to do operations against file.
-class _NFExport NFFileUtility {
+class _NFExport NFFileUtility
+{
 public:
 	// Query whether the file name is a valid directory. e.g. ".", ".." are invalid
 	// directory name.
@@ -75,9 +76,9 @@ public:
 	// @param base_dir[out]
 	// @param with_trailing_slash[in] true, End of the string With a SLASH "/".
 	static void SplitFileName(const wstring& filepath,
-		wstring& file_name, wstring& base_dir, bool with_trailing_slash = false);
+	                          wstring& file_name, wstring& base_dir, bool with_trailing_slash = false);
 	static void SplitFileName(const string& filepath,
-		string& file_name, string& base_dir, bool with_trailing_slash = false);
+	                          string& file_name, string& base_dir, bool with_trailing_slash = false);
 
 	// Concatenate tow path into one, and return it.
 	static string Join(const string& prefix, const string& postfix);
@@ -125,7 +126,9 @@ public:
 	// remove, else is a file and the file will be removed.
 	// @return bool True if successfully.
 	static bool Unlink(const string& filepath);
-	static bool Remove(const string& filepath) {
+
+	static bool Remove(const string& filepath)
+	{
 		return Unlink(filepath);
 	}
 
@@ -201,23 +204,28 @@ public:
 	static bool WriteFile(const string& filepath, const void* content, const size_t len);
 };
 
-inline bool NFFileUtility::IsValidDirName(const std::string& szName) {
+inline bool NFFileUtility::IsValidDirName(const std::string& szName)
+{
 	size_t len = szName.length();
 	return !((len >= 1 && szName[0] == ('.')) ||
 		(len >= 2 && szName[1] == '.'));
 }
 
 // Query whether strFileName is a absolute path.
-inline bool NFFileUtility::IsAbsolutePath(const string& path) {
-	if (path.size() == 0) {
+inline bool NFFileUtility::IsAbsolutePath(const string& path)
+{
+	if (path.size() == 0)
+	{
 		return false;
 	}
 
 #if NF_PLATFORM == NF_PLATFORM_WIN
-	if (isalpha(static_cast<unsigned char>(path[0])) && path[1] == ':') {
+	if (isalpha(static_cast<unsigned char>(path[0])) && path[1] == ':')
+	{
 		return true;
 	}
-	else {
+	else
+	{
 		return false;
 	}
 
@@ -226,14 +234,17 @@ inline bool NFFileUtility::IsAbsolutePath(const string& path) {
 #endif
 }
 
-inline string NFFileUtility::GetAbsolutePathName(const string& strPathName) {
+inline string NFFileUtility::GetAbsolutePathName(const string& strPathName)
+{
 	string strTmp = strPathName;
 
-	if (!IsAbsolutePath(strTmp)) {
+	if (!IsAbsolutePath(strTmp))
+	{
 		//
-		char szDir[_MAX_PATH];
+		char szDir[_MAX_PATH ];
 #if NF_PLATFORM == NF_PLATFORM_WIN
-		if (_getcwd(szDir, _MAX_PATH)) {
+		if (_getcwd(szDir, _MAX_PATH))
+		{
 			strTmp = string(szDir) + ("/") + strTmp;
 		}
 #else
@@ -248,53 +259,66 @@ inline string NFFileUtility::GetAbsolutePathName(const string& strPathName) {
 	return strTmp;
 }
 
-inline string NFFileUtility::GetFileName(const string& strFileName) {
+inline string NFFileUtility::GetFileName(const string& strFileName)
+{
 	// since '/' equal to L'/', we can cast to either one.
 	string::size_type i = strFileName.find_last_of((string::value_type)'/');
 
-	if (i == string::npos) {
+	if (i == string::npos)
+	{
 		return strFileName;
 	}
 
 	return strFileName.substr(i + 1);
 }
 
-inline string NFFileUtility::GetFileNameWithoutExt(const string& strFileName) {
+inline string NFFileUtility::GetFileNameWithoutExt(const string& strFileName)
+{
 	// since '/' equal to L'/', we can cast to either one.
 	string::size_type iStart = strFileName.find_last_of((string::value_type)'/');
 
-	if (iStart == string::npos) {
+	if (iStart == string::npos)
+	{
 		iStart = 0;
 	}
-	else {
+	else
+	{
 		// skip the '/'
 		++iStart;
 	}
 
 	return strFileName.substr(iStart, strFileName.find_last_of((string::value_type)'.') - iStart);
 }
-inline string NFFileUtility::GetFileNameExtension(const string& strFileName) {
+
+inline string NFFileUtility::GetFileNameExtension(const string& strFileName)
+{
 	string::size_type endPos = strFileName.find_last_of((string::value_type)'.');
 
-	if (endPos < strFileName.length() - 1) {
+	if (endPos < strFileName.length() - 1)
+	{
 		return strFileName.substr(endPos + 1);
 	}
 
 	return string();
 }
-inline string NFFileUtility::GetFileDirName(const string& strFileName) {
+
+inline string NFFileUtility::GetFileDirName(const string& strFileName)
+{
 	// since '/' equal to L'/', we can cast to either one.
 	string::size_type i = strFileName.find_last_of((string::value_type)'/');
 
-	if (i == string::npos) {
+	if (i == string::npos)
+	{
 		return string();
 	}
 
 	return strFileName.substr(0, i);
 }
 
-inline bool NFFileUtility::IsDir(const char* szFileName) {
-	if (!szFileName) {
+inline bool NFFileUtility::IsDir(const char* szFileName)
+{
+	if (!szFileName)
+	{
 		return false;
 	}
 
@@ -303,12 +327,14 @@ inline bool NFFileUtility::IsDir(const char* szFileName) {
 	return IsDir(strFileName);
 }
 
-inline bool NFFileUtility::IsDir(const string& strFileName) {
+inline bool NFFileUtility::IsDir(const string& strFileName)
+{
 	//for the 'stat' API, the parameter strFileName SHOULD not contain a trailing backslash
 	string strStandardisePath = NormalizePath(strFileName, false);
 
 	struct stat st;
-	if (0 != stat(strStandardisePath.c_str(), &st)) {
+	if (0 != stat(strStandardisePath.c_str(), &st))
+	{
 		return false;
 	}
 
@@ -324,8 +350,10 @@ inline bool NFFileUtility::IsDir(const string& strFileName) {
 	return false;
 }
 
-inline bool NFFileUtility::RemoveDirIfEmpty(const string& strDirName, bool bRecursivelyDeleteEmptyParentDir /*= true*/) {
-	if (!IsDir(strDirName)) {
+inline bool NFFileUtility::RemoveDirIfEmpty(const string& strDirName, bool bRecursivelyDeleteEmptyParentDir /*= true*/)
+{
+	if (!IsDir(strDirName))
+	{
 		return true;
 	}
 
@@ -334,16 +362,20 @@ inline bool NFFileUtility::RemoveDirIfEmpty(const string& strDirName, bool bRecu
 	std::list<string> files;
 	GetFiles(strDirName, files, true);
 
-	if (files.size() == 0) {
-		if (NFFileUtility::Rmdir(strDirName.c_str()) != 0) {
+	if (files.size() == 0)
+	{
+		if (NFFileUtility::Rmdir(strDirName.c_str()) != 0)
+		{
 			retval = false;
 		}
 	}
 
-	if (bRecursivelyDeleteEmptyParentDir) {
+	if (bRecursivelyDeleteEmptyParentDir)
+	{
 		string strParentDir = GetParentDir(strDirName);
 
-		if (!RemoveDirIfEmpty(strParentDir, bRecursivelyDeleteEmptyParentDir)) {
+		if (!RemoveDirIfEmpty(strParentDir, bRecursivelyDeleteEmptyParentDir))
+		{
 			retval = false;
 		}
 	}
@@ -351,38 +383,47 @@ inline bool NFFileUtility::RemoveDirIfEmpty(const string& strDirName, bool bRecu
 	return retval;
 }
 
-inline string NFFileUtility::GetParentDir(const string& strFileName, bool with_trailing_slash /*= true*/) {
+inline string NFFileUtility::GetParentDir(const string& strFileName, bool with_trailing_slash /*= true*/)
+{
 	string path = NormalizePath(strFileName, false);
 
-	if (!IsAbsolutePath(strFileName)) {
+	if (!IsAbsolutePath(strFileName))
+	{
 		path = GetAbsolutePathName(path);
 	}
 
 	size_t pos = path.find_last_of('/');
 
-	if (pos == 0 || pos == string::npos) {
-		if (with_trailing_slash) {
+	if (pos == 0 || pos == string::npos)
+	{
+		if (with_trailing_slash)
+		{
 			path += "/";
 		}
 
 		return path;
 	}
-	else {
-		if (with_trailing_slash) {
+	else
+	{
+		if (with_trailing_slash)
+		{
 			string retp = string(path.c_str(), pos) + "/";
 			return retp;
 		}
-		else {
+		else
+		{
 			return string(path.c_str(), pos);
 		}
 	}
 }
 
-inline bool NFFileUtility::Rmdir(const string& strDirName) {
+inline bool NFFileUtility::Rmdir(const string& strDirName)
+{
 	return Rmdir(strDirName.c_str());
 }
 
-inline bool NFFileUtility::Rmdir(const char* strDirName) {
+inline bool NFFileUtility::Rmdir(const char* strDirName)
+{
 #if NF_PLATFORM == NF_PLATFORM_WIN
 	if (::_rmdir(strDirName) == 0)
 #else
@@ -394,3 +435,4 @@ inline bool NFFileUtility::Rmdir(const char* strDirName) {
 
 	return false;
 }
+

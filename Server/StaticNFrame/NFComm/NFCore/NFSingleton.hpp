@@ -76,3 +76,4 @@ template <class T>
 T* NFSingleton<T>::m_pInstance = nullptr;
 
 #endif
+

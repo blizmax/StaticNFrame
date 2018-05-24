@@ -30,8 +30,10 @@ public:
 	{
 		return message;
 	}
+
 protected:
 	std::string message;
 };
 
 #endif
+

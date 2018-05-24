@@ -44,13 +44,16 @@ static unsigned short ccitt_table[256] = {
 	0x6E17, 0x7E36, 0x4E55, 0x5E74, 0x2E93, 0x3EB2, 0x0ED1, 0x1EF0
 };
 
-uint16_t NFCRC16::Sum(const void* v, size_t len) {
+uint16_t NFCRC16::Sum(const void* v, size_t len)
+{
 	uint16_t crc = 0;
 	const uint8_t* q = static_cast<const uint8_t*>(v);
 
-	while (len-- > 0) {
+	while (len-- > 0)
+	{
 		crc = ccitt_table[(crc >> 8 ^ *q++) & 0xff] ^ (crc << 8);
 	}
 
 	return ~crc;
 }
+

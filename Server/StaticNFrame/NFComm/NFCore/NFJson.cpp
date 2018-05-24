@@ -18,91 +18,120 @@ using std::move;
  * operators so the helpers in JsonValue work. We can't use nullptr_t because
  * it may not be orderable.
  */
-struct NullStruct {
-	bool operator==(NullStruct) const { return true; }
-	bool operator<(NullStruct) const { return false; }
+struct NullStruct
+{
+	bool operator==(NullStruct) const
+	{
+		return true;
+	}
+
+	bool operator<(NullStruct) const
+	{
+		return false;
+	}
 };
 
 /* * * * * * * * * * * * * * * * * * * *
  * Serialization
  */
 
-static void static_dump(NullStruct, string &out) {
+static void static_dump(NullStruct, string& out)
+{
 	out += "null";
 }
 
-static void static_dump(double value, string &out) {
-	if (std::isfinite(value)) {
+static void static_dump(double value, string& out)
+{
+	if (std::isfinite(value))
+	{
 		char buf[32];
 		snprintf(buf, sizeof buf, "%.17g", value);
 		out += buf;
 	}
-	else {
+	else
+	{
 		out += "null";
 	}
 }
 
-static void static_dump(int value, string &out) {
+static void static_dump(int value, string& out)
+{
 	char buf[32];
 	snprintf(buf, sizeof buf, "%d", value);
 	out += buf;
 }
 
-static void static_dump(bool value, string &out) {
+static void static_dump(bool value, string& out)
+{
 	out += value ? "true" : "false";
 }
 
-static void static_dump(const string &value, string &out) {
+static void static_dump(const string& value, string& out)
+{
 	out += '"';
-	for (size_t i = 0; i < value.length(); i++) {
+	for (size_t i = 0; i < value.length(); i++)
+	{
 		const char ch = value[i];
-		if (ch == '\\') {
+		if (ch == '\\')
+		{
 			out += "\\\\";
 		}
-		else if (ch == '"') {
+		else if (ch == '"')
+		{
 			out += "\\\"";
 		}
-		else if (ch == '\b') {
+		else if (ch == '\b')
+		{
 			out += "\\b";
 		}
-		else if (ch == '\f') {
+		else if (ch == '\f')
+		{
 			out += "\\f";
 		}
-		else if (ch == '\n') {
+		else if (ch == '\n')
+		{
 			out += "\\n";
 		}
-		else if (ch == '\r') {
+		else if (ch == '\r')
+		{
 			out += "\\r";
 		}
-		else if (ch == '\t') {
+		else if (ch == '\t')
+		{
 			out += "\\t";
 		}
-		else if (static_cast<uint8_t>(ch) <= 0x1f) {
+		else if (static_cast<uint8_t>(ch) <= 0x1f)
+		{
 			char buf[8];
 			snprintf(buf, sizeof buf, "\\u%04x", ch);
 			out += buf;
 		}
 		else if (static_cast<uint8_t>(ch) == 0xe2 && static_cast<uint8_t>(value[i + 1]) == 0x80
-			&& static_cast<uint8_t>(value[i + 2]) == 0xa8) {
+			&& static_cast<uint8_t>(value[i + 2]) == 0xa8)
+		{
 			out += "\\u2028";
 			i += 2;
 		}
 		else if (static_cast<uint8_t>(ch) == 0xe2 && static_cast<uint8_t>(value[i + 1]) == 0x80
-			&& static_cast<uint8_t>(value[i + 2]) == 0xa9) {
+			&& static_cast<uint8_t>(value[i + 2]) == 0xa9)
+		{
 			out += "\\u2029";
 			i += 2;
 		}
-		else {
+		else
+		{
 			out += ch;
 		}
 	}
 	out += '"';
 }
 
-static void static_dump(const NFJson::array &values, string &out) {
+static void static_dump(const NFJson::array& values, string& out)
+{
 	bool first = true;
 	out += "[";
-	for (const auto &value : values) {
+	for (const auto& value : values)
+	{
 		if (!first)
 			out += ", ";
 		value.dump(out);
@@ -111,10 +140,12 @@ static void static_dump(const NFJson::array &values, string &out) {
 	out += "]";
 }
 
-static void static_dump(const NFJson::object &values, string &out) {
+static void static_dump(const NFJson::object& values, string& out)
+{
 	bool first = true;
 	out += "{";
-	for (const auto &kv : values) {
+	for (const auto& kv : values)
+	{
 		if (!first)
 			out += ", ";
 		static_dump(kv.first, out);
@@ -125,7 +156,8 @@ static void static_dump(const NFJson::object &values, string &out) {
 	out += "}";
 }
 
-void NFJson::dump(string &out) const {
+void NFJson::dump(string& out) const
+{
 	m_ptr->dump(out);
 }
 
@@ -134,101 +166,199 @@ void NFJson::dump(string &out) const {
  */
 
 template <NFJson::Type tag, typename T>
-class Value : public JsonValue {
+class Value : public JsonValue
+{
 protected:
 
 	// Constructors
-	explicit Value(const T &value) : m_value(value) {}
-	explicit Value(T &&value) : m_value(move(value)) {}
+	explicit Value(const T& value) : m_value(value)
+	{
+	}
+
+	explicit Value(T&& value) : m_value(move(value))
+	{
+	}
 
 	// Get type tag
-	NFJson::Type type() const override {
+	NFJson::Type type() const override
+	{
 		return tag;
 	}
 
 	// Comparisons
-	bool equals(const JsonValue * other) const override {
+	bool equals(const JsonValue* other) const override
+	{
 		return m_value == static_cast<const Value<tag, T> *>(other)->m_value;
 	}
-	bool less(const JsonValue * other) const override {
+
+	bool less(const JsonValue* other) const override
+	{
 		return m_value < static_cast<const Value<tag, T> *>(other)->m_value;
 	}
 
 	const T m_value;
-	void dump(string &out) const override { static_dump(m_value, out); }
+
+	void dump(string& out) const override
+	{
+		static_dump(m_value, out);
+	}
 };
 
-class JsonDouble final : public Value<NFJson::NUMBER, double> {
-	double number_value() const override { return m_value; }
-	int int_value() const override { return static_cast<int>(m_value); }
-	bool equals(const JsonValue * other) const override { return m_value == other->number_value(); }
-	bool less(const JsonValue * other)   const override { return m_value < other->number_value(); }
+class JsonDouble final : public Value<NFJson::NUMBER, double>
+{
+	double number_value() const override
+	{
+		return m_value;
+	}
+
+	int int_value() const override
+	{
+		return static_cast<int>(m_value);
+	}
+
+	bool equals(const JsonValue* other) const override
+	{
+		return m_value == other->number_value();
+	}
+
+	bool less(const JsonValue* other) const override
+	{
+		return m_value < other->number_value();
+	}
+
 public:
-	explicit JsonDouble(double value) : Value(value) {}
+	explicit JsonDouble(double value) : Value(value)
+	{
+	}
 };
 
-class JsonInt final : public Value<NFJson::NUMBER, int> {
-	double number_value() const override { return m_value; }
-	int int_value() const override { return m_value; }
-	bool equals(const JsonValue * other) const override { return m_value == other->number_value(); }
-	bool less(const JsonValue * other)   const override { return m_value < other->number_value(); }
+class JsonInt final : public Value<NFJson::NUMBER, int>
+{
+	double number_value() const override
+	{
+		return m_value;
+	}
+
+	int int_value() const override
+	{
+		return m_value;
+	}
+
+	bool equals(const JsonValue* other) const override
+	{
+		return m_value == other->number_value();
+	}
+
+	bool less(const JsonValue* other) const override
+	{
+		return m_value < other->number_value();
+	}
+
 public:
-	explicit JsonInt(int value) : Value(value) {}
+	explicit JsonInt(int value) : Value(value)
+	{
+	}
 };
 
-class JsonBoolean final : public Value<NFJson::BOOL, bool> {
-	bool bool_value() const override { return m_value; }
+class JsonBoolean final : public Value<NFJson::BOOL, bool>
+{
+	bool bool_value() const override
+	{
+		return m_value;
+	}
+
 public:
-	explicit JsonBoolean(bool value) : Value(value) {}
+	explicit JsonBoolean(bool value) : Value(value)
+	{
+	}
 };
 
-class JsonString final : public Value<NFJson::STRING, string> {
-	const string &string_value() const override { return m_value; }
+class JsonString final : public Value<NFJson::STRING, string>
+{
+	const string& string_value() const override
+	{
+		return m_value;
+	}
+
 public:
-	explicit JsonString(const string &value) : Value(value) {}
-	explicit JsonString(string &&value) : Value(move(value)) {}
+	explicit JsonString(const string& value) : Value(value)
+	{
+	}
+
+	explicit JsonString(string&& value) : Value(move(value))
+	{
+	}
 };
 
-class JsonArray final : public Value<NFJson::ARRAY, NFJson::array> {
-	const NFJson::array &array_items() const override { return m_value; }
-	const NFJson & operator[](size_t i) const override;
+class JsonArray final : public Value<NFJson::ARRAY, NFJson::array>
+{
+	const NFJson::array& array_items() const override
+	{
+		return m_value;
+	}
+
+	const NFJson& operator[](size_t i) const override;
 public:
-	explicit JsonArray(const NFJson::array &value) : Value(value) {}
-	explicit JsonArray(NFJson::array &&value) : Value(move(value)) {}
+	explicit JsonArray(const NFJson::array& value) : Value(value)
+	{
+	}
+
+	explicit JsonArray(NFJson::array&& value) : Value(move(value))
+	{
+	}
 };
 
-class JsonObject final : public Value<NFJson::OBJECT, NFJson::object> {
-	const NFJson::object &object_items() const override { return m_value; }
-	const NFJson & operator[](const string &key) const override;
+class JsonObject final : public Value<NFJson::OBJECT, NFJson::object>
+{
+	const NFJson::object& object_items() const override
+	{
+		return m_value;
+	}
+
+	const NFJson& operator[](const string& key) const override;
 public:
-	explicit JsonObject(const NFJson::object &value) : Value(value) {}
-	explicit JsonObject(NFJson::object &&value) : Value(move(value)) {}
+	explicit JsonObject(const NFJson::object& value) : Value(value)
+	{
+	}
+
+	explicit JsonObject(NFJson::object&& value) : Value(move(value))
+	{
+	}
 };
 
-class JsonNull final : public Value<NFJson::NUL, NullStruct> {
+class JsonNull final : public Value<NFJson::NUL, NullStruct>
+{
 public:
-	JsonNull() : Value({}) {}
+	JsonNull() : Value({})
+	{
+	}
 };
 
 /* * * * * * * * * * * * * * * * * * * *
  * Static globals - static-init-safe
  */
-struct Statics {
+struct Statics
+{
 	const std::shared_ptr<JsonValue> null = make_shared<JsonNull>();
 	const std::shared_ptr<JsonValue> t = make_shared<JsonBoolean>(true);
 	const std::shared_ptr<JsonValue> f = make_shared<JsonBoolean>(false);
 	const string empty_string;
 	const vector<NFJson> empty_vector;
 	const map<string, NFJson> empty_map;
-	Statics() {}
+
+	Statics()
+	{
+	}
 };
 
-static const Statics & statics() {
+static const Statics& statics()
+{
 	static const Statics s{};
 	return s;
 }
 
-static const NFJson & static_null() {
+static const NFJson& static_null()
+{
 	// This has to be separate, not in Statics, because Json() accesses statics().null.
 	static const NFJson json_null;
 	return json_null;
@@ -238,47 +368,151 @@ static const NFJson & static_null() {
  * Constructors
  */
 
-NFJson::NFJson() noexcept                  : m_ptr(statics().null) {}
-NFJson::NFJson(std::nullptr_t) noexcept : m_ptr(statics().null) {}
-NFJson::NFJson(double value) : m_ptr(make_shared<JsonDouble>(value)) {}
-NFJson::NFJson(int value) : m_ptr(make_shared<JsonInt>(value)) {}
-NFJson::NFJson(bool value) : m_ptr(value ? statics().t : statics().f) {}
-NFJson::NFJson(const string &value) : m_ptr(make_shared<JsonString>(value)) {}
-NFJson::NFJson(string &&value) : m_ptr(make_shared<JsonString>(move(value))) {}
-NFJson::NFJson(const char * value) : m_ptr(make_shared<JsonString>(value)) {}
-NFJson::NFJson(const NFJson::array &values) : m_ptr(make_shared<JsonArray>(values)) {}
-NFJson::NFJson(NFJson::array &&values) : m_ptr(make_shared<JsonArray>(move(values))) {}
-NFJson::NFJson(const NFJson::object &values) : m_ptr(make_shared<JsonObject>(values)) {}
-NFJson::NFJson(NFJson::object &&values) : m_ptr(make_shared<JsonObject>(move(values))) {}
+NFJson::NFJson() noexcept : m_ptr(statics().null)
+{
+}
+
+NFJson::NFJson(std::nullptr_t) noexcept : m_ptr(statics().null)
+{
+}
+
+NFJson::NFJson(double value) : m_ptr(make_shared<JsonDouble>(value))
+{
+}
+
+NFJson::NFJson(int value) : m_ptr(make_shared<JsonInt>(value))
+{
+}
+
+NFJson::NFJson(bool value) : m_ptr(value ? statics().t : statics().f)
+{
+}
+
+NFJson::NFJson(const string& value) : m_ptr(make_shared<JsonString>(value))
+{
+}
+
+NFJson::NFJson(string&& value) : m_ptr(make_shared<JsonString>(move(value)))
+{
+}
+
+NFJson::NFJson(const char* value) : m_ptr(make_shared<JsonString>(value))
+{
+}
+
+NFJson::NFJson(const NFJson::array& values) : m_ptr(make_shared<JsonArray>(values))
+{
+}
+
+NFJson::NFJson(NFJson::array&& values) : m_ptr(make_shared<JsonArray>(move(values)))
+{
+}
+
+NFJson::NFJson(const NFJson::object& values) : m_ptr(make_shared<JsonObject>(values))
+{
+}
+
+NFJson::NFJson(NFJson::object&& values) : m_ptr(make_shared<JsonObject>(move(values)))
+{
+}
 
 /* * * * * * * * * * * * * * * * * * * *
  * Accessors
  */
 
-NFJson::Type NFJson::type()                           const { return m_ptr->type(); }
-double NFJson::number_value()                       const { return m_ptr->number_value(); }
-int NFJson::int_value()                             const { return m_ptr->int_value(); }
-bool NFJson::bool_value()                           const { return m_ptr->bool_value(); }
-const string & NFJson::string_value()               const { return m_ptr->string_value(); }
-const vector<NFJson> & NFJson::array_items()          const { return m_ptr->array_items(); }
-const map<string, NFJson> & NFJson::object_items()    const { return m_ptr->object_items(); }
-const NFJson & NFJson::operator[] (size_t i)          const { return (*m_ptr)[i]; }
-const NFJson & NFJson::operator[] (const string &key) const { return (*m_ptr)[key]; }
+NFJson::Type NFJson::type() const
+{
+	return m_ptr->type();
+}
 
-double                    JsonValue::number_value()              const { return 0; }
-int                       JsonValue::int_value()                 const { return 0; }
-bool                      JsonValue::bool_value()                const { return false; }
-const string &            JsonValue::string_value()              const { return statics().empty_string; }
-const vector<NFJson> &      JsonValue::array_items()               const { return statics().empty_vector; }
-const map<string, NFJson> & JsonValue::object_items()              const { return statics().empty_map; }
-const NFJson &              JsonValue::operator[] (size_t)         const { return static_null(); }
-const NFJson &              JsonValue::operator[] (const string &) const { return static_null(); }
+double NFJson::number_value() const
+{
+	return m_ptr->number_value();
+}
 
-const NFJson & JsonObject::operator[] (const string &key) const {
+int NFJson::int_value() const
+{
+	return m_ptr->int_value();
+}
+
+bool NFJson::bool_value() const
+{
+	return m_ptr->bool_value();
+}
+
+const string& NFJson::string_value() const
+{
+	return m_ptr->string_value();
+}
+
+const vector<NFJson>& NFJson::array_items() const
+{
+	return m_ptr->array_items();
+}
+
+const map<string, NFJson>& NFJson::object_items() const
+{
+	return m_ptr->object_items();
+}
+
+const NFJson& NFJson::operator[](size_t i) const
+{
+	return (*m_ptr)[i];
+}
+
+const NFJson& NFJson::operator[](const string& key) const
+{
+	return (*m_ptr)[key];
+}
+
+double JsonValue::number_value() const
+{
+	return 0;
+}
+
+int JsonValue::int_value() const
+{
+	return 0;
+}
+
+bool JsonValue::bool_value() const
+{
+	return false;
+}
+
+const string& JsonValue::string_value() const
+{
+	return statics().empty_string;
+}
+
+const vector<NFJson>& JsonValue::array_items() const
+{
+	return statics().empty_vector;
+}
+
+const map<string, NFJson>& JsonValue::object_items() const
+{
+	return statics().empty_map;
+}
+
+const NFJson& JsonValue::operator[](size_t) const
+{
+	return static_null();
+}
+
+const NFJson& JsonValue::operator[](const string&) const
+{
+	return static_null();
+}
+
+const NFJson& JsonObject::operator[](const string& key) const
+{
 	auto iter = m_value.find(key);
 	return (iter == m_value.end()) ? static_null() : iter->second;
 }
-const NFJson & JsonArray::operator[] (size_t i) const {
+
+const NFJson& JsonArray::operator[](size_t i) const
+{
 	if (i >= m_value.size()) return static_null();
 	else return m_value[i];
 }
@@ -287,7 +521,8 @@ const NFJson & JsonArray::operator[] (size_t i) const {
  * Comparison
  */
 
-bool NFJson::operator== (const NFJson &other) const {
+bool NFJson::operator==(const NFJson& other) const
+{
 	if (m_ptr == other.m_ptr)
 		return true;
 	if (m_ptr->type() != other.m_ptr->type())
@@ -296,7 +531,8 @@ bool NFJson::operator== (const NFJson &other) const {
 	return m_ptr->equals(other.m_ptr.get());
 }
 
-bool NFJson::operator< (const NFJson &other) const {
+bool NFJson::operator<(const NFJson& other) const
+{
 	if (m_ptr == other.m_ptr)
 		return false;
 	if (m_ptr->type() != other.m_ptr->type())
@@ -309,36 +545,42 @@ bool NFJson::operator< (const NFJson &other) const {
  * Parsing
  */
 
- /* esc(c)
-  *
-  * Format char c suitable for printing in an error message.
-  */
-static inline string esc(char c) {
+/* esc(c)
+ *
+ * Format char c suitable for printing in an error message.
+ */
+static inline string esc(char c)
+{
 	char buf[12];
-	if (static_cast<uint8_t>(c) >= 0x20 && static_cast<uint8_t>(c) <= 0x7f) {
+	if (static_cast<uint8_t>(c) >= 0x20 && static_cast<uint8_t>(c) <= 0x7f)
+	{
 		snprintf(buf, sizeof buf, "'%c' (%d)", c, c);
 	}
-	else {
+	else
+	{
 		snprintf(buf, sizeof buf, "(%d)", c);
 	}
 	return string(buf);
 }
 
-static inline bool in_range(long x, long lower, long upper) {
+static inline bool in_range(long x, long lower, long upper)
+{
 	return (x >= lower && x <= upper);
 }
 
-namespace {
+namespace
+{
 	/* JsonParser
 	 *
 	 * Object that tracks all state of an in-progress parse.
 	 */
-	struct JsonParser final {
+	struct JsonParser final
+	{
 		/* State
 		 */
-		const string &str;
+		const string& str;
 		size_t i;
-		string &err;
+		string& err;
 		bool failed;
 		const JsonParse strategy;
 
@@ -346,12 +588,14 @@ namespace {
 		 *
 		 * Mark this parse as failed.
 		 */
-		NFJson fail(string &&msg) {
+		NFJson fail(string&& msg)
+		{
 			return fail(move(msg), NFJson());
 		}
 
 		template <typename T>
-		T fail(string &&msg, const T err_ret) {
+		T fail(string&& msg, const T err_ret)
+		{
 			if (!failed)
 				err = std::move(msg);
 			failed = true;
@@ -362,7 +606,8 @@ namespace {
 		 *
 		 * Advance until the current character is non-whitespace.
 		 */
-		void consume_whitespace() {
+		void consume_whitespace()
+		{
 			while (str[i] == ' ' || str[i] == '\r' || str[i] == '\n' || str[i] == '\t')
 				i++;
 		}
@@ -371,26 +616,32 @@ namespace {
 		 *
 		 * Advance comments (c-style inline and multiline).
 		 */
-		bool consume_comment() {
+		bool consume_comment()
+		{
 			bool comment_found = false;
-			if (str[i] == '/') {
+			if (str[i] == '/')
+			{
 				i++;
 				if (i == str.size())
 					return fail("unexpected end of input after start of comment", false);
-				if (str[i] == '/') { // inline comment
+				if (str[i] == '/')
+				{ // inline comment
 					i++;
 					// advance until next line, or end of input
-					while (i < str.size() && str[i] != '\n') {
+					while (i < str.size() && str[i] != '\n')
+					{
 						i++;
 					}
 					comment_found = true;
 				}
-				else if (str[i] == '*') { // multiline comment
+				else if (str[i] == '*')
+				{ // multiline comment
 					i++;
 					if (i > str.size() - 2)
 						return fail("unexpected end of input inside multi-line comment", false);
 					// advance until closing tokens
-					while (!(str[i] == '*' && str[i + 1] == '/')) {
+					while (!(str[i] == '*' && str[i + 1] == '/'))
+					{
 						i++;
 						if (i > str.size() - 2)
 							return fail(
@@ -409,15 +660,19 @@ namespace {
 		 *
 		 * Advance until the current character is non-whitespace and non-comment.
 		 */
-		void consume_garbage() {
+		void consume_garbage()
+		{
 			consume_whitespace();
-			if (strategy == JsonParse::COMMENTS) {
+			if (strategy == JsonParse::COMMENTS)
+			{
 				bool comment_found;
-				do {
+				do
+				{
 					comment_found = consume_comment();
 					if (failed) return;
 					consume_whitespace();
-				} while (comment_found);
+				}
+				while (comment_found);
 			}
 		}
 
@@ -426,7 +681,8 @@ namespace {
 		 * Return the next non-whitespace character. If the end of the input is reached,
 		 * flag an error and return 0.
 		 */
-		char get_next_token() {
+		char get_next_token()
+		{
 			consume_garbage();
 			if (failed) return static_cast<char>(0);
 			if (i == str.size())
@@ -439,23 +695,28 @@ namespace {
 		 *
 		 * Encode pt as UTF-8 and add it to out.
 		 */
-		static void encode_utf8(long pt, string & out) {
+		static void encode_utf8(long pt, string& out)
+		{
 			if (pt < 0)
 				return;
 
-			if (pt < 0x80) {
+			if (pt < 0x80)
+			{
 				out += static_cast<char>(pt);
 			}
-			else if (pt < 0x800) {
+			else if (pt < 0x800)
+			{
 				out += static_cast<char>((pt >> 6) | 0xC0);
 				out += static_cast<char>((pt & 0x3F) | 0x80);
 			}
-			else if (pt < 0x10000) {
+			else if (pt < 0x10000)
+			{
 				out += static_cast<char>((pt >> 12) | 0xE0);
 				out += static_cast<char>(((pt >> 6) & 0x3F) | 0x80);
 				out += static_cast<char>((pt & 0x3F) | 0x80);
 			}
-			else {
+			else
+			{
 				out += static_cast<char>((pt >> 18) | 0xF0);
 				out += static_cast<char>(((pt >> 12) & 0x3F) | 0x80);
 				out += static_cast<char>(((pt >> 6) & 0x3F) | 0x80);
@@ -467,16 +728,19 @@ namespace {
 		 *
 		 * Parse a string, starting at the current position.
 		 */
-		string parse_string() {
+		string parse_string()
+		{
 			string out;
 			long last_escaped_codepoint = -1;
-			while (true) {
+			while (true)
+			{
 				if (i == str.size())
 					return fail("unexpected end of input in string", "");
 
 				char ch = str[i++];
 
-				if (ch == '"') {
+				if (ch == '"')
+				{
 					encode_utf8(last_escaped_codepoint, out);
 					return out;
 				}
@@ -485,7 +749,8 @@ namespace {
 					return fail("unescaped " + esc(ch) + " in string", "");
 
 				// The usual case: non-escaped characters
-				if (ch != '\\') {
+				if (ch != '\\')
+				{
 					encode_utf8(last_escaped_codepoint, out);
 					last_escaped_codepoint = -1;
 					out += ch;
@@ -498,16 +763,19 @@ namespace {
 
 				ch = str[i++];
 
-				if (ch == 'u') {
+				if (ch == 'u')
+				{
 					// Extract 4-byte escape sequence
 					string esc = str.substr(i, 4);
 					// Explicitly check length of the substring. The following loop
 					// relies on std::string returning the terminating NUL when
 					// accessing str[length]. Checking here reduces brittleness.
-					if (esc.length() < 4) {
+					if (esc.length() < 4)
+					{
 						return fail("bad \\u escape: " + esc, "");
 					}
-					for (size_t j = 0; j < 4; j++) {
+					for (size_t j = 0; j < 4; j++)
+					{
 						if (!in_range(esc[j], 'a', 'f') && !in_range(esc[j], 'A', 'F')
 							&& !in_range(esc[j], '0', '9'))
 							return fail("bad \\u escape: " + esc, "");
@@ -520,14 +788,16 @@ namespace {
 					// whether we're in the middle of such a beast: the previous codepoint was an
 					// escaped lead (high) surrogate, and this is a trail (low) surrogate.
 					if (in_range(last_escaped_codepoint, 0xD800, 0xDBFF)
-						&& in_range(codepoint, 0xDC00, 0xDFFF)) {
+						&& in_range(codepoint, 0xDC00, 0xDFFF))
+					{
 						// Reassemble the two surrogate pairs into one astral-plane character, per
 						// the UTF-16 algorithm.
 						encode_utf8((((last_escaped_codepoint - 0xD800) << 10)
-							| (codepoint - 0xDC00)) + 0x10000, out);
+							            | (codepoint - 0xDC00)) + 0x10000, out);
 						last_escaped_codepoint = -1;
 					}
-					else {
+					else
+					{
 						encode_utf8(last_escaped_codepoint, out);
 						last_escaped_codepoint = codepoint;
 					}
@@ -539,25 +809,32 @@ namespace {
 				encode_utf8(last_escaped_codepoint, out);
 				last_escaped_codepoint = -1;
 
-				if (ch == 'b') {
+				if (ch == 'b')
+				{
 					out += '\b';
 				}
-				else if (ch == 'f') {
+				else if (ch == 'f')
+				{
 					out += '\f';
 				}
-				else if (ch == 'n') {
+				else if (ch == 'n')
+				{
 					out += '\n';
 				}
-				else if (ch == 'r') {
+				else if (ch == 'r')
+				{
 					out += '\r';
 				}
-				else if (ch == 't') {
+				else if (ch == 't')
+				{
 					out += '\t';
 				}
-				else if (ch == '"' || ch == '\\' || ch == '/') {
+				else if (ch == '"' || ch == '\\' || ch == '/')
+				{
 					out += ch;
 				}
-				else {
+				else
+				{
 					return fail("invalid escape character " + esc(ch), "");
 				}
 			}
@@ -567,34 +844,40 @@ namespace {
 		 *
 		 * Parse a double.
 		 */
-		NFJson parse_number() {
+		NFJson parse_number()
+		{
 			size_t start_pos = i;
 
 			if (str[i] == '-')
 				i++;
 
 			// Integer part
-			if (str[i] == '0') {
+			if (str[i] == '0')
+			{
 				i++;
 				if (in_range(str[i], '0', '9'))
 					return fail("leading 0s not permitted in numbers");
 			}
-			else if (in_range(str[i], '1', '9')) {
+			else if (in_range(str[i], '1', '9'))
+			{
 				i++;
 				while (in_range(str[i], '0', '9'))
 					i++;
 			}
-			else {
+			else
+			{
 				return fail("invalid " + esc(str[i]) + " in number");
 			}
 
 			if (str[i] != '.' && str[i] != 'e' && str[i] != 'E'
-				&& (i - start_pos) <= static_cast<size_t>(std::numeric_limits<int>::digits10)) {
+				&& (i - start_pos) <= static_cast<size_t>(std::numeric_limits<int>::digits10))
+			{
 				return std::atoi(str.c_str() + start_pos);
 			}
 
 			// Decimal part
-			if (str[i] == '.') {
+			if (str[i] == '.')
+			{
 				i++;
 				if (!in_range(str[i], '0', '9'))
 					return fail("at least one digit required in fractional part");
@@ -604,7 +887,8 @@ namespace {
 			}
 
 			// Exponent part
-			if (str[i] == 'e' || str[i] == 'E') {
+			if (str[i] == 'e' || str[i] == 'E')
+			{
 				i++;
 
 				if (str[i] == '+' || str[i] == '-')
@@ -625,14 +909,17 @@ namespace {
 		 * Expect that 'str' starts at the character that was just read. If it does, advance
 		 * the input and return res. If not, flag an error.
 		 */
-		NFJson expect(const string &expected, NFJson res) {
+		NFJson expect(const string& expected, NFJson res)
+		{
 			assert(i != 0);
 			i--;
-			if (str.compare(i, expected.length(), expected) == 0) {
+			if (str.compare(i, expected.length(), expected) == 0)
+			{
 				i += expected.length();
 				return res;
 			}
-			else {
+			else
+			{
 				return fail("parse error: expected " + expected + ", got " + str.substr(i, expected.length()));
 			}
 		}
@@ -641,8 +928,10 @@ namespace {
 		 *
 		 * Parse a JSON object.
 		 */
-		NFJson parse_json(int depth) {
-			if (depth > max_depth) {
+		NFJson parse_json(int depth)
+		{
+			if (depth > max_depth)
+			{
 				return fail("exceeded maximum nesting depth");
 			}
 
@@ -650,7 +939,8 @@ namespace {
 			if (failed)
 				return NFJson();
 
-			if (ch == '-' || (ch >= '0' && ch <= '9')) {
+			if (ch == '-' || (ch >= '0' && ch <= '9'))
+			{
 				i--;
 				return parse_number();
 			}
@@ -667,13 +957,15 @@ namespace {
 			if (ch == '"')
 				return parse_string();
 
-			if (ch == '{') {
+			if (ch == '{')
+			{
 				map<string, NFJson> data;
 				ch = get_next_token();
 				if (ch == '}')
 					return data;
 
-				while (1) {
+				while (1)
+				{
 					if (ch != '"')
 						return fail("expected '\"' in object, got " + esc(ch));
 
@@ -700,13 +992,15 @@ namespace {
 				return data;
 			}
 
-			if (ch == '[') {
+			if (ch == '[')
+			{
 				vector<NFJson> data;
 				ch = get_next_token();
 				if (ch == ']')
 					return data;
 
-				while (1) {
+				while (1)
+				{
 					i--;
 					data.push_back(parse_json(depth + 1));
 					if (failed)
@@ -728,8 +1022,9 @@ namespace {
 		}
 	};
 }//namespace {
-NFJson NFJson::parse(const string &in, string &err, JsonParse strategy) {
-	JsonParser parser{ in, 0, err, false, strategy };
+NFJson NFJson::parse(const string& in, string& err, JsonParse strategy)
+{
+	JsonParser parser{in, 0, err, false, strategy};
 	NFJson result = parser.parse_json(0);
 
 	// Check for any trailing garbage
@@ -743,14 +1038,16 @@ NFJson NFJson::parse(const string &in, string &err, JsonParse strategy) {
 }
 
 // Documented in json11.hpp
-vector<NFJson> NFJson::parse_multi(const string &in,
-	std::string::size_type &parser_stop_pos,
-	string &err,
-	JsonParse strategy) {
-	JsonParser parser{ in, 0, err, false, strategy };
+vector<NFJson> NFJson::parse_multi(const string& in,
+                                   std::string::size_type& parser_stop_pos,
+                                   string& err,
+                                   JsonParse strategy)
+{
+	JsonParser parser{in, 0, err, false, strategy};
 	parser_stop_pos = 0;
 	vector<NFJson> json_vec;
-	while (parser.i != in.size() && !parser.failed) {
+	while (parser.i != in.size() && !parser.failed)
+	{
 		json_vec.push_back(parser.parse_json(0));
 		if (parser.failed)
 			break;
@@ -768,14 +1065,18 @@ vector<NFJson> NFJson::parse_multi(const string &in,
  * Shape-checking
  */
 
-bool NFJson::has_shape(const shape & types, string & err) const {
-	if (!is_object()) {
+bool NFJson::has_shape(const shape& types, string& err) const
+{
+	if (!is_object())
+	{
 		err = "expected JSON object, got " + dump();
 		return false;
 	}
 
-	for (auto & item : types) {
-		if ((*this)[item.first].type() != item.second) {
+	for (auto& item : types)
+	{
+		if ((*this)[item.first].type() != item.second)
+		{
 			err = "bad type for " + item.first + " in " + dump();
 			return false;
 		}
@@ -783,3 +1084,4 @@ bool NFJson::has_shape(const shape & types, string & err) const {
 
 	return true;
 }
+

@@ -19,12 +19,14 @@
 #include <sys/types.h>
 #endif
 
-void NFDataStream::ToText() {
+void NFDataStream::ToText()
+{
 	Write('\0');
 	seekp(-1);
 }
 
-bool NFDataStream::ReadFile(/*const string& strFileName*/ const string& strPathName) {
+bool NFDataStream::ReadFile(/*const string& strFileName*/ const string& strPathName)
+{
 	// #if NF_PLATFORM == NF_PLATFORM_WIN
 	//      string strPathName = StringUtil::utf8ToMbs(strFileName);
 	//         std::replace( strPathName.begin(), strPathName.end(), '\\', '/' );
@@ -32,7 +34,8 @@ bool NFDataStream::ReadFile(/*const string& strFileName*/ const string& strPathN
 	//         string strPathName = strFileName;
 	// #endif
 	// clear old data.
-	if (self_created_ && buffer_) {
+	if (self_created_ && buffer_)
+	{
 		free(buffer_);
 		buffer_ = NULL;
 		capacity_ = 0;
@@ -42,7 +45,8 @@ bool NFDataStream::ReadFile(/*const string& strFileName*/ const string& strPathN
 	write_index_ = 0;
 	read_index_ = 0;
 
-	if (strPathName.size() < 1) {
+	if (strPathName.size() < 1)
+	{
 		return false;
 	}
 
@@ -54,8 +58,10 @@ bool NFDataStream::ReadFile(/*const string& strFileName*/ const string& strPathN
 
 	FILE* pf = fopen(strPathName.c_str(), mode);
 	struct stat st;
-	if (!pf || 0 != stat(strPathName.c_str(), &st)) {
-		if (pf) {
+	if (!pf || 0 != stat(strPathName.c_str(), &st))
+	{
+		if (pf)
+		{
 			fclose(pf);
 		}
 
@@ -65,7 +71,8 @@ bool NFDataStream::ReadFile(/*const string& strFileName*/ const string& strPathN
 	// allocate memory.
 	buffer_ = (uint8_t*)malloc(st.st_size);
 
-	if (!buffer_) { //st.st_size may be 0
+	if (!buffer_)
+	{ //st.st_size may be 0
 		fclose(pf);
 		return false;
 	}
@@ -75,9 +82,10 @@ bool NFDataStream::ReadFile(/*const string& strFileName*/ const string& strPathN
 
 	size_t remain = capacity_;
 
-	while (remain > 0 && !feof(pf)) {
+	while (remain > 0 && !feof(pf))
+	{
 		size_t readn = fread(buffer_ + (capacity_ - remain),
-			sizeof(char), remain, pf);
+		                     sizeof(char), remain, pf);
 
 		remain -= readn;
 
@@ -96,19 +104,22 @@ bool NFDataStream::ReadFile(/*const string& strFileName*/ const string& strPathN
 	return true;
 }
 
-static void createDir(const string& strFileName) {
+static void createDir(const string& strFileName)
+{
 	string strPathName = strFileName;
 
 	std::replace(strPathName.begin(), strPathName.end(), '\\', '/');
 
 	size_t nCurSplit = 0, nNextSplit = 0;
 
-	do {
+	do
+	{
 		//  "/abc/ab/abc",   "e:/abac/adc"   "abcc/abc/a",   "abc"
 		// get current dir name.
 		nCurSplit = strPathName.find_first_of((string::value_type)'/', nNextSplit);
 
-		if (nCurSplit != 0 && nCurSplit != string::npos) {
+		if (nCurSplit != 0 && nCurSplit != string::npos)
+		{
 			// current dir
 #if NF_PLATFORM == NF_PLATFORM_WIN
 			int ret = _mkdir(strPathName.substr(0, nCurSplit).c_str());
@@ -122,10 +133,12 @@ static void createDir(const string& strFileName) {
 		}
 
 		nNextSplit = nCurSplit + 1;
-	} while (nCurSplit != string::npos);
+	}
+	while (nCurSplit != string::npos);
 }
 
-bool NFDataStream::WriteFile(const string& filepath) {
+bool NFDataStream::WriteFile(const string& filepath)
+{
 	// create directory.
 	createDir(filepath);
 
@@ -137,31 +150,38 @@ bool NFDataStream::WriteFile(const string& filepath) {
 
 	// open file.
 	FILE* fp = fopen(filepath.c_str(), (mode));
-	if (!fp) {
+	if (!fp)
+	{
 		return false;
 	}
 
 	size_t writen = fwrite(buffer_, 1, write_index_, fp);
 	fclose(fp);
 
-	if (writen < (uint32_t)write_index_) {
+	if (writen < (uint32_t)write_index_)
+	{
 		return false;
 	}
 
 	return true;
 }
 
-bool NFDataStream::IsContentEquals(const NFDataStream& first, const NFDataStream& second) {
+bool NFDataStream::IsContentEquals(const NFDataStream& first, const NFDataStream& second)
+{
 	size_t sz = first.size();
-	if (sz != second.size()) {
+	if (sz != second.size())
+	{
 		return false;
 	}
 
-	for (size_t i = 0; i < sz; i++) {
-		if (first.CharAt(i) != second.CharAt(i)) {
+	for (size_t i = 0; i < sz; i++)
+	{
+		if (first.CharAt(i) != second.CharAt(i))
+		{
 			return false;
 		}
 	}
 
 	return true;
 }
+

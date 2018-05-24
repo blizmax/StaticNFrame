@@ -33,7 +33,7 @@ struct PROFILE_TIMER
 	int index;
 	int parentIndex;
 	int level;
-	unsigned  sampleCount;
+	unsigned sampleCount;
 	long long beginTime;
 	long long sampleTime; // in nanosecond
 	char name[PROFILER_MAX_TIMER_NAME_LEN];
@@ -45,7 +45,9 @@ struct PROFILE_TIMER
 		name[sizeof(name) - 1] = '\0';
 	}
 
-	PROFILE_TIMER() : PROFILE_TIMER("") {  }
+	PROFILE_TIMER() : PROFILE_TIMER("")
+	{
+	}
 
 	void SetName(const char* _name)
 	{
@@ -69,7 +71,7 @@ struct CALL_TREE_NODE
 {
 	const char* name;
 	int parentIndex;
-	unsigned  sampleCount;
+	unsigned sampleCount;
 	long long sampleTime;
 
 	CALL_TREE_NODE* firstChild;
@@ -98,6 +100,7 @@ public:
 	virtual ~NFProfiler()
 	{
 	}
+
 public:
 	// pointer to timer must keep always valid, normally should be a static variable.
 	void BeginProfiler(PROFILE_TIMER* timer);
@@ -116,10 +119,10 @@ protected:
 	void OutputNode(const CALL_TREE_NODE& node, bool showSplitLine, long long totalTime, int level, std::string* report);
 	void OutputCallTree(const CALL_TREE_NODE& node, long long totalTime, long long minShowTime, int level, std::string* report);
 private:
-	bool        mIsOpenProfiler;
+	bool mIsOpenProfiler;
 	NF_THREAD_ID mProfileThreadID;
 private:
-	unsigned    mTimerCount;
+	unsigned mTimerCount;
 	PROFILE_TIMER* mTimers[PROFILER_MAX_TIMER_COUNT];
 
 	unsigned mStackLevel;
@@ -159,3 +162,5 @@ public:
                                                                            &_PROFILER_MERGE_STRING(s_timer_, __LINE__))
 
 #endif // NF_PROFILER_H
+
+

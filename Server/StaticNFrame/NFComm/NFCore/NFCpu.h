@@ -12,16 +12,16 @@
 #include "NFPlatform.h"
 
 #if NF_PLATFORM == NF_PLATFORM_WIN
-#include  <windows.h>
-#include  <Psapi.h>
-#include  <conio.h>
-#include  <stdio.h>
+#include <windows.h>
+#include <Psapi.h>
+#include <conio.h>
+#include <stdio.h>
 
 //在windows下获得CPU使用率的方法
 class _NFExport CpuUsage
 {
 public:
-	CpuUsage() :IsFirstRun(true), m_nCpuUsage(-1), m_lRunCount(0)
+	CpuUsage() : IsFirstRun(true), m_nCpuUsage(-1), m_lRunCount(0)
 	{
 		ZeroMemory(&m_ftPrevSysKernel, sizeof(FILETIME));
 		ZeroMemory(&m_ftPrevSysUser, sizeof(FILETIME));
@@ -30,7 +30,7 @@ public:
 		ZeroMemory(&m_ftPrevProcUser, sizeof(FILETIME));
 	}
 
-	short  GetUsage()
+	short GetUsage()
 	{
 		short nCpuCopy = m_nCpuUsage;
 
@@ -81,6 +81,7 @@ public:
 
 		return nCpuCopy;
 	}
+
 private:
 	static ULONGLONG SubtractTimes(const FILETIME& ftA, const FILETIME& ftB)
 	{
@@ -124,7 +125,7 @@ public:
 	/// @param total_cpu_time_start 整个系统cpu使用时间段-start
 	/// @param total_cpu_time_start 整个系统cpu使用时间段-stop
 	static float CalculateCurCpuUseage(long long cur_cpu_time_start, long long cur_cpu_time_stop,
-		long long total_cpu_time_start, long long total_cpu_time_stop);
+	                                   long long total_cpu_time_start, long long total_cpu_time_stop);
 
 	/// @brief 获取进程当前内存使用情况
 	/// @param vm_size_kb 输出参数，虚存，单位为K
@@ -137,3 +138,4 @@ public:
 	/// @brief 获取进程当前内存使用情况
 	static int GetCurMemorySize();
 };
+

@@ -75,13 +75,20 @@ public:
 	* @brief 构造函数.
 	*
 	*/
-	explicit NFMutexLock(NFMutex *mu) : mu_(mu) { this->mu_->Lock(); }
+	explicit NFMutexLock(NFMutex* mu) : mu_(mu)
+	{
+		this->mu_->Lock();
+	}
 
 	/**
 	* @brief 析构函数.
 	*
 	*/
-	~NFMutexLock() { this->mu_->Unlock(); }
+	~NFMutexLock()
+	{
+		this->mu_->Unlock();
+	}
+
 private:
 	NFMutex* const mu_;
 	/**
@@ -90,3 +97,4 @@ private:
 	*/
 	NF_DISALLOW_EVIL_CONSTRUCTORS(NFMutexLock);
 };
+
