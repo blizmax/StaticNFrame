@@ -84,24 +84,6 @@ static void log_cb(int severity, const char* msg)
 	// Intentionally unimplemented...
 }
 
-NFThreadClient::NFThreadClient()
-{
-	m_pMainBase = nullptr;
-	m_nSocketId = INVALID_SOCKET;
-#ifdef WIN32
-	WSADATA wsaData;
-	int nResult = WSAStartup(0x0201, &wsaData);
-	if (nResult)
-	{
-		std::cout << "WSAStartup failed with error code:" << nResult << std::endl;
-		return;
-	}
-	evthread_use_windows_threads();
-#else
-	evthread_use_pthreads();
-#endif
-}
-
 NFThreadClient::NFThreadClient(uint32_t nId, const NFClientFlag& flag) : NFClient(nId, flag)
 {
 	m_pMainBase = nullptr;
@@ -121,8 +103,6 @@ NFThreadClient::NFThreadClient(uint32_t nId, const NFClientFlag& flag) : NFClien
 
 NFThreadClient::~NFThreadClient()
 {
-	event_base_free(m_pMainBase);
-	m_pMainBase = nullptr;
 }
 
 bool NFThreadClient::Init()
@@ -142,6 +122,7 @@ bool NFThreadClient::Shut()
 {
 	Close();
 	SetStatus(eConnectStatus_UnConnect);
+	m_thread.StopThread();
 	return true;
 }
 
@@ -236,6 +217,11 @@ void NFThreadClient::Close()
 	SetStatus(eConnectStatus_Disconnect);
 	m_buffer.Clear();
 	event_base_loopbreak(m_pMainBase);
+	if (m_pBev)
+	{
+		bufferevent_free(m_pBev);
+		m_pBev = nullptr;
+	}
 }
 
 bool NFThreadClient::Connect()

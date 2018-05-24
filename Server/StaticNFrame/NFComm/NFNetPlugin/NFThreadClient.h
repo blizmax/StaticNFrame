@@ -15,11 +15,6 @@ public:
 	/**
 	 *@brief  构造函数.
 	 */
-	NFThreadClient();
-
-	/**
-	 *@brief  构造函数.
-	 */
 	NFThreadClient(uint32_t nId, const NFClientFlag& flag);
 
 	/**

@@ -12,7 +12,10 @@ NetObject::NetObject(): m_pBev(nullptr), m_usLinkId(0), m_eStatus(), m_lastRecvT
 
 NetObject::~NetObject()
 {
-	bufferevent_free(m_pBev);
+	if (m_pBev)
+	{
+		bufferevent_free(m_pBev);
+	}
 	m_eStatus = eConnectStatus_UnConnect;
 	m_nSocketId = INVALID_SOCKET;
 	m_buffer.Clear();

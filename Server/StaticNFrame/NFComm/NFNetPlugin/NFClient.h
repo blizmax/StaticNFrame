@@ -34,11 +34,6 @@ public:
 	/**
 	 *@brief  构造函数.
 	 */
-	NFClient();
-
-	/**
-	 *@brief  构造函数.
-	 */
 	NFClient(uint32_t nId, const NFClientFlag& flag);
 
 	/**

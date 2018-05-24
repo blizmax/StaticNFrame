@@ -62,7 +62,7 @@ static void conn_eventcb(struct bufferevent* pEv, short events, void* pArg)
 		}
 #endif
 		p->OnHandleDisConnect();
-		LogWarning(0, "NetWarning", " CloseProc Error Code " + std::string(evutil_socket_error_to_string(EVUTIL_SOCKET_ERROR())));
+		LogError(0, "NetError", " CloseProc Error Code " + std::string(evutil_socket_error_to_string(EVUTIL_SOCKET_ERROR())));
 	}
 }
 
@@ -92,15 +92,25 @@ static void log_cb(int severity, const char* msg)
 
 NFClient::NFClient(uint32_t nId, const NFClientFlag& flag) : m_pMainBase(nullptr)
 {
-}
-
-NFClient::NFClient() : m_pMainBase(nullptr)
-{
+#ifdef _MSC_VER
+    WSADATA wsaData;
+	int nResult = WSAStartup(0x0201, &wsaData);
+	if (nResult)
+	{
+		std::cout << "WSAStartup failed with error code:" << nResult << std::endl;
+		return;
+	}
+#endif
+	m_usLinkId = nId;
+	m_flag = flag;
 }
 
 NFClient::~NFClient()
 {
-	event_base_free(m_pMainBase);
+	if (m_pMainBase)
+	{
+		event_base_free(m_pMainBase);
+	}
 	m_pMainBase = nullptr;
 }
 
@@ -115,6 +125,7 @@ void NFClient::OnHandleMsgPeer(eMsgType type, uint32_t usLink, char* pBuf, uint3
 			mRecvCB(usLink, nValue, nMsgId, pBuf, sz);
 		}
 	}
+	break;
 	case eMsgType_CONNECTED:
 	case eMsgType_DISCONNECTED:
 	{
@@ -200,10 +211,12 @@ void NFClient::Close()
 
 bool NFClient::Connect()
 {
-	if (m_pBev) {
+	if (m_pBev) 
+	{
 		bufferevent_free(m_pBev);
 		m_pBev = nullptr;
 	}
+
 	m_pBev = bufferevent_socket_new(m_pMainBase, -1, BEV_OPT_CLOSE_ON_FREE);
 	struct sockaddr_in  sin;
 	memset(&sin, 0, sizeof(sin));
@@ -219,7 +232,8 @@ bool NFClient::Connect()
 	bufferevent_enable(m_pBev, EV_WRITE | EV_READ);
 	event_set_log_callback(&log_cb);
 
-	if (bufferevent_socket_connect(m_pBev, reinterpret_cast<struct sockaddr*>(&sin), sizeof(sin)) < 0) {
+	if (bufferevent_socket_connect(m_pBev, (struct sockaddr*)(&sin), sizeof(sin)) < 0) 
+	{
 		LogError(0, "NetError", "connect failed! IP: " + m_flag.strIP + " port:" + lexical_cast<std::string>(m_flag.nPort));
 		return false;
 	}
