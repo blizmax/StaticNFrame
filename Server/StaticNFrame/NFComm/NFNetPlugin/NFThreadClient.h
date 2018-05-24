@@ -2,7 +2,6 @@
 
 #include "NetObject.h"
 #include "NFClient.h"
-#include "NFINet.h"
 #include <thread>
 #include "NFComm/NFCore/NFThread.hpp"
 #include "NFComm/NFCore/NFQueue.hpp"
