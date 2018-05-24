@@ -2,7 +2,6 @@
 #include <iostream>
 #include "NFIPacketParse.h"
 
-
 NFCNetClientModule::NFCNetClientModule(NFIPluginManager* p)
 {
 	pPluginManager = p;

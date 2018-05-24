@@ -190,8 +190,8 @@ void stringUtil_trim_string(_StringType& str, const _StringType& delims, bool le
 }
 
 template< class _StringVector,
-class StringType,
-class _DelimType>
+	class StringType,
+	class _DelimType>
 	inline void _stringUtilSplit(
 		_StringVector& ret,
 		const StringType& str,
@@ -229,8 +229,8 @@ class _DelimType>
 }
 
 template< class _SliceVector,
-class StringType,
-class _DelimType>
+	class StringType,
+	class _DelimType>
 	void _stringUtilSplitStringToSlice(
 		_SliceVector& ret,
 		const StringType& str,
@@ -266,7 +266,7 @@ class _DelimType>
 }
 
 template< class StringType,
-class _DelimType>
+	class _DelimType>
 	inline void _stringUtilSplitStringToSlice(
 		const StringType& str,
 		const _DelimType& delims,
@@ -802,8 +802,8 @@ void NFStringUtility::URLDecode(const char* encoded_url, size_t encoded_url_len,
 		if (*data == '+') {
 			*dest = ' ';
 		}
-		else if (*data == '%' && len >= 2 && isxdigit(static_cast<int>(* (data + 1)))
-			&& isxdigit(static_cast<int>(* (data + 2)))) {
+		else if (*data == '%' && len >= 2 && isxdigit(static_cast<int>(*(data + 1)))
+			&& isxdigit(static_cast<int>(*(data + 2)))) {
 			*dest = static_cast<char>(php_htoi(data + 1));
 			data += 2;
 			len -= 2;

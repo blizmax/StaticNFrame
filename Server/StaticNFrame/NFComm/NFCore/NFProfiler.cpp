@@ -174,7 +174,7 @@ void NFProfiler::OutputNode(
 	long long totalTime,
 	int level,
 	std::string* report
-	)
+)
 {
 	static const int LEVEL_INDENT = 4;
 	char line[PROFILER_MAX_STACK_LEVEL * LEVEL_INDENT + PROFILER_MAX_TIMER_NAME_LEN + 128];
@@ -209,7 +209,7 @@ void NFProfiler::OutputNode(
 			node.sampleCount,
 			node.name,
 			(node.parentIndex == PROFILER_MULTI_PARENT) ? "<multi parent>" : ""
-			);
+		);
 	}
 
 	writePos[freeSize - 1] = '\0';
@@ -228,7 +228,7 @@ void NFProfiler::OutputCallTree(
 	long long minShowTime,
 	int level,
 	std::string* report
-	)
+)
 {
 	long long childTime = 0;
 	bool lastBratherHasChild = false;

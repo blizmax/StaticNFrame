@@ -93,7 +93,7 @@ static void log_cb(int severity, const char* msg)
 NFClient::NFClient(uint32_t nId, const NFClientFlag& flag) : m_pMainBase(nullptr)
 {
 #ifdef _MSC_VER
-    WSADATA wsaData;
+	WSADATA wsaData;
 	int nResult = WSAStartup(0x0201, &wsaData);
 	if (nResult)
 	{
@@ -139,7 +139,6 @@ void NFClient::OnHandleMsgPeer(eMsgType type, uint32_t usLink, char* pBuf, uint3
 		break;
 	}
 }
-
 
 void NFClient::OnHandleConnect(SOCKET nSocket)
 {
@@ -211,7 +210,7 @@ void NFClient::Close()
 
 bool NFClient::Connect()
 {
-	if (m_pBev) 
+	if (m_pBev)
 	{
 		bufferevent_free(m_pBev);
 		m_pBev = nullptr;
@@ -232,7 +231,7 @@ bool NFClient::Connect()
 	bufferevent_enable(m_pBev, EV_WRITE | EV_READ);
 	event_set_log_callback(&log_cb);
 
-	if (bufferevent_socket_connect(m_pBev, (struct sockaddr*)(&sin), sizeof(sin)) < 0) 
+	if (bufferevent_socket_connect(m_pBev, (struct sockaddr*)(&sin), sizeof(sin)) < 0)
 	{
 		LogError(0, "NetError", "connect failed! IP: " + m_flag.strIP + " port:" + lexical_cast<std::string>(m_flag.nPort));
 		return false;
@@ -243,7 +242,7 @@ bool NFClient::Connect()
 
 bool NFClient::Reconnect()
 {
-	if (eConnectStatus_Disconnect == m_eStatus) 
+	if (eConnectStatus_Disconnect == m_eStatus)
 	{
 		Connect();
 		return true;

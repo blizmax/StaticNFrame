@@ -7,7 +7,7 @@
 #include "NFComm/NFCore/NFDataStream.h"
 #include "NFComm/NFCore/NFBuffer.h"
 
-//#ifndef USE_THREAD_CLIENT 
+//#ifndef USE_THREAD_CLIENT
 //#define USE_THREAD_CLIENT 1
 //#endif
 

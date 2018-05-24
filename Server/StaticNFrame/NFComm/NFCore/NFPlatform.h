@@ -112,7 +112,7 @@ inline NF_THREAD_ID ThreadId()
 #define THERON_CPP11 1
 #endif
 
-//#ifndef USE_THREAD_CLIENT 
+//#ifndef USE_THREAD_CLIENT
 //#define USE_THREAD_CLIENT 1
 //#endif
 

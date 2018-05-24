@@ -440,7 +440,7 @@ namespace NFCmdLine {
 				if (p->first.length() == 0) continue;
 				char initial = p->second->short_name();
 				if (initial) {
-					if (lookup.count(initial)>0) {
+					if (lookup.count(initial) > 0) {
 						lookup[initial].clear();
 						errors.push_back(std::string("short option '") + initial + "' is ambiguous");
 						return false;

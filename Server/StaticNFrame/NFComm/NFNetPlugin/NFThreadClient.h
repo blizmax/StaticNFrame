@@ -59,7 +59,7 @@ public:
 	/**
 	 * @brief	处理多线程网络数据, 从多线程队列取出数据并处理
 	 *
-	 * @return	
+	 * @return
 	 */
 	virtual void ProcessMsgLogicThread();
 
@@ -76,14 +76,14 @@ public:
 	void StartThread();
 
 	/**
-	 * @brief	发送链接成功的消息给自己, 因为是多线程， 为避免过多的锁， 
+	 * @brief	发送链接成功的消息给自己, 因为是多线程， 为避免过多的锁，
 	 * 采用发送消息的机制，通知主线程网络连接状况
 	 * @return
 	 */
 	void SendConnected();
 
 	/**
-	 * @brief	发送链接断开的消息给自己, 因为是多线程， 为避免过多的锁， 
+	 * @brief	发送链接断开的消息给自己, 因为是多线程， 为避免过多的锁，
 	 * 采用发送消息的机制，通知主线程网络连接状况
 	 * @return
 	 */

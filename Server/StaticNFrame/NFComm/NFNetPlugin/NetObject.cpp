@@ -3,7 +3,7 @@
 #include "NFComm/NFPluginModule/NFLogMgr.h"
 #include "NFIPacketParse.h"
 
-NetObject::NetObject(): m_pBev(nullptr), m_usLinkId(0), m_eStatus(), m_lastRecvTime(0), m_lastDisconnetTime(0), m_lastPingTime(0)
+NetObject::NetObject() : m_pBev(nullptr), m_usLinkId(0), m_eStatus(), m_lastRecvTime(0), m_lastDisconnetTime(0), m_lastPingTime(0)
 {
 	m_eStatus = eConnectStatus_UnConnect;
 	m_nSocketId = INVALID_SOCKET;
@@ -167,10 +167,10 @@ void NetObject::SetSocketId(SOCKET nSocket)
 
 bool NetObject::Send(const void* pData, uint32_t unSize)
 {
-	if (IsConnectOK() && bufferevent_get_enabled(m_pBev) != 0) 
+	if (IsConnectOK() && bufferevent_get_enabled(m_pBev) != 0)
 	{
 		int nRet = bufferevent_write(m_pBev, pData, unSize);
-		if (nRet < 0) 
+		if (nRet < 0)
 		{
 			LogError(0, "NetError", "send msg error !");
 			return false;

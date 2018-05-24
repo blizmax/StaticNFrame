@@ -187,8 +187,7 @@ _NFExport void PHP_MD5Update(PHP_MD5_CTX * context, const unsigned char *input,
 	/* Transform as many times as possible.
 	*/
 	if (inputLen >= partLen) {
-		memcpy
-			(static_cast<unsigned char*>(& context->buffer[index]), input, partLen);
+		memcpy(static_cast<unsigned char*>(&context->buffer[index]), input, partLen);
 		MD5Transform(context->state, context->buffer);
 
 		for (i = partLen; i + 63 < inputLen; i += 64)
@@ -200,9 +199,7 @@ _NFExport void PHP_MD5Update(PHP_MD5_CTX * context, const unsigned char *input,
 		i = 0;
 
 	/* Buffer remaining input */
-	memcpy
-		(static_cast<unsigned char*>(& context->buffer[index]), &input[i],
-			inputLen - i);
+	memcpy(static_cast<unsigned char*>(&context->buffer[index]), &input[i], inputLen - i);
 }
 /* }}} */
 

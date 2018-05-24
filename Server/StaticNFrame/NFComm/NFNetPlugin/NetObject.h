@@ -152,7 +152,7 @@ protected:
 	/**
 	 * @brief	libevent代表连接读写事件对象
 	 */
-	struct bufferevent* m_pBev;	
+	struct bufferevent* m_pBev;
 
 	/**
 	 * @brief	代表这个链接的socket
@@ -161,7 +161,7 @@ protected:
 	/**
 	 * @brief	代表客户端连接的唯一ID
 	 */
-	uint32_t m_usLinkId;		
+	uint32_t m_usLinkId;
 
 	/**
 	 * @brief	用来保存网络发过来的临时数据
