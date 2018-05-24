@@ -57,12 +57,6 @@ public:
 protected:
 	void ProcessExecute();
 
-	int OnConnected(const eMsgType nEvent, const uint32_t unLinkId);
-
-	int OnDisConnected(const eMsgType nEvent, const uint32_t unLinkId);
-
-	////////////////////////////////////////////////////////////////////////////////
-
 	virtual uint32_t GetFreeUnLinkId(NF_SERVER_TYPES eServerType);
 
 	void SendMsg(NFClient* pClient, const uint32_t nMsgID, const char* msg, const uint32_t nLen, const uint64_t nPlayerID);
@@ -70,7 +64,6 @@ protected:
 	void OnReceiveNetPack(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen);
 
 	void OnSocketNetEvent(const eMsgType nEvent, const uint32_t unLinkId);
-
 private:
 	std::vector<std::vector<NFClient*>> mxServerMap;
 	NFBuffer	mxSendBuffer;

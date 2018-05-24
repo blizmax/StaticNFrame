@@ -305,25 +305,5 @@ void NFCNetClientModule::OnReceiveNetPack(const uint32_t unLinkId, const uint64_
 
 void NFCNetClientModule::OnSocketNetEvent(const eMsgType nEvent, const uint32_t unLinkId)
 {
-	int nRet(0);
-	if (nEvent == eMsgType_CONNECTED)
-	{
-		nRet = OnConnected(nEvent, unLinkId);
-	}
-	else
-	{
-		nRet = OnDisConnected(nEvent, unLinkId);
-	}
-
 	OnSocketBaseNetEvent(nEvent, unLinkId);
-}
-
-int NFCNetClientModule::OnConnected(const eMsgType nEvent, const uint32_t unLinkId)
-{
-	return 0;
-}
-
-int NFCNetClientModule::OnDisConnected(const eMsgType nEvent, const uint32_t unLinkId)
-{
-	return 0;
 }
