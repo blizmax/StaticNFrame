@@ -21,7 +21,7 @@ ArpgNetPacketParse::ArpgNetPacketParse()
 
 int ArpgNetPacketParse::DeCodeImpl(const char* strData, const uint32_t unLen, char*& outData, uint32_t& outLen, uint32_t& allLen, uint32_t &nMsgId, uint64_t& nValue)
 {
-	if (strData == nullptr || unLen == 0) return -1;
+	if (strData == nullptr || unLen == 0) return 1;
 
 	stMsg* packHead = nullptr;
 
