@@ -65,43 +65,6 @@ public:
 	}
 
 	/**
-	 * @brief libevent读数据回调
-	 *
-	 * @param pEv   libevent读写数据类
-	 * @param pArg  传入的参数
-	 * @return
-	 */
-	static void conn_recvcb(struct bufferevent* pEv, void* pArg);
-
-	/**
-	 * @brief libevent连接事件回调
-	 *
-	 * @param pEv		libevent读写数据类
-	 * @param events	事件
-	 * @param pArg		传入的参数
-	 * @return
-	 */
-	static void conn_eventcb(struct bufferevent* pEv, short events, void* pArg);
-
-	/**
-	 * @brief libevent写数据回调
-	 *
-	 * @param pEv   libevent读写数据类
-	 * @param pArg  传入的参数
-	 * @return
-	 */
-	static void conn_writecb(struct bufferevent* pEv, void* pArg);
-
-	/**
-	 * @brief log回调
-	 *
-	 * @param severity
-	 * @param msg		要打印的消息
-	 * @return
-	 */
-	static void log_cb(int severity, const char* msg);
-
-	/**
 	 * @brief	初始化
 	 *
 	 * @return 是否成功

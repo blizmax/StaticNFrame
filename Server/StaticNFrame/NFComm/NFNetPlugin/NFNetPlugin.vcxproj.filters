@@ -21,9 +21,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="NFNetPlugin.h" />
-    <ClInclude Include="NFINet.h">
-      <Filter>NFNet</Filter>
-    </ClInclude>
     <ClInclude Include="NFNetDefine.h">
       <Filter>NFNet</Filter>
     </ClInclude>

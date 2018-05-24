@@ -31,7 +31,6 @@
     <ClInclude Include="ArpgNetPacketParse.h" />
     <ClInclude Include="NFClient.h" />
     <ClInclude Include="NFThreadClient.h" />
-    <ClInclude Include="NFINet.h" />
     <ClInclude Include="NFCNetClientModule.h" />
     <ClInclude Include="NFIPacketParse.h" />
     <ClInclude Include="NFNetDefine.h" />

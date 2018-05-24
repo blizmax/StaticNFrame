@@ -11,38 +11,7 @@
 * @param pArg  传入的参数
 * @return
 */
-static void conn_recvcb(struct bufferevent* pEv, void *pArg);
-
-/**
-* @brief libevent连接事件回调
-*
-* @param pEv		libevent读写数据类
-* @param events	事件
-* @param pArg		传入的参数
-* @return
-*/
-static void conn_eventcb(struct bufferevent* pEv, short events, void *pArg);
-
-/**
-* @brief libevent写数据回调
-*
-* @param pEv   libevent读写数据类
-* @param pArg  传入的参数
-* @return
-*/
-static void conn_writecb(struct bufferevent* pEv, void *pArg);
-
-/**
-* @brief log回调
-*
-* @param severity
-* @param msg		要打印的消息
-* @return
-*/
-static void log_cb(int severity, const char* msg);
-
-
-void conn_recvcb(struct bufferevent* pEv, void *pArg)
+static void conn_recvcb(struct bufferevent* pEv, void *pArg)
 {
 	NFThreadClient*	pClient = static_cast<NFThreadClient*>(pArg);
 	if (pClient == nullptr) return;
@@ -54,31 +23,29 @@ void conn_recvcb(struct bufferevent* pEv, void *pArg)
 	pClient->SetLastRecvTime(NFGetTime());
 }
 
-void conn_writecb(struct bufferevent* pEv, void *pArg)
-{
-	// Intentionally unimplemented...
-}
-
-void log_cb(int severity, const char* msg)
-{
-	// Intentionally unimplemented...
-}
-
-void conn_eventcb(struct bufferevent* pEv, short what, void *pArg)
+/**
+* @brief libevent连接事件回调
+*
+* @param pEv		libevent读写数据类
+* @param events	事件
+* @param pArg		传入的参数
+* @return
+*/
+static void conn_eventcb(struct bufferevent* pEv, short events, void *pArg)
 {
 	NFThreadClient* p = static_cast<NFThreadClient*>(pArg);
 	if (p == nullptr) return;
 
-	if (what & BEV_EVENT_CONNECTED) {
+	if (events & BEV_EVENT_CONNECTED) {
 		p->OnHandleConnect(static_cast<SOCKET>(bufferevent_getfd(pEv)));
 	}
-	if (what & BEV_EVENT_EOF)
+	if (events & BEV_EVENT_EOF)
 	{
 		p->OnHandleDisConnect();
 		return;
 	}
 
-	if (what & BEV_EVENT_ERROR) {
+	if (events & BEV_EVENT_ERROR) {
 #ifdef _WIN32
 		if (ArkGetLastError() == WSAEISCONN)
 		{
@@ -91,6 +58,30 @@ void conn_eventcb(struct bufferevent* pEv, short what, void *pArg)
 		p->OnHandleDisConnect();
 		LogWarning(0, "NetWarning", " CloseProc Error Code " + std::string(evutil_socket_error_to_string(EVUTIL_SOCKET_ERROR())));
 	}
+}
+
+/**
+* @brief libevent写数据回调
+*
+* @param pEv   libevent读写数据类
+* @param pArg  传入的参数
+* @return
+*/
+static void conn_writecb(struct bufferevent* pEv, void *pArg)
+{
+	// Intentionally unimplemented...
+}
+
+/**
+* @brief log回调
+*
+* @param severity
+* @param msg		要打印的消息
+* @return
+*/
+static void log_cb(int severity, const char* msg)
+{
+	// Intentionally unimplemented...
 }
 
 NFThreadClient::NFThreadClient()
@@ -259,7 +250,7 @@ bool NFThreadClient::Connect()
 	sin.sin_family = AF_INET;
 	inet_pton(AF_INET, m_flag.strIP.c_str(), (void*)&sin.sin_addr.s_addr);
 	sin.sin_port = htons(m_flag.nPort);
-	bufferevent_setcb(m_pBev, conn_recvcb, conn_writecb, conn_eventcb, this);
+	bufferevent_setcb(m_pBev, &conn_recvcb, &conn_writecb, &conn_eventcb, this);
 
 	//设置水位为0
 	bufferevent_setwatermark(m_pBev, EV_READ, 0, 0);
