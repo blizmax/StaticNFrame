@@ -140,3 +140,4 @@ private:
 	 */
 	NFQueueVector<NFThreadNetMsg*> m_threadNetMsgs;
 };
+

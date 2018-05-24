@@ -11,9 +11,9 @@
 * @param pArg  传入的参数
 * @return
 */
-static void conn_recvcb(struct bufferevent* pEv, void *pArg)
+static void conn_recvcb(struct bufferevent* pEv, void* pArg)
 {
-	NFThreadClient*	pClient = static_cast<NFThreadClient*>(pArg);
+	NFThreadClient* pClient = static_cast<NFThreadClient*>(pArg);
 	if (pClient == nullptr) return;
 
 	if (!pClient->OnRecvData(pEv))
@@ -31,12 +31,13 @@ static void conn_recvcb(struct bufferevent* pEv, void *pArg)
 * @param pArg		传入的参数
 * @return
 */
-static void conn_eventcb(struct bufferevent* pEv, short events, void *pArg)
+static void conn_eventcb(struct bufferevent* pEv, short events, void* pArg)
 {
 	NFThreadClient* p = static_cast<NFThreadClient*>(pArg);
 	if (p == nullptr) return;
 
-	if (events & BEV_EVENT_CONNECTED) {
+	if (events & BEV_EVENT_CONNECTED)
+	{
 		p->OnHandleConnect(static_cast<SOCKET>(bufferevent_getfd(pEv)));
 	}
 	if (events & BEV_EVENT_EOF)
@@ -45,7 +46,8 @@ static void conn_eventcb(struct bufferevent* pEv, short events, void *pArg)
 		return;
 	}
 
-	if (events & BEV_EVENT_ERROR) {
+	if (events & BEV_EVENT_ERROR)
+	{
 #ifdef _WIN32
 		if (ArkGetLastError() == WSAEISCONN)
 		{
@@ -67,7 +69,7 @@ static void conn_eventcb(struct bufferevent* pEv, short events, void *pArg)
 * @param pArg  传入的参数
 * @return
 */
-static void conn_writecb(struct bufferevent* pEv, void *pArg)
+static void conn_writecb(struct bufferevent* pEv, void* pArg)
 {
 	// Intentionally unimplemented...
 }
@@ -145,29 +147,29 @@ void NFThreadClient::ProcessMsgLogicThread()
 		switch (pBuff->eType)
 		{
 		case eMsgType_RECIVEDATA:
-		{
-			if (mRecvCB)
 			{
-				mRecvCB(pBuff->usLink, pBuff->nValue, pBuff->nMsgId, static_cast<const char*>(pBuff->nBuffer.data()), pBuff->nBuffer.size());
+				if (mRecvCB)
+				{
+					mRecvCB(pBuff->usLink, pBuff->nValue, pBuff->nMsgId, static_cast<const char*>(pBuff->nBuffer.data()), pBuff->nBuffer.size());
+				}
 			}
-		}
-		break;
+			break;
 		case eMsgType_CONNECTED:
-		{
-			if (mEventCB)
 			{
-				mEventCB(eMsgType_CONNECTED, pBuff->usLink);
+				if (mEventCB)
+				{
+					mEventCB(eMsgType_CONNECTED, pBuff->usLink);
+				}
 			}
-		}
-		break;
+			break;
 		case eMsgType_DISCONNECTED:
-		{
-			if (mEventCB)
 			{
-				mEventCB(eMsgType_DISCONNECTED, pBuff->usLink);
+				if (mEventCB)
+				{
+					mEventCB(eMsgType_DISCONNECTED, pBuff->usLink);
+				}
 			}
-		}
-		break;
+			break;
 		default:
 			break;
 		}
@@ -177,7 +179,8 @@ void NFThreadClient::ProcessMsgLogicThread()
 
 void NFThreadClient::CheckConnect()
 {
-	if (m_flag.bAutoConnect) {
+	if (m_flag.bAutoConnect)
+	{
 		NFThreadClient::Reconnect();
 	}
 }
@@ -226,14 +229,15 @@ void NFThreadClient::Close()
 
 bool NFThreadClient::Connect()
 {
-	if (m_pBev) {
+	if (m_pBev)
+	{
 		bufferevent_free(m_pBev);
 		m_pBev = nullptr;
 	}
 	m_pBev = bufferevent_socket_new(GetMainBase(), -1, BEV_OPT_CLOSE_ON_FREE | BEV_OPT_THREADSAFE);
-	struct sockaddr_in  sin;
+	struct sockaddr_in sin;
 	memset(&sin, 0, sizeof(sin));
-	sin.sin_family = AF_INET;
+	sin.sin_family = AF_INET ;
 	inet_pton(AF_INET, m_flag.strIP.c_str(), (void*)&sin.sin_addr.s_addr);
 	sin.sin_port = htons(m_flag.nPort);
 	bufferevent_setcb(m_pBev, &conn_recvcb, &conn_writecb, &conn_eventcb, this);
@@ -245,7 +249,8 @@ bool NFThreadClient::Connect()
 	bufferevent_enable(m_pBev, EV_WRITE | EV_READ);
 	event_set_log_callback(&log_cb);
 
-	if (bufferevent_socket_connect(m_pBev, reinterpret_cast<struct sockaddr*>(&sin), sizeof(sin)) < 0) {
+	if (bufferevent_socket_connect(m_pBev, reinterpret_cast<struct sockaddr*>(&sin), sizeof(sin)) < 0)
+	{
 		LogError(0, "NetError", "connect failed! IP: " + m_flag.strIP + " port:" + lexical_cast<std::string>(m_flag.nPort));
 		return false;
 	}
@@ -266,9 +271,11 @@ void NFThreadClient::StartThread()
 
 bool NFThreadClient::Reconnect()
 {
-	if (eConnectStatus_Disconnect == m_eStatus) {
+	if (eConnectStatus_Disconnect == m_eStatus)
+	{
 		time_t nCurTime = time(nullptr);
-		if (nCurTime - m_lastDisconnetTime > 5) {     //5s重启
+		if (nCurTime - m_lastDisconnetTime > 5)
+		{ //5s重启
 			SetStatus(eConnectStatus_Connecting);
 			StartThread();
 		}
@@ -289,3 +296,4 @@ void NFThreadClient::OnHandleDisConnect()
 	SendDisconnect();
 	Close();
 }
+

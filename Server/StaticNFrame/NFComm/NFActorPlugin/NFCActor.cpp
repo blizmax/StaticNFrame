@@ -144,7 +144,7 @@ void NFCActor::Handler(const NFIActorMessage& message, const Theron::Address& fr
 
 	xReturnMessage.msgType = NFIActorMessage::ACTOR_MSG_TYPE_END_FUNC;
 	xReturnMessage.nMsgID = message.nMsgID;
-	xReturnMessage.data = std::move(strData);       //¼õÉÙCOPY
+	xReturnMessage.data = std::move(strData); //¼õÉÙCOPY
 	xReturnMessage.self = message.self;
 	xReturnMessage.nFormActor = this->GetAddress().AsInteger();
 
@@ -155,3 +155,4 @@ bool NFCActor::SendMsg(const Theron::Address& address, const NFIActorMessage& me
 {
 	return Send(message, address);
 }
+

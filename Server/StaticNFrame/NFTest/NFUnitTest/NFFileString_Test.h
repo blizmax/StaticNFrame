@@ -43,7 +43,7 @@ TEST(NF_Core, NF_FILESTRING)
 
 TEST(NF_Core, NF_CMDLINE)
 {
-	char *argv[10];
+	char* argv[10];
 
 	argv[0] = "a.out";
 	argv[1] = "--Server=AllServer";
@@ -63,3 +63,4 @@ TEST(NF_Core, NF_CMDLINE)
 	EXPECT_EQ(6, cmd.Get<int>("ID"));
 	EXPECT_EQ("../", cmd.Get<std::string>("PATH"));
 }
+

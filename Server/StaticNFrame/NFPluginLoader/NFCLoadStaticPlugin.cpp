@@ -73,3 +73,4 @@ bool NFCPluginManager::RegisterStaticPlugin()
 	REGISTER_STATIC_PLUGIN(this, NFTestPlugin);
 	return true;
 }
+

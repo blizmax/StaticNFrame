@@ -70,5 +70,6 @@ protected:
 	void OnSocketNetEvent(const eMsgType nEvent, const uint32_t unLinkId);
 private:
 	std::vector<std::vector<NFClient*>> mxServerMap;
-	NFBuffer	mxSendBuffer;
+	NFBuffer mxSendBuffer;
 };
+

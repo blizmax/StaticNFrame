@@ -7,14 +7,16 @@ NFNavigation::NFNavigation()
 }
 
 //-------------------------------------------------------------------------------------
-NFNavigation::~NFNavigation() {
+NFNavigation::~NFNavigation()
+{
 	Finalise();
 }
 
 //-------------------------------------------------------------------------------------
 void NFNavigation::Finalise()
 {
-	for (itmapNavigate it = m_mapNavhandles.begin(); it != m_mapNavhandles.end(); ++it) {
+	for (itmapNavigate it = m_mapNavhandles.begin(); it != m_mapNavhandles.end(); ++it)
+	{
 		NFNavigationHandle* p = it->second;
 		delete p;
 	}
@@ -24,7 +26,8 @@ void NFNavigation::Finalise()
 bool NFNavigation::RemoveNavigation(const std::string& name)
 {
 	itmapNavigate iter = m_mapNavhandles.find(name);
-	if (iter != m_mapNavhandles.end()) {
+	if (iter != m_mapNavhandles.end())
+	{
 		m_mapNavhandles.erase(iter);
 		return true;
 	}
@@ -63,7 +66,8 @@ NFNavigationHandle* NFNavigation::LoadNavigation(const std::string& name)
 
 	NFNavigationHandle* pNavigationHandle_ = new NFNavMeshHandle;
 
-	if (pNavigationHandle_->Create(name)) {
+	if (pNavigationHandle_->Create(name))
+	{
 		m_mapNavhandles[name] = pNavigationHandle_;
 		return pNavigationHandle_;
 	}
@@ -74,4 +78,7 @@ NFNavigationHandle* NFNavigation::LoadNavigation(const std::string& name)
 	}
 	return nullptr;
 }
+
 //-------------------------------------------------------------------------------------
+
+

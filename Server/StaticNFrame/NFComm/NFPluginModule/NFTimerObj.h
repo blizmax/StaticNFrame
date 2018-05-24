@@ -1,7 +1,7 @@
-#pragma once
+ï»¿#pragma once
 #include <stdint.h>
 
-//¶¨Ê±Æ÷½Ó¿Ú
+//ï¿½ï¿½Ê±ï¿½ï¿½ï¿½Ó¿ï¿½
 struct NFTimerObj
 {
 public:
@@ -10,27 +10,36 @@ public:
 public:
 	virtual void OnTimer(uint32_t nTimerID) = 0;
 
-	//ÉèÖÃ¶¨Ê±Æ÷
+	//ï¿½ï¿½ï¿½Ã¶ï¿½Ê±ï¿½ï¿½
 	virtual bool SetTimer(uint32_t nTimerID, uint64_t nInterVal, uint32_t nCallCount);
 
-	//¹Ø±Õ¶¨Ê±Æ÷
+	//ï¿½Ø±Õ¶ï¿½Ê±ï¿½ï¿½
 	virtual bool KillTimer(uint32_t nTimerID);
 
-	//¹Ø±ÕËùÓÐ¶¨Ê±Æ÷
+	//ï¿½Ø±ï¿½ï¿½ï¿½ï¿½Ð¶ï¿½Ê±ï¿½ï¿½
 	virtual bool KillAllTimer();
 
-	//ÉèÖÃ¹Ì¶¨Ê±¼äµÄ¶¨Ê±Æ÷
+	//ï¿½ï¿½ï¿½Ã¹Ì¶ï¿½Ê±ï¿½ï¿½Ä¶ï¿½Ê±ï¿½ï¿½
 	virtual bool SetFixTimer(uint32_t nTimerID, uint64_t nStartTime, uint32_t nInterDays, uint32_t nCallCount);
 
-	//¹Ø±Õ¹Ì¶¨Ê±¼ä¶¨Ê±Æ÷
+	//ï¿½Ø±Õ¹Ì¶ï¿½Ê±ï¿½ä¶¨Ê±ï¿½ï¿½
 	virtual bool KillFixTimer(uint32_t nTimerID);
 
-	//¹Ø±ÕËùÓÐ¹Ì¶¨Ê±¼ä¶¨Ê±Æ÷
+	//ï¿½Ø±ï¿½ï¿½ï¿½ï¿½Ð¹Ì¶ï¿½Ê±ï¿½ä¶¨Ê±ï¿½ï¿½
 	virtual bool KillAllFixTimer();
 public:
-	virtual void **GetTimerInfoPtr() { return &m_pTimerInfoPtr; }
-	virtual void **GetFixTimerInfoPtr() { return &m_pFixTimerInfoPtr; }
+	virtual void** GetTimerInfoPtr()
+	{
+		return &m_pTimerInfoPtr;
+	}
+
+	virtual void** GetFixTimerInfoPtr()
+	{
+		return &m_pFixTimerInfoPtr;
+	}
+
 private:
-	void *m_pTimerInfoPtr;			//ÁÙÊ±±£´æ»Øµ÷Ö¸Õë¶ÔÓ¦µÄ¶¨Ê±Æ÷ÐÅÏ¢
-	void *m_pFixTimerInfoPtr;		//ÁÙÊ±±£´æ»Øµ÷Ö¸Õë¶ÔÓ¦µÄ¹Ì¶¨Ê±¼äµÄ¶¨Ê±Æ÷ÐÅÏ¢
+	void* m_pTimerInfoPtr; //ï¿½ï¿½Ê±ï¿½ï¿½ï¿½ï¿½Øµï¿½Ö¸ï¿½ï¿½ï¿½Ó¦ï¿½Ä¶ï¿½Ê±ï¿½ï¿½ï¿½ï¿½Ï¢
+	void* m_pFixTimerInfoPtr; //ï¿½ï¿½Ê±ï¿½ï¿½ï¿½ï¿½Øµï¿½Ö¸ï¿½ï¿½ï¿½Ó¦ï¿½Ä¹Ì¶ï¿½Ê±ï¿½ï¿½Ä¶ï¿½Ê±ï¿½ï¿½ï¿½ï¿½Ï¢
 };
+

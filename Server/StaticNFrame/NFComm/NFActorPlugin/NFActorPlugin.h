@@ -10,7 +10,9 @@ public:
 		pPluginManager = p;
 	}
 
-	virtual ~NFActorPlugin() { }
+	virtual ~NFActorPlugin()
+	{
+	}
 
 	virtual int GetPluginVersion() override;
 
@@ -20,3 +22,4 @@ public:
 
 	virtual void Uninstall() override;
 };
+

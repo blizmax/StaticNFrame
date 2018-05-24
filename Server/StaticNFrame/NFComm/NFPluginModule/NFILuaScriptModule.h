@@ -14,7 +14,7 @@ namespace LuaIntf
 	LUA_USING_SHARED_PTR_TYPE(std::shared_ptr);
 }
 
-typedef LuaIntf::LuaRef	NFLuaRef;
+typedef LuaIntf::LuaRef NFLuaRef;
 typedef LuaIntf::LuaTableRef NFLuaTableRef;
 
 struct NFGUID;
@@ -25,11 +25,13 @@ public:
 	NFILuaScriptModule()
 	{
 	}
+
 public:
 	lua_State* GetLuaState() const
 	{
 		return l.state();
 	}
+
 public:
 	template <typename V = LuaIntf::LuaRef>
 	V GetGlobal(const std::string& keyName) const
@@ -37,7 +39,7 @@ public:
 		return l.getGlobal(keyName.c_str());
 	}
 
-	template<typename T>
+	template <typename T>
 	bool GetValue(const std::string& keyName, T& value) const
 	{
 		LuaIntf::LuaRef ref = GetGlobal(keyName);
@@ -46,7 +48,8 @@ public:
 			return false;
 		}
 
-		try {
+		try
+		{
 			value = ref.toValue<T>();
 			return true;
 		}
@@ -57,10 +60,12 @@ public:
 
 		return true;
 	}
+
 public:
 	bool TryLoadScriptString(const std::string& strScript)
 	{
-		try {
+		try
+		{
 			l.doString(strScript.c_str());
 			return true;
 		}
@@ -73,7 +78,8 @@ public:
 
 	bool TryLoadScriptFile(const std::string& strFileName)
 	{
-		try {
+		try
+		{
 			l.doFile(strFileName.c_str());
 			return true;
 		}
@@ -86,7 +92,8 @@ public:
 
 	bool TryAddPackagePath(const std::string& strFilePath)
 	{
-		try {
+		try
+		{
 			l.addPackagePath(strFilePath);
 			return true;
 		}
@@ -96,10 +103,12 @@ public:
 		}
 		return false;
 	}
+
 public:
 	bool TryRunGlobalScriptFunc(const std::string& strFuncName) const
 	{
-		try {
+		try
+		{
 			LuaIntf::LuaRef func(l, strFuncName.c_str());
 			func.call<LuaIntf::LuaRef>();
 			return true;
@@ -111,10 +120,11 @@ public:
 		return false;
 	}
 
-	template<typename... Arg>
+	template <typename... Arg>
 	bool TryRunGlobalScriptFunc(const std::string& strFuncName, Arg&&... args)
 	{
-		try {
+		try
+		{
 			LuaIntf::LuaRef func(l, strFuncName.c_str());
 			func.call<LuaIntf::LuaRef>(std::forward<Arg>(args)...);
 			return true;
@@ -125,11 +135,13 @@ public:
 		}
 		return false;
 	}
+
 public:
-	template<typename KEY, typename VALUE>
+	template <typename KEY, typename VALUE>
 	bool GetLuaTableValue(const LuaIntf::LuaRef& table, const KEY& keyName, VALUE& value)
 	{
-		try {
+		try
+		{
 			LuaIntf::LuaRef valueRef = table[keyName];
 			if (!valueRef.isValid())
 			{
@@ -146,6 +158,8 @@ public:
 		}
 		return false;
 	}
+
 protected:
 	LuaIntf::LuaContext l;
 };
+

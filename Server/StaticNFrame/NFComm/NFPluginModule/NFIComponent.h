@@ -17,24 +17,29 @@ class NFIComponent
 	NFIComponent() : mbEnable(false), mSelf(nullptr)
 	{
 	}
+
 public:
-	explicit NFIComponent(const std::string& strName) :mstrName(strName)
+	explicit NFIComponent(const std::string& strName) : mstrName(strName)
 	{
 		mbEnable = true;
 		//mstrName = strName;
 		mSelf = nullptr;
 	}
 
-	virtual ~NFIComponent() {}
+	virtual ~NFIComponent()
+	{
+	}
 
 	virtual void SetActor(NFIActor* self)
 	{
 		mSelf = self;
 	}
+
 	virtual NFIActor* GetActor()
 	{
 		return mSelf;
 	}
+
 	virtual bool Awake()
 	{
 		return true;
@@ -109,7 +114,7 @@ public:
 		return 0;
 	}
 
-	template<typename BaseType>
+	template <typename BaseType>
 	bool AddMsgObserver(const int nSubMessage, BaseType* pBase, int (BaseType::*handler)(uint64_t, const int, const int, std::string&))
 	{
 		ACTOR_PROCESS_FUNCTOR functor = std::bind(handler, pBase, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3, std::placeholders::_4);
@@ -136,3 +141,4 @@ private:
 };
 
 #endif
+

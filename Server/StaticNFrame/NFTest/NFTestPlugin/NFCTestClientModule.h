@@ -14,7 +14,10 @@ public:
 		m_pNetClientModule = nullptr;
 	}
 
-	virtual ~NFCTestClientModule() { }
+	virtual ~NFCTestClientModule()
+	{
+	}
+
 public:
 	virtual bool Init() override;
 
@@ -40,3 +43,4 @@ private:
 	std::string m_charName;
 	uint32_t m_serverId;
 };
+

@@ -31,7 +31,8 @@ NFNavMeshHandle::~NFNavMeshHandle()
 //-------------------------------------------------------------------------------------
 int NFNavMeshHandle::FindStraightPath(int layer, const NFVector3& start, const NFVector3& end, std::vector<NFVector3>& paths)
 {
-	if (layer >= static_cast<int>(navmeshQuery_layers.size())) {
+	if (layer >= static_cast<int>(navmeshQuery_layers.size()))
+	{
 		//ERROR_MSG(fmt::format("NavMeshHandle::findStraightPath: not found layer({})\n",  layer));
 		return NAV_ERROR;
 	}
@@ -51,7 +52,7 @@ int NFNavMeshHandle::FindStraightPath(int layer, const NFVector3& start, const N
 	filter.setIncludeFlags(0xffff);
 	filter.setExcludeFlags(0);
 
-	const float extents[3] = { 2.f, 4.f, 2.f };
+	const float extents[3] = {2.f, 4.f, 2.f};
 
 	dtPolyRef startRef = INVALID_NAVMESH_POLYREF;
 	dtPolyRef endRef = INVALID_NAVMESH_POLYREF;
@@ -61,7 +62,8 @@ int NFNavMeshHandle::FindStraightPath(int layer, const NFVector3& start, const N
 	navmeshQuery->findNearestPoly(spos, extents, &filter, &startRef, startNearestPt);
 	navmeshQuery->findNearestPoly(epos, extents, &filter, &endRef, endNearestPt);
 
-	if (!startRef || !endRef) {
+	if (!startRef || !endRef)
+	{
 		//ERROR_MSG(fmt::format("NavMeshHandle::findStraightPath({2}): Could not find any nearby poly's ({0}, {1})\n", startRef, endRef, name));
 		return NAV_ERROR_NEARESTPOLY;
 	}
@@ -88,7 +90,7 @@ int NFNavMeshHandle::FindStraightPath(int layer, const NFVector3& start, const N
 		navmeshQuery->findStraightPath(startNearestPt, endNearestPt, polys, npolys, straightPath, straightPathFlags, straightPathPolys, &nstraightPath, MAX_POLYS);
 
 		NFVector3 currpos;
-		for (int i = 0; i < nstraightPath * 3; )
+		for (int i = 0; i < nstraightPath * 3;)
 		{
 			currpos.x = straightPath[i++];
 			currpos.y = straightPath[i++];
@@ -105,7 +107,8 @@ int NFNavMeshHandle::FindStraightPath(int layer, const NFVector3& start, const N
 //-------------------------------------------------------------------------------------
 int NFNavMeshHandle::RayCast(int layer, const NFVector3& start, const NFVector3& end, std::vector<NFVector3>& hitPointVec)
 {
-	if (layer >= static_cast<int>(navmeshQuery_layers.size())) {
+	if (layer >= static_cast<int>(navmeshQuery_layers.size()))
+	{
 		return NAV_ERROR;
 	}
 	dtNavMeshQuery* navmeshQuery = navmeshQuery_layers[layer];
@@ -126,14 +129,15 @@ int NFNavMeshHandle::RayCast(int layer, const NFVector3& start, const NFVector3&
 	filter.setIncludeFlags(0xffff);
 	filter.setExcludeFlags(0);
 
-	const float extents[3] = { 2.f, 4.f, 2.f };
+	const float extents[3] = {2.f, 4.f, 2.f};
 
 	dtPolyRef startRef = INVALID_NAVMESH_POLYREF;
 
 	float nearestPt[3];
 	navmeshQuery->findNearestPoly(spos, extents, &filter, &startRef, nearestPt);
 
-	if (!startRef) {
+	if (!startRef)
+	{
 		return NAV_ERROR_NEARESTPOLY;
 	}
 
@@ -178,7 +182,8 @@ bool NFNavMeshHandle::Create(const std::string& path)
 	//pNavMeshHandle = new NavMeshHandle();
 
 	FILE* fp = fopen(path.c_str(), "rb");
-	if (!fp) {
+	if (!fp)
+	{
 		// 			ERROR_MSG(fmt::format("NavMeshHandle::create: open({}) is error!\n",
 		// 				Resmgr::getSingleton().matchRes(path)));
 		return false;
@@ -195,7 +200,8 @@ bool NFNavMeshHandle::Create(const std::string& path)
 	char* pBuf = new char[flen];
 
 	size_t readsize = fread(pBuf, 1, flen, fp);
-	if (readsize != flen) {
+	if (readsize != flen)
+	{
 		// 			ERROR_MSG(fmt::format("NavMeshHandle::create: open({}), read(size={} != {}) error!\n",
 		// 				Resmgr::getSingleton().matchRes(path), readsize, flen));
 
@@ -205,7 +211,8 @@ bool NFNavMeshHandle::Create(const std::string& path)
 		return false;
 	}
 
-	if (readsize < sizeof(NavMeshSetHeader)) {
+	if (readsize < sizeof(NavMeshSetHeader))
+	{
 		// 			ERROR_MSG(fmt::format("NavMeshHandle::create: open({}), NavMeshSetHeader is error!\n",
 		// 				Resmgr::getSingleton().matchRes(path)));
 
@@ -218,7 +225,8 @@ bool NFNavMeshHandle::Create(const std::string& path)
 	NavMeshSetHeader header;
 	memcpy(&header, pBuf, size);
 	pos += size;
-	if (header.version != NFNavMeshHandle::RCN_NAVMESH_VERSION) {
+	if (header.version != NFNavMeshHandle::RCN_NAVMESH_VERSION)
+	{
 		// 			ERROR_MSG(fmt::format("NavMeshHandle::create: navmesh version({}) is not match({})!\n",
 		// 				header.version, ((int)NavMeshHandle::RCN_NAVMESH_VERSION)));
 
@@ -229,7 +237,8 @@ bool NFNavMeshHandle::Create(const std::string& path)
 	}
 
 	dtNavMesh* mesh = dtAllocNavMesh();
-	if (!mesh) {
+	if (!mesh)
+	{
 		//ERROR_MSG("NavMeshHandle::create: dtAllocNavMesh is failed!\n");
 		fclose(fp);
 		delete[] pBuf;
@@ -275,10 +284,10 @@ bool NFNavMeshHandle::Create(const std::string& path)
 		pos += size;
 
 		status = mesh->addTile(tileData
-			, size
-			, (safeStorage ? DT_TILE_FREE_DATA : 0) //-V547
-			, tileHeader.tileRef
-			, nullptr);
+		                       , size
+		                       , (safeStorage ? DT_TILE_FREE_DATA : 0) //-V547
+		                       , tileHeader.tileRef
+		                       , nullptr);
 
 		if (dtStatusFailed(status))
 		{
@@ -332,9 +341,10 @@ bool NFNavMeshHandle::Create(const std::string& path)
 //-------------------------------------------------------------------------------------
 
 int NFNavMeshHandle::FindRandomPointAroundCircle(int layer, const NFVector3& centerPos,
-	std::vector<NFVector3>& points, int max_points, float maxRadius)
+                                                 std::vector<NFVector3>& points, int max_points, float maxRadius)
 {
-	if (layer >= static_cast<int>(navmeshQuery_layers.size())) {
+	if (layer >= static_cast<int>(navmeshQuery_layers.size()))
+	{
 		return NAV_ERROR;
 	}
 	dtNavMeshQuery* navmeshQuery = navmeshQuery_layers[layer];
@@ -363,7 +373,7 @@ int NFNavMeshHandle::FindRandomPointAroundCircle(int layer, const NFVector3& cen
 		return static_cast<int>(points.size());
 	}
 
-	const float extents[3] = { 2.f, 4.f, 2.f };
+	const float extents[3] = {2.f, 4.f, 2.f};
 
 	dtPolyRef startRef = INVALID_NAVMESH_POLYREF;
 
@@ -375,7 +385,8 @@ int NFNavMeshHandle::FindRandomPointAroundCircle(int layer, const NFVector3& cen
 	float startNearestPt[3];
 	navmeshQuery->findNearestPoly(spos, extents, &filter, &startRef, startNearestPt);
 
-	if (!startRef) {
+	if (!startRef)
+	{
 		return NAV_ERROR_NEARESTPOLY;
 	}
 
@@ -412,7 +423,7 @@ bool NFNavMeshHandle::IsValidPos(int layer, const NFVector3& pos)
 	filter.setIncludeFlags(0xffff);
 	filter.setExcludeFlags(0);
 
-	const float extents[3] = { 2.f, 100.f, 2.f };
+	const float extents[3] = {2.f, 100.f, 2.f};
 
 	float spos[3];
 	spos[0] = pos.x;
@@ -439,7 +450,7 @@ void NFNavMeshHandle::GetValidPos(int layer, const NFVector3& pos, NFVector3& ou
 	filter.setIncludeFlags(0xffff);
 	filter.setExcludeFlags(0);
 
-	const float extents[3] = { 2.f, 100.f, 2.f };
+	const float extents[3] = {2.f, 100.f, 2.f};
 
 	float spos[3];
 	spos[0] = pos.x;
@@ -488,3 +499,4 @@ NFVector3 NFNavMeshHandle::GetOriginPos(int layer)
 
 	return NFVector3(fPos[0], fPos[1], fPos[2]);
 }
+

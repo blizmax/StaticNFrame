@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 #include "NFComm/NFCore/NFPlatform.h"
 #include "NFComm/NFCore/NFSingleton.hpp"
@@ -31,3 +31,4 @@ public:
 private:
 	mapNavigate m_mapNavhandles;
 };
+

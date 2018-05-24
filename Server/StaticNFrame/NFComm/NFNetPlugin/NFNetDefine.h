@@ -41,21 +41,22 @@ typedef struct linger 		    LINGER;
 
 enum eConnectStatus
 {
-	eConnectStatus_UnConnect,    //未连接
-	eConnectStatus_Connecting,	 //连接中
-	eConnectStatus_ConnectOk,	 //连接OK
-	eConnectStatus_Disconnect,   //断开连接
+	eConnectStatus_UnConnect, //未连接
+	eConnectStatus_Connecting, //连接中
+	eConnectStatus_ConnectOk, //连接OK
+	eConnectStatus_Disconnect, //断开连接
 };
 
 struct stMsgFlag
 {
-	uint32_t		nInitRcvBufSZ;			//接受消息的缓冲区初始值
+	uint32_t nInitRcvBufSZ; //接受消息的缓冲区初始值
 	//uint32		nMaxRcvBufSZ;			//接受消息的缓冲区最大值
-	uint32_t		nMaxRcvMsgSZ;			//接受消息包的最大值
-	uint32_t		nInitSendBufSZ;			//接受消息的缓冲区初始值
-	uint32_t		nMaxCacheSize;             //最大缓存大小
+	uint32_t nMaxRcvMsgSZ; //接受消息包的最大值
+	uint32_t nInitSendBufSZ; //接受消息的缓冲区初始值
+	uint32_t nMaxCacheSize; //最大缓存大小
 
-	stMsgFlag() {
+	stMsgFlag()
+	{
 		nInitRcvBufSZ = 1024 * 4;
 		nInitSendBufSZ = 1024 * 100;
 		nMaxRcvMsgSZ = 1024 * 100;
@@ -65,13 +66,13 @@ struct stMsgFlag
 
 struct NFServerFlag
 {
-	uint32_t			nMaxConnectNum;   //最大链接数
-	uint32_t			nInitConnectNum;  //初始链接个数
-	uint32_t			nWorkThreadNum;   //工作线程个数
-	uint16_t			nPort;            //端口
-	bool				bEncrypt;		  //是否加密
-	uint32_t			nMaxMsgNumMinPer; //每一分钟最大的消息包数
-	uint32_t			nTimeoutDisconnect;  //超时断开连接断开连接
+	uint32_t nMaxConnectNum; //最大链接数
+	uint32_t nInitConnectNum; //初始链接个数
+	uint32_t nWorkThreadNum; //工作线程个数
+	uint16_t nPort; //端口
+	bool bEncrypt; //是否加密
+	uint32_t nMaxMsgNumMinPer; //每一分钟最大的消息包数
+	uint32_t nTimeoutDisconnect; //超时断开连接断开连接
 	NFServerFlag()
 	{
 		nInitConnectNum = 10;
@@ -86,12 +87,14 @@ struct NFServerFlag
 
 struct NFClientFlag
 {
-	bool			bAutoConnect; //自动重连
-	bool			bEncrypt;
-	uint16_t		nPort;
-	std::string		strIP;
-	uint16_t		sSuspend;
-	NFClientFlag() {
+	bool bAutoConnect; //自动重连
+	bool bEncrypt;
+	uint16_t nPort;
+	std::string strIP;
+	uint16_t sSuspend;
+
+	NFClientFlag()
+	{
 		nPort = 0;
 		bAutoConnect = false;
 		bEncrypt = false;
@@ -110,9 +113,10 @@ public:
 		nValue = 0;
 	}
 
-	uint32_t	usLink;       //和网络底层通信的接口
-	uint32_t	nMsgId;
-	uint64_t	nValue;
-	eMsgType	eType;       //消息是从哪里来的
+	uint32_t usLink; //和网络底层通信的接口
+	uint32_t nMsgId;
+	uint64_t nValue;
+	eMsgType eType; //消息是从哪里来的
 	NFSimpleBuffer nBuffer;
 };
+

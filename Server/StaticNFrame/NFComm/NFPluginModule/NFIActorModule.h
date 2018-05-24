@@ -20,7 +20,7 @@ class NFIComponent;
 class NFIActorModule : public NFIModule
 {
 public:
-	template<typename TypeComponent>
+	template <typename TypeComponent>
 	int RequireActor()
 	{
 		if (!TIsDerived<TypeComponent, NFIComponent>::Result)
@@ -40,7 +40,7 @@ public:
 		return -1;
 	}
 
-	template<typename TypeComponent, typename BaseType>
+	template <typename TypeComponent, typename BaseType>
 	int RequireActor(BaseType* pBase, int (BaseType::*handler_end)(uint64_t, const int, const int, const std::string&))
 	{
 		if (!TIsDerived<TypeComponent, NFIComponent>::Result)
@@ -60,7 +60,8 @@ public:
 
 		return -1;
 	}
-	template<typename TypeComponent>
+
+	template <typename TypeComponent>
 	bool AddComponent(const int nActorIndex)
 	{
 		if (!TIsDerived<TypeComponent, NFIComponent>::Result)
@@ -80,9 +81,9 @@ public:
 		return false;
 	}
 
-	template<typename BaseType>
+	template <typename BaseType>
 	int AddEndFunc(const int nActorIndex, const int nSubMessageID,
-		BaseType* pBase, int (BaseType::*handler_end)(uint64_t, const int, const int, const std::string&))
+	               BaseType* pBase, int (BaseType::*handler_end)(uint64_t, const int, const int, const std::string&))
 	{
 		if (pBase == nullptr || handler_end == nullptr)
 		{
@@ -94,9 +95,9 @@ public:
 		return AddEndFunc(nActorIndex, nSubMessageID, functor_end);
 	}
 
-	template<typename BaseType>
+	template <typename BaseType>
 	int AddDefaultEndFunc(const int nActorIndex,
-		BaseType* pBase, int (BaseType::*handler_end)(uint64_t, const int, const int, const std::string&))
+	                      BaseType* pBase, int (BaseType::*handler_end)(uint64_t, const int, const int, const std::string&))
 	{
 		if (pBase == nullptr || handler_end == nullptr)
 		{
@@ -107,6 +108,7 @@ public:
 
 		return AddEndFunc(nActorIndex, -1, functor_end);
 	}
+
 	virtual int RequireActor() = 0;
 	virtual bool SendMsgToActor(const int nActorIndex, uint64_t objectID, const int nEventID, const std::string& strArg) = 0;
 	virtual bool HandlerEx(const NFIActorMessage& message, const int from) = 0;
@@ -120,3 +122,4 @@ public:
 };
 
 #endif
+

@@ -21,7 +21,7 @@
 */
 static void conn_recvcb(struct bufferevent* pEv, void* pArg)
 {
-	NFClient*	pClient = static_cast<NFClient*>(pArg);
+	NFClient* pClient = static_cast<NFClient*>(pArg);
 	if (pClient == nullptr) return;
 
 	if (!pClient->OnRecvData(pEv))
@@ -44,7 +44,8 @@ static void conn_eventcb(struct bufferevent* pEv, short events, void* pArg)
 	NFClient* p = static_cast<NFClient*>(pArg);
 	if (p == nullptr) return;
 
-	if (events & BEV_EVENT_CONNECTED) {
+	if (events & BEV_EVENT_CONNECTED)
+	{
 		p->OnHandleConnect(static_cast<SOCKET>(bufferevent_getfd(pEv)));
 	}
 	if (events & BEV_EVENT_EOF)
@@ -53,7 +54,8 @@ static void conn_eventcb(struct bufferevent* pEv, short events, void* pArg)
 		return;
 	}
 
-	if (events & BEV_EVENT_ERROR) {
+	if (events & BEV_EVENT_ERROR)
+	{
 #ifdef _WIN32
 		if (ArkGetLastError() == WSAEISCONN)
 		{
@@ -119,22 +121,22 @@ void NFClient::OnHandleMsgPeer(eMsgType type, uint32_t usLink, char* pBuf, uint3
 	switch (type)
 	{
 	case eMsgType_RECIVEDATA:
-	{
-		if (mRecvCB)
 		{
-			mRecvCB(usLink, nValue, nMsgId, pBuf, sz);
+			if (mRecvCB)
+			{
+				mRecvCB(usLink, nValue, nMsgId, pBuf, sz);
+			}
 		}
-	}
-	break;
+		break;
 	case eMsgType_CONNECTED:
 	case eMsgType_DISCONNECTED:
-	{
-		if (mEventCB)
 		{
-			mEventCB(type, usLink);
+			if (mEventCB)
+			{
+				mEventCB(type, usLink);
+			}
 		}
-	}
-	break;
+		break;
 	default:
 		break;
 	}
@@ -217,9 +219,9 @@ bool NFClient::Connect()
 	}
 
 	m_pBev = bufferevent_socket_new(m_pMainBase, -1, BEV_OPT_CLOSE_ON_FREE);
-	struct sockaddr_in  sin;
+	struct sockaddr_in sin;
 	memset(&sin, 0, sizeof(sin));
-	sin.sin_family = AF_INET;
+	sin.sin_family = AF_INET ;
 	inet_pton(AF_INET, m_flag.strIP.c_str(), (void*)&sin.sin_addr.s_addr);
 	sin.sin_port = htons(m_flag.nPort);
 	bufferevent_setcb(m_pBev, &conn_recvcb, &conn_writecb, &conn_eventcb, this);
@@ -257,7 +259,9 @@ event_base* NFClient::GetMainBase() const
 
 void NFClient::CheckConnect()
 {
-	if (m_flag.bAutoConnect) {
+	if (m_flag.bAutoConnect)
+	{
 		NFClient::Reconnect();
 	}
 }
+

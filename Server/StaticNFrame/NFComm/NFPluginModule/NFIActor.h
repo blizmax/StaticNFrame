@@ -58,11 +58,13 @@ public:
 		m_pActorModule = nullptr;
 	}
 
-	virtual ~NFIActor() {}
+	virtual ~NFIActor()
+	{
+	}
 
 	virtual void AddComponent(NFIComponent* pComponent) = 0;
 
-	template<typename T>
+	template <typename T>
 	T* FindComponent(const std::string& strName)
 	{
 		if (!TIsDerived<T, NFIComponent>::Result)
@@ -75,6 +77,7 @@ public:
 		T* pT = dynamic_cast<T*>(pComponent);
 		return pT;
 	}
+
 	virtual NFIComponent* FindComponent(const std::string& strComponentName) = 0;
 
 	virtual bool AddBeginFunc(const int nSubMsgID, ACTOR_PROCESS_FUNCTOR xBeginFunctor) = 0;
@@ -84,8 +87,13 @@ public:
 
 protected:
 
-	virtual void HandlerEx(const NFIActorMessage& message, const Theron::Address& from) {};
-	virtual void Handler(const NFIActorMessage& message, const Theron::Address& from) {};
+	virtual void HandlerEx(const NFIActorMessage& message, const Theron::Address& from)
+	{
+	};
+
+	virtual void Handler(const NFIActorMessage& message, const Theron::Address& from)
+	{
+	};
 
 private:
 	void DefaultHandler(const NFIActorMessage& message, const Theron::Address from) //-V801
@@ -105,3 +113,4 @@ protected:
 };
 
 #endif
+

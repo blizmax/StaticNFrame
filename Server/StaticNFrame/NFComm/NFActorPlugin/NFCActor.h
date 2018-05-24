@@ -45,3 +45,4 @@ private:
 	ACTOR_PROCESS_FUNCTOR mxDefaultEndProcessFuntor;
 };
 #endif
+

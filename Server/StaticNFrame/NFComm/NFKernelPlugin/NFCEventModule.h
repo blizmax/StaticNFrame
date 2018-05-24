@@ -26,7 +26,7 @@
 //事件执行对象
 struct OnEventExecuteObj
 {
-	bool operator()(NFEventObj *pSink, uint16_t nEventID, uint64_t nSrcID, uint8_t bySrcType, NFEventContext* pEventContext) const
+	bool operator()(NFEventObj* pSink, uint16_t nEventID, uint64_t nSrcID, uint8_t bySrcType, NFEventContext* pEventContext) const
 	{
 		if (nullptr == pSink) return false;
 
@@ -85,7 +85,7 @@ public:
 	* @param desc		事件描述，用于打印，获取信息，查看BUG之类的
 	* @return			订阅事件是否成功
 	*/
-	virtual bool Subscribe(NFEventObj *pSink, uint16_t nEventID, uint64_t nSrcID, uint8_t bySrcType, const std::string& desc) override;
+	virtual bool Subscribe(NFEventObj* pSink, uint16_t nEventID, uint64_t nSrcID, uint8_t bySrcType, const std::string& desc) override;
 
 	/**
 	* @brief 取消订阅事件
@@ -95,16 +95,17 @@ public:
 	* @param bySrcType	事件源类型，玩家类型，怪物类型之类的
 	* @return			取消订阅事件是否成功
 	*/
-	virtual bool UnSubscribe(NFEventObj *pSink, uint16_t nEventID, uint64_t nSrcID, uint8_t bySrcType) override;
+	virtual bool UnSubscribe(NFEventObj* pSink, uint16_t nEventID, uint64_t nSrcID, uint8_t bySrcType) override;
 
 	/**
 	* @brief 取消NFEventObj所有订阅事件
 	*
 	* @return			取消订阅事件是否成功
 	*/
-	virtual bool UnSubscribeAll(NFEventObj *pSink) override;
+	virtual bool UnSubscribeAll(NFEventObj* pSink) override;
 private:
 	NFEventTemplate<NFEventObj, OnEventExecuteObj> m_ExecuteCenter;
 };
 
 #endif
+

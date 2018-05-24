@@ -18,7 +18,9 @@ public:
 		pPluginManager = p;
 	}
 
-	virtual ~NFKernelPlugin() { }
+	virtual ~NFKernelPlugin()
+	{
+	}
 
 	virtual int GetPluginVersion() override;
 
@@ -28,3 +30,4 @@ public:
 
 	virtual void Uninstall() override;
 };
+

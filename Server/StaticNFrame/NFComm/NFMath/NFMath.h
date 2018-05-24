@@ -21,11 +21,11 @@
 #include "G3D/Matrix3.h"
 #include "G3D/Quat.h"
 
-typedef G3D::Matrix3							Matrix;
-typedef G3D::Quat								Quaternion;
-typedef G3D::Vector2							Vector2;
-typedef G3D::Vector3							Vector3;
-typedef G3D::Vector4							Vector4;
+typedef G3D::Matrix3 Matrix;
+typedef G3D::Quat Quaternion;
+typedef G3D::Vector2 Vector2;
+typedef G3D::Vector3 Vector3;
+typedef G3D::Vector4 Vector4;
 
 #define NF_PI									3.1415926535898
 #define NF_2PI									6.2831853071796
@@ -80,7 +80,7 @@ inline float NFVec3CalcVec2Length(const Vector3& v1, const Vector3& v2)
 {
 	float x = v1.x - v2.x;
 	float z = v1.z - v2.z;
-	return sqrt(x*x + z*z);
+	return sqrt(x * x + z * z);
 }
 
 inline float int82angle(int8_t angle, bool half = false)
@@ -103,16 +103,27 @@ inline int8_t angle2int8(float v, bool half = false)
 	return angle;
 }
 
-typedef Vector2													NFVector2;												// 表示3D位置变量类型
-typedef Vector3													NFVector3;												// 表示3D位置变量类型
-typedef Vector4													NFVector4;												// 表示3D位置变量类型
+typedef Vector2 NFVector2; // 表示3D位置变量类型
+typedef Vector3 NFVector3; // 表示3D位置变量类型
+typedef Vector4 NFVector4; // 表示3D位置变量类型
 
-struct Direction3D																										// 表示方向位置变量类型
+struct Direction3D // 表示方向位置变量类型
 {
-	Direction3D() :dir(0.f, 0.f, 0.f) {};
-	Direction3D(const Vector3 & v) :dir(v) {}
-	Direction3D(float r, float p, float y) :dir(r, p, y) {}
-	Direction3D(const Direction3D & v) :dir(v.dir) {}
+	Direction3D() : dir(0.f, 0.f, 0.f)
+	{
+	};
+
+	Direction3D(const Vector3& v) : dir(v)
+	{
+	}
+
+	Direction3D(float r, float p, float y) : dir(r, p, y)
+	{
+	}
+
+	Direction3D(const Direction3D& v) : dir(v.dir)
+	{
+	}
 
 	Direction3D& operator=(const Direction3D& v)
 	{
@@ -120,13 +131,35 @@ struct Direction3D																										// 表示方向位置变量类型
 		return *this;
 	}
 
-	float roll() const { return dir.x; }
-	float pitch() const { return dir.y; }
-	float yaw() const { return dir.z; }
+	float roll() const
+	{
+		return dir.x;
+	}
 
-	void roll(float v) { dir.x = v; }
-	void pitch(float v) { dir.y = v; }
-	void yaw(float v) { dir.z = v; }
+	float pitch() const
+	{
+		return dir.y;
+	}
+
+	float yaw() const
+	{
+		return dir.z;
+	}
+
+	void roll(float v)
+	{
+		dir.x = v;
+	}
+
+	void pitch(float v)
+	{
+		dir.y = v;
+	}
+
+	void yaw(float v)
+	{
+		dir.z = v;
+	}
 
 	// roll, pitch, yaw
 	Vector3 dir;
@@ -134,6 +167,7 @@ struct Direction3D																										// 表示方向位置变量类型
 
 /** 浮点数比较 */
 #define floatEqual(v1, v2) (abs(v1 - v2) < std::numeric_limits<float>::epsilon())
+
 inline bool almostEqual(const float f1, const float f2, const float epsilon = 0.0004f)
 {
 	return fabsf(f1 - f2) < epsilon;
@@ -154,15 +188,16 @@ inline bool almostZero(const double d, const double epsilon = 0.0004)
 	return d < epsilon && d > -epsilon;
 }
 
-template<typename T>
+template <typename T>
 inline bool almostEqual(const T& c1, const T& c2, const float epsilon = 0.0004f)
 {
 	if (c1.size() != c2.size())
 		return false;
 	typename T::const_iterator iter1 = c1.begin();
 	typename T::const_iterator iter2 = c2.begin();
-	for (; iter1 != c1.end(); ++iter1, ++iter2)
+	for (; iter1 != c1.end(); ++iter1 , ++iter2)
 		if (!almostEqual(*iter1, *iter2, epsilon))
 			return false;
 	return true;
 }
+

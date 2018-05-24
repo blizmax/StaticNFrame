@@ -59,18 +59,21 @@ uint32_t NetObject::GetLinkId() const
 	return m_usLinkId;
 }
 
-bool  NetObject::OnRecvData(bufferevent* pBufEv)
+bool NetObject::OnRecvData(bufferevent* pBufEv)
 {
-	if (NULL == pBufEv) {
+	if (NULL == pBufEv)
+	{
 		return false;
 	}
-	struct evbuffer * pEvbuff = bufferevent_get_input(pBufEv);
-	if (NULL == pEvbuff) {
+	struct evbuffer* pEvbuff = bufferevent_get_input(pBufEv);
+	if (NULL == pEvbuff)
+	{
 		return false;
 	}
 
-	int32_t  ilen = static_cast<int32_t>(evbuffer_get_length(pEvbuff));
-	if (ilen <= 0) {
+	int32_t ilen = static_cast<int32_t>(evbuffer_get_length(pEvbuff));
+	if (ilen <= 0)
+	{
 		return true;
 	}
 
@@ -179,3 +182,4 @@ bool NetObject::Send(const void* pData, uint32_t unSize)
 	}
 	return false;
 }
+

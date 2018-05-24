@@ -1,4 +1,4 @@
-// -------------------------------------------------------------------------
+﻿// -------------------------------------------------------------------------
 //    @FileName         :    NFIPluginManager.h
 //    @Author           :    LvSheng.Huang
 //    @Date             :    2012-12-15
@@ -20,10 +20,10 @@
 class NFIPlugin;
 class NFIPluginManager;
 
-typedef std::function<NFIModule* (NFIPluginManager* pMan)> CREATE_ALONE_MODULE;
+typedef std::function<NFIModule*(NFIPluginManager* pMan)> CREATE_ALONE_MODULE;
 typedef std::function<void(NFIModule*)> DELETE_ALONE_MODULE;
 
-typedef std::function<NFIPlugin* (NFIPluginManager* pMan)> CREATE_PLUGIN_FUNCTION;
+typedef std::function<NFIPlugin*(NFIPluginManager* pMan)> CREATE_PLUGIN_FUNCTION;
 
 #define FIND_MODULE(classBaseName, className)  \
     assert((TIsDerived<classBaseName, NFIModule>::Result));
@@ -102,7 +102,7 @@ public:
 
 	virtual NFIModule* FindModule(const std::string& strModuleName) = 0;
 
-	virtual void RegisterAloneModule(const std::string& strModuleName, const CREATE_ALONE_MODULE& createFunc) = 0;   //
+	virtual void RegisterAloneModule(const std::string& strModuleName, const CREATE_ALONE_MODULE& createFunc) = 0; //
 
 	virtual NFIModule* CreateAloneModule(const std::string& strModuleName) = 0;
 
@@ -130,3 +130,4 @@ public:
 };
 
 #endif
+

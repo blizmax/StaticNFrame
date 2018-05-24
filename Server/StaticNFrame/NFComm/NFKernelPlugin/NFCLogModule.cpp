@@ -1,4 +1,4 @@
-// -------------------------------------------------------------------------
+ï»¿// -------------------------------------------------------------------------
 //    @FileName         :    NFCLogModule.cpp
 //    @Author           :    LvSheng.Huang
 //    @Date             :    2012-12-15
@@ -90,10 +90,10 @@ NFCLogModule::NFCLogModule(NFIPluginManager* p)
 #endif
 #endif
 
-	//°´ÎÄ¼þ´óÐ¡¹ö¶¯
+	//ï¿½ï¿½ï¿½Ä¼ï¿½ï¿½ï¿½Ð¡ï¿½ï¿½ï¿½ï¿½
 	el::Loggers::addFlag(el::LoggingFlag::StrictLogFileSizeCheck);
 	el::Loggers::addFlag(el::LoggingFlag::DisableApplicationAbortOnFatalLog);
-	//°´Ê±¼ä³¤¶È¹ö¶¯£¬µ¥Î»s
+	//ï¿½ï¿½Ê±ï¿½ä³¤ï¿½È¹ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Î»s
 	el::Loggers::addFlag(el::LoggingFlag::StrictLogFileTimeCheck);
 
 	el::Configurations conf(strAppLogName);
@@ -147,59 +147,59 @@ bool NFCLogModule::Log(const NF_LOG_LEVEL nll, const char* format, ...)
 {
 	BEGIN_PROFILE("WRITE_LOG");
 
-	int ret = 0;
-	va_list args;
-	va_start(args, format);
-	ret = vsnprintf(mBuffer.data(), mBuffer.size(), format, args);
-	va_end(args);
+		int ret = 0;
+		va_list args;
+		va_start(args, format);
+		ret = vsnprintf(mBuffer.data(), mBuffer.size(), format, args);
+		va_end(args);
 
-	if (ret < 0) return false;
+		if (ret < 0) return false;
 
-	mnLogCountTotal++;
-	switch (nll)
-	{
-	case NLL_DEBUG_NORMAL:
-	{
-		std::cout << termcolor::green;
-		LOG(DEBUG) << mnLogCountTotal << " | " << pPluginManager->GetAppID() << " | " << mBuffer.data();
-	}
-	break;
-	case NLL_INFO_NORMAL:
-	{
-		std::cout << termcolor::green;
-		LOG(INFO) << mnLogCountTotal << " | " << pPluginManager->GetAppID() << " | " << mBuffer.data();
-	}
-	break;
-	case NLL_WARING_NORMAL:
-	{
-		std::cout << termcolor::yellow;
-		LOG(WARNING) << mnLogCountTotal << " | " << pPluginManager->GetAppID() << " | " << mBuffer.data();
-	}
-	break;
-	case NLL_ERROR_NORMAL:
-	{
-		std::cout << termcolor::red;
-		LOG(ERROR) << mnLogCountTotal << " | " << pPluginManager->GetAppID() << " | " << mBuffer.data();
-		//LogStack();
-	}
-	break;
-	case NLL_FATAL_NORMAL:
-	{
-		std::cout << termcolor::red;
-		LOG(FATAL) << mnLogCountTotal << " | " << pPluginManager->GetAppID() << " | " << mBuffer.data();
-	}
-	break;
-	default:
-	{
-		std::cout << termcolor::green;
-		LOG(INFO) << mnLogCountTotal << " | " << pPluginManager->GetAppID() << " | " << mBuffer.data();
-	}
-	break;
-	}
+		mnLogCountTotal++;
+		switch (nll)
+		{
+		case NLL_DEBUG_NORMAL:
+			{
+				std::cout << termcolor::green;
+				LOG(DEBUG) << mnLogCountTotal << " | " << pPluginManager->GetAppID() << " | " << mBuffer.data();
+			}
+			break;
+		case NLL_INFO_NORMAL:
+			{
+				std::cout << termcolor::green;
+				LOG(INFO) << mnLogCountTotal << " | " << pPluginManager->GetAppID() << " | " << mBuffer.data();
+			}
+			break;
+		case NLL_WARING_NORMAL:
+			{
+				std::cout << termcolor::yellow;
+				LOG(WARNING) << mnLogCountTotal << " | " << pPluginManager->GetAppID() << " | " << mBuffer.data();
+			}
+			break;
+		case NLL_ERROR_NORMAL:
+			{
+				std::cout << termcolor::red;
+				LOG(ERROR) << mnLogCountTotal << " | " << pPluginManager->GetAppID() << " | " << mBuffer.data();
+				//LogStack();
+			}
+			break;
+		case NLL_FATAL_NORMAL:
+			{
+				std::cout << termcolor::red;
+				LOG(FATAL) << mnLogCountTotal << " | " << pPluginManager->GetAppID() << " | " << mBuffer.data();
+			}
+			break;
+		default:
+			{
+				std::cout << termcolor::green;
+				LOG(INFO) << mnLogCountTotal << " | " << pPluginManager->GetAppID() << " | " << mBuffer.data();
+			}
+			break;
+		}
 
-	std::cout << termcolor::reset;
-	//memset(szBuffer, 0, writeSize);
-	END_PROFILE();
+		std::cout << termcolor::reset;
+		//memset(szBuffer, 0, writeSize);
+		END_PROFILE();
 	return true;
 }
 
@@ -299,29 +299,29 @@ bool NFCLogModule::ChangeLogLevel(const std::string& strLevel)
 	switch (logLevel)
 	{
 	case el::Level::Fatal:
-	{
-		el::Configuration errorConfiguration(el::Level::Error, el::ConfigurationType::Enabled, "false");
-		pConfigurations->set(&errorConfiguration);
-	}
-	break;
+		{
+			el::Configuration errorConfiguration(el::Level::Error, el::ConfigurationType::Enabled, "false");
+			pConfigurations->set(&errorConfiguration);
+		}
+		break;
 	case el::Level::Error:
-	{
-		el::Configuration warnConfiguration(el::Level::Warning, el::ConfigurationType::Enabled, "false");
-		pConfigurations->set(&warnConfiguration);
-	}
-	break;
+		{
+			el::Configuration warnConfiguration(el::Level::Warning, el::ConfigurationType::Enabled, "false");
+			pConfigurations->set(&warnConfiguration);
+		}
+		break;
 	case el::Level::Warning:
-	{
-		el::Configuration infoConfiguration(el::Level::Info, el::ConfigurationType::Enabled, "false");
-		pConfigurations->set(&infoConfiguration);
-	}
-	break;
+		{
+			el::Configuration infoConfiguration(el::Level::Info, el::ConfigurationType::Enabled, "false");
+			pConfigurations->set(&infoConfiguration);
+		}
+		break;
 	case el::Level::Info:
-	{
-		el::Configuration debugConfiguration(el::Level::Debug, el::ConfigurationType::Enabled, "false");
-		pConfigurations->set(&debugConfiguration);
-	}
-	break;
+		{
+			el::Configuration debugConfiguration(el::Level::Debug, el::ConfigurationType::Enabled, "false");
+			pConfigurations->set(&debugConfiguration);
+		}
+		break;
 	case el::Level::Debug:
 		break;
 	default:
@@ -332,3 +332,4 @@ bool NFCLogModule::ChangeLogLevel(const std::string& strLevel)
 	LogNormal(NLL_INFO_NORMAL, 0, "[Log] Change log level", strLevel, __FUNCTION__, __LINE__);
 	return true;
 }
+

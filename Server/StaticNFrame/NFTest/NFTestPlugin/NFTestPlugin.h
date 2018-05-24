@@ -26,3 +26,4 @@ public:
 
 	virtual void Uninstall();
 };
+

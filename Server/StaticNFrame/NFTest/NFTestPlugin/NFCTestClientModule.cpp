@@ -81,7 +81,7 @@ void NFCTestClientModule::OnHandleQueryPlayerData(const uint32_t unLinkId, const
 	}
 }
 
-void  NFCTestClientModule::SendCreateChar()
+void NFCTestClientModule::SendCreateChar()
 {
 	proto::message::Login_CTS_CreateChar proReq;
 
@@ -93,3 +93,4 @@ void  NFCTestClientModule::SendCreateChar()
 
 	m_pNetClientModule->SendToServerByPB(m_usId, proto::message::ELogin_CTS_GAMESERVER_CreateChar, proReq, 0);
 }
+

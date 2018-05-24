@@ -32,7 +32,7 @@ void NFEventMgr::FireExecute(uint16_t nEventID, uint64_t nSrcID, uint8_t bySrcTy
 }
 
 //订阅执行事件
-bool NFEventMgr::Subscribe(NFEventObj *pSink, uint16_t nEventID, uint64_t nSrcID, uint8_t bySrcType, const std::string& desc) const
+bool NFEventMgr::Subscribe(NFEventObj* pSink, uint16_t nEventID, uint64_t nSrcID, uint8_t bySrcType, const std::string& desc) const
 {
 	if (m_pEventModule)
 	{
@@ -42,7 +42,7 @@ bool NFEventMgr::Subscribe(NFEventObj *pSink, uint16_t nEventID, uint64_t nSrcID
 }
 
 //取消订阅执行事件
-bool NFEventMgr::UnSubscribe(NFEventObj *pSink, uint16_t nEventID, uint64_t nSrcID, uint8_t bySrcType) const
+bool NFEventMgr::UnSubscribe(NFEventObj* pSink, uint16_t nEventID, uint64_t nSrcID, uint8_t bySrcType) const
 {
 	if (m_pEventModule)
 	{
@@ -52,7 +52,7 @@ bool NFEventMgr::UnSubscribe(NFEventObj *pSink, uint16_t nEventID, uint64_t nSrc
 }
 
 //取消所有执行事件的订阅
-bool NFEventMgr::UnSubscribeAll(NFEventObj *pSink) const
+bool NFEventMgr::UnSubscribeAll(NFEventObj* pSink) const
 {
 	if (m_pEventModule)
 	{
@@ -60,3 +60,4 @@ bool NFEventMgr::UnSubscribeAll(NFEventObj *pSink) const
 	}
 	return true;
 }
+

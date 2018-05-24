@@ -67,7 +67,7 @@ bool NFConfigMgr::Init()
 			assert(0);
 		}
 
-		NFPluginConfig *pConfig = NF_NEW NFPluginConfig();;
+		NFPluginConfig* pConfig = NF_NEW NFPluginConfig();;
 		if (serverPluginListRef.isTable())
 		{
 			for (int i = 1; i <= serverPluginListRef.len(); i++)
@@ -214,3 +214,4 @@ bool NFConfigMgr::Shut()
 	mServerConfig.clear();
 	return true;
 }
+

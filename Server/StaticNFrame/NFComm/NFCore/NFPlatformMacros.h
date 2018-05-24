@@ -140,6 +140,7 @@
 #endif // NF_PLATFORM == NF_PLATFORM_WIN
 
 
+
 //----------------------------------------------------------------------------
 // Linux/Apple/iOs/Android/Symbian/Tegra2/NaCl Settings
 #if NF_PLATFORM == NF_PLATFORM_LINUX

@@ -62,7 +62,7 @@ public:
 	 *
 	 * @return	< 0, 表示网络数据有问题, = 0, 表示还有数据继续处理，> 0表示数据处理完毕
 	 */
-	virtual int	Dismantle();
+	virtual int Dismantle();
 
 	/**
 	 * @brief	保存socket，并对socket做属性处理, 非阻塞
@@ -188,3 +188,4 @@ protected:
 	 */
 	uint64_t m_lastPingTime;
 };
+

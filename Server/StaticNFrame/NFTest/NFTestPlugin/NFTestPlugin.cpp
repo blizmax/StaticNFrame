@@ -49,3 +49,4 @@ void NFTestPlugin::Uninstall()
 	UNREGISTER_MODULE(pPluginManager, NFITestKernelModule, NFCTestKernelModule);
 	UNREGISTER_MODULE(pPluginManager, NFCTestClientModule, NFCTestClientModule);
 }
+

@@ -45,3 +45,4 @@ void NFNetPlugin::Uninstall()
 {
 	UNREGISTER_MODULE(pPluginManager, NFINetClientModule, NFCNetClientModule);
 }
+

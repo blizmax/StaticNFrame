@@ -28,6 +28,7 @@
         return ;										\
     }													\
 
+
 class NFINetModule : public NFIModule
 {
 protected:
@@ -41,7 +42,7 @@ public:
 	{
 	}
 
-	template<typename BaseType>
+	template <typename BaseType>
 	bool AddReceiveCallBack(const NF_SERVER_TYPES eType, const uint32_t nMsgID, BaseType* pBase, void (BaseType::*handleRecieve)(const uint32_t unLinkId, const uint64_t valueId, const uint32_t nMsgId, const char* msg, const uint32_t nLen))
 	{
 		NET_RECEIVE_FUNCTOR functor = std::bind(handleRecieve, pBase, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3, std::placeholders::_4, std::placeholders::_5);
@@ -49,7 +50,7 @@ public:
 		return AddReceiveCallBack(eType, nMsgID, functor);
 	}
 
-	template<typename BaseType>
+	template <typename BaseType>
 	bool AddReceiveCallBack(const NF_SERVER_TYPES eType, BaseType* pBase, void (BaseType::*handleRecieve)(const uint32_t unLinkId, const uint64_t valueId, const uint32_t nMsgId, const char* msg, const uint32_t nLen))
 	{
 		NET_RECEIVE_FUNCTOR functor = std::bind(handleRecieve, pBase, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3, std::placeholders::_4, std::placeholders::_5);
@@ -77,7 +78,7 @@ public:
 		return false;
 	}
 
-	template<typename BaseType>
+	template <typename BaseType>
 	bool AddEventCallBack(const NF_SERVER_TYPES eType, BaseType* pBase, void (BaseType::*handler)(const eMsgType nEvent, const uint32_t unLinkId))
 	{
 		NET_EVENT_FUNCTOR functor = std::bind(handler, pBase, std::placeholders::_1, std::placeholders::_2);
@@ -160,3 +161,4 @@ protected:
 
 	std::vector<CallBack> mxCallBack;
 };
+

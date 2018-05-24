@@ -7,10 +7,13 @@
 struct stMsg
 {
 public:
-	stMsg() :wSZ(0), wCmdID(0), ulValue(0) { }
-	uint32_t	wSZ;
-	uint16_t	wCmdID;
-	uint64_t	ulValue;
+	stMsg() : wSZ(0), wCmdID(0), ulValue(0)
+	{
+	}
+
+	uint32_t wSZ;
+	uint16_t wCmdID;
+	uint64_t ulValue;
 };
 
 #pragma pack(pop)
@@ -19,7 +22,7 @@ ArpgNetPacketParse::ArpgNetPacketParse()
 {
 }
 
-int ArpgNetPacketParse::DeCodeImpl(const char* strData, const uint32_t unLen, char*& outData, uint32_t& outLen, uint32_t& allLen, uint32_t &nMsgId, uint64_t& nValue)
+int ArpgNetPacketParse::DeCodeImpl(const char* strData, const uint32_t unLen, char*& outData, uint32_t& outLen, uint32_t& allLen, uint32_t& nMsgId, uint64_t& nValue)
 {
 	if (strData == nullptr || unLen == 0) return 1;
 
@@ -67,3 +70,4 @@ int ArpgNetPacketParse::EnCodeImpl(const uint32_t unMsgID, const uint64_t nValue
 
 	return packHead.wSZ;
 }
+

@@ -22,7 +22,12 @@ class NFITestKernelModule : public NFIModule
 class NFTestEvent0 : public NFEventContext
 {
 public:
-	NFTestEvent0() { a = 0; c = 0; }
+	NFTestEvent0()
+	{
+		a = 0;
+		c = 0;
+	}
+
 public:
 	int a;
 	std::string b;
@@ -32,7 +37,11 @@ public:
 class NFTestEvent : public NFEventContext
 {
 public:
-	NFTestEvent() { a = 0; }
+	NFTestEvent()
+	{
+		a = 0;
+	}
+
 public:
 	int a;
 	std::string b;
@@ -75,7 +84,12 @@ class NFCTestKernelModule : public NFITestKernelModule, NFTimerObj, NFEventObj
 
 public:
 	explicit NFCTestKernelModule(NFIPluginManager* p);
-	virtual ~NFCTestKernelModule() { delete m_pObject; }
+
+	virtual ~NFCTestKernelModule()
+	{
+		delete m_pObject;
+	}
+
 public:
 	virtual bool Init() override;
 
@@ -94,3 +108,4 @@ protected:
 	uint64_t lastTime = 0;
 	NFTestObject* m_pObject;
 };
+

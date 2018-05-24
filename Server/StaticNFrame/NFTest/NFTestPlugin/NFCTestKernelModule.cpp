@@ -139,3 +139,4 @@ void NFCTestKernelModule::OnExecute(uint16_t nEventID, uint64_t nSrcID, uint8_t 
 		this->FireExecute(NFEVENT_TEST2, 7, eEvent_one_cycle, nullptr);
 	}
 }
+

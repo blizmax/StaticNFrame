@@ -7,3 +7,4 @@
 #pragma comment( lib, "NFCore.lib" )
 #pragma comment( lib, "gtest.lib" )
 #endif
+

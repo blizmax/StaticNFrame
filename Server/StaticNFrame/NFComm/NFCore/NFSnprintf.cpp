@@ -72,6 +72,7 @@ int NFSafeVsnprintf(char *buf, size_t size, const char *fmt, va_list ap)
 # endif // __STDC_WANT_SECURE_LIB__
 
 
+
 #else
 
 int NFSafeSnprintf(char *buf, size_t size, const char *fmt, ...)

@@ -29,7 +29,7 @@ bool NFLogMgr::LogNormal(const NF_LOG_LEVEL nll, const uint64_t ident, const std
 	return false;
 }
 
-bool NFLogMgr::LogNormal(const NF_LOG_LEVEL nll, const uint64_t ident, const std::string& strInfo, const std::string& strDesc, const  char* func, int line)
+bool NFLogMgr::LogNormal(const NF_LOG_LEVEL nll, const uint64_t ident, const std::string& strInfo, const std::string& strDesc, const char* func, int line)
 {
 	if (m_pLogModule)
 	{
@@ -46,3 +46,4 @@ bool NFLogMgr::LogNormal(const NF_LOG_LEVEL nll, const uint64_t ident, const std
 	}
 	return false;
 }
+

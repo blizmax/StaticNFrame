@@ -21,7 +21,7 @@ void NFTimerMgr::UnInit()
 }
 
 //设置定时器
-bool NFTimerMgr::SetTimer(uint32_t nTimerID, uint64_t nInterVal, NFTimerObj *handler, uint32_t nCallCount /*= INFINITY_CALL*/)
+bool NFTimerMgr::SetTimer(uint32_t nTimerID, uint64_t nInterVal, NFTimerObj* handler, uint32_t nCallCount /*= INFINITY_CALL*/)
 {
 	if (m_pTimerModule)
 	{
@@ -31,7 +31,7 @@ bool NFTimerMgr::SetTimer(uint32_t nTimerID, uint64_t nInterVal, NFTimerObj *han
 }
 
 //关闭定时器
-bool NFTimerMgr::KillTimer(uint32_t nTimerID, NFTimerObj *handler)
+bool NFTimerMgr::KillTimer(uint32_t nTimerID, NFTimerObj* handler)
 {
 	if (m_pTimerModule)
 	{
@@ -41,7 +41,7 @@ bool NFTimerMgr::KillTimer(uint32_t nTimerID, NFTimerObj *handler)
 }
 
 //关闭所有定时器
-bool NFTimerMgr::KillAllTimer(NFTimerObj *handler)
+bool NFTimerMgr::KillAllTimer(NFTimerObj* handler)
 {
 	if (m_pTimerModule)
 	{
@@ -51,7 +51,7 @@ bool NFTimerMgr::KillAllTimer(NFTimerObj *handler)
 }
 
 //设置固定时间的定时器
-bool NFTimerMgr::SetFixTimer(uint32_t nTimerID, uint64_t nStartTime, uint32_t nInterDays, NFTimerObj *handler, uint32_t nCallCount/* = INFINITY_CALL */)
+bool NFTimerMgr::SetFixTimer(uint32_t nTimerID, uint64_t nStartTime, uint32_t nInterDays, NFTimerObj* handler, uint32_t nCallCount/* = INFINITY_CALL */)
 {
 	if (m_pTimerModule)
 	{
@@ -61,7 +61,7 @@ bool NFTimerMgr::SetFixTimer(uint32_t nTimerID, uint64_t nStartTime, uint32_t nI
 }
 
 //关闭固定时间定时器
-bool NFTimerMgr::KillFixTimer(uint32_t nTimerID, NFTimerObj *handler)
+bool NFTimerMgr::KillFixTimer(uint32_t nTimerID, NFTimerObj* handler)
 {
 	if (m_pTimerModule)
 	{
@@ -71,7 +71,7 @@ bool NFTimerMgr::KillFixTimer(uint32_t nTimerID, NFTimerObj *handler)
 }
 
 //关闭所有固定时间定时器
-bool NFTimerMgr::KillAllFixTimer(NFTimerObj *handler)
+bool NFTimerMgr::KillAllFixTimer(NFTimerObj* handler)
 {
 	if (m_pTimerModule)
 	{
@@ -79,3 +79,4 @@ bool NFTimerMgr::KillAllFixTimer(NFTimerObj *handler)
 	}
 	return false;
 }
+

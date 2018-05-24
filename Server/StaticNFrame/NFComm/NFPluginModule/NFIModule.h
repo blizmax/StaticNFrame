@@ -11,7 +11,7 @@
 
 #include <string>
 
-template<typename DerivedType, typename BaseType>
+template <typename DerivedType, typename BaseType>
 class TIsDerived
 {
 public:
@@ -20,7 +20,7 @@ public:
 		return 1;
 	}
 
-	static  char AnyFunction(void* t2)
+	static char AnyFunction(void* t2)
 	{
 		return 0;
 	}
@@ -40,7 +40,9 @@ public:
 	{
 	}
 
-	virtual ~NFIModule() {}
+	virtual ~NFIModule()
+	{
+	}
 
 	virtual bool RegisterLua()
 	{
@@ -108,3 +110,4 @@ protected:
 	NFIPluginManager* pPluginManager = NULL;
 };
 #endif
+

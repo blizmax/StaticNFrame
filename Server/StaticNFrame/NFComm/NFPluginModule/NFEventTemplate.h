@@ -28,15 +28,15 @@ class NFEventContext;
  */
 #define EVENT_FIRE_MAX_LAYER 20
 
- /**
- *@brief  对单一事件最大嵌套层数支持5层.
- * 比如在Fire一个事件里，又对这个事件经行了Fire
- */
+/**
+*@brief  对单一事件最大嵌套层数支持5层.
+* 比如在Fire一个事件里，又对这个事件经行了Fire
+*/
 #define EVENT_REF_MAX_CNT 5
 
- /**
- *@brief 事件key类
- */
+/**
+*@brief 事件key类
+*/
 struct SEventKey
 {
 	/**
@@ -52,7 +52,7 @@ struct SEventKey
 	/**
 	*@brief src类型, 用来区别玩家，怪物的类型
 	*/
-	uint8_t  bySrcType;
+	uint8_t bySrcType;
 
 	/**
 	*@brief 构造函数
@@ -67,7 +67,7 @@ struct SEventKey
 	/**
 	*@brief 判断是否相等
 	*/
-	bool operator == (const SEventKey &eventKey) const
+	bool operator ==(const SEventKey& eventKey) const
 	{
 		return ((nSrcID == eventKey.nSrcID) &&
 			(nEventID == eventKey.nEventID) &&
@@ -77,7 +77,7 @@ struct SEventKey
 	/**
 	*@brief 判断是否小于, 不知道有没有更好的判断小于的方法
 	*/
-	bool operator < (const SEventKey &eventKey) const
+	bool operator <(const SEventKey& eventKey) const
 	{
 		if (nSrcID < eventKey.nSrcID)
 		{
@@ -115,10 +115,12 @@ struct SEventKey
 /**
 *@brief 求hash值
 */
-namespace std {
-	template<> struct hash < SEventKey >
+namespace std
+{
+	template <>
+	struct hash<SEventKey>
 	{
-		size_t  operator()(const SEventKey &eventKey) const
+		size_t operator()(const SEventKey& eventKey) const
 		{
 			return NFHash::hash_combine(eventKey.nSrcID, eventKey.nEventID, eventKey.bySrcType);
 		}
@@ -128,7 +130,7 @@ namespace std {
 /**
  *@brief 事件系统模版类
  */
-template<class TEventSink, class TEventObj>
+template <class TEventSink, class TEventObj>
 class NFEventTemplate
 {
 private:
@@ -140,7 +142,7 @@ private:
 		/**
 		*@brief 事件对象
 		*/
-		TEventSink *pSink;
+		TEventSink* pSink;
 
 		/**
 		*@brief 描述信息
@@ -160,7 +162,7 @@ private:
 		/**
 		*@brief 构造函数
 		*/
-		SubscribeInfo(TEventSink *pParamSink, const std::string& desc) :szDesc(desc)
+		SubscribeInfo(TEventSink* pParamSink, const std::string& desc) : szDesc(desc)
 		{
 			pSink = pParamSink;
 			szDesc = desc;
@@ -184,6 +186,7 @@ private:
 			--nRefCount;
 		}
 	};
+
 public:
 	/**
 	*@brief 构造函数
@@ -212,7 +215,7 @@ public:
 	* @param desc		事件描述，用于打印，获取信息，查看BUG之类的
 	* @return			订阅事件是否成功
 	*/
-	bool Subscribe(TEventSink *pSink, uint16_t nEventID, uint64_t nSrcID, uint8_t bySrcType, const std::string& desc)
+	bool Subscribe(TEventSink* pSink, uint16_t nEventID, uint64_t nSrcID, uint8_t bySrcType, const std::string& desc)
 	{
 		if (nullptr == pSink) return false;
 
@@ -266,7 +269,7 @@ public:
 	* @param bySrcType	事件源类型，玩家类型，怪物类型之类的
 	* @return			取消订阅事件是否成功
 	*/
-	bool UnSubscribe(TEventSink *pSink, uint16_t nEventID, uint64_t nSrcID, uint8_t bySrcType)
+	bool UnSubscribe(TEventSink* pSink, uint16_t nEventID, uint64_t nSrcID, uint8_t bySrcType)
 	{
 		if (nullptr == pSink) return false;
 
@@ -311,7 +314,7 @@ public:
 	* @param pSink		订阅对象
 	* @return			取消订阅事件是否成功
 	*/
-	bool UnSubscribeAll(TEventSink *pSink)
+	bool UnSubscribeAll(TEventSink* pSink)
 	{
 		if (nullptr == pSink) return false;
 
@@ -380,6 +383,7 @@ public:
 		}
 		return true;
 	}
+
 private:
 	/**
 	* @brief 删除skey的链表里的pSink
@@ -388,14 +392,14 @@ private:
 	* @param SEventKey	事件合成key
 	* @return			删除skey的链表里的pSink是否成功
 	*/
-	bool DelSubcribeInfo(TEventSink *pSink, const SEventKey &skey)
+	bool DelSubcribeInfo(TEventSink* pSink, const SEventKey& skey)
 	{
 		auto iter = m_mapAllSubscribeObj.find(skey);
 		if (iter != m_mapAllSubscribeObj.end())
 		{
 			for (auto iterLst = iter->second.begin(); iterLst != iter->second.end(); ++iterLst)
 			{
-				SubscribeInfo &sInfo = (*iterLst);
+				SubscribeInfo& sInfo = (*iterLst);
 				if (sInfo.pSink == pSink)
 				{
 					if (sInfo.nRefCount == 0)
@@ -428,7 +432,7 @@ private:
 	* @param pEventContext	事件传输的数据
 	* @return				执行是否成功
 	*/
-	bool Fire(const SEventKey &skey, uint16_t nEventID, uint64_t nSrcID, uint8_t bySrcType, NFEventContext* pEventContex)
+	bool Fire(const SEventKey& skey, uint16_t nEventID, uint64_t nSrcID, uint8_t bySrcType, NFEventContext* pEventContex)
 	{
 		m_nFireLayer++;
 		if (m_nFireLayer >= EVENT_FIRE_MAX_LAYER)
@@ -445,7 +449,7 @@ private:
 		{
 			for (auto iter = iterLst->second.begin(); iter != iterLst->second.end();)
 			{
-				SubscribeInfo *pSubscribeInfo = &(*iter);
+				SubscribeInfo* pSubscribeInfo = &(*iter);
 				if (pSubscribeInfo->nRefCount >= EVENT_REF_MAX_CNT)
 				{
 					std::cerr << "[Event] pSubscribeInfo->nRefCount >= EVENT_REF_MAX_CNT....eventid:"
@@ -518,3 +522,4 @@ private:
 	//
 	int32_t m_nFireLayer;
 };
+

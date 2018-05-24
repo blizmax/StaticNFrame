@@ -21,11 +21,11 @@ NFFixTimerAxis::~NFFixTimerAxis()
 {
 	for (size_t i = 0; i < m_FixTimerAxis.size(); ++i)
 	{
-		FIXTIMER_LIST *pFixList = m_FixTimerAxis[i];
+		FIXTIMER_LIST* pFixList = m_FixTimerAxis[i];
 		FIXTIMER_LIST::iterator iter = pFixList->begin();
 		for (; iter != pFixList->end(); ++iter)
 		{
-			FixTimer *pFixTimer = (*iter);
+			FixTimer* pFixTimer = (*iter);
 			NFSafeDelete(pFixTimer);
 		}
 		pFixList->clear();
@@ -36,7 +36,7 @@ NFFixTimerAxis::~NFFixTimerAxis()
 }
 
 //设置固定时间的定时器
-bool NFFixTimerAxis::SetFixTimer(uint32_t nTimerID, uint64_t nStartTime, uint32_t nInterDays, NFTimerObj *handler, uint32_t nCallCount /*= INFINITY_CALL*/)
+bool NFFixTimerAxis::SetFixTimer(uint32_t nTimerID, uint64_t nStartTime, uint32_t nInterDays, NFTimerObj* handler, uint32_t nCallCount /*= INFINITY_CALL*/)
 {
 	if (nullptr == handler)
 	{
@@ -52,8 +52,8 @@ bool NFFixTimerAxis::SetFixTimer(uint32_t nTimerID, uint64_t nStartTime, uint32_
 	}
 
 	bool bNeedFind = true;
-	void **ppFixTimerInfo = handler->GetFixTimerInfoPtr();
-	FIXTIMER_LIST *pFixTimerList = *(FIXTIMER_LIST**)ppFixTimerInfo;
+	void** ppFixTimerInfo = handler->GetFixTimerInfoPtr();
+	FIXTIMER_LIST* pFixTimerList = *(FIXTIMER_LIST**)ppFixTimerInfo;
 	if (nullptr == pFixTimerList)
 	{
 		pFixTimerList = new FIXTIMER_LIST();
@@ -61,7 +61,7 @@ bool NFFixTimerAxis::SetFixTimer(uint32_t nTimerID, uint64_t nStartTime, uint32_
 		bNeedFind = false;
 	}
 
-	FixTimer *pFixTimer = nullptr;
+	FixTimer* pFixTimer = nullptr;
 	if (bNeedFind)
 	{
 		FIXTIMER_LIST::iterator iter = pFixTimerList->begin();
@@ -107,15 +107,16 @@ bool NFFixTimerAxis::SetFixTimer(uint32_t nTimerID, uint64_t nStartTime, uint32_
 
 	return true;
 }
+
 //关闭固定时间定时器
-bool NFFixTimerAxis::KillFixTimer(uint32_t nTimerID, NFTimerObj *handler)
+bool NFFixTimerAxis::KillFixTimer(uint32_t nTimerID, NFTimerObj* handler)
 {
 	if (nullptr == handler)
 	{
 		return false;
 	}
-	void **ppFixTimerInfo = handler->GetFixTimerInfoPtr();
-	FIXTIMER_LIST *pFixTimerList = *(FIXTIMER_LIST**)ppFixTimerInfo;
+	void** ppFixTimerInfo = handler->GetFixTimerInfoPtr();
+	FIXTIMER_LIST* pFixTimerList = *(FIXTIMER_LIST**)ppFixTimerInfo;
 	if (nullptr == pFixTimerList)
 	{
 		return false;
@@ -124,7 +125,7 @@ bool NFFixTimerAxis::KillFixTimer(uint32_t nTimerID, NFTimerObj *handler)
 	FIXTIMER_LIST::iterator iter = pFixTimerList->begin();
 	for (; iter != pFixTimerList->end(); ++iter)
 	{
-		FixTimer *pFixTimer = (*iter);
+		FixTimer* pFixTimer = (*iter);
 		if (pFixTimer && pFixTimer->nTimerID == nTimerID)
 		{
 			pFixTimerList->erase(iter);
@@ -150,14 +151,14 @@ bool NFFixTimerAxis::KillFixTimer(uint32_t nTimerID, NFTimerObj *handler)
 }
 
 //关闭所有固定时间定时器
-bool NFFixTimerAxis::KillAllFixTimer(NFTimerObj *handler)
+bool NFFixTimerAxis::KillAllFixTimer(NFTimerObj* handler)
 {
 	if (nullptr == handler)
 	{
 		return false;
 	}
-	void **ppFixTimerInfo = handler->GetFixTimerInfoPtr();
-	FIXTIMER_LIST *pFixTimerList = *(FIXTIMER_LIST**)ppFixTimerInfo;
+	void** ppFixTimerInfo = handler->GetFixTimerInfoPtr();
+	FIXTIMER_LIST* pFixTimerList = *(FIXTIMER_LIST**)ppFixTimerInfo;
 	if (nullptr == pFixTimerList)
 	{
 		return false;
@@ -165,7 +166,7 @@ bool NFFixTimerAxis::KillAllFixTimer(NFTimerObj *handler)
 	FIXTIMER_LIST::iterator iter = pFixTimerList->begin();
 	for (; iter != pFixTimerList->end(); ++iter)
 	{
-		FixTimer *pFixTimer = (*iter);
+		FixTimer* pFixTimer = (*iter);
 		if (nullptr != pFixTimer)
 		{
 			pFixTimer->nCallCount = 0;
@@ -186,7 +187,7 @@ bool NFFixTimerAxis::KillAllFixTimer(NFTimerObj *handler)
 }
 
 //重置定时器在时间轴上的位置
-bool NFFixTimerAxis::ResetFixTimerPos(FixTimer *pTimer)
+bool NFFixTimerAxis::ResetFixTimerPos(FixTimer* pTimer)
 {
 	if (nullptr == pTimer)
 	{
@@ -201,6 +202,7 @@ uint64_t NFFixTimerAxis::GetMorningTime(uint64_t nTimeSec)
 {
 	return (nTimeSec / FIX_AXIS_ONE_DAY_SECOND) * FIX_AXIS_ONE_DAY_SECOND;
 }
+
 //更新固定时间的定时器
 void NFFixTimerAxis::UpdateFix()
 {
@@ -221,11 +223,11 @@ void NFFixTimerAxis::UpdateFix()
 	do
 	{
 		// 遍历当前时间刻度中的所有待触发定时器
-		FIXTIMER_LIST *pTimerList = m_FixTimerAxis[i];
+		FIXTIMER_LIST* pTimerList = m_FixTimerAxis[i];
 		FIXTIMER_LIST::iterator it = pTimerList->begin();
 		for (; it != pTimerList->end();)
 		{
-			FixTimer * pFixTimer = *it;
+			FixTimer* pFixTimer = *it;
 			if (nullptr == pFixTimer || nullptr == pFixTimer->pHandler)
 			{
 				it = pTimerList->erase(it);
@@ -274,7 +276,8 @@ void NFFixTimerAxis::UpdateFix()
 
 		i = (i + 1) % m_FixTimerAxis.size();
 		//}while(i!=cur_grid);
-	} while (i != cur_grid);
+	}
+	while (i != cur_grid);
 }
 
 NFTimerAxis::NFTimerAxis()
@@ -301,11 +304,11 @@ NFTimerAxis::~NFTimerAxis()
 {
 	for (size_t i = 0; i < m_TimerAxis.size(); ++i)
 	{
-		TIMER_LIST *pTimerList = m_TimerAxis[i];
+		TIMER_LIST* pTimerList = m_TimerAxis[i];
 		TIMER_LIST::iterator iter = pTimerList->begin();
 		for (; iter != pTimerList->end(); ++iter)
 		{
-			Timer *pTimer = (*iter);
+			Timer* pTimer = (*iter);
 			NFSafeDelete(pTimer);
 		}
 		pTimerList->clear();
@@ -315,11 +318,11 @@ NFTimerAxis::~NFTimerAxis()
 
 	for (size_t j = 0; j < m_TimerAxisSec.size(); ++j)
 	{
-		TIMER_LIST *pTimerList = m_TimerAxisSec[j];
+		TIMER_LIST* pTimerList = m_TimerAxisSec[j];
 		TIMER_LIST::iterator iter = pTimerList->begin();
 		for (; iter != pTimerList->end(); ++iter)
 		{
-			Timer *pTimer = (*iter);
+			Timer* pTimer = (*iter);
 			NFSafeDelete(pTimer);
 		}
 		pTimerList->clear();
@@ -332,13 +335,14 @@ bool NFTimerAxis::Init()
 {
 	return true;
 }
+
 bool NFTimerAxis::UnInit()
 {
 	return true;
 }
 
 //设置秒定时器
-bool NFTimerAxis::SetTimerSec(uint32_t nTimerID, uint64_t nInterVal, NFTimerObj *handler, uint32_t nCallCount/* = INFINITY_CALL*/)
+bool NFTimerAxis::SetTimerSec(uint32_t nTimerID, uint64_t nInterVal, NFTimerObj* handler, uint32_t nCallCount/* = INFINITY_CALL*/)
 {
 	if (nullptr == handler)
 	{
@@ -354,8 +358,8 @@ bool NFTimerAxis::SetTimerSec(uint32_t nTimerID, uint64_t nInterVal, NFTimerObj 
 	}
 
 	bool bNeedFind = true;
-	void **ppTimerInfo = handler->GetTimerInfoPtr();
-	TIMER_LIST *pTimerList = *(TIMER_LIST**)ppTimerInfo;
+	void** ppTimerInfo = handler->GetTimerInfoPtr();
+	TIMER_LIST* pTimerList = *(TIMER_LIST**)ppTimerInfo;
 	if (nullptr == pTimerList)
 	{
 		pTimerList = new TIMER_LIST();
@@ -363,7 +367,7 @@ bool NFTimerAxis::SetTimerSec(uint32_t nTimerID, uint64_t nInterVal, NFTimerObj 
 		bNeedFind = false;
 	}
 
-	Timer *pTimer = nullptr;
+	Timer* pTimer = nullptr;
 	if (bNeedFind)
 	{
 		TIMER_LIST::iterator iter = pTimerList->begin();
@@ -396,7 +400,7 @@ bool NFTimerAxis::SetTimerSec(uint32_t nTimerID, uint64_t nInterVal, NFTimerObj 
 	return true;
 }
 
-bool NFTimerAxis::SetTimer(uint32_t nTimerID, uint64_t nInterVal, NFTimerObj *handler, uint32_t nCallCount /*= INFINITY_CALL*/)
+bool NFTimerAxis::SetTimer(uint32_t nTimerID, uint64_t nInterVal, NFTimerObj* handler, uint32_t nCallCount /*= INFINITY_CALL*/)
 {
 	if (nullptr == handler)
 	{
@@ -419,8 +423,8 @@ bool NFTimerAxis::SetTimer(uint32_t nTimerID, uint64_t nInterVal, NFTimerObj *ha
 	}
 
 	bool bNeedFind = true;
-	void **ppTimerInfo = handler->GetTimerInfoPtr();
-	TIMER_LIST *pTimerList = *(TIMER_LIST**)ppTimerInfo;
+	void** ppTimerInfo = handler->GetTimerInfoPtr();
+	TIMER_LIST* pTimerList = *(TIMER_LIST**)ppTimerInfo;
 	if (nullptr == pTimerList)
 	{
 		pTimerList = new TIMER_LIST();
@@ -428,7 +432,7 @@ bool NFTimerAxis::SetTimer(uint32_t nTimerID, uint64_t nInterVal, NFTimerObj *ha
 		bNeedFind = false;
 	}
 
-	Timer *pTimer = nullptr;
+	Timer* pTimer = nullptr;
 	if (bNeedFind)
 	{
 		TIMER_LIST::iterator iter = pTimerList->begin();
@@ -463,15 +467,15 @@ bool NFTimerAxis::SetTimer(uint32_t nTimerID, uint64_t nInterVal, NFTimerObj *ha
 }
 
 //关闭定时器
-bool NFTimerAxis::KillTimer(uint32_t nTimerID, NFTimerObj *handler)
+bool NFTimerAxis::KillTimer(uint32_t nTimerID, NFTimerObj* handler)
 {
 	if (nullptr == handler)
 	{
 		return false;
 	}
 
-	void **ppTimerInfo = handler->GetTimerInfoPtr();
-	TIMER_LIST *pTimerList = *(TIMER_LIST**)ppTimerInfo;
+	void** ppTimerInfo = handler->GetTimerInfoPtr();
+	TIMER_LIST* pTimerList = *(TIMER_LIST**)ppTimerInfo;
 	if (nullptr == pTimerList)
 	{
 		return false;
@@ -480,7 +484,7 @@ bool NFTimerAxis::KillTimer(uint32_t nTimerID, NFTimerObj *handler)
 	TIMER_LIST::iterator iter = pTimerList->begin();
 	for (; iter != pTimerList->end(); ++iter)
 	{
-		Timer *pTimer = (*iter);
+		Timer* pTimer = (*iter);
 		if (pTimer && pTimer->nTimerID == nTimerID)
 		{
 			pTimerList->erase(iter);
@@ -506,15 +510,15 @@ bool NFTimerAxis::KillTimer(uint32_t nTimerID, NFTimerObj *handler)
 }
 
 //关闭所有定时器
-bool NFTimerAxis::KillAllTimer(NFTimerObj *handler)
+bool NFTimerAxis::KillAllTimer(NFTimerObj* handler)
 {
 	if (nullptr == handler)
 	{
 		return false;
 	}
 
-	void **ppTimerInfo = handler->GetTimerInfoPtr();
-	TIMER_LIST *pTimerList = *(TIMER_LIST**)ppTimerInfo;
+	void** ppTimerInfo = handler->GetTimerInfoPtr();
+	TIMER_LIST* pTimerList = *(TIMER_LIST**)ppTimerInfo;
 	if (nullptr == pTimerList)
 	{
 		return false;
@@ -523,7 +527,7 @@ bool NFTimerAxis::KillAllTimer(NFTimerObj *handler)
 	TIMER_LIST::iterator iter = pTimerList->begin();
 	for (; iter != pTimerList->end(); ++iter)
 	{
-		Timer *pTimer = (*iter);
+		Timer* pTimer = (*iter);
 		if (nullptr != pTimer)
 		{
 			pTimer->nCallCount = 0;
@@ -553,20 +557,23 @@ void NFTimerAxis::CheckTick()
 }
 
 //设置固定时间的定时器
-bool NFTimerAxis::SetFixTimer(uint32_t nTimerID, uint64_t nStartTime, uint32_t nInterDays, NFTimerObj *handler, uint32_t nCallCount /*= INFINITY_CALL*/)
+bool NFTimerAxis::SetFixTimer(uint32_t nTimerID, uint64_t nStartTime, uint32_t nInterDays, NFTimerObj* handler, uint32_t nCallCount /*= INFINITY_CALL*/)
 {
 	return m_FixTimerAxis.SetFixTimer(nTimerID, nStartTime, nInterDays, handler, nCallCount);
 }
+
 //关闭固定时间定时器
-bool NFTimerAxis::KillFixTimer(uint32_t nTimerID, NFTimerObj *handler)
+bool NFTimerAxis::KillFixTimer(uint32_t nTimerID, NFTimerObj* handler)
 {
 	return m_FixTimerAxis.KillFixTimer(nTimerID, handler);
 }
+
 //关闭所有固定时间定时器
-bool NFTimerAxis::KillAllFixTimer(NFTimerObj *handler)
+bool NFTimerAxis::KillAllFixTimer(NFTimerObj* handler)
 {
 	return m_FixTimerAxis.KillAllFixTimer(handler);
 }
+
 //更新固定时间定时器
 void NFTimerAxis::UpdateFix()
 {
@@ -602,11 +609,11 @@ void NFTimerAxis::Update()
 			//某一个刻度定时器过多，这里打印一下日志
 		}
 		// 遍历当前时间刻度中的所有待触发定时器
-		TIMER_LIST * TimerList = m_TimerAxis[i];
+		TIMER_LIST* TimerList = m_TimerAxis[i];
 		TIMER_LIST::iterator it = TimerList->begin();
 		for (; it != TimerList->end();)
 		{
-			Timer * pTimer = *it;
+			Timer* pTimer = *it;
 			if (nullptr == pTimer || nullptr == pTimer->pHandler)
 			{
 				it = TimerList->erase(it);
@@ -627,8 +634,8 @@ void NFTimerAxis::Update()
 			if (static_cast<uint32_t>(now - pTimer->nLastTick) >= pTimer->nInterVal)
 			{
 				BEGIN_PROFILE("pTimer->pHandler->OnTimer");
-				pTimer->pHandler->OnTimer(pTimer->nTimerID);
-				END_PROFILE();
+					pTimer->pHandler->OnTimer(pTimer->nTimerID);
+					END_PROFILE();
 				pTimer = *it;
 				if (nullptr == pTimer || nullptr == pTimer->pHandler)
 				{
@@ -678,7 +685,8 @@ void NFTimerAxis::Update()
 		{
 			i = (i + 1) % m_TimerAxis.size();
 		}
-	} while (bFlag);
+	}
+	while (bFlag);
 
 	//更新秒定时器
 	UpdateSec();
@@ -710,11 +718,11 @@ void NFTimerAxis::UpdateSec()
 		{
 		}
 		// 遍历当前时间刻度中的所有待触发定时器
-		TIMER_LIST * TimerList = m_TimerAxisSec[i];
+		TIMER_LIST* TimerList = m_TimerAxisSec[i];
 		TIMER_LIST::iterator it = TimerList->begin();
 		for (; it != TimerList->end();)
 		{
-			Timer * pTimer = *it;
+			Timer* pTimer = *it;
 			if (nullptr == pTimer || nullptr == pTimer->pHandler)
 			{
 				it = TimerList->erase(it);
@@ -787,11 +795,12 @@ void NFTimerAxis::UpdateSec()
 		{
 			i = (i + 1) % m_TimerAxisSec.size();
 		}
-	} while (bFlag);
+	}
+	while (bFlag);
 }
 
 //重置定时器在时间轴上的位置
-bool NFTimerAxis::ResetTimerPos(Timer *pTimer)
+bool NFTimerAxis::ResetTimerPos(Timer* pTimer)
 {
 	if (nullptr == pTimer)
 	{
@@ -801,3 +810,4 @@ bool NFTimerAxis::ResetTimerPos(Timer *pTimer)
 
 	return true;
 }
+

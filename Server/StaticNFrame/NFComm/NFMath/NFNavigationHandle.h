@@ -18,27 +18,36 @@ public:
 
 	enum NAV_OBJECT_STATE
 	{
-		NAV_OBJECT_STATE_MOVING = 1,	// 移动中
-		NAV_OBJECT_STATE_MOVEOVER = 2,	// 移动已经结束了
+		NAV_OBJECT_STATE_MOVING = 1, // 移动中
+		NAV_OBJECT_STATE_MOVEOVER = 2, // 移动已经结束了
 	};
+
 public:
-	NFNavigationHandle() :name()
+	NFNavigationHandle() : name()
 	{
 	}
 
 	virtual ~NFNavigationHandle()
 	{
 	}
+
 public:
-	virtual NFNavigationHandle::NAV_TYPE type() const { return NAV_UNKNOWN; }
+	virtual NFNavigationHandle::NAV_TYPE type() const
+	{
+		return NAV_UNKNOWN;
+	}
 
 	virtual int FindStraightPath(int layer, const NFVector3& start, const NFVector3& end, std::vector<NFVector3>& paths) = 0;
 	virtual int RayCast(int layer, const NFVector3& start, const NFVector3& end, std::vector<NFVector3>& hitPointVec) = 0;
 
-	virtual bool Create(const std::string& name) { return false; };
+	virtual bool Create(const std::string& name)
+	{
+		return false;
+	};
 
 	virtual int FindRandomPointAroundCircle(int layer, const NFVector3& centerPos,
-		std::vector<NFVector3>& points, int max_points, float maxRadius) = 0;
+	                                        std::vector<NFVector3>& points, int max_points, float maxRadius) = 0;
 protected:
 	std::string name;
 };
+

@@ -59,9 +59,9 @@ bool NFCPluginManager::IsLoadAllServer() const
 
 bool NFCPluginManager::Awake()
 {
-	RegisterStaticPlugin();	//注册静态引擎
-	LoadKernelPlugin();		//NFKernelPlugin比较特效，提前加载
-	InitSingleton();		//初始化全局单件系统
+	RegisterStaticPlugin(); //注册静态引擎
+	LoadKernelPlugin(); //NFKernelPlugin比较特效，提前加载
+	InitSingleton(); //初始化全局单件系统
 
 	//加载引擎配置plugin.xml, 创建引擎，生成module
 	LoadPluginConfig();
@@ -174,20 +174,20 @@ bool NFCPluginManager::Execute()
 
 	BEGIN_PROFILE("Loop");
 
-	PluginInstanceMap::iterator it = mPluginInstanceMap.begin();
-	for (; it != mPluginInstanceMap.end(); ++it)
-	{
-		bool tembRet = it->second->Execute();
-		bRet = bRet && tembRet;
-	}
+		PluginInstanceMap::iterator it = mPluginInstanceMap.begin();
+		for (; it != mPluginInstanceMap.end(); ++it)
+		{
+			bool tembRet = it->second->Execute();
+			bRet = bRet && tembRet;
+		}
 
-	for (auto iter = mModuleAloneMultiMap.begin(); iter != mModuleAloneMultiMap.end(); ++iter)
-	{
-		bool tembRet = iter->second->Execute();
-		bRet = bRet && tembRet;
-	}
+		for (auto iter = mModuleAloneMultiMap.begin(); iter != mModuleAloneMultiMap.end(); ++iter)
+		{
+			bool tembRet = iter->second->Execute();
+			bRet = bRet && tembRet;
+		}
 
-	END_PROFILE();
+		END_PROFILE();
 
 	//采用固定帧率
 	endTime = NFGetTime();
@@ -520,3 +520,4 @@ NFIModule* NFCPluginManager::CreateAloneModule(const std::string& strModuleName)
 	}
 	return nullptr;
 }
+

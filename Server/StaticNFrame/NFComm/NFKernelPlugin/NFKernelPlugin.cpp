@@ -43,7 +43,7 @@ std::string NFKernelPlugin::GetPluginName()
 void NFKernelPlugin::Install()
 {
 	REGISTER_MODULE(pPluginManager, NFILogModule, NFCLogModule)
-		REGISTER_MODULE(pPluginManager, NFITimerModule, NFCTimerModule);
+	REGISTER_MODULE(pPluginManager, NFITimerModule, NFCTimerModule);
 	REGISTER_MODULE(pPluginManager, NFIEventModule, NFCEventModule);
 	REGISTER_MODULE(pPluginManager, NFIKernelModule, NFCKernelModule);
 }
@@ -55,3 +55,4 @@ void NFKernelPlugin::Uninstall()
 	UNREGISTER_MODULE(pPluginManager, NFITimerModule, NFCTimerModule);
 	UNREGISTER_MODULE(pPluginManager, NFILogModule, NFCLogModule)
 }
+

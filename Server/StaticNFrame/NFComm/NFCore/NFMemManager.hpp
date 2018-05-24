@@ -42,6 +42,7 @@
 #endif // NF_USE_TCMALLOC
 
 
+
 #endif
 
 class NFMemManager : public NFSingleton<NFMemManager>
