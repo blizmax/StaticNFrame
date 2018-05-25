@@ -1,3 +1,11 @@
+// -------------------------------------------------------------------------
+//    @FileName         :    NFCTestClientModule.cpp
+//    @Author           :    GaoYi
+//    @Date             :    2018/05/25
+//    @Email			:    445267987@qq.com
+//    @Module           :    NFTestPlugin
+//
+// -------------------------------------------------------------------------
 #include "NFCTestClientModule.h"
 #include "NFComm/NFPluginModule/NFIPluginManager.h"
 #include "NFMessageDefine/NFMsgDefine.h"

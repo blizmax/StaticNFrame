@@ -1,4 +1,12 @@
-﻿#pragma once
+// -------------------------------------------------------------------------
+//    @FileName         :    NFNavigation.h
+//    @Author           :    GaoYi
+//    @Date             :    2018/05/25
+//    @Email			:    445267987@qq.com
+//    @Module           :    NFMath
+//
+// -------------------------------------------------------------------------
+#pragma once
 
 #include "NFComm/NFCore/NFPlatform.h"
 #include "NFComm/NFCore/NFSingleton.hpp"
@@ -7,7 +15,6 @@
 #include <map>
 
 /*
-	������
 */
 typedef std::map<std::string, NFNavigationHandle*> mapNavigate;
 typedef mapNavigate::iterator itmapNavigate;

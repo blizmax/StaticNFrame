@@ -1,3 +1,11 @@
+// -------------------------------------------------------------------------
+//    @FileName         :    NFCLoadStaticPlugin.cpp
+//    @Author           :    GaoYi
+//    @Date             :    2018/05/25
+//    @Email			:    445267987@qq.com
+//    @Module           :    NFPluginLoader
+//
+// -------------------------------------------------------------------------
 #include "NFComm/NFPluginModule/NFCPluginManager.h"
 
 #include "NFComm/NFCore/NFServerTimeMgr.h"

@@ -1,3 +1,11 @@
+// -------------------------------------------------------------------------
+//    @FileName         :    NFCNetClientModule.cpp
+//    @Author           :    GaoYi
+//    @Date             :    2018/05/25
+//    @Email			:    445267987@qq.com
+//    @Module           :    NFNetPlugin
+//
+// -------------------------------------------------------------------------
 #include "NFCNetClientModule.h"
 #include <iostream>
 #include "NFIPacketParse.h"

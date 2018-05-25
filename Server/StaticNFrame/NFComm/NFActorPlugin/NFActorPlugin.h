@@ -1,3 +1,11 @@
+// -------------------------------------------------------------------------
+//    @FileName         :    NFActorPlugin.h
+//    @Author           :    GaoYi
+//    @Date             :    2018/05/25
+//    @Email			:    445267987@qq.com
+//    @Module           :    NFActorPlugin
+//
+// -------------------------------------------------------------------------
 #include "NFComm/NFPluginModule/NFIPlugin.h"
 #include "NFComm/NFPluginModule/NFIPluginManager.h"
 

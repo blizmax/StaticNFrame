@@ -1,3 +1,11 @@
+// -------------------------------------------------------------------------
+//    @FileName         :    NFEventMgr.cpp
+//    @Author           :    GaoYi
+//    @Date             :    2018/05/25
+//    @Email			:    445267987@qq.com
+//    @Module           :    NFPluginModule
+//
+// -------------------------------------------------------------------------
 #include "NFEventMgr.h"
 
 #include "NFComm/NFPluginModule/NFIEventModule.h"

@@ -1,3 +1,11 @@
+// -------------------------------------------------------------------------
+//    @FileName         :    NFNavMeshHandle.cpp
+//    @Author           :    GaoYi
+//    @Date             :    2018/05/25
+//    @Email			:    445267987@qq.com
+//    @Module           :    NFMath
+//
+// -------------------------------------------------------------------------
 #include "NFNavMeshHandle.h"
 #include "NFNavigation.h"
 #include "NFMath.h"

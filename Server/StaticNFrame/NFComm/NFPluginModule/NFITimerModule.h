@@ -1,11 +1,11 @@
 // -------------------------------------------------------------------------
-//    @FileName         :    {Filename}
+//    @FileName         :    NFITimerModule.h
 //    @Author           :    GaoYi
-//    @Date             :    2017-09-27
-//    @Module           :   {Filename}
+//    @Date             :    2018/05/25
+//    @Email			:    445267987@qq.com
+//    @Module           :    NFPluginModule
 //
 // -------------------------------------------------------------------------
-
 #pragma once
 
 #include "NFIModule.h"

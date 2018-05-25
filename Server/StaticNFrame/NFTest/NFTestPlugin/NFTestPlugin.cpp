@@ -1,8 +1,9 @@
 // -------------------------------------------------------------------------
-//    @FileName         :    NFKernelPlugin.cpp
-//    @Author           :    LvSheng.Huang
-//    @Date             :    2010-03-15
-//    @Module           :    NFKernelPlugin
+//    @FileName         :    NFTestPlugin.cpp
+//    @Author           :    GaoYi
+//    @Date             :    2018/05/25
+//    @Email			:    445267987@qq.com
+//    @Module           :    NFTestPlugin
 //
 // -------------------------------------------------------------------------
 

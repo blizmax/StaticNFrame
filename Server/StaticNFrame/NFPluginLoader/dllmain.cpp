@@ -1,3 +1,11 @@
+// -------------------------------------------------------------------------
+//    @FileName         :    dllmain.cpp
+//    @Author           :    GaoYi
+//    @Date             :    2018/05/25
+//    @Email			:    445267987@qq.com
+//    @Module           :    NFPluginLoader
+//
+// -------------------------------------------------------------------------
 #include "NFComm/NFCore/NFPlatform.h"
 
 #if NF_PLATFORM == NF_PLATFORM_WIN

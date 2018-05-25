@@ -1,8 +1,9 @@
 // -------------------------------------------------------------------------
-//    @FileName         :    {Filename}
+//    @FileName         :    NFCTestKernelModule.h
 //    @Author           :    GaoYi
-//    @Date             :    2017-09-27
-//    @Module           :   {Filename}
+//    @Date             :    2018/05/25
+//    @Email			:    445267987@qq.com
+//    @Module           :    NFTestPlugin
 //
 // -------------------------------------------------------------------------
 

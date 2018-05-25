@@ -1,3 +1,11 @@
+// -------------------------------------------------------------------------
+//    @FileName         :    NFCTestClientModule.h
+//    @Author           :    GaoYi
+//    @Date             :    2018/05/25
+//    @Email			:    445267987@qq.com
+//    @Module           :    NFTestPlugin
+//
+// -------------------------------------------------------------------------
 #pragma once
 
 #include "NFComm/NFPluginModule/NFINetClientModule.h"

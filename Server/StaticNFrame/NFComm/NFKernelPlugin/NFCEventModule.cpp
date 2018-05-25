@@ -1,8 +1,9 @@
 // -------------------------------------------------------------------------
 //    @FileName         :    NFCEventModule.cpp
-//    @Author           :    LvSheng.Huang
-//    @Date             :    2012-12-15
-//    @Module           :    NFCEventModule
+//    @Author           :    GaoYi
+//    @Date             :    2018/05/25
+//    @Email			:    445267987@qq.com
+//    @Module           :    NFKernelPlugin
 //
 // -------------------------------------------------------------------------
 

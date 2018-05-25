@@ -1,3 +1,11 @@
+// -------------------------------------------------------------------------
+//    @FileName         :    NFILuaScriptModule.h
+//    @Author           :    GaoYi
+//    @Date             :    2018/05/25
+//    @Email			:    445267987@qq.com
+//    @Module           :    NFPluginModule
+//
+// -------------------------------------------------------------------------
 #pragma once
 
 #define LUAINTF_LINK_LUA_COMPILED_IN_CXX 0

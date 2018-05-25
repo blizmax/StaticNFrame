@@ -1,3 +1,11 @@
+// -------------------------------------------------------------------------
+//    @FileName         :    ArpaNetPacketParse.cpp
+//    @Author           :    GaoYi
+//    @Date             :    2018/05/25
+//    @Email			:    445267987@qq.com
+//    @Module           :    NFNetPlugin
+//
+// -------------------------------------------------------------------------
 #include "ArpgNetPacketParse.h"
 #include "NFNetDefine.h"
 

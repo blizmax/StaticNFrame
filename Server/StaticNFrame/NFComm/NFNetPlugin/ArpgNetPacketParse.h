@@ -1,3 +1,11 @@
+// -------------------------------------------------------------------------
+//    @FileName         :    ArpgNetPacketParse.h
+//    @Author           :    GaoYi
+//    @Date             :    2018/05/25
+//    @Email			:    445267987@qq.com
+//    @Module           :    NFNetPlugin
+//
+// -------------------------------------------------------------------------
 #pragma once
 
 #include "NFIPacketParse.h"
