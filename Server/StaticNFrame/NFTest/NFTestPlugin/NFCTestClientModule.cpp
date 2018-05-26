@@ -100,5 +100,7 @@ void NFCTestClientModule::SendCreateChar()
 	proReq.set_sex(NFRandInt(1, 3));
 
 	m_pNetClientModule->SendToServerByPB(m_usId, proto::message::ELogin_CTS_GAMESERVER_CreateChar, proReq, 0);
+
+	m_pNetClientModule->CloseAllServer();
 }
 

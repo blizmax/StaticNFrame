@@ -16,6 +16,19 @@
 
 /**
 *@brief  多线程libevent网络客户端封装类.
+*		 m_thread主要使用在主线程钟
+*		 m_threadNetMsgs用于在两个线程中传输数据 
+*		 event_base* m_pMainBase创建于主线程，使用在client线程，销毁在主线程
+*        struct bufferevent* m_pBev创建于client线程, 读在client线程，写在主线程，没有看到同步？
+*        mRecvCB, mEventCB均使用与主线程
+*		 SOCKET m_nSocketId用在client线程
+*        NFBuffer m_buffer用在client线程
+*        eConnectStatus m_eStatus写主要在client线程，连接时写了一次，这个地方没有问题，断开连接时写了一次，可能会导致问题，
+*        Send时会有读判断， 但没有同步措施，有可能在client线程已经断开连接了，但是这里还在写? 不知道libevent里会不会有判断
+*        Reconnect没有同步eStatus，也可能有问题
+* 问题1：m_eStatus在两个线程里使用，大部分时间没有问题， 但连接断开时，可能会有问题
+* 问题2：Close函数在主线程中运行有问题，在不止client线程在做什么的情况下，贸然调用	SetStatus(eConnectStatus_Disconnect);
+	m_buffer.Clear(); 可能导致未定义问题，或崩溃. 应该先break循环，关闭线程，然后在调用
 */
 class NFThreadClient : public NFClient
 {
@@ -98,7 +111,9 @@ public:
 	void SendDisconnect();
 
 	/**
-	 * @brief	关闭连接
+	 * @brief	关闭连接, 如果在主线调用这个函数，应该先break网络线程，
+	 * 然后m_thread.StopThread()关闭网络线程
+	 * 这样就不会有线程冲突, 然后在调用
 	 *
 	 * @return
 	 */

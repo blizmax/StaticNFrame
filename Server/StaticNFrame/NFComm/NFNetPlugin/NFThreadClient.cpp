@@ -59,14 +59,12 @@ static void conn_eventcb(struct bufferevent* pEv, short events, void* pArg)
 #ifdef _WIN32
 		if (ArkGetLastError() == WSAEISCONN)
 		{
-			p->SetSocketId(static_cast<SOCKET>(bufferevent_getfd(pEv)));
-			p->SendConnected();
-			p->SetStatus(eConnectStatus_ConnectOk);
+			p->OnHandleConnect(static_cast<SOCKET>(bufferevent_getfd(pEv)));;
 			return;
 		}
 #endif
 		p->OnHandleDisConnect();
-		LogWarning(0, "NetWarning", " CloseProc Error Code " + std::string(evutil_socket_error_to_string(EVUTIL_SOCKET_ERROR())));
+		//LogWarning(0, "NetWarning", " CloseProc Error Code " + std::string(evutil_socket_error_to_string(EVUTIL_SOCKET_ERROR())));
 	}
 }
 
@@ -113,6 +111,19 @@ NFThreadClient::NFThreadClient(uint32_t nId, const NFClientFlag& flag) : NFClien
 
 NFThreadClient::~NFThreadClient()
 {
+	/**
+	 *@brief  必须先析构m_pBev， 然后析构m_pMainBase
+	 */
+	if (m_pBev)
+	{
+		bufferevent_free(m_pBev);
+	}
+	m_pBev = nullptr;
+	if (m_pMainBase)
+	{
+		event_base_free(m_pMainBase);
+	}
+	m_pMainBase = nullptr;
 }
 
 bool NFThreadClient::Init()
@@ -130,9 +141,25 @@ bool NFThreadClient::Init()
 
 bool NFThreadClient::Shut()
 {
-	Close();
-	SetStatus(eConnectStatus_UnConnect);
+	/**
+	 * @brief	为了防止多线程冲突，这个顺序不要改变
+	 */
+	event_base_loopbreak(m_pMainBase);
 	m_thread.StopThread();
+	m_buffer.Clear();
+	SetStatus(eConnectStatus_UnConnect);
+
+	std::vector<NFThreadNetMsg*> vecMsg;
+	m_threadNetMsgs.Pop(vecMsg);
+	for (size_t i = 0; i < vecMsg.size(); i++)
+	{
+		NFSafeDelete(vecMsg[i]);
+	}
+	vecMsg.clear();
+	if (m_pBev)
+	{
+		bufferevent_free(m_pBev);
+	}
 	return true;
 }
 
@@ -228,11 +255,6 @@ void NFThreadClient::Close()
 	SetStatus(eConnectStatus_Disconnect);
 	m_buffer.Clear();
 	event_base_loopbreak(m_pMainBase);
-	if (m_pBev)
-	{
-		bufferevent_free(m_pBev);
-		m_pBev = nullptr;
-	}
 }
 
 bool NFThreadClient::Connect()

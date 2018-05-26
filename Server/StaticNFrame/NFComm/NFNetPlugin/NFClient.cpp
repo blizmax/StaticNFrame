@@ -109,6 +109,14 @@ NFClient::NFClient(uint32_t nId, const NFClientFlag& flag) : m_pMainBase(nullptr
 
 NFClient::~NFClient()
 {
+	/**
+	 *@brief  必须先析构m_pBev， 然后析构m_pMainBase
+	 */
+	if (m_pBev)
+	{
+		bufferevent_free(m_pBev);
+	}
+	m_pBev = nullptr;
 	if (m_pMainBase)
 	{
 		event_base_free(m_pMainBase);
@@ -201,11 +209,6 @@ const NFClientFlag& NFClient::GetFlag() const
 
 void NFClient::Close()
 {
-	if (m_pBev)
-	{
-		bufferevent_free(m_pBev);
-		m_pBev = nullptr;
-	}
 	m_nSocketId = INVALID_SOCKET;
 	m_buffer.Clear();
 }
