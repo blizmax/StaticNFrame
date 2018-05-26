@@ -153,5 +153,12 @@ inline int64_t NFGetNanoSeccondTime()
 	return std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::system_clock::now().time_since_epoch()).count();
 }
 
+//用来将enum转化为字符串
+#ifndef NF_CASE_STRING_BIGIN
+#define NF_CASE_STRING_BIGIN(state) switch(state){
+#define NF_CASE_STRING(state) case state:return #state;break;
+#define NF_CASE_STRING_END()  default:return "Unknown";break;}
+#endif
+
 #endif
 

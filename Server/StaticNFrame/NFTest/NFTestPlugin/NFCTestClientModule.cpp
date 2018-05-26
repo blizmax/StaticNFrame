@@ -12,11 +12,30 @@
 #include "NFComm/NFPluginModule/NFLogMgr.h"
 #include "NFComm/NFCore/NFRandom.hpp"
 #include "NFComm/NFCore/NFBuffer.h"
+#include "NFComm/NFNetPlugin/NFEventLoop.h"
+#include "NFComm/NFNetPlugin/NFEventLoopThread.h"
+
+int testPrev()
+{
+	std::cout << "testPrev" << std::endl;
+	return 0;
+}
 
 bool NFCTestClientModule::Init()
 {
+#ifdef _MSC_VER
+	WSADATA wsaData;
+	int nResult = WSAStartup(0x0201, &wsaData);
+	if (nResult)
+	{
+		std::cout << "WSAStartup failed with error code:" << nResult << std::endl;
+		return false;
+	}
+#endif
 	m_pNetClientModule = pPluginManager->FindModule<NFINetClientModule>();
 	m_serverId = 1001;
+	pEventLoopThread = std::make_unique<NFEventLoopThread>();
+	pEventLoopThread->Start(true, testPrev);
 	return true;
 }
 
@@ -25,7 +44,7 @@ bool NFCTestClientModule::AfterInit()
 	m_pNetClientModule->AddEventCallBack(NF_ST_PROXY, this, &NFCTestClientModule::OnProxySocketEvent);
 	m_pNetClientModule->AddReceiveCallBack(NF_ST_PROXY, this, &NFCTestClientModule::OnHandleOtherMessage);
 	m_pNetClientModule->AddReceiveCallBack(NF_ST_PROXY, proto::message::ELogin_STC_QueryPlayerData, this, &NFCTestClientModule::OnHandleQueryPlayerData);
-	m_usId = m_pNetClientModule->AddServer(NF_ST_PROXY, "192.168.1.15", 7002);
+	//m_usId = m_pNetClientModule->AddServer(NF_ST_PROXY, "192.168.1.15", 7002);
 	std::string strAccount = NFRandomEnglish(12);
 	m_account = strAccount + "_" + lexical_cast<std::string>(0);
 	m_charName = strAccount + "_n_" + lexical_cast<std::string>(0);
@@ -54,6 +73,7 @@ bool NFCTestClientModule::BeforeShut()
 
 bool NFCTestClientModule::Shut()
 {
+	pEventLoopThread->Stop(true);
 	return true;
 }
 

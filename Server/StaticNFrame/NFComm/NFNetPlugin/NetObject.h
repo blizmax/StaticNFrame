@@ -18,15 +18,7 @@
 #include <algorithm>
 #include <stdint.h>
 
-#include "event2/bufferevent.h"
-#include "event2/event.h"
-#include "event2/util.h"
-#include "event2/buffer.h"
-#include <event2/http.h>
-#include <event2/http_struct.h>
-#include <event2/keyvalq_struct.h>
-#include <event2/listener.h>
-#include <event2/event_compat.h>
+#include "NFLibEvent.h"
 
 #include "NFComm/NFPluginModule/NFIModule.h"
 #include "NFComm/NFPluginModule/NFServerDefine.h"
@@ -143,13 +135,13 @@ public:
 	 * @brief	获得连接状态
 	 * @return
 	 */
-	eConnectStatus GetStatus() const;
+	virtual eConnectStatus GetStatus();
 
 	/**
 	 * @brief	设置连状态
 	 * @return
 	 */
-	void SetStatus(eConnectStatus val);
+	virtual void SetStatus(eConnectStatus val);
 
 	/**
 	 * @brief	是否处于连接状态

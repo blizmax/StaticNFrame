@@ -78,6 +78,9 @@
     <ClCompile Include="NFMutex.cpp">
       <Filter>Thread</Filter>
     </ClCompile>
+    <ClCompile Include="NFDuration.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="NFBase64.h">
@@ -198,6 +201,9 @@
       <Filter>Thread</Filter>
     </ClInclude>
     <ClInclude Include="NFCmdLine.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="NFDuration.h">
       <Filter>Common</Filter>
     </ClInclude>
   </ItemGroup>

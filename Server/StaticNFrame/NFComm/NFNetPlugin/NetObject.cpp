@@ -112,7 +112,7 @@ bool NetObject::OnRecvData(bufferevent* pBufEv)
 	return true;
 }
 
-eConnectStatus NetObject::GetStatus() const
+eConnectStatus NetObject::GetStatus()
 {
 	return m_eStatus;
 }

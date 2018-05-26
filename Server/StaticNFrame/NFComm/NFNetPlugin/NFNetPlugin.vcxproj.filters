@@ -18,6 +18,15 @@
     <ClCompile Include="NFClient.cpp">
       <Filter>NFClient</Filter>
     </ClCompile>
+    <ClCompile Include="NFEventLoopThread.cpp">
+      <Filter>NFNetThread</Filter>
+    </ClCompile>
+    <ClCompile Include="NFEventLoop.cpp">
+      <Filter>NFNetThread</Filter>
+    </ClCompile>
+    <ClCompile Include="NFEventWatcher.cpp">
+      <Filter>NFNetThread</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="NFNetPlugin.h" />
@@ -40,6 +49,24 @@
     <ClInclude Include="NFClient.h">
       <Filter>NFClient</Filter>
     </ClInclude>
+    <ClInclude Include="NFEventLoopThread.h">
+      <Filter>NFNetThread</Filter>
+    </ClInclude>
+    <ClInclude Include="NFLoopThreadStatus.h">
+      <Filter>NFNetThread</Filter>
+    </ClInclude>
+    <ClInclude Include="NFEventLoop.h">
+      <Filter>NFNetThread</Filter>
+    </ClInclude>
+    <ClInclude Include="NFEventWatcher.h">
+      <Filter>NFNetThread</Filter>
+    </ClInclude>
+    <ClInclude Include="NFLibEvent.h">
+      <Filter>NFNetThread</Filter>
+    </ClInclude>
+    <ClInclude Include="NFConnector.h">
+      <Filter>NFNetThread</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="NFClient">
@@ -50,6 +77,9 @@
     </Filter>
     <Filter Include="PacketParse">
       <UniqueIdentifier>{659ffc87-05b5-4512-a7ee-2100d1e99394}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="NFNetThread">
+      <UniqueIdentifier>{d1dff8aa-7521-4dc0-b57b-df67186eccb8}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
