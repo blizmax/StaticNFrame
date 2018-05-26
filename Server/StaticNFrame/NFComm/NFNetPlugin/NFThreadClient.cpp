@@ -156,10 +156,6 @@ bool NFThreadClient::Shut()
 		NFSafeDelete(vecMsg[i]);
 	}
 	vecMsg.clear();
-	if (m_pBev)
-	{
-		bufferevent_free(m_pBev);
-	}
 	return true;
 }
 
