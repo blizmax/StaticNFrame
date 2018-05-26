@@ -3,7 +3,7 @@
   <ItemGroup>
     <ClCompile Include="NFNetPlugin.cpp" />
     <ClCompile Include="NetObject.cpp">
-      <Filter>NFNet</Filter>
+      <Filter>NFNetObject</Filter>
     </ClCompile>
     <ClCompile Include="NFCNetClientModule.cpp" />
     <ClCompile Include="ArpaNetPacketParse.cpp">
@@ -27,14 +27,20 @@
     <ClCompile Include="NFEventWatcher.cpp">
       <Filter>NFNetThread</Filter>
     </ClCompile>
+    <ClCompile Include="NetThreadObject.cpp">
+      <Filter>NFNetObject</Filter>
+    </ClCompile>
+    <ClCompile Include="NFLoopThreadClient.cpp">
+      <Filter>NFClient</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="NFNetPlugin.h" />
     <ClInclude Include="NFNetDefine.h">
-      <Filter>NFNet</Filter>
+      <Filter>NFNetObject</Filter>
     </ClInclude>
     <ClInclude Include="NetObject.h">
-      <Filter>NFNet</Filter>
+      <Filter>NFNetObject</Filter>
     </ClInclude>
     <ClInclude Include="NFCNetClientModule.h" />
     <ClInclude Include="ArpgNetPacketParse.h">
@@ -67,19 +73,25 @@
     <ClInclude Include="NFConnector.h">
       <Filter>NFNetThread</Filter>
     </ClInclude>
+    <ClInclude Include="NetThreadObject.h">
+      <Filter>NFNetObject</Filter>
+    </ClInclude>
+    <ClInclude Include="NFLoopThreadClient.h">
+      <Filter>NFClient</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="NFClient">
       <UniqueIdentifier>{4503cebe-e925-47e0-a1f9-41af5877286c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="NFNet">
-      <UniqueIdentifier>{4a41b02b-477f-4136-bb63-6dddc6fd21d6}</UniqueIdentifier>
     </Filter>
     <Filter Include="PacketParse">
       <UniqueIdentifier>{659ffc87-05b5-4512-a7ee-2100d1e99394}</UniqueIdentifier>
     </Filter>
     <Filter Include="NFNetThread">
       <UniqueIdentifier>{d1dff8aa-7521-4dc0-b57b-df67186eccb8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="NFNetObject">
+      <UniqueIdentifier>{4a41b02b-477f-4136-bb63-6dddc6fd21d6}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

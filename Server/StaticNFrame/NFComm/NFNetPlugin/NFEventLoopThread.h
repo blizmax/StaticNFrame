@@ -53,7 +53,7 @@ public:
 	           Functor post = Functor());
 
 	/**
-	 * @brief 停止线程的运行
+	 * @brief 停止线程的运行, 只能主线程运行
 	 *
 	 * @param  wait_thread_exit = true 将等待线程退出后，才继续运行
 	 * @return void
