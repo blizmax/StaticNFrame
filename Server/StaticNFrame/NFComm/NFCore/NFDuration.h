@@ -22,7 +22,7 @@
 class NFDuration
 {
 public:
-#if NF_PLATFORM == NF_PLATFORM_WIN
+#if NF_PLATFORM == NF_PLATFORM_LINUX
 	static const int64_t kNanosecond; // = 1LL
 	static const int64_t kMicrosecond;// = 1000
 	static const int64_t kMillisecond;// = 1000 * kMicrosecond
