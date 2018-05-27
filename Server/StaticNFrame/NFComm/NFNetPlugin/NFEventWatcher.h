@@ -9,7 +9,7 @@
 #pragma once
 
 #include "NFComm/NFCore/NFPlatform.h"
-#include "NFComm/NFCore/NFDuration.h"
+#include "NFDuration.h"
 #include <functional>
 #include <event2/util.h>
 

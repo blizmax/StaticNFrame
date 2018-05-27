@@ -165,7 +165,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="NFBase64.cpp" />
-    <ClCompile Include="NFDuration.cpp" />
     <ClCompile Include="NFError.cpp" />
     <ClCompile Include="NFJson.cpp" />
     <ClCompile Include="NFMutex.cpp" />
@@ -191,7 +190,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="NFCmdLine.h" />
-    <ClInclude Include="NFDuration.h" />
     <ClInclude Include="NFError.h" />
     <ClInclude Include="NFHash.hpp" />
     <ClInclude Include="NFJson.h" />

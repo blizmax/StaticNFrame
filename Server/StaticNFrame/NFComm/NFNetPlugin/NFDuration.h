@@ -8,13 +8,10 @@
 // -------------------------------------------------------------------------
 #pragma once
 
-#include "NFPlatform.h"
+#include "NFComm/NFCore/NFPlatform.h"
 
-#if NF_PLATFORM == NF_PLATFORM_WIN
-#include <WinSock2.h>
-#else
-#include <sys/time.h>
-#endif
+#include "NFLibEvent.h"
+
 
 // A Duration represents the elapsed time between two instants
 // as an int64 nanosecond count. The representation limits the

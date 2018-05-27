@@ -45,6 +45,9 @@
     <ClCompile Include="NFEpoll.cpp">
       <Filter>NFBaseNet</Filter>
     </ClCompile>
+    <ClCompile Include="NFDuration.cpp">
+      <Filter>NFNetThread</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="NFNetPlugin.h" />
@@ -105,6 +108,9 @@
     </ClInclude>
     <ClInclude Include="NFEpoll.h">
       <Filter>NFBaseNet</Filter>
+    </ClInclude>
+    <ClInclude Include="NFDuration.h">
+      <Filter>NFNetThread</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

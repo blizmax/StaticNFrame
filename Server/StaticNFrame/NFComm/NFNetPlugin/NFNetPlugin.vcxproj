@@ -23,6 +23,7 @@
     <ClCompile Include="NetThreadObject.cpp" />
     <ClCompile Include="NFBasePoll.cpp" />
     <ClCompile Include="NFClient.cpp" />
+    <ClCompile Include="NFDuration.cpp" />
     <ClCompile Include="NFEpoll.cpp" />
     <ClCompile Include="NFEventLoop.cpp" />
     <ClCompile Include="NFEventLoopThread.cpp" />
@@ -41,6 +42,7 @@
     <ClInclude Include="NetThreadObject.h" />
     <ClInclude Include="NFClient.h" />
     <ClInclude Include="NFConnector.h" />
+    <ClInclude Include="NFDuration.h" />
     <ClInclude Include="NFEpoll.h" />
     <ClInclude Include="NFEventLoop.h" />
     <ClInclude Include="NFEventLoopThread.h" />
