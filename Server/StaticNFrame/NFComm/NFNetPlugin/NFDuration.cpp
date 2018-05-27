@@ -18,6 +18,10 @@ const int64_t NFDuration::kMinute = 60 * kSecond;
 const int64_t NFDuration::kHour = 60 * kMinute;
 #endif
 
+NFDuration::NFDuration(): ns_(0)
+{
+}
+
 NFDuration::NFDuration(const struct timeval& t)
 	: ns_(t.tv_sec * kSecond + t.tv_usec * kMicrosecond)
 {
@@ -28,9 +32,19 @@ NFDuration::NFDuration(int64_t nanoseconds)
 {
 }
 
+NFDuration::NFDuration(int nanoseconds)
+	: ns_(nanoseconds)
+{
+}
+
 NFDuration::NFDuration(double seconds)
 	: ns_((int64_t)(seconds * kSecond))
 {
+}
+
+int64_t NFDuration::Nanoseconds() const
+{
+	return ns_;
 }
 
 double NFDuration::Seconds() const
@@ -56,6 +70,12 @@ double NFDuration::Minutes() const
 double NFDuration::Hours() const
 {
 	return double(ns_) / kHour;
+}
+
+void NFDuration::To(timeval* t) const
+{
+	t->tv_sec = (long)(ns_ / NFDuration::kSecond);
+	t->tv_usec = (long)(ns_ % NFDuration::kSecond) / (long)NFDuration::kMicrosecond;
 }
 
 bool NFDuration::IsZero() const
