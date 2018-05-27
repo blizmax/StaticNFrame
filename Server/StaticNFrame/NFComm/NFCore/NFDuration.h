@@ -38,13 +38,13 @@ public:
 	static const int64_t kHour = 60 * kMinute;
 #endif
 public:
-	NFDuration();
+	NFDuration() : ns_(0) { }
 	explicit NFDuration(const struct timeval& t);
 	explicit NFDuration(int64_t nanoseconds);
 	explicit NFDuration(double seconds);
 
 	// Nanoseconds returns the duration as an integer nanosecond count.
-	int64_t Nanoseconds() const;
+	int64_t Nanoseconds() const { return ns_; }
 
 	// These methods return double because the dominant
 	// use case is for printing a floating point number like 1.5s, and
@@ -59,7 +59,12 @@ public:
 	double Hours() const;
 
 	struct timeval TimeVal() const;
-	void To(struct timeval* t) const;
+	void To(struct timeval* t) const
+	{
+		t->tv_sec = (long)(ns_ / kSecond);
+		t->tv_usec = (long)(ns_ % kSecond) / (long)kMicrosecond;
+	}
+
 
 	bool IsZero() const;
 	bool operator<(const NFDuration& rhs) const;
