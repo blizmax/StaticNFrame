@@ -59,12 +59,7 @@ public:
 	double Hours() const;
 
 	struct timeval TimeVal() const;
-	void To(struct timeval* t) const
-	{
-		t->tv_sec = (long)(ns_ / NFDuration::kSecond);
-		t->tv_usec = (long)(ns_ % NFDuration::kSecond) / (long)NFDuration::kMicrosecond;
-	}
-
+	void To(struct timeval* t) const;
 
 	bool IsZero() const;
 	bool operator<(const NFDuration& rhs) const;

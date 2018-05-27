@@ -58,6 +58,12 @@ double NFDuration::Hours() const
 	return double(ns_) / kHour;
 }
 
+void NFDuration::To(timeval* t) const
+{
+	t->tv_sec = (long)(ns_ / NFDuration::kSecond);
+	t->tv_usec = (long)(ns_ % NFDuration::kSecond) / (long)NFDuration::kMicrosecond;
+}
+
 bool NFDuration::IsZero() const
 {
 	return ns_ == 0;
