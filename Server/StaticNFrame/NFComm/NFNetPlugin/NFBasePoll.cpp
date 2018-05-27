@@ -11,16 +11,16 @@
 #include "NFSelect.h"
 #include "NFEpoll.h"
 
-Module*  CreateModule()
+NFPoll*  CreateModule()
 {
 #if NF_PLATFORM == NF_PLATFORM_WIN
-	return new Select();
+	return new NFSelect();
 #else
-	return new Epoll();
+	return new NFEpoll();
 #endif
 }
 
-void DeleteModule(Module* module)
+void DeleteModule(NFPoll* module)
 {
 	assert(module);
 	delete module;

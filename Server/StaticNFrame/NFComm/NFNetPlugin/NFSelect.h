@@ -10,7 +10,7 @@
 
 #include "NFBasePoll.h"
 
-class Select : public Module
+class NFSelect : public NFPoll
 {
 protected:
 	typedef std::map<SOCKET, void*> EVENT_MAP;
@@ -26,8 +26,8 @@ protected:
 	EVENT_MAP event_map_;
 
 public:
-	Select();
-	virtual ~Select();
+	NFSelect();
+	virtual ~NFSelect();
 
 public:
 	virtual bool Init(int max_sock);

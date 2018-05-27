@@ -13,7 +13,7 @@
 #include <errno.h>
 #include <NFComm/NFPluginModule/NFLogMgr.h>
 
-Select::Select()
+NFSelect::NFSelect()
 	: max_sock_(0),
 	timeout_()
 {
@@ -25,15 +25,15 @@ Select::Select()
 	FD_ZERO(&loop_error_);
 }
 
-Select::~Select()
+NFSelect::~NFSelect()
 {}
 
-bool Select::Init(int max_sock)
+bool NFSelect::Init(int max_sock)
 {
 	return true;
 }
 
-void Select::UnInit()
+void NFSelect::UnInit()
 {
 	max_sock_ = 0;
 	FD_ZERO(&recv_set_);
@@ -44,7 +44,7 @@ void Select::UnInit()
 	FD_ZERO(&loop_error_);
 }
 
-bool Select::Poll(bool poolWrite, bool poolRead, uint64_t timeout_ms)
+bool NFSelect::Poll(bool poolWrite, bool poolRead, uint64_t timeout_ms)
 {
 	if (poolWrite)
 	{
@@ -57,7 +57,7 @@ bool Select::Poll(bool poolWrite, bool poolRead, uint64_t timeout_ms)
 	return true;
 }
 
-bool  Select::_EventLoop(uint64_t timeout_ms, PollType poll_type)
+bool  NFSelect::_EventLoop(uint64_t timeout_ms, PollType poll_type)
 {
 	int ret = -1;
 	timeout_.tv_sec = (long)timeout_ms / 1000;
@@ -170,7 +170,7 @@ bool  Select::_EventLoop(uint64_t timeout_ms, PollType poll_type)
 	return true;
 }
 
-bool Select::AddEvent(SOCKET sock, EventFlag flag, void* ptr)
+bool NFSelect::AddEvent(SOCKET sock, EventFlag flag, void* ptr)
 {
 	// todo:遍历中自增宕机
 	FD_SET(sock, &error_set_);
@@ -194,7 +194,7 @@ bool Select::AddEvent(SOCKET sock, EventFlag flag, void* ptr)
 	return true;
 }
 
-bool Select::ModEvent(SOCKET sock, EventFlag flag, void* ptr)
+bool NFSelect::ModEvent(SOCKET sock, EventFlag flag, void* ptr)
 {
 	EventData* data = reinterpret_cast<EventData*>(ptr);
 	if (data->event_flag == flag)
@@ -227,7 +227,7 @@ bool Select::ModEvent(SOCKET sock, EventFlag flag, void* ptr)
 	return true;
 }
 
-bool Select::DelEvent(SOCKET sock, void* ptr)
+bool NFSelect::DelEvent(SOCKET sock, void* ptr)
 {
 	event_map_.erase(sock);
 	FD_CLR(sock, &recv_set_);

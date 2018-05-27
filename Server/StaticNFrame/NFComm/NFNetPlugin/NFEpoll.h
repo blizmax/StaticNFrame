@@ -14,7 +14,7 @@
 #if NF_PLATFORM == NF_PLATFORM_LINUX
 #include <sys/epoll.h>
 
-class Epoll : public Module
+class NFEpoll : public NFPoll
 {
 protected:
 	int                  max_fd_;
@@ -27,8 +27,8 @@ protected:
 	struct epoll_event*  write_events_;
 
 public:
-	Epoll();
-	virtual ~Epoll();
+	NFEpoll();
+	virtual ~NFEpoll();
 
 public:
 	virtual bool Init(int max_sock);

@@ -15,7 +15,7 @@
 
 #if NF_PLATFORM == NF_PLATFORM_LINUX
 
-Epoll::Epoll()
+NFEpoll::NFEpoll()
 {
 	max_fd_ = 0;
 	read_fd_ = -1;
@@ -27,10 +27,10 @@ Epoll::Epoll()
 	write_events_ = NULL;
 }
 
-Epoll::~Epoll()
+NFEpoll::~NFEpoll()
 {}
 
-bool Epoll::Init(int max_sock)
+bool NFEpoll::Init(int max_sock)
 {
 	bool result = false;
 
@@ -60,12 +60,12 @@ Exit0:
 	return result;
 }
 
-void Epoll::UnInit()
+void NFEpoll::UnInit()
 {
 	_Release();
 }
 
-void Epoll::_Release()
+void NFEpoll::_Release()
 {
 	if (write_events_)
 	{
@@ -90,7 +90,7 @@ void Epoll::_Release()
 	max_fd_ = 0;
 }
 
-bool Epoll::Poll(bool poolWrite, bool poolRead, uint64_t timeout_ms)
+bool NFEpoll::Poll(bool poolWrite, bool poolRead, uint64_t timeout_ms)
 {
 	if (poolWrite)
 	{
@@ -103,7 +103,7 @@ bool Epoll::Poll(bool poolWrite, bool poolRead, uint64_t timeout_ms)
 	return true;
 }
 
-bool Epoll::AddEvent(SOCKET sock, EventFlag flag, void* ptr)
+bool NFEpoll::AddEvent(SOCKET sock, EventFlag flag, void* ptr)
 {
 	// read poll event
 	uint32_t event_type = (EPOLLHUP | EPOLLERR);
@@ -130,7 +130,7 @@ bool Epoll::AddEvent(SOCKET sock, EventFlag flag, void* ptr)
 	return true;
 }
 
-bool Epoll::ModEvent(SOCKET sock, EventFlag flag, void* ptr)
+bool NFEpoll::ModEvent(SOCKET sock, EventFlag flag, void* ptr)
 {
 	EventData* data = reinterpret_cast<EventData*>(ptr);
 	if (data->event_flag == flag)
@@ -161,7 +161,7 @@ bool Epoll::ModEvent(SOCKET sock, EventFlag flag, void* ptr)
 	return true;
 }
 
-bool Epoll::DelEvent(SOCKET sock, void* ptr)
+bool NFEpoll::DelEvent(SOCKET sock, void* ptr)
 {
 	_DelPollEvent(ptr);
 	if (!_CtlPollEvent(read_fd_, sock, ptr, EPOLL_CTL_DEL, 0))
@@ -175,7 +175,7 @@ bool Epoll::DelEvent(SOCKET sock, void* ptr)
 	return true;
 }
 
-bool Epoll::_DelPollEvent(void* ptr)
+bool NFEpoll::_DelPollEvent(void* ptr)
 {
 	if (poll_counts_ <= 0)
 		return false;
@@ -197,7 +197,7 @@ bool Epoll::_DelPollEvent(void* ptr)
 	return true;
 }
 
-void Epoll::_DelPollEvent(void* ptr, struct epoll_event* events)
+void NFEpoll::_DelPollEvent(void* ptr, struct epoll_event* events)
 {
 	if (events[poll_index_].data.ptr == ptr)
 	{
@@ -214,7 +214,7 @@ void Epoll::_DelPollEvent(void* ptr, struct epoll_event* events)
 	return;
 }
 
-bool Epoll::_CtlPollEvent(int poll_fd, SOCKET sock, void* ptr, int opt, uint32_t flag)
+bool NFEpoll::_CtlPollEvent(int poll_fd, SOCKET sock, void* ptr, int opt, uint32_t flag)
 {
 	struct epoll_event epev = { flag,{ 0 } };
 	epev.data.ptr = ptr;
@@ -230,7 +230,7 @@ bool Epoll::_CtlPollEvent(int poll_fd, SOCKET sock, void* ptr, int opt, uint32_t
 	}
 }
 
-bool Epoll::_Poll(uint64_t timeout_ms)
+bool NFEpoll::_Poll(uint64_t timeout_ms)
 {
 	bool       result = false;
 	EventData* data = NULL;
@@ -325,7 +325,7 @@ Exit0:
 	return result;
 }
 
-bool Epoll::_PollRead(uint64_t timeout_ms)
+bool NFEpoll::_PollRead(uint64_t timeout_ms)
 {
 	bool       result = false;
 
@@ -340,7 +340,7 @@ Exit0:
 	return result;
 }
 
-bool Epoll::_PollWrite(uint64_t timeout_ms)
+bool NFEpoll::_PollWrite(uint64_t timeout_ms)
 {
 	bool       result = false;
 

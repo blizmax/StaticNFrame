@@ -10,7 +10,7 @@
 
 #include "NFNetBase.h"
 
-class Module
+class NFPoll
 {
 public:
 	virtual bool Init(int max_sock) = 0;
@@ -23,9 +23,9 @@ public:
 	virtual bool DelEvent(SOCKET sock, void* ptr) = 0;
 
 public:
-	Module() {}
-	virtual ~Module() {}
+	NFPoll() {}
+	virtual ~NFPoll() {}
 };
 
-Module*  CreateModule();
-void DeleteModule(Module* module);
+NFPoll*  CreateModule();
+void DeleteModule(NFPoll* module);
