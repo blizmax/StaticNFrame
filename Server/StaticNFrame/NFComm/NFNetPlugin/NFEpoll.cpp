@@ -234,7 +234,6 @@ bool NFEpoll::_Poll(uint64_t timeout_ms)
 {
 	bool       result = false;
 	EventData* data = NULL;
-	EventHandle*    handle = NULL;
 	int        poll_fd = -1;
 	struct epoll_event* poll_events = NULL;
 
