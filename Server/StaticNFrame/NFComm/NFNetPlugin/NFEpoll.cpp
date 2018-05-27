@@ -275,17 +275,16 @@ bool NFEpoll::_Poll(uint64_t timeout_ms)
 				continue;
 			}
 
-			handle = reinterpret_cast<EventHandle*>(data->handle);
 			if (poll_events[poll_index_].events & EPOLLERR)
 			{
-				handle->Error(data);
+				data->handle.mErrorHandler(data);
 				continue;
 			}
 			//if shutdown SHUTDOWN_SEND sock will recv epollin event and epollhup event
 			//because socket can read
 			if (poll_events[poll_index_].events & (EPOLLIN | EPOLLHUP))
 			{
-				handle->Readable(data);
+				data->handle.mReadHandler(data);
 			}
 		}
 	}
@@ -298,17 +297,16 @@ bool NFEpoll::_Poll(uint64_t timeout_ms)
 			{  // delete by other int net pack handle
 				continue;
 			}
-			handle = reinterpret_cast<EventHandle*>(data->handle);
 			if (poll_events[poll_index_].events & EPOLLERR)
 			{
-				handle->Error(data);
+				data->handle.mErrorHandler(data);
 				continue;
 			}
 			//can not handle event EPOLLHUP because socket can not write
 			if (poll_events[poll_index_].events & EPOLLOUT)
 			{
 				//std::cout << poll_events[poll_index_].events << std::endl;
-				handle->Writable(data);
+				data->handle.mWriteHandler(data);
 			}
 		}
 	}
