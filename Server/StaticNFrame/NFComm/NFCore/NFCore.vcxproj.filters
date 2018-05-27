@@ -206,8 +206,5 @@
     <ClInclude Include="NFDuration.h">
       <Filter>Common</Filter>
     </ClInclude>
-    <ClInclude Include="NFDuration.in.h">
-      <Filter>Common</Filter>
-    </ClInclude>
   </ItemGroup>
 </Project>

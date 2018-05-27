@@ -9,10 +9,10 @@
 
 #include "NFDuration.h"
 
-const int64_t NFDuration::kNanosecond = 1LL;
-const int64_t NFDuration::kMicrosecond = 1000 * kNanosecond;
-const int64_t NFDuration::kMillisecond = 1000 * kMicrosecond;
-const int64_t NFDuration::kSecond = 1000 * kMillisecond;
-const int64_t NFDuration::kMinute = 60 * kSecond;
-const int64_t NFDuration::kHour = 60 * kMinute;
+int64_t NFDuration::kNanosecond = 1LL;
+int64_t NFDuration::kMicrosecond = 1000 * kNanosecond;
+int64_t NFDuration::kMillisecond = 1000 * kMicrosecond;
+int64_t NFDuration::kSecond = 1000 * kMillisecond;
+int64_t NFDuration::kMinute = 60 * kSecond;
+int64_t NFDuration::kHour = 60 * kMinute;
 
