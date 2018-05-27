@@ -9,14 +9,12 @@
 
 #include "NFDuration.h"
 
-#if NF_PLATFORM == NF_PLATFORM_WIN
-const int64_t NFDuration::kNanosecond = 1LL;
-const int64_t NFDuration::kMicrosecond = 1000 * kNanosecond;
-const int64_t NFDuration::kMillisecond = 1000 * kMicrosecond;
-const int64_t NFDuration::kSecond = 1000 * kMillisecond;
-const int64_t NFDuration::kMinute = 60 * kSecond;
-const int64_t NFDuration::kHour = 60 * kMinute;
-#endif
+static const int64_t kNanosecond = 1LL;
+static const int64_t kMicrosecond = 1000 * kNanosecond;
+static const int64_t kMillisecond = 1000 * kMicrosecond;
+static const int64_t kSecond = 1000 * kMillisecond;
+static const int64_t kMinute = 60 * kSecond;
+static const int64_t kHour = 60 * kMinute;
 
 NFDuration::NFDuration(const struct timeval& t)
 	: ns_(t.tv_sec * kSecond + t.tv_usec * kMicrosecond)
@@ -60,8 +58,8 @@ double NFDuration::Hours() const
 
 void NFDuration::To(timeval* t) const
 {
-	t->tv_sec = (long)(ns_ / NFDuration::kSecond);
-	t->tv_usec = (long)(ns_ % NFDuration::kSecond) / (long)NFDuration::kMicrosecond;
+	t->tv_sec = (long)(ns_ / kSecond);
+	t->tv_usec = (long)(ns_ % kSecond) / (long)kMicrosecond;
 }
 
 bool NFDuration::IsZero() const

@@ -22,22 +22,6 @@
 class NFDuration
 {
 public:
-#if NF_PLATFORM == NF_PLATFORM_WIN
-	static const int64_t kNanosecond; // = 1LL
-	static const int64_t kMicrosecond;// = 1000
-	static const int64_t kMillisecond;// = 1000 * kMicrosecond
-	static const int64_t kSecond; // = 1000 * kMillisecond
-	static const int64_t kMinute; // = 60 * kSecond
-	static const int64_t kHour; // = 60 * kMinute
-#else
-	static const int64_t kNanosecond = 1LL;
-	static const int64_t kMicrosecond = 1000;
-	static const int64_t kMillisecond = 1000 * kMicrosecond;
-	static const int64_t kSecond = 1000 * kMillisecond;
-	static const int64_t kMinute = 60 * kSecond;
-	static const int64_t kHour = 60 * kMinute;
-#endif
-public:
 	NFDuration() : ns_(0) { }
 	explicit NFDuration(const struct timeval& t);
 	explicit NFDuration(int64_t nanoseconds);
