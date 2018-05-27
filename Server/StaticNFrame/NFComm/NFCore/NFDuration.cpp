@@ -9,7 +9,7 @@
 
 #include "NFDuration.h"
 
-#if NF_PLATFORM == NF_PLATFORM_LINUX
+#if NF_PLATFORM == NF_PLATFORM_WIN
 const int64_t NFDuration::kNanosecond = 1LL;
 const int64_t NFDuration::kMicrosecond = 1000 * kNanosecond;
 const int64_t NFDuration::kMillisecond = 1000 * kMicrosecond;
