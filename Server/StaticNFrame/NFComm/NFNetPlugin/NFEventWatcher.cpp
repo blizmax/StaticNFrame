@@ -12,6 +12,7 @@
 #include "NFLibEvent.h"
 #include <iostream>
 #include "NFEventLoop.h"
+#include "NFComm/NFCore/NFDuration.h"
 
 
 NFEventWatcher::NFEventWatcher(struct event_base* evbase, const Handler& handler)
