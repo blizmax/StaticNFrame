@@ -15,6 +15,8 @@
 #include "NFComm/NFNetPlugin/NFEventLoop.h"
 #include "NFComm/NFNetPlugin/NFEventLoopThread.h"
 
+#include <memory>
+
 int testPrev()
 {
 	std::cout << "testPrev" << std::endl;
