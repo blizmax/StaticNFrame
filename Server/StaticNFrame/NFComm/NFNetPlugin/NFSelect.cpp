@@ -63,7 +63,7 @@ bool  Select::_EventLoop(uint64_t timeout_ms, PollType poll_type)
 	timeout_.tv_sec = (long)timeout_ms / 1000;
 	timeout_.tv_usec = (long)(timeout_ms % 1000) * 1000;
 
-#ifndef OS_LINUX
+#if NF_PLATFORM == NF_PLATFORM_WIN
 	if (recv_set_.fd_count == 0
 		&& send_set_.fd_count == 0
 		&& error_set_.fd_count == 0)
@@ -86,7 +86,7 @@ bool  Select::_EventLoop(uint64_t timeout_ms, PollType poll_type)
 	memcpy(&loop_error_, &error_set_, sizeof(loop_error_));
 
 	int max_fd = 0;
-#ifdef OS_LINUX
+#if NF_PLATFORM == NF_PLATFORM_LINUX
 	max_fd = max_sock_ + 1;
 #endif  // OS_LINUX
 
@@ -183,7 +183,7 @@ bool Select::AddEvent(SOCKET sock, EventFlag flag, void* ptr)
 		FD_SET(sock, &send_set_);
 	}
 
-#ifdef OS_LINUX
+#if NF_PLATFORM == NF_PLATFORM_LINUX
 	if (sock > max_sock_)
 		max_sock_ = sock;
 #endif  // OS_LINUX
@@ -235,3 +235,4 @@ bool Select::DelEvent(SOCKET sock, void* ptr)
 	FD_CLR(sock, &error_set_);
 	return true;
 }
+
