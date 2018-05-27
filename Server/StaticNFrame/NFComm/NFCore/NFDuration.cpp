@@ -9,6 +9,12 @@
 
 #include "NFDuration.h"
 
+#if NF_PLATFORM == NF_PLATFORM_WIN
+#include <WinSock2.h>
+#else
+#include <sys/time.h>
+#endif
+
 static const int64_t kNanosecond = 1LL;
 static const int64_t kMicrosecond = 1000 * kNanosecond;
 static const int64_t kMillisecond = 1000 * kMicrosecond;
