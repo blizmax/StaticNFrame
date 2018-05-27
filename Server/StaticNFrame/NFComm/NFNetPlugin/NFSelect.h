@@ -17,14 +17,14 @@ class NFSelect : public NFPoll
 protected:
 	typedef std::map<SOCKET, EventData*> EVENT_MAP;
 
-	SOCKET max_sock_;
-	timeval timeout_;
-	fd_set recv_set_;
-	fd_set send_set_;
-	fd_set error_set_;
-	fd_set loop_recv_;
-	fd_set loop_send_;
-	fd_set loop_error_;
+	SOCKET    max_sock_;
+	timeval   timeout_;
+	fd_set    recv_set_;
+	fd_set    send_set_;
+	fd_set    error_set_;
+	fd_set    loop_recv_;
+	fd_set    loop_send_;
+	fd_set    loop_error_;
 	EVENT_MAP event_map_;
 
 public:

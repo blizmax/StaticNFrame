@@ -105,7 +105,7 @@ bool NFEpoll::Poll(bool poolWrite, bool poolRead, uint64_t timeout_ms)
 
 bool NFEpoll::AddEvent(SOCKET sock, EventFlag flag, EventData* ptr)
 {
-// read poll event
+	// read poll event
 	uint32_t event_type = (EPOLLHUP | EPOLLERR);
 	if (flag & EVENT_READ)
 	{
@@ -115,7 +115,7 @@ bool NFEpoll::AddEvent(SOCKET sock, EventFlag flag, EventData* ptr)
 	{
 		return false;
 	}
-// write poll event
+	// write poll event
 	event_type = (EPOLLHUP | EPOLLERR);
 	if (flag & EVENT_WRITE)
 	{
@@ -137,7 +137,7 @@ bool NFEpoll::ModEvent(SOCKET sock, EventFlag flag, EventData* ptr)
 	{
 		return true;
 	}
-// read poll event
+	// read poll event
 	uint32_t event_type = (EPOLLHUP | EPOLLERR);
 	if (flag & EVENT_READ)
 	{
@@ -147,7 +147,7 @@ bool NFEpoll::ModEvent(SOCKET sock, EventFlag flag, EventData* ptr)
 	{
 		return false;
 	}
-// write poll event
+	// write poll event
 	event_type = (EPOLLHUP | EPOLLERR);
 	if (flag & EVENT_WRITE)
 	{
@@ -263,7 +263,7 @@ bool NFEpoll::_Poll(uint64_t timeout_ms)
 		}
 	}
 
-// handle read
+	// handle read
 	if (poll_type_ == POLL_TYPE_READ)
 	{
 		for (poll_index_ = 0; poll_index_ < poll_counts_; ++poll_index_)
@@ -279,8 +279,8 @@ bool NFEpoll::_Poll(uint64_t timeout_ms)
 				data->handle.mErrorHandler(data);
 				continue;
 			}
-//if shutdown SHUTDOWN_SEND sock will recv epollin event and epollhup event
-//because socket can read
+			//if shutdown SHUTDOWN_SEND sock will recv epollin event and epollhup event
+			//because socket can read
 			if (poll_events[poll_index_].events & (EPOLLIN | EPOLLHUP))
 			{
 				data->handle.mReadHandler(data);
@@ -301,10 +301,10 @@ bool NFEpoll::_Poll(uint64_t timeout_ms)
 				data->handle.mErrorHandler(data);
 				continue;
 			}
-//can not handle event EPOLLHUP because socket can not write
+			//can not handle event EPOLLHUP because socket can not write
 			if (poll_events[poll_index_].events & EPOLLOUT)
 			{
-//std::cout << poll_events[poll_index_].events << std::endl;
+				//std::cout << poll_events[poll_index_].events << std::endl;
 				data->handle.mWriteHandler(data);
 			}
 		}
@@ -353,4 +353,3 @@ Exit0:
 }
 
 #endif
-

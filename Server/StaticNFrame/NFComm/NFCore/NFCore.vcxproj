@@ -192,6 +192,7 @@
   <ItemGroup>
     <ClInclude Include="NFCmdLine.h" />
     <ClInclude Include="NFDuration.h" />
+    <ClInclude Include="NFDuration.in.h" />
     <ClInclude Include="NFError.h" />
     <ClInclude Include="NFHash.hpp" />
     <ClInclude Include="NFJson.h" />

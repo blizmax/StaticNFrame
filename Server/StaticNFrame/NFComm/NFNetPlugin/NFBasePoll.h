@@ -23,15 +23,9 @@ public:
 	virtual bool DelEvent(SOCKET sock, EventData* ptr) = 0;
 
 public:
-	NFPoll()
-	{
-	}
-
-	virtual ~NFPoll()
-	{
-	}
+	NFPoll() {}
+	virtual ~NFPoll() {}
 };
 
-NFPoll* CreateModule();
+NFPoll*  CreateModule();
 void DeleteModule(NFPoll* module);
-

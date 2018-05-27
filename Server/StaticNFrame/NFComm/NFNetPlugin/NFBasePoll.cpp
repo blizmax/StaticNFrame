@@ -11,7 +11,7 @@
 #include "NFSelect.h"
 #include "NFEpoll.h"
 
-NFPoll* CreateModule()
+NFPoll*  CreateModule()
 {
 #if NF_PLATFORM == NF_PLATFORM_WIN
 	return new NFSelect();
@@ -25,4 +25,3 @@ void DeleteModule(NFPoll* module)
 	assert(module);
 	delete module;
 }
-

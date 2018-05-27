@@ -139,7 +139,6 @@ public:
 	{
 		return tid_;
 	}
-
 private:
 	/**
 	 * @brief 初始化数据
