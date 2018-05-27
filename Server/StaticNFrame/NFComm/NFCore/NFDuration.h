@@ -41,7 +41,6 @@ public:
 	NFDuration();
 	explicit NFDuration(const struct timeval& t);
 	explicit NFDuration(int64_t nanoseconds);
-	explicit NFDuration(int nanoseconds);
 	explicit NFDuration(double seconds);
 
 	// Nanoseconds returns the duration as an integer nanosecond count.

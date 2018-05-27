@@ -33,11 +33,6 @@ NFDuration::NFDuration(int64_t nanoseconds)
 {
 }
 
-NFDuration::NFDuration(int nanoseconds)
-	: ns_(nanoseconds)
-{
-}
-
 NFDuration::NFDuration(double seconds)
 	: ns_((int64_t)(seconds * kSecond))
 {
