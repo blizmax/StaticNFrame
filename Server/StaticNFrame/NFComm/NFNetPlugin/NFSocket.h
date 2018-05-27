@@ -47,6 +47,12 @@
 #define SHUTDOWN_BOTH   SHUT_RDWR
 #endif  // OS
 
+extern char g_errstr[1024];
+#define ERRNO   (Socket::GetSocketError())
+#define ERRSTR  (Socket::GetSocketErrorMsg(ERRNO,  \
+                 g_errstr,                   \
+                 sizeof(g_errstr)))
+
 class Socket
 {
 public:

@@ -10,11 +10,16 @@
 
 #include <stdint.h>
 #include <string>
+#include "NFComm/NFCore/NFPlatform.h"
 #include "NFComm/NFCore/NFSimpleBuffer.h"
 #include "NFComm/NFCore/NFDataStream.h"
 #include "NFComm/NFPluginModule/NFServerDefine.h"
 
-#ifndef _WIN32
+#if NF_PLATFORM == NF_PLATFORM_WIN
+#include <winsock2.h>
+#include <windows.h>
+#include <Ws2tcpip.h>
+#else
 #include <unistd.h>
 #include <sys/time.h>
 #include <sys/socket.h>
@@ -23,13 +28,9 @@
 #include <signal.h>
 #include <unistd.h>
 #include <netinet/tcp.h>
-#else
-#include <winsock2.h>
-#include <windows.h>
-#include <Ws2tcpip.h>
 #endif
 
-#ifdef _WIN32
+#if NF_PLATFORM == NF_PLATFORM_WIN
 #define ArkGetLastError		    WSAGetLastError
 typedef int Socklen_t;
 #define WIN32_LEAN_AND_MEAN
@@ -43,12 +44,6 @@ typedef struct linger 		    LINGER;
 #define INVALID_SOCKET		-1
 #define SD_SEND				SHUT_WR
 #endif
-
-extern char g_errstr[1024];
-#define ERRNO   (Socket::GetSocketError())
-#define ERRSTR  (Socket::GetSocketErrorMsg(ERRNO,  \
-                 g_errstr,                   \
-                 sizeof(g_errstr)))
 
 #define MAX_SEND_BUFFER_SIZE (1024 * 100)
 #define MAX_RECV_BUFFER_SIZE (1024 * 100)

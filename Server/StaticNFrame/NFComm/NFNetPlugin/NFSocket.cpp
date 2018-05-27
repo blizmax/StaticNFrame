@@ -679,7 +679,7 @@ bool Socket::GetPeerAddress(SOCKET sock, char* IPBuffer, uint32_t IPBufferSize, 
 
 	IP = inet_ntoa(addr.sin_addr);
 	length = strlen(IP);
-	assert_EXIT(IPBufferSize > length);
+	assert(IPBufferSize > length);
 
 	memcpy(IPBuffer, IP, length + 1);
 	*port = ntohs(addr.sin_port);
