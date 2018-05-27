@@ -61,8 +61,8 @@ public:
 	struct timeval TimeVal() const;
 	void To(struct timeval* t) const
 	{
-		t->tv_sec = (long)(ns_ / kSecond);
-		t->tv_usec = (long)(ns_ % kSecond) / (long)kMicrosecond;
+		t->tv_sec = (long)(ns_ / NFDuration::kSecond);
+		t->tv_usec = (long)(ns_ % NFDuration::kSecond) / (long)NFDuration::kMicrosecond;
 	}
 
 
