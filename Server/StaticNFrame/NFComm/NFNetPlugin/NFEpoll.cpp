@@ -9,6 +9,7 @@
 
 #include "NFEpoll.h"
 #include <NFComm/NFPluginModule/NFLogMgr.h>
+#include "NFComm/NFCore/NFLikely.h"
 
 #include <errno.h>
 
