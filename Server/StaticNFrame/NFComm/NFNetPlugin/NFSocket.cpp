@@ -10,7 +10,6 @@
 #include "NFSocket.h"
 #include "NFComm/NFCore/NFPlatform.h"
 #include "NFComm/NFPluginModule/NFLogMgr.h"
-#include "NFNetDefine.h"
 
 #if NF_PLATFORM == NF_PLATFORM_WIN
 

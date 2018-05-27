@@ -9,44 +9,7 @@
 #pragma once
 
 #include "NFComm/NFCore/NFPlatform.h"
-#include "NFNetDefine.h"
-
-#if NF_PLATFORM == NF_PLATFORM_WIN
-#include <winsock2.h>
-#include <windows.h>
-#include <mstcpip.h>
-#include <iphlpapi.h>
-#include <mswsock.h>
-#else
-#include <sys/socket.h>
-#include <netinet/in.h>
-#include <arpa/inet.h>
-#include <sys/ioctl.h>
-#include <netinet/tcp.h>
-#include <unistd.h>
-#include <pthread.h>
-#endif  // OS
-
-#if NF_PLATFORM == NF_PLATFORM_WIN
-#define ERR_INTER       WSAEINTR
-#define ERR_EAGAIN      WSAEWOULDBLOCK
-#define ERR_INPROGRESS  WSAEINPROGRESS
-#define SHUTDOWN_RECV   SD_RECEIVE
-#define SHUTDOWN_SEND   SD_SEND
-#define SHUTDOWN_BOTH   SD_BOTH
-#else  // defined(OS_LINUX)
-
-#include <sys/socket.h>
-#include <sys/types.h>
-#include<netinet/in.h> 
-
-#define ERR_INTER       EINTR
-#define ERR_EAGAIN      EAGAIN
-#define ERR_INPROGRESS  EINPROGRESS
-#define SHUTDOWN_RECV   SHUT_RD
-#define SHUTDOWN_SEND   SHUT_WR
-#define SHUTDOWN_BOTH   SHUT_RDWR
-#endif  // OS
+#include "NFNetBase.h"
 
 extern char g_errstr[1024];
 #define ERRNO   (NFSocket::GetSocketError())

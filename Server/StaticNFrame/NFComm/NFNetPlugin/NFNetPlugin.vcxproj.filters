@@ -36,6 +36,15 @@
     <ClCompile Include="NFSocket.cpp">
       <Filter>NFBaseNet</Filter>
     </ClCompile>
+    <ClCompile Include="NFSelect.cpp">
+      <Filter>NFBaseNet</Filter>
+    </ClCompile>
+    <ClCompile Include="NFBasePoll.cpp">
+      <Filter>NFBaseNet</Filter>
+    </ClCompile>
+    <ClCompile Include="NFEpoll.cpp">
+      <Filter>NFBaseNet</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="NFNetPlugin.h" />
@@ -83,6 +92,18 @@
       <Filter>NFClient</Filter>
     </ClInclude>
     <ClInclude Include="NFSocket.h">
+      <Filter>NFBaseNet</Filter>
+    </ClInclude>
+    <ClInclude Include="NFNetBase.h">
+      <Filter>NFBaseNet</Filter>
+    </ClInclude>
+    <ClInclude Include="NFBasePoll.h">
+      <Filter>NFBaseNet</Filter>
+    </ClInclude>
+    <ClInclude Include="NFSelect.h">
+      <Filter>NFBaseNet</Filter>
+    </ClInclude>
+    <ClInclude Include="NFEpoll.h">
       <Filter>NFBaseNet</Filter>
     </ClInclude>
   </ItemGroup>
