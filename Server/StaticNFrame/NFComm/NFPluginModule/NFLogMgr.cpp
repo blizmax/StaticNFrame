@@ -32,7 +32,7 @@ bool NFLogMgr::LogNormal(const NF_LOG_LEVEL nll, const uint64_t ident, const std
 {
 	if (m_pLogModule)
 	{
-		m_pLogModule->LogNormal(nll, ident, strInfo, nDesc, func, line);
+		return m_pLogModule->LogNormal(nll, ident, strInfo, nDesc, func, line);
 	}
 	return false;
 }
@@ -41,7 +41,7 @@ bool NFLogMgr::LogNormal(const NF_LOG_LEVEL nll, const uint64_t ident, const std
 {
 	if (m_pLogModule)
 	{
-		m_pLogModule->LogNormal(nll, ident, strInfo, strDesc, func, line);
+		return m_pLogModule->LogNormal(nll, ident, strInfo, strDesc, func, line);
 	}
 	return false;
 }
@@ -50,8 +50,12 @@ bool NFLogMgr::LogNormal(const NF_LOG_LEVEL nll, const uint64_t ident, const std
 {
 	if (m_pLogModule)
 	{
-		m_pLogModule->LogNormal(nll, ident, stream, func, line);
+		return m_pLogModule->LogNormal(nll, ident, stream, func, line);
 	}
 	return false;
 }
 
+NFILogModule* NFLogMgr::GetLogModule()
+{
+	return m_pLogModule;
+}

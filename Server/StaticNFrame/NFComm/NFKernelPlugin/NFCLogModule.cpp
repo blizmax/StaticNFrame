@@ -1,4 +1,4 @@
-﻿// -------------------------------------------------------------------------
+// -------------------------------------------------------------------------
 //    @FileName         :    NFCLogModule.cpp
 //    @Author           :    LvSheng.Huang
 //    @Date             :    2012-12-15
@@ -90,10 +90,8 @@ NFCLogModule::NFCLogModule(NFIPluginManager* p)
 #endif
 #endif
 
-	//���ļ���С����
 	el::Loggers::addFlag(el::LoggingFlag::StrictLogFileSizeCheck);
 	el::Loggers::addFlag(el::LoggingFlag::DisableApplicationAbortOnFatalLog);
-	//��ʱ�䳤�ȹ�������λs
 	el::Loggers::addFlag(el::LoggingFlag::StrictLogFileTimeCheck);
 
 	el::Configurations conf(strAppLogName);
@@ -145,61 +143,57 @@ bool NFCLogModule::Execute()
 
 bool NFCLogModule::Log(const NF_LOG_LEVEL nll, const char* format, ...)
 {
-	BEGIN_PROFILE("WRITE_LOG");
+	int ret = 0;
+	va_list args;
+	va_start(args, format);
+	ret = vsnprintf(mBuffer.data(), mBuffer.size(), format, args);
+	va_end(args);
 
-		int ret = 0;
-		va_list args;
-		va_start(args, format);
-		ret = vsnprintf(mBuffer.data(), mBuffer.size(), format, args);
-		va_end(args);
+	if (ret < 0) return false;
 
-		if (ret < 0) return false;
-
-		mnLogCountTotal++;
-		switch (nll)
+	mnLogCountTotal++;
+	switch (nll)
+	{
+	case NLL_DEBUG_NORMAL:
 		{
-		case NLL_DEBUG_NORMAL:
-			{
-				std::cout << termcolor::green;
-				LOG(DEBUG) << mnLogCountTotal << " | " << pPluginManager->GetAppID() << " | " << mBuffer.data();
-			}
-			break;
-		case NLL_INFO_NORMAL:
-			{
-				std::cout << termcolor::green;
-				LOG(INFO) << mnLogCountTotal << " | " << pPluginManager->GetAppID() << " | " << mBuffer.data();
-			}
-			break;
-		case NLL_WARING_NORMAL:
-			{
-				std::cout << termcolor::yellow;
-				LOG(WARNING) << mnLogCountTotal << " | " << pPluginManager->GetAppID() << " | " << mBuffer.data();
-			}
-			break;
-		case NLL_ERROR_NORMAL:
-			{
-				std::cout << termcolor::red;
-				LOG(ERROR) << mnLogCountTotal << " | " << pPluginManager->GetAppID() << " | " << mBuffer.data();
-				//LogStack();
-			}
-			break;
-		case NLL_FATAL_NORMAL:
-			{
-				std::cout << termcolor::red;
-				LOG(FATAL) << mnLogCountTotal << " | " << pPluginManager->GetAppID() << " | " << mBuffer.data();
-			}
-			break;
-		default:
-			{
-				std::cout << termcolor::green;
-				LOG(INFO) << mnLogCountTotal << " | " << pPluginManager->GetAppID() << " | " << mBuffer.data();
-			}
-			break;
+			std::cout << termcolor::green;
+			LOG(DEBUG) << mnLogCountTotal << " | " << pPluginManager->GetAppID() << " | " << mBuffer.data();
 		}
+		break;
+	case NLL_INFO_NORMAL:
+		{
+			std::cout << termcolor::green;
+			LOG(INFO) << mnLogCountTotal << " | " << pPluginManager->GetAppID() << " | " << mBuffer.data();
+		}
+		break;
+	case NLL_WARING_NORMAL:
+		{
+			std::cout << termcolor::yellow;
+			LOG(WARNING) << mnLogCountTotal << " | " << pPluginManager->GetAppID() << " | " << mBuffer.data();
+		}
+		break;
+	case NLL_ERROR_NORMAL:
+		{
+			std::cout << termcolor::red;
+			LOG(ERROR) << mnLogCountTotal << " | " << pPluginManager->GetAppID() << " | " << mBuffer.data();
+			//LogStack();
+		}
+		break;
+	case NLL_FATAL_NORMAL:
+		{
+			std::cout << termcolor::red;
+			LOG(FATAL) << mnLogCountTotal << " | " << pPluginManager->GetAppID() << " | " << mBuffer.data();
+		}
+		break;
+	default:
+		{
+			std::cout << termcolor::green;
+			LOG(INFO) << mnLogCountTotal << " | " << pPluginManager->GetAppID() << " | " << mBuffer.data();
+		}
+		break;
+	}
 
-		std::cout << termcolor::reset;
-		//memset(szBuffer, 0, writeSize);
-		END_PROFILE();
+	std::cout << termcolor::reset;
 	return true;
 }
 

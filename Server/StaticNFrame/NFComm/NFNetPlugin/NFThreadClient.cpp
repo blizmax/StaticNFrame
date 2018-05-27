@@ -131,7 +131,7 @@ bool NFThreadClient::Init()
 	m_pMainBase = event_base_new();
 	if (NULL == m_pMainBase)
 	{
-		LogError(0, "NetError", "error: client event_base_new failed!");
+		NFLogNormalError(0, "NetError", "error: client event_base_new failed!");
 		return false;
 	}
 
@@ -277,7 +277,7 @@ bool NFThreadClient::Connect()
 
 	if (bufferevent_socket_connect(m_pBev, reinterpret_cast<struct sockaddr*>(&sin), sizeof(sin)) < 0)
 	{
-		LogError(0, "NetError", "connect failed! IP: " + m_flag.strIP + " port:" + lexical_cast<std::string>(m_flag.nPort));
+		NFLogNormalError(0, "NetError", "connect failed! IP: " + m_flag.strIP + " port:" + lexical_cast<std::string>(m_flag.nPort));
 		return false;
 	}
 

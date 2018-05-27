@@ -36,6 +36,8 @@ public:
 	///////////////////////////////////////////////////////////////////////
 	virtual void LogStack();
 
+	virtual bool Log(const NF_LOG_LEVEL nll, const char* format, ...);
+
 	virtual bool LogNormal(const NF_LOG_LEVEL nll, const uint64_t ident, const std::string& strInfo, const char* func = "", int line = 0);
 	virtual bool LogNormal(const NF_LOG_LEVEL nll, const uint64_t ident, const std::string& strInfo, const int64_t nDesc, const char* func = "", int line = 0) override;
 	virtual bool LogNormal(const NF_LOG_LEVEL nll, const uint64_t ident, const std::string& strInfo, const std::string& strDesc, const char* func = "", int line = 0) override;
@@ -43,7 +45,6 @@ public:
 
 	virtual bool ChangeLogLevel(const std::string& strLevel);
 protected:
-	virtual bool Log(const NF_LOG_LEVEL nll, const char* format, ...);
 
 	static std::string GetNewLogFile(const std::string& oldFile);
 	static void rolloutHandler(const char* filename, std::size_t size);

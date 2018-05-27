@@ -183,7 +183,7 @@ bool NetObject::Send(const void* pData, uint32_t unSize)
 		int nRet = bufferevent_write(m_pBev, pData, unSize);
 		if (nRet < 0)
 		{
-			LogError(0, "NetError", "send msg error !");
+			NFLogNormalError(0, "NetError", "send msg error !");
 			return false;
 		}
 		return true;

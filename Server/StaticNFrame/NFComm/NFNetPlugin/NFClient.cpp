@@ -64,7 +64,7 @@ static void conn_eventcb(struct bufferevent* pEv, short events, void* pArg)
 		}
 #endif
 		p->OnHandleDisConnect();
-		LogError(0, "NetError", " CloseProc Error Code " + std::string(evutil_socket_error_to_string(EVUTIL_SOCKET_ERROR())));
+		NFLogNormalError(0, "NetError", " CloseProc Error Code " + std::string(evutil_socket_error_to_string(EVUTIL_SOCKET_ERROR())));
 	}
 }
 
@@ -169,13 +169,13 @@ bool NFClient::Init()
 	m_pMainBase = event_base_new();
 	if (m_pMainBase == nullptr)
 	{
-		LogError(0, "NetError", "error: client event_base_new failed!");
+		NFLogNormalError(0, "NetError", "error: client event_base_new failed!");
 		return false;
 	}
 
 	if (!Connect())
 	{
-		LogError(0, "NetError", "error: connected failed!");
+		NFLogNormalError(0, "NetError", "error: connected failed!");
 		return false;
 	}
 	return true;
@@ -238,7 +238,7 @@ bool NFClient::Connect()
 
 	if (bufferevent_socket_connect(m_pBev, (struct sockaddr*)(&sin), sizeof(sin)) < 0)
 	{
-		LogError(0, "NetError", "connect failed! IP: " + m_flag.strIP + " port:" + lexical_cast<std::string>(m_flag.nPort));
+		NFLogNormalError(0, "NetError", "connect failed! IP: " + m_flag.strIP + " port:" + lexical_cast<std::string>(m_flag.nPort));
 		return false;
 	}
 

@@ -44,6 +44,12 @@ typedef struct linger 		    LINGER;
 #define SD_SEND				SHUT_WR
 #endif
 
+extern char g_errstr[1024];
+#define ERRNO   (Socket::GetSocketError())
+#define ERRSTR  (Socket::GetSocketErrorMsg(ERRNO,  \
+                 g_errstr,                   \
+                 sizeof(g_errstr)))
+
 #define MAX_SEND_BUFFER_SIZE (1024 * 100)
 #define MAX_RECV_BUFFER_SIZE (1024 * 100)
 

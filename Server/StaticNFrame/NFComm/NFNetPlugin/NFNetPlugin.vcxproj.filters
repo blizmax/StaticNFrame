@@ -33,6 +33,9 @@
     <ClCompile Include="NFLoopThreadClient.cpp">
       <Filter>NFClient</Filter>
     </ClCompile>
+    <ClCompile Include="NFSocket.cpp">
+      <Filter>NFBaseNet</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="NFNetPlugin.h" />
@@ -79,6 +82,9 @@
     <ClInclude Include="NFLoopThreadClient.h">
       <Filter>NFClient</Filter>
     </ClInclude>
+    <ClInclude Include="NFSocket.h">
+      <Filter>NFBaseNet</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="NFClient">
@@ -92,6 +98,9 @@
     </Filter>
     <Filter Include="NFNetObject">
       <UniqueIdentifier>{4a41b02b-477f-4136-bb63-6dddc6fd21d6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="NFBaseNet">
+      <UniqueIdentifier>{909a847e-19b9-4a9f-a939-424fe74a297b}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

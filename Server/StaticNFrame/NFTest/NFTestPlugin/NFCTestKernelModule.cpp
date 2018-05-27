@@ -88,7 +88,7 @@ void NFCTestKernelModule::OnTimer(uint32_t nTimerID)
 {
 	if (nTimerID == eTimer_test)
 	{
-		LogWarning(eTimer_test, "eTimer_test", "use Time:" + lexical_cast<std::string>(NFGetTime() - lastTime));
+		NFLogNormalWarning(eTimer_test, "eTimer_test", "use Time:" + lexical_cast<std::string>(NFGetTime() - lastTime));
 		lastTime = NFGetTime();
 	}
 }

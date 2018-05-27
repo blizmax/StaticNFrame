@@ -96,7 +96,7 @@ void NFCTestClientModule::OnProxySocketEvent(const eMsgType nEvent, const uint32
 
 void NFCTestClientModule::OnHandleOtherMessage(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen)
 {
-	LogWarning(playerId, "Message Not Registed", lexical_cast<std::string>(nMsgId) + " | msg Len:" + lexical_cast<std::string>(nLen));
+	NFLogNormalWarning(playerId, "Message Not Registed", lexical_cast<std::string>(nMsgId) + " | msg Len:" + lexical_cast<std::string>(nLen));
 }
 
 void NFCTestClientModule::OnHandleQueryPlayerData(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen)

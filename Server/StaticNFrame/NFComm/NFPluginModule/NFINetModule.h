@@ -32,7 +32,7 @@
     msg xMsg;                                           \
 	if (!xMsg.ParseFromArray(msgData, nLen))				\
     {													\
-		LogError(playerId, "Parse Message Failed:", lexical_cast<std::string>(nMsgID));	\
+		NFLogNormalError(playerId, "Parse Message Failed:", lexical_cast<std::string>(nMsgID));	\
         return ;										\
     }													\
 
