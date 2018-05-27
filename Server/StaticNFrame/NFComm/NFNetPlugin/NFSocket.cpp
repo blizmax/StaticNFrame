@@ -43,12 +43,12 @@ public:
 	}
 }s_socketSetup;
 
-int Socket::GetSocketError()
+int NFSocket::GetSocketError()
 {
 	return WSAGetLastError();
 }
 
-char* Socket::GetSocketErrorMsg(int err_no, char *buf, size_t len)
+char* NFSocket::GetSocketErrorMsg(int err_no, char *buf, size_t len)
 {
 	assert(buf);
 	LPVOID msg_buf = NULL;
@@ -71,7 +71,7 @@ char* Socket::GetSocketErrorMsg(int err_no, char *buf, size_t len)
 	return buf;
 }
 
-SOCKET Socket::Create(int nodelay_flag /*= 1*/)
+SOCKET NFSocket::Create(int nodelay_flag /*= 1*/)
 {
 	SOCKET sock = socket(AF_INET, SOCK_STREAM, 0);
 	if (sock != INVALID_SOCKET)
@@ -85,7 +85,7 @@ SOCKET Socket::Create(int nodelay_flag /*= 1*/)
 	return sock;
 }
 
-bool Socket::Close(SOCKET sock)
+bool NFSocket::Close(SOCKET sock)
 {
 	assert(sock != INVALID_SOCKET);
 
@@ -96,7 +96,7 @@ bool Socket::Close(SOCKET sock)
 	return true;
 }
 
-bool Socket::Shutdown(SOCKET sock, int how)
+bool NFSocket::Shutdown(SOCKET sock, int how)
 {
 	assert(sock != INVALID_SOCKET);
 	if (sock != INVALID_SOCKET)
@@ -106,7 +106,7 @@ bool Socket::Shutdown(SOCKET sock, int how)
 	return true;
 }
 
-bool Socket::SetReuse(SOCKET sock)
+bool NFSocket::SetReuse(SOCKET sock)
 {
 	assert(sock != INVALID_SOCKET);
 
@@ -134,7 +134,7 @@ bool Socket::SetReuse(SOCKET sock)
 	}
 }
 
-bool Socket::SetNonBlock(SOCKET sock)
+bool NFSocket::SetNonBlock(SOCKET sock)
 {
 	assert(sock != INVALID_SOCKET);
 
@@ -158,7 +158,7 @@ bool Socket::SetNonBlock(SOCKET sock)
 	}
 }
 
-bool Socket::SetNoDelay(SOCKET sock, int flag /*= 1*/)
+bool NFSocket::SetNoDelay(SOCKET sock, int flag /*= 1*/)
 {
 	assert(sock != INVALID_SOCKET);
 
@@ -185,7 +185,7 @@ bool Socket::SetNoDelay(SOCKET sock, int flag /*= 1*/)
 	}
 }
 
-int Socket::Accept(SOCKET listen_sock, SOCKET* sock)
+int NFSocket::Accept(SOCKET listen_sock, SOCKET* sock)
 {
 	assert(listen_sock);
 
@@ -209,7 +209,7 @@ int Socket::Accept(SOCKET listen_sock, SOCKET* sock)
 	}
 }
 
-bool Socket::Connect(SOCKET sock, const char* ip, uint16_t port)
+bool NFSocket::Connect(SOCKET sock, const char* ip, uint16_t port)
 {
 	assert(sock != INVALID_SOCKET);
 	assert(ip);
@@ -234,7 +234,7 @@ bool Socket::Connect(SOCKET sock, const char* ip, uint16_t port)
 	return true;
 }
 
-bool Socket::Listen(SOCKET sock, const char* ip, uint16_t port)
+bool NFSocket::Listen(SOCKET sock, const char* ip, uint16_t port)
 {
 	assert(sock != INVALID_SOCKET);
 	assert(ip);
@@ -272,7 +272,7 @@ bool Socket::Listen(SOCKET sock, const char* ip, uint16_t port)
 }
 
 //返回值有意义：字长
-int Socket::Send(SOCKET sock, const char* buf, uint32_t len)
+int NFSocket::Send(SOCKET sock, const char* buf, uint32_t len)
 {
 	do
 	{
@@ -299,7 +299,7 @@ int Socket::Send(SOCKET sock, const char* buf, uint32_t len)
 	} while (true);
 }
 
-int Socket::Recv(SOCKET sock, char* buf, uint32_t size)
+int NFSocket::Recv(SOCKET sock, char* buf, uint32_t size)
 {
 	do
 	{
@@ -326,7 +326,7 @@ int Socket::Recv(SOCKET sock, char* buf, uint32_t size)
 	} while (true);
 }
 
-bool Socket::GetPeerAddress(SOCKET sock, char* IPBuffer, uint32_t IPBufferSize, uint16_t* port)
+bool NFSocket::GetPeerAddress(SOCKET sock, char* IPBuffer, uint32_t IPBufferSize, uint16_t* port)
 {
 	bool result = false;
 	int retCode = -1;
@@ -367,12 +367,12 @@ Exit0:
 #include <sys/types.h>
 #include <arpa/inet.h>
 
-int Socket::GetSocketError()
+int NFSocket::GetSocketError()
 {
 	return errno;     // errno is thread-local
 }
 
-char* Socket::GetSocketErrorMsg(int err_no, char *buf, size_t len)
+char* NFSocket::GetSocketErrorMsg(int err_no, char *buf, size_t len)
 {
 	assert(buf);
 	assert(len > 0);
@@ -381,7 +381,7 @@ char* Socket::GetSocketErrorMsg(int err_no, char *buf, size_t len)
 	return buf;
 }
 
-SOCKET Socket::Create(int nodelay_flag /*= 1*/)
+SOCKET NFSocket::Create(int nodelay_flag /*= 1*/)
 {
 	SOCKET sock = socket(AF_INET, SOCK_STREAM, 0);
 	if (sock != INVALID_SOCKET)
@@ -395,7 +395,7 @@ SOCKET Socket::Create(int nodelay_flag /*= 1*/)
 	return sock;
 }
 
-bool Socket::Close(SOCKET sock)
+bool NFSocket::Close(SOCKET sock)
 {
 	assert(sock != INVALID_SOCKET);
 
@@ -406,7 +406,7 @@ bool Socket::Close(SOCKET sock)
 	return true;
 }
 
-bool Socket::Shutdown(SOCKET sock, int how)
+bool NFSocket::Shutdown(SOCKET sock, int how)
 {
 	assert(sock != INVALID_SOCKET);
 
@@ -424,7 +424,7 @@ bool Socket::Shutdown(SOCKET sock, int how)
 	return true;
 }
 
-bool Socket::SetReuse(SOCKET sock)
+bool NFSocket::SetReuse(SOCKET sock)
 {
 	assert(sock != INVALID_SOCKET);
 
@@ -452,7 +452,7 @@ bool Socket::SetReuse(SOCKET sock)
 	}
 }
 
-bool Socket::SetNonBlock(SOCKET sock)
+bool NFSocket::SetNonBlock(SOCKET sock)
 {
 	assert(sock != INVALID_SOCKET);
 
@@ -476,7 +476,7 @@ bool Socket::SetNonBlock(SOCKET sock)
 	}
 }
 
-bool Socket::SetNoDelay(SOCKET sock, int flag /*= 1*/)
+bool NFSocket::SetNoDelay(SOCKET sock, int flag /*= 1*/)
 {
 	assert(sock != INVALID_SOCKET);
 
@@ -504,7 +504,7 @@ bool Socket::SetNoDelay(SOCKET sock, int flag /*= 1*/)
 }
 
 //返回值有意义：三种类型不适合做bool
-int Socket::Accept(SOCKET listen_sock, SOCKET* sock)
+int NFSocket::Accept(SOCKET listen_sock, SOCKET* sock)
 {
 	assert(listen_sock);
 
@@ -530,7 +530,7 @@ int Socket::Accept(SOCKET listen_sock, SOCKET* sock)
 	}
 }
 
-bool Socket::Connect(SOCKET sock, const char* ip, uint16_t port)
+bool NFSocket::Connect(SOCKET sock, const char* ip, uint16_t port)
 {
 	assert(sock != INVALID_SOCKET);
 	assert(ip);
@@ -557,7 +557,7 @@ bool Socket::Connect(SOCKET sock, const char* ip, uint16_t port)
 	return true;
 }
 
-bool Socket::Listen(SOCKET sock, const char* ip, uint16_t port)
+bool NFSocket::Listen(SOCKET sock, const char* ip, uint16_t port)
 {
 	assert(sock != INVALID_SOCKET);
 	assert(ip);
@@ -601,7 +601,7 @@ bool Socket::Listen(SOCKET sock, const char* ip, uint16_t port)
 }
 
 //返回值有意义：字长
-int Socket::Send(SOCKET sock, const char* buf, uint32_t len)
+int NFSocket::Send(SOCKET sock, const char* buf, uint32_t len)
 {
 	do
 	{
@@ -630,7 +630,7 @@ int Socket::Send(SOCKET sock, const char* buf, uint32_t len)
 	} while (true);
 }
 
-int Socket::Recv(SOCKET sock, char* buf, uint32_t size)
+int NFSocket::Recv(SOCKET sock, char* buf, uint32_t size)
 {
 	do
 	{
@@ -659,7 +659,7 @@ int Socket::Recv(SOCKET sock, char* buf, uint32_t size)
 	} while (true);
 }
 
-bool Socket::GetPeerAddress(SOCKET sock, char* IPBuffer, uint32_t IPBufferSize, uint16_t* port)
+bool NFSocket::GetPeerAddress(SOCKET sock, char* IPBuffer, uint32_t IPBufferSize, uint16_t* port)
 {
 	bool result = false;
 	int retCode = -1;

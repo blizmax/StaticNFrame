@@ -49,12 +49,12 @@
 #endif  // OS
 
 extern char g_errstr[1024];
-#define ERRNO   (Socket::GetSocketError())
-#define ERRSTR  (Socket::GetSocketErrorMsg(ERRNO,  \
+#define ERRNO   (NFSocket::GetSocketError())
+#define ERRSTR  (NFSocket::GetSocketErrorMsg(ERRNO,  \
                  g_errstr,                   \
                  sizeof(g_errstr)))
 
-class Socket
+class NFSocket
 {
 public:
 	static int    GetSocketError();
@@ -75,6 +75,6 @@ public:
 	static int    TpIntToStr(int ip, std::string* ip_str);
 	static bool   GetMac(char* mac);
 protected:
-	Socket();
-	virtual ~Socket();
+	NFSocket();
+	virtual ~NFSocket();
 };
