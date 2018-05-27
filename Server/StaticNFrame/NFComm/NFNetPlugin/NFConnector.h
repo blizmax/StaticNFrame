@@ -20,7 +20,8 @@ class NFEventLoop;
 class FdChannel;
 class DNSResolver;
 
-class Connector : public std::enable_shared_from_this<Connector> {
+class Connector : public std::enable_shared_from_this<Connector>
+{
 public:
 	typedef std::function<void(evutil_socket_t sockfd, const std::string& /*local addr*/)> NewConnectionCallback;
 	Connector(NFEventLoop* loop, TCPClient* client);
@@ -28,30 +29,48 @@ public:
 	void Start();
 	void Cancel();
 public:
-	void SetNewConnectionCallback(NewConnectionCallback cb) {
+	void SetNewConnectionCallback(NewConnectionCallback cb)
+	{
 		conn_fn_ = cb;
 	}
-	bool IsConnecting() const {
+
+	bool IsConnecting() const
+	{
 		return status_ == kConnecting;
 	}
-	bool IsConnected() const {
+
+	bool IsConnected() const
+	{
 		return status_ == kConnected;
 	}
-	bool IsDisconnected() const {
+
+	bool IsDisconnected() const
+	{
 		return status_ == kDisconnected;
 	}
-	int status() const {
+
+	int status() const
+	{
 		return status_;
 	}
+
 private:
 	void Connect();
 	void HandleWrite();
 	void HandleError();
 	void OnConnectTimeout();
-	void OnDNSResolved(const std::vector <struct in_addr>& addrs);
+	void OnDNSResolved(const std::vector<struct in_addr>& addrs);
 	std::string StatusToString() const;
 private:
-	enum Status { kDisconnected, kDNSResolving, kDNSResolved, kConnecting, kConnected };
+	enum Status
+	{
+		kDisconnected,
+		kDNSResolving,
+		kDNSResolved,
+		kConnecting,
+		kConnected
+	};
+
 	Status status_;
 	NFEventLoop* loop_;
 	TCPClient* owner_tcp_client_;
@@ -74,3 +93,4 @@ private:
 	std::shared_ptr<DNSResolver> dns_resolver_;
 	NewConnectionCallback conn_fn_;
 };
+

@@ -65,7 +65,8 @@ typedef struct linger 		    LINGER;
 #include <netinet/tcp.h>
 #include <unistd.h>
 #include <pthread.h>
-#endif  // OS
+#endif // OS
+
 
 #if NF_PLATFORM == NF_PLATFORM_WIN
 #define ERR_INTER       WSAEINTR
@@ -74,7 +75,8 @@ typedef struct linger 		    LINGER;
 #define SHUTDOWN_RECV   SD_RECEIVE
 #define SHUTDOWN_SEND   SD_SEND
 #define SHUTDOWN_BOTH   SD_BOTH
-#else  // defined(OS_LINUX)
+#else // defined(OS_LINUX)
+
 
 #include <sys/socket.h>
 #include <sys/types.h>
@@ -86,7 +88,8 @@ typedef struct linger 		    LINGER;
 #define SHUTDOWN_RECV   SHUT_RD
 #define SHUTDOWN_SEND   SHUT_WR
 #define SHUTDOWN_BOTH   SHUT_RDWR
-#endif  // OS
+#endif // OS
+
 
 enum PollType
 {
@@ -105,8 +108,8 @@ enum SocketFlag
 enum SessionState
 {
 	SESSION_STATE_NULL = 0,
-	SESSION_STATE_WORKING,    // working
-	SESSION_STATE_SHUTDOWN,   // app lay shutdown(grace close socket)
+	SESSION_STATE_WORKING, // working
+	SESSION_STATE_SHUTDOWN, // app lay shutdown(grace close socket)
 };
 
 enum EventFlag
@@ -129,26 +132,31 @@ public:
 		mWriteHandler = EventHandler();
 		mErrorHandler = EventHandler();
 	}
-	virtual ~EventHandle() {}
 
-	EventHandler	mReadHandler;
-	EventHandler	mWriteHandler;
-	EventHandler	mErrorHandler;
+	virtual ~EventHandle()
+	{
+	}
+
+	EventHandler mReadHandler;
+	EventHandler mWriteHandler;
+	EventHandler mErrorHandler;
 };
 
 struct EventData
 {
-	EventHandle      handle;
-	SocketFlag  sock_flag;
-	EventFlag   event_flag;
+	EventHandle handle;
+	SocketFlag sock_flag;
+	EventFlag event_flag;
+
 	union
 	{
 		struct
 		{
-			SOCKET   sock;
+			SOCKET sock;
 			uint16_t port;
 		};
-		void*        session;
+
+		void* session;
 	};
 
 	EventData()
@@ -162,13 +170,14 @@ struct EventData
 
 struct EventDataEx : public EventData
 {
-	uint32_t  sendBufSize;
-	uint32_t  recvBufSize;
+	uint32_t sendBufSize;
+	uint32_t recvBufSize;
 
 	EventDataEx()
 		: EventData()
-		, sendBufSize(0)
-		, recvBufSize(0)
-	{}
+		  , sendBufSize(0)
+		  , recvBufSize(0)
+	{
+	}
 };
 

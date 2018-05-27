@@ -15,7 +15,7 @@
 
 NFSelect::NFSelect()
 	: max_sock_(0),
-	timeout_()
+	  timeout_()
 {
 	FD_ZERO(&recv_set_);
 	FD_ZERO(&send_set_);
@@ -26,7 +26,8 @@ NFSelect::NFSelect()
 }
 
 NFSelect::~NFSelect()
-{}
+{
+}
 
 bool NFSelect::Init(int max_sock)
 {
@@ -57,7 +58,7 @@ bool NFSelect::Poll(bool poolWrite, bool poolRead, uint64_t timeout_ms)
 	return true;
 }
 
-bool  NFSelect::_EventLoop(uint64_t timeout_ms, PollType poll_type)
+bool NFSelect::_EventLoop(uint64_t timeout_ms, PollType poll_type)
 {
 	int ret = -1;
 	timeout_.tv_sec = (long)timeout_ms / 1000;
@@ -88,13 +89,14 @@ bool  NFSelect::_EventLoop(uint64_t timeout_ms, PollType poll_type)
 	int max_fd = 0;
 #if NF_PLATFORM == NF_PLATFORM_LINUX
 	max_fd = max_sock_ + 1;
-#endif  // OS_LINUX
+#endif // OS_LINUX
+
 
 	ret = select(max_fd,
-		(poll_type == POLL_TYPE_READ) ? &loop_recv_ : NULL,
-		(poll_type == POLL_TYPE_WRITE) ? &loop_send_ : NULL,
-		&loop_error_,
-		&timeout_);
+	             (poll_type == POLL_TYPE_READ) ? &loop_recv_ : NULL,
+	             (poll_type == POLL_TYPE_WRITE) ? &loop_send_ : NULL,
+	             &loop_error_,
+	             &timeout_);
 
 	if (ret == -1)
 	{
@@ -109,7 +111,7 @@ bool  NFSelect::_EventLoop(uint64_t timeout_ms, PollType poll_type)
 		}
 	}
 
-	SOCKET     sock = INVALID_SOCKET;
+	SOCKET sock = INVALID_SOCKET;
 	EventData* data = NULL;
 
 	// todo: 遍历map比较低效
@@ -138,7 +140,7 @@ bool  NFSelect::_EventLoop(uint64_t timeout_ms, PollType poll_type)
 		}
 	}
 	else if (poll_type == POLL_TYPE_WRITE)
-	{  // handle write
+	{ // handle write
 		for (; it != event_map_.end();)
 		{
 			it_use = it++;
@@ -169,18 +171,21 @@ bool NFSelect::AddEvent(SOCKET sock, EventFlag flag, EventData* ptr)
 	// todo:遍历中自增宕机
 	FD_SET(sock, &error_set_);
 
-	if (flag & EVENT_READ) {
+	if (flag & EVENT_READ)
+	{
 		FD_SET(sock, &recv_set_);
 	}
 
-	if (flag & EVENT_WRITE) {
+	if (flag & EVENT_WRITE)
+	{
 		FD_SET(sock, &send_set_);
 	}
 
 #if NF_PLATFORM == NF_PLATFORM_LINUX
 	if (sock > max_sock_)
 		max_sock_ = sock;
-#endif  // OS_LINUX
+#endif // OS_LINUX
+
 
 	event_map_[sock] = ptr;
 	EventData* data = reinterpret_cast<EventData*>(ptr);

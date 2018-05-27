@@ -16,123 +16,123 @@ const int64_t NFDuration::kSecond = 1000 * kMillisecond;
 const int64_t NFDuration::kMinute = 60 * kSecond;
 const int64_t NFDuration::kHour = 60 * kMinute;
 
- NFDuration::NFDuration()
+NFDuration::NFDuration()
 	: ns_(0)
 {
 }
 
- NFDuration::NFDuration(const struct timeval& t)
+NFDuration::NFDuration(const struct timeval& t)
 	: ns_(t.tv_sec * kSecond + t.tv_usec * kMicrosecond)
 {
 }
 
- NFDuration::NFDuration(int64_t nanoseconds)
+NFDuration::NFDuration(int64_t nanoseconds)
 	: ns_(nanoseconds)
 {
 }
 
- NFDuration::NFDuration(int nanoseconds)
+NFDuration::NFDuration(int nanoseconds)
 	: ns_(nanoseconds)
 {
 }
 
- NFDuration::NFDuration(double seconds)
+NFDuration::NFDuration(double seconds)
 	: ns_((int64_t)(seconds * kSecond))
 {
 }
 
- int64_t NFDuration::Nanoseconds() const
+int64_t NFDuration::Nanoseconds() const
 {
 	return ns_;
 }
 
- double NFDuration::Seconds() const
+double NFDuration::Seconds() const
 {
 	return double(ns_) / kSecond;
 }
 
- double NFDuration::Milliseconds() const
+double NFDuration::Milliseconds() const
 {
 	return double(ns_) / kMillisecond;
 }
 
- double NFDuration::Microseconds() const
+double NFDuration::Microseconds() const
 {
 	return double(ns_) / kMicrosecond;
 }
 
- double NFDuration::Minutes() const
+double NFDuration::Minutes() const
 {
 	return double(ns_) / kMinute;
 }
 
- double NFDuration::Hours() const
+double NFDuration::Hours() const
 {
 	return double(ns_) / kHour;
 }
 
- bool NFDuration::IsZero() const
+bool NFDuration::IsZero() const
 {
 	return ns_ == 0;
 }
 
- struct timeval NFDuration::TimeVal() const
+struct timeval NFDuration::TimeVal() const
 {
 	struct timeval t;
 	To(&t);
 	return t;
 }
 
- void NFDuration::To(struct timeval* t) const
+void NFDuration::To(struct timeval* t) const
 {
 	t->tv_sec = (long)(ns_ / kSecond);
 	t->tv_usec = (long)(ns_ % kSecond) / (long)kMicrosecond;
 }
 
- bool NFDuration::operator<(const NFDuration& rhs) const
+bool NFDuration::operator<(const NFDuration& rhs) const
 {
 	return ns_ < rhs.ns_;
 }
 
- bool NFDuration::operator<=(const NFDuration& rhs) const
+bool NFDuration::operator<=(const NFDuration& rhs) const
 {
 	return ns_ <= rhs.ns_;
 }
 
- bool NFDuration::operator>(const NFDuration& rhs) const
+bool NFDuration::operator>(const NFDuration& rhs) const
 {
 	return ns_ > rhs.ns_;
 }
 
- bool NFDuration::operator>=(const NFDuration& rhs) const
+bool NFDuration::operator>=(const NFDuration& rhs) const
 {
 	return ns_ >= rhs.ns_;
 }
 
- bool NFDuration::operator==(const NFDuration& rhs) const
+bool NFDuration::operator==(const NFDuration& rhs) const
 {
 	return ns_ == rhs.ns_;
 }
 
- NFDuration NFDuration::operator+=(const NFDuration& rhs)
+NFDuration NFDuration::operator+=(const NFDuration& rhs)
 {
 	ns_ += rhs.ns_;
 	return *this;
 }
 
- NFDuration NFDuration::operator-=(const NFDuration& rhs)
+NFDuration NFDuration::operator-=(const NFDuration& rhs)
 {
 	ns_ -= rhs.ns_;
 	return *this;
 }
 
- NFDuration NFDuration::operator*=(int n)
+NFDuration NFDuration::operator*=(int n)
 {
 	ns_ *= n;
 	return *this;
 }
 
- NFDuration NFDuration::operator/=(int n)
+NFDuration NFDuration::operator/=(int n)
 {
 	ns_ /= n;
 	return *this;

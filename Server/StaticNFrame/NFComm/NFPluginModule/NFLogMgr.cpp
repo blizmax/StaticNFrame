@@ -59,3 +59,4 @@ NFILogModule* NFLogMgr::GetLogModule()
 {
 	return m_pLogModule;
 }
+
