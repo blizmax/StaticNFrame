@@ -9,6 +9,7 @@
 #pragma once
 
 #include "NFComm/NFCore/NFPlatform.h"
+#include "NFNetDefine.h"
 
 #if NF_PLATFORM == NF_PLATFORM_WIN
 #include <winsock2.h>
