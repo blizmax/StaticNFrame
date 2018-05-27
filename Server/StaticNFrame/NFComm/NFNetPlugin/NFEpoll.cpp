@@ -103,7 +103,7 @@ bool NFEpoll::Poll(bool poolWrite, bool poolRead, uint64_t timeout_ms)
 	return true;
 }
 
-bool NFEpoll::AddEvent(SOCKET sock, EventFlag flag, void* ptr)
+bool NFEpoll::AddEvent(SOCKET sock, EventFlag flag, EventData* ptr)
 {
 	// read poll event
 	uint32_t event_type = (EPOLLHUP | EPOLLERR);
@@ -130,7 +130,7 @@ bool NFEpoll::AddEvent(SOCKET sock, EventFlag flag, void* ptr)
 	return true;
 }
 
-bool NFEpoll::ModEvent(SOCKET sock, EventFlag flag, void* ptr)
+bool NFEpoll::ModEvent(SOCKET sock, EventFlag flag, EventData* ptr)
 {
 	EventData* data = reinterpret_cast<EventData*>(ptr);
 	if (data->event_flag == flag)
@@ -161,7 +161,7 @@ bool NFEpoll::ModEvent(SOCKET sock, EventFlag flag, void* ptr)
 	return true;
 }
 
-bool NFEpoll::DelEvent(SOCKET sock, void* ptr)
+bool NFEpoll::DelEvent(SOCKET sock, EventData* ptr)
 {
 	_DelPollEvent(ptr);
 	if (!_CtlPollEvent(read_fd_, sock, ptr, EPOLL_CTL_DEL, 0))
@@ -175,7 +175,7 @@ bool NFEpoll::DelEvent(SOCKET sock, void* ptr)
 	return true;
 }
 
-bool NFEpoll::_DelPollEvent(void* ptr)
+bool NFEpoll::_DelPollEvent(EventData* ptr)
 {
 	if (poll_counts_ <= 0)
 		return false;
@@ -197,7 +197,7 @@ bool NFEpoll::_DelPollEvent(void* ptr)
 	return true;
 }
 
-void NFEpoll::_DelPollEvent(void* ptr, struct epoll_event* events)
+void NFEpoll::_DelPollEvent(EventData* ptr, struct epoll_event* events)
 {
 	if (events[poll_index_].data.ptr == ptr)
 	{
@@ -214,7 +214,7 @@ void NFEpoll::_DelPollEvent(void* ptr, struct epoll_event* events)
 	return;
 }
 
-bool NFEpoll::_CtlPollEvent(int poll_fd, SOCKET sock, void* ptr, int opt, uint32_t flag)
+bool NFEpoll::_CtlPollEvent(int poll_fd, SOCKET sock, EventData* ptr, int opt, uint32_t flag)
 {
 	struct epoll_event epev = { flag,{ 0 } };
 	epev.data.ptr = ptr;
@@ -234,7 +234,7 @@ bool NFEpoll::_Poll(uint64_t timeout_ms)
 {
 	bool       result = false;
 	EventData* data = NULL;
-	Handle*    handle = NULL;
+	EventHandle*    handle = NULL;
 	int        poll_fd = -1;
 	struct epoll_event* poll_events = NULL;
 
@@ -275,7 +275,7 @@ bool NFEpoll::_Poll(uint64_t timeout_ms)
 				continue;
 			}
 
-			handle = reinterpret_cast<Handle*>(data->handle);
+			handle = reinterpret_cast<EventHandle*>(data->handle);
 			if (poll_events[poll_index_].events & EPOLLERR)
 			{
 				handle->Error(data);
@@ -298,7 +298,7 @@ bool NFEpoll::_Poll(uint64_t timeout_ms)
 			{  // delete by other int net pack handle
 				continue;
 			}
-			handle = reinterpret_cast<Handle*>(data->handle);
+			handle = reinterpret_cast<EventHandle*>(data->handle);
 			if (poll_events[poll_index_].events & EPOLLERR)
 			{
 				handle->Error(data);

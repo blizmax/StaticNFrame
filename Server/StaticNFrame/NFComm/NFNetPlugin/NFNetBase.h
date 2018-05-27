@@ -117,13 +117,28 @@ enum EventFlag
 	EVENT_RANDW = EVENT_READ | EVENT_WRITE,
 };
 
+struct EventData;
+
+class EventHandle
+{
+	typedef std::function<void(EventData*)> EventHandler;
+public:
+	EventHandle()
+	{
+		mReadHandler = EventHandler();
+		mWriteHandler = EventHandler();
+		mErrorHandler = EventHandler();
+	}
+	virtual ~EventHandle() {}
+
+	EventHandler	mReadHandler;
+	EventHandler	mWriteHandler;
+	EventHandler	mErrorHandler;
+};
+
 struct EventData
 {
-	void*       user_req;
-	void*       context;
-	void*       handle;
-	void*       subpackage;
-	void*       netpackhandle;
+	EventHandle      handle;
 	SocketFlag  sock_flag;
 	EventFlag   event_flag;
 	union
@@ -142,11 +157,6 @@ struct EventData
 		event_flag = EVENT_NULL;
 		sock = INVALID_SOCKET;
 		port = 0;
-		user_req = NULL;
-		context = NULL;
-		handle = NULL;
-		session = NULL;
-		netpackhandle = NULL;
 	}
 };
 
@@ -162,13 +172,3 @@ struct EventDataEx : public EventData
 	{}
 };
 
-class Handle
-{
-public:
-	Handle() {}
-	virtual ~Handle() {}
-
-	virtual bool Readable(EventData* data) = 0;
-	virtual bool Writable(EventData* data) = 0;
-	virtual int  Error(EventData* data) = 0;
-};

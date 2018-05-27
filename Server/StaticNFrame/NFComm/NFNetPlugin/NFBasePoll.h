@@ -18,9 +18,9 @@ public:
 	virtual bool Poll(bool poolWrite, bool poolRead, uint64_t timeout_ms) = 0;
 
 public:
-	virtual bool AddEvent(SOCKET sock, EventFlag flag, void* ptr) = 0;
-	virtual bool ModEvent(SOCKET sock, EventFlag flag, void* ptr) = 0;
-	virtual bool DelEvent(SOCKET sock, void* ptr) = 0;
+	virtual bool AddEvent(SOCKET sock, EventFlag flag, EventData* ptr) = 0;
+	virtual bool ModEvent(SOCKET sock, EventFlag flag, EventData* ptr) = 0;
+	virtual bool DelEvent(SOCKET sock, EventData* ptr) = 0;
 
 public:
 	NFPoll() {}

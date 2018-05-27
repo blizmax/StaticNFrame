@@ -36,15 +36,15 @@ public:
 	virtual bool Poll(bool poolWrite, bool poolRead, uint64_t timeout_ms);
 
 public:
-	virtual bool AddEvent(SOCKET sock, EventFlag flag, void* ptr);
-	virtual bool ModEvent(SOCKET sock, EventFlag flag, void* ptr);
-	virtual bool DelEvent(SOCKET sock, void* ptr);
+	virtual bool AddEvent(SOCKET sock, EventFlag flag, EventData* ptr);
+	virtual bool ModEvent(SOCKET sock, EventFlag flag, EventData* ptr);
+	virtual bool DelEvent(SOCKET sock, EventData* ptr);
 
 protected:
 	void _Release();
-	bool _DelPollEvent(void* ptr);
-	void _DelPollEvent(void* ptr, struct epoll_event* events);
-	bool _CtlPollEvent(int poll_fd, SOCKET sock, void* ptr, int opt, uint32_t flag);
+	bool _DelPollEvent(EventData* ptr);
+	void _DelPollEvent(EventData* ptr, struct epoll_event* events);
+	bool _CtlPollEvent(int poll_fd, SOCKET sock, EventData* ptr, int opt, uint32_t flag);
 	bool _Poll(uint64_t timeout_ms);
 	bool _PollRead(uint64_t timeout_ms);
 	bool _PollWrite(uint64_t timeout_ms);

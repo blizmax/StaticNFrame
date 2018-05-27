@@ -10,10 +10,12 @@
 
 #include "NFBasePoll.h"
 
+struct EventData;
+
 class NFSelect : public NFPoll
 {
 protected:
-	typedef std::map<SOCKET, void*> EVENT_MAP;
+	typedef std::map<SOCKET, EventData*> EVENT_MAP;
 
 	SOCKET    max_sock_;
 	timeval   timeout_;
@@ -35,9 +37,9 @@ public:
 	virtual bool Poll(bool poolWrite, bool poolRead, uint64_t timeout_ms);
 
 public:
-	virtual bool AddEvent(SOCKET sock, EventFlag flag, void* ptr);
-	virtual bool ModEvent(SOCKET sock, EventFlag flag, void* ptr);
-	virtual bool DelEvent(SOCKET sock, void* ptr);
+	virtual bool AddEvent(SOCKET sock, EventFlag flag, EventData* ptr);
+	virtual bool ModEvent(SOCKET sock, EventFlag flag, EventData* ptr);
+	virtual bool DelEvent(SOCKET sock, EventData* ptr);
 
 protected:
 	bool _EventLoop(uint64_t timeout_ms, PollType poll_type);

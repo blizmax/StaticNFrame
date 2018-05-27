@@ -111,7 +111,6 @@ bool  NFSelect::_EventLoop(uint64_t timeout_ms, PollType poll_type)
 
 	SOCKET     sock = INVALID_SOCKET;
 	EventData* data = NULL;
-	Handle*    handle = NULL;
 
 	// todo: 遍历map比较低效
 	EVENT_MAP::iterator it = event_map_.begin();
@@ -125,20 +124,16 @@ bool  NFSelect::_EventLoop(uint64_t timeout_ms, PollType poll_type)
 			it_use = it++;
 			sock = static_cast<SOCKET>(it_use->first);
 			data = reinterpret_cast<EventData*>(it_use->second);
-			handle = reinterpret_cast<Handle*>(data->handle);
 
 			if (FD_ISSET(sock, &loop_error_))
 			{
-				handle->Error(data);
+				data->handle.mErrorHandler(data);
 				continue;
 			}
 
 			if (FD_ISSET(sock, &loop_recv_))
 			{
-				if (!handle->Readable(data))
-				{
-					continue;
-				}
+				data->handle.mReadHandler(data);
 			}
 		}
 	}
@@ -149,16 +144,15 @@ bool  NFSelect::_EventLoop(uint64_t timeout_ms, PollType poll_type)
 			it_use = it++;
 			sock = static_cast<SOCKET>(it_use->first);
 			data = reinterpret_cast<EventData*>(it_use->second);
-			handle = reinterpret_cast<Handle*>(data->handle);
 
 			if (FD_ISSET(sock, &loop_error_))
 			{
-				handle->Error(data);
+				data->handle.mErrorHandler(data);
 				continue;
 			}
 			if (FD_ISSET(sock, &loop_send_))
 			{
-				handle->Writable(data);
+				data->handle.mWriteHandler(data);
 			}
 		}
 	}
@@ -170,7 +164,7 @@ bool  NFSelect::_EventLoop(uint64_t timeout_ms, PollType poll_type)
 	return true;
 }
 
-bool NFSelect::AddEvent(SOCKET sock, EventFlag flag, void* ptr)
+bool NFSelect::AddEvent(SOCKET sock, EventFlag flag, EventData* ptr)
 {
 	// todo:遍历中自增宕机
 	FD_SET(sock, &error_set_);
@@ -194,7 +188,7 @@ bool NFSelect::AddEvent(SOCKET sock, EventFlag flag, void* ptr)
 	return true;
 }
 
-bool NFSelect::ModEvent(SOCKET sock, EventFlag flag, void* ptr)
+bool NFSelect::ModEvent(SOCKET sock, EventFlag flag, EventData* ptr)
 {
 	EventData* data = reinterpret_cast<EventData*>(ptr);
 	if (data->event_flag == flag)
@@ -227,7 +221,7 @@ bool NFSelect::ModEvent(SOCKET sock, EventFlag flag, void* ptr)
 	return true;
 }
 
-bool NFSelect::DelEvent(SOCKET sock, void* ptr)
+bool NFSelect::DelEvent(SOCKET sock, EventData* ptr)
 {
 	event_map_.erase(sock);
 	FD_CLR(sock, &recv_set_);
