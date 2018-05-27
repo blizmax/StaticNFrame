@@ -129,3 +129,4 @@ inline NFDuration NFDuration::operator/=(int n)
 	ns_ /= n;
 	return *this;
 }
+

@@ -71,5 +71,3 @@ private:
 
 #include "NFDuration.in.h"
 
-
-

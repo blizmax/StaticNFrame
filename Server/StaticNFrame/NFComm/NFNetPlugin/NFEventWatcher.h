@@ -180,7 +180,7 @@ public:
 	 */
 	void Notify();
 
-	
+
 	/**
 	 * @brief 返回写通道
 	 *
@@ -209,7 +209,7 @@ private:
 	 */
 	virtual void DoClose();
 
-	
+
 	/**
 	 * @brief 读通道触发事件回调
 	 *
