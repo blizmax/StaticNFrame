@@ -36,7 +36,7 @@ bool NFCTestClientModule::Init()
 #endif
 	m_pNetClientModule = pPluginManager->FindModule<NFINetClientModule>();
 	m_serverId = 1001;
-	pEventLoopThread = std::make_unique<NFEventLoopThread>();
+	pEventLoopThread = std::move(std::unique_ptr<NFEventLoopThread>(NF_NEW NFEventLoopThread()));
 	pEventLoopThread->Start(true, testPrev);
 	return true;
 }
