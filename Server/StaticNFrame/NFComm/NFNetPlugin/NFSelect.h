@@ -8,7 +8,7 @@
 // -------------------------------------------------------------------------
 #pragma once
 
-#include "NFBasePoll.h"
+#include "NFPoll.h"
 
 struct EventData;
 

@@ -21,7 +21,9 @@
   <ItemGroup>
     <ClCompile Include="ArpaNetPacketParse.cpp" />
     <ClCompile Include="NetThreadObject.cpp" />
-    <ClCompile Include="NFBasePoll.cpp" />
+    <ClCompile Include="NFEventData.cpp" />
+    <ClCompile Include="NFMyClient.cpp" />
+    <ClCompile Include="NFPoll.cpp" />
     <ClCompile Include="NFClient.cpp" />
     <ClCompile Include="NFDuration.cpp" />
     <ClCompile Include="NFEpoll.cpp" />
@@ -44,13 +46,15 @@
     <ClInclude Include="NFConnector.h" />
     <ClInclude Include="NFDuration.h" />
     <ClInclude Include="NFEpoll.h" />
+    <ClInclude Include="NFEventData.h" />
     <ClInclude Include="NFEventLoop.h" />
     <ClInclude Include="NFEventLoopThread.h" />
-    <ClInclude Include="NFBasePoll.h" />
+    <ClInclude Include="NFPoll.h" />
     <ClInclude Include="NFEventWatcher.h" />
     <ClInclude Include="NFLibEvent.h" />
     <ClInclude Include="NFLoopThreadClient.h" />
     <ClInclude Include="NFLoopThreadStatus.h" />
+    <ClInclude Include="NFMyClient.h" />
     <ClInclude Include="NFNetBase.h" />
     <ClInclude Include="NFSelect.h" />
     <ClInclude Include="NFSocket.h" />

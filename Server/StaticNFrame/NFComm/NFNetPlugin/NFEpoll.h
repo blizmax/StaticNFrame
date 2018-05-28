@@ -8,7 +8,7 @@
 // -------------------------------------------------------------------------
 #pragma once
 
-#include "NFBasePoll.h"
+#include "NFPoll.h"
 #include "NFSocket.h"
 
 #if NF_PLATFORM == NF_PLATFORM_LINUX

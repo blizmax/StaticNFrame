@@ -39,14 +39,20 @@
     <ClCompile Include="NFSelect.cpp">
       <Filter>NFBaseNet</Filter>
     </ClCompile>
-    <ClCompile Include="NFBasePoll.cpp">
-      <Filter>NFBaseNet</Filter>
-    </ClCompile>
     <ClCompile Include="NFEpoll.cpp">
       <Filter>NFBaseNet</Filter>
     </ClCompile>
     <ClCompile Include="NFDuration.cpp">
       <Filter>NFNetThread</Filter>
+    </ClCompile>
+    <ClCompile Include="NFPoll.cpp">
+      <Filter>NFBaseNet</Filter>
+    </ClCompile>
+    <ClCompile Include="NFMyClient.cpp">
+      <Filter>NFBaseNet</Filter>
+    </ClCompile>
+    <ClCompile Include="NFEventData.cpp">
+      <Filter>NFBaseNet</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -100,9 +106,6 @@
     <ClInclude Include="NFNetBase.h">
       <Filter>NFBaseNet</Filter>
     </ClInclude>
-    <ClInclude Include="NFBasePoll.h">
-      <Filter>NFBaseNet</Filter>
-    </ClInclude>
     <ClInclude Include="NFSelect.h">
       <Filter>NFBaseNet</Filter>
     </ClInclude>
@@ -111,6 +114,15 @@
     </ClInclude>
     <ClInclude Include="NFDuration.h">
       <Filter>NFNetThread</Filter>
+    </ClInclude>
+    <ClInclude Include="NFMyClient.h">
+      <Filter>NFBaseNet</Filter>
+    </ClInclude>
+    <ClInclude Include="NFPoll.h">
+      <Filter>NFBaseNet</Filter>
+    </ClInclude>
+    <ClInclude Include="NFEventData.h">
+      <Filter>NFBaseNet</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

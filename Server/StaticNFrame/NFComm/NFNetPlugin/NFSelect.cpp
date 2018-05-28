@@ -9,6 +9,7 @@
 
 #include "NFSelect.h"
 #include "NFSocket.h"
+#include "NFEventData.h"
 
 #include <errno.h>
 #include <NFComm/NFPluginModule/NFLogMgr.h>

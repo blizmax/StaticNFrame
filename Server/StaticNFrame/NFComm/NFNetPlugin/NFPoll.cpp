@@ -7,7 +7,7 @@
 //
 // -------------------------------------------------------------------------
 
-#include "NFBasePoll.h"
+#include "NFPoll.h"
 #include "NFSelect.h"
 #include "NFEpoll.h"
 

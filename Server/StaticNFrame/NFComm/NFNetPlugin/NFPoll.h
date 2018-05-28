@@ -10,6 +10,8 @@
 
 #include "NFNetBase.h"
 
+struct EventData;
+
 class NFPoll
 {
 public:
