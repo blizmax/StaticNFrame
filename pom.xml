@@ -9,16 +9,14 @@
   <profiles>
 
     <profile>
-      <id>RELEASE</id>
+      <id>Debug</id>
       <activation>
         <activeByDefault>true</activeByDefault>
         <property>
-          <name>release</name>
+          <name>Debug</name>
         </property>
       </activation>
-      <build>
-        <testSourceDirectory>src/test/java</testSourceDirectory>
-        
+      <build>    
         <!-- To define the plugin version in your parent POM -->
         <pluginManagement>
           <plugins>
