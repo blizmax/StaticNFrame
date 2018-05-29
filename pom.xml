@@ -16,9 +16,7 @@
           <name>Debug</name>
         </property>
       </activation>
-      <build>
-        <testSourceDirectory>src/test/java</testSourceDirectory>
-        
+      <build>  
         <!-- To define the plugin version in your parent POM -->
         <pluginManagement>
           <plugins>
