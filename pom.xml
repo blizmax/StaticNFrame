@@ -16,7 +16,9 @@
           <name>Debug</name>
         </property>
       </activation>
-      <build>    
+      <build>
+        <testSourceDirectory>${basedir}/Server/StaticNFrame</testSourceDirectory>
+        
         <!-- To define the plugin version in your parent POM -->
         <pluginManagement>
           <plugins>
