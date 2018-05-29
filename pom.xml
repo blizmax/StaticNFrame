@@ -17,7 +17,7 @@
         </property>
       </activation>
       <build>
-        <testSourceDirectory>${basedir}/Server/StaticNFrame</testSourceDirectory>
+        <testSourceDirectory>src/test/java</testSourceDirectory>
         
         <!-- To define the plugin version in your parent POM -->
         <pluginManagement>
