@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>NETICOA</groupId>
+  <artifactId>StaticNFrame</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
+  <packaging>pom</packaging>
+  <name>StaticNFrame</name>
+  <profiles>
+
+    <profile>
+      <id>RELEASE</id>
+      <activation>
+        <activeByDefault>true</activeByDefault>
+        <property>
+          <name>release</name>
+        </property>
+      </activation>
+      <build>
+        <testSourceDirectory>src/test/java</testSourceDirectory>
+        
+        <!-- To define the plugin version in your parent POM -->
+        <pluginManagement>
+          <plugins>
+            <plugin>
+              <groupId>org.codehaus.mojo</groupId>
+              <artifactId>cxx-maven-plugin</artifactId>
+              <version>0.0.5-SNAPSHOT</version>
+            </plugin>
+          </plugins>
+        </pluginManagement>
+        <plugins>
+          <plugin>
+            <groupId>org.codehaus.mojo</groupId>
+            <artifactId>cxx-maven-plugin</artifactId>
+            <executions>
+              <execution>
+                <id>clean</id>
+                <phase>clean</phase>
+                <goals>
+                  <goal>launch</goal>
+                </goals>
+                <configuration>
+                  <executable>rm</executable>
+                  <commandArgs>-rf "${basedir}/Product/build"</commandArgs>
+                </configuration>
+              </execution>
+              <execution>
+                <id>cmake</id>
+                <!--<phase>initialize</phase> -->
+                <!-- initialize is cmake goal default phase -->
+                <goals>
+                  <goal>cmake</goal>
+                </goals>
+                <configuration>
+                  <!-- ${basedir} is cmake projectDir default value -->
+                  <projectDir>${basedir}</projectDir>
+                  <!-- ${basedir} is cmake outsourceDir default value -->
+                  <outsourceDir>${basedir}/Product/build</outsourceDir>
+                  <generator>"Unix Makefiles"</generator>
+                  <commandArgs>-DCMAKE_BUILD_TYPE=Debug</commandArgs>
+                </configuration>
+              </execution>
+              <execution>
+                <id>make</id>
+                <!--<phase>compile</phase>-->
+                <!-- compile is make goal default phase -->
+                <goals>
+                  <goal>make</goal>
+                </goals>
+                <configuration>
+                  <projectDir>${basedir}/Product/build</projectDir>
+                </configuration>
+              </execution>        
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+</project>
