@@ -10,6 +10,7 @@
 #include "NFEventLoop.h"
 #include "NFLibEvent.h"
 #include <iostream>
+#include "NFEventWatcher.h"
 
 NFEventLoop::NFEventLoop()
 	: create_evbase_myself_(true), notified_(false), pending_functor_count_(0)

@@ -12,9 +12,9 @@
 #include "NFComm/NFCore/NFPlatform.h"
 #include <mutex>
 #include <vector>
-#include "NFEventWatcher.h"
 
 struct event_base;
+class NFPipeEventWatcher;
 
 // This is the IO Event driving kernel. Reactor model.
 // This class is a wrapper of event_base but not only a wrapper.

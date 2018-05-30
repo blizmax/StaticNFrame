@@ -10,6 +10,7 @@
 #include "NFEventLoopThread.h"
 #include "NFComm/NFCore/NFPlatform.h"
 #include <iostream>
+#include "NFEventLoop.h"
 
 NFEventLoopThread::NFEventLoopThread()
 	: event_loop_(new NFEventLoop)

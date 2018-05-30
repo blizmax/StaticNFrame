@@ -11,6 +11,8 @@
 #include "NFComm/NFPluginModule/NFLogMgr.h"
 #include "NFLibEvent.h"
 #include "NFLoopThreadClient.h"
+#include "NFEventLoopThread.h"
+#include "NFEventLoop.h"
 
 /**
 * @brief libevent读数据回调

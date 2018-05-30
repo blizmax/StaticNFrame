@@ -20,6 +20,10 @@
 class NFLoopTheadStatus
 {
 public:
+	virtual ~NFLoopTheadStatus()
+	{
+	}
+
 	enum Status
 	{
 		kNull = 0,

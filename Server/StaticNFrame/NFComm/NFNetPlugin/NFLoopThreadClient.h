@@ -11,7 +11,8 @@
 #include "NetObject.h"
 #include "NFComm/NFCore/NFQueue.hpp"
 #include "NetThreadObject.h"
-#include "NFEventLoopThread.h"
+
+class NFEventLoopThread;
 
 /**
 *@brief  多线程libevent网络客户端封装类.

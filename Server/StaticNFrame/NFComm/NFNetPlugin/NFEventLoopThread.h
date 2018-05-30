@@ -12,8 +12,8 @@
 
 #include <thread>
 #include <mutex>
-#include "NFEventLoop.h"
 
+class NFEventLoop;
 
 class NFEventLoopThread : public NFLoopTheadStatus
 {
