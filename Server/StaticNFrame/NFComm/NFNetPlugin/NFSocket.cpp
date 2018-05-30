@@ -11,12 +11,12 @@
 #include "NFComm/NFCore/NFPlatform.h"
 #include "NFComm/NFPluginModule/NFLogMgr.h"
 
+char g_errstr[1024];
+
 #if NF_PLATFORM == NF_PLATFORM_WIN
 
 #include <errno.h>
 #include <stdio.h>
-
-char g_errstr[1024];
 
 #pragma warning(disable : 4127)
 #pragma warning(disable : 4018)
@@ -245,7 +245,7 @@ bool NFSocket::Listen(SOCKET sock, const char* ip, uint16_t port)
 	//  return false;
 	//}
 
-	//TODO ÐÞ¸Ä·µ»ØÖµ
+	//TODO ï¿½Þ¸Ä·ï¿½ï¿½ï¿½Öµ
 	if (!SetNonBlock(sock))
 	{
 		return false;
@@ -273,7 +273,7 @@ bool NFSocket::Listen(SOCKET sock, const char* ip, uint16_t port)
 	return true;
 }
 
-//·µ»ØÖµÓÐÒâÒå£º×Ö³¤
+//ï¿½ï¿½ï¿½ï¿½Öµï¿½ï¿½ï¿½ï¿½ï¿½å£ºï¿½Ö³ï¿½
 int NFSocket::Send(SOCKET sock, const char* buf, uint32_t len)
 {
 	do
@@ -507,7 +507,7 @@ bool NFSocket::SetNoDelay(SOCKET sock, int flag /*= 1*/)
 	}
 }
 
-//·µ»ØÖµÓÐÒâÒå£ºÈýÖÖÀàÐÍ²»ÊÊºÏ×öbool
+//ï¿½ï¿½ï¿½ï¿½Öµï¿½ï¿½ï¿½ï¿½ï¿½å£ºï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Í²ï¿½ï¿½Êºï¿½ï¿½ï¿½bool
 int NFSocket::Accept(SOCKET listen_sock, SOCKET* sock)
 {
 	assert(listen_sock);
@@ -571,7 +571,7 @@ bool NFSocket::Listen(SOCKET sock, const char* ip, uint16_t port)
 		return false;
 	}
 
-//TODO ÐÞ¸Älisten
+//TODO ï¿½Þ¸ï¿½listen
 	if (!SetNonBlock(sock))
 	{
 		return false;
@@ -583,7 +583,7 @@ bool NFSocket::Listen(SOCKET sock, const char* ip, uint16_t port)
 	addr.sin_port = htons(port);
 	addr.sin_addr.s_addr = inet_addr(ip);
 
-//MMOTODO ÐÞ¸Ä·µ»ØÖµ
+//MMOTODO ï¿½Þ¸Ä·ï¿½ï¿½ï¿½Öµ
 	int ret = bind(sock, reinterpret_cast<sockaddr*>(&addr), sizeof(addr));
 	if (ret < 0)
 	{
@@ -604,7 +604,7 @@ bool NFSocket::Listen(SOCKET sock, const char* ip, uint16_t port)
 	return true;
 }
 
-//·µ»ØÖµÓÐÒâÒå£º×Ö³¤
+//ï¿½ï¿½ï¿½ï¿½Öµï¿½ï¿½ï¿½ï¿½ï¿½å£ºï¿½Ö³ï¿½
 int NFSocket::Send(SOCKET sock, const char* buf, uint32_t len)
 {
 	do

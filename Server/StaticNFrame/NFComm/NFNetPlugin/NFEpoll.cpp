@@ -307,7 +307,7 @@ bool NFEpoll::_Poll(uint64_t timeout_ms)
 			if (poll_events[poll_index_].events & EPOLLOUT)
 			{
 //std::cout << poll_events[poll_index_].events << std::endl;
-				data->event_cb(WRITE_ERROR);
+				data->event_cb(EVENT_WRITE);
 			}
 		}
 	}
