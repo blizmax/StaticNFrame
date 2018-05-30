@@ -16,6 +16,8 @@
 #include <errno.h>
 #include <stdio.h>
 
+char g_errstr[1024];
+
 #pragma warning(disable : 4127)
 #pragma warning(disable : 4018)
 #pragma comment(lib, "WS2_32.lib")

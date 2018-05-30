@@ -128,14 +128,14 @@ bool NFEpoll::AddEvent(SOCKET sock, EventFlag flag, EventData* ptr)
 		return false;
 	}
 	EventData* data = reinterpret_cast<EventData*>(ptr);
-	data->event_flag = flag;
+	data->mEventFlag = flag;
 	return true;
 }
 
 bool NFEpoll::ModEvent(SOCKET sock, EventFlag flag, EventData* ptr)
 {
 	EventData* data = reinterpret_cast<EventData*>(ptr);
-	if (data->event_flag == flag)
+	if (data->mEventFlag == flag)
 	{
 		return true;
 	}
@@ -159,7 +159,7 @@ bool NFEpoll::ModEvent(SOCKET sock, EventFlag flag, EventData* ptr)
 	{
 		return false;
 	}
-	data->event_flag = flag;
+	data->mEventFlag = flag;
 	return true;
 }
 
@@ -278,14 +278,14 @@ bool NFEpoll::_Poll(uint64_t timeout_ms)
 
 			if (poll_events[poll_index_].events & EPOLLERR)
 			{
-				data->handle.mErrorHandler(data);
+				data->event_cb(EVENT_ERROR);
 				continue;
 			}
 //if shutdown SHUTDOWN_SEND sock will recv epollin event and epollhup event
 //because socket can read
 			if (poll_events[poll_index_].events & (EPOLLIN | EPOLLHUP))
 			{
-				data->handle.mReadHandler(data);
+				data->recv_cb();
 			}
 		}
 	}
@@ -300,14 +300,14 @@ bool NFEpoll::_Poll(uint64_t timeout_ms)
 			}
 			if (poll_events[poll_index_].events & EPOLLERR)
 			{
-				data->handle.mErrorHandler(data);
+				data->event_cb(EVENT_ERROR);
 				continue;
 			}
 //can not handle event EPOLLHUP because socket can not write
 			if (poll_events[poll_index_].events & EPOLLOUT)
 			{
 //std::cout << poll_events[poll_index_].events << std::endl;
-				data->handle.mWriteHandler(data);
+				data->event_cb(WRITE_ERROR);
 			}
 		}
 	}

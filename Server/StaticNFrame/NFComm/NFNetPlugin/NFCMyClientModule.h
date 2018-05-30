@@ -10,16 +10,14 @@
 
 #include "NFComm/NFPluginModule/NFINetClientModule.h"
 #include "NFComm/NFPluginModule/NFServerDefine.h"
-#include "NFClient.h"
-#include "NFThreadClient.h"
-#include "NFComm/NFCore/NFDataStream.h"
 #include "NFComm/NFCore/NFBuffer.h"
+#include "NFMyClient.h"
 
-class NFCNetClientModule : public NFINetClientModule
+class NFCMyClientModule : public NFINetClientModule
 {
 public:
-	explicit NFCNetClientModule(NFIPluginManager* p);
-	virtual ~NFCNetClientModule();
+	explicit NFCMyClientModule(NFIPluginManager* p);
+	virtual ~NFCMyClientModule();
 	/////////////////////////////////////////////////////////////////////
 	virtual bool Init() override;
 
@@ -67,13 +65,13 @@ protected:
 
 	virtual uint32_t GetFreeUnLinkId(NF_SERVER_TYPES eServerType);
 
-	void SendMsg(NFClient* pClient, const uint32_t nMsgID, const char* msg, const uint32_t nLen, const uint64_t nPlayerID);
+	void SendMsg(NFMyClient* pClient, const uint32_t nMsgID, const char* msg, const uint32_t nLen, const uint64_t nPlayerID);
 
 	void OnReceiveNetPack(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen);
 
 	void OnSocketNetEvent(const eMsgType nEvent, const uint32_t unLinkId);
 private:
-	std::vector<std::vector<NFClient*>> mxServerMap;
+	std::vector<std::vector<NFMyClient*>> mxServerMap;
 	NFBuffer mxSendBuffer;
 };
 

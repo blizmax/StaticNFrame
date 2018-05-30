@@ -11,6 +11,7 @@
 #include "NFComm/NFPluginModule/NFINetClientModule.h"
 #include "NFComm/NFPluginModule/NFTimerObj.h"
 #include <NFComm/NFNetPlugin/NFEventLoopThread.h>
+#include "NFComm/NFNetPlugin/NFMyClient.h"
 
 class NFCTestClientModule : public NFIModule, NFTimerObj
 {
@@ -52,5 +53,6 @@ private:
 	std::string m_charName;
 	uint32_t m_serverId;
 	std::unique_ptr<NFEventLoopThread> pEventLoopThread;
+	NFMyClient* m_pMyClient;
 };
 

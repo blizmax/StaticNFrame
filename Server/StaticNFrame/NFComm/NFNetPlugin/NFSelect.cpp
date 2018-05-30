@@ -130,13 +130,13 @@ bool NFSelect::_EventLoop(uint64_t timeout_ms, PollType poll_type)
 
 			if (FD_ISSET(sock, &loop_error_))
 			{
-				data->handle.mErrorHandler(data);
+				data->event_cb(EVENT_ERROR);
 				continue;
 			}
 
 			if (FD_ISSET(sock, &loop_recv_))
 			{
-				data->handle.mReadHandler(data);
+				data->recv_cb();
 			}
 		}
 	}
@@ -150,12 +150,19 @@ bool NFSelect::_EventLoop(uint64_t timeout_ms, PollType poll_type)
 
 			if (FD_ISSET(sock, &loop_error_))
 			{
-				data->handle.mErrorHandler(data);
+				data->event_cb(EVENT_ERROR);
 				continue;
 			}
 			if (FD_ISSET(sock, &loop_send_))
 			{
-				data->handle.mWriteHandler(data);
+				if (data->mWriteFlag == false)
+				{
+					data->event_cb(EVENT_CONNECT);
+				}
+				else
+				{
+					data->event_cb(EVENT_WRITE);
+				}
 			}
 		}
 	}
@@ -190,14 +197,14 @@ bool NFSelect::AddEvent(SOCKET sock, EventFlag flag, EventData* ptr)
 
 	event_map_[sock] = ptr;
 	EventData* data = reinterpret_cast<EventData*>(ptr);
-	data->event_flag = flag;
+	data->mEventFlag = flag;
 	return true;
 }
 
 bool NFSelect::ModEvent(SOCKET sock, EventFlag flag, EventData* ptr)
 {
 	EventData* data = reinterpret_cast<EventData*>(ptr);
-	if (data->event_flag == flag)
+	if (data->mEventFlag == flag)
 	{
 		return true;
 	}
@@ -222,7 +229,7 @@ bool NFSelect::ModEvent(SOCKET sock, EventFlag flag, EventData* ptr)
 		FD_CLR(sock, &send_set_);
 	}
 
-	data->event_flag = flag;
+	data->mEventFlag = flag;
 	event_map_[sock] = ptr;
 	return true;
 }

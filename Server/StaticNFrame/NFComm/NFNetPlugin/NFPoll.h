@@ -10,7 +10,7 @@
 
 #include "NFNetBase.h"
 
-struct EventData;
+class EventData;
 
 class NFPoll
 {

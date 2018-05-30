@@ -9,6 +9,7 @@
 #include "NFNetPlugin.h"
 #include "NFComm/NFPluginModule/NFIPluginManager.h"
 #include "NFCNetClientModule.h"
+#include "NFCMyClientModule.h"
 
 #ifdef NF_DYNAMIC_PLUGIN
 
@@ -38,11 +39,13 @@ std::string NFNetPlugin::GetPluginName()
 
 void NFNetPlugin::Install()
 {
-	REGISTER_MODULE(pPluginManager, NFINetClientModule, NFCNetClientModule)
+	//REGISTER_MODULE(pPluginManager, NFINetClientModule, NFCNetClientModule)
+	REGISTER_MODULE(pPluginManager, NFINetClientModule, NFCMyClientModule)
 }
 
 void NFNetPlugin::Uninstall()
 {
-	UNREGISTER_MODULE(pPluginManager, NFINetClientModule, NFCNetClientModule);
+	//UNREGISTER_MODULE(pPluginManager, NFINetClientModule, NFCNetClientModule);
+	UNREGISTER_MODULE(pPluginManager, NFINetClientModule, NFCMyClientModule);
 }
 

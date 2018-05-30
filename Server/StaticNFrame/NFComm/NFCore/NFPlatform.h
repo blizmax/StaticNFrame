@@ -14,7 +14,7 @@
 #define NF_ASSERT(condition)					if (!(condition)) NFAssertFail(__FILE__, __LINE__); else { }
 #define NF_ASSERT_MSG(condition, msg)			if (!(condition)) NFAssertFail(__FILE__, __LINE__, msg); else { }
 
-inline void NFAssertFail(const char*const file, const unsigned int line, const std::string& message)
+inline void NFAssertFail(const char*const file, const unsigned int line, const std::string& message = std::string())
 {
 	fprintf(stderr, "FAIL in %s (%d)", file, line);
 	if (!message.empty())

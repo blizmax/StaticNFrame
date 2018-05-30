@@ -10,7 +10,7 @@
 
 #include "NFPoll.h"
 
-struct EventData;
+class EventData;
 
 class NFSelect : public NFPoll
 {

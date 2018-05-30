@@ -11,38 +11,64 @@
 
 #include "NFNetBase.h"
 
-struct EventData;
+typedef std::function<void(void* pArg)> NetRecvHandler;
+typedef std::function<void(short events, void* pArg)> NetEventHandler;
 
 class EventHandle
 {
-	typedef std::function<void(EventData*)> EventHandler;
+public:
+
 public:
 	EventHandle()
 	{
-		mReadHandler = EventHandler();
-		mWriteHandler = EventHandler();
-		mErrorHandler = EventHandler();
+		Clear();
 	}
 
 	virtual ~EventHandle()
 	{
 	}
 
-	EventHandler mReadHandler;
-	EventHandler mWriteHandler;
-	EventHandler mErrorHandler;
+	void Clear()
+	{
+		mReadHandler = NetRecvHandler();
+		mEventHandler = NetEventHandler();
+		pArg = nullptr;
+	}
+
+	NetRecvHandler mReadHandler;
+	NetEventHandler mEventHandler;
+	void* pArg;
 };
 
 class NFPoll;
 
-struct EventData
+class EventData
 {
-	EventHandle handle;
-	SocketFlag sock_flag;
-	EventFlag event_flag;
-	NFPoll* poll;
-	SOCKET sock;
+public:
+	EventHandle mHandle;
+	SocketFlag mSockFlag;
+	EventFlag mEventFlag;
+	NFPoll* mPoll;
+	SOCKET mSock;
+	bool mWriteFlag;
+	bool mConnected;
 
 	EventData();
 	~EventData();
+
+	bool Connect(const char* ip, uint16_t port);
+
+	bool Send(const char* buf, uint32_t len);
+
+	int Recv(char* buf, uint32_t size);
+
+	void Close();
+
+	bool Dispatch(uint32_t timeout);
+
+	void recv_cb();
+
+	void event_cb(short events);
+
+	void set_cb(NetRecvHandler recvcb, NetEventHandler eventcb, void *pArg);
 };
