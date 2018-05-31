@@ -46,6 +46,7 @@ void recv_cb(void* pArg)
 NFMyClient::NFMyClient(uint32_t nId, const NFClientFlag& flag): m_nSocketId(INVALID_SOCKET), m_usLinkId(nId), m_pEventData(nullptr)
 {
 	m_pEventData = new EventData();
+	m_pEventData->Init(100);
 	m_flag = flag;
 	m_buffer.AssureSpace(MAX_RECV_BUFFER_SIZE);
 }

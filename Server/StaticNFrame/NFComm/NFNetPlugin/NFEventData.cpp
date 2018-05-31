@@ -27,6 +27,17 @@ EventData::~EventData()
 	DeleteModule(mPoll);
 }
 
+bool EventData::Init(int max_sock)
+{
+	bool retCode = mPoll->Init(max_sock);
+	if (!retCode) 
+	{
+		NFLogError("Net poll init fail\n");
+		return false;
+	}
+	return true;
+}
+
 bool EventData::Connect(const char* ip, uint16_t port)
 {
 	SOCKET sock = NFSocket::Create();

@@ -56,6 +56,8 @@ public:
 	EventData();
 	~EventData();
 
+	bool Init(int max_sock);
+
 	bool Connect(const char* ip, uint16_t port);
 
 	bool Send(const char* buf, uint32_t len);

@@ -8,7 +8,7 @@
             "name": "(gdb) Launch",
             "type": "cppdbg",
             "request": "launch",
-            "preLaunchTask": "build",
+            "preLaunchTask": "make",
             "program": "${workspaceFolder}/Product/run/Debug/NFPluginLoader",
             "args": ["--Server=AllServer","--ID=6","PATH=../"],
             "stopAtEntry": true,
