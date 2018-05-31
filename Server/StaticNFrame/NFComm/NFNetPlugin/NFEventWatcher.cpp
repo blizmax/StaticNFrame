@@ -129,14 +129,14 @@ NFPipeEventWatcher::NFPipeEventWatcher(NFEventLoop* loop,
                                        const Handler& handler)
 	: NFEventWatcher(loop->event_base(), handler)
 {
-	memset(pipe_, 0, sizeof(pipe_[0] * 2));
+	memset(pipe_, 0, sizeof(pipe_));
 }
 
 NFPipeEventWatcher::NFPipeEventWatcher(NFEventLoop* loop,
                                        Handler&& h)
 	: NFEventWatcher(loop->event_base(), std::move(h))
 {
-	memset(pipe_, 0, sizeof(pipe_[0] * 2));
+	memset(pipe_, 0, sizeof(pipe_));
 }
 
 

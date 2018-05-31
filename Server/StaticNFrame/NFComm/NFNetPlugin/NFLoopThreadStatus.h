@@ -44,7 +44,7 @@ public:
 
 	std::string StatusToString() const
 	{
-		NF_CASE_STRING_BIGIN(mStatus.load());
+		NF_CASE_STRING_BIGIN(mStatus.load()); //-V622
 		NF_CASE_STRING(kNull);
 		NF_CASE_STRING(kInitialized);
 		NF_CASE_STRING(kRunning);

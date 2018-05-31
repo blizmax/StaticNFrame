@@ -16,7 +16,7 @@
 class NFCTestClientModule : public NFIModule, NFTimerObj
 {
 public:
-	explicit NFCTestClientModule(NFIPluginManager* p)
+	explicit NFCTestClientModule(NFIPluginManager* p): m_pMyClient(nullptr)
 	{
 		pPluginManager = p;
 		m_usId = 0;

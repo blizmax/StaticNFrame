@@ -348,8 +348,8 @@ struct Struct4Element
 template <typename TE1, typename TE2>
 inline NFDataStream& operator<<(NFDataStream& file, const Struct2Element<TE1, TE2>& val)
 {
-	file << (const TE1&)val.v1
-		<< (const TE2&)val.v2;
+	file << static_cast<const TE1&>(val.v1)
+		<< static_cast<const TE2&>(val.v2);
 
 	return file;
 }
@@ -358,8 +358,8 @@ inline NFDataStream& operator<<(NFDataStream& file, const Struct2Element<TE1, TE
 template <typename TE1, typename TE2>
 inline NFDataStream& operator >>(NFDataStream& file, Struct2Element<TE1, TE2>& val)
 {
-	file >> (TE1&)val.v1
-		>> (TE2&)val.v2;
+	file >> static_cast<TE1&>(val.v1)
+		>> static_cast<TE2&>(val.v2);
 
 	return file;
 }
@@ -368,9 +368,9 @@ inline NFDataStream& operator >>(NFDataStream& file, Struct2Element<TE1, TE2>& v
 template <typename TE1, typename TE2, typename TE3>
 inline NFDataStream& operator<<(NFDataStream& file, const Struct3Element<TE1, TE2, TE3>& val)
 {
-	file << (const TE1&)val.v1
-		<< (const TE2&)val.v2
-		<< (const TE3&)val.v3;
+	file << static_cast<const TE1&>(val.v1)
+		<< static_cast<const TE2&>(val.v2)
+		<< static_cast<const TE3&>(val.v3);
 	return file;
 }
 
@@ -378,36 +378,36 @@ inline NFDataStream& operator<<(NFDataStream& file, const Struct3Element<TE1, TE
 template <typename TE1, typename TE2, typename TE3>
 inline NFDataStream& operator >>(NFDataStream& file, Struct3Element<TE1, TE2, TE3>& val)
 {
-	file >> (TE1&)val.v1
-		>> (TE2&)val.v2
-		>> (TE3&)val.v3;
+	file >> static_cast<TE1&>(val.v1)
+		>> static_cast<TE2&>(val.v2)
+		>> static_cast<TE3&>(val.v3);
 	return file;
 }
 
 template <typename TE1, typename TE2, typename TE3, typename TE4>
 inline NFDataStream& operator<<(NFDataStream& file, const Struct4Element<TE1, TE2, TE3, TE4>& val)
 {
-	file << (const TE1&)val.v1
-		<< (const TE2&)val.v2
-		<< (const TE3&)val.v3
-		<< (const TE4&)val.v4;
+	file << static_cast<const TE1&>(val.v1)
+		<< static_cast<const TE2&>(val.v2)
+		<< static_cast<const TE3&>(val.v3)
+		<< static_cast<const TE4&>(val.v4);
 	return file;
 }
 
 template <typename TE1, typename TE2, typename TE3, typename TE4>
 inline NFDataStream& operator >>(NFDataStream& file, Struct4Element<TE1, TE2, TE3, TE4>& val)
 {
-	file >> (TE1&)val.v1
-		>> (TE2&)val.v2
-		>> (TE3&)val.v3
-		>> (TE4&)val.v4;
+	file >> static_cast<TE1&>(val.v1)
+		>> static_cast<TE2&>(val.v2)
+		>> static_cast<TE3&>(val.v3)
+		>> static_cast<TE4&>(val.v4);
 	return file;
 }
 
 // DataStream Implementation
 
 inline NFDataStream::NFDataStream()
-	: buffer_(NULL)
+	: buffer_(nullptr)
 	  , self_created_(false)
 	  , capacity_(0)
 	  , write_index_(0)
@@ -418,12 +418,12 @@ inline NFDataStream::NFDataStream()
 
 inline NFDataStream::NFDataStream(size_t nBufferSize)
 	: self_created_(true)
-	  , capacity_((uint32_t)nBufferSize)
+	  , capacity_(static_cast<uint32_t>(nBufferSize))
 	  , write_index_(0)
 	  , read_index_(0)
 	  , status_(0)
 {
-	buffer_ = (uint8_t*)malloc(capacity_);
+	buffer_ = static_cast<uint8_t*>(malloc(capacity_));
 
 	if (!buffer_)
 	{
@@ -432,9 +432,9 @@ inline NFDataStream::NFDataStream(size_t nBufferSize)
 }
 
 inline NFDataStream::NFDataStream(void* pData, size_t nBufferSize, bool bDestroy)
-	: buffer_((uint8_t*)pData)
+	: buffer_(static_cast<uint8_t*>(pData))
 	  , self_created_(bDestroy)
-	  , capacity_((uint32_t)nBufferSize)
+	  , capacity_(static_cast<uint32_t>(nBufferSize))
 	  , write_index_(0)
 	  , read_index_(0)
 	  , status_(0)
@@ -474,9 +474,9 @@ inline bool NFDataStream::Read(void* buf, size_t buf_len)
 		return false;
 	}
 
-	uint32_t nNewPos = read_index_ + (uint32_t)buf_len;
+	uint32_t nNewPos = read_index_ + static_cast<uint32_t>(buf_len);
 
-	if (nNewPos > (uint32_t)write_index_)
+	if (nNewPos > static_cast<uint32_t>(write_index_))
 	{
 		SetStatus(kReadBad);
 		return false;
@@ -504,7 +504,7 @@ inline bool NFDataStream::ReadLE(uint32_t* pu32)
 #ifdef H_LITTLE_ENDIAN
 	*this >> *pu32;
 #else
-	uint8_t* pc = (uint8_t*)pu32;
+	uint8_t* pc = reinterpret_cast<uint8_t*>(pu32);
 	*this >> pc[3];
 	*this >> pc[2];
 	*this >> pc[1];
@@ -519,10 +519,10 @@ inline bool NFDataStream::WriteLE(uint32_t i)
 #ifdef H_LITTLE_ENDIAN
 	*this << i;
 #else
-	*this << (char)((i & 0xff000000) >> 24);
-	*this << (char)((i & 0x00ff0000) >> 16);
-	*this << (char)((i & 0x0000ff00) >> 8);
-	*this << (char)((i & 0x000000ff));
+	*this << static_cast<char>((i & 0xff000000) >> 24);
+	*this << static_cast<char>((i & 0x00ff0000) >> 16);
+	*this << static_cast<char>((i & 0x0000ff00) >> 8);
+	*this << static_cast<char>((i & 0x000000ff));
 #endif
 	return true;
 }
@@ -531,19 +531,19 @@ inline bool NFDataStream::Write(const void* buf, size_t buf_len)
 {
 	assert(buf);
 
-	if (!Expand((uint32_t)buf_len))
+	if (!Expand(static_cast<uint32_t>(buf_len)))
 	{
 		return false;
 	}
 
 	memcpy(buffer_ + write_index_, buf, buf_len);
-	write_index_ += (uint32_t)buf_len;
+	write_index_ += static_cast<uint32_t>(buf_len);
 	return true;
 }
 
 inline NFDataStream& NFDataStream::SeekWriteIndex(int32_t offset)
 {
-	int64_t new_pos = (int32_t)write_index_ + offset;
+	int64_t new_pos = static_cast<int32_t>(write_index_) + offset;
 
 	if (new_pos < 0)
 	{
@@ -552,16 +552,16 @@ inline NFDataStream& NFDataStream::SeekWriteIndex(int32_t offset)
 	else
 	{
 		// pre-allocate size.
-		if (new_pos > (int64_t)write_index_)
+		if (new_pos > static_cast<int64_t>(write_index_))
 		{
-			if (!Expand((uint32_t)new_pos - write_index_))
+			if (!Expand(static_cast<uint32_t>(new_pos) - write_index_))
 			{
 				return *this;
 			}
 		}
 
 		// finished check, set the new size.
-		write_index_ = (uint32_t)new_pos;
+		write_index_ = static_cast<uint32_t>(new_pos);
 	}
 
 	return *this;
@@ -571,7 +571,7 @@ inline NFDataStream& NFDataStream::SeekReadIndex(int32_t offset)
 {
 	int32_t nNewPos = read_index_ + offset;
 
-	if (nNewPos > (int32_t)write_index_)
+	if (nNewPos > static_cast<int32_t>(write_index_))
 	{
 		read_index_ = write_index_;
 		SetStatus(kReadBad);
@@ -583,7 +583,7 @@ inline NFDataStream& NFDataStream::SeekReadIndex(int32_t offset)
 	}
 	else
 	{
-		read_index_ = (uint32_t)nNewPos;
+		read_index_ = static_cast<uint32_t>(nNewPos);
 	}
 
 	return *this;
@@ -635,7 +635,7 @@ inline void* NFDataStream::GetCache() const
 inline uint8_t NFDataStream::CharAt(size_t index) const
 {
 	assert(index < size());
-	return *((int8_t*)GetCache() + index);
+	return *(static_cast<int8_t*>(GetCache()) + index);
 }
 
 inline uint32_t NFDataStream::GetReadableSize() const
@@ -651,12 +651,12 @@ inline uint32_t NFDataStream::GetWriteableSize() const
 
 inline void* NFDataStream::GetCurrentReadBuffer() const
 {
-	return ((char*)GetCache()) + read_index_;
+	return static_cast<char*>(GetCache()) + read_index_;
 }
 
 inline void* NFDataStream::GetCurrentWriteBuffer() const
 {
-	return ((char*)GetCache()) + write_index_;
+	return static_cast<char*>(GetCache()) + write_index_;
 }
 
 inline void NFDataStream::Reset()
@@ -680,9 +680,9 @@ inline void NFDataStream::ResetMemory()
 inline bool NFDataStream::Resize(size_t nSize)
 {
 	// check size and assure enough buffer.
-	if ((uint32_t)nSize > capacity_)
+	if (static_cast<uint32_t>(nSize) > capacity_)
 	{
-		if (!Expand((uint32_t)nSize + capacity_))
+		if (!Expand(static_cast<uint32_t>(nSize) + capacity_))
 		{
 			return false;
 		}
@@ -695,7 +695,7 @@ inline bool NFDataStream::Resize(size_t nSize)
 		}
 	}
 
-	write_index_ = (uint32_t)nSize;
+	write_index_ = static_cast<uint32_t>(nSize);
 
 	return true;
 }
@@ -705,11 +705,11 @@ inline bool NFDataStream::Expand(uint32_t delta)
 	uint32_t new_size = write_index_ + delta + 1;
 
 	// only if buffer is no sufficient, we reallocate it.
-	if (new_size > (uint32_t)capacity_)
+	if (new_size > static_cast<uint32_t>(capacity_))
 	{
 		new_size = new_size + (new_size >> 1);
 
-		uint8_t* new_buffer = (uint8_t*)malloc(new_size);
+		uint8_t* new_buffer = static_cast<uint8_t*>(malloc(new_size));
 
 		if (!new_buffer)
 		{
@@ -739,7 +739,7 @@ inline bool NFDataStream::Reserve(size_t new_size)
 {
 	if (new_size > capacity_)
 	{
-		uint8_t* new_buf = (uint8_t*)malloc(new_size);
+		uint8_t* new_buf = static_cast<uint8_t*>(malloc(new_size));
 
 		if (!new_buf)
 		{
@@ -747,7 +747,7 @@ inline bool NFDataStream::Reserve(size_t new_size)
 			return false;
 		}
 
-		capacity_ = (uint32_t)new_size;
+		capacity_ = static_cast<uint32_t>(new_size);
 
 		if (buffer_)
 		{
@@ -842,13 +842,13 @@ NFDataStream& NFDataStream::operator >>(T& val)
 
 inline NFDataStream& NFDataStream::operator<<(const string& val)
 {
-	uint32_t nStrLen = (uint32_t)val.length();
+	uint32_t nStrLen = static_cast<uint32_t>(val.length());
 
 	// 1. write string length
 	*this << nStrLen;
 
 	// 2. write string
-	Write(val.c_str(), (uint32_t)nStrLen);
+	Write(val.c_str(), static_cast<uint32_t>(nStrLen));
 
 	return *this;
 }
@@ -860,10 +860,10 @@ inline NFDataStream& NFDataStream::operator<<(const char* szVal)
 		return *this;
 	}
 
-	uint32_t nStrLen = (uint32_t)strlen(szVal);
+	uint32_t nStrLen = static_cast<uint32_t>(strlen(szVal));
 
 	// 1. write string length
-	*this << (uint32_t&)nStrLen;
+	*this << static_cast<uint32_t&>(nStrLen);
 
 	// 2. write string
 	Write(szVal, nStrLen);
@@ -881,10 +881,10 @@ inline NFDataStream& NFDataStream::operator >>(string& val)
 
 	// 1. get length
 	uint32_t nSize = 0;
-	*this >> (uint32_t&)nSize;
+	*this >> static_cast<uint32_t&>(nSize);
 
 	// 2. get file
-	if (nSize <= (uint32_t)GetReadableSize())
+	if (nSize <= static_cast<uint32_t>(GetReadableSize()))
 	{
 		val.resize(nSize);
 
@@ -893,7 +893,7 @@ inline NFDataStream& NFDataStream::operator >>(string& val)
 			Read(&val[0], nSize);
 
 			// assure last character is null
-			val[nSize] = (char)0;
+			val[nSize] = static_cast<char>(0);
 		}
 	}
 	else
@@ -907,12 +907,12 @@ inline NFDataStream& NFDataStream::operator >>(string& val)
 inline NFDataStream& NFDataStream::operator<<(const NFDataStream& val)
 {
 	// 1. write string length
-	*this << (uint32_t)val.size();
+	*this << static_cast<uint32_t>(val.size());
 
 	// 2. write string
 	if (val.size() > 0)
 	{
-		Write((char*)val.GetCache(), val.size());
+		Write(static_cast<char*>(val.GetCache()), val.size());
 	}
 
 	return *this;
@@ -936,10 +936,10 @@ inline NFDataStream& NFDataStream::operator >>(NFDataStream& val)
 		return *this;
 	}
 
-	if (nSize <= (uint32_t)GetReadableSize())
+	if (nSize <= static_cast<uint32_t>(GetReadableSize()))
 	{
 		// 2. read string
-		val.Write(((char*)GetCache() + tellg()), nSize);
+		val.Write((static_cast<char*>(GetCache()) + tellg()), nSize);
 
 		// skip
 		seekg(nSize);
@@ -969,12 +969,12 @@ inline NFDataStream& NFDataStream::operator<<(const std::vector<_Kt>& val)
 template <typename _Kt>
 inline NFDataStream& NFDataStream::operator<<(const std::list<_Kt>& val)
 {
-	*this << (uint32_t)val.size();
+	*this << static_cast<uint32_t>(val.size());
 
 	auto it(val.begin()), ite(val.end());
 	for (; it != ite; ++it)
 	{
-		*this << (const _Kt&)*it;
+		*this << static_cast<const _Kt&>(*it);
 	}
 
 	return *this;
@@ -991,7 +991,7 @@ template <typename _Kt, typename _Val>
 inline NFDataStream& NFDataStream::operator<<(const std::map<_Kt, _Val>& val)
 {
 	// 1. write length
-	*this << (uint32_t)val.size();
+	*this << static_cast<uint32_t>(val.size());
 
 	// 2. elements.
 	auto it(val.begin()), ite(val.end());
@@ -1015,7 +1015,7 @@ inline NFDataStream& NFDataStream::operator >>(std::map<_Kt, _Val>& val)
 
 	// 1. read length
 	uint32_t nSize = 0;
-	*this >> (uint32_t&)nSize;
+	*this >> static_cast<uint32_t&>(nSize);
 
 	if (GetReadableSize() < nSize)
 	{
@@ -1034,8 +1034,8 @@ inline NFDataStream& NFDataStream::operator >>(std::map<_Kt, _Val>& val)
 		}
 
 		_Kt key;
-		*this >> (_Kt&)key;
-		*this >> (_Val&)val[key];
+		*this >> static_cast<_Kt&>(key);
+		*this >> static_cast<_Val&>(val[key]);
 	}
 
 	return *this;
@@ -1052,7 +1052,7 @@ inline NFDataStream& NFDataStream::operator >>(std::list<_Kt>& val)
 
 	// 1. read length
 	uint32_t nSize = 0;
-	*this >> (uint32_t&)nSize;
+	*this >> static_cast<uint32_t&>(nSize);
 
 	if (GetReadableSize() < nSize)
 	{
@@ -1071,7 +1071,7 @@ inline NFDataStream& NFDataStream::operator >>(std::list<_Kt>& val)
 		}
 
 		val.push_back(_Kt());
-		*this >> (_Kt&)val.back();
+		*this >> static_cast<_Kt&>(val.back());
 	}
 
 	return *this;
@@ -1131,7 +1131,7 @@ inline NFDataStream& NFDataStream::operator >>(std::vector<_Kt>& val)
 template <class T>
 inline NFDataStream& NFDataStream::operator<<(const std::set<T>& val)
 {
-	(*this) << (uint32_t)val.size();
+	(*this) << static_cast<uint32_t>(val.size());
 
 	typedef typename std::set<T>::const_iterator Iterator;
 	Iterator end = val.end();
@@ -1177,7 +1177,7 @@ template <typename _Kt, typename _Val>
 NFDataStream& NFDataStream::operator<<(const std::unordered_map<_Kt, _Val>& val)
 {
 	// 1. write length
-	*this << (uint32_t)val.size();
+	*this << static_cast<uint32_t>(val.size());
 
 	// 2. elements.
 	auto it(val.begin()), ite(val.end());
@@ -1202,7 +1202,7 @@ NFDataStream& NFDataStream::operator >>(std::unordered_map<_Kt, _Val>& val)
 
 	// 1. read length
 	uint32_t nSize = 0;
-	*this >> (uint32_t&)nSize;
+	*this >> static_cast<uint32_t&>(nSize);
 
 	if (GetReadableSize() < nSize)
 	{
@@ -1221,8 +1221,8 @@ NFDataStream& NFDataStream::operator >>(std::unordered_map<_Kt, _Val>& val)
 		}
 
 		_Kt key;
-		*this >> (_Kt&)key;
-		*this >> (_Val&)val[key];
+		*this >> static_cast<_Kt&>(key);
+		*this >> static_cast<_Val&>(val[key]);
 	}
 
 	return *this;
