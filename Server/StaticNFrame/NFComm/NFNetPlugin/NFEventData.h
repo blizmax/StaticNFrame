@@ -72,5 +72,6 @@ public:
 
 	void event_cb(short events);
 
-	void set_cb(NetRecvHandler recvcb, NetEventHandler eventcb, void *pArg);
+	void set_cb(NetRecvHandler recvcb, NetEventHandler eventcb, void* pArg);
 };
+

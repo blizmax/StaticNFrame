@@ -94,11 +94,11 @@ bool NFMyClient::Send(const char* buf, uint32_t len)
 	if (len > 0 && m_pEventData)
 	{
 		bool retCode = m_pEventData->Send(buf, len);
-        if (retCode == false) 
+		if (retCode == false)
 		{
 			NFLogError("[Net] send error remote[%s] [%d]", m_flag.strIP.c_str(), m_flag.nPort);
-            return false;
-        }
+			return false;
+		}
 	}
 	return true;
 }
@@ -154,8 +154,8 @@ bool NFMyClient::OnRecvData()
 	if (ret < 0)
 	{
 		return false;
-	} 
-	else if (ret == 0) 
+	}
+	else if (ret == 0)
 	{
 		return true;
 	}
@@ -207,3 +207,4 @@ uint32_t NFMyClient::GetLinkId() const
 {
 	return m_usLinkId;
 }
+

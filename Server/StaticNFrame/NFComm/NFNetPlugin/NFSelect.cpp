@@ -93,6 +93,7 @@ bool NFSelect::_EventLoop(uint64_t timeout_ms, PollType poll_type)
 #endif // OS_LINUX
 
 
+
 	ret = select(max_fd,
 	             (poll_type == POLL_TYPE_READ) ? &loop_recv_ : NULL,
 	             (poll_type == POLL_TYPE_WRITE) ? &loop_send_ : NULL,
@@ -193,6 +194,7 @@ bool NFSelect::AddEvent(SOCKET sock, EventFlag flag, EventData* ptr)
 	if (sock > max_sock_)
 		max_sock_ = sock;
 #endif // OS_LINUX
+
 
 
 	event_map_[sock] = ptr;

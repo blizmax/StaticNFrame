@@ -68,6 +68,7 @@ typedef struct linger 		    LINGER;
 #endif // OS
 
 
+
 #if NF_PLATFORM == NF_PLATFORM_WIN
 #define ERR_INTER       WSAEINTR
 #define ERR_EAGAIN      WSAEWOULDBLOCK
@@ -76,6 +77,7 @@ typedef struct linger 		    LINGER;
 #define SHUTDOWN_SEND   SD_SEND
 #define SHUTDOWN_BOTH   SD_BOTH
 #else // defined(OS_LINUX)
+
 
 
 #include <sys/socket.h>
@@ -89,6 +91,7 @@ typedef struct linger 		    LINGER;
 #define SHUTDOWN_SEND   SHUT_WR
 #define SHUTDOWN_BOTH   SHUT_RDWR
 #endif // OS
+
 
 
 enum PollType
@@ -122,6 +125,4 @@ enum EventFlag
 	EVENT_CONNECT = 1 << 3,
 	EVENT_DISCONNECT = 1 << 4,
 };
-
-
 

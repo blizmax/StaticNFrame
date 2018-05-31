@@ -30,9 +30,9 @@ public:
 	 */
 	virtual ~NFMyClient();
 
-		/**
-	 *@brief  设置接收回调.
-	 */
+	/**
+	*@brief  设置接收回调.
+	*/
 	template <typename BaseType>
 	void SetRecvCB(BaseType* pBaseType, void (BaseType::*handleRecieve)(const uint32_t unLinkId, const uint64_t valueId, const uint32_t nMsgId, const char* msg, const uint32_t nLen))
 	{
@@ -179,3 +179,4 @@ protected:
 	 */
 	NFClientFlag m_flag;
 };
+

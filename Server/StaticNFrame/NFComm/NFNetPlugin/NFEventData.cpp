@@ -30,7 +30,7 @@ EventData::~EventData()
 bool EventData::Init(int max_sock)
 {
 	bool retCode = mPoll->Init(max_sock);
-	if (!retCode) 
+	if (!retCode)
 	{
 		NFLogError("Net poll init fail\n");
 		return false;
@@ -75,10 +75,10 @@ bool EventData::Send(const char* buf, uint32_t len)
 	if (len > 0 && mConnected)
 	{
 		retCode = NFSocket::Send(mSock, buf, len);
-       if (retCode < 0) 
+		if (retCode < 0)
 		{
-            return false;
-        }
+			return false;
+		}
 	}
 	return true;
 }
@@ -88,13 +88,13 @@ int EventData::Recv(char* buf, uint32_t size)
 	int ret = NFSocket::Recv(mSock, buf, size);
 	if (ret < 0)
 	{// err
-		if (ret == -2) 
+		if (ret == -2)
 		{// EAGAIN/WSAEWOULDBLOCK
 			return 0;
 		}
 		return -1;
-	} 
-	else if (ret == 0) 
+	}
+	else if (ret == 0)
 	{// remote close
 		return -1;
 	}
@@ -154,7 +154,7 @@ void EventData::event_cb(short events)
 	}
 }
 
-void EventData::set_cb(NetRecvHandler recvcb, NetEventHandler eventcb, void *pArg)
+void EventData::set_cb(NetRecvHandler recvcb, NetEventHandler eventcb, void* pArg)
 {
 	mHandle.mReadHandler = recvcb;
 	mHandle.mEventHandler = eventcb;
