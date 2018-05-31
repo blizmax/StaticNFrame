@@ -115,8 +115,8 @@ void EventData::Close()
 
 bool EventData::Dispatch(uint32_t timeout)
 {
-	mPoll->Poll(true, false, timeout);
 	mPoll->Poll(false, true, timeout);
+	mPoll->Poll(true, false, timeout);
 	return true;
 }
 

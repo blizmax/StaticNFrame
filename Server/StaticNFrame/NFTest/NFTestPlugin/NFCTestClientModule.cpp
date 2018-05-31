@@ -50,7 +50,7 @@ bool NFCTestClientModule::AfterInit()
 	std::string strAccount = NFRandomEnglish(12);
 	m_account = strAccount + "_" + lexical_cast<std::string>(0);
 	m_charName = strAccount + "_n_" + lexical_cast<std::string>(0);
-	m_usId = m_pNetClientModule->AddServer(NF_ST_PROXY, "192.168.1.15", 7002);
+	m_usId = m_pNetClientModule->AddServer(NF_ST_PROXY, "192.168.2.181", 5503);
 	//m_pNetClientModule->AddServer(NF_ST_LOGIN, "192.168.1.15", 7002);
 	//SetTimer(0, 1000, 1);
 	return true;
