@@ -245,7 +245,7 @@ bool NFSocket::Listen(SOCKET sock, const char* ip, uint16_t port)
 	//  return false;
 	//}
 
-	//TODO ï¿½Þ¸Ä·ï¿½ï¿½ï¿½Öµ
+	//TODO ÐÞ¸Ä·µ»ØÖµ
 	if (!SetNonBlock(sock))
 	{
 		return false;
@@ -273,7 +273,7 @@ bool NFSocket::Listen(SOCKET sock, const char* ip, uint16_t port)
 	return true;
 }
 
-//ï¿½ï¿½ï¿½ï¿½Öµï¿½ï¿½ï¿½ï¿½ï¿½å£ºï¿½Ö³ï¿½
+//·µ»ØÖµÓÐÒâÒå£º×Ö³¤
 int NFSocket::Send(SOCKET sock, const char* buf, uint32_t len)
 {
 	do
@@ -507,7 +507,7 @@ bool NFSocket::SetNoDelay(SOCKET sock, int flag /*= 1*/)
 	}
 }
 
-//ï¿½ï¿½ï¿½ï¿½Öµï¿½ï¿½ï¿½ï¿½ï¿½å£ºï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Í²ï¿½ï¿½Êºï¿½ï¿½ï¿½bool
+//·µ»ØÖµÓÐÒâÒå£ºÈýÖÖÀàÐÍ²»ÊÊºÏ×öbool
 int NFSocket::Accept(SOCKET listen_sock, SOCKET* sock)
 {
 	assert(listen_sock);
@@ -571,7 +571,7 @@ bool NFSocket::Listen(SOCKET sock, const char* ip, uint16_t port)
 		return false;
 	}
 
-//TODO ï¿½Þ¸ï¿½listen
+//TODO ÐÞ¸Älisten
 	if (!SetNonBlock(sock))
 	{
 		return false;
@@ -583,7 +583,7 @@ bool NFSocket::Listen(SOCKET sock, const char* ip, uint16_t port)
 	addr.sin_port = htons(port);
 	addr.sin_addr.s_addr = inet_addr(ip);
 
-//MMOTODO ï¿½Þ¸Ä·ï¿½ï¿½ï¿½Öµ
+//MMOTODO ÐÞ¸Ä·µ»ØÖµ
 	int ret = bind(sock, reinterpret_cast<sockaddr*>(&addr), sizeof(addr));
 	if (ret < 0)
 	{
@@ -604,7 +604,7 @@ bool NFSocket::Listen(SOCKET sock, const char* ip, uint16_t port)
 	return true;
 }
 
-//ï¿½ï¿½ï¿½ï¿½Öµï¿½ï¿½ï¿½ï¿½ï¿½å£ºï¿½Ö³ï¿½
+//·µ»ØÖµÓÐÒâÒå£º×Ö³¤
 int NFSocket::Send(SOCKET sock, const char* buf, uint32_t len)
 {
 	do
