@@ -95,6 +95,13 @@ public:
 	uint32_t GetLinkId() const;
 
 	/**
+	* @brief	获得唯一ID
+	*
+	* @return
+	*/
+	void SetLinkId(uint32_t linkId);
+
+	/**
 	 * @brief	对解析出来的数据进行处理
 	 *
 	 * @param type    数据类型，主要是为了和多线程统一处理, 主要有接受数据处理，连接成功处理，断开连接处理
@@ -158,6 +165,7 @@ protected:
 	 * @brief	代表这个链接的socket
 	 */
 	SOCKET m_nSocketId;
+
 	/**
 	 * @brief	代表客户端连接的唯一ID
 	 */

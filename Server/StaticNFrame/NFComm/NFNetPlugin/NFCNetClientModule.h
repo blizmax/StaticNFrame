@@ -35,7 +35,16 @@ public:
 
 	///////////////////////////////////////////////////////////////////////
 
-	virtual uint32_t AddServer(NF_SERVER_TYPES eServerType, const std::string& strIp, const int nPort, bool useThread = true) override;
+	/**
+	 * @brief 连接服务器ip和port，返回代表这里连接的唯一ID，可以连接同种服务器类型多次
+	 * 内部通过数组来实现快速访问
+	 *
+	 * @param  eServerType 服务器类型
+	 * @param  strIp 
+	 * @param  nPort
+	 * @return uint32_t 返回0表示错误
+	 */
+	virtual uint32_t AddServer(NF_SERVER_TYPES eServerType, const std::string& strIp, const int nPort) override;
 
 	virtual void CloseServer(const uint32_t unLinkId) override;
 
@@ -65,7 +74,7 @@ public:
 protected:
 	void ProcessExecute();
 
-	virtual uint32_t GetFreeUnLinkId(NF_SERVER_TYPES eServerType);
+	uint32_t GetFreeUnLinkId(NF_SERVER_TYPES eServerType);
 
 	void SendMsg(NFClient* pClient, const uint32_t nMsgID, const char* msg, const uint32_t nLen, const uint64_t nPlayerID);
 

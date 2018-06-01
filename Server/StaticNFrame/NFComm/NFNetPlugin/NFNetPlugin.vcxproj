@@ -33,6 +33,7 @@
     <ClCompile Include="NFEventWatcher.cpp" />
     <ClCompile Include="NFLoopThreadClient.cpp" />
     <ClCompile Include="NFSelect.cpp" />
+    <ClCompile Include="NFServer.cpp" />
     <ClCompile Include="NFSocket.cpp" />
     <ClCompile Include="NFThreadClient.cpp" />
     <ClCompile Include="NetObject.cpp" />
@@ -59,6 +60,7 @@
     <ClInclude Include="NFMyClient.h" />
     <ClInclude Include="NFNetBase.h" />
     <ClInclude Include="NFSelect.h" />
+    <ClInclude Include="NFServer.h" />
     <ClInclude Include="NFSocket.h" />
     <ClInclude Include="NFThreadClient.h" />
     <ClInclude Include="NFCNetClientModule.h" />

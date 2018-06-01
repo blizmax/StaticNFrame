@@ -67,6 +67,11 @@ uint32_t NetObject::GetLinkId() const
 	return m_usLinkId;
 }
 
+void NetObject::SetLinkId(uint32_t linkId)
+{
+	m_usLinkId = linkId;
+}
+
 bool NetObject::OnRecvData(bufferevent* pBufEv)
 {
 	if (NULL == pBufEv)

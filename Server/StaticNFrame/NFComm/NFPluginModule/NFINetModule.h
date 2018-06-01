@@ -22,11 +22,12 @@
 
 #include "google/protobuf/message.h"
 
-#define MAX_SERVER_TYPE_CLIENT_COUNT 0x0000ffff
+#define MAX_CLIENT_MASK 0x00ffffff					//客户端掩码16777215
+#define MAX_SERVER_TYPE_CLIENT_COUNT 0x0000ffff		//客户端实际数目65535
 
-#define GetUnLinkId(serverType, serverIndex)	(((serverIndex) & MAX_SERVER_TYPE_CLIENT_COUNT) | (serverType) << 16);
-#define GetServerTypeFromUnlinkId(UnlinkId)		((UnlinkId) >> 16);
-#define GetServerIndexFromUnlinkId(UnlinkId)	((UnlinkId) & MAX_SERVER_TYPE_CLIENT_COUNT);
+#define GetUnLinkId(serverType, serverIndex)	(((serverIndex) & MAX_CLIENT_MASK) | (serverType) << 24);
+#define GetServerTypeFromUnlinkId(UnlinkId)		((UnlinkId) >> 24);
+#define GetServerIndexFromUnlinkId(UnlinkId)	((UnlinkId) & MAX_CLIENT_MASK);
 
 #define CLIENT_MSG_PROCESS_NO_OBJECT(nMsgID, msgData, nLen, msg)                 \
     msg xMsg;                                           \

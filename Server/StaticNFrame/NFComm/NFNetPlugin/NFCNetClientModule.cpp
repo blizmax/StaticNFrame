@@ -78,7 +78,7 @@ bool NFCNetClientModule::Execute()
 
 uint32_t NFCNetClientModule::GetFreeUnLinkId(NF_SERVER_TYPES eServerType)
 {
-	if (eServerType >= NF_ST_NONE && eServerType < NF_ST_MAX)
+	if (eServerType > NF_ST_NONE && eServerType < NF_ST_MAX)
 	{
 		if (mxServerMap[eServerType].empty())
 		{
@@ -87,10 +87,6 @@ uint32_t NFCNetClientModule::GetFreeUnLinkId(NF_SERVER_TYPES eServerType)
 		else
 		{
 			size_t sz = mxServerMap[eServerType].size();
-			if (sz >= MAX_SERVER_TYPE_CLIENT_COUNT)
-			{
-				return 0;
-			}
 
 			for (size_t index = 0; index < sz; index++)
 			{
@@ -99,17 +95,31 @@ uint32_t NFCNetClientModule::GetFreeUnLinkId(NF_SERVER_TYPES eServerType)
 					return GetUnLinkId(eServerType, index);
 				}
 			}
+
+			if (sz >= MAX_SERVER_TYPE_CLIENT_COUNT)
+			{
+				return 0;
+			}
+
+			mxServerMap[eServerType].push_back(nullptr);
+
 			return GetUnLinkId(eServerType, sz);
 		}
 	}
 	return 0;
 }
 
-uint32_t NFCNetClientModule::AddServer(NF_SERVER_TYPES eServerType, const std::string& strIp, const int nPort, bool useThread)
+uint32_t NFCNetClientModule::AddServer(NF_SERVER_TYPES eServerType, const std::string& strIp, const int nPort)
 {
-	if (eServerType >= NF_ST_NONE && eServerType < NF_ST_MAX)
+	if (eServerType > NF_ST_NONE && eServerType < NF_ST_MAX)
 	{
 		uint32_t usId = GetFreeUnLinkId(eServerType);
+		if (usId == 0)
+		{
+			NFLogError("Add Connecting Server Failed! Ip:%s, Port:%d, than max connection:65535", strIp.c_str(), nPort);
+			return 0;
+		}
+
 		uint32_t index = GetServerIndexFromUnlinkId(usId);
 
 		NFClientFlag flag;
@@ -120,15 +130,14 @@ uint32_t NFCNetClientModule::AddServer(NF_SERVER_TYPES eServerType, const std::s
 		pClient->SetEventCB(this, &NFCNetClientModule::OnSocketNetEvent);
 		if (pClient->Init())
 		{
-			if (index == mxServerMap[eServerType].size())
-			{
-				mxServerMap[eServerType].push_back(pClient);
-				return pClient->GetLinkId();
-			}
-			else if (index < mxServerMap[eServerType].size())
+			if (index < mxServerMap[eServerType].size() && mxServerMap[eServerType][index] == nullptr)
 			{
 				mxServerMap[eServerType][index] = pClient;
 				return pClient->GetLinkId();
+			}
+			else
+			{
+				NFLogError("Add Connecting Server Failed! Ip:%s, Port:%d, than max connection:65535", strIp.c_str(), nPort);
 			}
 		}
 		NFSafeDelete(pClient);

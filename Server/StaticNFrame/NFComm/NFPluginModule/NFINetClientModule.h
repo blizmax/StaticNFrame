@@ -13,7 +13,7 @@
 class NFINetClientModule : public NFINetModule
 {
 public:
-	virtual uint32_t AddServer(NF_SERVER_TYPES eServerType, const std::string& strIp, const int nPort, bool useThread = true) = 0;
+	virtual uint32_t AddServer(NF_SERVER_TYPES eServerType, const std::string& strIp, const int nPort) = 0;
 
 	virtual void CloseServer(const uint32_t unLinkId) = 0;
 
