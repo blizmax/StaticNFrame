@@ -134,7 +134,7 @@ void EventData::event_cb(short events)
 	{
 		NF_ASSERT(mSockFlag == SOCKET_CONNECT);
 		mSockFlag = SOCKET_CONNECT;
-		mPoll->AddEvent(mSock, EVENT_READ, this);
+		mPoll->ModEvent(mSock, EVENT_READ, this);
 		mWriteFlag = true;
 		mConnected = true;
 	}
@@ -145,7 +145,7 @@ void EventData::event_cb(short events)
 	}
 	else if (events & EVENT_WRITE)
 	{
-		mPoll->AddEvent(mSock, EVENT_READ, this);
+		mPoll->ModEvent(mSock, EVENT_READ, this);
 	}
 
 	if (mHandle.mEventHandler)
