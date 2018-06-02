@@ -50,10 +50,11 @@ typedef struct linger 		    LINGER;
 
 enum eConnectStatus
 {
-	eConnectStatus_UnConnect, //未连接
+	eConnectStatus_Disconnect, //断开连接
 	eConnectStatus_Connecting, //连接中
 	eConnectStatus_ConnectOk, //连接OK
-	eConnectStatus_Disconnect, //断开连接
+	eConnectStatus_RECONNECT, //断开连接
+	eConnectStatus_REMOVE,    //删除
 };
 
 struct stMsgFlag

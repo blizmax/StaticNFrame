@@ -72,6 +72,7 @@ bool NFCNetClientModule::Finalize()
 
 bool NFCNetClientModule::Execute()
 {
+	ExecuteClose();
 	ProcessExecute();
 	return true;
 }
@@ -80,31 +81,24 @@ uint32_t NFCNetClientModule::GetFreeUnLinkId(NF_SERVER_TYPES eServerType)
 {
 	if (eServerType > NF_ST_NONE && eServerType < NF_ST_MAX)
 	{
-		if (mxServerMap[eServerType].empty())
+		size_t sz = mxServerMap[eServerType].size();
+
+		for (size_t index = 0; index < sz; index++)
 		{
-			return GetUnLinkId(eServerType, 0);
+			if (mxServerMap[eServerType][index] == nullptr)
+			{
+				return GetUnLinkId(eServerType, index);
+			}
 		}
-		else
+
+		if (sz >= MAX_SERVER_TYPE_CLIENT_COUNT)
 		{
-			size_t sz = mxServerMap[eServerType].size();
-
-			for (size_t index = 0; index < sz; index++)
-			{
-				if (mxServerMap[eServerType][index] == nullptr)
-				{
-					return GetUnLinkId(eServerType, index);
-				}
-			}
-
-			if (sz >= MAX_SERVER_TYPE_CLIENT_COUNT)
-			{
-				return 0;
-			}
-
-			mxServerMap[eServerType].push_back(nullptr);
-
-			return GetUnLinkId(eServerType, sz);
+			return 0;
 		}
+
+		mxServerMap[eServerType].push_back(nullptr);
+
+		return GetUnLinkId(eServerType, sz);
 	}
 	return 0;
 }
@@ -128,17 +122,14 @@ uint32_t NFCNetClientModule::AddServer(NF_SERVER_TYPES eServerType, const std::s
 		NFClient* pClient = NF_NEW NFClient(usId, flag);
 		pClient->SetRecvCB(this, &NFCNetClientModule::OnReceiveNetPack);
 		pClient->SetEventCB(this, &NFCNetClientModule::OnSocketNetEvent);
-		if (pClient->Init())
+		if (index < mxServerMap[eServerType].size() && mxServerMap[eServerType][index] == nullptr)
 		{
-			if (index < mxServerMap[eServerType].size() && mxServerMap[eServerType][index] == nullptr)
-			{
-				mxServerMap[eServerType][index] = pClient;
-				return pClient->GetLinkId();
-			}
-			else
-			{
-				NFLogError("Add Connecting Server Failed! Ip:%s, Port:%d, than max connection:65535", strIp.c_str(), nPort);
-			}
+			mxServerMap[eServerType][index] = pClient;
+			return pClient->GetLinkId();
+		}
+		else
+		{
+			NFLogError("Add Connecting Server Failed! Ip:%s, Port:%d, than max connection:65535", strIp.c_str(), nPort);
 		}
 		NFSafeDelete(pClient);
 	}
@@ -156,8 +147,7 @@ void NFCNetClientModule::CloseServer(const uint32_t unLinkId)
 		if (pClient)
 		{
 			pClient->Shut();
-			NFSafeDelete(pClient);
-			mxServerMap[serverType][serverIndex] = nullptr;
+			pClient->SetStatus(eConnectStatus_REMOVE);
 		}
 	}
 }
@@ -171,8 +161,7 @@ void NFCNetClientModule::CloseServerByServerType(NF_SERVER_TYPES eServerType)
 			if (mxServerMap[eServerType][j])
 			{
 				mxServerMap[eServerType][j]->Shut();
-				NFSafeDelete(mxServerMap[eServerType][j]);
-				mxServerMap[eServerType][j] = nullptr;
+				mxServerMap[eServerType][j]->SetStatus(eConnectStatus_REMOVE);
 			}
 		}
 	}
@@ -187,8 +176,7 @@ void NFCNetClientModule::CloseAllServer()
 			if (mxServerMap[i][j])
 			{
 				mxServerMap[i][j]->Shut();
-				NFSafeDelete(mxServerMap[i][j]);
-				mxServerMap[i][j] = nullptr;
+				mxServerMap[i][j]->SetStatus(eConnectStatus_REMOVE);
 			}
 		}
 	}
@@ -306,11 +294,75 @@ void NFCNetClientModule::ProcessExecute()
 	{
 		for (size_t j = 0; j < mxServerMap[i].size(); j++)
 		{
-			if (mxServerMap[i][j])
+			auto pClient = mxServerMap[i][j];
+			if (pClient)
 			{
-				mxServerMap[i][j]->Execute();
+				switch (pClient->GetStatus())
+				{
+					case eConnectStatus_Disconnect:
+					{
+						pClient->SetStatus(eConnectStatus_RECONNECT);
+					}
+					break;
+					case eConnectStatus_Connecting:
+					{
+						pClient->Execute();
+					}
+					break;
+					case eConnectStatus_ConnectOk:
+					{
+						pClient->Execute();
+						KeepState(pClient);
+					}
+					break;
+					case eConnectStatus_RECONNECT:
+					{
+						if (pClient->GetLastActionTime() + 10000 >= (uint64_t)NFGetTime())
+						{
+							break;
+						}
+
+						pClient->ExecuteClose();
+						pClient->SetStatus(eConnectStatus_Connecting);
+						pClient->Init();
+					}
+					break;
+					case eConnectStatus_REMOVE:
+					{
+						NFSafeDelete(pClient);
+						mxServerMap[i][j] = nullptr;
+					}
+					break;
+					default:
+					break;
+				}
 			}
 		}
+	}
+}
+
+void NFCNetClientModule::ExecuteClose()
+{
+	for (size_t i = 0; i < mxServerMap.size(); i++)
+	{
+		for (size_t j = 0; j < mxServerMap[i].size(); j++)
+		{
+			if (mxServerMap[i][j] && mxServerMap[i][j]->IsNeedRemve())
+			{
+				NFSafeDelete(mxServerMap[i][j]);
+				mxServerMap[i][j] = nullptr;
+			}
+		}
+	}
+}
+
+void NFCNetClientModule::KeepState(NFClient* pClient)
+{
+	if (pClient)
+	{
+		if (pClient->GetLastActionTime() + 10000 >= (uint64_t)NFGetTime()) return;
+
+		pClient->SetLastActionTime(NFGetTime());
 	}
 }
 
@@ -321,6 +373,52 @@ void NFCNetClientModule::OnReceiveNetPack(const uint32_t unLinkId, const uint64_
 
 void NFCNetClientModule::OnSocketNetEvent(const eMsgType nEvent, const uint32_t unLinkId)
 {
+	OnHandleNetEvent(nEvent, unLinkId);
 	OnSocketBaseNetEvent(nEvent, unLinkId);
 }
 
+void NFCNetClientModule::OnHandleNetEvent(const eMsgType nEvent, const uint32_t unLinkId)
+{
+	uint32_t serverType = GetServerTypeFromUnlinkId(unLinkId);
+	uint32_t serverIndex = GetServerIndexFromUnlinkId(unLinkId);
+
+	if (serverType < NF_ST_MAX && serverIndex < mxServerMap[serverType].size())
+	{
+		NFClient* pClient = mxServerMap[serverType][serverIndex];
+		if (pClient)
+		{
+			switch(nEvent)
+			{
+				case eMsgType_CONNECTED:
+				{
+					OnConnected(pClient);
+				}
+				break;
+				case eMsgType_DISCONNECTED:
+				{
+					OnDisConnected(pClient);
+				}
+				break;
+				default:
+					break;
+			}
+		}
+	}
+}
+
+void NFCNetClientModule::OnConnected(NFClient* pClient)
+{
+	if (pClient)
+	{
+		pClient->SetStatus(eConnectStatus_ConnectOk);
+	}
+}
+
+void NFCNetClientModule::OnDisConnected(NFClient* pClient)
+{
+	if (pClient)
+	{
+		pClient->SetStatus(eConnectStatus_Disconnect);
+		pClient->SetLastActionTime(NFGetTime());
+	}
+}

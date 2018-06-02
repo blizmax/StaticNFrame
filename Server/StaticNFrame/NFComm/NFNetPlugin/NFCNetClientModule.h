@@ -11,7 +11,6 @@
 #include "NFComm/NFPluginModule/NFINetClientModule.h"
 #include "NFComm/NFPluginModule/NFServerDefine.h"
 #include "NFClient.h"
-#include "NFThreadClient.h"
 #include "NFComm/NFCore/NFDataStream.h"
 #include "NFComm/NFCore/NFBuffer.h"
 
@@ -73,6 +72,8 @@ public:
 	virtual void SendToAllServerByPB(NF_SERVER_TYPES eServerType, const uint32_t nMsgID, const google::protobuf::Message& xData, const uint64_t nPlayerID) override;
 protected:
 	void ProcessExecute();
+	void ExecuteClose();
+	void KeepState(NFClient* pClient);
 
 	uint32_t GetFreeUnLinkId(NF_SERVER_TYPES eServerType);
 
@@ -81,6 +82,12 @@ protected:
 	void OnReceiveNetPack(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen);
 
 	void OnSocketNetEvent(const eMsgType nEvent, const uint32_t unLinkId);
+
+	void OnHandleNetEvent(const eMsgType nEvent, const uint32_t unLinkId);
+
+    void OnConnected(NFClient* pClient);
+
+    void OnDisConnected(NFClient* pClient);
 private:
 	std::vector<std::vector<NFClient*>> mxServerMap;
 	NFBuffer mxSendBuffer;

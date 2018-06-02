@@ -15,36 +15,14 @@
 
 void listener_cb(struct evconnlistener* listener, evutil_socket_t fd, struct sockaddr* sa, int socklen, void* user_data)
 {
-	NFServer* pServer = (NFServer*)user_data;
+	NFServer* pServer = static_cast<NFServer*>(user_data);
 
-	if (pServer->GetNetObjectCount() >= (uint32_t)pServer->GetMaxConnectNum())
+	bool ret = pServer->AddNetObject(fd, sa);
+	if (ret == false)
 	{
-		NFLogError("connected count >= mnMaxConnect:%d! Can't add connect", pServer->GetMaxConnectNum());
+		NFLogError("pServer AddNetObject Failed!");
 		return;
 	}
-
-	struct event_base* base = pServer->GetEventBase();
-
-	struct bufferevent* bev = bufferevent_socket_new(base, fd, BEV_OPT_CLOSE_ON_FREE);
-	if (!bev)
-	{
-		NFLogError("Error constructing bufferevent!");
-		return;
-	}
-
-
-	struct sockaddr_in* pSin = (sockaddr_in*)sa;
-
-	NetObject* pObject = new NetObject();
-
-
-	bufferevent_setcb(bev, conn_readcb, conn_writecb, conn_eventcb, (void*)pObject);
-
-
-	bufferevent_enable(bev, EV_READ | EV_WRITE);
-
-
-	conn_eventcb(bev, BEV_EVENT_CONNECTED, (void*)pObject);
 }
 
 NFServer::NFServer(NF_SERVER_TYPES serverType, uint32_t serverId, const NFServerFlag& flag): mBase(nullptr), mListener(nullptr), mFlag(flag), mServerType(serverType), mServerId(serverId), mNetObjectCount(0)
@@ -54,6 +32,58 @@ NFServer::NFServer(NF_SERVER_TYPES serverType, uint32_t serverId, const NFServer
 
 NFServer::~NFServer()
 {
+}
+
+bool NFServer::AddNetObject(SOCKET fd, sockaddr* sa)
+{
+	if (GetNetObjectCount() >= GetMaxConnectNum())
+	{
+		NFLogError("connected count >= mnMaxConnect:%d! Can't add connect", GetMaxConnectNum());
+		return false;
+	}
+
+	uint32_t usLinkId = GetFreeUnLinkId();
+	if (usLinkId == 0)
+	{
+		NFLogError("connected count >= mnMaxConnect:%d! Can't add connect", GetMaxConnectNum());
+		return false;
+	}
+
+	uint32_t index = GetServerIndexFromUnlinkId(usLinkId);
+	if (index >= mNetObjectArray.size() || mNetObjectArray[index] == nullptr)
+	{
+		NFLogError("GetServerIndexFromUnLinkId Failed!");
+		return false;
+	}
+
+	struct bufferevent* bev = bufferevent_socket_new(mBase, fd, BEV_OPT_CLOSE_ON_FREE);
+	if (!bev)
+	{
+		NFLogError("Error constructing bufferevent!");
+		return false;
+	}
+
+	struct sockaddr_in* pSin = reinterpret_cast<sockaddr_in*>(sa);
+	std::string ip = inet_ntoa(pSin->sin_addr);
+	uint32_t	port = pSin->sin_port;
+
+	NetObject* pObject = NF_NEW NetObject();
+	mNetObjectArray[index] = pObject;
+	mNetObjectCount++;
+
+	pObject->SetLinkId(usLinkId);
+	pObject->SetBev(bev);
+	pObject->SetStrIp(ip);
+	pObject->SetPort(port);
+
+	pObject->SetRecvCB(this, &NFServer::OnReceiveNetPack);
+	pObject->SetEventCB(this, &NFServer::OnSocketNetEvent);
+
+	bufferevent_setcb(bev, NetObject::conn_recvcb, NetObject::conn_writecb, NetObject::conn_eventcb, static_cast<void*>(pObject));
+	bufferevent_enable(bev, EV_READ | EV_WRITE);
+	NetObject::conn_eventcb(bev, BEV_EVENT_CONNECTED, static_cast<void*>(pObject));
+
+	return true;
 }
 
 uint32_t NFServer::GetServerId() const
@@ -105,9 +135,9 @@ bool NFServer::Init()
 
 	NFLogInfo("serverId:%d serverType:%s started with port:", mServerId, GetServerName(mServerType).c_str(), mFlag.nPort);
 
-	mListener = evconnlistener_new_bind(mBase, listener_cb, (void*)this,
+	mListener = evconnlistener_new_bind(mBase, listener_cb, static_cast<void*>(this),
 	                                    LEV_OPT_REUSEABLE | LEV_OPT_CLOSE_ON_FREE, -1,
-	                                    (struct sockaddr*)&sin,
+	                                    reinterpret_cast<struct sockaddr*>(&sin),
 	                                    sizeof(sin));
 
 	if (mListener)
@@ -126,6 +156,12 @@ bool NFServer::Shut()
 
 bool NFServer::Execute()
 {
+	ExecuteClose();
+
+    if (mBase)
+    {
+        event_base_loop(mBase, EVLOOP_ONCE | EVLOOP_NONBLOCK);
+    }
 	return true;
 }
 
@@ -135,28 +171,25 @@ uint32_t NFServer::GetFreeUnLinkId()
 	{
 		return GetUnLinkId(mServerType, 0);
 	}
-	else
+
+	size_t sz = mNetObjectArray.size();
+
+	for (size_t index = 0; index < sz; index++)
 	{
-		size_t sz = mNetObjectArray.size();
-
-		for (size_t index = 0; index < sz; index++)
+		if (mNetObjectArray[index] == nullptr)
 		{
-			if (mNetObjectArray[index] == nullptr)
-			{
-				return GetUnLinkId(mServerType, index);
-			}
+			return GetUnLinkId(mServerType, index);
 		}
-
-		if (sz >= mFlag.nMaxConnectNum)
-		{
-			return 0;
-		}
-
-		mNetObjectArray.push_back(nullptr);
-
-		return GetUnLinkId(mServerType, sz);
 	}
-	return 0;
+
+	if (sz >= mFlag.nMaxConnectNum)
+	{
+		return 0;
+	}
+
+	mNetObjectArray.push_back(nullptr);
+
+	return GetUnLinkId(mServerType, sz);
 }
 
 uint32_t NFServer::GetNetObjectCount() const
@@ -172,4 +205,55 @@ uint32_t NFServer::GetMaxConnectNum() const
 event_base* NFServer::GetEventBase() const
 {
 	return mBase;
+}
+
+void NFServer::ExecuteClose()
+{
+	for (size_t i = 0; i < mvRemoveObject.size(); i++)
+	{
+		uint32_t unLinkId = mvRemoveObject[i];
+		uint32_t serverType = GetServerTypeFromUnlinkId(unLinkId);
+		uint32_t serverIndex = GetServerIndexFromUnlinkId(unLinkId);
+
+		NF_ASSERT_MSG(serverType == mServerType, "the unlinkId is not of the server");
+		if (serverIndex < mNetObjectArray.size())
+		{
+			auto pObject = mNetObjectArray[serverIndex];
+			if (pObject && pObject->GetNeedRemove())
+			{
+				mNetObjectArray[serverIndex] = nullptr;
+				NFSafeDelete(pObject);
+				return;
+			}
+		}			
+		NF_ASSERT_MSG(false, "the unlinkId is not right!");
+	}
+
+	mvRemoveObject.clear();
+}
+
+void NFServer::OnReceiveNetPack(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen)
+{
+}
+
+void NFServer::OnSocketNetEvent(const eMsgType nEvent, const uint32_t unLinkId)
+{
+	if (nEvent == eMsgType_DISCONNECTED)
+	{
+		uint32_t serverType = GetServerTypeFromUnlinkId(unLinkId);
+		uint32_t serverIndex = GetServerIndexFromUnlinkId(unLinkId);
+
+		NF_ASSERT_MSG(serverType == mServerType, "the unlinkId is not of the server");
+		if (serverIndex < mNetObjectArray.size())
+		{
+			auto pObject = mNetObjectArray[serverIndex];
+			if (pObject && pObject->GetNeedRemove())
+			{
+				mvRemoveObject.push_back(unLinkId);
+				return;
+			}
+		}
+
+		NF_ASSERT_MSG(false, "the unlinkId is not right!");
+	}
 }

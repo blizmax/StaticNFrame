@@ -33,7 +33,7 @@ public:
 
 	///////////////////////////////////////////////////////////////////////
 
-	virtual uint32_t AddServer(NF_SERVER_TYPES eServerType, const std::string& strIp, const int nPort, bool useThread = true) override;
+	virtual uint32_t AddServer(NF_SERVER_TYPES eServerType, const std::string& strIp, const int nPort) override;
 
 	virtual void CloseServer(const uint32_t unLinkId) override;
 

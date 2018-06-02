@@ -26,19 +26,47 @@
 #include "NFComm/NFCore/NFBuffer.h"
 
 #include <vector>
+#include <atomic>
 
 struct stMsg;
 struct bufferevent;
 class NFThreadClient;
 class NFClient;
+class NFServer;
 
 /**
 * @brief 网络对象，代表一个连接
 */
 class NetObject : public NFIModule
 {
-	friend NFThreadClient;
-	friend NFClient;
+public:
+	/**
+	* @brief libevent读数据回调
+	*
+	* @param pEv   libevent读写数据类
+	* @param pArg  传入的参数
+	* @return
+	*/
+	static void conn_recvcb(struct bufferevent* pEv, void* pArg);
+
+	/**
+	* @brief libevent连接事件回调
+	*
+	* @param pEv		libevent读写数据类
+	* @param events	事件
+	* @param pArg		传入的参数
+	* @return
+	*/
+	static void conn_eventcb(struct bufferevent* pEv, short events, void* pArg);
+
+	/**
+	* @brief libevent写数据回调
+	*
+	* @param pEv   libevent读写数据类
+	* @param pArg  传入的参数
+	* @return
+	*/
+	static void conn_writecb(struct bufferevent* pEv, void* pArg);
 public:
 	/**
 	 * @brief	构造函数
@@ -49,7 +77,71 @@ public:
 	 * @brief	析构函数
 	 */
 	virtual ~NetObject();
-public:
+
+	/**
+	 *@brief  设置接收回调.
+	 */
+	template <typename BaseType>
+	void SetRecvCB(BaseType* pBaseType, void (BaseType::*handleRecieve)(const uint32_t unLinkId, const uint64_t valueId, const uint32_t nMsgId, const char* msg, const uint32_t nLen))
+	{
+		mRecvCB = std::bind(handleRecieve, pBaseType, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3, std::placeholders::_4, std::placeholders::_5);
+	}
+
+	/**
+	 *@brief  设置连接事件回调.
+	 */
+	template <typename BaseType>
+	void SetEventCB(BaseType* pBaseType, void (BaseType::*handleEvent)(const eMsgType nEvent, const uint32_t unLinkId))
+	{
+		mEventCB = std::bind(handleEvent, pBaseType, std::placeholders::_1, std::placeholders::_2);
+	}
+
+	/**
+	 *@brief  设置接收回调.
+	 */
+	void SetRecvCB(const NET_RECEIVE_FUNCTOR& recvcb)
+	{
+		mRecvCB = recvcb;
+	}
+
+	/**
+	 *@brief  设置连接事件回调.
+	 */
+	void SetEventCB(const NET_EVENT_FUNCTOR& eventcb)
+	{
+		mEventCB = eventcb;
+	}
+
+	/**
+	 * @brief
+	 *
+	 * @return std::string 
+	 */
+	std::string GetStrIp() const;
+
+	/**
+	 * @brief
+	 *
+	 * @param  val
+	 * @return void 
+	 */
+	void SetStrIp(std::string val);
+
+	/**
+	 * @brief
+	 *
+	 * @return uint32_t 
+	 */
+	uint32_t GetPort() const;
+
+	/**
+	 * @brief
+	 *
+	 * @param  val
+	 * @return void 
+	 */
+	void SetPort(uint32_t val);
+
 	/**
 	 * @brief	接收数据
 	 *
@@ -88,6 +180,13 @@ public:
 	struct bufferevent* GetBev() const;
 
 	/**
+	 * @brief	获得读写数据结构体
+	 *
+	 * @return
+	 */
+	void SetBev(struct bufferevent* bev);
+
+	/**
 	 * @brief	获得唯一ID
 	 *
 	 * @return
@@ -112,50 +211,61 @@ public:
 	 * @param nValue  消息头携带的值，可能是玩家ID，也可能是对方客户端连接的唯一id
 	 * @return
 	 */
-	virtual void OnHandleMsgPeer(eMsgType type, uint32_t usLink, char* pBuf, uint32_t sz, uint32_t nMsgId, uint64_t nValue) = 0;
-
-	/**
-	 * @brief	获得上一次接收数据的时间
-	 * @return
-	 */
-	uint64_t GetLastRecvTime() const;
-
-	/**
-	 * @brief	设置上一次接收数据的时间
-	 * @return
-	 */
-	void SetLastRecvTime(uint64_t val);
-
-	/**
-	 * @brief	获得上一次ping的时间
-	 * @return
-	 */
-	uint64_t GetLastPingTime() const;
-
-	/**
-	 * @brief	设置上一次ping的时间
-	 * @return
-	 */
-	void SetLastPingTime(uint64_t val);
-
-	/**
-	 * @brief	获得连接状态
-	 * @return
-	 */
-	virtual eConnectStatus GetStatus();
-
-	/**
-	 * @brief	设置连状态
-	 * @return
-	 */
-	virtual void SetStatus(eConnectStatus val);
+	virtual void OnHandleMsgPeer(eMsgType type, uint32_t usLink, char* pBuf, uint32_t sz, uint32_t nMsgId, uint64_t nValue);
 
 	/**
 	 * @brief	是否处于连接状态
 	 * @return
 	 */
 	bool IsConnectOK() const;
+
+	/**
+	 * @brief
+	 *
+	 * @return bool 
+	 */
+	bool GetNeedRemove() const;
+
+	/**
+	 * @brief
+	 *
+	 * @param  val
+	 * @return void 
+	 */
+	void SetNeedRemove(bool val);
+
+	/**
+	 * @brief	处理连接成功
+	 *
+	 * @param nSocket	系统分配的socket
+	 * @return
+	 */
+	virtual void OnHandleConnect(SOCKET nSocket);
+
+	/**
+	 * @brief	处理断开连接
+	 *
+	 * @return
+	 */
+	virtual void OnHandleDisConnect();
+
+	/**
+	 * @brief 关闭对象禁止对象的读写功能
+	 *
+	 * @return void 
+	 */
+	virtual void CloseObject();
 protected:
+	/**
+	 * @brief	处理接受数据的回调
+	 */
+	NET_RECEIVE_FUNCTOR mRecvCB;
+
+	/**
+	 * @brief	网络事件回调
+	 */
+	NET_EVENT_FUNCTOR mEventCB;
+
 	/**
 	 * @brief	libevent代表连接读写事件对象
 	 */
@@ -177,23 +287,18 @@ protected:
 	NFBuffer m_buffer;
 
 	/**
-	 * @brief	连接状态
+	 * @brief	连接代表的对方的IP
 	 */
-	eConnectStatus m_eStatus;
+	std::string m_strIp;
 
 	/**
-	 * @brief	上次接受数据的时间
+	 * @brief	连接代表的对方的端口
 	 */
-	uint64_t m_lastRecvTime;
+	uint32_t m_port;
 
 	/**
-	 * @brief	上次断开连接的时间
+	 * @brief 是否需要删除, 这个链接不在起作用，将在下一次循环中被删除
 	 */
-	uint64_t m_lastDisconnetTime;
-
-	/**
-	 * @brief	上次ping的时间
-	 */
-	uint64_t m_lastPingTime;
+	bool mNeedRemove;
 };
 

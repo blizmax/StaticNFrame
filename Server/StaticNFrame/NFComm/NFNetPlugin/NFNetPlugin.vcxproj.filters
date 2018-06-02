@@ -11,9 +11,6 @@
     <ClCompile Include="NFIPacketParse.cpp">
       <Filter>PacketParse</Filter>
     </ClCompile>
-    <ClCompile Include="NFThreadClient.cpp">
-      <Filter>NFClient</Filter>
-    </ClCompile>
     <ClCompile Include="NFClient.cpp">
       <Filter>NFClient</Filter>
     </ClCompile>
@@ -25,12 +22,6 @@
     </ClCompile>
     <ClCompile Include="NFEventWatcher.cpp">
       <Filter>NFNetThread</Filter>
-    </ClCompile>
-    <ClCompile Include="NetThreadObject.cpp">
-      <Filter>NFNetObject</Filter>
-    </ClCompile>
-    <ClCompile Include="NFLoopThreadClient.cpp">
-      <Filter>NFClient</Filter>
     </ClCompile>
     <ClCompile Include="NFSocket.cpp">
       <Filter>NFBaseNet</Filter>
@@ -77,9 +68,6 @@
     <ClInclude Include="NFIPacketParse.h">
       <Filter>PacketParse</Filter>
     </ClInclude>
-    <ClInclude Include="NFThreadClient.h">
-      <Filter>NFClient</Filter>
-    </ClInclude>
     <ClInclude Include="NFClient.h">
       <Filter>NFClient</Filter>
     </ClInclude>
@@ -100,12 +88,6 @@
     </ClInclude>
     <ClInclude Include="NFConnector.h">
       <Filter>NFNetThread</Filter>
-    </ClInclude>
-    <ClInclude Include="NetThreadObject.h">
-      <Filter>NFNetObject</Filter>
-    </ClInclude>
-    <ClInclude Include="NFLoopThreadClient.h">
-      <Filter>NFClient</Filter>
     </ClInclude>
     <ClInclude Include="NFSocket.h">
       <Filter>NFBaseNet</Filter>

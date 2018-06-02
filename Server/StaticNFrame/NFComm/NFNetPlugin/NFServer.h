@@ -30,6 +30,15 @@ public:
 	virtual ~NFServer();
 
 	/**
+	 * @brief 添加网络对象
+	 *
+	 * @param  fd
+	 * @param  sa
+	 * @return bool 
+	 */
+	bool AddNetObject(SOCKET fd, sockaddr* sa);
+
+	/**
 	* @brief	获得唯一ID
 	*
 	* @return
@@ -91,6 +100,34 @@ public:
 	 * @return event_base*
 	 */
 	virtual event_base* GetEventBase() const;
+protected:
+	/**
+	 * @brief
+	 *
+	 * @return void 
+	 */
+	virtual void ExecuteClose();
+
+	/**
+	 * @brief 网络接受数据包回调
+	 *
+	 * @param  unLinkId
+	 * @param  playerId
+	 * @param  nMsgId
+	 * @param  msg
+	 * @param  nLen
+	 * @return void 
+	 */
+	virtual void OnReceiveNetPack(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen);
+
+	/**
+	 * @brief 网络事件，连接和断开连接处理
+	 *
+	 * @param  nEvent
+	 * @param  unLinkId
+	 * @return void 
+	 */
+	virtual void OnSocketNetEvent(const eMsgType nEvent, const uint32_t unLinkId);
 private:
 	/**
 	* @brief libevent
@@ -126,5 +163,10 @@ private:
 	* @brief 链接对象真实数目
 	*/
 	uint32_t mNetObjectCount;
+
+	/**
+	* @brief 需要删除的连接对象
+	*/
+	std::vector<uint32_t> mvRemoveObject;
 };
 

@@ -11,9 +11,78 @@
 #include "NFComm/NFPluginModule/NFLogMgr.h"
 #include "NFIPacketParse.h"
 
-NetObject::NetObject() : m_pBev(nullptr), m_usLinkId(0), m_eStatus(), m_lastRecvTime(0), m_lastDisconnetTime(0), m_lastPingTime(0)
+/**
+* @brief libevent读数据回调
+*
+* @param pEv   libevent读写数据类
+* @param pArg  传入的参数
+* @return
+*/
+void NetObject::conn_recvcb(struct bufferevent* pEv, void* pArg)
 {
-	m_eStatus = eConnectStatus_UnConnect;
+	NetObject* pObject = static_cast<NetObject*>(pArg);
+	if (pObject == nullptr) return;
+
+	if (pObject->GetNeedRemove()) return;
+
+	if (!pObject->OnRecvData(pEv))
+	{
+		pObject->OnHandleDisConnect();
+	}
+}
+
+/**
+* @brief libevent连接事件回调
+*
+* @param pEv		libevent读写数据类
+* @param events	事件
+* @param pArg		传入的参数
+* @return
+*/
+void NetObject::conn_eventcb(struct bufferevent* pEv, short events, void* pArg)
+{
+	NetObject* p = static_cast<NetObject*>(pArg);
+	if (p == nullptr) return;
+
+	if (events & BEV_EVENT_CONNECTED)
+	{
+		p->OnHandleConnect(static_cast<SOCKET>(bufferevent_getfd(pEv)));
+	}
+
+	if (events & BEV_EVENT_EOF)
+	{
+		p->OnHandleDisConnect();
+		return;
+	}
+
+	if (events & BEV_EVENT_ERROR)
+	{
+#ifdef _WIN32
+		if (ArkGetLastError() == WSAEISCONN)
+		{
+			p->OnHandleConnect(static_cast<SOCKET>(bufferevent_getfd(pEv)));;
+			return;
+		}
+#endif
+		p->OnHandleDisConnect();
+		NFLogNormalError(0, "NetError", " CloseProc Error Code " + std::string(evutil_socket_error_to_string(EVUTIL_SOCKET_ERROR())));
+	}
+}
+
+/**
+* @brief libevent写数据回调
+*
+* @param pEv   libevent读写数据类
+* @param pArg  传入的参数
+* @return
+*/
+void NetObject::conn_writecb(struct bufferevent* pEv, void* pArg)
+{
+	// Intentionally unimplemented...
+}
+
+NetObject::NetObject() : m_pBev(nullptr), m_usLinkId(0), m_port(0), mNeedRemove(false)
+{
 	m_nSocketId = INVALID_SOCKET;
 	m_buffer.AssureSpace(MAX_RECV_BUFFER_SIZE);
 }
@@ -24,10 +93,29 @@ NetObject::~NetObject()
 	{
 		bufferevent_free(m_pBev);
 	}
-	m_eStatus = eConnectStatus_UnConnect;
 	m_nSocketId = INVALID_SOCKET;
 	m_buffer.Clear();
 	m_pBev = nullptr;
+}
+
+std::string NetObject::GetStrIp() const
+{
+	return m_strIp;
+}
+
+void NetObject::SetStrIp(std::string val)
+{
+	m_strIp = val;
+}
+
+uint32_t NetObject::GetPort() const
+{
+	return m_port;
+}
+
+void NetObject::SetPort(uint32_t val)
+{
+	m_port = val;
 }
 
 int NetObject::Dismantle()
@@ -40,9 +128,8 @@ int NetObject::Dismantle()
 	int ret = NFIPacketParse::DeCode(m_buffer.ReadAddr(), m_buffer.ReadableSize(), outData, outLen, allLen, nMsgId, nValue);
 	if (ret < 0)
 	{
-		bufferevent_disable(m_pBev, EV_READ | EV_WRITE);
-		evutil_closesocket(m_nSocketId);
-		m_nSocketId = INVALID_SOCKET;
+		SetNeedRemove(true);
+		CloseObject();
 		return -1;
 	}
 	else if (ret > 0)
@@ -62,6 +149,11 @@ bufferevent* NetObject::GetBev() const
 	return m_pBev;
 }
 
+void NetObject::SetBev(bufferevent* bev)
+{
+	m_pBev = bev;
+}
+
 uint32_t NetObject::GetLinkId() const
 {
 	return m_usLinkId;
@@ -70,6 +162,32 @@ uint32_t NetObject::GetLinkId() const
 void NetObject::SetLinkId(uint32_t linkId)
 {
 	m_usLinkId = linkId;
+}
+
+void NetObject::OnHandleMsgPeer(eMsgType type, uint32_t usLink, char* pBuf, uint32_t sz, uint32_t nMsgId, uint64_t nValue)
+{
+	switch (type)
+	{
+	case eMsgType_RECIVEDATA:
+		{
+			if (mRecvCB)
+			{
+				mRecvCB(usLink, nValue, nMsgId, pBuf, sz);
+			}
+		}
+		break;
+	case eMsgType_CONNECTED:
+	case eMsgType_DISCONNECTED:
+		{
+			if (mEventCB)
+			{
+				mEventCB(type, usLink);
+			}
+		}
+		break;
+	default:
+		break;
+	}
 }
 
 bool NetObject::OnRecvData(bufferevent* pBufEv)
@@ -117,39 +235,37 @@ bool NetObject::OnRecvData(bufferevent* pBufEv)
 	return true;
 }
 
-eConnectStatus NetObject::GetStatus()
+bool NetObject::GetNeedRemove() const
 {
-	return m_eStatus;
+	return mNeedRemove;
 }
 
-void NetObject::SetStatus(eConnectStatus val)
+void NetObject::SetNeedRemove(bool val)
 {
-	m_eStatus = val;
+	mNeedRemove = val;
 }
 
-bool NetObject::IsConnectOK() const
+void NetObject::OnHandleConnect(SOCKET nSocket)
 {
-	return m_eStatus == eConnectStatus_ConnectOk;
+	SetSocketId(nSocket);
+	OnHandleMsgPeer(eMsgType_CONNECTED, m_usLinkId, nullptr, 0, 0, 0);
 }
 
-uint64_t NetObject::GetLastRecvTime() const
+void NetObject::OnHandleDisConnect()
 {
-	return m_lastRecvTime;
+	SetNeedRemove(true);
+	CloseObject();
+	OnHandleMsgPeer(eMsgType_DISCONNECTED, m_usLinkId, nullptr, 0, 0, 0);
 }
 
-void NetObject::SetLastRecvTime(uint64_t val)
+void NetObject::CloseObject()
 {
-	m_lastRecvTime = val;
-}
-
-uint64_t NetObject::GetLastPingTime() const
-{
-	return m_lastPingTime;
-}
-
-void NetObject::SetLastPingTime(uint64_t val)
-{
-	m_lastPingTime = val;
+	if (m_nSocketId != INVALID_SOCKET)
+	{
+		bufferevent_disable(m_pBev, EV_READ | EV_WRITE);
+		evutil_closesocket(m_nSocketId);
+		m_nSocketId = INVALID_SOCKET;		
+	}
 }
 
 void NetObject::SetSocketId(SOCKET nSocket)
@@ -183,7 +299,7 @@ void NetObject::SetSocketId(SOCKET nSocket)
 
 bool NetObject::Send(const void* pData, uint32_t unSize)
 {
-	if (IsConnectOK() && bufferevent_get_enabled(m_pBev) != 0)
+	if (!GetNeedRemove() && bufferevent_get_enabled(m_pBev) != 0)
 	{
 		int nRet = bufferevent_write(m_pBev, pData, unSize);
 		if (nRet < 0)

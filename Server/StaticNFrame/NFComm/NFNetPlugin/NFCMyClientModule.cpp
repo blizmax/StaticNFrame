@@ -105,7 +105,7 @@ uint32_t NFCMyClientModule::GetFreeUnLinkId(NF_SERVER_TYPES eServerType)
 	return 0;
 }
 
-uint32_t NFCMyClientModule::AddServer(NF_SERVER_TYPES eServerType, const std::string& strIp, const int nPort, bool useThread)
+uint32_t NFCMyClientModule::AddServer(NF_SERVER_TYPES eServerType, const std::string& strIp, const int nPort)
 {
 	if (eServerType >= NF_ST_NONE && eServerType < NF_ST_MAX)
 	{

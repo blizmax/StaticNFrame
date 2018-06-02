@@ -28,7 +28,7 @@
 /**
 *@brief  单线程libevent网络客户端封装类.
 */
-class NFClient : public NetObject
+class NFClient : public NFIModule
 {
 public:
 	/**
@@ -81,32 +81,11 @@ public:
 	virtual bool Execute() override;
 
 	/**
-	 * @brief	对解析出来的数据进行处理
+	 * @brief	删除关闭的连接
 	 *
-	 * @param type    数据类型，主要是为了和多线程统一处理, 主要有接受数据处理，连接成功处理，断开连接处理
-	 * @param usLink  本客户端的唯一id
-	 * @param pBuf    数据指针
-	 * @param sz      数据大小
-	 * @param nMsgId  分析出来的消息id
-	 * @param nValue  消息头携带的值，可能是玩家ID，也可能是对方客户端连接的唯一id
-	 * @return
+	 * @return	是否成功
 	 */
-	virtual void OnHandleMsgPeer(eMsgType type, uint32_t usLink, char* pBuf, uint32_t sz, uint32_t nMsgId, uint64_t nValue) override;
-
-	/**
-	 * @brief	处理连接成功
-	 *
-	 * @param nSocket	系统分配的socket
-	 * @return
-	 */
-	virtual void OnHandleConnect(SOCKET nSocket);
-
-	/**
-	 * @brief	处理断开连接
-	 *
-	 * @return
-	 */
-	virtual void OnHandleDisConnect();
+	virtual void ExecuteClose();
 
 	/**
 	 * @brief	连接服务端
@@ -117,6 +96,8 @@ public:
 
 	/**
 	 * @brief	关闭客户端连接, 与Conenct对应
+	 * 程序运行时，只能在OnExectue里调用，
+	 * 退出时，在析构函数调用
 	 * @return
 	 */
 	virtual void Close();
@@ -142,21 +123,77 @@ public:
 	const NFClientFlag& GetFlag() const;
 
 	/**
-	 * @brief	断线重连
-	 * @return	是否成功
-	 */
-	virtual bool Reconnect();
-
-	/**
-	 * @brief	检查连接
+	 * @brief	获得唯一ID
+	 *
 	 * @return
 	 */
-	virtual void CheckConnect();
+	uint32_t GetLinkId() const;
+
+	/**
+	* @brief	获得唯一ID
+	*
+	* @return
+	*/
+	void SetLinkId(uint32_t linkId);
+
+	/**
+	 * @brief	发送数据
+	 *
+	 * @param pData		发送的数据, 这里的数据已经包含了数据头
+	 * @param unSize	数据的大小
+	 * @return
+	 */
+	virtual bool Send(const void* pData, uint32_t unSize);
+
+	/**
+	 * @brief
+	 */
+	eConnectStatus GetStatus() const;
+
+	/**
+	 * @brief
+	 */
+	void SetStatus(eConnectStatus val);
+
+	/**
+	 * @brief
+	 */
+	bool IsNeedRemve() const;
+
+	/**
+	 * @brief
+	 *
+	 * @return uint64_t 
+	 */
+	uint64_t GetLastActionTime() const;
+
+	/**
+	 * @brief
+	 *
+	 * @param  time
+	 * @return void 
+	 */
+	void SetLastActionTime(uint64_t time);
 protected:
 	/**
 	 * @brief	libevent的react数据结构
 	 */
 	event_base* m_pMainBase;
+
+	/**
+	 * @brief	连接配置数据
+	 */
+	NFClientFlag m_flag;
+
+	/**
+	 * @brief	服务器名字
+	 */
+	std::string m_strName;
+
+	/**
+	 * @brief	连接对象
+	 */
+	NetObject*  m_pObject;
 
 	/**
 	 * @brief	处理接受数据的回调
@@ -169,13 +206,18 @@ protected:
 	NET_EVENT_FUNCTOR mEventCB;
 
 	/**
-	 * @brief	连接配置数据
+	 * @brief	代表客户端连接的唯一ID
 	 */
-	NFClientFlag m_flag;
+	uint32_t m_usLinkId;
 
 	/**
-	 * @brief	服务器名字
+	 * @brief 连接状态
 	 */
-	std::string m_strName;
+	eConnectStatus mStatus;
+
+	/**
+	 * @brief 上一次活动时间
+	 */
+	uint64_t mLastActionTime;
 };
 
