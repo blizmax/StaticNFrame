@@ -79,10 +79,6 @@ protected:
 
 	void SendMsg(NFClient* pClient, const uint32_t nMsgID, const char* msg, const uint32_t nLen, const uint64_t nPlayerID);
 
-	void OnReceiveNetPack(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen);
-
-	void OnSocketNetEvent(const eMsgType nEvent, const uint32_t unLinkId);
-
 	void OnHandleNetEvent(const eMsgType nEvent, const uint32_t unLinkId);
 
     void OnConnected(NFClient* pClient);

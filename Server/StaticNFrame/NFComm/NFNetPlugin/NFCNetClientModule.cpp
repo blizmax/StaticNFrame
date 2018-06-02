@@ -15,6 +15,10 @@ NFCNetClientModule::NFCNetClientModule(NFIPluginManager* p)
 {
 	pPluginManager = p;
 	mxServerMap.resize(NF_ST_MAX);
+	for(int serverType = NF_ST_NONE+1; serverType < NF_ST_MAX; serverType++)
+	{
+		AddEventCallBack((NF_SERVER_TYPES)serverType, this, &NFCNetClientModule::OnHandleNetEvent);
+	}
 	mxSendBuffer.AssureSpace(MAX_SEND_BUFFER_SIZE);
 }
 
@@ -120,8 +124,8 @@ uint32_t NFCNetClientModule::AddServer(NF_SERVER_TYPES eServerType, const std::s
 		flag.strIP = strIp;
 		flag.nPort = nPort;
 		NFClient* pClient = NF_NEW NFClient(usId, flag);
-		pClient->SetRecvCB(this, &NFCNetClientModule::OnReceiveNetPack);
-		pClient->SetEventCB(this, &NFCNetClientModule::OnSocketNetEvent);
+		pClient->SetRecvCB((NFINetModule*)this, &NFINetModule::OnReceiveNetPack);
+		pClient->SetEventCB((NFINetModule*)this, &NFINetModule::OnSocketNetEvent);
 		if (index < mxServerMap[eServerType].size() && mxServerMap[eServerType][index] == nullptr)
 		{
 			mxServerMap[eServerType][index] = pClient;
@@ -364,17 +368,6 @@ void NFCNetClientModule::KeepState(NFClient* pClient)
 
 		pClient->SetLastActionTime(NFGetTime());
 	}
-}
-
-void NFCNetClientModule::OnReceiveNetPack(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen)
-{
-	OnReceiveBaseNetPack(unLinkId, playerId, nMsgId, msg, nLen);
-}
-
-void NFCNetClientModule::OnSocketNetEvent(const eMsgType nEvent, const uint32_t unLinkId)
-{
-	OnHandleNetEvent(nEvent, unLinkId);
-	OnSocketBaseNetEvent(nEvent, unLinkId);
 }
 
 void NFCNetClientModule::OnHandleNetEvent(const eMsgType nEvent, const uint32_t unLinkId)

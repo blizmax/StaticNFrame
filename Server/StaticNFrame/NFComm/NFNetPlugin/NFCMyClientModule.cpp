@@ -78,7 +78,7 @@ bool NFCMyClientModule::Execute()
 
 uint32_t NFCMyClientModule::GetFreeUnLinkId(NF_SERVER_TYPES eServerType)
 {
-	if (eServerType >= NF_ST_NONE && eServerType < NF_ST_MAX)
+	if (eServerType > NF_ST_NONE && eServerType < NF_ST_MAX)
 	{
 		if (mxServerMap[eServerType].empty())
 		{
@@ -107,7 +107,7 @@ uint32_t NFCMyClientModule::GetFreeUnLinkId(NF_SERVER_TYPES eServerType)
 
 uint32_t NFCMyClientModule::AddServer(NF_SERVER_TYPES eServerType, const std::string& strIp, const int nPort)
 {
-	if (eServerType >= NF_ST_NONE && eServerType < NF_ST_MAX)
+	if (eServerType > NF_ST_NONE && eServerType < NF_ST_MAX)
 	{
 		uint32_t usId = GetFreeUnLinkId(eServerType);
 		uint32_t index = GetServerIndexFromUnlinkId(usId);
@@ -118,8 +118,8 @@ uint32_t NFCMyClientModule::AddServer(NF_SERVER_TYPES eServerType, const std::st
 		NFMyClient* pClient = NF_NEW NFMyClient(usId, flag);
 		//NFMyClient* pClient = NF_NEW NFMyClient(usId, flag);
 		//NFClient* pClient = NF_NEW NFThreadClient(usId, flag);
-		pClient->SetRecvCB(this, &NFCMyClientModule::OnReceiveNetPack);
-		pClient->SetEventCB(this, &NFCMyClientModule::OnSocketNetEvent);
+		pClient->SetRecvCB((NFINetModule*)this, &NFINetModule::OnReceiveNetPack);
+		pClient->SetEventCB((NFINetModule*)this, &NFINetModule::OnSocketNetEvent);
 		if (pClient->Init())
 		{
 			if (index == mxServerMap[eServerType].size())
@@ -305,15 +305,5 @@ void NFCMyClientModule::ProcessExecute()
 			}
 		}
 	}
-}
-
-void NFCMyClientModule::OnReceiveNetPack(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen)
-{
-	OnReceiveBaseNetPack(unLinkId, playerId, nMsgId, msg, nLen);
-}
-
-void NFCMyClientModule::OnSocketNetEvent(const eMsgType nEvent, const uint32_t unLinkId)
-{
-	OnSocketBaseNetEvent(nEvent, unLinkId);
 }
 
