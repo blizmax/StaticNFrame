@@ -128,8 +128,6 @@ int NetObject::Dismantle()
 	int ret = NFIPacketParse::DeCode(m_buffer.ReadAddr(), m_buffer.ReadableSize(), outData, outLen, allLen, nMsgId, nValue);
 	if (ret < 0)
 	{
-		SetNeedRemove(true);
-		CloseObject();
 		return -1;
 	}
 	else if (ret > 0)
@@ -229,6 +227,10 @@ bool NetObject::OnRecvData(bufferevent* pBufEv)
 		else if (ret > 0)
 		{
 			break;
+		}
+		if (GetNeedRemove())
+		{
+			return false;
 		}
 	}
 
