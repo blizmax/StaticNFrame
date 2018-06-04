@@ -74,6 +74,13 @@ public:
 	virtual bool Shut() override;
 
 	/**
+	 * @brief 释放数据
+	 *
+	 * @return bool 
+	 */
+	virtual bool Finalize() override;
+
+	/**
 	 * @brief	服务器每帧执行
 	 *
 	 * @return	是否成功

@@ -21,6 +21,7 @@
   <ItemGroup>
     <ClCompile Include="ArpaNetPacketParse.cpp" />
     <ClCompile Include="NFCMyClientModule.cpp" />
+    <ClCompile Include="NFCNetServerModule.cpp" />
     <ClCompile Include="NFEventData.cpp" />
     <ClCompile Include="NFMyClient.cpp" />
     <ClCompile Include="NFPoll.cpp" />
@@ -42,6 +43,7 @@
     <ClInclude Include="ArpgNetPacketParse.h" />
     <ClInclude Include="NFClient.h" />
     <ClInclude Include="NFCMyClientModule.h" />
+    <ClInclude Include="NFCNetServerModule.h" />
     <ClInclude Include="NFConnector.h" />
     <ClInclude Include="NFDuration.h" />
     <ClInclude Include="NFEpoll.h" />

@@ -20,7 +20,6 @@
 
 #include "NFLibEvent.h"
 
-#include "NFComm/NFPluginModule/NFIModule.h"
 #include "NFComm/NFPluginModule/NFServerDefine.h"
 #include "NFNetDefine.h"
 #include "NFComm/NFCore/NFBuffer.h"
@@ -37,7 +36,7 @@ class NFServer;
 /**
 * @brief 网络对象，代表一个连接
 */
-class NetObject : public NFIModule
+class NetObject
 {
 public:
 	/**
@@ -212,12 +211,6 @@ public:
 	 * @return
 	 */
 	virtual void OnHandleMsgPeer(eMsgType type, uint32_t usLink, char* pBuf, uint32_t sz, uint32_t nMsgId, uint64_t nValue);
-
-	/**
-	 * @brief	是否处于连接状态
-	 * @return
-	 */
-	bool IsConnectOK() const;
 
 	/**
 	 * @brief

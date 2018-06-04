@@ -45,6 +45,7 @@
     <ClInclude Include="NFCPluginManager.h">
       <Filter>PluginManager</Filter>
     </ClInclude>
+    <ClInclude Include="NFINetServerModule.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Event">

@@ -53,6 +53,9 @@
     <ClCompile Include="NFServer.cpp">
       <Filter>NFServer</Filter>
     </ClCompile>
+    <ClCompile Include="NFCNetServerModule.cpp">
+      <Filter>NFServer</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="NFNetPlugin.h" />
@@ -120,6 +123,9 @@
       <Filter>NFClient</Filter>
     </ClInclude>
     <ClInclude Include="NFServer.h">
+      <Filter>NFServer</Filter>
+    </ClInclude>
+    <ClInclude Include="NFCNetServerModule.h">
       <Filter>NFServer</Filter>
     </ClInclude>
   </ItemGroup>

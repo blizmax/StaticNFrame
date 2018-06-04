@@ -71,6 +71,12 @@ bool NFClient::Shut()
 	return true;
 }
 
+bool NFClient::Finalize()
+{
+	NFClient::Close();
+	return true;
+}
+
 bool NFClient::Execute()
 {
 	ExecuteClose();

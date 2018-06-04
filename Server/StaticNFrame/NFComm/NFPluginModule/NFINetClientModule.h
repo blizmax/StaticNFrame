@@ -20,7 +20,7 @@ public:
 	virtual void CloseServerByServerType(NF_SERVER_TYPES eServerType) = 0;
 
 	virtual void CloseAllServer() = 0;
-public:
+
 	virtual void SendByServerID(const uint32_t unLinkId, const uint32_t nMsgID, const std::string& strData, const uint64_t nPlayerID) = 0;
 
 	virtual void SendByServerID(const uint32_t unLinkId, const uint32_t nMsgID, const char* msg, const uint32_t nLen, const uint64_t nPlayerID) = 0;

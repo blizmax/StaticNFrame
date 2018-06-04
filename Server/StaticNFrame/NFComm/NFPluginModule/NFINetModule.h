@@ -123,8 +123,7 @@ public:
 		return true;
 	}
 
-protected:
-	void OnReceiveBaseNetPack(const uint32_t unLinkId, const uint64_t valueId, const uint32_t nMsgId, const char* msg, const uint32_t nLen)
+	void OnReceiveNetPack(const uint32_t unLinkId, const uint64_t valueId, const uint32_t nMsgId, const char* msg, const uint32_t nLen)
 	{
 		uint32_t eServerType = GetServerTypeFromUnlinkId(unLinkId);
 		if (eServerType < NF_ST_MAX)
@@ -146,7 +145,7 @@ protected:
 		}
 	}
 
-	void OnSocketBaseNetEvent(const eMsgType nEvent, const uint32_t unLinkId)
+	void OnSocketNetEvent(const eMsgType nEvent, const uint32_t unLinkId)
 	{
 		uint32_t eServerType = GetServerTypeFromUnlinkId(unLinkId);
 		if (eServerType < NF_ST_MAX)

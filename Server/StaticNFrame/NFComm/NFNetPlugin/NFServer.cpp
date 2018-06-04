@@ -32,6 +32,25 @@ NFServer::NFServer(NF_SERVER_TYPES serverType, uint32_t serverId, const NFServer
 
 NFServer::~NFServer()
 {
+	for (size_t i = 0; i < mNetObjectArray.size(); i++)
+	{
+		if (mNetObjectArray[i] != nullptr)
+		{
+			NFSafeDelete(mNetObjectArray[i]);
+		}
+	}
+	mNetObjectArray.clear();
+	if (mListener)
+	{
+		evconnlistener_free(mListener);	
+	}
+	mListener = nullptr;
+
+	if (mBase)
+	{
+		event_base_free(mBase);	
+	}
+	mBase = nullptr;
 }
 
 bool NFServer::AddNetObject(SOCKET fd, sockaddr* sa)
@@ -50,7 +69,7 @@ bool NFServer::AddNetObject(SOCKET fd, sockaddr* sa)
 	}
 
 	uint32_t index = GetServerIndexFromUnlinkId(usLinkId);
-	if (index >= mNetObjectArray.size() || mNetObjectArray[index] == nullptr)
+	if (index >= mNetObjectArray.size() || mNetObjectArray[index] != nullptr)
 	{
 		NFLogError("GetServerIndexFromUnLinkId Failed!");
 		return false;
@@ -151,6 +170,27 @@ bool NFServer::Init()
 
 bool NFServer::Shut()
 {
+	for (size_t i = 0; i < mNetObjectArray.size(); i++)
+	{
+		if (mNetObjectArray[i] != nullptr)
+		{
+			mNetObjectArray[i]->SetNeedRemove(true);
+			mNetObjectArray[i]->CloseObject();
+		}
+	}
+	return true;
+}
+
+bool NFServer::Finalize()
+{
+	for (size_t i = 0; i < mNetObjectArray.size(); i++)
+	{
+		if (mNetObjectArray[i] != nullptr)
+		{
+			NFSafeDelete(mNetObjectArray[i]);
+		}
+	}
+	mNetObjectArray.clear();
 	return true;
 }
 
@@ -234,6 +274,10 @@ void NFServer::ExecuteClose()
 
 void NFServer::OnReceiveNetPack(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen)
 {
+	if (mRecvCB)
+	{
+		mRecvCB(unLinkId, playerId, nMsgId, msg, nLen);
+	}
 }
 
 void NFServer::OnSocketNetEvent(const eMsgType nEvent, const uint32_t unLinkId)
@@ -255,5 +299,10 @@ void NFServer::OnSocketNetEvent(const eMsgType nEvent, const uint32_t unLinkId)
 		}
 
 		NF_ASSERT_MSG(false, "the unlinkId is not right!");
+	}
+
+	if (mEventCB)
+	{
+		mEventCB(nEvent, unLinkId);
 	}
 }

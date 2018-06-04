@@ -29,6 +29,25 @@ public:
 	*/
 	virtual ~NFServer();
 
+
+	/**
+	 *@brief  设置接收回调.
+	 */
+	template <typename BaseType>
+	void SetRecvCB(BaseType* pBaseType, void (BaseType::*handleRecieve)(const uint32_t unLinkId, const uint64_t valueId, const uint32_t nMsgId, const char* msg, const uint32_t nLen))
+	{
+		mRecvCB = std::bind(handleRecieve, pBaseType, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3, std::placeholders::_4, std::placeholders::_5);
+	}
+
+	/**
+	 *@brief  设置连接事件回调.
+	 */
+	template <typename BaseType>
+	void SetEventCB(BaseType* pBaseType, void (BaseType::*handleEvent)(const eMsgType nEvent, const uint32_t unLinkId))
+	{
+		mEventCB = std::bind(handleEvent, pBaseType, std::placeholders::_1, std::placeholders::_2);
+	}
+
 	/**
 	 * @brief 添加网络对象
 	 *
@@ -60,11 +79,18 @@ public:
 	virtual bool Init() override;
 
 	/**
-	* @brief	关闭客户端释放数据
+	* @brief	关闭客户端
 	*
 	* @return  是否成功
 	*/
 	virtual bool Shut() override;
+
+	/**
+	 * @brief 释放数据
+	 *
+	 * @return bool 
+	 */
+	virtual bool Finalize() override;
 
 	/**
 	* @brief	服务器每帧执行
@@ -129,6 +155,16 @@ protected:
 	 */
 	virtual void OnSocketNetEvent(const eMsgType nEvent, const uint32_t unLinkId);
 private:
+	/**
+	 * @brief	处理接受数据的回调
+	 */
+	NET_RECEIVE_FUNCTOR mRecvCB;
+
+	/**
+	 * @brief	网络事件回调
+	 */
+	NET_EVENT_FUNCTOR mEventCB;
+
 	/**
 	* @brief libevent
 	*/

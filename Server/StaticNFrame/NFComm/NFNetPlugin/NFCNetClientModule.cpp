@@ -66,6 +66,7 @@ bool NFCNetClientModule::Finalize()
 		{
 			if (mxServerMap[i][j])
 			{
+				mxServerMap[i][j]->Finalize();
 				NFSafeDelete(mxServerMap[i][j]);
 			}
 		}

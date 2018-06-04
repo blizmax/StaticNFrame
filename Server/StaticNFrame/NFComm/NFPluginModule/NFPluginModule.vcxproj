@@ -162,6 +162,7 @@
     <ClInclude Include="NFILuaScriptModule.h" />
     <ClInclude Include="NFINetClientModule.h" />
     <ClInclude Include="NFINetModule.h" />
+    <ClInclude Include="NFINetServerModule.h" />
     <ClInclude Include="NFLogMgr.h" />
     <ClInclude Include="NFConfigMgr.h" />
     <ClInclude Include="NFTimerMgr.h" />
