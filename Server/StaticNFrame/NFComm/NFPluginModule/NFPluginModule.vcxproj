@@ -157,6 +157,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="NFDBActor.h" />
+    <ClInclude Include="NFDBActorMgr.h" />
+    <ClInclude Include="NFActorMgr.h" />
+    <ClInclude Include="NFXActor.h" />
     <ClInclude Include="NFCPluginManager.h" />
     <ClInclude Include="NFEventDefine.h" />
     <ClInclude Include="NFILuaScriptModule.h" />
@@ -182,8 +186,11 @@
     <ClInclude Include="NFITimerModule.h" />
     <ClInclude Include="NFServerDefine.h" />
     <ClInclude Include="NFTimerAxis.h" />
+    <ClInclude Include="NFTask.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="NFDBActor.cpp" />
+    <ClCompile Include="NFDBActorMgr.cpp" />
     <ClCompile Include="NFCPluginManager.cpp" />
     <ClCompile Include="NFEventMgr.cpp" />
     <ClCompile Include="NFEventObj.cpp" />

@@ -80,7 +80,7 @@ public:
 		return true;
 	}
 
-	bool Pop(std::vector<T>& vecObj)
+	bool Pop(std::list<T>& vecObj)
 	{
 		NFMutexLock lock(&mMutex);
 		mList.swap(vecObj);

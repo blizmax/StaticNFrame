@@ -16,6 +16,7 @@
 #include "NFComm/NFPluginModule/NFTimerMgr.h"
 #include "NFComm/NFPluginModule/NFLogMgr.h"
 #include "NFComm/NFPluginModule/NFConfigMgr.h"
+#include "NFComm/NFPluginModule/NFDBActorMgr.h"
 
 #include "NFComm/NFPluginModule/NFILogModule.h"
 #include "NFComm/NFPluginModule/NFIEventModule.h"
@@ -36,12 +37,18 @@ bool NFCPluginManager::InitSingleton()
 	NFEventMgr::Instance()->Init(pEventModule);
 	NFTimerMgr::Instance()->Init(pTimerModule);
 	NFLogMgr::Instance()->Init(pLogModule);
-
+	
+	//初始化DB系统
+	NFDBActorMgr::Instance()->Init();
 	return true;
 }
 
 bool NFCPluginManager::ReleaseSingletion()
 {
+	//初始化DB系统
+	NFDBActorMgr::Instance()->UnInit();
+	NFDBActorMgr::Instance()->ReleaseInstance();
+
 	//释放时间系统
 	NFServerTimeMgr::Instance()->UnInit();
 	NFServerTimeMgr::Instance()->ReleaseInstance();

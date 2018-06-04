@@ -46,6 +46,21 @@
       <Filter>PluginManager</Filter>
     </ClInclude>
     <ClInclude Include="NFINetServerModule.h" />
+    <ClInclude Include="NFXActor.h">
+      <Filter>XActor</Filter>
+    </ClInclude>
+    <ClInclude Include="NFActorMgr.h">
+      <Filter>XActor</Filter>
+    </ClInclude>
+    <ClInclude Include="NFTask.h">
+      <Filter>XActor</Filter>
+    </ClInclude>
+    <ClInclude Include="NFDBActorMgr.h">
+      <Filter>XActor</Filter>
+    </ClInclude>
+    <ClInclude Include="NFDBActor.h">
+      <Filter>XActor</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Event">
@@ -62,6 +77,9 @@
     </Filter>
     <Filter Include="PluginManager">
       <UniqueIdentifier>{bdfa0e36-a558-48c1-8d1d-4fdc9ad68d24}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="XActor">
+      <UniqueIdentifier>{1dbbfc05-264b-4245-81c3-09fb2c94f054}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -89,6 +107,12 @@
     </ClCompile>
     <ClCompile Include="NFCPluginManager.cpp">
       <Filter>PluginManager</Filter>
+    </ClCompile>
+    <ClCompile Include="NFDBActorMgr.cpp">
+      <Filter>XActor</Filter>
+    </ClCompile>
+    <ClCompile Include="NFDBActor.cpp">
+      <Filter>XActor</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
