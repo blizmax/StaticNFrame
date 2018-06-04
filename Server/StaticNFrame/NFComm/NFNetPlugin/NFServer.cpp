@@ -131,6 +131,19 @@ bool NFServer::Send(uint32_t usLinkId, const void* pData, uint32_t unSize)
 	return false;
 }
 
+bool NFServer::SendAll(const void* pData, uint32_t unSize)
+{
+	for (size_t i = 0; i < mNetObjectArray.size(); i++)
+	{
+		auto pObject = mNetObjectArray[i];
+		if (pObject)
+		{
+			return pObject->Send(pData, unSize);
+		}
+	}
+	return true;
+}
+
 uint32_t NFServer::GetServerId() const
 {
 	return mServerId;

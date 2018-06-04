@@ -67,6 +67,15 @@ public:
 	bool Send(uint32_t usLinkId, const void* pData, uint32_t unSize);
 
 	/**
+	 * @brief	发送数据
+	 *
+	 * @param pData		发送的数据, 这里的数据已经包含了数据头
+	 * @param unSize	数据的大小
+	 * @return
+	 */
+	bool SendAll(const void* pData, uint32_t unSize);
+
+	/**
 	* @brief	获得唯一ID
 	*
 	* @return
