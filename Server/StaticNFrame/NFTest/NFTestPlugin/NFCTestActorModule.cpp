@@ -10,15 +10,18 @@
 #include "NFCTestActorModule.h"
 #include "NFComm/NFPluginModule/NFTask.h"
 
+static std::map<int, int> testMap;
+
 class DBTask : public NFTask
 {
 public:
 	virtual bool db_thread_process()
 	{
 		int j = 0;
-		for (int i = 0; i < 10000; i++)
+		for (int i = 0; i < 100; i++)
 		{
 			j += i;
+			testMap[i] = j;
 		}
 		return true;
 	}
@@ -30,9 +33,10 @@ public:
 	virtual bool db_thread_process()
 	{
 		int j = 0;
-		for (int i = 0; i < 10000; i++)
+		for (int i = 0; i < 100; i++)
 		{
 			j += i;
+			testMap[i] = j;
 		}
 		NFDBActorMgr::Instance()->AddTask(new DBTask());
 		return true;
