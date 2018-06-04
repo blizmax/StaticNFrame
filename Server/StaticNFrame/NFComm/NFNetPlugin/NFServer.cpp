@@ -105,6 +105,32 @@ bool NFServer::AddNetObject(SOCKET fd, sockaddr* sa)
 	return true;
 }
 
+bool NFServer::Send(uint32_t usLinkId, const void* pData, uint32_t unSize)
+{
+	uint32_t serverType = GetServerTypeFromUnlinkId(usLinkId);
+	uint32_t serverIndex = GetServerIndexFromUnlinkId(usLinkId);
+
+	if (serverType != mServerType)
+	{
+		NFLogError("serverType != mServerType, this usLinkId:%s is not of the server:%s", usLinkId, GetServerName(mServerType).c_str());
+		return false;
+	}
+
+	if (serverIndex < mNetObjectArray.size())
+	{
+		auto pObject = mNetObjectArray[serverIndex];
+		if (pObject)
+		{
+			return pObject->Send(pData, unSize);
+		}
+		else
+		{
+			NFLogError("the usLinkId:%d is nullptr", usLinkId);
+		}
+	}
+	return false;
+}
+
 uint32_t NFServer::GetServerId() const
 {
 	return mServerId;

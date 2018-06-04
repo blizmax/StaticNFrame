@@ -17,27 +17,9 @@ class NFINetServerModule : public NFINetModule
 public:
 	virtual uint32_t AddServer(const NF_SERVER_TYPES eType, uint32_t nServerID, uint32_t nMaxClient, uint32_t nPort) = 0;
 
-	virtual void CloseServer(const uint32_t nServerID) = 0;
+	virtual void SendByServerID(NF_SERVER_TYPES eServerType, uint32_t usLinkId, const uint32_t nMsgID, const std::string& strData, const uint64_t nPlayerID) = 0;
 
-	virtual void CloseServerByServerType(NF_SERVER_TYPES eServerType) = 0;
+	virtual void SendByServerID(NF_SERVER_TYPES eServerType, uint32_t usLinkId, const uint32_t nMsgID, const char* msg, const uint32_t nLen, const uint64_t nPlayerID) = 0;
 
-	virtual void CloseAllServer() = 0;
-
-	virtual void SendByServerID(NF_SERVER_TYPES eServerType, const uint32_t nMsgID, const std::string& strData, const uint64_t nPlayerID) = 0;
-
-	virtual void SendByServerID(NF_SERVER_TYPES eServerType, const uint32_t nMsgID, const char* msg, const uint32_t nLen, const uint64_t nPlayerID) = 0;
-
-	virtual void SendToServerByPB(NF_SERVER_TYPES eServerType, const uint32_t nMsgID, const google::protobuf::Message& xData, const uint64_t nPlayerID) = 0;
-
-	virtual void SendToAllServer(NF_SERVER_TYPES eServerType, const std::string& strData, const uint64_t nPlayerID) = 0;
-
-	virtual void SendToAllServer(NF_SERVER_TYPES eServerType, const char* msg, const uint32_t nLen, const uint64_t nPlayerID) = 0;
-
-	virtual void SendToAllServerByPB(NF_SERVER_TYPES eServerType, const google::protobuf::Message& xData, const uint64_t nPlayerID) = 0;
-
-	virtual void SendToAllServer(NF_SERVER_TYPES eServerType, uint32_t nMsgID, const std::string& strData, const uint64_t nPlayerID) = 0;
-
-	virtual void SendToAllServer(NF_SERVER_TYPES eServerType, const uint32_t nMsgID, const char* msg, const uint32_t nLen, const uint64_t nPlayerID) = 0;
-
-	virtual void SendToAllServerByPB(NF_SERVER_TYPES eServerType, const uint32_t nMsgID, const google::protobuf::Message& xData, const uint64_t nPlayerID) = 0;
+	virtual void SendToServerByPB(NF_SERVER_TYPES eServerType, uint32_t usLinkId, const uint32_t nMsgID, const google::protobuf::Message& xData, const uint64_t nPlayerID) = 0;
 };
