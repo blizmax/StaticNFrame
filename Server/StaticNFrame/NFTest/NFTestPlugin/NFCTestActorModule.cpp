@@ -41,11 +41,22 @@ public:
 		NFDBActorMgr::Instance()->AddTask(new DBTask());
 		return true;
 	}
+
+	virtual void Dump()
+	{
+		std::cout << "dump" << std::endl;
+	}
 };
 
 NFCTestActorModule::NFCTestActorModule(NFIPluginManager* p)
 {
 	pPluginManager = p;
+	NFTask* pTask = new DBTask();
+	DBXTask* pXTask = reinterpret_cast<DBXTask*>(pTask);
+	if (pXTask)
+	{
+		pXTask->Dump();
+	}
 }
 
 NFCTestActorModule::~NFCTestActorModule()

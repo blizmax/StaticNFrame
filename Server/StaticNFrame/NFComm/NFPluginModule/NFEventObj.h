@@ -23,6 +23,12 @@
 //所有事件发送过去的数据必须继承
 class NFEventContext
 {
+public:
+	virtual ~NFEventContext()
+	{
+	}
+
+	virtual void PrintConext() = 0; //实属无赖之举，要使用dynamic_cast，必须有多态，而static_cast转换无法对指针的有效做检查,dynamic_cast可以
 };
 
 /**
