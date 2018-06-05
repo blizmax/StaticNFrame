@@ -111,10 +111,8 @@ void NFCTestServerModule::OnHandleQueryPlayerData(const uint32_t unLinkId, const
 		pData = new TestPlayerData();
 		m_playerDataMap[account] = pData;
 	}
-	else
-	{
-		m_unLinkIdToAccount[unLinkId] = account;
-	}
+
+	m_unLinkIdToAccount[unLinkId] = account;
 
 	pData->m_account = account;
 	pData->m_usLinkId = unLinkId;

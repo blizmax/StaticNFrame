@@ -43,15 +43,15 @@ std::string NFTestPlugin::GetPluginName()
 void NFTestPlugin::Install()
 {
 	//REGISTER_MODULE(pPluginManager, NFITestKernelModule, NFCTestKernelModule);
-	REGISTER_MODULE(pPluginManager, NFCTestClientModule, NFCTestClientModule);
-	//REGISTER_MODULE(pPluginManager, NFCTestServerModule, NFCTestServerModule);
+	//REGISTER_MODULE(pPluginManager, NFCTestClientModule, NFCTestClientModule);
+	REGISTER_MODULE(pPluginManager, NFCTestServerModule, NFCTestServerModule);
 	REGISTER_MODULE(pPluginManager, NFCTestActorModule, NFCTestActorModule);
 }
 
 void NFTestPlugin::Uninstall()
 {
 	//UNREGISTER_MODULE(pPluginManager, NFITestKernelModule, NFCTestKernelModule);
-	UNREGISTER_MODULE(pPluginManager, NFCTestClientModule, NFCTestClientModule);
-	//UNREGISTER_MODULE(pPluginManager, NFCTestServerModule, NFCTestServerModule);
+	//UNREGISTER_MODULE(pPluginManager, NFCTestClientModule, NFCTestClientModule);
+	UNREGISTER_MODULE(pPluginManager, NFCTestServerModule, NFCTestServerModule);
 	UNREGISTER_MODULE(pPluginManager, NFCTestActorModule, NFCTestActorModule);
 }
