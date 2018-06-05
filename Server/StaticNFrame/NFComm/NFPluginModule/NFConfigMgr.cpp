@@ -222,4 +222,3 @@ bool NFConfigMgr::Shut()
 	mServerConfig.clear();
 	return true;
 }
-

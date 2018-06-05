@@ -94,4 +94,3 @@ protected:
 	std::unordered_map<std::string, NFPluginConfig*> mPluginConfig; //pluginName--key
 	std::unordered_map<int, NFServerConfig*> mServerConfig; //serverid--key
 };
-

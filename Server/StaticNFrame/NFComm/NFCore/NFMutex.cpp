@@ -127,9 +127,8 @@ void NFMutex::Unlock()
 }
 
 void NFMutex::AssertHeld() {
-// pthreads dosn't provide a way to check which thread holds the mutex.
-// TODO(kenton):  Maybe keep track of locking thread ID like with WIN32?
+	// pthreads dosn't provide a way to check which thread holds the mutex.
+	// TODO(kenton):  Maybe keep track of locking thread ID like with WIN32?
 }
 
 #endif
-

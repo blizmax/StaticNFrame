@@ -27,7 +27,7 @@
 
 class NFCPluginManager
 	: public NFIPluginManager,
-	  public NFSingleton<NFCPluginManager>
+	public NFSingleton<NFCPluginManager>
 {
 public:
 	NFCPluginManager();
@@ -138,8 +138,8 @@ private:
 	typedef std::multimap<std::string, NFIModule*> ModuleAloneMultiMap; //单独创建的Module集合
 	typedef std::map<int, int> ServerTypeToIdMap; //负责AllServer情况下，ServerType与ServerId的关系
 
-	typedef void (*DLL_START_PLUGIN_FUNC)(NFIPluginManager* pm);
-	typedef void (*DLL_STOP_PLUGIN_FUNC)(NFIPluginManager* pm);
+	typedef void(*DLL_START_PLUGIN_FUNC)(NFIPluginManager* pm);
+	typedef void(*DLL_STOP_PLUGIN_FUNC)(NFIPluginManager* pm);
 
 	PluginNameMap mPluginNameMap;
 	PluginInstanceMap mPluginInstanceMap;
@@ -152,4 +152,3 @@ private:
 };
 
 #endif
-

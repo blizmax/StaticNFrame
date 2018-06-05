@@ -712,4 +712,3 @@ protected:
 };
 
 #endif
-

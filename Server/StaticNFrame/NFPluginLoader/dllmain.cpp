@@ -32,4 +32,3 @@
 #pragma comment( lib, "NFNetPlugin.lib" )
 #pragma comment( lib, "NFTestPlugin.lib" )
 #endif
-

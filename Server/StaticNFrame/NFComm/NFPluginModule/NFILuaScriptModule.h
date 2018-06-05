@@ -170,4 +170,3 @@ public:
 protected:
 	LuaIntf::LuaContext l;
 };
-

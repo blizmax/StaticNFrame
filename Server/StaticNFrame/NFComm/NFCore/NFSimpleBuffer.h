@@ -91,4 +91,3 @@ private:
 	char* data_;
 	size_t size_;
 };
-

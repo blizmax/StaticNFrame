@@ -237,5 +237,3 @@ private: \
 
 #define DECLARE_PROPERTY_OBJECT_NULL(object_type, name) DECLARE_PROPERTY_OBJECT_VARIANT_NULL(object_type, name, Get##name, Set##name)
 ///////////////////////////////////////////////////////////////////////////
-
-

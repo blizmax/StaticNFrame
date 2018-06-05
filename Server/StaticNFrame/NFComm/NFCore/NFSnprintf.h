@@ -42,4 +42,3 @@ _NFExport int NFSafeSnprintf(char* buf, size_t size, const char* fmt, ...);
  *  2) _WIN32 平台下返回 -1
  */
 _NFExport int NFSafeVsnprintf(char* buf, size_t size, const char* fmt, va_list ap);
-

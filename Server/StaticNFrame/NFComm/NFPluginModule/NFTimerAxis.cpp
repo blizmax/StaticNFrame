@@ -284,8 +284,7 @@ void NFFixTimerAxis::UpdateFix()
 
 		i = (i + 1) % m_FixTimerAxis.size();
 		//}while(i!=cur_grid);
-	}
-	while (i != cur_grid);
+	} while (i != cur_grid);
 }
 
 NFTimerAxis::NFTimerAxis()
@@ -642,8 +641,8 @@ void NFTimerAxis::Update()
 			if (static_cast<uint32_t>(now - pTimer->nLastTick) >= pTimer->nInterVal)
 			{
 				BEGIN_PROFILE("pTimer->pHandler->OnTimer");
-					pTimer->pHandler->OnTimer(pTimer->nTimerID);
-					END_PROFILE();
+				pTimer->pHandler->OnTimer(pTimer->nTimerID);
+				END_PROFILE();
 				pTimer = *it;
 				if (nullptr == pTimer || nullptr == pTimer->pHandler)
 				{
@@ -693,8 +692,7 @@ void NFTimerAxis::Update()
 		{
 			i = (i + 1) % m_TimerAxis.size();
 		}
-	}
-	while (bFlag);
+	} while (bFlag);
 
 	//更新秒定时器
 	UpdateSec();
@@ -803,8 +801,7 @@ void NFTimerAxis::UpdateSec()
 		{
 			i = (i + 1) % m_TimerAxisSec.size();
 		}
-	}
-	while (bFlag);
+	} while (bFlag);
 }
 
 //重置定时器在时间轴上的位置
@@ -818,4 +815,3 @@ bool NFTimerAxis::ResetTimerPos(Timer* pTimer)
 
 	return true;
 }
-

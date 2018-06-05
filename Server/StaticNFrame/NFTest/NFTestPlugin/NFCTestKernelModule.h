@@ -109,4 +109,3 @@ protected:
 	uint64_t lastTime = 0;
 	NFTestObject* m_pObject;
 };
-

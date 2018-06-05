@@ -74,7 +74,7 @@ public:
 	 *
 	 * @param  ip
 	 * @param  port
-	 * @return bool 
+	 * @return bool
 	 */
 	virtual bool Connect(const std::string& ip, int port);
 
@@ -83,7 +83,7 @@ public:
 	 *
 	 * @param  buf
 	 * @param  len
-	 * @return bool 
+	 * @return bool
 	 */
 	virtual bool Send(const char* buf, uint32_t len);
 
@@ -91,7 +91,7 @@ public:
 	 * @brief 处理接受发送
 	 *
 	 * @param  timeout
-	 * @return bool 
+	 * @return bool
 	 */
 	virtual bool Dispatch(uint32_t timeout);
 
@@ -179,4 +179,3 @@ protected:
 	 */
 	NFClientFlag m_flag;
 };
-

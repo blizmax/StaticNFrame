@@ -37,7 +37,6 @@
         return ;										\
     }													\
 
-
 class NFINetModule : public NFIModule
 {
 protected:
@@ -169,4 +168,3 @@ protected:
 
 	std::vector<CallBack> mxCallBack;
 };
-

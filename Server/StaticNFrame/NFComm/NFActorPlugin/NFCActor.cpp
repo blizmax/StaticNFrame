@@ -155,4 +155,3 @@ bool NFCActor::SendMsg(const Theron::Address& address, const NFIActorMessage& me
 {
 	return Send(message, address);
 }
-

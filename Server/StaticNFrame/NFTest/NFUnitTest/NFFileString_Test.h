@@ -63,4 +63,3 @@ TEST(NF_Core, NF_CMDLINE)
 	EXPECT_EQ(6, cmd.Get<int>("ID"));
 	EXPECT_EQ("../", cmd.Get<std::string>("PATH"));
 }
-

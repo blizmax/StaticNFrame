@@ -16,68 +16,68 @@
 class NFCNetServerModule : public NFINetServerModule
 {
 public:
-    /**
-     * @brief 构造函数
-     */
-    NFCNetServerModule(NFIPluginManager* p);
+	/**
+	 * @brief 构造函数
+	 */
+	NFCNetServerModule(NFIPluginManager* p);
 
-    /**
-     * @brief 析构函数
-     */
+	/**
+	 * @brief 析构函数
+	 */
 	virtual ~NFCNetServerModule();
 
-    /**
-     * @brief
-     *
-     * @return bool 
-     */
-    virtual bool Init() override;
+	/**
+	 * @brief
+	 *
+	 * @return bool
+	 */
+	virtual bool Init() override;
 
-    /**
-     * @brief
-     *
-     * @return bool 
-     */
-    virtual bool AfterInit() override;
+	/**
+	 * @brief
+	 *
+	 * @return bool
+	 */
+	virtual bool AfterInit() override;
 
-    /**
-     * @brief
-     *
-     * @return bool 
-     */
-    virtual bool BeforeShut() override;
+	/**
+	 * @brief
+	 *
+	 * @return bool
+	 */
+	virtual bool BeforeShut() override;
 
-    /**
-     * @brief
-     *
-     * @return bool 
-     */
-    virtual bool Shut() override;
+	/**
+	 * @brief
+	 *
+	 * @return bool
+	 */
+	virtual bool Shut() override;
 
 	/**
 	 * @brief 释放数据
 	 *
-	 * @return bool 
+	 * @return bool
 	 */
 	virtual bool Finalize() override;
 
-    /**
-     * @brief
-     *
-     * @return bool 
-     */
-    virtual bool Execute() override;
+	/**
+	 * @brief
+	 *
+	 * @return bool
+	 */
+	virtual bool Execute() override;
 
-    /**
-     * @brief 添加服务器
-     *
-     * @param  eType		服务器类型
-     * @param  nServerID	服务器ID
-     * @param  nMaxClient	服务器最大连接客户端数
-     * @param  nPort		服务器监听端口
-     * @return int			返回0错误
-     */
-    virtual uint32_t AddServer(const NF_SERVER_TYPES eServerType, uint32_t nServerID, uint32_t nMaxClient, uint32_t nPort) override;
+	/**
+	 * @brief 添加服务器
+	 *
+	 * @param  eType		服务器类型
+	 * @param  nServerID	服务器ID
+	 * @param  nMaxClient	服务器最大连接客户端数
+	 * @param  nPort		服务器监听端口
+	 * @return int			返回0错误
+	 */
+	virtual uint32_t AddServer(const NF_SERVER_TYPES eServerType, uint32_t nServerID, uint32_t nMaxClient, uint32_t nPort) override;
 
 	/**
 	 * @brief
@@ -86,7 +86,7 @@ public:
 	 * @param  nMsgID
 	 * @param  strData
 	 * @param  nPlayerID
-	 * @return void 
+	 * @return void
 	 */
 	virtual void SendByServerID(uint32_t usLinkId, const uint32_t nMsgID, const std::string& strData, const uint64_t nPlayerID) override;
 
@@ -98,18 +98,18 @@ public:
 	 * @param  msg
 	 * @param  nLen
 	 * @param  nPlayerID
-	 * @return void 
+	 * @return void
 	 */
 	virtual void SendByServerID(uint32_t usLinkId, const uint32_t nMsgID, const char* msg, const uint32_t nLen, const uint64_t nPlayerID) override;
 
 	/**
-	 * @brief 
+	 * @brief
 	 *
 	 * @param  usLinkId
 	 * @param  nMsgID
 	 * @param  xData
 	 * @param  nPlayerID
-	 * @return void 
+	 * @return void
 	 */
 	virtual void SendToServerByPB(uint32_t usLinkId, const uint32_t nMsgID, const google::protobuf::Message& xData, const uint64_t nPlayerID) override;
 
@@ -119,7 +119,7 @@ public:
 	 * @param  nMsgID
 	 * @param  strData
 	 * @param  nPlayerID
-	 * @return void 
+	 * @return void
 	 */
 	virtual void SendToAllServer(const uint32_t nMsgID, const std::string& strData, const uint64_t nPlayerID) override;
 
@@ -130,7 +130,7 @@ public:
 	 * @param  msg
 	 * @param  nLen
 	 * @param  nPlayerID
-	 * @return void 
+	 * @return void
 	 */
 	virtual void SendToAllServer(const uint32_t nMsgID, const char* msg, const uint32_t nLen, const uint64_t nPlayerID) override;
 
@@ -140,7 +140,7 @@ public:
 	 * @param  nMsgID
 	 * @param  xData
 	 * @param  nPlayerID
-	 * @return void 
+	 * @return void
 	 */
 	virtual void SendToAllServerByPB(const uint32_t nMsgID, const google::protobuf::Message& xData, const uint64_t nPlayerID) override;
 
@@ -151,7 +151,7 @@ public:
 	 * @param  nMsgID
 	 * @param  strData
 	 * @param  nPlayerID
-	 * @return void 
+	 * @return void
 	 */
 	virtual void SendToAllServer(NF_SERVER_TYPES eServerType, uint32_t nMsgID, const std::string& strData, const uint64_t nPlayerID) override;
 
@@ -163,7 +163,7 @@ public:
 	 * @param  msg
 	 * @param  nLen
 	 * @param  nPlayerID
-	 * @return void 
+	 * @return void
 	 */
 	virtual void SendToAllServer(NF_SERVER_TYPES eServerType, const uint32_t nMsgID, const char* msg, const uint32_t nLen, const uint64_t nPlayerID) override;
 
@@ -174,7 +174,7 @@ public:
 	 * @param  nMsgID
 	 * @param  xData
 	 * @param  nPlayerID
-	 * @return void 
+	 * @return void
 	 */
 	virtual void SendToAllServerByPB(NF_SERVER_TYPES eServerType, const uint32_t nMsgID, const google::protobuf::Message& xData, const uint64_t nPlayerID) override;
 protected:
@@ -187,7 +187,7 @@ protected:
 	 * @param  msg
 	 * @param  nLen
 	 * @param  nPlayerID
-	 * @return void 
+	 * @return void
 	 */
 	void SendMsg(NFServer* pServer, uint32_t usLinkId, const uint32_t nMsgID, const char* msg, const uint32_t nLen, const uint64_t nPlayerID);
 
@@ -199,11 +199,10 @@ protected:
 	 * @param  msg
 	 * @param  nLen
 	 * @param  nPlayerID
-	 * @return void 
+	 * @return void
 	 */
 	void SendAllMsg(NFServer* pServer, const uint32_t nMsgID, const char* msg, const uint32_t nLen, const uint64_t nPlayerID);
 private:
 	std::vector<NFServer*> mServerArray;
 	NFBuffer mxSendBuffer;
 };
-

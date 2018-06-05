@@ -107,4 +107,3 @@ public:
 	*/
 	bool UnSubscribeAll();
 };
-

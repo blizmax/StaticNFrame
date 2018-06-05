@@ -71,4 +71,3 @@ bool NFServerTimeMgr::Update(uint64_t tick)
 
 	return true;
 }
-

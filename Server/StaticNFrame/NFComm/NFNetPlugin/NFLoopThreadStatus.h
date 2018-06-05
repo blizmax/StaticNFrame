@@ -69,7 +69,6 @@ public:
 	}
 
 protected:
-	std::atomic<Status> mStatus = {kNull};
-	std::atomic<SubStatus> mSubstatus = {kSubStatusNull};
+	std::atomic<Status> mStatus = { kNull };
+	std::atomic<SubStatus> mSubstatus = { kSubStatusNull };
 };
-

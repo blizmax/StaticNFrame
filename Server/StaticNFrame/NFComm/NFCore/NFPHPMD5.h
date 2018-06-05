@@ -77,9 +77,8 @@ extern "C"
 	_NFExport void make_digest_ex(char* md5str, unsigned char* digest, int len);
 	_NFExport void PHP_MD5Init(PHP_MD5_CTX*);
 	_NFExport void PHP_MD5Update(PHP_MD5_CTX*, const unsigned char*, unsigned int);
-	_NFExport void PHP_MD5Final(unsigned char [16], PHP_MD5_CTX*);
+	_NFExport void PHP_MD5Final(unsigned char[16], PHP_MD5_CTX*);
 
 #ifdef __cplusplus
 };
 #endif
-

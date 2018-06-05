@@ -160,4 +160,3 @@ void EventData::set_cb(NetRecvHandler recvcb, NetEventHandler eventcb, void* pAr
 	mHandle.mEventHandler = eventcb;
 	mHandle.pArg = pArg;
 }
-

@@ -16,7 +16,7 @@
 class NFCTestClientModule : public NFIModule, NFTimerObj
 {
 public:
-	explicit NFCTestClientModule(NFIPluginManager* p): m_pMyClient(nullptr)
+	explicit NFCTestClientModule(NFIPluginManager* p) : m_pMyClient(nullptr)
 	{
 		pPluginManager = p;
 		m_usId = 0;
@@ -55,4 +55,3 @@ private:
 	std::unique_ptr<NFEventLoopThread> pEventLoopThread;
 	NFMyClient* m_pMyClient;
 };
-

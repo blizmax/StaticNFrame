@@ -129,4 +129,3 @@ public:
 	eMsgType eType; //消息是从哪里来的
 	NFSimpleBuffer nBuffer;
 };
-

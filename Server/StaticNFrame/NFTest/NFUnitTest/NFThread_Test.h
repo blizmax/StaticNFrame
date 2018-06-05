@@ -115,4 +115,3 @@ TEST(NF_Core, NF_Thread)
 		std::cout << class_test_thread::count << std::endl;
 	}
 }
-

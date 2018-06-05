@@ -68,4 +68,3 @@ bool NFEventMgr::UnSubscribeAll(NFEventObj* pSink) const
 	}
 	return true;
 }
-

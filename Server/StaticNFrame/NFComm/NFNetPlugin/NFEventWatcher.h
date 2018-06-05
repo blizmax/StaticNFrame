@@ -54,7 +54,6 @@ public:
 	 */
 	void SetCancelCallback(const Handler& cb);
 
-
 	/**
 	 * @brief 清理掉事件回调函数对象
 	 *
@@ -79,7 +78,7 @@ protected:
 	 *
 	 * @param  evbase
 	 * @param  handler
-	 * @return 
+	 * @return
 	 */
 	NFEventWatcher(struct event_base* evbase, const Handler& handler);
 	NFEventWatcher(struct event_base* evbase, Handler&& handler);
@@ -91,14 +90,12 @@ protected:
 	 */
 	void Close();
 
-
 	/**
 	 * @brief 释放事件
 	 *
 	 * @return void
 	 */
 	void FreeEvent();
-
 
 	/**
 	 * @brief 主要的初始化，在继承类里实现
@@ -161,7 +158,7 @@ public:
 	/**
 	 * @brief 析构函数
 	 *
-	 * @return 
+	 * @return
 	 */
 	~NFPipeEventWatcher();
 
@@ -172,14 +169,12 @@ public:
 	 */
 	bool AsyncWait();
 
-
 	/**
 	 * @brief 通过往写管道写数据，来发通知
 	 *
 	 * @return void
 	 */
 	void Notify();
-
 
 	/**
 	 * @brief 返回写通道
@@ -194,13 +189,12 @@ public:
 private:
 	/**
 	 * @brief 初始化管道, 意思大概是
-	 * 当notify往写通道写数据时，读通道触发事件，调用HandlerFn, 
+	 * 当notify往写通道写数据时，读通道触发事件，调用HandlerFn,
 	 *  HandlerFn从读通道读取数据后，调用事件回调
 	 *
 	 * @return bool
 	 */
 	virtual bool DoInit();
-
 
 	/**
 	 * @brief 关闭管道
@@ -208,7 +202,6 @@ private:
 	 * @return void
 	 */
 	virtual void DoClose();
-
 
 	/**
 	 * @brief 读通道触发事件回调
@@ -238,7 +231,7 @@ public:
 	 * @param  loop
 	 * @param  handler
 	 * @param  timeout
-	 * @return 
+	 * @return
 	 */
 	NFTimerEventWatcher(NFEventLoop* loop, const Handler& handler, NFDuration timeout);
 	NFTimerEventWatcher(NFEventLoop* loop, Handler&& handler, NFDuration timeout);
@@ -296,7 +289,6 @@ private:
 	 */
 	virtual bool DoInit();
 
-
 	/**
 	 * @brief 调用handler
 	 *
@@ -312,4 +304,3 @@ private:
 	*/
 	int signo_;
 };
-

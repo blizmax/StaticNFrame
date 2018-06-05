@@ -60,4 +60,3 @@ bool NFCEventModule::UnSubscribeAll(NFEventObj* pSink)
 	m_ExecuteCenter.UnSubscribeAll(pSink);
 	return true;
 }
-

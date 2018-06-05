@@ -83,7 +83,7 @@ public:
 
 	template <typename BaseType>
 	int AddEndFunc(const int nActorIndex, const int nSubMessageID,
-	               BaseType* pBase, int (BaseType::*handler_end)(uint64_t, const int, const int, const std::string&))
+		BaseType* pBase, int (BaseType::*handler_end)(uint64_t, const int, const int, const std::string&))
 	{
 		if (pBase == nullptr || handler_end == nullptr)
 		{
@@ -97,7 +97,7 @@ public:
 
 	template <typename BaseType>
 	int AddDefaultEndFunc(const int nActorIndex,
-	                      BaseType* pBase, int (BaseType::*handler_end)(uint64_t, const int, const int, const std::string&))
+		BaseType* pBase, int (BaseType::*handler_end)(uint64_t, const int, const int, const std::string&))
 	{
 		if (pBase == nullptr || handler_end == nullptr)
 		{
@@ -122,4 +122,3 @@ public:
 };
 
 #endif
-

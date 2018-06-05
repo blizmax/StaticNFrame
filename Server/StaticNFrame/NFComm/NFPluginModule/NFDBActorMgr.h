@@ -7,7 +7,6 @@
 
 #include <vector>
 
-
 class NFTask;
 
 /**
@@ -38,7 +37,7 @@ public:
 	/**
 	 * @brief 释放资源
 	 *
-	 * @return int 
+	 * @return int
 	 */
 	virtual int UnInit();
 
@@ -121,7 +120,7 @@ protected:
 	int nHandleTaskCount;
 
 	/**
-	* @brief 返回的消息队列，线程安全, 
+	* @brief 返回的消息队列，线程安全,
 	* actor线程将数据放入队列， 主线程从队列里取数据处理
 	*/
 	NFQueue<NFXActorMessage>		m_mQueue;

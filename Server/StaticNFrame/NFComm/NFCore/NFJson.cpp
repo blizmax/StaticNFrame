@@ -545,10 +545,10 @@ bool NFJson::operator<(const NFJson& other) const
  * Parsing
  */
 
-/* esc(c)
- *
- * Format char c suitable for printing in an error message.
- */
+ /* esc(c)
+  *
+  * Format char c suitable for printing in an error message.
+  */
 static inline string esc(char c)
 {
 	char buf[12];
@@ -671,8 +671,7 @@ namespace
 					comment_found = consume_comment();
 					if (failed) return;
 					consume_whitespace();
-				}
-				while (comment_found);
+				} while (comment_found);
 			}
 		}
 
@@ -793,7 +792,7 @@ namespace
 						// Reassemble the two surrogate pairs into one astral-plane character, per
 						// the UTF-16 algorithm.
 						encode_utf8((((last_escaped_codepoint - 0xD800) << 10)
-							            | (codepoint - 0xDC00)) + 0x10000, out);
+							| (codepoint - 0xDC00)) + 0x10000, out);
 						last_escaped_codepoint = -1;
 					}
 					else
@@ -1024,7 +1023,7 @@ namespace
 }//namespace {
 NFJson NFJson::parse(const string& in, string& err, JsonParse strategy)
 {
-	JsonParser parser{in, 0, err, false, strategy};
+	JsonParser parser{ in, 0, err, false, strategy };
 	NFJson result = parser.parse_json(0);
 
 	// Check for any trailing garbage
@@ -1039,11 +1038,11 @@ NFJson NFJson::parse(const string& in, string& err, JsonParse strategy)
 
 // Documented in json11.hpp
 vector<NFJson> NFJson::parse_multi(const string& in,
-                                   std::string::size_type& parser_stop_pos,
-                                   string& err,
-                                   JsonParse strategy)
+	std::string::size_type& parser_stop_pos,
+	string& err,
+	JsonParse strategy)
 {
-	JsonParser parser{in, 0, err, false, strategy};
+	JsonParser parser{ in, 0, err, false, strategy };
 	parser_stop_pos = 0;
 	vector<NFJson> json_vec;
 	while (parser.i != in.size() && !parser.failed)
@@ -1084,4 +1083,3 @@ bool NFJson::has_shape(const shape& types, string& err) const
 
 	return true;
 }
-

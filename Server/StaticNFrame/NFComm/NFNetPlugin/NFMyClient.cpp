@@ -7,7 +7,6 @@
 //
 // -------------------------------------------------------------------------
 
-
 #include "NFMyClient.h"
 #include "NFEventData.h"
 #include <NFComm/NFPluginModule/NFLogMgr.h>
@@ -43,7 +42,7 @@ void recv_cb(void* pArg)
 	}
 }
 
-NFMyClient::NFMyClient(uint32_t nId, const NFClientFlag& flag): m_nSocketId(INVALID_SOCKET), m_usLinkId(nId), m_pEventData(nullptr)
+NFMyClient::NFMyClient(uint32_t nId, const NFClientFlag& flag) : m_nSocketId(INVALID_SOCKET), m_usLinkId(nId), m_pEventData(nullptr)
 {
 	m_pEventData = new EventData();
 	m_pEventData->Init(100);
@@ -117,22 +116,22 @@ void NFMyClient::OnHandleMsgPeer(eMsgType type, uint32_t usLink, char* pBuf, uin
 	switch (type)
 	{
 	case eMsgType_RECIVEDATA:
+	{
+		if (mRecvCB)
 		{
-			if (mRecvCB)
-			{
-				mRecvCB(usLink, nValue, nMsgId, pBuf, sz);
-			}
+			mRecvCB(usLink, nValue, nMsgId, pBuf, sz);
 		}
-		break;
+	}
+	break;
 	case eMsgType_CONNECTED:
 	case eMsgType_DISCONNECTED:
+	{
+		if (mEventCB)
 		{
-			if (mEventCB)
-			{
-				mEventCB(type, usLink);
-			}
+			mEventCB(type, usLink);
 		}
-		break;
+	}
+	break;
 	default:
 		break;
 	}
@@ -207,4 +206,3 @@ uint32_t NFMyClient::GetLinkId() const
 {
 	return m_usLinkId;
 }
-

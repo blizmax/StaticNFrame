@@ -529,4 +529,3 @@ bool NFObject::operator<(const NFObject& other) const
 
 	return m_ptr->Less(other.m_ptr.get());
 }
-

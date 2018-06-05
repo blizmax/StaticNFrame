@@ -154,4 +154,3 @@ protected:
 
 	NFFixTimerAxis m_FixTimerAxis;
 };
-

@@ -93,4 +93,3 @@ private:
 	// Performs a circular left shift operation
 	static inline unsigned CircularShift(int bits, unsigned word);
 };
-

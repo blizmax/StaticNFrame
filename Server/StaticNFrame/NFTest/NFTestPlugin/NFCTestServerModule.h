@@ -11,7 +11,21 @@
 #include <NFComm/NFPluginModule/NFIModule.h>
 #include "NFComm/NFPluginModule/NFServerDefine.h"
 
+#include <unordered_map>
+#include <memory>
+
 class NFINetServerModule;
+
+class TestPlayerData
+{
+public:
+	TestPlayerData()
+	{
+		m_usLinkId = 0;
+	}
+	uint32_t m_usLinkId;
+	std::string m_account;
+};
 
 class NFCTestServerModule : public NFIModule
 {
@@ -34,4 +48,6 @@ public:
 	void OnHandleQueryPlayerData(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen);
 private:
 	NFINetServerModule* m_pNetServerModule;
+	std::unordered_map<uint32_t, std::string> m_unLinkIdToAccount;
+	std::unordered_map<std::string, TestPlayerData*> m_playerDataMap;
 };

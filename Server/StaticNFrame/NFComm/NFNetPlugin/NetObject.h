@@ -114,7 +114,7 @@ public:
 	/**
 	 * @brief
 	 *
-	 * @return std::string 
+	 * @return std::string
 	 */
 	std::string GetStrIp() const;
 
@@ -122,14 +122,14 @@ public:
 	 * @brief
 	 *
 	 * @param  val
-	 * @return void 
+	 * @return void
 	 */
 	void SetStrIp(std::string val);
 
 	/**
 	 * @brief
 	 *
-	 * @return uint32_t 
+	 * @return uint32_t
 	 */
 	uint32_t GetPort() const;
 
@@ -137,7 +137,7 @@ public:
 	 * @brief
 	 *
 	 * @param  val
-	 * @return void 
+	 * @return void
 	 */
 	void SetPort(uint32_t val);
 
@@ -215,7 +215,7 @@ public:
 	/**
 	 * @brief
 	 *
-	 * @return bool 
+	 * @return bool
 	 */
 	bool GetNeedRemove() const;
 
@@ -223,7 +223,7 @@ public:
 	 * @brief
 	 *
 	 * @param  val
-	 * @return void 
+	 * @return void
 	 */
 	void SetNeedRemove(bool val);
 
@@ -245,7 +245,7 @@ public:
 	/**
 	 * @brief 关闭对象禁止对象的读写功能
 	 *
-	 * @return void 
+	 * @return void
 	 */
 	virtual void CloseObject();
 protected:
@@ -294,4 +294,3 @@ protected:
 	 */
 	bool mNeedRemove;
 };
-

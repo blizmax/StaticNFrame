@@ -60,4 +60,3 @@ TEST(NF_Core, NF_BASE64)
 	EXPECT_EQ(true, NFBase64::Decode(code, &gaoyi2));
 	EXPECT_EQ(gaoyi, gaoyi2);
 }
-

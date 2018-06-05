@@ -55,4 +55,3 @@ typedef std::function<void(const uint32_t unLinkId, const uint64_t valueId, cons
 typedef std::function<void(const eMsgType nEvent, const uint32_t unLinkId)> NET_EVENT_FUNCTOR;
 
 typedef std::function<void(int severity, const char* msg)> NET_EVENT_LOG_FUNCTOR;
-

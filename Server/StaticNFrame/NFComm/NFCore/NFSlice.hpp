@@ -135,4 +135,3 @@ inline int NFSlice::compare(const NFSlice& b) const
 
 	return r;
 }
-

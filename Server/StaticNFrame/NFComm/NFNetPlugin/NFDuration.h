@@ -64,4 +64,3 @@ public:
 private:
 	int64_t ns_; // nanoseconds
 };
-

@@ -125,7 +125,7 @@ public:
 	/// @param total_cpu_time_start 整个系统cpu使用时间段-start
 	/// @param total_cpu_time_start 整个系统cpu使用时间段-stop
 	static float CalculateCurCpuUseage(long long cur_cpu_time_start, long long cur_cpu_time_stop,
-	                                   long long total_cpu_time_start, long long total_cpu_time_stop);
+		long long total_cpu_time_start, long long total_cpu_time_stop);
 
 	/// @brief 获取进程当前内存使用情况
 	/// @param vm_size_kb 输出参数，虚存，单位为K
@@ -138,4 +138,3 @@ public:
 	/// @brief 获取进程当前内存使用情况
 	static int GetCurMemorySize();
 };
-

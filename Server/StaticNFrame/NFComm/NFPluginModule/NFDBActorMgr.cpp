@@ -126,7 +126,7 @@ int NFDBActorMgr::GetRandActor()
 		return -1;
 	}
 
-	mnSuitIndex ++;
+	mnSuitIndex++;
 	mnSuitIndex = mnSuitIndex % m_vecActorPool.size();
 
 	return m_vecActorPool[mnSuitIndex];
@@ -174,7 +174,7 @@ void NFDBActorMgr::OnMainThreadTick()
 					}
 					}
 				}
-	        }
+			}
 			else
 			{
 				//error

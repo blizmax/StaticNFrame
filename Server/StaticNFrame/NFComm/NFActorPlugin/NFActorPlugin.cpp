@@ -44,4 +44,3 @@ void NFActorPlugin::Uninstall()
 {
 	UNREGISTER_MODULE(pPluginManager, NFIActorModule, NFCActorModule)
 }
-

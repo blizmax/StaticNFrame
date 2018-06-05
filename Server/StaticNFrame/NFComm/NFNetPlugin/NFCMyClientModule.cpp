@@ -306,4 +306,3 @@ void NFCMyClientModule::ProcessExecute()
 		}
 	}
 }
-

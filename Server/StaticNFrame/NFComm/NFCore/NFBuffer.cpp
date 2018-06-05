@@ -228,4 +228,3 @@ void NFBuffer::SetHighWaterPercent(size_t percents)
 
 	_highWaterPercent = percents;
 }
-

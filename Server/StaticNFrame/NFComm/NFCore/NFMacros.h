@@ -19,4 +19,3 @@
   void operator=(const TypeName&)
 
 #define NF_ARRAYSIZE(Array) (sizeof(Array)/sizeof(Array[0]))
-

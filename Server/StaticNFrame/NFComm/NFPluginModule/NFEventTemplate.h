@@ -28,15 +28,15 @@ class NFEventContext;
  */
 #define EVENT_FIRE_MAX_LAYER 20
 
-/**
-*@brief  对单一事件最大嵌套层数支持5层.
-* 比如在Fire一个事件里，又对这个事件经行了Fire
-*/
+ /**
+ *@brief  对单一事件最大嵌套层数支持5层.
+ * 比如在Fire一个事件里，又对这个事件经行了Fire
+ */
 #define EVENT_REF_MAX_CNT 5
 
-/**
-*@brief 事件key类
-*/
+ /**
+ *@brief 事件key类
+ */
 struct SEventKey
 {
 	/**
@@ -522,4 +522,3 @@ private:
 	//
 	int32_t m_nFireLayer;
 };
-

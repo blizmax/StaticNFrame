@@ -110,4 +110,3 @@ protected:
 	NFIPluginManager* pPluginManager = NULL;
 };
 #endif
-

@@ -40,4 +40,3 @@ public:
 protected:
 	NFITimerModule* m_pTimerModule;
 };
-

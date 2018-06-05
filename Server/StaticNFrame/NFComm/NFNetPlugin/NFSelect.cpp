@@ -16,7 +16,7 @@
 
 NFSelect::NFSelect()
 	: max_sock_(0),
-	  timeout_()
+	timeout_()
 {
 	FD_ZERO(&recv_set_);
 	FD_ZERO(&send_set_);
@@ -92,13 +92,11 @@ bool NFSelect::_EventLoop(uint64_t timeout_ms, PollType poll_type)
 	max_fd = max_sock_ + 1;
 #endif // OS_LINUX
 
-
-
 	ret = select(max_fd,
-	             (poll_type == POLL_TYPE_READ) ? &loop_recv_ : NULL,
-	             (poll_type == POLL_TYPE_WRITE) ? &loop_send_ : NULL,
-	             &loop_error_,
-	             &timeout_);
+		(poll_type == POLL_TYPE_READ) ? &loop_recv_ : NULL,
+		(poll_type == POLL_TYPE_WRITE) ? &loop_send_ : NULL,
+		&loop_error_,
+		&timeout_);
 
 	if (ret == -1)
 	{
@@ -195,8 +193,6 @@ bool NFSelect::AddEvent(SOCKET sock, EventFlag flag, EventData* ptr)
 		max_sock_ = sock;
 #endif // OS_LINUX
 
-
-
 	event_map_[sock] = ptr;
 	EventData* data = reinterpret_cast<EventData*>(ptr);
 	data->mEventFlag = flag;
@@ -244,4 +240,3 @@ bool NFSelect::DelEvent(SOCKET sock, EventData* ptr)
 	FD_CLR(sock, &error_set_);
 	return true;
 }
-

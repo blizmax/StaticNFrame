@@ -10,4 +10,3 @@
 #pragma once
 
 #include "NFPlatform.h"
-

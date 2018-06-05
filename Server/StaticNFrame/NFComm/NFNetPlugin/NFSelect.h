@@ -47,4 +47,3 @@ protected:
 protected:
 	int _ResetEvent();
 };
-

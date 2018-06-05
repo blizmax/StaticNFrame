@@ -52,20 +52,19 @@ void NFEventLoopThread::Run(const Functor& pre, const Functor& post)
 		name_ = os.str();
 	}
 
-
 	std::cout << "loop=" << event_loop_ << " execute pre functor." << std::endl;
 	auto fn = [this, pre]()
+	{
+		mStatus = kRunning;
+		if (pre)
 		{
-			mStatus = kRunning;
-			if (pre)
+			auto rc = pre();
+			if (rc != kOK)
 			{
-				auto rc = pre();
-				if (rc != kOK)
-				{
-					event_loop_->Stop();
-				}
+				event_loop_->Stop();
 			}
-		};
+		}
+	};
 	event_loop_->QueueInLoop(std::move(fn));
 	event_loop_->Run();
 
@@ -130,12 +129,10 @@ const std::string& NFEventLoopThread::GetName() const
 	return name_;
 }
 
-
 NFEventLoop* NFEventLoopThread::Loop() const
 {
 	return event_loop_.get();
 }
-
 
 struct event_base* NFEventLoopThread::event_base()
 {
@@ -162,4 +159,3 @@ bool NFEventLoopThread::IsRunning() const
 	// the application will broke down
 	return event_loop_->IsRunning();
 }
-

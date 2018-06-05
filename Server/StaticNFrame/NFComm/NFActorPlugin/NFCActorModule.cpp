@@ -108,13 +108,13 @@ bool NFCActorModule::ExecuteEvent()
 	while (bRet)
 	{
 		BEGIN_PROFILE(__FUNCTION__);
-			if (xMsg.msgType != NFIActorMessage::ACTOR_MSG_TYPE_COMPONENT && xMsg.xEndFuncptr != nullptr)
-			{
-				xMsg.xEndFuncptr(xMsg.self, xMsg.nFormActor, xMsg.nMsgID, xMsg.data);
-			}
+		if (xMsg.msgType != NFIActorMessage::ACTOR_MSG_TYPE_COMPONENT && xMsg.xEndFuncptr != nullptr)
+		{
+			xMsg.xEndFuncptr(xMsg.self, xMsg.nFormActor, xMsg.nMsgID, xMsg.data);
+		}
 
-			bRet = mxQueue.Pop(xMsg);
-			END_PROFILE();
+		bRet = mxQueue.Pop(xMsg);
+		END_PROFILE();
 	}
 
 	return true;
@@ -174,4 +174,3 @@ bool NFCActorModule::AddEndFunc(const int nActorIndex, const int nSubMsgID, ACTO
 
 	return false;
 }
-

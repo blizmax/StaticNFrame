@@ -25,7 +25,7 @@ void listener_cb(struct evconnlistener* listener, evutil_socket_t fd, struct soc
 	}
 }
 
-NFServer::NFServer(NF_SERVER_TYPES serverType, uint32_t serverId, const NFServerFlag& flag): mBase(nullptr), mListener(nullptr), mFlag(flag), mServerType(serverType), mServerId(serverId), mNetObjectCount(0)
+NFServer::NFServer(NF_SERVER_TYPES serverType, uint32_t serverId, const NFServerFlag& flag) : mBase(nullptr), mListener(nullptr), mFlag(flag), mServerType(serverType), mServerId(serverId), mNetObjectCount(0)
 {
 	assert(serverType > NF_ST_NONE && serverType < NF_ST_MAX);
 }
@@ -42,13 +42,13 @@ NFServer::~NFServer()
 	mNetObjectArray.clear();
 	if (mListener)
 	{
-		evconnlistener_free(mListener);	
+		evconnlistener_free(mListener);
 	}
 	mListener = nullptr;
 
 	if (mBase)
 	{
-		event_base_free(mBase);	
+		event_base_free(mBase);
 	}
 	mBase = nullptr;
 }
@@ -188,15 +188,15 @@ bool NFServer::Init()
 
 	struct sockaddr_in sin;
 	memset(&sin, 0, sizeof(sin));
-	sin.sin_family = AF_INET ;
+	sin.sin_family = AF_INET;
 	sin.sin_port = htons(mFlag.nPort);
 
 	NFLogInfo("serverId:%d serverType:%s started with port:%d", mServerId, GetServerName(mServerType).c_str(), mFlag.nPort);
 
 	mListener = evconnlistener_new_bind(mBase, listener_cb, static_cast<void*>(this),
-	                                    LEV_OPT_REUSEABLE | LEV_OPT_CLOSE_ON_FREE, -1,
-	                                    reinterpret_cast<struct sockaddr*>(&sin),
-	                                    sizeof(sin));
+		LEV_OPT_REUSEABLE | LEV_OPT_CLOSE_ON_FREE, -1,
+		reinterpret_cast<struct sockaddr*>(&sin),
+		sizeof(sin));
 
 	if (!mListener)
 	{
@@ -238,10 +238,10 @@ bool NFServer::Execute()
 {
 	ExecuteClose();
 
-    if (mBase)
-    {
-        event_base_loop(mBase, EVLOOP_ONCE | EVLOOP_NONBLOCK);
-    }
+	if (mBase)
+	{
+		event_base_loop(mBase, EVLOOP_ONCE | EVLOOP_NONBLOCK);
+	}
 	return true;
 }
 
@@ -249,6 +249,7 @@ uint32_t NFServer::GetFreeUnLinkId()
 {
 	if (mNetObjectArray.empty())
 	{
+		mNetObjectArray.push_back(nullptr);
 		return GetUnLinkId(mServerType, 0);
 	}
 
@@ -304,10 +305,16 @@ void NFServer::ExecuteClose()
 				mNetObjectArray[serverIndex] = nullptr;
 				mNetObjectCount--;
 				NFSafeDelete(pObject);
-				return;
 			}
-		}			
-		NF_ASSERT_MSG(false, "the unlinkId is not right!");
+			else
+			{
+				NF_ASSERT_MSG(false, "the NetObject of the unlinkId is not remove!");
+			}
+		}
+		else
+		{
+			NF_ASSERT_MSG(false, "the unlinkId's index is not right!");
+		}
 	}
 
 	mvRemoveObject.clear();
@@ -335,11 +342,16 @@ void NFServer::OnSocketNetEvent(const eMsgType nEvent, const uint32_t unLinkId)
 			if (pObject && pObject->GetNeedRemove())
 			{
 				mvRemoveObject.push_back(unLinkId);
-				return;
+			}
+			else
+			{
+				NF_ASSERT_MSG(pObject && pObject->GetNeedRemove(), "the pObject is nullptr or is not remove!");
 			}
 		}
-
-		NF_ASSERT_MSG(false, "the unlinkId is not right!");
+		else
+		{
+			NF_ASSERT_MSG(serverIndex < mNetObjectArray.size(), "the unlinkId is not right!");
+		}
 	}
 
 	if (mEventCB)

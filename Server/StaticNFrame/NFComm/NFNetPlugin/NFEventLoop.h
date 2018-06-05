@@ -41,7 +41,6 @@ public:
 	*/
 	explicit NFEventLoop(struct event_base* base);
 
-
 	/**
 	 * @brief 析构函数
 	 */
@@ -64,7 +63,6 @@ public:
 	 */
 	void Stop();
 
-
 	/**
 	 * @brief 在IO线程里运行函数handler，
 	 * 如果这个函数本身就在io线程里，那么立马执行
@@ -74,7 +72,6 @@ public:
 	 * @return void
 	 */
 	void RunInLoop(const Functor& handler);
-
 
 	/**
 	 * @brief 把函数保存到队列中, 然后在IO线程里执行
@@ -119,7 +116,6 @@ public:
 		return tid_ == std::this_thread::get_id();
 	}
 
-
 	/**
 	 * @brief 队列里的函数对象个数, 线程安全
 	 *
@@ -148,14 +144,12 @@ private:
 	 */
 	void Init();
 
-
 	/**
 	 * @brief 初始化watcher， 用于多线程之间的通信
 	 *
 	 * @return void
 	 */
 	void InitNotifyPipeWatcher();
-
 
 	/**
 	 * @brief 在IO线程里调用IO循环退出函数
@@ -171,14 +165,12 @@ private:
 	 */
 	void DoPendingFunctors();
 
-
 	/**
 	 * @brief 获得队列里函数对象个数, 线程非安全，只能在IO线程里运行
 	 *
 	 * @return size_t
 	 */
 	size_t GetPendingQueueSize();
-
 
 	/**
 	 * @brief 是否队列为空，非线程安全，只能在IO线程里运行
@@ -227,4 +219,3 @@ private:
 	*/
 	std::atomic<int> pending_functor_count_;
 };
-

@@ -67,8 +67,6 @@ typedef struct linger 		    LINGER;
 #include <pthread.h>
 #endif // OS
 
-
-
 #if NF_PLATFORM == NF_PLATFORM_WIN
 #define ERR_INTER       WSAEINTR
 #define ERR_EAGAIN      WSAEWOULDBLOCK
@@ -78,11 +76,9 @@ typedef struct linger 		    LINGER;
 #define SHUTDOWN_BOTH   SD_BOTH
 #else // defined(OS_LINUX)
 
-
-
 #include <sys/socket.h>
 #include <sys/types.h>
-#include<netinet/in.h> 
+#include<netinet/in.h>
 
 #define ERR_INTER       EINTR
 #define ERR_EAGAIN      EAGAIN
@@ -91,8 +87,6 @@ typedef struct linger 		    LINGER;
 #define SHUTDOWN_SEND   SHUT_WR
 #define SHUTDOWN_BOTH   SHUT_RDWR
 #endif // OS
-
-
 
 enum PollType
 {
@@ -125,4 +119,3 @@ enum EventFlag
 	EVENT_CONNECT = 1 << 3,
 	EVENT_DISCONNECT = 1 << 4,
 };
-

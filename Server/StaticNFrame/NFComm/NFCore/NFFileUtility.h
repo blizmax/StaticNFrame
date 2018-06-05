@@ -76,9 +76,9 @@ public:
 	// @param base_dir[out]
 	// @param with_trailing_slash[in] true, End of the string With a SLASH "/".
 	static void SplitFileName(const wstring& filepath,
-	                          wstring& file_name, wstring& base_dir, bool with_trailing_slash = false);
+		wstring& file_name, wstring& base_dir, bool with_trailing_slash = false);
 	static void SplitFileName(const string& filepath,
-	                          string& file_name, string& base_dir, bool with_trailing_slash = false);
+		string& file_name, string& base_dir, bool with_trailing_slash = false);
 
 	// Concatenate tow path into one, and return it.
 	static string Join(const string& prefix, const string& postfix);
@@ -241,7 +241,7 @@ inline string NFFileUtility::GetAbsolutePathName(const string& strPathName)
 	if (!IsAbsolutePath(strTmp))
 	{
 		//
-		char szDir[_MAX_PATH ];
+		char szDir[_MAX_PATH];
 #if NF_PLATFORM == NF_PLATFORM_WIN
 		if (_getcwd(szDir, _MAX_PATH))
 		{
@@ -435,4 +435,3 @@ inline bool NFFileUtility::Rmdir(const char* strDirName)
 
 	return false;
 }
-

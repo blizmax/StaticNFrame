@@ -32,4 +32,3 @@ public:
 	//关闭所有固定时间定时器
 	virtual bool KillAllFixTimer(NFTimerObj* handler) = 0;
 };
-

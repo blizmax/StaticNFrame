@@ -36,4 +36,3 @@ public:
 
 NFPoll* CreateModule();
 void DeleteModule(NFPoll* module);
-

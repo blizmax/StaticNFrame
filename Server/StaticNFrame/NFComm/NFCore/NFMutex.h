@@ -97,4 +97,3 @@ private:
 	*/
 	NF_DISALLOW_EVIL_CONSTRUCTORS(NFMutexLock);
 };
-

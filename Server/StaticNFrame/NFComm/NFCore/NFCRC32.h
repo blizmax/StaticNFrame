@@ -30,4 +30,3 @@ private:
 	static void InitTable(uint32_t* table);
 	static uint32_t Reflect(uint32_t ref, char ch);
 };
-

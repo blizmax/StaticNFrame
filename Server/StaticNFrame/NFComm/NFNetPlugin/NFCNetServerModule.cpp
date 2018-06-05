@@ -6,7 +6,6 @@
 //
 // -------------------------------------------------------------------------
 
-
 #include "NFCNetServerModule.h"
 
 #include "NFComm/NFPluginModule/NFIPlugin.h"
@@ -14,12 +13,12 @@
 
 NFCNetServerModule::NFCNetServerModule(NFIPluginManager* p)
 {
-    pPluginManager = p;
+	pPluginManager = p;
 	mServerArray.resize(NF_ST_MAX);
-    for (int i = 0; i < NF_SERVER_TYPES::NF_ST_MAX; ++i)
-    {
+	for (int i = 0; i < NF_SERVER_TYPES::NF_ST_MAX; ++i)
+	{
 		mServerArray[i] = nullptr;
-    }
+	}
 	mxSendBuffer.AssureSpace(MAX_SEND_BUFFER_SIZE);
 }
 
@@ -29,17 +28,17 @@ NFCNetServerModule::~NFCNetServerModule()
 
 bool NFCNetServerModule::Init()
 {
-    return true;
+	return true;
 }
 
 bool NFCNetServerModule::AfterInit()
 {
-    return true;
+	return true;
 }
 
 bool NFCNetServerModule::BeforeShut()
 {
-    return true;
+	return true;
 }
 
 bool NFCNetServerModule::Shut()
@@ -51,7 +50,7 @@ bool NFCNetServerModule::Shut()
 			mServerArray[i]->Shut();
 		}
 	}
-    return true;
+	return true;
 }
 
 bool NFCNetServerModule::Finalize()
@@ -64,12 +63,19 @@ bool NFCNetServerModule::Finalize()
 			NFSafeDelete(mServerArray[i]);
 		}
 	}
-    return true;
+	return true;
 }
 
 bool NFCNetServerModule::Execute()
 {
-    return true;
+	for (size_t i = 0; i < mServerArray.size(); i++)
+	{
+		if (mServerArray[i] != nullptr)
+		{
+			mServerArray[i]->Execute();
+		}
+	}
+	return true;
 }
 
 uint32_t NFCNetServerModule::AddServer(const NF_SERVER_TYPES eServerType, uint32_t nServerID, uint32_t nMaxClient, uint32_t nPort)
@@ -78,7 +84,7 @@ uint32_t NFCNetServerModule::AddServer(const NF_SERVER_TYPES eServerType, uint32
 	{
 		if (mServerArray[eServerType] != nullptr)
 		{
-			NFLogError("the serverType:%s has existing! Add Server Failed!", GetServerName(eServerType).c_str());	
+			NFLogError("the serverType:%s has existing! Add Server Failed!", GetServerName(eServerType).c_str());
 			return 0;
 		}
 
@@ -114,6 +120,7 @@ void NFCNetServerModule::SendByServerID(uint32_t usLinkId, const uint32_t nMsgID
 		if (pServer)
 		{
 			SendMsg(pServer, usLinkId, nMsgID, msg, nLen, nPlayerID);
+			return;
 		}
 		else
 		{

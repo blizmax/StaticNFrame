@@ -12,7 +12,6 @@
 #include "NFComm/NFPluginModule/NFIModule.h"
 #include "NFComm/NFPluginModule/NFDBActorMgr.h"
 
-
 class NFCTestActorModule : public NFIModule
 {
 public:

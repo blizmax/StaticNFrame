@@ -37,7 +37,7 @@ bool NFCPluginManager::InitSingleton()
 	NFEventMgr::Instance()->Init(pEventModule);
 	NFTimerMgr::Instance()->Init(pTimerModule);
 	NFLogMgr::Instance()->Init(pLogModule);
-	
+
 	//初始化DB系统
 	NFDBActorMgr::Instance()->Init();
 	return true;
@@ -88,4 +88,3 @@ bool NFCPluginManager::RegisterStaticPlugin()
 	REGISTER_STATIC_PLUGIN(this, NFTestPlugin);
 	return true;
 }
-

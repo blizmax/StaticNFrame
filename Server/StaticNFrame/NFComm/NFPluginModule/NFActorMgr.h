@@ -3,7 +3,7 @@
 //    @Author           :    GaoYi
 //    @Date             :    2018-05-19
 //    @Email			:    445267987@qq.com
-//    @Module           :    
+//    @Module           :
 //
 // -------------------------------------------------------------------------
 
@@ -35,7 +35,6 @@ public:
 	*/
 	virtual ~NFXActorMgr()
 	{
-
 	}
 
 	/**
@@ -97,7 +96,7 @@ public:
 	* @return 是否成功
 	*/
 	virtual bool SendMsgToActor(const int nActorIndex, const std::string& strData) = 0;
-    
+
 	/**
 	* @brief 通过actorIndex获得一个actor
 	*
@@ -224,7 +223,7 @@ public:
 		if (thread_num <= 0) thread_num = 1;
 
 		m_pFramework = new Theron::Framework(thread_num);
-		
+
 		m_pMainActor = new ActorType(*m_pFramework, this);
 
 		return 0;
@@ -293,7 +292,7 @@ public:
 
 		return false;
 	}
-    
+
 	/**
 	* @brief 释放actor资源
 	*
@@ -399,7 +398,6 @@ public:
 	*/
 	virtual void OnMainThreadTick() override
 	{
-
 	}
 protected:
 	Theron::Framework*			m_pFramework;

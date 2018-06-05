@@ -235,13 +235,13 @@ void stringUtil_trim_string(_StringType& str, const _StringType& delims, bool le
 }
 
 template <class _StringVector,
-          class StringType,
-          class _DelimType>
-inline void _stringUtilSplit(
-	_StringVector& ret,
-	const StringType& str,
-	const _DelimType& delims,
-	unsigned int maxSplits)
+class StringType,
+class _DelimType>
+	inline void _stringUtilSplit(
+		_StringVector& ret,
+		const StringType& str,
+		const _DelimType& delims,
+		unsigned int maxSplits)
 {
 	unsigned int numSplits = 0;
 
@@ -275,18 +275,17 @@ inline void _stringUtilSplit(
 		}
 
 		++numSplits;
-	}
-	while (pos != StringType::npos);
+	} while (pos != StringType::npos);
 }
 
 template <class _SliceVector,
-          class StringType,
-          class _DelimType>
-void _stringUtilSplitStringToSlice(
-	_SliceVector& ret,
-	const StringType& str,
-	const _DelimType& delims,
-	unsigned int maxSplits)
+class StringType,
+class _DelimType>
+	void _stringUtilSplitStringToSlice(
+		_SliceVector& ret,
+		const StringType& str,
+		const _DelimType& delims,
+		unsigned int maxSplits)
 {
 	unsigned int numSplits = 0;
 
@@ -318,16 +317,15 @@ void _stringUtilSplitStringToSlice(
 		}
 
 		++numSplits;
-	}
-	while (pos != StringType::npos);
+	} while (pos != StringType::npos);
 }
 
 template <class StringType,
-          class _DelimType>
-inline void _stringUtilSplitStringToSlice(
-	const StringType& str,
-	const _DelimType& delims,
-	NFSlice* ret, size_t& slices_count)
+class _DelimType>
+	inline void _stringUtilSplitStringToSlice(
+		const StringType& str,
+		const _DelimType& delims,
+		NFSlice* ret, size_t& slices_count)
 {
 	unsigned int numSplits = 0;
 
@@ -357,8 +355,7 @@ inline void _stringUtilSplitStringToSlice(
 			ret[numSplits++] = (NFSlice(str.data() + start, pos - start));
 			start = pos + 1;
 		}
-	}
-	while (pos != StringType::npos);
+	} while (pos != StringType::npos);
 
 	slices_count = numSplits;
 }
@@ -400,8 +397,7 @@ inline void _stringUtilSplitSliceToSlice(
 			ret.push_back(NFSlice(str.data() + start, pos - start));
 			start = pos + 1;
 		}
-	}
-	while (true);
+	} while (true);
 }
 
 inline void _stringUtilSplitSliceToSlice(
@@ -442,8 +438,7 @@ inline void _stringUtilSplitSliceToSlice(
 			ret[numSplits++] = (NFSlice(str.data() + start, pos - start));
 			start = pos + 1;
 		}
-	}
-	while (true);
+	} while (true);
 
 	slices_count = numSplits;
 }
@@ -1081,38 +1076,38 @@ void NFStringUtilW::Split(std::vector<std::wstring>& ret, const std::wstring& st
 void NFStringUtility::ToLower(std::string& str)
 {
 	std::transform(str.begin(), str.end(), str.begin(), [](unsigned char c)
-	               {
-		               return tolower(c);
-	               });
+	{
+		return tolower(c);
+	});
 }
 
 void NFStringUtility::ToLower(std::wstring& str)
 {
 	std::transform(str.begin(), str.end(), str.begin(), [](wchar_t c)
-	               {
-		               return towlower(c);
-	               });
+	{
+		return towlower(c);
+	});
 }
 
 void NFStringUtility::ToUpper(std::string& str)
 {
 	std::transform(str.begin(), str.end(), str.begin(), [](unsigned char c)
-	               {
-		               return toupper(c);
-	               });
+	{
+		return toupper(c);
+	});
 }
 
 void NFStringUtility::ToUpper(std::wstring& str)
 {
 	std::transform(str.begin(), str.end(), str.begin(), [](wchar_t c)
-	               {
-		               return towupper(c);
-	               });
+	{
+		return towupper(c);
+	});
 }
 
 void NFStringUtility::Split(const std::string& str,
-                            const std::string& delim,
-                            std::vector<std::string>* result)
+	const std::string& delim,
+	std::vector<std::string>* result)
 {
 	if (str.empty())
 	{
@@ -1153,7 +1148,7 @@ std::string& NFStringUtility::Ltrim(std::string& str) // NOLINT
 std::string& NFStringUtility::Rtrim(std::string& str) // NOLINT
 {
 	std::string::reverse_iterator it = find_if(str.rbegin(),
-	                                           str.rend(), std::not1(std::ptr_fun(::isspace)));
+		str.rend(), std::not1(std::ptr_fun(::isspace)));
 
 	str.erase(it.base(), str.end());
 	return str;
@@ -1179,7 +1174,7 @@ void NFStringUtility::LRTrim(std::vector<std::string>* str_list)
 }
 
 void NFStringUtility::StringReplace(const std::string& sub_str1,
-                                    const std::string& sub_str2, std::string* str)
+	const std::string& sub_str2, std::string* str)
 {
 	std::string::size_type pos = 0;
 	std::string::size_type a = sub_str1.size();
@@ -1549,4 +1544,3 @@ std::string NFStringUtility::Demangle(const std::string& name)
 		return name;
 #endif
 }
-

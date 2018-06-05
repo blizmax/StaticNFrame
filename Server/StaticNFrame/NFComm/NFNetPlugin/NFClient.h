@@ -23,11 +23,11 @@
  *@brief  单线程libevent网络客户端封装类.
  *
  */
-/////////////////////////////////////////////////
+ /////////////////////////////////////////////////
 
-/**
-*@brief  单线程libevent网络客户端封装类.
-*/
+ /**
+ *@brief  单线程libevent网络客户端封装类.
+ */
 class NFClient : public NFIModule
 {
 public:
@@ -76,7 +76,7 @@ public:
 	/**
 	 * @brief 释放数据
 	 *
-	 * @return bool 
+	 * @return bool
 	 */
 	virtual bool Finalize() override;
 
@@ -170,7 +170,7 @@ public:
 	/**
 	 * @brief
 	 *
-	 * @return uint64_t 
+	 * @return uint64_t
 	 */
 	uint64_t GetLastActionTime() const;
 
@@ -178,7 +178,7 @@ public:
 	 * @brief
 	 *
 	 * @param  time
-	 * @return void 
+	 * @return void
 	 */
 	void SetLastActionTime(uint64_t time);
 protected:
@@ -227,4 +227,3 @@ protected:
 	 */
 	uint64_t mLastActionTime;
 };
-

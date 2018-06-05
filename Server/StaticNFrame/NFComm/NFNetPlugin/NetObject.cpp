@@ -167,22 +167,22 @@ void NetObject::OnHandleMsgPeer(eMsgType type, uint32_t usLink, char* pBuf, uint
 	switch (type)
 	{
 	case eMsgType_RECIVEDATA:
+	{
+		if (mRecvCB)
 		{
-			if (mRecvCB)
-			{
-				mRecvCB(usLink, nValue, nMsgId, pBuf, sz);
-			}
+			mRecvCB(usLink, nValue, nMsgId, pBuf, sz);
 		}
-		break;
+	}
+	break;
 	case eMsgType_CONNECTED:
 	case eMsgType_DISCONNECTED:
+	{
+		if (mEventCB)
 		{
-			if (mEventCB)
-			{
-				mEventCB(type, usLink);
-			}
+			mEventCB(type, usLink);
 		}
-		break;
+	}
+	break;
 	default:
 		break;
 	}
@@ -266,7 +266,7 @@ void NetObject::CloseObject()
 	{
 		bufferevent_disable(m_pBev, EV_READ | EV_WRITE);
 		evutil_closesocket(m_nSocketId);
-		m_nSocketId = INVALID_SOCKET;		
+		m_nSocketId = INVALID_SOCKET;
 	}
 }
 
@@ -313,4 +313,3 @@ bool NetObject::Send(const void* pData, uint32_t unSize)
 	}
 	return false;
 }
-

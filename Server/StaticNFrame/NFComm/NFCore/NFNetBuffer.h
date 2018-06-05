@@ -36,9 +36,9 @@ public:
 
 	explicit NFNetBuffer(size_t initial_size = kInitialSize, size_t reserved_prepend_size = kCheapPrependSize)
 		: capacity_(reserved_prepend_size + initial_size)
-		  , read_index_(reserved_prepend_size)
-		  , write_index_(reserved_prepend_size)
-		  , reserved_prepend_size_(reserved_prepend_size)
+		, read_index_(reserved_prepend_size)
+		, write_index_(reserved_prepend_size)
+		, reserved_prepend_size_(reserved_prepend_size)
 	{
 		buffer_ = new char[capacity_];
 		assert(length() == 0);
@@ -517,4 +517,3 @@ private:
 	size_t reserved_prepend_size_;
 	static const char kCRLF[];
 };
-

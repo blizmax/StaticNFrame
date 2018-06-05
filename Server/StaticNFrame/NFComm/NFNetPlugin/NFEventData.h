@@ -74,4 +74,3 @@ public:
 
 	void set_cb(NetRecvHandler recvcb, NetEventHandler eventcb, void* pArg);
 };
-

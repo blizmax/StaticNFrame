@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include "NFXActor.h"
 
 class NFXActorMgr;
@@ -39,7 +38,7 @@ public:
 	* @param from    发消息的actor的地址
 	* @return
 	*/
-    virtual void Handler(const NFXActorMessage& message, const Theron::Address from);
+	virtual void Handler(const NFXActorMessage& message, const Theron::Address from);
 
 	/**
 	* @brief 将被处理过的消息返回给主线程
@@ -48,7 +47,7 @@ public:
 	* @param from    发消息的actor的地址
 	* @return
 	*/
-    virtual void HandlerEx(const NFXActorMessage& message, const Theron::Address from);
+	virtual void HandlerEx(const NFXActorMessage& message, const Theron::Address from);
 public:
 	/**
 	* @brief 处理task前的处理

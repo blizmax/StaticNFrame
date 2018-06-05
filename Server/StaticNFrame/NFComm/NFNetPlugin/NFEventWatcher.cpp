@@ -13,7 +13,6 @@
 #include <iostream>
 #include "NFEventLoop.h"
 
-
 NFEventWatcher::NFEventWatcher(struct event_base* evbase, const Handler& handler)
 	: evbase_(evbase), attached_(false), handler_(handler)
 {
@@ -48,7 +47,6 @@ failed:
 	Close();
 	return false;
 }
-
 
 void NFEventWatcher::Close()
 {
@@ -126,19 +124,18 @@ void NFEventWatcher::SetCancelCallback(const Handler& cb)
 //////////////////////////////////////////////////////////////////////////
 
 NFPipeEventWatcher::NFPipeEventWatcher(NFEventLoop* loop,
-                                       const Handler& handler)
+	const Handler& handler)
 	: NFEventWatcher(loop->event_base(), handler)
 {
 	memset(pipe_, 0, sizeof(pipe_));
 }
 
 NFPipeEventWatcher::NFPipeEventWatcher(NFEventLoop* loop,
-                                       Handler&& h)
+	Handler&& h)
 	: NFEventWatcher(loop->event_base(), std::move(h))
 {
 	memset(pipe_, 0, sizeof(pipe_));
 }
-
 
 NFPipeEventWatcher::~NFPipeEventWatcher()
 {
@@ -163,7 +160,7 @@ bool NFPipeEventWatcher::DoInit()
 	}
 
 	::event_set(event_, pipe_[1], EV_READ | EV_PERSIST,
-	            &NFPipeEventWatcher::HandlerFn, this);
+		&NFPipeEventWatcher::HandlerFn, this);
 	return true;
 failed:
 	Close();
@@ -186,10 +183,10 @@ void NFPipeEventWatcher::HandlerFn(evutil_socket_t fd, short /*which*/, void* v)
 	NFPipeEventWatcher* e = (NFPipeEventWatcher*)v;
 #ifdef H_BENCHMARK_TESTING
 	// Every time we only read 1 byte for testing the IO event performance.
-	// We use it in the benchmark test program 
+	// We use it in the benchmark test program
 	//  1. evpp/benchmark/ioevent/evpp/
 	//  1. evpp/benchmark/ioevent/fd_channel_vs_pipe_event_watcher/
-		char buf[1];
+	char buf[1];
 #else
 	char buf[128];
 #endif
@@ -222,34 +219,34 @@ void NFPipeEventWatcher::Notify()
 //////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////
 NFTimerEventWatcher::NFTimerEventWatcher(NFEventLoop* loop,
-                                         const Handler& handler,
-                                         NFDuration timeout)
+	const Handler& handler,
+	NFDuration timeout)
 	: NFEventWatcher(loop->event_base(), handler)
-	  , timeout_(timeout)
+	, timeout_(timeout)
 {
 }
 
 NFTimerEventWatcher::NFTimerEventWatcher(NFEventLoop* loop,
-                                         Handler&& h,
-                                         NFDuration timeout)
+	Handler&& h,
+	NFDuration timeout)
 	: NFEventWatcher(loop->event_base(), std::move(h))
-	  , timeout_(timeout)
+	, timeout_(timeout)
 {
 }
 
 NFTimerEventWatcher::NFTimerEventWatcher(struct event_base* loop,
-                                         const Handler& handler,
-                                         NFDuration timeout)
+	const Handler& handler,
+	NFDuration timeout)
 	: NFEventWatcher(loop, handler)
-	  , timeout_(timeout)
+	, timeout_(timeout)
 {
 }
 
 NFTimerEventWatcher::NFTimerEventWatcher(struct event_base* loop,
-                                         Handler&& h,
-                                         NFDuration timeout)
+	Handler&& h,
+	NFDuration timeout)
 	: NFEventWatcher(loop, std::move(h))
-	  , timeout_(timeout)
+	, timeout_(timeout)
 {
 }
 
@@ -275,17 +272,17 @@ bool NFTimerEventWatcher::AsyncWait()
 //////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////
 NFSignalEventWatcher::NFSignalEventWatcher(evutil_socket_t signo, NFEventLoop* loop,
-                                                          const Handler& handler)
+	const Handler& handler)
 	: NFEventWatcher(loop->event_base(), handler)
-	  , signo_(signo)
+	, signo_(signo)
 {
 	assert(signo_);
 }
 
 NFSignalEventWatcher::NFSignalEventWatcher(evutil_socket_t signo, NFEventLoop* loop,
-                                                          Handler&& h)
+	Handler&& h)
 	: NFEventWatcher(loop->event_base(), std::move(h))
-	  , signo_(signo)
+	, signo_(signo)
 {
 	assert(signo_);
 }
@@ -307,4 +304,3 @@ bool NFSignalEventWatcher::AsyncWait()
 {
 	return Watch(NFDuration());
 }
-

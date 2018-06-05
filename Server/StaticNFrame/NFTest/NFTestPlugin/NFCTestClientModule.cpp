@@ -114,6 +114,7 @@ void NFCTestClientModule::SendCreateChar()
 
 	m_pNetClientModule->SendToServerByPB(m_usId, proto::message::ELogin_CTS_GAMESERVER_CreateChar, proReq, 0);
 
+	NFSLEEP(1000);
+
 	m_pNetClientModule->CloseServer(m_usId);
 }
-

@@ -50,7 +50,6 @@ NFCTestActorModule::NFCTestActorModule(NFIPluginManager* p)
 
 NFCTestActorModule::~NFCTestActorModule()
 {
-
 }
 
 bool NFCTestActorModule::Init()

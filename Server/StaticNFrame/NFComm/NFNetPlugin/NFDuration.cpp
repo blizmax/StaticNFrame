@@ -16,7 +16,7 @@ const int64_t NFDuration::kSecond = 1000 * kMillisecond;
 const int64_t NFDuration::kMinute = 60 * kSecond;
 const int64_t NFDuration::kHour = 60 * kMinute;
 
-NFDuration::NFDuration(): ns_(0)
+NFDuration::NFDuration() : ns_(0)
 {
 }
 
@@ -136,4 +136,3 @@ NFDuration NFDuration::operator/=(int n)
 	ns_ /= n;
 	return *this;
 }
-

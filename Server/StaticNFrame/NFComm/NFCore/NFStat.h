@@ -160,4 +160,3 @@ private:
 	ResourceStatTemp m_resource_stat_temp;
 	MessageStatTemp m_message_stat_temp;
 };
-

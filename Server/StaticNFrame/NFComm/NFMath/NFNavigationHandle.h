@@ -54,8 +54,7 @@ public:
 	};
 
 	virtual int FindRandomPointAroundCircle(int layer, const NFVector3& centerPos,
-	                                        std::vector<NFVector3>& points, int max_points, float maxRadius) = 0;
+		std::vector<NFVector3>& points, int max_points, float maxRadius) = 0;
 protected:
 	std::string name;
 };
-

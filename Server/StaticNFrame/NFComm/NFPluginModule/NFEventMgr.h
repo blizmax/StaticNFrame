@@ -98,4 +98,3 @@ public:
 private:
 	NFIEventModule* m_pEventModule;
 };
-

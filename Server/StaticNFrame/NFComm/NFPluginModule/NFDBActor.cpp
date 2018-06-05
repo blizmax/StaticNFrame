@@ -2,13 +2,10 @@
 #include "NFActorMgr.h"
 #include "NFTask.h"
 
-
-
-NFDBActor::NFDBActor(Theron::Framework& framework, NFXActorMgr* pActorMgr):NFXActor(framework, pActorMgr)
+NFDBActor::NFDBActor(Theron::Framework& framework, NFXActorMgr* pActorMgr) :NFXActor(framework, pActorMgr)
 {
-    m_bInit = false;
+	m_bInit = false;
 }
-
 
 NFDBActor::~NFDBActor()
 {
@@ -31,21 +28,21 @@ void NFDBActor::Handler(const NFXActorMessage& message, const Theron::Address fr
 		onProcessTaskEnd(pTask);
 	}
 
-    ////////////////////////////////////////////////////////
-    // must return message
-    NFXActorMessage xReturnMessage;
+	////////////////////////////////////////////////////////
+	// must return message
+	NFXActorMessage xReturnMessage;
 
-    xReturnMessage.nMsgType = NFXActorMessage::ACTOR_MSG_TYPE_END_FUNC;
-    xReturnMessage.nFromActor = this->GetAddress().AsInteger();
+	xReturnMessage.nMsgType = NFXActorMessage::ACTOR_MSG_TYPE_END_FUNC;
+	xReturnMessage.nFromActor = this->GetAddress().AsInteger();
 	xReturnMessage.pData = (void*)pTask;
 
 	//HandlerEx(xReturnMessage, from);
-    Send(xReturnMessage, from);
+	Send(xReturnMessage, from);
 }
 
 void NFDBActor::HandlerEx(const NFXActorMessage& message, const Theron::Address from)
 {
-    m_pActorMgr->HandlerEx(message, from.AsInteger());
+	m_pActorMgr->HandlerEx(message, from.AsInteger());
 }
 
 void NFDBActor::onProcessTaskStart(NFTask* pTask)
@@ -63,4 +60,3 @@ void NFDBActor::processTask(NFTask* pTask)
 void NFDBActor::onProcessTaskEnd(NFTask* pTask)
 {
 }
-

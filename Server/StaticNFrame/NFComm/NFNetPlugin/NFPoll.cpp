@@ -25,4 +25,3 @@ void DeleteModule(NFPoll* module)
 	assert(module);
 	delete module;
 }
-

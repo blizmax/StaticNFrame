@@ -164,8 +164,7 @@ bool NFBase64::Decode(const std::string& src, std::string* dst)
 			{
 				c = 65; //  字符串结束
 			}
-		}
-		while (c == 64); //  跳过无效字符，如回车等
+		} while (c == 64); //  跳过无效字符，如回车等
 
 		if (c == 65)
 		{
@@ -209,4 +208,3 @@ int NFBase64::Base64DecodeLen(int n)
 {
 	return n / 4 * 3 + 2;
 }
-

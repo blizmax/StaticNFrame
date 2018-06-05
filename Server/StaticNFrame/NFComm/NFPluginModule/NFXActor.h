@@ -19,18 +19,18 @@ public:
 	*
 	*/
 	enum MessageType
-    {
+	{
 		/**
 		* @brief 要处理的消息
 		*
 		*/
-        ACTOR_MSG_TYPE_COMPONENT,
+		ACTOR_MSG_TYPE_COMPONENT,
 		/**
 		* @brief 已经被处理的消息，等待返回主线程处理
 		*
 		*/
-        ACTOR_MSG_TYPE_END_FUNC,
-    };
+		ACTOR_MSG_TYPE_END_FUNC,
+	};
 
 	/**
 	* @brief 构造函数
@@ -79,17 +79,17 @@ public:
 	* @brief 构造函数
 	*        必须调用RegisterHandler，注册异步过程中用来处理的函数
 	*/
-    NFXActor(Theron::Framework& framework, NFXActorMgr* pActorMgr) : Theron::Actor(framework)
-    {
-        RegisterHandler(this, &NFXActor::DefaultHandler);
+	NFXActor(Theron::Framework& framework, NFXActorMgr* pActorMgr) : Theron::Actor(framework)
+	{
+		RegisterHandler(this, &NFXActor::DefaultHandler);
 		m_pActorMgr = pActorMgr;
-    }
+	}
 
 	/**
 	* @brief 析构函数
 	*
 	*/
-    virtual ~NFXActor() {}
+	virtual ~NFXActor() {}
 
 	/**
 	* @brief 向另外一个actor发送消息
@@ -100,7 +100,7 @@ public:
 	*/
 	virtual bool SendMsg(const Theron::Address address, const NFXActorMessage& message)
 	{
-		 return Send(message, address);
+		return Send(message, address);
 	}
 protected:
 	/**
@@ -110,7 +110,7 @@ protected:
 	* @param from	 发送消息的actor地址
 	* @return 返回发送是否成功
 	*/
-    virtual void HandlerEx(const NFXActorMessage& message, const Theron::Address from) {};
+	virtual void HandlerEx(const NFXActorMessage& message, const Theron::Address from) {};
 
 	/**
 	* @brief 处理发送的数据
@@ -119,7 +119,7 @@ protected:
 	* @param from	 发送消息的actor地址
 	* @return
 	*/
-    virtual void Handler(const NFXActorMessage& message, const Theron::Address from) {};
+	virtual void Handler(const NFXActorMessage& message, const Theron::Address from) {};
 private:
 	/**
 	* @brief 异步处理的过程
@@ -128,20 +128,20 @@ private:
 	* @param from	 发送消息的actor地址
 	* @return
 	*/
-    void DefaultHandler(const NFXActorMessage& message, const Theron::Address from)
-    {
-        if (message.nMsgType == NFXActorMessage::ACTOR_MSG_TYPE_COMPONENT)
-        {
-            Handler(message, from);
-        }
-        else
-        {
-            HandlerEx(message, from);
-        }
-    }
+	void DefaultHandler(const NFXActorMessage& message, const Theron::Address from)
+	{
+		if (message.nMsgType == NFXActorMessage::ACTOR_MSG_TYPE_COMPONENT)
+		{
+			Handler(message, from);
+		}
+		else
+		{
+			HandlerEx(message, from);
+		}
+	}
 protected:
 	/**
 	* @brief actor管理基类
 	*/
-    NFXActorMgr* m_pActorMgr;
+	NFXActorMgr* m_pActorMgr;
 };

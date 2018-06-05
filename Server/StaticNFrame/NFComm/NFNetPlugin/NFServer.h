@@ -29,7 +29,6 @@ public:
 	*/
 	virtual ~NFServer();
 
-
 	/**
 	 *@brief  设置接收回调.
 	 */
@@ -53,7 +52,7 @@ public:
 	 *
 	 * @param  fd
 	 * @param  sa
-	 * @return bool 
+	 * @return bool
 	 */
 	bool AddNetObject(SOCKET fd, sockaddr* sa);
 
@@ -106,7 +105,7 @@ public:
 	/**
 	 * @brief 释放数据
 	 *
-	 * @return bool 
+	 * @return bool
 	 */
 	virtual bool Finalize() override;
 
@@ -148,7 +147,7 @@ protected:
 	/**
 	 * @brief
 	 *
-	 * @return void 
+	 * @return void
 	 */
 	virtual void ExecuteClose();
 
@@ -160,7 +159,7 @@ protected:
 	 * @param  nMsgId
 	 * @param  msg
 	 * @param  nLen
-	 * @return void 
+	 * @return void
 	 */
 	virtual void OnReceiveNetPack(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen);
 
@@ -169,7 +168,7 @@ protected:
 	 *
 	 * @param  nEvent
 	 * @param  unLinkId
-	 * @return void 
+	 * @return void
 	 */
 	virtual void OnSocketNetEvent(const eMsgType nEvent, const uint32_t unLinkId);
 private:
@@ -223,4 +222,3 @@ private:
 	*/
 	std::vector<uint32_t> mvRemoveObject;
 };
-

@@ -54,7 +54,7 @@ public:
 	virtual bool Create(const std::string& name) override;
 
 	virtual int FindRandomPointAroundCircle(int layer, const NFVector3& centerPos,
-	                                        std::vector<NFVector3>& points, int max_points, float maxRadius) override;
+		std::vector<NFVector3>& points, int max_points, float maxRadius) override;
 
 	bool IsValidPos(int layer, const NFVector3& pos);
 	void GetValidPos(int layer, const NFVector3& pos, NFVector3& out);
@@ -66,4 +66,3 @@ public:
 	std::vector<dtNavMesh*> navmesh_layers;
 	std::vector<dtNavMeshQuery*> navmeshQuery_layers;
 };
-

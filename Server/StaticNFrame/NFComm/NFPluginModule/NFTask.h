@@ -18,7 +18,7 @@ public:
 	virtual ~NFTask()
 	{
 	}
-	
+
 	enum TPTaskState
 	{
 		/// 一个任务已经完成
@@ -34,7 +34,7 @@ public:
 	/**
 	返回值： thread::TPTask::TPTaskState， 请参看TPTaskState
 	*/
-	virtual TPTaskState presentMainThread() 
+	virtual TPTaskState presentMainThread()
 	{
 		return TPTASK_STATE_COMPLETED;
 	}
