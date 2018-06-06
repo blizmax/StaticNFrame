@@ -1,5 +1,16 @@
 echo Building dependencies...
 
+#compiling mysql
+cd mysql
+cmake .
+make clean
+make
+
+cp -R -f ./libmysql/libmysqlclient.a ../../../Product/Lib/Debug/
+cp -R -f ./libmysql/libmysqlclient.a ../../../Product/Lib/Release/
+cd ..
+
+
 # compiling libevent
 cd libevent
 chmod a+x ./configure
