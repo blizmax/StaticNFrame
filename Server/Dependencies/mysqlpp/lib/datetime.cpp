@@ -35,6 +35,7 @@
 
 #include <stdlib.h>
 #include <time.h>
+#include <memory>
 
 using namespace std;
 
