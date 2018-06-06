@@ -42,7 +42,7 @@
 #include <string>
 #include <vector>
 #include <set>
-#include "mysqlpp/mysql++.h"
+#include "mysqlpp/lib/mysql++.h"
 
 class NFIMysqlDriver
 {

@@ -11,7 +11,7 @@
 #include "NFComm/NFPluginModule/NFIMysqlDriver.h"
 #include "NFComm/NFCore/NFQueue.hpp"
 #include <string>
-#include <mysqlpp/connection.h>
+#include <mysqlpp/lib/connection.h>
 #include "NFMessageDefine/NFMsgDefine.h"
 
 #define  NFMYSQLTRYBEGIN try {
