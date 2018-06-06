@@ -286,37 +286,65 @@ bool NFFileUtility::Mkdir(const string& dirpath)
 
 bool NFFileUtility::IsFileExist(const string& strFileName)
 {
+#if NF_PLATFORM == NF_PLATFORM_WIN
 	if (_access(strFileName.c_str(), F_OK) != 0)
 	{
 		return false;
 	}
+#else
+	if (access(strFileName.c_str(), F_OK) != 0)
+	{
+		return false;
+	}
+#endif
 	return true;
 }
 
 bool NFFileUtility::IsReadable(const string& strFileNmae)
 {
+#if NF_PLATFORM == NF_PLATFORM_WIN
 	if (_access(strFileNmae.c_str(), R_OK) != 0)
 	{
 		return false;
 	}
+#else
+	if (access(strFileNmae.c_str(), R_OK) != 0)
+	{
+		return false;
+	}
+#endif
 	return true;
 }
 
 bool NFFileUtility::IsWriteable(const string& strFileNmae)
 {
+#if NF_PLATFORM == NF_PLATFORM_WIN
 	if (_access(strFileNmae.c_str(), W_OK) != 0)
 	{
 		return false;
 	}
+#else
+	if (access(strFileNmae.c_str(), W_OK) != 0)
+	{
+		return false;
+	}
+#endif
 	return true;
 }
 
 bool NFFileUtility::IsExecutable(const string& strFileNmae)
 {
+#if NF_PLATFORM == NF_PLATFORM_WIN
 	if (_access(strFileNmae.c_str(), X_OK) != 0)
 	{
 		return false;
 	}
+#else
+	if (access(strFileNmae.c_str(), X_OK) != 0)
+	{
+		return false;
+	}
+#endif
 	return true;
 }
 
