@@ -9,7 +9,6 @@
 #include "NFMysqlPlugin.h"
 #include "NFCMysqlModule.h"
 #include "NFComm/NFPluginModule/NFIPluginManager.h"
-#include <NFComm/NFPluginModule/NFIAsyMysqlModule.h>
 
 #ifdef NF_DYNAMIC_PLUGIN
 
