@@ -9,4 +9,7 @@ ADD_SUBDIRECTORY("g3dlite")
 PROJECT(navigation)
 ADD_SUBDIRECTORY("navigation")
 
+PROJECT(mysqlpp)
+ADD_SUBDIRECTORY("mysqlpp")
+
 

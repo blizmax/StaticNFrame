@@ -33,6 +33,8 @@ SET(INCLUDE_DIR "./" "/usr/local/include"
 	"${CMAKE_SOURCE_DIR}/Server/Dependencies"
 	"${CMAKE_SOURCE_DIR}/Server/Dependencies/protobuf/src"
 	"${CMAKE_SOURCE_DIR}/Server/Dependencies/navigation"
+	"${CMAKE_SOURCE_DIR}/Server/Dependencies/mysql/include"
+	"${CMAKE_SOURCE_DIR}/Server/Dependencies/mysqlpp/lib"
 	"${CMAKE_SOURCE_DIR}/Server/StaticNFrame/")
 
 
@@ -51,10 +53,10 @@ else()
 endif()
 
 SET(LIB_LINK_DEP pthread dl rt libevent_core.a libevent_extra.a libtheron.a
-		libevent.a liblua.a libprofiler.a libtcmalloc_minimal.a libtheron.a libevent_pthreads.a protobuf)
+		libevent.a liblua.a libprofiler.a libtcmalloc_minimal.a libtheron.a libevent_pthreads.a protobuf libmysqlclient.a)
 		
 SET(LIB_LINK_NF libCommon.a libG3Dlite.a libNavigation.a libNFActorPlugin.a libNFCore.a libNFKernelPlugin.a
-				libNFMath.a libNFMessageDefine.a libNFNetPlugin.a libNFPluginModule.a libNFTestPlugin.a)
+				libNFMath.a libNFMessageDefine.a libNFNetPlugin.a libNFPluginModule.a libNFTestPlugin.a libmysqlpp.a)
 	
 include_directories( ${INCLUDE_DIR} )
 	
