@@ -61,7 +61,6 @@ NFCTestActorModule::NFCTestActorModule(NFIPluginManager* p)
 	{
 		pXTask->a = 1;
 	}
-	std::cout << pDBTask->c << std::endl;
 
 	proto::message::PlayerInfo m_proData;
 
