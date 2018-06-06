@@ -286,7 +286,7 @@ bool NFFileUtility::Mkdir(const string& dirpath)
 
 bool NFFileUtility::IsFileExist(const string& strFileName)
 {
-	if (access(strFileName.c_str(), F_OK) != 0)
+	if (_access(strFileName.c_str(), F_OK) != 0)
 	{
 		return false;
 	}
@@ -295,7 +295,7 @@ bool NFFileUtility::IsFileExist(const string& strFileName)
 
 bool NFFileUtility::IsReadable(const string& strFileNmae)
 {
-	if (access(strFileNmae.c_str(), R_OK) != 0)
+	if (_access(strFileNmae.c_str(), R_OK) != 0)
 	{
 		return false;
 	}
@@ -304,7 +304,7 @@ bool NFFileUtility::IsReadable(const string& strFileNmae)
 
 bool NFFileUtility::IsWriteable(const string& strFileNmae)
 {
-	if (access(strFileNmae.c_str(), W_OK) != 0)
+	if (_access(strFileNmae.c_str(), W_OK) != 0)
 	{
 		return false;
 	}
@@ -313,7 +313,7 @@ bool NFFileUtility::IsWriteable(const string& strFileNmae)
 
 bool NFFileUtility::IsExecutable(const string& strFileNmae)
 {
-	if (access(strFileNmae.c_str(), X_OK) != 0)
+	if (_access(strFileNmae.c_str(), X_OK) != 0)
 	{
 		return false;
 	}

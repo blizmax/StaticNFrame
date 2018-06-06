@@ -70,9 +70,9 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
     <TargetName>$(ProjectName)</TargetName>
-    <OutDir>$(SolutionDir)/run/$(Configuration)/</OutDir>
+    <OutDir>$(SolutionDir)../Product/Lib/$(Configuration)/</OutDir>
     <EmbedManifest>false</EmbedManifest>
-    <IntDir>$(SolutionDir)/Bin/$(ProjectName)/$(Configuration)\</IntDir>
+    <IntDir>$(SolutionDir)../Product/Temp/$(ProjectName)/$(Configuration)\</IntDir>
     <TargetExt>.lib</TargetExt>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -103,8 +103,8 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>_X64;_DEBUG;_USRDLL</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(SolutionDir)/JyNetwork/common/inc;$(SolutionDir)/JyNetwork/Net/inc;$(SolutionDir)/JyNetwork/libevent/include;$(SolutionDir)/JyNetwork/tinyxml;$(SolutionDir)/JyNetwork/libevent/WIN32-Code/nmake;$(SolutionDir)/JyNetwork/libevent/;$(SolutionDir)/JyNetwork/Table/inc;$(SolutionDir)/JyNetwork/libevent/compat;$(SolutionDir)/JyNetwork/openssl/include;$(SolutionDir)\JyNetwork\Theron\Include\;$(SolutionDir)\Server_rc2;$(SolutionDir)/;$(SolutionDir)/Dependencies/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;_X64;_DEBUG;_USRDLL</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(SolutionDir)/Dependencies/mysqlpp;$(SolutionDir)/Dependencies/mysql;$(SolutionDir)\Dependencies\g3dlite;$(SolutionDir)\Dependencies\lua;$(SolutionDir)/Dependencies/libevent/include;$(SolutionDir)/Dependencies/libevent/WIN32-Code/nmake;$(SolutionDir)/Dependencies/libevent/;$(SolutionDir)/Dependencies/libevent/compat;$(SolutionDir)/Dependencies/Theron\Include/;$(SolutionDir)/StaticNFrame;$(SolutionDir)/Dependencies/;$(SolutionDir)/;$(SolutionDir)/Dependencies/protobuf/src;$(SolutionDir)/Dependencies/navigation;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <BrowseInformation>false</BrowseInformation>
       <DisableSpecificWarnings>4091;4251;4996;4275;4316</DisableSpecificWarnings>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>

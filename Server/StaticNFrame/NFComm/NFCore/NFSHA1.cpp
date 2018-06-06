@@ -84,7 +84,7 @@ bool NFSHA1::Encode2Hex(const char* lpData_Input, char* lpSHACode_Output)
 	SHAInit();
 
 	// One times analyse 64Bytes, 512 bits.
-	int nInputLen = strlen(lpData_Input);
+	int nInputLen = static_cast<int>(strlen(lpData_Input));
 	int nDealDataLen = 0; //    the length of can-deal-data, this times;
 	for (int pos = 0; pos <= nInputLen; pos += 64)
 	{
@@ -129,7 +129,7 @@ bool NFSHA1::Encode2Ascii(const char* lpData_Input, char* lpSHACode_Output)
 	SHAInit();
 
 	// One times analyse 64Bytes, 512 bits.
-	int nInputLen = strlen(lpData_Input);
+	int nInputLen = static_cast<int>(strlen(lpData_Input));
 	int nDealDataLen = 0; //    the length of can-deal-data, this times;
 	for (int pos = 0; pos <= nInputLen; pos += 64)
 	{

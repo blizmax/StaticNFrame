@@ -21,20 +21,9 @@ static const float g_fPar5 = 1.0f / 65535.0f;
 static const double g_dPar6 = 1.0 / 4294967295.0;
 static const uint32_t g_nPar7 = 0x7fffffff;
 
-inline uint32_t NFGetSeed()
-{
-#ifdef _WIN32
-	__asm _emit 0x0F
-	__asm _emit 0x31
-#else
-	__asm__ __volatile__(".byte 0x0F");
-	__asm__ __volatile__(".byte 0x31");
-#endif
-}
-
 void NFRandomSeed()
 {
-	g_seed = NFGetSeed();
+	g_seed = static_cast<uint32_t>(NFGetTime());
 }
 
 uint32_t NFRandomAUInt()

@@ -66,6 +66,7 @@
     <ClCompile Include="treasure.pb.cc" />
     <ClCompile Include="welfare.pb.cc" />
     <ClCompile Include="msg.pb.cc" />
+    <ClCompile Include="mysql_db.pb.cc" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="achieve.pb.h" />
@@ -134,5 +135,6 @@
     <ClInclude Include="welfare.pb.h" />
     <ClInclude Include="NFMsgDefine.h" />
     <ClInclude Include="msg.pb.h" />
+    <ClInclude Include="mysql_db.pb.h" />
   </ItemGroup>
 </Project>
