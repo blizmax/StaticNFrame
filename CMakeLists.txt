@@ -56,7 +56,7 @@ SET(LIB_LINK_DEP pthread dl rt libevent_core.a libevent_extra.a libtheron.a
 		libevent.a liblua.a libprofiler.a libtcmalloc_minimal.a libtheron.a libevent_pthreads.a protobuf libmysqlclient.a)
 		
 SET(LIB_LINK_NF libCommon.a libG3Dlite.a libNavigation.a libNFActorPlugin.a libNFCore.a libNFKernelPlugin.a
-				libNFMath.a libNFMessageDefine.a libNFNetPlugin.a libNFPluginModule.a libNFTestPlugin.a libmysqlpp.a)
+				libNFMath.a libNFMessageDefine.a libNFNetPlugin.a libNFPluginModule.a libNFTestPlugin.a libmysqlpp.a libNFMysqlPlugin.a)
 	
 include_directories( ${INCLUDE_DIR} )
 	
