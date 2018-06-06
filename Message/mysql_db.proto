@@ -1,0 +1,15 @@
+option java_package = "proto.message";
+package proto.message;
+
+//*****************************保存数据到db方案********************************//
+message message_db_base
+{
+	optional string table_name = 1; //数据库表名
+	optional string field_key_name = 2; //索引key名字
+	optional string field_key = 3; //索引key值
+}
+
+message update_player
+{
+	optional message_db_base db_base = 1; //数据库基础数据
+}

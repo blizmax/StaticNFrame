@@ -19,6 +19,7 @@ LoadPlugin =
 			"NFActorPlugin",
 			"NFNetPlugin",
 			"NFTestPlugin",
+			"NFMysqlPlugin"
 		};
 		ServerType = NF_ST_NONE;
 	};

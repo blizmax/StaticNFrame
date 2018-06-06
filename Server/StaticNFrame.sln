@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+VisualStudioVersion = 14.0.23107.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "NFrame", "NFrame", "{A65AF30D-E33C-48FF-9021-CC3D958C6BCC}"
 EndProject
@@ -72,6 +72,8 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "NFMessageDefine", "NFMessageDefine\NFMessageDefine.vcxproj", "{3F2973E3-2835-4326-9D92-2FB300F5A6F0}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "common", "Dependencies\common\common.vcxproj", "{5CEE5C46-2CA6-41AB-BCA9-2EB9DAF0B620}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "NFMysqlPlugin", "StaticNFrame\NFComm\NFMysqlPlugin\NFMysqlPlugin.vcxproj", "{03A9453A-D961-409D-A10D-ACB8B7A9F2AB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -307,6 +309,17 @@ Global
 		{5CEE5C46-2CA6-41AB-BCA9-2EB9DAF0B620}.Release|Win32.Build.0 = Release|Win32
 		{5CEE5C46-2CA6-41AB-BCA9-2EB9DAF0B620}.Release|x64.ActiveCfg = Release|x64
 		{5CEE5C46-2CA6-41AB-BCA9-2EB9DAF0B620}.Release|x64.Build.0 = Release|x64
+		{03A9453A-D961-409D-A10D-ACB8B7A9F2AB}.Debug|Win32.ActiveCfg = Debug|Win32
+		{03A9453A-D961-409D-A10D-ACB8B7A9F2AB}.Debug|Win32.Build.0 = Debug|Win32
+		{03A9453A-D961-409D-A10D-ACB8B7A9F2AB}.Debug|x64.ActiveCfg = Debug|x64
+		{03A9453A-D961-409D-A10D-ACB8B7A9F2AB}.Debug|x64.Build.0 = Debug|x64
+		{03A9453A-D961-409D-A10D-ACB8B7A9F2AB}.dummy|Win32.ActiveCfg = Release|x64
+		{03A9453A-D961-409D-A10D-ACB8B7A9F2AB}.dummy|Win32.Build.0 = Release|x64
+		{03A9453A-D961-409D-A10D-ACB8B7A9F2AB}.dummy|x64.ActiveCfg = Debug|x64
+		{03A9453A-D961-409D-A10D-ACB8B7A9F2AB}.dummy|x64.Build.0 = Debug|x64
+		{03A9453A-D961-409D-A10D-ACB8B7A9F2AB}.Release|Win32.ActiveCfg = Release|x64
+		{03A9453A-D961-409D-A10D-ACB8B7A9F2AB}.Release|x64.ActiveCfg = Release|x64
+		{03A9453A-D961-409D-A10D-ACB8B7A9F2AB}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -334,5 +347,6 @@ Global
 		{9D0BB1B4-FC93-4B3B-839F-9EC1797081EC} = {A65AF30D-E33C-48FF-9021-CC3D958C6BCC}
 		{3F2973E3-2835-4326-9D92-2FB300F5A6F0} = {47D5DE4B-494B-4AF8-922A-128A95ED2436}
 		{5CEE5C46-2CA6-41AB-BCA9-2EB9DAF0B620} = {EEC41D2A-C5CC-4C4F-A37D-615CBA15C932}
+		{03A9453A-D961-409D-A10D-ACB8B7A9F2AB} = {9D0BB1B4-FC93-4B3B-839F-9EC1797081EC}
 	EndGlobalSection
 EndGlobal

@@ -1,4 +1,4 @@
-set OutDir="../Server/Server_rc2/NFComm/NFMessageDefine/"
+set OutDir="../Server/NFMessageDefine/"
 protoc.exe  --cpp_out=%OutDir%  ./msg.proto
 protoc.exe  --cpp_out=%OutDir%  ./achieve.proto
 protoc.exe  --cpp_out=%OutDir%  ./activity.proto

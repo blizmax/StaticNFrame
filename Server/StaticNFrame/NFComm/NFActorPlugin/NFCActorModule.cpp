@@ -53,7 +53,7 @@ bool NFCActorModule::Finalize()
 {
 	for (auto it = mxActorMap.begin(); it != mxActorMap.end(); ++it)
 	{
-		delete it->second;
+		NFSafeDelete(it->second);
 	}
 	mxActorMap.clear();
 	return true;
@@ -102,19 +102,19 @@ bool NFCActorModule::HandlerEx(const NFIActorMessage& message, const int from)
 
 bool NFCActorModule::ExecuteEvent()
 {
-	NFIActorMessage xMsg;
+	std::list<NFIActorMessage> xListMsg;
 	bool bRet;
-	bRet = mxQueue.Pop(xMsg);
-	while (bRet)
+	bRet = mxQueue.Pop(xListMsg);
+	if (bRet)
 	{
-		BEGIN_PROFILE(__FUNCTION__);
-		if (xMsg.msgType != NFIActorMessage::ACTOR_MSG_TYPE_COMPONENT && xMsg.xEndFuncptr != nullptr)
+		for (auto it = xListMsg.begin(); it != xListMsg.end(); ++it)
 		{
-			xMsg.xEndFuncptr(xMsg.self, xMsg.nFormActor, xMsg.nMsgID, xMsg.data);
+			NFIActorMessage& xMsg = *it;
+			if (xMsg.msgType != NFIActorMessage::ACTOR_MSG_TYPE_COMPONENT && xMsg.xEndFuncptr != nullptr)
+			{
+				xMsg.xEndFuncptr(xMsg.self, xMsg.nFromActor, xMsg.nMsgID, xMsg.data);
+			}
 		}
-
-		bRet = mxQueue.Pop(xMsg);
-		END_PROFILE();
 	}
 
 	return true;
@@ -130,14 +130,11 @@ bool NFCActorModule::SendMsgToActor(const int nActorIndex, uint64_t objectID, co
 		xMessage.msgType = NFIActorMessage::ACTOR_MSG_TYPE_COMPONENT;
 		xMessage.data = strArg;
 		xMessage.nMsgID = nEventID;
-		if (m_pMainActor)
-		{
-			xMessage.nFormActor = m_pMainActor->GetAddress().AsInteger();
-		}
 		xMessage.self = objectID;
 
 		if (m_pFramework && m_pMainActor)
 		{
+			xMessage.nFromActor = m_pMainActor->GetAddress().AsInteger();
 			return m_pFramework->Send(xMessage, m_pMainActor->GetAddress(), pActor->GetAddress());
 		}
 	}
@@ -160,8 +157,14 @@ bool NFCActorModule::AddComponent(const int nActorIndex, NFIComponent* pComponen
 
 bool NFCActorModule::ReleaseActor(const int nActorIndex)
 {
-	mxActorMap.erase(nActorIndex);
-	return true;
+	auto it = mxActorMap.find(nActorIndex);
+	if (it != mxActorMap.end())
+	{
+		NFSafeDelete(it->second);
+		mxActorMap.erase(it);
+		return true;
+	}
+	return false;
 }
 
 bool NFCActorModule::AddEndFunc(const int nActorIndex, const int nSubMsgID, ACTOR_PROCESS_FUNCTOR functorPtr)

@@ -28,7 +28,6 @@ public:
 	virtual bool AddEndFunc(const int nSubMsgID, ACTOR_PROCESS_FUNCTOR xEndFunctor) override;
 
 	virtual bool SendMsg(const Theron::Address& address, const NFIActorMessage& message) override;
-
 protected:
 	//handler in component
 	virtual void Handler(const NFIActorMessage& message, const Theron::Address& from) override;

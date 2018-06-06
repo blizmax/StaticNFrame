@@ -9,6 +9,7 @@
 
 #include "NFCTestActorModule.h"
 #include "NFComm/NFPluginModule/NFTask.h"
+#include "NFMessageDefine/NFMsgDefine.h"
 
 static std::map<int, int> testMap;
 
@@ -25,6 +26,7 @@ public:
 		}
 		return true;
 	}
+	std::string c;
 };
 
 class DBXTask : public NFTask
@@ -46,17 +48,34 @@ public:
 	{
 		std::cout << "dump" << std::endl;
 	}
+	int a;
 };
 
 NFCTestActorModule::NFCTestActorModule(NFIPluginManager* p)
 {
 	pPluginManager = p;
 	NFTask* pTask = new DBTask();
-	DBXTask* pXTask = reinterpret_cast<DBXTask*>(pTask);
+	DBTask* pDBTask = static_cast<DBTask*>(pTask);
+	DBXTask* pXTask = static_cast<DBXTask*>(pTask);
 	if (pXTask)
 	{
-		pXTask->Dump();
+		pXTask->a = 1;
 	}
+	std::cout << pDBTask->c << std::endl;
+
+	proto::message::PlayerInfo m_proData;
+
+	std::string typeName = m_proData.GetDescriptor()->full_name();
+
+	const google::protobuf::Descriptor* pDesc =
+    google::protobuf::DescriptorPool::generated_pool()->FindMessageTypeByName(typeName);
+
+	const google::protobuf::Message* prototype =
+    google::protobuf::MessageFactory::generated_factory()->GetPrototype(pDesc);
+
+	proto::message::PlayerInfo* new_obj = dynamic_cast<proto::message::PlayerInfo*>(prototype->New());
+
+	assert(m_proData.GetDescriptor() == pDesc);
 }
 
 NFCTestActorModule::~NFCTestActorModule()

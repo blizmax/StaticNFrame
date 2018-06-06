@@ -34,18 +34,16 @@ public:
 	NFIActorMessage()
 	{
 		nMsgID = 0;
-		nFormActor = 0;
+		nFromActor = 0;
 		msgType = ACTOR_MSG_TYPE_COMPONENT;
 		self = 0;
 	}
 
 	int nMsgID;
-	int nFormActor;
+	int nFromActor;
 	std::string data;
 	MessageType msgType;
-	////////////////////event/////////////////////////////////////////////////
 	uint64_t self;
-	//////////////////////////////////////////////////////////////////////////
 	ACTOR_PROCESS_FUNCTOR xEndFuncptr;
 };
 
@@ -84,17 +82,13 @@ public:
 	virtual bool AddEndFunc(const int nSubMsgID, ACTOR_PROCESS_FUNCTOR xEndFunctor) = 0;
 
 	virtual bool SendMsg(const Theron::Address& address, const NFIActorMessage& message) = 0;
-
 protected:
-
 	virtual void HandlerEx(const NFIActorMessage& message, const Theron::Address& from)
 	{
 	};
-
 	virtual void Handler(const NFIActorMessage& message, const Theron::Address& from)
 	{
 	};
-
 private:
 	void DefaultHandler(const NFIActorMessage& message, const Theron::Address from) //-V801
 	{

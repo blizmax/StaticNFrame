@@ -23,6 +23,7 @@
 #include "NFComm/NFPluginModule/NFITimerModule.h"
 #include "NFComm/NFNetPlugin/NFNetPlugin.h"
 #include "NFTest/NFTestPlugin/NFTestPlugin.h"
+#include <NFComm/NFMysqlPlugin/NFMysqlPlugin.h>
 
 bool NFCPluginManager::InitSingleton()
 {
@@ -85,6 +86,7 @@ bool NFCPluginManager::RegisterStaticPlugin()
 	REGISTER_STATIC_PLUGIN(this, NFKernelPlugin);
 	REGISTER_STATIC_PLUGIN(this, NFActorPlugin);
 	REGISTER_STATIC_PLUGIN(this, NFNetPlugin);
+	REGISTER_STATIC_PLUGIN(this, NFMysqlPlugin);
 	REGISTER_STATIC_PLUGIN(this, NFTestPlugin);
 	return true;
 }

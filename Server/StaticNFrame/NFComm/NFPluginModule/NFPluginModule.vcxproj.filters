@@ -61,6 +61,18 @@
     <ClInclude Include="NFDBActor.h">
       <Filter>XActor</Filter>
     </ClInclude>
+    <ClInclude Include="NFIAsyMysqlModule.h">
+      <Filter>Mysql</Filter>
+    </ClInclude>
+    <ClInclude Include="NFIMysqlDriver.h">
+      <Filter>Mysql</Filter>
+    </ClInclude>
+    <ClInclude Include="NFIMysqlDriverManager.h">
+      <Filter>Mysql</Filter>
+    </ClInclude>
+    <ClInclude Include="NFIMysqlModule.h">
+      <Filter>Mysql</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Event">
@@ -80,6 +92,9 @@
     </Filter>
     <Filter Include="XActor">
       <UniqueIdentifier>{1dbbfc05-264b-4245-81c3-09fb2c94f054}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Mysql">
+      <UniqueIdentifier>{dd0fc0b9-d562-41ed-9db8-d5ba4c613206}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

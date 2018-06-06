@@ -69,3 +69,4 @@
 #include "treasure.pb.h"
 #include "welfare.pb.h"
 #include "msg.pb.h"
+#include "mysql_db.pb.h"

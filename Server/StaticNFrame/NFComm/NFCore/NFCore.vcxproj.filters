@@ -200,5 +200,17 @@
     <ClInclude Include="NFCmdLine.h">
       <Filter>Common</Filter>
     </ClInclude>
+    <ClInclude Include="NFList.hpp">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="NFMap.hpp">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="NFMapEx.hpp">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="NFMapList.hpp">
+      <Filter>Common</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

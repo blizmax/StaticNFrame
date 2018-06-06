@@ -27,13 +27,14 @@ NFCActor::~NFCActor()
 			pCompnent->BeforeShut();
 			pCompnent->Shut();
 			pCompnent->Finalize();
-			delete pCompnent;
+			NFSafeDelete(pCompnent);
 		}
 	}
 
 	mxComponent.clear();
 	mxProcessFuntor.clear();
 	mxEndProcessFuntor.clear();
+	mxDefaultEndProcessFuntor = ACTOR_PROCESS_FUNCTOR();
 }
 
 void NFCActor::HandlerEx(const NFIActorMessage& message, const Theron::Address& from)
@@ -104,7 +105,7 @@ void NFCActor::Handler(const NFIActorMessage& message, const Theron::Address& fr
 	auto it = mxProcessFuntor.find(message.nMsgID);
 	if (it != mxProcessFuntor.end())
 	{
-		it->second(message.self, message.nFormActor, message.nMsgID, strData);
+		it->second(message.self, message.nFromActor, message.nMsgID, strData);
 	}
 	else
 	{
@@ -113,7 +114,7 @@ void NFCActor::Handler(const NFIActorMessage& message, const Theron::Address& fr
 			NFIComponent* pComponent = iterator->second;
 			if (pComponent && pComponent->Enable())
 			{
-				pComponent->OnASyncEvent(message.self, message.nFormActor, message.nMsgID, strData);
+				pComponent->OnASyncEvent(message.self, message.nFromActor, message.nMsgID, strData);
 			}
 		}
 	}
@@ -144,9 +145,9 @@ void NFCActor::Handler(const NFIActorMessage& message, const Theron::Address& fr
 
 	xReturnMessage.msgType = NFIActorMessage::ACTOR_MSG_TYPE_END_FUNC;
 	xReturnMessage.nMsgID = message.nMsgID;
-	xReturnMessage.data = std::move(strData); //¼õÉÙCOPY
+	xReturnMessage.data = strData; 
 	xReturnMessage.self = message.self;
-	xReturnMessage.nFormActor = this->GetAddress().AsInteger();
+	xReturnMessage.nFromActor = this->GetAddress().AsInteger();
 
 	Send(xReturnMessage, from);
 }
