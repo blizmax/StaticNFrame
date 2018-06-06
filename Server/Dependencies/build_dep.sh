@@ -8,6 +8,8 @@ make
 
 cp -R -f ./libmysql/libmysqlclient.a ../../../Product/Lib/Debug/
 cp -R -f ./libmysql/libmysqlclient.a ../../../Product/Lib/Release/
+cp -R -f ./libmysql/libmysqlclient.so ../../../Product/Lib/Debug/
+cp -R -f ./libmysql/libmysqlclient.so ../../../Product/Lib/Release/
 cd ..
 
 
