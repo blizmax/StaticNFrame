@@ -201,6 +201,84 @@ bool NFCMysqlDriver::Connect()
     return true;
 }
 
+std::string GetFieldsString(const google::protobuf::Reflection * pReflect, const google::protobuf::Message& message, const google::protobuf::FieldDescriptor* pFieldDesc)
+{
+	if (pReflect == nullptr || pFieldDesc == nullptr) return std::string();
+
+	switch(pFieldDesc->cpp_type())
+	{
+		case google::protobuf::FieldDescriptor::CPPTYPE_INT32:
+		{
+			int32_t value = pReflect->GetInt32(message, pFieldDesc);
+			return lexical_cast<std::string>(value);
+		}
+		break;
+		case google::protobuf::FieldDescriptor::CPPTYPE_INT64:
+		{
+			int64_t value = pReflect->GetInt64(message, pFieldDesc);
+			return lexical_cast<std::string>(value);
+		}
+		break;
+		case google::protobuf::FieldDescriptor::CPPTYPE_UINT32:
+		{
+			uint32_t value = pReflect->GetUInt32(message, pFieldDesc);
+			return lexical_cast<std::string>(value);
+
+		}
+		break;
+		case google::protobuf::FieldDescriptor::CPPTYPE_UINT64:
+		{
+			uint64_t value = pReflect->GetUInt64(message, pFieldDesc);
+			return lexical_cast<std::string>(value);
+		}
+		break;
+		case google::protobuf::FieldDescriptor::CPPTYPE_DOUBLE:
+		{
+			double value = pReflect->GetDouble(message, pFieldDesc);
+			return lexical_cast<std::string>(value);
+		}
+		break;
+		case google::protobuf::FieldDescriptor::CPPTYPE_FLOAT:
+		{
+			float value = pReflect->GetFloat(message, pFieldDesc);
+			return lexical_cast<std::string>(value);
+		}
+		break;
+		case google::protobuf::FieldDescriptor::CPPTYPE_BOOL:
+		{
+			bool value = pReflect->GetBool(message, pFieldDesc);
+			return lexical_cast<std::string>(value);
+		}
+		break;
+		case google::protobuf::FieldDescriptor::CPPTYPE_ENUM:
+		{
+			const google::protobuf::EnumValueDescriptor* pEnumDesc = pReflect->GetEnum(message, pFieldDesc);
+			if (pEnumDesc)
+			{
+				return lexical_cast<std::string>(pEnumDesc->number());
+			}
+		}
+		break;
+		case google::protobuf::FieldDescriptor::CPPTYPE_STRING:
+		{
+			std::string value = pReflect->GetString(message, pFieldDesc);
+			return value;
+		}
+		break;
+		case google::protobuf::FieldDescriptor::CPPTYPE_MESSAGE:
+		{
+			const google::protobuf::Message& value= pReflect->GetMessage(message, pFieldDesc);
+			std::string msg;
+			value.SerializePartialToString(&msg);
+			return msg;
+		}
+		break;
+	default:
+		break;
+	}
+	return std::string();
+}
+
 bool NFCMysqlDriver::Updata(const google::protobuf::Message& message)
 {
     mysqlpp::Connection* pConnection = GetConnection();
@@ -212,35 +290,126 @@ bool NFCMysqlDriver::Updata(const google::protobuf::Message& message)
 	const google::protobuf::Reflection * pReflect = message.GetReflection();
 	if (pReflect == nullptr) return false;
 
-	const google::protobuf::FieldDescriptor* pDbBaseFieldDesc = pDesc->FindFieldByLowercaseName("db_base");
-	if (pDbBaseFieldDesc == nullptr || pDbBaseFieldDesc->cpp_type() != google::protobuf::FieldDescriptor::CPPTYPE_MESSAGE) return false;
+	std::string strTableName;
+	std::string strKeyName;
+	std::string strKey;
 
-	const google::protobuf::Message& dbBaseMessage = pReflect->GetMessage(message, pDbBaseFieldDesc);
+	//处理db_base， 表名，表key
+	{
+		const google::protobuf::FieldDescriptor* pDbBaseFieldDesc = pDesc->FindFieldByLowercaseName("db_base");
+		if (pDbBaseFieldDesc == nullptr || pDbBaseFieldDesc->cpp_type() != google::protobuf::FieldDescriptor::CPPTYPE_MESSAGE) return false;
 
-	const google::protobuf::Descriptor *pDbBaseDesc = dbBaseMessage.GetDescriptor();
-	if (pDbBaseDesc == nullptr) return false;
+		const google::protobuf::Message& dbBaseMessage = pReflect->GetMessage(message, pDbBaseFieldDesc);
 
-	const google::protobuf::Reflection *pDbBaseReflect = dbBaseMessage.GetReflection();
-	if (pDbBaseReflect == nullptr) return false;
+		const google::protobuf::Descriptor *pDbBaseDesc = dbBaseMessage.GetDescriptor();
+		if (pDbBaseDesc == nullptr) return false;
 
-	const google::protobuf::FieldDescriptor* pTableNameDesc = pDbBaseDesc->FindFieldByLowercaseName("table_name");
-	if (pTableNameDesc == nullptr || pTableNameDesc->cpp_type() != google::protobuf::FieldDescriptor::CPPTYPE_STRING) return false;
+		const google::protobuf::Reflection *pDbBaseReflect = dbBaseMessage.GetReflection();
+		if (pDbBaseReflect == nullptr) return false;
 
-	const google::protobuf::FieldDescriptor* pKeyNameDesc = pDbBaseDesc->FindFieldByLowercaseName("field_key_name");
-	if (pKeyNameDesc == nullptr || pKeyNameDesc->cpp_type() != google::protobuf::FieldDescriptor::CPPTYPE_STRING) return false;
+		const google::protobuf::FieldDescriptor* pTableNameDesc = pDbBaseDesc->FindFieldByLowercaseName("table_name");
+		if (pTableNameDesc == nullptr || pTableNameDesc->cpp_type() != google::protobuf::FieldDescriptor::CPPTYPE_STRING) return false;
 
-	const google::protobuf::FieldDescriptor* pKeyDesc = pDbBaseDesc->FindFieldByLowercaseName("field_key");
-	if (pKeyDesc == nullptr || pKeyDesc->cpp_type() != google::protobuf::FieldDescriptor::CPPTYPE_STRING) return false;
+		strTableName = pDbBaseReflect->GetString(dbBaseMessage, pTableNameDesc);
+	}
 
-	std::string strTableName = pDbBaseReflect->GetString(dbBaseMessage, pTableNameDesc);
-	std::string strKeyName = pDbBaseReflect->GetString(dbBaseMessage, pKeyNameDesc);
-	std::string strKey = pDbBaseReflect->GetString(dbBaseMessage, pKeyDesc);
+	{
+		const google::protobuf::FieldDescriptor* pDbFieldsFieldDesc = pDesc->FindFieldByLowercaseName("db_fields");
+		if (pDbFieldsFieldDesc == nullptr || pDbFieldsFieldDesc->cpp_type() != google::protobuf::FieldDescriptor::CPPTYPE_MESSAGE) return false;
 
-	bool bExist = false;
-    if (!Exists(strTableName, strKey, bExist, strKeyName))
-    {
-        return false;
-    }
+		const google::protobuf::Message& dbFieldsMessage = pReflect->GetMessage(message, pDbFieldsFieldDesc);
+
+		const google::protobuf::Descriptor *pDbFieldsDesc = dbFieldsMessage.GetDescriptor();
+		if (pDbFieldsDesc == nullptr) return false;
+
+		const google::protobuf::Reflection *pDbFieldsReflect = dbFieldsMessage.GetReflection();
+		if (pDbFieldsReflect == nullptr) return false;
+
+		if (pDbFieldsDesc->field_count() <= 0) return false;
+
+		{
+			const google::protobuf::FieldDescriptor* pKeyFieldDesc = pDbFieldsDesc->field(0);
+			if (pKeyFieldDesc == nullptr) return false;
+
+			strKeyName = pKeyFieldDesc->name();
+			strKey = GetFieldsString(pDbFieldsReflect, dbFieldsMessage, pKeyFieldDesc);
+		}
+
+		bool bExist = false;
+		if (!Exists(strTableName, strKey, bExist, strKeyName))
+		{
+			return false;
+		}
+
+		NFMYSQLTRYBEGIN
+		mysqlpp::Query query = pConnection->query();
+		if (bExist)
+		{
+			// update
+			query << "UPDATE " << strTableName << " SET ";
+			for (int i = 0; i < pDbFieldsDesc->field_count(); ++i)
+			{
+				if (i == 0)
+				{
+					if (pDbFieldsDesc->field(i) != nullptr)
+					{
+						query << pDbFieldsDesc->field(i)->name() << " = " << mysqlpp::quote << GetFieldsString(pDbFieldsReflect, dbFieldsMessage, pDbFieldsDesc->field(i));
+					}
+				}
+				else
+				{
+					if (pDbFieldsDesc->field(i) != nullptr)
+					{
+						query << "," << pDbFieldsDesc->field(i)->name() << " = " << mysqlpp::quote << GetFieldsString(pDbFieldsReflect, dbFieldsMessage, pDbFieldsDesc->field(i));
+					}
+				}
+			}
+
+			query << " WHERE " << strKeyName << " = " << mysqlpp::quote << strKey << ";";
+		}
+		else
+		{
+			// insert
+			query << "INSERT INTO " << strTableName << "(" << strKeyName << ",";
+			for (size_t i = 1; i < pDbFieldsDesc->field_count(); ++i)
+			{
+				if (pDbFieldsDesc->field(i) != nullptr)
+				{
+					if (i == 1)
+					{
+						query << pDbFieldsDesc->field(i)->name();
+					}
+					else
+					{
+						query << ", " << pDbFieldsDesc->field(i)->name();
+					}
+				}
+			}
+
+			query << ") VALUES(" << mysqlpp::quote << strKey << ",";
+			for (size_t i = 1; i < pDbFieldsDesc->field_count(); ++i)
+			{
+				if (pDbFieldsDesc->field(i) != nullptr)
+				{
+					if (i == 1)
+					{
+						query << mysqlpp::quote << GetFieldsString(pDbFieldsReflect, dbFieldsMessage, pDbFieldsDesc->field(i));
+					}
+					else
+					{
+						query << ", " << mysqlpp::quote << GetFieldsString(pDbFieldsReflect, dbFieldsMessage, pDbFieldsDesc->field(i));
+					}
+				}
+			}
+
+			query << ");";
+		}
+
+		query.execute();
+		query.reset();
+		NFMYSQLTRYEND("update or insert error")
+	}
+
 	return true;
 }
 

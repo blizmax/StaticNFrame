@@ -24,6 +24,9 @@ namespace {
 const ::google::protobuf::Descriptor* message_db_base_descriptor_ = NULL;
 const ::google::protobuf::internal::GeneratedMessageReflection*
   message_db_base_reflection_ = NULL;
+const ::google::protobuf::Descriptor* mysql_role_logout_descriptor_ = NULL;
+const ::google::protobuf::internal::GeneratedMessageReflection*
+  mysql_role_logout_reflection_ = NULL;
 const ::google::protobuf::Descriptor* update_player_descriptor_ = NULL;
 const ::google::protobuf::internal::GeneratedMessageReflection*
   update_player_reflection_ = NULL;
@@ -54,9 +57,33 @@ void protobuf_AssignDesc_mysql_5fdb_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(message_db_base));
-  update_player_descriptor_ = file->message_type(1);
-  static const int update_player_offsets_[1] = {
+  mysql_role_logout_descriptor_ = file->message_type(1);
+  static const int mysql_role_logout_offsets_[9] = {
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(mysql_role_logout, id_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(mysql_role_logout, user_id_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(mysql_role_logout, role_id_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(mysql_role_logout, role_name_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(mysql_role_logout, gid_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(mysql_role_logout, pid_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(mysql_role_logout, server_id_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(mysql_role_logout, reg_time_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(mysql_role_logout, is_gunfu_),
+  };
+  mysql_role_logout_reflection_ =
+    new ::google::protobuf::internal::GeneratedMessageReflection(
+      mysql_role_logout_descriptor_,
+      mysql_role_logout::default_instance_,
+      mysql_role_logout_offsets_,
+      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(mysql_role_logout, _has_bits_[0]),
+      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(mysql_role_logout, _unknown_fields_),
+      -1,
+      ::google::protobuf::DescriptorPool::generated_pool(),
+      ::google::protobuf::MessageFactory::generated_factory(),
+      sizeof(mysql_role_logout));
+  update_player_descriptor_ = file->message_type(2);
+  static const int update_player_offsets_[2] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(update_player, db_base_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(update_player, db_fields_),
   };
   update_player_reflection_ =
     new ::google::protobuf::internal::GeneratedMessageReflection(
@@ -84,6 +111,8 @@ void protobuf_RegisterTypes(const ::std::string&) {
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
     message_db_base_descriptor_, &message_db_base::default_instance());
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
+    mysql_role_logout_descriptor_, &mysql_role_logout::default_instance());
+  ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
     update_player_descriptor_, &update_player::default_instance());
 }
 
@@ -92,6 +121,8 @@ void protobuf_RegisterTypes(const ::std::string&) {
 void protobuf_ShutdownFile_mysql_5fdb_2eproto() {
   delete message_db_base::default_instance_;
   delete message_db_base_reflection_;
+  delete mysql_role_logout::default_instance_;
+  delete mysql_role_logout_reflection_;
   delete update_player::default_instance_;
   delete update_player_reflection_;
 }
@@ -105,14 +136,22 @@ void protobuf_AddDesc_mysql_5fdb_2eproto() {
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
     "\n\016mysql_db.proto\022\rproto.message\"P\n\017messa"
     "ge_db_base\022\022\n\ntable_name\030\001 \001(\t\022\026\n\016field_"
-    "key_name\030\002 \001(\t\022\021\n\tfield_key\030\003 \001(\t\"@\n\rupd"
-    "ate_player\022/\n\007db_base\030\001 \001(\0132\036.proto.mess"
-    "age.message_db_baseB\017\n\rproto.message", 196);
+    "key_name\030\002 \001(\t\022\021\n\tfield_key\030\003 \001(\t\"\245\001\n\021my"
+    "sql_role_logout\022\n\n\002id\030\001 \001(\004\022\017\n\007user_id\030\002"
+    " \001(\t\022\017\n\007role_id\030\003 \001(\004\022\021\n\trole_name\030\004 \001(\t"
+    "\022\013\n\003gid\030\005 \001(\r\022\013\n\003pid\030\006 \001(\r\022\021\n\tserver_id\030"
+    "\007 \001(\r\022\020\n\010reg_time\030\010 \001(\004\022\020\n\010is_gunfu\030\t \001("
+    "\004\"u\n\rupdate_player\022/\n\007db_base\030\001 \001(\0132\036.pr"
+    "oto.message.message_db_base\0223\n\tdb_fields"
+    "\030\002 \001(\0132 .proto.message.mysql_role_logout"
+    "B\017\n\rproto.message", 417);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "mysql_db.proto", &protobuf_RegisterTypes);
   message_db_base::default_instance_ = new message_db_base();
+  mysql_role_logout::default_instance_ = new mysql_role_logout();
   update_player::default_instance_ = new update_player();
   message_db_base::default_instance_->InitAsDefaultInstance();
+  mysql_role_logout::default_instance_->InitAsDefaultInstance();
   update_player::default_instance_->InitAsDefaultInstance();
   ::google::protobuf::internal::OnShutdown(&protobuf_ShutdownFile_mysql_5fdb_2eproto);
 }
@@ -466,7 +505,576 @@ void message_db_base::Swap(message_db_base* other) {
 // ===================================================================
 
 #ifndef _MSC_VER
+const int mysql_role_logout::kIdFieldNumber;
+const int mysql_role_logout::kUserIdFieldNumber;
+const int mysql_role_logout::kRoleIdFieldNumber;
+const int mysql_role_logout::kRoleNameFieldNumber;
+const int mysql_role_logout::kGidFieldNumber;
+const int mysql_role_logout::kPidFieldNumber;
+const int mysql_role_logout::kServerIdFieldNumber;
+const int mysql_role_logout::kRegTimeFieldNumber;
+const int mysql_role_logout::kIsGunfuFieldNumber;
+#endif  // !_MSC_VER
+
+mysql_role_logout::mysql_role_logout()
+  : ::google::protobuf::Message() {
+  SharedCtor();
+}
+
+void mysql_role_logout::InitAsDefaultInstance() {
+}
+
+mysql_role_logout::mysql_role_logout(const mysql_role_logout& from)
+  : ::google::protobuf::Message() {
+  SharedCtor();
+  MergeFrom(from);
+}
+
+void mysql_role_logout::SharedCtor() {
+  _cached_size_ = 0;
+  id_ = GOOGLE_ULONGLONG(0);
+  user_id_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+  role_id_ = GOOGLE_ULONGLONG(0);
+  role_name_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+  gid_ = 0u;
+  pid_ = 0u;
+  server_id_ = 0u;
+  reg_time_ = GOOGLE_ULONGLONG(0);
+  is_gunfu_ = GOOGLE_ULONGLONG(0);
+  ::memset(_has_bits_, 0, sizeof(_has_bits_));
+}
+
+mysql_role_logout::~mysql_role_logout() {
+  SharedDtor();
+}
+
+void mysql_role_logout::SharedDtor() {
+  if (user_id_ != &::google::protobuf::internal::kEmptyString) {
+    delete user_id_;
+  }
+  if (role_name_ != &::google::protobuf::internal::kEmptyString) {
+    delete role_name_;
+  }
+  if (this != default_instance_) {
+  }
+}
+
+void mysql_role_logout::SetCachedSize(int size) const {
+  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+  _cached_size_ = size;
+  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+}
+const ::google::protobuf::Descriptor* mysql_role_logout::descriptor() {
+  protobuf_AssignDescriptorsOnce();
+  return mysql_role_logout_descriptor_;
+}
+
+const mysql_role_logout& mysql_role_logout::default_instance() {
+  if (default_instance_ == NULL) protobuf_AddDesc_mysql_5fdb_2eproto();
+  return *default_instance_;
+}
+
+mysql_role_logout* mysql_role_logout::default_instance_ = NULL;
+
+mysql_role_logout* mysql_role_logout::New() const {
+  return new mysql_role_logout;
+}
+
+void mysql_role_logout::Clear() {
+  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+    id_ = GOOGLE_ULONGLONG(0);
+    if (has_user_id()) {
+      if (user_id_ != &::google::protobuf::internal::kEmptyString) {
+        user_id_->clear();
+      }
+    }
+    role_id_ = GOOGLE_ULONGLONG(0);
+    if (has_role_name()) {
+      if (role_name_ != &::google::protobuf::internal::kEmptyString) {
+        role_name_->clear();
+      }
+    }
+    gid_ = 0u;
+    pid_ = 0u;
+    server_id_ = 0u;
+    reg_time_ = GOOGLE_ULONGLONG(0);
+  }
+  if (_has_bits_[8 / 32] & (0xffu << (8 % 32))) {
+    is_gunfu_ = GOOGLE_ULONGLONG(0);
+  }
+  ::memset(_has_bits_, 0, sizeof(_has_bits_));
+  mutable_unknown_fields()->Clear();
+}
+
+bool mysql_role_logout::MergePartialFromCodedStream(
+    ::google::protobuf::io::CodedInputStream* input) {
+#define DO_(EXPRESSION) if (!(EXPRESSION)) return false
+  ::google::protobuf::uint32 tag;
+  while ((tag = input->ReadTag()) != 0) {
+    switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
+      // optional uint64 id = 1;
+      case 1: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::uint64, ::google::protobuf::internal::WireFormatLite::TYPE_UINT64>(
+                 input, &id_)));
+          set_has_id();
+        } else {
+          goto handle_uninterpreted;
+        }
+        if (input->ExpectTag(18)) goto parse_user_id;
+        break;
+      }
+
+      // optional string user_id = 2;
+      case 2: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
+         parse_user_id:
+          DO_(::google::protobuf::internal::WireFormatLite::ReadString(
+                input, this->mutable_user_id()));
+          ::google::protobuf::internal::WireFormat::VerifyUTF8String(
+            this->user_id().data(), this->user_id().length(),
+            ::google::protobuf::internal::WireFormat::PARSE);
+        } else {
+          goto handle_uninterpreted;
+        }
+        if (input->ExpectTag(24)) goto parse_role_id;
+        break;
+      }
+
+      // optional uint64 role_id = 3;
+      case 3: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
+         parse_role_id:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::uint64, ::google::protobuf::internal::WireFormatLite::TYPE_UINT64>(
+                 input, &role_id_)));
+          set_has_role_id();
+        } else {
+          goto handle_uninterpreted;
+        }
+        if (input->ExpectTag(34)) goto parse_role_name;
+        break;
+      }
+
+      // optional string role_name = 4;
+      case 4: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
+         parse_role_name:
+          DO_(::google::protobuf::internal::WireFormatLite::ReadString(
+                input, this->mutable_role_name()));
+          ::google::protobuf::internal::WireFormat::VerifyUTF8String(
+            this->role_name().data(), this->role_name().length(),
+            ::google::protobuf::internal::WireFormat::PARSE);
+        } else {
+          goto handle_uninterpreted;
+        }
+        if (input->ExpectTag(40)) goto parse_gid;
+        break;
+      }
+
+      // optional uint32 gid = 5;
+      case 5: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
+         parse_gid:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                 input, &gid_)));
+          set_has_gid();
+        } else {
+          goto handle_uninterpreted;
+        }
+        if (input->ExpectTag(48)) goto parse_pid;
+        break;
+      }
+
+      // optional uint32 pid = 6;
+      case 6: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
+         parse_pid:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                 input, &pid_)));
+          set_has_pid();
+        } else {
+          goto handle_uninterpreted;
+        }
+        if (input->ExpectTag(56)) goto parse_server_id;
+        break;
+      }
+
+      // optional uint32 server_id = 7;
+      case 7: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
+         parse_server_id:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                 input, &server_id_)));
+          set_has_server_id();
+        } else {
+          goto handle_uninterpreted;
+        }
+        if (input->ExpectTag(64)) goto parse_reg_time;
+        break;
+      }
+
+      // optional uint64 reg_time = 8;
+      case 8: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
+         parse_reg_time:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::uint64, ::google::protobuf::internal::WireFormatLite::TYPE_UINT64>(
+                 input, &reg_time_)));
+          set_has_reg_time();
+        } else {
+          goto handle_uninterpreted;
+        }
+        if (input->ExpectTag(72)) goto parse_is_gunfu;
+        break;
+      }
+
+      // optional uint64 is_gunfu = 9;
+      case 9: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
+         parse_is_gunfu:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::uint64, ::google::protobuf::internal::WireFormatLite::TYPE_UINT64>(
+                 input, &is_gunfu_)));
+          set_has_is_gunfu();
+        } else {
+          goto handle_uninterpreted;
+        }
+        if (input->ExpectAtEnd()) return true;
+        break;
+      }
+
+      default: {
+      handle_uninterpreted:
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
+          return true;
+        }
+        DO_(::google::protobuf::internal::WireFormat::SkipField(
+              input, tag, mutable_unknown_fields()));
+        break;
+      }
+    }
+  }
+  return true;
+#undef DO_
+}
+
+void mysql_role_logout::SerializeWithCachedSizes(
+    ::google::protobuf::io::CodedOutputStream* output) const {
+  // optional uint64 id = 1;
+  if (has_id()) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt64(1, this->id(), output);
+  }
+
+  // optional string user_id = 2;
+  if (has_user_id()) {
+    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
+      this->user_id().data(), this->user_id().length(),
+      ::google::protobuf::internal::WireFormat::SERIALIZE);
+    ::google::protobuf::internal::WireFormatLite::WriteString(
+      2, this->user_id(), output);
+  }
+
+  // optional uint64 role_id = 3;
+  if (has_role_id()) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt64(3, this->role_id(), output);
+  }
+
+  // optional string role_name = 4;
+  if (has_role_name()) {
+    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
+      this->role_name().data(), this->role_name().length(),
+      ::google::protobuf::internal::WireFormat::SERIALIZE);
+    ::google::protobuf::internal::WireFormatLite::WriteString(
+      4, this->role_name(), output);
+  }
+
+  // optional uint32 gid = 5;
+  if (has_gid()) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(5, this->gid(), output);
+  }
+
+  // optional uint32 pid = 6;
+  if (has_pid()) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(6, this->pid(), output);
+  }
+
+  // optional uint32 server_id = 7;
+  if (has_server_id()) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(7, this->server_id(), output);
+  }
+
+  // optional uint64 reg_time = 8;
+  if (has_reg_time()) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt64(8, this->reg_time(), output);
+  }
+
+  // optional uint64 is_gunfu = 9;
+  if (has_is_gunfu()) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt64(9, this->is_gunfu(), output);
+  }
+
+  if (!unknown_fields().empty()) {
+    ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
+        unknown_fields(), output);
+  }
+}
+
+::google::protobuf::uint8* mysql_role_logout::SerializeWithCachedSizesToArray(
+    ::google::protobuf::uint8* target) const {
+  // optional uint64 id = 1;
+  if (has_id()) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt64ToArray(1, this->id(), target);
+  }
+
+  // optional string user_id = 2;
+  if (has_user_id()) {
+    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
+      this->user_id().data(), this->user_id().length(),
+      ::google::protobuf::internal::WireFormat::SERIALIZE);
+    target =
+      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
+        2, this->user_id(), target);
+  }
+
+  // optional uint64 role_id = 3;
+  if (has_role_id()) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt64ToArray(3, this->role_id(), target);
+  }
+
+  // optional string role_name = 4;
+  if (has_role_name()) {
+    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
+      this->role_name().data(), this->role_name().length(),
+      ::google::protobuf::internal::WireFormat::SERIALIZE);
+    target =
+      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
+        4, this->role_name(), target);
+  }
+
+  // optional uint32 gid = 5;
+  if (has_gid()) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(5, this->gid(), target);
+  }
+
+  // optional uint32 pid = 6;
+  if (has_pid()) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(6, this->pid(), target);
+  }
+
+  // optional uint32 server_id = 7;
+  if (has_server_id()) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(7, this->server_id(), target);
+  }
+
+  // optional uint64 reg_time = 8;
+  if (has_reg_time()) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt64ToArray(8, this->reg_time(), target);
+  }
+
+  // optional uint64 is_gunfu = 9;
+  if (has_is_gunfu()) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt64ToArray(9, this->is_gunfu(), target);
+  }
+
+  if (!unknown_fields().empty()) {
+    target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
+        unknown_fields(), target);
+  }
+  return target;
+}
+
+int mysql_role_logout::ByteSize() const {
+  int total_size = 0;
+
+  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+    // optional uint64 id = 1;
+    if (has_id()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::UInt64Size(
+          this->id());
+    }
+
+    // optional string user_id = 2;
+    if (has_user_id()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::StringSize(
+          this->user_id());
+    }
+
+    // optional uint64 role_id = 3;
+    if (has_role_id()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::UInt64Size(
+          this->role_id());
+    }
+
+    // optional string role_name = 4;
+    if (has_role_name()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::StringSize(
+          this->role_name());
+    }
+
+    // optional uint32 gid = 5;
+    if (has_gid()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::UInt32Size(
+          this->gid());
+    }
+
+    // optional uint32 pid = 6;
+    if (has_pid()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::UInt32Size(
+          this->pid());
+    }
+
+    // optional uint32 server_id = 7;
+    if (has_server_id()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::UInt32Size(
+          this->server_id());
+    }
+
+    // optional uint64 reg_time = 8;
+    if (has_reg_time()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::UInt64Size(
+          this->reg_time());
+    }
+
+  }
+  if (_has_bits_[8 / 32] & (0xffu << (8 % 32))) {
+    // optional uint64 is_gunfu = 9;
+    if (has_is_gunfu()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::UInt64Size(
+          this->is_gunfu());
+    }
+
+  }
+  if (!unknown_fields().empty()) {
+    total_size +=
+      ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
+        unknown_fields());
+  }
+  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+  _cached_size_ = total_size;
+  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+  return total_size;
+}
+
+void mysql_role_logout::MergeFrom(const ::google::protobuf::Message& from) {
+  GOOGLE_CHECK_NE(&from, this);
+  const mysql_role_logout* source =
+    ::google::protobuf::internal::dynamic_cast_if_available<const mysql_role_logout*>(
+      &from);
+  if (source == NULL) {
+    ::google::protobuf::internal::ReflectionOps::Merge(from, this);
+  } else {
+    MergeFrom(*source);
+  }
+}
+
+void mysql_role_logout::MergeFrom(const mysql_role_logout& from) {
+  GOOGLE_CHECK_NE(&from, this);
+  if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+    if (from.has_id()) {
+      set_id(from.id());
+    }
+    if (from.has_user_id()) {
+      set_user_id(from.user_id());
+    }
+    if (from.has_role_id()) {
+      set_role_id(from.role_id());
+    }
+    if (from.has_role_name()) {
+      set_role_name(from.role_name());
+    }
+    if (from.has_gid()) {
+      set_gid(from.gid());
+    }
+    if (from.has_pid()) {
+      set_pid(from.pid());
+    }
+    if (from.has_server_id()) {
+      set_server_id(from.server_id());
+    }
+    if (from.has_reg_time()) {
+      set_reg_time(from.reg_time());
+    }
+  }
+  if (from._has_bits_[8 / 32] & (0xffu << (8 % 32))) {
+    if (from.has_is_gunfu()) {
+      set_is_gunfu(from.is_gunfu());
+    }
+  }
+  mutable_unknown_fields()->MergeFrom(from.unknown_fields());
+}
+
+void mysql_role_logout::CopyFrom(const ::google::protobuf::Message& from) {
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+void mysql_role_logout::CopyFrom(const mysql_role_logout& from) {
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool mysql_role_logout::IsInitialized() const {
+
+  return true;
+}
+
+void mysql_role_logout::Swap(mysql_role_logout* other) {
+  if (other != this) {
+    std::swap(id_, other->id_);
+    std::swap(user_id_, other->user_id_);
+    std::swap(role_id_, other->role_id_);
+    std::swap(role_name_, other->role_name_);
+    std::swap(gid_, other->gid_);
+    std::swap(pid_, other->pid_);
+    std::swap(server_id_, other->server_id_);
+    std::swap(reg_time_, other->reg_time_);
+    std::swap(is_gunfu_, other->is_gunfu_);
+    std::swap(_has_bits_[0], other->_has_bits_[0]);
+    _unknown_fields_.Swap(&other->_unknown_fields_);
+    std::swap(_cached_size_, other->_cached_size_);
+  }
+}
+
+::google::protobuf::Metadata mysql_role_logout::GetMetadata() const {
+  protobuf_AssignDescriptorsOnce();
+  ::google::protobuf::Metadata metadata;
+  metadata.descriptor = mysql_role_logout_descriptor_;
+  metadata.reflection = mysql_role_logout_reflection_;
+  return metadata;
+}
+
+
+// ===================================================================
+
+#ifndef _MSC_VER
 const int update_player::kDbBaseFieldNumber;
+const int update_player::kDbFieldsFieldNumber;
 #endif  // !_MSC_VER
 
 update_player::update_player()
@@ -476,6 +1084,7 @@ update_player::update_player()
 
 void update_player::InitAsDefaultInstance() {
   db_base_ = const_cast< ::proto::message::message_db_base*>(&::proto::message::message_db_base::default_instance());
+  db_fields_ = const_cast< ::proto::message::mysql_role_logout*>(&::proto::message::mysql_role_logout::default_instance());
 }
 
 update_player::update_player(const update_player& from)
@@ -487,6 +1096,7 @@ update_player::update_player(const update_player& from)
 void update_player::SharedCtor() {
   _cached_size_ = 0;
   db_base_ = NULL;
+  db_fields_ = NULL;
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
@@ -497,6 +1107,7 @@ update_player::~update_player() {
 void update_player::SharedDtor() {
   if (this != default_instance_) {
     delete db_base_;
+    delete db_fields_;
   }
 }
 
@@ -526,6 +1137,9 @@ void update_player::Clear() {
     if (has_db_base()) {
       if (db_base_ != NULL) db_base_->::proto::message::message_db_base::Clear();
     }
+    if (has_db_fields()) {
+      if (db_fields_ != NULL) db_fields_->::proto::message::mysql_role_logout::Clear();
+    }
   }
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
   mutable_unknown_fields()->Clear();
@@ -543,6 +1157,20 @@ bool update_player::MergePartialFromCodedStream(
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
           DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
                input, mutable_db_base()));
+        } else {
+          goto handle_uninterpreted;
+        }
+        if (input->ExpectTag(18)) goto parse_db_fields;
+        break;
+      }
+
+      // optional .proto.message.mysql_role_logout db_fields = 2;
+      case 2: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
+         parse_db_fields:
+          DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
+               input, mutable_db_fields()));
         } else {
           goto handle_uninterpreted;
         }
@@ -574,6 +1202,12 @@ void update_player::SerializeWithCachedSizes(
       1, this->db_base(), output);
   }
 
+  // optional .proto.message.mysql_role_logout db_fields = 2;
+  if (has_db_fields()) {
+    ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
+      2, this->db_fields(), output);
+  }
+
   if (!unknown_fields().empty()) {
     ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
         unknown_fields(), output);
@@ -587,6 +1221,13 @@ void update_player::SerializeWithCachedSizes(
     target = ::google::protobuf::internal::WireFormatLite::
       WriteMessageNoVirtualToArray(
         1, this->db_base(), target);
+  }
+
+  // optional .proto.message.mysql_role_logout db_fields = 2;
+  if (has_db_fields()) {
+    target = ::google::protobuf::internal::WireFormatLite::
+      WriteMessageNoVirtualToArray(
+        2, this->db_fields(), target);
   }
 
   if (!unknown_fields().empty()) {
@@ -605,6 +1246,13 @@ int update_player::ByteSize() const {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
           this->db_base());
+    }
+
+    // optional .proto.message.mysql_role_logout db_fields = 2;
+    if (has_db_fields()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
+          this->db_fields());
     }
 
   }
@@ -637,6 +1285,9 @@ void update_player::MergeFrom(const update_player& from) {
     if (from.has_db_base()) {
       mutable_db_base()->::proto::message::message_db_base::MergeFrom(from.db_base());
     }
+    if (from.has_db_fields()) {
+      mutable_db_fields()->::proto::message::mysql_role_logout::MergeFrom(from.db_fields());
+    }
   }
   mutable_unknown_fields()->MergeFrom(from.unknown_fields());
 }
@@ -661,6 +1312,7 @@ bool update_player::IsInitialized() const {
 void update_player::Swap(update_player* other) {
   if (other != this) {
     std::swap(db_base_, other->db_base_);
+    std::swap(db_fields_, other->db_fields_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
     _unknown_fields_.Swap(&other->_unknown_fields_);
     std::swap(_cached_size_, other->_cached_size_);

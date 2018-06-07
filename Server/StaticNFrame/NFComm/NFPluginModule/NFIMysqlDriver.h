@@ -44,6 +44,12 @@
 #include <set>
 #include "mysqlpp/lib/mysql++.h"
 
+namespace google{
+	namespace protobuf{
+		class Message;
+	}
+}
+
 class NFIMysqlDriver
 {
 public:
@@ -59,6 +65,7 @@ public:
     virtual bool Reconnect() = 0;
     virtual bool CanReconnect() = 0;
 
+	virtual bool Updata(const google::protobuf::Message& message) = 0;
     virtual bool Updata(const std::string& strRecordName, const std::string& strKey, const std::vector<std::string>& fieldVec, const std::vector<std::string>& valueVecconst) = 0;
     virtual bool Query(const std::string& strRecordName, const std::string& strKey, const std::vector<std::string>& fieldVec, std::vector<std::string>& valueVec, const std::string& strKeyColName = "") = 0;
     virtual bool Query(const std::string& strRecordName, int nOffset, int nRows, const std::vector<std::string>& fieldVec, std::vector<std::string>& valueVec, const std::string& strKeyColName = "") = 0;

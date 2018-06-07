@@ -10,6 +10,7 @@
 #include "NFCTestActorModule.h"
 #include "NFComm/NFPluginModule/NFTask.h"
 #include "NFMessageDefine/NFMsgDefine.h"
+#include <NFComm/NFPluginModule/NFIMysqlModule.h>
 
 static std::map<int, int> testMap;
 
@@ -83,6 +84,23 @@ NFCTestActorModule::~NFCTestActorModule()
 
 bool NFCTestActorModule::Init()
 {
+	NFIMysqlModule* m_pMysqlModule = pPluginManager->FindModule<NFIMysqlModule>();
+	m_pMysqlModule->AddMysqlServer(1, "192.168.1.15", 3306, "gamelog", "root", "123456");
+
+	proto::message::update_player player;
+	player.mutable_db_base()->set_table_name("role_registration");
+
+	player.mutable_db_fields()->set_id(111);
+	player.mutable_db_fields()->set_user_id("gaoyi111");
+	player.mutable_db_fields()->set_role_id(12345678);
+	player.mutable_db_fields()->set_role_name("gaoyi_111");
+	player.mutable_db_fields()->set_gid(1);
+	player.mutable_db_fields()->set_pid(1);
+	player.mutable_db_fields()->set_server_id(1014);
+	player.mutable_db_fields()->set_reg_time(0);
+	player.mutable_db_fields()->set_is_gunfu(0);
+	m_pMysqlModule->Updata(player);
+
 	return true;
 }
 
@@ -93,11 +111,6 @@ bool NFCTestActorModule::AfterInit()
 
 bool NFCTestActorModule::Execute()
 {
-	for (int i = 0; i < 10000; i++)
-	{
-		NFDBActorMgr::Instance()->AddTask(new DBXTask());
-	}
-	NFDBActorMgr::Instance()->OnMainThreadTick();
 	return true;
 }
 

@@ -35,6 +35,7 @@ void protobuf_AssignDesc_mysql_5fdb_2eproto();
 void protobuf_ShutdownFile_mysql_5fdb_2eproto();
 
 class message_db_base;
+class mysql_role_logout;
 class update_player;
 
 // ===================================================================
@@ -156,6 +157,178 @@ class message_db_base : public ::google::protobuf::Message {
 };
 // -------------------------------------------------------------------
 
+class mysql_role_logout : public ::google::protobuf::Message {
+ public:
+  mysql_role_logout();
+  virtual ~mysql_role_logout();
+
+  mysql_role_logout(const mysql_role_logout& from);
+
+  inline mysql_role_logout& operator=(const mysql_role_logout& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const mysql_role_logout& default_instance();
+
+  void Swap(mysql_role_logout* other);
+
+  // implements Message ----------------------------------------------
+
+  mysql_role_logout* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const mysql_role_logout& from);
+  void MergeFrom(const mysql_role_logout& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // optional uint64 id = 1;
+  inline bool has_id() const;
+  inline void clear_id();
+  static const int kIdFieldNumber = 1;
+  inline ::google::protobuf::uint64 id() const;
+  inline void set_id(::google::protobuf::uint64 value);
+
+  // optional string user_id = 2;
+  inline bool has_user_id() const;
+  inline void clear_user_id();
+  static const int kUserIdFieldNumber = 2;
+  inline const ::std::string& user_id() const;
+  inline void set_user_id(const ::std::string& value);
+  inline void set_user_id(const char* value);
+  inline void set_user_id(const char* value, size_t size);
+  inline ::std::string* mutable_user_id();
+  inline ::std::string* release_user_id();
+  inline void set_allocated_user_id(::std::string* user_id);
+
+  // optional uint64 role_id = 3;
+  inline bool has_role_id() const;
+  inline void clear_role_id();
+  static const int kRoleIdFieldNumber = 3;
+  inline ::google::protobuf::uint64 role_id() const;
+  inline void set_role_id(::google::protobuf::uint64 value);
+
+  // optional string role_name = 4;
+  inline bool has_role_name() const;
+  inline void clear_role_name();
+  static const int kRoleNameFieldNumber = 4;
+  inline const ::std::string& role_name() const;
+  inline void set_role_name(const ::std::string& value);
+  inline void set_role_name(const char* value);
+  inline void set_role_name(const char* value, size_t size);
+  inline ::std::string* mutable_role_name();
+  inline ::std::string* release_role_name();
+  inline void set_allocated_role_name(::std::string* role_name);
+
+  // optional uint32 gid = 5;
+  inline bool has_gid() const;
+  inline void clear_gid();
+  static const int kGidFieldNumber = 5;
+  inline ::google::protobuf::uint32 gid() const;
+  inline void set_gid(::google::protobuf::uint32 value);
+
+  // optional uint32 pid = 6;
+  inline bool has_pid() const;
+  inline void clear_pid();
+  static const int kPidFieldNumber = 6;
+  inline ::google::protobuf::uint32 pid() const;
+  inline void set_pid(::google::protobuf::uint32 value);
+
+  // optional uint32 server_id = 7;
+  inline bool has_server_id() const;
+  inline void clear_server_id();
+  static const int kServerIdFieldNumber = 7;
+  inline ::google::protobuf::uint32 server_id() const;
+  inline void set_server_id(::google::protobuf::uint32 value);
+
+  // optional uint64 reg_time = 8;
+  inline bool has_reg_time() const;
+  inline void clear_reg_time();
+  static const int kRegTimeFieldNumber = 8;
+  inline ::google::protobuf::uint64 reg_time() const;
+  inline void set_reg_time(::google::protobuf::uint64 value);
+
+  // optional uint64 is_gunfu = 9;
+  inline bool has_is_gunfu() const;
+  inline void clear_is_gunfu();
+  static const int kIsGunfuFieldNumber = 9;
+  inline ::google::protobuf::uint64 is_gunfu() const;
+  inline void set_is_gunfu(::google::protobuf::uint64 value);
+
+  // @@protoc_insertion_point(class_scope:proto.message.mysql_role_logout)
+ private:
+  inline void set_has_id();
+  inline void clear_has_id();
+  inline void set_has_user_id();
+  inline void clear_has_user_id();
+  inline void set_has_role_id();
+  inline void clear_has_role_id();
+  inline void set_has_role_name();
+  inline void clear_has_role_name();
+  inline void set_has_gid();
+  inline void clear_has_gid();
+  inline void set_has_pid();
+  inline void clear_has_pid();
+  inline void set_has_server_id();
+  inline void clear_has_server_id();
+  inline void set_has_reg_time();
+  inline void clear_has_reg_time();
+  inline void set_has_is_gunfu();
+  inline void clear_has_is_gunfu();
+
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+
+  ::google::protobuf::uint64 id_;
+  ::std::string* user_id_;
+  ::google::protobuf::uint64 role_id_;
+  ::std::string* role_name_;
+  ::google::protobuf::uint32 gid_;
+  ::google::protobuf::uint32 pid_;
+  ::google::protobuf::uint64 reg_time_;
+  ::google::protobuf::uint64 is_gunfu_;
+  ::google::protobuf::uint32 server_id_;
+
+  mutable int _cached_size_;
+  ::google::protobuf::uint32 _has_bits_[(9 + 31) / 32];
+
+  friend void  protobuf_AddDesc_mysql_5fdb_2eproto();
+  friend void protobuf_AssignDesc_mysql_5fdb_2eproto();
+  friend void protobuf_ShutdownFile_mysql_5fdb_2eproto();
+
+  void InitAsDefaultInstance();
+  static mysql_role_logout* default_instance_;
+};
+// -------------------------------------------------------------------
+
 class update_player : public ::google::protobuf::Message {
  public:
   update_player();
@@ -219,17 +392,29 @@ class update_player : public ::google::protobuf::Message {
   inline ::proto::message::message_db_base* release_db_base();
   inline void set_allocated_db_base(::proto::message::message_db_base* db_base);
 
+  // optional .proto.message.mysql_role_logout db_fields = 2;
+  inline bool has_db_fields() const;
+  inline void clear_db_fields();
+  static const int kDbFieldsFieldNumber = 2;
+  inline const ::proto::message::mysql_role_logout& db_fields() const;
+  inline ::proto::message::mysql_role_logout* mutable_db_fields();
+  inline ::proto::message::mysql_role_logout* release_db_fields();
+  inline void set_allocated_db_fields(::proto::message::mysql_role_logout* db_fields);
+
   // @@protoc_insertion_point(class_scope:proto.message.update_player)
  private:
   inline void set_has_db_base();
   inline void clear_has_db_base();
+  inline void set_has_db_fields();
+  inline void clear_has_db_fields();
 
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
   ::proto::message::message_db_base* db_base_;
+  ::proto::message::mysql_role_logout* db_fields_;
 
   mutable int _cached_size_;
-  ::google::protobuf::uint32 _has_bits_[(1 + 31) / 32];
+  ::google::protobuf::uint32 _has_bits_[(2 + 31) / 32];
 
   friend void  protobuf_AddDesc_mysql_5fdb_2eproto();
   friend void protobuf_AssignDesc_mysql_5fdb_2eproto();
@@ -457,6 +642,304 @@ inline void message_db_base::set_allocated_field_key(::std::string* field_key) {
 
 // -------------------------------------------------------------------
 
+// mysql_role_logout
+
+// optional uint64 id = 1;
+inline bool mysql_role_logout::has_id() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void mysql_role_logout::set_has_id() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void mysql_role_logout::clear_has_id() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void mysql_role_logout::clear_id() {
+  id_ = GOOGLE_ULONGLONG(0);
+  clear_has_id();
+}
+inline ::google::protobuf::uint64 mysql_role_logout::id() const {
+  return id_;
+}
+inline void mysql_role_logout::set_id(::google::protobuf::uint64 value) {
+  set_has_id();
+  id_ = value;
+}
+
+// optional string user_id = 2;
+inline bool mysql_role_logout::has_user_id() const {
+  return (_has_bits_[0] & 0x00000002u) != 0;
+}
+inline void mysql_role_logout::set_has_user_id() {
+  _has_bits_[0] |= 0x00000002u;
+}
+inline void mysql_role_logout::clear_has_user_id() {
+  _has_bits_[0] &= ~0x00000002u;
+}
+inline void mysql_role_logout::clear_user_id() {
+  if (user_id_ != &::google::protobuf::internal::kEmptyString) {
+    user_id_->clear();
+  }
+  clear_has_user_id();
+}
+inline const ::std::string& mysql_role_logout::user_id() const {
+  return *user_id_;
+}
+inline void mysql_role_logout::set_user_id(const ::std::string& value) {
+  set_has_user_id();
+  if (user_id_ == &::google::protobuf::internal::kEmptyString) {
+    user_id_ = new ::std::string;
+  }
+  user_id_->assign(value);
+}
+inline void mysql_role_logout::set_user_id(const char* value) {
+  set_has_user_id();
+  if (user_id_ == &::google::protobuf::internal::kEmptyString) {
+    user_id_ = new ::std::string;
+  }
+  user_id_->assign(value);
+}
+inline void mysql_role_logout::set_user_id(const char* value, size_t size) {
+  set_has_user_id();
+  if (user_id_ == &::google::protobuf::internal::kEmptyString) {
+    user_id_ = new ::std::string;
+  }
+  user_id_->assign(reinterpret_cast<const char*>(value), size);
+}
+inline ::std::string* mysql_role_logout::mutable_user_id() {
+  set_has_user_id();
+  if (user_id_ == &::google::protobuf::internal::kEmptyString) {
+    user_id_ = new ::std::string;
+  }
+  return user_id_;
+}
+inline ::std::string* mysql_role_logout::release_user_id() {
+  clear_has_user_id();
+  if (user_id_ == &::google::protobuf::internal::kEmptyString) {
+    return NULL;
+  } else {
+    ::std::string* temp = user_id_;
+    user_id_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+    return temp;
+  }
+}
+inline void mysql_role_logout::set_allocated_user_id(::std::string* user_id) {
+  if (user_id_ != &::google::protobuf::internal::kEmptyString) {
+    delete user_id_;
+  }
+  if (user_id) {
+    set_has_user_id();
+    user_id_ = user_id;
+  } else {
+    clear_has_user_id();
+    user_id_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+  }
+}
+
+// optional uint64 role_id = 3;
+inline bool mysql_role_logout::has_role_id() const {
+  return (_has_bits_[0] & 0x00000004u) != 0;
+}
+inline void mysql_role_logout::set_has_role_id() {
+  _has_bits_[0] |= 0x00000004u;
+}
+inline void mysql_role_logout::clear_has_role_id() {
+  _has_bits_[0] &= ~0x00000004u;
+}
+inline void mysql_role_logout::clear_role_id() {
+  role_id_ = GOOGLE_ULONGLONG(0);
+  clear_has_role_id();
+}
+inline ::google::protobuf::uint64 mysql_role_logout::role_id() const {
+  return role_id_;
+}
+inline void mysql_role_logout::set_role_id(::google::protobuf::uint64 value) {
+  set_has_role_id();
+  role_id_ = value;
+}
+
+// optional string role_name = 4;
+inline bool mysql_role_logout::has_role_name() const {
+  return (_has_bits_[0] & 0x00000008u) != 0;
+}
+inline void mysql_role_logout::set_has_role_name() {
+  _has_bits_[0] |= 0x00000008u;
+}
+inline void mysql_role_logout::clear_has_role_name() {
+  _has_bits_[0] &= ~0x00000008u;
+}
+inline void mysql_role_logout::clear_role_name() {
+  if (role_name_ != &::google::protobuf::internal::kEmptyString) {
+    role_name_->clear();
+  }
+  clear_has_role_name();
+}
+inline const ::std::string& mysql_role_logout::role_name() const {
+  return *role_name_;
+}
+inline void mysql_role_logout::set_role_name(const ::std::string& value) {
+  set_has_role_name();
+  if (role_name_ == &::google::protobuf::internal::kEmptyString) {
+    role_name_ = new ::std::string;
+  }
+  role_name_->assign(value);
+}
+inline void mysql_role_logout::set_role_name(const char* value) {
+  set_has_role_name();
+  if (role_name_ == &::google::protobuf::internal::kEmptyString) {
+    role_name_ = new ::std::string;
+  }
+  role_name_->assign(value);
+}
+inline void mysql_role_logout::set_role_name(const char* value, size_t size) {
+  set_has_role_name();
+  if (role_name_ == &::google::protobuf::internal::kEmptyString) {
+    role_name_ = new ::std::string;
+  }
+  role_name_->assign(reinterpret_cast<const char*>(value), size);
+}
+inline ::std::string* mysql_role_logout::mutable_role_name() {
+  set_has_role_name();
+  if (role_name_ == &::google::protobuf::internal::kEmptyString) {
+    role_name_ = new ::std::string;
+  }
+  return role_name_;
+}
+inline ::std::string* mysql_role_logout::release_role_name() {
+  clear_has_role_name();
+  if (role_name_ == &::google::protobuf::internal::kEmptyString) {
+    return NULL;
+  } else {
+    ::std::string* temp = role_name_;
+    role_name_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+    return temp;
+  }
+}
+inline void mysql_role_logout::set_allocated_role_name(::std::string* role_name) {
+  if (role_name_ != &::google::protobuf::internal::kEmptyString) {
+    delete role_name_;
+  }
+  if (role_name) {
+    set_has_role_name();
+    role_name_ = role_name;
+  } else {
+    clear_has_role_name();
+    role_name_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+  }
+}
+
+// optional uint32 gid = 5;
+inline bool mysql_role_logout::has_gid() const {
+  return (_has_bits_[0] & 0x00000010u) != 0;
+}
+inline void mysql_role_logout::set_has_gid() {
+  _has_bits_[0] |= 0x00000010u;
+}
+inline void mysql_role_logout::clear_has_gid() {
+  _has_bits_[0] &= ~0x00000010u;
+}
+inline void mysql_role_logout::clear_gid() {
+  gid_ = 0u;
+  clear_has_gid();
+}
+inline ::google::protobuf::uint32 mysql_role_logout::gid() const {
+  return gid_;
+}
+inline void mysql_role_logout::set_gid(::google::protobuf::uint32 value) {
+  set_has_gid();
+  gid_ = value;
+}
+
+// optional uint32 pid = 6;
+inline bool mysql_role_logout::has_pid() const {
+  return (_has_bits_[0] & 0x00000020u) != 0;
+}
+inline void mysql_role_logout::set_has_pid() {
+  _has_bits_[0] |= 0x00000020u;
+}
+inline void mysql_role_logout::clear_has_pid() {
+  _has_bits_[0] &= ~0x00000020u;
+}
+inline void mysql_role_logout::clear_pid() {
+  pid_ = 0u;
+  clear_has_pid();
+}
+inline ::google::protobuf::uint32 mysql_role_logout::pid() const {
+  return pid_;
+}
+inline void mysql_role_logout::set_pid(::google::protobuf::uint32 value) {
+  set_has_pid();
+  pid_ = value;
+}
+
+// optional uint32 server_id = 7;
+inline bool mysql_role_logout::has_server_id() const {
+  return (_has_bits_[0] & 0x00000040u) != 0;
+}
+inline void mysql_role_logout::set_has_server_id() {
+  _has_bits_[0] |= 0x00000040u;
+}
+inline void mysql_role_logout::clear_has_server_id() {
+  _has_bits_[0] &= ~0x00000040u;
+}
+inline void mysql_role_logout::clear_server_id() {
+  server_id_ = 0u;
+  clear_has_server_id();
+}
+inline ::google::protobuf::uint32 mysql_role_logout::server_id() const {
+  return server_id_;
+}
+inline void mysql_role_logout::set_server_id(::google::protobuf::uint32 value) {
+  set_has_server_id();
+  server_id_ = value;
+}
+
+// optional uint64 reg_time = 8;
+inline bool mysql_role_logout::has_reg_time() const {
+  return (_has_bits_[0] & 0x00000080u) != 0;
+}
+inline void mysql_role_logout::set_has_reg_time() {
+  _has_bits_[0] |= 0x00000080u;
+}
+inline void mysql_role_logout::clear_has_reg_time() {
+  _has_bits_[0] &= ~0x00000080u;
+}
+inline void mysql_role_logout::clear_reg_time() {
+  reg_time_ = GOOGLE_ULONGLONG(0);
+  clear_has_reg_time();
+}
+inline ::google::protobuf::uint64 mysql_role_logout::reg_time() const {
+  return reg_time_;
+}
+inline void mysql_role_logout::set_reg_time(::google::protobuf::uint64 value) {
+  set_has_reg_time();
+  reg_time_ = value;
+}
+
+// optional uint64 is_gunfu = 9;
+inline bool mysql_role_logout::has_is_gunfu() const {
+  return (_has_bits_[0] & 0x00000100u) != 0;
+}
+inline void mysql_role_logout::set_has_is_gunfu() {
+  _has_bits_[0] |= 0x00000100u;
+}
+inline void mysql_role_logout::clear_has_is_gunfu() {
+  _has_bits_[0] &= ~0x00000100u;
+}
+inline void mysql_role_logout::clear_is_gunfu() {
+  is_gunfu_ = GOOGLE_ULONGLONG(0);
+  clear_has_is_gunfu();
+}
+inline ::google::protobuf::uint64 mysql_role_logout::is_gunfu() const {
+  return is_gunfu_;
+}
+inline void mysql_role_logout::set_is_gunfu(::google::protobuf::uint64 value) {
+  set_has_is_gunfu();
+  is_gunfu_ = value;
+}
+
+// -------------------------------------------------------------------
+
 // update_player
 
 // optional .proto.message.message_db_base db_base = 1;
@@ -494,6 +977,44 @@ inline void update_player::set_allocated_db_base(::proto::message::message_db_ba
     set_has_db_base();
   } else {
     clear_has_db_base();
+  }
+}
+
+// optional .proto.message.mysql_role_logout db_fields = 2;
+inline bool update_player::has_db_fields() const {
+  return (_has_bits_[0] & 0x00000002u) != 0;
+}
+inline void update_player::set_has_db_fields() {
+  _has_bits_[0] |= 0x00000002u;
+}
+inline void update_player::clear_has_db_fields() {
+  _has_bits_[0] &= ~0x00000002u;
+}
+inline void update_player::clear_db_fields() {
+  if (db_fields_ != NULL) db_fields_->::proto::message::mysql_role_logout::Clear();
+  clear_has_db_fields();
+}
+inline const ::proto::message::mysql_role_logout& update_player::db_fields() const {
+  return db_fields_ != NULL ? *db_fields_ : *default_instance_->db_fields_;
+}
+inline ::proto::message::mysql_role_logout* update_player::mutable_db_fields() {
+  set_has_db_fields();
+  if (db_fields_ == NULL) db_fields_ = new ::proto::message::mysql_role_logout;
+  return db_fields_;
+}
+inline ::proto::message::mysql_role_logout* update_player::release_db_fields() {
+  clear_has_db_fields();
+  ::proto::message::mysql_role_logout* temp = db_fields_;
+  db_fields_ = NULL;
+  return temp;
+}
+inline void update_player::set_allocated_db_fields(::proto::message::mysql_role_logout* db_fields) {
+  delete db_fields_;
+  db_fields_ = db_fields;
+  if (db_fields) {
+    set_has_db_fields();
+  } else {
+    clear_has_db_fields();
   }
 }
 

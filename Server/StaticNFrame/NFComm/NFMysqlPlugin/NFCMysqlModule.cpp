@@ -39,11 +39,22 @@ bool NFCMysqlModule::AfterInit()
     return true;
 }
 
+bool NFCMysqlModule::Updata(const google::protobuf::Message& message)
+{
+    NFIMysqlDriver* pDriver = m_pMysqlDriverManager->GetMysqlDriver();
+    if (pDriver)
+    {
+        return pDriver->Updata(message);
+    }
+
+    return false;
+}
+
 bool NFCMysqlModule::Execute()
 {
     if (mnLastCheckTime + 10 > (uint64_t)NFGetSecondTime())
     {
-        return false;
+        return true;
     }
 
     mnLastCheckTime = (uint64_t)NFGetSecondTime();

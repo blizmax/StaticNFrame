@@ -5,11 +5,23 @@ package proto.message;
 message message_db_base
 {
 	optional string table_name = 1; //数据库表名
-	optional string field_key_name = 2; //索引key名字
-	optional string field_key = 3; //索引key值
+}
+
+message mysql_role_logout
+{
+	optional uint64 id = 1;
+	optional string user_id = 2;
+	optional uint64 role_id = 3;
+	optional string role_name = 4;
+	optional uint32 gid = 5;
+	optional uint32 pid = 6;
+	optional uint32 server_id = 7;
+	optional uint64 reg_time = 8;
+	optional uint64 is_gunfu = 9;
 }
 
 message update_player
 {
 	optional message_db_base db_base = 1; //数据库基础数据
+	optional mysql_role_logout db_fields = 2;
 }

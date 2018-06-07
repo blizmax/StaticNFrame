@@ -27,6 +27,7 @@ public:
     virtual bool AfterInit() override;
 
     //////////////////////////////////////////////////////////////////////////
+    virtual bool Updata(const google::protobuf::Message& message) override;
     virtual bool Updata(const std::string& strRecordName, const std::string& strKey, const std::vector<std::string>& fieldVec, const std::vector<std::string>& valueVec) override;
     virtual bool Query(const std::string& strRecordName, const std::string& strKey, const std::vector<std::string>& fieldVec, std::vector<std::string>& valueVec, const std::string& strKeyColName = "") override;
     virtual bool Select(const std::string& strRecordName, const std::string& strKey, const std::vector<std::string>& fieldVec, std::vector<std::string>& valueVec, const std::string& strKeyColName = "") override;
