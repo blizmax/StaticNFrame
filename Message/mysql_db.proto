@@ -1,27 +1,66 @@
 option java_package = "proto.message";
 package proto.message;
 
+import "mail.proto";
+
 //*****************************保存数据到db方案********************************//
 message message_db_base
 {
 	optional string table_name = 1; //数据库表名
+	optional uint32 offset = 2;		//查找数据的时候， 多条数据去偏移， 比如取出50条，要第10条开始取
+	optional uint32 rows = 3;		//取出多条数据
+	optional string order_key = 4;  //取数据的时候按照这个key排序取， 如果为空，默认按照db_fields第一条排序取
 }
 
-message mysql_role_logout
+message mysql_player
 {
-	optional uint64 id = 1;
-	optional string user_id = 2;
-	optional uint64 role_id = 3;
-	optional string role_name = 4;
-	optional uint32 gid = 5;
-	optional uint32 pid = 6;
-	optional uint32 server_id = 7;
-	optional uint64 reg_time = 8;
-	optional uint64 is_gunfu = 9;
+	optional uint64 charid = 1;
+	optional string account = 2;
+	optional string charname = 3;
+	optional uint32 serverid = 4;
+	optional uint32 career = 5;
+}
+
+message query_player_cond
+{
+	optional uint32 serverid = 1;
 }
 
 message update_player
 {
 	optional message_db_base db_base = 1; //数据库基础数据
-	optional mysql_role_logout db_fields = 2;
+	optional mysql_player db_fields = 2;
+}
+
+message query_player
+{
+	optional message_db_base db_base = 1; //数据库基础数据
+	repeated mysql_player db_fields = 2;
+	optional query_player_cond db_cond = 3;
+}
+
+message table_mail
+{
+	optional uint64 mailid = 1;
+	optional uint64 ownerid = 2;
+	optional MixMailData mixinfo = 3;
+	optional uint32 mail_type = 4;
+}
+
+message query_mail_cond
+{
+	optional uint64 mailid = 1;
+}
+
+message query_mail
+{
+	optional message_db_base db_base = 1; //数据库基础数据
+	optional table_mail db_fields = 2;
+	optional query_mail_cond db_cond = 3;
+}
+
+message update_mail
+{
+	optional message_db_base db_base = 1; //数据库基础数据
+	optional table_mail db_fields = 2;
 }
