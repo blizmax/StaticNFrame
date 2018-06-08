@@ -30,20 +30,21 @@ NF_EXPORT void DllStopPlugin(NFIPluginManager* pm)
 
 int NFMysqlPlugin::GetPluginVersion()
 {
-    return 0;
+	return 0;
 }
 
 std::string NFMysqlPlugin::GetPluginName()
 {
-    return GET_CLASS_NAME(NFMysqlPlugin);
+	return GET_CLASS_NAME(NFMysqlPlugin);
 }
 
 void NFMysqlPlugin::Install()
 {
-    REGISTER_MODULE(pPluginManager, NFIMysqlModule, NFCMysqlModule)
+	REGISTER_MODULE(pPluginManager, NFIMysqlModule, NFCMysqlModule)
 }
 
 void NFMysqlPlugin::Uninstall()
 {
-    UNREGISTER_MODULE(pPluginManager, NFIMysqlModule, NFCMysqlModule)
+	UNREGISTER_MODULE(pPluginManager, NFIMysqlModule, NFCMysqlModule)
 }
+

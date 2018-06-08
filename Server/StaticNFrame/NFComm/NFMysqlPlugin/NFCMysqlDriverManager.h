@@ -1,4 +1,3 @@
-
 // -------------------------------------------------------------------------
 //    @FileName         :    NFCMysqlDriverManager.h
 //    @Author           :    Chuanbo.Guo
@@ -19,13 +18,14 @@ class NFCMysqlDriverManager : public NFIMysqlDriverManager
 public:
 	NFCMysqlDriverManager();
 
-    virtual ~NFCMysqlDriverManager();
+	virtual ~NFCMysqlDriverManager();
 
-    virtual bool AddMysqlServer(const int nServerID, const std::string& strIP, const int nPort, const std::string strDBName, const std::string strDBUser, const std::string strDBPwd, const int nRconnectTime/* = 10*/, const int nRconneCount/* = -1*/) override;
-    virtual NFIMysqlDriver* GetMysqlDriver() override;
-    virtual void CheckMysql() override;
+	virtual bool AddMysqlServer(const int nServerID, const std::string& strIP, const int nPort, const std::string strDBName, const std::string strDBUser, const std::string strDBPwd, const int nRconnectTime/* = 10*/, const int nRconneCount/* = -1*/) override;
+	virtual NFIMysqlDriver* GetMysqlDriver() override;
+	virtual void CheckMysql() override;
 protected:
-    NFMap<int, NFIMysqlDriver> mvMysql;
-    NFMap<int, NFIMysqlDriver> mvInvalidMsyql;
-    uint64_t mnLastCheckTime;
+	NFMap<int, NFIMysqlDriver> mvMysql;
+	NFMap<int, NFIMysqlDriver> mvInvalidMsyql;
+	uint64_t mnLastCheckTime;
 };
+

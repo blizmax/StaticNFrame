@@ -14,9 +14,9 @@
 
 NFCMysqlModule::NFCMysqlModule(NFIPluginManager* p)
 {
-    pPluginManager = p;
-    mnLastCheckTime = 0;
-    m_pMysqlDriverManager = NF_NEW NFCMysqlDriverManager();
+	pPluginManager = p;
+	mnLastCheckTime = 0;
+	m_pMysqlDriverManager = NF_NEW NFCMysqlDriverManager();
 }
 
 NFCMysqlModule::~NFCMysqlModule()
@@ -26,119 +26,142 @@ NFCMysqlModule::~NFCMysqlModule()
 
 bool NFCMysqlModule::Init()
 {
-    return true;
+	return true;
 }
 
 bool NFCMysqlModule::Shut()
 {
-    return true;
+	return true;
 }
 
 bool NFCMysqlModule::AfterInit()
 {
-    return true;
+	return true;
 }
 
 bool NFCMysqlModule::Updata(const google::protobuf::Message& message)
 {
-    NFIMysqlDriver* pDriver = m_pMysqlDriverManager->GetMysqlDriver();
-    if (pDriver)
-    {
-        return pDriver->Updata(message);
-    }
+	NFIMysqlDriver* pDriver = m_pMysqlDriverManager->GetMysqlDriver();
+	if (pDriver)
+	{
+		return pDriver->Updata(message);
+	}
 
-    return false;
+	return false;
+}
+
+bool NFCMysqlModule::Query(google::protobuf::Message& message)
+{
+	NFIMysqlDriver* pDriver = m_pMysqlDriverManager->GetMysqlDriver();
+	if (pDriver)
+	{
+		return pDriver->Query(message);
+	}
+
+	return false;
+}
+
+bool NFCMysqlModule::QueryMore(google::protobuf::Message& message)
+{
+	NFIMysqlDriver* pDriver = m_pMysqlDriverManager->GetMysqlDriver();
+	if (pDriver)
+	{
+		return pDriver->QueryMore(message);
+	}
+
+	return false;	
+}
+
+bool NFCMysqlModule::Updata(const std::string& strTableName, const std::string& strKeyColName, const std::string& strKey, const std::vector<std::string>& fieldVec, const std::vector<std::string>& valueVec)
+{
+	NFIMysqlDriver* pDriver = m_pMysqlDriverManager->GetMysqlDriver();
+	if (pDriver)
+	{
+		return pDriver->Updata(strTableName, strKeyColName, strKey, fieldVec, valueVec);
+	}
+
+	return false;
+}
+
+bool NFCMysqlModule::Query(const std::string& strTableName, const std::string& strKeyColName, const std::string& strKey, const std::vector<std::string>& fieldVec, std::vector<std::string>& valueVec)
+{
+	NFIMysqlDriver* pDriver = m_pMysqlDriverManager->GetMysqlDriver();
+	if (pDriver)
+	{
+		return pDriver->Query(strTableName, strKeyColName, strKey, fieldVec, valueVec);
+	}
+
+	return false;
+}
+
+bool NFCMysqlModule::Query(const std::string& strTableName, const std::string& strKeyColName, int nOffset, int nRows, const std::vector<std::string>& fieldVec, std::vector<std::string>& valueVec)
+{
+	NFIMysqlDriver* pDriver = m_pMysqlDriverManager->GetMysqlDriver();
+	if (pDriver)
+	{
+		return pDriver->Query(strTableName, strKeyColName, nOffset, nRows, fieldVec, valueVec);
+	}
+
+	return false;
 }
 
 bool NFCMysqlModule::Execute()
 {
-    if (mnLastCheckTime + 10 > (uint64_t)NFGetSecondTime())
-    {
-        return true;
-    }
+	if (mnLastCheckTime + 10 > (uint64_t)NFGetSecondTime())
+	{
+		return true;
+	}
 
-    mnLastCheckTime = (uint64_t)NFGetSecondTime();
+	mnLastCheckTime = (uint64_t)NFGetSecondTime();
 
-    if (m_pMysqlDriverManager)
-    {
-        m_pMysqlDriverManager->CheckMysql();
-    }
+	if (m_pMysqlDriverManager)
+	{
+		m_pMysqlDriverManager->CheckMysql();
+	}
 
-    return true;
+	return true;
 }
 
 bool NFCMysqlModule::AddMysqlServer(const int nServerID, const std::string& strIP, const int nPort, const std::string strDBName, const std::string strDBUser, const std::string strDBPwd, const int nRconnectTime/* = 10*/, const int nRconneCount/* = -1*/)
 {
-    if (!m_pMysqlDriverManager)
-    {
-        return false;
-    }
+	if (!m_pMysqlDriverManager)
+	{
+		return false;
+	}
 
-    return m_pMysqlDriverManager->AddMysqlServer(nServerID, strIP, nPort, strDBName, strDBUser, strDBPwd, nRconnectTime, nRconneCount);
+	return m_pMysqlDriverManager->AddMysqlServer(nServerID, strIP, nPort, strDBName, strDBUser, strDBPwd, nRconnectTime, nRconneCount);
 }
 
-bool NFCMysqlModule::Updata(const std::string& strRecordName, const std::string& strKey, const std::vector<std::string>& fieldVec, const std::vector<std::string>& valueVec)
+bool NFCMysqlModule::Delete(const std::string& strTableName, const std::string& strKeyColName, const std::string& strKey)
 {
-    NFIMysqlDriver* pDriver = m_pMysqlDriverManager->GetMysqlDriver();
-    if (pDriver)
-    {
-        return pDriver->Updata(strRecordName, strKey, fieldVec, valueVec);
-    }
+	NFIMysqlDriver* pDriver = m_pMysqlDriverManager->GetMysqlDriver();
+	if (pDriver)
+	{
+		return pDriver->Delete(strTableName, strKeyColName, strKey);
+	}
 
-    return false;
+	return false;
 }
 
-bool NFCMysqlModule::Query(const std::string& strRecordName, const std::string& strKey, const std::vector<std::string>& fieldVec, std::vector<std::string>& valueVec, const std::string& strKeyColName)
+bool NFCMysqlModule::Exists(const std::string& strTableName, const std::string& strKeyColName, const std::string& strKey, bool& bExit)
 {
-    NFIMysqlDriver* pDriver = m_pMysqlDriverManager->GetMysqlDriver();
-    if (pDriver)
-    {
-        return pDriver->Query(strRecordName, strKey, fieldVec, valueVec, strKeyColName);
-    }
+	NFIMysqlDriver* pDriver = m_pMysqlDriverManager->GetMysqlDriver();
+	if (pDriver)
+	{
+		return pDriver->Exists(strTableName, strKeyColName, strKey, bExit);
+	}
 
-    return false;
+	return false;
 }
 
-bool NFCMysqlModule::Delete(const std::string& strRecordName, const std::string& strKey, const std::string& strKeyColName)
+bool NFCMysqlModule::Keys(const std::string& strTableName, const std::string& strKeyColName, const std::string& strKeyName, std::vector<std::string>& valueVec)
 {
-    NFIMysqlDriver* pDriver = m_pMysqlDriverManager->GetMysqlDriver();
-    if (pDriver)
-    {
-        return pDriver->Delete(strRecordName, strKey, strKeyColName);
-    }
+	NFIMysqlDriver* pDriver = m_pMysqlDriverManager->GetMysqlDriver();
+	if (pDriver)
+	{
+		return pDriver->Keys(strTableName, strKeyColName, strKeyName, valueVec);
+	}
 
-    return false;
+	return false;
 }
 
-bool NFCMysqlModule::Exists(const std::string& strRecordName, const std::string& strKey, bool& bExit, const std::string& strKeyColName)
-{
-    NFIMysqlDriver* pDriver = m_pMysqlDriverManager->GetMysqlDriver();
-    if (pDriver)
-    {
-        return pDriver->Exists(strRecordName, strKey, bExit, strKeyColName);
-    }
-
-    return false;
-}
-
-bool NFCMysqlModule::Select(const std::string& strRecordName, const std::string& strKey, const std::vector<std::string>& fieldVec, std::vector<std::string>& valueVec, const std::string& strKeyColName)
-{
-    NFIMysqlDriver* pDriver = m_pMysqlDriverManager->GetMysqlDriver();
-    if (pDriver)
-    {
-        return pDriver->Select(strRecordName, strKey, fieldVec, valueVec, strKeyColName);
-    }
-
-    return false;
-}
-
-bool NFCMysqlModule::Keys(const std::string& strRecordName, const std::string& strKeyName, std::vector<std::string>& valueVec)
-{
-    NFIMysqlDriver* pDriver = m_pMysqlDriverManager->GetMysqlDriver();
-    if (pDriver)
-    {
-        return pDriver->Keys(strRecordName, strKeyName, valueVec);
-    }
-
-    return false;
-}

@@ -85,21 +85,34 @@ NFCTestActorModule::~NFCTestActorModule()
 bool NFCTestActorModule::Init()
 {
 	NFIMysqlModule* m_pMysqlModule = pPluginManager->FindModule<NFIMysqlModule>();
-	m_pMysqlModule->AddMysqlServer(1, "192.168.1.15", 3306, "gamelog", "root", "123456");
+	m_pMysqlModule->AddMysqlServer(1, "192.168.1.15", 3306, "game", "root", "123456");
 
-	proto::message::update_player player;
-	player.mutable_db_base()->set_table_name("role_registration");
+	proto::message::update_mail update_mail;
+	update_mail.mutable_db_base()->set_table_name("mail");
+	update_mail.mutable_db_fields()->set_mailid(1234567);
+	update_mail.mutable_db_fields()->set_ownerid(111);
+	update_mail.mutable_db_fields()->set_mail_type(0);
+	update_mail.mutable_db_fields()->mutable_mixinfo()->set_templateid(1);
+	update_mail.mutable_db_fields()->mutable_mixinfo()->set_title("gaoyi");
+	update_mail.mutable_db_fields()->mutable_mixinfo()->set_sendtime(0);
+	update_mail.mutable_db_fields()->mutable_mixinfo()->set_flag(0);
+	update_mail.mutable_db_fields()->mutable_mixinfo()->add_add_content("sb");
+	update_mail.mutable_db_fields()->mutable_mixinfo()->add_add_content("son");
+	m_pMysqlModule->Updata(update_mail);
 
-	player.mutable_db_fields()->set_id(111);
-	player.mutable_db_fields()->set_user_id("gaoyi111");
-	player.mutable_db_fields()->set_role_id(12345678);
-	player.mutable_db_fields()->set_role_name("gaoyi_111");
-	player.mutable_db_fields()->set_gid(1);
-	player.mutable_db_fields()->set_pid(1);
-	player.mutable_db_fields()->set_server_id(1014);
-	player.mutable_db_fields()->set_reg_time(0);
-	player.mutable_db_fields()->set_is_gunfu(0);
-	m_pMysqlModule->Updata(player);
+	proto::message::query_mail query_mail;
+	query_mail.mutable_db_base()->set_table_name("mail");
+	query_mail.mutable_db_cond()->set_mailid(1234567);
+	m_pMysqlModule->Query(query_mail);
+	query_mail.PrintDebugString();
+
+
+	proto::message::query_player query_player;
+	query_player.mutable_db_base()->set_table_name("player");
+	query_player.mutable_db_base()->set_rows(2);
+	query_player.mutable_db_cond()->set_serverid(1001);
+	m_pMysqlModule->QueryMore(query_player);
+	query_player.PrintDebugString();
 
 	return true;
 }

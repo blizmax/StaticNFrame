@@ -44,8 +44,10 @@
 #include <set>
 #include "mysqlpp/lib/mysql++.h"
 
-namespace google{
-	namespace protobuf{
+namespace google
+{
+	namespace protobuf
+	{
 		class Message;
 	}
 }
@@ -53,26 +55,31 @@ namespace google{
 class NFIMysqlDriver
 {
 public:
-    virtual ~NFIMysqlDriver() {}
+	virtual ~NFIMysqlDriver()
+	{
+	}
 
-    virtual bool Connect(const std::string& strDBName, const std::string& strDBHost, const int nDBPort, const std::string& strDBUser, const std::string& strDBPwd) = 0;
-    virtual  bool Execute() = 0;
-    virtual mysqlpp::Connection* GetConnection() = 0;
-    virtual bool Query(const std::string& qstr, mysqlpp::StoreQueryResult& queryResult) = 0;
-    virtual bool Query(const std::string& qstr) = 0;
+	virtual bool Connect(const std::string& strDBName, const std::string& strDBHost, const int nDBPort, const std::string& strDBUser, const std::string& strDBPwd) = 0;
+	virtual bool Execute() = 0;
+	virtual mysqlpp::Connection* GetConnection() = 0;
+	virtual bool Query(const std::string& qstr, mysqlpp::StoreQueryResult& queryResult) = 0;
+	virtual bool Query(const std::string& qstr) = 0;
 
-    virtual bool Enable() = 0;
-    virtual bool Reconnect() = 0;
-    virtual bool CanReconnect() = 0;
+	virtual bool Enable() = 0;
+	virtual bool Reconnect() = 0;
+	virtual bool CanReconnect() = 0;
 
 	virtual bool Updata(const google::protobuf::Message& message) = 0;
-    virtual bool Updata(const std::string& strRecordName, const std::string& strKey, const std::vector<std::string>& fieldVec, const std::vector<std::string>& valueVecconst) = 0;
-    virtual bool Query(const std::string& strRecordName, const std::string& strKey, const std::vector<std::string>& fieldVec, std::vector<std::string>& valueVec, const std::string& strKeyColName = "") = 0;
-    virtual bool Query(const std::string& strRecordName, int nOffset, int nRows, const std::vector<std::string>& fieldVec, std::vector<std::string>& valueVec, const std::string& strKeyColName = "") = 0;
-    virtual bool Select(const std::string& strRecordName, const std::string& strKey, const std::vector<std::string>& fieldVec, std::vector<std::string>& valueVec, const std::string& strKeyColName = "") = 0;
-    virtual bool Delete(const std::string& strRecordName, const std::string& strKey, const std::string& strKeyColName = "") = 0;
-    virtual bool Exists(const std::string& strRecordName, const std::string& strKey, bool& bExit, const std::string& strKeyColName = "") = 0;
-    virtual bool Keys(const std::string& strRecordName, const std::string& strKeyName, std::vector<std::string>& valueVec) = 0;
+	virtual bool Query(google::protobuf::Message& message) = 0;
+	virtual bool QueryMore(google::protobuf::Message& message) = 0;
+	virtual bool Updata(const std::string& strTableName, const std::string& strKeyColName, const std::string& strKey, const std::vector<std::string>& fieldVec, const std::vector<std::string>& valueVec) = 0;
+	virtual bool Query(const std::string& strTableName, const std::string& strKeyColName, const std::string& strKey, const std::vector<std::string>& fieldVec, std::vector<std::string>& valueVec) = 0;
+	virtual bool Query(const std::string& strTableName, const std::string& strKeyColName, int nOffset, int nRows, const std::vector<std::string>& fieldVec, std::vector<std::string>& valueVec) = 0;
+	virtual bool Delete(const std::string& strTableName, const std::string& strKeyColName, const std::string& strKey) = 0;
+	virtual bool Exists(const std::string& strTableName, const std::string& strKeyColName, const std::string& strKey, bool& bExit) = 0;
+	virtual bool Keys(const std::string& strTableName, const std::string& strKeyColName, const std::string& strKeyName, std::vector<std::string>& valueVec) = 0;
 };
 
 #endif // !_NFI_REDIS_DRIVER_MODULE_H_
+
+

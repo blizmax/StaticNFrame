@@ -18,89 +18,90 @@ NFCMysqlDriverManager::NFCMysqlDriverManager(): mnLastCheckTime(0)
 
 NFCMysqlDriverManager::~NFCMysqlDriverManager()
 {
-    for (NFIMysqlDriver* pMysqlDriver = mvMysql.First(); nullptr != pMysqlDriver; pMysqlDriver = mvMysql.Next())
-    {
-        NFSafeDelete(pMysqlDriver);
-        pMysqlDriver = nullptr;
-    }
-    mvMysql.ClearAll();
-    for (NFIMysqlDriver* pMysqlDriver = mvInvalidMsyql.First(); nullptr != pMysqlDriver; pMysqlDriver = mvInvalidMsyql.Next())
-    {
-        NFSafeDelete(pMysqlDriver);
-        pMysqlDriver = nullptr;
-    }
-    mvInvalidMsyql.ClearAll();
+	for (NFIMysqlDriver* pMysqlDriver = mvMysql.First(); nullptr != pMysqlDriver; pMysqlDriver = mvMysql.Next())
+	{
+		NFSafeDelete(pMysqlDriver);
+		pMysqlDriver = nullptr;
+	}
+	mvMysql.ClearAll();
+	for (NFIMysqlDriver* pMysqlDriver = mvInvalidMsyql.First(); nullptr != pMysqlDriver; pMysqlDriver = mvInvalidMsyql.Next())
+	{
+		NFSafeDelete(pMysqlDriver);
+		pMysqlDriver = nullptr;
+	}
+	mvInvalidMsyql.ClearAll();
 }
 
 NFIMysqlDriver* NFCMysqlDriverManager::GetMysqlDriver()
 {
-    return mvMysql.First(); // 暂时先给first
+	return mvMysql.First(); // 暂时先给first
 }
 
 void NFCMysqlDriverManager::CheckMysql()
 {
-    int nServerID = 0;
-    std::vector<int> xIntVec;
-    for (NFIMysqlDriver* pMysqlDriver = mvMysql.First(nServerID); pMysqlDriver != NULL; pMysqlDriver = mvMysql.Next(nServerID))
-    {
-        if (!pMysqlDriver->Enable())
-        {
-            xIntVec.push_back(nServerID);
-            mvInvalidMsyql.AddElement(nServerID, pMysqlDriver);
-        }
-    }
+	int nServerID = 0;
+	std::vector<int> xIntVec;
+	for (NFIMysqlDriver* pMysqlDriver = mvMysql.First(nServerID); pMysqlDriver != NULL; pMysqlDriver = mvMysql.Next(nServerID))
+	{
+		if (!pMysqlDriver->Enable())
+		{
+			xIntVec.push_back(nServerID);
+			mvInvalidMsyql.AddElement(nServerID, pMysqlDriver);
+		}
+	}
 
-    for (int i = 0; i < (int)xIntVec.size(); ++i)
-    {
-        mvMysql.RemoveElement(xIntVec[i]);
-    }
-    //////////////////////////////////////////////////////////////////////////
-    xIntVec.clear();
-    nServerID = 0;
+	for (int i = 0; i < (int)xIntVec.size(); ++i)
+	{
+		mvMysql.RemoveElement(xIntVec[i]);
+	}
+	//////////////////////////////////////////////////////////////////////////
+	xIntVec.clear();
+	nServerID = 0;
 
-    for (NFIMysqlDriver* pMysqlDriver = mvInvalidMsyql.First(nServerID); pMysqlDriver != NULL; pMysqlDriver = mvInvalidMsyql.Next(nServerID))
-    {
-        if (!pMysqlDriver->Enable() && pMysqlDriver->CanReconnect())
-        {
-            pMysqlDriver->Reconnect();
-            if (pMysqlDriver->Enable())
-            {
-                xIntVec.push_back(nServerID);
-                mvMysql.AddElement(nServerID, pMysqlDriver);
-            }
-        }
-    }
+	for (NFIMysqlDriver* pMysqlDriver = mvInvalidMsyql.First(nServerID); pMysqlDriver != NULL; pMysqlDriver = mvInvalidMsyql.Next(nServerID))
+	{
+		if (!pMysqlDriver->Enable() && pMysqlDriver->CanReconnect())
+		{
+			pMysqlDriver->Reconnect();
+			if (pMysqlDriver->Enable())
+			{
+				xIntVec.push_back(nServerID);
+				mvMysql.AddElement(nServerID, pMysqlDriver);
+			}
+		}
+	}
 
-    for (int i = 0; i < (int)xIntVec.size(); ++i)
-    {
-        mvInvalidMsyql.RemoveElement(xIntVec[i]);
-    }
-
+	for (int i = 0; i < (int)xIntVec.size(); ++i)
+	{
+		mvInvalidMsyql.RemoveElement(xIntVec[i]);
+	}
 }
+
 bool NFCMysqlDriverManager::AddMysqlServer(const int nServerID, const std::string& strIP, const int nPort, const std::string strDBName, const std::string strDBUser, const std::string strDBPwd, const int nRconnectTime/* = 10*/, const int nRconneCount/* = -1*/)
 {
-    NFIMysqlDriver* pMysqlDriver = mvMysql.GetElement(nServerID);
-    if (pMysqlDriver)
-    {
-        return false;
-    }
+	NFIMysqlDriver* pMysqlDriver = mvMysql.GetElement(nServerID);
+	if (pMysqlDriver)
+	{
+		return false;
+	}
 
-    NFIMysqlDriver* pInvalidRedisDriver = mvInvalidMsyql.GetElement(nServerID);
-    if (pInvalidRedisDriver)
-    {
-        return false;
-    }
+	NFIMysqlDriver* pInvalidRedisDriver = mvInvalidMsyql.GetElement(nServerID);
+	if (pInvalidRedisDriver)
+	{
+		return false;
+	}
 
 
-    pMysqlDriver = NF_NEW NFCMysqlDriver(nRconnectTime, nRconneCount);
-    if (pMysqlDriver->Connect(strDBName, strIP, nPort, strDBUser, strDBPwd))
-    {
-        mvMysql.AddElement(nServerID, pMysqlDriver);
-    }
-    else
-    {
-        mvInvalidMsyql.AddElement(nServerID, pMysqlDriver);
-    }
+	pMysqlDriver = NF_NEW NFCMysqlDriver(nRconnectTime, nRconneCount);
+	if (pMysqlDriver->Connect(strDBName, strIP, nPort, strDBUser, strDBPwd))
+	{
+		mvMysql.AddElement(nServerID, pMysqlDriver);
+	}
+	else
+	{
+		mvInvalidMsyql.AddElement(nServerID, pMysqlDriver);
+	}
 
-    return true;
+	return true;
 }
+

@@ -16,16 +16,17 @@
 class NFMysqlPlugin : public NFIPlugin
 {
 public:
-    explicit NFMysqlPlugin(NFIPluginManager* p)
-    {
-        pPluginManager = p;
-    }
+	explicit NFMysqlPlugin(NFIPluginManager* p)
+	{
+		pPluginManager = p;
+	}
 
-    virtual int GetPluginVersion() override;
+	virtual int GetPluginVersion() override;
 
-    virtual std::string GetPluginName() override;
+	virtual std::string GetPluginName() override;
 
-    virtual void Install() override;
+	virtual void Install() override;
 
-    virtual void Uninstall() override;
+	virtual void Uninstall() override;
 };
+

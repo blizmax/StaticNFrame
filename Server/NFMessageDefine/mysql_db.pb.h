@@ -24,6 +24,7 @@
 #include <google/protobuf/repeated_field.h>
 #include <google/protobuf/extension_set.h>
 #include <google/protobuf/unknown_field_set.h>
+#include "mail.pb.h"
 // @@protoc_insertion_point(includes)
 
 namespace proto {
@@ -35,8 +36,14 @@ void protobuf_AssignDesc_mysql_5fdb_2eproto();
 void protobuf_ShutdownFile_mysql_5fdb_2eproto();
 
 class message_db_base;
-class mysql_role_logout;
+class mysql_player;
+class query_player_cond;
 class update_player;
+class query_player;
+class table_mail;
+class query_mail_cond;
+class query_mail;
+class update_mail;
 
 // ===================================================================
 
@@ -106,47 +113,52 @@ class message_db_base : public ::google::protobuf::Message {
   inline ::std::string* release_table_name();
   inline void set_allocated_table_name(::std::string* table_name);
 
-  // optional string field_key_name = 2;
-  inline bool has_field_key_name() const;
-  inline void clear_field_key_name();
-  static const int kFieldKeyNameFieldNumber = 2;
-  inline const ::std::string& field_key_name() const;
-  inline void set_field_key_name(const ::std::string& value);
-  inline void set_field_key_name(const char* value);
-  inline void set_field_key_name(const char* value, size_t size);
-  inline ::std::string* mutable_field_key_name();
-  inline ::std::string* release_field_key_name();
-  inline void set_allocated_field_key_name(::std::string* field_key_name);
+  // optional uint32 offset = 2;
+  inline bool has_offset() const;
+  inline void clear_offset();
+  static const int kOffsetFieldNumber = 2;
+  inline ::google::protobuf::uint32 offset() const;
+  inline void set_offset(::google::protobuf::uint32 value);
 
-  // optional string field_key = 3;
-  inline bool has_field_key() const;
-  inline void clear_field_key();
-  static const int kFieldKeyFieldNumber = 3;
-  inline const ::std::string& field_key() const;
-  inline void set_field_key(const ::std::string& value);
-  inline void set_field_key(const char* value);
-  inline void set_field_key(const char* value, size_t size);
-  inline ::std::string* mutable_field_key();
-  inline ::std::string* release_field_key();
-  inline void set_allocated_field_key(::std::string* field_key);
+  // optional uint32 rows = 3;
+  inline bool has_rows() const;
+  inline void clear_rows();
+  static const int kRowsFieldNumber = 3;
+  inline ::google::protobuf::uint32 rows() const;
+  inline void set_rows(::google::protobuf::uint32 value);
+
+  // optional string order_key = 4;
+  inline bool has_order_key() const;
+  inline void clear_order_key();
+  static const int kOrderKeyFieldNumber = 4;
+  inline const ::std::string& order_key() const;
+  inline void set_order_key(const ::std::string& value);
+  inline void set_order_key(const char* value);
+  inline void set_order_key(const char* value, size_t size);
+  inline ::std::string* mutable_order_key();
+  inline ::std::string* release_order_key();
+  inline void set_allocated_order_key(::std::string* order_key);
 
   // @@protoc_insertion_point(class_scope:proto.message.message_db_base)
  private:
   inline void set_has_table_name();
   inline void clear_has_table_name();
-  inline void set_has_field_key_name();
-  inline void clear_has_field_key_name();
-  inline void set_has_field_key();
-  inline void clear_has_field_key();
+  inline void set_has_offset();
+  inline void clear_has_offset();
+  inline void set_has_rows();
+  inline void clear_has_rows();
+  inline void set_has_order_key();
+  inline void clear_has_order_key();
 
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
   ::std::string* table_name_;
-  ::std::string* field_key_name_;
-  ::std::string* field_key_;
+  ::google::protobuf::uint32 offset_;
+  ::google::protobuf::uint32 rows_;
+  ::std::string* order_key_;
 
   mutable int _cached_size_;
-  ::google::protobuf::uint32 _has_bits_[(3 + 31) / 32];
+  ::google::protobuf::uint32 _has_bits_[(4 + 31) / 32];
 
   friend void  protobuf_AddDesc_mysql_5fdb_2eproto();
   friend void protobuf_AssignDesc_mysql_5fdb_2eproto();
@@ -157,14 +169,14 @@ class message_db_base : public ::google::protobuf::Message {
 };
 // -------------------------------------------------------------------
 
-class mysql_role_logout : public ::google::protobuf::Message {
+class mysql_player : public ::google::protobuf::Message {
  public:
-  mysql_role_logout();
-  virtual ~mysql_role_logout();
+  mysql_player();
+  virtual ~mysql_player();
 
-  mysql_role_logout(const mysql_role_logout& from);
+  mysql_player(const mysql_player& from);
 
-  inline mysql_role_logout& operator=(const mysql_role_logout& from) {
+  inline mysql_player& operator=(const mysql_player& from) {
     CopyFrom(from);
     return *this;
   }
@@ -178,17 +190,17 @@ class mysql_role_logout : public ::google::protobuf::Message {
   }
 
   static const ::google::protobuf::Descriptor* descriptor();
-  static const mysql_role_logout& default_instance();
+  static const mysql_player& default_instance();
 
-  void Swap(mysql_role_logout* other);
+  void Swap(mysql_player* other);
 
   // implements Message ----------------------------------------------
 
-  mysql_role_logout* New() const;
+  mysql_player* New() const;
   void CopyFrom(const ::google::protobuf::Message& from);
   void MergeFrom(const ::google::protobuf::Message& from);
-  void CopyFrom(const mysql_role_logout& from);
-  void MergeFrom(const mysql_role_logout& from);
+  void CopyFrom(const mysql_player& from);
+  void MergeFrom(const mysql_player& from);
   void Clear();
   bool IsInitialized() const;
 
@@ -211,121 +223,163 @@ class mysql_role_logout : public ::google::protobuf::Message {
 
   // accessors -------------------------------------------------------
 
-  // optional uint64 id = 1;
-  inline bool has_id() const;
-  inline void clear_id();
-  static const int kIdFieldNumber = 1;
-  inline ::google::protobuf::uint64 id() const;
-  inline void set_id(::google::protobuf::uint64 value);
+  // optional uint64 charid = 1;
+  inline bool has_charid() const;
+  inline void clear_charid();
+  static const int kCharidFieldNumber = 1;
+  inline ::google::protobuf::uint64 charid() const;
+  inline void set_charid(::google::protobuf::uint64 value);
 
-  // optional string user_id = 2;
-  inline bool has_user_id() const;
-  inline void clear_user_id();
-  static const int kUserIdFieldNumber = 2;
-  inline const ::std::string& user_id() const;
-  inline void set_user_id(const ::std::string& value);
-  inline void set_user_id(const char* value);
-  inline void set_user_id(const char* value, size_t size);
-  inline ::std::string* mutable_user_id();
-  inline ::std::string* release_user_id();
-  inline void set_allocated_user_id(::std::string* user_id);
+  // optional string account = 2;
+  inline bool has_account() const;
+  inline void clear_account();
+  static const int kAccountFieldNumber = 2;
+  inline const ::std::string& account() const;
+  inline void set_account(const ::std::string& value);
+  inline void set_account(const char* value);
+  inline void set_account(const char* value, size_t size);
+  inline ::std::string* mutable_account();
+  inline ::std::string* release_account();
+  inline void set_allocated_account(::std::string* account);
 
-  // optional uint64 role_id = 3;
-  inline bool has_role_id() const;
-  inline void clear_role_id();
-  static const int kRoleIdFieldNumber = 3;
-  inline ::google::protobuf::uint64 role_id() const;
-  inline void set_role_id(::google::protobuf::uint64 value);
+  // optional string charname = 3;
+  inline bool has_charname() const;
+  inline void clear_charname();
+  static const int kCharnameFieldNumber = 3;
+  inline const ::std::string& charname() const;
+  inline void set_charname(const ::std::string& value);
+  inline void set_charname(const char* value);
+  inline void set_charname(const char* value, size_t size);
+  inline ::std::string* mutable_charname();
+  inline ::std::string* release_charname();
+  inline void set_allocated_charname(::std::string* charname);
 
-  // optional string role_name = 4;
-  inline bool has_role_name() const;
-  inline void clear_role_name();
-  static const int kRoleNameFieldNumber = 4;
-  inline const ::std::string& role_name() const;
-  inline void set_role_name(const ::std::string& value);
-  inline void set_role_name(const char* value);
-  inline void set_role_name(const char* value, size_t size);
-  inline ::std::string* mutable_role_name();
-  inline ::std::string* release_role_name();
-  inline void set_allocated_role_name(::std::string* role_name);
+  // optional uint32 serverid = 4;
+  inline bool has_serverid() const;
+  inline void clear_serverid();
+  static const int kServeridFieldNumber = 4;
+  inline ::google::protobuf::uint32 serverid() const;
+  inline void set_serverid(::google::protobuf::uint32 value);
 
-  // optional uint32 gid = 5;
-  inline bool has_gid() const;
-  inline void clear_gid();
-  static const int kGidFieldNumber = 5;
-  inline ::google::protobuf::uint32 gid() const;
-  inline void set_gid(::google::protobuf::uint32 value);
+  // optional uint32 career = 5;
+  inline bool has_career() const;
+  inline void clear_career();
+  static const int kCareerFieldNumber = 5;
+  inline ::google::protobuf::uint32 career() const;
+  inline void set_career(::google::protobuf::uint32 value);
 
-  // optional uint32 pid = 6;
-  inline bool has_pid() const;
-  inline void clear_pid();
-  static const int kPidFieldNumber = 6;
-  inline ::google::protobuf::uint32 pid() const;
-  inline void set_pid(::google::protobuf::uint32 value);
-
-  // optional uint32 server_id = 7;
-  inline bool has_server_id() const;
-  inline void clear_server_id();
-  static const int kServerIdFieldNumber = 7;
-  inline ::google::protobuf::uint32 server_id() const;
-  inline void set_server_id(::google::protobuf::uint32 value);
-
-  // optional uint64 reg_time = 8;
-  inline bool has_reg_time() const;
-  inline void clear_reg_time();
-  static const int kRegTimeFieldNumber = 8;
-  inline ::google::protobuf::uint64 reg_time() const;
-  inline void set_reg_time(::google::protobuf::uint64 value);
-
-  // optional uint64 is_gunfu = 9;
-  inline bool has_is_gunfu() const;
-  inline void clear_is_gunfu();
-  static const int kIsGunfuFieldNumber = 9;
-  inline ::google::protobuf::uint64 is_gunfu() const;
-  inline void set_is_gunfu(::google::protobuf::uint64 value);
-
-  // @@protoc_insertion_point(class_scope:proto.message.mysql_role_logout)
+  // @@protoc_insertion_point(class_scope:proto.message.mysql_player)
  private:
-  inline void set_has_id();
-  inline void clear_has_id();
-  inline void set_has_user_id();
-  inline void clear_has_user_id();
-  inline void set_has_role_id();
-  inline void clear_has_role_id();
-  inline void set_has_role_name();
-  inline void clear_has_role_name();
-  inline void set_has_gid();
-  inline void clear_has_gid();
-  inline void set_has_pid();
-  inline void clear_has_pid();
-  inline void set_has_server_id();
-  inline void clear_has_server_id();
-  inline void set_has_reg_time();
-  inline void clear_has_reg_time();
-  inline void set_has_is_gunfu();
-  inline void clear_has_is_gunfu();
+  inline void set_has_charid();
+  inline void clear_has_charid();
+  inline void set_has_account();
+  inline void clear_has_account();
+  inline void set_has_charname();
+  inline void clear_has_charname();
+  inline void set_has_serverid();
+  inline void clear_has_serverid();
+  inline void set_has_career();
+  inline void clear_has_career();
 
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
-  ::google::protobuf::uint64 id_;
-  ::std::string* user_id_;
-  ::google::protobuf::uint64 role_id_;
-  ::std::string* role_name_;
-  ::google::protobuf::uint32 gid_;
-  ::google::protobuf::uint32 pid_;
-  ::google::protobuf::uint64 reg_time_;
-  ::google::protobuf::uint64 is_gunfu_;
-  ::google::protobuf::uint32 server_id_;
+  ::google::protobuf::uint64 charid_;
+  ::std::string* account_;
+  ::std::string* charname_;
+  ::google::protobuf::uint32 serverid_;
+  ::google::protobuf::uint32 career_;
 
   mutable int _cached_size_;
-  ::google::protobuf::uint32 _has_bits_[(9 + 31) / 32];
+  ::google::protobuf::uint32 _has_bits_[(5 + 31) / 32];
 
   friend void  protobuf_AddDesc_mysql_5fdb_2eproto();
   friend void protobuf_AssignDesc_mysql_5fdb_2eproto();
   friend void protobuf_ShutdownFile_mysql_5fdb_2eproto();
 
   void InitAsDefaultInstance();
-  static mysql_role_logout* default_instance_;
+  static mysql_player* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class query_player_cond : public ::google::protobuf::Message {
+ public:
+  query_player_cond();
+  virtual ~query_player_cond();
+
+  query_player_cond(const query_player_cond& from);
+
+  inline query_player_cond& operator=(const query_player_cond& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const query_player_cond& default_instance();
+
+  void Swap(query_player_cond* other);
+
+  // implements Message ----------------------------------------------
+
+  query_player_cond* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const query_player_cond& from);
+  void MergeFrom(const query_player_cond& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // optional uint32 serverid = 1;
+  inline bool has_serverid() const;
+  inline void clear_serverid();
+  static const int kServeridFieldNumber = 1;
+  inline ::google::protobuf::uint32 serverid() const;
+  inline void set_serverid(::google::protobuf::uint32 value);
+
+  // @@protoc_insertion_point(class_scope:proto.message.query_player_cond)
+ private:
+  inline void set_has_serverid();
+  inline void clear_has_serverid();
+
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+
+  ::google::protobuf::uint32 serverid_;
+
+  mutable int _cached_size_;
+  ::google::protobuf::uint32 _has_bits_[(1 + 31) / 32];
+
+  friend void  protobuf_AddDesc_mysql_5fdb_2eproto();
+  friend void protobuf_AssignDesc_mysql_5fdb_2eproto();
+  friend void protobuf_ShutdownFile_mysql_5fdb_2eproto();
+
+  void InitAsDefaultInstance();
+  static query_player_cond* default_instance_;
 };
 // -------------------------------------------------------------------
 
@@ -392,14 +446,14 @@ class update_player : public ::google::protobuf::Message {
   inline ::proto::message::message_db_base* release_db_base();
   inline void set_allocated_db_base(::proto::message::message_db_base* db_base);
 
-  // optional .proto.message.mysql_role_logout db_fields = 2;
+  // optional .proto.message.mysql_player db_fields = 2;
   inline bool has_db_fields() const;
   inline void clear_db_fields();
   static const int kDbFieldsFieldNumber = 2;
-  inline const ::proto::message::mysql_role_logout& db_fields() const;
-  inline ::proto::message::mysql_role_logout* mutable_db_fields();
-  inline ::proto::message::mysql_role_logout* release_db_fields();
-  inline void set_allocated_db_fields(::proto::message::mysql_role_logout* db_fields);
+  inline const ::proto::message::mysql_player& db_fields() const;
+  inline ::proto::message::mysql_player* mutable_db_fields();
+  inline ::proto::message::mysql_player* release_db_fields();
+  inline void set_allocated_db_fields(::proto::message::mysql_player* db_fields);
 
   // @@protoc_insertion_point(class_scope:proto.message.update_player)
  private:
@@ -411,7 +465,7 @@ class update_player : public ::google::protobuf::Message {
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
   ::proto::message::message_db_base* db_base_;
-  ::proto::message::mysql_role_logout* db_fields_;
+  ::proto::message::mysql_player* db_fields_;
 
   mutable int _cached_size_;
   ::google::protobuf::uint32 _has_bits_[(2 + 31) / 32];
@@ -422,6 +476,515 @@ class update_player : public ::google::protobuf::Message {
 
   void InitAsDefaultInstance();
   static update_player* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class query_player : public ::google::protobuf::Message {
+ public:
+  query_player();
+  virtual ~query_player();
+
+  query_player(const query_player& from);
+
+  inline query_player& operator=(const query_player& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const query_player& default_instance();
+
+  void Swap(query_player* other);
+
+  // implements Message ----------------------------------------------
+
+  query_player* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const query_player& from);
+  void MergeFrom(const query_player& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // optional .proto.message.message_db_base db_base = 1;
+  inline bool has_db_base() const;
+  inline void clear_db_base();
+  static const int kDbBaseFieldNumber = 1;
+  inline const ::proto::message::message_db_base& db_base() const;
+  inline ::proto::message::message_db_base* mutable_db_base();
+  inline ::proto::message::message_db_base* release_db_base();
+  inline void set_allocated_db_base(::proto::message::message_db_base* db_base);
+
+  // repeated .proto.message.mysql_player db_fields = 2;
+  inline int db_fields_size() const;
+  inline void clear_db_fields();
+  static const int kDbFieldsFieldNumber = 2;
+  inline const ::proto::message::mysql_player& db_fields(int index) const;
+  inline ::proto::message::mysql_player* mutable_db_fields(int index);
+  inline ::proto::message::mysql_player* add_db_fields();
+  inline const ::google::protobuf::RepeatedPtrField< ::proto::message::mysql_player >&
+      db_fields() const;
+  inline ::google::protobuf::RepeatedPtrField< ::proto::message::mysql_player >*
+      mutable_db_fields();
+
+  // optional .proto.message.query_player_cond db_cond = 3;
+  inline bool has_db_cond() const;
+  inline void clear_db_cond();
+  static const int kDbCondFieldNumber = 3;
+  inline const ::proto::message::query_player_cond& db_cond() const;
+  inline ::proto::message::query_player_cond* mutable_db_cond();
+  inline ::proto::message::query_player_cond* release_db_cond();
+  inline void set_allocated_db_cond(::proto::message::query_player_cond* db_cond);
+
+  // @@protoc_insertion_point(class_scope:proto.message.query_player)
+ private:
+  inline void set_has_db_base();
+  inline void clear_has_db_base();
+  inline void set_has_db_cond();
+  inline void clear_has_db_cond();
+
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+
+  ::proto::message::message_db_base* db_base_;
+  ::google::protobuf::RepeatedPtrField< ::proto::message::mysql_player > db_fields_;
+  ::proto::message::query_player_cond* db_cond_;
+
+  mutable int _cached_size_;
+  ::google::protobuf::uint32 _has_bits_[(3 + 31) / 32];
+
+  friend void  protobuf_AddDesc_mysql_5fdb_2eproto();
+  friend void protobuf_AssignDesc_mysql_5fdb_2eproto();
+  friend void protobuf_ShutdownFile_mysql_5fdb_2eproto();
+
+  void InitAsDefaultInstance();
+  static query_player* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class table_mail : public ::google::protobuf::Message {
+ public:
+  table_mail();
+  virtual ~table_mail();
+
+  table_mail(const table_mail& from);
+
+  inline table_mail& operator=(const table_mail& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const table_mail& default_instance();
+
+  void Swap(table_mail* other);
+
+  // implements Message ----------------------------------------------
+
+  table_mail* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const table_mail& from);
+  void MergeFrom(const table_mail& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // optional uint64 mailid = 1;
+  inline bool has_mailid() const;
+  inline void clear_mailid();
+  static const int kMailidFieldNumber = 1;
+  inline ::google::protobuf::uint64 mailid() const;
+  inline void set_mailid(::google::protobuf::uint64 value);
+
+  // optional uint64 ownerid = 2;
+  inline bool has_ownerid() const;
+  inline void clear_ownerid();
+  static const int kOwneridFieldNumber = 2;
+  inline ::google::protobuf::uint64 ownerid() const;
+  inline void set_ownerid(::google::protobuf::uint64 value);
+
+  // optional .proto.message.MixMailData mixinfo = 3;
+  inline bool has_mixinfo() const;
+  inline void clear_mixinfo();
+  static const int kMixinfoFieldNumber = 3;
+  inline const ::proto::message::MixMailData& mixinfo() const;
+  inline ::proto::message::MixMailData* mutable_mixinfo();
+  inline ::proto::message::MixMailData* release_mixinfo();
+  inline void set_allocated_mixinfo(::proto::message::MixMailData* mixinfo);
+
+  // optional uint32 mail_type = 4;
+  inline bool has_mail_type() const;
+  inline void clear_mail_type();
+  static const int kMailTypeFieldNumber = 4;
+  inline ::google::protobuf::uint32 mail_type() const;
+  inline void set_mail_type(::google::protobuf::uint32 value);
+
+  // @@protoc_insertion_point(class_scope:proto.message.table_mail)
+ private:
+  inline void set_has_mailid();
+  inline void clear_has_mailid();
+  inline void set_has_ownerid();
+  inline void clear_has_ownerid();
+  inline void set_has_mixinfo();
+  inline void clear_has_mixinfo();
+  inline void set_has_mail_type();
+  inline void clear_has_mail_type();
+
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+
+  ::google::protobuf::uint64 mailid_;
+  ::google::protobuf::uint64 ownerid_;
+  ::proto::message::MixMailData* mixinfo_;
+  ::google::protobuf::uint32 mail_type_;
+
+  mutable int _cached_size_;
+  ::google::protobuf::uint32 _has_bits_[(4 + 31) / 32];
+
+  friend void  protobuf_AddDesc_mysql_5fdb_2eproto();
+  friend void protobuf_AssignDesc_mysql_5fdb_2eproto();
+  friend void protobuf_ShutdownFile_mysql_5fdb_2eproto();
+
+  void InitAsDefaultInstance();
+  static table_mail* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class query_mail_cond : public ::google::protobuf::Message {
+ public:
+  query_mail_cond();
+  virtual ~query_mail_cond();
+
+  query_mail_cond(const query_mail_cond& from);
+
+  inline query_mail_cond& operator=(const query_mail_cond& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const query_mail_cond& default_instance();
+
+  void Swap(query_mail_cond* other);
+
+  // implements Message ----------------------------------------------
+
+  query_mail_cond* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const query_mail_cond& from);
+  void MergeFrom(const query_mail_cond& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // optional uint64 mailid = 1;
+  inline bool has_mailid() const;
+  inline void clear_mailid();
+  static const int kMailidFieldNumber = 1;
+  inline ::google::protobuf::uint64 mailid() const;
+  inline void set_mailid(::google::protobuf::uint64 value);
+
+  // @@protoc_insertion_point(class_scope:proto.message.query_mail_cond)
+ private:
+  inline void set_has_mailid();
+  inline void clear_has_mailid();
+
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+
+  ::google::protobuf::uint64 mailid_;
+
+  mutable int _cached_size_;
+  ::google::protobuf::uint32 _has_bits_[(1 + 31) / 32];
+
+  friend void  protobuf_AddDesc_mysql_5fdb_2eproto();
+  friend void protobuf_AssignDesc_mysql_5fdb_2eproto();
+  friend void protobuf_ShutdownFile_mysql_5fdb_2eproto();
+
+  void InitAsDefaultInstance();
+  static query_mail_cond* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class query_mail : public ::google::protobuf::Message {
+ public:
+  query_mail();
+  virtual ~query_mail();
+
+  query_mail(const query_mail& from);
+
+  inline query_mail& operator=(const query_mail& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const query_mail& default_instance();
+
+  void Swap(query_mail* other);
+
+  // implements Message ----------------------------------------------
+
+  query_mail* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const query_mail& from);
+  void MergeFrom(const query_mail& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // optional .proto.message.message_db_base db_base = 1;
+  inline bool has_db_base() const;
+  inline void clear_db_base();
+  static const int kDbBaseFieldNumber = 1;
+  inline const ::proto::message::message_db_base& db_base() const;
+  inline ::proto::message::message_db_base* mutable_db_base();
+  inline ::proto::message::message_db_base* release_db_base();
+  inline void set_allocated_db_base(::proto::message::message_db_base* db_base);
+
+  // optional .proto.message.table_mail db_fields = 2;
+  inline bool has_db_fields() const;
+  inline void clear_db_fields();
+  static const int kDbFieldsFieldNumber = 2;
+  inline const ::proto::message::table_mail& db_fields() const;
+  inline ::proto::message::table_mail* mutable_db_fields();
+  inline ::proto::message::table_mail* release_db_fields();
+  inline void set_allocated_db_fields(::proto::message::table_mail* db_fields);
+
+  // optional .proto.message.query_mail_cond db_cond = 3;
+  inline bool has_db_cond() const;
+  inline void clear_db_cond();
+  static const int kDbCondFieldNumber = 3;
+  inline const ::proto::message::query_mail_cond& db_cond() const;
+  inline ::proto::message::query_mail_cond* mutable_db_cond();
+  inline ::proto::message::query_mail_cond* release_db_cond();
+  inline void set_allocated_db_cond(::proto::message::query_mail_cond* db_cond);
+
+  // @@protoc_insertion_point(class_scope:proto.message.query_mail)
+ private:
+  inline void set_has_db_base();
+  inline void clear_has_db_base();
+  inline void set_has_db_fields();
+  inline void clear_has_db_fields();
+  inline void set_has_db_cond();
+  inline void clear_has_db_cond();
+
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+
+  ::proto::message::message_db_base* db_base_;
+  ::proto::message::table_mail* db_fields_;
+  ::proto::message::query_mail_cond* db_cond_;
+
+  mutable int _cached_size_;
+  ::google::protobuf::uint32 _has_bits_[(3 + 31) / 32];
+
+  friend void  protobuf_AddDesc_mysql_5fdb_2eproto();
+  friend void protobuf_AssignDesc_mysql_5fdb_2eproto();
+  friend void protobuf_ShutdownFile_mysql_5fdb_2eproto();
+
+  void InitAsDefaultInstance();
+  static query_mail* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class update_mail : public ::google::protobuf::Message {
+ public:
+  update_mail();
+  virtual ~update_mail();
+
+  update_mail(const update_mail& from);
+
+  inline update_mail& operator=(const update_mail& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const update_mail& default_instance();
+
+  void Swap(update_mail* other);
+
+  // implements Message ----------------------------------------------
+
+  update_mail* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const update_mail& from);
+  void MergeFrom(const update_mail& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // optional .proto.message.message_db_base db_base = 1;
+  inline bool has_db_base() const;
+  inline void clear_db_base();
+  static const int kDbBaseFieldNumber = 1;
+  inline const ::proto::message::message_db_base& db_base() const;
+  inline ::proto::message::message_db_base* mutable_db_base();
+  inline ::proto::message::message_db_base* release_db_base();
+  inline void set_allocated_db_base(::proto::message::message_db_base* db_base);
+
+  // optional .proto.message.table_mail db_fields = 2;
+  inline bool has_db_fields() const;
+  inline void clear_db_fields();
+  static const int kDbFieldsFieldNumber = 2;
+  inline const ::proto::message::table_mail& db_fields() const;
+  inline ::proto::message::table_mail* mutable_db_fields();
+  inline ::proto::message::table_mail* release_db_fields();
+  inline void set_allocated_db_fields(::proto::message::table_mail* db_fields);
+
+  // @@protoc_insertion_point(class_scope:proto.message.update_mail)
+ private:
+  inline void set_has_db_base();
+  inline void clear_has_db_base();
+  inline void set_has_db_fields();
+  inline void clear_has_db_fields();
+
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+
+  ::proto::message::message_db_base* db_base_;
+  ::proto::message::table_mail* db_fields_;
+
+  mutable int _cached_size_;
+  ::google::protobuf::uint32 _has_bits_[(2 + 31) / 32];
+
+  friend void  protobuf_AddDesc_mysql_5fdb_2eproto();
+  friend void protobuf_AssignDesc_mysql_5fdb_2eproto();
+  friend void protobuf_ShutdownFile_mysql_5fdb_2eproto();
+
+  void InitAsDefaultInstance();
+  static update_mail* default_instance_;
 };
 // ===================================================================
 
@@ -500,442 +1063,354 @@ inline void message_db_base::set_allocated_table_name(::std::string* table_name)
   }
 }
 
-// optional string field_key_name = 2;
-inline bool message_db_base::has_field_key_name() const {
+// optional uint32 offset = 2;
+inline bool message_db_base::has_offset() const {
   return (_has_bits_[0] & 0x00000002u) != 0;
 }
-inline void message_db_base::set_has_field_key_name() {
+inline void message_db_base::set_has_offset() {
   _has_bits_[0] |= 0x00000002u;
 }
-inline void message_db_base::clear_has_field_key_name() {
+inline void message_db_base::clear_has_offset() {
   _has_bits_[0] &= ~0x00000002u;
 }
-inline void message_db_base::clear_field_key_name() {
-  if (field_key_name_ != &::google::protobuf::internal::kEmptyString) {
-    field_key_name_->clear();
-  }
-  clear_has_field_key_name();
+inline void message_db_base::clear_offset() {
+  offset_ = 0u;
+  clear_has_offset();
 }
-inline const ::std::string& message_db_base::field_key_name() const {
-  return *field_key_name_;
+inline ::google::protobuf::uint32 message_db_base::offset() const {
+  return offset_;
 }
-inline void message_db_base::set_field_key_name(const ::std::string& value) {
-  set_has_field_key_name();
-  if (field_key_name_ == &::google::protobuf::internal::kEmptyString) {
-    field_key_name_ = new ::std::string;
-  }
-  field_key_name_->assign(value);
-}
-inline void message_db_base::set_field_key_name(const char* value) {
-  set_has_field_key_name();
-  if (field_key_name_ == &::google::protobuf::internal::kEmptyString) {
-    field_key_name_ = new ::std::string;
-  }
-  field_key_name_->assign(value);
-}
-inline void message_db_base::set_field_key_name(const char* value, size_t size) {
-  set_has_field_key_name();
-  if (field_key_name_ == &::google::protobuf::internal::kEmptyString) {
-    field_key_name_ = new ::std::string;
-  }
-  field_key_name_->assign(reinterpret_cast<const char*>(value), size);
-}
-inline ::std::string* message_db_base::mutable_field_key_name() {
-  set_has_field_key_name();
-  if (field_key_name_ == &::google::protobuf::internal::kEmptyString) {
-    field_key_name_ = new ::std::string;
-  }
-  return field_key_name_;
-}
-inline ::std::string* message_db_base::release_field_key_name() {
-  clear_has_field_key_name();
-  if (field_key_name_ == &::google::protobuf::internal::kEmptyString) {
-    return NULL;
-  } else {
-    ::std::string* temp = field_key_name_;
-    field_key_name_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
-    return temp;
-  }
-}
-inline void message_db_base::set_allocated_field_key_name(::std::string* field_key_name) {
-  if (field_key_name_ != &::google::protobuf::internal::kEmptyString) {
-    delete field_key_name_;
-  }
-  if (field_key_name) {
-    set_has_field_key_name();
-    field_key_name_ = field_key_name;
-  } else {
-    clear_has_field_key_name();
-    field_key_name_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
-  }
+inline void message_db_base::set_offset(::google::protobuf::uint32 value) {
+  set_has_offset();
+  offset_ = value;
 }
 
-// optional string field_key = 3;
-inline bool message_db_base::has_field_key() const {
+// optional uint32 rows = 3;
+inline bool message_db_base::has_rows() const {
   return (_has_bits_[0] & 0x00000004u) != 0;
 }
-inline void message_db_base::set_has_field_key() {
+inline void message_db_base::set_has_rows() {
   _has_bits_[0] |= 0x00000004u;
 }
-inline void message_db_base::clear_has_field_key() {
+inline void message_db_base::clear_has_rows() {
   _has_bits_[0] &= ~0x00000004u;
 }
-inline void message_db_base::clear_field_key() {
-  if (field_key_ != &::google::protobuf::internal::kEmptyString) {
-    field_key_->clear();
+inline void message_db_base::clear_rows() {
+  rows_ = 0u;
+  clear_has_rows();
+}
+inline ::google::protobuf::uint32 message_db_base::rows() const {
+  return rows_;
+}
+inline void message_db_base::set_rows(::google::protobuf::uint32 value) {
+  set_has_rows();
+  rows_ = value;
+}
+
+// optional string order_key = 4;
+inline bool message_db_base::has_order_key() const {
+  return (_has_bits_[0] & 0x00000008u) != 0;
+}
+inline void message_db_base::set_has_order_key() {
+  _has_bits_[0] |= 0x00000008u;
+}
+inline void message_db_base::clear_has_order_key() {
+  _has_bits_[0] &= ~0x00000008u;
+}
+inline void message_db_base::clear_order_key() {
+  if (order_key_ != &::google::protobuf::internal::kEmptyString) {
+    order_key_->clear();
   }
-  clear_has_field_key();
+  clear_has_order_key();
 }
-inline const ::std::string& message_db_base::field_key() const {
-  return *field_key_;
+inline const ::std::string& message_db_base::order_key() const {
+  return *order_key_;
 }
-inline void message_db_base::set_field_key(const ::std::string& value) {
-  set_has_field_key();
-  if (field_key_ == &::google::protobuf::internal::kEmptyString) {
-    field_key_ = new ::std::string;
+inline void message_db_base::set_order_key(const ::std::string& value) {
+  set_has_order_key();
+  if (order_key_ == &::google::protobuf::internal::kEmptyString) {
+    order_key_ = new ::std::string;
   }
-  field_key_->assign(value);
+  order_key_->assign(value);
 }
-inline void message_db_base::set_field_key(const char* value) {
-  set_has_field_key();
-  if (field_key_ == &::google::protobuf::internal::kEmptyString) {
-    field_key_ = new ::std::string;
+inline void message_db_base::set_order_key(const char* value) {
+  set_has_order_key();
+  if (order_key_ == &::google::protobuf::internal::kEmptyString) {
+    order_key_ = new ::std::string;
   }
-  field_key_->assign(value);
+  order_key_->assign(value);
 }
-inline void message_db_base::set_field_key(const char* value, size_t size) {
-  set_has_field_key();
-  if (field_key_ == &::google::protobuf::internal::kEmptyString) {
-    field_key_ = new ::std::string;
+inline void message_db_base::set_order_key(const char* value, size_t size) {
+  set_has_order_key();
+  if (order_key_ == &::google::protobuf::internal::kEmptyString) {
+    order_key_ = new ::std::string;
   }
-  field_key_->assign(reinterpret_cast<const char*>(value), size);
+  order_key_->assign(reinterpret_cast<const char*>(value), size);
 }
-inline ::std::string* message_db_base::mutable_field_key() {
-  set_has_field_key();
-  if (field_key_ == &::google::protobuf::internal::kEmptyString) {
-    field_key_ = new ::std::string;
+inline ::std::string* message_db_base::mutable_order_key() {
+  set_has_order_key();
+  if (order_key_ == &::google::protobuf::internal::kEmptyString) {
+    order_key_ = new ::std::string;
   }
-  return field_key_;
+  return order_key_;
 }
-inline ::std::string* message_db_base::release_field_key() {
-  clear_has_field_key();
-  if (field_key_ == &::google::protobuf::internal::kEmptyString) {
+inline ::std::string* message_db_base::release_order_key() {
+  clear_has_order_key();
+  if (order_key_ == &::google::protobuf::internal::kEmptyString) {
     return NULL;
   } else {
-    ::std::string* temp = field_key_;
-    field_key_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+    ::std::string* temp = order_key_;
+    order_key_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
     return temp;
   }
 }
-inline void message_db_base::set_allocated_field_key(::std::string* field_key) {
-  if (field_key_ != &::google::protobuf::internal::kEmptyString) {
-    delete field_key_;
+inline void message_db_base::set_allocated_order_key(::std::string* order_key) {
+  if (order_key_ != &::google::protobuf::internal::kEmptyString) {
+    delete order_key_;
   }
-  if (field_key) {
-    set_has_field_key();
-    field_key_ = field_key;
+  if (order_key) {
+    set_has_order_key();
+    order_key_ = order_key;
   } else {
-    clear_has_field_key();
-    field_key_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+    clear_has_order_key();
+    order_key_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
   }
 }
 
 // -------------------------------------------------------------------
 
-// mysql_role_logout
+// mysql_player
 
-// optional uint64 id = 1;
-inline bool mysql_role_logout::has_id() const {
+// optional uint64 charid = 1;
+inline bool mysql_player::has_charid() const {
   return (_has_bits_[0] & 0x00000001u) != 0;
 }
-inline void mysql_role_logout::set_has_id() {
+inline void mysql_player::set_has_charid() {
   _has_bits_[0] |= 0x00000001u;
 }
-inline void mysql_role_logout::clear_has_id() {
+inline void mysql_player::clear_has_charid() {
   _has_bits_[0] &= ~0x00000001u;
 }
-inline void mysql_role_logout::clear_id() {
-  id_ = GOOGLE_ULONGLONG(0);
-  clear_has_id();
+inline void mysql_player::clear_charid() {
+  charid_ = GOOGLE_ULONGLONG(0);
+  clear_has_charid();
 }
-inline ::google::protobuf::uint64 mysql_role_logout::id() const {
-  return id_;
+inline ::google::protobuf::uint64 mysql_player::charid() const {
+  return charid_;
 }
-inline void mysql_role_logout::set_id(::google::protobuf::uint64 value) {
-  set_has_id();
-  id_ = value;
+inline void mysql_player::set_charid(::google::protobuf::uint64 value) {
+  set_has_charid();
+  charid_ = value;
 }
 
-// optional string user_id = 2;
-inline bool mysql_role_logout::has_user_id() const {
+// optional string account = 2;
+inline bool mysql_player::has_account() const {
   return (_has_bits_[0] & 0x00000002u) != 0;
 }
-inline void mysql_role_logout::set_has_user_id() {
+inline void mysql_player::set_has_account() {
   _has_bits_[0] |= 0x00000002u;
 }
-inline void mysql_role_logout::clear_has_user_id() {
+inline void mysql_player::clear_has_account() {
   _has_bits_[0] &= ~0x00000002u;
 }
-inline void mysql_role_logout::clear_user_id() {
-  if (user_id_ != &::google::protobuf::internal::kEmptyString) {
-    user_id_->clear();
+inline void mysql_player::clear_account() {
+  if (account_ != &::google::protobuf::internal::kEmptyString) {
+    account_->clear();
   }
-  clear_has_user_id();
+  clear_has_account();
 }
-inline const ::std::string& mysql_role_logout::user_id() const {
-  return *user_id_;
+inline const ::std::string& mysql_player::account() const {
+  return *account_;
 }
-inline void mysql_role_logout::set_user_id(const ::std::string& value) {
-  set_has_user_id();
-  if (user_id_ == &::google::protobuf::internal::kEmptyString) {
-    user_id_ = new ::std::string;
+inline void mysql_player::set_account(const ::std::string& value) {
+  set_has_account();
+  if (account_ == &::google::protobuf::internal::kEmptyString) {
+    account_ = new ::std::string;
   }
-  user_id_->assign(value);
+  account_->assign(value);
 }
-inline void mysql_role_logout::set_user_id(const char* value) {
-  set_has_user_id();
-  if (user_id_ == &::google::protobuf::internal::kEmptyString) {
-    user_id_ = new ::std::string;
+inline void mysql_player::set_account(const char* value) {
+  set_has_account();
+  if (account_ == &::google::protobuf::internal::kEmptyString) {
+    account_ = new ::std::string;
   }
-  user_id_->assign(value);
+  account_->assign(value);
 }
-inline void mysql_role_logout::set_user_id(const char* value, size_t size) {
-  set_has_user_id();
-  if (user_id_ == &::google::protobuf::internal::kEmptyString) {
-    user_id_ = new ::std::string;
+inline void mysql_player::set_account(const char* value, size_t size) {
+  set_has_account();
+  if (account_ == &::google::protobuf::internal::kEmptyString) {
+    account_ = new ::std::string;
   }
-  user_id_->assign(reinterpret_cast<const char*>(value), size);
+  account_->assign(reinterpret_cast<const char*>(value), size);
 }
-inline ::std::string* mysql_role_logout::mutable_user_id() {
-  set_has_user_id();
-  if (user_id_ == &::google::protobuf::internal::kEmptyString) {
-    user_id_ = new ::std::string;
+inline ::std::string* mysql_player::mutable_account() {
+  set_has_account();
+  if (account_ == &::google::protobuf::internal::kEmptyString) {
+    account_ = new ::std::string;
   }
-  return user_id_;
+  return account_;
 }
-inline ::std::string* mysql_role_logout::release_user_id() {
-  clear_has_user_id();
-  if (user_id_ == &::google::protobuf::internal::kEmptyString) {
+inline ::std::string* mysql_player::release_account() {
+  clear_has_account();
+  if (account_ == &::google::protobuf::internal::kEmptyString) {
     return NULL;
   } else {
-    ::std::string* temp = user_id_;
-    user_id_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+    ::std::string* temp = account_;
+    account_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
     return temp;
   }
 }
-inline void mysql_role_logout::set_allocated_user_id(::std::string* user_id) {
-  if (user_id_ != &::google::protobuf::internal::kEmptyString) {
-    delete user_id_;
+inline void mysql_player::set_allocated_account(::std::string* account) {
+  if (account_ != &::google::protobuf::internal::kEmptyString) {
+    delete account_;
   }
-  if (user_id) {
-    set_has_user_id();
-    user_id_ = user_id;
+  if (account) {
+    set_has_account();
+    account_ = account;
   } else {
-    clear_has_user_id();
-    user_id_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+    clear_has_account();
+    account_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
   }
 }
 
-// optional uint64 role_id = 3;
-inline bool mysql_role_logout::has_role_id() const {
+// optional string charname = 3;
+inline bool mysql_player::has_charname() const {
   return (_has_bits_[0] & 0x00000004u) != 0;
 }
-inline void mysql_role_logout::set_has_role_id() {
+inline void mysql_player::set_has_charname() {
   _has_bits_[0] |= 0x00000004u;
 }
-inline void mysql_role_logout::clear_has_role_id() {
+inline void mysql_player::clear_has_charname() {
   _has_bits_[0] &= ~0x00000004u;
 }
-inline void mysql_role_logout::clear_role_id() {
-  role_id_ = GOOGLE_ULONGLONG(0);
-  clear_has_role_id();
-}
-inline ::google::protobuf::uint64 mysql_role_logout::role_id() const {
-  return role_id_;
-}
-inline void mysql_role_logout::set_role_id(::google::protobuf::uint64 value) {
-  set_has_role_id();
-  role_id_ = value;
-}
-
-// optional string role_name = 4;
-inline bool mysql_role_logout::has_role_name() const {
-  return (_has_bits_[0] & 0x00000008u) != 0;
-}
-inline void mysql_role_logout::set_has_role_name() {
-  _has_bits_[0] |= 0x00000008u;
-}
-inline void mysql_role_logout::clear_has_role_name() {
-  _has_bits_[0] &= ~0x00000008u;
-}
-inline void mysql_role_logout::clear_role_name() {
-  if (role_name_ != &::google::protobuf::internal::kEmptyString) {
-    role_name_->clear();
+inline void mysql_player::clear_charname() {
+  if (charname_ != &::google::protobuf::internal::kEmptyString) {
+    charname_->clear();
   }
-  clear_has_role_name();
+  clear_has_charname();
 }
-inline const ::std::string& mysql_role_logout::role_name() const {
-  return *role_name_;
+inline const ::std::string& mysql_player::charname() const {
+  return *charname_;
 }
-inline void mysql_role_logout::set_role_name(const ::std::string& value) {
-  set_has_role_name();
-  if (role_name_ == &::google::protobuf::internal::kEmptyString) {
-    role_name_ = new ::std::string;
+inline void mysql_player::set_charname(const ::std::string& value) {
+  set_has_charname();
+  if (charname_ == &::google::protobuf::internal::kEmptyString) {
+    charname_ = new ::std::string;
   }
-  role_name_->assign(value);
+  charname_->assign(value);
 }
-inline void mysql_role_logout::set_role_name(const char* value) {
-  set_has_role_name();
-  if (role_name_ == &::google::protobuf::internal::kEmptyString) {
-    role_name_ = new ::std::string;
+inline void mysql_player::set_charname(const char* value) {
+  set_has_charname();
+  if (charname_ == &::google::protobuf::internal::kEmptyString) {
+    charname_ = new ::std::string;
   }
-  role_name_->assign(value);
+  charname_->assign(value);
 }
-inline void mysql_role_logout::set_role_name(const char* value, size_t size) {
-  set_has_role_name();
-  if (role_name_ == &::google::protobuf::internal::kEmptyString) {
-    role_name_ = new ::std::string;
+inline void mysql_player::set_charname(const char* value, size_t size) {
+  set_has_charname();
+  if (charname_ == &::google::protobuf::internal::kEmptyString) {
+    charname_ = new ::std::string;
   }
-  role_name_->assign(reinterpret_cast<const char*>(value), size);
+  charname_->assign(reinterpret_cast<const char*>(value), size);
 }
-inline ::std::string* mysql_role_logout::mutable_role_name() {
-  set_has_role_name();
-  if (role_name_ == &::google::protobuf::internal::kEmptyString) {
-    role_name_ = new ::std::string;
+inline ::std::string* mysql_player::mutable_charname() {
+  set_has_charname();
+  if (charname_ == &::google::protobuf::internal::kEmptyString) {
+    charname_ = new ::std::string;
   }
-  return role_name_;
+  return charname_;
 }
-inline ::std::string* mysql_role_logout::release_role_name() {
-  clear_has_role_name();
-  if (role_name_ == &::google::protobuf::internal::kEmptyString) {
+inline ::std::string* mysql_player::release_charname() {
+  clear_has_charname();
+  if (charname_ == &::google::protobuf::internal::kEmptyString) {
     return NULL;
   } else {
-    ::std::string* temp = role_name_;
-    role_name_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+    ::std::string* temp = charname_;
+    charname_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
     return temp;
   }
 }
-inline void mysql_role_logout::set_allocated_role_name(::std::string* role_name) {
-  if (role_name_ != &::google::protobuf::internal::kEmptyString) {
-    delete role_name_;
+inline void mysql_player::set_allocated_charname(::std::string* charname) {
+  if (charname_ != &::google::protobuf::internal::kEmptyString) {
+    delete charname_;
   }
-  if (role_name) {
-    set_has_role_name();
-    role_name_ = role_name;
+  if (charname) {
+    set_has_charname();
+    charname_ = charname;
   } else {
-    clear_has_role_name();
-    role_name_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+    clear_has_charname();
+    charname_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
   }
 }
 
-// optional uint32 gid = 5;
-inline bool mysql_role_logout::has_gid() const {
+// optional uint32 serverid = 4;
+inline bool mysql_player::has_serverid() const {
+  return (_has_bits_[0] & 0x00000008u) != 0;
+}
+inline void mysql_player::set_has_serverid() {
+  _has_bits_[0] |= 0x00000008u;
+}
+inline void mysql_player::clear_has_serverid() {
+  _has_bits_[0] &= ~0x00000008u;
+}
+inline void mysql_player::clear_serverid() {
+  serverid_ = 0u;
+  clear_has_serverid();
+}
+inline ::google::protobuf::uint32 mysql_player::serverid() const {
+  return serverid_;
+}
+inline void mysql_player::set_serverid(::google::protobuf::uint32 value) {
+  set_has_serverid();
+  serverid_ = value;
+}
+
+// optional uint32 career = 5;
+inline bool mysql_player::has_career() const {
   return (_has_bits_[0] & 0x00000010u) != 0;
 }
-inline void mysql_role_logout::set_has_gid() {
+inline void mysql_player::set_has_career() {
   _has_bits_[0] |= 0x00000010u;
 }
-inline void mysql_role_logout::clear_has_gid() {
+inline void mysql_player::clear_has_career() {
   _has_bits_[0] &= ~0x00000010u;
 }
-inline void mysql_role_logout::clear_gid() {
-  gid_ = 0u;
-  clear_has_gid();
+inline void mysql_player::clear_career() {
+  career_ = 0u;
+  clear_has_career();
 }
-inline ::google::protobuf::uint32 mysql_role_logout::gid() const {
-  return gid_;
+inline ::google::protobuf::uint32 mysql_player::career() const {
+  return career_;
 }
-inline void mysql_role_logout::set_gid(::google::protobuf::uint32 value) {
-  set_has_gid();
-  gid_ = value;
-}
-
-// optional uint32 pid = 6;
-inline bool mysql_role_logout::has_pid() const {
-  return (_has_bits_[0] & 0x00000020u) != 0;
-}
-inline void mysql_role_logout::set_has_pid() {
-  _has_bits_[0] |= 0x00000020u;
-}
-inline void mysql_role_logout::clear_has_pid() {
-  _has_bits_[0] &= ~0x00000020u;
-}
-inline void mysql_role_logout::clear_pid() {
-  pid_ = 0u;
-  clear_has_pid();
-}
-inline ::google::protobuf::uint32 mysql_role_logout::pid() const {
-  return pid_;
-}
-inline void mysql_role_logout::set_pid(::google::protobuf::uint32 value) {
-  set_has_pid();
-  pid_ = value;
+inline void mysql_player::set_career(::google::protobuf::uint32 value) {
+  set_has_career();
+  career_ = value;
 }
 
-// optional uint32 server_id = 7;
-inline bool mysql_role_logout::has_server_id() const {
-  return (_has_bits_[0] & 0x00000040u) != 0;
-}
-inline void mysql_role_logout::set_has_server_id() {
-  _has_bits_[0] |= 0x00000040u;
-}
-inline void mysql_role_logout::clear_has_server_id() {
-  _has_bits_[0] &= ~0x00000040u;
-}
-inline void mysql_role_logout::clear_server_id() {
-  server_id_ = 0u;
-  clear_has_server_id();
-}
-inline ::google::protobuf::uint32 mysql_role_logout::server_id() const {
-  return server_id_;
-}
-inline void mysql_role_logout::set_server_id(::google::protobuf::uint32 value) {
-  set_has_server_id();
-  server_id_ = value;
-}
+// -------------------------------------------------------------------
 
-// optional uint64 reg_time = 8;
-inline bool mysql_role_logout::has_reg_time() const {
-  return (_has_bits_[0] & 0x00000080u) != 0;
-}
-inline void mysql_role_logout::set_has_reg_time() {
-  _has_bits_[0] |= 0x00000080u;
-}
-inline void mysql_role_logout::clear_has_reg_time() {
-  _has_bits_[0] &= ~0x00000080u;
-}
-inline void mysql_role_logout::clear_reg_time() {
-  reg_time_ = GOOGLE_ULONGLONG(0);
-  clear_has_reg_time();
-}
-inline ::google::protobuf::uint64 mysql_role_logout::reg_time() const {
-  return reg_time_;
-}
-inline void mysql_role_logout::set_reg_time(::google::protobuf::uint64 value) {
-  set_has_reg_time();
-  reg_time_ = value;
-}
+// query_player_cond
 
-// optional uint64 is_gunfu = 9;
-inline bool mysql_role_logout::has_is_gunfu() const {
-  return (_has_bits_[0] & 0x00000100u) != 0;
+// optional uint32 serverid = 1;
+inline bool query_player_cond::has_serverid() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
 }
-inline void mysql_role_logout::set_has_is_gunfu() {
-  _has_bits_[0] |= 0x00000100u;
+inline void query_player_cond::set_has_serverid() {
+  _has_bits_[0] |= 0x00000001u;
 }
-inline void mysql_role_logout::clear_has_is_gunfu() {
-  _has_bits_[0] &= ~0x00000100u;
+inline void query_player_cond::clear_has_serverid() {
+  _has_bits_[0] &= ~0x00000001u;
 }
-inline void mysql_role_logout::clear_is_gunfu() {
-  is_gunfu_ = GOOGLE_ULONGLONG(0);
-  clear_has_is_gunfu();
+inline void query_player_cond::clear_serverid() {
+  serverid_ = 0u;
+  clear_has_serverid();
 }
-inline ::google::protobuf::uint64 mysql_role_logout::is_gunfu() const {
-  return is_gunfu_;
+inline ::google::protobuf::uint32 query_player_cond::serverid() const {
+  return serverid_;
 }
-inline void mysql_role_logout::set_is_gunfu(::google::protobuf::uint64 value) {
-  set_has_is_gunfu();
-  is_gunfu_ = value;
+inline void query_player_cond::set_serverid(::google::protobuf::uint32 value) {
+  set_has_serverid();
+  serverid_ = value;
 }
 
 // -------------------------------------------------------------------
@@ -980,7 +1455,7 @@ inline void update_player::set_allocated_db_base(::proto::message::message_db_ba
   }
 }
 
-// optional .proto.message.mysql_role_logout db_fields = 2;
+// optional .proto.message.mysql_player db_fields = 2;
 inline bool update_player::has_db_fields() const {
   return (_has_bits_[0] & 0x00000002u) != 0;
 }
@@ -991,24 +1466,461 @@ inline void update_player::clear_has_db_fields() {
   _has_bits_[0] &= ~0x00000002u;
 }
 inline void update_player::clear_db_fields() {
-  if (db_fields_ != NULL) db_fields_->::proto::message::mysql_role_logout::Clear();
+  if (db_fields_ != NULL) db_fields_->::proto::message::mysql_player::Clear();
   clear_has_db_fields();
 }
-inline const ::proto::message::mysql_role_logout& update_player::db_fields() const {
+inline const ::proto::message::mysql_player& update_player::db_fields() const {
   return db_fields_ != NULL ? *db_fields_ : *default_instance_->db_fields_;
 }
-inline ::proto::message::mysql_role_logout* update_player::mutable_db_fields() {
+inline ::proto::message::mysql_player* update_player::mutable_db_fields() {
   set_has_db_fields();
-  if (db_fields_ == NULL) db_fields_ = new ::proto::message::mysql_role_logout;
+  if (db_fields_ == NULL) db_fields_ = new ::proto::message::mysql_player;
   return db_fields_;
 }
-inline ::proto::message::mysql_role_logout* update_player::release_db_fields() {
+inline ::proto::message::mysql_player* update_player::release_db_fields() {
   clear_has_db_fields();
-  ::proto::message::mysql_role_logout* temp = db_fields_;
+  ::proto::message::mysql_player* temp = db_fields_;
   db_fields_ = NULL;
   return temp;
 }
-inline void update_player::set_allocated_db_fields(::proto::message::mysql_role_logout* db_fields) {
+inline void update_player::set_allocated_db_fields(::proto::message::mysql_player* db_fields) {
+  delete db_fields_;
+  db_fields_ = db_fields;
+  if (db_fields) {
+    set_has_db_fields();
+  } else {
+    clear_has_db_fields();
+  }
+}
+
+// -------------------------------------------------------------------
+
+// query_player
+
+// optional .proto.message.message_db_base db_base = 1;
+inline bool query_player::has_db_base() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void query_player::set_has_db_base() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void query_player::clear_has_db_base() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void query_player::clear_db_base() {
+  if (db_base_ != NULL) db_base_->::proto::message::message_db_base::Clear();
+  clear_has_db_base();
+}
+inline const ::proto::message::message_db_base& query_player::db_base() const {
+  return db_base_ != NULL ? *db_base_ : *default_instance_->db_base_;
+}
+inline ::proto::message::message_db_base* query_player::mutable_db_base() {
+  set_has_db_base();
+  if (db_base_ == NULL) db_base_ = new ::proto::message::message_db_base;
+  return db_base_;
+}
+inline ::proto::message::message_db_base* query_player::release_db_base() {
+  clear_has_db_base();
+  ::proto::message::message_db_base* temp = db_base_;
+  db_base_ = NULL;
+  return temp;
+}
+inline void query_player::set_allocated_db_base(::proto::message::message_db_base* db_base) {
+  delete db_base_;
+  db_base_ = db_base;
+  if (db_base) {
+    set_has_db_base();
+  } else {
+    clear_has_db_base();
+  }
+}
+
+// repeated .proto.message.mysql_player db_fields = 2;
+inline int query_player::db_fields_size() const {
+  return db_fields_.size();
+}
+inline void query_player::clear_db_fields() {
+  db_fields_.Clear();
+}
+inline const ::proto::message::mysql_player& query_player::db_fields(int index) const {
+  return db_fields_.Get(index);
+}
+inline ::proto::message::mysql_player* query_player::mutable_db_fields(int index) {
+  return db_fields_.Mutable(index);
+}
+inline ::proto::message::mysql_player* query_player::add_db_fields() {
+  return db_fields_.Add();
+}
+inline const ::google::protobuf::RepeatedPtrField< ::proto::message::mysql_player >&
+query_player::db_fields() const {
+  return db_fields_;
+}
+inline ::google::protobuf::RepeatedPtrField< ::proto::message::mysql_player >*
+query_player::mutable_db_fields() {
+  return &db_fields_;
+}
+
+// optional .proto.message.query_player_cond db_cond = 3;
+inline bool query_player::has_db_cond() const {
+  return (_has_bits_[0] & 0x00000004u) != 0;
+}
+inline void query_player::set_has_db_cond() {
+  _has_bits_[0] |= 0x00000004u;
+}
+inline void query_player::clear_has_db_cond() {
+  _has_bits_[0] &= ~0x00000004u;
+}
+inline void query_player::clear_db_cond() {
+  if (db_cond_ != NULL) db_cond_->::proto::message::query_player_cond::Clear();
+  clear_has_db_cond();
+}
+inline const ::proto::message::query_player_cond& query_player::db_cond() const {
+  return db_cond_ != NULL ? *db_cond_ : *default_instance_->db_cond_;
+}
+inline ::proto::message::query_player_cond* query_player::mutable_db_cond() {
+  set_has_db_cond();
+  if (db_cond_ == NULL) db_cond_ = new ::proto::message::query_player_cond;
+  return db_cond_;
+}
+inline ::proto::message::query_player_cond* query_player::release_db_cond() {
+  clear_has_db_cond();
+  ::proto::message::query_player_cond* temp = db_cond_;
+  db_cond_ = NULL;
+  return temp;
+}
+inline void query_player::set_allocated_db_cond(::proto::message::query_player_cond* db_cond) {
+  delete db_cond_;
+  db_cond_ = db_cond;
+  if (db_cond) {
+    set_has_db_cond();
+  } else {
+    clear_has_db_cond();
+  }
+}
+
+// -------------------------------------------------------------------
+
+// table_mail
+
+// optional uint64 mailid = 1;
+inline bool table_mail::has_mailid() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void table_mail::set_has_mailid() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void table_mail::clear_has_mailid() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void table_mail::clear_mailid() {
+  mailid_ = GOOGLE_ULONGLONG(0);
+  clear_has_mailid();
+}
+inline ::google::protobuf::uint64 table_mail::mailid() const {
+  return mailid_;
+}
+inline void table_mail::set_mailid(::google::protobuf::uint64 value) {
+  set_has_mailid();
+  mailid_ = value;
+}
+
+// optional uint64 ownerid = 2;
+inline bool table_mail::has_ownerid() const {
+  return (_has_bits_[0] & 0x00000002u) != 0;
+}
+inline void table_mail::set_has_ownerid() {
+  _has_bits_[0] |= 0x00000002u;
+}
+inline void table_mail::clear_has_ownerid() {
+  _has_bits_[0] &= ~0x00000002u;
+}
+inline void table_mail::clear_ownerid() {
+  ownerid_ = GOOGLE_ULONGLONG(0);
+  clear_has_ownerid();
+}
+inline ::google::protobuf::uint64 table_mail::ownerid() const {
+  return ownerid_;
+}
+inline void table_mail::set_ownerid(::google::protobuf::uint64 value) {
+  set_has_ownerid();
+  ownerid_ = value;
+}
+
+// optional .proto.message.MixMailData mixinfo = 3;
+inline bool table_mail::has_mixinfo() const {
+  return (_has_bits_[0] & 0x00000004u) != 0;
+}
+inline void table_mail::set_has_mixinfo() {
+  _has_bits_[0] |= 0x00000004u;
+}
+inline void table_mail::clear_has_mixinfo() {
+  _has_bits_[0] &= ~0x00000004u;
+}
+inline void table_mail::clear_mixinfo() {
+  if (mixinfo_ != NULL) mixinfo_->::proto::message::MixMailData::Clear();
+  clear_has_mixinfo();
+}
+inline const ::proto::message::MixMailData& table_mail::mixinfo() const {
+  return mixinfo_ != NULL ? *mixinfo_ : *default_instance_->mixinfo_;
+}
+inline ::proto::message::MixMailData* table_mail::mutable_mixinfo() {
+  set_has_mixinfo();
+  if (mixinfo_ == NULL) mixinfo_ = new ::proto::message::MixMailData;
+  return mixinfo_;
+}
+inline ::proto::message::MixMailData* table_mail::release_mixinfo() {
+  clear_has_mixinfo();
+  ::proto::message::MixMailData* temp = mixinfo_;
+  mixinfo_ = NULL;
+  return temp;
+}
+inline void table_mail::set_allocated_mixinfo(::proto::message::MixMailData* mixinfo) {
+  delete mixinfo_;
+  mixinfo_ = mixinfo;
+  if (mixinfo) {
+    set_has_mixinfo();
+  } else {
+    clear_has_mixinfo();
+  }
+}
+
+// optional uint32 mail_type = 4;
+inline bool table_mail::has_mail_type() const {
+  return (_has_bits_[0] & 0x00000008u) != 0;
+}
+inline void table_mail::set_has_mail_type() {
+  _has_bits_[0] |= 0x00000008u;
+}
+inline void table_mail::clear_has_mail_type() {
+  _has_bits_[0] &= ~0x00000008u;
+}
+inline void table_mail::clear_mail_type() {
+  mail_type_ = 0u;
+  clear_has_mail_type();
+}
+inline ::google::protobuf::uint32 table_mail::mail_type() const {
+  return mail_type_;
+}
+inline void table_mail::set_mail_type(::google::protobuf::uint32 value) {
+  set_has_mail_type();
+  mail_type_ = value;
+}
+
+// -------------------------------------------------------------------
+
+// query_mail_cond
+
+// optional uint64 mailid = 1;
+inline bool query_mail_cond::has_mailid() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void query_mail_cond::set_has_mailid() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void query_mail_cond::clear_has_mailid() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void query_mail_cond::clear_mailid() {
+  mailid_ = GOOGLE_ULONGLONG(0);
+  clear_has_mailid();
+}
+inline ::google::protobuf::uint64 query_mail_cond::mailid() const {
+  return mailid_;
+}
+inline void query_mail_cond::set_mailid(::google::protobuf::uint64 value) {
+  set_has_mailid();
+  mailid_ = value;
+}
+
+// -------------------------------------------------------------------
+
+// query_mail
+
+// optional .proto.message.message_db_base db_base = 1;
+inline bool query_mail::has_db_base() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void query_mail::set_has_db_base() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void query_mail::clear_has_db_base() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void query_mail::clear_db_base() {
+  if (db_base_ != NULL) db_base_->::proto::message::message_db_base::Clear();
+  clear_has_db_base();
+}
+inline const ::proto::message::message_db_base& query_mail::db_base() const {
+  return db_base_ != NULL ? *db_base_ : *default_instance_->db_base_;
+}
+inline ::proto::message::message_db_base* query_mail::mutable_db_base() {
+  set_has_db_base();
+  if (db_base_ == NULL) db_base_ = new ::proto::message::message_db_base;
+  return db_base_;
+}
+inline ::proto::message::message_db_base* query_mail::release_db_base() {
+  clear_has_db_base();
+  ::proto::message::message_db_base* temp = db_base_;
+  db_base_ = NULL;
+  return temp;
+}
+inline void query_mail::set_allocated_db_base(::proto::message::message_db_base* db_base) {
+  delete db_base_;
+  db_base_ = db_base;
+  if (db_base) {
+    set_has_db_base();
+  } else {
+    clear_has_db_base();
+  }
+}
+
+// optional .proto.message.table_mail db_fields = 2;
+inline bool query_mail::has_db_fields() const {
+  return (_has_bits_[0] & 0x00000002u) != 0;
+}
+inline void query_mail::set_has_db_fields() {
+  _has_bits_[0] |= 0x00000002u;
+}
+inline void query_mail::clear_has_db_fields() {
+  _has_bits_[0] &= ~0x00000002u;
+}
+inline void query_mail::clear_db_fields() {
+  if (db_fields_ != NULL) db_fields_->::proto::message::table_mail::Clear();
+  clear_has_db_fields();
+}
+inline const ::proto::message::table_mail& query_mail::db_fields() const {
+  return db_fields_ != NULL ? *db_fields_ : *default_instance_->db_fields_;
+}
+inline ::proto::message::table_mail* query_mail::mutable_db_fields() {
+  set_has_db_fields();
+  if (db_fields_ == NULL) db_fields_ = new ::proto::message::table_mail;
+  return db_fields_;
+}
+inline ::proto::message::table_mail* query_mail::release_db_fields() {
+  clear_has_db_fields();
+  ::proto::message::table_mail* temp = db_fields_;
+  db_fields_ = NULL;
+  return temp;
+}
+inline void query_mail::set_allocated_db_fields(::proto::message::table_mail* db_fields) {
+  delete db_fields_;
+  db_fields_ = db_fields;
+  if (db_fields) {
+    set_has_db_fields();
+  } else {
+    clear_has_db_fields();
+  }
+}
+
+// optional .proto.message.query_mail_cond db_cond = 3;
+inline bool query_mail::has_db_cond() const {
+  return (_has_bits_[0] & 0x00000004u) != 0;
+}
+inline void query_mail::set_has_db_cond() {
+  _has_bits_[0] |= 0x00000004u;
+}
+inline void query_mail::clear_has_db_cond() {
+  _has_bits_[0] &= ~0x00000004u;
+}
+inline void query_mail::clear_db_cond() {
+  if (db_cond_ != NULL) db_cond_->::proto::message::query_mail_cond::Clear();
+  clear_has_db_cond();
+}
+inline const ::proto::message::query_mail_cond& query_mail::db_cond() const {
+  return db_cond_ != NULL ? *db_cond_ : *default_instance_->db_cond_;
+}
+inline ::proto::message::query_mail_cond* query_mail::mutable_db_cond() {
+  set_has_db_cond();
+  if (db_cond_ == NULL) db_cond_ = new ::proto::message::query_mail_cond;
+  return db_cond_;
+}
+inline ::proto::message::query_mail_cond* query_mail::release_db_cond() {
+  clear_has_db_cond();
+  ::proto::message::query_mail_cond* temp = db_cond_;
+  db_cond_ = NULL;
+  return temp;
+}
+inline void query_mail::set_allocated_db_cond(::proto::message::query_mail_cond* db_cond) {
+  delete db_cond_;
+  db_cond_ = db_cond;
+  if (db_cond) {
+    set_has_db_cond();
+  } else {
+    clear_has_db_cond();
+  }
+}
+
+// -------------------------------------------------------------------
+
+// update_mail
+
+// optional .proto.message.message_db_base db_base = 1;
+inline bool update_mail::has_db_base() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void update_mail::set_has_db_base() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void update_mail::clear_has_db_base() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void update_mail::clear_db_base() {
+  if (db_base_ != NULL) db_base_->::proto::message::message_db_base::Clear();
+  clear_has_db_base();
+}
+inline const ::proto::message::message_db_base& update_mail::db_base() const {
+  return db_base_ != NULL ? *db_base_ : *default_instance_->db_base_;
+}
+inline ::proto::message::message_db_base* update_mail::mutable_db_base() {
+  set_has_db_base();
+  if (db_base_ == NULL) db_base_ = new ::proto::message::message_db_base;
+  return db_base_;
+}
+inline ::proto::message::message_db_base* update_mail::release_db_base() {
+  clear_has_db_base();
+  ::proto::message::message_db_base* temp = db_base_;
+  db_base_ = NULL;
+  return temp;
+}
+inline void update_mail::set_allocated_db_base(::proto::message::message_db_base* db_base) {
+  delete db_base_;
+  db_base_ = db_base;
+  if (db_base) {
+    set_has_db_base();
+  } else {
+    clear_has_db_base();
+  }
+}
+
+// optional .proto.message.table_mail db_fields = 2;
+inline bool update_mail::has_db_fields() const {
+  return (_has_bits_[0] & 0x00000002u) != 0;
+}
+inline void update_mail::set_has_db_fields() {
+  _has_bits_[0] |= 0x00000002u;
+}
+inline void update_mail::clear_has_db_fields() {
+  _has_bits_[0] &= ~0x00000002u;
+}
+inline void update_mail::clear_db_fields() {
+  if (db_fields_ != NULL) db_fields_->::proto::message::table_mail::Clear();
+  clear_has_db_fields();
+}
+inline const ::proto::message::table_mail& update_mail::db_fields() const {
+  return db_fields_ != NULL ? *db_fields_ : *default_instance_->db_fields_;
+}
+inline ::proto::message::table_mail* update_mail::mutable_db_fields() {
+  set_has_db_fields();
+  if (db_fields_ == NULL) db_fields_ = new ::proto::message::table_mail;
+  return db_fields_;
+}
+inline ::proto::message::table_mail* update_mail::release_db_fields() {
+  clear_has_db_fields();
+  ::proto::message::table_mail* temp = db_fields_;
+  db_fields_ = NULL;
+  return temp;
+}
+inline void update_mail::set_allocated_db_fields(::proto::message::table_mail* db_fields) {
   delete db_fields_;
   db_fields_ = db_fields;
   if (db_fields) {
