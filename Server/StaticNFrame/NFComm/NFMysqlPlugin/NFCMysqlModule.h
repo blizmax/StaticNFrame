@@ -18,24 +18,143 @@ class NFCMysqlModule
 	: public NFIMysqlModule
 {
 public:
+	/**
+	 * @brief
+	 *
+	 * @param  p
+	 * @return  
+	 */
 	NFCMysqlModule(NFIPluginManager* p);
+	/**
+	 * @brief
+	 *
+	 * @return  
+	 */
 	virtual ~NFCMysqlModule();
 
+	/**
+	 * @brief
+	 *
+	 * @return bool 
+	 */
 	virtual bool Init() override;
+	/**
+	 * @brief
+	 *
+	 * @return bool 
+	 */
 	virtual bool Shut() override;
+	/**
+	 * @brief
+	 *
+	 * @return bool 
+	 */
 	virtual bool Execute() override;
+	/**
+	 * @brief
+	 *
+	 * @return bool 
+	 */
 	virtual bool AfterInit() override;
 
 	//////////////////////////////////////////////////////////////////////////
+	/**
+	 * @brief
+	 *
+	 * @param  message
+	 * @return bool 
+	 */
 	virtual bool Updata(const google::protobuf::Message& message) override;
+	/**
+	 * @brief
+	 *
+	 * @param  message
+	 * @return bool 
+	 */
 	virtual bool Query(google::protobuf::Message& message) override;
+	/**
+	 * @brief
+	 *
+	 * @param  message
+	 * @return bool 
+	 */
 	virtual bool QueryMore(google::protobuf::Message& message) override;
+	/**
+	 * @brief
+	 *
+	 * @param  strTableName
+	 * @param  strKeyColName
+	 * @param  strKey
+	 * @param  fieldVec
+	 * @param  valueVec
+	 * @return bool 
+	 */
 	virtual bool Updata(const std::string& strTableName, const std::string& strKeyColName, const std::string& strKey, const std::vector<std::string>& fieldVec, const std::vector<std::string>& valueVec) override;
+	/**
+	 * @brief
+	 *
+	 * @param  strTableName
+	 * @param  strKeyColName
+	 * @param  strKey
+	 * @param  fieldVec
+	 * @param  valueVec
+	 * @return bool 
+	 */
 	virtual bool Query(const std::string& strTableName, const std::string& strKeyColName, const std::string& strKey, const std::vector<std::string>& fieldVec, std::vector<std::string>& valueVec) override;
+	/**
+	 * @brief
+	 *
+	 * @param  strTableName
+	 * @param  strKeyColName
+	 * @param  nOffset
+	 * @param  nRows
+	 * @param  fieldVec
+	 * @param  valueVec
+	 * @return bool 
+	 */
 	virtual bool Query(const std::string& strTableName, const std::string& strKeyColName, int nOffset, int nRows, const std::vector<std::string>& fieldVec, std::vector<std::string>& valueVec) override;
+	/**
+	 * @brief
+	 *
+	 * @param  strTableName
+	 * @param  strKeyColName
+	 * @param  strKey
+	 * @return bool 
+	 */
 	virtual bool Delete(const std::string& strTableName, const std::string& strKeyColName, const std::string& strKey) override;
+	/**
+	 * @brief
+	 *
+	 * @param  strTableName
+	 * @param  strKeyColName
+	 * @param  strKey
+	 * @param  bExit
+	 * @return bool 
+	 */
 	virtual bool Exists(const std::string& strTableName, const std::string& strKeyColName, const std::string& strKey, bool& bExit) override;
+	/**
+	 * @brief
+	 *
+	 * @param  strTableName
+	 * @param  strKeyColName
+	 * @param  strKeyName
+	 * @param  valueVec
+	 * @return bool 
+	 */
 	virtual bool Keys(const std::string& strTableName, const std::string& strKeyColName, const std::string& strKeyName, std::vector<std::string>& valueVec) override;
+	/**
+	 * @brief
+	 *
+	 * @param  nServerID
+	 * @param  strIP
+	 * @param  nPort
+	 * @param  strDBName
+	 * @param  strDBUser
+	 * @param  strDBPwd
+	 * @param  nRconnectTime
+	 * @param  nRconneCount
+	 * @return bool 
+	 */
 	virtual bool AddMysqlServer(const int nServerID, const std::string& strIP, const int nPort, const std::string strDBName, const std::string strDBUser, const std::string strDBPwd, const int nRconnectTime = 10, const int nRconneCount = -1) override;
 private:
 	NFIMysqlDriverManager* m_pMysqlDriverManager;

@@ -20,8 +20,31 @@ public:
 
 	virtual ~NFCMysqlDriverManager();
 
+	/**
+	 * @brief
+	 *
+	 * @param  nServerID
+	 * @param  strIP
+	 * @param  nPort
+	 * @param  strDBName
+	 * @param  strDBUser
+	 * @param  strDBPwd
+	 * @param  nRconnectTime
+	 * @param  nRconneCount
+	 * @return bool 
+	 */
 	virtual bool AddMysqlServer(const int nServerID, const std::string& strIP, const int nPort, const std::string strDBName, const std::string strDBUser, const std::string strDBPwd, const int nRconnectTime/* = 10*/, const int nRconneCount/* = -1*/) override;
+	/**
+	 * @brief
+	 *
+	 * @return NFIMysqlDriver* 
+	 */
 	virtual NFIMysqlDriver* GetMysqlDriver() override;
+	/**
+	 * @brief
+	 *
+	 * @return void 
+	 */
 	virtual void CheckMysql() override;
 protected:
 	NFMap<int, NFIMysqlDriver> mvMysql;
