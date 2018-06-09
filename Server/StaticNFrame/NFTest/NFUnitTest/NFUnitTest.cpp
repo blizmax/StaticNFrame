@@ -31,6 +31,7 @@
 #include "NFAlgorithm_Test.h"
 #include "NFThread_Test.h"
 #include "NFFileString_Test.h"
+#include "NFJson_test.h"
 
 int main(int argc, char** argv)
 {

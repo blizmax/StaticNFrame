@@ -66,6 +66,9 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "NFTestPlugin", "StaticNFrame\NFTest\NFTestPlugin\NFTestPlugin.vcxproj", "{F095233B-8C5F-4CB7-8BFA-A273D76CD238}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "NFUnitTest", "StaticNFrame\NFTest\NFUnitTest\NFUnitTest.vcxproj", "{283DE13A-AE2D-4FEC-939B-34E9A65B97AB}"
+	ProjectSection(ProjectDependencies) = postProject
+		{47C3399C-0E56-4D1A-99DA-263C80A272F3} = {47C3399C-0E56-4D1A-99DA-263C80A272F3}
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "NFComm", "NFComm", "{9D0BB1B4-FC93-4B3B-839F-9EC1797081EC}"
 EndProject
