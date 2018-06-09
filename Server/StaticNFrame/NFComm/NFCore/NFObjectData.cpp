@@ -7,12 +7,13 @@
 //
 // -------------------------------------------------------------------------
 
-#include "NFObject.h"
+#include "NFObjectData.h"
 #include <cassert>
 #include <cmath>
 #include <cstdlib>
 #include <cstdio>
 #include <limits>
+
 
 static const int max_depth = 200;
 
@@ -37,7 +38,7 @@ struct NullStruct
  * Value wrappers
  */
 
-template <NFObject::NFObjectType tag, typename T>
+template <NFObjectData::NFObjectType tag, typename T>
 class NFValue : public NFObjectValue
 {
 protected:
@@ -51,7 +52,7 @@ protected:
 	}
 
 	// Get type tag
-	NFObject::NFObjectType Type() const override
+	NFObjectData::NFObjectType Type() const override
 	{
 		return tag;
 	}
@@ -70,7 +71,7 @@ protected:
 	const T m_value;
 };
 
-class NFObjectDouble final : public NFValue<NFObject::NUMBER, double>
+class NFObjectDouble final : public NFValue<NFObjectData::NUMBER, double>
 {
 protected:
 	double DoubleValue() const override
@@ -119,7 +120,7 @@ public:
 	}
 };
 
-class NFObjectInt final : public NFValue<NFObject::NUMBER, int64_t>
+class NFObjectInt final : public NFValue<NFObjectData::NUMBER, int64_t>
 {
 protected:
 	double DoubleValue() const override
@@ -163,12 +164,67 @@ protected:
 	}
 
 public:
-	explicit NFObjectInt(int value) : NFValue(value)
+	explicit NFObjectInt(int32_t value) : NFValue(static_cast<int64_t>(value))
+	{
+	}
+	explicit NFObjectInt(uint32_t value) : NFValue(static_cast<int64_t>(value))
+	{
+	}
+	explicit NFObjectInt(int64_t value) : NFValue(value)
 	{
 	}
 };
 
-class NFObjectBoolean final : public NFValue<NFObject::BOOL, bool>
+class NFObjectUInt64 final : public NFValue<NFObjectData::NUMBER, uint64_t>
+{
+protected:
+	double DoubleValue() const override
+	{
+		return static_cast<double>(m_value);
+	}
+
+	float FloatValue() const override
+	{
+		return static_cast<float>(m_value);
+	}
+
+	int32_t Int32Value() const override
+	{
+		return static_cast<int32_t>(m_value);
+	}
+
+	uint32_t Uint32Value() const override
+	{
+		return static_cast<uint32_t>(m_value);
+	}
+
+	int64_t Int64Value() const override
+	{
+		return static_cast<int64_t>(m_value);
+	}
+
+	uint64_t Uint64Value() const override
+	{
+		return static_cast<uint64_t>(m_value);
+	}
+
+	bool Equals(const NFObjectValue* other) const override
+	{
+		return m_value == other->Uint64Value();
+	}
+
+	bool Less(const NFObjectValue* other) const override
+	{
+		return m_value < other->Uint64Value();
+	}
+
+public:
+	explicit NFObjectUInt64(uint64_t value) : NFValue(value)
+	{
+	}
+};
+
+class NFObjectBoolean final : public NFValue<NFObjectData::BOOL, bool>
 {
 protected:
 	bool BoolValue() const override
@@ -182,7 +238,7 @@ public:
 	}
 };
 
-class NFObjectString final : public NFValue<NFObject::STRING, string>
+class NFObjectString final : public NFValue<NFObjectData::STRING, string>
 {
 protected:
 	const string& StringValue() const override
@@ -200,63 +256,63 @@ public:
 	}
 };
 
-class NFObjectArray final : public NFValue<NFObject::ARRAY, NFObject::Array>
+class NFObjectArray final : public NFValue<NFObjectData::ARRAY, NFObjectData::Array>
 {
 protected:
-	const NFObject::Array& ArrayItems() const override
+	const NFObjectData::Array& ArrayItems() const override
 	{
 		return m_value;
 	}
 
-	const NFObject& operator[](size_t i) const override;
+	const NFObjectData& operator[](size_t i) const override;
 public:
-	explicit NFObjectArray(const NFObject::Array& value) : NFValue(value)
+	explicit NFObjectArray(const NFObjectData::Array& value) : NFValue(value)
 	{
 	}
 
-	explicit NFObjectArray(NFObject::Array&& value) : NFValue(move(value))
+	explicit NFObjectArray(NFObjectData::Array&& value) : NFValue(move(value))
 	{
 	}
 };
 
-class NFObjectList final : public NFValue<NFObject::LIST, NFObject::List>
+class NFObjectList final : public NFValue<NFObjectData::LIST, NFObjectData::List>
 {
 protected:
-	const NFObject::List& ListItems() const override
+	const NFObjectData::List& ListItems() const override
 	{
 		return m_value;
 	}
 
 public:
-	explicit NFObjectList(const NFObject::List& value) : NFValue(value)
+	explicit NFObjectList(const NFObjectData::List& value) : NFValue(value)
 	{
 	}
 
-	explicit NFObjectList(NFObject::List&& value) : NFValue(move(value))
+	explicit NFObjectList(NFObjectData::List&& value) : NFValue(move(value))
 	{
 	}
 };
 
-class NFObjectMapObject final : public NFValue<NFObject::MAPObject, NFObject::MapObject>
+class NFObjectMapObject final : public NFValue<NFObjectData::MAPObject, NFObjectData::MapObject>
 {
 protected:
-	const NFObject::MapObject& MapObjectItems() const override
+	const NFObjectData::MapObject& MapObjectItems() const override
 	{
 		return m_value;
 	}
 
-	const NFObject& operator[](const string& key) const override;
+	const NFObjectData& operator[](const string& key) const override;
 public:
-	explicit NFObjectMapObject(const NFObject::MapObject& value) : NFValue(value)
+	explicit NFObjectMapObject(const NFObjectData::MapObject& value) : NFValue(value)
 	{
 	}
 
-	explicit NFObjectMapObject(NFObject::MapObject&& value) : NFValue(move(value))
+	explicit NFObjectMapObject(NFObjectData::MapObject&& value) : NFValue(move(value))
 	{
 	}
 };
 
-class NFObjectNull final : public NFValue<NFObject::NUL, NullStruct>
+class NFObjectNull final : public NFValue<NFObjectData::NUL, NullStruct>
 {
 public:
 	NFObjectNull() : NFValue({})
@@ -273,9 +329,9 @@ struct NFStatics
 	const std::shared_ptr<NFObjectValue> t = make_shared<NFObjectBoolean>(true);
 	const std::shared_ptr<NFObjectValue> f = make_shared<NFObjectBoolean>(false);
 	const std::string empty_string;
-	const NFObject::Array empty_vector;
-	const NFObject::List empty_list;
-	const NFObject::MapObject empty_map;
+	const NFObjectData::Array empty_vector;
+	const NFObjectData::List empty_list;
+	const NFObjectData::MapObject empty_map;
 
 	NFStatics()
 	{
@@ -288,10 +344,10 @@ static const NFStatics& Statics()
 	return s;
 }
 
-static const NFObject& StaticNull()
+static const NFObjectData& StaticNull()
 {
 	// This has to be separate, not in Statics, because Json() accesses statics().null.
-	static const NFObject object_null;
+	static const NFObjectData object_null;
 	return object_null;
 }
 
@@ -299,59 +355,71 @@ static const NFObject& StaticNull()
  * Constructors
  */
 
-NFObject::NFObject() noexcept : m_ptr(Statics().null)
+NFObjectData::NFObjectData() noexcept : m_ptr(Statics().null)
 {
 }
 
-NFObject::NFObject(std::nullptr_t) noexcept : m_ptr(Statics().null)
+NFObjectData::NFObjectData(std::nullptr_t) noexcept : m_ptr(Statics().null)
 {
 }
 
-NFObject::NFObject(double value) : m_ptr(make_shared<NFObjectDouble>(value))
+NFObjectData::NFObjectData(double value) : m_ptr(make_shared<NFObjectDouble>(value))
 {
 }
 
-NFObject::NFObject(int value) : m_ptr(make_shared<NFObjectInt>(value))
+NFObjectData::NFObjectData(int32_t value) : m_ptr(make_shared<NFObjectInt>(value))
 {
 }
 
-NFObject::NFObject(bool value) : m_ptr(value ? Statics().t : Statics().f)
+NFObjectData::NFObjectData(uint32_t value) : m_ptr(make_shared<NFObjectInt>(value))
 {
 }
 
-NFObject::NFObject(const string& value) : m_ptr(make_shared<NFObjectString>(value))
+NFObjectData::NFObjectData(int64_t value) : m_ptr(make_shared<NFObjectInt>(value))
 {
 }
 
-NFObject::NFObject(string&& value) : m_ptr(make_shared<NFObjectString>(move(value)))
+NFObjectData::NFObjectData(uint64_t value) : m_ptr(make_shared<NFObjectUInt64>(value))
 {
 }
 
-NFObject::NFObject(const char* value) : m_ptr(make_shared<NFObjectString>(value))
+NFObjectData::NFObjectData(bool value) : m_ptr(value ? Statics().t : Statics().f)
 {
 }
 
-NFObject::NFObject(const NFObject::Array& values) : m_ptr(make_shared<NFObjectArray>(values))
+NFObjectData::NFObjectData(const string& value) : m_ptr(make_shared<NFObjectString>(value))
 {
 }
 
-NFObject::NFObject(NFObject::Array&& values) : m_ptr(make_shared<NFObjectArray>(move(values)))
+NFObjectData::NFObjectData(string&& value) : m_ptr(make_shared<NFObjectString>(move(value)))
 {
 }
 
-NFObject::NFObject(const NFObject::MapObject& values) : m_ptr(make_shared<NFObjectMapObject>(values))
+NFObjectData::NFObjectData(const char* value) : m_ptr(make_shared<NFObjectString>(value))
 {
 }
 
-NFObject::NFObject(NFObject::MapObject&& values) : m_ptr(make_shared<NFObjectMapObject>(move(values)))
+NFObjectData::NFObjectData(const NFObjectData::Array& values) : m_ptr(make_shared<NFObjectArray>(values))
 {
 }
 
-NFObject::NFObject(const NFObject::List& values) : m_ptr(make_shared<NFObjectList>(values))
+NFObjectData::NFObjectData(NFObjectData::Array&& values) : m_ptr(make_shared<NFObjectArray>(move(values)))
 {
 }
 
-NFObject::NFObject(NFObject::List&& values) : m_ptr(make_shared<NFObjectList>(move(values)))
+NFObjectData::NFObjectData(const NFObjectData::MapObject& values) : m_ptr(make_shared<NFObjectMapObject>(values))
+{
+}
+
+NFObjectData::NFObjectData(NFObjectData::MapObject&& values) : m_ptr(make_shared<NFObjectMapObject>(move(values)))
+{
+}
+
+NFObjectData::NFObjectData(const NFObjectData::List& values) : m_ptr(make_shared<NFObjectList>(values))
+{
+}
+
+NFObjectData::NFObjectData(NFObjectData::List&& values) : m_ptr(make_shared<NFObjectList>(move(values)))
 {
 }
 
@@ -359,72 +427,72 @@ NFObject::NFObject(NFObject::List&& values) : m_ptr(make_shared<NFObjectList>(mo
  * Accessors
  */
 
-NFObject::NFObjectType NFObject::Type() const
+NFObjectData::NFObjectType NFObjectData::Type() const
 {
 	return m_ptr->Type();
 }
 
-double NFObject::DoubleValue() const
+double NFObjectData::DoubleValue() const
 {
 	return m_ptr->DoubleValue();
 }
 
-float NFObject::FloatValue() const
+float NFObjectData::FloatValue() const
 {
 	return m_ptr->FloatValue();
 }
 
-int32_t NFObject::Int32Value() const
+int32_t NFObjectData::Int32Value() const
 {
 	return m_ptr->Int32Value();
 }
 
-uint32_t NFObject::Uint32Value() const
+uint32_t NFObjectData::Uint32Value() const
 {
 	return m_ptr->Uint32Value();
 }
 
-int64_t NFObject::Int64Value() const
+int64_t NFObjectData::Int64Value() const
 {
 	return m_ptr->Int64Value();
 }
 
-uint64_t NFObject::Uint64Value() const
+uint64_t NFObjectData::Uint64Value() const
 {
 	return m_ptr->Uint64Value();
 }
 
-bool NFObject::BoolValue() const
+bool NFObjectData::BoolValue() const
 {
 	return m_ptr->BoolValue();
 }
 
-const std::string& NFObject::StringValue() const
+const std::string& NFObjectData::StringValue() const
 {
 	return m_ptr->StringValue();
 }
 
-const NFObject::Array& NFObject::ArrayItems() const
+const NFObjectData::Array& NFObjectData::ArrayItems() const
 {
 	return m_ptr->ArrayItems();
 }
 
-const NFObject::List& NFObject::ListItems() const
+const NFObjectData::List& NFObjectData::ListItems() const
 {
 	return m_ptr->ListItems();
 }
 
-const NFObject::MapObject& NFObject::MapObjectItems() const
+const NFObjectData::MapObject& NFObjectData::MapObjectItems() const
 {
 	return m_ptr->MapObjectItems();
 }
 
-const NFObject& NFObject::operator[](size_t i) const
+const NFObjectData& NFObjectData::operator[](size_t i) const
 {
 	return (*m_ptr)[i];
 }
 
-const NFObject& NFObject::operator[](const string& key) const
+const NFObjectData& NFObjectData::operator[](const string& key) const
 {
 	return (*m_ptr)[key];
 }
@@ -469,38 +537,38 @@ const std::string& NFObjectValue::StringValue() const
 	return Statics().empty_string;
 }
 
-const NFObject::Array& NFObjectValue::ArrayItems() const
+const NFObjectData::Array& NFObjectValue::ArrayItems() const
 {
 	return Statics().empty_vector;
 }
 
-const NFObject::List& NFObjectValue::ListItems() const
+const NFObjectData::List& NFObjectValue::ListItems() const
 {
 	return Statics().empty_list;
 }
 
-const NFObject::MapObject& NFObjectValue::MapObjectItems() const
+const NFObjectData::MapObject& NFObjectValue::MapObjectItems() const
 {
 	return Statics().empty_map;
 }
 
-const NFObject& NFObjectValue::operator[](size_t) const
+const NFObjectData& NFObjectValue::operator[](size_t) const
 {
 	return StaticNull();
 }
 
-const NFObject& NFObjectValue::operator[](const string&) const
+const NFObjectData& NFObjectValue::operator[](const string&) const
 {
 	return StaticNull();
 }
 
-const NFObject& NFObjectMapObject::operator[](const string& key) const
+const NFObjectData& NFObjectMapObject::operator[](const string& key) const
 {
 	auto iter = m_value.find(key);
 	return (iter == m_value.end()) ? StaticNull() : iter->second;
 }
 
-const NFObject& NFObjectArray::operator[](size_t i) const
+const NFObjectData& NFObjectArray::operator[](size_t i) const
 {
 	if (i >= m_value.size()) return StaticNull();
 	else return m_value[i];
@@ -510,7 +578,7 @@ const NFObject& NFObjectArray::operator[](size_t i) const
 * Comparison
 */
 
-bool NFObject::operator==(const NFObject& other) const
+bool NFObjectData::operator==(const NFObjectData& other) const
 {
 	if (m_ptr == other.m_ptr)
 		return true;
@@ -520,7 +588,7 @@ bool NFObject::operator==(const NFObject& other) const
 	return m_ptr->Equals(other.m_ptr.get());
 }
 
-bool NFObject::operator<(const NFObject& other) const
+bool NFObjectData::operator<(const NFObjectData& other) const
 {
 	if (m_ptr == other.m_ptr)
 		return false;

@@ -14,6 +14,14 @@
 #define NF_ASSERT(condition)					if (!(condition)) NFAssertFail(__FILE__, __LINE__); else { }
 #define NF_ASSERT_MSG(condition, msg)			if (!(condition)) NFAssertFail(__FILE__, __LINE__, msg); else { }
 
+#define NF_ASSERT_RET_VAL(exp_, val)   \
+    do                                  \
+    {                                   \
+        if ((exp_)) break;              \
+        assert(exp_);                   \
+        return val;                     \
+    } while (0);
+
 inline void NFAssertFail(const char*const file, const unsigned int line, const std::string& message = std::string())
 {
 	fprintf(stderr, "FAIL in %s (%d)", file, line);

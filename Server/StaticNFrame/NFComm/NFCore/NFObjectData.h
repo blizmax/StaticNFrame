@@ -30,7 +30,7 @@ class NFObjectValue;
 /**
  *@brief  NFrame的数据类
  */
-class _NFExport NFObject final
+class _NFExport NFObjectData final
 {
 public:
 	/**
@@ -48,31 +48,34 @@ public:
 	};
 
 	// Array and object typedefs
-	typedef std::vector<NFObject> Array;
-	typedef std::list<NFObject> List;
-	typedef std::map<std::string, NFObject> MapObject;
+	typedef std::vector<NFObjectData> Array;
+	typedef std::list<NFObjectData> List;
+	typedef std::map<std::string, NFObjectData> MapObject;
 
 	/**
 	* @brief 构造函数.
 	*/
-	NFObject() noexcept; // NUL
-	NFObject(std::nullptr_t) noexcept; // NUL
-	NFObject(double value); // NUMBER
-	NFObject(int value); // NUMBER
-	NFObject(bool value); // BOOL
-	NFObject(const std::string& value); // STRING
-	NFObject(std::string&& value); // STRING
-	NFObject(const char* value); // STRING
-	NFObject(const Array& jvalues); // ARRAY
-	NFObject(Array&& values); // ARRAY
-	NFObject(const List& kvalues); // LIST
-	NFObject(List&& values); // LIST
-	NFObject(const MapObject& values); // MAPOBJECT
-	NFObject(MapObject&& values); // MAPOBJECT
+	NFObjectData() noexcept; // NUL
+	NFObjectData(std::nullptr_t) noexcept; // NUL
+	NFObjectData(double value); // NUMBER
+	NFObjectData(int32_t value); // NUMBER
+	NFObjectData(uint32_t value); // NUMBER
+	NFObjectData(int64_t value); // NUMBER
+	NFObjectData(uint64_t value); // NUMBER
+	NFObjectData(bool value); // BOOL
+	NFObjectData(const std::string& value); // STRING
+	NFObjectData(std::string&& value); // STRING
+	NFObjectData(const char* value); // STRING
+	NFObjectData(const Array& jvalues); // ARRAY
+	NFObjectData(Array&& values); // ARRAY
+	NFObjectData(const List& kvalues); // LIST
+	NFObjectData(List&& values); // LIST
+	NFObjectData(const MapObject& values); // MAPOBJECT
+	NFObjectData(MapObject&& values); // MAPOBJECT
 
 	// This prevents NFObject(some_pointer) from accidentally producing a bool. Use
 	// NFObject(bool(some_pointer)) if that behavior is desired.
-	NFObject(void*) = delete;
+	NFObjectData(void*) = delete;
 
 	// Accessors
 	NFObjectType Type() const;
@@ -133,29 +136,29 @@ public:
 	const MapObject& MapObjectItems() const;
 
 	// Return a reference to arr[i] if this is an array, Json() otherwise.
-	const NFObject& operator[](size_t i) const;
+	const NFObjectData& operator[](size_t i) const;
 	// Return a reference to obj[key] if this is an object, Json() otherwise.
-	const NFObject& operator[](const std::string& key) const;
+	const NFObjectData& operator[](const std::string& key) const;
 
-	bool operator==(const NFObject& rhs) const;
-	bool operator<(const NFObject& rhs) const;
+	bool operator==(const NFObjectData& rhs) const;
+	bool operator<(const NFObjectData& rhs) const;
 
-	bool operator!=(const NFObject& rhs) const
+	bool operator!=(const NFObjectData& rhs) const
 	{
 		return !(*this == rhs);
 	}
 
-	bool operator<=(const NFObject& rhs) const
+	bool operator<=(const NFObjectData& rhs) const
 	{
 		return !(rhs < *this);
 	}
 
-	bool operator>(const NFObject& rhs) const
+	bool operator>(const NFObjectData& rhs) const
 	{
 		return (rhs < *this);
 	}
 
-	bool operator>=(const NFObject& rhs) const
+	bool operator>=(const NFObjectData& rhs) const
 	{
 		return !(*this < rhs);
 	}
@@ -170,11 +173,12 @@ private:
 class NFObjectValue
 {
 protected:
-	friend class NFObject;
+	friend class NFObjectData;
 	friend class NFObjectDouble;
 	friend class NFObjectInt;
+	friend class NFObjectUInt64;
 	friend class NFObjectList;
-	virtual NFObject::NFObjectType Type() const = 0;
+	virtual NFObjectData::NFObjectType Type() const = 0;
 	virtual bool Equals(const NFObjectValue* other) const = 0;
 	virtual bool Less(const NFObjectValue* other) const = 0;
 	virtual double DoubleValue() const;
@@ -185,11 +189,11 @@ protected:
 	virtual uint64_t Uint64Value() const;
 	virtual bool BoolValue() const;
 	virtual const std::string& StringValue() const;
-	virtual const NFObject::Array& ArrayItems() const;
-	virtual const NFObject& operator[](size_t i) const;
-	virtual const NFObject::List& ListItems() const;
-	virtual const NFObject::MapObject& MapObjectItems() const;
-	virtual const NFObject& operator[](const std::string& key) const;
+	virtual const NFObjectData::Array& ArrayItems() const;
+	virtual const NFObjectData& operator[](size_t i) const;
+	virtual const NFObjectData::List& ListItems() const;
+	virtual const NFObjectData::MapObject& MapObjectItems() const;
+	virtual const NFObjectData& operator[](const std::string& key) const;
 
 	virtual ~NFObjectValue()
 	{

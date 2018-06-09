@@ -73,6 +73,22 @@
     <ClInclude Include="NFIMysqlModule.h">
       <Filter>Mysql</Filter>
     </ClInclude>
+    <ClInclude Include="NFIObject.h">
+      <Filter>NFObject</Filter>
+    </ClInclude>
+    <ClInclude Include="NFDefine.h" />
+    <ClInclude Include="NFCData.h">
+      <Filter>NFObject</Filter>
+    </ClInclude>
+    <ClInclude Include="NFCDataValue.h">
+      <Filter>NFObject</Filter>
+    </ClInclude>
+    <ClInclude Include="NFDataNode.h">
+      <Filter>NFObject</Filter>
+    </ClInclude>
+    <ClInclude Include="NFBitValue.hpp">
+      <Filter>NFObject</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Event">
@@ -95,6 +111,9 @@
     </Filter>
     <Filter Include="Mysql">
       <UniqueIdentifier>{dd0fc0b9-d562-41ed-9db8-d5ba4c613206}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="NFObject">
+      <UniqueIdentifier>{c0d2ea3b-8a8b-4200-9cc9-efe210a9d0a1}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -128,6 +147,12 @@
     </ClCompile>
     <ClCompile Include="NFDBActor.cpp">
       <Filter>XActor</Filter>
+    </ClCompile>
+    <ClCompile Include="NFCData.cpp">
+      <Filter>NFObject</Filter>
+    </ClCompile>
+    <ClCompile Include="NFCDataValue.cpp">
+      <Filter>NFObject</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

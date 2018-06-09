@@ -162,6 +162,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="NFBitValue.hpp" />
+    <ClInclude Include="NFCData.h" />
+    <ClInclude Include="NFDataNode.h" />
+    <ClInclude Include="NFCDataValue.h" />
+    <ClInclude Include="NFDefine.h" />
+    <ClInclude Include="NFIObject.h" />
     <ClInclude Include="NFDBActor.h" />
     <ClInclude Include="NFDBActorMgr.h" />
     <ClInclude Include="NFActorMgr.h" />
@@ -198,6 +204,8 @@
     <ClInclude Include="NFTask.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="NFCData.cpp" />
+    <ClCompile Include="NFCDataValue.cpp" />
     <ClCompile Include="NFDBActor.cpp" />
     <ClCompile Include="NFDBActorMgr.cpp" />
     <ClCompile Include="NFCPluginManager.cpp" />

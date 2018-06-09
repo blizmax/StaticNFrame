@@ -179,7 +179,7 @@
     <ClCompile Include="NFIniReader.cpp" />
     <ClCompile Include="NFMD5.cpp" />
     <ClCompile Include="NFMMOMD5.cpp" />
-    <ClCompile Include="NFObject.cpp" />
+    <ClCompile Include="NFObjectData.cpp" />
     <ClCompile Include="NFPHPMD5.cpp" />
     <ClCompile Include="NFProfiler.cpp" />
     <ClCompile Include="NFRandom.cpp" />
@@ -218,7 +218,7 @@
     <ClInclude Include="NFMemManager.hpp" />
     <ClInclude Include="NFMMOMD5.h" />
     <ClInclude Include="NFNonCopyable.h" />
-    <ClInclude Include="NFObject.h" />
+    <ClInclude Include="NFObjectData.h" />
     <ClInclude Include="NFPHPMD5.h" />
     <ClInclude Include="NFPlatform.h" />
     <ClInclude Include="NFPlatformMacros.h" />
