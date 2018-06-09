@@ -14,144 +14,148 @@
 #include <typeinfo>
 #include "NFMapEx.hpp"
 
-template <typename T , typename TD>
+template <typename T, typename TD>
 class NFMap
 {
 public:
-    typedef std::map<T, TD*> NFMapOBJECT;
+	typedef std::map<T, TD*> NFMapOBJECT;
 
-    NFMap() {};
-    virtual ~NFMap()
-    {
-        //mObjectList.clear();
-        //DeleteAllElement();
-    };
+	NFMap()
+	{
+	};
 
-    virtual bool AddElement(const T& name, TD* data)
-    {
-        typename NFMapOBJECT::iterator itr = mObjectMap.find(name);
-        if (itr == mObjectMap.end())
-        {
-            mObjectMap.insert(typename NFMapOBJECT::value_type(name, data));
-            // mObjectList[name] = data;
-            return true;
-        }
+	virtual ~NFMap()
+	{
+		//mObjectList.clear();
+		//DeleteAllElement();
+	};
 
-        return false;
-    }
+	virtual bool AddElement(const T& name, TD* data)
+	{
+		typename NFMapOBJECT::iterator itr = mObjectMap.find(name);
+		if (itr == mObjectMap.end())
+		{
+			mObjectMap.insert(typename NFMapOBJECT::value_type(name, data));
+			// mObjectList[name] = data;
+			return true;
+		}
 
-    virtual TD* RemoveElement(const T& name)
-    {
-        TD* pData = nullptr;
-        typename NFMapOBJECT::iterator itr = mObjectMap.find(name);
-        if (itr != mObjectMap.end())
-        {
-            pData = itr->second;
-            mObjectMap.erase(itr);
-        }
+		return false;
+	}
 
-        return pData;
-    }
+	virtual TD* RemoveElement(const T& name)
+	{
+		TD* pData = nullptr;
+		typename NFMapOBJECT::iterator itr = mObjectMap.find(name);
+		if (itr != mObjectMap.end())
+		{
+			pData = itr->second;
+			mObjectMap.erase(itr);
+		}
 
-    virtual TD* GetElement(const T& name)
-    {
-        typename NFMapOBJECT::iterator itr = mObjectMap.find(name);
-        if (itr != mObjectMap.end())
-        {
-            return itr->second;
-        }
-        else
-        {
-            return nullptr;
-        }
-    }
+		return pData;
+	}
 
-    virtual TD* First()
-    {
-        if (mObjectMap.size() <= 0)
-        {
-            return nullptr;
-        }
+	virtual TD* GetElement(const T& name)
+	{
+		typename NFMapOBJECT::iterator itr = mObjectMap.find(name);
+		if (itr != mObjectMap.end())
+		{
+			return itr->second;
+		}
+		else
+		{
+			return nullptr;
+		}
+	}
 
-        mObjectCurIter = mObjectMap.begin();
-        if (mObjectCurIter != mObjectMap.end())
-        {
-            return mObjectCurIter->second;
-        }
-        else
-        {
-            return nullptr;
-        }
-    }
+	virtual TD* First()
+	{
+		if (mObjectMap.size() <= 0)
+		{
+			return nullptr;
+		}
 
-    virtual TD* Next()
-    {
-        if (mObjectCurIter == mObjectMap.end())
-        {
-            return nullptr;
-        }
+		mObjectCurIter = mObjectMap.begin();
+		if (mObjectCurIter != mObjectMap.end())
+		{
+			return mObjectCurIter->second;
+		}
+		else
+		{
+			return nullptr;
+		}
+	}
 
-        ++mObjectCurIter;
-        if (mObjectCurIter != mObjectMap.end())
-        {
-            return mObjectCurIter->second;
-        }
-        else
-        {
-            return nullptr;
-        }
-    }
+	virtual TD* Next()
+	{
+		if (mObjectCurIter == mObjectMap.end())
+		{
+			return nullptr;
+		}
 
-    virtual TD* First(T& name)
-    {
-        if (mObjectMap.size() <= 0)
-        {
-            return nullptr;
-        }
+		++mObjectCurIter;
+		if (mObjectCurIter != mObjectMap.end())
+		{
+			return mObjectCurIter->second;
+		}
+		else
+		{
+			return nullptr;
+		}
+	}
 
-        mObjectCurIter = mObjectMap.begin();
-        if (mObjectCurIter != mObjectMap.end())
-        {
-            name = mObjectCurIter->first;
-            return mObjectCurIter->second;
-        }
-        else
-        {
-            return nullptr;
-        }
-    }
+	virtual TD* First(T& name)
+	{
+		if (mObjectMap.size() <= 0)
+		{
+			return nullptr;
+		}
 
-    virtual TD* Next(T& name)
-    {
-        if (mObjectCurIter == mObjectMap.end())
-        {
-            return nullptr;
-        }
+		mObjectCurIter = mObjectMap.begin();
+		if (mObjectCurIter != mObjectMap.end())
+		{
+			name = mObjectCurIter->first;
+			return mObjectCurIter->second;
+		}
+		else
+		{
+			return nullptr;
+		}
+	}
 
-	    ++mObjectCurIter;
-        if (mObjectCurIter != mObjectMap.end())
-        {
-            name = mObjectCurIter->first;
-            return mObjectCurIter->second;
-        }
-        else
-        {
-            return nullptr;
-        }
-    }
+	virtual TD* Next(T& name)
+	{
+		if (mObjectCurIter == mObjectMap.end())
+		{
+			return nullptr;
+		}
 
-    int Count()
-    {
-        return mObjectMap.size();
-    }
+		++mObjectCurIter;
+		if (mObjectCurIter != mObjectMap.end())
+		{
+			name = mObjectCurIter->first;
+			return mObjectCurIter->second;
+		}
+		else
+		{
+			return nullptr;
+		}
+	}
 
-    bool ClearAll()
-    {
-        mObjectMap.clear();
-        return true;
-    }
+	int Count()
+	{
+		return mObjectMap.size();
+	}
+
+	bool ClearAll()
+	{
+		mObjectMap.clear();
+		return true;
+	}
+
 private:
-    NFMapOBJECT     mObjectMap;
-    typename NFMapOBJECT::iterator mObjectCurIter;
+	NFMapOBJECT mObjectMap;
+	typename NFMapOBJECT::iterator mObjectCurIter;
 };
 

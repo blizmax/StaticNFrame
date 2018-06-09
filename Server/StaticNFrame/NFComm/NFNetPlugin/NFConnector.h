@@ -93,3 +93,4 @@ private:
 	std::shared_ptr<DNSResolver> dns_resolver_;
 	NewConnectionCallback conn_fn_;
 };
+

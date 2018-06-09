@@ -206,3 +206,4 @@ private:
 	std::vector<NFServer*> mServerArray;
 	NFBuffer mxSendBuffer;
 };
+

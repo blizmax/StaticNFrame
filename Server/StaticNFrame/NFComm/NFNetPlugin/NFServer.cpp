@@ -84,7 +84,7 @@ bool NFServer::AddNetObject(SOCKET fd, sockaddr* sa)
 
 	struct sockaddr_in* pSin = reinterpret_cast<sockaddr_in*>(sa);
 	std::string ip = inet_ntoa(pSin->sin_addr);
-	uint32_t	port = pSin->sin_port;
+	uint32_t port = pSin->sin_port;
 
 	NetObject* pObject = NF_NEW NetObject();
 	mNetObjectArray[index] = pObject;
@@ -188,15 +188,15 @@ bool NFServer::Init()
 
 	struct sockaddr_in sin;
 	memset(&sin, 0, sizeof(sin));
-	sin.sin_family = AF_INET;
+	sin.sin_family = AF_INET ;
 	sin.sin_port = htons(mFlag.nPort);
 
 	NFLogInfo("serverId:%d serverType:%s started with port:%d", mServerId, GetServerName(mServerType).c_str(), mFlag.nPort);
 
 	mListener = evconnlistener_new_bind(mBase, listener_cb, static_cast<void*>(this),
-		LEV_OPT_REUSEABLE | LEV_OPT_CLOSE_ON_FREE, -1,
-		reinterpret_cast<struct sockaddr*>(&sin),
-		sizeof(sin));
+	                                    LEV_OPT_REUSEABLE | LEV_OPT_CLOSE_ON_FREE, -1,
+	                                    reinterpret_cast<struct sockaddr*>(&sin),
+	                                    sizeof(sin));
 
 	if (!mListener)
 	{
@@ -359,3 +359,4 @@ void NFServer::OnSocketNetEvent(const eMsgType nEvent, const uint32_t unLinkId)
 		mEventCB(nEvent, unLinkId);
 	}
 }
+

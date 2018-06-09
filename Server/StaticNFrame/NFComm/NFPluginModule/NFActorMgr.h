@@ -173,7 +173,11 @@ public:
 	*
 	* @return
 	*/
-	void		SetMainThreadRunning(bool running) { nMainThreadRuning = running; }
+	void SetMainThreadRunning(bool running)
+	{
+		nMainThreadRuning = running;
+	}
+
 protected:
 	/**
 	* @brief 服务器主线程是否在执行，
@@ -190,7 +194,7 @@ protected:
 * @brief actor异步管理模版, ActorType是actor具体的actor类型
 *
 */
-template<class ActorType>
+template <class ActorType>
 class NFActorMgr : public NFXActorMgr
 {
 public:
@@ -210,6 +214,7 @@ public:
 	{
 		NFActorMgr<ActorType>::ReleaseActor();
 	}
+
 public:
 	/**
 	* @brief 初始化actor系统, 配置线程个数
@@ -399,8 +404,10 @@ public:
 	virtual void OnMainThreadTick() override
 	{
 	}
+
 protected:
-	Theron::Framework*			m_pFramework;
-	NFXActor*					m_pMainActor;
-	std::map<int, NFXActor*>	m_mActorMap;
+	Theron::Framework* m_pFramework;
+	NFXActor* m_pMainActor;
+	std::map<int, NFXActor*> m_mActorMap;
 };
+

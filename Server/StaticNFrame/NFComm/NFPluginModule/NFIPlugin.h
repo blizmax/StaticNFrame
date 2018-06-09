@@ -38,7 +38,7 @@
 class NFIPluginManager;
 
 class NFIPlugin : public NFIModule,
-	public std::map<std::string, NFIModule>
+                  public std::map<std::string, NFIModule>
 {
 public:
 	NFIPlugin()
@@ -296,3 +296,4 @@ inline void NFIPlugin::RemoveModule(const std::string& moduleName)
 	}
 }
 #endif
+

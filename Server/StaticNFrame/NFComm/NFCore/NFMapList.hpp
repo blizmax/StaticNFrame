@@ -21,10 +21,13 @@ class NFMapList
 public:
 	typedef std::map<T, TD*> NFMapOBJECT;
 	typedef std::vector<TD*> NFListOBJECT;
-	NFMapList() {};
+
+	NFMapList()
+	{
+	};
+
 	virtual ~NFMapList()
 	{
-
 	};
 
 	virtual bool AddElement(const T& name, TD* data)
@@ -169,11 +172,10 @@ public:
 		mObjectList.clear();
 		return true;
 	}
+
 private:
-	NFMapOBJECT     mObjectMap;
-	NFListOBJECT	mObjectList;
+	NFMapOBJECT mObjectMap;
+	NFListOBJECT mObjectList;
 	typename NFMapOBJECT::iterator mObjectCurIter;
 };
-
-
 

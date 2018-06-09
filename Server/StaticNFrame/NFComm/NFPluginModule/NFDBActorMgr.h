@@ -73,14 +73,14 @@ public:
 	* @param balanceId 动态均衡id
 	* @return	一个actor索引
 	*/
-	int			GetBalanceActor(uint64_t balanceId);
+	int GetBalanceActor(uint64_t balanceId);
 
 	/**
 	* @brief 随机获得一个actor
 	*
 	* @return actor索引
 	*/
-	int			GetRandActor();
+	int GetRandActor();
 
 	/**
 	* @brief 添加要异步处理的task
@@ -88,14 +88,14 @@ public:
 	* @param pTask 要异步处理的task
 	* @return
 	*/
-	bool		AddTask(NFTask* pTask);
+	bool AddTask(NFTask* pTask);
 
 	/**
 	* @brief 主线程处理actor返回的任务
 	*
 	* @return
 	*/
-	void		OnMainThreadTick();
+	void OnMainThreadTick();
 protected:
 	/**
 	* @brief actor索引数组
@@ -123,5 +123,6 @@ protected:
 	* @brief 返回的消息队列，线程安全,
 	* actor线程将数据放入队列， 主线程从队列里取数据处理
 	*/
-	NFQueue<NFXActorMessage>		m_mQueue;
+	NFQueue<NFXActorMessage> m_mQueue;
 };
+

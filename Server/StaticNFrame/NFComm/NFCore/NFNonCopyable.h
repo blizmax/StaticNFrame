@@ -25,3 +25,4 @@ private:
 	NFNonCopyable(const NFNonCopyable&);
 	const NFNonCopyable& operator=(const NFNonCopyable&);
 };
+

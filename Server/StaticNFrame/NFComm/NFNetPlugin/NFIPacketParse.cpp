@@ -33,3 +33,4 @@ int NFIPacketParse::EnCode(const uint32_t unMsgID, const uint64_t nValue, const 
 {
 	return m_pPacketParse->EnCodeImpl(unMsgID, nValue, strData, unDataLen, buffer);
 }
+

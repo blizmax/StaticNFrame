@@ -304,3 +304,4 @@ private:
 	*/
 	int signo_;
 };
+

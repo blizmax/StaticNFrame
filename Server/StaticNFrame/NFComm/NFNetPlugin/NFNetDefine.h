@@ -54,7 +54,7 @@ enum eConnectStatus
 	eConnectStatus_Connecting, //连接中
 	eConnectStatus_ConnectOk, //连接OK
 	eConnectStatus_RECONNECT, //断开连接
-	eConnectStatus_REMOVE,    //删除
+	eConnectStatus_REMOVE, //删除
 };
 
 struct stMsgFlag
@@ -129,3 +129,4 @@ public:
 	eMsgType eType; //消息是从哪里来的
 	NFSimpleBuffer nBuffer;
 };
+

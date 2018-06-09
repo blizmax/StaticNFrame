@@ -38,3 +38,4 @@ public:
 private:
 	mapNavigate m_mapNavhandles;
 };
+

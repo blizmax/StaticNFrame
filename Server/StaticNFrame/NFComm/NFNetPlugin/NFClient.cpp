@@ -124,7 +124,7 @@ bool NFClient::Connect()
 
 	struct sockaddr_in sin;
 	memset(&sin, 0, sizeof(sin));
-	sin.sin_family = AF_INET;
+	sin.sin_family = AF_INET ;
 	inet_pton(AF_INET, m_flag.strIP.c_str(), (void*)&sin.sin_addr.s_addr);
 	sin.sin_port = htons(m_flag.nPort);
 	bufferevent_setcb(pBev, NetObject::conn_recvcb, NetObject::conn_writecb, NetObject::conn_eventcb, m_pObject);
@@ -200,3 +200,4 @@ void NFClient::SetLastActionTime(uint64_t time)
 {
 	mLastActionTime = time;
 }
+

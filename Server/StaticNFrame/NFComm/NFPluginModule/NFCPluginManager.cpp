@@ -174,20 +174,20 @@ bool NFCPluginManager::Execute()
 
 	BEGIN_PROFILE("Loop");
 
-	PluginInstanceMap::iterator it = mPluginInstanceMap.begin();
-	for (; it != mPluginInstanceMap.end(); ++it)
-	{
-		bool tembRet = it->second->Execute();
-		bRet = bRet && tembRet;
-	}
+		PluginInstanceMap::iterator it = mPluginInstanceMap.begin();
+		for (; it != mPluginInstanceMap.end(); ++it)
+		{
+			bool tembRet = it->second->Execute();
+			bRet = bRet && tembRet;
+		}
 
-	for (auto iter = mModuleAloneMultiMap.begin(); iter != mModuleAloneMultiMap.end(); ++iter)
-	{
-		bool tembRet = iter->second->Execute();
-		bRet = bRet && tembRet;
-	}
+		for (auto iter = mModuleAloneMultiMap.begin(); iter != mModuleAloneMultiMap.end(); ++iter)
+		{
+			bool tembRet = iter->second->Execute();
+			bRet = bRet && tembRet;
+		}
 
-	END_PROFILE();
+		END_PROFILE();
 
 	//采用固定帧率
 	endTime = NFGetTime();
@@ -520,3 +520,4 @@ NFIModule* NFCPluginManager::CreateAloneModule(const std::string& strModuleName)
 	}
 	return nullptr;
 }
+

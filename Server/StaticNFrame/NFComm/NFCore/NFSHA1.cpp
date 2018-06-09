@@ -200,12 +200,12 @@ void NFSHA1::AddDataLen(int nDealDataLen)
 void NFSHA1::ProcessMessageBlock()
 {
 	const unsigned K[] = // Constants defined for SHA-1
-	{
-		0x5A827999,
-		0x6ED9EBA1,
-		0x8F1BBCDC,
-		0xCA62C1D6
-	};
+		{
+			0x5A827999,
+			0x6ED9EBA1,
+			0x8F1BBCDC,
+			0xCA62C1D6
+		};
 	int t; // Loop counter
 	unsigned temp; // Temporary word value
 	unsigned W[80]; // Word sequence
@@ -343,11 +343,11 @@ void NFSHA1::PadMessage()
 	Message_Block[56] = (Length_High >> 24) & 0xFF;
 	Message_Block[57] = (Length_High >> 16) & 0xFF;
 	Message_Block[58] = (Length_High >> 8) & 0xFF;
-	Message_Block[59] = (Length_High)& 0xFF;
+	Message_Block[59] = (Length_High) & 0xFF;
 	Message_Block[60] = (Length_Low >> 24) & 0xFF;
 	Message_Block[61] = (Length_Low >> 16) & 0xFF;
 	Message_Block[62] = (Length_Low >> 8) & 0xFF;
-	Message_Block[63] = (Length_Low)& 0xFF;
+	Message_Block[63] = (Length_Low) & 0xFF;
 
 	ProcessMessageBlock();
 }
@@ -374,3 +374,4 @@ unsigned NFSHA1::CircularShift(int bits, unsigned word)
 {
 	return ((word << bits) & 0xFFFFFFFF) | ((word & 0xFFFFFFFF) >> (32 - bits));
 }
+

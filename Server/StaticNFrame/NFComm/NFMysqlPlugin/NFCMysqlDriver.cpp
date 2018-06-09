@@ -658,8 +658,9 @@ bool NFCMysqlDriver::QueryMore(google::protobuf::Message& message)
 
 	{
 		const google::protobuf::FieldDescriptor* pDbFieldsFieldDesc = pDesc->FindFieldByLowercaseName("db_fields");
-		if (pDbFieldsFieldDesc == nullptr || pDbFieldsFieldDesc->cpp_type() != google::protobuf::FieldDescriptor::CPPTYPE_MESSAGE 
-			|| !pDbFieldsFieldDesc->is_repeated()) return false;
+		if (pDbFieldsFieldDesc == nullptr || pDbFieldsFieldDesc->cpp_type() != google::protobuf::FieldDescriptor::CPPTYPE_MESSAGE
+			|| !pDbFieldsFieldDesc->is_repeated())
+			return false;
 
 		const google::protobuf::Descriptor* pDbFieldsDesc = pDbFieldsFieldDesc->message_type();
 		if (pDbFieldsDesc == nullptr) return false;
@@ -714,11 +715,11 @@ bool NFCMysqlDriver::QueryMore(google::protobuf::Message& message)
 			{
 				if (!orderKey.empty())
 				{
-					query << " ORDER BY " << orderKey << " limit " << lexical_cast<std::string>(nOffset) << "," << lexical_cast<std::string>(nRows) << ";";	
+					query << " ORDER BY " << orderKey << " limit " << lexical_cast<std::string>(nOffset) << "," << lexical_cast<std::string>(nRows) << ";";
 				}
 				else
 				{
-					query << " limit " << lexical_cast<std::string>(nOffset) << "," << lexical_cast<std::string>(nRows) << ";";	
+					query << " limit " << lexical_cast<std::string>(nOffset) << "," << lexical_cast<std::string>(nRows) << ";";
 				}
 			}
 			else
@@ -750,9 +751,8 @@ bool NFCMysqlDriver::QueryMore(google::protobuf::Message& message)
 
 					SetFieldsString(*pDbFieldsMessage, pTemp, strValue);
 				}
-
 			}
-		NFMYSQLTRYEND("query error")
+			NFMYSQLTRYEND("query error")
 	}
 
 	return true;

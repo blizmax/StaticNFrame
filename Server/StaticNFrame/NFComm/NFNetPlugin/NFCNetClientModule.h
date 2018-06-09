@@ -272,3 +272,4 @@ private:
 	std::vector<std::vector<NFClient*>> mxServerMap;
 	NFBuffer mxSendBuffer;
 };
+

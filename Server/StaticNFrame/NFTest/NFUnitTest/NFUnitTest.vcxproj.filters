@@ -8,5 +8,6 @@
     <ClInclude Include="NFThread_Test.h" />
     <ClInclude Include="NFAlgorithm_Test.h" />
     <ClInclude Include="NFFileString_Test.h" />
+    <ClInclude Include="NFJson_Test.h" />
   </ItemGroup>
 </Project>

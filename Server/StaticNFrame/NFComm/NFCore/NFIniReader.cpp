@@ -44,7 +44,7 @@ void NFINIReader::Clear()
 int32_t NFINIReader::ParseFile(FILE* file)
 {
 	static const int32_t MAX_BUFF_LEN = 2048;
-	char buff[MAX_BUFF_LEN] = { 0 };
+	char buff[MAX_BUFF_LEN] = {0};
 
 	int32_t line_no = 0;
 	std::string utf8bom;
@@ -122,7 +122,7 @@ int32_t NFINIReader::ParseFile(FILE* file)
 }
 
 std::string NFINIReader::Get(const std::string& section, const std::string& name,
-	const std::string& default_value)
+                             const std::string& default_value)
 {
 	std::map<std::string, std::map<std::string, std::string>>::iterator it = m_fields.find(section);
 	if (m_fields.end() == it)
@@ -241,3 +241,4 @@ std::set<std::string> NFINIReader::GetFields(const std::string& section)
 
 	return fields;
 }
+

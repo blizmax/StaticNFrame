@@ -177,3 +177,4 @@ bool NFCActorModule::AddEndFunc(const int nActorIndex, const int nSubMsgID, ACTO
 
 	return false;
 }
+

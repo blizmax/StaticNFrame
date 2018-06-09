@@ -1,4 +1,4 @@
-// -------------------------------------------------------------------------
+﻿// -------------------------------------------------------------------------
 //    @FileName         :    NFLoopThreadStatus.h
 //    @Author           :    GaoYi
 //    @Date             :    2018/05/26
@@ -14,7 +14,7 @@
 #include <atomic>
 
 /**
-* @brief Loop�߳�״̬
+* @brief Loop�߳�״̬
 *
 */
 class NFLoopTheadStatus
@@ -44,13 +44,14 @@ public:
 
 	std::string StatusToString() const
 	{
-		NF_CASE_STRING_BIGIN(mStatus.load()); //-V622
-		NF_CASE_STRING(kNull);
-		NF_CASE_STRING(kInitialized);
-		NF_CASE_STRING(kRunning);
-		NF_CASE_STRING(kStopping);
-		NF_CASE_STRING(kStopped);
-		NF_CASE_STRING_END();
+		NF_CASE_STRING_BIGIN(mStatus.load())
+			; //-V622
+			NF_CASE_STRING(kNull);
+			NF_CASE_STRING(kInitialized);
+			NF_CASE_STRING(kRunning);
+			NF_CASE_STRING(kStopping);
+			NF_CASE_STRING(kStopped);
+			NF_CASE_STRING_END();
 	}
 
 	virtual bool IsRunning() const
@@ -69,6 +70,7 @@ public:
 	}
 
 protected:
-	std::atomic<Status> mStatus = { kNull };
-	std::atomic<SubStatus> mSubstatus = { kSubStatusNull };
+	std::atomic<Status> mStatus = {kNull};
+	std::atomic<SubStatus> mSubstatus = {kSubStatusNull};
 };
+

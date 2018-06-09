@@ -86,9 +86,11 @@ protected:
 	virtual void HandlerEx(const NFIActorMessage& message, const Theron::Address& from)
 	{
 	};
+
 	virtual void Handler(const NFIActorMessage& message, const Theron::Address& from)
 	{
 	};
+
 private:
 	void DefaultHandler(const NFIActorMessage& message, const Theron::Address from) //-V801
 	{
@@ -107,3 +109,4 @@ protected:
 };
 
 #endif
+

@@ -42,6 +42,7 @@ public:
 		pData = nullptr;
 		nMsgType = ACTOR_MSG_TYPE_COMPONENT;
 	}
+
 public:
 	/**
 	* @brief 消息类型
@@ -89,7 +90,9 @@ public:
 	* @brief 析构函数
 	*
 	*/
-	virtual ~NFXActor() {}
+	virtual ~NFXActor()
+	{
+	}
 
 	/**
 	* @brief 向另外一个actor发送消息
@@ -102,6 +105,7 @@ public:
 	{
 		return Send(message, address);
 	}
+
 protected:
 	/**
 	* @brief 处理已经被处理过的消息
@@ -110,7 +114,9 @@ protected:
 	* @param from	 发送消息的actor地址
 	* @return 返回发送是否成功
 	*/
-	virtual void HandlerEx(const NFXActorMessage& message, const Theron::Address from) {};
+	virtual void HandlerEx(const NFXActorMessage& message, const Theron::Address from)
+	{
+	};
 
 	/**
 	* @brief 处理发送的数据
@@ -119,7 +125,10 @@ protected:
 	* @param from	 发送消息的actor地址
 	* @return
 	*/
-	virtual void Handler(const NFXActorMessage& message, const Theron::Address from) {};
+	virtual void Handler(const NFXActorMessage& message, const Theron::Address from)
+	{
+	};
+
 private:
 	/**
 	* @brief 异步处理的过程
@@ -139,9 +148,11 @@ private:
 			HandlerEx(message, from);
 		}
 	}
+
 protected:
 	/**
 	* @brief actor管理基类
 	*/
 	NFXActorMgr* m_pActorMgr;
 };
+

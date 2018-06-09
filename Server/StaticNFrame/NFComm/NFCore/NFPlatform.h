@@ -1,4 +1,4 @@
-#ifndef NF_PLATFORM_H
+ï»¿#ifndef NF_PLATFORM_H
 #define NF_PLATFORM_H
 
 #include "NFMacros.h"
@@ -153,7 +153,7 @@ inline int64_t NFGetNanoSeccondTime()
 	return std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::system_clock::now().time_since_epoch()).count();
 }
 
-//ÓÃÀ´½«enum×ª»¯Îª×Ö·û´®
+//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½enum×ªï¿½ï¿½Îªï¿½Ö·ï¿½ï¿½ï¿½
 #ifndef NF_CASE_STRING_BIGIN
 #define NF_CASE_STRING_BIGIN(state) switch(state){
 #define NF_CASE_STRING(state) case state:return #state;break;
@@ -161,3 +161,4 @@ inline int64_t NFGetNanoSeccondTime()
 #endif
 
 #endif
+

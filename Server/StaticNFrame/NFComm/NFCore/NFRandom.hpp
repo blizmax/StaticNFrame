@@ -118,3 +118,4 @@ _NFExport T NFRandReal(T min, T max)
 	std::uniform_real_distribution<T> distribution(min, max);
 	return distribution(generator);
 }
+

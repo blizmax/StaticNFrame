@@ -222,3 +222,4 @@ private:
 	*/
 	std::vector<uint32_t> mvRemoveObject;
 };
+

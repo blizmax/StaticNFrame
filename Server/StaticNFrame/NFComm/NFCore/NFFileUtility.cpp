@@ -154,7 +154,7 @@ wstring NFFileUtility::NormalizePath(const wstring& init, bool with_trailing_sla
 }
 
 void NFFileUtility::SplitFileName(const string& filepath,
-	string& base, string& dir_path, bool with_trailing_slash /*= false */)
+                                  string& base, string& dir_path, bool with_trailing_slash /*= false */)
 {
 	string path = filepath;
 	// Replace \ to /
@@ -187,7 +187,7 @@ void NFFileUtility::SplitFileName(const string& filepath,
 }
 
 void NFFileUtility::SplitFileName(const wstring& filepath,
-	wstring& base, wstring& dir_path, bool with_trailing_slash /*= false */)
+                                  wstring& base, wstring& dir_path, bool with_trailing_slash /*= false */)
 {
 	wstring path = filepath;
 	// Replace \ with / first
@@ -260,7 +260,8 @@ bool NFFileUtility::Mkdir(const string& dirpath)
 
 		// next dir
 		//nCurSplit = nNextSplit + 1;
-	} while (nNextSplit != string::npos);
+	}
+	while (nNextSplit != string::npos);
 
 	return true;
 }
@@ -475,7 +476,8 @@ void NFFileUtility::GetFiles(const string& strDirName, std::list<string>& files,
 				files.push_back(strFileName);
 			}
 		}
-	} while (_findnext(hFile, &finfo) == 0);
+	}
+	while (_findnext(hFile, &finfo) == 0);
 
 	_findclose(hFile);
 
@@ -548,7 +550,8 @@ void NFFileUtility::GetFiles(const string& strDirName, std::list<string>& files,
 				files.push_back(strFileName);
 			}
 		}
-	} while (_findnext(hFile, &finfo) == 0);
+	}
+	while (_findnext(hFile, &finfo) == 0);
 
 	_findclose(hFile);
 
@@ -559,7 +562,7 @@ void NFFileUtility::GetFiles(const string& strDirName, std::list<string>& files,
 	if (n < 0) {
 		std::ostringstream log;
 		log << "scandir failed. return value = -1, errno=" << errno;
-		//H_LOG_NAME_DEBUG( "FileUtil", log.str() );
+	//H_LOG_NAME_DEBUG( "FileUtil", log.str() );
 		return;
 	}
 
@@ -586,3 +589,4 @@ void NFFileUtility::GetFiles(const string& strDirName, std::list<string>& files,
 	free(namelist);
 #endif
 }
+

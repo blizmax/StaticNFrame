@@ -108,3 +108,4 @@ protected:
 private:
 	static uint64_t ms_lastUnixSec; // last unix sec
 };
+

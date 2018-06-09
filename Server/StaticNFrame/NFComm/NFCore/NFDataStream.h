@@ -408,20 +408,20 @@ inline NFDataStream& operator >>(NFDataStream& file, Struct4Element<TE1, TE2, TE
 
 inline NFDataStream::NFDataStream()
 	: buffer_(nullptr)
-	, self_created_(false)
-	, capacity_(0)
-	, write_index_(0)
-	, read_index_(0)
-	, status_(0)
+	  , self_created_(false)
+	  , capacity_(0)
+	  , write_index_(0)
+	  , read_index_(0)
+	  , status_(0)
 {
 }
 
 inline NFDataStream::NFDataStream(size_t nBufferSize)
 	: self_created_(true)
-	, capacity_(static_cast<uint32_t>(nBufferSize))
-	, write_index_(0)
-	, read_index_(0)
-	, status_(0)
+	  , capacity_(static_cast<uint32_t>(nBufferSize))
+	  , write_index_(0)
+	  , read_index_(0)
+	  , status_(0)
 {
 	buffer_ = static_cast<uint8_t*>(malloc(capacity_));
 
@@ -433,11 +433,11 @@ inline NFDataStream::NFDataStream(size_t nBufferSize)
 
 inline NFDataStream::NFDataStream(void* pData, size_t nBufferSize, bool bDestroy)
 	: buffer_(static_cast<uint8_t*>(pData))
-	, self_created_(bDestroy)
-	, capacity_(static_cast<uint32_t>(nBufferSize))
-	, write_index_(0)
-	, read_index_(0)
-	, status_(0)
+	  , self_created_(bDestroy)
+	  , capacity_(static_cast<uint32_t>(nBufferSize))
+	  , write_index_(0)
+	  , read_index_(0)
+	  , status_(0)
 {
 }
 
@@ -1227,3 +1227,4 @@ NFDataStream& NFDataStream::operator >>(std::unordered_map<_Kt, _Val>& val)
 
 	return *this;
 }
+

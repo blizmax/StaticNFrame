@@ -85,7 +85,7 @@ bool NFDataStream::ReadFile(/*const string& strFileName*/ const string& strPathN
 	while (remain > 0 && !feof(pf))
 	{
 		size_t readn = fread(buffer_ + (capacity_ - remain),
-			sizeof(char), remain, pf);
+		                     sizeof(char), remain, pf);
 
 		remain -= readn;
 
@@ -133,7 +133,8 @@ static void createDir(const string& strFileName)
 		}
 
 		nNextSplit = nCurSplit + 1;
-	} while (nCurSplit != string::npos);
+	}
+	while (nCurSplit != string::npos);
 }
 
 bool NFDataStream::WriteFile(const string& filepath)
@@ -183,3 +184,4 @@ bool NFDataStream::IsContentEquals(const NFDataStream& first, const NFDataStream
 
 	return true;
 }
+

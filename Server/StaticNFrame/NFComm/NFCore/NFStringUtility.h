@@ -273,8 +273,8 @@ public:
 	static bool IsFloatNumber(std::string& s);
 
 	static void Split(const std::string& str,
-		const std::string& delim,
-		std::vector<std::string>* result);
+	                  const std::string& delim,
+	                  std::vector<std::string>* result);
 
 	static std::string& Ltrim(std::string& str); // NOLINT
 
@@ -286,7 +286,7 @@ public:
 
 	// ×Ó´®Ìæ»»
 	static void StringReplace(const std::string& sub_str1,
-		const std::string& sub_str2, std::string* str);
+	                          const std::string& sub_str2, std::string* str);
 
 	static void UrlEncode(const std::string& src_str, std::string* dst_str);
 
@@ -387,7 +387,8 @@ inline void NFStringUtility::Explode(const _Tx& source, const _Tx& delim, std::v
 		{
 			return_value.push_back(_Ty(p1, p2 - p1));
 			p1 = p2 + delim_len;
-		} while ((p2 = static_cast<char*>(memmem(p1, len - (p1 - str), delim.data(), delim_len))) != nullptr && (limit == -1 || --limit > 1));
+		}
+		while ((p2 = static_cast<char*>(memmem(p1, len - (p1 - str), delim.data(), delim_len))) != nullptr && (limit == -1 || --limit > 1));
 
 		if (p1 < endp)
 		{
@@ -445,3 +446,4 @@ inline void NFStringUtility::Trim(_StringType& str, char c, bool left /*= true*/
 
 	str = _StringType(str.data() + start_pos, stop_pos + 1 - start_pos);
 }
+

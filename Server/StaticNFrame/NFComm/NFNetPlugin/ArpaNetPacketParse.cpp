@@ -78,3 +78,4 @@ int ArpgNetPacketParse::EnCodeImpl(const uint32_t unMsgID, const uint64_t nValue
 
 	return packHead.wSZ;
 }
+

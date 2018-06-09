@@ -79,3 +79,4 @@ bool NFCTimerModule::KillAllFixTimer(NFTimerObj* handler)
 {
 	return mTimerAxis.KillAllFixTimer(handler);
 }
+

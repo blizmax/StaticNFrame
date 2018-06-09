@@ -80,7 +80,7 @@ bool NFDBActorMgr::HandlerEx(const NFXActorMessage& message, const int from)
 	return false;
 }
 
-bool  NFDBActorMgr::AddTask(NFTask* pTask)
+bool NFDBActorMgr::AddTask(NFTask* pTask)
 {
 	if (nMainThreadRuning == false)
 	{
@@ -151,27 +151,27 @@ void NFDBActorMgr::OnMainThreadTick()
 					switch (state)
 					{
 					case NFTask::TPTASK_STATE_COMPLETED:
-					{
-						nHandleTaskCount++;
-						NFSafeDelete(pTask);
-					}
-					break;
+						{
+							nHandleTaskCount++;
+							NFSafeDelete(pTask);
+						}
+						break;
 					case NFTask::TPTASK_STATE_CONTINUE_CHILDTHREAD:
-					{
-						AddTask(pTask);
-					}
-					break;
+						{
+							AddTask(pTask);
+						}
+						break;
 					case NFTask::TPTASK_STATE_CONTINUE_MAINTHREAD:
-					{
-						m_mQueue.Push(xMsg);
-					}
-					break;
+						{
+							m_mQueue.Push(xMsg);
+						}
+						break;
 					default:
-					{
-						//error
-						nHandleTaskCount++;
-						NFSafeDelete(pTask);
-					}
+						{
+							//error
+							nHandleTaskCount++;
+							NFSafeDelete(pTask);
+						}
 					}
 				}
 			}
@@ -194,3 +194,4 @@ void NFDBActorMgr::OnMainThreadTick()
 
 	listTask.clear();
 }
+

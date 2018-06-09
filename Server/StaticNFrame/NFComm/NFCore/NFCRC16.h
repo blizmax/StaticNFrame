@@ -22,3 +22,4 @@ public:
 		return Sum(s.data(), s.size());
 	}
 };
+

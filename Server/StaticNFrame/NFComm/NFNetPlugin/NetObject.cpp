@@ -167,22 +167,22 @@ void NetObject::OnHandleMsgPeer(eMsgType type, uint32_t usLink, char* pBuf, uint
 	switch (type)
 	{
 	case eMsgType_RECIVEDATA:
-	{
-		if (mRecvCB)
 		{
-			mRecvCB(usLink, nValue, nMsgId, pBuf, sz);
+			if (mRecvCB)
+			{
+				mRecvCB(usLink, nValue, nMsgId, pBuf, sz);
+			}
 		}
-	}
-	break;
+		break;
 	case eMsgType_CONNECTED:
 	case eMsgType_DISCONNECTED:
-	{
-		if (mEventCB)
 		{
-			mEventCB(type, usLink);
+			if (mEventCB)
+			{
+				mEventCB(type, usLink);
+			}
 		}
-	}
-	break;
+		break;
 	default:
 		break;
 	}
@@ -313,3 +313,4 @@ bool NetObject::Send(const void* pData, uint32_t unSize)
 	}
 	return false;
 }
+

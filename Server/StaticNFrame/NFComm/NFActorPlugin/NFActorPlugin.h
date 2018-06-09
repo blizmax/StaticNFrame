@@ -30,3 +30,4 @@ public:
 
 	virtual void Uninstall() override;
 };
+

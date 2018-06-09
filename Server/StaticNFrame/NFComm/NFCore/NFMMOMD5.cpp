@@ -10,7 +10,7 @@
 #include "NFMMOMD5.h"
 
 /* Define the static member of MD5. */
-const byte NFMMOMD5::PADDING[64] = { 0x80 }; //-V1009
+const byte NFMMOMD5::PADDING[64] = {0x80}; //-V1009
 const char NFMMOMD5::HEX_NUMBERS[16] = {
 	'0', '1', '2', '3',
 	'4', '5', '6', '7',
@@ -230,7 +230,7 @@ void NFMMOMD5::transform(const byte block[64])
 */
 void NFMMOMD5::encode(const bit32* input, byte* output, size_t length)
 {
-	for (size_t i = 0, j = 0; j < length; ++i, j += 4)
+	for (size_t i = 0, j = 0; j < length; ++i , j += 4)
 	{
 		output[j] = static_cast<byte>(input[i] & 0xff);
 		output[j + 1] = static_cast<byte>((input[i] >> 8) & 0xff);
@@ -251,7 +251,7 @@ void NFMMOMD5::encode(const bit32* input, byte* output, size_t length)
 */
 void NFMMOMD5::decode(const byte* input, bit32* output, size_t length)
 {
-	for (size_t i = 0, j = 0; j < length; ++i, j += 4)
+	for (size_t i = 0, j = 0; j < length; ++i , j += 4)
 	{
 		output[i] = static_cast<bit32>(input[j]) | (static_cast<bit32>(input[j + 1]) << 8) |
 			(static_cast<bit32>(input[j + 2]) << 16) | (static_cast<bit32>(input[j + 3]) << 24);
@@ -279,3 +279,4 @@ string NFMMOMD5::toStr()
 	}
 	return str;
 }
+

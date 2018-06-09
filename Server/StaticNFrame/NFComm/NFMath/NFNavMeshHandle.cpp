@@ -60,7 +60,7 @@ int NFNavMeshHandle::FindStraightPath(int layer, const NFVector3& start, const N
 	filter.setIncludeFlags(0xffff);
 	filter.setExcludeFlags(0);
 
-	const float extents[3] = { 2.f, 4.f, 2.f };
+	const float extents[3] = {2.f, 4.f, 2.f};
 
 	dtPolyRef startRef = INVALID_NAVMESH_POLYREF;
 	dtPolyRef endRef = INVALID_NAVMESH_POLYREF;
@@ -137,7 +137,7 @@ int NFNavMeshHandle::RayCast(int layer, const NFVector3& start, const NFVector3&
 	filter.setIncludeFlags(0xffff);
 	filter.setExcludeFlags(0);
 
-	const float extents[3] = { 2.f, 4.f, 2.f };
+	const float extents[3] = {2.f, 4.f, 2.f};
 
 	dtPolyRef startRef = INVALID_NAVMESH_POLYREF;
 
@@ -292,10 +292,10 @@ bool NFNavMeshHandle::Create(const std::string& path)
 		pos += size;
 
 		status = mesh->addTile(tileData
-			, size
-			, (safeStorage ? DT_TILE_FREE_DATA : 0) //-V547
-			, tileHeader.tileRef
-			, nullptr);
+		                       , size
+		                       , (safeStorage ? DT_TILE_FREE_DATA : 0) //-V547
+		                       , tileHeader.tileRef
+		                       , nullptr);
 
 		if (dtStatusFailed(status))
 		{
@@ -349,7 +349,7 @@ bool NFNavMeshHandle::Create(const std::string& path)
 //-------------------------------------------------------------------------------------
 
 int NFNavMeshHandle::FindRandomPointAroundCircle(int layer, const NFVector3& centerPos,
-	std::vector<NFVector3>& points, int max_points, float maxRadius)
+                                                 std::vector<NFVector3>& points, int max_points, float maxRadius)
 {
 	if (layer >= static_cast<int>(navmeshQuery_layers.size()))
 	{
@@ -381,7 +381,7 @@ int NFNavMeshHandle::FindRandomPointAroundCircle(int layer, const NFVector3& cen
 		return static_cast<int>(points.size());
 	}
 
-	const float extents[3] = { 2.f, 4.f, 2.f };
+	const float extents[3] = {2.f, 4.f, 2.f};
 
 	dtPolyRef startRef = INVALID_NAVMESH_POLYREF;
 
@@ -431,7 +431,7 @@ bool NFNavMeshHandle::IsValidPos(int layer, const NFVector3& pos)
 	filter.setIncludeFlags(0xffff);
 	filter.setExcludeFlags(0);
 
-	const float extents[3] = { 2.f, 100.f, 2.f };
+	const float extents[3] = {2.f, 100.f, 2.f};
 
 	float spos[3];
 	spos[0] = pos.x;
@@ -458,7 +458,7 @@ void NFNavMeshHandle::GetValidPos(int layer, const NFVector3& pos, NFVector3& ou
 	filter.setIncludeFlags(0xffff);
 	filter.setExcludeFlags(0);
 
-	const float extents[3] = { 2.f, 100.f, 2.f };
+	const float extents[3] = {2.f, 100.f, 2.f};
 
 	float spos[3];
 	spos[0] = pos.x;
@@ -507,3 +507,4 @@ NFVector3 NFNavMeshHandle::GetOriginPos(int layer)
 
 	return NFVector3(fPos[0], fPos[1], fPos[2]);
 }
+

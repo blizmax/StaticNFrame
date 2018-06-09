@@ -29,8 +29,8 @@ bool NFCKernelModule::Init()
 bool NFCKernelModule::Execute()
 {
 	BEGIN_PROFILE(__FUNCTION__);
-	ProcessMemFree();
-	END_PROFILE();
+		ProcessMemFree();
+		END_PROFILE();
 	return true;
 }
 
@@ -53,3 +53,4 @@ void NFCKernelModule::ProcessMemFree()
 {
 	NFMemManager::GetSingletonPtr()->FreeMem();
 }
+

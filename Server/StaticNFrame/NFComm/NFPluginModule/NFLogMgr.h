@@ -40,3 +40,4 @@ protected:
 #define NFLogWarning(format, ...) NFLogMgr::Instance()->GetLogModule()->Log(NF_LOG_LEVEL::NLL_WARING_NORMAL, format, ##__VA_ARGS__);
 #define NFLogError(format, ...) NFLogMgr::Instance()->GetLogModule()->Log(NF_LOG_LEVEL::NLL_ERROR_NORMAL, format, ##__VA_ARGS__);
 #define NFLogFatal(format, ...) NFLogMgr::Instance()->GetLogModule()->Log(NF_LOG_LEVEL::NLL_FATAL_NORMAL, format, ##__VA_ARGS__);
+

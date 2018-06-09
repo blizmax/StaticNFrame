@@ -43,3 +43,4 @@ bool NFEventObj::UnSubscribeAll()
 {
 	return NFEventMgr::Instance()->UnSubscribeAll(this);
 }
+

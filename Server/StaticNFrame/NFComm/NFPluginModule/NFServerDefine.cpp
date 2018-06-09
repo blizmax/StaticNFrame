@@ -16,3 +16,4 @@ std::string GetServerName(NF_SERVER_TYPES serverId)
 	}
 	return std::string();
 }
+

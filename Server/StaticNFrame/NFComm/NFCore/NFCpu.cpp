@@ -120,7 +120,7 @@ long long NFCpu::GetTotalCpuTime()
 }
 
 float NFCpu::CalculateCurCpuUseage(long long cur_cpu_time_start, long long cur_cpu_time_stop,
-	long long total_cpu_time_start, long long total_cpu_time_stop)
+                                   long long total_cpu_time_start, long long total_cpu_time_stop)
 {
 #if NF_PLATFORM == NF_PLATFORM_LINUX
 	long long cpu_result = total_cpu_time_stop - total_cpu_time_start;
@@ -137,7 +137,7 @@ float NFCpu::CalculateCurCpuUseage(long long cur_cpu_time_start, long long cur_c
 
 #if NF_PLATFORM == NF_PLATFORM_WIN
 
-typedef LONG(WINAPI* PROCNTQSI)(UINT, PVOID, ULONG, PULONG);
+typedef LONG (WINAPI* PROCNTQSI)(UINT, PVOID, ULONG, PULONG);
 PROCNTQSI NtQuerySystemInformation;
 
 #endif
@@ -223,3 +223,4 @@ int NFCpu::GetCurMemoryUsage(int* vm_size_kb, int* rss_size_kb)
 	return 0;
 #endif
 }
+

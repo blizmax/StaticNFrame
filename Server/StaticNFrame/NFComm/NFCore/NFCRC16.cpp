@@ -56,3 +56,4 @@ uint16_t NFCRC16::Sum(const void* v, size_t len)
 
 	return ~crc;
 }
+

@@ -29,3 +29,4 @@ string NFMD5::GenHexMD5(const size_t random_data_len)
 	string bin = GenBinMD5(random_data_len);
 	return Bin2Hex(bin.data(), bin.size());
 }
+

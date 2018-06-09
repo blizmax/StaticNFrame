@@ -203,8 +203,9 @@ inline bool almostEqual(const T& c1, const T& c2, const float epsilon = 0.0004f)
 		return false;
 	typename T::const_iterator iter1 = c1.begin();
 	typename T::const_iterator iter2 = c2.begin();
-	for (; iter1 != c1.end(); ++iter1, ++iter2)
+	for (; iter1 != c1.end(); ++iter1 , ++iter2)
 		if (!almostEqual(*iter1, *iter2, epsilon))
 			return false;
 	return true;
 }
+

@@ -132,3 +132,4 @@ private:
 	/* Hex numbers. */
 	static const char HEX_NUMBERS[16];
 };
+

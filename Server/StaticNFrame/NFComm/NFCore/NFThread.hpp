@@ -46,9 +46,9 @@ public:
 	virtual bool StopThread()
 	{
 		std::call_once(m_flag, [this]
-		{
-			StopThreadFunction();
-		}); //保证多线程情况下只调用一次StopThread
+		               {
+			               StopThreadFunction();
+		               }); //保证多线程情况下只调用一次StopThread
 		return true;
 	}
 
@@ -65,3 +65,4 @@ protected:
 	atomic_bool m_running; //运行标志
 	std::once_flag m_flag;
 };
+

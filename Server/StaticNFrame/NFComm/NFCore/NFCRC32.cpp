@@ -72,10 +72,10 @@ unsigned int NFCRC32::Sum(const void* d, size_t len)
 	{
 		std::once_flag flag;
 		auto f = []()
-		{
-			InitTable(table);
-			init_table = false;
-		};
+			{
+				InitTable(table);
+				init_table = false;
+			};
 		std::call_once(flag, f);
 	}
 
@@ -94,3 +94,4 @@ unsigned int NFCRC32::Sum(const void* d, size_t len)
 
 	return ~CRC;
 }
+

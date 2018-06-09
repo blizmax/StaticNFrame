@@ -38,22 +38,22 @@ public:
 
 	/// @brief 获取string类型字段的值，字段未配置时使用默认值
 	std::string Get(const std::string& section, const std::string& name,
-		const std::string& default_value);
+	                const std::string& default_value);
 
 	// Get an integer (long) value from INI file, returning default_value
 	// if not found or not a valid integer (decimal "1234", "-1234",
 	// or hex "0x4d2").
 	int32_t GetInt32(const std::string& section, const std::string& name,
-		int32_t default_value);
+	                 int32_t default_value);
 
 	uint32_t GetUInt32(const std::string& section, const std::string& name,
-		uint32_t default_value);
+	                   uint32_t default_value);
 
 	int64_t GetInt64(const std::string& section, const std::string& name,
-		int64_t default_value);
+	                 int64_t default_value);
 
 	uint64_t GetUInt64(const std::string& section, const std::string& name,
-		uint64_t default_value);
+	                   uint64_t default_value);
 
 	// Get a real (floating point double) value from INI file, returning
 	// default_value if not found or not a valid floating point value
@@ -90,3 +90,4 @@ private:
 	std::set<std::string> m_sections;
 	std::map<std::string, std::map<std::string, std::string>> m_fields;
 };
+

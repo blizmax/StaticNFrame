@@ -162,3 +162,5 @@ public:
                                                                            &_PROFILER_MERGE_STRING(s_timer_, __LINE__))
 
 #endif // NF_PROFILER_H
+
+

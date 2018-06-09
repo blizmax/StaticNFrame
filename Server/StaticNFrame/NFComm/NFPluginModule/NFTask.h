@@ -39,12 +39,20 @@ public:
 		return TPTASK_STATE_COMPLETED;
 	}
 
-	virtual uint64_t GetBalanceId() const { return m_balanceId; }
-	void SetBalanceId(uint64_t balanceId) { m_balanceId = balanceId; }
+	virtual uint64_t GetBalanceId() const
+	{
+		return m_balanceId;
+	}
+
+	void SetBalanceId(uint64_t balanceId)
+	{
+		m_balanceId = balanceId;
+	}
 
 	virtual bool db_thread_process() = 0;
 protected:
-	uint64_t  m_balanceId; //动态均衡ID, 如果是玩家就是玩家CharId, 如果不是一般填0
+	uint64_t m_balanceId; //动态均衡ID, 如果是玩家就是玩家CharId, 如果不是一般填0
 };
 
 #endif
+

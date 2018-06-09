@@ -49,8 +49,8 @@ public:
 	 * @return bool
 	 */
 	bool Start(bool wait_thread_started = true,
-		Functor pre = Functor(),
-		Functor post = Functor());
+	           Functor pre = Functor(),
+	           Functor post = Functor());
 
 	/**
 	 * @brief 停止线程的运行, 只能主线程运行
@@ -115,3 +115,4 @@ private:
 	 */
 	std::string name_;
 };
+

@@ -338,8 +338,8 @@ namespace NFCmdLine
 		}
 
 		void Add(const std::string& name,
-			char short_name = 0,
-			const std::string& desc = "")
+		         char short_name = 0,
+		         const std::string& desc = "")
 		{
 			std::string lowerName = name;
 			NFStringUtility::ToLower(lowerName);
@@ -350,10 +350,10 @@ namespace NFCmdLine
 
 		template <class T>
 		void Add(const std::string& name,
-			char short_name = 0,
-			const std::string& desc = "",
-			bool need = true,
-			const T def = T())
+		         char short_name = 0,
+		         const std::string& desc = "",
+		         bool need = true,
+		         const T def = T())
 		{
 			std::string lowerName = name;
 			NFStringUtility::ToLower(lowerName);
@@ -362,11 +362,11 @@ namespace NFCmdLine
 
 		template <class T, class F>
 		void Add(const std::string& name,
-			char short_name = 0,
-			const std::string& desc = "",
-			bool need = true,
-			const T def = T(),
-			F reader = NFDefaultReader<T>())
+		         char short_name = 0,
+		         const std::string& desc = "",
+		         bool need = true,
+		         const T def = T(),
+		         F reader = NFDefaultReader<T>())
 		{
 			std::string lowerName = name;
 			NFStringUtility::ToLower(lowerName);
@@ -754,8 +754,8 @@ namespace NFCmdLine
 		{
 		public:
 			NFOptionWithoutValue(const std::string& name,
-				char short_name,
-				const std::string& desc)
+			                     char short_name,
+			                     const std::string& desc)
 				: nam(name), snam(short_name), desc(desc), has(false)
 			{
 			}
@@ -827,12 +827,12 @@ namespace NFCmdLine
 		{
 		public:
 			NFOptionWithValue(const std::string& name,
-				char short_name,
-				bool need,
-				const T& def,
-				const std::string& desc)
+			                  char short_name,
+			                  bool need,
+			                  const T& def,
+			                  const std::string& desc)
 				: nam(name), snam(short_name), need(need), has(false)
-				, def(def), actual(def)
+				  , def(def), actual(def)
 			{
 				this->desc = full_description(desc);
 			}
@@ -933,11 +933,11 @@ namespace NFCmdLine
 		{
 		public:
 			NFOptionWithValueWithReader(const std::string& name,
-				char short_name,
-				bool need,
-				const T def,
-				const std::string& desc,
-				F reader)
+			                            char short_name,
+			                            bool need,
+			                            const T def,
+			                            const std::string& desc,
+			                            F reader)
 				: NFOptionWithValue<T>(name, short_name, need, def, desc), reader(reader)
 			{
 			}
@@ -961,3 +961,5 @@ namespace NFCmdLine
 		std::vector<std::string> errors;
 	};
 } // cmdline
+
+

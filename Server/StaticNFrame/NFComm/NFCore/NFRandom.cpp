@@ -109,3 +109,4 @@ const char* NFRandomEnglish(size_t nChar)
 	s_aStr[nChar] = 0;
 	return &s_aStr.front();
 }
+

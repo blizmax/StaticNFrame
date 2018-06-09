@@ -69,7 +69,7 @@ bool NFCMysqlModule::QueryMore(google::protobuf::Message& message)
 		return pDriver->QueryMore(message);
 	}
 
-	return false;	
+	return false;
 }
 
 bool NFCMysqlModule::Updata(const std::string& strTableName, const std::string& strKeyColName, const std::string& strKey, const std::vector<std::string>& fieldVec, const std::vector<std::string>& valueVec)

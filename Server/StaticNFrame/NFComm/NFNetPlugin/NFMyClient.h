@@ -179,3 +179,4 @@ protected:
 	 */
 	NFClientFlag m_flag;
 };
+

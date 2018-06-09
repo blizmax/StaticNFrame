@@ -15,6 +15,7 @@
 #ifdef _MSC_VER
 #if _MSC_VER <= 1800 // VS 2013
 
+
 #ifndef noexcept
 #define noexcept throw()
 #endif
@@ -140,12 +141,12 @@ public:
 
 	// Parse. If parse fails, return Json() and assign an error message to err.
 	static NFJson parse(const std::string& in,
-		std::string& err,
-		JsonParse strategy = JsonParse::STANDARD);
+	                    std::string& err,
+	                    JsonParse strategy = JsonParse::STANDARD);
 
 	static NFJson parse(const char* in,
-		std::string& err,
-		JsonParse strategy = JsonParse::STANDARD)
+	                    std::string& err,
+	                    JsonParse strategy = JsonParse::STANDARD)
 	{
 		if (in)
 		{
@@ -233,3 +234,4 @@ protected:
 	{
 	}
 };
+

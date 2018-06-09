@@ -82,3 +82,4 @@ private:
 	*/
 	inline static int Base64DecodeLen(int n);
 };
+

@@ -74,5 +74,6 @@ private:
 	/**
 	* @brief 数据库是否初始化
 	*/
-	bool			m_bInit;
+	bool m_bInit;
 };
+

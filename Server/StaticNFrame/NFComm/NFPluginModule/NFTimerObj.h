@@ -43,3 +43,4 @@ private:
 	void* m_pTimerInfoPtr;
 	void* m_pFixTimerInfoPtr;
 };
+

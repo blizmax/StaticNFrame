@@ -305,39 +305,39 @@ void NFCNetClientModule::ProcessExecute()
 				switch (pClient->GetStatus())
 				{
 				case eConnectStatus_Disconnect:
-				{
-					pClient->SetStatus(eConnectStatus_RECONNECT);
-				}
-				break;
-				case eConnectStatus_Connecting:
-				{
-					pClient->Execute();
-				}
-				break;
-				case eConnectStatus_ConnectOk:
-				{
-					pClient->Execute();
-					KeepState(pClient);
-				}
-				break;
-				case eConnectStatus_RECONNECT:
-				{
-					if (pClient->GetLastActionTime() + 10000 >= (uint64_t)NFGetTime())
 					{
-						break;
+						pClient->SetStatus(eConnectStatus_RECONNECT);
 					}
+					break;
+				case eConnectStatus_Connecting:
+					{
+						pClient->Execute();
+					}
+					break;
+				case eConnectStatus_ConnectOk:
+					{
+						pClient->Execute();
+						KeepState(pClient);
+					}
+					break;
+				case eConnectStatus_RECONNECT:
+					{
+						if (pClient->GetLastActionTime() + 10000 >= (uint64_t)NFGetTime())
+						{
+							break;
+						}
 
-					pClient->ExecuteClose();
-					pClient->SetStatus(eConnectStatus_Connecting);
-					pClient->Init();
-				}
-				break;
+						pClient->ExecuteClose();
+						pClient->SetStatus(eConnectStatus_Connecting);
+						pClient->Init();
+					}
+					break;
 				case eConnectStatus_REMOVE:
-				{
-					NFSafeDelete(pClient);
-					mxServerMap[i][j] = nullptr;
-				}
-				break;
+					{
+						NFSafeDelete(pClient);
+						mxServerMap[i][j] = nullptr;
+					}
+					break;
 				default:
 					break;
 				}
@@ -384,15 +384,15 @@ void NFCNetClientModule::OnHandleNetEvent(const eMsgType nEvent, const uint32_t 
 			switch (nEvent)
 			{
 			case eMsgType_CONNECTED:
-			{
-				OnConnected(pClient);
-			}
-			break;
+				{
+					OnConnected(pClient);
+				}
+				break;
 			case eMsgType_DISCONNECTED:
-			{
-				OnDisConnected(pClient);
-			}
-			break;
+				{
+					OnDisConnected(pClient);
+				}
+				break;
 			default:
 				break;
 			}
@@ -419,3 +419,4 @@ void NFCNetClientModule::OnDisConnected(NFClient* pClient)
 		}
 	}
 }
+

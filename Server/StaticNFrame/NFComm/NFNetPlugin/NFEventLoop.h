@@ -219,3 +219,4 @@ private:
 	*/
 	std::atomic<int> pending_functor_count_;
 };
+

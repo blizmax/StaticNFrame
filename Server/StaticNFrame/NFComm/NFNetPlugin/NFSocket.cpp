@@ -55,14 +55,14 @@ char* NFSocket::GetSocketErrorMsg(int err_no, char* buf, size_t len)
 	assert(buf);
 	LPVOID msg_buf = NULL;
 	int ret = FormatMessage(FORMAT_MESSAGE_ALLOCATE_BUFFER |
-		FORMAT_MESSAGE_FROM_SYSTEM |
-		FORMAT_MESSAGE_IGNORE_INSERTS,
-		NULL,
-		(DWORD)err_no,
-		//MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT),
-		MAKELANGID(LANG_ENGLISH, SUBLANG_ENGLISH_US), // log output format is UTF8, use English not need covert
-		(LPTSTR)&msg_buf,
-		0, NULL);
+	                                                      FORMAT_MESSAGE_FROM_SYSTEM |
+	                                                      FORMAT_MESSAGE_IGNORE_INSERTS,
+	                                                      NULL,
+	                                                      (DWORD)err_no,
+	                                                      //MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT),
+	                                                      MAKELANGID(LANG_ENGLISH, SUBLANG_ENGLISH_US), // log output format is UTF8, use English not need covert
+	                                                      (LPTSTR)&msg_buf,
+	                                                      0, NULL);
 
 	if (ret > 0 && msg_buf != NULL && len > 0)
 	{
@@ -116,16 +116,16 @@ bool NFSocket::SetReuse(SOCKET sock)
 	{
 		int flag = 1;
 		int ret = setsockopt(sock,
-			SOL_SOCKET,
-			SO_REUSEADDR,
-			reinterpret_cast<char*>(&flag),
-			sizeof(flag));
+		                     SOL_SOCKET,
+		                     SO_REUSEADDR,
+		                     reinterpret_cast<char*>(&flag),
+		                     sizeof(flag));
 		if (ret == SOCKET_ERROR)
 		{
 			NFLogError("[Net] set socket reuse flag(%d) error(%d):%s",
 				flag,
 				ERRNO,
-				ERRSTR);
+				ERRSTR)			;
 			return false;
 		}
 		return true;
@@ -149,7 +149,7 @@ bool NFSocket::SetNonBlock(SOCKET sock)
 			NFLogError("[Net] set socket noblock flag(%ul) error(%d):%s",
 				flag,
 				ERRNO,
-				ERRSTR);
+				ERRSTR)			;
 			return false;
 		}
 		return true;
@@ -167,16 +167,16 @@ bool NFSocket::SetNoDelay(SOCKET sock, int flag /*= 1*/)
 	if (sock != INVALID_SOCKET)
 	{
 		int ret = setsockopt(sock,
-			IPPROTO_TCP,
-			TCP_NODELAY,
-			reinterpret_cast<char*>(&flag),
-			sizeof(flag));
+		                     IPPROTO_TCP,
+		                     TCP_NODELAY,
+		                     reinterpret_cast<char*>(&flag),
+		                     sizeof(flag));
 		if (ret == SOCKET_ERROR)
 		{
 			NFLogError("[Net] set socket delay flag(%d) error(%d):%s",
 				flag,
 				ERRNO,
-				ERRSTR);
+				ERRSTR)			;
 			return false;
 		}
 		return true;
@@ -202,7 +202,7 @@ int NFSocket::Accept(SOCKET listen_sock, SOCKET* sock)
 		}
 		NFLogError("[Net] Accept error(%d):%s",
 			ERRNO,
-			ERRSTR);
+			ERRSTR)		;
 		return -1;
 	}
 	else
@@ -222,7 +222,7 @@ bool NFSocket::Connect(SOCKET sock, const char* ip, uint16_t port)
 
 	struct sockaddr_in addr;
 	memset(&addr, 0, sizeof(addr));
-	addr.sin_family = AF_INET;
+	addr.sin_family = AF_INET ;
 	addr.sin_port = htons(port);
 	addr.sin_addr.s_addr = inet_addr(ip);
 
@@ -253,7 +253,7 @@ bool NFSocket::Listen(SOCKET sock, const char* ip, uint16_t port)
 
 	struct sockaddr_in addr;
 	memset(&addr, 0, sizeof(addr));
-	addr.sin_family = AF_INET;
+	addr.sin_family = AF_INET ;
 	addr.sin_port = htons(port);
 	addr.sin_addr.s_addr = inet_addr(ip);
 
@@ -298,7 +298,8 @@ int NFSocket::Send(SOCKET sock, const char* buf, uint32_t len)
 				return -1;
 			}
 		}
-	} while (true);
+	}
+	while (true);
 }
 
 int NFSocket::Recv(SOCKET sock, char* buf, uint32_t size)
@@ -325,7 +326,8 @@ int NFSocket::Recv(SOCKET sock, char* buf, uint32_t size)
 				return -1;
 			}
 		}
-	} while (true);
+	}
+	while (true);
 }
 
 bool NFSocket::GetPeerAddress(SOCKET sock, char* IPBuffer, uint32_t IPBufferSize, uint16_t* port)
@@ -568,7 +570,7 @@ bool NFSocket::Listen(SOCKET sock, const char* ip, uint16_t port)
 		return false;
 	}
 
-	//TODO 修改listen
+//TODO 修改listen
 	if (!SetNonBlock(sock))
 	{
 		return false;
@@ -580,7 +582,7 @@ bool NFSocket::Listen(SOCKET sock, const char* ip, uint16_t port)
 	addr.sin_port = htons(port);
 	addr.sin_addr.s_addr = inet_addr(ip);
 
-	//MMOTODO 修改返回值
+//MMOTODO 修改返回值
 	int ret = bind(sock, reinterpret_cast<sockaddr*>(&addr), sizeof(addr));
 	if (ret < 0)
 	{
@@ -691,3 +693,4 @@ Exit0:
 }
 
 #endif
+

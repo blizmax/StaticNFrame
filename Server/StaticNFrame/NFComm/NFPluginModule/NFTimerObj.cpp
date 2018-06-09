@@ -56,3 +56,4 @@ bool NFTimerObj::KillAllFixTimer()
 {
 	return NFTimerMgr::Instance()->KillAllFixTimer(this);
 }
+

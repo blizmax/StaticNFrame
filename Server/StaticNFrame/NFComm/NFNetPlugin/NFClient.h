@@ -23,11 +23,11 @@
  *@brief  单线程libevent网络客户端封装类.
  *
  */
- /////////////////////////////////////////////////
+/////////////////////////////////////////////////
 
- /**
- *@brief  单线程libevent网络客户端封装类.
- */
+/**
+*@brief  单线程libevent网络客户端封装类.
+*/
 class NFClient : public NFIModule
 {
 public:
@@ -200,7 +200,7 @@ protected:
 	/**
 	 * @brief	连接对象
 	 */
-	NetObject*  m_pObject;
+	NetObject* m_pObject;
 
 	/**
 	 * @brief	处理接受数据的回调
@@ -227,3 +227,4 @@ protected:
 	 */
 	uint64_t mLastActionTime;
 };
+

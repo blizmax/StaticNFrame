@@ -2,7 +2,7 @@
 #include "NFActorMgr.h"
 #include "NFTask.h"
 
-NFDBActor::NFDBActor(Theron::Framework& framework, NFXActorMgr* pActorMgr) :NFXActor(framework, pActorMgr)
+NFDBActor::NFDBActor(Theron::Framework& framework, NFXActorMgr* pActorMgr) : NFXActor(framework, pActorMgr)
 {
 	m_bInit = false;
 }
@@ -60,3 +60,4 @@ void NFDBActor::processTask(NFTask* pTask)
 void NFDBActor::onProcessTaskEnd(NFTask* pTask)
 {
 }
+

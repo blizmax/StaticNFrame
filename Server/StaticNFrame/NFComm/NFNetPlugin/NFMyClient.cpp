@@ -116,22 +116,22 @@ void NFMyClient::OnHandleMsgPeer(eMsgType type, uint32_t usLink, char* pBuf, uin
 	switch (type)
 	{
 	case eMsgType_RECIVEDATA:
-	{
-		if (mRecvCB)
 		{
-			mRecvCB(usLink, nValue, nMsgId, pBuf, sz);
+			if (mRecvCB)
+			{
+				mRecvCB(usLink, nValue, nMsgId, pBuf, sz);
+			}
 		}
-	}
-	break;
+		break;
 	case eMsgType_CONNECTED:
 	case eMsgType_DISCONNECTED:
-	{
-		if (mEventCB)
 		{
-			mEventCB(type, usLink);
+			if (mEventCB)
+			{
+				mEventCB(type, usLink);
+			}
 		}
-	}
-	break;
+		break;
 	default:
 		break;
 	}
@@ -206,3 +206,4 @@ uint32_t NFMyClient::GetLinkId() const
 {
 	return m_usLinkId;
 }
+

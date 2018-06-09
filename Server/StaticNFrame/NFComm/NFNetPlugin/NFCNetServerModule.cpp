@@ -218,3 +218,4 @@ void NFCNetServerModule::SendAllMsg(NFServer* pServer, const uint32_t nMsgID, co
 	}
 	mxSendBuffer.Clear();
 }
+

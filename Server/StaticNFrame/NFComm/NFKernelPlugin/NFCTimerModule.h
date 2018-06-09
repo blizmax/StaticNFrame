@@ -52,3 +52,4 @@ public:
 protected:
 	NFTimerAxis mTimerAxis;
 };
+

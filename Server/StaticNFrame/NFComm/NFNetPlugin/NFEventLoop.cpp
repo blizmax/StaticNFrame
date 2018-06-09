@@ -133,17 +133,17 @@ void NFEventLoop::StopInLoop()
 	assert(mStatus.load() == kStopping);
 
 	auto f = [this]()
-	{
-		for (int i = 0;; i++)
 		{
-			std::cout << "calling DoPendingFunctors index=" << i << std::endl;
-			DoPendingFunctors();
-			if (IsPendingQueueEmpty())
+			for (int i = 0;; i++)
 			{
-				break;
+				std::cout << "calling DoPendingFunctors index=" << i << std::endl;
+				DoPendingFunctors();
+				if (IsPendingQueueEmpty())
+				{
+					break;
+				}
 			}
-		}
-	};
+		};
 
 	std::cout << "before event_base_loopexit, we invoke DoPendingFunctors" << std::endl;
 
@@ -286,3 +286,4 @@ bool NFEventLoop::IsPendingQueueEmpty()
 {
 	return pending_functors_->empty();
 }
+

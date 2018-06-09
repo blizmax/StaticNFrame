@@ -139,6 +139,7 @@
 
 #endif // NF_PLATFORM == NF_PLATFORM_WIN
 
+
 //----------------------------------------------------------------------------
 // Linux/Apple/iOs/Android/Symbian/Tegra2/NaCl Settings
 #if NF_PLATFORM == NF_PLATFORM_LINUX
@@ -182,3 +183,4 @@
 #else
 #    define NF_ENDIAN NF_ENDIAN_LITTLE
 #endif
+

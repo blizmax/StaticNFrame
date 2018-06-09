@@ -161,3 +161,4 @@ void NFStat::CalculateMessageStatResult(MessageStatTempData* message_stat_temp)
 	result->_failure_rate = message_stat_temp->_failure_count / message_stat_temp->_total_count;
 	result->_average_cost_ms = message_stat_temp->_total_cost_ms / message_stat_temp->_total_count;
 }
+

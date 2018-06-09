@@ -32,3 +32,4 @@ public:
 private:
 	static NFIPacketParse* m_pPacketParse;
 };
+

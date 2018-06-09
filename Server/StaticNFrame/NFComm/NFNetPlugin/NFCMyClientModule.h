@@ -70,3 +70,4 @@ private:
 	std::vector<std::vector<NFMyClient*>> mxServerMap;
 	NFBuffer mxSendBuffer;
 };
+

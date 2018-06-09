@@ -290,7 +290,7 @@ inline bool NFMD5::IsValid(const char* hexmd5, size_t hexmd5_length)
 		0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 		0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 		0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-		0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+		0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 
 	for (size_t i = 0; i < hexmd5_length; ++i)
 	{
@@ -307,3 +307,4 @@ inline bool NFMD5::IsValid(const string& hexmd5)
 {
 	return IsValid(hexmd5.c_str(), hexmd5.length());
 }
+

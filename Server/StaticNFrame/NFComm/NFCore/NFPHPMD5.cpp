@@ -103,7 +103,7 @@ documentation and/or software.
 #define S43 15
 #define S44 21
 
-static void MD5Transform(php_uint32[4], const unsigned char[64]);
+static void MD5Transform(php_uint32 [4], const unsigned char [64]);
 static void Encode(unsigned char*, php_uint32*, unsigned int);
 static void Decode(php_uint32*, const unsigned char*, unsigned int);
 
@@ -171,7 +171,7 @@ operation, processing another message block, and updating the
 context.
 */
 _NFExport void PHP_MD5Update(PHP_MD5_CTX* context, const unsigned char* input,
-	unsigned int inputLen)
+                             unsigned int inputLen)
 {
 	unsigned int i, index, partLen;
 
@@ -338,7 +338,7 @@ static void Encode(unsigned char* output, php_uint32* input, unsigned int len)
 {
 	unsigned int i, j;
 
-	for (i = 0, j = 0; j < len; i++, j += 4)
+	for (i = 0 , j = 0; j < len; i++ , j += 4)
 	{
 		output[j] = static_cast<unsigned char>(input[i] & 0xff);
 		output[j + 1] = static_cast<unsigned char>((input[i] >> 8) & 0xff);
@@ -357,9 +357,9 @@ static void Decode(php_uint32* output, const unsigned char* input, unsigned int 
 {
 	unsigned int i, j;
 
-	for (i = 0, j = 0; j < len; i++, j += 4)
+	for (i = 0 , j = 0; j < len; i++ , j += 4)
 		output[i] = static_cast<php_uint32>(input[j]) | (static_cast<php_uint32>(input[j + 1]) << 8) |
-		(static_cast<php_uint32>(input[j + 2]) << 16) | (static_cast<php_uint32>(input[j + 3]) << 24);
+			(static_cast<php_uint32>(input[j + 2]) << 16) | (static_cast<php_uint32>(input[j + 3]) << 24);
 }
 
 /* }}} */
@@ -372,3 +372,4 @@ static void Decode(php_uint32* output, const unsigned char* input, unsigned int 
 * vim600: sw=4 ts=4 fdm=marker
 * vim<600: sw=4 ts=4
 */
+
