@@ -1,5 +1,5 @@
 // -------------------------------------------------------------------------
-//    @FileName         :    AFCDataNodeManager.cpp
+//    @FileName         :    NFCDataNodeManager.cpp
 //    @Author           :    GaoYi
 //    @Date             :    2018/06/10
 //    @Email			:    445267987@qq.com
@@ -13,7 +13,6 @@
 
 NFCDataNodeManager::NFCDataNodeManager(const uint64_t objectId) : mObjectId(objectId)
 {
-
 }
 
 NFCDataNodeManager::~NFCDataNodeManager()
@@ -23,13 +22,17 @@ NFCDataNodeManager::~NFCDataNodeManager()
 
 void NFCDataNodeManager::Clear()
 {
+	for(size_t i = 0; i < mNodes.size(); i++)
+	{
+		NFSafeDelete(mNodes[i]);
+	}
 	mNodes.clear();
-    mIndices.clear();
+	mIndices.clear();
 }
 
 uint64_t NFCDataNodeManager::GetObjectId() const
 {
-    return mObjectId;
+	return mObjectId;
 }
 
 bool NFCDataNodeManager::RegisterCallback(const std::string& name, const DATA_NODE_EVENT_FUNCTOR_PTR& cb)
@@ -54,25 +57,25 @@ bool NFCDataNodeManager::RegisterCallback(uint32_t index, const DATA_NODE_EVENT_
 
 size_t NFCDataNodeManager::GetNodeCount()
 {
-    return mNodes.size();
+	return mNodes.size();
 }
 
 NFDataNode* NFCDataNodeManager::GetNodeByIndex(size_t index)
 {
-    NF_ASSERT_RET_VAL(index >= 0 && index <= mNodes.size(), nullptr);
+	NF_ASSERT_RET_VAL(index >= 0 && index <= mNodes.size(), nullptr);
 
-    return mNodes[index];
+	return mNodes[index];
 }
 
 NFDataNode* NFCDataNodeManager::GetNode(const std::string& name)
 {
-    size_t index;
-    if(!FindIndex(name, index))
-    {
-        return nullptr;
-    }
+	size_t index;
+	if (!FindIndex(name, index))
+	{
+		return nullptr;
+	}
 
-    return mNodes[index];
+	return mNodes[index];
 }
 
 bool NFCDataNodeManager::FindIndex(const std::string& name, size_t& index) const
@@ -84,10 +87,10 @@ bool NFCDataNodeManager::FindIndex(const std::string& name, size_t& index) const
 		return true;
 	}
 
-    return false;
+	return false;
 }
 
-bool NFCDataNodeManager::OnNodeCallback(const uint32_t index, const NFCData& oldData, const NFCData& newData)
+bool NFCDataNodeManager::OnNodeCallback(const size_t index, const NFCData& oldData, const NFCData& newData)
 {
 	NF_ASSERT_RET_VAL(index < mNodes.size(), false);
 
@@ -109,91 +112,91 @@ bool NFCDataNodeManager::OnNodeCallback(const uint32_t index, const NFCData& old
 
 bool NFCDataNodeManager::AddNode(const std::string& name, const NFCData& value, const int8_t feature)
 {
-    NFDataNode* pNode = new NFDataNode();
-    pNode->mName = name;
-    pNode->mValue = value;
-    pNode->mFeature = feature;
-    mIndices.emplace(name, mNodes.size());
-    mNodes.push_back(pNode);
-    return true;
+	NFDataNode* pNode = new NFDataNode();
+	pNode->mName = name;
+	pNode->mValue = value;
+	pNode->mFeature = feature;
+	mIndices.emplace(name, mNodes.size());
+	mNodes.push_back(pNode);
+	return true;
 }
 
 bool NFCDataNodeManager::SetNode(const std::string& name, const NFCData& value)
 {
-    size_t index;
-    if(!FindIndex(name, index))
-    {
-        return false;
-    }
+	size_t index;
+	if (!FindIndex(name, index))
+	{
+		return false;
+	}
 
-    switch (value.GetType())
-    {
-    case DT_BOOLEAN:
-        return SetNodeBool(name, value.GetBool());
-    case DT_INT:
-        return SetNodeInt64(name, value.GetInt64());
-    case DT_UINT64:
-        return SetNodeInt64(name, value.GetInt64());
-    case DT_FLOAT:
-        return SetNodeFloat(name, value.GetFloat());
-    case DT_DOUBLE:
-        return SetNodeDouble(name, value.GetDouble());
-    case DT_STRING:
-        return SetNodeString(name, value.GetString());
-    default:
-        NF_ASSERT(0);
-        break;
-    }
+	switch (value.GetType())
+	{
+	case DT_BOOLEAN:
+		return SetNodeBool(name, value.GetBool());
+	case DT_INT:
+		return SetNodeInt64(name, value.GetInt64());
+	case DT_UINT64:
+		return SetNodeInt64(name, value.GetInt64());
+	case DT_FLOAT:
+		return SetNodeFloat(name, value.GetFloat());
+	case DT_DOUBLE:
+		return SetNodeDouble(name, value.GetDouble());
+	case DT_STRING:
+		return SetNodeString(name, value.GetString());
+	default:
+		NF_ASSERT(0);
+		break;
+	}
 
-    return false;
+	return false;
 }
 
 bool NFCDataNodeManager::SetNodeBool(const std::string& name, const bool value)
 {
-    size_t index;
-    if(!FindIndex(name, index))
-    {
-        return false;
-    }
+	size_t index;
+	if (!FindIndex(name, index))
+	{
+		return false;
+	}
 
-    //old value
-    NFCData oldData;
-    bool oldValue = mNodes[index]->mValue.GetBool();
-    oldData.SetBool(oldValue);
+	//old value
+	NFCData oldData;
+	bool oldValue = mNodes[index]->mValue.GetBool();
+	oldData.SetBool(oldValue);
 
-    mNodes[index]->mValue.SetBool(value);
+	mNodes[index]->mValue.SetBool(value);
 
-    if(oldValue != value)
-    {
-        //DataNode callbacks
-        OnNodeCallback(index, oldData, mNodes[index]->mValue);
-    }
+	if (oldValue != value)
+	{
+		//DataNode callbacks
+		OnNodeCallback(index, oldData, mNodes[index]->mValue);
+	}
 
-    return true;
+	return true;
 }
 
 bool NFCDataNodeManager::SetNodeInt(const std::string& name, const int32_t value)
 {
-    size_t index;
-    if(!FindIndex(name, index))
-    {
-        return false;
-    }
+	size_t index;
+	if (!FindIndex(name, index))
+	{
+		return false;
+	}
 
-    //old value
+	//old value
 	NFCData oldData;
-    int32_t oldValue = mNodes[index]->mValue.GetInt();
-    oldData.SetInt(oldValue);
+	int32_t oldValue = mNodes[index]->mValue.GetInt();
+	oldData.SetInt(oldValue);
 
-    mNodes[index]->mValue.SetInt(value);
+	mNodes[index]->mValue.SetInt(value);
 
-    if(oldValue != value)
-    {
+	if (oldValue != value)
+	{
 		//DataNode callbacks
 		OnNodeCallback(index, oldData, mNodes[index]->mValue);;
-    }
+	}
 
-    return true;
+	return true;
 }
 
 bool NFCDataNodeManager::SetNodeInt32(const std::string& name, const int32_t value)
@@ -270,98 +273,98 @@ bool NFCDataNodeManager::SetNodeInt64(const std::string& name, const int64_t val
 
 bool NFCDataNodeManager::SetNodeUInt64(const std::string& name, const uint64_t value)
 {
-    size_t index;
-    if(!FindIndex(name, index))
-    {
-        return false;
-    }
+	size_t index;
+	if (!FindIndex(name, index))
+	{
+		return false;
+	}
 
-    //old value
+	//old value
 	NFCData oldData;
-    uint64_t oldValue = mNodes[index]->mValue.GetUInt64();
-    oldData.SetUInt64(oldValue);
+	uint64_t oldValue = mNodes[index]->mValue.GetUInt64();
+	oldData.SetUInt64(oldValue);
 
-    mNodes[index]->mValue.SetUInt64(value);
+	mNodes[index]->mValue.SetUInt64(value);
 
-    if(oldValue != value)
-    {
+	if (oldValue != value)
+	{
 		//DataNode callbacks
 		OnNodeCallback(index, oldData, mNodes[index]->mValue);
-    }
+	}
 
-    return true;
+	return true;
 }
 
 bool NFCDataNodeManager::SetNodeFloat(const std::string& name, const float value)
 {
-    size_t index;
-    if(!FindIndex(name, index))
-    {
-        return false;
-    }
+	size_t index;
+	if (!FindIndex(name, index))
+	{
+		return false;
+	}
 
-    //old value
+	//old value
 	NFCData oldData;
-    float oldValue = mNodes[index]->mValue.GetFloat();
-    oldData.SetFloat(oldValue);
+	float oldValue = mNodes[index]->mValue.GetFloat();
+	oldData.SetFloat(oldValue);
 
-    mNodes[index]->mValue.SetFloat(value);
+	mNodes[index]->mValue.SetFloat(value);
 
-    if(!almostEqual(oldValue, value))
-    {
+	if (!almostEqual(oldValue, value))
+	{
 		//DataNode callbacks
 		OnNodeCallback(index, oldData, mNodes[index]->mValue);
-    }
+	}
 
-    return true;
+	return true;
 }
 
 bool NFCDataNodeManager::SetNodeDouble(const std::string& name, const double value)
 {
-    size_t index;
-    if(!FindIndex(name, index))
-    {
-        return false;
-    }
+	size_t index;
+	if (!FindIndex(name, index))
+	{
+		return false;
+	}
 
-    //old value
+	//old value
 	NFCData oldData;
-    double oldValue = mNodes[index]->mValue.GetDouble();
-    oldData.SetDouble(oldValue);
+	double oldValue = mNodes[index]->mValue.GetDouble();
+	oldData.SetDouble(oldValue);
 
-    mNodes[index]->mValue.SetDouble(value);
+	mNodes[index]->mValue.SetDouble(value);
 
-    if(!almostEqual(oldValue, value))
-    {
+	if (!almostEqual(oldValue, value))
+	{
 		//DataNode callbacks
 		OnNodeCallback(index, oldData, mNodes[index]->mValue);
-    }
+	}
 
-    return true;
+	return true;
 }
 
 bool NFCDataNodeManager::SetNodeString(const std::string& name, const std::string& value)
 {
-    size_t index;
-    if(!FindIndex(name, index))
-    {
-        return false;
-    }
+	size_t index;
+	if (!FindIndex(name, index))
+	{
+		return false;
+	}
 
-    //old value
+	//old value
 	NFCData oldData;
-    std::string oldValue = mNodes[index]->mValue.GetString();
-    oldData.SetString(oldValue);
+	std::string oldValue = mNodes[index]->mValue.GetString();
+	oldData.SetString(oldValue);
 
-    mNodes[index]->mValue.SetString(value);
+	mNodes[index]->mValue.SetString(value);
 
-    if(oldValue != value)
-    {
+	if (oldValue != value)
+	{
 		//DataNode callbacks
 		OnNodeCallback(index, oldData, mNodes[index]->mValue);;
-    }
+	}
 
-    return true;
+	return true;
 }
 
 bool NFCDataNodeManager::SetNodeBool(uint32_t index, const bool value)
@@ -546,24 +549,24 @@ bool NFCDataNodeManager::SetNodeString(uint32_t index, const std::string& value)
 
 bool NFCDataNodeManager::GetNodeBool(const std::string& name) const
 {
-    size_t index;
-    if(!FindIndex(name, index))
-    {
-        return NFCDataStatics::empty_boolean;
-    }
+	size_t index;
+	if (!FindIndex(name, index))
+	{
+		return NFCDataStatics::empty_boolean;
+	}
 
-    return mNodes[index]->mValue.GetBool();
+	return mNodes[index]->mValue.GetBool();
 }
 
 int32_t NFCDataNodeManager::GetNodeInt(const std::string& name) const
 {
-    size_t index;
-    if(!FindIndex(name, index))
-    {
-        return static_cast<int32_t>(NFCDataStatics::empty_int);;
-    }
+	size_t index;
+	if (!FindIndex(name, index))
+	{
+		return static_cast<int32_t>(NFCDataStatics::empty_int);;
+	}
 
-    return mNodes[index]->mValue.GetInt();
+	return mNodes[index]->mValue.GetInt();
 }
 
 int32_t NFCDataNodeManager::GetNodeInt32(const std::string& name) const
@@ -601,46 +604,46 @@ int64_t NFCDataNodeManager::GetNodeInt64(const std::string& name) const
 
 uint64_t NFCDataNodeManager::GetNodeUInt64(const std::string& name) const
 {
-    size_t index;
-    if(!FindIndex(name, index))
-    {
+	size_t index;
+	if (!FindIndex(name, index))
+	{
 		return NFCDataStatics::empty_uint64;
-    }
+	}
 
-    return mNodes[index]->mValue.GetUInt64();
+	return mNodes[index]->mValue.GetUInt64();
 }
 
 float NFCDataNodeManager::GetNodeFloat(const std::string& name) const
 {
-    size_t index;
-    if(!FindIndex(name, index))
-    {
+	size_t index;
+	if (!FindIndex(name, index))
+	{
 		return NFCDataStatics::empty_float;
-    }
+	}
 
-    return mNodes[index]->mValue.GetFloat();
+	return mNodes[index]->mValue.GetFloat();
 }
 
 double NFCDataNodeManager::GetNodeDouble(const std::string& name) const
 {
-    size_t index;
-    if(!FindIndex(name, index))
-    {
+	size_t index;
+	if (!FindIndex(name, index))
+	{
 		return NFCDataStatics::empty_double;
-    }
+	}
 
-    return mNodes[index]->mValue.GetDouble();
+	return mNodes[index]->mValue.GetDouble();
 }
 
 const std::string& NFCDataNodeManager::GetNodeString(const std::string& name) const
 {
-    size_t index;
-    if(!FindIndex(name, index))
-    {
+	size_t index;
+	if (!FindIndex(name, index))
+	{
 		return NFCDataStatics::empty_string;
-    }
+	}
 
-    return mNodes[index]->mValue.GetString();
+	return mNodes[index]->mValue.GetString();
 }
 
 bool NFCDataNodeManager::GetNodeBool(uint32_t index) const
@@ -705,3 +708,4 @@ const std::string& NFCDataNodeManager::GetNodeString(uint32_t index) const
 
 	return mNodes[index]->mValue.GetString();
 }
+

@@ -75,9 +75,6 @@
     <ClCompile Include="NFMutex.cpp">
       <Filter>Thread</Filter>
     </ClCompile>
-    <ClCompile Include="NFObjectData.cpp">
-      <Filter>Common</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="NFBase64.h">
@@ -207,9 +204,6 @@
       <Filter>Common</Filter>
     </ClInclude>
     <ClInclude Include="NFMapList.hpp">
-      <Filter>Common</Filter>
-    </ClInclude>
-    <ClInclude Include="NFObjectData.h">
       <Filter>Common</Filter>
     </ClInclude>
   </ItemGroup>

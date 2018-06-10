@@ -180,3 +180,4 @@ NFCData::MapIntObject& NFCDataValue::GetMapIntObject()
 {
 	return NFCDataStatics::empty_map_int;
 }
+

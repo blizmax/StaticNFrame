@@ -1,5 +1,5 @@
 // -------------------------------------------------------------------------
-//    @FileName         :    AFCData.h
+//    @FileName         :    NFCData.h
 //    @Author           :    GaoYi
 //    @Date             :    2018/06/09
 //    @Email			:    445267987@qq.com
@@ -18,18 +18,18 @@ class NFCDataValue;
 
 enum NF_DATA_TYPE
 {
-    DT_UNKNOWN,     //unknown type
-    DT_BOOLEAN,     //bool
-    DT_INT,         //int64_t
-    DT_UINT64,       //uint64_t
-    DT_FLOAT,       //float
-    DT_DOUBLE,      //doubl
-    DT_STRING,      //string(char*)
-	DT_ARRAY,		//std::vector<NFIData>
-	DT_LIST,		//std::list<NFIData>
-	DT_MAPSTRING,	//std::map<std::string,NFIData>
-	DT_MAPINT,		//std::map<int,NFIData>
-    DT_MAX,         //max
+	DT_UNKNOWN, //unknown type
+	DT_BOOLEAN, //bool
+	DT_INT, //int64_t
+	DT_UINT64, //uint64_t
+	DT_FLOAT, //float
+	DT_DOUBLE, //doubl
+	DT_STRING, //string(char*)
+	DT_ARRAY, //std::vector<NFIData>
+	DT_LIST, //std::list<NFIData>
+	DT_MAPSTRING, //std::map<std::string,NFIData>
+	DT_MAPINT, //std::map<int,NFIData>
+	DT_MAX, //max
 };
 
 class NFCData
@@ -40,14 +40,14 @@ public:
 	typedef std::unordered_map<std::string, NFCData> MapStringObject;
 	typedef std::unordered_map<int64_t, NFCData> MapIntObject;
 
-    NFCData()
-    {
-        mType = DT_UNKNOWN;
-    }
+	NFCData()
+	{
+		mType = DT_UNKNOWN;
+	}
 
-    virtual ~NFCData()
-    {
-    }
+	virtual ~NFCData()
+	{
+	}
 
 	/**
 	* @brief 构造函数.
@@ -68,45 +68,43 @@ public:
 	NFCData(int type, const MapStringObject&& values); // MAPOBJECT
 	NFCData(int type, const MapIntObject& values); // MAPOBJECT
 	NFCData(int type, MapIntObject&& values); // MAPOBJECT
-
 	NFCData(const NFCData& src);
-
 	NFCData& operator=(const NFCData& src);
-
 	void Swap(NFCData& src);
+	void DeepCopy(const NFCData& src);
 
 	virtual int GetType() const;
 	virtual void SetDefaultValue(int type);
 	virtual bool IsNullValue() const;
 	virtual bool IsNumber() const;
 
-    //Get data
-    virtual bool GetBool() const;
-	virtual int  GetInt() const;
-    virtual int32_t GetInt32() const;
-    virtual uint32_t GetUInt32() const;
-    virtual int64_t GetInt64() const;
-    virtual uint64_t GetUInt64() const;
-    virtual float GetFloat() const;
-    virtual double GetDouble() const;
-    virtual const std::string& GetString() const;
+	//Get data
+	virtual bool GetBool() const;
+	virtual int GetInt() const;
+	virtual int32_t GetInt32() const;
+	virtual uint32_t GetUInt32() const;
+	virtual int64_t GetInt64() const;
+	virtual uint64_t GetUInt64() const;
+	virtual float GetFloat() const;
+	virtual double GetDouble() const;
+	virtual const std::string& GetString() const;
 
-    //Set data
-    virtual void SetUnknown();
-    virtual void SetBool(bool value);
-    virtual void SetInt(int value);
-    virtual void SetInt32(int32_t value);
-    virtual void SetUInt32(uint32_t value);
-    virtual void SetInt64(int64_t value);
+	//Set data
+	virtual void SetUnknown();
+	virtual void SetBool(bool value);
+	virtual void SetInt(int value);
+	virtual void SetInt32(int32_t value);
+	virtual void SetUInt32(uint32_t value);
+	virtual void SetInt64(int64_t value);
 	virtual void SetUInt64(uint64_t value);
 	virtual void SetFloat(float value);
-    virtual void SetDouble(double value);
+	virtual void SetDouble(double value);
 	virtual void SetString(const std::string& value);
 
-    virtual const Array& GetArray() const;
-    virtual const List& GetList() const;
-    virtual const MapStringObject& GetMapStringObject() const;
-    virtual const MapIntObject& GetMapIntObject() const;
+	virtual const Array& GetArray() const;
+	virtual const List& GetList() const;
+	virtual const MapStringObject& GetMapStringObject() const;
+	virtual const MapIntObject& GetMapIntObject() const;
 
 	virtual void SetMapStringObject(const MapStringObject& value);
 	virtual void SetMapStringObject(MapStringObject&& value);
@@ -125,7 +123,7 @@ private:
 	* 数据指针
 	*/
 	int mType;
-	std::shared_ptr<NFCDataValue> m_ptr;	
+	std::shared_ptr<NFCDataValue> m_ptr;
 };
 
 /* * * * * * * * * * * * * * * * * * * *
@@ -144,6 +142,4 @@ struct NFCDataStatics
 	static NFCData::MapStringObject empty_map_string;
 	static NFCData::MapIntObject empty_map_int;
 };
-
-
 

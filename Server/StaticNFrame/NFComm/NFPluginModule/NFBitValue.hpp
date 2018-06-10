@@ -1,5 +1,5 @@
 // -------------------------------------------------------------------------
-//    @FileName         :    AFBitValue.hpp
+//    @FileName         :    NFBitValue.hpp
 //    @Author           :    GaoYi
 //    @Date             :    2018/06/09
 //    @Email			:    445267987@qq.com
@@ -9,132 +9,138 @@
 #pragma once
 
 //T just can be build-in type, like int uint16_t uint64_t 
-template<class T>
+template <class T>
 class NFBitValue
 {
 public:
-    enum NFBitValueDefine
-    {
-        ErrorValue = -1,
-        NoneValue = 0,
-        HaveValue = 1,
-    };
+	enum NFBitValueDefine
+	{
+		ErrorValue = -1,
+		NoneValue = 0,
+		HaveValue = 1,
+	};
 
-    NFBitValue() : m_nValue(0) { }
-    NFBitValue(T nValue) : m_nValue(nValue) { }
+	NFBitValue() : m_nValue(0)
+	{
+	}
 
-    void SetValue(const T& nValue)
-    {
-        m_nValue = nValue;
-    }
+	NFBitValue(T nValue) : m_nValue(nValue)
+	{
+	}
 
-    T GetValue() const
-    {
-        return m_nValue;
-    }
+	void SetValue(const T& nValue)
+	{
+		m_nValue = nValue;
+	}
 
-    static int GetBitLength()
-    {
-        return sizeof(T) * 8;
-    }
+	T GetValue() const
+	{
+		return m_nValue;
+	}
 
-    int GetFirstNoValueIndex()
-    {
-        for(int i = 0; i < GetBitLength(); ++i)
-        {
-            if((m_nValue & (T(1) << i)) == NoneValue)
-            {
-                return i;
-            }
-        }
+	static int GetBitLength()
+	{
+		return sizeof(T) * 8;
+	}
 
-        return -1;
-    }
+	int GetFirstNoValueIndex()
+	{
+		for (int i = 0; i < GetBitLength(); ++i)
+		{
+			if ((m_nValue & (T(1) << i)) == NoneValue)
+			{
+				return i;
+			}
+		}
 
-    T GetBitValue(const int nIndex)
-    {
-        if(nIndex < 0 || nIndex >= GetBitLength())
-        {
-            return ErrorValue;
-        }
+		return -1;
+	}
 
-        return (m_nValue & (T(1) << nIndex));
-    }
+	T GetBitValue(const int nIndex)
+	{
+		if (nIndex < 0 || nIndex >= GetBitLength())
+		{
+			return ErrorValue;
+		}
 
-    void SetBitValue(const int nIndex)
-    {
-        if(nIndex < 0 || nIndex >= GetBitLength())
-        {
-            return;
-        }
+		return (m_nValue & (T(1) << nIndex));
+	}
 
-        m_nValue |= (T(1) << nIndex);
-    }
+	void SetBitValue(const int nIndex)
+	{
+		if (nIndex < 0 || nIndex >= GetBitLength())
+		{
+			return;
+		}
 
-    void ClearBitValue(const int nIndex)
-    {
-        if(nIndex < 0 || nIndex >= GetBitLength())
-        {
-            return;
-        }
+		m_nValue |= (T(1) << nIndex);
+	}
 
-        m_nValue &= ~(T(1) << nIndex);
-    }
+	void ClearBitValue(const int nIndex)
+	{
+		if (nIndex < 0 || nIndex >= GetBitLength())
+		{
+			return;
+		}
 
-    bool HaveBitValue(const int nIndex)
-    {
-        return GetBitValue(nIndex) != NoneValue;
-    }
+		m_nValue &= ~(T(1) << nIndex);
+	}
 
-    ////////////////////////////////////////////////////////////////////////////////////////
-    static int GetFirstNoValueIndex(const T& nValue)
-    {
-        for(int i = 0; i < GetBitLength(); ++i)
-        {
-            if((nValue & (T(1) << i)) == NoneValue)
-            {
-                return i;
-            }
-        }
+	bool HaveBitValue(const int nIndex)
+	{
+		return GetBitValue(nIndex) != NoneValue;
+	}
 
-        return -1;
-    }
+	////////////////////////////////////////////////////////////////////////////////////////
+	static int GetFirstNoValueIndex(const T& nValue)
+	{
+		for (int i = 0; i < GetBitLength(); ++i)
+		{
+			if ((nValue & (T(1) << i)) == NoneValue)
+			{
+				return i;
+			}
+		}
 
-    static T GetBitValue(const T & nValue, const int nIndex)
-    {
-        if(nIndex < 0 || nIndex >= GetBitLength())
-        {
-            return ErrorValue;
-        }
+		return -1;
+	}
 
-        return (nValue & (T(1) << nIndex));
-    }
+	static T GetBitValue(const T& nValue, const int nIndex)
+	{
+		if (nIndex < 0 || nIndex >= GetBitLength())
+		{
+			return ErrorValue;
+		}
 
-    static void SetBitValue(T& nValue, const int nIndex)
-    {
-        if(nIndex < 0 || nIndex >= GetBitLength())
-        {
-            return;
-        }
+		return (nValue & (T(1) << nIndex));
+	}
 
-        nValue |= (T(1) << nIndex);
-    }
+	static void SetBitValue(T& nValue, const int nIndex)
+	{
+		if (nIndex < 0 || nIndex >= GetBitLength())
+		{
+			return;
+		}
 
-    static void ClearBitValue(T& nValue, const int nIndex)
-    {
-        if(nIndex < 0 || nIndex >= GetBitLength())
-        {
-            return;
-        }
+		nValue |= (T(1) << nIndex);
+	}
 
-        nValue &= ~(T(1) << nIndex);
-    }
+	static void ClearBitValue(T& nValue, const int nIndex)
+	{
+		if (nIndex < 0 || nIndex >= GetBitLength())
+		{
+			return;
+		}
 
-    static bool HaveBitValue(const T& nValue, const int nIndex)
-    {
-        return GetBitValue(nValue, nIndex) != NoneValue;
-    }
+		nValue &= ~(T(1) << nIndex);
+	}
+
+	static bool HaveBitValue(const T& nValue, const int nIndex)
+	{
+		return GetBitValue(nValue, nIndex) != NoneValue;
+	}
 
 private:
-    T m_nValue;
+	T m_nValue;
 };
+

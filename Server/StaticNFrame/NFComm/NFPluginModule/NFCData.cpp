@@ -1,5 +1,5 @@
 // -------------------------------------------------------------------------
-//    @FileName         :    NFCDataValue.cpp
+//    @FileName         :    NFCData.cpp
 //    @Author           :    GaoYi
 //    @Date             :    2018/06/09
 //    @Email			:    445267987@qq.com
@@ -25,15 +25,15 @@ NFCData::MapIntObject NFCDataStatics::empty_map_int;
 
 NFCData& NFCData::operator=(const NFCData& src)
 {
-	NFCData tmp(src);
-	Swap(tmp);
+	mType = src.mType;
+	m_ptr = src.m_ptr;
 	return *this;
 }
 
 void NFCData::Swap(NFCData& src)
 {
-	mType = src.mType;
-	m_ptr = src.m_ptr;
+	std::swap(mType, src.mType);
+	std::swap(m_ptr, src.m_ptr);
 }
 
 int NFCData::GetType() const
@@ -43,7 +43,7 @@ int NFCData::GetType() const
 
 void NFCData::SetDefaultValue(int type)
 {
-	switch(type)
+	switch (type)
 	{
 	case DT_BOOLEAN:
 		SetBool(NFCDataStatics::empty_boolean);
@@ -83,16 +83,16 @@ void NFCData::SetDefaultValue(int type)
 
 bool NFCData::IsNumber() const
 {
-	return mType == DT_INT || mType == DT_UINT64 || 
+	return mType == DT_INT || mType == DT_UINT64 ||
 		mType == DT_FLOAT || mType == DT_BOOLEAN;
 }
 
 bool NFCData::IsNullValue() const
 {
-	switch(GetType())
+	switch (GetType())
 	{
 	case DT_BOOLEAN:
-		return GetBool()== NFCDataStatics::empty_boolean;
+		return GetBool() == NFCDataStatics::empty_boolean;
 	case DT_INT:
 		return GetInt64() == NFCDataStatics::empty_int;
 	case DT_UINT64:
@@ -642,37 +642,50 @@ NFCData::NFCData(int type, MapIntObject&& value)
 	m_ptr = std::make_shared<NFCDataMapIntObject>(value);
 }
 
-NFCData::NFCData(const NFCData& src)
+void NFCData::DeepCopy(const NFCData& src)
 {
 	this->mType = src.GetType();
 	switch (this->mType)
 	{
 	case DT_BOOLEAN:
-		m_ptr = std::make_shared<NFCDataBoolean>(src.GetBool());
+		m_ptr = make_shared<NFCDataBoolean>(src.GetBool());
 		break;
 	case DT_INT:
-		m_ptr = std::make_shared<NFCDataInt>(src.GetInt64());
+		m_ptr = make_shared<NFCDataInt>(src.GetInt64());
 		break;
 	case DT_UINT64:
-		m_ptr = std::make_shared<NFCDataUInt64>(src.GetUInt64());
+		m_ptr = make_shared<NFCDataUInt64>(src.GetUInt64());
 		break;
 	case DT_FLOAT:
-		m_ptr = std::make_shared<NFCDataDouble>(src.GetDouble());
+		m_ptr = make_shared<NFCDataDouble>(src.GetDouble());
 		break;
 	case DT_DOUBLE:
-		m_ptr = std::make_shared<NFCDataDouble>(src.GetDouble());
+		m_ptr = make_shared<NFCDataDouble>(src.GetDouble());
 		break;
 	case DT_STRING:
-		m_ptr = std::make_shared<NFCDataString>(src.GetString());
+		m_ptr = make_shared<NFCDataString>(src.GetString());
+		break;
+	case DT_ARRAY:
+		m_ptr = make_shared<NFCDataArray>(src.GetArray());
+		break;
+	case DT_LIST:
+		m_ptr = make_shared<NFCDataList>(src.GetList());
 		break;
 	case DT_MAPSTRING:
-		m_ptr = std::make_shared<NFCDataMapStringObject>(src.GetMapStringObject());
+		m_ptr = make_shared<NFCDataMapStringObject>(src.GetMapStringObject());
 		break;
 	case DT_MAPINT:
-		m_ptr = std::make_shared<NFCDataMapIntObject>(src.GetMapIntObject());
+		m_ptr = make_shared<NFCDataMapIntObject>(src.GetMapIntObject());
 		break;
 	default:
 		NF_ASSERT(0);
 		break;
 	}
 }
+
+NFCData::NFCData(const NFCData& src)
+{
+	mType = src.mType;
+	m_ptr = src.m_ptr;
+}
+

@@ -12,6 +12,7 @@
 #include "NFCTestClientModule.h"
 #include "NFCTestServerModule.h"
 #include "NFCTestActorModule.h"
+#include "NFCTestObjectModule.h"
 //
 //
 #ifdef NF_DYNAMIC_PLUGIN
@@ -44,14 +45,16 @@ void NFTestPlugin::Install()
 {
 	//REGISTER_MODULE(pPluginManager, NFITestKernelModule, NFCTestKernelModule);
 	//REGISTER_MODULE(pPluginManager, NFCTestClientModule, NFCTestClientModule);
-	REGISTER_MODULE(pPluginManager, NFCTestServerModule, NFCTestServerModule);
-	REGISTER_MODULE(pPluginManager, NFCTestActorModule, NFCTestActorModule);
+	//REGISTER_MODULE(pPluginManager, NFCTestServerModule, NFCTestServerModule);
+	//REGISTER_MODULE(pPluginManager, NFCTestActorModule, NFCTestActorModule);
+	REGISTER_MODULE(pPluginManager, NFCTestObjectModule, NFCTestObjectModule);
 }
 
 void NFTestPlugin::Uninstall()
 {
 	//UNREGISTER_MODULE(pPluginManager, NFITestKernelModule, NFCTestKernelModule);
 	//UNREGISTER_MODULE(pPluginManager, NFCTestClientModule, NFCTestClientModule);
-	UNREGISTER_MODULE(pPluginManager, NFCTestServerModule, NFCTestServerModule);
-	UNREGISTER_MODULE(pPluginManager, NFCTestActorModule, NFCTestActorModule);
+	//UNREGISTER_MODULE(pPluginManager, NFCTestServerModule, NFCTestServerModule);
+	//UNREGISTER_MODULE(pPluginManager, NFCTestActorModule, NFCTestActorModule);
+	UNREGISTER_MODULE(pPluginManager, NFCTestObjectModule, NFCTestObjectModule);
 }
