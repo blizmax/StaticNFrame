@@ -162,6 +162,9 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="NFCObject.h" />
+    <ClInclude Include="NFCDataNodeManager.h" />
+    <ClInclude Include="NFIDataNodeManager.h" />
     <ClInclude Include="NFBitValue.hpp" />
     <ClInclude Include="NFCData.h" />
     <ClInclude Include="NFDataNode.h" />
@@ -204,6 +207,8 @@
     <ClInclude Include="NFTask.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="NFCObject.cpp" />
+    <ClCompile Include="NFCDataNodeManager.cpp" />
     <ClCompile Include="NFCData.cpp" />
     <ClCompile Include="NFCDataValue.cpp" />
     <ClCompile Include="NFDBActor.cpp" />

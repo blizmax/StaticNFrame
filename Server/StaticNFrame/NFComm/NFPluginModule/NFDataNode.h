@@ -68,7 +68,7 @@ public:
     {
         return mFeature;
     }
-private:
+
 	std::string mName;  //DataNode name, max = 16 bytes
     NFCData mValue;          //DataNode value
     int8_t mFeature = 0;     //DataNode feature
