@@ -66,6 +66,18 @@ bool NFCObject::CheckNodeExist(uint32_t index)
 	return (m_pNodeManager->GetNodeByIndex(index) != nullptr);
 }
 
+bool NFCObject::AddNode(const std::string& name, const NFCData& value, const int8_t feature)
+{
+	NF_ASSERT(m_pNodeManager != nullptr);
+	return m_pNodeManager->AddNode(name, value, feature);
+}
+
+bool NFCObject::SetNode(const std::string& name, const NFCData& value)
+{
+	NF_ASSERT(m_pNodeManager != nullptr);
+	return m_pNodeManager->SetNode(name, value);
+}
+
 bool NFCObject::SetNodeBool(const std::string& name, const bool value)
 {
 	NF_ASSERT(m_pNodeManager != nullptr);

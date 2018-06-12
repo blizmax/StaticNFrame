@@ -106,6 +106,24 @@ uint32_t NFCNetServerModule::AddServer(const NF_SERVER_TYPES eServerType, uint32
 	return 0;
 }
 
+std::string NFCNetServerModule::GetLinkIp(uint32_t usLinkId)
+{
+	uint32_t serverType = GetServerTypeFromUnlinkId(usLinkId);
+	if (serverType > NF_ST_NONE && serverType < NF_ST_MAX)
+	{
+		auto pServer = mServerArray[serverType];
+		if (pServer)
+		{
+			return pServer->GetLinkIp(usLinkId);
+		}
+		else
+		{
+			return std::string();
+		}
+	}
+	return std::string();
+}
+
 void NFCNetServerModule::SendByServerID(uint32_t usLinkId, const uint32_t nMsgID, const std::string& strData, const uint64_t nPlayerID)
 {
 	SendByServerID(usLinkId, nMsgID, strData.c_str(), strData.length(), nPlayerID);

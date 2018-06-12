@@ -36,6 +36,12 @@ inline void NFAssertFail(const char*const file, const unsigned int line, const s
 #else
 #define NF_ASSERT(condition)
 #define NF_ASSERT_MSG(condition, msg_)
+#define NF_ASSERT_RET_VAL(exp_, val)   \
+    do                                  \
+    {                                   \
+        if ((exp_)) break;              \
+        return val;                     \
+    } while (0)
 #endif
 
 #define NF_CHECK(EXPRESSION) \

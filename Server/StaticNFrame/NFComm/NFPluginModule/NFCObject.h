@@ -29,7 +29,10 @@ public:
 	virtual uint64_t GetObjectId() override;
 
 	virtual bool CheckNodeExist(const std::string& name) override;
-	virtual bool CheckNodeExist(uint32_t index);
+	virtual bool CheckNodeExist(uint32_t index) override;
+
+	virtual bool AddNode(const std::string& name, const NFCData& value, const int8_t feature);
+	virtual bool SetNode(const std::string& name, const NFCData& value);
 
 	virtual bool SetNodeBool(const std::string& name, const bool value) override;
 	virtual bool SetNodeInt(const std::string& name, const int32_t value) override;

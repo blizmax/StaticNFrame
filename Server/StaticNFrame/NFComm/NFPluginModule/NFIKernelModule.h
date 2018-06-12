@@ -18,6 +18,7 @@ class NFIKernelModule
 	: public NFIModule
 {
 public:
+	virtual uint64_t CreateObjectId() = 0;
 };
 
 #endif

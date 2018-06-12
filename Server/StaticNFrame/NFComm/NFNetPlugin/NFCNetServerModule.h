@@ -80,6 +80,14 @@ public:
 	virtual uint32_t AddServer(const NF_SERVER_TYPES eServerType, uint32_t nServerID, uint32_t nMaxClient, uint32_t nPort) override;
 
 	/**
+	 * @brief 获得连接的IP
+	 *
+	 * @param  usLinkId
+	 * @return std::string 
+	 */
+	virtual std::string GetLinkIp(uint32_t usLinkId) override;
+
+	/**
 	 * @brief
 	 *
 	 * @param  usLinkId

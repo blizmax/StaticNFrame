@@ -12,6 +12,9 @@
 #include <NFComm/NFPluginModule/NFCObject.h>
 #include <NFComm/NFPluginModule/NFIDataNodeManager.h>
 #include <NFComm/NFPluginModule/NFCData.h>
+#include <NFComm/NFPluginModule/NFIKernelModule.h>
+#include <NFComm/NFPluginModule/NFIPluginManager.h>
+#include <unordered_set>
 
 NFCTestObjectModule::NFCTestObjectModule(NFIPluginManager* p)
 {
@@ -29,6 +32,17 @@ bool NFCTestObjectModule::Init()
 	data.SetUInt64((uint64_t)NFGetTime());
 	pObject->GetNodeManager()->AddNode("gaoyi", data, 0);
 	pObject->SetNodeUInt64("gaoyi", 0);
+
+	NFIKernelModule* pKernelModule = pPluginManager->FindModule<NFIKernelModule>();
+	std::unordered_set<uint64_t> objectIdSet;
+	while (true)
+	{
+		uint64_t objectId = pKernelModule->CreateObjectId();
+		if (objectIdSet.find(objectId) != objectIdSet.end())
+			break;
+
+		objectIdSet.emplace(objectId);
+	}
 	return true;
 }
 

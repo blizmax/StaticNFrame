@@ -131,6 +131,32 @@ bool NFServer::Send(uint32_t usLinkId, const void* pData, uint32_t unSize)
 	return false;
 }
 
+std::string NFServer::GetLinkIp(uint32_t usLinkId)
+{
+	uint32_t serverType = GetServerTypeFromUnlinkId(usLinkId);
+	uint32_t serverIndex = GetServerIndexFromUnlinkId(usLinkId);
+
+	if (serverType != mServerType)
+	{
+		NFLogError("serverType != mServerType, this usLinkId:%s is not of the server:%s", usLinkId, GetServerName(mServerType).c_str());
+		return std::string();
+	}
+
+	if (serverIndex < mNetObjectArray.size())
+	{
+		auto pObject = mNetObjectArray[serverIndex];
+		if (pObject)
+		{
+			return pObject->GetStrIp();
+		}
+		else
+		{
+			NFLogError("the usLinkId:%d is nullptr", usLinkId);
+		}
+	}
+	return std::string();
+}
+
 bool NFServer::SendAll(const void* pData, uint32_t unSize)
 {
 	for (size_t i = 0; i < mNetObjectArray.size(); i++)

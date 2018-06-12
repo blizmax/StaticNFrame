@@ -66,6 +66,14 @@ public:
 	bool Send(uint32_t usLinkId, const void* pData, uint32_t unSize);
 
 	/**
+	 * @brief 获得连接IP
+	 *
+	 * @param  usLinkId
+	 * @return std::string 
+	 */
+	std::string GetLinkIp(uint32_t usLinkId);
+
+	/**
 	 * @brief	发送数据
 	 *
 	 * @param pData		发送的数据, 这里的数据已经包含了数据头
