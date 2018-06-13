@@ -14,11 +14,14 @@
 #include <functional>
 #include "NFIModule.h"
 
+class NFIObject;
+
 class NFIKernelModule
 	: public NFIModule
 {
 public:
 	virtual uint64_t CreateObjectId() = 0;
+	virtual NFIObject* CreateObject(uint64_t objectId = 0) = 0;
 };
 
 #endif

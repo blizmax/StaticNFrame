@@ -23,13 +23,45 @@ public:
 	virtual ~NFCDataNodeManager();
 	virtual void Clear() override;
 	virtual uint64_t GetObjectId() const;
+
 	virtual bool RegisterCallback(const std::string& name, const DATA_NODE_EVENT_FUNCTOR_PTR& cb) override;
 	virtual bool RegisterCallback(uint32_t index, const DATA_NODE_EVENT_FUNCTOR_PTR& cb) override;
+
 	virtual size_t GetNodeCount() override;
 	virtual NFDataNode* GetNodeByIndex(size_t index) override;
 	virtual NFDataNode* GetNode(const std::string& name) override;
 	virtual bool AddNode(const std::string& name, const NFCData& value, const int8_t feature) override;
 	virtual bool SetNode(const std::string& name, const NFCData& value) override;
+
+	virtual const NFCData::Array& GetArray(const std::string& name) const override;
+	virtual const NFCData::List& GetList(const std::string& name) const override;
+	virtual const NFCData::MapStringData& GetMapStringObject(const std::string& name) const override;
+	virtual const NFCData::MapIntData& GetMapIntObject(const std::string& name) const override;
+
+	virtual NFCData::Array* MutableArray(const std::string& name) override;
+	virtual NFCData::List* MutableList(const std::string& name) override;
+	virtual NFCData::MapStringData* MutableMapStringData(const std::string& name) override;
+	virtual NFCData::MapIntData* MutableMapIntData(const std::string& name) override;
+
+	virtual bool AddArrayItem(const std::string& name, const NFCData& data) override;
+	virtual bool AddListItem(const std::string& name, const NFCData& data) override;
+	virtual bool AddMapStringItem(const std::string& name, const std::string& key, const NFCData& value) override;
+	virtual bool AddMapIntItem(const std::string& name, uint64_t key, const NFCData& value) override;
+
+	virtual const NFCData::Array& GetArray(uint32_t index) const override;
+	virtual const NFCData::List& GetList(int32_t index) const override;
+	virtual const NFCData::MapStringData& GetMapStringObject(uint32_t index) const override;
+	virtual const NFCData::MapIntData& GetMapIntObject(uint32_t index) const override;
+
+	virtual NFCData::Array* MutableArray(uint32_t index) override;
+	virtual NFCData::List* MutableList(uint32_t index) override;
+	virtual NFCData::MapStringData* MutableMapStringData(uint32_t index) override;
+	virtual NFCData::MapIntData* MutableMapIntData(uint32_t index) override;
+
+	virtual bool AddArrayItem(uint32_t index, const NFCData& data) override;
+	virtual bool AddListItem(uint32_t index, const NFCData& data) override;
+	virtual bool AddMapStringItem(uint32_t index, const std::string& key, const NFCData& value) override;
+	virtual bool AddMapIntItem(uint32_t index, uint64_t key, const NFCData& value) override;
 
 	virtual bool SetNodeBool(const std::string& name, const bool value) override;
 	virtual bool SetNodeInt(const std::string& name, const int32_t value) override;

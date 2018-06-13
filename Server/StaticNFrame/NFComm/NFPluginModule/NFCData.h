@@ -21,7 +21,6 @@ enum NF_DATA_TYPE
 	DT_UNKNOWN, //unknown type
 	DT_BOOLEAN, //bool
 	DT_INT, //int64_t
-	DT_UINT64, //uint64_t
 	DT_FLOAT, //float
 	DT_DOUBLE, //doubl
 	DT_STRING, //string(char*)
@@ -37,8 +36,8 @@ class NFCData
 public:
 	typedef std::vector<NFCData> Array;
 	typedef std::list<NFCData> List;
-	typedef std::unordered_map<std::string, NFCData> MapStringObject;
-	typedef std::unordered_map<int64_t, NFCData> MapIntObject;
+	typedef std::unordered_map<std::string, NFCData> MapStringData;
+	typedef std::unordered_map<uint64_t, NFCData> MapIntData;
 
 	NFCData()
 	{
@@ -58,16 +57,17 @@ public:
 	NFCData(int type, int64_t value); // NUMBER
 	NFCData(int type, uint64_t value); // NUMBER
 	NFCData(int type, bool value); // BOOL
+	NFCData(int type, const char* value); // STRING
 	NFCData(int type, const std::string& value); // STRING
 	NFCData(int type, std::string&& value); // STRING
 	NFCData(int type, const Array& jvalues); // ARRAY
 	NFCData(int type, Array&& values); // ARRAY
 	NFCData(int type, const List& kvalues); // LIST
 	NFCData(int type, List&& values); // LIST
-	NFCData(int type, const MapStringObject& values); // MAPOBJECT
-	NFCData(int type, const MapStringObject&& values); // MAPOBJECT
-	NFCData(int type, const MapIntObject& values); // MAPOBJECT
-	NFCData(int type, MapIntObject&& values); // MAPOBJECT
+	NFCData(int type, const MapStringData& values); // MAPOBJECT
+	NFCData(int type, const MapStringData&& values); // MAPOBJECT
+	NFCData(int type, const MapIntData& values); // MAPOBJECT
+	NFCData(int type, MapIntData&& values); // MAPOBJECT
 	NFCData(const NFCData& src);
 	NFCData& operator=(const NFCData& src);
 	void Swap(NFCData& src);
@@ -103,14 +103,24 @@ public:
 
 	virtual const Array& GetArray() const;
 	virtual const List& GetList() const;
-	virtual const MapStringObject& GetMapStringObject() const;
-	virtual const MapIntObject& GetMapIntObject() const;
+	virtual const MapStringData& GetMapStringObject() const;
+	virtual const MapIntData& GetMapIntObject() const;
 
-	virtual void SetMapStringObject(const MapStringObject& value);
-	virtual void SetMapStringObject(MapStringObject&& value);
+	virtual Array* MutableArray();
+	virtual List* MutableList();
+	virtual MapStringData* MutableMapStringData();
+	virtual MapIntData* MutableMapIntData();
 
-	virtual void SetMapIntObject(const MapIntObject& value);
-	virtual void SetMapIntObject(MapIntObject&& value);
+	virtual void AddArrayItem(const NFCData& data);
+	virtual void AddListItem(const NFCData& data);
+	virtual void AddMapStringItem(const std::string& key, const NFCData& value);
+	virtual void AddMapIntItem(uint64_t key, const NFCData& value);
+
+	virtual void SetMapStringData(const MapStringData& value);
+	virtual void SetMapStringData(MapStringData&& value);
+
+	virtual void SetMapIntData(const MapIntData& value);
+	virtual void SetMapIntData(MapIntData&& value);
 
 
 	virtual void SetArray(const Array& value);
@@ -133,13 +143,12 @@ struct NFCDataStatics
 {
 	static bool empty_boolean;
 	static int64_t empty_int;
-	static uint64_t empty_uint64;
 	static float empty_float;
 	static double empty_double;
 	static std::string empty_string;
-	static NFCData::Array empty_vector;
+	static NFCData::Array empty_array;
 	static NFCData::List empty_list;
-	static NFCData::MapStringObject empty_map_string;
-	static NFCData::MapIntObject empty_map_int;
+	static NFCData::MapStringData empty_map_string;
+	static NFCData::MapIntData empty_map_int;
 };
 

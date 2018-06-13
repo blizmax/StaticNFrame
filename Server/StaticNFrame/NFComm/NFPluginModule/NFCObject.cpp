@@ -78,6 +78,156 @@ bool NFCObject::SetNode(const std::string& name, const NFCData& value)
 	return m_pNodeManager->SetNode(name, value);
 }
 
+size_t NFCObject::GetNodeCount() const
+{
+	NF_ASSERT(m_pNodeManager != nullptr);
+	return m_pNodeManager->GetNodeCount();
+}
+
+const NFCData::Array& NFCObject::GetArray(const std::string& name) const
+{
+	NF_ASSERT(m_pNodeManager != nullptr);
+	return m_pNodeManager->GetArray(name);
+}
+
+const NFCData::List& NFCObject::GetList(const std::string& name) const
+{
+	NF_ASSERT(m_pNodeManager != nullptr);
+	return m_pNodeManager->GetList(name);
+}
+
+const NFCData::MapStringData& NFCObject::GetMapStringData(const std::string& name) const
+{
+	NF_ASSERT(m_pNodeManager != nullptr);
+	return m_pNodeManager->GetMapStringObject(name);
+}
+
+const NFCData::MapIntData& NFCObject::GetMapIntData(const std::string& name) const
+{
+	NF_ASSERT(m_pNodeManager != nullptr);
+	return m_pNodeManager->GetMapIntObject(name);
+}
+
+NFCData::Array* NFCObject::MutableArray(const std::string& name)
+{
+	NF_ASSERT(m_pNodeManager != nullptr);
+	return m_pNodeManager->MutableArray(name);
+}
+
+NFCData::List* NFCObject::MutableList(const std::string& name)
+{
+	NF_ASSERT(m_pNodeManager != nullptr);
+	return m_pNodeManager->MutableList(name);
+}
+
+NFCData::MapStringData* NFCObject::MutableMapStringData(const std::string& name)
+{
+	NF_ASSERT(m_pNodeManager != nullptr);
+	return m_pNodeManager->MutableMapStringData(name);
+}
+
+NFCData::MapIntData* NFCObject::MutableMapIntData(const std::string& name)
+{
+	NF_ASSERT(m_pNodeManager != nullptr);
+	return m_pNodeManager->MutableMapIntData(name);
+}
+
+bool NFCObject::AddArrayItem(const std::string& name, const NFCData& data)
+{
+	NF_ASSERT(m_pNodeManager != nullptr);
+	return m_pNodeManager->AddArrayItem(name, data);
+}
+
+bool NFCObject::AddListItem(const std::string& name, const NFCData& data)
+{
+	NF_ASSERT(m_pNodeManager != nullptr);
+	return m_pNodeManager->AddListItem(name, data);
+}
+
+bool NFCObject::AddMapStringItem(const std::string& name, const std::string& key, const NFCData& value)
+{
+	NF_ASSERT(m_pNodeManager != nullptr);
+	return m_pNodeManager->AddMapStringItem(name, key, value);
+}
+
+bool NFCObject::AddMapIntItem(const std::string& name, uint64_t key, const NFCData& value)
+{
+	NF_ASSERT(m_pNodeManager != nullptr);
+	return m_pNodeManager->AddMapIntItem(name, key, value);
+}
+
+const NFCData::Array& NFCObject::GetArray(uint32_t index) const
+{
+	NF_ASSERT(m_pNodeManager != nullptr);
+	return m_pNodeManager->GetArray(index);
+}
+
+const NFCData::List& NFCObject::GetList(int32_t index) const
+{
+	NF_ASSERT(m_pNodeManager != nullptr);
+	return m_pNodeManager->GetList(index);
+}
+
+const NFCData::MapStringData& NFCObject::GetMapStringData(uint32_t index) const
+{
+	NF_ASSERT(m_pNodeManager != nullptr);
+	return m_pNodeManager->GetMapStringObject(index);
+}
+
+const NFCData::MapIntData& NFCObject::GetMapIntData(uint32_t index) const
+{
+	NF_ASSERT(m_pNodeManager != nullptr);
+	return m_pNodeManager->GetMapIntObject(index);
+}
+
+NFCData::Array* NFCObject::MutableArray(uint32_t index)
+{
+	NF_ASSERT(m_pNodeManager != nullptr);
+	return m_pNodeManager->MutableArray(index);
+}
+
+NFCData::List* NFCObject::MutableList(uint32_t index)
+{
+	NF_ASSERT(m_pNodeManager != nullptr);
+	return m_pNodeManager->MutableList(index);
+}
+
+NFCData::MapStringData* NFCObject::MutableMapStringData(uint32_t index)
+{
+	NF_ASSERT(m_pNodeManager != nullptr);
+	return m_pNodeManager->MutableMapStringData(index);
+}
+
+NFCData::MapIntData* NFCObject::MutableMapIntData(uint32_t index)
+{
+	NF_ASSERT(m_pNodeManager != nullptr);
+	return m_pNodeManager->MutableMapIntData(index);
+}
+
+bool NFCObject::AddArrayItem(uint32_t index, const NFCData& data)
+{
+	NF_ASSERT(m_pNodeManager != nullptr);
+	return m_pNodeManager->AddArrayItem(index, data);
+}
+
+bool NFCObject::AddListItem(uint32_t index, const NFCData& data)
+{
+	NF_ASSERT(m_pNodeManager != nullptr);
+	return m_pNodeManager->AddListItem(index, data);
+}
+
+bool NFCObject::AddMapStringItem(uint32_t index, const std::string& key, const NFCData& value)
+{
+	NF_ASSERT(m_pNodeManager != nullptr);
+	return m_pNodeManager->AddMapStringItem(index, key, value);
+}
+
+bool NFCObject::AddMapIntItem(uint32_t index, uint64_t key, const NFCData& value)
+{
+	NF_ASSERT(m_pNodeManager != nullptr);
+	return m_pNodeManager->AddMapIntItem(index, key, value);
+}
+
 bool NFCObject::SetNodeBool(const std::string& name, const bool value)
 {
 	NF_ASSERT(m_pNodeManager != nullptr);

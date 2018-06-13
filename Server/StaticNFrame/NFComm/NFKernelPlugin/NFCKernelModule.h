@@ -37,7 +37,7 @@ public:
 
 	virtual bool Execute() override;
 
-	virtual NFIObject* CreateObject(uint64_t objectId = 0);
+	virtual NFIObject* CreateObject(uint64_t objectId = 0) override;
 	virtual uint64_t CreateObjectId() override;
 protected:
 	static void ProcessMemFree();

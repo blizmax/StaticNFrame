@@ -132,23 +132,245 @@ bool NFCDataNodeManager::SetNode(const std::string& name, const NFCData& value)
 	switch (value.GetType())
 	{
 	case DT_BOOLEAN:
-		return SetNodeBool(name, value.GetBool());
+		return SetNodeBool(index, value.GetBool());
 	case DT_INT:
-		return SetNodeInt64(name, value.GetInt64());
-	case DT_UINT64:
-		return SetNodeInt64(name, value.GetInt64());
+		return SetNodeInt64(index, value.GetInt64());
 	case DT_FLOAT:
-		return SetNodeFloat(name, value.GetFloat());
+		return SetNodeFloat(index, value.GetFloat());
 	case DT_DOUBLE:
-		return SetNodeDouble(name, value.GetDouble());
+		return SetNodeDouble(index, value.GetDouble());
 	case DT_STRING:
-		return SetNodeString(name, value.GetString());
+		return SetNodeString(index, value.GetString());
 	default:
 		NF_ASSERT(0);
 		break;
 	}
 
 	return false;
+}
+
+const NFCData::Array& NFCDataNodeManager::GetArray(const std::string& name) const
+{
+	size_t index;
+	if (!FindIndex(name, index))
+	{
+		return NFCDataStatics::empty_array;
+	}
+
+	return mNodes[index]->mValue.GetArray();
+}
+
+const NFCData::List& NFCDataNodeManager::GetList(const std::string& name) const
+{
+	size_t index;
+	if (!FindIndex(name, index))
+	{
+		return NFCDataStatics::empty_list;
+	}
+
+	return mNodes[index]->mValue.GetList();
+}
+
+const NFCData::MapStringData& NFCDataNodeManager::GetMapStringObject(const std::string& name) const
+{
+	size_t index;
+	if (!FindIndex(name, index))
+	{
+		return NFCDataStatics::empty_map_string;
+	}
+
+	return mNodes[index]->mValue.GetMapStringObject();
+}
+
+const NFCData::MapIntData& NFCDataNodeManager::GetMapIntObject(const std::string& name) const
+{
+	size_t index;
+	if (!FindIndex(name, index))
+	{
+		return NFCDataStatics::empty_map_int;
+	}
+
+	return mNodes[index]->mValue.GetMapIntObject();
+}
+
+NFCData::Array* NFCDataNodeManager::MutableArray(const std::string& name)
+{
+	size_t index;
+	if (!FindIndex(name, index))
+	{
+		return nullptr;
+	}
+
+	return mNodes[index]->mValue.MutableArray();
+}
+
+NFCData::List* NFCDataNodeManager::MutableList(const std::string& name)
+{
+	size_t index;
+	if (!FindIndex(name, index))
+	{
+		return nullptr;
+	}
+
+	return mNodes[index]->mValue.MutableList();
+}
+
+NFCData::MapStringData* NFCDataNodeManager::MutableMapStringData(const std::string& name)
+{
+	size_t index;
+	if (!FindIndex(name, index))
+	{
+		return nullptr;
+	}
+
+	return mNodes[index]->mValue.MutableMapStringData();
+}
+
+NFCData::MapIntData* NFCDataNodeManager::MutableMapIntData(const std::string& name)
+{
+	size_t index;
+	if (!FindIndex(name, index))
+	{
+		return nullptr;
+	}
+
+	return mNodes[index]->mValue.MutableMapIntData();
+}
+
+bool NFCDataNodeManager::AddArrayItem(const std::string& name, const NFCData& data)
+{
+	size_t index;
+	if (!FindIndex(name, index))
+	{
+		return false;
+	}
+
+	mNodes[index]->mValue.AddArrayItem(data);
+	return true;
+}
+
+bool NFCDataNodeManager::AddListItem(const std::string& name, const NFCData& data)
+{
+	size_t index;
+	if (!FindIndex(name, index))
+	{
+		return false;
+	}
+
+	mNodes[index]->mValue.AddListItem(data);
+	return true;
+}
+
+bool NFCDataNodeManager::AddMapStringItem(const std::string& name, const std::string& key, const NFCData& value)
+{
+	size_t index;
+	if (!FindIndex(name, index))
+	{
+		return false;
+	}
+
+	mNodes[index]->mValue.AddMapStringItem(key, value);
+	return true;
+}
+
+bool NFCDataNodeManager::AddMapIntItem(const std::string& name, uint64_t key, const NFCData& value)
+{
+	size_t index;
+	if (!FindIndex(name, index))
+	{
+		return false;
+	}
+
+	mNodes[index]->mValue.AddMapIntItem(key, value);
+	return true;
+}
+
+const NFCData::Array& NFCDataNodeManager::GetArray(uint32_t index) const
+{
+	NF_ASSERT(index < mNodes.size());
+
+	return mNodes[index]->mValue.GetArray();
+}
+
+const NFCData::List& NFCDataNodeManager::GetList(int32_t index) const
+{
+	NF_ASSERT(index < mNodes.size());
+
+	return mNodes[index]->mValue.GetList();
+}
+
+const NFCData::MapStringData& NFCDataNodeManager::GetMapStringObject(uint32_t index) const
+{
+	NF_ASSERT(index < mNodes.size());
+
+	return mNodes[index]->mValue.GetMapStringObject();
+}
+
+const NFCData::MapIntData& NFCDataNodeManager::GetMapIntObject(uint32_t index) const
+{
+	NF_ASSERT(index < mNodes.size());
+
+	return mNodes[index]->mValue.GetMapIntObject();
+}
+
+NFCData::Array* NFCDataNodeManager::MutableArray(uint32_t index)
+{
+	NF_ASSERT(index < mNodes.size());
+
+	return mNodes[index]->mValue.MutableArray();
+}
+
+NFCData::List* NFCDataNodeManager::MutableList(uint32_t index)
+{
+	NF_ASSERT(index < mNodes.size());
+
+	return mNodes[index]->mValue.MutableList();
+}
+
+NFCData::MapStringData* NFCDataNodeManager::MutableMapStringData(uint32_t index)
+{
+	NF_ASSERT(index < mNodes.size());
+
+	return mNodes[index]->mValue.MutableMapStringData();
+}
+
+NFCData::MapIntData* NFCDataNodeManager::MutableMapIntData(uint32_t index)
+{
+	NF_ASSERT(index < mNodes.size());
+
+	return mNodes[index]->mValue.MutableMapIntData();
+}
+
+bool NFCDataNodeManager::AddArrayItem(uint32_t index, const NFCData& data)
+{
+	NF_ASSERT(index < mNodes.size());
+
+	mNodes[index]->mValue.AddArrayItem(data);
+	return true;
+}
+
+bool NFCDataNodeManager::AddListItem(uint32_t index, const NFCData& data)
+{
+	NF_ASSERT(index < mNodes.size());
+
+	mNodes[index]->mValue.AddListItem(data);
+	return true;
+}
+
+bool NFCDataNodeManager::AddMapStringItem(uint32_t index, const std::string& key, const NFCData& value)
+{
+	NF_ASSERT(index < mNodes.size());
+
+	mNodes[index]->mValue.AddMapStringItem(key, value);
+	return true;
+}
+
+bool NFCDataNodeManager::AddMapIntItem(uint32_t index, uint64_t key, const NFCData& value)
+{
+	NF_ASSERT(index < mNodes.size());
+
+	mNodes[index]->mValue.AddMapIntItem(key, value);
+	return true;
 }
 
 bool NFCDataNodeManager::SetNodeBool(const std::string& name, const bool value)
@@ -607,7 +829,7 @@ uint64_t NFCDataNodeManager::GetNodeUInt64(const std::string& name) const
 	size_t index;
 	if (!FindIndex(name, index))
 	{
-		return NFCDataStatics::empty_uint64;
+		return NFCDataStatics::empty_int;
 	}
 
 	return mNodes[index]->mValue.GetUInt64();

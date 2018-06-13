@@ -109,19 +109,19 @@ void NFCDataValue::SetString(const std::string& value)
 {
 }
 
-void NFCDataValue::SetMapStringObject(const NFCData::MapStringObject& value)
+void NFCDataValue::SetMapStringData(const NFCData::MapStringData& value)
 {
 }
 
-void NFCDataValue::SetMapStringObject(NFCData::MapStringObject&& value)
+void NFCDataValue::SetMapStringData(NFCData::MapStringData&& value)
 {
 }
 
-void NFCDataValue::SetMapIntObject(const NFCData::MapIntObject& value)
+void NFCDataValue::SetMapIntData(const NFCData::MapIntData& value)
 {
 }
 
-void NFCDataValue::SetMapIntObject(NFCData::MapIntObject&& value)
+void NFCDataValue::SetMapIntData(NFCData::MapIntData&& value)
 {
 }
 
@@ -143,7 +143,7 @@ void NFCDataValue::SetList(NFCData::List&& value)
 
 const NFCData::Array& NFCDataValue::GetArray() const
 {
-	return NFCDataStatics::empty_vector;
+	return NFCDataStatics::empty_array;
 }
 
 const NFCData::List& NFCDataValue::GetList() const
@@ -151,33 +151,48 @@ const NFCData::List& NFCDataValue::GetList() const
 	return NFCDataStatics::empty_list;
 }
 
-const NFCData::MapStringObject& NFCDataValue::GetMapStringObject() const
+const NFCData::MapStringData& NFCDataValue::GetMapStringData() const
 {
 	return NFCDataStatics::empty_map_string;
 }
 
-const NFCData::MapIntObject& NFCDataValue::GetMapIntObject() const
+const NFCData::MapIntData& NFCDataValue::GetMapIntData() const
 {
 	return NFCDataStatics::empty_map_int;
 }
 
-NFCData::Array& NFCDataValue::GetArray()
+NFCData::Array* NFCDataValue::MutableArray()
 {
-	return NFCDataStatics::empty_vector;
+	return nullptr;
 }
 
-NFCData::List& NFCDataValue::GetList()
+NFCData::List* NFCDataValue::MutableList()
 {
-	return NFCDataStatics::empty_list;
+	return nullptr;
 }
 
-NFCData::MapStringObject& NFCDataValue::GetMapStringObject()
+NFCData::MapStringData* NFCDataValue::MutableMapStringData()
 {
-	return NFCDataStatics::empty_map_string;
+	return nullptr;
 }
 
-NFCData::MapIntObject& NFCDataValue::GetMapIntObject()
+NFCData::MapIntData* NFCDataValue::MutableMapIntData()
 {
-	return NFCDataStatics::empty_map_int;
+	return nullptr;
 }
 
+void NFCDataValue::AddArrayItem(const NFCData& data)
+{
+}
+
+void NFCDataValue::AddListItem(const NFCData& data)
+{
+}
+
+void NFCDataValue::AddMapStringItem(const std::string& key, const NFCData& value)
+{
+}
+
+void NFCDataValue::AddMapIntItem(uint64_t key, const NFCData& value)
+{
+}

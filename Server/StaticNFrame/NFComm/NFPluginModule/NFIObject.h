@@ -10,6 +10,7 @@
 
 #include "NFComm/NFCore/NFPlatform.h"
 #include "NFIModule.h"
+#include "NFCData.h"
 
 class NFIObject : public NFIModule
 {
@@ -24,9 +25,41 @@ public:
 
 	virtual bool CheckNodeExist(const std::string& name) = 0;
 	virtual bool CheckNodeExist(uint32_t index) = 0;
+	virtual size_t GetNodeCount() const = 0;
 
 	virtual bool AddNode(const std::string& name, const NFCData& value, const int8_t feature) = 0;
 	virtual bool SetNode(const std::string& name, const NFCData& value) = 0;
+
+	virtual const NFCData::Array& GetArray(const std::string& name) const = 0;
+	virtual const NFCData::List& GetList(const std::string& name) const = 0;
+	virtual const NFCData::MapStringData& GetMapStringData(const std::string& name) const = 0;
+	virtual const NFCData::MapIntData& GetMapIntData(const std::string& name) const = 0;
+
+	virtual NFCData::Array* MutableArray(const std::string& name) = 0;
+	virtual NFCData::List* MutableList(const std::string& name) = 0;
+	virtual NFCData::MapStringData* MutableMapStringData(const std::string& name) = 0;
+	virtual NFCData::MapIntData* MutableMapIntData(const std::string& name) = 0;
+
+	virtual bool AddArrayItem(const std::string& name, const NFCData& data) = 0;
+	virtual bool AddListItem(const std::string& name, const NFCData& data) = 0;
+	virtual bool AddMapStringItem(const std::string& name, const std::string& key, const NFCData& value) = 0;
+	virtual bool AddMapIntItem(const std::string& name, uint64_t key, const NFCData& value) = 0;
+
+	virtual const NFCData::Array& GetArray(uint32_t index) const = 0;
+	virtual const NFCData::List& GetList(int32_t index) const = 0;
+	virtual const NFCData::MapStringData& GetMapStringData(uint32_t index) const = 0;
+	virtual const NFCData::MapIntData& GetMapIntData(uint32_t index) const = 0;
+
+	virtual NFCData::Array* MutableArray(uint32_t index) = 0;
+	virtual NFCData::List* MutableList(uint32_t index) = 0;
+	virtual NFCData::MapStringData* MutableMapStringData(uint32_t index) = 0;
+	virtual NFCData::MapIntData* MutableMapIntData(uint32_t index) = 0;
+
+	virtual bool AddArrayItem(uint32_t index, const NFCData& data) = 0;
+	virtual bool AddListItem(uint32_t index, const NFCData& data) = 0;
+	virtual bool AddMapStringItem(uint32_t index, const std::string& key, const NFCData& value) = 0;
+	virtual bool AddMapIntItem(uint32_t index, uint64_t key, const NFCData& value) = 0;
+
 
 	virtual bool SetNodeBool(const std::string& name, const bool value) = 0;
 	virtual bool SetNodeInt(const std::string& name, const int32_t value) = 0;

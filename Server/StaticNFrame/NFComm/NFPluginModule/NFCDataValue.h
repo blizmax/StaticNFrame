@@ -42,19 +42,24 @@ public:
 
 	virtual const NFCData::Array& GetArray() const;
 	virtual const NFCData::List& GetList() const;
-	virtual const NFCData::MapStringObject& GetMapStringObject() const;
-	virtual const NFCData::MapIntObject& GetMapIntObject() const;
+	virtual const NFCData::MapStringData& GetMapStringData() const;
+	virtual const NFCData::MapIntData& GetMapIntData() const;
 
-	virtual NFCData::Array& GetArray();
-	virtual NFCData::List& GetList();
-	virtual NFCData::MapStringObject& GetMapStringObject();
-	virtual NFCData::MapIntObject& GetMapIntObject();
+	virtual NFCData::Array* MutableArray();
+	virtual NFCData::List* MutableList();
+	virtual NFCData::MapStringData* MutableMapStringData();
+	virtual NFCData::MapIntData* MutableMapIntData();
 
-	virtual void SetMapStringObject(const NFCData::MapStringObject& value);
-	virtual void SetMapStringObject(NFCData::MapStringObject&& value);
+	virtual void AddArrayItem(const NFCData& data);
+	virtual void AddListItem(const NFCData& data);
+	virtual void AddMapStringItem(const std::string& key, const NFCData& value);
+	virtual void AddMapIntItem(uint64_t key, const NFCData& value);
 
-	virtual void SetMapIntObject(const NFCData::MapIntObject& value);
-	virtual void SetMapIntObject(NFCData::MapIntObject&& value);
+	virtual void SetMapStringData(const NFCData::MapStringData& value);
+	virtual void SetMapStringData(NFCData::MapStringData&& value);
+
+	virtual void SetMapIntData(const NFCData::MapIntData& value);
+	virtual void SetMapIntData(NFCData::MapIntData&& value);
 
 
 	virtual void SetArray(const NFCData::Array& value);
@@ -252,85 +257,6 @@ public:
 	}
 };
 
-class NFCDataUInt64 : public NFBaseValue<NF_DATA_TYPE::DT_UINT64, uint64_t>
-{
-public:
-	explicit NFCDataUInt64(uint64_t value) : NFBaseValue(value)
-	{
-	}
-
-	virtual int GetInt() const override
-	{
-		return static_cast<int>(m_value);
-	}
-
-	virtual int32_t GetInt32() const override
-	{
-		return static_cast<int32_t>(m_value);
-	}
-
-	virtual uint32_t GetUInt32() const override
-	{
-		return static_cast<uint32_t>(m_value);
-	}
-
-	virtual int64_t GetInt64() const override
-	{
-		return static_cast<int64_t>(m_value);
-	}
-
-	virtual uint64_t GetUInt64() const override
-	{
-		return static_cast<uint64_t>(m_value);
-	}
-
-	virtual float GetFloat() const override
-	{
-		return static_cast<float>(m_value);
-	}
-
-	virtual double GetDouble() const override
-	{
-		return static_cast<double>(m_value);
-	}
-
-	//Set data
-	virtual void SetInt(int value) override
-	{
-		m_value = static_cast<uint64_t>(value);
-	}
-
-	virtual void SetInt32(int32_t value) override
-	{
-		m_value = static_cast<uint64_t>(value);
-	}
-
-	virtual void SetUInt32(uint32_t value) override
-	{
-		m_value = static_cast<uint64_t>(value);
-	}
-
-	virtual void SetInt64(int64_t value) override
-	{
-		m_value = static_cast<uint64_t>(value);
-	}
-
-	virtual void SetUInt64(uint64_t value) override
-	{
-		m_value = static_cast<uint64_t>(value);
-	}
-
-	virtual void SetFloat(float value) override
-	{
-		m_value = static_cast<uint64_t>(value);
-	}
-
-	virtual void SetDouble(double value) override
-	{
-		m_value = static_cast<uint64_t>(value);
-	}
-};
-
 class NFCDataBoolean final : public NFBaseValue<NF_DATA_TYPE::DT_BOOLEAN, bool>
 {
 public:
@@ -387,9 +313,9 @@ public:
 		return m_value;
 	}
 
-	virtual NFCData::Array& GetArray() override
+	virtual NFCData::Array* MutableArray() override
 	{
-		return m_value;
+		return &m_value;
 	}
 
 	virtual void SetArray(const NFCData::Array& value) override
@@ -400,6 +326,11 @@ public:
 	virtual void SetArray(NFCData::Array&& value) override
 	{
 		m_value = std::move(value);
+	}
+
+	virtual void AddArrayItem(const NFCData& data) override
+	{
+		m_value.push_back(data);
 	}
 };
 
@@ -419,9 +350,9 @@ public:
 		return m_value;
 	}
 
-	virtual NFCData::List& GetList() override
+	virtual NFCData::List* MutableList() override
 	{
-		return m_value;
+		return &m_value;
 	}
 
 	virtual void SetList(const NFCData::List& value) override
@@ -433,69 +364,84 @@ public:
 	{
 		m_value = std::move(value);
 	}
+
+	virtual void AddListItem(const NFCData& data) override
+	{
+		m_value.push_back(data);
+	}
 };
 
-class NFCDataMapStringObject final : public NFBaseValue<NF_DATA_TYPE::DT_MAPSTRING, NFCData::MapStringObject>
+class NFCDataMapStringData final : public NFBaseValue<NF_DATA_TYPE::DT_MAPSTRING, NFCData::MapStringData>
 {
 public:
-	explicit NFCDataMapStringObject(const NFCData::MapStringObject& value) : NFBaseValue(value)
+	explicit NFCDataMapStringData(const NFCData::MapStringData& value) : NFBaseValue(value)
 	{
 	}
 
-	explicit NFCDataMapStringObject(NFCData::MapStringObject&& value) : NFBaseValue(move(value))
+	explicit NFCDataMapStringData(NFCData::MapStringData&& value) : NFBaseValue(move(value))
 	{
 	}
 
-	virtual const NFCData::MapStringObject& GetMapStringObject() const override
-	{
-		return m_value;
-	}
-
-	virtual NFCData::MapStringObject& GetMapStringObject() override
+	virtual const NFCData::MapStringData& GetMapStringData() const override
 	{
 		return m_value;
 	}
 
-	virtual void SetMapStringObject(const NFCData::MapStringObject& value) override
+	virtual NFCData::MapStringData* MutableMapStringData() override
+	{
+		return &m_value;
+	}
+
+	virtual void SetMapStringData(const NFCData::MapStringData& value) override
 	{
 		m_value = value;
 	}
 
-	virtual void SetMapStringObject(NFCData::MapStringObject&& value) override
+	virtual void SetMapStringData(NFCData::MapStringData&& value) override
 	{
 		m_value = std::move(value);
 	}
+
+	virtual void AddMapStringItem(const std::string& key, const NFCData& value) override
+	{
+		m_value[key] = value;
+	}
 };
 
-class NFCDataMapIntObject final : public NFBaseValue<NF_DATA_TYPE::DT_MAPINT, NFCData::MapIntObject>
+class NFCDataMapIntData final : public NFBaseValue<NF_DATA_TYPE::DT_MAPINT, NFCData::MapIntData>
 {
 public:
-	explicit NFCDataMapIntObject(const NFCData::MapIntObject& value) : NFBaseValue(value)
+	explicit NFCDataMapIntData(const NFCData::MapIntData& value) : NFBaseValue(value)
 	{
 	}
 
-	explicit NFCDataMapIntObject(NFCData::MapIntObject&& value) : NFBaseValue(move(value))
+	explicit NFCDataMapIntData(NFCData::MapIntData&& value) : NFBaseValue(std::move(value))
 	{
 	}
 
-	virtual const NFCData::MapIntObject& GetMapIntObject() const override
-	{
-		return m_value;
-	}
-
-	virtual NFCData::MapIntObject& GetMapIntObject() override
+	virtual const NFCData::MapIntData& GetMapIntData() const override
 	{
 		return m_value;
 	}
 
-	virtual void SetMapIntObject(const NFCData::MapIntObject& value) override
+	virtual NFCData::MapIntData* MutableMapIntData() override
+	{
+		return &m_value;
+	}
+
+	virtual void SetMapIntData(const NFCData::MapIntData& value) override
 	{
 		m_value = value;
 	}
 
-	virtual void SetMapIntObject(NFCData::MapIntObject&& value) override
+	virtual void SetMapIntData(NFCData::MapIntData&& value) override
 	{
 		m_value = std::move(value);
+	}
+
+	virtual void AddMapIntItem(uint64_t key, const NFCData& value) override
+	{
+		m_value[key] = value;
 	}
 };
 

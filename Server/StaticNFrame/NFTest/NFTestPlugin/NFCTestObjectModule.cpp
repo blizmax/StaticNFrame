@@ -15,6 +15,7 @@
 #include <NFComm/NFPluginModule/NFIKernelModule.h>
 #include <NFComm/NFPluginModule/NFIPluginManager.h>
 #include <unordered_set>
+#include <set>
 
 NFCTestObjectModule::NFCTestObjectModule(NFIPluginManager* p)
 {
@@ -27,22 +28,19 @@ NFCTestObjectModule::~NFCTestObjectModule()
 
 bool NFCTestObjectModule::Init()
 {
-	NFCObject* pObject = new NFCObject(0, pPluginManager);
-	NFCData data;
-	data.SetUInt64((uint64_t)NFGetTime());
-	pObject->GetNodeManager()->AddNode("gaoyi", data, 0);
-	pObject->SetNodeUInt64("gaoyi", 0);
-
 	NFIKernelModule* pKernelModule = pPluginManager->FindModule<NFIKernelModule>();
-	std::unordered_set<uint64_t> objectIdSet;
-	while (true)
-	{
-		uint64_t objectId = pKernelModule->CreateObjectId();
-		if (objectIdSet.find(objectId) != objectIdSet.end())
-			break;
+	NFIObject* pObject = pKernelModule->CreateObject();
+	NF_ASSERT(pObject != nullptr);
 
-		objectIdSet.emplace(objectId);
-	}
+	pObject->AddNode("string", NFCData(DT_STRING, "gaoyi"), 0);
+	pObject->AddNode("string1", NFCData(DT_STRING, std::string("gaoyi")), 0);
+	pObject->AddNode("bool", NFCData(DT_BOOLEAN, true), 0);
+	pObject->AddNode("bool2", NFCData(DT_BOOLEAN, false), 0);
+	pObject->AddNode("int", NFCData(DT_INT, -1), 0);
+
+	pObject->SetNodeInt64("int", 0);
+	pObject->SetNodeUInt64("int", 0);
+
 	return true;
 }
 
