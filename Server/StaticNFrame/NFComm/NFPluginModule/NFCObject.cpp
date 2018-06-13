@@ -282,6 +282,15 @@ bool NFCObject::SetNodeString(const std::string& name, const std::string& value)
 	return m_pNodeManager->SetNodeString(name, value);
 }
 
+bool NFCObject::SetNodeString(const std::string& name, const char* value)
+{
+	NF_ASSERT(m_pNodeManager != nullptr);
+	if (value != nullptr)
+		return m_pNodeManager->SetNodeString(name, value);
+	else
+		return m_pNodeManager->SetNodeString(name, std::string());
+}
+
 bool NFCObject::SetNodeBool(uint32_t index, const bool value)
 {
 	NF_ASSERT(m_pNodeManager != nullptr);
@@ -334,6 +343,15 @@ bool NFCObject::SetNodeString(uint32_t index, const std::string& value)
 {
 	NF_ASSERT(m_pNodeManager != nullptr);
 	return m_pNodeManager->SetNodeString(index, value);
+}
+
+bool NFCObject::SetNodeString(uint32_t index, const char* value)
+{
+	NF_ASSERT(m_pNodeManager != nullptr);
+	if (value != nullptr)
+		return m_pNodeManager->SetNodeString(index, value);
+	else
+		return m_pNodeManager->SetNodeString(index, std::string());
 }
 
 bool NFCObject::GetNodeBool(const std::string& name) const

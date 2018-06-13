@@ -14,7 +14,6 @@ class NFCDataDouble;
 
 bool NFCDataStatics::empty_boolean = false;
 int64_t NFCDataStatics::empty_int = 0;
-float NFCDataStatics::empty_float = 0;
 double NFCDataStatics::empty_double = 0;
 std::string NFCDataStatics::empty_string;
 NFCData::Array NFCDataStatics::empty_array;
@@ -50,9 +49,6 @@ void NFCData::SetDefaultValue(int type)
 	case DT_INT:
 		SetInt64(NFCDataStatics::empty_int);
 		break;
-	case DT_FLOAT:
-		SetFloat(NFCDataStatics::empty_float);
-		break;
 	case DT_DOUBLE:
 		SetDouble(NFCDataStatics::empty_double);
 		break;
@@ -79,8 +75,7 @@ void NFCData::SetDefaultValue(int type)
 
 bool NFCData::IsNumber() const
 {
-	return mType == DT_INT ||
-		mType == DT_FLOAT || mType == DT_BOOLEAN;
+	return mType == DT_INT || mType == DT_BOOLEAN || mType == DT_DOUBLE;
 }
 
 bool NFCData::IsNullValue() const
@@ -91,8 +86,6 @@ bool NFCData::IsNullValue() const
 		return GetBool() == NFCDataStatics::empty_boolean;
 	case DT_INT:
 		return GetInt64() == NFCDataStatics::empty_int;
-	case DT_FLOAT:
-		return GetFloat() == NFCDataStatics::empty_float;
 	case DT_DOUBLE:
 		return GetDouble() == NFCDataStatics::empty_double;
 	case DT_STRING:
@@ -151,7 +144,7 @@ uint64_t NFCData::GetUInt64() const
 
 float NFCData::GetFloat() const
 {
-	NF_ASSERT_RET_VAL(IsNumber(), NFCDataStatics::empty_float);
+	NF_ASSERT_RET_VAL(IsNumber(), NFCDataStatics::empty_double);
 	return m_ptr->GetFloat();
 }
 
@@ -289,17 +282,17 @@ void NFCData::SetUInt64(uint64_t value)
 
 void NFCData::SetFloat(float value)
 {
-	NF_ASSERT(mType == DT_UNKNOWN || mType == DT_FLOAT);
+	NF_ASSERT(mType == DT_UNKNOWN || mType == DT_DOUBLE);
 
 	if (mType == DT_UNKNOWN)
 	{
 		assert(m_ptr == nullptr);
-		mType = DT_FLOAT;
+		mType = DT_DOUBLE;
 		m_ptr = std::make_shared<NFCDataDouble>(value);
 		return;
 	}
 
-	mType = DT_FLOAT;
+	mType = DT_DOUBLE;
 	if (m_ptr)
 	{
 		m_ptr->SetFloat(value);
@@ -674,7 +667,10 @@ NFCData::NFCData(int type, const char* value)
 {
 	assert(type == DT_STRING);
 	mType = DT_STRING;
-	m_ptr = std::make_shared<NFCDataString>(value);
+	if (value != nullptr)
+		m_ptr = std::make_shared<NFCDataString>(value);
+	else
+		m_ptr = std::make_shared<NFCDataString>("");
 }
 
 NFCData::NFCData(int type, const std::string& value)
@@ -757,9 +753,6 @@ void NFCData::DeepCopy(const NFCData& src)
 		break;
 	case DT_INT:
 		m_ptr = make_shared<NFCDataInt>(src.GetInt64());
-		break;
-	case DT_FLOAT:
-		m_ptr = make_shared<NFCDataDouble>(src.GetDouble());
 		break;
 	case DT_DOUBLE:
 		m_ptr = make_shared<NFCDataDouble>(src.GetDouble());

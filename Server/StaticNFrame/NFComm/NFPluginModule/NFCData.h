@@ -21,7 +21,6 @@ enum NF_DATA_TYPE
 	DT_UNKNOWN, //unknown type
 	DT_BOOLEAN, //bool
 	DT_INT, //int64_t
-	DT_FLOAT, //float
 	DT_DOUBLE, //doubl
 	DT_STRING, //string(char*)
 	DT_ARRAY, //std::vector<NFIData>
@@ -143,7 +142,6 @@ struct NFCDataStatics
 {
 	static bool empty_boolean;
 	static int64_t empty_int;
-	static float empty_float;
 	static double empty_double;
 	static std::string empty_string;
 	static NFCData::Array empty_array;

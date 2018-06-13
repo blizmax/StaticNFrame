@@ -135,8 +135,6 @@ bool NFCDataNodeManager::SetNode(const std::string& name, const NFCData& value)
 		return SetNodeBool(index, value.GetBool());
 	case DT_INT:
 		return SetNodeInt64(index, value.GetInt64());
-	case DT_FLOAT:
-		return SetNodeFloat(index, value.GetFloat());
 	case DT_DOUBLE:
 		return SetNodeDouble(index, value.GetDouble());
 	case DT_STRING:
@@ -840,7 +838,7 @@ float NFCDataNodeManager::GetNodeFloat(const std::string& name) const
 	size_t index;
 	if (!FindIndex(name, index))
 	{
-		return NFCDataStatics::empty_float;
+		return NFCDataStatics::empty_double;
 	}
 
 	return mNodes[index]->mValue.GetFloat();

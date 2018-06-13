@@ -70,6 +70,7 @@ public:
 	virtual bool SetNodeFloat(const std::string& name, const float value) = 0;
 	virtual bool SetNodeDouble(const std::string& name, const double value) = 0;
 	virtual bool SetNodeString(const std::string& name, const std::string& value) = 0;
+	virtual bool SetNodeString(const std::string& name, const char* value) = 0;
 
 	virtual bool SetNodeBool(uint32_t index, const bool value) = 0;
 	virtual bool SetNodeInt(uint32_t index, const int32_t value) = 0;
@@ -80,6 +81,7 @@ public:
 	virtual bool SetNodeFloat(uint32_t index, const float value) = 0;
 	virtual bool SetNodeDouble(uint32_t index, const double value) = 0;
 	virtual bool SetNodeString(uint32_t index, const std::string& value) = 0;
+	virtual bool SetNodeString(uint32_t index, const char* value) = 0;
 
 	virtual bool GetNodeBool(const std::string& name) const = 0;
 	virtual int32_t GetNodeInt(const std::string& name) const = 0;

@@ -35,11 +35,22 @@ bool NFCTestObjectModule::Init()
 	pObject->AddNode("string", NFCData(DT_STRING, "gaoyi"), 0);
 	pObject->AddNode("string1", NFCData(DT_STRING, std::string("gaoyi")), 0);
 	pObject->AddNode("bool", NFCData(DT_BOOLEAN, true), 0);
-	pObject->AddNode("bool2", NFCData(DT_BOOLEAN, false), 0);
 	pObject->AddNode("int", NFCData(DT_INT, -1), 0);
+	pObject->AddNode("float", NFCData(DT_DOUBLE, 0.001), 0);
+	pObject->AddNode("array", NFCData(DT_ARRAY, NFCData::Array()), 0);
+	pObject->AddNode("list", NFCData(DT_LIST, NFCData::List()), 0);
+	pObject->AddNode("mapstring", NFCData(DT_MAPSTRING, NFCData::MapStringData()), 0);
+	pObject->AddNode("mapint", NFCData(DT_MAPINT, NFCData::MapIntData()), 0);
 
+	pObject->SetNodeInt("int", 0);
+	pObject->SetNodeInt32("int", 0);
 	pObject->SetNodeInt64("int", 0);
+	pObject->SetNodeUInt32("int", 0);
 	pObject->SetNodeUInt64("int", 0);
+	pObject->SetNodeString("string", nullptr);
+	pObject->SetNodeFloat("float", 0.001);
+	pObject->SetNodeDouble("float", 0.002);
+	pObject->AddArrayItem("array", NFCData(DT_INT, 100));
 
 	return true;
 }
