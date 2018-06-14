@@ -19,50 +19,15 @@ class DBTask : public NFTask
 public:
 	virtual bool db_thread_process()
 	{
-		int j = 0;
-		for (int i = 0; i < 100; i++)
-		{
-			j += i;
-			testMap[i] = j;
-		}
 		return true;
 	}
 	std::string c;
 };
 
-class DBXTask : public NFTask
-{
-public:
-	virtual bool db_thread_process()
-	{
-		int j = 0;
-		for (int i = 0; i < 100; i++)
-		{
-			j += i;
-			testMap[i] = j;
-		}
-		NFDBActorMgr::Instance()->AddTask(new DBTask());
-		return true;
-	}
-
-	virtual void Dump()
-	{
-		std::cout << "dump" << std::endl;
-	}
-	int a;
-};
-
 NFCTestActorModule::NFCTestActorModule(NFIPluginManager* p)
 {
 	pPluginManager = p;
-	NFTask* pTask = new DBTask();
-	DBTask* pDBTask = static_cast<DBTask*>(pTask);
-	DBXTask* pXTask = static_cast<DBXTask*>(pTask);
-	if (pXTask)
-	{
-		pXTask->a = 1;
-	}
-
+/*
 	proto::message::PlayerInfo m_proData;
 
 	std::string typeName = m_proData.GetDescriptor()->full_name();
@@ -76,6 +41,7 @@ NFCTestActorModule::NFCTestActorModule(NFIPluginManager* p)
 	proto::message::PlayerInfo* new_obj = dynamic_cast<proto::message::PlayerInfo*>(prototype->New());
 
 	assert(m_proData.GetDescriptor() == pDesc);
+*/
 }
 
 NFCTestActorModule::~NFCTestActorModule()
@@ -84,6 +50,19 @@ NFCTestActorModule::~NFCTestActorModule()
 
 bool NFCTestActorModule::Init()
 {
+	std::map<int,int> mapInt;
+	mapInt.emplace(1, 1);
+	mapInt.emplace(2, 1);
+	mapInt.emplace(4, 1);
+	mapInt.emplace(5, 1);
+	mapInt.emplace(6, 1);
+	mapInt.emplace(7, 1);
+
+	for (auto it = mapInt.begin(); it != mapInt.end();)
+	{
+		mapInt.erase(it++);
+	}
+/*
 	NFIMysqlModule* m_pMysqlModule = pPluginManager->FindModule<NFIMysqlModule>();
 	m_pMysqlModule->AddMysqlServer(1, "192.168.1.15", 3306, "game", "root", "123456");
 
@@ -113,7 +92,7 @@ bool NFCTestActorModule::Init()
 	query_player.mutable_db_cond()->set_serverid(1001);
 	m_pMysqlModule->QueryMore(query_player);
 	query_player.PrintDebugString();
-
+*/
 	return true;
 }
 
@@ -124,6 +103,14 @@ bool NFCTestActorModule::AfterInit()
 
 bool NFCTestActorModule::Execute()
 {
+	static int i = 0;
+	NFTask* pTask = new DBTask();
+	NFDBActorMgr::Instance()->AddTask(pTask);
+	char* str = (char*)malloc(100);
+	memset(str, 0, 200);
+	free(str);
+
+	NFDBActorMgr::Instance()->OnMainThreadTick();
 	return true;
 }
 
