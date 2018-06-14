@@ -449,6 +449,8 @@ bool NFCPluginManager::Finalize()
 	//最后释放单件系统
 	ReleaseSingletion();
 
+
+
 	return true;
 }
 

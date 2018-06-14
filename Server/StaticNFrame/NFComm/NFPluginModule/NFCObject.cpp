@@ -20,6 +20,7 @@ NFCObject::NFCObject(const uint64_t objectId, NFIPluginManager* pLuginManager)
 
 NFCObject::~NFCObject()
 {
+	NFSafeDelete(m_pNodeManager);
 }
 
 bool NFCObject::Init()

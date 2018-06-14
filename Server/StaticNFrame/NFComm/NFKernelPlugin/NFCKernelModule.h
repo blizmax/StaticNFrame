@@ -30,6 +30,7 @@ public:
 
 	virtual bool Init() override;
 	virtual bool Shut() override;
+	virtual bool Finalize() override;
 
 	virtual bool BeforeShut() override;
 

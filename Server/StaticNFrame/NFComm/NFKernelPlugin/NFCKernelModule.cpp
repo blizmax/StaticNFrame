@@ -33,9 +33,7 @@ bool NFCKernelModule::Init()
 
 bool NFCKernelModule::Execute()
 {
-	BEGIN_PROFILE(__FUNCTION__);
-		ProcessMemFree();
-		END_PROFILE();
+	ProcessMemFree();
 	return true;
 }
 
@@ -47,6 +45,7 @@ NFIObject* NFCKernelModule::CreateObject(uint64_t objectId)
 	}
 
 	NFIObject* pObject = NF_NEW NFCObject(objectId, pPluginManager);
+	mObjectMap.emplace(objectId, pObject);
 	return pObject;
 }
 
@@ -57,6 +56,16 @@ bool NFCKernelModule::BeforeShut()
 
 bool NFCKernelModule::Shut()
 {
+	return true;
+}
+
+bool NFCKernelModule::Finalize()
+{
+	for (auto it = mObjectMap.begin(); it != mObjectMap.end(); ++it)
+	{
+		NFSafeDelete(it->second);
+	}
+	mObjectMap.clear();
 	return true;
 }
 
