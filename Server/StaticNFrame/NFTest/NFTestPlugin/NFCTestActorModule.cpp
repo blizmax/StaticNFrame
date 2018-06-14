@@ -108,7 +108,6 @@ bool NFCTestActorModule::Execute()
 	NFDBActorMgr::Instance()->AddTask(pTask);
 	char* str = (char*)malloc(100);
 	memset(str, 0, 200);
-	free(str);
 
 	NFDBActorMgr::Instance()->OnMainThreadTick();
 	return true;
