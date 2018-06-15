@@ -14,14 +14,6 @@
 #define NF_ASSERT(condition)					if (!(condition)) NFAssertFail(__FILE__, __LINE__); else { }
 #define NF_ASSERT_MSG(condition, msg)			if (!(condition)) NFAssertFail(__FILE__, __LINE__, msg); else { }
 
-#define NF_ASSERT_RET_VAL(exp_, val)   \
-    do                                  \
-    {                                   \
-        if ((exp_)) break;              \
-        assert(exp_);                   \
-        return val;                     \
-    } while (0);
-
 inline void NFAssertFail(const char*const file, const unsigned int line, const std::string& message = std::string())
 {
 	fprintf(stderr, "FAIL in %s (%d)", file, line);
@@ -36,13 +28,46 @@ inline void NFAssertFail(const char*const file, const unsigned int line, const s
 #else
 #define NF_ASSERT(condition)
 #define NF_ASSERT_MSG(condition, msg_)
+#endif
+
 #define NF_ASSERT_RET_VAL(exp_, val)   \
     do                                  \
     {                                   \
         if ((exp_)) break;              \
+        assert(exp_);                   \
         return val;                     \
-    } while (0)
-#endif
+    } while (0);
+
+#define NF_ASSERT_BREAK(exp_)          \
+    if (!(exp_))                        \
+    {                                   \
+        assert(exp_);                   \
+        break;                          \
+    }                                   \
+    else {}
+
+#define NF_ASSERT_CONTINUE(exp_)       \
+    if (!(exp_))                        \
+    {                                   \
+        assert(exp_);                   \
+        continue;                       \
+    }                                   \
+    else {}
+
+#define NF_ASSERT_RET_NONE(exp_)       \
+    do                                  \
+    {                                   \
+        if ((exp_)) break;              \
+        assert(exp_);                   \
+        return;                         \
+    } while (0);
+
+#define NF_ASSERT_NO_EFFECT(exp_)      \
+    do                                  \
+    {                                   \
+        if (exp_) break;                \
+        assert(exp_);                   \
+    } while(0);
 
 #define NF_CHECK(EXPRESSION) \
   NF_ASSERT_MSG(EXPRESSION, "CHECK failed: " #EXPRESSION)

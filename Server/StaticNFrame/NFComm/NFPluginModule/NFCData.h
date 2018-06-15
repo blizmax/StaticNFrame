@@ -102,8 +102,8 @@ public:
 
 	virtual const Array& GetArray() const;
 	virtual const List& GetList() const;
-	virtual const MapStringData& GetMapStringObject() const;
-	virtual const MapIntData& GetMapIntObject() const;
+	virtual const MapStringData& GetMapStringData() const;
+	virtual const MapIntData& GetMapIntData() const;
 
 	virtual Array* MutableArray();
 	virtual List* MutableList();

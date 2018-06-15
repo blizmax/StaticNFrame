@@ -98,6 +98,15 @@
     <ClInclude Include="NFCObject.h">
       <Filter>NFObject</Filter>
     </ClInclude>
+    <ClInclude Include="NFDataTable.h">
+      <Filter>NFObject</Filter>
+    </ClInclude>
+    <ClInclude Include="NFIDataTableManager.h">
+      <Filter>NFObject</Filter>
+    </ClInclude>
+    <ClInclude Include="NFCDataTableManager.h">
+      <Filter>NFObject</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Event">
@@ -167,6 +176,12 @@
       <Filter>NFObject</Filter>
     </ClCompile>
     <ClCompile Include="NFCObject.cpp">
+      <Filter>NFObject</Filter>
+    </ClCompile>
+    <ClCompile Include="NFDataTable.cpp">
+      <Filter>NFObject</Filter>
+    </ClCompile>
+    <ClCompile Include="NFCDataTableManager.cpp">
       <Filter>NFObject</Filter>
     </ClCompile>
   </ItemGroup>

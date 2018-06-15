@@ -177,7 +177,7 @@ const NFCData::MapStringData& NFCDataNodeManager::GetMapStringObject(const std::
 		return NFCDataStatics::empty_map_string;
 	}
 
-	return mNodes[index]->mValue.GetMapStringObject();
+	return mNodes[index]->mValue.GetMapStringData();
 }
 
 const NFCData::MapIntData& NFCDataNodeManager::GetMapIntObject(const std::string& name) const
@@ -188,7 +188,7 @@ const NFCData::MapIntData& NFCDataNodeManager::GetMapIntObject(const std::string
 		return NFCDataStatics::empty_map_int;
 	}
 
-	return mNodes[index]->mValue.GetMapIntObject();
+	return mNodes[index]->mValue.GetMapIntData();
 }
 
 NFCData::Array* NFCDataNodeManager::MutableArray(const std::string& name)
@@ -301,14 +301,14 @@ const NFCData::MapStringData& NFCDataNodeManager::GetMapStringObject(uint32_t in
 {
 	NF_ASSERT(index < mNodes.size());
 
-	return mNodes[index]->mValue.GetMapStringObject();
+	return mNodes[index]->mValue.GetMapStringData();
 }
 
 const NFCData::MapIntData& NFCDataNodeManager::GetMapIntObject(uint32_t index) const
 {
 	NF_ASSERT(index < mNodes.size());
 
-	return mNodes[index]->mValue.GetMapIntObject();
+	return mNodes[index]->mValue.GetMapIntData();
 }
 
 NFCData::Array* NFCDataNodeManager::MutableArray(uint32_t index)

@@ -23,8 +23,8 @@ NFCData::MapIntData NFCDataStatics::empty_map_int;
 
 NFCData& NFCData::operator=(const NFCData& src)
 {
-	mType = src.mType;
-	m_ptr = src.m_ptr;
+	NF_ASSERT(mType == DT_UNKNOWN || mType == src.mType);
+	DeepCopy(src);
 	return *this;
 }
 
@@ -41,6 +41,7 @@ int NFCData::GetType() const
 
 void NFCData::SetDefaultValue(int type)
 {
+	NF_ASSERT(mType == DT_UNKNOWN || mType == type);
 	switch (type)
 	{
 	case DT_BOOLEAN:
@@ -95,9 +96,9 @@ bool NFCData::IsNullValue() const
 	case DT_LIST:
 		return GetList().empty();
 	case DT_MAPSTRING:
-		return GetMapStringObject().empty();
+		return GetMapStringData().empty();
 	case DT_MAPINT:
-		return GetMapIntObject().empty();
+		return GetMapIntData().empty();
 	default:
 		NF_ASSERT(0);
 		break;
@@ -351,14 +352,14 @@ const NFCData::List& NFCData::GetList() const
 	return m_ptr->GetList();
 }
 
-const NFCData::MapStringData& NFCData::GetMapStringObject() const
+const NFCData::MapStringData& NFCData::GetMapStringData() const
 {
 	NF_ASSERT_RET_VAL(mType == DT_MAPSTRING, NFCDataStatics::empty_map_string);
 
 	return m_ptr->GetMapStringData();
 }
 
-const NFCData::MapIntData& NFCData::GetMapIntObject() const
+const NFCData::MapIntData& NFCData::GetMapIntData() const
 {
 	NF_ASSERT_RET_VAL(mType == DT_MAPINT, NFCDataStatics::empty_map_int);
 
@@ -761,16 +762,58 @@ void NFCData::DeepCopy(const NFCData& src)
 		m_ptr = make_shared<NFCDataString>(src.GetString());
 		break;
 	case DT_ARRAY:
-		m_ptr = make_shared<NFCDataArray>(src.GetArray());
+		m_ptr = make_shared<NFCDataArray>(NFCData::Array());
+		{
+			const NFCData::Array& array = src.GetArray();
+			for (size_t i = 0; i < array.size(); ++i)
+			{
+				const NFCData& tmp = array[i];
+				NFCData data;
+				data.DeepCopy(tmp);
+				m_ptr->AddArrayItem(data);
+			}
+		}
 		break;
 	case DT_LIST:
-		m_ptr = make_shared<NFCDataList>(src.GetList());
+		m_ptr = make_shared<NFCDataList>(NFCData::List());
+		{
+			const NFCData::List& list = src.GetList();
+			for (auto it = list.begin(); it != list.end(); ++it)
+			{
+				const NFCData& tmp = *it;
+				NFCData data;
+				data.DeepCopy(tmp);
+				m_ptr->AddListItem(data);
+			}
+		}
 		break;
 	case DT_MAPSTRING:
-		m_ptr = make_shared<NFCDataMapStringData>(src.GetMapStringObject());
+		m_ptr = make_shared<NFCDataMapStringData>(NFCData::MapStringData()); 
+		{
+			const NFCData::MapStringData& mapStringData = src.GetMapStringData();
+			for (auto it = mapStringData.begin(); it != mapStringData.end(); ++it)
+			{
+				const std::string tmpKey = it->first;
+				const NFCData& tmp = it->second;
+				NFCData data;
+				data.DeepCopy(tmp);
+				m_ptr->AddMapStringItem(tmpKey, data);
+			}
+		}
 		break;
 	case DT_MAPINT:
-		m_ptr = make_shared<NFCDataMapIntData>(src.GetMapIntObject());
+		m_ptr = make_shared<NFCDataMapIntData>(NFCData::MapIntData()); 
+		{
+			const NFCData::MapIntData& mapIntData = src.GetMapIntData();
+			for (auto it = mapIntData.begin(); it != mapIntData.end(); ++it)
+			{
+				uint64_t tmpKey = it->first;
+				const NFCData& tmp = it->second;
+				NFCData data;
+				data.DeepCopy(tmp);
+				m_ptr->AddMapIntItem(tmpKey, data);
+			}
+		}
 		break;
 	default:
 		NF_ASSERT(0);
@@ -780,7 +823,7 @@ void NFCData::DeepCopy(const NFCData& src)
 
 NFCData::NFCData(const NFCData& src)
 {
-	mType = src.mType;
-	m_ptr = src.m_ptr;
+	NF_ASSERT(mType == DT_UNKNOWN || mType == src.mType);
+	DeepCopy(src);
 }
 
