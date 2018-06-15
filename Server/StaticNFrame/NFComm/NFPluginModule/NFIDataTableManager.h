@@ -27,23 +27,23 @@ public:
     virtual bool AddTableCallback(const std::string& table_name, const DATA_TABLE_EVENT_FUNCTOR_PTR& cb) = 0;
 
     virtual void Clear() = 0;
-    virtual NFDataTable* GetTable(const std::string& name) = 0;
+    virtual NFDataTable* GetTable(const std::string& name) const = 0;
     virtual size_t GetCount() const = 0;
-    virtual NFDataTable* GetTableByIndex(size_t index) = 0;
+    virtual NFDataTable* GetTableByIndex(size_t index) const = 0;
 
     virtual bool SetTableBool(const std::string& name, const int row, const int col, const bool value) = 0;
     virtual bool SetTableInt(const std::string& name, const int row, const int col, const int32_t value) = 0;
     virtual bool SetTableInt64(const std::string& name, const int row, const int col, const int64_t value) = 0;
     virtual bool SetTableFloat(const std::string& name, const int row, const int col, const float value) = 0;
     virtual bool SetTableDouble(const std::string& name, const int row, const int col, const double value) = 0;
-    virtual bool SetTableString(const std::string& name, const int row, const int col, const char* value) = 0;
+    virtual bool SetTableString(const std::string& name, const int row, const int col, const std::string& value) = 0;
 
-    virtual bool GetTableBool(const std::string& name, const int row, const int col) = 0;
-    virtual int32_t GetTableInt(const std::string& name, const int row, const int col) = 0;
-    virtual int64_t GetTableInt64(const std::string& name, const int row, const int col) = 0;
-    virtual float GetTableFloat(const std::string& name, const int row, const int col) = 0;
-    virtual double GetTableDouble(const std::string& name, const int row, const int col) = 0;
-    virtual const std::string& GetTableString(const std::string& name, const int row, const int col) = 0;
+    virtual bool GetTableBool(const std::string& name, const int row, const int col) const = 0;
+    virtual int32_t GetTableInt(const std::string& name, const int row, const int col) const = 0;
+    virtual int64_t GetTableInt64(const std::string& name, const int row, const int col) const = 0;
+    virtual float GetTableFloat(const std::string& name, const int row, const int col) const = 0;
+    virtual double GetTableDouble(const std::string& name, const int row, const int col) const = 0;
+    virtual const std::string& GetTableString(const std::string& name, const int row, const int col) const = 0;
 
 	virtual const NFCData::Array& GetArray(const std::string&, size_t row, size_t col) const = 0;
 	virtual const NFCData::List& GetList(const std::string&, size_t row, size_t col) const = 0;
@@ -67,12 +67,12 @@ public:
     virtual bool SetTableDouble(uint32_t index, const int row, const int col, const double value) = 0;
     virtual bool SetTableString(uint32_t index, const int row, const int col, const std::string& value) = 0;
 
-    virtual bool GetTableBool(uint32_t index, const int row, const int col) = 0;
-    virtual int32_t GetTableInt(uint32_t index, const int row, const int col) = 0;
-    virtual int64_t GetTableInt64(uint32_t index, const int row, const int col) = 0;
-    virtual float GetTableFloat(uint32_t index, const int row, const int col) = 0;
-    virtual double GetTableDouble(uint32_t index, const int row, const int col) = 0;
-    virtual const std::string& GetTableString(uint32_t index, const int row, const int col) = 0;
+    virtual bool GetTableBool(uint32_t index, const int row, const int col) const = 0;
+    virtual int32_t GetTableInt(uint32_t index, const int row, const int col) const = 0;
+    virtual int64_t GetTableInt64(uint32_t index, const int row, const int col) const = 0;
+    virtual float GetTableFloat(uint32_t index, const int row, const int col) const = 0;
+    virtual double GetTableDouble(uint32_t index, const int row, const int col) const = 0;
+    virtual const std::string& GetTableString(uint32_t index, const int row, const int col) const = 0;
 
 	virtual const NFCData::Array& GetArray(uint32_t index, size_t row, size_t col) const = 0;
 	virtual const NFCData::List& GetList(uint32_t index, size_t row, size_t col) const = 0;

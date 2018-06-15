@@ -129,21 +129,7 @@ bool NFCDataNodeManager::SetNode(const std::string& name, const NFCData& value)
 		return false;
 	}
 
-	switch (value.GetType())
-	{
-	case DT_BOOLEAN:
-		return SetNodeBool(index, value.GetBool());
-	case DT_INT:
-		return SetNodeInt64(index, value.GetInt64());
-	case DT_DOUBLE:
-		return SetNodeDouble(index, value.GetDouble());
-	case DT_STRING:
-		return SetNodeString(index, value.GetString());
-	default:
-		NF_ASSERT(0);
-		break;
-	}
-
+	mNodes[index]->mValue = value;
 	return false;
 }
 
