@@ -9,6 +9,7 @@
 
 #include "NFCObject.h"
 #include "NFCDataNodeManager.h"
+#include "NFCDataTableManager.h"
 
 NFCObject::NFCObject(const uint64_t objectId, NFIPluginManager* pLuginManager)
 	: mObjectId(objectId)
@@ -16,11 +17,13 @@ NFCObject::NFCObject(const uint64_t objectId, NFIPluginManager* pLuginManager)
 	pPluginManager = pLuginManager;
 
 	m_pNodeManager = NF_NEW NFCDataNodeManager(objectId);
+	m_pTableManager = NF_NEW NFCDataTableManager(objectId);
 }
 
 NFCObject::~NFCObject()
 {
 	NFSafeDelete(m_pNodeManager);
+	NFSafeDelete(m_pTableManager);
 }
 
 bool NFCObject::Init()
@@ -463,8 +466,373 @@ const std::string& NFCObject::GetNodeString(uint32_t index) const
 	return m_pNodeManager->GetNodeString(index);
 }
 
+bool NFCObject::SetTableBool(const std::string& name, const int row, const int col, const bool value)
+{
+	NF_ASSERT(m_pTableManager!= nullptr);
+	return m_pTableManager->SetTableBool(name, row, col, value);
+}
+
+bool NFCObject::SetTableInt(const std::string& name, const int row, const int col, const int32_t value)
+{
+	NF_ASSERT(m_pTableManager != nullptr);
+	return m_pTableManager->SetTableInt(name, row, col, value);
+}
+
+bool NFCObject::SetTableInt32(const std::string& name, const int row, const int col, const int32_t value)
+{
+	NF_ASSERT(m_pTableManager != nullptr);
+	return m_pTableManager->SetTableInt32(name, row, col, value);
+}
+
+bool NFCObject::SetTableUInt32(const std::string& name, const int row, const int col, const uint32_t value)
+{
+	NF_ASSERT(m_pTableManager != nullptr);
+	return m_pTableManager->SetTableUInt32(name, row, col, value);
+}
+
+bool NFCObject::SetTableInt64(const std::string& name, const int row, const int col, const int64_t value)
+{
+	NF_ASSERT(m_pTableManager != nullptr);
+	return m_pTableManager->SetTableInt64(name, row, col, value);
+}
+
+bool NFCObject::SetTableUInt64(const std::string& name, const int row, const int col, const uint64_t value)
+{
+	NF_ASSERT(m_pTableManager != nullptr);
+	return m_pTableManager->SetTableUInt64(name, row, col, value);
+}
+
+bool NFCObject::SetTableFloat(const std::string& name, const int row, const int col, const float value)
+{
+	NF_ASSERT(m_pTableManager != nullptr);
+	return m_pTableManager->SetTableFloat(name, row, col, value);
+}
+
+bool NFCObject::SetTableDouble(const std::string& name, const int row, const int col, const double value)
+{
+	NF_ASSERT(m_pTableManager != nullptr);
+	return m_pTableManager->SetTableDouble(name, row, col, value);
+}
+
+bool NFCObject::SetTableString(const std::string& name, const int row, const int col, const std::string& value)
+{
+	NF_ASSERT(m_pTableManager != nullptr);
+	return m_pTableManager->SetTableString(name, row, col, value);
+}
+
+bool NFCObject::GetTableBool(const std::string& name, const int row, const int col) const
+{
+	NF_ASSERT(m_pTableManager != nullptr);
+	return m_pTableManager->GetTableBool(name, row, col);
+}
+
+int32_t NFCObject::GetTableInt(const std::string& name, const int row, const int col) const
+{
+	NF_ASSERT(m_pTableManager != nullptr);
+	return m_pTableManager->GetTableInt(name, row, col);
+}
+
+int32_t NFCObject::GetTableInt32(const std::string& name, const int row, const int col) const
+{
+	NF_ASSERT(m_pTableManager != nullptr);
+	return m_pTableManager->GetTableInt32(name, row, col);
+}
+
+uint32_t NFCObject::GetTableUInt32(const std::string& name, const int row, const int col) const
+{
+	NF_ASSERT(m_pTableManager != nullptr);
+	return m_pTableManager->GetTableUInt32(name, row, col);
+}
+
+int64_t NFCObject::GetTableInt64(const std::string& name, const int row, const int col) const
+{
+	NF_ASSERT(m_pTableManager != nullptr);
+	return m_pTableManager->GetTableInt64(name, row, col);
+}
+
+uint64_t NFCObject::GetTableUInt64(const std::string& name, const int row, const int col) const
+{
+	NF_ASSERT(m_pTableManager != nullptr);
+	return m_pTableManager->GetTableUInt64(name, row, col);
+}
+
+float NFCObject::GetTableFloat(const std::string& name, const int row, const int col) const
+{
+	NF_ASSERT(m_pTableManager != nullptr);
+	return m_pTableManager->GetTableFloat(name, row, col);
+}
+
+double NFCObject::GetTableDouble(const std::string& name, const int row, const int col) const
+{
+	NF_ASSERT(m_pTableManager != nullptr);
+	return m_pTableManager->GetTableDouble(name, row, col);
+}
+
+const std::string& NFCObject::GetTableString(const std::string& name, const int row, const int col) const
+{
+	NF_ASSERT(m_pTableManager != nullptr);
+	return m_pTableManager->GetTableString(name, row, col);
+}
+
+const NFCData::Array& NFCObject::GetTableArray(const std::string& name, size_t row, size_t col) const
+{
+	NF_ASSERT(m_pTableManager != nullptr);
+	return m_pTableManager->GetTableArray(name, row, col);
+}
+
+const NFCData::List& NFCObject::GetTableList(const std::string& name, size_t row, size_t col) const
+{
+	NF_ASSERT(m_pTableManager != nullptr);
+	return m_pTableManager->GetTableList(name, row, col);
+}
+
+const NFCData::MapStringData& NFCObject::GetTableMapStringData(const std::string& name, size_t row, size_t col) const
+{
+	NF_ASSERT(m_pTableManager != nullptr);
+	return m_pTableManager->GetTableMapStringData(name, row, col);
+}
+
+const NFCData::MapIntData& NFCObject::GetTableMapIntData(const std::string& name, size_t row, size_t col) const
+{
+	NF_ASSERT(m_pTableManager != nullptr);
+	return m_pTableManager->GetTableMapIntData(name, row, col);
+}
+
+NFCData::Array* NFCObject::MutableTableArray(const std::string& name, size_t row, size_t col)
+{
+	NF_ASSERT(m_pTableManager != nullptr);
+	return m_pTableManager->MutableTableArray(name, row, col);
+}
+
+NFCData::List* NFCObject::MutableTableList(const std::string& name, size_t row, size_t col)
+{
+	NF_ASSERT(m_pTableManager != nullptr);
+	return m_pTableManager->MutableTableList(name, row, col);
+}
+
+NFCData::MapStringData* NFCObject::MutableTableMapStringData(const std::string& name, size_t row, size_t col)
+{
+	NF_ASSERT(m_pTableManager != nullptr);
+	return m_pTableManager->MutableTableMapStringData(name, row, col);
+}
+
+NFCData::MapIntData* NFCObject::MutableTableMapIntData(const std::string& name, size_t row, size_t col)
+{
+	NF_ASSERT(m_pTableManager != nullptr);
+	return m_pTableManager->MutableTableMapIntData(name, row, col);
+}
+
+bool NFCObject::AddTableArrayItem(const std::string& name, size_t row, size_t col, const NFCData& data)
+{
+	NF_ASSERT(m_pTableManager != nullptr);
+	return m_pTableManager->AddTableArrayItem(name, row, col, data);
+}
+
+bool NFCObject::AddTableListItem(const std::string& name, size_t row, size_t col, const NFCData& data)
+{
+	NF_ASSERT(m_pTableManager != nullptr);
+	return m_pTableManager->AddTableListItem(name, row, col, data);
+}
+
+bool NFCObject::AddTableMapStringItem(const std::string& name, size_t row, size_t col, const std::string& key, const NFCData& value)
+{
+	NF_ASSERT(m_pTableManager != nullptr);
+	return m_pTableManager->AddTableMapStringItem(name, row, col, key, value);
+}
+
+bool NFCObject::AddTableMapIntItem(const std::string& name, size_t row, size_t col, uint64_t key, const NFCData& value)
+{
+	NF_ASSERT(m_pTableManager != nullptr);
+	return m_pTableManager->AddTableMapIntItem(name, row, col, key, value);
+}
+
+bool NFCObject::SetTableBool(uint32_t index, const int row, const int col, const bool value)
+{
+	NF_ASSERT(m_pTableManager != nullptr);
+	return m_pTableManager->SetTableBool(index, row, col, value);
+}
+
+bool NFCObject::SetTableInt(uint32_t index, const int row, const int col, const int32_t value)
+{
+	NF_ASSERT(m_pTableManager != nullptr);
+	return m_pTableManager->SetTableInt(index, row, col, value);
+}
+
+bool NFCObject::SetTableInt32(uint32_t index, const int row, const int col, const int32_t value)
+{
+	NF_ASSERT(m_pTableManager != nullptr);
+	return m_pTableManager->SetTableInt32(index, row, col, value);
+}
+
+bool NFCObject::SetTableUInt32(uint32_t index, const int row, const int col, const uint32_t value)
+{
+	NF_ASSERT(m_pTableManager != nullptr);
+	return m_pTableManager->SetTableUInt32(index, row, col, value);
+}
+
+bool NFCObject::SetTableInt64(uint32_t index, const int row, const int col, const int64_t value)
+{
+	NF_ASSERT(m_pTableManager != nullptr);
+	return m_pTableManager->SetTableInt64(index, row, col, value);
+}
+
+bool NFCObject::SetTableUInt64(uint32_t index, const int row, const int col, const uint64_t value)
+{
+	NF_ASSERT(m_pTableManager != nullptr);
+	return m_pTableManager->SetTableUInt64(index, row, col, value);
+}
+
+bool NFCObject::SetTableFloat(uint32_t index, const int row, const int col, const float value)
+{
+	NF_ASSERT(m_pTableManager != nullptr);
+	return m_pTableManager->SetTableFloat(index, row, col, value);
+}
+
+bool NFCObject::SetTableDouble(uint32_t index, const int row, const int col, const double value)
+{
+	NF_ASSERT(m_pTableManager != nullptr);
+	return m_pTableManager->SetTableDouble(index, row, col, value);
+}
+
+bool NFCObject::SetTableString(uint32_t index, const int row, const int col, const std::string& value)
+{
+	NF_ASSERT(m_pTableManager != nullptr);
+	return m_pTableManager->SetTableString(index, row, col, value);
+}
+
+bool NFCObject::GetTableBool(uint32_t index, const int row, const int col) const
+{
+	NF_ASSERT(m_pTableManager != nullptr);
+	return m_pTableManager->GetTableBool(index, row, col);
+}
+
+int32_t NFCObject::GetTableInt(uint32_t index, const int row, const int col) const
+{
+	NF_ASSERT(m_pTableManager != nullptr);
+	return m_pTableManager->GetTableInt(index, row, col);
+}
+
+int32_t NFCObject::GetTableInt32(uint32_t index, const int row, const int col) const
+{
+	NF_ASSERT(m_pTableManager != nullptr);
+	return m_pTableManager->GetTableInt32(index, row, col);
+}
+
+uint32_t NFCObject::GetTableUInt32(uint32_t index, const int row, const int col) const
+{
+	NF_ASSERT(m_pTableManager != nullptr);
+	return m_pTableManager->GetTableUInt32(index, row, col);
+}
+
+int64_t NFCObject::GetTableInt64(uint32_t index, const int row, const int col) const
+{
+	NF_ASSERT(m_pTableManager != nullptr);
+	return m_pTableManager->GetTableInt64(index, row, col);
+}
+
+uint64_t NFCObject::GetTableUInt64(uint32_t index, const int row, const int col) const
+{
+	NF_ASSERT(m_pTableManager != nullptr);
+	return m_pTableManager->GetTableUInt64(index, row, col);
+}
+
+float NFCObject::GetTableFloat(uint32_t index, const int row, const int col) const
+{
+	NF_ASSERT(m_pTableManager != nullptr);
+	return m_pTableManager->GetTableFloat(index, row, col);
+}
+
+double NFCObject::GetTableDouble(uint32_t index, const int row, const int col) const
+{
+	NF_ASSERT(m_pTableManager != nullptr);
+	return m_pTableManager->GetTableDouble(index, row, col);
+}
+
+const std::string& NFCObject::GetTableString(uint32_t index, const int row, const int col) const
+{
+	NF_ASSERT(m_pTableManager != nullptr);
+	return m_pTableManager->GetTableString(index, row, col);
+}
+
+const NFCData::Array& NFCObject::GetTableArray(uint32_t index, size_t row, size_t col) const
+{
+	NF_ASSERT(m_pTableManager != nullptr);
+	return m_pTableManager->GetTableArray(index, row, col);
+}
+
+const NFCData::List& NFCObject::GetTableList(uint32_t index, size_t row, size_t col) const
+{
+	NF_ASSERT(m_pTableManager != nullptr);
+	return m_pTableManager->GetTableList(index, row, col);
+}
+
+const NFCData::MapStringData& NFCObject::GetTableMapStringData(uint32_t index, size_t row, size_t col) const
+{
+	NF_ASSERT(m_pTableManager != nullptr);
+	return m_pTableManager->GetTableMapStringData(index, row, col);
+}
+
+const NFCData::MapIntData& NFCObject::GetTableMapIntData(uint32_t index, size_t row, size_t col) const
+{
+	NF_ASSERT(m_pTableManager != nullptr);
+	return m_pTableManager->GetTableMapIntData(index, row, col);
+}
+
+NFCData::Array* NFCObject::MutableTableArray(uint32_t index, size_t row, size_t col)
+{
+	NF_ASSERT(m_pTableManager != nullptr);
+	return m_pTableManager->MutableTableArray(index, row, col);
+}
+
+NFCData::List* NFCObject::MutableTableList(uint32_t index, size_t row, size_t col)
+{
+	NF_ASSERT(m_pTableManager != nullptr);
+	return m_pTableManager->MutableTableList(index, row, col);
+}
+
+NFCData::MapStringData* NFCObject::MutableTableMapStringData(uint32_t index, size_t row, size_t col)
+{
+	NF_ASSERT(m_pTableManager != nullptr);
+	return m_pTableManager->MutableTableMapStringData(index, row, col);
+}
+
+NFCData::MapIntData* NFCObject::MutableTableMapIntData(uint32_t index, size_t row, size_t col)
+{
+	NF_ASSERT(m_pTableManager != nullptr);
+	return m_pTableManager->MutableTableMapIntData(index, row, col);
+}
+
+bool NFCObject::AddTableArrayItem(uint32_t index, size_t row, size_t col, const NFCData& data)
+{
+	NF_ASSERT(m_pTableManager != nullptr);
+	return m_pTableManager->AddTableArrayItem(index, row, col, data);
+}
+
+bool NFCObject::AddTableListItem(uint32_t index, size_t row, size_t col, const NFCData& data)
+{
+	NF_ASSERT(m_pTableManager != nullptr);
+	return m_pTableManager->AddTableListItem(index, row, col, data);
+}
+
+bool NFCObject::AddTableMapStringItem(uint32_t index, size_t row, size_t col, const std::string& key, const NFCData& value)
+{
+	NF_ASSERT(m_pTableManager != nullptr);
+	return m_pTableManager->AddTableMapStringItem(index, row, col, key, value);
+}
+
+bool NFCObject::AddTableMapIntItem(uint32_t index, size_t row, size_t col, uint64_t key, const NFCData& value)
+{
+	NF_ASSERT(m_pTableManager != nullptr);
+	return m_pTableManager->AddTableMapIntItem(index, row, col, key, value);
+}
+
 NFIDataNodeManager* NFCObject::GetNodeManager()
 {
 	return m_pNodeManager;
+}
+
+NFIDataTableManager* NFCObject::GetTableManager()
+{
+	return m_pTableManager;
 }
 
