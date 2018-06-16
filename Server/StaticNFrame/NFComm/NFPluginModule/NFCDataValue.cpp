@@ -17,6 +17,7 @@
 #include <limits>
 #include <string.h>
 #include <memory>
+#include "NFDefine.h"
 
 static const int max_depth = 200;
 
@@ -196,3 +197,4 @@ void NFCDataValue::AddMapStringItem(const std::string& key, const NFCData& value
 void NFCDataValue::AddMapIntItem(uint64_t key, const NFCData& value)
 {
 }
+

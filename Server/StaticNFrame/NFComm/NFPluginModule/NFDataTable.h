@@ -11,6 +11,7 @@
 #include <string>
 #include <vector>
 #include "NFCData.h"
+#include "NFDefine.h"
 
 class NFDataTable
 {
@@ -119,9 +120,14 @@ public:
     bool QueryRow(const int row, NFCData& varList) const;
 
     void ReleaseAll();
+
+	virtual bool AddCallback(const DATA_TABLE_EVENT_FUNCTOR_PTR& cb);
+protected:
+	void OnEventHandler(const uint64_t entity_id, const DATA_TABLE_EVENT_DATA& xEventData, const NFCData& oldData, const NFCData& newData);
 private:
     std::string mStrName;				//DataTable name
     int8_t mFeature;                    //DataTable feature
 	std::vector<int> mColTypes;         //DataTable column type array
 	std::vector<NFCData> mRowDatas;    //DataTable data array
+	std::vector<DATA_TABLE_EVENT_FUNCTOR_PTR> mTableCallbacks;
 };

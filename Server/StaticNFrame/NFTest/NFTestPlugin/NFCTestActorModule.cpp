@@ -103,13 +103,6 @@ bool NFCTestActorModule::AfterInit()
 
 bool NFCTestActorModule::Execute()
 {
-	static int i = 0;
-	NFTask* pTask = new DBTask();
-	NFDBActorMgr::Instance()->AddTask(pTask);
-	char* str = (char*)malloc(100);
-	memset(str, 0, 200);
-
-	NFDBActorMgr::Instance()->OnMainThreadTick();
 	return true;
 }
 

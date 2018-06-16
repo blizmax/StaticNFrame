@@ -58,6 +58,18 @@ bool NFCObject::AddNodeCallBack(uint32_t index, const DATA_NODE_EVENT_FUNCTOR_PT
 	return m_pNodeManager->RegisterCallback(index, cb);
 }
 
+bool NFCObject::AddTableCallback(const std::string& table_name, const DATA_TABLE_EVENT_FUNCTOR_PTR& cb)
+{
+	NF_ASSERT(m_pTableManager != nullptr);
+	return m_pTableManager->AddTableCallback(table_name, cb);
+}
+
+bool NFCObject::AddTableCallback(uint32_t index, const DATA_TABLE_EVENT_FUNCTOR_PTR& cb)
+{
+	NF_ASSERT(m_pTableManager != nullptr);
+	return m_pTableManager->AddTableCallback(index, cb);
+}
+
 bool NFCObject::CheckNodeExist(const std::string& name)
 {
 	NF_ASSERT(m_pNodeManager != nullptr);
@@ -68,24 +80,6 @@ bool NFCObject::CheckNodeExist(uint32_t index)
 {
 	NF_ASSERT(m_pNodeManager != nullptr);
 	return (m_pNodeManager->GetNodeByIndex(index) != nullptr);
-}
-
-bool NFCObject::AddNode(const std::string& name, const NFCData& value, const int8_t feature)
-{
-	NF_ASSERT(m_pNodeManager != nullptr);
-	return m_pNodeManager->AddNode(name, value, feature);
-}
-
-bool NFCObject::SetNode(const std::string& name, const NFCData& value)
-{
-	NF_ASSERT(m_pNodeManager != nullptr);
-	return m_pNodeManager->SetNode(name, value);
-}
-
-size_t NFCObject::GetNodeCount() const
-{
-	NF_ASSERT(m_pNodeManager != nullptr);
-	return m_pNodeManager->GetNodeCount();
 }
 
 const NFCData::Array& NFCObject::GetArray(const std::string& name) const

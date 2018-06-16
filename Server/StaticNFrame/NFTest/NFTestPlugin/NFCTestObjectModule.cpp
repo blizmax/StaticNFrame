@@ -32,15 +32,15 @@ bool NFCTestObjectModule::Init()
 	NFIObject* pObject = pKernelModule->CreateObject();
 	NF_ASSERT(pObject != nullptr);
 
-	pObject->AddNode("string", NFCData(DT_STRING, "gaoyi"), 0);
-	pObject->AddNode("string1", NFCData(DT_STRING, std::string("gaoyi")), 0);
-	pObject->AddNode("bool", NFCData(DT_BOOLEAN, true), 0);
-	pObject->AddNode("int", NFCData(DT_INT, -1), 0);
-	pObject->AddNode("float", NFCData(DT_DOUBLE, 0.001), 0);
-	pObject->AddNode("array", NFCData(DT_ARRAY, NFCData::Array()), 0);
-	pObject->AddNode("list", NFCData(DT_LIST, NFCData::List()), 0);
-	pObject->AddNode("mapstring", NFCData(DT_MAPSTRING, NFCData::MapStringData()), 0);
-	pObject->AddNode("mapint", NFCData(DT_MAPINT, NFCData::MapIntData()), 0);
+	pObject->GetNodeManager()->AddNode("string", NFCData(DT_STRING, "gaoyi"), 0);
+	pObject->GetNodeManager()->AddNode("string1", NFCData(DT_STRING, std::string("gaoyi")), 0);
+	pObject->GetNodeManager()->AddNode("bool", NFCData(DT_BOOLEAN, true), 0);
+	pObject->GetNodeManager()->AddNode("int", NFCData(DT_INT, -1), 0);
+	pObject->GetNodeManager()->AddNode("float", NFCData(DT_DOUBLE, 0.001), 0);
+	pObject->GetNodeManager()->AddNode("array", NFCData(DT_ARRAY, NFCData::Array()), 0);
+	pObject->GetNodeManager()->AddNode("list", NFCData(DT_LIST, NFCData::List()), 0);
+	pObject->GetNodeManager()->AddNode("mapstring", NFCData(DT_MAPSTRING, NFCData::MapStringData()), 0);
+	pObject->GetNodeManager()->AddNode("mapint", NFCData(DT_MAPINT, NFCData::MapIntData()), 0);
 
 	pObject->SetNodeInt("int", 0);
 	pObject->SetNodeInt32("int", 0);

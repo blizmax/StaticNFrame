@@ -34,7 +34,6 @@ void NFCDataTableManager::ReleaseAll()
     }
 
 	mTables.clear();
-    mTableCallbacks.clear();
 }
 
 bool NFCDataTableManager::Exist(const std::string& name) const
@@ -90,16 +89,6 @@ bool NFCDataTableManager::GetTableData(const std::string& name, const int row, c
     return pTable->GetValue(row, col, value);
 }
 
-void NFCDataTableManager::OnEventHandler(const uint64_t entity_id, const DATA_TABLE_EVENT_DATA& xEventData, const NFCData& oldData, const NFCData& newData)
-{
-    for(auto& iter : mTableCallbacks)
-    {
-        //TODO:check name from xEventData
-        //xEventData.name
-        (*iter)(entity_id, xEventData, oldData, newData);
-    }
-}
-
 bool NFCDataTableManager::FindIndex(const std::string& name, size_t& index) const
 {
 	auto it = mIndices.find(name);
@@ -128,9 +117,20 @@ bool NFCDataTableManager::AddTableInternal(NFDataTable* pTable)
 
 bool NFCDataTableManager::AddTableCallback(const std::string& table_name, const DATA_TABLE_EVENT_FUNCTOR_PTR& cb)
 {
-    //table_name
-    mTableCallbacks.push_back(cb);
-    return true;
+	size_t index;
+	if (!FindIndex(table_name, index))
+	{
+		return false;
+	}
+
+	NF_ASSERT(index < mTables.size());
+	return mTables[index]->AddCallback(cb);
+}
+
+bool NFCDataTableManager::AddTableCallback(uint32_t index, const DATA_TABLE_EVENT_FUNCTOR_PTR& cb)
+{
+	NF_ASSERT(index < mTables.size());
+	return mTables[index]->AddCallback(cb);
 }
 
 void NFCDataTableManager::Clear()
@@ -166,34 +166,7 @@ bool NFCDataTableManager::SetTableBool(const std::string& name, const int row, c
     NFDataTable* pTable = GetTable(name);
 	if (pTable == nullptr) return false;
 
-	NFCData* pData = pTable->MutableData(row, col);
-	if (pData == nullptr) return false;
-
-    //callback
-    do
-    {
-        if(pData->GetBool() == value)
-        {
-            return true;
-        }
-
-		NFCData oldData = *pData;
-		pData->SetBool(value);
-
-        if(!mTableCallbacks.empty())
-        {
-            DATA_TABLE_EVENT_DATA xTableEventData;
-            xTableEventData.nOpType = NFDataTable::TABLE_UPDATE;
-            xTableEventData.nRow = row;
-            xTableEventData.nCol = col;
-            xTableEventData.strName = name;
-
-            OnEventHandler(mObjectId, xTableEventData, oldData, *pData);
-        }
-    }
-    while(0);
-
-    return true;
+	return pTable->SetBool(row, col, value);
 }
 
 bool NFCDataTableManager::SetTableInt(const std::string& name, const int row, const int col, const int32_t value)
@@ -201,33 +174,7 @@ bool NFCDataTableManager::SetTableInt(const std::string& name, const int row, co
 	NFDataTable* pTable = GetTable(name);
 	if (pTable == nullptr) return false;
 
-	NFCData* pData = pTable->MutableData(row, col);
-	if (pData == nullptr) return false;
-
-	//callback
-	do
-	{
-		if (pData->GetInt() == value)
-		{
-			return true;
-		}
-
-		NFCData oldData = *pData;
-		pData->SetInt(value);
-
-		if (!mTableCallbacks.empty())
-		{
-			DATA_TABLE_EVENT_DATA xTableEventData;
-			xTableEventData.nOpType = NFDataTable::TABLE_UPDATE;
-			xTableEventData.nRow = row;
-			xTableEventData.nCol = col;
-			xTableEventData.strName = name;
-
-			OnEventHandler(mObjectId, xTableEventData, oldData, *pData);
-		}
-	} while (0);
-
-	return true;
+	return pTable->SetInt(row, col, value);
 }
 
 bool NFCDataTableManager::SetTableInt32(const std::string& name, const int row, const int col, const int32_t value)
@@ -235,33 +182,7 @@ bool NFCDataTableManager::SetTableInt32(const std::string& name, const int row, 
 	NFDataTable* pTable = GetTable(name);
 	if (pTable == nullptr) return false;
 
-	NFCData* pData = pTable->MutableData(row, col);
-	if (pData == nullptr) return false;
-
-	//callback
-	do
-	{
-		if (pData->GetInt32() == value)
-		{
-			return true;
-		}
-
-		NFCData oldData = *pData;
-		pData->SetInt32(value);
-
-		if (!mTableCallbacks.empty())
-		{
-			DATA_TABLE_EVENT_DATA xTableEventData;
-			xTableEventData.nOpType = NFDataTable::TABLE_UPDATE;
-			xTableEventData.nRow = row;
-			xTableEventData.nCol = col;
-			xTableEventData.strName = name;
-
-			OnEventHandler(mObjectId, xTableEventData, oldData, *pData);
-		}
-	} while (0);
-
-	return true;
+	return pTable->SetInt32(row, col, value);
 }
 
 bool NFCDataTableManager::SetTableUInt32(const std::string& name, const int row, const int col, const uint32_t value)
@@ -269,33 +190,7 @@ bool NFCDataTableManager::SetTableUInt32(const std::string& name, const int row,
 	NFDataTable* pTable = GetTable(name);
 	if (pTable == nullptr) return false;
 
-	NFCData* pData = pTable->MutableData(row, col);
-	if (pData == nullptr) return false;
-
-	//callback
-	do
-	{
-		if (pData->GetUInt32() == value)
-		{
-			return true;
-		}
-
-		NFCData oldData = *pData;
-		pData->SetUInt32(value);
-
-		if (!mTableCallbacks.empty())
-		{
-			DATA_TABLE_EVENT_DATA xTableEventData;
-			xTableEventData.nOpType = NFDataTable::TABLE_UPDATE;
-			xTableEventData.nRow = row;
-			xTableEventData.nCol = col;
-			xTableEventData.strName = name;
-
-			OnEventHandler(mObjectId, xTableEventData, oldData, *pData);
-		}
-	} while (0);
-
-	return true;
+	return pTable->SetUInt32(row, col, value);
 }
 
 bool NFCDataTableManager::SetTableInt64(const std::string& name, const int row, const int col, const int64_t value)
@@ -303,33 +198,7 @@ bool NFCDataTableManager::SetTableInt64(const std::string& name, const int row, 
 	NFDataTable* pTable = GetTable(name);
 	if (pTable == nullptr) return false;
 
-	NFCData* pData = pTable->MutableData(row, col);
-	if (pData == nullptr) return false;
-
-	//callback
-	do
-	{
-		if (pData->GetInt64() == value)
-		{
-			return true;
-		}
-
-		NFCData oldData = *pData;
-		pData->SetInt64(value);
-
-		if (!mTableCallbacks.empty())
-		{
-			DATA_TABLE_EVENT_DATA xTableEventData;
-			xTableEventData.nOpType = NFDataTable::TABLE_UPDATE;
-			xTableEventData.nRow = row;
-			xTableEventData.nCol = col;
-			xTableEventData.strName = name;
-
-			OnEventHandler(mObjectId, xTableEventData, oldData, *pData);
-		}
-	} while (0);
-
-	return true;
+	return pTable->SetInt64(row, col, value);
 }
 
 bool NFCDataTableManager::SetTableUInt64(const std::string& name, const int row, const int col, const uint64_t value)
@@ -337,33 +206,7 @@ bool NFCDataTableManager::SetTableUInt64(const std::string& name, const int row,
 	NFDataTable* pTable = GetTable(name);
 	if (pTable == nullptr) return false;
 
-	NFCData* pData = pTable->MutableData(row, col);
-	if (pData == nullptr) return false;
-
-	//callback
-	do
-	{
-		if (pData->GetUInt64() == value)
-		{
-			return true;
-		}
-
-		NFCData oldData = *pData;
-		pData->SetUInt64(value);
-
-		if (!mTableCallbacks.empty())
-		{
-			DATA_TABLE_EVENT_DATA xTableEventData;
-			xTableEventData.nOpType = NFDataTable::TABLE_UPDATE;
-			xTableEventData.nRow = row;
-			xTableEventData.nCol = col;
-			xTableEventData.strName = name;
-
-			OnEventHandler(mObjectId, xTableEventData, oldData, *pData);
-		}
-	} while (0);
-
-	return true;
+	return pTable->SetUInt64(row, col, value);
 }
 
 bool NFCDataTableManager::SetTableFloat(const std::string& name, const int row, const int col, const float value)
@@ -371,33 +214,7 @@ bool NFCDataTableManager::SetTableFloat(const std::string& name, const int row, 
 	NFDataTable* pTable = GetTable(name);
 	if (pTable == nullptr) return false;
 
-	NFCData* pData = pTable->MutableData(row, col);
-	if (pData == nullptr) return false;
-
-	//callback
-	do
-	{
-		if (almostEqual(pData->GetFloat(), value))
-		{
-			return true;
-		}
-
-		NFCData oldData = *pData;
-		pData->SetFloat(value);
-
-		if (!mTableCallbacks.empty())
-		{
-			DATA_TABLE_EVENT_DATA xTableEventData;
-			xTableEventData.nOpType = NFDataTable::TABLE_UPDATE;
-			xTableEventData.nRow = row;
-			xTableEventData.nCol = col;
-			xTableEventData.strName = name;
-
-			OnEventHandler(mObjectId, xTableEventData, oldData, *pData);
-		}
-	} while (0);
-
-	return true;
+	return pTable->SetFloat(row, col, value);
 }
 
 bool NFCDataTableManager::SetTableDouble(const std::string& name, const int row, const int col, const double value)
@@ -405,33 +222,7 @@ bool NFCDataTableManager::SetTableDouble(const std::string& name, const int row,
 	NFDataTable* pTable = GetTable(name);
 	if (pTable == nullptr) return false;
 
-	NFCData* pData = pTable->MutableData(row, col);
-	if (pData == nullptr) return false;
-
-	//callback
-	do
-	{
-		if (almostEqual(pData->GetDouble(),value))
-		{
-			return true;
-		}
-
-		NFCData oldData = *pData;
-		pData->SetDouble(value);
-
-		if (!mTableCallbacks.empty())
-		{
-			DATA_TABLE_EVENT_DATA xTableEventData;
-			xTableEventData.nOpType = NFDataTable::TABLE_UPDATE;
-			xTableEventData.nRow = row;
-			xTableEventData.nCol = col;
-			xTableEventData.strName = name;
-
-			OnEventHandler(mObjectId, xTableEventData, oldData, *pData);
-		}
-	} while (0);
-
-	return true;
+	return pTable->SetDouble(row, col, value);
 }
 
 bool NFCDataTableManager::SetTableString(const std::string& name, const int row, const int col, const std::string& value)
@@ -439,33 +230,7 @@ bool NFCDataTableManager::SetTableString(const std::string& name, const int row,
 	NFDataTable* pTable = GetTable(name);
 	if (pTable == nullptr) return false;
 
-	NFCData* pData = pTable->MutableData(row, col);
-	if (pData == nullptr) return false;
-
-	//callback
-	do
-	{
-		if (pData->GetString() == value)
-		{
-			return true;
-		}
-
-		NFCData oldData = *pData;
-		pData->SetString(value);
-
-		if (!mTableCallbacks.empty())
-		{
-			DATA_TABLE_EVENT_DATA xTableEventData;
-			xTableEventData.nOpType = NFDataTable::TABLE_UPDATE;
-			xTableEventData.nRow = row;
-			xTableEventData.nCol = col;
-			xTableEventData.strName = name;
-
-			OnEventHandler(mObjectId, xTableEventData, oldData, *pData);
-		}
-	} while (0);
-
-	return true;
+	return pTable->SetString(row, col, value);
 }
 
 bool NFCDataTableManager::GetTableBool(const std::string& name, const int row, const int col) const
@@ -704,33 +469,7 @@ bool NFCDataTableManager::SetTableBool(uint32_t index, const int row, const int 
 	NFDataTable* pTable = GetTableByIndex(index);
 	if (pTable == nullptr) return false;
 
-	NFCData* pData = pTable->MutableData(row, col);
-	if (pData == nullptr) return false;
-
-	//callback
-	do
-	{
-		if (pData->GetBool() == value)
-		{
-			return true;
-		}
-
-		NFCData oldData = *pData;
-		pData->SetBool(value);
-
-		if (!mTableCallbacks.empty())
-		{
-			DATA_TABLE_EVENT_DATA xTableEventData;
-			xTableEventData.nOpType = NFDataTable::TABLE_UPDATE;
-			xTableEventData.nRow = row;
-			xTableEventData.nCol = col;
-			xTableEventData.strName = pTable->GetName();
-
-			OnEventHandler(mObjectId, xTableEventData, oldData, *pData);
-		}
-	} while (0);
-
-	return true;
+	return pTable->SetBool(row, col, value);
 }
 
 bool NFCDataTableManager::SetTableInt(uint32_t index, const int row, const int col, const int32_t value)
@@ -738,33 +477,7 @@ bool NFCDataTableManager::SetTableInt(uint32_t index, const int row, const int c
 	NFDataTable* pTable = GetTableByIndex(index);
 	if (pTable == nullptr) return false;
 
-	NFCData* pData = pTable->MutableData(row, col);
-	if (pData == nullptr) return false;
-
-	//callback
-	do
-	{
-		if (pData->GetInt() == value)
-		{
-			return true;
-		}
-
-		NFCData oldData = *pData;
-		pData->SetInt(value);
-
-		if (!mTableCallbacks.empty())
-		{
-			DATA_TABLE_EVENT_DATA xTableEventData;
-			xTableEventData.nOpType = NFDataTable::TABLE_UPDATE;
-			xTableEventData.nRow = row;
-			xTableEventData.nCol = col;
-			xTableEventData.strName = pTable->GetName();
-
-			OnEventHandler(mObjectId, xTableEventData, oldData, *pData);
-		}
-	} while (0);
-
-	return true;
+	return pTable->SetInt(row, col, value);
 }
 
 bool NFCDataTableManager::SetTableInt32(uint32_t index, const int row, const int col, const int32_t value)
@@ -772,33 +485,7 @@ bool NFCDataTableManager::SetTableInt32(uint32_t index, const int row, const int
 	NFDataTable* pTable = GetTableByIndex(index);
 	if (pTable == nullptr) return false;
 
-	NFCData* pData = pTable->MutableData(row, col);
-	if (pData == nullptr) return false;
-
-	//callback
-	do
-	{
-		if (pData->GetInt32() == value)
-		{
-			return true;
-		}
-
-		NFCData oldData = *pData;
-		pData->SetInt32(value);
-
-		if (!mTableCallbacks.empty())
-		{
-			DATA_TABLE_EVENT_DATA xTableEventData;
-			xTableEventData.nOpType = NFDataTable::TABLE_UPDATE;
-			xTableEventData.nRow = row;
-			xTableEventData.nCol = col;
-			xTableEventData.strName = pTable->GetName();
-
-			OnEventHandler(mObjectId, xTableEventData, oldData, *pData);
-		}
-	} while (0);
-
-	return true;
+	return pTable->SetInt32(row, col, value);
 }
 
 bool NFCDataTableManager::SetTableUInt32(uint32_t index, const int row, const int col, const uint32_t value)
@@ -806,33 +493,7 @@ bool NFCDataTableManager::SetTableUInt32(uint32_t index, const int row, const in
 	NFDataTable* pTable = GetTableByIndex(index);
 	if (pTable == nullptr) return false;
 
-	NFCData* pData = pTable->MutableData(row, col);
-	if (pData == nullptr) return false;
-
-	//callback
-	do
-	{
-		if (pData->GetUInt32() == value)
-		{
-			return true;
-		}
-
-		NFCData oldData = *pData;
-		pData->SetUInt32(value);
-
-		if (!mTableCallbacks.empty())
-		{
-			DATA_TABLE_EVENT_DATA xTableEventData;
-			xTableEventData.nOpType = NFDataTable::TABLE_UPDATE;
-			xTableEventData.nRow = row;
-			xTableEventData.nCol = col;
-			xTableEventData.strName = pTable->GetName();
-
-			OnEventHandler(mObjectId, xTableEventData, oldData, *pData);
-		}
-	} while (0);
-
-	return true;
+	return pTable->SetUInt32(row, col, value);
 }
 
 bool NFCDataTableManager::SetTableInt64(uint32_t index, const int row, const int col, const int64_t value)
@@ -840,33 +501,7 @@ bool NFCDataTableManager::SetTableInt64(uint32_t index, const int row, const int
 	NFDataTable* pTable = GetTableByIndex(index);
 	if (pTable == nullptr) return false;
 
-	NFCData* pData = pTable->MutableData(row, col);
-	if (pData == nullptr) return false;
-
-	//callback
-	do
-	{
-		if (pData->GetInt64() == value)
-		{
-			return true;
-		}
-
-		NFCData oldData = *pData;
-		pData->SetInt64(value);
-
-		if (!mTableCallbacks.empty())
-		{
-			DATA_TABLE_EVENT_DATA xTableEventData;
-			xTableEventData.nOpType = NFDataTable::TABLE_UPDATE;
-			xTableEventData.nRow = row;
-			xTableEventData.nCol = col;
-			xTableEventData.strName = pTable->GetName();
-
-			OnEventHandler(mObjectId, xTableEventData, oldData, *pData);
-		}
-	} while (0);
-
-	return true;
+	return pTable->SetInt64(row, col, value);
 }
 
 bool NFCDataTableManager::SetTableUInt64(uint32_t index, const int row, const int col, const uint64_t value)
@@ -874,33 +509,7 @@ bool NFCDataTableManager::SetTableUInt64(uint32_t index, const int row, const in
 	NFDataTable* pTable = GetTableByIndex(index);
 	if (pTable == nullptr) return false;
 
-	NFCData* pData = pTable->MutableData(row, col);
-	if (pData == nullptr) return false;
-
-	//callback
-	do
-	{
-		if (pData->GetUInt64() == value)
-		{
-			return true;
-		}
-
-		NFCData oldData = *pData;
-		pData->SetUInt64(value);
-
-		if (!mTableCallbacks.empty())
-		{
-			DATA_TABLE_EVENT_DATA xTableEventData;
-			xTableEventData.nOpType = NFDataTable::TABLE_UPDATE;
-			xTableEventData.nRow = row;
-			xTableEventData.nCol = col;
-			xTableEventData.strName = pTable->GetName();
-
-			OnEventHandler(mObjectId, xTableEventData, oldData, *pData);
-		}
-	} while (0);
-
-	return true;
+	return pTable->SetUInt64(row, col, value);
 }
 
 bool NFCDataTableManager::SetTableFloat(uint32_t index, const int row, const int col, const float value)
@@ -908,33 +517,7 @@ bool NFCDataTableManager::SetTableFloat(uint32_t index, const int row, const int
 	NFDataTable* pTable = GetTableByIndex(index);
 	if (pTable == nullptr) return false;
 
-	NFCData* pData = pTable->MutableData(row, col);
-	if (pData == nullptr) return false;
-
-	//callback
-	do
-	{
-		if (almostEqual(pData->GetFloat(), value))
-		{
-			return true;
-		}
-
-		NFCData oldData = *pData;
-		pData->SetFloat(value);
-
-		if (!mTableCallbacks.empty())
-		{
-			DATA_TABLE_EVENT_DATA xTableEventData;
-			xTableEventData.nOpType = NFDataTable::TABLE_UPDATE;
-			xTableEventData.nRow = row;
-			xTableEventData.nCol = col;
-			xTableEventData.strName = pTable->GetName();
-
-			OnEventHandler(mObjectId, xTableEventData, oldData, *pData);
-		}
-	} while (0);
-
-	return true;
+	return pTable->SetFloat(row, col, value);
 }
 
 bool NFCDataTableManager::SetTableDouble(uint32_t index, const int row, const int col, const double value)
@@ -942,33 +525,7 @@ bool NFCDataTableManager::SetTableDouble(uint32_t index, const int row, const in
 	NFDataTable* pTable = GetTableByIndex(index);
 	if (pTable == nullptr) return false;
 
-	NFCData* pData = pTable->MutableData(row, col);
-	if (pData == nullptr) return false;
-
-	//callback
-	do
-	{
-		if (almostEqual(pData->GetDouble(), value))
-		{
-			return true;
-		}
-
-		NFCData oldData = *pData;
-		pData->SetDouble(value);
-
-		if (!mTableCallbacks.empty())
-		{
-			DATA_TABLE_EVENT_DATA xTableEventData;
-			xTableEventData.nOpType = NFDataTable::TABLE_UPDATE;
-			xTableEventData.nRow = row;
-			xTableEventData.nCol = col;
-			xTableEventData.strName = pTable->GetName();
-
-			OnEventHandler(mObjectId, xTableEventData, oldData, *pData);
-		}
-	} while (0);
-
-	return true;
+	return pTable->SetDouble(row, col, value);
 }
 
 bool NFCDataTableManager::SetTableString(uint32_t index, const int row, const int col, const std::string& value)
@@ -976,33 +533,7 @@ bool NFCDataTableManager::SetTableString(uint32_t index, const int row, const in
 	NFDataTable* pTable = GetTableByIndex(index);
 	if (pTable == nullptr) return false;
 
-	NFCData* pData = pTable->MutableData(row, col);
-	if (pData == nullptr) return false;
-
-	//callback
-	do
-	{
-		if (pData->GetString() == value)
-		{
-			return true;
-		}
-
-		NFCData oldData = *pData;
-		pData->SetString(value);
-
-		if (!mTableCallbacks.empty())
-		{
-			DATA_TABLE_EVENT_DATA xTableEventData;
-			xTableEventData.nOpType = NFDataTable::TABLE_UPDATE;
-			xTableEventData.nRow = row;
-			xTableEventData.nCol = col;
-			xTableEventData.strName = pTable->GetName();
-
-			OnEventHandler(mObjectId, xTableEventData, oldData, *pData);
-		}
-	} while (0);
-
-	return true;
+	return pTable->SetString(row, col, value);
 }
 
 bool NFCDataTableManager::GetTableBool(uint32_t index, const int row, const int col) const

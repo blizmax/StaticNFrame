@@ -24,6 +24,12 @@ void NFDataTable::ReleaseAll()
     mRowDatas.clear();
 }
 
+bool NFDataTable::AddCallback(const DATA_TABLE_EVENT_FUNCTOR_PTR& cb)
+{
+	mTableCallbacks.push_back(cb);
+	return true;
+}
+
 void NFDataTable::SetName(const char* value)
 {
     NF_ASSERT_RET_NONE(value != nullptr);
@@ -854,4 +860,14 @@ bool NFDataTable::QueryRow(const int row, NFCData& varList) const
     }
 
     return true;
+}
+
+void NFDataTable::OnEventHandler(const uint64_t entity_id, const DATA_TABLE_EVENT_DATA& xEventData, const NFCData& oldData, const NFCData& newData)
+{
+	for (auto& iter : mTableCallbacks)
+	{
+		//TODO:check name from xEventData
+		//xEventData.name
+		(*iter)(entity_id, xEventData, oldData, newData);
+	}
 }

@@ -25,6 +25,7 @@ public:
 
     virtual bool AddTable(uint64_t objectId, const std::string& table_name, const NFCData& col_type_list, const int8_t feature) = 0;
     virtual bool AddTableCallback(const std::string& table_name, const DATA_TABLE_EVENT_FUNCTOR_PTR& cb) = 0;
+    virtual bool AddTableCallback(uint32_t index, const DATA_TABLE_EVENT_FUNCTOR_PTR& cb) = 0;
 
     virtual void Clear() = 0;
     virtual NFDataTable* GetTable(const std::string& name) const = 0;

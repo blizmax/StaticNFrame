@@ -28,6 +28,7 @@ public:
 
     virtual bool AddTable(uint64_t objectId, const std::string& table_name, const NFCData& col_type_list, const int8_t feature) override;
     virtual bool AddTableCallback(const std::string& table_name, const DATA_TABLE_EVENT_FUNCTOR_PTR& cb) override;
+	virtual bool AddTableCallback(uint32_t index, const DATA_TABLE_EVENT_FUNCTOR_PTR& cb) override;
 
     virtual void Clear() override final;
     virtual NFDataTable* GetTable(const std::string& name) const override;
@@ -107,8 +108,6 @@ protected:
 	bool FindIndex(const std::string& name, size_t& index) const;
     bool GetTableData(const std::string& name, const int row, const int col, NFCData& value) const;
 
-    void OnEventHandler(const uint64_t entity_id, const DATA_TABLE_EVENT_DATA& xEventData, const NFCData& oldData, const NFCData& newData);
-
     bool AddTableInternal(NFDataTable* pTable);
     void ReleaseAll();
 private:
@@ -116,5 +115,4 @@ private:
 
     std::unordered_map<std::string, uint32_t> mIndices;
 	std::vector<NFDataTable*> mTables;
-    std::vector<DATA_TABLE_EVENT_FUNCTOR_PTR> mTableCallbacks;
 };

@@ -823,7 +823,7 @@ void NFCData::DeepCopy(const NFCData& src)
 
 NFCData::NFCData(const NFCData& src)
 {
-	NF_ASSERT(mType == DT_UNKNOWN || mType == src.mType);
+	mType = DT_UNKNOWN;
 	DeepCopy(src);
 }
 

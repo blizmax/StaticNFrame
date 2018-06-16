@@ -12,6 +12,9 @@
 #include "NFIModule.h"
 #include "NFCData.h"
 
+class NFIDataNodeManager;
+class NFIDataTableManager;
+
 class NFIObject : public NFIModule
 {
 public:
@@ -25,10 +28,6 @@ public:
 
 	virtual bool CheckNodeExist(const std::string& name) = 0;
 	virtual bool CheckNodeExist(uint32_t index) = 0;
-	virtual size_t GetNodeCount() const = 0;
-
-	virtual bool AddNode(const std::string& name, const NFCData& value, const int8_t feature) = 0;
-	virtual bool SetNode(const std::string& name, const NFCData& value) = 0;
 
 	virtual const NFCData::Array& GetArray(const std::string& name) const = 0;
 	virtual const NFCData::List& GetList(const std::string& name) const = 0;
@@ -187,7 +186,26 @@ public:
 		return AddNodeCallBack(index, std::make_shared<DATA_NODE_EVENT_FUNCTOR>(functor));
 	}
 
+	template <typename BaseType>
+	bool AddTableCallBack(const std::string& name, BaseType* pBase, int (BaseType::*handler)(const uint64_t, const DATA_TABLE_EVENT_DATA&, const NFCData&, const NFCData&))
+	{
+		DATA_TABLE_EVENT_FUNCTOR functor = std::bind(handler, pBase, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3, std::placeholders::_4);
+		return AddTableCallback(name, std::make_shared<DATA_TABLE_EVENT_FUNCTOR>(functor));
+	}
+
+	template <typename BaseType>
+	bool AddTableCallBack(uint32_t index, BaseType* pBase, int (BaseType::*handler)(const uint64_t, const DATA_TABLE_EVENT_DATA&, const NFCData&, const NFCData&))
+	{
+		DATA_TABLE_EVENT_FUNCTOR functor = std::bind(handler, pBase, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3, std::placeholders::_4);
+		return AddTableCallback(index, std::make_shared<DATA_TABLE_EVENT_FUNCTOR>(functor));
+	}
+
 	virtual bool AddNodeCallBack(const std::string& col, const DATA_NODE_EVENT_FUNCTOR_PTR& cb) = 0;
 	virtual bool AddNodeCallBack(uint32_t index, const DATA_NODE_EVENT_FUNCTOR_PTR& cb) = 0;
+	virtual bool AddTableCallback(const std::string& table_name, const DATA_TABLE_EVENT_FUNCTOR_PTR& cb) = 0;
+	virtual bool AddTableCallback(uint32_t index, const DATA_TABLE_EVENT_FUNCTOR_PTR& cb) = 0;
+
+	virtual NFIDataNodeManager* GetNodeManager() = 0;
+	virtual NFIDataTableManager* GetTableManager() = 0;
 };
 

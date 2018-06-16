@@ -33,10 +33,6 @@ public:
 	virtual bool CheckNodeExist(const std::string& name) override;
 	virtual bool CheckNodeExist(uint32_t index) override;
 
-	virtual bool AddNode(const std::string& name, const NFCData& value, const int8_t feature) override;
-	virtual bool SetNode(const std::string& name, const NFCData& value) override;
-	virtual size_t GetNodeCount() const override;
-
 	virtual const NFCData::Array& GetArray(const std::string& name) const override;
 	virtual const NFCData::List& GetList(const std::string& name) const override;
 	virtual const NFCData::MapStringData& GetMapStringData(const std::string& name) const override;
@@ -179,10 +175,12 @@ public:
 	virtual bool AddTableMapStringItem(uint32_t index, size_t row, size_t col, const std::string& key, const NFCData& value) override;
 	virtual bool AddTableMapIntItem(uint32_t index, size_t row, size_t col, uint64_t key, const NFCData& value) override;
 
-	virtual NFIDataNodeManager* GetNodeManager();
-	virtual NFIDataTableManager* GetTableManager();
+	virtual NFIDataNodeManager* GetNodeManager() override;
+	virtual NFIDataTableManager* GetTableManager() override;
 	virtual bool AddNodeCallBack(const std::string& col, const DATA_NODE_EVENT_FUNCTOR_PTR& cb) override;
 	virtual bool AddNodeCallBack(uint32_t index, const DATA_NODE_EVENT_FUNCTOR_PTR& cb) override;
+	virtual bool AddTableCallback(const std::string& table_name, const DATA_TABLE_EVENT_FUNCTOR_PTR& cb) override;
+	virtual bool AddTableCallback(uint32_t index, const DATA_TABLE_EVENT_FUNCTOR_PTR& cb) override;
 private:
 	uint64_t mObjectId;
 	NFIDataNodeManager* m_pNodeManager;
