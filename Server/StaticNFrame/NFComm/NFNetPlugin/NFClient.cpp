@@ -147,7 +147,7 @@ void NFClient::Close()
 {
 	if (m_pObject)
 	{
-		NFSafeDelete(m_pObject);
+		NF_SAFE_DELETE(m_pObject);
 	}
 	m_pObject = nullptr;
 }

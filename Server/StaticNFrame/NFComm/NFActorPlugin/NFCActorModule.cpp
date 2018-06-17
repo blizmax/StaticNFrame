@@ -53,7 +53,7 @@ bool NFCActorModule::Finalize()
 {
 	for (auto it = mxActorMap.begin(); it != mxActorMap.end(); ++it)
 	{
-		NFSafeDelete(it->second);
+		NF_SAFE_DELETE(it->second);
 	}
 	mxActorMap.clear();
 	return true;
@@ -160,7 +160,7 @@ bool NFCActorModule::ReleaseActor(const int nActorIndex)
 	auto it = mxActorMap.find(nActorIndex);
 	if (it != mxActorMap.end())
 	{
-		NFSafeDelete(it->second);
+		NF_SAFE_DELETE(it->second);
 		mxActorMap.erase(it);
 		return true;
 	}

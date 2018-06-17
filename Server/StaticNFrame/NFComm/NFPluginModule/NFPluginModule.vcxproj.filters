@@ -107,6 +107,7 @@
     <ClInclude Include="NFCDataTableManager.h">
       <Filter>NFObject</Filter>
     </ClInclude>
+    <ClInclude Include="NFIClassModule.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Event">

@@ -34,11 +34,11 @@ NFFixTimerAxis::~NFFixTimerAxis()
 		for (; iter != pFixList->end(); ++iter)
 		{
 			FixTimer* pFixTimer = (*iter);
-			NFSafeDelete(pFixTimer);
+			NF_SAFE_DELETE(pFixTimer);
 		}
 		pFixList->clear();
 
-		NFSafeDelete(pFixList);
+		NF_SAFE_DELETE(pFixList);
 	}
 	m_FixTimerAxis.clear();
 }
@@ -144,11 +144,11 @@ bool NFFixTimerAxis::KillFixTimer(uint32_t nTimerID, NFTimerObj* handler)
 			//重置在时间轴上的位置
 			ResetFixTimerPos(pFixTimer);
 
-			NFSafeDelete(pFixTimer);
+			NF_SAFE_DELETE(pFixTimer);
 
 			if (pFixTimerList->empty())
 			{
-				NFSafeDelete(pFixTimerList);
+				NF_SAFE_DELETE(pFixTimerList);
 				*ppFixTimerInfo = nullptr;
 			}
 
@@ -183,12 +183,12 @@ bool NFFixTimerAxis::KillAllFixTimer(NFTimerObj* handler)
 			//重置在时间轴上的位置
 			ResetFixTimerPos(pFixTimer);
 
-			NFSafeDelete(pFixTimer);
+			NF_SAFE_DELETE(pFixTimer);
 		}
 	}
 
 	pFixTimerList->clear();
-	NFSafeDelete(pFixTimerList);
+	NF_SAFE_DELETE(pFixTimerList);
 	*ppFixTimerInfo = nullptr;
 
 	return false;
@@ -245,7 +245,7 @@ void NFFixTimerAxis::UpdateFix()
 			if (pFixTimer->nCallCount == 0)
 			{
 				it = pTimerList->erase(it);
-				NFSafeDelete(pFixTimer);
+				NF_SAFE_DELETE(pFixTimer);
 				continue;
 			}
 
@@ -317,10 +317,10 @@ NFTimerAxis::~NFTimerAxis()
 		for (; iter != pTimerList->end(); ++iter)
 		{
 			Timer* pTimer = (*iter);
-			NFSafeDelete(pTimer);
+			NF_SAFE_DELETE(pTimer);
 		}
 		pTimerList->clear();
-		NFSafeDelete(pTimerList);
+		NF_SAFE_DELETE(pTimerList);
 	}
 	m_TimerAxis.clear();
 
@@ -331,10 +331,10 @@ NFTimerAxis::~NFTimerAxis()
 		for (; iter != pTimerList->end(); ++iter)
 		{
 			Timer* pTimer = (*iter);
-			NFSafeDelete(pTimer);
+			NF_SAFE_DELETE(pTimer);
 		}
 		pTimerList->clear();
-		NFSafeDelete(pTimerList);
+		NF_SAFE_DELETE(pTimerList);
 	}
 	m_TimerAxisSec.clear();
 }
@@ -502,11 +502,11 @@ bool NFTimerAxis::KillTimer(uint32_t nTimerID, NFTimerObj* handler)
 			//重置定时器在时间轴上的位置
 			ResetTimerPos(pTimer);
 
-			NFSafeDelete(pTimer);
+			NF_SAFE_DELETE(pTimer);
 
 			if (pTimerList->empty())
 			{
-				NFSafeDelete(pTimerList);
+				NF_SAFE_DELETE(pTimerList);
 				*ppTimerInfo = nullptr;
 			}
 
@@ -543,11 +543,11 @@ bool NFTimerAxis::KillAllTimer(NFTimerObj* handler)
 
 			//重置定时器在时间轴上的位置
 			ResetTimerPos(pTimer);
-			NFSafeDelete(pTimer);
+			NF_SAFE_DELETE(pTimer);
 		}
 	}
 	pTimerList->clear();
-	NFSafeDelete(pTimerList);
+	NF_SAFE_DELETE(pTimerList);
 	*ppTimerInfo = nullptr;
 
 	return false;
@@ -630,7 +630,7 @@ void NFTimerAxis::Update()
 			if (pTimer->nCallCount == 0)
 			{
 				it = TimerList->erase(it);
-				NFSafeDelete(pTimer);
+				NF_SAFE_DELETE(pTimer);
 				continue;
 			}
 
@@ -740,7 +740,7 @@ void NFTimerAxis::UpdateSec()
 			if (pTimer->nCallCount == 0)
 			{
 				it = TimerList->erase(it);
-				NFSafeDelete(pTimer);
+				NF_SAFE_DELETE(pTimer);
 				continue;
 			}
 

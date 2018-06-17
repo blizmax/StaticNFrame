@@ -27,7 +27,7 @@ NFCActor::~NFCActor()
 			pCompnent->BeforeShut();
 			pCompnent->Shut();
 			pCompnent->Finalize();
-			NFSafeDelete(pCompnent);
+			NF_SAFE_DELETE(pCompnent);
 		}
 	}
 

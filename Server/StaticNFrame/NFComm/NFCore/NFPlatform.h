@@ -166,11 +166,7 @@ inline NF_THREAD_ID ThreadId()
 
 #define NF_NEW new
 
-#define  NFSafeRelease(pObject) { if (pObject!=NULL) { pObject->Release(); pObject=NULL; } }
-
-#define  NFSafeDelete(pData) { try { delete pData; } catch (...) { NF_ASSERT_MSG(false, "NFSafeDelete error"); } pData=NULL; }
-
-#define  NFSafeDeleteArray(pData) { try { delete [] pData; } catch (...) {  NF_ASSERT_MSG(false, "NFSafeDeleteArray error"); } pData=NULL; }
+#define  NF_SAFE_DELETE(pData) { try { delete pData; } catch (...) { NF_ASSERT_MSG(false, "NFSafeDelete error"); } pData=NULL; }
 
 inline int64_t NFGetTime()
 {

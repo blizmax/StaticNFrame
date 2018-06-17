@@ -63,7 +63,7 @@ bool NFCKernelModule::Finalize()
 {
 	for (auto it = mObjectMap.begin(); it != mObjectMap.end(); ++it)
 	{
-		NFSafeDelete(it->second);
+		NF_SAFE_DELETE(it->second);
 	}
 	mObjectMap.clear();
 	return true;

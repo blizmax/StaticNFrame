@@ -62,7 +62,7 @@ bool NFCMyClientModule::Finalize()
 		{
 			if (mxServerMap[i][j])
 			{
-				NFSafeDelete(mxServerMap[i][j]);
+				NF_SAFE_DELETE(mxServerMap[i][j]);
 			}
 		}
 	}
@@ -133,7 +133,7 @@ uint32_t NFCMyClientModule::AddServer(NF_SERVER_TYPES eServerType, const std::st
 				return pClient->GetLinkId();
 			}
 		}
-		NFSafeDelete(pClient);
+		NF_SAFE_DELETE(pClient);
 	}
 	return 0;
 }
@@ -149,7 +149,7 @@ void NFCMyClientModule::CloseServer(const uint32_t unLinkId)
 		if (pClient)
 		{
 			pClient->Shut();
-			NFSafeDelete(pClient);
+			NF_SAFE_DELETE(pClient);
 			mxServerMap[serverType][serverIndex] = nullptr;
 		}
 	}
@@ -164,7 +164,7 @@ void NFCMyClientModule::CloseServerByServerType(NF_SERVER_TYPES eServerType)
 			if (mxServerMap[eServerType][j])
 			{
 				mxServerMap[eServerType][j]->Shut();
-				NFSafeDelete(mxServerMap[eServerType][j]);
+				NF_SAFE_DELETE(mxServerMap[eServerType][j]);
 				mxServerMap[eServerType][j] = nullptr;
 			}
 		}
@@ -180,7 +180,7 @@ void NFCMyClientModule::CloseAllServer()
 			if (mxServerMap[i][j])
 			{
 				mxServerMap[i][j]->Shut();
-				NFSafeDelete(mxServerMap[i][j]);
+				NF_SAFE_DELETE(mxServerMap[i][j]);
 				mxServerMap[i][j] = nullptr;
 			}
 		}

@@ -147,7 +147,7 @@ void NFCPluginManager::UnRegistered(NFIPlugin* plugin)
 		}
 
 		it->second->Uninstall();
-		NFSafeDelete(it->second);
+		NF_SAFE_DELETE(it->second);
 		it->second = nullptr;
 		mPluginInstanceMap.erase(it);
 	}
@@ -420,7 +420,7 @@ bool NFCPluginManager::Finalize()
 	//先析构掉独立的module
 	for (auto it = mModuleAloneMultiMap.begin(); it != mModuleAloneMultiMap.end(); ++it)
 	{
-		NFSafeDelete(it->second);
+		NF_SAFE_DELETE(it->second);
 		it->second = nullptr;
 	}
 
@@ -448,7 +448,6 @@ bool NFCPluginManager::Finalize()
 
 	//最后释放单件系统
 	ReleaseSingletion();
-
 
 
 	return true;

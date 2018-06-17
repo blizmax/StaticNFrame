@@ -11,14 +11,13 @@
 #include <NFComm/NFMath/NFMath.h>
 
 NFCDataTableManager::NFCDataTableManager(const uint64_t objectId)
-    : mObjectId(objectId)
+	: mObjectId(objectId)
 {
-
 }
 
 NFCDataTableManager::~NFCDataTableManager()
 {
-    ReleaseAll();
+	ReleaseAll();
 }
 
 uint64_t NFCDataTableManager::GetObjectId()
@@ -28,10 +27,10 @@ uint64_t NFCDataTableManager::GetObjectId()
 
 void NFCDataTableManager::ReleaseAll()
 {
-    for(size_t i = 0; i < mTables.size(); ++i)
-    {
-        NFSafeDelete(mTables[i]);
-    }
+	for (size_t i = 0; i < mTables.size(); ++i)
+	{
+		NF_SAFE_DELETE(mTables[i]);
+	}
 
 	mTables.clear();
 }
@@ -62,31 +61,31 @@ bool NFCDataTableManager::Exist(const std::string& name, size_t& index) const
 
 bool NFCDataTableManager::AddTable(uint64_t objectId, const std::string& table_name, const NFCData& col_type_list, const int8_t feature)
 {
-    NF_ASSERT_MSG(table_name.size() > 0, "Table name is invalid");
-    NF_ASSERT_MSG(col_type_list.GetType() == DT_ARRAY, "Table name is invalid");
+	NF_ASSERT_MSG(table_name.size() > 0, "Table name is invalid");
+	NF_ASSERT_MSG(col_type_list.GetType() == DT_ARRAY, "Table name is invalid");
 
-    NFDataTable* pTable = NF_NEW NFDataTable();
-    pTable->SetName(table_name);
-    pTable->SetColCount(col_type_list.GetArray().size());
-    for(size_t i = 0; i < col_type_list.GetArray().size(); ++i)
-    {
-        pTable->SetColType(i, col_type_list.GetArray()[i].GetType());
-    }
+	NFDataTable* pTable = NF_NEW NFDataTable();
+	pTable->SetName(table_name);
+	pTable->SetColCount(col_type_list.GetArray().size());
+	for (size_t i = 0; i < col_type_list.GetArray().size(); ++i)
+	{
+		pTable->SetColType(i, col_type_list.GetArray()[i].GetType());
+	}
 
-    pTable->SetFeature(feature);
+	pTable->SetFeature(feature);
 
-    return AddTableInternal(pTable);
+	return AddTableInternal(pTable);
 }
 
 bool NFCDataTableManager::GetTableData(const std::string& name, const int row, const int col, NFCData& value) const
 {
-    NFDataTable* pTable = GetTable(name);
-    if(pTable == nullptr)
-    {
-        return false;
-    }
+	NFDataTable* pTable = GetTable(name);
+	if (pTable == nullptr)
+	{
+		return false;
+	}
 
-    return pTable->GetValue(row, col, value);
+	return pTable->GetValue(row, col, value);
 }
 
 bool NFCDataTableManager::FindIndex(const std::string& name, size_t& index) const
@@ -103,7 +102,7 @@ bool NFCDataTableManager::FindIndex(const std::string& name, size_t& index) cons
 
 bool NFCDataTableManager::AddTableInternal(NFDataTable* pTable)
 {
-    assert(pTable != nullptr);
+	assert(pTable != nullptr);
 	if (Exist(pTable->GetName()))
 	{
 		return false;
@@ -135,7 +134,7 @@ bool NFCDataTableManager::AddTableCallback(uint32_t index, const DATA_TABLE_EVEN
 
 void NFCDataTableManager::Clear()
 {
-    ReleaseAll();
+	ReleaseAll();
 }
 
 NFDataTable* NFCDataTableManager::GetTable(const std::string& name) const
@@ -152,18 +151,18 @@ NFDataTable* NFCDataTableManager::GetTable(const std::string& name) const
 
 size_t NFCDataTableManager::GetCount() const
 {
-    return mTables.size();
+	return mTables.size();
 }
 
 NFDataTable* NFCDataTableManager::GetTableByIndex(size_t index) const
 {
-    NF_ASSERT_RET_VAL(index < GetCount(), nullptr);
-    return mTables[index];
+	NF_ASSERT_RET_VAL(index < GetCount(), nullptr);
+	return mTables[index];
 }
 
 bool NFCDataTableManager::SetTableBool(const std::string& name, const int row, const int col, const bool value)
 {
-    NFDataTable* pTable = GetTable(name);
+	NFDataTable* pTable = GetTable(name);
 	if (pTable == nullptr) return false;
 
 	return pTable->SetBool(row, col, value);
@@ -235,13 +234,13 @@ bool NFCDataTableManager::SetTableString(const std::string& name, const int row,
 
 bool NFCDataTableManager::GetTableBool(const std::string& name, const int row, const int col) const
 {
-    NFDataTable* pTable = GetTable(name);
-    if(pTable == nullptr)
-    {
-        return NFCDataStatics::empty_boolean;
-    }
+	NFDataTable* pTable = GetTable(name);
+	if (pTable == nullptr)
+	{
+		return NFCDataStatics::empty_boolean;
+	}
 
-    return pTable->GetBool(row, col);
+	return pTable->GetBool(row, col);
 }
 
 int32_t NFCDataTableManager::GetTableInt(const std::string& name, const int row, const int col) const
@@ -766,3 +765,4 @@ bool NFCDataTableManager::AddTableMapIntItem(uint32_t index, size_t row, size_t 
 
 	return pTable->AddMapIntItem(row, col, key, value);
 }
+

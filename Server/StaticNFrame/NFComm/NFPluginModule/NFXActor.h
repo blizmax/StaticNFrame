@@ -49,6 +49,7 @@ public:
 		pData = nullptr;
 		nMsgType = ACTOR_MSG_TYPE_COMPONENT;
 	}
+
 public:
 	/**
 	* @brief 消息类型

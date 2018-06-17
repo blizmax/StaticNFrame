@@ -67,7 +67,7 @@ bool NFCNetClientModule::Finalize()
 			if (mxServerMap[i][j])
 			{
 				mxServerMap[i][j]->Finalize();
-				NFSafeDelete(mxServerMap[i][j]);
+				NF_SAFE_DELETE(mxServerMap[i][j]);
 			}
 		}
 	}
@@ -136,7 +136,7 @@ uint32_t NFCNetClientModule::AddServer(NF_SERVER_TYPES eServerType, const std::s
 		{
 			NFLogError("Add Connecting Server Failed! Ip:%s, Port:%d, than max connection:65535", strIp.c_str(), nPort);
 		}
-		NFSafeDelete(pClient);
+		NF_SAFE_DELETE(pClient);
 	}
 	return 0;
 }
@@ -334,7 +334,7 @@ void NFCNetClientModule::ProcessExecute()
 					break;
 				case eConnectStatus_REMOVE:
 					{
-						NFSafeDelete(pClient);
+						NF_SAFE_DELETE(pClient);
 						mxServerMap[i][j] = nullptr;
 					}
 					break;
@@ -354,7 +354,7 @@ void NFCNetClientModule::ExecuteClose()
 		{
 			if (mxServerMap[i][j] && mxServerMap[i][j]->IsNeedRemve())
 			{
-				NFSafeDelete(mxServerMap[i][j]);
+				NF_SAFE_DELETE(mxServerMap[i][j]);
 				mxServerMap[i][j] = nullptr;
 			}
 		}

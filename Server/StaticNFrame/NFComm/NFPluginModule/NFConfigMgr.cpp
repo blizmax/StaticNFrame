@@ -206,7 +206,7 @@ bool NFConfigMgr::Shut()
 		NFPluginConfig* pConfig = it->second;
 		if (pConfig)
 		{
-			NFSafeDelete(pConfig);
+			NF_SAFE_DELETE(pConfig);
 		}
 	}
 	mPluginConfig.clear();
@@ -216,7 +216,7 @@ bool NFConfigMgr::Shut()
 		NFServerConfig* pConfig = it->second;
 		if (pConfig)
 		{
-			NFSafeDelete(pConfig);
+			NF_SAFE_DELETE(pConfig);
 		}
 	}
 	mServerConfig.clear();

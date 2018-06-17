@@ -22,9 +22,9 @@ NFCDataNodeManager::~NFCDataNodeManager()
 
 void NFCDataNodeManager::Clear()
 {
-	for(size_t i = 0; i < mNodes.size(); i++)
+	for (size_t i = 0; i < mNodes.size(); i++)
 	{
-		NFSafeDelete(mNodes[i]);
+		NF_SAFE_DELETE(mNodes[i]);
 	}
 	mNodes.clear();
 	mIndices.clear();

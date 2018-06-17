@@ -36,7 +36,7 @@ NFServer::~NFServer()
 	{
 		if (mNetObjectArray[i] != nullptr)
 		{
-			NFSafeDelete(mNetObjectArray[i]);
+			NF_SAFE_DELETE(mNetObjectArray[i]);
 		}
 	}
 	mNetObjectArray.clear();
@@ -253,7 +253,7 @@ bool NFServer::Finalize()
 		if (mNetObjectArray[i] != nullptr)
 		{
 			mNetObjectCount--;
-			NFSafeDelete(mNetObjectArray[i]);
+			NF_SAFE_DELETE(mNetObjectArray[i]);
 		}
 	}
 	mNetObjectArray.clear();
@@ -330,7 +330,7 @@ void NFServer::ExecuteClose()
 			{
 				mNetObjectArray[serverIndex] = nullptr;
 				mNetObjectCount--;
-				NFSafeDelete(pObject);
+				NF_SAFE_DELETE(pObject);
 			}
 			else
 			{

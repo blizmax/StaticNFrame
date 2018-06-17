@@ -307,17 +307,17 @@ public:
 	{
 		for (auto it = m_mActorMap.begin(); it != m_mActorMap.end(); it++)
 		{
-			NFSafeDelete(it->second);
+			NF_SAFE_DELETE(it->second);
 		}
 		m_mActorMap.clear();
 		if (m_pMainActor)
 		{
-			NFSafeDelete(m_pMainActor);
+			NF_SAFE_DELETE(m_pMainActor);
 		}
 		m_pMainActor = nullptr;
 		if (m_pFramework)
 		{
-			NFSafeDelete(m_pFramework);
+			NF_SAFE_DELETE(m_pFramework);
 		}
 		m_pFramework = nullptr;
 	}

@@ -21,7 +21,7 @@ NFCMysqlModule::NFCMysqlModule(NFIPluginManager* p)
 
 NFCMysqlModule::~NFCMysqlModule()
 {
-	NFSafeDelete(m_pMysqlDriverManager);
+	NF_SAFE_DELETE(m_pMysqlDriverManager);
 }
 
 bool NFCMysqlModule::Init()

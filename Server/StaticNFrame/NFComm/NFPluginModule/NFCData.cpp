@@ -788,7 +788,7 @@ void NFCData::DeepCopy(const NFCData& src)
 		}
 		break;
 	case DT_MAPSTRING:
-		m_ptr = make_shared<NFCDataMapStringData>(NFCData::MapStringData()); 
+		m_ptr = make_shared<NFCDataMapStringData>(NFCData::MapStringData());
 		{
 			const NFCData::MapStringData& mapStringData = src.GetMapStringData();
 			for (auto it = mapStringData.begin(); it != mapStringData.end(); ++it)
@@ -802,7 +802,7 @@ void NFCData::DeepCopy(const NFCData& src)
 		}
 		break;
 	case DT_MAPINT:
-		m_ptr = make_shared<NFCDataMapIntData>(NFCData::MapIntData()); 
+		m_ptr = make_shared<NFCDataMapIntData>(NFCData::MapIntData());
 		{
 			const NFCData::MapIntData& mapIntData = src.GetMapIntData();
 			for (auto it = mapIntData.begin(); it != mapIntData.end(); ++it)

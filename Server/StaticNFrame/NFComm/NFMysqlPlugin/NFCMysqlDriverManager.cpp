@@ -20,13 +20,13 @@ NFCMysqlDriverManager::~NFCMysqlDriverManager()
 {
 	for (NFIMysqlDriver* pMysqlDriver = mvMysql.First(); nullptr != pMysqlDriver; pMysqlDriver = mvMysql.Next())
 	{
-		NFSafeDelete(pMysqlDriver);
+		NF_SAFE_DELETE(pMysqlDriver);
 		pMysqlDriver = nullptr;
 	}
 	mvMysql.ClearAll();
 	for (NFIMysqlDriver* pMysqlDriver = mvInvalidMsyql.First(); nullptr != pMysqlDriver; pMysqlDriver = mvInvalidMsyql.Next())
 	{
-		NFSafeDelete(pMysqlDriver);
+		NF_SAFE_DELETE(pMysqlDriver);
 		pMysqlDriver = nullptr;
 	}
 	mvInvalidMsyql.ClearAll();

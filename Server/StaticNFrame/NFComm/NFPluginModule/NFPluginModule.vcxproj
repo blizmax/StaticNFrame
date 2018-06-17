@@ -163,6 +163,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="NFIClassModule.h" />
     <ClInclude Include="NFCDataTableManager.h" />
     <ClInclude Include="NFIDataTableManager.h" />
     <ClInclude Include="NFDataTable.h" />

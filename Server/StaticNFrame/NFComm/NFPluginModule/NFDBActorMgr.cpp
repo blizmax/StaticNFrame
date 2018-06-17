@@ -153,7 +153,7 @@ void NFDBActorMgr::OnMainThreadTick()
 					case NFTask::TPTASK_STATE_COMPLETED:
 						{
 							nHandleTaskCount++;
-							NFSafeDelete(pTask);
+							NF_SAFE_DELETE(pTask);
 						}
 						break;
 					case NFTask::TPTASK_STATE_CONTINUE_CHILDTHREAD:
@@ -170,7 +170,7 @@ void NFDBActorMgr::OnMainThreadTick()
 						{
 							//error
 							nHandleTaskCount++;
-							NFSafeDelete(pTask);
+							NF_SAFE_DELETE(pTask);
 						}
 					}
 				}
@@ -181,7 +181,7 @@ void NFDBActorMgr::OnMainThreadTick()
 				NFTask* pTask = static_cast<NFTask*>(xMsg.pData);
 				if (pTask)
 				{
-					NFSafeDelete(pTask);
+					NF_SAFE_DELETE(pTask);
 				}
 				else
 				{

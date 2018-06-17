@@ -60,7 +60,7 @@ bool NFCNetServerModule::Finalize()
 		if (mServerArray[i] != nullptr)
 		{
 			mServerArray[i]->Finalize();
-			NFSafeDelete(mServerArray[i]);
+			NF_SAFE_DELETE(mServerArray[i]);
 		}
 	}
 	return true;
@@ -101,7 +101,7 @@ uint32_t NFCNetServerModule::AddServer(const NF_SERVER_TYPES eServerType, uint32
 		}
 
 		NFLogError("Add Server Failed!");
-		NFSafeDelete(pServer);
+		NF_SAFE_DELETE(pServer);
 	}
 	return 0;
 }
