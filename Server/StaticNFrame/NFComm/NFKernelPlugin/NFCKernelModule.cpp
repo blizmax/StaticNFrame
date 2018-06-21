@@ -13,6 +13,8 @@
 #include "NFComm/NFCore/NFProfiler.h"
 #include <NFComm/NFPluginModule/NFIPluginManager.h>
 #include <NFComm/NFPluginModule/NFCObject.h>
+#include <NFComm/NFPluginModule/NFDataNode.h>
+#include <NFComm/NFPluginModule/NFDataTable.h>
 
 #define NF_GUID_POWER 100000
 #define NF_EPOCH 1288834974657
@@ -28,6 +30,7 @@ NFCKernelModule::~NFCKernelModule()
 
 bool NFCKernelModule::Init()
 {
+	m_pClassModule = pPluginManager->FindModule<NFIClassModule>();
 	return true;
 }
 
@@ -37,15 +40,47 @@ bool NFCKernelModule::Execute()
 	return true;
 }
 
-NFIObject* NFCKernelModule::CreateObject(uint64_t objectId)
+NFIObject* NFCKernelModule::CreateObject(uint64_t objectId, const std::string& strClassName)
 {
 	if (objectId == 0)
 	{
 		objectId = CreateObjectId();
 	}
 
-	NFIObject* pObject = NF_NEW NFCObject(objectId, pPluginManager);
-	mObjectMap.emplace(objectId, pObject);
+	NFIObject* pObject = nullptr;
+
+	NFIDataNodeManager* pClassNodeManager = m_pClassModule->GetNodeManager(strClassName);
+	NFIDataTableManager* pClassTableManager = m_pClassModule->GetTableManager(strClassName);
+
+	if (pClassNodeManager != nullptr && pClassTableManager != nullptr)
+	{
+		pObject = NF_NEW NFCObject(objectId, pPluginManager);
+		mObjectMap.emplace(objectId, pObject);
+
+		NFIDataNodeManager* pNodeManager = pObject->GetNodeManager();
+		NFIDataTableManager* pTableManager = pObject->GetTableManager();
+
+		for (size_t index = 0; index < pClassNodeManager->GetNodeCount(); ++index)
+		{
+			NFDataNode* pClassConfigNode = pClassNodeManager->GetNodeByIndex(index);
+			NF_ASSERT(pClassConfigNode != nullptr);
+			bool bRet = pNodeManager->AddNode(pClassConfigNode->GetName(), pClassConfigNode->GetValue(), pClassConfigNode->GetFeature());
+			if (!bRet)
+			{
+				NF_ASSERT_MSG(0, "AddNode failed, please check it");
+				continue;
+			}
+		}
+
+		for (size_t index = 0; index < pClassTableManager->GetCount(); ++index)
+		{
+			NFDataTable* pClassConfigTable = pClassTableManager->GetTableByIndex(index);
+			NF_ASSERT(pClassConfigTable != nullptr);
+			NFCData colTypeList;
+			pClassConfigTable->GetColTypeList(colTypeList);
+			pTableManager->AddTable(objectId, pClassConfigTable->GetName(), colTypeList, pClassConfigTable->GetFeature());
+		}
+	}
 	return pObject;
 }
 

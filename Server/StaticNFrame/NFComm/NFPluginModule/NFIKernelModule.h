@@ -21,7 +21,7 @@ class NFIKernelModule
 {
 public:
 	virtual uint64_t CreateObjectId() = 0;
-	virtual NFIObject* CreateObject(uint64_t objectId = 0) = 0;
+	virtual NFIObject* CreateObject(uint64_t objectId, const std::string& strClassName) = 0;
 };
 
 #endif

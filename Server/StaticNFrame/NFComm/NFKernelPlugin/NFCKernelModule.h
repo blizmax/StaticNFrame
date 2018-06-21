@@ -17,6 +17,7 @@
 
 #include "NFComm/NFPluginModule/NFIKernelModule.h"
 #include <unordered_map>
+#include <NFComm/NFPluginModule/NFIClassModule.h>
 
 class NFIObject;
 class NFILogModule;
@@ -38,7 +39,7 @@ public:
 
 	virtual bool Execute() override;
 
-	virtual NFIObject* CreateObject(uint64_t objectId = 0) override;
+	virtual NFIObject* CreateObject(uint64_t objectId, const std::string& strClassName) override;
 	virtual uint64_t CreateObjectId() override;
 protected:
 	static void ProcessMemFree();
@@ -46,6 +47,7 @@ private:
 	uint64_t nGUIDIndex = 0;
 	uint64_t mLastGuidTimeStamp = 0;
 	std::unordered_map<uint64_t, NFIObject*> mObjectMap;
+	NFIClassModule* m_pClassModule;
 };
 
 #endif

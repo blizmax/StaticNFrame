@@ -11,6 +11,7 @@
 #include "NFComm/NFPluginModule/NFIClassModule.h"
 #include <NFComm/NFPluginModule/NFCDataTableManager.h>
 #include <NFComm/NFPluginModule/NFCDataNodeManager.h>
+#include <RapidXML/rapidxml.hpp>
 
 
 class NFCClass : public NFIClass
@@ -82,9 +83,15 @@ public:
     virtual NFIDataNodeManager* GetNodeManager(const std::string& strClassName) override;
     virtual NFIDataTableManager* GetTableManager(const std::string& strClassName) override;
 
-    virtual bool AddClass(const std::string& strClassName, const std::string& strParentName);
 protected:
-	int ComputerType(const std::string& pstrTypeName, NFCData& var) const;
+	virtual int ComputerType(const std::string& pstrTypeName, NFCData& var) const;
+	virtual bool AddClass(const std::string& pstrClassFilePath, NFIClass* pClass);
+	virtual bool AddClassInclude(const std::string& pstrClassFilePath, NFIClass* pClass);
+	virtual bool AddNodes(rapidxml::xml_node<>* pNodeRootNode, NFIClass* pClass);
+	virtual bool AddTables(rapidxml::xml_node<>* pTableRootNode, NFIClass* pClass);
+	virtual bool AddTableFeature(rapidxml::xml_node<>* pTableFeature, NFIClass* pClass);
+
+	virtual bool Load(rapidxml::xml_node<>* attrNode);
 private:
     std::string msConfigFileName;
 	std::unordered_map<std::string, NFIClass*> mClassMap;

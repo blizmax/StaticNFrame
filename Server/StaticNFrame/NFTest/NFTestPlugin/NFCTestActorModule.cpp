@@ -11,6 +11,7 @@
 #include "NFComm/NFPluginModule/NFTask.h"
 #include "NFMessageDefine/NFMsgDefine.h"
 #include <NFComm/NFPluginModule/NFIMysqlModule.h>
+#include "NFMessageDefine/NFDataDefine.hpp"
 
 static std::map<int, int> testMap;
 

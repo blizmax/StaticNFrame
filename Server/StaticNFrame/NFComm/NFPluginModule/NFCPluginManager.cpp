@@ -172,22 +172,18 @@ bool NFCPluginManager::Execute()
 
 	NFServerTimeMgr::GetSingletonPtr()->Update(NFGetTime());
 
-	BEGIN_PROFILE("Loop");
+	PluginInstanceMap::iterator it = mPluginInstanceMap.begin();
+	for (; it != mPluginInstanceMap.end(); ++it)
+	{
+		bool tembRet = it->second->Execute();
+		bRet = bRet && tembRet;
+	}
 
-		PluginInstanceMap::iterator it = mPluginInstanceMap.begin();
-		for (; it != mPluginInstanceMap.end(); ++it)
-		{
-			bool tembRet = it->second->Execute();
-			bRet = bRet && tembRet;
-		}
-
-		for (auto iter = mModuleAloneMultiMap.begin(); iter != mModuleAloneMultiMap.end(); ++iter)
-		{
-			bool tembRet = iter->second->Execute();
-			bRet = bRet && tembRet;
-		}
-
-		END_PROFILE();
+	for (auto iter = mModuleAloneMultiMap.begin(); iter != mModuleAloneMultiMap.end(); ++iter)
+	{
+		bool tembRet = iter->second->Execute();
+		bRet = bRet && tembRet;
+	}
 
 	//采用固定帧率
 	endTime = NFGetTime();
