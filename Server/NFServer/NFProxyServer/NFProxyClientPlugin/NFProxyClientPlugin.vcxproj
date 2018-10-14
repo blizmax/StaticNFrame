@@ -19,11 +19,11 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="NFProxyClientModule.h" />
+    <ClInclude Include="NFProxyClient_GameModule.h" />
     <ClInclude Include="NFProxyClientPlugin.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="NFProxyClientModule.cpp">
+    <ClCompile Include="NFProxyClient_GameModule.cpp">
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;_DEBUG;_WINDOWS;_USRDLL;NFPLUGINMODULE_EXPORTS;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <ClCompile Include="NFProxyClientPlugin.cpp" />

@@ -8,4 +8,12 @@
     <ClCompile Include="NFBattleServerPlugin.cpp" />
     <ClCompile Include="NFBattleServerModule.cpp" />
   </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Scene">
+      <UniqueIdentifier>{122bbbc9-b70b-4642-9d7f-56354e16edac}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SceneObj">
+      <UniqueIdentifier>{92ea0b18-da02-4b2d-8d58-ba6ea5bad5b5}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
 </Project>

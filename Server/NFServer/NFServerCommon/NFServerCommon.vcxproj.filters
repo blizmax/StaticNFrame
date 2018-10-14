@@ -4,8 +4,11 @@
     <ClInclude Include="NFIBattleServerModule.h" />
     <ClInclude Include="NFServerCommon.h" />
     <ClInclude Include="NFIBattleClient_MatchModule.h" />
-    <ClInclude Include="NFIProxyClientModule.h" />
     <ClInclude Include="NFIProxyServerModule.h" />
+    <ClInclude Include="NFIProxyClient_GameModule.h" />
+    <ClInclude Include="NFIGameServerModule.h" />
+    <ClInclude Include="NFIGameClient_MatchModule.h" />
+    <ClInclude Include="NFIGameClient_WorldModule.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="NFServerCommon.cpp" />

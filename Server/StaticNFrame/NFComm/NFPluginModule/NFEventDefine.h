@@ -15,13 +15,7 @@ enum NFEventDefine
 	NFEVENT_TEST = 0, //测试事件， 用来测试
 	NFEVENT_TEST1 = 1, //测试事件， 用来测试
 	NFEVENT_TEST2 = 2, //测试事件， 用来测试
-};
-
-class NFTestEventContext : public NFEventContext
-{
-public:
-	int a = 1;
-	int b = 2;
-	int c = 3;
+	NFEVENT_PROXY_CONNECT_GAME_SUCCESS, //PROXY 链接 GAME SERVER
+	NFEVENT_PROXY_CONNECT_GAME_FAIL, //PROXY 链接 GAME SERVER
 };
 

@@ -9,6 +9,7 @@
 
 #include "NFGameServerPlugin.h"
 #include "NFComm/NFPluginModule/NFIPluginManager.h"
+#include "NFGameServerModule.h"
 
 #ifdef NF_DYNAMIC_PLUGIN
 
@@ -40,8 +41,10 @@ std::string NFGameServerPlugin::GetPluginName()
 
 void NFGameServerPlugin::Install()
 {
+	REGISTER_MODULE(pPluginManager, NFIGameServerModule, NFCGameServerModule)
 }
 
 void NFGameServerPlugin::Uninstall()
 {
+	UNREGISTER_MODULE(pPluginManager, NFIGameServerModule, NFCGameServerModule)
 }

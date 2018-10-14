@@ -154,7 +154,10 @@
   <ItemGroup>
     <ClInclude Include="NFIBattleClient_MatchModule.h" />
     <ClInclude Include="NFIBattleServerModule.h" />
-    <ClInclude Include="NFIProxyClientModule.h" />
+    <ClInclude Include="NFIGameClient_MatchModule.h" />
+    <ClInclude Include="NFIGameServerModule.h" />
+    <ClInclude Include="NFIGameClient_WorldModule.h" />
+    <ClInclude Include="NFIProxyClient_GameModule.h" />
     <ClInclude Include="NFServerCommon.h" />
     <ClInclude Include="NFIProxyServerModule.h" />
   </ItemGroup>

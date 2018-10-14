@@ -19,9 +19,11 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="NFGameServerModule.h" />
     <ClInclude Include="NFGameServerPlugin.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="NFGameServerModule.cpp" />
     <ClCompile Include="NFGameServerPlugin.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

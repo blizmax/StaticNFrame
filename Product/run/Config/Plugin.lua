@@ -8,8 +8,7 @@ NF_ST_PROXY = 5;    	--
 NF_ST_MATCH = 6;
 NF_ST_BATTLE = 7;
 NF_ST_UNION_MATCH = 8;
-NF_ST_PUBLIC_MATCH = 9;
-NF_ST_MAX = 10;    		--
+NF_ST_MAX = 9;    		--
 
 LoadPlugin = 
 {
@@ -18,8 +17,11 @@ LoadPlugin =
 			"NFKernelPlugin",
 			"NFActorPlugin",
 			"NFNetPlugin",
-			"NFTestPlugin",
-			"NFMysqlPlugin"
+			--"NFTestPlugin",
+			"NFMysqlPlugin",
+			"NFProxyServerPlugin",
+			"NFProxyClientPlugin",
+			"NFGameServerPlugin",
 		};
 		ServerType = NF_ST_NONE;
 	};

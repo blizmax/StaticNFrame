@@ -14,7 +14,7 @@ NFServerConfig* NFServerCommon::GetServerConfig(NFIPluginManager* pPluginManager
 	NFServerConfig* pServerConfig = nullptr;
 	if (pPluginManager->IsLoadAllServer())
 	{
-		std::vector<NFServerConfig*> vecServerConfig = NFConfigMgr::Instance()->GetServerConfigFromServerType(NF_ST_BATTLE);
+		std::vector<NFServerConfig*> vecServerConfig = NFConfigMgr::Instance()->GetServerConfigFromServerType(eServerType);
 		if (!vecServerConfig.empty())
 		{
 			pServerConfig = vecServerConfig.front();

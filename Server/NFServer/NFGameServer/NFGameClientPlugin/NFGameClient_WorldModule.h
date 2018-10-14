@@ -1,8 +1,10 @@
 // -------------------------------------------------------------------------
-//    @FileName         :    NFProxyClientModule.cpp
+//    @FileName         :    NFGameClient_WorldModule.h
 //    @Author           :    GaoYi
-//    @Date             :    2018/06/12
+//    @Date             :    2018/10/11
 //    @Email			:    445267987@qq.com
-//    @Module           :    NFProxyClientPlugin
+//    @Module           :    NFGameClientPlugin
 //
 // -------------------------------------------------------------------------
+
+#pragma once
