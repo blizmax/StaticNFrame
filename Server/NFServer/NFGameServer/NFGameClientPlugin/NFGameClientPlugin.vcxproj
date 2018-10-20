@@ -20,12 +20,10 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="NFGameClientPlugin.h" />
-    <ClInclude Include="NFGameClient_MatchModule.h" />
     <ClInclude Include="NFGameClient_WorldModule.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="NFGameClientPlugin.cpp" />
-    <ClCompile Include="NFGameClient_MatchModule.cpp" />
     <ClCompile Include="NFGameClient_WorldModule.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
