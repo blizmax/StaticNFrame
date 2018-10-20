@@ -1,6 +1,0 @@
-﻿<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<XML>
-  <Class>
-    <Class Id="IObject" Type="TYPE_IOBJECT" Path="DataConfig/Struct/Class/IObject.xml" Public="0" Desc="IObject" />
-  </Class>
-</XML>

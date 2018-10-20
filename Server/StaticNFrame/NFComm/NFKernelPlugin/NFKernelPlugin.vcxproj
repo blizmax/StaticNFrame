@@ -216,7 +216,6 @@
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="NFCClassModule.h" />
     <ClInclude Include="NFCEventModule.h" />
     <ClInclude Include="NFCKernelModule.h" />
     <ClInclude Include="NFCLogModule.h" />
@@ -224,7 +223,6 @@
     <ClInclude Include="NFKernelPlugin.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="NFCClassModule.cpp" />
     <ClCompile Include="NFCEventModule.cpp" />
     <ClCompile Include="NFCKernelModule.cpp" />
     <ClCompile Include="NFCLogModule.cpp" />

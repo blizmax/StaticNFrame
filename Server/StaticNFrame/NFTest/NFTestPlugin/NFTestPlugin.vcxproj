@@ -19,19 +19,11 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="NFCTestObjectModule.cpp" />
     <ClCompile Include="NFCTestActorModule.cpp" />
-    <ClCompile Include="NFCTestClientModule.cpp" />
-    <ClCompile Include="NFCTestKernelModule.cpp" />
-    <ClCompile Include="NFCTestServerModule.cpp" />
     <ClCompile Include="NFTestPlugin.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="NFCTestObjectModule.h" />
     <ClInclude Include="NFCTestActorModule.h" />
-    <ClInclude Include="NFCTestClientModule.h" />
-    <ClInclude Include="NFCTestKernelModule.h" />
-    <ClInclude Include="NFCTestServerModule.h" />
     <ClInclude Include="NFTestPlugin.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

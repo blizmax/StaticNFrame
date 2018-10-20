@@ -22,6 +22,7 @@ LoadPlugin =
 			"NFProxyServerPlugin",
 			"NFProxyClientPlugin",
 			"NFGameServerPlugin",
+			"NFLuaScriptPlugin",
 		};
 		ServerType = NF_ST_NONE;
 	};

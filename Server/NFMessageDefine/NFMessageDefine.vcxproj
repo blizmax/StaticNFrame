@@ -18,6 +18,13 @@
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="mysql_db.pb.h" />
+    <ClInclude Include="NFMsgDefine.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="mysql_db.pb.cc" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{3F2973E3-2835-4326-9D92-2FB300F5A6F0}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>

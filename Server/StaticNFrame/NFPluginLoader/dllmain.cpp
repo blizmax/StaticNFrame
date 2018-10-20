@@ -33,6 +33,7 @@
 #pragma comment( lib, "NFActorPlugin.lib" )
 #pragma comment( lib, "NFNetPlugin.lib" )
 #pragma comment( lib, "NFMysqlPlugin.lib" )
+#pragma comment( lib, "NFLuaScriptPlugin.lib" )
 #pragma comment( lib, "NFTestPlugin.lib" )
 #pragma comment( lib, "NFProxyServerPlugin.lib" )
 #pragma comment( lib, "NFProxyClientPlugin.lib" )

@@ -1,8 +1,6 @@
 option java_package = "proto.message";
 package proto.message;
 
-import "mail.proto";
-
 //*****************************保存数据到db方案********************************//
 message message_db_base
 {
@@ -37,6 +35,11 @@ message query_player
 	optional message_db_base db_base = 1; //数据库基础数据
 	repeated mysql_player db_fields = 2;
 	optional query_player_cond db_cond = 3;
+}
+
+message MixMailData
+{
+	optional uint32 id = 1;
 }
 
 message table_mail

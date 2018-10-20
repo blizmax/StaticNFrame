@@ -11,7 +11,6 @@
 #include "NFCTimerModule.h"
 #include "NFCLogModule.h"
 #include "NFCEventModule.h"
-#include "NFCClassModule.h"
 
 //
 //
@@ -47,7 +46,6 @@ void NFKernelPlugin::Install()
 	REGISTER_MODULE(pPluginManager, NFITimerModule, NFCTimerModule);
 	REGISTER_MODULE(pPluginManager, NFIEventModule, NFCEventModule);
 	REGISTER_MODULE(pPluginManager, NFIKernelModule, NFCKernelModule);
-	REGISTER_MODULE(pPluginManager, NFIClassModule, NFCClassModule);
 }
 
 void NFKernelPlugin::Uninstall()
@@ -56,6 +54,5 @@ void NFKernelPlugin::Uninstall()
 	UNREGISTER_MODULE(pPluginManager, NFIEventModule, NFCEventModule);
 	UNREGISTER_MODULE(pPluginManager, NFITimerModule, NFCTimerModule);
 	UNREGISTER_MODULE(pPluginManager, NFILogModule, NFCLogModule)
-	UNREGISTER_MODULE(pPluginManager, NFIClassModule, NFCClassModule);
 }
 
