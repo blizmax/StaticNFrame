@@ -28,7 +28,7 @@ bool NFCLuaScriptModule::Init()
 
     TRY_LOAD_SCRIPT_FLE("script_init.lua");
 
-    //TRY_RUN_GLOBAL_SCRIPT_FUN1("init_script_system", pPluginManager);
+    TRY_RUN_GLOBAL_SCRIPT_FUN1("init_script_system", pPluginManager);
 
     TRY_LOAD_SCRIPT_FLE("script_list.lua");
     TRY_LOAD_SCRIPT_FLE("script_module.lua");
@@ -82,5 +82,8 @@ bool NFCLuaScriptModule::BeforeShut()
 
 bool NFCLuaScriptModule::Register()
 {
+	LuaIntf::LuaBinding(l).beginClass<NFIPluginManager>("NFIPluginManager")
+		.addFunction("GetAppName", &NFIPluginManager::GetAppName)
+		.endClass();
     return true;
 }
