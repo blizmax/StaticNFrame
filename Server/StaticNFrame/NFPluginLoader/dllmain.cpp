@@ -10,7 +10,7 @@
 
 #if NF_PLATFORM == NF_PLATFORM_WIN
 #pragma comment( lib, "common.lib" )
-#pragma comment( lib, "lua.lib" )
+#pragma comment( lib, "luaBind.lib" )
 #pragma comment( lib, "navigation.lib" )
 #pragma comment( lib, "libevent.lib" )
 #pragma comment( lib, "libevent_core.lib" )

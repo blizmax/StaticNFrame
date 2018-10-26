@@ -10,7 +10,10 @@
 #include "NFCLuaScriptModule.h"
 #include "NFLuaScriptPlugin.h"
 #include "NFComm/NFPluginModule/NFIKernelModule.h"
+#include "NFComm/NFPluginModule/NFINetServerModule.h"
 #include "NFComm/NFCore/NFProfiler.h"
+#include "NFComm/NFCore/NFFileUtility.h"
+#include "NFComm/NFCore/NFStringUtility.h"
 
 #define TRY_RUN_GLOBAL_SCRIPT_FUN0(strFuncName)   try {LuaIntf::LuaRef func(l, strFuncName);  func.call<LuaIntf::LuaRef>(); }   catch (LuaIntf::LuaException& e) { cout << e.what() << endl; }
 #define TRY_RUN_GLOBAL_SCRIPT_FUN1(strFuncName, arg1)  try {LuaIntf::LuaRef func(l, strFuncName);  func.call<LuaIntf::LuaRef>(arg1); }catch (LuaIntf::LuaException& e) { cout << e.what() << endl; }
@@ -23,26 +26,20 @@
 bool NFCLuaScriptModule::Init()
 {
     Register();
-
-    TRY_ADD_PACKAGE_PATH(pPluginManager->GetConfigPath() + "/ScriptModule/" + pPluginManager->GetAppName()); //Add Search Path to Lua
-
-    TRY_LOAD_SCRIPT_FLE("script_init.lua");
-
-    TRY_RUN_GLOBAL_SCRIPT_FUN1("init_script_system", pPluginManager);
-
-    TRY_LOAD_SCRIPT_FLE("script_list.lua");
-    TRY_LOAD_SCRIPT_FLE("script_module.lua");
-
-    TRY_RUN_GLOBAL_SCRIPT_FUN0("ScriptModule.Init");
-
+	LoadScript();
     return true;
 }
 
 bool NFCLuaScriptModule::AfterInit()
 {
-    TRY_RUN_GLOBAL_SCRIPT_FUN0("ScriptModule.AfterInit");
-
     return true;
+}
+
+bool NFCLuaScriptModule::ReadyExecute()
+{
+	TRY_RUN_GLOBAL_SCRIPT_FUN0("ScriptModule.Init");
+	TRY_RUN_GLOBAL_SCRIPT_FUN0("ScriptModule.AfterInit");
+	return true;
 }
 
 bool NFCLuaScriptModule::Shut()
@@ -66,7 +63,6 @@ bool NFCLuaScriptModule::Execute()
         BEGIN_PROFILE(__FUNCTION__);
         mnTime = NFGetSecondTime();
         TRY_RUN_GLOBAL_SCRIPT_FUN0("ScriptModule.Execute");
-        TRY_LOAD_SCRIPT_FLE("script_reload.lua")
         END_PROFILE();
     }
 
@@ -80,10 +76,43 @@ bool NFCLuaScriptModule::BeforeShut()
     return true;
 }
 
+void NFCLuaScriptModule::LoadScript()
+{
+	TRY_ADD_PACKAGE_PATH(pPluginManager->GetConfigPath() + "/ScriptModule/" + pPluginManager->GetAppName());
+
+	std::list<std::string> files;
+	NFFileUtility::GetFiles(pPluginManager->GetConfigPath() + "/ScriptModule/" + pPluginManager->GetAppName(), files, true, "*.lua");
+	for (auto it = files.begin(); it != files.end(); it++)
+	{
+		std::string str = NFFileUtility::GetAbsolutePathName(*it);
+		std::cout << str << std::endl;
+		TRY_LOAD_SCRIPT_FLE(str.c_str());
+	}
+
+	TRY_RUN_GLOBAL_SCRIPT_FUN1("init_script_system", pPluginManager);
+}
+
 bool NFCLuaScriptModule::Register()
 {
 	LuaIntf::LuaBinding(l).beginClass<NFIPluginManager>("NFIPluginManager")
 		.addFunction("GetAppName", &NFIPluginManager::GetAppName)
+		.addFunction("GetLogModule", &NFIPluginManager::FindModule<NFILogModule>)
+		.addFunction("GetLuaModule", &NFIPluginManager::FindModule<NFILuaScriptModule>)
+		.endClass();
+
+	LuaIntf::LuaBinding(l).beginClass<NFILuaScriptModule>("NFILuaScriptModule")
+		.endClass();
+
+	LuaIntf::LuaBinding(l).beginClass<NFINetServerModule>("NFINetServerModule")
+		.addFunction("AddServer", &NFINetServerModule::AddServer)
+		.addFunction("GetLinkIp", &NFINetServerModule::GetLinkIp)
+		.endClass();
+
+	LuaIntf::LuaBinding(l).beginClass<NFILogModule>("NFILogModule")
+		.addFunction("LuaDebug", &NFILogModule::LuaDebug)
+		.addFunction("LuaInfo", &NFILogModule::LuaInfo)
+		.addFunction("LuaWarn", &NFILogModule::LuaWarn)
+		.addFunction("LuaError", &NFILogModule::LuaError)
 		.endClass();
     return true;
 }

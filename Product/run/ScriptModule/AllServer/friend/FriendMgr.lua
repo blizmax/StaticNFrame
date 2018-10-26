@@ -1,0 +1,2 @@
+require "gxlua/class"
+

@@ -1,5 +1,4 @@
-ScriptList={
-	--{tbl=nil, tblName="TestModule"},
-}
-
-load_script_file(ScriptList)
+function load_script_file()
+	register_module(FriendModule, "FriendModule")
+	register_module(TestModule, "TestModule")
+end

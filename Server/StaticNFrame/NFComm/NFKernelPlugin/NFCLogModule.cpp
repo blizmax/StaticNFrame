@@ -141,6 +141,42 @@ bool NFCLogModule::Execute()
 	return true;
 }
 
+void NFCLogModule::LuaDebug(const std::string& strInfo)
+{
+	mnLogCountTotal++;
+
+	std::cout << termcolor::green;
+	LOG(DEBUG) << mnLogCountTotal << " | " << pPluginManager->GetAppID() << " | " << "Lua" << " | " << strInfo;
+	std::cout << termcolor::reset;
+}
+
+void NFCLogModule::LuaInfo(const std::string& strInfo)
+{
+	mnLogCountTotal++;
+
+	std::cout << termcolor::green;
+	LOG(INFO) << mnLogCountTotal << " | " << pPluginManager->GetAppID() << " | " << "Lua" << " | " << strInfo;
+	std::cout << termcolor::reset;
+}
+
+void NFCLogModule::LuaWarn(const std::string& strInfo)
+{
+	mnLogCountTotal++;
+
+	std::cout << termcolor::yellow;
+	LOG(WARNING) << mnLogCountTotal << " | " << pPluginManager->GetAppID() << " | " << "Lua" << " | " << strInfo;
+	std::cout << termcolor::reset;
+}
+
+void NFCLogModule::LuaError(const std::string& strInfo)
+{
+	mnLogCountTotal++;
+
+	std::cout << termcolor::red;
+	LOG(ERROR) << mnLogCountTotal << " | " << pPluginManager->GetAppID() << " | " << "Lua" << " | " << strInfo;
+	std::cout << termcolor::reset;
+}
+
 bool NFCLogModule::Log(const NF_LOG_LEVEL nll, const char* format, ...)
 {
 	int ret = 0;

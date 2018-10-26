@@ -9,7 +9,7 @@
 #pragma once
 
 #define LUAINTF_LINK_LUA_COMPILED_IN_CXX 0
-#include "Dependencies/LuaIntf/LuaIntf.h"
+#include "Dependencies/LuaBind/luaintf/LuaIntf.h"
 #include <vector>
 #include <map>
 #include <memory>

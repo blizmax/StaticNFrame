@@ -26,6 +26,7 @@ public:
 
     virtual bool Init();
     virtual bool AfterInit();
+	virtual bool ReadyExecute();
 
     virtual bool Execute();
 
@@ -34,6 +35,7 @@ public:
     virtual bool Finalize();
 public:
     bool Register();
+	void LoadScript();
 protected:
     NFIKernelModule* m_pKernelModule;
     NFIEventModule* m_pEventModule;

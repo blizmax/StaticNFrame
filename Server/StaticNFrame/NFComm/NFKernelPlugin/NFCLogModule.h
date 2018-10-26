@@ -38,6 +38,11 @@ public:
 
 	virtual bool Log(const NF_LOG_LEVEL nll, const char* format, ...);
 
+	virtual void LuaDebug(const std::string& strInfo);
+	virtual void LuaInfo(const std::string& strInfo);
+	virtual void LuaWarn(const std::string& strInfo);
+	virtual void LuaError(const std::string& strInfo);
+
 	virtual bool LogNormal(const NF_LOG_LEVEL nll, const uint64_t ident, const std::string& strInfo, const char* func = "", int line = 0);
 	virtual bool LogNormal(const NF_LOG_LEVEL nll, const uint64_t ident, const std::string& strInfo, const int64_t nDesc, const char* func = "", int line = 0) override;
 	virtual bool LogNormal(const NF_LOG_LEVEL nll, const uint64_t ident, const std::string& strInfo, const std::string& strDesc, const char* func = "", int line = 0) override;
