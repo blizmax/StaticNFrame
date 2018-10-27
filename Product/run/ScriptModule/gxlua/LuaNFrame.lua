@@ -9,11 +9,33 @@ function LuaNFrame:init(pluginManager)
     end
     self.logModule = self.pluginManager:GetLogModule()
     self.luaModule = self.pluginManager:GetLuaModule()
+    self.serverModule = self.pluginManager:GetServerModule()
     
     --用来存放加载的module
     self.ScriptList = { }
     --用来存放加载函数
     self.LoadScriptList = { }
+
+    self.serverModule:AddServer(NF_SERVER_TYPES.NF_ST_LOGIN, 100, 10, 1782)
+end
+
+--添加网络服务器
+function LuaNFrame:addServer(server_type, server_id, max_client, port)
+    return self.serverModule:AddServer(server_type, server_id, max_client, port)
+end
+
+--添加网络协议回调函数
+function LuaNFrame:addRecvCallBack(serverType, nMsgId, luaFunc)
+    self.serverModule:AddReceiveLuaCallBackByMsgId(serverType, nMsgId, luaFunc)
+end
+
+--添加网络协议回调函数
+function LuaNFrame:addRecvCallBackToOthers(serverType, luaFunc)
+    self.serverModule:AddReceiveLuaCallBackToOthers(serverType, luaFunc)
+end
+
+function LuaNFrame:addEventCallBack(serverType, luaFunc)
+    self.serverModule:AddEventLuaCallBack(serverType, luaFunc)
 end
 
 --执行加载函数

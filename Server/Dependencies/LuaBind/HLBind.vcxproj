@@ -226,7 +226,8 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <OutDir>../Bin</OutDir>
+    <OutDir>$(SolutionDir)../Product/Lib/$(Configuration)/</OutDir>
+    <IntDir>$(SolutionDir)../Product/Temp/$(ProjectName)/$(Configuration)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <OutDir>../Bin</OutDir>
@@ -245,7 +246,8 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_CRT_SECURE_NO_WARNINGS;_WINSOCK_DEPRECATED_NO_WARNINGS;WIN32;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>../HBase;../HBase/3rd/;../HBase/3rd/conhash;../HBase/3rd/d3des;../HBase/3rd/http-parser;../HBase/3rd/jwsmtp;../HBase/3rd/md5;../HBase/3rd/mysql;../HBase/3rd/rapidjson;../HBase/3rd/rijndael;../HBase/3rd/RSAEuro;../HBase/3rd/sha1;../HBase/3rd/zlib;../HBase/adjure;../HBase/algorithm;../HBase/db;../HBase/base;../HBase/encrypt;../HBase/fparser;../HBase/parser;../HBase/service;../HLBind;../HLBind/lpeg;../HLBind/lua5.3;../HLBind/luabridge;../HLBind/luacjson;../HLBind/luasocket;../HLBind/luasql;../HLBind/pbc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)/Dependencies/LuaBind/luaintf;$(SolutionDir)/Dependencies/LuaBind/pbc;$(SolutionDir)/Dependencies/LuaBind/luasql;$(SolutionDir)/Dependencies/LuaBind/luasocket;$(SolutionDir)/Dependencies/LuaBind/luacjson;$(SolutionDir)/Dependencies/LuaBind/lua5.3/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>

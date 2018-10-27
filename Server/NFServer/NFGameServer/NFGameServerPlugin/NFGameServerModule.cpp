@@ -72,12 +72,12 @@ void NFCGameServerModule::OnProxySocketEvent(const eMsgType nEvent, const uint32
 	if (nEvent == eMsgType_CONNECTED)
 	{
 		std::string ip = m_pNetServerModule->GetLinkIp(unLinkId);
-		NFLogDebug("Proxy Server Connect Game Server Success, Ip:%s", ip.c_str());
+		//NFLogDebug("Proxy Server Connect Game Server Success, Ip:%s", ip.c_str());
 	}
 	else if (nEvent == eMsgType_DISCONNECTED)
 	{
 		std::string ip = m_pNetServerModule->GetLinkIp(unLinkId);
-		NFLogDebug("Proxy Server DisConnect, Ip:%s", ip.c_str());
+		//NFLogDebug("Proxy Server DisConnect, Ip:%s", ip.c_str());
 	}
 }
 

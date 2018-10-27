@@ -78,15 +78,50 @@ bool NFCLuaScriptModule::BeforeShut()
 
 void NFCLuaScriptModule::LoadScript()
 {
-	TRY_ADD_PACKAGE_PATH(pPluginManager->GetConfigPath() + "/ScriptModule/" + pPluginManager->GetAppName());
+	TRY_ADD_PACKAGE_PATH(pPluginManager->GetConfigPath() + "/ScriptModule");
 
-	std::list<std::string> files;
-	NFFileUtility::GetFiles(pPluginManager->GetConfigPath() + "/ScriptModule/" + pPluginManager->GetAppName(), files, true, "*.lua");
-	for (auto it = files.begin(); it != files.end(); it++)
+	if (pPluginManager->IsLoadAllServer())
 	{
-		std::string str = NFFileUtility::GetAbsolutePathName(*it);
-		std::cout << str << std::endl;
-		TRY_LOAD_SCRIPT_FLE(str.c_str());
+		std::list<std::string> files;
+		NFFileUtility::GetFiles(pPluginManager->GetConfigPath() + "/ScriptModule", files, true, "*.lua");
+		for (auto it = files.begin(); it != files.end(); it++)
+		{
+			std::string str = *it;
+			std::cout << "load script:" << str << std::endl;
+			TRY_LOAD_SCRIPT_FLE(str.c_str());
+		}
+	}
+	else
+	{
+		//先记载scriptmodule下面的lua代码
+		std::list<std::string> files;
+		NFFileUtility::GetFiles(pPluginManager->GetConfigPath() + "/ScriptModule", files, false, "*.lua");
+		for (auto it = files.begin(); it != files.end(); it++)
+		{
+			std::string str = *it;
+			std::cout << "load script:" << str << std::endl;
+			TRY_LOAD_SCRIPT_FLE(str.c_str());
+		}
+		files.clear();
+
+		//然后假装gxlua下面的公共代码
+		NFFileUtility::GetFiles(pPluginManager->GetConfigPath() + "/ScriptModule/gxlua", files, true, "*.lua");
+		for (auto it = files.begin(); it != files.end(); it++)
+		{
+			std::string str = *it;
+			std::cout << "load script:" << str << std::endl;
+			TRY_LOAD_SCRIPT_FLE(str.c_str());
+		}
+		files.clear();
+
+		//最后加载执行程序同名的目录
+		NFFileUtility::GetFiles(pPluginManager->GetConfigPath() + "/ScriptModule/" + pPluginManager->GetAppName(), files, true, "*.lua");
+		for (auto it = files.begin(); it != files.end(); it++)
+		{
+			std::string str = *it;
+			std::cout << "load script:" << str << std::endl;
+			TRY_LOAD_SCRIPT_FLE(str.c_str());
+		}
 	}
 
 	TRY_RUN_GLOBAL_SCRIPT_FUN1("init_script_system", pPluginManager);
@@ -98,6 +133,7 @@ bool NFCLuaScriptModule::Register()
 		.addFunction("GetAppName", &NFIPluginManager::GetAppName)
 		.addFunction("GetLogModule", &NFIPluginManager::FindModule<NFILogModule>)
 		.addFunction("GetLuaModule", &NFIPluginManager::FindModule<NFILuaScriptModule>)
+		.addFunction("GetServerModule", &NFIPluginManager::FindModule<NFINetServerModule>)
 		.endClass();
 
 	LuaIntf::LuaBinding(l).beginClass<NFILuaScriptModule>("NFILuaScriptModule")
@@ -106,6 +142,9 @@ bool NFCLuaScriptModule::Register()
 	LuaIntf::LuaBinding(l).beginClass<NFINetServerModule>("NFINetServerModule")
 		.addFunction("AddServer", &NFINetServerModule::AddServer)
 		.addFunction("GetLinkIp", &NFINetServerModule::GetLinkIp)
+		.addFunction("AddReceiveLuaCallBackByMsgId", &NFINetServerModule::AddReceiveLuaCallBackByMsgId)
+		.addFunction("AddReceiveLuaCallBackToOthers", &NFINetServerModule::AddReceiveLuaCallBackToOthers)
+		.addFunction("AddEventLuaCallBack", &NFINetServerModule::AddEventLuaCallBack)
 		.endClass();
 
 	LuaIntf::LuaBinding(l).beginClass<NFILogModule>("NFILogModule")
@@ -115,4 +154,14 @@ bool NFCLuaScriptModule::Register()
 		.addFunction("LuaError", &NFILogModule::LuaError)
 		.endClass();
     return true;
+}
+
+void NFCLuaScriptModule::RunNetRecvLuaFunc(const std::string& luaFunc, const uint32_t unLinkId, const uint64_t valueId, const uint32_t nMsgId, const char* msg, const uint32_t nLen)
+{
+	TryRunGlobalScriptFunc(luaFunc, unLinkId, valueId, nMsgId, msg, nLen);
+}
+
+void NFCLuaScriptModule::RunNetEventLuaFunc(const std::string& luaFunc, const eMsgType nEvent, const uint32_t unLinkId)
+{
+	TryRunGlobalScriptFunc(luaFunc, nEvent, unLinkId);
 }

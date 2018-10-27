@@ -91,12 +91,12 @@ void NFCProxyServerModule::OnProxySocketEvent(const eMsgType nEvent, const uint3
 	if (nEvent == eMsgType_CONNECTED)
 	{
 		std::string ip = m_pNetServerModule->GetLinkIp(unLinkId);
-		NFLogDebug("ip:%s connected success!", ip.c_str());		
+		//NFLogDebug("ip:%s connected success!", ip.c_str());		
 	}
 	else if (nEvent == eMsgType_DISCONNECTED)
 	{
 		std::string ip = m_pNetServerModule->GetLinkIp(unLinkId);
-		NFLogError("ip:%s disconnected!", ip.c_str());		
+		//NFLogError("ip:%s disconnected!", ip.c_str());		
 	}
 }
 

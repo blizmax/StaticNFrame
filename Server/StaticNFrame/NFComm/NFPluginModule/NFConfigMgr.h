@@ -8,13 +8,24 @@
 // -------------------------------------------------------------------------
 #pragma once
 
-#include "NFILuaScriptModule.h"
+#define LUAINTF_LINK_LUA_COMPILED_IN_CXX 0
+#include "Dependencies/LuaBind/luaintf/LuaIntf.h"
+
+#include "NFComm/NFPluginModule/NFIModule.h"
 #include "NFComm/NFCore/NFSingleton.hpp"
 #include "NFIPluginManager.h"
 #include "NFServerDefine.h"
 
 #include <unordered_map>
 #include <vector>
+
+namespace LuaIntf
+{
+	LUA_USING_SHARED_PTR_TYPE(std::shared_ptr);
+}
+
+typedef LuaIntf::LuaRef NFLuaRef;
+typedef LuaIntf::LuaTableRef NFLuaTableRef;
 
 struct NFPluginConfig
 {
@@ -58,7 +69,7 @@ public:
 	bool mSecurity;
 };
 
-class NFConfigMgr : public NFSingleton<NFConfigMgr>, public NFILuaScriptModule
+class NFConfigMgr : public NFSingleton<NFConfigMgr>, public NFIModule
 {
 public:
 	NFConfigMgr()
@@ -68,7 +79,137 @@ public:
 	virtual ~NFConfigMgr()
 	{
 	}
+public:
+	lua_State* GetLuaState() const
+	{
+		return l.state();
+	}
+public:
+	template <typename V = LuaIntf::LuaRef>
+	V GetGlobal(const std::string& keyName) const
+	{
+		return l.getGlobal(keyName.c_str());
+	}
 
+	template <typename T>
+	bool GetValue(const std::string& keyName, T& value) const
+	{
+		LuaIntf::LuaRef ref = GetGlobal(keyName);
+		if (!ref.isValid())
+		{
+			return false;
+		}
+
+		try
+		{
+			value = ref.toValue<T>();
+			return true;
+		}
+		catch (LuaIntf::LuaException& e)
+		{
+			std::cout << e.what() << std::endl;
+		}
+
+		return true;
+	}
+
+public:
+	bool TryLoadScriptString(const std::string& strScript)
+	{
+		try
+		{
+			l.doString(strScript.c_str());
+			return true;
+		}
+		catch (LuaIntf::LuaException& e)
+		{
+			std::cout << e.what() << std::endl;
+		}
+		return false;
+	}
+
+	bool TryLoadScriptFile(const std::string& strFileName)
+	{
+		try
+		{
+			l.doFile(strFileName.c_str());
+			return true;
+		}
+		catch (LuaIntf::LuaException& e)
+		{
+			std::cout << e.what() << std::endl;
+		}
+		return false;
+	}
+
+	bool TryAddPackagePath(const std::string& strFilePath)
+	{
+		try
+		{
+			l.addPackagePath(strFilePath);
+			return true;
+		}
+		catch (LuaIntf::LuaException& e)
+		{
+			std::cout << e.what() << std::endl;
+		}
+		return false;
+	}
+
+public:
+	bool TryRunGlobalScriptFunc(const std::string& strFuncName) const
+	{
+		try
+		{
+			LuaIntf::LuaRef func(l, strFuncName.c_str());
+			func.call<LuaIntf::LuaRef>();
+			return true;
+		}
+		catch (LuaIntf::LuaException& e)
+		{
+			std::cout << e.what() << std::endl;
+		}
+		return false;
+	}
+
+	template <typename... Arg>
+	bool TryRunGlobalScriptFunc(const std::string& strFuncName, Arg&&... args)
+	{
+		try
+		{
+			LuaIntf::LuaRef func(l, strFuncName.c_str());
+			func.call<LuaIntf::LuaRef>(std::forward<Arg>(args)...);
+			return true;
+		}
+		catch (LuaIntf::LuaException& e)
+		{
+			std::cout << e.what() << std::endl;
+		}
+		return false;
+	}
+
+public:
+	template <typename KEY, typename VALUE>
+	bool GetLuaTableValue(const LuaIntf::LuaRef& table, const KEY& keyName, VALUE& value)
+	{
+		try
+		{
+			LuaIntf::LuaRef valueRef = table[keyName];
+			if (!valueRef.isValid())
+			{
+				std::cout << "load lua table " << keyName << " failed!" << std::endl;
+				return false;
+			}
+
+			value = valueRef.toValue<VALUE>();
+			return true;
+		}
+		catch (LuaIntf::LuaException& e)
+		{
+			std::cout << e.what() << std::endl;
+		}
+		return false;
+	}
 public:
 	int Init(NFIPluginManager* p)
 	{
@@ -93,5 +234,7 @@ public:
 protected:
 	std::unordered_map<std::string, NFPluginConfig*> mPluginConfig; //pluginName--key
 	std::unordered_map<int, NFServerConfig*> mServerConfig; //serverid--key
+protected:
+	LuaIntf::LuaContext l;
 };
 

@@ -1,4 +1,4 @@
-
+require "gxlua/class"
 
 CreateClass("Map")
 

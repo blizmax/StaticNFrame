@@ -10,6 +10,7 @@
 #include <iostream>
 #include "NFIPacketParse.h"
 #include "NFMyClient.h"
+#include "NFComm/NFPluginModule/NFILuaScriptModule.h"
 
 NFCNetClientModule::NFCNetClientModule(NFIPluginManager* p)
 {
@@ -20,6 +21,7 @@ NFCNetClientModule::NFCNetClientModule(NFIPluginManager* p)
 		AddEventCallBack((NF_SERVER_TYPES)serverType, this, &NFCNetClientModule::OnHandleNetEvent);
 	}
 	mxSendBuffer.AssureSpace(MAX_SEND_BUFFER_SIZE);
+	m_pLuaScriptModule = nullptr;
 }
 
 NFCNetClientModule::~NFCNetClientModule()
@@ -417,6 +419,22 @@ void NFCNetClientModule::OnDisConnected(NFClient* pClient)
 			pClient->SetStatus(eConnectStatus_Disconnect);
 			pClient->SetLastActionTime(NFGetTime());
 		}
+	}
+}
+
+void NFCNetClientModule::RunNetRecvLuaFunc(const std::string& luaFunc, const uint32_t unLinkId, const uint64_t valueId, const uint32_t nMsgId, const char* msg, const uint32_t nLen)
+{
+	if (m_pLuaScriptModule)
+	{
+		m_pLuaScriptModule->RunNetRecvLuaFunc(luaFunc, unLinkId, valueId, nMsgId, msg, nLen);
+	}
+}
+
+void NFCNetClientModule::RunNetEventLuaFunc(const std::string& luaFunc, const eMsgType nEvent, const uint32_t unLinkId)
+{
+	if (m_pLuaScriptModule)
+	{
+		m_pLuaScriptModule->RunNetEventLuaFunc(luaFunc, nEvent, unLinkId);
 	}
 }
 

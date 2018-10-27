@@ -10,6 +10,7 @@
 
 #include "NFComm/NFPluginModule/NFIPlugin.h"
 #include "NFIPacketParse.h"
+#include "NFComm/NFPluginModule/NFILuaScriptModule.h"
 
 NFCNetServerModule::NFCNetServerModule(NFIPluginManager* p)
 {
@@ -20,6 +21,7 @@ NFCNetServerModule::NFCNetServerModule(NFIPluginManager* p)
 		mServerArray[i] = nullptr;
 	}
 	mxSendBuffer.AssureSpace(MAX_SEND_BUFFER_SIZE);
+	m_pLuaScriptModule = nullptr;
 }
 
 NFCNetServerModule::~NFCNetServerModule()
@@ -28,6 +30,8 @@ NFCNetServerModule::~NFCNetServerModule()
 
 bool NFCNetServerModule::Init()
 {
+	//可以允许Lua Module不存在
+	m_pLuaScriptModule = dynamic_cast<NFILuaScriptModule*>(pPluginManager->FindModule("NFILuaScriptModule"));
 	return true;
 }
 
@@ -235,5 +239,21 @@ void NFCNetServerModule::SendAllMsg(NFServer* pServer, const uint32_t nMsgID, co
 		pServer->SendAll(mxSendBuffer.ReadAddr(), mxSendBuffer.ReadableSize());
 	}
 	mxSendBuffer.Clear();
+}
+
+void NFCNetServerModule::RunNetRecvLuaFunc(const std::string& luaFunc, const uint32_t unLinkId, const uint64_t valueId, const uint32_t nMsgId, const char* msg, const uint32_t nLen)
+{
+	if (m_pLuaScriptModule)
+	{
+		m_pLuaScriptModule->RunNetRecvLuaFunc(luaFunc, unLinkId, valueId, nMsgId, msg, nLen);
+	}
+}
+
+void NFCNetServerModule::RunNetEventLuaFunc(const std::string& luaFunc, const eMsgType nEvent, const uint32_t unLinkId)
+{
+	if (m_pLuaScriptModule)
+	{
+		m_pLuaScriptModule->RunNetEventLuaFunc(luaFunc, nEvent, unLinkId);
+	}
 }
 

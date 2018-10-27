@@ -77,11 +77,31 @@ public:
 		return false;
 	}
 
+	virtual bool AddReceiveLuaCallBackByMsgId(const NF_SERVER_TYPES eType, const uint32_t nMsgID, const std::string& luaFunc)
+	{
+		if (eType >= 0 && eType < NF_ST_MAX)
+		{
+			mxCallBack[eType].mxReceiveLuaCallBack.emplace(nMsgID, luaFunc);
+			return true;
+		}
+		return false;
+	}
+
 	virtual bool AddReceiveCallBack(const NF_SERVER_TYPES eType, const NET_RECEIVE_FUNCTOR& cb)
 	{
 		if (eType >= 0 && eType < NF_ST_MAX)
 		{
 			mxCallBack[eType].mxCallBackList.push_back(cb);
+			return true;
+		}
+		return false;
+	}
+
+	virtual bool AddReceiveLuaCallBackToOthers(const NF_SERVER_TYPES eType, const std::string& luaFunc)
+	{
+		if (eType >= 0 && eType < NF_ST_MAX)
+		{
+			mxCallBack[eType].mxCallLuaBackList.push_back(luaFunc);
 			return true;
 		}
 		return false;
@@ -99,6 +119,16 @@ public:
 		if (eType >= 0 && eType < NF_ST_MAX)
 		{
 			mxCallBack[eType].mxEventCallBack.push_back(cb);
+			return true;
+		}
+		return false;
+	}
+
+	virtual bool AddEventLuaCallBack(const NF_SERVER_TYPES eType, const std::string& luaFunc)
+	{
+		if (eType >= 0 && eType < NF_ST_MAX)
+		{
+			mxCallBack[eType].mxEventLuaCallBack.push_back(luaFunc);
 			return true;
 		}
 		return false;
@@ -129,17 +159,30 @@ public:
 		if (eServerType < NF_ST_MAX)
 		{
 			auto it = mxCallBack[eServerType].mxReceiveCallBack.find(nMsgId);
-			if (mxCallBack[eServerType].mxReceiveCallBack.end() != it)
+			if (it != mxCallBack[eServerType].mxReceiveCallBack.end())
 			{
 				NET_RECEIVE_FUNCTOR& pFun = it->second;
 				pFun(unLinkId, valueId, nMsgId, msg, nLen);
 			}
 			else
 			{
-				for (auto iterator = mxCallBack[eServerType].mxCallBackList.begin(); iterator != mxCallBack[eServerType].mxCallBackList.end(); ++iterator)
+				auto iter = mxCallBack[eServerType].mxReceiveLuaCallBack.find(nMsgId);
+				if (iter != mxCallBack[eServerType].mxReceiveLuaCallBack.end())
 				{
-					NET_RECEIVE_FUNCTOR& pFun = *iterator;
-					pFun(unLinkId, valueId, nMsgId, msg, nLen);
+					RunNetRecvLuaFunc(iter->second, unLinkId, valueId, nMsgId, msg, nLen);
+				}
+				else
+				{
+					for (auto iterator = mxCallBack[eServerType].mxCallBackList.begin(); iterator != mxCallBack[eServerType].mxCallBackList.end(); ++iterator)
+					{
+						NET_RECEIVE_FUNCTOR& pFun = *iterator;
+						pFun(unLinkId, valueId, nMsgId, msg, nLen);
+					}
+
+					for (auto iterator = mxCallBack[eServerType].mxCallLuaBackList.begin(); iterator != mxCallBack[eServerType].mxCallLuaBackList.end(); ++iterator)
+					{
+						RunNetRecvLuaFunc(*iterator, unLinkId, valueId, nMsgId, msg, nLen);
+					}
 				}
 			}
 		}
@@ -155,9 +198,23 @@ public:
 				NET_EVENT_FUNCTOR& pFun = *it;
 				pFun(nEvent, unLinkId);
 			}
+
+			for (auto it = mxCallBack[eServerType].mxEventLuaCallBack.begin(); it != mxCallBack[eServerType].mxEventLuaCallBack.end(); ++it)
+			{
+				RunNetEventLuaFunc(*it, nEvent, unLinkId);
+			}
 		}
 	}
 
+	virtual void RunNetRecvLuaFunc(const std::string& luaFunc, const uint32_t unLinkId, const uint64_t valueId, const uint32_t nMsgId, const char* msg, const uint32_t nLen)
+	{
+
+	}
+
+	virtual void RunNetEventLuaFunc(const std::string& luaFunc, const eMsgType nEvent, const uint32_t unLinkId)
+	{
+
+	}
 protected:
 	struct CallBack
 	{
@@ -165,6 +222,10 @@ protected:
 		std::unordered_map<uint32_t, NET_RECEIVE_FUNCTOR> mxReceiveCallBack;
 		std::vector<NET_EVENT_FUNCTOR> mxEventCallBack;
 		std::vector<NET_RECEIVE_FUNCTOR> mxCallBackList;
+
+		std::unordered_map<uint32_t, std::string> mxReceiveLuaCallBack;
+		std::vector<std::string> mxEventLuaCallBack;
+		std::vector<std::string> mxCallLuaBackList;
 	};
 
 	std::vector<CallBack> mxCallBack;

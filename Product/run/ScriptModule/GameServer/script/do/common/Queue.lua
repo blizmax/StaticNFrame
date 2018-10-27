@@ -1,3 +1,5 @@
+require "gxlua/class"
+
 CreateClass("Queue")
 
 -- 构造函数
