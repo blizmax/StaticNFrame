@@ -77,6 +77,9 @@ void NFCProxyClient_GameModule::OnProxySocketEvent(const eMsgType nEvent, const 
 	{
 		//NFLogDebug("Proxy Server Connect Game Server Success!");
 		NFEventMgr::Instance()->FireExecute(NFEVENT_PROXY_CONNECT_GAME_SUCCESS, unLinkId, NF_ST_GAME, nullptr);
+
+		std::string msg = "{\"do\":\"Cmd.SendReqRecommendFriendCmd_C\"}";
+		m_pNetClientModule->SendByServerID(unLinkId, 1111, msg, 0);
 	}
 	else if (nEvent == eMsgType_DISCONNECTED)
 	{

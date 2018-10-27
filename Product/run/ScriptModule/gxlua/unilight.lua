@@ -1,4 +1,12 @@
+-- json
+json = cjson.new()
+
+Do = Do or {}
+
 unilight = unilight or {}
+
+-- Net.*简化Do.*的消息处理，可直接收发lua table消息 --
+Net = Net or {}
 
 unilight.debug = function(...)
 	LuaNFrame:debug(...)

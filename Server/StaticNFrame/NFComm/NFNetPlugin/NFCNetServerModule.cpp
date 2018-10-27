@@ -241,11 +241,11 @@ void NFCNetServerModule::SendAllMsg(NFServer* pServer, const uint32_t nMsgID, co
 	mxSendBuffer.Clear();
 }
 
-void NFCNetServerModule::RunNetRecvLuaFunc(const std::string& luaFunc, const uint32_t unLinkId, const uint64_t valueId, const uint32_t nMsgId, const char* msg, const uint32_t nLen)
+void NFCNetServerModule::RunNetRecvLuaFunc(const std::string& luaFunc, const uint32_t unLinkId, const uint64_t valueId, const uint32_t nMsgId, const std::string& strMsg)
 {
 	if (m_pLuaScriptModule)
 	{
-		m_pLuaScriptModule->RunNetRecvLuaFunc(luaFunc, unLinkId, valueId, nMsgId, msg, nLen);
+		m_pLuaScriptModule->RunNetRecvLuaFunc(luaFunc, unLinkId, valueId, nMsgId, strMsg);
 	}
 }
 

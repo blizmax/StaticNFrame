@@ -16,7 +16,7 @@ function LuaNFrame:init(pluginManager)
     --用来存放加载函数
     self.LoadScriptList = { }
 
-    self.serverModule:AddServer(NF_SERVER_TYPES.NF_ST_LOGIN, 100, 10, 1782)
+    self:addRecvCallBack(NF_SERVER_TYPES.NF_ST_GAME, 1111, "LuaNFrame.NetRecvHandleJson1111")
 end
 
 --添加网络服务器
@@ -36,6 +36,27 @@ end
 
 function LuaNFrame:addEventCallBack(serverType, luaFunc)
     self.serverModule:AddEventLuaCallBack(serverType, luaFunc)
+end
+
+--特殊协议1111
+function LuaNFrame.NetRecvHandleJson1111(unLinkId, valueId, nMsgId, strMsg)
+    unilight.debug("unLinkId:" .. unLinkId .. " valueId:" .. valueId .. " nMsgId:" .. nMsgId .. " strMsg:" .. strMsg)
+    local table_msg = json2table(strMsg)
+    --协议规则
+    if table_msg ~= nil then
+        local cmd = table_msg["do"]
+        if type(cmd) == "string" then
+            local i, j = string.find(cmd, "Cmd.")
+            local strcmd = string.sub(cmd, j+1, -1)
+            if strcmd ~= "" then
+                strcmd = "Cmd" .. strcmd
+                if type(Net[strcmd]) == "function" then
+                    Net[strcmd](table_msg, unLinkId, valueId)
+                end
+            end
+        end
+    end
+    -- body
 end
 
 --执行加载函数

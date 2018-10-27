@@ -7,6 +7,7 @@
 // -------------------------------------------------------------------------
 
 #include <assert.h>
+#include <set>
 #include "NFCLuaScriptModule.h"
 #include "NFLuaScriptPlugin.h"
 #include "NFComm/NFPluginModule/NFIKernelModule.h"
@@ -82,13 +83,42 @@ void NFCLuaScriptModule::LoadScript()
 
 	if (pPluginManager->IsLoadAllServer())
 	{
+		//先记载scriptmodule下面的lua代码
+		std::set<std::string> setFiles;
 		std::list<std::string> files;
-		NFFileUtility::GetFiles(pPluginManager->GetConfigPath() + "/ScriptModule", files, true, "*.lua");
+		NFFileUtility::GetFiles(pPluginManager->GetConfigPath() + "/ScriptModule", files, false, "*.lua");
 		for (auto it = files.begin(); it != files.end(); it++)
 		{
 			std::string str = *it;
 			std::cout << "load script:" << str << std::endl;
 			TRY_LOAD_SCRIPT_FLE(str.c_str());
+			setFiles.insert(str);
+		}
+		files.clear();
+
+		//然后假装gxlua下面的公共代码
+		NFFileUtility::GetFiles(pPluginManager->GetConfigPath() + "/ScriptModule/gxlua", files, true, "*.lua");
+		for (auto it = files.begin(); it != files.end(); it++)
+		{
+			std::string str = *it;
+			std::cout << "load script:" << str << std::endl;
+			TRY_LOAD_SCRIPT_FLE(str.c_str());
+			setFiles.insert(str);
+		}
+		files.clear();
+
+		NFFileUtility::GetFiles(pPluginManager->GetConfigPath() + "/ScriptModule", files, true, "*.lua");
+		for (auto it = files.begin(); it != files.end(); it++)
+		{
+			std::string str = *it;
+			if (setFiles.find(str) != setFiles.end())
+			{
+				continue;
+			}
+
+			std::cout << "load script:" << str << std::endl;
+			TRY_LOAD_SCRIPT_FLE(str.c_str());
+			setFiles.insert(str);
 		}
 	}
 	else
@@ -156,9 +186,9 @@ bool NFCLuaScriptModule::Register()
     return true;
 }
 
-void NFCLuaScriptModule::RunNetRecvLuaFunc(const std::string& luaFunc, const uint32_t unLinkId, const uint64_t valueId, const uint32_t nMsgId, const char* msg, const uint32_t nLen)
+void NFCLuaScriptModule::RunNetRecvLuaFunc(const std::string& luaFunc, const uint32_t unLinkId, const uint64_t valueId, const uint32_t nMsgId, const std::string& strMsg)
 {
-	TryRunGlobalScriptFunc(luaFunc, unLinkId, valueId, nMsgId, msg, nLen);
+	TryRunGlobalScriptFunc(luaFunc, unLinkId, valueId, nMsgId, strMsg);
 }
 
 void NFCLuaScriptModule::RunNetEventLuaFunc(const std::string& luaFunc, const eMsgType nEvent, const uint32_t unLinkId)

@@ -169,7 +169,8 @@ public:
 				auto iter = mxCallBack[eServerType].mxReceiveLuaCallBack.find(nMsgId);
 				if (iter != mxCallBack[eServerType].mxReceiveLuaCallBack.end())
 				{
-					RunNetRecvLuaFunc(iter->second, unLinkId, valueId, nMsgId, msg, nLen);
+					std::string strMsg(msg, nLen);
+					RunNetRecvLuaFunc(iter->second, unLinkId, valueId, nMsgId, strMsg);
 				}
 				else
 				{
@@ -181,7 +182,8 @@ public:
 
 					for (auto iterator = mxCallBack[eServerType].mxCallLuaBackList.begin(); iterator != mxCallBack[eServerType].mxCallLuaBackList.end(); ++iterator)
 					{
-						RunNetRecvLuaFunc(*iterator, unLinkId, valueId, nMsgId, msg, nLen);
+						std::string strMsg(msg, nLen);
+						RunNetRecvLuaFunc(*iterator, unLinkId, valueId, nMsgId, strMsg);
 					}
 				}
 			}
@@ -206,7 +208,7 @@ public:
 		}
 	}
 
-	virtual void RunNetRecvLuaFunc(const std::string& luaFunc, const uint32_t unLinkId, const uint64_t valueId, const uint32_t nMsgId, const char* msg, const uint32_t nLen)
+	virtual void RunNetRecvLuaFunc(const std::string& luaFunc, const uint32_t unLinkId, const uint64_t valueId, const uint32_t nMsgId, const std::string& strMsg)
 	{
 
 	}
