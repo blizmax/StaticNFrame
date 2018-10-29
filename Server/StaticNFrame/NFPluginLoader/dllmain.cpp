@@ -22,6 +22,8 @@
 #pragma comment( lib, "Dbghelp.lib" )
 #pragma comment( lib, "mysqlclient.lib" )
 #pragma comment( lib, "mysqlpp.lib" )
+#pragma comment( lib, "bson.lib" )
+#pragma comment( lib, "mongoc.lib" )
 
 /////////////////////////////////////////////////////////////////
 #pragma comment( lib, "NFCore.lib" )
