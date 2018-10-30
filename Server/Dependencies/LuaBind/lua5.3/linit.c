@@ -54,6 +54,7 @@ static const luaL_Reg loadedlibs[] = {
   {LUA_BITLIBNAME, luaopen_bit32},
 #endif
   { LUA_CJSONLIBNAME, luaopen_cjson },
+  { LUA_MONGOLIBNAME, luaopen_mongo },
 #ifdef H_MYSQL
   { LUA_LUASQLNAME, luaopen_luasql_mysql },
 #endif

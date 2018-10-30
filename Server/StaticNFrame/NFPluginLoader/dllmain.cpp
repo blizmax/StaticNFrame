@@ -8,7 +8,20 @@
 // -------------------------------------------------------------------------
 #include "NFComm/NFCore/NFPlatform.h"
 
+#define BSON_STATIC
+#define MONGOC_STATIC
+
 #if NF_PLATFORM == NF_PLATFORM_WIN
+//#pragma comment(lib, "ws2_32.lib")
+//#pragma comment(lib, "secur32.lib")
+//#pragma comment(lib, "Crypt32.lib")
+//#pragma comment(lib, "BCrypt.lib")
+//#pragma comment( lib, "bson-static-1.0.lib" )
+//#pragma comment( lib, "mongoc-static-1.0.lib" )
+
+#pragma comment( lib, "bson-1.0.lib" )
+#pragma comment( lib, "mongoc-1.0.lib" )
+
 #pragma comment( lib, "common.lib" )
 #pragma comment( lib, "luaBind.lib" )
 //#pragma comment( lib, "navigation.lib" )
@@ -22,8 +35,7 @@
 #pragma comment( lib, "Dbghelp.lib" )
 #pragma comment( lib, "mysqlclient.lib" )
 #pragma comment( lib, "mysqlpp.lib" )
-#pragma comment( lib, "bson.lib" )
-#pragma comment( lib, "mongoc.lib" )
+
 
 /////////////////////////////////////////////////////////////////
 #pragma comment( lib, "NFCore.lib" )

@@ -11,6 +11,7 @@
 #include "NFIPacketParse.h"
 #include "NFMyClient.h"
 #include "NFComm/NFPluginModule/NFILuaScriptModule.h"
+#include "NFComm/NFPluginModule/NFIPluginManager.h"
 
 NFCNetClientModule::NFCNetClientModule(NFIPluginManager* p)
 {
@@ -30,6 +31,8 @@ NFCNetClientModule::~NFCNetClientModule()
 
 bool NFCNetClientModule::Init()
 {
+	//可以允许Lua Module不存在
+	m_pLuaScriptModule = dynamic_cast<NFILuaScriptModule*>(pPluginManager->FindModule("NFILuaScriptModule"));
 	return true;
 }
 

@@ -108,6 +108,17 @@ void NFCLuaScriptModule::LoadScript()
 		}
 		files.clear();
 
+		//然后加载gxlua下面的公共代码
+		NFFileUtility::GetFiles(pPluginManager->GetConfigPath() + "/ScriptModule/common", files, true, "*.lua");
+		for (auto it = files.begin(); it != files.end(); it++)
+		{
+			std::string str = *it;
+			std::cout << "load script:" << str << std::endl;
+			TRY_LOAD_SCRIPT_FLE(str.c_str());
+			setFiles.insert(str);
+		}
+		files.clear();
+
 		NFFileUtility::GetFiles(pPluginManager->GetConfigPath() + "/ScriptModule", files, true, "*.lua");
 		for (auto it = files.begin(); it != files.end(); it++)
 		{
@@ -135,8 +146,18 @@ void NFCLuaScriptModule::LoadScript()
 		}
 		files.clear();
 
-		//然后假装gxlua下面的公共代码
+		//然后加载gxlua下面的公共代码
 		NFFileUtility::GetFiles(pPluginManager->GetConfigPath() + "/ScriptModule/gxlua", files, true, "*.lua");
+		for (auto it = files.begin(); it != files.end(); it++)
+		{
+			std::string str = *it;
+			std::cout << "load script:" << str << std::endl;
+			TRY_LOAD_SCRIPT_FLE(str.c_str());
+		}
+		files.clear();
+
+		//然后加载gxlua下面的公共代码
+		NFFileUtility::GetFiles(pPluginManager->GetConfigPath() + "/ScriptModule/common", files, true, "*.lua");
 		for (auto it = files.begin(); it != files.end(); it++)
 		{
 			std::string str = *it;
@@ -165,6 +186,7 @@ bool NFCLuaScriptModule::Register()
 		.addFunction("GetLogModule", &NFIPluginManager::FindModule<NFILogModule>)
 		.addFunction("GetLuaModule", &NFIPluginManager::FindModule<NFILuaScriptModule>)
 		.addFunction("GetServerModule", &NFIPluginManager::FindModule<NFINetServerModule>)
+		.addFunction("GetClientModule", &NFIPluginManager::FindModule<NFINetClientModule>)
 		.endClass();
 
 	LuaIntf::LuaBinding(l).beginClass<NFILuaScriptModule>("NFILuaScriptModule")
