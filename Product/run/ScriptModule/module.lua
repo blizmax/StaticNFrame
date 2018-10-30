@@ -1,3 +1,10 @@
+function register_module(tbl, name)
+	local tmp = {tbl = tbl, tblName = name}
+	table.insert(LuaNFrame.ScriptList, tmp)
+	unilight.debug("load module:" .. name)
+end
+
+
 ScriptModule = {}
 function ScriptModule.Init(...)
 	for i=1, #(LuaNFrame.ScriptList) do

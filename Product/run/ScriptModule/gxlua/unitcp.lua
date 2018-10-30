@@ -1,3 +1,65 @@
 if Do == nil then
 	Do = {}
 end
+
+TcpServer = TcpServer or { }
+TcpClient = TcpClient or { }
+
+--网络相关
+
+--添加网络服务器
+function TcpServer.addServer(server_type, server_id, max_client, port)
+	return LuaNFrame:addServer(server_type, server_id, max_client, port)
+end
+
+--添加网络协议回调函数
+--luaFunc比如：
+-- function(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen)
+-- end
+function TcpServer.addRecvCallBack(serverType, nMsgId, luaFunc)
+	LuaNFrame:addRecvCallBack(serverType, nMsgId, luaFunc)
+end
+
+--添加网络事件接受回调
+--luaFunc比如：nMsgType serverdefine.lua
+-- function(nMsgType, unLinkId)
+-- end
+function TcpServer.addEventCallBack(serverType, luaFunc)
+	LuaNFrame:addEventCallBack(serverType, luaFunc)
+end
+
+
+function TcpServer.sendJsonMsg(cmd, laccount)
+	local strMsg = table2json(cmd)
+	if type(strMsg) == "string" then
+		LuaNFrame:sendByServerID(laccount.unLinkId, 1111, strMsg, laccount.Id)
+	end
+end
+
+--添加网络客户端
+function TcpClient.addServer(serverType, ip, port)
+	return LuaNFrame:addServerForClient(serverType, ip, port)
+end
+
+--添加网络协议回调函数
+--luaFunc比如：
+-- function(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen)
+-- end
+function TcpClient.addRecvCallBack(serverType, nMsgId, luaFunc)
+	LuaNFrame:addRecvCallBackForClient(serverType, nMsgId, luaFunc)
+end
+
+--添加网络事件接受回调
+--luaFunc比如：nMsgType serverdefine.lua
+-- function(nMsgType, unLinkId)
+-- end
+function TcpClient.addEventCallBack(serverType, luaFunc)
+	LuaNFrame:addEventCallBackForClient(serverType, luaFunc)
+end
+
+function TcpClient.sendJsonMsg(cmd, laccount)
+	local strMsg = table2json(cmd)
+	if type(strMsg) == "string" then
+		LuaNFrame:sendByServerIDForClient(laccount.unLinkId, 1111, strMsg, laccount.Id)
+	end
+end
