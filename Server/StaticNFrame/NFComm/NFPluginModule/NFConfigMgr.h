@@ -74,6 +74,7 @@ class NFConfigMgr : public NFSingleton<NFConfigMgr>, public NFIModule
 public:
 	NFConfigMgr()
 	{
+		mLogLevel = 0;
 	}
 
 	virtual ~NFConfigMgr()
@@ -231,9 +232,11 @@ public:
 	NFPluginConfig* GetPluginConfig(const std::string& pluginName);
 	NFServerConfig* GetServerConfig(uint32_t serverId);
 	std::vector<NFServerConfig*> GetServerConfigFromServerType(uint32_t serverType);
+	uint32_t GetLogLevel() const { return mLogLevel; }
 protected:
 	std::unordered_map<std::string, NFPluginConfig*> mPluginConfig; //pluginName--key
 	std::unordered_map<int, NFServerConfig*> mServerConfig; //serverid--key
+	uint32_t mLogLevel;
 protected:
 	LuaIntf::LuaContext l;
 };

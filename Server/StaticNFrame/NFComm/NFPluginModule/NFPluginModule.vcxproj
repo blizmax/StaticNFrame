@@ -183,6 +183,7 @@
     <ClInclude Include="NFIMysqlDriver.h" />
     <ClInclude Include="NFIMysqlDriverManager.h" />
     <ClInclude Include="NFIMysqlModule.h" />
+    <ClInclude Include="NFISpdlogModule.h" />
     <ClInclude Include="NFXActor.h" />
     <ClInclude Include="NFCPluginManager.h" />
     <ClInclude Include="NFEventDefine.h" />

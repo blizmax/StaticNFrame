@@ -69,11 +69,9 @@ NFCLogModule::NFCLogModule(NFIPluginManager* p)
 	mBuffer.Init(LOG_BUFFER_LENGTH);
 	pPluginManager = p;
 	mnLogCountTotal = 0;
-	strLogConfigName = pPluginManager->GetLogConfigName();
-	if (strLogConfigName.empty())
-	{
-		strLogConfigName = pPluginManager->GetAppName();
-	}
+
+	strLogConfigName = pPluginManager->GetAppName();
+
 
 #if NF_PLATFORM == NF_PLATFORM_WIN
 #ifdef NF_DEBUG_MODE

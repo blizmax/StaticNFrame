@@ -16,6 +16,7 @@
 #include "NFComm/NFCore/NFProfiler.h"
 #include "NFComm/NFCore/NFFileUtility.h"
 #include "NFComm/NFCore/NFStringUtility.h"
+#include "NFComm/NFPluginModule/NFLogMgr.h"
 
 #define TRY_RUN_GLOBAL_SCRIPT_FUN0(strFuncName)   try {LuaIntf::LuaRef func(l, strFuncName);  func.call<LuaIntf::LuaRef>(); }   catch (LuaIntf::LuaException& e) { cout << e.what() << endl; }
 #define TRY_RUN_GLOBAL_SCRIPT_FUN1(strFuncName, arg1)  try {LuaIntf::LuaRef func(l, strFuncName);  func.call<LuaIntf::LuaRef>(arg1); }catch (LuaIntf::LuaException& e) { cout << e.what() << endl; }
@@ -27,6 +28,7 @@
 
 bool NFCLuaScriptModule::Init()
 {
+	NFLogDebug("{} shi ge {}", "gaoyi", 11);
     Register();
 	LoadScript();
     return true;
@@ -92,7 +94,7 @@ bool NFCLuaScriptModule::Register()
 		.addFunction("GetAppName", &NFIPluginManager::GetAppName)
 		.addFunction("IsLoadAllServer", &NFIPluginManager::IsLoadAllServer)
 		.addFunction("GetConfigPath", &NFIPluginManager::GetConfigPath)
-		.addFunction("GetLogModule", &NFIPluginManager::FindModule<NFILogModule>)
+		.addFunction("GetLogModule", &NFIPluginManager::FindModule<NFISpdlogModule>)
 		.addFunction("GetLuaModule", &NFIPluginManager::FindModule<NFILuaScriptModule>)
 		.addFunction("GetServerModule", &NFIPluginManager::FindModule<NFINetServerModule>)
 		.addFunction("GetClientModule", &NFIPluginManager::FindModule<NFINetClientModule>)
@@ -128,6 +130,13 @@ bool NFCLuaScriptModule::Register()
 		.addFunction("LuaInfo", &NFILogModule::LuaInfo)
 		.addFunction("LuaWarn", &NFILogModule::LuaWarn)
 		.addFunction("LuaError", &NFILogModule::LuaError)
+		.endClass();
+
+	LuaIntf::LuaBinding(l).beginClass<NFISpdlogModule>("NFISpdlogModule")
+		.addFunction("LuaDebug", &NFISpdlogModule::LuaDebug)
+		.addFunction("LuaInfo", &NFISpdlogModule::LuaInfo)
+		.addFunction("LuaWarn", &NFISpdlogModule::LuaWarn)
+		.addFunction("LuaError", &NFISpdlogModule::LuaError)
 		.endClass();
     return true;
 }

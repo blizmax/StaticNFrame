@@ -217,7 +217,7 @@ bool NFServer::Init()
 	sin.sin_family = AF_INET ;
 	sin.sin_port = htons(mFlag.nPort);
 
-	NFLogInfo("serverId:%d serverType:%s started with port:%d", mServerId, GetServerName(mServerType).c_str(), mFlag.nPort);
+	NFLogInfo("serverId:{} serverType:{} started with port:{}", mServerId, GetServerName(mServerType).c_str(), mFlag.nPort);
 
 	mListener = evconnlistener_new_bind(mBase, listener_cb, static_cast<void*>(this),
 	                                    LEV_OPT_REUSEABLE | LEV_OPT_CLOSE_ON_FREE, -1,
@@ -226,7 +226,7 @@ bool NFServer::Init()
 
 	if (!mListener)
 	{
-		NFLogError("Can not create a listener for port:%d", mFlag.nPort);
+		NFLogError("Can not create a listener for port:{}", mFlag.nPort);
 		return false;
 	}
 

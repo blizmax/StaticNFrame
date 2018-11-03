@@ -35,6 +35,8 @@ NFCPluginManager::NFCPluginManager() : NFIPluginManager()
 
 	mstrConfigName = "Plugin.lua";
 
+	mstrLogPath = "log";
+
 	//    ×¢²áAllServer
 	for (int i = 1; i < NF_ST_MAX; i++)
 	{
@@ -277,14 +279,15 @@ void NFCPluginManager::SetAppName(const std::string& strAppName)
 	mstrAppName = strAppName;
 }
 
-const std::string& NFCPluginManager::GetLogConfigName() const
+const std::string& NFCPluginManager::GetLogPath() const
 {
-	return mstrLogConfigName;
+	return mstrLogPath;
 }
 
-void NFCPluginManager::SetLogConfigName(const std::string& strName)
+void NFCPluginManager::SetLogPath(const std::string& strName)
 {
-	mstrLogConfigName = strName;
+	if (strName.empty()) return;
+	mstrLogPath = strName;
 }
 
 void NFCPluginManager::AddModule(const std::string& strModuleName, NFIModule* pModule)

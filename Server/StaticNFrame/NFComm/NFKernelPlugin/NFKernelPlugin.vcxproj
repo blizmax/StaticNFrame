@@ -219,6 +219,7 @@
     <ClInclude Include="NFCEventModule.h" />
     <ClInclude Include="NFCKernelModule.h" />
     <ClInclude Include="NFCLogModule.h" />
+    <ClInclude Include="NFCSpdlogModule.h" />
     <ClInclude Include="NFCTimerModule.h" />
     <ClInclude Include="NFKernelPlugin.h" />
   </ItemGroup>
@@ -226,6 +227,7 @@
     <ClCompile Include="NFCEventModule.cpp" />
     <ClCompile Include="NFCKernelModule.cpp" />
     <ClCompile Include="NFCLogModule.cpp" />
+    <ClCompile Include="NFCSpdlogModule.cpp" />
     <ClCompile Include="NFCTimerModule.cpp" />
     <ClCompile Include="NFKernelPlugin.cpp" />
   </ItemGroup>

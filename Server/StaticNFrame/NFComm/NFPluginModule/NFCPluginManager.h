@@ -95,9 +95,9 @@ public:
 
 	virtual void SetAppName(const std::string& strAppName) override;
 
-	virtual const std::string& GetLogConfigName() const override;
+	virtual const std::string& GetLogPath() const override;
 
-	virtual void SetLogConfigName(const std::string& strName) override;
+	virtual void SetLogPath(const std::string& strName) override;
 
 	virtual void SetLuaScriptPath(const std::string& luaScriptPath) override;
 
@@ -131,7 +131,7 @@ private:
 	std::string mstrConfigPath;
 	std::string mstrConfigName;
 	std::string mstrAppName;
-	std::string mstrLogConfigName;
+	std::string mstrLogPath;
 	std::string mstrLuaScriptPath;
 
 	typedef std::map<std::string, bool> PluginNameMap;

@@ -23,6 +23,7 @@
 #define DEFINE_LUA_STRING_MAX_CONNECT_NUM		"MaxConnectNum"
 #define DEFINE_LUA_STRING_WORK_THREAD_NUM		"WorkThreadNum"
 #define DEFINE_LUA_STRING_SECURITY				"Security"
+#define DEFINE_LUA_STRING_LOG_LEVEL				"LogLevel"
 
 bool NFConfigMgr::Init()
 {
@@ -50,6 +51,8 @@ bool NFConfigMgr::Init()
 		std::cerr << "Load ZoneServer.lua Failed!" << std::endl;
 		assert(0);
 	}
+
+	GetValue(DEFINE_LUA_STRING_LOG_LEVEL, mLogLevel);
 
 	NFLuaRef pluginRef = GetGlobal(DEFINE_LUA_STRING_LOAD_PLUGIN);
 	if (!pluginRef.isValid())

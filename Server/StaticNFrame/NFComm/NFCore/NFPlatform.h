@@ -195,5 +195,22 @@ inline int64_t NFGetNanoSeccondTime()
 #define NF_CASE_STRING_END()  default:return "Unknown";break;}
 #endif
 
+#ifndef NF_FUNCTION_LINE
+#define NF_FUNCTION_LINE __FUNCTION__, __LINE__
+#endif
+
+#ifndef NF_FILE_FUNCTION_LINE
+#define NF_FILE_FUNCTION_LINE __FILE__, __FUNCTION__, __LINE__
+#endif
+#define NF_FORMAT(my_fmt, ...)             fmt::format(my_fmt, ##__VA_ARGS__);
+#define NF_FORMAT_FUNCTION(my_fmt, ...)    fmt::format(std::string("[{}:{}]") + my_fmt, NF_FUNCTION_LINE, ##__VA_ARGS__);
+
+// folder separator
+#if NF_PLATFORM == NF_PLATFORM_WIN
+#define NF_FOLDER_SEP '\\'
+#else
+#define NF_FOLDER_SEP '/'
+#endif
+
 #endif
 

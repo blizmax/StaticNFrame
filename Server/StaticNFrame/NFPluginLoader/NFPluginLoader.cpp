@@ -164,7 +164,9 @@ void PrintfLogo()
 	std::cout << "--Plugin=Plugin.lua Load the plugin when programs be launched" << std::endl;
 	std::cout << "--Server=AllServer Load the AllServer plugin when programs be launched" << std::endl;
 	std::cout << "--ID=number(0) Load the number Server when programs be launched" << std::endl;
-	std::cout << "--PATH=../ Load the Config Path when programs be launched" << std::endl;
+	std::cout << "--PATH=../Config Load the Config Path when programs be launched" << std::endl;
+	std::cout << "--LuaScript=../ScriptModule Load the Config Path when programs be launched" << std::endl;
+	std::cout << "--LogPath=./spdlog Load the Config Path when programs be launched" << std::endl;
 	std::cout << "Input 'Exit' Programs will exit when it runs" << std::endl;
 	std::cout << "\n" << std::endl;
 
@@ -184,7 +186,8 @@ void ProcessParameter(int argc, char* argv[])
 		cmdParser.Add<std::string>("Path", 'P', "Config Path", false, "./");
 		cmdParser.Add<std::string>("Plugin", 'p', "Plugin Config", false, "Plugin.xml");
 		cmdParser.Add<std::string>("LuaScript", 'l', "Lua Script Path", false, "ScriptModule");
-
+		cmdParser.Add<std::string>("LogPath", 'o', "Log Path", false, "spdlog");
+		
 		cmdParser.Add("XButton", 'x', "Close the 'X' button, only on windows");
 		cmdParser.Add("Daemon", 'd', "Run it as daemon mode, only on linux");
 
@@ -218,6 +221,8 @@ void ProcessParameter(int argc, char* argv[])
 		NFCPluginManager::GetSingletonPtr()->SetConfigPath(strDataPath);
 		std::string luaScript = cmdParser.Get<std::string>("LuaScript");
 		NFCPluginManager::GetSingletonPtr()->SetLuaScriptPath(luaScript);
+		std::string logPath = cmdParser.Get<std::string>("LogPath");
+		NFCPluginManager::GetSingletonPtr()->SetLogPath(logPath);
 
 		std::string strTitleName = "NF" + strAppName + lexical_cast<std::string>(nAppID);// +" PID" + NFGetPID();
 #if NF_PLATFORM == NF_PLATFORM_WIN

@@ -34,14 +34,14 @@ bool NFCPluginManager::InitSingleton()
 	NFServerTimeMgr::Instance()->Init(mFrame);
 	NFConfigMgr::Instance()->Init(this);
 
-	NFILogModule* pLogModule = NFIPluginManager::FindModule<NFILogModule>();
 	NFIEventModule* pEventModule = NFIPluginManager::FindModule<NFIEventModule>();
 	NFITimerModule* pTimerModule = NFIPluginManager::FindModule<NFITimerModule>();
+	NFISpdlogModule* pSpdLogModule = NFIPluginManager::FindModule<NFISpdlogModule>();
 
 	//初始化事件系统
 	NFEventMgr::Instance()->Init(pEventModule);
 	NFTimerMgr::Instance()->Init(pTimerModule);
-	NFLogMgr::Instance()->Init(pLogModule);
+	NFLogMgr::Instance()->Init(pSpdLogModule);
 
 	//初始化DB系统
 	NFDBActorMgr::Instance()->Init();
