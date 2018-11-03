@@ -77,16 +77,16 @@ NFCLogModule::NFCLogModule(NFIPluginManager* p)
 
 #if NF_PLATFORM == NF_PLATFORM_WIN
 #ifdef NF_DEBUG_MODE
-	strAppLogName = pPluginManager->GetConfigPath() + "Config/logconfig/" + strLogConfigName + "_win.conf";
+	strAppLogName = pPluginManager->GetConfigPath() + "/logconfig/" + strLogConfigName + "_win.conf";
 #else
-	strAppLogName = pPluginManager->GetConfigPath() + "Config/logconfig/" + strLogConfigName + "_win.conf";
+	strAppLogName = pPluginManager->GetConfigPath() + "/logconfig/" + strLogConfigName + "_win.conf";
 #endif
 
 #else
 #ifdef NF_DEBUG_MODE
-	strAppLogName = pPluginManager->GetConfigPath() + "Config/logconfig/" + strLogConfigName + ".conf";
+	strAppLogName = pPluginManager->GetConfigPath() + "/logconfig/" + strLogConfigName + ".conf";
 #else
-	strAppLogName = pPluginManager->GetConfigPath() + "Config/logconfig/" + strLogConfigName + ".conf";
+	strAppLogName = pPluginManager->GetConfigPath() + "/logconfig/" + strLogConfigName + ".conf";
 #endif
 #endif
 

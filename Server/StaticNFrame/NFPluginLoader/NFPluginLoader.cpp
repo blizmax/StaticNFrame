@@ -179,13 +179,16 @@ void ProcessParameter(int argc, char* argv[])
 	{
 		NFCmdLine::NFParser cmdParser;
 
-		cmdParser.Add<std::string>("Server", 'S', "Server Name", true, "AllServer");
+		cmdParser.Add<std::string>("Server", 'S', "Server Name", true, "all");
 		cmdParser.Add<int>("ID", 'I', "Server ID", true, 0);
-		cmdParser.Add<std::string>("Path", 'P', "Config Path", false, "../");
-		cmdParser.Add<std::string>("Plugin", 'p', "Plugin Config", false, "Plugin.lua");
+		cmdParser.Add<std::string>("Path", 'P', "Config Path", false, "./");
+		cmdParser.Add<std::string>("Plugin", 'p', "Plugin Config", false, "Plugin.xml");
+		cmdParser.Add<std::string>("LuaScript", 'l', "Lua Script Path", false, "ScriptModule");
 
 		cmdParser.Add("XButton", 'x', "Close the 'X' button, only on windows");
 		cmdParser.Add("Daemon", 'd', "Run it as daemon mode, only on linux");
+
+		cmdParser.Usage();
 
 		cmdParser.ParseCheck(argc, argv);
 
@@ -213,6 +216,8 @@ void ProcessParameter(int argc, char* argv[])
 		NFCPluginManager::GetSingletonPtr()->SetAppID(nAppID);
 		std::string strDataPath = cmdParser.Get<std::string>("Path");
 		NFCPluginManager::GetSingletonPtr()->SetConfigPath(strDataPath);
+		std::string luaScript = cmdParser.Get<std::string>("LuaScript");
+		NFCPluginManager::GetSingletonPtr()->SetLuaScriptPath(luaScript);
 
 		std::string strTitleName = "NF" + strAppName + lexical_cast<std::string>(nAppID);// +" PID" + NFGetPID();
 #if NF_PLATFORM == NF_PLATFORM_WIN

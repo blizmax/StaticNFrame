@@ -31,13 +31,9 @@ NFCPluginManager::NFCPluginManager() : NFIPluginManager()
 {
 	mnAppID = 0;
 
-	mstrConfigPath = "../";
+	mstrConfigPath = "../Config";
 
-#ifdef NF_DEBUG_MODE
-	mstrConfigName = "Config/Plugin.lua";
-#else
-	mstrConfigName = "Config/Plugin.lua";
-#endif
+	mstrConfigName = "Plugin.lua";
 
 	//    ×¢²áAllServer
 	for (int i = 1; i < NF_ST_MAX; i++)
@@ -235,6 +231,8 @@ inline const std::string& NFCPluginManager::GetConfigPath() const
 
 inline void NFCPluginManager::SetConfigPath(const std::string& strPath)
 {
+	if (strPath.empty()) return;
+
 	mstrConfigPath = strPath;
 }
 
@@ -245,11 +243,18 @@ void NFCPluginManager::SetConfigName(const std::string& strFileName)
 		return;
 	}
 
-#ifdef NF_DEBUG_MODE
-	mstrConfigName = "Config/" + strFileName;
-#else
-	mstrConfigName = "Config/" + strFileName;
-#endif
+	mstrConfigName = strFileName;
+}
+
+void NFCPluginManager::SetLuaScriptPath(const std::string& luaScriptPath)
+{
+	if (luaScriptPath.empty()) return;
+	mstrLuaScriptPath = luaScriptPath;
+}
+
+const std::string& NFCPluginManager::GetLuaScriptPath() const
+{
+	return mstrLuaScriptPath;
 }
 
 const std::string& NFCPluginManager::GetConfigName() const

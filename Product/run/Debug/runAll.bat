@@ -1,1 +1,1 @@
-start ./NFPluginLoader --Server=AllServer --ID=6 --Path=../                               
+start ./NFPluginLoader --Server=AllServer --ID=6 --Path=../ --LuaScript="../ScriptModule"                               

@@ -127,6 +127,10 @@ public:
 	virtual void SetLogConfigName(const std::string& strName) = 0;
 
 	virtual bool IsLoadAllServer() const = 0;
+
+	virtual void SetLuaScriptPath(const std::string& luaScriptPath) = 0;
+
+	virtual const std::string& GetLuaScriptPath() const = 0;
 };
 
 #endif

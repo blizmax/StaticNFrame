@@ -99,6 +99,10 @@ public:
 
 	virtual void SetLogConfigName(const std::string& strName) override;
 
+	virtual void SetLuaScriptPath(const std::string& luaScriptPath) override;
+
+	virtual const std::string& GetLuaScriptPath() const override;
+
 	virtual bool IsLoadAllServer() const override;
 
 	virtual uint32_t GetFrame() const
@@ -128,6 +132,7 @@ private:
 	std::string mstrConfigName;
 	std::string mstrAppName;
 	std::string mstrLogConfigName;
+	std::string mstrLuaScriptPath;
 
 	typedef std::map<std::string, bool> PluginNameMap;
 	typedef std::map<std::string, NFIPlugin*> PluginInstanceMap;

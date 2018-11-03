@@ -26,7 +26,7 @@
 
 bool NFConfigMgr::Init()
 {
-	TryAddPackagePath(pPluginManager->GetConfigPath() + "Config/"); //Add Search Path to Lua
+	TryAddPackagePath(pPluginManager->GetConfigPath()); //Add Search Path to Lua
 	if (TryLoadScriptFile("Plugin.lua") == false)
 	{
 		std::cerr << "Load Plugin.lua Failed!" << std::endl;
