@@ -76,6 +76,7 @@
     <ClCompile Include="luacjson\g_fmt.c" />
     <ClCompile Include="luacjson\lua_cjson.c" />
     <ClCompile Include="luacjson\strbuf.c" />
+    <ClCompile Include="luafilesystem\lfs.c" />
     <ClCompile Include="luasocket\auxiliar.c" />
     <ClCompile Include="luasocket\buffer.c" />
     <ClCompile Include="luasocket\compat.c" />
@@ -145,6 +146,7 @@
     <ClInclude Include="luacjson\dtoa_config.h" />
     <ClInclude Include="luacjson\fpconv.h" />
     <ClInclude Include="luacjson\strbuf.h" />
+    <ClInclude Include="luafilesystem\lfs.h" />
     <ClInclude Include="luaintf\impl\CppArg.h" />
     <ClInclude Include="luaintf\impl\CppBindClass.h" />
     <ClInclude Include="luaintf\impl\CppBindModule.h" />

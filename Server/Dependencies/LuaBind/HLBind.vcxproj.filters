@@ -28,6 +28,9 @@
     <Filter Include="3rd\luamongo">
       <UniqueIdentifier>{b7e1cb1e-15c8-46c4-b4be-c46d42b36cb7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="3rd\luafilesystem">
+      <UniqueIdentifier>{2309f5d5-e667-4346-8f7b-5b01ade0ba7a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="lpeg\lpcap.c">
@@ -294,6 +297,9 @@
     <ClCompile Include="lua-mongo\src\util.c">
       <Filter>3rd\luamongo</Filter>
     </ClCompile>
+    <ClCompile Include="luafilesystem\lfs.c">
+      <Filter>3rd\luafilesystem</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="lpeg\lpcap.h">
@@ -532,6 +538,9 @@
     </ClInclude>
     <ClInclude Include="lua-mongo\src\common.h">
       <Filter>3rd\luamongo</Filter>
+    </ClInclude>
+    <ClInclude Include="luafilesystem\lfs.h">
+      <Filter>3rd\luafilesystem</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

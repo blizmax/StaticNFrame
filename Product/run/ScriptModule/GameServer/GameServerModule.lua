@@ -1,7 +1,6 @@
 GameServerModule = {}
 
 function GameServerModule.Init()
-	TcpServer.addRecvCallBack(NF_SERVER_TYPES.NF_ST_GAME, 1111, "unilight.NetRecvHandleJson1111")
 	TcpServer.addEventCallBack(NF_SERVER_TYPES.NF_ST_GAME, "GameServerModule.ProxyNetEvent")
 
 

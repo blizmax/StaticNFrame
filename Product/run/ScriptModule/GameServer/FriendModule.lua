@@ -25,4 +25,7 @@ end
 
 function Net.CmdSendReqRecommendFriendCmd_C(cmd, laccount)
     print(table2json(cmd))
+    local msg = {}
+    msg["do"] = "Cmd.SendReqRecommendFriendCmd_S"
+    return msg
 end

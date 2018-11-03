@@ -9,7 +9,6 @@
 #include "NFCNetClientModule.h"
 #include <iostream>
 #include "NFIPacketParse.h"
-#include "NFMyClient.h"
 #include "NFComm/NFPluginModule/NFILuaScriptModule.h"
 #include "NFComm/NFPluginModule/NFIPluginManager.h"
 

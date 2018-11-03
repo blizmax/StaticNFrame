@@ -5,7 +5,6 @@ function GateServerModule.Init()
 end
 
 function GateServerModule.AfterInit()
-	TcpClient.addRecvCallBack(NF_SERVER_TYPES.NF_ST_GAME, 1111, "unilight.NetRecvHandleJson1111")
 	TcpClient.addEventCallBack(NF_SERVER_TYPES.NF_ST_GAME, "GateServerModule.ProxyNetEvent")
 	TcpClient.addServer(NF_SERVER_TYPES.NF_ST_GAME, "127.0.0.1", 6005)
 end

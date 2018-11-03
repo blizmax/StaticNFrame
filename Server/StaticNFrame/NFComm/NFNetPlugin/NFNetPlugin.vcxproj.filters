@@ -14,39 +14,6 @@
     <ClCompile Include="NFClient.cpp">
       <Filter>NFClient</Filter>
     </ClCompile>
-    <ClCompile Include="NFEventLoopThread.cpp">
-      <Filter>NFNetThread</Filter>
-    </ClCompile>
-    <ClCompile Include="NFEventLoop.cpp">
-      <Filter>NFNetThread</Filter>
-    </ClCompile>
-    <ClCompile Include="NFEventWatcher.cpp">
-      <Filter>NFNetThread</Filter>
-    </ClCompile>
-    <ClCompile Include="NFSocket.cpp">
-      <Filter>NFBaseNet</Filter>
-    </ClCompile>
-    <ClCompile Include="NFSelect.cpp">
-      <Filter>NFBaseNet</Filter>
-    </ClCompile>
-    <ClCompile Include="NFEpoll.cpp">
-      <Filter>NFBaseNet</Filter>
-    </ClCompile>
-    <ClCompile Include="NFDuration.cpp">
-      <Filter>NFNetThread</Filter>
-    </ClCompile>
-    <ClCompile Include="NFPoll.cpp">
-      <Filter>NFBaseNet</Filter>
-    </ClCompile>
-    <ClCompile Include="NFMyClient.cpp">
-      <Filter>NFBaseNet</Filter>
-    </ClCompile>
-    <ClCompile Include="NFEventData.cpp">
-      <Filter>NFBaseNet</Filter>
-    </ClCompile>
-    <ClCompile Include="NFCMyClientModule.cpp">
-      <Filter>NFBaseNet</Filter>
-    </ClCompile>
     <ClCompile Include="NFCNetClientModule.cpp">
       <Filter>NFClient</Filter>
     </ClCompile>
@@ -55,6 +22,9 @@
     </ClCompile>
     <ClCompile Include="NFCNetServerModule.cpp">
       <Filter>NFServer</Filter>
+    </ClCompile>
+    <ClCompile Include="NFHttpClient.cpp">
+      <Filter>NFHttpClient</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -74,51 +44,6 @@
     <ClInclude Include="NFClient.h">
       <Filter>NFClient</Filter>
     </ClInclude>
-    <ClInclude Include="NFEventLoopThread.h">
-      <Filter>NFNetThread</Filter>
-    </ClInclude>
-    <ClInclude Include="NFLoopThreadStatus.h">
-      <Filter>NFNetThread</Filter>
-    </ClInclude>
-    <ClInclude Include="NFEventLoop.h">
-      <Filter>NFNetThread</Filter>
-    </ClInclude>
-    <ClInclude Include="NFEventWatcher.h">
-      <Filter>NFNetThread</Filter>
-    </ClInclude>
-    <ClInclude Include="NFLibEvent.h">
-      <Filter>NFNetThread</Filter>
-    </ClInclude>
-    <ClInclude Include="NFConnector.h">
-      <Filter>NFNetThread</Filter>
-    </ClInclude>
-    <ClInclude Include="NFSocket.h">
-      <Filter>NFBaseNet</Filter>
-    </ClInclude>
-    <ClInclude Include="NFNetBase.h">
-      <Filter>NFBaseNet</Filter>
-    </ClInclude>
-    <ClInclude Include="NFSelect.h">
-      <Filter>NFBaseNet</Filter>
-    </ClInclude>
-    <ClInclude Include="NFEpoll.h">
-      <Filter>NFBaseNet</Filter>
-    </ClInclude>
-    <ClInclude Include="NFDuration.h">
-      <Filter>NFNetThread</Filter>
-    </ClInclude>
-    <ClInclude Include="NFMyClient.h">
-      <Filter>NFBaseNet</Filter>
-    </ClInclude>
-    <ClInclude Include="NFPoll.h">
-      <Filter>NFBaseNet</Filter>
-    </ClInclude>
-    <ClInclude Include="NFEventData.h">
-      <Filter>NFBaseNet</Filter>
-    </ClInclude>
-    <ClInclude Include="NFCMyClientModule.h">
-      <Filter>NFBaseNet</Filter>
-    </ClInclude>
     <ClInclude Include="NFCNetClientModule.h">
       <Filter>NFClient</Filter>
     </ClInclude>
@@ -128,6 +53,18 @@
     <ClInclude Include="NFCNetServerModule.h">
       <Filter>NFServer</Filter>
     </ClInclude>
+    <ClInclude Include="NFLibEvent.h">
+      <Filter>NFNetObject</Filter>
+    </ClInclude>
+    <ClInclude Include="NFIHttpClient.h">
+      <Filter>NFHttpClient</Filter>
+    </ClInclude>
+    <ClInclude Include="NFIHttpServer.h">
+      <Filter>NFHttpServer</Filter>
+    </ClInclude>
+    <ClInclude Include="NFHttpClient.h">
+      <Filter>NFHttpClient</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="NFClient">
@@ -136,17 +73,17 @@
     <Filter Include="PacketParse">
       <UniqueIdentifier>{659ffc87-05b5-4512-a7ee-2100d1e99394}</UniqueIdentifier>
     </Filter>
-    <Filter Include="NFNetThread">
-      <UniqueIdentifier>{d1dff8aa-7521-4dc0-b57b-df67186eccb8}</UniqueIdentifier>
-    </Filter>
     <Filter Include="NFNetObject">
       <UniqueIdentifier>{4a41b02b-477f-4136-bb63-6dddc6fd21d6}</UniqueIdentifier>
     </Filter>
-    <Filter Include="NFBaseNet">
-      <UniqueIdentifier>{909a847e-19b9-4a9f-a939-424fe74a297b}</UniqueIdentifier>
-    </Filter>
     <Filter Include="NFServer">
       <UniqueIdentifier>{b93c4676-2477-4fa5-ba90-e064b613727c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="NFHttpClient">
+      <UniqueIdentifier>{5b8ac71f-d0e5-4162-99fa-38ab84b36664}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="NFHttpServer">
+      <UniqueIdentifier>{a7b0f2e7-25d1-4f53-9832-540483a3af73}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
