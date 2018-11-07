@@ -186,7 +186,7 @@ void ProcessParameter(int argc, char* argv[])
 		cmdParser.Add<std::string>("Path", 'P', "Config Path", false, "./");
 		cmdParser.Add<std::string>("Plugin", 'p', "Plugin Config", false, "Plugin.xml");
 		cmdParser.Add<std::string>("LuaScript", 'l', "Lua Script Path", false, "ScriptModule");
-		cmdParser.Add<std::string>("LogPath", 'o', "Log Path", false, "spdlog");
+		cmdParser.Add<std::string>("LogPath", 'o', "Log Path", false, "logs");
 		
 		cmdParser.Add("XButton", 'x', "Close the 'X' button, only on windows");
 		cmdParser.Add("Daemon", 'd', "Run it as daemon mode, only on linux");
@@ -285,8 +285,6 @@ int main(int argc, char* argv[])
 #endif
 		}
 	}
-
-	PRINTF_PROFILE();
 
 	NFCPluginManager::GetSingletonPtr()->BeforeShut();
 	NFCPluginManager::GetSingletonPtr()->Shut();

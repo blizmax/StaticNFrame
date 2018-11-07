@@ -8,9 +8,6 @@
 // -------------------------------------------------------------------------
 #include "NFComm/NFCore/NFPlatform.h"
 
-#define BSON_STATIC
-#define MONGOC_STATIC
-
 #if NF_PLATFORM == NF_PLATFORM_WIN
 //#pragma comment(lib, "ws2_32.lib")
 //#pragma comment(lib, "secur32.lib")

@@ -108,7 +108,6 @@
       <Filter>NFObject</Filter>
     </ClInclude>
     <ClInclude Include="NFIClassModule.h" />
-    <ClInclude Include="NFISpdlogModule.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Event">

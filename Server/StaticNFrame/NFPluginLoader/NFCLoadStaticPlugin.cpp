@@ -18,7 +18,6 @@
 #include "NFComm/NFPluginModule/NFConfigMgr.h"
 #include "NFComm/NFPluginModule/NFDBActorMgr.h"
 
-#include "NFComm/NFPluginModule/NFILogModule.h"
 #include "NFComm/NFPluginModule/NFIEventModule.h"
 #include "NFComm/NFPluginModule/NFITimerModule.h"
 #include "NFComm/NFNetPlugin/NFNetPlugin.h"
@@ -36,12 +35,12 @@ bool NFCPluginManager::InitSingleton()
 
 	NFIEventModule* pEventModule = NFIPluginManager::FindModule<NFIEventModule>();
 	NFITimerModule* pTimerModule = NFIPluginManager::FindModule<NFITimerModule>();
-	NFISpdlogModule* pSpdLogModule = NFIPluginManager::FindModule<NFISpdlogModule>();
+	NFILogModule* pLogModule = NFIPluginManager::FindModule<NFILogModule>();
 
 	//初始化事件系统
 	NFEventMgr::Instance()->Init(pEventModule);
 	NFTimerMgr::Instance()->Init(pTimerModule);
-	NFLogMgr::Instance()->Init(pSpdLogModule);
+	NFLogMgr::Instance()->Init(pLogModule);
 
 	//初始化DB系统
 	NFDBActorMgr::Instance()->Init();

@@ -10,6 +10,7 @@
 #define NFI_LOG_MODULE_H
 
 #include "NFIModule.h"
+#include "spdlog/fmt/fmt.h"
 
 enum NF_LOG_LEVEL
 {
@@ -25,14 +26,36 @@ class NFILogModule
 	: public NFIModule
 {
 public:
-	virtual bool Log(const NF_LOG_LEVEL nll, const char* format, ...) = 0;
-	virtual bool LogNormal(const NF_LOG_LEVEL nll, const uint64_t ident, const std::string& strInfo, const int64_t nDesc, const char* func = "", int line = 0) = 0;
-	virtual bool LogNormal(const NF_LOG_LEVEL nll, const uint64_t ident, const std::string& strInfo, const std::string& strDesc, const char* func = "", int line = 0) = 0;
-	virtual bool LogNormal(const NF_LOG_LEVEL nll, const uint64_t ident, const std::ostringstream& stream, const char* func = "", int line = 0) = 0;
-	virtual void LuaDebug(const std::string& strInfo) = 0;
-	virtual void LuaInfo(const std::string& strInfo) = 0;
-	virtual void LuaWarn(const std::string& strInfo) = 0;
-	virtual void LuaError(const std::string& strInfo) = 0;
+public:
+	template<typename... ARGS>
+	void Log(NF_LOG_LEVEL log_level, const char* function, int line, const char* my_fmt, const ARGS& ... args)
+	{
+		std::string new_fmt = std::string("[{}:{}] | ") + my_fmt;
+		std::string str = fmt::format(new_fmt, function, line, args...);
+		LogNormal(log_level, str);
+	}
+
+	virtual void LogNormal(NF_LOG_LEVEL log_level, const std::string& log) = 0;
+
+	virtual void LuaDebug(const std::string& strInfo)
+	{
+		LogNormal(NLL_DEBUG_NORMAL, strInfo);
+	}
+
+	virtual void LuaInfo(const std::string& strInfo)
+	{
+		LogNormal(NLL_INFO_NORMAL, strInfo);
+	}
+
+	virtual void LuaWarn(const std::string& strInfo)
+	{
+		LogNormal(NLL_WARING_NORMAL, strInfo);
+	}
+
+	virtual void LuaError(const std::string& strInfo)
+	{
+		LogNormal(NLL_ERROR_NORMAL, strInfo);
+	}
 };
 
 #endif

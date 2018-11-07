@@ -20,7 +20,6 @@
 #include <NFComm/NFPluginModule/NFIClassModule.h>
 
 class NFIObject;
-class NFILogModule;
 class NFITimerModule;
 
 class NFCKernelModule : public NFIKernelModule

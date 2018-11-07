@@ -35,7 +35,7 @@ NFCPluginManager::NFCPluginManager() : NFIPluginManager()
 
 	mstrConfigName = "Plugin.lua";
 
-	mstrLogPath = "log";
+	mstrLogPath = "logs";
 
 	//    ×¢²áAllServer
 	for (int i = 1; i < NF_ST_MAX; i++)

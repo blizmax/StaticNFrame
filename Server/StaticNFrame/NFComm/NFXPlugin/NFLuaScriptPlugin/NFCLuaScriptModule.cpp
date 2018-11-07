@@ -94,7 +94,7 @@ bool NFCLuaScriptModule::Register()
 		.addFunction("GetAppName", &NFIPluginManager::GetAppName)
 		.addFunction("IsLoadAllServer", &NFIPluginManager::IsLoadAllServer)
 		.addFunction("GetConfigPath", &NFIPluginManager::GetConfigPath)
-		.addFunction("GetLogModule", &NFIPluginManager::FindModule<NFISpdlogModule>)
+		.addFunction("GetLogModule", &NFIPluginManager::FindModule<NFILogModule>)
 		.addFunction("GetLuaModule", &NFIPluginManager::FindModule<NFILuaScriptModule>)
 		.addFunction("GetServerModule", &NFIPluginManager::FindModule<NFINetServerModule>)
 		.addFunction("GetClientModule", &NFIPluginManager::FindModule<NFINetClientModule>)
@@ -130,13 +130,6 @@ bool NFCLuaScriptModule::Register()
 		.addFunction("LuaInfo", &NFILogModule::LuaInfo)
 		.addFunction("LuaWarn", &NFILogModule::LuaWarn)
 		.addFunction("LuaError", &NFILogModule::LuaError)
-		.endClass();
-
-	LuaIntf::LuaBinding(l).beginClass<NFISpdlogModule>("NFISpdlogModule")
-		.addFunction("LuaDebug", &NFISpdlogModule::LuaDebug)
-		.addFunction("LuaInfo", &NFISpdlogModule::LuaInfo)
-		.addFunction("LuaWarn", &NFISpdlogModule::LuaWarn)
-		.addFunction("LuaError", &NFISpdlogModule::LuaError)
 		.endClass();
     return true;
 }

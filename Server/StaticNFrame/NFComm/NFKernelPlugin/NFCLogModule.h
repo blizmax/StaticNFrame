@@ -1,66 +1,32 @@
 // -------------------------------------------------------------------------
 //    @FileName         :    NFCLogModule.h
-//    @Author           :    LvSheng.Huang
-//    @Date             :    2012-12-15
+//    @Author           :    Yi.Gao
+//    @Date             :    2018-11-3
 //    @Module           :    NFCLogModule
 //    @Desc             :
 // -------------------------------------------------------------------------
-
-#ifndef NFC_LOG_MODULE_H
-#define NFC_LOG_MODULE_H
+#pragma once
 
 #include "NFComm/NFPluginModule/NFILogModule.h"
-#include "NFComm/NFCore/NFSimpleBuffer.h"
-#include "NFComm/NFCore/NFDateTime.hpp"
 
-class NFCLogModule
-	: public NFILogModule
+#include "spdlog/spdlog.h"
+#include "spdlog/fmt/fmt.h"
+
+class NFCLogModule : public NFILogModule
 {
 public:
-	explicit NFCLogModule(NFIPluginManager* p);
+	NFCLogModule(NFIPluginManager* p);
 
-	virtual ~NFCLogModule()
-	{
-	}
+	virtual ~NFCLogModule();
 
-	virtual bool Awake() override;
 	virtual bool Init() override;
 	virtual bool Shut() override;
-	virtual bool Finalize() override;
 
-	virtual bool BeforeShut() override;
-	virtual bool AfterInit() override;
-
-	virtual bool Execute() override;
-
-	///////////////////////////////////////////////////////////////////////
-	virtual void LogStack();
-
-	virtual bool Log(const NF_LOG_LEVEL nll, const char* format, ...);
-
-	virtual void LuaDebug(const std::string& strInfo);
-	virtual void LuaInfo(const std::string& strInfo);
-	virtual void LuaWarn(const std::string& strInfo);
-	virtual void LuaError(const std::string& strInfo);
-
-	virtual bool LogNormal(const NF_LOG_LEVEL nll, const uint64_t ident, const std::string& strInfo, const char* func = "", int line = 0);
-	virtual bool LogNormal(const NF_LOG_LEVEL nll, const uint64_t ident, const std::string& strInfo, const int64_t nDesc, const char* func = "", int line = 0) override;
-	virtual bool LogNormal(const NF_LOG_LEVEL nll, const uint64_t ident, const std::string& strInfo, const std::string& strDesc, const char* func = "", int line = 0) override;
-	virtual bool LogNormal(const NF_LOG_LEVEL nll, const uint64_t ident, const std::ostringstream& stream, const char* func = "", int line = 0) override;
-
-	virtual bool ChangeLogLevel(const std::string& strLevel);
+	virtual void LogNormal(NF_LOG_LEVEL log_level, const std::string& log);
 protected:
-
-	static std::string GetNewLogFile(const std::string& oldFile);
-	static void rolloutHandler(const char* filename, std::size_t size);
-	static void LogCrashHandler(int sig);
+	void CreateLogger();
 private:
-	static unsigned int idx;
-	uint64_t mnLogCountTotal;
-	std::string strLogConfigName;
-	std::string strAppLogName;
-	NFSimpleBuffer mBuffer;
+	std::shared_ptr<spdlog::async_logger> mxLogger;
 };
 
-#endif
 

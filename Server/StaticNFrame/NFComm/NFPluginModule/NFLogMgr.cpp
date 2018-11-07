@@ -12,16 +12,16 @@
 
 NFLogMgr::NFLogMgr()
 {
-	m_pSpdlogModule = nullptr;
+	m_pLogModule = nullptr;
 }
 
 NFLogMgr::~NFLogMgr()
 {
 }
 
-bool NFLogMgr::Init(NFISpdlogModule* pSpdlogModule)
+bool NFLogMgr::Init(NFILogModule* pSpdlogModule)
 {
-	m_pSpdlogModule = pSpdlogModule;
+	m_pLogModule = pSpdlogModule;
 	return true;
 }
 
@@ -30,35 +30,17 @@ void NFLogMgr::UnInit()
 	
 }
 
-bool NFLogMgr::LogNormal(const NF_LOG_LEVEL nll, const uint64_t ident, const std::string& strInfo, const int64_t nDesc, const char* func, int line)
-{
-	if (m_pSpdlogModule)
-	{
-		m_pSpdlogModule->Log(nll, func, line, " {} | {} | {} |", ident, nDesc, strInfo);
-	}
-	return false;
-}
-
 bool NFLogMgr::LogNormal(const NF_LOG_LEVEL nll, const uint64_t ident, const std::string& strInfo, const std::string& strDesc, const char* func, int line)
 {
-	if (m_pSpdlogModule)
+	if (m_pLogModule)
 	{
-		m_pSpdlogModule->Log(nll, func, line, " {} | {} | {} |", ident, strInfo, strDesc);
+		m_pLogModule->Log(nll, func, line, " {} | {} | {} |", ident, strInfo, strDesc);
 	}
 	return false;
 }
 
-bool NFLogMgr::LogNormal(const NF_LOG_LEVEL nll, const uint64_t ident, const std::ostringstream& stream, const char* func, int line)
+NFILogModule* NFLogMgr::GetLogModule()
 {
-	if (m_pSpdlogModule)
-	{
-		m_pSpdlogModule->Log(nll, func, line, " {} | {} | {} |", ident, stream.str());
-	}
-	return false;
-}
-
-NFISpdlogModule* NFLogMgr::GetSpdLogModule()
-{
-	return m_pSpdlogModule;
+	return m_pLogModule;
 }
 

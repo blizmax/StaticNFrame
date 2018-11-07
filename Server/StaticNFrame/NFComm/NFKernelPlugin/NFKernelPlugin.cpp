@@ -9,9 +9,8 @@
 #include "NFKernelPlugin.h"
 #include "NFCKernelModule.h"
 #include "NFCTimerModule.h"
-#include "NFCLogModule.h"
 #include "NFCEventModule.h"
-#include "NFCSpdlogModule.h"
+#include "NFCLogModule.h"
 
 //
 //
@@ -43,11 +42,10 @@ std::string NFKernelPlugin::GetPluginName()
 
 void NFKernelPlugin::Install()
 {
-	REGISTER_MODULE(pPluginManager, NFILogModule, NFCLogModule)
 	REGISTER_MODULE(pPluginManager, NFITimerModule, NFCTimerModule);
 	REGISTER_MODULE(pPluginManager, NFIEventModule, NFCEventModule);
 	REGISTER_MODULE(pPluginManager, NFIKernelModule, NFCKernelModule);
-	REGISTER_MODULE(pPluginManager, NFISpdlogModule, NFCSpdlogModule);
+	REGISTER_MODULE(pPluginManager, NFILogModule, NFCLogModule);
 }
 
 void NFKernelPlugin::Uninstall()
@@ -55,7 +53,6 @@ void NFKernelPlugin::Uninstall()
 	UNREGISTER_MODULE(pPluginManager, NFIKernelModule, NFCKernelModule);
 	UNREGISTER_MODULE(pPluginManager, NFIEventModule, NFCEventModule);
 	UNREGISTER_MODULE(pPluginManager, NFITimerModule, NFCTimerModule);
-	UNREGISTER_MODULE(pPluginManager, NFILogModule, NFCLogModule);
-	UNREGISTER_MODULE(pPluginManager, NFISpdlogModule, NFCSpdlogModule)
+	UNREGISTER_MODULE(pPluginManager, NFILogModule, NFCLogModule)
 }
 

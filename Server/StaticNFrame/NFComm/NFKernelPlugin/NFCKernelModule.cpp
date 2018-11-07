@@ -9,7 +9,6 @@
 #include "NFCKernelModule.h"
 #include "NFComm/NFCore/NFMemManager.hpp"
 
-#include "NFComm/NFPluginModule/NFILogModule.h"
 #include "NFComm/NFCore/NFProfiler.h"
 #include <NFComm/NFPluginModule/NFIPluginManager.h>
 #include <NFComm/NFPluginModule/NFCObject.h>
