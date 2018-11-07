@@ -101,7 +101,7 @@ struct default_date_and_hour_file_name_calculator
             }
         }
 
-        w.write(SPDLOG_FILENAME_T("{}{}_{:02d}{}"), dir_path, basename, tm.tm_hour, ext);
+        w.write(SPDLOG_FILENAME_T("{}{}_{:04d}_{:02d}_{:02d}_{:02d}{}"), dir_path, basename, tm.tm_year + 1900, tm.tm_mon + 1, tm.tm_mday, tm.tm_hour, ext);
         return w.str();
     }
 };

@@ -21,6 +21,8 @@
 */
 
 #pragma once
+#define BSON_STATIC
+#define MONGOC_STATIC
 
 #include <lauxlib.h>
 #include <mongoc.h>
