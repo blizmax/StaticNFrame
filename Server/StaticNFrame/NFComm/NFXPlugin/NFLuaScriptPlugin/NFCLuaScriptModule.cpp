@@ -17,6 +17,7 @@
 #include "NFComm/NFCore/NFFileUtility.h"
 #include "NFComm/NFCore/NFStringUtility.h"
 #include "NFComm/NFPluginModule/NFLogMgr.h"
+#include "NFComm/NFPluginModule/NFIHttpClientModule.h"
 
 #define TRY_RUN_GLOBAL_SCRIPT_FUN0(strFuncName)   try {LuaIntf::LuaRef func(l, strFuncName);  func.call<LuaIntf::LuaRef>(); }   catch (LuaIntf::LuaException& e) { cout << e.what() << endl; }
 #define TRY_RUN_GLOBAL_SCRIPT_FUN1(strFuncName, arg1)  try {LuaIntf::LuaRef func(l, strFuncName);  func.call<LuaIntf::LuaRef>(arg1); }catch (LuaIntf::LuaException& e) { cout << e.what() << endl; }
@@ -28,7 +29,6 @@
 
 bool NFCLuaScriptModule::Init()
 {
-	NFLogDebug("{} shi ge {}", "gaoyi", 11);
     Register();
 	LoadScript();
     return true;
@@ -98,9 +98,15 @@ bool NFCLuaScriptModule::Register()
 		.addFunction("GetLuaModule", &NFIPluginManager::FindModule<NFILuaScriptModule>)
 		.addFunction("GetServerModule", &NFIPluginManager::FindModule<NFINetServerModule>)
 		.addFunction("GetClientModule", &NFIPluginManager::FindModule<NFINetClientModule>)
+		.addFunction("GetHttpClientModule", &NFIPluginManager::FindModule<NFIHttpClientModule>)
 		.endClass();
 
 	LuaIntf::LuaBinding(l).beginClass<NFILuaScriptModule>("NFILuaScriptModule")
+		.endClass();
+
+	LuaIntf::LuaBinding(l).beginClass<NFIHttpClientModule>("NFIHttpClientModule")
+		.addFunction("HttpRequestGet", &NFIHttpClientModule::LuaHttpGet)
+		.addFunction("HttpRequestPost", &NFIHttpClientModule::LuaHttpPost)
 		.endClass();
 
 	LuaIntf::LuaBinding(l).beginClass<NFINetServerModule>("NFINetServerModule")
@@ -142,4 +148,9 @@ void NFCLuaScriptModule::RunNetRecvLuaFunc(const std::string& luaFunc, const uin
 void NFCLuaScriptModule::RunNetEventLuaFunc(const std::string& luaFunc, const eMsgType nEvent, const uint32_t unLinkId)
 {
 	TryRunGlobalScriptFunc(luaFunc, nEvent, unLinkId);
+}
+
+void NFCLuaScriptModule::RunHtttpClientLuaFunc(const std::string& luaFunc, const int state_code, const std::string& strRespData, const std::string& strUserData)
+{
+	TryRunGlobalScriptFunc("unilight.HttpRequestGetCallBack", luaFunc, state_code, strRespData, strUserData);
 }

@@ -108,6 +108,10 @@
       <Filter>NFObject</Filter>
     </ClInclude>
     <ClInclude Include="NFIClassModule.h" />
+    <ClInclude Include="NFIHttpClientModule.h" />
+    <ClInclude Include="NFIHttpServerModule.h" />
+    <ClInclude Include="NFIHttpClient.h" />
+    <ClInclude Include="NFIHttpServer.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Event">

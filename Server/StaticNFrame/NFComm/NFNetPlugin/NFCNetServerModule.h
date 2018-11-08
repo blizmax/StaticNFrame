@@ -29,6 +29,13 @@ public:
 	virtual ~NFCNetServerModule();
 
 	/**
+	* @brief
+	*
+	* @return bool
+	*/
+	virtual bool Awake() override;
+
+	/**
 	 * @brief
 	 *
 	 * @return bool

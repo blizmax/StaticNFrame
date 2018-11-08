@@ -8,6 +8,7 @@
 #include <chrono>
 #include <string>
 #include <memory>
+#include "spdlog/fmt/fmt.h"
 
 #ifndef NDEBUG
 #include <assert.h>

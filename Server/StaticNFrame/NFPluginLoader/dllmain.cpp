@@ -19,7 +19,7 @@
 #pragma comment( lib, "bson-1.0.lib" )
 #pragma comment( lib, "mongoc-1.0.lib" )
 
-#pragma comment( lib, "common.lib" )
+//#pragma comment( lib, "common.lib" )
 #pragma comment( lib, "luaBind.lib" )
 //#pragma comment( lib, "navigation.lib" )
 #pragma comment( lib, "libevent.lib" )

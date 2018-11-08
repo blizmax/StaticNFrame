@@ -19,14 +19,9 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="easylogging++.h" />
     <ClInclude Include="lexical_cast.hpp" />
-    <ClInclude Include="easylogging++_config.h" />
     <ClInclude Include="optional.hpp" />
     <ClInclude Include="variant.hpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="easylogging++.cc" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{5CEE5C46-2CA6-41AB-BCA9-2EB9DAF0B620}</ProjectGuid>

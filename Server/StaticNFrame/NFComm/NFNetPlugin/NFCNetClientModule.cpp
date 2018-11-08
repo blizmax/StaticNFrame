@@ -28,10 +28,16 @@ NFCNetClientModule::~NFCNetClientModule()
 {
 }
 
-bool NFCNetClientModule::Init()
+bool NFCNetClientModule::Awake()
 {
 	//可以允许Lua Module不存在
 	m_pLuaScriptModule = dynamic_cast<NFILuaScriptModule*>(pPluginManager->FindModule("NFILuaScriptModule"));
+	return true;
+}
+
+
+bool NFCNetClientModule::Init()
+{
 	return true;
 }
 

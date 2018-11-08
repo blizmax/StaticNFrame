@@ -30,6 +30,13 @@ public:
 	virtual ~NFCNetClientModule();
 
 	/**
+	* @brief
+	*
+	* @return bool
+	*/
+	virtual bool Awake() override;
+
+	/**
 	 * @brief
 	 *
 	 * @return bool

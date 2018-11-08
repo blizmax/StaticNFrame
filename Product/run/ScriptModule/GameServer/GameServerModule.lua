@@ -4,7 +4,18 @@ function GameServerModule.Init()
 	TcpServer.addEventCallBack(NF_SERVER_TYPES.NF_ST_GAME, "GameServerModule.ProxyNetEvent")
 
 
-	TcpServer.addServer(NF_SERVER_TYPES.NF_ST_GAME, 1, 100, 6005)
+    TcpServer.addServer(NF_SERVER_TYPES.NF_ST_GAME, 1, 100, 6005)
+    
+    local tmp = {
+        gaoyi = "is good boy",
+    }
+    unilight.HttpRequestGet("http://www.qq.com", "HttpCallBack", tmp)
+end
+
+function HttpGet.HttpCallBack(state_code, respData, strUseData)
+    unilight.debug("state_code:"..state_code)
+    unilight.debug(respData)
+    unilight.debug("strUseData:".. table2json(strUseData))
 end
 
 function GameServerModule.AfterInit()

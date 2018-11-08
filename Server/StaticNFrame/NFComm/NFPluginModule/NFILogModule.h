@@ -30,30 +30,33 @@ public:
 	template<typename... ARGS>
 	void Log(NF_LOG_LEVEL log_level, const char* function, int line, const char* my_fmt, const ARGS& ... args)
 	{
-		std::string new_fmt = std::string("[{}:{}] | ") + my_fmt;
-		std::string str = fmt::format(new_fmt, function, line, args...);
+		std::string str = fmt::format(std::string("[{}:{}] | ") + my_fmt, function, line, args...);
 		LogNormal(log_level, str);
 	}
 
 	virtual void LogNormal(NF_LOG_LEVEL log_level, const std::string& log) = 0;
 
-	virtual void LuaDebug(const std::string& strInfo)
+	virtual void LuaDebug(const std::string& str)
 	{
+		std::string strInfo = fmt::format("[Lua] | {}", str);
 		LogNormal(NLL_DEBUG_NORMAL, strInfo);
 	}
 
-	virtual void LuaInfo(const std::string& strInfo)
+	virtual void LuaInfo(const std::string& str)
 	{
+		std::string strInfo = fmt::format("[Lua] | {}", str);
 		LogNormal(NLL_INFO_NORMAL, strInfo);
 	}
 
-	virtual void LuaWarn(const std::string& strInfo)
+	virtual void LuaWarn(const std::string& str)
 	{
+		std::string strInfo = fmt::format("[Lua] | {}", str);
 		LogNormal(NLL_WARING_NORMAL, strInfo);
 	}
 
-	virtual void LuaError(const std::string& strInfo)
+	virtual void LuaError(const std::string& str)
 	{
+		std::string strInfo = fmt::format("[Lua] | {}", str);
 		LogNormal(NLL_ERROR_NORMAL, strInfo);
 	}
 };

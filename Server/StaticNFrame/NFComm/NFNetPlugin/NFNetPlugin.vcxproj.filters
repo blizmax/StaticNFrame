@@ -23,8 +23,17 @@
     <ClCompile Include="NFCNetServerModule.cpp">
       <Filter>NFServer</Filter>
     </ClCompile>
-    <ClCompile Include="NFHttpClient.cpp">
+    <ClCompile Include="NFCHttpClientModule.cpp">
       <Filter>NFHttpClient</Filter>
+    </ClCompile>
+    <ClCompile Include="NFCHttpClient.cpp">
+      <Filter>NFHttpClient</Filter>
+    </ClCompile>
+    <ClCompile Include="NFCHttpServer.cpp">
+      <Filter>NFHttpServer</Filter>
+    </ClCompile>
+    <ClCompile Include="NFCHttpServerModule.cpp">
+      <Filter>NFHttpServer</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -56,14 +65,17 @@
     <ClInclude Include="NFLibEvent.h">
       <Filter>NFNetObject</Filter>
     </ClInclude>
-    <ClInclude Include="NFIHttpClient.h">
+    <ClInclude Include="NFCHttpClientModule.h">
       <Filter>NFHttpClient</Filter>
     </ClInclude>
-    <ClInclude Include="NFIHttpServer.h">
+    <ClInclude Include="NFCHttpClient.h">
+      <Filter>NFHttpClient</Filter>
+    </ClInclude>
+    <ClInclude Include="NFCHttpServer.h">
       <Filter>NFHttpServer</Filter>
     </ClInclude>
-    <ClInclude Include="NFHttpClient.h">
-      <Filter>NFHttpClient</Filter>
+    <ClInclude Include="NFCHttpServerModule.h">
+      <Filter>NFHttpServer</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

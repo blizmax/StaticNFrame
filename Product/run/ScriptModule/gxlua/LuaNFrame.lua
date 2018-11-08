@@ -17,6 +17,7 @@ function LuaNFrame:init(pluginManager)
     self.luaModule = self.pluginManager:GetLuaModule()
     self.serverModule = self.pluginManager:GetServerModule()
     self.clientModule = self.pluginManager:GetClientModule()
+    self.httpClientModule = self.pluginManager:GetHttpClientModule()
     
     --用来存放加载的module
     self.ScriptList = { }
@@ -202,3 +203,87 @@ end
 function LuaNFrame:error(...)
     self.logModule:LuaError(...)
 end
+
+--http client接口
+
+--[[
+	向指定url请求GET http服务
+	resFunc:http请求回调函数
+	url:请求http服务器的url
+	para:请求的数据,这时里是一个lua的table
+    heads 在这里是一个 map[string]string 选定对应参考与值
+    
+    return bool
+]]
+
+function LuaNFrame:HttpRequestGet(url, resFunc, heads, para)
+    heads = heads or {}
+    para = para or {}
+	if type(resFunc) ~= "string" or type(url) ~= "string" or type(heads) ~= "table" then
+		unilight.error("unilight.HttpRequestGet params error" .. resFunc .. url)
+		return
+    end
+
+    local jsonHeaders = table2json(heads)
+	local callbackpara = table2json(para)
+    self.httpClientModule:HttpRequestGet(url, resFunc, jsonHeaders, callbackpara)
+end
+
+--[[
+	向指定url请求POS http服务
+	resFunc:http请求回调函数
+	url:请求http服务器的url
+	msg:请求的数据,这时里是一个lua的table
+	heads 在这里是一个 map[string]string 选定对应参考与值
+]]
+function LuaNFrame:HttpRequestPost(resFunc, url, body, bodyType, heads, para)
+    para = para or {}
+	heads = heads or {}
+	bodyType = bodyType or "application/x-www-form-urlencoded"
+	if type(resFunc) ~= "string" or type(url) ~= "string" or type(body) ~= "table" or type(bodyType) ~= "string"or type(heads) ~= "table" then
+		unilight.error("unilight.HttpRequestGet params error" .. resFunc .. url)
+		return
+	end
+    local jsonHeaders = table2json(heads)
+	local callbackpara = table2json(para)
+    self.httpClientModule:HttpRequestPost(url, body, resFunc, jsonHeaders, callbackpara)
+end
+
+--执行函数, 函数被字符串表达出来
+--比如说，要执行LoginModule.Init函数，
+--LuaNFrame.RunStringFunction("LoginModule.Init")
+function LuaNFrame.RunStringFunction(strFunction,...)
+    local v = _G;
+    for w in string.gmatch(strFunction,"[%[%]%w_\"]+") do
+      local index = string.find(w, "%[");
+      if index == nil then
+          v = v[w]
+      else
+          local key = string.match(w, "([%w_]+)%[")
+          if key == nil then
+              return;
+          else
+              v = v[key]
+              for val in string.gmatch(w, "%[[\"%w_]+%]") do
+                  local value = string.match(val, "%[([\"%w_]+)%]")
+                  local value_str = string.match(value,"\"([%w_]+)\"");
+                  if value_str ~= nil then
+                      v = v[value_str];
+                  else
+                      local value_num = tonumber(value);
+                      if value_num ~= nil then
+                          v = v[value_num];
+                      else
+                        LuaNFrame:error("strFunction:", strFunction, " is not a function");
+                      end
+                  end
+              end
+          end
+      end
+    end
+    if type(v) == "function" then
+      return v(...);
+    else
+        LuaNFrame:error(strFunction .. " is not function");
+    end
+  end

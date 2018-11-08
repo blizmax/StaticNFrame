@@ -175,6 +175,10 @@
     <ClInclude Include="NFDataNode.h" />
     <ClInclude Include="NFCDataValue.h" />
     <ClInclude Include="NFDefine.h" />
+    <ClInclude Include="NFIHttpClient.h" />
+    <ClInclude Include="NFIHttpClientModule.h" />
+    <ClInclude Include="NFIHttpServer.h" />
+    <ClInclude Include="NFIHttpServerModule.h" />
     <ClInclude Include="NFIObject.h" />
     <ClInclude Include="NFDBActor.h" />
     <ClInclude Include="NFDBActorMgr.h" />
