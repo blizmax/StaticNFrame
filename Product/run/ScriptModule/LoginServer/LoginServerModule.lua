@@ -32,24 +32,43 @@ function HttpServer.HttpLoginCallBack(req)
 
     if body["do"] == "request-zone-list" then
         LoginServerModule.RequestZoneList(req, body)
+    elseif body["do"] == "plat-token-login" then
+        LoginServerModule.PlatTokenLogin(req, body)
+    elseif body["do"] == "request-select-zone" then
+        LoginServerModule.RequestSelectZone(req, body)
     end
+end
+
+function LoginServerModule.RequestSelectZone(req,cmd)
+    unilight.debug("LoginServerModule.RequestSelectZone | "..table2json(cmd))
+
+end
+
+function LoginServerModule.PlatTokenLogin(req, cmd)
+    unilight.debug("LoginServerModule.PlatTokenLogin | "..table2json(cmd))
+    local account = cmd.data.platinfo.account
+    local sign = cmd.data.platinfo.sign
+    local msg = {
+        gameid = cmd.gameid,
+        unigame_plat_key = "",
+        unigame_plat_login = "",
+        unigame_plat_login_timeout = "",
+        unigame_plat_timestamp = cmd.unigame_plat_timestamp,
+        zoneid = cmd.zoneid,
+    }
+    msg["do"] = cmd["do"]
+    msg["data"] = {
+        sid = sign .. "::" .. account,
+        uid = "111111111",
+    }
+
+    local jsonmsg = json.encode(msg)
+
+    unilight.HttpServerResponseMsg(req, jsonmsg, NFWebStatus.WEB_OK, "OK")
 end
 
 function LoginServerModule.RequestZoneList(req,cmd)
     unilight.debug("LoginServerModule.RequestZoneList | "..table2json(cmd))
-
-    local msg = {}
-    msg["do"] = cmd["do"]
-    msg["error"] = "0"
-    msg["st"] = 111111111
-    msg["data"] = {
-        bestzoneid = 2,
-        gameid = cmd["data"].gameid,
-        gamename = "ttr",
-        zoneid = 5,
-        zonelist = {
-        }
-    }
 
     local server = {
         gameid = cmd["data"].gameid,
@@ -62,8 +81,21 @@ function LoginServerModule.RequestZoneList(req,cmd)
         zonename = "高义",
     }
 
-    table.insert(msg["data"].zonelist, server)
-    local jsonmsg = table2json(msg)
+    local msg = {}
+    msg["do"] = cmd["do"]
+    msg["error"] = "0"
+    msg["st"] = 111111111
+    msg["data"] = {
+        bestzoneid = 2,
+        gameid = cmd["data"].gameid,
+        gamename = "ttr",
+        zoneid = 5,
+        zonelist = {
+            server,
+        }
+    }
+
+    local jsonmsg = json.encode(msg)
 
     unilight.HttpServerResponseMsg(req, jsonmsg, NFWebStatus.WEB_OK, "OK")
 end

@@ -120,7 +120,7 @@ void NFCHttpServer::listener_cb(struct evhttp_request* req, void* arg)
 	rapidjson::StringBuffer headerbuffer;
 	rapidjson::Writer<rapidjson::StringBuffer> headerWriter(headerbuffer);
 	headerDoc.Accept(headerWriter);
-	request.json_params = headerbuffer.GetString();
+	request.json_headers = headerbuffer.GetString();
 
 	//uri
 	const char* uri = evhttp_request_get_uri(req);
@@ -267,6 +267,7 @@ bool NFCHttpServer::ResponseMsg(const NFHttpRequest& req, const std::string& str
 	evbuffer_add_printf(eventBuffer, strMsg.c_str());
 
 	evhttp_add_header(evhttp_request_get_output_headers(pHttpReq), "Content-Type", "application/json");
+	evhttp_add_header(evhttp_request_get_output_headers(pHttpReq), "Access-Control-Allow-Origin", "*");
 
 	evhttp_send_reply(pHttpReq, code, strReason.c_str(), eventBuffer);
 
