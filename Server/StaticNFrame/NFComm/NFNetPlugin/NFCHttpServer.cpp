@@ -8,6 +8,20 @@
 // -------------------------------------------------------------------------
 
 #include "NFCHttpServer.h"
+#include "NFComm/NFPluginModule/NFLogMgr.h"
+#include "rapidjson/rapidjson.h"
+#include "rapidjson/document.h"
+#include "rapidjson/stringbuffer.h"
+#include "rapidjson/writer.h"
+
+NFCHttpServer::~NFCHttpServer()
+{
+	if (base)
+	{
+		event_base_free(base);
+		base = NULL;
+	}
+}
 
 bool NFCHttpServer::Execute()
 {
@@ -40,98 +54,206 @@ int NFCHttpServer::InitServer(const unsigned short port)
 	base = event_base_new();
 	if (!base)
 	{
-		std::cout << "create event_base fail" << std::endl;;
+		NFLogError("create event_base fail");
 		return 1;
 	}
 
 	http = evhttp_new(base);
 	if (!http)
 	{
-		std::cout << "create evhttp fail" << std::endl;;
+		NFLogError("create evhttp fail");
+		return 1;
+	}
+
+	handle = evhttp_bind_socket_with_handle(http, "0.0.0.0", mPort);
+	if (!handle)
+	{
+		NFLogError("http server bind port :{} fail!", mPort);
 		return 1;
 	}
 
 	evhttp_set_gencb(http, listener_cb, (void*) this);
-	handle = evhttp_bind_socket_with_handle(http, "0.0.0.0", mPort);
-	if (!handle)
-	{
-		std::cout << "bind port :" << mPort << " fail" << std::endl;;
-		return 1;
-	}
 	return 0;
 }
 
 
 void NFCHttpServer::listener_cb(struct evhttp_request* req, void* arg)
 {
-	NFCHttpServer* pNet = (NFCHttpServer*)arg;
-	NFHttpRequest request;
-	request.req = req;
-	//uri
-	const char* uri = evhttp_request_get_uri(req);
-	//std::cout << "Got a GET request:" << uri << std::endl;
-
-	//get decodeUri
-	struct evhttp_uri* decoded = evhttp_uri_parse(uri);
-	if (!decoded)
+	if (req == NULL)
 	{
-		printf("It's not a good URI. Sending BADREQUEST\n");
+		NFLogError("req ==NULL");
+		return;
+	}
+
+	NFCHttpServer* pNet = (NFCHttpServer*)arg;
+	if (pNet == NULL)
+	{
+		NFLogError("pNet ==NULL");
 		evhttp_send_error(req, HTTP_BADREQUEST, 0);
 		return;
 	}
-	const char* decode1 = evhttp_uri_get_path(decoded);
-	if (!decode1)
-	{
-		decode1 = "/";
-	}
 
-	//The returned string must be freed by the caller.
-	const char* decodeUri = evhttp_uridecode(decode1, 0, NULL);
+	NFHttpRequest request;
+	request.req = req;
 
-	if (decodeUri == NULL)
+	//headers
+
+	struct evkeyvalq * header = evhttp_request_get_input_headers(req);
+	if (header == NULL)
 	{
-		printf("uri decode error\n");
-		evhttp_send_error(req, HTTP_BADREQUEST, "uri decode error");
+		NFLogError("header ==NULL");
+		evhttp_send_error(req, HTTP_BADREQUEST, 0);
 		return;
 	}
-	std::string strUri;
-	if (decodeUri[0] == '/')
+
+	rapidjson::Document headerDoc;
+	headerDoc.SetObject();
+
+	struct evkeyval* kv = header->tqh_first;
+	while (kv)
 	{
-		strUri = decodeUri;
-		strUri.erase(0, 1);
-		decodeUri = strUri.c_str();
-	}
-	//get strCommand
-	auto cmdList = Split(strUri, "/");
-	std::string strCommand = "";
-	if (cmdList.size() > 0)
-	{
-		strCommand = cmdList[0];
+		request.headers.emplace(kv->key, kv->value);
+		headerDoc.AddMember(rapidjson::StringRef(kv->key), rapidjson::StringRef(kv->value), headerDoc.GetAllocator());
+		kv = kv->next.tqe_next;
 	}
 
-	request.url = decodeUri;
+	rapidjson::StringBuffer headerbuffer;
+	rapidjson::Writer<rapidjson::StringBuffer> headerWriter(headerbuffer);
+	headerDoc.Accept(headerWriter);
+	request.json_params = headerbuffer.GetString();
 
-	// call cb
-	if (pNet->mRecvCB)
+	//uri
+	const char* uri = evhttp_request_get_uri(req);
+	if (uri == NULL)
 	{
-		pNet->mRecvCB(request, strCommand, decodeUri);
+		NFLogError("uri ==NULL");
+		evhttp_send_error(req, HTTP_BADREQUEST, 0);
+		return;
+	}
+
+	request.url = uri;
+	const char* hostname = evhttp_request_get_host(req);
+	if (hostname == NULL)
+	{
+		NFLogError("hostname ==NULL");
 	}
 	else
 	{
-		pNet->ResponseMsg(request, "mRecvCB empty", NFWebStatus::WEB_ERROR);
+		request.remoteHost = hostname;
 	}
 
+	request.type = (NFHttpType)evhttp_request_get_command(req);
 
+	//get decodeUri
+	struct evhttp_uri* decoded = evhttp_uri_parse(uri);
+	if (decoded == NULL)
+	{
+		NFLogError("bad request ");
+		evhttp_send_error(req, HTTP_BADREQUEST, 0);
+		return;
+	}
 
-	//close
-	/*{
-	if (decoded)
+	//path
+	const char* urlPath = evhttp_uri_get_path(decoded);
+	if (urlPath != NULL)
+	{
+		request.path = urlPath;
+	}
+	else
+	{
+		NFLogError("urlPath ==NULL");
+	}
+
 	evhttp_uri_free(decoded);
-	if (decodeUri)
-	free(decodeUri);
-	if (eventBuffer)
-	evbuffer_free(eventBuffer);
-	}*/
+
+	//std::cout << "Got a GET request:" << uri << std::endl;
+	if (evhttp_request_get_command(req) == evhttp_cmd_type::EVHTTP_REQ_GET)
+	{
+		//OnGetProcess(request, );
+		NFLogDebug("EVHTTP_REQ_GET");
+
+		rapidjson::Document paramDoc;
+		paramDoc.SetObject();
+
+		struct evkeyvalq params;
+		evhttp_parse_query(uri, &params);
+		struct evkeyval* kv = params.tqh_first;
+		while (kv)
+		{
+			request.params.emplace(kv->key, kv->value);
+			paramDoc.AddMember(rapidjson::StringRef(kv->key), rapidjson::StringRef(kv->value), paramDoc.GetAllocator());
+			kv = kv->next.tqe_next;
+		}
+
+		rapidjson::StringBuffer parambuffer;
+		rapidjson::Writer<rapidjson::StringBuffer> paramWriter(parambuffer);
+		paramDoc.Accept(paramWriter);
+		request.json_params = parambuffer.GetString();
+	}
+
+	struct evbuffer *in_evb = evhttp_request_get_input_buffer(req);
+	if (in_evb == NULL)
+	{
+		NFLogError("urlPath ==NULL");
+		return;
+	}
+
+	size_t len = evbuffer_get_length(in_evb);
+	if (len > 0)
+	{
+		unsigned char *pData = evbuffer_pullup(in_evb, len);
+		request.body.clear();
+
+		if (pData != NULL)
+		{
+			request.body.append((const char *)pData, len);
+		}
+	}
+
+	if (pNet->mFilter)
+	{
+		//return 401
+		try
+		{
+			NFWebStatus xWebStatus = pNet->mFilter(request);
+			if (xWebStatus != NFWebStatus::WEB_OK)
+			{
+				//401
+				pNet->ResponseMsg(request, "Filter error", xWebStatus);
+				return;
+			}
+		}
+		catch (std::exception& e)
+		{
+			pNet->ResponseMsg(request, e.what(), NFWebStatus::WEB_ERROR);
+		}
+		catch (...)
+		{
+			pNet->ResponseMsg(request, "UNKNOW ERROR", NFWebStatus::WEB_ERROR);
+		}
+
+	}
+
+	// call cb
+	try
+	{
+		if (pNet->mReceiveCB)
+		{
+			pNet->mReceiveCB(request);
+		}
+		else
+		{
+			pNet->ResponseMsg(request, "NO PROCESSER", NFWebStatus::WEB_ERROR);
+		}
+	}
+	catch (std::exception& e)
+	{
+		pNet->ResponseMsg(request, e.what(), NFWebStatus::WEB_ERROR);
+	}
+	catch (...)
+	{
+		pNet->ResponseMsg(request, "UNKNOW ERROR", NFWebStatus::WEB_ERROR);
+	}
 }
 
 bool NFCHttpServer::ResponseMsg(const NFHttpRequest& req, const std::string& strMsg, NFWebStatus code,
@@ -140,152 +262,16 @@ bool NFCHttpServer::ResponseMsg(const NFHttpRequest& req, const std::string& str
 	evhttp_request* pHttpReq = (evhttp_request*)req.req;
 	//create buffer
 	struct evbuffer* eventBuffer = evbuffer_new();
+
 	//send data
 	evbuffer_add_printf(eventBuffer, strMsg.c_str());
-	evhttp_add_header(evhttp_request_get_output_headers(pHttpReq), "Content-Type", "text/html");
+
+	evhttp_add_header(evhttp_request_get_output_headers(pHttpReq), "Content-Type", "application/json");
+
 	evhttp_send_reply(pHttpReq, code, strReason.c_str(), eventBuffer);
 
 	//free
 	evbuffer_free(eventBuffer);
+
 	return true;
-}
-
-bool NFCHttpServer::ResponseFile(const NFHttpRequest& req, const std::string& strPath, const std::string& strFileName)
-{
-	//Add response type
-	std::map<std::string, std::string> typeMap;
-	typeMap["txt"] = "text/plain";
-	typeMap["txt"] = "text/plain";
-	typeMap["c"] = "text/plain";
-	typeMap["h"] = "text/plain";
-	typeMap["html"] = "text/html";
-	typeMap["htm"] = "text/htm";
-	typeMap["css"] = "text/css";
-	typeMap["gif"] = "image/gif";
-	typeMap["jpg"] = "image/jpeg";
-	typeMap["jpeg"] = "image/jpeg";
-	typeMap["png"] = "image/png";
-	typeMap["pdf"] = "application/pdf";
-	typeMap["ps"] = "application/postsript";
-
-	std::string strFilePath = strPath;
-	if (strFilePath.find_last_of("/") != strFilePath.size())
-	{
-		strFilePath += "/";
-	}
-
-	strFilePath = strFilePath + req.url;
-
-	int fd = -1;
-	struct stat st;
-	if (stat(strFilePath.c_str(), &st) < 0)
-	{
-		std::string errMsg = strFilePath + strFileName;
-		ResponseMsg(req, errMsg.c_str(), NFWebStatus::WEB_ERROR, errMsg.c_str());
-
-		return false;
-	}
-
-	if (S_ISDIR(st.st_mode))
-	{
-		strFilePath += "/" + strFileName;
-	}
-
-	if (stat(strFilePath.c_str(), &st) < 0)
-	{
-		std::string errMsg = strFilePath + strFilePath;
-		ResponseMsg(req, errMsg.c_str(), NFWebStatus::WEB_ERROR, errMsg.c_str());
-		return false;
-	}
-
-#if NF_PLATFORM == NF_PLATFORM_WIN
-	if ((fd = open(strFilePath.c_str(), O_RDONLY | O_BINARY)) < 0)
-	{
-#else
-	if ((fd = open(strFilePath.c_str(), O_RDONLY)) < 0)
-	{
-#endif
-		ResponseMsg(req, "error", NFWebStatus::WEB_ERROR, "error");
-		return false;
-	}
-
-	if (fstat(fd, &st) < 0)
-	{
-		ResponseMsg(req, "error", NFWebStatus::WEB_ERROR, "error");
-		return false;
-	}
-
-	const char* last_period = strrchr(strFilePath.c_str(), '.');
-	std::string strType = last_period + 1;
-	if (typeMap.find(strType) == typeMap.end())
-	{
-		strType = "application/misc";
-	}
-	else
-	{
-		strType = typeMap[strType];
-	}
-	ResponseFile(req, fd, st, strType);
-	return false;
-	}
-
-bool NFCHttpServer::ResponseFile(const NFHttpRequest& req, const int fd, struct stat st, const std::string& strType)
-{
-	evhttp_request* pHttpReq = (evhttp_request*)req.req;
-
-	//create buffer
-	struct evbuffer* eventBuffer = evbuffer_new();
-	//send data
-	evbuffer_add_file(eventBuffer, fd, 0, st.st_size);
-	evhttp_add_header(evhttp_request_get_output_headers(pHttpReq), "Content-Type", strType.c_str());
-	evhttp_send_reply(pHttpReq, 200, "OK", eventBuffer);
-
-	//free
-	evbuffer_free(eventBuffer);
-	return true;
-}
-
-
-bool NFCHttpServer::Final()
-{
-	if (base)
-	{
-		event_base_free(base);
-		base = NULL;
-	}
-	return true;
-}
-
-std::vector<std::string> NFCHttpServer::Split(const std::string& str, std::string delim)
-{
-	std::vector<std::string> result;
-	if (str.empty() || delim.empty())
-	{
-		return result;
-	}
-
-	std::string tmp;
-	size_t pos_begin = str.find_first_not_of(delim);
-	size_t pos = 0;
-	while (pos_begin != std::string::npos)
-	{
-		pos = str.find(delim, pos_begin);
-		if (pos != std::string::npos)
-		{
-			tmp = str.substr(pos_begin, pos - pos_begin);
-			pos_begin = pos + delim.length();
-		}
-		else
-		{
-			tmp = str.substr(pos_begin);
-			pos_begin = pos;
-		}
-
-		if (!tmp.empty())
-		{
-			result.push_back(tmp);
-			tmp.clear();
-		}
-	}
-	return result;
 }

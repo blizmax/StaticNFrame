@@ -18,6 +18,7 @@
 #include "NFComm/NFCore/NFStringUtility.h"
 #include "NFComm/NFPluginModule/NFLogMgr.h"
 #include "NFComm/NFPluginModule/NFIHttpClientModule.h"
+#include "NFComm/NFPluginModule/NFIHttpServerModule.h"
 
 #define TRY_RUN_GLOBAL_SCRIPT_FUN0(strFuncName)   try {LuaIntf::LuaRef func(l, strFuncName);  func.call<LuaIntf::LuaRef>(); }   catch (LuaIntf::LuaException& e) { cout << e.what() << endl; }
 #define TRY_RUN_GLOBAL_SCRIPT_FUN1(strFuncName, arg1)  try {LuaIntf::LuaRef func(l, strFuncName);  func.call<LuaIntf::LuaRef>(arg1); }catch (LuaIntf::LuaException& e) { cout << e.what() << endl; }
@@ -99,6 +100,7 @@ bool NFCLuaScriptModule::Register()
 		.addFunction("GetServerModule", &NFIPluginManager::FindModule<NFINetServerModule>)
 		.addFunction("GetClientModule", &NFIPluginManager::FindModule<NFINetClientModule>)
 		.addFunction("GetHttpClientModule", &NFIPluginManager::FindModule<NFIHttpClientModule>)
+		.addFunction("GetHttpServerModule", &NFIPluginManager::FindModule<NFIHttpServerModule>)
 		.endClass();
 
 	LuaIntf::LuaBinding(l).beginClass<NFILuaScriptModule>("NFILuaScriptModule")
@@ -107,6 +109,22 @@ bool NFCLuaScriptModule::Register()
 	LuaIntf::LuaBinding(l).beginClass<NFIHttpClientModule>("NFIHttpClientModule")
 		.addFunction("HttpRequestGet", &NFIHttpClientModule::LuaHttpGet)
 		.addFunction("HttpRequestPost", &NFIHttpClientModule::LuaHttpPost)
+		.endClass();
+
+	LuaIntf::LuaBinding(l).beginClass<NFHttpRequest>("NFHttpRequest")
+		.addProperty("url", &NFHttpRequest::get_url, &NFHttpRequest::set_url)
+		.addProperty("path", &NFHttpRequest::get_path, &NFHttpRequest::set_path)
+		.addProperty("remoteHost", &NFHttpRequest::get_remoteHost, &NFHttpRequest::set_remoteHost)
+		.addProperty("type", &NFHttpRequest::get_type, &NFHttpRequest::set_type)
+		.addProperty("body", &NFHttpRequest::get_body, &NFHttpRequest::set_body)
+		.addProperty("params", &NFHttpRequest::get_params, &NFHttpRequest::set_params)
+		.addProperty("headers", &NFHttpRequest::get_headers, &NFHttpRequest::set_headers)
+	.endClass();
+
+	LuaIntf::LuaBinding(l).beginClass<NFIHttpServerModule>("NFIHttpServerModule")
+		.addFunction("AddRequestHandler", &NFIHttpServerModule::LuaAddRequestHandler)
+		.addFunction("InitServer", &NFIHttpServerModule::InitServer)
+		.addFunction("ResponseMsg", &NFIHttpServerModule::ResponseMsg)
 		.endClass();
 
 	LuaIntf::LuaBinding(l).beginClass<NFINetServerModule>("NFINetServerModule")
@@ -152,5 +170,10 @@ void NFCLuaScriptModule::RunNetEventLuaFunc(const std::string& luaFunc, const eM
 
 void NFCLuaScriptModule::RunHtttpClientLuaFunc(const std::string& luaFunc, const int state_code, const std::string& strRespData, const std::string& strUserData)
 {
-	TryRunGlobalScriptFunc("unilight.HttpRequestGetCallBack", luaFunc, state_code, strRespData, strUserData);
+	TryRunGlobalScriptFunc("unilight.HttpClientRequestCallBack", luaFunc, state_code, strRespData, strUserData);
+}
+
+void NFCLuaScriptModule::RunHttpServerLuaFunc(const std::string& luaFunc, const NFHttpRequest & req)
+{
+	TryRunGlobalScriptFunc("unilight.HttpServerRequestCallBack", luaFunc, req);
 }

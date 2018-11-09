@@ -99,36 +99,50 @@ bool NFCHttpClient::LuaMakeRequest(const std::string& strUri,
 	const std::string& strUserData,
 	const std::string& strPostData,
 	const std::map<std::string, std::string>& xHeaders,
-	bool bPost)
+	const NFHttpType eHttpType)
 {
-	struct evhttp_uri* http_uri = NULL;
-	const char* scheme, *host, *path, *query;
-
-	http_uri = evhttp_uri_parse(strUri.c_str());
+	struct evhttp_uri* http_uri = evhttp_uri_parse(strUri.c_str());
 	if (http_uri == NULL)
 	{
+		NFLogError("evhttp_uri_parse err. ");
+		return false;
+	}
+
+	const char*  scheme = evhttp_uri_get_scheme(http_uri);
+	if (scheme == NULL)
+	{
+		NFLogError("scheme == NULL err. ");
+		return false;
+	}
+
+	std::string lowwerScheme(scheme);
+	std::transform(lowwerScheme.begin(), lowwerScheme.end(), lowwerScheme.begin(), (int(*)(int)) std::tolower);
+	if (lowwerScheme.compare("https") != 0 && lowwerScheme.compare("http") != 0)
+	{
+		if (http_uri)
+		{
+			evhttp_uri_free(http_uri);
+		}
+
+		NFLogError("scheme == NULL err. ");
 		return false;
 	}
 
 	bool isHttps = false;
-
-	scheme = evhttp_uri_get_scheme(http_uri);
-	std::string lowwerScheme(scheme);
-	std::transform(lowwerScheme.begin(), lowwerScheme.end(), lowwerScheme.begin(), (int(*)(int)) std::tolower);
-	if (scheme == NULL || (lowwerScheme.compare("https") != 0 && lowwerScheme.compare("http") != 0))
-	{
-		return false;
-	}
-
 	if (lowwerScheme.compare("https") == 0)
 	{
 		isHttps = true;
 	}
 
-	host = evhttp_uri_get_host(http_uri);
+	const char* host = evhttp_uri_get_host(http_uri);
 	if (host == NULL)
 	{
-		NFLogError("url must have a host \n");
+		if (http_uri)
+		{
+			evhttp_uri_free(http_uri);
+		}
+
+		NFLogError("url must have a host err. ");
 		return false;
 	}
 
@@ -138,43 +152,38 @@ bool NFCHttpClient::LuaMakeRequest(const std::string& strUri,
 		port = isHttps ? 443 : 80;
 	}
 
-	path = evhttp_uri_get_path(http_uri);
+	const char* path = evhttp_uri_get_path(http_uri);
+	if (path == NULL)
+	{
+		NFLogError("path == NUL err. ");
+		return false;
+	}
+
 	if (strlen(path) == 0)
 	{
 		path = "/";
 	}
 
-	std::string uri;
+	char uri[512] = { 0 };
 
-	query = evhttp_uri_get_query(http_uri);
+	const char* query = evhttp_uri_get_query(http_uri);
 	if (query == NULL)
 	{
-		uri = path;
+		snprintf(uri, sizeof(uri) - 1, "%s", path);
 	}
 	else
 	{
-		uri = NF_FORMAT("{}?{}", path, query);
+		snprintf(uri, sizeof(uri) - 1, "%s?%s", path, query);
 	}
 
-	//char uri[512] = { 0 };
-
-	//query = evhttp_uri_get_query(http_uri);
-	//if (query == NULL)
-	//{
-	//	snprintf(uri, sizeof(uri) - 1, "%s", path);
-	//}
-	//else
-	//{
-	//	snprintf(uri, sizeof(uri) - 1, "%s?%s", path, query);
-	//}
-	//uri[sizeof(uri) - 1] = '\0';
+	uri[sizeof(uri) - 1] = '\0';
 
 	//-------we do not verify peer--------//
 	//like the curl SSL_VERIFYPEER is set false
 
 	//if (1 != SSL_CTX_load_verify_locations(ssl_ctx, crt, NULL)) {
-	//  err_openssl("SSL_CTX_load_verify_locations");
-	//  goto error;
+	//	err_openssl("SSL_CTX_load_verify_locations");
+	//	goto error;
 	//}
 	//SSL_CTX_set_verify(ssl_ctx, SSL_VERIFY_PEER, NULL);
 	//SSL_CTX_set_cert_verify_callback(ssl_ctx, cert_verify_callback,(void *)host);
@@ -186,6 +195,10 @@ bool NFCHttpClient::LuaMakeRequest(const std::string& strUri,
 	SSL* pSSL = SSL_new(m_pSslCtx);
 	if (pSSL == NULL)
 	{
+		if (http_uri)
+		{
+			evhttp_uri_free(http_uri);
+		}
 		NFLogError("SSL_new err.");
 		return false;
 	}
@@ -206,7 +219,12 @@ bool NFCHttpClient::LuaMakeRequest(const std::string& strUri,
 
 	if (bev == NULL)
 	{
-		NFLogError("bufferevent_socket_new() failed\n");
+		if (http_uri)
+		{
+			evhttp_uri_free(http_uri);
+		}
+
+		NFLogError(" bev == NUL err. ");
 		return false;
 	}
 
@@ -220,7 +238,12 @@ bool NFCHttpClient::LuaMakeRequest(const std::string& strUri,
 	struct evhttp_connection* evcon = evhttp_connection_base_bufferevent_new(m_pBase, NULL, bev, host, port);
 	if (evcon == NULL)
 	{
-		NFLogError("evhttp_connection_base_bufferevent_new() failed\n");
+		if (http_uri)
+		{
+			evhttp_uri_free(http_uri);
+		}
+
+		NFLogError(" evcon == NUL err. ");
 		return false;
 	}
 
@@ -239,13 +262,24 @@ bool NFCHttpClient::LuaMakeRequest(const std::string& strUri,
 	struct evhttp_request* req = evhttp_request_new(LuaOnHttpReqDone, pHttpObj);
 	if (req == NULL)
 	{
+		if (http_uri)
+		{
+			evhttp_uri_free(http_uri);
+		}
 		NFLogError("evhttp_request_new() failed\n");
 		return false;
 	}
 
 	struct evkeyvalq* output_headers = evhttp_request_get_output_headers(req);
+	if (output_headers == NULL)
+	{
+		NFLogError("output_headers == NULL err. ");
+		return false;
+	}
+
 	evhttp_add_header(output_headers, "Host", host);
 	evhttp_add_header(output_headers, "Connection", "close");
+
 	std::map<std::string, std::string>::const_iterator it = xHeaders.cbegin();
 	while (it != xHeaders.cend())
 	{
@@ -257,15 +291,25 @@ bool NFCHttpClient::LuaMakeRequest(const std::string& strUri,
 	if (nLen > 0)
 	{
 		struct evbuffer* output_buffer = evhttp_request_get_output_buffer(req);
+		if (output_buffer == NULL)
+		{
+			NFLogError("output_buffer == NUL err. ");
+			return false;
+		}
+
 		evbuffer_add(output_buffer, strPostData.c_str(), nLen);
 		char buf[256] = { 0 };
 		evutil_snprintf(buf, sizeof(buf) - 1, "%lu", (unsigned long)nLen);
 		evhttp_add_header(output_headers, "Content-Length", buf);
 	}
 
-	int r_ = evhttp_make_request(evcon, req, EVHTTP_REQ_GET, uri.c_str());
+	int r_ = evhttp_make_request(evcon, req, (evhttp_cmd_type)eHttpType, uri);
 	if (r_ != 0)
 	{
+		if (http_uri)
+		{
+			evhttp_uri_free(http_uri);
+		}
 		NFLogError("evhttp_make_request() failed\n");
 		return false;
 	}
@@ -283,36 +327,50 @@ bool NFCHttpClient::MakeRequest(const std::string& strUri,
 	const std::string& strUserData,
 	const std::string& strPostData,
 	const std::map<std::string, std::string>& xHeaders,
-	bool bPost)
+	const NFHttpType eHttpType)
 {
-	struct evhttp_uri* http_uri = NULL;
-	const char* scheme, *host, *path, *query;
-
-	http_uri = evhttp_uri_parse(strUri.c_str());
+	struct evhttp_uri* http_uri = evhttp_uri_parse(strUri.c_str());
 	if (http_uri == NULL)
 	{
+		NFLogError("evhttp_uri_parse err. ");
+		return false;
+	}
+
+	const char*  scheme = evhttp_uri_get_scheme(http_uri);
+	if (scheme == NULL)
+	{
+		NFLogError("scheme == NULL err. ");
+		return false;
+	}
+
+	std::string lowwerScheme(scheme);
+	std::transform(lowwerScheme.begin(), lowwerScheme.end(), lowwerScheme.begin(), (int(*)(int)) std::tolower);
+	if (lowwerScheme.compare("https") != 0 && lowwerScheme.compare("http") != 0)
+	{
+		if (http_uri)
+		{
+			evhttp_uri_free(http_uri);
+		}
+
+		NFLogError("scheme == NULL err. ");
 		return false;
 	}
 
 	bool isHttps = false;
-
-	scheme = evhttp_uri_get_scheme(http_uri);
-	std::string lowwerScheme(scheme);
-	std::transform(lowwerScheme.begin(), lowwerScheme.end(), lowwerScheme.begin(), (int(*)(int)) std::tolower);
-	if (scheme == NULL || (lowwerScheme.compare("https") != 0 && lowwerScheme.compare("http") != 0))
-	{
-		return false;
-	}
-
 	if (lowwerScheme.compare("https") == 0)
 	{
 		isHttps = true;
 	}
 
-	host = evhttp_uri_get_host(http_uri);
+	const char* host = evhttp_uri_get_host(http_uri);
 	if (host == NULL)
 	{
-		NFLogError("url must have a host \n");
+		if (http_uri)
+		{
+			evhttp_uri_free(http_uri);
+		}
+
+		NFLogError("url must have a host err. ");
 		return false;
 	}
 
@@ -322,43 +380,38 @@ bool NFCHttpClient::MakeRequest(const std::string& strUri,
 		port = isHttps ? 443 : 80;
 	}
 
-	path = evhttp_uri_get_path(http_uri);
+	const char* path = evhttp_uri_get_path(http_uri);
+	if (path == NULL)
+	{
+		NFLogError("path == NUL err. ");
+		return false;
+	}
+
 	if (strlen(path) == 0)
 	{
 		path = "/";
 	}
 
-	std::string uri;
+	char uri[512] = { 0 };
 
-	query = evhttp_uri_get_query(http_uri);
+	const char* query = evhttp_uri_get_query(http_uri);
 	if (query == NULL)
 	{
-		uri = path;
+		snprintf(uri, sizeof(uri) - 1, "%s", path);
 	}
 	else
 	{
-		uri = NF_FORMAT("{}?{}", path, query);
+		snprintf(uri, sizeof(uri) - 1, "%s?%s", path, query);
 	}
 
-	//char uri[512] = { 0 };
-
-	//query = evhttp_uri_get_query(http_uri);
-	//if (query == NULL)
-	//{
-	//	snprintf(uri, sizeof(uri) - 1, "%s", path);
-	//}
-	//else
-	//{
-	//	snprintf(uri, sizeof(uri) - 1, "%s?%s", path, query);
-	//}
-	//uri[sizeof(uri) - 1] = '\0';
+	uri[sizeof(uri) - 1] = '\0';
 
 	//-------we do not verify peer--------//
 	//like the curl SSL_VERIFYPEER is set false
 
 	//if (1 != SSL_CTX_load_verify_locations(ssl_ctx, crt, NULL)) {
-	//  err_openssl("SSL_CTX_load_verify_locations");
-	//  goto error;
+	//	err_openssl("SSL_CTX_load_verify_locations");
+	//	goto error;
 	//}
 	//SSL_CTX_set_verify(ssl_ctx, SSL_VERIFY_PEER, NULL);
 	//SSL_CTX_set_cert_verify_callback(ssl_ctx, cert_verify_callback,(void *)host);
@@ -370,6 +423,10 @@ bool NFCHttpClient::MakeRequest(const std::string& strUri,
 	SSL* pSSL = SSL_new(m_pSslCtx);
 	if (pSSL == NULL)
 	{
+		if (http_uri)
+		{
+			evhttp_uri_free(http_uri);
+		}
 		NFLogError("SSL_new err.");
 		return false;
 	}
@@ -390,7 +447,12 @@ bool NFCHttpClient::MakeRequest(const std::string& strUri,
 
 	if (bev == NULL)
 	{
-		NFLogError("bufferevent_socket_new() failed\n");
+		if (http_uri)
+		{
+			evhttp_uri_free(http_uri);
+		}
+
+		NFLogError(" bev == NUL err. ");
 		return false;
 	}
 
@@ -404,7 +466,12 @@ bool NFCHttpClient::MakeRequest(const std::string& strUri,
 	struct evhttp_connection* evcon = evhttp_connection_base_bufferevent_new(m_pBase, NULL, bev, host, port);
 	if (evcon == NULL)
 	{
-		NFLogError("evhttp_connection_base_bufferevent_new() failed\n");
+		if (http_uri)
+		{
+			evhttp_uri_free(http_uri);
+		}
+
+		NFLogError(" evcon == NUL err. ");
 		return false;
 	}
 
@@ -423,13 +490,24 @@ bool NFCHttpClient::MakeRequest(const std::string& strUri,
 	struct evhttp_request* req = evhttp_request_new(OnHttpReqDone, pHttpObj);
 	if (req == NULL)
 	{
+		if (http_uri)
+		{
+			evhttp_uri_free(http_uri);
+		}
 		NFLogError("evhttp_request_new() failed\n");
 		return false;
 	}
 
 	struct evkeyvalq* output_headers = evhttp_request_get_output_headers(req);
+	if (output_headers == NULL)
+	{
+		NFLogError("output_headers == NULL err. ");
+		return false;
+	}
+
 	evhttp_add_header(output_headers, "Host", host);
 	evhttp_add_header(output_headers, "Connection", "close");
+
 	std::map<std::string, std::string>::const_iterator it = xHeaders.cbegin();
 	while (it != xHeaders.cend())
 	{
@@ -441,15 +519,25 @@ bool NFCHttpClient::MakeRequest(const std::string& strUri,
 	if (nLen > 0)
 	{
 		struct evbuffer* output_buffer = evhttp_request_get_output_buffer(req);
+		if (output_buffer == NULL)
+		{
+			NFLogError("output_buffer == NUL err. ");
+			return false;
+		}
+
 		evbuffer_add(output_buffer, strPostData.c_str(), nLen);
 		char buf[256] = { 0 };
 		evutil_snprintf(buf, sizeof(buf) - 1, "%lu", (unsigned long)nLen);
 		evhttp_add_header(output_headers, "Content-Length", buf);
 	}
 
-	int r_ = evhttp_make_request(evcon, req, EVHTTP_REQ_GET, uri.c_str());
+	int r_ = evhttp_make_request(evcon, req, (evhttp_cmd_type)eHttpType, uri);
 	if (r_ != 0)
 	{
+		if (http_uri)
+		{
+			evhttp_uri_free(http_uri);
+		}
 		NFLogError("evhttp_make_request() failed\n");
 		return false;
 	}
@@ -466,40 +554,45 @@ bool NFCHttpClient::PerformGet(const std::string& strUri, const HTTP_RESP_FUNCTO
 	const std::string& strUserData,
 	const std::map<std::string, std::string>& xHeaders)
 {
-	return MakeRequest(strUri, pCB, strUserData, "", xHeaders, false);
+	return MakeRequest(strUri, pCB, strUserData, "", xHeaders, NFHttpType::NF_HTTP_REQ_GET);
 }
 
 bool NFCHttpClient::PerformPost(const std::string& strUri, const std::string& strPostData, const HTTP_RESP_FUNCTOR& pCB,
 	const std::string& strUserData,
 	const std::map<std::string, std::string>& xHeaders)
 {
-	return MakeRequest(strUri, pCB, strPostData, strUserData, xHeaders, true);
+	return MakeRequest(strUri, pCB, strPostData, strUserData, xHeaders, NFHttpType::NF_HTTP_REQ_POST);
 }
 
 bool NFCHttpClient::LuaPerformGet(const std::string& strUri, const std::string& luaFunc,
 	const std::string& strUserData,
 	const std::map<std::string, std::string>& xHeaders)
 {
-	return LuaMakeRequest(strUri, luaFunc, strUserData, "", xHeaders, false);
+	return LuaMakeRequest(strUri, luaFunc, strUserData, "", xHeaders, NFHttpType::NF_HTTP_REQ_GET);
 }
 
 bool NFCHttpClient::LuaPerformPost(const std::string& strUri, const std::string& strPostData, const std::string& luaFunc,
 	const std::string& strUserData,
 	const std::map<std::string, std::string>& xHeaders)
 {
-	return LuaMakeRequest(strUri, luaFunc, strPostData, strUserData, xHeaders, true);
+	return LuaMakeRequest(strUri, luaFunc, strPostData, strUserData, xHeaders, NFHttpType::NF_HTTP_REQ_POST);
 }
 
 void NFCHttpClient::OnHttpReqDone(struct evhttp_request* req, void* ctx)
 {
 	HttpObject* pHttpObj = (HttpObject*)(ctx);
+	if (pHttpObj == NULL)
+	{
+		NFLogError("pHttpObj ==NULL");
+		return;
+	}
 
 	if (req == NULL)
 	{
 		/* If req is NULL, it means an error occurred, but
 		* sadly we are mostly left guessing what the error
 		* might have been.  We'll do our best... */
-		struct bufferevent* bev = (struct bufferevent*) ctx;
+		struct bufferevent* bev = (struct bufferevent*) pHttpObj->m_pBev;
 		unsigned long oslerr = 0;
 		int printed_err = 0;
 		int errcode = EVUTIL_SOCKET_ERROR();
@@ -509,12 +602,11 @@ void NFCHttpClient::OnHttpReqDone(struct evhttp_request* req, void* ctx)
 		/* Print out the OpenSSL error queue that libevent
 		* squirreled away for us, if any. */
 
-		char buffer[512] = { 0 };
+		char buffer[1024] = { 0 };
 		int nread = 0;
 
 #if NF_ENABLE_SSL
-		while ((oslerr = bufferevent_get_openssl_error(bev)))
-		{
+		while ((oslerr = bufferevent_get_openssl_error(bev))) {
 			ERR_error_string_n(oslerr, buffer, sizeof(buffer));
 			fprintf(stderr, "%s\n", buffer);
 			strErrMsg += std::string(buffer);
@@ -525,8 +617,8 @@ void NFCHttpClient::OnHttpReqDone(struct evhttp_request* req, void* ctx)
 		* socket error; let's try printing that. */
 		if (!printed_err)
 		{
-			char tmpBuf[512] = { 0 };
-			snprintf(tmpBuf, 512, "socket error = %s (%d)\n",
+			char tmpBuf[1024] = { 0 };
+			snprintf(tmpBuf, 1024, "socket error = %s (%d)\n",
 				evutil_socket_error_to_string(errcode),
 				errcode);
 			strErrMsg += std::string(tmpBuf);
@@ -536,11 +628,13 @@ void NFCHttpClient::OnHttpReqDone(struct evhttp_request* req, void* ctx)
 		{
 			pHttpObj->m_pCB(-1, strErrMsg, pHttpObj->m_strUserData);
 		}
+
+		NFLogError(strErrMsg.c_str());
 		return;
 	}
 
 	int nRespCode = evhttp_request_get_response_code(req);
-	char buffer[512] = { 0 };
+	char buffer[4096] = { 0 };
 	int nread = 0;
 	std::string strResp;
 	while ((nread = evbuffer_remove(evhttp_request_get_input_buffer(req),
@@ -581,13 +675,18 @@ void NFCHttpClient::OnHttpReqDone(struct evhttp_request* req, void* ctx)
 void NFCHttpClient::LuaOnHttpReqDone(struct evhttp_request* req, void* ctx)
 {
 	LuaHttpObject* pHttpObj = (LuaHttpObject*)(ctx);
+	if (pHttpObj == NULL)
+	{
+		NFLogError("pHttpObj ==NULL");
+		return;
+	}
 
 	if (req == NULL)
 	{
 		/* If req is NULL, it means an error occurred, but
 		* sadly we are mostly left guessing what the error
 		* might have been.  We'll do our best... */
-		struct bufferevent* bev = (struct bufferevent*) ctx;
+		struct bufferevent* bev = (struct bufferevent*) pHttpObj->m_pBev;
 		unsigned long oslerr = 0;
 		int printed_err = 0;
 		int errcode = EVUTIL_SOCKET_ERROR();
@@ -597,12 +696,11 @@ void NFCHttpClient::LuaOnHttpReqDone(struct evhttp_request* req, void* ctx)
 		/* Print out the OpenSSL error queue that libevent
 		* squirreled away for us, if any. */
 
-		char buffer[512] = { 0 };
+		char buffer[1024] = { 0 };
 		int nread = 0;
 
 #if NF_ENABLE_SSL
-		while ((oslerr = bufferevent_get_openssl_error(bev)))
-		{
+		while ((oslerr = bufferevent_get_openssl_error(bev))) {
 			ERR_error_string_n(oslerr, buffer, sizeof(buffer));
 			fprintf(stderr, "%s\n", buffer);
 			strErrMsg += std::string(buffer);
@@ -613,20 +711,21 @@ void NFCHttpClient::LuaOnHttpReqDone(struct evhttp_request* req, void* ctx)
 		* socket error; let's try printing that. */
 		if (!printed_err)
 		{
-			char tmpBuf[512] = { 0 };
-			snprintf(tmpBuf, 512, "socket error = %s (%d)\n",
+			char tmpBuf[1024] = { 0 };
+			snprintf(tmpBuf, 1024, "socket error = %s (%d)\n",
 				evutil_socket_error_to_string(errcode),
 				errcode);
 			strErrMsg += std::string(tmpBuf);
 		}
 
-
 		pHttpObj->RunLuaFunc(-1, strErrMsg, pHttpObj->m_strUserData);
+
+		NFLogError(strErrMsg.c_str());
 		return;
 	}
 
 	int nRespCode = evhttp_request_get_response_code(req);
-	char buffer[512] = { 0 };
+	char buffer[4096] = { 0 };
 	int nread = 0;
 	std::string strResp;
 	while ((nread = evbuffer_remove(evhttp_request_get_input_buffer(req),

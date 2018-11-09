@@ -11,7 +11,6 @@
 #include "NFComm/NFPluginModule/NFIHttpServerModule.h"
 #include <map>
 #include <list>
-class NFILogModule;
 
 class NFCHttpServerModule
 	: public NFIHttpServerModule
@@ -23,6 +22,7 @@ public:
 	virtual ~NFCHttpServerModule();
 
 public:
+	virtual bool Awake();
 	virtual bool Init();
 	virtual bool AfterInit();
 	virtual bool Execute();
@@ -32,25 +32,20 @@ public:
 
 	virtual int InitServer(const unsigned short nPort);
 
-	virtual bool AddMsgCB(const std::string& strCommand, const HTTP_RECEIVE_FUNCTOR& cb);
-
-	virtual bool AddComMsgCB(const HTTP_RECEIVE_FUNCTOR& cb);
-
-	virtual bool ResponseMsg(const NFHttpRequest& req, const int nCommand, const std::string& strMsg);
-
-	virtual bool
-		ResponseMsg(const NFHttpRequest& req, const std::string& strMsg, NFWebStatus code = NFWebStatus::WEB_OK,
+	virtual bool ResponseMsg(const NFHttpRequest& req, const std::string& strMsg, NFWebStatus code = NFWebStatus::WEB_OK,
 			const std::string& reason = "OK");
-
-	virtual bool ResponseFile(const NFHttpRequest& req, const std::string& strPath, const std::string& strFileName);
-
 private:
-	void OnReceiveNetPack(const NFHttpRequest& req, const std::string& strCommand, const std::string& strUrl);
+	virtual bool OnReceiveNetPack(const NFHttpRequest& req);
+	virtual NFWebStatus OnFilterPack(const NFHttpRequest& req);
 
+	virtual bool AddMsgCB(const std::string& strCommand, const NFHttpType eRequestType, const HTTP_RECEIVE_FUNCTOR& cb);
+	virtual bool AddFilterCB(const std::string& strCommand, const HTTP_FILTER_FUNCTOR& cb);
+
+	virtual bool LuaAddMsgCB(const std::string& strCommand, const NFHttpType eRequestType, const std::string& luaFunc);
 private:
-	NFILogModule* mLogModule;
 	NFIHttpServer* m_pHttpServer;
-
-	std::map<std::string, HTTP_RECEIVE_FUNCTOR> mMsgCBMap;
-	std::list<HTTP_RECEIVE_FUNCTOR> mComMsgCBList;
+	std::map<NFHttpType, map<std::string, HTTP_RECEIVE_FUNCTOR>> mMsgCBMap;
+	std::map<NFHttpType, map<std::string, std::string>> mMsgLuaCBMap;
+	std::map<std::string, HTTP_FILTER_FUNCTOR> mMsgFliterMap;
+	NFILuaScriptModule* m_pLuaScriptModule;
 };

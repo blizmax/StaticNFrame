@@ -11,6 +11,7 @@
 
 #include "NFComm/NFPluginModule/NFIModule.h"
 #include "NFComm/NFPluginModule/NFDBActorMgr.h"
+#include "NFComm/NFPluginModule/NFIHttpServerModule.h"
 
 class NFCTestActorModule : public NFIModule
 {
@@ -27,4 +28,6 @@ public:
 	virtual bool BeforeShut() override;
 
 	virtual bool Shut() override;
+
+	bool HttpLogin(const NFHttpRequest& req);
 };

@@ -11,8 +11,9 @@
 
 #include "NFComm/NFPluginModule/NFIHttpClient.h"
 #include "NFComm/NFPluginModule/NFILuaScriptModule.h"
-
+#include "NFComm/NFPluginModule/NFIHttpServer.h"
 #include "NFLibEvent.h"
+
 
 #include <list>
 
@@ -71,7 +72,7 @@ public:
 class NFCHttpClient : public NFIHttpClient
 {
 public:
-	NFCHttpClient(int nRetry = 2, int nTimeoutSec = 2)
+	NFCHttpClient(int nRetry = 2, int nTimeoutSec = 30)
 		: m_nRetry(nRetry), m_nTimeOut(nTimeoutSec), m_pLuaScriptModule(nullptr)
 	{
 	}
@@ -112,20 +113,20 @@ private:
 		const std::string& strUserData,
 		const std::string& strPostData,
 		const std::map<std::string, std::string>& xHeaders,
-		bool bPost = false);
+		const NFHttpType eHttpType);
 
 	bool LuaMakeRequest(const std::string& strUri,
 		const std::string& luaFunc,
 		const std::string& strUserData,
 		const std::string& strPostData,
 		const std::map<std::string, std::string>& xHeaders,
-		bool bPost = false);
+		const NFHttpType eHttpType);
 private:
 	std::string m_strUserAgent;
 	struct event_base* m_pBase = nullptr;
 
 	int m_nRetry = 2;
-	int m_nTimeOut = 2;
+	int m_nTimeOut = 30;
 
 	NFILuaScriptModule* m_pLuaScriptModule;
 

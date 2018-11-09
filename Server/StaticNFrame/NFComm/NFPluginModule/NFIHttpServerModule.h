@@ -19,25 +19,32 @@ public:
 
 	// register msg callback
 	template<typename BaseType>
-	bool AddReceiveCallBack(const std::string& strCommand, BaseType* pBase, void (BaseType::*handleRecieve)(const NFHttpRequest& req, const std::string& strCommand, const std::string& strUrl))
+	bool AddRequestHandler(const std::string& strPath, const NFHttpType eRequestType, BaseType* pBase, bool (BaseType::*handleRecieve)(const NFHttpRequest& req))
 	{
-		HTTP_RECEIVE_FUNCTOR functor = std::bind(handleRecieve, pBase, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3);
-		return AddMsgCB(strCommand, functor);
+		HTTP_RECEIVE_FUNCTOR functor = std::bind(handleRecieve, pBase, std::placeholders::_1);
+		return AddMsgCB(strPath, eRequestType, functor);
 	}
+
 	template<typename BaseType>
-	bool AddNetCommonReceiveCallBack(BaseType* pBase, void (BaseType::*handleRecieve)(const NFHttpRequest& req, const std::string& strCommand, const std::string& strUrl))
+	bool AddNetFilter(const std::string& strPath, BaseType* pBase, NFWebStatus(BaseType::*handleFilter)(const NFHttpRequest& req))
 	{
-		HTTP_RECEIVE_FUNCTOR functor = std::bind(handleRecieve, pBase, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3);
+		HTTP_FILTER_FUNCTOR functor = std::bind(handleFilter, pBase, std::placeholders::_1);
 
-		return AddComMsgCB(functor);
+		return AddFilterCB(strPath, functor);
 	}
 
+	bool LuaAddRequestHandler(const std::string& strPath, const NFHttpType eRequestType, const std::string& luaFunc)
+	{
+		return LuaAddMsgCB(strPath, eRequestType, luaFunc);
+	}
 public:
 	virtual int InitServer(const unsigned short nPort) = 0;
 
 	virtual bool ResponseMsg(const NFHttpRequest& req, const std::string& strMsg, NFWebStatus code = NFWebStatus::WEB_OK, const std::string& reason = "OK") = 0;
-	virtual bool ResponseFile(const NFHttpRequest& req, const std::string& strPath, const std::string& strFileName) = 0;
 
-	virtual bool AddMsgCB(const std::string& strCommand, const HTTP_RECEIVE_FUNCTOR& cb) = 0;
-	virtual bool AddComMsgCB(const HTTP_RECEIVE_FUNCTOR& cb) = 0;
+private:
+	virtual bool AddMsgCB(const std::string& strCommand, const NFHttpType eRequestType, const HTTP_RECEIVE_FUNCTOR& cb) = 0;
+	virtual bool AddFilterCB(const std::string& strCommand, const HTTP_FILTER_FUNCTOR& cb) = 0;
+
+	virtual bool LuaAddMsgCB(const std::string& strCommand, const NFHttpType eRequestType, const std::string& luaFunc) = 0;
 };

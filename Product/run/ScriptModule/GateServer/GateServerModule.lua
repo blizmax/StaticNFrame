@@ -24,11 +24,11 @@ end
 
 function GateServerModule.ProxyNetEvent(event, unlinkId)
 	if event == NF_MSG_TYPE.eMsgType_CONNECTED then
-		local msg = { }
-		msg["do"] = "Cmd.SendReqRecommendFriendCmd_C"
-		local laccount = {}
-		laccount.unLinkId = unlinkId
-		laccount.Id = 0
-		TcpClient.sendJsonMsg(msg, laccount)
+		--local msg = { }
+		--msg["do"] = "Cmd.SendReqRecommendFriendCmd_C"
+		--local laccount = {}
+		--laccount.unLinkId = unlinkId
+		--laccount.Id = 0
+		--TcpClient.sendJsonMsg(msg, laccount)
     end
 end

@@ -10,6 +10,7 @@
 #pragma once
 
 #include "NFComm/NFPluginModule/NFIHttpServer.h"
+#include "NFLibEvent.h"
 
 class NFCHttpServer : public NFIHttpServer
 {
@@ -19,40 +20,26 @@ public:
 	}
 
 	template<typename BaseType>
-	NFCHttpServer(BaseType* pBaseType,
-		void (BaseType::*handleRecieve)(const NFHttpRequest& req, const std::string& strCommand,
-			const std::string& strUrl))
+	NFCHttpServer(BaseType* pBaseType, bool (BaseType::*handleRecieve)(const NFHttpRequest& req), NFWebStatus(BaseType::*handleFilter)(const NFHttpRequest& req))
 	{
 		base = NULL;
-		mRecvCB = std::bind(handleRecieve, pBaseType, std::placeholders::_1, std::placeholders::_2,
-			std::placeholders::_3);
+		mReceiveCB = std::bind(handleRecieve, pBaseType, std::placeholders::_1);
+		mFilter = std::bind(handleFilter, pBaseType, std::placeholders::_1);
 		mPort = 0;
 	}
 
-	virtual ~NFCHttpServer()
-	{};
+	virtual ~NFCHttpServer();
 
 	virtual bool Execute();
 
 	virtual int InitServer(const unsigned short nPort);
 
-	virtual bool Final();
-
-	virtual bool ResponseMsg(const NFHttpRequest& req, const std::string& strMsg, NFWebStatus code,
-		const std::string& strReason = "OK");
-
-	virtual bool ResponseFile(const NFHttpRequest& req, const std::string& strPath, const std::string& strFileName);
-
+	virtual bool ResponseMsg(const NFHttpRequest& req, const std::string& strMsg, NFWebStatus code, const std::string& strReason = "OK");
 private:
-
-	bool ResponseFile(const NFHttpRequest& req, const int fd, struct stat st, const std::string& strType);
-
 	static void listener_cb(struct evhttp_request* req, void* arg);
-
-	static std::vector<std::string> Split(const std::string& str, std::string delim);
-
 private:
 	int mPort;
 	struct event_base* base;
-	HTTP_RECEIVE_FUNCTOR mRecvCB;
+	HTTP_RECEIVE_FUNCTOR mReceiveCB;
+	HTTP_FILTER_FUNCTOR mFilter;
 };

@@ -12,6 +12,7 @@
 #include "NFComm/NFPluginModule/NFIPluginManager.h"
 #include <NFComm/NFPluginModule/NFConfigMgr.h>
 #include "NFComm/NFPluginModule/NFIHttpClientModule.h"
+#include "NFComm/NFPluginModule/NFIHttpServerModule.h"
 
 NFCGameServerModule::NFCGameServerModule(NFIPluginManager* p)
 {

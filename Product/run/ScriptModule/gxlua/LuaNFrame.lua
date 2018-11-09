@@ -18,6 +18,7 @@ function LuaNFrame:init(pluginManager)
     self.serverModule = self.pluginManager:GetServerModule()
     self.clientModule = self.pluginManager:GetClientModule()
     self.httpClientModule = self.pluginManager:GetHttpClientModule()
+    self.httpServerModule = self.pluginManager:GetHttpServerModule()
     
     --用来存放加载的module
     self.ScriptList = { }
@@ -216,7 +217,7 @@ end
     return bool
 ]]
 
-function LuaNFrame:HttpRequestGet(url, resFunc, heads, para)
+function LuaNFrame:HttpClientRequestGet(url, resFunc, heads, para)
     heads = heads or {}
     para = para or {}
 	if type(resFunc) ~= "string" or type(url) ~= "string" or type(heads) ~= "table" then
@@ -236,17 +237,41 @@ end
 	msg:请求的数据,这时里是一个lua的table
 	heads 在这里是一个 map[string]string 选定对应参考与值
 ]]
-function LuaNFrame:HttpRequestPost(resFunc, url, body, bodyType, heads, para)
+function LuaNFrame:HttpClientRequestPost(url, resFunc, body, heads, para)
     para = para or {}
 	heads = heads or {}
-	bodyType = bodyType or "application/x-www-form-urlencoded"
-	if type(resFunc) ~= "string" or type(url) ~= "string" or type(body) ~= "table" or type(bodyType) ~= "string"or type(heads) ~= "table" then
-		unilight.error("unilight.HttpRequestGet params error" .. resFunc .. url)
+	if type(resFunc) ~= "string" or type(url) ~= "string" or type(heads) ~= "table" or type(body) ~= "table" then
+		unilight.error("unilight.HttpClientRequestPost params error" .. resFunc .. url)
 		return
 	end
     local jsonHeaders = table2json(heads)
-	local callbackpara = table2json(para)
-    self.httpClientModule:HttpRequestPost(url, body, resFunc, jsonHeaders, callbackpara)
+    local callbackpara = table2json(para)
+    local jsonbody = table2json(body)
+    self.httpClientModule:HttpRequestPost(url, jsonbody, resFunc, jsonHeaders, callbackpara)
+end
+
+function LuaNFrame:HttpServerAddRequestHandler(urlPath, requestType, resFunc)
+	if type(resFunc) ~= "string" or type(urlPath) ~= "string" or type(requestType) ~= "number"then
+		unilight.error("HttpServerAddRequestHandler params error" .. resFunc .. urlPath)
+		return
+    end
+    self.httpServerModule:AddRequestHandler(urlPath, requestType, resFunc)
+end
+
+function LuaNFrame:HttpServerInitServer(port)
+    if type(port) ~= "number" then
+        unilight.error("HttpServerInitServer failed, port is not number:"..port)
+    end
+
+    self.httpServerModule:InitServer(port)
+end
+
+function LuaNFrame:HttpServerResponseMsg(req, strMsg, code, reason)
+    if type(strMsg) ~= "string" or type(code) ~= "number" or type(reason) ~= "string" then
+        unilight.error("HttpServerResponseMsg failed")
+    end
+
+    self.httpServerModule:ResponseMsg(req, strMsg, code, reason)
 end
 
 --执行函数, 函数被字符串表达出来

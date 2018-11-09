@@ -25,7 +25,7 @@ LoadPlugin =
 			"NFKernelPlugin",
 			"NFActorPlugin",
 			"NFNetPlugin",
-			--"NFTestPlugin",
+			"NFTestPlugin",
 			"NFMysqlPlugin",
 			--"NFProxyServerPlugin",
 			--"NFProxyClientPlugin",

@@ -10,16 +10,30 @@
 #include "NFCHttpServerModule.h"
 #include "NFComm/NFPluginModule/NFILogModule.h"
 #include "NFCHttpServer.h"
+#include "NFComm/NFPluginModule/NFILuaScriptModule.h"
+#include "NFComm/NFPluginModule/NFIPluginManager.h"
 
 NFCHttpServerModule::NFCHttpServerModule(NFIPluginManager* p)
 {
 	pPluginManager = p;
 	m_pHttpServer = NULL;
+	m_pLuaScriptModule = NULL;
 }
 
 NFCHttpServerModule::~NFCHttpServerModule()
 {
+	if (m_pHttpServer)
+	{
+		delete m_pHttpServer;
+		m_pHttpServer = NULL;
+	}
+}
 
+bool NFCHttpServerModule::Awake()
+{
+	//可以允许Lua Module不存在
+	m_pLuaScriptModule = dynamic_cast<NFILuaScriptModule*>(pPluginManager->FindModule("NFILuaScriptModule"));
+	return true;
 }
 
 bool NFCHttpServerModule::Init()
@@ -47,18 +61,12 @@ bool NFCHttpServerModule::Execute()
 bool NFCHttpServerModule::BeforeShut()
 {
 	mMsgCBMap.clear();
-	mComMsgCBList.clear();
+	mMsgFliterMap.clear();
 	return true;
 }
 
 bool NFCHttpServerModule::Shut()
 {
-	if (m_pHttpServer)
-	{
-		m_pHttpServer->Final();
-		delete m_pHttpServer;
-		m_pHttpServer = NULL;
-	}
 	return true;
 }
 
@@ -69,67 +77,104 @@ bool NFCHttpServerModule::Finalize()
 
 int NFCHttpServerModule::InitServer(const unsigned short nPort)
 {
-	m_pHttpServer = new NFCHttpServer(this, &NFCHttpServerModule::OnReceiveNetPack);
-	std::cout << "Open http port:" << nPort << std::endl;
+	m_pHttpServer = new NFCHttpServer(this, &NFCHttpServerModule::OnReceiveNetPack, &NFCHttpServerModule::OnFilterPack);
+	NFLogDebug("Http Server Open http port:{}", nPort);
 	return m_pHttpServer->InitServer(nPort);
 }
 
-void NFCHttpServerModule::OnReceiveNetPack(const NFHttpRequest& req, const std::string& strCommand,
-	const std::string& strUrl)
+bool NFCHttpServerModule::OnReceiveNetPack(const NFHttpRequest& req)
 {
-	auto it = mMsgCBMap.find(strCommand);
-	if (mMsgCBMap.end() != it)
+	auto iter = mMsgCBMap.find(req.type);
+	if (iter != mMsgCBMap.end())
 	{
-		HTTP_RECEIVE_FUNCTOR& pFunPtr = it->second;
-		pFunPtr(req, strCommand, strUrl);
-	}
-	else
-	{
-		if (mComMsgCBList.size() > 0)
+		auto itPath = iter->second.find(req.path);
+		if (itPath != iter->second.end())
 		{
-			for (std::list<HTTP_RECEIVE_FUNCTOR>::iterator it = mComMsgCBList.begin();
-			it != mComMsgCBList.end(); ++it)
+			HTTP_RECEIVE_FUNCTOR& pFunPtr = itPath->second;
+			try
 			{
-				HTTP_RECEIVE_FUNCTOR& pFunPtr = *it;
-				pFunPtr(req, strCommand, strUrl);
+				pFunPtr(req);
 			}
-		}
-		else
-		{
-			std::cout << "no http receiver:" << strCommand << std::endl;
+			catch (const std::exception&)
+			{
+				ResponseMsg(req, "unknow error", NFWebStatus::WEB_INTER_ERROR);
+			}
+			return true;
 		}
 	}
-}
 
-bool NFCHttpServerModule::AddMsgCB(const std::string& strCommand, const HTTP_RECEIVE_FUNCTOR& cb)
-{
-	if (mMsgCBMap.find(strCommand) == mMsgCBMap.end())
+	auto luaiter = mMsgLuaCBMap.find(req.type);
+	if (luaiter != mMsgLuaCBMap.end())
 	{
-		mMsgCBMap.insert(std::map<std::string, HTTP_RECEIVE_FUNCTOR>::value_type(strCommand, cb));
-		return true;
+		auto luaitPath = luaiter->second.find(req.path);
+		if (luaitPath != luaiter->second.end())
+		{
+			std::string& luaFunc = luaitPath->second;
+			try
+			{
+				if (m_pLuaScriptModule)
+				{
+					m_pLuaScriptModule->RunHttpServerLuaFunc(luaFunc, req);
+				}
+			}
+			catch (const std::exception&)
+			{
+				ResponseMsg(req, "unknow error", NFWebStatus::WEB_INTER_ERROR);
+			}
+			return true;
+		}
 	}
+
+	return ResponseMsg(req, "", NFWebStatus::WEB_ERROR);
+}
+
+NFWebStatus NFCHttpServerModule::OnFilterPack(const NFHttpRequest & req)
+{
+	auto itPath = mMsgFliterMap.find(req.path);
+	if (itPath != mMsgFliterMap.end())
+	{
+		HTTP_FILTER_FUNCTOR& pFunPtr = itPath->second;
+		return pFunPtr(req);
+	}
+
+	return NFWebStatus::WEB_OK;
+}
+
+bool NFCHttpServerModule::LuaAddMsgCB(const std::string& strCommand, const NFHttpType eRequestType, const std::string& luaFunc)
+{
+	auto it = mMsgLuaCBMap.find(eRequestType);
+	if (it == mMsgLuaCBMap.end())
+	{
+		mMsgLuaCBMap[eRequestType].emplace(strCommand, luaFunc);
+	}
+
 	return false;
 }
 
-bool NFCHttpServerModule::AddComMsgCB(const HTTP_RECEIVE_FUNCTOR& cb)
+bool NFCHttpServerModule::AddMsgCB(const std::string& strCommand, const NFHttpType eRequestType, const HTTP_RECEIVE_FUNCTOR& cb)
 {
-	mComMsgCBList.push_back(cb);
+	auto it = mMsgCBMap.find(eRequestType);
+	if (it == mMsgCBMap.end())
+	{
+		mMsgCBMap[eRequestType].emplace(strCommand, cb);
+	}
+
+	return false;
+}
+
+bool NFCHttpServerModule::AddFilterCB(const std::string& strCommand, const HTTP_FILTER_FUNCTOR& cb)
+{
+	auto it = mMsgFliterMap.find(strCommand);
+	if (it == mMsgFliterMap.end())
+	{
+		mMsgFliterMap.emplace(strCommand, cb);
+	}
+
 	return true;
-}
-
-bool NFCHttpServerModule::ResponseMsg(const NFHttpRequest& req, const int nCommand, const std::string& strMsg)
-{
-	return false;
 }
 
 bool NFCHttpServerModule::ResponseMsg(const NFHttpRequest& req, const std::string& strMsg, NFWebStatus code,
 	const std::string& strReason)
 {
 	return m_pHttpServer->ResponseMsg(req, strMsg, code, strReason);
-}
-
-bool
-NFCHttpServerModule::ResponseFile(const NFHttpRequest& req, const std::string& strPath, const std::string& strFileName)
-{
-	return m_pHttpServer->ResponseFile(req, strPath, strFileName);
 }

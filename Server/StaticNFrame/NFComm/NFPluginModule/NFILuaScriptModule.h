@@ -15,6 +15,8 @@
 #include "NFITimerModule.h"
 #include "NFServerDefine.h"
 
+class NFHttpRequest;
+
 class NFILuaScriptModule : public NFIModule
 {
 public:
@@ -28,6 +30,8 @@ public:
 	virtual void RunNetEventLuaFunc(const std::string& luaFunc, const eMsgType nEvent, const uint32_t unLinkId) = 0;
 
 	virtual void RunHtttpClientLuaFunc(const std::string& luaFunc, const int state_code, const std::string& strRespData, const std::string& strUserData) = 0;
+
+	virtual void RunHttpServerLuaFunc(const std::string& luaFunc, const NFHttpRequest & req) = 0;
 public:
 };
 

@@ -31,6 +31,7 @@ function init_script_system(pluginManager)
 	if pluginManager:IsLoadAllServer() then
 		LoadLuaFile("../ScriptModule/GameServer", true)
 		LoadLuaFile("../ScriptModule/GateServer", true)
+		LoadLuaFile("../ScriptModule/LoginServer", true)
 	else
 		LoadLuaFile("../ScriptModule/" .. pluginManager:GetAppName(), true)
 	end

@@ -9,10 +9,17 @@ function GameServerModule.Init()
     local tmp = {
         gaoyi = "is good boy",
     }
-    unilight.HttpRequestGet("http://www.qq.com", "HttpCallBack", tmp)
+
+    local body = { }
+    body["do"] = "request-zone-list"
+    body["data"] = {
+        gameid = 3010,
+    }  
+
+    --unilight.HttpClientRequestPost("https://loginxcxtest.zqgame.com/httplogin", "HttpLoginCallBack", body, {}, tmp)
 end
 
-function HttpGet.HttpCallBack(state_code, respData, strUseData)
+function HttpClient.HttpLoginCallBack(state_code, respData, strUseData)
     unilight.debug("state_code:"..state_code)
     unilight.debug(respData)
     unilight.debug("strUseData:".. table2json(strUseData))
