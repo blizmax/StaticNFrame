@@ -13,6 +13,8 @@ function LuaNFrame:init(pluginManager)
     if self.pluginManager == nil then
         print("初始化失败。。。。。。。。。")
     end
+
+    self.kernelModule = self.pluginManager:GetKernelModule()
     self.logModule = self.pluginManager:GetLogModule()
     self.luaModule = self.pluginManager:GetLuaModule()
     self.serverModule = self.pluginManager:GetServerModule()
@@ -25,6 +27,56 @@ function LuaNFrame:init(pluginManager)
 
     --加载应用程序的Lua  Module
     self:load_script_file()
+end
+
+--创建全局唯一的UUID
+function LuaNFrame:GetUUID()
+    return self.kernelModule:GetUUID()
+end
+
+--通过字符串获得MD5, 返回MD5字符串
+function LuaNFrame:GetMD5(str)
+    if type(str) ~= "string" then
+        LuaNFrame:error("GetMD5 param error, not string:" .. str)
+        return
+    end
+    return self.kernelModule:GetMD5(str)
+end
+
+--通过字符串获得对应的CRC32, 返回数字
+function LuaNFrame:GetCRC32(str)
+    if type(str) ~= "string" then
+        LuaNFrame:error("GetCRC32 param error, not string:" .. str)
+        return
+    end
+    return self.kernelModule:GetCRC32(str)
+end
+
+--通过字符串获得对应的CRC16, 返回数字
+function LuaNFrame:GetCRC16(str)
+    if type(str) ~= "string" then
+        LuaNFrame:error("GetCRC16 param error, not string:" .. str)
+        return
+    end
+    return self.kernelModule:GetCRC16(str)
+end
+
+--通过字符串获得对应的Base64Encode, 返回字符串
+function LuaNFrame:Base64Encode(str)
+    if type(str) ~= "string" then
+        LuaNFrame:error("Base64Encode param error, not string:" .. str)
+        return
+    end
+    return self.kernelModule:Base64Encode(str)
+end
+
+--通过字符串获得对应的Base64Decode, 返回字符串
+function LuaNFrame:Base64Decode(str)
+    if type(str) ~= "string" then
+        LuaNFrame:error("Base64Decode param error, not string:" .. str)
+        return
+    end
+    return self.kernelModule:Base64Decode(str)
 end
 
 --数据库
@@ -113,6 +165,16 @@ function LuaNFrame:savedata(name, data)
         return collection:update(mongo.BSON{_id = data.uid}, encode_repair(data))
     end
     return false
+end
+
+--获得服务器开启时间，单位ms
+function LuaNFrame:GetInitTime()
+    return self.pluginManager:GetInitTime()
+end
+
+--获得服务器当前时间，单位ms
+function LuaNFrame:GetNowTime()
+    return self.pluginManager:GetNowTime()
 end
 
 --添加网络服务器

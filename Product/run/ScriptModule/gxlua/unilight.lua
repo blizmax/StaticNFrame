@@ -23,6 +23,46 @@ function unilight.InsertLoadFunc(func)
     LuaNFrame:InsertLoadFunc(func)
 end
 
+--创建全局唯一的UUID
+function unilight.GetUUID()
+    return LuaNFrame:GetUUID()
+end
+
+--获得服务器开启时间，单位ms
+function unilight.GetInitTime()
+    return LuaNFrame:GetInitTime()
+end
+
+--获得服务器当前时间，单位ms
+function unilight.GetNowTime()
+    return LuaNFrame:GetNowTime()
+end
+
+--通过字符串获得MD5, 返回MD5字符串
+function unilight.GetMD5(str)
+    return LuaNFrame:GetMD5(str)
+end
+
+--通过字符串获得对应的CRC32, 返回数字
+function unilight.GetCRC32(str)
+    return LuaNFrame:GetCRC32(str)
+end
+
+--通过字符串获得对应的CRC16, 返回数字
+function unilight.GetCRC16(str)
+    return LuaNFrame:GetCRC16(str)
+end
+
+--通过字符串获得对应的Base64Encode, 返回字符串
+function unilight.Base64Encode(str)
+    return LuaNFrame:Base64Encode(str)
+end
+
+--通过字符串获得对应的Base64Decode, 返回字符串
+function unilight.Base64Decode(str)
+    return LuaNFrame:Base64Decode(str)
+end
+
 unilight.debug = function(...)
 	LuaNFrame:debug(...)
 end
