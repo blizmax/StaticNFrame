@@ -37,6 +37,9 @@ NFCPluginManager::NFCPluginManager() : NFIPluginManager()
 
 	mstrLogPath = "logs";
 
+	mnInitTime = NFGetTime();
+	mnNowTime = mnInitTime;
+
 	//    ×¢²áAllServer
 	for (int i = 1; i < NF_ST_MAX; i++)
 	{
@@ -165,6 +168,7 @@ NFIPlugin* NFCPluginManager::FindPlugin(const std::string& strPluginName)
 bool NFCPluginManager::Execute()
 {
 	bool bRet = true;
+	mnNowTime = NFGetTime();
 	uint64_t startTime = NFGetTime();
 	uint64_t endTime = 0;
 
@@ -524,5 +528,25 @@ NFIModule* NFCPluginManager::CreateAloneModule(const std::string& strModuleName)
 		return pModule;
 	}
 	return nullptr;
+}
+
+uint32_t NFCPluginManager::GetFrame() const
+{
+	return mFrame;
+}
+
+uint32_t NFCPluginManager::GetFrameTime() const
+{
+	return mFrameTime;
+}
+
+uint64_t NFCPluginManager::GetInitTime() const
+{
+	return mnInitTime;
+}
+
+uint64_t NFCPluginManager::GetNowTime() const
+{
+	return mnNowTime;
 }
 

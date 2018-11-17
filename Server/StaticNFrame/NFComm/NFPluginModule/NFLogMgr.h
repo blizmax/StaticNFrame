@@ -10,6 +10,7 @@
 
 #include "NFILogModule.h"
 #include "NFComm/NFCore/NFSingleton.hpp"
+#include "NFComm/NFCore/NFPlatform.h"
 
 class NFLogMgr : public NFSingleton<NFLogMgr>
 {

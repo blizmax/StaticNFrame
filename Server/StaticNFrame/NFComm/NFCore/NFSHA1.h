@@ -8,89 +8,150 @@
 // -------------------------------------------------------------------------
 
 /*
- *    sha1.h
- *
- *    Copyright (C) 1998
- *    Paul E. Jones <paulej@arid.us>
- *    All Rights Reserved.
- *
- *****************************************************************************
- *    $Id: sha1.h,v 1.6 2004/03/27 18:02:26 paulej Exp $
- *****************************************************************************
- *
- *    Description:
- *         This class implements the Secure Hashing Standard as defined
- *         in FIPS PUB 180-1 published April 17, 1995.
- *
- *        Many of the variable names in this class, especially the single
- *        character names, were used because those were the names used
- *        in the publication.
- *
- *         Please read the file sha1.cpp for more information.
- *
- *         This is the same as MD5.
- *
- *  Created on: 2009-3-26
- *      Author: root
- *      usage    :    char SHABuffer[41];
- *                    SHA1 SHA;
- *                    SHA.SHA_GO("gfc",SHABuffer);
- *                    执行完成之后SHABuffer中即存储了由"a string"计算得到的SHA值
-		 算法描述：
-					1.填充形成整512 bits(64字节), (N+1)*512;
-								N*512 + 448位                         64位
-						真实数据 + 填充(一个1和无数个0)                 保存真实数据的长度
-						—————————————————————— ----------------------
-					2.四个32位被称为连接变量的整数参数：
-						A=，B=，C=，D=,E=
-					3.开始算法的四轮循环运算。
-						循环的次数(N+1)是信息中512位信息分组的数目。
-						for(N+1, 每次取512 bits(64字节)来进行处理：)
-						{
-							512bits 分成16个分组(每个分组4字节。int data[16])
-							用16个分组中的每一个分组和A，B，C，D,E通过4个函数进行运算，
-							得到新的A，B，C，D,E
-						}
-					4.最后，将A，B，C，D,E拼接起来就是SHA值
-						将拼接后的值用字符串的方式表示出来，就是最终的结果。
-						(比如 0x234233F, 用串 “234233F”表示出来，生成的串的空间将是值的空间的2倍。)
- *        调试情况: 该代码已经调试通过。
- */
+100% free public domain implementation of the SHA-1 algorithm
+by Dominik Reichl <dominik.reichl@t-online.de>
+Web: http://www.dominik-reichl.de/
 
-#pragma once
+Version 1.6 - 2005-02-07 (thanks to Howard Kapustein for patches)
+- You can set the endianness in your files, no need to modify the
+header file of the CSHA1 class any more
+- Aligned data support
+- Made support/compilation of the utility functions (ReportHash
+and HashFile) optional (useful, if bytes count, for example in
+embedded environments)
 
-#include<stdio.h>
-#include<string.h>
+Version 1.5 - 2005-01-01
+- 64-bit compiler compatibility added
+- Made variable wiping optional (define SHA1_WIPE_VARIABLES)
+- Removed unnecessary variable initializations
+- ROL32 improvement for the Microsoft compiler (using _rotl)
 
-#include "NFPlatform.h"
+======== Test Vectors (from FIPS PUB 180-1) ========
 
-class _NFExport NFSHA1
+SHA1("abc") =
+A9993E36 4706816A BA3E2571 7850C26C 9CD0D89D
+
+SHA1("abcdbcdecdefdefgefghfghighijhijkijkljklmklmnlmnomnopnopq") =
+84983E44 1C3BD26E BAAE4AA1 F95129E5 E54670F1
+
+SHA1(A million repetitions of "a") =
+34AA973C D4C4DAA4 F61EEB2B DBAD2731 6534016F
+*/
+
+#ifndef ___SHA1_HDR___
+#define ___SHA1_HDR___
+
+#if !defined(SHA1_UTILITY_FUNCTIONS) && !defined(SHA1_NO_UTILITY_FUNCTIONS)
+#define SHA1_UTILITY_FUNCTIONS
+#endif
+
+#include <memory.h> // Needed for memset and memcpy
+
+#ifdef SHA1_UTILITY_FUNCTIONS
+#include <stdio.h>  // Needed for file access and sprintf
+#include <string.h> // Needed for strcat and strcpy
+#endif
+
+#ifdef _MSC_VER
+#include <stdlib.h>
+#endif
+
+// You can define the endian mode in your files, without modifying the SHA1
+// source files. Just #define SHA1_LITTLE_ENDIAN or #define SHA1_BIG_ENDIAN
+// in your files, before including the SHA1.h header file. If you don't
+// define anything, the class defaults to little endian.
+
+#if !defined(SHA1_LITTLE_ENDIAN) && !defined(SHA1_BIG_ENDIAN)
+#define SHA1_LITTLE_ENDIAN
+#endif
+
+// Same here. If you want variable wiping, #define SHA1_WIPE_VARIABLES, if
+// not, #define SHA1_NO_WIPE_VARIABLES. If you don't define anything, it
+// defaults to wiping.
+
+#if !defined(SHA1_WIPE_VARIABLES) && !defined(SHA1_NO_WIPE_VARIABLES)
+#define SHA1_WIPE_VARIABLES
+#endif
+
+/////////////////////////////////////////////////////////////////////////////
+// Define 8- and 32-bit variables
+
+#ifndef UINT_32
+
+#ifdef _MSC_VER
+
+#define UINT_8  unsigned __int8
+#define UINT_32 unsigned __int32
+
+#else
+
+#define UINT_8 unsigned char
+
+#if (ULONG_MAX == 0xFFFFFFFF)
+#define UINT_32 unsigned long
+#else
+#define UINT_32 unsigned int
+#endif
+
+#endif
+#endif
+
+/////////////////////////////////////////////////////////////////////////////
+// Declare SHA1 workspace
+
+typedef union
+{
+	UINT_8  c[64];
+	UINT_32 l[16];
+} SHA1_WORKSPACE_BLOCK;
+
+class NFSHA1
 {
 public:
+#ifdef SHA1_UTILITY_FUNCTIONS
+	// Two different formats for ReportHash(...)
+	enum
+	{
+		REPORT_HEX = 0,
+		REPORT_DIGIT = 1
+	};
+#endif
+
+	// Constructor and Destructor
 	NFSHA1();
-	virtual ~NFSHA1();
+	~NFSHA1();
 
-	bool Encode2Hex(const char* lpData_Input, char* lpSHACode_Output);
+	UINT_32 m_state[5];
+	UINT_32 m_count[2];
+	UINT_32 __reserved1[1];
+	UINT_8  m_buffer[64];
+	UINT_8  m_digest[20];
+	UINT_32 __reserved2[3];
 
-	bool Encode2Ascii(const char* lpData_Input, char* lpSHACode_Output);
+	void Reset();
+
+	// Update the hash value
+	void Update(UINT_8 *data, UINT_32 len);
+#ifdef SHA1_UTILITY_FUNCTIONS
+	bool HashFile(char *szFileName);
+#endif
+
+	// Finalize hash and report
+	void Final();
+
+	// Report functions: as pre-formatted and raw data
+#ifdef SHA1_UTILITY_FUNCTIONS
+	void ReportHash(char *szReport, unsigned char uReportType = REPORT_HEX);
+#endif
+	void GetHash(UINT_8 *puDest);
+
 private:
-	unsigned int H[5]; // Message digest buffers
-	unsigned int Length_Low; // Message length in bits
-	unsigned int Length_High; // Message length in bits
-	unsigned char Message_Block[64]; // 512-bit message blocks
-	int Message_Block_Index; // Index into message block array
-private:
-	void SHAInit();
+	// Private SHA-1 transformation
+	void Transform(UINT_32 *state, UINT_8 *buffer);
 
-	void AddDataLen(int nDealDataLen);
-
-	// Process the next 512 bits of the message
-	void ProcessMessageBlock();
-
-	// Pads the current message block to 512 bits
-	void PadMessage();
-
-	// Performs a circular left shift operation
-	static inline unsigned CircularShift(int bits, unsigned word);
+	// Member variables
+	UINT_8 m_workspace[64];
+	SHA1_WORKSPACE_BLOCK *m_block; // SHA1 pointer to the byte array above
 };
 
+#endif

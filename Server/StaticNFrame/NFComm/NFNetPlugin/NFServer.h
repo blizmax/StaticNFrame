@@ -97,6 +97,13 @@ public:
 	uint32_t GetServerType() const;
 
 	/**
+	* @brief	是否是web服务器
+	*
+	* @return
+	*/
+	bool IsWebSocket() const;
+
+	/**
 	* @brief	初始化
 	*
 	* @return 是否成功
@@ -229,5 +236,10 @@ private:
 	* @brief 需要删除的连接对象
 	*/
 	std::vector<uint32_t> mvRemoveObject;
+
+	/**
+	* @brief 是否是websocket
+	*/
+	bool mWebSocket;
 };
 

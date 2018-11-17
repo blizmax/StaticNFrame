@@ -93,14 +93,26 @@ bool NFCLuaScriptModule::Register()
 {
 	LuaIntf::LuaBinding(l).beginClass<NFIPluginManager>("NFIPluginManager")
 		.addFunction("GetAppName", &NFIPluginManager::GetAppName)
+		.addFunction("GetInitTime", &NFIPluginManager::GetInitTime)
+		.addFunction("GetNowTime", &NFIPluginManager::GetNowTime)
 		.addFunction("IsLoadAllServer", &NFIPluginManager::IsLoadAllServer)
 		.addFunction("GetConfigPath", &NFIPluginManager::GetConfigPath)
+		.addFunction("GetKernelModule", &NFIPluginManager::FindModule<NFIKernelModule>)
 		.addFunction("GetLogModule", &NFIPluginManager::FindModule<NFILogModule>)
 		.addFunction("GetLuaModule", &NFIPluginManager::FindModule<NFILuaScriptModule>)
 		.addFunction("GetServerModule", &NFIPluginManager::FindModule<NFINetServerModule>)
 		.addFunction("GetClientModule", &NFIPluginManager::FindModule<NFINetClientModule>)
 		.addFunction("GetHttpClientModule", &NFIPluginManager::FindModule<NFIHttpClientModule>)
 		.addFunction("GetHttpServerModule", &NFIPluginManager::FindModule<NFIHttpServerModule>)
+		.endClass();
+
+	LuaIntf::LuaBinding(l).beginClass<NFIKernelModule>("NFIKernelModule")
+		.addFunction("GetUUID", &NFIKernelModule::GetUUID)
+		.addFunction("GetMD5", &NFIKernelModule::GetMD5)
+		.addFunction("GetCRC32", &NFIKernelModule::GetCRC32)
+		.addFunction("GetCRC16", &NFIKernelModule::GetCRC16)
+		.addFunction("Base64Encode", &NFIKernelModule::Base64Encode)
+		.addFunction("Base64Decode", &NFIKernelModule::Base64Decode)
 		.endClass();
 
 	LuaIntf::LuaBinding(l).beginClass<NFILuaScriptModule>("NFILuaScriptModule")

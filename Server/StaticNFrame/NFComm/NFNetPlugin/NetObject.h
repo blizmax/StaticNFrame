@@ -112,6 +112,34 @@ public:
 	}
 
 	/**
+	* @brief 如果是websocket的话，判断是否handleshark
+	*
+	* @return bool
+	*/
+	bool IsHandleShark() const;
+
+	/**
+	* @brief 如果是websocket的话，需要设计handleshark
+	*
+	* @return
+	*/
+	void SetHandleShark(bool b);
+
+	/**
+	* @brief 如果是websocket的话
+	*
+	* @return bool
+	*/
+	bool IsWebSocket() const;
+
+	/**
+	* @brief 如果是websocket的话
+	*
+	* @return 
+	*/
+	void SetWebSocket(bool b);
+
+	/**
 	 * @brief
 	 *
 	 * @return std::string
@@ -213,6 +241,16 @@ public:
 	virtual void OnHandleMsgPeer(eMsgType type, uint32_t usLink, char* pBuf, uint32_t sz, uint32_t nMsgId, uint64_t nValue);
 
 	/**
+	* @brief	对解析出来的数据进行处理
+	*
+	* @param type    数据类型，主要是为了和多线程统一处理, 主要有接受数据处理，连接成功处理，断开连接处理
+	* @param usLink  本客户端的唯一id
+	* @param strMsg  websocket 字符串数据 这里的字符串不带0结尾，不要使用c_str函数
+	* @return
+	*/
+	virtual void OnHandleMsgPeer(eMsgType type, uint32_t usLink, const std::string& strMsg);
+
+	/**
 	 * @brief
 	 *
 	 * @return bool
@@ -248,6 +286,20 @@ public:
 	 * @return void
 	 */
 	virtual void CloseObject();
+
+	/**
+	* @brief 处理shark info
+	*
+	* @return void
+	*/
+	virtual int HandleSharkInfo();
+
+	/**
+	* @brief 处理shark info
+	*
+	* @return void
+	*/
+	virtual std::string HandleSharkReturn();
 protected:
 	/**
 	 * @brief	处理接受数据的回调
@@ -293,5 +345,26 @@ protected:
 	 * @brief 是否需要删除, 这个链接不在起作用，将在下一次循环中被删除
 	 */
 	bool mNeedRemove;
+
+	/**
+	* @brief 如果是websocket，需要先握手
+	*/
+	bool mHandleShark;
+
+	/**
+	* @brief websocket
+	*/
+	bool mWebSocket;
+
+	/**
+	* @brief websocket header map
+	*/
+	std::map<std::string, std::string> mHeaderMap;
+
+	std::string mCacheFrame;
+
+	std::string mParseString;
+
+	uint32_t mWSFrameType;
 };
 

@@ -112,6 +112,9 @@
     <ClInclude Include="NFIHttpServerModule.h" />
     <ClInclude Include="NFIHttpClient.h" />
     <ClInclude Include="NFIHttpServer.h" />
+    <ClInclude Include="NFIWebSocketServerModule.h" />
+    <ClInclude Include="NFIWebSocketServer.h" />
+    <ClInclude Include="NFIWebSocketClient.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Event">

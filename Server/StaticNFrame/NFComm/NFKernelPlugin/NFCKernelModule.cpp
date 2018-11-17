@@ -11,9 +11,13 @@
 
 #include "NFComm/NFCore/NFProfiler.h"
 #include <NFComm/NFPluginModule/NFIPluginManager.h>
-#include <NFComm/NFPluginModule/NFCObject.h>
+#include "NFComm/NFPluginModule/NFLogMgr.h"
 #include <NFComm/NFPluginModule/NFDataNode.h>
 #include <NFComm/NFPluginModule/NFDataTable.h>
+#include "NFComm/NFCore/NFMMOMD5.h"
+#include "NFComm/NFCore/NFCRC32.h"
+#include "NFComm/NFCore/NFCRC16.h"
+#include "NFComm/NFCore/NFBase64.h"
 
 #define NF_GUID_POWER 100000
 #define NF_EPOCH 1288834974657
@@ -63,7 +67,7 @@ void NFCKernelModule::ProcessMemFree()
 	NFMemManager::GetSingletonPtr()->FreeMem();
 }
 
-uint64_t NFCKernelModule::CreateObjectId()
+uint64_t NFCKernelModule::GetUUID()
 {
     uint64_t time = NFGetTime();
 
@@ -95,5 +99,42 @@ uint64_t NFCKernelModule::CreateObjectId()
 
 	mLastGuidTimeStamp = time;
 	return dataId;
+}
+
+std::string NFCKernelModule::GetMD5(const std::string& str)
+{
+	return NFMMOMD5(str).toStr();
+}
+
+uint32_t NFCKernelModule::GetCRC32(const std::string& s)
+{
+	return NFCRC32::Sum(s);
+}
+
+uint16_t NFCKernelModule::GetCRC16(const std::string& s)
+{
+	return NFCRC16::Sum(s);
+}
+
+std::string NFCKernelModule::Base64Encode(const std::string& s)
+{
+	std::string out;
+	bool ret = NFBase64::Encode(s, &out);
+	if (ret == false)
+	{
+		NFLogError("NFBase64::Encode({}) failed!", s);
+	}
+	return out;
+}
+
+std::string NFCKernelModule::Base64Decode(const std::string& s)
+{
+	std::string out;
+	bool ret = NFBase64::Decode(s, &out);
+	if (ret == false)
+	{
+		NFLogError("NFBase64::Decode({}) failed!", s);
+	}
+	return out;
 }
 

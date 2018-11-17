@@ -105,16 +105,13 @@ public:
 
 	virtual bool IsLoadAllServer() const override;
 
-	virtual uint32_t GetFrame() const
-	{
-		return mFrame;
-	}
+	virtual uint32_t GetFrame() const;
 
-	virtual uint32_t GetFrameTime() const
-	{
-		return mFrameTime;
-	}
+	virtual uint32_t GetFrameTime() const;
 
+	virtual uint64_t GetInitTime() const;
+
+	virtual uint64_t GetNowTime() const;
 protected:
 	bool LoadPluginConfig();
 	bool RegisterStaticPlugin();
@@ -128,6 +125,8 @@ private:
 	const uint32_t mFrameTime = 1000 / mFrame; //一帧多少时间
 private:
 	int mnAppID;
+	uint64_t mnInitTime;	//服务器开始时间，ms
+	uint64_t mnNowTime;		//服务器帧时间，ms
 	std::string mstrConfigPath;
 	std::string mstrConfigName;
 	std::string mstrAppName;

@@ -87,7 +87,7 @@ bool NFCNetServerModule::Execute()
 	return true;
 }
 
-uint32_t NFCNetServerModule::AddServer(const NF_SERVER_TYPES eServerType, uint32_t nServerID, uint32_t nMaxClient, uint32_t nPort)
+uint32_t NFCNetServerModule::AddServer(const NF_SERVER_TYPES eServerType, uint32_t nServerID, uint32_t nMaxClient, uint32_t nPort, bool bWebSocket)
 {
 	if (eServerType > NF_ST_NONE && eServerType < NF_ST_MAX)
 	{
@@ -100,6 +100,7 @@ uint32_t NFCNetServerModule::AddServer(const NF_SERVER_TYPES eServerType, uint32
 		NFServerFlag flag;
 		flag.nPort = nPort;
 		flag.nMaxConnectNum = nMaxClient;
+		flag.bWebSocket = bWebSocket;
 		NFServer* pServer = NF_NEW NFServer(eServerType, nServerID, flag);
 		pServer->SetRecvCB((NFINetModule*)this, &NFINetModule::OnReceiveNetPack);
 		pServer->SetEventCB((NFINetModule*)this, &NFINetModule::OnSocketNetEvent);

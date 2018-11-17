@@ -19,6 +19,9 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\libwebsockets\libwebsockets.h" />
+    <ClInclude Include="..\libwebsockets\windows\lws_config.h" />
+    <ClInclude Include="..\libwebsockets\windows\lws_config_private.h" />
     <ClInclude Include="lexical_cast.hpp" />
     <ClInclude Include="optional.hpp" />
     <ClInclude Include="variant.hpp" />
@@ -110,6 +113,7 @@
       <PreprocessorDefinitions>_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <AdditionalIncludeDirectories>$(SolutionDir)/Dependencies/libwebsockets/windows;$(SolutionDir)/Dependencies/libwebsockets;$(SolutionDir)/Dependencies/;$(SolutionDir)/Dependencies/common;$(SolutionDir)/Dependencies/common/ofxLibwebsockets;$(SolutionDir)/Dependencies/common/ofxLibwebsockets/libs/jsoncpp;$(SolutionDir)/Dependencies/common/ofxLibwebsockets/libs/ofxLibwebsockets/include;$(SolutionDir)/Dependencies/common/ofxLibwebsockets/libs/ofxLibwebsockets;$(SolutionDir)/Dependencies/openssl/</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>

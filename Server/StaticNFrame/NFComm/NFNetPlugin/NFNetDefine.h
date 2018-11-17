@@ -57,6 +57,16 @@ enum eConnectStatus
 	eConnectStatus_REMOVE, //删除
 };
 
+enum eWebSocketFrameType {
+	ERROR_FRAME = 0xff,
+	CONTINUATION_FRAME = 0x00,
+	TEXT_FRAME = 0x01,
+	BINARY_FRAME = 0x02,
+	CLOSE_FRAME = 0x08,
+	PING_FRAME = 0x09,
+	PONG_FRAME = 0x0A
+};
+
 struct stMsgFlag
 {
 	uint32_t nInitRcvBufSZ; //接受消息的缓冲区初始值
@@ -81,6 +91,7 @@ struct NFServerFlag
 	uint32_t nWorkThreadNum; //工作线程个数
 	uint16_t nPort; //端口
 	bool bEncrypt; //是否加密
+	bool bWebSocket; //是否是websocket
 	uint32_t nMaxMsgNumMinPer; //每一分钟最大的消息包数
 	uint32_t nTimeoutDisconnect; //超时断开连接断开连接
 	NFServerFlag()
@@ -92,6 +103,7 @@ struct NFServerFlag
 		nPort = 0;
 		nMaxMsgNumMinPer = 800;
 		nTimeoutDisconnect = 0;
+		bWebSocket = false;
 	}
 };
 

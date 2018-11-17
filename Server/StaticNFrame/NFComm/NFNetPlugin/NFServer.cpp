@@ -27,6 +27,7 @@ void listener_cb(struct evconnlistener* listener, evutil_socket_t fd, struct soc
 
 NFServer::NFServer(NF_SERVER_TYPES serverType, uint32_t serverId, const NFServerFlag& flag) : mBase(nullptr), mListener(nullptr), mFlag(flag), mServerType(serverType), mServerId(serverId), mNetObjectCount(0)
 {
+	mWebSocket = flag.bWebSocket;
 	assert(serverType > NF_ST_NONE && serverType < NF_ST_MAX);
 }
 
@@ -90,6 +91,7 @@ bool NFServer::AddNetObject(SOCKET fd, sockaddr* sa)
 	mNetObjectArray[index] = pObject;
 	mNetObjectCount++;
 
+	pObject->SetWebSocket(mWebSocket);
 	pObject->SetLinkId(usLinkId);
 	pObject->SetBev(bev);
 	pObject->SetStrIp(ip);
@@ -178,6 +180,11 @@ uint32_t NFServer::GetServerId() const
 uint32_t NFServer::GetServerType() const
 {
 	return mServerType;
+}
+
+bool NFServer::IsWebSocket() const
+{
+	return mWebSocket;
 }
 
 bool NFServer::Init()

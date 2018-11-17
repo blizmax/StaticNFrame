@@ -38,7 +38,12 @@ public:
 
 	virtual bool Execute() override;
 
-	virtual uint64_t CreateObjectId() override;
+	virtual uint64_t GetUUID() override;
+	virtual std::string GetMD5(const std::string& str) override;
+	virtual uint32_t GetCRC32(const std::string& s) override;
+	virtual uint16_t GetCRC16(const std::string& s) override;
+	virtual std::string Base64Encode(const std::string& s) override;
+	virtual std::string Base64Decode(const std::string& s) override;
 protected:
 	static void ProcessMemFree();
 private:

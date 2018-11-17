@@ -28,6 +28,4 @@ public:
 	virtual bool BeforeShut() override;
 
 	virtual bool Shut() override;
-
-	bool HttpLogin(const NFHttpRequest& req);
 };

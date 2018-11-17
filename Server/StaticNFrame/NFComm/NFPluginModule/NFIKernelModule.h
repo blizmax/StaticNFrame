@@ -20,7 +20,12 @@ class NFIKernelModule
 	: public NFIModule
 {
 public:
-	virtual uint64_t CreateObjectId() = 0;
+	virtual uint64_t GetUUID() = 0;
+	virtual std::string GetMD5(const std::string& str) = 0;
+	virtual uint32_t GetCRC32(const std::string& s) = 0;
+	virtual uint16_t GetCRC16(const std::string& s) = 0;
+	virtual std::string Base64Encode(const std::string& s) = 0;
+	virtual std::string Base64Decode(const std::string& s) = 0;
 };
 
 #endif
