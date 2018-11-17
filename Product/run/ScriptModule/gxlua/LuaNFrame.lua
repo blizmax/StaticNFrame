@@ -178,8 +178,8 @@ function LuaNFrame:GetNowTime()
 end
 
 --添加网络服务器
-function LuaNFrame:addServer(server_type, server_id, max_client, port)
-    return self.serverModule:AddServer(server_type, server_id, max_client, port)
+function LuaNFrame:addServer(server_type, server_id, max_client, port, websocket)
+    return self.serverModule:AddServer(server_type, server_id, max_client, port, websocket)
 end
 
 --添加网络协议回调函数

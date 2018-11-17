@@ -7,8 +7,6 @@ function LoginServerModule.Init()
 
     unilight.HttpServerInitServer(7000)
     unilight.HttpServerAddRequestHandler("/httplogin", NFHttpType.NF_HTTP_REQ_POST, "HttpLoginCallBack")
-
-    unilight.debug("md5(gaoyi)=" .. unilight.GetMD5("gaoyi"))
 end
 
 --C++将调用这个函数作为httpserver回调
@@ -22,7 +20,6 @@ end
 --params
 --headers
 function HttpServer.HttpLoginCallBack(req)
-    unilight.debug("HttpServer.HttpLoginCallBack")
     local tmp = {
         usrl = req.url,
         path = req.path,
@@ -32,7 +29,6 @@ function HttpServer.HttpLoginCallBack(req)
         params = req.params,
         headers = req.headers,
     }
-    unilight.debug(table2json(tmp))
 
     local body = json2table(req.body)
 
@@ -46,7 +42,6 @@ function HttpServer.HttpLoginCallBack(req)
 end
 
 function LoginServerModule.RequestSelectZone(req,cmd)
-    unilight.debug("LoginServerModule.RequestSelectZone | "..table2json(cmd))
     local uid = tonumber(cmd.uid)
     local unigame_plat_login = cmd.unigame_plat_login
     local gameid = cmd.unigame_plat_login
@@ -74,7 +69,7 @@ function LoginServerModule.RequestSelectZone(req,cmd)
         accountid = uid,
         gameid = userLogin:GetGameId(),
         gatewayurl = "http://14.17.104.12:9001/shen/user/http",
-        gatewayurltcp = "14.17.104.12:9005",
+        gatewayurltcp = "ws://127.0.0.1:7001",
         gatewayurlws = "ws://14.17.104.12:9001/shen/user",
         logintempid = 2994518,
         separatezoneuid = false,
@@ -87,7 +82,6 @@ function LoginServerModule.RequestSelectZone(req,cmd)
 end
 
 function LoginServerModule.PlatTokenLogin(req, cmd)
-    unilight.debug("LoginServerModule.PlatTokenLogin | "..table2json(cmd))
     local account = cmd.data.platinfo.account
     local sign = cmd.data.platinfo.sign
     local gameid = cmd.gameid
@@ -145,7 +139,6 @@ function LoginServerModule.PlatTokenLogin(req, cmd)
 end
 
 function LoginServerModule.RequestZoneList(req,cmd)
-    unilight.debug("LoginServerModule.RequestZoneList | "..table2json(cmd))
 
     local server = {
         gameid = cmd["data"].gameid,

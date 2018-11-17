@@ -8,7 +8,7 @@ function LoadLuaFile(path, subdir)
 			local attr = lfs.attributes(f)
 			if attr.mode == "directory"  then
 				if subdir == true then
-					attrdir(f)
+					LoadLuaFile(f, subdir)
 				end
 			else
 				if string.find(file, ".lua") ~= nil then
@@ -29,6 +29,7 @@ function init_script_system(pluginManager)
 	LoadLuaFile("../ScriptModule/table", true)
 
 	if pluginManager:IsLoadAllServer() then
+		package.path = package.path .. ";../ScriptModule/GameServer/?.lua;"
 		LoadLuaFile("../ScriptModule/GameServer", true)
 		LoadLuaFile("../ScriptModule/GateServer", true)
 		LoadLuaFile("../ScriptModule/LoginServer", true)

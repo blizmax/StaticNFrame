@@ -8,8 +8,8 @@ TcpClient = TcpClient or { }
 --网络相关
 
 --添加网络服务器
-function TcpServer.addServer(server_type, server_id, max_client, port)
-	return LuaNFrame:addServer(server_type, server_id, max_client, port)
+function TcpServer.addServer(server_type, server_id, max_client, port, websocket)
+	return LuaNFrame:addServer(server_type, server_id, max_client, port, websocket)
 end
 
 --添加网络协议回调函数
