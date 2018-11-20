@@ -4,22 +4,5 @@
     <ClInclude Include="lexical_cast.hpp" />
     <ClInclude Include="optional.hpp" />
     <ClInclude Include="variant.hpp" />
-    <ClInclude Include="..\libwebsockets\libwebsockets.h">
-      <Filter>3rd\websocket</Filter>
-    </ClInclude>
-    <ClInclude Include="..\libwebsockets\windows\lws_config.h">
-      <Filter>3rd\websocket</Filter>
-    </ClInclude>
-    <ClInclude Include="..\libwebsockets\windows\lws_config_private.h">
-      <Filter>3rd\websocket</Filter>
-    </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <Filter Include="3rd">
-      <UniqueIdentifier>{9c6a423b-5f63-4727-972a-5891eb71d410}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="3rd\websocket">
-      <UniqueIdentifier>{b9e95f9f-f75c-42d6-9f1e-0d66b0365e9f}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
 </Project>

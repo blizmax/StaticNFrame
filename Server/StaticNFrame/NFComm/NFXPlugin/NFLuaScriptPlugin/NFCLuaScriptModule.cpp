@@ -116,6 +116,10 @@ bool NFCLuaScriptModule::Register()
 		.endClass();
 
 	LuaIntf::LuaBinding(l).beginClass<NFILuaScriptModule>("NFILuaScriptModule")
+		.addFunction("AddTimer", &NFILuaScriptModule::AddTimer)
+		.addFunction("StopTimer", &NFILuaScriptModule::StopTimer)
+		.addFunction("AddClocker", &NFILuaScriptModule::AddClocker)
+		.addFunction("StopClocker", &NFILuaScriptModule::StopClocker)
 		.endClass();
 
 	LuaIntf::LuaBinding(l).beginClass<NFIHttpClientModule>("NFIHttpClientModule")
@@ -162,12 +166,15 @@ bool NFCLuaScriptModule::Register()
 		.endClass();
 
 	LuaIntf::LuaBinding(l).beginClass<NFILogModule>("NFILogModule")
+		.addFunction("SetLogLevel", &NFILogModule::SetLogLevel)
+		.addFunction("SetFlushOn", &NFILogModule::SetFlushOn)
 		.addFunction("LuaDebug", &NFILogModule::LuaDebug)
 		.addFunction("LuaInfo", &NFILogModule::LuaInfo)
 		.addFunction("LuaWarn", &NFILogModule::LuaWarn)
 		.addFunction("LuaError", &NFILogModule::LuaError)
 		.endClass();
-    return true;
+
+	return true;
 }
 
 void NFCLuaScriptModule::RunNetRecvLuaFunc(const std::string& luaFunc, const uint32_t unLinkId, const uint64_t valueId, const uint32_t nMsgId, const std::string& strMsg)
@@ -188,4 +195,62 @@ void NFCLuaScriptModule::RunHtttpClientLuaFunc(const std::string& luaFunc, const
 void NFCLuaScriptModule::RunHttpServerLuaFunc(const std::string& luaFunc, const NFHttpRequest & req)
 {
 	TryRunGlobalScriptFunc("unilight.HttpServerRequestCallBack", luaFunc, req);
+}
+
+void NFCLuaScriptModule::OnTimer(uint32_t nTimerID)
+{
+	auto iter = m_luaTimerMap.find(nTimerID);
+	if (iter != m_luaTimerMap.end())
+	{
+		NFLuaTimer& luaTimer = iter->second;
+
+		TryRunGlobalScriptFunc("LuaNFrame.RunTimer", luaTimer.mLuaFunc, nTimerID, luaTimer.mUseData);
+
+		luaTimer.mCurCallCount++;
+		if (luaTimer.mCurCallCount == luaTimer.mCallCount)
+		{
+			m_luaTimerMap.erase(nTimerID);
+		}
+	}
+}
+
+void NFCLuaScriptModule::StopTimer(uint32_t nTimerID)
+{
+	KillTimer(nTimerID);
+	m_luaTimerMap.erase(nTimerID);
+}
+
+void NFCLuaScriptModule::StopClocker(uint32_t nTimerID)
+{
+	KillFixTimer(nTimerID);
+	m_luaTimerMap.erase(nTimerID);
+}
+
+uint32_t NFCLuaScriptModule::AddTimer(const std::string& luaFunc, uint64_t nInterVal, const std::string& useData)
+{
+	NFLuaTimer luaTimer;
+	luaTimer.mLuaFunc = luaFunc;
+	luaTimer.mInterVal = nInterVal;
+	luaTimer.mCallCount = INFINITY_CALL;
+	luaTimer.mCurCallCount = 0;
+	luaTimer.mUseData = useData;
+	luaTimer.mTimerId = ++m_luaTimerIndex;
+
+	SetTimer(luaTimer.mTimerId, luaTimer.mInterVal, luaTimer.mCallCount);
+	m_luaTimerMap.emplace(luaTimer.mTimerId, luaTimer);
+	return luaTimer.mTimerId;
+}
+
+uint32_t NFCLuaScriptModule::AddClocker(const std::string& luaFunc, uint64_t nStartTime, uint32_t nInterDays, const std::string& useData)
+{
+	NFLuaTimer luaTimer;
+	luaTimer.mLuaFunc = luaFunc;
+	luaTimer.mCallCount = INFINITY_CALL;
+	luaTimer.mCurCallCount = 0;
+	luaTimer.mUseData = useData;
+	luaTimer.mTimerId = ++m_luaTimerIndex;
+
+	SetFixTimer(luaTimer.mTimerId, nStartTime, nInterDays, luaTimer.mCallCount);
+	m_luaTimerMap.emplace(luaTimer.mTimerId, luaTimer);
+	return luaTimer.mTimerId;
 }

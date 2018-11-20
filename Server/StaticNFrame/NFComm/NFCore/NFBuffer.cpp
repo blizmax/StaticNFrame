@@ -42,6 +42,18 @@ NFBuffer::~NFBuffer()
 	delete[] _buffer;
 }
 
+std::size_t NFBuffer::PushData(char data)
+{
+	if (ReadableSize() + 1 >= kMaxBufferSize)
+		return 0; // overflow
+
+	AssureSpace(1);
+	_buffer[_writePos] = data;
+	Produce(1);
+
+	return 1;
+}
+
 std::size_t NFBuffer::PushData(const void* data, std::size_t size)
 {
 	if (!data || size == 0)

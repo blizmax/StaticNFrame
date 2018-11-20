@@ -12,6 +12,7 @@
 #include <stdint.h>
 #include <string>
 #include "NFComm/NFCore/NFBuffer.h"
+#include "NFNetDefine.h"
 
 class NFIPacketParse
 {
@@ -26,6 +27,7 @@ public:
 	/////////////////////////////////////////////////////////////
 	static int DeCode(const char* strData, const uint32_t unLen, char*& outData, uint32_t& outLen, uint32_t& allLen, uint32_t& nMsgId, uint64_t& nValue);
 	static int EnCode(const uint32_t unMsgID, const uint64_t nValue, const char* strData, const uint32_t unDataLen, NFBuffer& buffer);
+	static bool EnCodeWeb(const char* strData, const uint32_t unDataLen, std::string& frame, uint32_t frame_type = eWebSocketFrameType::TEXT_FRAME, bool isFin = true, bool masking = false);
 	static bool DeCodeWeb(const char* strData, const uint32_t unLen, std::string& payload, uint32_t& outopcode, uint32_t& frameSize, bool& outfin);
 	////////////////////////////////////////////////////////////
 	static NFIPacketParse* CreatePacketParse(int parseType = 0);

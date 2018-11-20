@@ -152,10 +152,12 @@ void NFCNetServerModule::SendByServerID(uint32_t usLinkId, const uint32_t nMsgID
 		}
 		else
 		{
-			assert(0);
+			//assert(0);
+			NFLogError("SendByServerID error, usLinkId:{} not exist!", usLinkId);
 		}
 	}
-	assert(0);
+	NFLogError("SendByServerID error, usLinkId:{} not exist!", usLinkId);
+	//assert(0);
 }
 
 void NFCNetServerModule::SendToServerByPB(uint32_t usLinkId, const uint32_t nMsgID, const google::protobuf::Message& xData, const uint64_t nPlayerID)
@@ -228,7 +230,17 @@ void NFCNetServerModule::SendToAllServerByPB(NF_SERVER_TYPES eServerType, const 
 void NFCNetServerModule::SendMsg(NFServer* pServer, uint32_t usLinkId, const uint32_t nMsgID, const char* msg, const uint32_t nLen, const uint64_t nPlayerID)
 {
 	mxSendBuffer.Clear();
-	NFIPacketParse::EnCode(nMsgID, nPlayerID, msg, nLen, mxSendBuffer);
+	if (pServer->IsWebSocket())
+	{
+		std::string frame;
+		NFIPacketParse::EnCodeWeb(msg, nLen, frame);
+		mxSendBuffer.PushData((const void*)frame.data(), frame.length());
+	}
+	else
+	{
+		NFIPacketParse::EnCode(nMsgID, nPlayerID, msg, nLen, mxSendBuffer);
+	}
+	
 	if (pServer)
 	{
 		pServer->Send(usLinkId, mxSendBuffer.ReadAddr(), mxSendBuffer.ReadableSize());
@@ -239,7 +251,17 @@ void NFCNetServerModule::SendMsg(NFServer* pServer, uint32_t usLinkId, const uin
 void NFCNetServerModule::SendAllMsg(NFServer* pServer, const uint32_t nMsgID, const char* msg, const uint32_t nLen, const uint64_t nPlayerID)
 {
 	mxSendBuffer.Clear();
-	NFIPacketParse::EnCode(nMsgID, nPlayerID, msg, nLen, mxSendBuffer);
+	if (pServer->IsWebSocket())
+	{
+		std::string frame;
+		NFIPacketParse::EnCodeWeb(msg, nLen, frame);
+		mxSendBuffer.PushData((const void*)frame.data(), frame.length());
+	}
+	else
+	{
+		NFIPacketParse::EnCode(nMsgID, nPlayerID, msg, nLen, mxSendBuffer);
+	}
+	
 	if (pServer)
 	{
 		pServer->SendAll(mxSendBuffer.ReadAddr(), mxSendBuffer.ReadableSize());

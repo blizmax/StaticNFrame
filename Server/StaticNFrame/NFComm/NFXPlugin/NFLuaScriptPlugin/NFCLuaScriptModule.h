@@ -18,6 +18,8 @@
 #include "NFComm/NFPluginModule/NFIEventModule.h"
 #include "NFComm/NFPluginModule/NFIEventModule.h"
 
+#include "NFComm/NFPluginModule/NFTimerMgr.h"
+
 namespace LuaIntf
 {
 	LUA_USING_SHARED_PTR_TYPE(std::shared_ptr);
@@ -28,13 +30,31 @@ namespace LuaIntf
 typedef LuaIntf::LuaRef NFLuaRef;
 typedef LuaIntf::LuaTableRef NFLuaTableRef;
 
+class NFLuaTimer
+{
+public:
+	NFLuaTimer()
+	{
+		mTimerId = 0;
+		mInterVal = 0;
+		mCallCount = 0;
+	}
+	uint32_t mTimerId;
+	std::string mLuaFunc;
+	uint64_t mInterVal;
+	uint32_t mCallCount;
+	uint32_t mCurCallCount;
+	std::string mUseData;
+};
+
 class NFCLuaScriptModule
-    : public NFILuaScriptModule
+    : public NFILuaScriptModule, public NFTimerObj
 {
 public:
     NFCLuaScriptModule(NFIPluginManager* p)
     {
         pPluginManager = p;
+		m_luaTimerIndex = 10000;
     }
 public:
 	lua_State* GetLuaState() const
@@ -184,6 +204,12 @@ public:
 	virtual void RunHtttpClientLuaFunc(const std::string& luaFunc, const int state_code, const std::string& strRespData, const std::string& strUserData) override;
 	virtual void RunHttpServerLuaFunc(const std::string& luaFunc, const NFHttpRequest & req) override;
 public:
+	virtual void OnTimer(uint32_t nTimerID) override;
+	virtual uint32_t AddTimer(const std::string& luaFunc, uint64_t nInterVal, const std::string& useData) override;
+	virtual uint32_t AddClocker(const std::string& luaFunc, uint64_t nStartTime, uint32_t nInterDays, const std::string& useData) override;
+	virtual void StopTimer(uint32_t nTimerID) override;
+	virtual void StopClocker(uint32_t nTimerID) override;
+public:
     bool Register();
 	void LoadScript();
 protected:
@@ -192,7 +218,10 @@ protected:
 protected:
     int64_t mnTime;
 protected:
-		LuaIntf::LuaContext l;
+	LuaIntf::LuaContext l;
+protected:
+	std::map<uint64_t, NFLuaTimer> m_luaTimerMap;
+	uint32_t m_luaTimerIndex;
 };
 
 #endif

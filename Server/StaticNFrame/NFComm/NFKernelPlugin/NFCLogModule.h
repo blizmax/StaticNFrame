@@ -8,6 +8,7 @@
 #pragma once
 
 #include "NFComm/NFPluginModule/NFILogModule.h"
+#include "NFComm/NFCore/NFPlatform.h"
 
 #include "spdlog/spdlog.h"
 #include "spdlog/fmt/fmt.h"
@@ -23,6 +24,8 @@ public:
 	virtual bool Shut() override;
 
 	virtual void LogNormal(NF_LOG_LEVEL log_level, const std::string& log);
+	virtual void SetLogLevel(NF_LOG_LEVEL log_level);
+	virtual void SetFlushOn(NF_LOG_LEVEL log_level);
 protected:
 	void CreateLogger();
 private:

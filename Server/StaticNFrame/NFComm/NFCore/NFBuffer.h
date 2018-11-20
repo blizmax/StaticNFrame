@@ -54,6 +54,7 @@ public:
 	 * @return      写入的字节数
 	 */
 	std::size_t PushData(const void* data, std::size_t size);
+	std::size_t PushData(char data);
 
 	/**
 	 * @brief 调整缓冲区写游标

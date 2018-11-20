@@ -62,6 +62,7 @@ int ArpgNetPacketParse::DeCodeImpl(const char* strData, const uint32_t unLen, ch
 	outData = const_cast<char*>(strData + sizeof(stMsg));
 	outLen = static_cast<uint32_t>(dwMsgSz) - sizeof(stMsg);
 	nMsgId = packHead->wCmdID;
+	nValue = packHead->ulValue;
 	allLen = static_cast<uint32_t>(dwMsgSz);
 	return 0;
 }

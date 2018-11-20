@@ -33,5 +33,10 @@ public:
 
 	virtual void RunHttpServerLuaFunc(const std::string& luaFunc, const NFHttpRequest & req) = 0;
 public:
+
+	virtual uint32_t AddTimer(const std::string& luaFunc, uint64_t nInterVal, const std::string& useData) = 0;
+	virtual uint32_t AddClocker(const std::string& luaFunc, uint64_t nStartTime, uint32_t nInterDays, const std::string& useData) = 0;
+	virtual void StopTimer(uint32_t nTimerID) = 0;
+	virtual void StopClocker(uint32_t nTimerID) = 0;
 };
 

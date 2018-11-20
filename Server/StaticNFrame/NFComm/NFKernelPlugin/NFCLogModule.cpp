@@ -7,8 +7,9 @@
 // -------------------------------------------------------------------------
 
 #include "spdlog/contrib/sinks/date_and_hour_file_sink.h"
+#include "spdlog/sinks/ansicolor_sink.h"
 #include "NFCLogModule.h"
-#include "NFComm/NFCore/NFPlatform.h"
+
 #include "NFComm/NFPluginModule/NFIPluginManager.h"
 #include "NFComm/NFPluginModule/NFConfigMgr.h"
 
@@ -48,6 +49,16 @@ void NFCLogModule::LogNormal(NF_LOG_LEVEL log_level, const std::string& log)
 	mxLogger->log((spdlog::level::level_enum)log_level, log.c_str());
 }
 
+void NFCLogModule::SetLogLevel(NF_LOG_LEVEL log_level)
+{
+	mxLogger->set_level((spdlog::level::level_enum)(log_level));
+}
+
+void NFCLogModule::SetFlushOn(NF_LOG_LEVEL log_level)
+{
+	mxLogger->flush_on((spdlog::level::level_enum)(log_level));
+}
+
 void NFCLogModule::CreateLogger()
 {
 	std::vector<spdlog::sink_ptr> sinks_vec;
@@ -66,8 +77,9 @@ void NFCLogModule::CreateLogger()
 
 	mxLogger = std::make_shared<spdlog::async_logger>(pPluginManager->GetAppName(), std::begin(sinks_vec), std::end(sinks_vec), 1024);
 
-#if NF_DEBUG_MODE
 	mxLogger->set_level((spdlog::level::level_enum)(NFConfigMgr::Instance()->GetLogLevel()));
+
+#if NF_DEBUG_MODE
 	mxLogger->set_pattern("%^[%l | %Y-%m-%d %H:%M:%S.%e] | %v%$");
 #else
 	mxLogger->set_pattern("[%l | %Y-%m-%d %H:%M:%S.%e] | %v");

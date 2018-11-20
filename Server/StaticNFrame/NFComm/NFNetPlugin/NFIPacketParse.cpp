@@ -34,6 +34,64 @@ int NFIPacketParse::EnCode(const uint32_t unMsgID, const uint64_t nValue, const 
 	return m_pPacketParse->EnCodeImpl(unMsgID, nValue, strData, unDataLen, buffer);
 }
 
+bool NFIPacketParse::EnCodeWeb(const char* strData, const uint32_t unDataLen, std::string& frame, uint32_t frame_type, bool isFin, bool masking)
+{
+	const uint8_t head = static_cast<uint8_t>(frame_type) | (isFin ? 0x80 : 0x00);
+
+	frame.clear();
+	frame.push_back(static_cast<char>(head));
+	if (unDataLen <= 125)
+	{
+		// mask << 7 | payloadLen, mask = 0
+		frame.push_back(static_cast<uint8_t>(unDataLen));
+	}
+	else if (unDataLen <= 0xFFFF)
+	{
+		// 126 + 16bit len
+		frame.push_back(126);
+		frame.push_back((unDataLen & 0xFF00) >> 8);
+		frame.push_back(unDataLen & 0x00FF);
+	}
+	else
+	{
+		// 127 + 64bit len
+		frame.push_back(127);
+		// assume payload len is less than u_int32_max
+		frame.push_back(0x00);
+		frame.push_back(0x00);
+		frame.push_back(0x00);
+		frame.push_back(0x00);
+		frame.push_back(static_cast<char>((unDataLen & 0xFF000000) >> 24));
+		frame.push_back(static_cast<char>((unDataLen & 0x00FF0000) >> 16));
+		frame.push_back(static_cast<char>((unDataLen & 0x0000FF00) >> 8));
+		frame.push_back(static_cast<char>(unDataLen & 0x000000FF));
+	}
+
+	if (masking)
+	{
+		frame[1] = ((uint8_t)frame[1]) | 0x80;
+		uint8_t mask[4];
+		for (auto& m : mask)
+		{
+			m = rand();
+			frame.push_back(m);
+		}
+
+		frame.reserve(frame.size() + unDataLen);
+
+		for (size_t i = 0; i < unDataLen; i++)
+		{
+			frame.push_back(static_cast<uint8_t>(strData[i]) ^ mask[i % 4]);
+		}
+	}
+	else
+	{
+		frame.append(strData, unDataLen);
+	}
+
+	return true;
+}
+
 bool NFIPacketParse::DeCodeWeb(const char* strData, const uint32_t unLen, std::string& payload, uint32_t& outopcode, uint32_t& frameSize, bool& outfin)
 {
 	const auto buffer = (const unsigned char*)strData;
