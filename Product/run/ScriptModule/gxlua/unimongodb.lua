@@ -26,7 +26,7 @@ end
         LuaNFrame:droptable("userinfo") // 删除表"userinfo"
 ]]
 function unilight.droptable(name)
-	return LuaNFrame.droptable(name)
+	return LuaNFrame:droptable(name)
 end
 
 --[[
@@ -38,7 +38,7 @@ end
         LuaNFrame:getdata("userinfo", 100000) // 获取表"userinfo"中主键值为100000的那条记录
 ]]
 function unilight.getdata(name, key)
-	return LuaNFrame.getdata(name, key)
+	return LuaNFrame:getdata(name, key)
 end
 
 --[[
@@ -58,4 +58,19 @@ end
 ]]
 function unilight.savedata(name, data)
 	return LuaNFrame:savedata(name, data)
+end
+
+function unilight.savefield(name, id, fieldpath, data)
+    return LuaNFrame:savefield(name, id, fieldpath, data)
+end
+
+--[[
+    功能： 获取表里的所有记录
+    参数：
+            name:string,表名
+    实例：
+        local res = unilight.getAll("userinfo")
+]]
+ function unilight.getAll(name)
+    return LuaNFrame:getAll(name)
 end

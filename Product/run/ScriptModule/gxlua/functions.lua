@@ -23,26 +23,6 @@ function checktable(value)
     return value
 end
 
-function md5(value)
-    return Misc.MD5( value, string.len(value) );
-end
-
-function nldebug( str )
-	Debug.Debug(str,2);
-end
-
-function nlinfo( str )
-	Debug.Info(str,2);
-end
-
-function nlwarning( str )
-	Debug.Warning(str,2);
-end
-
-function nlstop( str )
-	Debug.Stop(str,2);
-end
-
 function shuffle(tbl)
     
     local tbl_count = #tbl;
@@ -54,49 +34,6 @@ function shuffle(tbl)
             tbl[ridx]   = temp;
         end
     end
-end
-
-function GetServiceID()
-	return Net.GetServiceID();
-end
-
-function PrintTable( tbl, indent, depth )
-    Debug.Info(JsonUtil.serialise_value(tbl, indent, depth), 2);
-    --[[
-    if tbl==nil then
-        return;
-    end
-    
-    local msg = ""
-    depth = depth or 1
-    local indent_str = ""
-    
-    for i = 2, depth do
-        indent_str = indent_str.."    "
-    end
-
-    nlinfo(indent_str .. "{")
-    for k,v in pairs(tbl) do
-        if k ~= "class" then
-            local item_str = string.format("%s%s = %s", indent_str .. " ",tostring(k), tostring(v))
-            nlinfo(item_str)
-            
-            if type(v) == "table" then
-                PrintTable(v, depth + 1)
-            end
-        end
-    end
-    nlinfo(indent_str .. "}")
-    
-    --]]
-end
-
-function Table2Json( tbl )
-    return JsonUtil.serialise_value(tbl);
-end
-
-function Json2Table( str )
-    return Json.decode(str);
 end
 
 -- start --

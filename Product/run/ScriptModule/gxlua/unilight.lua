@@ -21,6 +21,78 @@ function unilight.InsertLoadFunc(func)
     LuaNFrame:InsertLoadFunc(func)
 end
 
+--添加服务器秒定时器
+function unilight.addtimer(luaFunc, sec, ...)
+	local param_table = {...}
+	local json_param = json.encode(param_table)
+	local timerId = LuaNFrame:AddTimer(luaFunc, sec*1000, json_param)
+	local timer = {}
+	timer.Stop = function()
+		LuaNFrame:StopTimer(timerId)
+	end
+	return timer
+end
+
+--每嗝1毫秒的定时器示例
+--unilight.addtimer("testtimer",1,"wanghaijun")
+function unilight.addtimermsec(luaFunc, msec, ...)
+	local param_table = {...}
+	local json_param = json.encode(param_table)
+	local timerId = LuaNFrame:AddTimer(luaFunc, msec, json_param)
+	local timer = {}
+	timer.Stop = function()
+		LuaNFrame:StopTimer(timerId)
+	end
+	return timer
+end
+
+--停止服务器定时器
+function unilight.stoptimer(timer)
+	if timer == nil then
+		return true
+	end
+	return timer.Stop()
+end
+
+-- 关于闹钟实例：
+--  原理解释：
+	-- intervalSec 表示从1970年开始到现在，把所有的时间以intervalSec为单位划分用 “---”表示
+	-- sec 表示，在intervalSec这个单位时间段内需要触发闹钟的时刻用"*"表示
+	-- 所以要求sec < intervalSec
+	-- 图示：1970开始｜-*---｜-*--｜-*--|.......|-*--|now
+-- 实例：
+-- （1）每隔物理10秒的第1秒时钟实例 ：unilight.addclocker("testclocker",1,10,"wanghaijun");
+	--function testclocker(text,clocker)
+	--	unilight.debug("testclocker:"..text)
+	--  clocker.Stop()
+	--end
+--  (2) 每天上午8点触发闹钟实例：unilight.addclocker("OnClocker", 8*3600, 24*3600, "wanghaijun");
+	--function OnClocker(text,clocker)
+	--	unilight.debug("每日触发实列")
+	--end
+-- (3) 每周（7*24*3600）的第34个小时触发闹钟：unilight.addclocker("OnClocker", 34*3600, 7*24*3600, "wanghaijun");
+-- 
+function unilight.addclocker(luaFunc, sec, intervalSec, ...)
+	local param_table = {...}
+	local json_param = json.encode(param_table)
+	local timerId = LuaNFrame:AddClocker(luaFunc, sec, intervalSec , json_param)
+	local timer = {}
+	timer.Stop = function()
+		LuaNFrame:StopClocker(timerId)
+	end
+	
+	return timer
+end
+
+--关于日历
+--function testcalender(text,clocker)
+--	unilight.debug("testcalender:"..text)
+--  clocker.Stop()
+--unilight.addcalender("testcalender" , "2015-09-10 06:05:00","addcalender")
+unilight.addcalender = function(name, interval, ...)
+	return go.addCalender(name,interval, ...)
+end
+
 --创建全局唯一的UUID
 function unilight.GetUUID()
     return LuaNFrame:GetUUID()
@@ -61,6 +133,16 @@ function unilight.Base64Decode(str)
     return LuaNFrame:Base64Decode(str)
 end
 
+--设置LOG等级
+function unilight.SetLogLevel(level)
+    LuaNFrame:SetLogLevel(level)
+end
+
+--设置LOG立马刷新等级
+function unilight.SetFlushOn(level)
+    LuaNFrame:SetFlushOn(level)
+end
+
 unilight.debug = function(...)
 	LuaNFrame:debug(...)
 end
@@ -80,6 +162,10 @@ end
 unilight.SUCCESS = "0"
 unilight.DB_ERROR = "2"
 unilight.SCRIPT_ERROR = "4"
+
+function unilight.getdebuglevel()
+	return 0
+end
 
 
 --特殊协议
@@ -166,13 +252,11 @@ unilight.response = function(w, req)
         msgdata.errno = nil
         local rawdata = pb.encode(msgname,msgdata)
         w.SendLuaProtoRawdata(nu.bycmd, nu.byparam, rawdata)
-	    unilight.debug("[proto send] " .. s)
         return true
     else
 	    --req.st = os.time() + unilight.tzoffset()
 		--w.SendString(s)
 		w.SendString(s, w)
-	    unilight.debug("[js send] " .. s)
     end
 end
 

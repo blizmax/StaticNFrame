@@ -29,6 +29,35 @@ function LuaNFrame:init(pluginManager)
     self:load_script_file()
 end
 
+--添加服务器定时器
+function LuaNFrame:AddTimer(luaFunc, nInterVal, useData)
+    return self.luaModule:AddTimer(luaFunc, nInterVal, useData)
+end
+
+--停止服务器定时器
+function LuaNFrame:StopTimer(timerId)
+    self.luaModule:StopTimer(timerId)
+end
+
+--执行定时函数
+function LuaNFrame.RunTimer(luaFunc, timerId, useData)
+    local param_table = json.decode(useData)
+    local timerId = timerId
+    local timer = {}
+    timer.Stop = function()
+        LuaNFrame:StopTimer(timerId)
+    end
+    LuaNFrame.RunStringFunction(luaFunc, table.unpack(param_table), timer)
+end
+
+function LuaNFrame:AddClocker(luaFunc, sec, intervalSec, useData)
+    return self.luaModule:AddClocker(luaFunc, sec, intervalSec / (24*3600), useData)
+end
+
+function LuaNFrame:StopClocker(timerId)
+    return self.luaModule:StopClocker(timerId)
+end
+
 --创建全局唯一的UUID
 function LuaNFrame:GetUUID()
     return self.kernelModule:GetUUID()
@@ -167,6 +196,107 @@ function LuaNFrame:savedata(name, data)
     return false
 end
 
+--[[
+    功能：获取条记录的指定字段数据
+    参数：
+        name      :string          , 表名
+        id        :根据具体使用类型， 键值
+        fieldpath :string          , 指定字段
+    实例：
+        unilight.getfield("userinfo", 100000, "base.property") // 获取表"userinfo"中，key为100000的"base.property"字段数据
+]]
+function LuaNFrame:getfield(name, id, fieldpath)
+    local collection = self.dataBase:getCollection(name)
+    if collection ~= nil then
+        local data = collection:findOne(mongo.BSON{_id = key}, fieldpath)
+        if data ~= nil then
+            return data:value()
+        end
+    end
+    return nil
+end
+
+--[[
+    功能：保存一条记录里的某部分字段
+    参数：
+        name     : string           , 表名
+        id       : 根据存储类型一致 ，主键值
+        fieldpath: string           , 保存的记录键名
+        data     : table            , 需要保存据信息，如果表里已有记录冲空，替换整条记录
+    返回： nil 表示成功
+            string 表示失败
+    实例：
+    (1)	表"userinfo"原来有一条记录
+        userInfo = {
+            _id = 100000,
+            chips = 200000,
+            base = {
+                headurl = "http://baidu.com",
+                property = {
+                    name = "zwl",
+                    age = 27,
+                },
+            },
+        }
+
+    (2) 将userInfo.base.property修改成
+        local property = {
+            Name = "zhaowolong",
+            age = 28,
+            addr = "深圳",
+        }
+        unilight.savefield("userinfo", 100000, "base.property", property)
+
+    (3) 表"userinfo" 中键值为：100000的最新记录为：
+        userInfo = {
+            _id = 100000,
+            chips = 200000,
+            base = {
+                headurl = "http://baidu.com",
+                property = {
+                    Name = "zhaowolong",
+                    age = 28,
+                    addr = "深圳"
+                },
+            }
+        }
+]]
+----------------------------------WARNNING-------------------------------------
+-- data将覆盖指定的fieldpath，记得是覆盖
+-----------------------------------------------------------------------
+function LuaNFrame:savefield(name, id, fieldpath, data)
+    if id == nil or type(id) == "userdata" or data == nil or type(data) == "userdata" then
+        unilight.error("id or data is null or type() is userdata")
+        return "datatype error "  
+    end
+
+    local tmp = {}
+    tmp[fieldpath] = data
+    local collection = self.dataBase:getCollection(name)
+    if collection ~= nil then
+        return collection:update(mongo.BSON{_id = data.uid}, tmp)
+    end
+    return false
+end
+
+--[[
+    功能： 获取表里的所有记录
+    参数：
+            name:string,表名
+    实例：
+        local res = unilight.getAll("userinfo")
+]]
+function LuaNFrame:getAll(name)
+    local collection = self.dataBase:getCollection(name)
+    if collection ~= nil then
+        local tmp = {}
+        for data in collection:find({}):iterator() do
+            table.insert(tmp, data)
+        end
+        return tmp
+    end
+end
+
 --获得服务器开启时间，单位ms
 function LuaNFrame:GetInitTime()
     return self.pluginManager:GetInitTime()
@@ -250,6 +380,16 @@ function LuaNFrame:InsertLoadFunc(func)
 end
 
 -- log --
+
+--设置LOG等级
+function LuaNFrame:SetLogLevel(level)
+    self.logModule:SetLogLevel(level)
+end
+
+--设置LOG立马刷新等级
+function LuaNFrame:SetFlushOn(level)
+    self.logModule:SetFlushOn(level)
+end
 
 function LuaNFrame:debug(...)
 	self.logModule:LuaDebug(...)
@@ -345,6 +485,9 @@ function LuaNFrame.RunStringFunction(strFunction,...)
       local index = string.find(w, "%[");
       if index == nil then
           v = v[w]
+          if v == nil then
+            break
+          end
       else
           local key = string.match(w, "([%w_]+)%[")
           if key == nil then

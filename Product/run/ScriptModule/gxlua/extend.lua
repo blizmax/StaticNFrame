@@ -204,37 +204,6 @@ table.reset = function(t)
 	return t
 end
 
--- math.random({0.7, 0.1, 0.2}, {'A', 'B', 'C'})
-math.random = function(m, n)
-	if type(m) == "table" and #m == #n then
-		-- 标准化概率表
-		local sum = 0
-		for _,v in ipairs(m) do sum = sum + v end
-		local sm = {}
-		for k,v in ipairs(m) do sm[k] = v / sum end
-		-- 得到下标
-		local r = go.rand.Random()
-		for k,v in ipairs(sm) do
-			if r <= v then return n[k]
-			else r = r - v end
-		end
-		assert(false)
-	end
-
-	if m == nil then return go.rand.Random() end
-	local _random = function(m, n)
-		m, n = math.min(m, n), math.max(m, n)
-		local mi, mf = math.modf(m)
-		local ni, nf = math.modf(n)
-		if mf == 0 and nf == 0 then
-			return go.rand.RandBetween(m, n)
-		else
-			return m + go.rand.Random() * (n - m)
-		end
-	end
-	if n == nil then return _random(1, m) end
-	return _random(m, n)
-end
 
 -- http://www.cplusplus.com/reference/algorithm/random_shuffle/
 -- http://stackoverflow.com/questions/17119804/lua-array-shuffle-not-working

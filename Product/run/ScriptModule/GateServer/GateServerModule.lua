@@ -21,7 +21,6 @@ end
 
 --特殊协议
 function GateServerModule.NetServerRecvHandleJson(unLinkId, valueId, nMsgId, strMsg)
-    unilight.debug("unLinkId:" .. unLinkId .. " strMsg:" .. strMsg)
     local table_msg = json2table(strMsg)
     --协议规则
     if table_msg ~= nil then
@@ -32,7 +31,7 @@ function GateServerModule.NetServerRecvHandleJson(unLinkId, valueId, nMsgId, str
             if strcmd ~= "" then
 				if type(Net[strcmd]) == "function" then
 					local laccount = {}
-					laccount.Id = valueId
+					laccount.Id = AccountMgr:GetAccountId(unLinkId)
 					laccount.unLinkId = unLinkId
 					laccount.SendString = TcpServer.sendJsonMsg
 					Net[strcmd](table_msg, laccount)
@@ -45,29 +44,26 @@ function GateServerModule.NetServerRecvHandleJson(unLinkId, valueId, nMsgId, str
     -- body
 end
 
---特殊协议
+--转发消息给客户端
 function GateServerModule.NetClientRecvHandleJson(unLinkId, valueId, nMsgId, strMsg)
-    unilight.debug("unLinkId:" .. unLinkId .. " valueId:" .. valueId .. " nMsgId:" .. nMsgId .. " strMsg:" .. strMsg)
-    local table_msg = json2table(strMsg)
-    --协议规则
-    if table_msg ~= nil then
-        local cmd = table_msg["cmd_name"]
-        if type(cmd) == "string" then
-            local i, j = string.find(cmd, "Pmd.")
-            local strcmd = string.sub(cmd, j+1, -1)
-            if strcmd ~= "" then
-				if type(Net[strcmd]) == "function" then
-					local laccount = {}
-					laccount.Id = valueId
-					laccount.unLinkId = unLinkId
-					laccount.SendString = TcpServer.sendJsonMsg
-                    Net[strcmd](table_msg, laccount)
-                end
-            end
-        end
-    end
-    -- body
+    local server_unlinkid = AccountMgr:GetLinkId(valueId)
+
+    --如果连接断开了，就不在发送了
+    if server_unlinkid == 0 then return end
+
+    local msg = {
+        cmd_name = "Pmd.UserJsMessageForwardUserPmd_CS",
+        msg = json2table(strMsg),
+    }
+
+    local laccount = {}
+    laccount.Id = valueId
+    laccount.unLinkId = server_unlinkid
+
+    unilight.debug(tostring(valueId) .. " | send msg | " .. strMsg)
+    TcpServer.sendJsonMsg(msg, laccount)
 end
+
 
 function GateServerModule.ProxyServerWebNetEvent(event, unlinkId)
     if event == NF_MSG_TYPE.eMsgType_CONNECTED then

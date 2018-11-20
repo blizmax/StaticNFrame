@@ -68,9 +68,9 @@ function LoginServerModule.RequestSelectZone(req,cmd)
     msg["data"] = {
         accountid = uid,
         gameid = userLogin:GetGameId(),
-        gatewayurl = "http://14.17.104.12:9001/shen/user/http",
+        gatewayurl = "http://127.0.0.1:7001/shen/user/http",
         gatewayurltcp = "ws://127.0.0.1:7001",
-        gatewayurlws = "ws://14.17.104.12:9001/shen/user",
+        gatewayurlws = "ws://127.0.0.1:7001/shen/user",
         logintempid = 2994518,
         separatezoneuid = false,
         tokenid = 1541985442,
