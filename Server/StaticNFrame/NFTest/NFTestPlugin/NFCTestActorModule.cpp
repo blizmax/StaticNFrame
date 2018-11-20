@@ -17,8 +17,6 @@
 NFCTestActorModule::NFCTestActorModule(NFIPluginManager* p)
 {
 	pPluginManager = p;
-
-	
 }
 
 NFCTestActorModule::~NFCTestActorModule()
