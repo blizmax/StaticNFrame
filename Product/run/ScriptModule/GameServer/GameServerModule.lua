@@ -12,6 +12,12 @@ InitTimer = InitTimer or function()
     -- body
 end
 
+UserInfo = UserInfo or {}
+
+UserInfo.Update = UserInfo.Update or function()
+
+end
+
 function GameServerModule.Init()
     TcpServer.addRecvCallBack(NF_SERVER_TYPES.NF_ST_GAME, 0, "GameServerModule.NetServerRecvHandleJson")
 	TcpServer.addEventCallBack(NF_SERVER_TYPES.NF_ST_GAME, "GameServerModule.ProxyNetEvent")

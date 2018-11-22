@@ -5,13 +5,40 @@ CreateClass("LuaNFrame")
 --用来存放加载函数
 LuaNFrame.LoadScriptList = { }
 
+function LuaNFrame:TestLua()
+   
+    local data = {
+        uid = 10000001,
+        age = 15,
+        color = "red",
+        xxx = {
+            a = 1,
+            b = 2,
+            c = {
+                a = 1,
+                b = 2,
+            }
+        }
+    }
+    self:savedata("test", data)
+
+    local ret = self:getdata("test", data.uid)
+    print("ret:"..json.encode(ret))
+
+    local xx = self:savefield("test", data.uid, "xxx.c", {a = 2, b = 4, c = 5})
+
+    local yy = self:getfield("test", data.uid, "xxx")
+end
+
 function LuaNFrame:init(pluginManager)
     --local mongo = require 'mongo'
     self:initmongodb('mongodb://14.17.104.12:28900', "ttr-1")
 
+    self:TestLua()
+
     self.pluginManager = pluginManager
     if self.pluginManager == nil then
-        print("初始化失败。。。。。。。。。")
+        self:error("初始化失败。。。。。。。。。")
     end
 
     self.kernelModule = self.pluginManager:GetKernelModule()
@@ -93,7 +120,7 @@ end
 --通过字符串获得对应的Base64Encode, 返回字符串
 function LuaNFrame:Base64Encode(str)
     if type(str) ~= "string" then
-        LuaNFrame:error("Base64Encode param error, not string:" .. str)
+        self:error("Base64Encode param error, not string:" .. str)
         return
     end
     return self.kernelModule:Base64Encode(str)
@@ -102,7 +129,7 @@ end
 --通过字符串获得对应的Base64Decode, 返回字符串
 function LuaNFrame:Base64Decode(str)
     if type(str) ~= "string" then
-        LuaNFrame:error("Base64Decode param error, not string:" .. str)
+        self:error("Base64Decode param error, not string:" .. str)
         return
     end
     return self.kernelModule:Base64Decode(str)
@@ -114,14 +141,14 @@ function LuaNFrame:initmongodb(url, dbname)
     self.client = mongo.Client(url)
 
     if self.client == nil then
-        print("数据库初始化失败。。。。。。。。。")
+        self:error("数据库初始化失败。。。。。。。。。")
         return
     end
 
     self.dataBase = self.client:getDatabase(dbname)
 
     if self.dataBase == nil then
-        print("数据库初始化失败。。。。。。。。。")
+        self:error("数据库初始化失败。。。。。。。。。")
     end
 end
 
@@ -136,7 +163,7 @@ end
         returns its Collection handle. On error, returns nil and the error message.
 ]]
 function LuaNFrame:createdb(name, primary)
-    return self.dataBase:createCollection(name, mongo.BSON{_id = primary})
+	return self.dataBase:createCollection(name, mongo.BSON{_id = primary})
 end
 
 --[[
@@ -165,7 +192,7 @@ end
 function LuaNFrame:getdata(name, key)
     local collection = self.dataBase:getCollection(name)
     if collection ~= nil then
-        local data = collection:findOne(mongo.BSON{_id = key})
+        local data = collection:findOne({_id = key})
         if data ~= nil then
             return data:value()
         end
@@ -187,11 +214,11 @@ end
             }
         }
         unilight.savedata("userinfo", userInfo)
-]]
+]] 
 function LuaNFrame:savedata(name, data)
     local collection = self.dataBase:getCollection(name)
     if collection ~= nil then
-        return collection:update(mongo.BSON{_id = data.uid}, encode_repair(data))
+        return collection:update({_id = data.uid}, data, {upsert=true})
     end
     return false
 end
@@ -208,9 +235,9 @@ end
 function LuaNFrame:getfield(name, id, fieldpath)
     local collection = self.dataBase:getCollection(name)
     if collection ~= nil then
-        local data = collection:findOne(mongo.BSON{_id = key}, fieldpath)
+        local data = collection:findOne({_id = id})
         if data ~= nil then
-            return data:value()
+            return data:value()[fieldpath]
         end
     end
     return nil
@@ -267,14 +294,13 @@ end
 function LuaNFrame:savefield(name, id, fieldpath, data)
     if id == nil or type(id) == "userdata" or data == nil or type(data) == "userdata" then
         unilight.error("id or data is null or type() is userdata")
-        return "datatype error "  
+        return "datatype error "
     end
 
-    local tmp = {}
-    tmp[fieldpath] = data
+    local setstr = '{"$set":{"'..fieldpath..'":'..json.encode(data)..'}}'
     local collection = self.dataBase:getCollection(name)
     if collection ~= nil then
-        return collection:update(mongo.BSON{_id = data.uid}, tmp)
+        return collection:update({_id = id}, setstr)
     end
     return false
 end

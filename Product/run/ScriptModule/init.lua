@@ -24,7 +24,10 @@ function init_script_system(pluginManager)
 	--vscode luaide调试工具需要
 	local breakSocketHandle,debugXpCall = require("LuaDebug")("localhost",7003)
 
+	package.path = package.path .. ";../ScriptModule/gxlua/?.lua;"
+	
 	LoadLuaFile("../ScriptModule")
+	LoadLuaFile("../ScriptModule/gxlua/mongorover", true)
 	LoadLuaFile("../ScriptModule/gxlua", true)
 	LoadLuaFile("../ScriptModule/table", true)
 
