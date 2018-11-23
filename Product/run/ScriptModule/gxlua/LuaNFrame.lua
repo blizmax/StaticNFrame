@@ -30,6 +30,8 @@ function LuaNFrame:TestLua()
     local yy = self:getfield("test", data.uid, "xxx")
 end
 
+
+
 function LuaNFrame:init(pluginManager)
     --local mongo = require 'mongo'
     self:initmongodb('mongodb://14.17.104.12:28900', "ttr-1")
