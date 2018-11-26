@@ -3,7 +3,7 @@ taskTable = {
 [1001]={["taskId"]=1001,["taskType"]=1,["taskEvent"]=0,["param"]=1,["level"]=0,["activeValue"]=10,["reward"]="1_10",["reward2"]=""},
 [1002]={["taskId"]=1002,["taskType"]=1,["taskEvent"]=1,["param"]=1,["level"]=0,["activeValue"]=5,["reward"]="",["reward2"]="1003_120"},
 [1003]={["taskId"]=1003,["taskType"]=1,["taskEvent"]=1,["param"]=5,["level"]=0,["activeValue"]=10,["reward"]="",["reward2"]="1003_300"},
-[1004]={["taskId"]=1004,["taskType"]=1,["taskEvent"]=5,["param"]=1,["level"]=0,["activeValue"]=5,["reward"]="",["reward2"]="1003_180"},
+[1004]={["taskId"]=1004,["taskType"]=1,["taskEvent"]=5,["param"]=5,["level"]=0,["activeValue"]=5,["reward"]="",["reward2"]="1003_180"},
 [1005]={["taskId"]=1005,["taskType"]=1,["taskEvent"]=5,["param"]=100,["level"]=0,["activeValue"]=10,["reward"]="",["reward2"]="1003_600"},
 [1006]={["taskId"]=1006,["taskType"]=1,["taskEvent"]=6,["param"]=1,["level"]=0,["activeValue"]=5,["reward"]="1_5",["reward2"]=""},
 [1007]={["taskId"]=1007,["taskType"]=1,["taskEvent"]=6,["param"]=3,["level"]=0,["activeValue"]=10,["reward"]="1_10",["reward2"]=""},
