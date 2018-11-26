@@ -221,6 +221,7 @@
     <ClInclude Include="NFCLogModule.h" />
     <ClInclude Include="NFCTimerModule.h" />
     <ClInclude Include="NFKernelPlugin.h" />
+    <ClInclude Include="termcolor.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="NFCEventModule.cpp" />
