@@ -22,7 +22,7 @@ end
 
 function init_script_system(pluginManager)
 	--vscode luaide调试工具需要
-	local breakSocketHandle,debugXpCall = require("LuaDebug")("localhost",7003)
+	--local breakSocketHandle,debugXpCall = require("LuaDebug")("localhost",7003)
 
 	package.path = package.path .. ";../ScriptModule/gxlua/?.lua;"
 	
@@ -33,7 +33,11 @@ function init_script_system(pluginManager)
 
 	if pluginManager:IsLoadAllServer() then
 		package.path = package.path .. ";../ScriptModule/GameServer/?.lua;"
-		LoadLuaFile("../ScriptModule/GameServer", true)
+		LoadLuaFile("../ScriptModule/GameServer", false)
+		LoadLuaFile("../ScriptModule/GameServer/script/do", true)
+		LoadLuaFile("../ScriptModule/GameServer/script/event", true)
+		LoadLuaFile("../ScriptModule/GameServer/script/gxlua_ttr", true)
+
 		LoadLuaFile("../ScriptModule/GateServer", true)
 		LoadLuaFile("../ScriptModule/LoginServer", true)
 	else

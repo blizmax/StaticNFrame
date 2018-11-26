@@ -220,7 +220,7 @@ end
 function LuaNFrame:savedata(name, data)
     local collection = self.dataBase:getCollection(name)
     if collection ~= nil then
-        return collection:update({_id = data.uid}, data, {upsert=true})
+        return collection:update({_id = data.uid}, encode_repair(data), {upsert=true})
     end
     return false
 end
@@ -299,7 +299,7 @@ function LuaNFrame:savefield(name, id, fieldpath, data)
         return "datatype error "
     end
 
-    local setstr = '{"$set":{"'..fieldpath..'":'..json.encode(data)..'}}'
+    local setstr = '{"$set":{"'..fieldpath..'":'..table2json(data)..'}}'
     local collection = self.dataBase:getCollection(name)
     if collection ~= nil then
         return collection:update({_id = id}, setstr)
