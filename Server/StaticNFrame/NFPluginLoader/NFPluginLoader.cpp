@@ -243,7 +243,7 @@ void ProcessParameter(int argc, char* argv[])
 int main(int argc, char* argv[])
 {
 #if NF_PLATFORM == NF_PLATFORM_WIN
-	system("chcp 65001");	//utf8 Êä³ö
+	SetConsoleOutputCP(CP_UTF8);
 	SetUnhandledExceptionFilter((LPTOP_LEVEL_EXCEPTION_FILTER)ApplicationCrashHandler);
 #elif NF_PLATFORM == NF_PLATFORM_LINUX
 #endif
