@@ -50,7 +50,7 @@
 #pragma comment( lib, "NFMysqlPlugin.lib" )
 #pragma comment( lib, "NFLuaScriptPlugin.lib" )
 #pragma comment( lib, "NFTestPlugin.lib" )
-#pragma comment( lib, "NFProxyServerPlugin.lib" )
-#pragma comment( lib, "NFProxyClientPlugin.lib" )
-#pragma comment( lib, "NFGameServerPlugin.lib" )
+//#pragma comment( lib, "NFProxyServerPlugin.lib" )
+//#pragma comment( lib, "NFProxyClientPlugin.lib" )
+//#pragma comment( lib, "NFGameServerPlugin.lib" )
 #endif

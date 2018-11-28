@@ -23,9 +23,9 @@
 #include "NFComm/NFNetPlugin/NFNetPlugin.h"
 #include "NFTest/NFTestPlugin/NFTestPlugin.h"
 #include <NFComm/NFMysqlPlugin/NFMysqlPlugin.h>
-#include <NFServer/NFProxyServer/NFProxyServerPlugin/NFProxyServerPlugin.h>
-#include <NFServer/NFProxyServer/NFProxyClientPlugin/NFProxyClientPlugin.h>
-#include <NFServer/NFGameServer/NFGameServerPlugin/NFGameServerPlugin.h>
+//#include <NFServer/NFProxyServer/NFProxyServerPlugin/NFProxyServerPlugin.h>
+//#include <NFServer/NFProxyServer/NFProxyClientPlugin/NFProxyClientPlugin.h>
+//#include <NFServer/NFGameServer/NFGameServerPlugin/NFGameServerPlugin.h>
 #include <NFComm/NFXPlugin/NFLuaScriptPlugin/NFLuaScriptPlugin.h>
 
 bool NFCPluginManager::InitSingleton()
@@ -92,8 +92,8 @@ bool NFCPluginManager::RegisterStaticPlugin()
 	REGISTER_STATIC_PLUGIN(this, NFMysqlPlugin);
 	REGISTER_STATIC_PLUGIN(this, NFLuaScriptPlugin);
 	REGISTER_STATIC_PLUGIN(this, NFTestPlugin);
-	REGISTER_STATIC_PLUGIN(this, NFProxyServerPlugin);
-	REGISTER_STATIC_PLUGIN(this, NFProxyClientPlugin);
-	REGISTER_STATIC_PLUGIN(this, NFGameServerPlugin);
+	//REGISTER_STATIC_PLUGIN(this, NFProxyServerPlugin);
+	//REGISTER_STATIC_PLUGIN(this, NFProxyClientPlugin);
+	//REGISTER_STATIC_PLUGIN(this, NFGameServerPlugin);
 	return true;
 }
