@@ -176,7 +176,7 @@ std::string NetObject::HandleSharkReturn()
 */
 int NetObject::HandleSharkInfo()
 {
-	std::istringstream s(m_buffer.ReadAddr(), m_buffer.ReadableSize());
+	std::istringstream s(std::string(m_buffer.ReadAddr(), m_buffer.ReadableSize()));
 	std::string request;
 
 	std::getline(s, request);
