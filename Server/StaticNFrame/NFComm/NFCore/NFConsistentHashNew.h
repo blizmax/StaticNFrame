@@ -9,6 +9,7 @@
 
 #pragma once
 
+#include "NFPlatform.h"
 #include "NFMD5.h"
 #include "NFAutoPtr.h"
 #include "NFHash.hpp"

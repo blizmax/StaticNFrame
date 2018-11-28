@@ -14,6 +14,7 @@
 #include <cassert>
 #include <iostream>
 #include <functional>
+#include "NFPlatform.h"
 #include "NFException.hpp"
 #include "NFMemVector.h"
 #include "NFTCPack.h"

@@ -34,7 +34,7 @@ size_t NFMemChunk::calcBlockCount(size_t iMemSize, size_t iBlockSize)
 		return 0;
 	}
 
-	return std::min(((iMemSize - sizeof(tagChunkHead)) / iBlockSize), (size_t)(-1));
+	return (std::min)(((iMemSize - sizeof(tagChunkHead)) / iBlockSize), (size_t)(-1));
 }
 
 void NFMemChunk::create(void *pAddr, size_t iBlockSize, size_t iBlockCount)
@@ -381,7 +381,7 @@ void NFMemMultiChunkAllocator::calc()
 
 		if (_pHead->_iMaxBlockSize > _pHead->_iMinBlockSize)
 		{
-			n = std::max((size_t)(n*_pHead->_fFactor), n + 1);    //至少内存块大小要+1
+			n = (std::max)((size_t)(n*_pHead->_fFactor), n + 1);    //至少内存块大小要+1
 		}
 	}
 

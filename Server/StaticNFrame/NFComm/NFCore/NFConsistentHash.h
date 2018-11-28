@@ -12,6 +12,7 @@
 #include <string>
 #include <vector>
 #include <algorithm>
+#include "NFPlatform.h"
 #include "NFMD5.h"
 
 /////////////////////////////////////////////////

@@ -17,6 +17,7 @@
 #include <map>
 #include <stack>
 #include <sstream>
+#include "NFPlatform.h"
 #include "NFAutoPtr.h"
 #include "NFTarsElement.h"
 #include "NFCommon.h"

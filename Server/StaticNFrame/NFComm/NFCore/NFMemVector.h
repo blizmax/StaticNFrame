@@ -11,6 +11,7 @@
 
 #include <sstream>
 #include <string.h>
+#include "NFPlatform.h"
 #include "NFException.hpp"
 
 /////////////////////////////////////////////////

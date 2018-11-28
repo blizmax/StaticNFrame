@@ -119,7 +119,7 @@ size_t NFMemQueue::elementCount()
 		return iPushCount - iPopCount;
 	}
 
-	return std::numeric_limits<size_t>::max() - iPopCount + iPushCount;
+	return (std::numeric_limits<size_t>::max)() - iPopCount + iPushCount;
 }
 
 bool NFMemQueue::pop_front(std::string &sOut)
