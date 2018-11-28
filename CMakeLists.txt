@@ -24,7 +24,8 @@ message("CMAKE_SOURCE_DIR = ${CMAKE_SOURCE_DIR}")
 
 SET(INCLUDE_DIR "./" "/usr/local/include"
 	"${CMAKE_SOURCE_DIR}/Server"
-	"${CMAKE_SOURCE_DIR}/Server/Dependencies/lua"
+	"${CMAKE_SOURCE_DIR}/Server/Dependencies/LuaBind/lua5.3"
+	"${CMAKE_SOURCE_DIR}/Server/Dependencies/LuaBind/"
 	"${CMAKE_SOURCE_DIR}/Server/Dependencies/g3dlite"
 	"${CMAKE_SOURCE_DIR}/Server/Dependencies/libevent/include/event2"
 	"${CMAKE_SOURCE_DIR}/Server/Dependencies/libevent/include/"
@@ -35,7 +36,10 @@ SET(INCLUDE_DIR "./" "/usr/local/include"
 	"${CMAKE_SOURCE_DIR}/Server/Dependencies/navigation"
 	"${CMAKE_SOURCE_DIR}/Server/Dependencies/mysql/include"
 	"${CMAKE_SOURCE_DIR}/Server/Dependencies/mysqlpp/lib"
-	"${CMAKE_SOURCE_DIR}/Server/Dependencies/mongo/src"
+	"${CMAKE_SOURCE_DIR}/Server/Dependencies/mongo/src/libmongoc/src/mongoc"
+	"${CMAKE_SOURCE_DIR}/Server/Dependencies/mongo/src/libmongoc/src"
+	"${CMAKE_SOURCE_DIR}/Server/Dependencies/mongo/src/libbson/src"
+	"${CMAKE_SOURCE_DIR}/Server/Dependencies/mongo/src/libbson/src/bson"
 	"${CMAKE_SOURCE_DIR}/Server/Dependencies/mongo/linux"
 	"${CMAKE_SOURCE_DIR}/Server/StaticNFrame/")
 
