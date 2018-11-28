@@ -169,7 +169,6 @@
     <ClCompile Include="NFBase64.cpp" />
     <ClCompile Include="NFCommon.cpp" />
     <ClCompile Include="NFError.cpp" />
-    <ClCompile Include="NFFile.cpp" />
     <ClCompile Include="NFMemHashMap.cpp" />
     <ClCompile Include="NFMemHashMapCompact.cpp" />
     <ClCompile Include="NFJson.cpp" />
@@ -210,7 +209,6 @@
     <ClInclude Include="NFConsistentHash.h" />
     <ClInclude Include="NFConsistentHashNew.h" />
     <ClInclude Include="NFError.h" />
-    <ClInclude Include="NFFile.h" />
     <ClInclude Include="NFHash.hpp" />
     <ClInclude Include="NFMemHashMap.h" />
     <ClInclude Include="NFMemHashMapCompact.h" />

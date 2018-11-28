@@ -108,9 +108,6 @@
     <ClCompile Include="NFTarsParse.cpp">
       <Filter>Common</Filter>
     </ClCompile>
-    <ClCompile Include="NFFile.cpp">
-      <Filter>Common</Filter>
-    </ClCompile>
     <ClCompile Include="NFTarsElement.cpp">
       <Filter>Common</Filter>
     </ClCompile>
@@ -285,9 +282,6 @@
       <Filter>Common</Filter>
     </ClInclude>
     <ClInclude Include="NFTarsParse.h">
-      <Filter>Common</Filter>
-    </ClInclude>
-    <ClInclude Include="NFFile.h">
       <Filter>Common</Filter>
     </ClInclude>
     <ClInclude Include="NFTarsElement.h">
