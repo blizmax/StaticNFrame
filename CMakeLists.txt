@@ -59,7 +59,7 @@ else()
 endif()
 
 SET(LIB_LINK_DEP pthread dl rt libevent_core.a libevent_extra.a libtheron.a
-		libevent.a libLuaBind.a libtheron.a libevent_pthreads.a protobuf libmysqlclient.so libbson-static-1.0.a libmongoc-static-1.0.a ssl crypto)
+		libevent.a libLuaBind.a libtheron.a libevent_pthreads.a protobuf libmysqlclient.so libbson-1.0.so.0 libmongoc-1.0.so.0 ssl crypto)
 		
 SET(LIB_LINK_NF libNFActorPlugin.a libNFCore.a libNFKernelPlugin.a
 				libNFMath.a libNFMessageDefine.a libNFNetPlugin.a libNFPluginModule.a libNFTestPlugin.a libmysqlpp.a libNFMysqlPlugin.a)

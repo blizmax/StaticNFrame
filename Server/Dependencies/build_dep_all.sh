@@ -74,6 +74,10 @@ cp -rf src/libmongoc/libmongoc-static-1.0.a ../../../../Product/Lib/Debug/
 cp -rf src/libmongoc/libmongoc-static-1.0.a ../../../../Product/Lib/Release/
 cp -rf src/libbson/libbson-static-1.0.a ../../../../Product/Lib/Debug/
 cp -rf src/libbson/libbson-static-1.0.a ../../../../Product/Lib/Release/
+cp -rf src/libmongoc/libmongo-1.0.so* ../../../../Product/Lib/Debug/
+cp -rf src/libmongoc/libmongoc-1.0.so* ../../../../Product/Lib/Release/
+cp -rf src/libbson/libbson-1.0.so* ../../../../Product/Lib/Debug/
+cp -rf src/libbson/libbson-1.0.so* ../../../../Product/Lib/Release/
 cd ../../
 
 

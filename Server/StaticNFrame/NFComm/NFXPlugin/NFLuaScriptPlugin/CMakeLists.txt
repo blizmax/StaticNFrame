@@ -1,34 +1,14 @@
-set(ProjectName "NFLuaScriptPlugin")
-file(GLOB NFLuaScriptPlugin_ROOT_Cpp
-	*.cpp)
-	
-file(GLOB NFLuaScriptPlugin_ROOT_Hpp 
-	*.h)
+CMAKE_MINIMUM_REQUIRED(VERSION 2.8)
+PROJECT(NFLuaScriptPlugin)
 
-add_library(NFLuaScriptPlugin SHARED
-	${NFLuaScriptPlugin_ROOT_Cpp}
-	${NFLuaScriptPlugin_ROOT_Hpp})
-	
-set_target_properties( NFLuaScriptPlugin PROPERTIES OUTPUT_NAME_DEBUG "NFLuaScriptPlugin_d")
-set_target_properties( NFLuaScriptPlugin PROPERTIES PREFIX "")
-set_target_properties( NFLuaScriptPlugin PROPERTIES 
-	FOLDER "NFMidWare/NFLuaScriptPlugin"
-	ARCHIVE_OUTPUT_DIRECTORY ${NFOutPutDir}
-	RUNTIME_OUTPUT_DIRECTORY ${NFOutPutDir}
-	LIBRARY_OUTPUT_DIRECTORY ${NFOutPutDir} )
-target_link_libraries(NFLuaScriptPlugin liblua.a)
-link_NFSDK("NFLuaScriptPlugin")
+AUX_SOURCE_DIRECTORY(. SRC)
 
-if(UNIX)
-	add_definitions(
-		-D_USRDLL
-		-DELPP_NO_DEFAULT_LOG_FILE
-	)
-	
+if (CMAKE_BUILD_TYPE MATCHES "Release")
+	SET(LIBRARY_OUTPUT_PATH "${CMAKE_SOURCE_DIR}/Product/Lib/Release")
 else()
-	add_definitions(
-		-DWIN
-		-D_USRDLL
-		-DELPP_NO_DEFAULT_LOG_FILE
-	)
+	SET(LIBRARY_OUTPUT_PATH "${CMAKE_SOURCE_DIR}/Product/Lib/Debug")
 endif()
+
+ADD_LIBRARY( ${PROJECT_NAME} STATIC ${SRC} )
+
+
