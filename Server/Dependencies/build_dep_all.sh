@@ -1,5 +1,14 @@
 echo Building dependencies...
 
+#compling openssl
+cd openssl
+chmod a+x ./config
+./config
+make
+cp -rf libcrypto.a ../../../Product/Lib/Debug/
+cp -rf libssl.a ../../../Product/Lib/Release/
+cd ..
+
 #compiling mysql
 cd mysql
 cmake .
@@ -51,6 +60,7 @@ make library mode=release boost=off c++11=on posix=on shared=on
 cp -r -f ./Lib/libtheron.a ../../../Product/Lib/Release/
 make clean
 cd ../
+
 
 # comiling mongo-c-driver
 
