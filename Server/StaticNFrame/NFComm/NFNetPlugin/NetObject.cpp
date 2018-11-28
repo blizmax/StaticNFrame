@@ -160,14 +160,10 @@ std::string NetObject::HandleSharkReturn()
 	std::string server_key = mHeaderMap["Sec-WebSocket-Key"];
 	server_key += MAGIC_KEY;
 
-	NFSHA1 s1;
-	s1.Update((unsigned char*)server_key.c_str(), static_cast<unsigned int>(server_key.size()));
-	s1.Final();
-	unsigned char puDest[20];
-	s1.GetHash(puDest);
+	std::vector<char> puDest = NFSHA1::sha1bin(server_key.c_str(), server_key.size());
 
 	server_key.clear();
-	NFBase64::Encode(std::string((char*)puDest,20), &server_key);
+	server_key = NFBase64::Encode(std::string(puDest.begin(), puDest.end()));
 	server_key += "\r\n\r\n";
 	request += server_key;
 	return request;

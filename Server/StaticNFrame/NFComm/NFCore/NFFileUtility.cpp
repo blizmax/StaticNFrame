@@ -14,11 +14,11 @@
 
 #include <fstream>
 
-string NFFileUtility::Clean(const string& path)
+std::string NFFileUtility::Clean(const std::string& path)
 {
 	// Not Tested yet.
 
-	std::vector<string> v;
+	std::vector<std::string> v;
 	NFStringUtility::Split(v, path, "/\\", 0);
 
 	std::ostringstream newpath;
@@ -30,7 +30,7 @@ string NFFileUtility::Clean(const string& path)
 	}
 
 	// erase null.
-	std::list<string> vv;
+	std::list<std::string> vv;
 	for (auto it = v.rbegin(), ite = v.rend(); it != ite; ++it)
 	{
 		if (*it == ".")
@@ -73,10 +73,10 @@ string NFFileUtility::Clean(const string& path)
 	return newpath.str();
 }
 
-string NFFileUtility::Join(const string& prefix, const string& postfix)
+std::string NFFileUtility::Join(const std::string& prefix, const std::string& postfix)
 {
-	string pre = prefix;
-	string post = postfix;
+	std::string pre = prefix;
+	std::string post = postfix;
 	pre = NormalizePath(pre, false);
 	post = NormalizePath(post, false);
 	NFStringUtility::Trim(post, "/", true, false);
@@ -87,9 +87,9 @@ string NFFileUtility::Join(const string& prefix, const string& postfix)
 	return pre + "/" + post;
 }
 
-wstring NFFileUtility::Join(const wstring& prefix, const wstring& postfix)
+std::wstring NFFileUtility::Join(const std::wstring& prefix, const std::wstring& postfix)
 {
-	typedef wstring MyString;
+	typedef std::wstring MyString;
 	MyString pre = prefix;
 	MyString post = postfix;
 	pre = NormalizePath(pre, false);
@@ -102,14 +102,14 @@ wstring NFFileUtility::Join(const wstring& prefix, const wstring& postfix)
 	return pre + L"/" + post;
 }
 
-string NFFileUtility::NormalizePath(const string& init, bool with_trailing_slash /*= true*/)
+std::string NFFileUtility::NormalizePath(const std::string& init, bool with_trailing_slash /*= true*/)
 {
 	if (init.length() < 1)
 	{
 		return init;
 	}
 
-	string path = init;
+	std::string path = init;
 
 	std::replace(path.begin(), path.end(), '\\', '/');
 
@@ -129,14 +129,14 @@ string NFFileUtility::NormalizePath(const string& init, bool with_trailing_slash
 	return path;
 }
 
-wstring NFFileUtility::NormalizePath(const wstring& init, bool with_trailing_slash /*= true*/)
+std::wstring NFFileUtility::NormalizePath(const std::wstring& init, bool with_trailing_slash /*= true*/)
 {
 	if (init.length() < 1)
 	{
 		return init;
 	}
 
-	wstring path = init;
+	std::wstring path = init;
 	std::replace(path.begin(), path.end(), L'\\', L'/');
 	if (path[path.length() - 1] != L'/' && with_trailing_slash)
 	{
@@ -153,15 +153,15 @@ wstring NFFileUtility::NormalizePath(const wstring& init, bool with_trailing_sla
 	return path;
 }
 
-void NFFileUtility::SplitFileName(const string& filepath,
-                                  string& base, string& dir_path, bool with_trailing_slash /*= false */)
+void NFFileUtility::SplitFileName(const std::string& filepath,
+	std::string& base, std::string& dir_path, bool with_trailing_slash /*= false */)
 {
-	string path = filepath;
+	std::string path = filepath;
 	// Replace \ to /
 	std::replace(path.begin(), path.end(), '\\', '/');
 	// split based on final /
 	size_t i = path.find_last_of('/');
-	if (i == string::npos)
+	if (i == std::string::npos)
 	{
 		//dir_path = "";
 		dir_path.clear();
@@ -186,16 +186,16 @@ void NFFileUtility::SplitFileName(const string& filepath,
 #endif
 }
 
-void NFFileUtility::SplitFileName(const wstring& filepath,
-                                  wstring& base, wstring& dir_path, bool with_trailing_slash /*= false */)
+void NFFileUtility::SplitFileName(const std::wstring& filepath,
+	std::wstring& base, std::wstring& dir_path, bool with_trailing_slash /*= false */)
 {
-	wstring path = filepath;
+	std::wstring path = filepath;
 	// Replace \ with / first
 	std::replace(path.begin(), path.end(), L'\\', L'/');
 	// split based on final /
 	size_t i = path.find_last_of(L'/');
 
-	if (i == wstring::npos)
+	if (i == std::wstring::npos)
 	{
 		//dir_path = L"";
 		dir_path.clear();
@@ -220,7 +220,7 @@ void NFFileUtility::SplitFileName(const wstring& filepath,
 #endif
 }
 
-bool NFFileUtility::Unlink(const string& filepath)
+bool NFFileUtility::Unlink(const std::string& filepath)
 {
 	bool is_dir = NFFileUtility::IsDir(filepath);
 
@@ -237,7 +237,7 @@ bool NFFileUtility::Unlink(const string& filepath)
 #endif
 }
 
-bool NFFileUtility::Mkdir(const string& dirpath)
+bool NFFileUtility::Mkdir(const std::string& dirpath)
 {
 	size_t nCurSplit;
 	size_t nNextSplit = 0;
@@ -247,8 +247,8 @@ bool NFFileUtility::Mkdir(const string& dirpath)
 	do
 	{
 		// get current dir name.
-		nCurSplit = dirpath.find_first_of(static_cast<string::value_type>('/'), nNextSplit);
-		nNextSplit = dirpath.find_first_of(static_cast<string::value_type>('/'), nCurSplit + 1);
+		nCurSplit = dirpath.find_first_of(static_cast<std::string::value_type>('/'), nNextSplit);
+		nNextSplit = dirpath.find_first_of(static_cast<std::string::value_type>('/'), nCurSplit + 1);
 
 #if NF_PLATFORM == NF_PLATFORM_WIN
 		// current dir
@@ -261,7 +261,7 @@ bool NFFileUtility::Mkdir(const string& dirpath)
 		// next dir
 		//nCurSplit = nNextSplit + 1;
 	}
-	while (nNextSplit != string::npos);
+	while (nNextSplit != std::string::npos);
 
 	return true;
 }
@@ -285,7 +285,7 @@ bool NFFileUtility::Mkdir(const string& dirpath)
 #define X_OK  1
 #endif
 
-bool NFFileUtility::IsFileExist(const string& strFileName)
+bool NFFileUtility::IsFileExist(const std::string& strFileName)
 {
 #if NF_PLATFORM == NF_PLATFORM_WIN
 	if (_access(strFileName.c_str(), F_OK) != 0)
@@ -301,7 +301,7 @@ bool NFFileUtility::IsFileExist(const string& strFileName)
 	return true;
 }
 
-bool NFFileUtility::IsReadable(const string& strFileNmae)
+bool NFFileUtility::IsReadable(const std::string& strFileNmae)
 {
 #if NF_PLATFORM == NF_PLATFORM_WIN
 	if (_access(strFileNmae.c_str(), R_OK) != 0)
@@ -317,7 +317,7 @@ bool NFFileUtility::IsReadable(const string& strFileNmae)
 	return true;
 }
 
-bool NFFileUtility::IsWriteable(const string& strFileNmae)
+bool NFFileUtility::IsWriteable(const std::string& strFileNmae)
 {
 #if NF_PLATFORM == NF_PLATFORM_WIN
 	if (_access(strFileNmae.c_str(), W_OK) != 0)
@@ -333,7 +333,7 @@ bool NFFileUtility::IsWriteable(const string& strFileNmae)
 	return true;
 }
 
-bool NFFileUtility::IsExecutable(const string& strFileNmae)
+bool NFFileUtility::IsExecutable(const std::string& strFileNmae)
 {
 #if NF_PLATFORM == NF_PLATFORM_WIN
 	if (_access(strFileNmae.c_str(), X_OK) != 0)
@@ -349,14 +349,14 @@ bool NFFileUtility::IsExecutable(const string& strFileNmae)
 	return true;
 }
 
-bool NFFileUtility::CopyFile(const string& strSrcFile, const string& strDestFile, bool bOverride/* = true */)
+bool NFFileUtility::CopyFile(const std::string& strSrcFile, const std::string& strDestFile, bool bOverride/* = true */)
 {
 	if (IsDir(strSrcFile))
 	{
 		return false;
 	}
 
-	string strDestFilePath = strDestFile;
+	std::string strDestFilePath = strDestFile;
 
 	if (IsDir(strDestFile))
 	{
@@ -397,7 +397,7 @@ bool NFFileUtility::ReadFileContent(const std::string& strFileName, std::string&
 	return true;
 }
 
-bool NFFileUtility::ReadFile(const char* szFileName, std::list<string>& lines)
+bool NFFileUtility::ReadFile(const char* szFileName, std::list<std::string>& lines)
 {
 	if (!szFileName)
 	{
@@ -410,7 +410,7 @@ bool NFFileUtility::ReadFile(const char* szFileName, std::list<string>& lines)
 		return false;
 	}
 
-	string line;
+	std::string line;
 
 	while (!ifs.eof())
 	{
@@ -421,7 +421,7 @@ bool NFFileUtility::ReadFile(const char* szFileName, std::list<string>& lines)
 	return true;
 }
 
-bool NFFileUtility::WriteFile(const string& filepath, const void* content, const size_t len)
+bool NFFileUtility::WriteFile(const std::string& filepath, const void* content, const size_t len)
 {
 	return WriteFile(filepath.c_str(), content, len);
 }
@@ -448,7 +448,7 @@ bool NFFileUtility::WriteFile(const char* filepath, const void* content, const s
 	return true;
 }
 
-void NFFileUtility::GetFiles(const string& strDirName, std::list<string>& files, bool recursively/* = true*/, const string& filter/* = "*.*"*/)
+void NFFileUtility::GetFiles(const std::string& strDirName, std::list<std::string>& files, bool recursively/* = true*/, const std::string& filter/* = "*.*"*/)
 {
 #if NF_PLATFORM == NF_PLATFORM_WIN
 	struct _finddata_t finfo; //file info
@@ -470,7 +470,7 @@ void NFFileUtility::GetFiles(const string& strDirName, std::list<string>& files,
 		}
 		else
 		{
-			string strFileName = NFFileUtility::Join(strDirName, finfo.name);
+			std::string strFileName = NFFileUtility::Join(strDirName, finfo.name);
 			if (NFStringUtility::Match(strFileName, filter))
 			{
 				files.push_back(strFileName);
@@ -508,7 +508,7 @@ void NFFileUtility::GetFiles(const string& strDirName, std::list<string>& files,
 #endif
 }
 
-void NFFileUtility::GetFiles(const string& strDirName, std::list<string>& files, int depth /*= 0*/, const string& filter/* = "*"*/)
+void NFFileUtility::GetFiles(const std::string& strDirName, std::list<std::string>& files, int depth /*= 0*/, const std::string& filter/* = "*"*/)
 {
 	if (depth < 0)
 	{
@@ -527,7 +527,7 @@ void NFFileUtility::GetFiles(const string& strDirName, std::list<string>& files,
 
 	do
 	{
-		string strFileName = NFFileUtility::Join(strDirName, finfo.name);
+		std::string strFileName = NFFileUtility::Join(strDirName, finfo.name);
 		if ((finfo.attrib & _A_SUBDIR))
 		{
 			if (strcmp(finfo.name, ".") != 0 && strcmp(finfo.name, "..") != 0)

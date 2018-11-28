@@ -13,73 +13,69 @@
 
 #include "NFPlatform.h"
 
+/////////////////////////////////////////////////
+/**
+* @file tc_base64.h
+* @brief  base64编解码类.
+*/
+
+/////////////////////////////////////////////////
+
+/**
+* @brief 该类提供标准的Base64的编码解码
+*/
 class _NFExport NFBase64
 {
 public:
 	/**
-	* @brief 构造函数.
+	* @brief  对字符串进行base64编码.
 	*
+	* @param data         需要编码的数据
+	* @param bChangeLine  是否需要在最终编码数据加入换行符 ，
+	*                     (RFC中建议每76个字符后加入回车换行，默认为不添加换行
+	* @return string      编码后的数据
 	*/
-	NFBase64()
-	{
-	}
+	static std::string Encode(const std::string &data, bool bChangeLine = false);
 
 	/**
-	* @brief 析构函数.
+	* @brief  对字符串进行base64解码.
+	*
+	* @param data     需要解码的数据
+	* @return string  解码后的数据
 	*/
-	virtual ~NFBase64()
-	{
-	}
+	static std::string Decode(const std::string &data);
 
 	/**
-	* @brief Base64位编码
+	* @brief  对字符串进行base64编码 .
 	*
-	* @param src  要编码的数据，不能为空
-	* @param dst  编码后的数据，不能是空指针
-	* @return     编码是否成功
+	* @param pSrc        需要编码的数据
+	* @param nSrcLen     需要编码的数据长度
+	* @param pDst        编码后的数据
+	* @param bChangeLine 是否需要在最终编码数据加入换行符，
+	*                    RFC中建议每76个字符后加入回车换行，默认为不添加换行
+	* @return            编码后的字符串的长度
 	*/
-	static bool Encode(const std::string& src, std::string* dst);
+	static int Encode(const unsigned char* pSrc, int nSrcLen, char* pDst, bool bChangeLine = false);
 
 	/**
-	* @brief Base64位解码
+	* @brief  对字符串进行base64解码.
 	*
-	* @param data  要解码的数据，不能为空
-	* @param size  解码后的数据，不能是空指针
-	* @return      解码是否成功
+	* @param pSrc    需要解码的数据
+	* @param nSrcLe  需要解码的数据长度
+	* @param pDst   解码后的数据
+	* @return       解码后的字符串的长度
 	*/
-	static bool Decode(const std::string& src, std::string* dst);
+	static int Decode(const char* pSrc, int nSrcLen, unsigned char* pDst);
 
-private:
-	/**
-	* @brief 根据在Base64编码表中的序号求得某个字符
-	*
-	* @param n  在Base64编码表中的序号
-	* @return   在Base64编码表中的序号对应的某个字符
-	*/
-	static inline char Base2Chr(unsigned char n);
+protected:
 
 	/**
-	* @brief 求得某个字符在Base64编码表中的序号
-	*
-	* @param c  输入字符
-	* @return   字符在Base64编码表中的序号
+	* base64编码表
 	*/
-	static inline unsigned char Chr2Base(char c);
-
+	static const char EnBase64Tab[];
 	/**
-	* @brief 求得编码后的数据长度
-	*
-	* @param n  编码前数据的长度
-	* @return   编码后数据的长度
+	* base64解码表
 	*/
-	inline static int Base64EncodeLen(int n);
-
-	/**
-	* @brief 求得解码后的数据长度
-	*
-	* @param n  解码前数据的长度
-	* @return   解码后数据的长度
-	*/
-	inline static int Base64DecodeLen(int n);
+	static const char DeBase64Tab[];
 };
 

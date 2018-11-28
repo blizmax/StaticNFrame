@@ -19,7 +19,6 @@
 #include "NFComm/NFCore/NFPlatform.h"
 #include "NFComm/NFCore/NFHash.hpp"
 
-using namespace std;
 class NFEventContext;
 
 /**

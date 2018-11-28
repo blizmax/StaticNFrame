@@ -11,6 +11,7 @@
 #include "NFComm/NFCore/NFPlatform.h"
 #include "NFComm/NFPluginModule/NFLogMgr.h"
 #include "NFIPacketParse.h"
+#include "NFComm/NFCore/NFCommon.h"
 
 NFClient::NFClient(uint32_t nId, const NFClientFlag& flag) : m_pMainBase(nullptr), m_pObject(nullptr), m_usLinkId(nId), mLastActionTime(0)
 {

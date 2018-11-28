@@ -10,203 +10,162 @@
 #include <stdlib.h>
 #include "NFBase64.h"
 
-static char Base64_code[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
+// Base64编码表：将输入数据流每次取6 bit，用此6 bit的值(0-63)作为索引去查表，输出相应字符。这样，每3个字节将编码为4个字符(3×8 → 4×6)；不满4个字符的以'='填充。
+const char  NFBase64::EnBase64Tab[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
 
-/**
-* @Function: 根据在Base64编码表中的序号求得某个字符
-*            0-63 : A-Z(25) a-z(51), 0-9(61), +(62), /(63)
-* @Param:    unsigned char n
-* @Return:   字符
-*/
-char NFBase64::Base2Chr(unsigned char n)
+// Base64解码表：将64个可打印字符的值作为索引，查表得到的值（范围为0-63）依次连起来得到解码结果。
+// 解码表size为256，非法字符将被解码为ASCII 0
+const char  NFBase64::DeBase64Tab[] =
 {
-	n &= 0x3F;
-	if (n < 26)
-	{
-		return static_cast<char>(n + 'A');
-	}
-	else if (n < 52)
-	{
-		return static_cast<char>(n - 26 + 'a');
-	}
-	else if (n < 62)
-	{
-		return static_cast<char>(n - 52 + '0');
-	}
-	else if (n == 62)
-	{
-		return '+';
-	}
-	else
-	{
-		return '/';
-	}
+	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+	62,        // '+'
+	0, 0, 0,
+	63,        // '/'
+	52, 53, 54, 55, 56, 57, 58, 59, 60, 61,        // '0'-'9'
+	0, 0, 0, 0, 0, 0, 0,
+	0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12,
+	13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25,        // 'A'-'Z'
+	0, 0, 0, 0, 0, 0,
+	26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38,
+	39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51,        // 'a'-'z'
+	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+};
+
+std::string NFBase64::Encode(const std::string &data, bool bChangeLine/* = false*/)
+{
+	if (data.empty())
+		return "";
+	//设原始串长度为a,结果串中算上回车换行及'/0',最终长度为(a/3+1)*4+(a/3+1)*4*2/76+1,约为1.369*a+6
+	char *pDst = NULL;
+	int iBufSize = (int)(data.size()*1.4) + 6;
+	pDst = new char[iBufSize];
+	if (pDst == NULL)
+		return "";
+	int iDstLen = Encode((unsigned char*)data.c_str(), data.size(), pDst, bChangeLine);
+	std::string ret(pDst, iDstLen);
+	delete[] pDst;
+	return ret;
 }
 
-/**
-* @Function: 求得某个字符在Base64编码表中的序号
-* @Param:    char c   字符
-* @Return:   序号值
-*/
-unsigned char NFBase64::Chr2Base(char c)
+std::string NFBase64::Decode(const std::string &data)
 {
-	if (c >= 'A' && c <= 'Z')
-	{
-		return static_cast<unsigned char>(c - 'A');
-	}
-	else if (c >= 'a' && c <= 'z')
-	{
-		return static_cast<unsigned char>(c - 'a' + 26);
-	}
-	else if (c >= '0' && c <= '9')
-	{
-		return static_cast<unsigned char>(c - '0' + 52);
-	}
-	else if (c == '+')
-	{
-		return 62;
-	}
-	else if (c == '/')
-	{
-		return 63;
-	}
-	else
-	{
-		return 64; //  无效字符
-	}
+	if (data.empty())
+		return "";
+	unsigned char *pDst = NULL;
+	pDst = new unsigned char[data.size()];
+	if (pDst == NULL)
+		return "";
+	int iDstLen = Decode(data.c_str(), data.size(), pDst);
+	std::string ret((char*)pDst, iDstLen);
+	delete[] pDst;
+	return ret;
 }
 
-bool NFBase64::Encode(const std::string& src, std::string* dst)
+int NFBase64::Encode(const unsigned char* pSrc, int nSrcLen, char* pDst, bool bChangeLine/* = false*/)
 {
-	if (0 == src.size() || NULL == dst)
+	unsigned char c1, c2, c3;
+	int nDstLen = 0;
+	int nLineLen = 0;
+	int nDiv = nSrcLen / 3;
+	int nMod = nSrcLen % 3;
+	// 每次取3个字节，编码成4个字符
+	for (int i = 0; i < nDiv; i++)
 	{
-		return false;
+		c1 = *pSrc++;
+		c2 = *pSrc++;
+		c3 = *pSrc++;
+
+		*pDst++ = EnBase64Tab[c1 >> 2];
+		*pDst++ = EnBase64Tab[((c1 << 4) | (c2 >> 4)) & 0x3f];
+		*pDst++ = EnBase64Tab[((c2 << 2) | (c3 >> 6)) & 0x3f];
+		*pDst++ = EnBase64Tab[c3 & 0x3f];
+		nLineLen += 4;
+		nDstLen += 4;
+		// 相关RFC中每行超过76字符时需要添加回车换行
+		if (bChangeLine && nLineLen > 72)
+		{
+			*pDst++ = '\r';
+			*pDst++ = '\n';
+			nLineLen = 0;
+			nDstLen += 2;
+		}
 	}
-
-	dst->resize(Base64EncodeLen(static_cast<int>(src.size())));
-
-	int c;
-
-	unsigned char* p = reinterpret_cast<unsigned char*>(&(*dst)[0]);
-	unsigned char* s = p;
-	unsigned char* q = reinterpret_cast<unsigned char*>(const_cast<char*>(&src[0]));
-
-	for (size_t i = 0; i < src.size();)
+	// 编码余下的字节
+	if (nMod == 1)
 	{
-		// 处理的时候，都是把24bit当作一个单位，因为3*8=4*6
-		c = q[i++];
-		c *= 256;
-		if (i < src.size())
-		{
-			c += q[i];
-		}
-		i++;
-		c *= 256;
-		if (i < src.size())
-		{
-			c += q[i];
-		}
-		i++;
-
-		// 每次取6bit当作一个8bit的char放在p中
-		p[0] = Base64_code[(c & 0x00fc0000) >> 18];
-		p[1] = Base64_code[(c & 0x0003f000) >> 12];
-		p[2] = Base64_code[(c & 0x00000fc0) >> 6];
-		p[3] = Base64_code[(c & 0x0000003f) >> 0];
-
-		// 这里是处理结尾情况
-		if (i > src.size())
-		{
-			p[3] = '=';
-		}
-
-		if (i > src.size() + 1)
-		{
-			p[2] = '=';
-		}
-
-		p += 4; // 编码后的数据指针相应的移动
+		c1 = *pSrc++;
+		*pDst++ = EnBase64Tab[(c1 & 0xfc) >> 2];
+		*pDst++ = EnBase64Tab[((c1 & 0x03) << 4)];
+		*pDst++ = '=';
+		*pDst++ = '=';
+		nLineLen += 4;
+		nDstLen += 4;
 	}
+	else if (nMod == 2)
+	{
+		c1 = *pSrc++;
+		c2 = *pSrc++;
+		*pDst++ = EnBase64Tab[(c1 & 0xfc) >> 2];
+		*pDst++ = EnBase64Tab[((c1 & 0x03) << 4) | ((c2 & 0xf0) >> 4)];
+		*pDst++ = EnBase64Tab[((c2 & 0x0f) << 2)];
+		*pDst++ = '=';
+		nDstLen += 4;
+	}
+	// 输出加个结束符
+	*pDst = '\0';
 
-	*p = 0; // 防野指针
-	dst->resize(p - s);
-
-	return true;
+	return nDstLen;
 }
 
-bool NFBase64::Decode(const std::string& src, std::string* dst)
+
+int  NFBase64::Decode(const char* pSrc, int nSrcLen, unsigned char* pDst)
 {
-	if (0 == src.size() || NULL == dst)
+	int nDstLen;            // 输出的字符计数 
+	int nValue;             // 解码用到的整数
+	int i;
+	i = 0;
+	nDstLen = 0;
+
+	// 取4个字符，解码到一个长整数，再经过移位得到3个字节
+	while (i < nSrcLen)
 	{
-		return false;
-	}
-
-	dst->resize(Base64DecodeLen(static_cast<int>(src.size())));
-
-	unsigned char* p = reinterpret_cast<unsigned char*>(&(*dst)[0]);
-	unsigned char* q = p;
-	unsigned char c;
-	unsigned char t = 0;
-
-	for (size_t i = 0; i < src.size(); i++)
-	{
-		if (src[i] == '=')
+		// 跳过回车换行    
+		if (*pSrc != '\r' && *pSrc != '\n')
 		{
-			break;
-		}
-		do
-		{
-			if (src[i])
+			if (i + 4 > nSrcLen)                             //待解码字符串不合法，立即停止解码返回
+				break;
+
+			nValue = DeBase64Tab[int(*pSrc++)] << 18;
+			nValue += DeBase64Tab[int(*pSrc++)] << 12;
+			*pDst++ = (nValue & 0x00ff0000) >> 16;
+			nDstLen++;
+			if (*pSrc != '=')
 			{
-				c = Chr2Base(src[i]);
+				nValue += DeBase64Tab[int(*pSrc++)] << 6;
+				*pDst++ = (nValue & 0x0000ff00) >> 8;
+				nDstLen++;
+				if (*pSrc != '=')
+				{
+					nValue += DeBase64Tab[int(*pSrc++)];
+					*pDst++ = nValue & 0x000000ff;
+					nDstLen++;
+				}
 			}
-			else
-			{
-				c = 65; //  字符串结束
-			}
-		}
-		while (c == 64); //  跳过无效字符，如回车等
 
-		if (c == 65)
-		{
-			break;
+			i += 4;
 		}
-		switch (i % 4)
+		else
 		{
-		case 0:
-			t = c << 2;
-			break;
-		case 1:
-			*p = static_cast<unsigned char>(t | (c >> 4));
-			p++;
-			t = static_cast<unsigned char>(c << 4);
-			break;
-		case 2:
-			*p = static_cast<unsigned char>(t | (c >> 2));
-			p++;
-			t = static_cast<unsigned char>(c << 6);
-			break;
-		case 3:
-			*p = static_cast<unsigned char>(t | c);
-			p++;
-			break;
-		default:
-			break;
+			pSrc++;
+			i++;
 		}
 	}
-
-	dst->resize(static_cast<size_t>(p - q));
-
-	return true;
+	// 输出加个结束符
+	*pDst = '\0';
+	return nDstLen;
 }
-
-int NFBase64::Base64EncodeLen(int n)
-{
-	return (n + 2) / 3 * 4 + 1;
-}
-
-int NFBase64::Base64DecodeLen(int n)
-{
-	return n / 4 * 3 + 2;
-}
-

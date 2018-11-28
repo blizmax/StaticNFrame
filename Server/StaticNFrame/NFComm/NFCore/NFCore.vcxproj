@@ -118,7 +118,7 @@
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>$(SolutionDir)/Dependencies/mysqlpp/lib;$(SolutionDir)/Dependencies/mysql/include;$(SolutionDir)\Dependencies\g3dlite;$(SolutionDir)\Dependencies\lua;$(SolutionDir)/Dependencies/libevent/include;$(SolutionDir)/Dependencies/libevent/WIN32-Code/nmake;$(SolutionDir)/Dependencies/libevent/;$(SolutionDir)/Dependencies/libevent/compat;$(SolutionDir)/Dependencies/Theron\Include/;$(SolutionDir)/StaticNFrame;$(SolutionDir)/Dependencies/;$(SolutionDir)/;$(SolutionDir)/Dependencies/protobuf/src;$(SolutionDir)/Dependencies/navigation;$(SolutionDir)/Dependencies/LuaBind/luaintf;$(SolutionDir)/Dependencies/LuaBind/pbc;$(SolutionDir)/Dependencies/LuaBind/luasql;$(SolutionDir)/Dependencies/LuaBind/luasocket;$(SolutionDir)/Dependencies/LuaBind/luacjson;$(SolutionDir)/Dependencies/LuaBind/lua5.3/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
-      <DisableSpecificWarnings>4091;4251;4996;4275;4316;4244;4267;4244;</DisableSpecificWarnings>
+      <DisableSpecificWarnings>4091;4251;4996;4275;4316;4244;4267;4244;4101;4099;4200;</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -167,8 +167,18 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="NFBase64.cpp" />
+    <ClCompile Include="NFCommon.cpp" />
     <ClCompile Include="NFError.cpp" />
+    <ClCompile Include="NFFile.cpp" />
+    <ClCompile Include="NFMemHashMap.cpp" />
+    <ClCompile Include="NFMemHashMapCompact.cpp" />
     <ClCompile Include="NFJson.cpp" />
+    <ClCompile Include="NFMallocChunk.cpp" />
+    <ClCompile Include="NFMD5.cpp" />
+    <ClCompile Include="NFMemChunk.cpp" />
+    <ClCompile Include="NFMemQueu.cpp" />
+    <ClCompile Include="NFMemVector.h" />
+    <ClCompile Include="NFMemMultiHashMap.cpp" />
     <ClCompile Include="NFMutex.cpp" />
     <ClCompile Include="NFNetBuffer.cpp" />
     <ClCompile Include="NFCpu.cpp" />
@@ -177,9 +187,9 @@
     <ClCompile Include="NFDataStream.cpp" />
     <ClCompile Include="NFFileUtility.cpp" />
     <ClCompile Include="NFIniReader.cpp" />
-    <ClCompile Include="NFMD5.cpp" />
-    <ClCompile Include="NFMMOMD5.cpp" />
     <ClCompile Include="NFPHPMD5.cpp" />
+    <ClCompile Include="NFMMOMD5.cpp" />
+    <ClCompile Include="NFPHPMD5Impl.cpp" />
     <ClCompile Include="NFProfiler.cpp" />
     <ClCompile Include="NFRandom.cpp" />
     <ClCompile Include="NFSHA1.cpp" />
@@ -188,19 +198,35 @@
     <ClCompile Include="NFStringUtility.cpp" />
     <ClCompile Include="NFServerTimeMgr.cpp" />
     <ClCompile Include="NFBuffer.cpp" />
+    <ClCompile Include="NFTarsElement.cpp" />
+    <ClCompile Include="NFTarsParse.cpp" />
+    <ClCompile Include="NFTCPack.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="NFAtomic.h" />
+    <ClInclude Include="NFAutoPtr.h" />
     <ClInclude Include="NFCmdLine.h" />
+    <ClInclude Include="NFCommon.h" />
+    <ClInclude Include="NFConsistentHash.h" />
+    <ClInclude Include="NFConsistentHashNew.h" />
     <ClInclude Include="NFError.h" />
+    <ClInclude Include="NFFile.h" />
     <ClInclude Include="NFHash.hpp" />
+    <ClInclude Include="NFMemHashMap.h" />
+    <ClInclude Include="NFMemHashMapCompact.h" />
     <ClInclude Include="NFJson.h" />
     <ClInclude Include="NFLikely.h" />
     <ClInclude Include="NFBase64.h" />
     <ClInclude Include="NFList.hpp" />
     <ClInclude Include="NFMacros.h" />
+    <ClInclude Include="NFMallocChunk.h" />
     <ClInclude Include="NFMap.hpp" />
     <ClInclude Include="NFMapEx.hpp" />
     <ClInclude Include="NFMapList.hpp" />
+    <ClInclude Include="NFMD5.h" />
+    <ClInclude Include="NFMemChunk.h" />
+    <ClInclude Include="NFMemQueue.h" />
+    <ClInclude Include="NFMemMultiHashMap.h" />
     <ClInclude Include="NFMutex.h" />
     <ClInclude Include="NFNetBuffer.h" />
     <ClInclude Include="NFCpu.h" />
@@ -213,11 +239,11 @@
     <ClInclude Include="NFFileUtility.h" />
     <ClInclude Include="NFIniReader.h" />
     <ClInclude Include="NFMath.hpp" />
-    <ClInclude Include="NFMD5.h" />
+    <ClInclude Include="NFPHPMD5.h" />
     <ClInclude Include="NFMemManager.hpp" />
     <ClInclude Include="NFMMOMD5.h" />
     <ClInclude Include="NFNonCopyable.h" />
-    <ClInclude Include="NFPHPMD5.h" />
+    <ClInclude Include="NFPHPMD5Impl.h" />
     <ClInclude Include="NFPlatform.h" />
     <ClInclude Include="NFPlatformMacros.h" />
     <ClInclude Include="NFProfiler.h" />
@@ -231,6 +257,9 @@
     <ClInclude Include="NFStat.h" />
     <ClInclude Include="NFStringUtility.h" />
     <ClInclude Include="NFServerTimeMgr.h" />
+    <ClInclude Include="NFTarsElement.h" />
+    <ClInclude Include="NFTarsParse.h" />
+    <ClInclude Include="NFTCPack.h" />
     <ClInclude Include="NFThread.hpp" />
     <ClInclude Include="NFBuffer.h" />
   </ItemGroup>

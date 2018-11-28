@@ -423,7 +423,8 @@ public:
 		}
 		else
 		{
-			throw NFException("Day %d is not in valid weekday range ( %d - %d )", day, MIN_WEEKDAY, MAX_WEEKDAY);
+			std::string err = NF_FORMAT("Day %d is not in valid weekday range ( %d - %d )", day, MIN_WEEKDAY, MAX_WEEKDAY);
+			throw NFException(err);
 		}
 	}
 
@@ -435,7 +436,8 @@ public:
 		}
 		else
 		{
-			throw NFException("Month %d is not in valid range ( %d - %d )", month, MIN_MONTH, MAX_MONTH);
+			std::string err = NF_FORMAT("Month %d is not in valid range ( %d - %d )", month, MIN_MONTH, MAX_MONTH);
+			throw NFException(err);
 		}
 	}
 
@@ -571,27 +573,32 @@ protected:
 
 		if (!IsValidDayOfMonth(day, month))
 		{
-			throw NFException("Day %d is not in month %d's range", day, month);
+			std::string err = NF_FORMAT("Day %d is not in month %d's range", day, month);
+			throw NFException(err);
 		}
 
 		if (!IsValidHour(hour))
 		{
-			throw NFException("Hour %d is not in valid range ( %d - %d )", hour, MIN_HOUR, MAX_HOUR);
+			std::string err = NF_FORMAT("Hour %d is not in valid range ( %d - %d )", hour, MIN_HOUR, MAX_HOUR);
+			throw NFException(err);
 		}
 
 		if (!IsValidMinute(minute))
 		{
-			throw NFException("Minute %d is not in valid range ( %d - %d )", minute, MIN_MINUTE, MAX_MINUTE);
+			std::string err = NF_FORMAT("Minute %d is not in valid range ( %d - %d )", minute, MIN_MINUTE, MAX_MINUTE);
+			throw NFException(err);
 		}
 
 		if (!IsValidSecond(second))
 		{
-			throw NFException("Second %d is not in valid range ( %d - %d )", second, MIN_SECOND, MAX_SECOND);
+			std::string err = NF_FORMAT("Second %d is not in valid range ( %d - %d )", second, MIN_SECOND, MAX_SECOND);
+			throw NFException(err);
 		}
 
 		if (!IsValidMillisecond(millisecond))
 		{
-			throw NFException("Millisecond %d is not in valid range ( %d - %d )", millisecond, MIN_MILLISECOND, MAX_MILLISECOND);
+			std::string err = NF_FORMAT("Millisecond %d is not in valid range ( %d - %d )", millisecond, MIN_MILLISECOND, MAX_MILLISECOND);
+			throw NFException(err);
 		}
 
 		this->mDay = day;

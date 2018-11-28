@@ -17,7 +17,7 @@ class _NFExport NFCRC16
 public:
 	static uint16_t Sum(const void* data, size_t len);
 
-	static uint16_t Sum(const string& s)
+	static uint16_t Sum(const std::string& s)
 	{
 		return Sum(s.data(), s.size());
 	}

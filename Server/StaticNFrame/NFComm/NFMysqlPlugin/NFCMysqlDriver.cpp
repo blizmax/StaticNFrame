@@ -1,4 +1,5 @@
 ﻿#include "NFCMysqlDriver.h"
+#include "NFComm/NFCore/NFCommon.h"
 #include "Dependencies/common/lexical_cast.hpp"
 
 //m_pMysqlConnect在调用Connect会引发多线程的崩溃，必须枷锁
@@ -859,7 +860,7 @@ bool NFCMysqlDriver::Query(const std::string& strTableName, const std::string& s
 			}
 		}
 
-		query << " FROM " << strTableName << " ORDER BY " << strKeyColName << " limit " << lexical_cast<std::string>(nOffset) << "," << lexical_cast<std::string>(nRows) << ";";
+		query << " FROM " << strTableName << " ORDER BY " << strKeyColName << " limit " <<  lexical_cast<std::string>(nOffset) << "," << lexical_cast<std::string>(nRows) << ";";
 
 		//query.execute(); // 官网例子不需要execute
 		mysqlpp::StoreQueryResult xResult = query.store();

@@ -10,6 +10,8 @@
 #include <memory>
 #include "spdlog/fmt/fmt.h"
 
+using namespace std;
+
 #ifndef NDEBUG
 #include <assert.h>
 #define NF_ASSERT(condition)					if (!(condition)) NFAssertFail(__FILE__, __LINE__); else { }
@@ -89,7 +91,6 @@ inline void NFAssertFail(const char*const file, const unsigned int line, const s
 #include <time.h>
 #include <sstream>
 #include <stdio.h>
-#include "common/lexical_cast.hpp"
 
 #ifndef _MSC_VER
 #include <sys/time.h>
@@ -103,6 +104,7 @@ inline void NFAssertFail(const char*const file, const unsigned int line, const s
 #endif
 
 #if NF_PLATFORM == NF_PLATFORM_WIN
+#define __WORDSIZE 64
 #define NFSPRINTF sprintf_s
 #define NFSTRICMP stricmp
 #define NFSLEEP(s) Sleep(s)
@@ -189,7 +191,7 @@ inline int64_t NFGetNanoSeccondTime()
 	return std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::system_clock::now().time_since_epoch()).count();
 }
 
-//������enumת��Ϊ�ַ���
+//
 #ifndef NF_CASE_STRING_BIGIN
 #define NF_CASE_STRING_BIGIN(state) switch(state){
 #define NF_CASE_STRING(state) case state:return #state;break;

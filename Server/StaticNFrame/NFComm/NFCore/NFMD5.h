@@ -1,310 +1,179 @@
 // -------------------------------------------------------------------------
 //    @FileName         :    NFMD5.h
 //    @Author           :    GaoYi
-//    @Date             :    2017-04-01
+//    @Date             :    2018-11-27
 //    @Email			:    445267987@qq.com
 //    @Module           :    NFCore
 //
 // -------------------------------------------------------------------------
-
 #pragma once
 
-#include "NFPHPMD5.h"
+#include <string>
 
-#include <fstream>
-#include <iostream>
 
-// A wrapper of PHP md5 implementation
-class _NFExport NFMD5
+/////////////////////////////////////////////////
+/**
+* @file tc_md5.h
+* @brief md5类(修改并完善至md5的c版本)
+*
+*/
+/////////////////////////////////////////////////
+
+/**
+* @brief 该类提供MD5的散列算法，通过静态函数提供 .
+*
+* 提供两种输出方式:字符串(32个字符)或二进制(16个字节)
+*/
+#ifndef GET_ULONG_LE
+#define GET_ULONG_LE(n,b,i)                             \
+{                                                       \
+    (n) = ( (unsigned long) (b)[(i)    ]       )        \
+        | ( (unsigned long) (b)[(i) + 1] <<  8 )        \
+        | ( (unsigned long) (b)[(i) + 2] << 16 )        \
+        | ( (unsigned long) (b)[(i) + 3] << 24 );       \
+}
+#endif
+
+#ifndef PUT_ULONG_LE
+#define PUT_ULONG_LE(n,b,i)                             \
+{                                                       \
+    (b)[(i)    ] = (unsigned char) ( (n)       );       \
+    (b)[(i) + 1] = (unsigned char) ( (n) >>  8 );       \
+    (b)[(i) + 2] = (unsigned char) ( (n) >> 16 );       \
+    (b)[(i) + 3] = (unsigned char) ( (n) >> 24 );       \
+}
+#endif
+
+class NFMD5
 {
+	typedef unsigned char *POINTER;
+	typedef unsigned short int UINT2;
+	//typedef unsigned long int UINT4;
+	typedef uint32_t UINT4;
+
+	typedef struct
+	{
+		/**
+		* state (ABCD)
+		*/
+		//unsigned long state[4];        
+		UINT4 state[4];
+
+		/**
+		* number of bits, modulo 2^64 (lsb first)
+		*/
+		//unsigned long count[2];        
+		UINT4 count[2];
+
+		/**
+		* input buffer
+		*/
+		unsigned char buffer[64];
+	}MD5_CTX;
+
 public:
-	enum
-	{
-		kBinDigestLength = 16, // the length of digest as a 16-byte binary array
-		kHexDigestLength = 32, // the length of digest as a 32-byte ASCII-hex string, not include the terminating null-character
-	};
+	/**
+	* @brief 对字符串进行md5处理,返回16字节二进制数据.
+	*
+	* @param sString  输入字符串
+	* @return string 输出,16个字节的二进制数据
+	*/
+	static std::string md5bin(const std::string &sString);
 
-public:
-	NFMD5()
-	{
-		PHP_MD5Init(&md5_ctx);
-	}
+	/**
+	* @brief 对字符串进行md5处理 ，
+	*        将md5的二进制数据转换成HEX的32个字节的字符串
+	* @param sString  输入字符串
+	* @return string 输出,32个字符
+	*/
+	static std::string md5str(const std::string &sString);
 
-	void Update(const void* data, size_t data_len)
-	{
-		PHP_MD5Update(&md5_ctx, static_cast<const unsigned char*>(data), data_len);
-	}
+	/**
+	* @brief 对文件进行md5处理.
+	*
+	* @param fileName 要处理的文件名
+	* @return string  处理后的字符串
+	*/
+	static std::string md5file(const std::string& fileName);
 
-	template <typename string_t>
-	void Update(const string_t& data)
-	{
-		Update(data.data(), data.size());
-	}
+protected:
 
-	void Finalize(unsigned char binary16_digest[/*16*/])
-	{
-		PHP_MD5Final(binary16_digest, &md5_ctx);
-	}
+	static std::string bin2str(const void *buf, size_t len, const std::string &sSep);
 
-	void Finalizeh(char hex33[33]);
+	/**
+	* @brief MD5 init.
+	*
+	* @param context 上下文信息
+	* @return
+	*/
+	static void md5init(MD5_CTX *context);
 
-	string Finalize()
-	{
-		string m(kBinDigestLength, '\0');
-		Finalize(reinterpret_cast<unsigned char*>(&m[0]));
-		return m;
-	}
+	/**
+	* @brief MD5 block update operation，Continues an MD5
+	* message-digest operation, processing another message block,
+	* and updating the context
+	* @param context  上下文信息
+	* @param input    输入
+	* @param inputLen 输入长度
+	* @return
+	*/
+	static void md5update(MD5_CTX *context, unsigned char *input, unsigned int inputLen);
 
-	string Finalizeh()
-	{
-		string m(kHexDigestLength, '\0');
-		Finalize(reinterpret_cast<unsigned char*>(&m[0]));
-		//m.resize(kHexDigestLength);
-		return m;
-	}
+	/**
+	* @brief  MD5 finalization，Ends an MD5 message-digest
+	* operation, writing the message digest and zeroizing the
+	* context
+	* @param digest   摘要
+	* @param context 上下文信息
+	*/
+	static void md5final(unsigned char digest[16], MD5_CTX *context);
 
-	// static helpful utility methods
-public:
-	// Calculate the MD5 checksum of the data.
-	static void Sum(const void* data, size_t data_len, unsigned char binary16_digest[16]);
-	static string Sum(const void* data, size_t data_len);
-	static string Sum(const string& d);
+	/**
+	* @brief  MD5 basic transformation，Transforms state based on
+	*         block
+	* @param state 状态
+	* @param block : ...
+	*/
+	static void md5_process(MD5_CTX *ctx, const unsigned char data[64]);
 
-	// Calculate the MD5 checksum of the data. The checksum is human readable with 32 bytes hex code.
-	static void Sumh(const void* data, size_t data_len, char hex33[/*33*/]);
-	static string Sumh(const void* data, size_t data_len);
-	static string Sumh(const string& d);
+	/**
+	* @brief  Encodes input (UINT4) into output (unsigned
+	*         char)，Assumes len is a multiple of 4
+	* @param output 输出
+	* @param input  输入
+	* @param len    输入长度
+	*/
+	static void encode(unsigned char *output, UINT4 *input, unsigned int len);
 
-	// Generate a random md5
-	// @return a random hex md5, 32 bytes
-	static string GenHexMD5(const size_t random_data_len = 8);
+	/**
+	* @brief Decodes input (unsigned char) into output (UINT4)，
+	* Assumes len is a multiple of 4
+	* @param output 输出
+	* @param input  输入
+	* @param len    输入长度
+	*/
+	static void decode(UINT4 *output, unsigned char *input, unsigned int len);
 
-	// @return a random binary md5, 16 bytes
-	static string GenBinMD5(const size_t random_data_len = 8);
+	/**
+	* @brief replace "for loop" with standard memcpy if possible.
+	*
+	* @param output  输出
+	* @param input   输入
+	* @param len     输入长度
+	*/
+	static void md5_memcpy(POINTER output, POINTER input, unsigned int len);
 
-	// @brief Convert a binary buffer to a hex format
-	// @param[in] binary -
-	// @param[in] binary_len -
-	// @param[in] hex - At least with length of binary_len*2
-	// @return void -
-	static void Bin2Hex(const void* binary, size_t binary_len, char* hex);
-	static string Bin2Hex(const void* binary, size_t binary_len);
+	/**
+	* @brief replace "for loop" with standard memset if possible.
+	*
+	* @param output 输出
+	* @param value  值
+	* @param len    输入长度
+	*/
+	static void md5_memset(POINTER output, int value, unsigned int len);
 
-	// @brief Convert a hex format buffer to binary
-	// @param[in] hex -
-	// @param[in] hex_len -
-	// @param[in] binary - At least with length of hex_len/2
-	// @return bool -
-	static bool Hex2Bin(const char* hex, const size_t hex_len, void* binary);
-	static string Hex2Bin(const char* hex, const size_t hex_len);
-
-	static int DehexChar(char c);
-	static bool IsValid(const char* hexmd5, size_t hexmd5_length);
-	static bool IsValid(const string& hexmd5);
-private:
-	PHP_MD5_CTX md5_ctx;
+	/**
+	* 填充值
+	*/
+	static unsigned char PADDING[64];
 };
-
-inline void NFMD5::Finalizeh(char hex33[33])
-{
-	unsigned char binary16_digest[kBinDigestLength];
-	PHP_MD5Final(binary16_digest, &md5_ctx);
-	Bin2Hex(binary16_digest, kBinDigestLength, hex33);
-}
-
-inline void NFMD5::Sum(const void* data, size_t data_len, unsigned char binary16_digest[16])
-{
-	PHP_MD5_CTX ctx;
-	PHP_MD5Init(&ctx);
-	PHP_MD5Update(&ctx, static_cast<const unsigned char*>(data), data_len);
-	PHP_MD5Final(binary16_digest, &ctx);
-}
-
-inline string NFMD5::Sum(const string& d)
-{
-	return Sum(d.data(), d.size());
-}
-
-inline void NFMD5::Sumh(const void* data, size_t data_len, char hex33[/*33*/])
-{
-	PHP_MD5_CTX ctx;
-	PHP_MD5Init(&ctx);
-	PHP_MD5Update(&ctx, static_cast<const unsigned char*>(data), data_len);
-	unsigned char* binary = reinterpret_cast<unsigned char*>(hex33 + kBinDigestLength);
-	PHP_MD5Final(binary, &ctx);
-	Bin2Hex(binary, kBinDigestLength, hex33);
-}
-
-inline string NFMD5::Sumh(const string& d)
-{
-	return Sumh(d.data(), d.size());
-}
-
-inline string NFMD5::Sum(const void* data, size_t data_len)
-{
-	string binary16_digest;
-	binary16_digest.resize(16);
-	Sum(data, data_len, reinterpret_cast<unsigned char*>(&binary16_digest[0]));
-	return binary16_digest;
-}
-
-inline string NFMD5::Sumh(const void* data, size_t data_len)
-{
-	string hex33;
-	hex33.resize(kHexDigestLength + 1);
-	Sumh(data, data_len, &hex33[0]);
-	hex33.resize(kHexDigestLength);
-	return hex33;
-}
-
-inline void NFMD5::Bin2Hex(const void* binary, size_t binary_len, char* hex)
-{
-	int m = 0;
-	const uint8_t* ubinary = reinterpret_cast<const uint8_t*>(binary);
-
-	for (size_t i = 0; i < binary_len; ++i)
-	{
-		m = (ubinary[i] & 0xF0) >> 4;
-
-		if (m <= 9)
-		{
-			hex[i << 1] = m + '0';
-		}
-		else
-		{
-			hex[i << 1] = m + 'a' - 10;
-		}
-
-		m = (ubinary[i]) & 0x0F;
-
-		if (m <= 9)
-		{
-			hex[(i << 1) + 1] = m + '0';
-		}
-		else
-		{
-			hex[(i << 1) + 1] = m + 'a' - 10;
-		}
-	}
-
-	hex[binary_len << 1] = '\0';
-}
-
-inline string NFMD5::Bin2Hex(const void* binary, size_t binary_len)
-{
-	string r;
-	r.resize(binary_len << 1);
-	Bin2Hex(binary, binary_len, &r[0]);
-	return r;
-}
-
-inline bool NFMD5::Hex2Bin(const char* hex, const size_t hex_len, void* binary)
-{
-	int m = 0;
-	uint8_t* ubinary = reinterpret_cast<uint8_t*>(binary);
-	size_t i = 0;
-	size_t hex_len_1 = hex_len - 1;
-
-	while (i < hex_len_1)
-	{
-		m = DehexChar(hex[i]);
-
-		if (m < 0)
-		{
-			return false;
-		}
-
-		ubinary[i >> 1] = m << 4;
-
-		m = DehexChar(hex[i + 1]);
-
-		if (m < 0)
-		{
-			return false;
-		}
-
-		ubinary[i >> 1] |= m;
-
-		i += 2;
-	}
-
-	return true;
-}
-
-inline string NFMD5::Hex2Bin(const char* hex, const size_t hex_len)
-{
-	string r;
-	r.resize(hex_len >> 1);
-	Hex2Bin(hex, hex_len, &r[0]);
-	return r;
-}
-
-inline int NFMD5::DehexChar(char c)
-{
-	static int hex2dec_table[256] = {
-		/*       0  1  2  3   4  5  6  7   8  9  A  B   C  D  E  F */
-		/* 0 */ -1,-1,-1,-1, -1,-1,-1,-1, -1,-1,-1,-1, -1,-1,-1,-1,
-		/* 1 */ -1,-1,-1,-1, -1,-1,-1,-1, -1,-1,-1,-1, -1,-1,-1,-1,
-		/* 2 */ -1,-1,-1,-1, -1,-1,-1,-1, -1,-1,-1,-1, -1,-1,-1,-1,
-		/* 3 */ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9,-1,-1, -1,-1,-1,-1,
-
-		/* 4 */ -1,10,11,12, 13,14,15,-1, -1,-1,-1,-1, -1,-1,-1,-1,
-		/* 5 */ -1,-1,-1,-1, -1,-1,-1,-1, -1,-1,-1,-1, -1,-1,-1,-1,
-		/* 6 */ -1,10,11,12, 13,14,15,-1, -1,-1,-1,-1, -1,-1,-1,-1,
-		/* 7 */ -1,-1,-1,-1, -1,-1,-1,-1, -1,-1,-1,-1, -1,-1,-1,-1,
-
-		/* 8 */ -1,-1,-1,-1, -1,-1,-1,-1, -1,-1,-1,-1, -1,-1,-1,-1,
-		/* 9 */ -1,-1,-1,-1, -1,-1,-1,-1, -1,-1,-1,-1, -1,-1,-1,-1,
-		/* A */ -1,-1,-1,-1, -1,-1,-1,-1, -1,-1,-1,-1, -1,-1,-1,-1,
-		/* B */ -1,-1,-1,-1, -1,-1,-1,-1, -1,-1,-1,-1, -1,-1,-1,-1,
-
-		/* C */ -1,-1,-1,-1, -1,-1,-1,-1, -1,-1,-1,-1, -1,-1,-1,-1,
-		/* D */ -1,-1,-1,-1, -1,-1,-1,-1, -1,-1,-1,-1, -1,-1,-1,-1,
-		/* E */ -1,-1,-1,-1, -1,-1,-1,-1, -1,-1,-1,-1, -1,-1,-1,-1,
-		/* F */ -1,-1,-1,-1, -1,-1,-1,-1, -1,-1,-1,-1, -1,-1,-1,-1
-	};
-
-	return hex2dec_table[static_cast<int>(c)];
-}
-
-inline bool NFMD5::IsValid(const char* hexmd5, size_t hexmd5_length)
-{
-	if (hexmd5_length > 32 || hexmd5_length == 0)
-	{
-		return false;
-	}
-
-	static const char valid_chars[] = {
-		0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-		0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-		0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-		1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0,
-		0, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-		0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-		0, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-		0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-		0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-		0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-		0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-		0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-		0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-		0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-		0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-		0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
-
-	for (size_t i = 0; i < hexmd5_length; ++i)
-	{
-		if (valid_chars[static_cast<int>(hexmd5[i])] == 0)
-		{
-			return false;
-		}
-	}
-
-	return true;
-}
-
-inline bool NFMD5::IsValid(const string& hexmd5)
-{
-	return IsValid(hexmd5.c_str(), hexmd5.length());
-}
-

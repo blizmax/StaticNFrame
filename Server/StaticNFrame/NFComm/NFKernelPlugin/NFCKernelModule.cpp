@@ -118,23 +118,11 @@ uint16_t NFCKernelModule::GetCRC16(const std::string& s)
 
 std::string NFCKernelModule::Base64Encode(const std::string& s)
 {
-	std::string out;
-	bool ret = NFBase64::Encode(s, &out);
-	if (ret == false)
-	{
-		NFLogError("NFBase64::Encode({}) failed!", s);
-	}
-	return out;
+	return NFBase64::Encode(s);
 }
 
 std::string NFCKernelModule::Base64Decode(const std::string& s)
 {
-	std::string out;
-	bool ret = NFBase64::Decode(s, &out);
-	if (ret == false)
-	{
-		NFLogError("NFBase64::Decode({}) failed!", s);
-	}
-	return out;
+	return NFBase64::Decode(s);
 }
 

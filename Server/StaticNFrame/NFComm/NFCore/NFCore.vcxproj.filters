@@ -30,13 +30,7 @@
     <ClCompile Include="NFIniReader.cpp">
       <Filter>Common</Filter>
     </ClCompile>
-    <ClCompile Include="NFMD5.cpp">
-      <Filter>Common</Filter>
-    </ClCompile>
     <ClCompile Include="NFMMOMD5.cpp">
-      <Filter>Common</Filter>
-    </ClCompile>
-    <ClCompile Include="NFPHPMD5.cpp">
       <Filter>Common</Filter>
     </ClCompile>
     <ClCompile Include="NFProfiler.cpp">
@@ -75,6 +69,51 @@
     <ClCompile Include="NFMutex.cpp">
       <Filter>Thread</Filter>
     </ClCompile>
+    <ClCompile Include="NFPHPMD5Impl.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
+    <ClCompile Include="NFPHPMD5.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
+    <ClCompile Include="NFMD5.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
+    <ClCompile Include="NFMallocChunk.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
+    <ClCompile Include="NFMemVector.h">
+      <Filter>Common</Filter>
+    </ClCompile>
+    <ClCompile Include="NFTCPack.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
+    <ClCompile Include="NFMemQueu.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
+    <ClCompile Include="NFCommon.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
+    <ClCompile Include="NFMemChunk.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
+    <ClCompile Include="NFMemHashMap.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
+    <ClCompile Include="NFMemHashMapCompact.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
+    <ClCompile Include="NFMemMultiHashMap.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
+    <ClCompile Include="NFTarsParse.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
+    <ClCompile Include="NFFile.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
+    <ClCompile Include="NFTarsElement.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="NFBase64.h">
@@ -110,16 +149,10 @@
     <ClInclude Include="NFMath.hpp">
       <Filter>Common</Filter>
     </ClInclude>
-    <ClInclude Include="NFMD5.h">
-      <Filter>Common</Filter>
-    </ClInclude>
     <ClInclude Include="NFMemManager.hpp">
       <Filter>Common</Filter>
     </ClInclude>
     <ClInclude Include="NFMMOMD5.h">
-      <Filter>Common</Filter>
-    </ClInclude>
-    <ClInclude Include="NFPHPMD5.h">
       <Filter>Common</Filter>
     </ClInclude>
     <ClInclude Include="NFProfiler.h">
@@ -204,6 +237,60 @@
       <Filter>Common</Filter>
     </ClInclude>
     <ClInclude Include="NFMapList.hpp">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="NFConsistentHash.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="NFPHPMD5Impl.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="NFPHPMD5.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="NFMD5.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="NFAtomic.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="NFAutoPtr.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="NFConsistentHashNew.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="NFMallocChunk.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="NFTCPack.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="NFMemQueue.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="NFCommon.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="NFMemChunk.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="NFMemHashMap.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="NFMemHashMapCompact.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="NFMemMultiHashMap.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="NFTarsParse.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="NFFile.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="NFTarsElement.h">
       <Filter>Common</Filter>
     </ClInclude>
   </ItemGroup>

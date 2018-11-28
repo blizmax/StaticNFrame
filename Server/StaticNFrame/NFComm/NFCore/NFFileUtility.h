@@ -39,12 +39,12 @@ public:
 	static bool IsValidDirName(const std::string& szName);
 
 	// Query whether strFileName is a absolute path.
-	static bool IsAbsolutePath(const string& path);
+	static bool IsAbsolutePath(const std::string& path);
 
 	// Gets absolute path name.
 	// @param path If it is already a absolute path, we return it or else we build
 	// a absolute path name with current path.
-	static string GetAbsolutePathName(const string& path);
+	static std::string GetAbsolutePathName(const std::string& path);
 
 	// This method is copied from Golang project
 	// Clean returns the shortest path name equivalent to path
@@ -68,21 +68,21 @@ public:
 	// See also Rob Pike, ``Lexical File Names in Plan 9 or
 	// Getting Dot-Dot Right,''
 	// http://plan9.bell-labs.com/sys/doc/lexnames.html
-	static string Clean(const string& path);
+	static std::string Clean(const std::string& path);
 
 	// @brief splitting a fully qualified filename into file name and base path dir.
 	// @param qualifiedName Path is standardized as in <code>NormalizePath</code>
 	// @param file_name[out]
 	// @param base_dir[out]
 	// @param with_trailing_slash[in] true, End of the string With a SLASH "/".
-	static void SplitFileName(const wstring& filepath,
-	                          wstring& file_name, wstring& base_dir, bool with_trailing_slash = false);
-	static void SplitFileName(const string& filepath,
-	                          string& file_name, string& base_dir, bool with_trailing_slash = false);
+	static void SplitFileName(const std::wstring& filepath,
+		std::wstring& file_name, std::wstring& base_dir, bool with_trailing_slash = false);
+	static void SplitFileName(const std::string& filepath,
+		std::string& file_name, std::string& base_dir, bool with_trailing_slash = false);
 
 	// Concatenate tow path into one, and return it.
-	static string Join(const string& prefix, const string& postfix);
-	static wstring Join(const wstring& prefix, const wstring& postfix);
+	static std::string Join(const std::string& prefix, const std::string& postfix);
+	static std::wstring Join(const std::wstring& prefix, const std::wstring& postfix);
 
 	// @brief Method for standardizing paths - use forward slashes "/" only
 	// @param filepath
@@ -90,8 +90,8 @@ public:
 	//         true, End of the string With a SLASH "/".
 	//         false, without a SLASH "/" at the end of the string
 	// @return string
-	static string NormalizePath(const string& filepath, bool with_trailing_slash = true);
-	static wstring NormalizePath(const wstring& filepath, bool with_trailing_slash = true);
+	static std::string NormalizePath(const std::string& filepath, bool with_trailing_slash = true);
+	static std::wstring NormalizePath(const std::wstring& filepath, bool with_trailing_slash = true);
 
 	// @brief Gets path's parent directory name. The path can be a normal file or a directory
 	// e.g. "D:\test\aab.jpg" ==> "D:/test/" or "D:/test"
@@ -103,31 +103,33 @@ public:
 	//         true, End of the string With a SLASH "/".
 	//         false, without a SLASH "/" at the end of the string
 	// @return string,
-	static string GetParentDir(const string& filepath, bool with_trailing_slash = true);
+	static std::string GetParentDir(const std::string& filepath, bool with_trailing_slash = true);
 
 	// Gets file name without path..
 	// e.g. "D:/test/aab.jpg" ==> "aab.jpg"
-	static string GetFileName(const string& filepath);
+	static std::string GetFileName(const std::string& filepath);
 
 	// Gets base file name. the file extension will be removed.
 	// e.g. "D:/test/aab.jpg" ==> "aab"
-	static string GetFileNameWithoutExt(const string& filepath);
+	static std::string GetFileNameWithoutExt(const std::string& filepath);
 
 	// Gets file name extension. If can not find the last '.', null string
 	// will be returned. e.g. "D:/test/aab.jpg" ==> "jpg"
-	static string GetFileNameExtension(const string& filepath);
+	static std::string GetFileNameExtension(const std::string& filepath);
 
 	// Gets file path name without end '/'.
 	// e.g. "D:/test/aab.jpg" ==> "D:/test"
-	static string GetFileDirName(const string& filepath);
+	static std::string GetFileDirName(const std::string& filepath);
+
+	static std::string GetExcludeFileExt(const std::string &sFullFileName);
 
 	// Quickly remove file or directory from local file system.
 	// @param strFileName if end with '/', it is a directory, all the children will be
 	// remove, else is a file and the file will be removed.
 	// @return bool True if successfully.
-	static bool Unlink(const string& filepath);
+	static bool Unlink(const std::string& filepath);
 
-	static bool Remove(const string& filepath)
+	static bool Remove(const std::string& filepath)
 	{
 		return Unlink(filepath);
 	}
@@ -140,26 +142,26 @@ public:
 	//     If we call RemoveDirIfEmpty( "/home/a_dir/b_dir", true ), them a_dir, b_dir, c_dir will all be deleted.
 	// @param recursively_delete_empty_parent_dir True, we will delete its parent directory if its parent directory is also empty
 	// @return bool True if successfully.
-	static bool RemoveDirIfEmpty(const string& dir, bool recursively_delete_empty_parent_dir = true);
+	static bool RemoveDirIfEmpty(const std::string& dir, bool recursively_delete_empty_parent_dir = true);
 
 	// Make directory hierarchy in local file system.
 	// Its behavior is similar with the command 'mkdir -p'
 	// @param dir Absolute directory file name. e.g. '/home/weizili/test'
 	// @return true if successfully
-	static bool Mkdir(const string& dir);
+	static bool Mkdir(const std::string& dir);
 
-	static bool Rmdir(const string& dir);
+	static bool Rmdir(const std::string& dir);
 	static bool Rmdir(const char* dir);
 
 	// Determines if a file exists and could be opened.
 	// @note The file CAN be a directory
 	// @param filename is the string identifying the file which should be tested for existence.
 	// @return Returns true if file exists, and false if it does not exist or an error occurred.
-	static bool IsFileExist(const string& filepath);
+	static bool IsFileExist(const std::string& filepath);
 
-	static bool IsReadable(const string& filepath);
-	static bool IsWriteable(const string& filepath);
-	static bool IsExecutable(const string& filepath);
+	static bool IsReadable(const std::string& filepath);
+	static bool IsWriteable(const std::string& filepath);
+	static bool IsExecutable(const std::string& filepath);
 
 	// @brief copy a file to another place. This function has the same feature like DOS Command 'copy' or Linux Command 'cp'
 	// @warning If the destination file is exist, it will be replaced.
@@ -168,29 +170,29 @@ public:
 	// @param src_file The target file
 	// @param override True, this will override the old existent file.
 	// @return bool True if successfully
-	static bool CopyFile(const string& src_file, const string& dest_file, bool override = true);
+	static bool CopyFile(const std::string& src_file, const std::string& dest_file, bool override = true);
 
 	// @brief Query whether the given path is a directory.
 	static bool IsDir(const char* filepath);
-	static bool IsDir(const string& filepath);
+	static bool IsDir(const std::string& filepath);
 
 	// @brief Walk the directory and get a list of files, excluded directory.
 	// @param dir The directory path
 	// @param files[out] The list of files are stored here. The file name is with the full path name(include the directory name)
 	// @param recursively Whether walk the subdirectories.
 	// @param filter Pattern to match against; which can include simple '*' wildcards
-	static void GetFiles(const string& dir, std::list<string>& files, bool recursively = true, const string& filter = "*");
+	static void GetFiles(const std::string& dir, std::list<std::string>& files, bool recursively = true, const std::string& filter = "*");
 
 	// @brief Walk the directory and get a list of files, not include directory.
 	// @param dir The directory path
 	// @param files[out] The list of files are stored here. The file name is with the full path name(include the directory name)
 	// @param depth The depth to walk the subdirectories. 0 means only walk the top dir strDirName
 	// @param filter Pattern to match against; which can include simple '*' wildcards
-	static void GetFiles(const string& dir, std::list<string>& files, int depth, const string& filter = "*");
+	static void GetFiles(const std::string& dir, std::list<std::string>& files, int depth, const std::string& filter = "*");
 
 	// Extract strings from the a file line-by-line,
 	// every line content as a list element will be inserted to a list.
-	static bool ReadFile(const char* filepath, std::list<string>& lines);
+	static bool ReadFile(const char* filepath, std::list<std::string>& lines);
 
 	static bool ReadFileContent(const std::string& strFileName, std::string& strContent);
 
@@ -201,7 +203,7 @@ public:
 	// @param const size_t len - The length of the content
 	// @return true if successfully
 	static bool WriteFile(const char* filepath, const void* content, const size_t len);
-	static bool WriteFile(const string& filepath, const void* content, const size_t len);
+	static bool WriteFile(const std::string& filepath, const void* content, const size_t len);
 };
 
 inline bool NFFileUtility::IsValidDirName(const std::string& szName)
@@ -212,7 +214,7 @@ inline bool NFFileUtility::IsValidDirName(const std::string& szName)
 }
 
 // Query whether strFileName is a absolute path.
-inline bool NFFileUtility::IsAbsolutePath(const string& path)
+inline bool NFFileUtility::IsAbsolutePath(const std::string& path)
 {
 	if (path.size() == 0)
 	{
@@ -234,9 +236,9 @@ inline bool NFFileUtility::IsAbsolutePath(const string& path)
 #endif
 }
 
-inline string NFFileUtility::GetAbsolutePathName(const string& strPathName)
+inline std::string NFFileUtility::GetAbsolutePathName(const std::string& strPathName)
 {
-	string strTmp = strPathName;
+	std::string strTmp = strPathName;
 
 	if (!IsAbsolutePath(strTmp))
 	{
@@ -245,7 +247,7 @@ inline string NFFileUtility::GetAbsolutePathName(const string& strPathName)
 #if NF_PLATFORM == NF_PLATFORM_WIN
 		if (_getcwd(szDir, _MAX_PATH))
 		{
-			strTmp = string(szDir) + ("/") + strTmp;
+			strTmp = std::string(szDir) + ("/") + strTmp;
 		}
 #else
 		getcwd(szDir, _MAX_PATH);
@@ -259,12 +261,12 @@ inline string NFFileUtility::GetAbsolutePathName(const string& strPathName)
 	return strTmp;
 }
 
-inline string NFFileUtility::GetFileName(const string& strFileName)
+inline std::string NFFileUtility::GetFileName(const std::string& strFileName)
 {
 	// since '/' equal to L'/', we can cast to either one.
-	string::size_type i = strFileName.find_last_of((string::value_type)'/');
+	std::string::size_type i = strFileName.find_last_of((std::string::value_type)'/');
 
-	if (i == string::npos)
+	if (i == std::string::npos)
 	{
 		return strFileName;
 	}
@@ -272,12 +274,12 @@ inline string NFFileUtility::GetFileName(const string& strFileName)
 	return strFileName.substr(i + 1);
 }
 
-inline string NFFileUtility::GetFileNameWithoutExt(const string& strFileName)
+inline std::string NFFileUtility::GetFileNameWithoutExt(const std::string& strFileName)
 {
 	// since '/' equal to L'/', we can cast to either one.
-	string::size_type iStart = strFileName.find_last_of((string::value_type)'/');
+	std::string::size_type iStart = strFileName.find_last_of((std::string::value_type)'/');
 
-	if (iStart == string::npos)
+	if (iStart == std::string::npos)
 	{
 		iStart = 0;
 	}
@@ -287,32 +289,43 @@ inline string NFFileUtility::GetFileNameWithoutExt(const string& strFileName)
 		++iStart;
 	}
 
-	return strFileName.substr(iStart, strFileName.find_last_of((string::value_type)'.') - iStart);
+	return strFileName.substr(iStart, strFileName.find_last_of((std::string::value_type)'.') - iStart);
 }
 
-inline string NFFileUtility::GetFileNameExtension(const string& strFileName)
+inline std::string NFFileUtility::GetFileNameExtension(const std::string& strFileName)
 {
-	string::size_type endPos = strFileName.find_last_of((string::value_type)'.');
+	std::string::size_type endPos = strFileName.find_last_of((std::string::value_type)'.');
 
 	if (endPos < strFileName.length() - 1)
 	{
 		return strFileName.substr(endPos + 1);
 	}
 
-	return string();
+	return std::string();
 }
 
-inline string NFFileUtility::GetFileDirName(const string& strFileName)
+inline std::string NFFileUtility::GetFileDirName(const std::string& strFileName)
 {
 	// since '/' equal to L'/', we can cast to either one.
-	string::size_type i = strFileName.find_last_of((string::value_type)'/');
+	std::string::size_type i = strFileName.find_last_of((std::string::value_type)'/');
 
-	if (i == string::npos)
+	if (i == std::string::npos)
 	{
-		return string();
+		return std::string();
 	}
 
 	return strFileName.substr(0, i);
+}
+
+inline std::string NFFileUtility::GetExcludeFileExt(const std::string &sFullFileName)
+{
+	std::string::size_type pos;
+	if ((pos = sFullFileName.rfind('.')) == std::string::npos)
+	{
+		return sFullFileName;
+	}
+
+	return sFullFileName.substr(0, pos);
 }
 
 inline bool NFFileUtility::IsDir(const char* szFileName)
@@ -322,15 +335,15 @@ inline bool NFFileUtility::IsDir(const char* szFileName)
 		return false;
 	}
 
-	const string strFileName(szFileName);
+	const std::string strFileName(szFileName);
 
 	return IsDir(strFileName);
 }
 
-inline bool NFFileUtility::IsDir(const string& strFileName)
+inline bool NFFileUtility::IsDir(const std::string& strFileName)
 {
 	//for the 'stat' API, the parameter strFileName SHOULD not contain a trailing backslash
-	string strStandardisePath = NormalizePath(strFileName, false);
+	std::string strStandardisePath = NormalizePath(strFileName, false);
 
 	struct stat st;
 	if (0 != stat(strStandardisePath.c_str(), &st))
@@ -350,7 +363,7 @@ inline bool NFFileUtility::IsDir(const string& strFileName)
 	return false;
 }
 
-inline bool NFFileUtility::RemoveDirIfEmpty(const string& strDirName, bool bRecursivelyDeleteEmptyParentDir /*= true*/)
+inline bool NFFileUtility::RemoveDirIfEmpty(const std::string& strDirName, bool bRecursivelyDeleteEmptyParentDir /*= true*/)
 {
 	if (!IsDir(strDirName))
 	{
@@ -359,7 +372,7 @@ inline bool NFFileUtility::RemoveDirIfEmpty(const string& strDirName, bool bRecu
 
 	bool retval = true;
 
-	std::list<string> files;
+	std::list<std::string> files;
 	GetFiles(strDirName, files, true);
 
 	if (files.size() == 0)
@@ -372,7 +385,7 @@ inline bool NFFileUtility::RemoveDirIfEmpty(const string& strDirName, bool bRecu
 
 	if (bRecursivelyDeleteEmptyParentDir)
 	{
-		string strParentDir = GetParentDir(strDirName);
+		std::string strParentDir = GetParentDir(strDirName);
 
 		if (!RemoveDirIfEmpty(strParentDir, bRecursivelyDeleteEmptyParentDir))
 		{
@@ -383,9 +396,9 @@ inline bool NFFileUtility::RemoveDirIfEmpty(const string& strDirName, bool bRecu
 	return retval;
 }
 
-inline string NFFileUtility::GetParentDir(const string& strFileName, bool with_trailing_slash /*= true*/)
+inline std::string NFFileUtility::GetParentDir(const std::string& strFileName, bool with_trailing_slash /*= true*/)
 {
-	string path = NormalizePath(strFileName, false);
+	std::string path = NormalizePath(strFileName, false);
 
 	if (!IsAbsolutePath(strFileName))
 	{
@@ -394,7 +407,7 @@ inline string NFFileUtility::GetParentDir(const string& strFileName, bool with_t
 
 	size_t pos = path.find_last_of('/');
 
-	if (pos == 0 || pos == string::npos)
+	if (pos == 0 || pos == std::string::npos)
 	{
 		if (with_trailing_slash)
 		{
@@ -407,17 +420,17 @@ inline string NFFileUtility::GetParentDir(const string& strFileName, bool with_t
 	{
 		if (with_trailing_slash)
 		{
-			string retp = string(path.c_str(), pos) + "/";
+			std::string retp = std::string(path.c_str(), pos) + "/";
 			return retp;
 		}
 		else
 		{
-			return string(path.c_str(), pos);
+			return std::string(path.c_str(), pos);
 		}
 	}
 }
 
-inline bool NFFileUtility::Rmdir(const string& strDirName)
+inline bool NFFileUtility::Rmdir(const std::string& strDirName)
 {
 	return Rmdir(strDirName.c_str());
 }

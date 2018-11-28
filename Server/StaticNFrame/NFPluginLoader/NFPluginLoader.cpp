@@ -22,6 +22,7 @@
 #include "NFComm/NFCore/NFServerTimeMgr.h"
 #include "NFComm/NFCore/NFProfiler.h"
 #include "NFComm/NFCore/NFCmdLine.h"
+#include "NFComm/NFCore/NFCommon.h"
 
 #if NF_PLATFORM == NF_PLATFORM_LINUX
 #include <unistd.h>
