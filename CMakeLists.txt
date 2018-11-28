@@ -61,7 +61,7 @@ endif()
 SET(LIB_LINK_DEP pthread dl rt libevent_core.a libevent_extra.a libtheron.a
 		libevent.a libLuaBind.a libtheron.a libevent_pthreads.a protobuf libmysqlclient.so libbson-1.0.so.0 libmongoc-1.0.so.0 ssl crypto)
 		
-SET(LIB_LINK_NF libNFActorPlugin.a libNFCore.a libNFKernelPlugin.a
+SET(LIB_LINK_NF libNFActorPlugin.a libNFCore.a libNFKernelPlugin.a libNFLuaScriptPlugin.a
 				libNFMath.a libNFMessageDefine.a libNFNetPlugin.a libNFPluginModule.a libNFTestPlugin.a libmysqlpp.a libNFMysqlPlugin.a)
 	
 include_directories( ${INCLUDE_DIR} )

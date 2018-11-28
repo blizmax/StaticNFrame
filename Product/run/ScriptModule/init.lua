@@ -27,16 +27,12 @@ function init_script_system(pluginManager)
 	package.path = package.path .. ";../ScriptModule/gxlua/?.lua;"
 	
 	LoadLuaFile("../ScriptModule")
-	LoadLuaFile("../ScriptModule/gxlua/mongorover", true)
 	LoadLuaFile("../ScriptModule/gxlua", true)
 	LoadLuaFile("../ScriptModule/table", true)
 
 	if pluginManager:IsLoadAllServer() then
 		package.path = package.path .. ";../ScriptModule/GameServer/?.lua;"
 		LoadLuaFile("../ScriptModule/GameServer", false)
-		LoadLuaFile("../ScriptModule/GameServer/script/do", true)
-		LoadLuaFile("../ScriptModule/GameServer/script/event", true)
-		LoadLuaFile("../ScriptModule/GameServer/script/gxlua_ttr", true)
 
 		LoadLuaFile("../ScriptModule/GateServer", true)
 		LoadLuaFile("../ScriptModule/LoginServer", true)
