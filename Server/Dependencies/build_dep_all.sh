@@ -1,13 +1,13 @@
 echo Building dependencies...
 
 #compling openssl
-cd openssl
-chmod a+x ./config
-./config
-make
-cp -rf libcrypto.a ../../../Product/Lib/Debug/
-cp -rf libssl.a ../../../Product/Lib/Release/
-cd ..
+#cd openssl
+#chmod a+x ./config
+#./config
+#make
+#cp -rf libcrypto.a ../../../Product/Lib/Debug/
+#cp -rf libssl.a ../../../Product/Lib/Release/
+#cd ..
 
 #compiling mysql
 cd mysql
