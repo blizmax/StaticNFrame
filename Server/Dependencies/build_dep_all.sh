@@ -1,5 +1,14 @@
 echo Building dependencies...
 
+#compling openssl
+#cd openssl
+#chmod a+x ./config
+#./config
+#make
+#cp -rf libcrypto.a ../../../Product/Lib/Debug/
+#cp -rf libssl.a ../../../Product/Lib/Release/
+#cd ..
+
 #compiling mysql
 cd mysql
 cmake .
@@ -52,6 +61,7 @@ cp -r -f ./Lib/libtheron.a ../../../Product/Lib/Release/
 make clean
 cd ../
 
+
 # comiling mongo-c-driver
 
 cd mongo
@@ -64,6 +74,10 @@ cp -rf src/libmongoc/libmongoc-static-1.0.a ../../../../Product/Lib/Debug/
 cp -rf src/libmongoc/libmongoc-static-1.0.a ../../../../Product/Lib/Release/
 cp -rf src/libbson/libbson-static-1.0.a ../../../../Product/Lib/Debug/
 cp -rf src/libbson/libbson-static-1.0.a ../../../../Product/Lib/Release/
+cp -rf src/libmongoc/libmongo-1.0.so* ../../../../Product/Lib/Debug/
+cp -rf src/libmongoc/libmongoc-1.0.so* ../../../../Product/Lib/Release/
+cp -rf src/libbson/libbson-1.0.so* ../../../../Product/Lib/Debug/
+cp -rf src/libbson/libbson-1.0.so* ../../../../Product/Lib/Release/
 cd ../../
 
 
