@@ -35,6 +35,8 @@ SET(INCLUDE_DIR "./" "/usr/local/include"
 	"${CMAKE_SOURCE_DIR}/Server/Dependencies/navigation"
 	"${CMAKE_SOURCE_DIR}/Server/Dependencies/mysql/include"
 	"${CMAKE_SOURCE_DIR}/Server/Dependencies/mysqlpp/lib"
+	"${CMAKE_SOURCE_DIR}/Server/Dependencies/mongo/src"
+	"${CMAKE_SOURCE_DIR}/Server/Dependencies/mongo/linux"
 	"${CMAKE_SOURCE_DIR}/Server/StaticNFrame/")
 
 
