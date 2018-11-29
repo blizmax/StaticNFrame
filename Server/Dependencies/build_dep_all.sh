@@ -35,18 +35,17 @@ cd ../
 
 # compiling protobuf
 cd protobuf
-chmod a+x ./configure
-#./configure --disable-shared CFLAGS="-fPIC" CXXFLAGS="-fPIC"
-./configure CFLAGS="-fPIC" CXXFLAGS="-fPIC"
-make clean
-make
+cd cmake
+rm build -rf
+mkdir build
+cd build
+cmake ..
+make -j
 
-cp -R -f ./src/.libs/*.a ../../../Product/Lib/Debug/
-cp -R -f ./src/.libs/*.a ../../../Product/Lib/Release/
+cd ../../
 
-
-cp -R -f ./src/.libs/libprotobuf.so* ../../../Product/Lib/Debug/
-cp -R -f ./src/.libs/libprotobuf.so* ../../../Product/Lib/Release/
+cp -R -f ./cmake/build/*.a ../../../Product/Lib/Debug/
+cp -R -f ./cmake/build/*.a ../../../Product/Lib/Release/
 
 cd ../
 
