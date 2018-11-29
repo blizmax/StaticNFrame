@@ -27,13 +27,15 @@ cd ..
 
 # compiling libevent
 cd libevent
-chmod a+x ./configure
-./configure CPPFLAGS=-fPIC --disable-shared --disable-openssl
-make clean
-make
+mkdir build
+cd build
+cmake ..
+make -j
+cd ..
 
-cp -R -f ./.libs/*.a ../../../Product/Lib/Debug/
-cp -R -f ./.libs/*.a ../../../Product/Lib/Release/
+cp -R -f ./build/lib/*.a ../../../Product/Lib/Debug/
+cp -R -f ./build/lib/*.a ../../../Product/Lib/Release/
+cp -R -f ./build/include ./linux/
 cd ../
 
 # compiling protobuf

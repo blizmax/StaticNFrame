@@ -27,9 +27,8 @@ SET(INCLUDE_DIR "./" "/usr/local/include"
 	"${CMAKE_SOURCE_DIR}/Server/Dependencies/LuaBind/lua5.3"
 	"${CMAKE_SOURCE_DIR}/Server/Dependencies/LuaBind/"
 	"${CMAKE_SOURCE_DIR}/Server/Dependencies/g3dlite"
-	"${CMAKE_SOURCE_DIR}/Server/Dependencies/libevent/include/event2"
 	"${CMAKE_SOURCE_DIR}/Server/Dependencies/libevent/include/"
-	"${CMAKE_SOURCE_DIR}/Server/Dependencies/libevent/compat/"
+	"${CMAKE_SOURCE_DIR}/Server/Dependencies/libevent/linux/include/"
 	"${CMAKE_SOURCE_DIR}/Server/Dependencies/Theron/Include"
 	"${CMAKE_SOURCE_DIR}/Server/Dependencies"
 	"${CMAKE_SOURCE_DIR}/Server/Dependencies/protobuf/src"
@@ -61,7 +60,7 @@ else()
 endif()
 
 SET(LIB_LINK_DEP pthread dl rt mysqlclient libmysqlpp.a libevent_core.a libevent_extra.a libtheron.a
-		libevent.a libLuaBind.a libtheron.a libevent_pthreads.a libprotobuf.a libbson-1.0.so.0 libmongoc-1.0.so.0 libssl.so libcrypto.so)
+		libevent.a libLuaBind.a libtheron.a libprotobuf.a libbson-1.0.so.0 libmongoc-1.0.so.0 libssl.so libcrypto.so)
 		
 SET(LIB_LINK_NF libNFActorPlugin.a libNFCore.a libNFKernelPlugin.a libNFLuaScriptPlugin.a
 				libNFMath.a libNFMessageDefine.a libNFNetPlugin.a libNFPluginModule.a libNFTestPlugin.a libNFMysqlPlugin.a)

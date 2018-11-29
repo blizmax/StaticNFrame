@@ -17,6 +17,7 @@
 /Product/run/Debug/
 /Product/run/Release/
 /Product/build
+/Product/build_Release
 /Server/Dependencies
 /.cproject
 /.project
