@@ -8,6 +8,8 @@ make
 cp -rf libcrypto.a ../../../Product/Lib/Debug/
 cp -rf libssl.a ../../../Product/Lib/Release/
 cp -rf libcrypto.so* ../../../Product/run/Debug/
+cp -rf libcrypto.so* ../../../Product/run/Release/
+cp -rf libssl.so* ../../../Product/run/Debug/
 cp -rf libssl.so* ../../../Product/run/Release/
 cd ..
 

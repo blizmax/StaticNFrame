@@ -49,17 +49,19 @@ if (CMAKE_BUILD_TYPE MATCHES "Release")
 			"/usr/local/lib"
 			"/usr/lib64"
 			"/usr/local/lib64"
+			"${CMAKE_SOURCE_DIR}/Product/run/Release"
 			"${CMAKE_SOURCE_DIR}/Product/Lib/Release")
 else()
 	SET(LIB_DIR "/usr/lib"
 		"/usr/local/lib"
 		"/usr/lib64"
 		"/usr/local/lib64"
+		"${CMAKE_SOURCE_DIR}/Product/run/Debug"
 		"${CMAKE_SOURCE_DIR}/Product/Lib/Debug")
 endif()
 
 SET(LIB_LINK_DEP pthread dl rt mysqlclient libmysqlpp.a libevent_core.a libevent_extra.a libtheron.a
-		libevent.a libLuaBind.a libtheron.a libevent_pthreads.a libprotobuf.a libbson-1.0.so.0 libmongoc-1.0.so.0 ssl crypto)
+		libevent.a libLuaBind.a libtheron.a libevent_pthreads.a libprotobuf.a libbson-1.0.so.0 libmongoc-1.0.so.0 libssl.so libcrypto.so)
 		
 SET(LIB_LINK_NF libNFActorPlugin.a libNFCore.a libNFKernelPlugin.a libNFLuaScriptPlugin.a
 				libNFMath.a libNFMessageDefine.a libNFNetPlugin.a libNFPluginModule.a libNFTestPlugin.a libNFMysqlPlugin.a)
