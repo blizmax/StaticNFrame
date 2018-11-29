@@ -1,4 +1,4 @@
-option java_package = "proto.message";
+syntax = "proto2";
 package proto.message;
 
 //*****************************保存数据到db方案********************************//
