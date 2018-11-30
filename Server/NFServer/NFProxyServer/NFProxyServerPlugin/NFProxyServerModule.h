@@ -33,8 +33,9 @@ public:
 
 	void OnProxySocketEvent(const eMsgType nEvent, const uint32_t unLinkId);
 	void OnHandleOtherMessage(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen);
-
+	void OnHandleJsonMessage(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen);
 private:
 	NFINetServerModule* m_pNetServerModule;
 	uint32_t m_gameServerUnlinkId;
+	uint32_t m_worldServerUnlinkId;
 };

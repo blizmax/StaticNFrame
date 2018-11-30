@@ -41,7 +41,15 @@
 #pragma comment( lib, "NFMysqlPlugin.lib" )
 #pragma comment( lib, "NFLuaScriptPlugin.lib" )
 #pragma comment( lib, "NFTestPlugin.lib" )
-//#pragma comment( lib, "NFProxyServerPlugin.lib" )
-//#pragma comment( lib, "NFProxyClientPlugin.lib" )
-//#pragma comment( lib, "NFGameServerPlugin.lib" )
+
+/////////////////////////////////////////////////////
+#pragma comment( lib, "NFServerCommon.lib" )
+#pragma comment( lib, "NFMasterServerPlugin.lib" )
+#pragma comment( lib, "NFLoginServerPlugin.lib" )
+#pragma comment( lib, "NFWorldServerPlugin.lib" )
+
+/////////////////////////////////////////////////////////////
+#pragma comment( lib, "NFGameServerPlugin.lib" )
+#pragma comment( lib, "NFProxyServerPlugin.lib" )
+#pragma comment( lib, "NFProxyClientPlugin.lib" )
 #endif

@@ -9,6 +9,11 @@
     <ClInclude Include="NFIGameServerModule.h" />
     <ClInclude Include="NFIGameClient_MatchModule.h" />
     <ClInclude Include="NFIGameClient_WorldModule.h" />
+    <ClInclude Include="NFIWorldServerModule.h" />
+    <ClInclude Include="NFIMasterServerModule.h" />
+    <ClInclude Include="NFILoginServerModule.h" />
+    <ClInclude Include="NFIHttpLoginServerModule.h" />
+    <ClInclude Include="NFIProxyClient_WorldModule.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="NFServerCommon.cpp" />

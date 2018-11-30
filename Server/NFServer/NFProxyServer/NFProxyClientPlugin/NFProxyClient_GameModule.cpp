@@ -12,6 +12,7 @@
 #include <NFComm/NFPluginModule/NFConfigMgr.h>
 #include <NFComm/NFPluginModule/NFEventMgr.h>
 #include <NFComm/NFPluginModule/NFEventDefine.h>
+#include "NFServer/NFServerCommon/NFServerCommon.h"
 
 NFCProxyClient_GameModule::NFCProxyClient_GameModule(NFIPluginManager* p)
 {
@@ -34,23 +35,17 @@ bool NFCProxyClient_GameModule::AfterInit()
 	m_pNetClientModule->AddEventCallBack(NF_ST_GAME, this, &NFCProxyClient_GameModule::OnProxySocketEvent);
 	m_pNetClientModule->AddReceiveCallBack(NF_ST_GAME, this, &NFCProxyClient_GameModule::OnHandleOtherMessage);
 
-	if (pPluginManager->IsLoadAllServer())
+	NFServerConfig* pConfig = NFServerCommon::GetServerConfig(pPluginManager, NF_ST_GAME);
+	if (pConfig)
 	{
-		std::vector<NFServerConfig*> vec = NFConfigMgr::Instance()->GetServerConfigFromServerType(NF_ST_GAME);
-		NFServerConfig* pConfig = vec.front();
-		if (pConfig)
-		{
-			m_unLinkId = m_pNetClientModule->AddServer(NF_ST_GAME, pConfig->mServerIp, pConfig->mServerPort);
-		}
+		m_unLinkId = m_pNetClientModule->AddServer(NF_ST_GAME, pConfig->mServerIp, pConfig->mServerPort);
 	}
 	else
 	{
-		NFServerConfig* pConfig = NFConfigMgr::Instance()->GetServerConfig(pPluginManager->GetAppID());
-		if (pConfig)
-		{
-			m_unLinkId = m_pNetClientModule->AddServer(NF_ST_GAME, pConfig->mServerIp, pConfig->mServerPort);;
-		}
+		NFLogError("I Can't get the Game Server config!");
+		return false;
 	}
+
 	return true;
 }
 
@@ -77,9 +72,6 @@ void NFCProxyClient_GameModule::OnProxySocketEvent(const eMsgType nEvent, const 
 	{
 		//NFLogDebug("Proxy Server Connect Game Server Success!");
 		NFEventMgr::Instance()->FireExecute(NFEVENT_PROXY_CONNECT_GAME_SUCCESS, unLinkId, NF_ST_GAME, nullptr);
-
-		std::string msg = "{\"do\":\"Cmd.SendReqRecommendFriendCmd_C\"}";
-		m_pNetClientModule->SendByServerID(unLinkId, 1111, msg, 0);
 	}
 	else if (nEvent == eMsgType_DISCONNECTED)
 	{

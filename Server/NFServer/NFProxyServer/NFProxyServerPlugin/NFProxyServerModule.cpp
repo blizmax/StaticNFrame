@@ -14,10 +14,13 @@
 #include <NFComm/NFPluginModule/NFINetClientModule.h>
 #include <NFComm/NFPluginModule/NFEventDefine.h>
 
+#include <NFComm/NFCore/NFJson.h>
+
 NFCProxyServerModule::NFCProxyServerModule(NFIPluginManager* p)
 {
 	pPluginManager = p;
 	m_gameServerUnlinkId = 0;
+	m_worldServerUnlinkId = 0;
 }
 
 NFCProxyServerModule::~NFCProxyServerModule()
@@ -26,31 +29,36 @@ NFCProxyServerModule::~NFCProxyServerModule()
 
 bool NFCProxyServerModule::Init()
 {
-	std::cout << "sizeof(NFProxyData)=" << sizeof(NFProxyData) << std::endl;
+	//监听服务器连接事件
 	Subscribe(NFEVENT_PROXY_CONNECT_GAME_SUCCESS, 0, NF_ST_GAME, __FUNCTION__);
 	Subscribe(NFEVENT_PROXY_CONNECT_GAME_FAIL, 0, NF_ST_GAME, __FUNCTION__);
+	Subscribe(NFEVENT_PROXY_CONNECT_WORLD_SUCCESS, 0, NF_ST_WORLD, __FUNCTION__);
+	Subscribe(NFEVENT_PROXY_CONNECT_WORLD_FAIL, 0, NF_ST_WORLD, __FUNCTION__);
 
 	m_pNetServerModule = pPluginManager->FindModule<NFINetServerModule>();
 	m_pNetServerModule->AddEventCallBack(NF_ST_PROXY, this, &NFCProxyServerModule::OnProxySocketEvent);
 	m_pNetServerModule->AddReceiveCallBack(NF_ST_PROXY, this, &NFCProxyServerModule::OnHandleOtherMessage);
+	m_pNetServerModule->AddReceiveCallBack(NF_ST_PROXY, NF_JSON_MSG_ID, this, &NFCProxyServerModule::OnHandleOtherMessage);
 
-	if (pPluginManager->IsLoadAllServer())
+	NFServerConfig* pConfig = NFServerCommon::GetServerConfig(pPluginManager, NF_ST_PROXY);
+	if (pConfig)
 	{
-		std::vector<NFServerConfig*> vec = NFConfigMgr::Instance()->GetServerConfigFromServerType(NF_ST_PROXY);
-		NFServerConfig* pConfig = vec.front();
-		if (pConfig)
+		uint32_t unlinkId = m_pNetServerModule->AddServer(NF_ST_PROXY, pConfig->mServerId, pConfig->mMaxConnectNum, pConfig->mServerPort, pConfig->mWebSocket);
+		if (unlinkId != 0)
 		{
-			m_pNetServerModule->AddServer(NF_ST_PROXY, pConfig->mServerId, pConfig->mMaxConnectNum, pConfig->mServerPort);
+			NFLogInfo("proxy server listen success, serverId:{}, maxConnectNum:{}, port:{}", pConfig->mServerId, pConfig->mMaxConnectNum, pConfig->mServerPort);
+		}
+		else
+		{
+			NFLogInfo("proxy server listen failed!, serverId:{}, maxConnectNum:{}, port:{}", pConfig->mServerId, pConfig->mMaxConnectNum, pConfig->mServerPort);
 		}
 	}
 	else
 	{
-		NFServerConfig* pConfig = NFConfigMgr::Instance()->GetServerConfig(pPluginManager->GetAppID());
-		if (pConfig)
-		{
-			m_pNetServerModule->AddServer(NF_ST_PROXY, pConfig->mServerId, pConfig->mMaxConnectNum, pConfig->mServerPort);
-		}
+		NFLogError("I Can't get the Proxy Server config!");
+		return false;
 	}
+
 	return true;
 }
 
@@ -84,6 +92,14 @@ void NFCProxyServerModule::OnExecute(uint16_t nEventID, uint64_t nSrcID, uint8_t
 	{
 		m_gameServerUnlinkId = 0;
 	}
+	else if (nEventID == NFEVENT_PROXY_CONNECT_WORLD_SUCCESS)
+	{
+		m_worldServerUnlinkId = (uint32_t)nSrcID;
+	}
+	else if (nEventID == NFEVENT_PROXY_CONNECT_WORLD_FAIL)
+	{
+		m_worldServerUnlinkId = 0;
+	}
 }
 
 void NFCProxyServerModule::OnProxySocketEvent(const eMsgType nEvent, const uint32_t unLinkId)
@@ -91,18 +107,18 @@ void NFCProxyServerModule::OnProxySocketEvent(const eMsgType nEvent, const uint3
 	if (nEvent == eMsgType_CONNECTED)
 	{
 		std::string ip = m_pNetServerModule->GetLinkIp(unLinkId);
-		//NFLogDebug("ip:%s connected success!", ip.c_str());		
+		NFLogDebug("ip:{} connected proxy server success!", ip);		
 	}
 	else if (nEvent == eMsgType_DISCONNECTED)
 	{
 		std::string ip = m_pNetServerModule->GetLinkIp(unLinkId);
-		//NFLogError("ip:%s disconnected!", ip.c_str());		
+		NFLogError("ip:{} disconnected proxy server!", ip);		
 	}
 }
 
 void NFCProxyServerModule::OnHandleOtherMessage(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen)
 {
-	if (nMsgId >= emsgid_map_begin && nMsgId <= emsgid_map_end)
+	if (nMsgId > 0)
 	{
 		NFINetClientModule* pNetClientModule = pPluginManager->FindModule<NFINetClientModule>();
 		if (pNetClientModule)
@@ -112,5 +128,18 @@ void NFCProxyServerModule::OnHandleOtherMessage(const uint32_t unLinkId, const u
 		}
 	}
 	std::string ip = m_pNetServerModule->GetLinkIp(unLinkId);
-	NFLogWarning("other message not handled:playerId:%ld,msgId:%d,ip:%s", playerId, nMsgId, ip.c_str());
+	NFLogWarning("other message not handled:playerId:{},msgId:{},ip:{}", playerId, nMsgId, ip);
+}
+
+void NFCProxyServerModule::OnHandleJsonMessage(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen)
+{
+	NFJson json;
+	std::string errString;
+	json.parse(std::string(msg, nLen), errString);
+
+	if (errString.empty() == false)
+	{
+		NFLogError("json error | {}", errString);
+		return;
+	}
 }

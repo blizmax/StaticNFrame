@@ -78,7 +78,7 @@ bool NFCHttpServerModule::Finalize()
 int NFCHttpServerModule::InitServer(const unsigned short nPort)
 {
 	m_pHttpServer = new NFCHttpServer(this, &NFCHttpServerModule::OnReceiveNetPack, &NFCHttpServerModule::OnFilterPack);
-	NFLogDebug("Http Server Open http port:{}", nPort);
+	//NFLogDebug("Http Server Open http port:{}", nPort);
 	return m_pHttpServer->InitServer(nPort);
 }
 

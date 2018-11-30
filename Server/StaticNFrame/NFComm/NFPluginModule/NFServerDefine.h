@@ -27,6 +27,8 @@ enum NF_SERVER_TYPES
 	NF_ST_MAX = 10, //
 };
 
+#define NF_JSON_MSG_ID 0
+
 const std::string gArrayServer[NF_ST_MAX] = {
 	"NoneServer",
 	"MasterServer",

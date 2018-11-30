@@ -13,6 +13,7 @@
 #include <NFComm/NFPluginModule/NFConfigMgr.h>
 #include "NFComm/NFPluginModule/NFIHttpClientModule.h"
 #include "NFComm/NFPluginModule/NFIHttpServerModule.h"
+#include "NFServer/NFServerCommon/NFServerCommon.h"
 
 NFCGameServerModule::NFCGameServerModule(NFIPluginManager* p)
 {
@@ -29,23 +30,25 @@ bool NFCGameServerModule::Init()
 	m_pNetServerModule->AddEventCallBack(NF_ST_GAME, this, &NFCGameServerModule::OnProxySocketEvent);
 	m_pNetServerModule->AddReceiveCallBack(NF_ST_GAME, this, &NFCGameServerModule::OnHandleOtherMessage);
 
-	if (pPluginManager->IsLoadAllServer())
+	NFServerConfig* pConfig = NFServerCommon::GetServerConfig(pPluginManager, NF_ST_GAME);
+	if (pConfig)
 	{
-		std::vector<NFServerConfig*> vec = NFConfigMgr::Instance()->GetServerConfigFromServerType(NF_ST_GAME);
-		NFServerConfig* pConfig = vec.front();
-		if (pConfig)
+		uint32_t unlinkId = m_pNetServerModule->AddServer(NF_ST_GAME, pConfig->mServerId, pConfig->mMaxConnectNum, pConfig->mServerPort);
+		if (unlinkId != 0)
 		{
-			m_pNetServerModule->AddServer(NF_ST_GAME, pConfig->mServerId, pConfig->mMaxConnectNum, pConfig->mServerPort);
+			NFLogInfo("game server listen success, serverId:{}, maxConnectNum:{}, port:{}", pConfig->mServerId, pConfig->mMaxConnectNum, pConfig->mServerPort);
+		}
+		else
+		{
+			NFLogInfo("game server listen failed!, serverId:{}, maxConnectNum:{}, port:{}", pConfig->mServerId, pConfig->mMaxConnectNum, pConfig->mServerPort);
 		}
 	}
 	else
 	{
-		NFServerConfig* pConfig = NFConfigMgr::Instance()->GetServerConfig(pPluginManager->GetAppID());
-		if (pConfig)
-		{
-			m_pNetServerModule->AddServer(NF_ST_GAME, pConfig->mServerId, pConfig->mMaxConnectNum, pConfig->mServerPort);
-		}
+		NFLogError("I Can't get the Game Server config!");
+		return false;
 	}
+
 	return true;
 }
 

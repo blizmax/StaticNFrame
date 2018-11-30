@@ -224,7 +224,7 @@ bool NFServer::Init()
 	sin.sin_family = AF_INET ;
 	sin.sin_port = htons(mFlag.nPort);
 
-	NFLogInfo("serverId:{} serverType:{} started with port:{}", mServerId, GetServerName(mServerType).c_str(), mFlag.nPort);
+	//NFLogInfo("serverId:{} serverType:{} started with port:{}", mServerId, GetServerName(mServerType).c_str(), mFlag.nPort);
 
 	mListener = evconnlistener_new_bind(mBase, listener_cb, static_cast<void*>(this),
 	                                    LEV_OPT_REUSEABLE | LEV_OPT_CLOSE_ON_FREE, -1,

@@ -172,9 +172,9 @@ public:
 		try
 		{
 			LuaIntf::LuaRef valueRef = table[keyName];
-			if (!valueRef.isValid())
+			if (valueRef == nullptr)
 			{
-				std::cout << "load lua table " << keyName << " failed!" << std::endl;
+				//std::cout << "load lua table " << keyName << " failed!" << std::endl;
 				return false;
 			}
 

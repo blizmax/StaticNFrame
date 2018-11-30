@@ -53,6 +53,8 @@ public:
 		mMaxConnectNum = 100;
 		mWorkThreadNum = 1;
 		mSecurity = false;
+		mWebSocket = false;
+		mHttpPort = 0;
 	}
 
 public:
@@ -64,9 +66,11 @@ public:
 	uint32_t mZoneId;
 	std::string mServerIp;
 	uint32_t mServerPort;
+	uint32_t mHttpPort;
 	uint32_t mMaxConnectNum;
 	uint32_t mWorkThreadNum;
 	bool mSecurity;
+	bool mWebSocket;
 };
 
 class NFConfigMgr : public NFSingleton<NFConfigMgr>, public NFIModule
@@ -196,9 +200,9 @@ public:
 		try
 		{
 			LuaIntf::LuaRef valueRef = table[keyName];
-			if (!valueRef.isValid())
+			if (valueRef == nullptr)
 			{
-				std::cout << "load lua table " << keyName << " failed!" << std::endl;
+				//std::cout << "load lua table " << keyName << " failed!" << std::endl;
 				return false;
 			}
 

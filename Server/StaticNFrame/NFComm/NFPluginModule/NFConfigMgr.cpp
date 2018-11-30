@@ -24,6 +24,8 @@
 #define DEFINE_LUA_STRING_WORK_THREAD_NUM		"WorkThreadNum"
 #define DEFINE_LUA_STRING_SECURITY				"Security"
 #define DEFINE_LUA_STRING_LOG_LEVEL				"LogLevel"
+#define DEFINE_LUA_STRING_WebSocket				"WebSocket"
+#define DEFINE_LUA_STRING_HttpPort				"HttpPort"
 
 bool NFConfigMgr::Init()
 {
@@ -160,6 +162,9 @@ bool NFConfigMgr::Init()
 		{
 			assert(0);
 		}
+
+		GetLuaTableValue(serverConfigRef, DEFINE_LUA_STRING_WebSocket, pConfig->mWebSocket);
+		GetLuaTableValue(serverConfigRef, DEFINE_LUA_STRING_HttpPort, pConfig->mHttpPort);
 		mServerConfig.emplace(pConfig->mServerId, pConfig);
 	}
 	return true;
