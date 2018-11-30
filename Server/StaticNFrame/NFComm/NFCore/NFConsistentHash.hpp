@@ -15,6 +15,7 @@
 #include <chrono>
 #include "NFPlatform.h"
 #include "NFCRC32.h"
+#include "NFCommon.h"
 
 //template <typename T>
 class NFIVirtualNode
@@ -204,7 +205,7 @@ public:
 	virtual bool GetSuitNode(const T& name, NFCVirtualNode<T>& node)
 	{
 		std::string str = lexical_cast<std::string>(name);
-		uint32_t nCRC32 = NFrame::CRC32(str);
+		uint32_t nCRC32 = NFCRC32::Sum(str);
 		return GetSuitNode(nCRC32, node);
 	}
 	/*

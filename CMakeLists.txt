@@ -63,7 +63,7 @@ SET(LIB_LINK_DEP pthread dl rt mysqlclient libmysqlpp.a libevent_core.a libevent
 		libevent.a libLuaBind.a libtheron.a libprotobuf.a libbson-1.0.so.0 libmongoc-1.0.so.0 libssl.so libcrypto.so)
 		
 SET(LIB_LINK_NF libNFActorPlugin.a libNFCore.a libNFKernelPlugin.a libNFLuaScriptPlugin.a
-				libNFMath.a libNFMessageDefine.a libNFNetPlugin.a libNFPluginModule.a libNFTestPlugin.a libNFMysqlPlugin.a)
+				libNFMath.a libNFMessageDefine.a libNFNetPlugin.a libNFPluginModule.a libNFTestPlugin.a libNFMysqlPlugin.a libNFGameClientPlugin.a libNFGameServerPlugin.a libNFLoginClientPlugin.a libNFLoginServerPlugin.a libNFMasterServerPlugin.a libNFProxyClientPlugin.a libNFProxyServerPlugin.a libNFServerCommon.a libNFWorldClientPlugin.a libNFWorldServerPlugin.a)
 	
 include_directories( ${INCLUDE_DIR} )
 	
@@ -75,4 +75,5 @@ ADD_SUBDIRECTORY("Server/Dependencies")
 ADD_SUBDIRECTORY("Server/NFMessageDefine")
 ADD_SUBDIRECTORY("Server/StaticNFrame/NFComm")
 ADD_SUBDIRECTORY("Server/StaticNFrame/NFTest")
+ADD_SUBDIRECTORY("Server/NFServer")
 ADD_SUBDIRECTORY("Server/StaticNFrame/NFPluginLoader")
