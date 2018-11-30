@@ -102,7 +102,7 @@ set(EVENT_VERSION
 	"${EVENT_VERSION_MAJOR}.${EVENT_VERSION_MINOR}.${EVENT_VERSION_PATCH}-${EVENT_STAGE_NAME}")
 
 option(EVENT__BUILD_SHARED_LIBRARIES
-    "Define if libevent should be built with shared libraries instead of archives" OFF)
+    "Define if libevent should be built with shared libraries instead of archives" ON)
 
 option(EVENT__DISABLE_DEBUG_MODE
     "Define if libevent should build without support for a debug mode" OFF)
@@ -117,7 +117,7 @@ option(EVENT__DISABLE_THREAD_SUPPORT
     "Define if libevent should not be compiled with thread support" OFF)
 
 option(EVENT__DISABLE_OPENSSL
-    "Define if libevent should build without support for OpenSSL encrpytion" OFF)
+    "Define if libevent should build without support for OpenSSL encrpytion" ON)
 
 option(EVENT__DISABLE_BENCHMARK
     "Defines if libevent should build without the benchmark exectuables" OFF)
