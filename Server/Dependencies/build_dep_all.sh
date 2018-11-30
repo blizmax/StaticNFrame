@@ -4,7 +4,7 @@ echo Building dependencies...
 cd openssl
 chmod a+x ./config
 ./config
-make
+make -j
 cp -rf libcrypto.a ../../../Product/Lib/Debug/
 cp -rf libssl.a ../../../Product/Lib/Release/
 cp -rf libcrypto.so* ../../../Product/run/Debug/
@@ -17,7 +17,7 @@ cd ..
 cd mysql
 cmake .
 make clean
-make
+make -j
 
 cp -R -f ./libmysql/libmysqlclient.a ../../../Product/Lib/Debug/
 cp -R -f ./libmysql/libmysqlclient.a ../../../Product/Lib/Release/
@@ -72,7 +72,7 @@ cd mongo
 mkdir cmake_build
 cd cmake_build
 cmake ..
-make
+make -j
 
 cp -rf src/libmongoc/libmongoc-static-1.0.a ../../../../Product/Lib/Debug/
 cp -rf src/libmongoc/libmongoc-static-1.0.a ../../../../Product/Lib/Release/

@@ -167,7 +167,7 @@
 /* #undef EVENT__HAVE_KQUEUE */
 
 /* Define if the system has zlib */
-#define EVENT__HAVE_LIBZ
+/* #undef EVENT__HAVE_LIBZ */
 
 /* Define to 1 if you have the `mach_absolute_time' function. */
 /* #undef EVENT__HAVE_MACH_ABSOLUTE_TIME */
@@ -197,7 +197,7 @@
 #define EVENT__HAVE_NETINET_TCP_H
 
 /* Define if the system has openssl */
-#define EVENT__HAVE_OPENSSL
+/* #undef EVENT__HAVE_OPENSSL */
 
 /* Define to 1 if you have the `pipe' function. */
 #define EVENT__HAVE_PIPE
@@ -521,10 +521,10 @@
 /* Define to `int' if <sys/types.h> does not define. */
 #define EVENT__ssize_t ssize_t
 
-/* #undef EVENT__NEED_DLLIMPORT */
+#define EVENT__NEED_DLLIMPORT
 
 /* Define to 1 if you have ERR_remove_thread_stat(). */
-#define EVENT__HAVE_ERR_REMOVE_THREAD_STATE
+/* #undef EVENT__HAVE_ERR_REMOVE_THREAD_STATE */
 
 /* Define if waitpid() supports WNOWAIT */
 /* #undef EVENT__HAVE_WAITPID_WITH_WNOWAIT */
