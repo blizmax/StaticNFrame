@@ -212,6 +212,7 @@
     <ClInclude Include="NFCmdLine.h" />
     <ClInclude Include="NFCommon.h" />
     <ClInclude Include="NFConsistentHash.h" />
+    <ClInclude Include="NFConsistentHash.hpp" />
     <ClInclude Include="NFConsistentHashNew.h" />
     <ClInclude Include="NFError.h" />
     <ClInclude Include="NFHash.hpp" />

@@ -164,9 +164,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="NFIBattleClient_MatchModule.h" />
-    <ClInclude Include="NFIBattleServerModule.h" />
-    <ClInclude Include="NFIGameClient_MatchModule.h" />
     <ClInclude Include="NFIGameServerModule.h" />
     <ClInclude Include="NFIGameClient_WorldModule.h" />
     <ClInclude Include="NFIHttpLoginServerModule.h" />

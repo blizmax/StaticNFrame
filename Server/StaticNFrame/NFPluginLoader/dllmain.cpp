@@ -49,6 +49,7 @@
 #pragma comment( lib, "NFWorldServerPlugin.lib" )
 
 /////////////////////////////////////////////////////////////
+#pragma comment( lib, "NFGameClientPlugin.lib" )
 #pragma comment( lib, "NFGameServerPlugin.lib" )
 #pragma comment( lib, "NFProxyServerPlugin.lib" )
 #pragma comment( lib, "NFProxyClientPlugin.lib" )

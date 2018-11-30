@@ -28,10 +28,15 @@ public:
 	virtual bool BeforeShut() override;
 
 	virtual bool Shut() override;
-
+protected:
 	void OnProxySocketEvent(const eMsgType nEvent, const uint32_t unLinkId);
 	void OnHandleOtherMessage(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen);
-	void HttpGetCallBack(const int state_code, const std::string& strRespData, const std::string& strUserData);
+
+	//网关服务器注册协议回调
+	void OnProxyServerRegisterProcess(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen);
+
+	//游戏服务器注册协议回调
+	void OnGameServerRegisterProcess(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen);
 private:
 	NFINetServerModule* m_pNetServerModule;
 };

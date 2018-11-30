@@ -14,6 +14,7 @@
 #include <typeinfo>
 #include <memory>
 #include "NFPlatform.h"
+#include "NFConsistentHash.hpp"
 
 template <typename T, typename TD>
 class NFMapEx
@@ -286,5 +287,99 @@ public:
 protected:
 	NFMapOBJECT mObjectMap;
 	typename NFMapOBJECT::iterator mObjectCurIter;
+};
+
+template <typename T, typename TD>
+class NFConsistentHashMapEx : public NFMapEx<T, TD>
+{
+public:
+	virtual NF_SHARE_PTR<TD> GetElementBySuitRandom()
+	{
+		NFCVirtualNode<T> vNode;
+		if (mxConsistentHash.GetSuitNodeRandom(vNode))
+		{
+			typename NFMapEx<T, TD>::NFMapOBJECT::iterator itr = NFMapEx<T, TD>::mObjectList.find(vNode.mxData);
+			if (itr != NFMapEx<T, TD>::mObjectList.end())
+			{
+				return itr->second;
+			}
+		}
+
+		return NULL;
+	}
+
+	virtual NF_SHARE_PTR<TD> GetElementBySuitConsistent()
+	{
+		NFCVirtualNode<T> vNode;
+		if (mxConsistentHash.GetSuitNodeConsistent(vNode))
+		{
+			typename NFMapEx<T, TD>::NFMapOBJECT::iterator itr = NFMapEx<T, TD>::mObjectList.find(vNode.mxData);
+			if (itr != NFMapEx<T, TD>::mObjectList.end())
+			{
+				return itr->second;
+			}
+		}
+
+		return NULL;
+	}
+
+	virtual NF_SHARE_PTR<TD> GetElementBySuit(const T& name)
+	{
+		NFCVirtualNode<T> vNode;
+		if (mxConsistentHash.GetSuitNode(name, vNode))
+		{
+			typename NFMapEx<T, TD>::NFMapOBJECT::iterator itr = NFMapEx<T, TD>::mObjectList.find(vNode.mxData);
+			if (itr != NFMapEx<T, TD>::mObjectList.end())
+			{
+				return itr->second;
+			}
+		}
+
+		return NULL;
+	}
+
+	virtual bool AddElement(const T& name, const NF_SHARE_PTR<TD> data) override
+	{
+		if (data == nullptr)
+		{
+			return false;
+		}
+
+		typename NFMapEx<T, TD>::NFMapOBJECT::iterator itr = NFMapEx<T, TD>::mObjectList.find(name);
+		if (itr == NFMapEx<T, TD>::mObjectList.end())
+		{
+			NFMapEx<T, TD>::mObjectList.insert(typename NFMapEx<T, TD>::NFMapOBJECT::value_type(name, data));
+
+			mxConsistentHash.Insert(name);
+
+			return true;
+		}
+
+		return false;
+	}
+
+	virtual bool RemoveElement(const T& name) override
+	{
+		typename NFMapEx<T, TD>::NFMapOBJECT::iterator itr = NFMapEx<T, TD>::mObjectList.find(name);
+		if (itr != NFMapEx<T, TD>::mObjectList.end())
+		{
+			NFMapEx<T, TD>::mObjectList.erase(itr);
+			mxConsistentHash.Erase(name);
+
+			return true;
+		}
+
+		return false;
+	}
+
+	virtual bool ClearAll() override
+	{
+		NFMapEx<T, TD>::mObjectList.clear();
+		mxConsistentHash.ClearAll();
+		return true;
+	}
+
+private:
+	NFConsistentHash<T> mxConsistentHash;
 };
 

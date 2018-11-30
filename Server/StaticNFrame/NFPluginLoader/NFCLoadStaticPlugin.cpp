@@ -28,6 +28,7 @@
 #include <NFServer/NFLoginServer/NFLoginServerPlugin/NFLoginServerPlugin.h>
 #include <NFServer/NFWorldServer/NFWorldServerPlugin/NFWorldServerPlugin.h>
 
+#include <NFServer/NFGameServer/NFGameClientPlugin/NFGameClientPlugin.h>
 #include <NFServer/NFGameServer/NFGameServerPlugin/NFGameServerPlugin.h>
 #include <NFServer/NFProxyServer/NFProxyServerPlugin/NFProxyServerPlugin.h>
 #include <NFServer/NFProxyServer/NFProxyClientPlugin/NFProxyClientPlugin.h>
@@ -101,6 +102,7 @@ bool NFCPluginManager::RegisterStaticPlugin()
 	REGISTER_STATIC_PLUGIN(this, NFMasterServerPlugin);
 	REGISTER_STATIC_PLUGIN(this, NFLoginServerPlugin);
 	REGISTER_STATIC_PLUGIN(this, NFWorldServerPlugin);
+	REGISTER_STATIC_PLUGIN(this, NFGameClientPlugin);
 	REGISTER_STATIC_PLUGIN(this, NFGameServerPlugin);
 	REGISTER_STATIC_PLUGIN(this, NFProxyServerPlugin);
 	REGISTER_STATIC_PLUGIN(this, NFProxyClientPlugin);

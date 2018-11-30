@@ -41,10 +41,10 @@ std::string NFGameServerPlugin::GetPluginName()
 
 void NFGameServerPlugin::Install()
 {
-	REGISTER_MODULE(pPluginManager, NFIGameServerModule, NFCGameServerModule)
+	REGISTER_MODULE(pPluginManager, NFIGameServerModule, NFCGameServerModule);
 }
 
 void NFGameServerPlugin::Uninstall()
 {
-	UNREGISTER_MODULE(pPluginManager, NFIGameServerModule, NFCGameServerModule)
+	UNREGISTER_MODULE(pPluginManager, NFIGameServerModule, NFCGameServerModule);
 }

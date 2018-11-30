@@ -8,3 +8,14 @@
 // -------------------------------------------------------------------------
 
 #pragma once
+
+#include "NFComm/NFPluginModule/NFIModule.h"
+
+class NFIGameClient_WorldModule : public NFIModule
+{
+public:
+	virtual ~NFIGameClient_WorldModule()
+	{
+
+	}
+};

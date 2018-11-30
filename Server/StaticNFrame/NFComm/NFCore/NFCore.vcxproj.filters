@@ -287,5 +287,8 @@
     <ClInclude Include="NFTarsElement.h">
       <Filter>Common</Filter>
     </ClInclude>
+    <ClInclude Include="NFConsistentHash.hpp">
+      <Filter>Common</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

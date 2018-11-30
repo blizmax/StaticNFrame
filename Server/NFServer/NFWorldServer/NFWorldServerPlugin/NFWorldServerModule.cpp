@@ -15,6 +15,7 @@
 #include "NFComm/NFPluginModule/NFIHttpClientModule.h"
 #include "NFComm/NFPluginModule/NFIHttpServerModule.h"
 #include "NFServer/NFServerCommon/NFServerCommon.h"
+#include "NFMessageDefine/NFMsgDefine.h"
 
 NFCWorldServerModule::NFCWorldServerModule(NFIPluginManager* p)
 {
@@ -30,6 +31,10 @@ bool NFCWorldServerModule::Init()
 	m_pNetServerModule = pPluginManager->FindModule<NFINetServerModule>();
 	m_pNetServerModule->AddEventCallBack(NF_ST_WORLD, this, &NFCWorldServerModule::OnProxySocketEvent);
 	m_pNetServerModule->AddReceiveCallBack(NF_ST_WORLD, this, &NFCWorldServerModule::OnHandleOtherMessage);
+
+	
+	m_pNetServerModule->AddReceiveCallBack(NF_ST_WORLD, EGMI_NET_PROXY_TO_WORLD_REGISTER, this, &NFCWorldServerModule::OnProxyServerRegisterProcess);
+	m_pNetServerModule->AddReceiveCallBack(NF_ST_WORLD, EGMI_NET_GAME_TO_WORLD_REGISTER, this, &NFCWorldServerModule::OnGameServerRegisterProcess);
 
 	NFServerConfig* pConfig = NFServerCommon::GetServerConfig(pPluginManager, NF_ST_WORLD);
 	if (pConfig)
@@ -77,16 +82,39 @@ void NFCWorldServerModule::OnProxySocketEvent(const eMsgType nEvent, const uint3
 {
 	if (nEvent == eMsgType_CONNECTED)
 	{
-		std::string ip = m_pNetServerModule->GetLinkIp(unLinkId);
-		NFLogDebug("Game Server Connect World Server Success, Ip:{}", ip);
+
 	}
 	else if (nEvent == eMsgType_DISCONNECTED)
 	{
-		std::string ip = m_pNetServerModule->GetLinkIp(unLinkId);
-		NFLogDebug("Game Server DisConnect From the World Server, Ip:{}", ip);
+
 	}
 }
 
 void NFCWorldServerModule::OnHandleOtherMessage(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen)
 {
+	NFLogWarning("msg:{} not handled!", nMsgId);
+}
+
+void NFCWorldServerModule::OnProxyServerRegisterProcess(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen)
+{
+	NFMsg::ServerInfoReportList xMsg;                                           
+	CLIENT_MSG_PROCESS_NO_OBJECT(nMsgId, msg, nLen, xMsg);
+
+	for (int i = 0; i < xMsg.server_list_size(); ++i)
+	{
+		const NFMsg::ServerInfoReport& xData = xMsg.server_list(i);
+
+	}
+}
+
+void NFCWorldServerModule::OnGameServerRegisterProcess(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen)
+{
+	NFMsg::ServerInfoReportList xMsg;
+	CLIENT_MSG_PROCESS_NO_OBJECT(nMsgId, msg, nLen, xMsg);
+
+	for (int i = 0; i < xMsg.server_list_size(); ++i)
+	{
+		const NFMsg::ServerInfoReport& xData = xMsg.server_list(i);
+
+	}
 }

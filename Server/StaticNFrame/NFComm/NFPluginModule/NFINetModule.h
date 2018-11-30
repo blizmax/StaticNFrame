@@ -29,11 +29,10 @@
 #define GetServerTypeFromUnlinkId(UnlinkId)		((UnlinkId) >> 24);
 #define GetServerIndexFromUnlinkId(UnlinkId)	((UnlinkId) & MAX_CLIENT_MASK);
 
-#define CLIENT_MSG_PROCESS_NO_OBJECT(nMsgID, msgData, nLen, msg)                 \
-    msg xMsg;                                           \
-	if (!xMsg.ParseFromArray(msgData, nLen))				\
+#define CLIENT_MSG_PROCESS_NO_OBJECT(nMsgId, msg, nLen, xMsg)                 \
+	if (!xMsg.ParseFromArray(msg, nLen))				\
     {													\
-		NFLogNormalError(playerId, "Parse Message Failed:", lexical_cast<std::string>(nMsgID));	\
+		NFLogError("Protobuf Parse Message Failed, msgId:{}, nLen:{}", nMsgId, nLen); \
         return ;										\
     }													\
 

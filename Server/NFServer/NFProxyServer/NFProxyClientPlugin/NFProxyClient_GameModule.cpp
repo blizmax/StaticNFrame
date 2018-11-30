@@ -70,12 +70,12 @@ void NFCProxyClient_GameModule::OnProxySocketEvent(const eMsgType nEvent, const 
 
 	if (nEvent == eMsgType_CONNECTED)
 	{
-		//NFLogDebug("Proxy Server Connect Game Server Success!");
+		NFLogDebug("Proxy Server Connect Game Server Success!");
 		NFEventMgr::Instance()->FireExecute(NFEVENT_PROXY_CONNECT_GAME_SUCCESS, unLinkId, NF_ST_GAME, nullptr);
 	}
 	else if (nEvent == eMsgType_DISCONNECTED)
 	{
-		//NFLogDebug("Proxy Server DisConnect Game Server!");
+		NFLogDebug("Proxy Server DisConnect Game Server!");
 		NFEventMgr::Instance()->FireExecute(NFEVENT_PROXY_CONNECT_GAME_FAIL, unLinkId, NF_ST_GAME, nullptr);
 		m_unLinkId = 0;
 	}

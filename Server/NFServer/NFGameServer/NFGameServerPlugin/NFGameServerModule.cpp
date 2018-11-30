@@ -76,16 +76,15 @@ void NFCGameServerModule::OnProxySocketEvent(const eMsgType nEvent, const uint32
 {
 	if (nEvent == eMsgType_CONNECTED)
 	{
-		std::string ip = m_pNetServerModule->GetLinkIp(unLinkId);
-		//NFLogDebug("Proxy Server Connect Game Server Success, Ip:%s", ip.c_str());
+
 	}
 	else if (nEvent == eMsgType_DISCONNECTED)
 	{
-		std::string ip = m_pNetServerModule->GetLinkIp(unLinkId);
-		//NFLogDebug("Proxy Server DisConnect, Ip:%s", ip.c_str());
+
 	}
 }
 
 void NFCGameServerModule::OnHandleOtherMessage(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen)
 {
+	NFLogWarning("msg:{} not handled!", nMsgId);
 }

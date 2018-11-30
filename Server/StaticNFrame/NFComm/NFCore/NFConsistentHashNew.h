@@ -11,7 +11,6 @@
 
 #include "NFPlatform.h"
 #include "NFMD5.h"
-#include "NFAutoPtr.h"
 #include "NFHash.hpp"
 #include "NFCommon.h"
 
@@ -42,7 +41,7 @@ enum NF_HashAlgorithmType
 /**
 *  @brief hash 算法虚基类
 */
-class NF_HashAlgorithm : public NF_HandleBase
+class NF_HashAlgorithm
 {
 public:
 	virtual long hash(const std::string & sKey) = 0;
@@ -56,7 +55,7 @@ protected:
 
 };
 
-typedef NFAutoPtr<NF_HashAlgorithm> TC_HashAlgorithmPtr;
+typedef NF_HashAlgorithm* NF_HashAlgorithmPtr;
 
 /**
 *  @brief ketama hash 算法
@@ -165,6 +164,14 @@ public:
 	}
 
 	/**
+	*  @brief 析构函数
+	*/
+	virtual ~NFConsistentHashNew()
+	{
+		delete _ptrHashAlg;
+	}
+
+	/**
 	* @brief 节点比较.
 	*
 	* @param m1 node_T_new类型的对象，比较节点之一
@@ -246,7 +253,7 @@ public:
 	*/
 	int addNode(const std::string & node, unsigned int index, int weight = 1)
 	{
-		if (_ptrHashAlg.get() == NULL)
+		if (_ptrHashAlg == NULL)
 		{
 			return -1;
 		}
@@ -294,7 +301,7 @@ public:
 	*/
 	int getIndex(const std::string & key, unsigned int & iIndex)
 	{
-		if (_ptrHashAlg.get() == NULL || _vHashList.size() == 0)
+		if (_ptrHashAlg == NULL || _vHashList.size() == 0)
 		{
 			iIndex = 0;
 			return -1;
@@ -314,7 +321,7 @@ public:
 	*/
 	int getIndex(long hashcode, unsigned int & iIndex)
 	{
-		if (_ptrHashAlg.get() == NULL || _vHashList.size() == 0)
+		if (_ptrHashAlg == NULL || _vHashList.size() == 0)
 		{
 			iIndex = 0;
 			return -1;
@@ -369,5 +376,5 @@ public:
 
 protected:
 	std::vector<NFNode_T_New>    _vHashList;
-	TC_HashAlgorithmPtr _ptrHashAlg;
+	NF_HashAlgorithmPtr _ptrHashAlg;
 };

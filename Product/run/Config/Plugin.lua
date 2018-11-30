@@ -27,12 +27,16 @@ LoadPlugin =
 			"NFNetPlugin",
 			"NFTestPlugin",
 			"NFMysqlPlugin",
+			
 			"NFMasterServerPlugin",
 			"NFLoginServerPlugin",
 			"NFWorldServerPlugin",
+			
+			"NFGameClientPlugin",
+			"NFGameServerPlugin",
+			
 			"NFProxyServerPlugin",
 			"NFProxyClientPlugin",
-			"NFGameServerPlugin",
 			--"NFLuaScriptPlugin",
 		};
 		ServerType = NF_ST_NONE;
