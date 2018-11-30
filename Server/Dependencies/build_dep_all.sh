@@ -35,7 +35,7 @@ cd ..
 
 cp -R -f ./build/lib/*.a ../../../Product/Lib/Debug/
 cp -R -f ./build/lib/*.a ../../../Product/Lib/Release/
-cp -R -f ./build/include ./linux/
+#cp -R -f ./build/include ./linux/
 cd ../
 
 # compiling protobuf

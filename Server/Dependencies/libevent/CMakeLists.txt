@@ -102,7 +102,7 @@ set(EVENT_VERSION
 	"${EVENT_VERSION_MAJOR}.${EVENT_VERSION_MINOR}.${EVENT_VERSION_PATCH}-${EVENT_STAGE_NAME}")
 
 option(EVENT__BUILD_SHARED_LIBRARIES
-    "Define if libevent should be built with shared libraries instead of archives" ON)
+    "Define if libevent should be built with shared libraries instead of archives" OFF)
 
 option(EVENT__DISABLE_DEBUG_MODE
     "Define if libevent should build without support for a debug mode" OFF)

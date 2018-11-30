@@ -521,7 +521,7 @@
 /* Define to `int' if <sys/types.h> does not define. */
 #define EVENT__ssize_t ssize_t
 
-#define EVENT__NEED_DLLIMPORT
+/* #undef EVENT__NEED_DLLIMPORT */
 
 /* Define to 1 if you have ERR_remove_thread_stat(). */
 /* #undef EVENT__HAVE_ERR_REMOVE_THREAD_STATE */
