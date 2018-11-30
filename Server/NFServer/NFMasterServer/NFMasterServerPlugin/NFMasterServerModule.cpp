@@ -31,6 +31,10 @@ bool NFCMasterServerModule::Init()
 	m_pNetServerModule->AddEventCallBack(NF_ST_MASTER, this, &NFCMasterServerModule::OnProxySocketEvent);
 	m_pNetServerModule->AddReceiveCallBack(NF_ST_MASTER, this, &NFCMasterServerModule::OnHandleOtherMessage);
 
+
+	m_pNetServerModule->AddReceiveCallBack(NF_ST_MASTER, EGMI_NET_LOGIN_TO_MASTER_REGISTER, this, &NFCMasterServerModule::OnLoginServerRegisterProcess);
+	m_pNetServerModule->AddReceiveCallBack(NF_ST_MASTER, EGMI_NET_WORLD_TO_MASTER_REGISTER, this, &NFCMasterServerModule::OnWorldServerRegisterProcess);
+
 	NFServerConfig* pConfig = NFServerCommon::GetServerConfig(pPluginManager, NF_ST_MASTER);
 	if (pConfig)
 	{
@@ -78,15 +82,39 @@ void NFCMasterServerModule::OnProxySocketEvent(const eMsgType nEvent, const uint
 	if (nEvent == eMsgType_CONNECTED)
 	{
 		std::string ip = m_pNetServerModule->GetLinkIp(unLinkId);
-		NFLogDebug("Server Connect Master Server Success, Ip:{}", ip.c_str());
+		//NFLogDebug("Server Connect Master Server Success, Ip:{}", ip.c_str());
 	}
 	else if (nEvent == eMsgType_DISCONNECTED)
 	{
 		std::string ip = m_pNetServerModule->GetLinkIp(unLinkId);
-		NFLogDebug("Server DisConnect From Master Server, Ip:{}", ip.c_str());
+		//NFLogDebug("Server DisConnect From Master Server, Ip:{}", ip.c_str());
 	}
 }
 
 void NFCMasterServerModule::OnHandleOtherMessage(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen)
 {
+}
+
+void NFCMasterServerModule::OnLoginServerRegisterProcess(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen)
+{
+	NFMsg::ServerInfoReportList xMsg;
+	CLIENT_MSG_PROCESS_NO_OBJECT(nMsgId, msg, nLen, xMsg);
+
+	for (int i = 0; i < xMsg.server_list_size(); ++i)
+	{
+		const NFMsg::ServerInfoReport& xData = xMsg.server_list(i);
+
+	}
+}
+
+void NFCMasterServerModule::OnWorldServerRegisterProcess(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen)
+{
+	NFMsg::ServerInfoReportList xMsg;
+	CLIENT_MSG_PROCESS_NO_OBJECT(nMsgId, msg, nLen, xMsg);
+
+	for (int i = 0; i < xMsg.server_list_size(); ++i)
+	{
+		const NFMsg::ServerInfoReport& xData = xMsg.server_list(i);
+
+	}
 }

@@ -85,3 +85,22 @@ void NFCProxyClient_GameModule::OnHandleOtherMessage(const uint32_t unLinkId, co
 {
 	if (unLinkId != m_unLinkId) return;
 }
+
+void NFCProxyClient_GameModule::RegisterServer()
+{
+	NFServerConfig* pConfig = NFServerCommon::GetServerConfig(pPluginManager, NF_ST_PROXY);
+	if (pConfig)
+	{
+		NFMsg::ServerInfoReportList xMsg;
+		NFMsg::ServerInfoReport* pData = xMsg.add_server_list();
+		pData->set_server_id(pConfig->mServerId);
+		pData->set_server_name(pConfig->mServerName);
+		pData->set_server_ip(pConfig->mServerIp);
+		pData->set_server_port(pConfig->mServerPort);
+		pData->set_server_max_online(pConfig->mMaxConnectNum);
+		pData->set_server_state(NFMsg::EST_NARMAL);
+
+		m_pNetClientModule->SendToServerByPB(m_unLinkId, EGMI_NET_PROXY_TO_GAME_REGISTER, xMsg, 0);
+	}
+}
+

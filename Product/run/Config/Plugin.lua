@@ -29,7 +29,11 @@ LoadPlugin =
 			"NFMysqlPlugin",
 			
 			"NFMasterServerPlugin",
+			
+			"NFLoginClientPlugin",
 			"NFLoginServerPlugin",
+			
+			"NFWorldClientPlugin",
 			"NFWorldServerPlugin",
 			
 			"NFGameClientPlugin",

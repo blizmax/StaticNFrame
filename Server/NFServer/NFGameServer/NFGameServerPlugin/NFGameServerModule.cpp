@@ -30,6 +30,8 @@ bool NFCGameServerModule::Init()
 	m_pNetServerModule->AddEventCallBack(NF_ST_GAME, this, &NFCGameServerModule::OnProxySocketEvent);
 	m_pNetServerModule->AddReceiveCallBack(NF_ST_GAME, this, &NFCGameServerModule::OnHandleOtherMessage);
 
+	m_pNetServerModule->AddReceiveCallBack(NF_ST_MASTER, EGMI_NET_PROXY_TO_GAME_REGISTER, this, &NFCGameServerModule::OnProxyServerRegisterProcess);
+
 	NFServerConfig* pConfig = NFServerCommon::GetServerConfig(pPluginManager, NF_ST_GAME);
 	if (pConfig)
 	{
@@ -87,4 +89,16 @@ void NFCGameServerModule::OnProxySocketEvent(const eMsgType nEvent, const uint32
 void NFCGameServerModule::OnHandleOtherMessage(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen)
 {
 	NFLogWarning("msg:{} not handled!", nMsgId);
+}
+
+void NFCGameServerModule::OnProxyServerRegisterProcess(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen)
+{
+	NFMsg::ServerInfoReportList xMsg;
+	CLIENT_MSG_PROCESS_NO_OBJECT(nMsgId, msg, nLen, xMsg);
+
+	for (int i = 0; i < xMsg.server_list_size(); ++i)
+	{
+		const NFMsg::ServerInfoReport& xData = xMsg.server_list(i);
+
+	}
 }

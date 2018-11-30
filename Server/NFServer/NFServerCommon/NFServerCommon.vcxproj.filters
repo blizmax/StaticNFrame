@@ -11,6 +11,8 @@
     <ClInclude Include="NFILoginServerModule.h" />
     <ClInclude Include="NFIHttpLoginServerModule.h" />
     <ClInclude Include="NFIProxyClient_WorldModule.h" />
+    <ClInclude Include="NFIWorldClient_MasterModule.h" />
+    <ClInclude Include="NFILoginClient_MasterModule.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="NFServerCommon.cpp" />

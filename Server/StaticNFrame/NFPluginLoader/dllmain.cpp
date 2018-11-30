@@ -45,7 +45,9 @@
 /////////////////////////////////////////////////////
 #pragma comment( lib, "NFServerCommon.lib" )
 #pragma comment( lib, "NFMasterServerPlugin.lib" )
+#pragma comment( lib, "NFLoginClientPlugin.lib" )
 #pragma comment( lib, "NFLoginServerPlugin.lib" )
+#pragma comment( lib, "NFWorldClientPlugin.lib" )
 #pragma comment( lib, "NFWorldServerPlugin.lib" )
 
 /////////////////////////////////////////////////////////////

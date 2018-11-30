@@ -25,7 +25,9 @@
 #include <NFComm/NFMysqlPlugin/NFMysqlPlugin.h>
 
 #include <NFServer/NFMasterServer/NFMasterServerPlugin/NFMasterServerPlugin.h>
+#include <NFServer/NFLoginServer/NFLoginClientPlugin/NFLoginClientPlugin.h>
 #include <NFServer/NFLoginServer/NFLoginServerPlugin/NFLoginServerPlugin.h>
+#include <NFServer/NFWorldServer/NFWorldClientPlugin/NFWorldClientPlugin.h>
 #include <NFServer/NFWorldServer/NFWorldServerPlugin/NFWorldServerPlugin.h>
 
 #include <NFServer/NFGameServer/NFGameClientPlugin/NFGameClientPlugin.h>
@@ -99,12 +101,20 @@ bool NFCPluginManager::RegisterStaticPlugin()
 	REGISTER_STATIC_PLUGIN(this, NFMysqlPlugin);
 	REGISTER_STATIC_PLUGIN(this, NFLuaScriptPlugin);
 	REGISTER_STATIC_PLUGIN(this, NFTestPlugin);
+	/////////////////////////////////////////////////////////
 	REGISTER_STATIC_PLUGIN(this, NFMasterServerPlugin);
+
+	REGISTER_STATIC_PLUGIN(this, NFLoginClientPlugin);
 	REGISTER_STATIC_PLUGIN(this, NFLoginServerPlugin);
+
+	REGISTER_STATIC_PLUGIN(this, NFWorldClientPlugin);
 	REGISTER_STATIC_PLUGIN(this, NFWorldServerPlugin);
+
 	REGISTER_STATIC_PLUGIN(this, NFGameClientPlugin);
 	REGISTER_STATIC_PLUGIN(this, NFGameServerPlugin);
+
 	REGISTER_STATIC_PLUGIN(this, NFProxyServerPlugin);
 	REGISTER_STATIC_PLUGIN(this, NFProxyClientPlugin);
+	///////////////////////////////////////////////////
 	return true;
 }
