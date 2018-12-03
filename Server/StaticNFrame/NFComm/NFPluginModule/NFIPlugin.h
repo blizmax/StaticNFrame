@@ -59,7 +59,7 @@ NFLogMgr::Instance()->ReleaseInstance();\
 
 #define CREATE_PLUGIN(pManager, className)  NFIPlugin* pCreatePlugin##className = new className(pManager); pManager->Registered( pCreatePlugin##className );INIT_SINGLETON_PLUGINMANAGER(pManager);
 
-#define DESTROY_PLUGIN(pManager, className) pManager->UnRegistered( pManager->FindPlugin((#className)) );RELEASE_SINGLETON_PLUGINMANAGER;
+#define DESTROY_PLUGIN(pManager, className) pManager->UnRegistered( pManager->FindPlugin((#className)) );
 
 class NFIPluginManager;
 

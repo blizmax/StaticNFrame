@@ -410,8 +410,13 @@ bool NFCPluginManager::Finalize()
 
 	for (auto it = mPluginNameMap.begin(); it != mPluginNameMap.end(); ++it)
 	{
-		UnLoadStaticPlugin(it->first);
+		if (it->first != "NFKernelPlugin")
+		{
+			UnLoadStaticPlugin(it->first);
+		}
 	}
+
+	UnLoadStaticPlugin("NFKernelPlugin");
 
 	mPluginInstanceMap.clear();
 	mPluginInstanceList.clear();
