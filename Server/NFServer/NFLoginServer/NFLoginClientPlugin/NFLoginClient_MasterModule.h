@@ -13,6 +13,9 @@
 #include <NFComm/NFPluginModule/NFINetClientModule.h>
 #include <NFComm/NFPluginModule/NFServerDefine.h>
 
+#include "NFComm/NFCore/NFMapEx.hpp"
+#include "NFServer/NFServerCommon/NFServerCommon.h"
+
 class NFCLoginClient_MasterModule : public NFILoginClient_MasterModule
 {
 public:
@@ -34,8 +37,10 @@ protected:
 	void OnHandleOtherMessage(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen);
 
 	void RegisterServer();
+
+	void OnHandleMasterSendWorldMessage(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen);
 private:
 	NFINetClientModule* m_pNetClientModule;
-
 	uint32_t m_unLinkId;
+	NFMapEx<int, NFMsg::ServerInfoReport> mWorldMap;
 };

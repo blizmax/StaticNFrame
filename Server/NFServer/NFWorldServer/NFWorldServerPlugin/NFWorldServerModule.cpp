@@ -92,8 +92,13 @@ void NFCWorldServerModule::OnProxySocketEvent(const eMsgType nEvent, const uint3
 	}
 	else if (nEvent == eMsgType_DISCONNECTED)
 	{
-
+		OnClientDisconnect(unLinkId);
 	}
+}
+
+void NFCWorldServerModule::OnClientDisconnect(uint32_t unLinkId)
+{
+
 }
 
 void NFCWorldServerModule::OnHandleOtherMessage(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen)
@@ -120,7 +125,7 @@ void NFCWorldServerModule::OnProxyServerRegisterProcess(const uint32_t unLinkId,
 		pServerData->mUnlinkId = unLinkId;
 		pServerData->mServerInfo = xData;
 
-		SynGameToProxy(unLinkId);
+		SynWorldToLogin(unLinkId);
 
 		NFLogInfo("Proxy Server Register World Server Success, serverName:{}, serverId:{}, ip:{}, port:{}", xData.server_name(), xData.server_id(), xData.server_ip(), xData.server_port())
 	}
@@ -160,9 +165,9 @@ void NFCWorldServerModule::OnProxyServerRefreshProcess(const uint32_t unLinkId, 
 		pServerData->mUnlinkId = unLinkId;
 		pServerData->mServerInfo = xData;
 
-		SynGameToProxy(unLinkId);
+		SynWorldToLogin(unLinkId);
 
-		NFLogInfo("Proxy Server Refresh World Server Success, serverName:{}, serverId:{}, ip:{}, port:{}", xData.server_name(), xData.server_id(), xData.server_ip(), xData.server_port())
+		NFLogInfo("Proxy Server Refresh World Server Success, serverName:{}, serverId:{}, ip:{}, port:{}", xData.server_name(), xData.server_id(), xData.server_ip(), xData.server_port());
 	}
 }
 
@@ -177,7 +182,7 @@ void NFCWorldServerModule::OnGameServerUnRegisterProcess(const uint32_t unLinkId
 
 		mGameMap.RemoveElement(xData.server_id());
 
-		NFLogInfo("Game Server UnRegister World Server Success, serverName:{}, serverId:{}, ip:{}, port:{}", xData.server_name(), xData.server_id(), xData.server_ip(), xData.server_port())
+		NFLogInfo("Game Server UnRegister World Server Success, serverName:{}, serverId:{}, ip:{}, port:{}", xData.server_name(), xData.server_id(), xData.server_ip(), xData.server_port());
 	}
 }
 
@@ -199,9 +204,9 @@ void NFCWorldServerModule::OnGameServerRefreshProcess(const uint32_t unLinkId, c
 		pServerData->mUnlinkId = unLinkId;
 		pServerData->mServerInfo = xData;
 
-		NFLogInfo("Game Server Refresh World Server Success, serverName:{}, serverId:{}, ip:{}, port:{}", xData.server_name(), xData.server_id(), xData.server_ip(), xData.server_port())
+		NFLogInfo("Game Server Refresh World Server Success, serverName:{}, serverId:{}, ip:{}, port:{}", xData.server_name(), xData.server_id(), xData.server_ip(), xData.server_port());
 	}
-	SynGameToProxy();
+	SynWorldToLogin();
 }
 
 void NFCWorldServerModule::OnGameServerRegisterProcess(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen)
@@ -222,25 +227,25 @@ void NFCWorldServerModule::OnGameServerRegisterProcess(const uint32_t unLinkId, 
 		pServerData->mUnlinkId = unLinkId;
 		pServerData->mServerInfo = xData;
 
-		NFLogInfo("Game Server Register World Server Success, serverName:{}, serverId:{}, ip:{}, port:{}", xData.server_name(), xData.server_id(), xData.server_ip(), xData.server_port())
+		NFLogInfo("Game Server Register World Server Success, serverName:{}, serverId:{}, ip:{}, port:{}", xData.server_name(), xData.server_id(), xData.server_ip(), xData.server_port());
 	}
-	SynGameToProxy();
+	SynWorldToLogin();
 }
 
-void NFCWorldServerModule::SynGameToProxy()
+void NFCWorldServerModule::SynWorldToLogin()
 {
 	NFMsg::ServerInfoReportList xData;
 
 	NF_SHARE_PTR<NFServerData> pServerData = mProxyMap.First();
 	while (pServerData)
 	{
-		SynGameToProxy(pServerData->mUnlinkId);
+		SynWorldToLogin(pServerData->mUnlinkId);
 
 		pServerData = mProxyMap.Next();
 	}
 }
 
-void NFCWorldServerModule::SynGameToProxy(uint32_t linkId)
+void NFCWorldServerModule::SynWorldToLogin(uint32_t linkId)
 {
 	if (mGameMap.Count() <= 0) return;
 

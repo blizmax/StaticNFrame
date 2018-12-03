@@ -58,10 +58,11 @@ enum NF_EGMI_MsgId
 	EGMI_NET_PROXY_TO_WORLD_REFRESH = 21,	//网关服务器 刷新  世界服务器协议
 	EGMI_NET_GAME_TO_WORLD_REFRESH = 22,	//游戏服务器	刷新	世界服务器协议
 	EGMI_NET_LOGIN_TO_MASTER_REFRESH = 23,	//登录服务器	刷新	MASTER服务器协议
-	EGMI_NET_WORLD_TO_MASTER_REFRESHR = 24,	//世界服务器	刷新	MASTER服务器协议
+	EGMI_NET_WORLD_TO_MASTER_REFRESH = 24,	//世界服务器	刷新	MASTER服务器协议
 	EGMI_NET_PROXY_TO_GAME_REFRESH = 25,	//网关服务器	刷新	游戏服务器协议
 
 	EGMI_NET_WORLD_TO_PROXY_SEND_GAME = 26, //世界服务器发送游戏服务器信息给网关服务器
+	EGMI_NET_MASTER_TO_LOGIN_SEND_WORLD = 26, //Master服务器发送World服务器信息给Login服务器
 
 	EGMI_NET_MSG_END = 1000,
 };

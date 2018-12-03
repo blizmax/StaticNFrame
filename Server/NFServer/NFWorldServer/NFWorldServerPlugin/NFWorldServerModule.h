@@ -45,12 +45,13 @@ protected:
 	void OnGameServerUnRegisterProcess(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen);
 	void OnGameServerRefreshProcess(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen);
 
-	void SynGameToProxy();
-	void SynGameToProxy(uint32_t linkId);
+	void SynWorldToLogin();
+	void SynWorldToLogin(uint32_t linkId);
+
+	void OnClientDisconnect(uint32_t unLinkId);
 private:
 	NFINetServerModule* m_pNetServerModule;
 private:
-	NFConsistentHashMapEx<int, NFServerData> mWorldMap;
 	NFConsistentHashMapEx<int, NFServerData> mGameMap;
 	NFConsistentHashMapEx<int, NFServerData> mProxyMap;
 };
