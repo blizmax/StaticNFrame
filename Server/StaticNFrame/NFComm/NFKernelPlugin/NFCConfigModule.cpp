@@ -168,10 +168,6 @@ bool NFCConfigModule::LoadConfig()
 		{
 			assert(0);
 		}
-		if (!GetLuaTableValue(serverConfigRef, DEFINE_LUA_STRING_SERVER_ZONE_ID, pConfig->mZoneId))
-		{
-			assert(0);
-		}
 		if (!GetLuaTableValue(serverConfigRef, DEFINE_LUA_STRING_SERVER_IP, pConfig->mServerIp))
 		{
 			assert(0);

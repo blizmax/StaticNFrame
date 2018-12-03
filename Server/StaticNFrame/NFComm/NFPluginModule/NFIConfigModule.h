@@ -39,7 +39,6 @@ public:
 		mServerId = 0;
 		mMasterId = 0;
 		mWorldId = 0;
-		mZoneId = 0;
 		mServerPort = 0;
 		mMaxConnectNum = 100;
 		mWorkThreadNum = 1;
@@ -54,7 +53,6 @@ public:
 	uint32_t mServerId;
 	uint32_t mMasterId;
 	uint32_t mWorldId;
-	uint32_t mZoneId;
 	std::string mServerIp;
 	uint32_t mServerPort;
 	uint32_t mHttpPort;
