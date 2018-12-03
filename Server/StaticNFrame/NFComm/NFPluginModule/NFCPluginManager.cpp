@@ -65,6 +65,7 @@ bool NFCPluginManager::Awake()
 
 	InitSingleton();
 
+	NFLogInfo("StaticNFrame Start................");
 	//加载引擎配置plugin.xml, 创建引擎，生成module
 	LoadPluginConfig();
 	for (PluginNameMap::iterator it = mPluginNameMap.begin(); it != mPluginNameMap.end(); ++it)
