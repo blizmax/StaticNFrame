@@ -51,6 +51,7 @@ bool NFCGameClient_WorldModule::AfterInit()
 
 bool NFCGameClient_WorldModule::Execute()
 {
+	ServerReport();
 	return true;
 }
 
@@ -80,7 +81,6 @@ void NFCGameClient_WorldModule::OnProxySocketEvent(const eMsgType nEvent, const 
 	{
 		NFLogDebug("Game Server DisConnect World Server!");
 		NFEventMgr::Instance()->FireExecute(NFEVENT_GAME_CONNECT_WORLD_FAIL, unLinkId, NF_ST_WORLD, nullptr);
-		m_unLinkId = 0;
 	}
 }
 
@@ -107,6 +107,34 @@ void NFCGameClient_WorldModule::RegisterServer()
 		pData->set_server_state(NFMsg::EST_NARMAL);
 
 		m_pNetClientModule->SendToServerByPB(m_unLinkId, EGMI_NET_GAME_TO_WORLD_REGISTER, xMsg, 0);
+	}
+}
+
+void NFCGameClient_WorldModule::ServerReport()
+{
+	static uint64_t mLastReportTime = pPluginManager->GetNowTime();
+	if (mLastReportTime + 10000 > pPluginManager->GetNowTime())
+	{
+		return;
+	}
+
+	mLastReportTime = pPluginManager->GetNowTime();
+
+	NFServerConfig* pConfig = NFServerCommon::GetServerConfig(pPluginManager, NF_ST_GAME);
+	if (pConfig)
+	{
+		NFMsg::ServerInfoReportList xMsg;
+		NFMsg::ServerInfoReport* pData = xMsg.add_server_list();
+		pData->set_server_id(pConfig->mServerId);
+		pData->set_server_name(pConfig->mServerName);
+		pData->set_server_ip(pConfig->mServerIp);
+		pData->set_server_port(pConfig->mServerPort);
+		pData->set_server_type(pConfig->mServerType);
+		pData->set_server_max_online(pConfig->mMaxConnectNum);
+		pData->set_server_state(NFMsg::EST_NARMAL);
+		pData->set_server_cur_count(0);
+
+		m_pNetClientModule->SendToServerByPB(m_unLinkId, EGMI_STS_SERVER_REPORT, xMsg, 0);
 	}
 }
 

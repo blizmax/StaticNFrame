@@ -41,6 +41,8 @@ bool NFCMasterServerModule::Init()
 	m_pNetServerModule->AddReceiveCallBack(NF_ST_MASTER, EGMI_NET_LOGIN_TO_MASTER_REFRESH, this, &NFCMasterServerModule::OnLoginServerRefreshProcess);
 	m_pNetServerModule->AddReceiveCallBack(NF_ST_MASTER, EGMI_NET_WORLD_TO_MASTER_REFRESH, this, &NFCMasterServerModule::OnWorldServerRefreshProcess);
 
+	m_pNetServerModule->AddReceiveCallBack(NF_ST_MASTER, EGMI_STS_SERVER_REPORT, this, &NFCMasterServerModule::OnServerReport);
+
 	NFServerConfig* pConfig = NFServerCommon::GetServerConfig(pPluginManager, NF_ST_MASTER);
 	if (pConfig)
 	{
@@ -196,7 +198,7 @@ void NFCMasterServerModule::OnLoginServerRefreshProcess(const uint32_t unLinkId,
 		pServerData->mUnlinkId = unLinkId;
 		pServerData->mServerInfo = xData;
 
-		NFLogInfo("Login Server Refresh Master Server Success, serverName:{}, serverId:{}, ip:{}, port:{}", xData.server_name(), xData.server_id(), xData.server_ip(), xData.server_port());
+		//NFLogInfo("Login Server Refresh Master Server Success, serverName:{}, serverId:{}, ip:{}, port:{}", xData.server_name(), xData.server_id(), xData.server_ip(), xData.server_port());
 	}
 }
 
@@ -257,7 +259,7 @@ void NFCMasterServerModule::OnWorldServerRefreshProcess(const uint32_t unLinkId,
 		pServerData->mUnlinkId = unLinkId;
 		pServerData->mServerInfo = xData;
 
-		NFLogInfo("World Server Refresh Master Server Success, serverName:{}, serverId:{}, ip:{}, port:{}", xData.server_name(), xData.server_id(), xData.server_ip(), xData.server_port());
+		//NFLogInfo("World Server Refresh Master Server Success, serverName:{}, serverId:{}, ip:{}, port:{}", xData.server_name(), xData.server_id(), xData.server_ip(), xData.server_port());
 	}
 	SynWorldToLogin();
 }
@@ -291,4 +293,64 @@ void NFCMasterServerModule::SynWorldToLogin(uint32_t unlinkId)
 	}
 
 	m_pNetServerModule->SendToServerByPB(unlinkId, EGMI_NET_MASTER_TO_LOGIN_SEND_WORLD, xData, 0);
+}
+
+void NFCMasterServerModule::OnServerReport(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen)
+{
+	NFMsg::ServerInfoReportList xMsg;
+	CLIENT_MSG_PROCESS_NO_OBJECT(nMsgId, msg, nLen, xMsg);
+
+	for (int i = 0; i < xMsg.server_list_size(); ++i)
+	{
+		const NFMsg::ServerInfoReport& xData = xMsg.server_list(i);
+		NF_SHARE_PTR<NFServerData> pServerData;
+		switch (xData.server_type())
+		{
+		case NF_SERVER_TYPES::NF_ST_LOGIN:
+		{
+			pServerData = mLoginMap.GetElement(xData.server_id());
+			if (!pServerData)
+			{
+				pServerData = std::shared_ptr<NFServerData>(new NFServerData());
+				mLoginMap.AddElement(xData.server_id(), pServerData);
+			}
+		}
+		break;
+		case NF_SERVER_TYPES::NF_ST_WORLD:
+		{
+			pServerData = mWorldMap.GetElement(xData.server_id());
+			if (!pServerData)
+			{
+				pServerData = std::shared_ptr<NFServerData>(new NFServerData());
+				mWorldMap.AddElement(xData.server_id(), pServerData);
+			}
+		}
+		break;
+		case NF_SERVER_TYPES::NF_ST_PROXY:
+		{
+			pServerData = mProxyMap.GetElement(xData.server_id());
+			if (!pServerData)
+			{
+				pServerData = std::shared_ptr<NFServerData>(new NFServerData());
+				mProxyMap.AddElement(xData.server_id(), pServerData);
+			}
+		}
+		break;
+		case NF_SERVER_TYPES::NF_ST_GAME:
+		{
+			pServerData = mGameMap.GetElement(xData.server_id());
+			if (!pServerData)
+			{
+				pServerData = std::shared_ptr<NFServerData>(new NFServerData());
+				mGameMap.AddElement(xData.server_id(), pServerData);
+			}
+		}
+		break;
+		}
+		if (pServerData)
+		{
+			pServerData->mUnlinkId = unLinkId;
+			pServerData->mServerInfo = xData;
+		}
+	}
 }

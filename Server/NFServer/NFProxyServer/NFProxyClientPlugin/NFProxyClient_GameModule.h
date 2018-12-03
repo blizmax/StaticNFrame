@@ -12,6 +12,8 @@
 #include <NFServer/NFServerCommon/NFIProxyClient_GameModule.h>
 #include <NFComm/NFPluginModule/NFINetClientModule.h>
 #include <NFComm/NFPluginModule/NFServerDefine.h>
+#include "NFComm/NFCore/NFMapEx.hpp"
+#include "NFServer/NFServerCommon/NFServerCommon.h"
 
 class NFCProxyClient_GameModule : public NFIProxyClient_GameModule
 {
@@ -36,9 +38,11 @@ protected:
 	//
 	void OnHandleWorldSendGameMessage(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen);
 
-	void RegisterServer();
+	void RegisterServer(uint32_t unLinkId);
+	void OnClientDisconnect(uint32_t unLinkId);
 private:
 	NFINetClientModule* m_pNetClientModule;
 
-	uint32_t m_unLinkId;
+	NFMapEx<uint32_t, NFServerData> mGameMap;
+	std::map<uint32_t, uint32_t> mLinkIdMap;
 };

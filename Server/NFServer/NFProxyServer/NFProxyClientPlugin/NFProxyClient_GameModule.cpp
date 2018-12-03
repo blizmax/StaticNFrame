@@ -57,29 +57,48 @@ bool NFCProxyClient_GameModule::Shut()
 
 void NFCProxyClient_GameModule::OnProxySocketEvent(const eMsgType nEvent, const uint32_t unLinkId)
 {
-	if (unLinkId != m_unLinkId) return;
+	if (mLinkIdMap.find(unLinkId) == mLinkIdMap.end()) return;
 
 	if (nEvent == eMsgType_CONNECTED)
 	{
 		NFLogDebug("Proxy Server Connect Game Server Success!");
 		NFEventMgr::Instance()->FireExecute(NFEVENT_PROXY_CONNECT_GAME_SUCCESS, unLinkId, NF_ST_GAME, nullptr);
 
-		RegisterServer();
+		RegisterServer(unLinkId);
 	}
 	else if (nEvent == eMsgType_DISCONNECTED)
 	{
 		NFLogDebug("Proxy Server DisConnect Game Server!");
 		NFEventMgr::Instance()->FireExecute(NFEVENT_PROXY_CONNECT_GAME_FAIL, unLinkId, NF_ST_GAME, nullptr);
-		m_unLinkId = 0;
+		OnClientDisconnect(unLinkId);
+	}
+}
+
+void NFCProxyClient_GameModule::OnClientDisconnect(uint32_t unLinkId)
+{
+	NF_SHARE_PTR<NFServerData> pServerData = mGameMap.First();
+	while (pServerData)
+	{
+		if (unLinkId == pServerData->mUnlinkId)
+		{
+			pServerData->mServerInfo.set_server_state(NFMsg::EST_CRASH);
+			pServerData->mUnlinkId = 0;
+
+			NFLogError("the game server disconnect, serverName:{}, serverId:{}, serverIp:{}, serverPort:{}"
+				, pServerData->mServerInfo.server_name(), pServerData->mServerInfo.server_id(), pServerData->mServerInfo.server_ip(), pServerData->mServerInfo.server_port());
+			return;
+		}
+
+		pServerData = mGameMap.Next();
 	}
 }
 
 void NFCProxyClient_GameModule::OnHandleOtherMessage(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen)
 {
-	if (unLinkId != m_unLinkId) return;
+	if (mLinkIdMap.find(unLinkId) == mLinkIdMap.end()) return;
 }
 
-void NFCProxyClient_GameModule::RegisterServer()
+void NFCProxyClient_GameModule::RegisterServer(uint32_t unLinkId)
 {
 	NFServerConfig* pConfig = NFServerCommon::GetServerConfig(pPluginManager, NF_ST_PROXY);
 	if (pConfig)
@@ -94,7 +113,7 @@ void NFCProxyClient_GameModule::RegisterServer()
 		pData->set_server_max_online(pConfig->mMaxConnectNum);
 		pData->set_server_state(NFMsg::EST_NARMAL);
 
-		m_pNetClientModule->SendToServerByPB(m_unLinkId, EGMI_NET_PROXY_TO_GAME_REGISTER, xMsg, 0);
+		m_pNetClientModule->SendToServerByPB(unLinkId, EGMI_NET_PROXY_TO_GAME_REGISTER, xMsg, 0);
 	}
 }
 
@@ -111,7 +130,21 @@ void NFCProxyClient_GameModule::OnHandleWorldSendGameMessage(const uint32_t unLi
 		{
 		case NF_SERVER_TYPES::NF_ST_GAME:
 		{
-			m_unLinkId = m_pNetClientModule->AddServer(NF_SERVER_TYPES::NF_ST_GAME, xServerData.server_ip(), xServerData.server_port());
+			NF_SHARE_PTR<NFServerData> pServerData = mGameMap.GetElement(xServerData.server_id());
+			if (!pServerData)
+			{
+				pServerData = NF_SHARE_PTR<NFServerData>(NF_NEW NFServerData());
+				mGameMap.AddElement(xServerData.server_id(), pServerData);
+
+				pServerData->mServerInfo = xServerData;
+
+				pServerData->mUnlinkId = m_pNetClientModule->AddServer(NF_SERVER_TYPES::NF_ST_GAME, xServerData.server_ip(), xServerData.server_port());
+				mLinkIdMap.emplace(pServerData->mUnlinkId, pServerData->mServerInfo.server_id());
+			}
+			else
+			{
+				pServerData->mServerInfo = xServerData;
+			}
 		}
 		break;
 		default:
@@ -119,4 +152,6 @@ void NFCProxyClient_GameModule::OnHandleWorldSendGameMessage(const uint32_t unLi
 		}
 	}
 }
+
+
 

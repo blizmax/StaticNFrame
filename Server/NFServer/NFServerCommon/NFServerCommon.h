@@ -39,8 +39,9 @@ enum NF_EGMI_MsgId
 	//0号协议是特殊的JSON协议,数据是JSON字符串
 	EGMI_NET_MSG_JSON_MSG = 0,
 	//1号协议是服务器内存心跳协议
-	EGMI_NET_MSG_HEART_KEEP_ALIVE = 1,
+	EGMI_STS_HEART_BEAT = 1,
 
+	EGMI_STS_SERVER_REPORT = 2,
 	////////////////////////////////////////////
 	
 	EGMI_NET_PROXY_TO_WORLD_REGISTER = 11,	//网关服务器	注册	世界服务器协议

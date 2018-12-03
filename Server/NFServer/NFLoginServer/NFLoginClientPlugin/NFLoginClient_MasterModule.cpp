@@ -73,6 +73,7 @@ void NFCLoginClient_MasterModule::OnHandleMasterSendWorldMessage(const uint32_t 
 
 bool NFCLoginClient_MasterModule::Execute()
 {
+	ServerReport();
 	return true;
 }
 
@@ -101,7 +102,6 @@ void NFCLoginClient_MasterModule::OnProxySocketEvent(const eMsgType nEvent, cons
 	{
 		NFLogDebug("Login Server DisConnect Master Server!");
 		NFEventMgr::Instance()->FireExecute(NFEVENT_LOGIN_CONNECT_MASTER_FAIL, unLinkId, NF_ST_MASTER, nullptr);
-		m_unLinkId = 0;
 	}
 }
 
@@ -126,5 +126,33 @@ void NFCLoginClient_MasterModule::RegisterServer()
 		pData->set_server_state(NFMsg::EST_NARMAL);
 
 		m_pNetClientModule->SendToServerByPB(m_unLinkId, EGMI_NET_LOGIN_TO_MASTER_REGISTER, xMsg, 0);
+	}
+}
+
+void NFCLoginClient_MasterModule::ServerReport()
+{
+	static uint64_t mLastReportTime = pPluginManager->GetNowTime();
+	if (mLastReportTime + 10000 > pPluginManager->GetNowTime())
+	{
+		return;
+	}
+
+	mLastReportTime = pPluginManager->GetNowTime();
+
+	NFServerConfig* pConfig = NFServerCommon::GetServerConfig(pPluginManager, NF_ST_LOGIN);
+	if (pConfig)
+	{
+		NFMsg::ServerInfoReportList xMsg;
+		NFMsg::ServerInfoReport* pData = xMsg.add_server_list();
+		pData->set_server_id(pConfig->mServerId);
+		pData->set_server_name(pConfig->mServerName);
+		pData->set_server_ip(pConfig->mServerIp);
+		pData->set_server_port(pConfig->mServerPort);
+		pData->set_server_type(pConfig->mServerType);
+		pData->set_server_max_online(pConfig->mMaxConnectNum);
+		pData->set_server_state(NFMsg::EST_NARMAL);
+		pData->set_server_cur_count(0);
+
+		m_pNetClientModule->SendToServerByPB(m_unLinkId, EGMI_STS_SERVER_REPORT, xMsg, 0);
 	}
 }

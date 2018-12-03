@@ -16,10 +16,12 @@
 #include "NFComm/NFPluginModule/NFIHttpServerModule.h"
 #include "NFServer/NFServerCommon/NFServerCommon.h"
 #include "NFMessageDefine/NFMsgDefine.h"
+#include "NFComm/NFPluginModule/NFEventDefine.h"
 
 NFCWorldServerModule::NFCWorldServerModule(NFIPluginManager* p)
 {
 	pPluginManager = p;
+	mWorldToMasterUnlinkId = 0;
 }
 
 NFCWorldServerModule::~NFCWorldServerModule()
@@ -28,11 +30,15 @@ NFCWorldServerModule::~NFCWorldServerModule()
 
 bool NFCWorldServerModule::Init()
 {
+	//监听服务器连接事件
+	Subscribe(NFEVENT_WORLD_CONNECT_MASTER_SUCCESS, 0, NF_ST_MASTER, __FUNCTION__);
+	Subscribe(NFEVENT_WORLD_CONNECT_MASTER_FAIL, 0, NF_ST_MASTER, __FUNCTION__);
+
+	m_pNetClientModule = pPluginManager->FindModule<NFINetClientModule>();
 	m_pNetServerModule = pPluginManager->FindModule<NFINetServerModule>();
 	m_pNetServerModule->AddEventCallBack(NF_ST_WORLD, this, &NFCWorldServerModule::OnProxySocketEvent);
 	m_pNetServerModule->AddReceiveCallBack(NF_ST_WORLD, this, &NFCWorldServerModule::OnHandleOtherMessage);
 
-	
 	m_pNetServerModule->AddReceiveCallBack(NF_ST_WORLD, EGMI_NET_PROXY_TO_WORLD_REGISTER, this, &NFCWorldServerModule::OnProxyServerRegisterProcess);
 	m_pNetServerModule->AddReceiveCallBack(NF_ST_WORLD, EGMI_NET_GAME_TO_WORLD_REGISTER, this, &NFCWorldServerModule::OnGameServerRegisterProcess);
 
@@ -41,6 +47,8 @@ bool NFCWorldServerModule::Init()
 
 	m_pNetServerModule->AddReceiveCallBack(NF_ST_WORLD, EGMI_NET_PROXY_TO_WORLD_REFRESH, this, &NFCWorldServerModule::OnProxyServerRefreshProcess);
 	m_pNetServerModule->AddReceiveCallBack(NF_ST_WORLD, EGMI_NET_GAME_TO_WORLD_REFRESH, this, &NFCWorldServerModule::OnGameServerRefreshProcess);
+
+	m_pNetServerModule->AddReceiveCallBack(NF_ST_WORLD, EGMI_STS_SERVER_REPORT, this, &NFCWorldServerModule::OnServerReport);
 
 	NFServerConfig* pConfig = NFServerCommon::GetServerConfig(pPluginManager, NF_ST_WORLD);
 	if (pConfig)
@@ -98,7 +106,43 @@ void NFCWorldServerModule::OnProxySocketEvent(const eMsgType nEvent, const uint3
 
 void NFCWorldServerModule::OnClientDisconnect(uint32_t unLinkId)
 {
+	NF_SHARE_PTR<NFServerData> pServerData = mGameMap.First();
+	while (pServerData)
+	{
+		if (unLinkId == pServerData->mUnlinkId)
+		{
+			pServerData->mServerInfo.set_server_state(NFMsg::EST_CRASH);
+			pServerData->mUnlinkId = 0;
 
+			NFLogError("the game server disconnect from world server, serverName:{}, serverId:{}, serverIp:{}, serverPort:{}"
+				, pServerData->mServerInfo.server_name(), pServerData->mServerInfo.server_id(), pServerData->mServerInfo.server_ip(), pServerData->mServerInfo.server_port());
+
+			SynGameToProxy();
+			return;
+		}
+
+		pServerData = mGameMap.Next();
+	}
+
+	//////////////////////////////////////////////////////////////////////////
+
+	int nServerID = 0;
+	pServerData = mProxyMap.First();
+	while (pServerData)
+	{
+		if (unLinkId == pServerData->mUnlinkId)
+		{
+			nServerID = pServerData->mServerInfo.server_id();
+
+			NFLogError("the login server disconnect from master server, serverName:{}, serverId:{}, serverIp:{}, serverPort:{}"
+				, pServerData->mServerInfo.server_name(), pServerData->mServerInfo.server_id(), pServerData->mServerInfo.server_ip(), pServerData->mServerInfo.server_port());
+			break;
+		}
+
+		pServerData = mProxyMap.Next();
+	}
+
+	mProxyMap.RemoveElement(nServerID);
 }
 
 void NFCWorldServerModule::OnHandleOtherMessage(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen)
@@ -125,7 +169,7 @@ void NFCWorldServerModule::OnProxyServerRegisterProcess(const uint32_t unLinkId,
 		pServerData->mUnlinkId = unLinkId;
 		pServerData->mServerInfo = xData;
 
-		SynWorldToLogin(unLinkId);
+		SynGameToProxy(unLinkId);
 
 		NFLogInfo("Proxy Server Register World Server Success, serverName:{}, serverId:{}, ip:{}, port:{}", xData.server_name(), xData.server_id(), xData.server_ip(), xData.server_port())
 	}
@@ -165,9 +209,9 @@ void NFCWorldServerModule::OnProxyServerRefreshProcess(const uint32_t unLinkId, 
 		pServerData->mUnlinkId = unLinkId;
 		pServerData->mServerInfo = xData;
 
-		SynWorldToLogin(unLinkId);
+		SynGameToProxy(unLinkId);
 
-		NFLogInfo("Proxy Server Refresh World Server Success, serverName:{}, serverId:{}, ip:{}, port:{}", xData.server_name(), xData.server_id(), xData.server_ip(), xData.server_port());
+		//NFLogInfo("Proxy Server Refresh World Server Success, serverName:{}, serverId:{}, ip:{}, port:{}", xData.server_name(), xData.server_id(), xData.server_ip(), xData.server_port());
 	}
 }
 
@@ -204,9 +248,9 @@ void NFCWorldServerModule::OnGameServerRefreshProcess(const uint32_t unLinkId, c
 		pServerData->mUnlinkId = unLinkId;
 		pServerData->mServerInfo = xData;
 
-		NFLogInfo("Game Server Refresh World Server Success, serverName:{}, serverId:{}, ip:{}, port:{}", xData.server_name(), xData.server_id(), xData.server_ip(), xData.server_port());
+		//NFLogInfo("Game Server Refresh World Server Success, serverName:{}, serverId:{}, ip:{}, port:{}", xData.server_name(), xData.server_id(), xData.server_ip(), xData.server_port());
 	}
-	SynWorldToLogin();
+	SynGameToProxy();
 }
 
 void NFCWorldServerModule::OnGameServerRegisterProcess(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen)
@@ -229,23 +273,23 @@ void NFCWorldServerModule::OnGameServerRegisterProcess(const uint32_t unLinkId, 
 
 		NFLogInfo("Game Server Register World Server Success, serverName:{}, serverId:{}, ip:{}, port:{}", xData.server_name(), xData.server_id(), xData.server_ip(), xData.server_port());
 	}
-	SynWorldToLogin();
+	SynGameToProxy();
 }
 
-void NFCWorldServerModule::SynWorldToLogin()
+void NFCWorldServerModule::SynGameToProxy()
 {
 	NFMsg::ServerInfoReportList xData;
 
 	NF_SHARE_PTR<NFServerData> pServerData = mProxyMap.First();
 	while (pServerData)
 	{
-		SynWorldToLogin(pServerData->mUnlinkId);
+		SynGameToProxy(pServerData->mUnlinkId);
 
 		pServerData = mProxyMap.Next();
 	}
 }
 
-void NFCWorldServerModule::SynWorldToLogin(uint32_t linkId)
+void NFCWorldServerModule::SynGameToProxy(uint32_t linkId)
 {
 	if (mGameMap.Count() <= 0) return;
 
@@ -261,5 +305,25 @@ void NFCWorldServerModule::SynWorldToLogin(uint32_t linkId)
 	}
 
 	m_pNetServerModule->SendToServerByPB(linkId, EGMI_NET_WORLD_TO_PROXY_SEND_GAME, xData, 0);
+}
+
+void NFCWorldServerModule::OnExecute(uint16_t nEventID, uint64_t nSrcID, uint8_t bySrcType, NFEventContext* pEventContext)
+{
+	if (nEventID == NFEVENT_WORLD_CONNECT_MASTER_SUCCESS)
+	{
+		mWorldToMasterUnlinkId = (uint32_t)nSrcID;
+	}
+	else if (nEventID == NFEVENT_WORLD_CONNECT_MASTER_FAIL)
+	{
+		mWorldToMasterUnlinkId = 0;
+	}
+}
+
+void NFCWorldServerModule::OnServerReport(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen)
+{
+	NFMsg::ServerInfoReportList xMsg;
+	CLIENT_MSG_PROCESS_NO_OBJECT(nMsgId, msg, nLen, xMsg);
+
+	m_pNetClientModule->SendToServerByPB(mWorldToMasterUnlinkId, EGMI_STS_SERVER_REPORT, xMsg, 0);
 }
 
