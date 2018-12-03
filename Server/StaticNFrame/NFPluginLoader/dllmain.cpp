@@ -17,8 +17,8 @@
 //#pragma comment(lib, "libssl.lib")
 //#pragma comment(lib, "libcrypto.lib")
 
-#pragma comment( lib, "bson-1.0.lib" )
-#pragma comment( lib, "mongoc-1.0.lib" )
+#pragma comment( lib, "bson-static-1.0.lib" )
+#pragma comment( lib, "mongoc-static-1.0.lib" )
 
 #pragma comment( lib, "luaBind.lib" )
 #pragma comment( lib, "event.lib" )
