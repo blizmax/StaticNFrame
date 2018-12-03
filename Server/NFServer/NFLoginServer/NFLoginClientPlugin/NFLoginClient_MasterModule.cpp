@@ -112,7 +112,7 @@ void NFCLoginClient_MasterModule::OnHandleOtherMessage(const uint32_t unLinkId, 
 
 void NFCLoginClient_MasterModule::RegisterServer()
 {
-	NFServerConfig* pConfig = NFServerCommon::GetServerConfig(pPluginManager, NF_ST_LOGIN);
+	NFServerConfig* pConfig = NFServerCommon::GetAppConfig(pPluginManager, NF_ST_LOGIN);
 	if (pConfig)
 	{
 		NFMsg::ServerInfoReportList xMsg;
@@ -139,7 +139,7 @@ void NFCLoginClient_MasterModule::ServerReport()
 
 	mLastReportTime = pPluginManager->GetNowTime();
 
-	NFServerConfig* pConfig = NFServerCommon::GetServerConfig(pPluginManager, NF_ST_LOGIN);
+	NFServerConfig* pConfig = NFServerCommon::GetAppConfig(pPluginManager, NF_ST_LOGIN);
 	if (pConfig)
 	{
 		NFMsg::ServerInfoReportList xMsg;

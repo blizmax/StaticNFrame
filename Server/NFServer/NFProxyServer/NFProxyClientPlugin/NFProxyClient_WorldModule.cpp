@@ -68,7 +68,7 @@ bool NFCProxyClient_WorldModule::Shut()
 
 void NFCProxyClient_WorldModule::RegisterServer()
 {
-	NFServerConfig* pConfig = NFServerCommon::GetServerConfig(pPluginManager, NF_ST_PROXY);
+	NFServerConfig* pConfig = NFServerCommon::GetAppConfig(pPluginManager, NF_ST_PROXY);
 	if (pConfig)
 	{
 		NFMsg::ServerInfoReportList xMsg;
@@ -119,7 +119,7 @@ void NFCProxyClient_WorldModule::ServerReport()
 
 	mLastReportTime = pPluginManager->GetNowTime();
 
-	NFServerConfig* pConfig = NFServerCommon::GetServerConfig(pPluginManager, NF_ST_PROXY);
+	NFServerConfig* pConfig = NFServerCommon::GetAppConfig(pPluginManager, NF_ST_PROXY);
 	if (pConfig)
 	{
 		NFMsg::ServerInfoReportList xMsg;

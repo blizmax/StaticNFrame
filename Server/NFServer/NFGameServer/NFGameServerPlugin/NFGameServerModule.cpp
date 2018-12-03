@@ -32,7 +32,7 @@ bool NFCGameServerModule::Init()
 
 	m_pNetServerModule->AddReceiveCallBack(NF_ST_GAME, EGMI_NET_PROXY_TO_GAME_REGISTER, this, &NFCGameServerModule::OnProxyServerRegisterProcess);
 
-	NFServerConfig* pConfig = NFServerCommon::GetServerConfig(pPluginManager, NF_ST_GAME);
+	NFServerConfig* pConfig = NFServerCommon::GetAppConfig(pPluginManager, NF_ST_GAME);
 	if (pConfig)
 	{
 		uint32_t unlinkId = m_pNetServerModule->AddServer(NF_ST_GAME, pConfig->mServerId, pConfig->mMaxConnectNum, pConfig->mServerPort);

@@ -43,7 +43,7 @@ bool NFCMasterServerModule::Init()
 
 	m_pNetServerModule->AddReceiveCallBack(NF_ST_MASTER, EGMI_STS_SERVER_REPORT, this, &NFCMasterServerModule::OnServerReport);
 
-	NFServerConfig* pConfig = NFServerCommon::GetServerConfig(pPluginManager, NF_ST_MASTER);
+	NFServerConfig* pConfig = NFServerCommon::GetAppConfig(pPluginManager, NF_ST_MASTER);
 	if (pConfig)
 	{
 		uint32_t unlinkId = m_pNetServerModule->AddServer(NF_ST_MASTER, pConfig->mServerId, pConfig->mMaxConnectNum, pConfig->mServerPort);

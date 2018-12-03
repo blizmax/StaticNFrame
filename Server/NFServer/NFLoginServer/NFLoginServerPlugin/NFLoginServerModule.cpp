@@ -31,7 +31,7 @@ bool NFCLoginServerModule::Init()
 	m_pNetServerModule->AddEventCallBack(NF_ST_LOGIN, this, &NFCLoginServerModule::OnProxySocketEvent);
 	m_pNetServerModule->AddReceiveCallBack(NF_ST_LOGIN, this, &NFCLoginServerModule::OnHandleOtherMessage);
 
-	NFServerConfig* pConfig = NFServerCommon::GetServerConfig(pPluginManager, NF_ST_LOGIN);
+	NFServerConfig* pConfig = NFServerCommon::GetAppConfig(pPluginManager, NF_ST_LOGIN);
 	if (pConfig)
 	{
 		uint32_t unlinkId = m_pNetServerModule->AddServer(NF_ST_LOGIN, pConfig->mServerId, pConfig->mMaxConnectNum, pConfig->mServerPort);

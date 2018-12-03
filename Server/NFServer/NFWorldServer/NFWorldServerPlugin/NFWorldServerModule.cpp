@@ -50,7 +50,7 @@ bool NFCWorldServerModule::Init()
 
 	m_pNetServerModule->AddReceiveCallBack(NF_ST_WORLD, EGMI_STS_SERVER_REPORT, this, &NFCWorldServerModule::OnServerReport);
 
-	NFServerConfig* pConfig = NFServerCommon::GetServerConfig(pPluginManager, NF_ST_WORLD);
+	NFServerConfig* pConfig = NFServerCommon::GetAppConfig(pPluginManager, NF_ST_WORLD);
 	if (pConfig)
 	{
 		uint32_t unlinkId = m_pNetServerModule->AddServer(NF_ST_WORLD, pConfig->mServerId, pConfig->mMaxConnectNum, pConfig->mServerPort);

@@ -22,6 +22,70 @@ NFServerConfig* NFServerCommon::GetServerConfig(NFIPluginManager* pPluginManager
 	}
 	else
 	{
+		NFServerConfig* pAppConfig = NFConfigMgr::Instance()->GetServerConfig(pPluginManager->GetAppID());
+		if (pAppConfig == nullptr) return nullptr;
+
+		std::vector<NFServerConfig*> vecServerConfig = NFConfigMgr::Instance()->GetServerConfigFromServerType(eServerType);
+		if (!vecServerConfig.empty())
+		{
+			for (int i = 0; i < vecServerConfig.size(); i++)
+			{
+				NFServerConfig* pConfig = vecServerConfig[i];
+				if (eServerType == NF_ST_MASTER)
+				{			
+					if (pConfig->mMasterId == pAppConfig->mMasterId)
+					{
+						return pConfig;
+					}
+				}
+				else if (eServerType == NF_ST_LOGIN)
+				{
+					if (pConfig->mMasterId == pAppConfig->mMasterId)
+					{
+						return pConfig;
+					}
+				}
+				else if (eServerType == NF_ST_WORLD)
+				{
+					if (pConfig->mMasterId == pAppConfig->mMasterId && pConfig->mWorldId == pAppConfig->mWorldId)
+					{
+						return pConfig;
+					}
+				}
+				else if (eServerType == NF_ST_GAME)
+				{
+					if (pConfig->mMasterId == pAppConfig->mMasterId && pConfig->mWorldId == pAppConfig->mWorldId)
+					{
+						return pConfig;
+					}
+				}
+				else if (eServerType == NF_ST_PROXY)
+				{
+					if (pConfig->mMasterId == pAppConfig->mMasterId && pConfig->mWorldId == pAppConfig->mWorldId)
+					{
+						return pConfig;
+					}
+				}
+			}
+		}
+		
+	}
+	return pServerConfig;
+}
+
+NFServerConfig* NFServerCommon::GetAppConfig(NFIPluginManager* pPluginManager, NF_SERVER_TYPES eServerType)
+{
+	NFServerConfig* pServerConfig = nullptr;
+	if (pPluginManager->IsLoadAllServer())
+	{
+		std::vector<NFServerConfig*> vecServerConfig = NFConfigMgr::Instance()->GetServerConfigFromServerType(eServerType);
+		if (!vecServerConfig.empty())
+		{
+			pServerConfig = vecServerConfig.front();
+		}
+	}
+	else
+	{
 		pServerConfig = NFConfigMgr::Instance()->GetServerConfig(pPluginManager->GetAppID());
 	}
 	return pServerConfig;

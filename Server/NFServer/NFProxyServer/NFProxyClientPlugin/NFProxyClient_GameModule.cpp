@@ -82,7 +82,6 @@ void NFCProxyClient_GameModule::OnClientDisconnect(uint32_t unLinkId)
 		if (unLinkId == pServerData->mUnlinkId)
 		{
 			pServerData->mServerInfo.set_server_state(NFMsg::EST_CRASH);
-			pServerData->mUnlinkId = 0;
 
 			NFLogError("the game server disconnect, serverName:{}, serverId:{}, serverIp:{}, serverPort:{}"
 				, pServerData->mServerInfo.server_name(), pServerData->mServerInfo.server_id(), pServerData->mServerInfo.server_ip(), pServerData->mServerInfo.server_port());
@@ -100,7 +99,7 @@ void NFCProxyClient_GameModule::OnHandleOtherMessage(const uint32_t unLinkId, co
 
 void NFCProxyClient_GameModule::RegisterServer(uint32_t unLinkId)
 {
-	NFServerConfig* pConfig = NFServerCommon::GetServerConfig(pPluginManager, NF_ST_PROXY);
+	NFServerConfig* pConfig = NFServerCommon::GetAppConfig(pPluginManager, NF_ST_PROXY);
 	if (pConfig)
 	{
 		NFMsg::ServerInfoReportList xMsg;

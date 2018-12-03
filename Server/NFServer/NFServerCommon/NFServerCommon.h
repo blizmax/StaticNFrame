@@ -17,6 +17,7 @@ class NFServerCommon
 {
 public:
 	static NFServerConfig* GetServerConfig(NFIPluginManager* pPluginManager, NF_SERVER_TYPES eServerType);
+	static NFServerConfig* GetAppConfig(NFIPluginManager* pPluginManager, NF_SERVER_TYPES eServerType);
 };
 
 class NFProxyData

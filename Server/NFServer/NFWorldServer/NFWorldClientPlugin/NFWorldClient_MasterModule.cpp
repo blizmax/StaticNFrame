@@ -80,7 +80,6 @@ void NFCWorldClient_MasterModule::OnProxySocketEvent(const eMsgType nEvent, cons
 	{
 		NFLogDebug("World Server DisConnect Master Server!");
 		NFEventMgr::Instance()->FireExecute(NFEVENT_WORLD_CONNECT_MASTER_FAIL, unLinkId, NF_ST_MASTER, nullptr);
-		m_unLinkId = 0;
 	}
 }
 
@@ -91,7 +90,7 @@ void NFCWorldClient_MasterModule::OnHandleOtherMessage(const uint32_t unLinkId, 
 
 void NFCWorldClient_MasterModule::RegisterServer()
 {
-	NFServerConfig* pConfig = NFServerCommon::GetServerConfig(pPluginManager, NF_ST_WORLD);
+	NFServerConfig* pConfig = NFServerCommon::GetAppConfig(pPluginManager, NF_ST_WORLD);
 	if (pConfig)
 	{
 		NFMsg::ServerInfoReportList xMsg;
@@ -118,7 +117,7 @@ void NFCWorldClient_MasterModule::ServerReport()
 
 	mLastReportTime = pPluginManager->GetNowTime();
 
-	NFServerConfig* pConfig = NFServerCommon::GetServerConfig(pPluginManager, NF_ST_WORLD);
+	NFServerConfig* pConfig = NFServerCommon::GetAppConfig(pPluginManager, NF_ST_WORLD);
 	if (pConfig)
 	{
 		NFMsg::ServerInfoReportList xMsg;

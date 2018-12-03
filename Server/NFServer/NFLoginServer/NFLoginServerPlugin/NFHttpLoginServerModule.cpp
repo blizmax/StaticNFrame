@@ -30,7 +30,7 @@ bool NFCHttpLoginServerModule::Init()
 	m_pHttpServerModule = pPluginManager->FindModule<NFIHttpServerModule>();
 	m_pHttpServerModule->AddRequestHandler("/httplogin", NFHttpType::NF_HTTP_REQ_POST, this, &NFCHttpLoginServerModule::HttpHandleHttpLogin);
 
-	NFServerConfig* pConfig = NFServerCommon::GetServerConfig(pPluginManager, NF_ST_LOGIN);
+	NFServerConfig* pConfig = NFServerCommon::GetAppConfig(pPluginManager, NF_ST_LOGIN);
 	if (pConfig)
 	{
 		if (pConfig->mHttpPort == 0) return true;
