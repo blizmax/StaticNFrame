@@ -15,7 +15,7 @@
 #include <iostream>
 
 // A wrapper of PHP md5 implementation
-class _NFExport NFPHPMD5
+class NFPHPMD5
 {
 public:
 	enum

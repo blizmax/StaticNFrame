@@ -78,7 +78,7 @@ struct CALL_TREE_NODE
 	CALL_TREE_NODE* nextBrather;
 };
 
-class _NFExport NFProfiler : public NFSingleton<NFProfiler>
+class NFProfiler : public NFSingleton<NFProfiler>
 {
 public:
 	NFProfiler()
@@ -142,7 +142,7 @@ private:
 
 #define CLEAR_PROFILE() NFProfiler::Instance()->ResetAllProfilerTimer();
 
-class _NFExport ProfilerSegmentHelper
+class ProfilerSegmentHelper
 {
 public:
 	ProfilerSegmentHelper(PROFILE_TIMER* timer)

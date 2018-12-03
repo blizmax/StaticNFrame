@@ -7,19 +7,22 @@
 //
 // -------------------------------------------------------------------------
 #include "NFComm/NFPluginModule/NFCPluginManager.h"
+#include "NFComm/NFCore/NFPlatform.h"
 
-#include "NFComm/NFCore/NFServerTimeMgr.h"
+#include "NFComm/NFPluginModule/NFIEventModule.h"
+#include "NFComm/NFPluginModule/NFITimerModule.h"
+#include "NFComm/NFPluginModule/NFIConfigModule.h"
+#include "NFComm/NFPluginModule/NFILogModule.h"
 
-#include "NFComm/NFActorPlugin/NFActorPlugin.h"
-#include "NFComm/NFKernelPlugin/NFKernelPlugin.h"
 #include "NFComm/NFPluginModule/NFEventMgr.h"
 #include "NFComm/NFPluginModule/NFTimerMgr.h"
 #include "NFComm/NFPluginModule/NFLogMgr.h"
 #include "NFComm/NFPluginModule/NFConfigMgr.h"
-#include "NFComm/NFPluginModule/NFDBActorMgr.h"
 
-#include "NFComm/NFPluginModule/NFIEventModule.h"
-#include "NFComm/NFPluginModule/NFITimerModule.h"
+#ifndef NF_DYNAMIC_PLUGIN
+#include "NFComm/NFActorPlugin/NFActorPlugin.h"
+#include "NFComm/NFKernelPlugin/NFKernelPlugin.h"
+
 #include "NFComm/NFNetPlugin/NFNetPlugin.h"
 #include "NFTest/NFTestPlugin/NFTestPlugin.h"
 #include <NFComm/NFMysqlPlugin/NFMysqlPlugin.h>
@@ -37,35 +40,26 @@
 
 #include <NFComm/NFXPlugin/NFLuaScriptPlugin/NFLuaScriptPlugin.h>
 
+#endif
+
 bool NFCPluginManager::InitSingleton()
 {
-	NFServerTimeMgr::Instance()->Init(mFrame);
-	NFConfigMgr::Instance()->Init(this);
-
-	NFIEventModule* pEventModule = NFIPluginManager::FindModule<NFIEventModule>();
-	NFITimerModule* pTimerModule = NFIPluginManager::FindModule<NFITimerModule>();
-	NFILogModule* pLogModule = NFIPluginManager::FindModule<NFILogModule>();
+	NFIEventModule* pEventModule = (NFIEventModule*)FindModule(typeid(NFIEventModule).name());
+	NFITimerModule* pTimerModule = (NFITimerModule*)FindModule(typeid(NFITimerModule).name());
+	NFILogModule* pLogModule = (NFILogModule*)FindModule(typeid(NFILogModule).name());
+	NFIConfigModule* pConfigModule = (NFIConfigModule*)FindModule(typeid(NFIConfigModule).name());
 
 	//初始化事件系统
+	NFConfigMgr::Instance()->Init(pConfigModule);
 	NFEventMgr::Instance()->Init(pEventModule);
 	NFTimerMgr::Instance()->Init(pTimerModule);
 	NFLogMgr::Instance()->Init(pLogModule);
 
-	//初始化DB系统
-	NFDBActorMgr::Instance()->Init();
 	return true;
 }
 
 bool NFCPluginManager::ReleaseSingletion()
 {
-	//初始化DB系统
-	NFDBActorMgr::Instance()->UnInit();
-	NFDBActorMgr::Instance()->ReleaseInstance();
-
-	//释放时间系统
-	NFServerTimeMgr::Instance()->UnInit();
-	NFServerTimeMgr::Instance()->ReleaseInstance();
-
 	//系统配置
 	NFConfigMgr::Instance()->UnInit();
 	NFConfigMgr::Instance()->ReleaseInstance();
@@ -87,14 +81,19 @@ bool NFCPluginManager::ReleaseSingletion()
 
 bool NFCPluginManager::LoadKernelPlugin()
 {
+#ifndef NF_DYNAMIC_PLUGIN
 	mPluginNameMap.insert(PluginNameMap::value_type("NFKernelPlugin", true));
 	LoadStaticPlugin("NFKernelPlugin");
-
+#else
+	mPluginNameMap.insert(PluginNameMap::value_type("NFKernelPlugin", true));
+	LoadPluginLibrary("NFKernelPlugin");
+#endif
 	return true;
 }
 
 bool NFCPluginManager::RegisterStaticPlugin()
 {
+#ifndef NF_DYNAMIC_PLUGIN
 	REGISTER_STATIC_PLUGIN(this, NFKernelPlugin);
 	REGISTER_STATIC_PLUGIN(this, NFActorPlugin);
 	REGISTER_STATIC_PLUGIN(this, NFNetPlugin);
@@ -116,5 +115,7 @@ bool NFCPluginManager::RegisterStaticPlugin()
 	REGISTER_STATIC_PLUGIN(this, NFProxyServerPlugin);
 	REGISTER_STATIC_PLUGIN(this, NFProxyClientPlugin);
 	///////////////////////////////////////////////////
+
+#endif
 	return true;
 }

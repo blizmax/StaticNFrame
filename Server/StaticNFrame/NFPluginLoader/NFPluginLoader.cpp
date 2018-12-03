@@ -19,7 +19,6 @@
 
 #include "NFComm/NFPluginModule/NFCPluginManager.h"
 #include "NFComm/NFCore/NFPlatform.h"
-#include "NFComm/NFCore/NFServerTimeMgr.h"
 #include "NFComm/NFCore/NFProfiler.h"
 #include "NFComm/NFCore/NFCmdLine.h"
 #include "NFComm/NFCore/NFCommon.h"
@@ -109,11 +108,13 @@ static void sig_usr(int signo)
 	{
 	case SIGUSR1:
 	{
+		std::cout << "Start Close NFPluginLoader............." << std::endl;
 		NFCPluginManager::GetSingletonPtr()->BeforeShut();
 		NFCPluginManager::GetSingletonPtr()->Shut();
 		NFCPluginManager::GetSingletonPtr()->Finalize();
 
 		NFCPluginManager::GetSingletonPtr()->ReleaseInstance();
+		std::cout << "Close NFPluginLoader............." << std::endl;
 	}
 	break;
 	case SIGUSR2:
@@ -182,11 +183,11 @@ void ProcessParameter(int argc, char* argv[])
 	{
 		NFCmdLine::NFParser cmdParser;
 
-		cmdParser.Add<std::string>("Server", 'S', "Server Name", true, "all");
-		cmdParser.Add<int>("ID", 'I', "Server ID", true, 0);
-		cmdParser.Add<std::string>("Path", 'P', "Config Path", false, "./");
-		cmdParser.Add<std::string>("Plugin", 'p', "Plugin Config", false, "Plugin.xml");
-		cmdParser.Add<std::string>("LuaScript", 'l', "Lua Script Path", false, "ScriptModule");
+		cmdParser.Add<std::string>("Server", 'S', "Server Name", false, "AllServer");
+		cmdParser.Add<int>("ID", 'I', "Server ID", false, 6);
+		cmdParser.Add<std::string>("Path", 'P', "Config Path", false, "../Config");
+		cmdParser.Add<std::string>("Plugin", 'p', "Plugin Config", false, "Plugin.lua");
+		cmdParser.Add<std::string>("LuaScript", 'l', "Lua Script Path", false, "../ScriptModule");
 		cmdParser.Add<std::string>("LogPath", 'o', "Log Path", false, "logs");
 		
 		cmdParser.Add("XButton", 'x', "Close the 'X' button, only on windows");
@@ -288,11 +289,13 @@ int main(int argc, char* argv[])
 		}
 	}
 
+	std::cout << "Start Close NFPluginLoader............." << std::endl;
 	NFCPluginManager::GetSingletonPtr()->BeforeShut();
 	NFCPluginManager::GetSingletonPtr()->Shut();
 	NFCPluginManager::GetSingletonPtr()->Finalize();
 
 	NFCPluginManager::GetSingletonPtr()->ReleaseInstance();
+	std::cout << "Close NFPluginLoader............." << std::endl;
 
 	return 0;
 }

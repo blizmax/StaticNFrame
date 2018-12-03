@@ -31,15 +31,7 @@ public:
 		TPTASK_STATE_CONTINUE_CHILDTHREAD = 2,
 	};
 
-	/**
-	返回值： thread::TPTask::TPTaskState， 请参看TPTaskState
-	*/
-	virtual TPTaskState presentMainThread()
-	{
-		return TPTASK_STATE_COMPLETED;
-	}
-
-	virtual uint64_t GetBalanceId() const
+	uint64_t GetBalanceId() const
 	{
 		return m_balanceId;
 	}
@@ -49,7 +41,19 @@ public:
 		m_balanceId = balanceId;
 	}
 
-	virtual bool db_thread_process() = 0;
+	/**
+	**  异步线程处理函数，将在另一个线程里运行
+	*/
+	virtual bool ThreadProcess() = 0;
+
+	/**
+	** 主线程处理函数，将在线程处理完后，提交给主先来处理，根据返回函数是否继续处理
+		返回值： thread::TPTask::TPTaskState， 请参看TPTaskState
+	*/
+	virtual TPTaskState MainThreadProcess()
+	{
+		return TPTASK_STATE_COMPLETED;
+	}
 protected:
 	uint64_t m_balanceId; //动态均衡ID, 如果是玩家就是玩家CharId, 如果不是一般填0
 };

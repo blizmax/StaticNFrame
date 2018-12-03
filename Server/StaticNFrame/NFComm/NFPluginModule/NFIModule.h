@@ -44,11 +44,6 @@ public:
 	{
 	}
 
-	virtual bool RegisterLua()
-	{
-		return true;
-	}
-
 	virtual bool Awake()
 	{
 		return true;
@@ -105,7 +100,6 @@ public:
 	}
 
 	std::string strName;
-
 protected:
 	NFIPluginManager* pPluginManager = NULL;
 };

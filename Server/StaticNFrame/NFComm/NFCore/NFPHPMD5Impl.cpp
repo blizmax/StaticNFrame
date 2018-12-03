@@ -35,12 +35,12 @@
 #include "NFPHPMD5Impl.h"
 #include <string.h>
 
-_NFExport void make_digest(char* md5str, unsigned char* digest)
+void make_digest(char* md5str, unsigned char* digest)
 {
 	make_digest_ex(md5str, digest, 16);
 }
 
-_NFExport void make_digest_ex(char* md5str, unsigned char* digest, int len)
+void make_digest_ex(char* md5str, unsigned char* digest, int len)
 {
 	static const char hexits[17] = "0123456789abcdef";
 	int i;
@@ -152,7 +152,7 @@ Rotation is separate from addition to prevent recomputation.
 /* {{{ PHP_MD5Init
 * MD5 initialization. Begins an MD5 operation, writing a new context.
 */
-_NFExport void PHP_MD5Init(PHP_MD5_CTX* context)
+void PHP_MD5Init(PHP_MD5_CTX* context)
 {
 	context->count[0] = context->count[1] = 0;
 	/* Load magic initialization constants.
@@ -170,7 +170,7 @@ MD5 block update operation. Continues an MD5 message-digest
 operation, processing another message block, and updating the
 context.
 */
-_NFExport void PHP_MD5Update(PHP_MD5_CTX* context, const unsigned char* input,
+void PHP_MD5Update(PHP_MD5_CTX* context, const unsigned char* input,
                              unsigned int inputLen)
 {
 	unsigned int i, index, partLen;
@@ -211,7 +211,7 @@ _NFExport void PHP_MD5Update(PHP_MD5_CTX* context, const unsigned char* input,
 MD5 finalization. Ends an MD5 message-digest operation, writing the
 the message digest and zeroizing the context.
 */
-_NFExport void PHP_MD5Final(unsigned char digest[16], PHP_MD5_CTX* context)
+void PHP_MD5Final(unsigned char digest[16], PHP_MD5_CTX* context)
 {
 	unsigned char bits[8];
 	unsigned int index, padLen;

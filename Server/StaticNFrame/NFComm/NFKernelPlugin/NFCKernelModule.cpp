@@ -7,7 +7,6 @@
 // -------------------------------------------------------------------------
 
 #include "NFCKernelModule.h"
-#include "NFComm/NFCore/NFMemManager.hpp"
 
 #include "NFComm/NFCore/NFProfiler.h"
 #include <NFComm/NFPluginModule/NFIPluginManager.h>
@@ -64,7 +63,7 @@ bool NFCKernelModule::AfterInit()
 
 void NFCKernelModule::ProcessMemFree()
 {
-	NFMemManager::GetSingletonPtr()->FreeMem();
+
 }
 
 uint64_t NFCKernelModule::GetUUID()

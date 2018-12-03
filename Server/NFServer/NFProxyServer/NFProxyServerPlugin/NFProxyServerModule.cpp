@@ -38,7 +38,7 @@ bool NFCProxyServerModule::Init()
 	m_pNetServerModule = pPluginManager->FindModule<NFINetServerModule>();
 	m_pNetServerModule->AddEventCallBack(NF_ST_PROXY, this, &NFCProxyServerModule::OnProxySocketEvent);
 	m_pNetServerModule->AddReceiveCallBack(NF_ST_PROXY, this, &NFCProxyServerModule::OnHandleOtherMessage);
-	m_pNetServerModule->AddReceiveCallBack(NF_ST_PROXY, NF_JSON_MSG_ID, this, &NFCProxyServerModule::OnHandleOtherMessage);
+	m_pNetServerModule->AddReceiveCallBack(NF_ST_PROXY, EGMI_NET_MSG_JSON_MSG, this, &NFCProxyServerModule::OnHandleJsonMessage);
 
 	NFServerConfig* pConfig = NFServerCommon::GetServerConfig(pPluginManager, NF_ST_PROXY);
 	if (pConfig)

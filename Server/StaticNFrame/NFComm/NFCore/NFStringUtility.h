@@ -19,7 +19,7 @@
 
 #include "NFPlatform.h"
 
-class _NFExport NFStringUtility
+class NFStringUtility
 {
 public:
 	static const std::string kEmpty;
@@ -344,7 +344,7 @@ public:
 	}
 };
 
-class _NFExport NFStringUtilW
+class NFStringUtilW
 {
 public:
 	static void ToLower(std::wstring& str)

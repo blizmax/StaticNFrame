@@ -75,6 +75,7 @@ void NFCProxyClient_WorldModule::RegisterServer()
 		pData->set_server_id(pConfig->mServerId);
 		pData->set_server_name(pConfig->mServerName);
 		pData->set_server_ip(pConfig->mServerIp);
+		pData->set_server_type(pConfig->mServerType);
 		pData->set_server_port(pConfig->mServerPort);
 		pData->set_server_max_online(pConfig->mMaxConnectNum);
 		pData->set_server_state(NFMsg::EST_NARMAL);
@@ -105,5 +106,5 @@ void NFCProxyClient_WorldModule::OnProxySocketEvent(const eMsgType nEvent, const
 
 void NFCProxyClient_WorldModule::OnHandleOtherMessage(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen)
 {
-	if (unLinkId != m_unLinkId) return;
+	NFLogWarning("msg:{} not handled", nMsgId);
 }

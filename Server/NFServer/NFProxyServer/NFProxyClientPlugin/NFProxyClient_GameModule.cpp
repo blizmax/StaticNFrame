@@ -35,17 +35,8 @@ bool NFCProxyClient_GameModule::AfterInit()
 	m_pNetClientModule->AddEventCallBack(NF_ST_GAME, this, &NFCProxyClient_GameModule::OnProxySocketEvent);
 	m_pNetClientModule->AddReceiveCallBack(NF_ST_GAME, this, &NFCProxyClient_GameModule::OnHandleOtherMessage);
 
-	NFServerConfig* pConfig = NFServerCommon::GetServerConfig(pPluginManager, NF_ST_GAME);
-	if (pConfig)
-	{
-		m_unLinkId = m_pNetClientModule->AddServer(NF_ST_GAME, pConfig->mServerIp, pConfig->mServerPort);
-	}
-	else
-	{
-		NFLogError("I Can't get the Game Server config!");
-		return false;
-	}
-
+	//等待世界服务器消息返回， 处理游戏服务器连接
+	m_pNetClientModule->AddReceiveCallBack(NF_ST_WORLD, EGMI_NET_WORLD_TO_PROXY_SEND_GAME, this, &NFCProxyClient_GameModule::OnHandleWorldSendGameMessage);
 	return true;
 }
 
@@ -72,6 +63,8 @@ void NFCProxyClient_GameModule::OnProxySocketEvent(const eMsgType nEvent, const 
 	{
 		NFLogDebug("Proxy Server Connect Game Server Success!");
 		NFEventMgr::Instance()->FireExecute(NFEVENT_PROXY_CONNECT_GAME_SUCCESS, unLinkId, NF_ST_GAME, nullptr);
+
+		RegisterServer();
 	}
 	else if (nEvent == eMsgType_DISCONNECTED)
 	{
@@ -97,10 +90,33 @@ void NFCProxyClient_GameModule::RegisterServer()
 		pData->set_server_name(pConfig->mServerName);
 		pData->set_server_ip(pConfig->mServerIp);
 		pData->set_server_port(pConfig->mServerPort);
+		pData->set_server_type(pConfig->mServerType);
 		pData->set_server_max_online(pConfig->mMaxConnectNum);
 		pData->set_server_state(NFMsg::EST_NARMAL);
 
 		m_pNetClientModule->SendToServerByPB(m_unLinkId, EGMI_NET_PROXY_TO_GAME_REGISTER, xMsg, 0);
+	}
+}
+
+void NFCProxyClient_GameModule::OnHandleWorldSendGameMessage(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen)
+{
+	NFMsg::ServerInfoReportList xMsg;
+	CLIENT_MSG_PROCESS_NO_OBJECT(nMsgId, msg, nLen, xMsg);
+
+	for (int i = 0; i < xMsg.server_list_size(); ++i)
+	{
+		const NFMsg::ServerInfoReport& xServerData = xMsg.server_list(i);
+
+		switch (xServerData.server_type())
+		{
+		case NF_SERVER_TYPES::NF_ST_GAME:
+		{
+			m_unLinkId = m_pNetClientModule->AddServer(NF_SERVER_TYPES::NF_ST_GAME, xServerData.server_ip(), xServerData.server_port());
+		}
+		break;
+		default:
+			break;
+		}
 	}
 }
 

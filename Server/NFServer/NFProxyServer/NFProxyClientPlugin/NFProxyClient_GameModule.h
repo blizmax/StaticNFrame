@@ -32,6 +32,10 @@ public:
 protected:
 	void OnProxySocketEvent(const eMsgType nEvent, const uint32_t unLinkId);
 	void OnHandleOtherMessage(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen);
+
+	//
+	void OnHandleWorldSendGameMessage(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen);
+
 	void RegisterServer();
 private:
 	NFINetClientModule* m_pNetClientModule;

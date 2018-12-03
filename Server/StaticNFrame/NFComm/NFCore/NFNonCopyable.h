@@ -10,7 +10,7 @@
 
 #include "NFPlatform.h"
 
-class _NFExport NFNonCopyable
+class NFNonCopyable
 {
 protected:
 	NFNonCopyable()

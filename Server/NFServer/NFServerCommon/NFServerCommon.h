@@ -9,6 +9,7 @@
 
 #pragma once
 
+#include "NFComm/NFCore/NFPlatform.h"
 #include "NFComm/NFPluginModule/NFConfigMgr.h"
 #include "NFMessageDefine/NFMsgDefine.h"
 
@@ -23,14 +24,11 @@ class NFProxyData
 public:
 	NFProxyData()
 	{
-		mServerId = 0;
-		mLinkId = 0;
+		mUnlinkId = 0;
 	}
 
-	uint32_t mServerId;
-	uint32_t mLinkId;
-
-	virtual void print() { }
+	uint32_t mUnlinkId;
+	NFMsg::ServerInfoReport mServerInfo;
 };
 
 //服务器之间的内部协议号1-1000, 不涉及业务
@@ -45,12 +43,25 @@ enum NF_EGMI_MsgId
 
 	////////////////////////////////////////////
 	
-	EGMI_NET_PROXY_TO_WORLD_REGISTER = 11,	//网关服务器注册世界服务器协议
-	EGMI_NET_GAME_TO_WORLD_REGISTER = 12,	//游戏服务器注册世界服务器协议
-	EGMI_NET_LOGIN_TO_MASTER_REGISTER = 13,	//登录服务器注册MASTER服务器协议
-	EGMI_NET_WORLD_TO_MASTER_REGISTER = 14,	//世界服务器注册MASTER服务器协议
+	EGMI_NET_PROXY_TO_WORLD_REGISTER = 11,	//网关服务器	注册	世界服务器协议
+	EGMI_NET_GAME_TO_WORLD_REGISTER = 12,	//游戏服务器	注册	世界服务器协议
+	EGMI_NET_LOGIN_TO_MASTER_REGISTER = 13,	//登录服务器	注册	MASTER服务器协议
+	EGMI_NET_WORLD_TO_MASTER_REGISTER = 14,	//世界服务器	注册	MASTER服务器协议
+	EGMI_NET_PROXY_TO_GAME_REGISTER = 15,	//网关服务器	注册	游戏服务器协议
 
-	EGMI_NET_PROXY_TO_GAME_REGISTER = 14,	//网关服务器注册游戏服务器协议
+	EGMI_NET_PROXY_TO_WORLD_UNREGISTER = 16,	//网关服务器 注销  世界服务器协议
+	EGMI_NET_GAME_TO_WORLD_UNREGISTER = 17,	//游戏服务器	注销	世界服务器协议
+	EGMI_NET_LOGIN_TO_MASTER_UNREGISTER = 18,	//登录服务器	注销	MASTER服务器协议
+	EGMI_NET_WORLD_TO_MASTER_UNREGISTER = 19,	//世界服务器	注销	MASTER服务器协议
+	EGMI_NET_PROXY_TO_GAME_UNREGISTER = 20,	//网关服务器	注销	游戏服务器协议
+
+	EGMI_NET_PROXY_TO_WORLD_REFRESH = 21,	//网关服务器 刷新  世界服务器协议
+	EGMI_NET_GAME_TO_WORLD_REFRESH = 22,	//游戏服务器	刷新	世界服务器协议
+	EGMI_NET_LOGIN_TO_MASTER_REFRESH = 23,	//登录服务器	刷新	MASTER服务器协议
+	EGMI_NET_WORLD_TO_MASTER_REFRESHR = 24,	//世界服务器	刷新	MASTER服务器协议
+	EGMI_NET_PROXY_TO_GAME_REFRESH = 25,	//网关服务器	刷新	游戏服务器协议
+
+	EGMI_NET_WORLD_TO_PROXY_SEND_GAME = 26, //世界服务器发送游戏服务器信息给网关服务器
 
 	EGMI_NET_MSG_END = 1000,
 };
@@ -58,6 +69,7 @@ enum NF_EGMI_MsgId
 //////////////////////////////////////////////////////////////////////////
 class NFServerData
 {
+public:
 	NFServerData()
 	{
 		mUnlinkId = 0;
@@ -69,5 +81,5 @@ class NFServerData
 	}
 
 	uint32_t mUnlinkId;
-	NFMsg::ServerInfoReport pData;
+	NFMsg::ServerInfoReport mServerInfo;
 };

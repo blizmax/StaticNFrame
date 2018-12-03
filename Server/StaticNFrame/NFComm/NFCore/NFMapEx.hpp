@@ -20,20 +20,19 @@ template <typename T, typename TD>
 class NFMapEx
 {
 public:
-	typedef std::map<T, NF_SHARE_PTR<TD>> NFMapOBJECT;
+	typedef std::map<T, NF_SHARE_PTR<TD> > NFMapOBJECT;
 
 	NFMapEx()
 	{
 	};
-
 	virtual ~NFMapEx()
 	{
 	};
 
 	virtual bool ExistElement(const T& name)
 	{
-		typename NFMapOBJECT::iterator itr = mObjectMap.find(name);
-		if (itr != mObjectMap.end())
+		typename NFMapOBJECT::iterator itr = mObjectList.find(name);
+		if (itr != mObjectList.end())
 		{
 			return true;
 		}
@@ -42,18 +41,32 @@ public:
 			return false;
 		}
 	}
+	/*
+	virtual NF_SHARE_PTR<TD> AddElement(const T& name)
+	{
+	typename NFMapOBJECT::iterator itr = mObjectList.find(name);
+	if (itr == mObjectList.end())
+	{
+	NF_SHARE_PTR<TD> data(NF_NEW TD());
+	mObjectList.insert(typename NFMapOBJECT::value_type(name, data));
+	return data;
+	}
 
+	return NF_SHARE_PTR<TD>();
+	}
+	*/
 	virtual bool AddElement(const T& name, const NF_SHARE_PTR<TD> data)
 	{
 		if (data == nullptr)
 		{
+			std::cout << "AddElement failed : " << std::endl;
 			return false;
 		}
 
-		typename NFMapOBJECT::iterator itr = mObjectMap.find(name);
-		if (itr == mObjectMap.end())
+		typename NFMapOBJECT::iterator itr = mObjectList.find(name);
+		if (itr == mObjectList.end())
 		{
-			mObjectMap.insert(typename NFMapOBJECT::value_type(name, data));
+			mObjectList.insert(typename NFMapOBJECT::value_type(name, data));
 
 			return true;
 		}
@@ -63,10 +76,10 @@ public:
 
 	virtual bool RemoveElement(const T& name)
 	{
-		typename NFMapOBJECT::iterator itr = mObjectMap.find(name);
-		if (itr != mObjectMap.end())
+		typename NFMapOBJECT::iterator itr = mObjectList.find(name);
+		if (itr != mObjectList.end())
 		{
-			mObjectMap.erase(itr);
+			mObjectList.erase(itr);
 
 			return true;
 		}
@@ -76,21 +89,21 @@ public:
 
 	virtual TD* GetElementNude(const T& name)
 	{
-		typename NFMapOBJECT::iterator itr = mObjectMap.find(name);
-		if (itr != mObjectMap.end())
+		typename NFMapOBJECT::iterator itr = mObjectList.find(name);
+		if (itr != mObjectList.end())
 		{
 			return itr->second.get();
 		}
 		else
 		{
-			return nullptr;
+			return NULL;
 		}
 	}
 
 	virtual NF_SHARE_PTR<TD> GetElement(const T& name)
 	{
-		typename NFMapOBJECT::iterator itr = mObjectMap.find(name);
-		if (itr != mObjectMap.end())
+		typename NFMapOBJECT::iterator itr = mObjectList.find(name);
+		if (itr != mObjectList.end())
 		{
 			return itr->second;
 		}
@@ -102,87 +115,85 @@ public:
 
 	virtual TD* FirstNude(T& name)
 	{
-		if (mObjectMap.size() <= 0)
+		if (mObjectList.size() <= 0)
 		{
-			return nullptr;
+			return NULL;
 		}
 
-		mObjectCurIter = mObjectMap.begin();
-		if (mObjectCurIter != mObjectMap.end())
+		mObjectCurIter = mObjectList.begin();
+		if (mObjectCurIter != mObjectList.end())
 		{
 			name = mObjectCurIter->first;
 			return mObjectCurIter->second.get();
 		}
 		else
 		{
-			return nullptr;
+			return NULL;
 		}
 	}
 
 	virtual TD* NextNude(T& name)
 	{
-		if (mObjectCurIter == mObjectMap.end())
+		if (mObjectCurIter == mObjectList.end())
 		{
-			return nullptr;
+			return NULL;
 		}
 
-		++mObjectCurIter;
-		if (mObjectCurIter != mObjectMap.end())
+		mObjectCurIter++;
+		if (mObjectCurIter != mObjectList.end())
 		{
 			name = mObjectCurIter->first;
 			return mObjectCurIter->second.get();
 		}
 		else
 		{
-			return nullptr;
+			return NULL;
 		}
 	}
-
 	virtual TD* FirstNude()
 	{
-		if (mObjectMap.size() <= 0)
+		if (mObjectList.size() <= 0)
 		{
-			return nullptr;
+			return NULL;
 		}
 
-		mObjectCurIter = mObjectMap.begin();
-		if (mObjectCurIter != mObjectMap.end())
+		mObjectCurIter = mObjectList.begin();
+		if (mObjectCurIter != mObjectList.end())
 		{
 			return mObjectCurIter->second.get();
 		}
 		else
 		{
-			return nullptr;
+			return NULL;
 		}
 	}
-
 	virtual TD* NextNude()
 	{
-		if (mObjectCurIter == mObjectMap.end())
+		if (mObjectCurIter == mObjectList.end())
 		{
-			return nullptr;
+			return NULL;
 		}
 
-		++mObjectCurIter;
-		if (mObjectCurIter != mObjectMap.end())
+		mObjectCurIter++;
+		if (mObjectCurIter != mObjectList.end())
 		{
 			return mObjectCurIter->second.get();
 		}
 		else
 		{
-			return nullptr;
+			return NULL;
 		}
 	}
 
 	virtual NF_SHARE_PTR<TD> First()
 	{
-		if (mObjectMap.size() <= 0)
+		if (mObjectList.size() <= 0)
 		{
 			return nullptr;
 		}
 
-		mObjectCurIter = mObjectMap.begin();
-		if (mObjectCurIter != mObjectMap.end())
+		mObjectCurIter = mObjectList.begin();
+		if (mObjectCurIter != mObjectList.end())
 		{
 			return mObjectCurIter->second;
 		}
@@ -194,13 +205,13 @@ public:
 
 	virtual NF_SHARE_PTR<TD> Next()
 	{
-		if (mObjectCurIter == mObjectMap.end())
+		if (mObjectCurIter == mObjectList.end())
 		{
 			return nullptr;
 		}
 
 		++mObjectCurIter;
-		if (mObjectCurIter != mObjectMap.end())
+		if (mObjectCurIter != mObjectList.end())
 		{
 			return mObjectCurIter->second;
 		}
@@ -212,13 +223,13 @@ public:
 
 	virtual NF_SHARE_PTR<TD> First(T& name)
 	{
-		if (mObjectMap.size() <= 0)
+		if (mObjectList.size() <= 0)
 		{
 			return nullptr;
 		}
 
-		mObjectCurIter = mObjectMap.begin();
-		if (mObjectCurIter != mObjectMap.end())
+		mObjectCurIter = mObjectList.begin();
+		if (mObjectCurIter != mObjectList.end())
 		{
 			name = mObjectCurIter->first;
 			return mObjectCurIter->second;
@@ -231,13 +242,13 @@ public:
 
 	virtual NF_SHARE_PTR<TD> Next(T& name)
 	{
-		if (mObjectCurIter == mObjectMap.end())
+		if (mObjectCurIter == mObjectList.end())
 		{
 			return nullptr;
 		}
 
-		++mObjectCurIter;
-		if (mObjectCurIter != mObjectMap.end())
+		mObjectCurIter++;
+		if (mObjectCurIter != mObjectList.end())
 		{
 			name = mObjectCurIter->first;
 			return mObjectCurIter->second;
@@ -248,44 +259,20 @@ public:
 		}
 	}
 
-	int Count()
-	{
-		return (int)mObjectMap.size();
-	}
-
-	bool Empty()
-	{
-		return mObjectMap.empty();
-	}
-
 	virtual bool ClearAll()
 	{
-		mObjectMap.clear();
+		mObjectList.clear();
 		return true;
 	}
 
-	typename NFMapOBJECT::iterator Begin()
+	int Count()
 	{
-		return mObjectMap.begin();
+		return (int)mObjectList.size();
 	}
 
-	typename NFMapOBJECT::iterator End()
-	{
-		return mObjectMap.end();
-	}
-
-	typename NFMapOBJECT::const_iterator Begin() const
-	{
-		return mObjectMap.begin();
-	}
-
-	typename NFMapOBJECT::const_iterator End() const
-	{
-		return mObjectMap.end();
-	}
 
 protected:
-	NFMapOBJECT mObjectMap;
+	NFMapOBJECT     mObjectList;
 	typename NFMapOBJECT::iterator mObjectCurIter;
 };
 

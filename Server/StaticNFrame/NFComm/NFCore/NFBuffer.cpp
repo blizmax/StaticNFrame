@@ -25,7 +25,7 @@ inline static std::size_t RoundUp2Power(std::size_t size)
 	return roundUp;
 }
 
-const std::size_t NFBuffer::kMaxBufferSize = std::numeric_limits<std::size_t>::max() / 2;
+const std::size_t NFBuffer::kMaxBufferSize = (std::numeric_limits<std::size_t>::max)() / 2;
 const std::size_t NFBuffer::kDefaultSize = 128;
 
 NFBuffer::NFBuffer() :

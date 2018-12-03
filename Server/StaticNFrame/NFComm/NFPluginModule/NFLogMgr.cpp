@@ -10,6 +10,8 @@
 
 #include <sstream>
 
+#include "NFILogModule.h"
+
 NFLogMgr::NFLogMgr()
 {
 	m_pLogModule = nullptr;
@@ -27,20 +29,14 @@ bool NFLogMgr::Init(NFILogModule* pSpdlogModule)
 
 void NFLogMgr::UnInit()
 {
-	
+	m_pLogModule = nullptr;
 }
 
-bool NFLogMgr::LogNormal(const NF_LOG_LEVEL nll, const uint64_t ident, const std::string& strInfo, const std::string& strDesc, const char* func, int line)
+void NFLogMgr::LogNormal(uint32_t log_level, const std::string& log)
 {
 	if (m_pLogModule)
 	{
-		m_pLogModule->Log(nll, func, line, " {} | {} | {} |", ident, strInfo, strDesc);
+		m_pLogModule->LogNormal((NF_LOG_LEVEL)log_level, log);
 	}
-	return false;
-}
-
-NFILogModule* NFLogMgr::GetLogModule()
-{
-	return m_pLogModule;
 }
 

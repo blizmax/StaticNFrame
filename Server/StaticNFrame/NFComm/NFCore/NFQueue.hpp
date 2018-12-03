@@ -56,6 +56,11 @@ public:
 		return true;
 	}
 
+	uint32_t Count()
+	{
+		NFMutexLock lock(&mMutex);
+		return (uint32_t)mList.size();
+	}
 private:
 	std::vector<T> mList;
 	NFMutex mMutex;
@@ -101,6 +106,11 @@ public:
 		return true;
 	}
 
+	uint32_t Count()
+	{
+		NFMutexLock lock(&mMutex);
+		return (uint32_t)mList.size();
+	}
 private:
 	std::list<T> mList;
 	NFMutex mMutex;

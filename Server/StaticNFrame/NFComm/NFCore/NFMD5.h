@@ -9,7 +9,7 @@
 #pragma once
 
 #include <string>
-
+#include "NFPlatform.h"
 
 /////////////////////////////////////////////////
 /**

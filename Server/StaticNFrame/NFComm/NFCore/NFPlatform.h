@@ -133,10 +133,6 @@ inline NF_THREAD_ID ThreadId()
 }
 #endif
 
-//#ifndef NF_DYNAMIC_PLUGIN
-//#define NF_DYNAMIC_PLUGIN
-//#endif
-
 //use actor mode--begin
 #define NF_ACTOR_THREAD_COUNT 3
 
@@ -154,6 +150,10 @@ inline NF_THREAD_ID ThreadId()
 
 #ifndef THERON_CPP11
 #define THERON_CPP11 1
+#endif
+
+#ifndef NF_ENABLE_SSL
+#define NF_ENABLE_SSL 0
 #endif
 
 //#ifndef USE_THREAD_CLIENT

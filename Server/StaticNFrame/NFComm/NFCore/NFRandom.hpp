@@ -23,7 +23,7 @@
 // A very simple random number generator.  Not especially good at
 // generating truly random bits, but good enough for our needs in this
 // package.
-class _NFExport NFRandom
+class NFRandom
 {
 public:
 	explicit NFRandom(uint32_t s) : seed_(s & 0x7fffffffu)
@@ -84,27 +84,27 @@ private:
 	uint32_t seed_;
 };
 
-_NFExport void NFRandomSeed();
+void NFRandomSeed();
 
-_NFExport int32_t NFRandomAInt();
+int32_t NFRandomAInt();
 
-_NFExport uint32_t NFRandomAUInt();
+uint32_t NFRandomAUInt();
 
-_NFExport int32_t NFRandomInt(int32_t min, int32_t max);
+int32_t NFRandomInt(int32_t min, int32_t max);
 
-_NFExport uint32_t NFRandomUInt(uint32_t min, uint32_t max);
+uint32_t NFRandomUInt(uint32_t min, uint32_t max);
 
-_NFExport float NFRandomFloat(float min, float max);
+float NFRandomFloat(float min, float max);
 
-_NFExport double NFRandomDouble(double min, double max);
+double NFRandomDouble(double min, double max);
 
-_NFExport const char* NFRandomChar(size_t nChar);
+const char* NFRandomChar(size_t nChar);
 
-_NFExport const char* NFRandomEnglish(size_t nChar);;
+const char* NFRandomEnglish(size_t nChar);;
 
 //[min, max)范围内的随机数
 template <typename T>
-_NFExport T NFRandInt(T min, T max)
+T NFRandInt(T min, T max)
 {
 	static std::default_random_engine generator(static_cast<uint32_t>(time(nullptr)));
 	std::uniform_int_distribution<T> distribution(min, max - 1);
@@ -112,7 +112,7 @@ _NFExport T NFRandInt(T min, T max)
 }
 
 template <typename T>
-_NFExport T NFRandReal(T min, T max)
+T NFRandReal(T min, T max)
 {
 	static std::default_random_engine generator(time(nullptr));
 	std::uniform_real_distribution<T> distribution(min, max);

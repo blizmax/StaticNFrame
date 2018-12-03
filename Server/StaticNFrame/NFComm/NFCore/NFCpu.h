@@ -18,7 +18,7 @@
 #include <stdio.h>
 
 //在windows下获得CPU使用率的方法
-class _NFExport CpuUsage
+class CpuUsage
 {
 public:
 	CpuUsage() : IsFirstRun(true), m_nCpuUsage(-1), m_lRunCount(0)
@@ -110,7 +110,7 @@ private:
 };
 #endif
 
-class _NFExport NFCpu
+class NFCpu
 {
 public:
 	/// @brief 获取当前进程的cpu使用时间

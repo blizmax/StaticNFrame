@@ -34,7 +34,7 @@ enum JsonParse
 
 class JsonValue;
 
-class _NFExport NFJson final
+class NFJson final
 {
 public:
 	// Types

@@ -12,6 +12,8 @@
 #include <NFServer/NFServerCommon/NFIGameServerModule.h>
 #include "NFComm/NFPluginModule/NFServerDefine.h"
 #include <NFComm/NFPluginModule/NFINetServerModule.h>
+#include "NFComm/NFCore/NFMapEx.hpp"
+#include "NFServer/NFServerCommon/NFServerCommon.h"
 
 class NFCGameServerModule : public NFIGameServerModule
 {
@@ -34,4 +36,7 @@ public:
 	void OnProxyServerRegisterProcess(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen);
 private:
 	NFINetServerModule* m_pNetServerModule;
+
+	//gateid,data
+	NFMapEx<int, NFProxyData> mProxyMap;
 };

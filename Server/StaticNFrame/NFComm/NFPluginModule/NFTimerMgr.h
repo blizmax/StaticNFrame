@@ -8,8 +8,11 @@
 // -------------------------------------------------------------------------
 #pragma once
 
-#include "NFComm/NFPluginModule/NFITimerModule.h"
 #include "NFComm/NFCore/NFSingleton.hpp"
+#include "NFTimerAxis.h"
+
+#include "NFITimerModule.h"
+
 
 class NFTimerMgr : public NFSingleton<NFTimerMgr>
 {

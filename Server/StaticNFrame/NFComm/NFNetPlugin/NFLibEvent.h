@@ -29,3 +29,16 @@
 #include <event2/dns_struct.h>
 #include <event2/listener.h>
 
+#if NF_ENABLE_SSL
+
+#ifdef  __cplusplus
+extern "C" {
+#endif
+#include <openssl/ssl.h>
+#include <openssl/err.h>
+#ifdef  __cplusplus
+}
+#endif
+
+#endif
+

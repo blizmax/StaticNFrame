@@ -15,7 +15,7 @@
 #include <stdint.h>
 
 /// @brief 资源类统计结果
-class _NFExport ResourceStatItem
+class ResourceStatItem
 {
 public:
 	float _average_value;
@@ -31,7 +31,7 @@ public:
 };
 
 /// @brief 消息类统计结果
-class _NFExport MessageStatItem
+class MessageStatItem
 {
 public:
 	float _failure_rate;
@@ -53,7 +53,7 @@ typedef std::unordered_map<std::string, ResourceStatItem> ResourceStatResult;
 typedef std::unordered_map<std::string, MessageStatItem> MessageStatResult;
 
 /// @brief 基础的统计模块，只提供数据的记录和计算，数据的使用交给调用者
-class _NFExport NFStat
+class NFStat
 {
 public:
 	NFStat() : m_message_counts(0), m_failure_message_counts(0)

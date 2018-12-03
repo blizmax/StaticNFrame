@@ -30,7 +30,7 @@ bool NFCGameServerModule::Init()
 	m_pNetServerModule->AddEventCallBack(NF_ST_GAME, this, &NFCGameServerModule::OnProxySocketEvent);
 	m_pNetServerModule->AddReceiveCallBack(NF_ST_GAME, this, &NFCGameServerModule::OnHandleOtherMessage);
 
-	m_pNetServerModule->AddReceiveCallBack(NF_ST_MASTER, EGMI_NET_PROXY_TO_GAME_REGISTER, this, &NFCGameServerModule::OnProxyServerRegisterProcess);
+	m_pNetServerModule->AddReceiveCallBack(NF_ST_GAME, EGMI_NET_PROXY_TO_GAME_REGISTER, this, &NFCGameServerModule::OnProxyServerRegisterProcess);
 
 	NFServerConfig* pConfig = NFServerCommon::GetServerConfig(pPluginManager, NF_ST_GAME);
 	if (pConfig)
@@ -100,5 +100,16 @@ void NFCGameServerModule::OnProxyServerRegisterProcess(const uint32_t unLinkId, 
 	{
 		const NFMsg::ServerInfoReport& xData = xMsg.server_list(i);
 
+		NF_SHARE_PTR<NFProxyData> pServerData = mProxyMap.GetElement(xData.server_id());
+		if (!pServerData)
+		{
+			pServerData = NF_SHARE_PTR<NFProxyData>(NF_NEW NFProxyData());
+			mProxyMap.AddElement(xData.server_id(), pServerData);
+		}
+
+		pServerData->mUnlinkId = unLinkId;
+		pServerData->mServerInfo = xData;
+
+		NFLogInfo("Proxy Server Register Game Server Success, serverName:{}, serverId:{}, ip:{}, port:{}", xData.server_name(), xData.server_id(), xData.server_ip(), xData.server_port())
 	}
 }

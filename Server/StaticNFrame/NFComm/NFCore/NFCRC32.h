@@ -11,7 +11,7 @@
 
 #include "NFPlatform.h"
 
-class _NFExport NFCRC32
+class NFCRC32
 {
 public:
 	// @brief

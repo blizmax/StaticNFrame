@@ -20,7 +20,7 @@
 #include "NFPlatform.h"
 
 // The class encapsulates data stream in memory.
-class _NFExport NFDataStream
+class NFDataStream
 {
 public:
 	enum Status

@@ -16,24 +16,50 @@
 #include "NFComm/NFCore/NFPlatform.h"
 #include "NFIPluginManager.h"
 
-#define REGISTER_ALONE_MODULE(pManager, classBaseName, className)  \
-    assert((TIsDerived<classBaseName, NFIModule>::Result)); \
-    assert((TIsDerived<className, classBaseName>::Result)); \
-    pManager->RegisterAloneModule(#classBaseName, [] (NFIPluginManager* pMan) ->NFIModule* { return NF_NEW className(pMan);}); \
+#include "NFComm/NFPluginModule/NFLogMgr.h"
+#include "NFComm/NFPluginModule/NFConfigMgr.h"
+#include "NFComm/NFPluginModule/NFTimerMgr.h"
+#include "NFComm/NFPluginModule/NFEventMgr.h"
 
+
+#define INIT_SINGLETON_PLUGINMANAGER(pManager)			\
+NFIEventModule* pEventModule = (NFIEventModule*)pManager->FindModule(typeid(NFIEventModule).name());\
+NFITimerModule* pTimerModule = (NFITimerModule*)pManager->FindModule(typeid(NFITimerModule).name());\
+NFILogModule* pLogModule = (NFILogModule*)pManager->FindModule(typeid(NFILogModule).name());\
+NFIConfigModule* pConfigModule = (NFIConfigModule*)pManager->FindModule(typeid(NFIConfigModule).name());\
+NFConfigMgr::Instance()->Init(pConfigModule);\
+NFEventMgr::Instance()->Init(pEventModule);\
+NFTimerMgr::Instance()->Init(pTimerModule);\
+NFLogMgr::Instance()->Init(pLogModule);\
+
+#define RELEASE_SINGLETON_PLUGINMANAGER		\
+NFConfigMgr::Instance()->UnInit();\
+NFConfigMgr::Instance()->ReleaseInstance();\
+NFTimerMgr::Instance()->UnInit();\
+NFTimerMgr::Instance()->ReleaseInstance();\
+NFEventMgr::Instance()->UnInit();\
+NFEventMgr::Instance()->ReleaseInstance();\
+NFLogMgr::Instance()->UnInit();\
+NFLogMgr::Instance()->ReleaseInstance();\
+
+
+//为什么要在这里加上pManager->InitSingleton()呢， 主要是为了在动态加载的情况下，在每个DLL中，都初始化一次单件系统
 #define REGISTER_MODULE(pManager, classBaseName, className)  \
     assert((TIsDerived<classBaseName, NFIModule>::Result)); \
     assert((TIsDerived<className, classBaseName>::Result)); \
     NFIModule* pRegisterModule##className= new className(pManager); \
     pRegisterModule##className->strName = (#className); \
-    REGISTER_ALONE_MODULE(pManager, classBaseName, className); \
     pManager->AddModule( #classBaseName, pRegisterModule##className );AddModule( #classBaseName, pRegisterModule##className );
 
 #define UNREGISTER_MODULE(pManager, classBaseName, className) NFIModule* pUnRegisterModule##className =  \
     dynamic_cast<NFIModule*>( pManager->FindModule( typeid(classBaseName).name() )); \
-	pManager->RemoveModule( #classBaseName ); RemoveModule( #classBaseName ); delete pUnRegisterModule##className;
+	pManager->RemoveModule( #classBaseName );RemoveModule(#classBaseName); delete pUnRegisterModule##className;
 
 #define REGISTER_STATIC_PLUGIN(pManager, className)  pManager->RegisteredStaticPlugin(#className, [] (NFIPluginManager* pMan) ->NFIPlugin* { return NF_NEW className(pMan);});
+
+#define CREATE_PLUGIN(pManager, className)  NFIPlugin* pCreatePlugin##className = new className(pManager); pManager->Registered( pCreatePlugin##className );INIT_SINGLETON_PLUGINMANAGER(pManager);
+
+#define DESTROY_PLUGIN(pManager, className) pManager->UnRegistered( pManager->FindPlugin((#className)) );RELEASE_SINGLETON_PLUGINMANAGER;
 
 class NFIPluginManager;
 

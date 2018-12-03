@@ -89,10 +89,25 @@
 #define NF_EXPORT extern "C"  __declspec(dllexport)
 
 #include <Dbghelp.h>
-#define NF_STATIC_LIB
+
+// Win32 compilers use _DEBUG for specifying debug builds.
+// for MinGW, we set DEBUG
+#   if defined(_DEBUG) || defined(DEBUG)
+#       define NF_DEBUG_MODE 1
+#   endif
+
+#define NF_STATIC_PLUGIN 1
+
+#ifndef NF_STATIC_PLUGIN
+#define NF_DYNAMIC_PLUGIN 1
+#endif
+
+#ifndef NF_STATIC_PLUGIN
+//#define NF_DYNAMIC_PLUGIN 1
+#endif
 // If we're not including this from a client build, specify that the stuff
 // should get exported. Otherwise, import it.
-#   if defined( NF_STATIC_LIB )
+#   if defined( NF_STATIC_PLUGIN )
 // Linux compilers don't have symbol import/export directives.
 #       define _NFExport
 #       define _NFPrivate
@@ -107,11 +122,6 @@
 #           endif
 #       endif
 #       define _NFPrivate
-#   endif
-// Win32 compilers use _DEBUG for specifying debug builds.
-// for MinGW, we set DEBUG
-#   if defined(_DEBUG) || defined(DEBUG)
-#       define NF_DEBUG_MODE 1
 #   endif
 
 // Disable unicode support on MingW for GCC 3, poorly supported in stdlibc++

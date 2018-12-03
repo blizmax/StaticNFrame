@@ -10,7 +10,6 @@
 #pragma once
 
 #include "NFComm/NFPluginModule/NFIModule.h"
-#include "NFComm/NFPluginModule/NFDBActorMgr.h"
 #include "NFComm/NFPluginModule/NFIHttpServerModule.h"
 
 class NFCTestActorModule : public NFIModule

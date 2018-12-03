@@ -70,7 +70,7 @@ void NetObject::conn_eventcb(struct bufferevent* pEv, short events, void* pArg)
 		}
 #endif
 		p->OnHandleDisConnect();
-		NFLogNormalError(0, "NetError", " CloseProc Error Code " + std::string(evutil_socket_error_to_string(EVUTIL_SOCKET_ERROR())));
+		NFLogError("NetError | CloseProc Error Code ",std::string(evutil_socket_error_to_string(EVUTIL_SOCKET_ERROR())));
 	}
 }
 
@@ -488,7 +488,7 @@ bool NetObject::Send(const void* pData, uint32_t unSize)
 		int nRet = bufferevent_write(m_pBev, pData, unSize);
 		if (nRet < 0)
 		{
-			NFLogNormalError(0, "NetError", "send msg error !");
+			NFLogError("NetError | send msg error !");
 			return false;
 		}
 		return true;

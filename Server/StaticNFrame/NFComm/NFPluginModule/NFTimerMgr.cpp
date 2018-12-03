@@ -7,6 +7,7 @@
 //
 // -------------------------------------------------------------------------
 #include "NFTimerMgr.h"
+#include "NFComm/NFPluginModule/NFITimerModule.h"
 
 NFTimerMgr::NFTimerMgr()
 {

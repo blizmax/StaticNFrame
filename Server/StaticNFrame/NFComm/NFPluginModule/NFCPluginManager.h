@@ -16,6 +16,7 @@
 #include "NFComm/NFCore/NFSingleton.hpp"
 #include "NFComm/NFPluginModule/NFIPluginManager.h"
 #include "NFComm/NFCore/NFRandom.hpp"
+#include "NFCDynLib.h"
 
 /*
 	系统的Module，分为加载DLL创建的唯一Module，和自己独立创建出来的Module，
@@ -71,10 +72,6 @@ public:
 
 	virtual NFIModule* FindModule(const std::string& strModuleName) override;
 
-	virtual void RegisterAloneModule(const std::string& strModuleName, const CREATE_ALONE_MODULE& createFunc) override;
-
-	virtual NFIModule* CreateAloneModule(const std::string& strModuleName) override;
-
 	virtual bool Execute() override;
 
 	virtual int GetAppID() const override;
@@ -119,6 +116,9 @@ protected:
 	bool LoadStaticPlugin(const std::string& strPluginDLLName);
 	bool UnLoadStaticPlugin(const std::string& strPluginDLLName);
 
+	bool LoadPluginLibrary(const std::string& strPluginDLLName);
+	bool UnLoadPluginLibrary(const std::string& strPluginDLLName);
+
 	bool LoadKernelPlugin();
 private:
 	const uint32_t mFrame = 30; //服务器帧率，一秒30帧
@@ -133,25 +133,23 @@ private:
 	std::string mstrLogPath;
 	std::string mstrLuaScriptPath;
 
+	typedef std::map<std::string, NFCDynLib*> PluginLibMap;
 	typedef std::map<std::string, bool> PluginNameMap;
 	typedef std::map<std::string, NFIPlugin*> PluginInstanceMap;
 	typedef std::list<NFIPlugin*> PluginInstanceList;
 	typedef std::map<std::string, NFIModule*> ModuleInstanceMap;
-	typedef std::map<std::string, CREATE_ALONE_MODULE> ModuleAloneFuncMap; //单独创建,删除的Module
 	typedef std::map<std::string, CREATE_PLUGIN_FUNCTION> PluginFuncMap; //静态加载Plugin, 先注册创建函数
-	typedef std::multimap<std::string, NFIModule*> ModuleAloneMultiMap; //单独创建的Module集合
 	typedef std::map<int, int> ServerTypeToIdMap; //负责AllServer情况下，ServerType与ServerId的关系
 
 	typedef void (*DLL_START_PLUGIN_FUNC)(NFIPluginManager* pm);
 	typedef void (*DLL_STOP_PLUGIN_FUNC)(NFIPluginManager* pm);
 
+	PluginLibMap mPluginLibMap;
 	PluginNameMap mPluginNameMap;
 	PluginInstanceMap mPluginInstanceMap;
 	PluginInstanceList mPluginInstanceList;
 	ModuleInstanceMap mModuleInstanceMap;
-	ModuleAloneFuncMap mModuleAloneFuncMap; //单独创建,删除的Module
 	ServerTypeToIdMap mServerTypeIdMap; //负责AllServer情况下，ServerType与ServerId的关系
-	ModuleAloneMultiMap mModuleAloneMultiMap; //单独创建的Module集合
 	PluginFuncMap mPluginFuncMap; ////静态加载Plugin, 先注册创建和销毁函数
 };
 

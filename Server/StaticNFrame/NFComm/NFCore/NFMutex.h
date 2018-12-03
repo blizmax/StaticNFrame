@@ -15,7 +15,7 @@
 * @brief 线程锁封装,参考google protobuf
 *
 */
-class _NFExport NFMutex
+class NFMutex
 {
 public:
 	/**
@@ -68,7 +68,7 @@ private:
 * @brief 自动释放的线程锁封装,参考google protobuf
 *
 */
-class _NFExport NFMutexLock
+class NFMutexLock
 {
 public:
 	/**

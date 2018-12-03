@@ -24,10 +24,10 @@
  *  2) _WIN32 平台下返回 -1
  */
 #if defined(__GNUC__) && (__GNUC__ > 4 ||(__GNUC__ == 4 && __GNUC_MINOR__ >= 4))
-_NFExport int NFSafeSnprintf(char *buf, size_t size,
+int NFSafeSnprintf(char *buf, size_t size,
 	const char *fmt, ...);
 #else
-_NFExport int NFSafeSnprintf(char* buf, size_t size, const char* fmt, ...);
+int NFSafeSnprintf(char* buf, size_t size, const char* fmt, ...);
 #endif
 
 /**
@@ -41,5 +41,5 @@ _NFExport int NFSafeSnprintf(char* buf, size_t size, const char* fmt, ...);
  *     >= size；需要注意该返回值的含义与 _WIN32 下的不同
  *  2) _WIN32 平台下返回 -1
  */
-_NFExport int NFSafeVsnprintf(char* buf, size_t size, const char* fmt, va_list ap);
+int NFSafeVsnprintf(char* buf, size_t size, const char* fmt, va_list ap);
 

@@ -9,6 +9,8 @@
 #include "NFComm/NFCore/NFPlatform.h"
 
 #if NF_PLATFORM == NF_PLATFORM_WIN
+
+#ifndef NF_DYNAMIC_PLUGIN
 //#pragma comment(lib, "ws2_32.lib")
 
 #pragma comment(lib,"msvcrtd.lib")
@@ -34,6 +36,9 @@
 #pragma comment( lib, "NFPluginModule.lib" )
 #pragma comment( lib, "NFMessageDefine.lib" )
 #pragma comment( lib, "NFMath.lib" )
+
+#pragma comment( lib, "NFServerCommon.lib" )
+
 ////////////////////////////////////////////////////////////////
 #pragma comment( lib, "NFKernelPlugin.lib" )
 #pragma comment( lib, "NFActorPlugin.lib" )
@@ -43,7 +48,7 @@
 #pragma comment( lib, "NFTestPlugin.lib" )
 
 /////////////////////////////////////////////////////
-#pragma comment( lib, "NFServerCommon.lib" )
+
 #pragma comment( lib, "NFMasterServerPlugin.lib" )
 #pragma comment( lib, "NFLoginClientPlugin.lib" )
 #pragma comment( lib, "NFLoginServerPlugin.lib" )
@@ -55,4 +60,12 @@
 #pragma comment( lib, "NFGameServerPlugin.lib" )
 #pragma comment( lib, "NFProxyServerPlugin.lib" )
 #pragma comment( lib, "NFProxyClientPlugin.lib" )
+
+#else
+#pragma comment( lib, "NFCore.lib" )
+#pragma comment( lib, "NFPluginModule.lib" )
+
+#pragma comment( lib, "user32.lib")
+#pragma comment( lib, "Dbghelp.lib" )
+#endif
 #endif

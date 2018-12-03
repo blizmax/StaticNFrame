@@ -8,13 +8,47 @@
 // -------------------------------------------------------------------------
 
 #include "NFCTestActorModule.h"
-#include "NFComm/NFPluginModule/NFTask.h"
 #include "NFMessageDefine/NFMsgDefine.h"
 #include <NFComm/NFPluginModule/NFIMysqlModule.h>
 #include "NFComm/NFPluginModule/NFIHttpServerModule.h"
+#include "NFComm/NFPluginModule/NFITaskModule.h"
+#include "NFComm/NFPluginModule/NFTask.h"
+#include "NFComm/NFPluginModule/NFLogMgr.h"
+#include "NFComm/NFCore/NFCommon.h"
 
-#include "mongoc/mongoc.h"
 
+class NFLogTask : public NFTask
+{
+public:
+	NFLogTask()
+	{
+		count = 0;
+	}
+	/**
+	**  异步线程处理函数，将在另一个线程里运行
+	*/
+	virtual bool ThreadProcess()
+	{
+		NFLogError("thread process........... pid:{}, thread_id:{}", NFGetPID(), ThreadId());
+		count++;
+		return true;
+	}
+
+	/**
+	** 主线程处理函数，将在线程处理完后，提交给主先来处理，根据返回函数是否继续处理
+	返回值： thread::TPTask::TPTaskState， 请参看TPTaskState
+	*/
+	virtual TPTaskState MainThreadProcess()
+	{
+		if (count >= 10)
+		{
+			return NFTask::TPTASK_STATE_COMPLETED;
+		}
+		return TPTASK_STATE_CONTINUE_CHILDTHREAD;
+	}
+
+	std::atomic_int count;
+};
 
 NFCTestActorModule::NFCTestActorModule(NFIPluginManager* p)
 {
@@ -27,62 +61,15 @@ NFCTestActorModule::~NFCTestActorModule()
 
 bool NFCTestActorModule::Init()
 {
+	//NFITaskModule* pTaskModule = pPluginManager->FindModule<NFITaskModule>();
+
+	//for(int i = 0; i < 10000; i++)
+	//	pTaskModule->AddTask(new NFLogTask());
 	return true;
 }
 
 bool NFCTestActorModule::AfterInit()
 {
-	mongoc_uri_t *uri = nullptr;
-	mongoc_client_t *client;
-	mongoc_database_t *database;
-	mongoc_collection_t *collection;
-	bson_t *command, reply, *insert;
-	bson_error_t error;
-	char *str;
-	bool retval;
-
-	std::string uri_string = "mongodb://14.17.104.12:28900";
-	mongoc_init();
-	uri = mongoc_uri_new_with_error(uri_string.c_str(), &error);
-	if (!uri) {
-		NFLogError("failed to parse URI:{}\n, error message:{}\n", uri_string, error.message);
-		return true;
-	}
-
-	client = mongoc_client_new_from_uri(uri);
-	if (!client)
-	{
-		return true;
-	}
-
-	database = mongoc_client_get_database(client, "ttr-1");
-	if (!database)
-	{
-		return true;
-	}
-	collection = mongoc_client_get_collection(client, "ttr_1", "test");
-	if (!collection)
-	{
-		return true;
-	}
-
-	command = BCON_NEW("ping", BCON_INT32(1));
-
-	retval = mongoc_client_command_simple(client, "ttr_1", command, NULL, &reply, &error);
-
-	if (!retval)
-	{
-		NFLogError("{}", error.message);
-	}
-
-	str = bson_as_json(&reply, NULL);
-	NFLogInfo("{}", str);
-
-	insert = BCON_NEW("uid", BCON_UTF8("world"));
-	if (!mongoc_collection_insert_one(collection, insert, NULL, NULL, &error))
-	{
-		NFLogError("{}", error.message);
-	}
 	return true;
 }
 

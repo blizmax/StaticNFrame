@@ -65,7 +65,7 @@ void NFCLogModule::CreateLogger()
 	std::vector<spdlog::sink_ptr> sinks_vec;
 	std::string log_name = NF_FORMAT("{}{}{}{}{}.log", pPluginManager->GetLogPath(), spdlog::details::os::folder_sep, pPluginManager->GetAppName(), spdlog::details::os::folder_sep, pPluginManager->GetAppName());
 	auto date_and_hour_sink = std::make_shared<spdlog::sinks::date_and_hour_file_sink_mt>(log_name);
-#if NF_DEBUG_MODE
+
 #if NF_PLATFORM == NF_PLATFORM_WIN
 	auto color_sink = std::make_shared<spdlog::sinks::wincolor_stdout_sink_mt>();
 #else
@@ -73,18 +73,14 @@ void NFCLogModule::CreateLogger()
 #endif
 
 	sinks_vec.push_back(color_sink);
-#endif
+
 	sinks_vec.push_back(date_and_hour_sink);
 
 	mxLogger = std::make_shared<spdlog::async_logger>(pPluginManager->GetAppName(), std::begin(sinks_vec), std::end(sinks_vec), 1024);
 
 	mxLogger->set_level((spdlog::level::level_enum)(NFConfigMgr::Instance()->GetLogLevel()));
 
-#if NF_DEBUG_MODE
 	mxLogger->set_pattern("%^[%l | %Y-%m-%d %H:%M:%S.%e] | %v%$");
-#else
-	mxLogger->set_pattern("[%l | %Y-%m-%d %H:%M:%S.%e] | %v");
-#endif
 
 	mxLogger->flush_on(spdlog::level::err);
 

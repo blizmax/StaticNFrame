@@ -9,6 +9,22 @@
       <Configuration>Debug</Configuration>
       <Platform>x64</Platform>
     </ProjectConfiguration>
+    <ProjectConfiguration Include="Dynamic_Debug|Win32">
+      <Configuration>Dynamic_Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Dynamic_Debug|x64">
+      <Configuration>Dynamic_Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Dynamic_Release|Win32">
+      <Configuration>Dynamic_Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Dynamic_Release|x64">
+      <Configuration>Dynamic_Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
     <ProjectConfiguration Include="Release|Win32">
       <Configuration>Release</Configuration>
       <Platform>Win32</Platform>
@@ -31,13 +47,32 @@
     <CharacterSet>MultiByte</CharacterSet>
     <PlatformToolset>v140</PlatformToolset>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Dynamic_Debug|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v140</PlatformToolset>
+  </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <CharacterSet>MultiByte</CharacterSet>
     <PlatformToolset>v140</PlatformToolset>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Dynamic_Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v140</PlatformToolset>
+  </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v140</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Dynamic_Release|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <WholeProgramOptimization>true</WholeProgramOptimization>
@@ -51,23 +86,49 @@
     <CharacterSet>MultiByte</CharacterSet>
     <PlatformToolset>v140</PlatformToolset>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Dynamic_Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v140</PlatformToolset>
+  </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Dynamic_Debug|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Dynamic_Debug|Win32'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Dynamic_Release|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Dynamic_Release|Win32'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <LinkIncremental>true</LinkIncremental>
+    <TargetName>$(ProjectName)</TargetName>
+    <OutDir>$(SolutionDir)../Product/run/$(Configuration)/</OutDir>
+    <EmbedManifest>false</EmbedManifest>
+    <IntDir>$(SolutionDir)../Product/Temp/$(ProjectName)/$(Configuration)\</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Dynamic_Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
     <TargetName>$(ProjectName)</TargetName>
     <OutDir>$(SolutionDir)../Product/run/$(Configuration)/</OutDir>
@@ -82,7 +143,20 @@
     <OutDir>$(SolutionDir)../Product/run/$(Configuration)/</OutDir>
     <TargetExt>.exe</TargetExt>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Dynamic_Debug|Win32'">
+    <EmbedManifest>false</EmbedManifest>
+    <IntDir>$(SolutionDir)../Product/Temp/$(ProjectName)/$(Configuration)\</IntDir>
+    <LinkIncremental>true</LinkIncremental>
+    <TargetName>$(ProjectName)</TargetName>
+    <OutDir>$(SolutionDir)../Product/run/$(Configuration)/</OutDir>
+    <TargetExt>.exe</TargetExt>
+  </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <LinkIncremental>false</LinkIncremental>
+    <OutDir>$(SolutionDir)../Product/run/$(Configuration)/</OutDir>
+    <IntDir>$(SolutionDir)../Product/Temp/$(ProjectName)/$(Configuration)\</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Dynamic_Release|x64'">
     <LinkIncremental>false</LinkIncremental>
     <OutDir>$(SolutionDir)../Product/run/$(Configuration)/</OutDir>
     <IntDir>$(SolutionDir)../Product/Temp/$(ProjectName)/$(Configuration)\</IntDir>
@@ -93,12 +167,18 @@
     <OutDir>$(SolutionDir)../Product/run/$(Configuration)/</OutDir>
     <IgnoreImportLibrary />
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Dynamic_Release|Win32'">
+    <IntDir>$(SolutionDir)../Product/Temp/$(ProjectName)/$(Configuration)\</IntDir>
+    <LinkIncremental>false</LinkIncremental>
+    <OutDir>$(SolutionDir)../Product/run/$(Configuration)/</OutDir>
+    <IgnoreImportLibrary />
+  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;_X64;_DEBUG;_CONSOLE;NF_DYNAMIC_PLUGIN;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;_X64;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>$(SolutionDir)/Dependencies/mysqlpp/lib;$(SolutionDir)/Dependencies/mysql/include;$(SolutionDir)\Dependencies\g3dlite;$(SolutionDir)\Dependencies\lua;$(SolutionDir)/Dependencies/libevent/include;$(SolutionDir)/Dependencies/libevent/WIN32-Code/nmake;$(SolutionDir)/Dependencies/libevent/;$(SolutionDir)/Dependencies/libevent/compat;$(SolutionDir)/Dependencies/Theron\Include/;$(SolutionDir)/StaticNFrame;$(SolutionDir)/Dependencies/;$(SolutionDir)/;$(SolutionDir)/Dependencies/protobuf/src;$(SolutionDir)/Dependencies/navigation;$(SolutionDir)/Dependencies/LuaBind/luaintf;$(SolutionDir)/Dependencies/LuaBind/pbc;$(SolutionDir)/Dependencies/LuaBind/luasql;$(SolutionDir)/Dependencies/LuaBind/luasocket;$(SolutionDir)/Dependencies/LuaBind/luacjson;$(SolutionDir)/Dependencies/LuaBind/lua5.3/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <BrowseInformation>false</BrowseInformation>
       <DisableSpecificWarnings>4091;4251;4996;4275;4316;4244;4267;4244;</DisableSpecificWarnings>
@@ -108,7 +188,7 @@
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <UACExecutionLevel>RequireAdministrator</UACExecutionLevel>
-      <AdditionalLibraryDirectories>$(SolutionDir)\lib\$(Configuration)\;$(SolutionDir)\..\Product\lib\$(Configuration)\;$(SolutionDir)\..\Product\run\$(Configuration)\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)\..\Product\lib\$(Configuration)\;$(SolutionDir)\..\Product\run\$(Configuration)\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <IgnoreSpecificDefaultLibraries>libcmt.lib;</IgnoreSpecificDefaultLibraries>
       <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
@@ -118,7 +198,55 @@
       <PreserveSbr>true</PreserveSbr>
     </Bscmake>
   </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Dynamic_Debug|x64'">
+    <ClCompile>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;_X64;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(SolutionDir)/Dependencies/mysqlpp/lib;$(SolutionDir)/Dependencies/mysql/include;$(SolutionDir)\Dependencies\g3dlite;$(SolutionDir)\Dependencies\lua;$(SolutionDir)/Dependencies/libevent/include;$(SolutionDir)/Dependencies/libevent/WIN32-Code/nmake;$(SolutionDir)/Dependencies/libevent/;$(SolutionDir)/Dependencies/libevent/compat;$(SolutionDir)/Dependencies/Theron\Include/;$(SolutionDir)/StaticNFrame;$(SolutionDir)/Dependencies/;$(SolutionDir)/;$(SolutionDir)/Dependencies/protobuf/src;$(SolutionDir)/Dependencies/navigation;$(SolutionDir)/Dependencies/LuaBind/luaintf;$(SolutionDir)/Dependencies/LuaBind/pbc;$(SolutionDir)/Dependencies/LuaBind/luasql;$(SolutionDir)/Dependencies/LuaBind/luasocket;$(SolutionDir)/Dependencies/LuaBind/luacjson;$(SolutionDir)/Dependencies/LuaBind/lua5.3/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <BrowseInformation>false</BrowseInformation>
+      <DisableSpecificWarnings>4091;4251;4996;4275;4316;4244;4267;4244;</DisableSpecificWarnings>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <UACExecutionLevel>RequireAdministrator</UACExecutionLevel>
+      <AdditionalLibraryDirectories>$(SolutionDir)\..\Product\lib\$(Configuration)\;$(SolutionDir)\..\Product\run\$(Configuration)\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <IgnoreSpecificDefaultLibraries>libcmt.lib;</IgnoreSpecificDefaultLibraries>
+      <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+    <PostBuildEvent />
+    <Bscmake>
+      <PreserveSbr>true</PreserveSbr>
+    </Bscmake>
+  </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;_X64;_DEBUG;_CONSOLE;NF_DYNAMIC_PLUGIN;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(SolutionDir)/Dependencies/mysqlpp/lib;$(SolutionDir)/Dependencies/mysql/include;$(SolutionDir)\Dependencies\g3dlite;$(SolutionDir)\Dependencies\lua;$(SolutionDir)/Dependencies/libevent/include;$(SolutionDir)/Dependencies/libevent/WIN32-Code/nmake;$(SolutionDir)/Dependencies/libevent/;$(SolutionDir)/Dependencies/libevent/compat;$(SolutionDir)/Dependencies/Theron\Include/;$(SolutionDir)/StaticNFrame;$(SolutionDir)/Dependencies/;$(SolutionDir)/;$(SolutionDir)/Dependencies/protobuf/src;$(SolutionDir)/Dependencies/navigation;$(SolutionDir)/Dependencies/LuaBind/luaintf;$(SolutionDir)/Dependencies/LuaBind/pbc;$(SolutionDir)/Dependencies/LuaBind/luasql;$(SolutionDir)/Dependencies/LuaBind/luasocket;$(SolutionDir)/Dependencies/LuaBind/luacjson;$(SolutionDir)/Dependencies/LuaBind/lua5.3/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <BrowseInformation>false</BrowseInformation>
+      <DisableSpecificWarnings>4091;4251;4996;4275;4316;4244;4267</DisableSpecificWarnings>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <UACExecutionLevel>RequireAdministrator</UACExecutionLevel>
+      <AdditionalLibraryDirectories>$(SolutionDir)\lib\$(Configuration)\;$(SolutionDir)\..\Product\lib\$(Configuration)\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <IgnoreSpecificDefaultLibraries>libcmt.lib</IgnoreSpecificDefaultLibraries>
+      <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+    <PostBuildEvent />
+    <Bscmake>
+      <PreserveSbr>true</PreserveSbr>
+    </Bscmake>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Dynamic_Debug|Win32'">
     <ClCompile>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
@@ -149,8 +277,8 @@
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <PreprocessorDefinitions>_X64;NDEBUG;_CONSOLE;NF_DYNAMIC_PLUGIN;_WIN64;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(SolutionDir)\NFComm\NFMessageDefine\include;$(SolutionDir);$(SolutionDir)\Dependencies\;$(SolutionDir)\Dependencies\libevent\;$(SolutionDir)\Dependencies\libevent\WIN32-Code\;$(SolutionDir)\Dependencies\libevent\include\;$(SolutionDir)\Dependencies\libevent\compat\;$(SolutionDir)\Dependencies\protobuf\src\;$(SolutionDir)\Dependencies\Theron\Include\;$(SolutionDir)\Dependencies\libevent\WIN32-Code\nmake;$(SolutionDir)\Dependencies\lua</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>_X64;NDEBUG;_CONSOLE;_WIN64;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(SolutionDir)/Dependencies/mysqlpp/lib;$(SolutionDir)/Dependencies/mysql/include;$(SolutionDir)\Dependencies\g3dlite;$(SolutionDir)\Dependencies\lua;$(SolutionDir)/Dependencies/libevent/include;$(SolutionDir)/Dependencies/libevent/WIN32-Code/nmake;$(SolutionDir)/Dependencies/libevent/;$(SolutionDir)/Dependencies/libevent/compat;$(SolutionDir)/Dependencies/Theron\Include/;$(SolutionDir)/StaticNFrame;$(SolutionDir)/Dependencies/;$(SolutionDir)/;$(SolutionDir)/Dependencies/protobuf/src;$(SolutionDir)/Dependencies/navigation;$(SolutionDir)/Dependencies/LuaBind/luaintf;$(SolutionDir)/Dependencies/LuaBind/pbc;$(SolutionDir)/Dependencies/LuaBind/luasql;$(SolutionDir)/Dependencies/LuaBind/luasocket;$(SolutionDir)/Dependencies/LuaBind/luacjson;$(SolutionDir)/Dependencies/LuaBind/lua5.3/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <ExceptionHandling>Sync</ExceptionHandling>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <DisableSpecificWarnings>4091;4251;4996;4275;4316;4244;4267;4244;</DisableSpecificWarnings>
@@ -160,12 +288,61 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalLibraryDirectories>$(SolutionDir)\_Out\$(Configuration)\;$(SolutionDir)\Dependencies\lib\$(Configuration)\;$(SolutionDir)\Dependencies\boost_1_53_0\stage\lib\x64\vs11_0\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)\..\Product\lib\$(Configuration)\;$(SolutionDir)\..\Product\run\$(Configuration)\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
     <PostBuildEvent>
     </PostBuildEvent>
   </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Dynamic_Release|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>_X64;NDEBUG;_CONSOLE;_WIN64;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(SolutionDir)/Dependencies/mysqlpp/lib;$(SolutionDir)/Dependencies/mysql/include;$(SolutionDir)\Dependencies\g3dlite;$(SolutionDir)\Dependencies\lua;$(SolutionDir)/Dependencies/libevent/include;$(SolutionDir)/Dependencies/libevent/WIN32-Code/nmake;$(SolutionDir)/Dependencies/libevent/;$(SolutionDir)/Dependencies/libevent/compat;$(SolutionDir)/Dependencies/Theron\Include/;$(SolutionDir)/StaticNFrame;$(SolutionDir)/Dependencies/;$(SolutionDir)/;$(SolutionDir)/Dependencies/protobuf/src;$(SolutionDir)/Dependencies/navigation;$(SolutionDir)/Dependencies/LuaBind/luaintf;$(SolutionDir)/Dependencies/LuaBind/pbc;$(SolutionDir)/Dependencies/LuaBind/luasql;$(SolutionDir)/Dependencies/LuaBind/luasocket;$(SolutionDir)/Dependencies/LuaBind/luacjson;$(SolutionDir)/Dependencies/LuaBind/lua5.3/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <DisableSpecificWarnings>4091;4251;4996;4275;4316;4244;4267;4244;</DisableSpecificWarnings>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalLibraryDirectories>$(SolutionDir)\..\Product\lib\$(Configuration)\;$(SolutionDir)\..\Product\run\$(Configuration)\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Link>
+    <PostBuildEvent />
+  </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(SolutionDir)/Dependencies/mysqlpp;$(SolutionDir)/Dependencies/mysql;$(SolutionDir)\Dependencies\g3dlite;$(SolutionDir)\Dependencies\lua;$(SolutionDir)/Dependencies/libevent/include;$(SolutionDir)/Dependencies/libevent/WIN32-Code/nmake;$(SolutionDir)/Dependencies/libevent/;$(SolutionDir)/Dependencies/libevent/compat;$(SolutionDir)/Dependencies/Theron\Include/;$(SolutionDir)/StaticNFrame;$(SolutionDir)/Dependencies/;$(SolutionDir)/;$(SolutionDir)/Dependencies/protobuf/src;$(SolutionDir)/Dependencies/navigation;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <DisableSpecificWarnings>4091;4251;4996;4275;4316;4244;4267;</DisableSpecificWarnings>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalLibraryDirectories>$(SolutionDir)\lib\$(Configuration)\;$(SolutionDir)\..\Product\lib\$(Configuration)\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <IgnoreSpecificDefaultLibraries>
+      </IgnoreSpecificDefaultLibraries>
+      <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
+      <AdditionalDependencies>
+      </AdditionalDependencies>
+    </Link>
+    <PostBuildEvent />
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Dynamic_Release|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
