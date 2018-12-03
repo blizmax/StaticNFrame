@@ -11,14 +11,21 @@
 #if NF_PLATFORM == NF_PLATFORM_WIN
 
 #ifndef NF_DYNAMIC_PLUGIN
-//#pragma comment(lib, "ws2_32.lib")
+
 
 #pragma comment(lib,"msvcrtd.lib")
 //#pragma comment(lib, "libssl.lib")
 //#pragma comment(lib, "libcrypto.lib")
 
+////////////////////////////////////////////////////////////////
 #pragma comment( lib, "bson-static-1.0.lib" )
 #pragma comment( lib, "mongoc-static-1.0.lib" )
+#pragma comment(lib, "ws2_32.lib")
+#pragma comment(lib, "Secur32.lib")
+#pragma comment( lib, "Crypt32.lib" )
+#pragma comment( lib, "BCrypt.lib" )
+#pragma comment( lib, "Dnsapi.lib" )
+////////////////////////////////////////////////////////////////
 
 #pragma comment( lib, "luaBind.lib" )
 #pragma comment( lib, "event.lib" )
