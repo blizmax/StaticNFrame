@@ -23,7 +23,7 @@ set (ENABLE_SASL AUTO CACHE STRING
    SASL, \"SSPI\" to use Windows Native SSPI, \"GSSAPI\" to use macOS Native GSS,
    \"AUTO\",\ or \"OFF\". These options are case-sensitive.")
 
-set (ENABLE_STATIC AUTO CACHE STRING "Build static libmongoc. Set to ON/AUTO/OFF, default AUTO.")
+set (ENABLE_STATIC ON CACHE STRING "Build static libmongoc. Set to ON/AUTO/OFF, default AUTO.")
 option (ENABLE_TESTS "Build MongoDB C Driver tests." ON)
 option (ENABLE_EXAMPLES "Build MongoDB C Driver examples." ON)
 set (ENABLE_SRV AUTO CACHE STRING "Support mongodb+srv URIs. Set to ON/AUTO/OFF, default AUTO.")

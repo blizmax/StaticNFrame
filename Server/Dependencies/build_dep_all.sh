@@ -7,10 +7,6 @@ chmod a+x ./config
 make -j
 cp -rf libcrypto.a ../../../Product/Lib/Debug/
 cp -rf libssl.a ../../../Product/Lib/Release/
-cp -rf libcrypto.so* ../../../Product/run/Debug/
-cp -rf libcrypto.so* ../../../Product/run/Release/
-cp -rf libssl.so* ../../../Product/run/Debug/
-cp -rf libssl.so* ../../../Product/run/Release/
 cd ..
 
 #compiling mysql
@@ -21,8 +17,6 @@ make -j
 
 cp -R -f ./libmysql/libmysqlclient.a ../../../Product/Lib/Debug/
 cp -R -f ./libmysql/libmysqlclient.a ../../../Product/Lib/Release/
-cp -R -f ./libmysql/libmysqlclient.so* ../../../Product/run/Debug/
-cp -R -f ./libmysql/libmysqlclient.so* ../../../Product/run/Release/
 cd ..
 
 # compiling libevent
@@ -78,10 +72,6 @@ cp -rf src/libmongoc/libmongoc-static-1.0.a ../../../../Product/Lib/Debug/
 cp -rf src/libmongoc/libmongoc-static-1.0.a ../../../../Product/Lib/Release/
 cp -rf src/libbson/libbson-static-1.0.a ../../../../Product/Lib/Debug/
 cp -rf src/libbson/libbson-static-1.0.a ../../../../Product/Lib/Release/
-cp -rf src/libmongoc/libmongoc-1.0.so* ../../../../Product/run/Debug/
-cp -rf src/libmongoc/libmongoc-1.0.so* ../../../../Product/run/Release/
-cp -rf src/libbson/libbson-1.0.so* ../../../../Product/run/Debug/
-cp -rf src/libbson/libbson-1.0.so* ../../../../Product/run/Release/
 cd ../../
 
 
