@@ -14,7 +14,6 @@
 #include "NFComm/NFPluginModule/NFIHttpServer.h"
 #include "NFLibEvent.h"
 
-
 #include <list>
 
 class HttpObject

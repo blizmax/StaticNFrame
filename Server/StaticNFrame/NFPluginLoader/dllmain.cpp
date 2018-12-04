@@ -14,8 +14,8 @@
 
 
 #pragma comment(lib,"msvcrtd.lib")
-//#pragma comment(lib, "libssl.lib")
-//#pragma comment(lib, "libcrypto.lib")
+#pragma comment(lib, "libssl.lib")
+#pragma comment(lib, "libcrypto.lib")
 
 ////////////////////////////////////////////////////////////////
 #pragma comment( lib, "bson-static-1.0.lib" )

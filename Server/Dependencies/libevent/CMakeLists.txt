@@ -32,12 +32,15 @@ string(TOLOWER "${CMAKE_BUILD_TYPE}" CMAKE_BUILD_TYPE_LOWER)
 
 # get rid of the extra default configurations
 # what? why would you get id of other useful build types? - Ellzey
-set(CMAKE_CONFIGURATION_TYPES "Debug;Release" CACHE STRING "Limited configurations" FORCE)
+set(CMAKE_CONFIGURATION_TYPES "Debug;Release" CACHE STRING "Limited configurations" FORCE) 
 
 project(libevent C)
 
 set(CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/cmake/")
 string(REGEX MATCH "SunOS" SOLARIS "${CMAKE_SYSTEM_NAME}")
+
+set(OPENSSL_INCLUDE_DIR "${PROJECT_SOURCE_DIR}/../openssl/include;${PROJECT_SOURCE_DIR}/../openssl/include/win")
+set(OPENSSL_LIBRARIES "${PROJECT_SOURCE_DIR}/../../../Product/Lib/Release")
 
 
 include(CheckTypeSize)
@@ -117,19 +120,19 @@ option(EVENT__DISABLE_THREAD_SUPPORT
     "Define if libevent should not be compiled with thread support" OFF)
 
 option(EVENT__DISABLE_OPENSSL
-    "Define if libevent should build without support for OpenSSL encrpytion" ON)
+    "Define if libevent should build without support for OpenSSL encrpytion" OFF)
 
 option(EVENT__DISABLE_BENCHMARK
     "Defines if libevent should build without the benchmark exectuables" OFF)
 
 option(EVENT__DISABLE_TESTS
-    "If tests should be compiled or not" OFF)
+    "If tests should be compiled or not" ON)
 
 option(EVENT__DISABLE_REGRESS
-    "Disable the regress tests" OFF)
+    "Disable the regress tests" ON)
 
 option(EVENT__DISABLE_SAMPLES
-    "Disable sample files" OFF)
+    "Disable sample files" ON)
 
 option(EVENT__DISABLE_CLOCK_GETTIME
     "Do not use clock_gettime even if it is available" OFF)
@@ -680,7 +683,7 @@ if(EVENT__HAVE_EVENT_PORTS)
 endif()
 
 if (NOT EVENT__DISABLE_OPENSSL)
-    find_package(OpenSSL REQUIRED)
+    #find_package(OpenSSL REQUIRED)
 
     set(EVENT__HAVE_OPENSSL 1)
 

@@ -153,7 +153,7 @@ inline NF_THREAD_ID ThreadId()
 #endif
 
 #ifndef NF_ENABLE_SSL
-#define NF_ENABLE_SSL 0
+#define NF_ENABLE_SSL 1
 #endif
 
 //#ifndef USE_THREAD_CLIENT
