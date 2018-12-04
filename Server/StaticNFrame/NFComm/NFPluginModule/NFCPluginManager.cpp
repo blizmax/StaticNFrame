@@ -65,7 +65,7 @@ bool NFCPluginManager::Awake()
 
 	InitSingleton();
 
-	NFLogInfo("StaticNFrame Start................");
+	NFLogInfo("NFPlugLoader Awake................");
 	//加载引擎配置plugin.xml, 创建引擎，生成module
 	LoadPluginConfig();
 	for (PluginNameMap::iterator it = mPluginNameMap.begin(); it != mPluginNameMap.end(); ++it)
@@ -95,6 +95,7 @@ bool NFCPluginManager::Awake()
 
 inline bool NFCPluginManager::Init()
 {
+	NFLogInfo("NFPlugLoader Init................");
 	for (auto iter = mPluginInstanceList.begin(); iter != mPluginInstanceList.end(); ++iter)
 	{
 		(*iter)->Init();
@@ -347,6 +348,7 @@ NFIModule* NFCPluginManager::FindModule(const std::string& strModuleName)
 
 bool NFCPluginManager::AfterInit()
 {
+	NFLogInfo("NFPlugLoader AfterInit................");
 	for (auto iter = mPluginInstanceList.begin(); iter != mPluginInstanceList.end(); ++iter)
 	{
 		(*iter)->AfterInit();
@@ -357,6 +359,7 @@ bool NFCPluginManager::AfterInit()
 
 bool NFCPluginManager::CheckConfig()
 {
+	NFLogInfo("NFPlugLoader CheckConfig................");
 	PluginInstanceMap::iterator itCheckInstance = mPluginInstanceMap.begin();
 	for (; itCheckInstance != mPluginInstanceMap.end(); ++itCheckInstance)
 	{
@@ -368,6 +371,7 @@ bool NFCPluginManager::CheckConfig()
 
 bool NFCPluginManager::ReadyExecute()
 {
+	NFLogInfo("NFPlugLoader ReadyExecute................");
 	PluginInstanceMap::iterator itCheckInstance = mPluginInstanceMap.begin();
 	for (; itCheckInstance != mPluginInstanceMap.end(); ++itCheckInstance)
 	{
@@ -379,6 +383,7 @@ bool NFCPluginManager::ReadyExecute()
 
 bool NFCPluginManager::BeforeShut()
 {
+	NFLogInfo("NFPlugLoader BeforeShut................");
 	PluginInstanceMap::iterator itBeforeInstance = mPluginInstanceMap.begin();
 	for (; itBeforeInstance != mPluginInstanceMap.end(); ++itBeforeInstance)
 	{
@@ -390,6 +395,7 @@ bool NFCPluginManager::BeforeShut()
 
 bool NFCPluginManager::Shut()
 {
+	NFLogInfo("NFPlugLoader Shut................");
 	PluginInstanceMap::iterator itInstance = mPluginInstanceMap.begin();
 	for (; itInstance != mPluginInstanceMap.end(); ++itInstance)
 	{
@@ -401,6 +407,7 @@ bool NFCPluginManager::Shut()
 
 bool NFCPluginManager::Finalize()
 {
+	NFLogInfo("NFPlugLoader Finalize................");
 	PluginInstanceMap::iterator itInstance = mPluginInstanceMap.begin();
 	for (; itInstance != mPluginInstanceMap.end(); ++itInstance)
 	{

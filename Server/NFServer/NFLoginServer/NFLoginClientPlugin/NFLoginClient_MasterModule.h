@@ -18,6 +18,10 @@
 
 class NFCLoginClient_MasterModule : public NFILoginClient_MasterModule
 {
+	/**
+	* @brief 定义hash处理器
+	*/
+	using hash_functor = std::function<size_t(const std::string&)>;
 public:
 	explicit NFCLoginClient_MasterModule(NFIPluginManager* p);
 
@@ -39,9 +43,21 @@ protected:
 	void RegisterServer();
 	void ServerReport();
 
-	void OnHandleMasterSendWorldMessage(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen);
+	void OnServerReport(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen);
+
+	virtual NF_SHARE_PTR<NFServerData> GetSuitProxyServer(const std::string& name) override;
+	virtual NF_SHARE_PTR<NFServerData> GetSuitGameServer(const std::string& name) override;
+	virtual NF_SHARE_PTR<NFServerData> GetSuitWorldServer() override;
+	virtual NF_SHARE_PTR<NFServerData> GetRandProxyServer() override;
+	virtual NF_SHARE_PTR<NFServerData> GetRandGameServer() override;
 private:
 	NFINetClientModule* m_pNetClientModule;
 	uint32_t m_unLinkId;
-	NFMapEx<int, NFMsg::ServerInfoReport> mWorldMap;
+	NFMapEx<int, NFServerData> mWorldMap;
+	NFConsistentHashMapEx<int, NFServerData> mProxyMap;
+	NFConsistentHashMapEx<int, NFServerData> mGameMap;
+	/**
+	* hash值计算公式
+	*/
+	hash_functor                mhashf;
 };

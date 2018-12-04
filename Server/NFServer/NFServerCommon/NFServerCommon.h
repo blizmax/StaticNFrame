@@ -18,6 +18,9 @@ class NFServerCommon
 public:
 	static NFServerConfig* GetServerConfig(NFIPluginManager* pPluginManager, NF_SERVER_TYPES eServerType);
 	static NFServerConfig* GetAppConfig(NFIPluginManager* pPluginManager, NF_SERVER_TYPES eServerType);
+
+	static bool MessageToJsonString(const google::protobuf::Message& message, std::string& json);
+	static bool JsonStringToMessage(const string& json, google::protobuf::Message& message);
 };
 
 class NFProxyData

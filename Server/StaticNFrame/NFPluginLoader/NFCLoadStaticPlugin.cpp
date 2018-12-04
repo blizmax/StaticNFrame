@@ -40,6 +40,9 @@
 
 #include <NFComm/NFXPlugin/NFLuaScriptPlugin/NFLuaScriptPlugin.h>
 
+#include <NFServerLogic/NFLoginServerLogic/NFLoginLogicPlugin/NFLoginLogicPlugin.h>
+#include <NFServerLogic/NFGameServerLogic/NFGameLogicPlugin/NFGameLogicPlugin.h>
+#include <NFServerLogic/NFProxyServerLogic/NFProxyLogicPlugin/NFProxyLogicPlugin.h>
 #endif
 
 bool NFCPluginManager::InitSingleton()
@@ -116,6 +119,9 @@ bool NFCPluginManager::RegisterStaticPlugin()
 	REGISTER_STATIC_PLUGIN(this, NFProxyClientPlugin);
 	///////////////////////////////////////////////////
 
+	REGISTER_STATIC_PLUGIN(this, NFLoginLogicPlugin);
+	REGISTER_STATIC_PLUGIN(this, NFGameLogicPlugin);
+	REGISTER_STATIC_PLUGIN(this, NFProxyLogicPlugin);
 #endif
 	return true;
 }

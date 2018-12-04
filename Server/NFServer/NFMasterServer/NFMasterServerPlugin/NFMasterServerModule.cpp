@@ -277,6 +277,27 @@ void NFCMasterServerModule::SynWorldToLogin()
 	}
 }
 
+void NFCMasterServerModule::SynReportToLogin(NF_SHARE_PTR<NFServerData> pServerReport)
+{
+	NFMsg::ServerInfoReportList xData;
+
+	NF_SHARE_PTR<NFServerData> pServerData = mLoginMap.First();
+	while (pServerData)
+	{
+		NFMsg::ServerInfoReportList xData;
+
+		if (pServerReport)
+		{
+			NFMsg::ServerInfoReport* pData = xData.add_server_list();
+			*pData = pServerReport->mServerInfo;
+		}
+
+		m_pNetServerModule->SendToServerByPB(pServerData->mUnlinkId, EGMI_STS_SERVER_REPORT, xData, 0);
+
+		pServerData = mLoginMap.Next();
+	}
+}
+
 void NFCMasterServerModule::SynWorldToLogin(uint32_t unlinkId)
 {
 	if (mWorldMap.Count() <= 0) return;
@@ -292,7 +313,7 @@ void NFCMasterServerModule::SynWorldToLogin(uint32_t unlinkId)
 		pServerData = mWorldMap.Next();
 	}
 
-	m_pNetServerModule->SendToServerByPB(unlinkId, EGMI_NET_MASTER_TO_LOGIN_SEND_WORLD, xData, 0);
+	m_pNetServerModule->SendToServerByPB(unlinkId, EGMI_STS_SERVER_REPORT, xData, 0);
 }
 
 void NFCMasterServerModule::OnServerReport(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen)
@@ -314,6 +335,11 @@ void NFCMasterServerModule::OnServerReport(const uint32_t unLinkId, const uint64
 				pServerData = std::shared_ptr<NFServerData>(new NFServerData());
 				mLoginMap.AddElement(xData.server_id(), pServerData);
 			}
+			if (pServerData)
+			{
+				pServerData->mUnlinkId = unLinkId;
+				pServerData->mServerInfo = xData;
+			}
 		}
 		break;
 		case NF_SERVER_TYPES::NF_ST_WORLD:
@@ -324,6 +350,12 @@ void NFCMasterServerModule::OnServerReport(const uint32_t unLinkId, const uint64
 				pServerData = std::shared_ptr<NFServerData>(new NFServerData());
 				mWorldMap.AddElement(xData.server_id(), pServerData);
 			}
+			if (pServerData)
+			{
+				pServerData->mUnlinkId = unLinkId;
+				pServerData->mServerInfo = xData;
+			}
+			SynReportToLogin(pServerData);
 		}
 		break;
 		case NF_SERVER_TYPES::NF_ST_PROXY:
@@ -334,6 +366,12 @@ void NFCMasterServerModule::OnServerReport(const uint32_t unLinkId, const uint64
 				pServerData = std::shared_ptr<NFServerData>(new NFServerData());
 				mProxyMap.AddElement(xData.server_id(), pServerData);
 			}
+			if (pServerData)
+			{
+				pServerData->mUnlinkId = unLinkId;
+				pServerData->mServerInfo = xData;
+			}
+			SynReportToLogin(pServerData);
 		}
 		break;
 		case NF_SERVER_TYPES::NF_ST_GAME:
@@ -344,13 +382,14 @@ void NFCMasterServerModule::OnServerReport(const uint32_t unLinkId, const uint64
 				pServerData = std::shared_ptr<NFServerData>(new NFServerData());
 				mGameMap.AddElement(xData.server_id(), pServerData);
 			}
+			if (pServerData)
+			{
+				pServerData->mUnlinkId = unLinkId;
+				pServerData->mServerInfo = xData;
+			}
+			SynReportToLogin(pServerData);
 		}
 		break;
-		}
-		if (pServerData)
-		{
-			pServerData->mUnlinkId = unLinkId;
-			pServerData->mServerInfo = xData;
 		}
 	}
 }

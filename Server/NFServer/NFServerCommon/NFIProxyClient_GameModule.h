@@ -10,6 +10,8 @@
 #pragma once
 
 #include "NFComm/NFPluginModule/NFIModule.h"
+#include "NFComm/NFCore/NFPlatform.h"
+#include "NFServer/NFServerCommon/NFServerCommon.h"
 
 class NFIProxyClient_GameModule : public NFIModule
 {
@@ -18,4 +20,6 @@ public:
 	{
 		
 	}
+
+	virtual NF_SHARE_PTR<NFServerData> GetServerData(uint32_t serverId) = 0;
 };

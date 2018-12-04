@@ -51,6 +51,8 @@ protected:
 	void SynWorldToLogin();
 	void SynWorldToLogin(uint32_t unlinkId);
 
+	void SynReportToLogin(NF_SHARE_PTR<NFServerData> pServerData);
+
 	void OnClientDisconnect(uint32_t unLinkId);
 private:
 	NFINetServerModule* m_pNetServerModule;

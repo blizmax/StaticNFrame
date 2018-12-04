@@ -5,7 +5,6 @@ LoginServerModule = {}
 function LoginServerModule.Init()
     UserLoginMgr:Init()
 
-    unilight.HttpServerInitServer(7000)
     unilight.HttpServerAddRequestHandler("/httplogin", NFHttpType.NF_HTTP_REQ_POST, "HttpLoginCallBack")
 end
 

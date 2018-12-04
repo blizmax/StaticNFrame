@@ -38,7 +38,6 @@ bool NFCProxyServerModule::Init()
 	m_pNetServerModule = pPluginManager->FindModule<NFINetServerModule>();
 	m_pNetServerModule->AddEventCallBack(NF_ST_PROXY, this, &NFCProxyServerModule::OnProxySocketEvent);
 	m_pNetServerModule->AddReceiveCallBack(NF_ST_PROXY, this, &NFCProxyServerModule::OnHandleOtherMessage);
-	m_pNetServerModule->AddReceiveCallBack(NF_ST_PROXY, EGMI_NET_MSG_JSON_MSG, this, &NFCProxyServerModule::OnHandleJsonMessage);
 
 	NFServerConfig* pConfig = NFServerCommon::GetAppConfig(pPluginManager, NF_ST_PROXY);
 	if (pConfig)
@@ -129,17 +128,4 @@ void NFCProxyServerModule::OnHandleOtherMessage(const uint32_t unLinkId, const u
 	}
 	std::string ip = m_pNetServerModule->GetLinkIp(unLinkId);
 	NFLogWarning("other message not handled:playerId:{},msgId:{},ip:{}", playerId, nMsgId, ip);
-}
-
-void NFCProxyServerModule::OnHandleJsonMessage(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen)
-{
-	NFJson json;
-	std::string errString;
-	json.parse(std::string(msg, nLen), errString);
-
-	if (errString.empty() == false)
-	{
-		NFLogError("json error | {}", errString);
-		return;
-	}
 }

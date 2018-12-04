@@ -40,6 +40,8 @@ protected:
 
 	void RegisterServer(uint32_t unLinkId);
 	void OnClientDisconnect(uint32_t unLinkId);
+
+	virtual NF_SHARE_PTR<NFServerData> GetServerData(uint32_t serverId) override;
 private:
 	NFINetClientModule* m_pNetClientModule;
 

@@ -4,9 +4,11 @@
     <ClInclude Include="NFMsgDefine.h" />
     <ClInclude Include="mysql_db.pb.h" />
     <ClInclude Include="server_msg.pb.h" />
+    <ClInclude Include="login_msg.pb.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="mysql_db.pb.cc" />
     <ClCompile Include="server_msg.pb.cc" />
+    <ClCompile Include="login_msg.pb.cc" />
   </ItemGroup>
 </Project>

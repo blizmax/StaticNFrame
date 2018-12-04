@@ -18,6 +18,7 @@ NFCLoginClient_MasterModule::NFCLoginClient_MasterModule(NFIPluginManager* p)
 {
 	pPluginManager = p;
 	m_pNetClientModule = nullptr;
+	mhashf = NFHash::hash_new<std::string>();
 }
 
 NFCLoginClient_MasterModule::~NFCLoginClient_MasterModule()
@@ -35,7 +36,7 @@ bool NFCLoginClient_MasterModule::AfterInit()
 	m_pNetClientModule->AddEventCallBack(NF_ST_MASTER, this, &NFCLoginClient_MasterModule::OnProxySocketEvent);
 	m_pNetClientModule->AddReceiveCallBack(NF_ST_MASTER, this, &NFCLoginClient_MasterModule::OnHandleOtherMessage);
 
-	m_pNetClientModule->AddReceiveCallBack(NF_ST_MASTER, EGMI_NET_MASTER_TO_LOGIN_SEND_WORLD, this, &NFCLoginClient_MasterModule::OnHandleMasterSendWorldMessage);
+	m_pNetClientModule->AddReceiveCallBack(NF_ST_MASTER, EGMI_STS_SERVER_REPORT, this, &NFCLoginClient_MasterModule::OnServerReport);
 
 	NFServerConfig* pConfig = NFServerCommon::GetServerConfig(pPluginManager, NF_ST_MASTER);
 	if (pConfig)
@@ -51,23 +52,53 @@ bool NFCLoginClient_MasterModule::AfterInit()
 	return true;
 }
 
-void NFCLoginClient_MasterModule::OnHandleMasterSendWorldMessage(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen)
+void NFCLoginClient_MasterModule::OnServerReport(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen)
 {
 	NFMsg::ServerInfoReportList xMsg;
 	CLIENT_MSG_PROCESS_NO_OBJECT(nMsgId, msg, nLen, xMsg);
+
 	for (int i = 0; i < xMsg.server_list_size(); ++i)
 	{
 		const NFMsg::ServerInfoReport& xData = xMsg.server_list(i);
-
-		NF_SHARE_PTR<NFMsg::ServerInfoReport> pServerData = mWorldMap.GetElement(xData.server_id());
-		if (!pServerData)
+		NF_SHARE_PTR<NFServerData> pServerData;
+		switch (xData.server_type())
 		{
-			pServerData = NF_SHARE_PTR<NFMsg::ServerInfoReport>(NF_NEW NFMsg::ServerInfoReport());
-			*pServerData = xData;
-
-			mWorldMap.AddElement(xData.server_id(), pServerData);
+		case NF_SERVER_TYPES::NF_ST_WORLD:
+		{
+			pServerData = mWorldMap.GetElement(xData.server_id());
+			if (!pServerData)
+			{
+				pServerData = std::shared_ptr<NFServerData>(new NFServerData());
+				mWorldMap.AddElement(xData.server_id(), pServerData);
+			}
 		}
-
+		break;
+		case NF_SERVER_TYPES::NF_ST_PROXY:
+		{
+			pServerData = mProxyMap.GetElement(xData.server_id());
+			if (!pServerData)
+			{
+				pServerData = std::shared_ptr<NFServerData>(new NFServerData());
+				mProxyMap.AddElement(xData.server_id(), pServerData);
+			}
+		}
+		break;
+		case NF_SERVER_TYPES::NF_ST_GAME:
+		{
+			pServerData = mGameMap.GetElement(xData.server_id());
+			if (!pServerData)
+			{
+				pServerData = std::shared_ptr<NFServerData>(new NFServerData());
+				mGameMap.AddElement(xData.server_id(), pServerData);
+			}
+		}
+		break;
+		}
+		if (pServerData)
+		{
+			pServerData->mUnlinkId = unLinkId;
+			pServerData->mServerInfo = xData;
+		}
 	}
 }
 
@@ -155,4 +186,31 @@ void NFCLoginClient_MasterModule::ServerReport()
 
 		m_pNetClientModule->SendToServerByPB(m_unLinkId, EGMI_STS_SERVER_REPORT, xMsg, 0);
 	}
+}
+
+NF_SHARE_PTR<NFServerData> NFCLoginClient_MasterModule::GetSuitProxyServer(const std::string& name)
+{
+	int index = (int)mhashf(name);
+	return mProxyMap.GetElementBySuit(index);
+}
+
+NF_SHARE_PTR<NFServerData> NFCLoginClient_MasterModule::GetSuitGameServer(const std::string& name)
+{
+	int index = (int)mhashf(name);
+	return mGameMap.GetElementBySuit(index);
+}
+
+NF_SHARE_PTR<NFServerData> NFCLoginClient_MasterModule::GetSuitWorldServer()
+{
+	return mWorldMap.First();
+}
+
+NF_SHARE_PTR<NFServerData> NFCLoginClient_MasterModule::GetRandProxyServer()
+{
+	return mProxyMap.GetElementBySuitRandom();
+}
+
+NF_SHARE_PTR<NFServerData> NFCLoginClient_MasterModule::GetRandGameServer()
+{
+	return mGameMap.GetElementBySuitRandom();
 }

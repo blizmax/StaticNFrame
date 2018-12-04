@@ -28,7 +28,6 @@ NFCHttpLoginServerModule::~NFCHttpLoginServerModule()
 bool NFCHttpLoginServerModule::Init()
 {
 	m_pHttpServerModule = pPluginManager->FindModule<NFIHttpServerModule>();
-	m_pHttpServerModule->AddRequestHandler("/httplogin", NFHttpType::NF_HTTP_REQ_POST, this, &NFCHttpLoginServerModule::HttpHandleHttpLogin);
 
 	NFServerConfig* pConfig = NFServerCommon::GetAppConfig(pPluginManager, NF_ST_LOGIN);
 	if (pConfig)
@@ -69,11 +68,5 @@ bool NFCHttpLoginServerModule::BeforeShut()
 
 bool NFCHttpLoginServerModule::Shut()
 {
-	return true;
-}
-
-bool NFCHttpLoginServerModule::HttpHandleHttpLogin(const NFHttpRequest& req)
-{
-	NFLogDebug("http login | body | {}", req.body);
 	return true;
 }

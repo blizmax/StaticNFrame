@@ -7,13 +7,9 @@ end
 function GateServerModule.AfterInit()
 	--添加网关web服务器，以及网络事件回调，协议回调
 	TcpServer.addRecvCallBack(NF_SERVER_TYPES.NF_ST_PROXY, 0, "GateServerModule.NetServerRecvHandleJson")
-	TcpServer.addEventCallBack(NF_SERVER_TYPES.NF_ST_PROXY, "GateServerModule.ProxyServerWebNetEvent")
-	TcpServer.addServer(NF_SERVER_TYPES.NF_ST_PROXY, 1, 100, 7001, true)
 
 	--添加网关客户端，链接GameServer服务器, 以及网络事件回调，协议回调
 	TcpClient.addRecvCallBack(NF_SERVER_TYPES.NF_ST_GAME, 0, "GateServerModule.NetClientRecvHandleJson")
-	TcpClient.addEventCallBack(NF_SERVER_TYPES.NF_ST_GAME, "GateServerModule.ProxyNetEvent")
-	GateServerModule.gameserver_unlinkid = TcpClient.addServer(NF_SERVER_TYPES.NF_ST_GAME, "127.0.0.1", 6005)
 
 	--账号系统初始化
 	AccountMgr:Init()
@@ -65,16 +61,6 @@ function GateServerModule.NetClientRecvHandleJson(unLinkId, valueId, nMsgId, str
 end
 
 
-function GateServerModule.ProxyServerWebNetEvent(event, unlinkId)
-    if event == NF_MSG_TYPE.eMsgType_CONNECTED then
-        unilight.debug("web client connect! unlinkId:" .. tostring(unlinkId))
-	elseif event == NF_MSG_TYPE.eMsgType_DISCONNECTED then
-		unilight.error("web client disconnected! unlinkId:" .. tostring(unlinkId))
-		AccountMgr:RemoveAccountbyLinkId(unlinkId)
-    end
-end
-
-
 function GateServerModule.Execute()
 
 end
@@ -85,12 +71,4 @@ end
 
 function GateServerModule.Shut()
 
-end
-
-function GateServerModule.ProxyNetEvent(event, unlinkId)
-    if event == NF_MSG_TYPE.eMsgType_CONNECTED then
-        unilight.debug("GateServer | game connect!")
-    elseif event == NF_MSG_TYPE.eMsgType_DISCONNECTED then
-		unilight.error("GateServer | game disconnected!")
-    end
 end

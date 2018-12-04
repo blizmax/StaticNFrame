@@ -10,6 +10,8 @@
 #pragma once
 
 #include "NFComm/NFPluginModule/NFIModule.h"
+#include "NFComm/NFCore/NFPlatform.h"
+#include "NFServer/NFServerCommon/NFServerCommon.h"
 
 class NFILoginClient_MasterModule : public NFIModule
 {
@@ -18,4 +20,11 @@ public:
 	{
 
 	}
+
+	virtual NF_SHARE_PTR<NFServerData> GetSuitProxyServer(const std::string& name) = 0;
+	virtual NF_SHARE_PTR<NFServerData> GetSuitGameServer(const std::string& name) = 0;
+	virtual NF_SHARE_PTR<NFServerData> GetSuitWorldServer() = 0;
+
+	virtual NF_SHARE_PTR<NFServerData> GetRandProxyServer() = 0;
+	virtual NF_SHARE_PTR<NFServerData> GetRandGameServer() = 0;
 };

@@ -68,6 +68,12 @@
 #pragma comment( lib, "NFProxyServerPlugin.lib" )
 #pragma comment( lib, "NFProxyClientPlugin.lib" )
 
+///////////////////////////////////////////////////////////////
+#pragma comment( lib, "NFServerLogicCommon.lib" )
+
+#pragma comment( lib, "NFGameLogicPlugin.lib" )
+#pragma comment( lib, "NFProxyLogicPlugin.lib" )
+#pragma comment( lib, "NFLoginLogicPlugin.lib" )
 #else
 #pragma comment( lib, "NFCore.lib" )
 #pragma comment( lib, "NFPluginModule.lib" )

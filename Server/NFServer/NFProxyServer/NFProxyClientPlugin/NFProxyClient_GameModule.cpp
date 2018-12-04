@@ -152,5 +152,10 @@ void NFCProxyClient_GameModule::OnHandleWorldSendGameMessage(const uint32_t unLi
 	}
 }
 
+NF_SHARE_PTR<NFServerData> NFCProxyClient_GameModule::GetServerData(uint32_t serverId)
+{
+	return mGameMap.GetElement(serverId);
+}
+
 
 

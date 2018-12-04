@@ -108,13 +108,11 @@ static void sig_usr(int signo)
 	{
 	case SIGUSR1:
 	{
-		std::cout << "Start Close NFPluginLoader............." << std::endl;
 		NFCPluginManager::GetSingletonPtr()->BeforeShut();
 		NFCPluginManager::GetSingletonPtr()->Shut();
 		NFCPluginManager::GetSingletonPtr()->Finalize();
 
 		NFCPluginManager::GetSingletonPtr()->ReleaseInstance();
-		std::cout << "Close NFPluginLoader............." << std::endl;
 	}
 	break;
 	case SIGUSR2:
@@ -289,13 +287,11 @@ int main(int argc, char* argv[])
 		}
 	}
 
-	std::cout << "Start Close NFPluginLoader............." << std::endl;
 	NFCPluginManager::GetSingletonPtr()->BeforeShut();
 	NFCPluginManager::GetSingletonPtr()->Shut();
 	NFCPluginManager::GetSingletonPtr()->Finalize();
 
 	NFCPluginManager::GetSingletonPtr()->ReleaseInstance();
-	std::cout << "Close NFPluginLoader............." << std::endl;
 
 	return 0;
 }
