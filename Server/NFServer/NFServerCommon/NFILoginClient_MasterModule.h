@@ -27,4 +27,7 @@ public:
 
 	virtual NF_SHARE_PTR<NFServerData> GetRandProxyServer() = 0;
 	virtual NF_SHARE_PTR<NFServerData> GetRandGameServer() = 0;
+
+	virtual NF_SHARE_PTR<NFServerData> GetProxyServerByServerId(uint32_t serverId) = 0;
+	virtual NF_SHARE_PTR<NFServerData> GetGameServerByServerId(uint32_t serverId) = 0;
 };

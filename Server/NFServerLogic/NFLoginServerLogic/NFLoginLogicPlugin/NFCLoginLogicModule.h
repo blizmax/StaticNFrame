@@ -43,7 +43,7 @@ public:
 
 	virtual void RequestZoneList(const NFHttpRequest& req, const NFMsg::reqeust_zone_list& httpLogin);
 	virtual void PlatTokenLogin(const NFHttpRequest& req, const NFMsg::plat_token_login_request& request);
-	virtual void RequestSelectZone(const NFHttpRequest& req, NFJson& json);
+	virtual void RequestSelectZone(const NFHttpRequest& req, const NFMsg::reqeust_select_zone_request& json);
 private:
 	NFIHttpServerModule* m_pHttpServerModule;
 	NFILoginClient_MasterModule* m_pLoginClient_MasterModule;

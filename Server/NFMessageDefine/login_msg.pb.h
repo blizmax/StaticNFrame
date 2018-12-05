@@ -38,7 +38,7 @@ namespace protobuf_login_5fmsg_2eproto {
 struct TableStruct {
   static const ::google::protobuf::internal::ParseTableField entries[];
   static const ::google::protobuf::internal::AuxillaryParseTableField aux[];
-  static const ::google::protobuf::internal::ParseTable schema[12];
+  static const ::google::protobuf::internal::ParseTable schema[14];
   static const ::google::protobuf::internal::FieldMetadata field_metadata[];
   static const ::google::protobuf::internal::SerializationTable serialization_table[];
   static const ::google::protobuf::uint32 offsets[];
@@ -49,21 +49,21 @@ namespace NFMsg {
 class plat_token_login_request;
 class plat_token_login_requestDefaultTypeInternal;
 extern plat_token_login_requestDefaultTypeInternal _plat_token_login_request_default_instance_;
-class plat_token_login_request_data;
-class plat_token_login_request_dataDefaultTypeInternal;
-extern plat_token_login_request_dataDefaultTypeInternal _plat_token_login_request_data_default_instance_;
-class plat_token_login_request_data_platinfo;
-class plat_token_login_request_data_platinfoDefaultTypeInternal;
-extern plat_token_login_request_data_platinfoDefaultTypeInternal _plat_token_login_request_data_platinfo_default_instance_;
+class plat_token_login_request_request_data;
+class plat_token_login_request_request_dataDefaultTypeInternal;
+extern plat_token_login_request_request_dataDefaultTypeInternal _plat_token_login_request_request_data_default_instance_;
+class plat_token_login_request_request_data_request_data_platinfo;
+class plat_token_login_request_request_data_request_data_platinfoDefaultTypeInternal;
+extern plat_token_login_request_request_data_request_data_platinfoDefaultTypeInternal _plat_token_login_request_request_data_request_data_platinfo_default_instance_;
 class plat_token_login_respone;
 class plat_token_login_responeDefaultTypeInternal;
 extern plat_token_login_responeDefaultTypeInternal _plat_token_login_respone_default_instance_;
-class plat_token_login_respone_data;
-class plat_token_login_respone_dataDefaultTypeInternal;
-extern plat_token_login_respone_dataDefaultTypeInternal _plat_token_login_respone_data_default_instance_;
-class plat_token_login_respone_data_platinfo;
-class plat_token_login_respone_data_platinfoDefaultTypeInternal;
-extern plat_token_login_respone_data_platinfoDefaultTypeInternal _plat_token_login_respone_data_platinfo_default_instance_;
+class plat_token_login_respone_respone_data;
+class plat_token_login_respone_respone_dataDefaultTypeInternal;
+extern plat_token_login_respone_respone_dataDefaultTypeInternal _plat_token_login_respone_respone_data_default_instance_;
+class plat_token_login_respone_respone_data_respone_data_platinfo;
+class plat_token_login_respone_respone_data_respone_data_platinfoDefaultTypeInternal;
+extern plat_token_login_respone_respone_data_respone_data_platinfoDefaultTypeInternal _plat_token_login_respone_respone_data_respone_data_platinfo_default_instance_;
 class reqeust_select_zone_request;
 class reqeust_select_zone_requestDefaultTypeInternal;
 extern reqeust_select_zone_requestDefaultTypeInternal _reqeust_select_zone_request_default_instance_;
@@ -76,27 +76,35 @@ extern reqeust_zone_list_dataDefaultTypeInternal _reqeust_zone_list_data_default
 class reqeust_zone_list_respone;
 class reqeust_zone_list_responeDefaultTypeInternal;
 extern reqeust_zone_list_responeDefaultTypeInternal _reqeust_zone_list_respone_default_instance_;
-class reqeust_zone_list_respone_data;
-class reqeust_zone_list_respone_dataDefaultTypeInternal;
-extern reqeust_zone_list_respone_dataDefaultTypeInternal _reqeust_zone_list_respone_data_default_instance_;
-class reqeust_zone_list_server;
-class reqeust_zone_list_serverDefaultTypeInternal;
-extern reqeust_zone_list_serverDefaultTypeInternal _reqeust_zone_list_server_default_instance_;
+class reqeust_zone_list_respone_respone_data;
+class reqeust_zone_list_respone_respone_dataDefaultTypeInternal;
+extern reqeust_zone_list_respone_respone_dataDefaultTypeInternal _reqeust_zone_list_respone_respone_data_default_instance_;
+class reqeust_zone_list_respone_respone_data_reqeust_zone_list_server;
+class reqeust_zone_list_respone_respone_data_reqeust_zone_list_serverDefaultTypeInternal;
+extern reqeust_zone_list_respone_respone_data_reqeust_zone_list_serverDefaultTypeInternal _reqeust_zone_list_respone_respone_data_reqeust_zone_list_server_default_instance_;
+class respone_select_zone_respone;
+class respone_select_zone_responeDefaultTypeInternal;
+extern respone_select_zone_responeDefaultTypeInternal _respone_select_zone_respone_default_instance_;
+class respone_select_zone_respone_respone_data;
+class respone_select_zone_respone_respone_dataDefaultTypeInternal;
+extern respone_select_zone_respone_respone_dataDefaultTypeInternal _respone_select_zone_respone_respone_data_default_instance_;
 }  // namespace NFMsg
 namespace google {
 namespace protobuf {
 template<> ::NFMsg::plat_token_login_request* Arena::CreateMaybeMessage<::NFMsg::plat_token_login_request>(Arena*);
-template<> ::NFMsg::plat_token_login_request_data* Arena::CreateMaybeMessage<::NFMsg::plat_token_login_request_data>(Arena*);
-template<> ::NFMsg::plat_token_login_request_data_platinfo* Arena::CreateMaybeMessage<::NFMsg::plat_token_login_request_data_platinfo>(Arena*);
+template<> ::NFMsg::plat_token_login_request_request_data* Arena::CreateMaybeMessage<::NFMsg::plat_token_login_request_request_data>(Arena*);
+template<> ::NFMsg::plat_token_login_request_request_data_request_data_platinfo* Arena::CreateMaybeMessage<::NFMsg::plat_token_login_request_request_data_request_data_platinfo>(Arena*);
 template<> ::NFMsg::plat_token_login_respone* Arena::CreateMaybeMessage<::NFMsg::plat_token_login_respone>(Arena*);
-template<> ::NFMsg::plat_token_login_respone_data* Arena::CreateMaybeMessage<::NFMsg::plat_token_login_respone_data>(Arena*);
-template<> ::NFMsg::plat_token_login_respone_data_platinfo* Arena::CreateMaybeMessage<::NFMsg::plat_token_login_respone_data_platinfo>(Arena*);
+template<> ::NFMsg::plat_token_login_respone_respone_data* Arena::CreateMaybeMessage<::NFMsg::plat_token_login_respone_respone_data>(Arena*);
+template<> ::NFMsg::plat_token_login_respone_respone_data_respone_data_platinfo* Arena::CreateMaybeMessage<::NFMsg::plat_token_login_respone_respone_data_respone_data_platinfo>(Arena*);
 template<> ::NFMsg::reqeust_select_zone_request* Arena::CreateMaybeMessage<::NFMsg::reqeust_select_zone_request>(Arena*);
 template<> ::NFMsg::reqeust_zone_list* Arena::CreateMaybeMessage<::NFMsg::reqeust_zone_list>(Arena*);
 template<> ::NFMsg::reqeust_zone_list_data* Arena::CreateMaybeMessage<::NFMsg::reqeust_zone_list_data>(Arena*);
 template<> ::NFMsg::reqeust_zone_list_respone* Arena::CreateMaybeMessage<::NFMsg::reqeust_zone_list_respone>(Arena*);
-template<> ::NFMsg::reqeust_zone_list_respone_data* Arena::CreateMaybeMessage<::NFMsg::reqeust_zone_list_respone_data>(Arena*);
-template<> ::NFMsg::reqeust_zone_list_server* Arena::CreateMaybeMessage<::NFMsg::reqeust_zone_list_server>(Arena*);
+template<> ::NFMsg::reqeust_zone_list_respone_respone_data* Arena::CreateMaybeMessage<::NFMsg::reqeust_zone_list_respone_respone_data>(Arena*);
+template<> ::NFMsg::reqeust_zone_list_respone_respone_data_reqeust_zone_list_server* Arena::CreateMaybeMessage<::NFMsg::reqeust_zone_list_respone_respone_data_reqeust_zone_list_server>(Arena*);
+template<> ::NFMsg::respone_select_zone_respone* Arena::CreateMaybeMessage<::NFMsg::respone_select_zone_respone>(Arena*);
+template<> ::NFMsg::respone_select_zone_respone_respone_data* Arena::CreateMaybeMessage<::NFMsg::respone_select_zone_respone_respone_data>(Arena*);
 }  // namespace protobuf
 }  // namespace google
 namespace NFMsg {
@@ -330,24 +338,24 @@ class reqeust_zone_list : public ::google::protobuf::Message /* @@protoc_inserti
 };
 // -------------------------------------------------------------------
 
-class reqeust_zone_list_server : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:NFMsg.reqeust_zone_list_server) */ {
+class reqeust_zone_list_respone_respone_data_reqeust_zone_list_server : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:NFMsg.reqeust_zone_list_respone.respone_data.reqeust_zone_list_server) */ {
  public:
-  reqeust_zone_list_server();
-  virtual ~reqeust_zone_list_server();
+  reqeust_zone_list_respone_respone_data_reqeust_zone_list_server();
+  virtual ~reqeust_zone_list_respone_respone_data_reqeust_zone_list_server();
 
-  reqeust_zone_list_server(const reqeust_zone_list_server& from);
+  reqeust_zone_list_respone_respone_data_reqeust_zone_list_server(const reqeust_zone_list_respone_respone_data_reqeust_zone_list_server& from);
 
-  inline reqeust_zone_list_server& operator=(const reqeust_zone_list_server& from) {
+  inline reqeust_zone_list_respone_respone_data_reqeust_zone_list_server& operator=(const reqeust_zone_list_respone_respone_data_reqeust_zone_list_server& from) {
     CopyFrom(from);
     return *this;
   }
   #if LANG_CXX11
-  reqeust_zone_list_server(reqeust_zone_list_server&& from) noexcept
-    : reqeust_zone_list_server() {
+  reqeust_zone_list_respone_respone_data_reqeust_zone_list_server(reqeust_zone_list_respone_respone_data_reqeust_zone_list_server&& from) noexcept
+    : reqeust_zone_list_respone_respone_data_reqeust_zone_list_server() {
     *this = ::std::move(from);
   }
 
-  inline reqeust_zone_list_server& operator=(reqeust_zone_list_server&& from) noexcept {
+  inline reqeust_zone_list_respone_respone_data_reqeust_zone_list_server& operator=(reqeust_zone_list_respone_respone_data_reqeust_zone_list_server&& from) noexcept {
     if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
       if (this != &from) InternalSwap(&from);
     } else {
@@ -357,34 +365,34 @@ class reqeust_zone_list_server : public ::google::protobuf::Message /* @@protoc_
   }
   #endif
   static const ::google::protobuf::Descriptor* descriptor();
-  static const reqeust_zone_list_server& default_instance();
+  static const reqeust_zone_list_respone_respone_data_reqeust_zone_list_server& default_instance();
 
   static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
-  static inline const reqeust_zone_list_server* internal_default_instance() {
-    return reinterpret_cast<const reqeust_zone_list_server*>(
-               &_reqeust_zone_list_server_default_instance_);
+  static inline const reqeust_zone_list_respone_respone_data_reqeust_zone_list_server* internal_default_instance() {
+    return reinterpret_cast<const reqeust_zone_list_respone_respone_data_reqeust_zone_list_server*>(
+               &_reqeust_zone_list_respone_respone_data_reqeust_zone_list_server_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
     2;
 
-  void Swap(reqeust_zone_list_server* other);
-  friend void swap(reqeust_zone_list_server& a, reqeust_zone_list_server& b) {
+  void Swap(reqeust_zone_list_respone_respone_data_reqeust_zone_list_server* other);
+  friend void swap(reqeust_zone_list_respone_respone_data_reqeust_zone_list_server& a, reqeust_zone_list_respone_respone_data_reqeust_zone_list_server& b) {
     a.Swap(&b);
   }
 
   // implements Message ----------------------------------------------
 
-  inline reqeust_zone_list_server* New() const final {
-    return CreateMaybeMessage<reqeust_zone_list_server>(NULL);
+  inline reqeust_zone_list_respone_respone_data_reqeust_zone_list_server* New() const final {
+    return CreateMaybeMessage<reqeust_zone_list_respone_respone_data_reqeust_zone_list_server>(NULL);
   }
 
-  reqeust_zone_list_server* New(::google::protobuf::Arena* arena) const final {
-    return CreateMaybeMessage<reqeust_zone_list_server>(arena);
+  reqeust_zone_list_respone_respone_data_reqeust_zone_list_server* New(::google::protobuf::Arena* arena) const final {
+    return CreateMaybeMessage<reqeust_zone_list_respone_respone_data_reqeust_zone_list_server>(arena);
   }
   void CopyFrom(const ::google::protobuf::Message& from) final;
   void MergeFrom(const ::google::protobuf::Message& from) final;
-  void CopyFrom(const reqeust_zone_list_server& from);
-  void MergeFrom(const reqeust_zone_list_server& from);
+  void CopyFrom(const reqeust_zone_list_respone_respone_data_reqeust_zone_list_server& from);
+  void MergeFrom(const reqeust_zone_list_respone_respone_data_reqeust_zone_list_server& from);
   void Clear() final;
   bool IsInitialized() const final;
 
@@ -401,7 +409,7 @@ class reqeust_zone_list_server : public ::google::protobuf::Message /* @@protoc_
   void SharedCtor();
   void SharedDtor();
   void SetCachedSize(int size) const final;
-  void InternalSwap(reqeust_zone_list_server* other);
+  void InternalSwap(reqeust_zone_list_respone_respone_data_reqeust_zone_list_server* other);
   private:
   inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
     return NULL;
@@ -489,7 +497,7 @@ class reqeust_zone_list_server : public ::google::protobuf::Message /* @@protoc_
   ::google::protobuf::uint32 zoneid() const;
   void set_zoneid(::google::protobuf::uint32 value);
 
-  // @@protoc_insertion_point(class_scope:NFMsg.reqeust_zone_list_server)
+  // @@protoc_insertion_point(class_scope:NFMsg.reqeust_zone_list_respone.respone_data.reqeust_zone_list_server)
  private:
 
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
@@ -506,24 +514,24 @@ class reqeust_zone_list_server : public ::google::protobuf::Message /* @@protoc_
 };
 // -------------------------------------------------------------------
 
-class reqeust_zone_list_respone_data : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:NFMsg.reqeust_zone_list_respone_data) */ {
+class reqeust_zone_list_respone_respone_data : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:NFMsg.reqeust_zone_list_respone.respone_data) */ {
  public:
-  reqeust_zone_list_respone_data();
-  virtual ~reqeust_zone_list_respone_data();
+  reqeust_zone_list_respone_respone_data();
+  virtual ~reqeust_zone_list_respone_respone_data();
 
-  reqeust_zone_list_respone_data(const reqeust_zone_list_respone_data& from);
+  reqeust_zone_list_respone_respone_data(const reqeust_zone_list_respone_respone_data& from);
 
-  inline reqeust_zone_list_respone_data& operator=(const reqeust_zone_list_respone_data& from) {
+  inline reqeust_zone_list_respone_respone_data& operator=(const reqeust_zone_list_respone_respone_data& from) {
     CopyFrom(from);
     return *this;
   }
   #if LANG_CXX11
-  reqeust_zone_list_respone_data(reqeust_zone_list_respone_data&& from) noexcept
-    : reqeust_zone_list_respone_data() {
+  reqeust_zone_list_respone_respone_data(reqeust_zone_list_respone_respone_data&& from) noexcept
+    : reqeust_zone_list_respone_respone_data() {
     *this = ::std::move(from);
   }
 
-  inline reqeust_zone_list_respone_data& operator=(reqeust_zone_list_respone_data&& from) noexcept {
+  inline reqeust_zone_list_respone_respone_data& operator=(reqeust_zone_list_respone_respone_data&& from) noexcept {
     if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
       if (this != &from) InternalSwap(&from);
     } else {
@@ -533,34 +541,34 @@ class reqeust_zone_list_respone_data : public ::google::protobuf::Message /* @@p
   }
   #endif
   static const ::google::protobuf::Descriptor* descriptor();
-  static const reqeust_zone_list_respone_data& default_instance();
+  static const reqeust_zone_list_respone_respone_data& default_instance();
 
   static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
-  static inline const reqeust_zone_list_respone_data* internal_default_instance() {
-    return reinterpret_cast<const reqeust_zone_list_respone_data*>(
-               &_reqeust_zone_list_respone_data_default_instance_);
+  static inline const reqeust_zone_list_respone_respone_data* internal_default_instance() {
+    return reinterpret_cast<const reqeust_zone_list_respone_respone_data*>(
+               &_reqeust_zone_list_respone_respone_data_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
     3;
 
-  void Swap(reqeust_zone_list_respone_data* other);
-  friend void swap(reqeust_zone_list_respone_data& a, reqeust_zone_list_respone_data& b) {
+  void Swap(reqeust_zone_list_respone_respone_data* other);
+  friend void swap(reqeust_zone_list_respone_respone_data& a, reqeust_zone_list_respone_respone_data& b) {
     a.Swap(&b);
   }
 
   // implements Message ----------------------------------------------
 
-  inline reqeust_zone_list_respone_data* New() const final {
-    return CreateMaybeMessage<reqeust_zone_list_respone_data>(NULL);
+  inline reqeust_zone_list_respone_respone_data* New() const final {
+    return CreateMaybeMessage<reqeust_zone_list_respone_respone_data>(NULL);
   }
 
-  reqeust_zone_list_respone_data* New(::google::protobuf::Arena* arena) const final {
-    return CreateMaybeMessage<reqeust_zone_list_respone_data>(arena);
+  reqeust_zone_list_respone_respone_data* New(::google::protobuf::Arena* arena) const final {
+    return CreateMaybeMessage<reqeust_zone_list_respone_respone_data>(arena);
   }
   void CopyFrom(const ::google::protobuf::Message& from) final;
   void MergeFrom(const ::google::protobuf::Message& from) final;
-  void CopyFrom(const reqeust_zone_list_respone_data& from);
-  void MergeFrom(const reqeust_zone_list_respone_data& from);
+  void CopyFrom(const reqeust_zone_list_respone_respone_data& from);
+  void MergeFrom(const reqeust_zone_list_respone_respone_data& from);
   void Clear() final;
   bool IsInitialized() const final;
 
@@ -577,7 +585,7 @@ class reqeust_zone_list_respone_data : public ::google::protobuf::Message /* @@p
   void SharedCtor();
   void SharedDtor();
   void SetCachedSize(int size) const final;
-  void InternalSwap(reqeust_zone_list_respone_data* other);
+  void InternalSwap(reqeust_zone_list_respone_respone_data* other);
   private:
   inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
     return NULL;
@@ -591,18 +599,20 @@ class reqeust_zone_list_respone_data : public ::google::protobuf::Message /* @@p
 
   // nested types ----------------------------------------------------
 
+  typedef reqeust_zone_list_respone_respone_data_reqeust_zone_list_server reqeust_zone_list_server;
+
   // accessors -------------------------------------------------------
 
-  // repeated .NFMsg.reqeust_zone_list_server zonelist = 5;
+  // repeated .NFMsg.reqeust_zone_list_respone.respone_data.reqeust_zone_list_server zonelist = 5;
   int zonelist_size() const;
   void clear_zonelist();
   static const int kZonelistFieldNumber = 5;
-  ::NFMsg::reqeust_zone_list_server* mutable_zonelist(int index);
-  ::google::protobuf::RepeatedPtrField< ::NFMsg::reqeust_zone_list_server >*
+  ::NFMsg::reqeust_zone_list_respone_respone_data_reqeust_zone_list_server* mutable_zonelist(int index);
+  ::google::protobuf::RepeatedPtrField< ::NFMsg::reqeust_zone_list_respone_respone_data_reqeust_zone_list_server >*
       mutable_zonelist();
-  const ::NFMsg::reqeust_zone_list_server& zonelist(int index) const;
-  ::NFMsg::reqeust_zone_list_server* add_zonelist();
-  const ::google::protobuf::RepeatedPtrField< ::NFMsg::reqeust_zone_list_server >&
+  const ::NFMsg::reqeust_zone_list_respone_respone_data_reqeust_zone_list_server& zonelist(int index) const;
+  ::NFMsg::reqeust_zone_list_respone_respone_data_reqeust_zone_list_server* add_zonelist();
+  const ::google::protobuf::RepeatedPtrField< ::NFMsg::reqeust_zone_list_respone_respone_data_reqeust_zone_list_server >&
       zonelist() const;
 
   // string gamename = 3;
@@ -637,11 +647,11 @@ class reqeust_zone_list_respone_data : public ::google::protobuf::Message /* @@p
   ::google::protobuf::uint32 zoneid() const;
   void set_zoneid(::google::protobuf::uint32 value);
 
-  // @@protoc_insertion_point(class_scope:NFMsg.reqeust_zone_list_respone_data)
+  // @@protoc_insertion_point(class_scope:NFMsg.reqeust_zone_list_respone.respone_data)
  private:
 
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
-  ::google::protobuf::RepeatedPtrField< ::NFMsg::reqeust_zone_list_server > zonelist_;
+  ::google::protobuf::RepeatedPtrField< ::NFMsg::reqeust_zone_list_respone_respone_data_reqeust_zone_list_server > zonelist_;
   ::google::protobuf::internal::ArenaStringPtr gamename_;
   ::google::protobuf::uint32 bestzoneid_;
   ::google::protobuf::uint32 gameid_;
@@ -736,6 +746,8 @@ class reqeust_zone_list_respone : public ::google::protobuf::Message /* @@protoc
 
   // nested types ----------------------------------------------------
 
+  typedef reqeust_zone_list_respone_respone_data respone_data;
+
   // accessors -------------------------------------------------------
 
   // string do = 1;
@@ -766,17 +778,17 @@ class reqeust_zone_list_respone : public ::google::protobuf::Message /* @@protoc
   ::std::string* release_error();
   void set_allocated_error(::std::string* error);
 
-  // .NFMsg.reqeust_zone_list_respone_data data = 4;
+  // .NFMsg.reqeust_zone_list_respone.respone_data data = 4;
   bool has_data() const;
   void clear_data();
   static const int kDataFieldNumber = 4;
   private:
-  const ::NFMsg::reqeust_zone_list_respone_data& _internal_data() const;
+  const ::NFMsg::reqeust_zone_list_respone_respone_data& _internal_data() const;
   public:
-  const ::NFMsg::reqeust_zone_list_respone_data& data() const;
-  ::NFMsg::reqeust_zone_list_respone_data* release_data();
-  ::NFMsg::reqeust_zone_list_respone_data* mutable_data();
-  void set_allocated_data(::NFMsg::reqeust_zone_list_respone_data* data);
+  const ::NFMsg::reqeust_zone_list_respone_respone_data& data() const;
+  ::NFMsg::reqeust_zone_list_respone_respone_data* release_data();
+  ::NFMsg::reqeust_zone_list_respone_respone_data* mutable_data();
+  void set_allocated_data(::NFMsg::reqeust_zone_list_respone_respone_data* data);
 
   // uint64 st = 3;
   void clear_st();
@@ -790,31 +802,31 @@ class reqeust_zone_list_respone : public ::google::protobuf::Message /* @@protoc
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
   ::google::protobuf::internal::ArenaStringPtr do__;
   ::google::protobuf::internal::ArenaStringPtr error_;
-  ::NFMsg::reqeust_zone_list_respone_data* data_;
+  ::NFMsg::reqeust_zone_list_respone_respone_data* data_;
   ::google::protobuf::uint64 st_;
   mutable ::google::protobuf::internal::CachedSize _cached_size_;
   friend struct ::protobuf_login_5fmsg_2eproto::TableStruct;
 };
 // -------------------------------------------------------------------
 
-class plat_token_login_request_data_platinfo : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:NFMsg.plat_token_login_request_data_platinfo) */ {
+class plat_token_login_request_request_data_request_data_platinfo : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:NFMsg.plat_token_login_request.request_data.request_data_platinfo) */ {
  public:
-  plat_token_login_request_data_platinfo();
-  virtual ~plat_token_login_request_data_platinfo();
+  plat_token_login_request_request_data_request_data_platinfo();
+  virtual ~plat_token_login_request_request_data_request_data_platinfo();
 
-  plat_token_login_request_data_platinfo(const plat_token_login_request_data_platinfo& from);
+  plat_token_login_request_request_data_request_data_platinfo(const plat_token_login_request_request_data_request_data_platinfo& from);
 
-  inline plat_token_login_request_data_platinfo& operator=(const plat_token_login_request_data_platinfo& from) {
+  inline plat_token_login_request_request_data_request_data_platinfo& operator=(const plat_token_login_request_request_data_request_data_platinfo& from) {
     CopyFrom(from);
     return *this;
   }
   #if LANG_CXX11
-  plat_token_login_request_data_platinfo(plat_token_login_request_data_platinfo&& from) noexcept
-    : plat_token_login_request_data_platinfo() {
+  plat_token_login_request_request_data_request_data_platinfo(plat_token_login_request_request_data_request_data_platinfo&& from) noexcept
+    : plat_token_login_request_request_data_request_data_platinfo() {
     *this = ::std::move(from);
   }
 
-  inline plat_token_login_request_data_platinfo& operator=(plat_token_login_request_data_platinfo&& from) noexcept {
+  inline plat_token_login_request_request_data_request_data_platinfo& operator=(plat_token_login_request_request_data_request_data_platinfo&& from) noexcept {
     if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
       if (this != &from) InternalSwap(&from);
     } else {
@@ -824,34 +836,34 @@ class plat_token_login_request_data_platinfo : public ::google::protobuf::Messag
   }
   #endif
   static const ::google::protobuf::Descriptor* descriptor();
-  static const plat_token_login_request_data_platinfo& default_instance();
+  static const plat_token_login_request_request_data_request_data_platinfo& default_instance();
 
   static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
-  static inline const plat_token_login_request_data_platinfo* internal_default_instance() {
-    return reinterpret_cast<const plat_token_login_request_data_platinfo*>(
-               &_plat_token_login_request_data_platinfo_default_instance_);
+  static inline const plat_token_login_request_request_data_request_data_platinfo* internal_default_instance() {
+    return reinterpret_cast<const plat_token_login_request_request_data_request_data_platinfo*>(
+               &_plat_token_login_request_request_data_request_data_platinfo_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
     5;
 
-  void Swap(plat_token_login_request_data_platinfo* other);
-  friend void swap(plat_token_login_request_data_platinfo& a, plat_token_login_request_data_platinfo& b) {
+  void Swap(plat_token_login_request_request_data_request_data_platinfo* other);
+  friend void swap(plat_token_login_request_request_data_request_data_platinfo& a, plat_token_login_request_request_data_request_data_platinfo& b) {
     a.Swap(&b);
   }
 
   // implements Message ----------------------------------------------
 
-  inline plat_token_login_request_data_platinfo* New() const final {
-    return CreateMaybeMessage<plat_token_login_request_data_platinfo>(NULL);
+  inline plat_token_login_request_request_data_request_data_platinfo* New() const final {
+    return CreateMaybeMessage<plat_token_login_request_request_data_request_data_platinfo>(NULL);
   }
 
-  plat_token_login_request_data_platinfo* New(::google::protobuf::Arena* arena) const final {
-    return CreateMaybeMessage<plat_token_login_request_data_platinfo>(arena);
+  plat_token_login_request_request_data_request_data_platinfo* New(::google::protobuf::Arena* arena) const final {
+    return CreateMaybeMessage<plat_token_login_request_request_data_request_data_platinfo>(arena);
   }
   void CopyFrom(const ::google::protobuf::Message& from) final;
   void MergeFrom(const ::google::protobuf::Message& from) final;
-  void CopyFrom(const plat_token_login_request_data_platinfo& from);
-  void MergeFrom(const plat_token_login_request_data_platinfo& from);
+  void CopyFrom(const plat_token_login_request_request_data_request_data_platinfo& from);
+  void MergeFrom(const plat_token_login_request_request_data_request_data_platinfo& from);
   void Clear() final;
   bool IsInitialized() const final;
 
@@ -868,7 +880,7 @@ class plat_token_login_request_data_platinfo : public ::google::protobuf::Messag
   void SharedCtor();
   void SharedDtor();
   void SetCachedSize(int size) const final;
-  void InternalSwap(plat_token_login_request_data_platinfo* other);
+  void InternalSwap(plat_token_login_request_request_data_request_data_platinfo* other);
   private:
   inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
     return NULL;
@@ -1000,7 +1012,7 @@ class plat_token_login_request_data_platinfo : public ::google::protobuf::Messag
   ::google::protobuf::uint32 gameid() const;
   void set_gameid(::google::protobuf::uint32 value);
 
-  // @@protoc_insertion_point(class_scope:NFMsg.plat_token_login_request_data_platinfo)
+  // @@protoc_insertion_point(class_scope:NFMsg.plat_token_login_request.request_data.request_data_platinfo)
  private:
 
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
@@ -1019,24 +1031,24 @@ class plat_token_login_request_data_platinfo : public ::google::protobuf::Messag
 };
 // -------------------------------------------------------------------
 
-class plat_token_login_request_data : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:NFMsg.plat_token_login_request_data) */ {
+class plat_token_login_request_request_data : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:NFMsg.plat_token_login_request.request_data) */ {
  public:
-  plat_token_login_request_data();
-  virtual ~plat_token_login_request_data();
+  plat_token_login_request_request_data();
+  virtual ~plat_token_login_request_request_data();
 
-  plat_token_login_request_data(const plat_token_login_request_data& from);
+  plat_token_login_request_request_data(const plat_token_login_request_request_data& from);
 
-  inline plat_token_login_request_data& operator=(const plat_token_login_request_data& from) {
+  inline plat_token_login_request_request_data& operator=(const plat_token_login_request_request_data& from) {
     CopyFrom(from);
     return *this;
   }
   #if LANG_CXX11
-  plat_token_login_request_data(plat_token_login_request_data&& from) noexcept
-    : plat_token_login_request_data() {
+  plat_token_login_request_request_data(plat_token_login_request_request_data&& from) noexcept
+    : plat_token_login_request_request_data() {
     *this = ::std::move(from);
   }
 
-  inline plat_token_login_request_data& operator=(plat_token_login_request_data&& from) noexcept {
+  inline plat_token_login_request_request_data& operator=(plat_token_login_request_request_data&& from) noexcept {
     if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
       if (this != &from) InternalSwap(&from);
     } else {
@@ -1046,34 +1058,34 @@ class plat_token_login_request_data : public ::google::protobuf::Message /* @@pr
   }
   #endif
   static const ::google::protobuf::Descriptor* descriptor();
-  static const plat_token_login_request_data& default_instance();
+  static const plat_token_login_request_request_data& default_instance();
 
   static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
-  static inline const plat_token_login_request_data* internal_default_instance() {
-    return reinterpret_cast<const plat_token_login_request_data*>(
-               &_plat_token_login_request_data_default_instance_);
+  static inline const plat_token_login_request_request_data* internal_default_instance() {
+    return reinterpret_cast<const plat_token_login_request_request_data*>(
+               &_plat_token_login_request_request_data_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
     6;
 
-  void Swap(plat_token_login_request_data* other);
-  friend void swap(plat_token_login_request_data& a, plat_token_login_request_data& b) {
+  void Swap(plat_token_login_request_request_data* other);
+  friend void swap(plat_token_login_request_request_data& a, plat_token_login_request_request_data& b) {
     a.Swap(&b);
   }
 
   // implements Message ----------------------------------------------
 
-  inline plat_token_login_request_data* New() const final {
-    return CreateMaybeMessage<plat_token_login_request_data>(NULL);
+  inline plat_token_login_request_request_data* New() const final {
+    return CreateMaybeMessage<plat_token_login_request_request_data>(NULL);
   }
 
-  plat_token_login_request_data* New(::google::protobuf::Arena* arena) const final {
-    return CreateMaybeMessage<plat_token_login_request_data>(arena);
+  plat_token_login_request_request_data* New(::google::protobuf::Arena* arena) const final {
+    return CreateMaybeMessage<plat_token_login_request_request_data>(arena);
   }
   void CopyFrom(const ::google::protobuf::Message& from) final;
   void MergeFrom(const ::google::protobuf::Message& from) final;
-  void CopyFrom(const plat_token_login_request_data& from);
-  void MergeFrom(const plat_token_login_request_data& from);
+  void CopyFrom(const plat_token_login_request_request_data& from);
+  void MergeFrom(const plat_token_login_request_request_data& from);
   void Clear() final;
   bool IsInitialized() const final;
 
@@ -1090,7 +1102,7 @@ class plat_token_login_request_data : public ::google::protobuf::Message /* @@pr
   void SharedCtor();
   void SharedDtor();
   void SetCachedSize(int size) const final;
-  void InternalSwap(plat_token_login_request_data* other);
+  void InternalSwap(plat_token_login_request_request_data* other);
   private:
   inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
     return NULL;
@@ -1104,19 +1116,21 @@ class plat_token_login_request_data : public ::google::protobuf::Message /* @@pr
 
   // nested types ----------------------------------------------------
 
+  typedef plat_token_login_request_request_data_request_data_platinfo request_data_platinfo;
+
   // accessors -------------------------------------------------------
 
-  // .NFMsg.plat_token_login_request_data_platinfo platinfo = 1;
+  // .NFMsg.plat_token_login_request.request_data.request_data_platinfo platinfo = 1;
   bool has_platinfo() const;
   void clear_platinfo();
   static const int kPlatinfoFieldNumber = 1;
   private:
-  const ::NFMsg::plat_token_login_request_data_platinfo& _internal_platinfo() const;
+  const ::NFMsg::plat_token_login_request_request_data_request_data_platinfo& _internal_platinfo() const;
   public:
-  const ::NFMsg::plat_token_login_request_data_platinfo& platinfo() const;
-  ::NFMsg::plat_token_login_request_data_platinfo* release_platinfo();
-  ::NFMsg::plat_token_login_request_data_platinfo* mutable_platinfo();
-  void set_allocated_platinfo(::NFMsg::plat_token_login_request_data_platinfo* platinfo);
+  const ::NFMsg::plat_token_login_request_request_data_request_data_platinfo& platinfo() const;
+  ::NFMsg::plat_token_login_request_request_data_request_data_platinfo* release_platinfo();
+  ::NFMsg::plat_token_login_request_request_data_request_data_platinfo* mutable_platinfo();
+  void set_allocated_platinfo(::NFMsg::plat_token_login_request_request_data_request_data_platinfo* platinfo);
 
   // uint32 gameid = 2;
   void clear_gameid();
@@ -1124,11 +1138,11 @@ class plat_token_login_request_data : public ::google::protobuf::Message /* @@pr
   ::google::protobuf::uint32 gameid() const;
   void set_gameid(::google::protobuf::uint32 value);
 
-  // @@protoc_insertion_point(class_scope:NFMsg.plat_token_login_request_data)
+  // @@protoc_insertion_point(class_scope:NFMsg.plat_token_login_request.request_data)
  private:
 
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
-  ::NFMsg::plat_token_login_request_data_platinfo* platinfo_;
+  ::NFMsg::plat_token_login_request_request_data_request_data_platinfo* platinfo_;
   ::google::protobuf::uint32 gameid_;
   mutable ::google::protobuf::internal::CachedSize _cached_size_;
   friend struct ::protobuf_login_5fmsg_2eproto::TableStruct;
@@ -1220,6 +1234,8 @@ class plat_token_login_request : public ::google::protobuf::Message /* @@protoc_
 
   // nested types ----------------------------------------------------
 
+  typedef plat_token_login_request_request_data request_data;
+
   // accessors -------------------------------------------------------
 
   // string do = 1;
@@ -1236,17 +1252,17 @@ class plat_token_login_request : public ::google::protobuf::Message /* @@protoc_
   ::std::string* release_do_();
   void set_allocated_do_(::std::string* do_);
 
-  // .NFMsg.plat_token_login_request_data data = 2;
+  // .NFMsg.plat_token_login_request.request_data data = 2;
   bool has_data() const;
   void clear_data();
   static const int kDataFieldNumber = 2;
   private:
-  const ::NFMsg::plat_token_login_request_data& _internal_data() const;
+  const ::NFMsg::plat_token_login_request_request_data& _internal_data() const;
   public:
-  const ::NFMsg::plat_token_login_request_data& data() const;
-  ::NFMsg::plat_token_login_request_data* release_data();
-  ::NFMsg::plat_token_login_request_data* mutable_data();
-  void set_allocated_data(::NFMsg::plat_token_login_request_data* data);
+  const ::NFMsg::plat_token_login_request_request_data& data() const;
+  ::NFMsg::plat_token_login_request_request_data* release_data();
+  ::NFMsg::plat_token_login_request_request_data* mutable_data();
+  void set_allocated_data(::NFMsg::plat_token_login_request_request_data* data);
 
   // uint32 gameid = 3;
   void clear_gameid();
@@ -1271,7 +1287,7 @@ class plat_token_login_request : public ::google::protobuf::Message /* @@protoc_
 
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
   ::google::protobuf::internal::ArenaStringPtr do__;
-  ::NFMsg::plat_token_login_request_data* data_;
+  ::NFMsg::plat_token_login_request_request_data* data_;
   ::google::protobuf::uint32 gameid_;
   ::google::protobuf::uint32 zoneid_;
   ::google::protobuf::uint64 unigame_plat_timestamp_;
@@ -1280,24 +1296,24 @@ class plat_token_login_request : public ::google::protobuf::Message /* @@protoc_
 };
 // -------------------------------------------------------------------
 
-class plat_token_login_respone_data_platinfo : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:NFMsg.plat_token_login_respone_data_platinfo) */ {
+class plat_token_login_respone_respone_data_respone_data_platinfo : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:NFMsg.plat_token_login_respone.respone_data.respone_data_platinfo) */ {
  public:
-  plat_token_login_respone_data_platinfo();
-  virtual ~plat_token_login_respone_data_platinfo();
+  plat_token_login_respone_respone_data_respone_data_platinfo();
+  virtual ~plat_token_login_respone_respone_data_respone_data_platinfo();
 
-  plat_token_login_respone_data_platinfo(const plat_token_login_respone_data_platinfo& from);
+  plat_token_login_respone_respone_data_respone_data_platinfo(const plat_token_login_respone_respone_data_respone_data_platinfo& from);
 
-  inline plat_token_login_respone_data_platinfo& operator=(const plat_token_login_respone_data_platinfo& from) {
+  inline plat_token_login_respone_respone_data_respone_data_platinfo& operator=(const plat_token_login_respone_respone_data_respone_data_platinfo& from) {
     CopyFrom(from);
     return *this;
   }
   #if LANG_CXX11
-  plat_token_login_respone_data_platinfo(plat_token_login_respone_data_platinfo&& from) noexcept
-    : plat_token_login_respone_data_platinfo() {
+  plat_token_login_respone_respone_data_respone_data_platinfo(plat_token_login_respone_respone_data_respone_data_platinfo&& from) noexcept
+    : plat_token_login_respone_respone_data_respone_data_platinfo() {
     *this = ::std::move(from);
   }
 
-  inline plat_token_login_respone_data_platinfo& operator=(plat_token_login_respone_data_platinfo&& from) noexcept {
+  inline plat_token_login_respone_respone_data_respone_data_platinfo& operator=(plat_token_login_respone_respone_data_respone_data_platinfo&& from) noexcept {
     if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
       if (this != &from) InternalSwap(&from);
     } else {
@@ -1307,34 +1323,34 @@ class plat_token_login_respone_data_platinfo : public ::google::protobuf::Messag
   }
   #endif
   static const ::google::protobuf::Descriptor* descriptor();
-  static const plat_token_login_respone_data_platinfo& default_instance();
+  static const plat_token_login_respone_respone_data_respone_data_platinfo& default_instance();
 
   static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
-  static inline const plat_token_login_respone_data_platinfo* internal_default_instance() {
-    return reinterpret_cast<const plat_token_login_respone_data_platinfo*>(
-               &_plat_token_login_respone_data_platinfo_default_instance_);
+  static inline const plat_token_login_respone_respone_data_respone_data_platinfo* internal_default_instance() {
+    return reinterpret_cast<const plat_token_login_respone_respone_data_respone_data_platinfo*>(
+               &_plat_token_login_respone_respone_data_respone_data_platinfo_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
     8;
 
-  void Swap(plat_token_login_respone_data_platinfo* other);
-  friend void swap(plat_token_login_respone_data_platinfo& a, plat_token_login_respone_data_platinfo& b) {
+  void Swap(plat_token_login_respone_respone_data_respone_data_platinfo* other);
+  friend void swap(plat_token_login_respone_respone_data_respone_data_platinfo& a, plat_token_login_respone_respone_data_respone_data_platinfo& b) {
     a.Swap(&b);
   }
 
   // implements Message ----------------------------------------------
 
-  inline plat_token_login_respone_data_platinfo* New() const final {
-    return CreateMaybeMessage<plat_token_login_respone_data_platinfo>(NULL);
+  inline plat_token_login_respone_respone_data_respone_data_platinfo* New() const final {
+    return CreateMaybeMessage<plat_token_login_respone_respone_data_respone_data_platinfo>(NULL);
   }
 
-  plat_token_login_respone_data_platinfo* New(::google::protobuf::Arena* arena) const final {
-    return CreateMaybeMessage<plat_token_login_respone_data_platinfo>(arena);
+  plat_token_login_respone_respone_data_respone_data_platinfo* New(::google::protobuf::Arena* arena) const final {
+    return CreateMaybeMessage<plat_token_login_respone_respone_data_respone_data_platinfo>(arena);
   }
   void CopyFrom(const ::google::protobuf::Message& from) final;
   void MergeFrom(const ::google::protobuf::Message& from) final;
-  void CopyFrom(const plat_token_login_respone_data_platinfo& from);
-  void MergeFrom(const plat_token_login_respone_data_platinfo& from);
+  void CopyFrom(const plat_token_login_respone_respone_data_respone_data_platinfo& from);
+  void MergeFrom(const plat_token_login_respone_respone_data_respone_data_platinfo& from);
   void Clear() final;
   bool IsInitialized() const final;
 
@@ -1351,7 +1367,7 @@ class plat_token_login_respone_data_platinfo : public ::google::protobuf::Messag
   void SharedCtor();
   void SharedDtor();
   void SetCachedSize(int size) const final;
-  void InternalSwap(plat_token_login_respone_data_platinfo* other);
+  void InternalSwap(plat_token_login_respone_respone_data_respone_data_platinfo* other);
   private:
   inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
     return NULL;
@@ -1483,7 +1499,7 @@ class plat_token_login_respone_data_platinfo : public ::google::protobuf::Messag
   ::google::protobuf::uint32 gameid() const;
   void set_gameid(::google::protobuf::uint32 value);
 
-  // @@protoc_insertion_point(class_scope:NFMsg.plat_token_login_respone_data_platinfo)
+  // @@protoc_insertion_point(class_scope:NFMsg.plat_token_login_respone.respone_data.respone_data_platinfo)
  private:
 
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
@@ -1502,24 +1518,24 @@ class plat_token_login_respone_data_platinfo : public ::google::protobuf::Messag
 };
 // -------------------------------------------------------------------
 
-class plat_token_login_respone_data : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:NFMsg.plat_token_login_respone_data) */ {
+class plat_token_login_respone_respone_data : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:NFMsg.plat_token_login_respone.respone_data) */ {
  public:
-  plat_token_login_respone_data();
-  virtual ~plat_token_login_respone_data();
+  plat_token_login_respone_respone_data();
+  virtual ~plat_token_login_respone_respone_data();
 
-  plat_token_login_respone_data(const plat_token_login_respone_data& from);
+  plat_token_login_respone_respone_data(const plat_token_login_respone_respone_data& from);
 
-  inline plat_token_login_respone_data& operator=(const plat_token_login_respone_data& from) {
+  inline plat_token_login_respone_respone_data& operator=(const plat_token_login_respone_respone_data& from) {
     CopyFrom(from);
     return *this;
   }
   #if LANG_CXX11
-  plat_token_login_respone_data(plat_token_login_respone_data&& from) noexcept
-    : plat_token_login_respone_data() {
+  plat_token_login_respone_respone_data(plat_token_login_respone_respone_data&& from) noexcept
+    : plat_token_login_respone_respone_data() {
     *this = ::std::move(from);
   }
 
-  inline plat_token_login_respone_data& operator=(plat_token_login_respone_data&& from) noexcept {
+  inline plat_token_login_respone_respone_data& operator=(plat_token_login_respone_respone_data&& from) noexcept {
     if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
       if (this != &from) InternalSwap(&from);
     } else {
@@ -1529,34 +1545,34 @@ class plat_token_login_respone_data : public ::google::protobuf::Message /* @@pr
   }
   #endif
   static const ::google::protobuf::Descriptor* descriptor();
-  static const plat_token_login_respone_data& default_instance();
+  static const plat_token_login_respone_respone_data& default_instance();
 
   static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
-  static inline const plat_token_login_respone_data* internal_default_instance() {
-    return reinterpret_cast<const plat_token_login_respone_data*>(
-               &_plat_token_login_respone_data_default_instance_);
+  static inline const plat_token_login_respone_respone_data* internal_default_instance() {
+    return reinterpret_cast<const plat_token_login_respone_respone_data*>(
+               &_plat_token_login_respone_respone_data_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
     9;
 
-  void Swap(plat_token_login_respone_data* other);
-  friend void swap(plat_token_login_respone_data& a, plat_token_login_respone_data& b) {
+  void Swap(plat_token_login_respone_respone_data* other);
+  friend void swap(plat_token_login_respone_respone_data& a, plat_token_login_respone_respone_data& b) {
     a.Swap(&b);
   }
 
   // implements Message ----------------------------------------------
 
-  inline plat_token_login_respone_data* New() const final {
-    return CreateMaybeMessage<plat_token_login_respone_data>(NULL);
+  inline plat_token_login_respone_respone_data* New() const final {
+    return CreateMaybeMessage<plat_token_login_respone_respone_data>(NULL);
   }
 
-  plat_token_login_respone_data* New(::google::protobuf::Arena* arena) const final {
-    return CreateMaybeMessage<plat_token_login_respone_data>(arena);
+  plat_token_login_respone_respone_data* New(::google::protobuf::Arena* arena) const final {
+    return CreateMaybeMessage<plat_token_login_respone_respone_data>(arena);
   }
   void CopyFrom(const ::google::protobuf::Message& from) final;
   void MergeFrom(const ::google::protobuf::Message& from) final;
-  void CopyFrom(const plat_token_login_respone_data& from);
-  void MergeFrom(const plat_token_login_respone_data& from);
+  void CopyFrom(const plat_token_login_respone_respone_data& from);
+  void MergeFrom(const plat_token_login_respone_respone_data& from);
   void Clear() final;
   bool IsInitialized() const final;
 
@@ -1573,7 +1589,7 @@ class plat_token_login_respone_data : public ::google::protobuf::Message /* @@pr
   void SharedCtor();
   void SharedDtor();
   void SetCachedSize(int size) const final;
-  void InternalSwap(plat_token_login_respone_data* other);
+  void InternalSwap(plat_token_login_respone_respone_data* other);
   private:
   inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
     return NULL;
@@ -1586,6 +1602,8 @@ class plat_token_login_respone_data : public ::google::protobuf::Message /* @@pr
   ::google::protobuf::Metadata GetMetadata() const final;
 
   // nested types ----------------------------------------------------
+
+  typedef plat_token_login_respone_respone_data_respone_data_platinfo respone_data_platinfo;
 
   // accessors -------------------------------------------------------
 
@@ -1659,17 +1677,17 @@ class plat_token_login_respone_data : public ::google::protobuf::Message /* @@pr
   ::std::string* release_unigame_plat_login();
   void set_allocated_unigame_plat_login(::std::string* unigame_plat_login);
 
-  // .NFMsg.plat_token_login_respone_data_platinfo platinfo = 9;
+  // .NFMsg.plat_token_login_respone.respone_data.respone_data_platinfo platinfo = 9;
   bool has_platinfo() const;
   void clear_platinfo();
   static const int kPlatinfoFieldNumber = 9;
   private:
-  const ::NFMsg::plat_token_login_respone_data_platinfo& _internal_platinfo() const;
+  const ::NFMsg::plat_token_login_respone_respone_data_respone_data_platinfo& _internal_platinfo() const;
   public:
-  const ::NFMsg::plat_token_login_respone_data_platinfo& platinfo() const;
-  ::NFMsg::plat_token_login_respone_data_platinfo* release_platinfo();
-  ::NFMsg::plat_token_login_respone_data_platinfo* mutable_platinfo();
-  void set_allocated_platinfo(::NFMsg::plat_token_login_respone_data_platinfo* platinfo);
+  const ::NFMsg::plat_token_login_respone_respone_data_respone_data_platinfo& platinfo() const;
+  ::NFMsg::plat_token_login_respone_respone_data_respone_data_platinfo* release_platinfo();
+  ::NFMsg::plat_token_login_respone_respone_data_respone_data_platinfo* mutable_platinfo();
+  void set_allocated_platinfo(::NFMsg::plat_token_login_respone_respone_data_respone_data_platinfo* platinfo);
 
   // uint32 gameid = 1;
   void clear_gameid();
@@ -1689,7 +1707,7 @@ class plat_token_login_respone_data : public ::google::protobuf::Message /* @@pr
   ::google::protobuf::uint32 unigame_plat_login_life() const;
   void set_unigame_plat_login_life(::google::protobuf::uint32 value);
 
-  // @@protoc_insertion_point(class_scope:NFMsg.plat_token_login_respone_data)
+  // @@protoc_insertion_point(class_scope:NFMsg.plat_token_login_respone.respone_data)
  private:
 
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
@@ -1698,7 +1716,7 @@ class plat_token_login_respone_data : public ::google::protobuf::Message /* @@pr
   ::google::protobuf::internal::ArenaStringPtr uid_;
   ::google::protobuf::internal::ArenaStringPtr unigame_plat_key_;
   ::google::protobuf::internal::ArenaStringPtr unigame_plat_login_;
-  ::NFMsg::plat_token_login_respone_data_platinfo* platinfo_;
+  ::NFMsg::plat_token_login_respone_respone_data_respone_data_platinfo* platinfo_;
   ::google::protobuf::uint32 gameid_;
   ::google::protobuf::uint32 timezone_offset_;
   ::google::protobuf::uint32 unigame_plat_login_life_;
@@ -1792,6 +1810,8 @@ class plat_token_login_respone : public ::google::protobuf::Message /* @@protoc_
 
   // nested types ----------------------------------------------------
 
+  typedef plat_token_login_respone_respone_data respone_data;
+
   // accessors -------------------------------------------------------
 
   // string unigame_plat_key = 2;
@@ -1850,17 +1870,17 @@ class plat_token_login_respone : public ::google::protobuf::Message /* @@protoc_
   ::std::string* release_do_();
   void set_allocated_do_(::std::string* do_);
 
-  // .NFMsg.plat_token_login_respone_data data = 8;
+  // .NFMsg.plat_token_login_respone.respone_data data = 8;
   bool has_data() const;
   void clear_data();
   static const int kDataFieldNumber = 8;
   private:
-  const ::NFMsg::plat_token_login_respone_data& _internal_data() const;
+  const ::NFMsg::plat_token_login_respone_respone_data& _internal_data() const;
   public:
-  const ::NFMsg::plat_token_login_respone_data& data() const;
-  ::NFMsg::plat_token_login_respone_data* release_data();
-  ::NFMsg::plat_token_login_respone_data* mutable_data();
-  void set_allocated_data(::NFMsg::plat_token_login_respone_data* data);
+  const ::NFMsg::plat_token_login_respone_respone_data& data() const;
+  ::NFMsg::plat_token_login_respone_respone_data* release_data();
+  ::NFMsg::plat_token_login_respone_respone_data* mutable_data();
+  void set_allocated_data(::NFMsg::plat_token_login_respone_respone_data* data);
 
   // uint32 gameid = 1;
   void clear_gameid();
@@ -1888,7 +1908,7 @@ class plat_token_login_respone : public ::google::protobuf::Message /* @@protoc_
   ::google::protobuf::internal::ArenaStringPtr unigame_plat_login_;
   ::google::protobuf::internal::ArenaStringPtr unigame_plat_login_timeout_;
   ::google::protobuf::internal::ArenaStringPtr do__;
-  ::NFMsg::plat_token_login_respone_data* data_;
+  ::NFMsg::plat_token_login_respone_respone_data* data_;
   ::google::protobuf::uint32 gameid_;
   ::google::protobuf::uint32 zoneid_;
   ::google::protobuf::uint64 unigame_plat_timestamp_;
@@ -2057,6 +2077,388 @@ class reqeust_select_zone_request : public ::google::protobuf::Message /* @@prot
   mutable ::google::protobuf::internal::CachedSize _cached_size_;
   friend struct ::protobuf_login_5fmsg_2eproto::TableStruct;
 };
+// -------------------------------------------------------------------
+
+class respone_select_zone_respone_respone_data : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:NFMsg.respone_select_zone_respone.respone_data) */ {
+ public:
+  respone_select_zone_respone_respone_data();
+  virtual ~respone_select_zone_respone_respone_data();
+
+  respone_select_zone_respone_respone_data(const respone_select_zone_respone_respone_data& from);
+
+  inline respone_select_zone_respone_respone_data& operator=(const respone_select_zone_respone_respone_data& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  #if LANG_CXX11
+  respone_select_zone_respone_respone_data(respone_select_zone_respone_respone_data&& from) noexcept
+    : respone_select_zone_respone_respone_data() {
+    *this = ::std::move(from);
+  }
+
+  inline respone_select_zone_respone_respone_data& operator=(respone_select_zone_respone_respone_data&& from) noexcept {
+    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
+      if (this != &from) InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+  #endif
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const respone_select_zone_respone_respone_data& default_instance();
+
+  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
+  static inline const respone_select_zone_respone_respone_data* internal_default_instance() {
+    return reinterpret_cast<const respone_select_zone_respone_respone_data*>(
+               &_respone_select_zone_respone_respone_data_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    12;
+
+  void Swap(respone_select_zone_respone_respone_data* other);
+  friend void swap(respone_select_zone_respone_respone_data& a, respone_select_zone_respone_respone_data& b) {
+    a.Swap(&b);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline respone_select_zone_respone_respone_data* New() const final {
+    return CreateMaybeMessage<respone_select_zone_respone_respone_data>(NULL);
+  }
+
+  respone_select_zone_respone_respone_data* New(::google::protobuf::Arena* arena) const final {
+    return CreateMaybeMessage<respone_select_zone_respone_respone_data>(arena);
+  }
+  void CopyFrom(const ::google::protobuf::Message& from) final;
+  void MergeFrom(const ::google::protobuf::Message& from) final;
+  void CopyFrom(const respone_select_zone_respone_respone_data& from);
+  void MergeFrom(const respone_select_zone_respone_respone_data& from);
+  void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input) final;
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const final;
+  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
+      bool deterministic, ::google::protobuf::uint8* target) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(respone_select_zone_respone_respone_data* other);
+  private:
+  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
+    return NULL;
+  }
+  inline void* MaybeArenaPtr() const {
+    return NULL;
+  }
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // string gatewayurl = 3;
+  void clear_gatewayurl();
+  static const int kGatewayurlFieldNumber = 3;
+  const ::std::string& gatewayurl() const;
+  void set_gatewayurl(const ::std::string& value);
+  #if LANG_CXX11
+  void set_gatewayurl(::std::string&& value);
+  #endif
+  void set_gatewayurl(const char* value);
+  void set_gatewayurl(const char* value, size_t size);
+  ::std::string* mutable_gatewayurl();
+  ::std::string* release_gatewayurl();
+  void set_allocated_gatewayurl(::std::string* gatewayurl);
+
+  // string gatewayurltcp = 4;
+  void clear_gatewayurltcp();
+  static const int kGatewayurltcpFieldNumber = 4;
+  const ::std::string& gatewayurltcp() const;
+  void set_gatewayurltcp(const ::std::string& value);
+  #if LANG_CXX11
+  void set_gatewayurltcp(::std::string&& value);
+  #endif
+  void set_gatewayurltcp(const char* value);
+  void set_gatewayurltcp(const char* value, size_t size);
+  ::std::string* mutable_gatewayurltcp();
+  ::std::string* release_gatewayurltcp();
+  void set_allocated_gatewayurltcp(::std::string* gatewayurltcp);
+
+  // string gatewayurlws = 5;
+  void clear_gatewayurlws();
+  static const int kGatewayurlwsFieldNumber = 5;
+  const ::std::string& gatewayurlws() const;
+  void set_gatewayurlws(const ::std::string& value);
+  #if LANG_CXX11
+  void set_gatewayurlws(::std::string&& value);
+  #endif
+  void set_gatewayurlws(const char* value);
+  void set_gatewayurlws(const char* value, size_t size);
+  ::std::string* mutable_gatewayurlws();
+  ::std::string* release_gatewayurlws();
+  void set_allocated_gatewayurlws(::std::string* gatewayurlws);
+
+  // uint64 accountid = 1;
+  void clear_accountid();
+  static const int kAccountidFieldNumber = 1;
+  ::google::protobuf::uint64 accountid() const;
+  void set_accountid(::google::protobuf::uint64 value);
+
+  // uint32 gameid = 2;
+  void clear_gameid();
+  static const int kGameidFieldNumber = 2;
+  ::google::protobuf::uint32 gameid() const;
+  void set_gameid(::google::protobuf::uint32 value);
+
+  // uint32 logintempid = 6;
+  void clear_logintempid();
+  static const int kLogintempidFieldNumber = 6;
+  ::google::protobuf::uint32 logintempid() const;
+  void set_logintempid(::google::protobuf::uint32 value);
+
+  // uint64 tokenid = 7;
+  void clear_tokenid();
+  static const int kTokenidFieldNumber = 7;
+  ::google::protobuf::uint64 tokenid() const;
+  void set_tokenid(::google::protobuf::uint64 value);
+
+  // uint64 zoneuid = 9;
+  void clear_zoneuid();
+  static const int kZoneuidFieldNumber = 9;
+  ::google::protobuf::uint64 zoneuid() const;
+  void set_zoneuid(::google::protobuf::uint64 value);
+
+  // uint32 zoneid = 8;
+  void clear_zoneid();
+  static const int kZoneidFieldNumber = 8;
+  ::google::protobuf::uint32 zoneid() const;
+  void set_zoneid(::google::protobuf::uint32 value);
+
+  // @@protoc_insertion_point(class_scope:NFMsg.respone_select_zone_respone.respone_data)
+ private:
+
+  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+  ::google::protobuf::internal::ArenaStringPtr gatewayurl_;
+  ::google::protobuf::internal::ArenaStringPtr gatewayurltcp_;
+  ::google::protobuf::internal::ArenaStringPtr gatewayurlws_;
+  ::google::protobuf::uint64 accountid_;
+  ::google::protobuf::uint32 gameid_;
+  ::google::protobuf::uint32 logintempid_;
+  ::google::protobuf::uint64 tokenid_;
+  ::google::protobuf::uint64 zoneuid_;
+  ::google::protobuf::uint32 zoneid_;
+  mutable ::google::protobuf::internal::CachedSize _cached_size_;
+  friend struct ::protobuf_login_5fmsg_2eproto::TableStruct;
+};
+// -------------------------------------------------------------------
+
+class respone_select_zone_respone : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:NFMsg.respone_select_zone_respone) */ {
+ public:
+  respone_select_zone_respone();
+  virtual ~respone_select_zone_respone();
+
+  respone_select_zone_respone(const respone_select_zone_respone& from);
+
+  inline respone_select_zone_respone& operator=(const respone_select_zone_respone& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  #if LANG_CXX11
+  respone_select_zone_respone(respone_select_zone_respone&& from) noexcept
+    : respone_select_zone_respone() {
+    *this = ::std::move(from);
+  }
+
+  inline respone_select_zone_respone& operator=(respone_select_zone_respone&& from) noexcept {
+    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
+      if (this != &from) InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+  #endif
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const respone_select_zone_respone& default_instance();
+
+  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
+  static inline const respone_select_zone_respone* internal_default_instance() {
+    return reinterpret_cast<const respone_select_zone_respone*>(
+               &_respone_select_zone_respone_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    13;
+
+  void Swap(respone_select_zone_respone* other);
+  friend void swap(respone_select_zone_respone& a, respone_select_zone_respone& b) {
+    a.Swap(&b);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline respone_select_zone_respone* New() const final {
+    return CreateMaybeMessage<respone_select_zone_respone>(NULL);
+  }
+
+  respone_select_zone_respone* New(::google::protobuf::Arena* arena) const final {
+    return CreateMaybeMessage<respone_select_zone_respone>(arena);
+  }
+  void CopyFrom(const ::google::protobuf::Message& from) final;
+  void MergeFrom(const ::google::protobuf::Message& from) final;
+  void CopyFrom(const respone_select_zone_respone& from);
+  void MergeFrom(const respone_select_zone_respone& from);
+  void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input) final;
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const final;
+  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
+      bool deterministic, ::google::protobuf::uint8* target) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(respone_select_zone_respone* other);
+  private:
+  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
+    return NULL;
+  }
+  inline void* MaybeArenaPtr() const {
+    return NULL;
+  }
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  typedef respone_select_zone_respone_respone_data respone_data;
+
+  // accessors -------------------------------------------------------
+
+  // string do = 1;
+  void clear_do_();
+  static const int kDoFieldNumber = 1;
+  const ::std::string& do_() const;
+  void set_do_(const ::std::string& value);
+  #if LANG_CXX11
+  void set_do_(::std::string&& value);
+  #endif
+  void set_do_(const char* value);
+  void set_do_(const char* value, size_t size);
+  ::std::string* mutable_do_();
+  ::std::string* release_do_();
+  void set_allocated_do_(::std::string* do_);
+
+  // string errno_ = 2;
+  void clear_errno_();
+  static const int kErrnoFieldNumber = 2;
+  const ::std::string& errno_() const;
+  void set_errno_(const ::std::string& value);
+  #if LANG_CXX11
+  void set_errno_(::std::string&& value);
+  #endif
+  void set_errno_(const char* value);
+  void set_errno_(const char* value, size_t size);
+  ::std::string* mutable_errno_();
+  ::std::string* release_errno_();
+  void set_allocated_errno_(::std::string* errno_);
+
+  // string unigame_plat_login = 5;
+  void clear_unigame_plat_login();
+  static const int kUnigamePlatLoginFieldNumber = 5;
+  const ::std::string& unigame_plat_login() const;
+  void set_unigame_plat_login(const ::std::string& value);
+  #if LANG_CXX11
+  void set_unigame_plat_login(::std::string&& value);
+  #endif
+  void set_unigame_plat_login(const char* value);
+  void set_unigame_plat_login(const char* value, size_t size);
+  ::std::string* mutable_unigame_plat_login();
+  ::std::string* release_unigame_plat_login();
+  void set_allocated_unigame_plat_login(::std::string* unigame_plat_login);
+
+  // string uid = 9;
+  void clear_uid();
+  static const int kUidFieldNumber = 9;
+  const ::std::string& uid() const;
+  void set_uid(const ::std::string& value);
+  #if LANG_CXX11
+  void set_uid(::std::string&& value);
+  #endif
+  void set_uid(const char* value);
+  void set_uid(const char* value, size_t size);
+  ::std::string* mutable_uid();
+  ::std::string* release_uid();
+  void set_allocated_uid(::std::string* uid);
+
+  // .NFMsg.respone_select_zone_respone.respone_data data = 8;
+  bool has_data() const;
+  void clear_data();
+  static const int kDataFieldNumber = 8;
+  private:
+  const ::NFMsg::respone_select_zone_respone_respone_data& _internal_data() const;
+  public:
+  const ::NFMsg::respone_select_zone_respone_respone_data& data() const;
+  ::NFMsg::respone_select_zone_respone_respone_data* release_data();
+  ::NFMsg::respone_select_zone_respone_respone_data* mutable_data();
+  void set_allocated_data(::NFMsg::respone_select_zone_respone_respone_data* data);
+
+  // uint64 st = 4;
+  void clear_st();
+  static const int kStFieldNumber = 4;
+  ::google::protobuf::uint64 st() const;
+  void set_st(::google::protobuf::uint64 value);
+
+  // uint32 gameid = 3;
+  void clear_gameid();
+  static const int kGameidFieldNumber = 3;
+  ::google::protobuf::uint32 gameid() const;
+  void set_gameid(::google::protobuf::uint32 value);
+
+  // uint32 zoneid = 7;
+  void clear_zoneid();
+  static const int kZoneidFieldNumber = 7;
+  ::google::protobuf::uint32 zoneid() const;
+  void set_zoneid(::google::protobuf::uint32 value);
+
+  // uint64 unigame_plat_timestamp = 6;
+  void clear_unigame_plat_timestamp();
+  static const int kUnigamePlatTimestampFieldNumber = 6;
+  ::google::protobuf::uint64 unigame_plat_timestamp() const;
+  void set_unigame_plat_timestamp(::google::protobuf::uint64 value);
+
+  // @@protoc_insertion_point(class_scope:NFMsg.respone_select_zone_respone)
+ private:
+
+  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+  ::google::protobuf::internal::ArenaStringPtr do__;
+  ::google::protobuf::internal::ArenaStringPtr errno__;
+  ::google::protobuf::internal::ArenaStringPtr unigame_plat_login_;
+  ::google::protobuf::internal::ArenaStringPtr uid_;
+  ::NFMsg::respone_select_zone_respone_respone_data* data_;
+  ::google::protobuf::uint64 st_;
+  ::google::protobuf::uint32 gameid_;
+  ::google::protobuf::uint32 zoneid_;
+  ::google::protobuf::uint64 unigame_plat_timestamp_;
+  mutable ::google::protobuf::internal::CachedSize _cached_size_;
+  friend struct ::protobuf_login_5fmsg_2eproto::TableStruct;
+};
 // ===================================================================
 
 
@@ -2195,363 +2597,363 @@ inline void reqeust_zone_list::set_allocated_data(::NFMsg::reqeust_zone_list_dat
 
 // -------------------------------------------------------------------
 
-// reqeust_zone_list_server
+// reqeust_zone_list_respone_respone_data_reqeust_zone_list_server
 
 // uint32 gameid = 1;
-inline void reqeust_zone_list_server::clear_gameid() {
+inline void reqeust_zone_list_respone_respone_data_reqeust_zone_list_server::clear_gameid() {
   gameid_ = 0u;
 }
-inline ::google::protobuf::uint32 reqeust_zone_list_server::gameid() const {
-  // @@protoc_insertion_point(field_get:NFMsg.reqeust_zone_list_server.gameid)
+inline ::google::protobuf::uint32 reqeust_zone_list_respone_respone_data_reqeust_zone_list_server::gameid() const {
+  // @@protoc_insertion_point(field_get:NFMsg.reqeust_zone_list_respone.respone_data.reqeust_zone_list_server.gameid)
   return gameid_;
 }
-inline void reqeust_zone_list_server::set_gameid(::google::protobuf::uint32 value) {
+inline void reqeust_zone_list_respone_respone_data_reqeust_zone_list_server::set_gameid(::google::protobuf::uint32 value) {
   
   gameid_ = value;
-  // @@protoc_insertion_point(field_set:NFMsg.reqeust_zone_list_server.gameid)
+  // @@protoc_insertion_point(field_set:NFMsg.reqeust_zone_list_respone.respone_data.reqeust_zone_list_server.gameid)
 }
 
 // string gamename = 2;
-inline void reqeust_zone_list_server::clear_gamename() {
+inline void reqeust_zone_list_respone_respone_data_reqeust_zone_list_server::clear_gamename() {
   gamename_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-inline const ::std::string& reqeust_zone_list_server::gamename() const {
-  // @@protoc_insertion_point(field_get:NFMsg.reqeust_zone_list_server.gamename)
+inline const ::std::string& reqeust_zone_list_respone_respone_data_reqeust_zone_list_server::gamename() const {
+  // @@protoc_insertion_point(field_get:NFMsg.reqeust_zone_list_respone.respone_data.reqeust_zone_list_server.gamename)
   return gamename_.GetNoArena();
 }
-inline void reqeust_zone_list_server::set_gamename(const ::std::string& value) {
+inline void reqeust_zone_list_respone_respone_data_reqeust_zone_list_server::set_gamename(const ::std::string& value) {
   
   gamename_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
-  // @@protoc_insertion_point(field_set:NFMsg.reqeust_zone_list_server.gamename)
+  // @@protoc_insertion_point(field_set:NFMsg.reqeust_zone_list_respone.respone_data.reqeust_zone_list_server.gamename)
 }
 #if LANG_CXX11
-inline void reqeust_zone_list_server::set_gamename(::std::string&& value) {
+inline void reqeust_zone_list_respone_respone_data_reqeust_zone_list_server::set_gamename(::std::string&& value) {
   
   gamename_.SetNoArena(
     &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
-  // @@protoc_insertion_point(field_set_rvalue:NFMsg.reqeust_zone_list_server.gamename)
+  // @@protoc_insertion_point(field_set_rvalue:NFMsg.reqeust_zone_list_respone.respone_data.reqeust_zone_list_server.gamename)
 }
 #endif
-inline void reqeust_zone_list_server::set_gamename(const char* value) {
+inline void reqeust_zone_list_respone_respone_data_reqeust_zone_list_server::set_gamename(const char* value) {
   GOOGLE_DCHECK(value != NULL);
   
   gamename_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
-  // @@protoc_insertion_point(field_set_char:NFMsg.reqeust_zone_list_server.gamename)
+  // @@protoc_insertion_point(field_set_char:NFMsg.reqeust_zone_list_respone.respone_data.reqeust_zone_list_server.gamename)
 }
-inline void reqeust_zone_list_server::set_gamename(const char* value, size_t size) {
+inline void reqeust_zone_list_respone_respone_data_reqeust_zone_list_server::set_gamename(const char* value, size_t size) {
   
   gamename_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
       ::std::string(reinterpret_cast<const char*>(value), size));
-  // @@protoc_insertion_point(field_set_pointer:NFMsg.reqeust_zone_list_server.gamename)
+  // @@protoc_insertion_point(field_set_pointer:NFMsg.reqeust_zone_list_respone.respone_data.reqeust_zone_list_server.gamename)
 }
-inline ::std::string* reqeust_zone_list_server::mutable_gamename() {
+inline ::std::string* reqeust_zone_list_respone_respone_data_reqeust_zone_list_server::mutable_gamename() {
   
-  // @@protoc_insertion_point(field_mutable:NFMsg.reqeust_zone_list_server.gamename)
+  // @@protoc_insertion_point(field_mutable:NFMsg.reqeust_zone_list_respone.respone_data.reqeust_zone_list_server.gamename)
   return gamename_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-inline ::std::string* reqeust_zone_list_server::release_gamename() {
-  // @@protoc_insertion_point(field_release:NFMsg.reqeust_zone_list_server.gamename)
+inline ::std::string* reqeust_zone_list_respone_respone_data_reqeust_zone_list_server::release_gamename() {
+  // @@protoc_insertion_point(field_release:NFMsg.reqeust_zone_list_respone.respone_data.reqeust_zone_list_server.gamename)
   
   return gamename_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-inline void reqeust_zone_list_server::set_allocated_gamename(::std::string* gamename) {
+inline void reqeust_zone_list_respone_respone_data_reqeust_zone_list_server::set_allocated_gamename(::std::string* gamename) {
   if (gamename != NULL) {
     
   } else {
     
   }
   gamename_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), gamename);
-  // @@protoc_insertion_point(field_set_allocated:NFMsg.reqeust_zone_list_server.gamename)
+  // @@protoc_insertion_point(field_set_allocated:NFMsg.reqeust_zone_list_respone.respone_data.reqeust_zone_list_server.gamename)
 }
 
 // uint32 newzoneid = 3;
-inline void reqeust_zone_list_server::clear_newzoneid() {
+inline void reqeust_zone_list_respone_respone_data_reqeust_zone_list_server::clear_newzoneid() {
   newzoneid_ = 0u;
 }
-inline ::google::protobuf::uint32 reqeust_zone_list_server::newzoneid() const {
-  // @@protoc_insertion_point(field_get:NFMsg.reqeust_zone_list_server.newzoneid)
+inline ::google::protobuf::uint32 reqeust_zone_list_respone_respone_data_reqeust_zone_list_server::newzoneid() const {
+  // @@protoc_insertion_point(field_get:NFMsg.reqeust_zone_list_respone.respone_data.reqeust_zone_list_server.newzoneid)
   return newzoneid_;
 }
-inline void reqeust_zone_list_server::set_newzoneid(::google::protobuf::uint32 value) {
+inline void reqeust_zone_list_respone_respone_data_reqeust_zone_list_server::set_newzoneid(::google::protobuf::uint32 value) {
   
   newzoneid_ = value;
-  // @@protoc_insertion_point(field_set:NFMsg.reqeust_zone_list_server.newzoneid)
+  // @@protoc_insertion_point(field_set:NFMsg.reqeust_zone_list_respone.respone_data.reqeust_zone_list_server.newzoneid)
 }
 
 // uint32 onlinenum = 4;
-inline void reqeust_zone_list_server::clear_onlinenum() {
+inline void reqeust_zone_list_respone_respone_data_reqeust_zone_list_server::clear_onlinenum() {
   onlinenum_ = 0u;
 }
-inline ::google::protobuf::uint32 reqeust_zone_list_server::onlinenum() const {
-  // @@protoc_insertion_point(field_get:NFMsg.reqeust_zone_list_server.onlinenum)
+inline ::google::protobuf::uint32 reqeust_zone_list_respone_respone_data_reqeust_zone_list_server::onlinenum() const {
+  // @@protoc_insertion_point(field_get:NFMsg.reqeust_zone_list_respone.respone_data.reqeust_zone_list_server.onlinenum)
   return onlinenum_;
 }
-inline void reqeust_zone_list_server::set_onlinenum(::google::protobuf::uint32 value) {
+inline void reqeust_zone_list_respone_respone_data_reqeust_zone_list_server::set_onlinenum(::google::protobuf::uint32 value) {
   
   onlinenum_ = value;
-  // @@protoc_insertion_point(field_set:NFMsg.reqeust_zone_list_server.onlinenum)
+  // @@protoc_insertion_point(field_set:NFMsg.reqeust_zone_list_respone.respone_data.reqeust_zone_list_server.onlinenum)
 }
 
 // string opentime = 5;
-inline void reqeust_zone_list_server::clear_opentime() {
+inline void reqeust_zone_list_respone_respone_data_reqeust_zone_list_server::clear_opentime() {
   opentime_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-inline const ::std::string& reqeust_zone_list_server::opentime() const {
-  // @@protoc_insertion_point(field_get:NFMsg.reqeust_zone_list_server.opentime)
+inline const ::std::string& reqeust_zone_list_respone_respone_data_reqeust_zone_list_server::opentime() const {
+  // @@protoc_insertion_point(field_get:NFMsg.reqeust_zone_list_respone.respone_data.reqeust_zone_list_server.opentime)
   return opentime_.GetNoArena();
 }
-inline void reqeust_zone_list_server::set_opentime(const ::std::string& value) {
+inline void reqeust_zone_list_respone_respone_data_reqeust_zone_list_server::set_opentime(const ::std::string& value) {
   
   opentime_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
-  // @@protoc_insertion_point(field_set:NFMsg.reqeust_zone_list_server.opentime)
+  // @@protoc_insertion_point(field_set:NFMsg.reqeust_zone_list_respone.respone_data.reqeust_zone_list_server.opentime)
 }
 #if LANG_CXX11
-inline void reqeust_zone_list_server::set_opentime(::std::string&& value) {
+inline void reqeust_zone_list_respone_respone_data_reqeust_zone_list_server::set_opentime(::std::string&& value) {
   
   opentime_.SetNoArena(
     &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
-  // @@protoc_insertion_point(field_set_rvalue:NFMsg.reqeust_zone_list_server.opentime)
+  // @@protoc_insertion_point(field_set_rvalue:NFMsg.reqeust_zone_list_respone.respone_data.reqeust_zone_list_server.opentime)
 }
 #endif
-inline void reqeust_zone_list_server::set_opentime(const char* value) {
+inline void reqeust_zone_list_respone_respone_data_reqeust_zone_list_server::set_opentime(const char* value) {
   GOOGLE_DCHECK(value != NULL);
   
   opentime_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
-  // @@protoc_insertion_point(field_set_char:NFMsg.reqeust_zone_list_server.opentime)
+  // @@protoc_insertion_point(field_set_char:NFMsg.reqeust_zone_list_respone.respone_data.reqeust_zone_list_server.opentime)
 }
-inline void reqeust_zone_list_server::set_opentime(const char* value, size_t size) {
+inline void reqeust_zone_list_respone_respone_data_reqeust_zone_list_server::set_opentime(const char* value, size_t size) {
   
   opentime_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
       ::std::string(reinterpret_cast<const char*>(value), size));
-  // @@protoc_insertion_point(field_set_pointer:NFMsg.reqeust_zone_list_server.opentime)
+  // @@protoc_insertion_point(field_set_pointer:NFMsg.reqeust_zone_list_respone.respone_data.reqeust_zone_list_server.opentime)
 }
-inline ::std::string* reqeust_zone_list_server::mutable_opentime() {
+inline ::std::string* reqeust_zone_list_respone_respone_data_reqeust_zone_list_server::mutable_opentime() {
   
-  // @@protoc_insertion_point(field_mutable:NFMsg.reqeust_zone_list_server.opentime)
+  // @@protoc_insertion_point(field_mutable:NFMsg.reqeust_zone_list_respone.respone_data.reqeust_zone_list_server.opentime)
   return opentime_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-inline ::std::string* reqeust_zone_list_server::release_opentime() {
-  // @@protoc_insertion_point(field_release:NFMsg.reqeust_zone_list_server.opentime)
+inline ::std::string* reqeust_zone_list_respone_respone_data_reqeust_zone_list_server::release_opentime() {
+  // @@protoc_insertion_point(field_release:NFMsg.reqeust_zone_list_respone.respone_data.reqeust_zone_list_server.opentime)
   
   return opentime_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-inline void reqeust_zone_list_server::set_allocated_opentime(::std::string* opentime) {
+inline void reqeust_zone_list_respone_respone_data_reqeust_zone_list_server::set_allocated_opentime(::std::string* opentime) {
   if (opentime != NULL) {
     
   } else {
     
   }
   opentime_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), opentime);
-  // @@protoc_insertion_point(field_set_allocated:NFMsg.reqeust_zone_list_server.opentime)
+  // @@protoc_insertion_point(field_set_allocated:NFMsg.reqeust_zone_list_respone.respone_data.reqeust_zone_list_server.opentime)
 }
 
 // uint32 state = 6;
-inline void reqeust_zone_list_server::clear_state() {
+inline void reqeust_zone_list_respone_respone_data_reqeust_zone_list_server::clear_state() {
   state_ = 0u;
 }
-inline ::google::protobuf::uint32 reqeust_zone_list_server::state() const {
-  // @@protoc_insertion_point(field_get:NFMsg.reqeust_zone_list_server.state)
+inline ::google::protobuf::uint32 reqeust_zone_list_respone_respone_data_reqeust_zone_list_server::state() const {
+  // @@protoc_insertion_point(field_get:NFMsg.reqeust_zone_list_respone.respone_data.reqeust_zone_list_server.state)
   return state_;
 }
-inline void reqeust_zone_list_server::set_state(::google::protobuf::uint32 value) {
+inline void reqeust_zone_list_respone_respone_data_reqeust_zone_list_server::set_state(::google::protobuf::uint32 value) {
   
   state_ = value;
-  // @@protoc_insertion_point(field_set:NFMsg.reqeust_zone_list_server.state)
+  // @@protoc_insertion_point(field_set:NFMsg.reqeust_zone_list_respone.respone_data.reqeust_zone_list_server.state)
 }
 
 // uint32 zoneid = 7;
-inline void reqeust_zone_list_server::clear_zoneid() {
+inline void reqeust_zone_list_respone_respone_data_reqeust_zone_list_server::clear_zoneid() {
   zoneid_ = 0u;
 }
-inline ::google::protobuf::uint32 reqeust_zone_list_server::zoneid() const {
-  // @@protoc_insertion_point(field_get:NFMsg.reqeust_zone_list_server.zoneid)
+inline ::google::protobuf::uint32 reqeust_zone_list_respone_respone_data_reqeust_zone_list_server::zoneid() const {
+  // @@protoc_insertion_point(field_get:NFMsg.reqeust_zone_list_respone.respone_data.reqeust_zone_list_server.zoneid)
   return zoneid_;
 }
-inline void reqeust_zone_list_server::set_zoneid(::google::protobuf::uint32 value) {
+inline void reqeust_zone_list_respone_respone_data_reqeust_zone_list_server::set_zoneid(::google::protobuf::uint32 value) {
   
   zoneid_ = value;
-  // @@protoc_insertion_point(field_set:NFMsg.reqeust_zone_list_server.zoneid)
+  // @@protoc_insertion_point(field_set:NFMsg.reqeust_zone_list_respone.respone_data.reqeust_zone_list_server.zoneid)
 }
 
 // string zonename = 8;
-inline void reqeust_zone_list_server::clear_zonename() {
+inline void reqeust_zone_list_respone_respone_data_reqeust_zone_list_server::clear_zonename() {
   zonename_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-inline const ::std::string& reqeust_zone_list_server::zonename() const {
-  // @@protoc_insertion_point(field_get:NFMsg.reqeust_zone_list_server.zonename)
+inline const ::std::string& reqeust_zone_list_respone_respone_data_reqeust_zone_list_server::zonename() const {
+  // @@protoc_insertion_point(field_get:NFMsg.reqeust_zone_list_respone.respone_data.reqeust_zone_list_server.zonename)
   return zonename_.GetNoArena();
 }
-inline void reqeust_zone_list_server::set_zonename(const ::std::string& value) {
+inline void reqeust_zone_list_respone_respone_data_reqeust_zone_list_server::set_zonename(const ::std::string& value) {
   
   zonename_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
-  // @@protoc_insertion_point(field_set:NFMsg.reqeust_zone_list_server.zonename)
+  // @@protoc_insertion_point(field_set:NFMsg.reqeust_zone_list_respone.respone_data.reqeust_zone_list_server.zonename)
 }
 #if LANG_CXX11
-inline void reqeust_zone_list_server::set_zonename(::std::string&& value) {
+inline void reqeust_zone_list_respone_respone_data_reqeust_zone_list_server::set_zonename(::std::string&& value) {
   
   zonename_.SetNoArena(
     &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
-  // @@protoc_insertion_point(field_set_rvalue:NFMsg.reqeust_zone_list_server.zonename)
+  // @@protoc_insertion_point(field_set_rvalue:NFMsg.reqeust_zone_list_respone.respone_data.reqeust_zone_list_server.zonename)
 }
 #endif
-inline void reqeust_zone_list_server::set_zonename(const char* value) {
+inline void reqeust_zone_list_respone_respone_data_reqeust_zone_list_server::set_zonename(const char* value) {
   GOOGLE_DCHECK(value != NULL);
   
   zonename_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
-  // @@protoc_insertion_point(field_set_char:NFMsg.reqeust_zone_list_server.zonename)
+  // @@protoc_insertion_point(field_set_char:NFMsg.reqeust_zone_list_respone.respone_data.reqeust_zone_list_server.zonename)
 }
-inline void reqeust_zone_list_server::set_zonename(const char* value, size_t size) {
+inline void reqeust_zone_list_respone_respone_data_reqeust_zone_list_server::set_zonename(const char* value, size_t size) {
   
   zonename_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
       ::std::string(reinterpret_cast<const char*>(value), size));
-  // @@protoc_insertion_point(field_set_pointer:NFMsg.reqeust_zone_list_server.zonename)
+  // @@protoc_insertion_point(field_set_pointer:NFMsg.reqeust_zone_list_respone.respone_data.reqeust_zone_list_server.zonename)
 }
-inline ::std::string* reqeust_zone_list_server::mutable_zonename() {
+inline ::std::string* reqeust_zone_list_respone_respone_data_reqeust_zone_list_server::mutable_zonename() {
   
-  // @@protoc_insertion_point(field_mutable:NFMsg.reqeust_zone_list_server.zonename)
+  // @@protoc_insertion_point(field_mutable:NFMsg.reqeust_zone_list_respone.respone_data.reqeust_zone_list_server.zonename)
   return zonename_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-inline ::std::string* reqeust_zone_list_server::release_zonename() {
-  // @@protoc_insertion_point(field_release:NFMsg.reqeust_zone_list_server.zonename)
+inline ::std::string* reqeust_zone_list_respone_respone_data_reqeust_zone_list_server::release_zonename() {
+  // @@protoc_insertion_point(field_release:NFMsg.reqeust_zone_list_respone.respone_data.reqeust_zone_list_server.zonename)
   
   return zonename_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-inline void reqeust_zone_list_server::set_allocated_zonename(::std::string* zonename) {
+inline void reqeust_zone_list_respone_respone_data_reqeust_zone_list_server::set_allocated_zonename(::std::string* zonename) {
   if (zonename != NULL) {
     
   } else {
     
   }
   zonename_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), zonename);
-  // @@protoc_insertion_point(field_set_allocated:NFMsg.reqeust_zone_list_server.zonename)
+  // @@protoc_insertion_point(field_set_allocated:NFMsg.reqeust_zone_list_respone.respone_data.reqeust_zone_list_server.zonename)
 }
 
 // -------------------------------------------------------------------
 
-// reqeust_zone_list_respone_data
+// reqeust_zone_list_respone_respone_data
 
 // uint32 bestzoneid = 1;
-inline void reqeust_zone_list_respone_data::clear_bestzoneid() {
+inline void reqeust_zone_list_respone_respone_data::clear_bestzoneid() {
   bestzoneid_ = 0u;
 }
-inline ::google::protobuf::uint32 reqeust_zone_list_respone_data::bestzoneid() const {
-  // @@protoc_insertion_point(field_get:NFMsg.reqeust_zone_list_respone_data.bestzoneid)
+inline ::google::protobuf::uint32 reqeust_zone_list_respone_respone_data::bestzoneid() const {
+  // @@protoc_insertion_point(field_get:NFMsg.reqeust_zone_list_respone.respone_data.bestzoneid)
   return bestzoneid_;
 }
-inline void reqeust_zone_list_respone_data::set_bestzoneid(::google::protobuf::uint32 value) {
+inline void reqeust_zone_list_respone_respone_data::set_bestzoneid(::google::protobuf::uint32 value) {
   
   bestzoneid_ = value;
-  // @@protoc_insertion_point(field_set:NFMsg.reqeust_zone_list_respone_data.bestzoneid)
+  // @@protoc_insertion_point(field_set:NFMsg.reqeust_zone_list_respone.respone_data.bestzoneid)
 }
 
 // uint32 gameid = 2;
-inline void reqeust_zone_list_respone_data::clear_gameid() {
+inline void reqeust_zone_list_respone_respone_data::clear_gameid() {
   gameid_ = 0u;
 }
-inline ::google::protobuf::uint32 reqeust_zone_list_respone_data::gameid() const {
-  // @@protoc_insertion_point(field_get:NFMsg.reqeust_zone_list_respone_data.gameid)
+inline ::google::protobuf::uint32 reqeust_zone_list_respone_respone_data::gameid() const {
+  // @@protoc_insertion_point(field_get:NFMsg.reqeust_zone_list_respone.respone_data.gameid)
   return gameid_;
 }
-inline void reqeust_zone_list_respone_data::set_gameid(::google::protobuf::uint32 value) {
+inline void reqeust_zone_list_respone_respone_data::set_gameid(::google::protobuf::uint32 value) {
   
   gameid_ = value;
-  // @@protoc_insertion_point(field_set:NFMsg.reqeust_zone_list_respone_data.gameid)
+  // @@protoc_insertion_point(field_set:NFMsg.reqeust_zone_list_respone.respone_data.gameid)
 }
 
 // string gamename = 3;
-inline void reqeust_zone_list_respone_data::clear_gamename() {
+inline void reqeust_zone_list_respone_respone_data::clear_gamename() {
   gamename_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-inline const ::std::string& reqeust_zone_list_respone_data::gamename() const {
-  // @@protoc_insertion_point(field_get:NFMsg.reqeust_zone_list_respone_data.gamename)
+inline const ::std::string& reqeust_zone_list_respone_respone_data::gamename() const {
+  // @@protoc_insertion_point(field_get:NFMsg.reqeust_zone_list_respone.respone_data.gamename)
   return gamename_.GetNoArena();
 }
-inline void reqeust_zone_list_respone_data::set_gamename(const ::std::string& value) {
+inline void reqeust_zone_list_respone_respone_data::set_gamename(const ::std::string& value) {
   
   gamename_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
-  // @@protoc_insertion_point(field_set:NFMsg.reqeust_zone_list_respone_data.gamename)
+  // @@protoc_insertion_point(field_set:NFMsg.reqeust_zone_list_respone.respone_data.gamename)
 }
 #if LANG_CXX11
-inline void reqeust_zone_list_respone_data::set_gamename(::std::string&& value) {
+inline void reqeust_zone_list_respone_respone_data::set_gamename(::std::string&& value) {
   
   gamename_.SetNoArena(
     &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
-  // @@protoc_insertion_point(field_set_rvalue:NFMsg.reqeust_zone_list_respone_data.gamename)
+  // @@protoc_insertion_point(field_set_rvalue:NFMsg.reqeust_zone_list_respone.respone_data.gamename)
 }
 #endif
-inline void reqeust_zone_list_respone_data::set_gamename(const char* value) {
+inline void reqeust_zone_list_respone_respone_data::set_gamename(const char* value) {
   GOOGLE_DCHECK(value != NULL);
   
   gamename_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
-  // @@protoc_insertion_point(field_set_char:NFMsg.reqeust_zone_list_respone_data.gamename)
+  // @@protoc_insertion_point(field_set_char:NFMsg.reqeust_zone_list_respone.respone_data.gamename)
 }
-inline void reqeust_zone_list_respone_data::set_gamename(const char* value, size_t size) {
+inline void reqeust_zone_list_respone_respone_data::set_gamename(const char* value, size_t size) {
   
   gamename_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
       ::std::string(reinterpret_cast<const char*>(value), size));
-  // @@protoc_insertion_point(field_set_pointer:NFMsg.reqeust_zone_list_respone_data.gamename)
+  // @@protoc_insertion_point(field_set_pointer:NFMsg.reqeust_zone_list_respone.respone_data.gamename)
 }
-inline ::std::string* reqeust_zone_list_respone_data::mutable_gamename() {
+inline ::std::string* reqeust_zone_list_respone_respone_data::mutable_gamename() {
   
-  // @@protoc_insertion_point(field_mutable:NFMsg.reqeust_zone_list_respone_data.gamename)
+  // @@protoc_insertion_point(field_mutable:NFMsg.reqeust_zone_list_respone.respone_data.gamename)
   return gamename_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-inline ::std::string* reqeust_zone_list_respone_data::release_gamename() {
-  // @@protoc_insertion_point(field_release:NFMsg.reqeust_zone_list_respone_data.gamename)
+inline ::std::string* reqeust_zone_list_respone_respone_data::release_gamename() {
+  // @@protoc_insertion_point(field_release:NFMsg.reqeust_zone_list_respone.respone_data.gamename)
   
   return gamename_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-inline void reqeust_zone_list_respone_data::set_allocated_gamename(::std::string* gamename) {
+inline void reqeust_zone_list_respone_respone_data::set_allocated_gamename(::std::string* gamename) {
   if (gamename != NULL) {
     
   } else {
     
   }
   gamename_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), gamename);
-  // @@protoc_insertion_point(field_set_allocated:NFMsg.reqeust_zone_list_respone_data.gamename)
+  // @@protoc_insertion_point(field_set_allocated:NFMsg.reqeust_zone_list_respone.respone_data.gamename)
 }
 
 // uint32 zoneid = 4;
-inline void reqeust_zone_list_respone_data::clear_zoneid() {
+inline void reqeust_zone_list_respone_respone_data::clear_zoneid() {
   zoneid_ = 0u;
 }
-inline ::google::protobuf::uint32 reqeust_zone_list_respone_data::zoneid() const {
-  // @@protoc_insertion_point(field_get:NFMsg.reqeust_zone_list_respone_data.zoneid)
+inline ::google::protobuf::uint32 reqeust_zone_list_respone_respone_data::zoneid() const {
+  // @@protoc_insertion_point(field_get:NFMsg.reqeust_zone_list_respone.respone_data.zoneid)
   return zoneid_;
 }
-inline void reqeust_zone_list_respone_data::set_zoneid(::google::protobuf::uint32 value) {
+inline void reqeust_zone_list_respone_respone_data::set_zoneid(::google::protobuf::uint32 value) {
   
   zoneid_ = value;
-  // @@protoc_insertion_point(field_set:NFMsg.reqeust_zone_list_respone_data.zoneid)
+  // @@protoc_insertion_point(field_set:NFMsg.reqeust_zone_list_respone.respone_data.zoneid)
 }
 
-// repeated .NFMsg.reqeust_zone_list_server zonelist = 5;
-inline int reqeust_zone_list_respone_data::zonelist_size() const {
+// repeated .NFMsg.reqeust_zone_list_respone.respone_data.reqeust_zone_list_server zonelist = 5;
+inline int reqeust_zone_list_respone_respone_data::zonelist_size() const {
   return zonelist_.size();
 }
-inline void reqeust_zone_list_respone_data::clear_zonelist() {
+inline void reqeust_zone_list_respone_respone_data::clear_zonelist() {
   zonelist_.Clear();
 }
-inline ::NFMsg::reqeust_zone_list_server* reqeust_zone_list_respone_data::mutable_zonelist(int index) {
-  // @@protoc_insertion_point(field_mutable:NFMsg.reqeust_zone_list_respone_data.zonelist)
+inline ::NFMsg::reqeust_zone_list_respone_respone_data_reqeust_zone_list_server* reqeust_zone_list_respone_respone_data::mutable_zonelist(int index) {
+  // @@protoc_insertion_point(field_mutable:NFMsg.reqeust_zone_list_respone.respone_data.zonelist)
   return zonelist_.Mutable(index);
 }
-inline ::google::protobuf::RepeatedPtrField< ::NFMsg::reqeust_zone_list_server >*
-reqeust_zone_list_respone_data::mutable_zonelist() {
-  // @@protoc_insertion_point(field_mutable_list:NFMsg.reqeust_zone_list_respone_data.zonelist)
+inline ::google::protobuf::RepeatedPtrField< ::NFMsg::reqeust_zone_list_respone_respone_data_reqeust_zone_list_server >*
+reqeust_zone_list_respone_respone_data::mutable_zonelist() {
+  // @@protoc_insertion_point(field_mutable_list:NFMsg.reqeust_zone_list_respone.respone_data.zonelist)
   return &zonelist_;
 }
-inline const ::NFMsg::reqeust_zone_list_server& reqeust_zone_list_respone_data::zonelist(int index) const {
-  // @@protoc_insertion_point(field_get:NFMsg.reqeust_zone_list_respone_data.zonelist)
+inline const ::NFMsg::reqeust_zone_list_respone_respone_data_reqeust_zone_list_server& reqeust_zone_list_respone_respone_data::zonelist(int index) const {
+  // @@protoc_insertion_point(field_get:NFMsg.reqeust_zone_list_respone.respone_data.zonelist)
   return zonelist_.Get(index);
 }
-inline ::NFMsg::reqeust_zone_list_server* reqeust_zone_list_respone_data::add_zonelist() {
-  // @@protoc_insertion_point(field_add:NFMsg.reqeust_zone_list_respone_data.zonelist)
+inline ::NFMsg::reqeust_zone_list_respone_respone_data_reqeust_zone_list_server* reqeust_zone_list_respone_respone_data::add_zonelist() {
+  // @@protoc_insertion_point(field_add:NFMsg.reqeust_zone_list_respone.respone_data.zonelist)
   return zonelist_.Add();
 }
-inline const ::google::protobuf::RepeatedPtrField< ::NFMsg::reqeust_zone_list_server >&
-reqeust_zone_list_respone_data::zonelist() const {
-  // @@protoc_insertion_point(field_list:NFMsg.reqeust_zone_list_respone_data.zonelist)
+inline const ::google::protobuf::RepeatedPtrField< ::NFMsg::reqeust_zone_list_respone_respone_data_reqeust_zone_list_server >&
+reqeust_zone_list_respone_respone_data::zonelist() const {
+  // @@protoc_insertion_point(field_list:NFMsg.reqeust_zone_list_respone.respone_data.zonelist)
   return zonelist_;
 }
 
@@ -2679,7 +3081,7 @@ inline void reqeust_zone_list_respone::set_st(::google::protobuf::uint64 value) 
   // @@protoc_insertion_point(field_set:NFMsg.reqeust_zone_list_respone.st)
 }
 
-// .NFMsg.reqeust_zone_list_respone_data data = 4;
+// .NFMsg.reqeust_zone_list_respone.respone_data data = 4;
 inline bool reqeust_zone_list_respone::has_data() const {
   return this != internal_default_instance() && data_ != NULL;
 }
@@ -2689,32 +3091,32 @@ inline void reqeust_zone_list_respone::clear_data() {
   }
   data_ = NULL;
 }
-inline const ::NFMsg::reqeust_zone_list_respone_data& reqeust_zone_list_respone::_internal_data() const {
+inline const ::NFMsg::reqeust_zone_list_respone_respone_data& reqeust_zone_list_respone::_internal_data() const {
   return *data_;
 }
-inline const ::NFMsg::reqeust_zone_list_respone_data& reqeust_zone_list_respone::data() const {
-  const ::NFMsg::reqeust_zone_list_respone_data* p = data_;
+inline const ::NFMsg::reqeust_zone_list_respone_respone_data& reqeust_zone_list_respone::data() const {
+  const ::NFMsg::reqeust_zone_list_respone_respone_data* p = data_;
   // @@protoc_insertion_point(field_get:NFMsg.reqeust_zone_list_respone.data)
-  return p != NULL ? *p : *reinterpret_cast<const ::NFMsg::reqeust_zone_list_respone_data*>(
-      &::NFMsg::_reqeust_zone_list_respone_data_default_instance_);
+  return p != NULL ? *p : *reinterpret_cast<const ::NFMsg::reqeust_zone_list_respone_respone_data*>(
+      &::NFMsg::_reqeust_zone_list_respone_respone_data_default_instance_);
 }
-inline ::NFMsg::reqeust_zone_list_respone_data* reqeust_zone_list_respone::release_data() {
+inline ::NFMsg::reqeust_zone_list_respone_respone_data* reqeust_zone_list_respone::release_data() {
   // @@protoc_insertion_point(field_release:NFMsg.reqeust_zone_list_respone.data)
   
-  ::NFMsg::reqeust_zone_list_respone_data* temp = data_;
+  ::NFMsg::reqeust_zone_list_respone_respone_data* temp = data_;
   data_ = NULL;
   return temp;
 }
-inline ::NFMsg::reqeust_zone_list_respone_data* reqeust_zone_list_respone::mutable_data() {
+inline ::NFMsg::reqeust_zone_list_respone_respone_data* reqeust_zone_list_respone::mutable_data() {
   
   if (data_ == NULL) {
-    auto* p = CreateMaybeMessage<::NFMsg::reqeust_zone_list_respone_data>(GetArenaNoVirtual());
+    auto* p = CreateMaybeMessage<::NFMsg::reqeust_zone_list_respone_respone_data>(GetArenaNoVirtual());
     data_ = p;
   }
   // @@protoc_insertion_point(field_mutable:NFMsg.reqeust_zone_list_respone.data)
   return data_;
 }
-inline void reqeust_zone_list_respone::set_allocated_data(::NFMsg::reqeust_zone_list_respone_data* data) {
+inline void reqeust_zone_list_respone::set_allocated_data(::NFMsg::reqeust_zone_list_respone_respone_data* data) {
   ::google::protobuf::Arena* message_arena = GetArenaNoVirtual();
   if (message_arena == NULL) {
     delete data_;
@@ -2735,461 +3137,461 @@ inline void reqeust_zone_list_respone::set_allocated_data(::NFMsg::reqeust_zone_
 
 // -------------------------------------------------------------------
 
-// plat_token_login_request_data_platinfo
+// plat_token_login_request_request_data_request_data_platinfo
 
 // uint32 aaa = 1;
-inline void plat_token_login_request_data_platinfo::clear_aaa() {
+inline void plat_token_login_request_request_data_request_data_platinfo::clear_aaa() {
   aaa_ = 0u;
 }
-inline ::google::protobuf::uint32 plat_token_login_request_data_platinfo::aaa() const {
-  // @@protoc_insertion_point(field_get:NFMsg.plat_token_login_request_data_platinfo.aaa)
+inline ::google::protobuf::uint32 plat_token_login_request_request_data_request_data_platinfo::aaa() const {
+  // @@protoc_insertion_point(field_get:NFMsg.plat_token_login_request.request_data.request_data_platinfo.aaa)
   return aaa_;
 }
-inline void plat_token_login_request_data_platinfo::set_aaa(::google::protobuf::uint32 value) {
+inline void plat_token_login_request_request_data_request_data_platinfo::set_aaa(::google::protobuf::uint32 value) {
   
   aaa_ = value;
-  // @@protoc_insertion_point(field_set:NFMsg.plat_token_login_request_data_platinfo.aaa)
+  // @@protoc_insertion_point(field_set:NFMsg.plat_token_login_request.request_data.request_data_platinfo.aaa)
 }
 
 // string sign = 2;
-inline void plat_token_login_request_data_platinfo::clear_sign() {
+inline void plat_token_login_request_request_data_request_data_platinfo::clear_sign() {
   sign_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-inline const ::std::string& plat_token_login_request_data_platinfo::sign() const {
-  // @@protoc_insertion_point(field_get:NFMsg.plat_token_login_request_data_platinfo.sign)
+inline const ::std::string& plat_token_login_request_request_data_request_data_platinfo::sign() const {
+  // @@protoc_insertion_point(field_get:NFMsg.plat_token_login_request.request_data.request_data_platinfo.sign)
   return sign_.GetNoArena();
 }
-inline void plat_token_login_request_data_platinfo::set_sign(const ::std::string& value) {
+inline void plat_token_login_request_request_data_request_data_platinfo::set_sign(const ::std::string& value) {
   
   sign_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
-  // @@protoc_insertion_point(field_set:NFMsg.plat_token_login_request_data_platinfo.sign)
+  // @@protoc_insertion_point(field_set:NFMsg.plat_token_login_request.request_data.request_data_platinfo.sign)
 }
 #if LANG_CXX11
-inline void plat_token_login_request_data_platinfo::set_sign(::std::string&& value) {
+inline void plat_token_login_request_request_data_request_data_platinfo::set_sign(::std::string&& value) {
   
   sign_.SetNoArena(
     &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
-  // @@protoc_insertion_point(field_set_rvalue:NFMsg.plat_token_login_request_data_platinfo.sign)
+  // @@protoc_insertion_point(field_set_rvalue:NFMsg.plat_token_login_request.request_data.request_data_platinfo.sign)
 }
 #endif
-inline void plat_token_login_request_data_platinfo::set_sign(const char* value) {
+inline void plat_token_login_request_request_data_request_data_platinfo::set_sign(const char* value) {
   GOOGLE_DCHECK(value != NULL);
   
   sign_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
-  // @@protoc_insertion_point(field_set_char:NFMsg.plat_token_login_request_data_platinfo.sign)
+  // @@protoc_insertion_point(field_set_char:NFMsg.plat_token_login_request.request_data.request_data_platinfo.sign)
 }
-inline void plat_token_login_request_data_platinfo::set_sign(const char* value, size_t size) {
+inline void plat_token_login_request_request_data_request_data_platinfo::set_sign(const char* value, size_t size) {
   
   sign_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
       ::std::string(reinterpret_cast<const char*>(value), size));
-  // @@protoc_insertion_point(field_set_pointer:NFMsg.plat_token_login_request_data_platinfo.sign)
+  // @@protoc_insertion_point(field_set_pointer:NFMsg.plat_token_login_request.request_data.request_data_platinfo.sign)
 }
-inline ::std::string* plat_token_login_request_data_platinfo::mutable_sign() {
+inline ::std::string* plat_token_login_request_request_data_request_data_platinfo::mutable_sign() {
   
-  // @@protoc_insertion_point(field_mutable:NFMsg.plat_token_login_request_data_platinfo.sign)
+  // @@protoc_insertion_point(field_mutable:NFMsg.plat_token_login_request.request_data.request_data_platinfo.sign)
   return sign_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-inline ::std::string* plat_token_login_request_data_platinfo::release_sign() {
-  // @@protoc_insertion_point(field_release:NFMsg.plat_token_login_request_data_platinfo.sign)
+inline ::std::string* plat_token_login_request_request_data_request_data_platinfo::release_sign() {
+  // @@protoc_insertion_point(field_release:NFMsg.plat_token_login_request.request_data.request_data_platinfo.sign)
   
   return sign_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-inline void plat_token_login_request_data_platinfo::set_allocated_sign(::std::string* sign) {
+inline void plat_token_login_request_request_data_request_data_platinfo::set_allocated_sign(::std::string* sign) {
   if (sign != NULL) {
     
   } else {
     
   }
   sign_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), sign);
-  // @@protoc_insertion_point(field_set_allocated:NFMsg.plat_token_login_request_data_platinfo.sign)
+  // @@protoc_insertion_point(field_set_allocated:NFMsg.plat_token_login_request.request_data.request_data_platinfo.sign)
 }
 
 // string account = 3;
-inline void plat_token_login_request_data_platinfo::clear_account() {
+inline void plat_token_login_request_request_data_request_data_platinfo::clear_account() {
   account_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-inline const ::std::string& plat_token_login_request_data_platinfo::account() const {
-  // @@protoc_insertion_point(field_get:NFMsg.plat_token_login_request_data_platinfo.account)
+inline const ::std::string& plat_token_login_request_request_data_request_data_platinfo::account() const {
+  // @@protoc_insertion_point(field_get:NFMsg.plat_token_login_request.request_data.request_data_platinfo.account)
   return account_.GetNoArena();
 }
-inline void plat_token_login_request_data_platinfo::set_account(const ::std::string& value) {
+inline void plat_token_login_request_request_data_request_data_platinfo::set_account(const ::std::string& value) {
   
   account_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
-  // @@protoc_insertion_point(field_set:NFMsg.plat_token_login_request_data_platinfo.account)
+  // @@protoc_insertion_point(field_set:NFMsg.plat_token_login_request.request_data.request_data_platinfo.account)
 }
 #if LANG_CXX11
-inline void plat_token_login_request_data_platinfo::set_account(::std::string&& value) {
+inline void plat_token_login_request_request_data_request_data_platinfo::set_account(::std::string&& value) {
   
   account_.SetNoArena(
     &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
-  // @@protoc_insertion_point(field_set_rvalue:NFMsg.plat_token_login_request_data_platinfo.account)
+  // @@protoc_insertion_point(field_set_rvalue:NFMsg.plat_token_login_request.request_data.request_data_platinfo.account)
 }
 #endif
-inline void plat_token_login_request_data_platinfo::set_account(const char* value) {
+inline void plat_token_login_request_request_data_request_data_platinfo::set_account(const char* value) {
   GOOGLE_DCHECK(value != NULL);
   
   account_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
-  // @@protoc_insertion_point(field_set_char:NFMsg.plat_token_login_request_data_platinfo.account)
+  // @@protoc_insertion_point(field_set_char:NFMsg.plat_token_login_request.request_data.request_data_platinfo.account)
 }
-inline void plat_token_login_request_data_platinfo::set_account(const char* value, size_t size) {
+inline void plat_token_login_request_request_data_request_data_platinfo::set_account(const char* value, size_t size) {
   
   account_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
       ::std::string(reinterpret_cast<const char*>(value), size));
-  // @@protoc_insertion_point(field_set_pointer:NFMsg.plat_token_login_request_data_platinfo.account)
+  // @@protoc_insertion_point(field_set_pointer:NFMsg.plat_token_login_request.request_data.request_data_platinfo.account)
 }
-inline ::std::string* plat_token_login_request_data_platinfo::mutable_account() {
+inline ::std::string* plat_token_login_request_request_data_request_data_platinfo::mutable_account() {
   
-  // @@protoc_insertion_point(field_mutable:NFMsg.plat_token_login_request_data_platinfo.account)
+  // @@protoc_insertion_point(field_mutable:NFMsg.plat_token_login_request.request_data.request_data_platinfo.account)
   return account_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-inline ::std::string* plat_token_login_request_data_platinfo::release_account() {
-  // @@protoc_insertion_point(field_release:NFMsg.plat_token_login_request_data_platinfo.account)
+inline ::std::string* plat_token_login_request_request_data_request_data_platinfo::release_account() {
+  // @@protoc_insertion_point(field_release:NFMsg.plat_token_login_request.request_data.request_data_platinfo.account)
   
   return account_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-inline void plat_token_login_request_data_platinfo::set_allocated_account(::std::string* account) {
+inline void plat_token_login_request_request_data_request_data_platinfo::set_allocated_account(::std::string* account) {
   if (account != NULL) {
     
   } else {
     
   }
   account_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), account);
-  // @@protoc_insertion_point(field_set_allocated:NFMsg.plat_token_login_request_data_platinfo.account)
+  // @@protoc_insertion_point(field_set_allocated:NFMsg.plat_token_login_request.request_data.request_data_platinfo.account)
 }
 
 // string email = 4;
-inline void plat_token_login_request_data_platinfo::clear_email() {
+inline void plat_token_login_request_request_data_request_data_platinfo::clear_email() {
   email_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-inline const ::std::string& plat_token_login_request_data_platinfo::email() const {
-  // @@protoc_insertion_point(field_get:NFMsg.plat_token_login_request_data_platinfo.email)
+inline const ::std::string& plat_token_login_request_request_data_request_data_platinfo::email() const {
+  // @@protoc_insertion_point(field_get:NFMsg.plat_token_login_request.request_data.request_data_platinfo.email)
   return email_.GetNoArena();
 }
-inline void plat_token_login_request_data_platinfo::set_email(const ::std::string& value) {
+inline void plat_token_login_request_request_data_request_data_platinfo::set_email(const ::std::string& value) {
   
   email_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
-  // @@protoc_insertion_point(field_set:NFMsg.plat_token_login_request_data_platinfo.email)
+  // @@protoc_insertion_point(field_set:NFMsg.plat_token_login_request.request_data.request_data_platinfo.email)
 }
 #if LANG_CXX11
-inline void plat_token_login_request_data_platinfo::set_email(::std::string&& value) {
+inline void plat_token_login_request_request_data_request_data_platinfo::set_email(::std::string&& value) {
   
   email_.SetNoArena(
     &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
-  // @@protoc_insertion_point(field_set_rvalue:NFMsg.plat_token_login_request_data_platinfo.email)
+  // @@protoc_insertion_point(field_set_rvalue:NFMsg.plat_token_login_request.request_data.request_data_platinfo.email)
 }
 #endif
-inline void plat_token_login_request_data_platinfo::set_email(const char* value) {
+inline void plat_token_login_request_request_data_request_data_platinfo::set_email(const char* value) {
   GOOGLE_DCHECK(value != NULL);
   
   email_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
-  // @@protoc_insertion_point(field_set_char:NFMsg.plat_token_login_request_data_platinfo.email)
+  // @@protoc_insertion_point(field_set_char:NFMsg.plat_token_login_request.request_data.request_data_platinfo.email)
 }
-inline void plat_token_login_request_data_platinfo::set_email(const char* value, size_t size) {
+inline void plat_token_login_request_request_data_request_data_platinfo::set_email(const char* value, size_t size) {
   
   email_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
       ::std::string(reinterpret_cast<const char*>(value), size));
-  // @@protoc_insertion_point(field_set_pointer:NFMsg.plat_token_login_request_data_platinfo.email)
+  // @@protoc_insertion_point(field_set_pointer:NFMsg.plat_token_login_request.request_data.request_data_platinfo.email)
 }
-inline ::std::string* plat_token_login_request_data_platinfo::mutable_email() {
+inline ::std::string* plat_token_login_request_request_data_request_data_platinfo::mutable_email() {
   
-  // @@protoc_insertion_point(field_mutable:NFMsg.plat_token_login_request_data_platinfo.email)
+  // @@protoc_insertion_point(field_mutable:NFMsg.plat_token_login_request.request_data.request_data_platinfo.email)
   return email_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-inline ::std::string* plat_token_login_request_data_platinfo::release_email() {
-  // @@protoc_insertion_point(field_release:NFMsg.plat_token_login_request_data_platinfo.email)
+inline ::std::string* plat_token_login_request_request_data_request_data_platinfo::release_email() {
+  // @@protoc_insertion_point(field_release:NFMsg.plat_token_login_request.request_data.request_data_platinfo.email)
   
   return email_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-inline void plat_token_login_request_data_platinfo::set_allocated_email(::std::string* email) {
+inline void plat_token_login_request_request_data_request_data_platinfo::set_allocated_email(::std::string* email) {
   if (email != NULL) {
     
   } else {
     
   }
   email_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), email);
-  // @@protoc_insertion_point(field_set_allocated:NFMsg.plat_token_login_request_data_platinfo.email)
+  // @@protoc_insertion_point(field_set_allocated:NFMsg.plat_token_login_request.request_data.request_data_platinfo.email)
 }
 
 // uint32 platid = 5;
-inline void plat_token_login_request_data_platinfo::clear_platid() {
+inline void plat_token_login_request_request_data_request_data_platinfo::clear_platid() {
   platid_ = 0u;
 }
-inline ::google::protobuf::uint32 plat_token_login_request_data_platinfo::platid() const {
-  // @@protoc_insertion_point(field_get:NFMsg.plat_token_login_request_data_platinfo.platid)
+inline ::google::protobuf::uint32 plat_token_login_request_request_data_request_data_platinfo::platid() const {
+  // @@protoc_insertion_point(field_get:NFMsg.plat_token_login_request.request_data.request_data_platinfo.platid)
   return platid_;
 }
-inline void plat_token_login_request_data_platinfo::set_platid(::google::protobuf::uint32 value) {
+inline void plat_token_login_request_request_data_request_data_platinfo::set_platid(::google::protobuf::uint32 value) {
   
   platid_ = value;
-  // @@protoc_insertion_point(field_set:NFMsg.plat_token_login_request_data_platinfo.platid)
+  // @@protoc_insertion_point(field_set:NFMsg.plat_token_login_request.request_data.request_data_platinfo.platid)
 }
 
 // string gender = 6;
-inline void plat_token_login_request_data_platinfo::clear_gender() {
+inline void plat_token_login_request_request_data_request_data_platinfo::clear_gender() {
   gender_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-inline const ::std::string& plat_token_login_request_data_platinfo::gender() const {
-  // @@protoc_insertion_point(field_get:NFMsg.plat_token_login_request_data_platinfo.gender)
+inline const ::std::string& plat_token_login_request_request_data_request_data_platinfo::gender() const {
+  // @@protoc_insertion_point(field_get:NFMsg.plat_token_login_request.request_data.request_data_platinfo.gender)
   return gender_.GetNoArena();
 }
-inline void plat_token_login_request_data_platinfo::set_gender(const ::std::string& value) {
+inline void plat_token_login_request_request_data_request_data_platinfo::set_gender(const ::std::string& value) {
   
   gender_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
-  // @@protoc_insertion_point(field_set:NFMsg.plat_token_login_request_data_platinfo.gender)
+  // @@protoc_insertion_point(field_set:NFMsg.plat_token_login_request.request_data.request_data_platinfo.gender)
 }
 #if LANG_CXX11
-inline void plat_token_login_request_data_platinfo::set_gender(::std::string&& value) {
+inline void plat_token_login_request_request_data_request_data_platinfo::set_gender(::std::string&& value) {
   
   gender_.SetNoArena(
     &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
-  // @@protoc_insertion_point(field_set_rvalue:NFMsg.plat_token_login_request_data_platinfo.gender)
+  // @@protoc_insertion_point(field_set_rvalue:NFMsg.plat_token_login_request.request_data.request_data_platinfo.gender)
 }
 #endif
-inline void plat_token_login_request_data_platinfo::set_gender(const char* value) {
+inline void plat_token_login_request_request_data_request_data_platinfo::set_gender(const char* value) {
   GOOGLE_DCHECK(value != NULL);
   
   gender_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
-  // @@protoc_insertion_point(field_set_char:NFMsg.plat_token_login_request_data_platinfo.gender)
+  // @@protoc_insertion_point(field_set_char:NFMsg.plat_token_login_request.request_data.request_data_platinfo.gender)
 }
-inline void plat_token_login_request_data_platinfo::set_gender(const char* value, size_t size) {
+inline void plat_token_login_request_request_data_request_data_platinfo::set_gender(const char* value, size_t size) {
   
   gender_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
       ::std::string(reinterpret_cast<const char*>(value), size));
-  // @@protoc_insertion_point(field_set_pointer:NFMsg.plat_token_login_request_data_platinfo.gender)
+  // @@protoc_insertion_point(field_set_pointer:NFMsg.plat_token_login_request.request_data.request_data_platinfo.gender)
 }
-inline ::std::string* plat_token_login_request_data_platinfo::mutable_gender() {
+inline ::std::string* plat_token_login_request_request_data_request_data_platinfo::mutable_gender() {
   
-  // @@protoc_insertion_point(field_mutable:NFMsg.plat_token_login_request_data_platinfo.gender)
+  // @@protoc_insertion_point(field_mutable:NFMsg.plat_token_login_request.request_data.request_data_platinfo.gender)
   return gender_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-inline ::std::string* plat_token_login_request_data_platinfo::release_gender() {
-  // @@protoc_insertion_point(field_release:NFMsg.plat_token_login_request_data_platinfo.gender)
+inline ::std::string* plat_token_login_request_request_data_request_data_platinfo::release_gender() {
+  // @@protoc_insertion_point(field_release:NFMsg.plat_token_login_request.request_data.request_data_platinfo.gender)
   
   return gender_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-inline void plat_token_login_request_data_platinfo::set_allocated_gender(::std::string* gender) {
+inline void plat_token_login_request_request_data_request_data_platinfo::set_allocated_gender(::std::string* gender) {
   if (gender != NULL) {
     
   } else {
     
   }
   gender_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), gender);
-  // @@protoc_insertion_point(field_set_allocated:NFMsg.plat_token_login_request_data_platinfo.gender)
+  // @@protoc_insertion_point(field_set_allocated:NFMsg.plat_token_login_request.request_data.request_data_platinfo.gender)
 }
 
 // string nickname = 7;
-inline void plat_token_login_request_data_platinfo::clear_nickname() {
+inline void plat_token_login_request_request_data_request_data_platinfo::clear_nickname() {
   nickname_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-inline const ::std::string& plat_token_login_request_data_platinfo::nickname() const {
-  // @@protoc_insertion_point(field_get:NFMsg.plat_token_login_request_data_platinfo.nickname)
+inline const ::std::string& plat_token_login_request_request_data_request_data_platinfo::nickname() const {
+  // @@protoc_insertion_point(field_get:NFMsg.plat_token_login_request.request_data.request_data_platinfo.nickname)
   return nickname_.GetNoArena();
 }
-inline void plat_token_login_request_data_platinfo::set_nickname(const ::std::string& value) {
+inline void plat_token_login_request_request_data_request_data_platinfo::set_nickname(const ::std::string& value) {
   
   nickname_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
-  // @@protoc_insertion_point(field_set:NFMsg.plat_token_login_request_data_platinfo.nickname)
+  // @@protoc_insertion_point(field_set:NFMsg.plat_token_login_request.request_data.request_data_platinfo.nickname)
 }
 #if LANG_CXX11
-inline void plat_token_login_request_data_platinfo::set_nickname(::std::string&& value) {
+inline void plat_token_login_request_request_data_request_data_platinfo::set_nickname(::std::string&& value) {
   
   nickname_.SetNoArena(
     &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
-  // @@protoc_insertion_point(field_set_rvalue:NFMsg.plat_token_login_request_data_platinfo.nickname)
+  // @@protoc_insertion_point(field_set_rvalue:NFMsg.plat_token_login_request.request_data.request_data_platinfo.nickname)
 }
 #endif
-inline void plat_token_login_request_data_platinfo::set_nickname(const char* value) {
+inline void plat_token_login_request_request_data_request_data_platinfo::set_nickname(const char* value) {
   GOOGLE_DCHECK(value != NULL);
   
   nickname_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
-  // @@protoc_insertion_point(field_set_char:NFMsg.plat_token_login_request_data_platinfo.nickname)
+  // @@protoc_insertion_point(field_set_char:NFMsg.plat_token_login_request.request_data.request_data_platinfo.nickname)
 }
-inline void plat_token_login_request_data_platinfo::set_nickname(const char* value, size_t size) {
+inline void plat_token_login_request_request_data_request_data_platinfo::set_nickname(const char* value, size_t size) {
   
   nickname_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
       ::std::string(reinterpret_cast<const char*>(value), size));
-  // @@protoc_insertion_point(field_set_pointer:NFMsg.plat_token_login_request_data_platinfo.nickname)
+  // @@protoc_insertion_point(field_set_pointer:NFMsg.plat_token_login_request.request_data.request_data_platinfo.nickname)
 }
-inline ::std::string* plat_token_login_request_data_platinfo::mutable_nickname() {
+inline ::std::string* plat_token_login_request_request_data_request_data_platinfo::mutable_nickname() {
   
-  // @@protoc_insertion_point(field_mutable:NFMsg.plat_token_login_request_data_platinfo.nickname)
+  // @@protoc_insertion_point(field_mutable:NFMsg.plat_token_login_request.request_data.request_data_platinfo.nickname)
   return nickname_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-inline ::std::string* plat_token_login_request_data_platinfo::release_nickname() {
-  // @@protoc_insertion_point(field_release:NFMsg.plat_token_login_request_data_platinfo.nickname)
+inline ::std::string* plat_token_login_request_request_data_request_data_platinfo::release_nickname() {
+  // @@protoc_insertion_point(field_release:NFMsg.plat_token_login_request.request_data.request_data_platinfo.nickname)
   
   return nickname_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-inline void plat_token_login_request_data_platinfo::set_allocated_nickname(::std::string* nickname) {
+inline void plat_token_login_request_request_data_request_data_platinfo::set_allocated_nickname(::std::string* nickname) {
   if (nickname != NULL) {
     
   } else {
     
   }
   nickname_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), nickname);
-  // @@protoc_insertion_point(field_set_allocated:NFMsg.plat_token_login_request_data_platinfo.nickname)
+  // @@protoc_insertion_point(field_set_allocated:NFMsg.plat_token_login_request.request_data.request_data_platinfo.nickname)
 }
 
 // string uid = 8;
-inline void plat_token_login_request_data_platinfo::clear_uid() {
+inline void plat_token_login_request_request_data_request_data_platinfo::clear_uid() {
   uid_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-inline const ::std::string& plat_token_login_request_data_platinfo::uid() const {
-  // @@protoc_insertion_point(field_get:NFMsg.plat_token_login_request_data_platinfo.uid)
+inline const ::std::string& plat_token_login_request_request_data_request_data_platinfo::uid() const {
+  // @@protoc_insertion_point(field_get:NFMsg.plat_token_login_request.request_data.request_data_platinfo.uid)
   return uid_.GetNoArena();
 }
-inline void plat_token_login_request_data_platinfo::set_uid(const ::std::string& value) {
+inline void plat_token_login_request_request_data_request_data_platinfo::set_uid(const ::std::string& value) {
   
   uid_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
-  // @@protoc_insertion_point(field_set:NFMsg.plat_token_login_request_data_platinfo.uid)
+  // @@protoc_insertion_point(field_set:NFMsg.plat_token_login_request.request_data.request_data_platinfo.uid)
 }
 #if LANG_CXX11
-inline void plat_token_login_request_data_platinfo::set_uid(::std::string&& value) {
+inline void plat_token_login_request_request_data_request_data_platinfo::set_uid(::std::string&& value) {
   
   uid_.SetNoArena(
     &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
-  // @@protoc_insertion_point(field_set_rvalue:NFMsg.plat_token_login_request_data_platinfo.uid)
+  // @@protoc_insertion_point(field_set_rvalue:NFMsg.plat_token_login_request.request_data.request_data_platinfo.uid)
 }
 #endif
-inline void plat_token_login_request_data_platinfo::set_uid(const char* value) {
+inline void plat_token_login_request_request_data_request_data_platinfo::set_uid(const char* value) {
   GOOGLE_DCHECK(value != NULL);
   
   uid_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
-  // @@protoc_insertion_point(field_set_char:NFMsg.plat_token_login_request_data_platinfo.uid)
+  // @@protoc_insertion_point(field_set_char:NFMsg.plat_token_login_request.request_data.request_data_platinfo.uid)
 }
-inline void plat_token_login_request_data_platinfo::set_uid(const char* value, size_t size) {
+inline void plat_token_login_request_request_data_request_data_platinfo::set_uid(const char* value, size_t size) {
   
   uid_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
       ::std::string(reinterpret_cast<const char*>(value), size));
-  // @@protoc_insertion_point(field_set_pointer:NFMsg.plat_token_login_request_data_platinfo.uid)
+  // @@protoc_insertion_point(field_set_pointer:NFMsg.plat_token_login_request.request_data.request_data_platinfo.uid)
 }
-inline ::std::string* plat_token_login_request_data_platinfo::mutable_uid() {
+inline ::std::string* plat_token_login_request_request_data_request_data_platinfo::mutable_uid() {
   
-  // @@protoc_insertion_point(field_mutable:NFMsg.plat_token_login_request_data_platinfo.uid)
+  // @@protoc_insertion_point(field_mutable:NFMsg.plat_token_login_request.request_data.request_data_platinfo.uid)
   return uid_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-inline ::std::string* plat_token_login_request_data_platinfo::release_uid() {
-  // @@protoc_insertion_point(field_release:NFMsg.plat_token_login_request_data_platinfo.uid)
+inline ::std::string* plat_token_login_request_request_data_request_data_platinfo::release_uid() {
+  // @@protoc_insertion_point(field_release:NFMsg.plat_token_login_request.request_data.request_data_platinfo.uid)
   
   return uid_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-inline void plat_token_login_request_data_platinfo::set_allocated_uid(::std::string* uid) {
+inline void plat_token_login_request_request_data_request_data_platinfo::set_allocated_uid(::std::string* uid) {
   if (uid != NULL) {
     
   } else {
     
   }
   uid_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), uid);
-  // @@protoc_insertion_point(field_set_allocated:NFMsg.plat_token_login_request_data_platinfo.uid)
+  // @@protoc_insertion_point(field_set_allocated:NFMsg.plat_token_login_request.request_data.request_data_platinfo.uid)
 }
 
 // uint32 gameid = 9;
-inline void plat_token_login_request_data_platinfo::clear_gameid() {
+inline void plat_token_login_request_request_data_request_data_platinfo::clear_gameid() {
   gameid_ = 0u;
 }
-inline ::google::protobuf::uint32 plat_token_login_request_data_platinfo::gameid() const {
-  // @@protoc_insertion_point(field_get:NFMsg.plat_token_login_request_data_platinfo.gameid)
+inline ::google::protobuf::uint32 plat_token_login_request_request_data_request_data_platinfo::gameid() const {
+  // @@protoc_insertion_point(field_get:NFMsg.plat_token_login_request.request_data.request_data_platinfo.gameid)
   return gameid_;
 }
-inline void plat_token_login_request_data_platinfo::set_gameid(::google::protobuf::uint32 value) {
+inline void plat_token_login_request_request_data_request_data_platinfo::set_gameid(::google::protobuf::uint32 value) {
   
   gameid_ = value;
-  // @@protoc_insertion_point(field_set:NFMsg.plat_token_login_request_data_platinfo.gameid)
+  // @@protoc_insertion_point(field_set:NFMsg.plat_token_login_request.request_data.request_data_platinfo.gameid)
 }
 
 // string timestamp = 10;
-inline void plat_token_login_request_data_platinfo::clear_timestamp() {
+inline void plat_token_login_request_request_data_request_data_platinfo::clear_timestamp() {
   timestamp_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-inline const ::std::string& plat_token_login_request_data_platinfo::timestamp() const {
-  // @@protoc_insertion_point(field_get:NFMsg.plat_token_login_request_data_platinfo.timestamp)
+inline const ::std::string& plat_token_login_request_request_data_request_data_platinfo::timestamp() const {
+  // @@protoc_insertion_point(field_get:NFMsg.plat_token_login_request.request_data.request_data_platinfo.timestamp)
   return timestamp_.GetNoArena();
 }
-inline void plat_token_login_request_data_platinfo::set_timestamp(const ::std::string& value) {
+inline void plat_token_login_request_request_data_request_data_platinfo::set_timestamp(const ::std::string& value) {
   
   timestamp_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
-  // @@protoc_insertion_point(field_set:NFMsg.plat_token_login_request_data_platinfo.timestamp)
+  // @@protoc_insertion_point(field_set:NFMsg.plat_token_login_request.request_data.request_data_platinfo.timestamp)
 }
 #if LANG_CXX11
-inline void plat_token_login_request_data_platinfo::set_timestamp(::std::string&& value) {
+inline void plat_token_login_request_request_data_request_data_platinfo::set_timestamp(::std::string&& value) {
   
   timestamp_.SetNoArena(
     &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
-  // @@protoc_insertion_point(field_set_rvalue:NFMsg.plat_token_login_request_data_platinfo.timestamp)
+  // @@protoc_insertion_point(field_set_rvalue:NFMsg.plat_token_login_request.request_data.request_data_platinfo.timestamp)
 }
 #endif
-inline void plat_token_login_request_data_platinfo::set_timestamp(const char* value) {
+inline void plat_token_login_request_request_data_request_data_platinfo::set_timestamp(const char* value) {
   GOOGLE_DCHECK(value != NULL);
   
   timestamp_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
-  // @@protoc_insertion_point(field_set_char:NFMsg.plat_token_login_request_data_platinfo.timestamp)
+  // @@protoc_insertion_point(field_set_char:NFMsg.plat_token_login_request.request_data.request_data_platinfo.timestamp)
 }
-inline void plat_token_login_request_data_platinfo::set_timestamp(const char* value, size_t size) {
+inline void plat_token_login_request_request_data_request_data_platinfo::set_timestamp(const char* value, size_t size) {
   
   timestamp_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
       ::std::string(reinterpret_cast<const char*>(value), size));
-  // @@protoc_insertion_point(field_set_pointer:NFMsg.plat_token_login_request_data_platinfo.timestamp)
+  // @@protoc_insertion_point(field_set_pointer:NFMsg.plat_token_login_request.request_data.request_data_platinfo.timestamp)
 }
-inline ::std::string* plat_token_login_request_data_platinfo::mutable_timestamp() {
+inline ::std::string* plat_token_login_request_request_data_request_data_platinfo::mutable_timestamp() {
   
-  // @@protoc_insertion_point(field_mutable:NFMsg.plat_token_login_request_data_platinfo.timestamp)
+  // @@protoc_insertion_point(field_mutable:NFMsg.plat_token_login_request.request_data.request_data_platinfo.timestamp)
   return timestamp_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-inline ::std::string* plat_token_login_request_data_platinfo::release_timestamp() {
-  // @@protoc_insertion_point(field_release:NFMsg.plat_token_login_request_data_platinfo.timestamp)
+inline ::std::string* plat_token_login_request_request_data_request_data_platinfo::release_timestamp() {
+  // @@protoc_insertion_point(field_release:NFMsg.plat_token_login_request.request_data.request_data_platinfo.timestamp)
   
   return timestamp_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-inline void plat_token_login_request_data_platinfo::set_allocated_timestamp(::std::string* timestamp) {
+inline void plat_token_login_request_request_data_request_data_platinfo::set_allocated_timestamp(::std::string* timestamp) {
   if (timestamp != NULL) {
     
   } else {
     
   }
   timestamp_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), timestamp);
-  // @@protoc_insertion_point(field_set_allocated:NFMsg.plat_token_login_request_data_platinfo.timestamp)
+  // @@protoc_insertion_point(field_set_allocated:NFMsg.plat_token_login_request.request_data.request_data_platinfo.timestamp)
 }
 
 // -------------------------------------------------------------------
 
-// plat_token_login_request_data
+// plat_token_login_request_request_data
 
-// .NFMsg.plat_token_login_request_data_platinfo platinfo = 1;
-inline bool plat_token_login_request_data::has_platinfo() const {
+// .NFMsg.plat_token_login_request.request_data.request_data_platinfo platinfo = 1;
+inline bool plat_token_login_request_request_data::has_platinfo() const {
   return this != internal_default_instance() && platinfo_ != NULL;
 }
-inline void plat_token_login_request_data::clear_platinfo() {
+inline void plat_token_login_request_request_data::clear_platinfo() {
   if (GetArenaNoVirtual() == NULL && platinfo_ != NULL) {
     delete platinfo_;
   }
   platinfo_ = NULL;
 }
-inline const ::NFMsg::plat_token_login_request_data_platinfo& plat_token_login_request_data::_internal_platinfo() const {
+inline const ::NFMsg::plat_token_login_request_request_data_request_data_platinfo& plat_token_login_request_request_data::_internal_platinfo() const {
   return *platinfo_;
 }
-inline const ::NFMsg::plat_token_login_request_data_platinfo& plat_token_login_request_data::platinfo() const {
-  const ::NFMsg::plat_token_login_request_data_platinfo* p = platinfo_;
-  // @@protoc_insertion_point(field_get:NFMsg.plat_token_login_request_data.platinfo)
-  return p != NULL ? *p : *reinterpret_cast<const ::NFMsg::plat_token_login_request_data_platinfo*>(
-      &::NFMsg::_plat_token_login_request_data_platinfo_default_instance_);
+inline const ::NFMsg::plat_token_login_request_request_data_request_data_platinfo& plat_token_login_request_request_data::platinfo() const {
+  const ::NFMsg::plat_token_login_request_request_data_request_data_platinfo* p = platinfo_;
+  // @@protoc_insertion_point(field_get:NFMsg.plat_token_login_request.request_data.platinfo)
+  return p != NULL ? *p : *reinterpret_cast<const ::NFMsg::plat_token_login_request_request_data_request_data_platinfo*>(
+      &::NFMsg::_plat_token_login_request_request_data_request_data_platinfo_default_instance_);
 }
-inline ::NFMsg::plat_token_login_request_data_platinfo* plat_token_login_request_data::release_platinfo() {
-  // @@protoc_insertion_point(field_release:NFMsg.plat_token_login_request_data.platinfo)
+inline ::NFMsg::plat_token_login_request_request_data_request_data_platinfo* plat_token_login_request_request_data::release_platinfo() {
+  // @@protoc_insertion_point(field_release:NFMsg.plat_token_login_request.request_data.platinfo)
   
-  ::NFMsg::plat_token_login_request_data_platinfo* temp = platinfo_;
+  ::NFMsg::plat_token_login_request_request_data_request_data_platinfo* temp = platinfo_;
   platinfo_ = NULL;
   return temp;
 }
-inline ::NFMsg::plat_token_login_request_data_platinfo* plat_token_login_request_data::mutable_platinfo() {
+inline ::NFMsg::plat_token_login_request_request_data_request_data_platinfo* plat_token_login_request_request_data::mutable_platinfo() {
   
   if (platinfo_ == NULL) {
-    auto* p = CreateMaybeMessage<::NFMsg::plat_token_login_request_data_platinfo>(GetArenaNoVirtual());
+    auto* p = CreateMaybeMessage<::NFMsg::plat_token_login_request_request_data_request_data_platinfo>(GetArenaNoVirtual());
     platinfo_ = p;
   }
-  // @@protoc_insertion_point(field_mutable:NFMsg.plat_token_login_request_data.platinfo)
+  // @@protoc_insertion_point(field_mutable:NFMsg.plat_token_login_request.request_data.platinfo)
   return platinfo_;
 }
-inline void plat_token_login_request_data::set_allocated_platinfo(::NFMsg::plat_token_login_request_data_platinfo* platinfo) {
+inline void plat_token_login_request_request_data::set_allocated_platinfo(::NFMsg::plat_token_login_request_request_data_request_data_platinfo* platinfo) {
   ::google::protobuf::Arena* message_arena = GetArenaNoVirtual();
   if (message_arena == NULL) {
     delete platinfo_;
@@ -3205,21 +3607,21 @@ inline void plat_token_login_request_data::set_allocated_platinfo(::NFMsg::plat_
     
   }
   platinfo_ = platinfo;
-  // @@protoc_insertion_point(field_set_allocated:NFMsg.plat_token_login_request_data.platinfo)
+  // @@protoc_insertion_point(field_set_allocated:NFMsg.plat_token_login_request.request_data.platinfo)
 }
 
 // uint32 gameid = 2;
-inline void plat_token_login_request_data::clear_gameid() {
+inline void plat_token_login_request_request_data::clear_gameid() {
   gameid_ = 0u;
 }
-inline ::google::protobuf::uint32 plat_token_login_request_data::gameid() const {
-  // @@protoc_insertion_point(field_get:NFMsg.plat_token_login_request_data.gameid)
+inline ::google::protobuf::uint32 plat_token_login_request_request_data::gameid() const {
+  // @@protoc_insertion_point(field_get:NFMsg.plat_token_login_request.request_data.gameid)
   return gameid_;
 }
-inline void plat_token_login_request_data::set_gameid(::google::protobuf::uint32 value) {
+inline void plat_token_login_request_request_data::set_gameid(::google::protobuf::uint32 value) {
   
   gameid_ = value;
-  // @@protoc_insertion_point(field_set:NFMsg.plat_token_login_request_data.gameid)
+  // @@protoc_insertion_point(field_set:NFMsg.plat_token_login_request.request_data.gameid)
 }
 
 // -------------------------------------------------------------------
@@ -3279,7 +3681,7 @@ inline void plat_token_login_request::set_allocated_do_(::std::string* do_) {
   // @@protoc_insertion_point(field_set_allocated:NFMsg.plat_token_login_request.do)
 }
 
-// .NFMsg.plat_token_login_request_data data = 2;
+// .NFMsg.plat_token_login_request.request_data data = 2;
 inline bool plat_token_login_request::has_data() const {
   return this != internal_default_instance() && data_ != NULL;
 }
@@ -3289,32 +3691,32 @@ inline void plat_token_login_request::clear_data() {
   }
   data_ = NULL;
 }
-inline const ::NFMsg::plat_token_login_request_data& plat_token_login_request::_internal_data() const {
+inline const ::NFMsg::plat_token_login_request_request_data& plat_token_login_request::_internal_data() const {
   return *data_;
 }
-inline const ::NFMsg::plat_token_login_request_data& plat_token_login_request::data() const {
-  const ::NFMsg::plat_token_login_request_data* p = data_;
+inline const ::NFMsg::plat_token_login_request_request_data& plat_token_login_request::data() const {
+  const ::NFMsg::plat_token_login_request_request_data* p = data_;
   // @@protoc_insertion_point(field_get:NFMsg.plat_token_login_request.data)
-  return p != NULL ? *p : *reinterpret_cast<const ::NFMsg::plat_token_login_request_data*>(
-      &::NFMsg::_plat_token_login_request_data_default_instance_);
+  return p != NULL ? *p : *reinterpret_cast<const ::NFMsg::plat_token_login_request_request_data*>(
+      &::NFMsg::_plat_token_login_request_request_data_default_instance_);
 }
-inline ::NFMsg::plat_token_login_request_data* plat_token_login_request::release_data() {
+inline ::NFMsg::plat_token_login_request_request_data* plat_token_login_request::release_data() {
   // @@protoc_insertion_point(field_release:NFMsg.plat_token_login_request.data)
   
-  ::NFMsg::plat_token_login_request_data* temp = data_;
+  ::NFMsg::plat_token_login_request_request_data* temp = data_;
   data_ = NULL;
   return temp;
 }
-inline ::NFMsg::plat_token_login_request_data* plat_token_login_request::mutable_data() {
+inline ::NFMsg::plat_token_login_request_request_data* plat_token_login_request::mutable_data() {
   
   if (data_ == NULL) {
-    auto* p = CreateMaybeMessage<::NFMsg::plat_token_login_request_data>(GetArenaNoVirtual());
+    auto* p = CreateMaybeMessage<::NFMsg::plat_token_login_request_request_data>(GetArenaNoVirtual());
     data_ = p;
   }
   // @@protoc_insertion_point(field_mutable:NFMsg.plat_token_login_request.data)
   return data_;
 }
-inline void plat_token_login_request::set_allocated_data(::NFMsg::plat_token_login_request_data* data) {
+inline void plat_token_login_request::set_allocated_data(::NFMsg::plat_token_login_request_request_data* data) {
   ::google::protobuf::Arena* message_arena = GetArenaNoVirtual();
   if (message_arena == NULL) {
     delete data_;
@@ -3377,768 +3779,768 @@ inline void plat_token_login_request::set_unigame_plat_timestamp(::google::proto
 
 // -------------------------------------------------------------------
 
-// plat_token_login_respone_data_platinfo
+// plat_token_login_respone_respone_data_respone_data_platinfo
 
 // uint32 aaa = 1;
-inline void plat_token_login_respone_data_platinfo::clear_aaa() {
+inline void plat_token_login_respone_respone_data_respone_data_platinfo::clear_aaa() {
   aaa_ = 0u;
 }
-inline ::google::protobuf::uint32 plat_token_login_respone_data_platinfo::aaa() const {
-  // @@protoc_insertion_point(field_get:NFMsg.plat_token_login_respone_data_platinfo.aaa)
+inline ::google::protobuf::uint32 plat_token_login_respone_respone_data_respone_data_platinfo::aaa() const {
+  // @@protoc_insertion_point(field_get:NFMsg.plat_token_login_respone.respone_data.respone_data_platinfo.aaa)
   return aaa_;
 }
-inline void plat_token_login_respone_data_platinfo::set_aaa(::google::protobuf::uint32 value) {
+inline void plat_token_login_respone_respone_data_respone_data_platinfo::set_aaa(::google::protobuf::uint32 value) {
   
   aaa_ = value;
-  // @@protoc_insertion_point(field_set:NFMsg.plat_token_login_respone_data_platinfo.aaa)
+  // @@protoc_insertion_point(field_set:NFMsg.plat_token_login_respone.respone_data.respone_data_platinfo.aaa)
 }
 
 // string sign = 2;
-inline void plat_token_login_respone_data_platinfo::clear_sign() {
+inline void plat_token_login_respone_respone_data_respone_data_platinfo::clear_sign() {
   sign_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-inline const ::std::string& plat_token_login_respone_data_platinfo::sign() const {
-  // @@protoc_insertion_point(field_get:NFMsg.plat_token_login_respone_data_platinfo.sign)
+inline const ::std::string& plat_token_login_respone_respone_data_respone_data_platinfo::sign() const {
+  // @@protoc_insertion_point(field_get:NFMsg.plat_token_login_respone.respone_data.respone_data_platinfo.sign)
   return sign_.GetNoArena();
 }
-inline void plat_token_login_respone_data_platinfo::set_sign(const ::std::string& value) {
+inline void plat_token_login_respone_respone_data_respone_data_platinfo::set_sign(const ::std::string& value) {
   
   sign_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
-  // @@protoc_insertion_point(field_set:NFMsg.plat_token_login_respone_data_platinfo.sign)
+  // @@protoc_insertion_point(field_set:NFMsg.plat_token_login_respone.respone_data.respone_data_platinfo.sign)
 }
 #if LANG_CXX11
-inline void plat_token_login_respone_data_platinfo::set_sign(::std::string&& value) {
+inline void plat_token_login_respone_respone_data_respone_data_platinfo::set_sign(::std::string&& value) {
   
   sign_.SetNoArena(
     &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
-  // @@protoc_insertion_point(field_set_rvalue:NFMsg.plat_token_login_respone_data_platinfo.sign)
+  // @@protoc_insertion_point(field_set_rvalue:NFMsg.plat_token_login_respone.respone_data.respone_data_platinfo.sign)
 }
 #endif
-inline void plat_token_login_respone_data_platinfo::set_sign(const char* value) {
+inline void plat_token_login_respone_respone_data_respone_data_platinfo::set_sign(const char* value) {
   GOOGLE_DCHECK(value != NULL);
   
   sign_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
-  // @@protoc_insertion_point(field_set_char:NFMsg.plat_token_login_respone_data_platinfo.sign)
+  // @@protoc_insertion_point(field_set_char:NFMsg.plat_token_login_respone.respone_data.respone_data_platinfo.sign)
 }
-inline void plat_token_login_respone_data_platinfo::set_sign(const char* value, size_t size) {
+inline void plat_token_login_respone_respone_data_respone_data_platinfo::set_sign(const char* value, size_t size) {
   
   sign_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
       ::std::string(reinterpret_cast<const char*>(value), size));
-  // @@protoc_insertion_point(field_set_pointer:NFMsg.plat_token_login_respone_data_platinfo.sign)
+  // @@protoc_insertion_point(field_set_pointer:NFMsg.plat_token_login_respone.respone_data.respone_data_platinfo.sign)
 }
-inline ::std::string* plat_token_login_respone_data_platinfo::mutable_sign() {
+inline ::std::string* plat_token_login_respone_respone_data_respone_data_platinfo::mutable_sign() {
   
-  // @@protoc_insertion_point(field_mutable:NFMsg.plat_token_login_respone_data_platinfo.sign)
+  // @@protoc_insertion_point(field_mutable:NFMsg.plat_token_login_respone.respone_data.respone_data_platinfo.sign)
   return sign_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-inline ::std::string* plat_token_login_respone_data_platinfo::release_sign() {
-  // @@protoc_insertion_point(field_release:NFMsg.plat_token_login_respone_data_platinfo.sign)
+inline ::std::string* plat_token_login_respone_respone_data_respone_data_platinfo::release_sign() {
+  // @@protoc_insertion_point(field_release:NFMsg.plat_token_login_respone.respone_data.respone_data_platinfo.sign)
   
   return sign_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-inline void plat_token_login_respone_data_platinfo::set_allocated_sign(::std::string* sign) {
+inline void plat_token_login_respone_respone_data_respone_data_platinfo::set_allocated_sign(::std::string* sign) {
   if (sign != NULL) {
     
   } else {
     
   }
   sign_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), sign);
-  // @@protoc_insertion_point(field_set_allocated:NFMsg.plat_token_login_respone_data_platinfo.sign)
+  // @@protoc_insertion_point(field_set_allocated:NFMsg.plat_token_login_respone.respone_data.respone_data_platinfo.sign)
 }
 
 // string account = 3;
-inline void plat_token_login_respone_data_platinfo::clear_account() {
+inline void plat_token_login_respone_respone_data_respone_data_platinfo::clear_account() {
   account_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-inline const ::std::string& plat_token_login_respone_data_platinfo::account() const {
-  // @@protoc_insertion_point(field_get:NFMsg.plat_token_login_respone_data_platinfo.account)
+inline const ::std::string& plat_token_login_respone_respone_data_respone_data_platinfo::account() const {
+  // @@protoc_insertion_point(field_get:NFMsg.plat_token_login_respone.respone_data.respone_data_platinfo.account)
   return account_.GetNoArena();
 }
-inline void plat_token_login_respone_data_platinfo::set_account(const ::std::string& value) {
+inline void plat_token_login_respone_respone_data_respone_data_platinfo::set_account(const ::std::string& value) {
   
   account_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
-  // @@protoc_insertion_point(field_set:NFMsg.plat_token_login_respone_data_platinfo.account)
+  // @@protoc_insertion_point(field_set:NFMsg.plat_token_login_respone.respone_data.respone_data_platinfo.account)
 }
 #if LANG_CXX11
-inline void plat_token_login_respone_data_platinfo::set_account(::std::string&& value) {
+inline void plat_token_login_respone_respone_data_respone_data_platinfo::set_account(::std::string&& value) {
   
   account_.SetNoArena(
     &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
-  // @@protoc_insertion_point(field_set_rvalue:NFMsg.plat_token_login_respone_data_platinfo.account)
+  // @@protoc_insertion_point(field_set_rvalue:NFMsg.plat_token_login_respone.respone_data.respone_data_platinfo.account)
 }
 #endif
-inline void plat_token_login_respone_data_platinfo::set_account(const char* value) {
+inline void plat_token_login_respone_respone_data_respone_data_platinfo::set_account(const char* value) {
   GOOGLE_DCHECK(value != NULL);
   
   account_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
-  // @@protoc_insertion_point(field_set_char:NFMsg.plat_token_login_respone_data_platinfo.account)
+  // @@protoc_insertion_point(field_set_char:NFMsg.plat_token_login_respone.respone_data.respone_data_platinfo.account)
 }
-inline void plat_token_login_respone_data_platinfo::set_account(const char* value, size_t size) {
+inline void plat_token_login_respone_respone_data_respone_data_platinfo::set_account(const char* value, size_t size) {
   
   account_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
       ::std::string(reinterpret_cast<const char*>(value), size));
-  // @@protoc_insertion_point(field_set_pointer:NFMsg.plat_token_login_respone_data_platinfo.account)
+  // @@protoc_insertion_point(field_set_pointer:NFMsg.plat_token_login_respone.respone_data.respone_data_platinfo.account)
 }
-inline ::std::string* plat_token_login_respone_data_platinfo::mutable_account() {
+inline ::std::string* plat_token_login_respone_respone_data_respone_data_platinfo::mutable_account() {
   
-  // @@protoc_insertion_point(field_mutable:NFMsg.plat_token_login_respone_data_platinfo.account)
+  // @@protoc_insertion_point(field_mutable:NFMsg.plat_token_login_respone.respone_data.respone_data_platinfo.account)
   return account_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-inline ::std::string* plat_token_login_respone_data_platinfo::release_account() {
-  // @@protoc_insertion_point(field_release:NFMsg.plat_token_login_respone_data_platinfo.account)
+inline ::std::string* plat_token_login_respone_respone_data_respone_data_platinfo::release_account() {
+  // @@protoc_insertion_point(field_release:NFMsg.plat_token_login_respone.respone_data.respone_data_platinfo.account)
   
   return account_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-inline void plat_token_login_respone_data_platinfo::set_allocated_account(::std::string* account) {
+inline void plat_token_login_respone_respone_data_respone_data_platinfo::set_allocated_account(::std::string* account) {
   if (account != NULL) {
     
   } else {
     
   }
   account_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), account);
-  // @@protoc_insertion_point(field_set_allocated:NFMsg.plat_token_login_respone_data_platinfo.account)
+  // @@protoc_insertion_point(field_set_allocated:NFMsg.plat_token_login_respone.respone_data.respone_data_platinfo.account)
 }
 
 // string email = 4;
-inline void plat_token_login_respone_data_platinfo::clear_email() {
+inline void plat_token_login_respone_respone_data_respone_data_platinfo::clear_email() {
   email_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-inline const ::std::string& plat_token_login_respone_data_platinfo::email() const {
-  // @@protoc_insertion_point(field_get:NFMsg.plat_token_login_respone_data_platinfo.email)
+inline const ::std::string& plat_token_login_respone_respone_data_respone_data_platinfo::email() const {
+  // @@protoc_insertion_point(field_get:NFMsg.plat_token_login_respone.respone_data.respone_data_platinfo.email)
   return email_.GetNoArena();
 }
-inline void plat_token_login_respone_data_platinfo::set_email(const ::std::string& value) {
+inline void plat_token_login_respone_respone_data_respone_data_platinfo::set_email(const ::std::string& value) {
   
   email_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
-  // @@protoc_insertion_point(field_set:NFMsg.plat_token_login_respone_data_platinfo.email)
+  // @@protoc_insertion_point(field_set:NFMsg.plat_token_login_respone.respone_data.respone_data_platinfo.email)
 }
 #if LANG_CXX11
-inline void plat_token_login_respone_data_platinfo::set_email(::std::string&& value) {
+inline void plat_token_login_respone_respone_data_respone_data_platinfo::set_email(::std::string&& value) {
   
   email_.SetNoArena(
     &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
-  // @@protoc_insertion_point(field_set_rvalue:NFMsg.plat_token_login_respone_data_platinfo.email)
+  // @@protoc_insertion_point(field_set_rvalue:NFMsg.plat_token_login_respone.respone_data.respone_data_platinfo.email)
 }
 #endif
-inline void plat_token_login_respone_data_platinfo::set_email(const char* value) {
+inline void plat_token_login_respone_respone_data_respone_data_platinfo::set_email(const char* value) {
   GOOGLE_DCHECK(value != NULL);
   
   email_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
-  // @@protoc_insertion_point(field_set_char:NFMsg.plat_token_login_respone_data_platinfo.email)
+  // @@protoc_insertion_point(field_set_char:NFMsg.plat_token_login_respone.respone_data.respone_data_platinfo.email)
 }
-inline void plat_token_login_respone_data_platinfo::set_email(const char* value, size_t size) {
+inline void plat_token_login_respone_respone_data_respone_data_platinfo::set_email(const char* value, size_t size) {
   
   email_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
       ::std::string(reinterpret_cast<const char*>(value), size));
-  // @@protoc_insertion_point(field_set_pointer:NFMsg.plat_token_login_respone_data_platinfo.email)
+  // @@protoc_insertion_point(field_set_pointer:NFMsg.plat_token_login_respone.respone_data.respone_data_platinfo.email)
 }
-inline ::std::string* plat_token_login_respone_data_platinfo::mutable_email() {
+inline ::std::string* plat_token_login_respone_respone_data_respone_data_platinfo::mutable_email() {
   
-  // @@protoc_insertion_point(field_mutable:NFMsg.plat_token_login_respone_data_platinfo.email)
+  // @@protoc_insertion_point(field_mutable:NFMsg.plat_token_login_respone.respone_data.respone_data_platinfo.email)
   return email_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-inline ::std::string* plat_token_login_respone_data_platinfo::release_email() {
-  // @@protoc_insertion_point(field_release:NFMsg.plat_token_login_respone_data_platinfo.email)
+inline ::std::string* plat_token_login_respone_respone_data_respone_data_platinfo::release_email() {
+  // @@protoc_insertion_point(field_release:NFMsg.plat_token_login_respone.respone_data.respone_data_platinfo.email)
   
   return email_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-inline void plat_token_login_respone_data_platinfo::set_allocated_email(::std::string* email) {
+inline void plat_token_login_respone_respone_data_respone_data_platinfo::set_allocated_email(::std::string* email) {
   if (email != NULL) {
     
   } else {
     
   }
   email_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), email);
-  // @@protoc_insertion_point(field_set_allocated:NFMsg.plat_token_login_respone_data_platinfo.email)
+  // @@protoc_insertion_point(field_set_allocated:NFMsg.plat_token_login_respone.respone_data.respone_data_platinfo.email)
 }
 
 // uint32 platid = 5;
-inline void plat_token_login_respone_data_platinfo::clear_platid() {
+inline void plat_token_login_respone_respone_data_respone_data_platinfo::clear_platid() {
   platid_ = 0u;
 }
-inline ::google::protobuf::uint32 plat_token_login_respone_data_platinfo::platid() const {
-  // @@protoc_insertion_point(field_get:NFMsg.plat_token_login_respone_data_platinfo.platid)
+inline ::google::protobuf::uint32 plat_token_login_respone_respone_data_respone_data_platinfo::platid() const {
+  // @@protoc_insertion_point(field_get:NFMsg.plat_token_login_respone.respone_data.respone_data_platinfo.platid)
   return platid_;
 }
-inline void plat_token_login_respone_data_platinfo::set_platid(::google::protobuf::uint32 value) {
+inline void plat_token_login_respone_respone_data_respone_data_platinfo::set_platid(::google::protobuf::uint32 value) {
   
   platid_ = value;
-  // @@protoc_insertion_point(field_set:NFMsg.plat_token_login_respone_data_platinfo.platid)
+  // @@protoc_insertion_point(field_set:NFMsg.plat_token_login_respone.respone_data.respone_data_platinfo.platid)
 }
 
 // string gender = 6;
-inline void plat_token_login_respone_data_platinfo::clear_gender() {
+inline void plat_token_login_respone_respone_data_respone_data_platinfo::clear_gender() {
   gender_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-inline const ::std::string& plat_token_login_respone_data_platinfo::gender() const {
-  // @@protoc_insertion_point(field_get:NFMsg.plat_token_login_respone_data_platinfo.gender)
+inline const ::std::string& plat_token_login_respone_respone_data_respone_data_platinfo::gender() const {
+  // @@protoc_insertion_point(field_get:NFMsg.plat_token_login_respone.respone_data.respone_data_platinfo.gender)
   return gender_.GetNoArena();
 }
-inline void plat_token_login_respone_data_platinfo::set_gender(const ::std::string& value) {
+inline void plat_token_login_respone_respone_data_respone_data_platinfo::set_gender(const ::std::string& value) {
   
   gender_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
-  // @@protoc_insertion_point(field_set:NFMsg.plat_token_login_respone_data_platinfo.gender)
+  // @@protoc_insertion_point(field_set:NFMsg.plat_token_login_respone.respone_data.respone_data_platinfo.gender)
 }
 #if LANG_CXX11
-inline void plat_token_login_respone_data_platinfo::set_gender(::std::string&& value) {
+inline void plat_token_login_respone_respone_data_respone_data_platinfo::set_gender(::std::string&& value) {
   
   gender_.SetNoArena(
     &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
-  // @@protoc_insertion_point(field_set_rvalue:NFMsg.plat_token_login_respone_data_platinfo.gender)
+  // @@protoc_insertion_point(field_set_rvalue:NFMsg.plat_token_login_respone.respone_data.respone_data_platinfo.gender)
 }
 #endif
-inline void plat_token_login_respone_data_platinfo::set_gender(const char* value) {
+inline void plat_token_login_respone_respone_data_respone_data_platinfo::set_gender(const char* value) {
   GOOGLE_DCHECK(value != NULL);
   
   gender_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
-  // @@protoc_insertion_point(field_set_char:NFMsg.plat_token_login_respone_data_platinfo.gender)
+  // @@protoc_insertion_point(field_set_char:NFMsg.plat_token_login_respone.respone_data.respone_data_platinfo.gender)
 }
-inline void plat_token_login_respone_data_platinfo::set_gender(const char* value, size_t size) {
+inline void plat_token_login_respone_respone_data_respone_data_platinfo::set_gender(const char* value, size_t size) {
   
   gender_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
       ::std::string(reinterpret_cast<const char*>(value), size));
-  // @@protoc_insertion_point(field_set_pointer:NFMsg.plat_token_login_respone_data_platinfo.gender)
+  // @@protoc_insertion_point(field_set_pointer:NFMsg.plat_token_login_respone.respone_data.respone_data_platinfo.gender)
 }
-inline ::std::string* plat_token_login_respone_data_platinfo::mutable_gender() {
+inline ::std::string* plat_token_login_respone_respone_data_respone_data_platinfo::mutable_gender() {
   
-  // @@protoc_insertion_point(field_mutable:NFMsg.plat_token_login_respone_data_platinfo.gender)
+  // @@protoc_insertion_point(field_mutable:NFMsg.plat_token_login_respone.respone_data.respone_data_platinfo.gender)
   return gender_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-inline ::std::string* plat_token_login_respone_data_platinfo::release_gender() {
-  // @@protoc_insertion_point(field_release:NFMsg.plat_token_login_respone_data_platinfo.gender)
+inline ::std::string* plat_token_login_respone_respone_data_respone_data_platinfo::release_gender() {
+  // @@protoc_insertion_point(field_release:NFMsg.plat_token_login_respone.respone_data.respone_data_platinfo.gender)
   
   return gender_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-inline void plat_token_login_respone_data_platinfo::set_allocated_gender(::std::string* gender) {
+inline void plat_token_login_respone_respone_data_respone_data_platinfo::set_allocated_gender(::std::string* gender) {
   if (gender != NULL) {
     
   } else {
     
   }
   gender_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), gender);
-  // @@protoc_insertion_point(field_set_allocated:NFMsg.plat_token_login_respone_data_platinfo.gender)
+  // @@protoc_insertion_point(field_set_allocated:NFMsg.plat_token_login_respone.respone_data.respone_data_platinfo.gender)
 }
 
 // string nickname = 7;
-inline void plat_token_login_respone_data_platinfo::clear_nickname() {
+inline void plat_token_login_respone_respone_data_respone_data_platinfo::clear_nickname() {
   nickname_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-inline const ::std::string& plat_token_login_respone_data_platinfo::nickname() const {
-  // @@protoc_insertion_point(field_get:NFMsg.plat_token_login_respone_data_platinfo.nickname)
+inline const ::std::string& plat_token_login_respone_respone_data_respone_data_platinfo::nickname() const {
+  // @@protoc_insertion_point(field_get:NFMsg.plat_token_login_respone.respone_data.respone_data_platinfo.nickname)
   return nickname_.GetNoArena();
 }
-inline void plat_token_login_respone_data_platinfo::set_nickname(const ::std::string& value) {
+inline void plat_token_login_respone_respone_data_respone_data_platinfo::set_nickname(const ::std::string& value) {
   
   nickname_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
-  // @@protoc_insertion_point(field_set:NFMsg.plat_token_login_respone_data_platinfo.nickname)
+  // @@protoc_insertion_point(field_set:NFMsg.plat_token_login_respone.respone_data.respone_data_platinfo.nickname)
 }
 #if LANG_CXX11
-inline void plat_token_login_respone_data_platinfo::set_nickname(::std::string&& value) {
+inline void plat_token_login_respone_respone_data_respone_data_platinfo::set_nickname(::std::string&& value) {
   
   nickname_.SetNoArena(
     &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
-  // @@protoc_insertion_point(field_set_rvalue:NFMsg.plat_token_login_respone_data_platinfo.nickname)
+  // @@protoc_insertion_point(field_set_rvalue:NFMsg.plat_token_login_respone.respone_data.respone_data_platinfo.nickname)
 }
 #endif
-inline void plat_token_login_respone_data_platinfo::set_nickname(const char* value) {
+inline void plat_token_login_respone_respone_data_respone_data_platinfo::set_nickname(const char* value) {
   GOOGLE_DCHECK(value != NULL);
   
   nickname_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
-  // @@protoc_insertion_point(field_set_char:NFMsg.plat_token_login_respone_data_platinfo.nickname)
+  // @@protoc_insertion_point(field_set_char:NFMsg.plat_token_login_respone.respone_data.respone_data_platinfo.nickname)
 }
-inline void plat_token_login_respone_data_platinfo::set_nickname(const char* value, size_t size) {
+inline void plat_token_login_respone_respone_data_respone_data_platinfo::set_nickname(const char* value, size_t size) {
   
   nickname_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
       ::std::string(reinterpret_cast<const char*>(value), size));
-  // @@protoc_insertion_point(field_set_pointer:NFMsg.plat_token_login_respone_data_platinfo.nickname)
+  // @@protoc_insertion_point(field_set_pointer:NFMsg.plat_token_login_respone.respone_data.respone_data_platinfo.nickname)
 }
-inline ::std::string* plat_token_login_respone_data_platinfo::mutable_nickname() {
+inline ::std::string* plat_token_login_respone_respone_data_respone_data_platinfo::mutable_nickname() {
   
-  // @@protoc_insertion_point(field_mutable:NFMsg.plat_token_login_respone_data_platinfo.nickname)
+  // @@protoc_insertion_point(field_mutable:NFMsg.plat_token_login_respone.respone_data.respone_data_platinfo.nickname)
   return nickname_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-inline ::std::string* plat_token_login_respone_data_platinfo::release_nickname() {
-  // @@protoc_insertion_point(field_release:NFMsg.plat_token_login_respone_data_platinfo.nickname)
+inline ::std::string* plat_token_login_respone_respone_data_respone_data_platinfo::release_nickname() {
+  // @@protoc_insertion_point(field_release:NFMsg.plat_token_login_respone.respone_data.respone_data_platinfo.nickname)
   
   return nickname_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-inline void plat_token_login_respone_data_platinfo::set_allocated_nickname(::std::string* nickname) {
+inline void plat_token_login_respone_respone_data_respone_data_platinfo::set_allocated_nickname(::std::string* nickname) {
   if (nickname != NULL) {
     
   } else {
     
   }
   nickname_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), nickname);
-  // @@protoc_insertion_point(field_set_allocated:NFMsg.plat_token_login_respone_data_platinfo.nickname)
+  // @@protoc_insertion_point(field_set_allocated:NFMsg.plat_token_login_respone.respone_data.respone_data_platinfo.nickname)
 }
 
 // string uid = 8;
-inline void plat_token_login_respone_data_platinfo::clear_uid() {
+inline void plat_token_login_respone_respone_data_respone_data_platinfo::clear_uid() {
   uid_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-inline const ::std::string& plat_token_login_respone_data_platinfo::uid() const {
-  // @@protoc_insertion_point(field_get:NFMsg.plat_token_login_respone_data_platinfo.uid)
+inline const ::std::string& plat_token_login_respone_respone_data_respone_data_platinfo::uid() const {
+  // @@protoc_insertion_point(field_get:NFMsg.plat_token_login_respone.respone_data.respone_data_platinfo.uid)
   return uid_.GetNoArena();
 }
-inline void plat_token_login_respone_data_platinfo::set_uid(const ::std::string& value) {
+inline void plat_token_login_respone_respone_data_respone_data_platinfo::set_uid(const ::std::string& value) {
   
   uid_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
-  // @@protoc_insertion_point(field_set:NFMsg.plat_token_login_respone_data_platinfo.uid)
+  // @@protoc_insertion_point(field_set:NFMsg.plat_token_login_respone.respone_data.respone_data_platinfo.uid)
 }
 #if LANG_CXX11
-inline void plat_token_login_respone_data_platinfo::set_uid(::std::string&& value) {
+inline void plat_token_login_respone_respone_data_respone_data_platinfo::set_uid(::std::string&& value) {
   
   uid_.SetNoArena(
     &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
-  // @@protoc_insertion_point(field_set_rvalue:NFMsg.plat_token_login_respone_data_platinfo.uid)
+  // @@protoc_insertion_point(field_set_rvalue:NFMsg.plat_token_login_respone.respone_data.respone_data_platinfo.uid)
 }
 #endif
-inline void plat_token_login_respone_data_platinfo::set_uid(const char* value) {
+inline void plat_token_login_respone_respone_data_respone_data_platinfo::set_uid(const char* value) {
   GOOGLE_DCHECK(value != NULL);
   
   uid_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
-  // @@protoc_insertion_point(field_set_char:NFMsg.plat_token_login_respone_data_platinfo.uid)
+  // @@protoc_insertion_point(field_set_char:NFMsg.plat_token_login_respone.respone_data.respone_data_platinfo.uid)
 }
-inline void plat_token_login_respone_data_platinfo::set_uid(const char* value, size_t size) {
+inline void plat_token_login_respone_respone_data_respone_data_platinfo::set_uid(const char* value, size_t size) {
   
   uid_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
       ::std::string(reinterpret_cast<const char*>(value), size));
-  // @@protoc_insertion_point(field_set_pointer:NFMsg.plat_token_login_respone_data_platinfo.uid)
+  // @@protoc_insertion_point(field_set_pointer:NFMsg.plat_token_login_respone.respone_data.respone_data_platinfo.uid)
 }
-inline ::std::string* plat_token_login_respone_data_platinfo::mutable_uid() {
+inline ::std::string* plat_token_login_respone_respone_data_respone_data_platinfo::mutable_uid() {
   
-  // @@protoc_insertion_point(field_mutable:NFMsg.plat_token_login_respone_data_platinfo.uid)
+  // @@protoc_insertion_point(field_mutable:NFMsg.plat_token_login_respone.respone_data.respone_data_platinfo.uid)
   return uid_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-inline ::std::string* plat_token_login_respone_data_platinfo::release_uid() {
-  // @@protoc_insertion_point(field_release:NFMsg.plat_token_login_respone_data_platinfo.uid)
+inline ::std::string* plat_token_login_respone_respone_data_respone_data_platinfo::release_uid() {
+  // @@protoc_insertion_point(field_release:NFMsg.plat_token_login_respone.respone_data.respone_data_platinfo.uid)
   
   return uid_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-inline void plat_token_login_respone_data_platinfo::set_allocated_uid(::std::string* uid) {
+inline void plat_token_login_respone_respone_data_respone_data_platinfo::set_allocated_uid(::std::string* uid) {
   if (uid != NULL) {
     
   } else {
     
   }
   uid_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), uid);
-  // @@protoc_insertion_point(field_set_allocated:NFMsg.plat_token_login_respone_data_platinfo.uid)
+  // @@protoc_insertion_point(field_set_allocated:NFMsg.plat_token_login_respone.respone_data.respone_data_platinfo.uid)
 }
 
 // uint32 gameid = 9;
-inline void plat_token_login_respone_data_platinfo::clear_gameid() {
+inline void plat_token_login_respone_respone_data_respone_data_platinfo::clear_gameid() {
   gameid_ = 0u;
 }
-inline ::google::protobuf::uint32 plat_token_login_respone_data_platinfo::gameid() const {
-  // @@protoc_insertion_point(field_get:NFMsg.plat_token_login_respone_data_platinfo.gameid)
+inline ::google::protobuf::uint32 plat_token_login_respone_respone_data_respone_data_platinfo::gameid() const {
+  // @@protoc_insertion_point(field_get:NFMsg.plat_token_login_respone.respone_data.respone_data_platinfo.gameid)
   return gameid_;
 }
-inline void plat_token_login_respone_data_platinfo::set_gameid(::google::protobuf::uint32 value) {
+inline void plat_token_login_respone_respone_data_respone_data_platinfo::set_gameid(::google::protobuf::uint32 value) {
   
   gameid_ = value;
-  // @@protoc_insertion_point(field_set:NFMsg.plat_token_login_respone_data_platinfo.gameid)
+  // @@protoc_insertion_point(field_set:NFMsg.plat_token_login_respone.respone_data.respone_data_platinfo.gameid)
 }
 
 // string timestamp = 10;
-inline void plat_token_login_respone_data_platinfo::clear_timestamp() {
+inline void plat_token_login_respone_respone_data_respone_data_platinfo::clear_timestamp() {
   timestamp_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-inline const ::std::string& plat_token_login_respone_data_platinfo::timestamp() const {
-  // @@protoc_insertion_point(field_get:NFMsg.plat_token_login_respone_data_platinfo.timestamp)
+inline const ::std::string& plat_token_login_respone_respone_data_respone_data_platinfo::timestamp() const {
+  // @@protoc_insertion_point(field_get:NFMsg.plat_token_login_respone.respone_data.respone_data_platinfo.timestamp)
   return timestamp_.GetNoArena();
 }
-inline void plat_token_login_respone_data_platinfo::set_timestamp(const ::std::string& value) {
+inline void plat_token_login_respone_respone_data_respone_data_platinfo::set_timestamp(const ::std::string& value) {
   
   timestamp_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
-  // @@protoc_insertion_point(field_set:NFMsg.plat_token_login_respone_data_platinfo.timestamp)
+  // @@protoc_insertion_point(field_set:NFMsg.plat_token_login_respone.respone_data.respone_data_platinfo.timestamp)
 }
 #if LANG_CXX11
-inline void plat_token_login_respone_data_platinfo::set_timestamp(::std::string&& value) {
+inline void plat_token_login_respone_respone_data_respone_data_platinfo::set_timestamp(::std::string&& value) {
   
   timestamp_.SetNoArena(
     &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
-  // @@protoc_insertion_point(field_set_rvalue:NFMsg.plat_token_login_respone_data_platinfo.timestamp)
+  // @@protoc_insertion_point(field_set_rvalue:NFMsg.plat_token_login_respone.respone_data.respone_data_platinfo.timestamp)
 }
 #endif
-inline void plat_token_login_respone_data_platinfo::set_timestamp(const char* value) {
+inline void plat_token_login_respone_respone_data_respone_data_platinfo::set_timestamp(const char* value) {
   GOOGLE_DCHECK(value != NULL);
   
   timestamp_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
-  // @@protoc_insertion_point(field_set_char:NFMsg.plat_token_login_respone_data_platinfo.timestamp)
+  // @@protoc_insertion_point(field_set_char:NFMsg.plat_token_login_respone.respone_data.respone_data_platinfo.timestamp)
 }
-inline void plat_token_login_respone_data_platinfo::set_timestamp(const char* value, size_t size) {
+inline void plat_token_login_respone_respone_data_respone_data_platinfo::set_timestamp(const char* value, size_t size) {
   
   timestamp_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
       ::std::string(reinterpret_cast<const char*>(value), size));
-  // @@protoc_insertion_point(field_set_pointer:NFMsg.plat_token_login_respone_data_platinfo.timestamp)
+  // @@protoc_insertion_point(field_set_pointer:NFMsg.plat_token_login_respone.respone_data.respone_data_platinfo.timestamp)
 }
-inline ::std::string* plat_token_login_respone_data_platinfo::mutable_timestamp() {
+inline ::std::string* plat_token_login_respone_respone_data_respone_data_platinfo::mutable_timestamp() {
   
-  // @@protoc_insertion_point(field_mutable:NFMsg.plat_token_login_respone_data_platinfo.timestamp)
+  // @@protoc_insertion_point(field_mutable:NFMsg.plat_token_login_respone.respone_data.respone_data_platinfo.timestamp)
   return timestamp_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-inline ::std::string* plat_token_login_respone_data_platinfo::release_timestamp() {
-  // @@protoc_insertion_point(field_release:NFMsg.plat_token_login_respone_data_platinfo.timestamp)
+inline ::std::string* plat_token_login_respone_respone_data_respone_data_platinfo::release_timestamp() {
+  // @@protoc_insertion_point(field_release:NFMsg.plat_token_login_respone.respone_data.respone_data_platinfo.timestamp)
   
   return timestamp_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-inline void plat_token_login_respone_data_platinfo::set_allocated_timestamp(::std::string* timestamp) {
+inline void plat_token_login_respone_respone_data_respone_data_platinfo::set_allocated_timestamp(::std::string* timestamp) {
   if (timestamp != NULL) {
     
   } else {
     
   }
   timestamp_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), timestamp);
-  // @@protoc_insertion_point(field_set_allocated:NFMsg.plat_token_login_respone_data_platinfo.timestamp)
+  // @@protoc_insertion_point(field_set_allocated:NFMsg.plat_token_login_respone.respone_data.respone_data_platinfo.timestamp)
 }
 
 // -------------------------------------------------------------------
 
-// plat_token_login_respone_data
+// plat_token_login_respone_respone_data
 
 // uint32 gameid = 1;
-inline void plat_token_login_respone_data::clear_gameid() {
+inline void plat_token_login_respone_respone_data::clear_gameid() {
   gameid_ = 0u;
 }
-inline ::google::protobuf::uint32 plat_token_login_respone_data::gameid() const {
-  // @@protoc_insertion_point(field_get:NFMsg.plat_token_login_respone_data.gameid)
+inline ::google::protobuf::uint32 plat_token_login_respone_respone_data::gameid() const {
+  // @@protoc_insertion_point(field_get:NFMsg.plat_token_login_respone.respone_data.gameid)
   return gameid_;
 }
-inline void plat_token_login_respone_data::set_gameid(::google::protobuf::uint32 value) {
+inline void plat_token_login_respone_respone_data::set_gameid(::google::protobuf::uint32 value) {
   
   gameid_ = value;
-  // @@protoc_insertion_point(field_set:NFMsg.plat_token_login_respone_data.gameid)
+  // @@protoc_insertion_point(field_set:NFMsg.plat_token_login_respone.respone_data.gameid)
 }
 
 // string sid = 2;
-inline void plat_token_login_respone_data::clear_sid() {
+inline void plat_token_login_respone_respone_data::clear_sid() {
   sid_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-inline const ::std::string& plat_token_login_respone_data::sid() const {
-  // @@protoc_insertion_point(field_get:NFMsg.plat_token_login_respone_data.sid)
+inline const ::std::string& plat_token_login_respone_respone_data::sid() const {
+  // @@protoc_insertion_point(field_get:NFMsg.plat_token_login_respone.respone_data.sid)
   return sid_.GetNoArena();
 }
-inline void plat_token_login_respone_data::set_sid(const ::std::string& value) {
+inline void plat_token_login_respone_respone_data::set_sid(const ::std::string& value) {
   
   sid_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
-  // @@protoc_insertion_point(field_set:NFMsg.plat_token_login_respone_data.sid)
+  // @@protoc_insertion_point(field_set:NFMsg.plat_token_login_respone.respone_data.sid)
 }
 #if LANG_CXX11
-inline void plat_token_login_respone_data::set_sid(::std::string&& value) {
+inline void plat_token_login_respone_respone_data::set_sid(::std::string&& value) {
   
   sid_.SetNoArena(
     &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
-  // @@protoc_insertion_point(field_set_rvalue:NFMsg.plat_token_login_respone_data.sid)
+  // @@protoc_insertion_point(field_set_rvalue:NFMsg.plat_token_login_respone.respone_data.sid)
 }
 #endif
-inline void plat_token_login_respone_data::set_sid(const char* value) {
+inline void plat_token_login_respone_respone_data::set_sid(const char* value) {
   GOOGLE_DCHECK(value != NULL);
   
   sid_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
-  // @@protoc_insertion_point(field_set_char:NFMsg.plat_token_login_respone_data.sid)
+  // @@protoc_insertion_point(field_set_char:NFMsg.plat_token_login_respone.respone_data.sid)
 }
-inline void plat_token_login_respone_data::set_sid(const char* value, size_t size) {
+inline void plat_token_login_respone_respone_data::set_sid(const char* value, size_t size) {
   
   sid_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
       ::std::string(reinterpret_cast<const char*>(value), size));
-  // @@protoc_insertion_point(field_set_pointer:NFMsg.plat_token_login_respone_data.sid)
+  // @@protoc_insertion_point(field_set_pointer:NFMsg.plat_token_login_respone.respone_data.sid)
 }
-inline ::std::string* plat_token_login_respone_data::mutable_sid() {
+inline ::std::string* plat_token_login_respone_respone_data::mutable_sid() {
   
-  // @@protoc_insertion_point(field_mutable:NFMsg.plat_token_login_respone_data.sid)
+  // @@protoc_insertion_point(field_mutable:NFMsg.plat_token_login_respone.respone_data.sid)
   return sid_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-inline ::std::string* plat_token_login_respone_data::release_sid() {
-  // @@protoc_insertion_point(field_release:NFMsg.plat_token_login_respone_data.sid)
+inline ::std::string* plat_token_login_respone_respone_data::release_sid() {
+  // @@protoc_insertion_point(field_release:NFMsg.plat_token_login_respone.respone_data.sid)
   
   return sid_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-inline void plat_token_login_respone_data::set_allocated_sid(::std::string* sid) {
+inline void plat_token_login_respone_respone_data::set_allocated_sid(::std::string* sid) {
   if (sid != NULL) {
     
   } else {
     
   }
   sid_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), sid);
-  // @@protoc_insertion_point(field_set_allocated:NFMsg.plat_token_login_respone_data.sid)
+  // @@protoc_insertion_point(field_set_allocated:NFMsg.plat_token_login_respone.respone_data.sid)
 }
 
 // string timezone_name = 3;
-inline void plat_token_login_respone_data::clear_timezone_name() {
+inline void plat_token_login_respone_respone_data::clear_timezone_name() {
   timezone_name_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-inline const ::std::string& plat_token_login_respone_data::timezone_name() const {
-  // @@protoc_insertion_point(field_get:NFMsg.plat_token_login_respone_data.timezone_name)
+inline const ::std::string& plat_token_login_respone_respone_data::timezone_name() const {
+  // @@protoc_insertion_point(field_get:NFMsg.plat_token_login_respone.respone_data.timezone_name)
   return timezone_name_.GetNoArena();
 }
-inline void plat_token_login_respone_data::set_timezone_name(const ::std::string& value) {
+inline void plat_token_login_respone_respone_data::set_timezone_name(const ::std::string& value) {
   
   timezone_name_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
-  // @@protoc_insertion_point(field_set:NFMsg.plat_token_login_respone_data.timezone_name)
+  // @@protoc_insertion_point(field_set:NFMsg.plat_token_login_respone.respone_data.timezone_name)
 }
 #if LANG_CXX11
-inline void plat_token_login_respone_data::set_timezone_name(::std::string&& value) {
+inline void plat_token_login_respone_respone_data::set_timezone_name(::std::string&& value) {
   
   timezone_name_.SetNoArena(
     &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
-  // @@protoc_insertion_point(field_set_rvalue:NFMsg.plat_token_login_respone_data.timezone_name)
+  // @@protoc_insertion_point(field_set_rvalue:NFMsg.plat_token_login_respone.respone_data.timezone_name)
 }
 #endif
-inline void plat_token_login_respone_data::set_timezone_name(const char* value) {
+inline void plat_token_login_respone_respone_data::set_timezone_name(const char* value) {
   GOOGLE_DCHECK(value != NULL);
   
   timezone_name_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
-  // @@protoc_insertion_point(field_set_char:NFMsg.plat_token_login_respone_data.timezone_name)
+  // @@protoc_insertion_point(field_set_char:NFMsg.plat_token_login_respone.respone_data.timezone_name)
 }
-inline void plat_token_login_respone_data::set_timezone_name(const char* value, size_t size) {
+inline void plat_token_login_respone_respone_data::set_timezone_name(const char* value, size_t size) {
   
   timezone_name_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
       ::std::string(reinterpret_cast<const char*>(value), size));
-  // @@protoc_insertion_point(field_set_pointer:NFMsg.plat_token_login_respone_data.timezone_name)
+  // @@protoc_insertion_point(field_set_pointer:NFMsg.plat_token_login_respone.respone_data.timezone_name)
 }
-inline ::std::string* plat_token_login_respone_data::mutable_timezone_name() {
+inline ::std::string* plat_token_login_respone_respone_data::mutable_timezone_name() {
   
-  // @@protoc_insertion_point(field_mutable:NFMsg.plat_token_login_respone_data.timezone_name)
+  // @@protoc_insertion_point(field_mutable:NFMsg.plat_token_login_respone.respone_data.timezone_name)
   return timezone_name_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-inline ::std::string* plat_token_login_respone_data::release_timezone_name() {
-  // @@protoc_insertion_point(field_release:NFMsg.plat_token_login_respone_data.timezone_name)
+inline ::std::string* plat_token_login_respone_respone_data::release_timezone_name() {
+  // @@protoc_insertion_point(field_release:NFMsg.plat_token_login_respone.respone_data.timezone_name)
   
   return timezone_name_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-inline void plat_token_login_respone_data::set_allocated_timezone_name(::std::string* timezone_name) {
+inline void plat_token_login_respone_respone_data::set_allocated_timezone_name(::std::string* timezone_name) {
   if (timezone_name != NULL) {
     
   } else {
     
   }
   timezone_name_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), timezone_name);
-  // @@protoc_insertion_point(field_set_allocated:NFMsg.plat_token_login_respone_data.timezone_name)
+  // @@protoc_insertion_point(field_set_allocated:NFMsg.plat_token_login_respone.respone_data.timezone_name)
 }
 
 // uint32 timezone_offset = 4;
-inline void plat_token_login_respone_data::clear_timezone_offset() {
+inline void plat_token_login_respone_respone_data::clear_timezone_offset() {
   timezone_offset_ = 0u;
 }
-inline ::google::protobuf::uint32 plat_token_login_respone_data::timezone_offset() const {
-  // @@protoc_insertion_point(field_get:NFMsg.plat_token_login_respone_data.timezone_offset)
+inline ::google::protobuf::uint32 plat_token_login_respone_respone_data::timezone_offset() const {
+  // @@protoc_insertion_point(field_get:NFMsg.plat_token_login_respone.respone_data.timezone_offset)
   return timezone_offset_;
 }
-inline void plat_token_login_respone_data::set_timezone_offset(::google::protobuf::uint32 value) {
+inline void plat_token_login_respone_respone_data::set_timezone_offset(::google::protobuf::uint32 value) {
   
   timezone_offset_ = value;
-  // @@protoc_insertion_point(field_set:NFMsg.plat_token_login_respone_data.timezone_offset)
+  // @@protoc_insertion_point(field_set:NFMsg.plat_token_login_respone.respone_data.timezone_offset)
 }
 
 // string uid = 5;
-inline void plat_token_login_respone_data::clear_uid() {
+inline void plat_token_login_respone_respone_data::clear_uid() {
   uid_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-inline const ::std::string& plat_token_login_respone_data::uid() const {
-  // @@protoc_insertion_point(field_get:NFMsg.plat_token_login_respone_data.uid)
+inline const ::std::string& plat_token_login_respone_respone_data::uid() const {
+  // @@protoc_insertion_point(field_get:NFMsg.plat_token_login_respone.respone_data.uid)
   return uid_.GetNoArena();
 }
-inline void plat_token_login_respone_data::set_uid(const ::std::string& value) {
+inline void plat_token_login_respone_respone_data::set_uid(const ::std::string& value) {
   
   uid_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
-  // @@protoc_insertion_point(field_set:NFMsg.plat_token_login_respone_data.uid)
+  // @@protoc_insertion_point(field_set:NFMsg.plat_token_login_respone.respone_data.uid)
 }
 #if LANG_CXX11
-inline void plat_token_login_respone_data::set_uid(::std::string&& value) {
+inline void plat_token_login_respone_respone_data::set_uid(::std::string&& value) {
   
   uid_.SetNoArena(
     &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
-  // @@protoc_insertion_point(field_set_rvalue:NFMsg.plat_token_login_respone_data.uid)
+  // @@protoc_insertion_point(field_set_rvalue:NFMsg.plat_token_login_respone.respone_data.uid)
 }
 #endif
-inline void plat_token_login_respone_data::set_uid(const char* value) {
+inline void plat_token_login_respone_respone_data::set_uid(const char* value) {
   GOOGLE_DCHECK(value != NULL);
   
   uid_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
-  // @@protoc_insertion_point(field_set_char:NFMsg.plat_token_login_respone_data.uid)
+  // @@protoc_insertion_point(field_set_char:NFMsg.plat_token_login_respone.respone_data.uid)
 }
-inline void plat_token_login_respone_data::set_uid(const char* value, size_t size) {
+inline void plat_token_login_respone_respone_data::set_uid(const char* value, size_t size) {
   
   uid_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
       ::std::string(reinterpret_cast<const char*>(value), size));
-  // @@protoc_insertion_point(field_set_pointer:NFMsg.plat_token_login_respone_data.uid)
+  // @@protoc_insertion_point(field_set_pointer:NFMsg.plat_token_login_respone.respone_data.uid)
 }
-inline ::std::string* plat_token_login_respone_data::mutable_uid() {
+inline ::std::string* plat_token_login_respone_respone_data::mutable_uid() {
   
-  // @@protoc_insertion_point(field_mutable:NFMsg.plat_token_login_respone_data.uid)
+  // @@protoc_insertion_point(field_mutable:NFMsg.plat_token_login_respone.respone_data.uid)
   return uid_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-inline ::std::string* plat_token_login_respone_data::release_uid() {
-  // @@protoc_insertion_point(field_release:NFMsg.plat_token_login_respone_data.uid)
+inline ::std::string* plat_token_login_respone_respone_data::release_uid() {
+  // @@protoc_insertion_point(field_release:NFMsg.plat_token_login_respone.respone_data.uid)
   
   return uid_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-inline void plat_token_login_respone_data::set_allocated_uid(::std::string* uid) {
+inline void plat_token_login_respone_respone_data::set_allocated_uid(::std::string* uid) {
   if (uid != NULL) {
     
   } else {
     
   }
   uid_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), uid);
-  // @@protoc_insertion_point(field_set_allocated:NFMsg.plat_token_login_respone_data.uid)
+  // @@protoc_insertion_point(field_set_allocated:NFMsg.plat_token_login_respone.respone_data.uid)
 }
 
 // string unigame_plat_key = 6;
-inline void plat_token_login_respone_data::clear_unigame_plat_key() {
+inline void plat_token_login_respone_respone_data::clear_unigame_plat_key() {
   unigame_plat_key_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-inline const ::std::string& plat_token_login_respone_data::unigame_plat_key() const {
-  // @@protoc_insertion_point(field_get:NFMsg.plat_token_login_respone_data.unigame_plat_key)
+inline const ::std::string& plat_token_login_respone_respone_data::unigame_plat_key() const {
+  // @@protoc_insertion_point(field_get:NFMsg.plat_token_login_respone.respone_data.unigame_plat_key)
   return unigame_plat_key_.GetNoArena();
 }
-inline void plat_token_login_respone_data::set_unigame_plat_key(const ::std::string& value) {
+inline void plat_token_login_respone_respone_data::set_unigame_plat_key(const ::std::string& value) {
   
   unigame_plat_key_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
-  // @@protoc_insertion_point(field_set:NFMsg.plat_token_login_respone_data.unigame_plat_key)
+  // @@protoc_insertion_point(field_set:NFMsg.plat_token_login_respone.respone_data.unigame_plat_key)
 }
 #if LANG_CXX11
-inline void plat_token_login_respone_data::set_unigame_plat_key(::std::string&& value) {
+inline void plat_token_login_respone_respone_data::set_unigame_plat_key(::std::string&& value) {
   
   unigame_plat_key_.SetNoArena(
     &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
-  // @@protoc_insertion_point(field_set_rvalue:NFMsg.plat_token_login_respone_data.unigame_plat_key)
+  // @@protoc_insertion_point(field_set_rvalue:NFMsg.plat_token_login_respone.respone_data.unigame_plat_key)
 }
 #endif
-inline void plat_token_login_respone_data::set_unigame_plat_key(const char* value) {
+inline void plat_token_login_respone_respone_data::set_unigame_plat_key(const char* value) {
   GOOGLE_DCHECK(value != NULL);
   
   unigame_plat_key_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
-  // @@protoc_insertion_point(field_set_char:NFMsg.plat_token_login_respone_data.unigame_plat_key)
+  // @@protoc_insertion_point(field_set_char:NFMsg.plat_token_login_respone.respone_data.unigame_plat_key)
 }
-inline void plat_token_login_respone_data::set_unigame_plat_key(const char* value, size_t size) {
+inline void plat_token_login_respone_respone_data::set_unigame_plat_key(const char* value, size_t size) {
   
   unigame_plat_key_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
       ::std::string(reinterpret_cast<const char*>(value), size));
-  // @@protoc_insertion_point(field_set_pointer:NFMsg.plat_token_login_respone_data.unigame_plat_key)
+  // @@protoc_insertion_point(field_set_pointer:NFMsg.plat_token_login_respone.respone_data.unigame_plat_key)
 }
-inline ::std::string* plat_token_login_respone_data::mutable_unigame_plat_key() {
+inline ::std::string* plat_token_login_respone_respone_data::mutable_unigame_plat_key() {
   
-  // @@protoc_insertion_point(field_mutable:NFMsg.plat_token_login_respone_data.unigame_plat_key)
+  // @@protoc_insertion_point(field_mutable:NFMsg.plat_token_login_respone.respone_data.unigame_plat_key)
   return unigame_plat_key_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-inline ::std::string* plat_token_login_respone_data::release_unigame_plat_key() {
-  // @@protoc_insertion_point(field_release:NFMsg.plat_token_login_respone_data.unigame_plat_key)
+inline ::std::string* plat_token_login_respone_respone_data::release_unigame_plat_key() {
+  // @@protoc_insertion_point(field_release:NFMsg.plat_token_login_respone.respone_data.unigame_plat_key)
   
   return unigame_plat_key_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-inline void plat_token_login_respone_data::set_allocated_unigame_plat_key(::std::string* unigame_plat_key) {
+inline void plat_token_login_respone_respone_data::set_allocated_unigame_plat_key(::std::string* unigame_plat_key) {
   if (unigame_plat_key != NULL) {
     
   } else {
     
   }
   unigame_plat_key_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), unigame_plat_key);
-  // @@protoc_insertion_point(field_set_allocated:NFMsg.plat_token_login_respone_data.unigame_plat_key)
+  // @@protoc_insertion_point(field_set_allocated:NFMsg.plat_token_login_respone.respone_data.unigame_plat_key)
 }
 
 // string unigame_plat_login = 7;
-inline void plat_token_login_respone_data::clear_unigame_plat_login() {
+inline void plat_token_login_respone_respone_data::clear_unigame_plat_login() {
   unigame_plat_login_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-inline const ::std::string& plat_token_login_respone_data::unigame_plat_login() const {
-  // @@protoc_insertion_point(field_get:NFMsg.plat_token_login_respone_data.unigame_plat_login)
+inline const ::std::string& plat_token_login_respone_respone_data::unigame_plat_login() const {
+  // @@protoc_insertion_point(field_get:NFMsg.plat_token_login_respone.respone_data.unigame_plat_login)
   return unigame_plat_login_.GetNoArena();
 }
-inline void plat_token_login_respone_data::set_unigame_plat_login(const ::std::string& value) {
+inline void plat_token_login_respone_respone_data::set_unigame_plat_login(const ::std::string& value) {
   
   unigame_plat_login_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
-  // @@protoc_insertion_point(field_set:NFMsg.plat_token_login_respone_data.unigame_plat_login)
+  // @@protoc_insertion_point(field_set:NFMsg.plat_token_login_respone.respone_data.unigame_plat_login)
 }
 #if LANG_CXX11
-inline void plat_token_login_respone_data::set_unigame_plat_login(::std::string&& value) {
+inline void plat_token_login_respone_respone_data::set_unigame_plat_login(::std::string&& value) {
   
   unigame_plat_login_.SetNoArena(
     &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
-  // @@protoc_insertion_point(field_set_rvalue:NFMsg.plat_token_login_respone_data.unigame_plat_login)
+  // @@protoc_insertion_point(field_set_rvalue:NFMsg.plat_token_login_respone.respone_data.unigame_plat_login)
 }
 #endif
-inline void plat_token_login_respone_data::set_unigame_plat_login(const char* value) {
+inline void plat_token_login_respone_respone_data::set_unigame_plat_login(const char* value) {
   GOOGLE_DCHECK(value != NULL);
   
   unigame_plat_login_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
-  // @@protoc_insertion_point(field_set_char:NFMsg.plat_token_login_respone_data.unigame_plat_login)
+  // @@protoc_insertion_point(field_set_char:NFMsg.plat_token_login_respone.respone_data.unigame_plat_login)
 }
-inline void plat_token_login_respone_data::set_unigame_plat_login(const char* value, size_t size) {
+inline void plat_token_login_respone_respone_data::set_unigame_plat_login(const char* value, size_t size) {
   
   unigame_plat_login_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
       ::std::string(reinterpret_cast<const char*>(value), size));
-  // @@protoc_insertion_point(field_set_pointer:NFMsg.plat_token_login_respone_data.unigame_plat_login)
+  // @@protoc_insertion_point(field_set_pointer:NFMsg.plat_token_login_respone.respone_data.unigame_plat_login)
 }
-inline ::std::string* plat_token_login_respone_data::mutable_unigame_plat_login() {
+inline ::std::string* plat_token_login_respone_respone_data::mutable_unigame_plat_login() {
   
-  // @@protoc_insertion_point(field_mutable:NFMsg.plat_token_login_respone_data.unigame_plat_login)
+  // @@protoc_insertion_point(field_mutable:NFMsg.plat_token_login_respone.respone_data.unigame_plat_login)
   return unigame_plat_login_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-inline ::std::string* plat_token_login_respone_data::release_unigame_plat_login() {
-  // @@protoc_insertion_point(field_release:NFMsg.plat_token_login_respone_data.unigame_plat_login)
+inline ::std::string* plat_token_login_respone_respone_data::release_unigame_plat_login() {
+  // @@protoc_insertion_point(field_release:NFMsg.plat_token_login_respone.respone_data.unigame_plat_login)
   
   return unigame_plat_login_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-inline void plat_token_login_respone_data::set_allocated_unigame_plat_login(::std::string* unigame_plat_login) {
+inline void plat_token_login_respone_respone_data::set_allocated_unigame_plat_login(::std::string* unigame_plat_login) {
   if (unigame_plat_login != NULL) {
     
   } else {
     
   }
   unigame_plat_login_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), unigame_plat_login);
-  // @@protoc_insertion_point(field_set_allocated:NFMsg.plat_token_login_respone_data.unigame_plat_login)
+  // @@protoc_insertion_point(field_set_allocated:NFMsg.plat_token_login_respone.respone_data.unigame_plat_login)
 }
 
 // uint32 unigame_plat_login_life = 8;
-inline void plat_token_login_respone_data::clear_unigame_plat_login_life() {
+inline void plat_token_login_respone_respone_data::clear_unigame_plat_login_life() {
   unigame_plat_login_life_ = 0u;
 }
-inline ::google::protobuf::uint32 plat_token_login_respone_data::unigame_plat_login_life() const {
-  // @@protoc_insertion_point(field_get:NFMsg.plat_token_login_respone_data.unigame_plat_login_life)
+inline ::google::protobuf::uint32 plat_token_login_respone_respone_data::unigame_plat_login_life() const {
+  // @@protoc_insertion_point(field_get:NFMsg.plat_token_login_respone.respone_data.unigame_plat_login_life)
   return unigame_plat_login_life_;
 }
-inline void plat_token_login_respone_data::set_unigame_plat_login_life(::google::protobuf::uint32 value) {
+inline void plat_token_login_respone_respone_data::set_unigame_plat_login_life(::google::protobuf::uint32 value) {
   
   unigame_plat_login_life_ = value;
-  // @@protoc_insertion_point(field_set:NFMsg.plat_token_login_respone_data.unigame_plat_login_life)
+  // @@protoc_insertion_point(field_set:NFMsg.plat_token_login_respone.respone_data.unigame_plat_login_life)
 }
 
-// .NFMsg.plat_token_login_respone_data_platinfo platinfo = 9;
-inline bool plat_token_login_respone_data::has_platinfo() const {
+// .NFMsg.plat_token_login_respone.respone_data.respone_data_platinfo platinfo = 9;
+inline bool plat_token_login_respone_respone_data::has_platinfo() const {
   return this != internal_default_instance() && platinfo_ != NULL;
 }
-inline void plat_token_login_respone_data::clear_platinfo() {
+inline void plat_token_login_respone_respone_data::clear_platinfo() {
   if (GetArenaNoVirtual() == NULL && platinfo_ != NULL) {
     delete platinfo_;
   }
   platinfo_ = NULL;
 }
-inline const ::NFMsg::plat_token_login_respone_data_platinfo& plat_token_login_respone_data::_internal_platinfo() const {
+inline const ::NFMsg::plat_token_login_respone_respone_data_respone_data_platinfo& plat_token_login_respone_respone_data::_internal_platinfo() const {
   return *platinfo_;
 }
-inline const ::NFMsg::plat_token_login_respone_data_platinfo& plat_token_login_respone_data::platinfo() const {
-  const ::NFMsg::plat_token_login_respone_data_platinfo* p = platinfo_;
-  // @@protoc_insertion_point(field_get:NFMsg.plat_token_login_respone_data.platinfo)
-  return p != NULL ? *p : *reinterpret_cast<const ::NFMsg::plat_token_login_respone_data_platinfo*>(
-      &::NFMsg::_plat_token_login_respone_data_platinfo_default_instance_);
+inline const ::NFMsg::plat_token_login_respone_respone_data_respone_data_platinfo& plat_token_login_respone_respone_data::platinfo() const {
+  const ::NFMsg::plat_token_login_respone_respone_data_respone_data_platinfo* p = platinfo_;
+  // @@protoc_insertion_point(field_get:NFMsg.plat_token_login_respone.respone_data.platinfo)
+  return p != NULL ? *p : *reinterpret_cast<const ::NFMsg::plat_token_login_respone_respone_data_respone_data_platinfo*>(
+      &::NFMsg::_plat_token_login_respone_respone_data_respone_data_platinfo_default_instance_);
 }
-inline ::NFMsg::plat_token_login_respone_data_platinfo* plat_token_login_respone_data::release_platinfo() {
-  // @@protoc_insertion_point(field_release:NFMsg.plat_token_login_respone_data.platinfo)
+inline ::NFMsg::plat_token_login_respone_respone_data_respone_data_platinfo* plat_token_login_respone_respone_data::release_platinfo() {
+  // @@protoc_insertion_point(field_release:NFMsg.plat_token_login_respone.respone_data.platinfo)
   
-  ::NFMsg::plat_token_login_respone_data_platinfo* temp = platinfo_;
+  ::NFMsg::plat_token_login_respone_respone_data_respone_data_platinfo* temp = platinfo_;
   platinfo_ = NULL;
   return temp;
 }
-inline ::NFMsg::plat_token_login_respone_data_platinfo* plat_token_login_respone_data::mutable_platinfo() {
+inline ::NFMsg::plat_token_login_respone_respone_data_respone_data_platinfo* plat_token_login_respone_respone_data::mutable_platinfo() {
   
   if (platinfo_ == NULL) {
-    auto* p = CreateMaybeMessage<::NFMsg::plat_token_login_respone_data_platinfo>(GetArenaNoVirtual());
+    auto* p = CreateMaybeMessage<::NFMsg::plat_token_login_respone_respone_data_respone_data_platinfo>(GetArenaNoVirtual());
     platinfo_ = p;
   }
-  // @@protoc_insertion_point(field_mutable:NFMsg.plat_token_login_respone_data.platinfo)
+  // @@protoc_insertion_point(field_mutable:NFMsg.plat_token_login_respone.respone_data.platinfo)
   return platinfo_;
 }
-inline void plat_token_login_respone_data::set_allocated_platinfo(::NFMsg::plat_token_login_respone_data_platinfo* platinfo) {
+inline void plat_token_login_respone_respone_data::set_allocated_platinfo(::NFMsg::plat_token_login_respone_respone_data_respone_data_platinfo* platinfo) {
   ::google::protobuf::Arena* message_arena = GetArenaNoVirtual();
   if (message_arena == NULL) {
     delete platinfo_;
@@ -4154,7 +4556,7 @@ inline void plat_token_login_respone_data::set_allocated_platinfo(::NFMsg::plat_
     
   }
   platinfo_ = platinfo;
-  // @@protoc_insertion_point(field_set_allocated:NFMsg.plat_token_login_respone_data.platinfo)
+  // @@protoc_insertion_point(field_set_allocated:NFMsg.plat_token_login_respone.respone_data.platinfo)
 }
 
 // -------------------------------------------------------------------
@@ -4415,7 +4817,7 @@ inline void plat_token_login_respone::set_allocated_do_(::std::string* do_) {
   // @@protoc_insertion_point(field_set_allocated:NFMsg.plat_token_login_respone.do)
 }
 
-// .NFMsg.plat_token_login_respone_data data = 8;
+// .NFMsg.plat_token_login_respone.respone_data data = 8;
 inline bool plat_token_login_respone::has_data() const {
   return this != internal_default_instance() && data_ != NULL;
 }
@@ -4425,32 +4827,32 @@ inline void plat_token_login_respone::clear_data() {
   }
   data_ = NULL;
 }
-inline const ::NFMsg::plat_token_login_respone_data& plat_token_login_respone::_internal_data() const {
+inline const ::NFMsg::plat_token_login_respone_respone_data& plat_token_login_respone::_internal_data() const {
   return *data_;
 }
-inline const ::NFMsg::plat_token_login_respone_data& plat_token_login_respone::data() const {
-  const ::NFMsg::plat_token_login_respone_data* p = data_;
+inline const ::NFMsg::plat_token_login_respone_respone_data& plat_token_login_respone::data() const {
+  const ::NFMsg::plat_token_login_respone_respone_data* p = data_;
   // @@protoc_insertion_point(field_get:NFMsg.plat_token_login_respone.data)
-  return p != NULL ? *p : *reinterpret_cast<const ::NFMsg::plat_token_login_respone_data*>(
-      &::NFMsg::_plat_token_login_respone_data_default_instance_);
+  return p != NULL ? *p : *reinterpret_cast<const ::NFMsg::plat_token_login_respone_respone_data*>(
+      &::NFMsg::_plat_token_login_respone_respone_data_default_instance_);
 }
-inline ::NFMsg::plat_token_login_respone_data* plat_token_login_respone::release_data() {
+inline ::NFMsg::plat_token_login_respone_respone_data* plat_token_login_respone::release_data() {
   // @@protoc_insertion_point(field_release:NFMsg.plat_token_login_respone.data)
   
-  ::NFMsg::plat_token_login_respone_data* temp = data_;
+  ::NFMsg::plat_token_login_respone_respone_data* temp = data_;
   data_ = NULL;
   return temp;
 }
-inline ::NFMsg::plat_token_login_respone_data* plat_token_login_respone::mutable_data() {
+inline ::NFMsg::plat_token_login_respone_respone_data* plat_token_login_respone::mutable_data() {
   
   if (data_ == NULL) {
-    auto* p = CreateMaybeMessage<::NFMsg::plat_token_login_respone_data>(GetArenaNoVirtual());
+    auto* p = CreateMaybeMessage<::NFMsg::plat_token_login_respone_respone_data>(GetArenaNoVirtual());
     data_ = p;
   }
   // @@protoc_insertion_point(field_mutable:NFMsg.plat_token_login_respone.data)
   return data_;
 }
-inline void plat_token_login_respone::set_allocated_data(::NFMsg::plat_token_login_respone_data* data) {
+inline void plat_token_login_respone::set_allocated_data(::NFMsg::plat_token_login_respone_respone_data* data) {
   ::google::protobuf::Arena* message_arena = GetArenaNoVirtual();
   if (message_arena == NULL) {
     delete data_;
@@ -4674,9 +5076,586 @@ inline void reqeust_select_zone_request::set_unigame_plat_timestamp(::google::pr
   // @@protoc_insertion_point(field_set:NFMsg.reqeust_select_zone_request.unigame_plat_timestamp)
 }
 
+// -------------------------------------------------------------------
+
+// respone_select_zone_respone_respone_data
+
+// uint64 accountid = 1;
+inline void respone_select_zone_respone_respone_data::clear_accountid() {
+  accountid_ = GOOGLE_ULONGLONG(0);
+}
+inline ::google::protobuf::uint64 respone_select_zone_respone_respone_data::accountid() const {
+  // @@protoc_insertion_point(field_get:NFMsg.respone_select_zone_respone.respone_data.accountid)
+  return accountid_;
+}
+inline void respone_select_zone_respone_respone_data::set_accountid(::google::protobuf::uint64 value) {
+  
+  accountid_ = value;
+  // @@protoc_insertion_point(field_set:NFMsg.respone_select_zone_respone.respone_data.accountid)
+}
+
+// uint32 gameid = 2;
+inline void respone_select_zone_respone_respone_data::clear_gameid() {
+  gameid_ = 0u;
+}
+inline ::google::protobuf::uint32 respone_select_zone_respone_respone_data::gameid() const {
+  // @@protoc_insertion_point(field_get:NFMsg.respone_select_zone_respone.respone_data.gameid)
+  return gameid_;
+}
+inline void respone_select_zone_respone_respone_data::set_gameid(::google::protobuf::uint32 value) {
+  
+  gameid_ = value;
+  // @@protoc_insertion_point(field_set:NFMsg.respone_select_zone_respone.respone_data.gameid)
+}
+
+// string gatewayurl = 3;
+inline void respone_select_zone_respone_respone_data::clear_gatewayurl() {
+  gatewayurl_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline const ::std::string& respone_select_zone_respone_respone_data::gatewayurl() const {
+  // @@protoc_insertion_point(field_get:NFMsg.respone_select_zone_respone.respone_data.gatewayurl)
+  return gatewayurl_.GetNoArena();
+}
+inline void respone_select_zone_respone_respone_data::set_gatewayurl(const ::std::string& value) {
+  
+  gatewayurl_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:NFMsg.respone_select_zone_respone.respone_data.gatewayurl)
+}
+#if LANG_CXX11
+inline void respone_select_zone_respone_respone_data::set_gatewayurl(::std::string&& value) {
+  
+  gatewayurl_.SetNoArena(
+    &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+  // @@protoc_insertion_point(field_set_rvalue:NFMsg.respone_select_zone_respone.respone_data.gatewayurl)
+}
+#endif
+inline void respone_select_zone_respone_respone_data::set_gatewayurl(const char* value) {
+  GOOGLE_DCHECK(value != NULL);
+  
+  gatewayurl_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:NFMsg.respone_select_zone_respone.respone_data.gatewayurl)
+}
+inline void respone_select_zone_respone_respone_data::set_gatewayurl(const char* value, size_t size) {
+  
+  gatewayurl_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:NFMsg.respone_select_zone_respone.respone_data.gatewayurl)
+}
+inline ::std::string* respone_select_zone_respone_respone_data::mutable_gatewayurl() {
+  
+  // @@protoc_insertion_point(field_mutable:NFMsg.respone_select_zone_respone.respone_data.gatewayurl)
+  return gatewayurl_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline ::std::string* respone_select_zone_respone_respone_data::release_gatewayurl() {
+  // @@protoc_insertion_point(field_release:NFMsg.respone_select_zone_respone.respone_data.gatewayurl)
+  
+  return gatewayurl_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline void respone_select_zone_respone_respone_data::set_allocated_gatewayurl(::std::string* gatewayurl) {
+  if (gatewayurl != NULL) {
+    
+  } else {
+    
+  }
+  gatewayurl_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), gatewayurl);
+  // @@protoc_insertion_point(field_set_allocated:NFMsg.respone_select_zone_respone.respone_data.gatewayurl)
+}
+
+// string gatewayurltcp = 4;
+inline void respone_select_zone_respone_respone_data::clear_gatewayurltcp() {
+  gatewayurltcp_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline const ::std::string& respone_select_zone_respone_respone_data::gatewayurltcp() const {
+  // @@protoc_insertion_point(field_get:NFMsg.respone_select_zone_respone.respone_data.gatewayurltcp)
+  return gatewayurltcp_.GetNoArena();
+}
+inline void respone_select_zone_respone_respone_data::set_gatewayurltcp(const ::std::string& value) {
+  
+  gatewayurltcp_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:NFMsg.respone_select_zone_respone.respone_data.gatewayurltcp)
+}
+#if LANG_CXX11
+inline void respone_select_zone_respone_respone_data::set_gatewayurltcp(::std::string&& value) {
+  
+  gatewayurltcp_.SetNoArena(
+    &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+  // @@protoc_insertion_point(field_set_rvalue:NFMsg.respone_select_zone_respone.respone_data.gatewayurltcp)
+}
+#endif
+inline void respone_select_zone_respone_respone_data::set_gatewayurltcp(const char* value) {
+  GOOGLE_DCHECK(value != NULL);
+  
+  gatewayurltcp_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:NFMsg.respone_select_zone_respone.respone_data.gatewayurltcp)
+}
+inline void respone_select_zone_respone_respone_data::set_gatewayurltcp(const char* value, size_t size) {
+  
+  gatewayurltcp_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:NFMsg.respone_select_zone_respone.respone_data.gatewayurltcp)
+}
+inline ::std::string* respone_select_zone_respone_respone_data::mutable_gatewayurltcp() {
+  
+  // @@protoc_insertion_point(field_mutable:NFMsg.respone_select_zone_respone.respone_data.gatewayurltcp)
+  return gatewayurltcp_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline ::std::string* respone_select_zone_respone_respone_data::release_gatewayurltcp() {
+  // @@protoc_insertion_point(field_release:NFMsg.respone_select_zone_respone.respone_data.gatewayurltcp)
+  
+  return gatewayurltcp_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline void respone_select_zone_respone_respone_data::set_allocated_gatewayurltcp(::std::string* gatewayurltcp) {
+  if (gatewayurltcp != NULL) {
+    
+  } else {
+    
+  }
+  gatewayurltcp_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), gatewayurltcp);
+  // @@protoc_insertion_point(field_set_allocated:NFMsg.respone_select_zone_respone.respone_data.gatewayurltcp)
+}
+
+// string gatewayurlws = 5;
+inline void respone_select_zone_respone_respone_data::clear_gatewayurlws() {
+  gatewayurlws_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline const ::std::string& respone_select_zone_respone_respone_data::gatewayurlws() const {
+  // @@protoc_insertion_point(field_get:NFMsg.respone_select_zone_respone.respone_data.gatewayurlws)
+  return gatewayurlws_.GetNoArena();
+}
+inline void respone_select_zone_respone_respone_data::set_gatewayurlws(const ::std::string& value) {
+  
+  gatewayurlws_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:NFMsg.respone_select_zone_respone.respone_data.gatewayurlws)
+}
+#if LANG_CXX11
+inline void respone_select_zone_respone_respone_data::set_gatewayurlws(::std::string&& value) {
+  
+  gatewayurlws_.SetNoArena(
+    &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+  // @@protoc_insertion_point(field_set_rvalue:NFMsg.respone_select_zone_respone.respone_data.gatewayurlws)
+}
+#endif
+inline void respone_select_zone_respone_respone_data::set_gatewayurlws(const char* value) {
+  GOOGLE_DCHECK(value != NULL);
+  
+  gatewayurlws_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:NFMsg.respone_select_zone_respone.respone_data.gatewayurlws)
+}
+inline void respone_select_zone_respone_respone_data::set_gatewayurlws(const char* value, size_t size) {
+  
+  gatewayurlws_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:NFMsg.respone_select_zone_respone.respone_data.gatewayurlws)
+}
+inline ::std::string* respone_select_zone_respone_respone_data::mutable_gatewayurlws() {
+  
+  // @@protoc_insertion_point(field_mutable:NFMsg.respone_select_zone_respone.respone_data.gatewayurlws)
+  return gatewayurlws_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline ::std::string* respone_select_zone_respone_respone_data::release_gatewayurlws() {
+  // @@protoc_insertion_point(field_release:NFMsg.respone_select_zone_respone.respone_data.gatewayurlws)
+  
+  return gatewayurlws_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline void respone_select_zone_respone_respone_data::set_allocated_gatewayurlws(::std::string* gatewayurlws) {
+  if (gatewayurlws != NULL) {
+    
+  } else {
+    
+  }
+  gatewayurlws_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), gatewayurlws);
+  // @@protoc_insertion_point(field_set_allocated:NFMsg.respone_select_zone_respone.respone_data.gatewayurlws)
+}
+
+// uint32 logintempid = 6;
+inline void respone_select_zone_respone_respone_data::clear_logintempid() {
+  logintempid_ = 0u;
+}
+inline ::google::protobuf::uint32 respone_select_zone_respone_respone_data::logintempid() const {
+  // @@protoc_insertion_point(field_get:NFMsg.respone_select_zone_respone.respone_data.logintempid)
+  return logintempid_;
+}
+inline void respone_select_zone_respone_respone_data::set_logintempid(::google::protobuf::uint32 value) {
+  
+  logintempid_ = value;
+  // @@protoc_insertion_point(field_set:NFMsg.respone_select_zone_respone.respone_data.logintempid)
+}
+
+// uint64 tokenid = 7;
+inline void respone_select_zone_respone_respone_data::clear_tokenid() {
+  tokenid_ = GOOGLE_ULONGLONG(0);
+}
+inline ::google::protobuf::uint64 respone_select_zone_respone_respone_data::tokenid() const {
+  // @@protoc_insertion_point(field_get:NFMsg.respone_select_zone_respone.respone_data.tokenid)
+  return tokenid_;
+}
+inline void respone_select_zone_respone_respone_data::set_tokenid(::google::protobuf::uint64 value) {
+  
+  tokenid_ = value;
+  // @@protoc_insertion_point(field_set:NFMsg.respone_select_zone_respone.respone_data.tokenid)
+}
+
+// uint32 zoneid = 8;
+inline void respone_select_zone_respone_respone_data::clear_zoneid() {
+  zoneid_ = 0u;
+}
+inline ::google::protobuf::uint32 respone_select_zone_respone_respone_data::zoneid() const {
+  // @@protoc_insertion_point(field_get:NFMsg.respone_select_zone_respone.respone_data.zoneid)
+  return zoneid_;
+}
+inline void respone_select_zone_respone_respone_data::set_zoneid(::google::protobuf::uint32 value) {
+  
+  zoneid_ = value;
+  // @@protoc_insertion_point(field_set:NFMsg.respone_select_zone_respone.respone_data.zoneid)
+}
+
+// uint64 zoneuid = 9;
+inline void respone_select_zone_respone_respone_data::clear_zoneuid() {
+  zoneuid_ = GOOGLE_ULONGLONG(0);
+}
+inline ::google::protobuf::uint64 respone_select_zone_respone_respone_data::zoneuid() const {
+  // @@protoc_insertion_point(field_get:NFMsg.respone_select_zone_respone.respone_data.zoneuid)
+  return zoneuid_;
+}
+inline void respone_select_zone_respone_respone_data::set_zoneuid(::google::protobuf::uint64 value) {
+  
+  zoneuid_ = value;
+  // @@protoc_insertion_point(field_set:NFMsg.respone_select_zone_respone.respone_data.zoneuid)
+}
+
+// -------------------------------------------------------------------
+
+// respone_select_zone_respone
+
+// string do = 1;
+inline void respone_select_zone_respone::clear_do_() {
+  do__.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline const ::std::string& respone_select_zone_respone::do_() const {
+  // @@protoc_insertion_point(field_get:NFMsg.respone_select_zone_respone.do)
+  return do__.GetNoArena();
+}
+inline void respone_select_zone_respone::set_do_(const ::std::string& value) {
+  
+  do__.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:NFMsg.respone_select_zone_respone.do)
+}
+#if LANG_CXX11
+inline void respone_select_zone_respone::set_do_(::std::string&& value) {
+  
+  do__.SetNoArena(
+    &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+  // @@protoc_insertion_point(field_set_rvalue:NFMsg.respone_select_zone_respone.do)
+}
+#endif
+inline void respone_select_zone_respone::set_do_(const char* value) {
+  GOOGLE_DCHECK(value != NULL);
+  
+  do__.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:NFMsg.respone_select_zone_respone.do)
+}
+inline void respone_select_zone_respone::set_do_(const char* value, size_t size) {
+  
+  do__.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:NFMsg.respone_select_zone_respone.do)
+}
+inline ::std::string* respone_select_zone_respone::mutable_do_() {
+  
+  // @@protoc_insertion_point(field_mutable:NFMsg.respone_select_zone_respone.do)
+  return do__.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline ::std::string* respone_select_zone_respone::release_do_() {
+  // @@protoc_insertion_point(field_release:NFMsg.respone_select_zone_respone.do)
+  
+  return do__.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline void respone_select_zone_respone::set_allocated_do_(::std::string* do_) {
+  if (do_ != NULL) {
+    
+  } else {
+    
+  }
+  do__.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), do_);
+  // @@protoc_insertion_point(field_set_allocated:NFMsg.respone_select_zone_respone.do)
+}
+
+// string errno_ = 2;
+inline void respone_select_zone_respone::clear_errno_() {
+  errno__.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline const ::std::string& respone_select_zone_respone::errno_() const {
+  // @@protoc_insertion_point(field_get:NFMsg.respone_select_zone_respone.errno_)
+  return errno__.GetNoArena();
+}
+inline void respone_select_zone_respone::set_errno_(const ::std::string& value) {
+  
+  errno__.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:NFMsg.respone_select_zone_respone.errno_)
+}
+#if LANG_CXX11
+inline void respone_select_zone_respone::set_errno_(::std::string&& value) {
+  
+  errno__.SetNoArena(
+    &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+  // @@protoc_insertion_point(field_set_rvalue:NFMsg.respone_select_zone_respone.errno_)
+}
+#endif
+inline void respone_select_zone_respone::set_errno_(const char* value) {
+  GOOGLE_DCHECK(value != NULL);
+  
+  errno__.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:NFMsg.respone_select_zone_respone.errno_)
+}
+inline void respone_select_zone_respone::set_errno_(const char* value, size_t size) {
+  
+  errno__.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:NFMsg.respone_select_zone_respone.errno_)
+}
+inline ::std::string* respone_select_zone_respone::mutable_errno_() {
+  
+  // @@protoc_insertion_point(field_mutable:NFMsg.respone_select_zone_respone.errno_)
+  return errno__.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline ::std::string* respone_select_zone_respone::release_errno_() {
+  // @@protoc_insertion_point(field_release:NFMsg.respone_select_zone_respone.errno_)
+  
+  return errno__.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline void respone_select_zone_respone::set_allocated_errno_(::std::string* errno_) {
+  if (errno_ != NULL) {
+    
+  } else {
+    
+  }
+  errno__.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), errno_);
+  // @@protoc_insertion_point(field_set_allocated:NFMsg.respone_select_zone_respone.errno_)
+}
+
+// uint32 gameid = 3;
+inline void respone_select_zone_respone::clear_gameid() {
+  gameid_ = 0u;
+}
+inline ::google::protobuf::uint32 respone_select_zone_respone::gameid() const {
+  // @@protoc_insertion_point(field_get:NFMsg.respone_select_zone_respone.gameid)
+  return gameid_;
+}
+inline void respone_select_zone_respone::set_gameid(::google::protobuf::uint32 value) {
+  
+  gameid_ = value;
+  // @@protoc_insertion_point(field_set:NFMsg.respone_select_zone_respone.gameid)
+}
+
+// uint64 st = 4;
+inline void respone_select_zone_respone::clear_st() {
+  st_ = GOOGLE_ULONGLONG(0);
+}
+inline ::google::protobuf::uint64 respone_select_zone_respone::st() const {
+  // @@protoc_insertion_point(field_get:NFMsg.respone_select_zone_respone.st)
+  return st_;
+}
+inline void respone_select_zone_respone::set_st(::google::protobuf::uint64 value) {
+  
+  st_ = value;
+  // @@protoc_insertion_point(field_set:NFMsg.respone_select_zone_respone.st)
+}
+
+// string unigame_plat_login = 5;
+inline void respone_select_zone_respone::clear_unigame_plat_login() {
+  unigame_plat_login_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline const ::std::string& respone_select_zone_respone::unigame_plat_login() const {
+  // @@protoc_insertion_point(field_get:NFMsg.respone_select_zone_respone.unigame_plat_login)
+  return unigame_plat_login_.GetNoArena();
+}
+inline void respone_select_zone_respone::set_unigame_plat_login(const ::std::string& value) {
+  
+  unigame_plat_login_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:NFMsg.respone_select_zone_respone.unigame_plat_login)
+}
+#if LANG_CXX11
+inline void respone_select_zone_respone::set_unigame_plat_login(::std::string&& value) {
+  
+  unigame_plat_login_.SetNoArena(
+    &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+  // @@protoc_insertion_point(field_set_rvalue:NFMsg.respone_select_zone_respone.unigame_plat_login)
+}
+#endif
+inline void respone_select_zone_respone::set_unigame_plat_login(const char* value) {
+  GOOGLE_DCHECK(value != NULL);
+  
+  unigame_plat_login_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:NFMsg.respone_select_zone_respone.unigame_plat_login)
+}
+inline void respone_select_zone_respone::set_unigame_plat_login(const char* value, size_t size) {
+  
+  unigame_plat_login_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:NFMsg.respone_select_zone_respone.unigame_plat_login)
+}
+inline ::std::string* respone_select_zone_respone::mutable_unigame_plat_login() {
+  
+  // @@protoc_insertion_point(field_mutable:NFMsg.respone_select_zone_respone.unigame_plat_login)
+  return unigame_plat_login_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline ::std::string* respone_select_zone_respone::release_unigame_plat_login() {
+  // @@protoc_insertion_point(field_release:NFMsg.respone_select_zone_respone.unigame_plat_login)
+  
+  return unigame_plat_login_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline void respone_select_zone_respone::set_allocated_unigame_plat_login(::std::string* unigame_plat_login) {
+  if (unigame_plat_login != NULL) {
+    
+  } else {
+    
+  }
+  unigame_plat_login_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), unigame_plat_login);
+  // @@protoc_insertion_point(field_set_allocated:NFMsg.respone_select_zone_respone.unigame_plat_login)
+}
+
+// uint64 unigame_plat_timestamp = 6;
+inline void respone_select_zone_respone::clear_unigame_plat_timestamp() {
+  unigame_plat_timestamp_ = GOOGLE_ULONGLONG(0);
+}
+inline ::google::protobuf::uint64 respone_select_zone_respone::unigame_plat_timestamp() const {
+  // @@protoc_insertion_point(field_get:NFMsg.respone_select_zone_respone.unigame_plat_timestamp)
+  return unigame_plat_timestamp_;
+}
+inline void respone_select_zone_respone::set_unigame_plat_timestamp(::google::protobuf::uint64 value) {
+  
+  unigame_plat_timestamp_ = value;
+  // @@protoc_insertion_point(field_set:NFMsg.respone_select_zone_respone.unigame_plat_timestamp)
+}
+
+// uint32 zoneid = 7;
+inline void respone_select_zone_respone::clear_zoneid() {
+  zoneid_ = 0u;
+}
+inline ::google::protobuf::uint32 respone_select_zone_respone::zoneid() const {
+  // @@protoc_insertion_point(field_get:NFMsg.respone_select_zone_respone.zoneid)
+  return zoneid_;
+}
+inline void respone_select_zone_respone::set_zoneid(::google::protobuf::uint32 value) {
+  
+  zoneid_ = value;
+  // @@protoc_insertion_point(field_set:NFMsg.respone_select_zone_respone.zoneid)
+}
+
+// .NFMsg.respone_select_zone_respone.respone_data data = 8;
+inline bool respone_select_zone_respone::has_data() const {
+  return this != internal_default_instance() && data_ != NULL;
+}
+inline void respone_select_zone_respone::clear_data() {
+  if (GetArenaNoVirtual() == NULL && data_ != NULL) {
+    delete data_;
+  }
+  data_ = NULL;
+}
+inline const ::NFMsg::respone_select_zone_respone_respone_data& respone_select_zone_respone::_internal_data() const {
+  return *data_;
+}
+inline const ::NFMsg::respone_select_zone_respone_respone_data& respone_select_zone_respone::data() const {
+  const ::NFMsg::respone_select_zone_respone_respone_data* p = data_;
+  // @@protoc_insertion_point(field_get:NFMsg.respone_select_zone_respone.data)
+  return p != NULL ? *p : *reinterpret_cast<const ::NFMsg::respone_select_zone_respone_respone_data*>(
+      &::NFMsg::_respone_select_zone_respone_respone_data_default_instance_);
+}
+inline ::NFMsg::respone_select_zone_respone_respone_data* respone_select_zone_respone::release_data() {
+  // @@protoc_insertion_point(field_release:NFMsg.respone_select_zone_respone.data)
+  
+  ::NFMsg::respone_select_zone_respone_respone_data* temp = data_;
+  data_ = NULL;
+  return temp;
+}
+inline ::NFMsg::respone_select_zone_respone_respone_data* respone_select_zone_respone::mutable_data() {
+  
+  if (data_ == NULL) {
+    auto* p = CreateMaybeMessage<::NFMsg::respone_select_zone_respone_respone_data>(GetArenaNoVirtual());
+    data_ = p;
+  }
+  // @@protoc_insertion_point(field_mutable:NFMsg.respone_select_zone_respone.data)
+  return data_;
+}
+inline void respone_select_zone_respone::set_allocated_data(::NFMsg::respone_select_zone_respone_respone_data* data) {
+  ::google::protobuf::Arena* message_arena = GetArenaNoVirtual();
+  if (message_arena == NULL) {
+    delete data_;
+  }
+  if (data) {
+    ::google::protobuf::Arena* submessage_arena = NULL;
+    if (message_arena != submessage_arena) {
+      data = ::google::protobuf::internal::GetOwnedMessage(
+          message_arena, data, submessage_arena);
+    }
+    
+  } else {
+    
+  }
+  data_ = data;
+  // @@protoc_insertion_point(field_set_allocated:NFMsg.respone_select_zone_respone.data)
+}
+
+// string uid = 9;
+inline void respone_select_zone_respone::clear_uid() {
+  uid_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline const ::std::string& respone_select_zone_respone::uid() const {
+  // @@protoc_insertion_point(field_get:NFMsg.respone_select_zone_respone.uid)
+  return uid_.GetNoArena();
+}
+inline void respone_select_zone_respone::set_uid(const ::std::string& value) {
+  
+  uid_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:NFMsg.respone_select_zone_respone.uid)
+}
+#if LANG_CXX11
+inline void respone_select_zone_respone::set_uid(::std::string&& value) {
+  
+  uid_.SetNoArena(
+    &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+  // @@protoc_insertion_point(field_set_rvalue:NFMsg.respone_select_zone_respone.uid)
+}
+#endif
+inline void respone_select_zone_respone::set_uid(const char* value) {
+  GOOGLE_DCHECK(value != NULL);
+  
+  uid_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:NFMsg.respone_select_zone_respone.uid)
+}
+inline void respone_select_zone_respone::set_uid(const char* value, size_t size) {
+  
+  uid_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:NFMsg.respone_select_zone_respone.uid)
+}
+inline ::std::string* respone_select_zone_respone::mutable_uid() {
+  
+  // @@protoc_insertion_point(field_mutable:NFMsg.respone_select_zone_respone.uid)
+  return uid_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline ::std::string* respone_select_zone_respone::release_uid() {
+  // @@protoc_insertion_point(field_release:NFMsg.respone_select_zone_respone.uid)
+  
+  return uid_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline void respone_select_zone_respone::set_allocated_uid(::std::string* uid) {
+  if (uid != NULL) {
+    
+  } else {
+    
+  }
+  uid_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), uid);
+  // @@protoc_insertion_point(field_set_allocated:NFMsg.respone_select_zone_respone.uid)
+}
+
 #ifdef __GNUC__
   #pragma GCC diagnostic pop
 #endif  // __GNUC__
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
 // -------------------------------------------------------------------
 
 // -------------------------------------------------------------------

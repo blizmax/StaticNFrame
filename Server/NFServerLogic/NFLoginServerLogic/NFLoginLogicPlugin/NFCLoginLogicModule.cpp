@@ -8,6 +8,7 @@
 #include "NFMessageDefine/NFMsgDefine.h"
 #include "NFComm/NFCore/NFMD5.h"
 #include "NFComm/NFCore/NFCommon.h"
+#include "NFComm/NFCore/NFStringUtility.h"
 
 NFCLoginLogicModule::NFCLoginLogicModule(NFIPluginManager* p)
 {
@@ -96,7 +97,14 @@ bool NFCLoginLogicModule::HttpHandleHttpLogin(const NFHttpRequest& req)
 			}
 			else if (cmd.string_value() == "request-select-zone")
 			{
-				RequestSelectZone(req, data);
+				NFMsg::reqeust_select_zone_request httpLogin;
+				bool ret = NFServerCommon::JsonStringToMessage(req.body, httpLogin);
+				if (ret == false)
+				{
+					NFLogError("json error | {}", req.body);
+					return false;
+				}
+				RequestSelectZone(req, httpLogin);
 			}
 		}
 		else
@@ -210,7 +218,59 @@ void NFCLoginLogicModule::PlatTokenLogin(const NFHttpRequest& req, const NFMsg::
 	m_pHttpServerModule->ResponseMsg(req, responeJson, NFWebStatus::WEB_OK, "OK");
 }
 
-void NFCLoginLogicModule::RequestSelectZone(const NFHttpRequest& req, NFJson& json)
+void NFCLoginLogicModule::RequestSelectZone(const NFHttpRequest& req, const NFMsg::reqeust_select_zone_request& request)
 {
+	uint64_t uid = NFCommon::strto<long long>(request.uid());
+	std::string unigame_plat_login = request.unigame_plat_login();
+	uint32_t gameid = request.gameid();
+	uint32_t zoneid = request.zoneid();
+	uint64_t nowTime = pPluginManager->GetNowTime() / 1000;
 
+	auto pProxyServerData = m_pLoginClient_MasterModule->GetRandProxyServer();
+	if (pProxyServerData == nullptr)
+	{
+		NFLogError("No Proxy Server!");
+		return;
+	}
+
+	auto pGameServerData = m_pLoginClient_MasterModule->GetGameServerByServerId(zoneid);
+	if (pGameServerData == nullptr)
+	{
+		NFLogError("Can't find Server by the server id:{}", zoneid);
+		return;
+	}
+
+	NFMsg::respone_select_zone_respone respone;
+	respone.set_do_(request.do_());
+	respone.set_errno_("0");
+	respone.set_gameid(gameid);
+	respone.set_st(nowTime);
+	respone.set_uid(request.uid());
+	respone.set_unigame_plat_login(unigame_plat_login);
+	respone.set_unigame_plat_timestamp(nowTime);
+	respone.set_zoneid(zoneid);
+
+	auto* pData = respone.mutable_data();
+	pData->set_accountid(uid);
+	pData->set_gameid(gameid);
+	std::string gatewayurl = NF_FORMAT("http://{}:{}/shen/user", pProxyServerData->mServerInfo.server_ip(), pProxyServerData->mServerInfo.server_port());
+	std::string gatewayurltcp = NF_FORMAT("ws://{}:{}", pProxyServerData->mServerInfo.server_ip(), pProxyServerData->mServerInfo.server_port());
+	std::string gatewayurlws = NF_FORMAT("ws://{}:{}/shen/user", pProxyServerData->mServerInfo.server_ip(), pProxyServerData->mServerInfo.server_port());
+	pData->set_gatewayurl(gatewayurl);
+	pData->set_gatewayurltcp(gatewayurltcp);
+	pData->set_gatewayurlws(gatewayurlws);
+	pData->set_logintempid(0);
+	pData->set_tokenid(0);
+	pData->set_zoneid(zoneid);
+	pData->set_zoneuid(uid);
+
+	std::string responeJson;
+	bool ret = NFServerCommon::MessageToJsonString(respone, responeJson);
+	if (ret == false)
+	{
+		return;
+	}
+
+	NFStringUtility::Replace(responeJson, "errno_", "errno");
+	m_pHttpServerModule->ResponseMsg(req, responeJson, NFWebStatus::WEB_OK, "OK");
 }

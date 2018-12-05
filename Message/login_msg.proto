@@ -13,93 +13,89 @@ message reqeust_zone_list
 	reqeust_zone_list_data data = 2;
 }
 
-message reqeust_zone_list_server
-{
-	uint32 gameid = 1;
-	string gamename = 2;
-	uint32 newzoneid = 3;
-	uint32 onlinenum = 4;
-	string opentime = 5;
-	uint32 state = 6;
-	uint32 zoneid = 7;
-	string zonename = 8;
-}
-
-message reqeust_zone_list_respone_data
-{
-	uint32 bestzoneid = 1;
-	uint32 gameid = 2;
-	string gamename = 3;
-	uint32 zoneid = 4;
-	repeated  reqeust_zone_list_server zonelist = 5;
-}
-
 message reqeust_zone_list_respone
 {
+	message respone_data
+	{
+		message reqeust_zone_list_server
+		{
+			uint32 gameid = 1;
+			string gamename = 2;
+			uint32 newzoneid = 3;
+			uint32 onlinenum = 4;
+			string opentime = 5;
+			uint32 state = 6;
+			uint32 zoneid = 7;
+			string zonename = 8;
+		}
+		uint32 bestzoneid = 1;
+		uint32 gameid = 2;
+		string gamename = 3;
+		uint32 zoneid = 4;
+		repeated  reqeust_zone_list_server zonelist = 5;
+	}
 	string do = 1;
 	string error = 2;
 	uint64 st = 3;
-	reqeust_zone_list_respone_data data = 4;
+	respone_data data = 4;
 }
 
-message plat_token_login_request_data_platinfo
-{
-	uint32 aaa = 1;
-	string sign = 2;
-	string account = 3;
-	string email = 4;
-	uint32 platid = 5;
-	string gender = 6;
-	string nickname = 7;
-	string uid = 8;
-	uint32 gameid = 9;
-	string timestamp = 10;
-}
-
-message plat_token_login_request_data
-{
-	plat_token_login_request_data_platinfo platinfo = 1;
-	uint32 gameid = 2;
-}
 
 message plat_token_login_request
 {
+	message request_data
+	{
+		message request_data_platinfo
+		{
+			uint32 aaa = 1;
+			string sign = 2;
+			string account = 3;
+			string email = 4;
+			uint32 platid = 5;
+			string gender = 6;
+			string nickname = 7;
+			string uid = 8;
+			uint32 gameid = 9;
+			string timestamp = 10;
+		}
+		request_data_platinfo platinfo = 1;
+		uint32 gameid = 2;
+	}
+
 	string do = 1;
-	plat_token_login_request_data data = 2;
+	request_data data = 2;
 	uint32 gameid = 3;
 	uint32 zoneid = 4;
 	uint64 unigame_plat_timestamp = 5;
 }
 
-message plat_token_login_respone_data_platinfo
-{
-	uint32 aaa = 1;
-	string sign = 2;
-	string account = 3;
-	string email = 4;
-	uint32 platid = 5;
-	string gender = 6;
-	string nickname = 7;
-	string uid = 8;
-	uint32 gameid = 9;
-	string timestamp = 10;
-}
-
-message plat_token_login_respone_data
-{
-	uint32 gameid = 1;
-	string sid = 2;
-	string timezone_name = 3;
-	uint32 timezone_offset = 4;
-	string uid = 5;
-	string unigame_plat_key = 6;
-	string unigame_plat_login = 7;
-	uint32 unigame_plat_login_life = 8;
-	plat_token_login_respone_data_platinfo platinfo = 9;
-}
-
 message plat_token_login_respone
 {
+	message respone_data
+	{
+		message respone_data_platinfo
+		{
+			uint32 aaa = 1;
+			string sign = 2;
+			string account = 3;
+			string email = 4;
+			uint32 platid = 5;
+			string gender = 6;
+			string nickname = 7;
+			string uid = 8;
+			uint32 gameid = 9;
+			string timestamp = 10;
+		}
+		uint32 gameid = 1;
+		string sid = 2;
+		string timezone_name = 3;
+		uint32 timezone_offset = 4;
+		string uid = 5;
+		string unigame_plat_key = 6;
+		string unigame_plat_login = 7;
+		uint32 unigame_plat_login_life = 8;
+		respone_data_platinfo platinfo = 9;
+	}
 	uint32 gameid = 1;
 	string unigame_plat_key = 2;
 	string unigame_plat_login = 3;
@@ -107,7 +103,7 @@ message plat_token_login_respone
 	uint64 unigame_plat_timestamp = 5;
 	uint32 zoneid = 6;
 	string do = 7;
-	plat_token_login_respone_data data = 8;
+	respone_data data = 8;
 }
 
 message reqeust_select_zone_request
@@ -118,4 +114,31 @@ message reqeust_select_zone_request
 	string uid = 4;
 	string unigame_plat_login = 5;
 	uint64 unigame_plat_timestamp = 6; 
+}
+
+
+
+message respone_select_zone_respone
+{
+	message respone_data
+	{
+		uint64 accountid = 1;
+		uint32 gameid = 2;
+		string gatewayurl = 3;
+		string gatewayurltcp = 4;
+		string gatewayurlws = 5;
+		uint32 logintempid = 6;
+		uint64 tokenid = 7;
+		uint32 zoneid = 8;
+		uint64 zoneuid = 9;
+	}
+	string do = 1;
+	string errno_ = 2;
+	uint32 gameid = 3;
+	uint64 st = 4;
+	string unigame_plat_login = 5;
+	uint64 unigame_plat_timestamp = 6;
+	uint32 zoneid = 7;
+	respone_data data = 8;
+	string uid = 9;
 }

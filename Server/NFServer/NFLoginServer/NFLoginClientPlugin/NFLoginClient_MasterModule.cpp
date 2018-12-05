@@ -214,3 +214,13 @@ NF_SHARE_PTR<NFServerData> NFCLoginClient_MasterModule::GetRandGameServer()
 {
 	return mGameMap.GetElementBySuitRandom();
 }
+
+NF_SHARE_PTR<NFServerData> NFCLoginClient_MasterModule::GetProxyServerByServerId(uint32_t serverId)
+{
+	return mProxyMap.GetElement(serverId);
+}
+
+NF_SHARE_PTR<NFServerData> NFCLoginClient_MasterModule::GetGameServerByServerId(uint32_t serverId)
+{
+	return mGameMap.GetElement(serverId);
+}
