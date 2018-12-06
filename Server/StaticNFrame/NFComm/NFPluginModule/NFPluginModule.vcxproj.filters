@@ -109,6 +109,9 @@
     <ClInclude Include="NFCDynLib.h">
       <Filter>NFDynLib</Filter>
     </ClInclude>
+    <ClInclude Include="NFIMongoModule.h">
+      <Filter>Mongo</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Event">
@@ -137,6 +140,9 @@
     </Filter>
     <Filter Include="NFDynLib">
       <UniqueIdentifier>{4ce18727-df4f-4847-ae51-2548ef44ddd3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Mongo">
+      <UniqueIdentifier>{a62865f6-2c7a-4c1c-9acc-61b6ddce93c6}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

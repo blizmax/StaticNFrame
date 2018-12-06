@@ -8,6 +8,7 @@
 
 #include "NFMongoPlugin.h"
 #include "NFComm/NFPluginModule/NFIPluginManager.h"
+#include "NFCMongoModule.h"
 
 #ifdef NF_DYNAMIC_PLUGIN
 
@@ -39,11 +40,11 @@ std::string NFMongoPlugin::GetPluginName()
 
 void NFMongoPlugin::Install()
 {
-	//REGISTER_MODULE(pPluginManager, NFIMysqlModule, NFCMysqlModule)
+	REGISTER_MODULE(pPluginManager, NFIMongoModule, NFCMongoModule)
 }
 
 void NFMongoPlugin::Uninstall()
 {
-	//UNREGISTER_MODULE(pPluginManager, NFIMysqlModule, NFCMysqlModule)
+	UNREGISTER_MODULE(pPluginManager, NFIMongoModule, NFCMongoModule)
 }
 

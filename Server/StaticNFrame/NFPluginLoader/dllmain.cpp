@@ -53,6 +53,7 @@
 #pragma comment( lib, "NFMysqlPlugin.lib" )
 #pragma comment( lib, "NFLuaScriptPlugin.lib" )
 #pragma comment( lib, "NFTestPlugin.lib" )
+#pragma comment( lib, "NFMongoPlugin.lib" )
 
 /////////////////////////////////////////////////////
 

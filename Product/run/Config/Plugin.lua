@@ -24,6 +24,7 @@ LoadPlugin =
 			"NFNetPlugin",
 			"NFTestPlugin",
 			"NFMysqlPlugin",
+			"NFMongoPlugin",
 			
 			--"NFLuaScriptPlugin",
 			

@@ -15,6 +15,8 @@
 #include "NFComm/NFPluginModule/NFTask.h"
 #include "NFComm/NFPluginModule/NFLogMgr.h"
 #include "NFComm/NFCore/NFCommon.h"
+#include "NFComm/NFPluginModule/NFIMongoModule.h"
+#include "NFComm/NFPluginModule/NFServerDefine.h"
 
 
 class NFLogTask : public NFTask
@@ -65,6 +67,20 @@ bool NFCTestActorModule::Init()
 
 	//for(int i = 0; i < 10000; i++)
 	//	pTaskModule->AddTask(new NFLogTask());
+
+	NFIMongoModule* pMongoModule = pPluginManager->FindModule<NFIMongoModule>();
+
+	pMongoModule->AddMongoServer(NF_ST_GAME, "45.32.39.90", 27017, "test");
+
+	pMongoModule->IsExistCollection(NF_ST_GAME, "gaoyi");
+	pMongoModule->IsExistCollection(NF_ST_GAME, "test");
+
+	pMongoModule->CreateCollection(NF_ST_GAME, "gaoyi", "uid");
+	pMongoModule->CreateCollection(NF_ST_GAME, "test", "uid");
+
+	pMongoModule->DropCollection(NF_ST_GAME, "test");
+	pMongoModule->DropCollection(NF_ST_GAME, "test");
+	pMongoModule->DropCollection(NF_ST_GAME, "gaoyi");
 	return true;
 }
 
