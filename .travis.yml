@@ -9,7 +9,6 @@ addons:
     sources:
     - george-edison55-precise-backports
     packages:
-    - cmake
     - automake
 
 compiler:
