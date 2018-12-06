@@ -4,7 +4,7 @@ echo Building dependencies...
 cd openssl
 chmod a+x ./config
 ./config
-make -j
+make
 cp -rf libcrypto.a ../../../Product/Lib/Debug/
 cp -rf libssl.a ../../../Product/Lib/Release/
 cd ..
@@ -12,8 +12,7 @@ cd ..
 #compiling mysql
 cd mysql
 cmake .
-make clean
-make -j
+make
 
 cp -R -f ./libmysql/libmysqlclient.a ../../../Product/Lib/Debug/
 cp -R -f ./libmysql/libmysqlclient.a ../../../Product/Lib/Release/
@@ -24,7 +23,7 @@ cd libevent
 mkdir build
 cd build
 cmake ..
-make -j
+make
 cd ..
 
 cp -R -f ./build/lib/*.a ../../../Product/Lib/Debug/
@@ -35,11 +34,10 @@ cd ../
 # compiling protobuf
 cd protobuf
 cd cmake
-rm build -rf
 mkdir build
 cd build
 cmake ..
-make -j
+make
 
 cd ../../
 
@@ -50,13 +48,10 @@ cd ../
 
 # compiling Theron
 cd Theron
-make clean
 make library mode=debug boost=off c++11=on posix=on shared=on
 cp -r -f ./Lib/libtheron.a ../../../Product/Lib/Debug/
-make clean
 make library mode=release boost=off c++11=on posix=on shared=on
 cp -r -f ./Lib/libtheron.a ../../../Product/Lib/Release/
-make clean
 cd ../
 
 
@@ -66,7 +61,7 @@ cd mongo
 mkdir cmake_build
 cd cmake_build
 cmake ..
-make -j
+make
 
 cp -rf src/libmongoc/libmongoc-static-1.0.a ../../../../Product/Lib/Debug/
 cp -rf src/libmongoc/libmongoc-static-1.0.a ../../../../Product/Lib/Release/

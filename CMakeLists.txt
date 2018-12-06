@@ -40,6 +40,7 @@ SET(INCLUDE_DIR "./" "/usr/local/include"
 	"${CMAKE_SOURCE_DIR}/Server/Dependencies/mongo/src/libbson/src"
 	"${CMAKE_SOURCE_DIR}/Server/Dependencies/mongo/src/libbson/src/bson"
 	"${CMAKE_SOURCE_DIR}/Server/Dependencies/mongo/linux"
+	"${CMAKE_SOURCE_DIR}/Server/Dependencies/openssl/include"
 	"${CMAKE_SOURCE_DIR}/Server/StaticNFrame/")
 
 
