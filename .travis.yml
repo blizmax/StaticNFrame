@@ -9,7 +9,7 @@ addons:
     sources:
     - george-edison55-precise-backports
     packages:
-    - automake
+    - cmake
 
 compiler:
 - gcc
@@ -19,8 +19,6 @@ branches:
   - master
 
 before_install:
-  - chmod a+x ./install.sh
-  - sudo ./install.sh
   - echo -n | openssl s_client -connect https://scan.coverity.com:443 | sed -ne '/-BEGIN CERTIFICATE-/,/-END CERTIFICATE-/p' | sudo tee -a /etc/ssl/certs/ca-
 
 
