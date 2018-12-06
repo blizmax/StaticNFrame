@@ -4,7 +4,7 @@ ADD_SUBDIRECTORY("NFGameServerLogic/NFGameLogicPlugin")
 
 ADD_SUBDIRECTORY("NFLoginServerLogic/NFLoginLogicPlugin")
 
-ADD_SUBDIRECTORY("NFProxyServer/NFProxyLogicPlugin")
+ADD_SUBDIRECTORY("NFProxyServerLogic/NFProxyLogicPlugin")
 
 
 ADD_SUBDIRECTORY("NFServerLogicCommon")
