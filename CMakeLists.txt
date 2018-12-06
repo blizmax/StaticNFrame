@@ -65,7 +65,12 @@ SET(LIB_LINK_DEP resolv pthread dl rt libbson-static-1.0.a libmysqlpp.a libmysql
 		libevent.a libLuaBind.a libtheron.a libprotobuf.a libmongoc-static-1.0.a libbson-static-1.0.a libssl.a libcrypto.a)
 		
 SET(LIB_LINK_NF libNFActorPlugin.a libNFCore.a libNFKernelPlugin.a libNFLuaScriptPlugin.a
-				libNFMath.a libNFMessageDefine.a libNFNetPlugin.a libNFPluginModule.a libNFTestPlugin.a libNFMysqlPlugin.a libNFGameClientPlugin.a libNFGameServerPlugin.a libNFLoginClientPlugin.a libNFLoginServerPlugin.a libNFMasterServerPlugin.a libNFProxyClientPlugin.a libNFProxyServerPlugin.a libNFServerCommon.a libNFWorldClientPlugin.a libNFWorldServerPlugin.a)
+				libNFMath.a libNFMessageDefine.a libNFNetPlugin.a libNFPluginModule.a 
+				libNFTestPlugin.a libNFMysqlPlugin.a libNFGameClientPlugin.a libNFGameServerPlugin.a 
+				libNFLoginClientPlugin.a libNFLoginServerPlugin.a libNFMasterServerPlugin.a 
+				libNFProxyClientPlugin.a libNFProxyServerPlugin.a 
+				libNFServerCommon.a libNFWorldClientPlugin.a libNFWorldServerPlugin.a
+				libNFGameLogicPlugin.a libNFLoginLogicPlugin.a libNFProxyLogicPlugin.a libNFServerLogicCommon.a)
 	
 include_directories( ${INCLUDE_DIR} )
 	
