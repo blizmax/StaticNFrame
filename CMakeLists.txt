@@ -34,6 +34,7 @@ SET(INCLUDE_DIR "./" "/usr/local/include"
 	"${CMAKE_SOURCE_DIR}/Server/Dependencies/protobuf/src"
 	"${CMAKE_SOURCE_DIR}/Server/Dependencies/navigation"
 	"${CMAKE_SOURCE_DIR}/Server/Dependencies/mysql/include"
+	"${CMAKE_SOURCE_DIR}/Server/Dependencies/mysql/linux"
 	"${CMAKE_SOURCE_DIR}/Server/Dependencies/mysqlpp/lib"
 	"${CMAKE_SOURCE_DIR}/Server/Dependencies/mongo/src/libmongoc/src/mongoc"
 	"${CMAKE_SOURCE_DIR}/Server/Dependencies/mongo/src/libmongoc/src"
@@ -41,7 +42,7 @@ SET(INCLUDE_DIR "./" "/usr/local/include"
 	"${CMAKE_SOURCE_DIR}/Server/Dependencies/mongo/src/libbson/src/bson"
 	"${CMAKE_SOURCE_DIR}/Server/Dependencies/mongo/linux"
 	"${CMAKE_SOURCE_DIR}/Server/Dependencies/openssl/include"
-	"${CMAKE_SOURCE_DIR}/Server/Dependencies/openssl/linux"
+	"${CMAKE_SOURCE_DIR}/Server/Dependencies/openssl/linux/include"
 	"${CMAKE_SOURCE_DIR}/Server/StaticNFrame/")
 
 
