@@ -61,8 +61,8 @@ else()
 		"${CMAKE_SOURCE_DIR}/Product/Lib/Debug")
 endif()
 
-SET(LIB_LINK_DEP resolv pthread dl rt libbson-static-1.0.a libmysqlpp.a libmysqlclient.a libevent_core.a libevent_extra.a libtheron.a
-		libevent.a libLuaBind.a libtheron.a libprotobuf.a libmongoc-static-1.0.a libbson-static-1.0.a libssl.a libcrypto.a)
+SET(LIB_LINK_DEP resolv dl rt libssl.a libcrypto.a pthread libbson-static-1.0.a libmysqlpp.a libmysqlclient.a libevent_core.a libevent_extra.a libtheron.a
+		libevent.a libLuaBind.a libtheron.a libprotobuf.a libmongoc-static-1.0.a libbson-static-1.0.a)
 		
 SET(LIB_LINK_NF libNFActorPlugin.a libNFCore.a libNFKernelPlugin.a libNFLuaScriptPlugin.a
 				libNFMath.a libNFMessageDefine.a libNFNetPlugin.a libNFPluginModule.a 
