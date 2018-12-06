@@ -41,6 +41,7 @@ SET(INCLUDE_DIR "./" "/usr/local/include"
 	"${CMAKE_SOURCE_DIR}/Server/Dependencies/mongo/src/libbson/src/bson"
 	"${CMAKE_SOURCE_DIR}/Server/Dependencies/mongo/linux"
 	"${CMAKE_SOURCE_DIR}/Server/Dependencies/openssl/include"
+	"${CMAKE_SOURCE_DIR}/Server/Dependencies/openssl/linux"
 	"${CMAKE_SOURCE_DIR}/Server/StaticNFrame/")
 
 
@@ -61,7 +62,7 @@ else()
 endif()
 
 SET(LIB_LINK_DEP resolv pthread dl rt libbson-static-1.0.a libmysqlpp.a libmysqlclient.a libevent_core.a libevent_extra.a libtheron.a
-		libevent.a libLuaBind.a libtheron.a libprotobuf.a libmongoc-static-1.0.a libbson-static-1.0.a)
+		libevent.a libLuaBind.a libtheron.a libprotobuf.a libmongoc-static-1.0.a libbson-static-1.0.a libssl.a libcrypto.a)
 		
 SET(LIB_LINK_NF libNFActorPlugin.a libNFCore.a libNFKernelPlugin.a libNFLuaScriptPlugin.a
 				libNFMath.a libNFMessageDefine.a libNFNetPlugin.a libNFPluginModule.a libNFTestPlugin.a libNFMysqlPlugin.a libNFGameClientPlugin.a libNFGameServerPlugin.a libNFLoginClientPlugin.a libNFLoginServerPlugin.a libNFMasterServerPlugin.a libNFProxyClientPlugin.a libNFProxyServerPlugin.a libNFServerCommon.a libNFWorldClientPlugin.a libNFWorldServerPlugin.a)

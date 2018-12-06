@@ -6,6 +6,8 @@ chmod a+x ./config
 ./config
 make
 cp -rf libcrypto.a ../../../Product/Lib/Debug/
+cp -rf libcrypto.a ../../../Product/Lib/Release/
+cp -rf libssl.a ../../../Product/Lib/Debug/
 cp -rf libssl.a ../../../Product/Lib/Release/
 cd ..
 
