@@ -25,6 +25,10 @@ public:
 	virtual bool CreateCollection(const int nServerID, const std::string& collectionName, const std::string& key) = 0;
 
 	virtual bool DropCollection(const int nServerID, const std::string& collectionName) = 0;
+
+	virtual bool InsertJson(const int nServerID, const std::string& collectionName, const std::string& json_query) = 0;
+
+	virtual bool InsertMessage(const int nServerID, const std::string& collectionName, const google::protobuf::Message& message) = 0;
 };
 
 

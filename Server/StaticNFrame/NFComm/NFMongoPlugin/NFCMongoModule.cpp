@@ -90,3 +90,21 @@ bool NFCMongoModule::DropCollection(const int nServerID, const std::string& coll
 	}
 	return false;
 }
+
+bool NFCMongoModule::InsertJson(const int nServerID, const std::string& collectionName, const std::string& json_query)
+{
+	if (m_pMongoDriverManager)
+	{
+		return m_pMongoDriverManager->InsertOne(nServerID, collectionName, json_query);
+	}
+	return false;
+}
+
+bool NFCMongoModule::InsertMessage(const int nServerID, const std::string& collectionName, const google::protobuf::Message& message)
+{
+	if (m_pMongoDriverManager)
+	{
+		return m_pMongoDriverManager->InsertOne(nServerID, collectionName, message);
+	}
+	return false;
+}

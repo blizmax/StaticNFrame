@@ -7,3 +7,4 @@
 #include "mysql_db.pb.h"
 #include "server_msg.pb.h"
 #include "login_msg.pb.h"
+#include "db_base.pb.h"

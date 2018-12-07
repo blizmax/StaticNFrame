@@ -35,12 +35,14 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="db_base.pb.h" />
     <ClInclude Include="login_msg.pb.h" />
     <ClInclude Include="mysql_db.pb.h" />
     <ClInclude Include="NFMsgDefine.h" />
     <ClInclude Include="server_msg.pb.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="db_base.pb.cc" />
     <ClCompile Include="login_msg.pb.cc" />
     <ClCompile Include="mysql_db.pb.cc" />
     <ClCompile Include="server_msg.pb.cc" />

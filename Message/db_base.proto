@@ -1,0 +1,10 @@
+syntax = "proto3";
+
+package NFMsg; 
+
+message mongo_primary_key
+{
+	string _id = 1;
+	string primary = 2;
+}
+

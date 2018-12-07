@@ -27,6 +27,10 @@ public:
 
 	virtual bool DropCollection(const int nServerID, const std::string& collectionName);
 
+	virtual bool InsertOne(const int nServerID, const std::string& collectionName, const std::string& json_query);
+
+	virtual bool InsertOne(const int nServerID, const std::string& collectionName, const google::protobuf::Message& message);
+
 	virtual void CheckMongo();
 protected:
 	NFMap<int, NFCMongoDriver> mMongoDriver;

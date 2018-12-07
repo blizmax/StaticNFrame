@@ -67,7 +67,9 @@ enum EServerState {
   EST_NARMAL = 1,
   EST_BUSY = 2,
   EST_FIRE = 3,
-  EST_MAINTEN = 4
+  EST_MAINTEN = 4,
+  EServerState_INT_MIN_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32min,
+  EServerState_INT_MAX_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32max
 };
 bool EServerState_IsValid(int value);
 const EServerState EServerState_MIN = EST_CRASH;
@@ -112,13 +114,6 @@ class ServerInfoReport : public ::google::protobuf::Message /* @@protoc_insertio
     return *this;
   }
   #endif
-  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
-    return _internal_metadata_.unknown_fields();
-  }
-  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
-    return _internal_metadata_.mutable_unknown_fields();
-  }
-
   static const ::google::protobuf::Descriptor* descriptor();
   static const ServerInfoReport& default_instance();
 
@@ -180,8 +175,7 @@ class ServerInfoReport : public ::google::protobuf::Message /* @@protoc_insertio
 
   // accessors -------------------------------------------------------
 
-  // optional string server_name = 2;
-  bool has_server_name() const;
+  // string server_name = 2;
   void clear_server_name();
   static const int kServerNameFieldNumber = 2;
   const ::std::string& server_name() const;
@@ -195,8 +189,7 @@ class ServerInfoReport : public ::google::protobuf::Message /* @@protoc_insertio
   ::std::string* release_server_name();
   void set_allocated_server_name(::std::string* server_name);
 
-  // optional string server_ip = 3;
-  bool has_server_ip() const;
+  // string server_ip = 3;
   void clear_server_ip();
   static const int kServerIpFieldNumber = 3;
   const ::std::string& server_ip() const;
@@ -210,43 +203,37 @@ class ServerInfoReport : public ::google::protobuf::Message /* @@protoc_insertio
   ::std::string* release_server_ip();
   void set_allocated_server_ip(::std::string* server_ip);
 
-  // optional int32 server_id = 1;
-  bool has_server_id() const;
+  // int32 server_id = 1;
   void clear_server_id();
   static const int kServerIdFieldNumber = 1;
   ::google::protobuf::int32 server_id() const;
   void set_server_id(::google::protobuf::int32 value);
 
-  // optional int32 server_port = 4;
-  bool has_server_port() const;
+  // int32 server_port = 4;
   void clear_server_port();
   static const int kServerPortFieldNumber = 4;
   ::google::protobuf::int32 server_port() const;
   void set_server_port(::google::protobuf::int32 value);
 
-  // optional int32 server_max_online = 5;
-  bool has_server_max_online() const;
+  // int32 server_max_online = 5;
   void clear_server_max_online();
   static const int kServerMaxOnlineFieldNumber = 5;
   ::google::protobuf::int32 server_max_online() const;
   void set_server_max_online(::google::protobuf::int32 value);
 
-  // optional int32 server_cur_count = 6;
-  bool has_server_cur_count() const;
+  // int32 server_cur_count = 6;
   void clear_server_cur_count();
   static const int kServerCurCountFieldNumber = 6;
   ::google::protobuf::int32 server_cur_count() const;
   void set_server_cur_count(::google::protobuf::int32 value);
 
-  // optional uint32 server_state = 7;
-  bool has_server_state() const;
+  // uint32 server_state = 7;
   void clear_server_state();
   static const int kServerStateFieldNumber = 7;
   ::google::protobuf::uint32 server_state() const;
   void set_server_state(::google::protobuf::uint32 value);
 
-  // optional int32 server_type = 8;
-  bool has_server_type() const;
+  // int32 server_type = 8;
   void clear_server_type();
   static const int kServerTypeFieldNumber = 8;
   ::google::protobuf::int32 server_type() const;
@@ -254,26 +241,8 @@ class ServerInfoReport : public ::google::protobuf::Message /* @@protoc_insertio
 
   // @@protoc_insertion_point(class_scope:NFMsg.ServerInfoReport)
  private:
-  void set_has_server_id();
-  void clear_has_server_id();
-  void set_has_server_name();
-  void clear_has_server_name();
-  void set_has_server_ip();
-  void clear_has_server_ip();
-  void set_has_server_port();
-  void clear_has_server_port();
-  void set_has_server_max_online();
-  void clear_has_server_max_online();
-  void set_has_server_cur_count();
-  void clear_has_server_cur_count();
-  void set_has_server_state();
-  void clear_has_server_state();
-  void set_has_server_type();
-  void clear_has_server_type();
 
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
-  ::google::protobuf::internal::HasBits<1> _has_bits_;
-  mutable ::google::protobuf::internal::CachedSize _cached_size_;
   ::google::protobuf::internal::ArenaStringPtr server_name_;
   ::google::protobuf::internal::ArenaStringPtr server_ip_;
   ::google::protobuf::int32 server_id_;
@@ -282,6 +251,7 @@ class ServerInfoReport : public ::google::protobuf::Message /* @@protoc_insertio
   ::google::protobuf::int32 server_cur_count_;
   ::google::protobuf::uint32 server_state_;
   ::google::protobuf::int32 server_type_;
+  mutable ::google::protobuf::internal::CachedSize _cached_size_;
   friend struct ::protobuf_server_5fmsg_2eproto::TableStruct;
 };
 // -------------------------------------------------------------------
@@ -312,13 +282,6 @@ class ServerInfoReportList : public ::google::protobuf::Message /* @@protoc_inse
     return *this;
   }
   #endif
-  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
-    return _internal_metadata_.unknown_fields();
-  }
-  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
-    return _internal_metadata_.mutable_unknown_fields();
-  }
-
   static const ::google::protobuf::Descriptor* descriptor();
   static const ServerInfoReportList& default_instance();
 
@@ -396,9 +359,8 @@ class ServerInfoReportList : public ::google::protobuf::Message /* @@protoc_inse
  private:
 
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
-  ::google::protobuf::internal::HasBits<1> _has_bits_;
-  mutable ::google::protobuf::internal::CachedSize _cached_size_;
   ::google::protobuf::RepeatedPtrField< ::NFMsg::ServerInfoReport > server_list_;
+  mutable ::google::protobuf::internal::CachedSize _cached_size_;
   friend struct ::protobuf_server_5fmsg_2eproto::TableStruct;
 };
 // ===================================================================
@@ -412,56 +374,36 @@ class ServerInfoReportList : public ::google::protobuf::Message /* @@protoc_inse
 #endif  // __GNUC__
 // ServerInfoReport
 
-// optional int32 server_id = 1;
-inline bool ServerInfoReport::has_server_id() const {
-  return (_has_bits_[0] & 0x00000004u) != 0;
-}
-inline void ServerInfoReport::set_has_server_id() {
-  _has_bits_[0] |= 0x00000004u;
-}
-inline void ServerInfoReport::clear_has_server_id() {
-  _has_bits_[0] &= ~0x00000004u;
-}
+// int32 server_id = 1;
 inline void ServerInfoReport::clear_server_id() {
   server_id_ = 0;
-  clear_has_server_id();
 }
 inline ::google::protobuf::int32 ServerInfoReport::server_id() const {
   // @@protoc_insertion_point(field_get:NFMsg.ServerInfoReport.server_id)
   return server_id_;
 }
 inline void ServerInfoReport::set_server_id(::google::protobuf::int32 value) {
-  set_has_server_id();
+  
   server_id_ = value;
   // @@protoc_insertion_point(field_set:NFMsg.ServerInfoReport.server_id)
 }
 
-// optional string server_name = 2;
-inline bool ServerInfoReport::has_server_name() const {
-  return (_has_bits_[0] & 0x00000001u) != 0;
-}
-inline void ServerInfoReport::set_has_server_name() {
-  _has_bits_[0] |= 0x00000001u;
-}
-inline void ServerInfoReport::clear_has_server_name() {
-  _has_bits_[0] &= ~0x00000001u;
-}
+// string server_name = 2;
 inline void ServerInfoReport::clear_server_name() {
   server_name_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-  clear_has_server_name();
 }
 inline const ::std::string& ServerInfoReport::server_name() const {
   // @@protoc_insertion_point(field_get:NFMsg.ServerInfoReport.server_name)
   return server_name_.GetNoArena();
 }
 inline void ServerInfoReport::set_server_name(const ::std::string& value) {
-  set_has_server_name();
+  
   server_name_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
   // @@protoc_insertion_point(field_set:NFMsg.ServerInfoReport.server_name)
 }
 #if LANG_CXX11
 inline void ServerInfoReport::set_server_name(::std::string&& value) {
-  set_has_server_name();
+  
   server_name_.SetNoArena(
     &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
   // @@protoc_insertion_point(field_set_rvalue:NFMsg.ServerInfoReport.server_name)
@@ -469,65 +411,52 @@ inline void ServerInfoReport::set_server_name(::std::string&& value) {
 #endif
 inline void ServerInfoReport::set_server_name(const char* value) {
   GOOGLE_DCHECK(value != NULL);
-  set_has_server_name();
+  
   server_name_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
   // @@protoc_insertion_point(field_set_char:NFMsg.ServerInfoReport.server_name)
 }
 inline void ServerInfoReport::set_server_name(const char* value, size_t size) {
-  set_has_server_name();
+  
   server_name_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
       ::std::string(reinterpret_cast<const char*>(value), size));
   // @@protoc_insertion_point(field_set_pointer:NFMsg.ServerInfoReport.server_name)
 }
 inline ::std::string* ServerInfoReport::mutable_server_name() {
-  set_has_server_name();
+  
   // @@protoc_insertion_point(field_mutable:NFMsg.ServerInfoReport.server_name)
   return server_name_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
 inline ::std::string* ServerInfoReport::release_server_name() {
   // @@protoc_insertion_point(field_release:NFMsg.ServerInfoReport.server_name)
-  if (!has_server_name()) {
-    return NULL;
-  }
-  clear_has_server_name();
-  return server_name_.ReleaseNonDefaultNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  
+  return server_name_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
 inline void ServerInfoReport::set_allocated_server_name(::std::string* server_name) {
   if (server_name != NULL) {
-    set_has_server_name();
+    
   } else {
-    clear_has_server_name();
+    
   }
   server_name_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), server_name);
   // @@protoc_insertion_point(field_set_allocated:NFMsg.ServerInfoReport.server_name)
 }
 
-// optional string server_ip = 3;
-inline bool ServerInfoReport::has_server_ip() const {
-  return (_has_bits_[0] & 0x00000002u) != 0;
-}
-inline void ServerInfoReport::set_has_server_ip() {
-  _has_bits_[0] |= 0x00000002u;
-}
-inline void ServerInfoReport::clear_has_server_ip() {
-  _has_bits_[0] &= ~0x00000002u;
-}
+// string server_ip = 3;
 inline void ServerInfoReport::clear_server_ip() {
   server_ip_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-  clear_has_server_ip();
 }
 inline const ::std::string& ServerInfoReport::server_ip() const {
   // @@protoc_insertion_point(field_get:NFMsg.ServerInfoReport.server_ip)
   return server_ip_.GetNoArena();
 }
 inline void ServerInfoReport::set_server_ip(const ::std::string& value) {
-  set_has_server_ip();
+  
   server_ip_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
   // @@protoc_insertion_point(field_set:NFMsg.ServerInfoReport.server_ip)
 }
 #if LANG_CXX11
 inline void ServerInfoReport::set_server_ip(::std::string&& value) {
-  set_has_server_ip();
+  
   server_ip_.SetNoArena(
     &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
   // @@protoc_insertion_point(field_set_rvalue:NFMsg.ServerInfoReport.server_ip)
@@ -535,155 +464,102 @@ inline void ServerInfoReport::set_server_ip(::std::string&& value) {
 #endif
 inline void ServerInfoReport::set_server_ip(const char* value) {
   GOOGLE_DCHECK(value != NULL);
-  set_has_server_ip();
+  
   server_ip_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
   // @@protoc_insertion_point(field_set_char:NFMsg.ServerInfoReport.server_ip)
 }
 inline void ServerInfoReport::set_server_ip(const char* value, size_t size) {
-  set_has_server_ip();
+  
   server_ip_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
       ::std::string(reinterpret_cast<const char*>(value), size));
   // @@protoc_insertion_point(field_set_pointer:NFMsg.ServerInfoReport.server_ip)
 }
 inline ::std::string* ServerInfoReport::mutable_server_ip() {
-  set_has_server_ip();
+  
   // @@protoc_insertion_point(field_mutable:NFMsg.ServerInfoReport.server_ip)
   return server_ip_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
 inline ::std::string* ServerInfoReport::release_server_ip() {
   // @@protoc_insertion_point(field_release:NFMsg.ServerInfoReport.server_ip)
-  if (!has_server_ip()) {
-    return NULL;
-  }
-  clear_has_server_ip();
-  return server_ip_.ReleaseNonDefaultNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  
+  return server_ip_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
 inline void ServerInfoReport::set_allocated_server_ip(::std::string* server_ip) {
   if (server_ip != NULL) {
-    set_has_server_ip();
+    
   } else {
-    clear_has_server_ip();
+    
   }
   server_ip_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), server_ip);
   // @@protoc_insertion_point(field_set_allocated:NFMsg.ServerInfoReport.server_ip)
 }
 
-// optional int32 server_port = 4;
-inline bool ServerInfoReport::has_server_port() const {
-  return (_has_bits_[0] & 0x00000008u) != 0;
-}
-inline void ServerInfoReport::set_has_server_port() {
-  _has_bits_[0] |= 0x00000008u;
-}
-inline void ServerInfoReport::clear_has_server_port() {
-  _has_bits_[0] &= ~0x00000008u;
-}
+// int32 server_port = 4;
 inline void ServerInfoReport::clear_server_port() {
   server_port_ = 0;
-  clear_has_server_port();
 }
 inline ::google::protobuf::int32 ServerInfoReport::server_port() const {
   // @@protoc_insertion_point(field_get:NFMsg.ServerInfoReport.server_port)
   return server_port_;
 }
 inline void ServerInfoReport::set_server_port(::google::protobuf::int32 value) {
-  set_has_server_port();
+  
   server_port_ = value;
   // @@protoc_insertion_point(field_set:NFMsg.ServerInfoReport.server_port)
 }
 
-// optional int32 server_max_online = 5;
-inline bool ServerInfoReport::has_server_max_online() const {
-  return (_has_bits_[0] & 0x00000010u) != 0;
-}
-inline void ServerInfoReport::set_has_server_max_online() {
-  _has_bits_[0] |= 0x00000010u;
-}
-inline void ServerInfoReport::clear_has_server_max_online() {
-  _has_bits_[0] &= ~0x00000010u;
-}
+// int32 server_max_online = 5;
 inline void ServerInfoReport::clear_server_max_online() {
   server_max_online_ = 0;
-  clear_has_server_max_online();
 }
 inline ::google::protobuf::int32 ServerInfoReport::server_max_online() const {
   // @@protoc_insertion_point(field_get:NFMsg.ServerInfoReport.server_max_online)
   return server_max_online_;
 }
 inline void ServerInfoReport::set_server_max_online(::google::protobuf::int32 value) {
-  set_has_server_max_online();
+  
   server_max_online_ = value;
   // @@protoc_insertion_point(field_set:NFMsg.ServerInfoReport.server_max_online)
 }
 
-// optional int32 server_cur_count = 6;
-inline bool ServerInfoReport::has_server_cur_count() const {
-  return (_has_bits_[0] & 0x00000020u) != 0;
-}
-inline void ServerInfoReport::set_has_server_cur_count() {
-  _has_bits_[0] |= 0x00000020u;
-}
-inline void ServerInfoReport::clear_has_server_cur_count() {
-  _has_bits_[0] &= ~0x00000020u;
-}
+// int32 server_cur_count = 6;
 inline void ServerInfoReport::clear_server_cur_count() {
   server_cur_count_ = 0;
-  clear_has_server_cur_count();
 }
 inline ::google::protobuf::int32 ServerInfoReport::server_cur_count() const {
   // @@protoc_insertion_point(field_get:NFMsg.ServerInfoReport.server_cur_count)
   return server_cur_count_;
 }
 inline void ServerInfoReport::set_server_cur_count(::google::protobuf::int32 value) {
-  set_has_server_cur_count();
+  
   server_cur_count_ = value;
   // @@protoc_insertion_point(field_set:NFMsg.ServerInfoReport.server_cur_count)
 }
 
-// optional uint32 server_state = 7;
-inline bool ServerInfoReport::has_server_state() const {
-  return (_has_bits_[0] & 0x00000040u) != 0;
-}
-inline void ServerInfoReport::set_has_server_state() {
-  _has_bits_[0] |= 0x00000040u;
-}
-inline void ServerInfoReport::clear_has_server_state() {
-  _has_bits_[0] &= ~0x00000040u;
-}
+// uint32 server_state = 7;
 inline void ServerInfoReport::clear_server_state() {
   server_state_ = 0u;
-  clear_has_server_state();
 }
 inline ::google::protobuf::uint32 ServerInfoReport::server_state() const {
   // @@protoc_insertion_point(field_get:NFMsg.ServerInfoReport.server_state)
   return server_state_;
 }
 inline void ServerInfoReport::set_server_state(::google::protobuf::uint32 value) {
-  set_has_server_state();
+  
   server_state_ = value;
   // @@protoc_insertion_point(field_set:NFMsg.ServerInfoReport.server_state)
 }
 
-// optional int32 server_type = 8;
-inline bool ServerInfoReport::has_server_type() const {
-  return (_has_bits_[0] & 0x00000080u) != 0;
-}
-inline void ServerInfoReport::set_has_server_type() {
-  _has_bits_[0] |= 0x00000080u;
-}
-inline void ServerInfoReport::clear_has_server_type() {
-  _has_bits_[0] &= ~0x00000080u;
-}
+// int32 server_type = 8;
 inline void ServerInfoReport::clear_server_type() {
   server_type_ = 0;
-  clear_has_server_type();
 }
 inline ::google::protobuf::int32 ServerInfoReport::server_type() const {
   // @@protoc_insertion_point(field_get:NFMsg.ServerInfoReport.server_type)
   return server_type_;
 }
 inline void ServerInfoReport::set_server_type(::google::protobuf::int32 value) {
-  set_has_server_type();
+  
   server_type_ = value;
   // @@protoc_insertion_point(field_set:NFMsg.ServerInfoReport.server_type)
 }

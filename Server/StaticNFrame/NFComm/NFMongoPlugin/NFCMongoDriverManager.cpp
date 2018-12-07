@@ -79,6 +79,8 @@ bool NFCMongoDriverManager::AddMongoServer(const int nServerID, const std::strin
 	pMongoDriver = NF_NEW NFCMongoDriver();
 	if (pMongoDriver->Connect(ip, port, dbname))
 	{
+		pMongoDriver->CreateCollection(PRIMARY_TABLE);
+		pMongoDriver->FindAllPrimaryKey();
 		mMongoDriver.AddElement(nServerID, pMongoDriver);
 	}
 	else
@@ -120,5 +122,27 @@ bool NFCMongoDriverManager::DropCollection(const int nServerID, const std::strin
 	}
 
 	return pMongoDriver->DropCollection(collectionName);
+}
+
+bool NFCMongoDriverManager::InsertOne(const int nServerID, const std::string& collectionName, const std::string& json_query)
+{
+	NFCMongoDriver* pMongoDriver = mMongoDriver.GetElement(nServerID);
+	if (!pMongoDriver)
+	{
+		return false;
+	}
+
+	return pMongoDriver->InsertOne(collectionName, json_query);
+}
+
+bool NFCMongoDriverManager::InsertOne(const int nServerID, const std::string& collectionName, const google::protobuf::Message& message)
+{
+	NFCMongoDriver* pMongoDriver = mMongoDriver.GetElement(nServerID);
+	if (!pMongoDriver)
+	{
+		return false;
+	}
+
+	return pMongoDriver->InsertOne(collectionName, message);
 }
 

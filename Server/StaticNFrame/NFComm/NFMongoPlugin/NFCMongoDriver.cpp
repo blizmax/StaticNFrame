@@ -4,6 +4,12 @@
 
 #include "NFComm/NFCore/NFPlatform.h"
 #include "NFComm/NFPluginModule/NFLogMgr.h"
+#include "NFMessageDefine/NFMsgDefine.h"
+#include "NFServer/NFServerCommon/NFServerCommon.h"
+#include "rapidjson/rapidjson.h"
+#include "rapidjson/document.h"
+#include "rapidjson/stringbuffer.h"
+#include "rapidjson/writer.h"
 
 NFCMongoDriver::NFCMongoDriver(const int nReconnectTime, const int nReconnectCount)
 {
@@ -242,6 +248,50 @@ bool NFCMongoDriver::DropCollection(const std::string& collectionName)
 	return ret;
 }
 
+std::string NFCMongoDriver::FindKey(const std::string& collectionName, int64_t key)
+{
+	std::string result;
+	mongoc_collection_t *collection = GetCollection(collectionName);
+	if (!collection)
+	{
+		NFLogError("Collection Name Not Exist:{}", collectionName);
+		return result;
+	}
+
+	mongoc_cursor_t *cursor;
+	const bson_t *doc;
+
+	bson_error_t error;
+	bson_t *query = bson_new();
+	BSON_APPEND_INT64(query, "_id", key);
+
+	char *str;
+	bson_t opts;
+	bson_init(&opts);
+	BSON_APPEND_INT32(&opts, "limit", 1);
+	BSON_APPEND_BOOL(&opts, "singleBatch", true);
+
+	cursor = mongoc_collection_find_with_opts(collection, query, &opts, nullptr);
+	if (mongoc_cursor_next(cursor, &doc) == false)
+	{
+		if (mongoc_cursor_error(cursor, &error))
+		{
+			HandleMongocError(error);
+		}
+	}
+	else
+	{
+		str = bson_as_canonical_extended_json(doc, NULL);
+		result = str;
+		bson_free(str);
+	}
+
+	bson_destroy(query);
+	mongoc_cursor_destroy(cursor);
+	bson_destroy(&opts);
+	return result;
+}
+
 std::string NFCMongoDriver::FindOne(const std::string& collectionName, const std::string& json_query)
 {
 	std::string result;
@@ -308,7 +358,7 @@ std::vector<std::string> NFCMongoDriver::FindMany(const std::string& collectionN
 	bson_t *query = bson_new_from_json((const uint8_t*)json_query.data(), json_query.length(), &error);
 	if (HandleMongocError(error) == false)
 	{
-		bson_destroy(query);
+		if (query) bson_destroy(query);
 		NFLogError("bson_new_from_json error:{}", json_query);
 		return result;
 	}
@@ -333,13 +383,42 @@ std::vector<std::string> NFCMongoDriver::FindMany(const std::string& collectionN
 	return result;
 }
 
-bool NFCMongoDriver::CreateCollection(const std::string& collectionName, const std::string& key)
+std::vector<std::string> NFCMongoDriver::FindAll(const std::string& collectionName)
 {
+	std::vector<std::string> result;
+	mongoc_collection_t *collection = GetCollection(collectionName);
+	if (!collection)
+	{
+		NFLogError("Collection Name Not Exist:{}", collectionName);
+		return result;
+	}
+
+	mongoc_cursor_t *cursor;
+	const bson_t *doc;
+
+	bson_t *query = bson_new();
+	char *str;
+
+	cursor = mongoc_collection_find_with_opts(collection, query, nullptr, nullptr);
+	while (mongoc_cursor_next(cursor, &doc))
+	{
+		str = bson_as_canonical_extended_json(doc, NULL);
+		result.push_back(std::string(str));
+		bson_free(str);
+	}
+
+	bson_destroy(query);
+	mongoc_cursor_destroy(cursor);
+	return result;
+}
+
+bool NFCMongoDriver::CreateCollection(const std::string& collectionName, const std::string& primay_key)
+{
+	if (m_pDatabase == nullptr) return false;
+
 	bson_error_t error;
 	bson_t keys;
 	mongoc_index_opt_t opt;
-
-	if (m_pDatabase == nullptr) return false;
 
 	mongoc_collection_t *collection = GetCollection(collectionName);
 	if (!collection)
@@ -354,22 +433,148 @@ bool NFCMongoDriver::CreateCollection(const std::string& collectionName, const s
 		m_collectionMap.AddElement(collectionName, collection);
 	}
 
+	if (primay_key.empty())
+	{
+		return true;
+	}
+
 	mongoc_index_opt_init(&opt);
 
 	bson_init(&keys);
-	bson_append_int32(&keys, key.c_str(), -1, 1);
+	bson_append_int32(&keys, primay_key.c_str(), -1, 1);
 
 	opt.unique = true;
 
 	bool ret = mongoc_collection_ensure_index(collection, &keys, &opt, &error);
 	if (ret == false)
 	{
-		NFLogError("Create Collection Index Failed, collectionName:{}, key:{}", collectionName, key);
-		return HandleMongocError(error);
+		NFLogError("Create Collection Index Failed, collectionName:{}, key:{}", collectionName, primay_key);
+
+		HandleMongocError(error);
+
+		bson_destroy(&keys);
+		return false;
 	}
+
+	if (collectionName != PRIMARY_TABLE)
+	{
+		InsertPrimaryKey(collectionName, primay_key);
+	}
+
 	bson_destroy(&keys);
+	return true;
+}
+
+void NFCMongoDriver::FindAllPrimaryKey()
+{
+	std::vector<std::string> resultVec = FindAll(PRIMARY_TABLE);
+	for (int i = 0; i < resultVec.size(); i++)
+	{
+		const std::string& result = resultVec[i];
+		NFMsg::mongo_primary_key primary_key;
+		NFServerCommon::JsonStringToMessage(result, primary_key);
+
+		m_collectionPrimaryKeyMap.emplace(primary_key._id(), primary_key.primary());
+	}
+}
+
+bool NFCMongoDriver::InsertPrimaryKey(const std::string& collectionName, const std::string& primaryKey)
+{
+	bson_t *doc = bson_new();
+	BSON_APPEND_UTF8(doc, PRIMARY_TABLE_KEY, collectionName.c_str());
+	BSON_APPEND_UTF8(doc, PRIMARY_TABLE_COL, primaryKey.c_str());
+	bool ret = InsertOne(PRIMARY_TABLE, doc);
+	bson_destroy(doc);
+
+	m_collectionPrimaryKeyMap.emplace(collectionName, primaryKey);
+	return ret;
+}
+
+bool NFCMongoDriver::InsertOne(const std::string& collectionName, bson_t *doc)
+{
+	if (doc == nullptr) return false;
+
+	bson_error_t error;
+	mongoc_collection_t *collection = GetCollection(collectionName);
+	if (!collection)
+	{
+		NFLogError("Collection Name Not Exist:{}", collectionName);
+		return false;
+	}
+
+	bool ret = mongoc_collection_insert_one(collection, doc, NULL, NULL, &error);
+	if (ret == false)
+	{
+		HandleMongocError(error);
+		return false;
+	}
 
 	return true;
+}
+
+bool NFCMongoDriver::InsertOne(const std::string& collectionName, const google::protobuf::Message& message)
+{
+	std::string jsonStr;
+	if (NFServerCommon::MessageToJsonString(message, jsonStr) == false)
+	{
+		return false;
+	}
+
+	return InsertOne(collectionName, jsonStr);
+}
+
+bool NFCMongoDriver::InsertOne(const std::string& collectionName, const std::string& json_query)
+{
+	bson_error_t error;
+	if (collectionName != PRIMARY_TABLE)
+	{
+		std::string primary_key = m_collectionPrimaryKeyMap[collectionName];
+		if (primary_key.length() > 0 && primary_key != PRIMARY_TABLE_KEY)
+		{
+			rapidjson::Document document;
+			document.Parse(json_query.c_str());
+			
+			if (document.IsObject() && !document.HasMember(PRIMARY_TABLE_KEY))
+			{
+				if (document.HasMember(primary_key.c_str()) == false)
+				{
+					NFLogError("json hast not primary key:{}", primary_key);
+					return false;
+				}
+
+				rapidjson::Value& value = document[primary_key.c_str()];
+				document.AddMember(rapidjson::Value::StringRefType(PRIMARY_TABLE_KEY), rapidjson::Value().CopyFrom(value, document.GetAllocator()), document.GetAllocator());
+
+				rapidjson::StringBuffer buffer;
+				rapidjson::Writer<rapidjson::StringBuffer> writer(buffer);
+				document.Accept(writer);
+
+				bson_t *doc = bson_new_from_json((const uint8_t*)buffer.GetString(), buffer.GetSize(), &error);
+				if (HandleMongocError(error) == false || doc == nullptr)
+				{
+					if (doc) bson_destroy(doc);
+					NFLogError("bson_new_from_json error:{}", json_query);
+					return false;
+				}
+
+				bool ret = InsertOne(collectionName, doc);
+				bson_destroy(doc);
+				return ret;
+			}
+		}
+	}
+	
+	bson_t *doc = bson_new_from_json((const uint8_t*)json_query.data(), json_query.length(), &error);
+	if (HandleMongocError(error) == false || doc == nullptr)
+	{
+		if (doc) bson_destroy(doc);
+		NFLogError("bson_new_from_json error:{}", json_query);
+		return false;
+	}
+
+	bool ret = InsertOne(collectionName, doc);
+	bson_destroy(doc);
+	return ret;
 }
 
 bool NFCMongoDriver::Update(const std::string& json)

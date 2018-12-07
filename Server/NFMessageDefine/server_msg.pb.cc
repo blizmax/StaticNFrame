@@ -73,7 +73,7 @@ void InitDefaults() {
 const ::google::protobuf::EnumDescriptor* file_level_enum_descriptors[1];
 
 const ::google::protobuf::uint32 TableStruct::offsets[] GOOGLE_PROTOBUF_ATTRIBUTE_SECTION_VARIABLE(protodesc_cold) = {
-  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::NFMsg::ServerInfoReport, _has_bits_),
+  ~0u,  // no _has_bits_
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::NFMsg::ServerInfoReport, _internal_metadata_),
   ~0u,  // no _extensions_
   ~0u,  // no _oneof_case_
@@ -86,25 +86,16 @@ const ::google::protobuf::uint32 TableStruct::offsets[] GOOGLE_PROTOBUF_ATTRIBUT
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::NFMsg::ServerInfoReport, server_cur_count_),
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::NFMsg::ServerInfoReport, server_state_),
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::NFMsg::ServerInfoReport, server_type_),
-  2,
-  0,
-  1,
-  3,
-  4,
-  5,
-  6,
-  7,
-  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::NFMsg::ServerInfoReportList, _has_bits_),
+  ~0u,  // no _has_bits_
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::NFMsg::ServerInfoReportList, _internal_metadata_),
   ~0u,  // no _extensions_
   ~0u,  // no _oneof_case_
   ~0u,  // no _weak_field_map_
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::NFMsg::ServerInfoReportList, server_list_),
-  ~0u,
 };
 static const ::google::protobuf::internal::MigrationSchema schemas[] GOOGLE_PROTOBUF_ATTRIBUTE_SECTION_VARIABLE(protodesc_cold) = {
-  { 0, 13, sizeof(::NFMsg::ServerInfoReport)},
-  { 21, 27, sizeof(::NFMsg::ServerInfoReportList)},
+  { 0, -1, sizeof(::NFMsg::ServerInfoReport)},
+  { 13, -1, sizeof(::NFMsg::ServerInfoReportList)},
 };
 
 static ::google::protobuf::Message const * const file_default_instances[] = {
@@ -142,10 +133,10 @@ void AddDescriptorsImpl() {
       "rtList\022,\n\013server_list\030\001 \003(\0132\027.NFMsg.Serv"
       "erInfoReport*Z\n\014EServerState\022\r\n\tEST_CRAS"
       "H\020\000\022\016\n\nEST_NARMAL\020\001\022\014\n\010EST_BUSY\020\002\022\014\n\010EST"
-      "_FIRE\020\003\022\017\n\013EST_MAINTEN\020\004"
+      "_FIRE\020\003\022\017\n\013EST_MAINTEN\020\004b\006proto3"
   };
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
-      descriptor, 384);
+      descriptor, 392);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "server_msg.proto", &protobuf_RegisterTypes);
 }
@@ -204,15 +195,14 @@ ServerInfoReport::ServerInfoReport()
 }
 ServerInfoReport::ServerInfoReport(const ServerInfoReport& from)
   : ::google::protobuf::Message(),
-      _internal_metadata_(NULL),
-      _has_bits_(from._has_bits_) {
+      _internal_metadata_(NULL) {
   _internal_metadata_.MergeFrom(from._internal_metadata_);
   server_name_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-  if (from.has_server_name()) {
+  if (from.server_name().size() > 0) {
     server_name_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.server_name_);
   }
   server_ip_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-  if (from.has_server_ip()) {
+  if (from.server_ip().size() > 0) {
     server_ip_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.server_ip_);
   }
   ::memcpy(&server_id_, &from.server_id_,
@@ -259,21 +249,11 @@ void ServerInfoReport::Clear() {
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
-  cached_has_bits = _has_bits_[0];
-  if (cached_has_bits & 3u) {
-    if (cached_has_bits & 0x00000001u) {
-      server_name_.ClearNonDefaultToEmptyNoArena();
-    }
-    if (cached_has_bits & 0x00000002u) {
-      server_ip_.ClearNonDefaultToEmptyNoArena();
-    }
-  }
-  if (cached_has_bits & 252u) {
-    ::memset(&server_id_, 0, static_cast<size_t>(
-        reinterpret_cast<char*>(&server_type_) -
-        reinterpret_cast<char*>(&server_id_)) + sizeof(server_type_));
-  }
-  _has_bits_.Clear();
+  server_name_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  server_ip_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  ::memset(&server_id_, 0, static_cast<size_t>(
+      reinterpret_cast<char*>(&server_type_) -
+      reinterpret_cast<char*>(&server_id_)) + sizeof(server_type_));
   _internal_metadata_.Clear();
 }
 
@@ -287,11 +267,11 @@ bool ServerInfoReport::MergePartialFromCodedStream(
     tag = p.first;
     if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // optional int32 server_id = 1;
+      // int32 server_id = 1;
       case 1: {
         if (static_cast< ::google::protobuf::uint8>(tag) ==
             static_cast< ::google::protobuf::uint8>(8u /* 8 & 0xFF */)) {
-          set_has_server_id();
+
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
                  input, &server_id_)));
@@ -301,43 +281,43 @@ bool ServerInfoReport::MergePartialFromCodedStream(
         break;
       }
 
-      // optional string server_name = 2;
+      // string server_name = 2;
       case 2: {
         if (static_cast< ::google::protobuf::uint8>(tag) ==
             static_cast< ::google::protobuf::uint8>(18u /* 18 & 0xFF */)) {
           DO_(::google::protobuf::internal::WireFormatLite::ReadString(
                 input, this->mutable_server_name()));
-          ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
+          DO_(::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
             this->server_name().data(), static_cast<int>(this->server_name().length()),
-            ::google::protobuf::internal::WireFormat::PARSE,
-            "NFMsg.ServerInfoReport.server_name");
+            ::google::protobuf::internal::WireFormatLite::PARSE,
+            "NFMsg.ServerInfoReport.server_name"));
         } else {
           goto handle_unusual;
         }
         break;
       }
 
-      // optional string server_ip = 3;
+      // string server_ip = 3;
       case 3: {
         if (static_cast< ::google::protobuf::uint8>(tag) ==
             static_cast< ::google::protobuf::uint8>(26u /* 26 & 0xFF */)) {
           DO_(::google::protobuf::internal::WireFormatLite::ReadString(
                 input, this->mutable_server_ip()));
-          ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
+          DO_(::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
             this->server_ip().data(), static_cast<int>(this->server_ip().length()),
-            ::google::protobuf::internal::WireFormat::PARSE,
-            "NFMsg.ServerInfoReport.server_ip");
+            ::google::protobuf::internal::WireFormatLite::PARSE,
+            "NFMsg.ServerInfoReport.server_ip"));
         } else {
           goto handle_unusual;
         }
         break;
       }
 
-      // optional int32 server_port = 4;
+      // int32 server_port = 4;
       case 4: {
         if (static_cast< ::google::protobuf::uint8>(tag) ==
             static_cast< ::google::protobuf::uint8>(32u /* 32 & 0xFF */)) {
-          set_has_server_port();
+
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
                  input, &server_port_)));
@@ -347,11 +327,11 @@ bool ServerInfoReport::MergePartialFromCodedStream(
         break;
       }
 
-      // optional int32 server_max_online = 5;
+      // int32 server_max_online = 5;
       case 5: {
         if (static_cast< ::google::protobuf::uint8>(tag) ==
             static_cast< ::google::protobuf::uint8>(40u /* 40 & 0xFF */)) {
-          set_has_server_max_online();
+
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
                  input, &server_max_online_)));
@@ -361,11 +341,11 @@ bool ServerInfoReport::MergePartialFromCodedStream(
         break;
       }
 
-      // optional int32 server_cur_count = 6;
+      // int32 server_cur_count = 6;
       case 6: {
         if (static_cast< ::google::protobuf::uint8>(tag) ==
             static_cast< ::google::protobuf::uint8>(48u /* 48 & 0xFF */)) {
-          set_has_server_cur_count();
+
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
                  input, &server_cur_count_)));
@@ -375,11 +355,11 @@ bool ServerInfoReport::MergePartialFromCodedStream(
         break;
       }
 
-      // optional uint32 server_state = 7;
+      // uint32 server_state = 7;
       case 7: {
         if (static_cast< ::google::protobuf::uint8>(tag) ==
             static_cast< ::google::protobuf::uint8>(56u /* 56 & 0xFF */)) {
-          set_has_server_state();
+
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
                  input, &server_state_)));
@@ -389,11 +369,11 @@ bool ServerInfoReport::MergePartialFromCodedStream(
         break;
       }
 
-      // optional int32 server_type = 8;
+      // int32 server_type = 8;
       case 8: {
         if (static_cast< ::google::protobuf::uint8>(tag) ==
             static_cast< ::google::protobuf::uint8>(64u /* 64 & 0xFF */)) {
-          set_has_server_type();
+
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
                  input, &server_type_)));
@@ -429,60 +409,59 @@ void ServerInfoReport::SerializeWithCachedSizes(
   ::google::protobuf::uint32 cached_has_bits = 0;
   (void) cached_has_bits;
 
-  cached_has_bits = _has_bits_[0];
-  // optional int32 server_id = 1;
-  if (cached_has_bits & 0x00000004u) {
+  // int32 server_id = 1;
+  if (this->server_id() != 0) {
     ::google::protobuf::internal::WireFormatLite::WriteInt32(1, this->server_id(), output);
   }
 
-  // optional string server_name = 2;
-  if (cached_has_bits & 0x00000001u) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
+  // string server_name = 2;
+  if (this->server_name().size() > 0) {
+    ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
       this->server_name().data(), static_cast<int>(this->server_name().length()),
-      ::google::protobuf::internal::WireFormat::SERIALIZE,
+      ::google::protobuf::internal::WireFormatLite::SERIALIZE,
       "NFMsg.ServerInfoReport.server_name");
     ::google::protobuf::internal::WireFormatLite::WriteStringMaybeAliased(
       2, this->server_name(), output);
   }
 
-  // optional string server_ip = 3;
-  if (cached_has_bits & 0x00000002u) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
+  // string server_ip = 3;
+  if (this->server_ip().size() > 0) {
+    ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
       this->server_ip().data(), static_cast<int>(this->server_ip().length()),
-      ::google::protobuf::internal::WireFormat::SERIALIZE,
+      ::google::protobuf::internal::WireFormatLite::SERIALIZE,
       "NFMsg.ServerInfoReport.server_ip");
     ::google::protobuf::internal::WireFormatLite::WriteStringMaybeAliased(
       3, this->server_ip(), output);
   }
 
-  // optional int32 server_port = 4;
-  if (cached_has_bits & 0x00000008u) {
+  // int32 server_port = 4;
+  if (this->server_port() != 0) {
     ::google::protobuf::internal::WireFormatLite::WriteInt32(4, this->server_port(), output);
   }
 
-  // optional int32 server_max_online = 5;
-  if (cached_has_bits & 0x00000010u) {
+  // int32 server_max_online = 5;
+  if (this->server_max_online() != 0) {
     ::google::protobuf::internal::WireFormatLite::WriteInt32(5, this->server_max_online(), output);
   }
 
-  // optional int32 server_cur_count = 6;
-  if (cached_has_bits & 0x00000020u) {
+  // int32 server_cur_count = 6;
+  if (this->server_cur_count() != 0) {
     ::google::protobuf::internal::WireFormatLite::WriteInt32(6, this->server_cur_count(), output);
   }
 
-  // optional uint32 server_state = 7;
-  if (cached_has_bits & 0x00000040u) {
+  // uint32 server_state = 7;
+  if (this->server_state() != 0) {
     ::google::protobuf::internal::WireFormatLite::WriteUInt32(7, this->server_state(), output);
   }
 
-  // optional int32 server_type = 8;
-  if (cached_has_bits & 0x00000080u) {
+  // int32 server_type = 8;
+  if (this->server_type() != 0) {
     ::google::protobuf::internal::WireFormatLite::WriteInt32(8, this->server_type(), output);
   }
 
-  if (_internal_metadata_.have_unknown_fields()) {
+  if ((_internal_metadata_.have_unknown_fields() &&  ::google::protobuf::internal::GetProto3PreserveUnknownsDefault())) {
     ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
-        _internal_metadata_.unknown_fields(), output);
+        (::google::protobuf::internal::GetProto3PreserveUnknownsDefault()   ? _internal_metadata_.unknown_fields()   : _internal_metadata_.default_instance()), output);
   }
   // @@protoc_insertion_point(serialize_end:NFMsg.ServerInfoReport)
 }
@@ -494,62 +473,61 @@ void ServerInfoReport::SerializeWithCachedSizes(
   ::google::protobuf::uint32 cached_has_bits = 0;
   (void) cached_has_bits;
 
-  cached_has_bits = _has_bits_[0];
-  // optional int32 server_id = 1;
-  if (cached_has_bits & 0x00000004u) {
+  // int32 server_id = 1;
+  if (this->server_id() != 0) {
     target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(1, this->server_id(), target);
   }
 
-  // optional string server_name = 2;
-  if (cached_has_bits & 0x00000001u) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
+  // string server_name = 2;
+  if (this->server_name().size() > 0) {
+    ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
       this->server_name().data(), static_cast<int>(this->server_name().length()),
-      ::google::protobuf::internal::WireFormat::SERIALIZE,
+      ::google::protobuf::internal::WireFormatLite::SERIALIZE,
       "NFMsg.ServerInfoReport.server_name");
     target =
       ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
         2, this->server_name(), target);
   }
 
-  // optional string server_ip = 3;
-  if (cached_has_bits & 0x00000002u) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
+  // string server_ip = 3;
+  if (this->server_ip().size() > 0) {
+    ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
       this->server_ip().data(), static_cast<int>(this->server_ip().length()),
-      ::google::protobuf::internal::WireFormat::SERIALIZE,
+      ::google::protobuf::internal::WireFormatLite::SERIALIZE,
       "NFMsg.ServerInfoReport.server_ip");
     target =
       ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
         3, this->server_ip(), target);
   }
 
-  // optional int32 server_port = 4;
-  if (cached_has_bits & 0x00000008u) {
+  // int32 server_port = 4;
+  if (this->server_port() != 0) {
     target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(4, this->server_port(), target);
   }
 
-  // optional int32 server_max_online = 5;
-  if (cached_has_bits & 0x00000010u) {
+  // int32 server_max_online = 5;
+  if (this->server_max_online() != 0) {
     target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(5, this->server_max_online(), target);
   }
 
-  // optional int32 server_cur_count = 6;
-  if (cached_has_bits & 0x00000020u) {
+  // int32 server_cur_count = 6;
+  if (this->server_cur_count() != 0) {
     target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(6, this->server_cur_count(), target);
   }
 
-  // optional uint32 server_state = 7;
-  if (cached_has_bits & 0x00000040u) {
+  // uint32 server_state = 7;
+  if (this->server_state() != 0) {
     target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(7, this->server_state(), target);
   }
 
-  // optional int32 server_type = 8;
-  if (cached_has_bits & 0x00000080u) {
+  // int32 server_type = 8;
+  if (this->server_type() != 0) {
     target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(8, this->server_type(), target);
   }
 
-  if (_internal_metadata_.have_unknown_fields()) {
+  if ((_internal_metadata_.have_unknown_fields() &&  ::google::protobuf::internal::GetProto3PreserveUnknownsDefault())) {
     target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
-        _internal_metadata_.unknown_fields(), target);
+        (::google::protobuf::internal::GetProto3PreserveUnknownsDefault()   ? _internal_metadata_.unknown_fields()   : _internal_metadata_.default_instance()), target);
   }
   // @@protoc_insertion_point(serialize_to_array_end:NFMsg.ServerInfoReport)
   return target;
@@ -559,69 +537,67 @@ size_t ServerInfoReport::ByteSizeLong() const {
 // @@protoc_insertion_point(message_byte_size_start:NFMsg.ServerInfoReport)
   size_t total_size = 0;
 
-  if (_internal_metadata_.have_unknown_fields()) {
+  if ((_internal_metadata_.have_unknown_fields() &&  ::google::protobuf::internal::GetProto3PreserveUnknownsDefault())) {
     total_size +=
       ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
-        _internal_metadata_.unknown_fields());
+        (::google::protobuf::internal::GetProto3PreserveUnknownsDefault()   ? _internal_metadata_.unknown_fields()   : _internal_metadata_.default_instance()));
   }
-  if (_has_bits_[0 / 32] & 255u) {
-    // optional string server_name = 2;
-    if (has_server_name()) {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::StringSize(
-          this->server_name());
-    }
-
-    // optional string server_ip = 3;
-    if (has_server_ip()) {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::StringSize(
-          this->server_ip());
-    }
-
-    // optional int32 server_id = 1;
-    if (has_server_id()) {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::Int32Size(
-          this->server_id());
-    }
-
-    // optional int32 server_port = 4;
-    if (has_server_port()) {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::Int32Size(
-          this->server_port());
-    }
-
-    // optional int32 server_max_online = 5;
-    if (has_server_max_online()) {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::Int32Size(
-          this->server_max_online());
-    }
-
-    // optional int32 server_cur_count = 6;
-    if (has_server_cur_count()) {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::Int32Size(
-          this->server_cur_count());
-    }
-
-    // optional uint32 server_state = 7;
-    if (has_server_state()) {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::UInt32Size(
-          this->server_state());
-    }
-
-    // optional int32 server_type = 8;
-    if (has_server_type()) {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::Int32Size(
-          this->server_type());
-    }
-
+  // string server_name = 2;
+  if (this->server_name().size() > 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::StringSize(
+        this->server_name());
   }
+
+  // string server_ip = 3;
+  if (this->server_ip().size() > 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::StringSize(
+        this->server_ip());
+  }
+
+  // int32 server_id = 1;
+  if (this->server_id() != 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::Int32Size(
+        this->server_id());
+  }
+
+  // int32 server_port = 4;
+  if (this->server_port() != 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::Int32Size(
+        this->server_port());
+  }
+
+  // int32 server_max_online = 5;
+  if (this->server_max_online() != 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::Int32Size(
+        this->server_max_online());
+  }
+
+  // int32 server_cur_count = 6;
+  if (this->server_cur_count() != 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::Int32Size(
+        this->server_cur_count());
+  }
+
+  // uint32 server_state = 7;
+  if (this->server_state() != 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::UInt32Size(
+        this->server_state());
+  }
+
+  // int32 server_type = 8;
+  if (this->server_type() != 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::Int32Size(
+        this->server_type());
+  }
+
   int cached_size = ::google::protobuf::internal::ToCachedSize(total_size);
   SetCachedSize(cached_size);
   return total_size;
@@ -649,35 +625,31 @@ void ServerInfoReport::MergeFrom(const ServerInfoReport& from) {
   ::google::protobuf::uint32 cached_has_bits = 0;
   (void) cached_has_bits;
 
-  cached_has_bits = from._has_bits_[0];
-  if (cached_has_bits & 255u) {
-    if (cached_has_bits & 0x00000001u) {
-      set_has_server_name();
-      server_name_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.server_name_);
-    }
-    if (cached_has_bits & 0x00000002u) {
-      set_has_server_ip();
-      server_ip_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.server_ip_);
-    }
-    if (cached_has_bits & 0x00000004u) {
-      server_id_ = from.server_id_;
-    }
-    if (cached_has_bits & 0x00000008u) {
-      server_port_ = from.server_port_;
-    }
-    if (cached_has_bits & 0x00000010u) {
-      server_max_online_ = from.server_max_online_;
-    }
-    if (cached_has_bits & 0x00000020u) {
-      server_cur_count_ = from.server_cur_count_;
-    }
-    if (cached_has_bits & 0x00000040u) {
-      server_state_ = from.server_state_;
-    }
-    if (cached_has_bits & 0x00000080u) {
-      server_type_ = from.server_type_;
-    }
-    _has_bits_[0] |= cached_has_bits;
+  if (from.server_name().size() > 0) {
+
+    server_name_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.server_name_);
+  }
+  if (from.server_ip().size() > 0) {
+
+    server_ip_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.server_ip_);
+  }
+  if (from.server_id() != 0) {
+    set_server_id(from.server_id());
+  }
+  if (from.server_port() != 0) {
+    set_server_port(from.server_port());
+  }
+  if (from.server_max_online() != 0) {
+    set_server_max_online(from.server_max_online());
+  }
+  if (from.server_cur_count() != 0) {
+    set_server_cur_count(from.server_cur_count());
+  }
+  if (from.server_state() != 0) {
+    set_server_state(from.server_state());
+  }
+  if (from.server_type() != 0) {
+    set_server_type(from.server_type());
   }
 }
 
@@ -715,7 +687,6 @@ void ServerInfoReport::InternalSwap(ServerInfoReport* other) {
   swap(server_cur_count_, other->server_cur_count_);
   swap(server_state_, other->server_state_);
   swap(server_type_, other->server_type_);
-  swap(_has_bits_[0], other->_has_bits_[0]);
   _internal_metadata_.Swap(&other->_internal_metadata_);
 }
 
@@ -743,7 +714,6 @@ ServerInfoReportList::ServerInfoReportList()
 ServerInfoReportList::ServerInfoReportList(const ServerInfoReportList& from)
   : ::google::protobuf::Message(),
       _internal_metadata_(NULL),
-      _has_bits_(from._has_bits_),
       server_list_(from.server_list_) {
   _internal_metadata_.MergeFrom(from._internal_metadata_);
   // @@protoc_insertion_point(copy_constructor:NFMsg.ServerInfoReportList)
@@ -781,7 +751,6 @@ void ServerInfoReportList::Clear() {
   (void) cached_has_bits;
 
   server_list_.Clear();
-  _has_bits_.Clear();
   _internal_metadata_.Clear();
 }
 
@@ -842,9 +811,9 @@ void ServerInfoReportList::SerializeWithCachedSizes(
       output);
   }
 
-  if (_internal_metadata_.have_unknown_fields()) {
+  if ((_internal_metadata_.have_unknown_fields() &&  ::google::protobuf::internal::GetProto3PreserveUnknownsDefault())) {
     ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
-        _internal_metadata_.unknown_fields(), output);
+        (::google::protobuf::internal::GetProto3PreserveUnknownsDefault()   ? _internal_metadata_.unknown_fields()   : _internal_metadata_.default_instance()), output);
   }
   // @@protoc_insertion_point(serialize_end:NFMsg.ServerInfoReportList)
 }
@@ -864,9 +833,9 @@ void ServerInfoReportList::SerializeWithCachedSizes(
         1, this->server_list(static_cast<int>(i)), deterministic, target);
   }
 
-  if (_internal_metadata_.have_unknown_fields()) {
+  if ((_internal_metadata_.have_unknown_fields() &&  ::google::protobuf::internal::GetProto3PreserveUnknownsDefault())) {
     target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
-        _internal_metadata_.unknown_fields(), target);
+        (::google::protobuf::internal::GetProto3PreserveUnknownsDefault()   ? _internal_metadata_.unknown_fields()   : _internal_metadata_.default_instance()), target);
   }
   // @@protoc_insertion_point(serialize_to_array_end:NFMsg.ServerInfoReportList)
   return target;
@@ -876,10 +845,10 @@ size_t ServerInfoReportList::ByteSizeLong() const {
 // @@protoc_insertion_point(message_byte_size_start:NFMsg.ServerInfoReportList)
   size_t total_size = 0;
 
-  if (_internal_metadata_.have_unknown_fields()) {
+  if ((_internal_metadata_.have_unknown_fields() &&  ::google::protobuf::internal::GetProto3PreserveUnknownsDefault())) {
     total_size +=
       ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
-        _internal_metadata_.unknown_fields());
+        (::google::protobuf::internal::GetProto3PreserveUnknownsDefault()   ? _internal_metadata_.unknown_fields()   : _internal_metadata_.default_instance()));
   }
   // repeated .NFMsg.ServerInfoReport server_list = 1;
   {
@@ -947,7 +916,6 @@ void ServerInfoReportList::Swap(ServerInfoReportList* other) {
 void ServerInfoReportList::InternalSwap(ServerInfoReportList* other) {
   using std::swap;
   CastToBase(&server_list_)->InternalSwap(CastToBase(&other->server_list_));
-  swap(_has_bits_[0], other->_has_bits_[0]);
   _internal_metadata_.Swap(&other->_internal_metadata_);
 }
 

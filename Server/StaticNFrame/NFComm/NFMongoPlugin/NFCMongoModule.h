@@ -63,6 +63,10 @@ public:
 	virtual bool CreateCollection(const int nServerID, const std::string& collectionName, const std::string& key) override;
 
 	virtual bool DropCollection(const int nServerID, const std::string& collectionName) override;
+
+	virtual bool InsertJson(const int nServerID, const std::string& collectionName, const std::string& json_query) override;
+
+	virtual bool InsertMessage(const int nServerID, const std::string& collectionName, const google::protobuf::Message& message) override;
 private:
 	NFCMongoDriverManager* m_pMongoDriverManager;
 

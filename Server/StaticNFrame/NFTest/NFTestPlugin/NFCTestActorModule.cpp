@@ -17,6 +17,7 @@
 #include "NFComm/NFCore/NFCommon.h"
 #include "NFComm/NFPluginModule/NFIMongoModule.h"
 #include "NFComm/NFPluginModule/NFServerDefine.h"
+#include "NFComm/NFCore/NFJson.h"
 
 
 class NFLogTask : public NFTask
@@ -78,9 +79,13 @@ bool NFCTestActorModule::Init()
 	pMongoModule->CreateCollection(NF_ST_GAME, "gaoyi", "uid");
 	pMongoModule->CreateCollection(NF_ST_GAME, "test", "uid");
 
-	pMongoModule->DropCollection(NF_ST_GAME, "test");
-	pMongoModule->DropCollection(NF_ST_GAME, "test");
-	pMongoModule->DropCollection(NF_ST_GAME, "gaoyi");
+	std::map<std::string, NFJson> mapJson;
+	mapJson.emplace("uid", NFJson(111111111));
+	mapJson.emplace("gaoyi", NFJson("sb"));
+	NFJson json(std::move(mapJson));
+
+	std::string jsonStr = json.dump();
+	pMongoModule->InsertJson(NF_ST_GAME, "gaoyi", jsonStr);
 	return true;
 }
 
