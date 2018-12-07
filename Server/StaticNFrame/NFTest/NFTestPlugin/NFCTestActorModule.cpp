@@ -80,12 +80,16 @@ bool NFCTestActorModule::Init()
 	pMongoModule->CreateCollection(NF_ST_GAME, "test", "uid");
 
 	std::map<std::string, NFJson> mapJson;
-	mapJson.emplace("uid", NFJson(111111111));
-	mapJson.emplace("gaoyi", NFJson("sb"));
+	mapJson.emplace("uid", NFJson(11112222));
+	mapJson.emplace("gaoyi", NFJson("xx"));
+	std::map<std::string, NFJson> mapJson2;
+	mapJson2.emplace("fuck", NFJson("you"));
+	NFJson json2(std::move(mapJson2));
+	mapJson.emplace("fuck", json2);
 	NFJson json(std::move(mapJson));
 
 	std::string jsonStr = json.dump();
-	pMongoModule->InsertJson(NF_ST_GAME, "gaoyi", jsonStr);
+	pMongoModule->UpdateOne(NF_ST_GAME, "gaoyi", jsonStr);
 	return true;
 }
 

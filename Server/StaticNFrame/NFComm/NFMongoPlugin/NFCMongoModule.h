@@ -67,6 +67,16 @@ public:
 	virtual bool InsertJson(const int nServerID, const std::string& collectionName, const std::string& json_query) override;
 
 	virtual bool InsertMessage(const int nServerID, const std::string& collectionName, const google::protobuf::Message& message) override;
+
+	virtual bool UpdateOneByKey(const int nServerID, const std::string& collectionName, const std::string& json, uint64_t key) override;
+
+	virtual bool UpdateOneByKey(const int nServerID, const std::string& collectionName, const google::protobuf::Message& message, uint64_t key) override;
+
+	virtual bool UpdateOneByKey(const int nServerID, const std::string& collectionName, const std::string& json, const std::string key) override;
+
+	virtual bool UpdateOne(const int nServerID, const std::string& collectionName, const std::string& json) override;;
+
+	virtual bool UpdateOne(const int nServerID, const std::string& collectionName, const google::protobuf::Message& message) override;
 private:
 	NFCMongoDriverManager* m_pMongoDriverManager;
 

@@ -480,11 +480,13 @@ void NFCMongoDriver::FindAllPrimaryKey()
 
 bool NFCMongoDriver::InsertPrimaryKey(const std::string& collectionName, const std::string& primaryKey)
 {
+	bson_t *select = bson_new();
 	bson_t *doc = bson_new();
-	BSON_APPEND_UTF8(doc, PRIMARY_TABLE_KEY, collectionName.c_str());
+	BSON_APPEND_UTF8(select, PRIMARY_TABLE_KEY, collectionName.c_str());
 	BSON_APPEND_UTF8(doc, PRIMARY_TABLE_COL, primaryKey.c_str());
-	bool ret = InsertOne(PRIMARY_TABLE, doc);
+	bool ret = UpdateOne(PRIMARY_TABLE, select, doc);
 	bson_destroy(doc);
+	bson_destroy(select);
 
 	m_collectionPrimaryKeyMap.emplace(collectionName, primaryKey);
 	return ret;
@@ -577,8 +579,154 @@ bool NFCMongoDriver::InsertOne(const std::string& collectionName, const std::str
 	return ret;
 }
 
-bool NFCMongoDriver::Update(const std::string& json)
+bool NFCMongoDriver::UpdateOne(const std::string& collectionName, const std::string& json_query)
 {
+	bson_error_t error;
+
+	std::string primary_key = m_collectionPrimaryKeyMap[collectionName];
+	if (primary_key.length() > 0)
+	{
+		rapidjson::Document document;
+		document.Parse(json_query.c_str());
+
+		if (document.IsObject())
+		{
+			if (document.HasMember(primary_key.c_str()) == false)
+			{
+				NFLogError("json hast not primary key:{}", primary_key);
+				return false;
+			}
+
+			rapidjson::Value& value = document[primary_key.c_str()];
+			bson_t* select = bson_new();
+			if (value.IsInt64())
+			{
+				BSON_APPEND_INT64(select, PRIMARY_TABLE_KEY, value.GetInt64());
+			}
+			else if (value.IsString())
+			{
+				std::string str = value.GetString();
+				BSON_APPEND_UTF8(select, PRIMARY_TABLE_KEY, str.c_str());
+			}
+			else
+			{
+				NFLogError("json key error:{}", json_query);
+				bson_destroy(select);
+				return false;
+			}
+
+			bson_t *doc = bson_new_from_json((const uint8_t*)json_query.data(), json_query.length(), &error);
+			if (HandleMongocError(error) == false || doc == nullptr)
+			{
+				if (doc) bson_destroy(doc);
+				NFLogError("bson_new_from_json error:{}", json_query);
+				return false;
+			}
+
+			bool ret = UpdateOne(collectionName, select, doc);
+			bson_destroy(doc);
+			return ret;
+		}
+	}
+
+	return false;
+}
+
+bool NFCMongoDriver::UpdateOne(const std::string& collectionName, const google::protobuf::Message& message)
+{
+	std::string jsonStr;
+	if (NFServerCommon::MessageToJsonString(message, jsonStr) == false)
+	{
+		return false;
+	}
+
+	return UpdateOne(collectionName, jsonStr);
+}
+
+bool NFCMongoDriver::UpdateOne(const std::string& collectionName, bson_t *select, bson_t *doc)
+{
+	if (doc == nullptr) return false;
+
+	bson_error_t error;
+	mongoc_collection_t *collection = GetCollection(collectionName);
+	if (!collection)
+	{
+		NFLogError("Collection Name Not Exist:{}", collectionName);
+		return false;
+	}
+
+	bool ret = mongoc_collection_update(collection, MONGOC_UPDATE_UPSERT, select, doc, NULL, &error);
+	if (ret == false)
+	{
+		HandleMongocError(error);
+		return false;
+	}
+
 	return true;
+}
+
+bool NFCMongoDriver::UpdateOneByKey(const std::string& collectionName, const google::protobuf::Message& message, uint64_t key)
+{
+	bson_error_t error;
+	bson_t *select = bson_new();
+	BSON_APPEND_INT64(select, PRIMARY_TABLE_KEY, key);
+
+	std::string json_query;
+	NFServerCommon::MessageToJsonString(message, json_query);
+	bson_t *doc = bson_new_from_json((const uint8_t*)json_query.data(), json_query.length(), &error);
+	if (HandleMongocError(error) == false || doc == nullptr)
+	{
+		if (doc) bson_destroy(doc);
+		bson_destroy(select);
+		NFLogError("bson_new_from_json error:{}", json_query);
+		return false;
+	}
+
+	bool ret = UpdateOne(collectionName, select, doc);
+	bson_destroy(doc);
+	bson_destroy(select);
+	return ret;
+}
+
+bool NFCMongoDriver::UpdateOneByKey(const std::string& collectionName, const std::string& json_query, const std::string key)
+{
+	bson_error_t error;
+	bson_t *select = bson_new();
+	BSON_APPEND_UTF8(select, PRIMARY_TABLE_KEY, key.c_str());
+
+	bson_t *doc = bson_new_from_json((const uint8_t*)json_query.data(), json_query.length(), &error);
+	if (HandleMongocError(error) == false || doc == nullptr)
+	{
+		if (doc) bson_destroy(doc);
+		bson_destroy(select);
+		NFLogError("bson_new_from_json error:{}", json_query);
+		return false;
+	}
+
+	bool ret = UpdateOne(collectionName, select, doc);
+	bson_destroy(doc);
+	bson_destroy(select);
+	return ret;
+}
+
+bool NFCMongoDriver::UpdateOneByKey(const std::string& collectionName, const std::string& json_query, uint64_t key)
+{
+	bson_error_t error;
+	bson_t *select = bson_new();
+	BSON_APPEND_INT64(select, PRIMARY_TABLE_KEY, key);
+
+	bson_t *doc = bson_new_from_json((const uint8_t*)json_query.data(), json_query.length(), &error);
+	if (HandleMongocError(error) == false || doc == nullptr)
+	{
+		if (doc) bson_destroy(doc);
+		bson_destroy(select);
+		NFLogError("bson_new_from_json error:{}", json_query);
+		return false;
+	}
+
+	bool ret = UpdateOne(collectionName, select, doc);
+	bson_destroy(doc);
+	bson_destroy(select);
+	return ret;
 }
 

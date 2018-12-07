@@ -146,3 +146,59 @@ bool NFCMongoDriverManager::InsertOne(const int nServerID, const std::string& co
 	return pMongoDriver->InsertOne(collectionName, message);
 }
 
+bool NFCMongoDriverManager::UpdateOneByKey(const int nServerID, const std::string& collectionName, const google::protobuf::Message& message, uint64_t key)
+{
+	NFCMongoDriver* pMongoDriver = mMongoDriver.GetElement(nServerID);
+	if (!pMongoDriver)
+	{
+		return false;
+	}
+
+	return pMongoDriver->UpdateOneByKey(collectionName, message, key);
+}
+
+bool NFCMongoDriverManager::UpdateOneByKey(const int nServerID, const std::string& collectionName, const std::string& json, const std::string key)
+{
+	NFCMongoDriver* pMongoDriver = mMongoDriver.GetElement(nServerID);
+	if (!pMongoDriver)
+	{
+		return false;
+	}
+
+	return pMongoDriver->UpdateOneByKey(collectionName, json, key);
+}
+
+bool NFCMongoDriverManager::UpdateOneByKey(const int nServerID, const std::string& collectionName, const std::string& json, uint64_t key)
+{
+	NFCMongoDriver* pMongoDriver = mMongoDriver.GetElement(nServerID);
+	if (!pMongoDriver)
+	{
+		return false;
+	}
+
+	return pMongoDriver->UpdateOneByKey(collectionName, json, key);
+}
+
+bool NFCMongoDriverManager::UpdateOne(const int nServerID, const std::string& collectionName, const std::string& json)
+{
+	NFCMongoDriver* pMongoDriver = mMongoDriver.GetElement(nServerID);
+	if (!pMongoDriver)
+	{
+		return false;
+	}
+
+	return pMongoDriver->UpdateOne(collectionName, json);
+}
+
+bool NFCMongoDriverManager::UpdateOne(const int nServerID, const std::string& collectionName, const google::protobuf::Message& message)
+{
+	NFCMongoDriver* pMongoDriver = mMongoDriver.GetElement(nServerID);
+	if (!pMongoDriver)
+	{
+		return false;
+	}
+
+	return pMongoDriver->UpdateOne(collectionName, message);
+}
+
+

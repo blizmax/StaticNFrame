@@ -99,7 +99,12 @@ public:
 	virtual bool InsertOne(const std::string& collectionName, const std::string& json_query);
 	virtual bool InsertOne(const std::string& collectionName, const google::protobuf::Message& message);
 
-	virtual bool Update(const std::string& json);
+	virtual bool UpdateOneByKey(const std::string& collectionName, const std::string& json, const std::string key);
+	virtual bool UpdateOneByKey(const std::string& collectionName, const std::string& json, uint64_t key);
+	virtual bool UpdateOneByKey(const std::string& collectionName, const google::protobuf::Message& message, uint64_t key);
+	virtual bool UpdateOne(const std::string& collectionName, bson_t *select, bson_t *doc);
+	virtual bool UpdateOne(const std::string& collectionName, const std::string& json);
+	virtual bool UpdateOne(const std::string& collectionName, const google::protobuf::Message& message);
 
 	virtual bool InsertPrimaryKey(const std::string& collectionName, const std::string& primaryKey);
 	virtual void FindAllPrimaryKey();

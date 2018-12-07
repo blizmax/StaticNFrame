@@ -108,3 +108,48 @@ bool NFCMongoModule::InsertMessage(const int nServerID, const std::string& colle
 	}
 	return false;
 }
+
+bool NFCMongoModule::UpdateOneByKey(const int nServerID, const std::string& collectionName, const std::string& json, uint64_t key)
+{
+	if (m_pMongoDriverManager)
+	{
+		return m_pMongoDriverManager->UpdateOneByKey(nServerID, collectionName, json, key);
+	}
+	return false;
+}
+
+bool NFCMongoModule::UpdateOneByKey(const int nServerID, const std::string& collectionName, const std::string& json, const std::string key)
+{
+	if (m_pMongoDriverManager)
+	{
+		return m_pMongoDriverManager->UpdateOneByKey(nServerID, collectionName, json, key);
+	}
+	return false;
+}
+
+bool NFCMongoModule::UpdateOneByKey(const int nServerID, const std::string& collectionName, const google::protobuf::Message& message, uint64_t key)
+{
+	if (m_pMongoDriverManager)
+	{
+		return m_pMongoDriverManager->UpdateOneByKey(nServerID, collectionName, message, key);
+	}
+	return false;
+}
+
+bool NFCMongoModule::UpdateOne(const int nServerID, const std::string& collectionName, const std::string& json)
+{
+	if (m_pMongoDriverManager)
+	{
+		return m_pMongoDriverManager->UpdateOne(nServerID, collectionName, json);
+	}
+	return false;
+}
+
+bool NFCMongoModule::UpdateOne(const int nServerID, const std::string& collectionName, const google::protobuf::Message& message)
+{
+	if (m_pMongoDriverManager)
+	{
+		return m_pMongoDriverManager->UpdateOne(nServerID, collectionName, message);
+	}
+	return false;
+}
