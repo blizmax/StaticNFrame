@@ -222,7 +222,7 @@ std::string NFCMongoDriverManager::FindOne(const int nServerID, const std::strin
 *
 * @return bool
 */
-std::vector<std::string> NFCMongoDriverManager::FindMany(const int nServerID, const std::string& collectionName, const std::string& json_query)
+std::vector<std::string> NFCMongoDriverManager::FindMany(const int nServerID, const std::string& collectionName, const std::string& json_query, const std::string& json_opts)
 {
 	NFCMongoDriver* pMongoDriver = mMongoDriver.GetElement(nServerID);
 	if (!pMongoDriver)
@@ -230,7 +230,7 @@ std::vector<std::string> NFCMongoDriverManager::FindMany(const int nServerID, co
 		return std::vector<std::string>();
 	}
 
-	return pMongoDriver->FindMany(collectionName, json_query);
+	return pMongoDriver->FindMany(collectionName, json_query, json_opts);
 }
 
 /**

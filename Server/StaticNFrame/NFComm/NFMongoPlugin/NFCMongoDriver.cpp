@@ -384,7 +384,7 @@ std::string NFCMongoDriver::FindOne(const std::string& collectionName, const std
 	return result;
 }
 
-std::vector<std::string> NFCMongoDriver::FindMany(const std::string& collectionName, const std::string& json_query)
+std::vector<std::string> NFCMongoDriver::FindMany(const std::string& collectionName, const std::string& json_query, const std::string& json_opts)
 {
 	std::vector<std::string> result;
 	mongoc_collection_t *collection = GetCollection(collectionName);
@@ -407,8 +407,21 @@ std::vector<std::string> NFCMongoDriver::FindMany(const std::string& collectionN
 	}
 
 	char *str;
+	bson_t *opts = nullptr;
+	
+	if (!json_opts.empty())
+	{
+		opts = bson_new_from_json((const uint8_t*)json_opts.data(), json_opts.length(), &error);
+		if (HandleMongocError(error) == false)
+		{
+			if (query) bson_destroy(query);
+			if (opts) bson_destroy(opts);
+			NFLogError("bson_new_from_json error:{}", json_opts);
+			return result;
+		}
+	}
 
-	cursor = mongoc_collection_find_with_opts(collection, query, nullptr, nullptr);
+	cursor = mongoc_collection_find_with_opts(collection, query, opts, nullptr);
 	while (mongoc_cursor_next(cursor, &doc))
 	{
 		str = bson_as_json(doc, NULL);
@@ -422,6 +435,7 @@ std::vector<std::string> NFCMongoDriver::FindMany(const std::string& collectionN
 	}
 
 	bson_destroy(query);
+	bson_destroy(opts);
 	mongoc_cursor_destroy(cursor);
 	return result;
 }

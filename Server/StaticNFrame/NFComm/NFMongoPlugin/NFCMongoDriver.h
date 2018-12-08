@@ -119,7 +119,7 @@ public:
 	*
 	* @return bool
 	*/
-	virtual std::vector<std::string> FindMany(const std::string& collectionName, const std::string& json_query);
+	virtual std::vector<std::string> FindMany(const std::string& collectionName, const std::string& json_query, const std::string& json_opts = "");
 
 	/**
 	* @brief ВщевЪ§Он

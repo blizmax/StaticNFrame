@@ -52,7 +52,7 @@ public:
 	*
 	* @return bool
 	*/
-	virtual std::vector<std::string> FindMany(const int nServerID, const std::string& collectionName, const std::string& json_query) = 0;
+	virtual std::vector<std::string> FindMany(const int nServerID, const std::string& collectionName, const std::string& json_query, const std::string& json_opts = "") = 0;
 
 	/**
 	* @brief ВщевЪ§Он

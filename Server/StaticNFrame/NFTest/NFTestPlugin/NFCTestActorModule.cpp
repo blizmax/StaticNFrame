@@ -113,6 +113,14 @@ bool NFCTestActorModule::Init()
 		NFMsg::test_gaoyi_table message;
 		NFServerCommon::JsonStringToMessage(result, message);
 	}
+	{
+		std::map<std::string, NFJson> mapJson;
+		mapJson.emplace("age", NFJson(29));
+		NFJson json(mapJson);
+
+		std::string opts = "{\"sort\":{\"_id\":1}}";
+		std::vector<std::string> result = pMongoModule->FindMany(NF_ST_GAME, "gaoyi", json.dump(), opts);
+	}
 	return true;
 }
 

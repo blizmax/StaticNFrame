@@ -173,11 +173,11 @@ std::string NFCMongoModule::FindOne(const int nServerID, const std::string& coll
 *
 * @return bool
 */
-std::vector<std::string> NFCMongoModule::FindMany(const int nServerID, const std::string& collectionName, const std::string& json_query)
+std::vector<std::string> NFCMongoModule::FindMany(const int nServerID, const std::string& collectionName, const std::string& json_query, const std::string& json_opts)
 {
 	if (m_pMongoDriverManager)
 	{
-		return m_pMongoDriverManager->FindMany(nServerID, collectionName, json_query);
+		return m_pMongoDriverManager->FindMany(nServerID, collectionName, json_query, json_opts);
 	}
 	return std::vector<std::string>();
 }
