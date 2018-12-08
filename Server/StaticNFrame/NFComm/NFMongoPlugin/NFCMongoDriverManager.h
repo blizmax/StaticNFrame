@@ -55,6 +55,41 @@ public:
 	virtual bool InsertOne(const int nServerID, const std::string& collectionName, const std::string& json_query);
 
 	/**
+	* @brief 查找数据
+	*
+	* @return bool
+	*/
+	virtual std::string FindOne(const int nServerID, const std::string& collectionName, const std::string& json_query);
+
+	/**
+	* @brief 查找数据
+	*
+	* @return bool
+	*/
+	virtual std::vector<std::string> FindMany(const int nServerID, const std::string& collectionName, const std::string& json_query);
+
+	/**
+	* @brief 查找数据
+	*
+	* @return bool
+	*/
+	virtual std::vector<std::string> FindAll(const int nServerID, const std::string& collectionName);
+
+	/**
+	* @brief 查找数据
+	*
+	* @return bool
+	*/
+	virtual std::string FindOneyByKey(const int nServerID, const std::string& collectionName, int64_t key);
+
+	/**
+	* @brief 查找数据
+	*
+	* @return bool
+	*/
+	virtual std::string FindOneyByKey(const int nServerID, const std::string& collectionName, const std::string& key);
+
+	/**
 	* @brief 插入一条数据
 	*
 	* @return bool

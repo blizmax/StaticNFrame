@@ -8,3 +8,17 @@ message mongo_primary_key
 	string primary = 2;
 }
 
+message test_gaoyi_table
+{
+	message data
+	{
+		uint32 num = 1;
+		uint32 sb = 2;
+	}
+	uint64 uid = 1;
+	string name = 2;
+	string sex = 3;
+	uint32 age = 4;
+	data dd = 5;
+}
+

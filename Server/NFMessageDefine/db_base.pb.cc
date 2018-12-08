@@ -19,12 +19,25 @@
 #endif
 // @@protoc_insertion_point(includes)
 
+namespace protobuf_db_5fbase_2eproto {
+extern PROTOBUF_INTERNAL_EXPORT_protobuf_db_5fbase_2eproto ::google::protobuf::internal::SCCInfo<0> scc_info_test_gaoyi_table_data;
+}  // namespace protobuf_db_5fbase_2eproto
 namespace NFMsg {
 class mongo_primary_keyDefaultTypeInternal {
  public:
   ::google::protobuf::internal::ExplicitlyConstructed<mongo_primary_key>
       _instance;
 } _mongo_primary_key_default_instance_;
+class test_gaoyi_table_dataDefaultTypeInternal {
+ public:
+  ::google::protobuf::internal::ExplicitlyConstructed<test_gaoyi_table_data>
+      _instance;
+} _test_gaoyi_table_data_default_instance_;
+class test_gaoyi_tableDefaultTypeInternal {
+ public:
+  ::google::protobuf::internal::ExplicitlyConstructed<test_gaoyi_table>
+      _instance;
+} _test_gaoyi_table_default_instance_;
 }  // namespace NFMsg
 namespace protobuf_db_5fbase_2eproto {
 static void InitDefaultsmongo_primary_key() {
@@ -41,11 +54,42 @@ static void InitDefaultsmongo_primary_key() {
 ::google::protobuf::internal::SCCInfo<0> scc_info_mongo_primary_key =
     {{ATOMIC_VAR_INIT(::google::protobuf::internal::SCCInfoBase::kUninitialized), 0, InitDefaultsmongo_primary_key}, {}};
 
-void InitDefaults() {
-  ::google::protobuf::internal::InitSCC(&scc_info_mongo_primary_key.base);
+static void InitDefaultstest_gaoyi_table_data() {
+  GOOGLE_PROTOBUF_VERIFY_VERSION;
+
+  {
+    void* ptr = &::NFMsg::_test_gaoyi_table_data_default_instance_;
+    new (ptr) ::NFMsg::test_gaoyi_table_data();
+    ::google::protobuf::internal::OnShutdownDestroyMessage(ptr);
+  }
+  ::NFMsg::test_gaoyi_table_data::InitAsDefaultInstance();
 }
 
-::google::protobuf::Metadata file_level_metadata[1];
+::google::protobuf::internal::SCCInfo<0> scc_info_test_gaoyi_table_data =
+    {{ATOMIC_VAR_INIT(::google::protobuf::internal::SCCInfoBase::kUninitialized), 0, InitDefaultstest_gaoyi_table_data}, {}};
+
+static void InitDefaultstest_gaoyi_table() {
+  GOOGLE_PROTOBUF_VERIFY_VERSION;
+
+  {
+    void* ptr = &::NFMsg::_test_gaoyi_table_default_instance_;
+    new (ptr) ::NFMsg::test_gaoyi_table();
+    ::google::protobuf::internal::OnShutdownDestroyMessage(ptr);
+  }
+  ::NFMsg::test_gaoyi_table::InitAsDefaultInstance();
+}
+
+::google::protobuf::internal::SCCInfo<1> scc_info_test_gaoyi_table =
+    {{ATOMIC_VAR_INIT(::google::protobuf::internal::SCCInfoBase::kUninitialized), 1, InitDefaultstest_gaoyi_table}, {
+      &protobuf_db_5fbase_2eproto::scc_info_test_gaoyi_table_data.base,}};
+
+void InitDefaults() {
+  ::google::protobuf::internal::InitSCC(&scc_info_mongo_primary_key.base);
+  ::google::protobuf::internal::InitSCC(&scc_info_test_gaoyi_table_data.base);
+  ::google::protobuf::internal::InitSCC(&scc_info_test_gaoyi_table.base);
+}
+
+::google::protobuf::Metadata file_level_metadata[3];
 
 const ::google::protobuf::uint32 TableStruct::offsets[] GOOGLE_PROTOBUF_ATTRIBUTE_SECTION_VARIABLE(protodesc_cold) = {
   ~0u,  // no _has_bits_
@@ -55,13 +99,34 @@ const ::google::protobuf::uint32 TableStruct::offsets[] GOOGLE_PROTOBUF_ATTRIBUT
   ~0u,  // no _weak_field_map_
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::NFMsg::mongo_primary_key, _id_),
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::NFMsg::mongo_primary_key, primary_),
+  ~0u,  // no _has_bits_
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::NFMsg::test_gaoyi_table_data, _internal_metadata_),
+  ~0u,  // no _extensions_
+  ~0u,  // no _oneof_case_
+  ~0u,  // no _weak_field_map_
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::NFMsg::test_gaoyi_table_data, num_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::NFMsg::test_gaoyi_table_data, sb_),
+  ~0u,  // no _has_bits_
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::NFMsg::test_gaoyi_table, _internal_metadata_),
+  ~0u,  // no _extensions_
+  ~0u,  // no _oneof_case_
+  ~0u,  // no _weak_field_map_
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::NFMsg::test_gaoyi_table, uid_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::NFMsg::test_gaoyi_table, name_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::NFMsg::test_gaoyi_table, sex_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::NFMsg::test_gaoyi_table, age_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::NFMsg::test_gaoyi_table, dd_),
 };
 static const ::google::protobuf::internal::MigrationSchema schemas[] GOOGLE_PROTOBUF_ATTRIBUTE_SECTION_VARIABLE(protodesc_cold) = {
   { 0, -1, sizeof(::NFMsg::mongo_primary_key)},
+  { 7, -1, sizeof(::NFMsg::test_gaoyi_table_data)},
+  { 14, -1, sizeof(::NFMsg::test_gaoyi_table)},
 };
 
 static ::google::protobuf::Message const * const file_default_instances[] = {
   reinterpret_cast<const ::google::protobuf::Message*>(&::NFMsg::_mongo_primary_key_default_instance_),
+  reinterpret_cast<const ::google::protobuf::Message*>(&::NFMsg::_test_gaoyi_table_data_default_instance_),
+  reinterpret_cast<const ::google::protobuf::Message*>(&::NFMsg::_test_gaoyi_table_default_instance_),
 };
 
 void protobuf_AssignDescriptors() {
@@ -79,18 +144,21 @@ void protobuf_AssignDescriptorsOnce() {
 void protobuf_RegisterTypes(const ::std::string&) GOOGLE_PROTOBUF_ATTRIBUTE_COLD;
 void protobuf_RegisterTypes(const ::std::string&) {
   protobuf_AssignDescriptorsOnce();
-  ::google::protobuf::internal::RegisterAllTypes(file_level_metadata, 1);
+  ::google::protobuf::internal::RegisterAllTypes(file_level_metadata, 3);
 }
 
 void AddDescriptorsImpl() {
   InitDefaults();
   static const char descriptor[] GOOGLE_PROTOBUF_ATTRIBUTE_SECTION_VARIABLE(protodesc_cold) = {
       "\n\rdb_base.proto\022\005NFMsg\"1\n\021mongo_primary_"
-      "key\022\013\n\003_id\030\001 \001(\t\022\017\n\007primary\030\002 \001(\tb\006proto"
-      "3"
+      "key\022\013\n\003_id\030\001 \001(\t\022\017\n\007primary\030\002 \001(\t\"\222\001\n\020te"
+      "st_gaoyi_table\022\013\n\003uid\030\001 \001(\004\022\014\n\004name\030\002 \001("
+      "\t\022\013\n\003sex\030\003 \001(\t\022\013\n\003age\030\004 \001(\r\022(\n\002dd\030\005 \001(\0132"
+      "\034.NFMsg.test_gaoyi_table.data\032\037\n\004data\022\013\n"
+      "\003num\030\001 \001(\r\022\n\n\002sb\030\002 \001(\rb\006proto3"
   };
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
-      descriptor, 81);
+      descriptor, 230);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "db_base.proto", &protobuf_RegisterTypes);
 }
@@ -408,12 +476,713 @@ void mongo_primary_key::InternalSwap(mongo_primary_key* other) {
 }
 
 
+// ===================================================================
+
+void test_gaoyi_table_data::InitAsDefaultInstance() {
+}
+#if !defined(_MSC_VER) || _MSC_VER >= 1900
+const int test_gaoyi_table_data::kNumFieldNumber;
+const int test_gaoyi_table_data::kSbFieldNumber;
+#endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
+
+test_gaoyi_table_data::test_gaoyi_table_data()
+  : ::google::protobuf::Message(), _internal_metadata_(NULL) {
+  ::google::protobuf::internal::InitSCC(
+      &protobuf_db_5fbase_2eproto::scc_info_test_gaoyi_table_data.base);
+  SharedCtor();
+  // @@protoc_insertion_point(constructor:NFMsg.test_gaoyi_table.data)
+}
+test_gaoyi_table_data::test_gaoyi_table_data(const test_gaoyi_table_data& from)
+  : ::google::protobuf::Message(),
+      _internal_metadata_(NULL) {
+  _internal_metadata_.MergeFrom(from._internal_metadata_);
+  ::memcpy(&num_, &from.num_,
+    static_cast<size_t>(reinterpret_cast<char*>(&sb_) -
+    reinterpret_cast<char*>(&num_)) + sizeof(sb_));
+  // @@protoc_insertion_point(copy_constructor:NFMsg.test_gaoyi_table.data)
+}
+
+void test_gaoyi_table_data::SharedCtor() {
+  ::memset(&num_, 0, static_cast<size_t>(
+      reinterpret_cast<char*>(&sb_) -
+      reinterpret_cast<char*>(&num_)) + sizeof(sb_));
+}
+
+test_gaoyi_table_data::~test_gaoyi_table_data() {
+  // @@protoc_insertion_point(destructor:NFMsg.test_gaoyi_table.data)
+  SharedDtor();
+}
+
+void test_gaoyi_table_data::SharedDtor() {
+}
+
+void test_gaoyi_table_data::SetCachedSize(int size) const {
+  _cached_size_.Set(size);
+}
+const ::google::protobuf::Descriptor* test_gaoyi_table_data::descriptor() {
+  ::protobuf_db_5fbase_2eproto::protobuf_AssignDescriptorsOnce();
+  return ::protobuf_db_5fbase_2eproto::file_level_metadata[kIndexInFileMessages].descriptor;
+}
+
+const test_gaoyi_table_data& test_gaoyi_table_data::default_instance() {
+  ::google::protobuf::internal::InitSCC(&protobuf_db_5fbase_2eproto::scc_info_test_gaoyi_table_data.base);
+  return *internal_default_instance();
+}
+
+
+void test_gaoyi_table_data::Clear() {
+// @@protoc_insertion_point(message_clear_start:NFMsg.test_gaoyi_table.data)
+  ::google::protobuf::uint32 cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  ::memset(&num_, 0, static_cast<size_t>(
+      reinterpret_cast<char*>(&sb_) -
+      reinterpret_cast<char*>(&num_)) + sizeof(sb_));
+  _internal_metadata_.Clear();
+}
+
+bool test_gaoyi_table_data::MergePartialFromCodedStream(
+    ::google::protobuf::io::CodedInputStream* input) {
+#define DO_(EXPRESSION) if (!GOOGLE_PREDICT_TRUE(EXPRESSION)) goto failure
+  ::google::protobuf::uint32 tag;
+  // @@protoc_insertion_point(parse_start:NFMsg.test_gaoyi_table.data)
+  for (;;) {
+    ::std::pair<::google::protobuf::uint32, bool> p = input->ReadTagWithCutoffNoLastTag(127u);
+    tag = p.first;
+    if (!p.second) goto handle_unusual;
+    switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
+      // uint32 num = 1;
+      case 1: {
+        if (static_cast< ::google::protobuf::uint8>(tag) ==
+            static_cast< ::google::protobuf::uint8>(8u /* 8 & 0xFF */)) {
+
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                 input, &num_)));
+        } else {
+          goto handle_unusual;
+        }
+        break;
+      }
+
+      // uint32 sb = 2;
+      case 2: {
+        if (static_cast< ::google::protobuf::uint8>(tag) ==
+            static_cast< ::google::protobuf::uint8>(16u /* 16 & 0xFF */)) {
+
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                 input, &sb_)));
+        } else {
+          goto handle_unusual;
+        }
+        break;
+      }
+
+      default: {
+      handle_unusual:
+        if (tag == 0) {
+          goto success;
+        }
+        DO_(::google::protobuf::internal::WireFormat::SkipField(
+              input, tag, _internal_metadata_.mutable_unknown_fields()));
+        break;
+      }
+    }
+  }
+success:
+  // @@protoc_insertion_point(parse_success:NFMsg.test_gaoyi_table.data)
+  return true;
+failure:
+  // @@protoc_insertion_point(parse_failure:NFMsg.test_gaoyi_table.data)
+  return false;
+#undef DO_
+}
+
+void test_gaoyi_table_data::SerializeWithCachedSizes(
+    ::google::protobuf::io::CodedOutputStream* output) const {
+  // @@protoc_insertion_point(serialize_start:NFMsg.test_gaoyi_table.data)
+  ::google::protobuf::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  // uint32 num = 1;
+  if (this->num() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(1, this->num(), output);
+  }
+
+  // uint32 sb = 2;
+  if (this->sb() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(2, this->sb(), output);
+  }
+
+  if ((_internal_metadata_.have_unknown_fields() &&  ::google::protobuf::internal::GetProto3PreserveUnknownsDefault())) {
+    ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
+        (::google::protobuf::internal::GetProto3PreserveUnknownsDefault()   ? _internal_metadata_.unknown_fields()   : _internal_metadata_.default_instance()), output);
+  }
+  // @@protoc_insertion_point(serialize_end:NFMsg.test_gaoyi_table.data)
+}
+
+::google::protobuf::uint8* test_gaoyi_table_data::InternalSerializeWithCachedSizesToArray(
+    bool deterministic, ::google::protobuf::uint8* target) const {
+  (void)deterministic; // Unused
+  // @@protoc_insertion_point(serialize_to_array_start:NFMsg.test_gaoyi_table.data)
+  ::google::protobuf::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  // uint32 num = 1;
+  if (this->num() != 0) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(1, this->num(), target);
+  }
+
+  // uint32 sb = 2;
+  if (this->sb() != 0) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(2, this->sb(), target);
+  }
+
+  if ((_internal_metadata_.have_unknown_fields() &&  ::google::protobuf::internal::GetProto3PreserveUnknownsDefault())) {
+    target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
+        (::google::protobuf::internal::GetProto3PreserveUnknownsDefault()   ? _internal_metadata_.unknown_fields()   : _internal_metadata_.default_instance()), target);
+  }
+  // @@protoc_insertion_point(serialize_to_array_end:NFMsg.test_gaoyi_table.data)
+  return target;
+}
+
+size_t test_gaoyi_table_data::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:NFMsg.test_gaoyi_table.data)
+  size_t total_size = 0;
+
+  if ((_internal_metadata_.have_unknown_fields() &&  ::google::protobuf::internal::GetProto3PreserveUnknownsDefault())) {
+    total_size +=
+      ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
+        (::google::protobuf::internal::GetProto3PreserveUnknownsDefault()   ? _internal_metadata_.unknown_fields()   : _internal_metadata_.default_instance()));
+  }
+  // uint32 num = 1;
+  if (this->num() != 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::UInt32Size(
+        this->num());
+  }
+
+  // uint32 sb = 2;
+  if (this->sb() != 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::UInt32Size(
+        this->sb());
+  }
+
+  int cached_size = ::google::protobuf::internal::ToCachedSize(total_size);
+  SetCachedSize(cached_size);
+  return total_size;
+}
+
+void test_gaoyi_table_data::MergeFrom(const ::google::protobuf::Message& from) {
+// @@protoc_insertion_point(generalized_merge_from_start:NFMsg.test_gaoyi_table.data)
+  GOOGLE_DCHECK_NE(&from, this);
+  const test_gaoyi_table_data* source =
+      ::google::protobuf::internal::DynamicCastToGenerated<const test_gaoyi_table_data>(
+          &from);
+  if (source == NULL) {
+  // @@protoc_insertion_point(generalized_merge_from_cast_fail:NFMsg.test_gaoyi_table.data)
+    ::google::protobuf::internal::ReflectionOps::Merge(from, this);
+  } else {
+  // @@protoc_insertion_point(generalized_merge_from_cast_success:NFMsg.test_gaoyi_table.data)
+    MergeFrom(*source);
+  }
+}
+
+void test_gaoyi_table_data::MergeFrom(const test_gaoyi_table_data& from) {
+// @@protoc_insertion_point(class_specific_merge_from_start:NFMsg.test_gaoyi_table.data)
+  GOOGLE_DCHECK_NE(&from, this);
+  _internal_metadata_.MergeFrom(from._internal_metadata_);
+  ::google::protobuf::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  if (from.num() != 0) {
+    set_num(from.num());
+  }
+  if (from.sb() != 0) {
+    set_sb(from.sb());
+  }
+}
+
+void test_gaoyi_table_data::CopyFrom(const ::google::protobuf::Message& from) {
+// @@protoc_insertion_point(generalized_copy_from_start:NFMsg.test_gaoyi_table.data)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+void test_gaoyi_table_data::CopyFrom(const test_gaoyi_table_data& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:NFMsg.test_gaoyi_table.data)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool test_gaoyi_table_data::IsInitialized() const {
+  return true;
+}
+
+void test_gaoyi_table_data::Swap(test_gaoyi_table_data* other) {
+  if (other == this) return;
+  InternalSwap(other);
+}
+void test_gaoyi_table_data::InternalSwap(test_gaoyi_table_data* other) {
+  using std::swap;
+  swap(num_, other->num_);
+  swap(sb_, other->sb_);
+  _internal_metadata_.Swap(&other->_internal_metadata_);
+}
+
+::google::protobuf::Metadata test_gaoyi_table_data::GetMetadata() const {
+  protobuf_db_5fbase_2eproto::protobuf_AssignDescriptorsOnce();
+  return ::protobuf_db_5fbase_2eproto::file_level_metadata[kIndexInFileMessages];
+}
+
+
+// ===================================================================
+
+void test_gaoyi_table::InitAsDefaultInstance() {
+  ::NFMsg::_test_gaoyi_table_default_instance_._instance.get_mutable()->dd_ = const_cast< ::NFMsg::test_gaoyi_table_data*>(
+      ::NFMsg::test_gaoyi_table_data::internal_default_instance());
+}
+#if !defined(_MSC_VER) || _MSC_VER >= 1900
+const int test_gaoyi_table::kUidFieldNumber;
+const int test_gaoyi_table::kNameFieldNumber;
+const int test_gaoyi_table::kSexFieldNumber;
+const int test_gaoyi_table::kAgeFieldNumber;
+const int test_gaoyi_table::kDdFieldNumber;
+#endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
+
+test_gaoyi_table::test_gaoyi_table()
+  : ::google::protobuf::Message(), _internal_metadata_(NULL) {
+  ::google::protobuf::internal::InitSCC(
+      &protobuf_db_5fbase_2eproto::scc_info_test_gaoyi_table.base);
+  SharedCtor();
+  // @@protoc_insertion_point(constructor:NFMsg.test_gaoyi_table)
+}
+test_gaoyi_table::test_gaoyi_table(const test_gaoyi_table& from)
+  : ::google::protobuf::Message(),
+      _internal_metadata_(NULL) {
+  _internal_metadata_.MergeFrom(from._internal_metadata_);
+  name_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  if (from.name().size() > 0) {
+    name_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.name_);
+  }
+  sex_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  if (from.sex().size() > 0) {
+    sex_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.sex_);
+  }
+  if (from.has_dd()) {
+    dd_ = new ::NFMsg::test_gaoyi_table_data(*from.dd_);
+  } else {
+    dd_ = NULL;
+  }
+  ::memcpy(&uid_, &from.uid_,
+    static_cast<size_t>(reinterpret_cast<char*>(&age_) -
+    reinterpret_cast<char*>(&uid_)) + sizeof(age_));
+  // @@protoc_insertion_point(copy_constructor:NFMsg.test_gaoyi_table)
+}
+
+void test_gaoyi_table::SharedCtor() {
+  name_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  sex_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  ::memset(&dd_, 0, static_cast<size_t>(
+      reinterpret_cast<char*>(&age_) -
+      reinterpret_cast<char*>(&dd_)) + sizeof(age_));
+}
+
+test_gaoyi_table::~test_gaoyi_table() {
+  // @@protoc_insertion_point(destructor:NFMsg.test_gaoyi_table)
+  SharedDtor();
+}
+
+void test_gaoyi_table::SharedDtor() {
+  name_.DestroyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  sex_.DestroyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  if (this != internal_default_instance()) delete dd_;
+}
+
+void test_gaoyi_table::SetCachedSize(int size) const {
+  _cached_size_.Set(size);
+}
+const ::google::protobuf::Descriptor* test_gaoyi_table::descriptor() {
+  ::protobuf_db_5fbase_2eproto::protobuf_AssignDescriptorsOnce();
+  return ::protobuf_db_5fbase_2eproto::file_level_metadata[kIndexInFileMessages].descriptor;
+}
+
+const test_gaoyi_table& test_gaoyi_table::default_instance() {
+  ::google::protobuf::internal::InitSCC(&protobuf_db_5fbase_2eproto::scc_info_test_gaoyi_table.base);
+  return *internal_default_instance();
+}
+
+
+void test_gaoyi_table::Clear() {
+// @@protoc_insertion_point(message_clear_start:NFMsg.test_gaoyi_table)
+  ::google::protobuf::uint32 cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  name_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  sex_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  if (GetArenaNoVirtual() == NULL && dd_ != NULL) {
+    delete dd_;
+  }
+  dd_ = NULL;
+  ::memset(&uid_, 0, static_cast<size_t>(
+      reinterpret_cast<char*>(&age_) -
+      reinterpret_cast<char*>(&uid_)) + sizeof(age_));
+  _internal_metadata_.Clear();
+}
+
+bool test_gaoyi_table::MergePartialFromCodedStream(
+    ::google::protobuf::io::CodedInputStream* input) {
+#define DO_(EXPRESSION) if (!GOOGLE_PREDICT_TRUE(EXPRESSION)) goto failure
+  ::google::protobuf::uint32 tag;
+  // @@protoc_insertion_point(parse_start:NFMsg.test_gaoyi_table)
+  for (;;) {
+    ::std::pair<::google::protobuf::uint32, bool> p = input->ReadTagWithCutoffNoLastTag(127u);
+    tag = p.first;
+    if (!p.second) goto handle_unusual;
+    switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
+      // uint64 uid = 1;
+      case 1: {
+        if (static_cast< ::google::protobuf::uint8>(tag) ==
+            static_cast< ::google::protobuf::uint8>(8u /* 8 & 0xFF */)) {
+
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::uint64, ::google::protobuf::internal::WireFormatLite::TYPE_UINT64>(
+                 input, &uid_)));
+        } else {
+          goto handle_unusual;
+        }
+        break;
+      }
+
+      // string name = 2;
+      case 2: {
+        if (static_cast< ::google::protobuf::uint8>(tag) ==
+            static_cast< ::google::protobuf::uint8>(18u /* 18 & 0xFF */)) {
+          DO_(::google::protobuf::internal::WireFormatLite::ReadString(
+                input, this->mutable_name()));
+          DO_(::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+            this->name().data(), static_cast<int>(this->name().length()),
+            ::google::protobuf::internal::WireFormatLite::PARSE,
+            "NFMsg.test_gaoyi_table.name"));
+        } else {
+          goto handle_unusual;
+        }
+        break;
+      }
+
+      // string sex = 3;
+      case 3: {
+        if (static_cast< ::google::protobuf::uint8>(tag) ==
+            static_cast< ::google::protobuf::uint8>(26u /* 26 & 0xFF */)) {
+          DO_(::google::protobuf::internal::WireFormatLite::ReadString(
+                input, this->mutable_sex()));
+          DO_(::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+            this->sex().data(), static_cast<int>(this->sex().length()),
+            ::google::protobuf::internal::WireFormatLite::PARSE,
+            "NFMsg.test_gaoyi_table.sex"));
+        } else {
+          goto handle_unusual;
+        }
+        break;
+      }
+
+      // uint32 age = 4;
+      case 4: {
+        if (static_cast< ::google::protobuf::uint8>(tag) ==
+            static_cast< ::google::protobuf::uint8>(32u /* 32 & 0xFF */)) {
+
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                 input, &age_)));
+        } else {
+          goto handle_unusual;
+        }
+        break;
+      }
+
+      // .NFMsg.test_gaoyi_table.data dd = 5;
+      case 5: {
+        if (static_cast< ::google::protobuf::uint8>(tag) ==
+            static_cast< ::google::protobuf::uint8>(42u /* 42 & 0xFF */)) {
+          DO_(::google::protobuf::internal::WireFormatLite::ReadMessage(
+               input, mutable_dd()));
+        } else {
+          goto handle_unusual;
+        }
+        break;
+      }
+
+      default: {
+      handle_unusual:
+        if (tag == 0) {
+          goto success;
+        }
+        DO_(::google::protobuf::internal::WireFormat::SkipField(
+              input, tag, _internal_metadata_.mutable_unknown_fields()));
+        break;
+      }
+    }
+  }
+success:
+  // @@protoc_insertion_point(parse_success:NFMsg.test_gaoyi_table)
+  return true;
+failure:
+  // @@protoc_insertion_point(parse_failure:NFMsg.test_gaoyi_table)
+  return false;
+#undef DO_
+}
+
+void test_gaoyi_table::SerializeWithCachedSizes(
+    ::google::protobuf::io::CodedOutputStream* output) const {
+  // @@protoc_insertion_point(serialize_start:NFMsg.test_gaoyi_table)
+  ::google::protobuf::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  // uint64 uid = 1;
+  if (this->uid() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt64(1, this->uid(), output);
+  }
+
+  // string name = 2;
+  if (this->name().size() > 0) {
+    ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+      this->name().data(), static_cast<int>(this->name().length()),
+      ::google::protobuf::internal::WireFormatLite::SERIALIZE,
+      "NFMsg.test_gaoyi_table.name");
+    ::google::protobuf::internal::WireFormatLite::WriteStringMaybeAliased(
+      2, this->name(), output);
+  }
+
+  // string sex = 3;
+  if (this->sex().size() > 0) {
+    ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+      this->sex().data(), static_cast<int>(this->sex().length()),
+      ::google::protobuf::internal::WireFormatLite::SERIALIZE,
+      "NFMsg.test_gaoyi_table.sex");
+    ::google::protobuf::internal::WireFormatLite::WriteStringMaybeAliased(
+      3, this->sex(), output);
+  }
+
+  // uint32 age = 4;
+  if (this->age() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(4, this->age(), output);
+  }
+
+  // .NFMsg.test_gaoyi_table.data dd = 5;
+  if (this->has_dd()) {
+    ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
+      5, this->_internal_dd(), output);
+  }
+
+  if ((_internal_metadata_.have_unknown_fields() &&  ::google::protobuf::internal::GetProto3PreserveUnknownsDefault())) {
+    ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
+        (::google::protobuf::internal::GetProto3PreserveUnknownsDefault()   ? _internal_metadata_.unknown_fields()   : _internal_metadata_.default_instance()), output);
+  }
+  // @@protoc_insertion_point(serialize_end:NFMsg.test_gaoyi_table)
+}
+
+::google::protobuf::uint8* test_gaoyi_table::InternalSerializeWithCachedSizesToArray(
+    bool deterministic, ::google::protobuf::uint8* target) const {
+  (void)deterministic; // Unused
+  // @@protoc_insertion_point(serialize_to_array_start:NFMsg.test_gaoyi_table)
+  ::google::protobuf::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  // uint64 uid = 1;
+  if (this->uid() != 0) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt64ToArray(1, this->uid(), target);
+  }
+
+  // string name = 2;
+  if (this->name().size() > 0) {
+    ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+      this->name().data(), static_cast<int>(this->name().length()),
+      ::google::protobuf::internal::WireFormatLite::SERIALIZE,
+      "NFMsg.test_gaoyi_table.name");
+    target =
+      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
+        2, this->name(), target);
+  }
+
+  // string sex = 3;
+  if (this->sex().size() > 0) {
+    ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+      this->sex().data(), static_cast<int>(this->sex().length()),
+      ::google::protobuf::internal::WireFormatLite::SERIALIZE,
+      "NFMsg.test_gaoyi_table.sex");
+    target =
+      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
+        3, this->sex(), target);
+  }
+
+  // uint32 age = 4;
+  if (this->age() != 0) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(4, this->age(), target);
+  }
+
+  // .NFMsg.test_gaoyi_table.data dd = 5;
+  if (this->has_dd()) {
+    target = ::google::protobuf::internal::WireFormatLite::
+      InternalWriteMessageToArray(
+        5, this->_internal_dd(), deterministic, target);
+  }
+
+  if ((_internal_metadata_.have_unknown_fields() &&  ::google::protobuf::internal::GetProto3PreserveUnknownsDefault())) {
+    target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
+        (::google::protobuf::internal::GetProto3PreserveUnknownsDefault()   ? _internal_metadata_.unknown_fields()   : _internal_metadata_.default_instance()), target);
+  }
+  // @@protoc_insertion_point(serialize_to_array_end:NFMsg.test_gaoyi_table)
+  return target;
+}
+
+size_t test_gaoyi_table::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:NFMsg.test_gaoyi_table)
+  size_t total_size = 0;
+
+  if ((_internal_metadata_.have_unknown_fields() &&  ::google::protobuf::internal::GetProto3PreserveUnknownsDefault())) {
+    total_size +=
+      ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
+        (::google::protobuf::internal::GetProto3PreserveUnknownsDefault()   ? _internal_metadata_.unknown_fields()   : _internal_metadata_.default_instance()));
+  }
+  // string name = 2;
+  if (this->name().size() > 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::StringSize(
+        this->name());
+  }
+
+  // string sex = 3;
+  if (this->sex().size() > 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::StringSize(
+        this->sex());
+  }
+
+  // .NFMsg.test_gaoyi_table.data dd = 5;
+  if (this->has_dd()) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::MessageSize(
+        *dd_);
+  }
+
+  // uint64 uid = 1;
+  if (this->uid() != 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::UInt64Size(
+        this->uid());
+  }
+
+  // uint32 age = 4;
+  if (this->age() != 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::UInt32Size(
+        this->age());
+  }
+
+  int cached_size = ::google::protobuf::internal::ToCachedSize(total_size);
+  SetCachedSize(cached_size);
+  return total_size;
+}
+
+void test_gaoyi_table::MergeFrom(const ::google::protobuf::Message& from) {
+// @@protoc_insertion_point(generalized_merge_from_start:NFMsg.test_gaoyi_table)
+  GOOGLE_DCHECK_NE(&from, this);
+  const test_gaoyi_table* source =
+      ::google::protobuf::internal::DynamicCastToGenerated<const test_gaoyi_table>(
+          &from);
+  if (source == NULL) {
+  // @@protoc_insertion_point(generalized_merge_from_cast_fail:NFMsg.test_gaoyi_table)
+    ::google::protobuf::internal::ReflectionOps::Merge(from, this);
+  } else {
+  // @@protoc_insertion_point(generalized_merge_from_cast_success:NFMsg.test_gaoyi_table)
+    MergeFrom(*source);
+  }
+}
+
+void test_gaoyi_table::MergeFrom(const test_gaoyi_table& from) {
+// @@protoc_insertion_point(class_specific_merge_from_start:NFMsg.test_gaoyi_table)
+  GOOGLE_DCHECK_NE(&from, this);
+  _internal_metadata_.MergeFrom(from._internal_metadata_);
+  ::google::protobuf::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  if (from.name().size() > 0) {
+
+    name_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.name_);
+  }
+  if (from.sex().size() > 0) {
+
+    sex_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.sex_);
+  }
+  if (from.has_dd()) {
+    mutable_dd()->::NFMsg::test_gaoyi_table_data::MergeFrom(from.dd());
+  }
+  if (from.uid() != 0) {
+    set_uid(from.uid());
+  }
+  if (from.age() != 0) {
+    set_age(from.age());
+  }
+}
+
+void test_gaoyi_table::CopyFrom(const ::google::protobuf::Message& from) {
+// @@protoc_insertion_point(generalized_copy_from_start:NFMsg.test_gaoyi_table)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+void test_gaoyi_table::CopyFrom(const test_gaoyi_table& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:NFMsg.test_gaoyi_table)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool test_gaoyi_table::IsInitialized() const {
+  return true;
+}
+
+void test_gaoyi_table::Swap(test_gaoyi_table* other) {
+  if (other == this) return;
+  InternalSwap(other);
+}
+void test_gaoyi_table::InternalSwap(test_gaoyi_table* other) {
+  using std::swap;
+  name_.Swap(&other->name_, &::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+    GetArenaNoVirtual());
+  sex_.Swap(&other->sex_, &::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+    GetArenaNoVirtual());
+  swap(dd_, other->dd_);
+  swap(uid_, other->uid_);
+  swap(age_, other->age_);
+  _internal_metadata_.Swap(&other->_internal_metadata_);
+}
+
+::google::protobuf::Metadata test_gaoyi_table::GetMetadata() const {
+  protobuf_db_5fbase_2eproto::protobuf_AssignDescriptorsOnce();
+  return ::protobuf_db_5fbase_2eproto::file_level_metadata[kIndexInFileMessages];
+}
+
+
 // @@protoc_insertion_point(namespace_scope)
 }  // namespace NFMsg
 namespace google {
 namespace protobuf {
 template<> GOOGLE_PROTOBUF_ATTRIBUTE_NOINLINE ::NFMsg::mongo_primary_key* Arena::CreateMaybeMessage< ::NFMsg::mongo_primary_key >(Arena* arena) {
   return Arena::CreateInternal< ::NFMsg::mongo_primary_key >(arena);
+}
+template<> GOOGLE_PROTOBUF_ATTRIBUTE_NOINLINE ::NFMsg::test_gaoyi_table_data* Arena::CreateMaybeMessage< ::NFMsg::test_gaoyi_table_data >(Arena* arena) {
+  return Arena::CreateInternal< ::NFMsg::test_gaoyi_table_data >(arena);
+}
+template<> GOOGLE_PROTOBUF_ATTRIBUTE_NOINLINE ::NFMsg::test_gaoyi_table* Arena::CreateMaybeMessage< ::NFMsg::test_gaoyi_table >(Arena* arena) {
+  return Arena::CreateInternal< ::NFMsg::test_gaoyi_table >(arena);
 }
 }  // namespace protobuf
 }  // namespace google

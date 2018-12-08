@@ -39,6 +39,41 @@ public:
 	virtual bool UpdateOne(const int nServerID, const std::string& collectionName, const std::string& json) = 0;
 
 	virtual bool UpdateOne(const int nServerID, const std::string& collectionName, const google::protobuf::Message& message) = 0;
+
+	/**
+	* @brief 查找数据
+	*
+	* @return bool
+	*/
+	virtual std::string FindOne(const int nServerID, const std::string& collectionName, const std::string& json_query) = 0;
+
+	/**
+	* @brief 查找数据
+	*
+	* @return bool
+	*/
+	virtual std::vector<std::string> FindMany(const int nServerID, const std::string& collectionName, const std::string& json_query) = 0;
+
+	/**
+	* @brief 查找数据
+	*
+	* @return bool
+	*/
+	virtual std::vector<std::string> FindAll(const int nServerID, const std::string& collectionName) = 0;
+
+	/**
+	* @brief 查找数据
+	*
+	* @return bool
+	*/
+	virtual std::string FindOneyByKey(const int nServerID, const std::string& collectionName, int64_t key) = 0;
+
+	/**
+	* @brief 查找数据
+	*
+	* @return bool
+	*/
+	virtual std::string FindOneyByKey(const int nServerID, const std::string& collectionName, const std::string& key) = 0;
 };
 
 

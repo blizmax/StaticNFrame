@@ -153,3 +153,73 @@ bool NFCMongoModule::UpdateOne(const int nServerID, const std::string& collectio
 	}
 	return false;
 }
+
+/**
+* @brief 查找数据
+*
+* @return bool
+*/
+std::string NFCMongoModule::FindOne(const int nServerID, const std::string& collectionName, const std::string& json_query)
+{
+	if (m_pMongoDriverManager)
+	{
+		return m_pMongoDriverManager->FindOne(nServerID, collectionName, json_query);
+	}
+	return std::string();
+}
+
+/**
+* @brief 查找数据
+*
+* @return bool
+*/
+std::vector<std::string> NFCMongoModule::FindMany(const int nServerID, const std::string& collectionName, const std::string& json_query)
+{
+	if (m_pMongoDriverManager)
+	{
+		return m_pMongoDriverManager->FindMany(nServerID, collectionName, json_query);
+	}
+	return std::vector<std::string>();
+}
+
+/**
+* @brief 查找数据
+*
+* @return bool
+*/
+std::vector<std::string> NFCMongoModule::FindAll(const int nServerID, const std::string& collectionName)
+{
+	if (m_pMongoDriverManager)
+	{
+		return m_pMongoDriverManager->FindAll(nServerID, collectionName);
+	}
+	return std::vector<std::string>();
+}
+
+/**
+* @brief 查找数据
+*
+* @return bool
+*/
+std::string NFCMongoModule::FindOneyByKey(const int nServerID, const std::string& collectionName, int64_t key)
+{
+	if (m_pMongoDriverManager)
+	{
+		return m_pMongoDriverManager->FindOneyByKey(nServerID, collectionName, key);
+	}
+	return std::string();
+}
+
+/**
+* @brief 查找数据
+*
+* @return bool
+*/
+std::string NFCMongoModule::FindOneyByKey(const int nServerID, const std::string& collectionName, const std::string& key)
+{
+	if (m_pMongoDriverManager)
+	{
+		return m_pMongoDriverManager->FindOneyByKey(nServerID, collectionName, key);
+	}
+	return std::string();
+}

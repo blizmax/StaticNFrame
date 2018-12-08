@@ -248,7 +248,12 @@ bool NFCMongoDriver::DropCollection(const std::string& collectionName)
 	return ret;
 }
 
-std::string NFCMongoDriver::FindKey(const std::string& collectionName, int64_t key)
+/**
+* @brief ≤È’“ ˝æ›
+*
+* @return bool
+*/
+std::string NFCMongoDriver::FindOneyByKey(const std::string& collectionName, const std::string& key)
 {
 	std::string result;
 	mongoc_collection_t *collection = GetCollection(collectionName);
@@ -263,7 +268,7 @@ std::string NFCMongoDriver::FindKey(const std::string& collectionName, int64_t k
 
 	bson_error_t error;
 	bson_t *query = bson_new();
-	BSON_APPEND_INT64(query, "_id", key);
+	BSON_APPEND_UTF8(query, PRIMARY_TABLE_KEY, key.c_str());
 
 	char *str;
 	bson_t opts;
@@ -272,18 +277,58 @@ std::string NFCMongoDriver::FindKey(const std::string& collectionName, int64_t k
 	BSON_APPEND_BOOL(&opts, "singleBatch", true);
 
 	cursor = mongoc_collection_find_with_opts(collection, query, &opts, nullptr);
-	if (mongoc_cursor_next(cursor, &doc) == false)
+	if (mongoc_cursor_next(cursor, &doc))
 	{
-		if (mongoc_cursor_error(cursor, &error))
-		{
-			HandleMongocError(error);
-		}
-	}
-	else
-	{
-		str = bson_as_canonical_extended_json(doc, NULL);
+		str = bson_as_json(doc, NULL);
 		result = str;
 		bson_free(str);
+	}
+
+	if (mongoc_cursor_error(cursor, &error))
+	{
+		HandleMongocError(error);
+	}
+
+	bson_destroy(query);
+	mongoc_cursor_destroy(cursor);
+	bson_destroy(&opts);
+	return result;
+}
+
+std::string NFCMongoDriver::FindOneyByKey(const std::string& collectionName, int64_t key)
+{
+	std::string result;
+	mongoc_collection_t *collection = GetCollection(collectionName);
+	if (!collection)
+	{
+		NFLogError("Collection Name Not Exist:{}", collectionName);
+		return result;
+	}
+
+	mongoc_cursor_t *cursor;
+	const bson_t *doc;
+
+	bson_error_t error;
+	bson_t *query = bson_new();
+	BSON_APPEND_UTF8(query, PRIMARY_TABLE_KEY,lexical_cast<std::string>(key).c_str());
+
+	char *str;
+	bson_t opts;
+	bson_init(&opts);
+	BSON_APPEND_INT32(&opts, "limit", 1);
+	BSON_APPEND_BOOL(&opts, "singleBatch", true);
+
+	cursor = mongoc_collection_find_with_opts(collection, query, &opts, nullptr);
+	if (mongoc_cursor_next(cursor, &doc))
+	{
+		str = bson_as_json(doc, NULL);
+		result = str;
+		bson_free(str);
+	}
+
+	if (mongoc_cursor_error(cursor, &error))
+	{
+		HandleMongocError(error);
 	}
 
 	bson_destroy(query);
@@ -321,18 +366,16 @@ std::string NFCMongoDriver::FindOne(const std::string& collectionName, const std
 	BSON_APPEND_BOOL(&opts, "singleBatch", true);
 
 	cursor = mongoc_collection_find_with_opts(collection, query, &opts, nullptr);
-	if (mongoc_cursor_next(cursor, &doc) == false)
+	if (mongoc_cursor_next(cursor, &doc))
 	{
-		if (mongoc_cursor_error(cursor, &error)) 
-		{
-			HandleMongocError(error);
-		}
-	}
-	else
-	{
-		str = bson_as_canonical_extended_json(doc, NULL);
+		str = bson_as_json(doc, NULL);
 		result = str;
 		bson_free(str);
+	}
+
+	if (mongoc_cursor_error(cursor, &error))
+	{
+		HandleMongocError(error);
 	}
 	
 	bson_destroy(query);
@@ -364,22 +407,22 @@ std::vector<std::string> NFCMongoDriver::FindMany(const std::string& collectionN
 	}
 
 	char *str;
-	bson_t opts;
-	bson_init(&opts);
-	BSON_APPEND_INT32(&opts, "limit", 1);
-	BSON_APPEND_BOOL(&opts, "singleBatch", true);
 
-	cursor = mongoc_collection_find_with_opts(collection, query, &opts, nullptr);
+	cursor = mongoc_collection_find_with_opts(collection, query, nullptr, nullptr);
 	while (mongoc_cursor_next(cursor, &doc))
 	{
-		str = bson_as_canonical_extended_json(doc, NULL);
+		str = bson_as_json(doc, NULL);
 		result.push_back(std::string(str));
 		bson_free(str);
 	}
 
+	if (mongoc_cursor_error(cursor, &error)) 
+	{
+		HandleMongocError(error);
+	}
+
 	bson_destroy(query);
 	mongoc_cursor_destroy(cursor);
-	bson_destroy(&opts);
 	return result;
 }
 
@@ -402,9 +445,15 @@ std::vector<std::string> NFCMongoDriver::FindAll(const std::string& collectionNa
 	cursor = mongoc_collection_find_with_opts(collection, query, nullptr, nullptr);
 	while (mongoc_cursor_next(cursor, &doc))
 	{
-		str = bson_as_canonical_extended_json(doc, NULL);
+		str = bson_as_json(doc, NULL);
 		result.push_back(std::string(str));
 		bson_free(str);
+	}
+
+	bson_error_t error;
+	if (mongoc_cursor_error(cursor, &error))
+	{
+		HandleMongocError(error);
 	}
 
 	bson_destroy(query);

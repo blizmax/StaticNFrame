@@ -201,4 +201,84 @@ bool NFCMongoDriverManager::UpdateOne(const int nServerID, const std::string& co
 	return pMongoDriver->UpdateOne(collectionName, message);
 }
 
+/**
+* @brief 查找数据
+*
+* @return bool
+*/
+std::string NFCMongoDriverManager::FindOne(const int nServerID, const std::string& collectionName, const std::string& json_query)
+{
+	NFCMongoDriver* pMongoDriver = mMongoDriver.GetElement(nServerID);
+	if (!pMongoDriver)
+	{
+		return std::string();
+	}
+
+	return pMongoDriver->FindOne(collectionName, json_query);
+}
+
+/**
+* @brief 查找数据
+*
+* @return bool
+*/
+std::vector<std::string> NFCMongoDriverManager::FindMany(const int nServerID, const std::string& collectionName, const std::string& json_query)
+{
+	NFCMongoDriver* pMongoDriver = mMongoDriver.GetElement(nServerID);
+	if (!pMongoDriver)
+	{
+		return std::vector<std::string>();
+	}
+
+	return pMongoDriver->FindMany(collectionName, json_query);
+}
+
+/**
+* @brief 查找数据
+*
+* @return bool
+*/
+std::vector<std::string> NFCMongoDriverManager::FindAll(const int nServerID, const std::string& collectionName)
+{
+	NFCMongoDriver* pMongoDriver = mMongoDriver.GetElement(nServerID);
+	if (!pMongoDriver)
+	{
+		return std::vector<std::string>();
+	}
+
+	return pMongoDriver->FindAll(collectionName);
+}
+
+/**
+* @brief 查找数据
+*
+* @return bool
+*/
+std::string NFCMongoDriverManager::FindOneyByKey(const int nServerID, const std::string& collectionName, int64_t key)
+{
+	NFCMongoDriver* pMongoDriver = mMongoDriver.GetElement(nServerID);
+	if (!pMongoDriver)
+	{
+		return std::string();
+	}
+
+	return pMongoDriver->FindOneyByKey(collectionName, key);
+}
+
+/**
+* @brief 查找数据
+*
+* @return bool
+*/
+std::string NFCMongoDriverManager::FindOneyByKey(const int nServerID, const std::string& collectionName, const std::string& key)
+{
+	NFCMongoDriver* pMongoDriver = mMongoDriver.GetElement(nServerID);
+	if (!pMongoDriver)
+	{
+		return std::string();
+	}
+
+	return pMongoDriver->FindOneyByKey(collectionName, key);
+}
+
 

@@ -22,6 +22,10 @@
 #define PRIMARY_TABLE_COL "primary"
 #define PRIMARY_TABLE_KEY "_id"
 
+/*
+**	测试的时候发现，mongoc只要设置为索引，当使用这个索引查找的时候必须以字符串的方式查找，不然找不到数据
+*	其余的数据查找，使用数据本来的类型
+*/
 class NFCMongoDriver : public NFIModule
 {
 public:
@@ -129,7 +133,14 @@ public:
 	*
 	* @return bool
 	*/
-	virtual std::string FindKey(const std::string& collectionName, int64_t key);
+	virtual std::string FindOneyByKey(const std::string& collectionName, int64_t key);
+
+	/**
+	* @brief 查找数据
+	*
+	* @return bool
+	*/
+	virtual std::string FindOneyByKey(const std::string& collectionName, const std::string& key);
 
 	/**
 	* @brief 插入数据
