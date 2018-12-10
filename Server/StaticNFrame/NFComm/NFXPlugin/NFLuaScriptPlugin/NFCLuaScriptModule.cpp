@@ -21,6 +21,8 @@
 #include "NFComm/NFPluginModule/NFIHttpServerModule.h"
 #include "NFComm/NFPluginModule/NFIMongoModule.h"
 
+#include "NFServerLogic/NFServerLogicCommon/NFIGameLogicModule.h"
+
 #define TRY_RUN_GLOBAL_SCRIPT_FUN0(strFuncName)   try {LuaIntf::LuaRef func(l, strFuncName);  func.call<LuaIntf::LuaRef>(); }   catch (LuaIntf::LuaException& e) { cout << e.what() << endl; }
 #define TRY_RUN_GLOBAL_SCRIPT_FUN1(strFuncName, arg1)  try {LuaIntf::LuaRef func(l, strFuncName);  func.call<LuaIntf::LuaRef>(arg1); }catch (LuaIntf::LuaException& e) { cout << e.what() << endl; }
 #define TRY_RUN_GLOBAL_SCRIPT_FUN2(strFuncName, arg1, arg2)  try {LuaIntf::LuaRef func(l, strFuncName);  func.call<LuaIntf::LuaRef>(arg1, arg2); }catch (LuaIntf::LuaException& e) { cout << e.what() << endl; }
@@ -110,6 +112,7 @@ bool NFCLuaScriptModule::Register()
 		.addFunction("GetHttpClientModule", &NFIPluginManager::FindModule<NFIHttpClientModule>)
 		.addFunction("GetHttpServerModule", &NFIPluginManager::FindModule<NFIHttpServerModule>)
 		.addFunction("GetMongoModule", &NFIPluginManager::FindModule<NFIMongoModule>)
+		.addFunction("GetGameLogicModule", &NFIPluginManager::FindModule<NFIGameLogicModule>)
 		.endClass();
 
 	LuaIntf::LuaBinding(l).beginClass<NFIKernelModule>("NFIKernelModule")
@@ -181,7 +184,7 @@ bool NFCLuaScriptModule::Register()
 		.endClass();
 
 	LuaIntf::LuaBinding(l).beginClass<NFIMongoModule>("NFIMongoModule")
-		.addFunction("AddMongoServer", (bool (NFIMongoModule::*)(const int nServerID, const std::string& ip, uint32_t port, const std::string& dbname))&NFIMongoModule::AddMongoServer)
+		.addFunction("AddMongoServer", (bool (NFIMongoModule::*)(const int nServerID, const std::string& uri, const std::string& dbname))&NFIMongoModule::AddMongoServer)
 		.addFunction("CreateCollection", &NFIMongoModule::CreateCollection)
 		.addFunction("DropCollection", &NFIMongoModule::DropCollection)
 		.addFunction("UpdateOneByKey", (bool (NFIMongoModule::*)(const int nServerID, const std::string& collectionName, const std::string& json, uint64_t key))&NFIMongoModule::UpdateOneByKey)
@@ -192,6 +195,15 @@ bool NFCLuaScriptModule::Register()
 		.addFunction("FindOneByKey", (std::string (NFIMongoModule::*)(const int nServerID, const std::string& collectionName, int64_t key))&NFIMongoModule::FindOneByKey)
 		.addFunction("UpdateFieldByKey", (bool (NFIMongoModule::*)(const int nServerID, const std::string& collectionName, const std::string& json, uint64_t key))&NFIMongoModule::UpdateFieldByKey)
 		.addFunction("FindFieldByKey", (std::string(NFIMongoModule::*)(const int nServerID, const std::string& collectionName, const std::string& fieldPath, int64_t key))&NFIMongoModule::FindFieldByKey)
+		.endClass();
+
+	LuaIntf::LuaBinding(l).beginClass<PlayerAccountInfo>("PlayerAccountInfo")
+	.addProperty("Id", &PlayerAccountInfo::GetUid, &PlayerAccountInfo::SetUid)
+	.addProperty("SendString", &PlayerAccountInfo::GetSendMsg, &PlayerAccountInfo::SetSendMsg)
+	.endClass();
+
+	LuaIntf::LuaBinding(l).beginClass<NFIGameLogicModule>("NFIGameLogicModule")
+		.addFunction("GetAccount", &NFIGameLogicModule::GetPlayerAccountInfo)
 		.endClass();
 
 	return true;
@@ -273,4 +285,14 @@ uint32_t NFCLuaScriptModule::AddClocker(const std::string& luaFunc, uint64_t nSt
 	SetFixTimer(luaTimer.mTimerId, nStartTime, nInterDays, luaTimer.mCallCount);
 	m_luaTimerMap.emplace(luaTimer.mTimerId, luaTimer);
 	return luaTimer.mTimerId;
+}
+
+void NFCLuaScriptModule::RunAccountConnectFunc(PlayerAccountInfo* laccount)
+{
+	TryRunGlobalScriptFunc("Tcp.account_connect", laccount);
+}
+
+void NFCLuaScriptModule::RunAccountDisConnectFunc(PlayerAccountInfo* laccount)
+{
+	TryRunGlobalScriptFunc("Tcp.account_disconnect", laccount);
 }

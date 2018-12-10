@@ -53,6 +53,9 @@ public:
 
 	ProxyPlayerData* GetPlayerData(uint64_t uid) { return mPlayerData.GetElement(uid); }
 	ProxyPlayerData* GetPlayerDataByLinkId(uint32_t unlinkId) { return mUnlinkIdPlayerData.GetElement(unlinkId); }
+
+	void OnProxySocketEvent(const eMsgType nEvent, const uint32_t unLinkId);
+	void OnAccountDisconnect(const uint32_t unLinkId);
 private:
 	NFINetClientModule* m_pNetClientModule;
 	NFINetServerModule* m_pNetServerModule;

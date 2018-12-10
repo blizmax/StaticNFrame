@@ -9,6 +9,7 @@
 
 #include "NFGameLogicPlugin.h"
 #include "NFComm/NFPluginModule/NFIPluginManager.h"
+#include "NFGameLogicModule.h"
 
 #ifdef NF_DYNAMIC_PLUGIN
 
@@ -40,8 +41,10 @@ std::string NFGameLogicPlugin::GetPluginName()
 
 void NFGameLogicPlugin::Install()
 {
+	REGISTER_MODULE(pPluginManager, NFIGameLogicModule, NFCGameLogicModule);
 }
 
 void NFGameLogicPlugin::Uninstall()
 {
+	UNREGISTER_MODULE(pPluginManager, NFIGameLogicModule, NFCGameLogicModule);
 }

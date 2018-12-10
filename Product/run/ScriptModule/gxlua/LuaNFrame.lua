@@ -33,10 +33,6 @@ end
 
 
 function LuaNFrame:init(pluginManager)
-    --local mongo = require 'mongo'
-    self:initmongodb('mongodb://14.17.104.12:28900', "ttr-1")
-
-    self:TestLua()
 
     self.pluginManager = pluginManager
     if self.pluginManager == nil then
@@ -51,12 +47,16 @@ function LuaNFrame:init(pluginManager)
     self.httpClientModule = self.pluginManager:GetHttpClientModule()
     self.httpServerModule = self.pluginManager:GetHttpServerModule()
     self.mongoModule = self.pluginManager:GetMongoModule()
-    
+
     --用来存放加载的module
     self.ScriptList = { }
 
     --加载应用程序的Lua  Module
     self:load_script_file()
+end
+
+function LuaNFrame:GetPluginManager()
+    return self.pluginManager
 end
 
 --添加服务器定时器
@@ -179,7 +179,9 @@ end
 ]]
 function LuaNFrame:getdata(name, key)
     local data = self.mongoModule:FindOneByKey(0, name, key)
-    return json.decode(data)
+    if data ~= nil and data ~= "" then
+        return json.decode(data)
+    end
 end
 
 --[[
@@ -198,7 +200,7 @@ end
         unilight.savedata("userinfo", userInfo)
 ]] 
 function LuaNFrame:savedata(name, data)
-    local json_data = json2table(data)
+    local json_data = table2json(data)
     if type(data.uid) == "number" then
         return self.mongoModule:UpdateOneByKey(0, name, json_data, data.uid)
     else
@@ -216,7 +218,7 @@ end
         unilight.getfield("userinfo", 100000, "base.property") // 获取表"userinfo"中，key为100000的"base.property"字段数据
 ]]
 function LuaNFrame:getfield(name, id, fieldpath)
-    local json_fieldpath = json2table(fieldpath)
+    local json_fieldpath = table2json(fieldpath)
     local data = self.mongoModule:FindFieldByKey(0, name, json_fieldpath, id)
     return json.decode(data)
 end
@@ -277,7 +279,7 @@ function LuaNFrame:savefield(name, id, fieldpath, data)
 
     local tmp = {}
     tmp[fieldpath] = data
-    local json_str = json2table(tmp)
+    local json_str = table2json(tmp)
     return self.mongoModule:UpdateFieldByKey(0, name, json_str, id)
 end
 
@@ -289,7 +291,7 @@ end
         local res = unilight.getAll("userinfo")
 ]]
 function LuaNFrame:getAll(name)
-    local data = self.mongoModule:FindAll(name)
+    local data = self.mongoModule:FindAll(0, name)
     return json.decode(data)
 end
 

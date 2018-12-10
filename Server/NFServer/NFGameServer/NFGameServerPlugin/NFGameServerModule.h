@@ -14,6 +14,7 @@
 #include <NFComm/NFPluginModule/NFINetServerModule.h>
 #include "NFComm/NFCore/NFMapEx.hpp"
 #include "NFServer/NFServerCommon/NFServerCommon.h"
+#include "NFComm/NFCore/NFMap.hpp"
 
 class NFCGameServerModule : public NFIGameServerModule
 {

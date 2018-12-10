@@ -26,6 +26,7 @@ bool NFCProxyLogicModule::Init()
 	m_pNetClientModule = pPluginManager->FindModule<NFINetClientModule>();
 	m_pProxyClient_GameModule = pPluginManager->FindModule<NFIProxyClient_GameModule>();
 
+	m_pNetServerModule->AddEventCallBack(NF_ST_PROXY, this, &NFCProxyLogicModule::OnProxySocketEvent);
 	m_pNetServerModule->AddReceiveCallBack(NF_ST_PROXY, EGMI_NET_MSG_JSON_MSG, this, &NFCProxyLogicModule::OnHandleJsonMessage);
 	return true;
 }
@@ -109,7 +110,7 @@ void NFCProxyLogicModule::OnHandleUser_UserJsMessageForwardUserPmd(const uint32_
 	}
 
 	auto pServerData = m_pProxyClient_GameModule->GetServerData(pData->gameServerId);
-	m_pNetClientModule->SendByServerID(pServerData->mUnlinkId, 0, msg.msg(), 0);
+	m_pNetClientModule->SendByServerID(pServerData->mUnlinkId, 0, msg.msg(), pData->uid);
 }
 
 void NFCProxyLogicModule::OnHandleUser_LoginTokenLoginUserPmd(const uint32_t unLinkId, const NFMsg::UserLoginTokenLoginUserPmd_C& msg)
@@ -121,13 +122,53 @@ void NFCProxyLogicModule::OnHandleUser_LoginTokenLoginUserPmd(const uint32_t unL
 		pData->uid = msg.accountid();
 		pData->gameServerId = msg.zoneid();
 		mUnlinkIdPlayerData.AddElement(unLinkId, pData);
+	}
 
-		auto pPlayerData = GetPlayerData(msg.accountid());
-		if (pPlayerData == nullptr)
-		{
-			mPlayerData.AddElement(msg.accountid(), pData);
-		}
+	auto pPlayerData = GetPlayerData(msg.accountid());
+	if (pPlayerData == nullptr)
+	{
+		mPlayerData.AddElement(msg.accountid(), pData);
 	}
 
 	pData->unlinkId = unLinkId;
+
+	auto pServerData = m_pProxyClient_GameModule->GetServerData(pData->gameServerId);
+	if (pServerData == nullptr) return;
+
+	std::string ip = m_pNetServerModule->GetLinkIp(unLinkId);
+	NFMsg::AccountConnectGameServer_C account;
+	account.set_uid(pData->uid);
+	account.set_ip(ip);
+	
+	m_pNetClientModule->SendToServerByPB(pServerData->mUnlinkId, EGMI_NET_PROXY_TO_GAME_ACCOUNT_CONNECT, account, pData->uid);
+}
+
+void NFCProxyLogicModule::OnProxySocketEvent(const eMsgType nEvent, const uint32_t unLinkId)
+{
+	if (nEvent == eMsgType_CONNECTED)
+	{
+
+	}
+	else if (nEvent == eMsgType_DISCONNECTED)
+	{
+		OnAccountDisconnect(unLinkId);
+	}
+}
+
+void NFCProxyLogicModule::OnAccountDisconnect(const uint32_t unLinkId)
+{
+	ProxyPlayerData* pData = GetPlayerDataByLinkId(unLinkId);
+	if (pData)
+	{
+		mUnlinkIdPlayerData.RemoveElement(unLinkId);
+
+		auto pServerData = m_pProxyClient_GameModule->GetServerData(pData->gameServerId);
+		if (pServerData == nullptr) return;
+
+		std::string ip = m_pNetServerModule->GetLinkIp(unLinkId);
+		NFMsg::AccountConnectGameServer_C account;
+		account.set_uid(pData->uid);
+
+		m_pNetClientModule->SendToServerByPB(pServerData->mUnlinkId, EGMI_NET_PROXY_TO_GAME_ACCOUNT_DISCONNECT, account, pData->uid);
+	}
 }

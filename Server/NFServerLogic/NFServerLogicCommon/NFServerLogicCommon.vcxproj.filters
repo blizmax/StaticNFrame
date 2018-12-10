@@ -4,6 +4,7 @@
     <ClInclude Include="NFServerLogicCommon.h" />
     <ClInclude Include="NFIProxyLogicModule.h" />
     <ClInclude Include="NFILoginLogicModule.h" />
+    <ClInclude Include="NFIGameLogicModule.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="NFServerLogicCommon.cpp" />

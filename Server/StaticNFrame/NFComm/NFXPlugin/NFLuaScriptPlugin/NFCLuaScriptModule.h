@@ -59,6 +59,9 @@ public:
 	virtual void RunNetEventLuaFunc(const std::string& luaFunc, const eMsgType nEvent, const uint32_t unLinkId) override;
 	virtual void RunHtttpClientLuaFunc(const std::string& luaFunc, const int state_code, const std::string& strRespData, const std::string& strUserData) override;
 	virtual void RunHttpServerLuaFunc(const std::string& luaFunc, const NFHttpRequest & req) override;
+
+	virtual void RunAccountConnectFunc(PlayerAccountInfo* laccount) override;
+	virtual void RunAccountDisConnectFunc(PlayerAccountInfo* laccount) override;
 public:
 	virtual void OnTimer(uint32_t nTimerID) override;
 	virtual uint32_t AddTimer(const std::string& luaFunc, uint64_t nInterVal, const std::string& useData) override;

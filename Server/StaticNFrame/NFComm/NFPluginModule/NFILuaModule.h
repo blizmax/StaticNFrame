@@ -27,6 +27,16 @@ typedef LuaIntf::LuaTableRef NFLuaTableRef;
 class NFILuaModule
 {
 public:
+	NFILuaModule()
+	{
+
+	}
+
+	virtual ~NFILuaModule()
+	{
+
+	}
+
 	lua_State* GetLuaState() const
 	{
 		return l.state();

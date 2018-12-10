@@ -20,8 +20,6 @@ end
 
 function GameServerModule.Init()
     TcpServer.addRecvCallBack(NF_SERVER_TYPES.NF_ST_GAME, 0, "GameServerModule.NetServerRecvHandleJson")
-	TcpServer.addEventCallBack(NF_SERVER_TYPES.NF_ST_GAME, "GameServerModule.ProxyNetEvent")
-    GameServerModule.gameserver_linkid = TcpServer.addServer(NF_SERVER_TYPES.NF_ST_GAME, 1, 100, 6005, false)
 
     unilight.addtimer("UserInfo.Update", 1)
 
@@ -89,12 +87,4 @@ end
 
 function GameServerModule.Shut()
 
-end
-
-function GameServerModule.ProxyNetEvent(event, unlinkId)
-    if event == NF_MSG_TYPE.eMsgType_CONNECTED then
-        unilight.debug("GameServer | proxy connect!")
-    elseif event == NF_MSG_TYPE.eMsgType_DISCONNECTED then
-        unilight.error("GameServer | proxy disconnected!")
-    end
 end

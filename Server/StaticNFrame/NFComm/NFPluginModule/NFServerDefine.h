@@ -58,3 +58,35 @@ typedef std::function<void(const eMsgType nEvent, const uint32_t unLinkId)> NET_
 
 typedef std::function<void(int severity, const char* msg)> NET_EVENT_LOG_FUNCTOR;
 
+typedef std::function<void(const std::string& msg)> LUA_SEND_MSG_FUNCTION;
+
+class PlayerAccountInfo
+{
+public:
+	PlayerAccountInfo()
+	{
+		proxyUnlinkId = 0;
+		uid = 0;
+	}
+	uint32_t proxyUnlinkId;
+	uint64_t uid;
+	std::string ip;
+	std::string account;
+	LUA_SEND_MSG_FUNCTION sendMsgFunc;
+
+	void SetProxyUnlinkId(uint32_t id) { proxyUnlinkId = id; }
+	uint32_t GetProxyUnlinkId() { return proxyUnlinkId; }
+
+	void SetUid(uint64_t id) { uid = id; }
+	uint64_t GetUid() { return uid; }
+
+	void SetIp(const std::string& _ip) { ip = _ip; }
+	std::string GetIp() { return ip; }
+
+	void SetAccount(const std::string& a) { account = a; }
+	std::string GetAccount() { return account; }
+
+	void SetSendMsg(const LUA_SEND_MSG_FUNCTION& func) { sendMsgFunc = func; }
+	LUA_SEND_MSG_FUNCTION GetSendMsg() { return sendMsgFunc; }
+};
+

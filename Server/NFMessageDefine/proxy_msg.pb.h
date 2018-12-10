@@ -38,7 +38,7 @@ namespace protobuf_proxy_5fmsg_2eproto {
 struct TableStruct {
   static const ::google::protobuf::internal::ParseTableField entries[];
   static const ::google::protobuf::internal::AuxillaryParseTableField aux[];
-  static const ::google::protobuf::internal::ParseTable schema[3];
+  static const ::google::protobuf::internal::ParseTable schema[4];
   static const ::google::protobuf::internal::FieldMetadata field_metadata[];
   static const ::google::protobuf::internal::SerializationTable serialization_table[];
   static const ::google::protobuf::uint32 offsets[];
@@ -46,6 +46,9 @@ struct TableStruct {
 void AddDescriptors();
 }  // namespace protobuf_proxy_5fmsg_2eproto
 namespace NFMsg {
+class AccountConnectGameServer_C;
+class AccountConnectGameServer_CDefaultTypeInternal;
+extern AccountConnectGameServer_CDefaultTypeInternal _AccountConnectGameServer_C_default_instance_;
 class ProxyCmdMessage;
 class ProxyCmdMessageDefaultTypeInternal;
 extern ProxyCmdMessageDefaultTypeInternal _ProxyCmdMessage_default_instance_;
@@ -58,6 +61,7 @@ extern UserLoginTokenLoginUserPmd_CDefaultTypeInternal _UserLoginTokenLoginUserP
 }  // namespace NFMsg
 namespace google {
 namespace protobuf {
+template<> ::NFMsg::AccountConnectGameServer_C* Arena::CreateMaybeMessage<::NFMsg::AccountConnectGameServer_C>(Arena*);
 template<> ::NFMsg::ProxyCmdMessage* Arena::CreateMaybeMessage<::NFMsg::ProxyCmdMessage>(Arena*);
 template<> ::NFMsg::UserJsMessageForwardUserPmd_CS* Arena::CreateMaybeMessage<::NFMsg::UserJsMessageForwardUserPmd_CS>(Arena*);
 template<> ::NFMsg::UserLoginTokenLoginUserPmd_C* Arena::CreateMaybeMessage<::NFMsg::UserLoginTokenLoginUserPmd_C>(Arena*);
@@ -455,6 +459,146 @@ class UserJsMessageForwardUserPmd_CS : public ::google::protobuf::Message /* @@p
   mutable ::google::protobuf::internal::CachedSize _cached_size_;
   friend struct ::protobuf_proxy_5fmsg_2eproto::TableStruct;
 };
+// -------------------------------------------------------------------
+
+class AccountConnectGameServer_C : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:NFMsg.AccountConnectGameServer_C) */ {
+ public:
+  AccountConnectGameServer_C();
+  virtual ~AccountConnectGameServer_C();
+
+  AccountConnectGameServer_C(const AccountConnectGameServer_C& from);
+
+  inline AccountConnectGameServer_C& operator=(const AccountConnectGameServer_C& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  #if LANG_CXX11
+  AccountConnectGameServer_C(AccountConnectGameServer_C&& from) noexcept
+    : AccountConnectGameServer_C() {
+    *this = ::std::move(from);
+  }
+
+  inline AccountConnectGameServer_C& operator=(AccountConnectGameServer_C&& from) noexcept {
+    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
+      if (this != &from) InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+  #endif
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const AccountConnectGameServer_C& default_instance();
+
+  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
+  static inline const AccountConnectGameServer_C* internal_default_instance() {
+    return reinterpret_cast<const AccountConnectGameServer_C*>(
+               &_AccountConnectGameServer_C_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    3;
+
+  void Swap(AccountConnectGameServer_C* other);
+  friend void swap(AccountConnectGameServer_C& a, AccountConnectGameServer_C& b) {
+    a.Swap(&b);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline AccountConnectGameServer_C* New() const final {
+    return CreateMaybeMessage<AccountConnectGameServer_C>(NULL);
+  }
+
+  AccountConnectGameServer_C* New(::google::protobuf::Arena* arena) const final {
+    return CreateMaybeMessage<AccountConnectGameServer_C>(arena);
+  }
+  void CopyFrom(const ::google::protobuf::Message& from) final;
+  void MergeFrom(const ::google::protobuf::Message& from) final;
+  void CopyFrom(const AccountConnectGameServer_C& from);
+  void MergeFrom(const AccountConnectGameServer_C& from);
+  void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input) final;
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const final;
+  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
+      bool deterministic, ::google::protobuf::uint8* target) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(AccountConnectGameServer_C* other);
+  private:
+  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
+    return NULL;
+  }
+  inline void* MaybeArenaPtr() const {
+    return NULL;
+  }
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // string ip = 2;
+  void clear_ip();
+  static const int kIpFieldNumber = 2;
+  const ::std::string& ip() const;
+  void set_ip(const ::std::string& value);
+  #if LANG_CXX11
+  void set_ip(::std::string&& value);
+  #endif
+  void set_ip(const char* value);
+  void set_ip(const char* value, size_t size);
+  ::std::string* mutable_ip();
+  ::std::string* release_ip();
+  void set_allocated_ip(::std::string* ip);
+
+  // string account = 4;
+  void clear_account();
+  static const int kAccountFieldNumber = 4;
+  const ::std::string& account() const;
+  void set_account(const ::std::string& value);
+  #if LANG_CXX11
+  void set_account(::std::string&& value);
+  #endif
+  void set_account(const char* value);
+  void set_account(const char* value, size_t size);
+  ::std::string* mutable_account();
+  ::std::string* release_account();
+  void set_allocated_account(::std::string* account);
+
+  // uint64 uid = 1;
+  void clear_uid();
+  static const int kUidFieldNumber = 1;
+  ::google::protobuf::uint64 uid() const;
+  void set_uid(::google::protobuf::uint64 value);
+
+  // uint32 port = 3;
+  void clear_port();
+  static const int kPortFieldNumber = 3;
+  ::google::protobuf::uint32 port() const;
+  void set_port(::google::protobuf::uint32 value);
+
+  // @@protoc_insertion_point(class_scope:NFMsg.AccountConnectGameServer_C)
+ private:
+
+  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+  ::google::protobuf::internal::ArenaStringPtr ip_;
+  ::google::protobuf::internal::ArenaStringPtr account_;
+  ::google::protobuf::uint64 uid_;
+  ::google::protobuf::uint32 port_;
+  mutable ::google::protobuf::internal::CachedSize _cached_size_;
+  friend struct ::protobuf_proxy_5fmsg_2eproto::TableStruct;
+};
 // ===================================================================
 
 
@@ -770,9 +914,149 @@ inline void UserJsMessageForwardUserPmd_CS::set_allocated_msg(::std::string* msg
   // @@protoc_insertion_point(field_set_allocated:NFMsg.UserJsMessageForwardUserPmd_CS.msg)
 }
 
+// -------------------------------------------------------------------
+
+// AccountConnectGameServer_C
+
+// uint64 uid = 1;
+inline void AccountConnectGameServer_C::clear_uid() {
+  uid_ = GOOGLE_ULONGLONG(0);
+}
+inline ::google::protobuf::uint64 AccountConnectGameServer_C::uid() const {
+  // @@protoc_insertion_point(field_get:NFMsg.AccountConnectGameServer_C.uid)
+  return uid_;
+}
+inline void AccountConnectGameServer_C::set_uid(::google::protobuf::uint64 value) {
+  
+  uid_ = value;
+  // @@protoc_insertion_point(field_set:NFMsg.AccountConnectGameServer_C.uid)
+}
+
+// string ip = 2;
+inline void AccountConnectGameServer_C::clear_ip() {
+  ip_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline const ::std::string& AccountConnectGameServer_C::ip() const {
+  // @@protoc_insertion_point(field_get:NFMsg.AccountConnectGameServer_C.ip)
+  return ip_.GetNoArena();
+}
+inline void AccountConnectGameServer_C::set_ip(const ::std::string& value) {
+  
+  ip_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:NFMsg.AccountConnectGameServer_C.ip)
+}
+#if LANG_CXX11
+inline void AccountConnectGameServer_C::set_ip(::std::string&& value) {
+  
+  ip_.SetNoArena(
+    &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+  // @@protoc_insertion_point(field_set_rvalue:NFMsg.AccountConnectGameServer_C.ip)
+}
+#endif
+inline void AccountConnectGameServer_C::set_ip(const char* value) {
+  GOOGLE_DCHECK(value != NULL);
+  
+  ip_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:NFMsg.AccountConnectGameServer_C.ip)
+}
+inline void AccountConnectGameServer_C::set_ip(const char* value, size_t size) {
+  
+  ip_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:NFMsg.AccountConnectGameServer_C.ip)
+}
+inline ::std::string* AccountConnectGameServer_C::mutable_ip() {
+  
+  // @@protoc_insertion_point(field_mutable:NFMsg.AccountConnectGameServer_C.ip)
+  return ip_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline ::std::string* AccountConnectGameServer_C::release_ip() {
+  // @@protoc_insertion_point(field_release:NFMsg.AccountConnectGameServer_C.ip)
+  
+  return ip_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline void AccountConnectGameServer_C::set_allocated_ip(::std::string* ip) {
+  if (ip != NULL) {
+    
+  } else {
+    
+  }
+  ip_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ip);
+  // @@protoc_insertion_point(field_set_allocated:NFMsg.AccountConnectGameServer_C.ip)
+}
+
+// uint32 port = 3;
+inline void AccountConnectGameServer_C::clear_port() {
+  port_ = 0u;
+}
+inline ::google::protobuf::uint32 AccountConnectGameServer_C::port() const {
+  // @@protoc_insertion_point(field_get:NFMsg.AccountConnectGameServer_C.port)
+  return port_;
+}
+inline void AccountConnectGameServer_C::set_port(::google::protobuf::uint32 value) {
+  
+  port_ = value;
+  // @@protoc_insertion_point(field_set:NFMsg.AccountConnectGameServer_C.port)
+}
+
+// string account = 4;
+inline void AccountConnectGameServer_C::clear_account() {
+  account_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline const ::std::string& AccountConnectGameServer_C::account() const {
+  // @@protoc_insertion_point(field_get:NFMsg.AccountConnectGameServer_C.account)
+  return account_.GetNoArena();
+}
+inline void AccountConnectGameServer_C::set_account(const ::std::string& value) {
+  
+  account_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:NFMsg.AccountConnectGameServer_C.account)
+}
+#if LANG_CXX11
+inline void AccountConnectGameServer_C::set_account(::std::string&& value) {
+  
+  account_.SetNoArena(
+    &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+  // @@protoc_insertion_point(field_set_rvalue:NFMsg.AccountConnectGameServer_C.account)
+}
+#endif
+inline void AccountConnectGameServer_C::set_account(const char* value) {
+  GOOGLE_DCHECK(value != NULL);
+  
+  account_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:NFMsg.AccountConnectGameServer_C.account)
+}
+inline void AccountConnectGameServer_C::set_account(const char* value, size_t size) {
+  
+  account_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:NFMsg.AccountConnectGameServer_C.account)
+}
+inline ::std::string* AccountConnectGameServer_C::mutable_account() {
+  
+  // @@protoc_insertion_point(field_mutable:NFMsg.AccountConnectGameServer_C.account)
+  return account_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline ::std::string* AccountConnectGameServer_C::release_account() {
+  // @@protoc_insertion_point(field_release:NFMsg.AccountConnectGameServer_C.account)
+  
+  return account_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline void AccountConnectGameServer_C::set_allocated_account(::std::string* account) {
+  if (account != NULL) {
+    
+  } else {
+    
+  }
+  account_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), account);
+  // @@protoc_insertion_point(field_set_allocated:NFMsg.AccountConnectGameServer_C.account)
+}
+
 #ifdef __GNUC__
   #pragma GCC diagnostic pop
 #endif  // __GNUC__
+// -------------------------------------------------------------------
+
 // -------------------------------------------------------------------
 
 // -------------------------------------------------------------------

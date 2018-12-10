@@ -23,3 +23,10 @@ message UserJsMessageForwardUserPmd_CS
 {
 	string msg = 1;
 }
+
+message AccountConnectGameServer_C
+{
+	uint64 uid = 1;
+	string ip = 2;
+	string account = 3;
+}

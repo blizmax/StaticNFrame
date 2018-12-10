@@ -223,13 +223,14 @@ std::string NFCMongoModule::FindAllToJson(const int nServerID, const std::string
 {
 	std::string result;
 	std::vector<std::string> vec = FindAll(nServerID, collectionName);
-	result += "{";
+	result += "[";
 	for (size_t i = 0; i < vec.size(); i++)
 	{
 		result += vec[i];
-		result += ",";
+		if (i != vec.size()-1)
+			result += ",";
 	}
-	result += "}";
+	result += "]";
 	return result;
 }
 
