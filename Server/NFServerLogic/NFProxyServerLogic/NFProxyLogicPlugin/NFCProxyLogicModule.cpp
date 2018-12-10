@@ -72,13 +72,62 @@ void NFCProxyLogicModule::OnExecute(uint16_t nEventID, uint64_t nSrcID, uint8_t 
 
 void NFCProxyLogicModule::OnHandleJsonMessage(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen)
 {
-	NFJson json;
-	std::string errString;
-	json.parse(std::string(msg, nLen), errString);
-
-	if (errString.empty() == false)
+	NFMsg::ProxyCmdMessage cmdMessage;
+	std::string jsonMsg = std::string(msg, nLen);
+	if (NFServerCommon::JsonStringToMessage(jsonMsg, cmdMessage) == false)
 	{
-		NFLogError("json error | {}", errString);
 		return;
 	}
+
+	if (cmdMessage.cmd_name() == "Pmd.UserLoginTokenLoginUserPmd_C")
+	{
+		NFMsg::UserLoginTokenLoginUserPmd_C msg;
+		if (NFServerCommon::JsonStringToMessage(jsonMsg, msg) == false)
+		{
+			return;
+		}
+		OnHandleUser_LoginTokenLoginUserPmd(unLinkId, msg);
+	}
+	else if (cmdMessage.cmd_name() == "Pmd.UserJsMessageForwardUserPmd_CS")
+	{
+		NFMsg::UserJsMessageForwardUserPmd_CS msg;
+		if (NFServerCommon::JsonStringToMessage(jsonMsg, msg) == false)
+		{
+			return;
+		}
+		OnHandleUser_UserJsMessageForwardUserPmd(unLinkId, msg);
+	}
+}
+
+void NFCProxyLogicModule::OnHandleUser_UserJsMessageForwardUserPmd(const uint32_t unLinkId, const NFMsg::UserJsMessageForwardUserPmd_CS& msg)
+{
+	ProxyPlayerData* pData = GetPlayerDataByLinkId(unLinkId);
+	if (pData == nullptr)
+	{
+		NFLogError("Can't find player data, unLinkId:{}", unLinkId);
+		return;
+	}
+
+	auto pServerData = m_pProxyClient_GameModule->GetServerData(pData->gameServerId);
+	m_pNetClientModule->SendByServerID(pServerData->mUnlinkId, 0, msg.msg(), 0);
+}
+
+void NFCProxyLogicModule::OnHandleUser_LoginTokenLoginUserPmd(const uint32_t unLinkId, const NFMsg::UserLoginTokenLoginUserPmd_C& msg)
+{
+	ProxyPlayerData* pData = GetPlayerDataByLinkId(unLinkId);
+	if (pData == nullptr)
+	{
+		pData = NF_NEW ProxyPlayerData();
+		pData->uid = msg.accountid();
+		pData->gameServerId = msg.zoneid();
+		mUnlinkIdPlayerData.AddElement(unLinkId, pData);
+
+		auto pPlayerData = GetPlayerData(msg.accountid());
+		if (pPlayerData == nullptr)
+		{
+			mPlayerData.AddElement(msg.accountid(), pData);
+		}
+	}
+
+	pData->unlinkId = unLinkId;
 }

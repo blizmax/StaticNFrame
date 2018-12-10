@@ -108,6 +108,9 @@
     <ClCompile Include="NFTarsElement.cpp">
       <Filter>Common</Filter>
     </ClCompile>
+    <ClCompile Include="NFSHA2.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="NFBase64.h">
@@ -279,6 +282,9 @@
       <Filter>Common</Filter>
     </ClInclude>
     <ClInclude Include="NFConsistentHash.hpp">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="NFSHA2.h">
       <Filter>Common</Filter>
     </ClInclude>
   </ItemGroup>

@@ -1,0 +1,25 @@
+syntax = "proto3";
+
+package NFMsg;
+
+message ProxyCmdMessage
+{
+	string cmd_name = 1;
+}
+
+message UserLoginTokenLoginUserPmd_C
+{
+	uint32 version = 1;
+	uint32 gameid = 2;
+	uint32 zoneid = 3;
+	uint64 accountid = 4;
+	uint32 logintempid = 5;
+	uint64 timestamp = 6;
+	string compress = 7;
+	string tokenmd5 = 8;
+}
+
+message UserJsMessageForwardUserPmd_CS
+{
+	string msg = 1;
+}

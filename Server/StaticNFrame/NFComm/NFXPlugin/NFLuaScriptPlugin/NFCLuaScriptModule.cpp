@@ -19,6 +19,7 @@
 #include "NFComm/NFPluginModule/NFLogMgr.h"
 #include "NFComm/NFPluginModule/NFIHttpClientModule.h"
 #include "NFComm/NFPluginModule/NFIHttpServerModule.h"
+#include "NFComm/NFPluginModule/NFIMongoModule.h"
 
 #define TRY_RUN_GLOBAL_SCRIPT_FUN0(strFuncName)   try {LuaIntf::LuaRef func(l, strFuncName);  func.call<LuaIntf::LuaRef>(); }   catch (LuaIntf::LuaException& e) { cout << e.what() << endl; }
 #define TRY_RUN_GLOBAL_SCRIPT_FUN1(strFuncName, arg1)  try {LuaIntf::LuaRef func(l, strFuncName);  func.call<LuaIntf::LuaRef>(arg1); }catch (LuaIntf::LuaException& e) { cout << e.what() << endl; }
@@ -108,6 +109,7 @@ bool NFCLuaScriptModule::Register()
 		.addFunction("GetClientModule", &NFIPluginManager::FindModule<NFINetClientModule>)
 		.addFunction("GetHttpClientModule", &NFIPluginManager::FindModule<NFIHttpClientModule>)
 		.addFunction("GetHttpServerModule", &NFIPluginManager::FindModule<NFIHttpServerModule>)
+		.addFunction("GetMongoModule", &NFIPluginManager::FindModule<NFIMongoModule>)
 		.endClass();
 
 	LuaIntf::LuaBinding(l).beginClass<NFIKernelModule>("NFIKernelModule")
@@ -176,6 +178,20 @@ bool NFCLuaScriptModule::Register()
 		.addFunction("LuaInfo", &NFILogModule::LuaInfo)
 		.addFunction("LuaWarn", &NFILogModule::LuaWarn)
 		.addFunction("LuaError", &NFILogModule::LuaError)
+		.endClass();
+
+	LuaIntf::LuaBinding(l).beginClass<NFIMongoModule>("NFIMongoModule")
+		.addFunction("AddMongoServer", (bool (NFIMongoModule::*)(const int nServerID, const std::string& ip, uint32_t port, const std::string& dbname))&NFIMongoModule::AddMongoServer)
+		.addFunction("CreateCollection", &NFIMongoModule::CreateCollection)
+		.addFunction("DropCollection", &NFIMongoModule::DropCollection)
+		.addFunction("UpdateOneByKey", (bool (NFIMongoModule::*)(const int nServerID, const std::string& collectionName, const std::string& json, uint64_t key))&NFIMongoModule::UpdateOneByKey)
+		.addFunction("UpdateOne", (bool (NFIMongoModule::*)(const int nServerID, const std::string& collectionName, const std::string& json))&NFIMongoModule::UpdateOne)
+		.addFunction("FindOne", &NFIMongoModule::FindOne)
+		.addFunction("FindMany", &NFIMongoModule::FindMany)
+		.addFunction("FindAll", &NFIMongoModule::FindAllToJson)
+		.addFunction("FindOneByKey", (std::string (NFIMongoModule::*)(const int nServerID, const std::string& collectionName, int64_t key))&NFIMongoModule::FindOneByKey)
+		.addFunction("UpdateFieldByKey", (bool (NFIMongoModule::*)(const int nServerID, const std::string& collectionName, const std::string& json, uint64_t key))&NFIMongoModule::UpdateFieldByKey)
+		.addFunction("FindFieldByKey", (std::string(NFIMongoModule::*)(const int nServerID, const std::string& collectionName, const std::string& fieldPath, int64_t key))&NFIMongoModule::FindFieldByKey)
 		.endClass();
 
 	return true;

@@ -54,6 +54,20 @@ bool NFCMongoModule::Execute()
 
 	return true;
 }
+/**
+* @brief 添加serverid的链接, 一个serverid对应一个链接数据库的驱动
+*
+* @return bool
+*/
+bool NFCMongoModule::AddMongoServer(const int nServerID, const std::string& uri, const std::string& dbname)
+{
+	if (m_pMongoDriverManager)
+	{
+		return m_pMongoDriverManager->AddMongoServer(nServerID, uri, dbname);
+	}
+	return false;
+}
+
 
 bool NFCMongoModule::AddMongoServer(const int nServerID, const std::string& ip, uint32_t port, const std::string& dbname)
 {
@@ -118,7 +132,7 @@ bool NFCMongoModule::UpdateOneByKey(const int nServerID, const std::string& coll
 	return false;
 }
 
-bool NFCMongoModule::UpdateOneByKey(const int nServerID, const std::string& collectionName, const std::string& json, const std::string key)
+bool NFCMongoModule::UpdateOneByKey(const int nServerID, const std::string& collectionName, const std::string& json, const std::string& key)
 {
 	if (m_pMongoDriverManager)
 	{
@@ -128,6 +142,15 @@ bool NFCMongoModule::UpdateOneByKey(const int nServerID, const std::string& coll
 }
 
 bool NFCMongoModule::UpdateOneByKey(const int nServerID, const std::string& collectionName, const google::protobuf::Message& message, uint64_t key)
+{
+	if (m_pMongoDriverManager)
+	{
+		return m_pMongoDriverManager->UpdateOneByKey(nServerID, collectionName, message, key);
+	}
+	return false;
+}
+
+bool NFCMongoModule::UpdateOneByKey(const int nServerID, const std::string& collectionName, const google::protobuf::Message& message, const std::string& key)
 {
 	if (m_pMongoDriverManager)
 	{
@@ -196,16 +219,30 @@ std::vector<std::string> NFCMongoModule::FindAll(const int nServerID, const std:
 	return std::vector<std::string>();
 }
 
+std::string NFCMongoModule::FindAllToJson(const int nServerID, const std::string& collectionName)
+{
+	std::string result;
+	std::vector<std::string> vec = FindAll(nServerID, collectionName);
+	result += "{";
+	for (size_t i = 0; i < vec.size(); i++)
+	{
+		result += vec[i];
+		result += ",";
+	}
+	result += "}";
+	return result;
+}
+
 /**
 * @brief 查找数据
 *
 * @return bool
 */
-std::string NFCMongoModule::FindOneyByKey(const int nServerID, const std::string& collectionName, int64_t key)
+std::string NFCMongoModule::FindOneByKey(const int nServerID, const std::string& collectionName, int64_t key)
 {
 	if (m_pMongoDriverManager)
 	{
-		return m_pMongoDriverManager->FindOneyByKey(nServerID, collectionName, key);
+		return m_pMongoDriverManager->FindOneByKey(nServerID, collectionName, key);
 	}
 	return std::string();
 }
@@ -215,11 +252,95 @@ std::string NFCMongoModule::FindOneyByKey(const int nServerID, const std::string
 *
 * @return bool
 */
-std::string NFCMongoModule::FindOneyByKey(const int nServerID, const std::string& collectionName, const std::string& key)
+std::string NFCMongoModule::FindOneByKey(const int nServerID, const std::string& collectionName, const std::string& key)
 {
 	if (m_pMongoDriverManager)
 	{
-		return m_pMongoDriverManager->FindOneyByKey(nServerID, collectionName, key);
+		return m_pMongoDriverManager->FindOneByKey(nServerID, collectionName, key);
 	}
 	return std::string();
+}
+
+/**
+* @brief 更新数据
+*
+* @return bool
+*/
+bool NFCMongoModule::UpdateFieldByKey(const int nServerID, const std::string& collectionName, const std::string& json, const std::string key)
+{
+	if (m_pMongoDriverManager)
+	{
+		return m_pMongoDriverManager->UpdateFieldByKey(nServerID, collectionName, json, key);
+	}
+	return false;
+}
+
+/**
+* @brief 更新数据
+*
+* @return bool
+*/
+bool NFCMongoModule::UpdateFieldByKey(const int nServerID, const std::string& collectionName, const std::string& json, uint64_t key)
+{
+	if (m_pMongoDriverManager)
+	{
+		return m_pMongoDriverManager->UpdateFieldByKey(nServerID, collectionName, json, key);
+	}
+	return false;
+}
+
+/**
+* @brief 更新数据
+*
+* @return bool
+*/
+bool NFCMongoModule::UpdateFieldByKey(const int nServerID, const std::string& collectionName, const google::protobuf::Message& message, uint64_t key)
+{
+	if (m_pMongoDriverManager)
+	{
+		return m_pMongoDriverManager->UpdateFieldByKey(nServerID, collectionName, message, key);
+	}
+	return false;
+}
+
+/**
+* @brief 更新数据
+*
+* @return bool
+*/
+bool NFCMongoModule::UpdateFieldByKey(const int nServerID, const std::string& collectionName, const google::protobuf::Message& message, const std::string& key)
+{
+	if (m_pMongoDriverManager)
+	{
+		return m_pMongoDriverManager->UpdateFieldByKey(nServerID, collectionName, message, key);
+	}
+	return false;
+}
+
+/**
+* @brief 查找数据
+*
+* @return bool
+*/
+std::string NFCMongoModule::FindFieldByKey(const int nServerID, const std::string& collectionName, const std::string& fieldPath, int64_t key)
+{
+	if (m_pMongoDriverManager)
+	{
+		return m_pMongoDriverManager->FindFieldByKey(nServerID, collectionName, fieldPath, key);
+	}
+	return false;
+}
+
+/**
+* @brief 查找数据
+*
+* @return bool
+*/
+std::string NFCMongoModule::FindFieldByKey(const int nServerID, const std::string& collectionName, const std::string& fieldPath, const std::string& key)
+{
+	if (m_pMongoDriverManager)
+	{
+		return m_pMongoDriverManager->FindFieldByKey(nServerID, collectionName, fieldPath, key);
+	}
+	return false;
 }

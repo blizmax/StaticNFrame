@@ -33,9 +33,6 @@ function init_script_system(pluginManager)
 	if pluginManager:IsLoadAllServer() then
 		package.path = package.path .. ";../ScriptModule/GameServer/?.lua;"
 		LoadLuaFile("../ScriptModule/GameServer", false)
-
-		LoadLuaFile("../ScriptModule/GateServer", true)
-		LoadLuaFile("../ScriptModule/LoginServer", true)
 	else
 		LoadLuaFile("../ScriptModule/" .. pluginManager:GetAppName(), true)
 	end

@@ -19,6 +19,7 @@
 #include "NFComm/NFPluginModule/NFServerDefine.h"
 #include "NFComm/NFCore/NFJson.h"
 #include "NFServer/NFServerCommon/NFServerCommon.h"
+#include "NFComm/NFCore/NFRandom.hpp"
 
 
 class NFLogTask : public NFTask
@@ -63,13 +64,8 @@ NFCTestActorModule::~NFCTestActorModule()
 {
 }
 
-bool NFCTestActorModule::Init()
+void NFCTestActorModule::TestMongo()
 {
-	//NFITaskModule* pTaskModule = pPluginManager->FindModule<NFITaskModule>();
-
-	//for(int i = 0; i < 10000; i++)
-	//	pTaskModule->AddTask(new NFLogTask());
-
 	NFIMongoModule* pMongoModule = pPluginManager->FindModule<NFIMongoModule>();
 
 	pMongoModule->AddMongoServer(NF_ST_GAME, "45.32.39.90", 27017, "test");
@@ -82,11 +78,12 @@ bool NFCTestActorModule::Init()
 
 	for (int i = 1; i < 10; i++)
 	{
+		uint32_t xx = NFRandomUInt(0, 2);
 		NFMsg::test_gaoyi_table message;
 		message.set_uid(i);
 		message.set_name("gaoyi");
 		message.set_sex("man");
-		message.set_age(29);
+		message.set_age(29 + xx);
 		auto pData = message.mutable_dd();
 		pData->set_num(11);
 		pData->set_sb(12);
@@ -100,7 +97,7 @@ bool NFCTestActorModule::Init()
 	vecResult = pMongoModule->FindAll(NF_ST_GAME, "gaoyi");
 
 	{
-		std::string result = pMongoModule->FindOneyByKey(NF_ST_GAME, "gaoyi", 1);
+		std::string result = pMongoModule->FindOneByKey(NF_ST_GAME, "gaoyi", "1");
 		NFMsg::test_gaoyi_table message;
 		NFServerCommon::JsonStringToMessage(result, message);
 	}
@@ -118,9 +115,29 @@ bool NFCTestActorModule::Init()
 		mapJson.emplace("age", NFJson(29));
 		NFJson json(mapJson);
 
-		std::string opts = "{\"sort\":{\"_id\":1}}";
+		std::string opts = "{\"sort\":{\"_id\":-1}}";
 		std::vector<std::string> result = pMongoModule->FindMany(NF_ST_GAME, "gaoyi", json.dump(), opts);
 	}
+	{
+		std::string json = "{\"dd.sb\":33}";
+
+		pMongoModule->UpdateFieldByKey(NF_ST_GAME, "gaoyi", json, "1");
+	}
+
+	{
+		std::string fieldPath = "dd.sb";
+		std::string result = pMongoModule->FindFieldByKey(NF_ST_GAME, "gaoyi", fieldPath, "1");
+	}
+}
+
+bool NFCTestActorModule::Init()
+{
+	//NFITaskModule* pTaskModule = pPluginManager->FindModule<NFITaskModule>();
+
+	//for(int i = 0; i < 10000; i++)
+	//	pTaskModule->AddTask(new NFLogTask());
+
+
 	return true;
 }
 

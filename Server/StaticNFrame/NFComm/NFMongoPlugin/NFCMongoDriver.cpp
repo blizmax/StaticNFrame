@@ -36,24 +36,31 @@ bool NFCMongoDriver::Connect(const std::string& ip, uint32_t port, const std::st
 	m_port = port;
 	m_dbname = dbname;
 
+	std::string str = NF_FORMAT("mongodb://{}:{}", m_ip, m_port);
+	return Connect(str, dbname);
+}
+
+bool NFCMongoDriver::Connect(const std::string& uri, const std::string& dbname)
+{
+	m_dbname = dbname;
+
+	bson_error_t error;
+	m_uri = mongoc_uri_new_with_error(uri.c_str(), &error);
+	if (m_uri == nullptr)
+	{
+		NFLogError("Failed to parse URI:{}", uri);
+		return HandleMongocError(error);
+	}
+
 	return Connect();
 }
 
 bool NFCMongoDriver::Connect()
 {
-	bson_error_t error;
-	std::string str = NF_FORMAT("mongodb://{}:{}", m_ip, m_port);
-	m_uri = mongoc_uri_new_with_error(str.c_str(), &error);
-	if (m_uri == nullptr)
-	{
-		NFLogError("Failed to parse URI:{}", str);
-		return HandleMongocError(error);
-	}
-
 	m_pClient = mongoc_client_new_from_uri(m_uri);
 	if (m_pClient == nullptr)
 	{
-		NFLogError("Mongo Client Connect Error:{}", str);
+		NFLogError("Mongo Client Connect Error");
 		return false;
 	}
 
@@ -62,7 +69,7 @@ bool NFCMongoDriver::Connect()
 	m_pDatabase = mongoc_client_get_database(m_pClient, m_dbname.c_str());
 	if (m_pDatabase == nullptr)
 	{
-		NFLogError("Mongo Client Get DbBase Error, ip:{}, dbName:{}", str, m_dbname);
+		NFLogError("Mongo Client Get DbBase Error", m_dbname);
 		return false;
 	}
 	return true;
@@ -253,7 +260,7 @@ bool NFCMongoDriver::DropCollection(const std::string& collectionName)
 *
 * @return bool
 */
-std::string NFCMongoDriver::FindOneyByKey(const std::string& collectionName, const std::string& key)
+std::string NFCMongoDriver::FindOneByKey(const std::string& collectionName, const std::string& key)
 {
 	std::string result;
 	mongoc_collection_t *collection = GetCollection(collectionName);
@@ -275,7 +282,7 @@ std::string NFCMongoDriver::FindOneyByKey(const std::string& collectionName, con
 	bson_init(&opts);
 	BSON_APPEND_INT32(&opts, "limit", 1);
 	BSON_APPEND_BOOL(&opts, "singleBatch", true);
-
+	
 	cursor = mongoc_collection_find_with_opts(collection, query, &opts, nullptr);
 	if (mongoc_cursor_next(cursor, &doc))
 	{
@@ -295,7 +302,98 @@ std::string NFCMongoDriver::FindOneyByKey(const std::string& collectionName, con
 	return result;
 }
 
-std::string NFCMongoDriver::FindOneyByKey(const std::string& collectionName, int64_t key)
+/**
+* @brief 查找数据
+*
+* @return bool
+*/
+std::string NFCMongoDriver::FindFieldByKey(const std::string& collectionName, const std::string& fieldPath, int64_t key)
+{
+	std::string result;
+	mongoc_collection_t *collection = GetCollection(collectionName);
+	if (!collection)
+	{
+		NFLogError("Collection Name Not Exist:{}", collectionName);
+		return result;
+	}
+
+	mongoc_cursor_t *cursor;
+	const bson_t *doc;
+
+	char *str;
+	bson_error_t error;
+	bson_t *query = bson_new();
+	BSON_APPEND_INT64(query, PRIMARY_TABLE_KEY, key);
+
+	bson_t *field = bson_new();
+	BSON_APPEND_BOOL(field, fieldPath.c_str(), true);
+
+	cursor = mongoc_collection_find(collection, MONGOC_QUERY_NONE, 0, 1, 0, query, field, nullptr);
+	if (mongoc_cursor_next(cursor, &doc))
+	{
+		str = bson_as_json(doc, NULL);
+		result = str;
+		bson_free(str);
+	}
+
+	if (mongoc_cursor_error(cursor, &error))
+	{
+		HandleMongocError(error);
+	}
+
+	bson_destroy(field);
+	bson_destroy(query);
+	mongoc_cursor_destroy(cursor);
+	return result;
+}
+
+/**
+* @brief 查找数据
+*
+* @return bool
+*/
+std::string NFCMongoDriver::FindFieldByKey(const std::string& collectionName, const std::string& fieldPath, const std::string& key)
+{
+	std::string result;
+	mongoc_collection_t *collection = GetCollection(collectionName);
+	if (!collection)
+	{
+		NFLogError("Collection Name Not Exist:{}", collectionName);
+		return result;
+	}
+
+	mongoc_cursor_t *cursor;
+	const bson_t *doc;
+
+	char *str;
+	bson_error_t error;
+	bson_t *query = bson_new();
+	BSON_APPEND_UTF8(query, PRIMARY_TABLE_KEY, key.c_str());
+
+	bson_t *field = bson_new();
+	BSON_APPEND_BOOL(field, fieldPath.c_str(), true);
+
+	cursor = mongoc_collection_find(collection, MONGOC_QUERY_NONE, 0, 1, 0, query, field, nullptr);
+	if (mongoc_cursor_next(cursor, &doc))
+	{
+		str = bson_as_json(doc, NULL);
+		result = str;
+		bson_free(str);
+	}
+
+	if (mongoc_cursor_error(cursor, &error))
+	{
+		HandleMongocError(error);
+	}
+
+	bson_destroy(field);
+	bson_destroy(query);
+	mongoc_cursor_destroy(cursor);
+	return result;
+}
+
+
+std::string NFCMongoDriver::FindOneByKey(const std::string& collectionName, int64_t key)
 {
 	std::string result;
 	mongoc_collection_t *collection = GetCollection(collectionName);
@@ -310,7 +408,7 @@ std::string NFCMongoDriver::FindOneyByKey(const std::string& collectionName, int
 
 	bson_error_t error;
 	bson_t *query = bson_new();
-	BSON_APPEND_UTF8(query, PRIMARY_TABLE_KEY,lexical_cast<std::string>(key).c_str());
+	BSON_APPEND_INT64(query, PRIMARY_TABLE_KEY,key);
 
 	char *str;
 	bson_t opts;
@@ -706,9 +804,110 @@ bool NFCMongoDriver::UpdateOne(const std::string& collectionName, const google::
 	return UpdateOne(collectionName, jsonStr);
 }
 
+/**
+* @brief 更新数据
+*
+* @return bool
+*/
+bool NFCMongoDriver::UpdateFieldByKey(const std::string& collectionName, const std::string& json_query, const std::string key)
+{
+	bson_error_t error;
+	bson_t *select = bson_new();
+	BSON_APPEND_UTF8(select, PRIMARY_TABLE_KEY, key.c_str());
+
+	std::string setJson = "{\"$set\":" + json_query + "}";
+	bson_t *doc = bson_new_from_json((const uint8_t*)setJson.data(), setJson.length(), &error);
+	if (HandleMongocError(error) == false || doc == nullptr)
+	{
+		if (doc) bson_destroy(doc);
+		bson_destroy(select);
+		NFLogError("bson_new_from_json error:{}", json_query);
+		return false;
+	}
+
+	bool ret = UpdateField(collectionName, select, doc);
+	bson_destroy(doc);
+	bson_destroy(select);
+	return ret;
+}
+
+/**
+* @brief 更新数据
+*
+* @return bool
+*/
+bool NFCMongoDriver::UpdateFieldByKey(const std::string& collectionName, const std::string& json, uint64_t key)
+{
+	bson_error_t error;
+	bson_t *select = bson_new();
+	BSON_APPEND_INT64(select, PRIMARY_TABLE_KEY, key);
+
+	std::string setJson = "{\"$set\":" + json + "}";
+	bson_t *doc = bson_new_from_json((const uint8_t*)setJson.data(), setJson.length(), &error);
+	if (HandleMongocError(error) == false || doc == nullptr)
+	{
+		if (doc) bson_destroy(doc);
+		bson_destroy(select);
+		NFLogError("bson_new_from_json error:{}", json);
+		return false;
+	}
+
+	bool ret = UpdateField(collectionName, select, doc);
+	bson_destroy(doc);
+	bson_destroy(select);
+	return ret;
+}
+
+/**
+* @brief 更新数据
+*
+* @return bool
+*/
+bool NFCMongoDriver::UpdateFieldByKey(const std::string& collectionName, const google::protobuf::Message& message, uint64_t key)
+{
+	std::string json_query;
+	if (NFServerCommon::MessageToJsonString(message, json_query))
+	{
+		return UpdateFieldByKey(collectionName, json_query, key);
+	}
+	return false;
+}
+
+bool NFCMongoDriver::UpdateFieldByKey(const std::string& collectionName, const google::protobuf::Message& message, const std::string& key)
+{
+	std::string json_query;
+	if (NFServerCommon::MessageToJsonString(message, json_query))
+	{
+		return UpdateFieldByKey(collectionName, json_query, key);
+	}
+	return false;
+}
+
+bool NFCMongoDriver::UpdateField(const std::string& collectionName, bson_t *select, bson_t *doc)
+{
+	if (doc == nullptr || select == nullptr) return false;
+
+	bson_error_t error;
+	mongoc_collection_t *collection = GetCollection(collectionName);
+	if (!collection)
+	{
+		NFLogError("Collection Name Not Exist:{}", collectionName);
+		return false;
+	}
+
+	bool ret = mongoc_collection_update(collection, MONGOC_UPDATE_MULTI_UPDATE, select, doc, NULL, &error);
+	if (ret == false)
+	{
+		HandleMongocError(error);
+		return false;
+	}
+
+	return true;
+}
+
 bool NFCMongoDriver::UpdateOne(const std::string& collectionName, bson_t *select, bson_t *doc)
 {
-	if (doc == nullptr) return false;
+	if (doc == nullptr || select == nullptr) return false;
 
 	bson_error_t error;
 	mongoc_collection_t *collection = GetCollection(collectionName);
@@ -728,30 +927,34 @@ bool NFCMongoDriver::UpdateOne(const std::string& collectionName, bson_t *select
 	return true;
 }
 
-bool NFCMongoDriver::UpdateOneByKey(const std::string& collectionName, const google::protobuf::Message& message, uint64_t key)
+/**
+* @brief 更新数据
+*
+* @return bool
+*/
+bool NFCMongoDriver::UpdateOneByKey(const std::string& collectionName, const google::protobuf::Message& message, const std::string& key)
 {
-	bson_error_t error;
-	bson_t *select = bson_new();
-	BSON_APPEND_INT64(select, PRIMARY_TABLE_KEY, key);
-
 	std::string json_query;
-	NFServerCommon::MessageToJsonString(message, json_query);
-	bson_t *doc = bson_new_from_json((const uint8_t*)json_query.data(), json_query.length(), &error);
-	if (HandleMongocError(error) == false || doc == nullptr)
+	if (NFServerCommon::MessageToJsonString(message, json_query))
 	{
-		if (doc) bson_destroy(doc);
-		bson_destroy(select);
-		NFLogError("bson_new_from_json error:{}", json_query);
-		return false;
+		return UpdateOneByKey(collectionName, json_query, key);
 	}
 
-	bool ret = UpdateOne(collectionName, select, doc);
-	bson_destroy(doc);
-	bson_destroy(select);
-	return ret;
+	return false;
 }
 
-bool NFCMongoDriver::UpdateOneByKey(const std::string& collectionName, const std::string& json_query, const std::string key)
+bool NFCMongoDriver::UpdateOneByKey(const std::string& collectionName, const google::protobuf::Message& message, uint64_t key)
+{
+	std::string json_query;
+	if (NFServerCommon::MessageToJsonString(message, json_query))
+	{
+		return UpdateOneByKey(collectionName, json_query, key);
+	}
+
+	return false;
+}
+
+bool NFCMongoDriver::UpdateOneByKey(const std::string& collectionName, const std::string& json_query, const std::string& key)
 {
 	bson_error_t error;
 	bson_t *select = bson_new();

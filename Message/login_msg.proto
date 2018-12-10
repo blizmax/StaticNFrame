@@ -2,6 +2,11 @@ syntax = "proto3";
 
 package NFMsg;
 
+message http_login_cmd
+{
+	string do = 1;
+}
+
 message reqeust_zone_list_data
 {
 	uint32 gameid = 1;

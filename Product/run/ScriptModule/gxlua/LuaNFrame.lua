@@ -50,6 +50,7 @@ function LuaNFrame:init(pluginManager)
     self.clientModule = self.pluginManager:GetClientModule()
     self.httpClientModule = self.pluginManager:GetHttpClientModule()
     self.httpServerModule = self.pluginManager:GetHttpServerModule()
+    self.mongoModule = self.pluginManager:GetMongoModule()
     
     --用来存放加载的module
     self.ScriptList = { }
@@ -140,18 +141,7 @@ end
 --数据库
 
 function LuaNFrame:initmongodb(url, dbname)
-    self.client = mongo.Client(url)
-
-    if self.client == nil then
-        self:error("数据库初始化失败。。。。。。。。。")
-        return
-    end
-
-    self.dataBase = self.client:getDatabase(dbname)
-
-    if self.dataBase == nil then
-        self:error("数据库初始化失败。。。。。。。。。")
-    end
+    return self.mongoModule:AddMongoServer(0, url, dbname)
 end
 
 --[[
@@ -165,7 +155,7 @@ end
         returns its Collection handle. On error, returns nil and the error message.
 ]]
 function LuaNFrame:createdb(name, primary)
-	return self.dataBase:createCollection(name, mongo.BSON{_id = primary})
+	return self.mongoModule:CreateCollection(0, name, primary)
 end
 
 --[[
@@ -176,11 +166,7 @@ end
         LuaNFrame:droptable("userinfo") // 删除表"userinfo"
 ]]
 function LuaNFrame:droptable(name)
-    local collection = self.dataBase:getCollection(name)
-    if collection ~= nil then
-        return collection:drop()
-    end
-    return false
+    return self.mongoModule:DropCollection(name)
 end
 
 --[[
@@ -192,14 +178,8 @@ end
         LuaNFrame:getdata("userinfo", 100000) // 获取表"userinfo"中主键值为100000的那条记录
 ]]
 function LuaNFrame:getdata(name, key)
-    local collection = self.dataBase:getCollection(name)
-    if collection ~= nil then
-        local data = collection:findOne({_id = key})
-        if data ~= nil then
-            return data:value()
-        end
-    end
-    return nil
+    local data = self.mongoModule:FindOneByKey(0, name, key)
+    return json.decode(data)
 end
 
 --[[
@@ -218,11 +198,12 @@ end
         unilight.savedata("userinfo", userInfo)
 ]] 
 function LuaNFrame:savedata(name, data)
-    local collection = self.dataBase:getCollection(name)
-    if collection ~= nil then
-        return collection:update({_id = data.uid}, encode_repair(data), {upsert=true})
+    local json_data = json2table(data)
+    if type(data.uid) == "number" then
+        return self.mongoModule:UpdateOneByKey(0, name, json_data, data.uid)
+    else
+        return self.mongoModule:UpdateOne(0, name, json_data)
     end
-    return false
 end
 
 --[[
@@ -235,14 +216,9 @@ end
         unilight.getfield("userinfo", 100000, "base.property") // 获取表"userinfo"中，key为100000的"base.property"字段数据
 ]]
 function LuaNFrame:getfield(name, id, fieldpath)
-    local collection = self.dataBase:getCollection(name)
-    if collection ~= nil then
-        local data = collection:findOne({_id = id})
-        if data ~= nil then
-            return data:value()[fieldpath]
-        end
-    end
-    return nil
+    local json_fieldpath = json2table(fieldpath)
+    local data = self.mongoModule:FindFieldByKey(0, name, json_fieldpath, id)
+    return json.decode(data)
 end
 
 --[[
@@ -299,12 +275,10 @@ function LuaNFrame:savefield(name, id, fieldpath, data)
         return "datatype error "
     end
 
-    local setstr = '{"$set":{"'..fieldpath..'":'..table2json(data)..'}}'
-    local collection = self.dataBase:getCollection(name)
-    if collection ~= nil then
-        return collection:update({_id = id}, setstr)
-    end
-    return false
+    local tmp = {}
+    tmp[fieldpath] = data
+    local json_str = json2table(tmp)
+    return self.mongoModule:UpdateFieldByKey(0, name, json_str, id)
 end
 
 --[[
@@ -315,24 +289,18 @@ end
         local res = unilight.getAll("userinfo")
 ]]
 function LuaNFrame:getAll(name)
-    local collection = self.dataBase:getCollection(name)
-    if collection ~= nil then
-        local tmp = {}
-        for data in collection:find({}):iterator() do
-            table.insert(tmp, data)
-        end
-        return tmp
-    end
+    local data = self.mongoModule:FindAll(name)
+    return json.decode(data)
 end
 
---获得服务器开启时间，单位ms
+--获得服务器开启时间，单位s
 function LuaNFrame:GetInitTime()
-    return self.pluginManager:GetInitTime()
+    return self.pluginManager:GetInitTime()/1000
 end
 
---获得服务器当前时间，单位ms
+--获得服务器当前时间，单位s
 function LuaNFrame:GetNowTime()
-    return self.pluginManager:GetNowTime()
+    return self.pluginManager:GetNowTime()/1000
 end
 
 --添加网络服务器

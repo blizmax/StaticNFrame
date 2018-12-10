@@ -30,6 +30,11 @@ extern PROTOBUF_INTERNAL_EXPORT_protobuf_login_5fmsg_2eproto ::google::protobuf:
 extern PROTOBUF_INTERNAL_EXPORT_protobuf_login_5fmsg_2eproto ::google::protobuf::internal::SCCInfo<1> scc_info_reqeust_zone_list_respone_respone_data;
 }  // namespace protobuf_login_5fmsg_2eproto
 namespace NFMsg {
+class http_login_cmdDefaultTypeInternal {
+ public:
+  ::google::protobuf::internal::ExplicitlyConstructed<http_login_cmd>
+      _instance;
+} _http_login_cmd_default_instance_;
 class reqeust_zone_list_dataDefaultTypeInternal {
  public:
   ::google::protobuf::internal::ExplicitlyConstructed<reqeust_zone_list_data>
@@ -102,6 +107,20 @@ class respone_select_zone_responeDefaultTypeInternal {
 } _respone_select_zone_respone_default_instance_;
 }  // namespace NFMsg
 namespace protobuf_login_5fmsg_2eproto {
+static void InitDefaultshttp_login_cmd() {
+  GOOGLE_PROTOBUF_VERIFY_VERSION;
+
+  {
+    void* ptr = &::NFMsg::_http_login_cmd_default_instance_;
+    new (ptr) ::NFMsg::http_login_cmd();
+    ::google::protobuf::internal::OnShutdownDestroyMessage(ptr);
+  }
+  ::NFMsg::http_login_cmd::InitAsDefaultInstance();
+}
+
+::google::protobuf::internal::SCCInfo<0> scc_info_http_login_cmd =
+    {{ATOMIC_VAR_INIT(::google::protobuf::internal::SCCInfoBase::kUninitialized), 0, InitDefaultshttp_login_cmd}, {}};
+
 static void InitDefaultsreqeust_zone_list_data() {
   GOOGLE_PROTOBUF_VERIFY_VERSION;
 
@@ -307,6 +326,7 @@ static void InitDefaultsrespone_select_zone_respone() {
       &protobuf_login_5fmsg_2eproto::scc_info_respone_select_zone_respone_respone_data.base,}};
 
 void InitDefaults() {
+  ::google::protobuf::internal::InitSCC(&scc_info_http_login_cmd.base);
   ::google::protobuf::internal::InitSCC(&scc_info_reqeust_zone_list_data.base);
   ::google::protobuf::internal::InitSCC(&scc_info_reqeust_zone_list.base);
   ::google::protobuf::internal::InitSCC(&scc_info_reqeust_zone_list_respone_respone_data_reqeust_zone_list_server.base);
@@ -323,9 +343,15 @@ void InitDefaults() {
   ::google::protobuf::internal::InitSCC(&scc_info_respone_select_zone_respone.base);
 }
 
-::google::protobuf::Metadata file_level_metadata[14];
+::google::protobuf::Metadata file_level_metadata[15];
 
 const ::google::protobuf::uint32 TableStruct::offsets[] GOOGLE_PROTOBUF_ATTRIBUTE_SECTION_VARIABLE(protodesc_cold) = {
+  ~0u,  // no _has_bits_
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::NFMsg::http_login_cmd, _internal_metadata_),
+  ~0u,  // no _extensions_
+  ~0u,  // no _oneof_case_
+  ~0u,  // no _weak_field_map_
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::NFMsg::http_login_cmd, do__),
   ~0u,  // no _has_bits_
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::NFMsg::reqeust_zone_list_data, _internal_metadata_),
   ~0u,  // no _extensions_
@@ -486,23 +512,25 @@ const ::google::protobuf::uint32 TableStruct::offsets[] GOOGLE_PROTOBUF_ATTRIBUT
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::NFMsg::respone_select_zone_respone, uid_),
 };
 static const ::google::protobuf::internal::MigrationSchema schemas[] GOOGLE_PROTOBUF_ATTRIBUTE_SECTION_VARIABLE(protodesc_cold) = {
-  { 0, -1, sizeof(::NFMsg::reqeust_zone_list_data)},
-  { 6, -1, sizeof(::NFMsg::reqeust_zone_list)},
-  { 13, -1, sizeof(::NFMsg::reqeust_zone_list_respone_respone_data_reqeust_zone_list_server)},
-  { 26, -1, sizeof(::NFMsg::reqeust_zone_list_respone_respone_data)},
-  { 36, -1, sizeof(::NFMsg::reqeust_zone_list_respone)},
-  { 45, -1, sizeof(::NFMsg::plat_token_login_request_request_data_request_data_platinfo)},
-  { 60, -1, sizeof(::NFMsg::plat_token_login_request_request_data)},
-  { 67, -1, sizeof(::NFMsg::plat_token_login_request)},
-  { 77, -1, sizeof(::NFMsg::plat_token_login_respone_respone_data_respone_data_platinfo)},
-  { 92, -1, sizeof(::NFMsg::plat_token_login_respone_respone_data)},
-  { 106, -1, sizeof(::NFMsg::plat_token_login_respone)},
-  { 119, -1, sizeof(::NFMsg::reqeust_select_zone_request)},
-  { 130, -1, sizeof(::NFMsg::respone_select_zone_respone_respone_data)},
-  { 144, -1, sizeof(::NFMsg::respone_select_zone_respone)},
+  { 0, -1, sizeof(::NFMsg::http_login_cmd)},
+  { 6, -1, sizeof(::NFMsg::reqeust_zone_list_data)},
+  { 12, -1, sizeof(::NFMsg::reqeust_zone_list)},
+  { 19, -1, sizeof(::NFMsg::reqeust_zone_list_respone_respone_data_reqeust_zone_list_server)},
+  { 32, -1, sizeof(::NFMsg::reqeust_zone_list_respone_respone_data)},
+  { 42, -1, sizeof(::NFMsg::reqeust_zone_list_respone)},
+  { 51, -1, sizeof(::NFMsg::plat_token_login_request_request_data_request_data_platinfo)},
+  { 66, -1, sizeof(::NFMsg::plat_token_login_request_request_data)},
+  { 73, -1, sizeof(::NFMsg::plat_token_login_request)},
+  { 83, -1, sizeof(::NFMsg::plat_token_login_respone_respone_data_respone_data_platinfo)},
+  { 98, -1, sizeof(::NFMsg::plat_token_login_respone_respone_data)},
+  { 112, -1, sizeof(::NFMsg::plat_token_login_respone)},
+  { 125, -1, sizeof(::NFMsg::reqeust_select_zone_request)},
+  { 136, -1, sizeof(::NFMsg::respone_select_zone_respone_respone_data)},
+  { 150, -1, sizeof(::NFMsg::respone_select_zone_respone)},
 };
 
 static ::google::protobuf::Message const * const file_default_instances[] = {
+  reinterpret_cast<const ::google::protobuf::Message*>(&::NFMsg::_http_login_cmd_default_instance_),
   reinterpret_cast<const ::google::protobuf::Message*>(&::NFMsg::_reqeust_zone_list_data_default_instance_),
   reinterpret_cast<const ::google::protobuf::Message*>(&::NFMsg::_reqeust_zone_list_default_instance_),
   reinterpret_cast<const ::google::protobuf::Message*>(&::NFMsg::_reqeust_zone_list_respone_respone_data_reqeust_zone_list_server_default_instance_),
@@ -534,75 +562,76 @@ void protobuf_AssignDescriptorsOnce() {
 void protobuf_RegisterTypes(const ::std::string&) GOOGLE_PROTOBUF_ATTRIBUTE_COLD;
 void protobuf_RegisterTypes(const ::std::string&) {
   protobuf_AssignDescriptorsOnce();
-  ::google::protobuf::internal::RegisterAllTypes(file_level_metadata, 14);
+  ::google::protobuf::internal::RegisterAllTypes(file_level_metadata, 15);
 }
 
 void AddDescriptorsImpl() {
   InitDefaults();
   static const char descriptor[] GOOGLE_PROTOBUF_ATTRIBUTE_SECTION_VARIABLE(protodesc_cold) = {
-      "\n\017login_msg.proto\022\005NFMsg\"(\n\026reqeust_zone"
-      "_list_data\022\016\n\006gameid\030\001 \001(\r\"L\n\021reqeust_zo"
-      "ne_list\022\n\n\002do\030\001 \001(\t\022+\n\004data\030\002 \001(\0132\035.NFMs"
-      "g.reqeust_zone_list_data\"\330\003\n\031reqeust_zon"
-      "e_list_respone\022\n\n\002do\030\001 \001(\t\022\r\n\005error\030\002 \001("
-      "\t\022\n\n\002st\030\003 \001(\004\022;\n\004data\030\004 \001(\0132-.NFMsg.reqe"
-      "ust_zone_list_respone.respone_data\032\326\002\n\014r"
-      "espone_data\022\022\n\nbestzoneid\030\001 \001(\r\022\016\n\006gamei"
-      "d\030\002 \001(\r\022\020\n\010gamename\030\003 \001(\t\022\016\n\006zoneid\030\004 \001("
-      "\r\022X\n\010zonelist\030\005 \003(\0132F.NFMsg.reqeust_zone"
-      "_list_respone.respone_data.reqeust_zone_"
-      "list_server\032\245\001\n\030reqeust_zone_list_server"
-      "\022\016\n\006gameid\030\001 \001(\r\022\020\n\010gamename\030\002 \001(\t\022\021\n\tne"
-      "wzoneid\030\003 \001(\r\022\021\n\tonlinenum\030\004 \001(\r\022\020\n\010open"
-      "time\030\005 \001(\t\022\r\n\005state\030\006 \001(\r\022\016\n\006zoneid\030\007 \001("
-      "\r\022\020\n\010zonename\030\010 \001(\t\"\320\003\n\030plat_token_login"
-      "_request\022\n\n\002do\030\001 \001(\t\022:\n\004data\030\002 \001(\0132,.NFM"
-      "sg.plat_token_login_request.request_data"
-      "\022\016\n\006gameid\030\003 \001(\r\022\016\n\006zoneid\030\004 \001(\r\022\036\n\026unig"
-      "ame_plat_timestamp\030\005 \001(\004\032\253\002\n\014request_dat"
-      "a\022T\n\010platinfo\030\001 \001(\0132B.NFMsg.plat_token_l"
-      "ogin_request.request_data.request_data_p"
-      "latinfo\022\016\n\006gameid\030\002 \001(\r\032\264\001\n\025request_data"
-      "_platinfo\022\013\n\003aaa\030\001 \001(\r\022\014\n\004sign\030\002 \001(\t\022\017\n\007"
-      "account\030\003 \001(\t\022\r\n\005email\030\004 \001(\t\022\016\n\006platid\030\005"
-      " \001(\r\022\016\n\006gender\030\006 \001(\t\022\020\n\010nickname\030\007 \001(\t\022\013"
-      "\n\003uid\030\010 \001(\t\022\016\n\006gameid\030\t \001(\r\022\021\n\ttimestamp"
-      "\030\n \001(\t\"\313\005\n\030plat_token_login_respone\022\016\n\006g"
-      "ameid\030\001 \001(\r\022\030\n\020unigame_plat_key\030\002 \001(\t\022\032\n"
-      "\022unigame_plat_login\030\003 \001(\t\022\"\n\032unigame_pla"
-      "t_login_timeout\030\004 \001(\t\022\036\n\026unigame_plat_ti"
-      "mestamp\030\005 \001(\004\022\016\n\006zoneid\030\006 \001(\r\022\n\n\002do\030\007 \001("
-      "\t\022:\n\004data\030\010 \001(\0132,.NFMsg.plat_token_login"
-      "_respone.respone_data\032\314\003\n\014respone_data\022\016"
-      "\n\006gameid\030\001 \001(\r\022\013\n\003sid\030\002 \001(\t\022\025\n\rtimezone_"
-      "name\030\003 \001(\t\022\027\n\017timezone_offset\030\004 \001(\r\022\013\n\003u"
-      "id\030\005 \001(\t\022\030\n\020unigame_plat_key\030\006 \001(\t\022\032\n\022un"
-      "igame_plat_login\030\007 \001(\t\022\037\n\027unigame_plat_l"
-      "ogin_life\030\010 \001(\r\022T\n\010platinfo\030\t \001(\0132B.NFMs"
-      "g.plat_token_login_respone.respone_data."
-      "respone_data_platinfo\032\264\001\n\025respone_data_p"
-      "latinfo\022\013\n\003aaa\030\001 \001(\r\022\014\n\004sign\030\002 \001(\t\022\017\n\007ac"
-      "count\030\003 \001(\t\022\r\n\005email\030\004 \001(\t\022\016\n\006platid\030\005 \001"
-      "(\r\022\016\n\006gender\030\006 \001(\t\022\020\n\010nickname\030\007 \001(\t\022\013\n\003"
-      "uid\030\010 \001(\t\022\016\n\006gameid\030\t \001(\r\022\021\n\ttimestamp\030\n"
-      " \001(\t\"\222\001\n\033reqeust_select_zone_request\022\n\n\002"
-      "do\030\001 \001(\t\022\016\n\006gameid\030\002 \001(\r\022\016\n\006zoneid\030\003 \001(\r"
-      "\022\013\n\003uid\030\004 \001(\t\022\032\n\022unigame_plat_login\030\005 \001("
-      "\t\022\036\n\026unigame_plat_timestamp\030\006 \001(\004\"\251\003\n\033re"
-      "spone_select_zone_respone\022\n\n\002do\030\001 \001(\t\022\016\n"
-      "\006errno_\030\002 \001(\t\022\016\n\006gameid\030\003 \001(\r\022\n\n\002st\030\004 \001("
-      "\004\022\032\n\022unigame_plat_login\030\005 \001(\t\022\036\n\026unigame"
-      "_plat_timestamp\030\006 \001(\004\022\016\n\006zoneid\030\007 \001(\r\022=\n"
-      "\004data\030\010 \001(\0132/.NFMsg.respone_select_zone_"
-      "respone.respone_data\022\013\n\003uid\030\t \001(\t\032\271\001\n\014re"
-      "spone_data\022\021\n\taccountid\030\001 \001(\004\022\016\n\006gameid\030"
-      "\002 \001(\r\022\022\n\ngatewayurl\030\003 \001(\t\022\025\n\rgatewayurlt"
-      "cp\030\004 \001(\t\022\024\n\014gatewayurlws\030\005 \001(\t\022\023\n\013logint"
-      "empid\030\006 \001(\r\022\017\n\007tokenid\030\007 \001(\004\022\016\n\006zoneid\030\010"
-      " \001(\r\022\017\n\007zoneuid\030\t \001(\004b\006proto3"
+      "\n\017login_msg.proto\022\005NFMsg\"\034\n\016http_login_c"
+      "md\022\n\n\002do\030\001 \001(\t\"(\n\026reqeust_zone_list_data"
+      "\022\016\n\006gameid\030\001 \001(\r\"L\n\021reqeust_zone_list\022\n\n"
+      "\002do\030\001 \001(\t\022+\n\004data\030\002 \001(\0132\035.NFMsg.reqeust_"
+      "zone_list_data\"\330\003\n\031reqeust_zone_list_res"
+      "pone\022\n\n\002do\030\001 \001(\t\022\r\n\005error\030\002 \001(\t\022\n\n\002st\030\003 "
+      "\001(\004\022;\n\004data\030\004 \001(\0132-.NFMsg.reqeust_zone_l"
+      "ist_respone.respone_data\032\326\002\n\014respone_dat"
+      "a\022\022\n\nbestzoneid\030\001 \001(\r\022\016\n\006gameid\030\002 \001(\r\022\020\n"
+      "\010gamename\030\003 \001(\t\022\016\n\006zoneid\030\004 \001(\r\022X\n\010zonel"
+      "ist\030\005 \003(\0132F.NFMsg.reqeust_zone_list_resp"
+      "one.respone_data.reqeust_zone_list_serve"
+      "r\032\245\001\n\030reqeust_zone_list_server\022\016\n\006gameid"
+      "\030\001 \001(\r\022\020\n\010gamename\030\002 \001(\t\022\021\n\tnewzoneid\030\003 "
+      "\001(\r\022\021\n\tonlinenum\030\004 \001(\r\022\020\n\010opentime\030\005 \001(\t"
+      "\022\r\n\005state\030\006 \001(\r\022\016\n\006zoneid\030\007 \001(\r\022\020\n\010zonen"
+      "ame\030\010 \001(\t\"\320\003\n\030plat_token_login_request\022\n"
+      "\n\002do\030\001 \001(\t\022:\n\004data\030\002 \001(\0132,.NFMsg.plat_to"
+      "ken_login_request.request_data\022\016\n\006gameid"
+      "\030\003 \001(\r\022\016\n\006zoneid\030\004 \001(\r\022\036\n\026unigame_plat_t"
+      "imestamp\030\005 \001(\004\032\253\002\n\014request_data\022T\n\010plati"
+      "nfo\030\001 \001(\0132B.NFMsg.plat_token_login_reque"
+      "st.request_data.request_data_platinfo\022\016\n"
+      "\006gameid\030\002 \001(\r\032\264\001\n\025request_data_platinfo\022"
+      "\013\n\003aaa\030\001 \001(\r\022\014\n\004sign\030\002 \001(\t\022\017\n\007account\030\003 "
+      "\001(\t\022\r\n\005email\030\004 \001(\t\022\016\n\006platid\030\005 \001(\r\022\016\n\006ge"
+      "nder\030\006 \001(\t\022\020\n\010nickname\030\007 \001(\t\022\013\n\003uid\030\010 \001("
+      "\t\022\016\n\006gameid\030\t \001(\r\022\021\n\ttimestamp\030\n \001(\t\"\313\005\n"
+      "\030plat_token_login_respone\022\016\n\006gameid\030\001 \001("
+      "\r\022\030\n\020unigame_plat_key\030\002 \001(\t\022\032\n\022unigame_p"
+      "lat_login\030\003 \001(\t\022\"\n\032unigame_plat_login_ti"
+      "meout\030\004 \001(\t\022\036\n\026unigame_plat_timestamp\030\005 "
+      "\001(\004\022\016\n\006zoneid\030\006 \001(\r\022\n\n\002do\030\007 \001(\t\022:\n\004data\030"
+      "\010 \001(\0132,.NFMsg.plat_token_login_respone.r"
+      "espone_data\032\314\003\n\014respone_data\022\016\n\006gameid\030\001"
+      " \001(\r\022\013\n\003sid\030\002 \001(\t\022\025\n\rtimezone_name\030\003 \001(\t"
+      "\022\027\n\017timezone_offset\030\004 \001(\r\022\013\n\003uid\030\005 \001(\t\022\030"
+      "\n\020unigame_plat_key\030\006 \001(\t\022\032\n\022unigame_plat"
+      "_login\030\007 \001(\t\022\037\n\027unigame_plat_login_life\030"
+      "\010 \001(\r\022T\n\010platinfo\030\t \001(\0132B.NFMsg.plat_tok"
+      "en_login_respone.respone_data.respone_da"
+      "ta_platinfo\032\264\001\n\025respone_data_platinfo\022\013\n"
+      "\003aaa\030\001 \001(\r\022\014\n\004sign\030\002 \001(\t\022\017\n\007account\030\003 \001("
+      "\t\022\r\n\005email\030\004 \001(\t\022\016\n\006platid\030\005 \001(\r\022\016\n\006gend"
+      "er\030\006 \001(\t\022\020\n\010nickname\030\007 \001(\t\022\013\n\003uid\030\010 \001(\t\022"
+      "\016\n\006gameid\030\t \001(\r\022\021\n\ttimestamp\030\n \001(\t\"\222\001\n\033r"
+      "eqeust_select_zone_request\022\n\n\002do\030\001 \001(\t\022\016"
+      "\n\006gameid\030\002 \001(\r\022\016\n\006zoneid\030\003 \001(\r\022\013\n\003uid\030\004 "
+      "\001(\t\022\032\n\022unigame_plat_login\030\005 \001(\t\022\036\n\026uniga"
+      "me_plat_timestamp\030\006 \001(\004\"\251\003\n\033respone_sele"
+      "ct_zone_respone\022\n\n\002do\030\001 \001(\t\022\016\n\006errno_\030\002 "
+      "\001(\t\022\016\n\006gameid\030\003 \001(\r\022\n\n\002st\030\004 \001(\004\022\032\n\022uniga"
+      "me_plat_login\030\005 \001(\t\022\036\n\026unigame_plat_time"
+      "stamp\030\006 \001(\004\022\016\n\006zoneid\030\007 \001(\r\022=\n\004data\030\010 \001("
+      "\0132/.NFMsg.respone_select_zone_respone.re"
+      "spone_data\022\013\n\003uid\030\t \001(\t\032\271\001\n\014respone_data"
+      "\022\021\n\taccountid\030\001 \001(\004\022\016\n\006gameid\030\002 \001(\r\022\022\n\ng"
+      "atewayurl\030\003 \001(\t\022\025\n\rgatewayurltcp\030\004 \001(\t\022\024"
+      "\n\014gatewayurlws\030\005 \001(\t\022\023\n\013logintempid\030\006 \001("
+      "\r\022\017\n\007tokenid\030\007 \001(\004\022\016\n\006zoneid\030\010 \001(\r\022\017\n\007zo"
+      "neuid\030\t \001(\004b\006proto3"
   };
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
-      descriptor, 2389);
+      descriptor, 2419);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "login_msg.proto", &protobuf_RegisterTypes);
 }
@@ -619,6 +648,248 @@ struct StaticDescriptorInitializer {
 } static_descriptor_initializer;
 }  // namespace protobuf_login_5fmsg_2eproto
 namespace NFMsg {
+
+// ===================================================================
+
+void http_login_cmd::InitAsDefaultInstance() {
+}
+#if !defined(_MSC_VER) || _MSC_VER >= 1900
+const int http_login_cmd::kDoFieldNumber;
+#endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
+
+http_login_cmd::http_login_cmd()
+  : ::google::protobuf::Message(), _internal_metadata_(NULL) {
+  ::google::protobuf::internal::InitSCC(
+      &protobuf_login_5fmsg_2eproto::scc_info_http_login_cmd.base);
+  SharedCtor();
+  // @@protoc_insertion_point(constructor:NFMsg.http_login_cmd)
+}
+http_login_cmd::http_login_cmd(const http_login_cmd& from)
+  : ::google::protobuf::Message(),
+      _internal_metadata_(NULL) {
+  _internal_metadata_.MergeFrom(from._internal_metadata_);
+  do__.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  if (from.do_().size() > 0) {
+    do__.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.do__);
+  }
+  // @@protoc_insertion_point(copy_constructor:NFMsg.http_login_cmd)
+}
+
+void http_login_cmd::SharedCtor() {
+  do__.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+
+http_login_cmd::~http_login_cmd() {
+  // @@protoc_insertion_point(destructor:NFMsg.http_login_cmd)
+  SharedDtor();
+}
+
+void http_login_cmd::SharedDtor() {
+  do__.DestroyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+
+void http_login_cmd::SetCachedSize(int size) const {
+  _cached_size_.Set(size);
+}
+const ::google::protobuf::Descriptor* http_login_cmd::descriptor() {
+  ::protobuf_login_5fmsg_2eproto::protobuf_AssignDescriptorsOnce();
+  return ::protobuf_login_5fmsg_2eproto::file_level_metadata[kIndexInFileMessages].descriptor;
+}
+
+const http_login_cmd& http_login_cmd::default_instance() {
+  ::google::protobuf::internal::InitSCC(&protobuf_login_5fmsg_2eproto::scc_info_http_login_cmd.base);
+  return *internal_default_instance();
+}
+
+
+void http_login_cmd::Clear() {
+// @@protoc_insertion_point(message_clear_start:NFMsg.http_login_cmd)
+  ::google::protobuf::uint32 cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  do__.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  _internal_metadata_.Clear();
+}
+
+bool http_login_cmd::MergePartialFromCodedStream(
+    ::google::protobuf::io::CodedInputStream* input) {
+#define DO_(EXPRESSION) if (!GOOGLE_PREDICT_TRUE(EXPRESSION)) goto failure
+  ::google::protobuf::uint32 tag;
+  // @@protoc_insertion_point(parse_start:NFMsg.http_login_cmd)
+  for (;;) {
+    ::std::pair<::google::protobuf::uint32, bool> p = input->ReadTagWithCutoffNoLastTag(127u);
+    tag = p.first;
+    if (!p.second) goto handle_unusual;
+    switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
+      // string do = 1;
+      case 1: {
+        if (static_cast< ::google::protobuf::uint8>(tag) ==
+            static_cast< ::google::protobuf::uint8>(10u /* 10 & 0xFF */)) {
+          DO_(::google::protobuf::internal::WireFormatLite::ReadString(
+                input, this->mutable_do_()));
+          DO_(::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+            this->do_().data(), static_cast<int>(this->do_().length()),
+            ::google::protobuf::internal::WireFormatLite::PARSE,
+            "NFMsg.http_login_cmd.do"));
+        } else {
+          goto handle_unusual;
+        }
+        break;
+      }
+
+      default: {
+      handle_unusual:
+        if (tag == 0) {
+          goto success;
+        }
+        DO_(::google::protobuf::internal::WireFormat::SkipField(
+              input, tag, _internal_metadata_.mutable_unknown_fields()));
+        break;
+      }
+    }
+  }
+success:
+  // @@protoc_insertion_point(parse_success:NFMsg.http_login_cmd)
+  return true;
+failure:
+  // @@protoc_insertion_point(parse_failure:NFMsg.http_login_cmd)
+  return false;
+#undef DO_
+}
+
+void http_login_cmd::SerializeWithCachedSizes(
+    ::google::protobuf::io::CodedOutputStream* output) const {
+  // @@protoc_insertion_point(serialize_start:NFMsg.http_login_cmd)
+  ::google::protobuf::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  // string do = 1;
+  if (this->do_().size() > 0) {
+    ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+      this->do_().data(), static_cast<int>(this->do_().length()),
+      ::google::protobuf::internal::WireFormatLite::SERIALIZE,
+      "NFMsg.http_login_cmd.do");
+    ::google::protobuf::internal::WireFormatLite::WriteStringMaybeAliased(
+      1, this->do_(), output);
+  }
+
+  if ((_internal_metadata_.have_unknown_fields() &&  ::google::protobuf::internal::GetProto3PreserveUnknownsDefault())) {
+    ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
+        (::google::protobuf::internal::GetProto3PreserveUnknownsDefault()   ? _internal_metadata_.unknown_fields()   : _internal_metadata_.default_instance()), output);
+  }
+  // @@protoc_insertion_point(serialize_end:NFMsg.http_login_cmd)
+}
+
+::google::protobuf::uint8* http_login_cmd::InternalSerializeWithCachedSizesToArray(
+    bool deterministic, ::google::protobuf::uint8* target) const {
+  (void)deterministic; // Unused
+  // @@protoc_insertion_point(serialize_to_array_start:NFMsg.http_login_cmd)
+  ::google::protobuf::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  // string do = 1;
+  if (this->do_().size() > 0) {
+    ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+      this->do_().data(), static_cast<int>(this->do_().length()),
+      ::google::protobuf::internal::WireFormatLite::SERIALIZE,
+      "NFMsg.http_login_cmd.do");
+    target =
+      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
+        1, this->do_(), target);
+  }
+
+  if ((_internal_metadata_.have_unknown_fields() &&  ::google::protobuf::internal::GetProto3PreserveUnknownsDefault())) {
+    target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
+        (::google::protobuf::internal::GetProto3PreserveUnknownsDefault()   ? _internal_metadata_.unknown_fields()   : _internal_metadata_.default_instance()), target);
+  }
+  // @@protoc_insertion_point(serialize_to_array_end:NFMsg.http_login_cmd)
+  return target;
+}
+
+size_t http_login_cmd::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:NFMsg.http_login_cmd)
+  size_t total_size = 0;
+
+  if ((_internal_metadata_.have_unknown_fields() &&  ::google::protobuf::internal::GetProto3PreserveUnknownsDefault())) {
+    total_size +=
+      ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
+        (::google::protobuf::internal::GetProto3PreserveUnknownsDefault()   ? _internal_metadata_.unknown_fields()   : _internal_metadata_.default_instance()));
+  }
+  // string do = 1;
+  if (this->do_().size() > 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::StringSize(
+        this->do_());
+  }
+
+  int cached_size = ::google::protobuf::internal::ToCachedSize(total_size);
+  SetCachedSize(cached_size);
+  return total_size;
+}
+
+void http_login_cmd::MergeFrom(const ::google::protobuf::Message& from) {
+// @@protoc_insertion_point(generalized_merge_from_start:NFMsg.http_login_cmd)
+  GOOGLE_DCHECK_NE(&from, this);
+  const http_login_cmd* source =
+      ::google::protobuf::internal::DynamicCastToGenerated<const http_login_cmd>(
+          &from);
+  if (source == NULL) {
+  // @@protoc_insertion_point(generalized_merge_from_cast_fail:NFMsg.http_login_cmd)
+    ::google::protobuf::internal::ReflectionOps::Merge(from, this);
+  } else {
+  // @@protoc_insertion_point(generalized_merge_from_cast_success:NFMsg.http_login_cmd)
+    MergeFrom(*source);
+  }
+}
+
+void http_login_cmd::MergeFrom(const http_login_cmd& from) {
+// @@protoc_insertion_point(class_specific_merge_from_start:NFMsg.http_login_cmd)
+  GOOGLE_DCHECK_NE(&from, this);
+  _internal_metadata_.MergeFrom(from._internal_metadata_);
+  ::google::protobuf::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  if (from.do_().size() > 0) {
+
+    do__.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.do__);
+  }
+}
+
+void http_login_cmd::CopyFrom(const ::google::protobuf::Message& from) {
+// @@protoc_insertion_point(generalized_copy_from_start:NFMsg.http_login_cmd)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+void http_login_cmd::CopyFrom(const http_login_cmd& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:NFMsg.http_login_cmd)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool http_login_cmd::IsInitialized() const {
+  return true;
+}
+
+void http_login_cmd::Swap(http_login_cmd* other) {
+  if (other == this) return;
+  InternalSwap(other);
+}
+void http_login_cmd::InternalSwap(http_login_cmd* other) {
+  using std::swap;
+  do__.Swap(&other->do__, &::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+    GetArenaNoVirtual());
+  _internal_metadata_.Swap(&other->_internal_metadata_);
+}
+
+::google::protobuf::Metadata http_login_cmd::GetMetadata() const {
+  protobuf_login_5fmsg_2eproto::protobuf_AssignDescriptorsOnce();
+  return ::protobuf_login_5fmsg_2eproto::file_level_metadata[kIndexInFileMessages];
+}
+
 
 // ===================================================================
 
@@ -7474,6 +7745,9 @@ void respone_select_zone_respone::InternalSwap(respone_select_zone_respone* othe
 }  // namespace NFMsg
 namespace google {
 namespace protobuf {
+template<> GOOGLE_PROTOBUF_ATTRIBUTE_NOINLINE ::NFMsg::http_login_cmd* Arena::CreateMaybeMessage< ::NFMsg::http_login_cmd >(Arena* arena) {
+  return Arena::CreateInternal< ::NFMsg::http_login_cmd >(arena);
+}
 template<> GOOGLE_PROTOBUF_ATTRIBUTE_NOINLINE ::NFMsg::reqeust_zone_list_data* Arena::CreateMaybeMessage< ::NFMsg::reqeust_zone_list_data >(Arena* arena) {
   return Arena::CreateInternal< ::NFMsg::reqeust_zone_list_data >(arena);
 }

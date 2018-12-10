@@ -10,7 +10,7 @@
 #include "NFComm/NFCore/NFPlatform.h"
 #include "NFComm/NFPluginModule/NFLogMgr.h"
 #include "NFIPacketParse.h"
-#include "NFComm/NFCore/NFSHA1.h"
+#include "NFComm/NFCore/NFSHA2.h"
 #include "NFComm/NFCore/NFBase64.h"
 
 /**
@@ -160,10 +160,10 @@ std::string NetObject::HandleSharkReturn()
 	std::string server_key = mHeaderMap["Sec-WebSocket-Key"];
 	server_key += MAGIC_KEY;
 
-	std::vector<char> puDest = NFSHA1::sha1bin(server_key.c_str(), server_key.size());
+	server_key = NFSHA2::encode(server_key);
 
-	server_key.clear();
-	server_key = NFBase64::Encode(std::string(puDest.begin(), puDest.end()));
+	server_key = NFBase64::Encode(server_key);
+
 	server_key += "\r\n\r\n";
 	request += server_key;
 	return request;

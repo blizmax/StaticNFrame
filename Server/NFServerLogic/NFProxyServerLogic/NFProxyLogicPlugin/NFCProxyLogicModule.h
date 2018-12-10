@@ -18,6 +18,17 @@
 #include "NFComm/NFPluginModule/NFEventObj.h"
 #include "NFServer/NFServerCommon/NFIProxyClient_GameModule.h"
 
+#include "NFComm/NFCore/NFMap.hpp"
+
+class ProxyPlayerData
+{
+public:
+	uint32_t unlinkId;
+	uint32_t gameServerId;
+	uint64_t uid;
+	std::string account;
+};
+
 class NFCProxyLogicModule : public NFIProxyLogicModule, public NFEventObj
 {
 public:
@@ -37,9 +48,17 @@ public:
 	virtual void OnExecute(uint16_t nEventID, uint64_t nSrcID, uint8_t bySrcType, NFEventContext* pEventContext) override;
 
 	void OnHandleJsonMessage(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen);
+	void OnHandleUser_LoginTokenLoginUserPmd(const uint32_t unLinkId, const NFMsg::UserLoginTokenLoginUserPmd_C& msg);
+	void OnHandleUser_UserJsMessageForwardUserPmd(const uint32_t unLinkId, const NFMsg::UserJsMessageForwardUserPmd_CS& msg);
+
+	ProxyPlayerData* GetPlayerData(uint64_t uid) { return mPlayerData.GetElement(uid); }
+	ProxyPlayerData* GetPlayerDataByLinkId(uint32_t unlinkId) { return mUnlinkIdPlayerData.GetElement(unlinkId); }
 private:
 	NFINetClientModule* m_pNetClientModule;
 	NFINetServerModule* m_pNetServerModule;
 	NFIProxyClient_GameModule* m_pProxyClient_GameModule;
 	uint32_t m_worldServerUnlinkId;
+
+	NFMap<uint64_t, ProxyPlayerData> mPlayerData;
+	NFMap<uint32_t, ProxyPlayerData> mUnlinkIdPlayerData;
 };

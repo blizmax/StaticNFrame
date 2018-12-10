@@ -64,6 +64,13 @@ public:
 	virtual bool AddMongoServer(const int nServerID, const std::string& ip, uint32_t port, const std::string& dbname) override;
 
 	/**
+	* @brief 添加serverid的链接, 一个serverid对应一个链接数据库的驱动
+	*
+	* @return bool
+	*/
+	virtual bool AddMongoServer(const int nServerID, const std::string& uri, const std::string& dbname) override;
+
+	/**
 	* @brief 是否存在表格
 	*
 	* @return bool
@@ -117,7 +124,14 @@ public:
 	*
 	* @return bool
 	*/
-	virtual bool UpdateOneByKey(const int nServerID, const std::string& collectionName, const std::string& json, const std::string key) override;
+	virtual bool UpdateOneByKey(const int nServerID, const std::string& collectionName, const google::protobuf::Message& message, const std::string& key) override;
+
+	/**
+	* @brief 更新一个数据
+	*
+	* @return bool
+	*/
+	virtual bool UpdateOneByKey(const int nServerID, const std::string& collectionName, const std::string& json, const std::string& key) override;
 
 	/**
 	* @brief 更新一个数据
@@ -159,14 +173,63 @@ public:
 	*
 	* @return bool
 	*/
-	virtual std::string FindOneyByKey(const int nServerID, const std::string& collectionName, int64_t key);
+	virtual std::string FindAllToJson(const int nServerID, const std::string& collectionName);
 
 	/**
 	* @brief 查找数据
 	*
 	* @return bool
 	*/
-	virtual std::string FindOneyByKey(const int nServerID, const std::string& collectionName, const std::string& key);
+	virtual std::string FindOneByKey(const int nServerID, const std::string& collectionName, int64_t key);
+
+	/**
+	* @brief 查找数据
+	*
+	* @return bool
+	*/
+	virtual std::string FindOneByKey(const int nServerID, const std::string& collectionName, const std::string& key);
+
+	/**
+	* @brief 更新数据
+	*
+	* @return bool
+	*/
+	virtual bool UpdateFieldByKey(const int nServerID, const std::string& collectionName, const std::string& json, const std::string key);
+
+	/**
+	* @brief 更新数据
+	*
+	* @return bool
+	*/
+	virtual bool UpdateFieldByKey(const int nServerID, const std::string& collectionName, const std::string& json, uint64_t key);
+
+	/**
+	* @brief 更新数据
+	*
+	* @return bool
+	*/
+	virtual bool UpdateFieldByKey(const int nServerID, const std::string& collectionName, const google::protobuf::Message& message, uint64_t key);
+
+	/**
+	* @brief 更新数据
+	*
+	* @return bool
+	*/
+	virtual bool UpdateFieldByKey(const int nServerID, const std::string& collectionName, const google::protobuf::Message& message, const std::string& key);
+
+	/**
+	* @brief 查找数据
+	*
+	* @return bool
+	*/
+	virtual std::string FindFieldByKey(const int nServerID, const std::string& collectionName, const std::string& fieldPath, int64_t key);
+
+	/**
+	* @brief 查找数据
+	*
+	* @return bool
+	*/
+	virtual std::string FindFieldByKey(const int nServerID, const std::string& collectionName, const std::string& fieldPath, const std::string& key);
 private:
 	NFCMongoDriverManager* m_pMongoDriverManager;
 

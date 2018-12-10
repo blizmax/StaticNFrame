@@ -8,3 +8,4 @@
 #include "server_msg.pb.h"
 #include "login_msg.pb.h"
 #include "db_base.pb.h"
+#include "proxy_msg.pb.h"

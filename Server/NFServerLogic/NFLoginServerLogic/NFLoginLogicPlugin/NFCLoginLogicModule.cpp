@@ -56,62 +56,47 @@ void NFCLoginLogicModule::OnExecute(uint16_t nEventID, uint64_t nSrcID, uint8_t 
 
 bool NFCLoginLogicModule::HttpHandleHttpLogin(const NFHttpRequest& req)
 {
-	NFLogDebug("http login | body | {}", req.body);
-
-	std::string errString;
-	NFJson json = NFJson::parse(req.body, errString);
-
-	if (errString.empty() == false)
+	NFMsg::http_login_cmd cmd;
+	std::string jsonMsg = std::string(req.body);
+	if (NFServerCommon::JsonStringToMessage(jsonMsg, cmd) == false)
 	{
-		NFLogError("json error | {}", errString);
 		return false;
 	}
 
-	if (json.is_object())
+	if (cmd.do_() == "request-zone-list")
 	{
-		NFJson cmd = json["do"];
-		NFJson data = json["data"];
-		if (cmd.is_string())
-		{
-			if (cmd.string_value() == "request-zone-list")
-			{
-				NFMsg::reqeust_zone_list httpLogin;
-				bool ret = NFServerCommon::JsonStringToMessage(req.body, httpLogin);
-				if (ret == false)
-				{
-					NFLogError("json error | {}", req.body);
-					return false;
-				}
-				RequestZoneList(req, httpLogin);
-			}
-			else if (cmd.string_value() == "plat-token-login")
-			{
-				NFMsg::plat_token_login_request httpLogin;
-				bool ret = NFServerCommon::JsonStringToMessage(req.body, httpLogin);
-				if (ret == false)
-				{
-					NFLogError("json error | {}", req.body);
-					return false;
-				}
-				PlatTokenLogin(req, httpLogin);
-			}
-			else if (cmd.string_value() == "request-select-zone")
-			{
-				NFMsg::reqeust_select_zone_request httpLogin;
-				bool ret = NFServerCommon::JsonStringToMessage(req.body, httpLogin);
-				if (ret == false)
-				{
-					NFLogError("json error | {}", req.body);
-					return false;
-				}
-				RequestSelectZone(req, httpLogin);
-			}
-		}
-		else
+		NFMsg::reqeust_zone_list httpLogin;
+		bool ret = NFServerCommon::JsonStringToMessage(req.body, httpLogin);
+		if (ret == false)
 		{
 			NFLogError("json error | {}", req.body);
+			return false;
 		}
+		RequestZoneList(req, httpLogin);
 	}
+	else if (cmd.do_() == "plat-token-login")
+	{
+		NFMsg::plat_token_login_request httpLogin;
+		bool ret = NFServerCommon::JsonStringToMessage(req.body, httpLogin);
+		if (ret == false)
+		{
+			NFLogError("json error | {}", req.body);
+			return false;
+		}
+		PlatTokenLogin(req, httpLogin);
+	}
+	else if (cmd.do_() == "request-select-zone")
+	{
+		NFMsg::reqeust_select_zone_request httpLogin;
+		bool ret = NFServerCommon::JsonStringToMessage(req.body, httpLogin);
+		if (ret == false)
+		{
+			NFLogError("json error | {}", req.body);
+			return false;
+		}
+		RequestSelectZone(req, httpLogin);
+	}
+
 	return true;
 }
 
@@ -213,8 +198,8 @@ void NFCLoginLogicModule::PlatTokenLogin(const NFHttpRequest& req, const NFMsg::
 	{
 		return;
 	}
-	std::string set_url = "/httplogin?unigame_plat_sign=" + NFMD5::md5str(responeJson + NFCommon::tostr(nowTime) + plat_key);
-	NFLogError("last url | {}", set_url);
+	//std::string set_url = "/httplogin?unigame_plat_sign=" + NFMD5::md5str(responeJson + NFCommon::tostr(nowTime) + plat_key);
+	//NFLogError("last url | {}", set_url);
 	m_pHttpServerModule->ResponseMsg(req, responeJson, NFWebStatus::WEB_OK, "OK");
 }
 

@@ -23,8 +23,8 @@
 #define PRIMARY_TABLE_KEY "_id"
 
 /*
-**	测试的时候发现，mongoc只要设置为索引，当使用这个索引查找的时候必须以字符串的方式查找，不然找不到数据
-*	其余的数据查找，使用数据本来的类型
+**	protobuf 转 json时候，会把int64位的转成一个字符串
+*	
 */
 class NFCMongoDriver : public NFIModule
 {
@@ -34,6 +34,7 @@ public:
 	virtual ~NFCMongoDriver();
 
 	virtual bool Connect(const std::string& ip, uint32_t port, const std::string& dbname);
+	virtual bool Connect(const std::string& url, const std::string& dbname);
 
 	virtual bool Ping();
 
@@ -133,14 +134,28 @@ public:
 	*
 	* @return bool
 	*/
-	virtual std::string FindOneyByKey(const std::string& collectionName, int64_t key);
+	virtual std::string FindOneByKey(const std::string& collectionName, int64_t key);
 
 	/**
 	* @brief 查找数据
 	*
 	* @return bool
 	*/
-	virtual std::string FindOneyByKey(const std::string& collectionName, const std::string& key);
+	virtual std::string FindOneByKey(const std::string& collectionName, const std::string& key);
+
+	/**
+	* @brief 查找数据
+	*
+	* @return bool
+	*/
+	virtual std::string FindFieldByKey(const std::string& collectionName, const std::string& fieldPath, int64_t key);
+
+	/**
+	* @brief 查找数据
+	*
+	* @return bool
+	*/
+	virtual std::string FindFieldByKey(const std::string& collectionName, const std::string& fieldPath, const std::string& key);
 
 	/**
 	* @brief 插入数据
@@ -168,7 +183,7 @@ public:
 	*
 	* @return bool
 	*/
-	virtual bool UpdateOneByKey(const std::string& collectionName, const std::string& json, const std::string key);
+	virtual bool UpdateOneByKey(const std::string& collectionName, const std::string& json, const std::string& key);
 
 	/**
 	* @brief 更新数据
@@ -183,6 +198,13 @@ public:
 	* @return bool
 	*/
 	virtual bool UpdateOneByKey(const std::string& collectionName, const google::protobuf::Message& message, uint64_t key);
+
+	/**
+	* @brief 更新数据
+	*
+	* @return bool
+	*/
+	virtual bool UpdateOneByKey(const std::string& collectionName, const google::protobuf::Message& message, const std::string& key);
 
 	/**
 	* @brief 更新数据
@@ -204,6 +226,41 @@ public:
 	* @return bool
 	*/
 	virtual bool UpdateOne(const std::string& collectionName, const google::protobuf::Message& message);
+
+	/**
+	* @brief 更新数据
+	*
+	* @return bool
+	*/
+	virtual bool UpdateFieldByKey(const std::string& collectionName, const std::string& json, const std::string key);
+
+	/**
+	* @brief 更新数据
+	*
+	* @return bool
+	*/
+	virtual bool UpdateFieldByKey(const std::string& collectionName, const std::string& json, uint64_t key);
+
+	/**
+	* @brief 更新数据
+	*
+	* @return bool
+	*/
+	virtual bool UpdateFieldByKey(const std::string& collectionName, const google::protobuf::Message& message, uint64_t key);
+
+	/**
+	* @brief 更新数据
+	*
+	* @return bool
+	*/
+	virtual bool UpdateFieldByKey(const std::string& collectionName, const google::protobuf::Message& message, const std::string& key);
+
+	/**
+	* @brief 更新数据的一部分
+	*
+	* @return bool
+	*/
+	virtual bool UpdateField(const std::string& collectionName, bson_t *select, bson_t *doc);
 
 	/**
 	* @brief 创建表格主键
