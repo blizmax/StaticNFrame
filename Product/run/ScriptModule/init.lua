@@ -31,13 +31,21 @@ function init_script_system(pluginManager)
 	LoadLuaFile("../ScriptModule/table", true)
 
 	if pluginManager:IsLoadAllServer() then
-		package.path = package.path .. ";../ScriptModule/GameServer/?.lua;"
+		package.path = package.path .. ";../ScriptModule/GameServer/ttr-server/?.lua;"
 		LoadLuaFile("../ScriptModule/GameServer", false)
-		LoadLuaFile("../ScriptModule/GameServer/script/do", true)
-		LoadLuaFile("../ScriptModule/GameServer/script/event", true)
-		LoadLuaFile("../ScriptModule/GameServer/script/gxlua_ttr", true)
+		LoadLuaFile("../ScriptModule/GameServer/ttr-server/script/do", true)
+		LoadLuaFile("../ScriptModule/GameServer/ttr-server/script/event", true)
+		LoadLuaFile("../ScriptModule/GameServer/ttr-server/script/gxlua_ttr", true)
 	else
-		LoadLuaFile("../ScriptModule/" .. pluginManager:GetAppName(), true)
+		if pluginManager:GetAppName() == "GameServer" then
+			package.path = package.path .. ";../ScriptModule/GameServer/ttr-server/?.lua;"
+			LoadLuaFile("../ScriptModule/GameServer", false)
+			LoadLuaFile("../ScriptModule/GameServer/ttr-server/script/do", true)
+			LoadLuaFile("../ScriptModule/GameServer/ttr-server/script/event", true)
+			LoadLuaFile("../ScriptModule/GameServer/ttr-server/script/gxlua_ttr", true)
+		else
+			LoadLuaFile("../ScriptModule/" .. pluginManager:GetAppName(), true)
+		end
 	end
 
 	--初始化LuaNFrame
