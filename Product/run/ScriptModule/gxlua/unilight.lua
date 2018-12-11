@@ -244,20 +244,7 @@ end
 
 unilight.response = function(w, req)
 	local s = json.encode(encode_repair(req))
-    local msgname = req["do"]
-    local nu = unilight.getmsgnu(msgname)
-    if nu ~= nil then 
-        local msgname = req["do"]
-        local msgdata = req["data"]
-        msgdata.errno = nil
-        local rawdata = pb.encode(msgname,msgdata)
-        w.SendLuaProtoRawdata(nu.bycmd, nu.byparam, rawdata)
-        return true
-    else
-	    --req.st = os.time() + unilight.tzoffset()
-		--w.SendString(s)
-		w.SendString(s, w)
-    end
+	w.SendString(s)
 end
 
 -- Net.*简化Do.*的消息处理，可直接收发lua table消息 --
@@ -271,15 +258,8 @@ setmetatable(Net,
 		else
 			Do[k] = function(reqdata, w, msgname)
                 local req = {}
-                if msgname ~= nil and 0 == w.GetMsgType() then
-                    local data =  pb.decode(msgname, reqdata)
-                    req = {
-                        ["do"] = msgname, 
-                        ["data"] = data,
-                    }
-                else
-                    req = unilight.getreq(reqdata)
-                end
+                req = unilight.getreq(reqdata)
+                
 				local r0, r1 = handle(req,w)
 				if w == nil then
 					unilight.error("unsupported w is null")

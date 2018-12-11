@@ -2,6 +2,12 @@ syntax = "proto3";
 
 package NFMsg;
 
+message LoginAccount
+{
+	string account = 1;
+	uint64 uid = 2;
+}
+
 message http_login_cmd
 {
 	string do = 1;

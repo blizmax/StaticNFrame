@@ -22,10 +22,14 @@ NFCLoginLogicModule::~NFCLoginLogicModule()
 
 bool NFCLoginLogicModule::Init()
 {
+	m_pMongoModule = pPluginManager->FindModule<NFIMongoModule>();
 	m_pKernelModule = pPluginManager->FindModule<NFIKernelModule>();
 	m_pLoginClient_MasterModule = pPluginManager->FindModule<NFILoginClient_MasterModule>();
 	m_pHttpServerModule = pPluginManager->FindModule<NFIHttpServerModule>();
 	m_pHttpServerModule->AddRequestHandler("/httplogin", NFHttpType::NF_HTTP_REQ_POST, this, &NFCLoginLogicModule::HttpHandleHttpLogin);
+
+	m_pMongoModule->AddMongoServer(NF_ST_LOGIN, "mongodb://14.17.104.12:28900", "ttr-1");
+	m_pMongoModule->CreateCollection(NF_ST_LOGIN, ACCOUNT_TABLE, ACCOUNT_TABLE_KEY);
 	return true;
 }
 
@@ -161,8 +165,11 @@ void NFCLoginLogicModule::PlatTokenLogin(const NFHttpRequest& req, const NFMsg::
 	std::string plat_key = NFMD5::md5str(sign + account + NFCommon::tostr(nowTime));
 	std::string plat_login = NFMD5::md5str(sign + account + NFCommon::tostr(nowTime));
 
+	NFMsg::LoginAccount* pAccount = GetLoginAccount(account);
+	if (pAccount == nullptr) return;
+
 	uint32_t plat_login_timeout = 2592000;
-	uint64_t uuid = m_pKernelModule->GetUUID();
+	uint64_t uuid = pAccount->uid();
 
 	NFMsg::plat_token_login_respone respone;
 	respone.set_gameid(request.gameid());
@@ -258,4 +265,36 @@ void NFCLoginLogicModule::RequestSelectZone(const NFHttpRequest& req, const NFMs
 
 	NFStringUtility::Replace(responeJson, "errno_", "errno");
 	m_pHttpServerModule->ResponseMsg(req, responeJson, NFWebStatus::WEB_OK, "OK");
+}
+
+NFMsg::LoginAccount* NFCLoginLogicModule::GetLoginAccount(const std::string& account)
+{
+	if (m_loginAccountMap.Count() == 0)
+	{
+		std::vector<std::string> vec = m_pMongoModule->FindAll(NF_ST_LOGIN, ACCOUNT_TABLE);
+		for (int i = 0; i < (int)vec.size(); i++)
+		{
+			NFMsg::LoginAccount* pAccount = NF_NEW NFMsg::LoginAccount();
+			if (NFServerCommon::JsonStringToMessage(vec[i], *pAccount) == false)
+			{
+				continue;
+			}
+
+			m_loginAccountMap.AddElement(account, pAccount);
+		}
+	}
+	auto pAccount = m_loginAccountMap.GetElement(account);
+	if (pAccount == nullptr)
+	{
+		pAccount = NF_NEW NFMsg::LoginAccount();
+		pAccount->set_account(account);
+		uint64_t uid = m_pKernelModule->GetUUID();
+		pAccount->set_uid(uid);
+
+		m_loginAccountMap.AddElement(account, pAccount);
+
+		m_pMongoModule->UpdateOneByKey(NF_ST_LOGIN, ACCOUNT_TABLE, *pAccount, account);
+	}
+
+	return pAccount;
 }

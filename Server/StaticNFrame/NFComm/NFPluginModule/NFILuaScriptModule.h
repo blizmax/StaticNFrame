@@ -35,6 +35,8 @@ public:
 
 	virtual void RunAccountConnectFunc(PlayerAccountInfo* laccount) = 0;
 	virtual void RunAccountDisConnectFunc(PlayerAccountInfo* laccount) = 0;
+
+	virtual void RunAccountReConnectFunc(PlayerAccountInfo* laccount) = 0;
 public:
 
 	virtual uint32_t AddTimer(const std::string& luaFunc, uint64_t nInterVal, const std::string& useData) = 0;

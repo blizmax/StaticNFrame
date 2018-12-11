@@ -40,6 +40,7 @@ public:
 
 	void OnHandleAccountConnect(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen);
 	void OnHandleAccountDisConnect(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen);
+	void OnHandleAccountReConnect(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen);
 
 	virtual PlayerAccountInfo* GetPlayerAccountInfo(uint64_t uid) { return m_playerAccountInfo.GetElement(uid); }
 private:

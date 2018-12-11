@@ -134,6 +134,25 @@ std::string NFCNetServerModule::GetLinkIp(uint32_t usLinkId)
 	return std::string();
 }
 
+void NFCNetServerModule::CloseLinkId(uint32_t usLinkId)
+{
+	uint32_t serverType = GetServerTypeFromUnlinkId(usLinkId);
+	if (serverType > NF_ST_NONE && serverType < NF_ST_MAX)
+	{
+		auto pServer = mServerArray[serverType];
+		if (pServer)
+		{
+			pServer->CloseLinkId(usLinkId);
+			return;
+		}
+		else
+		{
+			NFLogError("CloseLinkId error, usLinkId:{} not exist!", usLinkId);
+		}
+	}
+	NFLogError("CloseLinkId error, usLinkId:{} not exist!", usLinkId);
+}
+
 void NFCNetServerModule::SendByServerID(uint32_t usLinkId, const uint32_t nMsgID, const std::string& strData, const uint64_t nPlayerID)
 {
 	SendByServerID(usLinkId, nMsgID, strData.c_str(), strData.length(), nPlayerID);
@@ -152,12 +171,10 @@ void NFCNetServerModule::SendByServerID(uint32_t usLinkId, const uint32_t nMsgID
 		}
 		else
 		{
-			//assert(0);
 			NFLogError("SendByServerID error, usLinkId:{} not exist!", usLinkId);
 		}
 	}
 	NFLogError("SendByServerID error, usLinkId:{} not exist!", usLinkId);
-	//assert(0);
 }
 
 void NFCNetServerModule::SendToServerByPB(uint32_t usLinkId, const uint32_t nMsgID, const google::protobuf::Message& xData, const uint64_t nPlayerID)

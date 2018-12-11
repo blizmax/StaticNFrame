@@ -34,6 +34,14 @@ public:
 	 */
 	virtual std::string GetLinkIp(uint32_t usLinkId) = 0;
 
+	/**
+	* @brief πÿ±’¡¨Ω”
+	*
+	* @param  usLinkId
+	* @return
+	*/
+	virtual void CloseLinkId(uint32_t usLinkId) = 0;
+
 	virtual void SendByServerID(uint32_t usLinkId, const uint32_t nMsgID, const std::string& strData, const uint64_t nPlayerID) = 0;
 
 	virtual void SendByServerID(uint32_t usLinkId, const uint32_t nMsgID, const char* msg, const uint32_t nLen, const uint64_t nPlayerID) = 0;

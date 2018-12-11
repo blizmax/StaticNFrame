@@ -20,6 +20,12 @@
 
 #include "NFComm/NFCore/NFJson.h"
 #include "NFComm/NFPluginModule/NFIKernelModule.h"
+#include "NFComm/NFPluginModule/NFIMongoModule.h"
+#include "NFComm/NFCore/NFMap.hpp"
+#include "NFMessageDefine/NFMsgDefine.h"
+
+#define ACCOUNT_TABLE "Account"
+#define ACCOUNT_TABLE_KEY "account"
 
 class NFCLoginLogicModule : public NFILoginLogicModule, public NFEventObj
 {
@@ -44,8 +50,12 @@ public:
 	virtual void RequestZoneList(const NFHttpRequest& req, const NFMsg::reqeust_zone_list& httpLogin);
 	virtual void PlatTokenLogin(const NFHttpRequest& req, const NFMsg::plat_token_login_request& request);
 	virtual void RequestSelectZone(const NFHttpRequest& req, const NFMsg::reqeust_select_zone_request& json);
+
+	NFMsg::LoginAccount* GetLoginAccount(const std::string& account);
 private:
 	NFIHttpServerModule* m_pHttpServerModule;
 	NFILoginClient_MasterModule* m_pLoginClient_MasterModule;
 	NFIKernelModule* m_pKernelModule;
+	NFIMongoModule* m_pMongoModule;
+	NFMap<std::string, NFMsg::LoginAccount> m_loginAccountMap;
 };

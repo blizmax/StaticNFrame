@@ -38,7 +38,7 @@ namespace protobuf_login_5fmsg_2eproto {
 struct TableStruct {
   static const ::google::protobuf::internal::ParseTableField entries[];
   static const ::google::protobuf::internal::AuxillaryParseTableField aux[];
-  static const ::google::protobuf::internal::ParseTable schema[15];
+  static const ::google::protobuf::internal::ParseTable schema[16];
   static const ::google::protobuf::internal::FieldMetadata field_metadata[];
   static const ::google::protobuf::internal::SerializationTable serialization_table[];
   static const ::google::protobuf::uint32 offsets[];
@@ -46,6 +46,9 @@ struct TableStruct {
 void AddDescriptors();
 }  // namespace protobuf_login_5fmsg_2eproto
 namespace NFMsg {
+class LoginAccount;
+class LoginAccountDefaultTypeInternal;
+extern LoginAccountDefaultTypeInternal _LoginAccount_default_instance_;
 class http_login_cmd;
 class http_login_cmdDefaultTypeInternal;
 extern http_login_cmdDefaultTypeInternal _http_login_cmd_default_instance_;
@@ -94,6 +97,7 @@ extern respone_select_zone_respone_respone_dataDefaultTypeInternal _respone_sele
 }  // namespace NFMsg
 namespace google {
 namespace protobuf {
+template<> ::NFMsg::LoginAccount* Arena::CreateMaybeMessage<::NFMsg::LoginAccount>(Arena*);
 template<> ::NFMsg::http_login_cmd* Arena::CreateMaybeMessage<::NFMsg::http_login_cmd>(Arena*);
 template<> ::NFMsg::plat_token_login_request* Arena::CreateMaybeMessage<::NFMsg::plat_token_login_request>(Arena*);
 template<> ::NFMsg::plat_token_login_request_request_data* Arena::CreateMaybeMessage<::NFMsg::plat_token_login_request_request_data>(Arena*);
@@ -114,6 +118,124 @@ template<> ::NFMsg::respone_select_zone_respone_respone_data* Arena::CreateMaybe
 namespace NFMsg {
 
 // ===================================================================
+
+class LoginAccount : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:NFMsg.LoginAccount) */ {
+ public:
+  LoginAccount();
+  virtual ~LoginAccount();
+
+  LoginAccount(const LoginAccount& from);
+
+  inline LoginAccount& operator=(const LoginAccount& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  #if LANG_CXX11
+  LoginAccount(LoginAccount&& from) noexcept
+    : LoginAccount() {
+    *this = ::std::move(from);
+  }
+
+  inline LoginAccount& operator=(LoginAccount&& from) noexcept {
+    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
+      if (this != &from) InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+  #endif
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const LoginAccount& default_instance();
+
+  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
+  static inline const LoginAccount* internal_default_instance() {
+    return reinterpret_cast<const LoginAccount*>(
+               &_LoginAccount_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    0;
+
+  void Swap(LoginAccount* other);
+  friend void swap(LoginAccount& a, LoginAccount& b) {
+    a.Swap(&b);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline LoginAccount* New() const final {
+    return CreateMaybeMessage<LoginAccount>(NULL);
+  }
+
+  LoginAccount* New(::google::protobuf::Arena* arena) const final {
+    return CreateMaybeMessage<LoginAccount>(arena);
+  }
+  void CopyFrom(const ::google::protobuf::Message& from) final;
+  void MergeFrom(const ::google::protobuf::Message& from) final;
+  void CopyFrom(const LoginAccount& from);
+  void MergeFrom(const LoginAccount& from);
+  void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input) final;
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const final;
+  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
+      bool deterministic, ::google::protobuf::uint8* target) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(LoginAccount* other);
+  private:
+  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
+    return NULL;
+  }
+  inline void* MaybeArenaPtr() const {
+    return NULL;
+  }
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // string account = 1;
+  void clear_account();
+  static const int kAccountFieldNumber = 1;
+  const ::std::string& account() const;
+  void set_account(const ::std::string& value);
+  #if LANG_CXX11
+  void set_account(::std::string&& value);
+  #endif
+  void set_account(const char* value);
+  void set_account(const char* value, size_t size);
+  ::std::string* mutable_account();
+  ::std::string* release_account();
+  void set_allocated_account(::std::string* account);
+
+  // uint64 uid = 2;
+  void clear_uid();
+  static const int kUidFieldNumber = 2;
+  ::google::protobuf::uint64 uid() const;
+  void set_uid(::google::protobuf::uint64 value);
+
+  // @@protoc_insertion_point(class_scope:NFMsg.LoginAccount)
+ private:
+
+  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+  ::google::protobuf::internal::ArenaStringPtr account_;
+  ::google::protobuf::uint64 uid_;
+  mutable ::google::protobuf::internal::CachedSize _cached_size_;
+  friend struct ::protobuf_login_5fmsg_2eproto::TableStruct;
+};
+// -------------------------------------------------------------------
 
 class http_login_cmd : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:NFMsg.http_login_cmd) */ {
  public:
@@ -150,7 +272,7 @@ class http_login_cmd : public ::google::protobuf::Message /* @@protoc_insertion_
                &_http_login_cmd_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    0;
+    1;
 
   void Swap(http_login_cmd* other);
   friend void swap(http_login_cmd& a, http_login_cmd& b) {
@@ -261,7 +383,7 @@ class reqeust_zone_list_data : public ::google::protobuf::Message /* @@protoc_in
                &_reqeust_zone_list_data_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    1;
+    2;
 
   void Swap(reqeust_zone_list_data* other);
   friend void swap(reqeust_zone_list_data& a, reqeust_zone_list_data& b) {
@@ -364,7 +486,7 @@ class reqeust_zone_list : public ::google::protobuf::Message /* @@protoc_inserti
                &_reqeust_zone_list_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    2;
+    3;
 
   void Swap(reqeust_zone_list* other);
   friend void swap(reqeust_zone_list& a, reqeust_zone_list& b) {
@@ -488,7 +610,7 @@ class reqeust_zone_list_respone_respone_data_reqeust_zone_list_server : public :
                &_reqeust_zone_list_respone_respone_data_reqeust_zone_list_server_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    3;
+    4;
 
   void Swap(reqeust_zone_list_respone_respone_data_reqeust_zone_list_server* other);
   friend void swap(reqeust_zone_list_respone_respone_data_reqeust_zone_list_server& a, reqeust_zone_list_respone_respone_data_reqeust_zone_list_server& b) {
@@ -664,7 +786,7 @@ class reqeust_zone_list_respone_respone_data : public ::google::protobuf::Messag
                &_reqeust_zone_list_respone_respone_data_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    4;
+    5;
 
   void Swap(reqeust_zone_list_respone_respone_data* other);
   friend void swap(reqeust_zone_list_respone_respone_data& a, reqeust_zone_list_respone_respone_data& b) {
@@ -811,7 +933,7 @@ class reqeust_zone_list_respone : public ::google::protobuf::Message /* @@protoc
                &_reqeust_zone_list_respone_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    5;
+    6;
 
   void Swap(reqeust_zone_list_respone* other);
   friend void swap(reqeust_zone_list_respone& a, reqeust_zone_list_respone& b) {
@@ -959,7 +1081,7 @@ class plat_token_login_request_request_data_request_data_platinfo : public ::goo
                &_plat_token_login_request_request_data_request_data_platinfo_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    6;
+    7;
 
   void Swap(plat_token_login_request_request_data_request_data_platinfo* other);
   friend void swap(plat_token_login_request_request_data_request_data_platinfo& a, plat_token_login_request_request_data_request_data_platinfo& b) {
@@ -1181,7 +1303,7 @@ class plat_token_login_request_request_data : public ::google::protobuf::Message
                &_plat_token_login_request_request_data_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    7;
+    8;
 
   void Swap(plat_token_login_request_request_data* other);
   friend void swap(plat_token_login_request_request_data& a, plat_token_login_request_request_data& b) {
@@ -1299,7 +1421,7 @@ class plat_token_login_request : public ::google::protobuf::Message /* @@protoc_
                &_plat_token_login_request_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    8;
+    9;
 
   void Swap(plat_token_login_request* other);
   friend void swap(plat_token_login_request& a, plat_token_login_request& b) {
@@ -1446,7 +1568,7 @@ class plat_token_login_respone_respone_data_respone_data_platinfo : public ::goo
                &_plat_token_login_respone_respone_data_respone_data_platinfo_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    9;
+    10;
 
   void Swap(plat_token_login_respone_respone_data_respone_data_platinfo* other);
   friend void swap(plat_token_login_respone_respone_data_respone_data_platinfo& a, plat_token_login_respone_respone_data_respone_data_platinfo& b) {
@@ -1668,7 +1790,7 @@ class plat_token_login_respone_respone_data : public ::google::protobuf::Message
                &_plat_token_login_respone_respone_data_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    10;
+    11;
 
   void Swap(plat_token_login_respone_respone_data* other);
   friend void swap(plat_token_login_respone_respone_data& a, plat_token_login_respone_respone_data& b) {
@@ -1875,7 +1997,7 @@ class plat_token_login_respone : public ::google::protobuf::Message /* @@protoc_
                &_plat_token_login_respone_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    11;
+    12;
 
   void Swap(plat_token_login_respone* other);
   friend void swap(plat_token_login_respone& a, plat_token_login_respone& b) {
@@ -2067,7 +2189,7 @@ class reqeust_select_zone_request : public ::google::protobuf::Message /* @@prot
                &_reqeust_select_zone_request_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    12;
+    13;
 
   void Swap(reqeust_select_zone_request* other);
   friend void swap(reqeust_select_zone_request& a, reqeust_select_zone_request& b) {
@@ -2229,7 +2351,7 @@ class respone_select_zone_respone_respone_data : public ::google::protobuf::Mess
                &_respone_select_zone_respone_respone_data_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    13;
+    14;
 
   void Swap(respone_select_zone_respone_respone_data* other);
   friend void swap(respone_select_zone_respone_respone_data& a, respone_select_zone_respone_respone_data& b) {
@@ -2412,7 +2534,7 @@ class respone_select_zone_respone : public ::google::protobuf::Message /* @@prot
                &_respone_select_zone_respone_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    14;
+    15;
 
   void Swap(respone_select_zone_respone* other);
   friend void swap(respone_select_zone_respone& a, respone_select_zone_respone& b) {
@@ -2583,6 +2705,77 @@ class respone_select_zone_respone : public ::google::protobuf::Message /* @@prot
   #pragma GCC diagnostic push
   #pragma GCC diagnostic ignored "-Wstrict-aliasing"
 #endif  // __GNUC__
+// LoginAccount
+
+// string account = 1;
+inline void LoginAccount::clear_account() {
+  account_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline const ::std::string& LoginAccount::account() const {
+  // @@protoc_insertion_point(field_get:NFMsg.LoginAccount.account)
+  return account_.GetNoArena();
+}
+inline void LoginAccount::set_account(const ::std::string& value) {
+  
+  account_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:NFMsg.LoginAccount.account)
+}
+#if LANG_CXX11
+inline void LoginAccount::set_account(::std::string&& value) {
+  
+  account_.SetNoArena(
+    &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+  // @@protoc_insertion_point(field_set_rvalue:NFMsg.LoginAccount.account)
+}
+#endif
+inline void LoginAccount::set_account(const char* value) {
+  GOOGLE_DCHECK(value != NULL);
+  
+  account_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:NFMsg.LoginAccount.account)
+}
+inline void LoginAccount::set_account(const char* value, size_t size) {
+  
+  account_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:NFMsg.LoginAccount.account)
+}
+inline ::std::string* LoginAccount::mutable_account() {
+  
+  // @@protoc_insertion_point(field_mutable:NFMsg.LoginAccount.account)
+  return account_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline ::std::string* LoginAccount::release_account() {
+  // @@protoc_insertion_point(field_release:NFMsg.LoginAccount.account)
+  
+  return account_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline void LoginAccount::set_allocated_account(::std::string* account) {
+  if (account != NULL) {
+    
+  } else {
+    
+  }
+  account_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), account);
+  // @@protoc_insertion_point(field_set_allocated:NFMsg.LoginAccount.account)
+}
+
+// uint64 uid = 2;
+inline void LoginAccount::clear_uid() {
+  uid_ = GOOGLE_ULONGLONG(0);
+}
+inline ::google::protobuf::uint64 LoginAccount::uid() const {
+  // @@protoc_insertion_point(field_get:NFMsg.LoginAccount.uid)
+  return uid_;
+}
+inline void LoginAccount::set_uid(::google::protobuf::uint64 value) {
+  
+  uid_ = value;
+  // @@protoc_insertion_point(field_set:NFMsg.LoginAccount.uid)
+}
+
+// -------------------------------------------------------------------
+
 // http_login_cmd
 
 // string do = 1;
@@ -5824,6 +6017,8 @@ inline void respone_select_zone_respone::set_allocated_uid(::std::string* uid) {
 #ifdef __GNUC__
   #pragma GCC diagnostic pop
 #endif  // __GNUC__
+// -------------------------------------------------------------------
+
 // -------------------------------------------------------------------
 
 // -------------------------------------------------------------------

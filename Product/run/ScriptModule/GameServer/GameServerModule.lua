@@ -23,6 +23,13 @@ function GameServerModule.Init()
 
     unilight.addtimer("UserInfo.Update", 1)
 
+    unilight.response = function(w, req)
+		req.st = os.time()
+		local s = table2json(req)
+		w.SendString(s)
+		unilight.debug("[send] " .. s)
+    end
+    
     -- 当tcp上线时
 	Tcp.account_connect = function(laccount)
 		UserInfo.Connected(laccount.Id)
@@ -57,13 +64,6 @@ function GameServerModule.NetServerRecvHandleJson(unLinkId, valueId, nMsgId, str
                 strcmd = "Cmd" .. strcmd
                 if type(Net[strcmd]) == "function" then
                     local laccount = go.roomusermgr.GetRoomUserById(valueId)
-                    if laccount == nil then
-                        laccount = {}
-                        laccount.Id = valueId
-                        laccount.unLinkId = unLinkId
-                        laccount.SendString = TcpServer.sendJsonMsg
-                    end
-
                     Net[strcmd](table_msg, laccount)
                 end
             end

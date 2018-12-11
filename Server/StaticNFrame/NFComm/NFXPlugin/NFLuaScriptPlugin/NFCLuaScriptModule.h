@@ -62,6 +62,7 @@ public:
 
 	virtual void RunAccountConnectFunc(PlayerAccountInfo* laccount) override;
 	virtual void RunAccountDisConnectFunc(PlayerAccountInfo* laccount) override;
+	virtual void RunAccountReConnectFunc(PlayerAccountInfo* laccount) override;
 public:
 	virtual void OnTimer(uint32_t nTimerID) override;
 	virtual uint32_t AddTimer(const std::string& luaFunc, uint64_t nInterVal, const std::string& useData) override;

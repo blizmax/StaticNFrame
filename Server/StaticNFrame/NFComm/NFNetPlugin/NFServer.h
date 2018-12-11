@@ -74,6 +74,14 @@ public:
 	std::string GetLinkIp(uint32_t usLinkId);
 
 	/**
+	* @brief 关闭连接
+	*
+	* @param  usLinkId
+	* @return 
+	*/
+	void CloseLinkId(uint32_t usLinkId);
+
+	/**
 	 * @brief	发送数据
 	 *
 	 * @param pData		发送的数据, 这里的数据已经包含了数据头

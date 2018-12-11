@@ -97,6 +97,14 @@ public:
 	virtual std::string GetLinkIp(uint32_t usLinkId) override;
 
 	/**
+	* @brief πÿ±’¡¨Ω”
+	*
+	* @param  usLinkId
+	* @return
+	*/
+	virtual void CloseLinkId(uint32_t usLinkId) override;
+
+	/**
 	 * @brief
 	 *
 	 * @param  usLinkId

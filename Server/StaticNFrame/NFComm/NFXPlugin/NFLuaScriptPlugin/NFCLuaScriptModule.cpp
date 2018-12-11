@@ -296,3 +296,8 @@ void NFCLuaScriptModule::RunAccountDisConnectFunc(PlayerAccountInfo* laccount)
 {
 	TryRunGlobalScriptFunc("Tcp.account_disconnect", laccount);
 }
+
+void NFCLuaScriptModule::RunAccountReConnectFunc(PlayerAccountInfo* laccount)
+{
+	TryRunGlobalScriptFunc("Tcp.reconnect_login_ok", laccount);
+}

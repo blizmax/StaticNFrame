@@ -21,7 +21,8 @@ message UserLoginTokenLoginUserPmd_C
 
 message UserJsMessageForwardUserPmd_CS
 {
-	string msg = 1;
+	string cmd_name = 1;
+	string msg = 2;
 }
 
 message AccountConnectGameServer_C
@@ -29,4 +30,17 @@ message AccountConnectGameServer_C
 	uint64 uid = 1;
 	string ip = 2;
 	string account = 3;
+}
+
+message UserLoginReconnectLoginUserPmd_C
+{
+	uint64 accountid = 1;
+	uint64 timestamp = 2;
+	string tokenmd5 = 3;
+	uint32 logintempid = 4;
+	uint32 gameid = 5;
+	uint32 zoneid = 6;
+	uint32 lastseq = 7;
+	uint32 charid = 8;
+	string url = 9;
 }
