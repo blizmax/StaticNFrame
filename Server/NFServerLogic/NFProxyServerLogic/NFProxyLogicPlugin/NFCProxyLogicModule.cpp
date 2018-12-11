@@ -98,6 +98,8 @@ void NFCProxyLogicModule::OnHandleJsonMessage(const uint32_t unLinkId, const uin
 		}
 		OnHandleUser_UserJsMessageForwardUserPmd(unLinkId, msg);
 	}
+	NFLogWarning("msg:{} not handled!", cmdMessage.cmd_name());
+	NFLogWarning("{}", jsonMsg);
 }
 
 void NFCProxyLogicModule::OnHandleUser_UserJsMessageForwardUserPmd(const uint32_t unLinkId, const NFMsg::UserJsMessageForwardUserPmd_CS& msg)
