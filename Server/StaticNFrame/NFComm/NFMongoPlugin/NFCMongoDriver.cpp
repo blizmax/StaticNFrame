@@ -578,8 +578,6 @@ bool NFCMongoDriver::CreateCollection(const std::string& collectionName, const s
 	if (m_pDatabase == nullptr) return false;
 
 	bson_error_t error;
-	bson_t keys;
-	mongoc_index_opt_t opt;
 
 	mongoc_collection_t *collection = GetCollection(collectionName);
 	if (!collection)
@@ -599,30 +597,10 @@ bool NFCMongoDriver::CreateCollection(const std::string& collectionName, const s
 		return true;
 	}
 
-	mongoc_index_opt_init(&opt);
-
-	bson_init(&keys);
-	bson_append_int32(&keys, primay_key.c_str(), -1, 1);
-
-	opt.unique = true;
-
-	bool ret = mongoc_collection_ensure_index(collection, &keys, &opt, &error);
-	if (ret == false)
-	{
-		NFLogError("Create Collection Index Failed, collectionName:{}, key:{}", collectionName, primay_key);
-
-		HandleMongocError(error);
-
-		bson_destroy(&keys);
-		return false;
-	}
-
 	if (collectionName != PRIMARY_TABLE)
 	{
 		InsertPrimaryKey(collectionName, primay_key);
 	}
-
-	bson_destroy(&keys);
 	return true;
 }
 
