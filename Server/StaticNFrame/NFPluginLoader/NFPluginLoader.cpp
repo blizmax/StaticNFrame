@@ -22,6 +22,7 @@
 #include "NFComm/NFCore/NFProfiler.h"
 #include "NFComm/NFCore/NFCmdLine.h"
 #include "NFComm/NFCore/NFCommon.h"
+#include "NFComm/NFCore/NFFileUtility.h"
 
 #if NF_PLATFORM == NF_PLATFORM_LINUX
 #include <unistd.h>
@@ -231,6 +232,8 @@ void ProcessParameter(int argc, char* argv[])
 		prctl(PR_SET_NAME, strTitleName.c_str());
 		//setproctitle(strTitleName.c_str());
 #endif
+		std::string pid_str = NFGetPID();
+		NFFileUtility::WriteFile("panic." + pid_str, pid_str.data(), pid_str.length());
 	}
 	catch (NFCmdLine::NFCmdLine_Error& e)
 	{
