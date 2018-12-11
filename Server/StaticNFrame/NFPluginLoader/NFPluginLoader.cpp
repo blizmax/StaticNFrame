@@ -109,6 +109,7 @@ static void sig_usr(int signo)
 	{
 	case SIGUSR1:
 	{
+		std::cout << "Recv Signo SIGUSR1.............." << std::endl;
 		NFCPluginManager::GetSingletonPtr()->BeforeShut();
 		NFCPluginManager::GetSingletonPtr()->Shut();
 		NFCPluginManager::GetSingletonPtr()->Finalize();
