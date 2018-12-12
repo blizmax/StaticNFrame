@@ -134,7 +134,7 @@ void NFCWorldServerModule::OnClientDisconnect(uint32_t unLinkId)
 		{
 			nServerID = pServerData->mServerInfo.server_id();
 
-			NFLogError("the login server disconnect from master server, serverName:{}, serverId:{}, serverIp:{}, serverPort:{}"
+			NFLogError("the proxy server disconnect from world server, serverName:{}, serverId:{}, serverIp:{}, serverPort:{}"
 				, pServerData->mServerInfo.server_name(), pServerData->mServerInfo.server_id(), pServerData->mServerInfo.server_ip(), pServerData->mServerInfo.server_port());
 			break;
 		}

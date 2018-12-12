@@ -82,7 +82,7 @@ void NFCLogModule::CreateLogger()
 
 	mxLogger->set_pattern("%^[%l | %Y-%m-%d %H:%M:%S.%e] | %v%$");
 
-	mxLogger->flush_on(spdlog::level::err);
+	mxLogger->flush_on(spdlog::level::debug);
 
 	spdlog::register_logger(mxLogger);
 }
