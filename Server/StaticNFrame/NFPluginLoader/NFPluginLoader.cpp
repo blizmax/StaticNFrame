@@ -127,11 +127,9 @@ static void sig_usr(int signo)
 #endif
 }
 
-void InitDaemon()
+void InitSignal()
 {
 #if NF_PLATFORM != NF_PLATFORM_WIN
-	daemon(1, 0);
-
 	signal(SIGUSR1, sig_usr);
 	signal(SIGUSR2, sig_usr);
 	signal(SIGKILL, sig_usr);
@@ -141,11 +139,18 @@ void InitDaemon()
 	signal(SIGTERM, sig_usr);
 	// ignore signals
 
-	
-	
+
+
 	signal(SIGPIPE, SIG_IGN);
 	signal(SIGTTOU, SIG_IGN);
 	signal(SIGTTIN, SIG_IGN);
+#endif
+}
+
+void InitDaemon()
+{
+#if NF_PLATFORM != NF_PLATFORM_WIN
+	daemon(1, 0);
 #endif
 }
 
@@ -212,8 +217,7 @@ void ProcessParameter(int argc, char* argv[])
 			InitDaemon();
 		}
 
-		signal(SIGPIPE, SIG_IGN);
-		signal(SIGCHLD, SIG_IGN);
+		InitSignal();
 #endif
 
 		std::string strPluginName = cmdParser.Get<std::string>("Plugin");
