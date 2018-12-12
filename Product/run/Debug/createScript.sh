@@ -10,7 +10,7 @@ cp NFPluginLoader NFLogin
 chmod a+x NFLogin
 cp runAll.sh runLogin.sh
 chmod a+x runLogin.sh
-sed -i "s/servername=NFPluginLoader/servername=NFLogin/g" ./ruLogin.sh
+sed -i "s/servername=NFPluginLoader/servername=NFLogin/g" ./runLogin.sh
 sed -i "s/servertype=AllServer/servertype=LoginServer/g" ./runLogin.sh
 sed -i "s/serverId=6/serverId=4/g" ./runLogin.sh
 
