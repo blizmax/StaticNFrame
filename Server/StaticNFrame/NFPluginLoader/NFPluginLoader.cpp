@@ -108,6 +108,10 @@ static void sig_usr(int signo)
 	switch (signo)
 	{
 	case SIGUSR1:
+	case SIGUSR2:
+	case SIGKILL:
+	case SIGQUIT:
+	case SIGHUP:
 	{
 		std::cout << "Recv Signo SIGUSR1.............." << std::endl;
 		NFCPluginManager::GetSingletonPtr()->BeforeShut();
@@ -115,10 +119,6 @@ static void sig_usr(int signo)
 		NFCPluginManager::GetSingletonPtr()->Finalize();
 
 		NFCPluginManager::GetSingletonPtr()->ReleaseInstance();
-	}
-	break;
-	case SIGUSR2:
-	{
 	}
 	break;
 	default:
@@ -134,15 +134,18 @@ void InitDaemon()
 
 	signal(SIGUSR1, sig_usr);
 	signal(SIGUSR2, sig_usr);
-
+	signal(SIGKILL, sig_usr);
+	signal(SIGINT, sig_usr);
+	signal(SIGQUIT, sig_usr);
+	signal(SIGHUP, sig_usr);
+	signal(SIGTERM, sig_usr);
 	// ignore signals
-	signal(SIGINT, SIG_IGN);
-	signal(SIGHUP, SIG_IGN);
-	signal(SIGQUIT, SIG_IGN);
+
+	
+	
 	signal(SIGPIPE, SIG_IGN);
 	signal(SIGTTOU, SIG_IGN);
 	signal(SIGTTIN, SIG_IGN);
-	signal(SIGTERM, SIG_IGN);
 #endif
 }
 
