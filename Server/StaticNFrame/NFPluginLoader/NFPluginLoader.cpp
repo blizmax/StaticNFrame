@@ -110,11 +110,11 @@ static void sig_usr(int signo)
 	case SIGUSR1:
 	case SIGUSR2:
 	case SIGKILL:
+	case SIGINT:
 	case SIGQUIT:
 	case SIGHUP:
 	case SIGTERM:
 	{
-		std::cout << "Recv Signo SIGUSR1.............." << std::endl;
 		NFCPluginManager::GetSingletonPtr()->BeforeShut();
 		NFCPluginManager::GetSingletonPtr()->Shut();
 		NFCPluginManager::GetSingletonPtr()->Finalize();
