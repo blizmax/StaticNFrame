@@ -38,6 +38,7 @@ NFCPluginManager::NFCPluginManager() : NFIPluginManager()
 
 	mnInitTime = NFGetTime();
 	mnNowTime = mnInitTime;
+	mIsDaemon = false;
 
 	//    ×¢²áAllServer
 	for (int i = 1; i < NF_ST_MAX; i++)
@@ -50,6 +51,16 @@ NFCPluginManager::NFCPluginManager() : NFIPluginManager()
 
 NFCPluginManager::~NFCPluginManager()
 {
+}
+
+bool NFCPluginManager::IsDaemon() const
+{
+	return mIsDaemon;
+}
+
+void NFCPluginManager::SetDaemon()
+{
+	mIsDaemon = true;
 }
 
 bool NFCPluginManager::IsLoadAllServer() const

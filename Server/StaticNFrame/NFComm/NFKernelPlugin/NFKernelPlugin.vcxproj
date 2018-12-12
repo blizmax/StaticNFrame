@@ -422,6 +422,7 @@
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="my_date_and_hour_file_sink.h" />
     <ClInclude Include="NFCConfigModule.h" />
     <ClInclude Include="NFCEventModule.h" />
     <ClInclude Include="NFCKernelModule.h" />

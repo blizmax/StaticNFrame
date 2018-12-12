@@ -109,6 +109,9 @@ public:
 	virtual uint64_t GetInitTime() const;
 
 	virtual uint64_t GetNowTime() const;
+
+	virtual bool IsDaemon() const;
+	virtual void SetDaemon();
 protected:
 	bool LoadPluginConfig();
 	bool RegisterStaticPlugin();
@@ -132,6 +135,7 @@ private:
 	std::string mstrAppName;
 	std::string mstrLogPath;
 	std::string mstrLuaScriptPath;
+	bool mIsDaemon;
 
 	typedef std::map<std::string, NFCDynLib*> PluginLibMap;
 	typedef std::map<std::string, bool> PluginNameMap;

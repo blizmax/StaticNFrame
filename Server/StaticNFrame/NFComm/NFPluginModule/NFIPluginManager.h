@@ -112,6 +112,9 @@ public:
 	virtual uint64_t GetInitTime() const = 0;
 
 	virtual uint64_t GetNowTime() const = 0;
+
+	virtual bool IsDaemon() const = 0;
+	virtual void SetDaemon() = 0;
 };
 
 #endif
