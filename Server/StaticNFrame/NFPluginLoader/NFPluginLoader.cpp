@@ -216,6 +216,7 @@ void ProcessParameter(int argc, char* argv[])
 		//run it as a daemon process
 		if (cmdParser.Exist("Daemon"))
 		{
+			NFCPluginManager::GetSingletonPtr()->SetDaemon();
 			InitDaemon();
 		}
 
@@ -242,8 +243,8 @@ void ProcessParameter(int argc, char* argv[])
 		prctl(PR_SET_NAME, strTitleName.c_str());
 		//setproctitle(strTitleName.c_str());
 #endif
-		std::string pid_str = NFGetPID();
-		NFFileUtility::WriteFile("panic." + pid_str, pid_str.data(), pid_str.length());
+		//std::string pid_str = NFGetPID();
+		//NFFileUtility::WriteFile("panic." + pid_str, pid_str.data(), pid_str.length());
 	}
 	catch (NFCmdLine::NFCmdLine_Error& e)
 	{
