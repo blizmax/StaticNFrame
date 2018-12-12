@@ -40,7 +40,7 @@ stopss()
 		return
 	fi
 	echo "$PWD/$servername Exist.........Stop .............."
-	ps x |grep $PWD/$servername | sed -e '/grep/d' | gawk '{print "panic."$1}' | xargs rm -rf
+	#ps x |grep $PWD/$servername | sed -e '/grep/d' | gawk '{print "panic."$1}' | xargs rm -rf
 	ps x |grep $PWD/$servername | sed -e '/grep/d' | gawk '{print $1}' | xargs kill
 	check_stop_over
 	echo "stop $servername"
