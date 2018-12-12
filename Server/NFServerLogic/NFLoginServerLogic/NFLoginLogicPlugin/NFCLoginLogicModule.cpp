@@ -168,6 +168,8 @@ void NFCLoginLogicModule::PlatTokenLogin(const NFHttpRequest& req, const NFMsg::
 	NFMsg::LoginAccount* pAccount = GetLoginAccount(account);
 	if (pAccount == nullptr) return;
 
+	NFLogInfo("account:{} uid:{} gameid:{}, zoneId:{} login......", pAccount->account(), pAccount->uid(), gameid, zoneid);
+
 	uint32_t plat_login_timeout = 2592000;
 	uint64_t uuid = pAccount->uid();
 

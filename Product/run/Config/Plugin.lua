@@ -116,6 +116,8 @@ LoadPlugin =
 			"NFGameServerPlugin",
 			
 			"NFGameLogicPlugin",
+			
+			"NFLuaScriptPlugin",
 		};
 		ServerType = NF_ST_GAME;
 	},

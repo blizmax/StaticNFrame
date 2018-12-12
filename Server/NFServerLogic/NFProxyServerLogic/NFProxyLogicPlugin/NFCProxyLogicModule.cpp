@@ -79,6 +79,7 @@ void NFCProxyLogicModule::OnHandleGameJsonMessage(const uint32_t unLinkId, const
 	{
 		std::string strJson = "{\"cmd_name\":\"Pmd.UserJsMessageForwardUserPmd_CS\", \"msg\":" + std::string(msg, nLen) + "}";
 		m_pNetServerModule->SendByServerID(pData->unlinkId, 0, strJson,0);
+		NFLogDebug("send msg:{}", strJson);
 	}
 }
 
@@ -90,6 +91,8 @@ void NFCProxyLogicModule::OnHandleJsonMessage(const uint32_t unLinkId, const uin
 	{
 		return;
 	}
+
+	NFLogDebug("recv msg:{}", jsonMsg);
 
 	if (cmdMessage.cmd_name() == "Pmd.UserLoginTokenLoginUserPmd_C")
 	{
@@ -140,19 +143,21 @@ void NFCProxyLogicModule::OnHandleUser_UserJsMessageForwardUserPmd(const uint32_
 
 void NFCProxyLogicModule::OnHandleUser_LoginTokenLoginUserPmd(const uint32_t unLinkId, const NFMsg::UserLoginTokenLoginUserPmd_C& msg)
 {
-	ProxyPlayerData* pData = GetPlayerDataByLinkId(unLinkId);
+	ProxyPlayerData* pData = GetPlayerData(msg.accountid());
 	if (pData == nullptr)
 	{
 		pData = NF_NEW ProxyPlayerData();
-		pData->uid = msg.accountid();
-		pData->gameServerId = msg.zoneid();
-		mUnlinkIdPlayerData.AddElement(unLinkId, pData);
+		mPlayerData.AddElement(msg.accountid(), pData);
 	}
 
-	auto pPlayerData = GetPlayerData(msg.accountid());
-	if (pPlayerData == nullptr)
+	pData->uid = msg.accountid();
+	pData->gameServerId = msg.zoneid();
+
+	ProxyPlayerData* pLinkData = GetPlayerDataByLinkId(unLinkId);
+	if (pLinkData == nullptr || pLinkData != pData)
 	{
-		mPlayerData.AddElement(msg.accountid(), pData);
+		pLinkData = pData;
+		mUnlinkIdPlayerData.AddElement(unLinkId, pLinkData);
 	}
 
 	pData->unlinkId = unLinkId;
@@ -178,19 +183,21 @@ void NFCProxyLogicModule::OnHandleUser_LoginTokenLoginUserPmd(const uint32_t unL
 
 void NFCProxyLogicModule::OnHandleUser_UserLoginReconnectLoginUserPmd(const uint32_t unLinkId, const NFMsg::UserLoginReconnectLoginUserPmd_C& msg)
 {
-	ProxyPlayerData* pData = GetPlayerDataByLinkId(unLinkId);
+	ProxyPlayerData* pData = GetPlayerData(msg.accountid());
 	if (pData == nullptr)
 	{
 		pData = NF_NEW ProxyPlayerData();
-		pData->uid = msg.accountid();
-		pData->gameServerId = msg.zoneid();
-		mUnlinkIdPlayerData.AddElement(unLinkId, pData);
+		mPlayerData.AddElement(msg.accountid(), pData);
 	}
 
-	auto pPlayerData = GetPlayerData(msg.accountid());
-	if (pPlayerData == nullptr)
+	pData->uid = msg.accountid();
+	pData->gameServerId = msg.zoneid();
+
+	ProxyPlayerData* pLinkData = GetPlayerDataByLinkId(unLinkId);
+	if (pLinkData == nullptr || pLinkData != pData)
 	{
-		mPlayerData.AddElement(msg.accountid(), pData);
+		pLinkData = pData;
+		mUnlinkIdPlayerData.AddElement(unLinkId, pLinkData);
 	}
 
 	pData->unlinkId = unLinkId;
