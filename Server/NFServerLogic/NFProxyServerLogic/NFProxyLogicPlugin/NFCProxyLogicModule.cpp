@@ -79,7 +79,7 @@ void NFCProxyLogicModule::OnHandleGameJsonMessage(const uint32_t unLinkId, const
 	{
 		std::string strJson = "{\"cmd_name\":\"Pmd.UserJsMessageForwardUserPmd_CS\", \"msg\":" + std::string(msg, nLen) + "}";
 		m_pNetServerModule->SendByServerID(pData->unlinkId, 0, strJson,0);
-		NFLogDebug("send msg:{}", strJson);
+		//NFLogDebug("send msg:{}", strJson);
 	}
 }
 
@@ -93,7 +93,7 @@ void NFCProxyLogicModule::OnHandleJsonMessage(const uint32_t unLinkId, const uin
 		return;
 	}
 
-	NFLogDebug("recv msg:{}", jsonMsg);
+	//NFLogDebug("recv msg:{}", jsonMsg);
 
 	if (cmdMessage.cmd_name() == "Pmd.UserLoginTokenLoginUserPmd_C")
 	{
