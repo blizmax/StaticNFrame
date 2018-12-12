@@ -31,7 +31,7 @@ NFCNetServerModule::~NFCNetServerModule()
 bool NFCNetServerModule::Awake()
 {
 	//可以允许Lua Module不存在
-	m_pLuaScriptModule = dynamic_cast<NFILuaScriptModule*>(pPluginManager->FindModule("NFILuaScriptModule"));
+	m_pLuaScriptModule = dynamic_cast<NFILuaScriptModule*>(pPluginManager->FindModule(typeid(NFILuaScriptModule).name()));
 	return true;
 }
 
@@ -174,7 +174,10 @@ void NFCNetServerModule::SendByServerID(uint32_t usLinkId, const uint32_t nMsgID
 			NFLogError("SendByServerID error, usLinkId:{} not exist!", usLinkId);
 		}
 	}
-	NFLogError("SendByServerID error, usLinkId:{} not exist!", usLinkId);
+	if (usLinkId != 0)
+	{
+		NFLogError("SendByServerID error, usLinkId:{} not exist!", usLinkId);
+	}
 }
 
 void NFCNetServerModule::SendToServerByPB(uint32_t usLinkId, const uint32_t nMsgID, const google::protobuf::Message& xData, const uint64_t nPlayerID)

@@ -37,7 +37,9 @@ public:
 	virtual bool Shut() override;
 
 	virtual void OnExecute(uint16_t nEventID, uint64_t nSrcID, uint8_t bySrcType, NFEventContext* pEventContext) override;
-
+	
+	void OnProxySocketEvent(const eMsgType nEvent, const uint32_t unLinkId);
+	void OnHandleProxyDisconnect(const uint32_t unLinkId);
 	void OnHandleAccountConnect(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen);
 	void OnHandleAccountDisConnect(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen);
 	void OnHandleAccountReConnect(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen);

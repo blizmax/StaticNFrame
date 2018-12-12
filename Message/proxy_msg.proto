@@ -41,6 +41,5 @@ message UserLoginReconnectLoginUserPmd_C
 	uint32 gameid = 5;
 	uint32 zoneid = 6;
 	uint32 lastseq = 7;
-	uint32 charid = 8;
 	string url = 9;
 }

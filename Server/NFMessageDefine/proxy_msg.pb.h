@@ -764,12 +764,6 @@ class UserLoginReconnectLoginUserPmd_C : public ::google::protobuf::Message /* @
   ::google::protobuf::uint32 lastseq() const;
   void set_lastseq(::google::protobuf::uint32 value);
 
-  // uint32 charid = 8;
-  void clear_charid();
-  static const int kCharidFieldNumber = 8;
-  ::google::protobuf::uint32 charid() const;
-  void set_charid(::google::protobuf::uint32 value);
-
   // @@protoc_insertion_point(class_scope:NFMsg.UserLoginReconnectLoginUserPmd_C)
  private:
 
@@ -782,7 +776,6 @@ class UserLoginReconnectLoginUserPmd_C : public ::google::protobuf::Message /* @
   ::google::protobuf::uint32 gameid_;
   ::google::protobuf::uint32 zoneid_;
   ::google::protobuf::uint32 lastseq_;
-  ::google::protobuf::uint32 charid_;
   mutable ::google::protobuf::internal::CachedSize _cached_size_;
   friend struct ::protobuf_proxy_5fmsg_2eproto::TableStruct;
 };
@@ -1417,20 +1410,6 @@ inline void UserLoginReconnectLoginUserPmd_C::set_lastseq(::google::protobuf::ui
   
   lastseq_ = value;
   // @@protoc_insertion_point(field_set:NFMsg.UserLoginReconnectLoginUserPmd_C.lastseq)
-}
-
-// uint32 charid = 8;
-inline void UserLoginReconnectLoginUserPmd_C::clear_charid() {
-  charid_ = 0u;
-}
-inline ::google::protobuf::uint32 UserLoginReconnectLoginUserPmd_C::charid() const {
-  // @@protoc_insertion_point(field_get:NFMsg.UserLoginReconnectLoginUserPmd_C.charid)
-  return charid_;
-}
-inline void UserLoginReconnectLoginUserPmd_C::set_charid(::google::protobuf::uint32 value) {
-  
-  charid_ = value;
-  // @@protoc_insertion_point(field_set:NFMsg.UserLoginReconnectLoginUserPmd_C.charid)
 }
 
 // string url = 9;

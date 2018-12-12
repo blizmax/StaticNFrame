@@ -22,6 +22,8 @@ bool NFCGameLogicModule::Init()
 	m_pNetClientModule = pPluginManager->FindModule<NFINetClientModule>();
 	m_pNetServerModule = pPluginManager->FindModule<NFINetServerModule>();
 	
+	m_pNetServerModule->AddEventCallBack(NF_ST_GAME, this, &NFCGameLogicModule::OnProxySocketEvent);
+
 	m_pNetServerModule->AddReceiveCallBack(NF_ST_GAME, EGMI_NET_PROXY_TO_GAME_ACCOUNT_CONNECT, this, &NFCGameLogicModule::OnHandleAccountConnect);
 	m_pNetServerModule->AddReceiveCallBack(NF_ST_GAME, EGMI_NET_PROXY_TO_GAME_ACCOUNT_DISCONNECT, this, &NFCGameLogicModule::OnHandleAccountDisConnect);
 	m_pNetServerModule->AddReceiveCallBack(NF_ST_GAME, EGMI_NET_PROXY_TO_GAME_ACCOUNT_RECONNECT, this, &NFCGameLogicModule::OnHandleAccountReConnect);
@@ -74,7 +76,7 @@ void NFCGameLogicModule::OnHandleAccountConnect(const uint32_t unLinkId, const u
 		this->m_pNetServerModule->SendByServerID(pInfo->proxyUnlinkId, 0, msg.data(), msg.length(), pInfo->uid);
 	});
 
-	NFILuaScriptModule* pLuaScriptModule = pPluginManager->FindModule<NFILuaScriptModule>();
+	NFILuaScriptModule* pLuaScriptModule = (NFILuaScriptModule*)pPluginManager->FindModule(typeid(NFILuaScriptModule).name());
 	if (pLuaScriptModule)
 	{
 		pLuaScriptModule->RunAccountConnectFunc(pInfo);
@@ -92,9 +94,9 @@ void NFCGameLogicModule::OnHandleAccountDisConnect(const uint32_t unLinkId, cons
 		pInfo->uid = xMsg.uid();
 		pInfo->account = xMsg.account();
 		pInfo->ip = xMsg.ip();
-		pInfo->proxyUnlinkId = unLinkId;
+		pInfo->proxyUnlinkId = 0;
 
-		NFILuaScriptModule* pLuaScriptModule = pPluginManager->FindModule<NFILuaScriptModule>();
+		NFILuaScriptModule* pLuaScriptModule = (NFILuaScriptModule*)pPluginManager->FindModule(typeid(NFILuaScriptModule).name());
 		if (pLuaScriptModule)
 		{
 			pLuaScriptModule->RunAccountDisConnectFunc(pInfo);
@@ -123,9 +125,39 @@ void NFCGameLogicModule::OnHandleAccountReConnect(const uint32_t unLinkId, const
 		this->m_pNetServerModule->SendByServerID(pInfo->proxyUnlinkId, 0, msg.data(), msg.length(), pInfo->uid);
 	});
 
-	NFILuaScriptModule* pLuaScriptModule = pPluginManager->FindModule<NFILuaScriptModule>();
+	NFILuaScriptModule* pLuaScriptModule = (NFILuaScriptModule*)pPluginManager->FindModule(typeid(NFILuaScriptModule).name());
 	if (pLuaScriptModule)
 	{
-		pLuaScriptModule->RunAccountConnectFunc(pInfo);
+		pLuaScriptModule->RunAccountReConnectFunc(pInfo);
+	}
+}
+
+void NFCGameLogicModule::OnProxySocketEvent(const eMsgType nEvent, const uint32_t unLinkId)
+{
+	if (nEvent == eMsgType_CONNECTED)
+	{
+
+	}
+	else if (nEvent == eMsgType_DISCONNECTED)
+	{
+		OnHandleProxyDisconnect(unLinkId);
+	}
+}
+
+void NFCGameLogicModule::OnHandleProxyDisconnect(const uint32_t unLinkId)
+{
+	NFILuaScriptModule* pLuaScriptModule = (NFILuaScriptModule*)pPluginManager->FindModule(typeid(NFILuaScriptModule).name());
+	PlayerAccountInfo* pInfo = m_playerAccountInfo.First();
+	while (pInfo)
+	{
+		if (pInfo->proxyUnlinkId == unLinkId)
+		{
+			pInfo->proxyUnlinkId = 0;
+			if (pLuaScriptModule)
+			{
+				pLuaScriptModule->RunAccountDisConnectFunc(pInfo);
+			}
+		}
+		pInfo = m_playerAccountInfo.Next();
 	}
 }

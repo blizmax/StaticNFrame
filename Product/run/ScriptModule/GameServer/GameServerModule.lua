@@ -64,7 +64,9 @@ function GameServerModule.NetServerRecvHandleJson(unLinkId, valueId, nMsgId, str
                 strcmd = "Cmd" .. strcmd
                 if type(Net[strcmd]) == "function" then
                     local laccount = go.roomusermgr.GetRoomUserById(valueId)
-                    Net[strcmd](table_msg, laccount)
+                    if laccount ~= nil then
+                        Net[strcmd](table_msg, laccount)
+                    end
                 end
             end
         end

@@ -174,7 +174,6 @@ const ::google::protobuf::uint32 TableStruct::offsets[] GOOGLE_PROTOBUF_ATTRIBUT
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::NFMsg::UserLoginReconnectLoginUserPmd_C, gameid_),
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::NFMsg::UserLoginReconnectLoginUserPmd_C, zoneid_),
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::NFMsg::UserLoginReconnectLoginUserPmd_C, lastseq_),
-  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::NFMsg::UserLoginReconnectLoginUserPmd_C, charid_),
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::NFMsg::UserLoginReconnectLoginUserPmd_C, url_),
 };
 static const ::google::protobuf::internal::MigrationSchema schemas[] GOOGLE_PROTOBUF_ATTRIBUTE_SECTION_VARIABLE(protodesc_cold) = {
@@ -223,15 +222,14 @@ void AddDescriptorsImpl() {
       "\n\036UserJsMessageForwardUserPmd_CS\022\020\n\010cmd_"
       "name\030\001 \001(\t\022\013\n\003msg\030\002 \001(\t\"F\n\032AccountConnec"
       "tGameServer_C\022\013\n\003uid\030\001 \001(\004\022\n\n\002ip\030\002 \001(\t\022\017"
-      "\n\007account\030\003 \001(\t\"\275\001\n UserLoginReconnectLo"
+      "\n\007account\030\003 \001(\t\"\255\001\n UserLoginReconnectLo"
       "ginUserPmd_C\022\021\n\taccountid\030\001 \001(\004\022\021\n\ttimes"
       "tamp\030\002 \001(\004\022\020\n\010tokenmd5\030\003 \001(\t\022\023\n\013logintem"
       "pid\030\004 \001(\r\022\016\n\006gameid\030\005 \001(\r\022\016\n\006zoneid\030\006 \001("
-      "\r\022\017\n\007lastseq\030\007 \001(\r\022\016\n\006charid\030\010 \001(\r\022\013\n\003ur"
-      "l\030\t \001(\tb\006proto3"
+      "\r\022\017\n\007lastseq\030\007 \001(\r\022\013\n\003url\030\t \001(\tb\006proto3"
   };
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
-      descriptor, 575);
+      descriptor, 559);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "proxy_msg.proto", &protobuf_RegisterTypes);
 }
@@ -1667,7 +1665,6 @@ const int UserLoginReconnectLoginUserPmd_C::kLogintempidFieldNumber;
 const int UserLoginReconnectLoginUserPmd_C::kGameidFieldNumber;
 const int UserLoginReconnectLoginUserPmd_C::kZoneidFieldNumber;
 const int UserLoginReconnectLoginUserPmd_C::kLastseqFieldNumber;
-const int UserLoginReconnectLoginUserPmd_C::kCharidFieldNumber;
 const int UserLoginReconnectLoginUserPmd_C::kUrlFieldNumber;
 #endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
 
@@ -1691,8 +1688,8 @@ UserLoginReconnectLoginUserPmd_C::UserLoginReconnectLoginUserPmd_C(const UserLog
     url_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.url_);
   }
   ::memcpy(&accountid_, &from.accountid_,
-    static_cast<size_t>(reinterpret_cast<char*>(&charid_) -
-    reinterpret_cast<char*>(&accountid_)) + sizeof(charid_));
+    static_cast<size_t>(reinterpret_cast<char*>(&lastseq_) -
+    reinterpret_cast<char*>(&accountid_)) + sizeof(lastseq_));
   // @@protoc_insertion_point(copy_constructor:NFMsg.UserLoginReconnectLoginUserPmd_C)
 }
 
@@ -1700,8 +1697,8 @@ void UserLoginReconnectLoginUserPmd_C::SharedCtor() {
   tokenmd5_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   url_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   ::memset(&accountid_, 0, static_cast<size_t>(
-      reinterpret_cast<char*>(&charid_) -
-      reinterpret_cast<char*>(&accountid_)) + sizeof(charid_));
+      reinterpret_cast<char*>(&lastseq_) -
+      reinterpret_cast<char*>(&accountid_)) + sizeof(lastseq_));
 }
 
 UserLoginReconnectLoginUserPmd_C::~UserLoginReconnectLoginUserPmd_C() {
@@ -1737,8 +1734,8 @@ void UserLoginReconnectLoginUserPmd_C::Clear() {
   tokenmd5_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   url_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   ::memset(&accountid_, 0, static_cast<size_t>(
-      reinterpret_cast<char*>(&charid_) -
-      reinterpret_cast<char*>(&accountid_)) + sizeof(charid_));
+      reinterpret_cast<char*>(&lastseq_) -
+      reinterpret_cast<char*>(&accountid_)) + sizeof(lastseq_));
   _internal_metadata_.Clear();
 }
 
@@ -1852,20 +1849,6 @@ bool UserLoginReconnectLoginUserPmd_C::MergePartialFromCodedStream(
         break;
       }
 
-      // uint32 charid = 8;
-      case 8: {
-        if (static_cast< ::google::protobuf::uint8>(tag) ==
-            static_cast< ::google::protobuf::uint8>(64u /* 64 & 0xFF */)) {
-
-          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
-                 input, &charid_)));
-        } else {
-          goto handle_unusual;
-        }
-        break;
-      }
-
       // string url = 9;
       case 9: {
         if (static_cast< ::google::protobuf::uint8>(tag) ==
@@ -1948,11 +1931,6 @@ void UserLoginReconnectLoginUserPmd_C::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteUInt32(7, this->lastseq(), output);
   }
 
-  // uint32 charid = 8;
-  if (this->charid() != 0) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(8, this->charid(), output);
-  }
-
   // string url = 9;
   if (this->url().size() > 0) {
     ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
@@ -2016,11 +1994,6 @@ void UserLoginReconnectLoginUserPmd_C::SerializeWithCachedSizes(
   // uint32 lastseq = 7;
   if (this->lastseq() != 0) {
     target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(7, this->lastseq(), target);
-  }
-
-  // uint32 charid = 8;
-  if (this->charid() != 0) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(8, this->charid(), target);
   }
 
   // string url = 9;
@@ -2107,13 +2080,6 @@ size_t UserLoginReconnectLoginUserPmd_C::ByteSizeLong() const {
         this->lastseq());
   }
 
-  // uint32 charid = 8;
-  if (this->charid() != 0) {
-    total_size += 1 +
-      ::google::protobuf::internal::WireFormatLite::UInt32Size(
-        this->charid());
-  }
-
   int cached_size = ::google::protobuf::internal::ToCachedSize(total_size);
   SetCachedSize(cached_size);
   return total_size;
@@ -2167,9 +2133,6 @@ void UserLoginReconnectLoginUserPmd_C::MergeFrom(const UserLoginReconnectLoginUs
   if (from.lastseq() != 0) {
     set_lastseq(from.lastseq());
   }
-  if (from.charid() != 0) {
-    set_charid(from.charid());
-  }
 }
 
 void UserLoginReconnectLoginUserPmd_C::CopyFrom(const ::google::protobuf::Message& from) {
@@ -2206,7 +2169,6 @@ void UserLoginReconnectLoginUserPmd_C::InternalSwap(UserLoginReconnectLoginUserP
   swap(gameid_, other->gameid_);
   swap(zoneid_, other->zoneid_);
   swap(lastseq_, other->lastseq_);
-  swap(charid_, other->charid_);
   _internal_metadata_.Swap(&other->_internal_metadata_);
 }
 

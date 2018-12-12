@@ -37,7 +37,7 @@ NFCHttpClientModule::~NFCHttpClientModule()
 bool NFCHttpClientModule::Awake()
 {
 	//可以允许Lua Module不存在
-	m_pLuaScriptModule = dynamic_cast<NFILuaScriptModule*>(pPluginManager->FindModule("NFILuaScriptModule"));
+	m_pLuaScriptModule = dynamic_cast<NFILuaScriptModule*>(pPluginManager->FindModule(typeid(NFILuaScriptModule).name()));
 	m_pHttpClient->Init();
 	m_pHttpClient->SetLuaScriptModule(m_pLuaScriptModule);
 	return true;

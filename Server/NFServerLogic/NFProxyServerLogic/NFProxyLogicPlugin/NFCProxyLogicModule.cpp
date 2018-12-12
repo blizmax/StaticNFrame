@@ -89,6 +89,7 @@ void NFCProxyLogicModule::OnHandleJsonMessage(const uint32_t unLinkId, const uin
 	std::string jsonMsg = std::string(msg, nLen);
 	if (NFServerCommon::JsonStringToMessage(jsonMsg, cmdMessage) == false)
 	{
+		NFLogError("error msg:{}", jsonMsg);
 		return;
 	}
 
@@ -99,6 +100,7 @@ void NFCProxyLogicModule::OnHandleJsonMessage(const uint32_t unLinkId, const uin
 		NFMsg::UserLoginTokenLoginUserPmd_C msg;
 		if (NFServerCommon::JsonStringToMessage(jsonMsg, msg) == false)
 		{
+			NFLogError("json to NFMsg::UserLoginTokenLoginUserPmd_C failed!");
 			return;
 		}
 		OnHandleUser_LoginTokenLoginUserPmd(unLinkId, msg);
@@ -108,6 +110,7 @@ void NFCProxyLogicModule::OnHandleJsonMessage(const uint32_t unLinkId, const uin
 		NFMsg::UserJsMessageForwardUserPmd_CS msg;
 		if (NFServerCommon::JsonStringToMessage(jsonMsg, msg) == false)
 		{
+			NFLogError("json to NFMsg::UserJsMessageForwardUserPmd_CS failed!");
 			return;
 		}
 		OnHandleUser_UserJsMessageForwardUserPmd(unLinkId, msg);
@@ -117,6 +120,7 @@ void NFCProxyLogicModule::OnHandleJsonMessage(const uint32_t unLinkId, const uin
 		NFMsg::UserLoginReconnectLoginUserPmd_C msg;
 		if (NFServerCommon::JsonStringToMessage(jsonMsg, msg) == false)
 		{
+			NFLogError("json to NFMsg::UserLoginReconnectLoginUserPmd_C failed!");
 			return;
 		}
 		OnHandleUser_UserLoginReconnectLoginUserPmd(unLinkId, msg);
@@ -134,11 +138,15 @@ void NFCProxyLogicModule::OnHandleUser_UserJsMessageForwardUserPmd(const uint32_
 	if (pData == nullptr)
 	{
 		NFLogError("Can't find player data, unLinkId:{}", unLinkId);
+		m_pNetServerModule->CloseLinkId(unLinkId);
 		return;
 	}
 
 	auto pServerData = m_pProxyClient_GameModule->GetServerData(pData->gameServerId);
-	m_pNetClientModule->SendByServerID(pServerData->mUnlinkId, 0, msg.msg(), pData->uid);
+	if (pServerData)
+	{
+		m_pNetClientModule->SendByServerID(pServerData->mUnlinkId, 0, msg.msg(), pData->uid);
+	}
 }
 
 void NFCProxyLogicModule::OnHandleUser_LoginTokenLoginUserPmd(const uint32_t unLinkId, const NFMsg::UserLoginTokenLoginUserPmd_C& msg)
@@ -168,6 +176,7 @@ void NFCProxyLogicModule::OnHandleUser_LoginTokenLoginUserPmd(const uint32_t unL
 		NFLogError("Game Server:{} Not Existed! Maybe dump!", pData->gameServerId);
 		pData->unlinkId = 0;
 		m_pNetServerModule->CloseLinkId(unLinkId);
+		return;
 	}
 
 	std::string ip = m_pNetServerModule->GetLinkIp(unLinkId);
@@ -241,7 +250,10 @@ void NFCProxyLogicModule::OnAccountDisconnect(const uint32_t unLinkId)
 		mUnlinkIdPlayerData.RemoveElement(unLinkId);
 
 		auto pServerData = m_pProxyClient_GameModule->GetServerData(pData->gameServerId);
-		if (pServerData == nullptr) return;
+		if (pServerData == nullptr)
+		{
+			return;
+		}
 
 		std::string ip = m_pNetServerModule->GetLinkIp(unLinkId);
 		NFMsg::AccountConnectGameServer_C account;
