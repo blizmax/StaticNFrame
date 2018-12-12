@@ -126,6 +126,7 @@ static void sig_usr(int signo)
 		break;
 	}
 #endif
+	exit(0);
 }
 
 void InitSignal()
