@@ -12,6 +12,20 @@ do_work()
 	sed -i "s/serverId=6/serverId=$2/g" ./run$1$2.sh
 
 	sed -i "s/AllServer/$1/g" ./$1_log.sh
+
+	touch Stop.sh
+	chmod a+x Stop.sh
+	echo "./run$1$2.sh ss" >> Stop.sh
+
+	touch Start.sh
+	chmod a+x Start.sh
+	echo "./run$1$2.sh" >> Start.sh
+
+	touch Clear.sh
+	chmod a+x Clear.sh
+	echo "rm $1 -rf" >> Clear.sh
+	echo "rm $1_log.sh -rf" >> Clear.sh
+	echo "rm run$1$2.sh -rf" >> Clear.sh
 }
 
 do_work MasterServer 1
@@ -20,3 +34,6 @@ do_work LoginServer 4
 do_work GameServer 10
 do_work ProxyServer 11
 
+echo "rm Stop.sh -rf" >> Clear.sh
+echo "rm Start.sh -rf" >> Clear.sh
+echo "rm Clear.sh -rf" >> Clear.sh
