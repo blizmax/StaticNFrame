@@ -124,9 +124,16 @@ void NFCProxyLogicModule::OnHandleUser_UserJsMessageForwardUserPmd(const uint32_
 	}
 
 	auto pServerData = m_pNetProxyServerModule->GetGameServerData(pData->gameServerId);
-	if (pServerData)
+	if (pServerData && pServerData->mUnlinkId >= 0)
 	{
 		m_pNetServerModule->SendByServerID(pServerData->mUnlinkId, 0, msg.msg(), pData->uid);
+	}
+	else
+	{
+		NFLogError("Game Server:{} Not Existed! Maybe dump!", pData->gameServerId);
+		pData->unlinkId = 0;
+		m_pNetServerModule->CloseLinkId(unLinkId);
+		return;
 	}
 }
 
@@ -152,7 +159,7 @@ void NFCProxyLogicModule::OnHandleUser_LoginTokenLoginUserPmd(const uint32_t unL
 	pData->unlinkId = unLinkId;
 
 	auto pServerData = m_pNetProxyServerModule->GetGameServerData(pData->gameServerId);
-	if (pServerData == nullptr)
+	if (pServerData == nullptr || pServerData->mUnlinkId <= 0)
 	{
 		NFLogError("Game Server:{} Not Existed! Maybe dump!", pData->gameServerId);
 		pData->unlinkId = 0;
@@ -195,7 +202,7 @@ void NFCProxyLogicModule::OnHandleUser_UserLoginReconnectLoginUserPmd(const uint
 	pData->unlinkId = unLinkId;
 
 	auto pServerData = m_pNetProxyServerModule->GetGameServerData(pData->gameServerId);
-	if (pServerData == nullptr)
+	if (pServerData == nullptr || pServerData->mUnlinkId <= 0)
 	{
 		NFLogError("Game Server:{} Not Existed! Maybe dump!", pData->gameServerId);
 		pData->unlinkId = 0;

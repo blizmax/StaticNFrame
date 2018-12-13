@@ -83,6 +83,8 @@ void NFCGameClient_ProxyModule::OnClientDisconnect(uint32_t unLinkId)
 			, pServerData->mServerInfo.server_name(), pServerData->mServerInfo.server_id(), pServerData->mServerInfo.server_ip(), pServerData->mServerInfo.server_port());
 
 		mUnlinkProxyMap.RemoveElement(unLinkId);
+
+		m_pNetClientModule->CloseServer(unLinkId);
 	}
 }
 
@@ -106,6 +108,11 @@ void NFCGameClient_ProxyModule::OnHandleProxyReport(const NFMsg::ServerInfoRepor
 
 		pServerData->mUnlinkId = m_pNetClientModule->AddServer(NF_ST_PROXY, xData.server_ip(), xData.server_inner_port());
 		mUnlinkProxyMap.AddElement(pServerData->mUnlinkId, pServerData);
+	}
+
+	if (pServerData->mUnlinkId <= 0)
+	{
+		pServerData->mUnlinkId = m_pNetClientModule->AddServer(NF_ST_PROXY, xData.server_ip(), xData.server_inner_port());
 	}
 
 	pServerData->mServerInfo = xData;

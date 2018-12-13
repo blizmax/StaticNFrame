@@ -84,6 +84,8 @@ void NFCGameClient_WorldModule::OnClientDisconnect(uint32_t unLinkId)
 			, pServerData->mServerInfo.server_name(), pServerData->mServerInfo.server_id(), pServerData->mServerInfo.server_ip(), pServerData->mServerInfo.server_port());
 
 		mUnlinkWorldMap.RemoveElement(unLinkId);
+
+		m_pNetClientModule->CloseServer(unLinkId);
 	}
 }
 
@@ -99,6 +101,11 @@ void NFCGameClient_WorldModule::OnHandleWorldReport(const NFMsg::ServerInfoRepor
 
 		pServerData->mUnlinkId = m_pNetClientModule->AddServer(NF_ST_WORLD, xData.server_ip(), xData.server_port());
 		mUnlinkWorldMap.AddElement(pServerData->mUnlinkId, pServerData);
+	}
+
+	if (pServerData->mUnlinkId <= 0)
+	{
+		pServerData->mUnlinkId = m_pNetClientModule->AddServer(NF_ST_WORLD, xData.server_ip(), xData.server_port());
 	}
 
 	pServerData->mServerInfo = xData;
