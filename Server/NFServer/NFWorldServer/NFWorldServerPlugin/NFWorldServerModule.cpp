@@ -177,6 +177,9 @@ void NFCWorldServerModule::OnGameServerRegisterProcess(const uint32_t unLinkId, 
 		pServerData->mUnlinkId = unLinkId;
 		pServerData->mServerInfo = xData;
 
+		std::string ip = m_pNetServerModule->GetLinkIp(unLinkId);
+		pServerData->mServerInfo.set_server_ip(ip);
+
 		NFLogInfo("Game Server Register World Server Success, serverName:{}, serverId:{}, ip:{}, port:{}", xData.server_name(), xData.server_id(), xData.server_ip(), xData.server_port());
 	}
 }

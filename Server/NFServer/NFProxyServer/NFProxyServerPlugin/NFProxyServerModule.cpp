@@ -96,6 +96,9 @@ void NFCProxyServerModule::OnGameServerRegisterProcess(const uint32_t unLinkId, 
 		pServerData->mUnlinkId = unLinkId;
 		pServerData->mServerInfo = xData;
 
+		std::string ip = m_pNetServerModule->GetLinkIp(unLinkId);
+		pServerData->mServerInfo.set_server_ip(ip);
+
 		NFLogInfo("Game Server Register Proxy Server Success, serverName:{}, serverId:{}, ip:{}, port:{}", xData.server_name(), xData.server_id(), xData.server_ip(), xData.server_port());
 	}
 }
@@ -131,6 +134,9 @@ void NFCProxyServerModule::OnGameServerRefreshProcess(const uint32_t unLinkId, c
 
 		pServerData->mUnlinkId = unLinkId;
 		pServerData->mServerInfo = xData;
+
+		std::string ip = m_pNetServerModule->GetLinkIp(unLinkId);
+		pServerData->mServerInfo.set_server_ip(ip);
 
 		//NFLogInfo("Game Server Refresh Master Server Success, serverName:{}, serverId:{}, ip:{}, port:{}", xData.server_name(), xData.server_id(), xData.server_ip(), xData.server_port());
 	}
@@ -255,6 +261,10 @@ void NFCProxyServerModule::OnWorldServerRegisterProcess(const uint32_t unLinkId,
 		pServerData->mUnlinkId = unLinkId;
 		pServerData->mServerInfo = xData;
 
+		std::string ip = m_pNetServerModule->GetLinkIp(unLinkId);
+		pServerData->mServerInfo.set_server_ip(ip);
+
+
 		NFLogInfo("World Server Register Proxy Server Success, serverName:{}, serverId:{}, ip:{}, port:{}", xData.server_name(), xData.server_id(), xData.server_ip(), xData.server_port());
 	}
 }
@@ -290,6 +300,10 @@ void NFCProxyServerModule::OnWorldServerRefreshProcess(const uint32_t unLinkId, 
 
 		pServerData->mUnlinkId = unLinkId;
 		pServerData->mServerInfo = xData;
+
+		std::string ip = m_pNetServerModule->GetLinkIp(unLinkId);
+		pServerData->mServerInfo.set_server_ip(ip);
+
 
 		//NFLogInfo("World Server Refresh Master Server Success, serverName:{}, serverId:{}, ip:{}, port:{}", xData.server_name(), xData.server_id(), xData.server_ip(), xData.server_port());
 	}
