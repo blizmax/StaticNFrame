@@ -106,6 +106,7 @@ void NFCGameClient_WorldModule::OnHandleWorldReport(const NFMsg::ServerInfoRepor
 	if (pServerData->mUnlinkId <= 0)
 	{
 		pServerData->mUnlinkId = m_pNetClientModule->AddServer(NF_ST_WORLD, xData.server_ip(), xData.server_port());
+		mUnlinkWorldMap.AddElement(pServerData->mUnlinkId, pServerData);
 	}
 
 	pServerData->mServerInfo = xData;

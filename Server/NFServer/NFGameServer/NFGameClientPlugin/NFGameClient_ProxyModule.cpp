@@ -113,6 +113,7 @@ void NFCGameClient_ProxyModule::OnHandleProxyReport(const NFMsg::ServerInfoRepor
 	if (pServerData->mUnlinkId <= 0)
 	{
 		pServerData->mUnlinkId = m_pNetClientModule->AddServer(NF_ST_PROXY, xData.server_ip(), xData.server_inner_port());
+		mUnlinkProxyMap.AddElement(pServerData->mUnlinkId, pServerData);
 	}
 
 	pServerData->mServerInfo = xData;
