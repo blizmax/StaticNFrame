@@ -19,8 +19,6 @@
 NFCProxyServerModule::NFCProxyServerModule(NFIPluginManager* p)
 {
 	pPluginManager = p;
-	m_unLinkId = 0;
-	m_unInnerLinkId = 0;
 }
 
 NFCProxyServerModule::~NFCProxyServerModule()
@@ -48,8 +46,8 @@ bool NFCProxyServerModule::Init()
 	NFServerConfig* pConfig = NFServerCommon::GetAppConfig(pPluginManager, NF_ST_PROXY);
 	if (pConfig)
 	{
-		m_unLinkId = m_pNetServerModule->AddServer(NF_ST_PROXY, pConfig->mServerId, pConfig->mMaxConnectNum, pConfig->mServerPort, pConfig->mWebSocket);
-		if (m_unLinkId != 0)
+		uint32_t unlinkId = m_pNetServerModule->AddServer(NF_ST_PROXY, pConfig->mServerId, pConfig->mMaxConnectNum, pConfig->mServerPort, pConfig->mWebSocket);
+		if (unlinkId != 0)
 		{
 			NFLogInfo("proxy server listen success, serverId:{}, maxConnectNum:{}, port:{}", pConfig->mServerId, pConfig->mMaxConnectNum, pConfig->mServerPort);
 		}
@@ -59,8 +57,8 @@ bool NFCProxyServerModule::Init()
 			return false;
 		}
 
-		m_unInnerLinkId = m_pNetServerModule->AddServer(NF_ST_PROXY_INNER, pConfig->mServerId, pConfig->mMaxConnectNum, pConfig->mServerInnerPort);
-		if (m_unInnerLinkId != 0)
+		unlinkId = m_pNetServerModule->AddServer(NF_ST_PROXY_INNER, pConfig->mServerId, pConfig->mMaxConnectNum, pConfig->mServerInnerPort);
+		if (unlinkId != 0)
 		{
 			NFLogInfo("proxy inner server listen success, serverId:{}, maxConnectNum:{}, port:{}", pConfig->mServerId, pConfig->mMaxConnectNum, pConfig->mServerInnerPort);
 		}
@@ -167,13 +165,11 @@ void NFCProxyServerModule::OnProxyInnerSocketEvent(const eMsgType nEvent, const 
 {
 	if (nEvent == eMsgType_CONNECTED)
 	{
-		//std::string ip = m_pNetServerModule->GetLinkIp(unLinkId);
-		//NFLogDebug("ip:{} connected proxy server success!", ip);
+
 	}
 	else if (nEvent == eMsgType_DISCONNECTED)
 	{
-		//std::string ip = m_pNetServerModule->GetLinkIp(unLinkId);
-		//NFLogError("ip:{} disconnected proxy server!", ip);
+		OnHandleInnerServerDisconnect(unLinkId);
 	}
 }
 
@@ -194,6 +190,44 @@ void NFCProxyServerModule::OnProxySocketEvent(const eMsgType nEvent, const uint3
 	{
 		std::string ip = m_pNetServerModule->GetLinkIp(unLinkId);
 		NFLogError("ip:{} disconnected proxy server!", ip);		
+	}
+}
+
+void NFCProxyServerModule::OnHandleInnerServerDisconnect(uint32_t unLinkId)
+{
+	NFServerData* pServerData = nullptr;
+	pServerData = mWorldMap.First();
+	while (pServerData)
+	{
+		if (unLinkId == pServerData->mUnlinkId)
+		{
+			pServerData->mServerInfo.set_server_state(NFMsg::EST_CRASH);
+			pServerData->mUnlinkId = 0;
+
+			NFLogError("the world server disconnect from proxy server, serverName:{}, serverId:{}, serverIp:{}, serverPort:{}"
+				, pServerData->mServerInfo.server_name(), pServerData->mServerInfo.server_id(), pServerData->mServerInfo.server_ip(), pServerData->mServerInfo.server_port());
+
+			return;
+		}
+
+		pServerData = mWorldMap.Next();
+	}
+
+	pServerData = mGameMap.First();
+	while (pServerData)
+	{
+		if (unLinkId == pServerData->mUnlinkId)
+		{
+			pServerData->mServerInfo.set_server_state(NFMsg::EST_CRASH);
+			pServerData->mUnlinkId = 0;
+
+			NFLogError("the game server disconnect from master server, serverName:{}, serverId:{}, serverIp:{}, serverPort:{}"
+				, pServerData->mServerInfo.server_name(), pServerData->mServerInfo.server_id(), pServerData->mServerInfo.server_ip(), pServerData->mServerInfo.server_port());
+
+			return;
+		}
+
+		pServerData = mGameMap.Next();
 	}
 }
 

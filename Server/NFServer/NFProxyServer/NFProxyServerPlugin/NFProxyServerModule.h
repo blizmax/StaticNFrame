@@ -51,10 +51,10 @@ public:
 
 	virtual NFServerData* GetGameServerData(uint32_t serverId) { return mGameMap.GetElement(serverId); }
 	virtual NFServerData* GetWorldServerData(uint32_t serverId) { return mWorldMap.GetElement(serverId); }
+
+	void OnHandleInnerServerDisconnect(uint32_t unLinkId);
 private:
 	NFINetServerModule* m_pNetServerModule;
-	uint32_t m_unLinkId; //对外连接
-	uint32_t m_unInnerLinkId; //对内连接
 	NFMap<uint32_t, NFServerData> mWorldMap;
 	NFMap<uint32_t, NFServerData> mGameMap;
 };

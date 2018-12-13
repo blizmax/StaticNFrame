@@ -109,7 +109,8 @@ void NFCMasterServerModule::OnHandleOtherMessage(const uint32_t unLinkId, const 
 
 void NFCMasterServerModule::OnClientDisconnect(uint32_t unLinkId)
 {
-	NF_SHARE_PTR<NFServerData> pServerData = mWorldMap.First();
+	NF_SHARE_PTR<NFServerData> pServerData = nullptr;
+	pServerData = mWorldMap.First();
 	while (pServerData)
 	{
 		if (unLinkId == pServerData->mUnlinkId)
@@ -124,6 +125,40 @@ void NFCMasterServerModule::OnClientDisconnect(uint32_t unLinkId)
 		}
 
 		pServerData = mWorldMap.Next();
+	}
+
+	pServerData = mProxyMap.First();
+	while (pServerData)
+	{
+		if (unLinkId == pServerData->mUnlinkId)
+		{
+			pServerData->mServerInfo.set_server_state(NFMsg::EST_CRASH);
+			pServerData->mUnlinkId = 0;
+
+			NFLogError("the proxy server disconnect from master server, serverName:{}, serverId:{}, serverIp:{}, serverPort:{}"
+				, pServerData->mServerInfo.server_name(), pServerData->mServerInfo.server_id(), pServerData->mServerInfo.server_ip(), pServerData->mServerInfo.server_port());
+
+			return;
+		}
+
+		pServerData = mProxyMap.Next();
+	}
+
+	pServerData = mGameMap.First();
+	while (pServerData)
+	{
+		if (unLinkId == pServerData->mUnlinkId)
+		{
+			pServerData->mServerInfo.set_server_state(NFMsg::EST_CRASH);
+			pServerData->mUnlinkId = 0;
+
+			NFLogError("the game server disconnect from master server, serverName:{}, serverId:{}, serverIp:{}, serverPort:{}"
+				, pServerData->mServerInfo.server_name(), pServerData->mServerInfo.server_id(), pServerData->mServerInfo.server_ip(), pServerData->mServerInfo.server_port());
+
+			return;
+		}
+
+		pServerData = mGameMap.Next();
 	}
 
 	//////////////////////////////////////////////////////////////////////////
@@ -165,6 +200,9 @@ void NFCMasterServerModule::OnLoginServerRegisterProcess(const uint32_t unLinkId
 		pServerData->mUnlinkId = unLinkId;
 		pServerData->mServerInfo = xData;
 
+		std::string ip = m_pNetServerModule->GetLinkIp(unLinkId);
+		pServerData->mServerInfo.set_server_ip(ip);
+
 		NFLogInfo("Login Server Register Master Server Success, serverName:{}, serverId:{}, ip:{}, port:{}", xData.server_name(), xData.server_id(), xData.server_ip(), xData.server_port());
 	}
 	SynReportToLogin();
@@ -202,6 +240,9 @@ void NFCMasterServerModule::OnLoginServerRefreshProcess(const uint32_t unLinkId,
 		pServerData->mUnlinkId = unLinkId;
 		pServerData->mServerInfo = xData;
 
+		std::string ip = m_pNetServerModule->GetLinkIp(unLinkId);
+		pServerData->mServerInfo.set_server_ip(ip);
+
 		//NFLogInfo("Login Server Refresh Master Server Success, serverName:{}, serverId:{}, ip:{}, port:{}", xData.server_name(), xData.server_id(), xData.server_ip(), xData.server_port());
 	}
 }
@@ -224,6 +265,9 @@ void NFCMasterServerModule::OnGameServerRegisterProcess(const uint32_t unLinkId,
 
 		pServerData->mUnlinkId = unLinkId;
 		pServerData->mServerInfo = xData;
+
+		std::string ip = m_pNetServerModule->GetLinkIp(unLinkId);
+		pServerData->mServerInfo.set_server_ip(ip);
 
 		SynProxyToGame(unLinkId);
 		SynWorldToGame(unLinkId);
@@ -264,6 +308,9 @@ void NFCMasterServerModule::OnGameServerRefreshProcess(const uint32_t unLinkId, 
 		pServerData->mUnlinkId = unLinkId;
 		pServerData->mServerInfo = xData;
 
+		std::string ip = m_pNetServerModule->GetLinkIp(unLinkId);
+		pServerData->mServerInfo.set_server_ip(ip);
+
 		//NFLogInfo("Game Server Refresh Master Server Success, serverName:{}, serverId:{}, ip:{}, port:{}", xData.server_name(), xData.server_id(), xData.server_ip(), xData.server_port());
 	}
 }
@@ -285,6 +332,9 @@ void NFCMasterServerModule::OnProxyServerRegisterProcess(const uint32_t unLinkId
 
 		pServerData->mUnlinkId = unLinkId;
 		pServerData->mServerInfo = xData;
+
+		std::string ip = m_pNetServerModule->GetLinkIp(unLinkId);
+		pServerData->mServerInfo.set_server_ip(ip);
 
 		SynReportToLogin(pServerData);
 		NFLogInfo("Proxy Server Register Master Server Success, serverName:{}, serverId:{}, ip:{}, port:{}", xData.server_name(), xData.server_id(), xData.server_ip(), xData.server_port());
@@ -326,6 +376,9 @@ void NFCMasterServerModule::OnProxyServerRefreshProcess(const uint32_t unLinkId,
 		pServerData->mUnlinkId = unLinkId;
 		pServerData->mServerInfo = xData;
 
+		std::string ip = m_pNetServerModule->GetLinkIp(unLinkId);
+		pServerData->mServerInfo.set_server_ip(ip);
+
 		//NFLogInfo("Proxy Server Refresh Master Server Success, serverName:{}, serverId:{}, ip:{}, port:{}", xData.server_name(), xData.server_id(), xData.server_ip(), xData.server_port());
 	}
 }
@@ -347,6 +400,9 @@ void NFCMasterServerModule::OnWorldServerRegisterProcess(const uint32_t unLinkId
 
 		pServerData->mUnlinkId = unLinkId;
 		pServerData->mServerInfo = xData;
+
+		std::string ip = m_pNetServerModule->GetLinkIp(unLinkId);
+		pServerData->mServerInfo.set_server_ip(ip);
 
 		SynProxyToWorld(unLinkId);
 		SynReportToLogin(pServerData);
@@ -386,6 +442,9 @@ void NFCMasterServerModule::OnWorldServerRefreshProcess(const uint32_t unLinkId,
 
 		pServerData->mUnlinkId = unLinkId;
 		pServerData->mServerInfo = xData;
+
+		std::string ip = m_pNetServerModule->GetLinkIp(unLinkId);
+		pServerData->mServerInfo.set_server_ip(ip);
 
 		//NFLogInfo("World Server Refresh Master Server Success, serverName:{}, serverId:{}, ip:{}, port:{}", xData.server_name(), xData.server_id(), xData.server_ip(), xData.server_port());
 	}
@@ -576,6 +635,9 @@ void NFCMasterServerModule::OnServerReport(const uint32_t unLinkId, const uint64
 			{
 				pServerData->mUnlinkId = unLinkId;
 				pServerData->mServerInfo = xData;
+
+				std::string ip = m_pNetServerModule->GetLinkIp(unLinkId);
+				pServerData->mServerInfo.set_server_ip(ip);
 			}
 		}
 		break;
@@ -591,6 +653,9 @@ void NFCMasterServerModule::OnServerReport(const uint32_t unLinkId, const uint64
 			{
 				pServerData->mUnlinkId = unLinkId;
 				pServerData->mServerInfo = xData;
+
+				std::string ip = m_pNetServerModule->GetLinkIp(unLinkId);
+				pServerData->mServerInfo.set_server_ip(ip);
 			}
 			SynReportToLogin(pServerData);
 		}
@@ -607,6 +672,9 @@ void NFCMasterServerModule::OnServerReport(const uint32_t unLinkId, const uint64
 			{
 				pServerData->mUnlinkId = unLinkId;
 				pServerData->mServerInfo = xData;
+
+				std::string ip = m_pNetServerModule->GetLinkIp(unLinkId);
+				pServerData->mServerInfo.set_server_ip(ip);
 			}
 			SynReportToLogin(pServerData);
 		}
@@ -623,6 +691,9 @@ void NFCMasterServerModule::OnServerReport(const uint32_t unLinkId, const uint64
 			{
 				pServerData->mUnlinkId = unLinkId;
 				pServerData->mServerInfo = xData;
+
+				std::string ip = m_pNetServerModule->GetLinkIp(unLinkId);
+				pServerData->mServerInfo.set_server_ip(ip);
 			}
 			SynReportToLogin(pServerData);
 		}

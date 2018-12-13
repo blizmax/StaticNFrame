@@ -7,7 +7,7 @@
 ]]
 
 --只改这个2个    下面ip改成本机的，zoneid最好有个分配规则
-MasterIP = "45.32.39.90";
+MasterIP = "192.168.52.42";
 MasterPort = 5501;
 
 ZoneServerId = 1014;
