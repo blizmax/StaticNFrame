@@ -218,9 +218,19 @@ end
         unilight.getfield("userinfo", 100000, "base.property") // 获取表"userinfo"中，key为100000的"base.property"字段数据
 ]]
 function LuaNFrame:getfield(name, id, fieldpath)
-    local json_fieldpath = table2json(fieldpath)
-    local data = self.mongoModule:FindFieldByKey(0, name, json_fieldpath, id)
-    return json.decode(data)
+    local data = self.mongoModule:FindFieldByKey(0, name, fieldpath, id)
+
+    if type(data) == "string" and data ~= "" then
+        data = json.decode(data)
+    else
+        return
+    end
+
+    local fields = string.split(fieldpath, ".")
+    for index, name in ipairs(fields) do
+        data = data[name]
+    end
+    return data
 end
 
 --[[

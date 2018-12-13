@@ -26,7 +26,11 @@ end
         LuaNFrame:droptable("userinfo") // 删除表"userinfo"
 ]]
 function unilight.droptable(name)
-	return LuaNFrame:droptable(name)
+    if type(name) == "string" then
+        return LuaNFrame:droptable(name)
+    else
+        unilight.error("unilight.droptable param error........")
+    end
 end
 
 --[[
@@ -38,7 +42,11 @@ end
         LuaNFrame:getdata("userinfo", 100000) // 获取表"userinfo"中主键值为100000的那条记录
 ]]
 function unilight.getdata(name, key)
-	return LuaNFrame:getdata(name, key)
+    if type(name) == "string" and type(key) == "number" then
+        return LuaNFrame:getdata(name, key)
+    else
+        unilight.error("unilight.getdata param error, name:"..name.." key:"..key)
+    end
 end
 
 --[[
@@ -61,7 +69,20 @@ function unilight.savedata(name, data)
 end
 
 function unilight.savefield(name, id, fieldpath, data)
-    return LuaNFrame:savefield(name, id, fieldpath, data)
+    if type(name) == "string" and type(id) == "number" and type(fieldpath) == "string" and type(data) == "table" then
+        return LuaNFrame:savefield(name, id, fieldpath, data)
+    else
+        unilight.error("unilight.savefield param error")
+    end
+end
+
+function unilight.getfield(name, id, field)
+    if type(name) == "string" and type(id) == "number" and type(field) == "string" then
+        return LuaNFrame:getfield(name, id, field)
+    else
+        unilight.error("unilight.getfield param error")
+    end
+
 end
 
 --[[

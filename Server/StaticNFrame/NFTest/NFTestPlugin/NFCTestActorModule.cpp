@@ -137,7 +137,7 @@ bool NFCTestActorModule::Init()
 	//for(int i = 0; i < 10000; i++)
 	//	pTaskModule->AddTask(new NFLogTask());
 
-
+	//TestMongo();
 	return true;
 }
 

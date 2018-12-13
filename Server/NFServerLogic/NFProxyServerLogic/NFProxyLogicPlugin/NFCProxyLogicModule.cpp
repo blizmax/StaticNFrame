@@ -21,6 +21,7 @@ bool NFCProxyLogicModule::Init()
 	m_pNetServerModule = pPluginManager->FindModule<NFINetServerModule>();
 	m_pNetProxyServerModule = pPluginManager->FindModule<NFIProxyServerModule>();
 
+	m_pNetServerModule->AddEventCallBack(NF_ST_PROXY_INNER, this, &NFCProxyLogicModule::OnProxyInnerSocketEvent);
 	m_pNetServerModule->AddEventCallBack(NF_ST_PROXY, this, &NFCProxyLogicModule::OnProxySocketEvent);
 	m_pNetServerModule->AddReceiveCallBack(NF_ST_PROXY, EGMI_NET_MSG_JSON_MSG, this, &NFCProxyLogicModule::OnHandleJsonMessage);
 	m_pNetServerModule->AddReceiveCallBack(NF_ST_PROXY_INNER, EGMI_NET_MSG_JSON_MSG, this, &NFCProxyLogicModule::OnHandleGameJsonMessage);
@@ -159,6 +160,8 @@ void NFCProxyLogicModule::OnHandleUser_LoginTokenLoginUserPmd(const uint32_t unL
 		return;
 	}
 
+	pData->gameUnlinkId = pServerData->mUnlinkId;
+
 	std::string ip = m_pNetServerModule->GetLinkIp(unLinkId);
 	NFMsg::AccountConnectGameServer_C account;
 	account.set_uid(pData->uid);
@@ -200,6 +203,8 @@ void NFCProxyLogicModule::OnHandleUser_UserLoginReconnectLoginUserPmd(const uint
 		return;
 	}
 
+	pData->gameUnlinkId = pServerData->mUnlinkId;
+
 	std::string ip = m_pNetServerModule->GetLinkIp(unLinkId);
 	NFMsg::AccountConnectGameServer_C account;
 	account.set_uid(pData->uid);
@@ -240,5 +245,33 @@ void NFCProxyLogicModule::OnAccountDisconnect(const uint32_t unLinkId)
 		account.set_uid(pData->uid);
 
 		m_pNetServerModule->SendToServerByPB(pServerData->mUnlinkId, EGMI_NET_PROXY_TO_GAME_ACCOUNT_DISCONNECT, account, pData->uid);
+	}
+}
+
+void NFCProxyLogicModule::OnProxyInnerSocketEvent(const eMsgType nEvent, const uint32_t unLinkId)
+{
+	if (nEvent == eMsgType_CONNECTED)
+	{
+
+	}
+	else if (nEvent == eMsgType_DISCONNECTED)
+	{
+		OnHandleInnerServerDisconnect(unLinkId);
+	}
+}
+
+void NFCProxyLogicModule::OnHandleInnerServerDisconnect(uint32_t unLinkId)
+{
+	ProxyPlayerData* pData = mPlayerData.First();
+	while (pData)
+	{
+		//这里还有世界服务器掉线要处理
+		if (pData->gameUnlinkId == unLinkId)
+		{
+			//断开玩家与网关的链接
+			m_pNetServerModule->CloseLinkId(pData->unlinkId);
+		}
+
+		pData = mPlayerData.Next();
 	}
 }

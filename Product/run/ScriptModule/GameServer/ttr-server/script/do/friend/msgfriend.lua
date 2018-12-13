@@ -533,7 +533,7 @@ Net.CmdSendReqRecommendFriendCmd_C = function(cmd, laccount)
     --收集被推荐的好友
     local tmp = {}
 
-    for k, v in pairs(friendData.deleteQQFriend) do
+    for k, v in pairs(friendData.deleteQQFriend.map) do
          --推荐好友，满足条件 1不是自己 2不是好友 3今天没有被推荐过 4今天没有被邀请过
          if k ~= uid and friendData:GetUserFriend(k) == nil and 
             friendData:IsRecommendedToFriend(k) == false and 

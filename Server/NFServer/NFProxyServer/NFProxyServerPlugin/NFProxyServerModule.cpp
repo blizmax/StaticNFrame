@@ -227,7 +227,7 @@ void NFCProxyServerModule::OnHandleInnerServerDisconnect(uint32_t unLinkId)
 			pServerData->mServerInfo.set_server_state(NFMsg::EST_CRASH);
 			pServerData->mUnlinkId = 0;
 
-			NFLogError("the game server disconnect from master server, serverName:{}, serverId:{}, serverIp:{}, serverPort:{}"
+			NFLogError("the game server disconnect from proxy server, serverName:{}, serverId:{}, serverIp:{}, serverPort:{}"
 				, pServerData->mServerInfo.server_name(), pServerData->mServerInfo.server_id(), pServerData->mServerInfo.server_ip(), pServerData->mServerInfo.server_port());
 
 			return;
