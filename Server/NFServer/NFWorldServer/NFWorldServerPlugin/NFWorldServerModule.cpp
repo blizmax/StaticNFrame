@@ -155,7 +155,7 @@ void NFCWorldServerModule::OnGameServerRefreshProcess(const uint32_t unLinkId, c
 		pServerData->mUnlinkId = unLinkId;
 		pServerData->mServerInfo = xData;
 
-		//NFLogInfo("Game Server Refresh World Server Success, serverName:{}, serverId:{}, ip:{}, port:{}", xData.server_name(), xData.server_id(), xData.server_ip(), xData.server_port());
+		//NFLogInfo("Game Server Refresh World Server Success, serverName:{}, serverId:{}, ip:{}, port:{}", pServerData->mServerInfo.server_name(), pServerData->mServerInfo.server_id(), pServerData->mServerInfo.server_ip(), pServerData->mServerInfo.server_port());
 	}
 }
 
@@ -180,7 +180,7 @@ void NFCWorldServerModule::OnGameServerRegisterProcess(const uint32_t unLinkId, 
 		std::string ip = m_pNetServerModule->GetLinkIp(unLinkId);
 		pServerData->mServerInfo.set_server_ip(ip);
 
-		NFLogInfo("Game Server Register World Server Success, serverName:{}, serverId:{}, ip:{}, port:{}", xData.server_name(), xData.server_id(), xData.server_ip(), xData.server_port());
+		NFLogInfo("Game Server Register World Server Success, serverName:{}, serverId:{}, ip:{}, port:{}", pServerData->mServerInfo.server_name(), pServerData->mServerInfo.server_id(), pServerData->mServerInfo.server_ip(), pServerData->mServerInfo.server_port());
 	}
 }
 

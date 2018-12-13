@@ -203,7 +203,7 @@ void NFCMasterServerModule::OnLoginServerRegisterProcess(const uint32_t unLinkId
 		std::string ip = m_pNetServerModule->GetLinkIp(unLinkId);
 		pServerData->mServerInfo.set_server_ip(ip);
 
-		NFLogInfo("Login Server Register Master Server Success, serverName:{}, serverId:{}, ip:{}, port:{}", xData.server_name(), xData.server_id(), xData.server_ip(), xData.server_port());
+		NFLogInfo("Login Server Register Master Server Success, serverName:{}, serverId:{}, ip:{}, port:{}", pServerData->mServerInfo.server_name(), pServerData->mServerInfo.server_id(), pServerData->mServerInfo.server_ip(), pServerData->mServerInfo.server_port());
 	}
 	SynReportToLogin();
 }
@@ -272,7 +272,7 @@ void NFCMasterServerModule::OnGameServerRegisterProcess(const uint32_t unLinkId,
 		SynProxyToGame(unLinkId);
 		SynWorldToGame(unLinkId);
 		SynReportToLogin(pServerData);
-		NFLogInfo("Game Server Register Master Server Success, serverName:{}, serverId:{}, ip:{}, port:{}", xData.server_name(), xData.server_id(), xData.server_ip(), xData.server_port());
+		NFLogInfo("Game Server Register Master Server Success, serverName:{}, serverId:{}, ip:{}, port:{}", pServerData->mServerInfo.server_name(), pServerData->mServerInfo.server_id(), pServerData->mServerInfo.server_ip(), pServerData->mServerInfo.server_port());
 	}
 }
 
@@ -337,7 +337,7 @@ void NFCMasterServerModule::OnProxyServerRegisterProcess(const uint32_t unLinkId
 		pServerData->mServerInfo.set_server_ip(ip);
 
 		SynReportToLogin(pServerData);
-		NFLogInfo("Proxy Server Register Master Server Success, serverName:{}, serverId:{}, ip:{}, port:{}", xData.server_name(), xData.server_id(), xData.server_ip(), xData.server_port());
+		NFLogInfo("Proxy Server Register Master Server Success, serverName:{}, serverId:{}, ip:{}, port:{}", pServerData->mServerInfo.server_name(), pServerData->mServerInfo.server_id(), pServerData->mServerInfo.server_ip(), pServerData->mServerInfo.server_port());
 	}
 
 	SynProxyToGame();
@@ -406,7 +406,7 @@ void NFCMasterServerModule::OnWorldServerRegisterProcess(const uint32_t unLinkId
 
 		SynProxyToWorld(unLinkId);
 		SynReportToLogin(pServerData);
-		NFLogInfo("World Server Register Master Server Success, serverName:{}, serverId:{}, ip:{}, port:{}", xData.server_name(), xData.server_id(), xData.server_ip(), xData.server_port());
+		NFLogInfo("World Server Register Master Server Success, serverName:{}, serverId:{}, ip:{}, port:{}", pServerData->mServerInfo.server_name(), pServerData->mServerInfo.server_id(), pServerData->mServerInfo.server_ip(), pServerData->mServerInfo.server_port());
 	}
 	SynWorldToGame();
 }

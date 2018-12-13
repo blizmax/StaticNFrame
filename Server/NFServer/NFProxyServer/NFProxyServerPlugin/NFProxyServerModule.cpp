@@ -99,7 +99,7 @@ void NFCProxyServerModule::OnGameServerRegisterProcess(const uint32_t unLinkId, 
 		std::string ip = m_pNetServerModule->GetLinkIp(unLinkId);
 		pServerData->mServerInfo.set_server_ip(ip);
 
-		NFLogInfo("Game Server Register Proxy Server Success, serverName:{}, serverId:{}, ip:{}, port:{}", xData.server_name(), xData.server_id(), xData.server_ip(), xData.server_port());
+		NFLogInfo("Game Server Register Proxy Server Success, serverName:{}, serverId:{}, ip:{}, port:{}", pServerData->mServerInfo.server_name(), pServerData->mServerInfo.server_id(), pServerData->mServerInfo.server_ip(), pServerData->mServerInfo.server_port());
 	}
 }
 
@@ -265,7 +265,7 @@ void NFCProxyServerModule::OnWorldServerRegisterProcess(const uint32_t unLinkId,
 		pServerData->mServerInfo.set_server_ip(ip);
 
 
-		NFLogInfo("World Server Register Proxy Server Success, serverName:{}, serverId:{}, ip:{}, port:{}", xData.server_name(), xData.server_id(), xData.server_ip(), xData.server_port());
+		NFLogInfo("World Server Register Proxy Server Success, serverName:{}, serverId:{}, ip:{}, port:{}", pServerData->mServerInfo.server_name(), pServerData->mServerInfo.server_id(), pServerData->mServerInfo.server_ip(), pServerData->mServerInfo.server_port());
 	}
 }
 
