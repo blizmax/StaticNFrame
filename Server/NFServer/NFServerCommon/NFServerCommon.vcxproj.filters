@@ -3,16 +3,18 @@
   <ItemGroup>
     <ClInclude Include="NFServerCommon.h" />
     <ClInclude Include="NFIProxyServerModule.h" />
-    <ClInclude Include="NFIProxyClient_GameModule.h" />
     <ClInclude Include="NFIGameServerModule.h" />
-    <ClInclude Include="NFIGameClient_WorldModule.h" />
     <ClInclude Include="NFIWorldServerModule.h" />
     <ClInclude Include="NFIMasterServerModule.h" />
     <ClInclude Include="NFILoginServerModule.h" />
     <ClInclude Include="NFIHttpLoginServerModule.h" />
-    <ClInclude Include="NFIProxyClient_WorldModule.h" />
     <ClInclude Include="NFIWorldClient_MasterModule.h" />
     <ClInclude Include="NFILoginClient_MasterModule.h" />
+    <ClInclude Include="NFIProxyClient_MasterModule.h" />
+    <ClInclude Include="NFIGameClient_MasterModule.h" />
+    <ClInclude Include="NFIGameClient_WorldModule.h" />
+    <ClInclude Include="NFIGameClient_ProxyModule.h" />
+    <ClInclude Include="NFIWorldClient_ProxyModule.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="NFServerCommon.cpp" />

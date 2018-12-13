@@ -9,7 +9,7 @@ ItemData = {
 [1004]={["itemid"]=1004,["itemtype"]=7,["paraone"]=0.5,["paratwo"]=0.0,["openitems"]="",["dayitems"]=""},
 [1005]={["itemid"]=1005,["itemtype"]=8,["paraone"]=20.0,["paratwo"]=0.0,["openitems"]="",["dayitems"]=""},
 [1006]={["itemid"]=1006,["itemtype"]=9,["paraone"]=20.0,["paratwo"]=0.0,["openitems"]="",["dayitems"]=""},
-[1007]={["itemid"]=1007,["itemtype"]=10,["paraone"]=3.0,["paratwo"]=2.0,["openitems"]="",["dayitems"]=""},
+[1007]={["itemid"]=1007,["itemtype"]=10,["paraone"]=3.0,["paratwo"]=4.0,["openitems"]="",["dayitems"]=""},
 [1008]={["itemid"]=1008,["itemtype"]=14,["paraone"]=0.01,["paratwo"]=0.0,["openitems"]="",["dayitems"]=""},
 [1009]={["itemid"]=1009,["itemtype"]=15,["paraone"]=0.01,["paratwo"]=0.0,["openitems"]="",["dayitems"]=""},
 [1010]={["itemid"]=1010,["itemtype"]=18,["paraone"]=0.01,["paratwo"]=0.0,["openitems"]="",["dayitems"]=""},

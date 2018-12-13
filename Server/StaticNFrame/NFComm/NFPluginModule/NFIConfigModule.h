@@ -45,6 +45,7 @@ public:
 		mSecurity = false;
 		mWebSocket = false;
 		mHttpPort = 0;
+		mServerInnerPort = 0;
 	}
 
 public:
@@ -55,6 +56,7 @@ public:
 	uint32_t mWorldId;
 	std::string mServerIp;
 	uint32_t mServerPort;
+	uint32_t mServerInnerPort;	//对内服务器端口，只要用于网关
 	uint32_t mHttpPort;
 	uint32_t mMaxConnectNum;
 	uint32_t mWorkThreadNum;

@@ -12,7 +12,6 @@ function LoadLuaFile(path, subdir)
 				end
 			else
 				if string.find(file, ".lua") ~= nil then
-					print(f)
 					dofile(f)
 				end
 			end

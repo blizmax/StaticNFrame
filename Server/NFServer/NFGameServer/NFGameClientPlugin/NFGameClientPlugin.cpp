@@ -10,6 +10,8 @@
 #include "NFGameClientPlugin.h"
 #include "NFComm/NFPluginModule/NFIPluginManager.h"
 #include "NFGameClient_WorldModule.h"
+#include "NFGameClient_ProxyModule.h"
+#include "NFGameClient_MasterModule.h"
 
 #ifdef NF_DYNAMIC_PLUGIN
 
@@ -42,10 +44,14 @@ std::string NFGameClientPlugin::GetPluginName()
 void NFGameClientPlugin::Install()
 {
 	REGISTER_MODULE(pPluginManager, NFIGameClient_WorldModule, NFCGameClient_WorldModule);
+	REGISTER_MODULE(pPluginManager, NFIGameClient_MasterModule, NFCGameClient_MasterModule);
+	REGISTER_MODULE(pPluginManager, NFIGameClient_ProxyModule, NFCGameClient_ProxyModule);
 }
 
 void NFGameClientPlugin::Uninstall()
 {
 	UNREGISTER_MODULE(pPluginManager, NFIGameClient_WorldModule, NFCGameClient_WorldModule);
+	UNREGISTER_MODULE(pPluginManager, NFIGameClient_MasterModule, NFCGameClient_MasterModule);
+	UNREGISTER_MODULE(pPluginManager, NFIGameClient_ProxyModule, NFCGameClient_ProxyModule);
 }
 

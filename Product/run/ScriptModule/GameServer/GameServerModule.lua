@@ -19,7 +19,7 @@ UserInfo.Update = UserInfo.Update or function()
 end
 
 function GameServerModule.Init()
-    TcpServer.addRecvCallBack(NF_SERVER_TYPES.NF_ST_GAME, 0, "GameServerModule.NetServerRecvHandleJson")
+    TcpClient.addRecvCallBack(NF_SERVER_TYPES.NF_ST_PROXY, 0, "GameServerModule.NetServerRecvHandleJson")
 
     unilight.addtimer("UserInfo.Update", 1)
 

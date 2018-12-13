@@ -5,6 +5,7 @@ NF_ST_LOGIN = 2;    	--
 NF_ST_WORLD = 3;    	--
 NF_ST_GAME = 4;    		--
 NF_ST_PROXY = 5;    	--
+NF_ST_PROXY_INNER = 6;    	--
 NF_ST_MAX = 9;    		--
 
 NF_LOG_LEVEL_TRACE = 0 --    trace = 0,
@@ -26,7 +27,7 @@ LoadPlugin =
 			"NFMysqlPlugin",
 			"NFMongoPlugin",
 			
-			--"NFLuaScriptPlugin",
+			"NFLuaScriptPlugin",
 			
 			"NFMasterServerPlugin",
 			

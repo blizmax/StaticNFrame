@@ -27,6 +27,7 @@ NFCWorldClient_MasterModule::~NFCWorldClient_MasterModule()
 bool NFCWorldClient_MasterModule::Init()
 {
 	m_pNetClientModule = pPluginManager->FindModule<NFINetClientModule>();
+	m_pWorldClient_ProxyModule = pPluginManager->FindModule<NFIWorldClient_ProxyModule>();
 	return true;
 }
 
@@ -34,6 +35,8 @@ bool NFCWorldClient_MasterModule::AfterInit()
 {
 	m_pNetClientModule->AddEventCallBack(NF_ST_MASTER, this, &NFCWorldClient_MasterModule::OnProxySocketEvent);
 	m_pNetClientModule->AddReceiveCallBack(NF_ST_MASTER, this, &NFCWorldClient_MasterModule::OnHandleOtherMessage);
+
+	m_pNetClientModule->AddReceiveCallBack(NF_ST_MASTER, EGMI_NET_MASTER_SEND_PROXY_TO_WORLD, this, &NFCWorldClient_MasterModule::OnHandleServerReport);
 
 	NFServerConfig* pConfig = NFServerCommon::GetServerConfig(pPluginManager, NF_ST_MASTER);
 	if (pConfig)
@@ -47,6 +50,25 @@ bool NFCWorldClient_MasterModule::AfterInit()
 	}
 
 	return true;
+}
+
+void NFCWorldClient_MasterModule::OnHandleServerReport(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen)
+{
+	NFMsg::ServerInfoReportList xMsg;
+	CLIENT_MSG_PROCESS_NO_OBJECT(nMsgId, msg, nLen, xMsg);
+
+	for (int i = 0; i < xMsg.server_list_size(); ++i)
+	{
+		const NFMsg::ServerInfoReport& xData = xMsg.server_list(i);
+		switch (xData.server_type())
+		{
+		case NF_SERVER_TYPES::NF_ST_PROXY:
+		{
+			m_pWorldClient_ProxyModule->OnHandleProxyReport(xData);
+		}
+		break;
+		}
+	}
 }
 
 bool NFCWorldClient_MasterModule::Execute()
@@ -72,14 +94,12 @@ void NFCWorldClient_MasterModule::OnProxySocketEvent(const eMsgType nEvent, cons
 	if (nEvent == eMsgType_CONNECTED)
 	{
 		NFLogDebug("World Server Connect Master Server Success!");
-		NFEventMgr::Instance()->FireExecute(NFEVENT_WORLD_CONNECT_MASTER_SUCCESS, unLinkId, NF_ST_MASTER, nullptr);
 	
 		RegisterServer();
 	}
 	else if (nEvent == eMsgType_DISCONNECTED)
 	{
 		NFLogDebug("World Server DisConnect Master Server!");
-		NFEventMgr::Instance()->FireExecute(NFEVENT_WORLD_CONNECT_MASTER_FAIL, unLinkId, NF_ST_MASTER, nullptr);
 	}
 }
 

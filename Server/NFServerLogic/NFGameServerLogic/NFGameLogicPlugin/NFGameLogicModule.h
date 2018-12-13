@@ -46,7 +46,6 @@ public:
 
 	virtual PlayerAccountInfo* GetPlayerAccountInfo(uint64_t uid) { return m_playerAccountInfo.GetElement(uid); }
 private:
-	NFINetServerModule* m_pNetServerModule;
 	NFINetClientModule* m_pNetClientModule;
 
 	NFMap<uint64_t, PlayerAccountInfo> m_playerAccountInfo;

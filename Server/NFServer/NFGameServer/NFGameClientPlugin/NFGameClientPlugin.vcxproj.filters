@@ -9,9 +9,13 @@
   <ItemGroup>
     <ClInclude Include="NFGameClientPlugin.h" />
     <ClInclude Include="NFGameClient_WorldModule.h" />
+    <ClInclude Include="NFGameClient_MasterModule.h" />
+    <ClInclude Include="NFGameClient_ProxyModule.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="NFGameClientPlugin.cpp" />
     <ClCompile Include="NFGameClient_WorldModule.cpp" />
+    <ClCompile Include="NFGameClient_MasterModule.cpp" />
+    <ClCompile Include="NFGameClient_ProxyModule.cpp" />
   </ItemGroup>
 </Project>

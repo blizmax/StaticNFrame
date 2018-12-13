@@ -215,27 +215,33 @@ class ServerInfoReport : public ::google::protobuf::Message /* @@protoc_insertio
   ::google::protobuf::int32 server_port() const;
   void set_server_port(::google::protobuf::int32 value);
 
-  // int32 server_max_online = 5;
+  // int32 server_inner_port = 5;
+  void clear_server_inner_port();
+  static const int kServerInnerPortFieldNumber = 5;
+  ::google::protobuf::int32 server_inner_port() const;
+  void set_server_inner_port(::google::protobuf::int32 value);
+
+  // int32 server_max_online = 6;
   void clear_server_max_online();
-  static const int kServerMaxOnlineFieldNumber = 5;
+  static const int kServerMaxOnlineFieldNumber = 6;
   ::google::protobuf::int32 server_max_online() const;
   void set_server_max_online(::google::protobuf::int32 value);
 
-  // int32 server_cur_count = 6;
+  // int32 server_cur_count = 7;
   void clear_server_cur_count();
-  static const int kServerCurCountFieldNumber = 6;
+  static const int kServerCurCountFieldNumber = 7;
   ::google::protobuf::int32 server_cur_count() const;
   void set_server_cur_count(::google::protobuf::int32 value);
 
-  // uint32 server_state = 7;
+  // uint32 server_state = 8;
   void clear_server_state();
-  static const int kServerStateFieldNumber = 7;
+  static const int kServerStateFieldNumber = 8;
   ::google::protobuf::uint32 server_state() const;
   void set_server_state(::google::protobuf::uint32 value);
 
-  // int32 server_type = 8;
+  // int32 server_type = 9;
   void clear_server_type();
-  static const int kServerTypeFieldNumber = 8;
+  static const int kServerTypeFieldNumber = 9;
   ::google::protobuf::int32 server_type() const;
   void set_server_type(::google::protobuf::int32 value);
 
@@ -247,6 +253,7 @@ class ServerInfoReport : public ::google::protobuf::Message /* @@protoc_insertio
   ::google::protobuf::internal::ArenaStringPtr server_ip_;
   ::google::protobuf::int32 server_id_;
   ::google::protobuf::int32 server_port_;
+  ::google::protobuf::int32 server_inner_port_;
   ::google::protobuf::int32 server_max_online_;
   ::google::protobuf::int32 server_cur_count_;
   ::google::protobuf::uint32 server_state_;
@@ -508,7 +515,21 @@ inline void ServerInfoReport::set_server_port(::google::protobuf::int32 value) {
   // @@protoc_insertion_point(field_set:NFMsg.ServerInfoReport.server_port)
 }
 
-// int32 server_max_online = 5;
+// int32 server_inner_port = 5;
+inline void ServerInfoReport::clear_server_inner_port() {
+  server_inner_port_ = 0;
+}
+inline ::google::protobuf::int32 ServerInfoReport::server_inner_port() const {
+  // @@protoc_insertion_point(field_get:NFMsg.ServerInfoReport.server_inner_port)
+  return server_inner_port_;
+}
+inline void ServerInfoReport::set_server_inner_port(::google::protobuf::int32 value) {
+  
+  server_inner_port_ = value;
+  // @@protoc_insertion_point(field_set:NFMsg.ServerInfoReport.server_inner_port)
+}
+
+// int32 server_max_online = 6;
 inline void ServerInfoReport::clear_server_max_online() {
   server_max_online_ = 0;
 }
@@ -522,7 +543,7 @@ inline void ServerInfoReport::set_server_max_online(::google::protobuf::int32 va
   // @@protoc_insertion_point(field_set:NFMsg.ServerInfoReport.server_max_online)
 }
 
-// int32 server_cur_count = 6;
+// int32 server_cur_count = 7;
 inline void ServerInfoReport::clear_server_cur_count() {
   server_cur_count_ = 0;
 }
@@ -536,7 +557,7 @@ inline void ServerInfoReport::set_server_cur_count(::google::protobuf::int32 val
   // @@protoc_insertion_point(field_set:NFMsg.ServerInfoReport.server_cur_count)
 }
 
-// uint32 server_state = 7;
+// uint32 server_state = 8;
 inline void ServerInfoReport::clear_server_state() {
   server_state_ = 0u;
 }
@@ -550,7 +571,7 @@ inline void ServerInfoReport::set_server_state(::google::protobuf::uint32 value)
   // @@protoc_insertion_point(field_set:NFMsg.ServerInfoReport.server_state)
 }
 
-// int32 server_type = 8;
+// int32 server_type = 9;
 inline void ServerInfoReport::clear_server_type() {
   server_type_ = 0;
 }

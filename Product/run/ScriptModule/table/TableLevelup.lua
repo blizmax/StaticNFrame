@@ -5,7 +5,7 @@ TableLevelup[10001]={["Id"]=1,["Level"]=1,["CostMoney"]="2_15",["ProduceMoney"]=
 TableLevelup[10002]={["Id"]=1,["Level"]=2,["CostMoney"]="2_18",["ProduceMoney"]="4",["ProduceTime"]=2}
 TableLevelup[10003]={["Id"]=1,["Level"]=3,["CostMoney"]="2_20",["ProduceMoney"]="6",["ProduceTime"]=2}
 TableLevelup[10004]={["Id"]=1,["Level"]=4,["CostMoney"]="2_23",["ProduceMoney"]="8",["ProduceTime"]=2}
-TableLevelup[10005]={["Id"]=1,["Level"]=5,["CostMoney"]="2_100",["ProduceMoney"]="10",["ProduceTime"]=1}
+TableLevelup[10005]={["Id"]=1,["Level"]=5,["CostMoney"]="2_50",["ProduceMoney"]="10",["ProduceTime"]=1}
 TableLevelup[10006]={["Id"]=1,["Level"]=6,["CostMoney"]="2_31",["ProduceMoney"]="12",["ProduceTime"]=1}
 TableLevelup[10007]={["Id"]=1,["Level"]=7,["CostMoney"]="2_35",["ProduceMoney"]="14",["ProduceTime"]=1}
 TableLevelup[10008]={["Id"]=1,["Level"]=8,["CostMoney"]="2_41",["ProduceMoney"]="16",["ProduceTime"]=1}
@@ -151,9 +151,9 @@ TableLevelup[10147]={["Id"]=1,["Level"]=147,["CostMoney"]="2_8718296371",["Produ
 TableLevelup[10148]={["Id"]=1,["Level"]=148,["CostMoney"]="2_10008391074",["ProduceMoney"]="11100",["ProduceTime"]=1}
 TableLevelup[10149]={["Id"]=1,["Level"]=149,["CostMoney"]="2_11489388250",["ProduceMoney"]="11175",["ProduceTime"]=1}
 TableLevelup[10150]={["Id"]=1,["Level"]=150,["CostMoney"]="2_13189536799",["ProduceMoney"]="11250",["ProduceTime"]=1}
-TableLevelup[20001]={["Id"]=2,["Level"]=1,["CostMoney"]="2_88",["ProduceMoney"]="30",["ProduceTime"]=6}
-TableLevelup[20002]={["Id"]=2,["Level"]=2,["CostMoney"]="2_200",["ProduceMoney"]="60",["ProduceTime"]=6}
-TableLevelup[20003]={["Id"]=2,["Level"]=3,["CostMoney"]="2_333",["ProduceMoney"]="90",["ProduceTime"]=6}
+TableLevelup[20001]={["Id"]=2,["Level"]=1,["CostMoney"]="2_50",["ProduceMoney"]="30",["ProduceTime"]=6}
+TableLevelup[20002]={["Id"]=2,["Level"]=2,["CostMoney"]="2_180",["ProduceMoney"]="60",["ProduceTime"]=6}
+TableLevelup[20003]={["Id"]=2,["Level"]=3,["CostMoney"]="2_320",["ProduceMoney"]="90",["ProduceTime"]=6}
 TableLevelup[20004]={["Id"]=2,["Level"]=4,["CostMoney"]="2_469",["ProduceMoney"]="120",["ProduceTime"]=6}
 TableLevelup[20005]={["Id"]=2,["Level"]=5,["CostMoney"]="2_4650",["ProduceMoney"]="150",["ProduceTime"]=3}
 TableLevelup[20006]={["Id"]=2,["Level"]=6,["CostMoney"]="2_618",["ProduceMoney"]="180",["ProduceTime"]=3}

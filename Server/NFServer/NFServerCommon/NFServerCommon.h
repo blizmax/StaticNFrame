@@ -48,26 +48,34 @@ enum NF_EGMI_MsgId
 	EGMI_STS_SERVER_REPORT = 2,
 	////////////////////////////////////////////
 	
-	EGMI_NET_PROXY_TO_WORLD_REGISTER = 11,	//网关服务器	注册	世界服务器协议
-	EGMI_NET_GAME_TO_WORLD_REGISTER = 12,	//游戏服务器	注册	世界服务器协议
+	EGMI_NET_PROXY_TO_MASTER_REGISTER = 11,	//网关服务器	注册	MASTER服务器协议
+	EGMI_NET_GAME_TO_MASTER_REGISTER = 12,	//网关服务器	注册	MASTER服务器协议
 	EGMI_NET_LOGIN_TO_MASTER_REGISTER = 13,	//登录服务器	注册	MASTER服务器协议
 	EGMI_NET_WORLD_TO_MASTER_REGISTER = 14,	//世界服务器	注册	MASTER服务器协议
-	EGMI_NET_PROXY_TO_GAME_REGISTER = 15,	//网关服务器	注册	游戏服务器协议
+	EGMI_NET_GAME_TO_PROXY_REGISTER = 15,	//游戏服务器	注册	网关服务器协议
+	EGMI_NET_GAME_TO_WORLD_REGISTER = 16,	//游戏服务器	注册	世界服务器协议
+	EGMI_NET_WORLD_TO_PROXY_REGISTER = 17,	//WORLD服务器	注册	网关服务器协议
 
-	EGMI_NET_PROXY_TO_WORLD_UNREGISTER = 16,	//网关服务器 注销  世界服务器协议
-	EGMI_NET_GAME_TO_WORLD_UNREGISTER = 17,	//游戏服务器	注销	世界服务器协议
-	EGMI_NET_LOGIN_TO_MASTER_UNREGISTER = 18,	//登录服务器	注销	MASTER服务器协议
-	EGMI_NET_WORLD_TO_MASTER_UNREGISTER = 19,	//世界服务器	注销	MASTER服务器协议
-	EGMI_NET_PROXY_TO_GAME_UNREGISTER = 20,	//网关服务器	注销	游戏服务器协议
+	EGMI_NET_PROXY_TO_MASTER_UNREGISTER = 21,	//网关服务器 注销  MASTER服务器协议
+	EGMI_NET_GAME_TO_MASTER_UNREGISTER = 22,	//网关服务器 注销  MASTER服务器协议
+	EGMI_NET_LOGIN_TO_MASTER_UNREGISTER = 23,	//登录服务器	注销	MASTER服务器协议
+	EGMI_NET_WORLD_TO_MASTER_UNREGISTER = 24,	//世界服务器	注销	MASTER服务器协议
+	EGMI_NET_GAME_TO_PROXY_UNREGISTER = 25,		//游戏服务器	注销	网关服务器协议
+	EGMI_NET_GAME_TO_WORLD_UNREGISTER = 26,		//游戏服务器	注销	世界服务器协议
+	EGMI_NET_WORLD_TO_PROXY_UNREGISTER = 27,	//WORLD服务器	注销	网关服务器协议
 
-	EGMI_NET_PROXY_TO_WORLD_REFRESH = 21,	//网关服务器 刷新  世界服务器协议
-	EGMI_NET_GAME_TO_WORLD_REFRESH = 22,	//游戏服务器	刷新	世界服务器协议
-	EGMI_NET_LOGIN_TO_MASTER_REFRESH = 23,	//登录服务器	刷新	MASTER服务器协议
-	EGMI_NET_WORLD_TO_MASTER_REFRESH = 24,	//世界服务器	刷新	MASTER服务器协议
-	EGMI_NET_PROXY_TO_GAME_REFRESH = 25,	//网关服务器	刷新	游戏服务器协议
+	EGMI_NET_PROXY_TO_MASTER_REFRESH = 31,	//网关服务器 刷新		MASTER服务器协议
+	EGMI_NET_GAME_TO_MASTER_REFRESH = 32,	//游戏服务器	刷新	MASTER服务器协议
+	EGMI_NET_LOGIN_TO_MASTER_REFRESH = 33,	//登录服务器	刷新	MASTER服务器协议
+	EGMI_NET_WORLD_TO_MASTER_REFRESH = 34,	//世界服务器	刷新	MASTER服务器协议
+	EGMI_NET_GAME_TO_PROXY_REFRESH = 35,	//游戏服务器	刷新	网关服务器协议
+	EGMI_NET_GAME_TO_WORLD_REFRESH = 36,	//游戏服务器	刷新	世界服务器协议
+	EGMI_NET_WORLD_TO_PROXY_REFRESH = 37,	//WORLD服务器	刷新	网关服务器协议
 
-	EGMI_NET_WORLD_TO_PROXY_SEND_GAME = 26, //世界服务器发送游戏服务器信息给网关服务器
-	EGMI_NET_MASTER_TO_LOGIN_SEND_WORLD = 26, //Master服务器发送World服务器信息给Login服务器
+	EGMI_NET_MASTER_SEND_PROXY_TO_GAME = 40, //master send proxy to game
+	EGMI_NET_MASTER_SEND_PROXY_TO_WORLD = 41, //master send proxy to world
+	EGMI_NET_MASTER_SEND_WORLD_TO_GAME = 42, //master send world to game
+	EGMI_NET_MASTER_SEND_SERVER_TO_LOGIN = 43, //master send server(proxy,world,game) to login
 
 	EGMI_NET_PROXY_TO_GAME_ACCOUNT_CONNECT = 50, //proxy 发送 账号链接数据
 	EGMI_NET_PROXY_TO_GAME_ACCOUNT_DISCONNECT = 51, //proxy 发送 账号链接数据

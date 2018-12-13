@@ -35,17 +35,12 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="NFProxyClient_GameModule.h" />
     <ClInclude Include="NFProxyClientPlugin.h" />
-    <ClInclude Include="NFProxyClient_WorldModule.h" />
+    <ClInclude Include="NFProxyClient_MasterModule.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="NFProxyClient_GameModule.cpp">
-      <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;_DEBUG;_WINDOWS;_USRDLL;NFPLUGINMODULE_EXPORTS;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Dynamic_Debug|x64'">_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;_DEBUG;_WINDOWS;_USRDLL;NFPLUGINMODULE_EXPORTS;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-    </ClCompile>
     <ClCompile Include="NFProxyClientPlugin.cpp" />
-    <ClCompile Include="NFProxyClient_WorldModule.cpp" />
+    <ClCompile Include="NFProxyClient_MasterModule.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{5C1094D5-0812-48B9-945D-AC3976506145}</ProjectGuid>

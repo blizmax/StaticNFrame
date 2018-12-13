@@ -36,10 +36,14 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="NFGameClientPlugin.h" />
+    <ClInclude Include="NFGameClient_MasterModule.h" />
+    <ClInclude Include="NFGameClient_ProxyModule.h" />
     <ClInclude Include="NFGameClient_WorldModule.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="NFGameClientPlugin.cpp" />
+    <ClCompile Include="NFGameClient_MasterModule.cpp" />
+    <ClCompile Include="NFGameClient_ProxyModule.cpp" />
     <ClCompile Include="NFGameClient_WorldModule.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

@@ -20,10 +20,7 @@ enum NF_SERVER_TYPES
 	NF_ST_WORLD = 3, //
 	NF_ST_GAME = 4, //
 	NF_ST_PROXY = 5, //
-	NF_ST_MATCH = 6,
-	NF_ST_BATTLE = 7,
-	NF_ST_UNION_MATCH = 8,
-	NF_ST_PUBLIC_MATCH = 9,
+	NF_ST_PROXY_INNER = 6, //网关对内服务器, 用来游戏服务器，世界服务器连接网关相互连接
 	NF_ST_MAX = 10, //
 };
 
@@ -36,10 +33,7 @@ const std::string gArrayServer[NF_ST_MAX] = {
 	"WorldServer",
 	"GameServer",
 	"ProxyServer",
-	"MatchServer",
-	"BattleServer", //地图服务器5张
-	"UnionMatch",
-	"PublicMatch", //全区服战场服
+	"ProxyInnerServer",
 };
 
 std::string GetServerName(NF_SERVER_TYPES serverId);

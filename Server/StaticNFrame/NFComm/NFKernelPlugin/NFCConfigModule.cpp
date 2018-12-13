@@ -26,6 +26,7 @@
 #define DEFINE_LUA_STRING_LOG_LEVEL				"LogLevel"
 #define DEFINE_LUA_STRING_WebSocket				"WebSocket"
 #define DEFINE_LUA_STRING_HttpPort				"HttpPort"
+#define DEFINE_LUA_STRING_SERVER_INNER_PROT		"ServerInnerPort"
 
 NFCConfigModule::NFCConfigModule(NFIPluginManager* p)
 {
@@ -168,27 +169,12 @@ bool NFCConfigModule::LoadConfig()
 		{
 			assert(0);
 		}
-		if (!GetLuaTableValue(serverConfigRef, DEFINE_LUA_STRING_SERVER_IP, pConfig->mServerIp))
-		{
-			assert(0);
-		}
-		if (!GetLuaTableValue(serverConfigRef, DEFINE_LUA_STRING_SERVER_PORT, pConfig->mServerPort))
-		{
-			assert(0);
-		}
-		if (!GetLuaTableValue(serverConfigRef, DEFINE_LUA_STRING_MAX_CONNECT_NUM, pConfig->mMaxConnectNum))
-		{
-			assert(0);
-		}
-		if (!GetLuaTableValue(serverConfigRef, DEFINE_LUA_STRING_WORK_THREAD_NUM, pConfig->mWorkThreadNum))
-		{
-			assert(0);
-		}
-		if (!GetLuaTableValue(serverConfigRef, DEFINE_LUA_STRING_SECURITY, pConfig->mSecurity))
-		{
-			assert(0);
-		}
-
+		GetLuaTableValue(serverConfigRef, DEFINE_LUA_STRING_SERVER_IP, pConfig->mServerIp);
+		GetLuaTableValue(serverConfigRef, DEFINE_LUA_STRING_SERVER_PORT, pConfig->mServerPort);
+		GetLuaTableValue(serverConfigRef, DEFINE_LUA_STRING_MAX_CONNECT_NUM, pConfig->mMaxConnectNum);
+		GetLuaTableValue(serverConfigRef, DEFINE_LUA_STRING_WORK_THREAD_NUM, pConfig->mWorkThreadNum);
+		GetLuaTableValue(serverConfigRef, DEFINE_LUA_STRING_SECURITY, pConfig->mSecurity);
+		GetLuaTableValue(serverConfigRef, DEFINE_LUA_STRING_SERVER_INNER_PROT, pConfig->mServerInnerPort);
 		GetLuaTableValue(serverConfigRef, DEFINE_LUA_STRING_WebSocket, pConfig->mWebSocket);
 		GetLuaTableValue(serverConfigRef, DEFINE_LUA_STRING_HttpPort, pConfig->mHttpPort);
 		mServerConfig.emplace(pConfig->mServerId, pConfig);

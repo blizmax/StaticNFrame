@@ -10,6 +10,8 @@
 #pragma once
 
 #include "NFComm/NFPluginModule/NFIModule.h"
+#include "NFMessageDefine/NFMsgDefine.h"
+#include "NFServer/NFServerCommon/NFServerCommon.h"
 
 class NFIWorldClient_MasterModule : public NFIModule
 {

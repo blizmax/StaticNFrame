@@ -3,9 +3,11 @@
   <ItemGroup>
     <ClCompile Include="NFWorldClientPlugin.cpp" />
     <ClCompile Include="NFWorldClient_MasterModule.cpp" />
+    <ClCompile Include="NFWorldClient_ProxyModule.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="NFWorldClientPlugin.h" />
     <ClInclude Include="NFWorldClient_MasterModule.h" />
+    <ClInclude Include="NFWorldClient_ProxyModule.h" />
   </ItemGroup>
 </Project>

@@ -10,6 +10,7 @@
 #pragma once
 
 #include "NFComm/NFPluginModule/NFIModule.h"
+#include "NFMessageDefine/NFMsgDefine.h"
 
 class NFIGameClient_WorldModule : public NFIModule
 {
@@ -18,4 +19,7 @@ public:
 	{
 
 	}
+
+	virtual void OnHandleWorldReport(const NFMsg::ServerInfoReport& xData) = 0;
 };
+

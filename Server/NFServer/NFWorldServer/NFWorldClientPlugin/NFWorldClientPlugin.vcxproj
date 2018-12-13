@@ -37,10 +37,12 @@
   <ItemGroup>
     <ClCompile Include="NFWorldClient_MasterModule.cpp" />
     <ClCompile Include="NFWorldClientPlugin.cpp" />
+    <ClCompile Include="NFWorldClient_ProxyModule.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="NFWorldClient_MasterModule.h" />
     <ClInclude Include="NFWorldClientPlugin.h" />
+    <ClInclude Include="NFWorldClient_ProxyModule.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{AF08195F-61FC-4155-B711-A3C5298ED430}</ProjectGuid>

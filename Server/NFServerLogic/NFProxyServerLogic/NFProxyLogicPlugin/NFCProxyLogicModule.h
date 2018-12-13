@@ -16,7 +16,6 @@
 
 #include "NFServerLogic/NFServerLogicCommon/NFIProxyLogicModule.h"
 #include "NFComm/NFPluginModule/NFEventObj.h"
-#include "NFServer/NFServerCommon/NFIProxyClient_GameModule.h"
 
 #include "NFComm/NFCore/NFMap.hpp"
 
@@ -59,10 +58,8 @@ public:
 	void OnProxySocketEvent(const eMsgType nEvent, const uint32_t unLinkId);
 	void OnAccountDisconnect(const uint32_t unLinkId);
 private:
-	NFINetClientModule* m_pNetClientModule;
 	NFINetServerModule* m_pNetServerModule;
-	NFIProxyClient_GameModule* m_pProxyClient_GameModule;
-	uint32_t m_worldServerUnlinkId;
+	NFIProxyServerModule* m_pNetProxyServerModule;
 
 	NFMap<uint64_t, ProxyPlayerData> mPlayerData;
 	NFMap<uint32_t, ProxyPlayerData> mUnlinkIdPlayerData;

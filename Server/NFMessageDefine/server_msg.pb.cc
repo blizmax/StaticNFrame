@@ -82,6 +82,7 @@ const ::google::protobuf::uint32 TableStruct::offsets[] GOOGLE_PROTOBUF_ATTRIBUT
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::NFMsg::ServerInfoReport, server_name_),
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::NFMsg::ServerInfoReport, server_ip_),
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::NFMsg::ServerInfoReport, server_port_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::NFMsg::ServerInfoReport, server_inner_port_),
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::NFMsg::ServerInfoReport, server_max_online_),
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::NFMsg::ServerInfoReport, server_cur_count_),
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::NFMsg::ServerInfoReport, server_state_),
@@ -95,7 +96,7 @@ const ::google::protobuf::uint32 TableStruct::offsets[] GOOGLE_PROTOBUF_ATTRIBUT
 };
 static const ::google::protobuf::internal::MigrationSchema schemas[] GOOGLE_PROTOBUF_ATTRIBUTE_SECTION_VARIABLE(protodesc_cold) = {
   { 0, -1, sizeof(::NFMsg::ServerInfoReport)},
-  { 13, -1, sizeof(::NFMsg::ServerInfoReportList)},
+  { 14, -1, sizeof(::NFMsg::ServerInfoReportList)},
 };
 
 static ::google::protobuf::Message const * const file_default_instances[] = {
@@ -124,19 +125,20 @@ void protobuf_RegisterTypes(const ::std::string&) {
 void AddDescriptorsImpl() {
   InitDefaults();
   static const char descriptor[] GOOGLE_PROTOBUF_ATTRIBUTE_SECTION_VARIABLE(protodesc_cold) = {
-      "\n\020server_msg.proto\022\005NFMsg\"\302\001\n\020ServerInfo"
+      "\n\020server_msg.proto\022\005NFMsg\"\335\001\n\020ServerInfo"
       "Report\022\021\n\tserver_id\030\001 \001(\005\022\023\n\013server_name"
       "\030\002 \001(\t\022\021\n\tserver_ip\030\003 \001(\t\022\023\n\013server_port"
-      "\030\004 \001(\005\022\031\n\021server_max_online\030\005 \001(\005\022\030\n\020ser"
-      "ver_cur_count\030\006 \001(\005\022\024\n\014server_state\030\007 \001("
-      "\r\022\023\n\013server_type\030\010 \001(\005\"D\n\024ServerInfoRepo"
-      "rtList\022,\n\013server_list\030\001 \003(\0132\027.NFMsg.Serv"
-      "erInfoReport*Z\n\014EServerState\022\r\n\tEST_CRAS"
-      "H\020\000\022\016\n\nEST_NARMAL\020\001\022\014\n\010EST_BUSY\020\002\022\014\n\010EST"
-      "_FIRE\020\003\022\017\n\013EST_MAINTEN\020\004b\006proto3"
+      "\030\004 \001(\005\022\031\n\021server_inner_port\030\005 \001(\005\022\031\n\021ser"
+      "ver_max_online\030\006 \001(\005\022\030\n\020server_cur_count"
+      "\030\007 \001(\005\022\024\n\014server_state\030\010 \001(\r\022\023\n\013server_t"
+      "ype\030\t \001(\005\"D\n\024ServerInfoReportList\022,\n\013ser"
+      "ver_list\030\001 \003(\0132\027.NFMsg.ServerInfoReport*"
+      "Z\n\014EServerState\022\r\n\tEST_CRASH\020\000\022\016\n\nEST_NA"
+      "RMAL\020\001\022\014\n\010EST_BUSY\020\002\022\014\n\010EST_FIRE\020\003\022\017\n\013ES"
+      "T_MAINTEN\020\004b\006proto3"
   };
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
-      descriptor, 392);
+      descriptor, 419);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "server_msg.proto", &protobuf_RegisterTypes);
 }
@@ -180,6 +182,7 @@ const int ServerInfoReport::kServerIdFieldNumber;
 const int ServerInfoReport::kServerNameFieldNumber;
 const int ServerInfoReport::kServerIpFieldNumber;
 const int ServerInfoReport::kServerPortFieldNumber;
+const int ServerInfoReport::kServerInnerPortFieldNumber;
 const int ServerInfoReport::kServerMaxOnlineFieldNumber;
 const int ServerInfoReport::kServerCurCountFieldNumber;
 const int ServerInfoReport::kServerStateFieldNumber;
@@ -327,10 +330,24 @@ bool ServerInfoReport::MergePartialFromCodedStream(
         break;
       }
 
-      // int32 server_max_online = 5;
+      // int32 server_inner_port = 5;
       case 5: {
         if (static_cast< ::google::protobuf::uint8>(tag) ==
             static_cast< ::google::protobuf::uint8>(40u /* 40 & 0xFF */)) {
+
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+                 input, &server_inner_port_)));
+        } else {
+          goto handle_unusual;
+        }
+        break;
+      }
+
+      // int32 server_max_online = 6;
+      case 6: {
+        if (static_cast< ::google::protobuf::uint8>(tag) ==
+            static_cast< ::google::protobuf::uint8>(48u /* 48 & 0xFF */)) {
 
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
@@ -341,10 +358,10 @@ bool ServerInfoReport::MergePartialFromCodedStream(
         break;
       }
 
-      // int32 server_cur_count = 6;
-      case 6: {
+      // int32 server_cur_count = 7;
+      case 7: {
         if (static_cast< ::google::protobuf::uint8>(tag) ==
-            static_cast< ::google::protobuf::uint8>(48u /* 48 & 0xFF */)) {
+            static_cast< ::google::protobuf::uint8>(56u /* 56 & 0xFF */)) {
 
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
@@ -355,10 +372,10 @@ bool ServerInfoReport::MergePartialFromCodedStream(
         break;
       }
 
-      // uint32 server_state = 7;
-      case 7: {
+      // uint32 server_state = 8;
+      case 8: {
         if (static_cast< ::google::protobuf::uint8>(tag) ==
-            static_cast< ::google::protobuf::uint8>(56u /* 56 & 0xFF */)) {
+            static_cast< ::google::protobuf::uint8>(64u /* 64 & 0xFF */)) {
 
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
@@ -369,10 +386,10 @@ bool ServerInfoReport::MergePartialFromCodedStream(
         break;
       }
 
-      // int32 server_type = 8;
-      case 8: {
+      // int32 server_type = 9;
+      case 9: {
         if (static_cast< ::google::protobuf::uint8>(tag) ==
-            static_cast< ::google::protobuf::uint8>(64u /* 64 & 0xFF */)) {
+            static_cast< ::google::protobuf::uint8>(72u /* 72 & 0xFF */)) {
 
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
@@ -439,24 +456,29 @@ void ServerInfoReport::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteInt32(4, this->server_port(), output);
   }
 
-  // int32 server_max_online = 5;
+  // int32 server_inner_port = 5;
+  if (this->server_inner_port() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(5, this->server_inner_port(), output);
+  }
+
+  // int32 server_max_online = 6;
   if (this->server_max_online() != 0) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt32(5, this->server_max_online(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(6, this->server_max_online(), output);
   }
 
-  // int32 server_cur_count = 6;
+  // int32 server_cur_count = 7;
   if (this->server_cur_count() != 0) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt32(6, this->server_cur_count(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(7, this->server_cur_count(), output);
   }
 
-  // uint32 server_state = 7;
+  // uint32 server_state = 8;
   if (this->server_state() != 0) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(7, this->server_state(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(8, this->server_state(), output);
   }
 
-  // int32 server_type = 8;
+  // int32 server_type = 9;
   if (this->server_type() != 0) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt32(8, this->server_type(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(9, this->server_type(), output);
   }
 
   if ((_internal_metadata_.have_unknown_fields() &&  ::google::protobuf::internal::GetProto3PreserveUnknownsDefault())) {
@@ -505,24 +527,29 @@ void ServerInfoReport::SerializeWithCachedSizes(
     target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(4, this->server_port(), target);
   }
 
-  // int32 server_max_online = 5;
+  // int32 server_inner_port = 5;
+  if (this->server_inner_port() != 0) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(5, this->server_inner_port(), target);
+  }
+
+  // int32 server_max_online = 6;
   if (this->server_max_online() != 0) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(5, this->server_max_online(), target);
+    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(6, this->server_max_online(), target);
   }
 
-  // int32 server_cur_count = 6;
+  // int32 server_cur_count = 7;
   if (this->server_cur_count() != 0) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(6, this->server_cur_count(), target);
+    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(7, this->server_cur_count(), target);
   }
 
-  // uint32 server_state = 7;
+  // uint32 server_state = 8;
   if (this->server_state() != 0) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(7, this->server_state(), target);
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(8, this->server_state(), target);
   }
 
-  // int32 server_type = 8;
+  // int32 server_type = 9;
   if (this->server_type() != 0) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(8, this->server_type(), target);
+    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(9, this->server_type(), target);
   }
 
   if ((_internal_metadata_.have_unknown_fields() &&  ::google::protobuf::internal::GetProto3PreserveUnknownsDefault())) {
@@ -570,28 +597,35 @@ size_t ServerInfoReport::ByteSizeLong() const {
         this->server_port());
   }
 
-  // int32 server_max_online = 5;
+  // int32 server_inner_port = 5;
+  if (this->server_inner_port() != 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::Int32Size(
+        this->server_inner_port());
+  }
+
+  // int32 server_max_online = 6;
   if (this->server_max_online() != 0) {
     total_size += 1 +
       ::google::protobuf::internal::WireFormatLite::Int32Size(
         this->server_max_online());
   }
 
-  // int32 server_cur_count = 6;
+  // int32 server_cur_count = 7;
   if (this->server_cur_count() != 0) {
     total_size += 1 +
       ::google::protobuf::internal::WireFormatLite::Int32Size(
         this->server_cur_count());
   }
 
-  // uint32 server_state = 7;
+  // uint32 server_state = 8;
   if (this->server_state() != 0) {
     total_size += 1 +
       ::google::protobuf::internal::WireFormatLite::UInt32Size(
         this->server_state());
   }
 
-  // int32 server_type = 8;
+  // int32 server_type = 9;
   if (this->server_type() != 0) {
     total_size += 1 +
       ::google::protobuf::internal::WireFormatLite::Int32Size(
@@ -639,6 +673,9 @@ void ServerInfoReport::MergeFrom(const ServerInfoReport& from) {
   if (from.server_port() != 0) {
     set_server_port(from.server_port());
   }
+  if (from.server_inner_port() != 0) {
+    set_server_inner_port(from.server_inner_port());
+  }
   if (from.server_max_online() != 0) {
     set_server_max_online(from.server_max_online());
   }
@@ -683,6 +720,7 @@ void ServerInfoReport::InternalSwap(ServerInfoReport* other) {
     GetArenaNoVirtual());
   swap(server_id_, other->server_id_);
   swap(server_port_, other->server_port_);
+  swap(server_inner_port_, other->server_inner_port_);
   swap(server_max_online_, other->server_max_online_);
   swap(server_cur_count_, other->server_cur_count_);
   swap(server_state_, other->server_state_);

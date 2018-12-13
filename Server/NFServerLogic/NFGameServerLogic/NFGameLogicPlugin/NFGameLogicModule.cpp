@@ -20,13 +20,12 @@ NFCGameLogicModule::~NFCGameLogicModule()
 bool NFCGameLogicModule::Init()
 {
 	m_pNetClientModule = pPluginManager->FindModule<NFINetClientModule>();
-	m_pNetServerModule = pPluginManager->FindModule<NFINetServerModule>();
 	
-	m_pNetServerModule->AddEventCallBack(NF_ST_GAME, this, &NFCGameLogicModule::OnProxySocketEvent);
+	m_pNetClientModule->AddEventCallBack(NF_ST_PROXY, this, &NFCGameLogicModule::OnProxySocketEvent);
 
-	m_pNetServerModule->AddReceiveCallBack(NF_ST_GAME, EGMI_NET_PROXY_TO_GAME_ACCOUNT_CONNECT, this, &NFCGameLogicModule::OnHandleAccountConnect);
-	m_pNetServerModule->AddReceiveCallBack(NF_ST_GAME, EGMI_NET_PROXY_TO_GAME_ACCOUNT_DISCONNECT, this, &NFCGameLogicModule::OnHandleAccountDisConnect);
-	m_pNetServerModule->AddReceiveCallBack(NF_ST_GAME, EGMI_NET_PROXY_TO_GAME_ACCOUNT_RECONNECT, this, &NFCGameLogicModule::OnHandleAccountReConnect);
+	m_pNetClientModule->AddReceiveCallBack(NF_ST_PROXY, EGMI_NET_PROXY_TO_GAME_ACCOUNT_CONNECT, this, &NFCGameLogicModule::OnHandleAccountConnect);
+	m_pNetClientModule->AddReceiveCallBack(NF_ST_PROXY, EGMI_NET_PROXY_TO_GAME_ACCOUNT_DISCONNECT, this, &NFCGameLogicModule::OnHandleAccountDisConnect);
+	m_pNetClientModule->AddReceiveCallBack(NF_ST_PROXY, EGMI_NET_PROXY_TO_GAME_ACCOUNT_RECONNECT, this, &NFCGameLogicModule::OnHandleAccountReConnect);
 	return true;
 }
 
@@ -73,7 +72,7 @@ void NFCGameLogicModule::OnHandleAccountConnect(const uint32_t unLinkId, const u
 	pInfo->proxyUnlinkId = unLinkId;
 
 	pInfo->SetSendMsg([pInfo, this](const std::string& msg) {
-		this->m_pNetServerModule->SendByServerID(pInfo->proxyUnlinkId, 0, msg.data(), msg.length(), pInfo->uid);
+		this->m_pNetClientModule->SendByServerID(pInfo->proxyUnlinkId, 0, msg.data(), msg.length(), pInfo->uid);
 	});
 
 	NFILuaScriptModule* pLuaScriptModule = (NFILuaScriptModule*)pPluginManager->FindModule(typeid(NFILuaScriptModule).name());
@@ -122,7 +121,7 @@ void NFCGameLogicModule::OnHandleAccountReConnect(const uint32_t unLinkId, const
 	pInfo->proxyUnlinkId = unLinkId;
 
 	pInfo->SetSendMsg([pInfo, this](const std::string& msg) {
-		this->m_pNetServerModule->SendByServerID(pInfo->proxyUnlinkId, 0, msg.data(), msg.length(), pInfo->uid);
+		this->m_pNetClientModule->SendByServerID(pInfo->proxyUnlinkId, 0, msg.data(), msg.length(), pInfo->uid);
 	});
 
 	NFILuaScriptModule* pLuaScriptModule = (NFILuaScriptModule*)pPluginManager->FindModule(typeid(NFILuaScriptModule).name());
