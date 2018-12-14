@@ -21,7 +21,6 @@
 NFCWorldServerModule::NFCWorldServerModule(NFIPluginManager* p)
 {
 	pPluginManager = p;
-	mWorldToMasterUnlinkId = 0;
 }
 
 NFCWorldServerModule::~NFCWorldServerModule()
@@ -30,10 +29,6 @@ NFCWorldServerModule::~NFCWorldServerModule()
 
 bool NFCWorldServerModule::Init()
 {
-	//监听服务器连接事件
-	Subscribe(NFEVENT_WORLD_CONNECT_MASTER_SUCCESS, 0, NF_ST_MASTER, __FUNCTION__);
-	Subscribe(NFEVENT_WORLD_CONNECT_MASTER_FAIL, 0, NF_ST_MASTER, __FUNCTION__);
-
 	m_pNetClientModule = pPluginManager->FindModule<NFINetClientModule>();
 	m_pNetServerModule = pPluginManager->FindModule<NFINetServerModule>();
 	m_pNetServerModule->AddEventCallBack(NF_ST_WORLD, this, &NFCWorldServerModule::OnProxySocketEvent);
@@ -177,8 +172,11 @@ void NFCWorldServerModule::OnGameServerRegisterProcess(const uint32_t unLinkId, 
 		pServerData->mUnlinkId = unLinkId;
 		pServerData->mServerInfo = xData;
 
-		std::string ip = m_pNetServerModule->GetLinkIp(unLinkId);
-		pServerData->mServerInfo.set_server_ip(ip);
+		if (xData.server_ip().empty())
+		{
+			std::string ip = m_pNetServerModule->GetLinkIp(unLinkId);
+			pServerData->mServerInfo.set_server_ip(ip);
+		}
 
 		NFLogInfo("Game Server Register World Server Success, serverName:{}, serverId:{}, ip:{}, port:{}", pServerData->mServerInfo.server_name(), pServerData->mServerInfo.server_id(), pServerData->mServerInfo.server_ip(), pServerData->mServerInfo.server_port());
 	}
@@ -186,13 +184,6 @@ void NFCWorldServerModule::OnGameServerRegisterProcess(const uint32_t unLinkId, 
 
 void NFCWorldServerModule::OnExecute(uint16_t nEventID, uint64_t nSrcID, uint8_t bySrcType, NFEventContext* pEventContext)
 {
-	if (nEventID == NFEVENT_WORLD_CONNECT_MASTER_SUCCESS)
-	{
-		mWorldToMasterUnlinkId = (uint32_t)nSrcID;
-	}
-	else if (nEventID == NFEVENT_WORLD_CONNECT_MASTER_FAIL)
-	{
-		mWorldToMasterUnlinkId = 0;
-	}
+
 }
 

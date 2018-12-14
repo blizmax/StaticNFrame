@@ -50,6 +50,14 @@ bool NFCGameClient_ProxyModule::BeforeShut()
 
 bool NFCGameClient_ProxyModule::Shut()
 {
+	mUnlinkProxyMap.ClearAll();
+	NFServerData* pData = mProxyMap.First();
+	while (pData)
+	{
+		NF_SAFE_DELETE(pData);
+		pData = mProxyMap.Next();
+	}
+	mProxyMap.ClearAll();
 	return true;
 }
 

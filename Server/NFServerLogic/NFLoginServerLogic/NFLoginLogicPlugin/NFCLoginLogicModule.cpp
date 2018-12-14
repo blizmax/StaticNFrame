@@ -50,6 +50,13 @@ bool NFCLoginLogicModule::BeforeShut()
 
 bool NFCLoginLogicModule::Shut()
 {
+	auto pData = m_loginAccountMap.First();
+	while (pData)
+	{
+		NF_SAFE_DELETE(pData);
+		pData = m_loginAccountMap.Next();
+	}
+	m_loginAccountMap.ClearAll();
 	return true;
 }
 

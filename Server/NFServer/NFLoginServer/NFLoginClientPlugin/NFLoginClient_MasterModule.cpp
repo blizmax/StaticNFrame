@@ -125,14 +125,12 @@ void NFCLoginClient_MasterModule::OnProxySocketEvent(const eMsgType nEvent, cons
 	if (nEvent == eMsgType_CONNECTED)
 	{
 		NFLogDebug("Login Server Connect Master Server Success!");
-		NFEventMgr::Instance()->FireExecute(NFEVENT_LOGIN_CONNECT_MASTER_SUCCESS, unLinkId, NF_ST_MASTER, nullptr);
 	
 		RegisterServer();
 	}
 	else if (nEvent == eMsgType_DISCONNECTED)
 	{
 		NFLogDebug("Login Server DisConnect Master Server!");
-		NFEventMgr::Instance()->FireExecute(NFEVENT_LOGIN_CONNECT_MASTER_FAIL, unLinkId, NF_ST_MASTER, nullptr);
 	}
 }
 

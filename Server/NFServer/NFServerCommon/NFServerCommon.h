@@ -83,6 +83,12 @@ enum NF_EGMI_MsgId
 	EGMI_NET_MSG_END = 1000,
 };
 
+enum NFServerEvent
+{
+	NF_SERVER_EVENT_GAME_DISCONNECT_PROXY = 100,
+	NF_SERVER_EVENT_WORLD_DISCONNECT_PROXY = 101,
+};
+
 //////////////////////////////////////////////////////////////////////////
 class NFServerData
 {

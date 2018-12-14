@@ -70,7 +70,7 @@ void NetObject::conn_eventcb(struct bufferevent* pEv, short events, void* pArg)
 		}
 #endif
 		p->OnHandleDisConnect();
-		NFLogError("NetError | CloseProc Error Code ",std::string(evutil_socket_error_to_string(EVUTIL_SOCKET_ERROR())));
+		//NFLogError("NetError | CloseProc Error Code ",std::string(evutil_socket_error_to_string(EVUTIL_SOCKET_ERROR())));
 	}
 }
 

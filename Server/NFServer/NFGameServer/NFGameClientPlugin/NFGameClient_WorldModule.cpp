@@ -50,7 +50,15 @@ bool NFCGameClient_WorldModule::BeforeShut()
 
 bool NFCGameClient_WorldModule::Shut()
 {
+	mUnlinkWorldMap.ClearAll();
+	NFServerData* pData = mWorldMap.First();
+	while (pData)
+	{
+		NF_SAFE_DELETE(pData);
+		pData = mWorldMap.Next();
+	}
 	return true;
+	mWorldMap.ClearAll();
 }
 
 void NFCGameClient_WorldModule::OnProxySocketEvent(const eMsgType nEvent, const uint32_t unLinkId)

@@ -46,6 +46,13 @@ bool NFCGameLogicModule::BeforeShut()
 
 bool NFCGameLogicModule::Shut()
 {
+	auto pData = m_playerAccountInfo.First();
+	while (pData)
+	{
+		NF_SAFE_DELETE(pData);
+		pData = m_playerAccountInfo.Next();
+	}
+	m_playerAccountInfo.ClearAll();
 	return true;
 }
 

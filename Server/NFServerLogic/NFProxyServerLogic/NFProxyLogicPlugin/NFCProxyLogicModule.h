@@ -54,7 +54,6 @@ public:
 
 	virtual void OnExecute(uint16_t nEventID, uint64_t nSrcID, uint8_t bySrcType, NFEventContext* pEventContext) override;
 
-	void OnProxyInnerSocketEvent(const eMsgType nEvent, const uint32_t unLinkId);
 	void OnHandleGameJsonMessage(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen);
 	void OnHandleJsonMessage(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen);
 	void OnHandleUser_LoginTokenLoginUserPmd(const uint32_t unLinkId, const NFMsg::UserLoginTokenLoginUserPmd_C& msg);
@@ -66,7 +65,7 @@ public:
 
 	void OnProxySocketEvent(const eMsgType nEvent, const uint32_t unLinkId);
 	void OnAccountDisconnect(const uint32_t unLinkId);
-	void OnHandleInnerServerDisconnect(uint32_t unLinkId);
+	void OnHandleInnerServerDisconnect(uint32_t serverType, uint32_t serverId);
 private:
 	NFINetServerModule* m_pNetServerModule;
 	NFIProxyServerModule* m_pNetProxyServerModule;

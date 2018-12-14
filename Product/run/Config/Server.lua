@@ -10,6 +10,8 @@
 MasterIP = "45.32.39.90";
 MasterPort = 5501;
 
+ZoneIP = "192.168.52.42"
+
 Server = {
 
 };

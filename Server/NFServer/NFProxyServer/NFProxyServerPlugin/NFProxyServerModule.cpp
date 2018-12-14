@@ -96,8 +96,11 @@ void NFCProxyServerModule::OnGameServerRegisterProcess(const uint32_t unLinkId, 
 		pServerData->mUnlinkId = unLinkId;
 		pServerData->mServerInfo = xData;
 
-		std::string ip = m_pNetServerModule->GetLinkIp(unLinkId);
-		pServerData->mServerInfo.set_server_ip(ip);
+		if (xData.server_ip().empty())
+		{
+			std::string ip = m_pNetServerModule->GetLinkIp(unLinkId);
+			pServerData->mServerInfo.set_server_ip(ip);
+		}
 
 		NFLogInfo("Game Server Register Proxy Server Success, serverName:{}, serverId:{}, ip:{}, port:{}", pServerData->mServerInfo.server_name(), pServerData->mServerInfo.server_id(), pServerData->mServerInfo.server_ip(), pServerData->mServerInfo.server_port());
 	}
@@ -135,8 +138,11 @@ void NFCProxyServerModule::OnGameServerRefreshProcess(const uint32_t unLinkId, c
 		pServerData->mUnlinkId = unLinkId;
 		pServerData->mServerInfo = xData;
 
-		std::string ip = m_pNetServerModule->GetLinkIp(unLinkId);
-		pServerData->mServerInfo.set_server_ip(ip);
+		if (xData.server_ip().empty())
+		{
+			std::string ip = m_pNetServerModule->GetLinkIp(unLinkId);
+			pServerData->mServerInfo.set_server_ip(ip);
+		}
 
 		//NFLogInfo("Game Server Refresh Master Server Success, serverName:{}, serverId:{}, ip:{}, port:{}", xData.server_name(), xData.server_id(), xData.server_ip(), xData.server_port());
 	}
@@ -213,6 +219,7 @@ void NFCProxyServerModule::OnHandleInnerServerDisconnect(uint32_t unLinkId)
 			NFLogError("the world server disconnect from proxy server, serverName:{}, serverId:{}, serverIp:{}, serverPort:{}"
 				, pServerData->mServerInfo.server_name(), pServerData->mServerInfo.server_id(), pServerData->mServerInfo.server_ip(), pServerData->mServerInfo.server_port());
 
+			FireExecute(NF_SERVER_EVENT_WORLD_DISCONNECT_PROXY, pServerData->mServerInfo.server_id(), pServerData->mServerInfo.server_type(), nullptr);
 			return;
 		}
 
@@ -230,6 +237,7 @@ void NFCProxyServerModule::OnHandleInnerServerDisconnect(uint32_t unLinkId)
 			NFLogError("the game server disconnect from proxy server, serverName:{}, serverId:{}, serverIp:{}, serverPort:{}"
 				, pServerData->mServerInfo.server_name(), pServerData->mServerInfo.server_id(), pServerData->mServerInfo.server_ip(), pServerData->mServerInfo.server_port());
 
+			FireExecute(NF_SERVER_EVENT_GAME_DISCONNECT_PROXY, pServerData->mServerInfo.server_id(), pServerData->mServerInfo.server_type(), nullptr);
 			return;
 		}
 
@@ -261,8 +269,11 @@ void NFCProxyServerModule::OnWorldServerRegisterProcess(const uint32_t unLinkId,
 		pServerData->mUnlinkId = unLinkId;
 		pServerData->mServerInfo = xData;
 
-		std::string ip = m_pNetServerModule->GetLinkIp(unLinkId);
-		pServerData->mServerInfo.set_server_ip(ip);
+		if (xData.server_ip().empty())
+		{
+			std::string ip = m_pNetServerModule->GetLinkIp(unLinkId);
+			pServerData->mServerInfo.set_server_ip(ip);
+		}
 
 
 		NFLogInfo("World Server Register Proxy Server Success, serverName:{}, serverId:{}, ip:{}, port:{}", pServerData->mServerInfo.server_name(), pServerData->mServerInfo.server_id(), pServerData->mServerInfo.server_ip(), pServerData->mServerInfo.server_port());
@@ -301,8 +312,11 @@ void NFCProxyServerModule::OnWorldServerRefreshProcess(const uint32_t unLinkId, 
 		pServerData->mUnlinkId = unLinkId;
 		pServerData->mServerInfo = xData;
 
-		std::string ip = m_pNetServerModule->GetLinkIp(unLinkId);
-		pServerData->mServerInfo.set_server_ip(ip);
+		if (xData.server_ip().empty())
+		{
+			std::string ip = m_pNetServerModule->GetLinkIp(unLinkId);
+			pServerData->mServerInfo.set_server_ip(ip);
+		}
 
 
 		//NFLogInfo("World Server Refresh Master Server Success, serverName:{}, serverId:{}, ip:{}, port:{}", xData.server_name(), xData.server_id(), xData.server_ip(), xData.server_port());

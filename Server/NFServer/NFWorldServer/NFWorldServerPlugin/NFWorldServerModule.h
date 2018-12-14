@@ -49,5 +49,4 @@ private:
 	NFINetClientModule* m_pNetClientModule;
 private:
 	NFMapEx<int, NFServerData> mGameMap;
-	uint32_t mWorldToMasterUnlinkId;
 };

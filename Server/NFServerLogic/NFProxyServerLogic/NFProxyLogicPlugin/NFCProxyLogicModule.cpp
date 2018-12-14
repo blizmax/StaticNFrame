@@ -18,10 +18,12 @@ NFCProxyLogicModule::~NFCProxyLogicModule()
 
 bool NFCProxyLogicModule::Init()
 {
+	this->Subscribe(NF_SERVER_EVENT_GAME_DISCONNECT_PROXY, 0, NF_ST_GAME, "NFCProxyLogicModule::Init");
+	this->Subscribe(NF_SERVER_EVENT_WORLD_DISCONNECT_PROXY, 0, NF_ST_WORLD, "NFCProxyLogicModule::Init");
+
 	m_pNetServerModule = pPluginManager->FindModule<NFINetServerModule>();
 	m_pNetProxyServerModule = pPluginManager->FindModule<NFIProxyServerModule>();
 
-	m_pNetServerModule->AddEventCallBack(NF_ST_PROXY_INNER, this, &NFCProxyLogicModule::OnProxyInnerSocketEvent);
 	m_pNetServerModule->AddEventCallBack(NF_ST_PROXY, this, &NFCProxyLogicModule::OnProxySocketEvent);
 	m_pNetServerModule->AddReceiveCallBack(NF_ST_PROXY, EGMI_NET_MSG_JSON_MSG, this, &NFCProxyLogicModule::OnHandleJsonMessage);
 	m_pNetServerModule->AddReceiveCallBack(NF_ST_PROXY_INNER, EGMI_NET_MSG_JSON_MSG, this, &NFCProxyLogicModule::OnHandleGameJsonMessage);
@@ -45,12 +47,37 @@ bool NFCProxyLogicModule::BeforeShut()
 
 bool NFCProxyLogicModule::Shut()
 {
+	mUnlinkIdPlayerData.ClearAll();
+	auto pData = mPlayerData.First();
+	while (pData)
+	{
+		NF_SAFE_DELETE(pData);
+		pData = mPlayerData.Next();
+	}
 	return true;
 }
 
 void NFCProxyLogicModule::OnExecute(uint16_t nEventID, uint64_t nSrcID, uint8_t bySrcType, NFEventContext* pEventContext)
 {
-
+	switch (nEventID)
+	{
+	case NF_SERVER_EVENT_GAME_DISCONNECT_PROXY:
+	{
+		uint32_t serverId = (uint32_t)nSrcID;
+		uint32_t serverType = (uint32_t)bySrcType;
+		OnHandleInnerServerDisconnect(serverType, serverId);
+	}
+	break;
+	case NF_SERVER_EVENT_WORLD_DISCONNECT_PROXY:
+	{
+		uint32_t serverId = (uint32_t)nSrcID;
+		uint32_t serverType = (uint32_t)bySrcType;
+		OnHandleInnerServerDisconnect(serverType, serverId);
+	}
+	break;
+	default:
+		break;
+	}
 }
 
 void NFCProxyLogicModule::OnHandleGameJsonMessage(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen)
@@ -255,30 +282,21 @@ void NFCProxyLogicModule::OnAccountDisconnect(const uint32_t unLinkId)
 	}
 }
 
-void NFCProxyLogicModule::OnProxyInnerSocketEvent(const eMsgType nEvent, const uint32_t unLinkId)
+void NFCProxyLogicModule::OnHandleInnerServerDisconnect(uint32_t serverType, uint32_t serverId)
 {
-	if (nEvent == eMsgType_CONNECTED)
+	if (serverType == NF_ST_GAME)
 	{
-
-	}
-	else if (nEvent == eMsgType_DISCONNECTED)
-	{
-		OnHandleInnerServerDisconnect(unLinkId);
-	}
-}
-
-void NFCProxyLogicModule::OnHandleInnerServerDisconnect(uint32_t unLinkId)
-{
-	ProxyPlayerData* pData = mPlayerData.First();
-	while (pData)
-	{
-		//这里还有世界服务器掉线要处理
-		if (pData->gameUnlinkId == unLinkId)
+		ProxyPlayerData* pData = mPlayerData.First();
+		while (pData)
 		{
-			//断开玩家与网关的链接
-			m_pNetServerModule->CloseLinkId(pData->unlinkId);
-		}
+			//这里还有世界服务器掉线要处理
+			if (pData->gameServerId == serverId)
+			{
+				//断开玩家与网关的链接
+				m_pNetServerModule->CloseLinkId(pData->unlinkId);
+			}
 
-		pData = mPlayerData.Next();
+			pData = mPlayerData.Next();
+		}
 	}
 }
