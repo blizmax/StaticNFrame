@@ -5,6 +5,7 @@
 #include "NFComm/NFPluginModule/NFIPluginManager.h"
 #include "NFServer/NFServerCommon/NFServerCommon.h"
 #include "NFComm/NFCore/NFJson.h"
+#include "NFComm/NFCore/NFMD5.h"
 
 NFCProxyLogicModule::NFCProxyLogicModule(NFIPluginManager* p)
 {
@@ -166,6 +167,16 @@ void NFCProxyLogicModule::OnHandleUser_UserJsMessageForwardUserPmd(const uint32_
 
 void NFCProxyLogicModule::OnHandleUser_LoginTokenLoginUserPmd(const uint32_t unLinkId, const NFMsg::UserLoginTokenLoginUserPmd_C& msg)
 {
+	std::string plat_key = NFMD5::md5str(lexical_cast<std::string>(msg.accountid()));
+	std::string str = NF_FORMAT("{}{}{}{}", msg.accountid(), msg.logintempid(), msg.timestamp(), plat_key);
+	std::string md5 = NFMD5::md5str(str);
+
+	if (md5 != msg.tokenmd5())
+	{
+		NFLogError("token md5 check failed!");
+		return;
+	}
+
 	ProxyPlayerData* pData = GetPlayerData(msg.accountid());
 	if (pData == nullptr)
 	{
@@ -209,6 +220,16 @@ void NFCProxyLogicModule::OnHandleUser_LoginTokenLoginUserPmd(const uint32_t unL
 
 void NFCProxyLogicModule::OnHandleUser_UserLoginReconnectLoginUserPmd(const uint32_t unLinkId, const NFMsg::UserLoginReconnectLoginUserPmd_C& msg)
 {
+	std::string plat_key = NFMD5::md5str(lexical_cast<std::string>(msg.accountid()));
+	std::string str = NF_FORMAT("{}{}{}{}", msg.accountid(), msg.logintempid(), msg.timestamp(), plat_key);
+	std::string md5 = NFMD5::md5str(str);
+
+	if (md5 != msg.tokenmd5())
+	{
+		NFLogError("token md5 check failed!");
+		return;
+	}
+
 	ProxyPlayerData* pData = GetPlayerData(msg.accountid());
 	if (pData == nullptr)
 	{

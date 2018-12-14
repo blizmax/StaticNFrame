@@ -373,6 +373,12 @@ const ::google::protobuf::uint32 TableStruct::offsets[] GOOGLE_PROTOBUF_ATTRIBUT
   ~0u,  // no _weak_field_map_
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::NFMsg::LoginAccount, account_),
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::NFMsg::LoginAccount, uid_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::NFMsg::LoginAccount, openkey_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::NFMsg::LoginAccount, platid_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::NFMsg::LoginAccount, gameid_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::NFMsg::LoginAccount, zoneid_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::NFMsg::LoginAccount, md5_plat_key_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::NFMsg::LoginAccount, md5_plat_login_),
   ~0u,  // no _has_bits_
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::NFMsg::http_login_cmd, _internal_metadata_),
   ~0u,  // no _extensions_
@@ -540,21 +546,21 @@ const ::google::protobuf::uint32 TableStruct::offsets[] GOOGLE_PROTOBUF_ATTRIBUT
 };
 static const ::google::protobuf::internal::MigrationSchema schemas[] GOOGLE_PROTOBUF_ATTRIBUTE_SECTION_VARIABLE(protodesc_cold) = {
   { 0, -1, sizeof(::NFMsg::LoginAccount)},
-  { 7, -1, sizeof(::NFMsg::http_login_cmd)},
-  { 13, -1, sizeof(::NFMsg::reqeust_zone_list_data)},
-  { 19, -1, sizeof(::NFMsg::reqeust_zone_list)},
-  { 26, -1, sizeof(::NFMsg::reqeust_zone_list_respone_respone_data_reqeust_zone_list_server)},
-  { 39, -1, sizeof(::NFMsg::reqeust_zone_list_respone_respone_data)},
-  { 49, -1, sizeof(::NFMsg::reqeust_zone_list_respone)},
-  { 58, -1, sizeof(::NFMsg::plat_token_login_request_request_data_request_data_platinfo)},
-  { 73, -1, sizeof(::NFMsg::plat_token_login_request_request_data)},
-  { 80, -1, sizeof(::NFMsg::plat_token_login_request)},
-  { 90, -1, sizeof(::NFMsg::plat_token_login_respone_respone_data_respone_data_platinfo)},
-  { 105, -1, sizeof(::NFMsg::plat_token_login_respone_respone_data)},
-  { 119, -1, sizeof(::NFMsg::plat_token_login_respone)},
-  { 132, -1, sizeof(::NFMsg::reqeust_select_zone_request)},
-  { 143, -1, sizeof(::NFMsg::respone_select_zone_respone_respone_data)},
-  { 157, -1, sizeof(::NFMsg::respone_select_zone_respone)},
+  { 13, -1, sizeof(::NFMsg::http_login_cmd)},
+  { 19, -1, sizeof(::NFMsg::reqeust_zone_list_data)},
+  { 25, -1, sizeof(::NFMsg::reqeust_zone_list)},
+  { 32, -1, sizeof(::NFMsg::reqeust_zone_list_respone_respone_data_reqeust_zone_list_server)},
+  { 45, -1, sizeof(::NFMsg::reqeust_zone_list_respone_respone_data)},
+  { 55, -1, sizeof(::NFMsg::reqeust_zone_list_respone)},
+  { 64, -1, sizeof(::NFMsg::plat_token_login_request_request_data_request_data_platinfo)},
+  { 79, -1, sizeof(::NFMsg::plat_token_login_request_request_data)},
+  { 86, -1, sizeof(::NFMsg::plat_token_login_request)},
+  { 96, -1, sizeof(::NFMsg::plat_token_login_respone_respone_data_respone_data_platinfo)},
+  { 111, -1, sizeof(::NFMsg::plat_token_login_respone_respone_data)},
+  { 125, -1, sizeof(::NFMsg::plat_token_login_respone)},
+  { 138, -1, sizeof(::NFMsg::reqeust_select_zone_request)},
+  { 149, -1, sizeof(::NFMsg::respone_select_zone_respone_respone_data)},
+  { 163, -1, sizeof(::NFMsg::respone_select_zone_respone)},
 };
 
 static ::google::protobuf::Message const * const file_default_instances[] = {
@@ -597,71 +603,74 @@ void protobuf_RegisterTypes(const ::std::string&) {
 void AddDescriptorsImpl() {
   InitDefaults();
   static const char descriptor[] GOOGLE_PROTOBUF_ATTRIBUTE_SECTION_VARIABLE(protodesc_cold) = {
-      "\n\017login_msg.proto\022\005NFMsg\",\n\014LoginAccount"
-      "\022\017\n\007account\030\001 \001(\t\022\013\n\003uid\030\002 \001(\004\"\034\n\016http_l"
-      "ogin_cmd\022\n\n\002do\030\001 \001(\t\"(\n\026reqeust_zone_lis"
-      "t_data\022\016\n\006gameid\030\001 \001(\r\"L\n\021reqeust_zone_l"
-      "ist\022\n\n\002do\030\001 \001(\t\022+\n\004data\030\002 \001(\0132\035.NFMsg.re"
-      "qeust_zone_list_data\"\330\003\n\031reqeust_zone_li"
-      "st_respone\022\n\n\002do\030\001 \001(\t\022\r\n\005error\030\002 \001(\t\022\n\n"
-      "\002st\030\003 \001(\004\022;\n\004data\030\004 \001(\0132-.NFMsg.reqeust_"
-      "zone_list_respone.respone_data\032\326\002\n\014respo"
-      "ne_data\022\022\n\nbestzoneid\030\001 \001(\r\022\016\n\006gameid\030\002 "
-      "\001(\r\022\020\n\010gamename\030\003 \001(\t\022\016\n\006zoneid\030\004 \001(\r\022X\n"
-      "\010zonelist\030\005 \003(\0132F.NFMsg.reqeust_zone_lis"
-      "t_respone.respone_data.reqeust_zone_list"
-      "_server\032\245\001\n\030reqeust_zone_list_server\022\016\n\006"
-      "gameid\030\001 \001(\r\022\020\n\010gamename\030\002 \001(\t\022\021\n\tnewzon"
-      "eid\030\003 \001(\r\022\021\n\tonlinenum\030\004 \001(\r\022\020\n\010opentime"
-      "\030\005 \001(\t\022\r\n\005state\030\006 \001(\r\022\016\n\006zoneid\030\007 \001(\r\022\020\n"
-      "\010zonename\030\010 \001(\t\"\320\003\n\030plat_token_login_req"
-      "uest\022\n\n\002do\030\001 \001(\t\022:\n\004data\030\002 \001(\0132,.NFMsg.p"
-      "lat_token_login_request.request_data\022\016\n\006"
-      "gameid\030\003 \001(\r\022\016\n\006zoneid\030\004 \001(\r\022\036\n\026unigame_"
-      "plat_timestamp\030\005 \001(\004\032\253\002\n\014request_data\022T\n"
-      "\010platinfo\030\001 \001(\0132B.NFMsg.plat_token_login"
-      "_request.request_data.request_data_plati"
-      "nfo\022\016\n\006gameid\030\002 \001(\r\032\264\001\n\025request_data_pla"
-      "tinfo\022\013\n\003aaa\030\001 \001(\r\022\014\n\004sign\030\002 \001(\t\022\017\n\007acco"
-      "unt\030\003 \001(\t\022\r\n\005email\030\004 \001(\t\022\016\n\006platid\030\005 \001(\r"
-      "\022\016\n\006gender\030\006 \001(\t\022\020\n\010nickname\030\007 \001(\t\022\013\n\003ui"
-      "d\030\010 \001(\t\022\016\n\006gameid\030\t \001(\r\022\021\n\ttimestamp\030\n \001"
-      "(\t\"\313\005\n\030plat_token_login_respone\022\016\n\006gamei"
-      "d\030\001 \001(\r\022\030\n\020unigame_plat_key\030\002 \001(\t\022\032\n\022uni"
-      "game_plat_login\030\003 \001(\t\022\"\n\032unigame_plat_lo"
-      "gin_timeout\030\004 \001(\t\022\036\n\026unigame_plat_timest"
-      "amp\030\005 \001(\004\022\016\n\006zoneid\030\006 \001(\r\022\n\n\002do\030\007 \001(\t\022:\n"
-      "\004data\030\010 \001(\0132,.NFMsg.plat_token_login_res"
-      "pone.respone_data\032\314\003\n\014respone_data\022\016\n\006ga"
-      "meid\030\001 \001(\r\022\013\n\003sid\030\002 \001(\t\022\025\n\rtimezone_name"
-      "\030\003 \001(\t\022\027\n\017timezone_offset\030\004 \001(\r\022\013\n\003uid\030\005"
-      " \001(\t\022\030\n\020unigame_plat_key\030\006 \001(\t\022\032\n\022unigam"
-      "e_plat_login\030\007 \001(\t\022\037\n\027unigame_plat_login"
-      "_life\030\010 \001(\r\022T\n\010platinfo\030\t \001(\0132B.NFMsg.pl"
-      "at_token_login_respone.respone_data.resp"
-      "one_data_platinfo\032\264\001\n\025respone_data_plati"
-      "nfo\022\013\n\003aaa\030\001 \001(\r\022\014\n\004sign\030\002 \001(\t\022\017\n\007accoun"
-      "t\030\003 \001(\t\022\r\n\005email\030\004 \001(\t\022\016\n\006platid\030\005 \001(\r\022\016"
-      "\n\006gender\030\006 \001(\t\022\020\n\010nickname\030\007 \001(\t\022\013\n\003uid\030"
-      "\010 \001(\t\022\016\n\006gameid\030\t \001(\r\022\021\n\ttimestamp\030\n \001(\t"
-      "\"\222\001\n\033reqeust_select_zone_request\022\n\n\002do\030\001"
-      " \001(\t\022\016\n\006gameid\030\002 \001(\r\022\016\n\006zoneid\030\003 \001(\r\022\013\n\003"
-      "uid\030\004 \001(\t\022\032\n\022unigame_plat_login\030\005 \001(\t\022\036\n"
-      "\026unigame_plat_timestamp\030\006 \001(\004\"\251\003\n\033respon"
-      "e_select_zone_respone\022\n\n\002do\030\001 \001(\t\022\016\n\006err"
-      "no_\030\002 \001(\t\022\016\n\006gameid\030\003 \001(\r\022\n\n\002st\030\004 \001(\004\022\032\n"
-      "\022unigame_plat_login\030\005 \001(\t\022\036\n\026unigame_pla"
-      "t_timestamp\030\006 \001(\004\022\016\n\006zoneid\030\007 \001(\r\022=\n\004dat"
-      "a\030\010 \001(\0132/.NFMsg.respone_select_zone_resp"
-      "one.respone_data\022\013\n\003uid\030\t \001(\t\032\271\001\n\014respon"
-      "e_data\022\021\n\taccountid\030\001 \001(\004\022\016\n\006gameid\030\002 \001("
-      "\r\022\022\n\ngatewayurl\030\003 \001(\t\022\025\n\rgatewayurltcp\030\004"
-      " \001(\t\022\024\n\014gatewayurlws\030\005 \001(\t\022\023\n\013logintempi"
-      "d\030\006 \001(\r\022\017\n\007tokenid\030\007 \001(\004\022\016\n\006zoneid\030\010 \001(\r"
-      "\022\017\n\007zoneuid\030\t \001(\004b\006proto3"
+      "\n\017login_msg.proto\022\005NFMsg\"\233\001\n\014LoginAccoun"
+      "t\022\017\n\007account\030\001 \001(\t\022\013\n\003uid\030\002 \001(\004\022\017\n\007openk"
+      "ey\030\003 \001(\t\022\016\n\006platid\030\004 \001(\r\022\016\n\006gameid\030\005 \001(\r"
+      "\022\016\n\006zoneid\030\006 \001(\r\022\024\n\014md5_plat_key\030\007 \001(\t\022\026"
+      "\n\016md5_plat_login\030\010 \001(\t\"\034\n\016http_login_cmd"
+      "\022\n\n\002do\030\001 \001(\t\"(\n\026reqeust_zone_list_data\022\016"
+      "\n\006gameid\030\001 \001(\r\"L\n\021reqeust_zone_list\022\n\n\002d"
+      "o\030\001 \001(\t\022+\n\004data\030\002 \001(\0132\035.NFMsg.reqeust_zo"
+      "ne_list_data\"\330\003\n\031reqeust_zone_list_respo"
+      "ne\022\n\n\002do\030\001 \001(\t\022\r\n\005error\030\002 \001(\t\022\n\n\002st\030\003 \001("
+      "\004\022;\n\004data\030\004 \001(\0132-.NFMsg.reqeust_zone_lis"
+      "t_respone.respone_data\032\326\002\n\014respone_data\022"
+      "\022\n\nbestzoneid\030\001 \001(\r\022\016\n\006gameid\030\002 \001(\r\022\020\n\010g"
+      "amename\030\003 \001(\t\022\016\n\006zoneid\030\004 \001(\r\022X\n\010zonelis"
+      "t\030\005 \003(\0132F.NFMsg.reqeust_zone_list_respon"
+      "e.respone_data.reqeust_zone_list_server\032"
+      "\245\001\n\030reqeust_zone_list_server\022\016\n\006gameid\030\001"
+      " \001(\r\022\020\n\010gamename\030\002 \001(\t\022\021\n\tnewzoneid\030\003 \001("
+      "\r\022\021\n\tonlinenum\030\004 \001(\r\022\020\n\010opentime\030\005 \001(\t\022\r"
+      "\n\005state\030\006 \001(\r\022\016\n\006zoneid\030\007 \001(\r\022\020\n\010zonenam"
+      "e\030\010 \001(\t\"\320\003\n\030plat_token_login_request\022\n\n\002"
+      "do\030\001 \001(\t\022:\n\004data\030\002 \001(\0132,.NFMsg.plat_toke"
+      "n_login_request.request_data\022\016\n\006gameid\030\003"
+      " \001(\r\022\016\n\006zoneid\030\004 \001(\r\022\036\n\026unigame_plat_tim"
+      "estamp\030\005 \001(\004\032\253\002\n\014request_data\022T\n\010platinf"
+      "o\030\001 \001(\0132B.NFMsg.plat_token_login_request"
+      ".request_data.request_data_platinfo\022\016\n\006g"
+      "ameid\030\002 \001(\r\032\264\001\n\025request_data_platinfo\022\013\n"
+      "\003aaa\030\001 \001(\r\022\014\n\004sign\030\002 \001(\t\022\017\n\007account\030\003 \001("
+      "\t\022\r\n\005email\030\004 \001(\t\022\016\n\006platid\030\005 \001(\r\022\016\n\006gend"
+      "er\030\006 \001(\t\022\020\n\010nickname\030\007 \001(\t\022\013\n\003uid\030\010 \001(\t\022"
+      "\016\n\006gameid\030\t \001(\r\022\021\n\ttimestamp\030\n \001(\t\"\313\005\n\030p"
+      "lat_token_login_respone\022\016\n\006gameid\030\001 \001(\r\022"
+      "\030\n\020unigame_plat_key\030\002 \001(\t\022\032\n\022unigame_pla"
+      "t_login\030\003 \001(\t\022\"\n\032unigame_plat_login_time"
+      "out\030\004 \001(\t\022\036\n\026unigame_plat_timestamp\030\005 \001("
+      "\004\022\016\n\006zoneid\030\006 \001(\r\022\n\n\002do\030\007 \001(\t\022:\n\004data\030\010 "
+      "\001(\0132,.NFMsg.plat_token_login_respone.res"
+      "pone_data\032\314\003\n\014respone_data\022\016\n\006gameid\030\001 \001"
+      "(\r\022\013\n\003sid\030\002 \001(\t\022\025\n\rtimezone_name\030\003 \001(\t\022\027"
+      "\n\017timezone_offset\030\004 \001(\r\022\013\n\003uid\030\005 \001(\t\022\030\n\020"
+      "unigame_plat_key\030\006 \001(\t\022\032\n\022unigame_plat_l"
+      "ogin\030\007 \001(\t\022\037\n\027unigame_plat_login_life\030\010 "
+      "\001(\r\022T\n\010platinfo\030\t \001(\0132B.NFMsg.plat_token"
+      "_login_respone.respone_data.respone_data"
+      "_platinfo\032\264\001\n\025respone_data_platinfo\022\013\n\003a"
+      "aa\030\001 \001(\r\022\014\n\004sign\030\002 \001(\t\022\017\n\007account\030\003 \001(\t\022"
+      "\r\n\005email\030\004 \001(\t\022\016\n\006platid\030\005 \001(\r\022\016\n\006gender"
+      "\030\006 \001(\t\022\020\n\010nickname\030\007 \001(\t\022\013\n\003uid\030\010 \001(\t\022\016\n"
+      "\006gameid\030\t \001(\r\022\021\n\ttimestamp\030\n \001(\t\"\222\001\n\033req"
+      "eust_select_zone_request\022\n\n\002do\030\001 \001(\t\022\016\n\006"
+      "gameid\030\002 \001(\r\022\016\n\006zoneid\030\003 \001(\r\022\013\n\003uid\030\004 \001("
+      "\t\022\032\n\022unigame_plat_login\030\005 \001(\t\022\036\n\026unigame"
+      "_plat_timestamp\030\006 \001(\004\"\251\003\n\033respone_select"
+      "_zone_respone\022\n\n\002do\030\001 \001(\t\022\016\n\006errno_\030\002 \001("
+      "\t\022\016\n\006gameid\030\003 \001(\r\022\n\n\002st\030\004 \001(\004\022\032\n\022unigame"
+      "_plat_login\030\005 \001(\t\022\036\n\026unigame_plat_timest"
+      "amp\030\006 \001(\004\022\016\n\006zoneid\030\007 \001(\r\022=\n\004data\030\010 \001(\0132"
+      "/.NFMsg.respone_select_zone_respone.resp"
+      "one_data\022\013\n\003uid\030\t \001(\t\032\271\001\n\014respone_data\022\021"
+      "\n\taccountid\030\001 \001(\004\022\016\n\006gameid\030\002 \001(\r\022\022\n\ngat"
+      "ewayurl\030\003 \001(\t\022\025\n\rgatewayurltcp\030\004 \001(\t\022\024\n\014"
+      "gatewayurlws\030\005 \001(\t\022\023\n\013logintempid\030\006 \001(\r\022"
+      "\017\n\007tokenid\030\007 \001(\004\022\016\n\006zoneid\030\010 \001(\r\022\017\n\007zone"
+      "uid\030\t \001(\004b\006proto3"
   };
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
-      descriptor, 2465);
+      descriptor, 2577);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "login_msg.proto", &protobuf_RegisterTypes);
 }
@@ -686,6 +695,12 @@ void LoginAccount::InitAsDefaultInstance() {
 #if !defined(_MSC_VER) || _MSC_VER >= 1900
 const int LoginAccount::kAccountFieldNumber;
 const int LoginAccount::kUidFieldNumber;
+const int LoginAccount::kOpenkeyFieldNumber;
+const int LoginAccount::kPlatidFieldNumber;
+const int LoginAccount::kGameidFieldNumber;
+const int LoginAccount::kZoneidFieldNumber;
+const int LoginAccount::kMd5PlatKeyFieldNumber;
+const int LoginAccount::kMd5PlatLoginFieldNumber;
 #endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
 
 LoginAccount::LoginAccount()
@@ -703,13 +718,32 @@ LoginAccount::LoginAccount(const LoginAccount& from)
   if (from.account().size() > 0) {
     account_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.account_);
   }
-  uid_ = from.uid_;
+  openkey_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  if (from.openkey().size() > 0) {
+    openkey_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.openkey_);
+  }
+  md5_plat_key_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  if (from.md5_plat_key().size() > 0) {
+    md5_plat_key_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.md5_plat_key_);
+  }
+  md5_plat_login_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  if (from.md5_plat_login().size() > 0) {
+    md5_plat_login_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.md5_plat_login_);
+  }
+  ::memcpy(&uid_, &from.uid_,
+    static_cast<size_t>(reinterpret_cast<char*>(&zoneid_) -
+    reinterpret_cast<char*>(&uid_)) + sizeof(zoneid_));
   // @@protoc_insertion_point(copy_constructor:NFMsg.LoginAccount)
 }
 
 void LoginAccount::SharedCtor() {
   account_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-  uid_ = GOOGLE_ULONGLONG(0);
+  openkey_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  md5_plat_key_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  md5_plat_login_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  ::memset(&uid_, 0, static_cast<size_t>(
+      reinterpret_cast<char*>(&zoneid_) -
+      reinterpret_cast<char*>(&uid_)) + sizeof(zoneid_));
 }
 
 LoginAccount::~LoginAccount() {
@@ -719,6 +753,9 @@ LoginAccount::~LoginAccount() {
 
 void LoginAccount::SharedDtor() {
   account_.DestroyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  openkey_.DestroyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  md5_plat_key_.DestroyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  md5_plat_login_.DestroyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
 
 void LoginAccount::SetCachedSize(int size) const {
@@ -742,7 +779,12 @@ void LoginAccount::Clear() {
   (void) cached_has_bits;
 
   account_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-  uid_ = GOOGLE_ULONGLONG(0);
+  openkey_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  md5_plat_key_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  md5_plat_login_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  ::memset(&uid_, 0, static_cast<size_t>(
+      reinterpret_cast<char*>(&zoneid_) -
+      reinterpret_cast<char*>(&uid_)) + sizeof(zoneid_));
   _internal_metadata_.Clear();
 }
 
@@ -780,6 +822,96 @@ bool LoginAccount::MergePartialFromCodedStream(
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::uint64, ::google::protobuf::internal::WireFormatLite::TYPE_UINT64>(
                  input, &uid_)));
+        } else {
+          goto handle_unusual;
+        }
+        break;
+      }
+
+      // string openkey = 3;
+      case 3: {
+        if (static_cast< ::google::protobuf::uint8>(tag) ==
+            static_cast< ::google::protobuf::uint8>(26u /* 26 & 0xFF */)) {
+          DO_(::google::protobuf::internal::WireFormatLite::ReadString(
+                input, this->mutable_openkey()));
+          DO_(::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+            this->openkey().data(), static_cast<int>(this->openkey().length()),
+            ::google::protobuf::internal::WireFormatLite::PARSE,
+            "NFMsg.LoginAccount.openkey"));
+        } else {
+          goto handle_unusual;
+        }
+        break;
+      }
+
+      // uint32 platid = 4;
+      case 4: {
+        if (static_cast< ::google::protobuf::uint8>(tag) ==
+            static_cast< ::google::protobuf::uint8>(32u /* 32 & 0xFF */)) {
+
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                 input, &platid_)));
+        } else {
+          goto handle_unusual;
+        }
+        break;
+      }
+
+      // uint32 gameid = 5;
+      case 5: {
+        if (static_cast< ::google::protobuf::uint8>(tag) ==
+            static_cast< ::google::protobuf::uint8>(40u /* 40 & 0xFF */)) {
+
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                 input, &gameid_)));
+        } else {
+          goto handle_unusual;
+        }
+        break;
+      }
+
+      // uint32 zoneid = 6;
+      case 6: {
+        if (static_cast< ::google::protobuf::uint8>(tag) ==
+            static_cast< ::google::protobuf::uint8>(48u /* 48 & 0xFF */)) {
+
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                 input, &zoneid_)));
+        } else {
+          goto handle_unusual;
+        }
+        break;
+      }
+
+      // string md5_plat_key = 7;
+      case 7: {
+        if (static_cast< ::google::protobuf::uint8>(tag) ==
+            static_cast< ::google::protobuf::uint8>(58u /* 58 & 0xFF */)) {
+          DO_(::google::protobuf::internal::WireFormatLite::ReadString(
+                input, this->mutable_md5_plat_key()));
+          DO_(::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+            this->md5_plat_key().data(), static_cast<int>(this->md5_plat_key().length()),
+            ::google::protobuf::internal::WireFormatLite::PARSE,
+            "NFMsg.LoginAccount.md5_plat_key"));
+        } else {
+          goto handle_unusual;
+        }
+        break;
+      }
+
+      // string md5_plat_login = 8;
+      case 8: {
+        if (static_cast< ::google::protobuf::uint8>(tag) ==
+            static_cast< ::google::protobuf::uint8>(66u /* 66 & 0xFF */)) {
+          DO_(::google::protobuf::internal::WireFormatLite::ReadString(
+                input, this->mutable_md5_plat_login()));
+          DO_(::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+            this->md5_plat_login().data(), static_cast<int>(this->md5_plat_login().length()),
+            ::google::protobuf::internal::WireFormatLite::PARSE,
+            "NFMsg.LoginAccount.md5_plat_login"));
         } else {
           goto handle_unusual;
         }
@@ -827,6 +959,51 @@ void LoginAccount::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteUInt64(2, this->uid(), output);
   }
 
+  // string openkey = 3;
+  if (this->openkey().size() > 0) {
+    ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+      this->openkey().data(), static_cast<int>(this->openkey().length()),
+      ::google::protobuf::internal::WireFormatLite::SERIALIZE,
+      "NFMsg.LoginAccount.openkey");
+    ::google::protobuf::internal::WireFormatLite::WriteStringMaybeAliased(
+      3, this->openkey(), output);
+  }
+
+  // uint32 platid = 4;
+  if (this->platid() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(4, this->platid(), output);
+  }
+
+  // uint32 gameid = 5;
+  if (this->gameid() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(5, this->gameid(), output);
+  }
+
+  // uint32 zoneid = 6;
+  if (this->zoneid() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(6, this->zoneid(), output);
+  }
+
+  // string md5_plat_key = 7;
+  if (this->md5_plat_key().size() > 0) {
+    ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+      this->md5_plat_key().data(), static_cast<int>(this->md5_plat_key().length()),
+      ::google::protobuf::internal::WireFormatLite::SERIALIZE,
+      "NFMsg.LoginAccount.md5_plat_key");
+    ::google::protobuf::internal::WireFormatLite::WriteStringMaybeAliased(
+      7, this->md5_plat_key(), output);
+  }
+
+  // string md5_plat_login = 8;
+  if (this->md5_plat_login().size() > 0) {
+    ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+      this->md5_plat_login().data(), static_cast<int>(this->md5_plat_login().length()),
+      ::google::protobuf::internal::WireFormatLite::SERIALIZE,
+      "NFMsg.LoginAccount.md5_plat_login");
+    ::google::protobuf::internal::WireFormatLite::WriteStringMaybeAliased(
+      8, this->md5_plat_login(), output);
+  }
+
   if ((_internal_metadata_.have_unknown_fields() &&  ::google::protobuf::internal::GetProto3PreserveUnknownsDefault())) {
     ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
         (::google::protobuf::internal::GetProto3PreserveUnknownsDefault()   ? _internal_metadata_.unknown_fields()   : _internal_metadata_.default_instance()), output);
@@ -857,6 +1034,54 @@ void LoginAccount::SerializeWithCachedSizes(
     target = ::google::protobuf::internal::WireFormatLite::WriteUInt64ToArray(2, this->uid(), target);
   }
 
+  // string openkey = 3;
+  if (this->openkey().size() > 0) {
+    ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+      this->openkey().data(), static_cast<int>(this->openkey().length()),
+      ::google::protobuf::internal::WireFormatLite::SERIALIZE,
+      "NFMsg.LoginAccount.openkey");
+    target =
+      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
+        3, this->openkey(), target);
+  }
+
+  // uint32 platid = 4;
+  if (this->platid() != 0) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(4, this->platid(), target);
+  }
+
+  // uint32 gameid = 5;
+  if (this->gameid() != 0) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(5, this->gameid(), target);
+  }
+
+  // uint32 zoneid = 6;
+  if (this->zoneid() != 0) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(6, this->zoneid(), target);
+  }
+
+  // string md5_plat_key = 7;
+  if (this->md5_plat_key().size() > 0) {
+    ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+      this->md5_plat_key().data(), static_cast<int>(this->md5_plat_key().length()),
+      ::google::protobuf::internal::WireFormatLite::SERIALIZE,
+      "NFMsg.LoginAccount.md5_plat_key");
+    target =
+      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
+        7, this->md5_plat_key(), target);
+  }
+
+  // string md5_plat_login = 8;
+  if (this->md5_plat_login().size() > 0) {
+    ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+      this->md5_plat_login().data(), static_cast<int>(this->md5_plat_login().length()),
+      ::google::protobuf::internal::WireFormatLite::SERIALIZE,
+      "NFMsg.LoginAccount.md5_plat_login");
+    target =
+      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
+        8, this->md5_plat_login(), target);
+  }
+
   if ((_internal_metadata_.have_unknown_fields() &&  ::google::protobuf::internal::GetProto3PreserveUnknownsDefault())) {
     target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
         (::google::protobuf::internal::GetProto3PreserveUnknownsDefault()   ? _internal_metadata_.unknown_fields()   : _internal_metadata_.default_instance()), target);
@@ -881,11 +1106,53 @@ size_t LoginAccount::ByteSizeLong() const {
         this->account());
   }
 
+  // string openkey = 3;
+  if (this->openkey().size() > 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::StringSize(
+        this->openkey());
+  }
+
+  // string md5_plat_key = 7;
+  if (this->md5_plat_key().size() > 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::StringSize(
+        this->md5_plat_key());
+  }
+
+  // string md5_plat_login = 8;
+  if (this->md5_plat_login().size() > 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::StringSize(
+        this->md5_plat_login());
+  }
+
   // uint64 uid = 2;
   if (this->uid() != 0) {
     total_size += 1 +
       ::google::protobuf::internal::WireFormatLite::UInt64Size(
         this->uid());
+  }
+
+  // uint32 platid = 4;
+  if (this->platid() != 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::UInt32Size(
+        this->platid());
+  }
+
+  // uint32 gameid = 5;
+  if (this->gameid() != 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::UInt32Size(
+        this->gameid());
+  }
+
+  // uint32 zoneid = 6;
+  if (this->zoneid() != 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::UInt32Size(
+        this->zoneid());
   }
 
   int cached_size = ::google::protobuf::internal::ToCachedSize(total_size);
@@ -919,8 +1186,29 @@ void LoginAccount::MergeFrom(const LoginAccount& from) {
 
     account_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.account_);
   }
+  if (from.openkey().size() > 0) {
+
+    openkey_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.openkey_);
+  }
+  if (from.md5_plat_key().size() > 0) {
+
+    md5_plat_key_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.md5_plat_key_);
+  }
+  if (from.md5_plat_login().size() > 0) {
+
+    md5_plat_login_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.md5_plat_login_);
+  }
   if (from.uid() != 0) {
     set_uid(from.uid());
+  }
+  if (from.platid() != 0) {
+    set_platid(from.platid());
+  }
+  if (from.gameid() != 0) {
+    set_gameid(from.gameid());
+  }
+  if (from.zoneid() != 0) {
+    set_zoneid(from.zoneid());
   }
 }
 
@@ -950,7 +1238,16 @@ void LoginAccount::InternalSwap(LoginAccount* other) {
   using std::swap;
   account_.Swap(&other->account_, &::google::protobuf::internal::GetEmptyStringAlreadyInited(),
     GetArenaNoVirtual());
+  openkey_.Swap(&other->openkey_, &::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+    GetArenaNoVirtual());
+  md5_plat_key_.Swap(&other->md5_plat_key_, &::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+    GetArenaNoVirtual());
+  md5_plat_login_.Swap(&other->md5_plat_login_, &::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+    GetArenaNoVirtual());
   swap(uid_, other->uid_);
+  swap(platid_, other->platid_);
+  swap(gameid_, other->gameid_);
+  swap(zoneid_, other->zoneid_);
   _internal_metadata_.Swap(&other->_internal_metadata_);
 }
 

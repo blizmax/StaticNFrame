@@ -165,12 +165,11 @@ void NFCLoginLogicModule::RequestZoneList(const NFHttpRequest& req, const NFMsg:
 void NFCLoginLogicModule::PlatTokenLogin(const NFHttpRequest& req, const NFMsg::plat_token_login_request& request)
 {
 	std::string account = request.data().platinfo().account();
-	std::string sign = request.data().platinfo().sign();
+	std::string openkey = request.data().platinfo().sign();
+	uint32_t platid = request.data().platinfo().platid();
 	uint32_t gameid = request.gameid();
 	uint32_t zoneid = request.zoneid();
 	uint64_t nowTime = pPluginManager->GetNowTime() / 1000;
-	std::string plat_key = NFMD5::md5str(sign + account + NFCommon::tostr(nowTime));
-	std::string plat_login = NFMD5::md5str(sign + account + NFCommon::tostr(nowTime));
 
 	NFMsg::LoginAccount* pAccount = GetLoginAccount(account);
 	if (pAccount == nullptr) return;
@@ -179,6 +178,16 @@ void NFCLoginLogicModule::PlatTokenLogin(const NFHttpRequest& req, const NFMsg::
 
 	uint32_t plat_login_timeout = 2592000;
 	uint64_t uuid = pAccount->uid();
+
+	std::string plat_key = NFMD5::md5str(lexical_cast<std::string>(uuid));
+	std::string plat_login = NFMD5::md5str(lexical_cast<std::string>(uuid));
+
+	pAccount->set_openkey(openkey);
+	pAccount->set_platid(platid);
+	pAccount->set_gameid(gameid);
+	pAccount->set_zoneid(zoneid);
+	pAccount->set_md5_plat_key(plat_key);
+	pAccount->set_md5_plat_login(plat_login);
 
 	NFMsg::plat_token_login_respone respone;
 	respone.set_gameid(request.gameid());
@@ -190,7 +199,7 @@ void NFCLoginLogicModule::PlatTokenLogin(const NFHttpRequest& req, const NFMsg::
 	respone.set_do_(request.do_());
 	auto pData = respone.mutable_data();
 	pData->set_gameid(request.gameid());
-	pData->set_sid(sign + "::" + account);
+	pData->set_sid(openkey + "::" + account);
 	pData->set_timezone_name("CST");
 	pData->set_timezone_offset(28800);
 	pData->set_uid(NFCommon::tostr(uuid));

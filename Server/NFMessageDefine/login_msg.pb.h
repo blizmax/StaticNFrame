@@ -220,18 +220,84 @@ class LoginAccount : public ::google::protobuf::Message /* @@protoc_insertion_po
   ::std::string* release_account();
   void set_allocated_account(::std::string* account);
 
+  // string openkey = 3;
+  void clear_openkey();
+  static const int kOpenkeyFieldNumber = 3;
+  const ::std::string& openkey() const;
+  void set_openkey(const ::std::string& value);
+  #if LANG_CXX11
+  void set_openkey(::std::string&& value);
+  #endif
+  void set_openkey(const char* value);
+  void set_openkey(const char* value, size_t size);
+  ::std::string* mutable_openkey();
+  ::std::string* release_openkey();
+  void set_allocated_openkey(::std::string* openkey);
+
+  // string md5_plat_key = 7;
+  void clear_md5_plat_key();
+  static const int kMd5PlatKeyFieldNumber = 7;
+  const ::std::string& md5_plat_key() const;
+  void set_md5_plat_key(const ::std::string& value);
+  #if LANG_CXX11
+  void set_md5_plat_key(::std::string&& value);
+  #endif
+  void set_md5_plat_key(const char* value);
+  void set_md5_plat_key(const char* value, size_t size);
+  ::std::string* mutable_md5_plat_key();
+  ::std::string* release_md5_plat_key();
+  void set_allocated_md5_plat_key(::std::string* md5_plat_key);
+
+  // string md5_plat_login = 8;
+  void clear_md5_plat_login();
+  static const int kMd5PlatLoginFieldNumber = 8;
+  const ::std::string& md5_plat_login() const;
+  void set_md5_plat_login(const ::std::string& value);
+  #if LANG_CXX11
+  void set_md5_plat_login(::std::string&& value);
+  #endif
+  void set_md5_plat_login(const char* value);
+  void set_md5_plat_login(const char* value, size_t size);
+  ::std::string* mutable_md5_plat_login();
+  ::std::string* release_md5_plat_login();
+  void set_allocated_md5_plat_login(::std::string* md5_plat_login);
+
   // uint64 uid = 2;
   void clear_uid();
   static const int kUidFieldNumber = 2;
   ::google::protobuf::uint64 uid() const;
   void set_uid(::google::protobuf::uint64 value);
 
+  // uint32 platid = 4;
+  void clear_platid();
+  static const int kPlatidFieldNumber = 4;
+  ::google::protobuf::uint32 platid() const;
+  void set_platid(::google::protobuf::uint32 value);
+
+  // uint32 gameid = 5;
+  void clear_gameid();
+  static const int kGameidFieldNumber = 5;
+  ::google::protobuf::uint32 gameid() const;
+  void set_gameid(::google::protobuf::uint32 value);
+
+  // uint32 zoneid = 6;
+  void clear_zoneid();
+  static const int kZoneidFieldNumber = 6;
+  ::google::protobuf::uint32 zoneid() const;
+  void set_zoneid(::google::protobuf::uint32 value);
+
   // @@protoc_insertion_point(class_scope:NFMsg.LoginAccount)
  private:
 
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
   ::google::protobuf::internal::ArenaStringPtr account_;
+  ::google::protobuf::internal::ArenaStringPtr openkey_;
+  ::google::protobuf::internal::ArenaStringPtr md5_plat_key_;
+  ::google::protobuf::internal::ArenaStringPtr md5_plat_login_;
   ::google::protobuf::uint64 uid_;
+  ::google::protobuf::uint32 platid_;
+  ::google::protobuf::uint32 gameid_;
+  ::google::protobuf::uint32 zoneid_;
   mutable ::google::protobuf::internal::CachedSize _cached_size_;
   friend struct ::protobuf_login_5fmsg_2eproto::TableStruct;
 };
@@ -2772,6 +2838,207 @@ inline void LoginAccount::set_uid(::google::protobuf::uint64 value) {
   
   uid_ = value;
   // @@protoc_insertion_point(field_set:NFMsg.LoginAccount.uid)
+}
+
+// string openkey = 3;
+inline void LoginAccount::clear_openkey() {
+  openkey_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline const ::std::string& LoginAccount::openkey() const {
+  // @@protoc_insertion_point(field_get:NFMsg.LoginAccount.openkey)
+  return openkey_.GetNoArena();
+}
+inline void LoginAccount::set_openkey(const ::std::string& value) {
+  
+  openkey_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:NFMsg.LoginAccount.openkey)
+}
+#if LANG_CXX11
+inline void LoginAccount::set_openkey(::std::string&& value) {
+  
+  openkey_.SetNoArena(
+    &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+  // @@protoc_insertion_point(field_set_rvalue:NFMsg.LoginAccount.openkey)
+}
+#endif
+inline void LoginAccount::set_openkey(const char* value) {
+  GOOGLE_DCHECK(value != NULL);
+  
+  openkey_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:NFMsg.LoginAccount.openkey)
+}
+inline void LoginAccount::set_openkey(const char* value, size_t size) {
+  
+  openkey_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:NFMsg.LoginAccount.openkey)
+}
+inline ::std::string* LoginAccount::mutable_openkey() {
+  
+  // @@protoc_insertion_point(field_mutable:NFMsg.LoginAccount.openkey)
+  return openkey_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline ::std::string* LoginAccount::release_openkey() {
+  // @@protoc_insertion_point(field_release:NFMsg.LoginAccount.openkey)
+  
+  return openkey_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline void LoginAccount::set_allocated_openkey(::std::string* openkey) {
+  if (openkey != NULL) {
+    
+  } else {
+    
+  }
+  openkey_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), openkey);
+  // @@protoc_insertion_point(field_set_allocated:NFMsg.LoginAccount.openkey)
+}
+
+// uint32 platid = 4;
+inline void LoginAccount::clear_platid() {
+  platid_ = 0u;
+}
+inline ::google::protobuf::uint32 LoginAccount::platid() const {
+  // @@protoc_insertion_point(field_get:NFMsg.LoginAccount.platid)
+  return platid_;
+}
+inline void LoginAccount::set_platid(::google::protobuf::uint32 value) {
+  
+  platid_ = value;
+  // @@protoc_insertion_point(field_set:NFMsg.LoginAccount.platid)
+}
+
+// uint32 gameid = 5;
+inline void LoginAccount::clear_gameid() {
+  gameid_ = 0u;
+}
+inline ::google::protobuf::uint32 LoginAccount::gameid() const {
+  // @@protoc_insertion_point(field_get:NFMsg.LoginAccount.gameid)
+  return gameid_;
+}
+inline void LoginAccount::set_gameid(::google::protobuf::uint32 value) {
+  
+  gameid_ = value;
+  // @@protoc_insertion_point(field_set:NFMsg.LoginAccount.gameid)
+}
+
+// uint32 zoneid = 6;
+inline void LoginAccount::clear_zoneid() {
+  zoneid_ = 0u;
+}
+inline ::google::protobuf::uint32 LoginAccount::zoneid() const {
+  // @@protoc_insertion_point(field_get:NFMsg.LoginAccount.zoneid)
+  return zoneid_;
+}
+inline void LoginAccount::set_zoneid(::google::protobuf::uint32 value) {
+  
+  zoneid_ = value;
+  // @@protoc_insertion_point(field_set:NFMsg.LoginAccount.zoneid)
+}
+
+// string md5_plat_key = 7;
+inline void LoginAccount::clear_md5_plat_key() {
+  md5_plat_key_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline const ::std::string& LoginAccount::md5_plat_key() const {
+  // @@protoc_insertion_point(field_get:NFMsg.LoginAccount.md5_plat_key)
+  return md5_plat_key_.GetNoArena();
+}
+inline void LoginAccount::set_md5_plat_key(const ::std::string& value) {
+  
+  md5_plat_key_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:NFMsg.LoginAccount.md5_plat_key)
+}
+#if LANG_CXX11
+inline void LoginAccount::set_md5_plat_key(::std::string&& value) {
+  
+  md5_plat_key_.SetNoArena(
+    &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+  // @@protoc_insertion_point(field_set_rvalue:NFMsg.LoginAccount.md5_plat_key)
+}
+#endif
+inline void LoginAccount::set_md5_plat_key(const char* value) {
+  GOOGLE_DCHECK(value != NULL);
+  
+  md5_plat_key_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:NFMsg.LoginAccount.md5_plat_key)
+}
+inline void LoginAccount::set_md5_plat_key(const char* value, size_t size) {
+  
+  md5_plat_key_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:NFMsg.LoginAccount.md5_plat_key)
+}
+inline ::std::string* LoginAccount::mutable_md5_plat_key() {
+  
+  // @@protoc_insertion_point(field_mutable:NFMsg.LoginAccount.md5_plat_key)
+  return md5_plat_key_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline ::std::string* LoginAccount::release_md5_plat_key() {
+  // @@protoc_insertion_point(field_release:NFMsg.LoginAccount.md5_plat_key)
+  
+  return md5_plat_key_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline void LoginAccount::set_allocated_md5_plat_key(::std::string* md5_plat_key) {
+  if (md5_plat_key != NULL) {
+    
+  } else {
+    
+  }
+  md5_plat_key_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), md5_plat_key);
+  // @@protoc_insertion_point(field_set_allocated:NFMsg.LoginAccount.md5_plat_key)
+}
+
+// string md5_plat_login = 8;
+inline void LoginAccount::clear_md5_plat_login() {
+  md5_plat_login_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline const ::std::string& LoginAccount::md5_plat_login() const {
+  // @@protoc_insertion_point(field_get:NFMsg.LoginAccount.md5_plat_login)
+  return md5_plat_login_.GetNoArena();
+}
+inline void LoginAccount::set_md5_plat_login(const ::std::string& value) {
+  
+  md5_plat_login_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:NFMsg.LoginAccount.md5_plat_login)
+}
+#if LANG_CXX11
+inline void LoginAccount::set_md5_plat_login(::std::string&& value) {
+  
+  md5_plat_login_.SetNoArena(
+    &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+  // @@protoc_insertion_point(field_set_rvalue:NFMsg.LoginAccount.md5_plat_login)
+}
+#endif
+inline void LoginAccount::set_md5_plat_login(const char* value) {
+  GOOGLE_DCHECK(value != NULL);
+  
+  md5_plat_login_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:NFMsg.LoginAccount.md5_plat_login)
+}
+inline void LoginAccount::set_md5_plat_login(const char* value, size_t size) {
+  
+  md5_plat_login_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:NFMsg.LoginAccount.md5_plat_login)
+}
+inline ::std::string* LoginAccount::mutable_md5_plat_login() {
+  
+  // @@protoc_insertion_point(field_mutable:NFMsg.LoginAccount.md5_plat_login)
+  return md5_plat_login_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline ::std::string* LoginAccount::release_md5_plat_login() {
+  // @@protoc_insertion_point(field_release:NFMsg.LoginAccount.md5_plat_login)
+  
+  return md5_plat_login_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline void LoginAccount::set_allocated_md5_plat_login(::std::string* md5_plat_login) {
+  if (md5_plat_login != NULL) {
+    
+  } else {
+    
+  }
+  md5_plat_login_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), md5_plat_login);
+  // @@protoc_insertion_point(field_set_allocated:NFMsg.LoginAccount.md5_plat_login)
 }
 
 // -------------------------------------------------------------------

@@ -6,6 +6,12 @@ message LoginAccount
 {
 	string account = 1;
 	uint64 uid = 2;
+	string openkey = 3;
+	uint32 platid = 4;
+	uint32 gameid = 5;
+	uint32 zoneid = 6;
+	string md5_plat_key = 7;
+	string md5_plat_login = 8;
 }
 
 message http_login_cmd
