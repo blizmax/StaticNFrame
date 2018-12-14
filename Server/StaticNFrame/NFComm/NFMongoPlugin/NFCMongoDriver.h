@@ -13,6 +13,9 @@
 #include "NFComm/NFCore/NFMap.hpp"
 #include "NFMessageDefine/NFMsgDefine.h"
 
+#define BSON_STATIC
+#define MONGOC_STATIC
+
 #include "mongoc.h"
 #include "bson.h"
 #include "bcon.h"
