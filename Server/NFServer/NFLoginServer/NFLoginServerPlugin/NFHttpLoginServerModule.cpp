@@ -35,7 +35,7 @@ bool NFCHttpLoginServerModule::Init()
 		if (pConfig->mHttpPort == 0) return true;
 
 		int ret = m_pHttpServerModule->InitServer(NF_ST_LOGIN,pConfig->mHttpPort);
-		if (ret != 0)
+		if (ret == 0)
 		{
 			NFLogError("Login Server Open Http Port:{} Failed!", pConfig->mHttpPort);
 			return false;

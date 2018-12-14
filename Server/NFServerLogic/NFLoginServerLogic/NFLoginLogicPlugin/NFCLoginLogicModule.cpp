@@ -113,43 +113,46 @@ bool NFCLoginLogicModule::HttpHandleHttpLogin(uint32_t linkId, const NFHttpReque
 
 void NFCLoginLogicModule::RequestZoneList(const NFHttpRequest& req, const NFMsg::reqeust_zone_list& httpLogin)
 {
-	auto pServerData = m_pLoginClient_MasterModule->GetRandGameServer();
-	if (pServerData == nullptr)
-	{
-		NFLogError("No Game Server!");
-		return;
-	}
-
-	auto pServerConfig = NFConfigMgr::Instance()->GetServerConfig(pServerData->mServerInfo.server_id());
-	if (pServerConfig == nullptr)
-	{
-		NFLogError("No Game Server Config!");
-		return;
-	}
-
 	uint64_t nowTime = pPluginManager->GetNowTime() / 1000;
-
 	NFMsg::reqeust_zone_list_respone respone;
 	respone.set_do_(httpLogin.do_());
 	respone.set_error("0");
 	respone.set_st(nowTime);
-	auto pData = respone.mutable_data();
-	if (pData)
-	{
-		pData->set_bestzoneid(pServerData->mServerInfo.server_id());
-		pData->set_gameid(pServerConfig->mWorldId);
-		pData->set_gamename(pServerConfig->mServerName);
-		pData->set_zoneid(pServerData->mServerInfo.server_id());
 
-		auto pZone = pData->add_zonelist();
-		pZone->set_gameid(pServerConfig->mWorldId);
-		pZone->set_gamename(pServerConfig->mServerName);
-		pZone->set_newzoneid(0);
-		pZone->set_onlinenum(pServerData->mServerInfo.server_cur_count());
-		pZone->set_opentime("");
-		pZone->set_state(pServerData->mServerInfo.server_state());
-		pZone->set_zoneid(pServerData->mServerInfo.server_id());
-		pZone->set_zonename(pServerData->mServerInfo.server_name());
+	auto vecServerData = m_pLoginClient_MasterModule->GetAllGameServer();
+	for (int i = 0; i < (int)vecServerData.size(); i++)
+	{
+		auto pServerData = vecServerData[i];
+		if (pServerData == nullptr)
+		{
+			continue;
+		}
+
+		auto pServerConfig = NFConfigMgr::Instance()->GetServerConfig(pServerData->mServerInfo.server_id());
+		if (pServerConfig == nullptr)
+		{
+			NFLogError("No Game Server Config!");
+			return;
+		}
+
+		auto pData = respone.mutable_data();
+		if (pData)
+		{
+			pData->set_bestzoneid(pServerData->mServerInfo.server_id());
+			pData->set_gameid(pServerConfig->mWorldId);
+			pData->set_gamename(pServerConfig->mServerName);
+			pData->set_zoneid(pServerData->mServerInfo.server_id());
+
+			auto pZone = pData->add_zonelist();
+			pZone->set_gameid(pServerConfig->mWorldId);
+			pZone->set_gamename(pServerConfig->mServerName);
+			pZone->set_newzoneid(0);
+			pZone->set_onlinenum(pServerData->mServerInfo.server_cur_count());
+			pZone->set_opentime("");
+			pZone->set_state(pServerData->mServerInfo.server_state());
+			pZone->set_zoneid(pServerData->mServerInfo.server_id());
+			pZone->set_zonename(pServerData->mServerInfo.server_name());
+		}
 	}
 
 	std::string responeJson;

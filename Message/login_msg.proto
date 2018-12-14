@@ -37,22 +37,22 @@ message reqeust_zone_list_respone
 		message reqeust_zone_list_server
 		{
 			uint32 gameid = 1;
-			string gamename = 2;
+			bytes gamename = 2;
 			uint32 newzoneid = 3;
 			uint32 onlinenum = 4;
-			string opentime = 5;
+			bytes opentime = 5;
 			uint32 state = 6;
 			uint32 zoneid = 7;
-			string zonename = 8;
+			bytes zonename = 8;
 		}
 		uint32 bestzoneid = 1;
 		uint32 gameid = 2;
-		string gamename = 3;
+		bytes gamename = 3;
 		uint32 zoneid = 4;
 		repeated  reqeust_zone_list_server zonelist = 5;
 	}
 	string do = 1;
-	string error = 2;
+	bytes error = 2;
 	uint64 st = 3;
 	respone_data data = 4;
 }
@@ -69,8 +69,8 @@ message plat_token_login_request
 			string account = 3;
 			string email = 4;
 			uint32 platid = 5;
-			string gender = 6;
-			string nickname = 7;
+			bytes gender = 6;
+			bytes nickname = 7;
 			string uid = 8;
 			uint32 gameid = 9;
 			string timestamp = 10;
@@ -94,11 +94,11 @@ message plat_token_login_respone
 		{
 			uint32 aaa = 1;
 			string sign = 2;
-			string account = 3;
+			bytes account = 3;
 			string email = 4;
 			uint32 platid = 5;
 			string gender = 6;
-			string nickname = 7;
+			bytes nickname = 7;
 			string uid = 8;
 			uint32 gameid = 9;
 			string timestamp = 10;

@@ -612,18 +612,18 @@ void AddDescriptorsImpl() {
       "\n\006gameid\030\001 \001(\r\"L\n\021reqeust_zone_list\022\n\n\002d"
       "o\030\001 \001(\t\022+\n\004data\030\002 \001(\0132\035.NFMsg.reqeust_zo"
       "ne_list_data\"\330\003\n\031reqeust_zone_list_respo"
-      "ne\022\n\n\002do\030\001 \001(\t\022\r\n\005error\030\002 \001(\t\022\n\n\002st\030\003 \001("
+      "ne\022\n\n\002do\030\001 \001(\t\022\r\n\005error\030\002 \001(\014\022\n\n\002st\030\003 \001("
       "\004\022;\n\004data\030\004 \001(\0132-.NFMsg.reqeust_zone_lis"
       "t_respone.respone_data\032\326\002\n\014respone_data\022"
       "\022\n\nbestzoneid\030\001 \001(\r\022\016\n\006gameid\030\002 \001(\r\022\020\n\010g"
-      "amename\030\003 \001(\t\022\016\n\006zoneid\030\004 \001(\r\022X\n\010zonelis"
+      "amename\030\003 \001(\014\022\016\n\006zoneid\030\004 \001(\r\022X\n\010zonelis"
       "t\030\005 \003(\0132F.NFMsg.reqeust_zone_list_respon"
       "e.respone_data.reqeust_zone_list_server\032"
       "\245\001\n\030reqeust_zone_list_server\022\016\n\006gameid\030\001"
-      " \001(\r\022\020\n\010gamename\030\002 \001(\t\022\021\n\tnewzoneid\030\003 \001("
-      "\r\022\021\n\tonlinenum\030\004 \001(\r\022\020\n\010opentime\030\005 \001(\t\022\r"
+      " \001(\r\022\020\n\010gamename\030\002 \001(\014\022\021\n\tnewzoneid\030\003 \001("
+      "\r\022\021\n\tonlinenum\030\004 \001(\r\022\020\n\010opentime\030\005 \001(\014\022\r"
       "\n\005state\030\006 \001(\r\022\016\n\006zoneid\030\007 \001(\r\022\020\n\010zonenam"
-      "e\030\010 \001(\t\"\320\003\n\030plat_token_login_request\022\n\n\002"
+      "e\030\010 \001(\014\"\320\003\n\030plat_token_login_request\022\n\n\002"
       "do\030\001 \001(\t\022:\n\004data\030\002 \001(\0132,.NFMsg.plat_toke"
       "n_login_request.request_data\022\016\n\006gameid\030\003"
       " \001(\r\022\016\n\006zoneid\030\004 \001(\r\022\036\n\026unigame_plat_tim"
@@ -633,7 +633,7 @@ void AddDescriptorsImpl() {
       "ameid\030\002 \001(\r\032\264\001\n\025request_data_platinfo\022\013\n"
       "\003aaa\030\001 \001(\r\022\014\n\004sign\030\002 \001(\t\022\017\n\007account\030\003 \001("
       "\t\022\r\n\005email\030\004 \001(\t\022\016\n\006platid\030\005 \001(\r\022\016\n\006gend"
-      "er\030\006 \001(\t\022\020\n\010nickname\030\007 \001(\t\022\013\n\003uid\030\010 \001(\t\022"
+      "er\030\006 \001(\014\022\020\n\010nickname\030\007 \001(\014\022\013\n\003uid\030\010 \001(\t\022"
       "\016\n\006gameid\030\t \001(\r\022\021\n\ttimestamp\030\n \001(\t\"\313\005\n\030p"
       "lat_token_login_respone\022\016\n\006gameid\030\001 \001(\r\022"
       "\030\n\020unigame_plat_key\030\002 \001(\t\022\032\n\022unigame_pla"
@@ -649,9 +649,9 @@ void AddDescriptorsImpl() {
       "\001(\r\022T\n\010platinfo\030\t \001(\0132B.NFMsg.plat_token"
       "_login_respone.respone_data.respone_data"
       "_platinfo\032\264\001\n\025respone_data_platinfo\022\013\n\003a"
-      "aa\030\001 \001(\r\022\014\n\004sign\030\002 \001(\t\022\017\n\007account\030\003 \001(\t\022"
+      "aa\030\001 \001(\r\022\014\n\004sign\030\002 \001(\t\022\017\n\007account\030\003 \001(\014\022"
       "\r\n\005email\030\004 \001(\t\022\016\n\006platid\030\005 \001(\r\022\016\n\006gender"
-      "\030\006 \001(\t\022\020\n\010nickname\030\007 \001(\t\022\013\n\003uid\030\010 \001(\t\022\016\n"
+      "\030\006 \001(\t\022\020\n\010nickname\030\007 \001(\014\022\013\n\003uid\030\010 \001(\t\022\016\n"
       "\006gameid\030\t \001(\r\022\021\n\ttimestamp\030\n \001(\t\"\222\001\n\033req"
       "eust_select_zone_request\022\n\n\002do\030\001 \001(\t\022\016\n\006"
       "gameid\030\002 \001(\r\022\016\n\006zoneid\030\003 \001(\r\022\013\n\003uid\030\004 \001("
@@ -2131,16 +2131,12 @@ bool reqeust_zone_list_respone_respone_data_reqeust_zone_list_server::MergeParti
         break;
       }
 
-      // string gamename = 2;
+      // bytes gamename = 2;
       case 2: {
         if (static_cast< ::google::protobuf::uint8>(tag) ==
             static_cast< ::google::protobuf::uint8>(18u /* 18 & 0xFF */)) {
-          DO_(::google::protobuf::internal::WireFormatLite::ReadString(
+          DO_(::google::protobuf::internal::WireFormatLite::ReadBytes(
                 input, this->mutable_gamename()));
-          DO_(::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
-            this->gamename().data(), static_cast<int>(this->gamename().length()),
-            ::google::protobuf::internal::WireFormatLite::PARSE,
-            "NFMsg.reqeust_zone_list_respone.respone_data.reqeust_zone_list_server.gamename"));
         } else {
           goto handle_unusual;
         }
@@ -2175,16 +2171,12 @@ bool reqeust_zone_list_respone_respone_data_reqeust_zone_list_server::MergeParti
         break;
       }
 
-      // string opentime = 5;
+      // bytes opentime = 5;
       case 5: {
         if (static_cast< ::google::protobuf::uint8>(tag) ==
             static_cast< ::google::protobuf::uint8>(42u /* 42 & 0xFF */)) {
-          DO_(::google::protobuf::internal::WireFormatLite::ReadString(
+          DO_(::google::protobuf::internal::WireFormatLite::ReadBytes(
                 input, this->mutable_opentime()));
-          DO_(::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
-            this->opentime().data(), static_cast<int>(this->opentime().length()),
-            ::google::protobuf::internal::WireFormatLite::PARSE,
-            "NFMsg.reqeust_zone_list_respone.respone_data.reqeust_zone_list_server.opentime"));
         } else {
           goto handle_unusual;
         }
@@ -2219,16 +2211,12 @@ bool reqeust_zone_list_respone_respone_data_reqeust_zone_list_server::MergeParti
         break;
       }
 
-      // string zonename = 8;
+      // bytes zonename = 8;
       case 8: {
         if (static_cast< ::google::protobuf::uint8>(tag) ==
             static_cast< ::google::protobuf::uint8>(66u /* 66 & 0xFF */)) {
-          DO_(::google::protobuf::internal::WireFormatLite::ReadString(
+          DO_(::google::protobuf::internal::WireFormatLite::ReadBytes(
                 input, this->mutable_zonename()));
-          DO_(::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
-            this->zonename().data(), static_cast<int>(this->zonename().length()),
-            ::google::protobuf::internal::WireFormatLite::PARSE,
-            "NFMsg.reqeust_zone_list_respone.respone_data.reqeust_zone_list_server.zonename"));
         } else {
           goto handle_unusual;
         }
@@ -2266,13 +2254,9 @@ void reqeust_zone_list_respone_respone_data_reqeust_zone_list_server::SerializeW
     ::google::protobuf::internal::WireFormatLite::WriteUInt32(1, this->gameid(), output);
   }
 
-  // string gamename = 2;
+  // bytes gamename = 2;
   if (this->gamename().size() > 0) {
-    ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
-      this->gamename().data(), static_cast<int>(this->gamename().length()),
-      ::google::protobuf::internal::WireFormatLite::SERIALIZE,
-      "NFMsg.reqeust_zone_list_respone.respone_data.reqeust_zone_list_server.gamename");
-    ::google::protobuf::internal::WireFormatLite::WriteStringMaybeAliased(
+    ::google::protobuf::internal::WireFormatLite::WriteBytesMaybeAliased(
       2, this->gamename(), output);
   }
 
@@ -2286,13 +2270,9 @@ void reqeust_zone_list_respone_respone_data_reqeust_zone_list_server::SerializeW
     ::google::protobuf::internal::WireFormatLite::WriteUInt32(4, this->onlinenum(), output);
   }
 
-  // string opentime = 5;
+  // bytes opentime = 5;
   if (this->opentime().size() > 0) {
-    ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
-      this->opentime().data(), static_cast<int>(this->opentime().length()),
-      ::google::protobuf::internal::WireFormatLite::SERIALIZE,
-      "NFMsg.reqeust_zone_list_respone.respone_data.reqeust_zone_list_server.opentime");
-    ::google::protobuf::internal::WireFormatLite::WriteStringMaybeAliased(
+    ::google::protobuf::internal::WireFormatLite::WriteBytesMaybeAliased(
       5, this->opentime(), output);
   }
 
@@ -2306,13 +2286,9 @@ void reqeust_zone_list_respone_respone_data_reqeust_zone_list_server::SerializeW
     ::google::protobuf::internal::WireFormatLite::WriteUInt32(7, this->zoneid(), output);
   }
 
-  // string zonename = 8;
+  // bytes zonename = 8;
   if (this->zonename().size() > 0) {
-    ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
-      this->zonename().data(), static_cast<int>(this->zonename().length()),
-      ::google::protobuf::internal::WireFormatLite::SERIALIZE,
-      "NFMsg.reqeust_zone_list_respone.respone_data.reqeust_zone_list_server.zonename");
-    ::google::protobuf::internal::WireFormatLite::WriteStringMaybeAliased(
+    ::google::protobuf::internal::WireFormatLite::WriteBytesMaybeAliased(
       8, this->zonename(), output);
   }
 
@@ -2335,14 +2311,10 @@ void reqeust_zone_list_respone_respone_data_reqeust_zone_list_server::SerializeW
     target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(1, this->gameid(), target);
   }
 
-  // string gamename = 2;
+  // bytes gamename = 2;
   if (this->gamename().size() > 0) {
-    ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
-      this->gamename().data(), static_cast<int>(this->gamename().length()),
-      ::google::protobuf::internal::WireFormatLite::SERIALIZE,
-      "NFMsg.reqeust_zone_list_respone.respone_data.reqeust_zone_list_server.gamename");
     target =
-      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
+      ::google::protobuf::internal::WireFormatLite::WriteBytesToArray(
         2, this->gamename(), target);
   }
 
@@ -2356,14 +2328,10 @@ void reqeust_zone_list_respone_respone_data_reqeust_zone_list_server::SerializeW
     target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(4, this->onlinenum(), target);
   }
 
-  // string opentime = 5;
+  // bytes opentime = 5;
   if (this->opentime().size() > 0) {
-    ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
-      this->opentime().data(), static_cast<int>(this->opentime().length()),
-      ::google::protobuf::internal::WireFormatLite::SERIALIZE,
-      "NFMsg.reqeust_zone_list_respone.respone_data.reqeust_zone_list_server.opentime");
     target =
-      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
+      ::google::protobuf::internal::WireFormatLite::WriteBytesToArray(
         5, this->opentime(), target);
   }
 
@@ -2377,14 +2345,10 @@ void reqeust_zone_list_respone_respone_data_reqeust_zone_list_server::SerializeW
     target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(7, this->zoneid(), target);
   }
 
-  // string zonename = 8;
+  // bytes zonename = 8;
   if (this->zonename().size() > 0) {
-    ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
-      this->zonename().data(), static_cast<int>(this->zonename().length()),
-      ::google::protobuf::internal::WireFormatLite::SERIALIZE,
-      "NFMsg.reqeust_zone_list_respone.respone_data.reqeust_zone_list_server.zonename");
     target =
-      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
+      ::google::protobuf::internal::WireFormatLite::WriteBytesToArray(
         8, this->zonename(), target);
   }
 
@@ -2405,24 +2369,24 @@ size_t reqeust_zone_list_respone_respone_data_reqeust_zone_list_server::ByteSize
       ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
         (::google::protobuf::internal::GetProto3PreserveUnknownsDefault()   ? _internal_metadata_.unknown_fields()   : _internal_metadata_.default_instance()));
   }
-  // string gamename = 2;
+  // bytes gamename = 2;
   if (this->gamename().size() > 0) {
     total_size += 1 +
-      ::google::protobuf::internal::WireFormatLite::StringSize(
+      ::google::protobuf::internal::WireFormatLite::BytesSize(
         this->gamename());
   }
 
-  // string opentime = 5;
+  // bytes opentime = 5;
   if (this->opentime().size() > 0) {
     total_size += 1 +
-      ::google::protobuf::internal::WireFormatLite::StringSize(
+      ::google::protobuf::internal::WireFormatLite::BytesSize(
         this->opentime());
   }
 
-  // string zonename = 8;
+  // bytes zonename = 8;
   if (this->zonename().size() > 0) {
     total_size += 1 +
-      ::google::protobuf::internal::WireFormatLite::StringSize(
+      ::google::protobuf::internal::WireFormatLite::BytesSize(
         this->zonename());
   }
 
@@ -2677,16 +2641,12 @@ bool reqeust_zone_list_respone_respone_data::MergePartialFromCodedStream(
         break;
       }
 
-      // string gamename = 3;
+      // bytes gamename = 3;
       case 3: {
         if (static_cast< ::google::protobuf::uint8>(tag) ==
             static_cast< ::google::protobuf::uint8>(26u /* 26 & 0xFF */)) {
-          DO_(::google::protobuf::internal::WireFormatLite::ReadString(
+          DO_(::google::protobuf::internal::WireFormatLite::ReadBytes(
                 input, this->mutable_gamename()));
-          DO_(::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
-            this->gamename().data(), static_cast<int>(this->gamename().length()),
-            ::google::protobuf::internal::WireFormatLite::PARSE,
-            "NFMsg.reqeust_zone_list_respone.respone_data.gamename"));
         } else {
           goto handle_unusual;
         }
@@ -2755,13 +2715,9 @@ void reqeust_zone_list_respone_respone_data::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteUInt32(2, this->gameid(), output);
   }
 
-  // string gamename = 3;
+  // bytes gamename = 3;
   if (this->gamename().size() > 0) {
-    ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
-      this->gamename().data(), static_cast<int>(this->gamename().length()),
-      ::google::protobuf::internal::WireFormatLite::SERIALIZE,
-      "NFMsg.reqeust_zone_list_respone.respone_data.gamename");
-    ::google::protobuf::internal::WireFormatLite::WriteStringMaybeAliased(
+    ::google::protobuf::internal::WireFormatLite::WriteBytesMaybeAliased(
       3, this->gamename(), output);
   }
 
@@ -2803,14 +2759,10 @@ void reqeust_zone_list_respone_respone_data::SerializeWithCachedSizes(
     target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(2, this->gameid(), target);
   }
 
-  // string gamename = 3;
+  // bytes gamename = 3;
   if (this->gamename().size() > 0) {
-    ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
-      this->gamename().data(), static_cast<int>(this->gamename().length()),
-      ::google::protobuf::internal::WireFormatLite::SERIALIZE,
-      "NFMsg.reqeust_zone_list_respone.respone_data.gamename");
     target =
-      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
+      ::google::protobuf::internal::WireFormatLite::WriteBytesToArray(
         3, this->gamename(), target);
   }
 
@@ -2855,10 +2807,10 @@ size_t reqeust_zone_list_respone_respone_data::ByteSizeLong() const {
     }
   }
 
-  // string gamename = 3;
+  // bytes gamename = 3;
   if (this->gamename().size() > 0) {
     total_size += 1 +
-      ::google::protobuf::internal::WireFormatLite::StringSize(
+      ::google::protobuf::internal::WireFormatLite::BytesSize(
         this->gamename());
   }
 
@@ -3081,16 +3033,12 @@ bool reqeust_zone_list_respone::MergePartialFromCodedStream(
         break;
       }
 
-      // string error = 2;
+      // bytes error = 2;
       case 2: {
         if (static_cast< ::google::protobuf::uint8>(tag) ==
             static_cast< ::google::protobuf::uint8>(18u /* 18 & 0xFF */)) {
-          DO_(::google::protobuf::internal::WireFormatLite::ReadString(
+          DO_(::google::protobuf::internal::WireFormatLite::ReadBytes(
                 input, this->mutable_error()));
-          DO_(::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
-            this->error().data(), static_cast<int>(this->error().length()),
-            ::google::protobuf::internal::WireFormatLite::PARSE,
-            "NFMsg.reqeust_zone_list_respone.error"));
         } else {
           goto handle_unusual;
         }
@@ -3159,13 +3107,9 @@ void reqeust_zone_list_respone::SerializeWithCachedSizes(
       1, this->do_(), output);
   }
 
-  // string error = 2;
+  // bytes error = 2;
   if (this->error().size() > 0) {
-    ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
-      this->error().data(), static_cast<int>(this->error().length()),
-      ::google::protobuf::internal::WireFormatLite::SERIALIZE,
-      "NFMsg.reqeust_zone_list_respone.error");
-    ::google::protobuf::internal::WireFormatLite::WriteStringMaybeAliased(
+    ::google::protobuf::internal::WireFormatLite::WriteBytesMaybeAliased(
       2, this->error(), output);
   }
 
@@ -3205,14 +3149,10 @@ void reqeust_zone_list_respone::SerializeWithCachedSizes(
         1, this->do_(), target);
   }
 
-  // string error = 2;
+  // bytes error = 2;
   if (this->error().size() > 0) {
-    ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
-      this->error().data(), static_cast<int>(this->error().length()),
-      ::google::protobuf::internal::WireFormatLite::SERIALIZE,
-      "NFMsg.reqeust_zone_list_respone.error");
     target =
-      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
+      ::google::protobuf::internal::WireFormatLite::WriteBytesToArray(
         2, this->error(), target);
   }
 
@@ -3252,10 +3192,10 @@ size_t reqeust_zone_list_respone::ByteSizeLong() const {
         this->do_());
   }
 
-  // string error = 2;
+  // bytes error = 2;
   if (this->error().size() > 0) {
     total_size += 1 +
-      ::google::protobuf::internal::WireFormatLite::StringSize(
+      ::google::protobuf::internal::WireFormatLite::BytesSize(
         this->error());
   }
 
@@ -3564,32 +3504,24 @@ bool plat_token_login_request_request_data_request_data_platinfo::MergePartialFr
         break;
       }
 
-      // string gender = 6;
+      // bytes gender = 6;
       case 6: {
         if (static_cast< ::google::protobuf::uint8>(tag) ==
             static_cast< ::google::protobuf::uint8>(50u /* 50 & 0xFF */)) {
-          DO_(::google::protobuf::internal::WireFormatLite::ReadString(
+          DO_(::google::protobuf::internal::WireFormatLite::ReadBytes(
                 input, this->mutable_gender()));
-          DO_(::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
-            this->gender().data(), static_cast<int>(this->gender().length()),
-            ::google::protobuf::internal::WireFormatLite::PARSE,
-            "NFMsg.plat_token_login_request.request_data.request_data_platinfo.gender"));
         } else {
           goto handle_unusual;
         }
         break;
       }
 
-      // string nickname = 7;
+      // bytes nickname = 7;
       case 7: {
         if (static_cast< ::google::protobuf::uint8>(tag) ==
             static_cast< ::google::protobuf::uint8>(58u /* 58 & 0xFF */)) {
-          DO_(::google::protobuf::internal::WireFormatLite::ReadString(
+          DO_(::google::protobuf::internal::WireFormatLite::ReadBytes(
                 input, this->mutable_nickname()));
-          DO_(::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
-            this->nickname().data(), static_cast<int>(this->nickname().length()),
-            ::google::protobuf::internal::WireFormatLite::PARSE,
-            "NFMsg.plat_token_login_request.request_data.request_data_platinfo.nickname"));
         } else {
           goto handle_unusual;
         }
@@ -3708,23 +3640,15 @@ void plat_token_login_request_request_data_request_data_platinfo::SerializeWithC
     ::google::protobuf::internal::WireFormatLite::WriteUInt32(5, this->platid(), output);
   }
 
-  // string gender = 6;
+  // bytes gender = 6;
   if (this->gender().size() > 0) {
-    ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
-      this->gender().data(), static_cast<int>(this->gender().length()),
-      ::google::protobuf::internal::WireFormatLite::SERIALIZE,
-      "NFMsg.plat_token_login_request.request_data.request_data_platinfo.gender");
-    ::google::protobuf::internal::WireFormatLite::WriteStringMaybeAliased(
+    ::google::protobuf::internal::WireFormatLite::WriteBytesMaybeAliased(
       6, this->gender(), output);
   }
 
-  // string nickname = 7;
+  // bytes nickname = 7;
   if (this->nickname().size() > 0) {
-    ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
-      this->nickname().data(), static_cast<int>(this->nickname().length()),
-      ::google::protobuf::internal::WireFormatLite::SERIALIZE,
-      "NFMsg.plat_token_login_request.request_data.request_data_platinfo.nickname");
-    ::google::protobuf::internal::WireFormatLite::WriteStringMaybeAliased(
+    ::google::protobuf::internal::WireFormatLite::WriteBytesMaybeAliased(
       7, this->nickname(), output);
   }
 
@@ -3810,25 +3734,17 @@ void plat_token_login_request_request_data_request_data_platinfo::SerializeWithC
     target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(5, this->platid(), target);
   }
 
-  // string gender = 6;
+  // bytes gender = 6;
   if (this->gender().size() > 0) {
-    ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
-      this->gender().data(), static_cast<int>(this->gender().length()),
-      ::google::protobuf::internal::WireFormatLite::SERIALIZE,
-      "NFMsg.plat_token_login_request.request_data.request_data_platinfo.gender");
     target =
-      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
+      ::google::protobuf::internal::WireFormatLite::WriteBytesToArray(
         6, this->gender(), target);
   }
 
-  // string nickname = 7;
+  // bytes nickname = 7;
   if (this->nickname().size() > 0) {
-    ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
-      this->nickname().data(), static_cast<int>(this->nickname().length()),
-      ::google::protobuf::internal::WireFormatLite::SERIALIZE,
-      "NFMsg.plat_token_login_request.request_data.request_data_platinfo.nickname");
     target =
-      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
+      ::google::protobuf::internal::WireFormatLite::WriteBytesToArray(
         7, this->nickname(), target);
   }
 
@@ -3897,17 +3813,17 @@ size_t plat_token_login_request_request_data_request_data_platinfo::ByteSizeLong
         this->email());
   }
 
-  // string gender = 6;
+  // bytes gender = 6;
   if (this->gender().size() > 0) {
     total_size += 1 +
-      ::google::protobuf::internal::WireFormatLite::StringSize(
+      ::google::protobuf::internal::WireFormatLite::BytesSize(
         this->gender());
   }
 
-  // string nickname = 7;
+  // bytes nickname = 7;
   if (this->nickname().size() > 0) {
     total_size += 1 +
-      ::google::protobuf::internal::WireFormatLite::StringSize(
+      ::google::protobuf::internal::WireFormatLite::BytesSize(
         this->nickname());
   }
 
@@ -4907,16 +4823,12 @@ bool plat_token_login_respone_respone_data_respone_data_platinfo::MergePartialFr
         break;
       }
 
-      // string account = 3;
+      // bytes account = 3;
       case 3: {
         if (static_cast< ::google::protobuf::uint8>(tag) ==
             static_cast< ::google::protobuf::uint8>(26u /* 26 & 0xFF */)) {
-          DO_(::google::protobuf::internal::WireFormatLite::ReadString(
+          DO_(::google::protobuf::internal::WireFormatLite::ReadBytes(
                 input, this->mutable_account()));
-          DO_(::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
-            this->account().data(), static_cast<int>(this->account().length()),
-            ::google::protobuf::internal::WireFormatLite::PARSE,
-            "NFMsg.plat_token_login_respone.respone_data.respone_data_platinfo.account"));
         } else {
           goto handle_unusual;
         }
@@ -4969,16 +4881,12 @@ bool plat_token_login_respone_respone_data_respone_data_platinfo::MergePartialFr
         break;
       }
 
-      // string nickname = 7;
+      // bytes nickname = 7;
       case 7: {
         if (static_cast< ::google::protobuf::uint8>(tag) ==
             static_cast< ::google::protobuf::uint8>(58u /* 58 & 0xFF */)) {
-          DO_(::google::protobuf::internal::WireFormatLite::ReadString(
+          DO_(::google::protobuf::internal::WireFormatLite::ReadBytes(
                 input, this->mutable_nickname()));
-          DO_(::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
-            this->nickname().data(), static_cast<int>(this->nickname().length()),
-            ::google::protobuf::internal::WireFormatLite::PARSE,
-            "NFMsg.plat_token_login_respone.respone_data.respone_data_platinfo.nickname"));
         } else {
           goto handle_unusual;
         }
@@ -5072,13 +4980,9 @@ void plat_token_login_respone_respone_data_respone_data_platinfo::SerializeWithC
       2, this->sign(), output);
   }
 
-  // string account = 3;
+  // bytes account = 3;
   if (this->account().size() > 0) {
-    ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
-      this->account().data(), static_cast<int>(this->account().length()),
-      ::google::protobuf::internal::WireFormatLite::SERIALIZE,
-      "NFMsg.plat_token_login_respone.respone_data.respone_data_platinfo.account");
-    ::google::protobuf::internal::WireFormatLite::WriteStringMaybeAliased(
+    ::google::protobuf::internal::WireFormatLite::WriteBytesMaybeAliased(
       3, this->account(), output);
   }
 
@@ -5107,13 +5011,9 @@ void plat_token_login_respone_respone_data_respone_data_platinfo::SerializeWithC
       6, this->gender(), output);
   }
 
-  // string nickname = 7;
+  // bytes nickname = 7;
   if (this->nickname().size() > 0) {
-    ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
-      this->nickname().data(), static_cast<int>(this->nickname().length()),
-      ::google::protobuf::internal::WireFormatLite::SERIALIZE,
-      "NFMsg.plat_token_login_respone.respone_data.respone_data_platinfo.nickname");
-    ::google::protobuf::internal::WireFormatLite::WriteStringMaybeAliased(
+    ::google::protobuf::internal::WireFormatLite::WriteBytesMaybeAliased(
       7, this->nickname(), output);
   }
 
@@ -5172,14 +5072,10 @@ void plat_token_login_respone_respone_data_respone_data_platinfo::SerializeWithC
         2, this->sign(), target);
   }
 
-  // string account = 3;
+  // bytes account = 3;
   if (this->account().size() > 0) {
-    ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
-      this->account().data(), static_cast<int>(this->account().length()),
-      ::google::protobuf::internal::WireFormatLite::SERIALIZE,
-      "NFMsg.plat_token_login_respone.respone_data.respone_data_platinfo.account");
     target =
-      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
+      ::google::protobuf::internal::WireFormatLite::WriteBytesToArray(
         3, this->account(), target);
   }
 
@@ -5210,14 +5106,10 @@ void plat_token_login_respone_respone_data_respone_data_platinfo::SerializeWithC
         6, this->gender(), target);
   }
 
-  // string nickname = 7;
+  // bytes nickname = 7;
   if (this->nickname().size() > 0) {
-    ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
-      this->nickname().data(), static_cast<int>(this->nickname().length()),
-      ::google::protobuf::internal::WireFormatLite::SERIALIZE,
-      "NFMsg.plat_token_login_respone.respone_data.respone_data_platinfo.nickname");
     target =
-      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
+      ::google::protobuf::internal::WireFormatLite::WriteBytesToArray(
         7, this->nickname(), target);
   }
 
@@ -5272,10 +5164,10 @@ size_t plat_token_login_respone_respone_data_respone_data_platinfo::ByteSizeLong
         this->sign());
   }
 
-  // string account = 3;
+  // bytes account = 3;
   if (this->account().size() > 0) {
     total_size += 1 +
-      ::google::protobuf::internal::WireFormatLite::StringSize(
+      ::google::protobuf::internal::WireFormatLite::BytesSize(
         this->account());
   }
 
@@ -5293,10 +5185,10 @@ size_t plat_token_login_respone_respone_data_respone_data_platinfo::ByteSizeLong
         this->gender());
   }
 
-  // string nickname = 7;
+  // bytes nickname = 7;
   if (this->nickname().size() > 0) {
     total_size += 1 +
-      ::google::protobuf::internal::WireFormatLite::StringSize(
+      ::google::protobuf::internal::WireFormatLite::BytesSize(
         this->nickname());
   }
 

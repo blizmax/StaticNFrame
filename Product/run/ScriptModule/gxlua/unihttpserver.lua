@@ -39,16 +39,16 @@ setmetatable(HttpServer,
 	end,
 })
 
-function unilight.HttpServerAddRequestHandler(urlPath, requestType, resFunc)
-    return LuaNFrame:HttpServerAddRequestHandler(urlPath, requestType, resFunc)
+function unilight.HttpServerAddRequestHandler(serverType, urlPath, requestType, resFunc)
+    return LuaNFrame:HttpServerAddRequestHandler(serverType, urlPath, requestType, resFunc)
 end
 
-function unilight.HttpServerInitServer(port)
-    return LuaNFrame:HttpServerInitServer(port)
+function unilight.HttpServerInitServer(serverType, port)
+    return LuaNFrame:HttpServerInitServer(serverType, port)
 end
 
-function unilight.HttpServerResponseMsg(req, strMsg, code, reason)
-    return LuaNFrame:HttpServerResponseMsg(req, strMsg, code, reason)
+function unilight.HttpServerResponseMsg(serverType, req, strMsg, code, reason)
+    return LuaNFrame:HttpServerResponseMsg(serverType, req, strMsg, code, reason)
 end
 
 --C++将调用这个函数作为httpserver回调

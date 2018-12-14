@@ -96,7 +96,7 @@ int NFCHttpServerModule::InitServer(NF_SERVER_TYPES serverType, uint32_t nPort)
 
 		NFCHttpServer* pHttpServer = new NFCHttpServer(serverType, this, &NFCHttpServerModule::OnReceiveNetPack, &NFCHttpServerModule::OnFilterPack);
 
-		if (pHttpServer->InitServer(nPort))
+		if (pHttpServer->InitServer(nPort) == 0)
 		{
 			mServerArray[serverType] = pHttpServer;
 			return serverType;

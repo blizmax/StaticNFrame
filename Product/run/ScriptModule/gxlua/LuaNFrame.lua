@@ -460,24 +460,24 @@ function LuaNFrame:HttpClientRequestPost(url, resFunc, body, heads, para)
     self.httpClientModule:HttpRequestPost(url, jsonbody, resFunc, jsonHeaders, callbackpara)
 end
 
-function LuaNFrame:HttpServerAddRequestHandler(urlPath, requestType, resFunc)
-	if type(resFunc) ~= "string" or type(urlPath) ~= "string" or type(requestType) ~= "number"then
+function LuaNFrame:HttpServerAddRequestHandler(serverType, urlPath, requestType, resFunc)
+	if type(serverType) ~= "number" or type(resFunc) ~= "string" or type(urlPath) ~= "string" or type(requestType) ~= "number"then
 		unilight.error("HttpServerAddRequestHandler params error" .. resFunc .. urlPath)
 		return
     end
-    self.httpServerModule:AddRequestHandler(urlPath, requestType, resFunc)
+    self.httpServerModule:AddRequestHandler(serverType, urlPath, requestType, resFunc)
 end
 
-function LuaNFrame:HttpServerInitServer(port)
-    if type(port) ~= "number" then
+function LuaNFrame:HttpServerInitServer(serverType, port)
+    if type(serverType) ~= "number" or type(port) ~= "number" then
         unilight.error("HttpServerInitServer failed, port is not number:"..port)
     end
 
     self.httpServerModule:InitServer(port)
 end
 
-function LuaNFrame:HttpServerResponseMsg(req, strMsg, code, reason)
-    if type(strMsg) ~= "string" or type(code) ~= "number" or type(reason) ~= "string" then
+function LuaNFrame:HttpServerResponseMsg(serverType, req, strMsg, code, reason)
+    if type(serverType) ~= "number" or type(strMsg) ~= "string" or type(code) ~= "number" or type(reason) ~= "string" then
         unilight.error("HttpServerResponseMsg failed")
     end
 

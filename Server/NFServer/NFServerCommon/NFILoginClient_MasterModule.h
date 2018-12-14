@@ -30,4 +30,6 @@ public:
 
 	virtual NF_SHARE_PTR<NFServerData> GetProxyServerByServerId(uint32_t serverId) = 0;
 	virtual NF_SHARE_PTR<NFServerData> GetGameServerByServerId(uint32_t serverId) = 0;
+
+	virtual std::vector<NF_SHARE_PTR<NFServerData>> GetAllGameServer() = 0;
 };

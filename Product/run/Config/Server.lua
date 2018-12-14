@@ -11,7 +11,8 @@ MasterIP = "45.32.39.90";
 --MasterIP = "192.168.52.42";
 MasterPort = 5501;
 
-ZoneIP = "192.168.52.42"
+--ZoneIP = "192.168.52.42"
+ZoneIP = "45.32.39.90"
 
 Server = {
 
