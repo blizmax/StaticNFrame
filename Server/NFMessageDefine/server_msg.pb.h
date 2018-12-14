@@ -175,7 +175,7 @@ class ServerInfoReport : public ::google::protobuf::Message /* @@protoc_insertio
 
   // accessors -------------------------------------------------------
 
-  // bytes server_name = 2;
+  // string server_name = 2;
   void clear_server_name();
   static const int kServerNameFieldNumber = 2;
   const ::std::string& server_name() const;
@@ -184,7 +184,7 @@ class ServerInfoReport : public ::google::protobuf::Message /* @@protoc_insertio
   void set_server_name(::std::string&& value);
   #endif
   void set_server_name(const char* value);
-  void set_server_name(const void* value, size_t size);
+  void set_server_name(const char* value, size_t size);
   ::std::string* mutable_server_name();
   ::std::string* release_server_name();
   void set_allocated_server_name(::std::string* server_name);
@@ -395,7 +395,7 @@ inline void ServerInfoReport::set_server_id(::google::protobuf::int32 value) {
   // @@protoc_insertion_point(field_set:NFMsg.ServerInfoReport.server_id)
 }
 
-// bytes server_name = 2;
+// string server_name = 2;
 inline void ServerInfoReport::clear_server_name() {
   server_name_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
@@ -422,7 +422,7 @@ inline void ServerInfoReport::set_server_name(const char* value) {
   server_name_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
   // @@protoc_insertion_point(field_set_char:NFMsg.ServerInfoReport.server_name)
 }
-inline void ServerInfoReport::set_server_name(const void* value, size_t size) {
+inline void ServerInfoReport::set_server_name(const char* value, size_t size) {
   
   server_name_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
       ::std::string(reinterpret_cast<const char*>(value), size));

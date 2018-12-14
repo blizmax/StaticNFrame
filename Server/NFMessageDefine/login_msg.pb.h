@@ -728,7 +728,7 @@ class reqeust_zone_list_respone_respone_data_reqeust_zone_list_server : public :
 
   // accessors -------------------------------------------------------
 
-  // bytes gamename = 2;
+  // string gamename = 2;
   void clear_gamename();
   static const int kGamenameFieldNumber = 2;
   const ::std::string& gamename() const;
@@ -737,12 +737,12 @@ class reqeust_zone_list_respone_respone_data_reqeust_zone_list_server : public :
   void set_gamename(::std::string&& value);
   #endif
   void set_gamename(const char* value);
-  void set_gamename(const void* value, size_t size);
+  void set_gamename(const char* value, size_t size);
   ::std::string* mutable_gamename();
   ::std::string* release_gamename();
   void set_allocated_gamename(::std::string* gamename);
 
-  // bytes opentime = 5;
+  // string opentime = 5;
   void clear_opentime();
   static const int kOpentimeFieldNumber = 5;
   const ::std::string& opentime() const;
@@ -751,12 +751,12 @@ class reqeust_zone_list_respone_respone_data_reqeust_zone_list_server : public :
   void set_opentime(::std::string&& value);
   #endif
   void set_opentime(const char* value);
-  void set_opentime(const void* value, size_t size);
+  void set_opentime(const char* value, size_t size);
   ::std::string* mutable_opentime();
   ::std::string* release_opentime();
   void set_allocated_opentime(::std::string* opentime);
 
-  // bytes zonename = 8;
+  // string zonename = 8;
   void clear_zonename();
   static const int kZonenameFieldNumber = 8;
   const ::std::string& zonename() const;
@@ -765,7 +765,7 @@ class reqeust_zone_list_respone_respone_data_reqeust_zone_list_server : public :
   void set_zonename(::std::string&& value);
   #endif
   void set_zonename(const char* value);
-  void set_zonename(const void* value, size_t size);
+  void set_zonename(const char* value, size_t size);
   ::std::string* mutable_zonename();
   ::std::string* release_zonename();
   void set_allocated_zonename(::std::string* zonename);
@@ -918,7 +918,7 @@ class reqeust_zone_list_respone_respone_data : public ::google::protobuf::Messag
   const ::google::protobuf::RepeatedPtrField< ::NFMsg::reqeust_zone_list_respone_respone_data_reqeust_zone_list_server >&
       zonelist() const;
 
-  // bytes gamename = 3;
+  // string gamename = 3;
   void clear_gamename();
   static const int kGamenameFieldNumber = 3;
   const ::std::string& gamename() const;
@@ -927,7 +927,7 @@ class reqeust_zone_list_respone_respone_data : public ::google::protobuf::Messag
   void set_gamename(::std::string&& value);
   #endif
   void set_gamename(const char* value);
-  void set_gamename(const void* value, size_t size);
+  void set_gamename(const char* value, size_t size);
   ::std::string* mutable_gamename();
   ::std::string* release_gamename();
   void set_allocated_gamename(::std::string* gamename);
@@ -1067,7 +1067,7 @@ class reqeust_zone_list_respone : public ::google::protobuf::Message /* @@protoc
   ::std::string* release_do_();
   void set_allocated_do_(::std::string* do_);
 
-  // bytes error = 2;
+  // string error = 2;
   void clear_error();
   static const int kErrorFieldNumber = 2;
   const ::std::string& error() const;
@@ -1076,7 +1076,7 @@ class reqeust_zone_list_respone : public ::google::protobuf::Message /* @@protoc
   void set_error(::std::string&& value);
   #endif
   void set_error(const char* value);
-  void set_error(const void* value, size_t size);
+  void set_error(const char* value, size_t size);
   ::std::string* mutable_error();
   ::std::string* release_error();
   void set_allocated_error(::std::string* error);
@@ -1241,7 +1241,7 @@ class plat_token_login_request_request_data_request_data_platinfo : public ::goo
   ::std::string* release_email();
   void set_allocated_email(::std::string* email);
 
-  // bytes gender = 6;
+  // string gender = 6;
   void clear_gender();
   static const int kGenderFieldNumber = 6;
   const ::std::string& gender() const;
@@ -1250,12 +1250,12 @@ class plat_token_login_request_request_data_request_data_platinfo : public ::goo
   void set_gender(::std::string&& value);
   #endif
   void set_gender(const char* value);
-  void set_gender(const void* value, size_t size);
+  void set_gender(const char* value, size_t size);
   ::std::string* mutable_gender();
   ::std::string* release_gender();
   void set_allocated_gender(::std::string* gender);
 
-  // bytes nickname = 7;
+  // string nickname = 7;
   void clear_nickname();
   static const int kNicknameFieldNumber = 7;
   const ::std::string& nickname() const;
@@ -1264,7 +1264,7 @@ class plat_token_login_request_request_data_request_data_platinfo : public ::goo
   void set_nickname(::std::string&& value);
   #endif
   void set_nickname(const char* value);
-  void set_nickname(const void* value, size_t size);
+  void set_nickname(const char* value, size_t size);
   ::std::string* mutable_nickname();
   ::std::string* release_nickname();
   void set_allocated_nickname(::std::string* nickname);
@@ -1700,7 +1700,7 @@ class plat_token_login_respone_respone_data_respone_data_platinfo : public ::goo
   ::std::string* release_sign();
   void set_allocated_sign(::std::string* sign);
 
-  // bytes account = 3;
+  // string account = 3;
   void clear_account();
   static const int kAccountFieldNumber = 3;
   const ::std::string& account() const;
@@ -1709,7 +1709,7 @@ class plat_token_login_respone_respone_data_respone_data_platinfo : public ::goo
   void set_account(::std::string&& value);
   #endif
   void set_account(const char* value);
-  void set_account(const void* value, size_t size);
+  void set_account(const char* value, size_t size);
   ::std::string* mutable_account();
   ::std::string* release_account();
   void set_allocated_account(::std::string* account);
@@ -1742,7 +1742,7 @@ class plat_token_login_respone_respone_data_respone_data_platinfo : public ::goo
   ::std::string* release_gender();
   void set_allocated_gender(::std::string* gender);
 
-  // bytes nickname = 7;
+  // string nickname = 7;
   void clear_nickname();
   static const int kNicknameFieldNumber = 7;
   const ::std::string& nickname() const;
@@ -1751,7 +1751,7 @@ class plat_token_login_respone_respone_data_respone_data_platinfo : public ::goo
   void set_nickname(::std::string&& value);
   #endif
   void set_nickname(const char* value);
-  void set_nickname(const void* value, size_t size);
+  void set_nickname(const char* value, size_t size);
   ::std::string* mutable_nickname();
   ::std::string* release_nickname();
   void set_allocated_nickname(::std::string* nickname);
@@ -3245,7 +3245,7 @@ inline void reqeust_zone_list_respone_respone_data_reqeust_zone_list_server::set
   // @@protoc_insertion_point(field_set:NFMsg.reqeust_zone_list_respone.respone_data.reqeust_zone_list_server.gameid)
 }
 
-// bytes gamename = 2;
+// string gamename = 2;
 inline void reqeust_zone_list_respone_respone_data_reqeust_zone_list_server::clear_gamename() {
   gamename_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
@@ -3272,7 +3272,7 @@ inline void reqeust_zone_list_respone_respone_data_reqeust_zone_list_server::set
   gamename_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
   // @@protoc_insertion_point(field_set_char:NFMsg.reqeust_zone_list_respone.respone_data.reqeust_zone_list_server.gamename)
 }
-inline void reqeust_zone_list_respone_respone_data_reqeust_zone_list_server::set_gamename(const void* value, size_t size) {
+inline void reqeust_zone_list_respone_respone_data_reqeust_zone_list_server::set_gamename(const char* value, size_t size) {
   
   gamename_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
       ::std::string(reinterpret_cast<const char*>(value), size));
@@ -3326,7 +3326,7 @@ inline void reqeust_zone_list_respone_respone_data_reqeust_zone_list_server::set
   // @@protoc_insertion_point(field_set:NFMsg.reqeust_zone_list_respone.respone_data.reqeust_zone_list_server.onlinenum)
 }
 
-// bytes opentime = 5;
+// string opentime = 5;
 inline void reqeust_zone_list_respone_respone_data_reqeust_zone_list_server::clear_opentime() {
   opentime_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
@@ -3353,7 +3353,7 @@ inline void reqeust_zone_list_respone_respone_data_reqeust_zone_list_server::set
   opentime_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
   // @@protoc_insertion_point(field_set_char:NFMsg.reqeust_zone_list_respone.respone_data.reqeust_zone_list_server.opentime)
 }
-inline void reqeust_zone_list_respone_respone_data_reqeust_zone_list_server::set_opentime(const void* value, size_t size) {
+inline void reqeust_zone_list_respone_respone_data_reqeust_zone_list_server::set_opentime(const char* value, size_t size) {
   
   opentime_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
       ::std::string(reinterpret_cast<const char*>(value), size));
@@ -3407,7 +3407,7 @@ inline void reqeust_zone_list_respone_respone_data_reqeust_zone_list_server::set
   // @@protoc_insertion_point(field_set:NFMsg.reqeust_zone_list_respone.respone_data.reqeust_zone_list_server.zoneid)
 }
 
-// bytes zonename = 8;
+// string zonename = 8;
 inline void reqeust_zone_list_respone_respone_data_reqeust_zone_list_server::clear_zonename() {
   zonename_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
@@ -3434,7 +3434,7 @@ inline void reqeust_zone_list_respone_respone_data_reqeust_zone_list_server::set
   zonename_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
   // @@protoc_insertion_point(field_set_char:NFMsg.reqeust_zone_list_respone.respone_data.reqeust_zone_list_server.zonename)
 }
-inline void reqeust_zone_list_respone_respone_data_reqeust_zone_list_server::set_zonename(const void* value, size_t size) {
+inline void reqeust_zone_list_respone_respone_data_reqeust_zone_list_server::set_zonename(const char* value, size_t size) {
   
   zonename_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
       ::std::string(reinterpret_cast<const char*>(value), size));
@@ -3492,7 +3492,7 @@ inline void reqeust_zone_list_respone_respone_data::set_gameid(::google::protobu
   // @@protoc_insertion_point(field_set:NFMsg.reqeust_zone_list_respone.respone_data.gameid)
 }
 
-// bytes gamename = 3;
+// string gamename = 3;
 inline void reqeust_zone_list_respone_respone_data::clear_gamename() {
   gamename_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
@@ -3519,7 +3519,7 @@ inline void reqeust_zone_list_respone_respone_data::set_gamename(const char* val
   gamename_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
   // @@protoc_insertion_point(field_set_char:NFMsg.reqeust_zone_list_respone.respone_data.gamename)
 }
-inline void reqeust_zone_list_respone_respone_data::set_gamename(const void* value, size_t size) {
+inline void reqeust_zone_list_respone_respone_data::set_gamename(const char* value, size_t size) {
   
   gamename_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
       ::std::string(reinterpret_cast<const char*>(value), size));
@@ -3646,7 +3646,7 @@ inline void reqeust_zone_list_respone::set_allocated_do_(::std::string* do_) {
   // @@protoc_insertion_point(field_set_allocated:NFMsg.reqeust_zone_list_respone.do)
 }
 
-// bytes error = 2;
+// string error = 2;
 inline void reqeust_zone_list_respone::clear_error() {
   error_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
@@ -3673,7 +3673,7 @@ inline void reqeust_zone_list_respone::set_error(const char* value) {
   error_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
   // @@protoc_insertion_point(field_set_char:NFMsg.reqeust_zone_list_respone.error)
 }
-inline void reqeust_zone_list_respone::set_error(const void* value, size_t size) {
+inline void reqeust_zone_list_respone::set_error(const char* value, size_t size) {
   
   error_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
       ::std::string(reinterpret_cast<const char*>(value), size));
@@ -3958,7 +3958,7 @@ inline void plat_token_login_request_request_data_request_data_platinfo::set_pla
   // @@protoc_insertion_point(field_set:NFMsg.plat_token_login_request.request_data.request_data_platinfo.platid)
 }
 
-// bytes gender = 6;
+// string gender = 6;
 inline void plat_token_login_request_request_data_request_data_platinfo::clear_gender() {
   gender_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
@@ -3985,7 +3985,7 @@ inline void plat_token_login_request_request_data_request_data_platinfo::set_gen
   gender_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
   // @@protoc_insertion_point(field_set_char:NFMsg.plat_token_login_request.request_data.request_data_platinfo.gender)
 }
-inline void plat_token_login_request_request_data_request_data_platinfo::set_gender(const void* value, size_t size) {
+inline void plat_token_login_request_request_data_request_data_platinfo::set_gender(const char* value, size_t size) {
   
   gender_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
       ::std::string(reinterpret_cast<const char*>(value), size));
@@ -4011,7 +4011,7 @@ inline void plat_token_login_request_request_data_request_data_platinfo::set_all
   // @@protoc_insertion_point(field_set_allocated:NFMsg.plat_token_login_request.request_data.request_data_platinfo.gender)
 }
 
-// bytes nickname = 7;
+// string nickname = 7;
 inline void plat_token_login_request_request_data_request_data_platinfo::clear_nickname() {
   nickname_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
@@ -4038,7 +4038,7 @@ inline void plat_token_login_request_request_data_request_data_platinfo::set_nic
   nickname_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
   // @@protoc_insertion_point(field_set_char:NFMsg.plat_token_login_request.request_data.request_data_platinfo.nickname)
 }
-inline void plat_token_login_request_request_data_request_data_platinfo::set_nickname(const void* value, size_t size) {
+inline void plat_token_login_request_request_data_request_data_platinfo::set_nickname(const char* value, size_t size) {
   
   nickname_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
       ::std::string(reinterpret_cast<const char*>(value), size));
@@ -4480,7 +4480,7 @@ inline void plat_token_login_respone_respone_data_respone_data_platinfo::set_all
   // @@protoc_insertion_point(field_set_allocated:NFMsg.plat_token_login_respone.respone_data.respone_data_platinfo.sign)
 }
 
-// bytes account = 3;
+// string account = 3;
 inline void plat_token_login_respone_respone_data_respone_data_platinfo::clear_account() {
   account_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
@@ -4507,7 +4507,7 @@ inline void plat_token_login_respone_respone_data_respone_data_platinfo::set_acc
   account_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
   // @@protoc_insertion_point(field_set_char:NFMsg.plat_token_login_respone.respone_data.respone_data_platinfo.account)
 }
-inline void plat_token_login_respone_respone_data_respone_data_platinfo::set_account(const void* value, size_t size) {
+inline void plat_token_login_respone_respone_data_respone_data_platinfo::set_account(const char* value, size_t size) {
   
   account_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
       ::std::string(reinterpret_cast<const char*>(value), size));
@@ -4653,7 +4653,7 @@ inline void plat_token_login_respone_respone_data_respone_data_platinfo::set_all
   // @@protoc_insertion_point(field_set_allocated:NFMsg.plat_token_login_respone.respone_data.respone_data_platinfo.gender)
 }
 
-// bytes nickname = 7;
+// string nickname = 7;
 inline void plat_token_login_respone_respone_data_respone_data_platinfo::clear_nickname() {
   nickname_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
@@ -4680,7 +4680,7 @@ inline void plat_token_login_respone_respone_data_respone_data_platinfo::set_nic
   nickname_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
   // @@protoc_insertion_point(field_set_char:NFMsg.plat_token_login_respone.respone_data.respone_data_platinfo.nickname)
 }
-inline void plat_token_login_respone_respone_data_respone_data_platinfo::set_nickname(const void* value, size_t size) {
+inline void plat_token_login_respone_respone_data_respone_data_platinfo::set_nickname(const char* value, size_t size) {
   
   nickname_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
       ::std::string(reinterpret_cast<const char*>(value), size));
