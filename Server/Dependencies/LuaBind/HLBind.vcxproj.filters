@@ -25,9 +25,6 @@
     <Filter Include="3rd\luaintf">
       <UniqueIdentifier>{5af3fec1-130c-4deb-94e3-fc4f158a861f}</UniqueIdentifier>
     </Filter>
-    <Filter Include="3rd\luamongo">
-      <UniqueIdentifier>{b7e1cb1e-15c8-46c4-b4be-c46d42b36cb7}</UniqueIdentifier>
-    </Filter>
     <Filter Include="3rd\luafilesystem">
       <UniqueIdentifier>{2309f5d5-e667-4346-8f7b-5b01ade0ba7a}</UniqueIdentifier>
     </Filter>
@@ -251,51 +248,6 @@
     </ClCompile>
     <ClCompile Include="pbc\wmessage.cpp">
       <Filter>3rd\pbc</Filter>
-    </ClCompile>
-    <ClCompile Include="lua-mongo\src\bson.c">
-      <Filter>3rd\luamongo</Filter>
-    </ClCompile>
-    <ClCompile Include="lua-mongo\src\bsontype.c">
-      <Filter>3rd\luamongo</Filter>
-    </ClCompile>
-    <ClCompile Include="lua-mongo\src\bulkoperation.c">
-      <Filter>3rd\luamongo</Filter>
-    </ClCompile>
-    <ClCompile Include="lua-mongo\src\client.c">
-      <Filter>3rd\luamongo</Filter>
-    </ClCompile>
-    <ClCompile Include="lua-mongo\src\collection.c">
-      <Filter>3rd\luamongo</Filter>
-    </ClCompile>
-    <ClCompile Include="lua-mongo\src\cursor.c">
-      <Filter>3rd\luamongo</Filter>
-    </ClCompile>
-    <ClCompile Include="lua-mongo\src\database.c">
-      <Filter>3rd\luamongo</Filter>
-    </ClCompile>
-    <ClCompile Include="lua-mongo\src\flags.c">
-      <Filter>3rd\luamongo</Filter>
-    </ClCompile>
-    <ClCompile Include="lua-mongo\src\gridfs.c">
-      <Filter>3rd\luamongo</Filter>
-    </ClCompile>
-    <ClCompile Include="lua-mongo\src\gridfsfile.c">
-      <Filter>3rd\luamongo</Filter>
-    </ClCompile>
-    <ClCompile Include="lua-mongo\src\gridfsfilelist.c">
-      <Filter>3rd\luamongo</Filter>
-    </ClCompile>
-    <ClCompile Include="lua-mongo\src\main.c">
-      <Filter>3rd\luamongo</Filter>
-    </ClCompile>
-    <ClCompile Include="lua-mongo\src\objectid.c">
-      <Filter>3rd\luamongo</Filter>
-    </ClCompile>
-    <ClCompile Include="lua-mongo\src\readprefs.c">
-      <Filter>3rd\luamongo</Filter>
-    </ClCompile>
-    <ClCompile Include="lua-mongo\src\util.c">
-      <Filter>3rd\luamongo</Filter>
     </ClCompile>
     <ClCompile Include="luafilesystem\lfs.c">
       <Filter>3rd\luafilesystem</Filter>
@@ -535,9 +487,6 @@
     </ClInclude>
     <ClInclude Include="luaintf\impl\LuaType.h">
       <Filter>3rd\luaintf</Filter>
-    </ClInclude>
-    <ClInclude Include="lua-mongo\src\common.h">
-      <Filter>3rd\luamongo</Filter>
     </ClInclude>
     <ClInclude Include="luafilesystem\lfs.h">
       <Filter>3rd\luafilesystem</Filter>

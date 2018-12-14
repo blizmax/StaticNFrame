@@ -45,7 +45,7 @@ public:
 
 	virtual void OnExecute(uint16_t nEventID, uint64_t nSrcID, uint8_t bySrcType, NFEventContext* pEventContext) override;
 
-	virtual bool HttpHandleHttpLogin(const NFHttpRequest& req);
+	virtual bool HttpHandleHttpLogin(uint32_t linkId, const NFHttpRequest& req);
 
 	virtual void RequestZoneList(const NFHttpRequest& req, const NFMsg::reqeust_zone_list& httpLogin);
 	virtual void PlatTokenLogin(const NFHttpRequest& req, const NFMsg::plat_token_login_request& request);

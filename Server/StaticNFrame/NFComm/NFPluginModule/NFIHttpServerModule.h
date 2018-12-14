@@ -10,6 +10,7 @@
 
 #include "NFComm/NFPluginModule/NFIModule.h"
 #include "NFIHttpServer.h"
+#include "NFComm/NFPluginModule/NFServerDefine.h"
 
 class NFIHttpServerModule
 	: public NFIModule
@@ -19,32 +20,32 @@ public:
 
 	// register msg callback
 	template<typename BaseType>
-	bool AddRequestHandler(const std::string& strPath, const NFHttpType eRequestType, BaseType* pBase, bool (BaseType::*handleRecieve)(const NFHttpRequest& req))
+	bool AddRequestHandler(NF_SERVER_TYPES serverType, const std::string& strPath, const NFHttpType eRequestType, BaseType* pBase, bool (BaseType::*handleRecieve)(uint32_t, const NFHttpRequest& req))
 	{
-		HTTP_RECEIVE_FUNCTOR functor = std::bind(handleRecieve, pBase, std::placeholders::_1);
-		return AddMsgCB(strPath, eRequestType, functor);
+		HTTP_RECEIVE_FUNCTOR functor = std::bind(handleRecieve, pBase, std::placeholders::_1, std::placeholders::_2);
+		return AddMsgCB(serverType, strPath, eRequestType, functor);
 	}
 
 	template<typename BaseType>
-	bool AddNetFilter(const std::string& strPath, BaseType* pBase, NFWebStatus(BaseType::*handleFilter)(const NFHttpRequest& req))
+	bool AddNetFilter(NF_SERVER_TYPES serverType, const std::string& strPath, BaseType* pBase, NFWebStatus(BaseType::*handleFilter)(uint32_t, const NFHttpRequest& req))
 	{
-		HTTP_FILTER_FUNCTOR functor = std::bind(handleFilter, pBase, std::placeholders::_1);
+		HTTP_FILTER_FUNCTOR functor = std::bind(handleFilter, pBase, std::placeholders::_1, std::placeholders::_2);
 
-		return AddFilterCB(strPath, functor);
+		return AddFilterCB(serverType, strPath, functor);
 	}
 
-	bool LuaAddRequestHandler(const std::string& strPath, const NFHttpType eRequestType, const std::string& luaFunc)
+	bool LuaAddRequestHandler(NF_SERVER_TYPES serverType, const std::string& strPath, const NFHttpType eRequestType, const std::string& luaFunc)
 	{
-		return LuaAddMsgCB(strPath, eRequestType, luaFunc);
+		return LuaAddMsgCB(serverType, strPath, eRequestType, luaFunc);
 	}
 public:
-	virtual int InitServer(const unsigned short nPort) = 0;
+	virtual int InitServer(NF_SERVER_TYPES serverType, uint32_t nPort) = 0;
 
-	virtual bool ResponseMsg(const NFHttpRequest& req, const std::string& strMsg, NFWebStatus code = NFWebStatus::WEB_OK, const std::string& reason = "OK") = 0;
+	virtual bool ResponseMsg(NF_SERVER_TYPES serverType, const NFHttpRequest& req, const std::string& strMsg, NFWebStatus code = NFWebStatus::WEB_OK, const std::string& reason = "OK") = 0;
 
 private:
-	virtual bool AddMsgCB(const std::string& strCommand, const NFHttpType eRequestType, const HTTP_RECEIVE_FUNCTOR& cb) = 0;
-	virtual bool AddFilterCB(const std::string& strCommand, const HTTP_FILTER_FUNCTOR& cb) = 0;
+	virtual bool AddMsgCB(NF_SERVER_TYPES serverType, const std::string& strCommand, const NFHttpType eRequestType, const HTTP_RECEIVE_FUNCTOR& cb) = 0;
+	virtual bool AddFilterCB(NF_SERVER_TYPES serverType, const std::string& strCommand, const HTTP_FILTER_FUNCTOR& cb) = 0;
 
-	virtual bool LuaAddMsgCB(const std::string& strCommand, const NFHttpType eRequestType, const std::string& luaFunc) = 0;
+	virtual bool LuaAddMsgCB(NF_SERVER_TYPES serverType, const std::string& strCommand, const NFHttpType eRequestType, const std::string& luaFunc) = 0;
 };

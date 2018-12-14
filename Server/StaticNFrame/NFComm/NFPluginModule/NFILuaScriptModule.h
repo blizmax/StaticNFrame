@@ -31,7 +31,7 @@ public:
 
 	virtual void RunHtttpClientLuaFunc(const std::string& luaFunc, const int state_code, const std::string& strRespData, const std::string& strUserData) = 0;
 
-	virtual void RunHttpServerLuaFunc(const std::string& luaFunc, const NFHttpRequest & req) = 0;
+	virtual void RunHttpServerLuaFunc(const std::string& luaFunc, uint32_t serverType, const NFHttpRequest & req) = 0;
 
 	virtual void RunAccountConnectFunc(PlayerAccountInfo* laccount) = 0;
 	virtual void RunAccountDisConnectFunc(PlayerAccountInfo* laccount) = 0;

@@ -16,17 +16,25 @@
 NFCHttpServerModule::NFCHttpServerModule(NFIPluginManager* p)
 {
 	pPluginManager = p;
-	m_pHttpServer = NULL;
+	mServerArray.resize(NF_ST_MAX);
+	for (int i = 0; i < NF_SERVER_TYPES::NF_ST_MAX; ++i)
+	{
+		mServerArray[i] = nullptr;
+	}
 	m_pLuaScriptModule = NULL;
+	mxCallBack.resize(NF_ST_MAX);
 }
 
 NFCHttpServerModule::~NFCHttpServerModule()
 {
-	if (m_pHttpServer)
+	for (size_t i = 0; i < mServerArray.size(); i++)
 	{
-		delete m_pHttpServer;
-		m_pHttpServer = NULL;
+		if (mServerArray[i] != nullptr)
+		{
+			NF_SAFE_DELETE(mServerArray[i]);
+		}
 	}
+	mServerArray.clear();
 }
 
 bool NFCHttpServerModule::Awake()
@@ -50,18 +58,19 @@ bool NFCHttpServerModule::AfterInit()
 
 bool NFCHttpServerModule::Execute()
 {
-	if (m_pHttpServer)
+	for (size_t i = 0; i < mServerArray.size(); i++)
 	{
-		m_pHttpServer->Execute();
+		if (mServerArray[i] != nullptr)
+		{
+			mServerArray[i]->Execute();
+		}
 	}
-
 	return true;
 }
 
 bool NFCHttpServerModule::BeforeShut()
 {
-	mMsgCBMap.clear();
-	mMsgFliterMap.clear();
+	mxCallBack.clear();
 	return true;
 }
 
@@ -75,17 +84,38 @@ bool NFCHttpServerModule::Finalize()
 	return true;
 }
 
-int NFCHttpServerModule::InitServer(const unsigned short nPort)
+int NFCHttpServerModule::InitServer(NF_SERVER_TYPES serverType, uint32_t nPort)
 {
-	m_pHttpServer = new NFCHttpServer(this, &NFCHttpServerModule::OnReceiveNetPack, &NFCHttpServerModule::OnFilterPack);
-	//NFLogDebug("Http Server Open http port:{}", nPort);
-	return m_pHttpServer->InitServer(nPort);
+	if (serverType > NF_ST_NONE && serverType < NF_ST_MAX)
+	{
+		if (mServerArray[serverType] != nullptr)
+		{
+			NFLogError("the serverType:{} has existing! Add Server Failed!", GetServerName(serverType));
+			return 0;
+		}
+
+		NFCHttpServer* pHttpServer = new NFCHttpServer(serverType, this, &NFCHttpServerModule::OnReceiveNetPack, &NFCHttpServerModule::OnFilterPack);
+
+		if (pHttpServer->InitServer(nPort))
+		{
+			mServerArray[serverType] = pHttpServer;
+			return serverType;
+		}
+
+		NFLogError("Http Server Listen Port Failed, serverType:{}, port:{}", GetServerName(serverType), nPort);
+		NF_SAFE_DELETE(pHttpServer);
+		return 0;
+	}
+	return 0;
 }
 
-bool NFCHttpServerModule::OnReceiveNetPack(const NFHttpRequest& req)
+bool NFCHttpServerModule::OnReceiveNetPack(uint32_t unlinkId, const NFHttpRequest& req)
 {
-	auto iter = mMsgCBMap.find(req.type);
-	if (iter != mMsgCBMap.end())
+	uint32_t serverType = unlinkId;
+	if (serverType <= NF_ST_NONE || serverType >= NF_ST_MAX) return false;
+
+	auto iter = mxCallBack[serverType].mMsgCBMap.find(req.type);
+	if (iter != mxCallBack[serverType].mMsgCBMap.end())
 	{
 		auto itPath = iter->second.find(req.path);
 		if (itPath != iter->second.end())
@@ -93,18 +123,18 @@ bool NFCHttpServerModule::OnReceiveNetPack(const NFHttpRequest& req)
 			HTTP_RECEIVE_FUNCTOR& pFunPtr = itPath->second;
 			try
 			{
-				pFunPtr(req);
+				pFunPtr(serverType,req);
 			}
 			catch (const std::exception&)
 			{
-				ResponseMsg(req, "unknow error", NFWebStatus::WEB_INTER_ERROR);
+				ResponseMsg((NF_SERVER_TYPES)serverType, req, "unknow error", NFWebStatus::WEB_INTER_ERROR);
 			}
 			return true;
 		}
 	}
 
-	auto luaiter = mMsgLuaCBMap.find(req.type);
-	if (luaiter != mMsgLuaCBMap.end())
+	auto luaiter = mxCallBack[serverType].mMsgLuaCBMap.find(req.type);
+	if (luaiter != mxCallBack[serverType].mMsgLuaCBMap.end())
 	{
 		auto luaitPath = luaiter->second.find(req.path);
 		if (luaitPath != luaiter->second.end())
@@ -114,67 +144,74 @@ bool NFCHttpServerModule::OnReceiveNetPack(const NFHttpRequest& req)
 			{
 				if (m_pLuaScriptModule)
 				{
-					m_pLuaScriptModule->RunHttpServerLuaFunc(luaFunc, req);
+					m_pLuaScriptModule->RunHttpServerLuaFunc(luaFunc, serverType, req);
 				}
 			}
 			catch (const std::exception&)
 			{
-				ResponseMsg(req, "unknow error", NFWebStatus::WEB_INTER_ERROR);
+				ResponseMsg((NF_SERVER_TYPES)serverType, req, "unknow error", NFWebStatus::WEB_INTER_ERROR);
 			}
 			return true;
 		}
 	}
 
-	return ResponseMsg(req, "", NFWebStatus::WEB_ERROR);
+	return ResponseMsg((NF_SERVER_TYPES)serverType, req, "", NFWebStatus::WEB_ERROR);
 }
 
-NFWebStatus NFCHttpServerModule::OnFilterPack(const NFHttpRequest & req)
+NFWebStatus NFCHttpServerModule::OnFilterPack(uint32_t unlinkId, const NFHttpRequest & req)
 {
-	auto itPath = mMsgFliterMap.find(req.path);
-	if (itPath != mMsgFliterMap.end())
+	uint32_t serverType = unlinkId;
+	if (serverType <= NF_ST_NONE || serverType >= NF_ST_MAX) return NFWebStatus::WEB_ERROR;
+
+	auto itPath = mxCallBack[serverType].mMsgFliterMap.find(req.path);
+	if (itPath != mxCallBack[serverType].mMsgFliterMap.end())
 	{
 		HTTP_FILTER_FUNCTOR& pFunPtr = itPath->second;
-		return pFunPtr(req);
+		return pFunPtr(serverType, req);
 	}
 
 	return NFWebStatus::WEB_OK;
 }
 
-bool NFCHttpServerModule::LuaAddMsgCB(const std::string& strCommand, const NFHttpType eRequestType, const std::string& luaFunc)
+bool NFCHttpServerModule::LuaAddMsgCB(NF_SERVER_TYPES serverType, const std::string& strCommand, const NFHttpType eRequestType, const std::string& luaFunc)
 {
-	auto it = mMsgLuaCBMap.find(eRequestType);
-	if (it == mMsgLuaCBMap.end())
+	if (serverType > NF_ST_NONE && serverType < NF_ST_MAX)
 	{
-		mMsgLuaCBMap[eRequestType].emplace(strCommand, luaFunc);
+		mxCallBack[serverType].mMsgLuaCBMap[eRequestType].emplace(strCommand, luaFunc);
 	}
 
 	return false;
 }
 
-bool NFCHttpServerModule::AddMsgCB(const std::string& strCommand, const NFHttpType eRequestType, const HTTP_RECEIVE_FUNCTOR& cb)
+bool NFCHttpServerModule::AddMsgCB(NF_SERVER_TYPES serverType, const std::string& strCommand, const NFHttpType eRequestType, const HTTP_RECEIVE_FUNCTOR& cb)
 {
-	auto it = mMsgCBMap.find(eRequestType);
-	if (it == mMsgCBMap.end())
+	if (serverType > NF_ST_NONE && serverType < NF_ST_MAX)
 	{
-		mMsgCBMap[eRequestType].emplace(strCommand, cb);
+		mxCallBack[serverType].mMsgCBMap[eRequestType].emplace(strCommand, cb);
 	}
 
 	return false;
 }
 
-bool NFCHttpServerModule::AddFilterCB(const std::string& strCommand, const HTTP_FILTER_FUNCTOR& cb)
+bool NFCHttpServerModule::AddFilterCB(NF_SERVER_TYPES serverType, const std::string& strCommand, const HTTP_FILTER_FUNCTOR& cb)
 {
-	auto it = mMsgFliterMap.find(strCommand);
-	if (it == mMsgFliterMap.end())
+	if (serverType > NF_ST_NONE && serverType < NF_ST_MAX)
 	{
-		mMsgFliterMap.emplace(strCommand, cb);
+		mxCallBack[serverType].mMsgFliterMap.emplace(strCommand, cb);
 	}
 
 	return true;
 }
 
-bool NFCHttpServerModule::ResponseMsg(const NFHttpRequest& req, const std::string& strMsg, NFWebStatus code,
+bool NFCHttpServerModule::ResponseMsg(NF_SERVER_TYPES serverType, const NFHttpRequest& req, const std::string& strMsg, NFWebStatus code,
 	const std::string& strReason)
 {
-	return m_pHttpServer->ResponseMsg(req, strMsg, code, strReason);
+	if (serverType > NF_ST_NONE && serverType < NF_ST_MAX)
+	{
+		if (mServerArray[serverType] != nullptr)
+		{
+			return mServerArray[serverType]->ResponseMsg(req, strMsg, code, strReason);
+		}
+	}
+	return false;
 }

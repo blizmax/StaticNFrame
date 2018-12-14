@@ -112,15 +112,17 @@ public:
 };
 
 //it should be
-typedef std::function<bool(const NFHttpRequest& req)> HTTP_RECEIVE_FUNCTOR;
-typedef std::function<NFWebStatus(const NFHttpRequest& req)> HTTP_FILTER_FUNCTOR;
+typedef std::function<bool(uint32_t linkId, const NFHttpRequest& req)> HTTP_RECEIVE_FUNCTOR;
+typedef std::function<NFWebStatus(uint32_t linkId, const NFHttpRequest& req)> HTTP_FILTER_FUNCTOR;
 
 class NFIHttpServer
 {
 public:
 	virtual bool Execute() = 0;
 
-	virtual int InitServer(const unsigned short nPort) = 0;
+	virtual uint32_t GetLinkId() const = 0;
+
+	virtual int InitServer(uint32_t nPort) = 0;
 
 	virtual bool ResponseMsg(const NFHttpRequest& req, const std::string& strMsg, NFWebStatus code,
 		const std::string& strReason = "OK") = 0;

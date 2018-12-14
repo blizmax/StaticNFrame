@@ -26,7 +26,7 @@ bool NFCLoginLogicModule::Init()
 	m_pKernelModule = pPluginManager->FindModule<NFIKernelModule>();
 	m_pLoginClient_MasterModule = pPluginManager->FindModule<NFILoginClient_MasterModule>();
 	m_pHttpServerModule = pPluginManager->FindModule<NFIHttpServerModule>();
-	m_pHttpServerModule->AddRequestHandler("/httplogin", NFHttpType::NF_HTTP_REQ_POST, this, &NFCLoginLogicModule::HttpHandleHttpLogin);
+	m_pHttpServerModule->AddRequestHandler(NF_ST_LOGIN, "/httplogin", NFHttpType::NF_HTTP_REQ_POST, this, &NFCLoginLogicModule::HttpHandleHttpLogin);
 
 	m_pMongoModule->AddMongoServer(NF_ST_LOGIN, "mongodb://14.17.104.12:28900", "ttr-1");
 	m_pMongoModule->CreateCollection(NF_ST_LOGIN, ACCOUNT_TABLE, ACCOUNT_TABLE_KEY);
@@ -65,7 +65,7 @@ void NFCLoginLogicModule::OnExecute(uint16_t nEventID, uint64_t nSrcID, uint8_t 
 
 }
 
-bool NFCLoginLogicModule::HttpHandleHttpLogin(const NFHttpRequest& req)
+bool NFCLoginLogicModule::HttpHandleHttpLogin(uint32_t linkId, const NFHttpRequest& req)
 {
 	NFMsg::http_login_cmd cmd;
 	std::string jsonMsg = std::string(req.body);
@@ -159,7 +159,7 @@ void NFCLoginLogicModule::RequestZoneList(const NFHttpRequest& req, const NFMsg:
 		return;
 	}
 
-	m_pHttpServerModule->ResponseMsg(req, responeJson, NFWebStatus::WEB_OK, "OK");
+	m_pHttpServerModule->ResponseMsg(NF_ST_LOGIN, req, responeJson, NFWebStatus::WEB_OK, "OK");
 }
 
 void NFCLoginLogicModule::PlatTokenLogin(const NFHttpRequest& req, const NFMsg::plat_token_login_request& request)
@@ -225,7 +225,7 @@ void NFCLoginLogicModule::PlatTokenLogin(const NFHttpRequest& req, const NFMsg::
 	}
 	//std::string set_url = "/httplogin?unigame_plat_sign=" + NFMD5::md5str(responeJson + NFCommon::tostr(nowTime) + plat_key);
 	//NFLogError("last url | {}", set_url);
-	m_pHttpServerModule->ResponseMsg(req, responeJson, NFWebStatus::WEB_OK, "OK");
+	m_pHttpServerModule->ResponseMsg(NF_ST_LOGIN, req, responeJson, NFWebStatus::WEB_OK, "OK");
 }
 
 void NFCLoginLogicModule::RequestSelectZone(const NFHttpRequest& req, const NFMsg::reqeust_select_zone_request& request)
@@ -282,7 +282,7 @@ void NFCLoginLogicModule::RequestSelectZone(const NFHttpRequest& req, const NFMs
 	}
 
 	NFStringUtility::Replace(responeJson, "errno_", "errno");
-	m_pHttpServerModule->ResponseMsg(req, responeJson, NFWebStatus::WEB_OK, "OK");
+	m_pHttpServerModule->ResponseMsg(NF_ST_LOGIN, req, responeJson, NFWebStatus::WEB_OK, "OK");
 }
 
 NFMsg::LoginAccount* NFCLoginLogicModule::GetLoginAccount(const std::string& account)

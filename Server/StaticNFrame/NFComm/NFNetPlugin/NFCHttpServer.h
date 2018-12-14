@@ -20,26 +20,30 @@ public:
 	}
 
 	template<typename BaseType>
-	NFCHttpServer(BaseType* pBaseType, bool (BaseType::*handleRecieve)(const NFHttpRequest& req), NFWebStatus(BaseType::*handleFilter)(const NFHttpRequest& req))
+	NFCHttpServer(uint32_t unLinkId, BaseType* pBaseType, bool (BaseType::*handleRecieve)(uint32_t,const NFHttpRequest& req), NFWebStatus(BaseType::*handleFilter)(uint32_t, const NFHttpRequest& req))
 	{
 		base = NULL;
-		mReceiveCB = std::bind(handleRecieve, pBaseType, std::placeholders::_1);
-		mFilter = std::bind(handleFilter, pBaseType, std::placeholders::_1);
+		mReceiveCB = std::bind(handleRecieve, pBaseType, std::placeholders::_1, std::placeholders::_2);
+		mFilter = std::bind(handleFilter, pBaseType, std::placeholders::_1, std::placeholders::_2);
 		mPort = 0;
+		mUnLinkId = unLinkId;
 	}
 
 	virtual ~NFCHttpServer();
 
+	virtual uint32_t GetLinkId() const;
+
 	virtual bool Execute();
 
-	virtual int InitServer(const unsigned short nPort);
+	virtual int InitServer(uint32_t nPort);
 
 	virtual bool ResponseMsg(const NFHttpRequest& req, const std::string& strMsg, NFWebStatus code, const std::string& strReason = "OK");
 private:
 	static void listener_cb(struct evhttp_request* req, void* arg);
 private:
-	int mPort;
+	uint32_t mPort;
 	struct event_base* base;
 	HTTP_RECEIVE_FUNCTOR mReceiveCB;
 	HTTP_FILTER_FUNCTOR mFilter;
+	uint32_t mUnLinkId;
 };

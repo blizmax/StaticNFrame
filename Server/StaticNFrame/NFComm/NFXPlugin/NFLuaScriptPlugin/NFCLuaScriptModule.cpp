@@ -224,9 +224,9 @@ void NFCLuaScriptModule::RunHtttpClientLuaFunc(const std::string& luaFunc, const
 	TryRunGlobalScriptFunc("unilight.HttpClientRequestCallBack", luaFunc, state_code, strRespData, strUserData);
 }
 
-void NFCLuaScriptModule::RunHttpServerLuaFunc(const std::string& luaFunc, const NFHttpRequest & req)
+void NFCLuaScriptModule::RunHttpServerLuaFunc(const std::string& luaFunc, uint32_t serverType, const NFHttpRequest & req)
 {
-	TryRunGlobalScriptFunc("unilight.HttpServerRequestCallBack", luaFunc, req);
+	TryRunGlobalScriptFunc("unilight.HttpServerRequestCallBack", luaFunc, serverType, req);
 }
 
 void NFCLuaScriptModule::OnTimer(uint32_t nTimerID)

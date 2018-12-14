@@ -23,6 +23,11 @@ NFCHttpServer::~NFCHttpServer()
 	}
 }
 
+uint32_t NFCHttpServer::GetLinkId() const
+{
+	return mUnLinkId;
+}
+
 bool NFCHttpServer::Execute()
 {
 	if (base)
@@ -34,7 +39,7 @@ bool NFCHttpServer::Execute()
 }
 
 
-int NFCHttpServer::InitServer(const unsigned short port)
+int NFCHttpServer::InitServer(uint32_t port)
 {
 	mPort = port;
 	//struct event_base *base;
@@ -215,7 +220,7 @@ void NFCHttpServer::listener_cb(struct evhttp_request* req, void* arg)
 		//return 401
 		try
 		{
-			NFWebStatus xWebStatus = pNet->mFilter(request);
+			NFWebStatus xWebStatus = pNet->mFilter(pNet->mUnLinkId, request);
 			if (xWebStatus != NFWebStatus::WEB_OK)
 			{
 				//401
@@ -239,7 +244,7 @@ void NFCHttpServer::listener_cb(struct evhttp_request* req, void* arg)
 	{
 		if (pNet->mReceiveCB)
 		{
-			pNet->mReceiveCB(request);
+			pNet->mReceiveCB(pNet->mUnLinkId, request);
 		}
 		else
 		{
