@@ -14,6 +14,7 @@
 #include "NFComm/NFPluginModule/NFIPluginManager.h"
 #include "NFComm/NFPluginModule/NFConfigMgr.h"
 #include "my_date_and_hour_file_sink.h"
+#include "NFComm/NFCore/NFCommon.h"
 
 #include <iostream>
 
@@ -64,7 +65,7 @@ void NFCLogModule::SetFlushOn(NF_LOG_LEVEL log_level)
 void NFCLogModule::CreateLogger()
 {
 	std::vector<spdlog::sink_ptr> sinks_vec;
-	std::string log_name = NF_FORMAT("{}{}{}{}{}.log", pPluginManager->GetLogPath(), spdlog::details::os::folder_sep, pPluginManager->GetAppName(), spdlog::details::os::folder_sep, pPluginManager->GetAppName());
+	std::string log_name = NF_FORMAT("{}{}{}{}{}.log", pPluginManager->GetLogPath(), spdlog::details::os::folder_sep, pPluginManager->GetAppName()+lexical_cast<std::string>(pPluginManager->GetAppID()), spdlog::details::os::folder_sep, pPluginManager->GetAppName());
 	auto date_and_hour_sink = std::make_shared<spdlog::sinks::my_date_and_hour_file_sink_mt>(log_name);
 
 #if NF_PLATFORM == NF_PLATFORM_WIN
