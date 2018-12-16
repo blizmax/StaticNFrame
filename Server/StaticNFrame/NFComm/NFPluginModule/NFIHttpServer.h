@@ -13,6 +13,7 @@
 #include <functional>
 
 #include "NFComm/NFPluginModule/NFIHttpClientModule.h"
+#include "NFComm/NFCore/NFSlice.hpp"
 
 #if NF_PLATFORM == NF_PLATFORM_WIN
 #include <winsock2.h>
@@ -64,6 +65,8 @@ enum NFHttpType
 	NF_HTTP_REQ_PATCH = 1 << 8
 };
 
+class NFCHttpServer;
+
 class NFHttpRequest
 {
 public:
@@ -74,41 +77,29 @@ public:
 
 	void Reset()
 	{
+		requestId = 0;
 		url.clear();
 		path.clear();
 		remoteHost.clear();
-		//type
-		body.clear();
-		params.clear();
-		headers.clear();
+		httpServer = nullptr;
+		timeOut = 0;
 	}
 
 	std::string get_url() { return url; }
-	void set_url(const std::string& _url) { url = _url; }
 	std::string get_path() { return path; }
-	void set_path(const std::string& _path) { path = _path; }
 	std::string get_remoteHost() { return remoteHost; }
-	void set_remoteHost(const std::string& _host) { remoteHost = _host; }
 	int get_type() { return type; }
-	void set_type(int t) { type = (NFHttpType)t; }
-	std::string get_body() { return body; }
-	void set_body(const std::string& b) { body = b; }
-
-	std::string get_params() { return json_params; }
-	void set_params(const std::string& p) { json_params = p; }
-	std::string get_headers() { return json_headers; }
-	void set_headers(const std::string& h) { json_headers = h; }
+	std::string get_body() { return bodySlice.ToString(); }
 
 	void* req;
 	std::string url;
 	std::string path;
 	std::string remoteHost;
 	NFHttpType type;
-	std::string body;//when using post
-	std::map<std::string, std::string> params;//when using get
-	std::map<std::string, std::string> headers;
-	std::string json_params;
-	std::string json_headers;
+	NFSlice bodySlice;
+	uint64_t requestId;
+	NFCHttpServer* httpServer;
+	uint64_t timeOut;
 };
 
 //it should be
@@ -123,8 +114,12 @@ public:
 	virtual uint32_t GetLinkId() const = 0;
 
 	virtual int InitServer(uint32_t nPort) = 0;
+	virtual int InitServer(std::vector<uint32_t> nPorts) = 0;
+	virtual int InitServer(const std::string& portStr) = 0;
 
 	virtual bool ResponseMsg(const NFHttpRequest& req, const std::string& strMsg, NFWebStatus code,
 		const std::string& strReason = "OK") = 0;
+
+	virtual bool ResponseMsg(uint64_t reqeustId, const std::string& strMsg, NFWebStatus code, const std::string& strReason = "OK") = 0;
 };
 

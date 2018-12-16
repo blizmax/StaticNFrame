@@ -31,9 +31,14 @@ public:
 	virtual bool Finalize();
 
 	virtual int InitServer(NF_SERVER_TYPES serverType, uint32_t nPort);
+	virtual int InitServer(NF_SERVER_TYPES serverType, std::vector<uint32_t> nPorts);
+	virtual int InitServer(NF_SERVER_TYPES serverType, const std::string& portStr);
 
 	virtual bool ResponseMsg(NF_SERVER_TYPES serverType, const NFHttpRequest& req, const std::string& strMsg, NFWebStatus code = NFWebStatus::WEB_OK,
 			const std::string& reason = "OK");
+
+	virtual bool ResponseMsg(NF_SERVER_TYPES serverType, uint64_t requestId, const std::string& strMsg, NFWebStatus code = NFWebStatus::WEB_OK,
+		const std::string& reason = "OK");
 private:
 	virtual bool OnReceiveNetPack(uint32_t unlinkId, const NFHttpRequest& req);
 	virtual NFWebStatus OnFilterPack(uint32_t unlinkId, const NFHttpRequest& req);

@@ -40,9 +40,13 @@ public:
 	}
 public:
 	virtual int InitServer(NF_SERVER_TYPES serverType, uint32_t nPort) = 0;
+	virtual int InitServer(NF_SERVER_TYPES serverType, std::vector<uint32_t> nPorts) = 0;
+	virtual int InitServer(NF_SERVER_TYPES serverType, const std::string& portStr) = 0;
 
 	virtual bool ResponseMsg(NF_SERVER_TYPES serverType, const NFHttpRequest& req, const std::string& strMsg, NFWebStatus code = NFWebStatus::WEB_OK, const std::string& reason = "OK") = 0;
 
+	virtual bool ResponseMsg(NF_SERVER_TYPES serverType, uint64_t requestId, const std::string& strMsg, NFWebStatus code = NFWebStatus::WEB_OK,
+		const std::string& reason = "OK") = 0;
 private:
 	virtual bool AddMsgCB(NF_SERVER_TYPES serverType, const std::string& strCommand, const NFHttpType eRequestType, const HTTP_RECEIVE_FUNCTOR& cb) = 0;
 	virtual bool AddFilterCB(NF_SERVER_TYPES serverType, const std::string& strCommand, const HTTP_FILTER_FUNCTOR& cb) = 0;

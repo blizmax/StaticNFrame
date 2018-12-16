@@ -7,12 +7,12 @@
 ]]
 
 --只改这个2个    下面ip改成本机的，zoneid最好有个分配规则
-MasterIP = "45.32.39.90";
---MasterIP = "192.168.52.42";
+--MasterIP = "45.32.39.90";
+MasterIP = "127.0.0.1";
 MasterPort = 5501;
 
---ZoneIP = "192.168.52.42"
-ZoneIP = "45.32.39.90"
+ZoneIP = "127.0.0.1"
+--ZoneIP = "45.32.39.90"
 
 Server = {
 

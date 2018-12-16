@@ -12,6 +12,7 @@
 #include "NFCHttpServer.h"
 #include "NFComm/NFPluginModule/NFILuaScriptModule.h"
 #include "NFComm/NFPluginModule/NFIPluginManager.h"
+#include "NFComm/NFCore/NFCommon.h"
 
 NFCHttpServerModule::NFCHttpServerModule(NFIPluginManager* p)
 {
@@ -82,6 +83,56 @@ bool NFCHttpServerModule::Shut()
 bool NFCHttpServerModule::Finalize()
 {
 	return true;
+}
+
+int NFCHttpServerModule::InitServer(NF_SERVER_TYPES serverType, const std::string& portStr)
+{
+	if (serverType > NF_ST_NONE && serverType < NF_ST_MAX)
+	{
+		if (mServerArray[serverType] != nullptr)
+		{
+			NFLogError("the serverType:{} has existing! Add Server Failed!", GetServerName(serverType));
+			return 0;
+		}
+
+		NFCHttpServer* pHttpServer = new NFCHttpServer(serverType, this, &NFCHttpServerModule::OnReceiveNetPack, &NFCHttpServerModule::OnFilterPack);
+
+		if (pHttpServer->InitServer(portStr) == 0)
+		{
+			mServerArray[serverType] = pHttpServer;
+			return serverType;
+		}
+
+		NFLogError("Http Server Listen Port Failed, serverType:{}, port:{}", GetServerName(serverType), portStr);
+		NF_SAFE_DELETE(pHttpServer);
+		return 0;
+	}
+	return 0;
+}
+
+int NFCHttpServerModule::InitServer(NF_SERVER_TYPES serverType, std::vector<uint32_t> nPorts)
+{
+	if (serverType > NF_ST_NONE && serverType < NF_ST_MAX)
+	{
+		if (mServerArray[serverType] != nullptr)
+		{
+			NFLogError("the serverType:{} has existing! Add Server Failed!", GetServerName(serverType));
+			return 0;
+		}
+
+		NFCHttpServer* pHttpServer = new NFCHttpServer(serverType, this, &NFCHttpServerModule::OnReceiveNetPack, &NFCHttpServerModule::OnFilterPack);
+
+		if (pHttpServer->InitServer(nPorts) == 0)
+		{
+			mServerArray[serverType] = pHttpServer;
+			return serverType;
+		}
+
+		NFLogError("Http Server Listen Port Failed, serverType:{}, port:{}", GetServerName(serverType), NFCommon::tostr(nPorts));
+		NF_SAFE_DELETE(pHttpServer);
+		return 0;
+	}
+	return 0;
 }
 
 int NFCHttpServerModule::InitServer(NF_SERVER_TYPES serverType, uint32_t nPort)
@@ -211,6 +262,19 @@ bool NFCHttpServerModule::ResponseMsg(NF_SERVER_TYPES serverType, const NFHttpRe
 		if (mServerArray[serverType] != nullptr)
 		{
 			return mServerArray[serverType]->ResponseMsg(req, strMsg, code, strReason);
+		}
+	}
+	return false;
+}
+
+bool NFCHttpServerModule::ResponseMsg(NF_SERVER_TYPES serverType, uint64_t requestId, const std::string& strMsg, NFWebStatus code,
+	const std::string& strReason)
+{
+	if (serverType > NF_ST_NONE && serverType < NF_ST_MAX)
+	{
+		if (mServerArray[serverType] != nullptr)
+		{
+			return mServerArray[serverType]->ResponseMsg(requestId, strMsg, code, strReason);
 		}
 	}
 	return false;

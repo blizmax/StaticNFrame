@@ -31,6 +31,14 @@ public:
 	{
 	}
 
+	void Clear()
+	{
+		m_pBev = nullptr;
+		m_pHttpClient = nullptr;
+		m_pCB = nullptr;
+		m_strUserData = "";
+	}
+
 	bufferevent* m_pBev;
 	NFIHttpClient* m_pHttpClient;
 	HTTP_RESP_FUNCTOR m_pCB;
@@ -59,6 +67,15 @@ public:
 		{
 			m_pLuaScriptModule->RunHtttpClientLuaFunc(m_luaFunc, state_code, strRespData, strUserData);
 		}
+	}
+
+	void Clear()
+	{
+		m_pBev = nullptr;
+		m_pHttpClient = nullptr;
+		m_luaFunc = "";
+		m_strUserData = "";
+		m_pLuaScriptModule = nullptr;
 	}
 
 	bufferevent* m_pBev;
@@ -132,4 +149,7 @@ private:
 #if NF_ENABLE_SSL
 	SSL_CTX*            m_pSslCtx = nullptr;
 #endif
+
+	std::list<HttpObject*> mListHttpObject;
+	std::list<LuaHttpObject*> mListLuaHttpObject;
 };

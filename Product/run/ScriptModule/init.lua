@@ -49,8 +49,4 @@ function init_script_system(pluginManager)
 
 	--初始化LuaNFrame
 	unilight.init(pluginManager)
-
-	unilight.initmongodb('mongodb://14.17.104.12:28900', "ttr-1")
-
-	Do.dbready()
 end

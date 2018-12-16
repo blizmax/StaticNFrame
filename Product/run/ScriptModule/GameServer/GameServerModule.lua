@@ -19,6 +19,9 @@ UserInfo.Update = UserInfo.Update or function()
 end
 
 function GameServerModule.Init()
+    unilight.initmongodb('mongodb://14.17.104.12:28900', "ttr-1")
+    Do.dbready()
+    
     TcpClient.addRecvCallBack(NF_SERVER_TYPES.NF_ST_PROXY, 0, "GameServerModule.NetServerRecvHandleJson")
 
     unilight.addtimer("UserInfo.Update", 1)

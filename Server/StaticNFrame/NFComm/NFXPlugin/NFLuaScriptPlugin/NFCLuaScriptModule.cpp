@@ -137,19 +137,20 @@ bool NFCLuaScriptModule::Register()
 		.endClass();
 
 	LuaIntf::LuaBinding(l).beginClass<NFHttpRequest>("NFHttpRequest")
-		.addProperty("url", &NFHttpRequest::get_url, &NFHttpRequest::set_url)
-		.addProperty("path", &NFHttpRequest::get_path, &NFHttpRequest::set_path)
-		.addProperty("remoteHost", &NFHttpRequest::get_remoteHost, &NFHttpRequest::set_remoteHost)
-		.addProperty("type", &NFHttpRequest::get_type, &NFHttpRequest::set_type)
-		.addProperty("body", &NFHttpRequest::get_body, &NFHttpRequest::set_body)
-		.addProperty("params", &NFHttpRequest::get_params, &NFHttpRequest::set_params)
-		.addProperty("headers", &NFHttpRequest::get_headers, &NFHttpRequest::set_headers)
+		.addProperty("url", &NFHttpRequest::get_url)
+		.addProperty("path", &NFHttpRequest::get_path)
+		.addProperty("remoteHost", &NFHttpRequest::get_remoteHost)
+		.addProperty("type", &NFHttpRequest::get_type)
+		.addProperty("body", &NFHttpRequest::get_body)
 	.endClass();
 
 	LuaIntf::LuaBinding(l).beginClass<NFIHttpServerModule>("NFIHttpServerModule")
 		.addFunction("AddRequestHandler", &NFIHttpServerModule::LuaAddRequestHandler)
-		.addFunction("InitServer", &NFIHttpServerModule::InitServer)
-		.addFunction("ResponseMsg", &NFIHttpServerModule::ResponseMsg)
+		.addFunction("InitServer", (int (NFIHttpServerModule::*)(NF_SERVER_TYPES serverType, uint32_t nPort))&NFIHttpServerModule::InitServer)
+		.addFunction("ResponseMsg", (bool (NFIHttpServerModule::*)(NF_SERVER_TYPES serverType, const NFHttpRequest& req, const std::string& strMsg, NFWebStatus code,
+			const std::string& reason))&NFIHttpServerModule::ResponseMsg)
+		.addFunction("ResponseMsgByRequestId", (bool (NFIHttpServerModule::*)(NF_SERVER_TYPES serverType, uint64_t requestId, const std::string& strMsg, NFWebStatus code,
+			const std::string& reason))&NFIHttpServerModule::ResponseMsg)
 		.endClass();
 
 	LuaIntf::LuaBinding(l).beginClass<NFINetServerModule>("NFINetServerModule")

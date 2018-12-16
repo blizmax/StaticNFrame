@@ -22,6 +22,16 @@ bool NFCHttpClient::Execute()
 
 bool NFCHttpClient::Init()
 {
+	for (int i = 0; i < 1024; i++)
+	{
+		mListHttpObject.push_back(NF_NEW HttpObject(this, nullptr, "", nullptr));
+	}
+
+	for (int i = 0; i < 1024; i++)
+	{
+		mListLuaHttpObject.push_back(NF_NEW LuaHttpObject(this, nullptr, "", "", nullptr));
+	}
+
 #if NF_PLATFORM == NF_PLATFORM_WIN
 	WORD wVersionRequested;
 	WSADATA wsaData;
@@ -63,6 +73,19 @@ bool NFCHttpClient::Init()
 
 bool NFCHttpClient::Final()
 {
+	for (auto iter = mListHttpObject.begin(); iter != mListHttpObject.end(); iter++)
+	{
+		NF_SAFE_DELETE(*iter);
+	}
+
+	for (auto iter = mListLuaHttpObject.begin(); iter != mListLuaHttpObject.end(); iter++)
+	{
+		NF_SAFE_DELETE(*iter);
+	}
+
+	mListHttpObject.clear();
+	mListLuaHttpObject.clear();
+
 	if (m_pBase)
 	{
 		event_base_free(m_pBase);
@@ -190,20 +213,6 @@ bool NFCHttpClient::LuaMakeRequest(const std::string& strUri,
 
 	struct bufferevent* bev = NULL;
 
-
-#if NF_ENABLE_SSL
-	SSL* pSSL = SSL_new(m_pSslCtx);
-	if (pSSL == NULL)
-	{
-		if (http_uri)
-		{
-			evhttp_uri_free(http_uri);
-		}
-		NFLogError("SSL_new err.");
-		return false;
-	}
-#endif
-
 	if (!isHttps)
 	{
 		bev = bufferevent_socket_new(m_pBase, -1, BEV_OPT_CLOSE_ON_FREE);
@@ -211,6 +220,17 @@ bool NFCHttpClient::LuaMakeRequest(const std::string& strUri,
 	else
 	{
 #if NF_ENABLE_SSL
+		SSL* pSSL = SSL_new(m_pSslCtx);
+		if (pSSL == NULL)
+		{
+			if (http_uri)
+			{
+				evhttp_uri_free(http_uri);
+			}
+			NFLogError("SSL_new err.");
+			return false;
+		}
+
 		bev = bufferevent_openssl_socket_new(m_pBase, -1, pSSL,
 			BUFFEREVENT_SSL_CONNECTING,
 			BEV_OPT_CLOSE_ON_FREE | BEV_OPT_DEFER_CALLBACKS);
@@ -256,7 +276,23 @@ bool NFCHttpClient::LuaMakeRequest(const std::string& strUri,
 		evhttp_connection_set_timeout(evcon, m_nTimeOut);
 	}
 
-	LuaHttpObject* pHttpObj = new LuaHttpObject(this, bev, strUserData, luaFunc, m_pLuaScriptModule);
+	//LuaHttpObject* pHttpObj = new LuaHttpObject(this, bev, strUserData, luaFunc, m_pLuaScriptModule);
+
+	LuaHttpObject* pHttpObj = nullptr;
+	if (mListLuaHttpObject.size() > 0)
+	{
+		pHttpObj = mListLuaHttpObject.front();
+		pHttpObj->m_pHttpClient = this;
+		pHttpObj->m_pBev = bev;
+		pHttpObj->m_strUserData = strUserData;
+		pHttpObj->m_luaFunc = luaFunc;
+		pHttpObj->m_pLuaScriptModule = m_pLuaScriptModule;
+		mListLuaHttpObject.pop_front();
+	}
+	else
+	{
+		pHttpObj = new LuaHttpObject(this, bev, strUserData, luaFunc, m_pLuaScriptModule);
+	}
 
 	// Fire off the request
 	struct evhttp_request* req = evhttp_request_new(LuaOnHttpReqDone, pHttpObj);
@@ -418,20 +454,6 @@ bool NFCHttpClient::MakeRequest(const std::string& strUri,
 
 	struct bufferevent* bev = NULL;
 
-
-#if NF_ENABLE_SSL
-	SSL* pSSL = SSL_new(m_pSslCtx);
-	if (pSSL == NULL)
-	{
-		if (http_uri)
-		{
-			evhttp_uri_free(http_uri);
-		}
-		NFLogError("SSL_new err.");
-		return false;
-	}
-#endif
-
 	if (!isHttps)
 	{
 		bev = bufferevent_socket_new(m_pBase, -1, BEV_OPT_CLOSE_ON_FREE);
@@ -439,6 +461,17 @@ bool NFCHttpClient::MakeRequest(const std::string& strUri,
 	else
 	{
 #if NF_ENABLE_SSL
+		SSL* pSSL = SSL_new(m_pSslCtx);
+		if (pSSL == NULL)
+		{
+			if (http_uri)
+			{
+				evhttp_uri_free(http_uri);
+			}
+			NFLogError("SSL_new err.");
+			return false;
+		}
+
 		bev = bufferevent_openssl_socket_new(m_pBase, -1, pSSL,
 			BUFFEREVENT_SSL_CONNECTING,
 			BEV_OPT_CLOSE_ON_FREE | BEV_OPT_DEFER_CALLBACKS);
@@ -484,7 +517,21 @@ bool NFCHttpClient::MakeRequest(const std::string& strUri,
 		evhttp_connection_set_timeout(evcon, m_nTimeOut);
 	}
 
-	HttpObject* pHttpObj = new HttpObject(this, bev, strUserData, pCB);
+	//HttpObject* pHttpObj = new HttpObject(this, bev, strUserData, pCB);
+	HttpObject* pHttpObj = nullptr;
+	if (mListHttpObject.size() > 0)
+	{
+		pHttpObj = mListHttpObject.front();
+		pHttpObj->m_pHttpClient = this;
+		pHttpObj->m_pBev = bev;
+		pHttpObj->m_strUserData = strUserData;
+		pHttpObj->m_pCB = pCB;
+		mListHttpObject.pop_front();
+	}
+	else
+	{
+		pHttpObj = new HttpObject(this, bev, strUserData, pCB);
+	}
 
 	// Fire off the request
 	struct evhttp_request* req = evhttp_request_new(OnHttpReqDone, pHttpObj);
@@ -561,7 +608,7 @@ bool NFCHttpClient::PerformPost(const std::string& strUri, const std::string& st
 	const std::string& strUserData,
 	const std::map<std::string, std::string>& xHeaders)
 {
-	return MakeRequest(strUri, pCB, strPostData, strUserData, xHeaders, NFHttpType::NF_HTTP_REQ_POST);
+	return MakeRequest(strUri, pCB, strUserData, strPostData, xHeaders, NFHttpType::NF_HTTP_REQ_POST);
 }
 
 bool NFCHttpClient::LuaPerformGet(const std::string& strUri, const std::string& luaFunc,
@@ -575,7 +622,7 @@ bool NFCHttpClient::LuaPerformPost(const std::string& strUri, const std::string&
 	const std::string& strUserData,
 	const std::map<std::string, std::string>& xHeaders)
 {
-	return LuaMakeRequest(strUri, luaFunc, strPostData, strUserData, xHeaders, NFHttpType::NF_HTTP_REQ_POST);
+	return LuaMakeRequest(strUri, luaFunc, strUserData, strPostData, xHeaders, NFHttpType::NF_HTTP_REQ_POST);
 }
 
 void NFCHttpClient::OnHttpReqDone(struct evhttp_request* req, void* ctx)
@@ -598,7 +645,7 @@ void NFCHttpClient::OnHttpReqDone(struct evhttp_request* req, void* ctx)
 		int errcode = EVUTIL_SOCKET_ERROR();
 
 		std::string strErrMsg = "";
-		fprintf(stderr, "some request failed - no idea which one though!\n");
+		NFLogError("some request failed - no idea which one though!\n");
 		/* Print out the OpenSSL error queue that libevent
 		* squirreled away for us, if any. */
 
@@ -608,7 +655,8 @@ void NFCHttpClient::OnHttpReqDone(struct evhttp_request* req, void* ctx)
 #if NF_ENABLE_SSL
 		while ((oslerr = bufferevent_get_openssl_error(bev))) {
 			ERR_error_string_n(oslerr, buffer, sizeof(buffer));
-			fprintf(stderr, "%s\n", buffer);
+			NFLogError(buffer);
+			//fprintf(stderr, "%s\n", buffer);
 			strErrMsg += std::string(buffer);
 			printed_err = 1;
 		}
@@ -617,17 +665,17 @@ void NFCHttpClient::OnHttpReqDone(struct evhttp_request* req, void* ctx)
 		* socket error; let's try printing that. */
 		if (!printed_err)
 		{
-			char tmpBuf[1024] = { 0 };
-			snprintf(tmpBuf, 1024, "socket error = %s (%d)\n",
-				evutil_socket_error_to_string(errcode),
-				errcode);
-			strErrMsg += std::string(tmpBuf);
+			//char tmpBuf[1024] = { 0 };
+			//snprintf(tmpBuf, 1024, "socket error = %s (%d)\n",
+			//	evutil_socket_error_to_string(errcode),
+			//	errcode);
+			std::string errMsg = NF_FORMAT("socket error = {} ({})\n", evutil_socket_error_to_string(errcode), errcode);
+			strErrMsg += errMsg;
 		}
 
-		if (pHttpObj->m_pCB)
-		{
-			pHttpObj->m_pCB(-1, strErrMsg, pHttpObj->m_strUserData);
-		}
+		NFCHttpClient* pHttpClient = (NFCHttpClient*)(pHttpObj->m_pHttpClient);
+		pHttpClient->mListHttpObject.push_back(pHttpObj);
+		pHttpObj->Clear();
 
 		NFLogError(strErrMsg.c_str());
 		return;
@@ -670,6 +718,10 @@ void NFCHttpClient::OnHttpReqDone(struct evhttp_request* req, void* ctx)
 	{
 		pHttpObj->m_pCB(nRespCode, strResp, pHttpObj->m_strUserData);
 	}
+
+	NFCHttpClient* pHttpClient = (NFCHttpClient*)(pHttpObj->m_pHttpClient);
+	pHttpClient->mListHttpObject.push_back(pHttpObj);
+	pHttpObj->Clear();
 }
 
 void NFCHttpClient::LuaOnHttpReqDone(struct evhttp_request* req, void* ctx)
@@ -692,7 +744,8 @@ void NFCHttpClient::LuaOnHttpReqDone(struct evhttp_request* req, void* ctx)
 		int errcode = EVUTIL_SOCKET_ERROR();
 
 		std::string strErrMsg = "";
-		fprintf(stderr, "some request failed - no idea which one though!\n");
+		NFLogError("some request failed - no idea which one though!\n");
+		//fprintf(stderr, "some request failed - no idea which one though!\n");
 		/* Print out the OpenSSL error queue that libevent
 		* squirreled away for us, if any. */
 
@@ -702,7 +755,8 @@ void NFCHttpClient::LuaOnHttpReqDone(struct evhttp_request* req, void* ctx)
 #if NF_ENABLE_SSL
 		while ((oslerr = bufferevent_get_openssl_error(bev))) {
 			ERR_error_string_n(oslerr, buffer, sizeof(buffer));
-			fprintf(stderr, "%s\n", buffer);
+			//fprintf(stderr, "%s\n", buffer);
+			NFLogError(buffer);
 			strErrMsg += std::string(buffer);
 			printed_err = 1;
 		}
@@ -711,14 +765,17 @@ void NFCHttpClient::LuaOnHttpReqDone(struct evhttp_request* req, void* ctx)
 		* socket error; let's try printing that. */
 		if (!printed_err)
 		{
-			char tmpBuf[1024] = { 0 };
-			snprintf(tmpBuf, 1024, "socket error = %s (%d)\n",
-				evutil_socket_error_to_string(errcode),
-				errcode);
-			strErrMsg += std::string(tmpBuf);
+			//char tmpBuf[1024] = { 0 };
+			//snprintf(tmpBuf, 1024, "socket error = %s (%d)\n",
+			//	evutil_socket_error_to_string(errcode),
+			//	errcode);
+			std::string errMsg = NF_FORMAT("socket error = {} ({})\n", evutil_socket_error_to_string(errcode), errcode);
+			strErrMsg += errMsg;
 		}
 
-		pHttpObj->RunLuaFunc(-1, strErrMsg, pHttpObj->m_strUserData);
+		NFCHttpClient* pHttpClient = (NFCHttpClient*)(pHttpObj->m_pHttpClient);
+		pHttpClient->mListLuaHttpObject.push_back(pHttpObj);
+		pHttpObj->Clear();
 
 		NFLogError(strErrMsg.c_str());
 		return;
@@ -758,4 +815,8 @@ void NFCHttpClient::LuaOnHttpReqDone(struct evhttp_request* req, void* ctx)
 	}
 
 	pHttpObj->RunLuaFunc(nRespCode, strResp, pHttpObj->m_strUserData);
+
+	NFCHttpClient* pHttpClient = (NFCHttpClient*)(pHttpObj->m_pHttpClient);
+	pHttpClient->mListLuaHttpObject.push_back(pHttpObj);
+	pHttpObj->Clear();
 }
