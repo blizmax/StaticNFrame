@@ -7,7 +7,6 @@
     <ClInclude Include="NFIWorldServerModule.h" />
     <ClInclude Include="NFIMasterServerModule.h" />
     <ClInclude Include="NFILoginServerModule.h" />
-    <ClInclude Include="NFIHttpLoginServerModule.h" />
     <ClInclude Include="NFIWorldClient_MasterModule.h" />
     <ClInclude Include="NFILoginClient_MasterModule.h" />
     <ClInclude Include="NFIProxyClient_MasterModule.h" />

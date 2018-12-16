@@ -10,7 +10,6 @@
 #include "NFLoginServerPlugin.h"
 #include "NFComm/NFPluginModule/NFIPluginManager.h"
 #include "NFLoginServerModule.h"
-#include "NFHttpLoginServerModule.h"
 
 #ifdef NF_DYNAMIC_PLUGIN
 
@@ -43,11 +42,9 @@ std::string NFLoginServerPlugin::GetPluginName()
 void NFLoginServerPlugin::Install()
 {
 	REGISTER_MODULE(pPluginManager, NFILoginServerModule, NFCLoginServerModule);
-	REGISTER_MODULE(pPluginManager, NFIHttpLoginServerModule, NFCHttpLoginServerModule);
 }
 
 void NFLoginServerPlugin::Uninstall()
 {
 	UNREGISTER_MODULE(pPluginManager, NFILoginServerModule, NFCLoginServerModule);
-	UNREGISTER_MODULE(pPluginManager, NFIHttpLoginServerModule, NFCHttpLoginServerModule);
 }

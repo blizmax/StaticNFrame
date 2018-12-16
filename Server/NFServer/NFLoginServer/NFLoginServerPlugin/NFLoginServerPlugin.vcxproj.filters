@@ -3,11 +3,9 @@
   <ItemGroup>
     <ClCompile Include="NFLoginServerPlugin.cpp" />
     <ClCompile Include="NFLoginServerModule.cpp" />
-    <ClCompile Include="NFHttpLoginServerModule.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="NFLoginServerPlugin.h" />
     <ClInclude Include="NFLoginServerModule.h" />
-    <ClInclude Include="NFHttpLoginServerModule.h" />
   </ItemGroup>
 </Project>

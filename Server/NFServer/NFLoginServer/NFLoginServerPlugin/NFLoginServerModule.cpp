@@ -27,6 +27,7 @@ NFCLoginServerModule::~NFCLoginServerModule()
 
 bool NFCLoginServerModule::Init()
 {
+	m_pHttpServerModule = pPluginManager->FindModule<NFIHttpServerModule>();
 	m_pNetServerModule = pPluginManager->FindModule<NFINetServerModule>();
 	m_pNetServerModule->AddEventCallBack(NF_ST_LOGIN, this, &NFCLoginServerModule::OnProxySocketEvent);
 	m_pNetServerModule->AddReceiveCallBack(NF_ST_LOGIN, this, &NFCLoginServerModule::OnHandleOtherMessage);
@@ -42,6 +43,17 @@ bool NFCLoginServerModule::Init()
 		else
 		{
 			NFLogInfo("login server listen failed!, serverId:{}, maxConnectNum:{}, port:{}", pConfig->mServerId, pConfig->mMaxConnectNum, pConfig->mServerPort);
+		}
+
+		if (pConfig->mHttpPort > 0)
+		{
+			int ret = m_pHttpServerModule->InitServer(NF_ST_LOGIN, pConfig->mHttpPort);
+			if (ret == 0)
+			{
+				NFLogError("Login Server Open Http Port:{} Failed!", pConfig->mHttpPort);
+				return false;
+			}
+			NFLogInfo("Login Server Open Http Port:{} Success!", pConfig->mHttpPort);
 		}
 	}
 	else

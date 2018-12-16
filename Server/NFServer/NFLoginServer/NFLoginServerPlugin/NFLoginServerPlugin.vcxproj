@@ -304,12 +304,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="NFHttpLoginServerModule.cpp" />
     <ClCompile Include="NFLoginServerModule.cpp" />
     <ClCompile Include="NFLoginServerPlugin.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="NFHttpLoginServerModule.h" />
     <ClInclude Include="NFLoginServerModule.h" />
     <ClInclude Include="NFLoginServerPlugin.h" />
   </ItemGroup>

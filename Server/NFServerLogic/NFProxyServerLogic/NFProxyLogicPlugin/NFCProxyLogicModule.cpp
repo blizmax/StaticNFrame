@@ -22,8 +22,11 @@ bool NFCProxyLogicModule::Init()
 	this->Subscribe(NF_SERVER_EVENT_GAME_DISCONNECT_PROXY, 0, NF_ST_GAME, "NFCProxyLogicModule::Init");
 	this->Subscribe(NF_SERVER_EVENT_WORLD_DISCONNECT_PROXY, 0, NF_ST_WORLD, "NFCProxyLogicModule::Init");
 
+	m_pNetClientModule = pPluginManager->FindModule<NFINetClientModule>();
 	m_pNetServerModule = pPluginManager->FindModule<NFINetServerModule>();
 	m_pNetProxyServerModule = pPluginManager->FindModule<NFIProxyServerModule>();
+
+	m_pNetClientModule->AddReceiveCallBack(NF_ST_MASTER, EGMI_STS_GM_MSG, this, &NFCProxyLogicModule::OnHandleGmMessage);
 
 	m_pNetServerModule->AddEventCallBack(NF_ST_PROXY, this, &NFCProxyLogicModule::OnProxySocketEvent);
 	m_pNetServerModule->AddReceiveCallBack(NF_ST_PROXY, EGMI_NET_MSG_JSON_MSG, this, &NFCProxyLogicModule::OnHandleJsonMessage);
@@ -90,6 +93,12 @@ void NFCProxyLogicModule::OnHandleGameJsonMessage(const uint32_t unLinkId, const
 		m_pNetServerModule->SendByServerID(pData->unlinkId, 0, strJson,0);
 		//NFLogDebug("send msg:{}", strJson);
 	}
+}
+
+void NFCProxyLogicModule::OnHandleGmMessage(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen)
+{
+	std::string jsonMsg = std::string(msg, nLen);
+	NFLogDebug("gm msg:{}", jsonMsg);
 }
 
 void NFCProxyLogicModule::OnHandleJsonMessage(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen)

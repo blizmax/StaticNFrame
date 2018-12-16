@@ -12,6 +12,7 @@
 #include <NFServer/NFServerCommon/NFILoginServerModule.h>
 #include "NFComm/NFPluginModule/NFServerDefine.h"
 #include <NFComm/NFPluginModule/NFINetServerModule.h>
+#include "NFComm/NFPluginModule/NFIHttpServerModule.h"
 
 class NFCLoginServerModule : public NFILoginServerModule
 {
@@ -31,7 +32,7 @@ public:
 
 	void OnProxySocketEvent(const eMsgType nEvent, const uint32_t unLinkId);
 	void OnHandleOtherMessage(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen);
-	void HttpGetCallBack(const int state_code, const std::string& strRespData, const std::string& strUserData);
 private:
 	NFINetServerModule* m_pNetServerModule;
+	NFIHttpServerModule* m_pHttpServerModule;
 };

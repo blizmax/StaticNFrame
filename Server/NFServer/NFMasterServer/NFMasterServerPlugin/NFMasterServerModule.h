@@ -12,6 +12,7 @@
 #include <NFServer/NFServerCommon/NFIMasterServerModule.h>
 #include "NFComm/NFPluginModule/NFServerDefine.h"
 #include <NFComm/NFPluginModule/NFINetServerModule.h>
+#include "NFComm/NFPluginModule/NFIHttpServerModule.h"
 
 #include "NFComm/NFCore/NFMapEx.hpp"
 #include "NFServer/NFServerCommon/NFServerCommon.h"
@@ -72,12 +73,14 @@ protected:
 	void SynReportToLogin(NF_SHARE_PTR<NFServerData> pServerData);
 
 	void OnClientDisconnect(uint32_t unLinkId);
+
+	virtual bool HttpHandleHttpGm(uint32_t linkId, const NFHttpRequest& req);
 private:
 	NFINetServerModule* m_pNetServerModule;
+	NFIHttpServerModule* m_pHttpServerModule;
 private:
-	NFMapEx<int, NFServerData> mMasterMap;
 	NFMapEx<int, NFServerData> mLoginMap;
-	NFMapEx<int, NFServerData> mWorldMap;
-	NFMapEx<int, NFServerData> mProxyMap;
-	NFMapEx<int, NFServerData> mGameMap;
+	NFConsistentHashMapEx<int, NFServerData> mWorldMap;
+	NFConsistentHashMapEx<int, NFServerData> mProxyMap;
+	NFConsistentHashMapEx<int, NFServerData> mGameMap;
 };

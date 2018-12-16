@@ -4,12 +4,13 @@ function RebotServerModule.Init()
     local data = {}
     data["do"] = "request-zone-list"
     data["gameid"] = 3010
-    unilight.HttpClientRequestPost("https://ttrserver.staticnframe.club:7000/httplogin", "httpPostReturn", data)
-    --nilight.HttpClientRequestPost("http://127.0.0.1:7000/httplogin", "httpPostReturn", data)
+    --unilight.HttpClientRequestPost("http://ttrserver.staticnframe.club:7000/httplogin", "httpPostReturn", data)
+    unilight.HttpClientRequestPost("http://127.0.0.1:7000/httplogin", "httpPostReturn", data)
+    unilight.HttpClientRequestPost("http://127.0.0.1:3000/gm", "httpPostReturn", data)
 end
 
 function HttpClient.httpPostReturn(state_code, respData)
-
+    unilight.debug("HttpClient.httpPostReturn");
 end
 
 --特殊协议

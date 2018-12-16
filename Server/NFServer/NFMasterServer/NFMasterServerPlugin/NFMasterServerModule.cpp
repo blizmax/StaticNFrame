@@ -27,10 +27,13 @@ NFCMasterServerModule::~NFCMasterServerModule()
 
 bool NFCMasterServerModule::Init()
 {
+	m_pHttpServerModule = pPluginManager->FindModule<NFIHttpServerModule>();
+	m_pHttpServerModule->AddRequestHandler(NF_ST_MASTER, "/gm", NFHttpType::NF_HTTP_REQ_POST, this, &NFCMasterServerModule::HttpHandleHttpGm);
+	m_pHttpServerModule->AddRequestHandler(NF_ST_MASTER, "/GM", NFHttpType::NF_HTTP_REQ_POST, this, &NFCMasterServerModule::HttpHandleHttpGm);
+
 	m_pNetServerModule = pPluginManager->FindModule<NFINetServerModule>();
 	m_pNetServerModule->AddEventCallBack(NF_ST_MASTER, this, &NFCMasterServerModule::OnProxySocketEvent);
 	m_pNetServerModule->AddReceiveCallBack(NF_ST_MASTER, this, &NFCMasterServerModule::OnHandleOtherMessage);
-
 
 	m_pNetServerModule->AddReceiveCallBack(NF_ST_MASTER, EGMI_NET_LOGIN_TO_MASTER_REGISTER, this, &NFCMasterServerModule::OnLoginServerRegisterProcess);
 	m_pNetServerModule->AddReceiveCallBack(NF_ST_MASTER, EGMI_NET_WORLD_TO_MASTER_REGISTER, this, &NFCMasterServerModule::OnWorldServerRegisterProcess);
@@ -60,6 +63,18 @@ bool NFCMasterServerModule::Init()
 		else
 		{
 			NFLogInfo("master server listen failed!, serverId:{}, maxConnectNum:{}, port:{}", pConfig->mServerId, pConfig->mMaxConnectNum, pConfig->mServerPort);
+			return false;
+		}
+
+		if (pConfig->mHttpPort > 0)
+		{
+			unlinkId = (uint32_t)m_pHttpServerModule->InitServer(NF_ST_MASTER, pConfig->mHttpPort);
+			if (unlinkId == 0)
+			{
+				NFLogError("Master Server Open Http Port:{} Failed!", pConfig->mHttpPort);
+				return false;
+			}
+			NFLogInfo("Master Server Open Http Port:{} Success!", pConfig->mHttpPort);
 		}
 	}
 	else
@@ -736,4 +751,20 @@ void NFCMasterServerModule::OnServerReport(const uint32_t unLinkId, const uint64
 		break;
 		}
 	}
+}
+
+bool NFCMasterServerModule::HttpHandleHttpGm(uint32_t linkId, const NFHttpRequest& req)
+{
+	std::string jsonMsg = req.bodySlice.ToString();
+	NF_SHARE_PTR<NFServerData> pServerData = mProxyMap.First();
+	while (pServerData)
+	{
+		m_pNetServerModule->SendByServerID(pServerData->mUnlinkId, EGMI_STS_GM_MSG, jsonMsg, 0);
+
+		pServerData = mProxyMap.Next();
+	}
+
+	m_pHttpServerModule->ResponseMsg(NF_ST_MASTER, req, "{}", NFWebStatus::WEB_OK, "OK");
+
+	return true;
 }

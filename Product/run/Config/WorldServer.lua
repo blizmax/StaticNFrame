@@ -13,6 +13,7 @@ Server[#Server+1] = {
 		WorkThreadNum = 1,
 		Security = false,
 		WebSocket = false,
+		HttpPort = 3000,
 	};
 	
 MasterPort = MasterPort + 1
