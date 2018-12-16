@@ -53,6 +53,8 @@ protected:
 	virtual NF_SHARE_PTR<NFServerData> GetProxyServerByServerId(uint32_t serverId) override;
 	virtual NF_SHARE_PTR<NFServerData> GetGameServerByServerId(uint32_t serverId) override;
 	virtual std::vector<NF_SHARE_PTR<NFServerData>> GetAllGameServer() override;
+
+	virtual uint32_t GetMasterLinkId() const { return m_unLinkId; }
 private:
 	NFINetClientModule* m_pNetClientModule;
 	uint32_t m_unLinkId;

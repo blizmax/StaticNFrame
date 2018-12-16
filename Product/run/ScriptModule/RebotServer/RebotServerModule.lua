@@ -5,12 +5,29 @@ function RebotServerModule.Init()
     data["do"] = "request-zone-list"
     data["gameid"] = 3010
     --unilight.HttpClientRequestPost("http://ttrserver.staticnframe.club:7000/httplogin", "httpPostReturn", data)
-    unilight.HttpClientRequestPost("http://127.0.0.1:7000/httplogin", "httpPostReturn", data)
-    unilight.HttpClientRequestPost("http://127.0.0.1:3000/gm", "httpPostReturn", data)
+    unilight.HttpClientRequestPost("http://127.0.0.1:7000/httplogin", "httpLoginReturn", data)
+    --unilight.HttpClientRequestPost("http://ttrserver.staticnframe.club:3000/gm", "httpPostReturn", data)
 end
 
-function HttpClient.httpPostReturn(state_code, respData)
+function HttpClient.httpLoginReturn(state_code, respData)
     unilight.debug("HttpClient.httpPostReturn");
+
+    local data = {}
+    data["do"] = "plat-token-login"
+    data["gameid"] = 3010
+    data["zoneid"] = 0
+    data["data"] = {}
+    data["data"]["platinfo"] = {}
+
+    data["data"]["platinfo"]["account"] = "gaoyi"
+    data["data"]["platinfo"]["openkey"] = "gaoyi_openkey"
+    data["data"]["platinfo"]["platid"] = 0
+
+    unilight.HttpClientRequestPost("http://127.0.0.1:7000/httplogin", "plat_token_login_return", data)
+end
+
+function HttpClient.plat_token_login_return(state_code, respData)
+    unilight.debug("HttpClient.plat_token_login_return")
 end
 
 --特殊协议

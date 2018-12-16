@@ -51,9 +51,13 @@ public:
 	virtual void PlatTokenLogin(const NFHttpRequest& req, const NFMsg::plat_token_login_request& request);
 	virtual void RequestSelectZone(const NFHttpRequest& req, const NFMsg::reqeust_select_zone_request& json);
 
+	void OnHandleMasterAccountLoginReturn(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen);
+
+
 	NFMsg::LoginAccount* GetLoginAccount(const std::string& account);
 private:
 	NFIHttpServerModule* m_pHttpServerModule;
+	NFINetClientModule* m_pNetClientModule;
 	NFILoginClient_MasterModule* m_pLoginClient_MasterModule;
 	NFIKernelModule* m_pKernelModule;
 	NFIMongoModule* m_pMongoModule;

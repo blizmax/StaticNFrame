@@ -12,6 +12,7 @@ message LoginAccount
 	uint32 zoneid = 6;
 	string md5_plat_key = 7;
 	string md5_plat_login = 8;
+	bool online = 9;
 }
 
 message http_login_cmd

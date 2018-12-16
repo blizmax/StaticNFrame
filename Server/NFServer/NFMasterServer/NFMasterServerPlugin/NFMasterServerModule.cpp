@@ -15,6 +15,7 @@
 #include "NFComm/NFPluginModule/NFIHttpClientModule.h"
 #include "NFComm/NFPluginModule/NFIHttpServerModule.h"
 #include "NFServer/NFServerCommon/NFServerCommon.h"
+#include "NFComm/NFCore/NFMD5.h"
 
 NFCMasterServerModule::NFCMasterServerModule(NFIPluginManager* p)
 {
@@ -27,6 +28,7 @@ NFCMasterServerModule::~NFCMasterServerModule()
 
 bool NFCMasterServerModule::Init()
 {
+	m_pKernelModule = pPluginManager->FindModule<NFIKernelModule>();
 	m_pHttpServerModule = pPluginManager->FindModule<NFIHttpServerModule>();
 	m_pHttpServerModule->AddRequestHandler(NF_ST_MASTER, "/gm", NFHttpType::NF_HTTP_REQ_POST, this, &NFCMasterServerModule::HttpHandleHttpGm);
 	m_pHttpServerModule->AddRequestHandler(NF_ST_MASTER, "/GM", NFHttpType::NF_HTTP_REQ_POST, this, &NFCMasterServerModule::HttpHandleHttpGm);
@@ -49,8 +51,10 @@ bool NFCMasterServerModule::Init()
 	m_pNetServerModule->AddReceiveCallBack(NF_ST_MASTER, EGMI_NET_WORLD_TO_MASTER_REFRESH, this, &NFCMasterServerModule::OnWorldServerRefreshProcess);
 	m_pNetServerModule->AddReceiveCallBack(NF_ST_MASTER, EGMI_NET_PROXY_TO_MASTER_REFRESH, this, &NFCMasterServerModule::OnProxyServerRefreshProcess);
 	m_pNetServerModule->AddReceiveCallBack(NF_ST_MASTER, EGMI_NET_GAME_TO_MASTER_REFRESH, this, &NFCMasterServerModule::OnGameServerRefreshProcess);
-
+	
 	m_pNetServerModule->AddReceiveCallBack(NF_ST_MASTER, EGMI_STS_SERVER_REPORT, this, &NFCMasterServerModule::OnServerReport);
+
+	m_pNetServerModule->AddReceiveCallBack(NF_ST_MASTER, EGMI_NET_LOGIN_TO_MASTER_PLAT_LOGIN, this, &NFCMasterServerModule::OnHandleAccountLogin);
 
 	NFServerConfig* pConfig = NFServerCommon::GetAppConfig(pPluginManager, NF_ST_MASTER);
 	if (pConfig)
@@ -767,4 +771,30 @@ bool NFCMasterServerModule::HttpHandleHttpGm(uint32_t linkId, const NFHttpReques
 	m_pHttpServerModule->ResponseMsg(NF_ST_MASTER, req, "{}", NFWebStatus::WEB_OK, "OK");
 
 	return true;
+}
+
+void NFCMasterServerModule::OnHandleAccountLogin(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen)
+{
+	NFMsg::LoginAccount xMsg;
+	CLIENT_MSG_PROCESS_NO_OBJECT(nMsgId, msg, nLen, xMsg);
+
+	NF_SHARE_PTR<NFMsg::LoginAccount> pAccount = m_loginAccountMap.GetElement(xMsg.account());
+	if (pAccount == nullptr)
+	{
+		pAccount = NF_SHARE_PTR<NFMsg::LoginAccount>(NF_NEW NFMsg::LoginAccount());
+		pAccount->set_uid(xMsg.uid());
+		pAccount->set_account(xMsg.account());
+		m_loginAccountMap.AddElement(xMsg.account(), pAccount);
+	}
+
+	pAccount->set_openkey(xMsg.openkey());
+	pAccount->set_platid(xMsg.platid());
+	pAccount->set_gameid(xMsg.gameid());
+
+	std::string plat_key = NFMD5::md5str(lexical_cast<std::string>(pAccount->uid()) + xMsg.openkey() + lexical_cast<std::string>(pAccount->platid()));
+	pAccount->set_md5_plat_key(plat_key);
+
+	xMsg.set_md5_plat_key(plat_key);
+
+	m_pNetServerModule->SendToServerByPB(unLinkId, EGMI_NET_MASTER_TO_LOGIN_PLAT_LOGIN, xMsg, playerId);
 }

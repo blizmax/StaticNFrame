@@ -13,9 +13,11 @@
 #include "NFComm/NFPluginModule/NFServerDefine.h"
 #include <NFComm/NFPluginModule/NFINetServerModule.h>
 #include "NFComm/NFPluginModule/NFIHttpServerModule.h"
+#include "NFComm/NFPluginModule/NFIKernelModule.h"
 
 #include "NFComm/NFCore/NFMapEx.hpp"
 #include "NFServer/NFServerCommon/NFServerCommon.h"
+#include "NFComm/NFCore/NFMap.hpp"
 
 class NFCMasterServerModule : public NFIMasterServerModule
 {
@@ -59,6 +61,8 @@ protected:
 
 	void OnServerReport(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen);
 
+	void OnHandleAccountLogin(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen);
+
 	void SynReportToLogin();
 
 	void SynProxyToGame();
@@ -78,9 +82,11 @@ protected:
 private:
 	NFINetServerModule* m_pNetServerModule;
 	NFIHttpServerModule* m_pHttpServerModule;
+	NFIKernelModule* m_pKernelModule;
 private:
 	NFMapEx<int, NFServerData> mLoginMap;
 	NFConsistentHashMapEx<int, NFServerData> mWorldMap;
 	NFConsistentHashMapEx<int, NFServerData> mProxyMap;
 	NFConsistentHashMapEx<int, NFServerData> mGameMap;
+	NFMapEx<std::string, NFMsg::LoginAccount> m_loginAccountMap;
 };

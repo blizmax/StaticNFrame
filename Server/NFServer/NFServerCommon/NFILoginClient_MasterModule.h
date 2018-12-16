@@ -32,4 +32,6 @@ public:
 	virtual NF_SHARE_PTR<NFServerData> GetGameServerByServerId(uint32_t serverId) = 0;
 
 	virtual std::vector<NF_SHARE_PTR<NFServerData>> GetAllGameServer() = 0;
+	virtual uint32_t GetMasterLinkId() const = 0;
+
 };

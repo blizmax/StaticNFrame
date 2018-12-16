@@ -22,11 +22,15 @@ NFCLoginLogicModule::~NFCLoginLogicModule()
 
 bool NFCLoginLogicModule::Init()
 {
+	m_pNetClientModule = pPluginManager->FindModule<NFINetClientModule>();
 	m_pMongoModule = pPluginManager->FindModule<NFIMongoModule>();
 	m_pKernelModule = pPluginManager->FindModule<NFIKernelModule>();
 	m_pLoginClient_MasterModule = pPluginManager->FindModule<NFILoginClient_MasterModule>();
 	m_pHttpServerModule = pPluginManager->FindModule<NFIHttpServerModule>();
+
 	m_pHttpServerModule->AddRequestHandler(NF_ST_LOGIN, "/httplogin", NFHttpType::NF_HTTP_REQ_POST, this, &NFCLoginLogicModule::HttpHandleHttpLogin);
+
+	m_pNetClientModule->AddReceiveCallBack(NF_ST_MASTER, EGMI_NET_MASTER_TO_LOGIN_PLAT_LOGIN, this, &NFCLoginLogicModule::OnHandleMasterAccountLoginReturn);
 
 	m_pMongoModule->AddMongoServer(NF_ST_LOGIN, "mongodb://14.17.104.12:28900", "ttr-1");
 	m_pMongoModule->CreateCollection(NF_ST_LOGIN, ACCOUNT_TABLE, ACCOUNT_TABLE_KEY);
@@ -165,24 +169,28 @@ void NFCLoginLogicModule::RequestZoneList(const NFHttpRequest& req, const NFMsg:
 	m_pHttpServerModule->ResponseMsg(NF_ST_LOGIN, req, responeJson, NFWebStatus::WEB_OK, "OK");
 }
 
-void NFCLoginLogicModule::PlatTokenLogin(const NFHttpRequest& req, const NFMsg::plat_token_login_request& request)
+void NFCLoginLogicModule::OnHandleMasterAccountLoginReturn(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen)
 {
-	std::string account = request.data().platinfo().account();
-	std::string openkey = request.data().platinfo().sign();
-	uint32_t platid = request.data().platinfo().platid();
-	uint32_t gameid = request.gameid();
-	uint32_t zoneid = request.zoneid();
+	NFMsg::LoginAccount xMsg;
+	CLIENT_MSG_PROCESS_NO_OBJECT(nMsgId, msg, nLen, xMsg);
+
+	std::string account = xMsg.account();
+	std::string openkey = xMsg.openkey();
+	uint32_t platid = xMsg.platid();
+	uint32_t gameid = xMsg.gameid();
+	uint32_t zoneid = xMsg.zoneid();
+
 	uint64_t nowTime = pPluginManager->GetNowTime() / 1000;
 
 	NFMsg::LoginAccount* pAccount = GetLoginAccount(account);
 	if (pAccount == nullptr) return;
 
-	NFLogInfo("account:{} uid:{} gameid:{}, zoneId:{} login......", pAccount->account(), pAccount->uid(), gameid, zoneid);
+	NFLogInfo("account:{} uid:{} gameid:{} login......", pAccount->account(), pAccount->uid(), gameid);
 
 	uint32_t plat_login_timeout = 2592000;
 	uint64_t uuid = pAccount->uid();
 
-	std::string plat_key = NFMD5::md5str(lexical_cast<std::string>(uuid));
+	std::string plat_key = xMsg.md5_plat_key();
 	std::string plat_login = NFMD5::md5str(lexical_cast<std::string>(uuid));
 
 	pAccount->set_openkey(openkey);
@@ -193,15 +201,15 @@ void NFCLoginLogicModule::PlatTokenLogin(const NFHttpRequest& req, const NFMsg::
 	pAccount->set_md5_plat_login(plat_login);
 
 	NFMsg::plat_token_login_respone respone;
-	respone.set_gameid(request.gameid());
+	respone.set_gameid(gameid);
 	respone.set_unigame_plat_key(plat_key);
 	respone.set_unigame_plat_login(plat_login);
 	respone.set_unigame_plat_timestamp(nowTime);
-	respone.set_zoneid(request.zoneid());
+	respone.set_zoneid(zoneid);
 
-	respone.set_do_(request.do_());
+	respone.set_do_("plat-token-login");
 	auto pData = respone.mutable_data();
-	pData->set_gameid(request.gameid());
+	pData->set_gameid(gameid);
 	pData->set_sid(openkey + "::" + account);
 	pData->set_timezone_name("CST");
 	pData->set_timezone_offset(28800);
@@ -213,7 +221,7 @@ void NFCLoginLogicModule::PlatTokenLogin(const NFHttpRequest& req, const NFMsg::
 	pPlatinfo->set_aaa(123);
 	pPlatinfo->set_account(account);
 	pPlatinfo->set_email("");
-	pPlatinfo->set_gameid(request.gameid());
+	pPlatinfo->set_gameid(gameid);
 	pPlatinfo->set_gender("");
 	pPlatinfo->set_nickname("");
 	pPlatinfo->set_platid(0);
@@ -228,7 +236,29 @@ void NFCLoginLogicModule::PlatTokenLogin(const NFHttpRequest& req, const NFMsg::
 	}
 	//std::string set_url = "/httplogin?unigame_plat_sign=" + NFMD5::md5str(responeJson + NFCommon::tostr(nowTime) + plat_key);
 	//NFLogError("last url | {}", set_url);
-	m_pHttpServerModule->ResponseMsg(NF_ST_LOGIN, req, responeJson, NFWebStatus::WEB_OK, "OK");
+	m_pHttpServerModule->ResponseMsg(NF_ST_LOGIN, playerId, responeJson, NFWebStatus::WEB_OK, "OK");
+}
+
+void NFCLoginLogicModule::PlatTokenLogin(const NFHttpRequest& req, const NFMsg::plat_token_login_request& request)
+{
+	std::string account = request.data().platinfo().account();
+	std::string openkey = request.data().platinfo().sign();
+	uint32_t platid = request.data().platinfo().platid();
+	uint32_t gameid = request.gameid();
+	uint32_t zoneid = request.zoneid();
+
+	NFMsg::LoginAccount* pAccount = GetLoginAccount(account);
+	if (pAccount == nullptr) return;
+
+	NFMsg::LoginAccount loginAccount;
+	loginAccount.set_uid(pAccount->uid());
+	loginAccount.set_account(account);
+	loginAccount.set_openkey(openkey);
+	loginAccount.set_platid(platid);
+	loginAccount.set_gameid(gameid);
+
+	m_pNetClientModule->SendToServerByPB(m_pLoginClient_MasterModule->GetMasterLinkId(), EGMI_NET_LOGIN_TO_MASTER_PLAT_LOGIN, loginAccount, req.requestId);
+	return;
 }
 
 void NFCLoginLogicModule::RequestSelectZone(const NFHttpRequest& req, const NFMsg::reqeust_select_zone_request& request)
