@@ -4,8 +4,8 @@ function RebotServerModule.Init()
     local data = {}
     data["do"] = "request-zone-list"
     data["gameid"] = 3010
-    --unilight.HttpClientRequestPost("http://ttrserver.staticnframe.club:7000/httplogin", "httpPostReturn", data)
-    unilight.HttpClientRequestPost("http://127.0.0.1:7000/httplogin", "httpLoginReturn", data)
+    unilight.HttpClientRequestPost("http://ttrserver.staticnframe.com/httplogin", "httpPostReturn", data)
+    --unilight.HttpClientRequestPost("http://127.0.0.1:7000/httplogin", "httpLoginReturn", data)
     --unilight.HttpClientRequestPost("http://ttrserver.staticnframe.club:3000/gm", "httpPostReturn", data)
 end
 
