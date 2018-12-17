@@ -65,7 +65,7 @@ Server[#Server+1] = {
 		WorkThreadNum = 5,
 		Security = false,
 		WebSocket = false,
-		HttpPort = 7000,
+		HttpPort = 80,
 	};
 	
 MasterPort = MasterPort + 1

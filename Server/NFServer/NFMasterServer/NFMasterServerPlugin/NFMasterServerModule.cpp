@@ -791,7 +791,8 @@ void NFCMasterServerModule::OnHandleAccountLogin(const uint32_t unLinkId, const 
 	pAccount->set_platid(xMsg.platid());
 	pAccount->set_gameid(xMsg.gameid());
 
-	std::string plat_key = NFMD5::md5str(lexical_cast<std::string>(pAccount->uid()) + xMsg.openkey() + lexical_cast<std::string>(pAccount->platid()));
+	//std::string plat_key = NFMD5::md5str(lexical_cast<std::string>(pAccount->uid()) + xMsg.openkey() + lexical_cast<std::string>(pAccount->platid()));
+	std::string plat_key = NFMD5::md5str(lexical_cast<std::string>(pAccount->uid()));
 	pAccount->set_md5_plat_key(plat_key);
 
 	xMsg.set_md5_plat_key(plat_key);

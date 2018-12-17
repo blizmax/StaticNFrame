@@ -160,3 +160,24 @@ message respone_select_zone_respone
 	respone_data data = 8;
 	string uid = 9;
 }
+
+message login_to_master_request_select_zone
+{
+	uint64	uid = 1;
+	uint32  gameid = 2;
+	uint32  zoneid = 3;
+}
+
+message master_to_login_respone_select_zone
+{
+	enum ErrorCode
+	{
+		CODE_SUCCESS = 0,
+		ERROR_FAIL = 1,
+	}
+	uint64	uid = 1;
+	uint32  gameid = 2;
+	uint32  zoneid = 3;
+
+	ErrorCode  result_code = 4;
+}

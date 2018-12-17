@@ -274,7 +274,7 @@ void NFCLoginLogicModule::RequestSelectZone(const NFHttpRequest& req, const NFMs
 	{
 		NFLogError("No Proxy Server!");
 		return;
-	}
+	} 
 
 	auto pGameServerData = m_pLoginClient_MasterModule->GetGameServerByServerId(zoneid);
 	if (pGameServerData == nullptr)
