@@ -371,25 +371,26 @@ end
 function UserProps:dealZeroInitProps()
 	unilight.debug("处理零点属性清理--------------------".. self.owner.uid)
 	--处理 周卡 月卡 永久卡
-	local time = os.time() 
-	if self.props.pWeekCardEndTime ~= 0 and self.props.pWeekCardEndTime < time then
-		self.props.pWeekCardEndTime = 0	
-	else
-		--发邮件
-		self.owner.mailMgr:addNew(8)
-	end
-
-	if self.props.pMonthCardEndTime ~= 0 and self.props.pMonthCardEndTime < time then
-		self.props.pMonthCardEndTime = 0
-	else
-		--发邮件
-		self.owner.mailMgr:addNew(9)
-	end
-
-	if self.props.pHasLifelongCard then
-		--发邮件
-		self.owner.mailMgr:addNew(10)
-	end	
+	--local time = os.time()
+	--if self.props.pWeekCardEndTime ~= 0 and self.props.pWeekCardEndTime < time then
+	--	self.props.pWeekCardEndTime = 0
+	--else
+	--	--发邮件
+	--	self.owner.mailMgr:addNew(8)
+	--end
+	--
+	--if self.props.pMonthCardEndTime ~= 0 and self.props.pMonthCardEndTime < time then
+	--	self.props.pMonthCardEndTime = 0
+	--else
+	--	--发邮件
+	--	self.owner.mailMgr:addNew(9)
+	--end
+	--
+	--if self.props.pHasLifelongCard then
+	--	--发邮件
+	--	self.owner.mailMgr:addNew(10)
+	--end
+	--现在没有周卡 月卡 永久卡
 
 	self.bprops.dayLookMediaTimes = 0
 	
@@ -617,7 +618,7 @@ function UserProps:setUserProp(userinfo,itemtype,itemnum,paraone,paratwo)
 		paraone = 1
 	end
 
-	local mailid = 0
+	--local mailid = 0
 	local res = { }
 	res["do"] = "Cmd.SendUserPropertyOnUseItemCmd_S"
 	if itemtype == tonumber(static_const.Static_ItemType_Diamond) then
@@ -674,7 +675,7 @@ function UserProps:setUserProp(userinfo,itemtype,itemnum,paraone,paratwo)
 		res["data"] = {
 			pWeekCardEndTime = self.props.pWeekCardEndTime			
 		}
-		mailid=8
+		--mailid=8
 	elseif itemtype == tonumber(static_const.Static_ItemType_MonthCard) then
 		if self.props.pAutoClickTimes_Times then
 			self.props.pMonthCardEndTime = self.props.pMonthCardEndTime + itemnum*paraone*86400 
@@ -684,13 +685,13 @@ function UserProps:setUserProp(userinfo,itemtype,itemnum,paraone,paratwo)
 		res["data"] = {
 			pMonthCardEndTime = self.props.pMonthCardEndTime			
 		}
-		mailid=9
+		--mailid=9
 	elseif itemtype == tonumber(static_const.Static_ItemType_LifelongCard) then
 		self.props.pHasLifelongCard = 1 
 		res["data"] = {
 			hasLifelongCard = self.props.pHasLifelongCard		
 		}
-		mailid=10
+		--mailid=10
 	elseif itemtype == tonumber(static_const.Static_ItemType_Clothes) then
 		table.insert(self.props.pClothes, itemid)
 		res["data"] = {
@@ -721,9 +722,9 @@ function UserProps:setUserProp(userinfo,itemtype,itemnum,paraone,paratwo)
 	unilight.response(userinfo.laccount, res)	
 	UserProps:sendUserProps(userinfo)
 	--发送邮件	
-	if mailid ~= 0 then
-		userinfo.mailMgr:addNew(mailid, "", "")
-	end
+	--if mailid ~= 0 then
+	--	userinfo.mailMgr:addNew(mailid, "", "")
+	--end
 	unilight.savefield("userinfo", userinfo.uid, "UserProps", self.props)	
 	
 end
@@ -864,18 +865,6 @@ function StoreMgr:buyGoods(laccount, goodsid, storeid)
 	end
 
 	local itemtype = tonumber(itemdata.itemtype)
-
-	--旅行团头像只能购买一次
-	if itemtype == static_const.Static_ItemType_Clothes then
-		local friendData = FriendManager:GetFriendInfo(uid)
-		local data = travelHead[itemid]
-		if friendData ~= nil and data ~= nil then
-			local travelData = friendData:GetUserTravel()
-			if travelData:IsExistTravelHeadBackup(data.head) == true then
-				return false,ERROR_CODE.OPEATE_AGAIN
-			end
-		end
-	end
 
 	--检测前置
 	local beforeid = storedata.beforeid

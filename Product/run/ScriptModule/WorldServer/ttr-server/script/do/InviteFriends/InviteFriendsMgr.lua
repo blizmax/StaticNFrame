@@ -91,10 +91,7 @@ end
 
 InviteFriendsMgr.HandleReward = function (rewardStr, uid)
 
-    local userInfo = UserInfo.GetUserInfoById(uid)
-    if userInfo == nil then
-        return
-    end
+    local friendData = FriendManager:GetOrNewFriendInfo(uid)
 
     local rewardTable = SplitStrBySemicolon(rewardStr)
     local rewardInfo = {}
@@ -111,13 +108,10 @@ InviteFriendsMgr.HandleReward = function (rewardStr, uid)
     for i, v in pairs(rewardInfo) do
         if v > 0 then
             local rewardType = tonumber(i)
-            print("HandleReward, i="..i..", v="..v..", rewardType="..rewardType)
             if rewardType <=2 then
-                print("邀请好友领取前, uid="..userInfo.uid..", money="..userInfo.money..", diamond="..userInfo.diamond..", rewardType="..i..", num="..v)
-                UserInfo.AddUserMoney(userInfo, rewardType, v)
-                print("邀请好友领取后, uid="..userInfo.uid..", money="..userInfo.money..", diamond="..userInfo.diamond)
+                FriendManager.AddUserMoney(nil, friendData, rewardType, v)
             else
-                UserItems:useItem(userInfo, rewardType, v)
+                FriendManager.UseItem(nil, friendData, rewardType, v)
             end
         end
     end

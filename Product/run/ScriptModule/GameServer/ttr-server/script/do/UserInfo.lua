@@ -12,8 +12,6 @@ end
 function UserInfo.ZeroTimer()
 	--清理玩家
 	UserInfo.AllUserZeroClear()
-	--清理好友系统
-	FriendManager:AllFriendZeroClear()
 end
 
 --玩家每天零点清理数据
@@ -27,6 +25,7 @@ end
 --玩家每天零点清理数据
 function UserInfo.UserZeroClear(userInfo)
 	userInfo.UserProps:dealZeroInitProps()
+	userInfo.dailyWelfare:dealZeroReset()
 end
 
 --定时保存玩家数据到DB
@@ -67,6 +66,7 @@ function UserInfo.CreateTempUserInfo(uid)
 		sex			= 1,
 		head		= "",
 		firstLogin  = 1,--首次登陆
+		friendAddontion = 0,
 	}
 
 	local world = World:new()
@@ -148,6 +148,7 @@ function UserInfo.CreateUserByDb(uid, dbUser)
 		nickName = dbUser.nickName,
 		money = dbUser.money,
 		diamond = dbUser.diamond,
+		friendAddontion = dbUser.friendAddontion or 0,
 		star = dbUser.star or 0,
 		head = dbUser.head or "",
 		sex = dbUser.sex or 1,
@@ -398,7 +399,8 @@ function UserInfo.GetServerData(userInfo)
 		guide = userInfo.guide:GetData(),
 		dailyDiamondReward = userInfo.dailyDiamondReward:GetData(),
 		dailyLotteryDraw = userInfo.dailyLotteryDraw:GetData(),
-		firstLogin = userInfo.firstLogin
+		firstLogin = userInfo.firstLogin,
+		friendAddontion = userInfo.friendAddontion,
 	}
 
 	return userInfoData
@@ -409,7 +411,9 @@ function UserInfo.Connected(uid)
 end
 
 function UserInfo.Disconnected(uid)
-	FriendManager:UserLogoutFriend(uid)
+	local data = {}
+	data.cmd_uid = self.owner.uid
+	unilobby.SendCmdToLobby("Cmd.UserDisconnected_C", data)
 
 	local userInfo = UserInfo.GetUserInfoById(uid)
 
@@ -427,6 +431,24 @@ function UserInfo.Disconnected(uid)
 	if userInfo["offline_timer"] == nil then
 		userInfo["offline_timer"] = unilight.addtimer("UserInfo.offline_savedata", static_const.Static_Const_USER_INFO_MAX_ONLINE_TIME_AFTER_OFFLINE, userInfo.uid)
 	end
+end
+
+function UserInfo.GetOfflineUserInfo(uid)
+    local userInfo = UserInfo.GetUserInfoById(uid)
+	if userInfo == nil then
+        local dbUser = unilight.getdata("userinfo", uid)
+
+        if dbUser ~= nil then
+			userInfo = UserInfo.CreateUserByDb(uid, dbUser)
+			userInfo.firstLogin = 0
+			userInfo.lastlogintime = os.time()
+			UserInfo.GlobalUserInfoMap[uid] = userInfo
+			if userInfo["offline_timer"] == nil then
+				userInfo["offline_timer"] = unilight.addtimer("UserInfo.offline_savedata", static_const.Static_Const_USER_INFO_MAX_ONLINE_TIME_AFTER_OFFLINE, userInfo.uid)
+			end
+        end
+	end
+	return userInfo
 end
 
 --玩家离线保存数据定时器
@@ -492,26 +514,14 @@ function UserInfo.ReconnectLoginOk(laccount)
 	--处理属性重置
 	UserProps:dealLoginInitProps(userInfo)
 
-	--玩家好友数据创建或登录
-	local friendData = FriendManager:UserLoginFriend(uid)
-	local travelData = friendData:GetUserTravel()
-	local friendVisitData = friendData:GetFriendVisit()
-
-	--登录时主动清理零点数据
-	friendData:AutoZeroClear()
-
-	--保存一次玩家互访的数据，并把互访的钱给玩家
-	friendVisitData:Rebuild(userInfo)
-
-	--同步玩家数据到好友数据
-	friendData:SetStar(userInfo.star)
-	friendData:SetMoney(userInfo.money)
-	travelData:CalcAddontion()
-
 	UserInfo.DealOfflinePrize(userInfo, false, 0)
 
 	--玩家产量初始化计算 依赖好友系统的加成计算
 	userInfo.world:recalc()
+
+	local data = {}
+	data.cmd_uid = self.owner.uid
+	unilobby.SendCmdToLobby("Cmd.UserReconncted_C", data)
 end
 
 --------------------------------------------------
@@ -558,11 +568,6 @@ function UserInfo.AddUserMoneyByUid(uid, moneytype, moneynum)
 	end
 	if moneytype == static_const.Static_MoneyType_Gold then
 		userinfo.money = userinfo.money + moneynum
-		RankListMgr:UpdateRankNode(RankListMgr.rank_type_money, uid, userinfo.money)
-		local friendInfo = FriendManager:GetFriendInfo(userinfo.uid)
-		if friendInfo ~= nil then
-			friendInfo.simpleData.money = userinfo.money
-		end
 	end
 
 	--同步下	
@@ -589,8 +594,12 @@ function UserInfo.SubUserMoneyByUid(uid, moneytype, moneynum)
 	end
 	local num = 0
 	if moneytype == static_const.Static_MoneyType_Diamond then
-		if userinfo.diamond > moneynum then
-			userinfo.diamond = userinfo.diamond - moneynum
+		if userinfo.diamond > 0 then
+			if userinfo.diamond > moneynum then
+				userinfo.diamond = userinfo.diamond - moneynum
+			else
+				userinfo.diamond = 0
+			end
 			num = moneynum
 			--任务系统，任务完成情况
 			userinfo.achieveTask:addProgress(TaskConditionEnum.CostDiamondEvent,moneynum)
@@ -599,12 +608,11 @@ function UserInfo.SubUserMoneyByUid(uid, moneytype, moneynum)
 		end
 	end
 	if moneytype == static_const.Static_MoneyType_Gold then
-		if userinfo.money > moneynum then
-			userinfo.money = userinfo.money - moneynum
-			RankListMgr:UpdateRankNode(RankListMgr.rank_type_money, uid, userinfo.money)
-			local friendInfo = FriendManager:GetFriendInfo(userinfo.uid)
-			if friendInfo ~= nil then
-				friendInfo.simpleData.money = userinfo.money
+		if userinfo.money > 0 then
+			if userinfo.money > moneynum then
+				userinfo.money = userinfo.money - moneynum
+			else
+				userinfo.money = 0
 			end
 			num = moneynum
 		end
@@ -652,11 +660,6 @@ function UserInfo.AddUserMoney(userinfo, moneytype, moneynum)
 	end
 	if moneytype == static_const.Static_MoneyType_Gold then
 		userinfo.money = userinfo.money + moneynum
-		RankListMgr:UpdateRankNode(RankListMgr.rank_type_money, userinfo.uid, userinfo.money)
-		local friendInfo = FriendManager:GetFriendInfo(userinfo.uid)
-		if friendInfo ~= nil then
-			friendInfo.simpleData.money = userinfo.money
-		end
 	end
 	--同步下	
 	UserInfo.SendUserMoney(userinfo)
@@ -672,8 +675,12 @@ function UserInfo.SubUserMoney(userinfo, moneytype, moneynum)
 	end
 	local num = 0
 	if moneytype == static_const.Static_MoneyType_Diamond then
-		if (userinfo.diamond) > (moneynum) then
-			userinfo.diamond = userinfo.diamond - moneynum
+		if (userinfo.diamond) > 0 then
+			if (userinfo.diamond) > (moneynum) then
+				userinfo.diamond = userinfo.diamond - moneynum
+			else
+				userinfo.diamond = 0
+			end
 			num = moneynum
 			--任务系统，任务完成情况
 			userinfo.achieveTask:addProgress(TaskConditionEnum.CostDiamondEvent, moneynum)
@@ -682,13 +689,13 @@ function UserInfo.SubUserMoney(userinfo, moneytype, moneynum)
 		end
 	end
 	if moneytype == static_const.Static_MoneyType_Gold then
-		if userinfo.money > moneynum then
-			userinfo.money = userinfo.money - moneynum
-			RankListMgr:UpdateRankNode(RankListMgr.rank_type_money, userinfo.uid, userinfo.money)
-			local friendInfo = FriendManager:GetFriendInfo(userinfo.uid)
-			if friendInfo ~= nil then
-				friendInfo.simpleData.money = userinfo.money
+		if userinfo.money > 0 then
+			if userinfo.money > moneynum then
+				userinfo.money = userinfo.money - moneynum
+			else
+				userinfo.money = 0
 			end
+			
 			num = moneynum
 		end
 	end
@@ -720,3 +727,56 @@ function UserInfo.SendUserMoney(userinfo)
 	return res
 end
 ------------------------------------------------------
+
+
+--中心服务器通知加钱扣钱
+Lby.CmdNotifyAddUserMoney_S = function(cmd, lobbyClientTask)
+    local uid = cmd.data.cmd_uid
+    
+    local userInfo = UserInfo.GetOfflineUserInfo(uid)
+	if userInfo == nil then
+        unilight.error("userinfo is not exist,uid:"..uid)
+		return
+    end
+
+    UserInfo.AddUserMoney(userInfo, cmd.data.moneytype, cmd.data.moneynum)      
+end
+
+--中心服务器通知加钱扣钱
+Lby.CmdNotifySubUserMoney_S = function(cmd, lobbyClientTask)
+    local uid = cmd.data.cmd_uid
+    
+    local userInfo = UserInfo.GetOfflineUserInfo(uid)
+	if userInfo == nil then
+        unilight.error("userinfo is not exist,uid:"..uid)
+		return
+    end
+
+    UserInfo.SubUserMoney(userInfo, cmd.data.moneytype, cmd.data.moneynum)      
+end
+
+--中心服务器通知使用物品
+Lby.CmdNotifyUseItem_S = function(cmd, lobbyClientTask)
+    local uid = cmd.data.cmd_uid
+    
+    local userInfo = UserInfo.GetOfflineUserInfo(uid)
+	if userInfo == nil then
+        unilight.error("userinfo is not exist,uid:"..uid)
+		return
+	end
+	
+	UserItems:useItem(userInfo, cmd.data.itemid, cmd.data.itemnum)    
+end
+
+--中心服务器消息通知
+Lby.CmdMsgNewCmd_S = function(cmd, lobbyClientTask)
+    local uid = cmd.data.cmd_uid
+    
+    local userInfo = UserInfo.GetOfflineUserInfo(uid)
+	if userInfo == nil then
+        unilight.error("userinfo is not exist,uid:"..uid)
+		return
+	end
+	
+	unilight.response(userInfo.laccount, cmd)
+end

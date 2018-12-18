@@ -27,7 +27,8 @@ end
 
 --保存当前是每周几天和每月第几天
 function GlobalDayZeroClock()
-	UserInfo.ZeroTimer()
+	--清理好友系统
+	FriendManager:AllFriendZeroClear()
 end
 
 --保存当前是每周几天和每月第几天

@@ -430,35 +430,13 @@ function DailyWelfare:GetNumDayOfTheWeek()
     return math.ceil(day)
 end
 
-
-function DailyWelfare:initGiftBagInfoForDebug()
-
-    local userInfo = {
-        uid			= 10086,
-        nickName	= "测试员" .. 10086,
-        money		= 1000,
-        diamond		= 1000,
-        star		= 1000,
-        settings	= {},
-        sex			= 1,
-        head		= "",
-        firstLogin  = 1,--首次登陆
-    }
-
-    self:init(userInfo)
-    DailyWelfare:GetDailyWelfareInfo()
-    DailyWelfare:HandleReward(2)
-    print("hello")
+function DailyWelfare:DealWithLogin()
+    if ttrutil.IsSameDay(self.owner.lastlogintime,os.time()) == false then
+        self:initGiftBagInfo()
+    end
 end
-
---DailyWelfare:initGiftBagInfoForDebug()
 
 --When 0:00, call
-function DailyWelfare:reset()
-    --self:initGiftBagInfo()
+function DailyWelfare:dealZeroReset()
+    self:initGiftBagInfo()
 end
-
-function DailyWelfare:addProgress(cond, times)
-
-end
-

@@ -259,3 +259,39 @@ Net.CmdReqGetActiveReward_C = function(cmd, laccount)
     }
     return res  
 end
+
+Lby.CmdNotifyDailyTaskAddProgress_S = function(cmd, lobbyClientTask)
+    local uid = cmd.data.cmd_uid
+    
+    local userInfo = UserInfo.GetOfflineUserInfo(uid)
+	if userInfo == nil then
+        unilight.error("userinfo is not exist,uid:"..uid)
+		return
+    end
+
+    userInfo.dailyTask:addProgress(cmd.data.event, cmd.data.times)        
+end
+
+Lby.CmdNotifyAchieveTaskAddProgress_S = function(cmd, lobbyClientTask)
+    local uid = cmd.data.cmd_uid
+    
+    local userInfo = UserInfo.GetOfflineUserInfo(uid)
+	if userInfo == nil then
+        unilight.error("userinfo is not exist,uid:"..uid)
+		return
+    end
+
+    userInfo.achieveTask:addProgress(cmd.data.event, cmd.data.times)       
+end
+
+Lby.CmdNotifyMainTaskAddProgress_S = function(cmd, lobbyClientTask)
+    local uid = cmd.data.cmd_uid
+    
+    local userInfo = UserInfo.GetOfflineUserInfo(uid)
+	if userInfo == nil then
+        unilight.error("userinfo is not exist,uid:"..uid)
+		return
+    end
+
+    userInfo.mainTask:addProgress(cmd.data.event, cmd.data.times)       
+end

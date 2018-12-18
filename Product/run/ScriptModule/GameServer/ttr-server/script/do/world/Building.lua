@@ -54,14 +54,14 @@ function Building:recalc()
 
 	local userinfo = UserInfo.GetUserInfoById(self.owner.uid)
 	if userinfo == nil then
-		return	
+		return
 	end
 
 	--建筑效率 = 	1 - 建筑效率提升% / (建筑效率提升% + 1)	
 	local aaa = (1 - UserProps:getUserProp(userinfo,"pBuildingProduceRate")/(UserProps:getUserProp(userinfo,"pBuildingProduceRate") + 1)) * GlobalConst.Takt_Time
 	--建筑产量 / 建筑效率 * 建筑改造加成 * (1 + 抓捕好友加成 * (1 + 好友亲密度加成) * (1 + 旅行团加成)) * 世界加成
-	self.produce = (self:getValue("ProduceMoney") / self:getValue("ProduceTime") )* self:getRebuildValue("Times")/aaa * (FriendManager:GetAddontion(self.owner.uid)) *(userinfo.UserProps:getUserProp(userinfo,"pWorldGoldAddRatio") + 1)
-	--unilight.info("Building计算值:" .. self.produce .. ",建筑效率:" .. aaa .. ",建筑速率:" ..  self.owner.UserProps:getUserProp(userinfo,"pBuildingProduceRate") .. ",世界加成:" .. self.owner.UserProps:getUserProp(userinfo,"pWorldGoldAddRatio") .. " 旅行团值;" .. FriendManager:GetAddontion(self.owner.uid))
+	self.produce = (self:getValue("ProduceMoney") / self:getValue("ProduceTime") )* self:getRebuildValue("Times")/aaa * (userinfo.friendAddontion) *(userinfo.UserProps:getUserProp(userinfo,"pWorldGoldAddRatio") + 1)
+
 end
 
 -- Get value from Levelup table
@@ -131,17 +131,16 @@ function Building:levelupTen()
 	--self.owner.achieveTask:addProgress(TaskConditionEnum.BuildingLevelUpEvent, self.owner.star)
 	--self.owner.dailyTask:addProgress(TaskConditionEnum.BuildingLevelUpEvent, self.owner.star)
 
-	local friendInfo = FriendManager:GetFriendInfo(self.owner.uid)
-	if friendInfo ~= nil then
-		friendInfo.simpleData.star = self.owner.star
-
-		local friendvisitData = friendInfo:GetFriendVisit()
-		if friendvisitData:GetCurMapId() == self.state.id then
-			friendvisitData:SetLevel(self.id, self.lv)
-		end
-	end
-
-	RankListMgr:UpdateRankNode(RankListMgr.rank_type_star, self.owner.uid, self.owner.star)
+	--同步中心服务器
+	local data = {}
+	data.cmd_uid = self.owner.uid
+	data.userInfo = {
+		star = self.owner.star,
+		mapid = self.state.id,
+		buildid = self.id,
+		lv = self.lv,
+	}
+	unilobby.SendCmdToLobby("Cmd.BuildingLevelup_C", data) 
 
 	return ERROR_CODE.SUCCESS
 end
@@ -183,18 +182,15 @@ function Building:levelup()
 	self.owner.mainTask:addProgress(TaskConditionEnum.SpecifyBuildingLevelUpEvent, 1, self.id)
 	self.owner.mainTask:addProgress(TaskConditionEnum.SpecifyBuildingStar, self.lv, self.id)
 
-	local friendInfo = FriendManager:GetFriendInfo(self.owner.uid)
-	if friendInfo ~= nil then
-		friendInfo.simpleData.star = self.owner.star
-
-		local friendvisitData = friendInfo:GetFriendVisit()
-		if friendvisitData:GetCurMapId() == self.state.id then
-			friendvisitData:SetLevel(self.id, self.lv)
-		end
-	end
-
-	RankListMgr:UpdateRankNode(RankListMgr.rank_type_star, self.owner.uid, self.owner.star)
-
+	local data = {}
+	data.cmd_uid = self.owner.uid
+	data.userInfo = {
+		star = self.owner.star,
+		mapid = self.state.id,
+		buildid = self.id,
+		lv = self.lv,
+	}
+	unilobby.SendCmdToLobby("Cmd.BuildingLevelup_C", data) 
 
 	return ERROR_CODE.SUCCESS
 end
@@ -241,13 +237,14 @@ function Building:rebuild()
 	self.owner.achieveTask:addProgress(TaskConditionEnum.BuildingChangeEvent, 1)
 	self.owner.dailyTask:addProgress(TaskConditionEnum.BuildingChangeEvent, 1)
 
-	local friendInfo = FriendManager:GetFriendInfo(self.owner.uid)
-	if friendInfo ~= nil then
-		local friendvisitData = friendInfo:GetFriendVisit()
-		if friendvisitData:GetCurMapId() == self.state.id then
-			friendvisitData:SetBuildLevel(self.id, self.buildLv)
-		end
-	end
+	local data = {}
+	data.cmd_uid = self.owner.uid
+	data.userInfo = {
+		mapid = self.state.id,
+		buildid = self.id,
+		lv = self.lv,
+	}
+	unilobby.SendCmdToLobby("Cmd.BuildingReBuild_C", data) 
 
 
 	return ERROR_CODE.SUCCESS

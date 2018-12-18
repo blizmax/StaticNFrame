@@ -38,9 +38,16 @@ function Net.CmdSaveSettingsCmd_C(cmd, laccount)
 
 	userInfo.settings = cmd.data.settings
 
-	--暂时保存一份在好友系统里, 以后可能要做别的处理
-	local friendData = FriendManager:GetOrNewFriendInfo(laccount.Id)
-	friendData:SetUserSimpleData(userInfo.star, userInfo.gender, userInfo.settings.signature, userInfo.settings.area, userInfo.settings.horoscope)
+	local data = {}
+	data.cmd_uid = self.owner.uid
+	data.userInfo = {
+		star = userInfo.star, 
+		gender = userInfo.gender, 
+		signature = userInfo.settings.signature,
+		area = userInfo.settings.area, 
+		horoscope = userInfo.settings.horoscope,
+	}
+	unilobby.SendCmdToLobby("Cmd.SaveSettingsCmd_C", data)
 	return res
 end
 

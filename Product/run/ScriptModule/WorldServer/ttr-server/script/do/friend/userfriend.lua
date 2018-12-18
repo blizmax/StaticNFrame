@@ -56,6 +56,12 @@ end
 function UserFriend:Init(uid)
     -- 创建好友结构体
     self.uid = uid
+    --玩家在线当前所在游戏id
+    self.gameid = 0
+    --玩家在线当前所在分区id
+    self.zoneid = 0
+    self.isFirstLogin = false
+
     self.app_id = ""
     self.online = true --当前玩家是否在线
     self.simpleData = UserFriendSimpleData:New()     --玩家简单数据，用于显示
@@ -115,6 +121,10 @@ function UserFriend:Init(uid)
 
     -- autorecommendtimer 自动推荐定时器
     self.autorecommendtimer = nil
+
+    -- 玩家消息数据
+    self.message = MsgMgr:New()
+    self.message:Init()
 end
 
 --设置零点清理时间
@@ -388,6 +398,7 @@ function UserFriend:SetDBTable(data)
 
     self.userTravel:SetDBTable(data.userTravel)
     self.friendVisit:SetDBTable(data.friendVisit)
+    self.message:SetDBTable(data.message)
 end
 
 --将userfriend数据打包到一个table里
@@ -398,6 +409,7 @@ function UserFriend:GetDBTable()
     data.online = self.online
     data.progressRewarded = self.progressRewarded
     data.simpleData = self.simpleData:GetDBTable()
+    data.message = self.message:GetDBTable()
 
     data.friends = {}
     self.friends:ForEach(
@@ -684,4 +696,24 @@ end
 
 function UserFriend:GetAddontion()
     return self.userTravel:GetAddontion()
+end
+
+function UserFriend:Give(zonetask, friendinfo, msgType, args)
+    local msg = self.message:give(friendinfo, msgType, args)
+
+    --push client
+    local res = {}
+    res["do"] = "Cmd.MsgNewCmd_S"
+    res["data"] = {
+        cmd_uid = self.uid,
+        record = msg,
+    }
+
+    if self.gameid == 0 or self.zoneid == 0 then
+        if zonetask ~= nil then
+            ZoneInfo.SendCmdToMe(res["do"], res["data"], zonetask)
+        end
+    else
+        ZoneInfo.SendCmdToMeById(res["do"], res["data"], self.gameid, self.zoneid)
+    end
 end

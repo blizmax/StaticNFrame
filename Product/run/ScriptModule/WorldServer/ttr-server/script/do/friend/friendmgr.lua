@@ -1,8 +1,33 @@
 
 require "script/do/common/staticconst"
-require "script/do/UserInfo"
 
 CreateClass("FriendManager")    --好友数据结构管理
+
+TaskConditionEnum = 
+{
+	LoginEvent = 0,						--登录
+	BuildingLevelUpEvent = 1,			--升级建筑（的次数）
+	BuildingChangeEvent = 2,			--建筑改造（的次数）
+	TravelLevelUpEvent = 3,				--旅行团等级提升
+	OpenMapEvent = 4,					--开启地图
+	ClickEvent = 5,						--点击次数事件(点击旅行团)
+	EmployFriendEvent = 6,				--雇佣好友事件
+	CaptureFriendEvent = 7,				--抓捕好友事件
+	StopCaptureEvent = 8,				--防御抓捕
+	CostDiamondEvent  = 9,				--累积消耗砖石
+	ApplyFriendEvent = 10,				--申请好友
+	AskFriendEvent = 11,				--邀请好友玩游戏
+	SharedGameEvent = 12,				--分享好友
+	AllBuildingStarEvent = 13,			--建筑要达到的的总星级
+	SpecifyBuildingLevelUpEvent = 14,	--升级指定建筑
+	SpecifyBuildingStar = 15,			--指定建筑要达到的星级
+	TravelLevelValueEvent = 16,			--旅行团要达到的等级
+	AddFriendEvent = 17,				--添加好友
+	VisitFriendEvent = 18,				--访问好友
+	InspireFriendEvent = 19,			--鼓舞好友
+	MischiefFriendEvent = 20,			--捣蛋好友
+	OpenSpecifyMapEvent = 21,			--开启指定地图
+}
 
 --初始化，分配好友数据
 function FriendManager:Init()
@@ -100,8 +125,8 @@ function FriendManager.FriendTravelEmployTimeout(uid, employ_uid, timer)
         f_friendData:SetOfflineChange()
 
         --雇佣完成，通知对方
-        message.give(employ_uid, friendData:GetTempUserInfo(), MsgTypeEnum.TripGroupMeFinishEmploy, {"1",})
-        message.give(uid, f_friendData:GetTempUserInfo(), MsgTypeEnum.TripGroupFriendFinishEmploy, {"1",})
+        f_friendData:Give(nil, friendData, MsgTypeEnum.TripGroupMeFinishEmploy, {"1",})
+        friendData:Give(nil, f_friendData, MsgTypeEnum.TripGroupMeFinishEmploy, {"1",})
     end
 
     travelData:DelMember(employ_uid)
@@ -380,10 +405,13 @@ function FriendManager.CheckData()
 end
 
 -- 玩家上线
-function FriendManager:UserLoginFriend(uid)
+function FriendManager:UserLoginFriend(uid, zonetask)
     local friendData = self:GetOrNewFriendInfo(uid)
     friendData:SetOnline()
     friendData:ClearLastLogoutTime()
+
+    friendData.gameid = zonetask.GetGameId()
+	friendData.zoneid = zonetask.GetZoneId()
 
     if friendData.autorecommendtimer == nil then
         friendData.autorecommendtimer = unilight.addtimer("FriendManager.SystemAutoRecommendFriend", static_const.Static_Const_Friend_System_Auto_Recommend_Time, uid)
@@ -397,6 +425,9 @@ function FriendManager:UserLogoutFriend(uid)
     local friendData = self:GetOrNewFriendInfo(uid)
     friendData:SetOffline()
     friendData:SetLastLogoutTime()
+
+    friendData.gameid = 0
+	friendData.zoneid = 0
 
     friendData:ClearOfflineChange()
     FriendManager:SaveDataToDb(friendData)
@@ -459,4 +490,97 @@ function FriendManager.GetCaptureFriendVisitFriend(f_friendData)
     )
 
     return visit_friend
+end
+
+function FriendManager.NotifyDailyTaskAddProgress(zonetask, friendinfo, event, times)
+    --通知客户端 每日任务完成
+    local res = { }
+    res["do"] = "Cmd.NotifyDailyTaskAddProgress_S"
+    res["data"] = {
+        notify_uid = friendinfo.uid, 
+        event = event,
+        times = times,
+    }
+    if friendinfo.gameid == 0 or friendinfo.zoneid == 0 then
+        ZoneInfo.SendCmdToMe(res["do"], res["data"], zonetask)
+    else
+        ZoneInfo.SendCmdToMeById(res["do"], res["data"], friendinfo.gameid, friendinfo.zoneid)
+    end
+end
+
+function FriendManager.NotifyAchieveTaskAddProgress(zonetask, friendinfo, event, times)
+    --通知客户端 每日任务完成
+    local res = { }
+    res["do"] = "Cmd.NotifyAchieveTaskAddProgress_S"
+    res["data"] = {
+        cmd_uid = friendinfo.uid, 
+        event = event,
+        times = times,
+    }
+    if friendinfo.gameid == 0 or friendinfo.zoneid == 0 then
+        ZoneInfo.SendCmdToMe(res["do"], res["data"], zonetask)
+    else
+        ZoneInfo.SendCmdToMeById(res["do"], res["data"], friendinfo.gameid, friendinfo.zoneid)
+    end
+end
+
+function FriendManager.NotifyMainTaskAddProgress(zonetask, friendinfo, event, times)
+    --通知客户端 每日任务完成
+    local res = { }
+    res["do"] = "Cmd.NotifyMainTaskAddProgress_S"
+    res["data"] = {
+        cmd_uid = friendinfo.uid, 
+        event = event,
+        times = times,
+    }
+    if friendinfo.gameid == 0 or friendinfo.zoneid == 0 then
+        ZoneInfo.SendCmdToMe(res["do"], res["data"], zonetask)
+    else
+        ZoneInfo.SendCmdToMeById(res["do"], res["data"], friendinfo.gameid, friendinfo.zoneid)
+    end
+end
+
+function FriendManager.AddUserMoney(zonetask, friendinfo, moneytype, moneynum)
+    local res = { }
+    res["do"] = "Cmd.NotifyAddUserMoney_S"
+    res["data"] = {
+        cmd_uid = friendinfo.uid, 
+        moneytype = moneytype,
+        moneynum = moneynum,
+    }
+    if friendinfo.gameid == 0 or friendinfo.zoneid == 0 then
+        ZoneInfo.SendCmdToMe(res["do"], res["data"], zonetask)
+    else
+        ZoneInfo.SendCmdToMeById(res["do"], res["data"], friendinfo.gameid, friendinfo.zoneid)
+    end
+end
+
+function FriendManager.SubUserMoney(zonetask, friendinfo, moneytype, moneynum)
+    local res = { }
+    res["do"] = "Cmd.NotifySubUserMoney_S"
+    res["data"] = {
+        cmd_uid = friendinfo.uid, 
+        moneytype = moneytype,
+        moneynum = moneynum,
+    }
+    if friendinfo.gameid == 0 or friendinfo.zoneid == 0 then
+        ZoneInfo.SendCmdToMe(res["do"], res["data"], zonetask)
+    else
+        ZoneInfo.SendCmdToMeById(res["do"], res["data"], friendinfo.gameid, friendinfo.zoneid)
+    end
+end
+
+function FriendManager.UseItem(zonetask, friendinfo, itemid, itemnum)
+    local res = { }
+    res["do"] = "Cmd.NotifyUseItem_S"
+    res["data"] = {
+        cmd_uid = friendinfo.uid, 
+        itemid = itemid,
+        itemnum = itemnum,
+    }
+    if friendinfo.gameid == 0 or friendinfo.zoneid == 0 then
+        ZoneInfo.SendCmdToMe(res["do"], res["data"], zonetask)
+    else
+        ZoneInfo.SendCmdToMeById(res["do"], res["data"], friendinfo.gameid, friendinfo.zoneid)
+    end
 end

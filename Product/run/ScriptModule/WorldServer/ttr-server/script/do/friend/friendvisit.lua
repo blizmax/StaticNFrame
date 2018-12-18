@@ -202,31 +202,6 @@ function FriendVisit:BeteasedNumberIsLimit()
     return false
 end
 
---重构好友互访数据
-function FriendVisit:Rebuild(userInfo)
-    local maxid = 0
-    for k, state in pairs(userInfo.world.states) do
-        if k >= maxid then
-            maxid = k
-        end
-    end
-
-    if userInfo.world.states[maxid] == nil then return end
-
-    self.cur_map_id = maxid
-    self.builds = { }
-
-    for id, build in pairs(userInfo.world.states[maxid].buildings) do
-        self:AddBuild(build.id, build.lv, build.buildLv)
-    end
-
-    UserInfo.AddUserMoney(userInfo, static_const.Static_MoneyType_Gold, self.add_visit_money)
-    UserInfo.SubUserMoney(userInfo, static_const.Static_MoneyType_Gold, self.sub_visit_money)
-
-    self.add_visit_money = 0
-    self.sub_visit_money = 0
-end
-
 function FriendVisit:GetDBTable()
     local data = {}
     data.cur_map_id = self.cur_map_id

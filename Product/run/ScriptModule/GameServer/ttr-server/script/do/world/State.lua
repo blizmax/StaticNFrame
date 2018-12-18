@@ -95,17 +95,15 @@ function State:buy(id) -- building ID
 	local building = Building:new()
 	building:init(self.owner, self, id, 1, 1)
 
-	local friendInfo = FriendManager:GetFriendInfo(self.owner.uid)
-	if friendInfo ~= nil then
-		friendInfo.simpleData.star = self.owner.star
-		friendInfo.simpleData.money = self.owner.money
-
-		local friendvisitData = friendInfo:GetFriendVisit()
-		friendvisitData:AddBuild(id, 1, 1)
-	end
-
-	RankListMgr:UpdateRankNode(RankListMgr.rank_type_star, self.owner.uid, self.owner.star)
-	RankListMgr:UpdateRankNode(RankListMgr.rank_type_money, self.owner.uid, self.owner.money)
+	local data = {}
+	data.cmd_uid = self.owner.uid
+	data.userInfo = {
+		star = self.owner.star,
+		money = self.owner.money,
+		mapid = self.id,
+		buildid = id,
+	}
+	unilobby.SendCmdToLobby("Cmd.UserBuyBuild_C", data)
 
 	--任务系统，任务完成情况
 	self.owner.achieveTask:addProgress(TaskConditionEnum.BuildingLevelUpEvent, self.owner.star)

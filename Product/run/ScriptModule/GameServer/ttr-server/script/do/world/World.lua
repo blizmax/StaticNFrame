@@ -67,17 +67,13 @@ function World:update()
 	self.owner.product = perProduct
 	self.owner.money = self.owner.money + product
 
-	local friendData = FriendManager:GetFriendInfo(self.owner.uid)
-
-	--unilight.debug("玩家产量:" .. product)
-
-	if friendData ~= nil then
-		friendData:SetProduct(perProduct)
-	--更新产量榜
-		RankListMgr:UpdateRankNode(RankListMgr.rank_type_product, self.owner.uid, perProduct)
-	end
-
-	--unilight.debug("UID:" .. self.owner.uid .."Money:" .. self.owner.money)
+	local data = {}
+	data.cmd_uid = self.owner.uid
+	data.userInfo = {
+		product = self.owner.product,
+		money = self.owner.money,
+	}
+	unilobby.SendCmdToLobby("Cmd.UserUpdate_C", data)
 end
 
 --In normal case, it is unused
@@ -195,16 +191,12 @@ function World:openState(id) -- state ID
 	self.owner.mainTask:addProgress(TaskConditionEnum.OpenMapEvent, 1)
 	self.owner.mainTask:addProgress(TaskConditionEnum.OpenSpecifyMapEvent, 1, mapid)
 
-	local friendData = FriendManager:GetFriendInfo(self.owner.uid)
-	if friendData ~= nil then
-		local friendvisitData = friendData:GetFriendVisit()
-		friendvisitData:SetCurMapId(mapid)
-	end
-
-	--local items = {}
-	--table.insert(items, {1001, 1})
-	--table.insert(items, {1, 100})
-	--self.owner.mailMgr:addNew(1, "Hello Mail", "就是我", items)
+	local data = {}
+	data.cmd_uid = self.owner.uid
+	data.userInfo = {
+		mapid = mapid
+	}
+	unilobby.SendCmdToLobby("Cmd.UserOpenMap_C", data)
 
 	return ERROR_CODE.SUCCESS
 end
@@ -262,20 +254,11 @@ function World:click(stateId, times, critical)
 	self.owner.dailyTask:addProgress(TaskConditionEnum.ClickEvent, times)
 	self.owner.mainTask:addProgress(TaskConditionEnum.ClickEvent, times)
 
-	local friendInfo = FriendManager:GetFriendInfo(self.owner.uid)
-	if friendInfo ~= nil then
-		friendInfo.simpleData.click = friendInfo.simpleData.click + times
-		RankListMgr:UpdateRankNode(RankListMgr.rank_type_click, self.owner.uid, friendInfo.simpleData.click)
-
-		local travelData = friendInfo:GetUserTravel()
-
-		for i = 0, times do
-			--旅行团团长自己也算一个
-			travelData:AddAnger(travelData:GetMemberCount()+1)
-		end
-
-		travelData:UpdateAngerToClient()
-	end
-
+	local data = {}
+	data.cmd_uid = self.owner.uid
+	data.userInfo = {
+		click = times,
+	}
+	unilobby.SendCmdToLobby("Cmd.UserClick_C", data)
 	return 0
 end

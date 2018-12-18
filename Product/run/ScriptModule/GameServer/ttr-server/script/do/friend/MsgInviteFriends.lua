@@ -1,13 +1,14 @@
 
--- 获得好友互访数据
-Net.CmdGetFriendVisitInfo_C = function(cmd, laccount)
+
+-- 获取玩家邀请到的好友信息
+Net.CmdGetInviteFriendInfoCmd_C = function(cmd, laccount)
     local uid = laccount.Id
 
     cmd.data.cmd_uid = uid
     unilobby.SendCmdToLobby(cmd["do"], cmd["data"])
 end
 
-Lby.CmdGetFriendVisitInfo_S = function(cmd, lobbyClientTask)
+Lby.CmdGetInviteFriendInfoCmd_S = function(cmd, lobbyClientTask)
     local uid = cmd.data.cmd_uid
     
     local userInfo = UserInfo.GetUserInfoById(uid)
@@ -19,15 +20,15 @@ Lby.CmdGetFriendVisitInfo_S = function(cmd, lobbyClientTask)
     unilight.response(userInfo.laccount, cmd)
 end
 
---鼓舞好友,单词用错先保留
-Net.CmdMischiefFriend_C = function(cmd, laccount)
+-- 获取5人领取奖励
+Net.CmdGetAskFriendFiveReward_C = function(cmd, laccount)
     local uid = laccount.Id
 
     cmd.data.cmd_uid = uid
     unilobby.SendCmdToLobby(cmd["do"], cmd["data"])
 end
 
-Lby.CmdMischiefFriend_S = function(cmd, lobbyClientTask)
+Lby.CmdGetAskFriendFiveReward_S = function(cmd, lobbyClientTask)
     local uid = cmd.data.cmd_uid
     
     local userInfo = UserInfo.GetUserInfoById(uid)
@@ -39,15 +40,7 @@ Lby.CmdMischiefFriend_S = function(cmd, lobbyClientTask)
     unilight.response(userInfo.laccount, cmd)
 end
 
---捣蛋好友, 单词用错先保留
-Net.CmdInspireFriend_C = function(cmd, laccount)
-    local uid = laccount.Id
-
-    cmd.data.cmd_uid = uid
-    unilobby.SendCmdToLobby(cmd["do"], cmd["data"])
-end
-
-Lby.CmdInspireFriend_S = function(cmd, lobbyClientTask)
+Lby.CmdNotifyAddUserTravelHead_S = function(cmd, lobbyClientTask)
     local uid = cmd.data.cmd_uid
     
     local userInfo = UserInfo.GetUserInfoById(uid)
@@ -59,15 +52,15 @@ Lby.CmdInspireFriend_S = function(cmd, lobbyClientTask)
     unilight.response(userInfo.laccount, cmd)
 end
 
---鼓舞看视频完回调
-Net.CmdMischiefFriend_Screen_C = function(cmd, laccount)
+ --领取 邀请好友 获得的奖励
+Net.CmdGetInviteFriendRewardCmd_C = function(cmd, laccount)
     local uid = laccount.Id
 
     cmd.data.cmd_uid = uid
     unilobby.SendCmdToLobby(cmd["do"], cmd["data"])
 end
 
-Lby.CmdMischiefFriend_Screen_S = function(cmd, lobbyClientTask)
+Lby.CmdGetInviteFriendRewardCmd_S = function(cmd, lobbyClientTask)
     local uid = cmd.data.cmd_uid
     
     local userInfo = UserInfo.GetUserInfoById(uid)
@@ -79,15 +72,16 @@ Lby.CmdMischiefFriend_Screen_S = function(cmd, lobbyClientTask)
     unilight.response(userInfo.laccount, cmd)
 end
 
---//捣蛋看视频完回调
-Net.CmdInspireFriend_Screen_C = function(cmd, laccount)
+
+--领取 邀请好友进度 获得的奖励
+Net.CmdGetProgressRewardCmd_C = function(cmd, laccount)
     local uid = laccount.Id
 
     cmd.data.cmd_uid = uid
     unilobby.SendCmdToLobby(cmd["do"], cmd["data"])
 end
 
-Lby.CmdInspireFriend_Screen_S = function(cmd, lobbyClientTask)
+Lby.CmdGetProgressRewardCmd_S = function(cmd, lobbyClientTask)
     local uid = cmd.data.cmd_uid
     
     local userInfo = UserInfo.GetUserInfoById(uid)
@@ -98,4 +92,3 @@ Lby.CmdInspireFriend_Screen_S = function(cmd, lobbyClientTask)
 
     unilight.response(userInfo.laccount, cmd)
 end
-

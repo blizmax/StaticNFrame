@@ -1,16 +1,18 @@
-Net.CmdReqGetWorldRankListInfo_C = function(cmd, laccount)
+Zone.CmdReqGetWorldRankListInfo_C = function(cmd,zonetask)
     local res = { }
     res["do"] = "Cmd.ReqGetWorldRankListInfo_S"
-
+    local uid = cmd.data.cmd_uid
     --检查客户端输入
     if cmd["data"] == nil or type(cmd["data"].rank_type) ~= "number" or 
     type(cmd["data"].start_index) ~= "number" or 
     type(cmd["data"].end_index) ~= "number" then
         res["data"] = {
+            cmd_uid = uid,
             resultCode = 1,
             desc = "数据出错"
         }
-        return res
+        ZoneInfo.SendCmdToMe(res["do"], res["data"], zonetask)
+        return
     end
 
     local rankType = cmd["data"].rank_type
@@ -19,13 +21,14 @@ Net.CmdReqGetWorldRankListInfo_C = function(cmd, laccount)
 
     if startIndex > endIndex then
         res["data"] = {
+            cmd_uid = uid,
             resultCode = 1,
             desc = "数据出错"
         }
-        return res    
+        ZoneInfo.SendCmdToMe(res["do"], res["data"], zonetask)
+        return    
     end
 
-    local uid = laccount.Id
     local friendData = FriendManager:GetOrNewFriendInfo(uid);
     local travelData = friendData:GetUserTravel()
 
@@ -33,13 +36,15 @@ Net.CmdReqGetWorldRankListInfo_C = function(cmd, laccount)
 
     if data == nil then
         res["data"] = {
+            cmd_uid = uid,
             resultCode = 1,
             desc = "数据rankType出错"
         }
-        return res
+        ZoneInfo.SendCmdToMe(res["do"], res["data"], zonetask)
+        return
     end
 
-    res["data"] = {}
+    res["data"] = {cmd_uid = uid,}
     res["data"].rank_node = {}
     res["data"].rank_type = rankType
 
@@ -64,7 +69,8 @@ Net.CmdReqGetWorldRankListInfo_C = function(cmd, laccount)
     end
 
     if startIndex > GlobalConst.Ranking_shows then
-        return res
+        ZoneInfo.SendCmdToMe(res["do"], res["data"], zonetask)
+        return
     end
 
     if endIndex > GlobalConst.Ranking_shows then
@@ -74,7 +80,8 @@ Net.CmdReqGetWorldRankListInfo_C = function(cmd, laccount)
     for index=startIndex, endIndex do
         local node = data[index]
         if node == nil then 
-            return res
+            ZoneInfo.SendCmdToMe(res["do"], res["data"], zonetask)
+            return
         end
         local node_friendData = FriendManager:GetFriendInfo(node:GetUid());
         if node_friendData ~= nil then
@@ -95,5 +102,6 @@ Net.CmdReqGetWorldRankListInfo_C = function(cmd, laccount)
         end
     end
 
-    return res
+    ZoneInfo.SendCmdToMe(res["do"], res["data"], zonetask)
+    return
 end
