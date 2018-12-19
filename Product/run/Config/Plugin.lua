@@ -88,6 +88,8 @@ LoadPlugin =
 			
 			"NFWorldClientPlugin",
 			"NFWorldServerPlugin",
+			
+			"NFLuaScriptPlugin",
 		};
 		ServerType = NF_ST_WORLD;
 	},
