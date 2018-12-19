@@ -180,7 +180,7 @@ end
 function LuaNFrame:getdata(name, key)
     local data = self.mongoModule:FindOneByKey(0, name, key)
     if data ~= nil and data ~= "" then
-        return json.decode(data)
+        return json2table(data)
     end
 end
 
@@ -201,8 +201,9 @@ end
 ]] 
 function LuaNFrame:savedata(name, data)
     local json_data = table2json(data)
-    if type(data.uid) == "number" then
-        return self.mongoModule:UpdateOneByKey(0, name, json_data, data.uid)
+    if type(data.uid) == "number" or type(data.uid) == "string" then
+        local uid = tonumber(data.uid)
+        return self.mongoModule:UpdateOneByKey(0, name, json_data, uid)
     else
         return self.mongoModule:UpdateOne(0, name, json_data)
     end
@@ -221,7 +222,7 @@ function LuaNFrame:getfield(name, id, fieldpath)
     local data = self.mongoModule:FindFieldByKey(0, name, fieldpath, id)
 
     if type(data) == "string" and data ~= "" then
-        data = json.decode(data)
+        data = json2table(data)
     else
         return
     end

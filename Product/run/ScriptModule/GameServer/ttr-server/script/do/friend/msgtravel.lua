@@ -148,7 +148,7 @@ Net.CmdRescissionEmployFriendShip_C = function(cmd, laccount)
     unilobby.SendCmdToLobby(cmd["do"], cmd["data"])
 end
 
-Lby.RescissionEmployFriendShip_S = function(cmd, lobbyClientTask)
+Lby.CmdRescissionEmployFriendShip_S = function(cmd, lobbyClientTask)
     local uid = cmd.data.cmd_uid
     
     local userInfo = UserInfo.GetUserInfoById(uid)
