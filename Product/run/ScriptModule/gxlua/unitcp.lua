@@ -28,6 +28,15 @@ function TcpServer.addEventCallBack(serverType, luaFunc)
 	LuaNFrame:addEventCallBack(serverType, luaFunc)
 end
 
+function TcpServer.sendByServerID(unlinkId, cmd)
+	if type(cmd) == "table" then
+		cmd = table2json(cmd)
+	end
+
+	if type(cmd) == "string" then
+		LuaNFrame:sendByServerID(unlinkId, 0, cmd, 0)
+	end
+end
 
 function TcpServer.sendJsonMsg(cmd, laccount)
 	if type(cmd) == "table" then
@@ -67,5 +76,15 @@ function TcpClient.sendJsonMsg(cmd, laccount)
 	
 	if type(cmd) == "string" then
 		LuaNFrame:sendByServerIDForClient(laccount.unLinkId, 0, cmd, laccount.Id)
+	end
+end
+
+function TcpClient.sendJsonMsgByServerType(serverType, cmd)
+	if type(cmd) == "table" then
+		cmd = table2json(cmd)
+	end
+	
+	if type(cmd) == "string" then
+		LuaNFrame:SendToAllServerByServerTypeForClient(serverType, 0, cmd, 0)
 	end
 end

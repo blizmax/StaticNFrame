@@ -109,6 +109,10 @@ public:
 		mUnlinkId = 0;
 	}
 
+	uint32_t GetUnlinkId() { return mUnlinkId; }
+	uint32_t GetServerId() { return mServerInfo.server_id(); }
+
 	uint32_t mUnlinkId;
 	NFMsg::ServerInfoReport mServerInfo;
+	uint32_t mGameId;
 };

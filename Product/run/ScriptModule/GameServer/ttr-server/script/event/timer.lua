@@ -18,7 +18,7 @@ function InitTimer()
 	local CYCLE_WEEKLY = CYCLE_DAY * 7
 
 	if unilight.getdebuglevel() > 0 then --测试服加速10分钟一次
-		unilight.addclocker("GlobalDayZeroClock", 0, 600) 	-- 0点时钟
+		--unilight.addclocker("GlobalDayZeroClock", 0, 600) 	-- 0点时钟
 	else
 		unilight.addclocker("GlobalDayZeroClock", 0, CYCLE_DAY) 	-- 0点时钟
 		unilight.addclocker("GlobalWeekZeroClock", 0, CYCLE_WEEKLY) 	-- 0点时钟
@@ -27,7 +27,7 @@ end
 
 --保存当前是每周几天和每月第几天
 function GlobalDayZeroClock()
-	UserInfo.ZeroTimer()
+	--UserInfo.ZeroTimer()
 end
 
 --保存当前是每周几天和每月第几天

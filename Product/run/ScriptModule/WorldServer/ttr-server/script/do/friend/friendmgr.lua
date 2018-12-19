@@ -106,7 +106,8 @@ function FriendManager.FriendTravelEmployTimeout(uid, employ_uid, timer)
             nickName = static_const.Static_Const_Friend_Travel_GOLD_GUEST_NAME,
             star = friendData:GetStar(),
         }
-        message.give(uid, tmp_who, MsgTypeEnum.TripGroupFriendFinishEmploy, {"1",})
+        --friendData:Give(nil, tmp_who, MsgTypeEnum.TripGroupMeFinishEmploy, {"1",})
+        --message.give(uid, tmp_who, MsgTypeEnum.TripGroupFriendFinishEmploy, {"1",})
     else
         local f_friendData = FriendManager:GetFriendInfo(employ_uid)
 

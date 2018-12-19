@@ -716,7 +716,7 @@ Zone.CmdUserTravelLevelUp_C = function(cmd,zonetask)
                 ZoneInfo.SendCmdToMe(res["do"], res["data"], zonetask)
                 return
             end
-        else if money_type == static_const.Static_MoneyType_Money then
+        elseif money_type == static_const.Static_MoneyType_Money then
             if cmd.data.cur_money < money then
                 res["data"] = {
                     cmd_uid = uid,
@@ -769,7 +769,7 @@ Zone.CmdUserTravelLevelUp_C = function(cmd,zonetask)
 end
 
 --更改玩家的旅行团头像
-Zone.CmdChangeUserTravelHead_C =  = function(cmd,zonetask)
+Zone.CmdChangeUserTravelHead_C = function(cmd,zonetask)
     local res = { }
     res["do"] = "Cmd.ChangeUserTravelHead_S"
     local uid = cmd.data.cmd_uid
@@ -820,7 +820,7 @@ Zone.CmdChangeUserTravelHead_C =  = function(cmd,zonetask)
 end
 
 --怒气值满了，点击
-Zone.CmdReleaseTravelAnger_C =  = function(cmd,zonetask)
+Zone.CmdReleaseTravelAnger_C = function(cmd,zonetask)
     local res = { }
     res["do"] = "Cmd.ReleaseTravelAnger_S"
 
@@ -877,7 +877,7 @@ end
 
 
 --怒气值满了，点击后看视屏回调
-Zone.CmdReleaseAngerSeeSceen_C =  = function(cmd,zonetask)
+Zone.CmdReleaseAngerSeeSceen_C = function(cmd,zonetask)
     local res = { }
     res["do"] = "Cmd.ReleaseAngerSeeSceen_S"
 
@@ -920,4 +920,3 @@ Zone.CmdReleaseAngerSeeSceen_C =  = function(cmd,zonetask)
     unilight.error("222money.."..tostring(res["data"].money).." clickcount"..tostring(travelData:GetAngerClickCount()))
     ZoneInfo.SendCmdToMe(res["do"], res["data"], zonetask)
 end
-

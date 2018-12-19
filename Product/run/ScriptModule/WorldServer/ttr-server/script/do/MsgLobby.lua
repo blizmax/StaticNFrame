@@ -1,4 +1,3 @@
-
 Zone.CmdUserInfoLoginCenter_C = function(cmd,zonetask)
 
 	local uid = cmd.data.cmd_uid

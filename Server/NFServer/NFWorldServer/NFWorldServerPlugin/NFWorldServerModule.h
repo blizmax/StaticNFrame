@@ -44,9 +44,13 @@ protected:
 	void OnGameServerRefreshProcess(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen);
 
 	void OnClientDisconnect(uint32_t unLinkId);
+
+	virtual NF_SHARE_PTR<NFServerData> GetGameByLink(uint32_t unLinkId) { return mLinkGamMap.GetElement(unLinkId); }
 private:
 	NFINetServerModule* m_pNetServerModule;
 	NFINetClientModule* m_pNetClientModule;
 private:
-	NFMapEx<int, NFServerData> mGameMap;
+	NFMapEx<uint32_t, NFServerData> mGameMap;
+	NFMapEx<uint32_t, NFServerData> mLinkGamMap; //linkid -- key
+	uint32_t mServerId;
 };

@@ -107,9 +107,5 @@ function Net.CmdPing_C(cmd, laccount)
 		resultCode = 0,
 	}
 
-	--local userInfo = UserInfo.GetUserInfoById(laccount.Id)
-	--message.give(11947586, userInfo, MsgTypeEnum.FriendApply)
-
 	return res
-	--]
 end

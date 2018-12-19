@@ -98,11 +98,6 @@ function UserInfo.CreateTempUserInfo(uid)
 	props:init(userInfo)
 	userInfo["UserProps"] = props
 
-	local msgMgr = MsgMgr:new()
-	msgMgr:init(userInfo)
-	msgMgr:createTemp()
-	userInfo["msgMgr"] = msgMgr
-
 	local mailMgr = MailMgr:new()
 	mailMgr:init(userInfo)
 	userInfo["mailMgr"] = mailMgr
@@ -185,21 +180,6 @@ function UserInfo.CreateUserByDb(uid, dbUser)
 	end
 	userInfo["world"] = world
 
-	--[Msg
-	-- Temporarilly use userinfo db
-	local msgMgr = MsgMgr:new()
-	msgMgr:init(userInfo)
-
-	if dbUser["msg"] == nil then
-		msgMgr:createTemp()
-	else
-		msgMgr:loadFromDb(dbUser.msg)
-		msgMgr:clean()
-	end
-
-	userInfo["msgMgr"] = msgMgr
-	--]
-	
 	--Not to load data here
 	local mailMgr = MailMgr:new()
 	mailMgr:init(userInfo)
@@ -386,7 +366,6 @@ function UserInfo.GetServerData(userInfo)
 		lastlogintime = os.time(),
 		world = userInfo.world:sn(),
 		settings = userInfo.settings,
-		msg = userInfo.msgMgr:sn(),
 		dailySharing = userInfo.dailySharing:GetData(),
 		collect = userInfo.collect:GetData(),
 		dailyTask = userInfo.dailyTask:GetDBTable(),
@@ -520,7 +499,7 @@ function UserInfo.ReconnectLoginOk(laccount)
 	userInfo.world:recalc()
 
 	local data = {}
-	data.cmd_uid = self.owner.uid
+	data.cmd_uid = uid
 	unilobby.SendCmdToLobby("Cmd.UserReconncted_C", data)
 end
 

@@ -35,6 +35,11 @@ function init_script_system(pluginManager)
 		LoadLuaFile("../ScriptModule/GameServer/ttr-server/script/do", true)
 		LoadLuaFile("../ScriptModule/GameServer/ttr-server/script/event", true)
 		LoadLuaFile("../ScriptModule/GameServer/ttr-server/script/gxlua_ttr", true)
+		package.path = package.path .. ";../ScriptModule/WorldServer/ttr-server/?.lua;"
+		LoadLuaFile("../ScriptModule/WorldServer", false)
+		LoadLuaFile("../ScriptModule/WorldServer/ttr-server/script/do", true)
+		LoadLuaFile("../ScriptModule/WorldServer/ttr-server/script/event", true)
+		LoadLuaFile("../ScriptModule/WorldServer/ttr-server/script/gxlua_ttr", true)
 	else
 		if pluginManager:GetAppName() == "GameServer" then
 			package.path = package.path .. ";../ScriptModule/GameServer/ttr-server/?.lua;"
@@ -42,6 +47,12 @@ function init_script_system(pluginManager)
 			LoadLuaFile("../ScriptModule/GameServer/ttr-server/script/do", true)
 			LoadLuaFile("../ScriptModule/GameServer/ttr-server/script/event", true)
 			LoadLuaFile("../ScriptModule/GameServer/ttr-server/script/gxlua_ttr", true)
+		elseif pluginManager:GetAppName() == "WorldServer" then
+			package.path = package.path .. ";../ScriptModule/WorldServer/ttr-server/?.lua;"
+			LoadLuaFile("../ScriptModule/WorldServer", false)
+			LoadLuaFile("../ScriptModule/WorldServer/ttr-server/script/do", true)
+			LoadLuaFile("../ScriptModule/WorldServer/ttr-server/script/event", true)
+			LoadLuaFile("../ScriptModule/WorldServer/ttr-server/script/gxlua_ttr", true)
 		else
 			LoadLuaFile("../ScriptModule/" .. pluginManager:GetAppName(), true)
 		end

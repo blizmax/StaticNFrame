@@ -20,8 +20,10 @@
 #include "NFComm/NFPluginModule/NFIHttpClientModule.h"
 #include "NFComm/NFPluginModule/NFIHttpServerModule.h"
 #include "NFComm/NFPluginModule/NFIMongoModule.h"
+#include "NFServer/NFServerCommon/NFServerCommon.h"
 
 #include "NFServerLogic/NFServerLogicCommon/NFIGameLogicModule.h"
+#include "NFServer/NFServerCommon/NFIWorldServerModule.h"
 
 #define TRY_RUN_GLOBAL_SCRIPT_FUN0(strFuncName)   try {LuaIntf::LuaRef func(l, strFuncName);  func.call<LuaIntf::LuaRef>(); }   catch (LuaIntf::LuaException& e) { cout << e.what() << endl; }
 #define TRY_RUN_GLOBAL_SCRIPT_FUN1(strFuncName, arg1)  try {LuaIntf::LuaRef func(l, strFuncName);  func.call<LuaIntf::LuaRef>(arg1); }catch (LuaIntf::LuaException& e) { cout << e.what() << endl; }
@@ -113,6 +115,7 @@ bool NFCLuaScriptModule::Register()
 		.addFunction("GetHttpServerModule", &NFIPluginManager::FindModule<NFIHttpServerModule>)
 		.addFunction("GetMongoModule", &NFIPluginManager::FindModule<NFIMongoModule>)
 		.addFunction("GetGameLogicModule", &NFIPluginManager::FindModule<NFIGameLogicModule>)
+		.addFunction("GetWorldServerModule", &NFIPluginManager::FindModule<NFIWorldServerModule>)
 		.endClass();
 
 	LuaIntf::LuaBinding(l).beginClass<NFIKernelModule>("NFIKernelModule")
@@ -205,6 +208,15 @@ bool NFCLuaScriptModule::Register()
 
 	LuaIntf::LuaBinding(l).beginClass<NFIGameLogicModule>("NFIGameLogicModule")
 		.addFunction("GetAccount", &NFIGameLogicModule::GetPlayerAccountInfo)
+		.endClass();
+	
+	LuaIntf::LuaBinding(l).beginClass<NFIWorldServerModule>("NFIWorldServerModule")
+		.addFunction("GetGameByLink", &NFIWorldServerModule::GetGameByLink)
+		.endClass();
+
+	LuaIntf::LuaBinding(l).beginClass<NFServerData>("NFServerData")
+		.addProperty("UnlinkId", &NFServerData::GetUnlinkId)
+		.addProperty("ServerId", &NFServerData::GetServerId)
 		.endClass();
 
 	return true;

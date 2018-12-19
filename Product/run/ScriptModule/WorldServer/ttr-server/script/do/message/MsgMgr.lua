@@ -15,12 +15,12 @@ MsgTypeEnum =
 MSG_MAX = 50
 MSG_KEEP_TIME = 86400 -- 24 * 3600
 
-CreateClass(MsgMgr)
+CreateClass("MsgMgr")
 
 --一条消息记录类
-CreateClass(MsgRecord)
+CreateClass("MsgRecord")
 
-function MsgRecord:init()
+function MsgRecord:Init()
 	--唯一id
 	self.id = 0
 	self.time = 0
@@ -57,7 +57,7 @@ function MsgRecord:SetDBTable(data)
 	self.who = data.who or self.who
 end
 
-function MsgMgr:init()
+function MsgMgr:Init()
 	-- 消息记录
 	self.id = 1000
 	self.records = List:New()

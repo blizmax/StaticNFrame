@@ -23,6 +23,8 @@ function GameServerModule.Init()
     Do.dbready()
     
     TcpClient.addRecvCallBack(NF_SERVER_TYPES.NF_ST_PROXY, 0, "GameServerModule.NetServerRecvHandleJson")
+    TcpClient.addRecvCallBack(NF_SERVER_TYPES.NF_ST_WORLD, 0, "GameServerModule.WorldServerRecvHandleJson")
+    TcpClient.addEventCallBack(NF_SERVER_TYPES.NF_ST_WORLD, "GameServerModule.WorldServerNetEvent")
 
     unilight.addtimer("UserInfo.Update", 1)
 
@@ -48,9 +50,57 @@ function GameServerModule.Init()
         UserInfo.ReconnectLoginOk(laccount)
     end
     
-    StartOver()
+    --StartOver()
+    --初始化玩家系统
+    if UserInfo ~= nil then
+        UserInfo.Init()
+    end
 
     InitTimer()
+end
+
+GameServerModule.LobbyTask = {}
+function GameServerModule.LobbyTask.GetGameId()
+    return 0
+end
+
+function GameServerModule.LobbyTask.GetZoneId()
+    return 0
+end
+
+function GameServerModule.LobbyTask.SendString(s)
+    TcpClient.sendJsonMsgByServerType(NF_SERVER_TYPES.NF_ST_WORLD, s)
+end
+
+function GameServerModule.WorldServerNetEvent(nEvent, unLinkId)
+    local cmd = {}
+    if nEvent == NF_MSG_TYPE.eMsgType_CONNECTED then
+        Lby.lobby_connect(cmd,GameServerModule.LobbyTask)
+    end
+    if nEvent == NF_MSG_TYPE.eMsgType_DISCONNECTED then
+        Lby.lobby_disconnect(cmd, GameServerModule.LobbyTask)
+    end
+end
+
+--特殊协议
+function GameServerModule.WorldServerRecvHandleJson(unLinkId, valueId, nMsgId, strMsg)
+    unilight.debug(tostring(valueId) .. " | recv world msg |" .. strMsg)
+    local table_msg = json2table(strMsg)
+    --协议规则
+    if table_msg ~= nil then
+        local cmd = table_msg["do"]
+        if type(cmd) == "string" then
+            local i, j = string.find(cmd, "Cmd.")
+            local strcmd = string.sub(cmd, j+1, -1)
+            if strcmd ~= "" then
+                strcmd = "Cmd" .. strcmd
+                if type(Lby[strcmd]) == "function" then
+                    Lby[strcmd](table_msg, GameServerModule.LobbyTask)
+                end
+            end
+        end
+    end
+    -- body
 end
 
 --特殊协议
@@ -92,4 +142,12 @@ end
 
 function GameServerModule.Shut()
 
+end
+
+--用来测试lobby服务器发消息过来
+Lby.CmdTestLobbySenMsgCmd_S = function(cmd,lobbyClientTask)
+	unilight.debug("Lby.TestLobbySenMsgCmd_S...........");
+
+	local data = {}
+	unilobby.SendCmdToLobby("Cmd.SendMsgToLobby2_S", data)
 end

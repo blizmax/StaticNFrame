@@ -41,6 +41,7 @@ bool NFCWorldServerModule::Init()
 	NFServerConfig* pConfig = NFServerCommon::GetAppConfig(pPluginManager, NF_ST_WORLD);
 	if (pConfig)
 	{
+		mServerId = pConfig->mServerId;
 		uint32_t unlinkId = m_pNetServerModule->AddServer(NF_ST_WORLD, pConfig->mServerId, pConfig->mMaxConnectNum, pConfig->mServerPort);
 		if (unlinkId != 0)
 		{
@@ -94,6 +95,8 @@ void NFCWorldServerModule::OnProxySocketEvent(const eMsgType nEvent, const uint3
 
 void NFCWorldServerModule::OnClientDisconnect(uint32_t unLinkId)
 {
+	mLinkGamMap.RemoveElement(unLinkId);
+
 	NF_SHARE_PTR<NFServerData> pServerData = mGameMap.First();
 	while (pServerData)
 	{
@@ -167,6 +170,11 @@ void NFCWorldServerModule::OnGameServerRegisterProcess(const uint32_t unLinkId, 
 		{
 			pServerData = NF_SHARE_PTR<NFServerData>(NF_NEW NFServerData());
 			mGameMap.AddElement(xData.server_id(), pServerData);
+		}
+
+		if (mLinkGamMap.GetElement(unLinkId) == nullptr)
+		{
+			mLinkGamMap.AddElement(unLinkId, pServerData);
 		}
 
 		pServerData->mUnlinkId = unLinkId;

@@ -50,6 +50,7 @@ end
 Net.CmdGetUserFriendDataCmd_C = function(cmd, laccount)
     local uid = laccount.Id
 
+    cmd.data = {}
     cmd.data.cmd_uid = uid
     unilobby.SendCmdToLobby(cmd["do"], cmd["data"])
 end

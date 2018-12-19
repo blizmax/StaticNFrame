@@ -285,3 +285,81 @@ setmetatable(Net,
 		end
 	end,
 })
+
+-- 收到大厅的回调
+Lobby = Lobby or {}
+Lby = Lby or {}
+setmetatable(Lby,
+{
+	__index = Lobby,
+	__newindex = function(t, k, handle)
+		if handle == nil then
+			Lobby[k] = nil
+		else
+			Lobby[k] = function(reqdata, w, msgname)
+                local req = {}
+
+				if reqdata ~= nil then
+					req = unilight.getreq(reqdata)
+				end
+
+				local r0, r1 = handle(req, w)
+				req.msgtype = "lobbymessage"
+
+				if w == nil then
+					return r0							-- return r0 for server test
+				elseif r0 == nil then
+					return								-- return nil?
+				elseif type(r0) == "table" then
+					unilight.success(w, r0)				-- return {data}
+				elseif r0 == unilight.DB_ERROR then
+					unilight.faildb(w, r1 or {})		-- return unilight.DB_ERROR, {data}?
+				elseif r0 == unilight.SCRIPT_ERROR then
+					unilight.scripterror(w, r1 or {})	-- return unilight.SCRIPT_ERROR, {data}?
+				elseif r0 == unilight.SUCCESS then
+					unilight.success(w, r1 or {}) 		-- return unilight.SUCCESS, {data}?
+				end
+			end
+		end
+	end,
+})
+ 
+-- 收到区服务器的回调
+Zone = Zone or {}
+ZoneServer = ZoneServer or {}
+setmetatable(Zone,
+{
+	__index = ZoneServer,
+	__newindex = function(t, k, handle)
+		if handle == nil then
+			ZoneServer[k] = nil
+		else
+			ZoneServer[k] = function(reqdata, w, msgname)
+                local req = {}
+                local req = reqdata 
+
+				if reqdata ~= nil and type(reqdata) == "string" then
+					req = unilight.getreq(reqdata)
+					req.msgtype = "lobbymessage"
+				end
+                
+				local r0, r1 = handle(req, w)
+
+				--req.msgtype = "lobbymessage"
+				if w == nil then
+					return r0							-- return r0 for server test
+				elseif r0 == nil then
+					return								-- return nil?
+				elseif type(r0) == "table" then
+					unilight.success(w, r0)				-- return {data}
+				elseif r0 == unilight.DB_ERROR then
+					unilight.faildb(w, r1 or {})		-- return unilight.DB_ERROR, {data}?
+				elseif r0 == unilight.SCRIPT_ERROR then
+					unilight.scripterror(w, r1 or {})	-- return unilight.SCRIPT_ERROR, {data}?
+				elseif r0 == unilight.SUCCESS then
+					unilight.success(w, r1 or {}) 		-- return unilight.SUCCESS, {data}?
+				end
+			end
+		end
+	end,
+})
