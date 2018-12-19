@@ -66,13 +66,13 @@ void NFCKernelModule::ProcessMemFree()
 
 }
 
-uint64_t NFCKernelModule::GetUUID()
+uint64_t NFCKernelModule::Get64UUID()
 {
-    uint64_t time = NFGetTime();
+	uint64_t time = NFGetTime();
 
 	if (mLastGuidTimeStamp == time)
 	{
-		nGUIDIndex = (nGUIDIndex + 1) & 0x3FF;
+		nGUIDIndex = (nGUIDIndex + 1) & 0xFFF;
 
 		if (nGUIDIndex == 0)
 		{
@@ -88,16 +88,37 @@ uint64_t NFCKernelModule::GetUUID()
 	}
 
 	//高16位 appId
-	uint64_t appId = pPluginManager->GetAppID(); 
-	appId = appId << 48;
-	//中间38 毫秒
+	uint64_t appId = pPluginManager->GetAppID();
+	//保留后41位时间
 	uint64_t dataId = (time - NF_EPOCH);
-	dataId = dataId << 10;
-	//底10位，每毫秒1024
-	dataId = appId | dataId | nGUIDIndex;
+	dataId = dataId << 22;
+
+	//中间十位是机器代码 
+
+	dataId |= (appId & 0x3FF) << 12;
+
+	//最后12位是squenceID
+	dataId |= nGUIDIndex & 0xFFF;
 
 	mLastGuidTimeStamp = time;
 	return dataId;
+}
+
+uint64_t NFCKernelModule::Get32UUID()
+{
+	uint64_t time = NFGetSecondTime();
+	if (mLastGuidTimeStamp == 0)
+	{
+		mLastGuidTimeStamp = time;
+	}
+
+	mLastGuidTimeStamp = mLastGuidTimeStamp + 1;
+	return mLastGuidTimeStamp;
+}
+
+uint64_t NFCKernelModule::GetUUID()
+{
+	return Get64UUID();
 }
 
 std::string NFCKernelModule::GetMD5(const std::string& str)

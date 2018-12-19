@@ -39,7 +39,7 @@ function Net.CmdSaveSettingsCmd_C(cmd, laccount)
 	userInfo.settings = cmd.data.settings
 
 	local data = {}
-	data.cmd_uid = self.owner.uid
+	data.cmd_uid = laccount.Id
 	data.userInfo = {
 		star = userInfo.star, 
 		gender = userInfo.gender, 

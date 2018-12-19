@@ -44,6 +44,9 @@ public:
 	virtual uint16_t GetCRC16(const std::string& s) override;
 	virtual std::string Base64Encode(const std::string& s) override;
 	virtual std::string Base64Decode(const std::string& s) override;
+
+	virtual uint64_t Get64UUID() override;
+	virtual uint64_t Get32UUID() override;
 protected:
 	static void ProcessMemFree();
 private:

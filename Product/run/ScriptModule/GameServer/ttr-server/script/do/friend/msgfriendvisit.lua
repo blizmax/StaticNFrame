@@ -3,6 +3,9 @@
 Net.CmdGetFriendVisitInfo_C = function(cmd, laccount)
     local uid = laccount.Id
 
+    if cmd.data == nil then
+        cmd.data = {}
+    end
     cmd.data.cmd_uid = uid
     unilobby.SendCmdToLobby(cmd["do"], cmd["data"])
 end
@@ -23,6 +26,9 @@ end
 Net.CmdMischiefFriend_C = function(cmd, laccount)
     local uid = laccount.Id
 
+    if cmd.data == nil then
+        cmd.data = {}
+    end
     cmd.data.cmd_uid = uid
     unilobby.SendCmdToLobby(cmd["do"], cmd["data"])
 end
@@ -43,6 +49,9 @@ end
 Net.CmdInspireFriend_C = function(cmd, laccount)
     local uid = laccount.Id
 
+    if cmd.data == nil then
+        cmd.data = {}
+    end
     cmd.data.cmd_uid = uid
     unilobby.SendCmdToLobby(cmd["do"], cmd["data"])
 end
@@ -63,6 +72,9 @@ end
 Net.CmdMischiefFriend_Screen_C = function(cmd, laccount)
     local uid = laccount.Id
 
+    if cmd.data == nil then
+        cmd.data = {}
+    end
     cmd.data.cmd_uid = uid
     unilobby.SendCmdToLobby(cmd["do"], cmd["data"])
 end
@@ -83,6 +95,9 @@ end
 Net.CmdInspireFriend_Screen_C = function(cmd, laccount)
     local uid = laccount.Id
 
+    if cmd.data == nil then
+        cmd.data = {}
+    end
     cmd.data.cmd_uid = uid
     unilobby.SendCmdToLobby(cmd["do"], cmd["data"])
 end

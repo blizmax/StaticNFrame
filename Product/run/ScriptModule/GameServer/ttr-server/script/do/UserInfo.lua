@@ -67,6 +67,7 @@ function UserInfo.CreateTempUserInfo(uid)
 		head		= "",
 		firstLogin  = 1,--首次登陆
 		friendAddontion = 0,
+		online = fasle,
 	}
 
 	local world = World:new()
@@ -330,10 +331,12 @@ function UserInfo.DealOfflinePrize(userinfo, flag, ctype)
 end
 function UserInfo.Update()
 	for k,userInfo in pairs(UserInfo.GlobalUserInfoMap) do
-		userInfo.world:update()
-		userInfo.UserProps:addOnlineTime()
-		userInfo.UserProps:dealBuffProps()
-		UserInfo.SendUserMoney(userInfo)
+		if userInfo.online == true then
+			userInfo.world:update()
+			userInfo.UserProps:addOnlineTime()
+			userInfo.UserProps:dealBuffProps()
+			UserInfo.SendUserMoney(userInfo)
+		end
 	end
 end
 
@@ -391,7 +394,7 @@ end
 
 function UserInfo.Disconnected(uid)
 	local data = {}
-	data.cmd_uid = self.owner.uid
+	data.cmd_uid = uid
 	unilobby.SendCmdToLobby("Cmd.UserDisconnected_C", data)
 
 	local userInfo = UserInfo.GetUserInfoById(uid)
@@ -400,6 +403,7 @@ function UserInfo.Disconnected(uid)
 		unilight.warn("User is nil")
 		return
 	end
+	userInfo.online = false
 	userInfo.firstLogin = 0
 	userInfo.lastlogintime = os.time()
 	print("user Disconnected, uid="..userInfo.uid..", lastlogintime="..os.time())
@@ -419,6 +423,7 @@ function UserInfo.GetOfflineUserInfo(uid)
 
         if dbUser ~= nil then
 			userInfo = UserInfo.CreateUserByDb(uid, dbUser)
+			userInfo.online = false
 			userInfo.firstLogin = 0
 			userInfo.lastlogintime = os.time()
 			UserInfo.GlobalUserInfoMap[uid] = userInfo
@@ -474,6 +479,7 @@ function UserInfo.ReconnectLoginOk(laccount)
 		unilight.stoptimer(userInfo["offline_timer"])
 	end
 
+	userInfo.online = true
 	userInfo.firstLogin = 0
 
 	--有可能需要重置每日任务数据
@@ -758,4 +764,28 @@ Lby.CmdMsgNewCmd_S = function(cmd, lobbyClientTask)
 	end
 	
 	unilight.response(userInfo.laccount, cmd)
+end
+
+Lby.CmdUserTravelAngerUpdate_S = function(cmd, lobbyClientTask)
+    local uid = cmd.data.cmd_uid
+    
+    local userInfo = UserInfo.GetOfflineUserInfo(uid)
+	if userInfo == nil then
+        unilight.error("userinfo is not exist,uid:"..uid)
+		return
+	end
+	
+	unilight.response(userInfo.laccount, cmd)
+end
+
+Lby.CmdUpdateCalcAddontion_S = function(cmd, lobbyClientTask)
+    local uid = cmd.data.cmd_uid
+    
+    local userInfo = UserInfo.GetOfflineUserInfo(uid)
+	if userInfo == nil then
+        unilight.error("userinfo is not exist,uid:"..uid)
+		return
+	end
+	
+	userInfo.friendAddontion = cmd.data.additon
 end

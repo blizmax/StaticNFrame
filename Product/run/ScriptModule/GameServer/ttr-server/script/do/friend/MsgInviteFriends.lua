@@ -4,6 +4,9 @@
 Net.CmdGetInviteFriendInfoCmd_C = function(cmd, laccount)
     local uid = laccount.Id
 
+    if cmd.data == nil then
+        cmd.data = {}
+    end
     cmd.data.cmd_uid = uid
     unilobby.SendCmdToLobby(cmd["do"], cmd["data"])
 end
@@ -24,6 +27,9 @@ end
 Net.CmdGetAskFriendFiveReward_C = function(cmd, laccount)
     local uid = laccount.Id
 
+    if cmd.data == nil then
+        cmd.data = {}
+    end
     cmd.data.cmd_uid = uid
     unilobby.SendCmdToLobby(cmd["do"], cmd["data"])
 end
@@ -56,6 +62,9 @@ end
 Net.CmdGetInviteFriendRewardCmd_C = function(cmd, laccount)
     local uid = laccount.Id
 
+    if cmd.data == nil then
+        cmd.data = {}
+    end
     cmd.data.cmd_uid = uid
     unilobby.SendCmdToLobby(cmd["do"], cmd["data"])
 end
@@ -77,6 +86,9 @@ end
 Net.CmdGetProgressRewardCmd_C = function(cmd, laccount)
     local uid = laccount.Id
 
+    if cmd.data == nil then
+        cmd.data = {}
+    end
     cmd.data.cmd_uid = uid
     unilobby.SendCmdToLobby(cmd["do"], cmd["data"])
 end

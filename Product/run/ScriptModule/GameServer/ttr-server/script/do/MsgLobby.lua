@@ -20,6 +20,9 @@ Net.CmdUserInfoSynLobbyCmd_C = function(cmd, laccount)
 		UserInfo.GlobalUserInfoMap[uid] = userInfo
 	end
 
+	--只有从中心服务器成功放回后才算登录成功
+	userInfo.online = false
+
 	--清理玩家离线定时器
 	if userInfo["offline_timer"] ~= nil then
 		unilight.stoptimer(userInfo["offline_timer"])
@@ -71,6 +74,7 @@ Lby.CmdUserInfoLoginCenter_S = function(cmd,lobbyClientTask)
 		return
 	end
 
+	userInfo.online = true
 	userInfo.friendAddontion = friendAddontion
 
 	--玩家产量初始化计算 依赖好友系统的加成计算

@@ -20,6 +20,7 @@
 #include "NFComm/NFCore/NFJson.h"
 #include "NFServer/NFServerCommon/NFServerCommon.h"
 #include "NFComm/NFCore/NFRandom.hpp"
+#include "NFComm/NFPluginModule/NFIKernelModule.h"
 
 
 class NFLogTask : public NFTask
@@ -132,6 +133,9 @@ void NFCTestActorModule::TestMongo()
 
 bool NFCTestActorModule::Init()
 {
+	NFIKernelModule* pKernelModule = pPluginManager->FindModule<NFIKernelModule>();
+	uint64_t a = pKernelModule->GetUUID();
+	NFLogError("uuid : {}", a);
 	//NFITaskModule* pTaskModule = pPluginManager->FindModule<NFITaskModule>();
 
 	//for(int i = 0; i < 10000; i++)

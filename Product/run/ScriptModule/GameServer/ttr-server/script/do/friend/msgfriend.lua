@@ -4,6 +4,9 @@ require "script/do/common/staticconst"
 Net.CmdBeAskedPlayGame_C = function(cmd, laccount)
     local uid = laccount.Id
 
+    if cmd.data == nil then
+        cmd.data = {}
+    end
     cmd.data.cmd_uid = uid
 	unilobby.SendCmdToLobby(cmd["do"], cmd["data"])
 end
@@ -26,6 +29,9 @@ end
 Net.CmdSendUserQQFriendDataCmd_C = function(cmd, laccount)
     local uid = laccount.Id
 
+    if cmd.data == nil then
+        cmd.data = {}
+    end
     cmd.data.cmd_uid = uid
     unilobby.SendCmdToLobby(cmd["do"], cmd["data"])
 
@@ -50,7 +56,9 @@ end
 Net.CmdGetUserFriendDataCmd_C = function(cmd, laccount)
     local uid = laccount.Id
 
-    cmd.data = {}
+    if cmd.data == nil then
+        cmd.data = {}
+    end
     cmd.data.cmd_uid = uid
     unilobby.SendCmdToLobby(cmd["do"], cmd["data"])
 end
@@ -71,6 +79,9 @@ end
 Net.CmdGetUserAskedAddFriends_C = function(cmd, laccount)
     local uid = laccount.Id
 
+    if cmd.data == nil then
+        cmd.data = {}
+    end
     cmd.data.cmd_uid = uid
     unilobby.SendCmdToLobby(cmd["do"], cmd["data"])
 end
@@ -103,6 +114,9 @@ end
 Net.CmdSendReqAddFriendCmd_C = function(cmd, laccount)
     local uid = laccount.Id
 
+    if cmd.data == nil then
+        cmd.data = {}
+    end
     cmd.data.cmd_uid = uid
     unilobby.SendCmdToLobby(cmd["do"], cmd["data"])
 end
@@ -123,6 +137,9 @@ end
 Net.CmdSendReqAgreeAddFriendCmd_C = function(cmd, laccount)
     local uid = laccount.Id
 
+    if cmd.data == nil then
+        cmd.data = {}
+    end
     cmd.data.cmd_uid = uid
     unilobby.SendCmdToLobby(cmd["do"], cmd["data"])
 end
@@ -143,6 +160,9 @@ end
 Net.CmdSendReqDeleteFriendCmd_C = function(cmd, laccount)
     local uid = laccount.Id
 
+    if cmd.data == nil then
+        cmd.data = {}
+    end
     cmd.data.cmd_uid = uid
     unilobby.SendCmdToLobby(cmd["do"], cmd["data"])
 end
@@ -163,6 +183,9 @@ end
 Net.CmdSendReqRecommendFriendCmd_C = function(cmd, laccount)
     local uid = laccount.Id
 
+    if cmd.data == nil then
+        cmd.data = {}
+    end
     cmd.data.cmd_uid = uid
     unilobby.SendCmdToLobby(cmd["do"], cmd["data"])
 end
@@ -183,6 +206,9 @@ end
 Net.CmdGetUserInfoByUid_C = function(cmd, laccount)
     local uid = laccount.Id
 
+    if cmd.data == nil then
+        cmd.data = {}
+    end
     cmd.data.cmd_uid = uid
     unilobby.SendCmdToLobby(cmd["do"], cmd["data"])
 end

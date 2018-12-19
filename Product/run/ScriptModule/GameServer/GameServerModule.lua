@@ -31,7 +31,17 @@ function GameServerModule.Init()
     unilight.response = function(w, req)
 		req.st = os.time()
 		local s = table2json(req)
-		w.SendString(s)
+        w.SendString(s)
+        
+        if type(req["do"]) == "string" then
+            if req["do"] == "Cmd.SendUserMoneyCmd_S" then
+                return
+            elseif req["do"] == "Cmd.UserTravelAngerUpdate_S" then
+                return
+            elseif req["do"] == "Cmd.Ping_S" then
+                return
+            end
+        end
 		unilight.debug("[send] " .. s)
     end
     
@@ -104,9 +114,13 @@ function GameServerModule.WorldServerRecvHandleJson(unLinkId, valueId, nMsgId, s
 end
 
 --特殊协议
-function GameServerModule.NetServerRecvHandleJson(unLinkId, valueId, nMsgId, strMsg)
-    unilight.debug(tostring(valueId) .. " | recv msg |" .. strMsg)
+function GameServerModule.NetServerRecvHandleJson(unLinkId, valueId, nMsgId, strMsg) 
     local table_msg = json2table(strMsg)
+    if type(table_msg["do"]) == "string" then
+        if table_msg["do"] ~= "Cmd.Ping_C" then
+            unilight.debug(tostring(valueId) .. " | recv msg |" .. strMsg)
+        end
+    end
     --协议规则
     if table_msg ~= nil then
         local cmd = table_msg["do"]

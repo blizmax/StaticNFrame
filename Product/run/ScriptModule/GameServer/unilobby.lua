@@ -9,7 +9,9 @@ function unilobby.SendCmdToLobby(doinfo,data,no_log,lobby,lobbyid)
     local s = table2json(send)
     TcpClient.sendJsonMsgByServerType(NF_SERVER_TYPES.NF_ST_WORLD, s)
     if not no_log then
-        unilight.debug("SendCmdToLobby:" .. s)
+        if doinfo ~= "Cmd.UserUpdate_C" then
+            unilight.debug("SendCmdToLobby:" .. s)
+        end
     end
 end
 

@@ -1,6 +1,9 @@
 Net.CmdReqGetWorldRankListInfo_C = function(cmd, laccount)
     local uid = laccount.Id
 
+    if cmd.data == nil then
+        cmd.data = {}
+    end
     cmd.data.cmd_uid = uid
     unilobby.SendCmdToLobby(cmd["do"], cmd["data"])
 end
