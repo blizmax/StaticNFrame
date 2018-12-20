@@ -34,7 +34,72 @@ bool NFCLoginLogicModule::Init()
 
 	m_pMongoModule->AddMongoServer(NF_ST_LOGIN, "mongodb://14.17.104.12:28900", "ttr-1");
 	m_pMongoModule->CreateCollection(NF_ST_LOGIN, ACCOUNT_TABLE, ACCOUNT_TABLE_KEY);
+	
+	CreateUidFromDb();
 	return true;
+}
+
+void NFCLoginLogicModule::CreateUidFromDb()
+{
+	if (m_pMongoModule->IsExistCollection(NF_ST_LOGIN, UID_TABLE) == false)
+	{
+		m_curUUID = NFGetSecondTime();
+		m_maxUUID = m_curUUID + 1000;
+		m_pMongoModule->CreateCollection(NF_ST_LOGIN, UID_TABLE, UID_TABLE_KEY);
+		std::string maxUidjson = "{ \"key\":0, \"uid\":" + lexical_cast<std::string>(m_maxUUID) + " }";
+		m_pMongoModule->UpdateOneByKey(NF_ST_LOGIN, UID_TABLE, maxUidjson, 0);
+	}
+	else
+	{
+		std::vector<std::string> result = m_pMongoModule->FindAll(NF_ST_LOGIN, UID_TABLE);
+		if (result.size() != 1)
+		{
+			NFLogError("the talbe {} has one error", UID_TABLE);
+			m_curUUID = NFGetSecondTime();
+			m_maxUUID = m_curUUID + 1000;
+		}
+		else
+		{
+			std::string strjson = result[0];
+			std::string err;
+			NFJson json = NFJson::parse(strjson.c_str(), err);
+			NFJson uidjson = json["uid"];
+			m_curUUID = uidjson.number_value() + 1;
+			m_maxUUID = m_curUUID + 1000;
+			std::string maxUidjson = "{ \"key\":0, \"uid\":" + lexical_cast<std::string>(m_maxUUID) + " }";
+			m_pMongoModule->UpdateOneByKey(NF_ST_LOGIN, UID_TABLE, maxUidjson, 0);
+		}
+	}
+}
+
+uint32_t NFCLoginLogicModule::GetUid()
+{
+	if (m_curUUID + 1 <= m_maxUUID)
+	{
+		m_curUUID++;
+	}
+	else
+	{
+		std::vector<std::string> result = m_pMongoModule->FindAll(NF_ST_LOGIN, UID_TABLE);
+		if (result.size() != 1)
+		{
+			NFLogError("the talbe {} has one error", UID_TABLE);
+			m_curUUID = NFGetSecondTime();
+			m_maxUUID = m_curUUID + 1000;
+		}
+		else
+		{
+			std::string strjson = result[0];
+			std::string err;
+			NFJson json = NFJson::parse(strjson.c_str(), err);
+			NFJson uidjson = json["uid"];
+			m_curUUID = uidjson.number_value() + 1;
+			m_maxUUID = m_curUUID + 1000;
+			std::string maxUidjson = "{ \"key\":0, \"uid\":" + lexical_cast<std::string>(m_maxUUID) + " }";
+			m_pMongoModule->UpdateOneByKey(NF_ST_LOGIN, UID_TABLE, maxUidjson, 0);
+		}
+	}
+	return m_curUUID;
 }
 
 bool NFCLoginLogicModule::AfterInit()
@@ -339,7 +404,7 @@ NFMsg::LoginAccount* NFCLoginLogicModule::GetLoginAccount(const std::string& acc
 	{
 		pAccount = NF_NEW NFMsg::LoginAccount();
 		pAccount->set_account(account);
-		uint64_t uid = m_pKernelModule->GetUUID();
+		uint64_t uid = GetUid();
 		pAccount->set_uid(uid);
 
 		m_loginAccountMap.AddElement(account, pAccount);

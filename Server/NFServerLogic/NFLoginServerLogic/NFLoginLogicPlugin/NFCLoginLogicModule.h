@@ -27,6 +27,9 @@
 #define ACCOUNT_TABLE "Account"
 #define ACCOUNT_TABLE_KEY "account"
 
+#define UID_TABLE "UidTable"
+#define UID_TABLE_KEY "key"
+
 class NFCLoginLogicModule : public NFILoginLogicModule, public NFEventObj
 {
 public:
@@ -55,6 +58,9 @@ public:
 
 
 	NFMsg::LoginAccount* GetLoginAccount(const std::string& account);
+
+	void CreateUidFromDb();
+	uint32_t GetUid();
 private:
 	NFIHttpServerModule* m_pHttpServerModule;
 	NFINetClientModule* m_pNetClientModule;
@@ -62,4 +68,7 @@ private:
 	NFIKernelModule* m_pKernelModule;
 	NFIMongoModule* m_pMongoModule;
 	NFMap<std::string, NFMsg::LoginAccount> m_loginAccountMap;
+
+	uint32_t m_curUUID;
+	uint32_t m_maxUUID;
 };
