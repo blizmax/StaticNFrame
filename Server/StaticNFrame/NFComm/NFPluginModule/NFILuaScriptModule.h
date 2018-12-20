@@ -17,7 +17,12 @@
 
 class NFHttpRequest;
 
+#ifndef NF_DYNAMIC_PLUGIN
+#include "NFComm/NFPluginModule/NFILuaModule.h"
+class NFILuaScriptModule : public NFIModule, public NFILuaModule
+#else
 class NFILuaScriptModule : public NFIModule
+#endif
 {
 public:
 	NFILuaScriptModule()
@@ -25,7 +30,6 @@ public:
 	}
 public:
 	virtual void RunNetRecvLuaFunc(const std::string& luaFunc, const uint32_t unLinkId, const uint64_t valueId, const uint32_t nMsgId, const std::string& strMsg) = 0;
-
 
 	virtual void RunNetEventLuaFunc(const std::string& luaFunc, const eMsgType nEvent, const uint32_t unLinkId) = 0;
 

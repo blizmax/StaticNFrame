@@ -34,8 +34,13 @@ public:
 	std::string mUseData;
 };
 
+#ifndef NF_DYNAMIC_PLUGIN
 class NFCLuaScriptModule
-    : public NFILuaScriptModule, public NFTimerObj, public NFILuaModule
+    : public NFILuaScriptModule, public NFTimerObj
+#else
+class NFCLuaScriptModule
+	: public NFILuaScriptModule, public NFTimerObj, public NFILuaModule
+#endif
 {
 public:
     NFCLuaScriptModule(NFIPluginManager* p)

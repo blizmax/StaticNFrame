@@ -17,6 +17,7 @@
 #include "NFServer/NFServerCommon/NFServerCommon.h"
 #include "NFMessageDefine/NFMsgDefine.h"
 #include "NFComm/NFPluginModule/NFEventDefine.h"
+#include <NFComm/NFPluginModule/NFILuaScriptModule.h>
 
 NFCWorldServerModule::NFCWorldServerModule(NFIPluginManager* p)
 {
@@ -108,6 +109,7 @@ void NFCWorldServerModule::OnClientDisconnect(uint32_t unLinkId)
 			NFLogError("the game server disconnect from world server, serverName:{}, serverId:{}, serverIp:{}, serverPort:{}"
 				, pServerData->mServerInfo.server_name(), pServerData->mServerInfo.server_id(), pServerData->mServerInfo.server_ip(), pServerData->mServerInfo.server_port());
 
+			OnServerNetEvent(eMsgType_DISCONNECTED, unLinkId, pServerData);
 			return;
 		}
 
@@ -187,11 +189,17 @@ void NFCWorldServerModule::OnGameServerRegisterProcess(const uint32_t unLinkId, 
 		}
 
 		NFLogInfo("Game Server Register World Server Success, serverName:{}, serverId:{}, ip:{}, port:{}", pServerData->mServerInfo.server_name(), pServerData->mServerInfo.server_id(), pServerData->mServerInfo.server_ip(), pServerData->mServerInfo.server_port());
+	
+		OnServerNetEvent(eMsgType_CONNECTED, unLinkId, pServerData);
 	}
 }
 
-void NFCWorldServerModule::OnExecute(uint16_t nEventID, uint64_t nSrcID, uint8_t bySrcType, NFEventContext* pEventContext)
+void NFCWorldServerModule::RunServerNetEventLuaFunc(const std::string& luaFunc, eMsgType nEvent, uint32_t unLinkId, NF_SHARE_PTR<NFServerData> pServerData)
 {
-
+	//可以允许NFILuaScriptModule不存在
+	NFILuaScriptModule* pLuaScriptModule = (NFILuaScriptModule*)pPluginManager->FindModule(typeid(NFILuaScriptModule).name());
+	if (pLuaScriptModule)
+	{
+		pLuaScriptModule->TryRunGlobalScriptFunc(luaFunc, nEvent, unLinkId, pServerData);
+	}
 }
-

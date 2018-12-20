@@ -17,7 +17,7 @@
 #include "NFComm/NFPluginModule/NFEventMgr.h"
 #include "NFComm/NFCore/NFMapEx.hpp"
 
-class NFCWorldServerModule : public NFIWorldServerModule, public NFEventObj
+class NFCWorldServerModule : public NFIWorldServerModule
 {
 public:
 	explicit NFCWorldServerModule(NFIPluginManager* p);
@@ -32,8 +32,6 @@ public:
 	virtual bool BeforeShut() override;
 
 	virtual bool Shut() override;
-
-	virtual void OnExecute(uint16_t nEventID, uint64_t nSrcID, uint8_t bySrcType, NFEventContext* pEventContext);
 protected:
 	void OnProxySocketEvent(const eMsgType nEvent, const uint32_t unLinkId);
 	void OnHandleOtherMessage(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen);
@@ -46,6 +44,8 @@ protected:
 	void OnClientDisconnect(uint32_t unLinkId);
 
 	virtual NF_SHARE_PTR<NFServerData> GetGameByLink(uint32_t unLinkId) { return mLinkGamMap.GetElement(unLinkId); }
+
+	virtual void RunServerNetEventLuaFunc(const std::string& luaFunc, eMsgType nEvent, uint32_t unLinkId, NF_SHARE_PTR<NFServerData> pServerData);
 private:
 	NFINetServerModule* m_pNetServerModule;
 	NFINetClientModule* m_pNetClientModule;
