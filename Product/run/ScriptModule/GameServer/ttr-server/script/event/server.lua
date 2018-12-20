@@ -16,13 +16,4 @@ function StartOver()
     if UserInfo ~= nil then
         UserInfo.Init()
     end
-
-    --初始化排行榜
-    if RankListMgr ~= nil then
-        RankListMgr:Init()
-    end
-    --好友管理系统初始化
-    if FriendManager ~= nil then
-        FriendManager:Init()
-    end
 end

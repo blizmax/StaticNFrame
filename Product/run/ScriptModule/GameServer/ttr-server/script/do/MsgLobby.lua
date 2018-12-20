@@ -57,6 +57,7 @@ Net.CmdUserInfoSynLobbyCmd_C = function(cmd, laccount)
 	data.userInfo = {
 		star = userInfo.star,
 		money = userInfo.money,
+		product = userInfo.product,
 		isFirstLogin = isFirstLogin,
 	}
 	unilobby.SendCmdToLobby("Cmd.UserInfoLoginCenter_C", data) 

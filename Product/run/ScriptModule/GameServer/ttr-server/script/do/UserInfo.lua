@@ -393,16 +393,22 @@ function UserInfo.Connected(uid)
 end
 
 function UserInfo.Disconnected(uid)
-	local data = {}
-	data.cmd_uid = uid
-	unilobby.SendCmdToLobby("Cmd.UserDisconnected_C", data)
-
 	local userInfo = UserInfo.GetUserInfoById(uid)
 
 	if userInfo == nil then
 		unilight.warn("User is nil")
 		return
 	end
+
+	local data = {}
+	data.cmd_uid = uid
+	data.userInfo = {
+		star = userInfo.star,
+		money = userInfo.money,
+		product = userInfo.product,
+	}
+	unilobby.SendCmdToLobby("Cmd.UserDisconnected_C", data)
+
 	userInfo.online = false
 	userInfo.firstLogin = 0
 	userInfo.lastlogintime = os.time()
@@ -506,6 +512,11 @@ function UserInfo.ReconnectLoginOk(laccount)
 
 	local data = {}
 	data.cmd_uid = uid
+	data.userInfo = {
+		star = userInfo.star,
+		money = userInfo.money,
+		product = userInfo.product,
+	}
 	unilobby.SendCmdToLobby("Cmd.UserReconncted_C", data)
 end
 

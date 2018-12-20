@@ -27,7 +27,7 @@ end
 
 --保存当前是每周几天和每月第几天
 function GlobalDayZeroClock()
-	--UserInfo.ZeroTimer()
+	UserInfo.ZeroTimer()
 end
 
 --保存当前是每周几天和每月第几天
