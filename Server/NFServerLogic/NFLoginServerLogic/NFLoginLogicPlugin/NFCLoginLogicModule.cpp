@@ -339,7 +339,7 @@ NFMsg::LoginAccount* NFCLoginLogicModule::GetLoginAccount(const std::string& acc
 	{
 		pAccount = NF_NEW NFMsg::LoginAccount();
 		pAccount->set_account(account);
-		uint64_t uid = m_pKernelModule->Get32UUID();
+		uint64_t uid = m_pKernelModule->GetUUID();
 		pAccount->set_uid(uid);
 
 		m_loginAccountMap.AddElement(account, pAccount);

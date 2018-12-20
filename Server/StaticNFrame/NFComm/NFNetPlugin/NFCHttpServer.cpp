@@ -365,10 +365,66 @@ void NFCHttpServer::listener_cb(struct evhttp_request* req, void* arg)
 	pRequest->httpServer = pNet;
 	pRequest->timeOut = NFGetSecondTime();
 
-	pRequest->url = evhttp_request_get_uri(req);
-	pRequest->remoteHost = evhttp_request_get_host(req);
+	//uri
+	const char* uri = evhttp_request_get_uri(req);
+	if (uri == NULL)
+	{
+		pNet->mListHttpRequestPool.push_back(pRequest);
+		NFLogError("uri ==NULL");
+		evhttp_send_error(req, HTTP_BADREQUEST, 0);
+		return;
+	}
+
+	pRequest->url = uri;
+
+	const char* hostname = evhttp_request_get_host(req);
+	if (hostname == NULL)
+	{
+		NFLogError("hostname ==NULL");
+	}
+	else
+	{
+		pRequest->remoteHost = hostname;
+	}
+
+	if (req->uri_elems == NULL)
+	{
+		//get decodeUri
+		struct evhttp_uri* decoded = evhttp_uri_parse(uri);
+		if (decoded == NULL)
+		{
+			pNet->mListHttpRequestPool.push_back(pRequest);
+			NFLogError("bad request ");
+			evhttp_send_error(req, HTTP_BADREQUEST, 0);
+			return;
+		}
+
+		//path
+		const char* urlPath = evhttp_uri_get_path(decoded);
+		if (urlPath != NULL)
+		{
+			pRequest->path = urlPath;
+		}
+		else
+		{
+			NFLogError("urlPath ==NULL");
+		}
+		evhttp_uri_free(decoded);
+	}
+	else
+	{
+		const char* urlPath = evhttp_uri_get_path(req->uri_elems);
+		if (urlPath != NULL)
+		{
+			pRequest->path = urlPath;
+		}
+		else
+		{
+			NFLogError("urlPath ==NULL");
+		}
+	}
+	
 	pRequest->type = (NFHttpType)evhttp_request_get_command(req);
-	pRequest->path = evhttp_uri_get_path(req->uri_elems);
 
 	struct evbuffer *in_evb = evhttp_request_get_input_buffer(req);
 	size_t len = evbuffer_get_length(in_evb);
