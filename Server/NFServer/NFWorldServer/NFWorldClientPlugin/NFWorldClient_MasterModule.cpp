@@ -136,6 +136,8 @@ void NFCWorldClient_MasterModule::RegisterServer()
 		pData->set_server_type(pConfig->mServerType);
 		pData->set_server_max_online(pConfig->mMaxConnectNum);
 		pData->set_server_state(NFMsg::EST_NARMAL);
+		pData->set_game_id(pConfig->mGameId);
+		pData->set_game_name(pConfig->mGameName);
 
 		m_pNetClientModule->SendToServerByPB(m_pMasterServerData->mUnlinkId, EGMI_NET_WORLD_TO_MASTER_REGISTER, xMsg, 0);
 	}
@@ -169,6 +171,8 @@ void NFCWorldClient_MasterModule::ServerReport()
 		pData->set_server_max_online(pConfig->mMaxConnectNum);
 		pData->set_server_state(NFMsg::EST_NARMAL);
 		pData->set_server_cur_count(0);
+		pData->set_game_id(pConfig->mGameId);
+		pData->set_game_name(pConfig->mGameName);
 
 		m_pNetClientModule->SendToServerByPB(m_pMasterServerData->mUnlinkId, EGMI_STS_SERVER_REPORT, xMsg, 0);
 	}
