@@ -197,6 +197,7 @@ void NFCProxyLogicModule::OnHandleUser_LoginTokenLoginUserPmd(const uint32_t unL
 	}
 
 	pData->uid = msg.accountid();
+	pData->gameId = msg.gameid();
 	pData->gameServerId = msg.zoneid();
 
 	ProxyPlayerData* pLinkData = GetPlayerDataByLinkId(unLinkId);

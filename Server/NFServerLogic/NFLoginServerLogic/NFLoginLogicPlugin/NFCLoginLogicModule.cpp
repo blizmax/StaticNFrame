@@ -182,12 +182,13 @@ bool NFCLoginLogicModule::HttpHandleHttpLogin(uint32_t linkId, const NFHttpReque
 void NFCLoginLogicModule::RequestZoneList(const NFHttpRequest& req, const NFMsg::reqeust_zone_list& httpLogin)
 {
 	uint64_t nowTime = pPluginManager->GetNowTime() / 1000;
+	uint32_t gameid = httpLogin.data().gameid();
 	NFMsg::reqeust_zone_list_respone respone;
 	respone.set_do_(httpLogin.do_());
 	respone.set_error("0");
 	respone.set_st(nowTime);
 
-	auto vecServerData = m_pLoginClient_MasterModule->GetAllGameServer();
+	auto vecServerData = m_pLoginClient_MasterModule->GetAllGameServer(gameid);
 	for (int i = 0; i < (int)vecServerData.size(); i++)
 	{
 		auto pServerData = vecServerData[i];
@@ -208,7 +209,7 @@ void NFCLoginLogicModule::RequestZoneList(const NFHttpRequest& req, const NFMsg:
 		{
 			pData->set_bestzoneid(pServerData->mServerInfo.server_id());
 			pData->set_gameid(pServerConfig->mGameId);
-			pData->set_gamename(pServerConfig->mServerName);
+			pData->set_gamename(pServerConfig->mGameName);
 			pData->set_zoneid(pServerData->mServerInfo.server_id());
 
 			auto pZone = pData->add_zonelist();
@@ -341,7 +342,7 @@ void NFCLoginLogicModule::RequestSelectZone(const NFHttpRequest& req, const NFMs
 	} 
 
 	auto pGameServerData = m_pLoginClient_MasterModule->GetGameServerByServerId(zoneid);
-	if (pGameServerData == nullptr)
+	if (pGameServerData == nullptr || pGameServerData->GetGameId() != gameid)
 	{
 		NFLogError("Can't find Server by the server id:{}", zoneid);
 		return;

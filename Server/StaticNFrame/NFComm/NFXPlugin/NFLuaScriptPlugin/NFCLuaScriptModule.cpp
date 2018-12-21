@@ -20,10 +20,6 @@
 #include "NFComm/NFPluginModule/NFIHttpClientModule.h"
 #include "NFComm/NFPluginModule/NFIHttpServerModule.h"
 #include "NFComm/NFPluginModule/NFIMongoModule.h"
-#include "NFServer/NFServerCommon/NFServerCommon.h"
-
-#include "NFServerLogic/NFServerLogicCommon/NFIGameLogicModule.h"
-#include "NFServer/NFServerCommon/NFIWorldServerModule.h"
 #include "NFComm/NFPluginModule/NFIServerNetEventModule.h"
 
 #define TRY_RUN_GLOBAL_SCRIPT_FUN0(strFuncName)   try {LuaIntf::LuaRef func(l, strFuncName);  func.call<LuaIntf::LuaRef>(); }   catch (LuaIntf::LuaException& e) { cout << e.what() << endl; }
@@ -115,8 +111,6 @@ bool NFCLuaScriptModule::Register()
 		.addFunction("GetHttpClientModule", &NFIPluginManager::FindModule<NFIHttpClientModule>)
 		.addFunction("GetHttpServerModule", &NFIPluginManager::FindModule<NFIHttpServerModule>)
 		.addFunction("GetMongoModule", &NFIPluginManager::FindModule<NFIMongoModule>)
-		.addFunction("GetGameLogicModule", &NFIPluginManager::FindModule<NFIGameLogicModule>)
-		.addFunction("GetWorldServerModule", &NFIPluginManager::FindModule<NFIWorldServerModule>)
 		.addFunction("GetServerNetEventModule", &NFIPluginManager::FindModule<NFIServerNetEventModule>)
 		.endClass();
 
@@ -205,20 +199,8 @@ bool NFCLuaScriptModule::Register()
 	
 	LuaIntf::LuaBinding(l).beginClass<NFIServerNetEventModule>("NFIServerNetEventModule")
 	.addFunction("AddEventCallBack", &NFIServerNetEventModule::AddEventLuaCallBack)
+	.addFunction("AddAccountEventCallBack", &NFIServerNetEventModule::AddAccountEventLuaCallBack)
 	.endClass();
-
-	LuaIntf::LuaBinding(l).beginClass<PlayerAccountInfo>("PlayerAccountInfo")
-	.addProperty("Id", &PlayerAccountInfo::GetUid, &PlayerAccountInfo::SetUid)
-	.addProperty("SendString", &PlayerAccountInfo::GetSendMsg, &PlayerAccountInfo::SetSendMsg)
-	.endClass();
-
-	LuaIntf::LuaBinding(l).beginClass<NFIGameLogicModule>("NFIGameLogicModule")
-		.addFunction("GetAccount", &NFIGameLogicModule::GetPlayerAccountInfo)
-		.endClass();
-	
-	LuaIntf::LuaBinding(l).beginClass<NFIWorldServerModule>("NFIWorldServerModule")
-		.addFunction("GetGameByLink", &NFIWorldServerModule::GetGameByLink)
-		.endClass();
 
 	LuaIntf::LuaBinding(l).beginClass<NFServerData>("NFServerData")
 		.addProperty("UnlinkId", &NFServerData::GetUnlinkId)
@@ -228,6 +210,10 @@ bool NFCLuaScriptModule::Register()
 		.addProperty("SendString", &NFServerData::GetSendString)
 		.endClass();
 
+	LuaIntf::LuaBinding(l).beginClass<AccountInfo>("PlayerAccountInfo")
+		.addProperty("Id", &AccountInfo::GetUid, &AccountInfo::SetUid)
+		.addProperty("SendString", &AccountInfo::GetSendMsg, &AccountInfo::SetSendMsg)
+		.endClass();
 	return true;
 }
 
@@ -309,22 +295,12 @@ uint32_t NFCLuaScriptModule::AddClocker(const std::string& luaFunc, uint64_t nSt
 	return luaTimer.mTimerId;
 }
 
-void NFCLuaScriptModule::RunAccountConnectFunc(PlayerAccountInfo* laccount)
-{
-	TryRunGlobalScriptFunc("Tcp.account_connect", laccount);
-}
-
-void NFCLuaScriptModule::RunAccountDisConnectFunc(PlayerAccountInfo* laccount)
-{
-	TryRunGlobalScriptFunc("Tcp.account_disconnect", laccount);
-}
-
-void NFCLuaScriptModule::RunAccountReConnectFunc(PlayerAccountInfo* laccount)
-{
-	TryRunGlobalScriptFunc("Tcp.reconnect_login_ok", laccount);
-}
-
 void NFCLuaScriptModule::RunServerNetEventLuaFunc(const std::string& luaFunc, eMsgType nEvent, uint32_t unLinkId, NF_SHARE_PTR<NFServerData> pServerData)
+{
+	TryRunGlobalScriptFunc(luaFunc, nEvent, unLinkId, pServerData);
+}
+
+void NFCLuaScriptModule::RunAccountNetEventLuaFunc(const std::string& luaFunc, uint32_t nEvent, uint32_t unLinkId, NF_SHARE_PTR<AccountInfo> pServerData)
 {
 	TryRunGlobalScriptFunc(luaFunc, nEvent, unLinkId, pServerData);
 }

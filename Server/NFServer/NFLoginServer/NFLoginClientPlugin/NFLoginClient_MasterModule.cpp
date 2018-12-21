@@ -223,13 +223,16 @@ NF_SHARE_PTR<NFServerData> NFCLoginClient_MasterModule::GetGameServerByServerId(
 	return mGameMap.GetElement(serverId);
 }
 
-std::vector<NF_SHARE_PTR<NFServerData>> NFCLoginClient_MasterModule::GetAllGameServer()
+std::vector<NF_SHARE_PTR<NFServerData>> NFCLoginClient_MasterModule::GetAllGameServer(uint32_t gameid)
 {
 	std::vector<NF_SHARE_PTR<NFServerData>> vec;
 	auto pServerData = mGameMap.First();
 	while (pServerData)
 	{
-		vec.push_back(pServerData);
+		if (pServerData->GetGameId() == gameid)
+		{
+			vec.push_back(pServerData);
+		}
 		pServerData = mGameMap.Next();
 	}
 	return vec;

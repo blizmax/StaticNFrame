@@ -25,14 +25,16 @@ class ProxyPlayerData
 public:
 	ProxyPlayerData()
 	{
+		gameId = 0;
 		unlinkId = 0;
 		gameServerId = 0;
 		gameUnlinkId = 0;
 		uid = 0;
 	}
-	uint32_t unlinkId;
-	uint32_t gameServerId;
-	uint32_t gameUnlinkId;
+	uint32_t unlinkId;		//玩家连接ID
+	uint32_t gameServerId;	//玩家连接点逻辑服务器
+	uint32_t gameId;		//玩家所在游戏ID
+	uint32_t gameUnlinkId;	//玩家连接逻辑服务器连接ID
 	uint64_t uid;
 	std::string account;
 };

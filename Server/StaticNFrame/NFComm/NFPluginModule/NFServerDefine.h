@@ -47,6 +47,14 @@ enum eMsgType
 	eMsgType_RECIVEDATA = 3,
 };
 
+enum eAccountEventType
+{
+	eAccountEventType_Num = 0,
+	eAccountEventType_CONNECTED = 1,
+	eAccountEventType_DISCONNECTED = 2,
+	eAccountEventType_RECONNECTED = 3,
+};
+
 typedef std::function<void(const uint32_t unLinkId, const uint64_t valueId, const uint32_t nMsgId, const char* msg, const uint32_t nLen)> NET_RECEIVE_FUNCTOR;
 
 typedef std::function<void(const eMsgType nEvent, const uint32_t unLinkId)> NET_EVENT_FUNCTOR;
@@ -87,22 +95,22 @@ public:
 	LUA_SEND_MSG_FUNCTION mSendString;
 };
 
-class PlayerAccountInfo
+class AccountInfo
 {
 public:
-	PlayerAccountInfo()
+	AccountInfo()
 	{
-		proxyUnlinkId = 0;
+		unlinkId = 0;
 		uid = 0;
 	}
-	uint32_t proxyUnlinkId;
+	uint32_t unlinkId;
 	uint64_t uid;
 	std::string ip;
 	std::string account;
 	LUA_SEND_MSG_FUNCTION sendMsgFunc;
 
-	void SetProxyUnlinkId(uint32_t id) { proxyUnlinkId = id; }
-	uint32_t GetProxyUnlinkId() { return proxyUnlinkId; }
+	void SetUnlinkId(uint32_t id) { unlinkId = id; }
+	uint32_t GetUnlinkId() { return unlinkId; }
 
 	void SetUid(uint64_t id) { uid = id; }
 	uint64_t GetUid() { return uid; }

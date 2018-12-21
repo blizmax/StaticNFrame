@@ -141,6 +141,8 @@ void NFCGameClient_ProxyModule::RegisterServer(uint32_t unlinkId)
 		pData->set_server_type(pConfig->mServerType);
 		pData->set_server_max_online(pConfig->mMaxConnectNum);
 		pData->set_server_state(NFMsg::EST_NARMAL);
+		pData->set_game_id(pConfig->mGameId);
+		pData->set_game_name(pConfig->mGameName);
 
 		m_pNetClientModule->SendToServerByPB(unlinkId, EGMI_NET_GAME_TO_PROXY_REGISTER, xMsg, 0);
 	}

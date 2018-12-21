@@ -19,6 +19,8 @@ NFCGameLogicModule::~NFCGameLogicModule()
 
 bool NFCGameLogicModule::Init()
 {
+	m_pServerNetEventModule = pPluginManager->FindModule<NFIServerNetEventModule>();
+
 	m_pNetClientModule = pPluginManager->FindModule<NFINetClientModule>();
 	
 	m_pNetClientModule->AddEventCallBack(NF_ST_PROXY, this, &NFCGameLogicModule::OnProxySocketEvent);
@@ -46,19 +48,8 @@ bool NFCGameLogicModule::BeforeShut()
 
 bool NFCGameLogicModule::Shut()
 {
-	auto pData = m_playerAccountInfo.First();
-	while (pData)
-	{
-		NF_SAFE_DELETE(pData);
-		pData = m_playerAccountInfo.Next();
-	}
 	m_playerAccountInfo.ClearAll();
 	return true;
-}
-
-void NFCGameLogicModule::OnExecute(uint16_t nEventID, uint64_t nSrcID, uint8_t bySrcType, NFEventContext* pEventContext)
-{
-
 }
 
 void NFCGameLogicModule::OnHandleAccountConnect(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen)
@@ -66,27 +57,23 @@ void NFCGameLogicModule::OnHandleAccountConnect(const uint32_t unLinkId, const u
 	NFMsg::AccountConnectGameServer_C xMsg;
 	CLIENT_MSG_PROCESS_NO_OBJECT(nMsgId, msg, nLen, xMsg);
 
-	PlayerAccountInfo* pInfo = GetPlayerAccountInfo(playerId);
+	NF_SHARE_PTR<AccountInfo> pInfo = GetPlayerAccountInfo(xMsg.uid());
 	if (pInfo == nullptr)
 	{
-		pInfo = NF_NEW PlayerAccountInfo();
-		m_playerAccountInfo.AddElement(playerId, pInfo);
+		pInfo = NF_SHARE_PTR<AccountInfo>(NF_NEW AccountInfo());
+		m_playerAccountInfo.AddElement(xMsg.uid(), pInfo);
 	}
 
 	pInfo->uid = xMsg.uid();
 	pInfo->account = xMsg.account();
 	pInfo->ip = xMsg.ip();
-	pInfo->proxyUnlinkId = unLinkId;
+	pInfo->unlinkId = unLinkId;
 
 	pInfo->SetSendMsg([pInfo, this](const std::string& msg) {
-		this->m_pNetClientModule->SendByServerID(pInfo->proxyUnlinkId, 0, msg.data(), msg.length(), pInfo->uid);
+		this->m_pNetClientModule->SendByServerID(pInfo->unlinkId, 0, msg.data(), msg.length(), pInfo->uid);
 	});
 
-	NFILuaScriptModule* pLuaScriptModule = (NFILuaScriptModule*)pPluginManager->FindModule(typeid(NFILuaScriptModule).name());
-	if (pLuaScriptModule)
-	{
-		pLuaScriptModule->RunAccountConnectFunc(pInfo);
-	}
+	m_pServerNetEventModule->OnAccountNetEvent(eAccountEventType_CONNECTED, NF_ST_GAME, unLinkId, pInfo);
 }
 
 void NFCGameLogicModule::OnHandleAccountDisConnect(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen)
@@ -94,19 +81,19 @@ void NFCGameLogicModule::OnHandleAccountDisConnect(const uint32_t unLinkId, cons
 	NFMsg::AccountConnectGameServer_C xMsg;
 	CLIENT_MSG_PROCESS_NO_OBJECT(nMsgId, msg, nLen, xMsg);
 
-	PlayerAccountInfo* pInfo = GetPlayerAccountInfo(playerId);
+	NF_SHARE_PTR<AccountInfo> pInfo = GetPlayerAccountInfo(xMsg.uid());
 	if (pInfo)
 	{
 		pInfo->uid = xMsg.uid();
 		pInfo->account = xMsg.account();
 		pInfo->ip = xMsg.ip();
-		pInfo->proxyUnlinkId = 0;
+		pInfo->unlinkId = 0;
 
-		NFILuaScriptModule* pLuaScriptModule = (NFILuaScriptModule*)pPluginManager->FindModule(typeid(NFILuaScriptModule).name());
-		if (pLuaScriptModule)
-		{
-			pLuaScriptModule->RunAccountDisConnectFunc(pInfo);
-		}
+		pInfo->SetSendMsg([pInfo, this](const std::string& msg) {
+			NFLogError("account disconnect, can't send msg:{}", msg);
+		});
+
+		m_pServerNetEventModule->OnAccountNetEvent(eAccountEventType_DISCONNECTED, NF_ST_GAME, unLinkId, pInfo);
 	}
 }
 
@@ -115,27 +102,23 @@ void NFCGameLogicModule::OnHandleAccountReConnect(const uint32_t unLinkId, const
 	NFMsg::AccountConnectGameServer_C xMsg;
 	CLIENT_MSG_PROCESS_NO_OBJECT(nMsgId, msg, nLen, xMsg);
 
-	PlayerAccountInfo* pInfo = GetPlayerAccountInfo(playerId);
+	NF_SHARE_PTR<AccountInfo> pInfo = GetPlayerAccountInfo(xMsg.uid());
 	if (pInfo == nullptr)
 	{
-		pInfo = NF_NEW PlayerAccountInfo();
-		m_playerAccountInfo.AddElement(playerId, pInfo);
+		pInfo = NF_SHARE_PTR<AccountInfo>(NF_NEW AccountInfo());
+		m_playerAccountInfo.AddElement(xMsg.uid(), pInfo);
 	}
 
 	pInfo->uid = xMsg.uid();
 	pInfo->account = xMsg.account();
 	pInfo->ip = xMsg.ip();
-	pInfo->proxyUnlinkId = unLinkId;
+	pInfo->unlinkId = unLinkId;
 
 	pInfo->SetSendMsg([pInfo, this](const std::string& msg) {
-		this->m_pNetClientModule->SendByServerID(pInfo->proxyUnlinkId, 0, msg.data(), msg.length(), pInfo->uid);
+		this->m_pNetClientModule->SendByServerID(pInfo->unlinkId, 0, msg.data(), msg.length(), pInfo->uid);
 	});
 
-	NFILuaScriptModule* pLuaScriptModule = (NFILuaScriptModule*)pPluginManager->FindModule(typeid(NFILuaScriptModule).name());
-	if (pLuaScriptModule)
-	{
-		pLuaScriptModule->RunAccountReConnectFunc(pInfo);
-	}
+	m_pServerNetEventModule->OnAccountNetEvent(eAccountEventType_RECONNECTED, NF_ST_GAME, unLinkId, pInfo);
 }
 
 void NFCGameLogicModule::OnProxySocketEvent(const eMsgType nEvent, const uint32_t unLinkId)
@@ -153,16 +136,13 @@ void NFCGameLogicModule::OnProxySocketEvent(const eMsgType nEvent, const uint32_
 void NFCGameLogicModule::OnHandleProxyDisconnect(const uint32_t unLinkId)
 {
 	NFILuaScriptModule* pLuaScriptModule = (NFILuaScriptModule*)pPluginManager->FindModule(typeid(NFILuaScriptModule).name());
-	PlayerAccountInfo* pInfo = m_playerAccountInfo.First();
+	NF_SHARE_PTR<AccountInfo> pInfo = m_playerAccountInfo.First();
 	while (pInfo)
 	{
-		if (pInfo->proxyUnlinkId == unLinkId)
+		if (pInfo->unlinkId == unLinkId)
 		{
-			pInfo->proxyUnlinkId = 0;
-			if (pLuaScriptModule)
-			{
-				pLuaScriptModule->RunAccountDisConnectFunc(pInfo);
-			}
+			pInfo->unlinkId = 0;
+			m_pServerNetEventModule->OnAccountNetEvent(eAccountEventType_DISCONNECTED, NF_ST_GAME, unLinkId, pInfo);
 		}
 		pInfo = m_playerAccountInfo.Next();
 	}

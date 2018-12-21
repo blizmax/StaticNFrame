@@ -14,6 +14,6 @@
 class NFIGameLogicModule : public NFIModule
 {
 public:
-	virtual PlayerAccountInfo* GetPlayerAccountInfo(uint64_t uid) = 0;
+	virtual NF_SHARE_PTR<AccountInfo> GetPlayerAccountInfo(uint64_t uid) = 0;
 };
 

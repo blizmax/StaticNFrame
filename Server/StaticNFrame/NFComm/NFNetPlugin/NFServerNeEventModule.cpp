@@ -67,3 +67,11 @@ void NFCServerNetEventModule::RunServerNetEventLuaFunc(const std::string& luaFun
 		m_pLuaScriptModule->RunServerNetEventLuaFunc(luaFunc, nEvent, unLinkId, pServerData);
 	}
 }
+
+void NFCServerNetEventModule::RunAccountNetEventLuaFunc(const std::string& luaFunc, uint32_t nEvent, uint32_t unLinkId, NF_SHARE_PTR<AccountInfo> pServerData)
+{
+	if (m_pLuaScriptModule)
+	{
+		m_pLuaScriptModule->RunAccountNetEventLuaFunc(luaFunc, nEvent, unLinkId, pServerData);
+	}
+}

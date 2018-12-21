@@ -14,7 +14,6 @@ function WorldServerModule.Init()
     Do.dbready()
 
     local pluginManager = LuaNFrame:GetPluginManager()
-    WorldServerModule.worldServerModule = pluginManager:GetWorldServerModule()
     
     TcpServer.addRecvCallBack(NF_SERVER_TYPES.NF_ST_WORLD, 0, "WorldServerModule.GameRecvHandleJson")
 
