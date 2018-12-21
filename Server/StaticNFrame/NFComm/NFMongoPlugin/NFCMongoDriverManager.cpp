@@ -66,7 +66,7 @@ bool NFCMongoDriverManager::AddMongoServer(const int nServerID, const std::strin
 	NFCMongoDriver* pMongoDriver = mMongoDriver.GetElement(nServerID);
 	if (pMongoDriver)
 	{
-		return false;
+		return true;
 	}
 
 	NFCMongoDriver* pInvalidMongoDriver = mInvalidMongoDriver.GetElement(nServerID);

@@ -110,6 +110,16 @@ class respone_select_zone_responeDefaultTypeInternal {
   ::google::protobuf::internal::ExplicitlyConstructed<respone_select_zone_respone>
       _instance;
 } _respone_select_zone_respone_default_instance_;
+class login_to_master_request_select_zoneDefaultTypeInternal {
+ public:
+  ::google::protobuf::internal::ExplicitlyConstructed<login_to_master_request_select_zone>
+      _instance;
+} _login_to_master_request_select_zone_default_instance_;
+class master_to_login_respone_select_zoneDefaultTypeInternal {
+ public:
+  ::google::protobuf::internal::ExplicitlyConstructed<master_to_login_respone_select_zone>
+      _instance;
+} _master_to_login_respone_select_zone_default_instance_;
 }  // namespace NFMsg
 namespace protobuf_login_5fmsg_2eproto {
 static void InitDefaultsLoginAccount() {
@@ -344,6 +354,34 @@ static void InitDefaultsrespone_select_zone_respone() {
     {{ATOMIC_VAR_INIT(::google::protobuf::internal::SCCInfoBase::kUninitialized), 1, InitDefaultsrespone_select_zone_respone}, {
       &protobuf_login_5fmsg_2eproto::scc_info_respone_select_zone_respone_respone_data.base,}};
 
+static void InitDefaultslogin_to_master_request_select_zone() {
+  GOOGLE_PROTOBUF_VERIFY_VERSION;
+
+  {
+    void* ptr = &::NFMsg::_login_to_master_request_select_zone_default_instance_;
+    new (ptr) ::NFMsg::login_to_master_request_select_zone();
+    ::google::protobuf::internal::OnShutdownDestroyMessage(ptr);
+  }
+  ::NFMsg::login_to_master_request_select_zone::InitAsDefaultInstance();
+}
+
+::google::protobuf::internal::SCCInfo<0> scc_info_login_to_master_request_select_zone =
+    {{ATOMIC_VAR_INIT(::google::protobuf::internal::SCCInfoBase::kUninitialized), 0, InitDefaultslogin_to_master_request_select_zone}, {}};
+
+static void InitDefaultsmaster_to_login_respone_select_zone() {
+  GOOGLE_PROTOBUF_VERIFY_VERSION;
+
+  {
+    void* ptr = &::NFMsg::_master_to_login_respone_select_zone_default_instance_;
+    new (ptr) ::NFMsg::master_to_login_respone_select_zone();
+    ::google::protobuf::internal::OnShutdownDestroyMessage(ptr);
+  }
+  ::NFMsg::master_to_login_respone_select_zone::InitAsDefaultInstance();
+}
+
+::google::protobuf::internal::SCCInfo<0> scc_info_master_to_login_respone_select_zone =
+    {{ATOMIC_VAR_INIT(::google::protobuf::internal::SCCInfoBase::kUninitialized), 0, InitDefaultsmaster_to_login_respone_select_zone}, {}};
+
 void InitDefaults() {
   ::google::protobuf::internal::InitSCC(&scc_info_LoginAccount.base);
   ::google::protobuf::internal::InitSCC(&scc_info_http_login_cmd.base);
@@ -361,9 +399,12 @@ void InitDefaults() {
   ::google::protobuf::internal::InitSCC(&scc_info_reqeust_select_zone_request.base);
   ::google::protobuf::internal::InitSCC(&scc_info_respone_select_zone_respone_respone_data.base);
   ::google::protobuf::internal::InitSCC(&scc_info_respone_select_zone_respone.base);
+  ::google::protobuf::internal::InitSCC(&scc_info_login_to_master_request_select_zone.base);
+  ::google::protobuf::internal::InitSCC(&scc_info_master_to_login_respone_select_zone.base);
 }
 
-::google::protobuf::Metadata file_level_metadata[16];
+::google::protobuf::Metadata file_level_metadata[18];
+const ::google::protobuf::EnumDescriptor* file_level_enum_descriptors[1];
 
 const ::google::protobuf::uint32 TableStruct::offsets[] GOOGLE_PROTOBUF_ATTRIBUTE_SECTION_VARIABLE(protodesc_cold) = {
   ~0u,  // no _has_bits_
@@ -379,6 +420,7 @@ const ::google::protobuf::uint32 TableStruct::offsets[] GOOGLE_PROTOBUF_ATTRIBUT
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::NFMsg::LoginAccount, zoneid_),
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::NFMsg::LoginAccount, md5_plat_key_),
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::NFMsg::LoginAccount, md5_plat_login_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::NFMsg::LoginAccount, online_),
   ~0u,  // no _has_bits_
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::NFMsg::http_login_cmd, _internal_metadata_),
   ~0u,  // no _extensions_
@@ -543,24 +585,43 @@ const ::google::protobuf::uint32 TableStruct::offsets[] GOOGLE_PROTOBUF_ATTRIBUT
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::NFMsg::respone_select_zone_respone, zoneid_),
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::NFMsg::respone_select_zone_respone, data_),
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::NFMsg::respone_select_zone_respone, uid_),
+  ~0u,  // no _has_bits_
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::NFMsg::login_to_master_request_select_zone, _internal_metadata_),
+  ~0u,  // no _extensions_
+  ~0u,  // no _oneof_case_
+  ~0u,  // no _weak_field_map_
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::NFMsg::login_to_master_request_select_zone, uid_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::NFMsg::login_to_master_request_select_zone, gameid_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::NFMsg::login_to_master_request_select_zone, zoneid_),
+  ~0u,  // no _has_bits_
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::NFMsg::master_to_login_respone_select_zone, _internal_metadata_),
+  ~0u,  // no _extensions_
+  ~0u,  // no _oneof_case_
+  ~0u,  // no _weak_field_map_
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::NFMsg::master_to_login_respone_select_zone, uid_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::NFMsg::master_to_login_respone_select_zone, gameid_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::NFMsg::master_to_login_respone_select_zone, zoneid_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::NFMsg::master_to_login_respone_select_zone, result_code_),
 };
 static const ::google::protobuf::internal::MigrationSchema schemas[] GOOGLE_PROTOBUF_ATTRIBUTE_SECTION_VARIABLE(protodesc_cold) = {
   { 0, -1, sizeof(::NFMsg::LoginAccount)},
-  { 13, -1, sizeof(::NFMsg::http_login_cmd)},
-  { 19, -1, sizeof(::NFMsg::reqeust_zone_list_data)},
-  { 25, -1, sizeof(::NFMsg::reqeust_zone_list)},
-  { 32, -1, sizeof(::NFMsg::reqeust_zone_list_respone_respone_data_reqeust_zone_list_server)},
-  { 45, -1, sizeof(::NFMsg::reqeust_zone_list_respone_respone_data)},
-  { 55, -1, sizeof(::NFMsg::reqeust_zone_list_respone)},
-  { 64, -1, sizeof(::NFMsg::plat_token_login_request_request_data_request_data_platinfo)},
-  { 79, -1, sizeof(::NFMsg::plat_token_login_request_request_data)},
-  { 86, -1, sizeof(::NFMsg::plat_token_login_request)},
-  { 96, -1, sizeof(::NFMsg::plat_token_login_respone_respone_data_respone_data_platinfo)},
-  { 111, -1, sizeof(::NFMsg::plat_token_login_respone_respone_data)},
-  { 125, -1, sizeof(::NFMsg::plat_token_login_respone)},
-  { 138, -1, sizeof(::NFMsg::reqeust_select_zone_request)},
-  { 149, -1, sizeof(::NFMsg::respone_select_zone_respone_respone_data)},
-  { 163, -1, sizeof(::NFMsg::respone_select_zone_respone)},
+  { 14, -1, sizeof(::NFMsg::http_login_cmd)},
+  { 20, -1, sizeof(::NFMsg::reqeust_zone_list_data)},
+  { 26, -1, sizeof(::NFMsg::reqeust_zone_list)},
+  { 33, -1, sizeof(::NFMsg::reqeust_zone_list_respone_respone_data_reqeust_zone_list_server)},
+  { 46, -1, sizeof(::NFMsg::reqeust_zone_list_respone_respone_data)},
+  { 56, -1, sizeof(::NFMsg::reqeust_zone_list_respone)},
+  { 65, -1, sizeof(::NFMsg::plat_token_login_request_request_data_request_data_platinfo)},
+  { 80, -1, sizeof(::NFMsg::plat_token_login_request_request_data)},
+  { 87, -1, sizeof(::NFMsg::plat_token_login_request)},
+  { 97, -1, sizeof(::NFMsg::plat_token_login_respone_respone_data_respone_data_platinfo)},
+  { 112, -1, sizeof(::NFMsg::plat_token_login_respone_respone_data)},
+  { 126, -1, sizeof(::NFMsg::plat_token_login_respone)},
+  { 139, -1, sizeof(::NFMsg::reqeust_select_zone_request)},
+  { 150, -1, sizeof(::NFMsg::respone_select_zone_respone_respone_data)},
+  { 164, -1, sizeof(::NFMsg::respone_select_zone_respone)},
+  { 178, -1, sizeof(::NFMsg::login_to_master_request_select_zone)},
+  { 186, -1, sizeof(::NFMsg::master_to_login_respone_select_zone)},
 };
 
 static ::google::protobuf::Message const * const file_default_instances[] = {
@@ -580,13 +641,15 @@ static ::google::protobuf::Message const * const file_default_instances[] = {
   reinterpret_cast<const ::google::protobuf::Message*>(&::NFMsg::_reqeust_select_zone_request_default_instance_),
   reinterpret_cast<const ::google::protobuf::Message*>(&::NFMsg::_respone_select_zone_respone_respone_data_default_instance_),
   reinterpret_cast<const ::google::protobuf::Message*>(&::NFMsg::_respone_select_zone_respone_default_instance_),
+  reinterpret_cast<const ::google::protobuf::Message*>(&::NFMsg::_login_to_master_request_select_zone_default_instance_),
+  reinterpret_cast<const ::google::protobuf::Message*>(&::NFMsg::_master_to_login_respone_select_zone_default_instance_),
 };
 
 void protobuf_AssignDescriptors() {
   AddDescriptors();
   AssignDescriptors(
       "login_msg.proto", schemas, file_default_instances, TableStruct::offsets,
-      file_level_metadata, NULL, NULL);
+      file_level_metadata, file_level_enum_descriptors, NULL);
 }
 
 void protobuf_AssignDescriptorsOnce() {
@@ -597,80 +660,88 @@ void protobuf_AssignDescriptorsOnce() {
 void protobuf_RegisterTypes(const ::std::string&) GOOGLE_PROTOBUF_ATTRIBUTE_COLD;
 void protobuf_RegisterTypes(const ::std::string&) {
   protobuf_AssignDescriptorsOnce();
-  ::google::protobuf::internal::RegisterAllTypes(file_level_metadata, 16);
+  ::google::protobuf::internal::RegisterAllTypes(file_level_metadata, 18);
 }
 
 void AddDescriptorsImpl() {
   InitDefaults();
   static const char descriptor[] GOOGLE_PROTOBUF_ATTRIBUTE_SECTION_VARIABLE(protodesc_cold) = {
-      "\n\017login_msg.proto\022\005NFMsg\"\233\001\n\014LoginAccoun"
+      "\n\017login_msg.proto\022\005NFMsg\"\253\001\n\014LoginAccoun"
       "t\022\017\n\007account\030\001 \001(\t\022\013\n\003uid\030\002 \001(\004\022\017\n\007openk"
       "ey\030\003 \001(\t\022\016\n\006platid\030\004 \001(\r\022\016\n\006gameid\030\005 \001(\r"
       "\022\016\n\006zoneid\030\006 \001(\r\022\024\n\014md5_plat_key\030\007 \001(\t\022\026"
-      "\n\016md5_plat_login\030\010 \001(\t\"\034\n\016http_login_cmd"
-      "\022\n\n\002do\030\001 \001(\t\"(\n\026reqeust_zone_list_data\022\016"
-      "\n\006gameid\030\001 \001(\r\"L\n\021reqeust_zone_list\022\n\n\002d"
-      "o\030\001 \001(\t\022+\n\004data\030\002 \001(\0132\035.NFMsg.reqeust_zo"
-      "ne_list_data\"\330\003\n\031reqeust_zone_list_respo"
-      "ne\022\n\n\002do\030\001 \001(\t\022\r\n\005error\030\002 \001(\t\022\n\n\002st\030\003 \001("
-      "\004\022;\n\004data\030\004 \001(\0132-.NFMsg.reqeust_zone_lis"
-      "t_respone.respone_data\032\326\002\n\014respone_data\022"
-      "\022\n\nbestzoneid\030\001 \001(\r\022\016\n\006gameid\030\002 \001(\r\022\020\n\010g"
-      "amename\030\003 \001(\t\022\016\n\006zoneid\030\004 \001(\r\022X\n\010zonelis"
-      "t\030\005 \003(\0132F.NFMsg.reqeust_zone_list_respon"
-      "e.respone_data.reqeust_zone_list_server\032"
-      "\245\001\n\030reqeust_zone_list_server\022\016\n\006gameid\030\001"
-      " \001(\r\022\020\n\010gamename\030\002 \001(\t\022\021\n\tnewzoneid\030\003 \001("
-      "\r\022\021\n\tonlinenum\030\004 \001(\r\022\020\n\010opentime\030\005 \001(\t\022\r"
-      "\n\005state\030\006 \001(\r\022\016\n\006zoneid\030\007 \001(\r\022\020\n\010zonenam"
-      "e\030\010 \001(\t\"\320\003\n\030plat_token_login_request\022\n\n\002"
-      "do\030\001 \001(\t\022:\n\004data\030\002 \001(\0132,.NFMsg.plat_toke"
-      "n_login_request.request_data\022\016\n\006gameid\030\003"
-      " \001(\r\022\016\n\006zoneid\030\004 \001(\r\022\036\n\026unigame_plat_tim"
-      "estamp\030\005 \001(\004\032\253\002\n\014request_data\022T\n\010platinf"
-      "o\030\001 \001(\0132B.NFMsg.plat_token_login_request"
-      ".request_data.request_data_platinfo\022\016\n\006g"
-      "ameid\030\002 \001(\r\032\264\001\n\025request_data_platinfo\022\013\n"
-      "\003aaa\030\001 \001(\r\022\014\n\004sign\030\002 \001(\t\022\017\n\007account\030\003 \001("
-      "\t\022\r\n\005email\030\004 \001(\t\022\016\n\006platid\030\005 \001(\r\022\016\n\006gend"
-      "er\030\006 \001(\t\022\020\n\010nickname\030\007 \001(\t\022\013\n\003uid\030\010 \001(\t\022"
-      "\016\n\006gameid\030\t \001(\r\022\021\n\ttimestamp\030\n \001(\t\"\313\005\n\030p"
-      "lat_token_login_respone\022\016\n\006gameid\030\001 \001(\r\022"
-      "\030\n\020unigame_plat_key\030\002 \001(\t\022\032\n\022unigame_pla"
-      "t_login\030\003 \001(\t\022\"\n\032unigame_plat_login_time"
-      "out\030\004 \001(\t\022\036\n\026unigame_plat_timestamp\030\005 \001("
-      "\004\022\016\n\006zoneid\030\006 \001(\r\022\n\n\002do\030\007 \001(\t\022:\n\004data\030\010 "
-      "\001(\0132,.NFMsg.plat_token_login_respone.res"
-      "pone_data\032\314\003\n\014respone_data\022\016\n\006gameid\030\001 \001"
-      "(\r\022\013\n\003sid\030\002 \001(\t\022\025\n\rtimezone_name\030\003 \001(\t\022\027"
-      "\n\017timezone_offset\030\004 \001(\r\022\013\n\003uid\030\005 \001(\t\022\030\n\020"
-      "unigame_plat_key\030\006 \001(\t\022\032\n\022unigame_plat_l"
-      "ogin\030\007 \001(\t\022\037\n\027unigame_plat_login_life\030\010 "
-      "\001(\r\022T\n\010platinfo\030\t \001(\0132B.NFMsg.plat_token"
-      "_login_respone.respone_data.respone_data"
-      "_platinfo\032\264\001\n\025respone_data_platinfo\022\013\n\003a"
-      "aa\030\001 \001(\r\022\014\n\004sign\030\002 \001(\t\022\017\n\007account\030\003 \001(\t\022"
-      "\r\n\005email\030\004 \001(\t\022\016\n\006platid\030\005 \001(\r\022\016\n\006gender"
-      "\030\006 \001(\t\022\020\n\010nickname\030\007 \001(\t\022\013\n\003uid\030\010 \001(\t\022\016\n"
-      "\006gameid\030\t \001(\r\022\021\n\ttimestamp\030\n \001(\t\"\222\001\n\033req"
-      "eust_select_zone_request\022\n\n\002do\030\001 \001(\t\022\016\n\006"
-      "gameid\030\002 \001(\r\022\016\n\006zoneid\030\003 \001(\r\022\013\n\003uid\030\004 \001("
-      "\t\022\032\n\022unigame_plat_login\030\005 \001(\t\022\036\n\026unigame"
-      "_plat_timestamp\030\006 \001(\004\"\251\003\n\033respone_select"
-      "_zone_respone\022\n\n\002do\030\001 \001(\t\022\016\n\006errno_\030\002 \001("
-      "\t\022\016\n\006gameid\030\003 \001(\r\022\n\n\002st\030\004 \001(\004\022\032\n\022unigame"
-      "_plat_login\030\005 \001(\t\022\036\n\026unigame_plat_timest"
-      "amp\030\006 \001(\004\022\016\n\006zoneid\030\007 \001(\r\022=\n\004data\030\010 \001(\0132"
-      "/.NFMsg.respone_select_zone_respone.resp"
-      "one_data\022\013\n\003uid\030\t \001(\t\032\271\001\n\014respone_data\022\021"
-      "\n\taccountid\030\001 \001(\004\022\016\n\006gameid\030\002 \001(\r\022\022\n\ngat"
-      "ewayurl\030\003 \001(\t\022\025\n\rgatewayurltcp\030\004 \001(\t\022\024\n\014"
-      "gatewayurlws\030\005 \001(\t\022\023\n\013logintempid\030\006 \001(\r\022"
-      "\017\n\007tokenid\030\007 \001(\004\022\016\n\006zoneid\030\010 \001(\r\022\017\n\007zone"
-      "uid\030\t \001(\004b\006proto3"
+      "\n\016md5_plat_login\030\010 \001(\t\022\016\n\006online\030\t \001(\010\"\034"
+      "\n\016http_login_cmd\022\n\n\002do\030\001 \001(\t\"(\n\026reqeust_"
+      "zone_list_data\022\016\n\006gameid\030\001 \001(\r\"L\n\021reqeus"
+      "t_zone_list\022\n\n\002do\030\001 \001(\t\022+\n\004data\030\002 \001(\0132\035."
+      "NFMsg.reqeust_zone_list_data\"\330\003\n\031reqeust"
+      "_zone_list_respone\022\n\n\002do\030\001 \001(\t\022\r\n\005error\030"
+      "\002 \001(\t\022\n\n\002st\030\003 \001(\004\022;\n\004data\030\004 \001(\0132-.NFMsg."
+      "reqeust_zone_list_respone.respone_data\032\326"
+      "\002\n\014respone_data\022\022\n\nbestzoneid\030\001 \001(\r\022\016\n\006g"
+      "ameid\030\002 \001(\r\022\020\n\010gamename\030\003 \001(\t\022\016\n\006zoneid\030"
+      "\004 \001(\r\022X\n\010zonelist\030\005 \003(\0132F.NFMsg.reqeust_"
+      "zone_list_respone.respone_data.reqeust_z"
+      "one_list_server\032\245\001\n\030reqeust_zone_list_se"
+      "rver\022\016\n\006gameid\030\001 \001(\r\022\020\n\010gamename\030\002 \001(\t\022\021"
+      "\n\tnewzoneid\030\003 \001(\r\022\021\n\tonlinenum\030\004 \001(\r\022\020\n\010"
+      "opentime\030\005 \001(\t\022\r\n\005state\030\006 \001(\r\022\016\n\006zoneid\030"
+      "\007 \001(\r\022\020\n\010zonename\030\010 \001(\t\"\320\003\n\030plat_token_l"
+      "ogin_request\022\n\n\002do\030\001 \001(\t\022:\n\004data\030\002 \001(\0132,"
+      ".NFMsg.plat_token_login_request.request_"
+      "data\022\016\n\006gameid\030\003 \001(\r\022\016\n\006zoneid\030\004 \001(\r\022\036\n\026"
+      "unigame_plat_timestamp\030\005 \001(\004\032\253\002\n\014request"
+      "_data\022T\n\010platinfo\030\001 \001(\0132B.NFMsg.plat_tok"
+      "en_login_request.request_data.request_da"
+      "ta_platinfo\022\016\n\006gameid\030\002 \001(\r\032\264\001\n\025request_"
+      "data_platinfo\022\013\n\003aaa\030\001 \001(\r\022\014\n\004sign\030\002 \001(\t"
+      "\022\017\n\007account\030\003 \001(\t\022\r\n\005email\030\004 \001(\t\022\016\n\006plat"
+      "id\030\005 \001(\r\022\016\n\006gender\030\006 \001(\t\022\020\n\010nickname\030\007 \001"
+      "(\t\022\013\n\003uid\030\010 \001(\t\022\016\n\006gameid\030\t \001(\r\022\021\n\ttimes"
+      "tamp\030\n \001(\t\"\313\005\n\030plat_token_login_respone\022"
+      "\016\n\006gameid\030\001 \001(\r\022\030\n\020unigame_plat_key\030\002 \001("
+      "\t\022\032\n\022unigame_plat_login\030\003 \001(\t\022\"\n\032unigame"
+      "_plat_login_timeout\030\004 \001(\t\022\036\n\026unigame_pla"
+      "t_timestamp\030\005 \001(\004\022\016\n\006zoneid\030\006 \001(\r\022\n\n\002do\030"
+      "\007 \001(\t\022:\n\004data\030\010 \001(\0132,.NFMsg.plat_token_l"
+      "ogin_respone.respone_data\032\314\003\n\014respone_da"
+      "ta\022\016\n\006gameid\030\001 \001(\r\022\013\n\003sid\030\002 \001(\t\022\025\n\rtimez"
+      "one_name\030\003 \001(\t\022\027\n\017timezone_offset\030\004 \001(\r\022"
+      "\013\n\003uid\030\005 \001(\t\022\030\n\020unigame_plat_key\030\006 \001(\t\022\032"
+      "\n\022unigame_plat_login\030\007 \001(\t\022\037\n\027unigame_pl"
+      "at_login_life\030\010 \001(\r\022T\n\010platinfo\030\t \001(\0132B."
+      "NFMsg.plat_token_login_respone.respone_d"
+      "ata.respone_data_platinfo\032\264\001\n\025respone_da"
+      "ta_platinfo\022\013\n\003aaa\030\001 \001(\r\022\014\n\004sign\030\002 \001(\t\022\017"
+      "\n\007account\030\003 \001(\t\022\r\n\005email\030\004 \001(\t\022\016\n\006platid"
+      "\030\005 \001(\r\022\016\n\006gender\030\006 \001(\t\022\020\n\010nickname\030\007 \001(\t"
+      "\022\013\n\003uid\030\010 \001(\t\022\016\n\006gameid\030\t \001(\r\022\021\n\ttimesta"
+      "mp\030\n \001(\t\"\222\001\n\033reqeust_select_zone_request"
+      "\022\n\n\002do\030\001 \001(\t\022\016\n\006gameid\030\002 \001(\r\022\016\n\006zoneid\030\003"
+      " \001(\r\022\013\n\003uid\030\004 \001(\t\022\032\n\022unigame_plat_login\030"
+      "\005 \001(\t\022\036\n\026unigame_plat_timestamp\030\006 \001(\004\"\251\003"
+      "\n\033respone_select_zone_respone\022\n\n\002do\030\001 \001("
+      "\t\022\016\n\006errno_\030\002 \001(\t\022\016\n\006gameid\030\003 \001(\r\022\n\n\002st\030"
+      "\004 \001(\004\022\032\n\022unigame_plat_login\030\005 \001(\t\022\036\n\026uni"
+      "game_plat_timestamp\030\006 \001(\004\022\016\n\006zoneid\030\007 \001("
+      "\r\022=\n\004data\030\010 \001(\0132/.NFMsg.respone_select_z"
+      "one_respone.respone_data\022\013\n\003uid\030\t \001(\t\032\271\001"
+      "\n\014respone_data\022\021\n\taccountid\030\001 \001(\004\022\016\n\006gam"
+      "eid\030\002 \001(\r\022\022\n\ngatewayurl\030\003 \001(\t\022\025\n\rgateway"
+      "urltcp\030\004 \001(\t\022\024\n\014gatewayurlws\030\005 \001(\t\022\023\n\013lo"
+      "gintempid\030\006 \001(\r\022\017\n\007tokenid\030\007 \001(\004\022\016\n\006zone"
+      "id\030\010 \001(\r\022\017\n\007zoneuid\030\t \001(\004\"R\n#login_to_ma"
+      "ster_request_select_zone\022\013\n\003uid\030\001 \001(\004\022\016\n"
+      "\006gameid\030\002 \001(\r\022\016\n\006zoneid\030\003 \001(\r\"\314\001\n#master"
+      "_to_login_respone_select_zone\022\013\n\003uid\030\001 \001"
+      "(\004\022\016\n\006gameid\030\002 \001(\r\022\016\n\006zoneid\030\003 \001(\r\022I\n\013re"
+      "sult_code\030\004 \001(\01624.NFMsg.master_to_login_"
+      "respone_select_zone.ErrorCode\"-\n\tErrorCo"
+      "de\022\020\n\014CODE_SUCCESS\020\000\022\016\n\nERROR_FAIL\020\001b\006pr"
+      "oto3"
   };
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
-      descriptor, 2577);
+      descriptor, 2884);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "login_msg.proto", &protobuf_RegisterTypes);
 }
@@ -687,6 +758,27 @@ struct StaticDescriptorInitializer {
 } static_descriptor_initializer;
 }  // namespace protobuf_login_5fmsg_2eproto
 namespace NFMsg {
+const ::google::protobuf::EnumDescriptor* master_to_login_respone_select_zone_ErrorCode_descriptor() {
+  protobuf_login_5fmsg_2eproto::protobuf_AssignDescriptorsOnce();
+  return protobuf_login_5fmsg_2eproto::file_level_enum_descriptors[0];
+}
+bool master_to_login_respone_select_zone_ErrorCode_IsValid(int value) {
+  switch (value) {
+    case 0:
+    case 1:
+      return true;
+    default:
+      return false;
+  }
+}
+
+#if !defined(_MSC_VER) || _MSC_VER >= 1900
+const master_to_login_respone_select_zone_ErrorCode master_to_login_respone_select_zone::CODE_SUCCESS;
+const master_to_login_respone_select_zone_ErrorCode master_to_login_respone_select_zone::ERROR_FAIL;
+const master_to_login_respone_select_zone_ErrorCode master_to_login_respone_select_zone::ErrorCode_MIN;
+const master_to_login_respone_select_zone_ErrorCode master_to_login_respone_select_zone::ErrorCode_MAX;
+const int master_to_login_respone_select_zone::ErrorCode_ARRAYSIZE;
+#endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
 
 // ===================================================================
 
@@ -701,6 +793,7 @@ const int LoginAccount::kGameidFieldNumber;
 const int LoginAccount::kZoneidFieldNumber;
 const int LoginAccount::kMd5PlatKeyFieldNumber;
 const int LoginAccount::kMd5PlatLoginFieldNumber;
+const int LoginAccount::kOnlineFieldNumber;
 #endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
 
 LoginAccount::LoginAccount()
@@ -731,8 +824,8 @@ LoginAccount::LoginAccount(const LoginAccount& from)
     md5_plat_login_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.md5_plat_login_);
   }
   ::memcpy(&uid_, &from.uid_,
-    static_cast<size_t>(reinterpret_cast<char*>(&zoneid_) -
-    reinterpret_cast<char*>(&uid_)) + sizeof(zoneid_));
+    static_cast<size_t>(reinterpret_cast<char*>(&online_) -
+    reinterpret_cast<char*>(&uid_)) + sizeof(online_));
   // @@protoc_insertion_point(copy_constructor:NFMsg.LoginAccount)
 }
 
@@ -742,8 +835,8 @@ void LoginAccount::SharedCtor() {
   md5_plat_key_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   md5_plat_login_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   ::memset(&uid_, 0, static_cast<size_t>(
-      reinterpret_cast<char*>(&zoneid_) -
-      reinterpret_cast<char*>(&uid_)) + sizeof(zoneid_));
+      reinterpret_cast<char*>(&online_) -
+      reinterpret_cast<char*>(&uid_)) + sizeof(online_));
 }
 
 LoginAccount::~LoginAccount() {
@@ -783,8 +876,8 @@ void LoginAccount::Clear() {
   md5_plat_key_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   md5_plat_login_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   ::memset(&uid_, 0, static_cast<size_t>(
-      reinterpret_cast<char*>(&zoneid_) -
-      reinterpret_cast<char*>(&uid_)) + sizeof(zoneid_));
+      reinterpret_cast<char*>(&online_) -
+      reinterpret_cast<char*>(&uid_)) + sizeof(online_));
   _internal_metadata_.Clear();
 }
 
@@ -918,6 +1011,20 @@ bool LoginAccount::MergePartialFromCodedStream(
         break;
       }
 
+      // bool online = 9;
+      case 9: {
+        if (static_cast< ::google::protobuf::uint8>(tag) ==
+            static_cast< ::google::protobuf::uint8>(72u /* 72 & 0xFF */)) {
+
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   bool, ::google::protobuf::internal::WireFormatLite::TYPE_BOOL>(
+                 input, &online_)));
+        } else {
+          goto handle_unusual;
+        }
+        break;
+      }
+
       default: {
       handle_unusual:
         if (tag == 0) {
@@ -1004,6 +1111,11 @@ void LoginAccount::SerializeWithCachedSizes(
       8, this->md5_plat_login(), output);
   }
 
+  // bool online = 9;
+  if (this->online() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteBool(9, this->online(), output);
+  }
+
   if ((_internal_metadata_.have_unknown_fields() &&  ::google::protobuf::internal::GetProto3PreserveUnknownsDefault())) {
     ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
         (::google::protobuf::internal::GetProto3PreserveUnknownsDefault()   ? _internal_metadata_.unknown_fields()   : _internal_metadata_.default_instance()), output);
@@ -1082,6 +1194,11 @@ void LoginAccount::SerializeWithCachedSizes(
         8, this->md5_plat_login(), target);
   }
 
+  // bool online = 9;
+  if (this->online() != 0) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteBoolToArray(9, this->online(), target);
+  }
+
   if ((_internal_metadata_.have_unknown_fields() &&  ::google::protobuf::internal::GetProto3PreserveUnknownsDefault())) {
     target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
         (::google::protobuf::internal::GetProto3PreserveUnknownsDefault()   ? _internal_metadata_.unknown_fields()   : _internal_metadata_.default_instance()), target);
@@ -1155,6 +1272,11 @@ size_t LoginAccount::ByteSizeLong() const {
         this->zoneid());
   }
 
+  // bool online = 9;
+  if (this->online() != 0) {
+    total_size += 1 + 1;
+  }
+
   int cached_size = ::google::protobuf::internal::ToCachedSize(total_size);
   SetCachedSize(cached_size);
   return total_size;
@@ -1210,6 +1332,9 @@ void LoginAccount::MergeFrom(const LoginAccount& from) {
   if (from.zoneid() != 0) {
     set_zoneid(from.zoneid());
   }
+  if (from.online() != 0) {
+    set_online(from.online());
+  }
 }
 
 void LoginAccount::CopyFrom(const ::google::protobuf::Message& from) {
@@ -1248,6 +1373,7 @@ void LoginAccount::InternalSwap(LoginAccount* other) {
   swap(platid_, other->platid_);
   swap(gameid_, other->gameid_);
   swap(zoneid_, other->zoneid_);
+  swap(online_, other->online_);
   _internal_metadata_.Swap(&other->_internal_metadata_);
 }
 
@@ -8349,6 +8475,646 @@ void respone_select_zone_respone::InternalSwap(respone_select_zone_respone* othe
 }
 
 
+// ===================================================================
+
+void login_to_master_request_select_zone::InitAsDefaultInstance() {
+}
+#if !defined(_MSC_VER) || _MSC_VER >= 1900
+const int login_to_master_request_select_zone::kUidFieldNumber;
+const int login_to_master_request_select_zone::kGameidFieldNumber;
+const int login_to_master_request_select_zone::kZoneidFieldNumber;
+#endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
+
+login_to_master_request_select_zone::login_to_master_request_select_zone()
+  : ::google::protobuf::Message(), _internal_metadata_(NULL) {
+  ::google::protobuf::internal::InitSCC(
+      &protobuf_login_5fmsg_2eproto::scc_info_login_to_master_request_select_zone.base);
+  SharedCtor();
+  // @@protoc_insertion_point(constructor:NFMsg.login_to_master_request_select_zone)
+}
+login_to_master_request_select_zone::login_to_master_request_select_zone(const login_to_master_request_select_zone& from)
+  : ::google::protobuf::Message(),
+      _internal_metadata_(NULL) {
+  _internal_metadata_.MergeFrom(from._internal_metadata_);
+  ::memcpy(&uid_, &from.uid_,
+    static_cast<size_t>(reinterpret_cast<char*>(&zoneid_) -
+    reinterpret_cast<char*>(&uid_)) + sizeof(zoneid_));
+  // @@protoc_insertion_point(copy_constructor:NFMsg.login_to_master_request_select_zone)
+}
+
+void login_to_master_request_select_zone::SharedCtor() {
+  ::memset(&uid_, 0, static_cast<size_t>(
+      reinterpret_cast<char*>(&zoneid_) -
+      reinterpret_cast<char*>(&uid_)) + sizeof(zoneid_));
+}
+
+login_to_master_request_select_zone::~login_to_master_request_select_zone() {
+  // @@protoc_insertion_point(destructor:NFMsg.login_to_master_request_select_zone)
+  SharedDtor();
+}
+
+void login_to_master_request_select_zone::SharedDtor() {
+}
+
+void login_to_master_request_select_zone::SetCachedSize(int size) const {
+  _cached_size_.Set(size);
+}
+const ::google::protobuf::Descriptor* login_to_master_request_select_zone::descriptor() {
+  ::protobuf_login_5fmsg_2eproto::protobuf_AssignDescriptorsOnce();
+  return ::protobuf_login_5fmsg_2eproto::file_level_metadata[kIndexInFileMessages].descriptor;
+}
+
+const login_to_master_request_select_zone& login_to_master_request_select_zone::default_instance() {
+  ::google::protobuf::internal::InitSCC(&protobuf_login_5fmsg_2eproto::scc_info_login_to_master_request_select_zone.base);
+  return *internal_default_instance();
+}
+
+
+void login_to_master_request_select_zone::Clear() {
+// @@protoc_insertion_point(message_clear_start:NFMsg.login_to_master_request_select_zone)
+  ::google::protobuf::uint32 cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  ::memset(&uid_, 0, static_cast<size_t>(
+      reinterpret_cast<char*>(&zoneid_) -
+      reinterpret_cast<char*>(&uid_)) + sizeof(zoneid_));
+  _internal_metadata_.Clear();
+}
+
+bool login_to_master_request_select_zone::MergePartialFromCodedStream(
+    ::google::protobuf::io::CodedInputStream* input) {
+#define DO_(EXPRESSION) if (!GOOGLE_PREDICT_TRUE(EXPRESSION)) goto failure
+  ::google::protobuf::uint32 tag;
+  // @@protoc_insertion_point(parse_start:NFMsg.login_to_master_request_select_zone)
+  for (;;) {
+    ::std::pair<::google::protobuf::uint32, bool> p = input->ReadTagWithCutoffNoLastTag(127u);
+    tag = p.first;
+    if (!p.second) goto handle_unusual;
+    switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
+      // uint64 uid = 1;
+      case 1: {
+        if (static_cast< ::google::protobuf::uint8>(tag) ==
+            static_cast< ::google::protobuf::uint8>(8u /* 8 & 0xFF */)) {
+
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::uint64, ::google::protobuf::internal::WireFormatLite::TYPE_UINT64>(
+                 input, &uid_)));
+        } else {
+          goto handle_unusual;
+        }
+        break;
+      }
+
+      // uint32 gameid = 2;
+      case 2: {
+        if (static_cast< ::google::protobuf::uint8>(tag) ==
+            static_cast< ::google::protobuf::uint8>(16u /* 16 & 0xFF */)) {
+
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                 input, &gameid_)));
+        } else {
+          goto handle_unusual;
+        }
+        break;
+      }
+
+      // uint32 zoneid = 3;
+      case 3: {
+        if (static_cast< ::google::protobuf::uint8>(tag) ==
+            static_cast< ::google::protobuf::uint8>(24u /* 24 & 0xFF */)) {
+
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                 input, &zoneid_)));
+        } else {
+          goto handle_unusual;
+        }
+        break;
+      }
+
+      default: {
+      handle_unusual:
+        if (tag == 0) {
+          goto success;
+        }
+        DO_(::google::protobuf::internal::WireFormat::SkipField(
+              input, tag, _internal_metadata_.mutable_unknown_fields()));
+        break;
+      }
+    }
+  }
+success:
+  // @@protoc_insertion_point(parse_success:NFMsg.login_to_master_request_select_zone)
+  return true;
+failure:
+  // @@protoc_insertion_point(parse_failure:NFMsg.login_to_master_request_select_zone)
+  return false;
+#undef DO_
+}
+
+void login_to_master_request_select_zone::SerializeWithCachedSizes(
+    ::google::protobuf::io::CodedOutputStream* output) const {
+  // @@protoc_insertion_point(serialize_start:NFMsg.login_to_master_request_select_zone)
+  ::google::protobuf::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  // uint64 uid = 1;
+  if (this->uid() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt64(1, this->uid(), output);
+  }
+
+  // uint32 gameid = 2;
+  if (this->gameid() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(2, this->gameid(), output);
+  }
+
+  // uint32 zoneid = 3;
+  if (this->zoneid() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(3, this->zoneid(), output);
+  }
+
+  if ((_internal_metadata_.have_unknown_fields() &&  ::google::protobuf::internal::GetProto3PreserveUnknownsDefault())) {
+    ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
+        (::google::protobuf::internal::GetProto3PreserveUnknownsDefault()   ? _internal_metadata_.unknown_fields()   : _internal_metadata_.default_instance()), output);
+  }
+  // @@protoc_insertion_point(serialize_end:NFMsg.login_to_master_request_select_zone)
+}
+
+::google::protobuf::uint8* login_to_master_request_select_zone::InternalSerializeWithCachedSizesToArray(
+    bool deterministic, ::google::protobuf::uint8* target) const {
+  (void)deterministic; // Unused
+  // @@protoc_insertion_point(serialize_to_array_start:NFMsg.login_to_master_request_select_zone)
+  ::google::protobuf::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  // uint64 uid = 1;
+  if (this->uid() != 0) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt64ToArray(1, this->uid(), target);
+  }
+
+  // uint32 gameid = 2;
+  if (this->gameid() != 0) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(2, this->gameid(), target);
+  }
+
+  // uint32 zoneid = 3;
+  if (this->zoneid() != 0) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(3, this->zoneid(), target);
+  }
+
+  if ((_internal_metadata_.have_unknown_fields() &&  ::google::protobuf::internal::GetProto3PreserveUnknownsDefault())) {
+    target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
+        (::google::protobuf::internal::GetProto3PreserveUnknownsDefault()   ? _internal_metadata_.unknown_fields()   : _internal_metadata_.default_instance()), target);
+  }
+  // @@protoc_insertion_point(serialize_to_array_end:NFMsg.login_to_master_request_select_zone)
+  return target;
+}
+
+size_t login_to_master_request_select_zone::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:NFMsg.login_to_master_request_select_zone)
+  size_t total_size = 0;
+
+  if ((_internal_metadata_.have_unknown_fields() &&  ::google::protobuf::internal::GetProto3PreserveUnknownsDefault())) {
+    total_size +=
+      ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
+        (::google::protobuf::internal::GetProto3PreserveUnknownsDefault()   ? _internal_metadata_.unknown_fields()   : _internal_metadata_.default_instance()));
+  }
+  // uint64 uid = 1;
+  if (this->uid() != 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::UInt64Size(
+        this->uid());
+  }
+
+  // uint32 gameid = 2;
+  if (this->gameid() != 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::UInt32Size(
+        this->gameid());
+  }
+
+  // uint32 zoneid = 3;
+  if (this->zoneid() != 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::UInt32Size(
+        this->zoneid());
+  }
+
+  int cached_size = ::google::protobuf::internal::ToCachedSize(total_size);
+  SetCachedSize(cached_size);
+  return total_size;
+}
+
+void login_to_master_request_select_zone::MergeFrom(const ::google::protobuf::Message& from) {
+// @@protoc_insertion_point(generalized_merge_from_start:NFMsg.login_to_master_request_select_zone)
+  GOOGLE_DCHECK_NE(&from, this);
+  const login_to_master_request_select_zone* source =
+      ::google::protobuf::internal::DynamicCastToGenerated<const login_to_master_request_select_zone>(
+          &from);
+  if (source == NULL) {
+  // @@protoc_insertion_point(generalized_merge_from_cast_fail:NFMsg.login_to_master_request_select_zone)
+    ::google::protobuf::internal::ReflectionOps::Merge(from, this);
+  } else {
+  // @@protoc_insertion_point(generalized_merge_from_cast_success:NFMsg.login_to_master_request_select_zone)
+    MergeFrom(*source);
+  }
+}
+
+void login_to_master_request_select_zone::MergeFrom(const login_to_master_request_select_zone& from) {
+// @@protoc_insertion_point(class_specific_merge_from_start:NFMsg.login_to_master_request_select_zone)
+  GOOGLE_DCHECK_NE(&from, this);
+  _internal_metadata_.MergeFrom(from._internal_metadata_);
+  ::google::protobuf::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  if (from.uid() != 0) {
+    set_uid(from.uid());
+  }
+  if (from.gameid() != 0) {
+    set_gameid(from.gameid());
+  }
+  if (from.zoneid() != 0) {
+    set_zoneid(from.zoneid());
+  }
+}
+
+void login_to_master_request_select_zone::CopyFrom(const ::google::protobuf::Message& from) {
+// @@protoc_insertion_point(generalized_copy_from_start:NFMsg.login_to_master_request_select_zone)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+void login_to_master_request_select_zone::CopyFrom(const login_to_master_request_select_zone& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:NFMsg.login_to_master_request_select_zone)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool login_to_master_request_select_zone::IsInitialized() const {
+  return true;
+}
+
+void login_to_master_request_select_zone::Swap(login_to_master_request_select_zone* other) {
+  if (other == this) return;
+  InternalSwap(other);
+}
+void login_to_master_request_select_zone::InternalSwap(login_to_master_request_select_zone* other) {
+  using std::swap;
+  swap(uid_, other->uid_);
+  swap(gameid_, other->gameid_);
+  swap(zoneid_, other->zoneid_);
+  _internal_metadata_.Swap(&other->_internal_metadata_);
+}
+
+::google::protobuf::Metadata login_to_master_request_select_zone::GetMetadata() const {
+  protobuf_login_5fmsg_2eproto::protobuf_AssignDescriptorsOnce();
+  return ::protobuf_login_5fmsg_2eproto::file_level_metadata[kIndexInFileMessages];
+}
+
+
+// ===================================================================
+
+void master_to_login_respone_select_zone::InitAsDefaultInstance() {
+}
+#if !defined(_MSC_VER) || _MSC_VER >= 1900
+const int master_to_login_respone_select_zone::kUidFieldNumber;
+const int master_to_login_respone_select_zone::kGameidFieldNumber;
+const int master_to_login_respone_select_zone::kZoneidFieldNumber;
+const int master_to_login_respone_select_zone::kResultCodeFieldNumber;
+#endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
+
+master_to_login_respone_select_zone::master_to_login_respone_select_zone()
+  : ::google::protobuf::Message(), _internal_metadata_(NULL) {
+  ::google::protobuf::internal::InitSCC(
+      &protobuf_login_5fmsg_2eproto::scc_info_master_to_login_respone_select_zone.base);
+  SharedCtor();
+  // @@protoc_insertion_point(constructor:NFMsg.master_to_login_respone_select_zone)
+}
+master_to_login_respone_select_zone::master_to_login_respone_select_zone(const master_to_login_respone_select_zone& from)
+  : ::google::protobuf::Message(),
+      _internal_metadata_(NULL) {
+  _internal_metadata_.MergeFrom(from._internal_metadata_);
+  ::memcpy(&uid_, &from.uid_,
+    static_cast<size_t>(reinterpret_cast<char*>(&result_code_) -
+    reinterpret_cast<char*>(&uid_)) + sizeof(result_code_));
+  // @@protoc_insertion_point(copy_constructor:NFMsg.master_to_login_respone_select_zone)
+}
+
+void master_to_login_respone_select_zone::SharedCtor() {
+  ::memset(&uid_, 0, static_cast<size_t>(
+      reinterpret_cast<char*>(&result_code_) -
+      reinterpret_cast<char*>(&uid_)) + sizeof(result_code_));
+}
+
+master_to_login_respone_select_zone::~master_to_login_respone_select_zone() {
+  // @@protoc_insertion_point(destructor:NFMsg.master_to_login_respone_select_zone)
+  SharedDtor();
+}
+
+void master_to_login_respone_select_zone::SharedDtor() {
+}
+
+void master_to_login_respone_select_zone::SetCachedSize(int size) const {
+  _cached_size_.Set(size);
+}
+const ::google::protobuf::Descriptor* master_to_login_respone_select_zone::descriptor() {
+  ::protobuf_login_5fmsg_2eproto::protobuf_AssignDescriptorsOnce();
+  return ::protobuf_login_5fmsg_2eproto::file_level_metadata[kIndexInFileMessages].descriptor;
+}
+
+const master_to_login_respone_select_zone& master_to_login_respone_select_zone::default_instance() {
+  ::google::protobuf::internal::InitSCC(&protobuf_login_5fmsg_2eproto::scc_info_master_to_login_respone_select_zone.base);
+  return *internal_default_instance();
+}
+
+
+void master_to_login_respone_select_zone::Clear() {
+// @@protoc_insertion_point(message_clear_start:NFMsg.master_to_login_respone_select_zone)
+  ::google::protobuf::uint32 cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  ::memset(&uid_, 0, static_cast<size_t>(
+      reinterpret_cast<char*>(&result_code_) -
+      reinterpret_cast<char*>(&uid_)) + sizeof(result_code_));
+  _internal_metadata_.Clear();
+}
+
+bool master_to_login_respone_select_zone::MergePartialFromCodedStream(
+    ::google::protobuf::io::CodedInputStream* input) {
+#define DO_(EXPRESSION) if (!GOOGLE_PREDICT_TRUE(EXPRESSION)) goto failure
+  ::google::protobuf::uint32 tag;
+  // @@protoc_insertion_point(parse_start:NFMsg.master_to_login_respone_select_zone)
+  for (;;) {
+    ::std::pair<::google::protobuf::uint32, bool> p = input->ReadTagWithCutoffNoLastTag(127u);
+    tag = p.first;
+    if (!p.second) goto handle_unusual;
+    switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
+      // uint64 uid = 1;
+      case 1: {
+        if (static_cast< ::google::protobuf::uint8>(tag) ==
+            static_cast< ::google::protobuf::uint8>(8u /* 8 & 0xFF */)) {
+
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::uint64, ::google::protobuf::internal::WireFormatLite::TYPE_UINT64>(
+                 input, &uid_)));
+        } else {
+          goto handle_unusual;
+        }
+        break;
+      }
+
+      // uint32 gameid = 2;
+      case 2: {
+        if (static_cast< ::google::protobuf::uint8>(tag) ==
+            static_cast< ::google::protobuf::uint8>(16u /* 16 & 0xFF */)) {
+
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                 input, &gameid_)));
+        } else {
+          goto handle_unusual;
+        }
+        break;
+      }
+
+      // uint32 zoneid = 3;
+      case 3: {
+        if (static_cast< ::google::protobuf::uint8>(tag) ==
+            static_cast< ::google::protobuf::uint8>(24u /* 24 & 0xFF */)) {
+
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                 input, &zoneid_)));
+        } else {
+          goto handle_unusual;
+        }
+        break;
+      }
+
+      // .NFMsg.master_to_login_respone_select_zone.ErrorCode result_code = 4;
+      case 4: {
+        if (static_cast< ::google::protobuf::uint8>(tag) ==
+            static_cast< ::google::protobuf::uint8>(32u /* 32 & 0xFF */)) {
+          int value;
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   int, ::google::protobuf::internal::WireFormatLite::TYPE_ENUM>(
+                 input, &value)));
+          set_result_code(static_cast< ::NFMsg::master_to_login_respone_select_zone_ErrorCode >(value));
+        } else {
+          goto handle_unusual;
+        }
+        break;
+      }
+
+      default: {
+      handle_unusual:
+        if (tag == 0) {
+          goto success;
+        }
+        DO_(::google::protobuf::internal::WireFormat::SkipField(
+              input, tag, _internal_metadata_.mutable_unknown_fields()));
+        break;
+      }
+    }
+  }
+success:
+  // @@protoc_insertion_point(parse_success:NFMsg.master_to_login_respone_select_zone)
+  return true;
+failure:
+  // @@protoc_insertion_point(parse_failure:NFMsg.master_to_login_respone_select_zone)
+  return false;
+#undef DO_
+}
+
+void master_to_login_respone_select_zone::SerializeWithCachedSizes(
+    ::google::protobuf::io::CodedOutputStream* output) const {
+  // @@protoc_insertion_point(serialize_start:NFMsg.master_to_login_respone_select_zone)
+  ::google::protobuf::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  // uint64 uid = 1;
+  if (this->uid() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt64(1, this->uid(), output);
+  }
+
+  // uint32 gameid = 2;
+  if (this->gameid() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(2, this->gameid(), output);
+  }
+
+  // uint32 zoneid = 3;
+  if (this->zoneid() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(3, this->zoneid(), output);
+  }
+
+  // .NFMsg.master_to_login_respone_select_zone.ErrorCode result_code = 4;
+  if (this->result_code() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteEnum(
+      4, this->result_code(), output);
+  }
+
+  if ((_internal_metadata_.have_unknown_fields() &&  ::google::protobuf::internal::GetProto3PreserveUnknownsDefault())) {
+    ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
+        (::google::protobuf::internal::GetProto3PreserveUnknownsDefault()   ? _internal_metadata_.unknown_fields()   : _internal_metadata_.default_instance()), output);
+  }
+  // @@protoc_insertion_point(serialize_end:NFMsg.master_to_login_respone_select_zone)
+}
+
+::google::protobuf::uint8* master_to_login_respone_select_zone::InternalSerializeWithCachedSizesToArray(
+    bool deterministic, ::google::protobuf::uint8* target) const {
+  (void)deterministic; // Unused
+  // @@protoc_insertion_point(serialize_to_array_start:NFMsg.master_to_login_respone_select_zone)
+  ::google::protobuf::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  // uint64 uid = 1;
+  if (this->uid() != 0) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt64ToArray(1, this->uid(), target);
+  }
+
+  // uint32 gameid = 2;
+  if (this->gameid() != 0) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(2, this->gameid(), target);
+  }
+
+  // uint32 zoneid = 3;
+  if (this->zoneid() != 0) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(3, this->zoneid(), target);
+  }
+
+  // .NFMsg.master_to_login_respone_select_zone.ErrorCode result_code = 4;
+  if (this->result_code() != 0) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteEnumToArray(
+      4, this->result_code(), target);
+  }
+
+  if ((_internal_metadata_.have_unknown_fields() &&  ::google::protobuf::internal::GetProto3PreserveUnknownsDefault())) {
+    target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
+        (::google::protobuf::internal::GetProto3PreserveUnknownsDefault()   ? _internal_metadata_.unknown_fields()   : _internal_metadata_.default_instance()), target);
+  }
+  // @@protoc_insertion_point(serialize_to_array_end:NFMsg.master_to_login_respone_select_zone)
+  return target;
+}
+
+size_t master_to_login_respone_select_zone::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:NFMsg.master_to_login_respone_select_zone)
+  size_t total_size = 0;
+
+  if ((_internal_metadata_.have_unknown_fields() &&  ::google::protobuf::internal::GetProto3PreserveUnknownsDefault())) {
+    total_size +=
+      ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
+        (::google::protobuf::internal::GetProto3PreserveUnknownsDefault()   ? _internal_metadata_.unknown_fields()   : _internal_metadata_.default_instance()));
+  }
+  // uint64 uid = 1;
+  if (this->uid() != 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::UInt64Size(
+        this->uid());
+  }
+
+  // uint32 gameid = 2;
+  if (this->gameid() != 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::UInt32Size(
+        this->gameid());
+  }
+
+  // uint32 zoneid = 3;
+  if (this->zoneid() != 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::UInt32Size(
+        this->zoneid());
+  }
+
+  // .NFMsg.master_to_login_respone_select_zone.ErrorCode result_code = 4;
+  if (this->result_code() != 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::EnumSize(this->result_code());
+  }
+
+  int cached_size = ::google::protobuf::internal::ToCachedSize(total_size);
+  SetCachedSize(cached_size);
+  return total_size;
+}
+
+void master_to_login_respone_select_zone::MergeFrom(const ::google::protobuf::Message& from) {
+// @@protoc_insertion_point(generalized_merge_from_start:NFMsg.master_to_login_respone_select_zone)
+  GOOGLE_DCHECK_NE(&from, this);
+  const master_to_login_respone_select_zone* source =
+      ::google::protobuf::internal::DynamicCastToGenerated<const master_to_login_respone_select_zone>(
+          &from);
+  if (source == NULL) {
+  // @@protoc_insertion_point(generalized_merge_from_cast_fail:NFMsg.master_to_login_respone_select_zone)
+    ::google::protobuf::internal::ReflectionOps::Merge(from, this);
+  } else {
+  // @@protoc_insertion_point(generalized_merge_from_cast_success:NFMsg.master_to_login_respone_select_zone)
+    MergeFrom(*source);
+  }
+}
+
+void master_to_login_respone_select_zone::MergeFrom(const master_to_login_respone_select_zone& from) {
+// @@protoc_insertion_point(class_specific_merge_from_start:NFMsg.master_to_login_respone_select_zone)
+  GOOGLE_DCHECK_NE(&from, this);
+  _internal_metadata_.MergeFrom(from._internal_metadata_);
+  ::google::protobuf::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  if (from.uid() != 0) {
+    set_uid(from.uid());
+  }
+  if (from.gameid() != 0) {
+    set_gameid(from.gameid());
+  }
+  if (from.zoneid() != 0) {
+    set_zoneid(from.zoneid());
+  }
+  if (from.result_code() != 0) {
+    set_result_code(from.result_code());
+  }
+}
+
+void master_to_login_respone_select_zone::CopyFrom(const ::google::protobuf::Message& from) {
+// @@protoc_insertion_point(generalized_copy_from_start:NFMsg.master_to_login_respone_select_zone)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+void master_to_login_respone_select_zone::CopyFrom(const master_to_login_respone_select_zone& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:NFMsg.master_to_login_respone_select_zone)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool master_to_login_respone_select_zone::IsInitialized() const {
+  return true;
+}
+
+void master_to_login_respone_select_zone::Swap(master_to_login_respone_select_zone* other) {
+  if (other == this) return;
+  InternalSwap(other);
+}
+void master_to_login_respone_select_zone::InternalSwap(master_to_login_respone_select_zone* other) {
+  using std::swap;
+  swap(uid_, other->uid_);
+  swap(gameid_, other->gameid_);
+  swap(zoneid_, other->zoneid_);
+  swap(result_code_, other->result_code_);
+  _internal_metadata_.Swap(&other->_internal_metadata_);
+}
+
+::google::protobuf::Metadata master_to_login_respone_select_zone::GetMetadata() const {
+  protobuf_login_5fmsg_2eproto::protobuf_AssignDescriptorsOnce();
+  return ::protobuf_login_5fmsg_2eproto::file_level_metadata[kIndexInFileMessages];
+}
+
+
 // @@protoc_insertion_point(namespace_scope)
 }  // namespace NFMsg
 namespace google {
@@ -8400,6 +9166,12 @@ template<> GOOGLE_PROTOBUF_ATTRIBUTE_NOINLINE ::NFMsg::respone_select_zone_respo
 }
 template<> GOOGLE_PROTOBUF_ATTRIBUTE_NOINLINE ::NFMsg::respone_select_zone_respone* Arena::CreateMaybeMessage< ::NFMsg::respone_select_zone_respone >(Arena* arena) {
   return Arena::CreateInternal< ::NFMsg::respone_select_zone_respone >(arena);
+}
+template<> GOOGLE_PROTOBUF_ATTRIBUTE_NOINLINE ::NFMsg::login_to_master_request_select_zone* Arena::CreateMaybeMessage< ::NFMsg::login_to_master_request_select_zone >(Arena* arena) {
+  return Arena::CreateInternal< ::NFMsg::login_to_master_request_select_zone >(arena);
+}
+template<> GOOGLE_PROTOBUF_ATTRIBUTE_NOINLINE ::NFMsg::master_to_login_respone_select_zone* Arena::CreateMaybeMessage< ::NFMsg::master_to_login_respone_select_zone >(Arena* arena) {
+  return Arena::CreateInternal< ::NFMsg::master_to_login_respone_select_zone >(arena);
 }
 }  // namespace protobuf
 }  // namespace google

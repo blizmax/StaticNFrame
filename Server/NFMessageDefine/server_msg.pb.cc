@@ -78,7 +78,10 @@ const ::google::protobuf::uint32 TableStruct::offsets[] GOOGLE_PROTOBUF_ATTRIBUT
   ~0u,  // no _extensions_
   ~0u,  // no _oneof_case_
   ~0u,  // no _weak_field_map_
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::NFMsg::ServerInfoReport, game_id_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::NFMsg::ServerInfoReport, game_name_),
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::NFMsg::ServerInfoReport, server_id_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::NFMsg::ServerInfoReport, server_type_),
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::NFMsg::ServerInfoReport, server_name_),
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::NFMsg::ServerInfoReport, server_ip_),
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::NFMsg::ServerInfoReport, server_port_),
@@ -86,7 +89,6 @@ const ::google::protobuf::uint32 TableStruct::offsets[] GOOGLE_PROTOBUF_ATTRIBUT
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::NFMsg::ServerInfoReport, server_max_online_),
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::NFMsg::ServerInfoReport, server_cur_count_),
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::NFMsg::ServerInfoReport, server_state_),
-  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::NFMsg::ServerInfoReport, server_type_),
   ~0u,  // no _has_bits_
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::NFMsg::ServerInfoReportList, _internal_metadata_),
   ~0u,  // no _extensions_
@@ -96,7 +98,7 @@ const ::google::protobuf::uint32 TableStruct::offsets[] GOOGLE_PROTOBUF_ATTRIBUT
 };
 static const ::google::protobuf::internal::MigrationSchema schemas[] GOOGLE_PROTOBUF_ATTRIBUTE_SECTION_VARIABLE(protodesc_cold) = {
   { 0, -1, sizeof(::NFMsg::ServerInfoReport)},
-  { 14, -1, sizeof(::NFMsg::ServerInfoReportList)},
+  { 16, -1, sizeof(::NFMsg::ServerInfoReportList)},
 };
 
 static ::google::protobuf::Message const * const file_default_instances[] = {
@@ -125,20 +127,21 @@ void protobuf_RegisterTypes(const ::std::string&) {
 void AddDescriptorsImpl() {
   InitDefaults();
   static const char descriptor[] GOOGLE_PROTOBUF_ATTRIBUTE_SECTION_VARIABLE(protodesc_cold) = {
-      "\n\020server_msg.proto\022\005NFMsg\"\335\001\n\020ServerInfo"
-      "Report\022\021\n\tserver_id\030\001 \001(\005\022\023\n\013server_name"
-      "\030\002 \001(\t\022\021\n\tserver_ip\030\003 \001(\t\022\023\n\013server_port"
-      "\030\004 \001(\005\022\031\n\021server_inner_port\030\005 \001(\005\022\031\n\021ser"
-      "ver_max_online\030\006 \001(\005\022\030\n\020server_cur_count"
-      "\030\007 \001(\005\022\024\n\014server_state\030\010 \001(\r\022\023\n\013server_t"
-      "ype\030\t \001(\005\"D\n\024ServerInfoReportList\022,\n\013ser"
-      "ver_list\030\001 \003(\0132\027.NFMsg.ServerInfoReport*"
-      "Z\n\014EServerState\022\r\n\tEST_CRASH\020\000\022\016\n\nEST_NA"
-      "RMAL\020\001\022\014\n\010EST_BUSY\020\002\022\014\n\010EST_FIRE\020\003\022\017\n\013ES"
-      "T_MAINTEN\020\004b\006proto3"
+      "\n\020server_msg.proto\022\005NFMsg\"\201\002\n\020ServerInfo"
+      "Report\022\017\n\007game_id\030\001 \001(\005\022\021\n\tgame_name\030\002 \001"
+      "(\t\022\021\n\tserver_id\030\003 \001(\005\022\023\n\013server_type\030\004 \001"
+      "(\005\022\023\n\013server_name\030\005 \001(\t\022\021\n\tserver_ip\030\006 \001"
+      "(\t\022\023\n\013server_port\030\007 \001(\005\022\031\n\021server_inner_"
+      "port\030\010 \001(\005\022\031\n\021server_max_online\030\t \001(\005\022\030\n"
+      "\020server_cur_count\030\n \001(\005\022\024\n\014server_state\030"
+      "\013 \001(\r\"D\n\024ServerInfoReportList\022,\n\013server_"
+      "list\030\001 \003(\0132\027.NFMsg.ServerInfoReport*Z\n\014E"
+      "ServerState\022\r\n\tEST_CRASH\020\000\022\016\n\nEST_NARMAL"
+      "\020\001\022\014\n\010EST_BUSY\020\002\022\014\n\010EST_FIRE\020\003\022\017\n\013EST_MA"
+      "INTEN\020\004b\006proto3"
   };
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
-      descriptor, 419);
+      descriptor, 455);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "server_msg.proto", &protobuf_RegisterTypes);
 }
@@ -178,7 +181,10 @@ bool EServerState_IsValid(int value) {
 void ServerInfoReport::InitAsDefaultInstance() {
 }
 #if !defined(_MSC_VER) || _MSC_VER >= 1900
+const int ServerInfoReport::kGameIdFieldNumber;
+const int ServerInfoReport::kGameNameFieldNumber;
 const int ServerInfoReport::kServerIdFieldNumber;
+const int ServerInfoReport::kServerTypeFieldNumber;
 const int ServerInfoReport::kServerNameFieldNumber;
 const int ServerInfoReport::kServerIpFieldNumber;
 const int ServerInfoReport::kServerPortFieldNumber;
@@ -186,7 +192,6 @@ const int ServerInfoReport::kServerInnerPortFieldNumber;
 const int ServerInfoReport::kServerMaxOnlineFieldNumber;
 const int ServerInfoReport::kServerCurCountFieldNumber;
 const int ServerInfoReport::kServerStateFieldNumber;
-const int ServerInfoReport::kServerTypeFieldNumber;
 #endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
 
 ServerInfoReport::ServerInfoReport()
@@ -200,6 +205,10 @@ ServerInfoReport::ServerInfoReport(const ServerInfoReport& from)
   : ::google::protobuf::Message(),
       _internal_metadata_(NULL) {
   _internal_metadata_.MergeFrom(from._internal_metadata_);
+  game_name_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  if (from.game_name().size() > 0) {
+    game_name_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.game_name_);
+  }
   server_name_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   if (from.server_name().size() > 0) {
     server_name_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.server_name_);
@@ -208,18 +217,19 @@ ServerInfoReport::ServerInfoReport(const ServerInfoReport& from)
   if (from.server_ip().size() > 0) {
     server_ip_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.server_ip_);
   }
-  ::memcpy(&server_id_, &from.server_id_,
-    static_cast<size_t>(reinterpret_cast<char*>(&server_type_) -
-    reinterpret_cast<char*>(&server_id_)) + sizeof(server_type_));
+  ::memcpy(&game_id_, &from.game_id_,
+    static_cast<size_t>(reinterpret_cast<char*>(&server_state_) -
+    reinterpret_cast<char*>(&game_id_)) + sizeof(server_state_));
   // @@protoc_insertion_point(copy_constructor:NFMsg.ServerInfoReport)
 }
 
 void ServerInfoReport::SharedCtor() {
+  game_name_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   server_name_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   server_ip_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-  ::memset(&server_id_, 0, static_cast<size_t>(
-      reinterpret_cast<char*>(&server_type_) -
-      reinterpret_cast<char*>(&server_id_)) + sizeof(server_type_));
+  ::memset(&game_id_, 0, static_cast<size_t>(
+      reinterpret_cast<char*>(&server_state_) -
+      reinterpret_cast<char*>(&game_id_)) + sizeof(server_state_));
 }
 
 ServerInfoReport::~ServerInfoReport() {
@@ -228,6 +238,7 @@ ServerInfoReport::~ServerInfoReport() {
 }
 
 void ServerInfoReport::SharedDtor() {
+  game_name_.DestroyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   server_name_.DestroyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   server_ip_.DestroyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
@@ -252,11 +263,12 @@ void ServerInfoReport::Clear() {
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
+  game_name_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   server_name_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   server_ip_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-  ::memset(&server_id_, 0, static_cast<size_t>(
-      reinterpret_cast<char*>(&server_type_) -
-      reinterpret_cast<char*>(&server_id_)) + sizeof(server_type_));
+  ::memset(&game_id_, 0, static_cast<size_t>(
+      reinterpret_cast<char*>(&server_state_) -
+      reinterpret_cast<char*>(&game_id_)) + sizeof(server_state_));
   _internal_metadata_.Clear();
 }
 
@@ -270,10 +282,40 @@ bool ServerInfoReport::MergePartialFromCodedStream(
     tag = p.first;
     if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // int32 server_id = 1;
+      // int32 game_id = 1;
       case 1: {
         if (static_cast< ::google::protobuf::uint8>(tag) ==
             static_cast< ::google::protobuf::uint8>(8u /* 8 & 0xFF */)) {
+
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+                 input, &game_id_)));
+        } else {
+          goto handle_unusual;
+        }
+        break;
+      }
+
+      // string game_name = 2;
+      case 2: {
+        if (static_cast< ::google::protobuf::uint8>(tag) ==
+            static_cast< ::google::protobuf::uint8>(18u /* 18 & 0xFF */)) {
+          DO_(::google::protobuf::internal::WireFormatLite::ReadString(
+                input, this->mutable_game_name()));
+          DO_(::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+            this->game_name().data(), static_cast<int>(this->game_name().length()),
+            ::google::protobuf::internal::WireFormatLite::PARSE,
+            "NFMsg.ServerInfoReport.game_name"));
+        } else {
+          goto handle_unusual;
+        }
+        break;
+      }
+
+      // int32 server_id = 3;
+      case 3: {
+        if (static_cast< ::google::protobuf::uint8>(tag) ==
+            static_cast< ::google::protobuf::uint8>(24u /* 24 & 0xFF */)) {
 
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
@@ -284,10 +326,24 @@ bool ServerInfoReport::MergePartialFromCodedStream(
         break;
       }
 
-      // string server_name = 2;
-      case 2: {
+      // int32 server_type = 4;
+      case 4: {
         if (static_cast< ::google::protobuf::uint8>(tag) ==
-            static_cast< ::google::protobuf::uint8>(18u /* 18 & 0xFF */)) {
+            static_cast< ::google::protobuf::uint8>(32u /* 32 & 0xFF */)) {
+
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+                 input, &server_type_)));
+        } else {
+          goto handle_unusual;
+        }
+        break;
+      }
+
+      // string server_name = 5;
+      case 5: {
+        if (static_cast< ::google::protobuf::uint8>(tag) ==
+            static_cast< ::google::protobuf::uint8>(42u /* 42 & 0xFF */)) {
           DO_(::google::protobuf::internal::WireFormatLite::ReadString(
                 input, this->mutable_server_name()));
           DO_(::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
@@ -300,10 +356,10 @@ bool ServerInfoReport::MergePartialFromCodedStream(
         break;
       }
 
-      // string server_ip = 3;
-      case 3: {
+      // string server_ip = 6;
+      case 6: {
         if (static_cast< ::google::protobuf::uint8>(tag) ==
-            static_cast< ::google::protobuf::uint8>(26u /* 26 & 0xFF */)) {
+            static_cast< ::google::protobuf::uint8>(50u /* 50 & 0xFF */)) {
           DO_(::google::protobuf::internal::WireFormatLite::ReadString(
                 input, this->mutable_server_ip()));
           DO_(::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
@@ -316,10 +372,10 @@ bool ServerInfoReport::MergePartialFromCodedStream(
         break;
       }
 
-      // int32 server_port = 4;
-      case 4: {
+      // int32 server_port = 7;
+      case 7: {
         if (static_cast< ::google::protobuf::uint8>(tag) ==
-            static_cast< ::google::protobuf::uint8>(32u /* 32 & 0xFF */)) {
+            static_cast< ::google::protobuf::uint8>(56u /* 56 & 0xFF */)) {
 
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
@@ -330,10 +386,10 @@ bool ServerInfoReport::MergePartialFromCodedStream(
         break;
       }
 
-      // int32 server_inner_port = 5;
-      case 5: {
+      // int32 server_inner_port = 8;
+      case 8: {
         if (static_cast< ::google::protobuf::uint8>(tag) ==
-            static_cast< ::google::protobuf::uint8>(40u /* 40 & 0xFF */)) {
+            static_cast< ::google::protobuf::uint8>(64u /* 64 & 0xFF */)) {
 
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
@@ -344,10 +400,10 @@ bool ServerInfoReport::MergePartialFromCodedStream(
         break;
       }
 
-      // int32 server_max_online = 6;
-      case 6: {
+      // int32 server_max_online = 9;
+      case 9: {
         if (static_cast< ::google::protobuf::uint8>(tag) ==
-            static_cast< ::google::protobuf::uint8>(48u /* 48 & 0xFF */)) {
+            static_cast< ::google::protobuf::uint8>(72u /* 72 & 0xFF */)) {
 
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
@@ -358,10 +414,10 @@ bool ServerInfoReport::MergePartialFromCodedStream(
         break;
       }
 
-      // int32 server_cur_count = 7;
-      case 7: {
+      // int32 server_cur_count = 10;
+      case 10: {
         if (static_cast< ::google::protobuf::uint8>(tag) ==
-            static_cast< ::google::protobuf::uint8>(56u /* 56 & 0xFF */)) {
+            static_cast< ::google::protobuf::uint8>(80u /* 80 & 0xFF */)) {
 
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
@@ -372,28 +428,14 @@ bool ServerInfoReport::MergePartialFromCodedStream(
         break;
       }
 
-      // uint32 server_state = 8;
-      case 8: {
+      // uint32 server_state = 11;
+      case 11: {
         if (static_cast< ::google::protobuf::uint8>(tag) ==
-            static_cast< ::google::protobuf::uint8>(64u /* 64 & 0xFF */)) {
+            static_cast< ::google::protobuf::uint8>(88u /* 88 & 0xFF */)) {
 
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
                  input, &server_state_)));
-        } else {
-          goto handle_unusual;
-        }
-        break;
-      }
-
-      // int32 server_type = 9;
-      case 9: {
-        if (static_cast< ::google::protobuf::uint8>(tag) ==
-            static_cast< ::google::protobuf::uint8>(72u /* 72 & 0xFF */)) {
-
-          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
-                 input, &server_type_)));
         } else {
           goto handle_unusual;
         }
@@ -426,59 +468,74 @@ void ServerInfoReport::SerializeWithCachedSizes(
   ::google::protobuf::uint32 cached_has_bits = 0;
   (void) cached_has_bits;
 
-  // int32 server_id = 1;
-  if (this->server_id() != 0) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt32(1, this->server_id(), output);
+  // int32 game_id = 1;
+  if (this->game_id() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(1, this->game_id(), output);
   }
 
-  // string server_name = 2;
+  // string game_name = 2;
+  if (this->game_name().size() > 0) {
+    ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+      this->game_name().data(), static_cast<int>(this->game_name().length()),
+      ::google::protobuf::internal::WireFormatLite::SERIALIZE,
+      "NFMsg.ServerInfoReport.game_name");
+    ::google::protobuf::internal::WireFormatLite::WriteStringMaybeAliased(
+      2, this->game_name(), output);
+  }
+
+  // int32 server_id = 3;
+  if (this->server_id() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(3, this->server_id(), output);
+  }
+
+  // int32 server_type = 4;
+  if (this->server_type() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(4, this->server_type(), output);
+  }
+
+  // string server_name = 5;
   if (this->server_name().size() > 0) {
     ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
       this->server_name().data(), static_cast<int>(this->server_name().length()),
       ::google::protobuf::internal::WireFormatLite::SERIALIZE,
       "NFMsg.ServerInfoReport.server_name");
     ::google::protobuf::internal::WireFormatLite::WriteStringMaybeAliased(
-      2, this->server_name(), output);
+      5, this->server_name(), output);
   }
 
-  // string server_ip = 3;
+  // string server_ip = 6;
   if (this->server_ip().size() > 0) {
     ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
       this->server_ip().data(), static_cast<int>(this->server_ip().length()),
       ::google::protobuf::internal::WireFormatLite::SERIALIZE,
       "NFMsg.ServerInfoReport.server_ip");
     ::google::protobuf::internal::WireFormatLite::WriteStringMaybeAliased(
-      3, this->server_ip(), output);
+      6, this->server_ip(), output);
   }
 
-  // int32 server_port = 4;
+  // int32 server_port = 7;
   if (this->server_port() != 0) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt32(4, this->server_port(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(7, this->server_port(), output);
   }
 
-  // int32 server_inner_port = 5;
+  // int32 server_inner_port = 8;
   if (this->server_inner_port() != 0) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt32(5, this->server_inner_port(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(8, this->server_inner_port(), output);
   }
 
-  // int32 server_max_online = 6;
+  // int32 server_max_online = 9;
   if (this->server_max_online() != 0) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt32(6, this->server_max_online(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(9, this->server_max_online(), output);
   }
 
-  // int32 server_cur_count = 7;
+  // int32 server_cur_count = 10;
   if (this->server_cur_count() != 0) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt32(7, this->server_cur_count(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(10, this->server_cur_count(), output);
   }
 
-  // uint32 server_state = 8;
+  // uint32 server_state = 11;
   if (this->server_state() != 0) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(8, this->server_state(), output);
-  }
-
-  // int32 server_type = 9;
-  if (this->server_type() != 0) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt32(9, this->server_type(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(11, this->server_state(), output);
   }
 
   if ((_internal_metadata_.have_unknown_fields() &&  ::google::protobuf::internal::GetProto3PreserveUnknownsDefault())) {
@@ -495,12 +552,33 @@ void ServerInfoReport::SerializeWithCachedSizes(
   ::google::protobuf::uint32 cached_has_bits = 0;
   (void) cached_has_bits;
 
-  // int32 server_id = 1;
-  if (this->server_id() != 0) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(1, this->server_id(), target);
+  // int32 game_id = 1;
+  if (this->game_id() != 0) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(1, this->game_id(), target);
   }
 
-  // string server_name = 2;
+  // string game_name = 2;
+  if (this->game_name().size() > 0) {
+    ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+      this->game_name().data(), static_cast<int>(this->game_name().length()),
+      ::google::protobuf::internal::WireFormatLite::SERIALIZE,
+      "NFMsg.ServerInfoReport.game_name");
+    target =
+      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
+        2, this->game_name(), target);
+  }
+
+  // int32 server_id = 3;
+  if (this->server_id() != 0) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(3, this->server_id(), target);
+  }
+
+  // int32 server_type = 4;
+  if (this->server_type() != 0) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(4, this->server_type(), target);
+  }
+
+  // string server_name = 5;
   if (this->server_name().size() > 0) {
     ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
       this->server_name().data(), static_cast<int>(this->server_name().length()),
@@ -508,10 +586,10 @@ void ServerInfoReport::SerializeWithCachedSizes(
       "NFMsg.ServerInfoReport.server_name");
     target =
       ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
-        2, this->server_name(), target);
+        5, this->server_name(), target);
   }
 
-  // string server_ip = 3;
+  // string server_ip = 6;
   if (this->server_ip().size() > 0) {
     ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
       this->server_ip().data(), static_cast<int>(this->server_ip().length()),
@@ -519,37 +597,32 @@ void ServerInfoReport::SerializeWithCachedSizes(
       "NFMsg.ServerInfoReport.server_ip");
     target =
       ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
-        3, this->server_ip(), target);
+        6, this->server_ip(), target);
   }
 
-  // int32 server_port = 4;
+  // int32 server_port = 7;
   if (this->server_port() != 0) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(4, this->server_port(), target);
+    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(7, this->server_port(), target);
   }
 
-  // int32 server_inner_port = 5;
+  // int32 server_inner_port = 8;
   if (this->server_inner_port() != 0) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(5, this->server_inner_port(), target);
+    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(8, this->server_inner_port(), target);
   }
 
-  // int32 server_max_online = 6;
+  // int32 server_max_online = 9;
   if (this->server_max_online() != 0) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(6, this->server_max_online(), target);
+    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(9, this->server_max_online(), target);
   }
 
-  // int32 server_cur_count = 7;
+  // int32 server_cur_count = 10;
   if (this->server_cur_count() != 0) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(7, this->server_cur_count(), target);
+    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(10, this->server_cur_count(), target);
   }
 
-  // uint32 server_state = 8;
+  // uint32 server_state = 11;
   if (this->server_state() != 0) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(8, this->server_state(), target);
-  }
-
-  // int32 server_type = 9;
-  if (this->server_type() != 0) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(9, this->server_type(), target);
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(11, this->server_state(), target);
   }
 
   if ((_internal_metadata_.have_unknown_fields() &&  ::google::protobuf::internal::GetProto3PreserveUnknownsDefault())) {
@@ -569,67 +642,81 @@ size_t ServerInfoReport::ByteSizeLong() const {
       ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
         (::google::protobuf::internal::GetProto3PreserveUnknownsDefault()   ? _internal_metadata_.unknown_fields()   : _internal_metadata_.default_instance()));
   }
-  // string server_name = 2;
+  // string game_name = 2;
+  if (this->game_name().size() > 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::StringSize(
+        this->game_name());
+  }
+
+  // string server_name = 5;
   if (this->server_name().size() > 0) {
     total_size += 1 +
       ::google::protobuf::internal::WireFormatLite::StringSize(
         this->server_name());
   }
 
-  // string server_ip = 3;
+  // string server_ip = 6;
   if (this->server_ip().size() > 0) {
     total_size += 1 +
       ::google::protobuf::internal::WireFormatLite::StringSize(
         this->server_ip());
   }
 
-  // int32 server_id = 1;
+  // int32 game_id = 1;
+  if (this->game_id() != 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::Int32Size(
+        this->game_id());
+  }
+
+  // int32 server_id = 3;
   if (this->server_id() != 0) {
     total_size += 1 +
       ::google::protobuf::internal::WireFormatLite::Int32Size(
         this->server_id());
   }
 
-  // int32 server_port = 4;
+  // int32 server_type = 4;
+  if (this->server_type() != 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::Int32Size(
+        this->server_type());
+  }
+
+  // int32 server_port = 7;
   if (this->server_port() != 0) {
     total_size += 1 +
       ::google::protobuf::internal::WireFormatLite::Int32Size(
         this->server_port());
   }
 
-  // int32 server_inner_port = 5;
+  // int32 server_inner_port = 8;
   if (this->server_inner_port() != 0) {
     total_size += 1 +
       ::google::protobuf::internal::WireFormatLite::Int32Size(
         this->server_inner_port());
   }
 
-  // int32 server_max_online = 6;
+  // int32 server_max_online = 9;
   if (this->server_max_online() != 0) {
     total_size += 1 +
       ::google::protobuf::internal::WireFormatLite::Int32Size(
         this->server_max_online());
   }
 
-  // int32 server_cur_count = 7;
+  // int32 server_cur_count = 10;
   if (this->server_cur_count() != 0) {
     total_size += 1 +
       ::google::protobuf::internal::WireFormatLite::Int32Size(
         this->server_cur_count());
   }
 
-  // uint32 server_state = 8;
+  // uint32 server_state = 11;
   if (this->server_state() != 0) {
     total_size += 1 +
       ::google::protobuf::internal::WireFormatLite::UInt32Size(
         this->server_state());
-  }
-
-  // int32 server_type = 9;
-  if (this->server_type() != 0) {
-    total_size += 1 +
-      ::google::protobuf::internal::WireFormatLite::Int32Size(
-        this->server_type());
   }
 
   int cached_size = ::google::protobuf::internal::ToCachedSize(total_size);
@@ -659,6 +746,10 @@ void ServerInfoReport::MergeFrom(const ServerInfoReport& from) {
   ::google::protobuf::uint32 cached_has_bits = 0;
   (void) cached_has_bits;
 
+  if (from.game_name().size() > 0) {
+
+    game_name_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.game_name_);
+  }
   if (from.server_name().size() > 0) {
 
     server_name_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.server_name_);
@@ -667,8 +758,14 @@ void ServerInfoReport::MergeFrom(const ServerInfoReport& from) {
 
     server_ip_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.server_ip_);
   }
+  if (from.game_id() != 0) {
+    set_game_id(from.game_id());
+  }
   if (from.server_id() != 0) {
     set_server_id(from.server_id());
+  }
+  if (from.server_type() != 0) {
+    set_server_type(from.server_type());
   }
   if (from.server_port() != 0) {
     set_server_port(from.server_port());
@@ -684,9 +781,6 @@ void ServerInfoReport::MergeFrom(const ServerInfoReport& from) {
   }
   if (from.server_state() != 0) {
     set_server_state(from.server_state());
-  }
-  if (from.server_type() != 0) {
-    set_server_type(from.server_type());
   }
 }
 
@@ -714,17 +808,20 @@ void ServerInfoReport::Swap(ServerInfoReport* other) {
 }
 void ServerInfoReport::InternalSwap(ServerInfoReport* other) {
   using std::swap;
+  game_name_.Swap(&other->game_name_, &::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+    GetArenaNoVirtual());
   server_name_.Swap(&other->server_name_, &::google::protobuf::internal::GetEmptyStringAlreadyInited(),
     GetArenaNoVirtual());
   server_ip_.Swap(&other->server_ip_, &::google::protobuf::internal::GetEmptyStringAlreadyInited(),
     GetArenaNoVirtual());
+  swap(game_id_, other->game_id_);
   swap(server_id_, other->server_id_);
+  swap(server_type_, other->server_type_);
   swap(server_port_, other->server_port_);
   swap(server_inner_port_, other->server_inner_port_);
   swap(server_max_online_, other->server_max_online_);
   swap(server_cur_count_, other->server_cur_count_);
   swap(server_state_, other->server_state_);
-  swap(server_type_, other->server_type_);
   _internal_metadata_.Swap(&other->_internal_metadata_);
 }
 

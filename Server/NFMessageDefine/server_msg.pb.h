@@ -175,9 +175,23 @@ class ServerInfoReport : public ::google::protobuf::Message /* @@protoc_insertio
 
   // accessors -------------------------------------------------------
 
-  // string server_name = 2;
+  // string game_name = 2;
+  void clear_game_name();
+  static const int kGameNameFieldNumber = 2;
+  const ::std::string& game_name() const;
+  void set_game_name(const ::std::string& value);
+  #if LANG_CXX11
+  void set_game_name(::std::string&& value);
+  #endif
+  void set_game_name(const char* value);
+  void set_game_name(const char* value, size_t size);
+  ::std::string* mutable_game_name();
+  ::std::string* release_game_name();
+  void set_allocated_game_name(::std::string* game_name);
+
+  // string server_name = 5;
   void clear_server_name();
-  static const int kServerNameFieldNumber = 2;
+  static const int kServerNameFieldNumber = 5;
   const ::std::string& server_name() const;
   void set_server_name(const ::std::string& value);
   #if LANG_CXX11
@@ -189,9 +203,9 @@ class ServerInfoReport : public ::google::protobuf::Message /* @@protoc_insertio
   ::std::string* release_server_name();
   void set_allocated_server_name(::std::string* server_name);
 
-  // string server_ip = 3;
+  // string server_ip = 6;
   void clear_server_ip();
-  static const int kServerIpFieldNumber = 3;
+  static const int kServerIpFieldNumber = 6;
   const ::std::string& server_ip() const;
   void set_server_ip(const ::std::string& value);
   #if LANG_CXX11
@@ -203,61 +217,69 @@ class ServerInfoReport : public ::google::protobuf::Message /* @@protoc_insertio
   ::std::string* release_server_ip();
   void set_allocated_server_ip(::std::string* server_ip);
 
-  // int32 server_id = 1;
+  // int32 game_id = 1;
+  void clear_game_id();
+  static const int kGameIdFieldNumber = 1;
+  ::google::protobuf::int32 game_id() const;
+  void set_game_id(::google::protobuf::int32 value);
+
+  // int32 server_id = 3;
   void clear_server_id();
-  static const int kServerIdFieldNumber = 1;
+  static const int kServerIdFieldNumber = 3;
   ::google::protobuf::int32 server_id() const;
   void set_server_id(::google::protobuf::int32 value);
 
-  // int32 server_port = 4;
+  // int32 server_type = 4;
+  void clear_server_type();
+  static const int kServerTypeFieldNumber = 4;
+  ::google::protobuf::int32 server_type() const;
+  void set_server_type(::google::protobuf::int32 value);
+
+  // int32 server_port = 7;
   void clear_server_port();
-  static const int kServerPortFieldNumber = 4;
+  static const int kServerPortFieldNumber = 7;
   ::google::protobuf::int32 server_port() const;
   void set_server_port(::google::protobuf::int32 value);
 
-  // int32 server_inner_port = 5;
+  // int32 server_inner_port = 8;
   void clear_server_inner_port();
-  static const int kServerInnerPortFieldNumber = 5;
+  static const int kServerInnerPortFieldNumber = 8;
   ::google::protobuf::int32 server_inner_port() const;
   void set_server_inner_port(::google::protobuf::int32 value);
 
-  // int32 server_max_online = 6;
+  // int32 server_max_online = 9;
   void clear_server_max_online();
-  static const int kServerMaxOnlineFieldNumber = 6;
+  static const int kServerMaxOnlineFieldNumber = 9;
   ::google::protobuf::int32 server_max_online() const;
   void set_server_max_online(::google::protobuf::int32 value);
 
-  // int32 server_cur_count = 7;
+  // int32 server_cur_count = 10;
   void clear_server_cur_count();
-  static const int kServerCurCountFieldNumber = 7;
+  static const int kServerCurCountFieldNumber = 10;
   ::google::protobuf::int32 server_cur_count() const;
   void set_server_cur_count(::google::protobuf::int32 value);
 
-  // uint32 server_state = 8;
+  // uint32 server_state = 11;
   void clear_server_state();
-  static const int kServerStateFieldNumber = 8;
+  static const int kServerStateFieldNumber = 11;
   ::google::protobuf::uint32 server_state() const;
   void set_server_state(::google::protobuf::uint32 value);
-
-  // int32 server_type = 9;
-  void clear_server_type();
-  static const int kServerTypeFieldNumber = 9;
-  ::google::protobuf::int32 server_type() const;
-  void set_server_type(::google::protobuf::int32 value);
 
   // @@protoc_insertion_point(class_scope:NFMsg.ServerInfoReport)
  private:
 
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+  ::google::protobuf::internal::ArenaStringPtr game_name_;
   ::google::protobuf::internal::ArenaStringPtr server_name_;
   ::google::protobuf::internal::ArenaStringPtr server_ip_;
+  ::google::protobuf::int32 game_id_;
   ::google::protobuf::int32 server_id_;
+  ::google::protobuf::int32 server_type_;
   ::google::protobuf::int32 server_port_;
   ::google::protobuf::int32 server_inner_port_;
   ::google::protobuf::int32 server_max_online_;
   ::google::protobuf::int32 server_cur_count_;
   ::google::protobuf::uint32 server_state_;
-  ::google::protobuf::int32 server_type_;
   mutable ::google::protobuf::internal::CachedSize _cached_size_;
   friend struct ::protobuf_server_5fmsg_2eproto::TableStruct;
 };
@@ -381,7 +403,74 @@ class ServerInfoReportList : public ::google::protobuf::Message /* @@protoc_inse
 #endif  // __GNUC__
 // ServerInfoReport
 
-// int32 server_id = 1;
+// int32 game_id = 1;
+inline void ServerInfoReport::clear_game_id() {
+  game_id_ = 0;
+}
+inline ::google::protobuf::int32 ServerInfoReport::game_id() const {
+  // @@protoc_insertion_point(field_get:NFMsg.ServerInfoReport.game_id)
+  return game_id_;
+}
+inline void ServerInfoReport::set_game_id(::google::protobuf::int32 value) {
+  
+  game_id_ = value;
+  // @@protoc_insertion_point(field_set:NFMsg.ServerInfoReport.game_id)
+}
+
+// string game_name = 2;
+inline void ServerInfoReport::clear_game_name() {
+  game_name_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline const ::std::string& ServerInfoReport::game_name() const {
+  // @@protoc_insertion_point(field_get:NFMsg.ServerInfoReport.game_name)
+  return game_name_.GetNoArena();
+}
+inline void ServerInfoReport::set_game_name(const ::std::string& value) {
+  
+  game_name_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:NFMsg.ServerInfoReport.game_name)
+}
+#if LANG_CXX11
+inline void ServerInfoReport::set_game_name(::std::string&& value) {
+  
+  game_name_.SetNoArena(
+    &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+  // @@protoc_insertion_point(field_set_rvalue:NFMsg.ServerInfoReport.game_name)
+}
+#endif
+inline void ServerInfoReport::set_game_name(const char* value) {
+  GOOGLE_DCHECK(value != NULL);
+  
+  game_name_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:NFMsg.ServerInfoReport.game_name)
+}
+inline void ServerInfoReport::set_game_name(const char* value, size_t size) {
+  
+  game_name_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:NFMsg.ServerInfoReport.game_name)
+}
+inline ::std::string* ServerInfoReport::mutable_game_name() {
+  
+  // @@protoc_insertion_point(field_mutable:NFMsg.ServerInfoReport.game_name)
+  return game_name_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline ::std::string* ServerInfoReport::release_game_name() {
+  // @@protoc_insertion_point(field_release:NFMsg.ServerInfoReport.game_name)
+  
+  return game_name_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline void ServerInfoReport::set_allocated_game_name(::std::string* game_name) {
+  if (game_name != NULL) {
+    
+  } else {
+    
+  }
+  game_name_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), game_name);
+  // @@protoc_insertion_point(field_set_allocated:NFMsg.ServerInfoReport.game_name)
+}
+
+// int32 server_id = 3;
 inline void ServerInfoReport::clear_server_id() {
   server_id_ = 0;
 }
@@ -395,7 +484,21 @@ inline void ServerInfoReport::set_server_id(::google::protobuf::int32 value) {
   // @@protoc_insertion_point(field_set:NFMsg.ServerInfoReport.server_id)
 }
 
-// string server_name = 2;
+// int32 server_type = 4;
+inline void ServerInfoReport::clear_server_type() {
+  server_type_ = 0;
+}
+inline ::google::protobuf::int32 ServerInfoReport::server_type() const {
+  // @@protoc_insertion_point(field_get:NFMsg.ServerInfoReport.server_type)
+  return server_type_;
+}
+inline void ServerInfoReport::set_server_type(::google::protobuf::int32 value) {
+  
+  server_type_ = value;
+  // @@protoc_insertion_point(field_set:NFMsg.ServerInfoReport.server_type)
+}
+
+// string server_name = 5;
 inline void ServerInfoReport::clear_server_name() {
   server_name_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
@@ -448,7 +551,7 @@ inline void ServerInfoReport::set_allocated_server_name(::std::string* server_na
   // @@protoc_insertion_point(field_set_allocated:NFMsg.ServerInfoReport.server_name)
 }
 
-// string server_ip = 3;
+// string server_ip = 6;
 inline void ServerInfoReport::clear_server_ip() {
   server_ip_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
@@ -501,7 +604,7 @@ inline void ServerInfoReport::set_allocated_server_ip(::std::string* server_ip) 
   // @@protoc_insertion_point(field_set_allocated:NFMsg.ServerInfoReport.server_ip)
 }
 
-// int32 server_port = 4;
+// int32 server_port = 7;
 inline void ServerInfoReport::clear_server_port() {
   server_port_ = 0;
 }
@@ -515,7 +618,7 @@ inline void ServerInfoReport::set_server_port(::google::protobuf::int32 value) {
   // @@protoc_insertion_point(field_set:NFMsg.ServerInfoReport.server_port)
 }
 
-// int32 server_inner_port = 5;
+// int32 server_inner_port = 8;
 inline void ServerInfoReport::clear_server_inner_port() {
   server_inner_port_ = 0;
 }
@@ -529,7 +632,7 @@ inline void ServerInfoReport::set_server_inner_port(::google::protobuf::int32 va
   // @@protoc_insertion_point(field_set:NFMsg.ServerInfoReport.server_inner_port)
 }
 
-// int32 server_max_online = 6;
+// int32 server_max_online = 9;
 inline void ServerInfoReport::clear_server_max_online() {
   server_max_online_ = 0;
 }
@@ -543,7 +646,7 @@ inline void ServerInfoReport::set_server_max_online(::google::protobuf::int32 va
   // @@protoc_insertion_point(field_set:NFMsg.ServerInfoReport.server_max_online)
 }
 
-// int32 server_cur_count = 7;
+// int32 server_cur_count = 10;
 inline void ServerInfoReport::clear_server_cur_count() {
   server_cur_count_ = 0;
 }
@@ -557,7 +660,7 @@ inline void ServerInfoReport::set_server_cur_count(::google::protobuf::int32 val
   // @@protoc_insertion_point(field_set:NFMsg.ServerInfoReport.server_cur_count)
 }
 
-// uint32 server_state = 8;
+// uint32 server_state = 11;
 inline void ServerInfoReport::clear_server_state() {
   server_state_ = 0u;
 }
@@ -569,20 +672,6 @@ inline void ServerInfoReport::set_server_state(::google::protobuf::uint32 value)
   
   server_state_ = value;
   // @@protoc_insertion_point(field_set:NFMsg.ServerInfoReport.server_state)
-}
-
-// int32 server_type = 9;
-inline void ServerInfoReport::clear_server_type() {
-  server_type_ = 0;
-}
-inline ::google::protobuf::int32 ServerInfoReport::server_type() const {
-  // @@protoc_insertion_point(field_get:NFMsg.ServerInfoReport.server_type)
-  return server_type_;
-}
-inline void ServerInfoReport::set_server_type(::google::protobuf::int32 value) {
-  
-  server_type_ = value;
-  // @@protoc_insertion_point(field_set:NFMsg.ServerInfoReport.server_type)
 }
 
 // -------------------------------------------------------------------

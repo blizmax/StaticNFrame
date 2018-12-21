@@ -16,6 +16,7 @@
 
 #include "NFServerLogic/NFServerLogicCommon/NFIProxyLogicModule.h"
 #include "NFComm/NFPluginModule/NFEventObj.h"
+#include "NFComm/NFPluginModule/NFIServerNetEventModule.h"
 
 #include "NFComm/NFCore/NFMap.hpp"
 
@@ -36,7 +37,7 @@ public:
 	std::string account;
 };
 
-class NFCProxyLogicModule : public NFIProxyLogicModule, public NFEventObj
+class NFCProxyLogicModule : public NFIProxyLogicModule
 {
 public:
 	explicit NFCProxyLogicModule(NFIPluginManager* p);
@@ -52,8 +53,6 @@ public:
 
 	virtual bool Shut() override;
 
-	virtual void OnExecute(uint16_t nEventID, uint64_t nSrcID, uint8_t bySrcType, NFEventContext* pEventContext) override;
-
 	void OnHandleGmMessage(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen);
 	void OnHandleGameJsonMessage(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen);
 	void OnHandleJsonMessage(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen);
@@ -67,10 +66,14 @@ public:
 	void OnProxySocketEvent(const eMsgType nEvent, const uint32_t unLinkId);
 	void OnAccountDisconnect(const uint32_t unLinkId);
 	void OnHandleInnerServerDisconnect(uint32_t serverType, uint32_t serverId);
+
+	void OnHandleGameEventCallBack(eMsgType nEvent, uint32_t unLinkId, NF_SHARE_PTR<NFServerData> pServerData);
+	void OnHandleWorldEventCallBack(eMsgType nEvent, uint32_t unLinkId, NF_SHARE_PTR<NFServerData> pServerData);
 private:
 	NFINetServerModule* m_pNetServerModule;
 	NFINetClientModule* m_pNetClientModule;
 	NFIProxyServerModule* m_pNetProxyServerModule;
+	NFIServerNetEventModule* m_pServerNetEventModule;
 
 	NFMap<uint64_t, ProxyPlayerData> mPlayerData;
 	NFMap<uint32_t, ProxyPlayerData> mUnlinkIdPlayerData;

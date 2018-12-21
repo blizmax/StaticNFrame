@@ -19,8 +19,7 @@ NFCProxyLogicModule::~NFCProxyLogicModule()
 
 bool NFCProxyLogicModule::Init()
 {
-	this->Subscribe(NF_SERVER_EVENT_GAME_DISCONNECT_PROXY, 0, NF_ST_GAME, "NFCProxyLogicModule::Init");
-	this->Subscribe(NF_SERVER_EVENT_WORLD_DISCONNECT_PROXY, 0, NF_ST_WORLD, "NFCProxyLogicModule::Init");
+	m_pServerNetEventModule = pPluginManager->FindModule<NFIServerNetEventModule>();
 
 	m_pNetClientModule = pPluginManager->FindModule<NFINetClientModule>();
 	m_pNetServerModule = pPluginManager->FindModule<NFINetServerModule>();
@@ -31,7 +30,34 @@ bool NFCProxyLogicModule::Init()
 	m_pNetServerModule->AddEventCallBack(NF_ST_PROXY, this, &NFCProxyLogicModule::OnProxySocketEvent);
 	m_pNetServerModule->AddReceiveCallBack(NF_ST_PROXY, EGMI_NET_MSG_JSON_MSG, this, &NFCProxyLogicModule::OnHandleJsonMessage);
 	m_pNetServerModule->AddReceiveCallBack(NF_ST_PROXY_INNER, EGMI_NET_MSG_JSON_MSG, this, &NFCProxyLogicModule::OnHandleGameJsonMessage);
+
+	m_pServerNetEventModule->AddEventCallBack(NF_ST_PROXY, NF_ST_GAME, this, &NFCProxyLogicModule::OnHandleGameEventCallBack);
+	m_pServerNetEventModule->AddEventCallBack(NF_ST_PROXY, NF_ST_WORLD, this, &NFCProxyLogicModule::OnHandleWorldEventCallBack);
 	return true;
+}
+
+void NFCProxyLogicModule::OnHandleGameEventCallBack(eMsgType nEvent, uint32_t unLinkId, NF_SHARE_PTR<NFServerData> pServerData)
+{
+	if (nEvent == eMsgType_CONNECTED)
+	{
+
+	}
+	else if (nEvent == eMsgType_DISCONNECTED)
+	{
+		OnHandleInnerServerDisconnect(pServerData->GetServerType(), pServerData->GetServerId());
+	}
+}
+
+void NFCProxyLogicModule::OnHandleWorldEventCallBack(eMsgType nEvent, uint32_t unLinkId, NF_SHARE_PTR<NFServerData> pServerData)
+{
+	if (nEvent == eMsgType_CONNECTED)
+	{
+
+	}
+	else if (nEvent == eMsgType_DISCONNECTED)
+	{
+		OnHandleInnerServerDisconnect(pServerData->GetServerType(), pServerData->GetServerId());
+	}
 }
 
 bool NFCProxyLogicModule::AfterInit()
@@ -59,29 +85,6 @@ bool NFCProxyLogicModule::Shut()
 		pData = mPlayerData.Next();
 	}
 	return true;
-}
-
-void NFCProxyLogicModule::OnExecute(uint16_t nEventID, uint64_t nSrcID, uint8_t bySrcType, NFEventContext* pEventContext)
-{
-	switch (nEventID)
-	{
-	case NF_SERVER_EVENT_GAME_DISCONNECT_PROXY:
-	{
-		uint32_t serverId = (uint32_t)nSrcID;
-		uint32_t serverType = (uint32_t)bySrcType;
-		OnHandleInnerServerDisconnect(serverType, serverId);
-	}
-	break;
-	case NF_SERVER_EVENT_WORLD_DISCONNECT_PROXY:
-	{
-		uint32_t serverId = (uint32_t)nSrcID;
-		uint32_t serverType = (uint32_t)bySrcType;
-		OnHandleInnerServerDisconnect(serverType, serverId);
-	}
-	break;
-	default:
-		break;
-	}
 }
 
 void NFCProxyLogicModule::OnHandleGameJsonMessage(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen)

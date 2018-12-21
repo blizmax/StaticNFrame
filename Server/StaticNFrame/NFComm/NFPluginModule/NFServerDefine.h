@@ -71,16 +71,18 @@ public:
 
 	uint32_t GetUnlinkId() { return mUnlinkId; }
 	uint32_t GetServerId() { return mServerInfo.server_id(); }
-	uint32_t GetGameId() { return mServerInfo.server_id(); }
+	uint32_t GetServerType() { return mServerInfo.server_type(); }
+	std::string GetServerName() { return mServerInfo.server_name(); }
+	uint32_t GetGameId() { return mServerInfo.game_id(); }
+	std::string GetGameName() { return mServerInfo.game_name(); }
 	uint32_t GetZoneId() { return mServerInfo.server_id(); }
-	std::function<uint32_t()> LuaGetGameId() { return [this]()->uint32_t { return mServerInfo.server_id(); }; }
+	std::function<uint32_t()> LuaGetGameId() { return [this]()->uint32_t { return mServerInfo.game_id(); }; }
 	std::function<uint32_t()> LuaGetZoneId() { return [this]()->uint32_t { return mServerInfo.server_id(); }; }
 	LUA_SEND_MSG_FUNCTION GetSendString() { return mSendString; }
 	void SetSendString(LUA_SEND_MSG_FUNCTION cb) { mSendString = cb; }
 
 	uint32_t mUnlinkId;
 	NFMsg::ServerInfoReport mServerInfo;
-	uint32_t mGameId;
 
 	LUA_SEND_MSG_FUNCTION mSendString;
 };

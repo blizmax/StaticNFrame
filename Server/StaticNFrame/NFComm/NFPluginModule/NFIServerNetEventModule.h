@@ -20,14 +20,14 @@ class NFIServerNetEventModule : public NFIModule
 {
 public:
 	template <typename BaseType>
-	bool AddReceiveCallBack(NF_SERVER_TYPES eSourceType, NF_SERVER_TYPES eTargetType, void (BaseType::*handleRecieve)(eMsgType nEvent, uint32_t unLinkId, NF_SHARE_PTR<NFServerData> pServerData))
+	bool AddEventCallBack(NF_SERVER_TYPES eSourceType, NF_SERVER_TYPES eTargetType, BaseType* pBase, void (BaseType::*handleRecieve)(eMsgType nEvent, uint32_t unLinkId, NF_SHARE_PTR<NFServerData> pServerData))
 	{
-		NET_RECEIVE_FUNCTOR functor = std::bind(handleRecieve, pBase, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3);
+		SERVER_NET_EVENT_FUNCTOR functor = std::bind(handleRecieve, pBase, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3);
 
-		return AddReceiveCallBack(eSourceType, eTargetType, functor);
+		return AddEventCallBack(eSourceType, eTargetType, functor);
 	}
 
-	virtual bool AddReceiveCallBack(NF_SERVER_TYPES eSourceType, NF_SERVER_TYPES eTargetType, const SERVER_NET_EVENT_FUNCTOR& cb)
+	virtual bool AddEventCallBack(NF_SERVER_TYPES eSourceType, NF_SERVER_TYPES eTargetType, const SERVER_NET_EVENT_FUNCTOR& cb)
 	{
 		if (eSourceType  < NF_ST_MAX && eTargetType < NF_ST_MAX)
 		{

@@ -298,7 +298,7 @@ void NFCMasterServerModule::OnGameServerRegisterProcess(const uint32_t unLinkId,
 		}
 
 		SynProxyToGame(unLinkId);
-		SynWorldToGame(unLinkId);
+		SynWorldToGame(unLinkId, pServerData->GetGameId());
 		SynReportToLogin(pServerData);
 		NFLogInfo("Game Server Register Master Server Success, serverName:{}, serverId:{}, ip:{}, port:{}", pServerData->mServerInfo.server_name(), pServerData->mServerInfo.server_id(), pServerData->mServerInfo.server_ip(), pServerData->mServerInfo.server_port());
 	}
@@ -531,13 +531,13 @@ void NFCMasterServerModule::SynWorldToGame()
 	NF_SHARE_PTR<NFServerData> pServerData = mGameMap.First();
 	while (pServerData)
 	{
-		SynWorldToGame(pServerData->mUnlinkId);
+		SynWorldToGame(pServerData->mUnlinkId, pServerData->GetGameId());
 
 		pServerData = mGameMap.Next();
 	}
 }
 
-void NFCMasterServerModule::SynWorldToGame(uint32_t unlinkId)
+void NFCMasterServerModule::SynWorldToGame(uint32_t unlinkId, uint32_t gameId)
 {
 	if (mWorldMap.Count() <= 0) return;
 
@@ -546,8 +546,11 @@ void NFCMasterServerModule::SynWorldToGame(uint32_t unlinkId)
 	NF_SHARE_PTR<NFServerData> pServerData = mWorldMap.First();
 	while (pServerData)
 	{
-		NFMsg::ServerInfoReport* pData = xData.add_server_list();
-		*pData = pServerData->mServerInfo;
+		if (pServerData->GetGameId() == gameId)
+		{
+			NFMsg::ServerInfoReport* pData = xData.add_server_list();
+			*pData = pServerData->mServerInfo;
+		}
 
 		pServerData = mWorldMap.Next();
 	}

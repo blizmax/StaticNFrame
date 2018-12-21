@@ -72,7 +72,7 @@ protected:
 	void SynProxyToWorld(uint32_t unlinkId);
 
 	void SynWorldToGame();
-	void SynWorldToGame(uint32_t unlinkId);
+	void SynWorldToGame(uint32_t unlinkId, uint32_t gameId);
 
 	void SynReportToLogin(NF_SHARE_PTR<NFServerData> pServerData);
 

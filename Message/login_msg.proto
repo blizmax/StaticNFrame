@@ -172,8 +172,8 @@ message master_to_login_respone_select_zone
 {
 	enum ErrorCode
 	{
-		CODE_SUCCESS = 0,
-		ERROR_FAIL = 1,
+		CODE_SUCCESS = 0;
+		ERROR_FAIL = 1;
 	}
 	uint64	uid = 1;
 	uint32  gameid = 2;
