@@ -19,6 +19,6 @@ public:
 	{
 		
 	}
-	virtual NFServerData* GetGameServerData(uint32_t serverId) = 0;
-	virtual NFServerData* GetWorldServerData(uint32_t serverId) = 0;
+	virtual NF_SHARE_PTR<NFServerData> GetGameServerData(uint32_t serverId) = 0;
+	virtual NF_SHARE_PTR<NFServerData> GetWorldServerData(uint32_t serverId) = 0;
 };

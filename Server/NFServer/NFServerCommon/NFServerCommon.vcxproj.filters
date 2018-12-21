@@ -14,7 +14,6 @@
     <ClInclude Include="NFIGameClient_WorldModule.h" />
     <ClInclude Include="NFIGameClient_ProxyModule.h" />
     <ClInclude Include="NFIWorldClient_ProxyModule.h" />
-    <ClInclude Include="NFIServerNetEvent.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="NFServerCommon.cpp" />

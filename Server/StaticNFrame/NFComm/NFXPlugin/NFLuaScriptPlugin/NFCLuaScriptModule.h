@@ -64,7 +64,7 @@ public:
 	virtual void RunNetEventLuaFunc(const std::string& luaFunc, const eMsgType nEvent, const uint32_t unLinkId) override;
 	virtual void RunHtttpClientLuaFunc(const std::string& luaFunc, const int state_code, const std::string& strRespData, const std::string& strUserData) override;
 	virtual void RunHttpServerLuaFunc(const std::string& luaFunc, uint32_t serverType, const NFHttpRequest & req) override;
-
+	virtual void RunServerNetEventLuaFunc(const std::string& luaFunc, eMsgType nEvent, uint32_t unLinkId, NF_SHARE_PTR<NFServerData> pServerData) override;
 	virtual void RunAccountConnectFunc(PlayerAccountInfo* laccount) override;
 	virtual void RunAccountDisConnectFunc(PlayerAccountInfo* laccount) override;
 	virtual void RunAccountReConnectFunc(PlayerAccountInfo* laccount) override;

@@ -24,6 +24,7 @@
 
 #include "NFServerLogic/NFServerLogicCommon/NFIGameLogicModule.h"
 #include "NFServer/NFServerCommon/NFIWorldServerModule.h"
+#include "NFComm/NFPluginModule/NFIServerNetEventModule.h"
 
 #define TRY_RUN_GLOBAL_SCRIPT_FUN0(strFuncName)   try {LuaIntf::LuaRef func(l, strFuncName);  func.call<LuaIntf::LuaRef>(); }   catch (LuaIntf::LuaException& e) { cout << e.what() << endl; }
 #define TRY_RUN_GLOBAL_SCRIPT_FUN1(strFuncName, arg1)  try {LuaIntf::LuaRef func(l, strFuncName);  func.call<LuaIntf::LuaRef>(arg1); }catch (LuaIntf::LuaException& e) { cout << e.what() << endl; }
@@ -116,6 +117,7 @@ bool NFCLuaScriptModule::Register()
 		.addFunction("GetMongoModule", &NFIPluginManager::FindModule<NFIMongoModule>)
 		.addFunction("GetGameLogicModule", &NFIPluginManager::FindModule<NFIGameLogicModule>)
 		.addFunction("GetWorldServerModule", &NFIPluginManager::FindModule<NFIWorldServerModule>)
+		.addFunction("GetServerNetEventModule", &NFIPluginManager::FindModule<NFIServerNetEventModule>)
 		.endClass();
 
 	LuaIntf::LuaBinding(l).beginClass<NFIKernelModule>("NFIKernelModule")
@@ -200,6 +202,10 @@ bool NFCLuaScriptModule::Register()
 		.addFunction("UpdateFieldByKey", (bool (NFIMongoModule::*)(const int nServerID, const std::string& collectionName, const std::string& json, uint64_t key))&NFIMongoModule::UpdateFieldByKey)
 		.addFunction("FindFieldByKey", (std::string(NFIMongoModule::*)(const int nServerID, const std::string& collectionName, const std::string& fieldPath, int64_t key))&NFIMongoModule::FindFieldByKey)
 		.endClass();
+	
+	LuaIntf::LuaBinding(l).beginClass<NFIServerNetEventModule>("NFIServerNetEventModule")
+	.addFunction("AddEventCallBack", &NFIServerNetEventModule::AddEventLuaCallBack)
+	.endClass();
 
 	LuaIntf::LuaBinding(l).beginClass<PlayerAccountInfo>("PlayerAccountInfo")
 	.addProperty("Id", &PlayerAccountInfo::GetUid, &PlayerAccountInfo::SetUid)
@@ -217,6 +223,9 @@ bool NFCLuaScriptModule::Register()
 	LuaIntf::LuaBinding(l).beginClass<NFServerData>("NFServerData")
 		.addProperty("UnlinkId", &NFServerData::GetUnlinkId)
 		.addProperty("ServerId", &NFServerData::GetServerId)
+		.addProperty("GetGameId", &NFServerData::LuaGetGameId)
+		.addProperty("GetZoneId", &NFServerData::LuaGetZoneId)
+		.addProperty("SendString", &NFServerData::GetSendString)
 		.endClass();
 
 	return true;
@@ -313,4 +322,9 @@ void NFCLuaScriptModule::RunAccountDisConnectFunc(PlayerAccountInfo* laccount)
 void NFCLuaScriptModule::RunAccountReConnectFunc(PlayerAccountInfo* laccount)
 {
 	TryRunGlobalScriptFunc("Tcp.reconnect_login_ok", laccount);
+}
+
+void NFCLuaScriptModule::RunServerNetEventLuaFunc(const std::string& luaFunc, eMsgType nEvent, uint32_t unLinkId, NF_SHARE_PTR<NFServerData> pServerData)
+{
+	TryRunGlobalScriptFunc(luaFunc, nEvent, unLinkId, pServerData);
 }

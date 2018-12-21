@@ -14,8 +14,9 @@
 #include <NFComm/NFPluginModule/NFEventObj.h>
 #include "NFComm/NFCore/NFMap.hpp"
 #include "NFServer/NFServerCommon/NFServerCommon.h"
+#include "NFComm/NFPluginModule/NFIServerNetEventModule.h"
 
-class NFCProxyServerModule : public NFIProxyServerModule, public NFEventObj
+class NFCProxyServerModule : public NFIProxyServerModule
 {
 public:
 	explicit NFCProxyServerModule(NFIPluginManager* p);
@@ -30,8 +31,6 @@ public:
 	virtual bool BeforeShut() override;
 
 	virtual bool Shut() override;
-
-	virtual void OnExecute(uint16_t nEventID, uint64_t nSrcID, uint8_t bySrcType, NFEventContext* pEventContext);
 
 	void OnProxySocketEvent(const eMsgType nEvent, const uint32_t unLinkId);
 	void OnHandleOtherMessage(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen);
@@ -49,12 +48,13 @@ public:
 	void OnGameServerUnRegisterProcess(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen);
 	void OnGameServerRefreshProcess(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen);
 
-	virtual NFServerData* GetGameServerData(uint32_t serverId) { return mGameMap.GetElement(serverId); }
-	virtual NFServerData* GetWorldServerData(uint32_t serverId) { return mWorldMap.GetElement(serverId); }
+	virtual NF_SHARE_PTR<NFServerData> GetGameServerData(uint32_t serverId) { return mGameMap.GetElement(serverId); }
+	virtual NF_SHARE_PTR<NFServerData> GetWorldServerData(uint32_t serverId) { return mWorldMap.GetElement(serverId); }
 
 	void OnHandleInnerServerDisconnect(uint32_t unLinkId);
 private:
+	NFIServerNetEventModule* m_pServerNetEventModule;
 	NFINetServerModule* m_pNetServerModule;
-	NFMap<uint32_t, NFServerData> mWorldMap;
-	NFMap<uint32_t, NFServerData> mGameMap;
+	NFMapEx<uint32_t, NFServerData> mWorldMap;
+	NFMapEx<uint32_t, NFServerData> mGameMap;
 };

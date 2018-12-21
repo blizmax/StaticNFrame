@@ -30,6 +30,7 @@ NFCWorldServerModule::~NFCWorldServerModule()
 
 bool NFCWorldServerModule::Init()
 {
+	m_pServerNetEventModule = pPluginManager->FindModule<NFIServerNetEventModule>();
 	m_pNetClientModule = pPluginManager->FindModule<NFINetClientModule>();
 	m_pNetServerModule = pPluginManager->FindModule<NFINetServerModule>();
 	m_pNetServerModule->AddEventCallBack(NF_ST_WORLD, this, &NFCWorldServerModule::OnProxySocketEvent);
@@ -109,7 +110,10 @@ void NFCWorldServerModule::OnClientDisconnect(uint32_t unLinkId)
 			NFLogError("the game server disconnect from world server, serverName:{}, serverId:{}, serverIp:{}, serverPort:{}"
 				, pServerData->mServerInfo.server_name(), pServerData->mServerInfo.server_id(), pServerData->mServerInfo.server_ip(), pServerData->mServerInfo.server_port());
 
-			OnServerNetEvent(eMsgType_DISCONNECTED, unLinkId, pServerData);
+			pServerData->SetSendString([this, pServerData](const std::string& msg) {
+				NFLogError("game disconnect, can't send msg:{}", msg);
+			});
+			m_pServerNetEventModule->OnServerNetEvent(eMsgType_DISCONNECTED, NF_ST_WORLD, NF_ST_GAME, unLinkId, pServerData);
 			return;
 		}
 
@@ -190,16 +194,9 @@ void NFCWorldServerModule::OnGameServerRegisterProcess(const uint32_t unLinkId, 
 
 		NFLogInfo("Game Server Register World Server Success, serverName:{}, serverId:{}, ip:{}, port:{}", pServerData->mServerInfo.server_name(), pServerData->mServerInfo.server_id(), pServerData->mServerInfo.server_ip(), pServerData->mServerInfo.server_port());
 	
-		OnServerNetEvent(eMsgType_CONNECTED, unLinkId, pServerData);
-	}
-}
-
-void NFCWorldServerModule::RunServerNetEventLuaFunc(const std::string& luaFunc, eMsgType nEvent, uint32_t unLinkId, NF_SHARE_PTR<NFServerData> pServerData)
-{
-	//可以允许NFILuaScriptModule不存在
-	NFILuaScriptModule* pLuaScriptModule = (NFILuaScriptModule*)pPluginManager->FindModule(typeid(NFILuaScriptModule).name());
-	if (pLuaScriptModule)
-	{
-		pLuaScriptModule->TryRunGlobalScriptFunc(luaFunc, nEvent, unLinkId, pServerData);
+		pServerData->SetSendString([this, pServerData](const std::string& msg) {
+			m_pNetServerModule->SendByServerID(pServerData->mUnlinkId, 0, msg, 0);
+		});
+		m_pServerNetEventModule->OnServerNetEvent(eMsgType_CONNECTED, NF_ST_WORLD, NF_ST_GAME, unLinkId, pServerData);
 	}
 }

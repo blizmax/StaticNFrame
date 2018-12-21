@@ -27,6 +27,7 @@ NFCProxyServerModule::~NFCProxyServerModule()
 
 bool NFCProxyServerModule::Init()
 {
+	m_pServerNetEventModule = pPluginManager->FindModule<NFIServerNetEventModule>();
 	m_pNetServerModule = pPluginManager->FindModule<NFINetServerModule>();
 	m_pNetServerModule->AddEventCallBack(NF_ST_PROXY, this, &NFCProxyServerModule::OnProxySocketEvent);
 	m_pNetServerModule->AddReceiveCallBack(NF_ST_PROXY, this, &NFCProxyServerModule::OnHandleOtherMessage);
@@ -86,10 +87,10 @@ void NFCProxyServerModule::OnGameServerRegisterProcess(const uint32_t unLinkId, 
 	for (int i = 0; i < xMsg.server_list_size(); ++i)
 	{
 		const NFMsg::ServerInfoReport& xData = xMsg.server_list(i);
-		NFServerData* pServerData = mGameMap.GetElement(xData.server_id());
+		NF_SHARE_PTR<NFServerData> pServerData = mGameMap.GetElement(xData.server_id());
 		if (!pServerData)
 		{
-			pServerData = NF_NEW NFServerData();
+			pServerData = NF_SHARE_PTR<NFServerData>(NF_NEW NFServerData());
 			mGameMap.AddElement(xData.server_id(), pServerData);
 		}
 
@@ -103,6 +104,11 @@ void NFCProxyServerModule::OnGameServerRegisterProcess(const uint32_t unLinkId, 
 		}
 
 		NFLogInfo("Game Server Register Proxy Server Success, serverName:{}, serverId:{}, ip:{}, port:{}", pServerData->mServerInfo.server_name(), pServerData->mServerInfo.server_id(), pServerData->mServerInfo.server_ip(), pServerData->mServerInfo.server_port());
+	
+		pServerData->SetSendString([this, pServerData](const std::string& msg) {
+			m_pNetServerModule->SendByServerID(pServerData->mUnlinkId, 0, msg, 0);
+		});
+		m_pServerNetEventModule->OnServerNetEvent(eMsgType_CONNECTED, NF_ST_PROXY, NF_ST_GAME, unLinkId, pServerData);
 	}
 }
 
@@ -128,10 +134,10 @@ void NFCProxyServerModule::OnGameServerRefreshProcess(const uint32_t unLinkId, c
 	for (int i = 0; i < xMsg.server_list_size(); ++i)
 	{
 		const NFMsg::ServerInfoReport& xData = xMsg.server_list(i);
-		NFServerData* pServerData = mGameMap.GetElement(xData.server_id());
+		NF_SHARE_PTR<NFServerData> pServerData = mGameMap.GetElement(xData.server_id());
 		if (!pServerData)
 		{
-			pServerData =NF_NEW NFServerData();
+			pServerData = NF_SHARE_PTR<NFServerData>(NF_NEW NFServerData());
 			mGameMap.AddElement(xData.server_id(), pServerData);
 		}
 
@@ -168,11 +174,6 @@ bool NFCProxyServerModule::Shut()
 	return true;
 }
 
-void NFCProxyServerModule::OnExecute(uint16_t nEventID, uint64_t nSrcID, uint8_t bySrcType, NFEventContext* pEventContext)
-{
-
-}
-
 void NFCProxyServerModule::OnProxyInnerSocketEvent(const eMsgType nEvent, const uint32_t unLinkId)
 {
 	if (nEvent == eMsgType_CONNECTED)
@@ -207,7 +208,7 @@ void NFCProxyServerModule::OnProxySocketEvent(const eMsgType nEvent, const uint3
 
 void NFCProxyServerModule::OnHandleInnerServerDisconnect(uint32_t unLinkId)
 {
-	NFServerData* pServerData = nullptr;
+	NF_SHARE_PTR<NFServerData> pServerData = nullptr;
 	pServerData = mWorldMap.First();
 	while (pServerData)
 	{
@@ -219,7 +220,10 @@ void NFCProxyServerModule::OnHandleInnerServerDisconnect(uint32_t unLinkId)
 			NFLogError("the world server disconnect from proxy server, serverName:{}, serverId:{}, serverIp:{}, serverPort:{}"
 				, pServerData->mServerInfo.server_name(), pServerData->mServerInfo.server_id(), pServerData->mServerInfo.server_ip(), pServerData->mServerInfo.server_port());
 
-			FireExecute(NF_SERVER_EVENT_WORLD_DISCONNECT_PROXY, pServerData->mServerInfo.server_id(), pServerData->mServerInfo.server_type(), nullptr);
+			pServerData->SetSendString([this, pServerData](const std::string& msg) {
+				NFLogError("world disconnect, can't send msg:{}", msg);
+			});
+			m_pServerNetEventModule->OnServerNetEvent(eMsgType_DISCONNECTED, NF_ST_PROXY, NF_ST_WORLD, unLinkId, pServerData);
 			return;
 		}
 
@@ -237,7 +241,10 @@ void NFCProxyServerModule::OnHandleInnerServerDisconnect(uint32_t unLinkId)
 			NFLogError("the game server disconnect from proxy server, serverName:{}, serverId:{}, serverIp:{}, serverPort:{}"
 				, pServerData->mServerInfo.server_name(), pServerData->mServerInfo.server_id(), pServerData->mServerInfo.server_ip(), pServerData->mServerInfo.server_port());
 
-			FireExecute(NF_SERVER_EVENT_GAME_DISCONNECT_PROXY, pServerData->mServerInfo.server_id(), pServerData->mServerInfo.server_type(), nullptr);
+			pServerData->SetSendString([this, pServerData](const std::string& msg) {
+				NFLogError("game disconnect, can't send msg:{}", msg);
+			});
+			m_pServerNetEventModule->OnServerNetEvent(eMsgType_DISCONNECTED, NF_ST_PROXY, NF_ST_GAME, unLinkId, pServerData);
 			return;
 		}
 
@@ -259,10 +266,10 @@ void NFCProxyServerModule::OnWorldServerRegisterProcess(const uint32_t unLinkId,
 	for (int i = 0; i < xMsg.server_list_size(); ++i)
 	{
 		const NFMsg::ServerInfoReport& xData = xMsg.server_list(i);
-		NFServerData* pServerData = mWorldMap.GetElement(xData.server_id());
+		NF_SHARE_PTR<NFServerData> pServerData = mWorldMap.GetElement(xData.server_id());
 		if (!pServerData)
 		{
-			pServerData = NF_NEW NFServerData();
+			pServerData = NF_SHARE_PTR<NFServerData>(NF_NEW NFServerData());
 			mWorldMap.AddElement(xData.server_id(), pServerData);
 		}
 
@@ -277,6 +284,11 @@ void NFCProxyServerModule::OnWorldServerRegisterProcess(const uint32_t unLinkId,
 
 
 		NFLogInfo("World Server Register Proxy Server Success, serverName:{}, serverId:{}, ip:{}, port:{}", pServerData->mServerInfo.server_name(), pServerData->mServerInfo.server_id(), pServerData->mServerInfo.server_ip(), pServerData->mServerInfo.server_port());
+	
+		pServerData->SetSendString([this, pServerData](const std::string& msg) {
+			m_pNetServerModule->SendByServerID(pServerData->mUnlinkId, 0, msg, 0);
+		});
+		m_pServerNetEventModule->OnServerNetEvent(eMsgType_CONNECTED, NF_ST_PROXY, NF_ST_WORLD, unLinkId, pServerData);
 	}
 }
 
@@ -302,10 +314,10 @@ void NFCProxyServerModule::OnWorldServerRefreshProcess(const uint32_t unLinkId, 
 	for (int i = 0; i < xMsg.server_list_size(); ++i)
 	{
 		const NFMsg::ServerInfoReport& xData = xMsg.server_list(i);
-		NFServerData* pServerData = mWorldMap.GetElement(xData.server_id());
+		NF_SHARE_PTR<NFServerData> pServerData = mWorldMap.GetElement(xData.server_id());
 		if (!pServerData)
 		{
-			pServerData = NF_NEW NFServerData();
+			pServerData = NF_SHARE_PTR<NFServerData>(NF_NEW NFServerData());
 			mWorldMap.AddElement(xData.server_id(), pServerData);
 		}
 

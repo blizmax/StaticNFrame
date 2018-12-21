@@ -26,8 +26,10 @@ NFCWorldClient_MasterModule::~NFCWorldClient_MasterModule()
 
 bool NFCWorldClient_MasterModule::Init()
 {
+	m_pServerNetEventModule = pPluginManager->FindModule<NFIServerNetEventModule>();
 	m_pNetClientModule = pPluginManager->FindModule<NFINetClientModule>();
 	m_pWorldClient_ProxyModule = pPluginManager->FindModule<NFIWorldClient_ProxyModule>();
+	m_pMasterServerData = NF_SHARE_PTR<NFServerData>(NF_NEW NFServerData());
 	return true;
 }
 
@@ -41,11 +43,18 @@ bool NFCWorldClient_MasterModule::AfterInit()
 	NFServerConfig* pConfig = NFServerCommon::GetServerConfig(pPluginManager, NF_ST_MASTER);
 	if (pConfig)
 	{
-		m_unLinkId = m_pNetClientModule->AddServer(NF_ST_MASTER, pConfig->mServerIp, pConfig->mServerPort);
+		//AddServer会自动重连，断开连接时，m_pMasterServerData->mUnlinkId不用清理，不变
+		m_pMasterServerData->mUnlinkId = m_pNetClientModule->AddServer(NF_ST_MASTER, pConfig->mServerIp, pConfig->mServerPort);
+		m_pMasterServerData->mServerInfo.set_server_id(pConfig->mServerId);
+		m_pMasterServerData->mServerInfo.set_server_ip(pConfig->mServerIp);
+		m_pMasterServerData->mServerInfo.set_server_port(pConfig->mServerPort);
+		m_pMasterServerData->mServerInfo.set_server_name(pConfig->mServerName);
+		m_pMasterServerData->mServerInfo.set_server_type(pConfig->mServerType);
+		m_pMasterServerData->mServerInfo.set_server_state(NFMsg::EST_NARMAL);
 	}
 	else
 	{
-		NFLogError("I Can't get the Game Server config!");
+		NFLogError("I Can't get the Master Server config!");
 		return false;
 	}
 
@@ -89,7 +98,7 @@ bool NFCWorldClient_MasterModule::Shut()
 
 void NFCWorldClient_MasterModule::OnProxySocketEvent(const eMsgType nEvent, const uint32_t unLinkId)
 {
-	if (unLinkId != m_unLinkId) return;
+	if (unLinkId != m_pMasterServerData->mUnlinkId) return;
 
 	if (nEvent == eMsgType_CONNECTED)
 	{
@@ -100,12 +109,17 @@ void NFCWorldClient_MasterModule::OnProxySocketEvent(const eMsgType nEvent, cons
 	else if (nEvent == eMsgType_DISCONNECTED)
 	{
 		NFLogDebug("World Server DisConnect Master Server!");
+
+		m_pMasterServerData->SetSendString([this](const std::string& msg) {
+			NFLogError("master disconnect, can't send msg:{}", msg);
+		});
+		m_pServerNetEventModule->OnServerNetEvent(eMsgType_DISCONNECTED, NF_ST_WORLD, NF_ST_MASTER, m_pMasterServerData->mUnlinkId, m_pMasterServerData);
 	}
 }
 
 void NFCWorldClient_MasterModule::OnHandleOtherMessage(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen)
 {
-	if (unLinkId != m_unLinkId) return;
+	if (unLinkId != m_pMasterServerData->mUnlinkId) return;
 }
 
 void NFCWorldClient_MasterModule::RegisterServer()
@@ -123,8 +137,13 @@ void NFCWorldClient_MasterModule::RegisterServer()
 		pData->set_server_max_online(pConfig->mMaxConnectNum);
 		pData->set_server_state(NFMsg::EST_NARMAL);
 
-		m_pNetClientModule->SendToServerByPB(m_unLinkId, EGMI_NET_WORLD_TO_MASTER_REGISTER, xMsg, 0);
+		m_pNetClientModule->SendToServerByPB(m_pMasterServerData->mUnlinkId, EGMI_NET_WORLD_TO_MASTER_REGISTER, xMsg, 0);
 	}
+
+	m_pMasterServerData->SetSendString([this](const std::string& msg) {
+		m_pNetClientModule->SendByServerID(m_pMasterServerData->mUnlinkId, 0, msg, 0);
+	});
+	m_pServerNetEventModule->OnServerNetEvent(eMsgType_CONNECTED, NF_ST_WORLD, NF_ST_MASTER, m_pMasterServerData->mUnlinkId, m_pMasterServerData);
 }
 
 void NFCWorldClient_MasterModule::ServerReport()
@@ -151,6 +170,6 @@ void NFCWorldClient_MasterModule::ServerReport()
 		pData->set_server_state(NFMsg::EST_NARMAL);
 		pData->set_server_cur_count(0);
 
-		m_pNetClientModule->SendToServerByPB(m_unLinkId, EGMI_STS_SERVER_REPORT, xMsg, 0);
+		m_pNetClientModule->SendToServerByPB(m_pMasterServerData->mUnlinkId, EGMI_STS_SERVER_REPORT, xMsg, 0);
 	}
 }

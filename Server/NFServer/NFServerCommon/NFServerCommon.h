@@ -94,25 +94,3 @@ enum NFServerEvent
 	NF_SERVER_EVENT_GAME_DISCONNECT_PROXY = 100,
 	NF_SERVER_EVENT_WORLD_DISCONNECT_PROXY = 101,
 };
-
-//////////////////////////////////////////////////////////////////////////
-class NFServerData
-{
-public:
-	NFServerData()
-	{
-		mUnlinkId = 0;
-	}
-
-	~NFServerData()
-	{
-		mUnlinkId = 0;
-	}
-
-	uint32_t GetUnlinkId() { return mUnlinkId; }
-	uint32_t GetServerId() { return mServerInfo.server_id(); }
-
-	uint32_t mUnlinkId;
-	NFMsg::ServerInfoReport mServerInfo;
-	uint32_t mGameId;
-};

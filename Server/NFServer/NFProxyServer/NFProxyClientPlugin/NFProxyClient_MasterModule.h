@@ -12,6 +12,7 @@
 #include <NFServer/NFServerCommon/NFIProxyClient_MasterModule.h>
 #include <NFComm/NFPluginModule/NFINetClientModule.h>
 #include <NFComm/NFPluginModule/NFServerDefine.h>
+#include "NFComm/NFPluginModule/NFIServerNetEventModule.h"
 
 class NFCProxyClient_MasterModule : public NFIProxyClient_MasterModule
 {
@@ -37,7 +38,7 @@ protected:
 	void ServerReport();
 private:
 	NFINetClientModule* m_pNetClientModule;
-
-	uint32_t m_unLinkId;
+	NFIServerNetEventModule* m_pServerNetEventModule;
+	NF_SHARE_PTR<NFServerData> m_pMasterServerData;
 };
 

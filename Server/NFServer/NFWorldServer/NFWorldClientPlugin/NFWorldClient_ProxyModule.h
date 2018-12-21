@@ -13,6 +13,7 @@
 #include <NFComm/NFPluginModule/NFINetClientModule.h>
 #include <NFComm/NFPluginModule/NFServerDefine.h>
 #include "NFServer/NFServerCommon/NFServerCommon.h"
+#include "NFComm/NFPluginModule/NFIServerNetEventModule.h"
 #include <NFComm/NFCore/NFMap.hpp>
 
 class NFCWorldClient_ProxyModule : public NFIWorldClient_ProxyModule
@@ -40,13 +41,14 @@ protected:
 
 	virtual void OnHandleProxyReport(const NFMsg::ServerInfoReport& xData);
 
-	NFServerData* GetServerByServerId(uint32_t serverId) { return mProxyMap.GetElement(serverId); }
-	NFServerData* GetServerByUnlinkId(uint32_t unlinkId) { return mUnlinkProxyMap.GetElement(unlinkId); }
+	NF_SHARE_PTR<NFServerData> GetServerByServerId(uint32_t serverId) { return mProxyMap.GetElement(serverId); }
+	NF_SHARE_PTR<NFServerData> GetServerByUnlinkId(uint32_t unlinkId) { return mUnlinkProxyMap.GetElement(unlinkId); }
 private:
 	NFINetClientModule* m_pNetClientModule;
+	NFIServerNetEventModule* m_pServerNetEventModule;
 
-	NFMap<uint32_t, NFServerData> mProxyMap;	//serverid -- serverdata
-	NFMap<uint32_t, NFServerData> mUnlinkProxyMap; //unlinkid -- serverdata
+	NFMapEx<uint32_t, NFServerData> mProxyMap;	//serverid -- serverdata
+	NFMapEx<uint32_t, NFServerData> mUnlinkProxyMap; //unlinkid -- serverdata
 };
 
 

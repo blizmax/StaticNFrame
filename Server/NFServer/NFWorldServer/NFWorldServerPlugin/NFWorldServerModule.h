@@ -13,6 +13,7 @@
 #include "NFComm/NFPluginModule/NFServerDefine.h"
 #include <NFComm/NFPluginModule/NFINetServerModule.h>
 #include <NFComm/NFPluginModule/NFINetClientModule.h>
+#include "NFComm/NFPluginModule/NFIServerNetEventModule.h"
 #include "NFServer/NFServerCommon/NFServerCommon.h"
 #include "NFComm/NFPluginModule/NFEventMgr.h"
 #include "NFComm/NFCore/NFMapEx.hpp"
@@ -44,11 +45,10 @@ protected:
 	void OnClientDisconnect(uint32_t unLinkId);
 
 	virtual NF_SHARE_PTR<NFServerData> GetGameByLink(uint32_t unLinkId) { return mLinkGamMap.GetElement(unLinkId); }
-
-	virtual void RunServerNetEventLuaFunc(const std::string& luaFunc, eMsgType nEvent, uint32_t unLinkId, NF_SHARE_PTR<NFServerData> pServerData);
 private:
 	NFINetServerModule* m_pNetServerModule;
 	NFINetClientModule* m_pNetClientModule;
+	NFIServerNetEventModule* m_pServerNetEventModule;
 private:
 	NFMapEx<uint32_t, NFServerData> mGameMap;
 	NFMapEx<uint32_t, NFServerData> mLinkGamMap; //linkid -- key

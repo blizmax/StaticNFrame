@@ -47,6 +47,7 @@
     <ClCompile Include="NFCNetClientModule.cpp" />
     <ClCompile Include="NFIPacketParse.cpp" />
     <ClCompile Include="NFNetPlugin.cpp" />
+    <ClCompile Include="NFServerNeEventModule.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ArpgNetPacketParse.h" />
@@ -63,6 +64,7 @@
     <ClInclude Include="NFNetDefine.h" />
     <ClInclude Include="NetObject.h" />
     <ClInclude Include="NFNetPlugin.h" />
+    <ClInclude Include="NFServerNetEventModule.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{77F81D3A-7E0B-4D4D-AAAA-AB22E60B66BD}</ProjectGuid>

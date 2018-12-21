@@ -37,6 +37,8 @@ public:
 
 	virtual void RunHttpServerLuaFunc(const std::string& luaFunc, uint32_t serverType, const NFHttpRequest & req) = 0;
 
+	virtual void RunServerNetEventLuaFunc(const std::string& luaFunc, eMsgType nEvent, uint32_t unLinkId, NF_SHARE_PTR<NFServerData> pServerData) = 0;
+
 	virtual void RunAccountConnectFunc(PlayerAccountInfo* laccount) = 0;
 	virtual void RunAccountDisConnectFunc(PlayerAccountInfo* laccount) = 0;
 

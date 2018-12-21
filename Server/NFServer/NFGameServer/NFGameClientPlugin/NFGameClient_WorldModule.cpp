@@ -26,6 +26,7 @@ NFCGameClient_WorldModule::~NFCGameClient_WorldModule()
 
 bool NFCGameClient_WorldModule::Init()
 {
+	m_pServerNetEventModule = pPluginManager->FindModule<NFIServerNetEventModule>();
 	m_pNetClientModule = pPluginManager->FindModule<NFINetClientModule>();
 	return true;
 }
@@ -51,14 +52,8 @@ bool NFCGameClient_WorldModule::BeforeShut()
 bool NFCGameClient_WorldModule::Shut()
 {
 	mUnlinkWorldMap.ClearAll();
-	NFServerData* pData = mWorldMap.First();
-	while (pData)
-	{
-		NF_SAFE_DELETE(pData);
-		pData = mWorldMap.Next();
-	}
-	return true;
 	mWorldMap.ClearAll();
+	return true;
 }
 
 void NFCGameClient_WorldModule::OnProxySocketEvent(const eMsgType nEvent, const uint32_t unLinkId)
@@ -82,14 +77,20 @@ void NFCGameClient_WorldModule::OnProxySocketEvent(const eMsgType nEvent, const 
 
 void NFCGameClient_WorldModule::OnClientDisconnect(uint32_t unLinkId)
 {
-	NFServerData* pServerData = mUnlinkWorldMap.GetElement(unLinkId);
+	NF_SHARE_PTR<NFServerData> pServerData = mUnlinkWorldMap.GetElement(unLinkId);
 	if (pServerData)
 	{
+		//game server 与 world server 一旦断开，不需要主动重新连接, 清理后将关闭这个unLinkId
 		pServerData->mUnlinkId = 0;
 		pServerData->mServerInfo.set_server_state(NFMsg::EST_CRASH);
 
 		NFLogError("the world server disconnect, serverName:{}, serverId:{}, serverIp:{}, serverPort:{}"
 			, pServerData->mServerInfo.server_name(), pServerData->mServerInfo.server_id(), pServerData->mServerInfo.server_ip(), pServerData->mServerInfo.server_port());
+
+		pServerData->SetSendString([this, pServerData](const std::string& msg) {
+			NFLogError("world disconnect, can't send msg:{}", msg);
+		});
+		m_pServerNetEventModule->OnServerNetEvent(eMsgType_DISCONNECTED, NF_ST_GAME, NF_ST_WORLD, unLinkId, pServerData);
 
 		mUnlinkWorldMap.RemoveElement(unLinkId);
 
@@ -101,10 +102,10 @@ void NFCGameClient_WorldModule::OnHandleWorldReport(const NFMsg::ServerInfoRepor
 {
 	if (xData.server_type() != NF_ST_WORLD) return;
 
-	NFServerData* pServerData = GetServerByServerId(xData.server_id());
+	NF_SHARE_PTR<NFServerData> pServerData = GetServerByServerId(xData.server_id());
 	if (pServerData == nullptr)
 	{
-		pServerData = NF_NEW NFServerData();
+		pServerData = NF_SHARE_PTR<NFServerData>(NF_NEW NFServerData());
 		mWorldMap.AddElement(xData.server_id(), pServerData);
 
 		pServerData->mUnlinkId = m_pNetClientModule->AddServer(NF_ST_WORLD, xData.server_ip(), xData.server_port());
@@ -143,6 +144,15 @@ void NFCGameClient_WorldModule::RegisterServer(uint32_t linkId)
 		pData->set_server_state(NFMsg::EST_NARMAL);
 
 		m_pNetClientModule->SendToServerByPB(linkId, EGMI_NET_GAME_TO_WORLD_REGISTER, xMsg, 0);
+	}
+
+	NF_SHARE_PTR<NFServerData> pServerData = mUnlinkWorldMap.GetElement(linkId);
+	if (pServerData)
+	{
+		pServerData->SetSendString([this, pServerData](const std::string& msg) {
+			m_pNetClientModule->SendByServerID(pServerData->mUnlinkId, 0, msg, 0);
+		});
+		m_pServerNetEventModule->OnServerNetEvent(eMsgType_CONNECTED, NF_ST_GAME, NF_ST_WORLD, linkId, pServerData);
 	}
 }
 

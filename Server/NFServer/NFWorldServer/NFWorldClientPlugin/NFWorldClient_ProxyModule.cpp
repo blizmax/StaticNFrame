@@ -26,6 +26,7 @@ NFCWorldClient_ProxyModule::~NFCWorldClient_ProxyModule()
 
 bool NFCWorldClient_ProxyModule::Init()
 {
+	m_pServerNetEventModule = pPluginManager->FindModule<NFIServerNetEventModule>();
 	m_pNetClientModule = pPluginManager->FindModule<NFINetClientModule>();
 	return true;
 }
@@ -51,12 +52,6 @@ bool NFCWorldClient_ProxyModule::BeforeShut()
 bool NFCWorldClient_ProxyModule::Shut()
 {
 	mUnlinkProxyMap.ClearAll();
-	NFServerData* pData = mProxyMap.First();
-	while (pData)
-	{
-		NF_SAFE_DELETE(pData);
-		pData = mProxyMap.Next();
-	}
 	mProxyMap.ClearAll();
 	return true;
 }
@@ -81,14 +76,20 @@ void NFCWorldClient_ProxyModule::OnProxySocketEvent(const eMsgType nEvent, const
 
 void NFCWorldClient_ProxyModule::OnClientDisconnect(uint32_t unLinkId)
 {
-	NFServerData* pServerData = mUnlinkProxyMap.GetElement(unLinkId);
+	NF_SHARE_PTR<NFServerData> pServerData = mUnlinkProxyMap.GetElement(unLinkId);
 	if (pServerData)
 	{
+		//world server 与 proxy server 一旦断开，不需要主动重新连接, 清理后将关闭这个unLinkId
 		pServerData->mUnlinkId = 0;
 		pServerData->mServerInfo.set_server_state(NFMsg::EST_CRASH);
 
 		NFLogError("the proxy server disconnect, serverName:{}, serverId:{}, serverIp:{}, serverPort:{}"
 			, pServerData->mServerInfo.server_name(), pServerData->mServerInfo.server_id(), pServerData->mServerInfo.server_ip(), pServerData->mServerInfo.server_port());
+
+		pServerData->SetSendString([this, pServerData](const std::string& msg) {
+			NFLogError("proxy disconnect, can't send msg:{}", msg);
+		});
+		m_pServerNetEventModule->OnServerNetEvent(eMsgType_DISCONNECTED, NF_ST_WORLD, NF_ST_PROXY, unLinkId, pServerData);
 
 		mUnlinkProxyMap.RemoveElement(unLinkId);
 
@@ -108,10 +109,10 @@ void NFCWorldClient_ProxyModule::OnHandleProxyReport(const NFMsg::ServerInfoRepo
 {
 	if (xData.server_type() != NF_ST_PROXY) return;
 
-	NFServerData* pServerData = GetServerByServerId(xData.server_id());
+	NF_SHARE_PTR<NFServerData> pServerData = GetServerByServerId(xData.server_id());
 	if (pServerData == nullptr)
 	{
-		pServerData = NF_NEW NFServerData();
+		pServerData = NF_SHARE_PTR<NFServerData>(NF_NEW NFServerData());
 		mProxyMap.AddElement(xData.server_id(), pServerData);
 
 		pServerData->mUnlinkId = m_pNetClientModule->AddServer(NF_ST_PROXY, xData.server_ip(), xData.server_inner_port());
@@ -143,5 +144,14 @@ void NFCWorldClient_ProxyModule::RegisterServer(uint32_t unlinkId)
 		pData->set_server_state(NFMsg::EST_NARMAL);
 
 		m_pNetClientModule->SendToServerByPB(unlinkId, EGMI_NET_WORLD_TO_PROXY_REGISTER, xMsg, 0);
+	}
+
+	NF_SHARE_PTR<NFServerData> pServerData = mUnlinkProxyMap.GetElement(unlinkId);
+	if (pServerData)
+	{
+		pServerData->SetSendString([this, pServerData](const std::string& msg) {
+			m_pNetClientModule->SendByServerID(pServerData->mUnlinkId, 0, msg, 0);
+		});
+		m_pServerNetEventModule->OnServerNetEvent(eMsgType_CONNECTED, NF_ST_WORLD, NF_ST_PROXY, unlinkId, pServerData);
 	}
 }

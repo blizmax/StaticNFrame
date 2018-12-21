@@ -13,6 +13,7 @@
 #include <NFComm/NFPluginModule/NFINetClientModule.h>
 #include <NFComm/NFPluginModule/NFServerDefine.h>
 #include <NFServer/NFServerCommon/NFIWorldClient_ProxyModule.h>
+#include "NFComm/NFPluginModule/NFIServerNetEventModule.h"
 
 class NFCWorldClient_MasterModule : public NFIWorldClient_MasterModule
 {
@@ -38,7 +39,8 @@ protected:
 	void ServerReport();
 	void OnHandleServerReport(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen);
 private:
+	NFIServerNetEventModule* m_pServerNetEventModule;
 	NFINetClientModule* m_pNetClientModule;
 	NFIWorldClient_ProxyModule* m_pWorldClient_ProxyModule;
-	uint32_t m_unLinkId;
+	NF_SHARE_PTR<NFServerData> m_pMasterServerData;
 };

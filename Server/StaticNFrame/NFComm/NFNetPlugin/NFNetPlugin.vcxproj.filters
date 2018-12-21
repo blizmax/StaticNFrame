@@ -35,6 +35,9 @@
     <ClCompile Include="NFCHttpServerModule.cpp">
       <Filter>NFHttpServer</Filter>
     </ClCompile>
+    <ClCompile Include="NFServerNeEventModule.cpp">
+      <Filter>NFServerNetEvent</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="NFNetPlugin.h" />
@@ -77,6 +80,9 @@
     <ClInclude Include="NFCHttpServerModule.h">
       <Filter>NFHttpServer</Filter>
     </ClInclude>
+    <ClInclude Include="NFServerNetEventModule.h">
+      <Filter>NFServerNetEvent</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="NFClient">
@@ -96,6 +102,9 @@
     </Filter>
     <Filter Include="NFHttpServer">
       <UniqueIdentifier>{a7b0f2e7-25d1-4f53-9832-540483a3af73}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="NFServerNetEvent">
+      <UniqueIdentifier>{8811a49f-5dc4-4b11-a187-97245bd2102c}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

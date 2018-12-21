@@ -12,9 +12,8 @@
 #include "NFComm/NFPluginModule/NFIModule.h"
 #include "NFComm/NFCore/NFPlatform.h"
 #include "NFServer/NFServerCommon/NFServerCommon.h"
-#include "NFIServerNetEvent.h"
 
-class NFIWorldServerModule : public NFIServerNetEvent
+class NFIWorldServerModule : public NFIModule
 {
 public:
 	virtual ~NFIWorldServerModule()

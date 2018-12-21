@@ -14,6 +14,7 @@
 #include <NFComm/NFPluginModule/NFServerDefine.h>
 #include "NFComm/NFCore/NFMap.hpp"
 #include "NFServer/NFServerCommon/NFServerCommon.h"
+#include "NFComm/NFPluginModule/NFIServerNetEventModule.h"
 
 class NFCGameClient_WorldModule : public NFIGameClient_WorldModule
 {
@@ -40,12 +41,13 @@ protected:
 
 	virtual void OnHandleWorldReport(const NFMsg::ServerInfoReport& xData);
 
-	NFServerData* GetServerByServerId(uint32_t serverId) { return mWorldMap.GetElement(serverId); }
-	NFServerData* GetServerByUnlinkId(uint32_t unlinkId) { return mUnlinkWorldMap.GetElement(unlinkId); }
+	NF_SHARE_PTR<NFServerData> GetServerByServerId(uint32_t serverId) { return mWorldMap.GetElement(serverId); }
+	NF_SHARE_PTR<NFServerData> GetServerByUnlinkId(uint32_t unlinkId) { return mUnlinkWorldMap.GetElement(unlinkId); }
 private:
 	NFINetClientModule* m_pNetClientModule;
+	NFIServerNetEventModule* m_pServerNetEventModule;
 
-	NFMap<uint32_t, NFServerData> mWorldMap;	//serverid -- serverdata
-	NFMap<uint32_t, NFServerData> mUnlinkWorldMap; //unlinkid -- serverdata
+	NFMapEx<uint32_t, NFServerData> mWorldMap;	//serverid -- serverdata
+	NFMapEx<uint32_t, NFServerData> mUnlinkWorldMap; //unlinkid -- serverdata
 };
 

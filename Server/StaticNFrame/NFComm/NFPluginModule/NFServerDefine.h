@@ -11,6 +11,7 @@
 #include <stdint.h>
 #include <functional>
 #include <string>
+#include "NFMessageDefine/NFMsgDefine.h"
 
 enum NF_SERVER_TYPES
 {
@@ -53,6 +54,36 @@ typedef std::function<void(const eMsgType nEvent, const uint32_t unLinkId)> NET_
 typedef std::function<void(int severity, const char* msg)> NET_EVENT_LOG_FUNCTOR;
 
 typedef std::function<void(const std::string& msg)> LUA_SEND_MSG_FUNCTION;
+
+//////////////////////////////////////////////////////////////////////////
+class NFServerData
+{
+public:
+	NFServerData()
+	{
+		mUnlinkId = 0;
+	}
+
+	~NFServerData()
+	{
+		mUnlinkId = 0;
+	}
+
+	uint32_t GetUnlinkId() { return mUnlinkId; }
+	uint32_t GetServerId() { return mServerInfo.server_id(); }
+	uint32_t GetGameId() { return mServerInfo.server_id(); }
+	uint32_t GetZoneId() { return mServerInfo.server_id(); }
+	std::function<uint32_t()> LuaGetGameId() { return [this]()->uint32_t { return mServerInfo.server_id(); }; }
+	std::function<uint32_t()> LuaGetZoneId() { return [this]()->uint32_t { return mServerInfo.server_id(); }; }
+	LUA_SEND_MSG_FUNCTION GetSendString() { return mSendString; }
+	void SetSendString(LUA_SEND_MSG_FUNCTION cb) { mSendString = cb; }
+
+	uint32_t mUnlinkId;
+	NFMsg::ServerInfoReport mServerInfo;
+	uint32_t mGameId;
+
+	LUA_SEND_MSG_FUNCTION mSendString;
+};
 
 class PlayerAccountInfo
 {

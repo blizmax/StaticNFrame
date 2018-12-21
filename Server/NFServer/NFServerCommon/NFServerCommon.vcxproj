@@ -322,7 +322,6 @@
     <ClInclude Include="NFILoginServerModule.h" />
     <ClInclude Include="NFIMasterServerModule.h" />
     <ClInclude Include="NFIProxyClient_MasterModule.h" />
-    <ClInclude Include="NFIServerNetEvent.h" />
     <ClInclude Include="NFIWorldClient_MasterModule.h" />
     <ClInclude Include="NFIWorldClient_ProxyModule.h" />
     <ClInclude Include="NFIWorldServerModule.h" />
