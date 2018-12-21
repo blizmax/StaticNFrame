@@ -32,11 +32,11 @@ do_work()
 }
 
 do_work MasterServer 1
-do_work WorldServer 2
-do_work LoginServer 4
-do_work ProxyServer 10
-do_work ProxyServer 11
-do_work GameServer 20
+do_work LoginServer 2
+do_work ProxyServer 3
+
+do_work WorldServer 10
+do_work GameServer 11
 
 
 echo "rm Stop.sh -rf" >> Clear.sh
