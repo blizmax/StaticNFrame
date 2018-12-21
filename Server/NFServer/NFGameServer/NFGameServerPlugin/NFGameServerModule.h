@@ -15,6 +15,7 @@
 #include "NFComm/NFCore/NFMapEx.hpp"
 #include "NFServer/NFServerCommon/NFServerCommon.h"
 #include "NFComm/NFCore/NFMap.hpp"
+#include "NFComm/NFPluginModule/NFIMongoModule.h"
 
 class NFCGameServerModule : public NFIGameServerModule
 {
@@ -36,4 +37,5 @@ public:
 	void OnHandleOtherMessage(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen);
 private:
 	NFINetServerModule* m_pNetServerModule;
+	NFIMongoModule* m_pMongoModule;
 };

@@ -37,8 +37,8 @@ public:
 	{
 		mServerType = NF_ST_NONE;
 		mServerId = 0;
-		mMasterId = 0;
-		mWorldId = 0;
+		mGameId = 0;
+		mMongoPort = 0;
 		mServerPort = 0;
 		mMaxConnectNum = 100;
 		mWorkThreadNum = 1;
@@ -49,19 +49,22 @@ public:
 	}
 
 public:
-	std::string mServerName;
-	uint32_t mServerType;
-	uint32_t mServerId;
-	uint32_t mMasterId;
-	uint32_t mWorldId;
-	std::string mServerIp;
-	uint32_t mServerPort;
+	std::string mServerName;	//服务器名字
+	uint32_t mServerType;	//服务器类型
+	uint32_t mServerId;		//服务器唯一ID
+	uint32_t mGameId;	//游戏ID
+	std::string mGameName;	//游戏名字
+	std::string mMongoIp;	//mongodb 地址
+	uint32_t	mMongoPort;	//mongodb port
+	std::string mMongoDbName; //mongo dbname数据库名字
+	std::string mServerIp;  //服务器监听IP
+	uint32_t mServerPort;	//服务器监听端口
 	uint32_t mServerInnerPort;	//对内服务器端口，只要用于网关
-	uint32_t mHttpPort;
-	uint32_t mMaxConnectNum;
-	uint32_t mWorkThreadNum;
-	bool mSecurity;
-	bool mWebSocket;
+	uint32_t mHttpPort;		//服务器http监听ip
+	uint32_t mMaxConnectNum;	//最大连接数目
+	uint32_t mWorkThreadNum;	//线程数目
+	bool mSecurity;				//是否加密
+	bool mWebSocket;			//是否开启websocket功能
 };
 
 class NFIConfigModule : public NFIModule

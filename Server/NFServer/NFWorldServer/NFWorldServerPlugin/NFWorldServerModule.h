@@ -17,6 +17,7 @@
 #include "NFServer/NFServerCommon/NFServerCommon.h"
 #include "NFComm/NFPluginModule/NFEventMgr.h"
 #include "NFComm/NFCore/NFMapEx.hpp"
+#include "NFComm/NFPluginModule/NFIMongoModule.h"
 
 class NFCWorldServerModule : public NFIWorldServerModule
 {
@@ -46,6 +47,7 @@ protected:
 
 	virtual NF_SHARE_PTR<NFServerData> GetGameByLink(uint32_t unLinkId) { return mLinkGamMap.GetElement(unLinkId); }
 private:
+	NFIMongoModule* m_pMongoModule;
 	NFINetServerModule* m_pNetServerModule;
 	NFINetClientModule* m_pNetClientModule;
 	NFIServerNetEventModule* m_pServerNetEventModule;

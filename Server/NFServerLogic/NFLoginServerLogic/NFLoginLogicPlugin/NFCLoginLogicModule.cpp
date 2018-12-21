@@ -22,20 +22,6 @@ NFCLoginLogicModule::~NFCLoginLogicModule()
 
 bool NFCLoginLogicModule::Init()
 {
-	m_pNetClientModule = pPluginManager->FindModule<NFINetClientModule>();
-	m_pMongoModule = pPluginManager->FindModule<NFIMongoModule>();
-	m_pKernelModule = pPluginManager->FindModule<NFIKernelModule>();
-	m_pLoginClient_MasterModule = pPluginManager->FindModule<NFILoginClient_MasterModule>();
-	m_pHttpServerModule = pPluginManager->FindModule<NFIHttpServerModule>();
-
-	m_pHttpServerModule->AddRequestHandler(NF_ST_LOGIN, "/httplogin", NFHttpType::NF_HTTP_REQ_POST, this, &NFCLoginLogicModule::HttpHandleHttpLogin);
-
-	m_pNetClientModule->AddReceiveCallBack(NF_ST_MASTER, EGMI_NET_MASTER_TO_LOGIN_PLAT_LOGIN, this, &NFCLoginLogicModule::OnHandleMasterAccountLoginReturn);
-
-	m_pMongoModule->AddMongoServer(NF_ST_LOGIN, "mongodb://14.17.104.12:28900", "ttr-1");
-	m_pMongoModule->CreateCollection(NF_ST_LOGIN, ACCOUNT_TABLE, ACCOUNT_TABLE_KEY);
-	
-	CreateUidFromDb();
 	return true;
 }
 
@@ -104,6 +90,19 @@ uint32_t NFCLoginLogicModule::GetUid()
 
 bool NFCLoginLogicModule::AfterInit()
 {
+	m_pNetClientModule = pPluginManager->FindModule<NFINetClientModule>();
+	m_pMongoModule = pPluginManager->FindModule<NFIMongoModule>();
+	m_pKernelModule = pPluginManager->FindModule<NFIKernelModule>();
+	m_pLoginClient_MasterModule = pPluginManager->FindModule<NFILoginClient_MasterModule>();
+	m_pHttpServerModule = pPluginManager->FindModule<NFIHttpServerModule>();
+
+	m_pHttpServerModule->AddRequestHandler(NF_ST_LOGIN, "/httplogin", NFHttpType::NF_HTTP_REQ_POST, this, &NFCLoginLogicModule::HttpHandleHttpLogin);
+
+	m_pNetClientModule->AddReceiveCallBack(NF_ST_MASTER, EGMI_NET_MASTER_TO_LOGIN_PLAT_LOGIN, this, &NFCLoginLogicModule::OnHandleMasterAccountLoginReturn);
+
+	m_pMongoModule->CreateCollection(NF_ST_LOGIN, ACCOUNT_TABLE, ACCOUNT_TABLE_KEY);
+
+	CreateUidFromDb();
 	return true;
 }
 
@@ -208,12 +207,12 @@ void NFCLoginLogicModule::RequestZoneList(const NFHttpRequest& req, const NFMsg:
 		if (pData)
 		{
 			pData->set_bestzoneid(pServerData->mServerInfo.server_id());
-			pData->set_gameid(pServerConfig->mWorldId);
+			pData->set_gameid(pServerConfig->mGameId);
 			pData->set_gamename(pServerConfig->mServerName);
 			pData->set_zoneid(pServerData->mServerInfo.server_id());
 
 			auto pZone = pData->add_zonelist();
-			pZone->set_gameid(pServerConfig->mWorldId);
+			pZone->set_gameid(pServerConfig->mGameId);
 			pZone->set_gamename(pServerConfig->mServerName);
 			pZone->set_newzoneid(0);
 			pZone->set_onlinenum(pServerData->mServerInfo.server_cur_count());

@@ -11,7 +11,6 @@ end
 WorldServerModule.worldServerModule = nil
 
 function WorldServerModule.Init()
-    unilight.initmongodb('mongodb://14.17.104.12:28900', "ttr-1")
     Do.dbready()
 
     local pluginManager = LuaNFrame:GetPluginManager()

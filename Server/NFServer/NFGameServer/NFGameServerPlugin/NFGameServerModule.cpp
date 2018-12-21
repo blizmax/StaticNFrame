@@ -26,6 +26,7 @@ NFCGameServerModule::~NFCGameServerModule()
 
 bool NFCGameServerModule::Init()
 {
+	m_pMongoModule = pPluginManager->FindModule<NFIMongoModule>();
 	m_pNetServerModule = pPluginManager->FindModule<NFINetServerModule>();
 	m_pNetServerModule->AddEventCallBack(NF_ST_GAME, this, &NFCGameServerModule::OnProxySocketEvent);
 	m_pNetServerModule->AddReceiveCallBack(NF_ST_GAME, this, &NFCGameServerModule::OnHandleOtherMessage);
@@ -41,6 +42,27 @@ bool NFCGameServerModule::Init()
 		else
 		{
 			NFLogInfo("game server listen failed!, serverId:{}, maxConnectNum:{}, port:{}", pConfig->mServerId, pConfig->mMaxConnectNum, pConfig->mServerPort);
+		}
+
+		if (!pConfig->mMongoIp.empty())
+		{
+			if (pConfig->mMongoPort > 0)
+			{
+				bool ret = m_pMongoModule->AddMongoServer(NF_ST_GAME, pConfig->mMongoIp, pConfig->mMongoPort, pConfig->mMongoDbName);
+				if (ret == false)
+				{
+					NFLogError("Login Server Connected Mongo Failed, ip:{}, port:{}, dbname:{}", pConfig->mMongoIp, pConfig->mMongoPort, pConfig->mMongoDbName);
+					return false;
+				}
+				//0ºÅ£¬¸øLUAÊ¹ÓÃ
+				bool ret = m_pMongoModule->AddMongoServer(0, pConfig->mMongoIp, pConfig->mMongoPort, pConfig->mMongoDbName);
+				if (ret == false)
+				{
+					NFLogError("Login Server Connected Mongo Failed, ip:{}, port:{}, dbname:{}", pConfig->mMongoIp, pConfig->mMongoPort, pConfig->mMongoDbName);
+					return false;
+				}
+				NFLogError("Login Server Connected Mongo Success, ip:{}, port:{}, dbname:{}", pConfig->mMongoIp, pConfig->mMongoPort, pConfig->mMongoDbName);
+			}
 		}
 	}
 	else

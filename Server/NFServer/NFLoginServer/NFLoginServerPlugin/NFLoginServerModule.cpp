@@ -27,6 +27,7 @@ NFCLoginServerModule::~NFCLoginServerModule()
 
 bool NFCLoginServerModule::Init()
 {
+	m_pMongoModule = pPluginManager->FindModule<NFIMongoModule>();
 	m_pHttpServerModule = pPluginManager->FindModule<NFIHttpServerModule>();
 	m_pNetServerModule = pPluginManager->FindModule<NFINetServerModule>();
 	m_pNetServerModule->AddEventCallBack(NF_ST_LOGIN, this, &NFCLoginServerModule::OnProxySocketEvent);
@@ -54,6 +55,20 @@ bool NFCLoginServerModule::Init()
 				return false;
 			}
 			NFLogInfo("Login Server Open Http Port:{} Success!", pConfig->mHttpPort);
+		}
+
+		if (!pConfig->mMongoIp.empty())
+		{
+			if (pConfig->mMongoPort > 0)
+			{
+				bool ret = m_pMongoModule->AddMongoServer(NF_ST_LOGIN, pConfig->mMongoIp, pConfig->mMongoPort, pConfig->mMongoDbName);
+				if (ret == false)
+				{
+					NFLogError("Login Server Connected Mongo Failed, ip:{}, port:{}, dbname:{}", pConfig->mMongoIp, pConfig->mMongoPort, pConfig->mMongoDbName);
+					return false;
+				}
+				NFLogError("Login Server Connected Mongo Success, ip:{}, port:{}, dbname:{}", pConfig->mMongoIp, pConfig->mMongoPort, pConfig->mMongoDbName);
+			}
 		}
 	}
 	else

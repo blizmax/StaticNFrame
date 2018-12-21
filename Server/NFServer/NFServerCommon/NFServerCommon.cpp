@@ -34,35 +34,32 @@ NFServerConfig* NFServerCommon::GetServerConfig(NFIPluginManager* pPluginManager
 				NFServerConfig* pConfig = vecServerConfig[i];
 				if (eServerType == NF_ST_MASTER)
 				{			
-					if (pConfig->mMasterId == pAppConfig->mMasterId)
-					{
-						return pConfig;
-					}
+					return pConfig;
 				}
 				else if (eServerType == NF_ST_LOGIN)
 				{
-					if (pConfig->mMasterId == pAppConfig->mMasterId)
+					if (pConfig->mGameId == pAppConfig->mGameId)
 					{
 						return pConfig;
 					}
 				}
 				else if (eServerType == NF_ST_WORLD)
 				{
-					if (pConfig->mMasterId == pAppConfig->mMasterId && pConfig->mWorldId == pAppConfig->mWorldId)
+					if (pConfig->mGameId == pAppConfig->mGameId)
 					{
 						return pConfig;
 					}
 				}
 				else if (eServerType == NF_ST_GAME)
 				{
-					if (pConfig->mMasterId == pAppConfig->mMasterId && pConfig->mWorldId == pAppConfig->mWorldId)
+					if (pConfig->mGameId == pAppConfig->mGameId)
 					{
 						return pConfig;
 					}
 				}
 				else if (eServerType == NF_ST_PROXY)
 				{
-					if (pConfig->mMasterId == pAppConfig->mMasterId && pConfig->mWorldId == pAppConfig->mWorldId)
+					if (pConfig->mGameId == pAppConfig->mGameId)
 					{
 						return pConfig;
 					}

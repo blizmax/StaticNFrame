@@ -30,6 +30,7 @@ NFCWorldServerModule::~NFCWorldServerModule()
 
 bool NFCWorldServerModule::Init()
 {
+	m_pMongoModule = pPluginManager->FindModule<NFIMongoModule>();
 	m_pServerNetEventModule = pPluginManager->FindModule<NFIServerNetEventModule>();
 	m_pNetClientModule = pPluginManager->FindModule<NFINetClientModule>();
 	m_pNetServerModule = pPluginManager->FindModule<NFINetServerModule>();
@@ -52,6 +53,28 @@ bool NFCWorldServerModule::Init()
 		else
 		{
 			NFLogInfo("world server listen failed!, serverId:{}, maxConnectNum:{}, port:{}", pConfig->mServerId, pConfig->mMaxConnectNum, pConfig->mServerPort);
+		}
+
+		if (!pConfig->mMongoIp.empty())
+		{
+			if (pConfig->mMongoPort > 0)
+			{
+				bool ret = m_pMongoModule->AddMongoServer(NF_ST_WORLD, pConfig->mMongoIp, pConfig->mMongoPort, pConfig->mMongoDbName);
+				if (ret == false)
+				{
+					NFLogError("Login Server Connected Mongo Failed, ip:{}, port:{}, dbname:{}", pConfig->mMongoIp, pConfig->mMongoPort, pConfig->mMongoDbName);
+					return false;
+				}
+
+				//¸øLUAÓÃ
+				bool ret = m_pMongoModule->AddMongoServer(0, pConfig->mMongoIp, pConfig->mMongoPort, pConfig->mMongoDbName);
+				if (ret == false)
+				{
+					NFLogError("Login Server Connected Mongo Failed, ip:{}, port:{}, dbname:{}", pConfig->mMongoIp, pConfig->mMongoPort, pConfig->mMongoDbName);
+					return false;
+				}
+				NFLogError("Login Server Connected Mongo Success, ip:{}, port:{}, dbname:{}", pConfig->mMongoIp, pConfig->mMongoPort, pConfig->mMongoDbName);
+			}
 		}
 	}
 	else

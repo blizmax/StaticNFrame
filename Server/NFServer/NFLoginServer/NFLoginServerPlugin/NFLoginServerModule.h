@@ -13,6 +13,7 @@
 #include "NFComm/NFPluginModule/NFServerDefine.h"
 #include <NFComm/NFPluginModule/NFINetServerModule.h>
 #include "NFComm/NFPluginModule/NFIHttpServerModule.h"
+#include "NFComm/NFPluginModule/NFIMongoModule.h"
 
 class NFCLoginServerModule : public NFILoginServerModule
 {
@@ -35,4 +36,5 @@ public:
 private:
 	NFINetServerModule* m_pNetServerModule;
 	NFIHttpServerModule* m_pHttpServerModule;
+	NFIMongoModule* m_pMongoModule;
 };

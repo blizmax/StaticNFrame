@@ -7,16 +7,21 @@
 // -------------------------------------------------------------------------
 
 #include "NFCConfigModule.h"
+#include "NFComm/NFCore/NFFileUtility.h"
+#include "NFComm/NFPluginModule/NFLogMgr.h"
 
 #define DEFINE_LUA_STRING_LOAD_PLUGIN			"LoadPlugin"
 #define DEFINE_LUA_STRING_SERVER_PLUGINS		"ServerPlugins"
 #define DEFINE_LUA_STRING_SERVER_TYPE			"ServerType"
-#define DEFINE_LUA_STRING_SERVER				"Server"
+#define DEFINE_LUA_STRING_SERVER				"ServerList"
 
 #define DEFINE_LUA_STRING_SERVER_NAME			"ServerName"
 #define DEFINE_LUA_STRING_SERVER_ID				"ServerId"
-#define DEFINE_LUA_STRING_SERVER_MASTER_ID		"MasterId"
-#define DEFINE_LUA_STRING_SERVER_WORLD_ID		"WorldId"
+#define DEFINE_LUA_STRING_SERVER_GAME_ID		"GameId"
+#define DEFINE_LUA_STRING_SERVER_GAME_NAME		"GameName"
+#define DEFINE_LUA_STRING_SERVER_MONGO_IP		"MongoIp"
+#define DEFINE_LUA_STRING_SERVER_MONGO_PORT		"MongoPort"
+#define DEFINE_LUA_STRING_SERVER_MONGO_DBNAME	"MongonName"
 #define DEFINE_LUA_STRING_SERVER_ZONE_ID		"ZoneId"
 #define DEFINE_LUA_STRING_SERVER_IP				"ServerIp"
 #define DEFINE_LUA_STRING_SERVER_PORT			"ServerPort"
@@ -61,29 +66,19 @@ NFCConfigModule::~NFCConfigModule()
 bool NFCConfigModule::LoadConfig()
 {
 	TryAddPackagePath(pPluginManager->GetConfigPath()); //Add Search Path to Lua
-	if (TryLoadScriptFile("Plugin.lua") == false)
+	std::list<std::string> fileList;
+	NFFileUtility::GetFiles(pPluginManager->GetConfigPath(), fileList, true, "*.lua");
+
+	for (auto it = fileList.begin(); it != fileList.end(); it++)
 	{
-		std::cerr << "Load Plugin.lua Failed!" << std::endl;
-		assert(0);
+		if (TryLoadScriptFile(*it) == false)
+		{
+			NFLogError("Load {} Failed!", *it);
+			assert(0);
+		}
 	}
 
-	if (TryLoadScriptFile("Server.lua") == false)
-	{
-		std::cerr << "Load Server.lua Failed!" << std::endl;
-		assert(0);
-	}
-
-	if (TryLoadScriptFile("WorldServer.lua") == false)
-	{
-		std::cerr << "Load WorldServer.lua Failed!" << std::endl;
-		assert(0);
-	}
-
-	if (TryLoadScriptFile("ZoneServer.lua") == false)
-	{
-		std::cerr << "Load ZoneServer.lua Failed!" << std::endl;
-		assert(0);
-	}
+	TryRunGlobalScriptFunc("InitServer");
 
 	GetValue(DEFINE_LUA_STRING_LOG_LEVEL, mLogLevel);
 
@@ -149,26 +144,24 @@ bool NFCConfigModule::LoadConfig()
 	{
 		NFLuaRef serverConfigRef = it.value();
 		NFServerConfig* pConfig = NF_NEW NFServerConfig();
-		if (!GetLuaTableValue(serverConfigRef, DEFINE_LUA_STRING_SERVER_NAME, pConfig->mServerName))
-		{
-			assert(0);
-		}
+		
 		if (!GetLuaTableValue(serverConfigRef, DEFINE_LUA_STRING_SERVER_ID, pConfig->mServerId))
 		{
+			NFLogError("must be config the ServerId........");
 			assert(0);
 		}
 		if (!GetLuaTableValue(serverConfigRef, DEFINE_LUA_STRING_SERVER_TYPE, pConfig->mServerType))
 		{
+			NFLogError("must be config the ServerType........");
 			assert(0);
 		}
-		if (!GetLuaTableValue(serverConfigRef, DEFINE_LUA_STRING_SERVER_MASTER_ID, pConfig->mMasterId))
-		{
-			assert(0);
-		}
-		if (!GetLuaTableValue(serverConfigRef, DEFINE_LUA_STRING_SERVER_WORLD_ID, pConfig->mWorldId))
-		{
-			assert(0);
-		}
+
+		GetLuaTableValue(serverConfigRef, DEFINE_LUA_STRING_SERVER_GAME_ID, pConfig->mGameId);
+		GetLuaTableValue(serverConfigRef, DEFINE_LUA_STRING_SERVER_NAME, pConfig->mServerName);
+		GetLuaTableValue(serverConfigRef, DEFINE_LUA_STRING_SERVER_GAME_NAME, pConfig->mGameName);
+		GetLuaTableValue(serverConfigRef, DEFINE_LUA_STRING_SERVER_MONGO_IP, pConfig->mMongoIp);
+		GetLuaTableValue(serverConfigRef, DEFINE_LUA_STRING_SERVER_MONGO_PORT, pConfig->mMongoPort); 
+		GetLuaTableValue(serverConfigRef, DEFINE_LUA_STRING_SERVER_MONGO_DBNAME, pConfig->mMongoDbName);
 		GetLuaTableValue(serverConfigRef, DEFINE_LUA_STRING_SERVER_IP, pConfig->mServerIp);
 		GetLuaTableValue(serverConfigRef, DEFINE_LUA_STRING_SERVER_PORT, pConfig->mServerPort);
 		GetLuaTableValue(serverConfigRef, DEFINE_LUA_STRING_MAX_CONNECT_NUM, pConfig->mMaxConnectNum);
