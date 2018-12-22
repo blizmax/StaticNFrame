@@ -265,6 +265,18 @@ class ServerInfoReport : public ::google::protobuf::Message /* @@protoc_insertio
   ::google::protobuf::uint32 server_state() const;
   void set_server_state(::google::protobuf::uint32 value);
 
+  // double cpu_useage = 12;
+  void clear_cpu_useage();
+  static const int kCpuUseageFieldNumber = 12;
+  double cpu_useage() const;
+  void set_cpu_useage(double value);
+
+  // double memory_size = 13;
+  void clear_memory_size();
+  static const int kMemorySizeFieldNumber = 13;
+  double memory_size() const;
+  void set_memory_size(double value);
+
   // @@protoc_insertion_point(class_scope:NFMsg.ServerInfoReport)
  private:
 
@@ -280,6 +292,8 @@ class ServerInfoReport : public ::google::protobuf::Message /* @@protoc_insertio
   ::google::protobuf::int32 server_max_online_;
   ::google::protobuf::int32 server_cur_count_;
   ::google::protobuf::uint32 server_state_;
+  double cpu_useage_;
+  double memory_size_;
   mutable ::google::protobuf::internal::CachedSize _cached_size_;
   friend struct ::protobuf_server_5fmsg_2eproto::TableStruct;
 };
@@ -672,6 +686,34 @@ inline void ServerInfoReport::set_server_state(::google::protobuf::uint32 value)
   
   server_state_ = value;
   // @@protoc_insertion_point(field_set:NFMsg.ServerInfoReport.server_state)
+}
+
+// double cpu_useage = 12;
+inline void ServerInfoReport::clear_cpu_useage() {
+  cpu_useage_ = 0;
+}
+inline double ServerInfoReport::cpu_useage() const {
+  // @@protoc_insertion_point(field_get:NFMsg.ServerInfoReport.cpu_useage)
+  return cpu_useage_;
+}
+inline void ServerInfoReport::set_cpu_useage(double value) {
+  
+  cpu_useage_ = value;
+  // @@protoc_insertion_point(field_set:NFMsg.ServerInfoReport.cpu_useage)
+}
+
+// double memory_size = 13;
+inline void ServerInfoReport::clear_memory_size() {
+  memory_size_ = 0;
+}
+inline double ServerInfoReport::memory_size() const {
+  // @@protoc_insertion_point(field_get:NFMsg.ServerInfoReport.memory_size)
+  return memory_size_;
+}
+inline void ServerInfoReport::set_memory_size(double value) {
+  
+  memory_size_ = value;
+  // @@protoc_insertion_point(field_set:NFMsg.ServerInfoReport.memory_size)
 }
 
 // -------------------------------------------------------------------

@@ -757,6 +757,7 @@ void NFCMasterServerModule::OnServerReport(const uint32_t unLinkId, const uint64
 		}
 		break;
 		}
+		NFLogInfo("{} report, cpu:{}, memory:{}M", xData.server_name(), xData.cpu_useage(), xData.memory_size());
 	}
 }
 

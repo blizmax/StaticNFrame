@@ -24,7 +24,8 @@ message ServerInfoReport
 	int32   server_max_online = 9;
 	int32   server_cur_count = 10;
 	uint32  server_state = 11;
-
+	double  cpu_useage = 12;	//cpu
+	double  memory_size = 13;
 }
 
 message ServerInfoReportList

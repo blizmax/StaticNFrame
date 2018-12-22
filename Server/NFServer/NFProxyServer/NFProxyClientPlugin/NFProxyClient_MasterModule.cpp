@@ -14,6 +14,7 @@
 #include <NFComm/NFPluginModule/NFEventDefine.h>
 #include "NFServer/NFServerCommon/NFServerCommon.h"
 #include "NFMessageDefine/NFMsgDefine.h"
+#include "NFComm/NFCore/NFCpu.h"
 
 NFCProxyClient_MasterModule::NFCProxyClient_MasterModule(NFIPluginManager* p)
 {
@@ -151,6 +152,8 @@ void NFCProxyClient_MasterModule::ServerReport()
 		pData->set_server_max_online(pConfig->mMaxConnectNum);
 		pData->set_server_state(NFMsg::EST_NARMAL);
 		pData->set_server_cur_count(0);
+		pData->set_cpu_useage(pPluginManager->GetCurCpuUseage());
+		pData->set_memory_size(pPluginManager->GetCurMemoryUseage());
 
 		m_pNetClientModule->SendToServerByPB(m_pMasterServerData->mUnlinkId, EGMI_STS_SERVER_REPORT, xMsg, 0);
 	}

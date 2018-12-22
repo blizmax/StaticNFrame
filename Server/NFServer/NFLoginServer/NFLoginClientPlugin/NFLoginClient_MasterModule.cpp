@@ -13,6 +13,7 @@
 #include <NFComm/NFPluginModule/NFEventMgr.h>
 #include <NFComm/NFPluginModule/NFEventDefine.h>
 #include "NFServer/NFServerCommon/NFServerCommon.h"
+#include "NFComm/NFCore/NFCpu.h"
 
 NFCLoginClient_MasterModule::NFCLoginClient_MasterModule(NFIPluginManager* p)
 {
@@ -181,6 +182,8 @@ void NFCLoginClient_MasterModule::ServerReport()
 		pData->set_server_max_online(pConfig->mMaxConnectNum);
 		pData->set_server_state(NFMsg::EST_NARMAL);
 		pData->set_server_cur_count(0);
+		pData->set_cpu_useage(pPluginManager->GetCurCpuUseage());
+		pData->set_memory_size(pPluginManager->GetCurMemoryUseage());
 
 		m_pNetClientModule->SendToServerByPB(m_unLinkId, EGMI_STS_SERVER_REPORT, xMsg, 0);
 	}

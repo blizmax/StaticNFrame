@@ -148,11 +148,7 @@ int NFCpu::GetCurCpuUseage()
 #if NF_PLATFORM == NF_PLATFORM_WIN
 	CpuUsage objCpu;
 
-	int nCpuRoteBegin = objCpu.GetUsage();
-	Sleep(1000);
-	int nCpuRoteEnd = objCpu.GetUsage();
-
-	return static_cast<int>((nCpuRoteEnd - nCpuRoteBegin) / 2);
+	return objCpu.GetUsage();
 #else
 	return 0;
 #endif

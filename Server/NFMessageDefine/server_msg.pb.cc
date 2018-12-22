@@ -89,6 +89,8 @@ const ::google::protobuf::uint32 TableStruct::offsets[] GOOGLE_PROTOBUF_ATTRIBUT
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::NFMsg::ServerInfoReport, server_max_online_),
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::NFMsg::ServerInfoReport, server_cur_count_),
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::NFMsg::ServerInfoReport, server_state_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::NFMsg::ServerInfoReport, cpu_useage_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::NFMsg::ServerInfoReport, memory_size_),
   ~0u,  // no _has_bits_
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::NFMsg::ServerInfoReportList, _internal_metadata_),
   ~0u,  // no _extensions_
@@ -98,7 +100,7 @@ const ::google::protobuf::uint32 TableStruct::offsets[] GOOGLE_PROTOBUF_ATTRIBUT
 };
 static const ::google::protobuf::internal::MigrationSchema schemas[] GOOGLE_PROTOBUF_ATTRIBUTE_SECTION_VARIABLE(protodesc_cold) = {
   { 0, -1, sizeof(::NFMsg::ServerInfoReport)},
-  { 16, -1, sizeof(::NFMsg::ServerInfoReportList)},
+  { 18, -1, sizeof(::NFMsg::ServerInfoReportList)},
 };
 
 static ::google::protobuf::Message const * const file_default_instances[] = {
@@ -127,21 +129,22 @@ void protobuf_RegisterTypes(const ::std::string&) {
 void AddDescriptorsImpl() {
   InitDefaults();
   static const char descriptor[] GOOGLE_PROTOBUF_ATTRIBUTE_SECTION_VARIABLE(protodesc_cold) = {
-      "\n\020server_msg.proto\022\005NFMsg\"\201\002\n\020ServerInfo"
+      "\n\020server_msg.proto\022\005NFMsg\"\252\002\n\020ServerInfo"
       "Report\022\017\n\007game_id\030\001 \001(\005\022\021\n\tgame_name\030\002 \001"
       "(\t\022\021\n\tserver_id\030\003 \001(\005\022\023\n\013server_type\030\004 \001"
       "(\005\022\023\n\013server_name\030\005 \001(\t\022\021\n\tserver_ip\030\006 \001"
       "(\t\022\023\n\013server_port\030\007 \001(\005\022\031\n\021server_inner_"
       "port\030\010 \001(\005\022\031\n\021server_max_online\030\t \001(\005\022\030\n"
       "\020server_cur_count\030\n \001(\005\022\024\n\014server_state\030"
-      "\013 \001(\r\"D\n\024ServerInfoReportList\022,\n\013server_"
-      "list\030\001 \003(\0132\027.NFMsg.ServerInfoReport*Z\n\014E"
-      "ServerState\022\r\n\tEST_CRASH\020\000\022\016\n\nEST_NARMAL"
-      "\020\001\022\014\n\010EST_BUSY\020\002\022\014\n\010EST_FIRE\020\003\022\017\n\013EST_MA"
-      "INTEN\020\004b\006proto3"
+      "\013 \001(\r\022\022\n\ncpu_useage\030\014 \001(\001\022\023\n\013memory_size"
+      "\030\r \001(\001\"D\n\024ServerInfoReportList\022,\n\013server"
+      "_list\030\001 \003(\0132\027.NFMsg.ServerInfoReport*Z\n\014"
+      "EServerState\022\r\n\tEST_CRASH\020\000\022\016\n\nEST_NARMA"
+      "L\020\001\022\014\n\010EST_BUSY\020\002\022\014\n\010EST_FIRE\020\003\022\017\n\013EST_M"
+      "AINTEN\020\004b\006proto3"
   };
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
-      descriptor, 455);
+      descriptor, 496);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "server_msg.proto", &protobuf_RegisterTypes);
 }
@@ -192,6 +195,8 @@ const int ServerInfoReport::kServerInnerPortFieldNumber;
 const int ServerInfoReport::kServerMaxOnlineFieldNumber;
 const int ServerInfoReport::kServerCurCountFieldNumber;
 const int ServerInfoReport::kServerStateFieldNumber;
+const int ServerInfoReport::kCpuUseageFieldNumber;
+const int ServerInfoReport::kMemorySizeFieldNumber;
 #endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
 
 ServerInfoReport::ServerInfoReport()
@@ -218,8 +223,8 @@ ServerInfoReport::ServerInfoReport(const ServerInfoReport& from)
     server_ip_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.server_ip_);
   }
   ::memcpy(&game_id_, &from.game_id_,
-    static_cast<size_t>(reinterpret_cast<char*>(&server_state_) -
-    reinterpret_cast<char*>(&game_id_)) + sizeof(server_state_));
+    static_cast<size_t>(reinterpret_cast<char*>(&memory_size_) -
+    reinterpret_cast<char*>(&game_id_)) + sizeof(memory_size_));
   // @@protoc_insertion_point(copy_constructor:NFMsg.ServerInfoReport)
 }
 
@@ -228,8 +233,8 @@ void ServerInfoReport::SharedCtor() {
   server_name_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   server_ip_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   ::memset(&game_id_, 0, static_cast<size_t>(
-      reinterpret_cast<char*>(&server_state_) -
-      reinterpret_cast<char*>(&game_id_)) + sizeof(server_state_));
+      reinterpret_cast<char*>(&memory_size_) -
+      reinterpret_cast<char*>(&game_id_)) + sizeof(memory_size_));
 }
 
 ServerInfoReport::~ServerInfoReport() {
@@ -267,8 +272,8 @@ void ServerInfoReport::Clear() {
   server_name_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   server_ip_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   ::memset(&game_id_, 0, static_cast<size_t>(
-      reinterpret_cast<char*>(&server_state_) -
-      reinterpret_cast<char*>(&game_id_)) + sizeof(server_state_));
+      reinterpret_cast<char*>(&memory_size_) -
+      reinterpret_cast<char*>(&game_id_)) + sizeof(memory_size_));
   _internal_metadata_.Clear();
 }
 
@@ -442,6 +447,34 @@ bool ServerInfoReport::MergePartialFromCodedStream(
         break;
       }
 
+      // double cpu_useage = 12;
+      case 12: {
+        if (static_cast< ::google::protobuf::uint8>(tag) ==
+            static_cast< ::google::protobuf::uint8>(97u /* 97 & 0xFF */)) {
+
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   double, ::google::protobuf::internal::WireFormatLite::TYPE_DOUBLE>(
+                 input, &cpu_useage_)));
+        } else {
+          goto handle_unusual;
+        }
+        break;
+      }
+
+      // double memory_size = 13;
+      case 13: {
+        if (static_cast< ::google::protobuf::uint8>(tag) ==
+            static_cast< ::google::protobuf::uint8>(105u /* 105 & 0xFF */)) {
+
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   double, ::google::protobuf::internal::WireFormatLite::TYPE_DOUBLE>(
+                 input, &memory_size_)));
+        } else {
+          goto handle_unusual;
+        }
+        break;
+      }
+
       default: {
       handle_unusual:
         if (tag == 0) {
@@ -538,6 +571,16 @@ void ServerInfoReport::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteUInt32(11, this->server_state(), output);
   }
 
+  // double cpu_useage = 12;
+  if (this->cpu_useage() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteDouble(12, this->cpu_useage(), output);
+  }
+
+  // double memory_size = 13;
+  if (this->memory_size() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteDouble(13, this->memory_size(), output);
+  }
+
   if ((_internal_metadata_.have_unknown_fields() &&  ::google::protobuf::internal::GetProto3PreserveUnknownsDefault())) {
     ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
         (::google::protobuf::internal::GetProto3PreserveUnknownsDefault()   ? _internal_metadata_.unknown_fields()   : _internal_metadata_.default_instance()), output);
@@ -623,6 +666,16 @@ void ServerInfoReport::SerializeWithCachedSizes(
   // uint32 server_state = 11;
   if (this->server_state() != 0) {
     target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(11, this->server_state(), target);
+  }
+
+  // double cpu_useage = 12;
+  if (this->cpu_useage() != 0) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteDoubleToArray(12, this->cpu_useage(), target);
+  }
+
+  // double memory_size = 13;
+  if (this->memory_size() != 0) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteDoubleToArray(13, this->memory_size(), target);
   }
 
   if ((_internal_metadata_.have_unknown_fields() &&  ::google::protobuf::internal::GetProto3PreserveUnknownsDefault())) {
@@ -719,6 +772,16 @@ size_t ServerInfoReport::ByteSizeLong() const {
         this->server_state());
   }
 
+  // double cpu_useage = 12;
+  if (this->cpu_useage() != 0) {
+    total_size += 1 + 8;
+  }
+
+  // double memory_size = 13;
+  if (this->memory_size() != 0) {
+    total_size += 1 + 8;
+  }
+
   int cached_size = ::google::protobuf::internal::ToCachedSize(total_size);
   SetCachedSize(cached_size);
   return total_size;
@@ -782,6 +845,12 @@ void ServerInfoReport::MergeFrom(const ServerInfoReport& from) {
   if (from.server_state() != 0) {
     set_server_state(from.server_state());
   }
+  if (from.cpu_useage() != 0) {
+    set_cpu_useage(from.cpu_useage());
+  }
+  if (from.memory_size() != 0) {
+    set_memory_size(from.memory_size());
+  }
 }
 
 void ServerInfoReport::CopyFrom(const ::google::protobuf::Message& from) {
@@ -822,6 +891,8 @@ void ServerInfoReport::InternalSwap(ServerInfoReport* other) {
   swap(server_max_online_, other->server_max_online_);
   swap(server_cur_count_, other->server_cur_count_);
   swap(server_state_, other->server_state_);
+  swap(cpu_useage_, other->cpu_useage_);
+  swap(memory_size_, other->memory_size_);
   _internal_metadata_.Swap(&other->_internal_metadata_);
 }
 
