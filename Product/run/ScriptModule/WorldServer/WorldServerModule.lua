@@ -1,20 +1,16 @@
 WorldServerModule = {}
 
 function WorldServerModule.Init()
+    --vscode luaide调试工具需要
+    breakSocketHandle,debugXpCall = require("LuaDebug")("localhost",7003)
+    
     unilight.createdb("friendinfo","uid")					-- 玩家好友信息
     unilight.createdb("userQQAppId", "uid")					-- 玩家QQAPPID信息
     unilight.createdb("ranklist", "uid")					-- 排行榜数据库信息
-    
+
     TcpServer.addRecvCallBack(NF_SERVER_TYPES.NF_ST_WORLD, 0, "WorldServerModule.GameRecvHandleJson")
 
     unilight.AddServerEventCallBack(NF_SERVER_TYPES.NF_ST_WORLD, NF_SERVER_TYPES.NF_ST_GAME, "WorldServerModule.WorldServerNetEvent")
-
-    unilight.response = function(w, req)
-		req.st = os.time()
-		local s = table2json(req)
-		w.SendString(s)
-		unilight.debug("[send] " .. s)
-    end
     
     --初始化排行榜
     if RankListMgr ~= nil then
@@ -24,7 +20,6 @@ function WorldServerModule.Init()
     if FriendManager ~= nil then
         FriendManager:Init()
     end
-
 end
 
 function WorldServerModule.WorldServerNetEvent(nEvent, unLinkId, serverData)
@@ -80,5 +75,6 @@ function WorldServerModule.BeforeShut()
 end
 
 function WorldServerModule.Shut()
-
+    FriendManager.RefreshUserFriendToDB()
+    unilight.info("Server.ServerStop:停机数据处理完成")
 end

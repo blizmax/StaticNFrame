@@ -27,25 +27,6 @@ function GameServerModule.Init()
     unilight.AddAccountEventCallBack(NF_SERVER_TYPES.NF_ST_GAME, "GameServerModule.AccountEventCallBack")
 
     unilight.addtimer("UserInfo.Update", 1)
-
-    unilight.response = function(w, req)
-		req.st = os.time()
-		local s = table2json(req)
-		if w ~= nil then
-			w.SendString(s)
-		end
-        
-        if type(req["do"]) == "string" then
-            if req["do"] == "Cmd.SendUserMoneyCmd_S" then
-                return
-            elseif req["do"] == "Cmd.UserTravelAngerUpdate_S" then
-                return
-            elseif req["do"] == "Cmd.Ping_S" then
-                return
-            end
-        end
-		unilight.debug("[send] " .. s)
-    end
     
     -- 当tcp上线时
 	Tcp.account_connect = function(laccount)
@@ -65,7 +46,7 @@ function GameServerModule.Init()
     if rechargemgr ~= nil then
         rechargemgr.Init()
     end
-    
+
     --StartOver()
     --初始化玩家系统
     if UserInfo ~= nil then
@@ -162,5 +143,6 @@ function GameServerModule.BeforeShut()
 end
 
 function GameServerModule.Shut()
-
+    UserInfo.SaveUserInfoToDB()
+    unilight.info("Server.ServerStop:停机数据处理完成")
 end

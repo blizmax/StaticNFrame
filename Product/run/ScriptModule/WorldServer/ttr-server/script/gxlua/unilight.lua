@@ -360,34 +360,6 @@ unilight.response = function(w, req)
 	    w.SendString(s)
 	    unilight.debug("[js send] " .. s)
     end
-
-	if req["do"] == "win-pve-battle" or req["do"] == "sweep-pve-battle" or req["do"] == "lose-pve-battle"  or req["do"] == "end-battle" then
-		if req["data"]["userData"] ~= nil then
-			local level = req["data"]["userData"].level
-			local gold = req["data"]["userData"].gold
-			local diamond = req["data"]["userData"].diamond
-			local tmp = req["data"]["userData"]
-			req["data"]["userData"] = {}
-			req["data"]["userData"].level = level
-			req["data"]["userData"].gold = gold
-			req["data"]["userData"].diamond = diamond
-			s = json.encode(encode_repair(req))
-			unilight.debug("[send] " .. s)
-			req["data"]["userData"] = tmp
-			return 
-		end
-	elseif req["do"] == "get-activity-rank-list" then
-		if req["data"] ~= nil then
-			local errno = req["data"].errno
-			local tmp = req["data"]
-			req["data"] = {}
-			req["data"].errno = errno
-			s = json.encode(encode_repair(req))
-			unilight.debug("[send] " .. s)
-			req["data"] = tmp
-			return 
-		end
-	end
 end
 
 -- rand --

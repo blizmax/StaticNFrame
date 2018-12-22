@@ -23,6 +23,9 @@ function ScriptModule.AfterInit(...)
 end
 
 function ScriptModule.Execute(...)
+	if breakSocketHandle ~= nil then
+		breakSocketHandle()
+	end
 	for i=1, #(LuaNFrame.ScriptList) do
 		if (type(LuaNFrame.ScriptList[i].tbl.Execute) == "function") then
 			LuaNFrame.ScriptList[i].tbl.Execute(...);

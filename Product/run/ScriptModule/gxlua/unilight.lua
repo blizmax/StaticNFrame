@@ -231,8 +231,22 @@ unilight.scripterror = function(w, err)
 end
 
 unilight.response = function(w, req)
-	local s = json.encode(encode_repair(req))
-	w.SendString(s)
+	req.st = os.time()
+	local s = table2json(req)
+	if w ~= nil then
+		w.SendString(s)
+	end
+	
+	if type(req["do"]) == "string" then
+		if req["do"] == "Cmd.SendUserMoneyCmd_S" then
+			return
+		elseif req["do"] == "Cmd.UserTravelAngerUpdate_S" then
+			return
+		elseif req["do"] == "Cmd.Ping_S" then
+			return
+		end
+	end
+	unilight.debug("[send] " .. s)
 end
 
 -- Net.*简化Do.*的消息处理，可直接收发lua table消息 --

@@ -21,10 +21,9 @@ end
 
 function init_script_system(pluginManager)
 	--vscode luaide调试工具需要
-	local breakSocketHandle,debugXpCall = require("LuaDebug")("localhost",7003)
-
+	--breakSocketHandle,debugXpCall = require("LuaDebug")("localhost",7003)
 	package.path = package.path .. ";../ScriptModule/gxlua/?.lua;"
-	
+
 	LoadLuaFile("../ScriptModule")
 	LoadLuaFile("../ScriptModule/gxlua", true)
 	LoadLuaFile("../ScriptModule/table", true)
@@ -60,4 +59,12 @@ function init_script_system(pluginManager)
 
 	--初始化LuaNFrame
 	unilight.init(pluginManager)
+
+	unilight.addtimer("update_debugsocket", 1)
+end
+
+function update_debugsocket()
+	if breakSocketHandle ~= nil then
+		breakSocketHandle()
+	end
 end
