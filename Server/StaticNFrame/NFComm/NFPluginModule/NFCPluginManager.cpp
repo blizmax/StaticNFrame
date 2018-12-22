@@ -576,7 +576,7 @@ double NFCPluginManager::GetCurMemoryUseage()
 	int vm_size_kb = 0;
 	int rss_size_kb = 0;
 	NFCpu::GetCurMemoryUsage(&vm_size_kb, &rss_size_kb);
-	mCurMemoryUseage = vm_size_kb / (double)1024;
+	mCurMemoryUseage = (double)vm_size_kb / (double)1024;
 #else
 	int memory = NFCpu::GetCurMemorySize();
 	mCurMemoryUseage = (double)memory / (double)(1024*1024);
