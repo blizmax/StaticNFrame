@@ -861,3 +861,39 @@ Lby.CmdForceUserOffline_C = function(cmd, lobbyClientTask)
 
 	unilight.debug("user:"..uid.. " force offline..........")
 end
+
+Lby.CmdNotifyAddUserTravelHead_S = function(cmd, lobbyClientTask)
+    local uid = cmd.data.cmd_uid
+
+    local userInfo = UserInfo.GetUserInfoById(uid)
+	if userInfo == nil then
+        unilight.error("userinfo is not exist,uid:"..uid)
+		return
+	end
+
+	unilight.response(userInfo.laccount, cmd)
+end
+
+Lby.CmdNotifyUserBuyShieldCount_S = function(cmd, lobbyClientTask)
+    local uid = cmd.data.cmd_uid
+
+    local userInfo = UserInfo.GetUserInfoById(uid)
+	if userInfo == nil then
+        unilight.error("userinfo is not exist,uid:"..uid)
+		return
+	end
+
+	unilight.response(userInfo.laccount, cmd)
+end
+
+Lby.CmdNotifyUserTravelTimeOut_S = function(cmd, lobbyClientTask)
+    local uid = cmd.data.cmd_uid
+
+    local userInfo = UserInfo.GetUserInfoById(uid)
+	if userInfo == nil then
+        unilight.error("userinfo is not exist,uid:"..uid)
+		return
+	end
+
+	unilight.response(userInfo.laccount, cmd)
+end

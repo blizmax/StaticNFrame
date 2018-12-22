@@ -150,15 +150,11 @@ function FriendManager.FriendTravelEmployTimeout(uid, employ_uid, timer)
         local req = { }
         req["do"] = "Cmd.NotifyUserTravelTimeOut_S"
         req["data"] = { 
+            cmd_uid = uid,
             uid = employ_uid,
         }
-        req.errno = unilight.SUCCESS
-        local laccount = go.roomusermgr.GetRoomUserById(uid)
-        if laccount == nil then
-            unilight.debug("sorry, the laccount of the ask_uid:" .. uid .. " is nil")
-        else
-            unilight.success(laccount, req)
-        end
+
+        ZoneInfo.SendCmdToMeById(req["do"], req["data"], friendData.gameid, friendData.zoneid)
     end
 end
 

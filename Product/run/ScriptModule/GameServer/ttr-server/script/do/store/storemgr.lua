@@ -96,6 +96,26 @@ function UserItems:getUserHadBuyGoods()
 	return self.buyitems
 end
 
+function UserItems.NotifyAddTravelHead(uid, itemid, itemnum)
+	local cmd = {}
+	cmd["do"] = "Cmd.NotifyAddTravelHead"
+    cmd.data = {}
+	cmd.data.cmd_uid = uid
+	cmd.data.itemid = itemid
+	cmd.data.itemnum = itemnum
+    unilobby.SendCmdToLobby(cmd["do"], cmd["data"])
+end
+
+function UserItems.NotifyAddShieldCount(uid, itemid, itemnum)
+	local cmd = {}
+	cmd["do"] = "Cmd.NotifyAddShieldCount"
+    cmd.data = {}
+	cmd.data.cmd_uid = uid
+	cmd.data.itemid = itemid
+	cmd.data.itemnum = itemnum
+    unilobby.SendCmdToLobby(cmd["do"], cmd["data"])
+end
+
 function UserItems:useItem(userinfo,itemid,itemnum)
 --	unilight.debug("userItem-001" .. " itemid:" .. itemid .. " itemnum:" .. itemnum)
 	if userinfo == nil or itemid == nil or itemid == 0 then
@@ -112,12 +132,12 @@ function UserItems:useItem(userinfo,itemid,itemnum)
 	local itemtype = tonumber(itemdata.itemtype)
 	--这里是玩家购买了旅行团头像后的回调
 	if itemtype == static_const.Static_ItemType_Clothes then
-		UserTravel.AddTravelHeadBackupCallBack(userinfo.uid,itemid,itemnum)
+		UserItems.NotifyAddTravelHead(userinfo.uid,itemid,itemnum)
 	end
 
 	--旅行团护盾
 	if itemtype == static_const.Static_ItemType_ProtectTimes then
-		UserTravel.BuyShieldCountCallBack(userinfo.uid,itemid,itemnum)
+		UserItems.NotifyAddShieldCount(userinfo.uid,itemid,itemnum)
 	end
 	
 	userinfo.UserProps:setUserProp(userinfo,itemtype, itemnum, tonumber(itemdata.paraone), tonumber(itemdata.paratwo))

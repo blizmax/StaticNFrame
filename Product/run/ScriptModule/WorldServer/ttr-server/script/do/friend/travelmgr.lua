@@ -494,14 +494,9 @@ function UserTravel.BuyShieldCountCallBack(uid, itemid, itemcount)
     local req = {}
     req["do"] = "Cmd.NotifyUserBuyShieldCount_S"
     req["data"] = {
+        cmd_uid = uid,
         shield_count = 0,
     }
-
-    req.errno = unilight.SUCCESS
-    local laccount = go.roomusermgr.GetRoomUserById(uid)
-    if laccount == nil then
-        return
-    end
 
     local friendData = FriendManager:GetOrNewFriendInfo(uid);
     local travelData = friendData:GetUserTravel()
@@ -509,21 +504,16 @@ function UserTravel.BuyShieldCountCallBack(uid, itemid, itemcount)
     travelData:AddShieldCount(itemcount)
     req["data"].shield_count = travelData:GetShieldCount()
 
-    unilight.success(laccount, req)
+    ZoneInfo.SendCmdToMeById(req["do"], req["data"], friendData.gameid, friendData.zoneid)
 end
 
 function UserTravel.AddTravelHeadBackupCallBack(uid, itemid, itemcount)
     local req = {}
     req["do"] = "Cmd.NotifyAddUserTravelHead_S"
     req["data"] = {
+        cmd_uid = uid,
         head = 0,
     }
-
-    req.errno = unilight.SUCCESS
-    local laccount = go.roomusermgr.GetRoomUserById(uid)
-    if laccount == nil then
-        return
-    end
 
     local friendData = FriendManager:GetOrNewFriendInfo(uid);
     local travelData = friendData:GetUserTravel()
@@ -532,11 +522,9 @@ function UserTravel.AddTravelHeadBackupCallBack(uid, itemid, itemcount)
     if data ~= nil then
         travelData:AddTravelHeadBackup(data.head)
         req["data"].head = data.head
-    else
-        unilight.error("错误，无法通过itemid找到对应的头像,itemid:" .. itemid)
     end
 
-    unilight.success(laccount, req)
+    ZoneInfo.SendCmdToMeById(req["do"], req["data"], friendData.gameid, friendData.zoneid)
 end
 
 --重新计算玩家旅行团产量加成

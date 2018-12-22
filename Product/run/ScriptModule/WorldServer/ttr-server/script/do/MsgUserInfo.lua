@@ -154,3 +154,19 @@ Zone.CmdUserInfoDateFromMemory_C = function(cmd,zonetask)
 		friendData.zoneid = 0
 	end
 end
+
+Zone.CmdNotifyAddTravelHead = function(cmd,zonetask)
+	local uid = cmd.data.cmd_uid
+	local itemid = cmd.data.itemid
+	local itemnum = cmd.data.itemnum
+
+	UserTravel.AddTravelHeadBackupCallBack(uid,itemid,itemnum)
+end
+
+Zone.CmdNotifyAddShieldCount = function(cmd,zonetask)
+	local uid = cmd.data.cmd_uid
+	local itemid = cmd.data.itemid
+	local itemnum = cmd.data.itemnum
+
+	UserTravel.BuyShieldCountCallBack(uid,itemid,itemnum)
+end
