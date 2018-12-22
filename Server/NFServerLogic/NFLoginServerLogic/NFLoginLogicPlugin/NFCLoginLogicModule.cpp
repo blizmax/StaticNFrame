@@ -396,7 +396,7 @@ NFMsg::LoginAccount* NFCLoginLogicModule::GetLoginAccount(const std::string& acc
 				continue;
 			}
 
-			m_loginAccountMap.AddElement(account, pAccount);
+			m_loginAccountMap.AddElement(pAccount->account(), pAccount);
 		}
 	}
 	auto pAccount = m_loginAccountMap.GetElement(account);
