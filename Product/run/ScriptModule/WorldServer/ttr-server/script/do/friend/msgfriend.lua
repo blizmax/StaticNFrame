@@ -581,9 +581,6 @@ Zone.CmdSendReqRecommendFriendCmd_C = function(cmd,zonetask)
     --玩家可能不在线,设置离线数据被该标志
     friendData:SetOfflineChange()
 
-    --收集被推荐的好友
-    local tmp = {}
-
     for k, v in pairs(friendData.deleteQQFriend.map) do
          --推荐好友，满足条件 1不是自己 2不是好友 3今天没有被推荐过 4今天没有被邀请过
          if k ~= uid and friendData:GetUserFriend(k) == nil and 
@@ -607,15 +604,17 @@ Zone.CmdSendReqRecommendFriendCmd_C = function(cmd,zonetask)
                 --如果人数多于20直接发送，如果没有从以前推荐过的列表中插入
                 if #res["data"].friends >= 20 then
                     ZoneInfo.SendCmdToMe(res["do"], res["data"], zonetask)
+                    return
                 end
             end
          end
     end
 
+    local tmp = {}
     for i = 0, 100, 1 do
         local friendInfo = FriendManager:GetRandomFriendInfo()
         --推荐好友，满足条件 1不是自己 2不是好友 3今天没有被推荐过 4今天没有被邀请过
-        if friendInfo ~= nil and friendInfo:GetUid() ~= uid and 
+        if friendInfo ~= nil and friendInfo:GetUid() ~= uid and tmp[friendInfo:GetUid()] == nil and 
         friendData:GetUserFriend(friendInfo:GetUid()) == nil and 
         friendData:IsRecommendedToFriend(friendInfo:GetUid()) == false and 
         friendData:IsExistTodayAskedFriends(uid) == false and
@@ -637,52 +636,10 @@ Zone.CmdSendReqRecommendFriendCmd_C = function(cmd,zonetask)
 
         --如果人数多于20直接发送，如果没有从以前推荐过的列表中插入
         if #res["data"].friends >= 20 then
-            for tmpk,tmpv in pairs(tmp) do
-                --记录已经被推荐
-                --friendData:AddRecommendFriends(tmpk)
-                
-            end
             ZoneInfo.SendCmdToMe(res["do"], res["data"], zonetask)
             return
         end
 
-    end
-    
-
-    --如果人数多于20直接发送，如果没有从以前推荐过的列表中插入
-    for k,v in pairs(friendData.recommendFriends.map) do
-        if k ~= uid and friendData:GetUserFriend(k) == nil and 
-        friendData:IsExistTodayAskedFriends(k) == false then
-            local friendInfo = FriendManager:GetFriendInfo(k)
-            if friendInfo ~= nil and friendInfo:GetName() ~= "" and friendInfo:GetHead() ~= "" then
-                local info = {
-                    uid = k,
-                    name = friendInfo:GetName(), 
-                    head =  friendInfo:GetHead(), 
-                    star =  friendInfo:GetStar(), 
-                    sex =  friendInfo:GetSex(), 
-                    signature =  friendInfo:GetSignature(), 
-                    area =  friendInfo:GetArea(), 
-                    horoscope =  friendInfo:GetHoroscope(),
-                    friend_ship = travelData:GetRelationShip(k),
-                }
-                table.insert(res["data"].friends, info)
-                --如果人数多于20直接发送
-                if #res["data"] >= 20 then
-                    for tmpk,tmpv in pairs(tmp) do
-                        --记录已经被推荐
-                        --friendData:AddRecommendFriends(tmpk)
-                    end
-                    ZoneInfo.SendCmdToMe(res["do"], res["data"], zonetask)
-                    return
-                end
-            end
-        end
-    end
-
-    for tmpk,tmpv in pairs(tmp) do
-        --记录已经被推荐
-        --friendData:AddRecommendFriends(tmpk)
     end
 
     ZoneInfo.SendCmdToMe(res["do"], res["data"], zonetask)

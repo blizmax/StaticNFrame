@@ -21,7 +21,7 @@ end
 
 function init_script_system(pluginManager)
 	--vscode luaide调试工具需要
-	--breakSocketHandle,debugXpCall = require("LuaDebug")("localhost",7003)
+	breakSocketHandle,debugXpCall = require("LuaDebug")("localhost",7003)
 	package.path = package.path .. ";../ScriptModule/gxlua/?.lua;"
 
 	LoadLuaFile("../ScriptModule")
