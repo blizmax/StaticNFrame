@@ -43,6 +43,7 @@ SET(INCLUDE_DIR "./" "/usr/local/include"
 	"${CMAKE_SOURCE_DIR}/Server/Dependencies/mongo/linux"
 	"${CMAKE_SOURCE_DIR}/Server/Dependencies/openssl/include"
 	"${CMAKE_SOURCE_DIR}/Server/Dependencies/openssl/linux/include"
+	"${CMAKE_SOURCE_DIR}/Server/Dependencies/common/sigar/linux"
 	"${CMAKE_SOURCE_DIR}/Server/StaticNFrame/")
 
 
@@ -63,7 +64,7 @@ else()
 endif()
 
 SET(LIB_LINK_DEP resolv dl rt libssl.a libcrypto.a pthread libbson-static-1.0.a libmysqlpp.a libmysqlclient.a libevent_core.a libevent_extra.a libtheron.a
-		libevent.a libLuaBind.a libtheron.a libprotobuf.a libmongoc-static-1.0.a libbson-static-1.0.a libcommon.a)
+		libevent.a libLuaBind.a libtheron.a libprotobuf.a libmongoc-static-1.0.a libbson-static-1.0.a libCommon.a)
 		
 SET(LIB_LINK_NF libNFActorPlugin.a libNFCore.a libNFKernelPlugin.a libNFLuaScriptPlugin.a
 				libNFMath.a libNFMessageDefine.a libNFNetPlugin.a libNFPluginModule.a libNFMongoPlugin.a
