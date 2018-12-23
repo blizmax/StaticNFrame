@@ -113,6 +113,9 @@
       <Filter>Mongo</Filter>
     </ClInclude>
     <ClInclude Include="NFIServerNetEventModule.h" />
+    <ClInclude Include="NFSystemInfo.h">
+      <Filter>SystemInfo</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Event">
@@ -144,6 +147,9 @@
     </Filter>
     <Filter Include="Mongo">
       <UniqueIdentifier>{a62865f6-2c7a-4c1c-9acc-61b6ddce93c6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SystemInfo">
+      <UniqueIdentifier>{fcde711c-3bd1-4164-a561-7a0a57af519c}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -195,6 +201,9 @@
     </ClCompile>
     <ClCompile Include="NFCDynLib.cpp">
       <Filter>NFDynLib</Filter>
+    </ClCompile>
+    <ClCompile Include="NFSystemInfo.cpp">
+      <Filter>SystemInfo</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

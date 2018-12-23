@@ -217,6 +217,8 @@ bool NFCPluginManager::Execute()
 	{
 		std::this_thread::sleep_for(std::chrono::milliseconds(1));
 	}
+
+	mSystemInfo.CountSystemInfo();
 	return bRet;
 }
 
@@ -572,51 +574,10 @@ bool NFCPluginManager::UnLoadPluginLibrary(const std::string& strPluginDLLName)
 
 double NFCPluginManager::GetCurMemoryUseage()
 {
-#if NF_PLATFORM == NF_PLATFORM_LINUX
-	int vm_size_kb = 0;
-	int rss_size_kb = 0;
-	NFCpu::GetCurMemoryUsage(&vm_size_kb, &rss_size_kb);
-	mCurMemoryUseage = (double)vm_size_kb / (double)1024;
-#else
-	int memory = NFCpu::GetCurMemorySize();
-	mCurMemoryUseage = (double)memory / (double)(1024*1024);
-#endif
-
-	return mCurMemoryUseage;
+	return mSystemInfo.GetCurMemPer();
 }
 
 double NFCPluginManager::GetCurCpuUseage()
 {
-#if NF_PLATFORM == NF_PLATFORM_LINUX
-	static int64_t last_pid_cpu_use = 0;
-	static int64_t last_total_cpu_use = 0;
-	static int64_t now_pid_cpu_use = 0;
-	static int64_t now_total_cpu_use = 0;
-
-	now_pid_cpu_use = NFCpu::GetCurCpuTime();
-	now_total_cpu_use = NFCpu::GetTotalCpuTime();
-
-	if (now_pid_cpu_use == 0 || now_total_cpu_use == 0)
-	{
-		mCurCpuUseage = 0;
-		return mCurCpuUseage;
-	}
-
-	float mCurCpuUseage = NFCpu::CalculateCurCpuUseage(last_pid_cpu_use, now_pid_cpu_use,
-		last_total_cpu_use, now_total_cpu_use);
-
-	last_pid_cpu_use = now_pid_cpu_use;
-	last_total_cpu_use = now_total_cpu_use;
-#else
-	static int last_cpu_use = 0;
-	static int now_cpu_use = 0;
-
-	now_cpu_use = NFCpu::GetCurCpuUseage();
-
-	mCurCpuUseage = (now_cpu_use - last_cpu_use) / 2;
-
-	last_cpu_use = now_cpu_use;
-#endif
-
-	return mCurCpuUseage;
+	return mSystemInfo.GetCurCpuPer();
 }

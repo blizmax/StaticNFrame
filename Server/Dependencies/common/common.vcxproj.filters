@@ -4,5 +4,83 @@
     <ClInclude Include="optional.hpp" />
     <ClInclude Include="variant.hpp" />
     <ClInclude Include="lexical_cast.hpp" />
+    <ClInclude Include="sigar\win32\sigar.h">
+      <Filter>sigar</Filter>
+    </ClInclude>
+    <ClInclude Include="sigar\win32\sigar_fileinfo.h">
+      <Filter>sigar</Filter>
+    </ClInclude>
+    <ClInclude Include="sigar\win32\sigar_format.h">
+      <Filter>sigar</Filter>
+    </ClInclude>
+    <ClInclude Include="sigar\win32\sigar_getline.h">
+      <Filter>sigar</Filter>
+    </ClInclude>
+    <ClInclude Include="sigar\win32\sigar_log.h">
+      <Filter>sigar</Filter>
+    </ClInclude>
+    <ClInclude Include="sigar\win32\sigar_os.h">
+      <Filter>sigar</Filter>
+    </ClInclude>
+    <ClInclude Include="sigar\win32\sigar_pdh.h">
+      <Filter>sigar</Filter>
+    </ClInclude>
+    <ClInclude Include="sigar\win32\sigar_private.h">
+      <Filter>sigar</Filter>
+    </ClInclude>
+    <ClInclude Include="sigar\win32\sigar_ptql.h">
+      <Filter>sigar</Filter>
+    </ClInclude>
+    <ClInclude Include="sigar\win32\sigar_util.h">
+      <Filter>sigar</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="sigar">
+      <UniqueIdentifier>{3f990641-289d-4195-b112-3087447e7835}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="sigar\win32\peb.c">
+      <Filter>sigar</Filter>
+    </ClCompile>
+    <ClCompile Include="sigar\win32\sigar.c">
+      <Filter>sigar</Filter>
+    </ClCompile>
+    <ClCompile Include="sigar\win32\sigar_cache.c">
+      <Filter>sigar</Filter>
+    </ClCompile>
+    <ClCompile Include="sigar\win32\sigar_fileinfo.c">
+      <Filter>sigar</Filter>
+    </ClCompile>
+    <ClCompile Include="sigar\win32\sigar_format.c">
+      <Filter>sigar</Filter>
+    </ClCompile>
+    <ClCompile Include="sigar\win32\sigar_getline.c">
+      <Filter>sigar</Filter>
+    </ClCompile>
+    <ClCompile Include="sigar\win32\sigar_ptql.c">
+      <Filter>sigar</Filter>
+    </ClCompile>
+    <ClCompile Include="sigar\win32\sigar_signal.c">
+      <Filter>sigar</Filter>
+    </ClCompile>
+    <ClCompile Include="sigar\win32\sigar_util.c">
+      <Filter>sigar</Filter>
+    </ClCompile>
+    <ClCompile Include="sigar\win32\win32_sigar.c">
+      <Filter>sigar</Filter>
+    </ClCompile>
+    <ClCompile Include="sigar\win32\wmi.cpp">
+      <Filter>sigar</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="sigar\win32\sigar.rc.in">
+      <Filter>sigar</Filter>
+    </None>
+    <None Include="sigar\win32\sigar_version.c.in">
+      <Filter>sigar</Filter>
+    </None>
   </ItemGroup>
 </Project>

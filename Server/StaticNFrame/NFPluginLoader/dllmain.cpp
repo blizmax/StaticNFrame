@@ -12,10 +12,12 @@
 
 #ifndef NF_DYNAMIC_PLUGIN
 
-
+#pragma comment(lib, "common.lib")
 #pragma comment(lib,"msvcrtd.lib")
 #pragma comment(lib, "libssl.lib")
 #pragma comment(lib, "libcrypto.lib")
+#pragma comment(lib, "version.lib")
+#pragma comment(lib, "netapi32.lib")
 
 ////////////////////////////////////////////////////////////////
 #pragma comment( lib, "bson-static-1.0.lib" )

@@ -757,7 +757,26 @@ void NFCMasterServerModule::OnServerReport(const uint32_t unLinkId, const uint64
 		}
 		break;
 		}
-		NFLogInfo("{} report, cpu:{}, memory:{}M", xData.server_name(), xData.cpu_useage(), xData.memory_size());
+
+		if (pServerData)
+		{
+			NFLogInfo("********************************************************");
+			NFLogInfo("\t\t****************{}****************", xData.server_name());
+			NFLogInfo("\t\t\t\t********cpu:{}********", xData.cpu_useage());
+			if (xData.memory_size() < 1024)
+			{
+				NFLogInfo("\t\t\t\t********mem:{}B********", xData.memory_size());
+			}
+			else if (xData.memory_size() < 1024 * 1024)
+			{
+				NFLogInfo("\t\t\t\t********mem:{}K********", xData.memory_size()/1024);
+			}
+			else
+			{
+				NFLogInfo("\t\t\t\t********mem:{}M********", xData.memory_size()/(1024*1024));
+			}
+			NFLogInfo("********************************************************");
+		}
 	}
 }
 

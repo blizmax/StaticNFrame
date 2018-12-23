@@ -17,6 +17,7 @@
 #include "NFComm/NFPluginModule/NFIPluginManager.h"
 #include "NFComm/NFCore/NFRandom.hpp"
 #include "NFCDynLib.h"
+#include "NFSystemInfo.h"
 
 /*
 	系统的Module，分为加载DLL创建的唯一Module，和自己独立创建出来的Module，
@@ -129,8 +130,7 @@ protected:
 private:
 	const uint32_t mFrame = 30; //服务器帧率，一秒30帧
 	const uint32_t mFrameTime = 1000 / mFrame; //一帧多少时间
-	double mCurCpuUseage = 0.0; //当前CPU使用情况
-	double mCurMemoryUseage = 0.0; //当前进程虚拟内存使用情况, M为单位
+	NFSystemInfo mSystemInfo; //物理机子以及进程系统信息
 private:
 	int mnAppID;
 	uint64_t mnInitTime;	//服务器开始时间，ms
