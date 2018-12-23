@@ -63,7 +63,7 @@ else()
 endif()
 
 SET(LIB_LINK_DEP resolv dl rt libssl.a libcrypto.a pthread libbson-static-1.0.a libmysqlpp.a libmysqlclient.a libevent_core.a libevent_extra.a libtheron.a
-		libevent.a libLuaBind.a libtheron.a libprotobuf.a libmongoc-static-1.0.a libbson-static-1.0.a)
+		libevent.a libLuaBind.a libtheron.a libprotobuf.a libmongoc-static-1.0.a libbson-static-1.0.a libcommon.a)
 		
 SET(LIB_LINK_NF libNFActorPlugin.a libNFCore.a libNFKernelPlugin.a libNFLuaScriptPlugin.a
 				libNFMath.a libNFMessageDefine.a libNFNetPlugin.a libNFPluginModule.a libNFMongoPlugin.a
