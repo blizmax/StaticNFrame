@@ -12,8 +12,6 @@
 
 #include "NFComm/NFPluginModule/NFLogMgr.h"
 
-static sigar_t *m_sigarproclist = 0;
-static sigar_t *m_sigarcpulist = 0;
 static sigar_t *m_sigar = 0;
 
 NFSystemInfo::NFSystemInfo()
@@ -23,17 +21,15 @@ NFSystemInfo::NFSystemInfo()
 
 void NFSystemInfo::Init()
 {
-	mCurPid = GetProcessPid();
 	sigar_open(&m_sigar);
-	sigar_open(&m_sigarproclist);
-	sigar_open(&m_sigarcpulist);
+
 	CountCpu();
+	CountOsInfo();
+	CountCurProcessBaseInfo();
 }
 
 NFSystemInfo::~NFSystemInfo()
 {
-	sigar_close(m_sigarcpulist);
-	sigar_close(m_sigarproclist);
 	sigar_close(m_sigar);
 }
 
@@ -42,13 +38,27 @@ uint32_t NFSystemInfo::GetProcessPid()
 	return (uint32_t)getpid();
 }
 
+void NFSystemInfo::CountCurProcessBaseInfo()
+{
+	mCurProcessInfo.mPid = GetProcessPid();
+
+	sigar_proc_exe_t exestate;
+	if (sigar_proc_exe_get(m_sigar, mCurProcessInfo.mPid, &exestate) != SIGAR_OK)
+	{
+		NFLogError("sigar_proc_state_get error, cur_pid:{}", mCurProcessInfo.mPid);
+	}
+
+	mCurProcessInfo.mName = exestate.name;
+	mCurProcessInfo.mCwd = exestate.cwd;
+}
+
 void NFSystemInfo::CountCpu()
 {
 	int status = SIGAR_OK;
 
 	sigar_cpu_list_t cpulist;
 
-	status = sigar_cpu_list_get(m_sigarcpulist, &cpulist);
+	status = sigar_cpu_list_get(m_sigar, &cpulist);
 
 	if (status != SIGAR_OK)
 	{
@@ -57,7 +67,7 @@ void NFSystemInfo::CountCpu()
 	else
 	{
 		mCpuCount = cpulist.number;
-		sigar_cpu_list_destroy(m_sigarcpulist, &cpulist);
+		sigar_cpu_list_destroy(m_sigar, &cpulist);
 	}
 }
 
@@ -68,59 +78,83 @@ uint32_t NFSystemInfo::GetCpuCount() const
 
 float NFSystemInfo::GetCurCpuPer() const
 {
-	return mCurCpuPer;
+	return mCurProcessInfo.mCpuUsed;
 }
 
 uint64_t NFSystemInfo::GetCurMemPer() const
 {
-	return mCurMemPer;
+	return mCurProcessInfo.mMemUsed;
 }
 
-void NFSystemInfo::CountCurCpuPer()
+double NFSystemInfo::CountProcessCpuPer(uint32_t pid)
 {
 	sigar_proc_cpu_t cpu;
+	double percent = 0;
 
-	int status = sigar_proc_cpu_get(m_sigarproclist, mCurPid, &cpu);
+	int status = sigar_proc_cpu_get(m_sigar, pid, &cpu);
 	if (status == SIGAR_OK)
 	{
-		mCurCpuPer = float(cpu.percent) * 100.f;
+		percent = double(cpu.percent) * 100.f;
 
 #if NF_PLATFORM == NF_PLATFORM_WIN
-		mCurCpuPer /= float(mCpuCount);
+		percent /= double(mCpuCount);
 #endif
 	}
 	else
 	{
-		NFLogError("sigar_proc_cpu_get cpu error, cur_pid:{}", mCurPid);
+		NFLogError("sigar_proc_cpu_get cpu error, cur_pid:{}", pid);
 	}
 
-	sigar_proc_state_t procstate;
-	if (sigar_proc_state_get(m_sigarproclist, mCurPid, &procstate) != SIGAR_OK)
-	{
-		NFLogError("sigar_proc_state_get error, cur_pid:{}", mCurPid);
-	}
+	return percent;
 }
 
-void NFSystemInfo::CountCurMemPer()
+uint64_t NFSystemInfo::CountProcessMemPer(uint32_t pid)
 {
 	int status;
+	uint64_t mem = 0;
 
 	sigar_proc_mem_t proc_mem;
-	status = sigar_proc_mem_get(m_sigarproclist, mCurPid, &proc_mem);
+	status = sigar_proc_mem_get(m_sigar, pid, &proc_mem);
 
 	if (status == SIGAR_OK)
 	{
-		mCurMemPer = proc_mem.resident;
+		mem = proc_mem.resident;
 	}
 	else
 	{
-		NFLogError("sigar_proc_mem_get error, cur_pid:{}", mCurPid);
+		NFLogError("sigar_proc_mem_get error, cur_pid:{}", pid);
 	}
+	return mem;
 }
 
-NFMemInfo NFSystemInfo::GetMemInfo() const
+const NFMemInfo& NFSystemInfo::GetMemInfo() const
 {
 	return mMachineMemInfo;
+}
+
+const NFProcessInfo& NFSystemInfo::GetProcessInfo() const
+{
+	return mCurProcessInfo;
+}
+
+void NFSystemInfo::CountOsInfo()
+{
+	sigar_sys_info_t sysInfo;
+	if (sigar_sys_info_get(m_sigar, &sysInfo) != SIGAR_OK)
+	{
+		NFLogError("sigar_sys_info_get error");
+	}
+
+	mMachineOsInfo.mOsName = sysInfo.name;
+	mMachineOsInfo.mOsVersion = sysInfo.version;
+	mMachineOsInfo.mOsArch = sysInfo.arch;
+	mMachineOsInfo.mOsMachine = sysInfo.machine;
+	mMachineOsInfo.mOsDescription = sysInfo.description;
+	mMachineOsInfo.mPatchLevel = sysInfo.patch_level;
+	mMachineOsInfo.mVendor = sysInfo.vendor;
+	mMachineOsInfo.mVendorVersion = sysInfo.vendor_version;
+	mMachineOsInfo.mVerdorName = sysInfo.vendor_name;
+	mMachineOsInfo.mVendorCodeName = sysInfo.vendor_code_name;
 }
 
 void NFSystemInfo::CountSystemInfo()
@@ -132,8 +166,21 @@ void NFSystemInfo::CountSystemInfo()
 	lastTime = (uint64_t)NFGetSecondTime();
 
 	CountMemInfo();
-	CountCurCpuPer();
-	CountCurMemPer();
+	CountCurProcessInfo();
+}
+
+void NFSystemInfo::CountCurProcessInfo()
+{
+	mCurProcessInfo.mCpuUsed = CountProcessCpuPer(mCurProcessInfo.mPid);
+	mCurProcessInfo.mMemUsed = CountProcessMemPer(mCurProcessInfo.mPid);
+
+	sigar_proc_state_t procstate;
+	if (sigar_proc_state_get(m_sigar, mCurProcessInfo.mPid, &procstate) != SIGAR_OK)
+	{
+		NFLogError("sigar_proc_state_get error, cur_pid:{}", mCurProcessInfo.mPid);
+	}
+
+	mCurProcessInfo.mThreads = (uint32_t)procstate.threads;
 }
 
 void NFSystemInfo::CountMemInfo()
@@ -144,4 +191,6 @@ void NFSystemInfo::CountMemInfo()
 	mMachineMemInfo.mTotalMem = sigar_mem.total;
 	mMachineMemInfo.mFreeMem = sigar_mem.actual_free;
 	mMachineMemInfo.mUsedMem = sigar_mem.actual_used;
+	mMachineMemInfo.mUsedPercent = sigar_mem.used_percent;
+	mMachineMemInfo.mFreePercent = sigar_mem.free_percent;
 }
