@@ -765,9 +765,9 @@ void NFCMasterServerModule::OnServerReport(const uint32_t unLinkId, const uint64
 			NFLogInfo("\t\t********systeinfo:{}********", xData.system_info());
 			NFLogInfo("\t\t********totalmem:{}M********", xData.total_mem() / (1024*1024));
 			NFLogInfo("\t\t********usedmem:{}M********", xData.used_mem() / (1024 * 1024));
-			NFLogInfo("\t\t********proc_name:{}M********", xData.cur_proc_name());
-			NFLogInfo("\t\t********proc_cwd:{}M********", xData.cur_proc_cwd());
-			NFLogInfo("\t\t********proc_thread:{}M********", xData.cur_thread_num());
+			NFLogInfo("\t\t********proc_name:{}********", xData.cur_proc_name());
+			NFLogInfo("\t\t********proc_cwd:{}********", xData.cur_proc_cwd());
+			NFLogInfo("\t\t********proc_thread:{}********", xData.cur_thread_num());
 			NFLogInfo("\t\t********proc_cpu:{}********", xData.cur_cpu_used());
 			if (xData.cur_mem_used() < 1024)
 			{
