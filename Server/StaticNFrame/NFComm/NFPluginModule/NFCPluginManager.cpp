@@ -573,12 +573,7 @@ bool NFCPluginManager::UnLoadPluginLibrary(const std::string& strPluginDLLName)
 	return false;
 }
 
-double NFCPluginManager::GetCurMemoryUseage()
+const NFSystemInfo& NFCPluginManager::GetSystemInfo() const
 {
-	return mSystemInfo.GetCurMemPer();
-}
-
-double NFCPluginManager::GetCurCpuUseage()
-{
-	return mSystemInfo.GetCurCpuPer();
+	return mSystemInfo;
 }

@@ -125,8 +125,7 @@ protected:
 
 	bool LoadKernelPlugin();
 
-	double GetCurMemoryUseage();
-	double GetCurCpuUseage();
+	const NFSystemInfo& GetSystemInfo() const;
 private:
 	const uint32_t mFrame = 30; //服务器帧率，一秒30帧
 	const uint32_t mFrameTime = 1000 / mFrame; //一帧多少时间

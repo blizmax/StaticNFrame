@@ -137,6 +137,11 @@ const NFProcessInfo& NFSystemInfo::GetProcessInfo() const
 	return mCurProcessInfo;
 }
 
+const NFOsInfo& NFSystemInfo::GetOsInfo() const
+{
+	return mMachineOsInfo;
+}
+
 void NFSystemInfo::CountOsInfo()
 {
 	sigar_sys_info_t sysInfo;

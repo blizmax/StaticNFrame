@@ -87,6 +87,7 @@ public:
 
 	virtual const NFMemInfo& GetMemInfo() const;
 	virtual const NFProcessInfo& GetProcessInfo() const;
+	virtual const NFOsInfo& GetOsInfo() const;
 	virtual float GetCurCpuPer() const;
 	virtual uint64_t GetCurMemPer() const;
 	virtual uint32_t GetCpuCount() const;

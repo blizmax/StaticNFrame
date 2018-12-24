@@ -11,6 +11,7 @@
 
 #include "NFIModule.h"
 #include "NFComm/NFCore/NFPlatform.h"
+#include "NFSystemInfo.h"
 
 #include <functional>
 #include <assert.h>
@@ -116,8 +117,7 @@ public:
 	virtual bool IsDaemon() const = 0;
 	virtual void SetDaemon() = 0;
 
-	virtual double GetCurMemoryUseage() = 0;
-	virtual double GetCurCpuUseage() = 0;
+	virtual const NFSystemInfo& GetSystemInfo() const = 0;
 };
 
 #endif

@@ -182,8 +182,15 @@ void NFCLoginClient_MasterModule::ServerReport()
 		pData->set_server_max_online(pConfig->mMaxConnectNum);
 		pData->set_server_state(NFMsg::EST_NARMAL);
 		pData->set_server_cur_count(0);
-		pData->set_cpu_useage(pPluginManager->GetCurCpuUseage());
-		pData->set_memory_size(pPluginManager->GetCurMemoryUseage());
+		pData->set_cur_cpu_used(pPluginManager->GetSystemInfo().GetProcessInfo().mCpuUsed);
+		pData->set_cur_mem_used(pPluginManager->GetSystemInfo().GetProcessInfo().mMemUsed);
+		pData->set_total_mem(pPluginManager->GetSystemInfo().GetMemInfo().mTotalMem);
+		pData->set_used_mem(pPluginManager->GetSystemInfo().GetMemInfo().mUsedMem);
+		pData->set_free_mem(pPluginManager->GetSystemInfo().GetMemInfo().mFreeMem);
+		pData->set_cur_thread_num(pPluginManager->GetSystemInfo().GetProcessInfo().mThreads);
+		pData->set_system_info(pPluginManager->GetSystemInfo().GetOsInfo().mOsDescription);
+		pData->set_cur_proc_name(pPluginManager->GetSystemInfo().GetProcessInfo().mName);
+		pData->set_cur_proc_cwd(pPluginManager->GetSystemInfo().GetProcessInfo().mCwd);
 
 		m_pNetClientModule->SendToServerByPB(m_unLinkId, EGMI_STS_SERVER_REPORT, xMsg, 0);
 	}

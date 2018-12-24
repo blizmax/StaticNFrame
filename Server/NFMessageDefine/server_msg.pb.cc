@@ -89,8 +89,15 @@ const ::google::protobuf::uint32 TableStruct::offsets[] GOOGLE_PROTOBUF_ATTRIBUT
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::NFMsg::ServerInfoReport, server_max_online_),
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::NFMsg::ServerInfoReport, server_cur_count_),
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::NFMsg::ServerInfoReport, server_state_),
-  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::NFMsg::ServerInfoReport, cpu_useage_),
-  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::NFMsg::ServerInfoReport, memory_size_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::NFMsg::ServerInfoReport, system_info_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::NFMsg::ServerInfoReport, total_mem_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::NFMsg::ServerInfoReport, free_mem_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::NFMsg::ServerInfoReport, used_mem_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::NFMsg::ServerInfoReport, cur_cpu_used_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::NFMsg::ServerInfoReport, cur_mem_used_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::NFMsg::ServerInfoReport, cur_thread_num_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::NFMsg::ServerInfoReport, cur_proc_name_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::NFMsg::ServerInfoReport, cur_proc_cwd_),
   ~0u,  // no _has_bits_
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::NFMsg::ServerInfoReportList, _internal_metadata_),
   ~0u,  // no _extensions_
@@ -100,7 +107,7 @@ const ::google::protobuf::uint32 TableStruct::offsets[] GOOGLE_PROTOBUF_ATTRIBUT
 };
 static const ::google::protobuf::internal::MigrationSchema schemas[] GOOGLE_PROTOBUF_ATTRIBUTE_SECTION_VARIABLE(protodesc_cold) = {
   { 0, -1, sizeof(::NFMsg::ServerInfoReport)},
-  { 18, -1, sizeof(::NFMsg::ServerInfoReportList)},
+  { 25, -1, sizeof(::NFMsg::ServerInfoReportList)},
 };
 
 static ::google::protobuf::Message const * const file_default_instances[] = {
@@ -129,22 +136,26 @@ void protobuf_RegisterTypes(const ::std::string&) {
 void AddDescriptorsImpl() {
   InitDefaults();
   static const char descriptor[] GOOGLE_PROTOBUF_ATTRIBUTE_SECTION_VARIABLE(protodesc_cold) = {
-      "\n\020server_msg.proto\022\005NFMsg\"\252\002\n\020ServerInfo"
+      "\n\020server_msg.proto\022\005NFMsg\"\276\003\n\020ServerInfo"
       "Report\022\017\n\007game_id\030\001 \001(\005\022\021\n\tgame_name\030\002 \001"
       "(\t\022\021\n\tserver_id\030\003 \001(\005\022\023\n\013server_type\030\004 \001"
       "(\005\022\023\n\013server_name\030\005 \001(\t\022\021\n\tserver_ip\030\006 \001"
       "(\t\022\023\n\013server_port\030\007 \001(\005\022\031\n\021server_inner_"
       "port\030\010 \001(\005\022\031\n\021server_max_online\030\t \001(\005\022\030\n"
       "\020server_cur_count\030\n \001(\005\022\024\n\014server_state\030"
-      "\013 \001(\r\022\022\n\ncpu_useage\030\014 \001(\001\022\023\n\013memory_size"
-      "\030\r \001(\001\"D\n\024ServerInfoReportList\022,\n\013server"
-      "_list\030\001 \003(\0132\027.NFMsg.ServerInfoReport*Z\n\014"
-      "EServerState\022\r\n\tEST_CRASH\020\000\022\016\n\nEST_NARMA"
-      "L\020\001\022\014\n\010EST_BUSY\020\002\022\014\n\010EST_FIRE\020\003\022\017\n\013EST_M"
-      "AINTEN\020\004b\006proto3"
+      "\013 \001(\r\022\023\n\013system_info\030\014 \001(\t\022\021\n\ttotal_mem\030"
+      "\r \001(\004\022\020\n\010free_mem\030\016 \001(\004\022\020\n\010used_mem\030\017 \001("
+      "\004\022\024\n\014cur_cpu_used\030\020 \001(\001\022\024\n\014cur_mem_used\030"
+      "\021 \001(\004\022\026\n\016cur_thread_num\030\022 \001(\r\022\025\n\rcur_pro"
+      "c_name\030\023 \001(\t\022\024\n\014cur_proc_cwd\030\024 \001(\t\"D\n\024Se"
+      "rverInfoReportList\022,\n\013server_list\030\001 \003(\0132"
+      "\027.NFMsg.ServerInfoReport*Z\n\014EServerState"
+      "\022\r\n\tEST_CRASH\020\000\022\016\n\nEST_NARMAL\020\001\022\014\n\010EST_B"
+      "USY\020\002\022\014\n\010EST_FIRE\020\003\022\017\n\013EST_MAINTEN\020\004b\006pr"
+      "oto3"
   };
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
-      descriptor, 496);
+      descriptor, 644);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "server_msg.proto", &protobuf_RegisterTypes);
 }
@@ -195,8 +206,15 @@ const int ServerInfoReport::kServerInnerPortFieldNumber;
 const int ServerInfoReport::kServerMaxOnlineFieldNumber;
 const int ServerInfoReport::kServerCurCountFieldNumber;
 const int ServerInfoReport::kServerStateFieldNumber;
-const int ServerInfoReport::kCpuUseageFieldNumber;
-const int ServerInfoReport::kMemorySizeFieldNumber;
+const int ServerInfoReport::kSystemInfoFieldNumber;
+const int ServerInfoReport::kTotalMemFieldNumber;
+const int ServerInfoReport::kFreeMemFieldNumber;
+const int ServerInfoReport::kUsedMemFieldNumber;
+const int ServerInfoReport::kCurCpuUsedFieldNumber;
+const int ServerInfoReport::kCurMemUsedFieldNumber;
+const int ServerInfoReport::kCurThreadNumFieldNumber;
+const int ServerInfoReport::kCurProcNameFieldNumber;
+const int ServerInfoReport::kCurProcCwdFieldNumber;
 #endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
 
 ServerInfoReport::ServerInfoReport()
@@ -222,9 +240,21 @@ ServerInfoReport::ServerInfoReport(const ServerInfoReport& from)
   if (from.server_ip().size() > 0) {
     server_ip_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.server_ip_);
   }
+  system_info_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  if (from.system_info().size() > 0) {
+    system_info_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.system_info_);
+  }
+  cur_proc_name_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  if (from.cur_proc_name().size() > 0) {
+    cur_proc_name_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.cur_proc_name_);
+  }
+  cur_proc_cwd_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  if (from.cur_proc_cwd().size() > 0) {
+    cur_proc_cwd_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.cur_proc_cwd_);
+  }
   ::memcpy(&game_id_, &from.game_id_,
-    static_cast<size_t>(reinterpret_cast<char*>(&memory_size_) -
-    reinterpret_cast<char*>(&game_id_)) + sizeof(memory_size_));
+    static_cast<size_t>(reinterpret_cast<char*>(&cur_thread_num_) -
+    reinterpret_cast<char*>(&game_id_)) + sizeof(cur_thread_num_));
   // @@protoc_insertion_point(copy_constructor:NFMsg.ServerInfoReport)
 }
 
@@ -232,9 +262,12 @@ void ServerInfoReport::SharedCtor() {
   game_name_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   server_name_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   server_ip_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  system_info_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  cur_proc_name_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  cur_proc_cwd_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   ::memset(&game_id_, 0, static_cast<size_t>(
-      reinterpret_cast<char*>(&memory_size_) -
-      reinterpret_cast<char*>(&game_id_)) + sizeof(memory_size_));
+      reinterpret_cast<char*>(&cur_thread_num_) -
+      reinterpret_cast<char*>(&game_id_)) + sizeof(cur_thread_num_));
 }
 
 ServerInfoReport::~ServerInfoReport() {
@@ -246,6 +279,9 @@ void ServerInfoReport::SharedDtor() {
   game_name_.DestroyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   server_name_.DestroyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   server_ip_.DestroyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  system_info_.DestroyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  cur_proc_name_.DestroyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  cur_proc_cwd_.DestroyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
 
 void ServerInfoReport::SetCachedSize(int size) const {
@@ -271,9 +307,12 @@ void ServerInfoReport::Clear() {
   game_name_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   server_name_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   server_ip_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  system_info_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  cur_proc_name_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  cur_proc_cwd_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   ::memset(&game_id_, 0, static_cast<size_t>(
-      reinterpret_cast<char*>(&memory_size_) -
-      reinterpret_cast<char*>(&game_id_)) + sizeof(memory_size_));
+      reinterpret_cast<char*>(&cur_thread_num_) -
+      reinterpret_cast<char*>(&game_id_)) + sizeof(cur_thread_num_));
   _internal_metadata_.Clear();
 }
 
@@ -283,7 +322,7 @@ bool ServerInfoReport::MergePartialFromCodedStream(
   ::google::protobuf::uint32 tag;
   // @@protoc_insertion_point(parse_start:NFMsg.ServerInfoReport)
   for (;;) {
-    ::std::pair<::google::protobuf::uint32, bool> p = input->ReadTagWithCutoffNoLastTag(127u);
+    ::std::pair<::google::protobuf::uint32, bool> p = input->ReadTagWithCutoffNoLastTag(16383u);
     tag = p.first;
     if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
@@ -447,28 +486,132 @@ bool ServerInfoReport::MergePartialFromCodedStream(
         break;
       }
 
-      // double cpu_useage = 12;
+      // string system_info = 12;
       case 12: {
         if (static_cast< ::google::protobuf::uint8>(tag) ==
-            static_cast< ::google::protobuf::uint8>(97u /* 97 & 0xFF */)) {
-
-          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   double, ::google::protobuf::internal::WireFormatLite::TYPE_DOUBLE>(
-                 input, &cpu_useage_)));
+            static_cast< ::google::protobuf::uint8>(98u /* 98 & 0xFF */)) {
+          DO_(::google::protobuf::internal::WireFormatLite::ReadString(
+                input, this->mutable_system_info()));
+          DO_(::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+            this->system_info().data(), static_cast<int>(this->system_info().length()),
+            ::google::protobuf::internal::WireFormatLite::PARSE,
+            "NFMsg.ServerInfoReport.system_info"));
         } else {
           goto handle_unusual;
         }
         break;
       }
 
-      // double memory_size = 13;
+      // uint64 total_mem = 13;
       case 13: {
         if (static_cast< ::google::protobuf::uint8>(tag) ==
-            static_cast< ::google::protobuf::uint8>(105u /* 105 & 0xFF */)) {
+            static_cast< ::google::protobuf::uint8>(104u /* 104 & 0xFF */)) {
+
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::uint64, ::google::protobuf::internal::WireFormatLite::TYPE_UINT64>(
+                 input, &total_mem_)));
+        } else {
+          goto handle_unusual;
+        }
+        break;
+      }
+
+      // uint64 free_mem = 14;
+      case 14: {
+        if (static_cast< ::google::protobuf::uint8>(tag) ==
+            static_cast< ::google::protobuf::uint8>(112u /* 112 & 0xFF */)) {
+
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::uint64, ::google::protobuf::internal::WireFormatLite::TYPE_UINT64>(
+                 input, &free_mem_)));
+        } else {
+          goto handle_unusual;
+        }
+        break;
+      }
+
+      // uint64 used_mem = 15;
+      case 15: {
+        if (static_cast< ::google::protobuf::uint8>(tag) ==
+            static_cast< ::google::protobuf::uint8>(120u /* 120 & 0xFF */)) {
+
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::uint64, ::google::protobuf::internal::WireFormatLite::TYPE_UINT64>(
+                 input, &used_mem_)));
+        } else {
+          goto handle_unusual;
+        }
+        break;
+      }
+
+      // double cur_cpu_used = 16;
+      case 16: {
+        if (static_cast< ::google::protobuf::uint8>(tag) ==
+            static_cast< ::google::protobuf::uint8>(129u /* 129 & 0xFF */)) {
 
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    double, ::google::protobuf::internal::WireFormatLite::TYPE_DOUBLE>(
-                 input, &memory_size_)));
+                 input, &cur_cpu_used_)));
+        } else {
+          goto handle_unusual;
+        }
+        break;
+      }
+
+      // uint64 cur_mem_used = 17;
+      case 17: {
+        if (static_cast< ::google::protobuf::uint8>(tag) ==
+            static_cast< ::google::protobuf::uint8>(136u /* 136 & 0xFF */)) {
+
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::uint64, ::google::protobuf::internal::WireFormatLite::TYPE_UINT64>(
+                 input, &cur_mem_used_)));
+        } else {
+          goto handle_unusual;
+        }
+        break;
+      }
+
+      // uint32 cur_thread_num = 18;
+      case 18: {
+        if (static_cast< ::google::protobuf::uint8>(tag) ==
+            static_cast< ::google::protobuf::uint8>(144u /* 144 & 0xFF */)) {
+
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                 input, &cur_thread_num_)));
+        } else {
+          goto handle_unusual;
+        }
+        break;
+      }
+
+      // string cur_proc_name = 19;
+      case 19: {
+        if (static_cast< ::google::protobuf::uint8>(tag) ==
+            static_cast< ::google::protobuf::uint8>(154u /* 154 & 0xFF */)) {
+          DO_(::google::protobuf::internal::WireFormatLite::ReadString(
+                input, this->mutable_cur_proc_name()));
+          DO_(::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+            this->cur_proc_name().data(), static_cast<int>(this->cur_proc_name().length()),
+            ::google::protobuf::internal::WireFormatLite::PARSE,
+            "NFMsg.ServerInfoReport.cur_proc_name"));
+        } else {
+          goto handle_unusual;
+        }
+        break;
+      }
+
+      // string cur_proc_cwd = 20;
+      case 20: {
+        if (static_cast< ::google::protobuf::uint8>(tag) ==
+            static_cast< ::google::protobuf::uint8>(162u /* 162 & 0xFF */)) {
+          DO_(::google::protobuf::internal::WireFormatLite::ReadString(
+                input, this->mutable_cur_proc_cwd()));
+          DO_(::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+            this->cur_proc_cwd().data(), static_cast<int>(this->cur_proc_cwd().length()),
+            ::google::protobuf::internal::WireFormatLite::PARSE,
+            "NFMsg.ServerInfoReport.cur_proc_cwd"));
         } else {
           goto handle_unusual;
         }
@@ -571,14 +714,64 @@ void ServerInfoReport::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteUInt32(11, this->server_state(), output);
   }
 
-  // double cpu_useage = 12;
-  if (this->cpu_useage() != 0) {
-    ::google::protobuf::internal::WireFormatLite::WriteDouble(12, this->cpu_useage(), output);
+  // string system_info = 12;
+  if (this->system_info().size() > 0) {
+    ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+      this->system_info().data(), static_cast<int>(this->system_info().length()),
+      ::google::protobuf::internal::WireFormatLite::SERIALIZE,
+      "NFMsg.ServerInfoReport.system_info");
+    ::google::protobuf::internal::WireFormatLite::WriteStringMaybeAliased(
+      12, this->system_info(), output);
   }
 
-  // double memory_size = 13;
-  if (this->memory_size() != 0) {
-    ::google::protobuf::internal::WireFormatLite::WriteDouble(13, this->memory_size(), output);
+  // uint64 total_mem = 13;
+  if (this->total_mem() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt64(13, this->total_mem(), output);
+  }
+
+  // uint64 free_mem = 14;
+  if (this->free_mem() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt64(14, this->free_mem(), output);
+  }
+
+  // uint64 used_mem = 15;
+  if (this->used_mem() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt64(15, this->used_mem(), output);
+  }
+
+  // double cur_cpu_used = 16;
+  if (this->cur_cpu_used() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteDouble(16, this->cur_cpu_used(), output);
+  }
+
+  // uint64 cur_mem_used = 17;
+  if (this->cur_mem_used() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt64(17, this->cur_mem_used(), output);
+  }
+
+  // uint32 cur_thread_num = 18;
+  if (this->cur_thread_num() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(18, this->cur_thread_num(), output);
+  }
+
+  // string cur_proc_name = 19;
+  if (this->cur_proc_name().size() > 0) {
+    ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+      this->cur_proc_name().data(), static_cast<int>(this->cur_proc_name().length()),
+      ::google::protobuf::internal::WireFormatLite::SERIALIZE,
+      "NFMsg.ServerInfoReport.cur_proc_name");
+    ::google::protobuf::internal::WireFormatLite::WriteStringMaybeAliased(
+      19, this->cur_proc_name(), output);
+  }
+
+  // string cur_proc_cwd = 20;
+  if (this->cur_proc_cwd().size() > 0) {
+    ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+      this->cur_proc_cwd().data(), static_cast<int>(this->cur_proc_cwd().length()),
+      ::google::protobuf::internal::WireFormatLite::SERIALIZE,
+      "NFMsg.ServerInfoReport.cur_proc_cwd");
+    ::google::protobuf::internal::WireFormatLite::WriteStringMaybeAliased(
+      20, this->cur_proc_cwd(), output);
   }
 
   if ((_internal_metadata_.have_unknown_fields() &&  ::google::protobuf::internal::GetProto3PreserveUnknownsDefault())) {
@@ -668,14 +861,67 @@ void ServerInfoReport::SerializeWithCachedSizes(
     target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(11, this->server_state(), target);
   }
 
-  // double cpu_useage = 12;
-  if (this->cpu_useage() != 0) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteDoubleToArray(12, this->cpu_useage(), target);
+  // string system_info = 12;
+  if (this->system_info().size() > 0) {
+    ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+      this->system_info().data(), static_cast<int>(this->system_info().length()),
+      ::google::protobuf::internal::WireFormatLite::SERIALIZE,
+      "NFMsg.ServerInfoReport.system_info");
+    target =
+      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
+        12, this->system_info(), target);
   }
 
-  // double memory_size = 13;
-  if (this->memory_size() != 0) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteDoubleToArray(13, this->memory_size(), target);
+  // uint64 total_mem = 13;
+  if (this->total_mem() != 0) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt64ToArray(13, this->total_mem(), target);
+  }
+
+  // uint64 free_mem = 14;
+  if (this->free_mem() != 0) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt64ToArray(14, this->free_mem(), target);
+  }
+
+  // uint64 used_mem = 15;
+  if (this->used_mem() != 0) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt64ToArray(15, this->used_mem(), target);
+  }
+
+  // double cur_cpu_used = 16;
+  if (this->cur_cpu_used() != 0) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteDoubleToArray(16, this->cur_cpu_used(), target);
+  }
+
+  // uint64 cur_mem_used = 17;
+  if (this->cur_mem_used() != 0) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt64ToArray(17, this->cur_mem_used(), target);
+  }
+
+  // uint32 cur_thread_num = 18;
+  if (this->cur_thread_num() != 0) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(18, this->cur_thread_num(), target);
+  }
+
+  // string cur_proc_name = 19;
+  if (this->cur_proc_name().size() > 0) {
+    ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+      this->cur_proc_name().data(), static_cast<int>(this->cur_proc_name().length()),
+      ::google::protobuf::internal::WireFormatLite::SERIALIZE,
+      "NFMsg.ServerInfoReport.cur_proc_name");
+    target =
+      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
+        19, this->cur_proc_name(), target);
+  }
+
+  // string cur_proc_cwd = 20;
+  if (this->cur_proc_cwd().size() > 0) {
+    ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+      this->cur_proc_cwd().data(), static_cast<int>(this->cur_proc_cwd().length()),
+      ::google::protobuf::internal::WireFormatLite::SERIALIZE,
+      "NFMsg.ServerInfoReport.cur_proc_cwd");
+    target =
+      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
+        20, this->cur_proc_cwd(), target);
   }
 
   if ((_internal_metadata_.have_unknown_fields() &&  ::google::protobuf::internal::GetProto3PreserveUnknownsDefault())) {
@@ -714,6 +960,27 @@ size_t ServerInfoReport::ByteSizeLong() const {
     total_size += 1 +
       ::google::protobuf::internal::WireFormatLite::StringSize(
         this->server_ip());
+  }
+
+  // string system_info = 12;
+  if (this->system_info().size() > 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::StringSize(
+        this->system_info());
+  }
+
+  // string cur_proc_name = 19;
+  if (this->cur_proc_name().size() > 0) {
+    total_size += 2 +
+      ::google::protobuf::internal::WireFormatLite::StringSize(
+        this->cur_proc_name());
+  }
+
+  // string cur_proc_cwd = 20;
+  if (this->cur_proc_cwd().size() > 0) {
+    total_size += 2 +
+      ::google::protobuf::internal::WireFormatLite::StringSize(
+        this->cur_proc_cwd());
   }
 
   // int32 game_id = 1;
@@ -772,14 +1039,44 @@ size_t ServerInfoReport::ByteSizeLong() const {
         this->server_state());
   }
 
-  // double cpu_useage = 12;
-  if (this->cpu_useage() != 0) {
-    total_size += 1 + 8;
+  // uint64 total_mem = 13;
+  if (this->total_mem() != 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::UInt64Size(
+        this->total_mem());
   }
 
-  // double memory_size = 13;
-  if (this->memory_size() != 0) {
-    total_size += 1 + 8;
+  // uint64 free_mem = 14;
+  if (this->free_mem() != 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::UInt64Size(
+        this->free_mem());
+  }
+
+  // uint64 used_mem = 15;
+  if (this->used_mem() != 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::UInt64Size(
+        this->used_mem());
+  }
+
+  // double cur_cpu_used = 16;
+  if (this->cur_cpu_used() != 0) {
+    total_size += 2 + 8;
+  }
+
+  // uint64 cur_mem_used = 17;
+  if (this->cur_mem_used() != 0) {
+    total_size += 2 +
+      ::google::protobuf::internal::WireFormatLite::UInt64Size(
+        this->cur_mem_used());
+  }
+
+  // uint32 cur_thread_num = 18;
+  if (this->cur_thread_num() != 0) {
+    total_size += 2 +
+      ::google::protobuf::internal::WireFormatLite::UInt32Size(
+        this->cur_thread_num());
   }
 
   int cached_size = ::google::protobuf::internal::ToCachedSize(total_size);
@@ -821,6 +1118,18 @@ void ServerInfoReport::MergeFrom(const ServerInfoReport& from) {
 
     server_ip_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.server_ip_);
   }
+  if (from.system_info().size() > 0) {
+
+    system_info_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.system_info_);
+  }
+  if (from.cur_proc_name().size() > 0) {
+
+    cur_proc_name_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.cur_proc_name_);
+  }
+  if (from.cur_proc_cwd().size() > 0) {
+
+    cur_proc_cwd_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.cur_proc_cwd_);
+  }
   if (from.game_id() != 0) {
     set_game_id(from.game_id());
   }
@@ -845,11 +1154,23 @@ void ServerInfoReport::MergeFrom(const ServerInfoReport& from) {
   if (from.server_state() != 0) {
     set_server_state(from.server_state());
   }
-  if (from.cpu_useage() != 0) {
-    set_cpu_useage(from.cpu_useage());
+  if (from.total_mem() != 0) {
+    set_total_mem(from.total_mem());
   }
-  if (from.memory_size() != 0) {
-    set_memory_size(from.memory_size());
+  if (from.free_mem() != 0) {
+    set_free_mem(from.free_mem());
+  }
+  if (from.used_mem() != 0) {
+    set_used_mem(from.used_mem());
+  }
+  if (from.cur_cpu_used() != 0) {
+    set_cur_cpu_used(from.cur_cpu_used());
+  }
+  if (from.cur_mem_used() != 0) {
+    set_cur_mem_used(from.cur_mem_used());
+  }
+  if (from.cur_thread_num() != 0) {
+    set_cur_thread_num(from.cur_thread_num());
   }
 }
 
@@ -883,6 +1204,12 @@ void ServerInfoReport::InternalSwap(ServerInfoReport* other) {
     GetArenaNoVirtual());
   server_ip_.Swap(&other->server_ip_, &::google::protobuf::internal::GetEmptyStringAlreadyInited(),
     GetArenaNoVirtual());
+  system_info_.Swap(&other->system_info_, &::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+    GetArenaNoVirtual());
+  cur_proc_name_.Swap(&other->cur_proc_name_, &::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+    GetArenaNoVirtual());
+  cur_proc_cwd_.Swap(&other->cur_proc_cwd_, &::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+    GetArenaNoVirtual());
   swap(game_id_, other->game_id_);
   swap(server_id_, other->server_id_);
   swap(server_type_, other->server_type_);
@@ -891,8 +1218,12 @@ void ServerInfoReport::InternalSwap(ServerInfoReport* other) {
   swap(server_max_online_, other->server_max_online_);
   swap(server_cur_count_, other->server_cur_count_);
   swap(server_state_, other->server_state_);
-  swap(cpu_useage_, other->cpu_useage_);
-  swap(memory_size_, other->memory_size_);
+  swap(total_mem_, other->total_mem_);
+  swap(free_mem_, other->free_mem_);
+  swap(used_mem_, other->used_mem_);
+  swap(cur_cpu_used_, other->cur_cpu_used_);
+  swap(cur_mem_used_, other->cur_mem_used_);
+  swap(cur_thread_num_, other->cur_thread_num_);
   _internal_metadata_.Swap(&other->_internal_metadata_);
 }
 

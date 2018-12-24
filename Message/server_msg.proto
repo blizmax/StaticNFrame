@@ -24,8 +24,15 @@ message ServerInfoReport
 	int32   server_max_online = 9;
 	int32   server_cur_count = 10;
 	uint32  server_state = 11;
-	double  cpu_useage = 12;	//cpu
-	double  memory_size = 13;
+	string  system_info = 12;
+	uint64  total_mem = 13;
+	uint64  free_mem = 14;
+	uint64  used_mem = 15;
+	double  cur_cpu_used = 16;	//cur process cpu used
+	uint64  cur_mem_used = 17;	//cur process mem used
+	uint32  cur_thread_num = 18; //cur process thread num
+	string  cur_proc_name = 19;
+	string  cur_proc_cwd = 20; 
 }
 
 message ServerInfoReportList
