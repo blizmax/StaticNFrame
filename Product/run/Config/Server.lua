@@ -55,7 +55,7 @@ LoginServer_2 = {
 		WorkThreadNum = 5,
 		Security = false,
 		WebSocket = false,
-		HttpPort = 80,
+		HttpPort = 7000,
 	};
 	
 --ProxyServer 网管服务器， 负责与外部的客户端连接, 转发数据

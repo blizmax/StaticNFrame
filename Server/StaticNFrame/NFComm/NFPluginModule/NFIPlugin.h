@@ -135,7 +135,7 @@ inline bool NFIPlugin::Init()
 			bool bRet = pModule->Init();
 			if (!bRet)
 			{
-				std::cout << pModule->strName << "Init failed!" << std::endl;
+				std::cout << pModule->strName << " Init failed!" << std::endl;
 				assert(0);
 			}
 		}

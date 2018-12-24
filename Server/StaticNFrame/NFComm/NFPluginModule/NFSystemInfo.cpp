@@ -10,6 +10,8 @@
 #include <iostream>
 #include "sigar.h"
 
+#include "NFComm/NFPluginModule/NFLogMgr.h"
+
 static sigar_t *m_sigarproclist = 0;
 static sigar_t *m_sigarcpulist = 0;
 static sigar_t *m_sigar = 0;
@@ -17,6 +19,10 @@ static sigar_t *m_sigar = 0;
 NFSystemInfo::NFSystemInfo()
 {
 	mCpuCount = 1;
+}
+
+void NFSystemInfo::Init()
+{
 	mCurPid = GetProcessPid();
 	sigar_open(&m_sigar);
 	sigar_open(&m_sigarproclist);
@@ -83,11 +89,15 @@ void NFSystemInfo::CountCurCpuPer()
 		mCurCpuPer /= float(mCpuCount);
 #endif
 	}
+	else
+	{
+		NFLogError("sigar_proc_cpu_get cpu error, cur_pid:{}", mCurPid);
+	}
 
 	sigar_proc_state_t procstate;
 	if (sigar_proc_state_get(m_sigarproclist, mCurPid, &procstate) != SIGAR_OK)
 	{
-		std::cerr << ("sigar_proc_state_get error.....") << std::endl;
+		NFLogError("sigar_proc_state_get error, cur_pid:{}", mCurPid);
 	}
 }
 
@@ -101,6 +111,10 @@ void NFSystemInfo::CountCurMemPer()
 	if (status == SIGAR_OK)
 	{
 		mCurMemPer = proc_mem.resident;
+	}
+	else
+	{
+		NFLogError("sigar_proc_mem_get error, cur_pid:{}", mCurPid);
 	}
 }
 

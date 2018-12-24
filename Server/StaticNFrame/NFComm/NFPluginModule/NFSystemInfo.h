@@ -44,6 +44,8 @@ public:
 	NFSystemInfo();
 	virtual ~NFSystemInfo();
 
+	virtual void Init();
+
 	virtual uint32_t GetProcessPid(); //获得当前机子的进程ID
 
 	virtual NFMemInfo GetMemInfo() const;
