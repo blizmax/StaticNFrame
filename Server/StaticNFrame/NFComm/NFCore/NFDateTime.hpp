@@ -453,7 +453,7 @@ public:
 
 	int GetDaysOfMonth(int month)
 	{
-		return IsValidMonth(month) ? mDaysOfMonth[month] : -1;
+		return IsValidMonth(month) ? mDaysOfMonth[month-1] : -1;
 	}
 
 	bool operator<(const NFDateTime& dt) const

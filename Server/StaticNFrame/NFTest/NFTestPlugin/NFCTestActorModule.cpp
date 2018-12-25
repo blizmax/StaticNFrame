@@ -88,7 +88,7 @@ NFCTestActorModule::~NFCTestActorModule()
 void NFCTestActorModule::TestTimer()
 {
 	NFXXTimer* pTimer = new NFXXTimer(pPluginManager);
-	pTimer->SetFixTimer(0, 0, 60*60*24, 1000);
+	pTimer->SetFixTimer(0, 3, 10, 1000);
 }
 
 void NFCTestActorModule::TestMongo()

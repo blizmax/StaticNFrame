@@ -335,22 +335,30 @@ bool NFTimerAxis::SetFixTimer(uint32_t nTimerID, uint64_t nStartTime, uint32_t n
 	pTimer->pHandler = handler;
 	pTimer->nLastTick = m_nLastSec;
 
-	//转换格林威治时间
-	nStartTime += (24 * 60 * 60) - (8 * 60 * 60);
-	nStartTime %= nInterSec;
-
 	uint64_t nowTime = NFGetSecondTime();
 	uint64_t nowDaySecs = nowTime % nInterSec;
-	//为了在接下来的固定时间点立刻生效，构造pTimer 最近一次回调时间
-	if (nStartTime < nowDaySecs)
+
+	if (nInterSec >= 8 * 60 * 60)
 	{
-		//当前已经过了固定开始时间
-		pTimer->nLastTick = (nowTime / nInterSec) * nInterSec + nStartTime;
+		//转换格林威治时间
+		nStartTime += nInterSec - 8 * 60 * 60;
+		nStartTime %= nInterSec;
+
+		//为了在接下来的固定时间点立刻生效，构造pTimer 最近一次回调时间
+		if (nStartTime < nowDaySecs)
+		{
+			//当前已经过了固定开始时间
+			pTimer->nLastTick = (nowTime / nInterSec) * nInterSec + nStartTime;
+		}
+		else
+		{
+			//
+			pTimer->nLastTick = (nowTime / nInterSec) * nInterSec - nInterSec + nStartTime;
+		}
 	}
 	else
 	{
-		//
-		pTimer->nLastTick = (nowTime / nInterSec) * nInterSec - nInterSec + nStartTime;
+		pTimer->nLastTick = (nowTime / nInterSec) * nInterSec + nStartTime - (8 * 60 * 60 - nInterSec) % nInterSec;
 	}
 
 	uint32_t nTemp = (uint32_t)(pTimer->nLastTick - m_nInitSec + pTimer->nInterVal);
