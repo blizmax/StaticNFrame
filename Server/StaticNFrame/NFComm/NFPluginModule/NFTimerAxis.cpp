@@ -300,7 +300,7 @@ NFTimerAxis::NFTimerAxis()
 	}
 
 	m_TimerAxisSec.resize(TIME_AXIS_SECLENGTH);
-	m_nInitSec = time(nullptr);
+	m_nInitSec = GetTick()/1000;
 	m_nLastSec = m_nInitSec;
 	for (uint32_t i = 0; i < m_TimerAxisSec.size(); ++i)
 	{
@@ -641,9 +641,8 @@ void NFTimerAxis::Update()
 			}
 			if (static_cast<uint32_t>(now - pTimer->nLastTick) >= pTimer->nInterVal)
 			{
-				BEGIN_PROFILE("pTimer->pHandler->OnTimer");
-					pTimer->pHandler->OnTimer(pTimer->nTimerID);
-					END_PROFILE();
+				pTimer->pHandler->OnTimer(pTimer->nTimerID);
+
 				pTimer = *it;
 				if (nullptr == pTimer || nullptr == pTimer->pHandler)
 				{

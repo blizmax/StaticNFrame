@@ -56,6 +56,22 @@ public:
 	std::atomic_int count;
 };
 
+class NFXXTimer : public NFTimerObj, NFIModule
+{
+public:
+	NFXXTimer(NFIPluginManager* p)
+	{
+		pPluginManager = p;
+	}
+
+	virtual void OnTimer(uint32_t nTimerID);
+};
+
+void NFXXTimer::OnTimer(uint32_t nTimerID)
+{
+
+}
+
 NFCTestActorModule::NFCTestActorModule(NFIPluginManager* p)
 {
 	pPluginManager = p;
@@ -63,6 +79,30 @@ NFCTestActorModule::NFCTestActorModule(NFIPluginManager* p)
 
 NFCTestActorModule::~NFCTestActorModule()
 {
+}
+
+void NFCTestActorModule::TestTimer()
+{
+	NFIMongoModule* pMongoModule = pPluginManager->FindModule<NFIMongoModule>();
+
+	pMongoModule->AddMongoServer(NF_ST_GAME, "45.32.39.90", 27017, "test");
+
+	pMongoModule->IsExistCollection(NF_ST_GAME, "gaoyi");
+	pMongoModule->IsExistCollection(NF_ST_GAME, "test");
+
+	pMongoModule->CreateCollection(NF_ST_GAME, "gaoyi", "uid");
+	pMongoModule->CreateCollection(NF_ST_GAME, "test", "uid");
+
+	for (int i = 1; i < 10000000; i++)
+	{
+		NFXXTimer* pTimer = new NFXXTimer(pPluginManager);
+		for (int j = 1; j <= 1; j++)
+		{
+			uint32_t intervalTime = NFRandInt(1, 1000);
+			uint32_t callTimer = NFRandInt(1, 100);
+			pTimer->SetTimer(j, intervalTime, callTimer);
+		}
+	}
 }
 
 void NFCTestActorModule::TestMongo()
@@ -133,6 +173,7 @@ void NFCTestActorModule::TestMongo()
 
 bool NFCTestActorModule::Init()
 {
+	TestTimer();
 	//NFITaskModule* pTaskModule = pPluginManager->FindModule<NFITaskModule>();
 
 	//for(int i = 0; i < 10000; i++)
