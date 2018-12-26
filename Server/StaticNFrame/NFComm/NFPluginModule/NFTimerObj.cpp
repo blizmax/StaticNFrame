@@ -16,7 +16,6 @@ NFTimerObj::NFTimerObj() : m_pTimerInfoPtr(nullptr), m_pFixTimerInfoPtr(nullptr)
 NFTimerObj::~NFTimerObj()
 {
 	NFTimerMgr::Instance()->KillAllTimer(this);
-	NFTimerMgr::Instance()->KillAllFixTimer(this);
 	m_pTimerInfoPtr = nullptr;
 	m_pFixTimerInfoPtr = nullptr;
 }
@@ -40,20 +39,8 @@ bool NFTimerObj::KillAllTimer()
 }
 
 //设置固定时间的定时器
-bool NFTimerObj::SetFixTimer(uint32_t nTimerID, uint64_t nStartTime, uint32_t nInterDays, uint32_t nCallCount)
+bool NFTimerObj::SetFixTimer(uint32_t nTimerID, uint64_t nStartTime, uint32_t nInterSec, uint32_t nCallCount)
 {
-	return NFTimerMgr::Instance()->SetFixTimer(nTimerID, nStartTime, nInterDays, this, nCallCount);
-}
-
-//关闭固定时间定时器
-bool NFTimerObj::KillFixTimer(uint32_t nTimerID)
-{
-	return NFTimerMgr::Instance()->KillFixTimer(nTimerID, this);
-}
-
-//关闭所有固定时间定时器
-bool NFTimerObj::KillAllFixTimer()
-{
-	return NFTimerMgr::Instance()->KillAllFixTimer(this);
+	return NFTimerMgr::Instance()->SetFixTimer(nTimerID, nStartTime, nInterSec, this, nCallCount);
 }
 

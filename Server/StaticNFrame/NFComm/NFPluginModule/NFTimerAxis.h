@@ -23,57 +23,6 @@
 #define INVALID_TIMER				0xffffffff  // 无效定时器
 #define INFINITY_CALL				0xffffffff	// 调用无限次
 
-class NFFixTimerAxis
-{
-public:
-	NFFixTimerAxis();
-	~NFFixTimerAxis();
-
-	//设置固定时间的定时器
-	bool SetFixTimer(uint32_t nTimerID, uint64_t nStartTime, uint32_t nInterDays, NFTimerObj* handler, uint32_t nCallCount = INFINITY_CALL);
-	//关闭固定时间定时器
-	bool KillFixTimer(uint32_t nTimerID, NFTimerObj* handler);
-	//关闭所有固定时间定时器
-	bool KillAllFixTimer(NFTimerObj* handler);
-	//更新固定时间的定时器
-	void UpdateFix();
-private:
-	static uint64_t GetMorningTime(uint64_t nTimeSec);
-
-protected:
-	struct FixTimer
-	{
-		uint32_t nTimerID; //定时器ID
-		uint32_t nInterDays; //间隔天数
-		uint64_t nStartTime; //开始时间
-		uint32_t nCallCount; //调用次数
-		uint64_t nLastSec; //最近一次调用时间
-		NFTimerObj* pHandler;//回调指针
-		uint32_t nGridIndex; //所在的时间刻度
-		std::list<FixTimer*>::iterator pos; //在时间轴中的位置，便于快速定位
-		FixTimer()
-		{
-			nTimerID = 0;
-			nInterDays = 0;
-			nStartTime = 0;
-			nCallCount = 0;
-			nLastSec = 0;
-			pHandler = nullptr;
-			nGridIndex = 0;
-		}
-	};
-
-	//重置定时器在时间轴上的位置
-	static bool ResetFixTimerPos(FixTimer* pTimer);
-
-	typedef std::list<FixTimer*> FIXTIMER_LIST;
-	typedef std::vector<FIXTIMER_LIST*> FIXTIMER_AXIS;
-
-	FIXTIMER_AXIS m_FixTimerAxis; //时间轴
-	uint64_t m_nInitSec; //初始时间
-	uint64_t m_nLastSec; //最近更新时间
-};
-
 //时间轴
 class NFTimerAxis
 {
@@ -94,14 +43,7 @@ public:
 	void Update();
 
 	//设置固定时间的定时器
-	bool SetFixTimer(uint32_t nTimerID, uint64_t nStartTime, uint32_t nInterDays, NFTimerObj* handler, uint32_t nCallCount = INFINITY_CALL);
-	//关闭固定时间定时器
-	bool KillFixTimer(uint32_t nTimerID, NFTimerObj* handler);
-	//关闭所有固定时间定时器
-	bool KillAllFixTimer(NFTimerObj* handler);
-	//更新固定时间定时器
-	void UpdateFix();
-
+	bool SetFixTimer(uint32_t nTimerID, uint64_t nStartTime, uint32_t nInterSec, NFTimerObj* handler, uint32_t nCallCount = INFINITY_CALL);
 private:
 	//设置秒定时器
 	bool SetTimerSec(uint32_t nTimerID, uint64_t nInterVal, NFTimerObj* handler, uint32_t nCallCount = INFINITY_CALL);
@@ -151,7 +93,5 @@ protected:
 	TIMER_AXIS m_TimerAxisSec; //秒时间轴
 	uint64_t m_nInitSec; //秒时间轴初始时间
 	uint64_t m_nLastSec; //秒时间轴最后一次检查的时间
-
-	NFFixTimerAxis m_FixTimerAxis;
 };
 

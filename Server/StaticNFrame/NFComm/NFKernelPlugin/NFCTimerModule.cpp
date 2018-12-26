@@ -29,7 +29,6 @@ bool NFCTimerModule::AfterInit()
 bool NFCTimerModule::Execute()
 {
 	mTimerAxis.Update();
-	mTimerAxis.UpdateFix();
 	return true;
 }
 
@@ -66,16 +65,4 @@ bool NFCTimerModule::KillAllTimer(NFTimerObj* handler)
 bool NFCTimerModule::SetFixTimer(uint32_t nTimerID, uint64_t nStartTime, uint32_t nInterDays, NFTimerObj* handler, uint32_t nCallCount/* = INFINITY_CALL */)
 {
 	return mTimerAxis.SetFixTimer(nTimerID, nStartTime, nInterDays, handler, nCallCount);
-}
-
-//关闭固定时间定时器
-bool NFCTimerModule::KillFixTimer(uint32_t nTimerID, NFTimerObj* handler)
-{
-	return mTimerAxis.KillFixTimer(nTimerID, handler);
-}
-
-//关闭所有固定时间定时器
-bool NFCTimerModule::KillAllFixTimer(NFTimerObj* handler)
-{
-	return mTimerAxis.KillAllFixTimer(handler);
 }

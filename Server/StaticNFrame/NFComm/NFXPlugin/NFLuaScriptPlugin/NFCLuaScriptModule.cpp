@@ -262,7 +262,7 @@ void NFCLuaScriptModule::StopTimer(uint32_t nTimerID)
 
 void NFCLuaScriptModule::StopClocker(uint32_t nTimerID)
 {
-	KillFixTimer(nTimerID);
+	KillTimer(nTimerID);
 	m_luaTimerMap.erase(nTimerID);
 }
 

@@ -10,284 +10,6 @@
 #include "NFComm/NFCore/NFProfiler.h"
 #include "NFComm/NFCore/NFPlatform.h"
 
-#define FIX_AXIS_ONE_DAY_HOUR 24
-#define FIX_AXIS_ONE_HOUR_SECOND (60 * 60)
-#define FIX_AXIS_ONE_DAY_SECOND (60*60*24)
-
-NFFixTimerAxis::NFFixTimerAxis()
-{
-	m_FixTimerAxis.resize(FIX_AXIS_ONE_DAY_HOUR);
-	m_nInitSec = NFGetSecondTime();
-	m_nLastSec = m_nInitSec;
-	for (size_t i = 0; i < m_FixTimerAxis.size(); ++i)
-	{
-		m_FixTimerAxis[i] = new FIXTIMER_LIST();
-	}
-}
-
-NFFixTimerAxis::~NFFixTimerAxis()
-{
-	for (size_t i = 0; i < m_FixTimerAxis.size(); ++i)
-	{
-		FIXTIMER_LIST* pFixList = m_FixTimerAxis[i];
-		FIXTIMER_LIST::iterator iter = pFixList->begin();
-		for (; iter != pFixList->end(); ++iter)
-		{
-			FixTimer* pFixTimer = (*iter);
-			NF_SAFE_DELETE(pFixTimer);
-		}
-		pFixList->clear();
-
-		NF_SAFE_DELETE(pFixList);
-	}
-	m_FixTimerAxis.clear();
-}
-
-//设置固定时间的定时器
-bool NFFixTimerAxis::SetFixTimer(uint32_t nTimerID, uint64_t nStartTime, uint32_t nInterDays, NFTimerObj* handler, uint32_t nCallCount /*= INFINITY_CALL*/)
-{
-	if (nullptr == handler)
-	{
-		return false;
-	}
-	if (nCallCount < 1)
-	{
-		return false;
-	}
-	if (nInterDays < 1)
-	{
-		nInterDays = 1;
-	}
-
-	bool bNeedFind = true;
-	void** ppFixTimerInfo = handler->GetFixTimerInfoPtr();
-	FIXTIMER_LIST* pFixTimerList = *(FIXTIMER_LIST**)ppFixTimerInfo;
-	if (nullptr == pFixTimerList)
-	{
-		pFixTimerList = new FIXTIMER_LIST();
-		*ppFixTimerInfo = pFixTimerList;
-		bNeedFind = false;
-	}
-
-	FixTimer* pFixTimer = nullptr;
-	if (bNeedFind)
-	{
-		FIXTIMER_LIST::iterator iter = pFixTimerList->begin();
-		for (; iter != pFixTimerList->end(); ++iter)
-		{
-			pFixTimer = (*iter);
-			if (pFixTimer->nTimerID == nTimerID)
-			{
-				return false;
-			}
-		}
-	}
-	//转换格林威治时间
-	nStartTime += FIX_AXIS_ONE_DAY_SECOND - (8 * 60 * 60);
-	nStartTime %= FIX_AXIS_ONE_DAY_SECOND;
-
-	pFixTimer = new FixTimer();
-	pFixTimer->nTimerID = nTimerID;
-	pFixTimer->nInterDays = nInterDays;
-	pFixTimer->nStartTime = nStartTime;
-	pFixTimer->nCallCount = nCallCount;
-	pFixTimer->pHandler = handler;
-
-	uint64_t nowTime = NFGetSecondTime();
-	uint64_t nowDaySecs = nowTime % FIX_AXIS_ONE_DAY_SECOND;
-	//为了在接下来的固定时间点立刻生效，构造pTimer 最近一次回调时间
-	if (nStartTime < nowDaySecs)
-	{
-		//当前已经过了固定开始时间
-		pFixTimer->nLastSec = GetMorningTime(nowTime) + nStartTime;
-	}
-	else
-	{
-		//
-		pFixTimer->nLastSec = GetMorningTime(nowTime) - pFixTimer->nInterDays * FIX_AXIS_ONE_DAY_SECOND + pFixTimer->nStartTime;
-	}
-	pFixTimer->nGridIndex = static_cast<uint32_t>(pFixTimer->nStartTime / FIX_AXIS_ONE_HOUR_SECOND);
-
-	pFixTimerList->push_back(pFixTimer);
-
-	m_FixTimerAxis[pFixTimer->nGridIndex]->push_back(pFixTimer);
-	pFixTimer->pos = --m_FixTimerAxis[pFixTimer->nGridIndex]->end();
-
-	return true;
-}
-
-//关闭固定时间定时器
-bool NFFixTimerAxis::KillFixTimer(uint32_t nTimerID, NFTimerObj* handler)
-{
-	if (nullptr == handler)
-	{
-		return false;
-	}
-	void** ppFixTimerInfo = handler->GetFixTimerInfoPtr();
-	FIXTIMER_LIST* pFixTimerList = *(FIXTIMER_LIST**)ppFixTimerInfo;
-	if (nullptr == pFixTimerList)
-	{
-		return false;
-	}
-
-	FIXTIMER_LIST::iterator iter = pFixTimerList->begin();
-	for (; iter != pFixTimerList->end(); ++iter)
-	{
-		FixTimer* pFixTimer = (*iter);
-		if (pFixTimer && pFixTimer->nTimerID == nTimerID)
-		{
-			pFixTimerList->erase(iter);
-
-			pFixTimer->nCallCount = 0;
-			pFixTimer->pHandler = nullptr;
-
-			//重置在时间轴上的位置
-			ResetFixTimerPos(pFixTimer);
-
-			NF_SAFE_DELETE(pFixTimer);
-
-			if (pFixTimerList->empty())
-			{
-				NF_SAFE_DELETE(pFixTimerList);
-				*ppFixTimerInfo = nullptr;
-			}
-
-			return true;
-		}
-	}
-	return false;
-}
-
-//关闭所有固定时间定时器
-bool NFFixTimerAxis::KillAllFixTimer(NFTimerObj* handler)
-{
-	if (nullptr == handler)
-	{
-		return false;
-	}
-	void** ppFixTimerInfo = handler->GetFixTimerInfoPtr();
-	FIXTIMER_LIST* pFixTimerList = *(FIXTIMER_LIST**)ppFixTimerInfo;
-	if (nullptr == pFixTimerList)
-	{
-		return false;
-	}
-	FIXTIMER_LIST::iterator iter = pFixTimerList->begin();
-	for (; iter != pFixTimerList->end(); ++iter)
-	{
-		FixTimer* pFixTimer = (*iter);
-		if (nullptr != pFixTimer)
-		{
-			pFixTimer->nCallCount = 0;
-			pFixTimer->pHandler = nullptr;
-
-			//重置在时间轴上的位置
-			ResetFixTimerPos(pFixTimer);
-
-			NF_SAFE_DELETE(pFixTimer);
-		}
-	}
-
-	pFixTimerList->clear();
-	NF_SAFE_DELETE(pFixTimerList);
-	*ppFixTimerInfo = nullptr;
-
-	return false;
-}
-
-//重置定时器在时间轴上的位置
-bool NFFixTimerAxis::ResetFixTimerPos(FixTimer* pTimer)
-{
-	if (nullptr == pTimer)
-	{
-		return false;
-	}
-	(*pTimer->pos) = nullptr;
-
-	return true;
-}
-
-uint64_t NFFixTimerAxis::GetMorningTime(uint64_t nTimeSec)
-{
-	return (nTimeSec / FIX_AXIS_ONE_DAY_SECOND) * FIX_AXIS_ONE_DAY_SECOND;
-}
-
-//更新固定时间的定时器
-void NFFixTimerAxis::UpdateFix()
-{
-	uint64_t now = NFGetTime();
-	if (now - m_nLastSec < 3)
-	{
-		return;
-	}
-
-	uint32_t start_grid = (m_nLastSec % FIX_AXIS_ONE_DAY_SECOND) / FIX_AXIS_ONE_HOUR_SECOND;
-	uint32_t cur_grid = (now % FIX_AXIS_ONE_DAY_SECOND) / FIX_AXIS_ONE_HOUR_SECOND;
-
-	m_nLastSec = now;
-
-	uint32_t i = start_grid;
-
-	// 遍历时间刻度
-	do
-	{
-		// 遍历当前时间刻度中的所有待触发定时器
-		FIXTIMER_LIST* pTimerList = m_FixTimerAxis[i];
-		FIXTIMER_LIST::iterator it = pTimerList->begin();
-		for (; it != pTimerList->end();)
-		{
-			FixTimer* pFixTimer = *it;
-			if (nullptr == pFixTimer || nullptr == pFixTimer->pHandler)
-			{
-				it = pTimerList->erase(it);
-				continue;
-			}
-
-			if (pFixTimer->nCallCount == 0)
-			{
-				it = pTimerList->erase(it);
-				NF_SAFE_DELETE(pFixTimer);
-				continue;
-			}
-
-			// 触发定时器
-			if (now - pFixTimer->nLastSec >= (static_cast<uint64_t>(pFixTimer->nInterDays) * FIX_AXIS_ONE_DAY_SECOND))
-			{
-				pFixTimer->pHandler->OnTimer(pFixTimer->nTimerID);
-				pFixTimer = *it;
-				if (nullptr == pFixTimer || nullptr == pFixTimer->pHandler)
-				{
-					it = pTimerList->erase(it);
-					continue;
-				}
-
-				pFixTimer->nLastSec = GetMorningTime(now) + pFixTimer->nStartTime;
-				if (pFixTimer->nCallCount > 0)
-					pFixTimer->nCallCount -= 1;
-
-				if (pFixTimer->nCallCount == 0)
-				{
-					// 调用次数已经够了
-					KillFixTimer(pFixTimer->nTimerID, pFixTimer->pHandler);
-					it = pTimerList->erase(it);
-					continue;
-				}
-			}
-
-			++it;
-		}
-
-		// 递进到下一个刻度
-		if (i == cur_grid)
-		{
-			break;
-		}
-
-		i = (i + 1) % m_FixTimerAxis.size();
-		//}while(i!=cur_grid);
-	}
-	while (i != cur_grid);
-}
-
 NFTimerAxis::NFTimerAxis()
 {
 	m_TimerAxis.resize((TIME_AXIS_LENGTH + TIME_GRID - 1) / TIME_GRID);
@@ -565,27 +287,81 @@ void NFTimerAxis::CheckTick()
 }
 
 //设置固定时间的定时器
-bool NFTimerAxis::SetFixTimer(uint32_t nTimerID, uint64_t nStartTime, uint32_t nInterDays, NFTimerObj* handler, uint32_t nCallCount /*= INFINITY_CALL*/)
+bool NFTimerAxis::SetFixTimer(uint32_t nTimerID, uint64_t nStartTime, uint32_t nInterSec, NFTimerObj* handler, uint32_t nCallCount /*= INFINITY_CALL*/)
 {
-	return m_FixTimerAxis.SetFixTimer(nTimerID, nStartTime, nInterDays, handler, nCallCount);
-}
+	if (nullptr == handler)
+	{
+		return false;
+	}
+	if (nCallCount == 0)
+	{
+		return false;
+	}
+	if (nInterSec < 1)
+	{
+		nInterSec = 1;
+	}
 
-//关闭固定时间定时器
-bool NFTimerAxis::KillFixTimer(uint32_t nTimerID, NFTimerObj* handler)
-{
-	return m_FixTimerAxis.KillFixTimer(nTimerID, handler);
-}
+	bool bNeedFind = true;
+	void** ppTimerInfo = handler->GetTimerInfoPtr();
+	TIMER_LIST* pTimerList = *(TIMER_LIST**)ppTimerInfo;
+	if (nullptr == pTimerList)
+	{
+		pTimerList = new TIMER_LIST();
+		*ppTimerInfo = pTimerList;
+		bNeedFind = false;
+	}
 
-//关闭所有固定时间定时器
-bool NFTimerAxis::KillAllFixTimer(NFTimerObj* handler)
-{
-	return m_FixTimerAxis.KillAllFixTimer(handler);
-}
+	Timer* pTimer = nullptr;
+	if (bNeedFind)
+	{
+		TIMER_LIST::iterator iter = pTimerList->begin();
+		for (; iter != pTimerList->end(); ++iter)
+		{
+			pTimer = (*iter);
+			if (pTimer->nTimerID == nTimerID)
+			{
+				//定时器ID 已存在
+				return false;
+			}
+		}
+	}
 
-//更新固定时间定时器
-void NFTimerAxis::UpdateFix()
-{
-	m_FixTimerAxis.UpdateFix();
+	pTimer = new Timer();
+	pTimer->byType = 1;
+	pTimer->nTimerID = nTimerID;
+	pTimer->nCallCount = nCallCount;
+	pTimer->nInterVal = nInterSec;
+	pTimer->pHandler = handler;
+	pTimer->nLastTick = m_nLastSec;
+
+	//转换格林威治时间
+	nStartTime += (24 * 60 * 60) - (8 * 60 * 60);
+	nStartTime %= nInterSec;
+
+	uint64_t nowTime = NFGetSecondTime();
+	uint64_t nowDaySecs = nowTime % nInterSec;
+	//为了在接下来的固定时间点立刻生效，构造pTimer 最近一次回调时间
+	if (nStartTime < nowDaySecs)
+	{
+		//当前已经过了固定开始时间
+		pTimer->nLastTick = (nowTime / nInterSec) * nInterSec + nStartTime;
+	}
+	else
+	{
+		//
+		pTimer->nLastTick = (nowTime / nInterSec) * nInterSec - nInterSec + nStartTime;
+	}
+
+	uint32_t nTemp = (uint32_t)(pTimer->nLastTick - m_nInitSec + pTimer->nInterVal);
+	pTimer->nGridIndex = nTemp % m_TimerAxisSec.size();
+
+	pTimerList->push_back(pTimer);
+
+	m_TimerAxisSec[pTimer->nGridIndex]->push_back(pTimer);
+	pTimer->pos = --m_TimerAxisSec[pTimer->nGridIndex]->end();
+
+	return true;
 }
 
 void NFTimerAxis::Update()

@@ -21,6 +21,7 @@
 #include "NFServer/NFServerCommon/NFServerCommon.h"
 #include "NFComm/NFCore/NFRandom.hpp"
 #include "NFComm/NFPluginModule/NFIKernelModule.h"
+#include "NFComm/NFCore/NFDateTime.hpp"
 
 
 class NFLogTask : public NFTask
@@ -69,7 +70,10 @@ public:
 
 void NFXXTimer::OnTimer(uint32_t nTimerID)
 {
+	NFDateTime dateTime = NFDateTime::Now();
 
+	NFLogError("now:{}", dateTime.GetLongTimeString());
+	NFLogError("xxxxxxxxxxxxxxxxx");
 }
 
 NFCTestActorModule::NFCTestActorModule(NFIPluginManager* p)
@@ -83,26 +87,8 @@ NFCTestActorModule::~NFCTestActorModule()
 
 void NFCTestActorModule::TestTimer()
 {
-	NFIMongoModule* pMongoModule = pPluginManager->FindModule<NFIMongoModule>();
-
-	pMongoModule->AddMongoServer(NF_ST_GAME, "45.32.39.90", 27017, "test");
-
-	pMongoModule->IsExistCollection(NF_ST_GAME, "gaoyi");
-	pMongoModule->IsExistCollection(NF_ST_GAME, "test");
-
-	pMongoModule->CreateCollection(NF_ST_GAME, "gaoyi", "uid");
-	pMongoModule->CreateCollection(NF_ST_GAME, "test", "uid");
-
-	for (int i = 1; i < 10000000; i++)
-	{
-		NFXXTimer* pTimer = new NFXXTimer(pPluginManager);
-		for (int j = 1; j <= 1; j++)
-		{
-			uint32_t intervalTime = NFRandInt(1, 1000);
-			uint32_t callTimer = NFRandInt(1, 100);
-			pTimer->SetTimer(j, intervalTime, callTimer);
-		}
-	}
+	NFXXTimer* pTimer = new NFXXTimer(pPluginManager);
+	pTimer->SetFixTimer(0, 0, 60*60*24, 1000);
 }
 
 void NFCTestActorModule::TestMongo()

@@ -23,11 +23,7 @@ public:
 
 	virtual bool KillAllTimer();
 
-	virtual bool SetFixTimer(uint32_t nTimerID, uint64_t nStartTime, uint32_t nInterDays, uint32_t nCallCount);
-
-	virtual bool KillFixTimer(uint32_t nTimerID);
-
-	virtual bool KillAllFixTimer();
+	virtual bool SetFixTimer(uint32_t nTimerID, uint64_t nStartTime, uint32_t nInterSec, uint32_t nCallCount);
 public:
 	virtual void** GetTimerInfoPtr()
 	{
