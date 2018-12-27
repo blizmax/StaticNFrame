@@ -8,8 +8,8 @@ unilight = unilight or {}
 -- Net.*简化Do.*的消息处理，可直接收发lua table消息 --
 Net = Net or {}
 
-function unilight.init(pluginManager)
-	LuaNFrame:init(pluginManager)
+function unilight.init(pluginManager, luaModule)
+	LuaNFrame:init(pluginManager, luaModule)
 end
 
 --执行加载函数
@@ -24,34 +24,26 @@ end
 --添加服务器秒定时器
 function unilight.addtimer(luaFunc, sec, ...)
 	local param_table = {...}
-	local json_param = json.encode(param_table)
-	local timerId = LuaNFrame:AddTimer(luaFunc, sec*1000, json_param)
-	local timer = {}
-	timer.Stop = function()
-		LuaNFrame:StopTimer(timerId)
+	if #param_table == 0 then
+		param_table = nil
 	end
-	return timer
+	local timerId = LuaNFrame:AddTimer(luaFunc, sec*1000, param_table)
 end
 
 --每嗝1毫秒的定时器示例
 --unilight.addtimer("testtimer",1,"wanghaijun")
 function unilight.addtimermsec(luaFunc, msec, ...)
 	local param_table = {...}
-	local json_param = json.encode(param_table)
-	local timerId = LuaNFrame:AddTimer(luaFunc, msec, json_param)
-	local timer = {}
-	timer.Stop = function()
-		LuaNFrame:StopTimer(timerId)
+	if #param_table == 0 then
+		param_table = nil
 	end
-	return timer
+	return LuaNFrame:AddTimer(luaFunc, msec, param_table)
 end
 
 --停止服务器定时器
 function unilight.stoptimer(timer)
-	if timer == nil then
-		return true
-	end
-	return timer.Stop()
+	if timer == nil then return end
+	timer.Stop()
 end
 
 -- 关于闹钟实例：
@@ -74,14 +66,7 @@ end
 -- 
 function unilight.addclocker(luaFunc, sec, intervalSec, ...)
 	local param_table = {...}
-	local json_param = json.encode(param_table)
-	local timerId = LuaNFrame:AddClocker(luaFunc, sec, intervalSec , json_param)
-	local timer = {}
-	timer.Stop = function()
-		LuaNFrame:StopClocker(timerId)
-	end
-
-	return timer
+	return LuaNFrame:AddClocker(luaFunc, sec, intervalSec , param_table)
 end
 
 --关于日历

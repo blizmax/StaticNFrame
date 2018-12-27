@@ -16,23 +16,16 @@
 #include "NFComm/NFCore/NFProfiler.h"
 #include "NFComm/NFCore/NFFileUtility.h"
 #include "NFComm/NFCore/NFStringUtility.h"
+#include "NFComm/NFCore/NFCommon.h"
 #include "NFComm/NFPluginModule/NFLogMgr.h"
 #include "NFComm/NFPluginModule/NFIHttpClientModule.h"
 #include "NFComm/NFPluginModule/NFIHttpServerModule.h"
 #include "NFComm/NFPluginModule/NFIMongoModule.h"
 #include "NFComm/NFPluginModule/NFIServerNetEventModule.h"
 
-#define TRY_RUN_GLOBAL_SCRIPT_FUN0(strFuncName)   try {LuaIntf::LuaRef func(l, strFuncName);  func.call<LuaIntf::LuaRef>(); }   catch (LuaIntf::LuaException& e) { cout << e.what() << endl; }
-#define TRY_RUN_GLOBAL_SCRIPT_FUN1(strFuncName, arg1)  try {LuaIntf::LuaRef func(l, strFuncName);  func.call<LuaIntf::LuaRef>(arg1); }catch (LuaIntf::LuaException& e) { cout << e.what() << endl; }
-#define TRY_RUN_GLOBAL_SCRIPT_FUN2(strFuncName, arg1, arg2)  try {LuaIntf::LuaRef func(l, strFuncName);  func.call<LuaIntf::LuaRef>(arg1, arg2); }catch (LuaIntf::LuaException& e) { cout << e.what() << endl; }
-#define TRY_RUN_GLOBAL_SCRIPT_FUN3(strFuncName, arg1, arg2, arg3)  try {LuaIntf::LuaRef func(l, strFuncName);  func.call<LuaIntf::LuaRef>(arg1, arg2, arg3); }catch (LuaIntf::LuaException& e) { cout << e.what() << endl; }
-
-#define TRY_LOAD_SCRIPT_FLE(strFileName)  try{l.doFile(strFileName);} catch (LuaIntf::LuaException& e) { cout << e.what() << endl; }
-#define TRY_ADD_PACKAGE_PATH(strFilePath)  try{ l.addPackagePath(strFilePath); } catch (LuaIntf::LuaException& e) { cout << e.what() << endl; }
-
 void NFLuaTimer::OnTimer(uint32_t nTimerID)
 {
-	m_pLuaScriptModule->TryRunGlobalScriptFunc("LuaNFrame.RunTimer", mLuaFunc, nTimerID, mUseData);
+	m_pLuaScriptModule->TryRunGlobalScriptFunc("LuaNFrame.RunTimer", mLuaFunc, nTimerID, mLuaRef);
 }
 
 bool NFCLuaScriptModule::Init()
@@ -53,14 +46,14 @@ bool NFCLuaScriptModule::AfterInit()
 
 bool NFCLuaScriptModule::ReadyExecute()
 {
-	TRY_RUN_GLOBAL_SCRIPT_FUN0("ScriptModule.Init");
-	TRY_RUN_GLOBAL_SCRIPT_FUN0("ScriptModule.AfterInit");
+	TryRunGlobalScriptFunc("ScriptModule.Init");
+	TryRunGlobalScriptFunc("ScriptModule.AfterInit");
 	return true;
 }
 
 bool NFCLuaScriptModule::Shut()
 {
-    TRY_RUN_GLOBAL_SCRIPT_FUN0("ScriptModule.Shut");
+	TryRunGlobalScriptFunc("ScriptModule.Shut");
 
     return true;
 }
@@ -78,7 +71,7 @@ bool NFCLuaScriptModule::Execute()
     {
         BEGIN_PROFILE(__FUNCTION__);
         mnTime = NFGetSecondTime();
-        TRY_RUN_GLOBAL_SCRIPT_FUN0("ScriptModule.Execute");
+		TryRunGlobalScriptFunc("ScriptModule.Execute");
         END_PROFILE();
     }
 
@@ -87,17 +80,17 @@ bool NFCLuaScriptModule::Execute()
 
 bool NFCLuaScriptModule::BeforeShut()
 {
-    TRY_RUN_GLOBAL_SCRIPT_FUN0("ScriptModule.BeforeShut");
+	TryRunGlobalScriptFunc("ScriptModule.BeforeShut");
 
     return true;
 }
 
 void NFCLuaScriptModule::LoadScript()
 {
-	TRY_ADD_PACKAGE_PATH(pPluginManager->GetLuaScriptPath());
-	TRY_LOAD_SCRIPT_FLE("init.lua");
+	TryAddPackagePath(pPluginManager->GetLuaScriptPath());
+	TryLoadScriptFile("init.lua");
 
-	TRY_RUN_GLOBAL_SCRIPT_FUN1("init_script_system", pPluginManager);
+	TryRunGlobalScriptFunc("init_script_system", pPluginManager, this);
 }
 
 bool NFCLuaScriptModule::Register()
@@ -128,11 +121,11 @@ bool NFCLuaScriptModule::Register()
 		.addFunction("Base64Decode", &NFIKernelModule::Base64Decode)
 		.endClass();
 
-	LuaIntf::LuaBinding(l).beginClass<NFILuaScriptModule>("NFILuaScriptModule")
-		.addFunction("AddTimer", &NFILuaScriptModule::AddTimer)
-		.addFunction("StopTimer", &NFILuaScriptModule::StopTimer)
-		.addFunction("AddClocker", &NFILuaScriptModule::AddClocker)
-		.addFunction("StopClocker", &NFILuaScriptModule::StopClocker)
+	LuaIntf::LuaBinding(l).beginClass<NFCLuaScriptModule>("NFILuaScriptModule")
+		.addFunction("AddTimer", &NFCLuaScriptModule::AddTimer)
+		.addFunction("StopTimer", &NFCLuaScriptModule::StopTimer)
+		.addFunction("AddClocker", &NFCLuaScriptModule::AddClocker)
+		.addFunction("StopClocker", &NFCLuaScriptModule::StopClocker)
 		.endClass();
 
 	LuaIntf::LuaBinding(l).beginClass<NFIHttpClientModule>("NFIHttpClientModule")
@@ -261,7 +254,7 @@ void NFCLuaScriptModule::StopClocker(uint32_t nTimerID)
 	StopTimer(nTimerID);
 }
 
-uint32_t NFCLuaScriptModule::AddTimer(const std::string& luaFunc, uint64_t nInterVal, const std::string& useData)
+uint32_t NFCLuaScriptModule::AddTimer(const std::string& luaFunc, uint64_t nInterVal, LuaIntf::LuaRef ref)
 {
 	NFLuaTimer* luaTimer = nullptr;
 	if (m_luaTimerList.empty())
@@ -279,15 +272,16 @@ uint32_t NFCLuaScriptModule::AddTimer(const std::string& luaFunc, uint64_t nInte
 	luaTimer->mInterVal = nInterVal;
 	luaTimer->mCallCount = INFINITY_CALL;
 	luaTimer->mCurCallCount = 0;
-	luaTimer->mUseData = useData;
+	luaTimer->mLuaRef = ref;
 	luaTimer->mTimerId = ++m_luaTimerIndex;
 
 	luaTimer->SetTimer(luaTimer->mTimerId, luaTimer->mInterVal, luaTimer->mCallCount);
 	m_luaTimerMap.emplace(luaTimer->mTimerId, luaTimer);
+
 	return luaTimer->mTimerId;
 }
 
-uint32_t NFCLuaScriptModule::AddClocker(const std::string& luaFunc, uint64_t nStartTime, uint32_t nInterDays, const std::string& useData)
+uint32_t NFCLuaScriptModule::AddClocker(const std::string& luaFunc, uint64_t nStartTime, uint32_t nInterDays, LuaIntf::LuaRef ref)
 {
 	NFLuaTimer* luaTimer = nullptr;
 	if (m_luaTimerList.empty())
@@ -304,7 +298,7 @@ uint32_t NFCLuaScriptModule::AddClocker(const std::string& luaFunc, uint64_t nSt
 	luaTimer->mLuaFunc = luaFunc;
 	luaTimer->mCallCount = INFINITY_CALL;
 	luaTimer->mCurCallCount = 0;
-	luaTimer->mUseData = useData;
+	luaTimer->mLuaRef = ref;
 	luaTimer->mTimerId = ++m_luaTimerIndex;
 
 	luaTimer->SetFixTimer(luaTimer->mTimerId, nStartTime, nInterDays, luaTimer->mCallCount);

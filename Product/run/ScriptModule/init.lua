@@ -19,7 +19,7 @@ function LoadLuaFile(path, subdir)
 	end
 end
 
-function init_script_system(pluginManager)
+function init_script_system(pluginManager, luaModule)
 	--vscode luaide调试工具需要
 	breakSocketHandle,debugXpCall = require("LuaDebug")("localhost",7003)
 	package.path = package.path .. ";../ScriptModule/gxlua/?.lua;"
@@ -58,7 +58,7 @@ function init_script_system(pluginManager)
 	end
 
 	--初始化LuaNFrame
-	unilight.init(pluginManager)
+	unilight.init(pluginManager, luaModule)
 
 	unilight.addtimer("update_debugsocket", 1)
 end

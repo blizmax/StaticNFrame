@@ -5,16 +5,16 @@ CreateClass("LuaNFrame")
 --用来存放加载函数
 LuaNFrame.LoadScriptList = { }
 
-function LuaNFrame:init(pluginManager)
+function LuaNFrame:init(pluginManager, luaModule)
 
     self.pluginManager = pluginManager
-    if self.pluginManager == nil then
+    if self.pluginManager == nil or luaModule == nil then
         self:error("初始化失败。。。。。。。。。")
     end
 
     self.kernelModule = self.pluginManager:GetKernelModule()
     self.logModule = self.pluginManager:GetLogModule()
-    self.luaModule = self.pluginManager:GetLuaModule()
+    self.luaModule = luaModule
     self.serverModule = self.pluginManager:GetServerModule()
     self.clientModule = self.pluginManager:GetClientModule()
     self.httpClientModule = self.pluginManager:GetHttpClientModule()
@@ -34,8 +34,17 @@ function LuaNFrame:GetPluginManager()
 end
 
 --添加服务器定时器
-function LuaNFrame:AddTimer(luaFunc, nInterVal, useData)
-    return self.luaModule:AddTimer(luaFunc, nInterVal, useData)
+function LuaNFrame:AddTimer(luaFunc, nInterVal, param_table)
+    local timerId = self.luaModule:AddTimer(luaFunc, nInterVal, param_table)
+
+    local ret = {
+		timerId = timerId,
+		Stop = function()
+			LuaNFrame:StopTimer(timerId)
+		end,
+    }
+    
+    return ret
 end
 
 --停止服务器定时器
@@ -44,18 +53,30 @@ function LuaNFrame:StopTimer(timerId)
 end
 
 --执行定时函数
-function LuaNFrame.RunTimer(luaFunc, timerId, useData)
-    local param_table = json.decode(useData)
+function LuaNFrame.RunTimer(luaFunc, timerId, param_table)
     local timerId = timerId
-    local timer = {}
-    timer.Stop = function()
-        LuaNFrame:StopTimer(timerId)
+    local timer = {
+		timerId = timerId,
+		Stop = function()
+			LuaNFrame:StopTimer(timerId)
+		end,
+    }
+    if param_table ~= nil and #param_table ~= 0 then
+        LuaNFrame.RunStringFunction(luaFunc, table.unpack(param_table), timer)
+    else
+        LuaNFrame.RunStringFunction(luaFunc, timer)
     end
-    LuaNFrame.RunStringFunction(luaFunc, table.unpack(param_table), timer)
 end
 
-function LuaNFrame:AddClocker(luaFunc, startSec, intervalSec, useData)
-    return self.luaModule:AddClocker(luaFunc, startSec, intervalSec, useData)
+function LuaNFrame:AddClocker(luaFunc, startSec, intervalSec, param_table)
+    local timerId = self.luaModule:AddClocker(luaFunc, startSec, intervalSec, param_table)
+    local ret = {
+		timerId = timerId,
+		Stop = function()
+			LuaNFrame:StopTimer(timerId)
+		end,
+    }
+    return ret
 end
 
 function LuaNFrame:StopClocker(timerId)

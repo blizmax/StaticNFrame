@@ -35,7 +35,7 @@ public:
 		mCallCount = 0;
 		mCurCallCount = 0;
 		mLuaFunc = "";
-		mUseData = "";
+		mLuaRef = LuaIntf::LuaRef();
 	}
 
 	uint32_t mTimerId;
@@ -43,7 +43,7 @@ public:
 	uint64_t mInterVal;
 	uint32_t mCallCount;
 	uint32_t mCurCallCount;
-	std::string mUseData;
+	LuaIntf::LuaRef mLuaRef;
 	NFCLuaScriptModule* m_pLuaScriptModule;
 
 	virtual void OnTimer(uint32_t nTimerID) override;
@@ -82,10 +82,10 @@ public:
 	virtual void RunServerNetEventLuaFunc(const std::string& luaFunc, eMsgType nEvent, uint32_t unLinkId, NF_SHARE_PTR<NFServerData> pServerData) override;
 	virtual void RunAccountNetEventLuaFunc(const std::string& luaFunc, uint32_t nEvent, uint32_t unLinkId, NF_SHARE_PTR<AccountInfo> pServerData) override;
 public:
-	virtual uint32_t AddTimer(const std::string& luaFunc, uint64_t nInterVal, const std::string& useData) override;
-	virtual uint32_t AddClocker(const std::string& luaFunc, uint64_t nStartTime, uint32_t nInterDays, const std::string& useData) override;
-	virtual void StopTimer(uint32_t nTimerID) override;
-	virtual void StopClocker(uint32_t nTimerID) override;
+	virtual uint32_t AddTimer(const std::string& luaFunc, uint64_t nInterVal, LuaIntf::LuaRef ref);
+	virtual uint32_t AddClocker(const std::string& luaFunc, uint64_t nStartTime, uint32_t nInterDays, LuaIntf::LuaRef ref);
+	virtual void StopTimer(uint32_t nTimerID);
+	virtual void StopClocker(uint32_t nTimerID);
 public:
     bool Register();
 	void LoadScript();
