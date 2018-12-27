@@ -62,7 +62,12 @@ bool NFCTimerModule::KillAllTimer(NFTimerObj* handler)
 }
 
 //设置固定时间的定时器
-bool NFCTimerModule::SetFixTimer(uint32_t nTimerID, uint64_t nStartTime, uint32_t nInterDays, NFTimerObj* handler, uint32_t nCallCount/* = INFINITY_CALL */)
+bool NFCTimerModule::SetClocker(uint32_t nTimerID, uint64_t nStartTime, uint32_t nInterDays, NFTimerObj* handler, uint32_t nCallCount/* = INFINITY_CALL */)
 {
-	return mTimerAxis.SetFixTimer(nTimerID, nStartTime, nInterDays, handler, nCallCount);
+	return mTimerAxis.SetClocker(nTimerID, nStartTime, nInterDays, handler, nCallCount);
+}
+
+bool NFCTimerModule::SetCalender(uint32_t nTimerID, const std::string& timeStr, NFTimerObj* handler, uint32_t nCallCount/* = INFINITY_CALL */)
+{
+	return mTimerAxis.SetCalender(nTimerID, timeStr, handler, nCallCount);
 }

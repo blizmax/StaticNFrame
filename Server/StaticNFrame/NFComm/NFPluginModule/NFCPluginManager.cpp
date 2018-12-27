@@ -7,10 +7,10 @@
 // -------------------------------------------------------------------------
 
 #include "NFCPluginManager.h"
-#include "Dependencies/RapidXML/rapidxml.hpp"
-#include "Dependencies/RapidXML/rapidxml_iterators.hpp"
-#include "Dependencies/RapidXML/rapidxml_print.hpp"
-#include "Dependencies/RapidXML/rapidxml_utils.hpp"
+#include "common/RapidXML/rapidxml.hpp"
+#include "common/RapidXML/rapidxml_iterators.hpp"
+#include "common/RapidXML/rapidxml_print.hpp"
+#include "common/RapidXML/rapidxml_utils.hpp"
 #include "NFComm/NFPluginModule/NFIPlugin.h"
 #include "NFComm/NFCore/NFPlatform.h"
 #include "NFComm/NFCore/NFProfiler.h"

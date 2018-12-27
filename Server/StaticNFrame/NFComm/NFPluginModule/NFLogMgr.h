@@ -10,7 +10,7 @@
 
 #include "NFComm/NFCore/NFSingleton.hpp"
 #include "NFComm/NFCore/NFPlatform.h"
-#include "spdlog/fmt/fmt.h"
+#include "common/spdlog/fmt/fmt.h"
 #include "NFILogModule.h"
 
 class NFLogMgr : public NFSingleton<NFLogMgr>

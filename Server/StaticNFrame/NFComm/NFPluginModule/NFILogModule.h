@@ -10,7 +10,7 @@
 #define NFI_LOG_MODULE_H
 
 #include "NFIModule.h"
-#include "spdlog/fmt/fmt.h"
+#include "common/spdlog/fmt/fmt.h"
 
 enum NF_LOG_LEVEL
 {

@@ -7,8 +7,8 @@
 // -------------------------------------------------------------------------
 
 #include "NFComm/NFCore/NFPlatform.h"
-#include "spdlog/contrib/sinks/date_and_hour_file_sink.h"
-#include "spdlog/sinks/ansicolor_sink.h"
+#include "common/spdlog/contrib/sinks/date_and_hour_file_sink.h"
+#include "common/spdlog/sinks/ansicolor_sink.h"
 #include "NFCLogModule.h"
 
 #include "NFComm/NFPluginModule/NFIPluginManager.h"

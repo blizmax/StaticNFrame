@@ -64,7 +64,7 @@ bool NFTimerMgr::SetFixTimer(uint32_t nTimerID, uint64_t nStartTime, uint32_t nI
 {
 	if (m_pTimerModule)
 	{
-		return m_pTimerModule->SetFixTimer(nTimerID, nStartTime, nInterSec, handler, nCallCount);
+		return m_pTimerModule->SetClocker(nTimerID, nStartTime, nInterSec, handler, nCallCount);
 	}
 	return false;
 }

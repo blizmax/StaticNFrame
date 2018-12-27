@@ -286,8 +286,13 @@ void NFTimerAxis::CheckTick()
 	}
 }
 
+bool NFTimerAxis::SetCalender(uint32_t nTimerID, const std::string& timeStr, NFTimerObj* handler, uint32_t nCallCount /* = INFINITY_CALL*/)
+{
+	return true;
+}
+
 //设置固定时间的定时器
-bool NFTimerAxis::SetFixTimer(uint32_t nTimerID, uint64_t nStartTime, uint32_t nInterSec, NFTimerObj* handler, uint32_t nCallCount /*= INFINITY_CALL*/)
+bool NFTimerAxis::SetClocker(uint32_t nTimerID, uint64_t nStartTime, uint32_t nInterSec, NFTimerObj* handler, uint32_t nCallCount /*= INFINITY_CALL*/)
 {
 	if (nullptr == handler)
 	{

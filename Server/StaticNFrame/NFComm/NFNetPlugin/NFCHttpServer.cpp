@@ -10,10 +10,10 @@
 #include "NFCHttpServer.h"
 #include "NFComm/NFPluginModule/NFLogMgr.h"
 #include "NFComm/NFCore/NFStringUtility.h"
-#include "rapidjson/rapidjson.h"
-#include "rapidjson/document.h"
-#include "rapidjson/stringbuffer.h"
-#include "rapidjson/writer.h"
+#include "common/rapidjson/rapidjson.h"
+#include "common/rapidjson/document.h"
+#include "common/rapidjson/stringbuffer.h"
+#include "common/rapidjson/writer.h"
 #include "NFComm/NFCore/NFCommon.h"
 
 NFCHttpServer::~NFCHttpServer()

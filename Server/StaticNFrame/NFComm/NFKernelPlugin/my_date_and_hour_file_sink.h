@@ -2,10 +2,10 @@
 
 
 
-#include "spdlog/details/file_helper.h"
-#include "spdlog/details/null_mutex.h"
-#include "spdlog/fmt/fmt.h"
-#include "spdlog/sinks/base_sink.h"
+#include "common/spdlog/details/file_helper.h"
+#include "common/spdlog/details/null_mutex.h"
+#include "common/spdlog/fmt/fmt.h"
+#include "common/spdlog/sinks/base_sink.h"
 
 #include "NFComm/NFCore/NFFileUtility.h"
 

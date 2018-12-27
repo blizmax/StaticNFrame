@@ -42,7 +42,10 @@ public:
 	virtual bool KillAllTimer(NFTimerObj* handler) override;
 
 	//设置固定时间的定时器
-	virtual bool SetFixTimer(uint32_t nTimerID, uint64_t nStartTime, uint32_t nInterDays, NFTimerObj* handler, uint32_t nCallCount = INFINITY_CALL) override;
+	virtual bool SetClocker(uint32_t nTimerID, uint64_t nStartTime, uint32_t nInterDays, NFTimerObj* handler, uint32_t nCallCount = INFINITY_CALL) override;
+
+	//设置固定时间的定时器
+	virtual bool SetCalender(uint32_t nTimerID, const std::string& timeStr, NFTimerObj* handler, uint32_t nCallCount = INFINITY_CALL) override;
 protected:
 	NFTimerAxis mTimerAxis;
 };

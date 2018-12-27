@@ -43,7 +43,9 @@ public:
 	void Update();
 
 	//设置固定时间的定时器
-	bool SetFixTimer(uint32_t nTimerID, uint64_t nStartTime, uint32_t nInterSec, NFTimerObj* handler, uint32_t nCallCount = INFINITY_CALL);
+	bool SetClocker(uint32_t nTimerID, uint64_t nStartTime, uint32_t nInterSec, NFTimerObj* handler, uint32_t nCallCount = INFINITY_CALL);
+	bool SetCalender(uint32_t nTimerID, const std::string& timeStr, NFTimerObj* handler, uint32_t nCallCount = INFINITY_CALL);
+
 private:
 	//设置秒定时器
 	bool SetTimerSec(uint32_t nTimerID, uint64_t nInterVal, NFTimerObj* handler, uint32_t nCallCount = INFINITY_CALL);

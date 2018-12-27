@@ -6,10 +6,10 @@
 #include "NFComm/NFPluginModule/NFLogMgr.h"
 #include "NFMessageDefine/NFMsgDefine.h"
 #include "NFServer/NFServerCommon/NFServerCommon.h"
-#include "rapidjson/rapidjson.h"
-#include "rapidjson/document.h"
-#include "rapidjson/stringbuffer.h"
-#include "rapidjson/writer.h"
+#include "common/rapidjson/rapidjson.h"
+#include "common/rapidjson/document.h"
+#include "common/rapidjson/stringbuffer.h"
+#include "common/rapidjson/writer.h"
 
 NFCMongoDriver::NFCMongoDriver(const int nReconnectTime, const int nReconnectCount)
 {

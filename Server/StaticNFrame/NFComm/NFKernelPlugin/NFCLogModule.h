@@ -10,8 +10,8 @@
 #include "NFComm/NFPluginModule/NFILogModule.h"
 #include "NFComm/NFCore/NFPlatform.h"
 
-#include "spdlog/spdlog.h"
-#include "spdlog/fmt/fmt.h"
+#include "common/spdlog/spdlog.h"
+#include "common/spdlog/fmt/fmt.h"
 
 class NFCLogModule : public NFILogModule
 {

@@ -10,8 +10,8 @@
 #pragma once
 
 #include "NFIModule.h"
-#include "rapidjson/rapidjson.h"
-#include "rapidjson/document.h"
+#include "common/rapidjson/rapidjson.h"
+#include "common/rapidjson/document.h"
 #include <functional>
 #include <map>
 #include "NFComm/NFPluginModule/NFLogMgr.h"
