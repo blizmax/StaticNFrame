@@ -159,7 +159,7 @@ void NFCTestActorModule::TestMongo()
 
 bool NFCTestActorModule::Init()
 {
-	TestTimer();
+	//TestTimer();
 	//NFITaskModule* pTaskModule = pPluginManager->FindModule<NFITaskModule>();
 
 	//for(int i = 0; i < 10000; i++)

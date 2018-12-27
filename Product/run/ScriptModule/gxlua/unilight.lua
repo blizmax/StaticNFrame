@@ -80,7 +80,7 @@ function unilight.addclocker(luaFunc, sec, intervalSec, ...)
 	timer.Stop = function()
 		LuaNFrame:StopClocker(timerId)
 	end
-	
+
 	return timer
 end
 

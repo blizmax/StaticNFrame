@@ -20,6 +20,26 @@ function WorldServerModule.Init()
     if FriendManager ~= nil then
         FriendManager:Init()
     end
+
+	local CYCLE_MIN = 60
+	local CYCLE_HOUR = 3600
+	local CYCLE_DAY = CYCLE_HOUR * 24
+    local CYCLE_WEEKLY = CYCLE_DAY * 7
+    
+    unilight.addclocker("WorldServerModule.GlobalDayZeroClock", 0, CYCLE_DAY) 	-- 0点时钟
+    unilight.addclocker("WorldServerModule.GlobalWeekZeroClock", 0, CYCLE_WEEKLY) 	-- 0点时钟
+end
+
+--保存当前是每周几天和每月第几天
+function WorldServerModule.GlobalDayZeroClock()
+	--清理好友系统
+	FriendManager:AllFriendZeroClear()
+	FriendManager.RefreshUserFriendToDB()
+end
+
+--保存当前是每周几天和每月第几天
+function WorldServerModule.GlobalWeekZeroClock()
+
 end
 
 function WorldServerModule.WorldServerNetEvent(nEvent, unLinkId, serverData)

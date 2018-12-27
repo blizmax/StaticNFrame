@@ -54,8 +54,8 @@ function LuaNFrame.RunTimer(luaFunc, timerId, useData)
     LuaNFrame.RunStringFunction(luaFunc, table.unpack(param_table), timer)
 end
 
-function LuaNFrame:AddClocker(luaFunc, sec, intervalSec, useData)
-    return self.luaModule:AddClocker(luaFunc, sec, intervalSec / (24*3600), useData)
+function LuaNFrame:AddClocker(luaFunc, startSec, intervalSec, useData)
+    return self.luaModule:AddClocker(luaFunc, startSec, intervalSec, useData)
 end
 
 function LuaNFrame:StopClocker(timerId)

@@ -30,6 +30,11 @@
 #define TRY_LOAD_SCRIPT_FLE(strFileName)  try{l.doFile(strFileName);} catch (LuaIntf::LuaException& e) { cout << e.what() << endl; }
 #define TRY_ADD_PACKAGE_PATH(strFilePath)  try{ l.addPackagePath(strFilePath); } catch (LuaIntf::LuaException& e) { cout << e.what() << endl; }
 
+void NFLuaTimer::OnTimer(uint32_t nTimerID)
+{
+	m_pLuaScriptModule->TryRunGlobalScriptFunc("LuaNFrame.RunTimer", mLuaFunc, nTimerID, mUseData);
+}
+
 bool NFCLuaScriptModule::Init()
 {
 #if NF_PLATFORM == NF_PLATFORM_WIN
@@ -237,62 +242,74 @@ void NFCLuaScriptModule::RunHttpServerLuaFunc(const std::string& luaFunc, uint32
 	TryRunGlobalScriptFunc("unilight.HttpServerRequestCallBack", luaFunc, serverType, req);
 }
 
-void NFCLuaScriptModule::OnTimer(uint32_t nTimerID)
+void NFCLuaScriptModule::StopTimer(uint32_t nTimerID)
 {
 	auto iter = m_luaTimerMap.find(nTimerID);
 	if (iter != m_luaTimerMap.end())
 	{
-		NFLuaTimer& luaTimer = iter->second;
+		NFLuaTimer* luaTimer = iter->second;
+		luaTimer->KillTimer(nTimerID);
 
-		TryRunGlobalScriptFunc("LuaNFrame.RunTimer", luaTimer.mLuaFunc, nTimerID, luaTimer.mUseData);
-
-		luaTimer.mCurCallCount++;
-		if (luaTimer.mCurCallCount == luaTimer.mCallCount)
-		{
-			m_luaTimerMap.erase(nTimerID);
-		}
+		m_luaTimerMap.erase(iter);
+		luaTimer->Clear();
+		m_luaTimerList.push_back(luaTimer);
 	}
-}
-
-void NFCLuaScriptModule::StopTimer(uint32_t nTimerID)
-{
-	KillTimer(nTimerID);
-	m_luaTimerMap.erase(nTimerID);
 }
 
 void NFCLuaScriptModule::StopClocker(uint32_t nTimerID)
 {
-	KillTimer(nTimerID);
-	m_luaTimerMap.erase(nTimerID);
+	StopTimer(nTimerID);
 }
 
 uint32_t NFCLuaScriptModule::AddTimer(const std::string& luaFunc, uint64_t nInterVal, const std::string& useData)
 {
-	NFLuaTimer luaTimer;
-	luaTimer.mLuaFunc = luaFunc;
-	luaTimer.mInterVal = nInterVal;
-	luaTimer.mCallCount = INFINITY_CALL;
-	luaTimer.mCurCallCount = 0;
-	luaTimer.mUseData = useData;
-	luaTimer.mTimerId = ++m_luaTimerIndex;
+	NFLuaTimer* luaTimer = nullptr;
+	if (m_luaTimerList.empty())
+	{
+		luaTimer = NF_NEW NFLuaTimer(this);
+	}
+	else
+	{
+		NFLuaTimer* luaTimer = m_luaTimerList.front();
+		m_luaTimerList.pop_front();
+		luaTimer->m_pLuaScriptModule = this;
+	}
 
-	SetTimer(luaTimer.mTimerId, luaTimer.mInterVal, luaTimer.mCallCount);
-	m_luaTimerMap.emplace(luaTimer.mTimerId, luaTimer);
-	return luaTimer.mTimerId;
+	luaTimer->mLuaFunc = luaFunc;
+	luaTimer->mInterVal = nInterVal;
+	luaTimer->mCallCount = INFINITY_CALL;
+	luaTimer->mCurCallCount = 0;
+	luaTimer->mUseData = useData;
+	luaTimer->mTimerId = ++m_luaTimerIndex;
+
+	luaTimer->SetTimer(luaTimer->mTimerId, luaTimer->mInterVal, luaTimer->mCallCount);
+	m_luaTimerMap.emplace(luaTimer->mTimerId, luaTimer);
+	return luaTimer->mTimerId;
 }
 
 uint32_t NFCLuaScriptModule::AddClocker(const std::string& luaFunc, uint64_t nStartTime, uint32_t nInterDays, const std::string& useData)
 {
-	NFLuaTimer luaTimer;
-	luaTimer.mLuaFunc = luaFunc;
-	luaTimer.mCallCount = INFINITY_CALL;
-	luaTimer.mCurCallCount = 0;
-	luaTimer.mUseData = useData;
-	luaTimer.mTimerId = ++m_luaTimerIndex;
+	NFLuaTimer* luaTimer = nullptr;
+	if (m_luaTimerList.empty())
+	{
+		luaTimer = NF_NEW NFLuaTimer(this);
+	}
+	else
+	{
+		NFLuaTimer* luaTimer = m_luaTimerList.front();
+		m_luaTimerList.pop_front();
+		luaTimer->m_pLuaScriptModule = this;
+	}
 
-	SetFixTimer(luaTimer.mTimerId, nStartTime, nInterDays, luaTimer.mCallCount);
-	m_luaTimerMap.emplace(luaTimer.mTimerId, luaTimer);
-	return luaTimer.mTimerId;
+	luaTimer->mLuaFunc = luaFunc;
+	luaTimer->mCallCount = INFINITY_CALL;
+	luaTimer->mCurCallCount = 0;
+	luaTimer->mUseData = useData;
+	luaTimer->mTimerId = ++m_luaTimerIndex;
+
+	luaTimer->SetFixTimer(luaTimer->mTimerId, nStartTime, nInterDays, luaTimer->mCallCount);
+	m_luaTimerMap.emplace(luaTimer->mTimerId, luaTimer);
+	return luaTimer->mTimerId;
 }
 
 void NFCLuaScriptModule::RunServerNetEventLuaFunc(const std::string& luaFunc, eMsgType nEvent, uint32_t unLinkId, NF_SHARE_PTR<NFServerData> pServerData)

@@ -17,29 +17,44 @@
 #include "NFComm/NFPluginModule/NFTimerMgr.h"
 #include "NFComm/NFPluginModule/NFILuaModule.h"
 
-class NFLuaTimer
+class NFCLuaScriptModule;
+
+class NFLuaTimer : public NFTimerObj
 {
 public:
-	NFLuaTimer()
+	NFLuaTimer(NFCLuaScriptModule* p)
+	{
+		Clear();
+		m_pLuaScriptModule = p;
+	}
+
+	void Clear()
 	{
 		mTimerId = 0;
 		mInterVal = 0;
 		mCallCount = 0;
+		mCurCallCount = 0;
+		mLuaFunc = "";
+		mUseData = "";
 	}
+
 	uint32_t mTimerId;
 	std::string mLuaFunc;
 	uint64_t mInterVal;
 	uint32_t mCallCount;
 	uint32_t mCurCallCount;
 	std::string mUseData;
+	NFCLuaScriptModule* m_pLuaScriptModule;
+
+	virtual void OnTimer(uint32_t nTimerID) override;
 };
 
 #ifndef NF_DYNAMIC_PLUGIN
 class NFCLuaScriptModule
-    : public NFILuaScriptModule, public NFTimerObj
+    : public NFILuaScriptModule
 #else
 class NFCLuaScriptModule
-	: public NFILuaScriptModule, public NFTimerObj, public NFILuaModule
+	: public NFILuaScriptModule, public NFILuaModule
 #endif
 {
 public:
@@ -67,7 +82,6 @@ public:
 	virtual void RunServerNetEventLuaFunc(const std::string& luaFunc, eMsgType nEvent, uint32_t unLinkId, NF_SHARE_PTR<NFServerData> pServerData) override;
 	virtual void RunAccountNetEventLuaFunc(const std::string& luaFunc, uint32_t nEvent, uint32_t unLinkId, NF_SHARE_PTR<AccountInfo> pServerData) override;
 public:
-	virtual void OnTimer(uint32_t nTimerID) override;
 	virtual uint32_t AddTimer(const std::string& luaFunc, uint64_t nInterVal, const std::string& useData) override;
 	virtual uint32_t AddClocker(const std::string& luaFunc, uint64_t nStartTime, uint32_t nInterDays, const std::string& useData) override;
 	virtual void StopTimer(uint32_t nTimerID) override;
@@ -81,7 +95,8 @@ protected:
 protected:
     int64_t mnTime;
 protected:
-	std::map<uint64_t, NFLuaTimer> m_luaTimerMap;
+	std::map<uint64_t, NFLuaTimer*> m_luaTimerMap;
+	std::list<NFLuaTimer*> m_luaTimerList;
 	uint32_t m_luaTimerIndex;
 };
 
