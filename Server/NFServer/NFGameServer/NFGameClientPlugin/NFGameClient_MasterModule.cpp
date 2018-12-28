@@ -19,6 +19,7 @@ NFCGameClient_MasterModule::NFCGameClient_MasterModule(NFIPluginManager* p)
 {
 	pPluginManager = p;
 	m_pNetClientModule = nullptr;
+	m_onlineNum = 0;
 }
 
 NFCGameClient_MasterModule::~NFCGameClient_MasterModule()
@@ -161,7 +162,7 @@ void NFCGameClient_MasterModule::ServerReport()
 		pData->set_game_id(pConfig->mGameId);
 		pData->set_game_name(pConfig->mGameName);
 		pData->set_server_state(NFMsg::EST_NARMAL);
-		pData->set_server_cur_count(0);
+		pData->set_server_cur_count(m_onlineNum);
 
 		pData->set_cur_cpu_used(pPluginManager->GetSystemInfo().GetProcessInfo().mCpuUsed);
 		pData->set_cur_mem_used(pPluginManager->GetSystemInfo().GetProcessInfo().mMemUsed);

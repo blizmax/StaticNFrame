@@ -20,6 +20,7 @@ NFCGameLogicModule::~NFCGameLogicModule()
 
 bool NFCGameLogicModule::Init()
 {
+	m_pGameClient_MasterModule = pPluginManager->FindModule<NFIGameClient_MasterModule>();
 	m_pServerNetEventModule = pPluginManager->FindModule<NFIServerNetEventModule>();
 
 	m_pNetClientModule = pPluginManager->FindModule<NFINetClientModule>();
@@ -46,6 +47,7 @@ bool NFCGameLogicModule::Execute()
 	}
 
 	NFLogError("online num:{}", m_onlineNum);
+	m_pGameClient_MasterModule->SetOnlineNum(m_onlineNum);
 	lastTime = NFGetSecondTime();
 	return true;
 }

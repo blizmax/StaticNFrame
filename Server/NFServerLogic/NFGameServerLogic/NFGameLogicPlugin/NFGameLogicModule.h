@@ -21,6 +21,7 @@
 #include "NFComm/NFPluginModule/NFILuaScriptModule.h"
 #include "NFComm/NFCore/NFMap.hpp"
 #include "NFComm/NFPluginModule/NFIServerNetEventModule.h"
+#include "NFServer/NFServerCommon/NFIGameClient_MasterModule.h"
 
 class NFCGameLogicModule : public NFIGameLogicModule
 {
@@ -49,6 +50,7 @@ private:
 	NFIServerNetEventModule* m_pServerNetEventModule;
 	NFINetClientModule* m_pNetClientModule;
 	NFILuaScriptModule* m_pLuaScriptModule;
+	NFIGameClient_MasterModule* m_pGameClient_MasterModule;
 
 	NFMapEx<uint64_t, AccountInfo> m_playerAccountInfo;
 	uint32_t m_onlineNum;

@@ -18,4 +18,6 @@ public:
 	{
 
 	}
+
+	virtual void SetOnlineNum(uint32_t num) = 0;
 };
