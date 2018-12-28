@@ -10,6 +10,7 @@
 NFCGameLogicModule::NFCGameLogicModule(NFIPluginManager* p)
 {
 	pPluginManager = p;
+	m_onlineNum = 0;
 }
 
 NFCGameLogicModule::~NFCGameLogicModule()
@@ -38,6 +39,13 @@ bool NFCGameLogicModule::AfterInit()
 
 bool NFCGameLogicModule::Execute()
 {
+	static uint64_t lastTime = 0;
+	if (lastTime + 10 < NFGetSecondTime())
+	{
+		NFLogError("online num:{}", m_onlineNum);
+	}
+
+	lastTime = NFGetSecondTime();
 	return true;
 }
 
@@ -69,6 +77,8 @@ void NFCGameLogicModule::OnHandleAccountConnect(const uint32_t unLinkId, const u
 	pInfo->ip = xMsg.ip();
 	pInfo->unlinkId = unLinkId;
 
+	m_onlineNum++;
+
 	pInfo->SetSendMsg([pInfo, this](const std::string& msg) {
 		this->m_pNetClientModule->SendByServerID(pInfo->unlinkId, 0, msg.data(), msg.length(), pInfo->uid);
 	});
@@ -88,6 +98,8 @@ void NFCGameLogicModule::OnHandleAccountDisConnect(const uint32_t unLinkId, cons
 		pInfo->account = xMsg.account();
 		pInfo->ip = xMsg.ip();
 		pInfo->unlinkId = 0;
+
+		m_onlineNum--;
 
 		pInfo->SetSendMsg([pInfo, this](const std::string& msg) {
 			NFLogError("account disconnect, can't send msg:{}", msg);
@@ -113,6 +125,8 @@ void NFCGameLogicModule::OnHandleAccountReConnect(const uint32_t unLinkId, const
 	pInfo->account = xMsg.account();
 	pInfo->ip = xMsg.ip();
 	pInfo->unlinkId = unLinkId;
+
+	m_onlineNum++;
 
 	pInfo->SetSendMsg([pInfo, this](const std::string& msg) {
 		this->m_pNetClientModule->SendByServerID(pInfo->unlinkId, 0, msg.data(), msg.length(), pInfo->uid);

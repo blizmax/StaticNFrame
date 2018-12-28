@@ -2,9 +2,9 @@ RebotServerModule = {}
 RebotServerModule.RebotIndex = 1
 
 --RebotServerModule.loginUrl = "http://loginxcxtest.zqgame.com/httplogin"
-RebotServerModule.loginUrl = "http://127.0.0.1:7000/httplogin"
+RebotServerModule.loginUrl = "http://ttrserver.staticnframe.com:7000/httplogin"
 RebotServerModule.gameid = 3010
-RebotServerModule.zoneid = 10
+RebotServerModule.zoneid = 11
 RebotServerModule.platid = 0
 RebotServerModule.openKey = "0"
 
@@ -21,11 +21,13 @@ function RebotServerModule.Init()
     TcpClient.addEventCallBack(NF_SERVER_TYPES.NF_ST_PROXY, "RebotServerModule.NetEventCallBack")
     TcpClient.addRecvCallBack(NF_SERVER_TYPES.NF_ST_PROXY, 0, "RebotServerModule.NetServerRecvHandleJson")
 
-    local rebot = RebotPlayer:New()
-    rebot:Init(RebotServerModule.GetRebotIndex())
-    RebotServerModule.rebotNameMap[rebot.name] = rebot
+    for i = 1, 1000 do
+        local rebot = RebotPlayer:New()
+        rebot:Init(RebotServerModule.GetRebotIndex())
+        RebotServerModule.rebotNameMap[rebot.name] = rebot
 
-    rebot:RequestZoneList()
+        rebot:RequestZoneList()
+    end
 end
 
 function RebotServerModule.NetEventCallBack(nEvent, unLinkId)

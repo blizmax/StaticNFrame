@@ -51,4 +51,5 @@ private:
 	NFILuaScriptModule* m_pLuaScriptModule;
 
 	NFMapEx<uint64_t, AccountInfo> m_playerAccountInfo;
+	uint32_t m_onlineNum;
 };
