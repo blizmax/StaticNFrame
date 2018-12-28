@@ -1,5 +1,5 @@
---MasterIP = "45.32.39.90"
-MasterIP = "127.0.0.1"
+MasterIP = "45.32.39.90"
+--MasterIP = "127.0.0.1"
 MasterPort = 5501
 
 --服务器配置列表， ServerId, ServerType 必须配置，MasterServer, LoginServer, ProxyServer为公共服务器， 不用配置gameid， 
