@@ -40,11 +40,12 @@ bool NFCGameLogicModule::AfterInit()
 bool NFCGameLogicModule::Execute()
 {
 	static uint64_t lastTime = 0;
-	if (lastTime + 10 < NFGetSecondTime())
+	if (lastTime + 10 > NFGetSecondTime())
 	{
-		NFLogError("online num:{}", m_onlineNum);
+		return true;
 	}
 
+	NFLogError("online num:{}", m_onlineNum);
 	lastTime = NFGetSecondTime();
 	return true;
 }
