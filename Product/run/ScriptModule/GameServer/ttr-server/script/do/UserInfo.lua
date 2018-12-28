@@ -25,7 +25,12 @@ end
 --玩家每天零点清理数据
 function UserInfo.UserZeroClear(userInfo)
 	userInfo.UserProps:dealZeroInitProps()
-	userInfo.dailyWelfare:dealZeroReset()
+
+	userInfo.dailyLogin:DealZeroReset()
+	userInfo.dailySharing:DealZeroReset()
+	userInfo.dailyDiamondReward:DealZeroReset()
+	userInfo.dailyLotteryDraw:DealZeroReset()
+	userInfo.dailyWelfare:DealZeroReset()
 end
 
 --定时保存玩家数据到DB

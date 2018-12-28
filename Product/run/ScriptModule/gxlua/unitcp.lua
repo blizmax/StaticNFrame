@@ -49,8 +49,12 @@ function TcpServer.sendJsonMsg(cmd, laccount)
 end
 
 --添加网络客户端
-function TcpClient.addServer(serverType, ip, port)
-	return LuaNFrame:addServerForClient(serverType, ip, port)
+function TcpClient.addServer(serverType, ip, port, websocket)
+	return LuaNFrame:addServerForClient(serverType, ip, port, websocket)
+end
+
+function TcpClient:addWebServer(serverType, url)
+	return LuaNFrame:addWebServerForClient(serverType, url)
 end
 
 --添加网络协议回调函数
@@ -67,6 +71,18 @@ end
 -- end
 function TcpClient.addEventCallBack(serverType, luaFunc)
 	LuaNFrame:addEventCallBackForClient(serverType, luaFunc)
+end
+
+function TcpClient.sendMsgByServerId(cmd, unlinkId, msgId, playerId)
+	if type(cmd) == "table" then
+		cmd = table2json(cmd)
+	end
+	
+	if type(cmd) == "string" then
+		msgId = msgId or 0
+		playerId = playerId or 0
+		LuaNFrame:sendByServerIDForClient(unlinkId, msgId, cmd, playerId)
+	end
 end
 
 function TcpClient.sendJsonMsg(cmd, laccount)

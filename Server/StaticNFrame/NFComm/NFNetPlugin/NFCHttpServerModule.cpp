@@ -160,7 +160,7 @@ int NFCHttpServerModule::InitServer(NF_SERVER_TYPES serverType, uint32_t nPort)
 	return 0;
 }
 
-bool NFCHttpServerModule::OnReceiveNetPack(uint32_t unlinkId, const NFHttpRequest& req)
+bool NFCHttpServerModule::OnReceiveNetPack(uint32_t unlinkId, const NFHttpHandle& req)
 {
 	uint32_t serverType = unlinkId;
 	if (serverType <= NF_ST_NONE || serverType >= NF_ST_MAX) return false;
@@ -209,7 +209,7 @@ bool NFCHttpServerModule::OnReceiveNetPack(uint32_t unlinkId, const NFHttpReques
 	return ResponseMsg((NF_SERVER_TYPES)serverType, req, "", NFWebStatus::WEB_ERROR);
 }
 
-NFWebStatus NFCHttpServerModule::OnFilterPack(uint32_t unlinkId, const NFHttpRequest & req)
+NFWebStatus NFCHttpServerModule::OnFilterPack(uint32_t unlinkId, const NFHttpHandle & req)
 {
 	uint32_t serverType = unlinkId;
 	if (serverType <= NF_ST_NONE || serverType >= NF_ST_MAX) return NFWebStatus::WEB_ERROR;
@@ -254,7 +254,7 @@ bool NFCHttpServerModule::AddFilterCB(NF_SERVER_TYPES serverType, const std::str
 	return true;
 }
 
-bool NFCHttpServerModule::ResponseMsg(NF_SERVER_TYPES serverType, const NFHttpRequest& req, const std::string& strMsg, NFWebStatus code,
+bool NFCHttpServerModule::ResponseMsg(NF_SERVER_TYPES serverType, const NFHttpHandle& req, const std::string& strMsg, NFWebStatus code,
 	const std::string& strReason)
 {
 	if (serverType > NF_ST_NONE && serverType < NF_ST_MAX)

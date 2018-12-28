@@ -786,7 +786,7 @@ void NFCMasterServerModule::OnServerReport(const uint32_t unLinkId, const uint64
 	}
 }
 
-bool NFCMasterServerModule::HttpHandleHttpGm(uint32_t linkId, const NFHttpRequest& req)
+bool NFCMasterServerModule::HttpHandleHttpGm(uint32_t linkId, const NFHttpHandle& req)
 {
 	std::string jsonMsg = req.bodySlice.ToString();
 	NF_SHARE_PTR<NFServerData> pServerData = mProxyMap.First();

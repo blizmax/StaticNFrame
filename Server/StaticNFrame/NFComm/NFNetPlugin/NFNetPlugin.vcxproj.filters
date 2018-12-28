@@ -83,6 +83,9 @@
     <ClInclude Include="NFServerNetEventModule.h">
       <Filter>NFServerNetEvent</Filter>
     </ClInclude>
+    <ClInclude Include="NFHttpFormat.h">
+      <Filter>NFHttpClient</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="NFClient">

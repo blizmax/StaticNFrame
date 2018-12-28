@@ -262,3 +262,21 @@ function World:click(stateId, times, critical)
 	unilobby.SendCmdToLobby("Cmd.UserClick_C", data)
 	return 0
 end
+
+function World:rebuildSeeSceen(stateId, buildingId)
+	if self.states[stateId] == nil then
+		return ERROR_CODE.BUILDING_STATE_NOT_OPEN
+	end
+
+	local ret = self.states[stateId]:rebuildSeeSceen(buildingId)
+	return ret
+end
+
+function World:GetBuildingRebuildReward(stateId, buildingId)
+	if self.states[stateId] == nil then
+		return ERROR_CODE.BUILDING_STATE_NOT_OPEN
+	end
+
+	local ret = self.states[stateId]:GetBuildingRebuildReward(buildingId)
+	return ret
+end

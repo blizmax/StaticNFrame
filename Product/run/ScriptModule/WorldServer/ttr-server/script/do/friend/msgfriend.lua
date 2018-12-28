@@ -536,7 +536,7 @@ Zone.CmdSendReqDeleteFriendCmd_C = function(cmd,zonetask)
     if friendData:GetUserFriend(del_uid) ~= nil then
         local tmp = friendData:GetUserFriend(del_uid)
         if tmp:GetIsQQFriend() == true then
-            unilight.debug("是QQ好友，删除QQ好友，记录一下")
+            --unilight.debug("是QQ好友，删除QQ好友，记录一下")
             friendData:AddDeleteQQFriend(del_uid)
         end
         friendData:DelUserFriend(del_uid)
@@ -546,7 +546,7 @@ Zone.CmdSendReqDeleteFriendCmd_C = function(cmd,zonetask)
     if delFriendData:GetUserFriend(uid) ~= nil then
         local tmp = delFriendData:GetUserFriend(uid)
         if tmp:GetIsQQFriend() == true then
-            unilight.debug("是QQ好友，删除QQ好友，记录一下")
+            --unilight.debug("是QQ好友，删除QQ好友，记录一下")
             delFriendData:AddDeleteQQFriend(uid)
         end
         delFriendData:DelUserFriend(uid)

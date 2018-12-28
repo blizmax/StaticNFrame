@@ -181,6 +181,8 @@ public:
 	 * @return void
 	 */
 	void SetLastActionTime(uint64_t time);
+
+	virtual bool IsWebSocket() const { return m_flag.bWebSocket; }
 protected:
 	/**
 	 * @brief	libevent的react数据结构

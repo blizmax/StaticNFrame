@@ -140,7 +140,7 @@ end
 --有时候玩家数据加载需要主动清理零点数据
 function UserFriend:AutoZeroClear()
     if self:IsSameDay() == false then
-        unilight.debug("主动清理好友零点数据............")
+        --unilight.debug("主动清理好友零点数据............")
         self:ZeroClearData()
         self:SetLastZeroTime()
     end
@@ -183,16 +183,16 @@ end
 --邀请的好友首次登陆
 function UserFriend:AddMeAskPlayerUidsAndFirstLogin(uid)
 
-    unilight.debug("table.getn(self.meAskPlayerUids), add-->uid="..uid..", self.uid="..self.uid)
+    --unilight.debug("table.getn(self.meAskPlayerUids), add-->uid="..uid..", self.uid="..self.uid)
 
     if table.getn(self.meAskPlayerUids) >= 10 then
-        unilight.debug("table.getn(self.meAskPlayerUids) >= 10")
+        --unilight.debug("table.getn(self.meAskPlayerUids) >= 10")
         return
     end
 
     for i, v in ipairs(self.meAskPlayerUidsAndFirstLogin) do
         if v == uid then
-            unilight.debug("AddMeAskPlayerUidsAndFirstLogin, self.uid="..self.uid..", addUid="..uid..", already exist")
+            --unilight.debug("AddMeAskPlayerUidsAndFirstLogin, self.uid="..self.uid..", addUid="..uid..", already exist")
             return
         end
     end
@@ -200,7 +200,7 @@ function UserFriend:AddMeAskPlayerUidsAndFirstLogin(uid)
     table.insert(self.meAskPlayerUidsAndFirstLogin, uid)
 
     for i, v in ipairs(self.meAskPlayerUidsAndFirstLogin) do
-        print("self.uid="..self.uid..", AddMeAskPlayerUidsAndFirstLogin, i="..i..", v="..v..", newUid="..v)
+        --print("self.uid="..self.uid..", AddMeAskPlayerUidsAndFirstLogin, i="..i..", v="..v..", newUid="..v)
     end
 end
 
@@ -290,7 +290,7 @@ end
 
 function UserFriend:GetRewardState()
 
-    unilight.debug("GetRewardState, rewardState="..self.simpleData.rewardState..", star="..self.simpleData.star..", Invitation_Star_Awardse="..GlobalConst.Invitation_Star_Awardse)
+    --unilight.debug("GetRewardState, rewardState="..self.simpleData.rewardState..", star="..self.simpleData.star..", Invitation_Star_Awardse="..GlobalConst.Invitation_Star_Awardse)
     if self.simpleData.rewardState == 1 and self.simpleData.star >= GlobalConst.Invitation_Star_Awardse then
         self.simpleData.rewardState = 2
     end
@@ -330,7 +330,7 @@ end
 
 --零点清理数据
 function UserFriend:ZeroClearData()
-    unilight.debug("好友系统，零点清理")
+    --unilight.debug("好友系统，零点清理")
     --清理今天被邀请过的好友
     self:ClearAskAddFriends()
     --清理今天推荐过的好友

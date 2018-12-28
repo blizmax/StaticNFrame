@@ -56,7 +56,7 @@ function State:loadFromDb(data)
 
 	for i, db_building in pairs(data.buildings) do
 		local building = Building:new()
-		building:init(self.owner, self, db_building.id, db_building.lv, db_building.buildLv)
+		building:init(self.owner, self, db_building.id, db_building.lv, db_building.buildLv, db_building.isFootReward)
 	end
 
 	return true
@@ -160,4 +160,20 @@ function State:calcEarning()
 	end
 
 	return money
+end
+
+function State:rebuildSeeSceen(id)
+	if self.buildings[id] == nil then
+		return ERROR_CODE.BUILDING_NOT_BUY
+	end
+
+	return self.buildings[id]:rebuildSeeSceen()
+end
+
+function State:GetBuildingRebuildReward(id)
+	if self.buildings[id] == nil then
+		return ERROR_CODE.BUILDING_NOT_BUY
+	end
+
+	return self.buildings[id]:GetBuildingRebuildReward()
 end

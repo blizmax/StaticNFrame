@@ -26,7 +26,7 @@ local function init()
 		req.st = os.time()
 		local s = table2json(req)
 		w.SendString(s)
-		unilight.debug("[send] " .. s)
+		--unilight.debug("[send] " .. s)
 	end
 
     --停机存档

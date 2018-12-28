@@ -353,12 +353,12 @@ unilight.response = function(w, req)
         msgdata.errno = nil
         local rawdata = pb.encode(msgname,msgdata)
         w.SendLuaProtoRawdata(nu.bycmd, nu.byparam, rawdata)
-	    unilight.debug("[proto send] " .. s)
+	    --unilight.debug("[proto send] " .. s)
         return true
     else
 	    req.st = os.time() + unilight.tzoffset()
 	    w.SendString(s)
-	    unilight.debug("[js send] " .. s)
+	    --unilight.debug("[js send] " .. s)
     end
 end
 

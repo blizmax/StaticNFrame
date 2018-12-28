@@ -1,40 +1,51 @@
 RebotServerModule = {}
+RebotServerModule.RebotIndex = 1
+
+--RebotServerModule.loginUrl = "http://loginxcxtest.zqgame.com/httplogin"
+RebotServerModule.loginUrl = "http://127.0.0.1:7000/httplogin"
+RebotServerModule.gameid = 3010
+RebotServerModule.zoneid = 10
+RebotServerModule.platid = 0
+RebotServerModule.openKey = "0"
+
+RebotServerModule.rebotNameMap = {}
+RebotServerModule.rebotUidMap = {}
+RebotServerModule.rebotUnlinkIdMap = {}
+
+function RebotServerModule.GetRebotIndex()
+    RebotServerModule.RebotIndex = RebotServerModule.RebotIndex + 1
+    return RebotServerModule.RebotIndex
+end
 
 function RebotServerModule.Init()
-    local data = {}
-    data["do"] = "request-zone-list"
-    data["gameid"] = 3010
+    TcpClient.addEventCallBack(NF_SERVER_TYPES.NF_ST_PROXY, "RebotServerModule.NetEventCallBack")
+    TcpClient.addRecvCallBack(NF_SERVER_TYPES.NF_ST_PROXY, 0, "RebotServerModule.NetServerRecvHandleJson")
 
-    --unilight.HttpClientRequestPost("http://ttrserver.staticnframe.com/httplogin", "httpPostReturn", data)
-    --unilight.HttpClientRequestPost("http://127.0.0.1:7000/httplogin", "httpLoginReturn", data)
-    --unilight.HttpClientRequestPost("http://ttrserver.staticnframe.club:3000/gm", "httpPostReturn", data)
+    local rebot = RebotPlayer:New()
+    rebot:Init(RebotServerModule.GetRebotIndex())
+    RebotServerModule.rebotNameMap[rebot.name] = rebot
+
+    rebot:RequestZoneList()
 end
 
-function HttpClient.httpLoginReturn(state_code, respData)
-    unilight.debug("HttpClient.httpPostReturn");
-
-    local data = {}
-    data["do"] = "plat-token-login"
-    data["gameid"] = 3010
-    data["zoneid"] = 0
-    data["data"] = {}
-    data["data"]["platinfo"] = {}
-
-    data["data"]["platinfo"]["account"] = "gaoyi"
-    data["data"]["platinfo"]["openkey"] = "gaoyi_openkey"
-    data["data"]["platinfo"]["platid"] = 0
-
-    unilight.HttpClientRequestPost("http://127.0.0.1:7000/httplogin", "plat_token_login_return", data)
+function RebotServerModule.NetEventCallBack(nEvent, unLinkId)
+    if nEvent == NF_MSG_TYPE.eMsgType_CONNECTED then
+        local rebot = RebotServerModule.rebotUnlinkIdMap[unLinkId]
+        if rebot ~= nil then
+            rebot:Connect()
+        end
+    elseif nEvent == NF_MSG_TYPE.eMsgType_DISCONNECTED then
+        local rebot = RebotServerModule.rebotUnlinkIdMap[unLinkId]
+        if rebot ~= nil then
+            rebot:DisConnect()
+        end
+    end
 end
 
-function HttpClient.plat_token_login_return(state_code, respData)
-    unilight.debug("HttpClient.plat_token_login_return")
-end
-
---特殊协议
 function RebotServerModule.NetServerRecvHandleJson(unLinkId, valueId, nMsgId, strMsg)
     unilight.debug(tostring(valueId) .. " | recv msg |" .. strMsg)
     local table_msg = json2table(strMsg)
+    table_msg = table_msg["msg"]
     --协议规则
     if table_msg ~= nil then
         local cmd = table_msg["do"]
@@ -53,6 +64,47 @@ function RebotServerModule.NetServerRecvHandleJson(unLinkId, valueId, nMsgId, st
         end
     end
     -- body
+end
+
+function HttpClient.httpLoginReturn(state_code, respData, param)
+    unilight.debug("HttpClient.httpPostReturn");
+
+    local rebot_name = param["name"]
+
+    local rebot = RebotServerModule.rebotNameMap[rebot_name]
+
+    if rebot ~= nil then
+        rebot:HttpLoginReturn(respData)
+    end
+end
+
+function HttpClient.plat_token_login_return(state_code, respData, param)
+    unilight.debug("HttpClient.plat_token_login_return")
+
+    local rebot_name = param["name"]
+
+    local rebot = RebotServerModule.rebotNameMap[rebot_name]
+
+    if rebot ~= nil then
+        rebot:PlatTokenLoginReturn(respData)
+    end
+end
+
+function HttpClient.select_zone_return(state_code, respData, param)
+    unilight.debug("HttpClient.select_zone_return")
+
+    if respData.errno ~= "0" then
+        unilight.error("select_zone_return error")
+    end
+ 
+    local rebot_name = param["name"]
+
+    local rebot = RebotServerModule.rebotNameMap[rebot_name]
+
+    if rebot ~= nil then
+        rebot:SelectZoneReturn(respData)
+    end
+
 end
 
 function RebotServerModule.AfterInit()

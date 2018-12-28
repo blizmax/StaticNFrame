@@ -14,7 +14,11 @@ function unilobby.SendCmdToLobby(doinfo,data,no_log,lobby,lobbyid)
     local s = table2json(send)
     local ret = lobby.SendString(s)
     if not no_log then
-        unilight.debug("SendCmdToLobby:" .. s)
+        if doinfo == "Cmd.UserUpdate_C" then
+
+        else
+            --unilight.debug("SendCmdToLobby:" .. s)
+        end
     end
     return ret
 end

@@ -121,9 +121,8 @@ function DailySharing:DealWithLogin()
     end
 end
 
---When 0:00, call
-function DailySharing:dealZeroReset()
-    self.dailyRewardNum = 0
+function DailySharing:DealZeroReset()
+    self:DealWithLogin()
 end
 
 

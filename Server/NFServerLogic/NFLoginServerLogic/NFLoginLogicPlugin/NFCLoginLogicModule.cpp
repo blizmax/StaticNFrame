@@ -133,7 +133,7 @@ void NFCLoginLogicModule::OnExecute(uint16_t nEventID, uint64_t nSrcID, uint8_t 
 
 }
 
-bool NFCLoginLogicModule::HttpHandleHttpLogin(uint32_t linkId, const NFHttpRequest& req)
+bool NFCLoginLogicModule::HttpHandleHttpLogin(uint32_t linkId, const NFHttpHandle& req)
 {
 	NFMsg::http_login_cmd cmd;
 	std::string jsonMsg = req.bodySlice.ToString();
@@ -179,7 +179,7 @@ bool NFCLoginLogicModule::HttpHandleHttpLogin(uint32_t linkId, const NFHttpReque
 	return true;
 }
 
-void NFCLoginLogicModule::RequestZoneList(const NFHttpRequest& req, const NFMsg::reqeust_zone_list& httpLogin)
+void NFCLoginLogicModule::RequestZoneList(const NFHttpHandle& req, const NFMsg::reqeust_zone_list& httpLogin)
 {
 	uint64_t nowTime = pPluginManager->GetNowTime() / 1000;
 	uint32_t gameid = httpLogin.data().gameid();
@@ -304,7 +304,7 @@ void NFCLoginLogicModule::OnHandleMasterAccountLoginReturn(const uint32_t unLink
 	m_pHttpServerModule->ResponseMsg(NF_ST_LOGIN, playerId, responeJson, NFWebStatus::WEB_OK, "OK");
 }
 
-void NFCLoginLogicModule::PlatTokenLogin(const NFHttpRequest& req, const NFMsg::plat_token_login_request& request)
+void NFCLoginLogicModule::PlatTokenLogin(const NFHttpHandle& req, const NFMsg::plat_token_login_request& request)
 {
 	std::string account = request.data().platinfo().account();
 	std::string openkey = request.data().platinfo().sign();
@@ -326,7 +326,7 @@ void NFCLoginLogicModule::PlatTokenLogin(const NFHttpRequest& req, const NFMsg::
 	return;
 }
 
-void NFCLoginLogicModule::RequestSelectZone(const NFHttpRequest& req, const NFMsg::reqeust_select_zone_request& request)
+void NFCLoginLogicModule::RequestSelectZone(const NFHttpHandle& req, const NFMsg::reqeust_select_zone_request& request)
 {
 	uint64_t uid = NFCommon::strto<long long>(request.uid());
 	std::string unigame_plat_login = request.unigame_plat_login();

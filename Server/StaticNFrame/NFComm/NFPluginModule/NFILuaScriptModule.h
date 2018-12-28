@@ -15,7 +15,7 @@
 #include "NFITimerModule.h"
 #include "NFServerDefine.h"
 
-class NFHttpRequest;
+class NFHttpHandle;
 
 #ifndef NF_DYNAMIC_PLUGIN
 #include "NFComm/NFPluginModule/NFILuaModule.h"
@@ -35,7 +35,7 @@ public:
 
 	virtual void RunHtttpClientLuaFunc(const std::string& luaFunc, const int state_code, const std::string& strRespData, const std::string& strUserData) = 0;
 
-	virtual void RunHttpServerLuaFunc(const std::string& luaFunc, uint32_t serverType, const NFHttpRequest & req) = 0;
+	virtual void RunHttpServerLuaFunc(const std::string& luaFunc, uint32_t serverType, const NFHttpHandle & req) = 0;
 
 	virtual void RunServerNetEventLuaFunc(const std::string& luaFunc, eMsgType nEvent, uint32_t unLinkId, NF_SHARE_PTR<NFServerData> pServerData) = 0;
 

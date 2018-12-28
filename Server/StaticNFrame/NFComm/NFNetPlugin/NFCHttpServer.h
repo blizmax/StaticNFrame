@@ -32,7 +32,7 @@ public:
 	}
 
 	template<typename BaseType>
-	NFCHttpServer(uint32_t unLinkId, BaseType* pBaseType, bool (BaseType::*handleRecieve)(uint32_t,const NFHttpRequest& req), NFWebStatus(BaseType::*handleFilter)(uint32_t, const NFHttpRequest& req))
+	NFCHttpServer(uint32_t unLinkId, BaseType* pBaseType, bool (BaseType::*handleRecieve)(uint32_t,const NFHttpHandle& req), NFWebStatus(BaseType::*handleFilter)(uint32_t, const NFHttpHandle& req))
 	{
 		mEventBase = NULL;
 		mReceiveCB = std::bind(handleRecieve, pBaseType, std::placeholders::_1, std::placeholders::_2);
@@ -50,7 +50,7 @@ public:
 
 	virtual ~NFCHttpServer();
 
-	NFHttpRequest* AllocHttpRequest();
+	NFHttpHandle* AllocHttpRequest();
 
 	virtual uint32_t GetLinkId() const;
 
@@ -62,7 +62,7 @@ public:
 	virtual int InitServer(std::vector<uint32_t> nPorts);
 	virtual int InitServer(const std::string& portStr);
 
-	virtual bool ResponseMsg(const NFHttpRequest& req, const std::string& strMsg, NFWebStatus code, const std::string& strReason = "OK");
+	virtual bool ResponseMsg(const NFHttpHandle& req, const std::string& strMsg, NFWebStatus code, const std::string& strReason = "OK");
 	virtual bool ResponseMsg(uint64_t reqeustId, const std::string& strMsg, NFWebStatus code, const std::string& strReason = "OK");
 
 #if NF_ENABLE_SSL
@@ -86,7 +86,7 @@ public:
 private:
 	static void listener_cb(struct evhttp_request* req, void* arg);
 
-	static void AddResponseHeader(const NFHttpRequest& req, const std::string& key, const std::string& value);
+	static void AddResponseHeader(const NFHttpHandle& req, const std::string& key, const std::string& value);
 private:
 	uint32_t mPort;
 	std::vector<uint32_t> mVecPort;
@@ -96,8 +96,8 @@ private:
 	HTTP_FILTER_FUNCTOR mFilter;
 	uint32_t mUnLinkId;
 	uint64_t mIndex;
-	std::map<uint64_t, NFHttpRequest*> mHttpRequestMap;
-	std::list<NFHttpRequest*> mListHttpRequestPool;
+	std::map<uint64_t, NFHttpHandle*> mHttpRequestMap;
+	std::list<NFHttpHandle*> mListHttpRequestPool;
 
 #if NF_ENABLE_SSL
 	bool mEnableSSL;

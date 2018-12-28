@@ -87,7 +87,18 @@ public:
 	 * @param  nPort		连接的端口
 	 * @return uint32_t		返回客户端的唯一ID，返回0表示错误
 	 */
-	virtual uint32_t AddServer(NF_SERVER_TYPES eServerType, const std::string& strIp, const int nPort) override;
+	virtual uint32_t AddServer(NF_SERVER_TYPES eServerType, const std::string& strIp, uint32_t nPort, bool bWebSocket = false) override;
+
+	/**
+	* @brief 连接服务器ip和port，返回代表这里连接的唯一ID，可以连接同种服务器类型多次
+	* 内部通过数组来实现快速访问
+	*
+	* @param  eServerType  服务器类型
+	* @param  strIp		连接的监听IP
+	* @param  nPort		连接的端口
+	* @return uint32_t		返回客户端的唯一ID，返回0表示错误
+	*/
+	virtual uint32_t AddWebServer(NF_SERVER_TYPES eServerType, const std::string& url) override;
 
 	/**
 	 * @brief 关闭unLinkId所代表的连接

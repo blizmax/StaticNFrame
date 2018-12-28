@@ -118,7 +118,84 @@ uint32_t NFCNetClientModule::GetFreeUnLinkId(NF_SERVER_TYPES eServerType)
 	return 0;
 }
 
-uint32_t NFCNetClientModule::AddServer(NF_SERVER_TYPES eServerType, const std::string& strIp, const int nPort)
+uint32_t NFCNetClientModule::AddWebServer(NF_SERVER_TYPES eServerType, const std::string& url)
+{
+	struct evhttp_uri* http_uri = evhttp_uri_parse(url.c_str());
+	if (http_uri == NULL)
+	{
+		NFLogError("evhttp_uri_parse err. url:{}", url);
+		return 0;
+	}
+
+	const char*  scheme = evhttp_uri_get_scheme(http_uri);
+	if (scheme == NULL)
+	{
+		NFLogError("http_uri:{},scheme == NULL err. ", url);
+		return 0;
+	}
+
+	std::string schemeStr = scheme;
+
+	if (schemeStr != "ws" && schemeStr != "wss")
+	{
+		NFLogError("http_uri:{}, is not ws or wss err. ", url);
+		return 0;
+	}
+
+	const char*  host = evhttp_uri_get_host(http_uri);
+	if (host == NULL)
+	{
+		NFLogError("http_uri:{},host == NULL err. ", url);
+		return 0;
+	}
+
+	std::string hostStr = host;
+	std::string pathStr;
+
+	int port = evhttp_uri_get_port(http_uri);
+
+	const char* path = evhttp_uri_get_path(http_uri);
+	if (path != NULL)
+	{
+		pathStr = path;
+	}
+
+	evhttp_uri_free(http_uri);
+
+	if (eServerType > NF_ST_NONE && eServerType < NF_ST_MAX)
+	{
+		uint32_t usId = GetFreeUnLinkId(eServerType);
+		if (usId == 0)
+		{
+			NFLogError("Add Connecting Server Failed! Ip:{}, Port:{}", hostStr, port);
+			return 0;
+		}
+
+		uint32_t index = GetServerIndexFromUnlinkId(usId);
+
+		NFClientFlag flag;
+		flag.strIP = hostStr;
+		flag.nPort = port;
+		flag.bWebSocket = true;
+		flag.origin = url;
+		NFClient* pClient = NF_NEW NFClient(usId, flag);
+		pClient->SetRecvCB((NFINetModule*)this, &NFINetModule::OnReceiveNetPack);
+		pClient->SetEventCB((NFINetModule*)this, &NFINetModule::OnSocketNetEvent);
+		if (index < mxServerMap[eServerType].size() && mxServerMap[eServerType][index] == nullptr)
+		{
+			mxServerMap[eServerType][index] = pClient;
+			return pClient->GetLinkId();
+		}
+		else
+		{
+			NFLogError("Add Connecting Server Failed! Ip:{}, Port:{}", hostStr, port);
+		}
+		NF_SAFE_DELETE(pClient);
+	}
+	return 0;
+}
+
+uint32_t NFCNetClientModule::AddServer(NF_SERVER_TYPES eServerType, const std::string& strIp, uint32_t nPort, bool bWebSocket)
 {
 	if (eServerType > NF_ST_NONE && eServerType < NF_ST_MAX)
 	{
@@ -134,6 +211,7 @@ uint32_t NFCNetClientModule::AddServer(NF_SERVER_TYPES eServerType, const std::s
 		NFClientFlag flag;
 		flag.strIP = strIp;
 		flag.nPort = nPort;
+		flag.bWebSocket = bWebSocket;
 		NFClient* pClient = NF_NEW NFClient(usId, flag);
 		pClient->SetRecvCB((NFINetModule*)this, &NFINetModule::OnReceiveNetPack);
 		pClient->SetEventCB((NFINetModule*)this, &NFINetModule::OnSocketNetEvent);
@@ -234,8 +312,20 @@ void NFCNetClientModule::SendByServerID(const uint32_t unLinkId, const uint32_t 
 
 void NFCNetClientModule::SendMsg(NFClient* pClient, const uint32_t nMsgID, const char* msg, const uint32_t nLen, const uint64_t nPlayerID)
 {
+	if (pClient == nullptr) return;
+
 	mxSendBuffer.Clear();
-	NFIPacketParse::EnCode(nMsgID, nPlayerID, msg, nLen, mxSendBuffer);
+	if (pClient->IsWebSocket())
+	{
+		std::string frame;
+		NFIPacketParse::EnCodeWeb(msg, nLen, frame);
+		mxSendBuffer.PushData((const void*)frame.data(), frame.length());
+	}
+	else
+	{
+		NFIPacketParse::EnCode(nMsgID, nPlayerID, msg, nLen, mxSendBuffer);
+	}
+	
 	if (pClient)
 	{
 		pClient->Send(mxSendBuffer.ReadAddr(), mxSendBuffer.ReadableSize());

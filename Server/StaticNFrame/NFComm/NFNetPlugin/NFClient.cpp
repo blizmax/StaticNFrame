@@ -115,6 +115,9 @@ bool NFClient::Connect()
 
 	struct bufferevent* pBev = bufferevent_socket_new(m_pMainBase, -1, BEV_OPT_CLOSE_ON_FREE);
 
+	m_pObject->SetWebSocket(m_flag.bWebSocket);
+	m_pObject->SetOrigin(m_flag.origin);
+	m_pObject->SetIsServer(false);
 	m_pObject->SetBev(pBev);
 	m_pObject->SetLinkId(m_usLinkId);
 	m_pObject->SetStrIp(m_flag.strIP);

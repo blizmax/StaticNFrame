@@ -120,3 +120,50 @@ function Net.CmdBuildingLevelupTenCmd_C(cmd, laccount)
 
 	return res
 end
+
+
+function Net.CmdBuildingRebuildSeeScreen_C(cmd, laccount)
+	local res = {}
+	res["do"] = "Cmd.BuildingRebuildSeeScreen_S"
+	res["data"] = {
+		stateId = cmd.data.stateId,
+		buildingId = cmd.data.buildingId,
+	}
+
+	if cmd.data == nil or cmd.data.stateId == nil or cmd.data.buildingId == nil then
+		res.data["resultCode"] = ERROR_CODE.ARGUMENT_ERROR
+		return res
+	end
+
+	local userInfo = UserInfo.GetUserInfoById(laccount.Id)
+
+	res.data["resultCode"] = userInfo.world:rebuildSeeSceen(cmd.data.stateId, cmd.data.buildingId)
+
+	return res
+end
+
+function Net.CmdGetBuildingRebuildRewardCmd_C(cmd, laccount)
+	local res = {}
+	res["do"] = "Cmd.GetBuildingRebuildRewardCmd_S"
+	res["data"] = {
+		stateId = cmd.data.stateId,
+		buildingId = cmd.data.buildingId,
+	}
+
+	if cmd.data == nil or cmd.data.stateId == nil or cmd.data.buildingId == nil then
+		res.data["resultCode"] = ERROR_CODE.ARGUMENT_ERROR
+		return res
+	end
+
+	local userInfo = UserInfo.GetUserInfoById(laccount.Id)
+
+	res.data["resultCode"] = userInfo.world:GetBuildingRebuildReward(cmd.data.stateId, cmd.data.buildingId)
+
+	if res.data["resultCode"] == 0 then
+		res.data["isFootReward"] = true
+	else
+		res.data["isFootReward"] = false
+	end
+	
+	return res
+end

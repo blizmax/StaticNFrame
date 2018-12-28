@@ -300,6 +300,17 @@ public:
 	* @return void
 	*/
 	virtual std::string HandleSharkReturn();
+
+	/**
+	* @brief 是否是服务器端
+	*
+	* @return void
+	*/
+	virtual void SetIsServer(bool b);
+
+	virtual void SendHandleShark();
+
+	virtual void SetOrigin(const std::string& str) { m_origin = str; }
 protected:
 	/**
 	 * @brief	处理接受数据的回调
@@ -332,6 +343,11 @@ protected:
 	NFBuffer m_buffer;
 
 	/**
+	* @brief	websocket需要
+	*/
+	std::string m_origin;
+
+	/**
 	 * @brief	连接代表的对方的IP
 	 */
 	std::string m_strIp;
@@ -355,6 +371,11 @@ protected:
 	* @brief websocket
 	*/
 	bool mWebSocket;
+
+	/**
+	* @brief is server
+	*/
+	bool mIsServer; //是否是服务器端
 
 	/**
 	* @brief websocket header map

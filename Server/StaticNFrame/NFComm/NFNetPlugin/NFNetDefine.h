@@ -111,15 +111,18 @@ struct NFClientFlag
 {
 	bool bAutoConnect; //自动重连
 	bool bEncrypt;
+	bool bWebSocket;
 	uint16_t nPort;
 	std::string strIP;
 	uint16_t sSuspend;
+	std::string origin;
 
 	NFClientFlag()
 	{
 		nPort = 0;
 		bAutoConnect = false;
 		bEncrypt = false;
+		bWebSocket = false;
 		sSuspend = 0;
 	}
 };

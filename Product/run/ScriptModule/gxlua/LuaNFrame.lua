@@ -354,8 +354,13 @@ function LuaNFrame:SendToAllServerByServerTypeForClient(serverType, nMsgId, strD
     self.clientModule:SendToAllServerByServerType(serverType, nMsgId, strData, nPlayerId)
 end
 
-function LuaNFrame:addServerForClient(serverType, ip, port)
-    return self.clientModule:AddServer(serverType, ip, port)
+function LuaNFrame:addServerForClient(serverType, ip, port, websocket)
+    websocket = websocket or false
+    return self.clientModule:AddServer(serverType, ip, port, websocket)
+end
+
+function LuaNFrame:addWebServerForClient(serverType, url)
+    return self.clientModule:AddWebServer(serverType, url)
 end
 
 --添加网络协议回调函数

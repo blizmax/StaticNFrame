@@ -732,18 +732,18 @@ Zone.CmdUserTravelLevelUp_C = function(cmd,zonetask)
             return
         end
 
-        if money_type == static_const.Static_MoneyType_Diamond then
-            if cmd.data.cur_diamond < money then
+        if tonumber(money_type) == static_const.Static_MoneyType_Diamond then
+            if cmd.data.cur_diamond < tonumber(money) then
                 res["data"] = {
                     cmd_uid = uid,
-                    resultCode = ERROR_CODE.MONEY_NOT_ENOUGH,
+                    resultCode = ERROR_CODE.DIAMOND_NOT_ENOUGH,
                     desc = "抱歉，你的钱不够"
                 }
                 ZoneInfo.SendCmdToMe(res["do"], res["data"], zonetask)
                 return
             end
-        elseif money_type == static_const.Static_MoneyType_Gold then
-            if cmd.data.cur_money < money then
+        elseif tonumber(money_type) == static_const.Static_MoneyType_Gold then
+            if cmd.data.cur_money < tonumber(money) then
                 res["data"] = {
                     cmd_uid = uid,
                     resultCode = ERROR_CODE.MONEY_NOT_ENOUGH,
@@ -754,7 +754,7 @@ Zone.CmdUserTravelLevelUp_C = function(cmd,zonetask)
             end
         end
 
-        FriendManager.SubUserMoney(zonetask, friendData, money_type, money)
+        FriendManager.SubUserMoney(zonetask, friendData, tonumber(money_type), tonumber(money))
     end
 
     travelData:LevelUp()

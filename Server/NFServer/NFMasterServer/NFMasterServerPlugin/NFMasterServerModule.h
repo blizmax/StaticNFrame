@@ -78,7 +78,7 @@ protected:
 
 	void OnClientDisconnect(uint32_t unLinkId);
 
-	virtual bool HttpHandleHttpGm(uint32_t linkId, const NFHttpRequest& req);
+	virtual bool HttpHandleHttpGm(uint32_t linkId, const NFHttpHandle& req);
 private:
 	NFINetServerModule* m_pNetServerModule;
 	NFIHttpServerModule* m_pHttpServerModule;

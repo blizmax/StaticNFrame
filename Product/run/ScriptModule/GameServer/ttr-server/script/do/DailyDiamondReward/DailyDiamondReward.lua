@@ -92,9 +92,6 @@ function DailyDiamondReward:DealWithLogin()
     unilight.response(self.owner.laccount, res)
 end
 
---When 0:00, call
-function DailyDiamondReward:reset()
-end
-
-function DailyDiamondReward:addProgress(cond, times)
+function DailyDiamondReward:DealZeroReset()
+    self:DealWithLogin()
 end

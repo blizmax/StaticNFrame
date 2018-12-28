@@ -5,9 +5,9 @@ require "script/do/globalConst"
 static_const = {}
 
 --静态常量，好友系统，多次时间保存一次数据
-static_const.Static_Const_Friend_Save_Data_To_DB_Time = 60
+static_const.Static_Const_Friend_Save_Data_To_DB_Time = 300
 
-static_const.Static_Const_User_Save_Data_DB_Time = 60
+static_const.Static_Const_User_Save_Data_DB_Time = 300
 
 static_const.Static_Const_Rank_List_Sort_time = 60
 

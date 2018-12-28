@@ -27,7 +27,15 @@ local function init()
 		local s = table2json(req)
 		if w ~= nil then
 			w.SendString(s)
-			unilight.debug("[send] " .. s)
+
+			if type(req["do"]) == "string" then
+				if req["do"] == "Cmd.SendUserMoneyCmd_S" then
+					return
+				elseif req["do"] == "Cmd.Ping_S" then
+					return
+				end
+			end
+			--unilight.debug("[send] " .. s)
 		end
 	end
     Zone = Zone or {}

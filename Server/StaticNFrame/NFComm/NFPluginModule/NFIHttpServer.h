@@ -67,10 +67,10 @@ enum NFHttpType
 
 class NFCHttpServer;
 
-class NFHttpRequest
+class NFHttpHandle
 {
 public:
-	NFHttpRequest()
+	NFHttpHandle()
 	{
 		Reset();
 	}
@@ -103,8 +103,8 @@ public:
 };
 
 //it should be
-typedef std::function<bool(uint32_t linkId, const NFHttpRequest& req)> HTTP_RECEIVE_FUNCTOR;
-typedef std::function<NFWebStatus(uint32_t linkId, const NFHttpRequest& req)> HTTP_FILTER_FUNCTOR;
+typedef std::function<bool(uint32_t linkId, const NFHttpHandle& req)> HTTP_RECEIVE_FUNCTOR;
+typedef std::function<NFWebStatus(uint32_t linkId, const NFHttpHandle& req)> HTTP_FILTER_FUNCTOR;
 
 class NFIHttpServer
 {
@@ -117,7 +117,7 @@ public:
 	virtual int InitServer(std::vector<uint32_t> nPorts) = 0;
 	virtual int InitServer(const std::string& portStr) = 0;
 
-	virtual bool ResponseMsg(const NFHttpRequest& req, const std::string& strMsg, NFWebStatus code,
+	virtual bool ResponseMsg(const NFHttpHandle& req, const std::string& strMsg, NFWebStatus code,
 		const std::string& strReason = "OK") = 0;
 
 	virtual bool ResponseMsg(uint64_t reqeustId, const std::string& strMsg, NFWebStatus code, const std::string& strReason = "OK") = 0;

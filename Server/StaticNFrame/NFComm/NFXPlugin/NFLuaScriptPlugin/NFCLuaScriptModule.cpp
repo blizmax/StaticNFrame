@@ -133,18 +133,18 @@ bool NFCLuaScriptModule::Register()
 		.addFunction("HttpRequestPost", &NFIHttpClientModule::LuaHttpPost)
 		.endClass();
 
-	LuaIntf::LuaBinding(l).beginClass<NFHttpRequest>("NFHttpRequest")
-		.addProperty("url", &NFHttpRequest::get_url)
-		.addProperty("path", &NFHttpRequest::get_path)
-		.addProperty("remoteHost", &NFHttpRequest::get_remoteHost)
-		.addProperty("type", &NFHttpRequest::get_type)
-		.addProperty("body", &NFHttpRequest::get_body)
+	LuaIntf::LuaBinding(l).beginClass<NFHttpHandle>("NFHttpRequest")
+		.addProperty("url", &NFHttpHandle::get_url)
+		.addProperty("path", &NFHttpHandle::get_path)
+		.addProperty("remoteHost", &NFHttpHandle::get_remoteHost)
+		.addProperty("type", &NFHttpHandle::get_type)
+		.addProperty("body", &NFHttpHandle::get_body)
 	.endClass();
 
 	LuaIntf::LuaBinding(l).beginClass<NFIHttpServerModule>("NFIHttpServerModule")
 		.addFunction("AddRequestHandler", &NFIHttpServerModule::LuaAddRequestHandler)
 		.addFunction("InitServer", (int (NFIHttpServerModule::*)(NF_SERVER_TYPES serverType, uint32_t nPort))&NFIHttpServerModule::InitServer)
-		.addFunction("ResponseMsg", (bool (NFIHttpServerModule::*)(NF_SERVER_TYPES serverType, const NFHttpRequest& req, const std::string& strMsg, NFWebStatus code,
+		.addFunction("ResponseMsg", (bool (NFIHttpServerModule::*)(NF_SERVER_TYPES serverType, const NFHttpHandle& req, const std::string& strMsg, NFWebStatus code,
 			const std::string& reason))&NFIHttpServerModule::ResponseMsg)
 		.addFunction("ResponseMsgByRequestId", (bool (NFIHttpServerModule::*)(NF_SERVER_TYPES serverType, uint64_t requestId, const std::string& strMsg, NFWebStatus code,
 			const std::string& reason))&NFIHttpServerModule::ResponseMsg)
@@ -163,6 +163,7 @@ bool NFCLuaScriptModule::Register()
 
 	LuaIntf::LuaBinding(l).beginClass<NFINetClientModule>("NFINetClientModule")
 		.addFunction("AddServer", &NFINetClientModule::AddServer)
+		.addFunction("AddWebServer", &NFINetClientModule::AddWebServer)
 		.addFunction("CloseServer", &NFINetClientModule::CloseServer)
 		.addFunction("AddReceiveLuaCallBackByMsgId", &NFINetClientModule::AddReceiveLuaCallBackByMsgId)
 		.addFunction("AddReceiveLuaCallBackToOthers", &NFINetClientModule::AddReceiveLuaCallBackToOthers)
@@ -230,7 +231,7 @@ void NFCLuaScriptModule::RunHtttpClientLuaFunc(const std::string& luaFunc, const
 	TryRunGlobalScriptFunc("unilight.HttpClientRequestCallBack", luaFunc, state_code, strRespData, strUserData);
 }
 
-void NFCLuaScriptModule::RunHttpServerLuaFunc(const std::string& luaFunc, uint32_t serverType, const NFHttpRequest & req)
+void NFCLuaScriptModule::RunHttpServerLuaFunc(const std::string& luaFunc, uint32_t serverType, const NFHttpHandle & req)
 {
 	TryRunGlobalScriptFunc("unilight.HttpServerRequestCallBack", luaFunc, serverType, req);
 }

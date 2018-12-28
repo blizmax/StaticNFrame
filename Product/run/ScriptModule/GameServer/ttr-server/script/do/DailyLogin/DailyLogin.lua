@@ -249,58 +249,7 @@ function DailyLogin:initRewardInfoForDebug()
     print("hello")
 end
 
---DailyLogin:initRewardInfoForDebug()
-
 --When 0:00, call
-function DailyLogin:reset()
-    self:initRewardInfo()
+function DailyLogin:DealZeroReset()
+    self:DealWithLogin()
 end
-
-function DailyLogin:addProgress(cond, times)
-
-end
-
-
---function DailyLogin:LoginForDebug()
---
---    DailyLoginTable = {
---        [1]={["id"]=1,["reward"]="1_20"},
---        [2]={["id"]=2,["reward"]="1_40"},
---        [3]={["id"]=3,["reward"]="1_60"},
---        [4]={["id"]=4,["reward"]="1_80"},
---        [5]={["id"]=5,["reward"]="1_100"},
---        [6]={["id"]=6,["reward"]="1_120"},
---        [7]={["id"]=7,["reward"]="1_150"},
---    }
---
---    local userInfo = {
---        uid			= 10086,
---        nickName	= "测试员" .. 10086,
---        money		= 1000,
---        diamond		= 1000,
---        star		= 1000,
---        settings	= {},
---        sex			= 1,
---        head		= "",
---        firstLogin  = 1,--首次登陆
---    }
---    self.owner = userInfo
---
---    self.loginInfo = {}
---    self.len = #DailyLoginTable
---    for i = 1,  self.len do
---        local temp = LoginInfo:new()
---        temp.id = i
---        temp.state = G_ALREADY_GET_REWARD
---        if i == self.len then
---            temp.state = G_CAN_GET_REWARD
---        end
---
---        temp.rewardInfo = DailyLoginTable[i]["reward"]
---        self.loginInfo[i] = temp
---    end
---
---    self:Login()
---end
-
---DailyLogin:LoginForDebug()

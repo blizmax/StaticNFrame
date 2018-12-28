@@ -6,6 +6,7 @@ Building = {
 	buildLv = 1,
 	lost = 0,
 	produce = 0,
+	isFootReward = false, --是否领取构造最高奖励
 
 	product_time = os.time(),
 	product_value = 0,
@@ -18,7 +19,7 @@ function Building:new(o)
 	return o
 end
 
-function Building:init(owner, state, id, lv, buildLv)
+function Building:init(owner, state, id, lv, buildLv, isFootReward)
 	self.owner = owner
 	self.state = state
 	self.id = id
@@ -27,6 +28,7 @@ function Building:init(owner, state, id, lv, buildLv)
 	self.product_time = os.time()
 	self.product_value = 0
 	self.produce = 0
+	self.isFootReward = isFootReward or self.isFootReward
 
 	if self.buildLv >= 100 then
 		self.buildLv = 99
@@ -52,7 +54,7 @@ function Building:recalc()
 	--local words = "recalc building: {id: %d, lv: %d, buildLv: %d, produce:%d}"
 	--unilight.debug(words.format(words, self.id, self.lv, self.buildLv, self.produce))
 
-	local userinfo = UserInfo.GetUserInfoById(self.owner.uid)
+	local userinfo = self.owner
 	if userinfo == nil then
 		return
 	end
@@ -102,6 +104,7 @@ function Building:sn()
 		id = self.id,
 		lv = self.lv,
 		buildLv = self.buildLv,
+		isFootReward = self.isFootReward,
 	}
 	return data
 end
@@ -140,7 +143,11 @@ function Building:levelupTen()
 		buildid = self.id,
 		lv = self.lv,
 	}
-	unilobby.SendCmdToLobby("Cmd.BuildingLevelup_C", data) 
+	unilobby.SendCmdToLobby("Cmd.BuildingLevelup_C", data)
+
+	--for i = 1, num do
+	--	self:AutoRebuild()
+	--end
 
 	return ERROR_CODE.SUCCESS
 end
@@ -190,7 +197,81 @@ function Building:levelup()
 		buildid = self.id,
 		lv = self.lv,
 	}
-	unilobby.SendCmdToLobby("Cmd.BuildingLevelup_C", data) 
+	unilobby.SendCmdToLobby("Cmd.BuildingLevelup_C", data)
+
+	--self:AutoRebuild()
+
+	return ERROR_CODE.SUCCESS
+end
+
+function Building:AutoRebuild()
+	local row = TableRebuild.query(self.id, self.buildLv + 1)
+	if row == nil then
+		return
+	end
+
+	local needLv = row["NeedLv"]
+
+	if type(needLv) ~= "number" then
+		unilight.error("Table[Rebuild]'s needLv is error")
+		return
+	end
+
+	if self.lv >= needLv then
+		self.buildLv = self.buildLv + 1
+		self:recalc()
+
+		--任务系统，任务完成情况
+		self.owner.achieveTask:addProgress(TaskConditionEnum.BuildingChangeEvent, 1)
+		self.owner.dailyTask:addProgress(TaskConditionEnum.BuildingChangeEvent, 1)
+
+		local data = {}
+		data.cmd_uid = self.owner.uid
+		data.userInfo = {
+			mapid = self.state.id,
+			buildid = self.id,
+			lv = self.lv,
+		}
+		unilobby.SendCmdToLobby("Cmd.BuildingReBuild_C", data)
+
+		local reward = row["RewardMoney"]
+
+		local money_table = string.split(reward, "_")
+		local money_type, money =  money_table[1], money_table[2]
+		if money_type ~= nil and money ~= nil then
+			UserInfo.AddUserMoneyByUid(self.owner.uid, money_type, money)
+		end
+
+		local res = {}
+		res["do"] = "Cmd.BuildingRebuildCmd_S"
+		res["data"] = {
+			stateId = self.state.id,
+			buildingId = self.id,
+			resultCode = 0,
+		}
+
+		unilight.response(self.owner.laccount, res)
+	end
+
+end
+
+function Building:rebuildSeeSceen()
+	local row = TableRebuild.query(self.id, self.buildLv)
+
+	if row == nil then
+		return ERROR_CODE.BUILDING_REBUILD_MAX
+	end
+
+	local reward = row["RewardMoney"]
+
+	local money_table = string.split(reward, "_")
+	local money_type, money =  money_table[1], money_table[2]
+	if money_type == nil or money == nil then
+		unilight.error("配置表数据出错.........")
+		return ERROR_CODE.TABLE_ERROR
+	end
+
+	UserInfo.AddUserMoneyByUid(self.owner.uid, money_type, money)
 
 	return ERROR_CODE.SUCCESS
 end
@@ -246,6 +327,61 @@ function Building:rebuild()
 	}
 	unilobby.SendCmdToLobby("Cmd.BuildingReBuild_C", data) 
 
+--	local reward = row["RewardMoney"]
+
+--	local money_table = string.split(reward, "_")
+--	local money_type, money =  money_table[1], money_table[2]
+--	if money_type == nil or money == nil then
+--		unilight.error("配置表数据出错.........")
+--		return ERROR_CODE.TABLE_ERROR
+--	end
+
+--	UserInfo.AddUserMoneyByUid(self.owner.uid, money_type, money)
 
 	return ERROR_CODE.SUCCESS
 end
+
+function Building:GetBuildingRebuildReward()
+	local row = FootPrint.query(self.id)
+
+	if row == nil then
+		return ERROR_CODE.TABLE_ERROR
+	end
+
+	local needLv = row["RebuildTimes"]
+
+	if type(needLv) ~= "number" then
+		unilight.info("Table[Rebuild]'s needLv is error")
+		return ERROR_CODE.TABLE_ERROR
+	end
+
+	unilight.error("buildid:"..self.id.." buildlv:"..self.buildLv.." needLv:"..needLv)
+
+	if self.buildLv ~= needLv then
+		return ERROR_CODE.BUILDING_LEVEL_NOT_ENOUGH
+	end
+
+	local cost = row["Reward1"]
+
+	local money_table = string.split(cost, "_")
+	local money_type, money =  money_table[1], money_table[2]
+	if money_type == nil or money == nil then
+		unilight.error("配置表数据出错.........")
+		return ERROR_CODE.TABLE_ERROR
+	end
+
+	if UserInfo.CheckUserMoneyByUid(self.owner.uid, money_type, money) == false then
+		if money_type == static_const.Static_MoneyType_Diamond then
+			return ERROR_CODE.MONEY_NOT_ENOUGH
+		elseif money_type == static_const.Static_MoneyType_Gold then
+			return ERROR_CODE.DIAMOND_NOT_ENOUGH
+		end
+	end
+
+	UserInfo.SubUserMoneyByUid(self.owner.uid, money_type, money)
+
+	self.isFootReward = true
+
+	return ERROR_CODE.SUCCESS
+end
+
