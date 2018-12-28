@@ -27,7 +27,7 @@ function unilobby.SendCmdToLobby(doinfo,data,no_log,lobbyid)
 
     if not no_log then
         if doinfo ~= "Cmd.UserUpdate_C" then
-            unilight.debug("SendCmdToLobby:" .. s)
+            --unilight.debug("SendCmdToLobby:" .. s)
         end
     end
 end

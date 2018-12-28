@@ -231,7 +231,7 @@ unilight.response = function(w, req)
 			return
 		end
 	end
-	unilight.debug("[send] " .. s)
+	--unilight.debug("[send] " .. s)
 end
 
 -- Net.*简化Do.*的消息处理，可直接收发lua table消息 --

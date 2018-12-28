@@ -39,7 +39,7 @@ ZoneInfo.SendCmdToMe = function(doinfo, data, zonetask)
     send["do"] = doinfo
     send["data"] = data
     local s = json.encode(send)
-    unilight.info("SendCmdToMe:" .. s)
+    --unilight.info("SendCmdToMe:" .. s)
     zonetask.SendString(s)
 end
 
@@ -52,7 +52,7 @@ ZoneInfo.SendCmdToMeById = function(doinfo, data, gameid, zoneid)
     send["do"] = doinfo
     send["data"] = data
     local s = json.encode(send)
-    unilight.info("SendCmdToMeById:" .. s)
+    --unilight.info("SendCmdToMeById:" .. s)
     local zonetask = ZoneInfo.ZoneTaskMap[tostring(gameid)..zoneid]
     if zonetask ~= nil then
         zonetask.SendString(s)
@@ -68,7 +68,7 @@ ZoneInfo.SendCmdToFirst = function(doinfo, data)
     send["do"] = doinfo
     send["data"] = data
     local s = json.encode(send)
-    unilight.info("SendCmdToFirst:" .. s)
+    --unilight.info("SendCmdToFirst:" .. s)
     if ZoneInfo.FirstTask ~= nil then
         ZoneInfo.FirstTask.SendString(s)
     end
@@ -83,7 +83,7 @@ ZoneInfo.SendCmdToAll = function(doinfo, data, gameid, zoneid)
     send["do"] = doinfo
     send["data"] = data
     local s = json.encode(send)
-    unilight.info("SendCmdToAll:" .. s)
+    --unilight.info("SendCmdToAll:" .. s)
     local key = tostring(gameid)..zoneid
     for k, zonetask in pairs(ZoneInfo.ZoneTaskMap) do
         if k ~= key then

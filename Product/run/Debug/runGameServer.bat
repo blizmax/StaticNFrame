@@ -1,1 +1,0 @@
-start NFPluginLoader --Server=GameServer --ID=12 --Path=../Config --LuaScript=../ScriptModule                         

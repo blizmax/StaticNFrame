@@ -102,6 +102,8 @@ function RebotPlayer:Connect()
     self:DoRequestPlayerBaseInfo()
     self:RequestTravelData()
     self:RequestGuideInfo()
+
+    unilight.addtimer("RebotServerModule.UpdateSec", 1, self.uid)
 end
 
 function RebotPlayer:LoginTokenLogin()
@@ -161,4 +163,16 @@ end
 
 function RebotPlayer:DisConnect()
 
+end
+
+function RebotPlayer:ClickTravel()
+    local data = { }
+    data["do"] = "Cmd.StateClickCmd_C"
+    data["data"] = {
+        stateId = 101,
+        times = 4,
+        critical = 4,
+    }
+
+    self:SendMessage(data)
 end

@@ -303,12 +303,12 @@ end
 
 --获得服务器开启时间，单位s
 function LuaNFrame:GetInitTime()
-    return self.pluginManager:GetInitTime()/1000
+    return self.pluginManager:GetInitTime()
 end
 
 --获得服务器当前时间，单位s
 function LuaNFrame:GetNowTime()
-    return self.pluginManager:GetNowTime()/1000
+    return self.pluginManager:GetNowTime()
 end
 
 --添加网络服务器

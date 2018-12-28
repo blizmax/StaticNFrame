@@ -97,7 +97,7 @@ end
 
 --特殊协议
 function GameServerModule.WorldServerRecvHandleJson(unLinkId, valueId, nMsgId, strMsg)
-    unilight.debug(tostring(valueId) .. " | recv world msg |" .. strMsg)
+    --unilight.debug(tostring(valueId) .. " | recv world msg |" .. strMsg)
     local table_msg = json2table(strMsg)
     --协议规则
     if table_msg ~= nil then
@@ -124,7 +124,7 @@ function GameServerModule.NetServerRecvHandleJson(unLinkId, valueId, nMsgId, str
     local table_msg = json2table(strMsg)
     if type(table_msg["do"]) == "string" then
         if table_msg["do"] ~= "Cmd.Ping_C" then
-            unilight.debug(tostring(valueId) .. " | recv msg |" .. strMsg)
+            --unilight.debug(tostring(valueId) .. " | recv msg |" .. strMsg)
         end
     end
     --协议规则

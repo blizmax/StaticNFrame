@@ -1,5 +1,5 @@
 RebotServerModule = {}
-RebotServerModule.RebotIndex = 1
+RebotServerModule.RebotIndex = os.time()
 
 --RebotServerModule.loginUrl = "http://loginxcxtest.zqgame.com/httplogin"
 RebotServerModule.loginUrl = "http://ttrserver.staticnframe.com:7000/httplogin"
@@ -18,6 +18,7 @@ function RebotServerModule.GetRebotIndex()
 end
 
 function RebotServerModule.Init()
+    RebotServerModule.RebotIndex = unilight.GetInitTime()
     TcpClient.addEventCallBack(NF_SERVER_TYPES.NF_ST_PROXY, "RebotServerModule.NetEventCallBack")
     TcpClient.addRecvCallBack(NF_SERVER_TYPES.NF_ST_PROXY, 0, "RebotServerModule.NetServerRecvHandleJson")
 
@@ -107,6 +108,13 @@ function HttpClient.select_zone_return(state_code, respData, param)
         rebot:SelectZoneReturn(respData)
     end
 
+end
+
+function RebotServerModule.UpdateSec(uid, timer)
+    local rebot = RebotServerModule.rebotUidMap[uid]
+    if rebot == nil then return end
+
+    rebot:ClickTravel()
 end
 
 function RebotServerModule.AfterInit()
