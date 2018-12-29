@@ -27,18 +27,20 @@ function RebotServerModule.Init()
 end
 
 function RebotServerModule.addRebot(timer)
-    local rebot = RebotPlayer:New()
-    rebot:Init(RebotServerModule.GetRebotIndex())
-    RebotServerModule.rebotNameMap[rebot.name] = rebot
+    for i = 1, 5 do
+        local rebot = RebotPlayer:New()
+        rebot:Init(RebotServerModule.GetRebotIndex())
+        RebotServerModule.rebotNameMap[rebot.name] = rebot
 
-    rebot:RequestZoneList()
+        rebot:RequestZoneList()
+    end
 
     local num = 0
     for k, v in pairs(RebotServerModule.rebotNameMap) do
         num = num + 1
     end
 
-    if num >= 200 then
+    if num >= 2000 then
         unilight.stoptimer(timer)
     end
 end
