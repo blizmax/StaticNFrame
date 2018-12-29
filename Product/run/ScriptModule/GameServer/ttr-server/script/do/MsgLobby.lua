@@ -57,6 +57,7 @@ Lby.CmdUserInfoLoginCenter_S = function(cmd,lobbyClientTask)
 	local friendAddontion = cmd.data.friendAddontion
 	local shield_count = cmd.data.shield_count
 	local isFirstLogin = cmd.data.isFirstLogin
+	local relationships = cmd.data.relationships
 
 	local userInfo = UserInfo.GetUserInfoById(uid)
 	if userInfo == nil then
@@ -66,6 +67,7 @@ Lby.CmdUserInfoLoginCenter_S = function(cmd,lobbyClientTask)
 
 	userInfo.online = true
 	userInfo.friendAddontion = friendAddontion
+	userInfo["relationships"] = relationships
 
 	--玩家产量初始化计算 依赖好友系统的加成计算
 	userInfo.world:recalc()

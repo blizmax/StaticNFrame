@@ -18,11 +18,20 @@ Zone.CmdUserInfoLoginCenter_C = function(cmd,zonetask)
 
 	friendData.isFirstLogin = cmd.data.userInfo.isFirstLogin
 
+	local relationships = {}
+
+    travelData.relationships:ForEach(
+        function(k,v)
+            relationships[k] = v
+        end
+    )
+
 	local data = {
 		cmd_uid = uid,
 		friendAddontion = friendData:GetAddontion(),
 		isFirstLogin = cmd.data.userInfo.isFirstLogin,
 		shield_count = travelData:GetShieldCount(),
+		relationships = relationships,
 	}
 	ZoneInfo.SendCmdToMe("Cmd.UserInfoLoginCenter_S", data, zonetask)
 end

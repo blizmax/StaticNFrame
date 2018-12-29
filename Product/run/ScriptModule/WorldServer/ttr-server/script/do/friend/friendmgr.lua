@@ -200,6 +200,9 @@ end
 --为了方便测试
 function FriendManager:LoadAllUserFriendData()
     local tmp = unilight.getAll("friendinfo")
+    if type(tmp) == "table" then
+        unilight.info("load friend data num:"..#tmp)
+    end
     for i, info in ipairs(tmp) do
         friendData = UserFriend:New()
         friendData:Init(info.uid)
@@ -352,6 +355,7 @@ function FriendManager.SystemAutoRecommendFriend(uid, timer)
         local data = FriendManager:GetRandomFriendInfo()
         if data ~= nil and data:GetUid() ~= uid and data:GetOnline() == true and friendData:GetUserFriend(data:GetUid()) == nil then
             res["data"] = {
+                cmd_uid = uid,
                 uid = data:GetUid(),
                 head = data:GetHead(),
                 name = data:GetName(),

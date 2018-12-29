@@ -488,6 +488,24 @@ function UserTravel:AddRelationShip(uid)
         t = t + 1
         self.relationships:Replace(uid, t)
     end
+    self:NotifyAddRelationShip(uid)
+end
+
+function UserTravel:NotifyAddRelationShip(uid)
+    local friendData = FriendManager:GetFriendInfo(self.uid)
+    if friendData.online == true then
+        local num = self:GetRelationShip(uid)
+        local res = {}
+        res["do"] = "Cmd.NotifyAddRelationShip"
+        res["data"] = {
+            cmd_uid = self.uid,
+            uid = uid,
+            num = num,
+        }
+        if friendData.gameid ~= 0 and friendData.zoneid ~= 0 then
+            ZoneInfo.SendCmdToMeById(res["do"], res["data"], friendData.gameid, friendData.zoneid)
+        end
+    end
 end
 
 function UserTravel.BuyShieldCountCallBack(uid, itemid, itemcount)

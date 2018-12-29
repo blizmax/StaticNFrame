@@ -74,6 +74,10 @@ function UserInfo.CreateTempUserInfo(uid)
 		online = fasle,
 	}
 
+	--旅行团亲密度, 玩家UID--亲密值 这里只是缓存
+	local relationships = {}
+	userInfo["relationships"] = relationships
+
 	local world = World:new()
 	world:init(userInfo)
 	world:create()
@@ -157,6 +161,11 @@ function UserInfo.CreateUserByDb(uid, dbUser)
 		firstLogin = 0, --只要走这里就不是第一次登陆
 		product = dbUser.product or 0,
 	}
+
+	--旅行团亲密度, 玩家UID--亲密值 这里只是缓存
+	local relationships = {}
+	userInfo["relationships"] = relationships
+
 	userInfo["settings"] = dbUser.settings or {}
 --玩家商品
 	local items = UserItems:new()
@@ -901,4 +910,28 @@ Lby.CmdNotifyUserTravelTimeOut_S = function(cmd, lobbyClientTask)
 	end
 
 	unilight.response(userInfo.laccount, cmd)
+end
+
+Lby.CmdSystemAutoRecommendFriendCmd_S = function(cmd, lobbyClientTask)
+    local uid = cmd.data.cmd_uid
+
+    local userInfo = UserInfo.GetUserInfoById(uid)
+	if userInfo == nil then
+        unilight.error("userinfo is not exist,uid:"..uid)
+		return
+	end
+
+	unilight.response(userInfo.laccount, cmd)
+end
+
+Lby.CmdNotifyAddRelationShip = function(cmd, lobbyClientTask)
+    local uid = cmd.data.cmd_uid
+
+    local userInfo = UserInfo.GetUserInfoById(uid)
+	if userInfo == nil then
+        unilight.error("userinfo is not exist,uid:"..uid)
+		return
+	end
+
+	userInfo["relationships"][cmd.data.uid] = cmd.data.num
 end

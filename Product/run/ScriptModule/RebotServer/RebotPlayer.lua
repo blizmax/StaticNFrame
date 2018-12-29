@@ -30,7 +30,13 @@ function RebotPlayer:RequestZoneList()
 end
 
 function RebotPlayer:HttpLoginReturn(respData)
-    self.zoneid = 11
+    for k, zoneInfo in pairs(respData.data.zonelist) do
+        if zoneInfo.state > 0 then
+            self.zoneid = zoneInfo.zoneid
+            break
+        end
+    end
+
 
     local data = {}
     data["do"] = "plat-token-login"
