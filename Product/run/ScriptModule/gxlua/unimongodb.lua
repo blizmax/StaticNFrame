@@ -65,7 +65,7 @@ end
         unilight.savedata("userinfo", userInfo)
 ]]
 function unilight.savedata(name, data)
-	--return LuaNFrame:savedata(name, data)
+	return LuaNFrame:savedata(name, data)
 end
 
 function unilight.savefield(name, id, fieldpath, data)
