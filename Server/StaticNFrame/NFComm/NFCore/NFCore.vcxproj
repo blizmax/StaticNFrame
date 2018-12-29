@@ -354,7 +354,6 @@
     <ClCompile Include="NFPHPMD5.cpp" />
     <ClCompile Include="NFMMOMD5.cpp" />
     <ClCompile Include="NFPHPMD5Impl.cpp" />
-    <ClCompile Include="NFProfiler.cpp" />
     <ClCompile Include="NFRandom.cpp" />
     <ClCompile Include="NFSHA1.cpp" />
     <ClCompile Include="NFSHA2.cpp" />
@@ -409,7 +408,6 @@
     <ClInclude Include="NFPHPMD5Impl.h" />
     <ClInclude Include="NFPlatform.h" />
     <ClInclude Include="NFPlatformMacros.h" />
-    <ClInclude Include="NFProfiler.h" />
     <ClInclude Include="NFQueue.hpp" />
     <ClInclude Include="NFRandom.hpp" />
     <ClInclude Include="NFSHA1.h" />

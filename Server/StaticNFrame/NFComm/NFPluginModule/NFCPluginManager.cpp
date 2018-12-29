@@ -13,7 +13,7 @@
 #include "common/RapidXML/rapidxml_utils.hpp"
 #include "NFComm/NFPluginModule/NFIPlugin.h"
 #include "NFComm/NFCore/NFPlatform.h"
-#include "NFComm/NFCore/NFProfiler.h"
+#include "NFProfiler.h"
 #include "NFComm/NFPluginModule/NFServerDefine.h"
 #include "NFComm/NFCore/NFFileUtility.h"
 #include "NFComm/NFPluginModule/NFConfigMgr.h"
@@ -230,7 +230,7 @@ bool NFCPluginManager::Execute()
 
 	if (mCurFrameCount % 1000 == 0)
 	{
-		PRINTF_PROFILE();
+		PrintProfiler();
 	}
 	return bRet;
 }
@@ -460,8 +460,6 @@ bool NFCPluginManager::Finalize()
 
 	//最后释放单件系统
 	ReleaseSingletion();
-
-	ClearProfiler();
 	return true;
 }
 
@@ -592,34 +590,21 @@ const NFSystemInfo& NFCPluginManager::GetSystemInfo() const
 
 void NFCPluginManager::BeginProfiler(const std::string& funcName)
 {
-	PROFILE_TIMER* pTimer = nullptr;
-	auto iter = m_luaFuncProfiler.find(funcName);
-	if (iter == m_luaFuncProfiler.end())
-	{
-		pTimer = NF_NEW PROFILE_TIMER(funcName.c_str());
-		m_luaFuncProfiler.emplace(funcName, pTimer);
-	}
-	else
-	{
-		pTimer = iter->second;
-	}
-
-	NFProfiler::Instance()->BeginProfiler(pTimer);
+	m_profilerMgr.BeginProfiler(funcName);
 }
 
 void NFCPluginManager::EndProfiler()
 {
-	NFProfiler::Instance()->EndProfiler();
+	m_profilerMgr.EndProfiler();
 }
 
 void NFCPluginManager::ClearProfiler()
 {
-	CLEAR_PROFILE();
-	for (auto iter = m_luaFuncProfiler.begin(); iter != m_luaFuncProfiler.end(); iter++)
-	{
-		NF_SAFE_DELETE(iter->second);
-	}
+	m_profilerMgr.ResetAllProfilerTimer();
+}
 
-	m_luaFuncProfiler.clear();
-	NFSingleton<NFProfiler>::ReleaseInstance();
+void NFCPluginManager::PrintProfiler()
+{
+	std::string str = m_profilerMgr.OutputTopProfilerTimer();
+	NFLogDebug("{}", str);
 }

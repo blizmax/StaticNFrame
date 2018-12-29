@@ -116,6 +116,9 @@
     <ClInclude Include="NFSystemInfo.h">
       <Filter>SystemInfo</Filter>
     </ClInclude>
+    <ClInclude Include="NFProfiler.h">
+      <Filter>NFProfier</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Event">
@@ -150,6 +153,9 @@
     </Filter>
     <Filter Include="SystemInfo">
       <UniqueIdentifier>{fcde711c-3bd1-4164-a561-7a0a57af519c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="NFProfier">
+      <UniqueIdentifier>{e8666d19-12a6-4bd5-aeed-1255c25d8b8a}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -204,6 +210,9 @@
     </ClCompile>
     <ClCompile Include="NFSystemInfo.cpp">
       <Filter>SystemInfo</Filter>
+    </ClCompile>
+    <ClCompile Include="NFProfiler.cpp">
+      <Filter>NFProfier</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

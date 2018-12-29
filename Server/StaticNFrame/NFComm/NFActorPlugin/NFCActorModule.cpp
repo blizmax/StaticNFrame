@@ -7,7 +7,6 @@
 // -------------------------------------------------------------------------
 
 #include "NFCActorModule.h"
-#include "NFComm/NFCore/NFProfiler.h"
 #include "NFCActor.h"
 
 NFCActorModule::NFCActorModule(NFIPluginManager* p)

@@ -13,7 +13,6 @@
 #include "NFComm/NFPluginModule/NFIKernelModule.h"
 #include "NFComm/NFPluginModule/NFINetServerModule.h"
 #include "NFComm/NFPluginModule/NFINetClientModule.h"
-#include "NFComm/NFCore/NFProfiler.h"
 #include "NFComm/NFCore/NFFileUtility.h"
 #include "NFComm/NFCore/NFStringUtility.h"
 #include "NFComm/NFCore/NFCommon.h"
@@ -71,10 +70,8 @@ bool NFCLuaScriptModule::Execute()
 
     if (NFGetSecondTime() - mnTime > 10)
     {
-        BEGIN_PROFILE(__FUNCTION__);
         mnTime = NFGetSecondTime();
 		TryRunGlobalScriptFunc("ScriptModule.Execute");
-        END_PROFILE();
     }
 
     return true;

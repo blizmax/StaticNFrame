@@ -8,7 +8,6 @@
 
 #include "NFCKernelModule.h"
 
-#include "NFComm/NFCore/NFProfiler.h"
 #include <NFComm/NFPluginModule/NFIPluginManager.h>
 #include "NFComm/NFPluginModule/NFLogMgr.h"
 #include <NFComm/NFPluginModule/NFDataNode.h>

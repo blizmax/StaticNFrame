@@ -19,7 +19,6 @@
 
 #include "NFComm/NFPluginModule/NFCPluginManager.h"
 #include "NFComm/NFCore/NFPlatform.h"
-#include "NFComm/NFCore/NFProfiler.h"
 #include "NFComm/NFCore/NFCmdLine.h"
 #include "NFComm/NFCore/NFCommon.h"
 #include "NFComm/NFCore/NFFileUtility.h"

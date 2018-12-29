@@ -351,6 +351,7 @@
     <ClInclude Include="NFIMysqlModule.h" />
     <ClInclude Include="NFIServerNetEventModule.h" />
     <ClInclude Include="NFITaskModule.h" />
+    <ClInclude Include="NFProfiler.h" />
     <ClInclude Include="NFSystemInfo.h" />
     <ClInclude Include="NFTaskActor.h" />
     <ClInclude Include="NFCPluginManager.h" />
@@ -393,6 +394,7 @@
     <ClCompile Include="NFEventObj.cpp" />
     <ClCompile Include="NFLogMgr.cpp" />
     <ClCompile Include="NFConfigMgr.cpp" />
+    <ClCompile Include="NFProfiler.cpp" />
     <ClCompile Include="NFServerDefine.cpp" />
     <ClCompile Include="NFSystemInfo.cpp" />
     <ClCompile Include="NFTaskActor.cpp" />

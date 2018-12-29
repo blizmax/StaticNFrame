@@ -18,7 +18,7 @@
 #include "NFComm/NFCore/NFRandom.hpp"
 #include "NFCDynLib.h"
 #include "NFSystemInfo.h"
-#include "NFComm/NFCore/NFProfiler.h"
+#include "NFProfiler.h"
 
 /*
 	系统的Module，分为加载DLL创建的唯一Module，和自己独立创建出来的Module，
@@ -131,6 +131,7 @@ protected:
 	virtual void BeginProfiler(const std::string& luaFunc);
 	virtual void EndProfiler();
 	virtual void ClearProfiler();
+	virtual void PrintProfiler();
 private:
 	const uint32_t mFrame = 30; //服务器帧率，一秒30帧
 	const uint32_t mFrameTime = 1000 / mFrame; //一帧多少时间
@@ -166,7 +167,7 @@ private:
 	ServerTypeToIdMap mServerTypeIdMap; //负责AllServer情况下，ServerType与ServerId的关系
 	PluginFuncMap mPluginFuncMap; ////静态加载Plugin, 先注册创建和销毁函数
 
-	std::map<std::string, PROFILE_TIMER*> m_luaFuncProfiler;
+	NFProfiler m_profilerMgr;
 };
 
 #endif
