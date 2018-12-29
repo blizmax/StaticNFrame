@@ -295,6 +295,24 @@ int NetObject::Dismantle()
 					}
 					opcode = mWSFrameType;
 				}
+				else if (opcode == eWebSocketFrameType::CLOSE_FRAME)
+				{
+					NFLogError("recv close frame, close connection!");
+					m_buffer.Consume(allLen);
+					return 0;
+				}
+				else if (opcode == eWebSocketFrameType::PONG_FRAME)
+				{
+					NFLogError("recv pong frame!");
+					m_buffer.Consume(allLen);
+					return 0;
+				}
+				else if (opcode == eWebSocketFrameType::PING_FRAME)
+				{
+					NFLogError("recv ping frame!");
+					m_buffer.Consume(allLen);
+					return 0;
+				}
 
 				if (NFStringUtility::IsUTF8String(mParseString))
 				{
@@ -315,9 +333,6 @@ int NetObject::Dismantle()
 
 		if (mHandleShark == false)
 		{
-			std::string str(m_buffer.ReadAddr(), m_buffer.ReadableSize());
-			NFLogError("websocket client handle shark:{}", str);
-
 			if (HandleSharkInfo() < 0)
 			{
 				m_buffer.Consume(m_buffer.ReadableSize());
@@ -375,6 +390,18 @@ int NetObject::Dismantle()
 				else if (opcode == eWebSocketFrameType::CLOSE_FRAME)
 				{
 					NFLogError("recv close frame, close connection!");
+					m_buffer.Consume(allLen);
+					return 0;
+				}
+				else if (opcode == eWebSocketFrameType::PONG_FRAME)
+				{
+					NFLogError("recv pong frame!");
+					m_buffer.Consume(allLen);
+					return 0;
+				}
+				else if (opcode == eWebSocketFrameType::PING_FRAME)
+				{
+					NFLogError("recv ping frame!");
 					m_buffer.Consume(allLen);
 					return 0;
 				}
