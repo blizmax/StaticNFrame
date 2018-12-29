@@ -231,12 +231,6 @@ void NFProfiler::OutputNode(
 
 	writePos[freeSize - 1] = '\0';
 	report.append(line);
-
-	if (report.length() + NF_ARRAYSIZE(line) >= (unsigned)4092)
-	{
-		//NFLogDebug("profile:\t\n{}", *report);
-		report.clear();
-	}
 }
 
 void NFProfiler::OutputCallTree(
