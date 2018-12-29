@@ -23,12 +23,23 @@ function RebotServerModule.Init()
     TcpClient.addEventCallBack(NF_SERVER_TYPES.NF_ST_PROXY, "RebotServerModule.NetEventCallBack")
     TcpClient.addRecvCallBack(NF_SERVER_TYPES.NF_ST_PROXY, 0, "RebotServerModule.NetServerRecvHandleJson")
 
-    for i = 1, 200 do
-        local rebot = RebotPlayer:New()
-        rebot:Init(RebotServerModule.GetRebotIndex())
-        RebotServerModule.rebotNameMap[rebot.name] = rebot
+    unilight.addtimer("RebotServerModule.addRebot", 1)
+end
 
-        rebot:RequestZoneList()
+function RebotServerModule.addRebot(timer)
+    local rebot = RebotPlayer:New()
+    rebot:Init(RebotServerModule.GetRebotIndex())
+    RebotServerModule.rebotNameMap[rebot.name] = rebot
+
+    rebot:RequestZoneList()
+
+    local num = 0
+    for k, v in pairs(RebotServerModule.rebotNameMap) do
+        num = num + 1
+    end
+
+    if num >= 2000 then
+        unilight.stoptimer(timer)
     end
 end
 
