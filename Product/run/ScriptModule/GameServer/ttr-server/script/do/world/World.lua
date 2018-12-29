@@ -242,7 +242,7 @@ function World:click(stateId, times, critical)
 		earning = earning * critical * GlobalConst.Click_Crit_Multiple
 		earning =  earning + earning * (times - critical)
 	end
-	unilight.info("click计算值:" .. math.ceil(earning))
+	--unilight.info("click计算值:" .. math.ceil(earning))
 
 	if earning < 1 then
 		earning = 1

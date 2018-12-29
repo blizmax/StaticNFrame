@@ -71,7 +71,7 @@ end
 	res["do"] = "Cmd.GetInviteFriendRewardCmd_S"
 	local uid = cmd.data.cmd_uid
 	local friendUid = cmd.data.friendUid
-	print("CmdGetInviteFriendRewardCmd_C, uid="..uid..", friendUid="..friendUid)
+	--print("CmdGetInviteFriendRewardCmd_C, uid="..uid..", friendUid="..friendUid)
 	local  ret, desc, rewardId = InviteFriendsMgr.GetInviteFriendReward(uid, friendUid)
 
 	res["data"] = {

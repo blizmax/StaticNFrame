@@ -6,7 +6,7 @@ Net.CmdGetDailySharingInfoCmd_C = function(cmd, laccount)
 	local uid = laccount.Id
     local userInfo = UserInfo.GetUserInfoById(uid)
 	local num = userInfo.dailySharing:GetDailySharingInfo()
-	print("CmdGetDailySharingInfoCmd_C, uid="..uid..", num="..num)
+	--print("CmdGetDailySharingInfoCmd_C, uid="..uid..", num="..num)
 
 	res["data"] = {
 		resultCode 	= 0,
@@ -25,7 +25,7 @@ Net.CmdGetDailySharingRewardCmd_C = function(cmd, laccount)
 	local sharingId = cmd.data.id
 	local userInfo = UserInfo.GetUserInfoById(uid)
 	local  ret, desc, sharingId = userInfo.dailySharing:GetDailySharingReward(sharingId)
-    print("CmdGetDailySharingRewardCmd_C, uid="..uid..", sharingId="..sharingId..", ret="..ret..", desc="..desc)
+    --print("CmdGetDailySharingRewardCmd_C, uid="..uid..", sharingId="..sharingId..", ret="..ret..", desc="..desc)
 
 	res["data"] = {
 		resultCode 	= ret,

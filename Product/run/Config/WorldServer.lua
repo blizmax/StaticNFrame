@@ -1,5 +1,5 @@
---local ZoneIP = "127.0.0.1"
-local ZoneIP = "45.32.39.90"
+local ZoneIP = "127.0.0.1"
+--local ZoneIP = "45.32.39.90"
 
 
 function InitGame3010()

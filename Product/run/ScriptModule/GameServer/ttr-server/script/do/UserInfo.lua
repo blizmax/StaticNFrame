@@ -418,7 +418,7 @@ function UserInfo.Disconnected(uid)
 	userInfo.lastlogintime = os.time()
 
 	UserInfo:SaveUserInfoToDb(userInfo)
-	print("user Disconnected, uid="..userInfo.uid..", lastlogintime="..os.time())
+	--print("user Disconnected, uid="..userInfo.uid..", lastlogintime="..os.time())
 
 	if userInfo["offline_timer"] == nil then
 		userInfo["offline_timer"] = unilight.addtimer("UserInfo.offline_savedata", static_const.Static_Const_USER_INFO_MAX_ONLINE_TIME_AFTER_OFFLINE, userInfo.uid)

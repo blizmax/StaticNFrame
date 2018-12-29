@@ -27,7 +27,7 @@ Net.CmdGetDailyWelfareRewardCmd_C = function(cmd, laccount)
 	local doubleReward = cmd.data.doubleReward
 	local userInfo = UserInfo.GetUserInfoById(uid)
 	local  ret, desc, id, rewardInfo, nextGiftBagInfo = userInfo.dailyWelfare:GetDailyWelfareReward(welfareId, doubleReward)
-	print("CmdGetDailyWelfareRewardCmd_S, uid="..uid..", welfareId="..welfareId..", id="..id..", rewardInfo="..rewardInfo)
+	--print("CmdGetDailyWelfareRewardCmd_S, uid="..uid..", welfareId="..welfareId..", id="..id..", rewardInfo="..rewardInfo)
 
 	res["data"] = {
 		resultCode 	= ret,

@@ -1,5 +1,5 @@
-MasterIP = "45.32.39.90"
---MasterIP = "127.0.0.1"
+--MasterIP = "45.32.39.90"
+MasterIP = "127.0.0.1"
 MasterPort = 5501
 
 --服务器配置列表， ServerId, ServerType 必须配置，MasterServer, LoginServer, ProxyServer为公共服务器， 不用配置gameid， 
@@ -51,7 +51,7 @@ LoginServer_2 = {
 		MongoIp = "45.32.39.90",
 		MongoPort = 27017,
 		MongonName = "ttr-1",
-		MaxConnectNum = 1000,
+		MaxConnectNum = 100000,
 		WorkThreadNum = 5,
 		Security = false,
 		WebSocket = false,
@@ -66,7 +66,7 @@ ProxyServer_3 = {
 		ServerIp = MasterIP,
 		ServerPort = GetNewPort(),
 		ServerInnerPort = GetNewPort(),	--网关对内服务器接口
-		MaxConnectNum = 1000,
+		MaxConnectNum = 100000,
 		WorkThreadNum = 5,
 		Security = false,
 		WebSocket = true,
@@ -80,7 +80,7 @@ ProxyServer_4 = {
 		ServerIp = MasterIP,
 		ServerPort = GetNewPort(),
 		ServerInnerPort = GetNewPort(),	--网关对内服务器接口
-		MaxConnectNum = 1000,
+		MaxConnectNum = 100000,
 		WorkThreadNum = 5,
 		Security = false,
 		WebSocket = true,

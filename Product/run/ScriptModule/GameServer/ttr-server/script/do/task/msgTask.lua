@@ -163,7 +163,7 @@ Net.CmdReqGetRewardDailyTask_C = function(cmd, laccount)
 
     local tmp
     if isMainTask == true then
-        print("CmdReqGetRewardDailyTask_C, uid="..uid..", rewardTaskId="..taskId..", isMainTask=true")
+        --print("CmdReqGetRewardDailyTask_C, uid="..uid..", rewardTaskId="..taskId..", isMainTask=true")
         local nextMainTaskInfo = userInfo.mainTask:SetNextTaskIdInProgress()
         if nextMainTaskInfo ~= nil then
             local taskIdInProgress = nextMainTaskInfo:GetId()
@@ -180,7 +180,7 @@ Net.CmdReqGetRewardDailyTask_C = function(cmd, laccount)
                 needTimes = taskTable[taskIdInProgress].param,
                 reward = reward
             }
-            print("CmdReqGetRewardDailyTask_C, tem.taskid="..tmp.taskid..", times="..tmp.times..", status="..tmp.status..", needTimes="..tmp.needTimes)
+            --print("CmdReqGetRewardDailyTask_C, tem.taskid="..tmp.taskid..", times="..tmp.times..", status="..tmp.status..", needTimes="..tmp.needTimes)
         end
     end
 

@@ -18,11 +18,11 @@ end
 function Collect:init(owner)
     self.owner = owner
     self.isCollect = 0
-    print("Collect:init(owner), isCollect = "..self.isCollect..", uid = "..self.owner.uid)
+    --print("Collect:init(owner), isCollect = "..self.isCollect..", uid = "..self.owner.uid)
 end
 
 function Collect:GetData()
-    print("Collect:GetData, isCollect = "..self.isCollect..", uid = "..self.owner.uid)
+    --print("Collect:GetData, isCollect = "..self.isCollect..", uid = "..self.owner.uid)
     return {["isCollect"] = self.isCollect}
 end
 
@@ -56,11 +56,11 @@ function Collect:HandleReward(rewardStr)
     for i, v in pairs(rewardInfo) do
         if v > 0 then
             local rewardType = tonumber(i)
-            print("HandleReward, i="..i..", v="..v..", rewardType="..rewardType)
+            --("HandleReward, i="..i..", v="..v..", rewardType="..rewardType)
             if rewardType <=2 then
-                print("收藏领取前, uid="..self.owner.uid..", money="..self.owner.money..", diamond="..self.owner.diamond..", rewardType="..i..", num="..v)
+                --print("收藏领取前, uid="..self.owner.uid..", money="..self.owner.money..", diamond="..self.owner.diamond..", rewardType="..i..", num="..v)
                 UserInfo.AddUserMoney(self.owner, rewardType, v)
-                print("收藏领取后, uid="..self.owner.uid..", money="..self.owner.money..", diamond="..self.owner.diamond)
+                --print("收藏领取后, uid="..self.owner.uid..", money="..self.owner.money..", diamond="..self.owner.diamond)
             else
                 UserItems:useItem(self.owner, rewardType, v)
             end

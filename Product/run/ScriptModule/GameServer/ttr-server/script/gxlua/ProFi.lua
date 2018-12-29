@@ -117,7 +117,7 @@ function ProFi:writeReport( filename )
 		filename = filename or 'ProFi.txt'
 		self:sortReportsWithSortMethod( self.reports, self.sortMethod )
 		self:writeReportsToFilename( filename )
-		print( string.format("[ProFi]\t Report written to %s", filename) )
+		--print( string.format("[ProFi]\t Report written to %s", filename) )
 	end
 end
 

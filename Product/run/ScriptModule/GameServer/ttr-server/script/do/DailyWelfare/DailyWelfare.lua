@@ -40,7 +40,7 @@ end
 
 function DailyWelfare:init(owner)
     self.owner = owner
-    print("DailyWelfare:init, uid="..self.owner.uid..", len="..#self.giftBag)
+    --print("DailyWelfare:init, uid="..self.owner.uid..", len="..#self.giftBag)
     self:initGiftBagInfo()
 end
 
@@ -50,7 +50,7 @@ function DailyWelfare:initGiftBagInfo()
     local star = self.owner.star
 
     --unilight.debug("DailyWelfare:initGiftBagInfo(), uid="..self.owner.uid..", star="..star)
-    print("DailyWelfare:initGiftBagInfo(), uid="..self.owner.uid..", star="..star..", len="..#self.giftBag)
+    --print("DailyWelfare:initGiftBagInfo(), uid="..self.owner.uid..", star="..star..", len="..#self.giftBag)
     for i, v in ipairs(DailyWelfareTable) do
         if  star >= v["minStar"] and star <= v["maxStar"] then
             count = count + 1
@@ -69,7 +69,7 @@ function DailyWelfare:initGiftBagInfo()
             end
 
             self.giftBag[count] = giftBagInfo
-            print("initGiftBagInfo, uid="..self.owner.uid..", id="..i..", state="..giftBagInfo.state..", cd="..v["cd"]..", startTime="..giftBagInfo.startTime
+            --print("initGiftBagInfo, uid="..self.owner.uid..", id="..i..", state="..giftBagInfo.state..", cd="..v["cd"]..", startTime="..giftBagInfo.startTime
             ..", minStar="..v["minStar"]..", maxStar="..v["maxStar"]..", welfareId="..v.id)
         end
     end
@@ -133,14 +133,14 @@ function DailyWelfare:IsTheSameDay(lastTime)
     local lastTimeDay, x = math.modf(lastTime/aDaySecondCount)
     local today, y = math.modf(os.time()/aDaySecondCount)
 
-    print("IsTheSameDay, lastTimeDay="..lastTimeDay..", today="..today)
+    --print("IsTheSameDay, lastTimeDay="..lastTimeDay..", today="..today)
 
     return  lastTimeDay == today
 end
 
 function DailyWelfare:GetDailyWelfareInfo()
 
-    print("GetDailyWelfareInfo, uid="..self.owner.uid..", len="..#self.giftBag)
+    --print("GetDailyWelfareInfo, uid="..self.owner.uid..", len="..#self.giftBag)
 
     if #self.giftBag == 0 then
         self:initGiftBagInfo()
@@ -161,8 +161,8 @@ function DailyWelfare:GetDailyWelfareInfo()
 
         info[i] = temp
 
-        print("GetDailyWelfareInfo, uid="..self.owner.uid..", id="..v.id..", state="..v.state..", cd="..v.cd
-                ..", watchVideoMinusMinute="..v.watchVideoMinusMinute..", rewardInfo="..temp.rewardInfo..", desc="..temp.desc)
+        --("GetDailyWelfareInfo, uid="..self.owner.uid..", id="..v.id..", state="..v.state..", cd="..v.cd
+         --       ..", watchVideoMinusMinute="..v.watchVideoMinusMinute..", rewardInfo="..temp.rewardInfo..", desc="..temp.desc)
     end
 
     return info, GlobalConst.Diamond_Quick_Time, GlobalConst.WatchVideoMinusMinuteCd
@@ -174,7 +174,7 @@ function DailyWelfare:CalcAndJudgeCanGetReward(welfareId, index)
         --self:initGiftBagInfo()
         return false
     end
-    print("CalcAndJudgeCanGetReward, welfareId="..welfareId..", index="..index..", state=".. self.giftBag[index].state..", cd="..self.giftBag[index].cd)
+    --print("CalcAndJudgeCanGetReward, welfareId="..welfareId..", index="..index..", state=".. self.giftBag[index].state..", cd="..self.giftBag[index].cd)
 
     if self.giftBag[index].state ~= G_WAITING_TO_GET_REWARD and self.giftBag[index].state ~= G_CAN_GET_REWARD then
         return false

@@ -2,7 +2,8 @@ RebotServerModule = {}
 RebotServerModule.RebotIndex = os.time()
 
 --RebotServerModule.loginUrl = "http://loginxcxtest.zqgame.com/httplogin"
-RebotServerModule.loginUrl = "http://ttrserver.staticnframe.com:7000/httplogin"
+--RebotServerModule.loginUrl = "http://ttrserver.staticnframe.com:7000/httplogin"
+RebotServerModule.loginUrl = "http://127.0.0.1:7000/httplogin"
 RebotServerModule.gameid = 3010
 RebotServerModule.zoneid = 11
 RebotServerModule.platid = 0
@@ -22,7 +23,7 @@ function RebotServerModule.Init()
     TcpClient.addEventCallBack(NF_SERVER_TYPES.NF_ST_PROXY, "RebotServerModule.NetEventCallBack")
     TcpClient.addRecvCallBack(NF_SERVER_TYPES.NF_ST_PROXY, 0, "RebotServerModule.NetServerRecvHandleJson")
 
-    for i = 1, 100 do
+    for i = 1, 10 do
         local rebot = RebotPlayer:New()
         rebot:Init(RebotServerModule.GetRebotIndex())
         RebotServerModule.rebotNameMap[rebot.name] = rebot
@@ -46,7 +47,7 @@ function RebotServerModule.NetEventCallBack(nEvent, unLinkId)
 end
 
 function RebotServerModule.NetServerRecvHandleJson(unLinkId, valueId, nMsgId, strMsg)
-    unilight.debug(tostring(valueId) .. " | recv msg |" .. strMsg)
+    --unilight.debug(tostring(valueId) .. " | recv msg |" .. strMsg)
     local table_msg = json2table(strMsg)
     table_msg = table_msg["msg"]
     --协议规则

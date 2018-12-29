@@ -23,11 +23,11 @@ function DailyLotteryDraw:init(owner)
     self.isGotLuckyDraw = 0
     self.rewardId = 0
     self.owner.lastlogintime = self.owner.lastlogintime or os.time()
-    print("DailyLotteryDraw:init(owner), drawNum = "..self.drawNum..", uid = "..self.owner.uid..", lastlogintime="..self.owner.lastlogintime)
+    --print("DailyLotteryDraw:init(owner), drawNum = "..self.drawNum..", uid = "..self.owner.uid..", lastlogintime="..self.owner.lastlogintime)
 end
 
 function DailyLotteryDraw:GetData()
-    print("DailyLotteryDraw:GetData, drawNum = "..self.drawNum..", uid = "..self.owner.uid)
+    --print("DailyLotteryDraw:GetData, drawNum = "..self.drawNum..", uid = "..self.owner.uid)
     return {
         drawNum = self.drawNum,
         totalDrawNum = self.totalDrawNum,
@@ -74,14 +74,14 @@ function DailyLotteryDraw:GetRewardId()
     end
 
     --print("DailyLotteryDraw:GetRewardId(), uid="..self.owner.uid..", rewardId="..rewardId..", rewardStr="..DailyLotteryDrawTable[rewardId])
-    print("DailyLotteryDraw:GetRewardId(), rewardId="..rewardId..", rewardStr="..DailyLotteryDrawTable[rewardId].reward)
+    --print("DailyLotteryDraw:GetRewardId(), rewardId="..rewardId..", rewardStr="..DailyLotteryDrawTable[rewardId].reward)
     return rewardId
 end
 
 function DailyLotteryDraw:GetLotteryDrawRewardId()
     local rewardId = self:GetRewardId()
     self.rewardId = rewardId
-    print("GetLotteryDrawRewardId, uid="..self.owner.uid..", rewardId="..self.rewardId)
+    --print("GetLotteryDrawRewardId, uid="..self.owner.uid..", rewardId="..self.rewardId)
     --return 0, "获取奖品id成功", rewardId
     return 0, "领取成功", self.drawNum, rewardId, self.isGotLuckyDraw
 end
@@ -100,7 +100,7 @@ end
 
 function DailyLotteryDraw:HandleReward(rewardId)
 
-    print("HandleReward, uid="..self.owner.uid..", rewardId="..self.rewardId)
+    --print("HandleReward, uid="..self.owner.uid..", rewardId="..self.rewardId)
     self.rewardId = 0
     self.drawNum = self.drawNum + 1
 
@@ -126,9 +126,9 @@ function DailyLotteryDraw:HandleReward(rewardId)
     for i, v in pairs(rewardInfo) do
         if v > 0 then
             local rewardType = tonumber(i)
-            print("抽奖领取前, uid="..self.owner.uid..", money="..self.owner.money..", diamond="..self.owner.diamond..", rewardType="..i..", num="..v)
+            --print("抽奖领取前, uid="..self.owner.uid..", money="..self.owner.money..", diamond="..self.owner.diamond..", rewardType="..i..", num="..v)
             UserItems:useItem(self.owner, rewardType, v)
-            print("抽奖领取后, uid="..self.owner.uid..", money="..self.owner.money..", diamond="..self.owner.diamond)
+            --print("抽奖领取后, uid="..self.owner.uid..", money="..self.owner.money..", diamond="..self.owner.diamond)
         end
     end
 end
@@ -164,7 +164,7 @@ function DailyLotteryDraw:GetDailyLotteryDraw()
     end
     self.totalDrawNum = self.totalDrawNum + 1
     self.drawNum = drawNum
-    print("GetDailyLotteryDraw, rewardId="..rewardId..", reward="..DailyLotteryDrawTable[rewardId].reward..", rewardStr="..rewardStr..", isGotLuckyDraw="..self.isGotLuckyDraw
+    --print("GetDailyLotteryDraw, rewardId="..rewardId..", reward="..DailyLotteryDrawTable[rewardId].reward..", rewardStr="..rewardStr..", isGotLuckyDraw="..self.isGotLuckyDraw
     .." totalDrawNum="..self.totalDrawNum)
     return 0, "领取成功", drawNum, rewardId, self.isGotLuckyDraw
 end
@@ -182,7 +182,7 @@ function DailyLotteryDraw:DealWithLogin()
     return
     end
 
-    print("DealWithLogin, self.owner.lastlogintime="..self.owner.lastlogintime..", os.time="..os.time())
+    --print("DealWithLogin, self.owner.lastlogintime="..self.owner.lastlogintime..", os.time="..os.time())
     if DailyLotteryDraw:IsTheSameDay(self.owner.lastlogintime, os.time()) == false then
         self.drawNum = 0
     end

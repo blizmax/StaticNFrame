@@ -462,7 +462,7 @@ function UserProps:dealLookMediaOK(userinfo)
 		 self.bprops.pWorldGoldAddRatioTime = curtime + GlobalConst.Max_RangeIncome_Time*3600
 	end
 	self.bprops.dayLookMediaTimes = self.bprops.dayLookMediaTimes + 1
-	print("dealLookMediaOK, uid="..userinfo.uid..", self.bprops.dayLookMediaTimes="..self.bprops.dayLookMediaTimes..", userinfo.bprops.dayLookMediaTimes="..userinfo.UserProps.bprops.dayLookMediaTimes)
+	--print("dealLookMediaOK, uid="..userinfo.uid..", self.bprops.dayLookMediaTimes="..self.bprops.dayLookMediaTimes..", userinfo.bprops.dayLookMediaTimes="..userinfo.UserProps.bprops.dayLookMediaTimes)
 	UserProps:sendUserLookMediaInfo(userinfo)
 	return ERROR_CODE.SUCCESS
 end
@@ -552,7 +552,7 @@ function UserProps:getOnlineRandBoxPrize(ptimeid,ctype,ptype)
 	unilight.debug("getOnlineRandBoxPrize, uid="..self.owner.uid..", ptimeid:" .. ptimeid .." ctype:"..ctype.." ptype:"..ptype..", len="..#self.ponline.bOnlinePrize)
 
 	for k, v in pairs(self.ponline.bOnlinePrize) do
-		print("getOnlineRandBoxPrize, uid="..self.owner.uid..", key="..k..", value.status="..v.status..", value.onlinetime="..v.onlinetime)
+		--print("getOnlineRandBoxPrize, uid="..self.owner.uid..", key="..k..", value.status="..v.status..", value.onlinetime="..v.onlinetime)
 	end
 
 	if ptimeid < 1 or ptimeid > #self.ponline.bOnlinePrize then
@@ -562,7 +562,7 @@ function UserProps:getOnlineRandBoxPrize(ptimeid,ctype,ptype)
 	if pinfo == nil then
 		return ERROR_CODE.UNKNOWN_ERROR
 	end
-	print("getOnlineRandBoxPrize, self.ponline.bOnlineTime="..self.ponline.bOnlineTime..", pinfo.onlinetime="..pinfo.onlinetime)
+	--print("getOnlineRandBoxPrize, self.ponline.bOnlineTime="..self.ponline.bOnlineTime..", pinfo.onlinetime="..pinfo.onlinetime)
 	if self.ponline.bOnlineTime < pinfo.onlinetime then
 		return ERROR_CODE.ONLINE_PRIZE_OUTTIME
 	end
@@ -815,7 +815,7 @@ function UserProps:getUserProp(userinfo,prop)
 			aprops.bprops.dayLookMediaTimes = 0
 		end
 		value = aprops.bprops.dayLookMediaTimes
-		print("getUserProp-1, uid="..userinfo.uid..", dayLookMediaTimes="..value..", GlobalConst.Max_Adviertisement_Times="..GlobalConst.Max_Adviertisement_Times)
+		--print("getUserProp-1, uid="..userinfo.uid..", dayLookMediaTimes="..value..", GlobalConst.Max_Adviertisement_Times="..GlobalConst.Max_Adviertisement_Times)
 	end
 	if value == nil then
 		value = 0

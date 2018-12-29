@@ -13,7 +13,7 @@ InviteFriendsMgr.GetInviteFriendsInfo = function(uid)
     end
 
     for i, v in ipairs(userFriendData.meAskPlayerUidsAndFirstLogin) do
-        print("uid="..uid..", meAskPlayerUidsAndFirstLogin, i="..i..", v="..v)
+        --print("uid="..uid..", meAskPlayerUidsAndFirstLogin, i="..i..", v="..v)
     end
 
     local inviteFriendsData = userFriendData:GetMeAskPlayerUidsAndFirstLogin()
@@ -37,7 +37,7 @@ InviteFriendsMgr.GetInviteFriendsInfo = function(uid)
             nickName = friendInfo:GetName()
         }
 
-        print("uid="..uid..", meAskPlayerUidsAndFirstLogin inviteFriendsData, start="..temp.star..", rewardState="..temp.rewardState..", rewardId="..temp.rewardId)
+       --print("uid="..uid..", meAskPlayerUidsAndFirstLogin inviteFriendsData, start="..temp.star..", rewardState="..temp.rewardState..", rewardId="..temp.rewardId)
 
         table.insert(data, temp)
     end
@@ -58,7 +58,7 @@ InviteFriendsMgr.GetInviteFriendReward = function(uid, friendId)
 
     local index = -1
     for i, v in ipairs(selfFriendInfo.meAskPlayerUidsAndFirstLogin) do
-        print("selfUid="..uid..", GetInviteFriendReward, meAskPlayerUidsAndFirstLogin, i="..i..", v="..v..", friendId="..friendId)
+        --print("selfUid="..uid..", GetInviteFriendReward, meAskPlayerUidsAndFirstLogin, i="..i..", v="..v..", friendId="..friendId)
         if v == friendId then
             index = i
             break
@@ -141,7 +141,7 @@ InviteFriendsMgr.GetProgressReward = function(uid, progressRewardId)
             inviteProgressNum = inviteProgressNum + 1
         end
     end
-    print("GetProgressReward, uid="..uid..", inviteProgressNum="..inviteProgressNum)
+    --print("GetProgressReward, uid="..uid..", inviteProgressNum="..inviteProgressNum)
 
     if inviteProgressNum < InvitationSchedule[rewardId]["scheduleVal"] then
     return 3, "未达到指定条件"

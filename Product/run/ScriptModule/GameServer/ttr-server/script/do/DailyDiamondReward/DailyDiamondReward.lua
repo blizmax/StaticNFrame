@@ -17,11 +17,11 @@ function DailyDiamondReward:init(owner)
     self.owner = owner
     self.dailyDiamondRewardNum = 0
     self.owner.lastlogintime = self.owner.lastlogintime or os.time()
-    print("DailyDiamondReward:init(owner), dailyDiamondRewardNum = "..self.dailyDiamondRewardNum..", uid = "..self.owner.uid..", lastlogintime="..self.owner.lastlogintime)
+    --print("DailyDiamondReward:init(owner), dailyDiamondRewardNum = "..self.dailyDiamondRewardNum..", uid = "..self.owner.uid..", lastlogintime="..self.owner.lastlogintime)
 end
 
 function DailyDiamondReward:GetData()
-    print("DailyDiamondReward:GetData, dailyDiamondRewardNum = "..self.dailyDiamondRewardNum..", uid = "..self.owner.uid)
+    --print("DailyDiamondReward:GetData, dailyDiamondRewardNum = "..self.dailyDiamondRewardNum..", uid = "..self.owner.uid)
     return {["dailyDiamondRewardNum"] = self.dailyDiamondRewardNum}
 end
 
@@ -47,9 +47,9 @@ function DailyDiamondReward:GetDailyDiamondRewardReward()
         return 2, "当天的奖励已经领取完了", 0
     end
 
-    print("每日钻石领取前, uid="..self.owner.uid..", diamond="..self.owner.diamond)
+    --print("每日钻石领取前, uid="..self.owner.uid..", diamond="..self.owner.diamond)
     UserInfo.AddUserMoney(self.owner, static_const.Static_MoneyType_Diamond , GlobalConst.Diamonds_Number[rewardNum])
-    print("每日钻石领取后, uid="..self.owner.uid..", diamond="..self.owner.diamond)
+    --print("每日钻石领取后, uid="..self.owner.uid..", diamond="..self.owner.diamond)
 
     self.dailyDiamondRewardNum = rewardNum
     return 0, "领取成功", rewardNum
@@ -77,7 +77,7 @@ function DailyDiamondReward:DealWithLogin()
     end
 
     if DailyDiamondReward:IsTheSameDay(self.owner.lastlogintime, os.time()) == false then
-        print("DailyDiamondReward:IsTheSameDay = false, lastlogintime="..self.owner.lastlogintime..", os.time="..os.time())
+        --print("DailyDiamondReward:IsTheSameDay = false, lastlogintime="..self.owner.lastlogintime..", os.time="..os.time())
         self.dailyDiamondRewardNum = 0
     end
 

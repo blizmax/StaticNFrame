@@ -18,11 +18,11 @@ end
 function DailySharing:init(owner)
     self.owner = owner
     self.dailyRewardNum = 0
-    print("DailySharing:init(owner), dailyRewardNum = "..self.dailyRewardNum..", uid = "..self.owner.uid)
+    --("DailySharing:init(owner), dailyRewardNum = "..self.dailyRewardNum..", uid = "..self.owner.uid)
 end
 
 function DailySharing:GetData()
-    print("DailySharing:GetData, dailyRewardNum = "..self.dailyRewardNum..", uid = "..self.owner.uid)
+    --print("DailySharing:GetData, dailyRewardNum = "..self.dailyRewardNum..", uid = "..self.owner.uid)
     return {["dailyRewardNum"] = self.dailyRewardNum}
 end
 
@@ -80,11 +80,11 @@ function DailySharing:HandleReward(rewardStr)
     for i, v in pairs(rewardInfo) do
         if v > 0 then
             local rewardType = tonumber(i)
-            print("HandleReward, i="..i..", v="..v..", rewardType="..rewardType)
+            --print("HandleReward, i="..i..", v="..v..", rewardType="..rewardType)
             if rewardType <=2 then
-                print("每日分享领取前, uid="..self.owner.uid..", money="..self.owner.money..", diamond="..self.owner.diamond..", rewardType="..i..", num="..v)
+                --print("每日分享领取前, uid="..self.owner.uid..", money="..self.owner.money..", diamond="..self.owner.diamond..", rewardType="..i..", num="..v)
                 UserInfo.AddUserMoney(self.owner, rewardType, v)
-                print("每日分享领取后, uid="..self.owner.uid..", money="..self.owner.money..", diamond="..self.owner.diamond)
+               -- print("每日分享领取后, uid="..self.owner.uid..", money="..self.owner.money..", diamond="..self.owner.diamond)
             else
                 UserItems:useItem(self.owner, rewardType, v)
             end

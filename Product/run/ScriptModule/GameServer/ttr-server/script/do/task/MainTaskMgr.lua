@@ -58,7 +58,7 @@ function MainTaskMgr:LoadConfig()
 		end
 	end
 
-	print("MainTaskMgr:LoadConfig, uid="..self.owner.uid..", taskIdInProgress="..self.taskIdInProgress)
+	--print("MainTaskMgr:LoadConfig, uid="..self.owner.uid..", taskIdInProgress="..self.taskIdInProgress)
 	--如果当前没有进行中的id，找到最小的任务id设它为进行中
 	if self.taskIdInProgress == 0 then
 		local minTaskId = 0
@@ -79,7 +79,7 @@ function MainTaskMgr:LoadConfig()
 		end
 		--self.tasks:Find(minTaskId).status = TaskStatusEnum.Begin
 		self.taskIdInProgress = minTaskId
-		print("LoadConfig, minTaskId="..minTaskId..", taskIdInProgress="..self.taskIdInProgress)
+		--print("LoadConfig, minTaskId="..minTaskId..", taskIdInProgress="..self.taskIdInProgress)
 	end
 
 	--有些任务可能被策划干掉了，这里也删掉他
@@ -112,14 +112,14 @@ function MainTaskMgr:GetDBTable()
 end
 
 function MainTaskMgr:GetTaskIdInProgress()
-	print("GetTaskIdInProgress, uid="..self.owner.uid..", taskIdInProgress="..self.taskIdInProgress)
+	--print("GetTaskIdInProgress, uid="..self.owner.uid..", taskIdInProgress="..self.taskIdInProgress)
 	return self.taskIdInProgress
 end
 
 function MainTaskMgr:SetNextTaskIdInProgress()
 	local taskInfo = self.tasks:Find(self.taskIdInProgress + 1)
 	if taskInfo == nil then
-		print("MainTaskMgr:SetNextTaskIdInProgress(), uid="..self.owner.uid..", nextTaskIdInProgress="..self.taskIdInProgress.."taskInfo is nil")
+		--print("MainTaskMgr:SetNextTaskIdInProgress(), uid="..self.owner.uid..", nextTaskIdInProgress="..self.taskIdInProgress.."taskInfo is nil")
 		return nil
 	end
 
@@ -128,7 +128,7 @@ function MainTaskMgr:SetNextTaskIdInProgress()
 	if taskInfo:GetTimes() >= taskTable[taskInfo:GetId()].param then
 		taskInfo:SetStatus(TaskStatusEnum.Finish)
 	end
-	print("MainTaskMgr:SetNextTaskIdInProgress(), uid="..self.owner.uid..", nextTaskIdInProgress="..self.taskIdInProgress..", event="..taskInfo.event
+	--print("MainTaskMgr:SetNextTaskIdInProgress(), uid="..self.owner.uid..", nextTaskIdInProgress="..self.taskIdInProgress..", event="..taskInfo.event
 			..", times="..taskInfo.times..", status="..taskInfo:GetStatus())
 	return taskInfo
 end
@@ -136,7 +136,7 @@ end
 --增加任务进度
 function MainTaskMgr:addProgress(event, times, param2)
 	param2 = param2 or 0
-	print("MainTaskMgr:addProgress, uid="..self.owner.uid..", event="..event..", times="..times..", param2="..param2)
+	--print("MainTaskMgr:addProgress, uid="..self.owner.uid..", event="..event..", times="..times..", param2="..param2)
 	self.tasks:ForEach(
 			function(taskId, taskInfo)
 				local taskConf = taskTable[taskId]

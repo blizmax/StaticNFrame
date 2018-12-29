@@ -37,7 +37,7 @@ function DailyLogin:init(owner)
     self.owner = owner
     self.lastLoginTime = 0
     self:initLoginInfo()
-    print("DailyLogin:init()")
+    --print("DailyLogin:init()")
     --self:initRewardInfo()
 end
 
@@ -79,7 +79,7 @@ function DailyLogin:loadFromDb(data)
     end
 
     self.lastLoginTime = data["lastLoginTime"]
-    print("DailyLogin:loadFromDb(data), self.lastLoginTime="..self.lastLoginTime)
+    --print("DailyLogin:loadFromDb(data), self.lastLoginTime="..self.lastLoginTime)
     self:SetMissingFieldFromDb()
 
     return true
@@ -104,7 +104,7 @@ function DailyLogin:IsTheSameDay()
     local lastLoginDay, x = math.modf(self.lastLoginTime/aDaySecondCount)
     local today, y = math.modf(os.time()/aDaySecondCount)
 
-    print("IsTheSameDay, lastLoginDay="..lastLoginDay..", today="..today..", self.lastLoginTime="..self.lastLoginTime..", nowTime="..os.time())
+    --print("IsTheSameDay, lastLoginDay="..lastLoginDay..", today="..today..", self.lastLoginTime="..self.lastLoginTime..", nowTime="..os.time())
 
     return  lastLoginDay == today
 end
@@ -113,7 +113,7 @@ end
 function DailyLogin:DealWithLogin()
 
     if self.owner == nil then
-        print("DailyLogin:Login(), self.owner=false")
+        --("DailyLogin:Login(), self.owner=false")
         return
     end
 
@@ -123,7 +123,7 @@ function DailyLogin:DealWithLogin()
     --end
 
     if ttrutil.IsSameDay(self.owner.lastlogintime,os.time()) == true then
-        print("DailyLogin:Login(), IsTheSameDay=true, uid="..self.owner.uid)
+        --print("DailyLogin:Login(), IsTheSameDay=true, uid="..self.owner.uid)
         return
     end
 
@@ -147,18 +147,18 @@ function DailyLogin:DealWithLogin()
         self.loginInfo[1].state = G_CAN_GET_REWARD
     else
         if index ~= 0 then
-            print("DailyLogin:Login, index="..index..", id="..self.loginInfo[index].id..", state="..self.loginInfo[index].rewardInfo..", index="..index)
+            --print("DailyLogin:Login, index="..index..", id="..self.loginInfo[index].id..", state="..self.loginInfo[index].rewardInfo..", index="..index)
             self.loginInfo[index].state = G_CAN_GET_REWARD
         end
     end
 
     self.lastLoginTime = os.time()
-    print("DailyLogin:Login(), set self.lastLoginTime="..self.lastLoginTime)
+    --print("DailyLogin:Login(), set self.lastLoginTime="..self.lastLoginTime)
 end
 
 function DailyLogin:GetDailyLoginInfo()
     for i, v in ipairs(self.loginInfo) do
-        print("uid="..self.owner.uid..", len="..#self.loginInfo..", id="..v.id..", state="..v.state..", rewardInfo="..v.rewardInfo)
+        --print("uid="..self.owner.uid..", len="..#self.loginInfo..", id="..v.id..", state="..v.state..", rewardInfo="..v.rewardInfo)
     end
     return self.loginInfo
 end
@@ -186,11 +186,11 @@ function DailyLogin:HandleReward(rewardStr, doubleReward)
         if v > 0 then
             v = v*times
             local rewardType = tonumber(i)
-            print("HandleReward, i="..i..", v="..v..", rewardType="..rewardType..", times="..times)
+            --print("HandleReward, i="..i..", v="..v..", rewardType="..rewardType..", times="..times)
             if rewardType <=2 then
-                print("每日登录领取前, uid="..self.owner.uid..", money="..self.owner.money..", diamond="..self.owner.diamond..", rewardType="..i..", num="..v)
+                --print("每日登录领取前, uid="..self.owner.uid..", money="..self.owner.money..", diamond="..self.owner.diamond..", rewardType="..i..", num="..v)
                 UserInfo.AddUserMoney(self.owner, rewardType, v)
-                print("每日登录领取后, uid="..self.owner.uid..", money="..self.owner.money..", diamond="..self.owner.diamond)
+                --print("每日登录领取后, uid="..self.owner.uid..", money="..self.owner.money..", diamond="..self.owner.diamond)
             else
                 UserItems:useItem(self.owner, rewardType, v)
             end
@@ -246,7 +246,7 @@ function DailyLogin:initRewardInfoForDebug()
     self:GetDailyLoginInfo()
     self:Login()
     self:GetDailyLoginReward(1)
-    print("hello")
+    --print("hello")
 end
 
 --When 0:00, call
