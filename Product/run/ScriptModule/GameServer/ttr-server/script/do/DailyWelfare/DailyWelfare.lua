@@ -70,7 +70,7 @@ function DailyWelfare:initGiftBagInfo()
 
             self.giftBag[count] = giftBagInfo
             --print("initGiftBagInfo, uid="..self.owner.uid..", id="..i..", state="..giftBagInfo.state..", cd="..v["cd"]..", startTime="..giftBagInfo.startTime
-            ..", minStar="..v["minStar"]..", maxStar="..v["maxStar"]..", welfareId="..v.id)
+            --..", minStar="..v["minStar"]..", maxStar="..v["maxStar"]..", welfareId="..v.id)
         end
     end
 end
@@ -222,7 +222,7 @@ function DailyWelfare:HandleReward(welfareId, doubleReward)
         if v > 0 then
             local rewardType = tonumber(i)
             v = v*times
-            print("HandleReward, i="..i..", v="..v..", rewardType="..rewardType..", times="..times)
+            --print("HandleReward, i="..i..", v="..v..", rewardType="..rewardType..", times="..times)
             UserItems:useItem(self.owner, rewardType, v)
         end
     end

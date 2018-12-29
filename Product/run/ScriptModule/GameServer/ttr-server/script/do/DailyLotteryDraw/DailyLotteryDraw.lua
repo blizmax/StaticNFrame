@@ -165,7 +165,7 @@ function DailyLotteryDraw:GetDailyLotteryDraw()
     self.totalDrawNum = self.totalDrawNum + 1
     self.drawNum = drawNum
     --print("GetDailyLotteryDraw, rewardId="..rewardId..", reward="..DailyLotteryDrawTable[rewardId].reward..", rewardStr="..rewardStr..", isGotLuckyDraw="..self.isGotLuckyDraw
-    .." totalDrawNum="..self.totalDrawNum)
+    --" totalDrawNum="..self.totalDrawNum)
     return 0, "领取成功", drawNum, rewardId, self.isGotLuckyDraw
 end
 

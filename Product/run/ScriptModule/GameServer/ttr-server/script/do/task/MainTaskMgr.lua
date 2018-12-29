@@ -129,7 +129,7 @@ function MainTaskMgr:SetNextTaskIdInProgress()
 		taskInfo:SetStatus(TaskStatusEnum.Finish)
 	end
 	--print("MainTaskMgr:SetNextTaskIdInProgress(), uid="..self.owner.uid..", nextTaskIdInProgress="..self.taskIdInProgress..", event="..taskInfo.event
-			..", times="..taskInfo.times..", status="..taskInfo:GetStatus())
+	--		..", times="..taskInfo.times..", status="..taskInfo:GetStatus())
 	return taskInfo
 end
 
