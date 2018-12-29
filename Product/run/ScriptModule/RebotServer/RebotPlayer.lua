@@ -104,6 +104,7 @@ function RebotPlayer:Connect()
     self:RequestGuideInfo()
 
     unilight.addtimer("RebotServerModule.UpdateSec", 1, self.uid)
+    unilight.addtimer("RebotServerModule.UpdateFriend", 5, self.uid)
 end
 
 function RebotPlayer:LoginTokenLogin()
@@ -172,6 +173,36 @@ function RebotPlayer:ClickTravel()
         stateId = 101,
         times = 4,
         critical = 4,
+    }
+
+    self:SendMessage(data)
+end
+
+function RebotPlayer:GetRecommendFriendInfo()
+    local data = { }
+    data["do"] = "Cmd.SendReqRecommendFriendCmd_C"
+    data["data"] = {
+    }
+
+    self:SendMessage(data)
+end
+
+function RebotPlayer:GetFriendInfo()
+    local data = { }
+    data["do"] = "Cmd.GetUserFriendDataCmd_C"
+    data["data"] = {
+    }
+
+    self:SendMessage(data)
+end
+
+function RebotPlayer:GetRankList()
+    local data = { }
+    data["do"] = "Cmd.ReqGetWorldRankListInfo_C"
+    data["data"] = {
+        rank_type = 1,
+        start_index = 1,
+        endIndex = 20,
     }
 
     self:SendMessage(data)

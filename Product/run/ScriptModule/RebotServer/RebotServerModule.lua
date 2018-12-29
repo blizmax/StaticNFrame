@@ -118,6 +118,21 @@ function RebotServerModule.UpdateSec(uid, timer)
     rebot:ClickTravel()
 end
 
+function RebotServerModule.UpdateFriend(uid, timer)
+    local rebot = RebotServerModule.rebotUidMap[uid]
+    if rebot == nil then return end
+
+    local num = math.random(1,3)
+    if num == 1 then
+        rebot:GetRecommendFriendInfo()
+    elseif num == 2 then
+        rebot:GetFriendInfo()
+    elseif num == 3 then
+        rebot:GetRankList()
+    end
+    
+end
+
 function RebotServerModule.AfterInit()
 
 end
