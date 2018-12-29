@@ -23,7 +23,7 @@ function RebotServerModule.Init()
     TcpClient.addEventCallBack(NF_SERVER_TYPES.NF_ST_PROXY, "RebotServerModule.NetEventCallBack")
     TcpClient.addRecvCallBack(NF_SERVER_TYPES.NF_ST_PROXY, 0, "RebotServerModule.NetServerRecvHandleJson")
 
-    for i = 1, 1 do
+    for i = 1, 200 do
         local rebot = RebotPlayer:New()
         rebot:Init(RebotServerModule.GetRebotIndex())
         RebotServerModule.rebotNameMap[rebot.name] = rebot
@@ -47,7 +47,7 @@ function RebotServerModule.NetEventCallBack(nEvent, unLinkId)
 end
 
 function RebotServerModule.NetServerRecvHandleJson(unLinkId, valueId, nMsgId, strMsg)
-    --unilight.debug(tostring(valueId) .. " | recv msg |" .. strMsg)
+    unilight.debug(tostring(valueId) .. " | recv msg |" .. strMsg)
     local table_msg = json2table(strMsg)
     table_msg = table_msg["msg"]
     --协议规则
