@@ -122,7 +122,7 @@ function DailyLogin:DealWithLogin()
     --    return
     --end
 
-    if ttrutil.IsSameDay(self.owner.lastlogintime,os.time()) == true then
+    if ttrutil.IsSameDay(self.lastLoginTime,os.time()) == true then
         --print("DailyLogin:Login(), IsTheSameDay=true, uid="..self.owner.uid)
         return
     end

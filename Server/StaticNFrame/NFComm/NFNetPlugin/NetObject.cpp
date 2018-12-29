@@ -14,6 +14,7 @@
 #include "NFComm/NFCore/NFBase64.h"
 #include "NFComm/NFCore/NFCommon.h"
 #include "NFHttpFormat.h"
+#include "NFComm/NFCore/NFStringUtility.h"
 
 /**
 * @brief libevent读数据回调
@@ -295,7 +296,10 @@ int NetObject::Dismantle()
 					opcode = mWSFrameType;
 				}
 
-				OnHandleMsgPeer(eMsgType_RECIVEDATA, m_usLinkId, mParseString);
+				if (NFStringUtility::IsUTF8String(mParseString))
+				{
+					OnHandleMsgPeer(eMsgType_RECIVEDATA, m_usLinkId, mParseString);
+				}
 			}
 			
 			m_buffer.Consume(allLen);
@@ -375,7 +379,14 @@ int NetObject::Dismantle()
 					return 0;
 				}
 
-				OnHandleMsgPeer(eMsgType_RECIVEDATA, m_usLinkId, mParseString);
+				if (NFStringUtility::IsUTF8String(mParseString))
+				{
+					OnHandleMsgPeer(eMsgType_RECIVEDATA, m_usLinkId, mParseString);
+				}
+				else
+				{
+					NFLogError("recv data not utf8:{}", mParseString);
+				}
 			}
 
 			m_buffer.Consume(allLen);

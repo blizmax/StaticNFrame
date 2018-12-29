@@ -1532,6 +1532,55 @@ void NFStringUtility::StringAppendF(std::string* dst, const char* format, ...)
 	va_end(ap);
 }
 
+bool NFStringUtility::IsUTF8String(const std::string& str)
+{
+	int check_sub = 0;
+
+	for (int i = 0; i < str.length(); i++)
+	{
+		if (check_sub == 0)
+		{
+			if ((str[i] >> 7) == 0)         //0xxx xxxx  
+			{
+				continue;
+			}
+			else if ((str[i] & 0xE0) == 0xC0) //110x xxxx  
+			{
+				check_sub = 1;
+			}
+			else if ((str[i] & 0xF0) == 0xE0) //1110 xxxx  
+			{
+				check_sub = 2;
+			}
+			else if ((str[i] & 0xF8) == 0xF0) //1111 0xxx  
+			{
+				check_sub = 3;
+			}
+			else if ((str[i] & 0xFC) == 0xF8) //1111 10xx  
+			{
+				check_sub = 4;
+			}
+			else if ((str[i] & 0xFE) == 0xFC) //1111 110x  
+			{
+				check_sub = 5;
+			}
+			else
+			{
+				return false;
+			}
+		}
+		else
+		{
+			if ((str[i] & 0xC0) != 0x80)
+			{
+				return false;
+			}
+			check_sub--;
+		}
+	}
+	return true;
+}
+
 std::string NFStringUtility::Demangle(const std::string& name)
 {
 #if NF_PLATFORM == NF_PLATFORM_LINUX

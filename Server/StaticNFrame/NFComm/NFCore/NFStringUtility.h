@@ -332,6 +332,10 @@ public:
 	 */
 	static std::string Demangle(const std::string& name);
 
+	/*
+	*/
+	static bool IsUTF8String(const std::string& str);
+
 	/**
 	 * @brief 获得类型T的类型名字
 	 *
