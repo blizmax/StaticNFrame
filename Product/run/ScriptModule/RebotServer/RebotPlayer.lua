@@ -111,6 +111,7 @@ function RebotPlayer:Connect()
 
     unilight.addtimer("RebotServerModule.UpdateSec", 1, self.uid)
     unilight.addtimer("RebotServerModule.UpdateFriend", 5, self.uid)
+    unilight.addtimer("RebotServerModule.UpdateTick", 5, self.uid)
 end
 
 function RebotPlayer:LoginTokenLogin()
@@ -209,6 +210,15 @@ function RebotPlayer:GetRankList()
         rank_type = 1,
         start_index = 1,
         endIndex = 20,
+    }
+
+    self:SendMessage(data)
+end
+
+function RebotPlayer:SendTick()
+    local data = { }
+    data["do"] = "Cmd.Ping_C"
+    data["data"] = {
     }
 
     self:SendMessage(data)

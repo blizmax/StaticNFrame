@@ -318,7 +318,7 @@ void NFCNetClientModule::SendMsg(NFClient* pClient, const uint32_t nMsgID, const
 	if (pClient->IsWebSocket())
 	{
 		std::string frame;
-		NFIPacketParse::EnCodeWeb(msg, nLen, frame);
+		NFIPacketParse::EnCodeWeb(msg, nLen, frame, BINARY_FRAME, true, true);
 		mxSendBuffer.PushData((const void*)frame.data(), frame.length());
 	}
 	else

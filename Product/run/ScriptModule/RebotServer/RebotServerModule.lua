@@ -23,7 +23,7 @@ function RebotServerModule.Init()
     TcpClient.addEventCallBack(NF_SERVER_TYPES.NF_ST_PROXY, "RebotServerModule.NetEventCallBack")
     TcpClient.addRecvCallBack(NF_SERVER_TYPES.NF_ST_PROXY, 0, "RebotServerModule.NetServerRecvHandleJson")
 
-    for i = 1, 1 do
+    for i = 1, 200 do
         local rebot = RebotPlayer:New()
         rebot:Init(RebotServerModule.GetRebotIndex())
         RebotServerModule.rebotNameMap[rebot.name] = rebot
@@ -131,6 +131,14 @@ function RebotServerModule.UpdateFriend(uid, timer)
         rebot:GetRankList()
     end
     
+end
+
+
+function RebotServerModule.UpdateTick(uid, timer)
+    local rebot = RebotServerModule.rebotUidMap[uid]
+    if rebot == nil then return end
+
+    rebot:SendTick()
 end
 
 function RebotServerModule.AfterInit()
