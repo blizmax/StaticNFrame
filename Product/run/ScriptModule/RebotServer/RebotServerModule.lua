@@ -23,7 +23,7 @@ function RebotServerModule.Init()
     TcpClient.addEventCallBack(NF_SERVER_TYPES.NF_ST_PROXY, "RebotServerModule.NetEventCallBack")
     TcpClient.addRecvCallBack(NF_SERVER_TYPES.NF_ST_PROXY, 0, "RebotServerModule.NetServerRecvHandleJson")
 
-    for i = 1, 200 do
+    for i = 1, 1 do
         local rebot = RebotPlayer:New()
         rebot:Init(RebotServerModule.GetRebotIndex())
         RebotServerModule.rebotNameMap[rebot.name] = rebot
