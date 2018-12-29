@@ -161,6 +161,6 @@ function GameServerModule.BeforeShut()
 end
 
 function GameServerModule.Shut()
-    UserInfo.SaveUserInfoToDB()
+    UserInfo.SaveAllUserInfoToDB()
     unilight.info("Server.ServerStop:停机数据处理完成")
 end

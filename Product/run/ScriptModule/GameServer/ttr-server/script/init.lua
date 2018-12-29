@@ -53,7 +53,7 @@ local function init()
 
     --停机存档
 	Server.ServerStop = function()
-		UserInfo.SaveUserInfoToDB()
+		UserInfo.SaveAllUserInfoToDB()
 		unilight.info("Server.ServerStop:停机数据处理完成")
 	end
 

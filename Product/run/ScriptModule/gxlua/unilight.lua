@@ -27,7 +27,7 @@ function unilight.addtimer(luaFunc, sec, ...)
 	if #param_table == 0 then
 		param_table = nil
 	end
-	local timerId = LuaNFrame:AddTimer(luaFunc, sec*1000, param_table)
+	return LuaNFrame:AddTimer(luaFunc, sec*1000, param_table)
 end
 
 --每嗝1毫秒的定时器示例

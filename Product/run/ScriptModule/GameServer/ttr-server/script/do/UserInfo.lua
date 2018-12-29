@@ -5,7 +5,7 @@ UserInfo.GlobalUserInfoMap = {} -- 玩家在线信息全局管理
 
 --玩家系统初始化函数
 function UserInfo.Init()
-	unilight.addtimer("UserInfo.SaveUserInfoToDB",static_const.Static_Const_User_Save_Data_DB_Time)
+	--unilight.addtimer("UserInfo.SaveOneUserInfoToDB",static_const.Static_Const_User_Save_Data_DB_Time)
 end
 
 --每天零点定时器
@@ -34,10 +34,17 @@ function UserInfo.UserZeroClear(userInfo)
 end
 
 --定时保存玩家数据到DB
-function UserInfo.SaveUserInfoToDB()
-	unilight.debug("1分钟保存一次玩家在线数据.................")
+function UserInfo.SaveOneUserInfoToDB(uid)
+	local userInfo = UserInfo.GetUserInfoById(uid)
+
+	if userInfo ~= nil then
+		UserInfo.SaveUserInfoToDb(userInfo)
+	end
+end
+
+function UserInfo.SaveAllUserInfoToDB()
 	for uid, userInfo in pairs(UserInfo.GlobalUserInfoMap) do
-		UserInfo:SaveUserInfoToDb(userInfo)
+		UserInfo.SaveUserInfoToDb(userInfo)
 	end
 end
 
@@ -141,6 +148,8 @@ function UserInfo.CreateTempUserInfo(uid)
 
 	--玩家离线定时器，超过这个时间后，玩家离线，内存数据被删除
 	userInfo["offline_timer"] = nil
+	--玩家保存数据定时器
+	userInfo["savedb_timer"] = nil
 	return userInfo
 end
 
@@ -285,6 +294,11 @@ function UserInfo.CreateUserByDb(uid, dbUser)
     if userInfo.star == 0 then
 		userInfo.star = world:recalcStar()
 	end
+
+	--玩家离线定时器，超过这个时间后，玩家离线，内存数据被删除
+	userInfo["offline_timer"] = nil
+	--玩家保存数据定时器
+	userInfo["savedb_timer"] = nil
 	
 	return userInfo
 end
@@ -426,11 +440,15 @@ function UserInfo.Disconnected(uid)
 	userInfo.firstLogin = 0
 	userInfo.lastlogintime = os.time()
 
-	UserInfo:SaveUserInfoToDb(userInfo)
+	UserInfo.SaveUserInfoToDb(userInfo)
 	--print("user Disconnected, uid="..userInfo.uid..", lastlogintime="..os.time())
 
 	if userInfo["offline_timer"] == nil then
 		userInfo["offline_timer"] = unilight.addtimer("UserInfo.offline_savedata", static_const.Static_Const_USER_INFO_MAX_ONLINE_TIME_AFTER_OFFLINE, userInfo.uid)
+	end
+
+	if userInfo["savedb_timer"] ~= nil then
+		unilight.stoptimer(userInfo["savedb_timer"])
 	end
 end
 
@@ -454,7 +472,7 @@ function UserInfo.GetOrNewUserInfo(uid)
 	return userInfo
 end
 
-function UserInfo:SaveUserInfoToDb(userInfo)
+function UserInfo.SaveUserInfoToDb(userInfo)
 	if userInfo ~= nil then
 		unilight.savedata("userinfo", UserInfo.GetServerData(userInfo))
 		userInfo.mailMgr:saveToDb()
@@ -492,7 +510,7 @@ function UserInfo.offline_savedata(uid, timer)
 		return
 	end
 
-	UserInfo:SaveUserInfoToDb(userInfo)
+	UserInfo.SaveUserInfoToDb(userInfo)
 
 	UserInfo.GlobalUserInfoMap[uid] = nil
 
@@ -524,6 +542,10 @@ function UserInfo.ReconnectLoginOk(laccount)
 	--清理玩家定时器
 	if userInfo["offline_timer"] ~= nil then
 		unilight.stoptimer(userInfo["offline_timer"])
+	end
+
+	if userInfo["savedb_timer"] == nil then
+		userInfo["savedb_timer"] = unilight.addtimer("UserInfo.SaveOneUserInfoToDB",static_const.Static_Const_User_Save_Data_DB_Time, userInfo.uid)
 	end
 
 	userInfo.online = true
@@ -782,7 +804,7 @@ Lby.CmdNotifyAddUserMoney_S = function(cmd, lobbyClientTask)
 
 	UserInfo.AddUserMoney(userInfo, cmd.data.moneytype, cmd.data.moneynum)
 	if userInfo.online == false then
-		UserInfo:SaveUserInfoToDb(userInfo)
+		UserInfo.SaveUserInfoToDb(userInfo)
 	end
 end
 
@@ -798,7 +820,7 @@ Lby.CmdNotifySubUserMoney_S = function(cmd, lobbyClientTask)
 
 	UserInfo.SubUserMoney(userInfo, cmd.data.moneytype, cmd.data.moneynum)
 	if userInfo.online == false then
-		UserInfo:SaveUserInfoToDb(userInfo)
+		UserInfo.SaveUserInfoToDb(userInfo)
 	end
 end
 
@@ -814,7 +836,7 @@ Lby.CmdNotifyUseItem_S = function(cmd, lobbyClientTask)
 	
 	UserItems:useItem(userInfo, cmd.data.itemid, cmd.data.itemnum)
 	if userInfo.online == false then
-		UserInfo:SaveUserInfoToDb(userInfo)
+		UserInfo.SaveUserInfoToDb(userInfo)
 	end
 end
 
@@ -869,7 +891,7 @@ Lby.CmdForceUserOffline_C = function(cmd, lobbyClientTask)
 		unilight.stoptimer(userInfo["offline_timer"])
 	end
 
-	--UserInfo:SaveUserInfoToDb(userInfo)
+	--UserInfo.SaveUserInfoToDb(userInfo)
 
 	UserInfo.GlobalUserInfoMap[uid] = nil
 

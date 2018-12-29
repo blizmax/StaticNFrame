@@ -5,11 +5,11 @@ require "script/do/globalConst"
 static_const = {}
 
 --静态常量，好友系统，多次时间保存一次数据
-static_const.Static_Const_Friend_Save_Data_To_DB_Time = 300
+static_const.Static_Const_Friend_Save_Data_To_DB_Time = 600
 
-static_const.Static_Const_User_Save_Data_DB_Time = 300
+static_const.Static_Const_User_Save_Data_DB_Time = 600
 
-static_const.Static_Const_Rank_List_Sort_time = 60
+static_const.Static_Const_Rank_List_Sort_time = 300
 
 --静态常量，好友系统，玩家离线后最大数据最大在线时间
 static_const.Static_Const_Friend_MAX_ONLINE_TIME_AFTER_OFFLINE = 600
