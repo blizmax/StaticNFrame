@@ -45,7 +45,7 @@ function FriendManager:Init()
    self:LoadAllUserFriendData()
 
    unilight.addtimer("FriendManager.SaveUserFriendToDB",static_const.Static_Const_Friend_Save_Data_To_DB_Time)
-   unilight.addtimer("FriendManager.RefreshUserFriendToDB",static_const.Static_Const_Friend_Save_Data_To_DB_Time*6)
+   --unilight.addtimer("FriendManager.RefreshUserFriendToDB",static_const.Static_Const_Friend_Save_Data_To_DB_Time*6)
    unilight.addtimer("FriendManager.CheckData", static_const.Static_Const_Friend_System_Check_Data_Time)
 end
 

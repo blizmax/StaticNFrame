@@ -34,7 +34,7 @@ end
 function WorldServerModule.GlobalDayZeroClock()
 	--清理好友系统
 	FriendManager:AllFriendZeroClear()
-	FriendManager.RefreshUserFriendToDB()
+	--FriendManager.RefreshUserFriendToDB()
 end
 
 --保存当前是每周几天和每月第几天

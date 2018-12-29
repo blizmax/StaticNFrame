@@ -1,9 +1,9 @@
 RebotServerModule = {}
 RebotServerModule.RebotIndex = os.time()
 
-RebotServerModule.loginUrl = "http://loginxcxtest.zqgame.com/httplogin"
+--RebotServerModule.loginUrl = "http://loginxcxtest.zqgame.com/httplogin"
 --RebotServerModule.loginUrl = "http://ttrserver.staticnframe.com:7000/httplogin"
---RebotServerModule.loginUrl = "http://127.0.0.1:7000/httplogin"
+RebotServerModule.loginUrl = "http://127.0.0.1:7000/httplogin"
 RebotServerModule.gameid = 3010
 RebotServerModule.zoneid = 1
 RebotServerModule.platid = 0
