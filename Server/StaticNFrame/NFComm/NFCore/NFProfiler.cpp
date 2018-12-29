@@ -191,7 +191,7 @@ void NFProfiler::OutputNode(
 	if (showSplitLine)
 	{
 		line[indentLength] = '|';
-		line[indentLength + 1] = '\r';
+		line[indentLength + 1] = '\t';
 		line[indentLength + 2] = '\n';
 		line[indentLength + 3] = '\0';
 		report->append(line);
@@ -204,7 +204,7 @@ void NFProfiler::OutputNode(
 		snprintf(
 			writePos,
 			freeSize,
-			"+-[%5.2f%% %6.3fms count=%u]----%s%s\r\n",
+			"+-[%5.2f%% %6.3fms count=%u]----%s%s\t\n",
 			node.sampleTime * 100.f / totalTime,
 			node.sampleTime / 1000000.f,
 			node.sampleCount,
@@ -218,7 +218,7 @@ void NFProfiler::OutputNode(
 
 	if (report->length() + NF_ARRAYSIZE(line) >= (unsigned)4092)
 	{
-		NFLogDebug("profile:\r\n{}", *report);
+		NFLogDebug("profile:\t\n{}", *report);
 		report->clear();
 	}
 }
@@ -285,7 +285,7 @@ bool NFProfiler::OutputTopProfilerTimer()
 	head.sampleTime = totalTime;
 	BuildCallTree(&head, &tree);
 	OutputCallTree(head, totalTime, minShowTime, 0, &report);
-	NFLogDebug("profile:\r\n{}", report.c_str());
+	NFLogDebug("profile:\r\n{}", report);
 	return true;
 }
 
