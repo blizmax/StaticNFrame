@@ -38,7 +38,7 @@ function RebotServerModule.addRebot(timer)
         num = num + 1
     end
 
-    if num >= 2000 then
+    if num >= 200 then
         unilight.stoptimer(timer)
     end
 end
