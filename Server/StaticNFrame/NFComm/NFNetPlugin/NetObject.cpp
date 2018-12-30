@@ -385,7 +385,7 @@ int NetObject::Dismantle()
 				}
 				else
 				{
-					NFLogError("recv data not utf8:{}", mParseString);
+					//NFLogError("recv data not utf8:{}", mParseString);
 				}
 			}
 
