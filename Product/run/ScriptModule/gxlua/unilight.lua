@@ -128,6 +128,15 @@ function unilight.SetFlushOn(level)
     LuaNFrame:SetFlushOn(level)
 end
 
+--使用方法，BeginProfiler -- EndProfiler必须成对出现
+function unilight.BeginProfiler(funname)
+    LuaNFrame:BeginProfiler(funname)
+end
+
+function unilight.EndProfiler()
+    LuaNFrame:EndProfiler()
+end
+
 --serverNetEventModule 注册服务器与服务器之间的网络回调，主要有连接回调，断线回调
 --比如说，luaFuncStr格式：luaFuncStr（eMsgType nEvent, uint32_t unLinkId, NF_SHARE_PTR<NFServerData> pServerData）
 --

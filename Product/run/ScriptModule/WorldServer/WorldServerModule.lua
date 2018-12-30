@@ -58,7 +58,7 @@ function WorldServerModule.GameRecvHandleJson(unLinkId, valueId, nMsgId, strMsg)
     if type(table_msg["do"]) == "string" then
         if table_msg["do"] == "Cmd.UserUpdate_C" then
         else
-            unilight.debug(tostring(valueId) .. " | recv game msg |" .. strMsg)
+            --unilight.debug(tostring(valueId) .. " | recv game msg |" .. strMsg)
         end
     end
     --协议规则
@@ -72,7 +72,9 @@ function WorldServerModule.GameRecvHandleJson(unLinkId, valueId, nMsgId, strMsg)
                 if type(Zone[strcmd]) == "function" then
                     local zonetask = ZoneInfo.ZoneLinkTaskMap[unLinkId]
                     if zonetask ~= nil then
+                        unilight.BeginProfiler("Zone."..strcmd)
                         Zone[strcmd](table_msg, zonetask)
+                        unilight.EndProfiler()
                     end
                 end
             end

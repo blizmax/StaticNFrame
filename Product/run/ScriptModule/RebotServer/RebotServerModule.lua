@@ -1,9 +1,9 @@
 RebotServerModule = {}
 RebotServerModule.RebotIndex = os.time()
 
-RebotServerModule.loginUrl = "http://loginxcxtest.zqgame.com/httplogin"
+--RebotServerModule.loginUrl = "http://loginxcxtest.zqgame.com/httplogin"
 --RebotServerModule.loginUrl = "http://ttrserver.staticnframe.com:7000/httplogin"
---RebotServerModule.loginUrl = "http://127.0.0.1:7000/httplogin"
+RebotServerModule.loginUrl = "http://127.0.0.1:7000/httplogin"
 RebotServerModule.gameid = 3010
 RebotServerModule.zoneid = 1
 RebotServerModule.platid = 0
@@ -58,7 +58,7 @@ function RebotServerModule.NetEventCallBack(nEvent, unLinkId)
 end
 
 function RebotServerModule.NetServerRecvHandleJson(unLinkId, valueId, nMsgId, strMsg)
-    unilight.debug(tostring(valueId) .. " | recv msg |" .. strMsg)
+    --unilight.debug(tostring(valueId) .. " | recv msg |" .. strMsg)
     local table_msg = json2table(strMsg)
     table_msg = table_msg["msg"]
     --协议规则
@@ -72,7 +72,9 @@ function RebotServerModule.NetServerRecvHandleJson(unLinkId, valueId, nMsgId, st
                 if type(Net[strcmd]) == "function" then
                     local laccount = go.roomusermgr.GetRoomUserById(valueId)
                     if laccount ~= nil then
+                        unilight.BeginProfiler("Net."..strcmd)
                         Net[strcmd](table_msg, laccount)
+                        unilight.EndProfiler()
                     end
                 end
             end

@@ -97,7 +97,7 @@ end
 
 --特殊协议
 function GameServerModule.WorldServerRecvHandleJson(unLinkId, valueId, nMsgId, strMsg)
-    unilight.debug(tostring(valueId) .. " | recv world msg |" .. strMsg)
+    --unilight.debug(tostring(valueId) .. " | recv world msg |" .. strMsg)
     local table_msg = json2table(strMsg)
     --协议规则
     if table_msg ~= nil then
@@ -110,7 +110,9 @@ function GameServerModule.WorldServerRecvHandleJson(unLinkId, valueId, nMsgId, s
                 if type(Lby[strcmd]) == "function" then
                     local lobby = unilobby.lobbytaskMap[unLinkId]
                     if lobby ~= nil then
+                        unilight.BeginProfiler("Lby."..strcmd)
                         Lby[strcmd](table_msg, lobby)
+                        unilight.EndProfiler()
                     end
                 end
             end
@@ -124,7 +126,7 @@ function GameServerModule.NetServerRecvHandleJson(unLinkId, valueId, nMsgId, str
     local table_msg = json2table(strMsg)
     if type(table_msg["do"]) == "string" then
         if table_msg["do"] ~= "Cmd.Ping_C" then
-            unilight.debug(tostring(valueId) .. " | recv msg |" .. strMsg)
+            --unilight.debug(tostring(valueId) .. " | recv msg |" .. strMsg)
         end
     end
     --协议规则
@@ -138,7 +140,9 @@ function GameServerModule.NetServerRecvHandleJson(unLinkId, valueId, nMsgId, str
                 if type(Net[strcmd]) == "function" then
                     local laccount = go.roomusermgr.GetRoomUserById(valueId)
                     if laccount ~= nil then
+                        unilight.BeginProfiler("Net."..strcmd)
                         Net[strcmd](table_msg, laccount)
+                        unilight.EndProfiler()
                     end
                 end
             end

@@ -33,6 +33,19 @@ function LuaNFrame:GetPluginManager()
     return self.pluginManager
 end
 
+--使用方法，BeginProfiler -- EndProfiler必须成对出现
+function LuaNFrame:BeginProfiler(funname)
+    funname = funname or "nullstring"
+    if type(funname) ~= "string" then
+        funname = "funname"
+    end
+    self.pluginManager:BeginProfiler(funname)
+end
+
+function LuaNFrame:EndProfiler()
+    self.pluginManager:EndProfiler()
+end
+
 --添加服务器定时器
 function LuaNFrame:AddTimer(luaFunc, nInterVal, param_table)
     local timerId = self.luaModule:AddTimer(luaFunc, nInterVal, param_table)
