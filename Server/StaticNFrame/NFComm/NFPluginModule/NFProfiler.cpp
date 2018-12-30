@@ -289,7 +289,7 @@ std::string NFProfiler::OutputTopProfilerTimer()
 			totalTime += timer->sampleTime;
 		}
 	}
-	long long minShowTime = 0.f;//(long long)(totalTime * 0.005f);
+	long long minShowTime = (long long)(totalTime * 0.00005f);//(long long)(totalTime * 0.005f);
 
 	head.sampleCount = 1;
 	head.sampleTime = totalTime;
