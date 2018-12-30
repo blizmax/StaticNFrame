@@ -222,7 +222,14 @@ bool NFCPluginManager::Execute()
 	}
 	else
 	{
-		NFLogError("frame timeout:{}", cost);
+		if (cost >= 80 && cost <= 200)
+		{
+			NFLogWarning("frame timeout:{}", cost);
+		}
+		else if (cost > 200)
+		{
+			NFLogError("frame timeout:{}, something wrong", cost);
+		}
 		std::this_thread::sleep_for(std::chrono::milliseconds(1));
 	}
 

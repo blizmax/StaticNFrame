@@ -150,6 +150,7 @@ function UserInfo.CreateTempUserInfo(uid)
 	userInfo["offline_timer"] = nil
 	--玩家保存数据定时器
 	userInfo["savedb_timer"] = nil
+	userInfo["update_user_sec_timer"] = nil
 	return userInfo
 end
 
@@ -299,7 +300,7 @@ function UserInfo.CreateUserByDb(uid, dbUser)
 	userInfo["offline_timer"] = nil
 	--玩家保存数据定时器
 	userInfo["savedb_timer"] = nil
-	
+	userInfo["update_user_sec_timer"] = nil
 	return userInfo
 end
 
@@ -364,6 +365,21 @@ function UserInfo.Update()
 			userInfo.UserProps:dealBuffProps()
 			UserInfo.SendUserMoney(userInfo)
 		end
+	end
+end
+
+function UserInfo.UpdateUserSec(uid)
+	local userInfo = UserInfo.GetUserInfoById(uid)
+
+	if userInfo == nil then
+		return
+	end
+
+	if userInfo.online == true then
+		userInfo.world:update()
+		userInfo.UserProps:addOnlineTime()
+		userInfo.UserProps:dealBuffProps()
+		UserInfo.SendUserMoney(userInfo)
 	end
 end
 
@@ -449,6 +465,10 @@ function UserInfo.Disconnected(uid)
 
 	if userInfo["savedb_timer"] ~= nil then
 		unilight.stoptimer(userInfo["savedb_timer"])
+	end
+
+	if userInfo["update_user_sec_timer"] ~= nil then
+		unilight.stoptimer(userInfo["update_user_sec_timer"])
 	end
 end
 
@@ -546,6 +566,10 @@ function UserInfo.ReconnectLoginOk(laccount)
 
 	if userInfo["savedb_timer"] == nil then
 		userInfo["savedb_timer"] = unilight.addtimer("UserInfo.SaveOneUserInfoToDB",static_const.Static_Const_User_Save_Data_DB_Time, userInfo.uid)
+	end
+
+	if userInfo["update_user_sec_timer"] == nil then
+		userInfo["update_user_sec_timer"] = unilight.addtimer("UserInfo.UpdateUserSec", 1, userInfo.uid)
 	end
 
 	userInfo.online = true

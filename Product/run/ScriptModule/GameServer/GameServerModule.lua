@@ -12,10 +12,6 @@ end
 
 UserInfo = UserInfo or {}
 
-UserInfo.Update = UserInfo.Update or function()
-
-end
-
 function GameServerModule.Init()
     unilight.createdb("userinfo","uid")						-- 玩家个人信息
     unilight.createdb(mailsys.MAIL_DB, "uid")
@@ -25,8 +21,6 @@ function GameServerModule.Init()
 
     unilight.AddServerEventCallBack(NF_SERVER_TYPES.NF_ST_GAME, NF_SERVER_TYPES.NF_ST_WORLD, "GameServerModule.WorldServerNetEvent")
     unilight.AddAccountEventCallBack(NF_SERVER_TYPES.NF_ST_GAME, "GameServerModule.AccountEventCallBack")
-
-    unilight.addtimer("UserInfo.Update", 1)
     
     -- 当tcp上线时
 	Tcp.account_connect = function(laccount)

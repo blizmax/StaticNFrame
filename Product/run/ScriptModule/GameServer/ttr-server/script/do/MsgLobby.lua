@@ -18,9 +18,13 @@ Net.CmdUserInfoSynLobbyCmd_C = function(cmd, laccount)
 	if userInfo["offline_timer"] ~= nil then
 		unilight.stoptimer(userInfo["offline_timer"])
 	end
-
+	
 	if userInfo["savedb_timer"] == nil then
 		userInfo["savedb_timer"] = unilight.addtimer("UserInfo.SaveOneUserInfoToDB",static_const.Static_Const_User_Save_Data_DB_Time, userInfo.uid)
+	end
+
+	if userInfo["update_user_sec_timer"] == nil then
+		userInfo["update_user_sec_timer"] = unilight.addtimer("UserInfo.UpdateUserSec", 1, userInfo.uid)
 	end
 
 	--有可能需要重置每日任务数据

@@ -36,23 +36,21 @@ struct PROFILE_TIMER
 	unsigned sampleCount;
 	long long beginTime;
 	long long sampleTime; // in nanosecond
-	char name[PROFILER_MAX_TIMER_NAME_LEN];
+	std::string name;
 
-	PROFILE_TIMER(const char* _name)
+	PROFILE_TIMER(const std::string& _name)
 	{
 		Clear();
-		strncpy(name, _name, sizeof(name));
-		name[sizeof(name) - 1] = '\0';
+		name = _name;
 	}
 
 	PROFILE_TIMER() : PROFILE_TIMER("")
 	{
 	}
 
-	void SetName(const char* _name)
+	void SetName(const std::string& _name)
 	{
-		strncpy(name, _name, sizeof(name));
-		name[sizeof(name) - 1] = '\0';
+		name = _name;
 	}
 
 	void Clear()
@@ -62,8 +60,6 @@ struct PROFILE_TIMER
 		level = -1;
 
 		memset(&beginTime, 0, sizeof(beginTime));
-		sampleCount = 0;
-		sampleTime = 0;
 	}
 };
 
