@@ -1,6 +1,6 @@
-local ZoneIP = "127.0.0.1"
+--local ZoneIP = "127.0.0.1"
 --local ZoneIP = "45.32.39.90"
---local ZoneIP = "45.77.12.201"
+local ZoneIP = "167.179.98.135"
 
 
 function InitGame3010()
@@ -20,7 +20,7 @@ WorldServer_3010_10 = {
 		ServerPort = GetNewPort(),
 		GameId = 3010,
 		GameName = "ttrserver",
-		MongoIp = "45.32.39.90",
+		MongoIp = "167.179.98.135",
 		MongoPort = 27017,
 		MongonName = "ttr-1",
 		MaxConnectNum = 100,
@@ -38,7 +38,7 @@ WorldServer_3010_30 = {
 		ServerPort = GetNewPort(),
 		GameId = 3010,
 		GameName = "ttrserver",
-		MongoIp = "45.32.39.90",
+		MongoIp = "167.179.98.135",
 		MongoPort = 27017,
 		MongonName = "ttr-1",
 		MaxConnectNum = 100,
@@ -57,7 +57,7 @@ GameServer_3010_11 = {
 		ServerPort = GetNewPort(),
 		GameId = 3010,
 		GameName = "ttrserver",
-		MongoIp = "45.32.39.90",
+		MongoIp = "167.179.98.135",
 		MongoPort = 27017,
 		MongonName = "ttr-1",
 		MaxConnectNum = 100,
@@ -75,7 +75,7 @@ GameServer_3010_12 = {
 		ServerPort = GetNewPort(),
 		GameId = 3010,
 		GameName = "ttrserver",
-		MongoIp = "45.32.39.90",
+		MongoIp = "167.179.98.135",
 		MongoPort = 27017,
 		MongonName = "ttr-1",
 		MaxConnectNum = 100,

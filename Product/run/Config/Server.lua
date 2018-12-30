@@ -1,5 +1,6 @@
 --MasterIP = "45.77.12.201"
-MasterIP = "127.0.0.1"
+--MasterIP = "127.0.0.1"
+MasterIP = "167.179.98.135"
 MasterPort = 5501
 
 --服务器配置列表， ServerId, ServerType 必须配置，MasterServer, LoginServer, ProxyServer为公共服务器， 不用配置gameid， 
@@ -48,7 +49,7 @@ LoginServer_2 = {
 		ServerId = 2,			--对每一个服务器来说都是唯一的， 应用程序需要通过这个ServerId才能知道需要加载的配置是他
 		ServerIp = MasterIP,
 		ServerPort = GetNewPort(),
-		MongoIp = "45.32.39.90",
+		MongoIp = "167.179.98.135",
 		MongoPort = 27017,
 		MongonName = "ttr-1",
 		MaxConnectNum = 100000,
