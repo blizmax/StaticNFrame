@@ -182,7 +182,7 @@ bool NFCLoginLogicModule::HttpHandleHttpLogin(uint32_t linkId, const NFHttpHandl
 void NFCLoginLogicModule::RequestZoneList(const NFHttpHandle& req, const NFMsg::reqeust_zone_list& httpLogin)
 {
 	uint64_t nowTime = pPluginManager->GetNowTime() / 1000;
-	uint32_t gameid = httpLogin.gameid();
+	uint32_t gameid = httpLogin.data().gameid();
 	NFMsg::reqeust_zone_list_respone respone;
 	respone.set_do_(httpLogin.do_());
 	respone.set_error("0");

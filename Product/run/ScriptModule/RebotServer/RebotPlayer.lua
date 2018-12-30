@@ -22,7 +22,8 @@ end
 function RebotPlayer:RequestZoneList()
     local data = {}
     data["do"] = "request-zone-list"
-    data["gameid"] = RebotServerModule.gameid
+    data["data"] = {}
+    data["data"]["gameid"] = RebotServerModule.gameid
 
     local param = { name = self.name }
 
