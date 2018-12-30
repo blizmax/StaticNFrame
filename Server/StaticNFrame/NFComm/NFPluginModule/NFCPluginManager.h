@@ -129,7 +129,7 @@ protected:
 	const NFSystemInfo& GetSystemInfo() const;
 
 	virtual void BeginProfiler(const std::string& luaFunc);
-	virtual void EndProfiler();
+	virtual uint64_t EndProfiler();
 	virtual void ClearProfiler();
 	virtual void PrintProfiler();
 private:

@@ -50,17 +50,17 @@ void NFProfiler::BeginProfiler(PROFILE_TIMER* timer)
 	timer->beginTime = NFGetNanoSeccondTime();//std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::system_clock::now().time_since_epoch()).count();
 }
 
-void NFProfiler::EndProfiler()
+uint64_t NFProfiler::EndProfiler()
 {
 	if (!mIsOpenProfiler)
 	{
-		return;
+		return 0;
 	}
 
 	if (mStackLevel == 0)
 	{
 		NF_ASSERT_MSG(false, "Not match BeginProfile()");
-		return;
+		return 0;
 	}
 
 	PROFILE_TIMER* timer = mStacks[--mStackLevel];
@@ -72,11 +72,7 @@ void NFProfiler::EndProfiler()
 	timer->sampleTime += diffNanosecond;
 	timer->sampleCount += 1;
 
-	//>= 80ms, warnning
-	if (diffNanosecond >= 80000000)
-	{
-		NFLogWarning("{} cost time:{}ms, something wrong......", timer->name, diffNanosecond / 1000000);
-	}
+	return diffNanosecond / 1000000;
 }
 
 void NFProfiler::SetProfilerThreadID()
@@ -196,7 +192,7 @@ void NFProfiler::OutputNode(
 	if (showSplitLine)
 	{
 		line[indentLength] = '|';
-		line[indentLength + 1] = '\t';
+		line[indentLength + 1] = '\r';
 		line[indentLength + 2] = '\n';
 		line[indentLength + 3] = '\0';
 		report.append(line);
@@ -211,7 +207,7 @@ void NFProfiler::OutputNode(
 			snprintf(
 				writePos,
 				freeSize,
-				"+-[%5.2f%% %6.3fms (per %6.3fms) count=%u]----%s%s\t\n",
+				"+-[%5.2f%% %6.3fms (per %6.3fms) count=%u]----%s%s\r\n",
 				node.sampleTime * 100.f / totalTime,
 				node.sampleTime / 1000000.f,
 				node.sampleTime / 1000000.f / node.sampleCount,
@@ -225,7 +221,7 @@ void NFProfiler::OutputNode(
 			snprintf(
 				writePos,
 				freeSize,
-				"+-[%5.2f%% %6.3fms count=%u]----%s%s\t\n",
+				"+-[%5.2f%% %6.3fms count=%u]----%s%s\r\n",
 				node.sampleTime * 100.f / totalTime,
 				node.sampleTime / 1000000.f,
 				node.sampleCount,
@@ -272,7 +268,7 @@ void NFProfiler::OutputCallTree(
 	long long other = node.sampleTime - childTime;
 	if (other > minShowTime)
 	{
-		CALL_TREE_NODE otherNode = {0};
+		CALL_TREE_NODE otherNode;
 		otherNode.name = "<other: code not be sample and sampled but too small>";
 		otherNode.sampleCount = node.sampleCount;
 		otherNode.sampleTime = other;
@@ -296,13 +292,14 @@ std::string NFProfiler::OutputTopProfilerTimer()
 			totalTime += timer->sampleTime;
 		}
 	}
-	long long minShowTime = (long long)(totalTime * 0.00005f);//(long long)(totalTime * 0.005f);
+	long long minShowTime = 0;//(long long)(totalTime * 0.005f);
 
 	head.sampleCount = 1;
 	head.sampleTime = totalTime;
 	BuildCallTree(&head, &tree);
 	OutputCallTree(head, totalTime, minShowTime, 0, report);
-	report = "profile:\t\n" + report;
+	report = "profile:\r\n" + report;
+	//printf("profile:\r\n%s", report.c_str());
 	return report;
 }
 

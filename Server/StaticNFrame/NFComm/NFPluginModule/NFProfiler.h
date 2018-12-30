@@ -36,21 +36,23 @@ struct PROFILE_TIMER
 	unsigned sampleCount;
 	long long beginTime;
 	long long sampleTime; // in nanosecond
-	std::string name;
+	char name[PROFILER_MAX_TIMER_NAME_LEN];
 
-	PROFILE_TIMER(const std::string& _name)
+	PROFILE_TIMER(const char* _name)
 	{
 		Clear();
-		name = _name;
+		strncpy(name, _name, sizeof(name));
+		name[sizeof(name) - 1] = '\0';
 	}
 
 	PROFILE_TIMER() : PROFILE_TIMER("")
 	{
 	}
 
-	void SetName(const std::string& _name)
+	void SetName(const char* _name)
 	{
-		name = _name;
+		strncpy(name, _name, sizeof(name));
+		name[sizeof(name) - 1] = '\0';
 	}
 
 	void Clear()
@@ -60,6 +62,8 @@ struct PROFILE_TIMER
 		level = -1;
 
 		memset(&beginTime, 0, sizeof(beginTime));
+		sampleCount = 0;
+		sampleTime = 0;
 	}
 };
 
@@ -106,7 +110,7 @@ public:
 	// pointer to timer must keep always valid, normally should be a static variable.
 	void BeginProfiler(PROFILE_TIMER* timer);
 	void BeginProfiler(const std::string& luaFunc);
-	void EndProfiler();
+	uint64_t EndProfiler();
 public:
 	// for support profile main thread in multi thread program(ignore another, only main thread)
 	void SetProfilerThreadID();

@@ -120,7 +120,7 @@ public:
 	virtual const NFSystemInfo& GetSystemInfo() const = 0;
 
 	virtual void BeginProfiler(const std::string& luaFunc) = 0;
-	virtual void EndProfiler() = 0;
+	virtual uint64_t EndProfiler() = 0;
 };
 
 #endif

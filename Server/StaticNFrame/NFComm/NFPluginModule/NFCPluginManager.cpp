@@ -600,9 +600,9 @@ void NFCPluginManager::BeginProfiler(const std::string& funcName)
 	m_profilerMgr.BeginProfiler(funcName);
 }
 
-void NFCPluginManager::EndProfiler()
+uint64_t NFCPluginManager::EndProfiler()
 {
-	m_profilerMgr.EndProfiler();
+	return m_profilerMgr.EndProfiler();
 }
 
 void NFCPluginManager::ClearProfiler()
