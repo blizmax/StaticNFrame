@@ -9,6 +9,7 @@
 
 #include "NFProfiler.h"
 #include "NFPlatform.h"
+#include "NFComm/NFPluginModule/NFLogMgr.h"
 #include <string>
 #include <vector>
 
@@ -217,7 +218,7 @@ void NFProfiler::OutputNode(
 
 	if (report->length() + NF_ARRAYSIZE(line) >= (unsigned)4092)
 	{
-		printf("profile:\r\n%s", report->c_str());
+		NFLogDebug("profile:\r\n{}", *report);
 		report->clear();
 	}
 }
