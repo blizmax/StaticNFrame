@@ -10,6 +10,7 @@
 #include "NFProfiler.h"
 #include <string>
 #include <vector>
+#include "NFLogMgr.h"
 
 void NFProfiler::BeginProfiler(PROFILE_TIMER* timer)
 {
@@ -70,6 +71,12 @@ void NFProfiler::EndProfiler()
 
 	timer->sampleTime += diffNanosecond;
 	timer->sampleCount += 1;
+
+	//>= 80ms, warnning
+	if (diffNanosecond >= 80000000)
+	{
+		NFLogWarning("{} cost time:{}ms, something wrong......", timer->name, diffNanosecond / 1000000);
+	}
 }
 
 void NFProfiler::SetProfilerThreadID()
