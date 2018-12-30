@@ -46,7 +46,6 @@ bool NFCGameLogicModule::Execute()
 		return true;
 	}
 
-	NFLogError("online num:{}", m_onlineNum);
 	m_pGameClient_MasterModule->SetOnlineNum(m_onlineNum);
 	lastTime = NFGetSecondTime();
 	return true;
