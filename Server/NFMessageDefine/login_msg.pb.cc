@@ -22,7 +22,6 @@
 namespace protobuf_login_5fmsg_2eproto {
 extern PROTOBUF_INTERNAL_EXPORT_protobuf_login_5fmsg_2eproto ::google::protobuf::internal::SCCInfo<0> scc_info_plat_token_login_request_request_data_request_data_platinfo;
 extern PROTOBUF_INTERNAL_EXPORT_protobuf_login_5fmsg_2eproto ::google::protobuf::internal::SCCInfo<0> scc_info_plat_token_login_respone_respone_data_respone_data_platinfo;
-extern PROTOBUF_INTERNAL_EXPORT_protobuf_login_5fmsg_2eproto ::google::protobuf::internal::SCCInfo<0> scc_info_reqeust_zone_list_data;
 extern PROTOBUF_INTERNAL_EXPORT_protobuf_login_5fmsg_2eproto ::google::protobuf::internal::SCCInfo<0> scc_info_reqeust_zone_list_respone_respone_data_reqeust_zone_list_server;
 extern PROTOBUF_INTERNAL_EXPORT_protobuf_login_5fmsg_2eproto ::google::protobuf::internal::SCCInfo<0> scc_info_respone_select_zone_respone_respone_data;
 extern PROTOBUF_INTERNAL_EXPORT_protobuf_login_5fmsg_2eproto ::google::protobuf::internal::SCCInfo<1> scc_info_plat_token_login_request_request_data;
@@ -175,9 +174,8 @@ static void InitDefaultsreqeust_zone_list() {
   ::NFMsg::reqeust_zone_list::InitAsDefaultInstance();
 }
 
-::google::protobuf::internal::SCCInfo<1> scc_info_reqeust_zone_list =
-    {{ATOMIC_VAR_INIT(::google::protobuf::internal::SCCInfoBase::kUninitialized), 1, InitDefaultsreqeust_zone_list}, {
-      &protobuf_login_5fmsg_2eproto::scc_info_reqeust_zone_list_data.base,}};
+::google::protobuf::internal::SCCInfo<0> scc_info_reqeust_zone_list =
+    {{ATOMIC_VAR_INIT(::google::protobuf::internal::SCCInfoBase::kUninitialized), 0, InitDefaultsreqeust_zone_list}, {}};
 
 static void InitDefaultsreqeust_zone_list_respone_respone_data_reqeust_zone_list_server() {
   GOOGLE_PROTOBUF_VERIFY_VERSION;
@@ -439,7 +437,7 @@ const ::google::protobuf::uint32 TableStruct::offsets[] GOOGLE_PROTOBUF_ATTRIBUT
   ~0u,  // no _oneof_case_
   ~0u,  // no _weak_field_map_
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::NFMsg::reqeust_zone_list, do__),
-  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::NFMsg::reqeust_zone_list, data_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::NFMsg::reqeust_zone_list, gameid_),
   ~0u,  // no _has_bits_
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::NFMsg::reqeust_zone_list_respone_respone_data_reqeust_zone_list_server, _internal_metadata_),
   ~0u,  // no _extensions_
@@ -672,76 +670,75 @@ void AddDescriptorsImpl() {
       "\022\016\n\006zoneid\030\006 \001(\r\022\024\n\014md5_plat_key\030\007 \001(\t\022\026"
       "\n\016md5_plat_login\030\010 \001(\t\022\016\n\006online\030\t \001(\010\"\034"
       "\n\016http_login_cmd\022\n\n\002do\030\001 \001(\t\"(\n\026reqeust_"
-      "zone_list_data\022\016\n\006gameid\030\001 \001(\r\"L\n\021reqeus"
-      "t_zone_list\022\n\n\002do\030\001 \001(\t\022+\n\004data\030\002 \001(\0132\035."
-      "NFMsg.reqeust_zone_list_data\"\330\003\n\031reqeust"
-      "_zone_list_respone\022\n\n\002do\030\001 \001(\t\022\r\n\005error\030"
-      "\002 \001(\t\022\n\n\002st\030\003 \001(\004\022;\n\004data\030\004 \001(\0132-.NFMsg."
-      "reqeust_zone_list_respone.respone_data\032\326"
-      "\002\n\014respone_data\022\022\n\nbestzoneid\030\001 \001(\r\022\016\n\006g"
-      "ameid\030\002 \001(\r\022\020\n\010gamename\030\003 \001(\t\022\016\n\006zoneid\030"
-      "\004 \001(\r\022X\n\010zonelist\030\005 \003(\0132F.NFMsg.reqeust_"
-      "zone_list_respone.respone_data.reqeust_z"
-      "one_list_server\032\245\001\n\030reqeust_zone_list_se"
-      "rver\022\016\n\006gameid\030\001 \001(\r\022\020\n\010gamename\030\002 \001(\t\022\021"
-      "\n\tnewzoneid\030\003 \001(\r\022\021\n\tonlinenum\030\004 \001(\r\022\020\n\010"
-      "opentime\030\005 \001(\t\022\r\n\005state\030\006 \001(\r\022\016\n\006zoneid\030"
-      "\007 \001(\r\022\020\n\010zonename\030\010 \001(\t\"\320\003\n\030plat_token_l"
-      "ogin_request\022\n\n\002do\030\001 \001(\t\022:\n\004data\030\002 \001(\0132,"
-      ".NFMsg.plat_token_login_request.request_"
-      "data\022\016\n\006gameid\030\003 \001(\r\022\016\n\006zoneid\030\004 \001(\r\022\036\n\026"
-      "unigame_plat_timestamp\030\005 \001(\004\032\253\002\n\014request"
-      "_data\022T\n\010platinfo\030\001 \001(\0132B.NFMsg.plat_tok"
-      "en_login_request.request_data.request_da"
-      "ta_platinfo\022\016\n\006gameid\030\002 \001(\r\032\264\001\n\025request_"
-      "data_platinfo\022\013\n\003aaa\030\001 \001(\r\022\014\n\004sign\030\002 \001(\t"
-      "\022\017\n\007account\030\003 \001(\t\022\r\n\005email\030\004 \001(\t\022\016\n\006plat"
-      "id\030\005 \001(\r\022\016\n\006gender\030\006 \001(\t\022\020\n\010nickname\030\007 \001"
-      "(\t\022\013\n\003uid\030\010 \001(\t\022\016\n\006gameid\030\t \001(\r\022\021\n\ttimes"
-      "tamp\030\n \001(\t\"\313\005\n\030plat_token_login_respone\022"
-      "\016\n\006gameid\030\001 \001(\r\022\030\n\020unigame_plat_key\030\002 \001("
-      "\t\022\032\n\022unigame_plat_login\030\003 \001(\t\022\"\n\032unigame"
-      "_plat_login_timeout\030\004 \001(\t\022\036\n\026unigame_pla"
-      "t_timestamp\030\005 \001(\004\022\016\n\006zoneid\030\006 \001(\r\022\n\n\002do\030"
-      "\007 \001(\t\022:\n\004data\030\010 \001(\0132,.NFMsg.plat_token_l"
-      "ogin_respone.respone_data\032\314\003\n\014respone_da"
-      "ta\022\016\n\006gameid\030\001 \001(\r\022\013\n\003sid\030\002 \001(\t\022\025\n\rtimez"
-      "one_name\030\003 \001(\t\022\027\n\017timezone_offset\030\004 \001(\r\022"
-      "\013\n\003uid\030\005 \001(\t\022\030\n\020unigame_plat_key\030\006 \001(\t\022\032"
-      "\n\022unigame_plat_login\030\007 \001(\t\022\037\n\027unigame_pl"
-      "at_login_life\030\010 \001(\r\022T\n\010platinfo\030\t \001(\0132B."
-      "NFMsg.plat_token_login_respone.respone_d"
-      "ata.respone_data_platinfo\032\264\001\n\025respone_da"
-      "ta_platinfo\022\013\n\003aaa\030\001 \001(\r\022\014\n\004sign\030\002 \001(\t\022\017"
-      "\n\007account\030\003 \001(\t\022\r\n\005email\030\004 \001(\t\022\016\n\006platid"
-      "\030\005 \001(\r\022\016\n\006gender\030\006 \001(\t\022\020\n\010nickname\030\007 \001(\t"
-      "\022\013\n\003uid\030\010 \001(\t\022\016\n\006gameid\030\t \001(\r\022\021\n\ttimesta"
-      "mp\030\n \001(\t\"\222\001\n\033reqeust_select_zone_request"
-      "\022\n\n\002do\030\001 \001(\t\022\016\n\006gameid\030\002 \001(\r\022\016\n\006zoneid\030\003"
-      " \001(\r\022\013\n\003uid\030\004 \001(\t\022\032\n\022unigame_plat_login\030"
-      "\005 \001(\t\022\036\n\026unigame_plat_timestamp\030\006 \001(\004\"\251\003"
-      "\n\033respone_select_zone_respone\022\n\n\002do\030\001 \001("
-      "\t\022\016\n\006errno_\030\002 \001(\t\022\016\n\006gameid\030\003 \001(\r\022\n\n\002st\030"
-      "\004 \001(\004\022\032\n\022unigame_plat_login\030\005 \001(\t\022\036\n\026uni"
-      "game_plat_timestamp\030\006 \001(\004\022\016\n\006zoneid\030\007 \001("
-      "\r\022=\n\004data\030\010 \001(\0132/.NFMsg.respone_select_z"
-      "one_respone.respone_data\022\013\n\003uid\030\t \001(\t\032\271\001"
-      "\n\014respone_data\022\021\n\taccountid\030\001 \001(\004\022\016\n\006gam"
-      "eid\030\002 \001(\r\022\022\n\ngatewayurl\030\003 \001(\t\022\025\n\rgateway"
-      "urltcp\030\004 \001(\t\022\024\n\014gatewayurlws\030\005 \001(\t\022\023\n\013lo"
-      "gintempid\030\006 \001(\r\022\017\n\007tokenid\030\007 \001(\004\022\016\n\006zone"
-      "id\030\010 \001(\r\022\017\n\007zoneuid\030\t \001(\004\"R\n#login_to_ma"
-      "ster_request_select_zone\022\013\n\003uid\030\001 \001(\004\022\016\n"
-      "\006gameid\030\002 \001(\r\022\016\n\006zoneid\030\003 \001(\r\"\314\001\n#master"
-      "_to_login_respone_select_zone\022\013\n\003uid\030\001 \001"
-      "(\004\022\016\n\006gameid\030\002 \001(\r\022\016\n\006zoneid\030\003 \001(\r\022I\n\013re"
-      "sult_code\030\004 \001(\01624.NFMsg.master_to_login_"
-      "respone_select_zone.ErrorCode\"-\n\tErrorCo"
-      "de\022\020\n\014CODE_SUCCESS\020\000\022\016\n\nERROR_FAIL\020\001b\006pr"
-      "oto3"
+      "zone_list_data\022\016\n\006gameid\030\001 \001(\r\"/\n\021reqeus"
+      "t_zone_list\022\n\n\002do\030\001 \001(\t\022\016\n\006gameid\030\002 \001(\r\""
+      "\330\003\n\031reqeust_zone_list_respone\022\n\n\002do\030\001 \001("
+      "\t\022\r\n\005error\030\002 \001(\t\022\n\n\002st\030\003 \001(\004\022;\n\004data\030\004 \001"
+      "(\0132-.NFMsg.reqeust_zone_list_respone.res"
+      "pone_data\032\326\002\n\014respone_data\022\022\n\nbestzoneid"
+      "\030\001 \001(\r\022\016\n\006gameid\030\002 \001(\r\022\020\n\010gamename\030\003 \001(\t"
+      "\022\016\n\006zoneid\030\004 \001(\r\022X\n\010zonelist\030\005 \003(\0132F.NFM"
+      "sg.reqeust_zone_list_respone.respone_dat"
+      "a.reqeust_zone_list_server\032\245\001\n\030reqeust_z"
+      "one_list_server\022\016\n\006gameid\030\001 \001(\r\022\020\n\010gamen"
+      "ame\030\002 \001(\t\022\021\n\tnewzoneid\030\003 \001(\r\022\021\n\tonlinenu"
+      "m\030\004 \001(\r\022\020\n\010opentime\030\005 \001(\t\022\r\n\005state\030\006 \001(\r"
+      "\022\016\n\006zoneid\030\007 \001(\r\022\020\n\010zonename\030\010 \001(\t\"\320\003\n\030p"
+      "lat_token_login_request\022\n\n\002do\030\001 \001(\t\022:\n\004d"
+      "ata\030\002 \001(\0132,.NFMsg.plat_token_login_reque"
+      "st.request_data\022\016\n\006gameid\030\003 \001(\r\022\016\n\006zonei"
+      "d\030\004 \001(\r\022\036\n\026unigame_plat_timestamp\030\005 \001(\004\032"
+      "\253\002\n\014request_data\022T\n\010platinfo\030\001 \001(\0132B.NFM"
+      "sg.plat_token_login_request.request_data"
+      ".request_data_platinfo\022\016\n\006gameid\030\002 \001(\r\032\264"
+      "\001\n\025request_data_platinfo\022\013\n\003aaa\030\001 \001(\r\022\014\n"
+      "\004sign\030\002 \001(\t\022\017\n\007account\030\003 \001(\t\022\r\n\005email\030\004 "
+      "\001(\t\022\016\n\006platid\030\005 \001(\r\022\016\n\006gender\030\006 \001(\t\022\020\n\010n"
+      "ickname\030\007 \001(\t\022\013\n\003uid\030\010 \001(\t\022\016\n\006gameid\030\t \001"
+      "(\r\022\021\n\ttimestamp\030\n \001(\t\"\313\005\n\030plat_token_log"
+      "in_respone\022\016\n\006gameid\030\001 \001(\r\022\030\n\020unigame_pl"
+      "at_key\030\002 \001(\t\022\032\n\022unigame_plat_login\030\003 \001(\t"
+      "\022\"\n\032unigame_plat_login_timeout\030\004 \001(\t\022\036\n\026"
+      "unigame_plat_timestamp\030\005 \001(\004\022\016\n\006zoneid\030\006"
+      " \001(\r\022\n\n\002do\030\007 \001(\t\022:\n\004data\030\010 \001(\0132,.NFMsg.p"
+      "lat_token_login_respone.respone_data\032\314\003\n"
+      "\014respone_data\022\016\n\006gameid\030\001 \001(\r\022\013\n\003sid\030\002 \001"
+      "(\t\022\025\n\rtimezone_name\030\003 \001(\t\022\027\n\017timezone_of"
+      "fset\030\004 \001(\r\022\013\n\003uid\030\005 \001(\t\022\030\n\020unigame_plat_"
+      "key\030\006 \001(\t\022\032\n\022unigame_plat_login\030\007 \001(\t\022\037\n"
+      "\027unigame_plat_login_life\030\010 \001(\r\022T\n\010platin"
+      "fo\030\t \001(\0132B.NFMsg.plat_token_login_respon"
+      "e.respone_data.respone_data_platinfo\032\264\001\n"
+      "\025respone_data_platinfo\022\013\n\003aaa\030\001 \001(\r\022\014\n\004s"
+      "ign\030\002 \001(\t\022\017\n\007account\030\003 \001(\t\022\r\n\005email\030\004 \001("
+      "\t\022\016\n\006platid\030\005 \001(\r\022\016\n\006gender\030\006 \001(\t\022\020\n\010nic"
+      "kname\030\007 \001(\t\022\013\n\003uid\030\010 \001(\t\022\016\n\006gameid\030\t \001(\r"
+      "\022\021\n\ttimestamp\030\n \001(\t\"\222\001\n\033reqeust_select_z"
+      "one_request\022\n\n\002do\030\001 \001(\t\022\016\n\006gameid\030\002 \001(\r\022"
+      "\016\n\006zoneid\030\003 \001(\r\022\013\n\003uid\030\004 \001(\t\022\032\n\022unigame_"
+      "plat_login\030\005 \001(\t\022\036\n\026unigame_plat_timesta"
+      "mp\030\006 \001(\004\"\251\003\n\033respone_select_zone_respone"
+      "\022\n\n\002do\030\001 \001(\t\022\016\n\006errno_\030\002 \001(\t\022\016\n\006gameid\030\003"
+      " \001(\r\022\n\n\002st\030\004 \001(\004\022\032\n\022unigame_plat_login\030\005"
+      " \001(\t\022\036\n\026unigame_plat_timestamp\030\006 \001(\004\022\016\n\006"
+      "zoneid\030\007 \001(\r\022=\n\004data\030\010 \001(\0132/.NFMsg.respo"
+      "ne_select_zone_respone.respone_data\022\013\n\003u"
+      "id\030\t \001(\t\032\271\001\n\014respone_data\022\021\n\taccountid\030\001"
+      " \001(\004\022\016\n\006gameid\030\002 \001(\r\022\022\n\ngatewayurl\030\003 \001(\t"
+      "\022\025\n\rgatewayurltcp\030\004 \001(\t\022\024\n\014gatewayurlws\030"
+      "\005 \001(\t\022\023\n\013logintempid\030\006 \001(\r\022\017\n\007tokenid\030\007 "
+      "\001(\004\022\016\n\006zoneid\030\010 \001(\r\022\017\n\007zoneuid\030\t \001(\004\"R\n#"
+      "login_to_master_request_select_zone\022\013\n\003u"
+      "id\030\001 \001(\004\022\016\n\006gameid\030\002 \001(\r\022\016\n\006zoneid\030\003 \001(\r"
+      "\"\314\001\n#master_to_login_respone_select_zone"
+      "\022\013\n\003uid\030\001 \001(\004\022\016\n\006gameid\030\002 \001(\r\022\016\n\006zoneid\030"
+      "\003 \001(\r\022I\n\013result_code\030\004 \001(\01624.NFMsg.maste"
+      "r_to_login_respone_select_zone.ErrorCode"
+      "\"-\n\tErrorCode\022\020\n\014CODE_SUCCESS\020\000\022\016\n\nERROR"
+      "_FAIL\020\001b\006proto3"
   };
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
-      descriptor, 2884);
+      descriptor, 2855);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "login_msg.proto", &protobuf_RegisterTypes);
 }
@@ -1851,12 +1848,10 @@ void reqeust_zone_list_data::InternalSwap(reqeust_zone_list_data* other) {
 // ===================================================================
 
 void reqeust_zone_list::InitAsDefaultInstance() {
-  ::NFMsg::_reqeust_zone_list_default_instance_._instance.get_mutable()->data_ = const_cast< ::NFMsg::reqeust_zone_list_data*>(
-      ::NFMsg::reqeust_zone_list_data::internal_default_instance());
 }
 #if !defined(_MSC_VER) || _MSC_VER >= 1900
 const int reqeust_zone_list::kDoFieldNumber;
-const int reqeust_zone_list::kDataFieldNumber;
+const int reqeust_zone_list::kGameidFieldNumber;
 #endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
 
 reqeust_zone_list::reqeust_zone_list()
@@ -1874,17 +1869,13 @@ reqeust_zone_list::reqeust_zone_list(const reqeust_zone_list& from)
   if (from.do_().size() > 0) {
     do__.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.do__);
   }
-  if (from.has_data()) {
-    data_ = new ::NFMsg::reqeust_zone_list_data(*from.data_);
-  } else {
-    data_ = NULL;
-  }
+  gameid_ = from.gameid_;
   // @@protoc_insertion_point(copy_constructor:NFMsg.reqeust_zone_list)
 }
 
 void reqeust_zone_list::SharedCtor() {
   do__.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-  data_ = NULL;
+  gameid_ = 0u;
 }
 
 reqeust_zone_list::~reqeust_zone_list() {
@@ -1894,7 +1885,6 @@ reqeust_zone_list::~reqeust_zone_list() {
 
 void reqeust_zone_list::SharedDtor() {
   do__.DestroyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-  if (this != internal_default_instance()) delete data_;
 }
 
 void reqeust_zone_list::SetCachedSize(int size) const {
@@ -1918,10 +1908,7 @@ void reqeust_zone_list::Clear() {
   (void) cached_has_bits;
 
   do__.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-  if (GetArenaNoVirtual() == NULL && data_ != NULL) {
-    delete data_;
-  }
-  data_ = NULL;
+  gameid_ = 0u;
   _internal_metadata_.Clear();
 }
 
@@ -1951,12 +1938,14 @@ bool reqeust_zone_list::MergePartialFromCodedStream(
         break;
       }
 
-      // .NFMsg.reqeust_zone_list_data data = 2;
+      // uint32 gameid = 2;
       case 2: {
         if (static_cast< ::google::protobuf::uint8>(tag) ==
-            static_cast< ::google::protobuf::uint8>(18u /* 18 & 0xFF */)) {
-          DO_(::google::protobuf::internal::WireFormatLite::ReadMessage(
-               input, mutable_data()));
+            static_cast< ::google::protobuf::uint8>(16u /* 16 & 0xFF */)) {
+
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                 input, &gameid_)));
         } else {
           goto handle_unusual;
         }
@@ -1999,10 +1988,9 @@ void reqeust_zone_list::SerializeWithCachedSizes(
       1, this->do_(), output);
   }
 
-  // .NFMsg.reqeust_zone_list_data data = 2;
-  if (this->has_data()) {
-    ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
-      2, this->_internal_data(), output);
+  // uint32 gameid = 2;
+  if (this->gameid() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(2, this->gameid(), output);
   }
 
   if ((_internal_metadata_.have_unknown_fields() &&  ::google::protobuf::internal::GetProto3PreserveUnknownsDefault())) {
@@ -2030,11 +2018,9 @@ void reqeust_zone_list::SerializeWithCachedSizes(
         1, this->do_(), target);
   }
 
-  // .NFMsg.reqeust_zone_list_data data = 2;
-  if (this->has_data()) {
-    target = ::google::protobuf::internal::WireFormatLite::
-      InternalWriteMessageToArray(
-        2, this->_internal_data(), deterministic, target);
+  // uint32 gameid = 2;
+  if (this->gameid() != 0) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(2, this->gameid(), target);
   }
 
   if ((_internal_metadata_.have_unknown_fields() &&  ::google::protobuf::internal::GetProto3PreserveUnknownsDefault())) {
@@ -2061,11 +2047,11 @@ size_t reqeust_zone_list::ByteSizeLong() const {
         this->do_());
   }
 
-  // .NFMsg.reqeust_zone_list_data data = 2;
-  if (this->has_data()) {
+  // uint32 gameid = 2;
+  if (this->gameid() != 0) {
     total_size += 1 +
-      ::google::protobuf::internal::WireFormatLite::MessageSize(
-        *data_);
+      ::google::protobuf::internal::WireFormatLite::UInt32Size(
+        this->gameid());
   }
 
   int cached_size = ::google::protobuf::internal::ToCachedSize(total_size);
@@ -2099,8 +2085,8 @@ void reqeust_zone_list::MergeFrom(const reqeust_zone_list& from) {
 
     do__.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.do__);
   }
-  if (from.has_data()) {
-    mutable_data()->::NFMsg::reqeust_zone_list_data::MergeFrom(from.data());
+  if (from.gameid() != 0) {
+    set_gameid(from.gameid());
   }
 }
 
@@ -2130,7 +2116,7 @@ void reqeust_zone_list::InternalSwap(reqeust_zone_list* other) {
   using std::swap;
   do__.Swap(&other->do__, &::google::protobuf::internal::GetEmptyStringAlreadyInited(),
     GetArenaNoVirtual());
-  swap(data_, other->data_);
+  swap(gameid_, other->gameid_);
   _internal_metadata_.Swap(&other->_internal_metadata_);
 }
 

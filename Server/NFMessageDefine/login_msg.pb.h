@@ -655,24 +655,18 @@ class reqeust_zone_list : public ::google::protobuf::Message /* @@protoc_inserti
   ::std::string* release_do_();
   void set_allocated_do_(::std::string* do_);
 
-  // .NFMsg.reqeust_zone_list_data data = 2;
-  bool has_data() const;
-  void clear_data();
-  static const int kDataFieldNumber = 2;
-  private:
-  const ::NFMsg::reqeust_zone_list_data& _internal_data() const;
-  public:
-  const ::NFMsg::reqeust_zone_list_data& data() const;
-  ::NFMsg::reqeust_zone_list_data* release_data();
-  ::NFMsg::reqeust_zone_list_data* mutable_data();
-  void set_allocated_data(::NFMsg::reqeust_zone_list_data* data);
+  // uint32 gameid = 2;
+  void clear_gameid();
+  static const int kGameidFieldNumber = 2;
+  ::google::protobuf::uint32 gameid() const;
+  void set_gameid(::google::protobuf::uint32 value);
 
   // @@protoc_insertion_point(class_scope:NFMsg.reqeust_zone_list)
  private:
 
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
   ::google::protobuf::internal::ArenaStringPtr do__;
-  ::NFMsg::reqeust_zone_list_data* data_;
+  ::google::protobuf::uint32 gameid_;
   mutable ::google::protobuf::internal::CachedSize _cached_size_;
   friend struct ::protobuf_login_5fmsg_2eproto::TableStruct;
 };
@@ -3491,58 +3485,18 @@ inline void reqeust_zone_list::set_allocated_do_(::std::string* do_) {
   // @@protoc_insertion_point(field_set_allocated:NFMsg.reqeust_zone_list.do)
 }
 
-// .NFMsg.reqeust_zone_list_data data = 2;
-inline bool reqeust_zone_list::has_data() const {
-  return this != internal_default_instance() && data_ != NULL;
+// uint32 gameid = 2;
+inline void reqeust_zone_list::clear_gameid() {
+  gameid_ = 0u;
 }
-inline void reqeust_zone_list::clear_data() {
-  if (GetArenaNoVirtual() == NULL && data_ != NULL) {
-    delete data_;
-  }
-  data_ = NULL;
+inline ::google::protobuf::uint32 reqeust_zone_list::gameid() const {
+  // @@protoc_insertion_point(field_get:NFMsg.reqeust_zone_list.gameid)
+  return gameid_;
 }
-inline const ::NFMsg::reqeust_zone_list_data& reqeust_zone_list::_internal_data() const {
-  return *data_;
-}
-inline const ::NFMsg::reqeust_zone_list_data& reqeust_zone_list::data() const {
-  const ::NFMsg::reqeust_zone_list_data* p = data_;
-  // @@protoc_insertion_point(field_get:NFMsg.reqeust_zone_list.data)
-  return p != NULL ? *p : *reinterpret_cast<const ::NFMsg::reqeust_zone_list_data*>(
-      &::NFMsg::_reqeust_zone_list_data_default_instance_);
-}
-inline ::NFMsg::reqeust_zone_list_data* reqeust_zone_list::release_data() {
-  // @@protoc_insertion_point(field_release:NFMsg.reqeust_zone_list.data)
+inline void reqeust_zone_list::set_gameid(::google::protobuf::uint32 value) {
   
-  ::NFMsg::reqeust_zone_list_data* temp = data_;
-  data_ = NULL;
-  return temp;
-}
-inline ::NFMsg::reqeust_zone_list_data* reqeust_zone_list::mutable_data() {
-  
-  if (data_ == NULL) {
-    auto* p = CreateMaybeMessage<::NFMsg::reqeust_zone_list_data>(GetArenaNoVirtual());
-    data_ = p;
-  }
-  // @@protoc_insertion_point(field_mutable:NFMsg.reqeust_zone_list.data)
-  return data_;
-}
-inline void reqeust_zone_list::set_allocated_data(::NFMsg::reqeust_zone_list_data* data) {
-  ::google::protobuf::Arena* message_arena = GetArenaNoVirtual();
-  if (message_arena == NULL) {
-    delete data_;
-  }
-  if (data) {
-    ::google::protobuf::Arena* submessage_arena = NULL;
-    if (message_arena != submessage_arena) {
-      data = ::google::protobuf::internal::GetOwnedMessage(
-          message_arena, data, submessage_arena);
-    }
-    
-  } else {
-    
-  }
-  data_ = data;
-  // @@protoc_insertion_point(field_set_allocated:NFMsg.reqeust_zone_list.data)
+  gameid_ = value;
+  // @@protoc_insertion_point(field_set:NFMsg.reqeust_zone_list.gameid)
 }
 
 // -------------------------------------------------------------------

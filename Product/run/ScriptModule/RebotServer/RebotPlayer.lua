@@ -30,6 +30,11 @@ function RebotPlayer:RequestZoneList()
 end
 
 function RebotPlayer:HttpLoginReturn(respData)
+    if respData.data.zonelist == nil then
+        unilight.error("has no zone list!")
+        return 
+    end
+
     for k, zoneInfo in pairs(respData.data.zonelist) do
         if zoneInfo.state > 0 then
             self.zoneid = zoneInfo.zoneid
