@@ -285,7 +285,7 @@ bool NFProfiler::OutputTopProfilerTimer()
 	head.sampleTime = totalTime;
 	BuildCallTree(&head, &tree);
 	OutputCallTree(head, totalTime, minShowTime, 0, &report);
-	NFLogDebug("profile:\r\n{}", report.c_str());
+	NFLogDebug("profile:\r\n{}", report);
 	return true;
 }
 
