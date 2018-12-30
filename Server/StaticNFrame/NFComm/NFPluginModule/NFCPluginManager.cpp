@@ -29,6 +29,7 @@
 
 NFCPluginManager::NFCPluginManager() : NFIPluginManager()
 {
+	mCurFrameCount = 0;
 	mnAppID = 0;
 
 	mstrConfigPath = "../Config";
@@ -198,13 +199,18 @@ bool NFCPluginManager::Execute()
 	mnNowTime = NFGetTime();
 	uint64_t startTime = NFGetTime();
 	uint64_t endTime = 0;
+	mCurFrameCount++;
 
+	BeginProfiler("MainLoop");
 	PluginInstanceMap::iterator it = mPluginInstanceMap.begin();
 	for (; it != mPluginInstanceMap.end(); ++it)
 	{
+		BeginProfiler(it->second->GetPluginName() + "--Loop");
 		bool tembRet = it->second->Execute();
 		bRet = bRet && tembRet;
+		EndProfiler();
 	}
+	EndProfiler();
 
 	//采用固定帧率
 	endTime = NFGetTime();
@@ -220,7 +226,12 @@ bool NFCPluginManager::Execute()
 		std::this_thread::sleep_for(std::chrono::milliseconds(1));
 	}
 
-	mSystemInfo.CountSystemInfo();
+	//mSystemInfo.CountSystemInfo();
+
+	if (mCurFrameCount % 1000 == 0)
+	{
+		PRINTF_PROFILE();
+	}
 	return bRet;
 }
 
@@ -450,7 +461,7 @@ bool NFCPluginManager::Finalize()
 	//最后释放单件系统
 	ReleaseSingletion();
 
-
+	ClearProfiler();
 	return true;
 }
 
@@ -577,4 +588,38 @@ bool NFCPluginManager::UnLoadPluginLibrary(const std::string& strPluginDLLName)
 const NFSystemInfo& NFCPluginManager::GetSystemInfo() const
 {
 	return mSystemInfo;
+}
+
+void NFCPluginManager::BeginProfiler(const std::string& funcName)
+{
+	PROFILE_TIMER* pTimer = nullptr;
+	auto iter = m_luaFuncProfiler.find(funcName);
+	if (iter == m_luaFuncProfiler.end())
+	{
+		pTimer = NF_NEW PROFILE_TIMER(funcName.c_str());
+		m_luaFuncProfiler.emplace(funcName, pTimer);
+	}
+	else
+	{
+		pTimer = iter->second;
+	}
+
+	NFProfiler::Instance()->BeginProfiler(pTimer);
+}
+
+void NFCPluginManager::EndProfiler()
+{
+	NFProfiler::Instance()->EndProfiler();
+}
+
+void NFCPluginManager::ClearProfiler()
+{
+	CLEAR_PROFILE();
+	for (auto iter = m_luaFuncProfiler.begin(); iter != m_luaFuncProfiler.end(); iter++)
+	{
+		NF_SAFE_DELETE(iter->second);
+	}
+
+	m_luaFuncProfiler.clear();
+	NFSingleton<NFProfiler>::ReleaseInstance();
 }

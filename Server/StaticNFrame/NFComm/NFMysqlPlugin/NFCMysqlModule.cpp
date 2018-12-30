@@ -107,18 +107,6 @@ bool NFCMysqlModule::Query(const std::string& strTableName, const std::string& s
 
 bool NFCMysqlModule::Execute()
 {
-	if (mnLastCheckTime + 10 > (uint64_t)NFGetSecondTime())
-	{
-		return true;
-	}
-
-	mnLastCheckTime = (uint64_t)NFGetSecondTime();
-
-	if (m_pMysqlDriverManager)
-	{
-		m_pMysqlDriverManager->CheckMysql();
-	}
-
 	return true;
 }
 

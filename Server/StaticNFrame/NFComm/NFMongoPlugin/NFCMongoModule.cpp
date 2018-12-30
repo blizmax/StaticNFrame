@@ -40,18 +40,6 @@ bool NFCMongoModule::AfterInit()
 
 bool NFCMongoModule::Execute()
 {
-	if (mnLastCheckTime + 10 > (uint64_t)NFGetSecondTime())
-	{
-		return true;
-	}
-
-	mnLastCheckTime = (uint64_t)NFGetSecondTime();
-
-	if (m_pMongoDriverManager)
-	{
-		m_pMongoDriverManager->CheckMongo();
-	}
-
 	return true;
 }
 /**

@@ -25,7 +25,9 @@
 
 void NFLuaTimer::OnTimer(uint32_t nTimerID)
 {
+	m_pLuaScriptModule->GetPluginManager()->BeginProfiler(mLuaFunc);
 	m_pLuaScriptModule->TryRunGlobalScriptFunc("LuaNFrame.RunTimer", mLuaFunc, nTimerID, mLuaRef);
+	m_pLuaScriptModule->GetPluginManager()->EndProfiler();
 }
 
 bool NFCLuaScriptModule::Init()
@@ -99,6 +101,8 @@ bool NFCLuaScriptModule::Register()
 		.addFunction("GetAppName", &NFIPluginManager::GetAppName)
 		.addFunction("GetInitTime", &NFIPluginManager::GetInitTime)
 		.addFunction("GetNowTime", &NFIPluginManager::GetNowTime)
+		.addFunction("BeginProfiler", &NFIPluginManager::BeginProfiler)
+		.addFunction("EndProfiler", &NFIPluginManager::EndProfiler)
 		.addFunction("IsLoadAllServer", &NFIPluginManager::IsLoadAllServer)
 		.addFunction("GetConfigPath", &NFIPluginManager::GetConfigPath)
 		.addFunction("GetKernelModule", &NFIPluginManager::FindModule<NFIKernelModule>)
@@ -228,12 +232,16 @@ void NFCLuaScriptModule::RunNetEventLuaFunc(const std::string& luaFunc, const eM
 
 void NFCLuaScriptModule::RunHtttpClientLuaFunc(const std::string& luaFunc, const int state_code, const std::string& strRespData, const std::string& strUserData)
 {
+	pPluginManager->BeginProfiler(luaFunc);
 	TryRunGlobalScriptFunc("unilight.HttpClientRequestCallBack", luaFunc, state_code, strRespData, strUserData);
+	pPluginManager->EndProfiler();
 }
 
 void NFCLuaScriptModule::RunHttpServerLuaFunc(const std::string& luaFunc, uint32_t serverType, const NFHttpHandle & req)
 {
+	pPluginManager->BeginProfiler(luaFunc);
 	TryRunGlobalScriptFunc("unilight.HttpServerRequestCallBack", luaFunc, serverType, req);
+	pPluginManager->EndProfiler();
 }
 
 void NFCLuaScriptModule::StopTimer(uint32_t nTimerID)
@@ -309,10 +317,14 @@ uint32_t NFCLuaScriptModule::AddClocker(const std::string& luaFunc, uint64_t nSt
 
 void NFCLuaScriptModule::RunServerNetEventLuaFunc(const std::string& luaFunc, eMsgType nEvent, uint32_t unLinkId, NF_SHARE_PTR<NFServerData> pServerData)
 {
+	pPluginManager->BeginProfiler(luaFunc);
 	TryRunGlobalScriptFunc(luaFunc, nEvent, unLinkId, pServerData);
+	pPluginManager->EndProfiler();
 }
 
 void NFCLuaScriptModule::RunAccountNetEventLuaFunc(const std::string& luaFunc, uint32_t nEvent, uint32_t unLinkId, NF_SHARE_PTR<AccountInfo> pServerData)
 {
+	pPluginManager->BeginProfiler(luaFunc);
 	TryRunGlobalScriptFunc(luaFunc, nEvent, unLinkId, pServerData);
+	pPluginManager->EndProfiler();
 }

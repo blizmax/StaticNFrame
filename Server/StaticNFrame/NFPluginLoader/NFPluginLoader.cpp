@@ -289,7 +289,6 @@ int main(int argc, char* argv[])
 			__try
 			{
 #endif
-
 				NFCPluginManager::GetSingletonPtr()->Execute();
 
 #if NF_PLATFORM == NF_PLATFORM_WIN

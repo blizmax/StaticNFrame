@@ -710,7 +710,7 @@ void NFCMasterServerModule::OnServerReport(const uint32_t unLinkId, const uint64
 				}
 			}
 			SynReportToLogin(pServerData);
-
+			/*
 			if (pServerData)
 			{
 				NFLogInfo("********************************************************");
@@ -737,6 +737,7 @@ void NFCMasterServerModule::OnServerReport(const uint32_t unLinkId, const uint64
 				}
 				NFLogInfo("********************************************************");
 			}
+			*/
 		}
 		break;
 		case NF_SERVER_TYPES::NF_ST_PROXY:
@@ -781,7 +782,7 @@ void NFCMasterServerModule::OnServerReport(const uint32_t unLinkId, const uint64
 				}
 			}
 			SynReportToLogin(pServerData);
-
+			/*
 			if (pServerData)
 			{
 				NFLogError("********************************************************");
@@ -808,6 +809,7 @@ void NFCMasterServerModule::OnServerReport(const uint32_t unLinkId, const uint64
 				}
 				NFLogError("********************************************************");
 			}
+			*/
 		}
 		break;
 		}
