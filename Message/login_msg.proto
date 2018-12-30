@@ -28,7 +28,7 @@ message reqeust_zone_list_data
 message reqeust_zone_list
 {
 	string do = 1;
-	reqeust_zone_list_data data = 2;
+	uint32 gameid = 1;
 }
 
 message reqeust_zone_list_respone
