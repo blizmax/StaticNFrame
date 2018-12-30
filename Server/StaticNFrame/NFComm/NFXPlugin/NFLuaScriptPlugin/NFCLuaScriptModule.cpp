@@ -264,7 +264,7 @@ uint32_t NFCLuaScriptModule::AddTimer(const std::string& luaFunc, uint64_t nInte
 	}
 	else
 	{
-		NFLuaTimer* luaTimer = m_luaTimerList.front();
+		luaTimer = m_luaTimerList.front();
 		m_luaTimerList.pop_front();
 		luaTimer->m_pLuaScriptModule = this;
 	}
