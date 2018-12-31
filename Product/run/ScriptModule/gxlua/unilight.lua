@@ -134,7 +134,7 @@ function unilight.BeginProfiler(funname)
 end
 
 function unilight.EndProfiler()
-    LuaNFrame:EndProfiler()
+    return LuaNFrame:EndProfiler()
 end
 
 --serverNetEventModule 注册服务器与服务器之间的网络回调，主要有连接回调，断线回调

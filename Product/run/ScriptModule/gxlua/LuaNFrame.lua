@@ -43,7 +43,7 @@ function LuaNFrame:BeginProfiler(funname)
 end
 
 function LuaNFrame:EndProfiler()
-    self.pluginManager:EndProfiler()
+    return self.pluginManager:EndProfiler()
 end
 
 --添加服务器定时器
