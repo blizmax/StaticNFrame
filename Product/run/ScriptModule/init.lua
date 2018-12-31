@@ -61,6 +61,8 @@ function init_script_system(pluginManager, luaModule)
 	unilight.init(pluginManager, luaModule)
 
 	unilight.addtimer("update_debugsocket", 1)
+
+	unilight.SetLogLevel(1)
 end
 
 function update_debugsocket()
