@@ -110,7 +110,7 @@ public:
 	// pointer to timer must keep always valid, normally should be a static variable.
 	void BeginProfiler(PROFILE_TIMER* timer);
 	void BeginProfiler(const std::string& luaFunc);
-	uint64_t EndProfiler();
+	uint64_t EndProfiler(); //return this time cost time(us) ОўГо
 public:
 	// for support profile main thread in multi thread program(ignore another, only main thread)
 	void SetProfilerThreadID();

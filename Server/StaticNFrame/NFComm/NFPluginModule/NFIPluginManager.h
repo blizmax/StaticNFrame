@@ -120,6 +120,7 @@ public:
 	virtual const NFSystemInfo& GetSystemInfo() const = 0;
 
 	virtual void BeginProfiler(const std::string& luaFunc) = 0;
+	//return BeginProfiler - EndProfiler 本次的时间差，单位微妙
 	virtual uint64_t EndProfiler() = 0;
 };
 

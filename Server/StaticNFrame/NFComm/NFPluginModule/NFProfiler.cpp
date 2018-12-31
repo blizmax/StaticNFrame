@@ -72,7 +72,7 @@ uint64_t NFProfiler::EndProfiler()
 	timer->sampleTime += diffNanosecond;
 	timer->sampleCount += 1;
 
-	return diffNanosecond / 1000000;
+	return diffNanosecond / 1000;
 }
 
 void NFProfiler::SetProfilerThreadID()
