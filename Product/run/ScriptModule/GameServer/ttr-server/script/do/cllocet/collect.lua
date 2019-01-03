@@ -81,7 +81,7 @@ function Collect:GetCollectReward()
         return 2, "奖励信息为空"
     end
 
-    unilight.debug("GetCollectReward, CollectionTable[1]="..CollectionTable[1]["reward"]..", uid="..self.owner.uid)
+    --unilight.debug("GetCollectReward, CollectionTable[1]="..CollectionTable[1]["reward"]..", uid="..self.owner.uid)
 
     local rewardStr = SplitStrBySemicolon(CollectionTable[1]["reward"])
     --Collect:HandleReward(rewardStr) 此处要用self, 用Collect作用不到self

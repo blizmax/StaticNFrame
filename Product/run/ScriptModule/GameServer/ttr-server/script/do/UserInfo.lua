@@ -16,7 +16,7 @@ end
 
 --玩家每天零点清理数据
 function UserInfo.AllUserZeroClear()
-	unilight.debug("每天零点开始清理玩家数据了.................")
+	--unilight.debug("每天零点开始清理玩家数据了.................")
 	for uid, userInfo in pairs(UserInfo.GlobalUserInfoMap) do
 		UserInfo.UserZeroClear(userInfo)
 	end
@@ -64,7 +64,7 @@ function UserInfo.UpdateQqData(uid, head, name, sex)
 end
 
 function UserInfo.CreateTempUserInfo(uid)
-	unilight.debug("Create new user info")
+	--unilight.debug("Create new user info")
 
 	local userInfo = {
 		uid			= uid,
@@ -155,7 +155,7 @@ function UserInfo.CreateTempUserInfo(uid)
 end
 
 function UserInfo.CreateUserByDb(uid, dbUser)
-	unilight.debug("Get user info from DB")
+	--unilight.debug("Get user info from DB")
 
 	local userInfo = {
 		uid = uid,
@@ -786,7 +786,7 @@ function UserInfo.SubUserMoney(userinfo, moneytype, moneynum)
 			num = moneynum
 		end
 	end
-	unilight.debug("end, SubUserMoney-002, uid="..userinfo.uid..", moneytype="..moneytype..", moneyNum="..moneynum ..",num:" .. num)
+	--unilight.debug("end, SubUserMoney-002, uid="..userinfo.uid..", moneytype="..moneytype..", moneyNum="..moneynum ..",num:" .. num)
 	if num then
 		--同步下	
 		UserInfo.SendUserMoney(userinfo)	
@@ -919,7 +919,7 @@ Lby.CmdForceUserOffline_C = function(cmd, lobbyClientTask)
 
 	UserInfo.GlobalUserInfoMap[uid] = nil
 
-	unilight.debug("user:"..uid.. " force offline..........")
+	--unilight.debug("user:"..uid.. " force offline..........")
 end
 
 Lby.CmdNotifyAddUserTravelHead_S = function(cmd, lobbyClientTask)

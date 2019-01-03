@@ -97,7 +97,7 @@ function RebotServerModule.HandleRecvMsg(table_msg, unLinkId)
                     local rebot = RebotServerModule.rebotUnlinkIdMap[unLinkId]
                     if rebot ~= nil then
                         Net[strcmd](table_msg, rebot)
-                        --unilight.debug("| handle msg |" .. table2json(table_msg))
+                        unilight.debug("| handle msg |" .. table2json(table_msg))
                     end
                 end
             end

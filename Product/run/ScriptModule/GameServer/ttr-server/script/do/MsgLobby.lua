@@ -1,6 +1,6 @@
 -- 登录获取个人信息
 Net.CmdUserInfoSynLobbyCmd_C = function(cmd, laccount)
-	unilight.debug("First Login Center Server......")
+	--unilight.debug("First Login Center Server......")
 
 	local uid 		= laccount.Id
 
