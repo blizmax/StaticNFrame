@@ -31,14 +31,6 @@ public:
 	virtual bool Execute() override;
 public:
 	/**
-	* @brief 初始化DB以及actor系统
-	*
-	* @param actor_num	actor个数
-	* @return
-	*/
-	virtual int InitActor(int actor_num = 10);
-
-	/**
 	* @brief 初始化actor系统, 配置线程个数
 	*
 	* @param thread_num	线程数目，至少为1
@@ -85,14 +77,6 @@ public:
 	virtual int GetNumQueuedMessages();
 
 	/**
-	* @brief 向系统申请actorNum个actor, 初始化actor池
-	*
-	* @param actorNum	actor数目
-	* @return 是否成功
-	*/
-	virtual bool StartActorPool(int actorNum);
-
-	/**
 	* @brief 释放申请的actor数据，关闭actor池
 	*
 	* @return 是否成功
@@ -132,6 +116,14 @@ public:
 	* @return
 	*/
 	bool AddTask(NFTask* pTask);
+
+	/**
+	* @brief 添加要异步处理的task
+	*
+	* @param pTask 要异步处理的task
+	* @return
+	*/
+	bool AddTask(int actorId, NFTask* pTask);
 
 	/**
 	* @brief 主线程处理actor返回的任务

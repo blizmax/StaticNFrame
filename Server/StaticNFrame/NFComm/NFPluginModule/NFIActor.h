@@ -68,7 +68,7 @@ public:
 		if (!TIsDerived<T, NFIComponent>::Result)
 		{
 			//BaseTypeComponent must inherit from NFIComponent;
-			return NF_SHARE_PTR<T>();
+			return nullptr;
 		}
 
 		NFIComponent* pComponent = FindComponent(strName);

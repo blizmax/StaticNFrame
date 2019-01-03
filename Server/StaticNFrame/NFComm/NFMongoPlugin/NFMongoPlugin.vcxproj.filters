@@ -5,11 +5,13 @@
     <ClInclude Include="NFCMongoDriver.h" />
     <ClInclude Include="NFCMongoDriverManager.h" />
     <ClInclude Include="NFCMongoModule.h" />
+    <ClInclude Include="NFCAsynMongoModule.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="NFMongoPlugin.cpp" />
     <ClCompile Include="NFCMongoDriver.cpp" />
     <ClCompile Include="NFCMongoDriverManager.cpp" />
     <ClCompile Include="NFCMongoModule.cpp" />
+    <ClCompile Include="NFCAsynMongoModule.cpp" />
   </ItemGroup>
 </Project>

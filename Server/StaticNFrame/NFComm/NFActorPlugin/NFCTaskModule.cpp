@@ -16,7 +16,8 @@ NFCTaskModule::NFCTaskModule(NFIPluginManager* p)
 {
 	pPluginManager = p;
 	srand(static_cast<unsigned>(time(nullptr)));
-	InitActor(10);
+	//首先初始化
+	InitActorThread(std::thread::hardware_concurrency());
 }
 
 NFCTaskModule::~NFCTaskModule()
@@ -91,6 +92,7 @@ int NFCTaskModule::RequireActor()
 	if (pActor)
 	{
 		m_mActorMap.emplace(pActor->GetAddress().AsInteger(), pActor);
+		m_vecActorPool.push_back(pActor->GetAddress().AsInteger());
 		return pActor->GetAddress().AsInteger();
 	}
 	return -1;
@@ -176,45 +178,6 @@ int NFCTaskModule::GetNumQueuedMessages()
 	return count;
 }
 
-int NFCTaskModule::InitActor(int actor_num)
-{
-	//首先初始化
-	//InitActorThread(std::thread::hardware_concurrency());
-	InitActorThread(4);
-
-	StartActorPool(actor_num);
-
-	for (size_t i = 0; i < m_vecActorPool.size(); i++)
-	{
-		int nActorId = m_vecActorPool[i];
-		NFTaskActor* pActor = GetActor(nActorId);
-		if (pActor)
-		{
-			pActor->Init();
-		}
-	}
-
-	return 0;
-}
-
-bool NFCTaskModule::StartActorPool(int actorNum)
-{
-	m_vecActorPool.resize(actorNum);
-	for (int i = 0; i < actorNum; i++)
-	{
-		int nActorId = RequireActor();
-		if (nActorId > 0)
-		{
-			m_vecActorPool[i] = nActorId;
-		}
-		else
-		{
-			//error
-		}
-	}
-	return true;
-}
-
 bool NFCTaskModule::CloseActorPool()
 {
 	ReleaseActor();
@@ -241,6 +204,22 @@ bool NFCTaskModule::AddTask(NFTask* pTask)
 	}
 
 	if (!SendMsgToActor(nActorId, pTask))
+	{
+		return false;
+	}
+
+	nRecvTaskCount++;
+	return true;
+}
+
+bool NFCTaskModule::AddTask(int actorId, NFTask* pTask)
+{
+	if (actorId <= 0)
+	{
+		return false;
+	}
+
+	if (!SendMsgToActor(actorId, pTask))
 	{
 		return false;
 	}

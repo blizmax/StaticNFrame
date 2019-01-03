@@ -23,4 +23,19 @@ public:
 	* @return
 	*/
 	virtual bool AddTask(NFTask* pTask) = 0;
+
+	/**
+	* @brief 添加要异步处理的task
+	*
+	* @param pTask 要异步处理的task
+	* @return
+	*/
+	virtual bool AddTask(int actorId, NFTask* pTask) = 0;
+
+	/**
+	* @brief 向系统请求请求一个actor
+	*
+	* @return 返回actor的唯一索引
+	*/
+	virtual int RequireActor() = 0;
 };

@@ -325,6 +325,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="NFCDynLib.h" />
+    <ClInclude Include="NFIAsynMongoModule.h" />
     <ClInclude Include="NFIClassModule.h" />
     <ClInclude Include="NFCDataTableManager.h" />
     <ClInclude Include="NFIConfigModule.h" />

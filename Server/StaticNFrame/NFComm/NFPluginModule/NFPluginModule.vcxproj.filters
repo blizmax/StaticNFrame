@@ -119,6 +119,9 @@
     <ClInclude Include="NFProfiler.h">
       <Filter>NFProfier</Filter>
     </ClInclude>
+    <ClInclude Include="NFIAsynMongoModule.h">
+      <Filter>Mongo</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Event">

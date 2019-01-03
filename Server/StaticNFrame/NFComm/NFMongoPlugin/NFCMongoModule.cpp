@@ -42,6 +42,7 @@ bool NFCMongoModule::Execute()
 {
 	return true;
 }
+
 /**
 * @brief 添加serverid的链接, 一个serverid对应一个链接数据库的驱动
 *
