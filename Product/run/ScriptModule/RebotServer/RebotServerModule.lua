@@ -1,9 +1,9 @@
 RebotServerModule = {}
 RebotServerModule.RebotIndex = os.time()
 
-RebotServerModule.loginUrl = "http://loginxcxtest.zqgame.com/httplogin"
+--RebotServerModule.loginUrl = "http://loginxcxtest.zqgame.com/httplogin"
 --RebotServerModule.loginUrl = "http://ttrserver.staticnframe.com:7000/httplogin"
---RebotServerModule.loginUrl = "http://167.179.98.135:7000/httplogin"
+RebotServerModule.loginUrl = "http://202.182.104.95:7000/httplogin"
 RebotServerModule.gameid = 3010
 RebotServerModule.zoneid = 1
 RebotServerModule.platid = 0
@@ -40,7 +40,7 @@ function RebotServerModule.addRebot(timer)
         num = num + 1
     end
 
-    if num >= 10 then
+    if num >= 200 then
         unilight.stoptimer(timer)
     end
 end
