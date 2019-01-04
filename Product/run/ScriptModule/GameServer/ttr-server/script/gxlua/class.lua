@@ -59,19 +59,19 @@ function CreateClass(name,basename)
 		return self.__classname .. "[" .. id .."," ..name.. "] " 
 	end
 	function class:Debug(...)
-		unilight.debug(self:GetLogPrefix() .. unpack(arg))
+		--unilight.debug(self:GetLogPrefix() .. unpack(arg))
 	end
 	function class:Info(...)
-		unilight.info(self:GetLogPrefix() .. unpack(arg))
+		--unilight.info(self:GetLogPrefix() .. unpack(arg))
 	end
 	function class:Warn(...)
-		unilight.warn(self:GetLogPrefix() .. unpack(arg))
+		--unilight.warn(self:GetLogPrefix() .. unpack(arg))
 	end
 	function class:Error(...)
-		unilight.error(self:GetLogPrefix() .. unpack(arg))
+		--unilight.error(self:GetLogPrefix() .. unpack(arg))
 	end
 	function class:Stack(...)
-		unilight.stack(self:GetLogPrefix() .. unpack(arg))
+		--unilight.stack(self:GetLogPrefix() .. unpack(arg))
 	end
 	return class
 end

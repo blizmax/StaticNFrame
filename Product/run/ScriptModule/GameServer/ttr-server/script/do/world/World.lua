@@ -226,7 +226,7 @@ function World:earn()
 end
 
 function World:click(stateId, times, critical)
-	local userinfo = UserInfo.GetUserInfoById(self.owner.uid) 
+	local userinfo = self.owner
 	if critical > times then
 		critical = times
 	end
@@ -247,7 +247,7 @@ function World:click(stateId, times, critical)
 	if earning < 1 then
 		earning = 1
 	end
-	UserInfo.AddUserMoneyByUid(self.owner.uid, static_const.Static_MoneyType_Gold, math.ceil(earning))
+	UserInfo.AddUserMoney(self.owner, static_const.Static_MoneyType_Gold, math.ceil(earning))
 
 	--任务系统，任务完成情况
 	self.owner.achieveTask:addProgress(TaskConditionEnum.ClickEvent, times)
