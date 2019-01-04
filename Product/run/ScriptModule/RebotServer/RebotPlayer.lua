@@ -17,6 +17,12 @@ function RebotPlayer:Init(index)
     self.tokenid = 0
     self.reconnect_logintempid = 0
     self.reconnect_url = ""
+    self.userInfo = nil
+    self.user_props = nil
+    self.daily_task = nil
+    self.achieve_task = nil
+    self.main_task = nil
+    self.friends = {}
 end
 
 function RebotPlayer:RequestZoneList()
@@ -111,13 +117,6 @@ end
 
 function RebotPlayer:Connect()
     self:LoginTokenLogin()
-    self:DoRequestPlayerBaseInfo()
-    self:RequestTravelData()
-    self:RequestGuideInfo()
-
-    unilight.addtimer("RebotServerModule.UpdateSec", 1, self.uid)
-    unilight.addtimer("RebotServerModule.UpdateFriend", 5, self.uid)
-    unilight.addtimer("RebotServerModule.UpdateTick", 5, self.uid)
 end
 
 function RebotPlayer:LoginTokenLogin()
@@ -159,9 +158,9 @@ function RebotPlayer:DoRequestPlayerBaseInfo()
     self:SendMessage(data)
 end
 
-function RebotPlayer:RequestTravelData()
+function RebotPlayer:DoGetDailyLoginInfo()
     local data = { }
-    data["do"] = "Cmd.GetUserTravelInfo_C"
+    data["do"] = "Cmd.GetDailyLoginInfoCmd_C"
     data["data"] = {}
 
     self:SendMessage(data)
@@ -191,24 +190,6 @@ function RebotPlayer:ClickTravel()
     self:SendMessage(data)
 end
 
-function RebotPlayer:GetRecommendFriendInfo()
-    local data = { }
-    data["do"] = "Cmd.SendReqRecommendFriendCmd_C"
-    data["data"] = {
-    }
-
-    self:SendMessage(data)
-end
-
-function RebotPlayer:GetFriendInfo()
-    local data = { }
-    data["do"] = "Cmd.GetUserFriendDataCmd_C"
-    data["data"] = {
-    }
-
-    self:SendMessage(data)
-end
-
 function RebotPlayer:GetRankList()
     local data = { }
     data["do"] = "Cmd.ReqGetWorldRankListInfo_C"
@@ -229,3 +210,250 @@ function RebotPlayer:SendTick()
 
     self:SendMessage(data)
 end
+
+function RebotPlayer:DoGetDailyWelfareInfo()
+    local data = { }
+    data["do"] = "Cmd.GetDailyWelfareInfoCmd_C"
+    data["data"] = {}
+
+    self:SendMessage(data)
+end
+
+
+function RebotPlayer:GetUserTaskInfo()
+    local data = { }
+    data["do"] = "Cmd.GetUserTaskInfo_C"
+    data["data"] = {
+    }
+
+    self:SendMessage(data)
+end
+
+function RebotPlayer:GetDailyLoginRewardCmd(id,doubleReward)
+    local data = { }
+    data["do"] = "Cmd.GetDailyLoginRewardCmd_C"
+    data["data"] = {
+        id = id,
+        doubleReward = doubleReward,
+    }
+
+    self:SendMessage(data)
+end
+
+function RebotPlayer:GetGetDailyLotteryDraw()
+    local data = { }
+    data["do"] = "Cmd.GetDailyLotteryDrawCmd_C"
+    data["data"] = {
+    }
+
+    self:SendMessage(data)
+end
+
+function RebotPlayer:GetLotteryDrawRewardId()
+    local data = { }
+    data["do"] = "Cmd.GetLotteryDrawRewardIdCmd_C"
+    data["data"] = {
+    }
+
+    self:SendMessage(data)
+end
+
+function RebotPlayer:GetLotteryDrawReward()
+    local data = { }
+    data["do"] = "Cmd.GetLotteryDrawRewardCmd_C"
+    data["data"] = {
+    }
+
+    self:SendMessage(data)
+end
+
+function RebotPlayer:ReqGetRewardDailyTask(taskid)
+    local data = { }
+    data["do"] = "Cmd.ReqGetRewardDailyTask_C"
+    data["data"] = {
+        task_id = taskid,
+    }
+
+    self:SendMessage(data)
+end
+
+function RebotPlayer:GetDailyDiamondReward()
+    local data = { }
+    data["do"] = "Cmd.GetDailyDiamondRewardCmd_C"
+    data["data"] = {
+    }
+
+    self:SendMessage(data)
+end
+
+function RebotPlayer:GetCollectReward()
+    local data = { }
+    data["do"] = "Cmd.GetCollectRewardCmd_C"
+    data["data"] = {
+    }
+
+    self:SendMessage(data)
+end
+
+function RebotPlayer:ReqBuyBuild(stateId, buildingId)
+    local data = { }
+    data["do"] = "Cmd.BuildingBuyCmd_C"
+    data["data"] = {
+        stateId = stateId,
+        buildingId = buildingId,
+    }
+
+    self:SendMessage(data)
+end
+
+function RebotPlayer:ReqLevelupBuild(stateId, buildingId)
+    local data = { }
+    data["do"] = "Cmd.BuildingLevelupCmd_C"
+    data["data"] = {
+        stateId = stateId,
+        buildingId = buildingId,
+    }
+
+    self:SendMessage(data)
+end
+
+function RebotPlayer:ReqRebuildBuild(stateId, buildingId)
+    local data = { }
+    data["do"] = "Cmd.BuildingRebuildCmd_C"
+    data["data"] = {
+        stateId = stateId,
+        buildingId = buildingId,
+    }
+
+    self:SendMessage(data)
+end
+
+function RebotPlayer:ReqBuyAllBuild()
+    for k, map in pairs(self.userInfo.world.states) do
+        for k, build in pairs(TableBuilding) do
+            if build.mapid == map.id then
+                self:ReqBuyBuild(build.mapid, build.Id)
+            end
+        end
+    end
+end
+
+function RebotPlayer:ReqLevelupAllBuild()
+    for k, map in pairs(self.userInfo.world.states) do
+        for k, build in pairs(TableBuilding) do
+            if build.mapid == map.id then
+                self:ReqLevelupBuild(build.mapid, build.Id)
+            end
+        end
+    end
+end
+
+function RebotPlayer:ReqRebuildAllBuild()
+    for k, map in pairs(self.userInfo.world.states) do
+        for k, build in pairs(TableBuilding) do
+            if build.mapid == map.id then
+                self:ReqRebuildBuild(build.mapid, build.Id)
+            end
+        end
+    end
+end
+
+
+function RebotPlayer:SendUserQQFriendData()
+    local data = { }
+    data["do"] = "Cmd.SendUserQQFriendDataCmd_C"
+    data["data"] = {
+        self_data = {
+            head = "",
+            name = self.name,
+            sex = 1,
+        }
+    }
+
+    self:SendMessage(data)
+end
+
+
+function RebotPlayer:GetRecommendFriendInfo()
+    local data = { }
+    data["do"] = "Cmd.SendReqRecommendFriendCmd_C"
+    data["data"] = {
+    }
+
+    self:SendMessage(data)
+end
+
+function RebotPlayer:GetFriendInfo()
+    local data = { }
+    data["do"] = "Cmd.GetUserFriendDataCmd_C"
+    data["data"] = {
+    }
+
+    self:SendMessage(data)
+end
+
+function RebotPlayer:GetUserAskedAddFriends()
+    local data = { }
+    data["do"] = "Cmd.GetUserAskedAddFriends_C"
+    data["data"] = {
+    }
+
+    self:SendMessage(data)
+end
+
+function RebotPlayer:SendReqAddFriend(friend_uid)
+    local data = { }
+    data["do"] = "Cmd.SendReqAddFriendCmd_C"
+    data["data"] = {
+        friend_uid = friend_uid,
+    }
+
+    self.friends[friend_uid] = true
+    self:SendMessage(data)
+end
+
+function RebotPlayer:SendReqAgreeAddFriend(friend_uid)
+    local data = { }
+    data["do"] = "Cmd.SendReqAgreeAddFriendCmd_C"
+    data["data"] = {
+        uid = friend_uid,
+        agree = true,
+    }
+    self.friends[friend_uid] = true
+    self:SendMessage(data)
+end
+
+function RebotPlayer:RequestTravelData()
+    local data = { }
+    data["do"] = "Cmd.GetUserTravelInfo_C"
+    data["data"] = {}
+
+    self:SendMessage(data)
+end
+
+function RebotPlayer:GetTravelEmployFriend()
+    local data = { }
+    data["do"] = "Cmd.GetTravelEmployFriend_C"
+    data["data"] = {}
+
+    self:SendMessage(data)
+end
+
+function RebotPlayer:GetTravelEmployRecommend()
+    local data = { }
+    data["do"] = "Cmd.GetTravelEmployRecommend_C"
+    data["data"] = {}
+
+    self:SendMessage(data)
+end
+
+function RebotPlayer:EmployFriendToTravel(f_uid)
+    local data = { }
+    data["do"] = "Cmd.EmployFriendToTravel_C"
+    data["data"] = {
+        uid = f_uid,
+    }
+
+    self:SendMessage(data)
+end
+

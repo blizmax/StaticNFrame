@@ -298,20 +298,17 @@ int NetObject::Dismantle()
 				else if (opcode == eWebSocketFrameType::CLOSE_FRAME)
 				{
 					NFLogError("recv close frame, close connection!");
+
 					m_buffer.Consume(allLen);
 					return 0;
 				}
 				else if (opcode == eWebSocketFrameType::PONG_FRAME)
 				{
 					NFLogError("recv pong frame!");
-					m_buffer.Consume(allLen);
-					return 0;
 				}
 				else if (opcode == eWebSocketFrameType::PING_FRAME)
 				{
 					NFLogError("recv ping frame!");
-					m_buffer.Consume(allLen);
-					return 0;
 				}
 
 				if (NFStringUtility::IsUTF8String(mParseString))
@@ -367,6 +364,8 @@ int NetObject::Dismantle()
 			if (!isFinish || opcode == eWebSocketFrameType::CONTINUATION_FRAME)
 			{
 				mCacheFrame += mParseString;
+				//NFLogError("cacheFrame:{}", mCacheFrame);
+				//NFLogError("parseString:{}", mParseString);
 				mParseString.clear();
 			}
 			// 如果当前fram的fin为false，并且opcode不为延续包，则表示收到分段payload的第一个段(frame)，需要缓存当前frame的opcode
@@ -375,6 +374,7 @@ int NetObject::Dismantle()
 				mWSFrameType = opcode;
 			}
 
+			//NFLogError("parseString:{}", mParseString);
 			if (isFinish)
 			{
 				// 如果fin为true，并且opcode为延续包，则表示分段payload全部接受完毕，因此需要获取之前第一次收到分段frame的opcode作为整个payload的类型
@@ -396,14 +396,10 @@ int NetObject::Dismantle()
 				else if (opcode == eWebSocketFrameType::PONG_FRAME)
 				{
 					NFLogError("recv pong frame!");
-					m_buffer.Consume(allLen);
-					return 0;
 				}
 				else if (opcode == eWebSocketFrameType::PING_FRAME)
 				{
 					NFLogError("recv ping frame!");
-					m_buffer.Consume(allLen);
-					return 0;
 				}
 
 				if (NFStringUtility::IsUTF8String(mParseString))
