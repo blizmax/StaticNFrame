@@ -126,7 +126,7 @@ function UserItems:useItem(userinfo,itemid,itemnum)
 	end
 	local itemdata = ItemData[itemid]
 	if not itemdata then
-		unilight.debug("2222" .. " itemid:" .. itemid .. " itemnum:" .. itemnum)
+		--unilight.debug("2222" .. " itemid:" .. itemid .. " itemnum:" .. itemnum)
 		return false
 	end
 	local itemtype = tonumber(itemdata.itemtype)
@@ -141,7 +141,7 @@ function UserItems:useItem(userinfo,itemid,itemnum)
 	end
 	
 	userinfo.UserProps:setUserProp(userinfo,itemtype, itemnum, tonumber(itemdata.paraone), tonumber(itemdata.paratwo))
-	unilight.debug("2221" .. " itemid:" .. itemid .. " itemnum:" .. itemnum .. " itemtype" .. itemtype)
+	--unilight.debug("2221" .. " itemid:" .. itemid .. " itemnum:" .. itemnum .. " itemtype" .. itemtype)
 	--处理打开获得道具
 	local items = itemdata.openitems
 	local args = string.split(items, ';')
@@ -151,7 +151,7 @@ function UserItems:useItem(userinfo,itemid,itemnum)
 		local aitemnum = aargs[2]
 		UserItems:useItem(userinfo,tonumber(aitemid),tonumber(aitemnum))
 	end
-	unilight.debug("userItem-009" .. " itemid:" .. itemid .. " itemnum:" .. itemnum)
+	--unilight.debug("userItem-009" .. " itemid:" .. itemid .. " itemnum:" .. itemnum)
 end
 
 --玩家属性
@@ -389,7 +389,7 @@ end
 
 --用userinfo调
 function UserProps:dealZeroInitProps()
-	unilight.debug("处理零点属性清理--------------------".. self.owner.uid)
+	--unilight.debug("处理零点属性清理--------------------".. self.owner.uid)
 	--处理 周卡 月卡 永久卡
 	--local time = os.time()
 	--if self.props.pWeekCardEndTime ~= 0 and self.props.pWeekCardEndTime < time then
@@ -424,7 +424,7 @@ function UserProps:dealLoginInitProps(userinfo)
 	if userinfo == nil then
 		return
 	end
-	unilight.debug("处理登录属性清理--------------------".. userinfo.uid)
+	--("处理登录属性清理--------------------".. userinfo.uid)
 	local time = os.time()
 	if userinfo.lastlogintime == nil or userinfo.lastlogintime == 0 then
 		userinfo.lastlogintime = time
@@ -522,7 +522,7 @@ end
 function UserProps:initRandBoxPrize()
 	for k,v in pairs(TreasureBoxData) do
 		local aa = math.random(v.mintime, v.maxtime)	
-		unilight.debug("initRandBoxPrize" .. " k:" .. k .. "   aa:" .. aa )
+		--unilight.debug("initRandBoxPrize" .. " k:" .. k .. "   aa:" .. aa )
 		local value = { onlinetime = aa, status = 0}
 		self.ponline.bOnlinePrize[k] = value	
 	end
@@ -549,7 +549,7 @@ end
 
 function UserProps:getOnlineRandBoxPrize(ptimeid,ctype,ptype)
 
-	unilight.debug("getOnlineRandBoxPrize, uid="..self.owner.uid..", ptimeid:" .. ptimeid .." ctype:"..ctype.." ptype:"..ptype..", len="..#self.ponline.bOnlinePrize)
+	--unilight.debug("getOnlineRandBoxPrize, uid="..self.owner.uid..", ptimeid:" .. ptimeid .." ctype:"..ctype.." ptype:"..ptype..", len="..#self.ponline.bOnlinePrize)
 
 	for k, v in pairs(self.ponline.bOnlinePrize) do
 		--print("getOnlineRandBoxPrize, uid="..self.owner.uid..", key="..k..", value.status="..v.status..", value.onlinetime="..v.onlinetime)
@@ -630,7 +630,7 @@ function UserProps:sendUserLookMediaInfo(userinfo)
 end
 
 function UserProps:setUserProp(userinfo,itemtype,itemnum,paraone,paratwo)
-	unilight.debug("3330" .. " itemtype:" .. itemtype .. " paraone:" .. paraone .. " paratwo" .. paratwo)
+	--unilight.debug("3330" .. " itemtype:" .. itemtype .. " paraone:" .. paraone .. " paratwo" .. paratwo)
 	if userinfo == nil then
 		return 
 	end

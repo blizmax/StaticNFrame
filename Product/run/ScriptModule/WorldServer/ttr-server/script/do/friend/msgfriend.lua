@@ -467,7 +467,7 @@ Zone.CmdSendReqAgreeAddFriendCmd_C = function(cmd,zonetask)
             return
         end
 
-        unilight.debug("name:" .. friendData:GetName() .. "同意加name:" .. ask_friendData:GetName() .. " 为好友")
+        --unilight.debug("name:" .. friendData:GetName() .. "同意加name:" .. ask_friendData:GetName() .. " 为好友")
         friendData:AddUserFriend(ask_friendData:GetUid(), ask_friendData:GetHead(), ask_friendData:GetName(), ask_friendData:GetAppId(), isQQFriend)
         ask_friendData:AddUserFriend(friendData:GetUid(), friendData:GetHead(), friendData:GetName(), friendData:GetAppId(), isQQFriend)
         --ask_uid添加uid为朋友，这个是接口是uid接受或拒绝ask_uid的请求

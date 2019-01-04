@@ -67,7 +67,7 @@ function mailsys.save(uid, mail)
 	local data = unilight.getdata("mail", uid)
 	
 	if data == nil then 
-		unilight.debug("Can not get mail about uid:" .. uid)
+		--unilight.debug("Can not get mail about uid:" .. uid)
 
 		data = {
 			uid = uid,
@@ -77,7 +77,7 @@ function mailsys.save(uid, mail)
 	end
 
 	if data.mails == nil then
-		unilight.debug("mail is nil, UID:" .. uid)
+		--unilight.debug("mail is nil, UID:" .. uid)
 		data.mails = {}
 	end
 

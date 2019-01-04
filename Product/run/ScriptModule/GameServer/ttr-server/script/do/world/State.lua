@@ -50,7 +50,7 @@ end
 
 function State:loadFromDb(data)
 	if data["buildings"] == nil then
-		unilight.debug("No buildings")
+		--unilight.debug("No buildings")
 		return false
 	end
 
