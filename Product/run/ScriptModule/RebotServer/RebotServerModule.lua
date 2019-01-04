@@ -3,7 +3,7 @@ RebotServerModule.RebotIndex = os.time()
 
 --RebotServerModule.loginUrl = "http://loginxcxtest.zqgame.com/httplogin"
 --RebotServerModule.loginUrl = "http://ttrserver.staticnframe.com:7000/httplogin"
-RebotServerModule.loginUrl = "http://127.0.0.1:7000/httplogin"
+RebotServerModule.loginUrl = "http://149.28.158.210:7000/httplogin"
 RebotServerModule.gameid = 3010
 RebotServerModule.zoneid = 1
 RebotServerModule.platid = 0
@@ -40,7 +40,7 @@ function RebotServerModule.addRebot(timer)
         num = num + 1
     end
 
-    if num >= 200 then
+    if num >= 2000 then
         unilight.stoptimer(timer)
     end
 end
@@ -97,7 +97,7 @@ function RebotServerModule.HandleRecvMsg(table_msg, unLinkId)
                     local rebot = RebotServerModule.rebotUnlinkIdMap[unLinkId]
                     if rebot ~= nil then
                         Net[strcmd](table_msg, rebot)
-                        unilight.debug("| handle msg |" .. table2json(table_msg))
+                        --unilight.debug("| handle msg |" .. table2json(table_msg))
                     end
                 end
             end
@@ -107,7 +107,7 @@ end
 
 
 function HttpClient.httpLoginReturn(state_code, respData, param)
-    unilight.debug("HttpClient.httpPostReturn");
+    --unilight.debug("HttpClient.httpPostReturn");
 
     local rebot_name = param["name"]
 
@@ -119,7 +119,7 @@ function HttpClient.httpLoginReturn(state_code, respData, param)
 end
 
 function HttpClient.plat_token_login_return(state_code, respData, param)
-    unilight.debug("HttpClient.plat_token_login_return")
+    --unilight.debug("HttpClient.plat_token_login_return")
 
     local rebot_name = param["name"]
 
@@ -131,7 +131,7 @@ function HttpClient.plat_token_login_return(state_code, respData, param)
 end
 
 function HttpClient.select_zone_return(state_code, respData, param)
-    unilight.debug("HttpClient.select_zone_return")
+    --unilight.debug("HttpClient.select_zone_return")
 
     if respData.errno ~= "0" then
         unilight.error("select_zone_return error")
@@ -227,25 +227,25 @@ function Net.CmdUserInfoSynLobbyCmd_S(cmd, rebot)
 
     unilight.debug("account"..rebot.name.." login success.............")
 
-    --rebot:DoGetDailyLoginInfo()
-    --rebot:RequestTravelData()
-    --rebot:RequestGuideInfo()
-    --rebot:GetRecommendFriendInfo()
-    --rebot:GetFriendInfo()
-    --rebot:SendUserQQFriendData()
-    --rebot:GetUserAskedAddFriends()
-    --rebot:GetUserTaskInfo()
-    --rebot:DoGetDailyWelfareInfo()
-    --rebot:GetGetDailyLotteryDraw()
-    --rebot:GetLotteryDrawRewardId()
-    --rebot:GetLotteryDrawReward()
-    --rebot:GetDailyDiamondReward()
-    --rebot:GetCollectReward()
+    rebot:DoGetDailyLoginInfo()
+    rebot:RequestTravelData()
+    rebot:RequestGuideInfo()
+    rebot:GetRecommendFriendInfo()
+    rebot:GetFriendInfo()
+    rebot:SendUserQQFriendData()
+    rebot:GetUserAskedAddFriends()
+    rebot:GetUserTaskInfo()
+    rebot:DoGetDailyWelfareInfo()
+    rebot:GetGetDailyLotteryDraw()
+    rebot:GetLotteryDrawRewardId()
+    rebot:GetLotteryDrawReward()
+    rebot:GetDailyDiamondReward()
+    rebot:GetCollectReward()
 
-    --unilight.addtimer("RebotServerModule.UpdateSec", 1, rebot.uid)
-    --unilight.addtimer("RebotServerModule.UpdateFriend", 5, rebot.uid)
+    unilight.addtimer("RebotServerModule.UpdateSec", 1, rebot.uid)
+    unilight.addtimer("RebotServerModule.UpdateFriend", 5, rebot.uid)
 
-    --rebot:ReqBuyAllBuild()
+    rebot:ReqBuyAllBuild()
 end
 
 function Net.CmdBuildingBuyCmd_S(cmd, rebot)
