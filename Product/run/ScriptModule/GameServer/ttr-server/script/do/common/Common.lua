@@ -41,7 +41,7 @@ function common.StringSplitTable(str)
     end
 
     local args = string.split(str, ";")
-    unilight.debug("")
+    --unilight.debug("")
     for k,v in pairs(args) do
         local _args = string.split(v, "_")
         tmp[_args[1]] = _args[2]
