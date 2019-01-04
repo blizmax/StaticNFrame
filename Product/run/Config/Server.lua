@@ -1,6 +1,6 @@
 --MasterIP = "45.32.39.90"
 --MasterIP = "127.0.0.1"
-MasterIP = "192.168.130.229"
+MasterIP = "149.28.158.210"
 
 MasterPort = 5501
 
@@ -50,9 +50,9 @@ LoginServer_2 = {
 		ServerId = 2,			--对每一个服务器来说都是唯一的， 应用程序需要通过这个ServerId才能知道需要加载的配置是他
 		ServerIp = MasterIP,
 		ServerPort = GetNewPort(),
-		MongoIp = "14.17.104.12",
-		MongoPort = 28900,
-		MongonName = "gaoyi_ttr-1",
+		MongoIp = MasterIP,
+		MongoPort = 27017,
+		MongonName = "ttr-1",
 		MaxConnectNum = 100000,
 		WorkThreadNum = 5,
 		Security = false,
