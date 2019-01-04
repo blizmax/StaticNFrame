@@ -750,79 +750,33 @@ function UserProps:setUserProp(userinfo,itemtype,itemnum,paraone,paratwo)
 end
 function UserProps:getUserProp(userinfo,prop)
 	--unilight.debug("00000获取props:" .. prop)
-	if userinfo == nil then
+	if userinfo == nil or type(prop) ~= "string" then
 		return 0
 	end
-	prop = tostring(prop)
+
 	local value = 0.0
 	local aprops = userinfo.UserProps
 	if aprops == nil then
 		return value
 	end
-	--unilight.debug("11111获取props:" .. prop)
-	if prop == tostring("pProtectTimes") then
-		value = aprops.props.pProtectTimes			
-	elseif prop == tostring("pPower") then
-		value = aprops.props.pPower
-	elseif prop == tostring("pGoldPerSecond")  then
-		value = aprops.props.pGoldPerSecond   
-	elseif prop == tostring("pBuildingProduceRate") then
-		value = aprops.props.pBuildingProduceRate  
-	elseif prop == tostring("pClickGoldAdd") then
-		value = aprops.props.pClickGoldAdd 
-	elseif prop == tostring("pWorldGoldAdd") then
-		value = aprops.props.pWorldGoldAdd   
-	elseif prop == tostring("pAutoClickTimes_Time") then
-		value = aprops.props.pAutoClickTimes_Time 
-	elseif prop == tostring("pAutoClickTimes_Times") then
-		value = aprops.props.pAutoClickTimes_Times
-	elseif prop == tostring("pWeekCardEndTime") then
-		value = aprops.props.pWeekCardEndTime 		
-	elseif prop == tostring("pMonthCardEndTime") then
-		value = aprops.props.pMonthCardEndTime
-	elseif prop == tostring("pClothes") then
-		value = aprops.props.pClothes
-	elseif prop == tostring("pClickGoldAddRatio") then
-		if aprops.props.pClickGoldAddRatio == nil then
-			aprops.props.pClickGoldAddRatio = 0
-		end
-		if aprops.bprops.pClickGoldAddRatioValue == nil then
-			aprops.bprops.pClickGoldAddRatioValue = 0
-		end
-		value = aprops.props.pClickGoldAddRatio + aprops.bprops.pClickGoldAddRatioValue 
-	elseif prop == tostring("pWorldGoldAddRatio") then
-		if aprops.props.pWorldGoldAddRatio == nil then
-			aprops.props.pWorldGoldAddRatio = 0
-		end
-		if aprops.bprops.pWorldGoldAddRatioValue == nil then
-			aprops.bprops.pWorldGoldAddRatioValue = 0
-		end
+
+	if prop == "pClickGoldAddRatio" then
+		value = aprops.props.pClickGoldAddRatio + aprops.bprops.pClickGoldAddRatioValue
+	elseif prop == "pWorldGoldAddRatio" then
 		value = aprops.props.pWorldGoldAddRatio + aprops.bprops.pWorldGoldAddRatioValue
-	elseif prop == tostring("pGoldRainTimeAdd")  then
-		value = aprops.props.pGoldRainTimeAdd 
-	elseif prop == tostring("pOfflineGoldAddRatio") then
-		if aprops.props.pOfflineGoldAddRatio == nil then
-			aprops.props.pOfflineGoldAddRatio = 0
-		end
-		if aprops.bprops.pOfflineGoldAddRatioValue == nil then
-			aprops.bprops.pOfflineGoldAddRatioValue = 0
-		end
-		value = aprops.props.pOfflineGoldAddRatio + aprops.bprops.pOfflineGoldAddRatioValue 
-	elseif prop == tostring("pHasLifelongCard") then
-		value = aprops.props.pHasLifelongCard
-	elseif prop == tostring("dayLookMediaTimes") then
-		if aprops.bprops.dayLookMediaTimes == nil then
-			aprops.bprops.dayLookMediaTimes = 0
-		end
+	elseif prop == "pOfflineGoldAddRatio" then
+		value = aprops.props.pOfflineGoldAddRatio + aprops.bprops.pOfflineGoldAddRatioValue
+	elseif prop == "dayLookMediaTimes" then
 		value = aprops.bprops.dayLookMediaTimes
-		--print("getUserProp-1, uid="..userinfo.uid..", dayLookMediaTimes="..value..", GlobalConst.Max_Adviertisement_Times="..GlobalConst.Max_Adviertisement_Times)
+	else
+		value = aprops.props[prop]
 	end
-	if value == nil then
-		value = 0
+	
+	if type(value) ~= "number" then
+		value = 0.0
 	end
-	--unilight.debug("获取props:" .. prop)
-	--unilight.debug("获取value:" .. value)
-	return value 
+
+	return value
 end
 
 --商城类
