@@ -56,7 +56,6 @@ LoadPlugin =
 			"NFKernelPlugin",
 			"NFActorPlugin",
 			"NFNetPlugin",
-			"NFMysqlPlugin",
 			"NFMongoPlugin",
 			
 			"NFMasterServerPlugin",
@@ -68,7 +67,6 @@ LoadPlugin =
 			"NFKernelPlugin",
 			"NFActorPlugin",
 			"NFNetPlugin",
-			"NFMysqlPlugin",
 			"NFMongoPlugin",
 			
 			"NFLoginClientPlugin",
@@ -83,7 +81,6 @@ LoadPlugin =
 			"NFKernelPlugin",
 			"NFActorPlugin",
 			"NFNetPlugin",
-			"NFMysqlPlugin",
 			"NFMongoPlugin",
 			
 			"NFWorldClientPlugin",
@@ -96,10 +93,7 @@ LoadPlugin =
 	ProxyServer = {
 		ServerPlugins = {
 			"NFKernelPlugin",
-			"NFActorPlugin",
 			"NFNetPlugin",
-			"NFMysqlPlugin",
-			"NFMongoPlugin",
 			
 			"NFProxyServerPlugin",
 			"NFProxyClientPlugin",
@@ -113,7 +107,6 @@ LoadPlugin =
 			"NFKernelPlugin",
 			"NFActorPlugin",
 			"NFNetPlugin",
-			"NFMysqlPlugin",
 			"NFMongoPlugin",
 			
 			"NFGameClientPlugin",
@@ -128,10 +121,7 @@ LoadPlugin =
 	RebotServer = {
 		ServerPlugins = {
 			"NFKernelPlugin",
-			"NFActorPlugin",
 			"NFNetPlugin",
-			"NFMysqlPlugin",
-			"NFMongoPlugin",
 			
 			"NFLuaScriptPlugin",
 		};

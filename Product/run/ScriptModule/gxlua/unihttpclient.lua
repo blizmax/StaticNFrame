@@ -48,11 +48,11 @@ function unilight.HttpClientRequestCallBack(luaFunc, state_code, respData, strUs
 	if state_code == 200 then
 		local data = json2table(respData)
 		local callbackpara = json2table(strUseData)
-		unilight.debug("Http Client | " .. luaFunc .. " | recv:" .. respData)
+		--unilight.debug("Http Client | " .. luaFunc .. " | recv:" .. respData)
 		if HttpClient[luaFunc] ~= nil then
 			HttpClient[luaFunc](state_code, data, callbackpara)
 		end
 	else
-		unilight.error("Http Client | " .. luaFunc .. " | state_code:" .. state_code .. " | error:" .. respData)
+		--unilight.error("Http Client | " .. luaFunc .. " | state_code:" .. state_code .. " | error:" .. respData)
 	end
 end
