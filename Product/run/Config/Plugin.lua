@@ -122,6 +122,8 @@ LoadPlugin =
 		ServerPlugins = {
 			"NFKernelPlugin",
 			"NFNetPlugin",
+			"NFActorPlugin",
+			"NFMongoPlugin",
 			
 			"NFLuaScriptPlugin",
 		};
