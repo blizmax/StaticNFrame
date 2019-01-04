@@ -1,6 +1,6 @@
 --MasterIP = "45.32.39.90"
 --MasterIP = "127.0.0.1"
-MasterIP = "149.28.158.210"
+MasterIP = "192.168.130.229"
 
 MasterPort = 5501
 

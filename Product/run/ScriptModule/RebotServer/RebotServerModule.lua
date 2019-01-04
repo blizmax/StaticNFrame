@@ -3,7 +3,7 @@ RebotServerModule.RebotIndex = os.time()
 
 --RebotServerModule.loginUrl = "http://loginxcxtest.zqgame.com/httplogin"
 --RebotServerModule.loginUrl = "http://ttrserver.staticnframe.com:7000/httplogin"
-RebotServerModule.loginUrl = "http://149.28.158.210:7000/httplogin"
+RebotServerModule.loginUrl = "http://192.168.130.229:7000/httplogin"
 RebotServerModule.gameid = 3010
 RebotServerModule.zoneid = 1
 RebotServerModule.platid = 0

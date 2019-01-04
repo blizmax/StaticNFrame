@@ -1,6 +1,6 @@
 --local ZoneIP = "127.0.0.1"
 --local ZoneIP = "45.32.39.90"
-local ZoneIP = "149.28.158.210"
+local ZoneIP = "192.168.130.229"
 
 
 function InitGame3010()
