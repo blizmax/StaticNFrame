@@ -92,5 +92,5 @@ function update_debugsocket()
 end
 
 function update_snapshot()
-	collectgarbage("collect")
+	--collectgarbage("collect")
 end
