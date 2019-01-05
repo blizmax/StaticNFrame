@@ -50,5 +50,5 @@ function ScriptModule.Shut(...)
 	end
 
 	local mri = require("MemoryReferenceInfo")
-	mri.m_cBases.OutputFilteredResult("./LuaMemRefInfo-All-[1-Before].txt", "ScriptModule", true, true)
+	mri.m_cBases.OutputFilteredResult("./logs/"..LuaNFrame.app_dir.."/LuaMemRefInfo-All-[1-Before].txt", "ScriptModule", true, true)
 end

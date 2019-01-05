@@ -22,6 +22,9 @@ function LuaNFrame:init(pluginManager, luaModule)
     self.mongoModule = self.pluginManager:GetMongoModule()
     self.serverNetEventModule = self.pluginManager:GetServerNetEventModule()
     self.asynMongoModule = self.pluginManager:GetAsynMongoModule()
+    self.app_name = pluginManager:GetAppName()
+    self.app_id = pluginManager:GetAppID()
+    self.app_dir = self.app_name .. tostring(self.app_id)
 
     --用来存放加载的module
     self.ScriptList = { }
