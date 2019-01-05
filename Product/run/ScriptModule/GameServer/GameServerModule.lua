@@ -15,13 +15,13 @@ UserInfo = UserInfo or {}
 function GameServerModule.Init()
     unilight.createdb("userinfo","uid")						-- 玩家个人信息
     unilight.createdb(mailsys.MAIL_DB, "uid")
-    
+
     TcpClient.addRecvCallBack(NF_SERVER_TYPES.NF_ST_PROXY, 0, "GameServerModule.NetServerRecvHandleJson")
     TcpClient.addRecvCallBack(NF_SERVER_TYPES.NF_ST_WORLD, 0, "GameServerModule.WorldServerRecvHandleJson")
 
     unilight.AddServerEventCallBack(NF_SERVER_TYPES.NF_ST_GAME, NF_SERVER_TYPES.NF_ST_WORLD, "GameServerModule.WorldServerNetEvent")
     unilight.AddAccountEventCallBack(NF_SERVER_TYPES.NF_ST_GAME, "GameServerModule.AccountEventCallBack")
-    
+
     -- 当tcp上线时
 	Tcp.account_connect = function(laccount)
 		UserInfo.Connected(laccount.Id)

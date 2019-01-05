@@ -62,6 +62,7 @@
     <ClCompile Include="luacjson\lua_cjson.c" />
     <ClCompile Include="luacjson\strbuf.c" />
     <ClCompile Include="luafilesystem\lfs.c" />
+    <ClCompile Include="luasnapshot\snapshot.c" />
     <ClCompile Include="luasocket\auxiliar.c" />
     <ClCompile Include="luasocket\buffer.c" />
     <ClCompile Include="luasocket\compat.c" />

@@ -61,6 +61,7 @@ function init_script_system(pluginManager, luaModule)
 	unilight.init(pluginManager, luaModule)
 
 	unilight.addtimer("update_debugsocket", 1)
+	unilight.addtimer("update_snapshot", 60)
 
 	unilight.SetLogLevel(1)
 end
@@ -68,5 +69,20 @@ end
 function update_debugsocket()
 	if breakSocketHandle ~= nil then
 		breakSocketHandle()
+	end
+end
+
+function update_snapshot()
+
+	if lastSnapShot == nil then
+		lastSnapShot = luaopen_snapshot()
+	end
+
+	nowSnapShot = luaopen_snapshot()
+
+	for k,v in pairs(nowSnapShot) do
+		if lastSnapShot[k] == nil then
+			print(k,v)
+		end
 	end
 end

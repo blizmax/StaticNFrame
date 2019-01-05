@@ -75,7 +75,7 @@ function WorldServerModule.GameRecvHandleJson(unLinkId, valueId, nMsgId, strMsg)
                         unilight.BeginProfiler("Zone."..strcmd)
                         Zone[strcmd](table_msg, zonetask)
                         local cost = unilight.EndProfiler()
-                        if cost >= 1000 then
+                        if cost >= 10000 then
                             unilight.error("Zone."..strcmd.." cost "..tostring(cost).." us, something wrong.....")
                         end
                     end

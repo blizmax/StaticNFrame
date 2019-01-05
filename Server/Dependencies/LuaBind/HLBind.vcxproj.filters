@@ -28,6 +28,9 @@
     <Filter Include="3rd\luafilesystem">
       <UniqueIdentifier>{2309f5d5-e667-4346-8f7b-5b01ade0ba7a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="3rd\luasnapshot">
+      <UniqueIdentifier>{75af347e-db19-42b6-bcf7-70e4a4e74565}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="lpeg\lpcap.c">
@@ -251,6 +254,9 @@
     </ClCompile>
     <ClCompile Include="luafilesystem\lfs.c">
       <Filter>3rd\luafilesystem</Filter>
+    </ClCompile>
+    <ClCompile Include="luasnapshot\snapshot.c">
+      <Filter>3rd\luasnapshot</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
