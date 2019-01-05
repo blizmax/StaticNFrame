@@ -481,6 +481,7 @@ function UserInfo.GetOrNewUserInfo(uid)
 		if dbUser == nil then
 			userInfo = UserInfo.CreateTempUserInfo(uid)
 			userInfo.firstLogin = 1
+			UserInfo.SaveUserInfoToDb(userInfo)
 		else
 			userInfo = UserInfo.CreateUserByDb(uid, dbUser)
 			userInfo.firstLogin = 0
