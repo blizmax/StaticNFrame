@@ -95,6 +95,7 @@ bool NFCLuaScriptModule::Register()
 {
 	LuaIntf::LuaBinding(l).beginClass<NFIPluginManager>("NFIPluginManager")
 		.addFunction("GetAppName", &NFIPluginManager::GetAppName)
+		.addFunction("GetAppID", (int (NFIPluginManager::*)() const)&NFIPluginManager::GetAppID)
 		.addFunction("GetInitTime", &NFIPluginManager::GetInitTime)
 		.addFunction("GetNowTime", &NFIPluginManager::GetNowTime)
 		.addFunction("BeginProfiler", &NFIPluginManager::BeginProfiler)

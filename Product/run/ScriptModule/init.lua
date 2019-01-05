@@ -81,7 +81,7 @@ function init_script_system(pluginManager, luaModule)
 	-- cRootObject - 遍历的根节点对象，默认为 nil 时使用 debug.getregistry()。
 	-- MemoryReferenceInfo.m_cMethods.DumpMemorySnapshot(strSavePath, strExtraFileName, nMaxRescords, strRootObjectName, cRootObject)
 	collectgarbage("collect")
-	mri.m_cMethods.DumpMemorySnapshot("./", "1-Before", -1)
+	mri.m_cMethods.DumpMemorySnapshot("./logs/"..pluginManager:GetAppName()..tostring(pluginManager:GetAppID()), "1-Before", -1)
 end
 
 function update_debugsocket()
