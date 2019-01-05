@@ -80,14 +80,14 @@ function LuaNFrame.RunTimer(luaFunc, timerId, param_table)
         LuaNFrame.RunStringFunction(luaFunc, table.unpack(param_table), timer)
         local cost = LuaNFrame:EndProfiler()
         if cost >= 10000 then
-            unilight.error(luaFunc.. "cost time:"..tostring(cost).." us some thint wrong");
+            unilight.error(luaFunc.. " cost time:"..tostring(cost).." us some thint wrong");
         end
     else
         LuaNFrame:BeginProfiler(luaFunc)
         LuaNFrame.RunStringFunction(luaFunc, timer)
         local cost = LuaNFrame:EndProfiler()
         if cost >= 10000 then
-            unilight.error(luaFunc.. "cost time:"..tostring(cost).." us some thint wrong");
+            unilight.error(luaFunc.. " cost time:"..tostring(cost).." us some thint wrong");
         end
     end
 end
