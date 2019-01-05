@@ -22,6 +22,7 @@
 #include "NFComm/NFCore/NFRandom.hpp"
 #include "NFComm/NFPluginModule/NFIKernelModule.h"
 #include "NFComm/NFCore/NFDateTime.hpp"
+#include "NFComm/NFPluginModule/NFIAsynMongoModule.h"
 
 
 class NFLogTask : public NFTask
@@ -93,21 +94,17 @@ void NFCTestActorModule::TestTimer()
 
 void NFCTestActorModule::TestMongo()
 {
-	NFIMongoModule* pMongoModule = pPluginManager->FindModule<NFIMongoModule>();
+	NFIAsynMongoModule* pMongoModule = pPluginManager->FindModule<NFIAsynMongoModule>();
 
 	pMongoModule->AddMongoServer(NF_ST_GAME, "45.32.39.90", 27017, "test");
-
-	pMongoModule->IsExistCollection(NF_ST_GAME, "gaoyi");
-	pMongoModule->IsExistCollection(NF_ST_GAME, "test");
 
 	pMongoModule->CreateCollection(NF_ST_GAME, "gaoyi", "uid");
 	pMongoModule->CreateCollection(NF_ST_GAME, "test", "uid");
 
-	for (int i = 1; i < 10; i++)
 	{
 		uint32_t xx = NFRandomUInt(0, 2);
 		NFMsg::test_gaoyi_table message;
-		message.set_uid(i);
+		message.set_uid(1);
 		message.set_name("gaoyi");
 		message.set_sex("man");
 		message.set_age(29 + xx);
@@ -117,43 +114,18 @@ void NFCTestActorModule::TestMongo()
 
 		std::string jsonStr;
 		NFServerCommon::MessageToJsonString(message, jsonStr);
-		pMongoModule->UpdateOne(NF_ST_GAME, "gaoyi", jsonStr);
-	}
-
-	std::vector<std::string> vecResult = pMongoModule->FindAll(NF_ST_GAME, "max_id_index");
-	vecResult = pMongoModule->FindAll(NF_ST_GAME, "gaoyi");
-
-	{
-		std::string result = pMongoModule->FindOneByKey(NF_ST_GAME, "gaoyi", "1");
-		NFMsg::test_gaoyi_table message;
-		NFServerCommon::JsonStringToMessage(result, message);
-	}
-	{
-		std::map<std::string, NFJson> mapJson;
-		mapJson.emplace("age", NFJson(29));
-		NFJson json(mapJson);
-
-		std::string result = pMongoModule->FindOne(NF_ST_GAME, "gaoyi", json.dump());
-		NFMsg::test_gaoyi_table message;
-		NFServerCommon::JsonStringToMessage(result, message);
-	}
-	{
-		std::map<std::string, NFJson> mapJson;
-		mapJson.emplace("age", NFJson(29));
-		NFJson json(mapJson);
-
-		std::string opts = "{\"sort\":{\"_id\":-1}}";
-		std::vector<std::string> result = pMongoModule->FindMany(NF_ST_GAME, "gaoyi", json.dump(), opts);
-	}
-	{
-		std::string json = "{\"dd.sb\":33}";
-
-		pMongoModule->UpdateFieldByKey(NF_ST_GAME, "gaoyi", json, "1");
+		pMongoModule->UpdateOneByKey(NF_ST_GAME, "gaoyi", message, 1);
 	}
 
 	{
-		std::string fieldPath = "dd.sb";
-		std::string result = pMongoModule->FindFieldByKey(NF_ST_GAME, "gaoyi", fieldPath, "1");
+		//std::string json = "{\"dd.sb\":33}";
+
+		//pMongoModule->UpdateFieldByKey(NF_ST_GAME, "gaoyi", json, "1");
+	}
+
+	{
+		//std::string fieldPath = "dd.sb";
+		//pMongoModule->FindFieldByKey(NF_ST_GAME, "gaoyi", fieldPath, "1");
 	}
 }
 

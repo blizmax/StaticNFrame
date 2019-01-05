@@ -14,6 +14,7 @@
 #include <NFComm/NFPluginModule/NFINetServerModule.h>
 #include "NFComm/NFPluginModule/NFIHttpServerModule.h"
 #include "NFComm/NFPluginModule/NFIMongoModule.h"
+#include "NFComm/NFPluginModule/NFIAsynMongoModule.h"
 
 class NFCLoginServerModule : public NFILoginServerModule
 {
@@ -37,4 +38,5 @@ private:
 	NFINetServerModule* m_pNetServerModule;
 	NFIHttpServerModule* m_pHttpServerModule;
 	NFIMongoModule* m_pMongoModule;
+	NFIAsynMongoModule* m_pAsynMongoModule;
 };

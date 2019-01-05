@@ -170,7 +170,7 @@ function FriendManager:SaveUserQQInfo(app_id, uid)
        app_id = app_id,
        uid = uid,
    }
-   unilight.savedata("userQQAppId", tmp)
+   unilight.savedata("userQQAppId", tmp, true, true)
 end
 
 function FriendManager:PrintUserQQInfo()
@@ -272,7 +272,7 @@ function FriendManager:SaveDataToDb(friendData)
     if friendData == nil then return end
 
     local t = friendData:GetDBTable()
-    unilight.savedata("friendinfo", t)
+    unilight.savedata("friendinfo", t, true, true)
 end
 
 function FriendManager:LoadDataFromDb(friendData)

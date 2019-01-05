@@ -92,6 +92,7 @@ bool NFCLoginLogicModule::AfterInit()
 {
 	m_pNetClientModule = pPluginManager->FindModule<NFINetClientModule>();
 	m_pMongoModule = pPluginManager->FindModule<NFIMongoModule>();
+	m_pAsynMongoModule = pPluginManager->FindModule<NFIAsynMongoModule>();
 	m_pKernelModule = pPluginManager->FindModule<NFIKernelModule>();
 	m_pLoginClient_MasterModule = pPluginManager->FindModule<NFILoginClient_MasterModule>();
 	m_pHttpServerModule = pPluginManager->FindModule<NFIHttpServerModule>();
@@ -101,6 +102,7 @@ bool NFCLoginLogicModule::AfterInit()
 	m_pNetClientModule->AddReceiveCallBack(NF_ST_MASTER, EGMI_NET_MASTER_TO_LOGIN_PLAT_LOGIN, this, &NFCLoginLogicModule::OnHandleMasterAccountLoginReturn);
 
 	m_pMongoModule->CreateCollection(NF_ST_LOGIN, ACCOUNT_TABLE, ACCOUNT_TABLE_KEY);
+	m_pAsynMongoModule->CreateCollection(NF_ST_LOGIN, ACCOUNT_TABLE, ACCOUNT_TABLE_KEY);
 
 	CreateUidFromDb();
 	return true;
@@ -409,7 +411,7 @@ NFMsg::LoginAccount* NFCLoginLogicModule::GetLoginAccount(const std::string& acc
 
 		m_loginAccountMap.AddElement(account, pAccount);
 
-		m_pMongoModule->UpdateOneByKey(NF_ST_LOGIN, ACCOUNT_TABLE, *pAccount, account);
+		m_pAsynMongoModule->UpdateOneByKey(NF_ST_LOGIN, ACCOUNT_TABLE, *pAccount, account);
 	}
 
 	return pAccount;

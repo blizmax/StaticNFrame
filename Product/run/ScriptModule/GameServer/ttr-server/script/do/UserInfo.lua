@@ -494,7 +494,7 @@ end
 
 function UserInfo.SaveUserInfoToDb(userInfo)
 	if userInfo ~= nil then
-		unilight.savedata("userinfo", UserInfo.GetServerData(userInfo))
+		unilight.savedata("userinfo", UserInfo.GetServerData(userInfo), true, true)
 		userInfo.mailMgr:saveToDb()
 	end
 end

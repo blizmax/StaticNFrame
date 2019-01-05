@@ -27,6 +27,7 @@ NFCGameServerModule::~NFCGameServerModule()
 bool NFCGameServerModule::Init()
 {
 	m_pMongoModule = pPluginManager->FindModule<NFIMongoModule>();
+	m_pAsynMongoModule = pPluginManager->FindModule<NFIAsynMongoModule>();
 	m_pNetServerModule = pPluginManager->FindModule<NFINetServerModule>();
 	m_pNetServerModule->AddEventCallBack(NF_ST_GAME, this, &NFCGameServerModule::OnProxySocketEvent);
 	m_pNetServerModule->AddReceiveCallBack(NF_ST_GAME, this, &NFCGameServerModule::OnHandleOtherMessage);
@@ -51,17 +52,32 @@ bool NFCGameServerModule::Init()
 				bool ret = m_pMongoModule->AddMongoServer(NF_ST_GAME, pConfig->mMongoIp, pConfig->mMongoPort, pConfig->mMongoDbName);
 				if (ret == false)
 				{
-					NFLogError("Login Server Connected Mongo Failed, ip:{}, port:{}, dbname:{}", pConfig->mMongoIp, pConfig->mMongoPort, pConfig->mMongoDbName);
+					NFLogError("Game Server Connected Mongo Failed, ip:{}, port:{}, dbname:{}", pConfig->mMongoIp, pConfig->mMongoPort, pConfig->mMongoDbName);
 					return false;
 				}
 				//0号，给LUA使用
 				ret = m_pMongoModule->AddMongoServer(0, pConfig->mMongoIp, pConfig->mMongoPort, pConfig->mMongoDbName);
 				if (ret == false)
 				{
-					NFLogError("World Server Connected Mongo Failed, ip:{}, port:{}, dbname:{}", pConfig->mMongoIp, pConfig->mMongoPort, pConfig->mMongoDbName);
+					NFLogError("Game Server Connected Mongo Failed, ip:{}, port:{}, dbname:{}", pConfig->mMongoIp, pConfig->mMongoPort, pConfig->mMongoDbName);
 					return false;
 				}
-				NFLogInfo("World Server Connected Mongo Success, ip:{}, port:{}, dbname:{}", pConfig->mMongoIp, pConfig->mMongoPort, pConfig->mMongoDbName);
+
+				ret = m_pAsynMongoModule->AddMongoServer(NF_ST_GAME, pConfig->mMongoIp, pConfig->mMongoPort, pConfig->mMongoDbName);
+				if (ret == false)
+				{
+					NFLogError("Game Server Connected Mongo Failed, ip:{}, port:{}, dbname:{}", pConfig->mMongoIp, pConfig->mMongoPort, pConfig->mMongoDbName);
+					return false;
+				}
+				//0号，给LUA使用
+				ret = m_pAsynMongoModule->AddMongoServer(0, pConfig->mMongoIp, pConfig->mMongoPort, pConfig->mMongoDbName);
+				if (ret == false)
+				{
+					NFLogError("Game Server Connected Mongo Failed, ip:{}, port:{}, dbname:{}", pConfig->mMongoIp, pConfig->mMongoPort, pConfig->mMongoDbName);
+					return false;
+				}
+
+				NFLogInfo("Game Server Connected Mongo Success, ip:{}, port:{}, dbname:{}", pConfig->mMongoIp, pConfig->mMongoPort, pConfig->mMongoDbName);
 			}
 		}
 	}

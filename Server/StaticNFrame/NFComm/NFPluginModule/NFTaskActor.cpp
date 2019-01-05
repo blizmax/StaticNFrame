@@ -92,7 +92,7 @@ void NFTaskActor::ProcessTask(NFTask* pTask)
 {
 	if (pTask)
 	{
-		NFLogError("actor id:{}", this->GetAddress().AsInteger());
+		//NFLogError("actor id:{}, threadid:{}", this->GetAddress().AsInteger(), ThreadId());
 		pTask->ThreadProcess();
 	}
 }

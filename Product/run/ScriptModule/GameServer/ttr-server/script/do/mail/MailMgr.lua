@@ -142,7 +142,7 @@ function MailMgr:saveToDb()
 		mails = self.mails,
 	}
 
-	unilight.savedata(mailsys.MAIL_DB, data)
+	unilight.savedata(mailsys.MAIL_DB, data, true, true)
 end
 
 function MailMgr:loadFromDb()

@@ -15,6 +15,9 @@
 NFCTaskModule::NFCTaskModule(NFIPluginManager* p)
 {
 	pPluginManager = p;
+	mnSuitIndex = 0;
+	nRecvTaskCount = 0;
+	nHandleTaskCount = 0;
 	srand(static_cast<unsigned>(time(nullptr)));
 	//首先初始化
 	InitActorThread(std::thread::hardware_concurrency());

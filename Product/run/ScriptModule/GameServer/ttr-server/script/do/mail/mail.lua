@@ -89,5 +89,5 @@ function mailsys.save(uid, mail)
 	mail.id = data.id
 	table.insert(data.mails, mail)
 
-	unilight.savedata(MAIL_DB, data)
+	unilight.savedata(MAIL_DB, data, true, true)
 end

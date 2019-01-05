@@ -21,6 +21,7 @@
 #include "NFComm/NFCore/NFJson.h"
 #include "NFComm/NFPluginModule/NFIKernelModule.h"
 #include "NFComm/NFPluginModule/NFIMongoModule.h"
+#include "NFComm/NFPluginModule/NFIAsynMongoModule.h"
 #include "NFComm/NFCore/NFMap.hpp"
 #include "NFMessageDefine/NFMsgDefine.h"
 
@@ -67,6 +68,7 @@ private:
 	NFILoginClient_MasterModule* m_pLoginClient_MasterModule;
 	NFIKernelModule* m_pKernelModule;
 	NFIMongoModule* m_pMongoModule;
+	NFIAsynMongoModule* m_pAsynMongoModule;
 	NFMap<std::string, NFMsg::LoginAccount> m_loginAccountMap;
 
 	uint32_t m_curUUID;

@@ -268,7 +268,7 @@ function UserRechargeCreateOrderLog(gameOrder, platOrder, uid, payPlatId, rmb, m
 		createtime = ttrutil.FormatDate2Get(),
         	sendtoagent = 0, -- 是否通知过代理商 0/1/2 未通知、成功、异常
 	}
-	unilight.savedata("gameorder", log)
+	unilight.savedata("gameorder", log, true, true)
 	unilight.info("玩家创建订单成功：" .. uid .. "   gameorder " .. gameOrder .. "  rmb:" .. rmbYuan)
 end
 
@@ -292,7 +292,7 @@ function UserRechargeOkLog(gameOrder, platOrder, uid, rmb, flag, actualNum)
 	log.remainder = userInfo.property.chips
 	log.timestamp = os.time()
 	log.actualnum = actualNum
-	unilight.savedata("gameorder", log)
+	unilight.savedata("gameorder", log, true, true)
 	unilight.info("充值成功：" .. uid .. "   gameorder " .. gameOrder .. "  rmb:" .. rmbYuan)
 end
 

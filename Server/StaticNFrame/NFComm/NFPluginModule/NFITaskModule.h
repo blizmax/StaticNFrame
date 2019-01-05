@@ -38,4 +38,11 @@ public:
 	* @return 返回actor的唯一索引
 	*/
 	virtual int RequireActor() = 0;
+
+	/**
+	* @brief 获得系统还没有处理完的任务数目
+	*
+	* @return 未完成的任务数目
+	*/
+	virtual int GetNumQueuedMessages() = 0;
 };

@@ -57,7 +57,7 @@ function UserItems:addRechargeItems(goodsid)
 	end
 	if goodsid then
 		table.insert(self.rechargeitems, goodsid)
-		unilight.savefield("userinfo", self.owner.uid, "UserItems.rechargeitems", self.rechargeitems)	
+		--unilight.savefield("userinfo", self.owner.uid, "UserItems.rechargeitems", self.rechargeitems)	
 	end
 end
 
@@ -79,7 +79,7 @@ function UserItems:addUserItems(goodsid)
 	end
 	if goodsid then
 		table.insert(self.buyitems, goodsid)
-		unilight.savefield("userinfo", self.owner.uid, "UserItems.buyitems", self.buyitems)	
+		--unilight.savefield("userinfo", self.owner.uid, "UserItems.buyitems", self.buyitems)	
 		return true
 	end
 	return false
@@ -745,7 +745,7 @@ function UserProps:setUserProp(userinfo,itemtype,itemnum,paraone,paratwo)
 	--if mailid ~= 0 then
 	--	userinfo.mailMgr:addNew(mailid, "", "")
 	--end
-	unilight.savefield("userinfo", userinfo.uid, "UserProps", self.props)	
+	--unilight.savefield("userinfo", userinfo.uid, "UserProps", self.props)	
 	
 end
 function UserProps:getUserProp(userinfo,prop)

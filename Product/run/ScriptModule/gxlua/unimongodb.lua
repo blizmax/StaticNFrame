@@ -64,13 +64,13 @@ end
         }
         unilight.savedata("userinfo", userInfo)
 ]]
-function unilight.savedata(name, data)
-	return LuaNFrame:savedata(name, data)
+function unilight.savedata(name, data, asyn)
+	return LuaNFrame:savedata(name, data, asyn)
 end
 
-function unilight.savefield(name, id, fieldpath, data)
+function unilight.savefield(name, id, fieldpath, data, asyn)
     if type(name) == "string" and type(id) == "number" and type(fieldpath) == "string" and type(data) == "table" then
-        return LuaNFrame:savefield(name, id, fieldpath, data)
+        return LuaNFrame:savefield(name, id, fieldpath, data, asyn)
     else
         unilight.error("unilight.savefield param error")
     end

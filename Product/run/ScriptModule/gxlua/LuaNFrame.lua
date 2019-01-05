@@ -21,6 +21,7 @@ function LuaNFrame:init(pluginManager, luaModule)
     self.httpServerModule = self.pluginManager:GetHttpServerModule()
     self.mongoModule = self.pluginManager:GetMongoModule()
     self.serverNetEventModule = self.pluginManager:GetServerNetEventModule()
+    self.asynMongoModule = self.pluginManager:GetAsynMongoModule()
 
     --用来存放加载的module
     self.ScriptList = { }
@@ -159,7 +160,9 @@ end
 --数据库
 
 function LuaNFrame:initmongodb(url, dbname)
-    return self.mongoModule:AddMongoServer(0, url, dbname)
+    self.mongoModule:AddMongoServer(0, url, dbname)
+    self.asynMongoModule:AddMongoServer(0, url, dbname)
+    return true
 end
 
 --[[
@@ -173,7 +176,9 @@ end
         returns its Collection handle. On error, returns nil and the error message.
 ]]
 function LuaNFrame:createdb(name, primary)
-	return self.mongoModule:CreateCollection(0, name, primary)
+    self.mongoModule:CreateCollection(0, name, primary)
+    self.asynMongoModule:CreateCollection(0, name, primary)
+    return true
 end
 
 --[[
@@ -217,13 +222,21 @@ end
         }
         unilight.savedata("userinfo", userInfo)
 ]] 
-function LuaNFrame:savedata(name, data)
+function LuaNFrame:savedata(name, data, asyn)
     local json_data = table2json(data)
     if type(data.uid) == "number" or type(data.uid) == "string" then
         local uid = tonumber(data.uid)
-        return self.mongoModule:UpdateOneByKey(0, name, json_data, uid)
+        if asyn == nil or asyn == false then
+            return self.mongoModule:UpdateOneByKey(0, name, json_data, uid)
+        else
+            return self.asynMongoModule:UpdateOneByKey(0, name, json_data, uid)
+        end
     else
-        return self.mongoModule:UpdateOne(0, name, json_data)
+        if asyn == nil or asyn == false then
+            return self.mongoModule:UpdateOne(0, name, json_data)
+        else
+            return self.asynMongoModule:UpdateOne(0, name, json_data)
+        end
     end
 end
 
@@ -300,7 +313,7 @@ end
 ----------------------------------WARNNING-------------------------------------
 -- data将覆盖指定的fieldpath，记得是覆盖
 -----------------------------------------------------------------------
-function LuaNFrame:savefield(name, id, fieldpath, data)
+function LuaNFrame:savefield(name, id, fieldpath, data, asyn)
     if id == nil or type(id) == "userdata" or data == nil or type(data) == "userdata" then
         unilight.error("id or data is null or type() is userdata")
         return "datatype error "
@@ -309,7 +322,12 @@ function LuaNFrame:savefield(name, id, fieldpath, data)
     local tmp = {}
     tmp[fieldpath] = data
     local json_str = table2json(tmp)
-    return self.mongoModule:UpdateFieldByKey(0, name, json_str, id)
+
+    if asyn == nil or asyn == false then
+        return self.mongoModule:UpdateFieldByKey(0, name, json_str, id)
+    else
+        return self.asynMongoModule:UpdateFieldByKey(0, name, json_str, id)
+    end
 end
 
 --[[

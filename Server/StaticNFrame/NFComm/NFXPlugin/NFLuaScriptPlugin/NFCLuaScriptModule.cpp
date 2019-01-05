@@ -20,6 +20,7 @@
 #include "NFComm/NFPluginModule/NFIHttpClientModule.h"
 #include "NFComm/NFPluginModule/NFIHttpServerModule.h"
 #include "NFComm/NFPluginModule/NFIMongoModule.h"
+#include "NFComm/NFPluginModule/NFIAsynMongoModule.h"
 #include "NFComm/NFPluginModule/NFIServerNetEventModule.h"
 
 void NFLuaTimer::OnTimer(uint32_t nTimerID)
@@ -108,6 +109,7 @@ bool NFCLuaScriptModule::Register()
 		.addFunction("GetHttpClientModule", &NFIPluginManager::FindModule<NFIHttpClientModule>)
 		.addFunction("GetHttpServerModule", &NFIPluginManager::FindModule<NFIHttpServerModule>)
 		.addFunction("GetMongoModule", &NFIPluginManager::FindModule<NFIMongoModule>)
+		.addFunction("GetAsynMongoModule", &NFIPluginManager::FindModule<NFIAsynMongoModule>)
 		.addFunction("GetServerNetEventModule", &NFIPluginManager::FindModule<NFIServerNetEventModule>)
 		.endClass();
 
@@ -193,6 +195,14 @@ bool NFCLuaScriptModule::Register()
 		.addFunction("FindOneByKey", (std::string (NFIMongoModule::*)(const int nServerID, const std::string& collectionName, int64_t key))&NFIMongoModule::FindOneByKey)
 		.addFunction("UpdateFieldByKey", (bool (NFIMongoModule::*)(const int nServerID, const std::string& collectionName, const std::string& json, uint64_t key))&NFIMongoModule::UpdateFieldByKey)
 		.addFunction("FindFieldByKey", (std::string(NFIMongoModule::*)(const int nServerID, const std::string& collectionName, const std::string& fieldPath, int64_t key))&NFIMongoModule::FindFieldByKey)
+		.endClass();
+
+	LuaIntf::LuaBinding(l).beginClass<NFIAsynMongoModule>("NFIAsynMongoModule")
+		.addFunction("AddMongoServer", (bool (NFIAsynMongoModule::*)(const int nServerID, const std::string& uri, const std::string& dbname))&NFIAsynMongoModule::AddMongoServer)
+		.addFunction("CreateCollection", &NFIAsynMongoModule::CreateCollection)
+		.addFunction("UpdateOneByKey", (bool (NFIAsynMongoModule::*)(const int nServerID, const std::string& collectionName, const std::string& json, uint64_t key))&NFIAsynMongoModule::UpdateOneByKey)
+		.addFunction("UpdateOne", (bool (NFIAsynMongoModule::*)(const int nServerID, const std::string& collectionName, const std::string& json))&NFIAsynMongoModule::UpdateOne)
+		.addFunction("UpdateFieldByKey", (bool (NFIAsynMongoModule::*)(const int nServerID, const std::string& collectionName, const std::string& json, uint64_t key))&NFIAsynMongoModule::UpdateFieldByKey)
 		.endClass();
 	
 	LuaIntf::LuaBinding(l).beginClass<NFIServerNetEventModule>("NFIServerNetEventModule")

@@ -16,6 +16,7 @@
 #include "NFServer/NFServerCommon/NFServerCommon.h"
 #include "NFComm/NFCore/NFMap.hpp"
 #include "NFComm/NFPluginModule/NFIMongoModule.h"
+#include "NFComm/NFPluginModule/NFIAsynMongoModule.h"
 
 class NFCGameServerModule : public NFIGameServerModule
 {
@@ -38,4 +39,5 @@ public:
 private:
 	NFINetServerModule* m_pNetServerModule;
 	NFIMongoModule* m_pMongoModule;
+	NFIAsynMongoModule* m_pAsynMongoModule;
 };
