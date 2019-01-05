@@ -152,19 +152,39 @@ function unilight.AddAccountEventCallBack(eServerType, luaFuncStr)
 end
 
 unilight.debug = function(...)
-	LuaNFrame:debug(...)
+	local cStackInfo = debug.getinfo(2, "Sl")
+	if cStackInfo then
+		LuaNFrame:debug("["..tostring(cStackInfo.short_src)..":"..tostring(cStackInfo.currentline).."] | "..tostring(...))
+	else
+		LuaNFrame:debug(tostring(...))
+	end
 end
 
 unilight.info = function(...)
-	LuaNFrame:info(...)
+	local cStackInfo = debug.getinfo(2, "Sl")
+	if cStackInfo then
+		LuaNFrame:info("["..tostring(cStackInfo.short_src)..":"..tostring(cStackInfo.currentline).."] | "..tostring(...))
+	else
+		LuaNFrame:info(tostring(...))
+	end
 end
 
 unilight.warn = function(...)
-	LuaNFrame:warn(...)
+	local cStackInfo = debug.getinfo(2, "Sl")
+	if cStackInfo then
+		LuaNFrame:warn("["..tostring(cStackInfo.short_src)..":"..tostring(cStackInfo.currentline).."] | "..tostring(...))
+	else
+		LuaNFrame:warn(tostring(...))
+	end
 end
 
 unilight.error = function(...)
-    LuaNFrame:error(...)
+	local cStackInfo = debug.getinfo(2, "Sl")
+	if cStackInfo then
+		LuaNFrame:error("["..tostring(cStackInfo.short_src)..":"..tostring(cStackInfo.currentline).."] | "..tostring(...))
+	else
+		LuaNFrame:error(tostring(...))
+	end
 end
 
 unilight.SUCCESS = "0"

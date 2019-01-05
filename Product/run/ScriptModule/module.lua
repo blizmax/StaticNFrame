@@ -1,3 +1,4 @@
+
 function register_module(tbl, name)
 	local tmp = {tbl = tbl, tblName = name}
 	table.insert(LuaNFrame.ScriptList, tmp)
@@ -47,4 +48,7 @@ function ScriptModule.Shut(...)
 			LuaNFrame.ScriptList[i].tbl.Shut(...);
 		end
 	end
+
+	local mri = require("MemoryReferenceInfo")
+	mri.m_cBases.OutputFilteredResult("./LuaMemRefInfo-All-[1-Before].txt", "ScriptModule", true, true)
 end
