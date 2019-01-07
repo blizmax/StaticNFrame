@@ -1,7 +1,7 @@
---MasterIP = "45.32.39.90"
+MasterIP = "45.32.39.90"
 --MasterIP = "127.0.0.1"
-MasterIP = "149.28.158.210"
-MongoIp = "149.28.158.210"
+MongoIp = "14.17.104.12"
+MongoPort = 28900
 
 MasterPort = 5501
 
@@ -50,8 +50,8 @@ function InitGlobalServer()
 			ServerIp = MasterIP,
 			ServerPort = GetNewPort(),
 			MongoIp = MongoIp,
-			MongoPort = 27017,
-			MongonName = "ttr-1",
+			MongoPort = MongoPort,
+			MongonName = "gaoyi-ttr-1",
 			MaxConnectNum = 100000,
 			WorkThreadNum = 5,
 			Security = false,

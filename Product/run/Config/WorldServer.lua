@@ -1,7 +1,6 @@
---local ZoneIP = "127.0.0.1"
+local ZoneIP = "127.0.0.1"
 
 --local ZoneIP = "45.32.39.90"
-local ZoneIP = "149.28.158.210"
 
 
 function InitGame3010()
@@ -15,8 +14,8 @@ function InitGame3010()
 			GameId = 3010,
 			GameName = "ttrserver",
 			MongoIp = MongoIp,
-			MongoPort = 27017,
-			MongonName = "ttr-1",
+			MongoPort = MongoPort,
+			MongonName = "gaoyi-ttr-1",
 			MaxConnectNum = 100,
 			WorkThreadNum = 1,
 			Security = false,
@@ -33,8 +32,8 @@ function InitGame3010()
 			GameId = 3010,
 			GameName = "ttrserver",
 			MongoIp = MongoIp,
-			MongoPort = 27017,
-			MongonName = "ttr-1",
+			MongoPort = MongoPort,
+			MongonName = "gaoyi-ttr-1",
 			MaxConnectNum = 100,
 			WorkThreadNum = 1,
 			Security = false,
@@ -52,8 +51,8 @@ function InitGame3010()
 			GameId = 3010,
 			GameName = "ttrserver",
 			MongoIp = MongoIp,
-			MongoPort = 27017,
-			MongonName = "ttr-1",
+			MongoPort = MongoPort,
+			MongonName = "gaoyi-ttr-1",
 			MaxConnectNum = 100,
 			WorkThreadNum = 1,
 			Security = false,
@@ -70,8 +69,8 @@ function InitGame3010()
 			GameId = 3010,
 			GameName = "ttrserver",
 			MongoIp = MongoIp,
-			MongoPort = 27017,
-			MongonName = "ttr-1",
+			MongoPort = MongoPort,
+			MongonName = "gaoyi-ttr-1",
 			MaxConnectNum = 100,
 			WorkThreadNum = 1,
 			Security = false,
