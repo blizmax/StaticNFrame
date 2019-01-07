@@ -1,11 +1,11 @@
 --静态常量， 临时放一些不便的值，方便修改
 
-require "script/do/globalConst"
+require "common/globalConst"
 
 static_const = {}
 
 --静态常量，好友系统，多次时间保存一次数据
-static_const.Static_Const_Friend_Save_Data_To_DB_Time = 600
+static_const.Static_Const_Friend_Save_Data_To_DB_Time = 300
 
 static_const.Static_Const_User_Save_Data_DB_Time = 600
 

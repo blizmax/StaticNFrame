@@ -52,16 +52,7 @@ end
 
 --添加服务器定时器
 function LuaNFrame:AddTimer(luaFunc, nInterVal, param_table)
-    local timerId = self.luaModule:AddTimer(luaFunc, nInterVal, param_table)
-
-    local ret = {
-		timerId = timerId,
-		Stop = function()
-			LuaNFrame:StopTimer(timerId)
-		end,
-    }
-    
-    return ret
+    return self.luaModule:AddTimer(luaFunc, nInterVal, param_table)
 end
 
 --停止服务器定时器
@@ -71,23 +62,16 @@ end
 
 --执行定时函数
 function LuaNFrame.RunTimer(luaFunc, timerId, param_table)
-    local timerId = timerId
-    local timer = {
-		timerId = timerId,
-		Stop = function()
-			LuaNFrame:StopTimer(timerId)
-		end,
-    }
     if param_table ~= nil and #param_table ~= 0 then
         LuaNFrame:BeginProfiler(luaFunc)
-        LuaNFrame.RunStringFunction(luaFunc, table.unpack(param_table), timer)
+        LuaNFrame.RunStringFunction(luaFunc, table.unpack(param_table), timerId)
         local cost = LuaNFrame:EndProfiler()
         if cost >= 10000 then
             unilight.error(luaFunc.. " cost time:"..tostring(cost).." us some thint wrong");
         end
     else
         LuaNFrame:BeginProfiler(luaFunc)
-        LuaNFrame.RunStringFunction(luaFunc, timer)
+        LuaNFrame.RunStringFunction(luaFunc, timerId)
         local cost = LuaNFrame:EndProfiler()
         if cost >= 10000 then
             unilight.error(luaFunc.. " cost time:"..tostring(cost).." us some thint wrong");
@@ -96,14 +80,7 @@ function LuaNFrame.RunTimer(luaFunc, timerId, param_table)
 end
 
 function LuaNFrame:AddClocker(luaFunc, startSec, intervalSec, param_table)
-    local timerId = self.luaModule:AddClocker(luaFunc, startSec, intervalSec, param_table)
-    local ret = {
-		timerId = timerId,
-		Stop = function()
-			LuaNFrame:StopTimer(timerId)
-		end,
-    }
-    return ret
+    return self.luaModule:AddClocker(luaFunc, startSec, intervalSec, param_table)
 end
 
 function LuaNFrame:StopClocker(timerId)

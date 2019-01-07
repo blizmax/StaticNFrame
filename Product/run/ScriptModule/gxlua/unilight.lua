@@ -43,7 +43,7 @@ end
 --停止服务器定时器
 function unilight.stoptimer(timer)
 	if timer == nil then return end
-	timer.Stop()
+	LuaNFrame:StopTimer(timer)
 end
 
 -- 关于闹钟实例：

@@ -8,8 +8,8 @@ end
 
 ScriptModule = {}
 function ScriptModule.Init(...)
-	ProFi = require 'ProFi'
-	ProFi:start()
+	--ProFi = require 'ProFi'
+	--ProFi:start()
 
 	--local mri = require("MemoryReferenceInfo")
 
@@ -69,6 +69,6 @@ function ScriptModule.Shut(...)
 	--local mri = require("MemoryReferenceInfo")
 	--mri.m_cBases.OutputFilteredResult("./logs/"..LuaNFrame.app_dir.."/LuaMemRefInfo-All-[1-Before].txt", "ScriptModule", true, true)
 
-	ProFi:stop()
-	ProFi:writeReport( "./logs/"..LuaNFrame.app_dir.."/MyProfilingReport.txt" )
+	--ProFi:stop()
+	--ProFi:writeReport( "./logs/"..LuaNFrame.app_dir.."/MyProfilingReport.txt" )
 end

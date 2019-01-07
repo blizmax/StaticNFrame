@@ -27,6 +27,7 @@ function init_script_system(pluginManager, luaModule)
 
 	LoadLuaFile("../ScriptModule")
 	LoadLuaFile("../ScriptModule/gxlua", true)
+	LoadLuaFile("../ScriptModule/common", true)
 	LoadLuaFile("../ScriptModule/table", true)
 
 	if pluginManager:IsLoadAllServer() then

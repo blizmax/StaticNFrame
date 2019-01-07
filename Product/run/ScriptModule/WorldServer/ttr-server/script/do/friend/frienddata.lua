@@ -1,4 +1,3 @@
-require "script/do/common/Common"
 
 CreateClass("FriendData")   --单个好友简单数据
 

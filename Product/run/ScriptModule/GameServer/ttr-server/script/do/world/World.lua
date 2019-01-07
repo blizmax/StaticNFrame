@@ -238,15 +238,18 @@ function World:click(stateId, times, critical)
 	earning = earning * GlobalConst.Click_Factor
 	earning = earning + (UserProps:getUserProp(userinfo,"pClickGoldAdd") + self.owner.star - 1) * (self.owner.UserProps:getUserProp(userinfo,"pWorldGoldAddRatio") + 1) 
 	earning = earning * (1 + UserProps:getUserProp(userinfo,"pClickGoldAddRatio"))
-	if type(critical) == "number" and critical ~= 0 then
-		earning = earning * critical * GlobalConst.Click_Crit_Multiple
-		earning =  earning + earning * (times - critical)
-	end
-	--unilight.info("click计算值:" .. math.ceil(earning))
-
 	if earning < 1 then
 		earning = 1
 	end
+	earning = math.ceil(earning)
+	if type(critical) == "number" and critical ~= 0 then
+		earning = earning * critical * GlobalConst.Click_Crit_Multiple
+		earning =  earning + earning * (times - critical)
+	else
+		earning = earning * times
+	end
+	--unilight.info("click计算值:" .. math.ceil(earning))
+
 	UserInfo.AddUserMoney(self.owner, static_const.Static_MoneyType_Gold, math.ceil(earning))
 
 	--任务系统，任务完成情况
