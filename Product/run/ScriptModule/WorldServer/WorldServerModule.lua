@@ -2,7 +2,7 @@ WorldServerModule = {}
 
 function WorldServerModule.Init()
     --vscode luaide调试工具需要
-    --breakSocketHandle,debugXpCall = require("LuaDebug")("localhost",7003)
+    breakSocketHandle,debugXpCall = require("LuaDebug")("localhost",7004)
     
     unilight.createdb("friendinfo","uid")					-- 玩家好友信息
     unilight.createdb("userQQAppId", "uid")					-- 玩家QQAPPID信息
@@ -58,7 +58,7 @@ function WorldServerModule.GameRecvHandleJson(unLinkId, valueId, nMsgId, strMsg)
     if type(table_msg["do"]) == "string" then
         if table_msg["do"] == "Cmd.UserUpdate_C" then
         else
-            --unilight.debug(tostring(valueId) .. " | recv game msg |" .. strMsg)
+            unilight.debug(tostring(valueId) .. " | recv game msg |" .. strMsg)
         end
     end
     --协议规则

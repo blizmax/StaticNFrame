@@ -9,6 +9,14 @@ function FriendData:Init(uid, head, name, app_id, isQQFriend)
     self.name = name or ""
     self.app_id = app_id or ""
     self.isQQFriend = isQQFriend or false
+    self.sex = 1
+    self.star = 1
+    self.signature = ""
+    self.area = ""
+    self.horoscope = ""
+    self.money = 0
+    self.product = 0
+    self.click = 0
 end
 
 function FriendData:GetDBTable()
@@ -18,6 +26,14 @@ function FriendData:GetDBTable()
     tmp.name = self.name
     tmp.app_id = self.app_id
     tmp.isQQFriend = self.isQQFriend
+    tmp.sex = self.sex
+    tmp.star = self.star
+    tmp.signature = self.signature
+    tmp.area = self.area
+    tmp.horoscope = self.horoscope
+    tmp.money = self.money
+    tmp.product = self.product
+    tmp.click = self.click
     return tmp
 end
 
@@ -27,6 +43,14 @@ function FriendData:SetDBTable(data)
     self.name = data.name or ""
     self.app_id = data.app_id or ""
     self.isQQFriend = data.isQQFriend or false
+    self.sex = data.sex or self.sex
+    self.star = data.star or self.star
+    self.signature = data.signature or self.signature
+    self.area = data.area or self.area
+    self.horoscope = data.horoscope or self.horoscope
+    self.money = data.money or self.money
+    self.product = data.product or self.product
+    self.click = data.click or self.click
 end
 
 function FriendData:GetUid()
@@ -47,12 +71,5 @@ end
 
 function FriendData:GetIsQQFriend()
     return self.isQQFriend
-end
-
-function FriendData:PrintData()
-    unilight.debug("uid------------" .. self.uid)
-    unilight.debug("head-----------" .. self.head)
-    unilight.debug("name-----------" .. self.name)
-    unilight.debug("appid----------" .. self.app_id)
 end
 

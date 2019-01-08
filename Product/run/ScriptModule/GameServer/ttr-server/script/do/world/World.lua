@@ -67,12 +67,20 @@ function World:update()
 	self.owner.product = perProduct
 	self.owner.money = self.owner.money + product
 
+	local friendData = FriendManager:GetFriendInfo(self.owner.uid)
+
+	if friendData ~= nil then
+        friendData:SetProduct(self.owner.product)
+        friendData:SetMoney(self.owner.money)
+	end
+
 	local data = {}
 	data.cmd_uid = self.owner.uid
 	data.userInfo = {
 		product = self.owner.product,
 		money = self.owner.money,
 	}
+
 	unilobby.SendCmdToLobby("Cmd.UserUpdate_C", data)
 end
 
@@ -191,12 +199,11 @@ function World:openState(id) -- state ID
 	self.owner.mainTask:addProgress(TaskConditionEnum.OpenMapEvent, 1)
 	self.owner.mainTask:addProgress(TaskConditionEnum.OpenSpecifyMapEvent, 1, mapid)
 
-	local data = {}
-	data.cmd_uid = self.owner.uid
-	data.userInfo = {
-		mapid = mapid
-	}
-	unilobby.SendCmdToLobby("Cmd.UserOpenMap_C", data)
+    local friendData = FriendManager:GetFriendInfo(self.owner.uid)
+	if friendData ~= nil then
+		local friendvisitData = friendData:GetFriendVisit()
+		friendvisitData:SetCurMapId(mapid)
+	end
 
 	return ERROR_CODE.SUCCESS
 end
@@ -257,12 +264,34 @@ function World:click(stateId, times, critical)
 	self.owner.dailyTask:addProgress(TaskConditionEnum.ClickEvent, times)
 	self.owner.mainTask:addProgress(TaskConditionEnum.ClickEvent, times)
 
-	local data = {}
-	data.cmd_uid = self.owner.uid
-	data.userInfo = {
-		click = times,
-	}
-	unilobby.SendCmdToLobby("Cmd.UserClick_C", data)
+	local friendInfo = FriendManager:GetFriendInfo(self.owner.uid)
+	if friendInfo ~= nil then
+		friendInfo.simpleData.click = friendInfo.simpleData.click + times
+
+		local travelData = friendInfo:GetUserTravel()
+
+		for i = 1, times do
+			--旅行团团长自己也算一个
+			travelData:AddAnger(travelData:GetMemberCount()+1)
+		end
+
+		local req = {}
+		req["do"] = "Cmd.UserTravelAngerUpdate_S"
+		req["data"] = {
+			cmd_uid = uid,
+			anger = travelData.anger,
+		}
+
+		UserInfo.SendInfo(self.owner, req)
+
+		local data = {}
+		data.cmd_uid = self.owner.uid
+		data.userInfo = {
+			click = friendInfo.simpleData.click,
+		}
+		unilobby.SendCmdToLobby("Cmd.UserClick_C", data)
+	end
+
 	return 0
 end
 

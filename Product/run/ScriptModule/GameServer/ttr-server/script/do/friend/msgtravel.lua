@@ -3,9 +3,71 @@
 -- 客户端获得旅行团信息
 Net.CmdGetUserTravelInfo_C = function(cmd, laccount)
     local uid = laccount.Id
+    local res = { }
+    res["do"] = "Cmd.GetUserTravelInfo_S"
 
-    cmd.data.cmd_uid = uid
-    unilobby.SendCmdToLobby(cmd["do"], cmd["data"])
+    local friendData = FriendManager:GetOrNewFriendInfo(uid);
+    local travelData = friendData:GetUserTravel()
+
+    res["data"] = {cmd_uid = uid,}
+    res["data"].level = travelData:GetLevel()
+    res["data"].head = travelData:GetTravelHead()
+    res["data"].capture_times = travelData:GetCaptureTimes()
+    res["data"].unlock_slot_count = travelData:GetUnlockSlotCount() - travelData:GetMemberCount()
+    res["data"].today_buy_capture_times = travelData:GetTodayBuyCaptureTimes()
+    res["data"].anger = travelData:GetAnger()
+    res["data"].anger_click_count = travelData:GetAngerClickCount()
+    res["data"].head_backup = {}
+
+    local head_backup = travelData:GetTravelHeadBackup()
+    head_backup:ForEach(
+        function(k,v)
+            table.insert(res["data"].head_backup, k)
+        end
+    )
+
+    res["data"].member = {}
+
+    --轮询收集每个旅行团成员的数据
+    travelData:MembersForEach(
+        function(m_uid, m_time)
+            if m_time + static_const.Static_Const_TRAVEL_Employ_MAX_TIME > os.time() then
+                local member = { }
+                member.uid = m_uid
+                if m_uid == static_const.Static_Const_Friend_Travel_GOLD_GUEST_UID then
+                    member.head = travelData:GetTravelHead()
+                    member.name = static_const.Static_Const_Friend_Travel_GOLD_GUEST_NAME
+                    member.star =  friendData:GetStar()
+                    member.sex =  friendData:GetSex()
+                    member.signature = friendData:GetSignature()
+                    member.area =  friendData:GetArea()
+                    member.horoscope =  friendData:GetHoroscope()
+                    member.relation_ship = 0
+                    member.travel_level = 0
+                    member.level_time = (static_const.Static_Const_TRAVEL_Employ_MAX_TIME+m_time) - os.time()
+                    table.insert(res["data"].member, member)
+                else
+                    local member_friendData = FriendManager:GetFriendInfo(m_uid); 
+                    if member_friendData ~= nil then
+                        local member_travelData = member_friendData:GetUserTravel()
+                        member.head = member_travelData:GetTravelHead()
+                        member.name = member_friendData:GetName()
+                        member.star =  member_friendData:GetStar() 
+                        member.sex =  member_friendData:GetSex() 
+                        member.signature =  member_friendData:GetSignature()
+                        member.area =  member_friendData:GetArea()
+                        member.horoscope =  member_friendData:GetHoroscope()
+                        member.relation_ship = travelData:GetRelationShip(m_uid)
+                        member.travel_level = member_travelData:GetLevel()
+                        member.level_time = (static_const.Static_Const_TRAVEL_Employ_MAX_TIME+m_time) - os.time()
+                        table.insert(res["data"].member, member)
+                    end
+                end
+            end
+        end
+    )
+
+    return res
 end
 
 Lby.CmdGetUserTravelInfo_S = function(cmd, lobbyClientTask)

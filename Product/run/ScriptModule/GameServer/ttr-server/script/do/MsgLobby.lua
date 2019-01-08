@@ -1,9 +1,29 @@
 -- 登录获取个人信息
 Net.CmdUserInfoSynLobbyCmd_C = function(cmd, laccount)
-	--unilight.debug("First Login Center Server......")
-
 	local uid 		= laccount.Id
 
+	local userInfo = UserInfo.GetOrNewUserInfo(uid)
+	local friendData = FriendManager:UserLoginFriend(uid)
+
+	userInfo.online = true
+	userInfo.laccount = laccount
+
+	local isFirstLogin = false
+	if userInfo.firstLogin == 1 then
+		isFirstLogin = true
+	end
+
+	local startLoginReq = {}
+	startLoginReq["do"] = "Cmd.UserInfoLoginCenter_C"
+	startLoginReq["data"] = {
+		cmd_uid = uid,
+	}
+	unilobby.SendCmdToLobby(startLoginReq["do"], startLoginReq["data"])
+end
+
+Lby.CmdUserInfoLoginCenter_S = function(cmd, lobbyClientTask)
+    local uid = cmd.data.cmd_uid
+    
 	local userInfo = UserInfo.GetOrNewUserInfo(uid)
 
 	local isFirstLogin = false
@@ -11,14 +31,13 @@ Net.CmdUserInfoSynLobbyCmd_C = function(cmd, laccount)
 		isFirstLogin = true
 	end
 
-	--只有从中心服务器成功放回后才算登录成功
-	userInfo.online = false
+	userInfo.online = true
 
 	--清理玩家离线定时器
 	if userInfo["offline_timer"] ~= nil then
 		unilight.stoptimer(userInfo["offline_timer"])
 	end
-	
+
 	if userInfo["savedb_timer"] == nil then
 		userInfo["savedb_timer"] = unilight.addtimer("UserInfo.SaveOneUserInfoToDB",static_const.Static_Const_User_Save_Data_DB_Time, userInfo.uid)
 	end
@@ -34,7 +53,7 @@ Net.CmdUserInfoSynLobbyCmd_C = function(cmd, laccount)
 	--userInfo.nickName = name or userInfo.nickName
 	--userInfo.head = head or userInfo.head
 	--userInfo.sex = sex or userInfo.sex
-	userInfo.laccount = laccount
+
 	userInfo.dailyTask:addProgress(TaskConditionEnum.LoginEvent, 1)
 	userInfo.mainTask:addProgress(TaskConditionEnum.LoginEvent, 1)
 
@@ -47,35 +66,17 @@ Net.CmdUserInfoSynLobbyCmd_C = function(cmd, laccount)
 		UserInfo.DealOfflinePrize(userInfo, false, 0)
 	end
 
-	--如果存在中心服务器的话，先登陆中心服务器
-	local data = {}
-	data.cmd_uid = uid
-	data.userInfo = {
-		star = userInfo.star,
-		money = userInfo.money,
-		product = userInfo.product,
-		isFirstLogin = userInfo.firstLogin,
-	}
-	unilobby.SendCmdToLobby("Cmd.UserInfoLoginCenter_C", data) 
-end
+	local friendData = FriendManager:UserLoginFriend(uid)
+	local travelData = friendData:GetUserTravel()
 
--- 中心服务器登入返回
-Lby.CmdUserInfoLoginCenter_S = function(cmd,lobbyClientTask)
-	local uid = cmd.data.cmd_uid
-	local friendAddontion = cmd.data.friendAddontion
-	local shield_count = cmd.data.shield_count
-	local isFirstLogin = cmd.data.isFirstLogin
-	local relationships = cmd.data.relationships
+	--登录时主动清理零点数据
+	friendData:AutoZeroClear()
 
-	local userInfo = UserInfo.GetUserInfoById(uid)
-	if userInfo == nil then
-		unilight.error("userinfo is not exist,uid:"..uid)
-		return
-	end
+	travelData:CalcAddontion()
 
-	userInfo.online = true
-	userInfo.friendAddontion = friendAddontion
-	userInfo["relationships"] = relationships
+	userInfo.friendAddontion = friendData:GetAddontion()
+
+	friendData.isFirstLogin = userInfo.firstLogin
 
 	--玩家产量初始化计算 依赖好友系统的加成计算
 	userInfo.world:recalc()
@@ -86,7 +87,7 @@ Lby.CmdUserInfoLoginCenter_S = function(cmd,lobbyClientTask)
 		resultCode = 0,
 		userInfo = UserInfo.GetClientData(userInfo),
 		is_first_login = isFirstLogin,
-		shield_count = shield_count,
+		shield_count = travelData:GetShieldCount(),
 		user_props = UserProps:GetUserProps(userInfo),
 	}
 	unilight.response(userInfo.laccount, res)

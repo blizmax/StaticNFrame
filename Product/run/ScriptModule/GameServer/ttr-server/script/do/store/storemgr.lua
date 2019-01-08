@@ -97,23 +97,11 @@ function UserItems:getUserHadBuyGoods()
 end
 
 function UserItems.NotifyAddTravelHead(uid, itemid, itemnum)
-	local cmd = {}
-	cmd["do"] = "Cmd.NotifyAddTravelHead"
-    cmd.data = {}
-	cmd.data.cmd_uid = uid
-	cmd.data.itemid = itemid
-	cmd.data.itemnum = itemnum
-    unilobby.SendCmdToLobby(cmd["do"], cmd["data"])
+	UserTravel.AddTravelHeadBackupCallBack(uid,itemid,itemnum)
 end
 
 function UserItems.NotifyAddShieldCount(uid, itemid, itemnum)
-	local cmd = {}
-	cmd["do"] = "Cmd.NotifyAddShieldCount"
-    cmd.data = {}
-	cmd.data.cmd_uid = uid
-	cmd.data.itemid = itemid
-	cmd.data.itemnum = itemnum
-    unilobby.SendCmdToLobby(cmd["do"], cmd["data"])
+	UserTravel.BuyShieldCountCallBack(uid,itemid,itemnum)
 end
 
 function UserItems:useItem(userinfo,itemid,itemnum)

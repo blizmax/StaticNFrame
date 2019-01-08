@@ -95,13 +95,22 @@ function State:buy(id) -- building ID
 	local building = Building:new()
 	building:init(self.owner, self, id, 1, 1)
 
+	local friendInfo = FriendManager:GetFriendInfo(self.owner.uid)
+	if friendInfo ~= nil then
+		friendInfo.simpleData.star = self.owner.star
+		friendInfo.simpleData.money = self.owner.money
+
+        local friendvisitData = friendInfo:GetFriendVisit()
+		if friendvisitData:GetCurMapId() == self.id then
+			friendvisitData:AddBuild(id, 1, 1)
+		end
+	end
+
 	local data = {}
 	data.cmd_uid = self.owner.uid
 	data.userInfo = {
 		star = self.owner.star,
 		money = self.owner.money,
-		mapid = self.id,
-		buildid = id,
 	}
 	unilobby.SendCmdToLobby("Cmd.UserBuyBuild_C", data)
 

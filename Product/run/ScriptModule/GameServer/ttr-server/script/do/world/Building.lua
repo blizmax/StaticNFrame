@@ -139,9 +139,6 @@ function Building:levelupTen()
 	data.cmd_uid = self.owner.uid
 	data.userInfo = {
 		star = self.owner.star,
-		mapid = self.state.id,
-		buildid = self.id,
-		lv = self.lv,
 	}
 	unilobby.SendCmdToLobby("Cmd.BuildingLevelup_C", data)
 
@@ -189,13 +186,20 @@ function Building:levelup()
 	self.owner.mainTask:addProgress(TaskConditionEnum.SpecifyBuildingLevelUpEvent, 1, self.id)
 	self.owner.mainTask:addProgress(TaskConditionEnum.SpecifyBuildingStar, self.lv, self.id)
 
+	local friendInfo = FriendManager:GetFriendInfo(self.owner.uid)
+	if friendInfo ~= nil then
+		friendInfo.simpleData.star = self.owner.star
+
+		local friendvisitData = friendInfo:GetFriendVisit()
+		if friendvisitData:GetCurMapId() == self.state.id then
+			friendvisitData:SetLevel(self.id, self.lv)
+		end
+	end
+
 	local data = {}
 	data.cmd_uid = self.owner.uid
 	data.userInfo = {
 		star = self.owner.star,
-		mapid = self.state.id,
-		buildid = self.id,
-		lv = self.lv,
 	}
 	unilobby.SendCmdToLobby("Cmd.BuildingLevelup_C", data)
 
@@ -225,13 +229,16 @@ function Building:AutoRebuild()
 		self.owner.achieveTask:addProgress(TaskConditionEnum.BuildingChangeEvent, 1)
 		self.owner.dailyTask:addProgress(TaskConditionEnum.BuildingChangeEvent, 1)
 
+		local friendInfo = FriendManager:GetFriendInfo(self.owner.uid)
+		if friendInfo ~= nil then
+			local friendvisitData = friendInfo:GetFriendVisit()
+			if friendvisitData:GetCurMapId() == self.state.id then
+				friendvisitData:SetLevel(self.idd,self.lv)
+			end
+		end
+
 		local data = {}
 		data.cmd_uid = self.owner.uid
-		data.userInfo = {
-			mapid = self.state.id,
-			buildid = self.id,
-			lv = self.lv,
-		}
 		unilobby.SendCmdToLobby("Cmd.BuildingReBuild_C", data)
 
 		local reward = row["RewardMoney"]
@@ -318,14 +325,17 @@ function Building:rebuild()
 	self.owner.achieveTask:addProgress(TaskConditionEnum.BuildingChangeEvent, 1)
 	self.owner.dailyTask:addProgress(TaskConditionEnum.BuildingChangeEvent, 1)
 
+	local friendInfo = FriendManager:GetFriendInfo(self.owner.uid)
+	if friendInfo ~= nil then
+		local friendvisitData = friendInfo:GetFriendVisit()
+		if friendvisitData:GetCurMapId() == self.state.id then
+			friendvisitData:SetLevel(self.idd,self.lv)
+		end
+	end
+
 	local data = {}
 	data.cmd_uid = self.owner.uid
-	data.userInfo = {
-		mapid = self.state.id,
-		buildid = self.id,
-		lv = self.lv,
-	}
-	unilobby.SendCmdToLobby("Cmd.BuildingReBuild_C", data) 
+	unilobby.SendCmdToLobby("Cmd.BuildingReBuild_C", data)
 
 --	local reward = row["RewardMoney"]
 

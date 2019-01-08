@@ -4,81 +4,83 @@
 Net.CmdGetInviteFriendInfoCmd_C = function(cmd, laccount)
     local uid = laccount.Id
 
-    if cmd.data == nil then
-        cmd.data = {}
-    end
-    cmd.data.cmd_uid = uid
-    unilobby.SendCmdToLobby(cmd["do"], cmd["data"])
-end
+	local res = {}
+	res["do"] = "Cmd.GetInviteFriendInfoCmd_S"
 
-Lby.CmdGetInviteFriendInfoCmd_S = function(cmd, lobbyClientTask)
-    local uid = cmd.data.cmd_uid
-    
-    local userInfo = UserInfo.GetUserInfoById(uid)
-	if userInfo == nil then
-		unilight.error("userinfo is not exist,uid:"..uid)
-		return
-    end
+	local code, desc, inviteFriendsInfo, progressRewarded, askFriendFiveReward = InviteFriendsMgr.GetInviteFriendsInfo(uid)
 
-    unilight.response(userInfo.laccount, cmd)
+	res["data"] = {
+		cmd_uid = uid,
+		resultCode 	= code,
+		desc 		= desc,
+		data 	    = inviteFriendsInfo,
+		progressRewarded = progressRewarded,
+		askFriendFiveReward = askFriendFiveReward,	--0没有领取，1已经领取
+	}
+    return res
 end
 
 -- 获取5人领取奖励
 Net.CmdGetAskFriendFiveReward_C = function(cmd, laccount)
     local uid = laccount.Id
 
-    if cmd.data == nil then
-        cmd.data = {}
-    end
-    cmd.data.cmd_uid = uid
-    unilobby.SendCmdToLobby(cmd["do"], cmd["data"])
-end
+	local res = {}
+	res["do"] = "Cmd.GetAskFriendFiveReward_S"
 
-Lby.CmdGetAskFriendFiveReward_S = function(cmd, lobbyClientTask)
-    local uid = cmd.data.cmd_uid
-    
-    local userInfo = UserInfo.GetUserInfoById(uid)
-	if userInfo == nil then
-		unilight.error("userinfo is not exist,uid:"..uid)
-		return
-    end
+	local friendData = FriendManager:GetOrNewFriendInfo(uid)
 
-    unilight.response(userInfo.laccount, cmd)
-end
+	local tmp = friendData:GetMeAskPlayerUidsAndFirstLogin()
+	if #tmp >= GlobalConst.Invitation_Role_Times and friendData:GetAskFriendFiveReward() == 0 then
+		local travelData = friendData:GetUserTravel()
+		local data = travelHead[GlobalConst.Invitation_Role_Character]
+		if data ~= nil then
+			travelData:AddTravelHeadBackup(data.head)
 
-Lby.CmdNotifyAddUserTravelHead_S = function(cmd, lobbyClientTask)
-    local uid = cmd.data.cmd_uid
-    
-    local userInfo = UserInfo.GetUserInfoById(uid)
-	if userInfo == nil then
-		unilight.error("userinfo is not exist,uid:"..uid)
-		return
-    end
+			local req = {}
+			req["do"] = "Cmd.NotifyAddUserTravelHead_S"
+			req["data"] = {
+				cmd_uid = uid,
+				head = data.head,
+            }
+            UserInfo.SendInfo(uid, req)
+		end
 
-    unilight.response(userInfo.laccount, cmd)
+		friendData:SetAskFriendFiveReward()
+	else
+		res["data"] = {
+			cmd_uid = uid,
+			resultCode = 1,
+			desc = "",
+		}
+        return res
+	end
+
+	res["data"] = {
+		cmd_uid = uid,
+		resultCode = 0,
+		desc = "",
+	}
+    return res
 end
 
  --领取 邀请好友 获得的奖励
 Net.CmdGetInviteFriendRewardCmd_C = function(cmd, laccount)
     local uid = laccount.Id
 
-    if cmd.data == nil then
-        cmd.data = {}
-    end
-    cmd.data.cmd_uid = uid
-    unilobby.SendCmdToLobby(cmd["do"], cmd["data"])
-end
+	local res = {}
+	res["do"] = "Cmd.GetInviteFriendRewardCmd_S"
 
-Lby.CmdGetInviteFriendRewardCmd_S = function(cmd, lobbyClientTask)
-    local uid = cmd.data.cmd_uid
-    
-    local userInfo = UserInfo.GetUserInfoById(uid)
-	if userInfo == nil then
-		unilight.error("userinfo is not exist,uid:"..uid)
-		return
-    end
+	local friendUid = cmd.data.friendUid
+	--print("CmdGetInviteFriendRewardCmd_C, uid="..uid..", friendUid="..friendUid)
+	local  ret, desc, rewardId = InviteFriendsMgr.GetInviteFriendReward(uid, friendUid)
 
-    unilight.response(userInfo.laccount, cmd)
+	res["data"] = {
+		cmd_uid = uid,
+		resultCode 	= ret,
+		desc 		= desc,
+		rewardId 	= rewardId,
+	}
+    return res
 end
 
 
@@ -86,21 +88,17 @@ end
 Net.CmdGetProgressRewardCmd_C = function(cmd, laccount)
     local uid = laccount.Id
 
-    if cmd.data == nil then
-        cmd.data = {}
-    end
-    cmd.data.cmd_uid = uid
-    unilobby.SendCmdToLobby(cmd["do"], cmd["data"])
-end
+	local res = {}
+	res["do"] = "Cmd.GetProgressRewardCmd_S"
 
-Lby.CmdGetProgressRewardCmd_S = function(cmd, lobbyClientTask)
-    local uid = cmd.data.cmd_uid
-    
-    local userInfo = UserInfo.GetUserInfoById(uid)
-	if userInfo == nil then
-		unilight.error("userinfo is not exist,uid:"..uid)
-		return
-    end
+	local progressRewardId = cmd.data.progressRewardId
+	local  ret, desc = InviteFriendsMgr.GetProgressReward(uid, progressRewardId)
 
-    unilight.response(userInfo.laccount, cmd)
+	res["data"] = {
+		cmd_uid = uid,
+		resultCode 	= ret,
+		desc 		= desc,
+		progressRewardId 	= progressRewardId,
+	}
+    return res
 end
