@@ -111,6 +111,8 @@ function State:buy(id) -- building ID
 	data.userInfo = {
 		star = self.owner.star,
 		money = self.owner.money,
+		mapid = self.id,
+		buildid = id,
 	}
 	unilobby.SendCmdToLobby("Cmd.UserBuyBuild_C", data)
 

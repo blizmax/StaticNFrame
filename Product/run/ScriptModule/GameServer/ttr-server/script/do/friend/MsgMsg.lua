@@ -54,7 +54,7 @@ Lby.CmdGiveMessageFromCenter_CS = function(cmd, lobbyClientTask)
             res["data"] = {
                 record = msg,
             }
-            UserInfo.SendInfo(friendData.uid, res)
+            UserInfo.SendInfoByUid(friendData.uid, res)
         end
 	end
 end

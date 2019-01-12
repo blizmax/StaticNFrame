@@ -1,6 +1,6 @@
 --静态常量， 临时放一些不便的值，方便修改
 
-require "common/globalConst"
+require("table/globalConst")
 
 static_const = {}
 

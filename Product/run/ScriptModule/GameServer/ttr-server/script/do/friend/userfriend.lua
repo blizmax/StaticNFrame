@@ -615,6 +615,6 @@ function UserFriend:Give(friendinfo, msgType, args)
         res["data"] = {
             record = msg,
         }
-        UserInfo.SendInfo(self.uid, res)
+        UserInfo.SendInfoByUid(self.uid, res)
     end
 end

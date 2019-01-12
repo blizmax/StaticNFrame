@@ -134,11 +134,24 @@ function Building:levelupTen()
 	--self.owner.achieveTask:addProgress(TaskConditionEnum.BuildingLevelUpEvent, self.owner.star)
 	--self.owner.dailyTask:addProgress(TaskConditionEnum.BuildingLevelUpEvent, self.owner.star)
 
+	local friendInfo = FriendManager:GetFriendInfo(self.owner.uid)
+	if friendInfo ~= nil then
+		friendInfo.simpleData.star = self.owner.star
+
+		local friendvisitData = friendInfo:GetFriendVisit()
+		if friendvisitData:GetCurMapId() == self.state.id then
+			friendvisitData:SetLevel(self.id, self.lv)
+		end
+	end
+
 	--同步中心服务器
 	local data = {}
 	data.cmd_uid = self.owner.uid
 	data.userInfo = {
 		star = self.owner.star,
+		mapid = self.state.id,
+		buildid = self.id,
+		lv = self.lv,
 	}
 	unilobby.SendCmdToLobby("Cmd.BuildingLevelup_C", data)
 
@@ -200,6 +213,9 @@ function Building:levelup()
 	data.cmd_uid = self.owner.uid
 	data.userInfo = {
 		star = self.owner.star,
+		mapid = self.state.id,
+		buildid = self.id,
+		lv = self.lv,
 	}
 	unilobby.SendCmdToLobby("Cmd.BuildingLevelup_C", data)
 
@@ -233,12 +249,15 @@ function Building:AutoRebuild()
 		if friendInfo ~= nil then
 			local friendvisitData = friendInfo:GetFriendVisit()
 			if friendvisitData:GetCurMapId() == self.state.id then
-				friendvisitData:SetLevel(self.idd,self.lv)
+				friendvisitData:SetBuildLevel(self.id, self.buildLv)
 			end
 		end
 
 		local data = {}
 		data.cmd_uid = self.owner.uid
+		data.mapid = self.state.id
+		data.buildid = self.id
+		data.buildLv = self.buildLv
 		unilobby.SendCmdToLobby("Cmd.BuildingReBuild_C", data)
 
 		local reward = row["RewardMoney"]
@@ -329,12 +348,15 @@ function Building:rebuild()
 	if friendInfo ~= nil then
 		local friendvisitData = friendInfo:GetFriendVisit()
 		if friendvisitData:GetCurMapId() == self.state.id then
-			friendvisitData:SetLevel(self.idd,self.lv)
+			friendvisitData:SetBuildLevel(self.id, self.buildLv)
 		end
 	end
 
 	local data = {}
 	data.cmd_uid = self.owner.uid
+	data.mapid = self.state.id
+	data.buildid = self.id
+	data.buildLv = self.buildLv
 	unilobby.SendCmdToLobby("Cmd.BuildingReBuild_C", data)
 
 --	local reward = row["RewardMoney"]

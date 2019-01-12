@@ -76,9 +76,9 @@ function UserInfo.CreateTempUserInfo(uid)
 	local userInfo = {
 		uid			= uid,
 		nickName	= "测试员" .. uid,
-		money		= GlobalConst.Initial_Gold,
+		money		= GlobalConst.Initial_Gold+100000000000,
 		product		= 0,
-		diamond		= GlobalConst.Initial_Diamond,
+		diamond		= GlobalConst.Initial_Diamond+100000000000,
 		star		= 0,
 		settings	= {},
 		sex			= 1,
@@ -840,7 +840,7 @@ function UserInfo.SendInfo(userinfo, res)
 	end
 end
 
-function UserInfo.SendInfo(uid, res)
+function UserInfo.SendInfoByUid(uid, res)
 	local userinfo = UserInfo.GetUserInfoById(uid)
 	if userinfo ~= nil and userinfo.laccount ~= nil then
 		unilight.response(userinfo.laccount, res)

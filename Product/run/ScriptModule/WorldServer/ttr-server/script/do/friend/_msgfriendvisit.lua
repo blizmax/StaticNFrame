@@ -6,17 +6,6 @@ Zone.CmdGetFriendVisitInfo_C = function(cmd,zonetask)
 
     local uid = cmd.data.cmd_uid
 
-    --检查客户端数据输入
-    if cmd["data"] == nil or type(cmd["data"].uid) ~= "number" then
-        res["data"] = {
-            cmd_uid = uid,
-            resultCode = 1,
-            desc = "数据出错"
-        }
-        ZoneInfo.SendCmdToMe(res["do"], res["data"], zonetask)
-        return;
-    end
-
     local f_uid = cmd["data"].uid
     local friendData = FriendManager:GetOrNewFriendInfo(uid)
     local friendvisitData = friendData:GetFriendVisit()
@@ -109,367 +98,72 @@ end
 --鼓舞好友,单词用错先保留
 Zone.CmdMischiefFriend_C = function(cmd,zonetask)
     local res = { }
-    res["do"] = "Cmd.MischiefFriend_S"
-
-    local uid = cmd.data.cmd_uid
-
-    --检查客户端数据输入
-    if cmd["data"] == nil or type(cmd["data"].uid) ~= "number" then
-        res["data"] = {
-            cmd_uid = uid,
-            resultCode = 1,
-            desc = "数据出错"
-        }
-        ZoneInfo.SendCmdToMe(res["do"], res["data"], zonetask)
-        return;
-    end
-
-    local f_uid = cmd["data"].uid
-    local friendData = FriendManager:GetOrNewFriendInfo(uid)
-
-    --玩家可能不在线,设置离线数据被该标志
-    friendData:SetOfflineChange()
-
-    local friendvisitData = friendData:GetFriendVisit()
-    local travelData = friendData:GetUserTravel()
-
-    if friendData:GetUserFriend(f_uid) == nil then
-        res["data"] = {
-            cmd_uid = uid,
-            resultCode = ERROR_CODE.FRIEND_VISIT_NOT_FRIEND,
-            desc = "",
-        }
-        ZoneInfo.SendCmdToMe(res["do"], res["data"], zonetask)
-        return
-    end
-
-    if friendvisitData:MischiefNumberIsLimit() then
-        res["data"] = {
-            cmd_uid = uid,
-            resultCode = ERROR_CODE.FRIEND_VISIT_TO_VISIT_LIMIT,
-            desc = "",
-        }
-        ZoneInfo.SendCmdToMe(res["do"], res["data"], zonetask)
-        return
-    end
-
-    if friendvisitData:IsTodayMischief(f_uid) then
-        res["data"] = {
-            cmd_uid = uid,
-            resultCode = ERROR_CODE.FRIEND_VISIT_TODAY_MISCHIEF,
-            desc = "",
-        }
-        ZoneInfo.SendCmdToMe(res["do"], res["data"], zonetask)
-        return
-    end
-
-    local f_friendData = FriendManager:GetFriendInfo(f_uid)
-    if f_friendData == nil then
-        res["data"] = {
-            cmd_uid = uid,
-            resultCode = ERROR_CODE.ID_NOT_FOUND,
-            desc = "",
-        }
-        ZoneInfo.SendCmdToMe(res["do"], res["data"], zonetask)
-        return
-    end
-
-    local f_friendvisitData = f_friendData:GetFriendVisit()
-    local f_travelData = f_friendData:GetUserTravel()
-
-    --玩家可能不在线,设置离线数据被该标志
-    f_friendData:SetOfflineChange()
-
-    if f_friendvisitData:EncouragedNumberIsLimit() then
-        res["data"] = {
-            cmd_uid = uid,
-            resultCode = ERROR_CODE.FRIEND_VISIT_ENCOURAGED_LIMIT,
-            desc = "",
-        }
-        ZoneInfo.SendCmdToMe(res["do"], res["data"], zonetask)
-        return
-    end
-
-    local targetmoney = 0
-    local targetproduct = 0
-
-    targetmoney = f_friendData:GetMoney()
-    targetproduct = f_friendData:GetProduct()
-
-    local money = math.min(friendData:GetProduct(), targetproduct)*120 + f_friendData:GetStar() * 100
-    money = math.ceil(money)
-    if money <= 0 then
-        money = 1
-    end
-
-    FriendManager.AddUserMoney(zonetask, friendData, static_const.Static_MoneyType_Gold, money)
-    FriendManager.AddUserMoney(zonetask, f_friendData, static_const.Static_MoneyType_Gold, money)
-
-    travelData:AddRelationShip(f_uid)
-    f_travelData:AddRelationShip(uid)
-
-    friendvisitData:SetLastMischiefTime(os.time())
-    friendvisitData.last_mischief_money = money
-
-    friendvisitData:AddMischiefNumber()
-    friendvisitData:RecordMischiefFriend(f_uid)
-
-    f_friendvisitData:AddEncouragedNumber()
-
-    --鼓舞或捣蛋好友，通知下对方
-    f_friendData:Give(zonetask, friendData, MsgTypeEnum.FriendVisitMischiefFriend, {tostring(money),})
-
-    FriendManager.NotifyMainTaskAddProgress(zonetask, friendData, TaskConditionEnum.InspireFriendEvent, 1)
-
+    res["do"] = "Cmd.MischiefFriend_f_C"
     res["data"] = {
-        cmd_uid = uid,
-        resultCode = 0,
-        desc = "",
-        count = friendvisitData:GetMischiefNumber(),
-        money = money,
+        cmd_uid = cmd.data.uid,
+        mischief_uid = cmd.data.cmd_uid,
+        product = cmd.data.product,
     }
-    ZoneInfo.SendCmdToMe(res["do"], res["data"], zonetask)
-    return;
+
+    local friendData = FriendManager:GetFriendInfo(cmd.data.uid)
+    if friendData == nil then
+        return
+    end
+
+    FriendManager.SendCmdByFriend(res["do"], res["data"], friendData, zonetask)
 end
 
 --捣蛋好友, 单词用错先保留
 Zone.CmdInspireFriend_C = function(cmd,zonetask)
     local res = { }
-    res["do"] = "Cmd.InspireFriend_S"
-
-    local uid = cmd.data.cmd_uid
-
-    --检查客户端数据输入
-    if cmd["data"] == nil or type(cmd["data"].uid) ~= "number" or type(cmd["data"].buildid) ~= "number" then
-        res["data"] = {
-            cmd_uid = uid,
-            resultCode = 1,
-            desc = "数据出错"
-        }
-        ZoneInfo.SendCmdToMe(res["do"], res["data"], zonetask)
-        return;
-    end
-
-    local f_uid = cmd["data"].uid
-    local buildid = cmd["data"].buildid
-    local friendData = FriendManager:GetOrNewFriendInfo(uid)
-    local friendvisitData = friendData:GetFriendVisit()
-    local travelData = friendData:GetUserTravel()
-
-    --玩家可能不在线,设置离线数据被该标志
-    friendData:SetOfflineChange()
-
-    if friendData:GetUserFriend(f_uid) == nil then
-        res["data"] = {
-            cmd_uid = uid,
-            resultCode = ERROR_CODE.FRIEND_VISIT_NOT_FRIEND,
-            desc = "不是好友不能访问",
-        }
-        ZoneInfo.SendCmdToMe(res["do"], res["data"], zonetask)
-        return
-    end
-
-    if friendvisitData:IsTodayInspire(f_uid) then
-        res["data"] = {
-            cmd_uid = uid,
-            resultCode = ERROR_CODE.FRIEND_VISIT_TODAY_INSPIRE,
-            desc = "",
-        }
-        ZoneInfo.SendCmdToMe(res["do"], res["data"], zonetask)
-        return
-    end
-
-    --是否可以看视屏
-    local see_sceen = friendvisitData:IsTodayInspireSeeSceen(f_uid)
-
-    --主要考虑到看视屏赠送了一次
-    if friendvisitData:InspireNumberIsLimit() then
-        if see_sceen == true then
-            res["data"] = {
-                cmd_uid = uid,
-                resultCode = ERROR_CODE.FRIEND_VISIT_TO_VISIT_LIMIT,
-                desc = "",
-            }
-            ZoneInfo.SendCmdToMe(res["do"], res["data"], zonetask)
-            return
-        end
-    end
-
-    local f_friendData = FriendManager:GetFriendInfo(f_uid)
-    if f_friendData == nil then
-        res["data"] = {
-            cmd_uid = uid,
-            resultCode = ERROR_CODE.ID_NOT_FOUND,
-            desc = "该玩家不存在",
-        }
-        ZoneInfo.SendCmdToMe(res["do"], res["data"], zonetask)
-        return
-    end
-
-    --玩家可能不在线,设置离线数据被该标志
-    f_friendData:SetOfflineChange()
-
-    local f_travelData = f_friendData:GetUserTravel()
-    local f_friendvisitData = f_friendData:GetFriendVisit()
-
-    if f_friendvisitData:BeteasedNumberIsLimit() then
-        res["data"] = {
-            cmd_uid = uid,
-            resultCode = ERROR_CODE.FRIEND_VISIT_BETEASED_LIMIT,
-            desc = "",
-        }
-        ZoneInfo.SendCmdToMe(res["do"], res["data"], zonetask)
-        return
-    end
-
-    --查看使用猜中
-    local guest = false
-    local reward_buildid = f_friendvisitData:GetLastInpireBuildId()
-    if buildid == reward_buildid then
-        guest = true
-        f_friendvisitData:GetRandBuilds()
-    end
-
-    local money = 0
-    
-    if guest == true then 
-       money = math.min(friendData:GetProduct(), f_friendData:GetProduct())*360 + f_friendData:GetStar() * 100
-    else
-    money = math.min(friendData:GetProduct(), f_friendData:GetProduct())*60 + f_friendData:GetStar() * 100
-    end
-    money = math.ceil(money)
-    if money <= 0 then
-        money = 1
-    end
-
-    FriendManager.AddUserMoney(zonetask, friendData, static_const.Static_MoneyType_Gold, money)
-    FriendManager.SubUserMoney(zonetask, f_friendData, static_const.Static_MoneyType_Gold, money)
-
-    friendvisitData:SetLastInspireTime(os.time())
-
-    if see_sceen == true then
-        friendvisitData:AddInspireNumber()
-        f_friendvisitData:AddBeteasedNumber()
-    end
-
-    friendvisitData:RecordInspireFriend(f_uid)
-
-    --鼓舞或捣蛋好友，通知下对方
-    f_friendData:Give(zonetask, friendData, MsgTypeEnum.FriendVisitInspireFriend, {tostring(money),})
-
-    FriendManager.NotifyMainTaskAddProgress(zonetask, friendData, TaskConditionEnum.MischiefFriendEvent, 1)
-
+    res["do"] = "Cmd.InspireFriend_f_C"
     res["data"] = {
-        cmd_uid = uid,
-        resultCode = 0,
-        desc = "",
-        count = friendvisitData:GetInspireNumber(),
-        money = money,
-        see_sceen = see_sceen,
-        reward_buildid = reward_buildid,
-        guest = guest,
+        cmd_uid = cmd.data.uid,
+        inspire_uid = cmd.data.cmd_uid,
+        buildid = cmd.data.buildid,
+        product = cmd.data.product,
+        see_sceen = cmd.data.see_sceen,
     }
-    ZoneInfo.SendCmdToMe(res["do"], res["data"], zonetask)
-    return;
+
+    local friendData = FriendManager:GetFriendInfo(cmd.data.uid)
+    if friendData == nil then
+        return
+    end
+
+    FriendManager.SendCmdByFriend(res["do"], res["data"], friendData, zonetask)
+end
+
+Zone.CmdMischiefFriend_S = function(cmd,zonetask)
+    local friendData = FriendManager:GetFriendInfo(cmd.data.cmd_uid)
+    if friendData == nil then
+        return
+    end
+
+    FriendManager.SendCmdByFriend(res["do"], res["data"], friendData, zonetask)
+end
+
+Zone.CmdInspireFriend_S = function(cmd,zonetask)
+    local friendData = FriendManager:GetFriendInfo(cmd.data.cmd_uid)
+    if friendData == nil then
+        return
+    end
+
+    FriendManager.SendCmdByFriend(cmd["do"], cmd["data"], friendData)
 end
 
 --鼓舞看视频完回调
 Zone.CmdMischiefFriend_Screen_C = function(cmd,zonetask)
-    local res = { }
-    res["do"] = "Cmd.MischiefFriend_Screen_S"
+    local res = {}
+    res["do"] = "Cmd.MischiefFriend_Screen_C"
+    res["data"] = {
+        cmd_uid = cmd.data.uid,
+        money = cmd.data.money,
+    }
 
-    local uid = cmd.data.cmd_uid
-
-    --检查客户端数据输入
-    if cmd["data"] == nil or type(cmd["data"].uid) ~= "number" then
-        res["data"] = {
-            cmd_uid = uid,
-            resultCode = 1,
-            desc = "数据出错"
-        }
-        ZoneInfo.SendCmdToMe(res["do"], res["data"], zonetask)
-        return;
-    end
-
-    local f_uid = cmd["data"].uid
-    local friendData = FriendManager:GetOrNewFriendInfo(uid)
-    local friendvisitData = friendData:GetFriendVisit()
-    local travelData = friendData:GetUserTravel()
-
-    --玩家可能不在线,设置离线数据被该标志
-    friendData:SetOfflineChange()
-
-    local f_friendData = FriendManager:GetFriendInfo(f_uid)
+    local f_friendData = FriendManager:GetFriendInfo(cmd.data.uid)
     if f_friendData == nil then
-        res["data"] = {
-            cmd_uid = uid,
-            resultCode = ERROR_CODE.ID_NOT_FOUND,
-            desc = "该玩家不存在",
-        }
-        ZoneInfo.SendCmdToMe(res["do"], res["data"], zonetask)
         return
     end
 
-    --玩家可能不在线,设置离线数据被该标志
-    f_friendData:SetOfflineChange()
-
-    local f_travelData = f_friendData:GetUserTravel()
-    local f_friendvisitData = f_friendData:GetFriendVisit()
-
-    local money = friendvisitData.last_mischief_money
-
-    FriendManager.AddUserMoney(zonetask, friendData, static_const.Static_MoneyType_Gold, money)
-    FriendManager.AddUserMoney(zonetask, f_friendData, static_const.Static_MoneyType_Gold, money)
-
-    travelData:AddRelationShip(f_uid)
-    f_travelData:AddRelationShip(uid)
-
-    res["data"] = {
-        cmd_uid = uid,
-        resultCode = 0,
-        desc = "",
-        count = friendvisitData:GetMischiefNumber(),
-        money = money*2,
-    }
-    ZoneInfo.SendCmdToMe(res["do"], res["data"], zonetask)
-    return;
+    FriendManager.SendCmdByFriend(res["do"], res["data"], f_friendData, zonetask)
 end
-
---//捣蛋看视频完回调
-Zone.CmdInspireFriend_Screen_C = function(cmd,zonetask)
-    local res = { }
-    res["do"] = "Cmd.InspireFriend_Screen_S"
-
-    local uid = cmd.data.cmd_uid
-
-    --检查客户端数据输入
-    if cmd["data"] == nil or type(cmd["data"].uid) ~= "number" then
-        res["data"] = {
-            cmd_uid = uid,
-            resultCode = 1,
-            desc = "数据出错"
-        }
-        ZoneInfo.SendCmdToMe(res["do"], res["data"], zonetask)
-        return;
-    end
-
-    local f_uid = cmd["data"].uid
-    local friendData = FriendManager:GetOrNewFriendInfo(uid)
-    local friendvisitData = friendData:GetFriendVisit()
-
-    --玩家可能不在线,设置离线数据被该标志
-    friendData:SetOfflineChange()
-
-    friendvisitData:AgainInspireFriend(f_uid)
-
-    res["data"] = {
-        cmd_uid = uid,
-        resultCode = 0,
-        desc = "",
-        count = friendvisitData:GetInspireNumber(),
-        money = 0,
-    }
-    ZoneInfo.SendCmdToMe(res["do"], res["data"], zonetask)
-    return;
-end
-

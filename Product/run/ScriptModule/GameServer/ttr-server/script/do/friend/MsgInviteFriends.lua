@@ -42,7 +42,7 @@ Net.CmdGetAskFriendFiveReward_C = function(cmd, laccount)
 				cmd_uid = uid,
 				head = data.head,
             }
-            UserInfo.SendInfo(uid, req)
+            UserInfo.SendInfoByUid(uid, req)
 		end
 
 		friendData:SetAskFriendFiveReward()

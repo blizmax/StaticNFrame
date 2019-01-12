@@ -140,9 +140,35 @@ end
 Zone.CmdGetUserFriendDataCmd_C = function(cmd,zonetask)
     local res = { }
     res["do"] = "Cmd.GetUserFriendDataCmd_S"
+    res["data"] = { 
+        cmd_uid = cmd.data.cmd_uid,
+        friend_data = {},
+    }
 
     local uid = cmd.data.cmd_uid
     local friendData = FriendManager:GetOrNewFriendInfo(uid);
+    
+    --获取QQ好友数据
+    for i, data in ipairs(cmd.data.tmp) do
+        local f_friendData = FriendManager:GetFriendInfo(data.uid)
+        if f_friendData ~= nil then
+            local data = {
+                uid = data.uid,
+                name = f_friendData:GetName(), 
+                head =  f_friendData:GetHead(), 
+                star =  f_friendData:GetStar(), 
+                sex =  f_friendData:GetSex(), 
+                signature =  f_friendData:GetSignature(), 
+                area =  f_friendData:GetArea(), 
+                horoscope =  f_friendData:GetHoroscope(),
+                friend_ship = data.friend_ship,
+                money = f_friendData:GetMoney(),
+                product = f_friendData:GetProduct(),
+                click = f_friendData:GetClick()
+            }
+            table.insert(res["data"].friend_data, data)
+        end
+    end
 
     ZoneInfo.SendCmdToMe(res["do"], res["data"], zonetask)
 end
@@ -157,6 +183,26 @@ Zone.CmdGetUserAskedAddFriends_C = function(cmd,zonetask)
     local travelData = friendData:GetUserTravel()
 
     res["data"] = { cmd_uid = uid,}
+    res["data"].friend_data = {}
+
+    for i, data in ipairs(cmd.data.tmp) do
+        local ask_uid = data.uid
+        local ask_friend_data = FriendManager:GetFriendInfo(ask_uid)
+        if ask_friend_data ~= nil then
+            local req = { 
+                uid = ask_uid,
+                name = ask_friend_data:GetName(), 
+                head =  ask_friend_data:GetHead(), 
+                star =  ask_friend_data:GetStar(), 
+                sex =  ask_friend_data:GetSex(), 
+                signature =  ask_friend_data:GetSignature(), 
+                area =  ask_friend_data:GetArea(), 
+                horoscope =  ask_friend_data:GetHoroscope(),
+                friend_ship = data.friend_ship,
+            }
+            table.insert(res["data"].friend_data, req)
+        end
+    end
 
     ZoneInfo.SendCmdToMe(res["do"], res["data"], zonetask)
 end
@@ -208,7 +254,7 @@ Zone.CmdSendReqAddFriendCmd_C = function(cmd,zonetask)
     end
 
 	--给被邀请的人，一条消息记录
-    askFriendData:Give(zonetask, friendData, MsgTypeEnum.FriendApply)
+    askFriendData:Give(friendData, MsgTypeEnum.FriendApply)
 
     res["data"] = {
         cmd_uid = uid,
@@ -234,7 +280,7 @@ Zone.CmdSendReqAddFriendCmd_C = function(cmd,zonetask)
             signature =  friendData:GetSignature(),
             area =  friendData:GetArea(),
             horoscope =  friendData:GetHoroscope(),
-            friend_ship = travelData:GetRelationShip(ask_uid),
+            friend_ship = 0,
         }
 
         ZoneInfo.SendCmdToMeById(req["do"], req["data"], askFriendData.gameid, askFriendData.zoneid)
@@ -249,8 +295,8 @@ Zone.CmdSendReqAgreeAddFriendCmd_C = function(cmd,zonetask)
     res["do"] = "Cmd.SendReqAgreeAddFriendCmd_S"
 
     local uid = cmd.data.cmd_uid
-    local agree = cmd["data"].agree
-    local ask_uid = cmd["data"].uid
+    local agree = cmd.data.agree
+    local ask_uid = cmd.data.uid
 
     local friendData = FriendManager:GetOrNewFriendInfo(uid);
     local ask_friendData = FriendManager:GetFriendInfo(ask_uid);
@@ -360,7 +406,36 @@ Zone.CmdSendReqRecommendFriendCmd_C = function(cmd,zonetask)
     res["data"].friends = {}
 
     local friendData = FriendManager:GetOrNewFriendInfo(uid)
-    local travelData = friendData:GetUserTravel()
+
+    local tmp = {}
+    local maxNum = FriendManager:GetFriendCount()
+    maxNum = (maxNum < 100) and maxNum or 100
+
+    for i = 0, maxNum, 1 do
+        local friendInfo = FriendManager:GetRandomFriendInfo()
+        --推荐好友，满足条件 1不是自己 2不是好友 3今天没有被推荐过 4今天没有被邀请过
+        if friendInfo ~= nil and friendInfo:GetUid() ~= uid and tmp[friendInfo:GetUid()] == nil  and
+        friendInfo:GetName() ~= "" and friendInfo:GetHead() ~= "" then
+            local info = {
+                uid = friendInfo:GetUid(),
+                name = friendInfo:GetName(), 
+                head =  friendInfo:GetHead(), 
+                star =  friendInfo:GetStar(), 
+                sex =  friendInfo:GetSex(), 
+                signature =  friendInfo:GetSignature(), 
+                area =  friendInfo:GetArea(), 
+                horoscope =  friendInfo:GetHoroscope(),
+                friend_ship = 0,
+            }
+            table.insert(res["data"].friends, info)
+            tmp[friendInfo:GetUid()] = true
+        end
+
+        --如果人数多于20直接发送，如果没有从以前推荐过的列表中插入
+        if #res["data"].friends >= 20 then
+            return res
+        end
+    end
 
     ZoneInfo.SendCmdToMe(res["do"], res["data"], zonetask)
 end

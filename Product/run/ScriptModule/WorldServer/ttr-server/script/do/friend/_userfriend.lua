@@ -3,6 +3,17 @@
 CreateClass("UserFriend")   --单个玩家所有好友数据结构体
 CreateClass("UserFriendSimpleData")
 
+MsgTypeEnum = 
+{
+	FriendApply = 1,							--好友请求
+	FriendRobbed = 2,							--好友被抢
+	TripGroupFriendFinishEmploy = 3,			--你的旅行团的好友完成雇佣
+	FriendRobbedWithFailure = 4,				--好友被抢，但失败了
+	TripGroupMeFinishEmploy = 5,				--好友的旅行团的你完成雇佣
+	FriendVisitInspireFriend = 6,				--好友捣蛋
+	FriendVisitMischiefFriend = 7,				--好友鼓舞
+}
+
 function UserFriendSimpleData:Init()
     self.name = ""  --玩家名字 nickname
     self.signature = "" --玩家签名
@@ -14,25 +25,6 @@ function UserFriendSimpleData:Init()
     self.money = 0 --玩家财富，金币，排行榜需要
     self.product = 0 --玩家产出，排行榜需要
     self.click = 0 --玩家点击， 排行榜需要
-    self.rewardState = 1 --邀请有礼的奖励状态 1-未达成, 2-可领取, 3-已领取
-    self.askFriendFiveReward = 0 --0没有领取奖励，1两区奖励
-end
-
-function UserFriendSimpleData:GetDBTable()
-    local tmp = { }
-    tmp.name = self.name
-    tmp.signature = self.signature
-    tmp.area = self.area
-    tmp.horoscope = self.horoscope
-    tmp.head = self.head
-    tmp.star = self.star
-    tmp.sex = self.sex
-    tmp.money = self.money
-    tmp.protduct = self.product
-    tmp.click = self.click
-    tmp.rewardState = self.rewardState
-    tmp.askFriendFiveReward = self.askFriendFiveReward
-    return tmp
 end
 
 function UserFriendSimpleData:SetDBTable(tmp)
@@ -47,8 +39,6 @@ function UserFriendSimpleData:SetDBTable(tmp)
     self.money = tmp.money or 0
     self.product = tmp.product or 0
     self.click = tmp.click or 0
-    self.rewardState = tmp.rewardState or 1
-    self.askFriendFiveReward = tmp.askFriendFiveReward or 0
 end
 
 
@@ -75,16 +65,37 @@ function UserFriend:Init(uid)
     self.userTravel = UserTravel:New()
     self.userTravel:Init(uid)
 
-    --用于零点清理玩家数据
-    self.lastZeroTime = 0
+    -- 好友互访数据
+    self.friendVisit = FriendVisit:New()
+    self.friendVisit:Init(uid)
 end
 
 function UserFriend:SetBaseInfo(uid, head, name, app_id, sex)
+    if self.simpleData.name == "" or self.simpleData.head == "" then
+        if sex ~= nil then
+            if sex == 1 then
+                self.userTravel:SetTravelHead(1)
+            else
+                self.userTravel:SetTravelHead(2)
+            end
+        end
+    end
     self.uid = uid or ""
     self.app_id = app_id or ""
     self.simpleData.name = name or ""
     self.simpleData.head = head or ""
     self.simpleData.sex = sex or 1
+end
+
+--将从db里取出来的一个table数据放到userfriend里
+function UserFriend:SetDBTable(data)
+    self.uid = data.uid or 0
+    self.app_id = data.app_id or ""
+    self.online = data.online or false
+    self.simpleData:SetDBTable(data.simpleData)
+
+    self.userTravel:SetDBTable(data.userTravel)
+    self.friendVisit:SetDBTable(data.friendVisit)
 end
 
 function UserFriend:GetUid()
@@ -101,6 +112,10 @@ end
 
 function UserFriend:SetName(name)
     self.simpleData.name = name
+end
+
+function UserFriend:GetName()
+    return self.simpleData.name
 end
 
 function UserFriend:GetAppId()
@@ -179,6 +194,11 @@ end
 
 function UserFriend:GetUserTravel()
     return self.userTravel
+end
+
+--获得好友互访数据
+function UserFriend:GetFriendVisit()
+    return self.friendVisit
 end
 
 --head name 数据暂时不对

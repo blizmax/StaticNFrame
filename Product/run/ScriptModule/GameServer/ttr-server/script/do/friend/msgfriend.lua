@@ -174,6 +174,30 @@ Net.CmdGetUserFriendDataCmd_C = function(cmd, laccount)
     local travelData = friendData:GetUserTravel()
     local friendvisitData = friendData:GetFriendVisit()
 
+    local tmp = {}
+
+    --获取QQ好友数据
+    friendData:UserFriendsForEach(
+        function(k,v)
+            local f_friendData = FriendManager:GetFriendInfo(k)
+            if f_friendData == nil then
+                local data = {
+                    uid = k,
+                    friend_ship = travelData:GetRelationShip(k),
+                }
+                table.insert(tmp, data)
+            end
+        end
+    )
+
+    if #tmp > 0 then
+        cmd.data = {}
+        cmd.data.cmd_uid = uid
+        cmd.data.tmp = tmp
+        unilobby.SendCmdToLobby(cmd["do"], cmd["data"])
+        return
+    end
+
     res["data"] = {
         cmd_uid = uid,
         self_data = {
@@ -221,23 +245,65 @@ Net.CmdGetUserFriendDataCmd_C = function(cmd, laccount)
     )
 
     return res
---[[
-    if cmd.data == nil then
-        cmd.data = {}
-    end
-    cmd.data.cmd_uid = uid
-    unilobby.SendCmdToLobby(cmd["do"], cmd["data"])
---]]
 end
 
 Lby.CmdGetUserFriendDataCmd_S = function(cmd, lobbyClientTask)
     local uid = cmd.data.cmd_uid
+    local res = cmd
     
     local userInfo = UserInfo.GetUserInfoById(uid)
 	if userInfo == nil then
 		unilight.error("userinfo is not exist,uid:"..uid)
 		return
     end
+
+    local friendData = FriendManager:GetOrNewFriendInfo(uid)
+    local travelData = friendData:GetUserTravel()
+    local friendvisitData = friendData:GetFriendVisit()
+
+    res["data"].self_data = {
+            uid = uid,
+            name = friendData:GetName(),
+            head = friendData:GetHead(),
+            sex = friendData:GetSex(),
+            star = friendData:GetStar(),
+            signature =  friendData:GetSignature(), 
+            area =  friendData:GetArea(), 
+            horoscope =  friendData:GetHoroscope(),
+            friend_ship = 0,
+            money = friendData:GetMoney(),
+            product = friendData:GetProduct(),
+            click = friendData:GetClick(),
+    }
+
+    res["data"].today_mischief_number = friendvisitData:GetMischiefNumber()
+    res["data"].today_inspire_number = friendvisitData:GetInspireNumber()
+
+    res["data"].friend_data = res["data"].friend_data or {}
+
+    --获取QQ好友数据
+    friendData:UserFriendsForEach(
+        function(k,v)
+            local f_friendData = FriendManager:GetFriendInfo(k)
+            if f_friendData ~= nil then
+                local data = {
+                    uid = k,
+                    name = f_friendData:GetName(), 
+                    head =  f_friendData:GetHead(), 
+                    star =  f_friendData:GetStar(), 
+                    sex =  f_friendData:GetSex(), 
+                    signature =  f_friendData:GetSignature(), 
+                    area =  f_friendData:GetArea(), 
+                    horoscope =  f_friendData:GetHoroscope(),
+                    friend_ship = travelData:GetRelationShip(k),
+                    money = f_friendData:GetMoney(),
+                    product = f_friendData:GetProduct(),
+                    click = f_friendData:GetClick()
+                }
+                table.insert(res["data"].friend_data, data)
+            end
+        end
+    )
 
     unilight.response(userInfo.laccount, cmd)
 end
@@ -251,6 +317,30 @@ Net.CmdGetUserAskedAddFriends_C = function(cmd, laccount)
 
     local friendData = FriendManager:GetOrNewFriendInfo(uid);
     local travelData = friendData:GetUserTravel()
+
+    local tmp = {}
+
+    friendData:AskAddFriendsForEach(
+        function(k,v)
+            local ask_uid = k
+            local ask_friend_data = FriendManager:GetFriendInfo(ask_uid)
+            if ask_friend_data == nil then
+                local data = { 
+                    uid = ask_uid,
+                    friend_ship = travelData:GetRelationShip(ask_uid),
+                }
+                table.insert(tmp, data)
+            end
+        end
+    )
+
+    if #tmp > 0 then
+        cmd.data = {}
+        cmd.data.cmd_uid = uid
+        cmd.data.tmp = tmp
+        unilobby.SendCmdToLobby(cmd["do"], cmd["data"])
+        return
+    end
 
     res["data"].friend_data = { }
     --玩家不在线时， 被邀请为好友处理
@@ -276,22 +366,43 @@ Net.CmdGetUserAskedAddFriends_C = function(cmd, laccount)
     )
 
     return res
---[[   if cmd.data == nil then
-        cmd.data = {}
-    end
-    cmd.data.cmd_uid = uid
-    unilobby.SendCmdToLobby(cmd["do"], cmd["data"])
---]]
 end
 
 Lby.CmdGetUserAskedAddFriends_S  = function(cmd, lobbyClientTask)
     local uid = cmd.data.cmd_uid
     
+    local friendData = FriendManager:GetOrNewFriendInfo(uid);
+    local travelData = friendData:GetUserTravel()
     local userInfo = UserInfo.GetUserInfoById(uid)
 	if userInfo == nil then
 		unilight.error("userinfo is not exist,uid:"..uid)
 		return
     end
+
+    local res = cmd
+    res["data"].friend_data = res["data"].friend_data or {}
+
+    --玩家不在线时， 被邀请为好友处理
+    friendData:AskAddFriendsForEach(
+        function(k,v)
+            local ask_uid = k
+            local ask_friend_data = FriendManager:GetFriendInfo(ask_uid)
+            if ask_friend_data ~= nil then
+                local req = { 
+                    uid = ask_uid,
+                    name = ask_friend_data:GetName(), 
+                    head =  ask_friend_data:GetHead(), 
+                    star =  ask_friend_data:GetStar(), 
+                    sex =  ask_friend_data:GetSex(), 
+                    signature =  ask_friend_data:GetSignature(), 
+                    area =  ask_friend_data:GetArea(), 
+                    horoscope =  ask_friend_data:GetHoroscope(),
+                    friend_ship = travelData:GetRelationShip(ask_uid),
+                }
+                table.insert(res["data"].friend_data, req)
+            end
+        end
+    )
 
     unilight.response(userInfo.laccount, cmd)
 end
@@ -423,7 +534,7 @@ Net.CmdSendReqAddFriendCmd_C = function(cmd, laccount)
             friend_ship = travelData:GetRelationShip(ask_uid),
         }
 
-        UserInfo.SendInfo(ask_uid, req)
+        UserInfo.SendInfoByUid(ask_uid, req)
 
        return res
     end
@@ -577,7 +688,7 @@ Net.CmdSendReqAgreeAddFriendCmd_C = function(cmd, laccount)
                 desc = "添加好友成功"
             }
 
-            UserInfo.SendInfo(ask_uid, req)
+            UserInfo.SendInfoByUid(ask_uid, req)
 
             return res
         end
@@ -705,6 +816,15 @@ Net.CmdSendReqRecommendFriendCmd_C = function(cmd, laccount)
     res["do"] = "Cmd.SendReqRecommendFriendCmd_S"
     res["data"] = {cmd_uid = uid,}
     res["data"].friends = {}
+
+    if FriendManager:GetFriendCount() <= 50 then
+        if cmd.data == nil then
+            cmd.data = {}
+        end
+        cmd.data.cmd_uid = uid
+        unilobby.SendCmdToLobby(cmd["do"], cmd["data"])
+        return
+    end
 
     local friendData = FriendManager:GetOrNewFriendInfo(uid)
     local travelData = friendData:GetUserTravel()

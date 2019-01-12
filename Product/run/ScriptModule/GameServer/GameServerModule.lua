@@ -13,9 +13,6 @@ end
 UserInfo = UserInfo or {}
 
 function GameServerModule.Init()
-    --vscode luaide调试工具需要
-    breakSocketHandle,debugXpCall = require("LuaDebug")("localhost",7003)
-
     unilight.response = function(w, req)
         req.st = os.time()
         local s = table2json(req)

@@ -119,7 +119,6 @@ function UserTravel:GetDBTable()
         end
     )
 
-
     data.employUid = self.employUid
     data.employName = self.employName
     data.lastEmployUid = self.lastEmployUid

@@ -1,9 +1,6 @@
 WorldServerModule = {}
 
 function WorldServerModule.Init()
-    --vscode luaide调试工具需要
-    breakSocketHandle,debugXpCall = require("LuaDebug")("localhost",7004)
-    
     unilight.createdb("friendinfo","uid")					-- 玩家好友信息
     unilight.createdb("userQQAppId", "uid")					-- 玩家QQAPPID信息
     unilight.createdb("ranklist", "uid")					-- 排行榜数据库信息

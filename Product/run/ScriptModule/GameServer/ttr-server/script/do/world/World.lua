@@ -205,6 +205,13 @@ function World:openState(id) -- state ID
 		friendvisitData:SetCurMapId(mapid)
 	end
 
+	local data = {}
+	data.cmd_uid = self.owner.uid
+	data.userInfo = {
+		mapid = mapid
+	}
+	unilobby.SendCmdToLobby("Cmd.UserOpenMap_C", data)
+
 	return ERROR_CODE.SUCCESS
 end
 

@@ -41,6 +41,27 @@ function FriendManager:Init()
    self.userQQInfo:Init()
 
    self:LoadQQInfoFromDB()
+   self:LoadAllUserFriendData()
+end
+
+function FriendManager:LoadAllUserFriendData()
+    local tmp = unilight.getAll("friendinfo")
+    if type(tmp) == "table" then
+        unilight.info("load friend data num:"..#tmp)
+    end
+    for i, info in ipairs(tmp) do
+        friendData = UserFriend:New()
+        friendData:Init(info.uid)
+        friendData:SetDBTable(info)
+        friendData:SetOffline()
+        self.userFriend:Insert(info.uid, friendData)
+
+        RankListMgr:UpdateRankNode(RankListMgr.rank_type_star, friendData:GetUid(), friendData:GetStar())
+        RankListMgr:UpdateRankNode(RankListMgr.rank_type_money, friendData:GetUid(), friendData:GetMoney())
+        RankListMgr:UpdateRankNode(RankListMgr.rank_type_product, friendData:GetUid(), friendData:GetProduct())
+        RankListMgr:UpdateRankNode(RankListMgr.rank_type_click, friendData:GetUid(), friendData:GetClick())
+        table.insert(self.friendUidList, info.uid)
+    end
 end
 
 --存取QQ唯一标识数据
@@ -187,6 +208,60 @@ function FriendManager.SendCmdByFriend(doinfo, data, friendData, zonetask)
     if zonetask ~= nil then
         ZoneInfo.SendCmdToMe(doinfo, data, zonetask)
     end
+end
+
+--获得一个玩家的抓捕互访数据
+function FriendManager.GetCaptureFriendVisitFriend(f_friendData)
+    local f_travelData = f_friendData:GetUserTravel()
+    local f_friendvisitData = f_friendData:GetFriendVisit()
+
+    local visit_friend = {
+        uid = f_friendData:GetUid(),
+        cur_mapid = f_friendvisitData:GetCurMapId(),
+        builds = {},
+        travel_member = {},
+    }
+
+    local f_friendvisitData_builds = f_friendvisitData:GetBuilds()
+    for id, build in pairs(f_friendvisitData_builds) do
+        local tmp = {
+            id = build.id,
+            lv = build.lv,
+            buildlv = build.buildlv,
+        }
+        table.insert(visit_friend.builds, tmp)
+    end
+
+    local self_travel = {
+        uid = f_friendData:GetUid(),
+        head = f_travelData:GetTravelHead(),
+        name = f_friendData:GetName(),
+        star = f_friendData:GetStar(),
+        sex = f_friendData:GetSex(),
+        travel_level = f_travelData:GetLevel(),
+    }
+
+    table.insert(visit_friend.travel_member, self_travel)
+
+    f_travelData:MembersForEach(
+        function(m_uid, m_t)
+            local m_friendData = FriendManager:GetFriendInfo(m_uid)
+            if m_friendData ~= nil then
+                local m_travelData = m_friendData:GetUserTravel()
+                local tmp = {
+                    uid = m_friendData:GetUid(),
+                    head = m_travelData:GetTravelHead(),
+                    name = m_friendData:GetName(),
+                    star = m_friendData:GetStar(),
+                    sex = m_friendData:GetSex(),
+                    travel_level = m_travelData:GetLevel(),
+                }
+                table.insert(visit_friend.travel_member, tmp)
+            end
+        end
+    )
+
+    return visit_friend
 end
 
 function FriendManager.NotifyDailyTaskAddProgress(zonetask, friendinfo, event, times)
