@@ -492,7 +492,7 @@ Lby.CmdNotifyTravelMemberBeCapture_C = function(cmd, lobbyClientTask)
         if last_travelData:GetShieldCount() > 0 then
             last_travelData:SubShieldCount()
 
-            last_friendData:Give(friendData, MsgTypeEnum.FriendRobbedWithFailure)
+            last_friendData:Give(last_friendData, MsgTypeEnum.FriendRobbedWithFailure)
 
             do
                 local last_userInfo = UserInfo.GetOfflineUserInfo(last_uid)
