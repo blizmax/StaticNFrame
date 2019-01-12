@@ -16,11 +16,96 @@ Net.CmdGetFriendVisitInfo_C = function(cmd, laccount)
         return res
     end
 
-    if cmd.data == nil then
-        cmd.data = {}
+    local userInfo = UserInfo.GetUserInfoById(uid)
+	if userInfo == nil then
+		unilight.error("userinfo is not exist,uid:"..uid)
+		return
     end
-    cmd.data.cmd_uid = uid
-    unilobby.SendCmdToLobby(cmd["do"], cmd["data"])
+
+    local f_uid = cmd["data"].uid
+    local friendData = FriendManager:GetOrNewFriendInfo(uid)
+    local friendvisitData = friendData:GetFriendVisit()
+
+    local f_friendData = FriendManager:GetFriendInfo(f_uid)
+    if f_friendData == nil then
+        if cmd.data == nil then
+            cmd.data = {}
+        end
+        cmd.data.cmd_uid = uid
+        unilobby.SendCmdToLobby(cmd["do"], cmd["data"])
+        return res
+    end
+
+    local f_travelData = f_friendData:GetUserTravel()
+    local f_friendvisitData = f_friendData:GetFriendVisit()
+
+    local visit_friend = {
+        uid = f_uid,
+        head = f_friendData:GetHead(),
+        name = f_friendData:GetName(),
+        star = f_friendData:GetStar(),
+        sex = f_friendData:GetSex(),
+        money = f_friendData:GetMoney(),
+        product = f_friendData:GetProduct(),
+        travel_level = f_travelData:GetLevel(),
+        cur_mapid = f_friendvisitData:GetCurMapId(),
+        today_encouraged_number = f_friendvisitData:GetEncouragedNumber(),
+        today_beteased_number = f_friendvisitData:GetBeteasedNumber(),
+        is_today_mischief = friendvisitData:IsTodayMischief(f_uid),
+        is_today_inspire = friendvisitData:IsTodayInspire(f_uid),
+        builds = {},
+        travel_member = {},
+    }
+
+    local f_friendvisitData_builds = f_friendvisitData:GetBuilds()
+    for id, build in pairs(f_friendvisitData_builds) do
+        local tmp = {
+            id = build.id,
+            lv = build.lv,
+            buildlv = build.buildlv,
+        }
+        table.insert(visit_friend.builds, tmp)
+    end
+
+    local self_travel = {
+        uid = f_friendData:GetUid(),
+        head = f_travelData:GetTravelHead(),
+        name = f_friendData:GetName(),
+        star = f_friendData:GetStar(),
+        sex = f_friendData:GetSex(),
+        travel_level = f_travelData:GetLevel(),
+    }
+
+    table.insert(visit_friend.travel_member, self_travel)
+
+    f_travelData:MembersForEach(
+        function(m_uid, m_t)
+            local m_friendData = FriendManager:GetFriendInfo(m_uid)
+            if m_friendData ~= nil then
+                local m_travelData = m_friendData:GetUserTravel()
+                local tmp = {
+                    uid = m_friendData:GetUid(),
+                    head = m_travelData:GetTravelHead(),
+                    name = m_friendData:GetName(),
+                    star = m_friendData:GetStar(),
+                    sex = m_friendData:GetSex(),
+                    travel_level = m_travelData:GetLevel(),
+                }
+                table.insert(visit_friend.travel_member, tmp)
+            end
+        end
+    )
+
+    userInfo.mainTask:addProgress(TaskConditionEnum.VisitFriendEvent, 1)
+
+    res["data"] = {
+        cmd_uid = uid,
+        resultCode = 0,
+        desc = "",
+        friend = visit_friend,
+    }
+
+    return res
 end
 
 Lby.CmdGetFriendVisitInfo_S = function(cmd, lobbyClientTask)
