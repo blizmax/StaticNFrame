@@ -732,6 +732,7 @@ public:
 	NFCAsynMongoModule(NFIPluginManager* p);
 	virtual ~NFCAsynMongoModule();
 
+	virtual bool Awake();
 	virtual bool Init();
 	virtual bool AfterInit();
 	virtual bool Execute();

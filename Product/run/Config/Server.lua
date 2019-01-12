@@ -1,7 +1,10 @@
 MasterIP = "45.32.39.90"
 --MasterIP = "127.0.0.1"
-MongoIp = "14.17.104.12"
-MongoPort = 28900
+--MongoIp = "14.17.104.12"
+--MongoPort = 28900
+
+MongoIp = "45.32.39.90"
+MongoPort = 27017
 
 MasterPort = 5501
 
