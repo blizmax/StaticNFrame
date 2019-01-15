@@ -109,7 +109,7 @@ Net.CmdReqGetRewardDailyTask_C = function(cmd, laccount)
 
     local taskId = cmd["data"].task_id;
 
-    unilight.debug("领取任务奖励..." .. taskId)
+    --unilight.debug("领取任务奖励..." .. taskId)
 
     local taskConf = taskTable[taskId]
     if taskConf == nil then

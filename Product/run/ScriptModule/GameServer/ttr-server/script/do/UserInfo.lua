@@ -762,7 +762,7 @@ function UserInfo.SubUserMoney(userinfo, moneytype, moneynum)
 			num = moneynum
 		end
 	end
-	unilight.debug("end, SubUserMoney-002, uid="..userinfo.uid..", moneytype="..moneytype..", moneyNum="..moneynum ..",num:" .. num)
+	--unilight.debug("end, SubUserMoney-002, uid="..userinfo.uid..", moneytype="..moneytype..", moneyNum="..moneynum ..",num:" .. num)
 	if num then
 		--同步下	
 		UserInfo.SendUserMoney(userinfo)	
