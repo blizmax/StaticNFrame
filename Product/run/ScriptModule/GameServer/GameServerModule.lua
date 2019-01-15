@@ -133,7 +133,11 @@ function GameServerModule.WorldServerRecvHandleJson(unLinkId, valueId, nMsgId, s
                     local lobby = unilobby.lobbytaskMap[unLinkId]
                     if lobby ~= nil then
                         unilight.BeginProfiler("Lby."..strcmd)
-                        Lby[strcmd](table_msg, lobby)
+                        if pcall(Lby[strcmd](table_msg, lobby)) then
+
+                        else
+
+                        end
                         local cost = unilight.EndProfiler()
                         if cost >= 10000 then
                             unilight.error("Lby."..strcmd.." cost "..tostring(cost).." us, something wrong.....")
@@ -166,7 +170,11 @@ function GameServerModule.NetServerRecvHandleJson(unLinkId, valueId, nMsgId, str
                     local laccount = go.roomusermgr.GetRoomUserById(valueId)
                     if laccount ~= nil then
                         unilight.BeginProfiler("Net."..strcmd)
-                        Net[strcmd](table_msg, laccount)
+                        if pcall(Net[strcmd](table_msg, laccount)) then
+
+                        else
+
+                        end
                         local cost = unilight.EndProfiler()
                         if cost >= 10000 then
                             unilight.error("Net."..strcmd.." cost "..tostring(cost).." us, something wrong.....")

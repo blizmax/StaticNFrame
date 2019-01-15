@@ -2,8 +2,8 @@ RebotServerModule = {}
 RebotServerModule.RebotIndex = os.time()
 
 --RebotServerModule.loginUrl = "http://loginxcxtest.zqgame.com/httplogin"
---RebotServerModule.loginUrl = "http://ttrserver.staticnframe.com:7000/httplogin"
-RebotServerModule.loginUrl = "http://149.28.158.210:7000/httplogin"
+RebotServerModule.loginUrl = "http://ttrserver.staticnframe.com:7000/httplogin"
+--RebotServerModule.loginUrl = "http://149.28.158.210:7000/httplogin"
 RebotServerModule.gameid = 3010
 RebotServerModule.zoneid = 1
 RebotServerModule.platid = 0
@@ -40,7 +40,7 @@ function RebotServerModule.addRebot(timer)
         num = num + 1
     end
 
-    if num >= 2000 then
+    if num >= 5 then
         unilight.stoptimer(timer)
     end
 end
@@ -96,7 +96,12 @@ function RebotServerModule.HandleRecvMsg(table_msg, unLinkId)
                 if type(Net[strcmd]) == "function" then
                     local rebot = RebotServerModule.rebotUnlinkIdMap[unLinkId]
                     if rebot ~= nil then
-                        Net[strcmd](table_msg, rebot)
+                        
+                        if pcall(Net[strcmd](table_msg, rebot)) then
+
+                        else
+
+                        end
                         --unilight.debug("| handle msg |" .. table2json(table_msg))
                     end
                 end
