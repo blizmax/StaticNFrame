@@ -129,10 +129,7 @@ function GameServerModule.WorldServerRecvHandleJson(unLinkId, valueId, nMsgId, s
                     if lobby ~= nil then
                         unilight.BeginProfiler("Lby."..strcmd)
                         Lby[strcmd](table_msg, lobby)
-                        local cost = unilight.EndProfiler()
-                        if cost >= 10000 then
-                            unilight.error("Lby."..strcmd.." cost "..tostring(cost).." us, something wrong.....")
-                        end
+                        unilight.EndProfiler()
                     end
                 end
             end
@@ -162,10 +159,7 @@ function GameServerModule.NetServerRecvHandleJson(unLinkId, valueId, nMsgId, str
                     if laccount ~= nil then
                         unilight.BeginProfiler("Net."..strcmd)
                         Net[strcmd](table_msg, laccount)
-                        local cost = unilight.EndProfiler()
-                        if cost >= 10000 then
-                            unilight.error("Net."..strcmd.." cost "..tostring(cost).." us, something wrong.....")
-                        end
+                        unilight.EndProfiler()
                     end
                 end
             end
