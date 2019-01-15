@@ -40,7 +40,7 @@ function RebotServerModule.addRebot(timer)
         num = num + 1
     end
 
-    if num >= 5 then
+    if num >= 500 then
         unilight.stoptimer(timer)
     end
 end
