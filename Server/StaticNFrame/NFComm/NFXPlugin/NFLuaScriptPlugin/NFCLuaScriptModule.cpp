@@ -60,6 +60,18 @@ bool NFCLuaScriptModule::Shut()
 
 bool NFCLuaScriptModule::Finalize()
 {
+	for (auto iter = m_luaTimerMap.begin(); iter != m_luaTimerMap.end(); iter++)
+	{
+		NF_SAFE_DELETE(iter->second);
+	}
+
+	for (auto iter = m_luaTimerList.begin(); iter != m_luaTimerList.end(); iter++)
+	{
+		NF_SAFE_DELETE(*iter);
+	}
+	
+	m_luaTimerList.clear();
+	m_luaTimerMap.clear();
     return true;
 }
 
