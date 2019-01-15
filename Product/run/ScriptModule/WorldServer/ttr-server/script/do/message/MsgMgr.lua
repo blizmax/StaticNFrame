@@ -151,5 +151,3 @@ function MsgMgr:give(friendinfo, msgType, args)
 
 	return self:add(l_who, msgType, args)
 end
-
-

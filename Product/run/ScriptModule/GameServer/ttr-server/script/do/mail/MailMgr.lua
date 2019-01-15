@@ -111,7 +111,7 @@ function MailMgr:add(mailType, subject, content, attachments)
 	table.insert(self.mails, mail)
 
 	while (#self.mails >= MAIL_MAX) do
-		--unilight.debug("mails is more than " .. MAIL_MAX .. ", remove the first")
+		unilight.debug("mails is more than " .. MAIL_MAX .. ", remove the first")
 		table.remove(self.mails, 1)
 	end
 

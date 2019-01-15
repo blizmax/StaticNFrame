@@ -97,11 +97,23 @@ function UserItems:getUserHadBuyGoods()
 end
 
 function UserItems.NotifyAddTravelHead(uid, itemid, itemnum)
-	UserTravel.AddTravelHeadBackupCallBack(uid,itemid,itemnum)
+	local cmd = {}
+	cmd["do"] = "Cmd.NotifyAddTravelHead"
+    cmd.data = {}
+	cmd.data.cmd_uid = uid
+	cmd.data.itemid = itemid
+	cmd.data.itemnum = itemnum
+    unilobby.SendCmdToLobby(cmd["do"], cmd["data"])
 end
 
 function UserItems.NotifyAddShieldCount(uid, itemid, itemnum)
-	UserTravel.BuyShieldCountCallBack(uid,itemid,itemnum)
+	local cmd = {}
+	cmd["do"] = "Cmd.NotifyAddShieldCount"
+    cmd.data = {}
+	cmd.data.cmd_uid = uid
+	cmd.data.itemid = itemid
+	cmd.data.itemnum = itemnum
+    unilobby.SendCmdToLobby(cmd["do"], cmd["data"])
 end
 
 function UserItems:useItem(userinfo,itemid,itemnum)
@@ -114,7 +126,7 @@ function UserItems:useItem(userinfo,itemid,itemnum)
 	end
 	local itemdata = ItemData[itemid]
 	if not itemdata then
-		--unilight.debug("2222" .. " itemid:" .. itemid .. " itemnum:" .. itemnum)
+		unilight.debug("2222" .. " itemid:" .. itemid .. " itemnum:" .. itemnum)
 		return false
 	end
 	local itemtype = tonumber(itemdata.itemtype)
@@ -129,7 +141,7 @@ function UserItems:useItem(userinfo,itemid,itemnum)
 	end
 	
 	userinfo.UserProps:setUserProp(userinfo,itemtype, itemnum, tonumber(itemdata.paraone), tonumber(itemdata.paratwo))
-	--unilight.debug("2221" .. " itemid:" .. itemid .. " itemnum:" .. itemnum .. " itemtype" .. itemtype)
+	unilight.debug("2221" .. " itemid:" .. itemid .. " itemnum:" .. itemnum .. " itemtype" .. itemtype)
 	--处理打开获得道具
 	local items = itemdata.openitems
 	local args = string.split(items, ';')
@@ -139,7 +151,7 @@ function UserItems:useItem(userinfo,itemid,itemnum)
 		local aitemnum = aargs[2]
 		UserItems:useItem(userinfo,tonumber(aitemid),tonumber(aitemnum))
 	end
-	--unilight.debug("userItem-009" .. " itemid:" .. itemid .. " itemnum:" .. itemnum)
+	unilight.debug("userItem-009" .. " itemid:" .. itemid .. " itemnum:" .. itemnum)
 end
 
 --玩家属性
@@ -377,7 +389,7 @@ end
 
 --用userinfo调
 function UserProps:dealZeroInitProps()
-	--unilight.debug("处理零点属性清理--------------------".. self.owner.uid)
+	unilight.debug("处理零点属性清理--------------------".. self.owner.uid)
 	--处理 周卡 月卡 永久卡
 	--local time = os.time()
 	--if self.props.pWeekCardEndTime ~= 0 and self.props.pWeekCardEndTime < time then
@@ -412,7 +424,7 @@ function UserProps:dealLoginInitProps(userinfo)
 	if userinfo == nil then
 		return
 	end
-	--("处理登录属性清理--------------------".. userinfo.uid)
+	unilight.debug("处理登录属性清理--------------------".. userinfo.uid)
 	local time = os.time()
 	if userinfo.lastlogintime == nil or userinfo.lastlogintime == 0 then
 		userinfo.lastlogintime = time
@@ -510,7 +522,7 @@ end
 function UserProps:initRandBoxPrize()
 	for k,v in pairs(TreasureBoxData) do
 		local aa = math.random(v.mintime, v.maxtime)	
-		--unilight.debug("initRandBoxPrize" .. " k:" .. k .. "   aa:" .. aa )
+		unilight.debug("initRandBoxPrize" .. " k:" .. k .. "   aa:" .. aa )
 		local value = { onlinetime = aa, status = 0}
 		self.ponline.bOnlinePrize[k] = value	
 	end
@@ -537,7 +549,7 @@ end
 
 function UserProps:getOnlineRandBoxPrize(ptimeid,ctype,ptype)
 
-	--unilight.debug("getOnlineRandBoxPrize, uid="..self.owner.uid..", ptimeid:" .. ptimeid .." ctype:"..ctype.." ptype:"..ptype..", len="..#self.ponline.bOnlinePrize)
+	unilight.debug("getOnlineRandBoxPrize, uid="..self.owner.uid..", ptimeid:" .. ptimeid .." ctype:"..ctype.." ptype:"..ptype..", len="..#self.ponline.bOnlinePrize)
 
 	for k, v in pairs(self.ponline.bOnlinePrize) do
 		--print("getOnlineRandBoxPrize, uid="..self.owner.uid..", key="..k..", value.status="..v.status..", value.onlinetime="..v.onlinetime)
@@ -618,7 +630,7 @@ function UserProps:sendUserLookMediaInfo(userinfo)
 end
 
 function UserProps:setUserProp(userinfo,itemtype,itemnum,paraone,paratwo)
-	--unilight.debug("3330" .. " itemtype:" .. itemtype .. " paraone:" .. paraone .. " paratwo" .. paratwo)
+	unilight.debug("3330" .. " itemtype:" .. itemtype .. " paraone:" .. paraone .. " paratwo" .. paratwo)
 	if userinfo == nil then
 		return 
 	end
@@ -738,33 +750,79 @@ function UserProps:setUserProp(userinfo,itemtype,itemnum,paraone,paratwo)
 end
 function UserProps:getUserProp(userinfo,prop)
 	--unilight.debug("00000获取props:" .. prop)
-	if userinfo == nil or type(prop) ~= "string" then
+	if userinfo == nil then
 		return 0
 	end
-
+	prop = tostring(prop)
 	local value = 0.0
 	local aprops = userinfo.UserProps
 	if aprops == nil then
 		return value
 	end
-
-	if prop == "pClickGoldAddRatio" then
-		value = aprops.props.pClickGoldAddRatio + aprops.bprops.pClickGoldAddRatioValue
-	elseif prop == "pWorldGoldAddRatio" then
+	--unilight.debug("11111获取props:" .. prop)
+	if prop == tostring("pProtectTimes") then
+		value = aprops.props.pProtectTimes			
+	elseif prop == tostring("pPower") then
+		value = aprops.props.pPower
+	elseif prop == tostring("pGoldPerSecond")  then
+		value = aprops.props.pGoldPerSecond   
+	elseif prop == tostring("pBuildingProduceRate") then
+		value = aprops.props.pBuildingProduceRate  
+	elseif prop == tostring("pClickGoldAdd") then
+		value = aprops.props.pClickGoldAdd 
+	elseif prop == tostring("pWorldGoldAdd") then
+		value = aprops.props.pWorldGoldAdd   
+	elseif prop == tostring("pAutoClickTimes_Time") then
+		value = aprops.props.pAutoClickTimes_Time 
+	elseif prop == tostring("pAutoClickTimes_Times") then
+		value = aprops.props.pAutoClickTimes_Times
+	elseif prop == tostring("pWeekCardEndTime") then
+		value = aprops.props.pWeekCardEndTime 		
+	elseif prop == tostring("pMonthCardEndTime") then
+		value = aprops.props.pMonthCardEndTime
+	elseif prop == tostring("pClothes") then
+		value = aprops.props.pClothes
+	elseif prop == tostring("pClickGoldAddRatio") then
+		if aprops.props.pClickGoldAddRatio == nil then
+			aprops.props.pClickGoldAddRatio = 0
+		end
+		if aprops.bprops.pClickGoldAddRatioValue == nil then
+			aprops.bprops.pClickGoldAddRatioValue = 0
+		end
+		value = aprops.props.pClickGoldAddRatio + aprops.bprops.pClickGoldAddRatioValue 
+	elseif prop == tostring("pWorldGoldAddRatio") then
+		if aprops.props.pWorldGoldAddRatio == nil then
+			aprops.props.pWorldGoldAddRatio = 0
+		end
+		if aprops.bprops.pWorldGoldAddRatioValue == nil then
+			aprops.bprops.pWorldGoldAddRatioValue = 0
+		end
 		value = aprops.props.pWorldGoldAddRatio + aprops.bprops.pWorldGoldAddRatioValue
-	elseif prop == "pOfflineGoldAddRatio" then
-		value = aprops.props.pOfflineGoldAddRatio + aprops.bprops.pOfflineGoldAddRatioValue
-	elseif prop == "dayLookMediaTimes" then
+	elseif prop == tostring("pGoldRainTimeAdd")  then
+		value = aprops.props.pGoldRainTimeAdd 
+	elseif prop == tostring("pOfflineGoldAddRatio") then
+		if aprops.props.pOfflineGoldAddRatio == nil then
+			aprops.props.pOfflineGoldAddRatio = 0
+		end
+		if aprops.bprops.pOfflineGoldAddRatioValue == nil then
+			aprops.bprops.pOfflineGoldAddRatioValue = 0
+		end
+		value = aprops.props.pOfflineGoldAddRatio + aprops.bprops.pOfflineGoldAddRatioValue 
+	elseif prop == tostring("pHasLifelongCard") then
+		value = aprops.props.pHasLifelongCard
+	elseif prop == tostring("dayLookMediaTimes") then
+		if aprops.bprops.dayLookMediaTimes == nil then
+			aprops.bprops.dayLookMediaTimes = 0
+		end
 		value = aprops.bprops.dayLookMediaTimes
-	else
-		value = aprops.props[prop]
+		--print("getUserProp-1, uid="..userinfo.uid..", dayLookMediaTimes="..value..", GlobalConst.Max_Adviertisement_Times="..GlobalConst.Max_Adviertisement_Times)
 	end
-	
-	if type(value) ~= "number" then
-		value = 0.0
+	if value == nil then
+		value = 0
 	end
-
-	return value
+	--unilight.debug("获取props:" .. prop)
+	--unilight.debug("获取value:" .. value)
+	return value 
 end
 
 --商城类

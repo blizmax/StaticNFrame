@@ -5,7 +5,7 @@ UserInfo.GlobalUserInfoMap = {} -- 玩家在线信息全局管理
 
 --玩家系统初始化函数
 function UserInfo.Init()
-
+	--unilight.addtimer("UserInfo.SaveOneUserInfoToDB",static_const.Static_Const_User_Save_Data_DB_Time)
 end
 
 --每天零点定时器
@@ -16,7 +16,7 @@ end
 
 --玩家每天零点清理数据
 function UserInfo.AllUserZeroClear()
-	--unilight.debug("每天零点开始清理玩家数据了.................")
+	unilight.debug("每天零点开始清理玩家数据了.................")
 	for uid, userInfo in pairs(UserInfo.GlobalUserInfoMap) do
 		UserInfo.UserZeroClear(userInfo)
 	end
@@ -36,14 +36,9 @@ end
 --定时保存玩家数据到DB
 function UserInfo.SaveOneUserInfoToDB(uid)
 	local userInfo = UserInfo.GetUserInfoById(uid)
-	local friendData = FriendManager:GetFriendInfo(uid)
 
 	if userInfo ~= nil then
 		UserInfo.SaveUserInfoToDb(userInfo)
-	end
-
-	if friendData ~= nil then
-		FriendManager:SaveDataToDb(friendData)
 	end
 end
 
@@ -51,8 +46,6 @@ function UserInfo.SaveAllUserInfoToDB()
 	for uid, userInfo in pairs(UserInfo.GlobalUserInfoMap) do
 		UserInfo.SaveUserInfoToDb(userInfo)
 	end
-
-	FriendManager.RefreshUserFriendToDB()
 end
 
 --获取玩家的在线信息
@@ -71,14 +64,14 @@ function UserInfo.UpdateQqData(uid, head, name, sex)
 end
 
 function UserInfo.CreateTempUserInfo(uid)
-	--unilight.debug("Create new user info")
+	unilight.debug("Create new user info")
 
 	local userInfo = {
 		uid			= uid,
 		nickName	= "测试员" .. uid,
-		money		= GlobalConst.Initial_Gold+100000000000,
+		money		= GlobalConst.Initial_Gold,
 		product		= 0,
-		diamond		= GlobalConst.Initial_Diamond+100000000000,
+		diamond		= GlobalConst.Initial_Diamond,
 		star		= 0,
 		settings	= {},
 		sex			= 1,
@@ -157,12 +150,11 @@ function UserInfo.CreateTempUserInfo(uid)
 	userInfo["offline_timer"] = nil
 	--玩家保存数据定时器
 	userInfo["savedb_timer"] = nil
-	userInfo["update_user_sec_timer"] = nil
 	return userInfo
 end
 
 function UserInfo.CreateUserByDb(uid, dbUser)
-	--unilight.debug("Get user info from DB")
+	unilight.debug("Get user info from DB")
 
 	local userInfo = {
 		uid = uid,
@@ -307,7 +299,7 @@ function UserInfo.CreateUserByDb(uid, dbUser)
 	userInfo["offline_timer"] = nil
 	--玩家保存数据定时器
 	userInfo["savedb_timer"] = nil
-	userInfo["update_user_sec_timer"] = nil
+	
 	return userInfo
 end
 
@@ -372,21 +364,6 @@ function UserInfo.Update()
 			userInfo.UserProps:dealBuffProps()
 			UserInfo.SendUserMoney(userInfo)
 		end
-	end
-end
-
-function UserInfo.UpdateUserSec(uid)
-	local userInfo = UserInfo.GetUserInfoById(uid)
-
-	if userInfo == nil then
-		return
-	end
-
-	if userInfo.online == true then
-		userInfo.world:update()
-		userInfo.UserProps:addOnlineTime()
-		userInfo.UserProps:dealBuffProps()
-		UserInfo.SendUserMoney(userInfo)
 	end
 end
 
@@ -462,7 +439,6 @@ function UserInfo.Disconnected(uid)
 	userInfo.online = false
 	userInfo.firstLogin = 0
 	userInfo.lastlogintime = os.time()
-	userInfo.laccount = nil
 
 	UserInfo.SaveUserInfoToDb(userInfo)
 	--print("user Disconnected, uid="..userInfo.uid..", lastlogintime="..os.time())
@@ -473,10 +449,6 @@ function UserInfo.Disconnected(uid)
 
 	if userInfo["savedb_timer"] ~= nil then
 		unilight.stoptimer(userInfo["savedb_timer"])
-	end
-
-	if userInfo["update_user_sec_timer"] ~= nil then
-		unilight.stoptimer(userInfo["update_user_sec_timer"])
 	end
 end
 
@@ -489,7 +461,6 @@ function UserInfo.GetOrNewUserInfo(uid)
 		if dbUser == nil then
 			userInfo = UserInfo.CreateTempUserInfo(uid)
 			userInfo.firstLogin = 1
-			UserInfo.SaveUserInfoToDb(userInfo)
 		else
 			userInfo = UserInfo.CreateUserByDb(uid, dbUser)
 			userInfo.firstLogin = 0
@@ -519,6 +490,7 @@ function UserInfo.GetOfflineUserInfo(uid)
 			UserInfo.GlobalUserInfoMap[uid] = userInfo
 			if userInfo["offline_timer"] == nil then
 				userInfo["offline_timer"] = unilight.addtimer("UserInfo.offline_savedata", static_const.Static_Const_USER_INFO_MAX_ONLINE_TIME_AFTER_OFFLINE, userInfo.uid)
+
 			end
         end
 	end
@@ -527,7 +499,7 @@ end
 
 --玩家离线保存数据定时器
 function UserInfo.offline_savedata(uid, timer)
-	unilight.info("the user offline, del data...........")
+	unilight.info("the user offline than ten then minute, del data...........")
 
 	unilight.stoptimer(timer)
 
@@ -541,6 +513,11 @@ function UserInfo.offline_savedata(uid, timer)
 	UserInfo.SaveUserInfoToDb(userInfo)
 
 	UserInfo.GlobalUserInfoMap[uid] = nil
+
+	--玩家数据被彻底删除，这个时候可惜需要改变中心服务器gameid zone
+	local data = {}
+	data.cmd_uid = uid
+	unilobby.SendCmdToLobby("Cmd.UserInfoDateFromMemory_C", data)
 end
 
 --掉线重连
@@ -571,10 +548,6 @@ function UserInfo.ReconnectLoginOk(laccount)
 		userInfo["savedb_timer"] = unilight.addtimer("UserInfo.SaveOneUserInfoToDB",static_const.Static_Const_User_Save_Data_DB_Time, userInfo.uid)
 	end
 
-	if userInfo["update_user_sec_timer"] == nil then
-		userInfo["update_user_sec_timer"] = unilight.addtimer("UserInfo.UpdateUserSec", 1, userInfo.uid)
-	end
-
 	userInfo.online = true
 	userInfo.firstLogin = 0
 
@@ -594,22 +567,6 @@ function UserInfo.ReconnectLoginOk(laccount)
 	UserProps:dealLoginInitProps(userInfo)
 
 	UserInfo.DealOfflinePrize(userInfo, false, 0)
-
-	local friendData = FriendManager:UserLoginFriend(uid)
-	local travelData = friendData:GetUserTravel()
-
-	--登录时主动清理零点数据
-	friendData:AutoZeroClear()
-
-	--同步玩家数据到好友数据
-	friendData:SetStar(cmd.data.userInfo.star)
-	friendData:SetMoney(cmd.data.userInfo.money)
-	friendData:SetProduct(cmd.data.userInfo.product)
-	travelData:CalcAddontion()
-
-	userInfo.friendAddontion = friendData:GetAddontion()
-
-	friendData.isFirstLogin = userInfo.firstLogin
 
 	--玩家产量初始化计算 依赖好友系统的加成计算
 	userInfo.world:recalc()
@@ -805,7 +762,7 @@ function UserInfo.SubUserMoney(userinfo, moneytype, moneynum)
 			num = moneynum
 		end
 	end
-	--unilight.debug("end, SubUserMoney-002, uid="..userinfo.uid..", moneytype="..moneytype..", moneyNum="..moneynum ..",num:" .. num)
+	unilight.debug("end, SubUserMoney-002, uid="..userinfo.uid..", moneytype="..moneytype..", moneyNum="..moneynum ..",num:" .. num)
 	if num then
 		--同步下	
 		UserInfo.SendUserMoney(userinfo)	
@@ -833,19 +790,6 @@ function UserInfo.SendUserMoney(userinfo)
 	return res
 end
 ------------------------------------------------------
-
-function UserInfo.SendInfo(userinfo, res)
-	if userinfo.laccount ~= nil then
-		unilight.response(userinfo.laccount, res)
-	end
-end
-
-function UserInfo.SendInfoByUid(uid, res)
-	local userinfo = UserInfo.GetUserInfoById(uid)
-	if userinfo ~= nil and userinfo.laccount ~= nil then
-		unilight.response(userinfo.laccount, res)
-	end
-end
 
 
 --中心服务器通知加钱扣钱
@@ -938,37 +882,20 @@ Lby.CmdForceUserOffline_C = function(cmd, lobbyClientTask)
     local uid = cmd.data.cmd_uid
 
     local userInfo = UserInfo.GetUserInfoById(uid)
-	if userInfo ~= nil then
-		--清理玩家定时器
-		if userInfo["offline_timer"] ~= nil then
-			unilight.stoptimer(userInfo["offline_timer"])
-		end
-
-		if userInfo["savedb_timer"] ~= nil then
-			unilight.stoptimer(userInfo["savedb_timer"])
-		end
-
-		if userInfo["update_user_sec_timer"] ~= nil then
-			unilight.stoptimer(userInfo["update_user_sec_timer"])
-		end
-
-		UserInfo.SaveUserInfoToDb(userInfo)
-
-		UserInfo.GlobalUserInfoMap[uid] = nil
+	if userInfo == nil then
+		return
 	end
 
-	local friendData = FriendManager:GetFriendInfo(uid)
-	if friendData ~= nil then
-		FriendManager:SaveDataToDb(friendData)
-		FriendManager:DelFriendInfoFromMemory(uid)
+	--清理玩家定时器
+	if userInfo["offline_timer"] ~= nil then
+		unilight.stoptimer(userInfo["offline_timer"])
 	end
 
-	local req = {}
-	req["do"] = "Cmd.ForceUserOffline_S"
-	req["data"] = {
-		cmd_uid = uid,
-	}
-	unilobby.SendCmdToLobby(req["do"], req["data"])
+	--UserInfo.SaveUserInfoToDb(userInfo)
+
+	UserInfo.GlobalUserInfoMap[uid] = nil
+
+	unilight.debug("user:"..uid.. " force offline..........")
 end
 
 Lby.CmdNotifyAddUserTravelHead_S = function(cmd, lobbyClientTask)
@@ -1007,4 +934,26 @@ Lby.CmdNotifyUserTravelTimeOut_S = function(cmd, lobbyClientTask)
 	unilight.response(userInfo.laccount, cmd)
 end
 
+Lby.CmdSystemAutoRecommendFriendCmd_S = function(cmd, lobbyClientTask)
+    local uid = cmd.data.cmd_uid
 
+    local userInfo = UserInfo.GetUserInfoById(uid)
+	if userInfo == nil then
+        unilight.error("userinfo is not exist,uid:"..uid)
+		return
+	end
+
+	unilight.response(userInfo.laccount, cmd)
+end
+
+Lby.CmdNotifyAddRelationShip = function(cmd, lobbyClientTask)
+    local uid = cmd.data.cmd_uid
+
+    local userInfo = UserInfo.GetUserInfoById(uid)
+	if userInfo == nil then
+        unilight.error("userinfo is not exist,uid:"..uid)
+		return
+	end
+
+	userInfo["relationships"][cmd.data.uid] = cmd.data.num
+end

@@ -1,3 +1,4 @@
+require "script/do/common/Common"
 
 CreateClass("FriendData")   --单个好友简单数据
 
@@ -47,5 +48,12 @@ end
 
 function FriendData:GetIsQQFriend()
     return self.isQQFriend
+end
+
+function FriendData:PrintData()
+    unilight.debug("uid------------" .. self.uid)
+    unilight.debug("head-----------" .. self.head)
+    unilight.debug("name-----------" .. self.name)
+    unilight.debug("appid----------" .. self.app_id)
 end
 

@@ -1,4 +1,4 @@
-
+require "script/do/common/staticconst"
 
 CreateClass("UserTravel")   --单个玩家所有好友数据结构体
 
@@ -118,6 +118,7 @@ function UserTravel:GetDBTable()
             data.travelHeadBackUp[k] = v
         end
     )
+
 
     data.employUid = self.employUid
     data.employName = self.employName
@@ -374,6 +375,12 @@ function UserTravel:ClearCaptureInfo()
         self.anger_click_count = 0
 end
 
+function UserTravel:PrintUserTravel()
+    unilight.debug("-------打印旅行团程序信息-------------")
+    local tmp = self:GetDBTable()
+    unilight.debug(table2json(tmp))
+end
+
 --获取好友雇佣他的旅行团UID
 function UserTravel:GetEmployUid()
     return self.employUid
@@ -481,23 +488,61 @@ function UserTravel:AddRelationShip(uid)
         t = t + 1
         self.relationships:Replace(uid, t)
     end
+    self:NotifyAddRelationShip(uid)
+end
+
+function UserTravel:NotifyAddRelationShip(uid)
+    local friendData = FriendManager:GetFriendInfo(self.uid)
+    if friendData.online == true then
+        local num = self:GetRelationShip(uid)
+        local res = {}
+        res["do"] = "Cmd.NotifyAddRelationShip"
+        res["data"] = {
+            cmd_uid = self.uid,
+            uid = uid,
+            num = num,
+        }
+        if friendData.gameid ~= 0 and friendData.zoneid ~= 0 then
+            ZoneInfo.SendCmdToMeById(res["do"], res["data"], friendData.gameid, friendData.zoneid)
+        end
+    end
 end
 
 function UserTravel.BuyShieldCountCallBack(uid, itemid, itemcount)
+    local req = {}
+    req["do"] = "Cmd.NotifyUserBuyShieldCount_S"
+    req["data"] = {
+        cmd_uid = uid,
+        shield_count = 0,
+    }
+
     local friendData = FriendManager:GetOrNewFriendInfo(uid);
     local travelData = friendData:GetUserTravel()
 
     travelData:AddShieldCount(itemcount)
+    req["data"].shield_count = travelData:GetShieldCount()
+
+    ZoneInfo.SendCmdToMeById(req["do"], req["data"], friendData.gameid, friendData.zoneid)
 end
 
 function UserTravel.AddTravelHeadBackupCallBack(uid, itemid, itemcount)
+    local req = {}
+    req["do"] = "Cmd.NotifyAddUserTravelHead_S"
+    req["data"] = {
+        cmd_uid = uid,
+        head = 0,
+    }
+
     local friendData = FriendManager:GetOrNewFriendInfo(uid);
     local travelData = friendData:GetUserTravel()
 
     local data = travelHead[itemid]
     if data ~= nil then
         travelData:AddTravelHeadBackup(data.head)
+        req["data"].head = data.head
     end
+
+    ZoneInfo.SendCmdToMeById(req["do"], req["data"], friendData.gameid, friendData.zoneid)
 end
 
 --重新计算玩家旅行团产量加成

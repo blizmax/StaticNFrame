@@ -1,4 +1,4 @@
-
+require "script/do/common/Common"
 
 CreateClass("UserFriend")   --单个玩家所有好友数据结构体
 CreateClass("UserFriendSimpleData")
@@ -56,7 +56,10 @@ end
 function UserFriend:Init(uid)
     -- 创建好友结构体
     self.uid = uid
-
+    --玩家在线当前所在游戏id
+    self.gameid = 0
+    --玩家在线当前所在分区id
+    self.zoneid = 0
     self.isFirstLogin = false
 
     self.app_id = ""
@@ -80,6 +83,11 @@ function UserFriend:Init(uid)
 
     --用于零点清理玩家数据
     self.lastZeroTime = 0
+
+    -- 当天系统推荐好友队列
+    --这里只是简单映射下, uid--boolean
+    self.recommendFriends = Map:New()
+    self.recommendFriends:Init()
 
     -- 被删除的QQ好友，下次登入时不再被重新加入
     self.deleteQQFriend = Map:New()
@@ -190,6 +198,10 @@ function UserFriend:AddMeAskPlayerUidsAndFirstLogin(uid)
     end
 
     table.insert(self.meAskPlayerUidsAndFirstLogin, uid)
+
+    for i, v in ipairs(self.meAskPlayerUidsAndFirstLogin) do
+        --print("self.uid="..self.uid..", AddMeAskPlayerUidsAndFirstLogin, i="..i..", v="..v..", newUid="..v)
+    end
 end
 
 function UserFriend:SetAskMePlayGameUid(uid)
@@ -321,6 +333,8 @@ function UserFriend:ZeroClearData()
     --unilight.debug("好友系统，零点清理")
     --清理今天被邀请过的好友
     self:ClearAskAddFriends()
+    --清理今天推荐过的好友
+    self:ClearRecommendFriends()
     --清理今天邀请过的好友
     self:ClearTodayAskedFriends()
     --清理旅行团
@@ -372,6 +386,12 @@ function UserFriend:SetDBTable(data)
 
     self.lastZeroTime = data.lastZeroTime or 0
 
+    if data.recommendFriends ~= nil then
+        for k,v in pairs(data.recommendFriends) do
+            self.recommendFriends:Insert(k,v)
+        end
+    end
+
     if data.deleteQQFriend ~= nil then
         for k,v in pairs(data.deleteQQFriend) do
             self.deleteQQFriend:Insert(k,v)
@@ -420,6 +440,13 @@ function UserFriend:GetDBTable()
 
     data.lastZeroTime = self.lastZeroTime
 
+    data.recommendFriends = {}
+    self.recommendFriends:ForEach(
+        function(k,v)
+            data.recommendFriends[k] = v
+        end
+    )
+
     data.deleteQQFriend = { }
 
     self.deleteQQFriend:ForEach(
@@ -434,6 +461,30 @@ function UserFriend:GetDBTable()
     data.friendVisit = self.friendVisit:GetDBTable()
 
     return data
+end
+
+function UserFriend:RecommendFriendForEach(fun, ...)
+    self.recommendFriends:ForEach(fun, ...)
+end
+
+function UserFriend:AddRecommendFriends(uid)
+    self.recommendFriends:Insert(uid, true)
+end
+
+function UserFriend:IsRecommendedToFriend(uid)
+    if self.recommendFriends:Find(uid) == nil then
+        return false
+    else
+        return true
+    end
+end
+
+function UserFriend:DelRecommendFriends(uid)
+    self.recommendFriends:Remove(uid)
+end
+
+function UserFriend:ClearRecommendFriends()
+        self.recommendFriends:Clear()
 end
 
 function UserFriend:SetBaseInfo(uid, head, name, app_id, sex)
@@ -452,6 +503,54 @@ function UserFriend:SetBaseInfo(uid, head, name, app_id, sex)
     self.simpleData.name = name or ""
     self.simpleData.head = head or ""
     self.simpleData.sex = sex or 1
+end
+
+function UserFriend:PrintBaseInfo()
+    unilight.debug("--------Print User Friend Base Info:-----------------")
+    unilight.debug("uid:" .. self.uid)
+    unilight.debug("head:" .. self.simpleData.head)
+    unilight.debug("name:" .. self.simpleData.name)
+    unilight.debug("area:" .. self.simpleData.area)
+    unilight.debug("star:" .. self.simpleData.star)
+    unilight.debug("app_id:" .. self.app_id)
+end
+
+function UserFriend:PrintUserFriend()
+    unilight.debug("打印玩家(" .. self.simpleData.name .. ")好友信息:")
+    self.friends:ForEach(
+        function(k,v)
+            v:PrintData()
+        end
+    )
+end
+
+function UserFriend:PrintAlInfo()
+    self:PrintBaseInfo()
+    self:PrintUserFriend()
+    unilight.debug("打印玩家不在线，邀请该玩家的好友UID：")
+    self.askAddFriends:ForEach(
+        function(k,v)
+            unilight.debug(tostring(k))
+        end
+    )
+    unilight.debug("打印今天邀请过的玩家UID:")
+    self.todayAskedFriends:ForEach(
+        function(k,v)
+            unilight.debug(tostring(k))
+        end
+    )
+    unilight.debug("打印今天推荐过的好友UID：")
+    self.recommendFriends:ForEach(
+        function(k,v)
+            unilight.debug(tostring(k))
+        end
+    )
+    unilight.debug("打印删除了的QQ好友UID:")
+    self.deleteQQFriend:ForEach(
+        function(k,v)
+            unilight.debug(tostring(k))
+        end
+    )
 end
 
 function UserFriend:GetUid()
@@ -605,7 +704,7 @@ function UserFriend:GetAddontion()
     return self.userTravel:GetAddontion()
 end
 
-function UserFriend:Give(friendinfo, msgType, args)
+function UserFriend:Give(zonetask, friendinfo, msgType, args)
     local msg = self.message:give(friendinfo, msgType, args)
 
     if self.online == true then
@@ -613,8 +712,9 @@ function UserFriend:Give(friendinfo, msgType, args)
         local res = {}
         res["do"] = "Cmd.MsgNewCmd_S"
         res["data"] = {
+            cmd_uid = self.uid,
             record = msg,
         }
-        UserInfo.SendInfoByUid(self.uid, res)
+        ZoneInfo.SendCmdToMeById(res["do"], res["data"], self.gameid, self.zoneid)
     end
 end
