@@ -1,4 +1,4 @@
-require "script/do/common/staticconst"
+
 
 -- 邀请游戏，发送邀请你玩着游戏的玩家UID
 Zone.CmdBeAskedPlayGame_C = function(cmd,zonetask)

@@ -70,10 +70,6 @@ function GameServerModule.Init()
         UserInfo.Init()
     end
 
-    if FriendManager ~= nil then
-        FriendManager:Init()
-    end
-
 	local CYCLE_MIN = 60
 	local CYCLE_HOUR = 3600
 	local CYCLE_DAY = CYCLE_HOUR * 24
@@ -86,7 +82,6 @@ end
 --保存当前是每周几天和每月第几天
 function GameServerModule.GlobalDayZeroClock()
     UserInfo.ZeroTimer()
-    FriendManager:AllFriendZeroClear()
 end
 
 --保存当前是每周几天和每月第几天

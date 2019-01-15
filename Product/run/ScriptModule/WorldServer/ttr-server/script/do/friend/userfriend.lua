@@ -1,4 +1,4 @@
-require "script/do/common/Common"
+
 
 CreateClass("UserFriend")   --单个玩家所有好友数据结构体
 CreateClass("UserFriendSimpleData")

@@ -1,5 +1,5 @@
 
-require "script/do/common/staticconst"
+
 
 CreateClass("FriendManager")    --好友数据结构管理
 

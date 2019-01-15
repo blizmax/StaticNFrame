@@ -29,7 +29,7 @@ function init_script_system(pluginManager, luaModule)
 
 	if pluginManager:IsLoadAllServer() then
 		--vscode luaide调试工具需要
-		--breakSocketHandle,debugXpCall = require("LuaDebug")("localhost",7003)
+		breakSocketHandle,debugXpCall = require("LuaDebug")("localhost",7003)
 		package.path = package.path .. ";../ScriptModule/GameServer/ttr-server/?.lua;"
 		LoadLuaFile("../ScriptModule/GameServer", false)
 		LoadLuaFile("../ScriptModule/GameServer/ttr-server/script/do", true)
