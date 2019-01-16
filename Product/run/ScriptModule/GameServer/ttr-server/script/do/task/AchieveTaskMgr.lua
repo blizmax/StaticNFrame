@@ -3,6 +3,17 @@
 
 CreateClass("AchieveTaskMgr")
 
+AchieveTaskMgr_TableEvent = {}
+
+for taskId, info in pairs(taskTable) do
+	if info.taskType == static_const.Static_Const_Task_TaskType_AchieveTask then
+		if AchieveTaskMgr_TableEvent[info.taskEvent] == nil then
+			AchieveTaskMgr_TableEvent[info.taskEvent] = {}
+		end
+		table.insert(AchieveTaskMgr_TableEvent[info.taskEvent], taskId)
+	end
+end
+
 --初始化数据
 function AchieveTaskMgr:init(owner)
 	--玩家指正
@@ -77,82 +88,66 @@ end
 
 --增加任务进度
 function AchieveTaskMgr:addProgress(event, times)
-	self.tasks:ForEach(
-		function(taskId, taskInfo)
-			if taskInfo.event == event and taskInfo:GetStatus() == TaskStatusEnum.Begin then
-				--开启地图需要特殊处理
-				if event == TaskConditionEnum.OpenMapEvent or 
-				event == TaskConditionEnum.BuildingLevelUpEvent or
-				event == TaskConditionEnum.TravelLevelUpEvent then
-					local taskConf = taskTable[taskId]
-					if taskConf ~= nil then
-						if event ~= TaskConditionEnum.OpenMapEvent then
+	local taskId_list = AchieveTaskMgr_TableEvent[event]
+	if taskId_list == nil then return end
+
+	for i, taskId in ipairs(taskId_list) do
+		local taskInfo = self.tasks:Find(taskId)
+		if taskInfo ~= nil and taskInfo:GetStatus() == TaskStatusEnum.Begin then
+			--开启地图需要特殊处理
+			if event == TaskConditionEnum.OpenMapEvent or 
+			event == TaskConditionEnum.BuildingLevelUpEvent or
+			event == TaskConditionEnum.TravelLevelUpEvent then
+				local taskConf = taskTable[taskId]
+				if taskConf ~= nil then
+					if event ~= TaskConditionEnum.OpenMapEvent then
+						taskInfo:SetTimes(times)
+						if times >= taskConf.param then
 							taskInfo:SetTimes(times)
-							if times >= taskConf.param then
-								taskInfo:SetTimes(times)
-								taskInfo:SetStatus(TaskStatusEnum.Finish)
-		
-								--通知客户端 任务完成
-								local req = { }
-								req["do"] = "Cmd.NotifyUserTaskFinish_S"
-								req["data"] = { 
-									task_id = taskId,
-								}
-								req.errno = unilight.SUCCESS
-								local laccount = go.roomusermgr.GetRoomUserById(self.owner.uid)
-								if laccount == nil then
-									unilight.debug("sorry, the laccount of the ask_uid:" .. self.owner.uid .. " is nil")
-								else
-									unilight.success(laccount, req)
-								end
-							end
-						else
-							if times == taskConf.param then
-								taskInfo:SetTimes(times)
-								taskInfo:SetStatus(TaskStatusEnum.Finish)
-		
-								--通知客户端 任务完成
-								local req = { }
-								req["do"] = "Cmd.NotifyUserTaskFinish_S"
-								req["data"] = { 
-									task_id = taskId,
-									map_count = self.owner.world:StateCount(),
-								}
-								req.errno = unilight.SUCCESS
-								local laccount = go.roomusermgr.GetRoomUserById(self.owner.uid)
-								if laccount == nil then
-									unilight.debug("sorry, the laccount of the ask_uid:" .. self.owner.uid .. " is nil")
-								else
-									unilight.success(laccount, req)
-								end
-							end
-						end
-					end
-				else 
-					taskInfo:AddTimes(times)
-					local taskConf = taskTable[taskId]
-					if taskConf ~= nil then
-						if taskInfo:GetTimes() >= taskConf.param then
-							taskInfo:SetTimes(taskConf.param)
 							taskInfo:SetStatus(TaskStatusEnum.Finish)
 	
 							--通知客户端 任务完成
 							local req = { }
 							req["do"] = "Cmd.NotifyUserTaskFinish_S"
 							req["data"] = { 
-								task_id = taskId
+								task_id = taskId,
 							}
-							req.errno = unilight.SUCCESS
-							local laccount = go.roomusermgr.GetRoomUserById(self.owner.uid)
-							if laccount == nil then
-								unilight.debug("sorry, the laccount of the ask_uid:" .. self.owner.uid .. " is nil")
-							else
-								unilight.success(laccount, req)
-							end
+							UserInfo.SendInfoByUid(self.owner.uid, req)
+						end
+					else
+						if times == taskConf.param then
+							taskInfo:SetTimes(times)
+							taskInfo:SetStatus(TaskStatusEnum.Finish)
+	
+							--通知客户端 任务完成
+							local req = { }
+							req["do"] = "Cmd.NotifyUserTaskFinish_S"
+							req["data"] = { 
+								task_id = taskId,
+								map_count = self.owner.world:StateCount(),
+							}
+							UserInfo.SendInfoByUid(self.owner.uid, req)
 						end
 					end
 				end
-			end
+			else
+				taskInfo:AddTimes(times)
+				local taskConf = taskTable[taskId]
+				if taskConf ~= nil then
+					if taskInfo:GetTimes() >= taskConf.param then
+						taskInfo:SetTimes(taskConf.param)
+						taskInfo:SetStatus(TaskStatusEnum.Finish)
+
+						--通知客户端 任务完成
+						local req = { }
+						req["do"] = "Cmd.NotifyUserTaskFinish_S"
+						req["data"] = { 
+							task_id = taskId
+						}
+						UserInfo.SendInfoByUid(self.owner.uid, req)
+					end
+				end
+			end			
 		end
-	)
+	end
 end

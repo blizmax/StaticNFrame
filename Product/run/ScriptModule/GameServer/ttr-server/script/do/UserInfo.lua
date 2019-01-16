@@ -792,6 +792,19 @@ end
 ------------------------------------------------------
 
 
+function UserInfo.SendInfo(userinfo, res)
+	if userinfo.laccount ~= nil then
+		unilight.response(userinfo.laccount, res)
+	end
+end
+
+function UserInfo.SendInfoByUid(uid, res)
+	local userinfo = UserInfo.GetUserInfoById(uid)
+	if userinfo ~= nil and userinfo.laccount ~= nil then
+		unilight.response(userinfo.laccount, res)
+	end
+end
+
 --中心服务器通知加钱扣钱
 Lby.CmdNotifyAddUserMoney_S = function(cmd, lobbyClientTask)
     local uid = cmd.data.cmd_uid

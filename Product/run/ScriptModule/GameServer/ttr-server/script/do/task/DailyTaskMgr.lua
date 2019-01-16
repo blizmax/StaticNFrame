@@ -1,6 +1,19 @@
 --玩家每日任务数据
 CreateClass("DailyTaskMgr")
 
+DailyTaskMgr_TableEvent = {}
+
+for taskId, info in pairs(taskTable) do
+	if info.taskType == static_const.Static_Const_Task_TaskType_DailyTask then
+		if DailyTaskMgr_TableEvent[info.taskEvent] == nil then
+			DailyTaskMgr_TableEvent[info.taskEvent] = {}
+		end
+		table.insert(DailyTaskMgr_TableEvent[info.taskEvent], taskId)
+	end
+end
+
+
+
 --初始化数据
 function DailyTaskMgr:init(owner)
 	--玩家指正
@@ -171,31 +184,27 @@ end
 
 --增加每日任务进度
 function DailyTaskMgr:addProgress(event, times)
-	self.tasks:ForEach(
-		function(taskId, taskInfo)
-			if taskInfo.event == event and taskInfo:GetStatus() == TaskStatusEnum.Begin then
-				taskInfo:AddTimes(times)
-				local taskConf = taskTable[taskId]
-				if taskConf ~= nil then
-					if taskInfo:GetTimes() >= taskConf.param then
-						taskInfo:SetStatus(TaskStatusEnum.Finish)
+	local taskId_list = DailyTaskMgr_TableEvent[event]
+	if taskId_list == nil then return end
 
-						--通知客户端 每日任务完成
-						local req = { }
-						req["do"] = "Cmd.NotifyUserTaskFinish_S"
-						req["data"] = { 
-							task_id = taskId
-						}
-						req.errno = unilight.SUCCESS
-						local laccount = go.roomusermgr.GetRoomUserById(self.owner.uid)
-						if laccount == nil then
-							unilight.debug("sorry, the laccount of the ask_uid:" .. self.owner.uid .. " is nil")
-						else
-							unilight.success(laccount, req)
-						end
-					end
+	for i, taskId in ipairs(taskId_list) do
+		local taskInfo = self.tasks:Find(taskId)
+		if taskInfo ~= nil and taskInfo:GetStatus() == TaskStatusEnum.Begin then
+			taskInfo:AddTimes(times)
+			local taskConf = taskTable[taskId]
+			if taskConf ~= nil then
+				if taskInfo:GetTimes() >= taskConf.param then
+					taskInfo:SetStatus(TaskStatusEnum.Finish)
+
+					--通知客户端 每日任务完成
+					local req = { }
+					req["do"] = "Cmd.NotifyUserTaskFinish_S"
+					req["data"] = { 
+						task_id = taskId
+					}
+					UserInfo.SendInfoByUid(self.owner.uid, req)
 				end
 			end
 		end
-	)
+	end
 end

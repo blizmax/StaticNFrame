@@ -3,6 +3,17 @@
 
 CreateClass("MainTaskMgr")
 
+MainTaskMgr_TableEvent = {}
+
+for taskId, info in pairs(taskTable) do
+	if info.taskType == static_const.Static_Const_Task_TaskType_MainTask then
+		if MainTaskMgr_TableEvent[info.taskEvent] == nil then
+			MainTaskMgr_TableEvent[info.taskEvent] = {}
+		end
+		table.insert(MainTaskMgr_TableEvent[info.taskEvent], taskId)
+	end
+end
+
 --初始化数据
 function MainTaskMgr:init(owner)
 	--玩家指正
@@ -135,39 +146,42 @@ end
 
 --增加任务进度
 function MainTaskMgr:addProgress(event, times, param2)
+	local taskId_list = MainTaskMgr_TableEvent[event]
+	if taskId_list == nil then return end
+
 	param2 = param2 or 0
-	--print("MainTaskMgr:addProgress, uid="..self.owner.uid..", event="..event..", times="..times..", param2="..param2)
-	self.tasks:ForEach(
-			function(taskId, taskInfo)
-				local taskConf = taskTable[taskId]
-				if taskConf ~= nil then
-					local tempParam2 = taskConf.param2
-					local isOk = taskInfo.event == event and taskInfo:GetStatus() == TaskStatusEnum.Begin and param2 == tempParam2
-					if isOk then
-						local isLevelEvent = event == TaskConditionEnum.SpecifyBuildingStar or event == TaskConditionEnum.AllBuildingStarEvent
-								or event == TaskConditionEnum.TravelLevelValueEvent
-						if isLevelEvent then
-							taskInfo:SetTimes(times) --此处的times为级数，直接赋值。其他的普通事件的times是次数的意思，用AddTimes
-							if times >= taskConf.param then
-								taskInfo:SetTimes(times)
-								taskInfo:SetStatus(TaskStatusEnum.Finish)
-								self:sendTaskFinish(taskId)
-							end
-						else
-							taskInfo:AddTimes(times)
-							if taskInfo:GetTimes() >= taskConf.param then
-								taskInfo:SetTimes(taskConf.param)
-								taskInfo:SetStatus(TaskStatusEnum.Finish)
-								self:sendTaskFinish(taskId)
-							end
+	for i, taskId in ipairs(taskId_list) do
+		local taskInfo = self.tasks:Find(taskId)
+		if taskInfo ~= nil then
+			local taskConf = taskTable[taskId]
+			if taskConf ~= nil then
+				local tempParam2 = taskConf.param2
+				local isOk = taskInfo:GetStatus() == TaskStatusEnum.Begin and param2 == tempParam2
+				if isOk then
+					local isLevelEvent = event == TaskConditionEnum.SpecifyBuildingStar or event == TaskConditionEnum.AllBuildingStarEvent
+							or event == TaskConditionEnum.TravelLevelValueEvent
+					if isLevelEvent then
+						taskInfo:SetTimes(times) --此处的times为级数，直接赋值。其他的普通事件的times是次数的意思，用AddTimes
+						if times >= taskConf.param then
+							taskInfo:SetTimes(times)
+							taskInfo:SetStatus(TaskStatusEnum.Finish)
+							self:sendTaskFinish(taskId)
 						end
-						if taskId == self.taskIdInProgress then
-							self:sendTaskProgress(taskId, taskInfo:GetTimes(), taskConf.param)
+					else
+						taskInfo:AddTimes(times)
+						if taskInfo:GetTimes() >= taskConf.param then
+							taskInfo:SetTimes(taskConf.param)
+							taskInfo:SetStatus(TaskStatusEnum.Finish)
+							self:sendTaskFinish(taskId)
 						end
+					end
+					if taskId == self.taskIdInProgress then
+						self:sendTaskProgress(taskId, taskInfo:GetTimes(), taskConf.param)
 					end
 				end
 			end
-	)
+		end
+	end
 end
 
 function MainTaskMgr:sendTaskFinish(taskId)
