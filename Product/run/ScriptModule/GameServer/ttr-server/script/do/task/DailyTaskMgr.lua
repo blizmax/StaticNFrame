@@ -119,11 +119,34 @@ function DailyTaskMgr:Reset()
 		end
 	)
 
+    --检查配置，并把没有的任务加载到配置中
+	for taskId, info in pairs(taskTable) do
+		if info.taskType == static_const.Static_Const_Task_TaskType_DailyTask and self.tasks:Find(taskId) == nil then
+			local task = TaskData:New()
+			task:init(taskId, info.taskEvent, 0, TaskStatusEnum.Begin)
+			self.tasks:Insert(taskId, task)
+		end
+    end
+
 	--后来的玩家可能没有数据
 	if self.activityReward:Count() <= 0 then
 		for id, info in pairs(taskActivity) do
 			self.activityReward:Insert(id, 0)
 		end
+	end
+
+    --有些任务可能被策划干掉了，这里也删掉他
+    local tmp = {}
+    self.tasks:ForEach(
+        function(taskId, taskInfo)
+            if taskTable[taskId] == nil then
+                table.insert(tmp, taskId)
+            end
+        end
+    )
+
+    for k, taskId in pairs(tmp) do
+        self.tasks:Remove(taskId)
 	end
 
 	if self:IsReset() == false then return end
@@ -143,20 +166,6 @@ function DailyTaskMgr:Reset()
 			task:init(taskId, info.taskEvent, 0, TaskStatusEnum.Begin)
 			self.tasks:Insert(taskId, task)
 		end
-	end
-
-    --有些任务可能被策划干掉了，这里也删掉他
-    local tmp = {}
-    self.tasks:ForEach(
-        function(taskId, taskInfo)
-            if taskTable[taskId] == nil then
-                table.insert(tmp, taskId)
-            end
-        end
-    )
-
-    for k, taskId in pairs(tmp) do
-        self.tasks:Remove(taskId)
 	end
 end
 

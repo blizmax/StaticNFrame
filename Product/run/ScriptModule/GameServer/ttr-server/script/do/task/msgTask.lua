@@ -14,9 +14,6 @@ Net.CmdGetUserTaskInfo_C = function(cmd, laccount)
         return res
     end
 
-    --每日数据可能需要重置
-    userInfo.dailyTask:Reset()
-
     res["data"] = {
         active = userInfo.dailyTask:GetActivity(),
         daily_task = {},
