@@ -8,7 +8,7 @@ Github: https://github.com/yigao/StaticNFrame
 Gitee(码云): https://gitee.com/xiaoyi445/StaticNFrame
 
 ## StaticNFrame 
-StaticNFrame is a lightweight, agility, scalable, distributed plugin framework written by C++，make it easier and faster to create your own game server, can be used to develop MMO RPG, ARPG, Round play, chess games. Inspired by UnrealEngine and Ogre.
+StaticNFrame是一个由C+编写的轻量级、敏捷性、可扩展的分布式插件框架，从NoachNFrame开源服务器改变而来，分为静态加载和动态加载两种运行方式，可以用来开发各总各样的游戏服务器，笔者自己主要用来开发小型游戏，使用LUA来实现逻辑.
 
 ## Features
 
@@ -43,7 +43,7 @@ svn checkout https://github.com/yigao/StaticNFrame
 ## Dependencies
 
 - libevent master
-- easylogging++ 9.80
+- splog
 - google protobuf 3.5.x
 - gperftools master
 
