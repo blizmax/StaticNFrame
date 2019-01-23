@@ -58,6 +58,7 @@ Using Visual Studio 2015
 1. Pull all source
 2. Run command line 
 ```batch
+可以编译依赖也可以不编译，依赖需要的库已经上传，如果编译的话，需要按照cmake
 cd StaticNFrame/Server/Dependencies
 build_dep.bat
 ```
@@ -76,15 +77,9 @@ build_dep.bat
 - automake
 
 Using CMake
-1. sudo install.sh
-2. build_dep.sh
-3. build.sh
-
-## Documents
-
-[English](https://github.com/yigao/StaticNFrame/tree/master/Docs/doc_EN.md)
-
-[Chinese](https://github.com/yigao/StaticNFrame/tree/master/Docs/doc_ZH.md)
+1. 首先按照一些依赖，主要是编译需要的g++之类的sudo install.sh
+2. 编译依赖文件，也可以不去编译，需要的库文件已经编译好，并上传build_dep.sh
+3. 编译基础引擎，服务器框架引擎，具体服务器逻辑实现引擎build.sh
 
 ## Examples
 
