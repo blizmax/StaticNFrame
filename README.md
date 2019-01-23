@@ -12,20 +12,10 @@ StaticNFrame是一个由C+编写的轻量级、敏捷性、可扩展的分布式
 
 ## Features
 
-- Flexible apps, plugins, and modules
-- High availability architectures
-- General abstract data system
-- Interface-oriented and data-oriented programming(IOP & DOP)
-- Event-driven and data-driven
-- High concurrency and performance of network
-- Based on C++ standard, easy to handle and learn
-- Cross platform (Include Windows and Linux)
-- Less downtime and higher availability
-- Lower training and education costs
-- Use Excel as configuration files, easier for game designer
-- With existed simple Unity3D client for rapid development
-- Plentiful plugins(DB, script, http, websocket, etc.)
-- Customization service for business customer
+- 插件化，模块化，可以灵活选择不同的插件来组成功能不同的应用程序
+- 高可用性体系结构
+- 仅仅改动配置或修改程序启动参数就可以实现服务器结构在一个程序里执行还是分N个不同的程序执行
+- 跨平台，当前仅仅在windows和centos7上使用过 (Include Windows and Linux)
 
 ### FAQ
 
