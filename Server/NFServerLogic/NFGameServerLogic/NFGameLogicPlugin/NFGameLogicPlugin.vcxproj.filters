@@ -3,9 +3,16 @@
   <ItemGroup>
     <ClInclude Include="NFGameLogicPlugin.h" />
     <ClInclude Include="NFGameLogicModule.h" />
+    <ClInclude Include="NFGameConfigModule.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="NFGameLogicPlugin.cpp" />
     <ClCompile Include="NFGameLogicModule.cpp" />
+    <ClCompile Include="NFGameConfigModule.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="NFTableClass">
+      <UniqueIdentifier>{7650517a-2933-4fc8-9644-406d8bf60df5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
 </Project>

@@ -35,10 +35,12 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="NFGameConfigModule.h" />
     <ClInclude Include="NFGameLogicModule.h" />
     <ClInclude Include="NFGameLogicPlugin.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="NFGameConfigModule.cpp" />
     <ClCompile Include="NFGameLogicModule.cpp" />
     <ClCompile Include="NFGameLogicPlugin.cpp" />
   </ItemGroup>
