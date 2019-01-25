@@ -8,24 +8,14 @@ Github: https://github.com/yigao/StaticNFrame
 Gitee(码云): https://gitee.com/xiaoyi445/StaticNFrame
 
 ## StaticNFrame 
-StaticNFrame is a lightweight, agility, scalable, distributed plugin framework written by C++，make it easier and faster to create your own game server, can be used to develop MMO RPG, ARPG, Round play, chess games. Inspired by UnrealEngine and Ogre.
+StaticNFrame是一个由C+编写的轻量级、敏捷性、可扩展的分布式插件框架，从NoachNFrame开源服务器改变而来，分为静态加载和动态加载两种运行方式，可以用来开发各总各样的游戏服务器，笔者自己主要用来开发小型游戏，使用LUA来实现逻辑.
 
 ## Features
 
-- Flexible apps, plugins, and modules
-- High availability architectures
-- General abstract data system
-- Interface-oriented and data-oriented programming(IOP & DOP)
-- Event-driven and data-driven
-- High concurrency and performance of network
-- Based on C++ standard, easy to handle and learn
-- Cross platform (Include Windows and Linux)
-- Less downtime and higher availability
-- Lower training and education costs
-- Use Excel as configuration files, easier for game designer
-- With existed simple Unity3D client for rapid development
-- Plentiful plugins(DB, script, http, websocket, etc.)
-- Customization service for business customer
+- 插件化，模块化，可以灵活选择不同的插件来组成功能不同的应用程序
+- 高可用性体系结构
+- 仅仅改动配置或修改程序启动参数就可以实现服务器结构在一个程序里执行还是分N个不同的程序执行
+- 跨平台，当前仅仅在windows和centos7上使用过 (Include Windows and Linux)
 
 ### FAQ
 
@@ -43,7 +33,7 @@ svn checkout https://github.com/yigao/StaticNFrame
 ## Dependencies
 
 - libevent master
-- easylogging++ 9.80
+- splog
 - google protobuf 3.5.x
 - gperftools master
 
@@ -68,6 +58,7 @@ Using Visual Studio 2015
 1. Pull all source
 2. Run command line 
 ```batch
+可以编译依赖也可以不编译，依赖需要的库已经上传，如果编译的话，需要按照cmake
 cd StaticNFrame/Server/Dependencies
 build_dep.bat
 ```
@@ -86,15 +77,9 @@ build_dep.bat
 - automake
 
 Using CMake
-1. sudo install.sh
-2. build_dep.sh
-3. build.sh
-
-## Documents
-
-[English](https://github.com/yigao/StaticNFrame/tree/master/Docs/doc_EN.md)
-
-[Chinese](https://github.com/yigao/StaticNFrame/tree/master/Docs/doc_ZH.md)
+1. 首先按照一些依赖，主要是编译需要的g++之类的sudo install.sh
+2. 编译依赖文件，也可以不去编译，需要的库文件已经编译好，并上传build_dep.sh
+3. 编译基础引擎，服务器框架引擎，具体服务器逻辑实现引擎build.sh
 
 ## Examples
 
