@@ -5,7 +5,6 @@
     <ClInclude Include="NFIProxyLogicModule.h" />
     <ClInclude Include="NFILoginLogicModule.h" />
     <ClInclude Include="NFIGameLogicModule.h" />
-    <ClInclude Include="NFIGameConfigModule.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="NFServerLogicCommon.cpp" />
