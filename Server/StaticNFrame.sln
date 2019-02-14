@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.24720.0
+VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "NFrame", "NFrame", "{A65AF30D-E33C-48FF-9021-CC3D958C6BCC}"
 EndProject
@@ -132,8 +132,6 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "NFLoginServerLogic", "NFLoginServerLogic", "{C88A8816-80F0-4DD6-AE31-93F0CB3936A4}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "NFLoginLogicPlugin", "NFServerLogic\NFLoginServerLogic\NFLoginLogicPlugin\NFLoginLogicPlugin.vcxproj", "{2D98DD59-385B-4395-9888-ECBE94FD4081}"
-EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "NFAcePlugin", "StaticNFrame\NFComm\NFAcePlugin\NFAcePlugin.vcxproj", "{A59AA93E-8172-4480-920A-4C748E430CE7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -643,22 +641,6 @@ Global
 		{2D98DD59-385B-4395-9888-ECBE94FD4081}.Release|x64.Build.0 = Release|x64
 		{2D98DD59-385B-4395-9888-ECBE94FD4081}.Release|x86.ActiveCfg = Release|Win32
 		{2D98DD59-385B-4395-9888-ECBE94FD4081}.Release|x86.Build.0 = Release|Win32
-		{A59AA93E-8172-4480-920A-4C748E430CE7}.Debug|x64.ActiveCfg = Debug|x64
-		{A59AA93E-8172-4480-920A-4C748E430CE7}.Debug|x64.Build.0 = Debug|x64
-		{A59AA93E-8172-4480-920A-4C748E430CE7}.Debug|x86.ActiveCfg = Debug|Win32
-		{A59AA93E-8172-4480-920A-4C748E430CE7}.Debug|x86.Build.0 = Debug|Win32
-		{A59AA93E-8172-4480-920A-4C748E430CE7}.Dynamic_Debug|x64.ActiveCfg = Debug|x64
-		{A59AA93E-8172-4480-920A-4C748E430CE7}.Dynamic_Debug|x64.Build.0 = Debug|x64
-		{A59AA93E-8172-4480-920A-4C748E430CE7}.Dynamic_Debug|x86.ActiveCfg = Debug|Win32
-		{A59AA93E-8172-4480-920A-4C748E430CE7}.Dynamic_Debug|x86.Build.0 = Debug|Win32
-		{A59AA93E-8172-4480-920A-4C748E430CE7}.Dynamic_Release|x64.ActiveCfg = Release|x64
-		{A59AA93E-8172-4480-920A-4C748E430CE7}.Dynamic_Release|x64.Build.0 = Release|x64
-		{A59AA93E-8172-4480-920A-4C748E430CE7}.Dynamic_Release|x86.ActiveCfg = Release|Win32
-		{A59AA93E-8172-4480-920A-4C748E430CE7}.Dynamic_Release|x86.Build.0 = Release|Win32
-		{A59AA93E-8172-4480-920A-4C748E430CE7}.Release|x64.ActiveCfg = Release|x64
-		{A59AA93E-8172-4480-920A-4C748E430CE7}.Release|x64.Build.0 = Release|x64
-		{A59AA93E-8172-4480-920A-4C748E430CE7}.Release|x86.ActiveCfg = Release|Win32
-		{A59AA93E-8172-4480-920A-4C748E430CE7}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -708,6 +690,5 @@ Global
 		{92384BEC-D838-4203-A662-A0B77A31F6F9} = {97651E77-FC2C-4D4E-8873-0D8DC9A0780F}
 		{C88A8816-80F0-4DD6-AE31-93F0CB3936A4} = {1A0B356A-90E1-4510-BEB2-083D067A248D}
 		{2D98DD59-385B-4395-9888-ECBE94FD4081} = {C88A8816-80F0-4DD6-AE31-93F0CB3936A4}
-		{A59AA93E-8172-4480-920A-4C748E430CE7} = {9D0BB1B4-FC93-4B3B-839F-9EC1797081EC}
 	EndGlobalSection
 EndGlobal
