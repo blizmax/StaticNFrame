@@ -8,8 +8,9 @@
 // -------------------------------------------------------------------------
 #pragma once
 #include <stdint.h>
+#include "NFComm/NFCore/NFPlatform.h"
 
-struct NFTimerObj
+struct _NFExport NFTimerObj
 {
 public:
 	NFTimerObj();

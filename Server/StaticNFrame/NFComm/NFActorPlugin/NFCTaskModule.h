@@ -11,6 +11,7 @@
 
 #include "NFComm/NFPluginModule/NFITaskModule.h"
 #include "NFComm/NFCore/NFQueue.hpp"
+#include "NFTaskActor.h"
 
 class NFCTaskModule : public NFITaskModule
 {

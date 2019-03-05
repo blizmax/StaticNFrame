@@ -15,7 +15,7 @@
 * @brief 线程锁封装,参考google protobuf
 *
 */
-class NFMutex
+class _NFExport NFMutex
 {
 public:
 	/**

@@ -23,7 +23,7 @@
 // A very simple random number generator.  Not especially good at
 // generating truly random bits, but good enough for our needs in this
 // package.
-class NFRandom
+class _NFExport NFRandom
 {
 public:
 	explicit NFRandom(uint32_t s) : seed_(s & 0x7fffffffu)
@@ -84,23 +84,23 @@ private:
 	uint32_t seed_;
 };
 
-void NFRandomSeed();
+_NFExport void NFRandomSeed();
 
-int32_t NFRandomAInt();
+_NFExport int32_t NFRandomAInt();
 
-uint32_t NFRandomAUInt();
+_NFExport uint32_t NFRandomAUInt();
 
-int32_t NFRandomInt(int32_t min, int32_t max);
+_NFExport int32_t NFRandomInt(int32_t min, int32_t max);
 
-uint32_t NFRandomUInt(uint32_t min, uint32_t max);
+_NFExport uint32_t NFRandomUInt(uint32_t min, uint32_t max);
 
-float NFRandomFloat(float min, float max);
+_NFExport float NFRandomFloat(float min, float max);
 
-double NFRandomDouble(double min, double max);
+_NFExport double NFRandomDouble(double min, double max);
 
-const char* NFRandomChar(size_t nChar);
+_NFExport const char* NFRandomChar(size_t nChar);
 
-const char* NFRandomEnglish(size_t nChar);;
+_NFExport const char* NFRandomEnglish(size_t nChar);;
 
 //[min, max)范围内的随机数
 template <typename T>

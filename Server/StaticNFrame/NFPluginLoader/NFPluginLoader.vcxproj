@@ -372,7 +372,11 @@
   <ItemGroup>
     <ClCompile Include="dllmain.cpp" />
     <ClCompile Include="NFCLoadStaticPlugin.cpp" />
+    <ClCompile Include="NFCPluginManager.cpp" />
     <ClCompile Include="NFPluginLoader.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="NFCPluginManager.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

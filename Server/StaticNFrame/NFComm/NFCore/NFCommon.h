@@ -27,6 +27,7 @@
 #include <vector>
 
 #include "common/lexical_cast.hpp"
+#include "NFPlatform.h"
 
 using namespace std;
 
@@ -49,7 +50,7 @@ using namespace std;
 *
 * 替换字符串函数,Ip匹配函数,判断一个数是否是素数等
 */
-class NFCommon
+class _NFExport NFCommon
 {
 public:
 

@@ -15,7 +15,7 @@
 
 #include "NFIConfigModule.h"
 
-class NFConfigMgr : public NFSingleton<NFConfigMgr>
+class _NFExport NFConfigMgr : public NFSingleton<NFConfigMgr>
 {
 public:
 	NFConfigMgr()

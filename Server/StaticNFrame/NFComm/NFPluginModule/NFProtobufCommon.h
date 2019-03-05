@@ -9,8 +9,9 @@
 #pragma once
 
 #include "NFMessageDefine/NFMsgDefine.h"
+#include "NFComm/NFCore/NFPlatform.h"
 
-class NFProtobufCommon
+class _NFExport NFProtobufCommon
 {
 public:
 	static bool MessageToJsonString(const google::protobuf::Message& message, std::string& json);

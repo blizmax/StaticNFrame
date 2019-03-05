@@ -24,7 +24,7 @@
 /**
 * @brief 该类提供标准的Base64的编码解码
 */
-class NFBase64
+class _NFExport NFBase64
 {
 public:
 	/**

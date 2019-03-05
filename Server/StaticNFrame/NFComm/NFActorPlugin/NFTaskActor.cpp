@@ -1,9 +1,8 @@
 
 
 #include "NFTaskActor.h"
-#include "NFTask.h"
-#include "NFITaskModule.h"
-#include "NFLogMgr.h"
+#include "NFComm/NFPluginModule/NFTask.h"
+#include "NFComm/NFPluginModule/NFITaskModule.h"
 
 /**
 * @brief ¹¹Ôìº¯Êý

@@ -21,6 +21,16 @@ void yyerror(char const *msg)
 	g_parse->error(msg);
 }
 
+int yyparse()
+{
+	return 0;
+}
+
+int yylex()
+{
+	return 0;
+}
+
 TarsParse::TarsParse()
 {
 	_bWithTars = false;
@@ -77,7 +87,7 @@ void TarsParse::parse(const std::string& sFileName)
 		clear();
 
 		_contains.push(new Container(""));
-		if (!(yyin = fopen(sTemp.c_str(), "r")))
+		//if (!(yyin = fopen(sTemp.c_str(), "r")))
 		{
 			error("open file '" + sFileName + "(" + sTemp + ")" + "' error :" + string(strerror(errno)));
 		}
@@ -102,7 +112,7 @@ void TarsParse::parse(const std::string& sFileName)
 		clear();
 
 		_contains.push(new Container(""));
-		if (!(yyin = fopen(sTemp.c_str(), "r")))
+		//if (!(yyin = fopen(sTemp.c_str(), "r")))
 		{
 			error("open file '" + sFileName + "(" + sTemp + ")" + "' error :" + string(strerror(errno)));
 		}
@@ -118,7 +128,7 @@ void TarsParse::parse(const std::string& sFileName)
 		clear();
 
 		_contains.push(new Container(""));
-		if (!(yyin = fopen(sFileName.c_str(), "r")))
+		//if (!(yyin = fopen(sFileName.c_str(), "r")))
 		{
 			error("open file '" + sFileName + "' error :" + string(strerror(errno)));
 		}

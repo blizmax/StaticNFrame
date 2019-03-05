@@ -12,6 +12,7 @@
 #include <string.h>
 #include <assert.h>
 #include <string>
+#include "NFPlatform.h"
 
 class NFSimpleBuffer
 {

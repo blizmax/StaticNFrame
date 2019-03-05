@@ -19,7 +19,7 @@
 
 #include "NFPlatform.h"
 
-class NFStringUtility
+class _NFExport NFStringUtility
 {
 public:
 	static const std::string kEmpty;

@@ -75,7 +75,7 @@ public:
 	uint32_t mThreads = 0;
 };
 
-class NFSystemInfo
+class _NFExport NFSystemInfo
 {
 public:
 	NFSystemInfo();

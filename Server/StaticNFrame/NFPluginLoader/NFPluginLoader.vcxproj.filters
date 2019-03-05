@@ -4,5 +4,9 @@
     <ClCompile Include="NFPluginLoader.cpp" />
     <ClCompile Include="dllmain.cpp" />
     <ClCompile Include="NFCLoadStaticPlugin.cpp" />
+    <ClCompile Include="NFCPluginManager.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="NFCPluginManager.h" />
   </ItemGroup>
 </Project>

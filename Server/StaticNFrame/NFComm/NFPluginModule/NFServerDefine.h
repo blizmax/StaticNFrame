@@ -37,7 +37,7 @@ const std::string gArrayServer[NF_ST_MAX] = {
 	"ProxyInnerServer",
 };
 
-std::string GetServerName(NF_SERVER_TYPES serverId);
+std::string _NFExport GetServerName(NF_SERVER_TYPES serverId);
 
 enum eMsgType
 {

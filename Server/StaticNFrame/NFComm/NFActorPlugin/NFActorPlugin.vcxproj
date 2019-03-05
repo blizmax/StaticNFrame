@@ -39,12 +39,14 @@
     <ClCompile Include="NFCActorModule.cpp" />
     <ClCompile Include="NFActorPlugin.cpp" />
     <ClCompile Include="NFCTaskModule.cpp" />
+    <ClCompile Include="NFTaskActor.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="NFCActor.h" />
     <ClInclude Include="NFCActorModule.h" />
     <ClInclude Include="NFActorPlugin.h" />
     <ClInclude Include="NFCTaskModule.h" />
+    <ClInclude Include="NFTaskActor.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{DBF28939-C743-4C54-A0A5-EB719EEC1F1F}</ProjectGuid>
@@ -218,7 +220,7 @@
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>$(SolutionDir)\..\Product\lib\$(Configuration)\;$(SolutionDir)\..\Product\run\$(Configuration)\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>Theron.lib;NFCore.lib;NFPluginModule.lib;</AdditionalDependencies>
+      <AdditionalDependencies>NFCore.lib;NFPluginModule.lib;Theron.lib;</AdditionalDependencies>
     </Link>
     <Bscmake>
       <PreserveSbr>true</PreserveSbr>

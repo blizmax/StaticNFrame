@@ -54,7 +54,7 @@ struct NF_HashMap_Exception : public NFException
 *
 *支持dump到文件，或从文件load；
 */
-class NFMemHashMap
+class _NFExport NFMemHashMap
 {
 public:
 	struct HashMapIterator;

@@ -45,7 +45,7 @@ void NFSystemInfo::CountCurProcessBaseInfo()
 	sigar_proc_exe_t exestate;
 	if (sigar_proc_exe_get(m_sigar, mCurProcessInfo.mPid, &exestate) != SIGAR_OK)
 	{
-		NFLogError("sigar_proc_state_get error, cur_pid:{}", mCurProcessInfo.mPid);
+		//NFLogError("sigar_proc_state_get error, cur_pid:{}", mCurProcessInfo.mPid);
 	}
 
 	mCurProcessInfo.mName = exestate.name;
@@ -102,7 +102,7 @@ double NFSystemInfo::CountProcessCpuPer(uint32_t pid)
 	}
 	else
 	{
-		NFLogError("sigar_proc_cpu_get cpu error, cur_pid:{}", pid);
+		//NFLogError("sigar_proc_cpu_get cpu error, cur_pid:{}", pid);
 	}
 
 	return percent;
@@ -122,7 +122,7 @@ uint64_t NFSystemInfo::CountProcessMemPer(uint32_t pid)
 	}
 	else
 	{
-		NFLogError("sigar_proc_mem_get error, cur_pid:{}", pid);
+		//NFLogError("sigar_proc_mem_get error, cur_pid:{}", pid);
 	}
 	return mem;
 }
@@ -147,7 +147,7 @@ void NFSystemInfo::CountOsInfo()
 	sigar_sys_info_t sysInfo;
 	if (sigar_sys_info_get(m_sigar, &sysInfo) != SIGAR_OK)
 	{
-		NFLogError("sigar_sys_info_get error");
+		//NFLogError("sigar_sys_info_get error");
 	}
 
 	mMachineOsInfo.mOsName = sysInfo.name;
@@ -182,7 +182,7 @@ void NFSystemInfo::CountCurProcessInfo()
 	sigar_proc_state_t procstate;
 	if (sigar_proc_state_get(m_sigar, mCurProcessInfo.mPid, &procstate) != SIGAR_OK)
 	{
-		NFLogError("sigar_proc_state_get error, cur_pid:{}", mCurProcessInfo.mPid);
+		//NFLogError("sigar_proc_state_get error, cur_pid:{}", mCurProcessInfo.mPid);
 	}
 
 	mCurProcessInfo.mThreads = (uint32_t)procstate.threads;

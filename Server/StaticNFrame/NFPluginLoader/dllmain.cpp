@@ -20,6 +20,8 @@
 #pragma comment(lib, "netapi32.lib")
 
 ////////////////////////////////////////////////////////////////
+#pragma comment( lib, "bson-static-1.0.lib" )
+#pragma comment( lib, "mongoc-static-1.0.lib" )
 #pragma comment(lib, "ws2_32.lib")
 #pragma comment(lib, "Secur32.lib")
 #pragma comment( lib, "Crypt32.lib" )
@@ -53,6 +55,7 @@
 #pragma comment( lib, "NFMysqlPlugin.lib" )
 #pragma comment( lib, "NFLuaScriptPlugin.lib" )
 #pragma comment( lib, "NFTestPlugin.lib" )
+#pragma comment( lib, "NFMongoPlugin.lib" )
 
 /////////////////////////////////////////////////////
 

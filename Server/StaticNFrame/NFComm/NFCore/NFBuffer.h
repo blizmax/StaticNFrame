@@ -25,7 +25,7 @@
 /**
  *@brief  字节流缓冲区封装类.
  */
-class NFBuffer
+class _NFExport NFBuffer
 {
 public:
 	/**

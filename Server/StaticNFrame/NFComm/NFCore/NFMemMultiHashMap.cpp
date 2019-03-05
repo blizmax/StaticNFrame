@@ -2096,7 +2096,7 @@ void NFMemMultiHashMap::create(void *pAddr, size_t iSize)
 
 	if (_iMinDataSize == 0 || _iMaxDataSize == 0 || _fFactor < 1.0)
 	{
-		throw NF_Multi_HashMap_Exception("[TC_Multi_HashMap::create] init data size error:" + NFCommon::tostr(_iMinDataSize) + "|" + NFCommon::tostr(_iMaxDataSize) + "|" + NFCommon::tostr(_fFactor));
+		throw NF_Multi_HashMap_Exception("[TC_Multi_HashMap::create] init data size error:" + lexical_cast<std::string>(_iMinDataSize) + "|" + lexical_cast<std::string>(_iMaxDataSize) + "|" + lexical_cast<std::string>(_fFactor));
 	}
 
 	init(pAddr);

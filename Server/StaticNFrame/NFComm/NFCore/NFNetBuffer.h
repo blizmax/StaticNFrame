@@ -28,7 +28,7 @@
 
 #endif
 
-class NFNetBuffer
+class _NFExport NFNetBuffer
 {
 public:
 	static const size_t kCheapPrependSize;

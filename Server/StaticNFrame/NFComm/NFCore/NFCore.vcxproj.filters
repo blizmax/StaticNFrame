@@ -78,9 +78,6 @@
     <ClCompile Include="NFMemVector.h">
       <Filter>Common</Filter>
     </ClCompile>
-    <ClCompile Include="NFTCPack.cpp">
-      <Filter>Common</Filter>
-    </ClCompile>
     <ClCompile Include="NFMemQueu.cpp">
       <Filter>Common</Filter>
     </ClCompile>
@@ -99,13 +96,16 @@
     <ClCompile Include="NFMemMultiHashMap.cpp">
       <Filter>Common</Filter>
     </ClCompile>
-    <ClCompile Include="NFTarsParse.cpp">
+    <ClCompile Include="NFSHA2.cpp">
       <Filter>Common</Filter>
     </ClCompile>
     <ClCompile Include="NFTarsElement.cpp">
       <Filter>Common</Filter>
     </ClCompile>
-    <ClCompile Include="NFSHA2.cpp">
+    <ClCompile Include="NFTarsParse.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
+    <ClCompile Include="NFTCPack.cpp">
       <Filter>Common</Filter>
     </ClCompile>
   </ItemGroup>
@@ -248,9 +248,6 @@
     <ClInclude Include="NFMallocChunk.h">
       <Filter>Common</Filter>
     </ClInclude>
-    <ClInclude Include="NFTCPack.h">
-      <Filter>Common</Filter>
-    </ClInclude>
     <ClInclude Include="NFMemQueue.h">
       <Filter>Common</Filter>
     </ClInclude>
@@ -269,16 +266,19 @@
     <ClInclude Include="NFMemMultiHashMap.h">
       <Filter>Common</Filter>
     </ClInclude>
-    <ClInclude Include="NFTarsParse.h">
+    <ClInclude Include="NFConsistentHash.hpp">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="NFSHA2.h">
       <Filter>Common</Filter>
     </ClInclude>
     <ClInclude Include="NFTarsElement.h">
       <Filter>Common</Filter>
     </ClInclude>
-    <ClInclude Include="NFConsistentHash.hpp">
+    <ClInclude Include="NFTarsParse.h">
       <Filter>Common</Filter>
     </ClInclude>
-    <ClInclude Include="NFSHA2.h">
+    <ClInclude Include="NFTCPack.h">
       <Filter>Common</Filter>
     </ClInclude>
   </ItemGroup>

@@ -13,7 +13,7 @@
 #include "common/RapidXML/rapidxml_utils.hpp"
 #include "NFComm/NFPluginModule/NFIPlugin.h"
 #include "NFComm/NFCore/NFPlatform.h"
-#include "NFProfiler.h"
+#include "NFComm/NFPluginModule/NFProfiler.h"
 #include "NFComm/NFPluginModule/NFServerDefine.h"
 #include "NFComm/NFCore/NFFileUtility.h"
 #include "NFComm/NFPluginModule/NFConfigMgr.h"
@@ -201,16 +201,16 @@ bool NFCPluginManager::Execute()
 	uint64_t endTime = 0;
 	mCurFrameCount++;
 
-	BeginProfiler("MainLoop");
+	//BeginProfiler("MainLoop");
 	PluginInstanceMap::iterator it = mPluginInstanceMap.begin();
 	for (; it != mPluginInstanceMap.end(); ++it)
 	{
-		BeginProfiler(it->second->GetPluginName() + "--Loop");
+		//BeginProfiler(it->second->GetPluginName() + "--Loop");
 		bool tembRet = it->second->Execute();
 		bRet = bRet && tembRet;
-		EndProfiler();
+		//EndProfiler();
 	}
-	EndProfiler();
+	//EndProfiler();
 
 	//采用固定帧率
 	endTime = NFGetTime();

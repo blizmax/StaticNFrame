@@ -6,7 +6,7 @@
 //    @Module           :    NFPluginLoader
 //
 // -------------------------------------------------------------------------
-#include "NFComm/NFPluginModule/NFCPluginManager.h"
+#include "NFCPluginManager.h"
 #include "NFComm/NFCore/NFPlatform.h"
 
 #include "NFComm/NFPluginModule/NFIEventModule.h"

@@ -31,7 +31,7 @@
 
 // File access utility class which provides many help methods
 // to make it easy to do operations against file.
-class NFFileUtility
+class _NFExport NFFileUtility
 {
 public:
 	// Query whether the file name is a valid directory. e.g. ".", ".." are invalid

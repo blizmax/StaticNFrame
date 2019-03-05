@@ -42,9 +42,6 @@
     <ClInclude Include="NFConfigMgr.h">
       <Filter>Config</Filter>
     </ClInclude>
-    <ClInclude Include="NFCPluginManager.h">
-      <Filter>PluginManager</Filter>
-    </ClInclude>
     <ClInclude Include="NFINetServerModule.h" />
     <ClInclude Include="NFTask.h">
       <Filter>Task</Filter>
@@ -101,9 +98,6 @@
     <ClInclude Include="NFIHttpClient.h" />
     <ClInclude Include="NFIHttpServer.h" />
     <ClInclude Include="NFITaskModule.h" />
-    <ClInclude Include="NFTaskActor.h">
-      <Filter>Task</Filter>
-    </ClInclude>
     <ClInclude Include="NFIConfigModule.h" />
     <ClInclude Include="NFILuaModule.h" />
     <ClInclude Include="NFCDynLib.h">
@@ -133,9 +127,6 @@
     </Filter>
     <Filter Include="Log">
       <UniqueIdentifier>{5e799ddc-ea5b-4be8-8258-40e634ff4a55}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="PluginManager">
-      <UniqueIdentifier>{bdfa0e36-a558-48c1-8d1d-4fdc9ad68d24}</UniqueIdentifier>
     </Filter>
     <Filter Include="Mysql">
       <UniqueIdentifier>{dd0fc0b9-d562-41ed-9db8-d5ba4c613206}</UniqueIdentifier>
@@ -185,9 +176,6 @@
     <ClCompile Include="NFConfigMgr.cpp">
       <Filter>Config</Filter>
     </ClCompile>
-    <ClCompile Include="NFCPluginManager.cpp">
-      <Filter>PluginManager</Filter>
-    </ClCompile>
     <ClCompile Include="NFCData.cpp">
       <Filter>NFObject</Filter>
     </ClCompile>
@@ -205,9 +193,6 @@
     </ClCompile>
     <ClCompile Include="NFCDataTableManager.cpp">
       <Filter>NFObject</Filter>
-    </ClCompile>
-    <ClCompile Include="NFTaskActor.cpp">
-      <Filter>Task</Filter>
     </ClCompile>
     <ClCompile Include="NFCDynLib.cpp">
       <Filter>NFDynLib</Filter>

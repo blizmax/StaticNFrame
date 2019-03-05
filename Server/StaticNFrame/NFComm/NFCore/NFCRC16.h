@@ -12,7 +12,7 @@
 #include "NFPlatform.h"
 
 // CRC-16/CCITT
-class NFCRC16
+class _NFExport NFCRC16
 {
 public:
 	static uint16_t Sum(const void* data, size_t len);

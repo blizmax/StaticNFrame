@@ -24,7 +24,7 @@
 *
 * 将连续的内存分成大小相同的块,形成链表,并能够分配和释放这些大小相同的快
 */
-class NFMemChunk
+class _NFExport NFMemChunk
 {
 public:
 

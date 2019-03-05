@@ -44,7 +44,7 @@
 }
 #endif
 
-class NFMD5
+class _NFExport NFMD5
 {
 	typedef unsigned char *POINTER;
 	typedef unsigned short int UINT2;

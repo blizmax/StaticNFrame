@@ -38,7 +38,7 @@ typedef struct HINSTANCE__* hInstance;
 
 #endif
 
-class NFCDynLib
+class _NFExport NFCDynLib
 {
 
 public:

@@ -16,7 +16,7 @@
 
 #include "NFPlatform.h"
 
-class NFINIReader
+class _NFExport NFINIReader
 {
 public:
 	explicit NFINIReader()

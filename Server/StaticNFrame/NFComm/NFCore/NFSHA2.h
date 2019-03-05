@@ -41,6 +41,8 @@ SHA1(A million repetitions of "a") =
 #ifndef ___SHA1_HDR___
 #define ___SHA1_HDR___
 
+#include "NFPlatform.h"
+
 #if !defined(SHA1_UTILITY_FUNCTIONS) && !defined(SHA1_NO_UTILITY_FUNCTIONS)
 #define SHA1_UTILITY_FUNCTIONS
 #endif
@@ -106,7 +108,7 @@ typedef union
 	UINT_32 l[16];
 } SHA1_WORKSPACE_BLOCK;
 
-class NFSHA2
+class _NFExport NFSHA2
 {
 public:
 #ifdef SHA1_UTILITY_FUNCTIONS

@@ -26,7 +26,7 @@ class NFIEventModule;
 /**
  *@brief 事件系统管理类
  */
-class NFEventMgr : public NFSingleton<NFEventMgr>
+class _NFExport NFEventMgr : public NFSingleton<NFEventMgr>
 {
 public:
 	/**

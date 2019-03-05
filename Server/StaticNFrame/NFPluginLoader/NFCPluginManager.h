@@ -16,9 +16,9 @@
 #include "NFComm/NFCore/NFSingleton.hpp"
 #include "NFComm/NFPluginModule/NFIPluginManager.h"
 #include "NFComm/NFCore/NFRandom.hpp"
-#include "NFCDynLib.h"
-#include "NFSystemInfo.h"
-#include "NFProfiler.h"
+#include "NFComm/NFPluginModule/NFCDynLib.h"
+#include "NFComm/NFPluginModule/NFSystemInfo.h"
+#include "NFComm/NFPluginModule/NFProfiler.h"
 
 /*
 	系统的Module，分为加载DLL创建的唯一Module，和自己独立创建出来的Module，

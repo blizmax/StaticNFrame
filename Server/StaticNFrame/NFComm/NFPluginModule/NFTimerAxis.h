@@ -24,7 +24,7 @@
 #define INFINITY_CALL				0xffffffff	// 调用无限次
 
 //时间轴
-class NFTimerAxis
+class _NFExport NFTimerAxis
 {
 public:
 	NFTimerAxis();

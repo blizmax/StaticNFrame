@@ -11,6 +11,7 @@
 
 #include <string>
 #include <stdint.h>
+#include "NFComm/NFCore/NFPlatform.h"
 
 /* 事件使用注意事项
  取消订阅事件的时传入的参数一定要和订阅事件时传入的参数一致，

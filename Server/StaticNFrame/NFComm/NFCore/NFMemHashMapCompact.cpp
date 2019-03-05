@@ -1503,7 +1503,7 @@ void NFMemHashMapCompact::create(void *pAddr, size_t iSize)
 
 	if (_iMinDataSize == 0 || _iMaxDataSize == 0 || _fFactor < 1.0)
 	{
-		throw NF_HashMapCompact_Exception("[TC_HashMapCompact::create] init data size error:" + NFCommon::tostr(_iMinDataSize) + "|" + NFCommon::tostr(_iMaxDataSize) + "|" + NFCommon::tostr(_fFactor));
+		throw NF_HashMapCompact_Exception("[TC_HashMapCompact::create] init data size error:" + lexical_cast<std::string>(_iMinDataSize) + "|" + lexical_cast<std::string>(_iMaxDataSize) + "|" + lexical_cast<std::string>(_fFactor));
 	}
 
 	init(pAddr);
@@ -1511,7 +1511,7 @@ void NFMemHashMapCompact::create(void *pAddr, size_t iSize)
 	//block size用2个字节存储的
 	if (sizeof(Block::tagBlockHead) + _iMaxDataSize >(uint16_t)(-1))
 	{
-		throw NF_HashMapCompact_Exception("[TC_HashMapCompact::create] init block size error, block size must be less then " + NFCommon::tostr((uint16_t)(-1) - sizeof(Block::tagBlockHead)));
+		throw NF_HashMapCompact_Exception("[TC_HashMapCompact::create] init block size error, block size must be less then " + lexical_cast<std::string>((uint16_t)(-1) - sizeof(Block::tagBlockHead)));
 	}
 
 	_pHead->_bInit = false;
@@ -1588,7 +1588,7 @@ void NFMemHashMapCompact::connect(void *pAddr, size_t iSize)
 
 	if (_pHead->_iMemSize != iSize)
 	{
-		throw NF_HashMapCompact_Exception("[TC_HashMapCompact::connect] hash map size not equal:" + NFCommon::tostr(_pHead->_iMemSize) + "!=" + NFCommon::tostr(iSize));
+		throw NF_HashMapCompact_Exception("[TC_HashMapCompact::connect] hash map size not equal:" + lexical_cast<std::string>(_pHead->_iMemSize) + "!=" + lexical_cast<std::string>(iSize));
 	}
 
 	void *pHashAddr = (char*)_pHead + sizeof(tagMapHead) + sizeof(tagModifyHead);

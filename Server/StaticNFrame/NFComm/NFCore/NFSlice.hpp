@@ -12,6 +12,7 @@
 #include <string.h>
 #include <assert.h>
 #include <string>
+#include "NFPlatform.h"
 
 // Copy from leveldb project
 // @see https://github.com/google/leveldb/blob/master/include/leveldb/slice.h

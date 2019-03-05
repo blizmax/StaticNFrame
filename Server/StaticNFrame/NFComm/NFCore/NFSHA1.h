@@ -50,7 +50,7 @@ struct NF_SHA_Exception : public NFException
 * @brief sha各种hash算法,
 *
 */
-class NFSHA1
+class _NFExport NFSHA1
 {
 public:
 	/**

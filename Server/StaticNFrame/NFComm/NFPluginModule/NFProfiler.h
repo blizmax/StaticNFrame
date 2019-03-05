@@ -78,7 +78,7 @@ struct CALL_TREE_NODE
 	CALL_TREE_NODE* nextBrather;
 };
 
-class NFProfiler
+class _NFExport NFProfiler
 {
 public:
 	NFProfiler()

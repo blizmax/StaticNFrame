@@ -4,6 +4,7 @@
 
 #include <map>
 #include <Theron/Theron.h>
+#include "NFComm/NFCore/NFPlatform.h"
 
 class NFTask;
 class NFITaskModule;

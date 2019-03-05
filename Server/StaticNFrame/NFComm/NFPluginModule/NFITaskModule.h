@@ -1,7 +1,9 @@
 #pragma once
 
 #include "NFIModule.h"
-#include "NFTaskActor.h"
+
+class NFTaskActorMessage;
+class NFTask;
 
 class NFITaskModule : public NFIModule
 {

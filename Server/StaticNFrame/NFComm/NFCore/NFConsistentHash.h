@@ -37,7 +37,7 @@ struct NFNode_T
 /**
 *  @brief 一致性hash算法类
 */
-class  NFConsistentHash
+class NFConsistentHash
 {
 public:
 

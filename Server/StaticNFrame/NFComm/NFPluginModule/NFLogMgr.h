@@ -13,7 +13,7 @@
 #include "common/spdlog/fmt/fmt.h"
 #include "NFILogModule.h"
 
-class NFLogMgr : public NFSingleton<NFLogMgr>
+class _NFExport NFLogMgr : public NFSingleton<NFLogMgr>
 {
 public:
 	NFLogMgr();

@@ -12,9 +12,10 @@
 #include "NFTimerAxis.h"
 
 #include "NFITimerModule.h"
+#include "NFComm/NFCore/NFPlatform.h"
 
 
-class NFTimerMgr : public NFSingleton<NFTimerMgr>
+class _NFExport NFTimerMgr : public NFSingleton<NFTimerMgr>
 {
 public:
 	NFTimerMgr();
