@@ -20,6 +20,7 @@
 #include "NFTCPack.h"
 #include "NFMemChunk.h"
 #include "NFHash.hpp"
+#include "NFCommon.h"
 
 
 /////////////////////////////////////////////////

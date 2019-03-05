@@ -28,25 +28,25 @@ LoadPlugin =
 			"NFMysqlPlugin",
 			"NFMongoPlugin",
 			
-			"NFLuaScriptPlugin",
+			--"NFLuaScriptPlugin",
 			
-			"NFMasterServerPlugin",
+			--"NFMasterServerPlugin",
 			
-			"NFLoginClientPlugin",
-			"NFLoginServerPlugin",
+			--"NFLoginClientPlugin",
+			--"NFLoginServerPlugin",
 			
-			"NFWorldClientPlugin",
-			"NFWorldServerPlugin",
+			--"NFWorldClientPlugin",
+			--"NFWorldServerPlugin",
 			
-			"NFGameClientPlugin",
-			"NFGameServerPlugin",
+			--"NFGameClientPlugin",
+			--"NFGameServerPlugin",
 			
-			"NFProxyServerPlugin",
-			"NFProxyClientPlugin",
+			--"NFProxyServerPlugin",
+			--"NFProxyClientPlugin",
 			
-			"NFGameLogicPlugin",
-			"NFLoginLogicPlugin",
-			"NFProxyLogicPlugin",
+			--"NFGameLogicPlugin",
+			--"NFLoginLogicPlugin",
+			--"NFProxyLogicPlugin",
 
 		};
 		ServerType = NF_ST_NONE;
@@ -86,7 +86,7 @@ LoadPlugin =
 			"NFWorldClientPlugin",
 			"NFWorldServerPlugin",
 			
-			"NFLuaScriptPlugin",
+			--"NFLuaScriptPlugin",
 		};
 		ServerType = NF_ST_WORLD;
 	},
@@ -114,7 +114,7 @@ LoadPlugin =
 			
 			"NFGameLogicPlugin",
 			
-			"NFLuaScriptPlugin",
+			--"NFLuaScriptPlugin",
 		};
 		ServerType = NF_ST_GAME;
 	},
@@ -125,7 +125,7 @@ LoadPlugin =
 			"NFActorPlugin",
 			"NFMongoPlugin",
 			
-			"NFLuaScriptPlugin",
+			--"NFLuaScriptPlugin",
 		};
 		ServerType = NF_ST_REBOT;
 	},

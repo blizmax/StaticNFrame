@@ -234,7 +234,7 @@
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>$(SolutionDir)\..\Product\lib\$(Configuration)\;$(SolutionDir)\..\Product\run\$(Configuration)\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>luaBind.lib;libprotobuf.lib;NFMessageDefine.lib;NFCore.lib;NFPluginModule.lib;mongoc-1.0.lib;bson-1.0.lib;msvcrtd.lib;Dbghelp.lib;ws2_32.lib</AdditionalDependencies>
+      <AdditionalDependencies>luaBind.lib;libprotobuf.lib;NFMessageDefine.lib;NFCore.lib;NFPluginModule.lib;msvcrtd.lib;Dbghelp.lib;ws2_32.lib</AdditionalDependencies>
     </Link>
     <PreBuildEvent>
       <Command>

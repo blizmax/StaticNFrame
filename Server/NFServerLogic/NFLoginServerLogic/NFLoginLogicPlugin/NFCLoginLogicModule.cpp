@@ -9,6 +9,7 @@
 #include "NFComm/NFCore/NFMD5.h"
 #include "NFComm/NFCore/NFCommon.h"
 #include "NFComm/NFCore/NFStringUtility.h"
+#include "NFComm/NFPluginModule/NFProtobufCommon.h"
 
 NFCLoginLogicModule::NFCLoginLogicModule(NFIPluginManager* p)
 {
@@ -227,7 +228,7 @@ void NFCLoginLogicModule::RequestZoneList(const NFHttpHandle& req, const NFMsg::
 	}
 
 	std::string responeJson;
-	bool ret = NFServerCommon::MessageToJsonString(respone, responeJson);
+	bool ret = NFProtobufCommon::MessageToJsonString(respone, responeJson);
 	if (ret == false)
 	{
 		return;
@@ -296,7 +297,7 @@ void NFCLoginLogicModule::OnHandleMasterAccountLoginReturn(const uint32_t unLink
 	pPlatinfo->set_uid(NFCommon::tostr(uuid));
 
 	std::string responeJson;
-	bool ret = NFServerCommon::MessageToJsonString(respone, responeJson);
+	bool ret = NFProtobufCommon::MessageToJsonString(respone, responeJson);
 	if (ret == false)
 	{
 		return;
@@ -375,7 +376,7 @@ void NFCLoginLogicModule::RequestSelectZone(const NFHttpHandle& req, const NFMsg
 	pData->set_zoneuid(uid);
 
 	std::string responeJson;
-	bool ret = NFServerCommon::MessageToJsonString(respone, responeJson);
+	bool ret = NFProtobufCommon::MessageToJsonString(respone, responeJson);
 	if (ret == false)
 	{
 		return;

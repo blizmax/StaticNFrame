@@ -5,7 +5,7 @@
 #include "NFComm/NFCore/NFPlatform.h"
 #include "NFComm/NFPluginModule/NFLogMgr.h"
 #include "NFMessageDefine/NFMsgDefine.h"
-#include "NFServer/NFServerCommon/NFServerCommon.h"
+#include "NFComm/NFPluginModule/NFProtobufCommon.h"
 #include "common/rapidjson/rapidjson.h"
 #include "common/rapidjson/document.h"
 #include "common/rapidjson/stringbuffer.h"
@@ -611,7 +611,7 @@ void NFCMongoDriver::FindAllPrimaryKey()
 	{
 		const std::string& result = resultVec[i];
 		NFMsg::mongo_primary_key primary_key;
-		NFServerCommon::JsonStringToMessage(result, primary_key);
+		NFProtobufCommon::JsonStringToMessage(result, primary_key);
 
 		m_collectionPrimaryKeyMap.emplace(primary_key._id(), primary_key.primary());
 	}
@@ -656,7 +656,7 @@ bool NFCMongoDriver::InsertOne(const std::string& collectionName, bson_t *doc)
 bool NFCMongoDriver::InsertOne(const std::string& collectionName, const google::protobuf::Message& message)
 {
 	std::string jsonStr;
-	if (NFServerCommon::MessageToJsonString(message, jsonStr) == false)
+	if (NFProtobufCommon::MessageToJsonString(message, jsonStr) == false)
 	{
 		return false;
 	}
@@ -774,7 +774,7 @@ bool NFCMongoDriver::UpdateOne(const std::string& collectionName, const std::str
 bool NFCMongoDriver::UpdateOne(const std::string& collectionName, const google::protobuf::Message& message)
 {
 	std::string jsonStr;
-	if (NFServerCommon::MessageToJsonString(message, jsonStr) == false)
+	if (NFProtobufCommon::MessageToJsonString(message, jsonStr) == false)
 	{
 		return false;
 	}
@@ -844,7 +844,7 @@ bool NFCMongoDriver::UpdateFieldByKey(const std::string& collectionName, const s
 bool NFCMongoDriver::UpdateFieldByKey(const std::string& collectionName, const google::protobuf::Message& message, uint64_t key)
 {
 	std::string json_query;
-	if (NFServerCommon::MessageToJsonString(message, json_query))
+	if (NFProtobufCommon::MessageToJsonString(message, json_query))
 	{
 		return UpdateFieldByKey(collectionName, json_query, key);
 	}
@@ -854,7 +854,7 @@ bool NFCMongoDriver::UpdateFieldByKey(const std::string& collectionName, const g
 bool NFCMongoDriver::UpdateFieldByKey(const std::string& collectionName, const google::protobuf::Message& message, const std::string& key)
 {
 	std::string json_query;
-	if (NFServerCommon::MessageToJsonString(message, json_query))
+	if (NFProtobufCommon::MessageToJsonString(message, json_query))
 	{
 		return UpdateFieldByKey(collectionName, json_query, key);
 	}
@@ -913,7 +913,7 @@ bool NFCMongoDriver::UpdateOne(const std::string& collectionName, bson_t *select
 bool NFCMongoDriver::UpdateOneByKey(const std::string& collectionName, const google::protobuf::Message& message, const std::string& key)
 {
 	std::string json_query;
-	if (NFServerCommon::MessageToJsonString(message, json_query))
+	if (NFProtobufCommon::MessageToJsonString(message, json_query))
 	{
 		return UpdateOneByKey(collectionName, json_query, key);
 	}
@@ -924,7 +924,7 @@ bool NFCMongoDriver::UpdateOneByKey(const std::string& collectionName, const goo
 bool NFCMongoDriver::UpdateOneByKey(const std::string& collectionName, const google::protobuf::Message& message, uint64_t key)
 {
 	std::string json_query;
-	if (NFServerCommon::MessageToJsonString(message, json_query))
+	if (NFProtobufCommon::MessageToJsonString(message, json_query))
 	{
 		return UpdateOneByKey(collectionName, json_query, key);
 	}

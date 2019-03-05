@@ -20,8 +20,6 @@
 #pragma comment(lib, "netapi32.lib")
 
 ////////////////////////////////////////////////////////////////
-#pragma comment( lib, "bson-static-1.0.lib" )
-#pragma comment( lib, "mongoc-static-1.0.lib" )
 #pragma comment(lib, "ws2_32.lib")
 #pragma comment(lib, "Secur32.lib")
 #pragma comment( lib, "Crypt32.lib" )
@@ -55,7 +53,6 @@
 #pragma comment( lib, "NFMysqlPlugin.lib" )
 #pragma comment( lib, "NFLuaScriptPlugin.lib" )
 #pragma comment( lib, "NFTestPlugin.lib" )
-#pragma comment( lib, "NFMongoPlugin.lib" )
 
 /////////////////////////////////////////////////////
 
@@ -78,10 +75,24 @@
 #pragma comment( lib, "NFProxyLogicPlugin.lib" )
 #pragma comment( lib, "NFLoginLogicPlugin.lib" )
 #else
-#pragma comment( lib, "NFCore.lib" )
-#pragma comment( lib, "NFPluginModule.lib" )
-
-#pragma comment( lib, "user32.lib")
+/////////////////////////////////////////////////////////////////
+//windows“¿¿µø‚
+#pragma comment(lib,"msvcrtd.lib")
+#pragma comment(lib, "ws2_32.lib")
 #pragma comment( lib, "Dbghelp.lib" )
+#pragma comment(lib, "version.lib")
+#pragma comment(lib, "netapi32.lib")
+
+/////////////////////////////////////////////////////////////////
+
+#pragma comment(lib, "common.lib")
+#pragma comment( lib, "libprotobuf.lib" )
+
+/////////////////////////////////////////////////////////////////
+#pragma comment( lib, "NFCore.lib" )
+
+#pragma comment( lib, "NFPluginModule.lib" )
+#pragma comment( lib, "NFMessageDefine.lib" )
+#pragma comment( lib, "NFMath.lib" )
 #endif
 #endif

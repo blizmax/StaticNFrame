@@ -10,8 +10,6 @@
 #pragma once
 
 #include "NFComm/NFPluginModule/NFIModule.h"
-#include "NFComm/NFPluginModule/NFIHttpServerModule.h"
-#include "NFComm/NFPluginModule/NFTimerMgr.h"
 
 class NFCTestActorModule : public NFIModule
 {
@@ -28,7 +26,4 @@ public:
 	virtual bool BeforeShut() override;
 
 	virtual bool Shut() override;
-
-	void TestMongo();
-	void TestTimer();
 };
