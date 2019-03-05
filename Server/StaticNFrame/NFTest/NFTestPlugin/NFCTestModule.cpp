@@ -7,39 +7,39 @@
 //
 // -------------------------------------------------------------------------
 
-#include "NFCTestActorModule.h"
+#include "NFCTestModule.h"
 
 
-NFCTestActorModule::NFCTestActorModule(NFIPluginManager* p)
+NFCTestModule::NFCTestModule(NFIPluginManager* p)
 {
 	pPluginManager = p;
 }
 
-NFCTestActorModule::~NFCTestActorModule()
+NFCTestModule::~NFCTestModule()
 {
 }
 
-bool NFCTestActorModule::Init()
-{
-	return true;
-}
-
-bool NFCTestActorModule::AfterInit()
+bool NFCTestModule::Init()
 {
 	return true;
 }
 
-bool NFCTestActorModule::Execute()
+bool NFCTestModule::AfterInit()
 {
 	return true;
 }
 
-bool NFCTestActorModule::BeforeShut()
+bool NFCTestModule::Execute()
 {
 	return true;
 }
 
-bool NFCTestActorModule::Shut()
+bool NFCTestModule::BeforeShut()
+{
+	return true;
+}
+
+bool NFCTestModule::Shut()
 {
 	return true;
 }

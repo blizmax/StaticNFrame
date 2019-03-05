@@ -35,11 +35,11 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="NFCTestActorModule.cpp" />
+    <ClCompile Include="NFCTestModule.cpp" />
     <ClCompile Include="NFTestPlugin.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="NFCTestActorModule.h" />
+    <ClInclude Include="NFCTestModule.h" />
     <ClInclude Include="NFTestPlugin.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

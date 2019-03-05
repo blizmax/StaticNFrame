@@ -11,11 +11,11 @@
 
 #include "NFComm/NFPluginModule/NFIModule.h"
 
-class NFCTestActorModule : public NFIModule
+class NFCTestModule : public NFIModule
 {
 public:
-	explicit NFCTestActorModule(NFIPluginManager* p);
-	virtual ~NFCTestActorModule();
+	explicit NFCTestModule(NFIPluginManager* p);
+	virtual ~NFCTestModule();
 
 	virtual bool Init() override;
 
