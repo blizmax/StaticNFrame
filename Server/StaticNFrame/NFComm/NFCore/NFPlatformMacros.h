@@ -96,7 +96,7 @@
 #       define NF_DEBUG_MODE 1
 #   endif
 
-#define NF_STATIC_PLUGIN 1
+//#define NF_STATIC_PLUGIN 1
 
 #ifndef NF_STATIC_PLUGIN
 #define NF_DYNAMIC_PLUGIN 1

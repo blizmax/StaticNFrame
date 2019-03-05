@@ -9,6 +9,8 @@
 
 #pragma once
 
+#include <string>
+
 #include "NFComm/NFPluginModule/NFIModule.h"
 
 class NFCTestModule : public NFIModule
@@ -26,4 +28,6 @@ public:
 	virtual bool BeforeShut() override;
 
 	virtual bool Shut() override;
+private:
+	std::string m_szConnectString;
 };

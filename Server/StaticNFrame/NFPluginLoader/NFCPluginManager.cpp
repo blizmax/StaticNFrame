@@ -145,6 +145,7 @@ void NFCPluginManager::Registered(NFIPlugin* plugin)
 {
 	if (plugin == nullptr) return;
 
+	//动态加载的情况下，直接使用FindPlugin(plugin->GetPluginName()) 将导致崩溃， 这到底是为啥呢
 	std::string strPluginName = plugin->GetPluginName();
 	if (!FindPlugin(strPluginName))
 	{
@@ -166,7 +167,9 @@ void NFCPluginManager::UnRegistered(NFIPlugin* plugin)
 		return;
 	}
 
-	PluginInstanceMap::iterator it = mPluginInstanceMap.find(plugin->GetPluginName());
+	//动态加载的情况下，直接使用mPluginInstanceMap.find(plugin->GetPluginName()) 将导致崩溃， 这到底是为啥呢
+	std::string strPluginName = plugin->GetPluginName();
+	PluginInstanceMap::iterator it = mPluginInstanceMap.find(strPluginName);
 	if (it != mPluginInstanceMap.end())
 	{
 		if (it->second == nullptr)
@@ -201,16 +204,16 @@ bool NFCPluginManager::Execute()
 	uint64_t endTime = 0;
 	mCurFrameCount++;
 
-	//BeginProfiler("MainLoop");
+	BeginProfiler("MainLoop");
 	PluginInstanceMap::iterator it = mPluginInstanceMap.begin();
 	for (; it != mPluginInstanceMap.end(); ++it)
 	{
-		//BeginProfiler(it->second->GetPluginName() + "--Loop");
+		BeginProfiler(it->first + "--Loop");
 		bool tembRet = it->second->Execute();
 		bRet = bRet && tembRet;
-		//EndProfiler();
+		EndProfiler();
 	}
-	//EndProfiler();
+	EndProfiler();
 
 	//采用固定帧率
 	endTime = NFGetTime();
