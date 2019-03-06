@@ -592,7 +592,7 @@ public:
 	/**
 	* @brief map的数据项
 	*/
-	class HashMapLockItem
+	class _NFExport HashMapLockItem
 	{
 	public:
 
@@ -749,7 +749,7 @@ public:
 	/**
 	* @brief 定义迭代器
 	*/
-	struct HashMapLockIterator
+	struct _NFExport HashMapLockIterator
 	{
 	public:
 
@@ -958,7 +958,7 @@ public:
 	/**
 	* @brief 定义迭代器
 	*/
-	struct HashMapIterator
+	struct _NFExport HashMapIterator
 	{
 	public:
 

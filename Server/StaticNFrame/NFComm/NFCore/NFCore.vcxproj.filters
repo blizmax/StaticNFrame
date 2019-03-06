@@ -108,6 +108,9 @@
     <ClCompile Include="NFTCPack.cpp">
       <Filter>Common</Filter>
     </ClCompile>
+    <ClCompile Include="NFShm.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="NFBase64.h">
@@ -279,6 +282,9 @@
       <Filter>Common</Filter>
     </ClInclude>
     <ClInclude Include="NFTCPack.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="NFShm.h">
       <Filter>Common</Filter>
     </ClInclude>
   </ItemGroup>

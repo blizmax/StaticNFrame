@@ -357,6 +357,7 @@
     <ClCompile Include="NFRandom.cpp" />
     <ClCompile Include="NFSHA1.cpp" />
     <ClCompile Include="NFSHA2.cpp" />
+    <ClCompile Include="NFShm.cpp" />
     <ClCompile Include="NFSnprintf.cpp" />
     <ClCompile Include="NFStat.cpp" />
     <ClCompile Include="NFStringUtility.cpp" />
@@ -412,6 +413,7 @@
     <ClInclude Include="NFRandom.hpp" />
     <ClInclude Include="NFSHA1.h" />
     <ClInclude Include="NFSHA2.h" />
+    <ClInclude Include="NFShm.h" />
     <ClInclude Include="NFSingleton.hpp" />
     <ClInclude Include="NFSlice.hpp" />
     <ClInclude Include="NFSimpleBuffer.h" />

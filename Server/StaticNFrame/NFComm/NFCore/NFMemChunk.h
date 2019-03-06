@@ -221,7 +221,7 @@ private:
 *
 * TC_MemChunk 暂时只支持同一个Block大小的MemChunk
 */
-class NFMemChunkAllocator
+class _NFExport NFMemChunkAllocator
 {
 public:
 
@@ -414,7 +414,7 @@ private:
 *
 * 自动计算出块的个数(每种大小块的个数相同)
 */
-class NFMemMultiChunkAllocator
+class _NFExport NFMemMultiChunkAllocator
 {
 public:
 

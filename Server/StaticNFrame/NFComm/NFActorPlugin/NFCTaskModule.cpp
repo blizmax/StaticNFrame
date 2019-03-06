@@ -21,8 +21,6 @@ NFCTaskModule::NFCTaskModule(NFIPluginManager* p)
 	srand(static_cast<unsigned>(time(nullptr)));
 	//首先初始化
 	InitActorThread(std::thread::hardware_concurrency());
-
-	NFLogMgr::GetSingletonPtr()->LogNormal(1, __FUNCTION__);
 }
 
 NFCTaskModule::~NFCTaskModule()
@@ -32,7 +30,6 @@ NFCTaskModule::~NFCTaskModule()
 
 bool NFCTaskModule::Init()
 {
-	NFLogMgr::GetSingletonPtr()->LogNormal(1, __FUNCTION__);
 	return true;
 }
 
