@@ -389,6 +389,7 @@
     <ClInclude Include="NFMapList.hpp" />
     <ClInclude Include="NFMD5.h" />
     <ClInclude Include="NFMemChunk.h" />
+    <ClInclude Include="NFMemPolicy.h" />
     <ClInclude Include="NFMemQueue.h" />
     <ClInclude Include="NFMemMultiHashMap.h" />
     <ClInclude Include="NFMutex.h" />

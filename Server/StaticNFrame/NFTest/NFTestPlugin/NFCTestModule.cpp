@@ -35,6 +35,10 @@ bool NFCTestModule::Init()
 	if (shm.iscreate())
 	{
 		memHashMap.create(shm.getPointer(), shm.size());
+
+		std::string str;
+		memHashMap.get("gaoyi", str);
+
 		std::vector<NFMemHashMap::BlockData> vtData;
 		memHashMap.set("gaoyi", "sb", false, vtData);
 	}

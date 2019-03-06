@@ -55,7 +55,7 @@ public:
 	* @param bOwner  是否拥有共享内存,默认为false
 	*/
 #if NF_PLATFORM == NF_PLATFORM_WIN
-	NFShm(bool bOwner = false) : _bOwner(bOwner), _shmSize(0), _shmKey(0), _bCreate(true), _pshm(nullptr), _shemID(nullptr) {}
+	NFShm(bool bOwner = false) : _bOwner(bOwner), _shmSize(0), _shmKey(0), _bCreate(true), _pshm(nullptr), _shemID(nullptr), _fileID(nullptr){}
 #else
 	NFShm(bool bOwner = false) : _bOwner(bOwner), _shmSize(0), _shmKey(0), _bCreate(true), _pshm(nullptr), _shemID(-1) {}
 #endif
@@ -171,6 +171,7 @@ protected:
 	*/
 #if NF_PLATFORM == NF_PLATFORM_WIN
 	HANDLE			_shemID;
+	HANDLE			_fileID;
 #else
 	int             _shemID;
 #endif

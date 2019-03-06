@@ -287,5 +287,8 @@
     <ClInclude Include="NFShm.h">
       <Filter>Common</Filter>
     </ClInclude>
+    <ClInclude Include="NFMemPolicy.h">
+      <Filter>Common</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

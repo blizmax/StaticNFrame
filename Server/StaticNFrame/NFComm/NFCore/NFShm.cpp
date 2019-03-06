@@ -1,8 +1,18 @@
+// -------------------------------------------------------------------------
+//    @FileName         :    NFShm.cpp
+//    @Author           :    GaoYi
+//    @Date             :    2019-3-6
+//    @Email			:    445267987@qq.com
+//    @Module           :    NFCore
+//
+// -------------------------------------------------------------------------
+
 #include "NFShm.h"
 
 #include <cassert>
 #include <errno.h>
 #include "NFStringUtility.h"
+#include "NFFileUtility.h"
 
 
 NFShm::NFShm(size_t iShmSize, key_t iKey, bool bOwner)
@@ -27,13 +37,25 @@ void NFShm::init(size_t iShmSize, key_t iKey, bool bOwner)
 #if NF_PLATFORM == NF_PLATFORM_WIN
 	std::string shmFileName = NF_FORMAT("shm_key_{}.bus", iKey);
 	std::wstring wShmFileName = NFStringUtility::s2ws(shmFileName);
-	_shemID = OpenFileMapping(FILE_MAP_ALL_ACCESS, false, wShmFileName.c_str());
+	_shemID = OpenFileMapping(PAGE_READWRITE, false, wShmFileName.c_str());
 	
 	if (_shemID == nullptr)
 	{
 		_bCreate = true;
 
-		_shemID = CreateFileMapping(INVALID_HANDLE_VALUE, nullptr, PAGE_READWRITE, 0, static_cast<DWORD>(iShmSize), wShmFileName.c_str());
+		if (NFFileUtility::IsFileExist(shmFileName))
+		{
+			_bCreate = false;
+		}
+
+		_fileID = CreateFile(wShmFileName.c_str(), GENERIC_READ | GENERIC_WRITE, FILE_SHARE_READ | FILE_SHARE_WRITE, NULL, OPEN_ALWAYS, FILE_FLAG_SEQUENTIAL_SCAN, NULL);
+
+		if (_fileID == nullptr)
+		{
+			throw NFShmException("[NFShm::init()] CreateFile error", errno);
+		}
+
+		_shemID = CreateFileMapping(_fileID, nullptr, PAGE_READWRITE, 0, static_cast<DWORD>(iShmSize), wShmFileName.c_str());
 
 		if (_shemID == nullptr)
 		{
@@ -53,6 +75,19 @@ void NFShm::init(size_t iShmSize, key_t iKey, bool bOwner)
 	}
 
 #else
+	std::string shmFileName = NF_FORMAT("shm_key_{}.bus", iKey);
+	if (!NFFileUtility::IsFileExist(shmFileName))
+	{
+		NFFileUtility::WriteFile(shmFileName, &iKey, sizeof(iKey));
+	}
+
+	//防止重复
+	iKey = ftok(shmFileName.c_str(), 0);
+	if (iKey == -1)
+	{
+		throw NFShmException("[NFShm::init()] ftok error", errno);
+	}
+
 	//注意_bCreate的赋值位置:保证多线程用一个对象的时候也不会有问题
 	//试图创建
 	if ((_shemID = shmget(iKey, iShmSize, IPC_CREAT | IPC_EXCL | 0666)) < 0)
@@ -61,7 +96,7 @@ void NFShm::init(size_t iShmSize, key_t iKey, bool bOwner)
 		//有可能是已经存在同样的key_shm,则试图连接
 		if ((_shemID = shmget(iKey, iShmSize, 0666)) < 0)
 		{
-			throw NFShmException("[TC_Shm::init()] shmget error", errno);
+			throw NFShmException("[NFShm::init()] shmget error", errno);
 		}
 	}
 	else
@@ -72,7 +107,7 @@ void NFShm::init(size_t iShmSize, key_t iKey, bool bOwner)
 	//try to access shm
 	if ((_pshm = shmat(_shemID, NULL, 0)) == (char *)-1)
 	{
-		throw NFShmException("[TC_Shm::init()] shmat error", errno);
+		throw NFShmException("[NFShm::init()] shmat error", errno);
 	}
 #endif
 	_shmSize = iShmSize;
@@ -87,6 +122,7 @@ int NFShm::detach()
 	{
 		UnmapViewOfFile(_pshm);
 		CloseHandle(_shemID);
+		CloseHandle(_fileID);
 
 		_shemID = NULL;
 		_pshm = NULL;
@@ -112,6 +148,7 @@ int NFShm::del()
 	{
 		UnmapViewOfFile(_pshm);
 		CloseHandle(_shemID);
+		CloseHandle(_fileID);
 
 		_shemID = NULL;
 		_pshm = NULL;
