@@ -48,6 +48,9 @@ void NFKernelPlugin::Install()
 	REGISTER_MODULE(pPluginManager, NFIKernelModule, NFCKernelModule);
 	REGISTER_MODULE(pPluginManager, NFILogModule, NFCLogModule);
 	REGISTER_MODULE(pPluginManager, NFIConfigModule, NFCConfigModule);
+
+	//为了防止静态库的情况
+	INIT_SINGLETON_PLUGINMANAGER(pPluginManager);
 }
 
 void NFKernelPlugin::Uninstall()

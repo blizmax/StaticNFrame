@@ -169,18 +169,18 @@ NFMemChunk::tagChunkHead NFMemChunk::getChunkHead() const
 ////////////////////////////////////////////////////////////////////
 //
 
-TC_MemChunkAllocator::TC_MemChunkAllocator()
+NFMemChunkAllocator::NFMemChunkAllocator()
 	: _pHead(NULL), _pChunk(NULL)
 {
 }
 
-void TC_MemChunkAllocator::init(void *pAddr)
+void NFMemChunkAllocator::init(void *pAddr)
 {
 	_pHead = static_cast<tagChunkAllocatorHead*>(pAddr);
 	_pChunk = (char*)_pHead + sizeof(tagChunkAllocatorHead);
 }
 
-void TC_MemChunkAllocator::initChunk()
+void NFMemChunkAllocator::initChunk()
 {
 	assert(_pHead->_iSize > sizeof(tagChunkAllocatorHead));
 
@@ -195,7 +195,7 @@ void TC_MemChunkAllocator::initChunk()
 	_chunk.create((void*)((char *)_pChunk), _pHead->_iBlockSize, iBlockCount);
 }
 
-void TC_MemChunkAllocator::create(void *pAddr, size_t iSize, size_t iBlockSize)
+void NFMemChunkAllocator::create(void *pAddr, size_t iSize, size_t iBlockSize)
 {
 	init(pAddr);
 
@@ -205,7 +205,7 @@ void TC_MemChunkAllocator::create(void *pAddr, size_t iSize, size_t iBlockSize)
 	initChunk();
 }
 
-void TC_MemChunkAllocator::connectChunk()
+void NFMemChunkAllocator::connectChunk()
 {
 	assert(_pHead->_iSize > sizeof(tagChunkAllocatorHead));
 
@@ -216,41 +216,41 @@ void TC_MemChunkAllocator::connectChunk()
 	_chunk.connect((void*)((char *)_pChunk));
 }
 
-void TC_MemChunkAllocator::connect(void *pAddr)
+void NFMemChunkAllocator::connect(void *pAddr)
 {
 	init(pAddr);
 
 	connectChunk();
 }
 
-void TC_MemChunkAllocator::rebuild()
+void NFMemChunkAllocator::rebuild()
 {
 	_chunk.rebuild();
 }
 
-void* TC_MemChunkAllocator::allocate()
+void* NFMemChunkAllocator::allocate()
 {
 	return _chunk.allocate();
 }
 
-void* TC_MemChunkAllocator::allocate2(size_t &iIndex)
+void* NFMemChunkAllocator::allocate2(size_t &iIndex)
 {
 	return _chunk.allocate2(iIndex);
 }
 
-void TC_MemChunkAllocator::deallocate(void *pAddr)
+void NFMemChunkAllocator::deallocate(void *pAddr)
 {
 	assert(pAddr >= _pChunk);
 
 	_chunk.deallocate(pAddr);
 }
 
-void TC_MemChunkAllocator::deallocate2(size_t iIndex)
+void NFMemChunkAllocator::deallocate2(size_t iIndex)
 {
 	_chunk.deallocate2(iIndex);
 }
 
-NFMemChunk::tagChunkHead TC_MemChunkAllocator::getBlockDetail() const
+NFMemChunk::tagChunkHead NFMemChunkAllocator::getBlockDetail() const
 {
 	return _chunk.getChunkHead();
 }
@@ -388,12 +388,12 @@ void NFMemMultiChunkAllocator::calc()
 	sum += _pHead->_iMaxBlockSize;
 	_vBlockSize.push_back(_pHead->_iMaxBlockSize);
 
-	assert(_pHead->_iSize > (NFMemMultiChunkAllocator::getHeadSize() + TC_MemChunkAllocator::getHeadSize()*_vBlockSize.size() + NFMemChunk::getHeadSize()*_vBlockSize.size()));
+	assert(_pHead->_iSize > (NFMemMultiChunkAllocator::getHeadSize() + NFMemChunkAllocator::getHeadSize()*_vBlockSize.size() + NFMemChunk::getHeadSize()*_vBlockSize.size()));
 
 	//计算块的个数
 	_iBlockCount = (_pHead->_iSize
 		- NFMemMultiChunkAllocator::getHeadSize()
-		- TC_MemChunkAllocator::getHeadSize() * _vBlockSize.size()
+		- NFMemChunkAllocator::getHeadSize() * _vBlockSize.size()
 		- NFMemChunk::getHeadSize() * _vBlockSize.size()) / sum;
 
 	assert(_iBlockCount >= 1);
@@ -419,8 +419,8 @@ void NFMemMultiChunkAllocator::create(void *pAddr, size_t iSize, size_t iMinBloc
 	char *pChunkBegin = (char*)_pChunk;
 	for (size_t i = 0; i < _vBlockSize.size(); i++)
 	{
-		TC_MemChunkAllocator *p = new TC_MemChunkAllocator;
-		size_t iAllocSize = TC_MemChunkAllocator::getHeadSize() + NFMemChunk::calcMemSize(_vBlockSize[i], _iBlockCount);
+		NFMemChunkAllocator *p = new NFMemChunkAllocator;
+		size_t iAllocSize = NFMemChunkAllocator::getHeadSize() + NFMemChunk::calcMemSize(_vBlockSize[i], _iBlockCount);
 		p->create(pChunkBegin, iAllocSize, _vBlockSize[i]);
 		pChunkBegin += iAllocSize;
 		_allocator.push_back(p);
@@ -441,10 +441,10 @@ void NFMemMultiChunkAllocator::connect(void *pAddr)
 	char *pChunkBegin = (char*)_pChunk;
 	for (size_t i = 0; i < _vBlockSize.size(); i++)
 	{
-		TC_MemChunkAllocator *p = new TC_MemChunkAllocator;
+		NFMemChunkAllocator *p = new NFMemChunkAllocator;
 
 		p->connect(pChunkBegin);
-		pChunkBegin += TC_MemChunkAllocator::getHeadSize() + NFMemChunk::calcMemSize(_vBlockSize[i], _iBlockCount);
+		pChunkBegin += NFMemChunkAllocator::getHeadSize() + NFMemChunk::calcMemSize(_vBlockSize[i], _iBlockCount);
 		_allocator.push_back(p);
 	}
 

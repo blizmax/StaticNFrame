@@ -2138,7 +2138,7 @@ void NFMemMultiHashMap::create(void *pAddr, size_t iSize)
 	size_t iBlockSize = (_pHead->_iMinDataSize + _pHead->_iMaxDataSize) / 2 + iMaxHeadSize;
 
 	// 计算近似主key Hash个数
-	size_t iMHashCount = (iSize - sizeof(tagMapHead) - sizeof(tagModifyHead) - sizeof(TC_MemChunkAllocator::tagChunkAllocatorHead)) /
+	size_t iMHashCount = (iSize - sizeof(tagMapHead) - sizeof(tagModifyHead) - sizeof(NFMemChunkAllocator::tagChunkAllocatorHead)) /
 		((size_t)(iBlockSize*_fHashRatio*_fMainKeyRatio) +
 			(size_t)(sizeof(tagHashItem)*_fMainKeyRatio) + sizeof(tagMainKeyHashItem));
 	// 采用最近的素数作为hash值

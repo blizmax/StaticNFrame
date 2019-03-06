@@ -221,14 +221,14 @@ private:
 *
 * TC_MemChunk 暂时只支持同一个Block大小的MemChunk
 */
-class TC_MemChunkAllocator
+class NFMemChunkAllocator
 {
 public:
 
 	/**
 	* @brief 构造函数
 	*/
-	TC_MemChunkAllocator();
+	NFMemChunkAllocator();
 
 	/**
 	* @brief 初始化
@@ -369,13 +369,13 @@ protected:
 	/**
 	*@brief 不允许copy构造
 	*/
-	TC_MemChunkAllocator(const TC_MemChunkAllocator &);
+	NFMemChunkAllocator(const NFMemChunkAllocator &);
 	/**
 	*@brief 不允许赋值
 	*/
-	TC_MemChunkAllocator& operator=(const TC_MemChunkAllocator &);
-	bool operator==(const TC_MemChunkAllocator &mca) const;
-	bool operator!=(const TC_MemChunkAllocator &mca) const;
+	NFMemChunkAllocator& operator=(const NFMemChunkAllocator &);
+	bool operator==(const NFMemChunkAllocator &mca) const;
+	bool operator!=(const NFMemChunkAllocator &mca) const;
 
 private:
 
@@ -641,7 +641,7 @@ private:
 	/**
 	* chunk链表
 	*/
-	std::vector<TC_MemChunkAllocator*>       _allocator;
+	std::vector<NFMemChunkAllocator*>       _allocator;
 
 	/**
 	* 所有的索引个数

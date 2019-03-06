@@ -1548,7 +1548,7 @@ void NFMemHashMapCompact::create(void *pAddr, size_t iSize)
 	uint32_t iBlockSize = (_pHead->_iMinDataSize + _pHead->_iMaxDataSize) / 2 + sizeof(Block::tagBlockHead);
 
 	//Hash个数
-	uint32_t iHashCount = (iSize - sizeof(TC_MemChunkAllocator::tagChunkAllocatorHead)) / ((uint32_t)(iBlockSize*_fRadio) + sizeof(tagHashItem));
+	uint32_t iHashCount = (iSize - sizeof(NFMemChunkAllocator::tagChunkAllocatorHead)) / ((uint32_t)(iBlockSize*_fRadio) + sizeof(tagHashItem));
 	//采用最近的素数作为hash值
 	iHashCount = getMinPrimeNumber(iHashCount);
 

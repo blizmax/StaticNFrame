@@ -21,7 +21,10 @@
 #include "NFComm/NFPluginModule/NFTimerMgr.h"
 #include "NFComm/NFPluginModule/NFEventMgr.h"
 
-
+/*
+	说明:动态加载时，当公共库比如NFPluginModule编译的是一个静态库时，这时候单件模式里的static变量，
+	在每个plugin编译的DLL里都有一个单独的全景变量，所以需要下面的代码来把所有的变量重新设置一遍
+*/
 #define INIT_SINGLETON_PLUGINMANAGER(pManager)			\
 NFIEventModule* pEventModule = (NFIEventModule*)pManager->FindModule(typeid(NFIEventModule).name());\
 NFITimerModule* pTimerModule = (NFITimerModule*)pManager->FindModule(typeid(NFITimerModule).name());\
@@ -57,8 +60,8 @@ NFLogMgr::Instance()->ReleaseInstance();\
 
 #define REGISTER_STATIC_PLUGIN(pManager, className)  pManager->RegisteredStaticPlugin(#className, [] (NFIPluginManager* pMan) ->NFIPlugin* { return NF_NEW className(pMan);});
 
-#define CREATE_PLUGIN(pManager, className)  NFIPlugin* pCreatePlugin##className = new className(pManager); pManager->Registered( pCreatePlugin##className );
-//#define CREATE_PLUGIN(pManager, className)  NFIPlugin* pCreatePlugin##className = new className(pManager); pManager->Registered( pCreatePlugin##className );INIT_SINGLETON_PLUGINMANAGER(pManager);
+//#define CREATE_PLUGIN(pManager, className)  NFIPlugin* pCreatePlugin##className = new className(pManager); pManager->Registered( pCreatePlugin##className );
+#define CREATE_PLUGIN(pManager, className)  NFIPlugin* pCreatePlugin##className = new className(pManager); INIT_SINGLETON_PLUGINMANAGER(pManager); pManager->Registered( pCreatePlugin##className );
 
 #define DESTROY_PLUGIN(pManager, className) pManager->UnRegistered( pManager->FindPlugin((#className)) );
 
