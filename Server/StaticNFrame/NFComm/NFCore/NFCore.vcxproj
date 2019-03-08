@@ -377,6 +377,7 @@
     <ClInclude Include="NFError.h" />
     <ClInclude Include="NFHash.hpp" />
     <ClInclude Include="NFMemHashMap.h" />
+    <ClInclude Include="NFMemHashMap2.h" />
     <ClInclude Include="NFMemHashMapCompact.h" />
     <ClInclude Include="NFJson.h" />
     <ClInclude Include="NFLikely.h" />

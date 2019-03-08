@@ -290,5 +290,8 @@
     <ClInclude Include="NFMemPolicy.h">
       <Filter>Common</Filter>
     </ClInclude>
+    <ClInclude Include="NFMemHashMap2.h">
+      <Filter>Common</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

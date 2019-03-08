@@ -220,6 +220,189 @@
     <ClInclude Include="spdlog\fmt\bundled\time.h">
       <Filter>spdlog\fmt</Filter>
     </ClInclude>
+    <ClInclude Include="ctlib\include\base\CTAssert.h">
+      <Filter>ctlib</Filter>
+    </ClInclude>
+    <ClInclude Include="ctlib\include\base\CTBaseDefine.h">
+      <Filter>ctlib</Filter>
+    </ClInclude>
+    <ClInclude Include="ctlib\include\base\CTException.h">
+      <Filter>ctlib</Filter>
+    </ClInclude>
+    <ClInclude Include="ctlib\include\base\CTFile.h">
+      <Filter>ctlib</Filter>
+    </ClInclude>
+    <ClInclude Include="ctlib\include\base\CTLog.h">
+      <Filter>ctlib</Filter>
+    </ClInclude>
+    <ClInclude Include="ctlib\include\base\CTPlatform.h">
+      <Filter>ctlib</Filter>
+    </ClInclude>
+    <ClInclude Include="ctlib\include\base\CTSingleton.h">
+      <Filter>ctlib</Filter>
+    </ClInclude>
+    <ClInclude Include="ctlib\include\base\CTStringUtils.h">
+      <Filter>ctlib</Filter>
+    </ClInclude>
+    <ClInclude Include="ctlib\include\base\CTTime.h">
+      <Filter>ctlib</Filter>
+    </ClInclude>
+    <ClInclude Include="ctlib\include\ipc\CTShm.h">
+      <Filter>ctlib</Filter>
+    </ClInclude>
+    <ClInclude Include="ctlib\include\ipc\CTThread.h">
+      <Filter>ctlib</Filter>
+    </ClInclude>
+    <ClInclude Include="ctlib\include\ipc\CTThreadPool.h">
+      <Filter>ctlib</Filter>
+    </ClInclude>
+    <ClInclude Include="ctlib\include\net\CTBase64.h">
+      <Filter>ctlib</Filter>
+    </ClInclude>
+    <ClInclude Include="ctlib\include\net\CTBinhex.h">
+      <Filter>ctlib</Filter>
+    </ClInclude>
+    <ClInclude Include="ctlib\include\net\CTEpoll.h">
+      <Filter>ctlib</Filter>
+    </ClInclude>
+    <ClInclude Include="ctlib\include\net\CTIocp.h">
+      <Filter>ctlib</Filter>
+    </ClInclude>
+    <ClInclude Include="ctlib\include\net\CTMD5.h">
+      <Filter>ctlib</Filter>
+    </ClInclude>
+    <ClInclude Include="ctlib\include\net\CTQuoted.h">
+      <Filter>ctlib</Filter>
+    </ClInclude>
+    <ClInclude Include="ctlib\include\net\CTSocket.h">
+      <Filter>ctlib</Filter>
+    </ClInclude>
+    <ClInclude Include="ctlib\include\net\CTSocketUtils.h">
+      <Filter>ctlib</Filter>
+    </ClInclude>
+    <ClInclude Include="ctlib\include\net\CTTea.h">
+      <Filter>ctlib</Filter>
+    </ClInclude>
+    <ClInclude Include="ctlib\include\tool\CTSha1.h">
+      <Filter>ctlib</Filter>
+    </ClInclude>
+    <ClInclude Include="ctlib\include\CDataUpdateMgr.h">
+      <Filter>ctlib</Filter>
+    </ClInclude>
+    <ClInclude Include="ctlib\include\CTArray.h">
+      <Filter>ctlib</Filter>
+    </ClInclude>
+    <ClInclude Include="ctlib\include\CTAsyncCmd.h">
+      <Filter>ctlib</Filter>
+    </ClInclude>
+    <ClInclude Include="ctlib\include\CTAsyncCmdFactory.h">
+      <Filter>ctlib</Filter>
+    </ClInclude>
+    <ClInclude Include="ctlib\include\CTBase.h">
+      <Filter>ctlib</Filter>
+    </ClInclude>
+    <ClInclude Include="ctlib\include\CTBitset.h">
+      <Filter>ctlib</Filter>
+    </ClInclude>
+    <ClInclude Include="ctlib\include\CTBuffer.h">
+      <Filter>ctlib</Filter>
+    </ClInclude>
+    <ClInclude Include="ctlib\include\CTCodeConvert.h">
+      <Filter>ctlib</Filter>
+    </ClInclude>
+    <ClInclude Include="ctlib\include\CTCodeConvert2.h">
+      <Filter>ctlib</Filter>
+    </ClInclude>
+    <ClInclude Include="ctlib\include\CTCodeConvert3.h">
+      <Filter>ctlib</Filter>
+    </ClInclude>
+    <ClInclude Include="ctlib\include\CTCodeMySQL.h">
+      <Filter>ctlib</Filter>
+    </ClInclude>
+    <ClInclude Include="ctlib\include\CTCodeQueue.h">
+      <Filter>ctlib</Filter>
+    </ClInclude>
+    <ClInclude Include="ctlib\include\CTCodeUpdate.h">
+      <Filter>ctlib</Filter>
+    </ClInclude>
+    <ClInclude Include="ctlib\include\CTConfig.h">
+      <Filter>ctlib</Filter>
+    </ClInclude>
+    <ClInclude Include="ctlib\include\CTDataStoreFile.h">
+      <Filter>ctlib</Filter>
+    </ClInclude>
+    <ClInclude Include="ctlib\include\CTDoubleKeyedHashMgr.h">
+      <Filter>ctlib</Filter>
+    </ClInclude>
+    <ClInclude Include="ctlib\include\CTFileUtils.h">
+      <Filter>ctlib</Filter>
+    </ClInclude>
+    <ClInclude Include="ctlib\include\CTHashObjectMgr.h">
+      <Filter>ctlib</Filter>
+    </ClInclude>
+    <ClInclude Include="ctlib\include\CTHttpParse.h">
+      <Filter>ctlib</Filter>
+    </ClInclude>
+    <ClInclude Include="ctlib\include\CTKeyValue.h">
+      <Filter>ctlib</Filter>
+    </ClInclude>
+    <ClInclude Include="ctlib\include\CTMsgBase.h">
+      <Filter>ctlib</Filter>
+    </ClInclude>
+    <ClInclude Include="ctlib\include\CTMultiHashMgr.h">
+      <Filter>ctlib</Filter>
+    </ClInclude>
+    <ClInclude Include="ctlib\include\CTMultiObjectMgr.h">
+      <Filter>ctlib</Filter>
+    </ClInclude>
+    <ClInclude Include="ctlib\include\CTMySQL.h">
+      <Filter>ctlib</Filter>
+    </ClInclude>
+    <ClInclude Include="ctlib\include\CTMySQLCharset.h">
+      <Filter>ctlib</Filter>
+    </ClInclude>
+    <ClInclude Include="ctlib\include\CTNull.h">
+      <Filter>ctlib</Filter>
+    </ClInclude>
+    <ClInclude Include="ctlib\include\CTObjectMgr.h">
+      <Filter>ctlib</Filter>
+    </ClInclude>
+    <ClInclude Include="ctlib\include\CTObjReloadCheck.h">
+      <Filter>ctlib</Filter>
+    </ClInclude>
+    <ClInclude Include="ctlib\include\CTRandomNum.h">
+      <Filter>ctlib</Filter>
+    </ClInclude>
+    <ClInclude Include="ctlib\include\CTServerUtils.h">
+      <Filter>ctlib</Filter>
+    </ClInclude>
+    <ClInclude Include="ctlib\include\CTShmQueue.h">
+      <Filter>ctlib</Filter>
+    </ClInclude>
+    <ClInclude Include="ctlib\include\CTSimpleTimerMgr.h">
+      <Filter>ctlib</Filter>
+    </ClInclude>
+    <ClInclude Include="ctlib\include\CTSizeString.h">
+      <Filter>ctlib</Filter>
+    </ClInclude>
+    <ClInclude Include="ctlib\include\CTSoBase.h">
+      <Filter>ctlib</Filter>
+    </ClInclude>
+    <ClInclude Include="ctlib\include\CTStandardTimerMgr.h">
+      <Filter>ctlib</Filter>
+    </ClInclude>
+    <ClInclude Include="ctlib\include\CTStat.h">
+      <Filter>ctlib</Filter>
+    </ClInclude>
+    <ClInclude Include="ctlib\include\CTSyncSys.h">
+      <Filter>ctlib</Filter>
+    </ClInclude>
+    <ClInclude Include="ctlib\include\CTSysLog.h">
+      <Filter>ctlib</Filter>
+    </ClInclude>
+    <ClInclude Include="ctlib\include\CTTimeEscapeCheck.h">
+      <Filter>ctlib</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="sigar">
@@ -245,6 +428,9 @@
     </Filter>
     <Filter Include="spdlog\sinks">
       <UniqueIdentifier>{2a1a4708-204f-490d-b8e5-1188ad656969}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ctlib">
+      <UniqueIdentifier>{9b8cc0a6-298a-43db-840f-e02e0371f79d}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
