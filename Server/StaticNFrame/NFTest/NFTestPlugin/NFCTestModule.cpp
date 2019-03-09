@@ -12,6 +12,7 @@
 #include "NFComm/NFCore/NFMallocChunk.h"
 #include "NFComm/NFCore/NFSimpleBuffer.h"
 #include "NFComm/NFCore/NFMemHashMap.h"
+#include "NFComm/NFCore/NFMemHashMap2.h"
 #include "NFComm/NFCore/NFShm.h"
 
 
@@ -29,26 +30,11 @@ bool NFCTestModule::Init()
 	NFShm shm;
 	shm.init(1024 * 1024 * 32, 8888, true);
 
-	NFMemHashMap memHashMap;
-	memHashMap.initDataBlockSize(666, 666, 2);
-	memHashMap.initHashRadio(2);
-	if (shm.iscreate())
-	{
-		memHashMap.create(shm.getPointer(), shm.size());
+	NFMemHashMap2<int, int> memHashMap;
+	memHashMap.create(shm.getPointer(), 1024);
 
-		std::string str;
-		memHashMap.get("gaoyi", str);
-
-		std::vector<NFMemHashMap::BlockData> vtData;
-		memHashMap.set("gaoyi", "sb", false, vtData);
-	}
-	else
-	{
-		memHashMap.connect(shm.getPointer(), shm.size());
-	}
-
-	std::string str;
-	memHashMap.get("gaoyi", str);
+	NFMemHashMap2<int, int> memHashMap2;
+	memHashMap2.connect(shm.getPointer(), 1024);
 	return true;
 }
 
