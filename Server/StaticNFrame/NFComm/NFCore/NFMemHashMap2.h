@@ -186,7 +186,7 @@ public:
 		*/
 		BlockData* get()
 		{
-			return getBlockHead()->_cData;
+			return (BlockData*)getBlockHead()->_cData;
 		}
 
 		/**
@@ -197,8 +197,31 @@ public:
 		*/
 		int set(const Key& key, const Value& value)
 		{
-			void *p = allocate();
-			new (BlockData*)p;
+			//首先分配刚刚够的长度, 不能多一个chunk, 也不能少一个chunk
+			int ret = allocate(sizeof(BlockData));
+			if (ret != NFMemHashMap::RT_OK)
+			{
+				return ret;
+			}
+
+			size_t iUseSize = getBlockHead()->_iSize - sizeof(tagBlockHead);
+			getBlockHead()->_iDataLen = sizeof(BlockData);
+
+			BlockData *p = (BlockData*)getBlockHead()->_cData;
+			new (p) BlockData();
+			p->_key = key;
+			p->_value = value;
+			
+			return NFMemHashMap::RT_OK;
+		}
+
+		/**
+		* @brief 从当前的chunk开始释放
+		* @param iChunk 释放地址
+		*/
+		void deallocate(size_t iChunk)
+		{
+
 		}
 
 		/**
@@ -208,9 +231,18 @@ public:
 		*
 		* @return int,
 		*/
-		void* allocate()
+		int allocate(size_t iDataLen)
 		{
-			return getBlockHead()->_cData;
+			size_t fn = 0;
+
+			//一个块的真正的数据容量
+			fn = getBlockHead()->_iSize - sizeof(tagBlockHead);
+
+			if (fn >= iDataLen)
+			{
+				return NFMemHashMap2::RT_OK;
+			}
+			return NFMemHashMap2::RT_NO_MEMORY;
 		}
 	};
 
