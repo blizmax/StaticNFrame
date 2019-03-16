@@ -3,7 +3,7 @@
 #include "NFCProxyLogicModule.h"
 #include "NFComm/NFPluginModule/NFEventDefine.h"
 #include "NFComm/NFPluginModule/NFIPluginManager.h"
-#include "NFServer/NFServerCommon/NFServerCommon.h"
+#include "NFComm/NFPluginModule/NFProtobufCommon.h"
 #include "NFComm/NFCore/NFJson.h"
 #include "NFComm/NFCore/NFMD5.h"
 
@@ -108,7 +108,7 @@ void NFCProxyLogicModule::OnHandleJsonMessage(const uint32_t unLinkId, const uin
 {
 	NFMsg::ProxyCmdMessage cmdMessage;
 	std::string jsonMsg = std::string(msg, nLen);
-	if (NFServerCommon::JsonStringToMessage(jsonMsg, cmdMessage) == false)
+	if (NFProtobufCommon::JsonStringToMessage(jsonMsg, cmdMessage) == false)
 	{
 		NFLogError("error msg:{}", jsonMsg);
 		return;
@@ -119,7 +119,7 @@ void NFCProxyLogicModule::OnHandleJsonMessage(const uint32_t unLinkId, const uin
 	if (cmdMessage.cmd_name() == "Pmd.UserLoginTokenLoginUserPmd_C")
 	{
 		NFMsg::UserLoginTokenLoginUserPmd_C msg;
-		if (NFServerCommon::JsonStringToMessage(jsonMsg, msg) == false)
+		if (NFProtobufCommon::JsonStringToMessage(jsonMsg, msg) == false)
 		{
 			NFLogError("json to NFMsg::UserLoginTokenLoginUserPmd_C failed!");
 			return;
@@ -129,7 +129,7 @@ void NFCProxyLogicModule::OnHandleJsonMessage(const uint32_t unLinkId, const uin
 	else if (cmdMessage.cmd_name() == "Pmd.UserJsMessageForwardUserPmd_CS")
 	{
 		NFMsg::UserJsMessageForwardUserPmd_CS msg;
-		if (NFServerCommon::JsonStringToMessage(jsonMsg, msg) == false)
+		if (NFProtobufCommon::JsonStringToMessage(jsonMsg, msg) == false)
 		{
 			NFLogError("json to NFMsg::UserJsMessageForwardUserPmd_CS failed!");
 			return;
@@ -139,7 +139,7 @@ void NFCProxyLogicModule::OnHandleJsonMessage(const uint32_t unLinkId, const uin
 	else if (cmdMessage.cmd_name() == "Pmd.UserLoginReconnectLoginUserPmd_C")
 	{
 		NFMsg::UserLoginReconnectLoginUserPmd_C msg;
-		if (NFServerCommon::JsonStringToMessage(jsonMsg, msg) == false)
+		if (NFProtobufCommon::JsonStringToMessage(jsonMsg, msg) == false)
 		{
 			NFLogError("json to NFMsg::UserLoginReconnectLoginUserPmd_C failed!");
 			return;

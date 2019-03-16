@@ -334,7 +334,6 @@
     <ClCompile Include="NFBase64.cpp" />
     <ClCompile Include="NFCommon.cpp" />
     <ClCompile Include="NFError.cpp" />
-    <ClCompile Include="NFMemHashMap.cpp" />
     <ClCompile Include="NFMemHashMapCompact.cpp" />
     <ClCompile Include="NFJson.cpp" />
     <ClCompile Include="NFMallocChunk.cpp" />
@@ -376,7 +375,6 @@
     <ClInclude Include="NFConsistentHashNew.h" />
     <ClInclude Include="NFError.h" />
     <ClInclude Include="NFHash.hpp" />
-    <ClInclude Include="NFMemHashMap.h" />
     <ClInclude Include="NFMemHashMap2.h" />
     <ClInclude Include="NFMemHashMapCompact.h" />
     <ClInclude Include="NFJson.h" />

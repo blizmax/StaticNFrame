@@ -22,7 +22,7 @@
 #include "NFCommon.h"
 
 
-template<Key,Value>
+template<typename KEY, typename VALUE>
 class _NFExport NFMemHashMap
 {
 public:
@@ -34,15 +34,21 @@ public:
 
 		}
 
+		~NFMemHashPair()
+		{
+
+		}
+
 		NFMemHashPair(const NFMemHashPair& pair)
 		{
 			_key = pair._key;
 			_value = pair._value;
 		}
 
-		Key	_key;
-		Value _value;
-	}
+		KEY	_key;
+		VALUE _value;
+	};
+
 	///////////////////////////////////////////////////////////////////////////////////
 	/**
 	* @brief 内存数据块,读取和存放数据
@@ -203,7 +209,7 @@ public:
 			getBlockHead()->_iIndex = index;
 			getBlockHead()->_iBlockNext = 0;
 			getBlockHead()->_iBlockPrev = 0;
-			getBlockHead()->_iDataLen = 0;
+			getBlockHead()->_iDataLen = iAllocSize - sizeof(tagBlockHead);
 
 			_pMap->incElementCount();
 			_pMap->incListCount(index);
@@ -224,9 +230,6 @@ public:
 				_pMap->item(index)->_iBlockAddr = _iHead;
 				getBlockHead()->_iBlockPrev = (size_t)0;
 			}
-
-			NFMemHashPair* pPair = get();
-			new (pPair) NFMemHashPair();
 		}
 
 		/**
@@ -247,9 +250,46 @@ public:
 			return getBlockHead()->_iDataLen;
 		}
 
-		NFMemHashPair* get()
+		void* getData()
 		{
-			return (NFMemHashPair*)getBlockHead()->_cData;
+			return getBlockHead()->_cData;
+		}
+
+		void erase()
+		{
+			///////////////////从block链表中去掉///////////
+			//
+			//上一个block指向下一个block
+			if (getBlockHead()->_iBlockPrev != 0)
+			{
+				getBlockHead(getBlockHead()->_iBlockPrev)->_iBlockNext = getBlockHead()->_iBlockNext;
+			}
+
+			//下一个block指向上一个
+			if (getBlockHead()->_iBlockNext != 0)
+			{
+				getBlockHead(getBlockHead()->_iBlockNext)->_iBlockPrev = getBlockHead()->_iBlockPrev;
+			}
+
+			//////////////////如果是hash头部, 需要修改hash索引数据指针//////
+			//
+			_pMap->delListCount(getBlockHead()->_iIndex);
+			if (getBlockHead()->_iBlockPrev == 0)
+			{
+				//如果是hash桶的头部, 则还需要处理
+				NFMemHashMap::tagHashItem *pItem = _pMap->item(getBlockHead()->_iIndex);
+				assert(pItem->_iBlockAddr == _iHead);
+				if (pItem->_iBlockAddr == _iHead)
+				{
+					pItem->_iBlockAddr = getBlockHead()->_iBlockNext;
+				}
+			}
+
+			//元素个数减少
+			_pMap->delElementCount();
+
+			//归还到内存中
+			deallocate();
 		}
 	public:
 
@@ -278,7 +318,7 @@ public:
 		*/
 		BlockAllocator(NFMemHashMap *pMap)
 			: _pMap(pMap)
-			, _pChunkAllocator(new NFMemMultiChunkAllocator())
+			, _pChunkAllocator(new NFMemChunkAllocator())
 		{
 		}
 
@@ -301,9 +341,9 @@ public:
 		* @param iSize, 内存大小
 		* @param fFactor, 因子
 		*/
-		void create(void *pHeadAddr, size_t iSize, size_t iMinBlockSize, size_t iMaxBlockSize, float fFactor)
+		void create(void *pHeadAddr, size_t iSize, size_t iBlockSize)
 		{
-			_pChunkAllocator->create(pHeadAddr, iSize, iMinBlockSize, iMaxBlockSize, fFactor);
+			_pChunkAllocator->create(pHeadAddr, iSize, iBlockSize);
 		}
 
 		/**
@@ -313,16 +353,6 @@ public:
 		void connect(void *pHeadAddr)
 		{
 			_pChunkAllocator->connect(pHeadAddr);
-		}
-
-		/**
-		* @brief 扩展空间
-		* @param pAddr
-		* @param iSize
-		*/
-		void append(void *pAddr, size_t iSize)
-		{
-			_pChunkAllocator->append(pAddr, iSize);
 		}
 
 		/**
@@ -338,7 +368,7 @@ public:
 		*
 		* @return NFMemChunk::tagChunkHead
 		*/
-		std::vector<NFMemChunk::tagChunkHead> getBlockDetail() const { return _pChunkAllocator->getBlockDetail(); }
+		NFMemChunk::tagChunkHead getBlockDetail() const { return _pChunkAllocator->getBlockDetail(); }
 
 		/**
 		* @brief 获取内存大小
@@ -355,18 +385,11 @@ public:
 		size_t getCapacity() const { return _pChunkAllocator->getCapacity(); }
 
 		/**
-		* @brief 每种block中的chunk个数(每种block中的chunk个数相同)
+		* @brief 每个block的大小
 		*
-		* @return vector<size_t>
+		* @return block的大小
 		*/
-		std::vector<size_t> singleBlockChunkCount() const { return _pChunkAllocator->singleBlockChunkCount(); }
-
-		/**
-		* @brief 获取所有block的chunk个数
-		*
-		* @return size_t
-		*/
-		size_t allBlockChunkCount() const { return _pChunkAllocator->allBlockChunkCount(); }
+		size_t getBlockSize() const { return _pChunkAllocator->getBlockSize(); }
 
 		/**
 		* @brief 在内存中分配一个新的Block
@@ -378,8 +401,7 @@ public:
 		size_t allocateMemBlock(size_t index)
 		{
 		begin:
-			size_t iAllocSize = sizeof(Block::tagBlockHead) + sizeof(NFMemHashPair);
-			void *pAddr = _pChunkAllocator->allocate(iAllocSize, iAllocSize);
+			void *pAddr = _pChunkAllocator->allocate();
 			if (pAddr == NULL)
 			{
 				return 0;
@@ -388,7 +410,7 @@ public:
 			//分配的新的MemBlock, 初始化一下
 			size_t iAddr = _pMap->getRelative(pAddr);
 			Block block(_pMap, iAddr);
-			block.makeNew(index, iAllocSize);
+			block.makeNew(index, _pChunkAllocator->getBlockSize());
 
 			_pMap->incChunkCount();
 
@@ -420,19 +442,19 @@ public:
 		/**
 		* map
 		*/
-		NFMemHashMap2                  *_pMap;
+		NFMemHashMap                  *_pMap;
 
 		/**
 		* chunk分配器
 		*/
-		NFMemMultiChunkAllocator   *_pChunkAllocator;
+		NFMemChunkAllocator   *_pChunkAllocator;
 	};
 
 	////////////////////////////////////////////////////////////////
 	/**
 	* @brief map的数据项
 	*/
-	class _NFExport HashMapLockItem
+	class _NFExport HashMapItem
 	{
 	public:
 
@@ -441,7 +463,7 @@ public:
 		* @param pMap
 		* @param iAddr
 		*/
-		HashMapLockItem(NFMemHashMap *pMap, size_t iAddr)
+		HashMapItem(NFMemHashMap *pMap, size_t iAddr)
 			: _pMap(pMap)
 			, _iAddr(iAddr)
 		{
@@ -451,7 +473,7 @@ public:
 		*
 		* @param mcmdi
 		*/
-		HashMapLockItem(const HashMapLockItem &mcmdi)
+		HashMapItem(const HashMapItem &mcmdi)
 			: _pMap(mcmdi._pMap)
 			, _iAddr(mcmdi._iAddr)
 		{
@@ -463,7 +485,7 @@ public:
 		*
 		* @return HashMapLockItem&
 		*/
-		HashMapLockItem &operator=(const HashMapLockItem &mcmdi)
+		HashMapItem &operator=(const HashMapItem &mcmdi)
 		{
 			if (this != &mcmdi)
 			{
@@ -479,7 +501,7 @@ public:
 		*
 		* @return bool
 		*/
-		bool operator==(const HashMapLockItem &mcmdi)
+		bool operator==(const HashMapItem &mcmdi)
 		{
 			return _pMap == mcmdi._pMap && _iAddr == mcmdi._iAddr;
 		}
@@ -490,7 +512,7 @@ public:
 		*
 		* @return bool
 		*/
-		bool operator!=(const HashMapLockItem &mcmdi)
+		bool operator!=(const HashMapItem &mcmdi)
 		{
 			return _pMap != mcmdi._pMap || _iAddr != mcmdi._iAddr;
 		}
@@ -501,11 +523,11 @@ public:
 		*          RT_OK:数据获取OK
 		*          其他值, 异常
 		*/
-		Value* getValue()
+		VALUE& getValue()
 		{
 			Block block(_pMap, _iAddr);
-			NFMemHashPair* ptr = (NFMemHashPair*)block.get();
-			return &ptr->_value;
+			NFMemHashPair* ptr = (NFMemHashPair*)block.getData();
+			return ptr->_value;
 		}
 
 		/**
@@ -514,11 +536,11 @@ public:
 		*          RT_OK:数据获取OK
 		*          其他值, 异常
 		*/
-		Key* getKey()
+		const VALUE& getValue() const
 		{
 			Block block(_pMap, _iAddr);
-			NFMemHashPair* ptr = (NFMemHashPair*)block.get();
-			return &ptr->_key;
+			NFMemHashPair* ptr = (NFMemHashPair*)block.getData();
+			return ptr->_value;
 		}
 
 		/**
@@ -527,10 +549,19 @@ public:
 		*          RT_OK:数据获取OK
 		*          其他值, 异常
 		*/
-		NFMemHashPair* get()
+		const KEY& getKey() const
 		{
 			Block block(_pMap, _iAddr);
-			return (NFMemHashPair*)block.get();
+			NFMemHashPair* ptr = (NFMemHashPair*)block.getData();
+			return ptr->_key;
+		}
+
+		void Insert(const KEY& k, const VALUE& v)
+		{
+			Block block(_pMap, _iAddr);
+			NFMemHashPair* ptr = (NFMemHashPair*)block.getData();
+			ptr->_key = k;
+			ptr->_value = v;
 		}
 
 		/**
@@ -542,6 +573,18 @@ public:
 	protected:
 
 		/**
+		* @brief 获取值
+		* @return int
+		*          RT_OK:数据获取OK
+		*          其他值, 异常
+		*/
+		NFMemHashPair* getData()
+		{
+			Block block(_pMap, _iAddr);
+			return (NFMemHashPair*)block.getData();
+		}
+
+		/**
 		* @brief 下一个item
 		*
 		* @return HashMapLockItem
@@ -550,7 +593,7 @@ public:
 		{
 			Block block(_pMap, _iAddr);
 
-			if (iType == HashMapLockIterator::IT_BLOCK)
+			if (iType == HashMapIterator::IT_BLOCK)
 			{
 				size_t index = block.getBlockHead()->_iIndex;
 
@@ -588,7 +631,7 @@ public:
 		{
 			Block block(_pMap, _iAddr);
 
-			if (iType == HashMapLockIterator::IT_BLOCK)
+			if (iType == HashMapIterator::IT_BLOCK)
 			{
 				size_t index = block.getBlockHead()->_iIndex;
 				if (block.prevBlock())
@@ -617,11 +660,11 @@ public:
 			}
 		}
 
-		bool NFMemHashMap::HashMapLockItem::equal(const Key& k)
+		bool NFMemHashMap::HashMapItem::equal(const KEY& k)
 		{
-			NFMemHashPair* ptr = get();
+			const KEY& key = getKey();
 
-			if (ptr->_key == k)
+			if (key == k)
 			{
 				return true;
 			}
@@ -630,8 +673,7 @@ public:
 		}
 
 		friend class NFMemHashMap;
-		friend struct NFMemHashMap::HashMapLockIterator;
-
+		friend struct NFMemHashMap::HashMapIterator;
 	private:
 		/**
 		* map
@@ -648,7 +690,7 @@ public:
 	/**
 	* @brief 定义迭代器
 	*/
-	struct _NFExport HashMapLockIterator
+	struct _NFExport HashMapIterator
 	{
 	public:
 
@@ -674,7 +716,7 @@ public:
 		/**
 		*
 		*/
-		HashMapLockIterator()
+		HashMapIterator()
 			: _pMap(NULL), _iItem(NULL, 0), _iType(IT_BLOCK), _iOrder(IT_NEXT)
 		{
 		}
@@ -684,7 +726,7 @@ public:
 		* @param iAddr, 地址
 		* @param type
 		*/
-		HashMapLockIterator(NFMemHashMap *pMap, size_t iAddr, int iType, int iOrder)
+		HashMapIterator(NFMemHashMap *pMap, size_t iAddr, int iType, int iOrder)
 			: _pMap(pMap), _iItem(_pMap, iAddr), _iType(iType), _iOrder(iOrder)
 		{
 		}
@@ -693,7 +735,7 @@ public:
 		* @brief copy
 		* @param it
 		*/
-		HashMapLockIterator(const HashMapLockIterator &it)
+		HashMapIterator(const HashMapIterator &it)
 			: _pMap(it._pMap), _iItem(it._iItem), _iType(it._iType), _iOrder(it._iOrder)
 		{
 		}
@@ -704,7 +746,7 @@ public:
 		*
 		* @return HashMapLockIterator&
 		*/
-		HashMapLockIterator& operator=(const HashMapLockIterator &it)
+		HashMapIterator& operator=(const HashMapIterator &it)
 		{
 			if (this != &it)
 			{
@@ -723,7 +765,7 @@ public:
 		*
 		* @return bool
 		*/
-		bool operator==(const HashMapLockIterator& mcmi)
+		bool operator==(const HashMapIterator& mcmi)
 		{
 			if (_iItem.getAddr() != 0 || mcmi._iItem.getAddr() != 0)
 			{
@@ -742,7 +784,7 @@ public:
 		*
 		* @return bool
 		*/
-		bool operator!=(const HashMapLockIterator& mcmi)
+		bool operator!=(const HashMapIterator& mcmi)
 		{
 			if (_iItem.getAddr() != 0 || mcmi._iItem.getAddr() != 0)
 			{
@@ -760,448 +802,69 @@ public:
 		*
 		* @return HashMapLockIterator&
 		*/
-		HashMapLockIterator& operator++()
-		{
-			if (_iOrder == IT_NEXT)
-			{
-				_iItem.nextItem(_iType);
-			}
-			else
-			{
-				_iItem.prevItem(_iType);
-			}
-			return (*this);
-
-		}
-
-		/**
-		* @brief 后置++
-		*
-		* @return HashMapLockIterator&
-		*/
-		HashMapLockIterator operator++(int)
-		{
-			HashMapLockIterator it(*this);
-
-			if (_iOrder == IT_NEXT)
-			{
-				_iItem.nextItem(_iType);
-			}
-			else
-			{
-				_iItem.prevItem(_iType);
-			}
-
-			return it;
-
-		}
-
-		/**
-		*
-		*
-		* @return HashMapLockItem&i
-		*/
-		HashMapLockItem& operator*() { return _iItem; }
-
-		/**
-		*
-		*
-		* @return HashMapLockItem*
-		*/
-		HashMapLockItem* operator->() { return &_iItem; }
-
-	public:
-		/**
-		*
-		*/
-		NFMemHashMap  *_pMap;
-
-		/**
-		*
-		*/
-		HashMapLockItem _iItem;
-
-		/**
-		* 迭代器的方式
-		*/
-		int        _iType;
-
-		/**
-		* 迭代器的顺序
-		*/
-		int        _iOrder;
-
-	};
-
-	/////////////////////////////////////////////////////////////////////////
-	/**
-	* @brief 定义迭代器
-	*/
-	struct _NFExport HashMapLockIterator
-	{
-	public:
-
-		/**
-		*@brief 定义遍历方式
-		*/
-		enum
-		{
-			IT_BLOCK = 0,        /**普通的顺序*/
-			IT_SET = 1,        /**Set时间顺序*/
-			IT_GET = 2,        /**Get时间顺序*/
-		};
-
-		/**
-		* 迭代器的顺序
-		*/
-		enum
-		{
-			IT_NEXT = 0,        /**顺序*/
-			IT_PREV = 1,        /**逆序*/
-		};
-
-		/**
-		*
-		*/
-		HashMapLockIterator();
-
-		/**
-		* @brief 构造函数
-		* @param iAddr, 地址
-		* @param type
-		*/
-		HashMapLockIterator(NFMemHashMap *pMap, size_t iAddr, int iType, int iOrder);
-
-		/**
-		* @brief copy
-		* @param it
-		*/
-		HashMapLockIterator(const HashMapLockIterator &it);
-
-		/**
-		* @brief 复制
-		* @param it
-		*
-		* @return HashMapLockIterator&
-		*/
-		HashMapLockIterator& operator=(const HashMapLockIterator &it);
-
-		/**
-		*
-		* @param mcmi
-		*
-		* @return bool
-		*/
-		bool operator==(const HashMapLockIterator& mcmi);
-
-		/**
-		*
-		* @param mv
-		*
-		* @return bool
-		*/
-		bool operator!=(const HashMapLockIterator& mcmi);
-
-		/**
-		* @brief 前置++
-		*
-		* @return HashMapLockIterator&
-		*/
-		HashMapLockIterator& operator++();
-
-		/**
-		* @brief 后置++
-		*
-		* @return HashMapLockIterator&
-		*/
-		HashMapLockIterator operator++(int);
-
-		/**
-		*
-		*
-		* @return HashMapLockItem&i
-		*/
-		HashMapLockItem& operator*() { return _iItem; }
-
-		/**
-		*
-		*
-		* @return HashMapLockItem*
-		*/
-		HashMapLockItem* operator->() { return &_iItem; }
-
-	public:
-		/**
-		*
-		*/
-		NFMemHashMap  *_pMap;
-
-		/**
-		*
-		*/
-		HashMapLockItem _iItem;
-
-		/**
-		* 迭代器的方式
-		*/
-		int        _iType;
-
-		/**
-		* 迭代器的顺序
-		*/
-		int        _iOrder;
-
-	};
-
-	////////////////////////////////////////////////////////////////
-	/**
-	* @brief map的HashItem项, 一个HashItem对应多个数据项
-	*/
-	class HashMapItem
-	{
-	public:
-
-		/**
-		*
-		* @param pMap
-		* @param iIndex
-		*/
-		HashMapItem(NFMemHashMap *pMap, size_t iIndex)
-			: _pMap(pMap)
-			, _iIndex(iIndex)
-		{
-		}
-
-		/**
-		*
-		* @param mcmdi
-		*/
-		HashMapItem(const HashMapItem &mcmdi)
-			: _pMap(mcmdi._pMap)
-			, _iIndex(mcmdi._iIndex)
-		{
-		}
-
-		/**
-		*
-		* @param mcmdi
-		*
-		* @return HashMapItem&
-		*/
-		HashMapItem &operator=(const HashMapItem &mcmdi)
-		{
-			if (this != &mcmdi)
-			{
-				_pMap = mcmdi._pMap;
-				_iIndex = mcmdi._iIndex;
-			}
-			return (*this);
-		}
-
-		/**
-		*
-		* @param mcmdi
-		*
-		* @return bool
-		*/
-		bool operator==(const HashMapItem &mcmdi)
-		{
-			return _pMap == mcmdi._pMap && _iIndex == mcmdi._iIndex;
-		}
-
-		/**
-		*
-		* @param mcmdi
-		*
-		* @return bool
-		*/
-		bool operator!=(const HashMapItem &mcmdi)
-		{
-			return _pMap != mcmdi._pMap || _iIndex != mcmdi._iIndex;
-		}
-
-		/**
-		* @brief 获取当前hash桶的所有数量, 注意只获取有key/value的数据
-		* 对于只有key的数据, 不获取
-		*
-		* @return
-		*/
-		void get(std::vector<NFMemHashPair*> &vtData)
-		{
-			size_t iAddr = _pMap->item(_iIndex)->_iBlockAddr;
-
-			while (iAddr != 0)
-			{
-				Block block(_pMap, iAddr);
-
-				NFMemHashPair* ptr = block.get();
-				vtData.push_back(ptr);
-
-				iAddr = block.getBlockHead()->_iBlockNext;
-			}
-		}
-
-		/**
-		*
-		*
-		* @return int
-		*/
-		int getIndex() const { return _iIndex; }
-
-		/**
-		* @brief 下一个item
-		*
-		*/
-		void nextItem()
-		{
-			if (_iIndex == (size_t)(-1))
-			{
-				return;
-			}
-
-			if (_iIndex >= _pMap->getHashCount() - 1)
-			{
-				_iIndex = (size_t)(-1);
-				return;
-			}
-			_iIndex++;
-		}
-
-		friend class NFMemHashMap;
-		friend struct NFMemHashMap::HashMapIterator;
-
-	private:
-		/**
-		* map
-		*/
-		NFMemHashMap *_pMap;
-
-		/**
-		* 数据块地址
-		*/
-		size_t      _iIndex;
-	};
-
-	/////////////////////////////////////////////////////////////////////////
-	/**
-	* @brief 定义迭代器
-	*/
-	struct _NFExport HashMapIterator
-	{
-	public:
-
-		/**
-		* @brief 构造函数
-		*/
-		HashMapIterator()
-			: _pMap(NULL), _iItem(NULL, 0)
-		{
-		}
-
-		/**
-		* @brief 构造函数
-		* @param iIndex, 地址
-		* @param type
-		*/
-		HashMapIterator(NFMemHashMap *pMap, size_t iIndex)
-			: _pMap(pMap), _iItem(_pMap, iIndex)
-		{
-		}
-
-		/**
-		* @brief copy
-		* @param it
-		*/
-		HashMapIterator(const HashMapIterator &it)
-			: _pMap(it._pMap), _iItem(it._iItem)
-		{
-		}
-
-		/**
-		* @brief 复制
-		* @param it
-		*
-		* @return HashMapLockIterator&
-		*/
-		HashMapIterator& operator=(const HashMapIterator &it)
-		{
-			if (this != &it)
-			{
-				_pMap = it._pMap;
-				_iItem = it._iItem;
-			}
-
-			return (*this);
-		}
-
-		/**
-		*
-		* @param mcmi
-		*
-		* @return bool
-		*/
-		bool operator==(const HashMapIterator& mcmi)
-		{
-			if (_iItem.getIndex() != -1 || mcmi._iItem.getIndex() != -1)
-			{
-				return _pMap == mcmi._pMap && _iItem == mcmi._iItem;
-			}
-
-			return _pMap == mcmi._pMap;
-		}
-
-		/**
-		*
-		* @param mv
-		*
-		* @return bool
-		*/
-		bool operator!=(const HashMapIterator& mcmi)
-		{
-			if (_iItem.getIndex() != -1 || mcmi._iItem.getIndex() != -1)
-			{
-				return _pMap != mcmi._pMap || _iItem != mcmi._iItem;
-			}
-
-			return _pMap != mcmi._pMap;
-		}
-
-		/**
-		* @brief 前置++
-		*
-		* @return HashMapIterator&
-		*/
 		HashMapIterator& operator++()
 		{
-			_iItem.nextItem();
+			if (_iOrder == IT_NEXT)
+			{
+				_iItem.nextItem(_iType);
+			}
+			else
+			{
+				_iItem.prevItem(_iType);
+			}
 			return (*this);
+
 		}
 
 		/**
 		* @brief 后置++
 		*
-		* @return HashMapIterator&
+		* @return HashMapLockIterator&
 		*/
 		HashMapIterator operator++(int)
 		{
 			HashMapIterator it(*this);
-			_iItem.nextItem();
+
+			if (_iOrder == IT_NEXT)
+			{
+				_iItem.nextItem(_iType);
+			}
+			else
+			{
+				_iItem.prevItem(_iType);
+			}
+
 			return it;
+
 		}
 
 		/**
 		*
 		*
-		* @return HashMapItem&i
+		* @return HashMapLockItem&i
 		*/
-		HashMapItem& operator*() { return _iItem; }
+		HashMapItem& operator*() 
+		{
+			if (_iItem._pMap == NULL || _iItem._iAddr == 0)
+			{
+				throw NFException("_iItem._pMap == NULL || _iItem._iAddr == 0");
+			}
+			return _iItem; 
+		}
 
 		/**
 		*
 		*
-		* @return HashMapItem*
+		* @return HashMapLockItem*
 		*/
-		HashMapItem* operator->() { return &_iItem; }
+		HashMapItem* operator->() 
+		{
+			if (_iItem._pMap == NULL || _iItem._iAddr == 0)
+			{
+				throw NFException("_iItem._pMap == NULL || _iItem._iAddr == 0");
+			}
+			return &_iItem; 
+		}
 
 	public:
 		/**
@@ -1213,9 +876,18 @@ public:
 		*
 		*/
 		HashMapItem _iItem;
+
+		/**
+		* 迭代器的方式
+		*/
+		int        _iType;
+
+		/**
+		* 迭代器的顺序
+		*/
+		int        _iOrder;
+
 	};
-
-
 	//////////////////////////////////////////////////////////////////////////////////////////////////
 #if NF_PLATFORM == NF_PLATFORM_WIN
 #pragma  pack (push,1)
@@ -1227,9 +899,7 @@ public:
 		char   _cMaxVersion;        /**大版本*/
 		char   _cMinVersion;         /**小版本*/
 		size_t _iMemSize;            /**内存大小*/
-		size_t _iMinDataSize;        /**最小数据块大小*/
-		size_t _iMaxDataSize;        /**最大数据块大小*/
-		float  _fFactor;             /**因子*/
+		size_t _iBlockSize;         /**最小数据块大小*/
 		float   _fRadio;              /**chunks个数/hash个数*/
 		size_t _iElementCount;       /**总元素个数*/
 		size_t _iUsedChunk;          /**已经使用的内存块*/
@@ -1327,37 +997,25 @@ public:
 	};
 
 	/**
+	* @brief 定义迭代器
+	*/
+	typedef HashMapIterator     iterator;
+
+	/**
 	* @brief 定义hash处理器
 	*/
-	using hash_functor = std::function<size_t(const Key&)>;
+	using hash_functor = std::function<size_t(const KEY&)>;
 
 	/**
 	* @brief 构造函数
 	*/
-	NFMemHashMap2()
-		: _iMinDataSize(0)
-		, _iMaxDataSize(0)
-		, _fFactor(1.0)
+	NFMemHashMap()
+		:_iBlockSize(sizeof(NFMemHashPair) * 2 + sizeof(Block::tagBlockHead))
 		, _fRadio(2)
 		, _pDataAllocator(new BlockAllocator(this))
-		, _hashf(NFHash::hash<Key>())
+		, _end(this, 0, 0, 0)
+		, _hashf(NFHash::hash<KEY>())
 	{
-	}
-
-	/**
-	*  @brief 定义hash处理器初始化数据块平均大小
-	* 表示内存分配的时候，会分配n个最小块， n个（最小快*增长因子）, n个（最小快*增长因子*增长因子）..., 直到n个最大块
-	* n是hashmap自己计算出来的
-	* 这种分配策略通常是数据块记录变长比较多的使用， 便于节约内存，如果数据记录基本不是变长的， 那最小块=最大快，增长因子=1就可以了
-	* @param iMinDataSize 最小数据块大小
-	* @param iMaxDataSize 最大数据块大小
-	* @param fFactor      增长因子
-	*/
-	void initDataBlockSize(size_t iMinDataSize, size_t iMaxDataSize, float fFactor)
-	{
-		_iMinDataSize = iMinDataSize;
-		_iMaxDataSize = iMaxDataSize;
-		_fFactor = fFactor;
 	}
 
 	/**
@@ -1390,16 +1048,7 @@ public:
 			+ sizeof(NFMemMultiChunkAllocator::tagChunkAllocatorHead)
 			+ 10 > iSize)
 		{
-			throw NF_HashMap_Exception("[NFMemHashMap::create] mem size not enougth.");
-		}
-
-		//分配的内存比需要的大一点
-		initDataBlockSize(sizeof(NFMemHashPair) * 2, sizeof(NFMemHashPair) * 2, 1);
-		initHashRadio(2);
-
-		if (_iMinDataSize == 0 || _iMaxDataSize == 0 || _fFactor < 1.0)
-		{
-			throw NF_HashMap_Exception("[NFMemHashMap::create] init data size error:" + lexical_cast<std::string>(_iMinDataSize) + "|" + lexical_cast<std::string>(_iMaxDataSize) + "|" + lexical_cast<std::string>(_fFactor));
+			throw NFException("[NFMemHashMap::create] mem size not enougth.");
 		}
 
 		init(pAddr);
@@ -1407,17 +1056,14 @@ public:
 		_pHead->_cMaxVersion = MAX_VERSION;
 		_pHead->_cMinVersion = MIN_VERSION;
 		_pHead->_iMemSize = iSize;
-		_pHead->_iMinDataSize = _iMinDataSize;
-		_pHead->_iMaxDataSize = _iMaxDataSize;
-		_pHead->_fFactor = _fFactor;
+		//分配的空间比需要的稍微大点
+		_pHead->_iBlockSize = _iBlockSize;
 		_pHead->_fRadio = _fRadio;
 		_pHead->_iElementCount = 0;
-
-		//计算平均block大小
-		size_t iBlockSize = (_pHead->_iMinDataSize + _pHead->_iMaxDataSize) / 2 + sizeof(Block::tagBlockHead);
+		_pHead->_iUsedChunk = 0;
 
 		//Hash个数
-		size_t iHashCount = (iSize - sizeof(NFMemChunkAllocator::tagChunkAllocatorHead)) / ((size_t)(iBlockSize*_fRadio) + sizeof(tagHashItem));
+		size_t iHashCount = (iSize - sizeof(NFMemChunkAllocator::tagChunkAllocatorHead)) / ((size_t)(_iBlockSize*_fRadio) + sizeof(tagHashItem));
 		//采用最近的素数作为hash值
 		iHashCount = getMinPrimeNumber(iHashCount);
 
@@ -1428,7 +1074,7 @@ public:
 
 		void *pDataAddr = (char*)pHashAddr + _hash.getMemSize();
 
-		_pDataAllocator->create(pDataAddr, iSize - ((char*)pDataAddr - (char*)_pHead), sizeof(Block::tagBlockHead) + _pHead->_iMinDataSize, sizeof(Block::tagBlockHead) + _pHead->_iMaxDataSize, _pHead->_fFactor);
+		_pDataAllocator->create(pDataAddr, iSize - ((char*)pDataAddr - (char*)_pHead), _pHead->_iBlockSize);
 	}
 
 	/**
@@ -1445,12 +1091,12 @@ public:
 		{
 			std::ostringstream os;
 			os << (int)_pHead->_cMaxVersion << "." << (int)_pHead->_cMinVersion << " != " << ((int)MAX_VERSION) << "." << ((int)MIN_VERSION);
-			throw NF_HashMap_Exception("[NFMemHashMap::connect] hash map version not equal:" + os.str() + " (data != code)");
+			throw NFException("[NFMemHashMap::connect] hash map version not equal:" + os.str() + " (data != code)");
 		}
 
 		if (_pHead->_iMemSize != iSize)
 		{
-			throw NF_HashMap_Exception("[NFMemHashMap::connect] hash map size not equal:" + NFCommon::tostr(_pHead->_iMemSize) + "!=" + NFCommon::tostr(iSize));
+			throw NFException("[NFMemHashMap::connect] hash map size not equal:" + NFCommon::tostr(_pHead->_iMemSize) + "!=" + NFCommon::tostr(iSize));
 		}
 
 		void *pHashAddr = (char*)_pHead + sizeof(tagMapHead);
@@ -1459,49 +1105,8 @@ public:
 		void *pDataAddr = (char*)pHashAddr + _hash.getMemSize();
 
 		_pDataAllocator->connect(pDataAddr);
-		_iMinDataSize = _pHead->_iMinDataSize;
-		_iMaxDataSize = _pHead->_iMaxDataSize;
-		_fFactor = _pHead->_fFactor;
+		_iBlockSize = _pHead->_iBlockSize;
 		_fRadio = _pHead->_fRadio;
-	}
-
-	/**
-	*  @brief 原来的数据块基础上扩展内存,注意通常只能对mmap文件生效
-	* (如果iSize比本来的内存就小,则返回-1)
-	* @param pAddr, 扩展后的空间
-	* @param iSize
-	* @return 0:成功, -1:失败
-	*/
-	int append(void *pAddr, size_t iSize)
-	{
-		if (iSize <= _pHead->_iMemSize)
-		{
-			return -1;
-		}
-
-		init(pAddr);
-
-		if (_pHead->_cMaxVersion != MAX_VERSION || _pHead->_cMinVersion != MIN_VERSION)
-		{
-			std::ostringstream os;
-			os << (int)_pHead->_cMaxVersion << "." << (int)_pHead->_cMinVersion << " != " << ((int)MAX_VERSION) << "." << ((int)MIN_VERSION);
-			throw NF_HashMap_Exception("[TC_HashMap::append] hash map version not equal:" + os.str() + " (data != code)");
-		}
-
-		_pHead->_iMemSize = iSize;
-
-		void *pHashAddr = (char*)_pHead + sizeof(tagMapHead) + sizeof(tagModifyHead);
-		_hash.connect(pHashAddr);
-
-		void *pDataAddr = (char*)pHashAddr + _hash.getMemSize();
-		_pDataAllocator->append(pDataAddr, iSize - ((size_t)pDataAddr - (size_t)pAddr));
-
-		_iMinDataSize = _pHead->_iMinDataSize;
-		_iMaxDataSize = _pHead->_iMaxDataSize;
-		_fFactor = _pHead->_fFactor;
-		_fRadio = _pHead->_fRadio;
-
-		return 0;
 	}
 
 	/**
@@ -1605,7 +1210,7 @@ public:
 	*
 	* @return size_t
 	*/
-	size_t hashIndex(const Key& k)
+	size_t hashIndex(const KEY& k)
 	{
 		return _hashf(k) % _hash.size();
 	}
@@ -1615,21 +1220,21 @@ public:
 	*
 	* @return
 	*/
-	lock_iterator end() { return _lock_end; }
+	iterator end() { return _end; }
 
 	/**
 	* @brief  block正序
 	*
-	* @return lock_iterator
+	* @return iterator
 	*/
-	lock_iterator begin()
+	iterator begin()
 	{
 		for (size_t i = 0; i < _hash.size(); i++)
 		{
 			tagHashItem &hashItem = _hash[i];
 			if (hashItem._iBlockAddr != 0)
 			{
-				return lock_iterator(this, hashItem._iBlockAddr, lock_iterator::IT_BLOCK, lock_iterator::IT_NEXT);
+				return iterator(this, hashItem._iBlockAddr, iterator::IT_BLOCK, iterator::IT_NEXT);
 			}
 		}
 
@@ -1639,9 +1244,9 @@ public:
 	/**
 	* @brief  block逆序
 	*
-	* @return lock_iterator
+	* @return iterator
 	*/
-	lock_iterator rbegin()
+	iterator rbegin()
 	{
 		for (size_t i = _hash.size(); i > 0; i--)
 		{
@@ -1649,7 +1254,7 @@ public:
 			if (hashItem._iBlockAddr != 0)
 			{
 				Block block(this, hashItem._iBlockAddr);
-				return lock_iterator(this, block.getLastBlockHead(), lock_iterator::IT_BLOCK, lock_iterator::IT_PREV);
+				return iterator(this, block.getLastBlockHead(), iterator::IT_BLOCK, iterator::IT_PREV);
 			}
 		}
 
@@ -1661,7 +1266,7 @@ public:
 	* @brief  根据Key查找数据
 	* @param string
 	*/
-	lock_iterator find(const Key& k)
+	iterator find(const KEY& k)
 	{
 		size_t index = hashIndex(k);
 		if (item(index)->_iBlockAddr == 0)
@@ -1672,10 +1277,10 @@ public:
 		Block mb(this, item(index)->_iBlockAddr);
 		while (true)
 		{
-			HashMapLockItem mcmdi(this, mb.getHead());
+			HashMapItem mcmdi(this, mb.getHead());
 			if (mcmdi.equal(k))
 			{
-				return lock_iterator(this, mb.getHead(), lock_iterator::IT_BLOCK, lock_iterator::IT_NEXT);
+				return iterator(this, mb.getHead(), iterator::IT_BLOCK, iterator::IT_NEXT);
 			}
 
 			if (!mb.nextBlock())
@@ -1687,7 +1292,7 @@ public:
 		return end();
 	}
 
-	lock_iterator find(const Key& k, size_t index)
+	iterator find(const KEY& k, size_t index)
 	{
 		if (item(index)->_iBlockAddr == 0)
 		{
@@ -1697,10 +1302,10 @@ public:
 		Block mb(this, item(index)->_iBlockAddr);
 		while (true)
 		{
-			HashMapLockItem mcmdi(this, mb.getHead());
+			HashMapItem mcmdi(this, mb.getHead());
 			if (mcmdi.equal(k))
 			{
-				return lock_iterator(this, mb.getHead(), lock_iterator::IT_BLOCK, lock_iterator::IT_NEXT);
+				return iterator(this, mb.getHead(), iterator::IT_BLOCK, iterator::IT_NEXT);
 			}
 
 			if (!mb.nextBlock())
@@ -1712,53 +1317,56 @@ public:
 		return end();
 	}
 
-	lock_iterator insert(const Key& k, const Value& v)
+	iterator insert(const KEY& k, const VALUE& v)
 	{
 		size_t index = hashIndex(k);
-		lock_iterator it = find(k, index);
+		iterator it = find(k, index);
 
 		if (it == end())
 		{
-			//先分配空间, 并获得淘汰的数据
+			//分配空间
 			size_t iAddr = _pDataAllocator->allocateMemBlock(index);
 			if (iAddr == 0)
 			{
 				return end();
 			}
 
-			it = HashMapLockIterator(this, iAddr, HashMapLockIterator::IT_BLOCK, HashMapLockIterator::IT_NEXT);
+			Block block(this, iAddr);
+			NFMemHashPair* ptr = (NFMemHashPair*)block.getData();
+			new (ptr) NFMemHashPair();
+
+			it = iterator(this, iAddr, iterator::IT_BLOCK, iterator::IT_NEXT);
 		}
-	}
 
-	/////////////////////////////////////////////////////////////////////////////////////////
-	// 以下是遍历map函数, 不需要对map加锁
-
-	/**
-	* @brief  根据hash桶遍历
-	*
-	* @return hash_iterator
-	*/
-	hash_iterator hashBegin()
-	{
-		return hash_iterator(this, 0);
+		it->Insert(k, v);
+		return it;
 	}
 
 	/**
-	* @brief  结束
-	*
-	* @return
+	* @brief  删除数据
+	* @param k, 关键字
+	* @param data, 被删除的记录
+	* @return int:
+	*          RT_READONLY: map只读
+	*          RT_NO_DATA: 没有当前数据
+	*          RT_ONLY_KEY:只有Key, 删除成功
+	*          RT_OK: 删除数据成功
+	*         其他返回值: 错误
 	*/
-	hash_iterator hashEnd() { return _end; }
-
-	/**
-	* 获取指定下标的hash_iterator
-	* @param iIndex
-	*
-	* @return hash_iterator
-	*/
-	hash_iterator hashIndex(size_t iIndex)
+	void erase(const KEY& k)
 	{
-		return hash_iterator(this, iIndex);
+		size_t index = hashIndex(k);
+		iterator it = find(k, index);
+
+		if (it == end())
+		{
+			return;
+		}
+
+		Block block(this, it->getAddr());
+		block.erase();
+
+		return;
 	}
 
 	/**
@@ -1823,19 +1431,9 @@ protected:
 	tagMapHead                  *_pHead;
 
 	/**
-	* 最小的数据块大小
+	* 数据块大小
 	*/
-	size_t                      _iMinDataSize;
-
-	/**
-	* 最大的数据块大小
-	*/
-	size_t                      _iMaxDataSize;
-
-	/**
-	* 变化因子
-	*/
-	float                       _fFactor;
+	size_t                      _iBlockSize;
 
 	/**
 	* 设置chunk数据块/hash项比值
@@ -1855,12 +1453,7 @@ protected:
 	/**
 	* 尾部
 	*/
-	lock_iterator               _lock_end;
-
-	/**
-	* 尾部
-	*/
-	hash_iterator               _end;
+	iterator					_end;
 
 	/**
 	* hash值计算公式

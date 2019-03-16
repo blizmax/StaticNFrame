@@ -9,7 +9,9 @@
 
 #pragma once
 
-class NFServerLogicCommon
+#include "NFComm/NFCore/NFPlatform.h"
+
+class _NFExport NFServerLogicCommon
 {
 public:
 	NFServerLogicCommon();

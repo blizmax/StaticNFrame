@@ -35,7 +35,7 @@ public:
 /**
  *@brief 事件系统对象，所有想使用事件系统的都必须继承这个对象
  */
-class NFEventObj
+class _NFExport NFEventObj
 {
 public:
 	/**

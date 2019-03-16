@@ -87,9 +87,6 @@
     <ClCompile Include="NFMemChunk.cpp">
       <Filter>Common</Filter>
     </ClCompile>
-    <ClCompile Include="NFMemHashMap.cpp">
-      <Filter>Common</Filter>
-    </ClCompile>
     <ClCompile Include="NFMemHashMapCompact.cpp">
       <Filter>Common</Filter>
     </ClCompile>
@@ -258,9 +255,6 @@
       <Filter>Common</Filter>
     </ClInclude>
     <ClInclude Include="NFMemChunk.h">
-      <Filter>Common</Filter>
-    </ClInclude>
-    <ClInclude Include="NFMemHashMap.h">
       <Filter>Common</Filter>
     </ClInclude>
     <ClInclude Include="NFMemHashMapCompact.h">
