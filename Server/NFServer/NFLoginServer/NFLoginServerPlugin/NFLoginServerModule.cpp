@@ -57,27 +57,6 @@ bool NFCLoginServerModule::Init()
 			}
 			NFLogInfo("Login Server Open Http Port:{} Success!", pConfig->mHttpPort);
 		}
-
-		if (!pConfig->mMongoIp.empty())
-		{
-			if (pConfig->mMongoPort > 0)
-			{
-				bool ret = m_pMongoModule->AddMongoServer(NF_ST_LOGIN, pConfig->mMongoIp, pConfig->mMongoPort, pConfig->mMongoDbName);
-				if (ret == false)
-				{
-					NFLogError("Login Server Connected Mongo Failed, ip:{}, port:{}, dbname:{}", pConfig->mMongoIp, pConfig->mMongoPort, pConfig->mMongoDbName);
-					return false;
-				}
-
-				ret = m_pAsynMongoModule->AddMongoServer(NF_ST_LOGIN, pConfig->mMongoIp, pConfig->mMongoPort, pConfig->mMongoDbName);
-				if (ret == false)
-				{
-					NFLogError("Login Server Connected Mongo Failed, ip:{}, port:{}, dbname:{}", pConfig->mMongoIp, pConfig->mMongoPort, pConfig->mMongoDbName);
-					return false;
-				}
-				NFLogInfo("Login Server Connected Mongo Success, ip:{}, port:{}, dbname:{}", pConfig->mMongoIp, pConfig->mMongoPort, pConfig->mMongoDbName);
-			}
-		}
 	}
 	else
 	{

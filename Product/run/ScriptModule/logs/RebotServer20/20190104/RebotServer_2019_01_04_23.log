@@ -1,0 +1,1076 @@
+[info | 2019-01-04 23:13:58.016] | [NFCPluginManager::Awake:82] | NFPluginLoader Awake................
+[info | 2019-01-04 23:13:58.038] | [NFCPluginManager::Init:112] | NFPluginLoader Init................
+[debug | 2019-01-04 23:13:58.282] | [Lua] | [../ScriptModule\module.lua:5] | load module:RebotServerModule
+[info | 2019-01-04 23:13:58.283] | [NFCPluginManager::AfterInit:385] | NFPluginLoader AfterInit................
+[info | 2019-01-04 23:13:58.283] | [NFCPluginManager::CheckConfig:396] | NFPluginLoader CheckConfig................
+[info | 2019-01-04 23:13:58.283] | [NFCPluginManager::ReadyExecute:408] | NFPluginLoader ReadyExecute................
+[debug | 2019-01-04 23:14:23.032] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:23.035] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:23.037] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:23.039] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:23.042] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[error | 2019-01-04 23:14:23.043] | [Lua] | [../ScriptModule/gxlua\LuaNFrame.lua:93] | RebotServerModule.addRebot cost time:12565 us some thint wrong
+[debug | 2019-01-04 23:14:23.693] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:24.056] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:24.061] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:24.067] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:24.075] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:24.079] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[error | 2019-01-04 23:14:24.081] | [Lua] | [../ScriptModule/gxlua\LuaNFrame.lua:93] | RebotServerModule.addRebot cost time:30614 us some thint wrong
+[debug | 2019-01-04 23:14:24.434] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:25.069] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:25.077] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:25.083] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:25.089] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:25.094] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[error | 2019-01-04 23:14:25.096] | [Lua] | [../ScriptModule/gxlua\LuaNFrame.lua:93] | RebotServerModule.addRebot cost time:33134 us some thint wrong
+[debug | 2019-01-04 23:14:25.290] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:25.691] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:25.710] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:25.730] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:25.939] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:26.067] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:26.086] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:26.093] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:26.097] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:26.100] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:26.103] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:26.106] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[error | 2019-01-04 23:14:26.109] | [Lua] | [../ScriptModule/gxlua\LuaNFrame.lua:93] | RebotServerModule.addRebot cost time:18102 us some thint wrong
+[debug | 2019-01-04 23:14:26.294] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:26.319] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:26.342] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[warning | 2019-01-04 23:14:26.343] | [NFCPluginManager::Execute:227] | frame timeout:86
+[debug | 2019-01-04 23:14:26.676] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:26.695] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:26.713] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:26.730] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:26.748] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:26.755] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:26.765] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:26.773] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:26.781] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[warning | 2019-01-04 23:14:26.782] | [NFCPluginManager::Execute:227] | frame timeout:133
+[debug | 2019-01-04 23:14:26.792] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:26.801] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:27.125] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:27.128] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:27.132] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:27.136] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:27.139] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[error | 2019-01-04 23:14:27.143] | [Lua] | [../ScriptModule/gxlua\LuaNFrame.lua:93] | RebotServerModule.addRebot cost time:20932 us some thint wrong
+[debug | 2019-01-04 23:14:27.244] | [Lua] | [../ScriptModule/RebotServer\RebotServerModule.lua:228] | accountgaoyi1546614837610 login success.............
+[debug | 2019-01-04 23:14:27.399] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:27.416] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:27.430] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:27.447] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:27.462] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[warning | 2019-01-04 23:14:27.463] | [NFCPluginManager::Execute:227] | frame timeout:87
+[debug | 2019-01-04 23:14:27.478] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:27.499] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:27.508] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:27.517] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:27.703] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:27.805] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:27.875] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:27.890] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:27.909] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:27.922] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:27.930] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:27.978] | [Lua] | [../ScriptModule/RebotServer\RebotServerModule.lua:228] | accountgaoyi1546614837612 login success.............
+[debug | 2019-01-04 23:14:28.155] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:28.161] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:28.167] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:28.173] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:28.179] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[error | 2019-01-04 23:14:28.185] | [Lua] | [../ScriptModule/gxlua\LuaNFrame.lua:93] | RebotServerModule.addRebot cost time:37292 us some thint wrong
+[debug | 2019-01-04 23:14:28.437] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:28.540] | [Lua] | [../ScriptModule/RebotServer\RebotServerModule.lua:228] | accountgaoyi1546614837619 login success.............
+[debug | 2019-01-04 23:14:28.574] | [Lua] | [../ScriptModule/RebotServer\RebotServerModule.lua:228] | accountgaoyi1546614837620 login success.............
+[debug | 2019-01-04 23:14:28.610] | [Lua] | [../ScriptModule/RebotServer\RebotServerModule.lua:228] | accountgaoyi1546614837618 login success.............
+[debug | 2019-01-04 23:14:28.645] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[warning | 2019-01-04 23:14:28.646] | [NFCPluginManager::Execute:227] | frame timeout:130
+[debug | 2019-01-04 23:14:28.658] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:28.668] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:28.677] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:28.688] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:28.698] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:28.788] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:28.796] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:28.877] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:28.896] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:28.910] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:28.921] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:28.934] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:29.168] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:29.174] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:29.177] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:29.181] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:29.185] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[error | 2019-01-04 23:14:29.189] | [Lua] | [../ScriptModule/gxlua\LuaNFrame.lua:93] | RebotServerModule.addRebot cost time:26487 us some thint wrong
+[debug | 2019-01-04 23:14:29.207] | [Lua] | [../ScriptModule/RebotServer\RebotServerModule.lua:228] | accountgaoyi1546614837611 login success.............
+[debug | 2019-01-04 23:14:29.257] | [Lua] | [../ScriptModule/RebotServer\RebotServerModule.lua:228] | accountgaoyi1546614837615 login success.............
+[warning | 2019-01-04 23:14:29.288] | [NFCPluginManager::Execute:227] | frame timeout:130
+[debug | 2019-01-04 23:14:29.584] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:29.597] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:29.711] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:29.723] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:29.735] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:29.753] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:29.770] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:29.786] | [Lua] | [../ScriptModule/RebotServer\RebotServerModule.lua:228] | accountgaoyi1546614837624 login success.............
+[debug | 2019-01-04 23:14:29.854] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:29.864] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:29.872] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:29.914] | [Lua] | [../ScriptModule/RebotServer\RebotServerModule.lua:228] | accountgaoyi1546614837621 login success.............
+[debug | 2019-01-04 23:14:29.940] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:29.948] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:29.994] | [Lua] | [../ScriptModule/RebotServer\RebotServerModule.lua:228] | accountgaoyi1546614837606 login success.............
+[debug | 2019-01-04 23:14:30.021] | [Lua] | [../ScriptModule/RebotServer\RebotServerModule.lua:228] | accountgaoyi1546614837607 login success.............
+[debug | 2019-01-04 23:14:30.052] | [Lua] | [../ScriptModule/RebotServer\RebotServerModule.lua:228] | accountgaoyi1546614837609 login success.............
+[warning | 2019-01-04 23:14:30.078] | [NFCPluginManager::Execute:227] | frame timeout:93
+[debug | 2019-01-04 23:14:30.113] | [Lua] | [../ScriptModule/RebotServer\RebotServerModule.lua:228] | accountgaoyi1546614837623 login success.............
+[debug | 2019-01-04 23:14:30.145] | [Lua] | [../ScriptModule/RebotServer\RebotServerModule.lua:228] | accountgaoyi1546614837625 login success.............
+[debug | 2019-01-04 23:14:30.189] | [Lua] | [../ScriptModule/RebotServer\RebotServerModule.lua:228] | accountgaoyi1546614837622 login success.............
+[debug | 2019-01-04 23:14:30.219] | [Lua] | [../ScriptModule/RebotServer\RebotServerModule.lua:228] | accountgaoyi1546614837608 login success.............
+[warning | 2019-01-04 23:14:30.256] | [NFCPluginManager::Execute:227] | frame timeout:177
+[debug | 2019-01-04 23:14:30.263] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:30.265] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:30.267] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:30.270] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:30.272] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[error | 2019-01-04 23:14:30.276] | [Lua] | [../ScriptModule/gxlua\LuaNFrame.lua:93] | RebotServerModule.addRebot cost time:16186 us some thint wrong
+[debug | 2019-01-04 23:14:30.708] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:30.722] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:30.736] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:30.746] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:30.941] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:30.952] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:30.960] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:30.980] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:30.991] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:31.147] | [Lua] | [../ScriptModule/RebotServer\RebotServerModule.lua:228] | accountgaoyi1546614837613 login success.............
+[debug | 2019-01-04 23:14:31.189] | [Lua] | [../ScriptModule/RebotServer\RebotServerModule.lua:228] | accountgaoyi1546614837630 login success.............
+[debug | 2019-01-04 23:14:31.221] | [Lua] | [../ScriptModule/RebotServer\RebotServerModule.lua:228] | accountgaoyi1546614837627 login success.............
+[debug | 2019-01-04 23:14:31.255] | [Lua] | [../ScriptModule/RebotServer\RebotServerModule.lua:228] | accountgaoyi1546614837629 login success.............
+[debug | 2019-01-04 23:14:31.293] | [Lua] | [../ScriptModule/RebotServer\RebotServerModule.lua:228] | accountgaoyi1546614837614 login success.............
+[debug | 2019-01-04 23:14:31.329] | [Lua] | [../ScriptModule/RebotServer\RebotServerModule.lua:228] | accountgaoyi1546614837628 login success.............
+[error | 2019-01-04 23:14:31.360] | [NFCPluginManager::Execute:231] | frame timeout:265, something wrong
+[debug | 2019-01-04 23:14:31.366] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:31.368] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:31.371] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:31.373] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:31.376] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[error | 2019-01-04 23:14:31.379] | [Lua] | [../ScriptModule/gxlua\LuaNFrame.lua:93] | RebotServerModule.addRebot cost time:15731 us some thint wrong
+[debug | 2019-01-04 23:14:31.423] | [Lua] | [../ScriptModule/RebotServer\RebotServerModule.lua:228] | accountgaoyi1546614837626 login success.............
+[warning | 2019-01-04 23:14:31.463] | [NFCPluginManager::Execute:227] | frame timeout:102
+[debug | 2019-01-04 23:14:31.793] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:31.807] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:31.818] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:31.847] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:31.856] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:31.934] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:32.131] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:32.269] | [Lua] | [../ScriptModule/RebotServer\RebotServerModule.lua:228] | accountgaoyi1546614837617 login success.............
+[warning | 2019-01-04 23:14:32.320] | [NFCPluginManager::Execute:227] | frame timeout:86
+[debug | 2019-01-04 23:14:32.366] | [Lua] | [../ScriptModule/RebotServer\RebotServerModule.lua:228] | accountgaoyi1546614837633 login success.............
+[debug | 2019-01-04 23:14:32.394] | [Lua] | [../ScriptModule/RebotServer\RebotServerModule.lua:228] | accountgaoyi1546614837632 login success.............
+[debug | 2019-01-04 23:14:32.419] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:32.421] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:32.423] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:32.425] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:32.428] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[error | 2019-01-04 23:14:32.431] | [Lua] | [../ScriptModule/gxlua\LuaNFrame.lua:93] | RebotServerModule.addRebot cost time:14020 us some thint wrong
+[debug | 2019-01-04 23:14:33.120] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:33.137] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:33.186] | [Lua] | [../ScriptModule/RebotServer\RebotServerModule.lua:228] | accountgaoyi1546614837639 login success.............
+[debug | 2019-01-04 23:14:33.451] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:33.457] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:33.462] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:33.466] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:33.469] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[error | 2019-01-04 23:14:33.473] | [Lua] | [../ScriptModule/gxlua\LuaNFrame.lua:93] | RebotServerModule.addRebot cost time:26576 us some thint wrong
+[debug | 2019-01-04 23:14:33.531] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[warning | 2019-01-04 23:14:33.531] | [NFCPluginManager::Execute:227] | frame timeout:88
+[debug | 2019-01-04 23:14:33.640] | [Lua] | [../ScriptModule/RebotServer\RebotServerModule.lua:228] | accountgaoyi1546614837634 login success.............
+[debug | 2019-01-04 23:14:33.672] | [Lua] | [../ScriptModule/RebotServer\RebotServerModule.lua:228] | accountgaoyi1546614837635 login success.............
+[warning | 2019-01-04 23:14:33.698] | [NFCPluginManager::Execute:227] | frame timeout:131
+[debug | 2019-01-04 23:14:34.102] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:34.470] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:34.473] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:34.475] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:34.478] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:34.482] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[error | 2019-01-04 23:14:34.486] | [Lua] | [../ScriptModule/gxlua\LuaNFrame.lua:93] | RebotServerModule.addRebot cost time:18119 us some thint wrong
+[debug | 2019-01-04 23:14:34.631] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:34.870] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:35.051] | [Lua] | [../ScriptModule/RebotServer\RebotServerModule.lua:228] | accountgaoyi1546614837616 login success.............
+[error | 2019-01-04 23:14:35.191] | [Lua] | [../ScriptModule/gxlua\LuaNFrame.lua:86] | RebotServerModule.UpdateSec cost time:10154 us some thint wrong
+[debug | 2019-01-04 23:14:35.475] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:35.478] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:35.480] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:35.483] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:35.486] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[error | 2019-01-04 23:14:35.490] | [Lua] | [../ScriptModule/gxlua\LuaNFrame.lua:93] | RebotServerModule.addRebot cost time:17122 us some thint wrong
+[debug | 2019-01-04 23:14:35.704] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:35.864] | [Lua] | [../ScriptModule/RebotServer\RebotServerModule.lua:228] | accountgaoyi1546614837644 login success.............
+[debug | 2019-01-04 23:14:35.923] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:36.061] | [Lua] | [../ScriptModule/RebotServer\RebotServerModule.lua:228] | accountgaoyi1546614837640 login success.............
+[debug | 2019-01-04 23:14:36.091] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:36.098] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:36.129] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:36.486] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:36.490] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:36.495] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:36.497] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:36.500] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[error | 2019-01-04 23:14:36.503] | [Lua] | [../ScriptModule/gxlua\LuaNFrame.lua:93] | RebotServerModule.addRebot cost time:20114 us some thint wrong
+[debug | 2019-01-04 23:14:36.710] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:36.718] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[warning | 2019-01-04 23:14:36.719] | [NFCPluginManager::Execute:227] | frame timeout:83
+[debug | 2019-01-04 23:14:36.840] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:37.081] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:37.146] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:37.154] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:37.449] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:37.502] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:37.508] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:37.514] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:37.517] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:37.520] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[error | 2019-01-04 23:14:37.526] | [Lua] | [../ScriptModule/gxlua\LuaNFrame.lua:93] | RebotServerModule.addRebot cost time:31149 us some thint wrong
+[debug | 2019-01-04 23:14:37.709] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:37.787] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:38.047] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:38.367] | [Lua] | [../ScriptModule/RebotServer\RebotServerModule.lua:228] | accountgaoyi1546614837643 login success.............
+[debug | 2019-01-04 23:14:38.475] | [Lua] | [../ScriptModule/RebotServer\RebotServerModule.lua:228] | accountgaoyi1546614837642 login success.............
+[debug | 2019-01-04 23:14:38.503] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:38.505] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:38.507] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:38.509] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:38.512] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[error | 2019-01-04 23:14:38.516] | [Lua] | [../ScriptModule/gxlua\LuaNFrame.lua:93] | RebotServerModule.addRebot cost time:17051 us some thint wrong
+[debug | 2019-01-04 23:14:38.709] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:38.773] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:39.574] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[warning | 2019-01-04 23:14:39.579] | [NFCPluginManager::Execute:227] | frame timeout:86
+[debug | 2019-01-04 23:14:39.583] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:39.585] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:39.588] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:39.590] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:39.593] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[error | 2019-01-04 23:14:39.597] | [Lua] | [../ScriptModule/gxlua\LuaNFrame.lua:93] | RebotServerModule.addRebot cost time:15626 us some thint wrong
+[debug | 2019-01-04 23:14:39.685] | [Lua] | [../ScriptModule/RebotServer\RebotServerModule.lua:228] | accountgaoyi1546614837637 login success.............
+[debug | 2019-01-04 23:14:40.069] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:40.206] | [Lua] | [../ScriptModule/RebotServer\RebotServerModule.lua:228] | accountgaoyi1546614837651 login success.............
+[error | 2019-01-04 23:14:40.394] | [Lua] | [../ScriptModule/gxlua\LuaNFrame.lua:86] | RebotServerModule.UpdateSec cost time:10519 us some thint wrong
+[warning | 2019-01-04 23:14:40.448] | [NFCPluginManager::Execute:227] | frame timeout:119
+[debug | 2019-01-04 23:14:40.509] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:40.525] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:40.600] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:40.605] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:40.609] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:40.618] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:40.624] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[error | 2019-01-04 23:14:40.633] | [Lua] | [../ScriptModule/gxlua\LuaNFrame.lua:93] | RebotServerModule.addRebot cost time:36376 us some thint wrong
+[debug | 2019-01-04 23:14:41.050] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:41.259] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[warning | 2019-01-04 23:14:41.446] | [NFCPluginManager::Execute:227] | frame timeout:94
+[debug | 2019-01-04 23:14:41.569] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:41.608] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:41.610] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:41.612] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:41.614] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:41.617] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[error | 2019-01-04 23:14:41.622] | [Lua] | [../ScriptModule/gxlua\LuaNFrame.lua:93] | RebotServerModule.addRebot cost time:16296 us some thint wrong
+[debug | 2019-01-04 23:14:41.644] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:41.854] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:41.890] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:41.969] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:42.053] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:42.328] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[warning | 2019-01-04 23:14:42.328] | [NFCPluginManager::Execute:227] | frame timeout:104
+[warning | 2019-01-04 23:14:42.411] | [NFCPluginManager::Execute:227] | frame timeout:81
+[debug | 2019-01-04 23:14:42.553] | [Lua] | [../ScriptModule/RebotServer\RebotServerModule.lua:228] | accountgaoyi1546614837659 login success.............
+[debug | 2019-01-04 23:14:42.610] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:42.613] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:42.616] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:42.618] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:42.621] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[error | 2019-01-04 23:14:42.627] | [Lua] | [../ScriptModule/gxlua\LuaNFrame.lua:93] | RebotServerModule.addRebot cost time:18508 us some thint wrong
+[debug | 2019-01-04 23:14:43.107] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:43.158] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:43.197] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:43.516] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:43.623] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:43.625] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:43.627] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:43.630] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:43.634] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[error | 2019-01-04 23:14:43.639] | [Lua] | [../ScriptModule/gxlua\LuaNFrame.lua:93] | RebotServerModule.addRebot cost time:18507 us some thint wrong
+[debug | 2019-01-04 23:14:43.739] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:43.747] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[warning | 2019-01-04 23:14:43.748] | [NFCPluginManager::Execute:227] | frame timeout:128
+[debug | 2019-01-04 23:14:43.812] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:43.874] | [Lua] | [../ScriptModule/RebotServer\RebotServerModule.lua:228] | accountgaoyi1546614837641 login success.............
+[warning | 2019-01-04 23:14:44.118] | [NFCPluginManager::Execute:227] | frame timeout:88
+[debug | 2019-01-04 23:14:44.297] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:44.305] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:44.487] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:44.551] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:44.652] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:44.654] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:44.656] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:44.659] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:44.662] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[error | 2019-01-04 23:14:44.668] | [Lua] | [../ScriptModule/gxlua\LuaNFrame.lua:93] | RebotServerModule.addRebot cost time:17367 us some thint wrong
+[debug | 2019-01-04 23:14:44.841] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:45.095] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:45.110] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[warning | 2019-01-04 23:14:45.111] | [NFCPluginManager::Execute:227] | frame timeout:97
+[debug | 2019-01-04 23:14:45.369] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:45.379] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:45.515] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:45.525] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[warning | 2019-01-04 23:14:45.526] | [NFCPluginManager::Execute:227] | frame timeout:80
+[debug | 2019-01-04 23:14:45.580] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:45.653] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:45.655] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:45.658] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:45.660] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:45.663] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[error | 2019-01-04 23:14:45.668] | [Lua] | [../ScriptModule/gxlua\LuaNFrame.lua:93] | RebotServerModule.addRebot cost time:16559 us some thint wrong
+[debug | 2019-01-04 23:14:45.870] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:45.935] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:46.251] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:46.261] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:46.302] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:46.311] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:46.405] | [Lua] | [../ScriptModule/RebotServer\RebotServerModule.lua:228] | accountgaoyi1546614837652 login success.............
+[debug | 2019-01-04 23:14:46.438] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:46.606] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:46.614] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:46.685] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:46.688] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:46.690] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:46.692] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:46.695] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[error | 2019-01-04 23:14:46.701] | [Lua] | [../ScriptModule/gxlua\LuaNFrame.lua:93] | RebotServerModule.addRebot cost time:17553 us some thint wrong
+[debug | 2019-01-04 23:14:47.161] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:47.259] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:47.314] | [Lua] | [../ScriptModule/RebotServer\RebotServerModule.lua:228] | accountgaoyi1546614837658 login success.............
+[debug | 2019-01-04 23:14:47.341] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:47.350] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:47.699] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[warning | 2019-01-04 23:14:47.708] | [NFCPluginManager::Execute:227] | frame timeout:145
+[debug | 2019-01-04 23:14:47.735] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:47.738] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:47.740] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:47.742] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:47.745] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[error | 2019-01-04 23:14:47.751] | [Lua] | [../ScriptModule/gxlua\LuaNFrame.lua:93] | RebotServerModule.addRebot cost time:16898 us some thint wrong
+[debug | 2019-01-04 23:14:47.925] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:47.998] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:48.155] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:48.389] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:48.447] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:48.683] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:48.694] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:48.708] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[warning | 2019-01-04 23:14:48.708] | [NFCPluginManager::Execute:227] | frame timeout:116
+[debug | 2019-01-04 23:14:48.729] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:48.731] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:48.733] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:48.735] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:48.737] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[error | 2019-01-04 23:14:48.743] | [Lua] | [../ScriptModule/gxlua\LuaNFrame.lua:93] | RebotServerModule.addRebot cost time:15972 us some thint wrong
+[warning | 2019-01-04 23:14:48.812] | [NFCPluginManager::Execute:227] | frame timeout:102
+[debug | 2019-01-04 23:14:48.858] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:49.302] | [Lua] | [../ScriptModule/RebotServer\RebotServerModule.lua:228] | accountgaoyi1546614837650 login success.............
+[debug | 2019-01-04 23:14:49.344] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:49.356] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:49.365] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[warning | 2019-01-04 23:14:49.365] | [NFCPluginManager::Execute:227] | frame timeout:81
+[debug | 2019-01-04 23:14:49.434] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:49.752] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:49.755] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:49.758] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:49.761] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:49.764] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[error | 2019-01-04 23:14:49.773] | [Lua] | [../ScriptModule/gxlua\LuaNFrame.lua:93] | RebotServerModule.addRebot cost time:22530 us some thint wrong
+[debug | 2019-01-04 23:14:49.799] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:49.849] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:49.970] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:50.062] | [Lua] | [../ScriptModule/RebotServer\RebotServerModule.lua:228] | accountgaoyi1546614837669 login success.............
+[debug | 2019-01-04 23:14:50.097] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[warning | 2019-01-04 23:14:50.098] | [NFCPluginManager::Execute:227] | frame timeout:93
+[debug | 2019-01-04 23:14:50.247] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:50.494] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:50.502] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:50.782] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:50.785] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:50.788] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:50.790] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:50.793] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[error | 2019-01-04 23:14:50.801] | [Lua] | [../ScriptModule/gxlua\LuaNFrame.lua:93] | RebotServerModule.addRebot cost time:21715 us some thint wrong
+[warning | 2019-01-04 23:14:50.847] | [NFCPluginManager::Execute:227] | frame timeout:107
+[debug | 2019-01-04 23:14:50.893] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:51.088] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:51.482] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:51.489] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:51.499] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:51.507] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:51.515] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[warning | 2019-01-04 23:14:51.515] | [NFCPluginManager::Execute:227] | frame timeout:117
+[debug | 2019-01-04 23:14:51.747] | [Lua] | [../ScriptModule/RebotServer\RebotServerModule.lua:228] | accountgaoyi1546614837719 login success.............
+[debug | 2019-01-04 23:14:51.819] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:51.821] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:51.824] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:51.826] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:51.828] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[error | 2019-01-04 23:14:51.834] | [Lua] | [../ScriptModule/gxlua\LuaNFrame.lua:93] | RebotServerModule.addRebot cost time:16710 us some thint wrong
+[warning | 2019-01-04 23:14:51.886] | [NFCPluginManager::Execute:227] | frame timeout:99
+[debug | 2019-01-04 23:14:52.128] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[warning | 2019-01-04 23:14:52.128] | [NFCPluginManager::Execute:227] | frame timeout:107
+[debug | 2019-01-04 23:14:52.295] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:52.497] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:52.507] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[error | 2019-01-04 23:14:52.508] | [NFCHttpClient::LuaOnHttpReqDone:747] | some request failed - no idea which one though!
+
+[error | 2019-01-04 23:14:52.508] | [NFCHttpClient::LuaOnHttpReqDone:780] | socket error = 由于连接方在一段时间后没有正确答复或连接的主机没有反应，连接尝试失败。 (10060)
+
+[error | 2019-01-04 23:14:52.509] | [NFCHttpClient::LuaOnHttpReqDone:747] | some request failed - no idea which one though!
+
+[error | 2019-01-04 23:14:52.509] | [NFCHttpClient::LuaOnHttpReqDone:780] | socket error = 由于连接方在一段时间后没有正确答复或连接的主机没有反应，连接尝试失败。 (10060)
+
+[error | 2019-01-04 23:14:52.509] | [NFCHttpClient::LuaOnHttpReqDone:747] | some request failed - no idea which one though!
+
+[error | 2019-01-04 23:14:52.509] | [NFCHttpClient::LuaOnHttpReqDone:780] | socket error = 由于连接方在一段时间后没有正确答复或连接的主机没有反应，连接尝试失败。 (10060)
+
+[warning | 2019-01-04 23:14:52.509] | [NFCPluginManager::Execute:227] | frame timeout:111
+[debug | 2019-01-04 23:14:52.563] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:52.785] | [Lua] | [../ScriptModule/RebotServer\RebotServerModule.lua:228] | accountgaoyi1546614837705 login success.............
+[debug | 2019-01-04 23:14:52.817] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:52.842] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:52.844] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:52.848] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:52.850] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:52.853] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[error | 2019-01-04 23:14:52.860] | [Lua] | [../ScriptModule/gxlua\LuaNFrame.lua:93] | RebotServerModule.addRebot cost time:19744 us some thint wrong
+[debug | 2019-01-04 23:14:52.910] | [Lua] | [../ScriptModule/RebotServer\RebotServerModule.lua:228] | accountgaoyi1546614837716 login success.............
+[warning | 2019-01-04 23:14:52.936] | [NFCPluginManager::Execute:227] | frame timeout:116
+[error | 2019-01-04 23:14:52.985] | [NFCHttpClient::LuaOnHttpReqDone:747] | some request failed - no idea which one though!
+
+[error | 2019-01-04 23:14:52.985] | [NFCHttpClient::LuaOnHttpReqDone:780] | socket error = 由于连接方在一段时间后没有正确答复或连接的主机没有反应，连接尝试失败。 (10060)
+
+[debug | 2019-01-04 23:14:53.251] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:53.299] | [Lua] | [../ScriptModule/RebotServer\RebotServerModule.lua:228] | accountgaoyi1546614837657 login success.............
+[debug | 2019-01-04 23:14:53.328] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:53.380] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:53.426] | [Lua] | [../ScriptModule/RebotServer\RebotServerModule.lua:228] | accountgaoyi1546614837662 login success.............
+[debug | 2019-01-04 23:14:53.455] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:53.471] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:53.481] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:53.573] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:53.755] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:53.855] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:53.858] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:53.860] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:53.863] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:53.865] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[error | 2019-01-04 23:14:53.871] | [Lua] | [../ScriptModule/gxlua\LuaNFrame.lua:93] | RebotServerModule.addRebot cost time:17983 us some thint wrong
+[warning | 2019-01-04 23:14:53.919] | [NFCPluginManager::Execute:227] | frame timeout:83
+[debug | 2019-01-04 23:14:54.075] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:54.124] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[error | 2019-01-04 23:14:54.129] | [NFCHttpClient::LuaOnHttpReqDone:747] | some request failed - no idea which one though!
+
+[error | 2019-01-04 23:14:54.129] | [NFCHttpClient::LuaOnHttpReqDone:780] | socket error = 由于连接方在一段时间后没有正确答复或连接的主机没有反应，连接尝试失败。 (10060)
+
+[debug | 2019-01-04 23:14:54.202] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:54.210] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:54.266] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:54.456] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:54.465] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:54.534] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:54.541] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[error | 2019-01-04 23:14:54.542] | [NFCHttpClient::LuaOnHttpReqDone:747] | some request failed - no idea which one though!
+
+[error | 2019-01-04 23:14:54.542] | [NFCHttpClient::LuaOnHttpReqDone:780] | socket error = 由于连接方在一段时间后没有正确答复或连接的主机没有反应，连接尝试失败。 (10060)
+
+[debug | 2019-01-04 23:14:54.557] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:54.781] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:54.802] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:54.894] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:54.897] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:54.900] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:54.903] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:54.905] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[error | 2019-01-04 23:14:54.914] | [Lua] | [../ScriptModule/gxlua\LuaNFrame.lua:93] | RebotServerModule.addRebot cost time:22878 us some thint wrong
+[warning | 2019-01-04 23:14:54.941] | [NFCPluginManager::Execute:227] | frame timeout:83
+[debug | 2019-01-04 23:14:55.048] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:55.230] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:55.455] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[error | 2019-01-04 23:14:55.501] | [Lua] | [../ScriptModule/gxlua\LuaNFrame.lua:86] | RebotServerModule.UpdateSec cost time:10846 us some thint wrong
+[error | 2019-01-04 23:14:55.524] | [NFCHttpClient::LuaOnHttpReqDone:747] | some request failed - no idea which one though!
+
+[error | 2019-01-04 23:14:55.524] | [NFCHttpClient::LuaOnHttpReqDone:780] | socket error = 由于连接方在一段时间后没有正确答复或连接的主机没有反应，连接尝试失败。 (10060)
+
+[debug | 2019-01-04 23:14:55.605] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:55.802] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[warning | 2019-01-04 23:14:55.802] | [NFCPluginManager::Execute:227] | frame timeout:83
+[debug | 2019-01-04 23:14:55.829] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:55.889] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:55.892] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:55.895] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:55.897] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:55.899] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[error | 2019-01-04 23:14:55.907] | [Lua] | [../ScriptModule/gxlua\LuaNFrame.lua:93] | RebotServerModule.addRebot cost time:19356 us some thint wrong
+[debug | 2019-01-04 23:14:56.087] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:56.154] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:56.337] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:56.345] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:56.357] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:56.469] | [Lua] | [../ScriptModule/RebotServer\RebotServerModule.lua:228] | accountgaoyi1546614837724 login success.............
+[debug | 2019-01-04 23:14:56.502] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:56.510] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:56.518] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[error | 2019-01-04 23:14:56.710] | [NFCHttpClient::LuaOnHttpReqDone:747] | some request failed - no idea which one though!
+
+[error | 2019-01-04 23:14:56.710] | [NFCHttpClient::LuaOnHttpReqDone:780] | socket error = 由于连接方在一段时间后没有正确答复或连接的主机没有反应，连接尝试失败。 (10060)
+
+[warning | 2019-01-04 23:14:56.816] | [NFCPluginManager::Execute:227] | frame timeout:85
+[debug | 2019-01-04 23:14:56.860] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:56.913] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:56.916] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:56.919] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:56.923] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:56.925] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[error | 2019-01-04 23:14:56.933] | [Lua] | [../ScriptModule/gxlua\LuaNFrame.lua:93] | RebotServerModule.addRebot cost time:22488 us some thint wrong
+[debug | 2019-01-04 23:14:56.968] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[warning | 2019-01-04 23:14:56.968] | [NFCPluginManager::Execute:227] | frame timeout:83
+[debug | 2019-01-04 23:14:57.043] | [Lua] | [../ScriptModule/RebotServer\RebotServerModule.lua:228] | accountgaoyi1546614837636 login success.............
+[debug | 2019-01-04 23:14:57.073] | [Lua] | [../ScriptModule/RebotServer\RebotServerModule.lua:228] | accountgaoyi1546614837677 login success.............
+[warning | 2019-01-04 23:14:57.093] | [NFCPluginManager::Execute:227] | frame timeout:89
+[debug | 2019-01-04 23:14:57.521] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[warning | 2019-01-04 23:14:57.613] | [NFCPluginManager::Execute:227] | frame timeout:82
+[debug | 2019-01-04 23:14:57.865] | [Lua] | [../ScriptModule/RebotServer\RebotServerModule.lua:228] | accountgaoyi1546614837718 login success.............
+[debug | 2019-01-04 23:14:57.891] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[warning | 2019-01-04 23:14:57.892] | [NFCPluginManager::Execute:227] | frame timeout:145
+[debug | 2019-01-04 23:14:57.921] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:57.924] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:57.926] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:57.930] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:57.933] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[error | 2019-01-04 23:14:57.940] | [Lua] | [../ScriptModule/gxlua\LuaNFrame.lua:93] | RebotServerModule.addRebot cost time:20698 us some thint wrong
+[debug | 2019-01-04 23:14:58.153] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:58.163] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[warning | 2019-01-04 23:14:58.169] | [NFCPluginManager::Execute:227] | frame timeout:161
+[error | 2019-01-04 23:14:58.185] | [NFCHttpClient::LuaOnHttpReqDone:747] | some request failed - no idea which one though!
+
+[error | 2019-01-04 23:14:58.185] | [NFCHttpClient::LuaOnHttpReqDone:780] | socket error = 由于连接方在一段时间后没有正确答复或连接的主机没有反应，连接尝试失败。 (10060)
+
+[error | 2019-01-04 23:14:58.185] | [NFCHttpClient::LuaOnHttpReqDone:747] | some request failed - no idea which one though!
+
+[error | 2019-01-04 23:14:58.185] | [NFCHttpClient::LuaOnHttpReqDone:780] | socket error = 由于连接方在一段时间后没有正确答复或连接的主机没有反应，连接尝试失败。 (10060)
+
+[debug | 2019-01-04 23:14:58.331] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:58.413] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:58.524] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:58.643] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:58.650] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:58.667] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:58.676] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:58.684] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[error | 2019-01-04 23:14:58.685] | [NFCHttpClient::LuaOnHttpReqDone:747] | some request failed - no idea which one though!
+
+[error | 2019-01-04 23:14:58.685] | [NFCHttpClient::LuaOnHttpReqDone:780] | socket error = 由于连接方在一段时间后没有正确答复或连接的主机没有反应，连接尝试失败。 (10060)
+
+[error | 2019-01-04 23:14:58.685] | [NFCHttpClient::LuaOnHttpReqDone:747] | some request failed - no idea which one though!
+
+[error | 2019-01-04 23:14:58.685] | [NFCHttpClient::LuaOnHttpReqDone:780] | socket error = 由于连接方在一段时间后没有正确答复或连接的主机没有反应，连接尝试失败。 (10060)
+
+[warning | 2019-01-04 23:14:58.685] | [NFCPluginManager::Execute:227] | frame timeout:146
+[debug | 2019-01-04 23:14:58.809] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:58.956] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:58.962] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:58.967] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:58.971] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:58.977] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[error | 2019-01-04 23:14:58.986] | [Lua] | [../ScriptModule/gxlua\LuaNFrame.lua:93] | RebotServerModule.addRebot cost time:34157 us some thint wrong
+[debug | 2019-01-04 23:14:59.102] | [Lua] | [../ScriptModule/RebotServer\RebotServerModule.lua:228] | accountgaoyi1546614837672 login success.............
+[error | 2019-01-04 23:14:59.125] | [NFCPluginManager::Execute:231] | frame timeout:211, something wrong
+[debug | 2019-01-04 23:14:59.230] | [Lua] | [../ScriptModule/RebotServer\RebotServerModule.lua:228] | accountgaoyi1546614837710 login success.............
+[debug | 2019-01-04 23:14:59.267] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:59.276] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:59.286] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[warning | 2019-01-04 23:14:59.287] | [NFCPluginManager::Execute:227] | frame timeout:159
+[debug | 2019-01-04 23:14:59.503] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:59.515] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:59.539] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:59.548] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[error | 2019-01-04 23:14:59.548] | [NFCHttpClient::LuaOnHttpReqDone:747] | some request failed - no idea which one though!
+
+[error | 2019-01-04 23:14:59.548] | [NFCHttpClient::LuaOnHttpReqDone:780] | socket error = 由于连接方在一段时间后没有正确答复或连接的主机没有反应，连接尝试失败。 (10060)
+
+[error | 2019-01-04 23:14:59.549] | [NFCHttpClient::LuaOnHttpReqDone:747] | some request failed - no idea which one though!
+
+[error | 2019-01-04 23:14:59.549] | [NFCHttpClient::LuaOnHttpReqDone:780] | socket error = 由于连接方在一段时间后没有正确答复或连接的主机没有反应，连接尝试失败。 (10060)
+
+[debug | 2019-01-04 23:14:59.630] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:59.669] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:59.676] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:59.946] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:59.949] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:59.951] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:59.953] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:14:59.955] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[error | 2019-01-04 23:14:59.963] | [Lua] | [../ScriptModule/gxlua\LuaNFrame.lua:93] | RebotServerModule.addRebot cost time:18800 us some thint wrong
+[debug | 2019-01-04 23:15:00.074] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[warning | 2019-01-04 23:15:00.075] | [NFCPluginManager::Execute:227] | frame timeout:154
+[debug | 2019-01-04 23:15:00.289] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:15:00.529] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:15:00.553] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[error | 2019-01-04 23:15:00.601] | [NFCHttpClient::LuaOnHttpReqDone:747] | some request failed - no idea which one though!
+
+[error | 2019-01-04 23:15:00.601] | [NFCHttpClient::LuaOnHttpReqDone:780] | socket error = 由于连接方在一段时间后没有正确答复或连接的主机没有反应，连接尝试失败。 (10060)
+
+[debug | 2019-01-04 23:15:00.866] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:15:00.911] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:15:00.972] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:15:00.975] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:15:00.977] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:15:00.980] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:15:00.982] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[error | 2019-01-04 23:15:00.989] | [Lua] | [../ScriptModule/gxlua\LuaNFrame.lua:93] | RebotServerModule.addRebot cost time:18454 us some thint wrong
+[debug | 2019-01-04 23:15:01.052] | [Lua] | [../ScriptModule/RebotServer\RebotServerModule.lua:228] | accountgaoyi1546614837708 login success.............
+[debug | 2019-01-04 23:15:01.086] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[warning | 2019-01-04 23:15:01.096] | [NFCPluginManager::Execute:227] | frame timeout:159
+[debug | 2019-01-04 23:15:01.220] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:15:01.458] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[error | 2019-01-04 23:15:01.551] | [NFCHttpClient::LuaOnHttpReqDone:747] | some request failed - no idea which one though!
+
+[error | 2019-01-04 23:15:01.551] | [NFCHttpClient::LuaOnHttpReqDone:780] | socket error = 由于连接方在一段时间后没有正确答复或连接的主机没有反应，连接尝试失败。 (10060)
+
+[debug | 2019-01-04 23:15:01.616] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:15:01.626] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:15:01.659] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:15:01.666] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[error | 2019-01-04 23:15:01.667] | [NFCHttpClient::LuaOnHttpReqDone:747] | some request failed - no idea which one though!
+
+[error | 2019-01-04 23:15:01.667] | [NFCHttpClient::LuaOnHttpReqDone:780] | socket error = 由于连接方在一段时间后没有正确答复或连接的主机没有反应，连接尝试失败。 (10060)
+
+[debug | 2019-01-04 23:15:01.781] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:15:01.870] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:15:01.878] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[warning | 2019-01-04 23:15:01.879] | [NFCPluginManager::Execute:227] | frame timeout:95
+[debug | 2019-01-04 23:15:01.975] | [Lua] | [../ScriptModule/RebotServer\RebotServerModule.lua:228] | accountgaoyi1546614837674 login success.............
+[debug | 2019-01-04 23:15:02.032] | [Lua] | [../ScriptModule/RebotServer\RebotServerModule.lua:228] | accountgaoyi1546614837751 login success.............
+[debug | 2019-01-04 23:15:02.076] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:15:02.093] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[error | 2019-01-04 23:15:02.093] | [NFCHttpClient::LuaOnHttpReqDone:747] | some request failed - no idea which one though!
+
+[error | 2019-01-04 23:15:02.093] | [NFCHttpClient::LuaOnHttpReqDone:780] | socket error = 由于连接方在一段时间后没有正确答复或连接的主机没有反应，连接尝试失败。 (10060)
+
+[error | 2019-01-04 23:15:02.094] | [NFCPluginManager::Execute:231] | frame timeout:214, something wrong
+[debug | 2019-01-04 23:15:02.121] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:15:02.123] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:15:02.126] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:15:02.128] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:15:02.131] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[error | 2019-01-04 23:15:02.139] | [Lua] | [../ScriptModule/gxlua\LuaNFrame.lua:93] | RebotServerModule.addRebot cost time:20076 us some thint wrong
+[debug | 2019-01-04 23:15:02.450] | [Lua] | [../ScriptModule/RebotServer\RebotServerModule.lua:228] | accountgaoyi1546614837701 login success.............
+[debug | 2019-01-04 23:15:02.529] | [Lua] | [../ScriptModule/RebotServer\RebotServerModule.lua:228] | accountgaoyi1546614837752 login success.............
+[debug | 2019-01-04 23:15:02.560] | [Lua] | [../ScriptModule/RebotServer\RebotServerModule.lua:228] | accountgaoyi1546614837741 login success.............
+[debug | 2019-01-04 23:15:02.597] | [Lua] | [../ScriptModule/RebotServer\RebotServerModule.lua:228] | accountgaoyi1546614837730 login success.............
+[debug | 2019-01-04 23:15:02.630] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:15:02.639] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:15:02.652] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:15:02.660] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:15:02.673] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:15:02.683] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:15:02.696] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:15:02.710] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[error | 2019-01-04 23:15:02.711] | [NFCHttpClient::LuaOnHttpReqDone:747] | some request failed - no idea which one though!
+
+[error | 2019-01-04 23:15:02.711] | [NFCHttpClient::LuaOnHttpReqDone:780] | socket error = 由于连接方在一段时间后没有正确答复或连接的主机没有反应，连接尝试失败。 (10060)
+
+[error | 2019-01-04 23:15:02.712] | [NFCPluginManager::Execute:231] | frame timeout:617, something wrong
+[debug | 2019-01-04 23:15:03.015] | [Lua] | [../ScriptModule/RebotServer\RebotServerModule.lua:228] | accountgaoyi1546614837703 login success.............
+[debug | 2019-01-04 23:15:03.062] | [Lua] | [../ScriptModule/RebotServer\RebotServerModule.lua:228] | accountgaoyi1546614837728 login success.............
+[debug | 2019-01-04 23:15:03.092] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:15:03.100] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:15:03.116] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:15:03.131] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:15:03.143] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:15:03.151] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:15:03.169] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:15:03.177] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:15:03.185] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:15:03.197] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:15:03.205] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[error | 2019-01-04 23:15:03.205] | [NFCHttpClient::LuaOnHttpReqDone:747] | some request failed - no idea which one though!
+
+[error | 2019-01-04 23:15:03.205] | [NFCHttpClient::LuaOnHttpReqDone:780] | socket error = 由于连接方在一段时间后没有正确答复或连接的主机没有反应，连接尝试失败。 (10060)
+
+[error | 2019-01-04 23:15:03.206] | [NFCHttpClient::LuaOnHttpReqDone:747] | some request failed - no idea which one though!
+
+[error | 2019-01-04 23:15:03.206] | [NFCHttpClient::LuaOnHttpReqDone:780] | socket error = 操作成功完成。 (0)
+
+[error | 2019-01-04 23:15:03.206] | [NFCPluginManager::Execute:231] | frame timeout:493, something wrong
+[debug | 2019-01-04 23:15:03.276] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:15:03.279] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:15:03.281] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:15:03.284] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:15:03.286] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[error | 2019-01-04 23:15:03.294] | [Lua] | [../ScriptModule/gxlua\LuaNFrame.lua:93] | RebotServerModule.addRebot cost time:19003 us some thint wrong
+[debug | 2019-01-04 23:15:03.559] | [Lua] | [../ScriptModule/RebotServer\RebotServerModule.lua:228] | accountgaoyi1546614837686 login success.............
+[debug | 2019-01-04 23:15:03.614] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:15:03.624] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:15:03.637] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:15:03.646] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:15:03.656] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:15:03.684] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:15:03.703] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[error | 2019-01-04 23:15:03.705] | [NFCPluginManager::Execute:231] | frame timeout:495, something wrong
+[error | 2019-01-04 23:15:03.716] | [NFCHttpClient::LuaOnHttpReqDone:747] | some request failed - no idea which one though!
+
+[error | 2019-01-04 23:15:03.716] | [NFCHttpClient::LuaOnHttpReqDone:780] | socket error = 由于连接方在一段时间后没有正确答复或连接的主机没有反应，连接尝试失败。 (10060)
+
+[debug | 2019-01-04 23:15:04.014] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[error | 2019-01-04 23:15:04.015] | [NFCPluginManager::Execute:231] | frame timeout:275, something wrong
+[debug | 2019-01-04 23:15:04.070] | [Lua] | [../ScriptModule/RebotServer\RebotServerModule.lua:228] | accountgaoyi1546614837695 login success.............
+[debug | 2019-01-04 23:15:04.101] | [Lua] | [../ScriptModule/RebotServer\RebotServerModule.lua:228] | accountgaoyi1546614837706 login success.............
+[debug | 2019-01-04 23:15:04.162] | [Lua] | [../ScriptModule/RebotServer\RebotServerModule.lua:228] | accountgaoyi1546614837761 login success.............
+[debug | 2019-01-04 23:15:04.200] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:15:04.221] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:15:04.232] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:15:04.240] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:15:04.249] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:15:04.256] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:15:04.265] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:15:04.273] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:15:04.283] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:15:04.297] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:15:04.310] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:15:04.328] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:15:04.337] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:15:04.351] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:15:04.358] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:15:04.366] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:15:04.375] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:15:04.385] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[error | 2019-01-04 23:15:04.385] | [NFCHttpClient::LuaOnHttpReqDone:747] | some request failed - no idea which one though!
+
+[error | 2019-01-04 23:15:04.385] | [NFCHttpClient::LuaOnHttpReqDone:780] | socket error = 由于连接方在一段时间后没有正确答复或连接的主机没有反应，连接尝试失败。 (10060)
+
+[error | 2019-01-04 23:15:04.385] | [NFCPluginManager::Execute:231] | frame timeout:368, something wrong
+[debug | 2019-01-04 23:15:04.640] | [Lua] | [../ScriptModule/RebotServer\RebotServerModule.lua:228] | accountgaoyi1546614837723 login success.............
+[debug | 2019-01-04 23:15:04.681] | [Lua] | [../ScriptModule/RebotServer\RebotServerModule.lua:228] | accountgaoyi1546614837704 login success.............
+[debug | 2019-01-04 23:15:04.744] | [Lua] | [../ScriptModule/RebotServer\RebotServerModule.lua:228] | accountgaoyi1546614837733 login success.............
+[debug | 2019-01-04 23:15:04.804] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:15:04.818] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:15:04.829] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:15:04.848] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:15:04.866] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[error | 2019-01-04 23:15:04.871] | [NFCHttpClient::LuaOnHttpReqDone:747] | some request failed - no idea which one though!
+
+[error | 2019-01-04 23:15:04.872] | [NFCHttpClient::LuaOnHttpReqDone:780] | socket error = 由于连接方在一段时间后没有正确答复或连接的主机没有反应，连接尝试失败。 (10060)
+
+[error | 2019-01-04 23:15:04.872] | [NFCPluginManager::Execute:231] | frame timeout:485, something wrong
+[debug | 2019-01-04 23:15:05.073] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:15:05.087] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[error | 2019-01-04 23:15:05.088] | [NFCPluginManager::Execute:231] | frame timeout:214, something wrong
+[warning | 2019-01-04 23:15:05.246] | [NFCPluginManager::Execute:227] | frame timeout:156
+[debug | 2019-01-04 23:15:05.258] | [Lua] | [../ScriptModule/RebotServer\RebotServerModule.lua:228] | accountgaoyi1546614837694 login success.............
+[debug | 2019-01-04 23:15:05.318] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:15:05.335] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:15:05.344] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:15:05.353] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:15:05.364] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:15:05.373] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[warning | 2019-01-04 23:15:05.373] | [NFCPluginManager::Execute:227] | frame timeout:126
+[debug | 2019-01-04 23:15:05.441] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:15:05.450] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:15:05.460] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:15:05.472] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:15:05.482] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:15:05.490] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:15:05.500] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:15:05.510] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[warning | 2019-01-04 23:15:05.511] | [NFCPluginManager::Execute:227] | frame timeout:136
+[debug | 2019-01-04 23:15:05.783] | [Lua] | [../ScriptModule/RebotServer\RebotServerModule.lua:228] | accountgaoyi1546614837749 login success.............
+[debug | 2019-01-04 23:15:05.816] | [Lua] | [../ScriptModule/RebotServer\RebotServerModule.lua:228] | accountgaoyi1546614837753 login success.............
+[debug | 2019-01-04 23:15:05.859] | [Lua] | [../ScriptModule/RebotServer\RebotServerModule.lua:228] | accountgaoyi1546614837754 login success.............
+[debug | 2019-01-04 23:15:05.904] | [Lua] | [../ScriptModule/RebotServer\RebotServerModule.lua:228] | accountgaoyi1546614837745 login success.............
+[debug | 2019-01-04 23:15:05.942] | [Lua] | [../ScriptModule/RebotServer\RebotServerModule.lua:228] | accountgaoyi1546614837743 login success.............
+[debug | 2019-01-04 23:15:05.980] | [Lua] | [../ScriptModule/RebotServer\RebotServerModule.lua:228] | accountgaoyi1546614837760 login success.............
+[debug | 2019-01-04 23:15:06.068] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:15:06.077] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:15:06.089] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:15:06.106] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[error | 2019-01-04 23:15:06.117] | [NFCHttpClient::LuaOnHttpReqDone:747] | some request failed - no idea which one though!
+
+[error | 2019-01-04 23:15:06.117] | [NFCHttpClient::LuaOnHttpReqDone:780] | socket error = 由于连接方在一段时间后没有正确答复或连接的主机没有反应，连接尝试失败。 (10060)
+
+[error | 2019-01-04 23:15:06.117] | [NFCHttpClient::LuaOnHttpReqDone:747] | some request failed - no idea which one though!
+
+[error | 2019-01-04 23:15:06.117] | [NFCHttpClient::LuaOnHttpReqDone:780] | socket error = 由于连接方在一段时间后没有正确答复或连接的主机没有反应，连接尝试失败。 (10060)
+
+[error | 2019-01-04 23:15:06.117] | [NFCHttpClient::LuaOnHttpReqDone:747] | some request failed - no idea which one though!
+
+[error | 2019-01-04 23:15:06.117] | [NFCHttpClient::LuaOnHttpReqDone:780] | socket error = 由于连接方在一段时间后没有正确答复或连接的主机没有反应，连接尝试失败。 (10060)
+
+[error | 2019-01-04 23:15:06.117] | [NFCPluginManager::Execute:231] | frame timeout:604, something wrong
+[debug | 2019-01-04 23:15:06.521] | [Lua] | [../ScriptModule/RebotServer\RebotServerModule.lua:228] | accountgaoyi1546614837681 login success.............
+[debug | 2019-01-04 23:15:06.599] | [Lua] | [../ScriptModule/RebotServer\RebotServerModule.lua:228] | accountgaoyi1546614837758 login success.............
+[debug | 2019-01-04 23:15:06.688] | [Lua] | [../ScriptModule/RebotServer\RebotServerModule.lua:228] | accountgaoyi1546614837722 login success.............
+[debug | 2019-01-04 23:15:06.723] | [Lua] | [../ScriptModule/RebotServer\RebotServerModule.lua:228] | accountgaoyi1546614837729 login success.............
+[debug | 2019-01-04 23:15:06.775] | [Lua] | [../ScriptModule/RebotServer\RebotServerModule.lua:228] | accountgaoyi1546614837726 login success.............
+[debug | 2019-01-04 23:15:06.809] | [Lua] | [../ScriptModule/RebotServer\RebotServerModule.lua:228] | accountgaoyi1546614837682 login success.............
+[debug | 2019-01-04 23:15:06.845] | [Lua] | [../ScriptModule/RebotServer\RebotServerModule.lua:228] | accountgaoyi1546614837727 login success.............
+[debug | 2019-01-04 23:15:06.879] | [Lua] | [../ScriptModule/RebotServer\RebotServerModule.lua:228] | accountgaoyi1546614837773 login success.............
+[debug | 2019-01-04 23:15:06.913] | [Lua] | [../ScriptModule/RebotServer\RebotServerModule.lua:228] | accountgaoyi1546614837746 login success.............
+[debug | 2019-01-04 23:15:07.022] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:15:07.031] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:15:07.051] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[error | 2019-01-04 23:15:07.051] | [NFCHttpClient::LuaOnHttpReqDone:747] | some request failed - no idea which one though!
+
+[error | 2019-01-04 23:15:07.051] | [NFCHttpClient::LuaOnHttpReqDone:780] | socket error = 由于连接方在一段时间后没有正确答复或连接的主机没有反应，连接尝试失败。 (10060)
+
+[error | 2019-01-04 23:15:07.051] | [NFCHttpClient::LuaOnHttpReqDone:747] | some request failed - no idea which one though!
+
+[error | 2019-01-04 23:15:07.051] | [NFCHttpClient::LuaOnHttpReqDone:780] | socket error = 由于连接方在一段时间后没有正确答复或连接的主机没有反应，连接尝试失败。 (10060)
+
+[error | 2019-01-04 23:15:07.051] | [NFCHttpClient::LuaOnHttpReqDone:747] | some request failed - no idea which one though!
+
+[error | 2019-01-04 23:15:07.051] | [NFCHttpClient::LuaOnHttpReqDone:780] | socket error = 由于连接方在一段时间后没有正确答复或连接的主机没有反应，连接尝试失败。 (10060)
+
+[error | 2019-01-04 23:15:07.052] | [NFCPluginManager::Execute:231] | frame timeout:933, something wrong
+[debug | 2019-01-04 23:15:07.532] | [Lua] | [../ScriptModule/RebotServer\RebotServerModule.lua:228] | accountgaoyi1546614837709 login success.............
+[debug | 2019-01-04 23:15:07.569] | [Lua] | [../ScriptModule/RebotServer\RebotServerModule.lua:228] | accountgaoyi1546614837770 login success.............
+[debug | 2019-01-04 23:15:07.613] | [Lua] | [../ScriptModule/RebotServer\RebotServerModule.lua:228] | accountgaoyi1546614837772 login success.............
+[debug | 2019-01-04 23:15:07.651] | [Lua] | [../ScriptModule/RebotServer\RebotServerModule.lua:228] | accountgaoyi1546614837689 login success.............
+[debug | 2019-01-04 23:15:07.686] | [Lua] | [../ScriptModule/RebotServer\RebotServerModule.lua:228] | accountgaoyi1546614837698 login success.............
+[debug | 2019-01-04 23:15:07.722] | [Lua] | [../ScriptModule/RebotServer\RebotServerModule.lua:228] | accountgaoyi1546614837763 login success.............
+[debug | 2019-01-04 23:15:07.758] | [Lua] | [../ScriptModule/RebotServer\RebotServerModule.lua:228] | accountgaoyi1546614837747 login success.............
+[debug | 2019-01-04 23:15:07.796] | [Lua] | [../ScriptModule/RebotServer\RebotServerModule.lua:228] | accountgaoyi1546614837795 login success.............
+[debug | 2019-01-04 23:15:07.837] | [Lua] | [../ScriptModule/RebotServer\RebotServerModule.lua:228] | accountgaoyi1546614837731 login success.............
+[debug | 2019-01-04 23:15:07.880] | [Lua] | [../ScriptModule/RebotServer\RebotServerModule.lua:228] | accountgaoyi1546614837765 login success.............
+[debug | 2019-01-04 23:15:07.913] | [Lua] | [../ScriptModule/RebotServer\RebotServerModule.lua:228] | accountgaoyi1546614837792 login success.............
+[debug | 2019-01-04 23:15:07.976] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[debug | 2019-01-04 23:15:07.986] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[error | 2019-01-04 23:15:07.990] | [NFCHttpClient::LuaOnHttpReqDone:747] | some request failed - no idea which one though!
+
+[error | 2019-01-04 23:15:07.991] | [NFCHttpClient::LuaOnHttpReqDone:780] | socket error = 由于连接方在一段时间后没有正确答复或连接的主机没有反应，连接尝试失败。 (10060)
+
+[error | 2019-01-04 23:15:07.991] | [NFCHttpClient::LuaOnHttpReqDone:747] | some request failed - no idea which one though!
+
+[error | 2019-01-04 23:15:07.991] | [NFCHttpClient::LuaOnHttpReqDone:780] | socket error = 由于连接方在一段时间后没有正确答复或连接的主机没有反应，连接尝试失败。 (10060)
+
+[error | 2019-01-04 23:15:07.991] | [NFCPluginManager::Execute:231] | frame timeout:938, something wrong
+[debug | 2019-01-04 23:15:08.351] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[error | 2019-01-04 23:15:08.356] | [NFCPluginManager::Execute:231] | frame timeout:363, something wrong
+[debug | 2019-01-04 23:15:08.607] | [Lua] | [../ScriptModule/RebotServer\RebotServerModule.lua:228] | accountgaoyi1546614837645 login success.............
+[debug | 2019-01-04 23:15:08.830] | [Lua] | [../ScriptModule/RebotServer\RebotServerModule.lua:228] | accountgaoyi1546614837778 login success.............
+[debug | 2019-01-04 23:15:08.868] | [Lua] | [../ScriptModule/RebotServer\RebotServerModule.lua:228] | accountgaoyi1546614837768 login success.............
+[error | 2019-01-04 23:15:08.899] | [NFCPluginManager::Execute:231] | frame timeout:541, something wrong
+[debug | 2019-01-04 23:15:08.961] | [Lua] | [../ScriptModule/RebotServer\RebotServerModule.lua:228] | accountgaoyi1546614837668 login success.............
+[warning | 2019-01-04 23:15:09.005] | [NFCPluginManager::Execute:227] | frame timeout:105
+[error | 2019-01-04 23:15:09.319] | [NFCHttpClient::LuaOnHttpReqDone:747] | some request failed - no idea which one though!
+
+[error | 2019-01-04 23:15:09.319] | [NFCHttpClient::LuaOnHttpReqDone:780] | socket error = 由于连接方在一段时间后没有正确答复或连接的主机没有反应，连接尝试失败。 (10060)
+
+[error | 2019-01-04 23:15:09.319] | [NFCPluginManager::Execute:231] | frame timeout:312, something wrong
+[debug | 2019-01-04 23:15:09.610] | [Lua] | [../ScriptModule/RebotServer\RebotServerModule.lua:228] | accountgaoyi1546614837738 login success.............
+[debug | 2019-01-04 23:15:09.659] | [Lua] | [../ScriptModule/RebotServer\RebotServerModule.lua:228] | accountgaoyi1546614837789 login success.............
+[debug | 2019-01-04 23:15:09.687] | [Lua] | [../ScriptModule/RebotServer\RebotServerModule.lua:228] | accountgaoyi1546614837785 login success.............
+[debug | 2019-01-04 23:15:09.717] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[error | 2019-01-04 23:15:09.718] | [NFCHttpClient::LuaOnHttpReqDone:747] | some request failed - no idea which one though!
+
+[error | 2019-01-04 23:15:09.718] | [NFCHttpClient::LuaOnHttpReqDone:780] | socket error = 由于连接方在一段时间后没有正确答复或连接的主机没有反应，连接尝试失败。 (10060)
+
+[error | 2019-01-04 23:15:09.718] | [NFCPluginManager::Execute:231] | frame timeout:356, something wrong
+[error | 2019-01-04 23:15:09.877] | [NFCHttpClient::LuaOnHttpReqDone:747] | some request failed - no idea which one though!
+
+[error | 2019-01-04 23:15:09.877] | [NFCHttpClient::LuaOnHttpReqDone:780] | socket error = 由于连接方在一段时间后没有正确答复或连接的主机没有反应，连接尝试失败。 (10060)
+
+[error | 2019-01-04 23:15:09.877] | [NFCHttpClient::LuaOnHttpReqDone:747] | some request failed - no idea which one though!
+
+[error | 2019-01-04 23:15:09.877] | [NFCHttpClient::LuaOnHttpReqDone:780] | socket error = 由于连接方在一段时间后没有正确答复或连接的主机没有反应，连接尝试失败。 (10060)
+
+[error | 2019-01-04 23:15:09.877] | [NFCHttpClient::LuaOnHttpReqDone:747] | some request failed - no idea which one though!
+
+[error | 2019-01-04 23:15:09.877] | [NFCHttpClient::LuaOnHttpReqDone:780] | socket error = 由于连接方在一段时间后没有正确答复或连接的主机没有反应，连接尝试失败。 (10060)
+
+[warning | 2019-01-04 23:15:09.877] | [NFCPluginManager::Execute:227] | frame timeout:157
+[debug | 2019-01-04 23:15:09.930] | [Lua] | [../ScriptModule/RebotServer\RebotServerModule.lua:228] | accountgaoyi1546614837736 login success.............
+[debug | 2019-01-04 23:15:09.957] | [Lua] | [../ScriptModule/RebotServer\RebotServerModule.lua:228] | accountgaoyi1546614837796 login success.............
+[debug | 2019-01-04 23:15:09.990] | [Lua] | [../ScriptModule/RebotServer\RebotServerModule.lua:228] | accountgaoyi1546614837798 login success.............
+[warning | 2019-01-04 23:15:10.031] | [NFCPluginManager::Execute:227] | frame timeout:116
+[error | 2019-01-04 23:15:10.395] | [NFCHttpClient::LuaOnHttpReqDone:747] | some request failed - no idea which one though!
+
+[error | 2019-01-04 23:15:10.395] | [NFCHttpClient::LuaOnHttpReqDone:780] | socket error = 由于连接方在一段时间后没有正确答复或连接的主机没有反应，连接尝试失败。 (10060)
+
+[error | 2019-01-04 23:15:10.395] | [NFCHttpClient::LuaOnHttpReqDone:747] | some request failed - no idea which one though!
+
+[error | 2019-01-04 23:15:10.395] | [NFCHttpClient::LuaOnHttpReqDone:780] | socket error = 由于连接方在一段时间后没有正确答复或连接的主机没有反应，连接尝试失败。 (10060)
+
+[error | 2019-01-04 23:15:10.395] | [NFCPluginManager::Execute:231] | frame timeout:362, something wrong
+[debug | 2019-01-04 23:15:10.775] | [Lua] | [../ScriptModule/RebotServer\RebotServerModule.lua:228] | accountgaoyi1546614837766 login success.............
+[debug | 2019-01-04 23:15:10.813] | [Lua] | [../ScriptModule/RebotServer\RebotServerModule.lua:228] | accountgaoyi1546614837783 login success.............
+[debug | 2019-01-04 23:15:10.864] | [Lua] | [../ScriptModule/RebotServer\RebotServerModule.lua:228] | accountgaoyi1546614837742 login success.............
+[error | 2019-01-04 23:15:10.885] | [NFCHttpClient::LuaOnHttpReqDone:747] | some request failed - no idea which one though!
+
+[error | 2019-01-04 23:15:10.885] | [NFCHttpClient::LuaOnHttpReqDone:780] | socket error = 由于连接方在一段时间后没有正确答复或连接的主机没有反应，连接尝试失败。 (10060)
+
+[error | 2019-01-04 23:15:10.885] | [NFCHttpClient::LuaOnHttpReqDone:747] | some request failed - no idea which one though!
+
+[error | 2019-01-04 23:15:10.885] | [NFCHttpClient::LuaOnHttpReqDone:780] | socket error = 由于连接方在一段时间后没有正确答复或连接的主机没有反应，连接尝试失败。 (10060)
+
+[error | 2019-01-04 23:15:10.885] | [NFCPluginManager::Execute:231] | frame timeout:488, something wrong
+[error | 2019-01-04 23:15:10.903] | [NetObject::Dismantle:392] | recv close frame, close connection!
+[debug | 2019-01-04 23:15:10.978] | [Lua] | [../ScriptModule/RebotServer\RebotServerModule.lua:228] | accountgaoyi1546614837737 login success.............
+[debug | 2019-01-04 23:15:11.014] | [Lua] | [../ScriptModule/RebotServer\RebotServerModule.lua:228] | accountgaoyi1546614837714 login success.............
+[debug | 2019-01-04 23:15:11.050] | [Lua] | [../ScriptModule/RebotServer\RebotServerModule.lua:228] | accountgaoyi1546614837744 login success.............
+[debug | 2019-01-04 23:15:11.080] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[warning | 2019-01-04 23:15:11.080] | [NFCPluginManager::Execute:227] | frame timeout:193
+[error | 2019-01-04 23:15:11.395] | [NFCPluginManager::Execute:231] | frame timeout:313, something wrong
+[debug | 2019-01-04 23:15:11.785] | [Lua] | [../ScriptModule/RebotServer\RebotServerModule.lua:228] | accountgaoyi1546614837784 login success.............
+[debug | 2019-01-04 23:15:11.822] | [Lua] | [../ScriptModule/RebotServer\RebotServerModule.lua:228] | accountgaoyi1546614837804 login success.............
+[error | 2019-01-04 23:15:11.849] | [NFCPluginManager::Execute:231] | frame timeout:379, something wrong
+[warning | 2019-01-04 23:15:11.955] | [NFCPluginManager::Execute:227] | frame timeout:104
+[warning | 2019-01-04 23:15:12.098] | [NFCPluginManager::Execute:227] | frame timeout:87
+[debug | 2019-01-04 23:15:12.311] | [Lua] | [../ScriptModule/RebotServer\RebotServerModule.lua:228] | accountgaoyi1546614837782 login success.............
+[debug | 2019-01-04 23:15:12.341] | [Lua] | [../ScriptModule/RebotServer\RebotServerModule.lua:228] | accountgaoyi1546614837797 login success.............
+[debug | 2019-01-04 23:15:12.353] | [NFIHttpClientModule::LuaHttpPost:117] | [HttpPos | {}]
+[error | 2019-01-04 23:15:12.355] | [NFCPluginManager::Execute:231] | frame timeout:256, something wrong
+[debug | 2019-01-04 23:15:12.442] | [Lua] | [../ScriptModule/RebotServer\RebotServerModule.lua:228] | accountgaoyi1546614837794 login success.............
+[debug | 2019-01-04 23:15:12.777] | [Lua] | [../ScriptModule/RebotServer\RebotServerModule.lua:228] | accountgaoyi1546614837755 login success.............
+[error | 2019-01-04 23:15:12.801] | [NFCPluginManager::Execute:231] | frame timeout:325, something wrong
+[error | 2019-01-04 23:15:12.831] | [NFCHttpClient::LuaOnHttpReqDone:747] | some request failed - no idea which one though!
+
+[error | 2019-01-04 23:15:12.831] | [NFCHttpClient::LuaOnHttpReqDone:780] | socket error = 由于连接方在一段时间后没有正确答复或连接的主机没有反应，连接尝试失败。 (10060)
+
+[debug | 2019-01-04 23:15:13.334] | [Lua] | [../ScriptModule/RebotServer\RebotServerModule.lua:228] | accountgaoyi1546614837713 login success.............
+[error | 2019-01-04 23:15:13.357] | [NFCPluginManager::Execute:231] | frame timeout:251, something wrong
+[error | 2019-01-04 23:15:13.471] | [Lua] | [../ScriptModule/gxlua\LuaNFrame.lua:86] | RebotServerModule.UpdateSec cost time:10243 us some thint wrong
+[error | 2019-01-04 23:15:13.877] | [NFCPluginManager::Execute:231] | frame timeout:385, something wrong
+[debug | 2019-01-04 23:15:14.123] | [Lua] | [../ScriptModule/RebotServer\RebotServerModule.lua:228] | accountgaoyi1546614837793 login success.............
+[warning | 2019-01-04 23:15:14.142] | [NFCPluginManager::Execute:227] | frame timeout:149
+[debug | 2019-01-04 23:15:14.447] | [Lua] | [../ScriptModule/RebotServer\RebotServerModule.lua:228] | accountgaoyi1546614837786 login success.............
+[debug | 2019-01-04 23:15:14.487] | [Lua] | [../ScriptModule/RebotServer\RebotServerModule.lua:228] | accountgaoyi1546614837801 login success.............
+[error | 2019-01-04 23:15:14.518] | [NFCPluginManager::Execute:231] | frame timeout:375, something wrong
+[debug | 2019-01-04 23:15:14.520] | [NFCPluginManager::PrintProfiler:616] | profile:
++-[100.00% 31888.354ms (per 31.888ms) count=1000]----MainLoop
+|   +-[70.29% 22413.203ms (per 22.413ms) count=1000]----NFNetPlugin--Loop
+|   +-[29.22% 9316.557ms (per  9.317ms) count=1000]----NFKernelPlugin--Loop
+|   |   +-[20.37% 6495.828ms (per  3.007ms) count=2160]----RebotServerModule.UpdateSec
+|   |   +-[ 3.41% 1086.101ms (per  2.316ms) count=469]----RebotServerModule.UpdateTick
+|   |   +-[ 2.63% 839.467ms (per 20.987ms) count=40]----RebotServerModule.addRebot
+|   |   +-[ 0.10% 33.089ms (per  0.675ms) count=49]----update_debugsocket
+|   |   +-[ 0.01%  3.058ms (per  0.510ms) count=6]----update_snapshot
+|   |   +-[ 2.69% 859.014ms (per  0.859ms) count=1000]----<other: code not be sample and sampled but too small>
+|   |
+|   +-[ 0.07% 22.297ms (per  0.022ms) count=1000]----NFActorPlugin--Loop
+|   +-[ 0.02%  6.247ms (per  0.006ms) count=1000]----NFLuaScriptPlugin--Loop
+|   +-[ 0.02%  5.715ms (per  0.006ms) count=1000]----NFMongoPlugin--Loop
+|   +-[ 0.01%  4.514ms (per  0.005ms) count=1000]----NFMysqlPlugin--Loop
+|   +-[ 0.38% 119.820ms (per  0.120ms) count=1000]----<other: code not be sample and sampled but too small>
+
+[error | 2019-01-04 23:15:14.903] | [NFCPluginManager::Execute:231] | frame timeout:383, something wrong
+[debug | 2019-01-04 23:15:14.930] | [Lua] | [../ScriptModule/RebotServer\RebotServerModule.lua:228] | accountgaoyi1546614837700 login success.............
+[warning | 2019-01-04 23:15:15.139] | [NFCPluginManager::Execute:227] | frame timeout:134
+[error | 2019-01-04 23:15:15.414] | [NFCPluginManager::Execute:231] | frame timeout:213, something wrong
+[error | 2019-01-04 23:15:15.889] | [NFCPluginManager::Execute:231] | frame timeout:337, something wrong
+[warning | 2019-01-04 23:15:16.107] | [NFCPluginManager::Execute:227] | frame timeout:100
+[debug | 2019-01-04 23:15:16.122] | [Lua] | [../ScriptModule/RebotServer\RebotServerModule.lua:228] | accountgaoyi1546614837791 login success.............
+[warning | 2019-01-04 23:15:16.396] | [NFCPluginManager::Execute:227] | frame timeout:185
+[debug | 2019-01-04 23:15:17.001] | [Lua] | [../ScriptModule/RebotServer\RebotServerModule.lua:228] | accountgaoyi1546614837739 login success.............
+[error | 2019-01-04 23:15:17.024] | [NFCPluginManager::Execute:231] | frame timeout:456, something wrong
+[debug | 2019-01-04 23:15:17.161] | [Lua] | [../ScriptModule/RebotServer\RebotServerModule.lua:228] | accountgaoyi1546614837670 login success.............
+[error | 2019-01-04 23:15:17.361] | [NFCPluginManager::Execute:231] | frame timeout:336, something wrong
+[debug | 2019-01-04 23:15:17.579] | [Lua] | [../ScriptModule/RebotServer\RebotServerModule.lua:228] | accountgaoyi1546614837774 login success.............
+[error | 2019-01-04 23:15:17.594] | [NFCPluginManager::Execute:231] | frame timeout:232, something wrong
+[debug | 2019-01-04 23:15:18.018] | [Lua] | [../ScriptModule/RebotServer\RebotServerModule.lua:228] | accountgaoyi1546614837799 login success.............
+[debug | 2019-01-04 23:15:18.048] | [Lua] | [../ScriptModule/RebotServer\RebotServerModule.lua:228] | accountgaoyi1546614837803 login success.............
+[debug | 2019-01-04 23:15:18.061] | [Lua] | [../ScriptModule/RebotServer\RebotServerModule.lua:228] | accountgaoyi1546614837762 login success.............
+[error | 2019-01-04 23:15:18.089] | [NFCPluginManager::Execute:231] | frame timeout:493, something wrong
+[error | 2019-01-04 23:15:18.398] | [NFCPluginManager::Execute:231] | frame timeout:308, something wrong
+[debug | 2019-01-04 23:15:18.739] | [Lua] | [../ScriptModule/RebotServer\RebotServerModule.lua:228] | accountgaoyi1546614837788 login success.............
+[error | 2019-01-04 23:15:18.758] | [NFCPluginManager::Execute:231] | frame timeout:359, something wrong
+[error | 2019-01-04 23:15:19.190] | [NFCHttpClient::LuaOnHttpReqDone:747] | some request failed - no idea which one though!
+
+[error | 2019-01-04 23:15:19.190] | [NFCHttpClient::LuaOnHttpReqDone:780] | socket error = 由于连接方在一段时间后没有正确答复或连接的主机没有反应，连接尝试失败。 (10060)
+
+[error | 2019-01-04 23:15:19.190] | [NFCPluginManager::Execute:231] | frame timeout:430, something wrong
+[warning | 2019-01-04 23:15:19.383] | [NFCPluginManager::Execute:227] | frame timeout:192
+[error | 2019-01-04 23:15:19.680] | [NFCPluginManager::Execute:231] | frame timeout:262, something wrong
+[warning | 2019-01-04 23:15:19.809] | [NFCPluginManager::Execute:227] | frame timeout:94
+[error | 2019-01-04 23:15:20.275] | [NFCPluginManager::Execute:231] | frame timeout:464, something wrong
+[error | 2019-01-04 23:15:20.656] | [NFCPluginManager::Execute:231] | frame timeout:229, something wrong
+[error | 2019-01-04 23:15:21.167] | [NFCPluginManager::Execute:231] | frame timeout:342, something wrong
+[debug | 2019-01-04 23:15:21.237] | [Lua] | [../ScriptModule/RebotServer\RebotServerModule.lua:228] | accountgaoyi1546614837787 login success.............
+[warning | 2019-01-04 23:15:21.257] | [NFCPluginManager::Execute:227] | frame timeout:89
+[error | 2019-01-04 23:15:21.774] | [NFCPluginManager::Execute:231] | frame timeout:328, something wrong
+[debug | 2019-01-04 23:15:22.187] | [Lua] | [../ScriptModule/RebotServer\RebotServerModule.lua:228] | accountgaoyi1546614837775 login success.............
+[error | 2019-01-04 23:15:22.211] | [NFCPluginManager::Execute:231] | frame timeout:353, something wrong
+[warning | 2019-01-04 23:15:22.666] | [NFCPluginManager::Execute:227] | frame timeout:187
+[debug | 2019-01-04 23:15:22.807] | [Lua] | [../ScriptModule/RebotServer\RebotServerModule.lua:228] | accountgaoyi1546614837802 login success.............
+[warning | 2019-01-04 23:15:22.826] | [NFCPluginManager::Execute:227] | frame timeout:124
+[warning | 2019-01-04 23:15:22.912] | [NFCPluginManager::Execute:227] | frame timeout:83
+[error | 2019-01-04 23:15:23.286] | [NFCPluginManager::Execute:231] | frame timeout:373, something wrong
+[error | 2019-01-04 23:15:24.127] | [NFCPluginManager::Execute:231] | frame timeout:707, something wrong
+[debug | 2019-01-04 23:15:24.976] | [Lua] | [../ScriptModule/RebotServer\RebotServerModule.lua:228] | accountgaoyi1546614837790 login success.............
+[error | 2019-01-04 23:15:25.002] | [NFCPluginManager::Execute:231] | frame timeout:873, something wrong
+[error | 2019-01-04 23:15:25.430] | [NFCHttpClient::LuaOnHttpReqDone:747] | some request failed - no idea which one though!
+
+[error | 2019-01-04 23:15:25.430] | [NFCHttpClient::LuaOnHttpReqDone:780] | socket error = 由于连接方在一段时间后没有正确答复或连接的主机没有反应，连接尝试失败。 (10060)
+
+[error | 2019-01-04 23:15:25.430] | [NFCPluginManager::Execute:231] | frame timeout:427, something wrong
+[debug | 2019-01-04 23:15:26.093] | [Lua] | [../ScriptModule/RebotServer\RebotServerModule.lua:228] | accountgaoyi1546614837759 login success.............
+[error | 2019-01-04 23:15:26.096] | [NFCPluginManager::Execute:231] | frame timeout:665, something wrong
+[error | 2019-01-04 23:15:26.406] | [NFCPluginManager::Execute:231] | frame timeout:308, something wrong
+[warning | 2019-01-04 23:15:26.572] | [NFCPluginManager::Execute:227] | frame timeout:165
+[error | 2019-01-04 23:15:27.166] | [NFCPluginManager::Execute:231] | frame timeout:593, something wrong
+[warning | 2019-01-04 23:15:27.319] | [NFCPluginManager::Execute:227] | frame timeout:152
+[debug | 2019-01-04 23:15:28.153] | [Lua] | [../ScriptModule/RebotServer\RebotServerModule.lua:228] | accountgaoyi1546614837756 login success.............
+[error | 2019-01-04 23:15:28.192] | [NFCPluginManager::Execute:231] | frame timeout:603, something wrong
+[error | 2019-01-04 23:15:28.406] | [NFCPluginManager::Execute:231] | frame timeout:213, something wrong
+[error | 2019-01-04 23:15:29.193] | [NFCPluginManager::Execute:231] | frame timeout:579, something wrong
+[error | 2019-01-04 23:15:29.462] | [NFCPluginManager::Execute:231] | frame timeout:267, something wrong
+[error | 2019-01-04 23:15:30.349] | [NFCPluginManager::Execute:231] | frame timeout:715, something wrong
+[error | 2019-01-04 23:15:30.681] | [NFCPluginManager::Execute:231] | frame timeout:331, something wrong
+[error | 2019-01-04 23:15:31.289] | [NFCPluginManager::Execute:231] | frame timeout:607, something wrong
+[warning | 2019-01-04 23:15:31.446] | [NFCPluginManager::Execute:227] | frame timeout:155
+[debug | 2019-01-04 23:15:32.534] | [Lua] | [../ScriptModule/RebotServer\RebotServerModule.lua:228] | accountgaoyi1546614837750 login success.............
+[error | 2019-01-04 23:15:32.554] | [NFCPluginManager::Execute:231] | frame timeout:852, something wrong
+[error | 2019-01-04 23:15:32.859] | [NFCPluginManager::Execute:231] | frame timeout:304, something wrong
+[error | 2019-01-04 23:15:33.198] | [Lua] | [../ScriptModule/gxlua\LuaNFrame.lua:86] | RebotServerModule.UpdateSec cost time:10516 us some thint wrong
+[error | 2019-01-04 23:15:33.845] | [NFCPluginManager::Execute:231] | frame timeout:985, something wrong
+[error | 2019-01-04 23:15:34.050] | [NFCPluginManager::Execute:231] | frame timeout:202, something wrong
+[error | 2019-01-04 23:15:34.520] | [NetObject::Dismantle:392] | recv close frame, close connection!
+[error | 2019-01-04 23:15:34.766] | [NFCPluginManager::Execute:231] | frame timeout:714, something wrong
+[error | 2019-01-04 23:15:35.273] | [NFCPluginManager::Execute:231] | frame timeout:249, something wrong
+[error | 2019-01-04 23:15:35.766] | [NFCPluginManager::Execute:231] | frame timeout:491, something wrong
+[warning | 2019-01-04 23:15:35.911] | [NFCPluginManager::Execute:227] | frame timeout:143
+[error | 2019-01-04 23:15:36.976] | [NFCPluginManager::Execute:231] | frame timeout:697, something wrong
+[warning | 2019-01-04 23:15:37.074] | [NFCPluginManager::Execute:227] | frame timeout:96
+[warning | 2019-01-04 23:15:37.173] | [NFCPluginManager::Execute:227] | frame timeout:98
+[error | 2019-01-04 23:15:38.282] | [NFCPluginManager::Execute:231] | frame timeout:1001, something wrong
+[debug | 2019-01-04 23:15:39.257] | [Lua] | [../ScriptModule/RebotServer\RebotServerModule.lua:228] | accountgaoyi1546614837660 login success.............
+[error | 2019-01-04 23:15:40.549] | [NFCPluginManager::Execute:231] | frame timeout:2265, something wrong
+[error | 2019-01-04 23:15:41.660] | [NetObject::Dismantle:392] | recv close frame, close connection!
+[debug | 2019-01-04 23:15:42.646] | [Lua] | [../ScriptModule/RebotServer\RebotServerModule.lua:228] | accountgaoyi1546614837767 login success.............
+[error | 2019-01-04 23:15:42.674] | [NFCPluginManager::Execute:231] | frame timeout:2123, something wrong
+[error | 2019-01-04 23:15:45.005] | [NetObject::Dismantle:392] | recv close frame, close connection!
+[error | 2019-01-04 23:15:45.012] | [NetObject::Dismantle:392] | recv close frame, close connection!
+[error | 2019-01-04 23:15:45.030] | [NetObject::Dismantle:392] | recv close frame, close connection!
+[error | 2019-01-04 23:15:45.038] | [NetObject::Dismantle:392] | recv close frame, close connection!
+[error | 2019-01-04 23:15:45.230] | [NetObject::Dismantle:392] | recv close frame, close connection!
+[debug | 2019-01-04 23:15:45.542] | [Lua] | [../ScriptModule/RebotServer\RebotServerModule.lua:228] | accountgaoyi1546614837697 login success.............
+[debug | 2019-01-04 23:15:45.607] | [Lua] | [../ScriptModule/RebotServer\RebotServerModule.lua:228] | accountgaoyi1546614837757 login success.............
+[debug | 2019-01-04 23:15:45.785] | [Lua] | [../ScriptModule/RebotServer\RebotServerModule.lua:228] | accountgaoyi1546614837800 login success.............
+[error | 2019-01-04 23:15:45.806] | [NFCPluginManager::Execute:231] | frame timeout:3130, something wrong
+[info | 2019-01-04 23:15:45.809] | [NFCPluginManager::BeforeShut:420] | NFPluginLoader BeforeShut................
+[info | 2019-01-04 23:15:45.810] | [NFCPluginManager::Shut:432] | NFPluginLoader Shut................
+[info | 2019-01-04 23:15:49.450] | [NFCPluginManager::Finalize:444] | NFPluginLoader Finalize................

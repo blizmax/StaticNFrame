@@ -63,18 +63,7 @@ protected:
 
 	void OnHandleAccountLogin(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen);
 
-	void SynReportToLogin();
-
-	void SynProxyToGame();
-	void SynProxyToGame(uint32_t unlinkId);
-
-	void SynProxyToWorld();
-	void SynProxyToWorld(uint32_t unlinkId);
-
-	void SynWorldToGame();
-	void SynWorldToGame(uint32_t unlinkId, uint32_t gameId);
-
-	void SynReportToLogin(NF_SHARE_PTR<NFServerData> pServerData);
+	void SynServerToOthers(NF_SHARE_PTR<NFServerData> pServerData);
 
 	void OnClientDisconnect(uint32_t unLinkId);
 

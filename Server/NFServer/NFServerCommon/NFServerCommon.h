@@ -72,10 +72,7 @@ enum NF_EGMI_MsgId
 	EGMI_NET_GAME_TO_WORLD_REFRESH = 36,	//游戏服务器	刷新	世界服务器协议
 	EGMI_NET_PROXY_TO_WORLD_REFRESH = 37,	//网关服务器	刷新	WORLD服务器协议
 
-	EGMI_NET_MASTER_SEND_PROXY_TO_GAME = 40, //master send proxy to game
-	EGMI_NET_MASTER_SEND_PROXY_TO_WORLD = 41, //master send proxy to world
-	EGMI_NET_MASTER_SEND_WORLD_TO_GAME = 42, //master send world to game
-	EGMI_NET_MASTER_SEND_SERVER_TO_LOGIN = 43, //master send server(proxy,world,game) to login
+	EGMI_NET_MASTER_SEND_SERVER_TO_SERVER = 40, //master send server to server
 
 	EGMI_NET_PROXY_TO_GAME_ACCOUNT_CONNECT = 50, //proxy 发送 账号链接数据
 	EGMI_NET_PROXY_TO_GAME_ACCOUNT_DISCONNECT = 51, //proxy 发送 账号链接数据
