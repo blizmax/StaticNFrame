@@ -10,7 +10,6 @@
 #include "NFWorldClientPlugin.h"
 #include "NFComm/NFPluginModule/NFIPluginManager.h"
 #include "NFWorldClient_MasterModule.h"
-#include "NFWorldClient_ProxyModule.h"
 
 #ifdef NF_DYNAMIC_PLUGIN
 
@@ -43,11 +42,9 @@ std::string NFWorldClientPlugin::GetPluginName()
 void NFWorldClientPlugin::Install()
 {
 	REGISTER_MODULE(pPluginManager, NFIWorldClient_MasterModule, NFCWorldClient_MasterModule);
-	REGISTER_MODULE(pPluginManager, NFIWorldClient_ProxyModule, NFCWorldClient_ProxyModule);
 }
 
 void NFWorldClientPlugin::Uninstall()
 {
 	UNREGISTER_MODULE(pPluginManager, NFIWorldClient_MasterModule, NFCWorldClient_MasterModule);
-	UNREGISTER_MODULE(pPluginManager, NFIWorldClient_ProxyModule, NFCWorldClient_ProxyModule);
 }

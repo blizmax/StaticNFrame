@@ -55,19 +55,7 @@ public:
 
 	virtual bool Shut() override;
 
-	void OnHandleGmMessage(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen);
-	void OnHandleGameJsonMessage(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen);
-	void OnHandleJsonMessage(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen);
-	void OnHandleUser_LoginTokenLoginUserPmd(const uint32_t unLinkId, const NFMsg::UserLoginTokenLoginUserPmd_C& msg);
-	void OnHandleUser_UserJsMessageForwardUserPmd(const uint32_t unLinkId, const NFMsg::UserJsMessageForwardUserPmd_CS& msg);
-	void OnHandleUser_UserLoginReconnectLoginUserPmd(const uint32_t unLinkId, const NFMsg::UserLoginReconnectLoginUserPmd_C& msg);
-
-	ProxyPlayerData* GetPlayerData(uint64_t uid) { return mPlayerData.GetElement(uid); }
-	ProxyPlayerData* GetPlayerDataByLinkId(uint32_t unlinkId) { return mUnlinkIdPlayerData.GetElement(unlinkId); }
-
 	void OnProxySocketEvent(const eMsgType nEvent, const uint32_t unLinkId);
-	void OnAccountDisconnect(const uint32_t unLinkId);
-	void OnHandleInnerServerDisconnect(uint32_t serverType, uint32_t serverId);
 
 	void OnHandleGameEventCallBack(eMsgType nEvent, uint32_t unLinkId, NF_SHARE_PTR<NFServerData> pServerData);
 	void OnHandleWorldEventCallBack(eMsgType nEvent, uint32_t unLinkId, NF_SHARE_PTR<NFServerData> pServerData);
@@ -76,7 +64,4 @@ private:
 	NFINetClientModule* m_pNetClientModule;
 	NFIProxyServerModule* m_pNetProxyServerModule;
 	NFIServerNetEventModule* m_pServerNetEventModule;
-
-	NFMap<uint64_t, ProxyPlayerData> mPlayerData;
-	NFMap<uint32_t, ProxyPlayerData> mUnlinkIdPlayerData;
 };

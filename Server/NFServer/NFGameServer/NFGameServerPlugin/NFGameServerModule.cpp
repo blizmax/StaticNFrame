@@ -26,11 +26,14 @@ NFCGameServerModule::~NFCGameServerModule()
 
 bool NFCGameServerModule::Init()
 {
-	m_pMongoModule = pPluginManager->FindModule<NFIMongoModule>();
-	m_pAsynMongoModule = pPluginManager->FindModule<NFIAsynMongoModule>();
+	m_pServerNetEventModule = pPluginManager->FindModule<NFIServerNetEventModule>();
 	m_pNetServerModule = pPluginManager->FindModule<NFINetServerModule>();
 	m_pNetServerModule->AddEventCallBack(NF_ST_GAME, this, &NFCGameServerModule::OnProxySocketEvent);
 	m_pNetServerModule->AddReceiveCallBack(NF_ST_GAME, this, &NFCGameServerModule::OnHandleOtherMessage);
+
+	m_pNetServerModule->AddReceiveCallBack(NF_ST_GAME, EGMI_NET_PROXY_TO_GAME_REGISTER, this, &NFCGameServerModule::OnProxyServerRegisterProcess);
+	m_pNetServerModule->AddReceiveCallBack(NF_ST_GAME, EGMI_NET_PROXY_TO_GAME_UNREGISTER, this, &NFCGameServerModule::OnProxyServerUnRegisterProcess);
+	m_pNetServerModule->AddReceiveCallBack(NF_ST_GAME, EGMI_NET_PROXY_TO_GAME_REFRESH, this, &NFCGameServerModule::OnProxyServerRefreshProcess);
 
 	NFServerConfig* pConfig = NFServerCommon::GetAppConfig(pPluginManager, NF_ST_GAME);
 	if (pConfig)
@@ -43,42 +46,6 @@ bool NFCGameServerModule::Init()
 		else
 		{
 			NFLogInfo("game server listen failed!, serverId:{}, maxConnectNum:{}, port:{}", pConfig->mServerId, pConfig->mMaxConnectNum, pConfig->mServerPort);
-		}
-
-		if (!pConfig->mMongoIp.empty())
-		{
-			if (pConfig->mMongoPort > 0)
-			{
-				bool ret = m_pMongoModule->AddMongoServer(NF_ST_GAME, pConfig->mMongoIp, pConfig->mMongoPort, pConfig->mMongoDbName);
-				if (ret == false)
-				{
-					NFLogError("Game Server Connected Mongo Failed, ip:{}, port:{}, dbname:{}", pConfig->mMongoIp, pConfig->mMongoPort, pConfig->mMongoDbName);
-					return false;
-				}
-				//0号，给LUA使用
-				ret = m_pMongoModule->AddMongoServer(0, pConfig->mMongoIp, pConfig->mMongoPort, pConfig->mMongoDbName);
-				if (ret == false)
-				{
-					NFLogError("Game Server Connected Mongo Failed, ip:{}, port:{}, dbname:{}", pConfig->mMongoIp, pConfig->mMongoPort, pConfig->mMongoDbName);
-					return false;
-				}
-
-				ret = m_pAsynMongoModule->AddMongoServer(NF_ST_GAME, pConfig->mMongoIp, pConfig->mMongoPort, pConfig->mMongoDbName);
-				if (ret == false)
-				{
-					NFLogError("Game Server Connected Mongo Failed, ip:{}, port:{}, dbname:{}", pConfig->mMongoIp, pConfig->mMongoPort, pConfig->mMongoDbName);
-					return false;
-				}
-				//0号，给LUA使用
-				ret = m_pAsynMongoModule->AddMongoServer(0, pConfig->mMongoIp, pConfig->mMongoPort, pConfig->mMongoDbName);
-				if (ret == false)
-				{
-					NFLogError("Game Server Connected Mongo Failed, ip:{}, port:{}, dbname:{}", pConfig->mMongoIp, pConfig->mMongoPort, pConfig->mMongoDbName);
-					return false;
-				}
-
-				NFLogInfo("Game Server Connected Mongo Success, ip:{}, port:{}, dbname:{}", pConfig->mMongoIp, pConfig->mMongoPort, pConfig->mMongoDbName);
-			}
 		}
 	}
 	else
@@ -118,11 +85,113 @@ void NFCGameServerModule::OnProxySocketEvent(const eMsgType nEvent, const uint32
 	}
 	else if (nEvent == eMsgType_DISCONNECTED)
 	{
-
+		OnHandleServerDisconnect(unLinkId);
 	}
 }
 
 void NFCGameServerModule::OnHandleOtherMessage(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen)
 {
 	NFLogWarning("msg:{} not handled!", nMsgId);
+}
+
+//游戏服务器注册协议回调
+void NFCGameServerModule::OnProxyServerRegisterProcess(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen)
+{
+	NFMsg::ServerInfoReportList xMsg;
+	CLIENT_MSG_PROCESS_NO_OBJECT(nMsgId, msg, nLen, xMsg);
+
+	for (int i = 0; i < xMsg.server_list_size(); ++i)
+	{
+		const NFMsg::ServerInfoReport& xData = xMsg.server_list(i);
+		NF_SHARE_PTR<NFServerData> pServerData = mProxyMap.GetElement(xData.server_id());
+		if (!pServerData)
+		{
+			pServerData = NF_SHARE_PTR<NFServerData>(NF_NEW NFServerData());
+			mProxyMap.AddElement(xData.server_id(), pServerData);
+		}
+
+		pServerData->mUnlinkId = unLinkId;
+		pServerData->mServerInfo = xData;
+
+		if (xData.server_ip().empty())
+		{
+			std::string ip = m_pNetServerModule->GetLinkIp(unLinkId);
+			pServerData->mServerInfo.set_server_ip(ip);
+		}
+
+		NFLogInfo("Proxy Server Register Game Server Success, serverName:{}, serverId:{}, ip:{}, port:{}", pServerData->mServerInfo.server_name(), pServerData->mServerInfo.server_id(), pServerData->mServerInfo.server_ip(), pServerData->mServerInfo.server_port());
+
+		pServerData->SetSendString([this, pServerData](const std::string& msg) {
+			m_pNetServerModule->SendByServerID(pServerData->mUnlinkId, 0, msg, 0);
+		});
+		m_pServerNetEventModule->OnServerNetEvent(eMsgType_CONNECTED, NF_ST_GAME, NF_ST_PROXY, unLinkId, pServerData);
+	}
+}
+
+void NFCGameServerModule::OnProxyServerUnRegisterProcess(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen)
+{
+	NFMsg::ServerInfoReportList xMsg;
+	CLIENT_MSG_PROCESS_NO_OBJECT(nMsgId, msg, nLen, xMsg);
+
+	for (int i = 0; i < xMsg.server_list_size(); ++i)
+	{
+		const NFMsg::ServerInfoReport& xData = xMsg.server_list(i);
+		mProxyMap.RemoveElement(xData.server_id());
+
+		NFLogInfo("Game Server UnRegister Proxy Server Success, serverName:{}, serverId:{}, ip:{}, port:{}", xData.server_name(), xData.server_id(), xData.server_ip(), xData.server_port());
+	}
+}
+
+void NFCGameServerModule::OnProxyServerRefreshProcess(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen)
+{
+	NFMsg::ServerInfoReportList xMsg;
+	CLIENT_MSG_PROCESS_NO_OBJECT(nMsgId, msg, nLen, xMsg);
+
+	for (int i = 0; i < xMsg.server_list_size(); ++i)
+	{
+		const NFMsg::ServerInfoReport& xData = xMsg.server_list(i);
+		NF_SHARE_PTR<NFServerData> pServerData = mProxyMap.GetElement(xData.server_id());
+		if (!pServerData)
+		{
+			pServerData = NF_SHARE_PTR<NFServerData>(NF_NEW NFServerData());
+			mProxyMap.AddElement(xData.server_id(), pServerData);
+		}
+
+		pServerData->mUnlinkId = unLinkId;
+		pServerData->mServerInfo = xData;
+
+		if (xData.server_ip().empty())
+		{
+			std::string ip = m_pNetServerModule->GetLinkIp(unLinkId);
+			pServerData->mServerInfo.set_server_ip(ip);
+		}
+
+		//NFLogInfo("Game Server Refresh Master Server Success, serverName:{}, serverId:{}, ip:{}, port:{}", xData.server_name(), xData.server_id(), xData.server_ip(), xData.server_port());
+	}
+}
+
+void NFCGameServerModule::OnHandleServerDisconnect(uint32_t unLinkId)
+{
+	NF_SHARE_PTR<NFServerData> pServerData = nullptr;
+
+	pServerData = mProxyMap.First();
+	while (pServerData)
+	{
+		if (unLinkId == pServerData->mUnlinkId)
+		{
+			pServerData->mServerInfo.set_server_state(NFMsg::EST_CRASH);
+			pServerData->mUnlinkId = 0;
+
+			NFLogError("the game server disconnect from proxy server, serverName:{}, serverId:{}, serverIp:{}, serverPort:{}"
+				, pServerData->mServerInfo.server_name(), pServerData->mServerInfo.server_id(), pServerData->mServerInfo.server_ip(), pServerData->mServerInfo.server_port());
+
+			pServerData->SetSendString([this, pServerData](const std::string& msg) {
+				NFLogError("game disconnect, can't send msg:{}", msg);
+			});
+			m_pServerNetEventModule->OnServerNetEvent(eMsgType_DISCONNECTED, NF_ST_GAME, NF_ST_PROXY, unLinkId, pServerData);
+			return;
+		}
+
+		pServerData = mProxyMap.Next();
+	}
 }

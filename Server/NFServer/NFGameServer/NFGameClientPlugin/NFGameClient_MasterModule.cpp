@@ -30,7 +30,6 @@ bool NFCGameClient_MasterModule::Init()
 {
 	m_pServerNetEventModule = pPluginManager->FindModule<NFIServerNetEventModule>();
 	m_pNetClientModule = pPluginManager->FindModule<NFINetClientModule>();
-	m_pGameClient_ProxyModule = pPluginManager->FindModule<NFIGameClient_ProxyModule>();
 	m_pGameClient_WorldModule = pPluginManager->FindModule<NFIGameClient_WorldModule>();
 	m_pMasterServerData = NF_SHARE_PTR<NFServerData>(NF_NEW NFServerData());
 	return true;
@@ -43,7 +42,6 @@ bool NFCGameClient_MasterModule::AfterInit()
 
 	m_pNetClientModule->AddReceiveCallBack(NF_ST_MASTER, this, &NFCGameClient_MasterModule::OnHandleOtherMessage);
 	
-	m_pNetClientModule->AddReceiveCallBack(NF_ST_MASTER, EGMI_NET_MASTER_SEND_PROXY_TO_GAME, this, &NFCGameClient_MasterModule::OnHandleServerReport);
 	m_pNetClientModule->AddReceiveCallBack(NF_ST_MASTER, EGMI_NET_MASTER_SEND_WORLD_TO_GAME, this, &NFCGameClient_MasterModule::OnHandleServerReport);
 
 	NFServerConfig* pConfig = NFServerCommon::GetServerConfig(pPluginManager, NF_ST_MASTER);
@@ -191,11 +189,6 @@ void NFCGameClient_MasterModule::OnHandleServerReport(const uint32_t unLinkId, c
 		case NF_SERVER_TYPES::NF_ST_WORLD:
 		{
 			m_pGameClient_WorldModule->OnHandleWorldReport(xData);
-		}
-		break;
-		case NF_SERVER_TYPES::NF_ST_PROXY:
-		{
-			m_pGameClient_ProxyModule->OnHandleProxyReport(xData);
 		}
 		break;
 		}

@@ -315,7 +315,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="NFIGameClient_ProxyModule.h" />
     <ClInclude Include="NFIGameClient_WorldModule.h" />
     <ClInclude Include="NFIGameServerModule.h" />
     <ClInclude Include="NFIGameClient_MasterModule.h" />
@@ -324,7 +323,6 @@
     <ClInclude Include="NFIMasterServerModule.h" />
     <ClInclude Include="NFIProxyClient_MasterModule.h" />
     <ClInclude Include="NFIWorldClient_MasterModule.h" />
-    <ClInclude Include="NFIWorldClient_ProxyModule.h" />
     <ClInclude Include="NFIWorldServerModule.h" />
     <ClInclude Include="NFServerCommon.h" />
     <ClInclude Include="NFIProxyServerModule.h" />

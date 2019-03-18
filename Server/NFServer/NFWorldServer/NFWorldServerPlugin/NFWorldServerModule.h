@@ -17,8 +17,6 @@
 #include "NFServer/NFServerCommon/NFServerCommon.h"
 #include "NFComm/NFPluginModule/NFEventMgr.h"
 #include "NFComm/NFCore/NFMapEx.hpp"
-#include "NFComm/NFPluginModule/NFIMongoModule.h"
-#include "NFComm/NFPluginModule/NFIAsynMongoModule.h"
 
 class NFCWorldServerModule : public NFIWorldServerModule
 {
@@ -44,17 +42,21 @@ protected:
 	void OnGameServerUnRegisterProcess(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen);
 	void OnGameServerRefreshProcess(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen);
 
+	//网关服务器注册协议回调
+	void OnProxyServerRegisterProcess(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen);
+	void OnProxyServerUnRegisterProcess(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen);
+	void OnProxyServerRefreshProcess(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen);
+
 	void OnClientDisconnect(uint32_t unLinkId);
 
 	virtual NF_SHARE_PTR<NFServerData> GetGameByLink(uint32_t unLinkId) { return mLinkGamMap.GetElement(unLinkId); }
 private:
-	NFIMongoModule* m_pMongoModule;
-	NFIAsynMongoModule* m_pAsynMongoModule;
 	NFINetServerModule* m_pNetServerModule;
 	NFINetClientModule* m_pNetClientModule;
 	NFIServerNetEventModule* m_pServerNetEventModule;
 private:
 	NFMapEx<uint32_t, NFServerData> mGameMap;
 	NFMapEx<uint32_t, NFServerData> mLinkGamMap; //linkid -- key
+	NFMapEx<uint32_t, NFServerData> mProxyMap;
 	uint32_t mServerId;
 };

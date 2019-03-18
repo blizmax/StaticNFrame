@@ -15,8 +15,7 @@
 #include "NFComm/NFCore/NFMapEx.hpp"
 #include "NFServer/NFServerCommon/NFServerCommon.h"
 #include "NFComm/NFCore/NFMap.hpp"
-#include "NFComm/NFPluginModule/NFIMongoModule.h"
-#include "NFComm/NFPluginModule/NFIAsynMongoModule.h"
+#include "NFComm/NFPluginModule/NFIServerNetEventModule.h"
 
 class NFCGameServerModule : public NFIGameServerModule
 {
@@ -36,8 +35,16 @@ public:
 
 	void OnProxySocketEvent(const eMsgType nEvent, const uint32_t unLinkId);
 	void OnHandleOtherMessage(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen);
+
+	//网关服务器注册协议回调
+	void OnProxyServerRegisterProcess(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen);
+	void OnProxyServerUnRegisterProcess(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen);
+	void OnProxyServerRefreshProcess(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen);
+
+	void OnHandleServerDisconnect(uint32_t unLinkId);
 private:
 	NFINetServerModule* m_pNetServerModule;
-	NFIMongoModule* m_pMongoModule;
-	NFIAsynMongoModule* m_pAsynMongoModule;
+	NFIServerNetEventModule* m_pServerNetEventModule;
+
+	NFMapEx<uint32_t, NFServerData> mProxyMap;
 };

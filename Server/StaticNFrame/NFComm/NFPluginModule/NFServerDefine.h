@@ -21,7 +21,6 @@ enum NF_SERVER_TYPES
 	NF_ST_WORLD = 3, //
 	NF_ST_GAME = 4, //
 	NF_ST_PROXY = 5, //
-	NF_ST_PROXY_INNER = 6, //网关对内服务器, 用来游戏服务器，世界服务器连接网关相互连接
 	NF_ST_MAX = 10, //
 };
 
