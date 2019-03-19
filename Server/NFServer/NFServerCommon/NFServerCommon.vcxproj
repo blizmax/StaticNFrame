@@ -321,7 +321,10 @@
     <ClInclude Include="NFILoginClient_MasterModule.h" />
     <ClInclude Include="NFILoginServerModule.h" />
     <ClInclude Include="NFIMasterServerModule.h" />
+    <ClInclude Include="NFIProxyClient_GameModule.h" />
+    <ClInclude Include="NFIProxyClient_LoginModule.h" />
     <ClInclude Include="NFIProxyClient_MasterModule.h" />
+    <ClInclude Include="NFIProxyClient_WorldModule.h" />
     <ClInclude Include="NFIWorldClient_MasterModule.h" />
     <ClInclude Include="NFIWorldServerModule.h" />
     <ClInclude Include="NFServerCommon.h" />

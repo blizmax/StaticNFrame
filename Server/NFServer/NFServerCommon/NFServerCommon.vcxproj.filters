@@ -12,6 +12,9 @@
     <ClInclude Include="NFIProxyClient_MasterModule.h" />
     <ClInclude Include="NFIGameClient_MasterModule.h" />
     <ClInclude Include="NFIGameClient_WorldModule.h" />
+    <ClInclude Include="NFIProxyClient_GameModule.h" />
+    <ClInclude Include="NFIProxyClient_WorldModule.h" />
+    <ClInclude Include="NFIProxyClient_LoginModule.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="NFServerCommon.cpp" />

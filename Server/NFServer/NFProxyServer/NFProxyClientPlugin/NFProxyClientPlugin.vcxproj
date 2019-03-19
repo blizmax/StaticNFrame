@@ -36,11 +36,17 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="NFProxyClientPlugin.h" />
+    <ClInclude Include="NFProxyClient_GameModule.h" />
+    <ClInclude Include="NFProxyClient_LoginModule.h" />
     <ClInclude Include="NFProxyClient_MasterModule.h" />
+    <ClInclude Include="NFProxyClient_WorldModule.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="NFProxyClientPlugin.cpp" />
+    <ClCompile Include="NFProxyClient_GameModule.cpp" />
+    <ClCompile Include="NFProxyClient_LoginModule.cpp" />
     <ClCompile Include="NFProxyClient_MasterModule.cpp" />
+    <ClCompile Include="NFProxyClient_WorldModule.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{5C1094D5-0812-48B9-945D-AC3976506145}</ProjectGuid>

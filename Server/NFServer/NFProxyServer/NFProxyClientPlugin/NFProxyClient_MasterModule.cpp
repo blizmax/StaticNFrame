@@ -28,6 +28,9 @@ NFCProxyClient_MasterModule::~NFCProxyClient_MasterModule()
 
 bool NFCProxyClient_MasterModule::Init()
 {
+	m_pProxyClient_GameModule = pPluginManager->FindModule<NFIProxyClient_GameModule>();
+	m_pProxyClient_WorldModule = pPluginManager->FindModule<NFIProxyClient_WorldModule>();
+	m_pProxyClient_LoginModule = pPluginManager->FindModule<NFIProxyClient_LoginModule>();
 	m_pNetClientModule = pPluginManager->FindModule<NFINetClientModule>();
 	m_pMasterServerData = NF_SHARE_PTR<NFServerData>(NF_NEW NFServerData());
 	return true;
@@ -38,6 +41,8 @@ bool NFCProxyClient_MasterModule::AfterInit()
 	m_pServerNetEventModule = pPluginManager->FindModule<NFIServerNetEventModule>();
 	m_pNetClientModule->AddEventCallBack(NF_ST_MASTER, this, &NFCProxyClient_MasterModule::OnProxySocketEvent);
 	m_pNetClientModule->AddReceiveCallBack(NF_ST_MASTER, this, &NFCProxyClient_MasterModule::OnHandleOtherMessage);
+
+	m_pNetClientModule->AddReceiveCallBack(NF_ST_MASTER, EGMI_NET_MASTER_SEND_SERVER_TO_SERVER, this, &NFCProxyClient_MasterModule::OnHandleServerReport);
 
 	NFServerConfig* pConfig = NFServerCommon::GetServerConfig(pPluginManager, NF_ST_MASTER);
 	if (pConfig)
@@ -163,5 +168,34 @@ void NFCProxyClient_MasterModule::ServerReport()
 		pData->set_cur_proc_cwd(pPluginManager->GetSystemInfo().GetProcessInfo().mCwd);
 
 		m_pNetClientModule->SendToServerByPB(m_pMasterServerData->mUnlinkId, EGMI_STS_SERVER_REPORT, xMsg, 0);
+	}
+}
+
+void NFCProxyClient_MasterModule::OnHandleServerReport(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen)
+{
+	NFMsg::ServerInfoReportList xMsg;
+	CLIENT_MSG_PROCESS_NO_OBJECT(nMsgId, msg, nLen, xMsg);
+
+	for (int i = 0; i < xMsg.server_list_size(); ++i)
+	{
+		const NFMsg::ServerInfoReport& xData = xMsg.server_list(i);
+		switch (xData.server_type())
+		{
+		case NF_SERVER_TYPES::NF_ST_WORLD:
+		{
+			m_pProxyClient_WorldModule->OnHandleServerReport(xData);
+		}
+		break;
+		case NF_SERVER_TYPES::NF_ST_GAME:
+		{
+			m_pProxyClient_GameModule->OnHandleServerReport(xData);
+		}
+		break;
+		case NF_SERVER_TYPES::NF_ST_LOGIN:
+		{
+			m_pProxyClient_LoginModule->OnHandleServerReport(xData);
+		}
+		break;
+		}
 	}
 }

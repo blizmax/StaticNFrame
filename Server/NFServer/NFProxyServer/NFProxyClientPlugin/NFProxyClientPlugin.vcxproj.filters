@@ -3,9 +3,15 @@
   <ItemGroup>
     <ClInclude Include="NFProxyClientPlugin.h" />
     <ClInclude Include="NFProxyClient_MasterModule.h" />
+    <ClInclude Include="NFProxyClient_GameModule.h" />
+    <ClInclude Include="NFProxyClient_WorldModule.h" />
+    <ClInclude Include="NFProxyClient_LoginModule.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="NFProxyClientPlugin.cpp" />
     <ClCompile Include="NFProxyClient_MasterModule.cpp" />
+    <ClCompile Include="NFProxyClient_GameModule.cpp" />
+    <ClCompile Include="NFProxyClient_WorldModule.cpp" />
+    <ClCompile Include="NFProxyClient_LoginModule.cpp" />
   </ItemGroup>
 </Project>

@@ -55,6 +55,7 @@ enum NF_EGMI_MsgId
 	EGMI_NET_PROXY_TO_GAME_REGISTER = 15,	//网关服务器	注册	游戏服务器协议
 	EGMI_NET_GAME_TO_WORLD_REGISTER = 16,	//游戏服务器	注册	世界服务器协议
 	EGMI_NET_PROXY_TO_WORLD_REGISTER = 17,	//网关服务器	注册	WORLD服务器协议
+	EGMI_NET_PROXY_TO_LOGIN_REGISTER = 17,	//网关服务器	注册	Login服务器协议
 
 	EGMI_NET_PROXY_TO_MASTER_UNREGISTER = 21,	//网关服务器 注销  MASTER服务器协议
 	EGMI_NET_GAME_TO_MASTER_UNREGISTER = 22,	//网关服务器 注销  MASTER服务器协议
