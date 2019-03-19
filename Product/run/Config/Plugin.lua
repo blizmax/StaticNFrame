@@ -30,19 +30,19 @@ LoadPlugin =
 			
 			--"NFLuaScriptPlugin",
 			
-			--"NFMasterServerPlugin",
+			"NFMasterServerPlugin",
 			
-			--"NFLoginClientPlugin",
-			--"NFLoginServerPlugin",
+			"NFLoginClientPlugin",
+			"NFLoginServerPlugin",
 			
-			--"NFWorldClientPlugin",
-			--"NFWorldServerPlugin",
+			"NFWorldClientPlugin",
+			"NFWorldServerPlugin",
 			
-			--"NFGameClientPlugin",
-			--"NFGameServerPlugin",
+			"NFGameClientPlugin",
+			"NFGameServerPlugin",
 			
-			--"NFProxyServerPlugin",
-			--"NFProxyClientPlugin",
+			"NFProxyServerPlugin",
+			"NFProxyClientPlugin",
 			
 			--"NFGameLogicPlugin",
 			--"NFLoginLogicPlugin",
