@@ -10,6 +10,9 @@
 #include "NFProxyClientPlugin.h"
 #include "NFComm/NFPluginModule/NFIPluginManager.h"
 #include "NFProxyClient_MasterModule.h"
+#include "NFProxyClient_GameModule.h"
+#include "NFProxyClient_WorldModule.h"
+#include "NFProxyClient_LoginModule.h"
 
 #ifdef NF_DYNAMIC_PLUGIN
 
@@ -42,9 +45,15 @@ std::string NFProxyClientPlugin::GetPluginName()
 void NFProxyClientPlugin::Install()
 {
 	REGISTER_MODULE(pPluginManager, NFIProxyClient_MasterModule, NFCProxyClient_MasterModule);
+	REGISTER_MODULE(pPluginManager, NFIProxyClient_GameModule, NFCProxyClient_GameModule);
+	REGISTER_MODULE(pPluginManager, NFIProxyClient_WorldModule, NFCProxyClient_WorldModule);
+	REGISTER_MODULE(pPluginManager, NFIProxyClient_LoginModule, NFCProxyClient_LoginModule);
 }
 
 void NFProxyClientPlugin::Uninstall()
 {
 	UNREGISTER_MODULE(pPluginManager, NFIProxyClient_MasterModule, NFCProxyClient_MasterModule);
+	UNREGISTER_MODULE(pPluginManager, NFIProxyClient_GameModule, NFCProxyClient_GameModule);
+	UNREGISTER_MODULE(pPluginManager, NFIProxyClient_WorldModule, NFCProxyClient_WorldModule);
+	UNREGISTER_MODULE(pPluginManager, NFIProxyClient_LoginModule, NFCProxyClient_LoginModule);
 }

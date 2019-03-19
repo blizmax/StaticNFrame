@@ -38,6 +38,8 @@ bool NFCWorldClient_MasterModule::AfterInit()
 	m_pNetClientModule->AddEventCallBack(NF_ST_MASTER, this, &NFCWorldClient_MasterModule::OnProxySocketEvent);
 	m_pNetClientModule->AddReceiveCallBack(NF_ST_MASTER, this, &NFCWorldClient_MasterModule::OnHandleOtherMessage);
 
+	m_pNetClientModule->AddReceiveCallBack(NF_ST_MASTER, EGMI_NET_MASTER_SEND_OTHERS_TO_WORLD, this, &NFCWorldClient_MasterModule::OnHandleServerReport);
+
 	NFServerConfig* pConfig = NFServerCommon::GetServerConfig(pPluginManager, NF_ST_MASTER);
 	if (pConfig)
 	{
@@ -99,6 +101,8 @@ void NFCWorldClient_MasterModule::OnProxySocketEvent(const eMsgType nEvent, cons
 void NFCWorldClient_MasterModule::OnHandleOtherMessage(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen)
 {
 	if (unLinkId != m_pMasterServerData->mUnlinkId) return;
+
+	NFLogWarning("msg:{} not handled", nMsgId);
 }
 
 void NFCWorldClient_MasterModule::RegisterServer()
@@ -163,5 +167,29 @@ void NFCWorldClient_MasterModule::ServerReport()
 		pData->set_cur_proc_cwd(pPluginManager->GetSystemInfo().GetProcessInfo().mCwd);
 
 		m_pNetClientModule->SendToServerByPB(m_pMasterServerData->mUnlinkId, EGMI_STS_SERVER_REPORT, xMsg, 0);
+	}
+}
+
+void NFCWorldClient_MasterModule::OnHandleServerReport(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen)
+{
+	NFMsg::ServerInfoReportList xMsg;
+	CLIENT_MSG_PROCESS_NO_OBJECT(nMsgId, msg, nLen, xMsg);
+
+	for (int i = 0; i < xMsg.server_list_size(); ++i)
+	{
+		const NFMsg::ServerInfoReport& xData = xMsg.server_list(i);
+		switch (xData.server_type())
+		{
+		case NF_SERVER_TYPES::NF_ST_WORLD:
+		{
+			
+		}
+		break;
+		case NF_SERVER_TYPES::NF_ST_LOGIN:
+		{
+
+		}
+		break;
+		}
 	}
 }

@@ -29,6 +29,7 @@ NFCLoginClient_MasterModule::~NFCLoginClient_MasterModule()
 bool NFCLoginClient_MasterModule::Init()
 {
 	m_pNetClientModule = pPluginManager->FindModule<NFINetClientModule>();
+	m_pMasterServerData = NF_SHARE_PTR<NFServerData>(NF_NEW NFServerData());
 	return true;
 }
 
@@ -37,16 +38,23 @@ bool NFCLoginClient_MasterModule::AfterInit()
 	m_pNetClientModule->AddEventCallBack(NF_ST_MASTER, this, &NFCLoginClient_MasterModule::OnProxySocketEvent);
 	m_pNetClientModule->AddReceiveCallBack(NF_ST_MASTER, this, &NFCLoginClient_MasterModule::OnHandleOtherMessage);
 
-	m_pNetClientModule->AddReceiveCallBack(NF_ST_MASTER, EGMI_NET_MASTER_SEND_SERVER_TO_SERVER, this, &NFCLoginClient_MasterModule::OnServerReport);
+	m_pNetClientModule->AddReceiveCallBack(NF_ST_MASTER, EGMI_NET_MASTER_SEND_OTHERS_TO_LOGIN, this, &NFCLoginClient_MasterModule::OnServerReport);
 
 	NFServerConfig* pConfig = NFServerCommon::GetServerConfig(pPluginManager, NF_ST_MASTER);
 	if (pConfig)
 	{
-		m_unLinkId = m_pNetClientModule->AddServer(NF_ST_MASTER, pConfig->mServerIp, pConfig->mServerPort);
+		//AddServer会自动重连，断开连接时，m_pMasterServerData->mUnlinkId不用清理，不变
+		m_pMasterServerData->mUnlinkId = m_pNetClientModule->AddServer(NF_ST_MASTER, pConfig->mServerIp, pConfig->mServerPort);
+		m_pMasterServerData->mServerInfo.set_server_id(pConfig->mServerId);
+		m_pMasterServerData->mServerInfo.set_server_ip(pConfig->mServerIp);
+		m_pMasterServerData->mServerInfo.set_server_port(pConfig->mServerPort);
+		m_pMasterServerData->mServerInfo.set_server_name(pConfig->mServerName);
+		m_pMasterServerData->mServerInfo.set_server_type(pConfig->mServerType);
+		m_pMasterServerData->mServerInfo.set_server_state(NFMsg::EST_NARMAL);
 	}
 	else
 	{
-		NFLogError("I Can't get the Game Server config!");
+		NFLogError("I Can't get the Master Server config!");
 		return false;
 	}
 
@@ -121,7 +129,7 @@ bool NFCLoginClient_MasterModule::Shut()
 
 void NFCLoginClient_MasterModule::OnProxySocketEvent(const eMsgType nEvent, const uint32_t unLinkId)
 {
-	if (unLinkId != m_unLinkId) return;
+	if (unLinkId != m_pMasterServerData->mUnlinkId) return;
 
 	if (nEvent == eMsgType_CONNECTED)
 	{
@@ -137,7 +145,9 @@ void NFCLoginClient_MasterModule::OnProxySocketEvent(const eMsgType nEvent, cons
 
 void NFCLoginClient_MasterModule::OnHandleOtherMessage(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen)
 {
-	if (unLinkId != m_unLinkId) return;
+	if (unLinkId != m_pMasterServerData->mUnlinkId) return;
+
+	NFLogWarning("msg:{} not handled", nMsgId);
 }
 
 void NFCLoginClient_MasterModule::RegisterServer()
@@ -155,7 +165,7 @@ void NFCLoginClient_MasterModule::RegisterServer()
 		pData->set_server_max_online(pConfig->mMaxConnectNum);
 		pData->set_server_state(NFMsg::EST_NARMAL);
 
-		m_pNetClientModule->SendToServerByPB(m_unLinkId, EGMI_NET_LOGIN_TO_MASTER_REGISTER, xMsg, 0);
+		m_pNetClientModule->SendToServerByPB(m_pMasterServerData->mUnlinkId, EGMI_NET_LOGIN_TO_MASTER_REGISTER, xMsg, 0);
 	}
 }
 
@@ -192,7 +202,7 @@ void NFCLoginClient_MasterModule::ServerReport()
 		pData->set_cur_proc_name(pPluginManager->GetSystemInfo().GetProcessInfo().mName);
 		pData->set_cur_proc_cwd(pPluginManager->GetSystemInfo().GetProcessInfo().mCwd);
 
-		m_pNetClientModule->SendToServerByPB(m_unLinkId, EGMI_STS_SERVER_REPORT, xMsg, 0);
+		m_pNetClientModule->SendToServerByPB(m_pMasterServerData->mUnlinkId, EGMI_STS_SERVER_REPORT, xMsg, 0);
 	}
 }
 

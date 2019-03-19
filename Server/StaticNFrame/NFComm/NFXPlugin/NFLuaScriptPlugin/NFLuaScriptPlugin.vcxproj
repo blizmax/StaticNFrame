@@ -209,7 +209,7 @@
       <BrowseInformation>false</BrowseInformation>
       <PrecompiledHeaderFile>stdafx.h</PrecompiledHeaderFile>
       <DisableSpecificWarnings>4091;4251;4996;4275;4316;4244;4267;4101;4390</DisableSpecificWarnings>
-      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>

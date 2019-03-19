@@ -337,7 +337,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Dynamic_Debug|x64'">
     <ClCompile>
-      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <PreprocessorDefinitions>WIN32;_CRT_SECURE_NO_WARNINGS;_WINSOCK_DEPRECATED_NO_WARNINGS;_DEBUG;_LIB;BSON_STATIC;MONGOC_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <Optimization>Disabled</Optimization>
       <AdditionalIncludeDirectories>$(SolutionDir)/Dependencies/LuaBind/luaintf;$(SolutionDir)/Dependencies/LuaBind/pbc;$(SolutionDir)/Dependencies/LuaBind/luasql;$(SolutionDir)/Dependencies/LuaBind/luasocket;$(SolutionDir)/Dependencies/LuaBind/luacjson;$(SolutionDir)/Dependencies/LuaBind/lua5.3/;$(SolutionDir)/Dependencies/mongo/src/libbson/src/bson;$(SolutionDir)/Dependencies/mongo/src/libmongoc/src/mongoc;$(SolutionDir)/Dependencies/mongo/src/libbson/src;$(SolutionDir)/Dependencies/mongo/src/libmongoc/src;$(SolutionDir)/Dependencies/mongo/win/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>

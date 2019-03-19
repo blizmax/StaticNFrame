@@ -42,7 +42,7 @@ bool NFCProxyClient_MasterModule::AfterInit()
 	m_pNetClientModule->AddEventCallBack(NF_ST_MASTER, this, &NFCProxyClient_MasterModule::OnProxySocketEvent);
 	m_pNetClientModule->AddReceiveCallBack(NF_ST_MASTER, this, &NFCProxyClient_MasterModule::OnHandleOtherMessage);
 
-	m_pNetClientModule->AddReceiveCallBack(NF_ST_MASTER, EGMI_NET_MASTER_SEND_SERVER_TO_SERVER, this, &NFCProxyClient_MasterModule::OnHandleServerReport);
+	m_pNetClientModule->AddReceiveCallBack(NF_ST_MASTER, EGMI_NET_MASTER_SEND_OTHERS_TO_PROXY, this, &NFCProxyClient_MasterModule::OnHandleServerReport);
 
 	NFServerConfig* pConfig = NFServerCommon::GetServerConfig(pPluginManager, NF_ST_MASTER);
 	if (pConfig)
@@ -130,6 +130,8 @@ void NFCProxyClient_MasterModule::OnProxySocketEvent(const eMsgType nEvent, cons
 
 void NFCProxyClient_MasterModule::OnHandleOtherMessage(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen)
 {
+	if (unLinkId != m_pMasterServerData->mUnlinkId) return;
+
 	NFLogWarning("msg:{} not handled", nMsgId);
 }
 
@@ -199,3 +201,5 @@ void NFCProxyClient_MasterModule::OnHandleServerReport(const uint32_t unLinkId, 
 		}
 	}
 }
+
+

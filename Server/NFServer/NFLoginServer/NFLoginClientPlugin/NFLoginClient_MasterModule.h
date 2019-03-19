@@ -54,10 +54,10 @@ protected:
 	virtual NF_SHARE_PTR<NFServerData> GetGameServerByServerId(uint32_t serverId) override;
 	virtual std::vector<NF_SHARE_PTR<NFServerData>> GetAllGameServer(uint32_t gameid = 0) override;
 
-	virtual uint32_t GetMasterLinkId() const { return m_unLinkId; }
+	virtual uint32_t GetMasterLinkId() const { return m_pMasterServerData->mUnlinkId; }
 private:
 	NFINetClientModule* m_pNetClientModule;
-	uint32_t m_unLinkId;
+	NF_SHARE_PTR<NFServerData> m_pMasterServerData;
 	NFMapEx<int, NFServerData> mWorldMap;
 	NFConsistentHashMapEx<int, NFServerData> mProxyMap;
 	NFConsistentHashMapEx<int, NFServerData> mGameMap;

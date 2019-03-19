@@ -42,7 +42,7 @@ bool NFCGameClient_MasterModule::AfterInit()
 
 	m_pNetClientModule->AddReceiveCallBack(NF_ST_MASTER, this, &NFCGameClient_MasterModule::OnHandleOtherMessage);
 	
-	m_pNetClientModule->AddReceiveCallBack(NF_ST_MASTER, EGMI_NET_MASTER_SEND_SERVER_TO_SERVER, this, &NFCGameClient_MasterModule::OnHandleServerReport);
+	m_pNetClientModule->AddReceiveCallBack(NF_ST_MASTER, EGMI_NET_MASTER_SEND_OTHERS_TO_GAME, this, &NFCGameClient_MasterModule::OnHandleServerReport);
 
 	NFServerConfig* pConfig = NFServerCommon::GetServerConfig(pPluginManager, NF_ST_MASTER);
 	if (pConfig)

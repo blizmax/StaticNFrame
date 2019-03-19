@@ -696,49 +696,90 @@ void NFCMasterServerModule::SynServerToOthers(NF_SHARE_PTR<NFServerData> pServer
 	NFMsg::ServerInfoReport* pSelfData = xSelfData.add_server_list();
 	*pSelfData = pServerData->mServerInfo;
 
-	NF_SHARE_PTR<NFServerData> pLoginServer = mLoginMap.First();
-	while (pLoginServer)
+	do 
 	{
-		NFMsg::ServerInfoReport* pData = xData.add_server_list();
-		*pData = pLoginServer->mServerInfo;
+		NF_SHARE_PTR<NFServerData> pLoginServer = mLoginMap.First();
+		while (pLoginServer)
+		{
+			if (pServerData->mServerInfo.server_id() != pLoginServer->mServerInfo.server_id())
+			{
+				NFMsg::ServerInfoReport* pData = xData.add_server_list();
+				*pData = pLoginServer->mServerInfo;
 
-		m_pNetServerModule->SendToServerByPB(pLoginServer->mUnlinkId, EGMI_NET_MASTER_SEND_SERVER_TO_SERVER, xSelfData, 0);
+				m_pNetServerModule->SendToServerByPB(pLoginServer->mUnlinkId, EGMI_NET_MASTER_SEND_OTHERS_TO_LOGIN, xSelfData, 0);
+			}
 
-		pLoginServer = mLoginMap.Next();
-	}
+			pLoginServer = mLoginMap.Next();
+		}
+	} while(0);
 
-	NF_SHARE_PTR<NFServerData> pWorldServer = mWorldMap.First();
-	while (pWorldServer)
+	do 
 	{
-		NFMsg::ServerInfoReport* pData = xData.add_server_list();
-		*pData = pWorldServer->mServerInfo;
+		NF_SHARE_PTR<NFServerData> pWorldServer = mWorldMap.First();
+		while (pWorldServer)
+		{
+			if (pServerData->mServerInfo.server_id() != pWorldServer->mServerInfo.server_id())
+			{
+				NFMsg::ServerInfoReport* pData = xData.add_server_list();
+				*pData = pWorldServer->mServerInfo;
 
-		m_pNetServerModule->SendToServerByPB(pWorldServer->mUnlinkId, EGMI_NET_MASTER_SEND_SERVER_TO_SERVER, xSelfData, 0);
+				m_pNetServerModule->SendToServerByPB(pWorldServer->mUnlinkId, EGMI_NET_MASTER_SEND_OTHERS_TO_WORLD, xSelfData, 0);
+			}
 
-		pWorldServer = mWorldMap.Next();
-	}
+			pWorldServer = mWorldMap.Next();
+		}
+	} while(0);
 
-	NF_SHARE_PTR<NFServerData> pGameServer = mGameMap.First();
-	while (pGameServer)
+	do 
 	{
-		NFMsg::ServerInfoReport* pData = xData.add_server_list();
-		*pData = pGameServer->mServerInfo;
+		NF_SHARE_PTR<NFServerData> pGameServer = mGameMap.First();
+		while (pGameServer)
+		{
+			if (pServerData->mServerInfo.server_id() != pGameServer->mServerInfo.server_id())
+			{
+				NFMsg::ServerInfoReport* pData = xData.add_server_list();
+				*pData = pGameServer->mServerInfo;
 
-		m_pNetServerModule->SendToServerByPB(pGameServer->mUnlinkId, EGMI_NET_MASTER_SEND_SERVER_TO_SERVER, xSelfData, 0);
+				m_pNetServerModule->SendToServerByPB(pGameServer->mUnlinkId, EGMI_NET_MASTER_SEND_OTHERS_TO_GAME, xSelfData, 0);
+			}
 
-		pGameServer = mGameMap.Next();
-	}
+			pGameServer = mGameMap.Next();
+		}
+	} while(0);
 
-	NF_SHARE_PTR<NFServerData> pProxyServer = mProxyMap.First();
-	while (pProxyServer)
+	do 
 	{
-		NFMsg::ServerInfoReport* pData = xData.add_server_list();
-		*pData = pProxyServer->mServerInfo;
+		NF_SHARE_PTR<NFServerData> pProxyServer = mProxyMap.First();
+		while (pProxyServer)
+		{
+			if (pServerData->mServerInfo.server_id() != pProxyServer->mServerInfo.server_id())
+			{
+				NFMsg::ServerInfoReport* pData = xData.add_server_list();
+				*pData = pProxyServer->mServerInfo;
 
-		m_pNetServerModule->SendToServerByPB(pProxyServer->mUnlinkId, EGMI_NET_MASTER_SEND_SERVER_TO_SERVER, xSelfData, 0);
+				m_pNetServerModule->SendToServerByPB(pProxyServer->mUnlinkId, EGMI_NET_MASTER_SEND_OTHERS_TO_PROXY, xSelfData, 0);
+			}
 
-		pProxyServer = mProxyMap.Next();
+			pProxyServer = mProxyMap.Next();
+		}
+	} while(0);
+
+
+
+	if (pServerData->mServerInfo.server_type() == NF_ST_GAME)
+	{
+		m_pNetServerModule->SendToServerByPB(pServerData->mUnlinkId, EGMI_NET_MASTER_SEND_OTHERS_TO_GAME, xData, 0);
 	}
-
-	m_pNetServerModule->SendToServerByPB(pServerData->mUnlinkId, EGMI_NET_MASTER_SEND_SERVER_TO_SERVER, xData, 0);
+	else if (pServerData->mServerInfo.server_type() == NF_ST_WORLD)
+	{
+		m_pNetServerModule->SendToServerByPB(pServerData->mUnlinkId, EGMI_NET_MASTER_SEND_OTHERS_TO_WORLD, xData, 0);
+	}
+	else if (pServerData->mServerInfo.server_type() == NF_ST_PROXY)
+	{
+		m_pNetServerModule->SendToServerByPB(pServerData->mUnlinkId, EGMI_NET_MASTER_SEND_OTHERS_TO_PROXY, xData, 0);
+	}
+	else if (pServerData->mServerInfo.server_type() == NF_ST_LOGIN)
+	{
+		m_pNetServerModule->SendToServerByPB(pServerData->mUnlinkId, EGMI_NET_MASTER_SEND_OTHERS_TO_LOGIN, xData, 0);
+	}
 }
