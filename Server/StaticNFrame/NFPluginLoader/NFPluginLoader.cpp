@@ -148,6 +148,7 @@ void InitSignal()
 #endif
 }
 
+//转变成守护进程后，会新建一个进程
 void InitDaemon()
 {
 #if NF_PLATFORM != NF_PLATFORM_WIN
@@ -289,7 +290,6 @@ int main(int argc, char* argv[])
 			{
 #endif
 				NFCPluginManager::GetSingletonPtr()->Execute();
-
 #if NF_PLATFORM == NF_PLATFORM_WIN
 			}
 			__except (ApplicationCrashHandler(GetExceptionInformation()))

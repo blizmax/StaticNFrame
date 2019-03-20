@@ -73,6 +73,7 @@ bool NFCPluginManager::IsLoadAllServer() const
 bool NFCPluginManager::Awake()
 {
 	mSystemInfo.Init();
+
 #ifndef NF_DYNAMIC_PLUGIN
 	RegisterStaticPlugin(); //注册静态引擎
 	LoadKernelPlugin(); //NFKernelPlugin比较特殊，提前加载

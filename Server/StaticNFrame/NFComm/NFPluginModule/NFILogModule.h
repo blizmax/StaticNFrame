@@ -36,6 +36,11 @@ public:
 
 	virtual void LogNormal(NF_LOG_LEVEL log_level, const std::string& log) = 0;
 
+	/*创建LOG系统*/
+	virtual void CreateLogger(uint32_t logId, const std::string& logName, bool async) = 0;
+
+	virtual void LogNormal(uint32_t logId, NF_LOG_LEVEL log_level, const std::string& log) = 0;
+
 	virtual void SetLogLevel(NF_LOG_LEVEL log_level) = 0;
 
 	virtual void SetFlushOn(NF_LOG_LEVEL log_level) = 0;
