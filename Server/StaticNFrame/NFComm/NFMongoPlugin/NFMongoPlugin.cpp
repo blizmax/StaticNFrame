@@ -1,8 +1,8 @@
 //------------------------------------------------------------------------ -
-//    @FileName         :    NFMysqlPlugin.cpp
-//    @Author           :    LvSheng.Huang
-//    @Date             :    2017-02-08
-//    @Module           :    NFMysqlPlugin
+//    @FileName         :    NFMongoPlugin.cpp
+//    @Author           :    Yi.Gao
+//    @Date             :    2018-11-20
+//    @Module           :    NFMongoPlugin
 //
 // -------------------------------------------------------------------------
 

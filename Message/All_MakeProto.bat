@@ -4,4 +4,5 @@ protoc.exe --cpp_out=%OutDir%  ./db_base.proto
 protoc.exe --cpp_out=%OutDir%  ./server_msg.proto
 protoc.exe --cpp_out=%OutDir%  ./login_msg.proto
 protoc.exe --cpp_out=%OutDir%  ./proxy_msg.proto
+protoc.exe --cpp_out=%OutDir%  ./sqlite_db.proto
 pause

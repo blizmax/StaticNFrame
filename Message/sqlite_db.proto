@@ -1,0 +1,18 @@
+syntax = "proto2";
+package proto.message;
+
+//*****************************保存数据到db方案********************************//
+message message_sqlite_base
+{
+	optional string table_name = 1; //数据库表名
+}
+
+message create_sqlite_table
+{
+	optional message_sqlite_base db_base = 1;
+}
+
+message table_user
+{
+	optional string user_table = 1;
+}

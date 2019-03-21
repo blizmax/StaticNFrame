@@ -1,6 +1,7 @@
 ﻿#include "NFCMysqlDriver.h"
 #include "NFComm/NFCore/NFCommon.h"
 #include "Dependencies/common/lexical_cast.hpp"
+#include "NFComm/NFPluginModule/NFProtobufCommon.h"
 
 //m_pMysqlConnect在调用Connect会引发多线程的崩溃，必须枷锁
 NFMutex NFCMysqlDriver::ConnectLock;
@@ -288,84 +289,6 @@ void SetFieldsString(google::protobuf::Message& message, const google::protobuf:
 	return;
 }
 
-std::string GetFieldsString(const google::protobuf::Message& message, const google::protobuf::FieldDescriptor* pFieldDesc)
-{
-	const google::protobuf::Reflection* pReflect = message.GetReflection();
-	if (pReflect == nullptr || pFieldDesc == nullptr) return std::string();
-
-	switch (pFieldDesc->cpp_type())
-	{
-	case google::protobuf::FieldDescriptor::CPPTYPE_INT32:
-		{
-			int32_t value = pReflect->GetInt32(message, pFieldDesc);
-			return lexical_cast<std::string>(value);
-		}
-		break;
-	case google::protobuf::FieldDescriptor::CPPTYPE_INT64:
-		{
-			int64_t value = pReflect->GetInt64(message, pFieldDesc);
-			return lexical_cast<std::string>(value);
-		}
-		break;
-	case google::protobuf::FieldDescriptor::CPPTYPE_UINT32:
-		{
-			uint32_t value = pReflect->GetUInt32(message, pFieldDesc);
-			return lexical_cast<std::string>(value);
-		}
-		break;
-	case google::protobuf::FieldDescriptor::CPPTYPE_UINT64:
-		{
-			uint64_t value = pReflect->GetUInt64(message, pFieldDesc);
-			return lexical_cast<std::string>(value);
-		}
-		break;
-	case google::protobuf::FieldDescriptor::CPPTYPE_DOUBLE:
-		{
-			double value = pReflect->GetDouble(message, pFieldDesc);
-			return lexical_cast<std::string>(value);
-		}
-		break;
-	case google::protobuf::FieldDescriptor::CPPTYPE_FLOAT:
-		{
-			float value = pReflect->GetFloat(message, pFieldDesc);
-			return lexical_cast<std::string>(value);
-		}
-		break;
-	case google::protobuf::FieldDescriptor::CPPTYPE_BOOL:
-		{
-			bool value = pReflect->GetBool(message, pFieldDesc);
-			return lexical_cast<std::string>(value);
-		}
-		break;
-	case google::protobuf::FieldDescriptor::CPPTYPE_ENUM:
-		{
-			const google::protobuf::EnumValueDescriptor* pEnumDesc = pReflect->GetEnum(message, pFieldDesc);
-			if (pEnumDesc)
-			{
-				return lexical_cast<std::string>(pEnumDesc->number());
-			}
-		}
-		break;
-	case google::protobuf::FieldDescriptor::CPPTYPE_STRING:
-		{
-			std::string value = pReflect->GetString(message, pFieldDesc);
-			return value;
-		}
-		break;
-	case google::protobuf::FieldDescriptor::CPPTYPE_MESSAGE:
-		{
-			const google::protobuf::Message& value = pReflect->GetMessage(message, pFieldDesc);
-			std::string msg;
-			value.SerializePartialToString(&msg);
-			return msg;
-		}
-		break;
-	default:
-		break;
-	}
-	return std::string();
-}
-
 bool NFCMysqlDriver::Updata(const google::protobuf::Message& message)
 {
 	mysqlpp::Connection* pConnection = GetConnection();
@@ -397,7 +320,7 @@ bool NFCMysqlDriver::Updata(const google::protobuf::Message& message)
 		const google::protobuf::FieldDescriptor* pTableNameDesc = pDbBaseDesc->FindFieldByLowercaseName("table_name");
 		if (pTableNameDesc == nullptr || pTableNameDesc->cpp_type() != google::protobuf::FieldDescriptor::CPPTYPE_STRING) return false;
 
-		strTableName = GetFieldsString(dbBaseMessage, pTableNameDesc);
+		strTableName = NFProtobufCommon::GetFieldsString(dbBaseMessage, pTableNameDesc);
 	}
 
 	{
@@ -416,7 +339,7 @@ bool NFCMysqlDriver::Updata(const google::protobuf::Message& message)
 			if (pKeyFieldDesc == nullptr) return false;
 
 			strKeyName = pKeyFieldDesc->name();
-			strKey = GetFieldsString(dbFieldsMessage, pKeyFieldDesc);
+			strKey = NFProtobufCommon::GetFieldsString(dbFieldsMessage, pKeyFieldDesc);
 		}
 
 		bool bExist = false;
@@ -438,11 +361,11 @@ bool NFCMysqlDriver::Updata(const google::protobuf::Message& message)
 
 					if (i == 0)
 					{
-						query << pTemp->name() << " = " << mysqlpp::quote << GetFieldsString(dbFieldsMessage, pTemp);
+						query << pTemp->name() << " = " << mysqlpp::quote << NFProtobufCommon::GetFieldsString(dbFieldsMessage, pTemp);
 					}
 					else
 					{
-						query << "," << pTemp->name() << " = " << mysqlpp::quote << GetFieldsString(dbFieldsMessage, pTemp);
+						query << "," << pTemp->name() << " = " << mysqlpp::quote << NFProtobufCommon::GetFieldsString(dbFieldsMessage, pTemp);
 					}
 				}
 
@@ -475,11 +398,11 @@ bool NFCMysqlDriver::Updata(const google::protobuf::Message& message)
 
 					if (i == 0)
 					{
-						query << mysqlpp::quote << GetFieldsString(dbFieldsMessage, pDbFieldsDesc->field(i));
+						query << mysqlpp::quote << NFProtobufCommon::GetFieldsString(dbFieldsMessage, pDbFieldsDesc->field(i));
 					}
 					else
 					{
-						query << ", " << mysqlpp::quote << GetFieldsString(dbFieldsMessage, pDbFieldsDesc->field(i));
+						query << ", " << mysqlpp::quote << NFProtobufCommon::GetFieldsString(dbFieldsMessage, pDbFieldsDesc->field(i));
 					}
 				}
 
@@ -523,7 +446,7 @@ bool NFCMysqlDriver::Query(google::protobuf::Message& message)
 		const google::protobuf::FieldDescriptor* pTableNameDesc = pDbBaseDesc->FindFieldByLowercaseName("table_name");
 		if (pTableNameDesc == nullptr || pTableNameDesc->cpp_type() != google::protobuf::FieldDescriptor::CPPTYPE_STRING) return false;
 
-		strTableName = GetFieldsString(dbBaseMessage, pTableNameDesc);
+		strTableName = NFProtobufCommon::GetFieldsString(dbBaseMessage, pTableNameDesc);
 	}
 
 	{
@@ -570,11 +493,11 @@ bool NFCMysqlDriver::Query(google::protobuf::Message& message)
 
 				if (i == 0)
 				{
-					query << pTemp->name() << " = " << mysqlpp::quote << GetFieldsString(dbCondsMessage, pTemp);
+					query << pTemp->name() << " = " << mysqlpp::quote << NFProtobufCommon::GetFieldsString(dbCondsMessage, pTemp);
 				}
 				else
 				{
-					query << " and " << pTemp->name() << " = " << mysqlpp::quote << GetFieldsString(dbCondsMessage, pTemp);
+					query << " and " << pTemp->name() << " = " << mysqlpp::quote << NFProtobufCommon::GetFieldsString(dbCondsMessage, pTemp);
 				}
 			}
 
@@ -651,10 +574,10 @@ bool NFCMysqlDriver::QueryMore(google::protobuf::Message& message)
 		const google::protobuf::FieldDescriptor* pOrderKeyDesc = pDbBaseDesc->FindFieldByLowercaseName("order_key");
 		if (pOrderKeyDesc == nullptr || pOrderKeyDesc->cpp_type() != google::protobuf::FieldDescriptor::CPPTYPE_STRING) return false;
 
-		strTableName = GetFieldsString(dbBaseMessage, pTableNameDesc);
-		nOffset = GetFieldsString(dbBaseMessage, pOffsetDesc);
-		nRows = GetFieldsString(dbBaseMessage, pRowsDesc);
-		orderKey = GetFieldsString(dbBaseMessage, pOrderKeyDesc);
+		strTableName = NFProtobufCommon::GetFieldsString(dbBaseMessage, pTableNameDesc);
+		nOffset = NFProtobufCommon::GetFieldsString(dbBaseMessage, pOffsetDesc);
+		nRows = NFProtobufCommon::GetFieldsString(dbBaseMessage, pRowsDesc);
+		orderKey = NFProtobufCommon::GetFieldsString(dbBaseMessage, pOrderKeyDesc);
 	}
 
 	{
@@ -703,11 +626,11 @@ bool NFCMysqlDriver::QueryMore(google::protobuf::Message& message)
 
 				if (i == 0)
 				{
-					query << pTemp->name() << " = " << mysqlpp::quote << GetFieldsString(dbCondsMessage, pTemp);
+					query << pTemp->name() << " = " << mysqlpp::quote << NFProtobufCommon::GetFieldsString(dbCondsMessage, pTemp);
 				}
 				else
 				{
-					query << " and " << pTemp->name() << " = " << mysqlpp::quote << GetFieldsString(dbCondsMessage, pTemp);
+					query << " and " << pTemp->name() << " = " << mysqlpp::quote << NFProtobufCommon::GetFieldsString(dbCondsMessage, pTemp);
 				}
 			}
 
