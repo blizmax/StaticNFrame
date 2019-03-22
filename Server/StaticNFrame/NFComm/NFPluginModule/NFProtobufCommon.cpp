@@ -221,3 +221,87 @@ std::string NFProtobufCommon::GetDBNameFromMessage(const google::protobuf::Messa
 		return fieldValue;
 	}
 }
+
+std::string  NFProtobufCommon::GetSqliteColumnFromMessage(const google::protobuf::Message& message, bool firstKey)
+{
+	const google::protobuf::Descriptor* pDesc = message.GetDescriptor();
+	if (pDesc == nullptr) return std::string();
+
+	const google::protobuf::Reflection* pReflect = message.GetReflection();
+	if (pReflect == nullptr) return std::string();
+
+	std::string columnSql;
+	for (int i = 0; i < pDesc->field_count(); i++)
+	{
+		const google::protobuf::FieldDescriptor* pFieldDesc = pDesc->field(i);
+		std::string columnStr = pFieldDesc->name() + " ";
+		switch (pFieldDesc->cpp_type())
+		{
+		case google::protobuf::FieldDescriptor::CPPTYPE_INT32:
+		{
+			columnStr += "int";
+		}
+		break;
+		case google::protobuf::FieldDescriptor::CPPTYPE_INT64:
+		{
+			columnStr += "bigint";
+		}
+		break;
+		case google::protobuf::FieldDescriptor::CPPTYPE_UINT32:
+		{
+			columnStr += "int";
+		}
+		break;
+		case google::protobuf::FieldDescriptor::CPPTYPE_UINT64:
+		{
+			columnStr += "bigint";
+		}
+		break;
+		case google::protobuf::FieldDescriptor::CPPTYPE_DOUBLE:
+		{
+			columnStr += "real";
+		}
+		break;
+		case google::protobuf::FieldDescriptor::CPPTYPE_FLOAT:
+		{
+			columnStr += "real";
+		}
+		break;
+		case google::protobuf::FieldDescriptor::CPPTYPE_BOOL:
+		{
+			columnStr += "int";
+		}
+		break;
+		case google::protobuf::FieldDescriptor::CPPTYPE_ENUM:
+		{
+			columnStr += "int";
+		}
+		break;
+		case google::protobuf::FieldDescriptor::CPPTYPE_STRING:
+		{
+			columnStr += "text";
+		}
+		break;
+		case google::protobuf::FieldDescriptor::CPPTYPE_MESSAGE:
+		{
+			columnStr += "blob";
+		}
+		break;
+		default:
+			break;
+		}
+
+		if (i == 0 && firstKey)
+		{
+			columnSql += "primary key";
+		}
+
+		columnSql += columnStr;
+		if (i != pDesc->field_count() - 1)
+		{
+			columnSql += ",";
+		}
+	}
+
+	return columnSql;
+}

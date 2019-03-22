@@ -95,7 +95,7 @@ bool NFCSqliteDriver::CloseConnection()
 * @param  message
 * @return bool
 */
-bool NFCSqliteDriver::CreateTable(const google::protobuf::Message& message)
+bool NFCSqliteDriver::CreateTable(const google::protobuf::Message& message, bool firstKey)
 {
 	if (m_pSqliteDB == nullptr) return false;
 
@@ -108,32 +108,55 @@ bool NFCSqliteDriver::CreateTable(const google::protobuf::Message& message)
 	//获得表的名字
 	std::string strTableName = NFProtobufCommon::GetDBNameFromMessage(message);
 	if (strTableName.empty()) return false;
-	
-	std::string strKeyName;
 
-	do
+	const google::protobuf::FieldDescriptor* pDbFieldsFieldDesc = pDesc->FindFieldByLowercaseName("db_fields");
+	if (pDbFieldsFieldDesc == nullptr || pDbFieldsFieldDesc->cpp_type() != google::protobuf::FieldDescriptor::CPPTYPE_MESSAGE) return false;
+
+	const google::protobuf::Message& dbFieldsMessage = pReflect->GetMessage(message, pDbFieldsFieldDesc);
+
+	std::string strColumnSql = NFProtobufCommon::GetSqliteColumnFromMessage(dbFieldsMessage, firstKey);
+	if (strColumnSql.empty()) return false;
+
+	return CreateTable(strTableName, strColumnSql);
+}
+
+/**
+* @brief 创建数据库表
+*
+* @param  tableName 数据库名字
+* @param  columnSql 列字符串 类似"ServerID int, UserDBID bigint"
+* @return bool
+*/
+bool NFCSqliteDriver::CreateTable(const std::string& tableName, const std::string& columnSql)
+{
+	std::string createTableSql = "create table " + tableName + "(" + columnSql + ")";
+	return ExecSql(createTableSql);
+}
+
+/**
+* @brief 执行一条语句
+*
+* @return void
+*/
+
+bool NFCSqliteDriver::ExecSql(const std::string& sql)
+{
+	if (m_pSqliteDB == nullptr)
 	{
-		const google::protobuf::FieldDescriptor* pDbFieldsFieldDesc = pDesc->FindFieldByLowercaseName("db_fields");
-		if (pDbFieldsFieldDesc == nullptr || pDbFieldsFieldDesc->cpp_type() != google::protobuf::FieldDescriptor::CPPTYPE_MESSAGE) return false;
+		NFLogError("m_pSqliteDB == nullptr, Exec Sql ({}) Failed!", sql);
+		return false;
+	}
 
-		const google::protobuf::Message& dbFieldsMessage = pReflect->GetMessage(message, pDbFieldsFieldDesc);
+	char* errmsg = nullptr;
+	int result = SQLITE_OK;
 
-		const google::protobuf::Descriptor* pDbFieldsDesc = dbFieldsMessage.GetDescriptor();
-		if (pDbFieldsDesc == nullptr) return false;
-
-		if (pDbFieldsDesc->field_count() <= 0) return false;
-
-		const google::protobuf::FieldDescriptor* pKeyFieldDesc = pDbFieldsDesc->field(0);
-		if (pKeyFieldDesc == nullptr) return false;
-
-		strKeyName = pKeyFieldDesc->name();
-
-		for (int i = 0; i < pDbFieldsDesc->field_count(); ++i)
-		{
-			const google::protobuf::FieldDescriptor* pTemp = pDbFieldsDesc->field(i);
-			if (pTemp == nullptr) return false;
-		}
-	} while (false);
+	result = sqlite3_exec(m_pSqliteDB, sql.c_str(), nullptr, nullptr, &errmsg);
+	if (result != SQLITE_OK)
+	{
+		NFLogError("sqlite3_exec error, error code:{}, errmsg:", result, errmsg);
+		NFLogError("sqlite3_exec error, sql:", sql);
+		return false;
+	}
 
 	return true;
 }

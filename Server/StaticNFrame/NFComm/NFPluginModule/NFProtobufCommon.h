@@ -22,6 +22,11 @@ public:
 	** sqlite,mysql从message利用反射取出数据库名字
 	*/
 	static std::string GetDBNameFromMessage(const google::protobuf::Message& message);
+
+	/*
+	** sqlite,mysql从message利用反射,将message的field name做为数据的列，将列名 和类型出去来作为字符串 
+	*/
+	static std::string GetSqliteColumnFromMessage(const google::protobuf::Message& message, bool firstKey = true);
 };
 
 

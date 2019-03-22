@@ -124,6 +124,7 @@ struct tagRecordInfo : public sqliteInsertInfo
 		ret = sqlite3_bind_int64(pStmt, 3, lActorDBID);
 		ret = sqlite3_bind_int64(pStmt, 4, lEnterTime);
 		ret = sqlite3_bind_int64(pStmt, 5, lLeaveTime);
+		ret = sqlite3_bind_text(pStmt, 6, "datetime('now', 'localtime')", -1, SQLITE_TRANSIENT);
 	}
 };
 
@@ -144,18 +145,26 @@ void testSqlite3()
 	pTagInfo->lEnterTime = NFGetSecondTime();
 	pTagInfo->lLeaveTime = NFGetSecondTime() + 1000000;
 	sqliteInsertInfo* pInsertInfo = pTagInfo;
-
+	sqlite3_stmt *stmt1;
 	std::string strDrop = "drop table if exists " + pInsertInfo->GetTableName();
 	rc = sqlite3_exec(db, strDrop.c_str(), 0, 0, 0);
 
 	std::string strCreateTable = "create table " + pInsertInfo->GetTableName() + "(" + pInsertInfo->GetTableColumnInfo() + ")";
 	rc = sqlite3_exec(db, strCreateTable.c_str(), 0, 0, 0);
 
+	std::string selectSql = "select max(ID) from " + pInsertInfo->GetTableName();
+	rc = sqlite3_prepare_v2(db, selectSql.data(), selectSql.size(), &stmt1, 0);
+	if (sqlite3_step(stmt1) == SQLITE_ROW)
+	{
+		int maxId = sqlite3_column_int(stmt1, 0);
+		std::cout << "maxId" << std::endl;
+	}
+	rc = sqlite3_finalize(stmt1);
+
 	std::string sql = pInsertInfo->CreateSqlitePrepareSql();
 
-	uint64_t startTime = NFGetTime();
 	rc = sqlite3_exec(db, "begin;", 0, 0, 0);
-	sqlite3_stmt *stmt1;
+
 	rc = sqlite3_prepare_v2(db, sql.data(), sql.size(), &stmt1, 0);
 	for (int i = 0; i < 100; ++i)
 	{
@@ -167,10 +176,18 @@ void testSqlite3()
 	char *errmsg;
 	rc = sqlite3_exec(db, "commit;", 0, 0, &errmsg);
 
-	uint64_t endTime = NFGetTime();
+	rc = sqlite3_exec(db, "begin;", 0, 0, 0);
+	selectSql = "select max(ID) from " + pInsertInfo->GetTableName();
+	rc = sqlite3_prepare_v2(db, selectSql.data(), selectSql.size(), &stmt1, 0);
+	if (sqlite3_step(stmt1) == SQLITE_ROW)
+	{
+		int maxId = sqlite3_column_int(stmt1, 0);
+		std::cout << "maxId" << std::endl;
+	}
+	rc = sqlite3_finalize(stmt1);
+	rc = sqlite3_exec(db, "commit;", 0, 0, &errmsg);
 
 	rc = sqlite3_close_v2(db);
-	std::cout << "sqlite3 300000 cost time: " << (endTime - startTime) << "ms" << std::endl;
 }
 
 void testLog()
@@ -193,6 +210,7 @@ void testLog()
 
 bool NFCTestModule::Init()
 {
+	testSqlite3();
 	std::string table_name = NFProtobufCommon::GetDBNameFromMessage(proto::message::table_user::default_instance());
 	return true;
 }
