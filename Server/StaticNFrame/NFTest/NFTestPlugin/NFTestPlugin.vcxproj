@@ -40,6 +40,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="NFCTestModule.h" />
+    <ClInclude Include="NFMpmcBlockingQueue.h" />
     <ClInclude Include="NFTestPlugin.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
