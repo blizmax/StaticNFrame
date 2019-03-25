@@ -70,13 +70,13 @@ bool NFCSqliteDriver::Connect(const std::string& dbname)
 */
 void NFCSqliteDriver::SetPragmaInfo()
 {
-	ExecSql("PRAGMA synchronous = OFF;");
-	ExecSql("PRAGMA auto_vacuum = 0;");
-	ExecSql("PRAGMA cache_size = 8000;");
-	ExecSql("PRAGMA case_sensitive_like = 1;");
-	ExecSql("PRAGMA count_changes = 1;");
-	ExecSql("PRAGMA page_size = 8192;");
-	ExecSql("PRAGMA temp_store = MEMORY;");
+	ExecSqlNoTransaction("PRAGMA synchronous = OFF;");
+	ExecSqlNoTransaction("PRAGMA auto_vacuum = 0;");
+	ExecSqlNoTransaction("PRAGMA cache_size = 8000;");
+	ExecSqlNoTransaction("PRAGMA case_sensitive_like = 1;");
+	ExecSqlNoTransaction("PRAGMA count_changes = 1;");
+	ExecSqlNoTransaction("PRAGMA page_size = 8192;");
+	ExecSqlNoTransaction("PRAGMA temp_store = MEMORY;");
 }
 
 /**
@@ -219,7 +219,7 @@ bool NFCSqliteDriver::IsExistTable(const std::string& tableName)
 bool NFCSqliteDriver::CreateTable(const std::string& tableName, const std::string& columnSql)
 {
 	std::string createTableSql = "create table " + tableName + "(" + columnSql + ")";
-	return ExecSql(createTableSql);
+	return ExecSqlNoTransaction(createTableSql);
 }
 
 /**
@@ -610,7 +610,7 @@ bool NFCSqliteDriver::SqliteBindStep(const google::protobuf::Message& message, s
 */
 bool NFCSqliteDriver::BeginTransaction()
 {
-	bool result = ExecSql("begin transaction");
+	bool result = ExecSqlNoTransaction("begin transaction");
 	if (!result)
 	{
 		NFLogError("begin transaction failed!");
@@ -625,7 +625,7 @@ bool NFCSqliteDriver::BeginTransaction()
 */
 bool NFCSqliteDriver::CommitTransaction()
 {
-	bool result = ExecSql("commit transaction");
+	bool result = ExecSqlNoTransaction("commit transaction");
 	if (!result)
 	{
 		NFLogError("commit transaction failed!");

@@ -79,6 +79,13 @@ public:
 	* @return void
 	*/
 	virtual bool InsertMessage(uint32_t nServerID, std::vector<google::protobuf::Message*>& vecMessage, bool insertKey = false);
+
+	/**
+	* @brief 执行N条可能不同表的不同插入语句
+	*
+	* @return void
+	*/
+	virtual bool InsertDifferentMessage(uint32_t nServerID, std::vector<google::protobuf::Message*>& vecMessage, bool insertKey = false);
 private:
 	NFCSqliteDriverManager* m_pSqliteDriverManager;
 };

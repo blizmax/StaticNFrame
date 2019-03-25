@@ -16,29 +16,26 @@ NFCSqliteModule::NFCSqliteModule(NFIPluginManager* p)
 
 NFCSqliteModule::~NFCSqliteModule()
 {
-	NF_SAFE_DELETE(m_pSqliteDriverManager);
+
 }
 
 bool NFCSqliteModule::Init()
 {
-	m_pSqliteDriverManager->AddSqliteServer(0, "sqlite/test.db");
-	auto pDriver = m_pSqliteDriverManager->GetSqliteDriver();
-	if (pDriver)
+	AddSqliteServer(0, "sqlite/test.db");
+	CreateTable(0,proto::message::plane_record_info::default_instance());
+
+	uint64_t beginTime = NFGetTime();
+	std::vector<google::protobuf::Message*> vecInfo;
+	for (int i = 0; i < 100000; i++)
 	{
-		pDriver->CreateTable(proto::message::plane_record_info::default_instance());
-
-		uint64_t beginTime = NFGetTime();
-		std::vector<google::protobuf::Message*> vecInfo;
-		for (int i = 0; i < 100000; i++)
-		{
-			proto::message::plane_record_info* pInfo = new proto::message::plane_record_info();
-			pInfo->mutable_db_fields()->set_id(i + 1);
-			vecInfo.push_back(pInfo);
-		}
-		pDriver->InsertMessage(vecInfo, false);
-
-		std::cout << "use time:" << NFGetTime() - beginTime << " ms" << std::endl;
+		proto::message::plane_record_info* pInfo = new proto::message::plane_record_info();
+		pInfo->mutable_db_fields()->set_id(i + 1);
+		vecInfo.push_back(pInfo);
 	}
+	InsertDifferentMessage(0, vecInfo);
+
+	std::cout << "use time:" << NFGetTime() - beginTime << " ms" << std::endl;
+
 	return true;
 }
 
@@ -59,6 +56,7 @@ bool NFCSqliteModule::Shut()
 
 bool NFCSqliteModule::Finalize()
 {
+	NF_SAFE_DELETE(m_pSqliteDriverManager);
 	return true;
 }
 
@@ -161,7 +159,49 @@ bool NFCSqliteModule::InsertMessage(uint32_t nServerID, std::vector<google::prot
 	NFCSqliteDriver* pDriver = m_pSqliteDriverManager->GetSqliteDriver(nServerID);
 	if (pDriver)
 	{
-		return pDriver->InsertMessage(vecMessage, insertKey);
+		bool result = pDriver->InsertMessage(vecMessage, insertKey);
+
+		for (size_t i = 0; i < vecMessage.size(); i++)
+		{
+			NF_SAFE_DELETE(vecMessage[i]);
+		}
+		vecMessage.clear();
+		return result;
+	}
+	return false;
+}
+
+/**
+* @brief 执行N条可能不同表的不同插入语句
+*
+* @return void
+*/
+bool NFCSqliteModule::InsertDifferentMessage(uint32_t nServerID, std::vector<google::protobuf::Message*>& vecMessage, bool insertKey)
+{
+	NFCSqliteDriver* pDriver = m_pSqliteDriverManager->GetSqliteDriver(nServerID);
+	if (pDriver)
+	{
+		std::map<std::string, std::vector<google::protobuf::Message*>> vecMap;
+		for (size_t i = 0; i < vecMessage.size(); i++)
+		{
+			vecMap[vecMessage[i]->GetTypeName()].push_back(vecMessage[i]);
+		}
+
+		for (auto iter = vecMap.begin(); iter != vecMap.end(); iter++)
+		{
+			bool result = pDriver->InsertMessage(iter->second, insertKey);
+			if (!result)
+			{
+				return result;
+			}
+		}
+
+		for (size_t i = 0; i < vecMessage.size(); i++)
+		{
+			NF_SAFE_DELETE(vecMessage[i]);
+		}
+		vecMessage.clear();
+		return true;
 	}
 	return false;
 }
