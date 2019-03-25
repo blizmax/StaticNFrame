@@ -8,6 +8,8 @@
 
 #include "NFSqlitePlugin.h"
 #include "NFComm/NFPluginModule/NFIPluginManager.h"
+#include "NFCSqliteModule.h"
+#include "NFCAsyncSqliteModule.h"
 
 #ifdef NF_DYNAMIC_PLUGIN
 
@@ -39,13 +41,13 @@ std::string NFSqlitePlugin::GetPluginName()
 
 void NFSqlitePlugin::Install()
 {
-	//REGISTER_MODULE(pPluginManager, NFIMongoModule, NFCMongoModule);
+	REGISTER_MODULE(pPluginManager, NFISqliteModule, NFCSqliteModule);
 	//REGISTER_MODULE(pPluginManager, NFIAsynMongoModule, NFCAsynMongoModule);
 }
 
 void NFSqlitePlugin::Uninstall()
 {
-	//UNREGISTER_MODULE(pPluginManager, NFIMongoModule, NFCMongoModule);
+	UNREGISTER_MODULE(pPluginManager, NFISqliteModule, NFCSqliteModule);
 	//UNREGISTER_MODULE(pPluginManager, NFIAsynMongoModule, NFCAsynMongoModule);
 }
 

@@ -117,6 +117,12 @@
       <Filter>Mongo</Filter>
     </ClInclude>
     <ClInclude Include="NFProtobufCommon.h" />
+    <ClInclude Include="NFISqliteModule.h">
+      <Filter>Sqlite</Filter>
+    </ClInclude>
+    <ClInclude Include="NFIAsyncSqliteModule.h">
+      <Filter>Sqlite</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Event">
@@ -151,6 +157,9 @@
     </Filter>
     <Filter Include="NFProfier">
       <UniqueIdentifier>{e8666d19-12a6-4bd5-aeed-1255c25d8b8a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sqlite">
+      <UniqueIdentifier>{0bc4edbe-59a7-4c95-9d7b-6e9ae3e0a628}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

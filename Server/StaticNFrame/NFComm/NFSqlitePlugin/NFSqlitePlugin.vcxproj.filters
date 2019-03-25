@@ -3,9 +3,15 @@
   <ItemGroup>
     <ClInclude Include="NFSqlitePlugin.h" />
     <ClInclude Include="NFCSqliteDriver.h" />
+    <ClInclude Include="NFCSqliteDriverManager.h" />
+    <ClInclude Include="NFCSqliteModule.h" />
+    <ClInclude Include="NFCAsyncSqliteModule.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="NFSqlitePlugin.cpp" />
     <ClCompile Include="NFCSqliteDriver.cpp" />
+    <ClCompile Include="NFCSqliteDriverManager.cpp" />
+    <ClCompile Include="NFCSqliteModule.cpp" />
+    <ClCompile Include="NFCAsyncSqliteModule.cpp" />
   </ItemGroup>
 </Project>

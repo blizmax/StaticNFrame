@@ -38,7 +38,7 @@ namespace protobuf_sqlite_5fdb_2eproto {
 struct TableStruct {
   static const ::google::protobuf::internal::ParseTableField entries[];
   static const ::google::protobuf::internal::AuxillaryParseTableField aux[];
-  static const ::google::protobuf::internal::ParseTable schema[3];
+  static const ::google::protobuf::internal::ParseTable schema[4];
   static const ::google::protobuf::internal::FieldMetadata field_metadata[];
   static const ::google::protobuf::internal::SerializationTable serialization_table[];
   static const ::google::protobuf::uint32 offsets[];
@@ -53,16 +53,20 @@ extern create_sqlite_tableDefaultTypeInternal _create_sqlite_table_default_insta
 class message_sqlite_base;
 class message_sqlite_baseDefaultTypeInternal;
 extern message_sqlite_baseDefaultTypeInternal _message_sqlite_base_default_instance_;
-class table_user;
-class table_userDefaultTypeInternal;
-extern table_userDefaultTypeInternal _table_user_default_instance_;
+class plane_record_info;
+class plane_record_infoDefaultTypeInternal;
+extern plane_record_infoDefaultTypeInternal _plane_record_info_default_instance_;
+class user_InOut_Record_Table;
+class user_InOut_Record_TableDefaultTypeInternal;
+extern user_InOut_Record_TableDefaultTypeInternal _user_InOut_Record_Table_default_instance_;
 }  // namespace message
 }  // namespace proto
 namespace google {
 namespace protobuf {
 template<> ::proto::message::create_sqlite_table* Arena::CreateMaybeMessage<::proto::message::create_sqlite_table>(Arena*);
 template<> ::proto::message::message_sqlite_base* Arena::CreateMaybeMessage<::proto::message::message_sqlite_base>(Arena*);
-template<> ::proto::message::table_user* Arena::CreateMaybeMessage<::proto::message::table_user>(Arena*);
+template<> ::proto::message::plane_record_info* Arena::CreateMaybeMessage<::proto::message::plane_record_info>(Arena*);
+template<> ::proto::message::user_InOut_Record_Table* Arena::CreateMaybeMessage<::proto::message::user_InOut_Record_Table>(Arena*);
 }  // namespace protobuf
 }  // namespace google
 namespace proto {
@@ -311,24 +315,24 @@ class create_sqlite_table : public ::google::protobuf::Message /* @@protoc_inser
 };
 // -------------------------------------------------------------------
 
-class table_user : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:proto.message.table_user) */ {
+class user_InOut_Record_Table : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:proto.message.user_InOut_Record_Table) */ {
  public:
-  table_user();
-  virtual ~table_user();
+  user_InOut_Record_Table();
+  virtual ~user_InOut_Record_Table();
 
-  table_user(const table_user& from);
+  user_InOut_Record_Table(const user_InOut_Record_Table& from);
 
-  inline table_user& operator=(const table_user& from) {
+  inline user_InOut_Record_Table& operator=(const user_InOut_Record_Table& from) {
     CopyFrom(from);
     return *this;
   }
   #if LANG_CXX11
-  table_user(table_user&& from) noexcept
-    : table_user() {
+  user_InOut_Record_Table(user_InOut_Record_Table&& from) noexcept
+    : user_InOut_Record_Table() {
     *this = ::std::move(from);
   }
 
-  inline table_user& operator=(table_user&& from) noexcept {
+  inline user_InOut_Record_Table& operator=(user_InOut_Record_Table&& from) noexcept {
     if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
       if (this != &from) InternalSwap(&from);
     } else {
@@ -345,34 +349,34 @@ class table_user : public ::google::protobuf::Message /* @@protoc_insertion_poin
   }
 
   static const ::google::protobuf::Descriptor* descriptor();
-  static const table_user& default_instance();
+  static const user_InOut_Record_Table& default_instance();
 
   static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
-  static inline const table_user* internal_default_instance() {
-    return reinterpret_cast<const table_user*>(
-               &_table_user_default_instance_);
+  static inline const user_InOut_Record_Table* internal_default_instance() {
+    return reinterpret_cast<const user_InOut_Record_Table*>(
+               &_user_InOut_Record_Table_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
     2;
 
-  void Swap(table_user* other);
-  friend void swap(table_user& a, table_user& b) {
+  void Swap(user_InOut_Record_Table* other);
+  friend void swap(user_InOut_Record_Table& a, user_InOut_Record_Table& b) {
     a.Swap(&b);
   }
 
   // implements Message ----------------------------------------------
 
-  inline table_user* New() const final {
-    return CreateMaybeMessage<table_user>(NULL);
+  inline user_InOut_Record_Table* New() const final {
+    return CreateMaybeMessage<user_InOut_Record_Table>(NULL);
   }
 
-  table_user* New(::google::protobuf::Arena* arena) const final {
-    return CreateMaybeMessage<table_user>(arena);
+  user_InOut_Record_Table* New(::google::protobuf::Arena* arena) const final {
+    return CreateMaybeMessage<user_InOut_Record_Table>(arena);
   }
   void CopyFrom(const ::google::protobuf::Message& from) final;
   void MergeFrom(const ::google::protobuf::Message& from) final;
-  void CopyFrom(const table_user& from);
-  void MergeFrom(const table_user& from);
+  void CopyFrom(const user_InOut_Record_Table& from);
+  void MergeFrom(const user_InOut_Record_Table& from);
   void Clear() final;
   bool IsInitialized() const final;
 
@@ -389,7 +393,7 @@ class table_user : public ::google::protobuf::Message /* @@protoc_insertion_poin
   void SharedCtor();
   void SharedDtor();
   void SetCachedSize(int size) const final;
-  void InternalSwap(table_user* other);
+  void InternalSwap(user_InOut_Record_Table* other);
   private:
   inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
     return NULL;
@@ -405,30 +409,299 @@ class table_user : public ::google::protobuf::Message /* @@protoc_insertion_poin
 
   // accessors -------------------------------------------------------
 
-  // optional string user_table = 1;
-  bool has_user_table() const;
-  void clear_user_table();
-  static const int kUserTableFieldNumber = 1;
-  const ::std::string& user_table() const;
-  void set_user_table(const ::std::string& value);
-  #if LANG_CXX11
-  void set_user_table(::std::string&& value);
-  #endif
-  void set_user_table(const char* value);
-  void set_user_table(const char* value, size_t size);
-  ::std::string* mutable_user_table();
-  ::std::string* release_user_table();
-  void set_allocated_user_table(::std::string* user_table);
+  // optional uint32 ID = 1;
+  bool has_id() const;
+  void clear_id();
+  static const int kIDFieldNumber = 1;
+  ::google::protobuf::uint32 id() const;
+  void set_id(::google::protobuf::uint32 value);
 
-  // @@protoc_insertion_point(class_scope:proto.message.table_user)
+  // optional uint32 RecordID = 2;
+  bool has_recordid() const;
+  void clear_recordid();
+  static const int kRecordIDFieldNumber = 2;
+  ::google::protobuf::uint32 recordid() const;
+  void set_recordid(::google::protobuf::uint32 value);
+
+  // optional uint64 ActorDBID = 4;
+  bool has_actordbid() const;
+  void clear_actordbid();
+  static const int kActorDBIDFieldNumber = 4;
+  ::google::protobuf::uint64 actordbid() const;
+  void set_actordbid(::google::protobuf::uint64 value);
+
+  // optional uint64 EnterTime = 5;
+  bool has_entertime() const;
+  void clear_entertime();
+  static const int kEnterTimeFieldNumber = 5;
+  ::google::protobuf::uint64 entertime() const;
+  void set_entertime(::google::protobuf::uint64 value);
+
+  // optional uint64 LeaveTime = 6;
+  bool has_leavetime() const;
+  void clear_leavetime();
+  static const int kLeaveTimeFieldNumber = 6;
+  ::google::protobuf::uint64 leavetime() const;
+  void set_leavetime(::google::protobuf::uint64 value);
+
+  // optional int64 EnterScore = 7;
+  bool has_enterscore() const;
+  void clear_enterscore();
+  static const int kEnterScoreFieldNumber = 7;
+  ::google::protobuf::int64 enterscore() const;
+  void set_enterscore(::google::protobuf::int64 value);
+
+  // optional int64 LeaveScore = 8;
+  bool has_leavescore() const;
+  void clear_leavescore();
+  static const int kLeaveScoreFieldNumber = 8;
+  ::google::protobuf::int64 leavescore() const;
+  void set_leavescore(::google::protobuf::int64 value);
+
+  // optional int64 ChangeScore = 9;
+  bool has_changescore() const;
+  void clear_changescore();
+  static const int kChangeScoreFieldNumber = 9;
+  ::google::protobuf::int64 changescore() const;
+  void set_changescore(::google::protobuf::int64 value);
+
+  // optional int64 TotalWinScore = 10;
+  bool has_totalwinscore() const;
+  void clear_totalwinscore();
+  static const int kTotalWinScoreFieldNumber = 10;
+  ::google::protobuf::int64 totalwinscore() const;
+  void set_totalwinscore(::google::protobuf::int64 value);
+
+  // optional int64 TotalLostScore = 11;
+  bool has_totallostscore() const;
+  void clear_totallostscore();
+  static const int kTotalLostScoreFieldNumber = 11;
+  ::google::protobuf::int64 totallostscore() const;
+  void set_totallostscore(::google::protobuf::int64 value);
+
+  // optional int64 TotalWinHBQCount = 12;
+  bool has_totalwinhbqcount() const;
+  void clear_totalwinhbqcount();
+  static const int kTotalWinHBQCountFieldNumber = 12;
+  ::google::protobuf::int64 totalwinhbqcount() const;
+  void set_totalwinhbqcount(::google::protobuf::int64 value);
+
+  // optional int64 TotalWinBoxCount = 13;
+  bool has_totalwinboxcount() const;
+  void clear_totalwinboxcount();
+  static const int kTotalWinBoxCountFieldNumber = 13;
+  ::google::protobuf::int64 totalwinboxcount() const;
+  void set_totalwinboxcount(::google::protobuf::int64 value);
+
+  // optional int64 TotalWinDrawCount = 14;
+  bool has_totalwindrawcount() const;
+  void clear_totalwindrawcount();
+  static const int kTotalWinDrawCountFieldNumber = 14;
+  ::google::protobuf::int64 totalwindrawcount() const;
+  void set_totalwindrawcount(::google::protobuf::int64 value);
+
+  // optional int64 TotalShopingSocre = 15;
+  bool has_totalshopingsocre() const;
+  void clear_totalshopingsocre();
+  static const int kTotalShopingSocreFieldNumber = 15;
+  ::google::protobuf::int64 totalshopingsocre() const;
+  void set_totalshopingsocre(::google::protobuf::int64 value);
+
+  // optional uint32 ServerID = 3;
+  bool has_serverid() const;
+  void clear_serverid();
+  static const int kServerIDFieldNumber = 3;
+  ::google::protobuf::uint32 serverid() const;
+  void set_serverid(::google::protobuf::uint32 value);
+
+  // @@protoc_insertion_point(class_scope:proto.message.user_InOut_Record_Table)
  private:
-  void set_has_user_table();
-  void clear_has_user_table();
+  void set_has_id();
+  void clear_has_id();
+  void set_has_recordid();
+  void clear_has_recordid();
+  void set_has_serverid();
+  void clear_has_serverid();
+  void set_has_actordbid();
+  void clear_has_actordbid();
+  void set_has_entertime();
+  void clear_has_entertime();
+  void set_has_leavetime();
+  void clear_has_leavetime();
+  void set_has_enterscore();
+  void clear_has_enterscore();
+  void set_has_leavescore();
+  void clear_has_leavescore();
+  void set_has_changescore();
+  void clear_has_changescore();
+  void set_has_totalwinscore();
+  void clear_has_totalwinscore();
+  void set_has_totallostscore();
+  void clear_has_totallostscore();
+  void set_has_totalwinhbqcount();
+  void clear_has_totalwinhbqcount();
+  void set_has_totalwinboxcount();
+  void clear_has_totalwinboxcount();
+  void set_has_totalwindrawcount();
+  void clear_has_totalwindrawcount();
+  void set_has_totalshopingsocre();
+  void clear_has_totalshopingsocre();
 
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
   ::google::protobuf::internal::HasBits<1> _has_bits_;
   mutable ::google::protobuf::internal::CachedSize _cached_size_;
-  ::google::protobuf::internal::ArenaStringPtr user_table_;
+  ::google::protobuf::uint32 id_;
+  ::google::protobuf::uint32 recordid_;
+  ::google::protobuf::uint64 actordbid_;
+  ::google::protobuf::uint64 entertime_;
+  ::google::protobuf::uint64 leavetime_;
+  ::google::protobuf::int64 enterscore_;
+  ::google::protobuf::int64 leavescore_;
+  ::google::protobuf::int64 changescore_;
+  ::google::protobuf::int64 totalwinscore_;
+  ::google::protobuf::int64 totallostscore_;
+  ::google::protobuf::int64 totalwinhbqcount_;
+  ::google::protobuf::int64 totalwinboxcount_;
+  ::google::protobuf::int64 totalwindrawcount_;
+  ::google::protobuf::int64 totalshopingsocre_;
+  ::google::protobuf::uint32 serverid_;
+  friend struct ::protobuf_sqlite_5fdb_2eproto::TableStruct;
+};
+// -------------------------------------------------------------------
+
+class plane_record_info : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:proto.message.plane_record_info) */ {
+ public:
+  plane_record_info();
+  virtual ~plane_record_info();
+
+  plane_record_info(const plane_record_info& from);
+
+  inline plane_record_info& operator=(const plane_record_info& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  #if LANG_CXX11
+  plane_record_info(plane_record_info&& from) noexcept
+    : plane_record_info() {
+    *this = ::std::move(from);
+  }
+
+  inline plane_record_info& operator=(plane_record_info&& from) noexcept {
+    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
+      if (this != &from) InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+  #endif
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _internal_metadata_.unknown_fields();
+  }
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return _internal_metadata_.mutable_unknown_fields();
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const plane_record_info& default_instance();
+
+  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
+  static inline const plane_record_info* internal_default_instance() {
+    return reinterpret_cast<const plane_record_info*>(
+               &_plane_record_info_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    3;
+
+  void Swap(plane_record_info* other);
+  friend void swap(plane_record_info& a, plane_record_info& b) {
+    a.Swap(&b);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline plane_record_info* New() const final {
+    return CreateMaybeMessage<plane_record_info>(NULL);
+  }
+
+  plane_record_info* New(::google::protobuf::Arena* arena) const final {
+    return CreateMaybeMessage<plane_record_info>(arena);
+  }
+  void CopyFrom(const ::google::protobuf::Message& from) final;
+  void MergeFrom(const ::google::protobuf::Message& from) final;
+  void CopyFrom(const plane_record_info& from);
+  void MergeFrom(const plane_record_info& from);
+  void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input) final;
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const final;
+  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
+      bool deterministic, ::google::protobuf::uint8* target) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(plane_record_info* other);
+  private:
+  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
+    return NULL;
+  }
+  inline void* MaybeArenaPtr() const {
+    return NULL;
+  }
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // optional string UserInOutRecord = 1;
+  bool has_userinoutrecord() const;
+  void clear_userinoutrecord();
+  static const int kUserInOutRecordFieldNumber = 1;
+  const ::std::string& userinoutrecord() const;
+  void set_userinoutrecord(const ::std::string& value);
+  #if LANG_CXX11
+  void set_userinoutrecord(::std::string&& value);
+  #endif
+  void set_userinoutrecord(const char* value);
+  void set_userinoutrecord(const char* value, size_t size);
+  ::std::string* mutable_userinoutrecord();
+  ::std::string* release_userinoutrecord();
+  void set_allocated_userinoutrecord(::std::string* userinoutrecord);
+
+  // optional .proto.message.user_InOut_Record_Table db_fields = 2;
+  bool has_db_fields() const;
+  void clear_db_fields();
+  static const int kDbFieldsFieldNumber = 2;
+  private:
+  const ::proto::message::user_InOut_Record_Table& _internal_db_fields() const;
+  public:
+  const ::proto::message::user_InOut_Record_Table& db_fields() const;
+  ::proto::message::user_InOut_Record_Table* release_db_fields();
+  ::proto::message::user_InOut_Record_Table* mutable_db_fields();
+  void set_allocated_db_fields(::proto::message::user_InOut_Record_Table* db_fields);
+
+  // @@protoc_insertion_point(class_scope:proto.message.plane_record_info)
+ private:
+  void set_has_userinoutrecord();
+  void clear_has_userinoutrecord();
+  void set_has_db_fields();
+  void clear_has_db_fields();
+
+  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+  ::google::protobuf::internal::HasBits<1> _has_bits_;
+  mutable ::google::protobuf::internal::CachedSize _cached_size_;
+  ::google::protobuf::internal::ArenaStringPtr userinoutrecord_;
+  ::proto::message::user_InOut_Record_Table* db_fields_;
   friend struct ::protobuf_sqlite_5fdb_2eproto::TableStruct;
 };
 // ===================================================================
@@ -572,77 +845,501 @@ inline void create_sqlite_table::set_allocated_db_base(::proto::message::message
 
 // -------------------------------------------------------------------
 
-// table_user
+// user_InOut_Record_Table
 
-// optional string user_table = 1;
-inline bool table_user::has_user_table() const {
+// optional uint32 ID = 1;
+inline bool user_InOut_Record_Table::has_id() const {
   return (_has_bits_[0] & 0x00000001u) != 0;
 }
-inline void table_user::set_has_user_table() {
+inline void user_InOut_Record_Table::set_has_id() {
   _has_bits_[0] |= 0x00000001u;
 }
-inline void table_user::clear_has_user_table() {
+inline void user_InOut_Record_Table::clear_has_id() {
   _has_bits_[0] &= ~0x00000001u;
 }
-inline void table_user::clear_user_table() {
-  user_table_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-  clear_has_user_table();
+inline void user_InOut_Record_Table::clear_id() {
+  id_ = 0u;
+  clear_has_id();
 }
-inline const ::std::string& table_user::user_table() const {
-  // @@protoc_insertion_point(field_get:proto.message.table_user.user_table)
-  return user_table_.GetNoArena();
+inline ::google::protobuf::uint32 user_InOut_Record_Table::id() const {
+  // @@protoc_insertion_point(field_get:proto.message.user_InOut_Record_Table.ID)
+  return id_;
 }
-inline void table_user::set_user_table(const ::std::string& value) {
-  set_has_user_table();
-  user_table_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
-  // @@protoc_insertion_point(field_set:proto.message.table_user.user_table)
+inline void user_InOut_Record_Table::set_id(::google::protobuf::uint32 value) {
+  set_has_id();
+  id_ = value;
+  // @@protoc_insertion_point(field_set:proto.message.user_InOut_Record_Table.ID)
+}
+
+// optional uint32 RecordID = 2;
+inline bool user_InOut_Record_Table::has_recordid() const {
+  return (_has_bits_[0] & 0x00000002u) != 0;
+}
+inline void user_InOut_Record_Table::set_has_recordid() {
+  _has_bits_[0] |= 0x00000002u;
+}
+inline void user_InOut_Record_Table::clear_has_recordid() {
+  _has_bits_[0] &= ~0x00000002u;
+}
+inline void user_InOut_Record_Table::clear_recordid() {
+  recordid_ = 0u;
+  clear_has_recordid();
+}
+inline ::google::protobuf::uint32 user_InOut_Record_Table::recordid() const {
+  // @@protoc_insertion_point(field_get:proto.message.user_InOut_Record_Table.RecordID)
+  return recordid_;
+}
+inline void user_InOut_Record_Table::set_recordid(::google::protobuf::uint32 value) {
+  set_has_recordid();
+  recordid_ = value;
+  // @@protoc_insertion_point(field_set:proto.message.user_InOut_Record_Table.RecordID)
+}
+
+// optional uint32 ServerID = 3;
+inline bool user_InOut_Record_Table::has_serverid() const {
+  return (_has_bits_[0] & 0x00004000u) != 0;
+}
+inline void user_InOut_Record_Table::set_has_serverid() {
+  _has_bits_[0] |= 0x00004000u;
+}
+inline void user_InOut_Record_Table::clear_has_serverid() {
+  _has_bits_[0] &= ~0x00004000u;
+}
+inline void user_InOut_Record_Table::clear_serverid() {
+  serverid_ = 0u;
+  clear_has_serverid();
+}
+inline ::google::protobuf::uint32 user_InOut_Record_Table::serverid() const {
+  // @@protoc_insertion_point(field_get:proto.message.user_InOut_Record_Table.ServerID)
+  return serverid_;
+}
+inline void user_InOut_Record_Table::set_serverid(::google::protobuf::uint32 value) {
+  set_has_serverid();
+  serverid_ = value;
+  // @@protoc_insertion_point(field_set:proto.message.user_InOut_Record_Table.ServerID)
+}
+
+// optional uint64 ActorDBID = 4;
+inline bool user_InOut_Record_Table::has_actordbid() const {
+  return (_has_bits_[0] & 0x00000004u) != 0;
+}
+inline void user_InOut_Record_Table::set_has_actordbid() {
+  _has_bits_[0] |= 0x00000004u;
+}
+inline void user_InOut_Record_Table::clear_has_actordbid() {
+  _has_bits_[0] &= ~0x00000004u;
+}
+inline void user_InOut_Record_Table::clear_actordbid() {
+  actordbid_ = GOOGLE_ULONGLONG(0);
+  clear_has_actordbid();
+}
+inline ::google::protobuf::uint64 user_InOut_Record_Table::actordbid() const {
+  // @@protoc_insertion_point(field_get:proto.message.user_InOut_Record_Table.ActorDBID)
+  return actordbid_;
+}
+inline void user_InOut_Record_Table::set_actordbid(::google::protobuf::uint64 value) {
+  set_has_actordbid();
+  actordbid_ = value;
+  // @@protoc_insertion_point(field_set:proto.message.user_InOut_Record_Table.ActorDBID)
+}
+
+// optional uint64 EnterTime = 5;
+inline bool user_InOut_Record_Table::has_entertime() const {
+  return (_has_bits_[0] & 0x00000008u) != 0;
+}
+inline void user_InOut_Record_Table::set_has_entertime() {
+  _has_bits_[0] |= 0x00000008u;
+}
+inline void user_InOut_Record_Table::clear_has_entertime() {
+  _has_bits_[0] &= ~0x00000008u;
+}
+inline void user_InOut_Record_Table::clear_entertime() {
+  entertime_ = GOOGLE_ULONGLONG(0);
+  clear_has_entertime();
+}
+inline ::google::protobuf::uint64 user_InOut_Record_Table::entertime() const {
+  // @@protoc_insertion_point(field_get:proto.message.user_InOut_Record_Table.EnterTime)
+  return entertime_;
+}
+inline void user_InOut_Record_Table::set_entertime(::google::protobuf::uint64 value) {
+  set_has_entertime();
+  entertime_ = value;
+  // @@protoc_insertion_point(field_set:proto.message.user_InOut_Record_Table.EnterTime)
+}
+
+// optional uint64 LeaveTime = 6;
+inline bool user_InOut_Record_Table::has_leavetime() const {
+  return (_has_bits_[0] & 0x00000010u) != 0;
+}
+inline void user_InOut_Record_Table::set_has_leavetime() {
+  _has_bits_[0] |= 0x00000010u;
+}
+inline void user_InOut_Record_Table::clear_has_leavetime() {
+  _has_bits_[0] &= ~0x00000010u;
+}
+inline void user_InOut_Record_Table::clear_leavetime() {
+  leavetime_ = GOOGLE_ULONGLONG(0);
+  clear_has_leavetime();
+}
+inline ::google::protobuf::uint64 user_InOut_Record_Table::leavetime() const {
+  // @@protoc_insertion_point(field_get:proto.message.user_InOut_Record_Table.LeaveTime)
+  return leavetime_;
+}
+inline void user_InOut_Record_Table::set_leavetime(::google::protobuf::uint64 value) {
+  set_has_leavetime();
+  leavetime_ = value;
+  // @@protoc_insertion_point(field_set:proto.message.user_InOut_Record_Table.LeaveTime)
+}
+
+// optional int64 EnterScore = 7;
+inline bool user_InOut_Record_Table::has_enterscore() const {
+  return (_has_bits_[0] & 0x00000020u) != 0;
+}
+inline void user_InOut_Record_Table::set_has_enterscore() {
+  _has_bits_[0] |= 0x00000020u;
+}
+inline void user_InOut_Record_Table::clear_has_enterscore() {
+  _has_bits_[0] &= ~0x00000020u;
+}
+inline void user_InOut_Record_Table::clear_enterscore() {
+  enterscore_ = GOOGLE_LONGLONG(0);
+  clear_has_enterscore();
+}
+inline ::google::protobuf::int64 user_InOut_Record_Table::enterscore() const {
+  // @@protoc_insertion_point(field_get:proto.message.user_InOut_Record_Table.EnterScore)
+  return enterscore_;
+}
+inline void user_InOut_Record_Table::set_enterscore(::google::protobuf::int64 value) {
+  set_has_enterscore();
+  enterscore_ = value;
+  // @@protoc_insertion_point(field_set:proto.message.user_InOut_Record_Table.EnterScore)
+}
+
+// optional int64 LeaveScore = 8;
+inline bool user_InOut_Record_Table::has_leavescore() const {
+  return (_has_bits_[0] & 0x00000040u) != 0;
+}
+inline void user_InOut_Record_Table::set_has_leavescore() {
+  _has_bits_[0] |= 0x00000040u;
+}
+inline void user_InOut_Record_Table::clear_has_leavescore() {
+  _has_bits_[0] &= ~0x00000040u;
+}
+inline void user_InOut_Record_Table::clear_leavescore() {
+  leavescore_ = GOOGLE_LONGLONG(0);
+  clear_has_leavescore();
+}
+inline ::google::protobuf::int64 user_InOut_Record_Table::leavescore() const {
+  // @@protoc_insertion_point(field_get:proto.message.user_InOut_Record_Table.LeaveScore)
+  return leavescore_;
+}
+inline void user_InOut_Record_Table::set_leavescore(::google::protobuf::int64 value) {
+  set_has_leavescore();
+  leavescore_ = value;
+  // @@protoc_insertion_point(field_set:proto.message.user_InOut_Record_Table.LeaveScore)
+}
+
+// optional int64 ChangeScore = 9;
+inline bool user_InOut_Record_Table::has_changescore() const {
+  return (_has_bits_[0] & 0x00000080u) != 0;
+}
+inline void user_InOut_Record_Table::set_has_changescore() {
+  _has_bits_[0] |= 0x00000080u;
+}
+inline void user_InOut_Record_Table::clear_has_changescore() {
+  _has_bits_[0] &= ~0x00000080u;
+}
+inline void user_InOut_Record_Table::clear_changescore() {
+  changescore_ = GOOGLE_LONGLONG(0);
+  clear_has_changescore();
+}
+inline ::google::protobuf::int64 user_InOut_Record_Table::changescore() const {
+  // @@protoc_insertion_point(field_get:proto.message.user_InOut_Record_Table.ChangeScore)
+  return changescore_;
+}
+inline void user_InOut_Record_Table::set_changescore(::google::protobuf::int64 value) {
+  set_has_changescore();
+  changescore_ = value;
+  // @@protoc_insertion_point(field_set:proto.message.user_InOut_Record_Table.ChangeScore)
+}
+
+// optional int64 TotalWinScore = 10;
+inline bool user_InOut_Record_Table::has_totalwinscore() const {
+  return (_has_bits_[0] & 0x00000100u) != 0;
+}
+inline void user_InOut_Record_Table::set_has_totalwinscore() {
+  _has_bits_[0] |= 0x00000100u;
+}
+inline void user_InOut_Record_Table::clear_has_totalwinscore() {
+  _has_bits_[0] &= ~0x00000100u;
+}
+inline void user_InOut_Record_Table::clear_totalwinscore() {
+  totalwinscore_ = GOOGLE_LONGLONG(0);
+  clear_has_totalwinscore();
+}
+inline ::google::protobuf::int64 user_InOut_Record_Table::totalwinscore() const {
+  // @@protoc_insertion_point(field_get:proto.message.user_InOut_Record_Table.TotalWinScore)
+  return totalwinscore_;
+}
+inline void user_InOut_Record_Table::set_totalwinscore(::google::protobuf::int64 value) {
+  set_has_totalwinscore();
+  totalwinscore_ = value;
+  // @@protoc_insertion_point(field_set:proto.message.user_InOut_Record_Table.TotalWinScore)
+}
+
+// optional int64 TotalLostScore = 11;
+inline bool user_InOut_Record_Table::has_totallostscore() const {
+  return (_has_bits_[0] & 0x00000200u) != 0;
+}
+inline void user_InOut_Record_Table::set_has_totallostscore() {
+  _has_bits_[0] |= 0x00000200u;
+}
+inline void user_InOut_Record_Table::clear_has_totallostscore() {
+  _has_bits_[0] &= ~0x00000200u;
+}
+inline void user_InOut_Record_Table::clear_totallostscore() {
+  totallostscore_ = GOOGLE_LONGLONG(0);
+  clear_has_totallostscore();
+}
+inline ::google::protobuf::int64 user_InOut_Record_Table::totallostscore() const {
+  // @@protoc_insertion_point(field_get:proto.message.user_InOut_Record_Table.TotalLostScore)
+  return totallostscore_;
+}
+inline void user_InOut_Record_Table::set_totallostscore(::google::protobuf::int64 value) {
+  set_has_totallostscore();
+  totallostscore_ = value;
+  // @@protoc_insertion_point(field_set:proto.message.user_InOut_Record_Table.TotalLostScore)
+}
+
+// optional int64 TotalWinHBQCount = 12;
+inline bool user_InOut_Record_Table::has_totalwinhbqcount() const {
+  return (_has_bits_[0] & 0x00000400u) != 0;
+}
+inline void user_InOut_Record_Table::set_has_totalwinhbqcount() {
+  _has_bits_[0] |= 0x00000400u;
+}
+inline void user_InOut_Record_Table::clear_has_totalwinhbqcount() {
+  _has_bits_[0] &= ~0x00000400u;
+}
+inline void user_InOut_Record_Table::clear_totalwinhbqcount() {
+  totalwinhbqcount_ = GOOGLE_LONGLONG(0);
+  clear_has_totalwinhbqcount();
+}
+inline ::google::protobuf::int64 user_InOut_Record_Table::totalwinhbqcount() const {
+  // @@protoc_insertion_point(field_get:proto.message.user_InOut_Record_Table.TotalWinHBQCount)
+  return totalwinhbqcount_;
+}
+inline void user_InOut_Record_Table::set_totalwinhbqcount(::google::protobuf::int64 value) {
+  set_has_totalwinhbqcount();
+  totalwinhbqcount_ = value;
+  // @@protoc_insertion_point(field_set:proto.message.user_InOut_Record_Table.TotalWinHBQCount)
+}
+
+// optional int64 TotalWinBoxCount = 13;
+inline bool user_InOut_Record_Table::has_totalwinboxcount() const {
+  return (_has_bits_[0] & 0x00000800u) != 0;
+}
+inline void user_InOut_Record_Table::set_has_totalwinboxcount() {
+  _has_bits_[0] |= 0x00000800u;
+}
+inline void user_InOut_Record_Table::clear_has_totalwinboxcount() {
+  _has_bits_[0] &= ~0x00000800u;
+}
+inline void user_InOut_Record_Table::clear_totalwinboxcount() {
+  totalwinboxcount_ = GOOGLE_LONGLONG(0);
+  clear_has_totalwinboxcount();
+}
+inline ::google::protobuf::int64 user_InOut_Record_Table::totalwinboxcount() const {
+  // @@protoc_insertion_point(field_get:proto.message.user_InOut_Record_Table.TotalWinBoxCount)
+  return totalwinboxcount_;
+}
+inline void user_InOut_Record_Table::set_totalwinboxcount(::google::protobuf::int64 value) {
+  set_has_totalwinboxcount();
+  totalwinboxcount_ = value;
+  // @@protoc_insertion_point(field_set:proto.message.user_InOut_Record_Table.TotalWinBoxCount)
+}
+
+// optional int64 TotalWinDrawCount = 14;
+inline bool user_InOut_Record_Table::has_totalwindrawcount() const {
+  return (_has_bits_[0] & 0x00001000u) != 0;
+}
+inline void user_InOut_Record_Table::set_has_totalwindrawcount() {
+  _has_bits_[0] |= 0x00001000u;
+}
+inline void user_InOut_Record_Table::clear_has_totalwindrawcount() {
+  _has_bits_[0] &= ~0x00001000u;
+}
+inline void user_InOut_Record_Table::clear_totalwindrawcount() {
+  totalwindrawcount_ = GOOGLE_LONGLONG(0);
+  clear_has_totalwindrawcount();
+}
+inline ::google::protobuf::int64 user_InOut_Record_Table::totalwindrawcount() const {
+  // @@protoc_insertion_point(field_get:proto.message.user_InOut_Record_Table.TotalWinDrawCount)
+  return totalwindrawcount_;
+}
+inline void user_InOut_Record_Table::set_totalwindrawcount(::google::protobuf::int64 value) {
+  set_has_totalwindrawcount();
+  totalwindrawcount_ = value;
+  // @@protoc_insertion_point(field_set:proto.message.user_InOut_Record_Table.TotalWinDrawCount)
+}
+
+// optional int64 TotalShopingSocre = 15;
+inline bool user_InOut_Record_Table::has_totalshopingsocre() const {
+  return (_has_bits_[0] & 0x00002000u) != 0;
+}
+inline void user_InOut_Record_Table::set_has_totalshopingsocre() {
+  _has_bits_[0] |= 0x00002000u;
+}
+inline void user_InOut_Record_Table::clear_has_totalshopingsocre() {
+  _has_bits_[0] &= ~0x00002000u;
+}
+inline void user_InOut_Record_Table::clear_totalshopingsocre() {
+  totalshopingsocre_ = GOOGLE_LONGLONG(0);
+  clear_has_totalshopingsocre();
+}
+inline ::google::protobuf::int64 user_InOut_Record_Table::totalshopingsocre() const {
+  // @@protoc_insertion_point(field_get:proto.message.user_InOut_Record_Table.TotalShopingSocre)
+  return totalshopingsocre_;
+}
+inline void user_InOut_Record_Table::set_totalshopingsocre(::google::protobuf::int64 value) {
+  set_has_totalshopingsocre();
+  totalshopingsocre_ = value;
+  // @@protoc_insertion_point(field_set:proto.message.user_InOut_Record_Table.TotalShopingSocre)
+}
+
+// -------------------------------------------------------------------
+
+// plane_record_info
+
+// optional string UserInOutRecord = 1;
+inline bool plane_record_info::has_userinoutrecord() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void plane_record_info::set_has_userinoutrecord() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void plane_record_info::clear_has_userinoutrecord() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void plane_record_info::clear_userinoutrecord() {
+  userinoutrecord_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  clear_has_userinoutrecord();
+}
+inline const ::std::string& plane_record_info::userinoutrecord() const {
+  // @@protoc_insertion_point(field_get:proto.message.plane_record_info.UserInOutRecord)
+  return userinoutrecord_.GetNoArena();
+}
+inline void plane_record_info::set_userinoutrecord(const ::std::string& value) {
+  set_has_userinoutrecord();
+  userinoutrecord_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:proto.message.plane_record_info.UserInOutRecord)
 }
 #if LANG_CXX11
-inline void table_user::set_user_table(::std::string&& value) {
-  set_has_user_table();
-  user_table_.SetNoArena(
+inline void plane_record_info::set_userinoutrecord(::std::string&& value) {
+  set_has_userinoutrecord();
+  userinoutrecord_.SetNoArena(
     &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
-  // @@protoc_insertion_point(field_set_rvalue:proto.message.table_user.user_table)
+  // @@protoc_insertion_point(field_set_rvalue:proto.message.plane_record_info.UserInOutRecord)
 }
 #endif
-inline void table_user::set_user_table(const char* value) {
+inline void plane_record_info::set_userinoutrecord(const char* value) {
   GOOGLE_DCHECK(value != NULL);
-  set_has_user_table();
-  user_table_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
-  // @@protoc_insertion_point(field_set_char:proto.message.table_user.user_table)
+  set_has_userinoutrecord();
+  userinoutrecord_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:proto.message.plane_record_info.UserInOutRecord)
 }
-inline void table_user::set_user_table(const char* value, size_t size) {
-  set_has_user_table();
-  user_table_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+inline void plane_record_info::set_userinoutrecord(const char* value, size_t size) {
+  set_has_userinoutrecord();
+  userinoutrecord_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
       ::std::string(reinterpret_cast<const char*>(value), size));
-  // @@protoc_insertion_point(field_set_pointer:proto.message.table_user.user_table)
+  // @@protoc_insertion_point(field_set_pointer:proto.message.plane_record_info.UserInOutRecord)
 }
-inline ::std::string* table_user::mutable_user_table() {
-  set_has_user_table();
-  // @@protoc_insertion_point(field_mutable:proto.message.table_user.user_table)
-  return user_table_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+inline ::std::string* plane_record_info::mutable_userinoutrecord() {
+  set_has_userinoutrecord();
+  // @@protoc_insertion_point(field_mutable:proto.message.plane_record_info.UserInOutRecord)
+  return userinoutrecord_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-inline ::std::string* table_user::release_user_table() {
-  // @@protoc_insertion_point(field_release:proto.message.table_user.user_table)
-  if (!has_user_table()) {
+inline ::std::string* plane_record_info::release_userinoutrecord() {
+  // @@protoc_insertion_point(field_release:proto.message.plane_record_info.UserInOutRecord)
+  if (!has_userinoutrecord()) {
     return NULL;
   }
-  clear_has_user_table();
-  return user_table_.ReleaseNonDefaultNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  clear_has_userinoutrecord();
+  return userinoutrecord_.ReleaseNonDefaultNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-inline void table_user::set_allocated_user_table(::std::string* user_table) {
-  if (user_table != NULL) {
-    set_has_user_table();
+inline void plane_record_info::set_allocated_userinoutrecord(::std::string* userinoutrecord) {
+  if (userinoutrecord != NULL) {
+    set_has_userinoutrecord();
   } else {
-    clear_has_user_table();
+    clear_has_userinoutrecord();
   }
-  user_table_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), user_table);
-  // @@protoc_insertion_point(field_set_allocated:proto.message.table_user.user_table)
+  userinoutrecord_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), userinoutrecord);
+  // @@protoc_insertion_point(field_set_allocated:proto.message.plane_record_info.UserInOutRecord)
+}
+
+// optional .proto.message.user_InOut_Record_Table db_fields = 2;
+inline bool plane_record_info::has_db_fields() const {
+  return (_has_bits_[0] & 0x00000002u) != 0;
+}
+inline void plane_record_info::set_has_db_fields() {
+  _has_bits_[0] |= 0x00000002u;
+}
+inline void plane_record_info::clear_has_db_fields() {
+  _has_bits_[0] &= ~0x00000002u;
+}
+inline void plane_record_info::clear_db_fields() {
+  if (db_fields_ != NULL) db_fields_->Clear();
+  clear_has_db_fields();
+}
+inline const ::proto::message::user_InOut_Record_Table& plane_record_info::_internal_db_fields() const {
+  return *db_fields_;
+}
+inline const ::proto::message::user_InOut_Record_Table& plane_record_info::db_fields() const {
+  const ::proto::message::user_InOut_Record_Table* p = db_fields_;
+  // @@protoc_insertion_point(field_get:proto.message.plane_record_info.db_fields)
+  return p != NULL ? *p : *reinterpret_cast<const ::proto::message::user_InOut_Record_Table*>(
+      &::proto::message::_user_InOut_Record_Table_default_instance_);
+}
+inline ::proto::message::user_InOut_Record_Table* plane_record_info::release_db_fields() {
+  // @@protoc_insertion_point(field_release:proto.message.plane_record_info.db_fields)
+  clear_has_db_fields();
+  ::proto::message::user_InOut_Record_Table* temp = db_fields_;
+  db_fields_ = NULL;
+  return temp;
+}
+inline ::proto::message::user_InOut_Record_Table* plane_record_info::mutable_db_fields() {
+  set_has_db_fields();
+  if (db_fields_ == NULL) {
+    auto* p = CreateMaybeMessage<::proto::message::user_InOut_Record_Table>(GetArenaNoVirtual());
+    db_fields_ = p;
+  }
+  // @@protoc_insertion_point(field_mutable:proto.message.plane_record_info.db_fields)
+  return db_fields_;
+}
+inline void plane_record_info::set_allocated_db_fields(::proto::message::user_InOut_Record_Table* db_fields) {
+  ::google::protobuf::Arena* message_arena = GetArenaNoVirtual();
+  if (message_arena == NULL) {
+    delete db_fields_;
+  }
+  if (db_fields) {
+    ::google::protobuf::Arena* submessage_arena = NULL;
+    if (message_arena != submessage_arena) {
+      db_fields = ::google::protobuf::internal::GetOwnedMessage(
+          message_arena, db_fields, submessage_arena);
+    }
+    set_has_db_fields();
+  } else {
+    clear_has_db_fields();
+  }
+  db_fields_ = db_fields;
+  // @@protoc_insertion_point(field_set_allocated:proto.message.plane_record_info.db_fields)
 }
 
 #ifdef __GNUC__
   #pragma GCC diagnostic pop
 #endif  // __GNUC__
+// -------------------------------------------------------------------
+
 // -------------------------------------------------------------------
 
 // -------------------------------------------------------------------

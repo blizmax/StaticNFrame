@@ -18,6 +18,7 @@
 #include "sqlite3/sqlite3.h"
 #include "NFComm/NFPluginModule/NFProtobufCommon.h"
 #include "NFMessageDefine/NFMsgDefine.h"
+#include "NFComm/NFSqlitePlugin/NFCSqliteDriver.h"
 
 struct Test
 {
@@ -80,19 +81,23 @@ void testHashMap()
 	}
 }
 
-struct sqliteInsertInfo
+struct tagRecordInfo
 {
-	virtual const std::string& GetTableName() = 0;
-	virtual const std::string& GetTableColumnInfo() = 0;
-	virtual const std::string& CreateSqlitePrepareSql() = 0;
-	virtual void SqliteBindStep(sqlite3_stmt *pStmt) = 0;
-};
-
-struct tagRecordInfo : public sqliteInsertInfo
-{
+	uint32_t	lID;
+	uint32_t    lRecordID;
+	uint32_t    lServerID;
 	int64_t		lActorDBID;
 	int64_t		lEnterTime;
 	int64_t     lLeaveTime;
+	int64_t		lEnterScore;
+	int64_t     lLeaveScore;
+	int64_t     lChangeScore;
+	int64_t     lTotalWinScore;
+	int64_t		lTotalLostScore;
+	int64_t		lTotalWinHBQCount;
+	int64_t		lTotalWinBoxCount;
+	int64_t		lTotalWinDrawCount;
+	int64_t		lTotalShopingScore;
 
 	virtual const std::string& GetTableName()
 	{
@@ -103,28 +108,46 @@ struct tagRecordInfo : public sqliteInsertInfo
 	virtual const std::string& GetTableColumnInfo()
 	{
 		static std::string strTableColumnInfo = "ID INTEGER PRIMARY KEY,"
+			"'RecordID'		int,"
 			"'ServerID'		int,"
 			"'UserDBID'		bigint,"
-			"'EnterTime'	int,"
-			"'LeaveTime'	int,"
-			"'Time'			datetime";
+			"'EnterTime'	bigint,"
+			"'LeaveTime'	bigint,"
+			"'EnterScore'	bigint,"
+			"'LeaveScore'	bigint,"
+			"'ChangeScore'	bigint,"
+			"'TotalWinScore'	bigint,"
+			"'TotalLostScore'	bigint,"
+			"'TotalWinHBQCount'	bigint,"
+			"'TotalWinBoxCount'	bigint,"
+			"'TotalWinDrawCount'	bigint,"
+			"'TotalShopingScore'	bigint";
 		return strTableColumnInfo;
 	}
 
 	virtual const std::string& CreateSqlitePrepareSql()
 	{
-		static std::string strSql = "insert into UserInOutRecord values(?,?,?,?,?,?)";
+		static std::string strSql = "insert into UserInOutRecord values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 		return strSql;
 	}
 
 	virtual void SqliteBindStep(sqlite3_stmt *pStmt)
 	{
 		int ret = 0;
-		ret = sqlite3_bind_int(pStmt, 2, 1);
-		ret = sqlite3_bind_int64(pStmt, 3, lActorDBID);
-		ret = sqlite3_bind_int64(pStmt, 4, lEnterTime);
-		ret = sqlite3_bind_int64(pStmt, 5, lLeaveTime);
-		ret = sqlite3_bind_text(pStmt, 6, "datetime('now', 'localtime')", -1, SQLITE_TRANSIENT);
+		ret = sqlite3_bind_int(pStmt, 2, lRecordID);
+		ret = sqlite3_bind_int64(pStmt, 3, lServerID);
+		ret = sqlite3_bind_int64(pStmt, 4, lActorDBID);
+		ret = sqlite3_bind_int64(pStmt, 5, lEnterTime);
+		ret = sqlite3_bind_int64(pStmt, 6, lLeaveTime);
+		ret = sqlite3_bind_int64(pStmt, 7, lEnterScore);
+		ret = sqlite3_bind_int64(pStmt, 8, lLeaveScore);
+		ret = sqlite3_bind_int64(pStmt, 9, lChangeScore);
+		ret = sqlite3_bind_int64(pStmt, 10, lTotalWinScore);
+		ret = sqlite3_bind_int64(pStmt, 11, lTotalLostScore);
+		ret = sqlite3_bind_int64(pStmt, 12, lTotalWinHBQCount);
+		ret = sqlite3_bind_int64(pStmt, 13, lTotalWinBoxCount);
+		ret = sqlite3_bind_int64(pStmt, 14, lTotalWinDrawCount);
+		ret = sqlite3_bind_int64(pStmt, 15, lTotalShopingScore);
 	}
 };
 
@@ -140,11 +163,11 @@ void testSqlite3()
 	sqlite3_exec(db, "PRAGMA page_size = 8192; ", 0, 0, 0);
 	sqlite3_exec(db, "PRAGMA temp_store = MEMORY; ", 0, 0, 0);
 
-	tagRecordInfo* pTagInfo = new tagRecordInfo();
-	pTagInfo->lActorDBID = NFGetTime();
-	pTagInfo->lEnterTime = NFGetSecondTime();
-	pTagInfo->lLeaveTime = NFGetSecondTime() + 1000000;
-	sqliteInsertInfo* pInsertInfo = pTagInfo;
+	tagRecordInfo* pInsertInfo = new tagRecordInfo();
+	pInsertInfo->lActorDBID = NFGetTime();
+	pInsertInfo->lEnterTime = NFGetSecondTime();
+	pInsertInfo->lLeaveTime = NFGetSecondTime() + 1000000;
+
 	sqlite3_stmt *stmt1;
 	std::string strDrop = "drop table if exists " + pInsertInfo->GetTableName();
 	rc = sqlite3_exec(db, strDrop.c_str(), 0, 0, 0);
@@ -152,40 +175,29 @@ void testSqlite3()
 	std::string strCreateTable = "create table " + pInsertInfo->GetTableName() + "(" + pInsertInfo->GetTableColumnInfo() + ")";
 	rc = sqlite3_exec(db, strCreateTable.c_str(), 0, 0, 0);
 
-	std::string selectSql = "select max(ID) from " + pInsertInfo->GetTableName();
-	rc = sqlite3_prepare_v2(db, selectSql.data(), selectSql.size(), &stmt1, 0);
-	if (sqlite3_step(stmt1) == SQLITE_ROW)
-	{
-		int maxId = sqlite3_column_int(stmt1, 0);
-		std::cout << "maxId" << std::endl;
-	}
-	rc = sqlite3_finalize(stmt1);
-
 	std::string sql = pInsertInfo->CreateSqlitePrepareSql();
 
+	uint64_t startTime = NFGetTime();
 	rc = sqlite3_exec(db, "begin;", 0, 0, 0);
-
+	assert(rc == 0);
 	rc = sqlite3_prepare_v2(db, sql.data(), sql.size(), &stmt1, 0);
-	for (int i = 0; i < 100; ++i)
+	assert(rc == 0);
+	for (int i = 0; i < 100000; ++i)
 	{
 		rc = sqlite3_reset(stmt1);
+		assert(rc == 0);
 		pInsertInfo->SqliteBindStep(stmt1);
 		rc = sqlite3_step(stmt1);
+		assert(rc == 100);
 	}
 	rc = sqlite3_finalize(stmt1);
+	assert(rc == 0);
 	char *errmsg;
 	rc = sqlite3_exec(db, "commit;", 0, 0, &errmsg);
+	assert(rc == 0);
 
-	rc = sqlite3_exec(db, "begin;", 0, 0, 0);
-	selectSql = "select max(ID) from " + pInsertInfo->GetTableName();
-	rc = sqlite3_prepare_v2(db, selectSql.data(), selectSql.size(), &stmt1, 0);
-	if (sqlite3_step(stmt1) == SQLITE_ROW)
-	{
-		int maxId = sqlite3_column_int(stmt1, 0);
-		std::cout << "maxId" << std::endl;
-	}
-	rc = sqlite3_finalize(stmt1);
-	rc = sqlite3_exec(db, "commit;", 0, 0, &errmsg);
+	uint64_t useTime = NFGetTime() - startTime;
+	std::cout << "use time :" << useTime << " ms" << std::endl;
 
 	rc = sqlite3_close_v2(db);
 }
@@ -211,7 +223,6 @@ void testLog()
 bool NFCTestModule::Init()
 {
 	testSqlite3();
-	std::string table_name = NFProtobufCommon::GetDBNameFromMessage(proto::message::table_user::default_instance());
 	return true;
 }
 

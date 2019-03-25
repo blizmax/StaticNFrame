@@ -235,6 +235,19 @@ std::string  NFProtobufCommon::GetSqliteColumnFromMessage(const google::protobuf
 	{
 		const google::protobuf::FieldDescriptor* pFieldDesc = pDesc->field(i);
 		std::string columnStr = pFieldDesc->name() + " ";
+		if (i == 0 && firstKey)
+		{
+			if (pFieldDesc->cpp_type() == google::protobuf::FieldDescriptor::CPPTYPE_INT32 ||
+				pFieldDesc->cpp_type() == google::protobuf::FieldDescriptor::CPPTYPE_UINT32 ||
+				pFieldDesc->cpp_type() == google::protobuf::FieldDescriptor::CPPTYPE_INT64 ||
+				pFieldDesc->cpp_type() == google::protobuf::FieldDescriptor::CPPTYPE_UINT64)
+			{
+				columnStr += " INTEGER PRIMARY KEY AUTOINCREMENT,";
+				columnSql += columnStr;
+				continue;
+			}
+		}
+
 		switch (pFieldDesc->cpp_type())
 		{
 		case google::protobuf::FieldDescriptor::CPPTYPE_INT32:
@@ -293,7 +306,7 @@ std::string  NFProtobufCommon::GetSqliteColumnFromMessage(const google::protobuf
 
 		if (i == 0 && firstKey)
 		{
-			columnSql += "primary key";
+			columnStr += " PRIMARY KEY,";
 		}
 
 		columnSql += columnStr;
@@ -304,4 +317,42 @@ std::string  NFProtobufCommon::GetSqliteColumnFromMessage(const google::protobuf
 	}
 
 	return columnSql;
+}
+
+/*
+** sqlite从message利用反射,将message的field name生成prepare需要的语句,比如
+** insert into UserInOutRecord values(?,?,?,?,?,?)
+*/
+std::string NFProtobufCommon::GetSqlitePrepareFromMessage(const google::protobuf::Message& message)
+{
+	const google::protobuf::Descriptor* pDesc = message.GetDescriptor();
+	if (pDesc == nullptr) return false;
+
+	const google::protobuf::Reflection* pReflect = message.GetReflection();
+	if (pReflect == nullptr) return false;
+
+	//获得表的名字
+	std::string strTableName = NFProtobufCommon::GetDBNameFromMessage(message);
+	if (strTableName.empty()) return false;
+
+	const google::protobuf::FieldDescriptor* pDbFieldsFieldDesc = pDesc->FindFieldByLowercaseName("db_fields");
+	if (pDbFieldsFieldDesc == nullptr || pDbFieldsFieldDesc->cpp_type() != google::protobuf::FieldDescriptor::CPPTYPE_MESSAGE) return false;
+
+	const google::protobuf::Message& dbFieldsMessage = pReflect->GetMessage(message, pDbFieldsFieldDesc);
+
+	const google::protobuf::Descriptor* pFieldsMessageDesc = dbFieldsMessage.GetDescriptor();
+	if (pFieldsMessageDesc == nullptr) return std::string();
+
+	std::string sql = "insert into " + strTableName + " values(";
+	for (int i = 0; i < pFieldsMessageDesc->field_count(); i++)
+	{
+		sql += "?";
+		if (i != (pFieldsMessageDesc->field_count() - 1))
+		{
+			sql += ",";
+		}
+	}
+
+	sql += ")";
+	return sql;
 }

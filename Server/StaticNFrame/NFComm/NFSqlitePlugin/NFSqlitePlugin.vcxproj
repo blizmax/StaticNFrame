@@ -223,11 +223,17 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="NFCAsyncSqliteModule.h" />
     <ClInclude Include="NFCSqliteDriver.h" />
+    <ClInclude Include="NFCSqliteDriverManager.h" />
+    <ClInclude Include="NFCSqliteModule.h" />
     <ClInclude Include="NFSqlitePlugin.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="NFCAsyncSqliteModule.cpp" />
     <ClCompile Include="NFCSqliteDriver.cpp" />
+    <ClCompile Include="NFCSqliteDriverManager.cpp" />
+    <ClCompile Include="NFCSqliteModule.cpp" />
     <ClCompile Include="NFSqlitePlugin.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
