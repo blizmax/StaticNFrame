@@ -25,24 +25,25 @@ LoadPlugin =
 			"NFActorPlugin",
 			"NFNetPlugin",
 			"NFTestPlugin",
-			"NFMysqlPlugin",
-			"NFMongoPlugin",
+			"NFSqlitePlugin",
+			--"NFMysqlPlugin",
+			--"NFMongoPlugin",
 			
 			--"NFLuaScriptPlugin",
 			
-			"NFMasterServerPlugin",
+			--"NFMasterServerPlugin",
 			
-			"NFLoginClientPlugin",
-			"NFLoginServerPlugin",
+			--"NFLoginClientPlugin",
+			--"NFLoginServerPlugin",
 			
-			"NFWorldClientPlugin",
-			"NFWorldServerPlugin",
+			--"NFWorldClientPlugin",
+			--"NFWorldServerPlugin",
 			
-			"NFGameClientPlugin",
-			"NFGameServerPlugin",
+			--"NFGameClientPlugin",
+			--"NFGameServerPlugin",
 			
-			"NFProxyServerPlugin",
-			"NFProxyClientPlugin",
+			--"NFProxyServerPlugin",
+			--"NFProxyClientPlugin",
 			
 			--"NFGameLogicPlugin",
 			--"NFLoginLogicPlugin",
