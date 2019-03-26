@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.23107.0
+VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "NFrame", "NFrame", "{A65AF30D-E33C-48FF-9021-CC3D958C6BCC}"
 EndProject
@@ -246,6 +246,8 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "sqlite3", "Dependencies\sqlite3\sqlite3.vcxproj", "{6A81A640-1691-4918-8BCD-50EE94EF54F5}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "NFSqlitePlugin", "StaticNFrame\NFComm\NFSqlitePlugin\NFSqlitePlugin.vcxproj", "{FA079C71-D71F-4889-906C-2FA2B2FDB294}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "NFMonitorPlugin", "StaticNFrame\NFComm\NFMonitorPlugin\NFMonitorPlugin.vcxproj", "{881632FF-114E-4DC9-B863-B824033A53A9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -787,6 +789,22 @@ Global
 		{FA079C71-D71F-4889-906C-2FA2B2FDB294}.Release|x64.Build.0 = Release|x64
 		{FA079C71-D71F-4889-906C-2FA2B2FDB294}.Release|x86.ActiveCfg = Release|Win32
 		{FA079C71-D71F-4889-906C-2FA2B2FDB294}.Release|x86.Build.0 = Release|Win32
+		{881632FF-114E-4DC9-B863-B824033A53A9}.Debug|x64.ActiveCfg = Debug|x64
+		{881632FF-114E-4DC9-B863-B824033A53A9}.Debug|x64.Build.0 = Debug|x64
+		{881632FF-114E-4DC9-B863-B824033A53A9}.Debug|x86.ActiveCfg = Debug|Win32
+		{881632FF-114E-4DC9-B863-B824033A53A9}.Debug|x86.Build.0 = Debug|Win32
+		{881632FF-114E-4DC9-B863-B824033A53A9}.Dynamic_Debug|x64.ActiveCfg = Dynamic_Debug|x64
+		{881632FF-114E-4DC9-B863-B824033A53A9}.Dynamic_Debug|x64.Build.0 = Dynamic_Debug|x64
+		{881632FF-114E-4DC9-B863-B824033A53A9}.Dynamic_Debug|x86.ActiveCfg = Debug|Win32
+		{881632FF-114E-4DC9-B863-B824033A53A9}.Dynamic_Debug|x86.Build.0 = Debug|Win32
+		{881632FF-114E-4DC9-B863-B824033A53A9}.Dynamic_Release|x64.ActiveCfg = Dynamic_Release|x64
+		{881632FF-114E-4DC9-B863-B824033A53A9}.Dynamic_Release|x64.Build.0 = Dynamic_Release|x64
+		{881632FF-114E-4DC9-B863-B824033A53A9}.Dynamic_Release|x86.ActiveCfg = Release|Win32
+		{881632FF-114E-4DC9-B863-B824033A53A9}.Dynamic_Release|x86.Build.0 = Release|Win32
+		{881632FF-114E-4DC9-B863-B824033A53A9}.Release|x64.ActiveCfg = Release|x64
+		{881632FF-114E-4DC9-B863-B824033A53A9}.Release|x64.Build.0 = Release|x64
+		{881632FF-114E-4DC9-B863-B824033A53A9}.Release|x86.ActiveCfg = Release|Win32
+		{881632FF-114E-4DC9-B863-B824033A53A9}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -839,5 +857,6 @@ Global
 		{FD763E2E-5AF1-46BE-B218-DE34F9C4D1A9} = {A65AF30D-E33C-48FF-9021-CC3D958C6BCC}
 		{6A81A640-1691-4918-8BCD-50EE94EF54F5} = {EEC41D2A-C5CC-4C4F-A37D-615CBA15C932}
 		{FA079C71-D71F-4889-906C-2FA2B2FDB294} = {FD763E2E-5AF1-46BE-B218-DE34F9C4D1A9}
+		{881632FF-114E-4DC9-B863-B824033A53A9} = {FD763E2E-5AF1-46BE-B218-DE34F9C4D1A9}
 	EndGlobalSection
 EndGlobal
