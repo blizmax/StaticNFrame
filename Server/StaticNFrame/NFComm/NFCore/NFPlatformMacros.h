@@ -102,9 +102,6 @@
 #define NF_DYNAMIC_PLUGIN 1
 #endif
 
-#ifndef NF_STATIC_PLUGIN
-//#define NF_DYNAMIC_PLUGIN 1
-#endif
 // If we're not including this from a client build, specify that the stuff
 // should get exported. Otherwise, import it.
 #   if defined( NF_STATIC_PLUGIN )

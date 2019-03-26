@@ -9,7 +9,7 @@
 #pragma once
 
 #include "NFIModule.h"
-#include "protobuf/src/google/protobuf/message.h"
+#include "NFMessageDefine/NFMsgDefine.h"
 #include <vector>
 #include <string>
 

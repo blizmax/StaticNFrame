@@ -26,7 +26,7 @@ bool NFCSqliteModule::Init()
 
 	uint64_t beginTime = NFGetTime();
 	std::vector<google::protobuf::Message*> vecInfo;
-	for (int i = 0; i < 100000; i++)
+	for (int i = 0; i < 400000; i++)
 	{
 		proto::message::plane_record_info* pInfo = new proto::message::plane_record_info();
 		pInfo->mutable_db_fields()->set_id(i + 1);

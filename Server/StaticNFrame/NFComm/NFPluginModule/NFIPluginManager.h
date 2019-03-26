@@ -22,7 +22,6 @@ class NFIPlugin;
 class NFIPluginManager;
 
 typedef std::function<NFIModule*(NFIPluginManager* pMan)> CREATE_ALONE_MODULE;
-typedef std::function<void(NFIModule*)> DELETE_ALONE_MODULE;
 
 typedef std::function<NFIPlugin*(NFIPluginManager* pMan)> CREATE_PLUGIN_FUNCTION;
 
@@ -64,6 +63,34 @@ public:
 		assert(nullptr);
 		return nullptr;
 	}
+
+	template <typename T>
+	T* CreateAloneModule()
+	{
+		NFIModule* pLogicModule = CreateAloneModule(typeid(T).name());
+		if (pLogicModule)
+		{
+			if (!TIsDerived<T, NFIModule>::Result)
+			{
+				return NULL;
+			}
+			//TODO OSX上dynamic_cast返回了NULL
+#if NF_PLATFORM == NF_PLATFORM_APPLE
+			T* pT = (T*)pLogicModule;
+#else
+			T* pT = dynamic_cast<T*>(pLogicModule);
+#endif
+			assert(NULL != pT);
+
+			return pT;
+		}
+		assert(NULL);
+		return NULL;
+	}
+
+	virtual void RegisterAloneModule(const std::string& strModuleName, const CREATE_ALONE_MODULE& createFunc) = 0;   //
+
+	virtual NFIModule* CreateAloneModule(const std::string& strModuleName) = 0;
 
 	//初始化单件系统
 	virtual bool InitSingleton() = 0;

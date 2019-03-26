@@ -206,14 +206,23 @@ bool NFCPluginManager::Execute()
 	mCurFrameCount++;
 
 	BeginProfiler("MainLoop");
-	PluginInstanceMap::iterator it = mPluginInstanceMap.begin();
-	for (; it != mPluginInstanceMap.end(); ++it)
+	
+	for (auto it = mPluginInstanceMap.begin(); it != mPluginInstanceMap.end(); ++it)
 	{
 		BeginProfiler(it->first + "--Loop");
 		bool tembRet = it->second->Execute();
 		bRet = bRet && tembRet;
 		EndProfiler();
 	}
+
+	for (auto iter = mModuleAloneMultiMap.begin(); iter != mModuleAloneMultiMap.end(); iter++)
+	{
+		BeginProfiler(iter->first + "--Alone-Loop");
+		bool tembRet = iter->second->Execute();
+		bRet = bRet && tembRet;
+		EndProfiler();
+	}
+
 	EndProfiler();
 
 	//采用固定帧率
@@ -398,11 +407,17 @@ bool NFCPluginManager::AfterInit()
 bool NFCPluginManager::CheckConfig()
 {
 	NFLogInfo("NFPluginLoader CheckConfig................");
-	PluginInstanceMap::iterator itCheckInstance = mPluginInstanceMap.begin();
-	for (; itCheckInstance != mPluginInstanceMap.end(); ++itCheckInstance)
+	
+	for (PluginInstanceMap::iterator itCheckInstance = mPluginInstanceMap.begin(); itCheckInstance != mPluginInstanceMap.end(); ++itCheckInstance)
 	{
 		itCheckInstance->second->CheckConfig();
 	}
+
+	for (auto it = mModuleAloneMultiMap.begin(); it != mModuleAloneMultiMap.end(); it++)
+	{
+		it->second->CheckConfig();
+	}
+	return true;
 
 	return true;
 }
@@ -410,22 +425,31 @@ bool NFCPluginManager::CheckConfig()
 bool NFCPluginManager::ReadyExecute()
 {
 	NFLogInfo("NFPluginLoader ReadyExecute................");
-	PluginInstanceMap::iterator itCheckInstance = mPluginInstanceMap.begin();
-	for (; itCheckInstance != mPluginInstanceMap.end(); ++itCheckInstance)
+	
+	for (PluginInstanceMap::iterator itCheckInstance = mPluginInstanceMap.begin(); itCheckInstance != mPluginInstanceMap.end(); ++itCheckInstance)
 	{
 		itCheckInstance->second->ReadyExecute();
 	}
 
+	for (auto it = mModuleAloneMultiMap.begin(); it != mModuleAloneMultiMap.end(); it++)
+	{
+		it->second->ReadyExecute();
+	}
 	return true;
 }
 
 bool NFCPluginManager::BeforeShut()
 {
 	NFLogInfo("NFPluginLoader BeforeShut................");
-	PluginInstanceMap::iterator itBeforeInstance = mPluginInstanceMap.begin();
-	for (; itBeforeInstance != mPluginInstanceMap.end(); ++itBeforeInstance)
+	
+	for (PluginInstanceMap::iterator itBeforeInstance = mPluginInstanceMap.begin(); itBeforeInstance != mPluginInstanceMap.end(); ++itBeforeInstance)
 	{
 		itBeforeInstance->second->BeforeShut();
+	}
+
+	for (auto it = mModuleAloneMultiMap.begin(); it != mModuleAloneMultiMap.end(); it++)
+	{
+		it->second->BeforeShut();
 	}
 
 	return true;
@@ -434,10 +458,15 @@ bool NFCPluginManager::BeforeShut()
 bool NFCPluginManager::Shut()
 {
 	NFLogInfo("NFPluginLoader Shut................");
-	PluginInstanceMap::iterator itInstance = mPluginInstanceMap.begin();
-	for (; itInstance != mPluginInstanceMap.end(); ++itInstance)
+	
+	for (PluginInstanceMap::iterator itInstance = mPluginInstanceMap.begin(); itInstance != mPluginInstanceMap.end(); ++itInstance)
 	{
 		itInstance->second->Shut();
+	}
+
+	for (auto it = mModuleAloneMultiMap.begin(); it != mModuleAloneMultiMap.end(); it++)
+	{
+		it->second->Shut();
 	}
 
 	return true;
@@ -446,12 +475,29 @@ bool NFCPluginManager::Shut()
 bool NFCPluginManager::Finalize()
 {
 	NFLogInfo("NFPluginLoader Finalize................");
-	PluginInstanceMap::iterator itInstance = mPluginInstanceMap.begin();
-	for (; itInstance != mPluginInstanceMap.end(); ++itInstance)
+	
+	for (PluginInstanceMap::iterator itInstance = mPluginInstanceMap.begin(); itInstance != mPluginInstanceMap.end(); ++itInstance)
 	{
 		itInstance->second->Finalize();
 	}
 
+	for (auto it = mModuleAloneMultiMap.begin(); it != mModuleAloneMultiMap.end(); it++)
+	{
+		it->second->Finalize();
+	}
+
+	//先析构掉独立的module
+	for (auto it = mModuleAloneMultiMap.begin(); it != mModuleAloneMultiMap.end(); it++)
+	{
+		NF_SAFE_DELETE(it->second);
+		it->second = nullptr;
+	}
+	mModuleAloneMultiMap.clear();
+
+	//std::function必须在module析构前，清理掉
+	mModuleAloneFuncMap.clear();
+
+#ifndef NF_DYNAMIC_PLUGIN
 	////////////////////////////////////////////////
 
 	for (auto it = mPluginNameMap.begin(); it != mPluginNameMap.end(); ++it)
@@ -463,6 +509,17 @@ bool NFCPluginManager::Finalize()
 	}
 
 	UnLoadStaticPlugin("NFKernelPlugin");
+#else
+	for (auto it = mPluginNameMap.begin(); it != mPluginNameMap.end(); ++it)
+	{
+		if (it->first != "NFKernelPlugin")
+		{
+			UnLoadPluginLibrary(it->first);
+		}
+	}
+
+	UnLoadPluginLibrary("NFKernelPlugin");
+#endif
 
 	mPluginInstanceMap.clear();
 	mPluginInstanceList.clear();
@@ -500,6 +557,47 @@ bool NFCPluginManager::UnLoadStaticPlugin(const std::string& strPluginDLLName)
 {
 	UnRegistered(FindPlugin(strPluginDLLName));
 	return true;
+}
+
+void NFCPluginManager::RegisterAloneModule(const std::string& strModuleName, const CREATE_ALONE_MODULE& createFunc)
+{
+	mModuleAloneFuncMap.emplace(strModuleName, createFunc);
+}
+
+NFIModule* NFCPluginManager::CreateAloneModule(const std::string& strModuleName)
+{
+	std::string strSubModuleName = strModuleName;
+
+#if NF_PLATFORM == NF_PLATFORM_WIN
+	std::size_t position = strSubModuleName.find(" ");
+	if (string::npos != position)
+	{
+		strSubModuleName = strSubModuleName.substr(position + 1, strSubModuleName.length());
+	}
+#else
+	for (int i = 0; i < (int)strSubModuleName.length(); i++)
+	{
+		std::string s = strSubModuleName.substr(0, i + 1);
+		int n = atof(s.c_str());
+		if ((int)strSubModuleName.length() == i + 1 + n)
+		{
+			strSubModuleName = strSubModuleName.substr(i + 1, strSubModuleName.length());
+			break;
+		}
+	}
+#endif
+
+	auto it = mModuleAloneFuncMap.find(strSubModuleName);
+	if (it != mModuleAloneFuncMap.end())
+	{
+		NFIModule* pModule = it->second(this);
+		if (pModule)
+		{
+			mModuleAloneMultiMap.emplace(strSubModuleName, pModule);
+		}
+		return pModule;
+	}
+	return nullptr;
 }
 
 uint32_t NFCPluginManager::GetFrame() const

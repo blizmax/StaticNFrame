@@ -74,6 +74,10 @@ public:
 
 	virtual NFIModule* FindModule(const std::string& strModuleName) override;
 
+	virtual void RegisterAloneModule(const std::string& strModuleName, const CREATE_ALONE_MODULE& createFunc) override;
+
+	virtual NFIModule* CreateAloneModule(const std::string& strModuleName) override;
+
 	virtual bool Execute() override;
 
 	virtual int GetAppID() const override;
@@ -156,6 +160,9 @@ private:
 	typedef std::map<std::string, CREATE_PLUGIN_FUNCTION> PluginFuncMap; //静态加载Plugin, 先注册创建函数
 	typedef std::map<int, int> ServerTypeToIdMap; //负责AllServer情况下，ServerType与ServerId的关系
 
+	typedef std::map<std::string, CREATE_ALONE_MODULE> ModuleAloneFuncMap;  //名字与单独创建Module的函数
+	typedef std::multimap<std::string, NFIModule*> ModuleAloneMultiMap;     //名字以及单独创建的Module集合
+
 	typedef void (*DLL_START_PLUGIN_FUNC)(NFIPluginManager* pm);
 	typedef void (*DLL_STOP_PLUGIN_FUNC)(NFIPluginManager* pm);
 
@@ -166,6 +173,9 @@ private:
 	ModuleInstanceMap mModuleInstanceMap;
 	ServerTypeToIdMap mServerTypeIdMap; //负责AllServer情况下，ServerType与ServerId的关系
 	PluginFuncMap mPluginFuncMap; ////静态加载Plugin, 先注册创建和销毁函数
+
+	ModuleAloneFuncMap mModuleAloneFuncMap;         //名字与单独创建Module的函数
+	ModuleAloneMultiMap mModuleAloneMultiMap;       //名字以及单独创建的Module集合
 
 	NFProfiler m_profilerMgr;
 };

@@ -45,6 +45,10 @@ NFEventMgr::Instance()->ReleaseInstance();\
 NFLogMgr::Instance()->UnInit();\
 NFLogMgr::Instance()->ReleaseInstance();\
 
+#define REGISTER_ALONE_MODULE(pManager, classBaseName, className)  \
+    assert((TIsDerived<classBaseName, NFIModule>::Result)); \
+    assert((TIsDerived<className, classBaseName>::Result)); \
+    pManager->RegisterAloneModule(#classBaseName, [] (NFIPluginManager* pMan) ->NFIModule* { return NF_NEW className(pMan);}); \
 
 //为什么要在这里加上pManager->InitSingleton()呢， 主要是为了在动态加载的情况下，在每个DLL中，都初始化一次单件系统
 #define REGISTER_MODULE(pManager, classBaseName, className)  \
@@ -52,6 +56,7 @@ NFLogMgr::Instance()->ReleaseInstance();\
     assert((TIsDerived<className, classBaseName>::Result)); \
     NFIModule* pRegisterModule##className= new className(pManager); \
     pRegisterModule##className->strName = (#className); \
+	REGISTER_ALONE_MODULE(pManager, classBaseName, className); \
     pManager->AddModule( #classBaseName, pRegisterModule##className );AddModule( #classBaseName, pRegisterModule##className );
 
 #define UNREGISTER_MODULE(pManager, classBaseName, className) NFIModule* pUnRegisterModule##className =  \
