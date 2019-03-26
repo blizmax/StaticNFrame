@@ -298,9 +298,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="NFMonitorModule.cpp" />
     <ClCompile Include="NFMonitorPlugin.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="NFMonitorModule.h" />
     <ClInclude Include="NFMonitorPlugin.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

@@ -40,16 +40,6 @@ bool NFCGameLogicModule::AfterInit()
 
 bool NFCGameLogicModule::Execute()
 {
-	static uint64_t lastTime = 0;
-	if (lastTime + 10 > NFGetSecondTime())
-	{
-		return true;
-	}
-
-	m_pGameClient_MasterModule->SetOnlineNum(m_onlineNum);
-	lastTime = NFGetSecondTime();
-
-	NFLogError("cpu:{}%, mem:{}M, online_num:{}", pPluginManager->GetSystemInfo().GetProcessInfo().mCpuUsed, pPluginManager->GetSystemInfo().GetProcessInfo().mMemUsed / 1024.f / 1024.f, m_onlineNum);
 	return true;
 }
 

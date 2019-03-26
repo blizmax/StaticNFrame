@@ -164,12 +164,6 @@ void NFSystemInfo::CountOsInfo()
 
 void NFSystemInfo::CountSystemInfo()
 {
-	static uint64_t lastTime = 0;
-
-	if (lastTime + 10 > (uint64_t)NFGetSecondTime()) return;
-
-	lastTime = (uint64_t)NFGetSecondTime();
-
 	CountMemInfo();
 	CountCurProcessInfo();
 }

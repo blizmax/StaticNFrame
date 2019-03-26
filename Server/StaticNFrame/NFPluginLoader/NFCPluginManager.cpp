@@ -72,8 +72,6 @@ bool NFCPluginManager::IsLoadAllServer() const
 
 bool NFCPluginManager::Awake()
 {
-	mSystemInfo.Init();
-
 #ifndef NF_DYNAMIC_PLUGIN
 	RegisterStaticPlugin(); //注册静态引擎
 	LoadKernelPlugin(); //NFKernelPlugin比较特殊，提前加载
@@ -245,8 +243,6 @@ bool NFCPluginManager::Execute()
 		}
 		std::this_thread::sleep_for(std::chrono::milliseconds(1));
 	}
-
-	mSystemInfo.CountSystemInfo();
 
 	if (mCurFrameCount % 1000 == 0)
 	{
@@ -690,11 +686,6 @@ bool NFCPluginManager::UnLoadPluginLibrary(const std::string& strPluginDLLName)
 	}
 
 	return false;
-}
-
-const NFSystemInfo& NFCPluginManager::GetSystemInfo() const
-{
-	return mSystemInfo;
 }
 
 void NFCPluginManager::BeginProfiler(const std::string& funcName)

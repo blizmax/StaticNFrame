@@ -130,8 +130,6 @@ protected:
 
 	bool LoadKernelPlugin();
 
-	const NFSystemInfo& GetSystemInfo() const;
-
 	virtual void BeginProfiler(const std::string& luaFunc);
 	virtual uint64_t EndProfiler();//return this time cost time(us) 微妙
 	virtual void ClearProfiler();
@@ -140,7 +138,6 @@ private:
 	const uint32_t mFrame = 30; //服务器帧率，一秒30帧
 	const uint32_t mFrameTime = 1000 / mFrame; //一帧多少时间
 	uint32_t mCurFrameCount = 0;
-	NFSystemInfo mSystemInfo; //物理机子以及进程系统信息
 private:
 	int mnAppID;
 	uint64_t mnInitTime;	//服务器开始时间，ms

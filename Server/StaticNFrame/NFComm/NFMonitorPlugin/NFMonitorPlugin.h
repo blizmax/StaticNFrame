@@ -12,6 +12,9 @@
 #include "NFComm/NFPluginModule/NFIPluginManager.h"
 #include <string>
 
+/*
+** ·þÎñÆ÷¼à¿ØÒýÇæ
+*/
 //////////////////////////////////////////////////////////////////////////
 class NFMonitorPlugin : public NFIPlugin
 {

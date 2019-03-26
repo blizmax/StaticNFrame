@@ -135,7 +135,6 @@ private:
 	PROFILE_TIMER* mStacks[PROFILER_MAX_STACK_LEVEL];
 
 	std::map<std::string, PROFILE_TIMER*> m_funcNameProfiler;
-
 };
 
 #endif // NF_PROFILER_H
