@@ -48,7 +48,7 @@ bool NFCMongoDriver::Connect(const std::string& uri, const std::string& dbname)
 	m_uri = mongoc_uri_new_with_error(uri.c_str(), &error);
 	if (m_uri == nullptr)
 	{
-		NFLogError("Failed to parse URI:{}", uri);
+		NFLogError(NF_LOG_MONGO_PLUGIN, 0, "Failed to parse URI:{}", uri);
 		return HandleMongocError(error);
 	}
 
@@ -60,7 +60,7 @@ bool NFCMongoDriver::Connect()
 	m_pClient = mongoc_client_new_from_uri(m_uri);
 	if (m_pClient == nullptr)
 	{
-		NFLogError("Mongo Client Connect Error");
+		NFLogError(NF_LOG_MONGO_PLUGIN, 0, "Mongo Client Connect Error");
 		return false;
 	}
 
@@ -69,7 +69,7 @@ bool NFCMongoDriver::Connect()
 	m_pDatabase = mongoc_client_get_database(m_pClient, m_dbname.c_str());
 	if (m_pDatabase == nullptr)
 	{
-		NFLogError("Mongo Client Get DbBase Error", m_dbname);
+		NFLogError(NF_LOG_MONGO_PLUGIN, 0, "Mongo Client Get DbBase Error", m_dbname);
 		return false;
 	}
 	return true;
@@ -102,7 +102,7 @@ bool NFCMongoDriver::Ping()
 	retval = mongoc_client_command_simple(m_pClient, "admin", command, NULL, &reply, &error);
 
 	if (!retval) {
-		NFLogError("Mongo Ping Error:{}", error.message)
+		NFLogError(NF_LOG_MONGO_PLUGIN, 0, "Mongo Ping Error:{}", error.message)
 		return false;
 	}
 
@@ -208,7 +208,7 @@ bool NFCMongoDriver::HandleMongocError(const bson_error_t& error)
 		return true;
 	}
 
-	NFLogError("mongoc error:{}", error.message);
+	NFLogError(NF_LOG_MONGO_PLUGIN, 0, "mongoc error:{}", error.message);
 	return false;
 }
 
@@ -241,7 +241,7 @@ bool NFCMongoDriver::DropCollection(const std::string& collectionName)
 	mongoc_collection_t *collection = GetCollection(collectionName);
 	if (collection == nullptr)
 	{
-		NFLogError("DropCollection Failed, collection:{} not exist!", collectionName);
+		NFLogError(NF_LOG_MONGO_PLUGIN, 0, "DropCollection Failed, collection:{} not exist!", collectionName);
 		return false;
 	}
 
@@ -249,7 +249,7 @@ bool NFCMongoDriver::DropCollection(const std::string& collectionName)
 	bool ret = mongoc_collection_drop(collection, &error);
 	if (ret == false)
 	{
-		NFLogError("Drop Collection Failed, collectionName:{}", collectionName);
+		NFLogError(NF_LOG_MONGO_PLUGIN, 0, "Drop Collection Failed, collectionName:{}", collectionName);
 		return HandleMongocError(error);
 	}
 	return ret;
@@ -266,7 +266,7 @@ std::string NFCMongoDriver::FindOneByKey(const std::string& collectionName, cons
 	mongoc_collection_t *collection = GetCollection(collectionName);
 	if (!collection)
 	{
-		NFLogError("Collection Name Not Exist:{}", collectionName);
+		NFLogError(NF_LOG_MONGO_PLUGIN, 0, "Collection Name Not Exist:{}", collectionName);
 		return result;
 	}
 
@@ -313,7 +313,7 @@ std::string NFCMongoDriver::FindFieldByKey(const std::string& collectionName, co
 	mongoc_collection_t *collection = GetCollection(collectionName);
 	if (!collection)
 	{
-		NFLogError("Collection Name Not Exist:{}", collectionName);
+		NFLogError(NF_LOG_MONGO_PLUGIN, 0, "Collection Name Not Exist:{}", collectionName);
 		return result;
 	}
 
@@ -358,7 +358,7 @@ std::string NFCMongoDriver::FindFieldByKey(const std::string& collectionName, co
 	mongoc_collection_t *collection = GetCollection(collectionName);
 	if (!collection)
 	{
-		NFLogError("Collection Name Not Exist:{}", collectionName);
+		NFLogError(NF_LOG_MONGO_PLUGIN, 0, "Collection Name Not Exist:{}", collectionName);
 		return result;
 	}
 
@@ -399,7 +399,7 @@ std::string NFCMongoDriver::FindOneByKey(const std::string& collectionName, int6
 	mongoc_collection_t *collection = GetCollection(collectionName);
 	if (!collection)
 	{
-		NFLogError("Collection Name Not Exist:{}", collectionName);
+		NFLogError(NF_LOG_MONGO_PLUGIN, 0, "Collection Name Not Exist:{}", collectionName);
 		return result;
 	}
 
@@ -441,7 +441,7 @@ std::string NFCMongoDriver::FindOne(const std::string& collectionName, const std
 	mongoc_collection_t *collection = GetCollection(collectionName);
 	if (!collection)
 	{
-		NFLogError("Collection Name Not Exist:{}", collectionName);
+		NFLogError(NF_LOG_MONGO_PLUGIN, 0, "Collection Name Not Exist:{}", collectionName);
 		return result;
 	}
 
@@ -453,7 +453,7 @@ std::string NFCMongoDriver::FindOne(const std::string& collectionName, const std
 	if (HandleMongocError(error) == false)
 	{
 		bson_destroy(query);
-		NFLogError("bson_new_from_json error:{}", json_query);
+		NFLogError(NF_LOG_MONGO_PLUGIN, 0, "bson_new_from_json error:{}", json_query);
 		return result;
 	}
 	
@@ -488,7 +488,7 @@ std::vector<std::string> NFCMongoDriver::FindMany(const std::string& collectionN
 	mongoc_collection_t *collection = GetCollection(collectionName);
 	if (!collection)
 	{
-		NFLogError("Collection Name Not Exist:{}", collectionName);
+		NFLogError(NF_LOG_MONGO_PLUGIN, 0, "Collection Name Not Exist:{}", collectionName);
 		return result;
 	}
 
@@ -500,7 +500,7 @@ std::vector<std::string> NFCMongoDriver::FindMany(const std::string& collectionN
 	if (HandleMongocError(error) == false)
 	{
 		if (query) bson_destroy(query);
-		NFLogError("bson_new_from_json error:{}", json_query);
+		NFLogError(NF_LOG_MONGO_PLUGIN, 0, "bson_new_from_json error:{}", json_query);
 		return result;
 	}
 
@@ -514,7 +514,7 @@ std::vector<std::string> NFCMongoDriver::FindMany(const std::string& collectionN
 		{
 			if (query) bson_destroy(query);
 			if (opts) bson_destroy(opts);
-			NFLogError("bson_new_from_json error:{}", json_opts);
+			NFLogError(NF_LOG_MONGO_PLUGIN, 0, "bson_new_from_json error:{}", json_opts);
 			return result;
 		}
 	}
@@ -544,7 +544,7 @@ std::vector<std::string> NFCMongoDriver::FindAll(const std::string& collectionNa
 	mongoc_collection_t *collection = GetCollection(collectionName);
 	if (!collection)
 	{
-		NFLogError("Collection Name Not Exist:{}", collectionName);
+		NFLogError(NF_LOG_MONGO_PLUGIN, 0, "Collection Name Not Exist:{}", collectionName);
 		return result;
 	}
 
@@ -585,7 +585,7 @@ bool NFCMongoDriver::CreateCollection(const std::string& collectionName, const s
 		collection = mongoc_database_create_collection(m_pDatabase, collectionName.c_str(), nullptr, &error);
 		if (collection == nullptr)
 		{
-			NFLogError("Create Collection Failed, collectionName:{}", collectionName);
+			NFLogError(NF_LOG_MONGO_PLUGIN, 0, "Create Collection Failed, collectionName:{}", collectionName);
 			return HandleMongocError(error);
 		}
 
@@ -639,7 +639,7 @@ bool NFCMongoDriver::InsertOne(const std::string& collectionName, bson_t *doc)
 	mongoc_collection_t *collection = GetCollection(collectionName);
 	if (!collection)
 	{
-		NFLogError("Collection Name Not Exist:{}", collectionName);
+		NFLogError(NF_LOG_MONGO_PLUGIN, 0, "Collection Name Not Exist:{}", collectionName);
 		return false;
 	}
 
@@ -679,7 +679,7 @@ bool NFCMongoDriver::InsertOne(const std::string& collectionName, const std::str
 			{
 				if (document.HasMember(primary_key.c_str()) == false)
 				{
-					NFLogError("json hast not primary key:{}", primary_key);
+					NFLogError(NF_LOG_MONGO_PLUGIN, 0, "json hast not primary key:{}", primary_key);
 					return false;
 				}
 
@@ -694,7 +694,7 @@ bool NFCMongoDriver::InsertOne(const std::string& collectionName, const std::str
 				if (HandleMongocError(error) == false || doc == nullptr)
 				{
 					if (doc) bson_destroy(doc);
-					NFLogError("bson_new_from_json error:{}", json_query);
+					NFLogError(NF_LOG_MONGO_PLUGIN, 0, "bson_new_from_json error:{}", json_query);
 					return false;
 				}
 
@@ -709,7 +709,7 @@ bool NFCMongoDriver::InsertOne(const std::string& collectionName, const std::str
 	if (HandleMongocError(error) == false || doc == nullptr)
 	{
 		if (doc) bson_destroy(doc);
-		NFLogError("bson_new_from_json error:{}", json_query);
+		NFLogError(NF_LOG_MONGO_PLUGIN, 0, "bson_new_from_json error:{}", json_query);
 		return false;
 	}
 
@@ -732,7 +732,7 @@ bool NFCMongoDriver::UpdateOne(const std::string& collectionName, const std::str
 		{
 			if (document.HasMember(primary_key.c_str()) == false)
 			{
-				NFLogError("json hast not primary key:{}", primary_key);
+				NFLogError(NF_LOG_MONGO_PLUGIN, 0, "json hast not primary key:{}", primary_key);
 				return false;
 			}
 
@@ -749,7 +749,7 @@ bool NFCMongoDriver::UpdateOne(const std::string& collectionName, const std::str
 			}
 			else
 			{
-				NFLogError("json key error:{}", json_query);
+				NFLogError(NF_LOG_MONGO_PLUGIN, 0, "json key error:{}", json_query);
 				bson_destroy(select);
 				return false;
 			}
@@ -758,7 +758,7 @@ bool NFCMongoDriver::UpdateOne(const std::string& collectionName, const std::str
 			if (HandleMongocError(error) == false || doc == nullptr)
 			{
 				if (doc) bson_destroy(doc);
-				NFLogError("bson_new_from_json error:{}", json_query);
+				NFLogError(NF_LOG_MONGO_PLUGIN, 0, "bson_new_from_json error:{}", json_query);
 				return false;
 			}
 
@@ -799,7 +799,7 @@ bool NFCMongoDriver::UpdateFieldByKey(const std::string& collectionName, const s
 	{
 		if (doc) bson_destroy(doc);
 		bson_destroy(select);
-		NFLogError("bson_new_from_json error:{}", json_query);
+		NFLogError(NF_LOG_MONGO_PLUGIN, 0, "bson_new_from_json error:{}", json_query);
 		return false;
 	}
 
@@ -826,7 +826,7 @@ bool NFCMongoDriver::UpdateFieldByKey(const std::string& collectionName, const s
 	{
 		if (doc) bson_destroy(doc);
 		bson_destroy(select);
-		NFLogError("bson_new_from_json error:{}", json);
+		NFLogError(NF_LOG_MONGO_PLUGIN, 0, "bson_new_from_json error:{}", json);
 		return false;
 	}
 
@@ -869,7 +869,7 @@ bool NFCMongoDriver::UpdateField(const std::string& collectionName, bson_t *sele
 	mongoc_collection_t *collection = GetCollection(collectionName);
 	if (!collection)
 	{
-		NFLogError("Collection Name Not Exist:{}", collectionName);
+		NFLogError(NF_LOG_MONGO_PLUGIN, 0, "Collection Name Not Exist:{}", collectionName);
 		return false;
 	}
 
@@ -891,7 +891,7 @@ bool NFCMongoDriver::UpdateOne(const std::string& collectionName, bson_t *select
 	mongoc_collection_t *collection = GetCollection(collectionName);
 	if (!collection)
 	{
-		NFLogError("Collection Name Not Exist:{}", collectionName);
+		NFLogError(NF_LOG_MONGO_PLUGIN, 0, "Collection Name Not Exist:{}", collectionName);
 		return false;
 	}
 
@@ -943,7 +943,7 @@ bool NFCMongoDriver::UpdateOneByKey(const std::string& collectionName, const std
 	{
 		if (doc) bson_destroy(doc);
 		bson_destroy(select);
-		NFLogError("bson_new_from_json error:{}", json_query);
+		NFLogError(NF_LOG_MONGO_PLUGIN, 0, "bson_new_from_json error:{}", json_query);
 		return false;
 	}
 
@@ -964,7 +964,7 @@ bool NFCMongoDriver::UpdateOneByKey(const std::string& collectionName, const std
 	{
 		if (doc) bson_destroy(doc);
 		bson_destroy(select);
-		NFLogError("bson_new_from_json error:{}", json_query);
+		NFLogError(NF_LOG_MONGO_PLUGIN, 0, "bson_new_from_json error:{}", json_query);
 		return false;
 	}
 

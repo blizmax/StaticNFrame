@@ -9,6 +9,7 @@
 #include "NFCConfigModule.h"
 #include "NFComm/NFCore/NFFileUtility.h"
 #include "NFComm/NFPluginModule/NFLogMgr.h"
+#include "NFComm/NFPluginModule/NFConfigMgr.h"
 
 #define DEFINE_LUA_STRING_LOAD_PLUGIN			"LoadPlugin"
 #define DEFINE_LUA_STRING_SERVER_PLUGINS		"ServerPlugins"
@@ -28,7 +29,8 @@
 #define DEFINE_LUA_STRING_MAX_CONNECT_NUM		"MaxConnectNum"
 #define DEFINE_LUA_STRING_WORK_THREAD_NUM		"WorkThreadNum"
 #define DEFINE_LUA_STRING_SECURITY				"Security"
-#define DEFINE_LUA_STRING_LOG_LEVEL				"LogLevel"
+#define DEFINE_LUA_STRING_LOG_LEVEL				"LogLevel"					//log等级配置
+#define DEFINE_LUA_STRING_LOG_FLUSH_LEVEL		"LogFlushLevel"				//log刷新等级配置
 #define DEFINE_LUA_STRING_WebSocket				"WebSocket"
 #define DEFINE_LUA_STRING_HttpPort				"HttpPort"
 #define DEFINE_LUA_STRING_SERVER_INNER_PROT		"ServerInnerPort"
@@ -36,8 +38,11 @@
 NFCConfigModule::NFCConfigModule(NFIPluginManager* p)
 {
 	pPluginManager = p;
+	mLogLevel = NLL_TRACE_NORMAL;
+	mLogFlushLevel = NLL_TRACE_NORMAL;
 	//比较特殊，必须在这里加载配置，不然plugginmanager::Awake会出问题， 引擎配置没有数据
 	LoadConfig();
+	NFConfigMgr::Instance()->Init(this);
 }
 
 NFCConfigModule::~NFCConfigModule()
@@ -73,7 +78,7 @@ bool NFCConfigModule::LoadConfig()
 	{
 		if (TryLoadScriptFile(*it) == false)
 		{
-			NFLogError("Load {} Failed!", *it);
+			NFLogError(NF_LOG_SYSTEMLOG, 0, "Load {} Failed!", *it);
 			assert(0);
 		}
 	}
@@ -81,6 +86,7 @@ bool NFCConfigModule::LoadConfig()
 	TryRunGlobalScriptFunc("InitServer");
 
 	GetValue(DEFINE_LUA_STRING_LOG_LEVEL, mLogLevel);
+	GetValue(DEFINE_LUA_STRING_LOG_FLUSH_LEVEL, mLogFlushLevel);
 
 	NFLuaRef pluginRef = GetGlobal(DEFINE_LUA_STRING_LOAD_PLUGIN);
 	if (!pluginRef.isValid())
@@ -147,12 +153,12 @@ bool NFCConfigModule::LoadConfig()
 		
 		if (!GetLuaTableValue(serverConfigRef, DEFINE_LUA_STRING_SERVER_ID, pConfig->mServerId))
 		{
-			NFLogError("must be config the ServerId........");
+			NFLogError(NF_LOG_SYSTEMLOG, 0, "must be config the ServerId........");
 			assert(0);
 		}
 		if (!GetLuaTableValue(serverConfigRef, DEFINE_LUA_STRING_SERVER_TYPE, pConfig->mServerType))
 		{
-			NFLogError("must be config the ServerType........");
+			NFLogError(NF_LOG_SYSTEMLOG, 0, "must be config the ServerType........");
 			assert(0);
 		}
 

@@ -85,12 +85,12 @@ public:
 
 		if (jsonHeaders.empty() == false)
 		{
-			NFLogDebug("[HttpGet | {}]", jsonHeaders);
+			NFLogDebug(NF_LOG_LUA_PLUGIN, 0, "[HttpGet | {}]", jsonHeaders);
 			rapidjson::Document jsonDoc;
 			jsonDoc.Parse(jsonHeaders.c_str());
 			if (jsonDoc.IsObject() == false)
 			{
-				NFLogError("[HttpGet Error");
+				NFLogError(NF_LOG_LUA_PLUGIN, 0, "[HttpGet Error");
 				return false;
 			}
 
@@ -114,12 +114,12 @@ public:
 
 		if (jsonHeaders.empty() == false)
 		{
-			NFLogDebug("[HttpPos | {}]", jsonHeaders);
+			NFLogDebug(NF_LOG_LUA_PLUGIN, 0, "[HttpPos | {}]", jsonHeaders);
 			rapidjson::Document jsonDoc;
 			jsonDoc.Parse(jsonHeaders.c_str());
 			if (jsonDoc.IsObject() == false)
 			{
-				NFLogError("[HttpPos Error");
+				NFLogError(NF_LOG_LUA_PLUGIN, 0, "[HttpPos Error");
 				return false;
 			}
 

@@ -38,7 +38,7 @@ struct Test
 
 	void print()
 	{
-		NFLogDebug("a={},b={},c={}", a, b, c);
+		NFLogDebug(0,0,"a={},b={},c={}", a, b, c);
 	}
 	uint32_t a;
 	uint32_t b;
@@ -213,7 +213,7 @@ void testLog()
 		{
 			str += "fuck your mother.................................................";
 		}
-		NFLogDebug(str.c_str());
+		NFLogDebug(0,0,str.c_str());
 	}
 
 	uint64_t endTime = NFGetTime();

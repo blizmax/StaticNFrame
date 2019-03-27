@@ -42,14 +42,9 @@ class NFCEventModule
 	: public NFIEventModule
 {
 public:
-	explicit NFCEventModule(NFIPluginManager* p)
-	{
-		pPluginManager = p;
-	}
+	explicit NFCEventModule(NFIPluginManager* p);
 
-	virtual ~NFCEventModule()
-	{
-	}
+	virtual ~NFCEventModule();
 
 	virtual bool Init() override;
 	virtual bool AfterInit() override;

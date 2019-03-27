@@ -52,12 +52,12 @@ bool NFCSqliteDriver::Connect(const std::string& dbname)
 	if (ret == SQLITE_OK)
 	{
 		SetPragmaInfo();
-		NFLogInfo("sqlite3_open:{} success!", dbname);
+		NFLogInfo(NF_LOG_SQLITE_PLUGIN, 0, "sqlite3_open:{} success!", dbname);
 		return true;
 	}
 	else
 	{
-		NFLogError("sqlite3_open:{} failed! error code:{}", dbname, ret);
+		NFLogError(NF_LOG_SQLITE_PLUGIN, 0, "sqlite3_open:{} failed! error code:{}", dbname, ret);
 		CloseConnection();
 		return false;
 	}
@@ -91,15 +91,15 @@ bool NFCSqliteDriver::CloseConnection()
 		int result = sqlite3_close_v2(m_pSqliteDB);
 		if (result == SQLITE_OK)
 		{
-			NFLogInfo("sqlite3_close:{} success!", m_dbName);
+			NFLogInfo(NF_LOG_SQLITE_PLUGIN, 0, "sqlite3_close:{} success!", m_dbName);
 			return true;
 		}
 
-		NFLogError("sqlite3_close:{} failed! error code:{}", m_dbName, result);
+		NFLogError(NF_LOG_SQLITE_PLUGIN, 0, "sqlite3_close:{} failed! error code:{}", m_dbName, result);
 	}
 	else
 	{
-		NFLogError("sqlite3_close:{} failed! m_pSqliteDB == nullptr", m_dbName);
+		NFLogError(NF_LOG_SQLITE_PLUGIN, 0, "sqlite3_close:{} failed! m_pSqliteDB == nullptr", m_dbName);
 	}
 
 	return false;
@@ -231,7 +231,7 @@ bool NFCSqliteDriver::ExecSqlNoTransaction(const std::string& sql)
 {
 	if (m_pSqliteDB == nullptr)
 	{
-		NFLogError("m_pSqliteDB == nullptr, Exec Sql ({}) Failed!", sql);
+		NFLogError(NF_LOG_SQLITE_PLUGIN, 0, "m_pSqliteDB == nullptr, Exec Sql ({}) Failed!", sql);
 		return false;
 	}
 
@@ -241,8 +241,8 @@ bool NFCSqliteDriver::ExecSqlNoTransaction(const std::string& sql)
 	result = sqlite3_exec(m_pSqliteDB, sql.c_str(), nullptr, nullptr, &errmsg);
 	if (result != SQLITE_OK)
 	{
-		NFLogError("sqlite3_exec error, error code:{}, errmsg:{}", result, errmsg);
-		NFLogError("sqlite3_exec error, sql:{}", sql);
+		NFLogError(NF_LOG_SQLITE_PLUGIN, 0, "sqlite3_exec error, error code:{}, errmsg:{}", result, errmsg);
+		NFLogError(NF_LOG_SQLITE_PLUGIN, 0, "sqlite3_exec error, sql:{}", sql);
 		return false;
 	}
 
@@ -258,7 +258,7 @@ bool NFCSqliteDriver::ExecSql(const std::string& sql)
 {
 	if (m_pSqliteDB == nullptr)
 	{
-		NFLogError("m_pSqliteDB == nullptr, Exec Sql ({}) Failed!", sql);
+		NFLogError(NF_LOG_SQLITE_PLUGIN, 0, "m_pSqliteDB == nullptr, Exec Sql ({}) Failed!", sql);
 		return false;
 	}
 
@@ -294,7 +294,7 @@ bool NFCSqliteDriver::ExecSql(const std::vector<std::string>& vecSql)
 {
 	if (m_pSqliteDB == nullptr)
 	{
-		NFLogError("m_pSqliteDB == nullptr, Exec Sql Failed!");
+		NFLogError(NF_LOG_SQLITE_PLUGIN, 0, "m_pSqliteDB == nullptr, Exec Sql Failed!");
 		return false;
 	}
 
@@ -613,7 +613,7 @@ bool NFCSqliteDriver::BeginTransaction()
 	bool result = ExecSqlNoTransaction("begin transaction");
 	if (!result)
 	{
-		NFLogError("begin transaction failed!");
+		NFLogError(NF_LOG_SQLITE_PLUGIN, 0, "begin transaction failed!");
 	}
 	return result;
 }
@@ -628,7 +628,7 @@ bool NFCSqliteDriver::CommitTransaction()
 	bool result = ExecSqlNoTransaction("commit transaction");
 	if (!result)
 	{
-		NFLogError("commit transaction failed!");
+		NFLogError(NF_LOG_SQLITE_PLUGIN, 0, "commit transaction failed!");
 	}
 	return result;
 }
@@ -642,7 +642,7 @@ bool NFCSqliteDriver::SqlitePrepare(const std::string& sql, sqlite3_stmt** pStmt
 {
 	if (m_pSqliteDB == nullptr)
 	{
-		NFLogError("m_pSqliteDB == nullptr, SqlitePrepare ({}) Failed!", sql);
+		NFLogError(NF_LOG_SQLITE_PLUGIN, 0, "m_pSqliteDB == nullptr, SqlitePrepare ({}) Failed!", sql);
 		return false;
 	}
 
@@ -651,8 +651,8 @@ bool NFCSqliteDriver::SqlitePrepare(const std::string& sql, sqlite3_stmt** pStmt
 	result = sqlite3_prepare_v2(m_pSqliteDB, sql.data(), sql.size(), pStmt, NULL);
 	if (result != SQLITE_OK)
 	{
-		NFLogError("sqlite3_prepare_v2 error, error code:{}", result);
-		NFLogError("sqlite3_prepare_v2 error, sql:{}", sql);
+		NFLogError(NF_LOG_SQLITE_PLUGIN, 0, "sqlite3_prepare_v2 error, error code:{}", result);
+		NFLogError(NF_LOG_SQLITE_PLUGIN, 0, "sqlite3_prepare_v2 error, sql:{}", sql);
 		return false;
 	}
 
@@ -668,7 +668,7 @@ bool NFCSqliteDriver::SqliteFinalize(sqlite3_stmt* pStmt)
 {
 	if (m_pSqliteDB == nullptr)
 	{
-		NFLogError("m_pSqliteDB == nullptr, SqliteFinalize Failed!");
+		NFLogError(NF_LOG_SQLITE_PLUGIN, 0, "m_pSqliteDB == nullptr, SqliteFinalize Failed!");
 		return false;
 	}
 
@@ -677,7 +677,7 @@ bool NFCSqliteDriver::SqliteFinalize(sqlite3_stmt* pStmt)
 	result = sqlite3_finalize(pStmt);
 	if (result != SQLITE_OK)
 	{
-		NFLogError("sqlite3_finalize error, error code:{}", result);
+		NFLogError(NF_LOG_SQLITE_PLUGIN, 0, "sqlite3_finalize error, error code:{}", result);
 		return false;
 	}
 
@@ -693,7 +693,7 @@ bool NFCSqliteDriver::SqliteReset(sqlite3_stmt* pStmt)
 {
 	if (m_pSqliteDB == nullptr)
 	{
-		NFLogError("m_pSqliteDB == nullptr, SqliteFinalize Failed!");
+		NFLogError(NF_LOG_SQLITE_PLUGIN, 0, "m_pSqliteDB == nullptr, SqliteFinalize Failed!");
 		return false;
 	}
 
@@ -702,7 +702,7 @@ bool NFCSqliteDriver::SqliteReset(sqlite3_stmt* pStmt)
 	result = sqlite3_reset(pStmt);
 	if (result != SQLITE_OK)
 	{
-		NFLogError("sqlite3_reset error, error code:{}", result);
+		NFLogError(NF_LOG_SQLITE_PLUGIN, 0, "sqlite3_reset error, error code:{}", result);
 		return false;
 	}
 
@@ -718,7 +718,7 @@ bool NFCSqliteDriver::SqliteStep(sqlite3_stmt* pStmt)
 {
 	if (m_pSqliteDB == nullptr)
 	{
-		NFLogError("m_pSqliteDB == nullptr, SqliteStep Failed!");
+		NFLogError(NF_LOG_SQLITE_PLUGIN, 0, "m_pSqliteDB == nullptr, SqliteStep Failed!");
 		return false;
 	}
 
@@ -727,7 +727,7 @@ bool NFCSqliteDriver::SqliteStep(sqlite3_stmt* pStmt)
 	result = sqlite3_step(pStmt);
 	if (result != SQLITE_ROW)
 	{
-		NFLogError("sqlite3_step error, error code:{}", result);
+		NFLogError(NF_LOG_SQLITE_PLUGIN, 0, "sqlite3_step error, error code:{}", result);
 		return false;
 	}
 

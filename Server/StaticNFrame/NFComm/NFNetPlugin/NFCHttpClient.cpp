@@ -56,7 +56,7 @@ bool NFCHttpClient::Init()
 	m_pSslCtx = SSL_CTX_new(SSLv23_client_method());
 	if (!m_pSslCtx)
 	{
-		NFLogError("SSL_CTX_new err.");
+		NFLogError(NF_LOG_NET_PLUGIN, 0, "SSL_CTX_new err.");
 		return false;
 	}
 
@@ -65,7 +65,7 @@ bool NFCHttpClient::Init()
 	m_pBase = event_base_new();
 	if (m_pBase == nullptr)
 	{
-		NFLogError("event_base_new err.");
+		NFLogError(NF_LOG_NET_PLUGIN, 0, "event_base_new err.");
 		return false;
 	}
 	return true;
@@ -127,14 +127,14 @@ bool NFCHttpClient::LuaMakeRequest(const std::string& strUri,
 	struct evhttp_uri* http_uri = evhttp_uri_parse(strUri.c_str());
 	if (http_uri == NULL)
 	{
-		NFLogError("evhttp_uri_parse err. ");
+		NFLogError(NF_LOG_NET_PLUGIN, 0, "evhttp_uri_parse err. ");
 		return false;
 	}
 
 	const char*  scheme = evhttp_uri_get_scheme(http_uri);
 	if (scheme == NULL)
 	{
-		NFLogError("scheme == NULL err. ");
+		NFLogError(NF_LOG_NET_PLUGIN, 0, "scheme == NULL err. ");
 		return false;
 	}
 
@@ -147,7 +147,7 @@ bool NFCHttpClient::LuaMakeRequest(const std::string& strUri,
 			evhttp_uri_free(http_uri);
 		}
 
-		NFLogError("scheme == NULL err. ");
+		NFLogError(NF_LOG_NET_PLUGIN, 0, "scheme == NULL err. ");
 		return false;
 	}
 
@@ -165,7 +165,7 @@ bool NFCHttpClient::LuaMakeRequest(const std::string& strUri,
 			evhttp_uri_free(http_uri);
 		}
 
-		NFLogError("url must have a host err. ");
+		NFLogError(NF_LOG_NET_PLUGIN, 0, "url must have a host err. ");
 		return false;
 	}
 
@@ -178,7 +178,7 @@ bool NFCHttpClient::LuaMakeRequest(const std::string& strUri,
 	const char* path = evhttp_uri_get_path(http_uri);
 	if (path == NULL)
 	{
-		NFLogError("path == NUL err. ");
+		NFLogError(NF_LOG_NET_PLUGIN, 0, "path == NUL err. ");
 		return false;
 	}
 
@@ -227,7 +227,7 @@ bool NFCHttpClient::LuaMakeRequest(const std::string& strUri,
 			{
 				evhttp_uri_free(http_uri);
 			}
-			NFLogError("SSL_new err.");
+			NFLogError(NF_LOG_NET_PLUGIN, 0, "SSL_new err.");
 			return false;
 		}
 
@@ -244,7 +244,7 @@ bool NFCHttpClient::LuaMakeRequest(const std::string& strUri,
 			evhttp_uri_free(http_uri);
 		}
 
-		NFLogError(" bev == NUL err. ");
+		NFLogError(NF_LOG_NET_PLUGIN, 0, " bev == NUL err. ");
 		return false;
 	}
 
@@ -263,7 +263,7 @@ bool NFCHttpClient::LuaMakeRequest(const std::string& strUri,
 			evhttp_uri_free(http_uri);
 		}
 
-		NFLogError(" evcon == NUL err. ");
+		NFLogError(NF_LOG_NET_PLUGIN, 0, " evcon == NUL err. ");
 		return false;
 	}
 
@@ -302,14 +302,14 @@ bool NFCHttpClient::LuaMakeRequest(const std::string& strUri,
 		{
 			evhttp_uri_free(http_uri);
 		}
-		NFLogError("evhttp_request_new() failed\n");
+		NFLogError(NF_LOG_NET_PLUGIN, 0, "evhttp_request_new() failed\n");
 		return false;
 	}
 
 	struct evkeyvalq* output_headers = evhttp_request_get_output_headers(req);
 	if (output_headers == NULL)
 	{
-		NFLogError("output_headers == NULL err. ");
+		NFLogError(NF_LOG_NET_PLUGIN, 0, "output_headers == NULL err. ");
 		return false;
 	}
 
@@ -329,7 +329,7 @@ bool NFCHttpClient::LuaMakeRequest(const std::string& strUri,
 		struct evbuffer* output_buffer = evhttp_request_get_output_buffer(req);
 		if (output_buffer == NULL)
 		{
-			NFLogError("output_buffer == NUL err. ");
+			NFLogError(NF_LOG_NET_PLUGIN, 0, "output_buffer == NUL err. ");
 			return false;
 		}
 
@@ -346,7 +346,7 @@ bool NFCHttpClient::LuaMakeRequest(const std::string& strUri,
 		{
 			evhttp_uri_free(http_uri);
 		}
-		NFLogError("evhttp_make_request() failed\n");
+		NFLogError(NF_LOG_NET_PLUGIN, 0, "evhttp_make_request() failed\n");
 		return false;
 	}
 
@@ -368,14 +368,14 @@ bool NFCHttpClient::MakeRequest(const std::string& strUri,
 	struct evhttp_uri* http_uri = evhttp_uri_parse(strUri.c_str());
 	if (http_uri == NULL)
 	{
-		NFLogError("evhttp_uri_parse err. ");
+		NFLogError(NF_LOG_NET_PLUGIN, 0, "evhttp_uri_parse err. ");
 		return false;
 	}
 
 	const char*  scheme = evhttp_uri_get_scheme(http_uri);
 	if (scheme == NULL)
 	{
-		NFLogError("scheme == NULL err. ");
+		NFLogError(NF_LOG_NET_PLUGIN, 0, "scheme == NULL err. ");
 		return false;
 	}
 
@@ -388,7 +388,7 @@ bool NFCHttpClient::MakeRequest(const std::string& strUri,
 			evhttp_uri_free(http_uri);
 		}
 
-		NFLogError("scheme == NULL err. ");
+		NFLogError(NF_LOG_NET_PLUGIN, 0, "scheme == NULL err. ");
 		return false;
 	}
 
@@ -406,7 +406,7 @@ bool NFCHttpClient::MakeRequest(const std::string& strUri,
 			evhttp_uri_free(http_uri);
 		}
 
-		NFLogError("url must have a host err. ");
+		NFLogError(NF_LOG_NET_PLUGIN, 0, "url must have a host err. ");
 		return false;
 	}
 
@@ -419,7 +419,7 @@ bool NFCHttpClient::MakeRequest(const std::string& strUri,
 	const char* path = evhttp_uri_get_path(http_uri);
 	if (path == NULL)
 	{
-		NFLogError("path == NUL err. ");
+		NFLogError(NF_LOG_NET_PLUGIN, 0, "path == NUL err. ");
 		return false;
 	}
 
@@ -468,7 +468,7 @@ bool NFCHttpClient::MakeRequest(const std::string& strUri,
 			{
 				evhttp_uri_free(http_uri);
 			}
-			NFLogError("SSL_new err.");
+			NFLogError(NF_LOG_NET_PLUGIN, 0, "SSL_new err.");
 			return false;
 		}
 
@@ -485,7 +485,7 @@ bool NFCHttpClient::MakeRequest(const std::string& strUri,
 			evhttp_uri_free(http_uri);
 		}
 
-		NFLogError(" bev == NUL err. ");
+		NFLogError(NF_LOG_NET_PLUGIN, 0, " bev == NUL err. ");
 		return false;
 	}
 
@@ -504,7 +504,7 @@ bool NFCHttpClient::MakeRequest(const std::string& strUri,
 			evhttp_uri_free(http_uri);
 		}
 
-		NFLogError(" evcon == NUL err. ");
+		NFLogError(NF_LOG_NET_PLUGIN, 0, " evcon == NUL err. ");
 		return false;
 	}
 
@@ -541,14 +541,14 @@ bool NFCHttpClient::MakeRequest(const std::string& strUri,
 		{
 			evhttp_uri_free(http_uri);
 		}
-		NFLogError("evhttp_request_new() failed\n");
+		NFLogError(NF_LOG_NET_PLUGIN, 0, "evhttp_request_new() failed\n");
 		return false;
 	}
 
 	struct evkeyvalq* output_headers = evhttp_request_get_output_headers(req);
 	if (output_headers == NULL)
 	{
-		NFLogError("output_headers == NULL err. ");
+		NFLogError(NF_LOG_NET_PLUGIN, 0, "output_headers == NULL err. ");
 		return false;
 	}
 
@@ -568,7 +568,7 @@ bool NFCHttpClient::MakeRequest(const std::string& strUri,
 		struct evbuffer* output_buffer = evhttp_request_get_output_buffer(req);
 		if (output_buffer == NULL)
 		{
-			NFLogError("output_buffer == NUL err. ");
+			NFLogError(NF_LOG_NET_PLUGIN, 0, "output_buffer == NUL err. ");
 			return false;
 		}
 
@@ -585,7 +585,7 @@ bool NFCHttpClient::MakeRequest(const std::string& strUri,
 		{
 			evhttp_uri_free(http_uri);
 		}
-		NFLogError("evhttp_make_request() failed\n");
+		NFLogError(NF_LOG_NET_PLUGIN, 0, "evhttp_make_request() failed\n");
 		return false;
 	}
 
@@ -630,7 +630,7 @@ void NFCHttpClient::OnHttpReqDone(struct evhttp_request* req, void* ctx)
 	HttpObject* pHttpObj = (HttpObject*)(ctx);
 	if (pHttpObj == NULL)
 	{
-		NFLogError("pHttpObj ==NULL");
+		NFLogError(NF_LOG_NET_PLUGIN, 0, "pHttpObj ==NULL");
 		return;
 	}
 
@@ -645,7 +645,7 @@ void NFCHttpClient::OnHttpReqDone(struct evhttp_request* req, void* ctx)
 		int errcode = EVUTIL_SOCKET_ERROR();
 
 		std::string strErrMsg = "";
-		NFLogError("some request failed - no idea which one though!\n");
+		NFLogError(NF_LOG_NET_PLUGIN, 0, "some request failed - no idea which one though!\n");
 		/* Print out the OpenSSL error queue that libevent
 		* squirreled away for us, if any. */
 
@@ -655,7 +655,7 @@ void NFCHttpClient::OnHttpReqDone(struct evhttp_request* req, void* ctx)
 #if NF_ENABLE_SSL
 		while ((oslerr = bufferevent_get_openssl_error(bev))) {
 			ERR_error_string_n(oslerr, buffer, sizeof(buffer));
-			NFLogError(buffer);
+			NFLogError(NF_LOG_NET_PLUGIN, 0, buffer);
 			//fprintf(stderr, "%s\n", buffer);
 			strErrMsg += std::string(buffer);
 			printed_err = 1;
@@ -677,7 +677,7 @@ void NFCHttpClient::OnHttpReqDone(struct evhttp_request* req, void* ctx)
 		pHttpClient->mListHttpObject.push_back(pHttpObj);
 		pHttpObj->Clear();
 
-		NFLogError(strErrMsg.c_str());
+		NFLogError(NF_LOG_NET_PLUGIN, 0, strErrMsg.c_str());
 		return;
 	}
 
@@ -729,7 +729,7 @@ void NFCHttpClient::LuaOnHttpReqDone(struct evhttp_request* req, void* ctx)
 	LuaHttpObject* pHttpObj = (LuaHttpObject*)(ctx);
 	if (pHttpObj == NULL)
 	{
-		NFLogError("pHttpObj ==NULL");
+		NFLogError(NF_LOG_NET_PLUGIN, 0, "pHttpObj ==NULL");
 		return;
 	}
 
@@ -744,7 +744,7 @@ void NFCHttpClient::LuaOnHttpReqDone(struct evhttp_request* req, void* ctx)
 		int errcode = EVUTIL_SOCKET_ERROR();
 
 		std::string strErrMsg = "";
-		NFLogError("some request failed - no idea which one though!\n");
+		NFLogError(NF_LOG_NET_PLUGIN, 0, "some request failed - no idea which one though!\n");
 		//fprintf(stderr, "some request failed - no idea which one though!\n");
 		/* Print out the OpenSSL error queue that libevent
 		* squirreled away for us, if any. */
@@ -756,7 +756,7 @@ void NFCHttpClient::LuaOnHttpReqDone(struct evhttp_request* req, void* ctx)
 		while ((oslerr = bufferevent_get_openssl_error(bev))) {
 			ERR_error_string_n(oslerr, buffer, sizeof(buffer));
 			//fprintf(stderr, "%s\n", buffer);
-			NFLogError(buffer);
+			NFLogError(NF_LOG_NET_PLUGIN, 0, buffer);
 			strErrMsg += std::string(buffer);
 			printed_err = 1;
 		}
@@ -777,7 +777,7 @@ void NFCHttpClient::LuaOnHttpReqDone(struct evhttp_request* req, void* ctx)
 		pHttpClient->mListLuaHttpObject.push_back(pHttpObj);
 		pHttpObj->Clear();
 
-		NFLogError(strErrMsg.c_str());
+		NFLogError(NF_LOG_NET_PLUGIN, 0, strErrMsg.c_str());
 		return;
 	}
 

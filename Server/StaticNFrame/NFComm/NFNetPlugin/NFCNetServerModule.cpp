@@ -93,7 +93,7 @@ uint32_t NFCNetServerModule::AddServer(const NF_SERVER_TYPES eServerType, uint32
 	{
 		if (mServerArray[eServerType] != nullptr)
 		{
-			NFLogError("the serverType:%s has existing! Add Server Failed!", GetServerName(eServerType).c_str());
+			NFLogError(NF_LOG_NET_PLUGIN, 0, "the serverType:%s has existing! Add Server Failed!", GetServerName(eServerType).c_str());
 			return 0;
 		}
 
@@ -110,7 +110,7 @@ uint32_t NFCNetServerModule::AddServer(const NF_SERVER_TYPES eServerType, uint32
 			return eServerType;
 		}
 
-		NFLogError("Add Server Failed!");
+		NFLogError(NF_LOG_NET_PLUGIN, 0, "Add Server Failed!");
 		NF_SAFE_DELETE(pServer);
 	}
 	return 0;
@@ -147,10 +147,10 @@ void NFCNetServerModule::CloseLinkId(uint32_t usLinkId)
 		}
 		else
 		{
-			NFLogError("CloseLinkId error, usLinkId:{} not exist!", usLinkId);
+			NFLogError(NF_LOG_NET_PLUGIN, 0, "CloseLinkId error, usLinkId:{} not exist!", usLinkId);
 		}
 	}
-	NFLogError("CloseLinkId error, usLinkId:{} not exist!", usLinkId);
+	NFLogError(NF_LOG_NET_PLUGIN, 0, "CloseLinkId error, usLinkId:{} not exist!", usLinkId);
 }
 
 void NFCNetServerModule::SendByServerID(uint32_t usLinkId, const uint32_t nMsgID, const std::string& strData, const uint64_t nPlayerID)
@@ -171,12 +171,12 @@ void NFCNetServerModule::SendByServerID(uint32_t usLinkId, const uint32_t nMsgID
 		}
 		else
 		{
-			NFLogError("SendByServerID error, usLinkId:{} not exist!", usLinkId);
+			NFLogError(NF_LOG_NET_PLUGIN, 0, "SendByServerID error, usLinkId:{} not exist!", usLinkId);
 		}
 	}
 	if (usLinkId != 0)
 	{
-		NFLogError("SendByServerID error, usLinkId:{} not exist!", usLinkId);
+		NFLogError(NF_LOG_NET_PLUGIN, 0, "SendByServerID error, usLinkId:{} not exist!", usLinkId);
 	}
 }
 

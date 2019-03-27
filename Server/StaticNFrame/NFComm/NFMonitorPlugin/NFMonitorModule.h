@@ -16,7 +16,7 @@
 /**
 * @brief 服务器监控模块
 */
-class NFCMonitorModule : public NFIMonitorModule, public NFTimerObj
+class NFCMonitorModule : public NFIMonitorModule, public NFTimerObj, public NFEventObj
 {
 public:
 	NFCMonitorModule(NFIPluginManager* p);
@@ -35,6 +35,13 @@ public:
 	* @return void
 	*/
 	virtual void OnTimer(uint32_t nTimerID);
+
+	/**
+	* @brief 处理事件
+	*
+	* @return void
+	*/
+	virtual void OnExecute(uint16_t nEventID, uint64_t nSrcID, uint8_t bySrcType, NFEventContext* pEventContext);
 private:
 	NFSystemInfo mSystemInfo;
 };

@@ -123,14 +123,14 @@ uint32_t NFCNetClientModule::AddWebServer(NF_SERVER_TYPES eServerType, const std
 	struct evhttp_uri* http_uri = evhttp_uri_parse(url.c_str());
 	if (http_uri == NULL)
 	{
-		NFLogError("evhttp_uri_parse err. url:{}", url);
+		NFLogError(NF_LOG_NET_PLUGIN, 0, "evhttp_uri_parse err. url:{}", url);
 		return 0;
 	}
 
 	const char*  scheme = evhttp_uri_get_scheme(http_uri);
 	if (scheme == NULL)
 	{
-		NFLogError("http_uri:{},scheme == NULL err. ", url);
+		NFLogError(NF_LOG_NET_PLUGIN, 0, "http_uri:{},scheme == NULL err. ", url);
 		return 0;
 	}
 
@@ -138,14 +138,14 @@ uint32_t NFCNetClientModule::AddWebServer(NF_SERVER_TYPES eServerType, const std
 
 	if (schemeStr != "ws" && schemeStr != "wss")
 	{
-		NFLogError("http_uri:{}, is not ws or wss err. ", url);
+		NFLogError(NF_LOG_NET_PLUGIN, 0, "http_uri:{}, is not ws or wss err. ", url);
 		return 0;
 	}
 
 	const char*  host = evhttp_uri_get_host(http_uri);
 	if (host == NULL)
 	{
-		NFLogError("http_uri:{},host == NULL err. ", url);
+		NFLogError(NF_LOG_NET_PLUGIN, 0, "http_uri:{},host == NULL err. ", url);
 		return 0;
 	}
 
@@ -167,7 +167,7 @@ uint32_t NFCNetClientModule::AddWebServer(NF_SERVER_TYPES eServerType, const std
 		uint32_t usId = GetFreeUnLinkId(eServerType);
 		if (usId == 0)
 		{
-			NFLogError("Add Connecting Server Failed! Ip:{}, Port:{}", hostStr, port);
+			NFLogError(NF_LOG_NET_PLUGIN, 0, "Add Connecting Server Failed! Ip:{}, Port:{}", hostStr, port);
 			return 0;
 		}
 
@@ -188,7 +188,7 @@ uint32_t NFCNetClientModule::AddWebServer(NF_SERVER_TYPES eServerType, const std
 		}
 		else
 		{
-			NFLogError("Add Connecting Server Failed! Ip:{}, Port:{}", hostStr, port);
+			NFLogError(NF_LOG_NET_PLUGIN, 0, "Add Connecting Server Failed! Ip:{}, Port:{}", hostStr, port);
 		}
 		NF_SAFE_DELETE(pClient);
 	}
@@ -202,7 +202,7 @@ uint32_t NFCNetClientModule::AddServer(NF_SERVER_TYPES eServerType, const std::s
 		uint32_t usId = GetFreeUnLinkId(eServerType);
 		if (usId == 0)
 		{
-			NFLogError("Add Connecting Server Failed! Ip:%s, Port:%d, than max connection:65535", strIp.c_str(), nPort);
+			NFLogError(NF_LOG_NET_PLUGIN, 0, "Add Connecting Server Failed! Ip:%s, Port:%d, than max connection:65535", strIp.c_str(), nPort);
 			return 0;
 		}
 
@@ -222,7 +222,7 @@ uint32_t NFCNetClientModule::AddServer(NF_SERVER_TYPES eServerType, const std::s
 		}
 		else
 		{
-			NFLogError("Add Connecting Server Failed! Ip:%s, Port:%d, than max connection:65535", strIp.c_str(), nPort);
+			NFLogError(NF_LOG_NET_PLUGIN, 0, "Add Connecting Server Failed! Ip:%s, Port:%d, than max connection:65535", strIp.c_str(), nPort);
 		}
 		NF_SAFE_DELETE(pClient);
 	}

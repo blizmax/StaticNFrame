@@ -316,13 +316,13 @@ void NFCTaskModule::OnMainThreadTick()
 				{
 					//error
 				}
-				NFLogError("task actor module error................");
+				NFLogError(NF_LOG_ACTOR_PLUGIN,0,"task actor module error................");
 			}
 		}
 
 		if (listTask.size() > 0)
 		{
-			NFLogDebug("handle main thread tick task num:{}, use time:{}", listTask.size(), NFGetTime() - start);
+			NFLogDebug(NF_LOG_ACTOR_PLUGIN, 0, "handle main thread tick task num:{}, use time:{}", listTask.size(), NFGetTime() - start);
 		}
 	}
 

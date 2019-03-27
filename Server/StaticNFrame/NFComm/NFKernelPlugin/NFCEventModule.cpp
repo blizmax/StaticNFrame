@@ -9,7 +9,18 @@
 
 #include "NFCEventModule.h"
 
-#include "NFComm/NFPluginModule/NFIKernelModule.h"
+#include "NFComm/NFPluginModule/NFEventMgr.h"
+
+NFCEventModule::NFCEventModule(NFIPluginManager* p)
+{
+	pPluginManager = p;
+	NFEventMgr::Instance()->Init(this);
+}
+
+NFCEventModule::~NFCEventModule()
+{
+
+}
 
 bool NFCEventModule::Init()
 {

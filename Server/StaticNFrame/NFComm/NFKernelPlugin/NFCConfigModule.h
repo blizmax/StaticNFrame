@@ -32,8 +32,10 @@ public:
 	virtual NFServerConfig* GetServerConfig(uint32_t serverId);
 	virtual std::vector<NFServerConfig*> GetServerConfigFromServerType(uint32_t serverType);
 	virtual uint32_t GetLogLevel() const { return mLogLevel; }
+	virtual uint32_t GetLogFlushLevel() const { return mLogFlushLevel; }
 protected:
 	std::unordered_map<std::string, NFPluginConfig*> mPluginConfig; //pluginName--key
 	std::unordered_map<int, NFServerConfig*> mServerConfig; //serverid--key
 	uint32_t mLogLevel;
+	uint32_t mLogFlushLevel;
 };

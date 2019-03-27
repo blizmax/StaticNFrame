@@ -20,7 +20,7 @@ void listener_cb(struct evconnlistener* listener, evutil_socket_t fd, struct soc
 	bool ret = pServer->AddNetObject(fd, sa);
 	if (ret == false)
 	{
-		NFLogError("pServer AddNetObject Failed!");
+		NFLogError(NF_LOG_NET_PLUGIN, 0, "pServer AddNetObject Failed!");
 		return;
 	}
 }
@@ -58,28 +58,28 @@ bool NFServer::AddNetObject(SOCKET fd, sockaddr* sa)
 {
 	if (GetNetObjectCount() >= GetMaxConnectNum())
 	{
-		NFLogError("connected count >= mnMaxConnect:%d! Can't add connect", GetMaxConnectNum());
+		NFLogError(NF_LOG_NET_PLUGIN, 0, "connected count >= mnMaxConnect:%d! Can't add connect", GetMaxConnectNum());
 		return false;
 	}
 
 	uint32_t usLinkId = GetFreeUnLinkId();
 	if (usLinkId == 0)
 	{
-		NFLogError("connected count >= mnMaxConnect:%d! Can't add connect", GetMaxConnectNum());
+		NFLogError(NF_LOG_NET_PLUGIN, 0, "connected count >= mnMaxConnect:%d! Can't add connect", GetMaxConnectNum());
 		return false;
 	}
 
 	uint32_t index = GetServerIndexFromUnlinkId(usLinkId);
 	if (index >= mNetObjectArray.size() || mNetObjectArray[index] != nullptr)
 	{
-		NFLogError("GetServerIndexFromUnLinkId Failed!");
+		NFLogError(NF_LOG_NET_PLUGIN, 0, "GetServerIndexFromUnLinkId Failed!");
 		return false;
 	}
 
 	struct bufferevent* bev = bufferevent_socket_new(mBase, fd, BEV_OPT_CLOSE_ON_FREE);
 	if (!bev)
 	{
-		NFLogError("Error constructing bufferevent!");
+		NFLogError(NF_LOG_NET_PLUGIN, 0, "Error constructing bufferevent!");
 		return false;
 	}
 
@@ -114,7 +114,7 @@ void NFServer::CloseLinkId(uint32_t usLinkId)
 
 	if (serverType != mServerType)
 	{
-		NFLogError("serverType != mServerType, this usLinkId:%s is not of the server:%s", usLinkId, GetServerName(mServerType).c_str());
+		NFLogError(NF_LOG_NET_PLUGIN, 0, "serverType != mServerType, this usLinkId:%s is not of the server:%s", usLinkId, GetServerName(mServerType).c_str());
 		return;
 	}
 
@@ -128,7 +128,7 @@ void NFServer::CloseLinkId(uint32_t usLinkId)
 		}
 		else
 		{
-			NFLogError("the usLinkId:{} is nullptr", usLinkId);
+			NFLogError(NF_LOG_NET_PLUGIN, 0, "the usLinkId:{} is nullptr", usLinkId);
 		}
 	}
 	return;
@@ -141,7 +141,7 @@ bool NFServer::Send(uint32_t usLinkId, const void* pData, uint32_t unSize)
 
 	if (serverType != mServerType)
 	{
-		NFLogError("serverType != mServerType, this usLinkId:%s is not of the server:%s", usLinkId, GetServerName(mServerType).c_str());
+		NFLogError(NF_LOG_NET_PLUGIN, 0, "serverType != mServerType, this usLinkId:%s is not of the server:%s", usLinkId, GetServerName(mServerType).c_str());
 		return false;
 	}
 
@@ -154,7 +154,7 @@ bool NFServer::Send(uint32_t usLinkId, const void* pData, uint32_t unSize)
 		}
 		else
 		{
-			NFLogError("the usLinkId:{} is nullptr", usLinkId);
+			NFLogError(NF_LOG_NET_PLUGIN, 0, "the usLinkId:{} is nullptr", usLinkId);
 		}
 	}
 	return false;
@@ -167,7 +167,7 @@ std::string NFServer::GetLinkIp(uint32_t usLinkId)
 
 	if (serverType != mServerType)
 	{
-		NFLogError("serverType != mServerType, this usLinkId:%s is not of the server:%s", usLinkId, GetServerName(mServerType).c_str());
+		NFLogError(NF_LOG_NET_PLUGIN, 0, "serverType != mServerType, this usLinkId:%s is not of the server:%s", usLinkId, GetServerName(mServerType).c_str());
 		return std::string();
 	}
 
@@ -180,7 +180,7 @@ std::string NFServer::GetLinkIp(uint32_t usLinkId)
 		}
 		else
 		{
-			NFLogError("the usLinkId:%d is nullptr", usLinkId);
+			NFLogError(NF_LOG_NET_PLUGIN, 0, "the usLinkId:%d is nullptr", usLinkId);
 		}
 	}
 	return std::string();
@@ -242,7 +242,7 @@ bool NFServer::Init()
 
 	if (!mBase)
 	{
-		NFLogError("Could not initialize libevent!\n");
+		NFLogError(NF_LOG_NET_PLUGIN, 0, "Could not initialize libevent!\n");
 		return false;
 	}
 
@@ -260,7 +260,7 @@ bool NFServer::Init()
 
 	if (!mListener)
 	{
-		NFLogError("Can not create a listener for port:{}", mFlag.nPort);
+		NFLogError(NF_LOG_NET_PLUGIN, 0, "Can not create a listener for port:{}", mFlag.nPort);
 		return false;
 	}
 

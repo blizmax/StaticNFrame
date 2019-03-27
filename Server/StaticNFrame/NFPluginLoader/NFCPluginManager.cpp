@@ -108,7 +108,7 @@ bool NFCPluginManager::Awake()
 
 inline bool NFCPluginManager::Init()
 {
-	NFLogInfo("NFPluginLoader Init................");
+	NFLogInfo(NF_LOG_PLUGIN_MANAGER, 0, "NFPluginLoader Init................");
 	for (auto iter = mPluginInstanceList.begin(); iter != mPluginInstanceList.end(); ++iter)
 	{
 		(*iter)->Init();
@@ -235,11 +235,11 @@ bool NFCPluginManager::Execute()
 	{
 		if (cost >= 80 && cost <= 200)
 		{
-			NFLogWarning("frame timeout:{}", cost);
+			NFLogWarning(NF_LOG_PLUGIN_MANAGER, 0, "frame timeout:{}", cost);
 		}
 		else if (cost > 200)
 		{
-			NFLogError("frame timeout:{}, something wrong", cost);
+			NFLogError(NF_LOG_PLUGIN_MANAGER, 0, "frame timeout:{}, something wrong", cost);
 		}
 		std::this_thread::sleep_for(std::chrono::milliseconds(1));
 	}
@@ -391,7 +391,7 @@ NFIModule* NFCPluginManager::FindModule(const std::string& strModuleName)
 
 bool NFCPluginManager::AfterInit()
 {
-	NFLogInfo("NFPluginLoader AfterInit................");
+	NFLogInfo(NF_LOG_PLUGIN_MANAGER, 0, "NFPluginLoader AfterInit................");
 	for (auto iter = mPluginInstanceList.begin(); iter != mPluginInstanceList.end(); ++iter)
 	{
 		(*iter)->AfterInit();
@@ -402,7 +402,7 @@ bool NFCPluginManager::AfterInit()
 
 bool NFCPluginManager::CheckConfig()
 {
-	NFLogInfo("NFPluginLoader CheckConfig................");
+	NFLogInfo(NF_LOG_PLUGIN_MANAGER, 0, "NFPluginLoader CheckConfig................");
 	
 	for (PluginInstanceMap::iterator itCheckInstance = mPluginInstanceMap.begin(); itCheckInstance != mPluginInstanceMap.end(); ++itCheckInstance)
 	{
@@ -420,7 +420,7 @@ bool NFCPluginManager::CheckConfig()
 
 bool NFCPluginManager::ReadyExecute()
 {
-	NFLogInfo("NFPluginLoader ReadyExecute................");
+	NFLogInfo(NF_LOG_PLUGIN_MANAGER, 0, "NFPluginLoader ReadyExecute................");
 	
 	for (PluginInstanceMap::iterator itCheckInstance = mPluginInstanceMap.begin(); itCheckInstance != mPluginInstanceMap.end(); ++itCheckInstance)
 	{
@@ -436,7 +436,7 @@ bool NFCPluginManager::ReadyExecute()
 
 bool NFCPluginManager::BeforeShut()
 {
-	NFLogInfo("NFPluginLoader BeforeShut................");
+	NFLogInfo(NF_LOG_PLUGIN_MANAGER, 0, "NFPluginLoader BeforeShut................");
 	
 	for (PluginInstanceMap::iterator itBeforeInstance = mPluginInstanceMap.begin(); itBeforeInstance != mPluginInstanceMap.end(); ++itBeforeInstance)
 	{
@@ -453,7 +453,7 @@ bool NFCPluginManager::BeforeShut()
 
 bool NFCPluginManager::Shut()
 {
-	NFLogInfo("NFPluginLoader Shut................");
+	NFLogInfo(NF_LOG_PLUGIN_MANAGER, 0, "NFPluginLoader Shut................");
 	
 	for (PluginInstanceMap::iterator itInstance = mPluginInstanceMap.begin(); itInstance != mPluginInstanceMap.end(); ++itInstance)
 	{
@@ -470,7 +470,7 @@ bool NFCPluginManager::Shut()
 
 bool NFCPluginManager::Finalize()
 {
-	NFLogInfo("NFPluginLoader Finalize................");
+	NFLogInfo(NF_LOG_PLUGIN_MANAGER, 0, "NFPluginLoader Finalize................");
 	
 	for (PluginInstanceMap::iterator itInstance = mPluginInstanceMap.begin(); itInstance != mPluginInstanceMap.end(); ++itInstance)
 	{
@@ -706,5 +706,5 @@ void NFCPluginManager::ClearProfiler()
 void NFCPluginManager::PrintProfiler()
 {
 	std::string str = m_profilerMgr.OutputTopProfilerTimer();
-	NFLogDebug("{}", str);
+	NFLogDebug(NF_LOG_PLUGIN_MANAGER, 0, "{}", str);
 }

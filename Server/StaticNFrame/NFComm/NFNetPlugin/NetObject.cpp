@@ -297,18 +297,18 @@ int NetObject::Dismantle()
 				}
 				else if (opcode == eWebSocketFrameType::CLOSE_FRAME)
 				{
-					NFLogError("recv close frame, close connection!");
+					NFLogError(NF_LOG_NET_PLUGIN, 0, "recv close frame, close connection!");
 
 					m_buffer.Consume(allLen);
 					return 0;
 				}
 				else if (opcode == eWebSocketFrameType::PONG_FRAME)
 				{
-					NFLogError("recv pong frame!");
+					NFLogError(NF_LOG_NET_PLUGIN, 0, "recv pong frame!");
 				}
 				else if (opcode == eWebSocketFrameType::PING_FRAME)
 				{
-					NFLogError("recv ping frame!");
+					NFLogError(NF_LOG_NET_PLUGIN, 0, "recv ping frame!");
 				}
 
 				if (NFStringUtility::IsUTF8String(mParseString))
@@ -389,17 +389,17 @@ int NetObject::Dismantle()
 				}
 				else if (opcode == eWebSocketFrameType::CLOSE_FRAME)
 				{
-					NFLogError("recv close frame, close connection!");
+					NFLogError(NF_LOG_NET_PLUGIN, 0, "recv close frame, close connection!");
 					m_buffer.Consume(allLen);
 					return 0;
 				}
 				else if (opcode == eWebSocketFrameType::PONG_FRAME)
 				{
-					NFLogError("recv pong frame!");
+					NFLogError(NF_LOG_NET_PLUGIN, 0, "recv pong frame!");
 				}
 				else if (opcode == eWebSocketFrameType::PING_FRAME)
 				{
-					NFLogError("recv ping frame!");
+					NFLogError(NF_LOG_NET_PLUGIN, 0, "recv ping frame!");
 				}
 
 				if (NFStringUtility::IsUTF8String(mParseString))
@@ -667,7 +667,7 @@ bool NetObject::Send(const void* pData, uint32_t unSize)
 		int nRet = bufferevent_write(m_pBev, pData, unSize);
 		if (nRet < 0)
 		{
-			NFLogError("NetError | send msg error !");
+			NFLogError(NF_LOG_NET_PLUGIN, 0, "NetError | send msg error !");
 			return false;
 		}
 		return true;

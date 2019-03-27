@@ -68,7 +68,7 @@ bool NFCHttpServer::initSSL(bool force_enable) {
 	/* 创建SSL上下文 */
 	SSL_CTX *ctx = SSL_CTX_new(SSLv23_server_method());
 	if (ctx == NULL) {
-		NFLogError("SSL_CTX_new failed");
+		NFLogError(NF_LOG_NET_PLUGIN, 0, "SSL_CTX_new failed");
 		return false;
 	}
 	/* 设置SSL选项 https://linux.die.net/man/3/ssl_ctx_set_options */
@@ -82,33 +82,33 @@ bool NFCHttpServer::initSSL(bool force_enable) {
 	/* 创建椭圆曲线加密key */
 	EC_KEY *ecdh = EC_KEY_new_by_curve_name(NID_X9_62_prime256v1);
 	if (ecdh == NULL) {
-		NFLogError("EC_KEY_new_by_curve_name failed");
+		NFLogError(NF_LOG_NET_PLUGIN, 0, "EC_KEY_new_by_curve_name failed");
 		ERR_print_errors_fp(stderr);
 		return false;
 	}
 	/* 设置ECDH临时公钥 */
 	if (1 != SSL_CTX_set_tmp_ecdh(ctx, ecdh)) {
-		NFLogError("SSL_CTX_set_tmp_ecdh failed");
+		NFLogError(NF_LOG_NET_PLUGIN, 0, "SSL_CTX_set_tmp_ecdh failed");
 		return false;
 	}
 	/* 加载证书链文件(文件编码必须为PEM格式，使用Base64编码) */
 	/* 此处也可使用SSL_CTX_use_certificate_file仅加载公钥证书 */
 	if (1 != SSL_CTX_use_certificate_chain_file(
 		ctx, certificate_chain_file_.c_str())) {
-		NFLogError("Load certificate chain file({})failed", certificate_chain_file_);
+		NFLogError(NF_LOG_NET_PLUGIN, 0, "Load certificate chain file({})failed", certificate_chain_file_);
 		ERR_print_errors_fp(stderr);
 		return false;
 	}
 	/* 加载私钥文件 */
 	if (1 != SSL_CTX_use_PrivateKey_file(
 		ctx, private_key_file_.c_str(), SSL_FILETYPE_PEM)) {
-		NFLogError("Load private key file({})failed", private_key_file_);
+		NFLogError(NF_LOG_NET_PLUGIN, 0, "Load private key file({})failed", private_key_file_);
 		ERR_print_errors_fp(stderr);
 		return false;
 	}
 	/* 校验私钥与证书是否匹配 */
 	if (1 != SSL_CTX_check_private_key(ctx)) {
-		NFLogError("EC_KEY_new_by_curve_name failed");
+		NFLogError(NF_LOG_NET_PLUGIN, 0, "EC_KEY_new_by_curve_name failed");
 		ERR_print_errors_fp(stderr);
 		return false;
 	}
@@ -192,7 +192,7 @@ int NFCHttpServer::InitServer(std::vector<uint32_t> nPorts)
 		int ret = InitServerImpl(nPorts[i]);
 		if (ret != 0)
 		{
-			NFLogError("Listen Port:{} Failed!", nPorts[i]);
+			NFLogError(NF_LOG_NET_PLUGIN, 0, "Listen Port:{} Failed!", nPorts[i]);
 			return 1;
 		}
 	}
@@ -219,7 +219,7 @@ int NFCHttpServer::InitServer(const std::string& portStr)
 		int ret = InitServerImpl(port);
 		if (ret != 0)
 		{
-			NFLogError("Listen Port:{} from Port String:{} Failed!", port, portStr);
+			NFLogError(NF_LOG_NET_PLUGIN, 0, "Listen Port:{} from Port String:{} Failed!", port, portStr);
 			return 1;
 		}
 	}
@@ -247,7 +247,7 @@ bool NFCHttpServer::Init()
 	mEventBase = event_base_new();
 	if (!mEventBase)
 	{
-		NFLogError("create event_base fail");
+		NFLogError(NF_LOG_NET_PLUGIN, 0, "create event_base fail");
 		return false;
 	}
 
@@ -280,7 +280,7 @@ int NFCHttpServer::InitServerImpl(uint32_t port)
 	http = evhttp_new(mEventBase);
 	if (!http)
 	{
-		NFLogError("create evhttp fail");
+		NFLogError(NF_LOG_NET_PLUGIN, 0, "create evhttp fail");
 		return 1;
 	}
 
@@ -322,7 +322,7 @@ int NFCHttpServer::InitServerImpl(uint32_t port)
 	handle = evhttp_bind_socket_with_handle(http, "0.0.0.0", mPort);
 	if (!handle)
 	{
-		NFLogError("http server bind port :{} fail!", mPort);
+		NFLogError(NF_LOG_NET_PLUGIN, 0, "http server bind port :{} fail!", mPort);
 		return 1;
 	}
 
@@ -335,20 +335,20 @@ void NFCHttpServer::listener_cb(struct evhttp_request* req, void* arg)
 {
 	if (req == NULL)
 	{
-		NFLogError("req == NULL");
+		NFLogError(NF_LOG_NET_PLUGIN, 0, "req == NULL");
 		return;
 	}
 
 	if (req->evcon == NULL)
 	{
-		NFLogError("req->evcon == NULL");
+		NFLogError(NF_LOG_NET_PLUGIN, 0, "req->evcon == NULL");
 		return;
 	}
 
 	NFCHttpServer* pNet = (NFCHttpServer*)arg;
 	if (pNet == NULL)
 	{
-		NFLogError("pNet ==NULL");
+		NFLogError(NF_LOG_NET_PLUGIN, 0, "pNet ==NULL");
 		evhttp_send_error(req, HTTP_BADREQUEST, 0);
 		return;
 	}
@@ -356,7 +356,7 @@ void NFCHttpServer::listener_cb(struct evhttp_request* req, void* arg)
 	NFHttpHandle* pRequest = pNet->AllocHttpRequest();
 	if (pRequest == nullptr)
 	{
-		NFLogError("pRequest ==NULL");
+		NFLogError(NF_LOG_NET_PLUGIN, 0, "pRequest ==NULL");
 		evhttp_send_error(req, HTTP_BADREQUEST, 0);
 		return;
 	}
@@ -370,7 +370,7 @@ void NFCHttpServer::listener_cb(struct evhttp_request* req, void* arg)
 	if (uri == NULL)
 	{
 		pNet->mListHttpRequestPool.push_back(pRequest);
-		NFLogError("uri ==NULL");
+		NFLogError(NF_LOG_NET_PLUGIN, 0, "uri ==NULL");
 		evhttp_send_error(req, HTTP_BADREQUEST, 0);
 		return;
 	}
@@ -380,7 +380,7 @@ void NFCHttpServer::listener_cb(struct evhttp_request* req, void* arg)
 	const char* hostname = evhttp_request_get_host(req);
 	if (hostname == NULL)
 	{
-		NFLogError("hostname ==NULL");
+		NFLogError(NF_LOG_NET_PLUGIN, 0, "hostname ==NULL");
 	}
 	else
 	{
@@ -394,7 +394,7 @@ void NFCHttpServer::listener_cb(struct evhttp_request* req, void* arg)
 		if (decoded == NULL)
 		{
 			pNet->mListHttpRequestPool.push_back(pRequest);
-			NFLogError("bad request ");
+			NFLogError(NF_LOG_NET_PLUGIN, 0, "bad request ");
 			evhttp_send_error(req, HTTP_BADREQUEST, 0);
 			return;
 		}
@@ -407,7 +407,7 @@ void NFCHttpServer::listener_cb(struct evhttp_request* req, void* arg)
 		}
 		else
 		{
-			NFLogError("urlPath ==NULL");
+			NFLogError(NF_LOG_NET_PLUGIN, 0, "urlPath ==NULL");
 		}
 		evhttp_uri_free(decoded);
 	}
@@ -420,7 +420,7 @@ void NFCHttpServer::listener_cb(struct evhttp_request* req, void* arg)
 		}
 		else
 		{
-			NFLogError("urlPath ==NULL");
+			NFLogError(NF_LOG_NET_PLUGIN, 0, "urlPath ==NULL");
 		}
 	}
 	
@@ -528,7 +528,7 @@ bool NFCHttpServer::ResponseMsg(uint64_t requestId, const std::string& strMsg, N
 	auto it = mHttpRequestMap.find(requestId);
 	if (it == mHttpRequestMap.end())
 	{
-		NFLogError("Response Msg Timeout........ requestId:{}, strMsg:{}", requestId, strMsg);
+		NFLogError(NF_LOG_NET_PLUGIN, 0, "Response Msg Timeout........ requestId:{}, strMsg:{}", requestId, strMsg);
 		return false;
 	}
 

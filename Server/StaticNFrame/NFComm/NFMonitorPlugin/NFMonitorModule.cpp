@@ -54,3 +54,13 @@ void NFCMonitorModule::OnTimer(uint32_t nTimerID)
 		mSystemInfo.CountSystemInfo();
 	}
 }
+
+/**
+* @brief 处理事件
+*
+* @return void
+*/
+void NFCMonitorModule::OnExecute(uint16_t nEventID, uint64_t nSrcID, uint8_t bySrcType, NFEventContext* pEventContext)
+{
+
+}

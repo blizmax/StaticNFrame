@@ -15,6 +15,8 @@
 #include "NFComm/NFPluginModule/NFConfigMgr.h"
 #include "my_date_and_hour_file_sink.h"
 #include "NFComm/NFCore/NFCommon.h"
+#include "NFComm/NFPluginModule/NFLogMgr.h"
+#include "NFComm/NFPluginModule/NFConfigMgr.h"
 
 #include <iostream>
 
@@ -24,12 +26,15 @@ NFCLogModule::NFCLogModule(NFIPluginManager* p)
 	//Create spdlog
 	try
 	{
-		CreateLogger();
+		CreateDefaultLogger();
 	}
 	catch (std::system_error& error)
 	{
 		std::cout << "Create logger failed, error = " << error.what() << std::endl;
+		assert(false);
 	}
+
+	NFLogMgr::Instance()->Init(this);
 }
 
 NFCLogModule::~NFCLogModule()
@@ -37,8 +42,10 @@ NFCLogModule::~NFCLogModule()
 	spdlog::drop_all();
 }
 
-bool NFCLogModule::Init()
+bool NFCLogModule::Awake()
 {
+	SetDefaultLevel((NF_LOG_LEVEL)NFConfigMgr::Instance()->GetLogLevel());
+	SetDefaultFlush((NF_LOG_LEVEL)NFConfigMgr::Instance()->GetLogFlushLevel());
 	return true;
 }
 
@@ -47,31 +54,31 @@ bool NFCLogModule::Shut()
 	return true;
 }
 
-void NFCLogModule::LogNormal(NF_LOG_LEVEL log_level, const std::string& log)
+void NFCLogModule::LogDefault(NF_LOG_LEVEL log_level, uint32_t logId, uint64_t guid, const std::string& log)
 {
-	mdefaultLogger->log((spdlog::level::level_enum)log_level, log.c_str());
+	m_defaultLogger->log((spdlog::level::level_enum)log_level, log.c_str());
 }
 
-void NFCLogModule::LogNormal(uint32_t logId, NF_LOG_LEVEL log_level, const std::string& log)
+void NFCLogModule::LogOthers(uint32_t logNameId, NF_LOG_LEVEL log_level, const std::string& log)
 {
-	auto iter = m_loggerMap.find(logId);
+	auto iter = m_loggerMap.find(logNameId);
 	if (iter != m_loggerMap.end())
 	{
 		iter->second->log((spdlog::level::level_enum)log_level, log.c_str());
 	}
 }
 
-void NFCLogModule::SetLogLevel(NF_LOG_LEVEL log_level)
+void NFCLogModule::SetDefaultLevel(NF_LOG_LEVEL log_level)
 {
-	mdefaultLogger->set_level((spdlog::level::level_enum)(log_level));
+	m_defaultLogger->set_level((spdlog::level::level_enum)(log_level));
 }
 
-void NFCLogModule::SetFlushOn(NF_LOG_LEVEL log_level)
+void NFCLogModule::SetDefaultFlush(NF_LOG_LEVEL log_level)
 {
-	mdefaultLogger->flush_on((spdlog::level::level_enum)(log_level));
+	m_defaultLogger->flush_on((spdlog::level::level_enum)(log_level));
 }
 
-void NFCLogModule::CreateLogger()
+void NFCLogModule::CreateDefaultLogger()
 {
 	std::vector<spdlog::sink_ptr> sinks_vec;
 	std::string log_name = NF_FORMAT("{}{}{}{}{}.log", pPluginManager->GetLogPath(), spdlog::details::os::folder_sep, pPluginManager->GetAppName()+lexical_cast<std::string>(pPluginManager->GetAppID()), spdlog::details::os::folder_sep, pPluginManager->GetAppName());
@@ -90,23 +97,23 @@ void NFCLogModule::CreateLogger()
 
 	sinks_vec.push_back(date_and_hour_sink);
 #ifdef NF_DEBUG_MODE
-	mdefaultLogger = std::make_shared<spdlog::logger>(pPluginManager->GetAppName(), std::begin(sinks_vec), std::end(sinks_vec));
+	m_defaultLogger = std::make_shared<spdlog::logger>(pPluginManager->GetAppName(), std::begin(sinks_vec), std::end(sinks_vec));
 #else
-	mdefaultLogger = std::make_shared<spdlog::async_logger>(pPluginManager->GetAppName(), std::begin(sinks_vec), std::end(sinks_vec), 1024,
+	m_defaultLogger = std::make_shared<spdlog::async_logger>(pPluginManager->GetAppName(), std::begin(sinks_vec), std::end(sinks_vec), 1024,
 		spdlog::async_overflow_policy::block_retry, nullptr, std::chrono::milliseconds(1000), nullptr);
 #endif
 
-	mdefaultLogger->set_level(spdlog::level::level_enum::trace);
+	m_defaultLogger->set_level(spdlog::level::level_enum::trace);
 
-	mdefaultLogger->set_pattern("%^[%l | %Y-%m-%d %H:%M:%S.%e] | %v%$");
+	m_defaultLogger->set_pattern("%^[%l | %Y-%m-%d %H:%M:%S.%e] | %v%$");
 
-	mdefaultLogger->flush_on(spdlog::level::debug);
+	m_defaultLogger->flush_on(spdlog::level::debug);
 
-	spdlog::register_logger(mdefaultLogger);
+	spdlog::register_logger(m_defaultLogger);
 }
 
 /*创建同步LOG系统*/
-void NFCLogModule::CreateLogger(uint32_t logId, const std::string& logName, bool async)
+void NFCLogModule::CreateOthersLogger(uint32_t logNameId, const std::string& logName, bool async)
 {
 	std::vector<spdlog::sink_ptr> sinks_vec;
 	std::string log_name = NF_FORMAT("{}{}{}{}{}.log", pPluginManager->GetLogPath(), spdlog::details::os::folder_sep, pPluginManager->GetAppName() + lexical_cast<std::string>(pPluginManager->GetAppID()) + "_" + logName, spdlog::details::os::folder_sep, logName);
@@ -143,6 +150,6 @@ void NFCLogModule::CreateLogger(uint32_t logId, const std::string& logName, bool
 	pLogger->flush_on(spdlog::level::debug);
 
 	spdlog::register_logger(pLogger);
-	m_loggerMap.emplace(logId, pLogger);
+	m_loggerMap.emplace(logNameId, pLogger);
 }
 

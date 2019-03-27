@@ -188,8 +188,8 @@ bool NFCLuaScriptModule::Register()
 		.endClass();
 
 	LuaIntf::LuaBinding(l).beginClass<NFILogModule>("NFILogModule")
-		.addFunction("SetLogLevel", &NFILogModule::SetLogLevel)
-		.addFunction("SetFlushOn", &NFILogModule::SetFlushOn)
+		.addFunction("SetDefaultLevel", &NFILogModule::SetDefaultLevel)
+		.addFunction("SetDefaultFlush", &NFILogModule::SetDefaultFlush)
 		.addFunction("LuaDebug", &NFILogModule::LuaDebug)
 		.addFunction("LuaInfo", &NFILogModule::LuaInfo)
 		.addFunction("LuaWarn", &NFILogModule::LuaWarn)

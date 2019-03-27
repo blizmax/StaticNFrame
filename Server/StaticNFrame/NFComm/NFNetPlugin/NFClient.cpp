@@ -31,7 +31,7 @@ NFClient::NFClient(uint32_t nId, const NFClientFlag& flag) : m_pMainBase(nullptr
 	m_pMainBase = event_base_new();
 	if (m_pMainBase == nullptr)
 	{
-		NFLogError("NetError | error: client event_base_new failed!");
+		NFLogError(NF_LOG_NET_PLUGIN, 0, "NetError | error: client event_base_new failed!");
 		assert(false);
 	}
 }
@@ -53,7 +53,7 @@ bool NFClient::Init()
 {
 	if (!Connect())
 	{
-		NFLogError("NetError | error: connected failed!");
+		NFLogError(NF_LOG_NET_PLUGIN, 0, "NetError | error: connected failed!");
 		return false;
 	}
 	return true;
@@ -140,7 +140,7 @@ bool NFClient::Connect()
 
 	if (bufferevent_socket_connect(pBev, reinterpret_cast<struct sockaddr*>(&sin), sizeof(sin)) < 0)
 	{
-		NFLogError("NetError | connect failed! IP: {}, port:{}", m_flag.strIP,m_flag.nPort);
+		NFLogError(NF_LOG_NET_PLUGIN, 0, "NetError | connect failed! IP: {}, port:{}", m_flag.strIP,m_flag.nPort);
 		return false;
 	}
 

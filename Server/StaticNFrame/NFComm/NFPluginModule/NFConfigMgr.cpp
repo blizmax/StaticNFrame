@@ -57,4 +57,13 @@ uint32_t NFConfigMgr::GetLogLevel() const
 	return 0;
 }
 
+uint32_t NFConfigMgr::GetLogFlushLevel() const
+{
+	if (m_pConfigModule)
+	{
+		return m_pConfigModule->GetLogFlushLevel();
+	}
+	return 0;
+}
+
 

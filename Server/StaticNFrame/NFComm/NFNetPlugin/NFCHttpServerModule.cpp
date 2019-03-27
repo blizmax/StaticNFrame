@@ -91,7 +91,7 @@ int NFCHttpServerModule::InitServer(NF_SERVER_TYPES serverType, const std::strin
 	{
 		if (mServerArray[serverType] != nullptr)
 		{
-			NFLogError("the serverType:{} has existing! Add Server Failed!", GetServerName(serverType));
+			NFLogError(NF_LOG_NET_PLUGIN, 0, "the serverType:{} has existing! Add Server Failed!", GetServerName(serverType));
 			return 0;
 		}
 
@@ -103,7 +103,7 @@ int NFCHttpServerModule::InitServer(NF_SERVER_TYPES serverType, const std::strin
 			return serverType;
 		}
 
-		NFLogError("Http Server Listen Port Failed, serverType:{}, port:{}", GetServerName(serverType), portStr);
+		NFLogError(NF_LOG_NET_PLUGIN, 0, "Http Server Listen Port Failed, serverType:{}, port:{}", GetServerName(serverType), portStr);
 		NF_SAFE_DELETE(pHttpServer);
 		return 0;
 	}
@@ -116,7 +116,7 @@ int NFCHttpServerModule::InitServer(NF_SERVER_TYPES serverType, std::vector<uint
 	{
 		if (mServerArray[serverType] != nullptr)
 		{
-			NFLogError("the serverType:{} has existing! Add Server Failed!", GetServerName(serverType));
+			NFLogError(NF_LOG_NET_PLUGIN, 0, "the serverType:{} has existing! Add Server Failed!", GetServerName(serverType));
 			return 0;
 		}
 
@@ -128,7 +128,7 @@ int NFCHttpServerModule::InitServer(NF_SERVER_TYPES serverType, std::vector<uint
 			return serverType;
 		}
 
-		NFLogError("Http Server Listen Port Failed, serverType:{}, port:{}", GetServerName(serverType), NFCommon::tostr(nPorts));
+		NFLogError(NF_LOG_NET_PLUGIN, 0, "Http Server Listen Port Failed, serverType:{}, port:{}", GetServerName(serverType), NFCommon::tostr(nPorts));
 		NF_SAFE_DELETE(pHttpServer);
 		return 0;
 	}
@@ -141,7 +141,7 @@ int NFCHttpServerModule::InitServer(NF_SERVER_TYPES serverType, uint32_t nPort)
 	{
 		if (mServerArray[serverType] != nullptr)
 		{
-			NFLogError("the serverType:{} has existing! Add Server Failed!", GetServerName(serverType));
+			NFLogError(NF_LOG_NET_PLUGIN, 0, "the serverType:{} has existing! Add Server Failed!", GetServerName(serverType));
 			return 0;
 		}
 
@@ -153,7 +153,7 @@ int NFCHttpServerModule::InitServer(NF_SERVER_TYPES serverType, uint32_t nPort)
 			return serverType;
 		}
 
-		NFLogError("Http Server Listen Port Failed, serverType:{}, port:{}", GetServerName(serverType), nPort);
+		NFLogError(NF_LOG_NET_PLUGIN, 0, "Http Server Listen Port Failed, serverType:{}, port:{}", GetServerName(serverType), nPort);
 		NF_SAFE_DELETE(pHttpServer);
 		return 0;
 	}

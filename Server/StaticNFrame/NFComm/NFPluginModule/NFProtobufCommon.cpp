@@ -20,7 +20,7 @@ bool NFProtobufCommon::MessageToJsonString(const google::protobuf::Message& msg,
 	google::protobuf::util::Status status = google::protobuf::util::MessageToJsonString(msg, &json, options);
 	if (!status.ok())
 	{
-		NFLogError("MessageToJsonString Error | {}", status.error_message().ToString());
+		NFLogError(NF_LOG_SYSTEMLOG, 0, "MessageToJsonString Error | {}", status.error_message().ToString());
 	}
 	return status.ok();
 }
@@ -32,7 +32,7 @@ bool NFProtobufCommon::JsonStringToMessage(const string& json, google::protobuf:
 	google::protobuf::util::Status status = google::protobuf::util::JsonStringToMessage(json, &msg, options);
 	if (!status.ok())
 	{
-		NFLogError("JsonStringToMessage Error | {}", status.error_message().ToString());
+		NFLogError(NF_LOG_SYSTEMLOG, 0, "JsonStringToMessage Error | {}", status.error_message().ToString());
 	}
 	return status.ok();
 }
