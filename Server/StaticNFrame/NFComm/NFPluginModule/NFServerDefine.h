@@ -124,3 +124,30 @@ public:
 	LUA_SEND_MSG_FUNCTION GetSendMsg() { return sendMsgFunc; }
 };
 
+/**
+* @brief log打印配置
+*
+* @param  mLogId log配置ID
+* @param  mDisplay 是否打印这个LOG
+* @param  mLevel 输出等级
+* @param  mLogName 显示名字
+* @param  mGuid 0表示打印所有玩家LOG，玩家ID表示只打印这个玩家的LOG
+*/
+class LogInfoConfig
+{
+public:
+	LogInfoConfig()
+	{
+		mLogId = 0;
+		mDisplay = false;
+		mLevel = 0;
+		mGuid = 0;
+	}
+
+	uint32_t mLogId;
+	bool mDisplay;
+	uint32_t mLevel;
+	std::string mLogName;
+	uint64_t mGuid;
+};
+

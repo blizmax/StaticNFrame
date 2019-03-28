@@ -95,10 +95,6 @@ void NFCGameLogicModule::OnHandleAccountDisConnect(const uint32_t unLinkId, cons
 
 		m_onlineNum--;
 
-		pInfo->SetSendMsg([pInfo, this](const std::string& msg) {
-			NFLogError("account disconnect, can't send msg:{}", msg);
-		});
-
 		m_pServerNetEventModule->OnAccountNetEvent(eAccountEventType_DISCONNECTED, NF_ST_GAME, unLinkId, pInfo);
 	}
 }

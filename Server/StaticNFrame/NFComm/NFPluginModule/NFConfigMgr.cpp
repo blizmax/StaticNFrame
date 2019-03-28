@@ -66,4 +66,15 @@ uint32_t NFConfigMgr::GetLogFlushLevel() const
 	return 0;
 }
 
+const std::vector<LogInfoConfig>& NFConfigMgr::GetLogInfoConfig() const
+{
+	if (m_pConfigModule)
+	{
+		return m_pConfigModule->GetLogInfoConfig();
+	}
+
+	std::vector<LogInfoConfig> vec;
+	return vec;
+}
+
 

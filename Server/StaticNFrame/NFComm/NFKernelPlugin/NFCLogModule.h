@@ -30,6 +30,19 @@ public:
 	* @brief 对外接口输出默认的LOG
 	*
 	* @param  log_level log等级
+	* @param  function 
+	* @param  line
+	* @param  logId LOG选项ID，可以配置输出
+	* @param  guid 一般是玩家ID，某些情况下，只想输出一个玩家的LOG
+	* @param  log
+	* @return bool
+	*/
+	virtual void LogDefault(NF_LOG_LEVEL log_level, const char* function, int line, uint32_t logId, uint64_t guid, const std::string& log);
+
+	/**
+	* @brief 对外接口输出默认的LOG
+	*
+	* @param  log_level log等级
 	* @param  logId LOG选项ID，可以配置输出
 	* @param  guid 一般是玩家ID，某些情况下，只想输出一个玩家的LOG
 	* @param  log
@@ -52,6 +65,14 @@ public:
 	* @return bool
 	*/
 	virtual void SetDefaultFlush(NF_LOG_LEVEL log_level);
+
+	/**
+	* @brief 设置log的配置
+	*
+	* @param  vecLogConfig
+	* @return
+	*/
+	virtual void SetDefaultLogConfig(const std::vector<LogInfoConfig>& vecLogConfig);
 
 	/**
 	* @brief 创建别的LOG系统
@@ -79,6 +100,7 @@ private:
 	std::shared_ptr<spdlog::logger> m_defaultLogger;
 	std::unordered_map<uint32_t, std::shared_ptr<spdlog::logger>> m_loggerMap;
 	std::unordered_set<std::string> m_loggerName;
+	std::vector<LogInfoConfig> m_logInfoConfig;
 };
 
 

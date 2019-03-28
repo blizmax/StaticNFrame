@@ -21,6 +21,7 @@ NFCSqliteModule::~NFCSqliteModule()
 
 bool NFCSqliteModule::Init()
 {
+	/*
 	AddSqliteServer(0, "sqlite/test.db");
 	CreateTable(0,proto::message::plane_record_info::default_instance());
 
@@ -35,6 +36,7 @@ bool NFCSqliteModule::Init()
 	InsertDifferentMessage(0, vecInfo);
 
 	std::cout << "use time:" << NFGetTime() - beginTime << " ms" << std::endl;
+	*/
 
 	return true;
 }

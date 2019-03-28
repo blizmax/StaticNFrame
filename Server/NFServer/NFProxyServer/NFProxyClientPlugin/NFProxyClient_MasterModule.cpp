@@ -58,7 +58,7 @@ bool NFCProxyClient_MasterModule::AfterInit()
 	}
 	else
 	{
-		NFLogError("I Can't get the Master Server config!");
+		NFLogError(NF_LOG_SERVER_CONNECT_SERVER, 0, "I Can't get the Master Server config!");
 		return false;
 	}
 
@@ -112,16 +112,16 @@ void NFCProxyClient_MasterModule::OnProxySocketEvent(const eMsgType nEvent, cons
 
 	if (nEvent == eMsgType_CONNECTED)
 	{
-		NFLogDebug("Proxy Server Connect Master Server Success!");
+		NFLogDebug(NF_LOG_SERVER_CONNECT_SERVER, 0, "Proxy Server Connect Master Server Success!");
 
 		//连接成功，发送网关服务器IP以及数据给世界服务器
 		RegisterServer();
 	}
 	else if (nEvent == eMsgType_DISCONNECTED)
 	{
-		NFLogDebug("Proxy Server DisConnect Master Server!");
+		NFLogDebug(NF_LOG_SERVER_CONNECT_SERVER, 0, "Proxy Server DisConnect Master Server!");
 		m_pMasterServerData->SetSendString([this](const std::string& msg) {
-			NFLogError("master disconnect, can't send msg:{}", msg);
+			NFLogError(NF_LOG_SERVER_CONNECT_SERVER, 0, "master disconnect, can't send msg:{}", msg);
 		});
 		m_pServerNetEventModule->OnServerNetEvent(eMsgType_DISCONNECTED, NF_ST_PROXY, NF_ST_MASTER, m_pMasterServerData->mUnlinkId, m_pMasterServerData);
 
@@ -132,7 +132,7 @@ void NFCProxyClient_MasterModule::OnHandleOtherMessage(const uint32_t unLinkId, 
 {
 	if (unLinkId != m_pMasterServerData->mUnlinkId) return;
 
-	NFLogWarning("msg:{} not handled", nMsgId);
+	NFLogWarning(NF_LOG_SERVER_NOT_HANDLE_MESSAGE, 0, "msg:{} not handled", nMsgId);
 }
 
 void NFCProxyClient_MasterModule::ServerReport()

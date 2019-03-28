@@ -32,7 +32,7 @@
 #define CLIENT_MSG_PROCESS_NO_OBJECT(nMsgId, msg, nLen, xMsg)                 \
 	if (!xMsg.ParseFromArray(msg, nLen))				\
     {													\
-		NFLogError("Protobuf Parse Message Failed, msgId:{}, nLen:{}", nMsgId, nLen); \
+		NFLogError(NF_LOG_PROTOBUF_PARSE, 0, "Protobuf Parse Message Failed, msgId:{}, nLen:{}", nMsgId, nLen); \
         return ;										\
     }													\
 

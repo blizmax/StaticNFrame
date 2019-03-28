@@ -63,14 +63,14 @@ void NFCProxyClient_LoginModule::OnProxySocketEvent(const eMsgType nEvent, const
 
 	if (nEvent == eMsgType_CONNECTED)
 	{
-		NFLogDebug("Proxy Server Connect Login Server Success!");
+		NFLogDebug(NF_LOG_SERVER_CONNECT_SERVER, 0, "Proxy Server Connect Login Server Success!");
 
 		//连接成功，发送网关服务器IP以及数据给Login服务器
 		RegisterServer(unLinkId);
 	}
 	else if (nEvent == eMsgType_DISCONNECTED)
 	{
-		NFLogDebug("Proxy Server DisConnect Login Server!");
+		NFLogDebug(NF_LOG_SERVER_CONNECT_SERVER, 0, "Proxy Server DisConnect Login Server!");
 
 		OnClientDisconnect(unLinkId);
 	}
@@ -85,7 +85,7 @@ void NFCProxyClient_LoginModule::OnClientDisconnect(uint32_t unLinkId)
 		pServerData->mUnlinkId = 0;
 		pServerData->mServerInfo.set_server_state(NFMsg::EST_CRASH);
 
-		NFLogError("the login server disconnect, serverName:{}, serverId:{}, serverIp:{}, serverPort:{}"
+		NFLogError(NF_LOG_SERVER_CONNECT_SERVER, 0, "the login server disconnect, serverName:{}, serverId:{}, serverIp:{}, serverPort:{}"
 			, pServerData->mServerInfo.server_name(), pServerData->mServerInfo.server_id(), pServerData->mServerInfo.server_ip(), pServerData->mServerInfo.server_port());
 
 		m_pServerNetEventModule->OnServerNetEvent(eMsgType_DISCONNECTED, NF_ST_PROXY, NF_ST_LOGIN, unLinkId, pServerData);
@@ -123,7 +123,7 @@ void NFCProxyClient_LoginModule::OnHandleOtherMessage(const uint32_t unLinkId, c
 {
 	if (GetServerByUnlinkId(unLinkId) == nullptr) return;
 
-	NFLogWarning("msg:{} not handled!", nMsgId);
+	NFLogWarning(NF_LOG_SERVER_NOT_HANDLE_MESSAGE, playerId, "msg:{} not handled!", nMsgId);
 }
 
 void NFCProxyClient_LoginModule::RegisterServer(uint32_t linkId)

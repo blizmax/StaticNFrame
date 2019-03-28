@@ -62,11 +62,11 @@ bool NFCMasterServerModule::Init()
 		uint32_t unlinkId = m_pNetServerModule->AddServer(NF_ST_MASTER, pConfig->mServerId, pConfig->mMaxConnectNum, pConfig->mServerPort);
 		if (unlinkId != 0)
 		{
-			NFLogInfo("master server listen success, serverId:{}, maxConnectNum:{}, port:{}", pConfig->mServerId, pConfig->mMaxConnectNum, pConfig->mServerPort);
+			NFLogInfo(NF_LOG_SERVER_CONNECT_SERVER, 0, "master server listen success, serverId:{}, maxConnectNum:{}, port:{}", pConfig->mServerId, pConfig->mMaxConnectNum, pConfig->mServerPort);
 		}
 		else
 		{
-			NFLogInfo("master server listen failed!, serverId:{}, maxConnectNum:{}, port:{}", pConfig->mServerId, pConfig->mMaxConnectNum, pConfig->mServerPort);
+			NFLogInfo(NF_LOG_SERVER_CONNECT_SERVER, 0, "master server listen failed!, serverId:{}, maxConnectNum:{}, port:{}", pConfig->mServerId, pConfig->mMaxConnectNum, pConfig->mServerPort);
 			return false;
 		}
 
@@ -75,15 +75,15 @@ bool NFCMasterServerModule::Init()
 			unlinkId = (uint32_t)m_pHttpServerModule->InitServer(NF_ST_MASTER, pConfig->mHttpPort);
 			if (unlinkId == 0)
 			{
-				NFLogError("Master Server Open Http Port:{} Failed!", pConfig->mHttpPort);
+				NFLogError(NF_LOG_SERVER_CONNECT_SERVER, 0, "Master Server Open Http Port:{} Failed!", pConfig->mHttpPort);
 				return false;
 			}
-			NFLogInfo("Master Server Open Http Port:{} Success!", pConfig->mHttpPort);
+			NFLogInfo(NF_LOG_SERVER_CONNECT_SERVER, 0, "Master Server Open Http Port:{} Success!", pConfig->mHttpPort);
 		}
 	}
 	else
 	{
-		NFLogError("I Can't get the Master Server config!");
+		NFLogError(NF_LOG_SERVER_CONNECT_SERVER, 0, "I Can't get the Master Server config!");
 		return false;
 	}
 
@@ -137,7 +137,7 @@ void NFCMasterServerModule::OnClientDisconnect(uint32_t unLinkId)
 			pServerData->mServerInfo.set_server_state(NFMsg::EST_CRASH);
 			pServerData->mUnlinkId = 0;
 
-			NFLogError("the world server disconnect from master server, serverName:{}, serverId:{}, serverIp:{}, serverPort:{}"
+			NFLogError(NF_LOG_SERVER_CONNECT_SERVER, 0, "the world server disconnect from master server, serverName:{}, serverId:{}, serverIp:{}, serverPort:{}"
 				, pServerData->mServerInfo.server_name(), pServerData->mServerInfo.server_id(), pServerData->mServerInfo.server_ip(), pServerData->mServerInfo.server_port());
 
 			return;
@@ -154,7 +154,7 @@ void NFCMasterServerModule::OnClientDisconnect(uint32_t unLinkId)
 			pServerData->mServerInfo.set_server_state(NFMsg::EST_CRASH);
 			pServerData->mUnlinkId = 0;
 
-			NFLogError("the proxy server disconnect from master server, serverName:{}, serverId:{}, serverIp:{}, serverPort:{}"
+			NFLogError(NF_LOG_SERVER_CONNECT_SERVER, 0, "the proxy server disconnect from master server, serverName:{}, serverId:{}, serverIp:{}, serverPort:{}"
 				, pServerData->mServerInfo.server_name(), pServerData->mServerInfo.server_id(), pServerData->mServerInfo.server_ip(), pServerData->mServerInfo.server_port());
 
 			return;
@@ -171,7 +171,7 @@ void NFCMasterServerModule::OnClientDisconnect(uint32_t unLinkId)
 			pServerData->mServerInfo.set_server_state(NFMsg::EST_CRASH);
 			pServerData->mUnlinkId = 0;
 
-			NFLogError("the game server disconnect from master server, serverName:{}, serverId:{}, serverIp:{}, serverPort:{}"
+			NFLogError(NF_LOG_SERVER_CONNECT_SERVER, 0, "the game server disconnect from master server, serverName:{}, serverId:{}, serverIp:{}, serverPort:{}"
 				, pServerData->mServerInfo.server_name(), pServerData->mServerInfo.server_id(), pServerData->mServerInfo.server_ip(), pServerData->mServerInfo.server_port());
 
 			return;
@@ -190,7 +190,7 @@ void NFCMasterServerModule::OnClientDisconnect(uint32_t unLinkId)
 		{
 			nServerID = pServerData->mServerInfo.server_id();
 
-			NFLogError("the login server disconnect from master server, serverName:{}, serverId:{}, serverIp:{}, serverPort:{}"
+			NFLogError(NF_LOG_SERVER_CONNECT_SERVER, 0, "the login server disconnect from master server, serverName:{}, serverId:{}, serverIp:{}, serverPort:{}"
 				, pServerData->mServerInfo.server_name(), pServerData->mServerInfo.server_id(), pServerData->mServerInfo.server_ip(), pServerData->mServerInfo.server_port());
 			break;
 		}
@@ -227,7 +227,7 @@ void NFCMasterServerModule::OnLoginServerRegisterProcess(const uint32_t unLinkId
 
 		SynServerToOthers(pServerData);
 
-		NFLogInfo("Login Server Register Master Server Success, serverName:{}, serverId:{}, ip:{}, port:{}", pServerData->mServerInfo.server_name(), pServerData->mServerInfo.server_id(), pServerData->mServerInfo.server_ip(), pServerData->mServerInfo.server_port());
+		NFLogInfo(NF_LOG_SERVER_CONNECT_SERVER, 0, "Login Server Register Master Server Success, serverName:{}, serverId:{}, ip:{}, port:{}", pServerData->mServerInfo.server_name(), pServerData->mServerInfo.server_id(), pServerData->mServerInfo.server_ip(), pServerData->mServerInfo.server_port());
 	}
 }
 
@@ -241,7 +241,7 @@ void NFCMasterServerModule::OnLoginServerUnRegisterProcess(const uint32_t unLink
 		const NFMsg::ServerInfoReport& xData = xMsg.server_list(i);
 		mLoginMap.RemoveElement(xData.server_id());
 
-		NFLogInfo("Login Server UnRegister Master Server Success, serverName:{}, serverId:{}, ip:{}, port:{}", xData.server_name(), xData.server_id(), xData.server_ip(), xData.server_port());
+		NFLogInfo(NF_LOG_SERVER_CONNECT_SERVER, 0, "Login Server UnRegister Master Server Success, serverName:{}, serverId:{}, ip:{}, port:{}", xData.server_name(), xData.server_id(), xData.server_ip(), xData.server_port());
 	}
 }
 
@@ -299,7 +299,7 @@ void NFCMasterServerModule::OnGameServerRegisterProcess(const uint32_t unLinkId,
 		}
 
 		SynServerToOthers(pServerData);
-		NFLogInfo("Game Server Register Master Server Success, serverName:{}, serverId:{}, ip:{}, port:{}", pServerData->mServerInfo.server_name(), pServerData->mServerInfo.server_id(), pServerData->mServerInfo.server_ip(), pServerData->mServerInfo.server_port());
+		NFLogInfo(NF_LOG_SERVER_CONNECT_SERVER, 0, "Game Server Register Master Server Success, serverName:{}, serverId:{}, ip:{}, port:{}", pServerData->mServerInfo.server_name(), pServerData->mServerInfo.server_id(), pServerData->mServerInfo.server_ip(), pServerData->mServerInfo.server_port());
 	}
 }
 
@@ -313,7 +313,7 @@ void NFCMasterServerModule::OnGameServerUnRegisterProcess(const uint32_t unLinkI
 		const NFMsg::ServerInfoReport& xData = xMsg.server_list(i);
 		mGameMap.RemoveElement(xData.server_id());
 
-		NFLogInfo("Game Server UnRegister Master Server Success, serverName:{}, serverId:{}, ip:{}, port:{}", xData.server_name(), xData.server_id(), xData.server_ip(), xData.server_port());
+		NFLogInfo(NF_LOG_SERVER_CONNECT_SERVER, 0, "Game Server UnRegister Master Server Success, serverName:{}, serverId:{}, ip:{}, port:{}", xData.server_name(), xData.server_id(), xData.server_ip(), xData.server_port());
 	}
 }
 
@@ -370,7 +370,7 @@ void NFCMasterServerModule::OnProxyServerRegisterProcess(const uint32_t unLinkId
 		}
 
 		SynServerToOthers(pServerData);
-		NFLogInfo("Proxy Server Register Master Server Success, serverName:{}, serverId:{}, ip:{}, port:{}", pServerData->mServerInfo.server_name(), pServerData->mServerInfo.server_id(), pServerData->mServerInfo.server_ip(), pServerData->mServerInfo.server_port());
+		NFLogInfo(NF_LOG_SERVER_CONNECT_SERVER, 0, "Proxy Server Register Master Server Success, serverName:{}, serverId:{}, ip:{}, port:{}", pServerData->mServerInfo.server_name(), pServerData->mServerInfo.server_id(), pServerData->mServerInfo.server_ip(), pServerData->mServerInfo.server_port());
 	}
 }
 
@@ -384,7 +384,7 @@ void NFCMasterServerModule::OnProxyServerUnRegisterProcess(const uint32_t unLink
 		const NFMsg::ServerInfoReport& xData = xMsg.server_list(i);
 		mProxyMap.RemoveElement(xData.server_id());
 
-		NFLogInfo("Proxy Server UnRegister Master Server Success, serverName:{}, serverId:{}, ip:{}, port:{}", xData.server_name(), xData.server_id(), xData.server_ip(), xData.server_port());
+		NFLogInfo(NF_LOG_SERVER_CONNECT_SERVER, 0, "Proxy Server UnRegister Master Server Success, serverName:{}, serverId:{}, ip:{}, port:{}", xData.server_name(), xData.server_id(), xData.server_ip(), xData.server_port());
 	}
 }
 
@@ -441,7 +441,7 @@ void NFCMasterServerModule::OnWorldServerRegisterProcess(const uint32_t unLinkId
 		}
 
 		SynServerToOthers(pServerData);
-		NFLogInfo("World Server Register Master Server Success, serverName:{}, serverId:{}, ip:{}, port:{}", pServerData->mServerInfo.server_name(), pServerData->mServerInfo.server_id(), pServerData->mServerInfo.server_ip(), pServerData->mServerInfo.server_port());
+		NFLogInfo(NF_LOG_SERVER_CONNECT_SERVER, 0, "World Server Register Master Server Success, serverName:{}, serverId:{}, ip:{}, port:{}", pServerData->mServerInfo.server_name(), pServerData->mServerInfo.server_id(), pServerData->mServerInfo.server_ip(), pServerData->mServerInfo.server_port());
 	}
 }
 
@@ -455,7 +455,7 @@ void NFCMasterServerModule::OnWorldServerUnRegisterProcess(const uint32_t unLink
 		const NFMsg::ServerInfoReport& xData = xMsg.server_list(i);
 		mWorldMap.RemoveElement(xData.server_id());
 
-		NFLogInfo("World Server UnRegister Master Server Success, serverName:{}, serverId:{}, ip:{}, port:{}", xData.server_name(), xData.server_id(), xData.server_ip(), xData.server_port());
+		NFLogInfo(NF_LOG_SERVER_CONNECT_SERVER, 0, "World Server UnRegister Master Server Success, serverName:{}, serverId:{}, ip:{}, port:{}", xData.server_name(), xData.server_id(), xData.server_ip(), xData.server_port());
 	}
 }
 

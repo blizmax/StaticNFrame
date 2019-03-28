@@ -35,6 +35,8 @@
 #define DEFINE_LUA_STRING_HttpPort				"HttpPort"
 #define DEFINE_LUA_STRING_SERVER_INNER_PROT		"ServerInnerPort"
 
+#define DEFINE_LUA_STRING_LOG_INFO				"LogInfo"			//log配置
+
 NFCConfigModule::NFCConfigModule(NFIPluginManager* p)
 {
 	pPluginManager = p;
@@ -83,21 +85,71 @@ bool NFCConfigModule::LoadConfig()
 		}
 	}
 
-	TryRunGlobalScriptFunc("InitServer");
+	LoadLogConfig();
+	LoadPluginConfig();
+	LoadServerConfig();
+
+	return true;
+}
+
+bool NFCConfigModule::LoadLogConfig()
+{
+	mLogInfoConfig.clear();
+	mLogLevel = 0;
+	mLogFlushLevel = 0;
 
 	GetValue(DEFINE_LUA_STRING_LOG_LEVEL, mLogLevel);
 	GetValue(DEFINE_LUA_STRING_LOG_FLUSH_LEVEL, mLogFlushLevel);
 
+	NFLuaRef logInfoRef = GetGlobal(DEFINE_LUA_STRING_LOG_INFO);
+	if (!logInfoRef.isValid())
+	{
+		NFLogError(NF_LOG_LOAD_CONFIG, 0, "log.lua can't find ({})", DEFINE_LUA_STRING_LOG_INFO);
+		assert(0);
+	}
+
+	if (!logInfoRef.isTable())
+	{
+		NFLogError(NF_LOG_LOAD_CONFIG, 0, "{} is not table in the log.lua", DEFINE_LUA_STRING_LOG_INFO);
+		assert(0);
+	}
+
+	/* lua 是从1开始的 */
+	for (int i = 1; i <= logInfoRef.len(); i++)
+	{
+		NFLuaRef logRef = logInfoRef[i];
+		if (!logRef.isTable())
+		{
+			NFLogError(NF_LOG_LOAD_CONFIG, 0, "logInfo some wrong in the log.lua");
+			assert(0);
+		}
+
+		LogInfoConfig logConfig;
+
+		GetLuaTableValue(logRef, "logid", logConfig.mLogId);
+		GetLuaTableValue(logRef, "display", logConfig.mDisplay);
+		GetLuaTableValue(logRef, "level", logConfig.mLevel);
+		GetLuaTableValue(logRef, "logname", logConfig.mLogName);
+		GetLuaTableValue(logRef, "guid", logConfig.mGuid);
+
+		mLogInfoConfig.push_back(logConfig);
+	}
+
+	return true;
+}
+
+bool NFCConfigModule::LoadPluginConfig()
+{
 	NFLuaRef pluginRef = GetGlobal(DEFINE_LUA_STRING_LOAD_PLUGIN);
 	if (!pluginRef.isValid())
 	{
-		std::cerr << "Plugin.lua can't find the '" << DEFINE_LUA_STRING_LOAD_PLUGIN << "'" << std::endl;
+		NFLogError(NF_LOG_LOAD_CONFIG, 0, "Plugin.lua can't find ({})", DEFINE_LUA_STRING_LOAD_PLUGIN);
 		assert(0);
 	}
 
 	if (!pluginRef.isTable())
 	{
-		std::cerr << DEFINE_LUA_STRING_LOAD_PLUGIN << "is not table in the plugin.lua" << std::endl;
+		NFLogError(NF_LOG_LOAD_CONFIG, 0, "{} is not table in the plugin.lua", DEFINE_LUA_STRING_LOAD_PLUGIN);
 		assert(0);
 	}
 
@@ -108,7 +160,7 @@ bool NFCConfigModule::LoadConfig()
 		NFLuaRef serverPluginListRef;
 		if (!GetLuaTableValue(serverPluginRef, DEFINE_LUA_STRING_SERVER_PLUGINS, serverPluginListRef))
 		{
-			std::cerr << DEFINE_LUA_STRING_SERVER_PLUGINS << " can't find int server:" << serverPluginName << " int the table " << DEFINE_LUA_STRING_LOAD_PLUGIN << " in the plugin.lua" << std::endl;
+			NFLogError(NF_LOG_LOAD_CONFIG, 0, "{} can't find int server:{} int the table {}  in the plugin.lua", DEFINE_LUA_STRING_SERVER_PLUGINS, serverPluginName, DEFINE_LUA_STRING_LOAD_PLUGIN);
 			assert(0);
 		}
 
@@ -127,22 +179,29 @@ bool NFCConfigModule::LoadConfig()
 
 		if (!GetLuaTableValue(serverPluginRef, DEFINE_LUA_STRING_SERVER_TYPE, pConfig->mServerType))
 		{
-			std::cerr << DEFINE_LUA_STRING_SERVER_PLUGINS << " can't find int server:" << serverPluginName << " int the table " << DEFINE_LUA_STRING_LOAD_PLUGIN << " in the plugin.lua" << std::endl;
+			NFLogError(NF_LOG_LOAD_CONFIG, 0, "{} can't find int server:{} int the table {}  in the plugin.lua", DEFINE_LUA_STRING_SERVER_PLUGINS, serverPluginName, DEFINE_LUA_STRING_LOAD_PLUGIN);
 			assert(0);
 		}
 
 		if (pConfig->mServerType >= NF_ST_MAX)
 		{
-			std::cerr << DEFINE_LUA_STRING_SERVER_PLUGINS << " is not right int server:" << serverPluginName << " int the table " << DEFINE_LUA_STRING_LOAD_PLUGIN << " in the plugin.lua" << std::endl;
+			NFLogError(NF_LOG_LOAD_CONFIG, 0, "{} can't find int server:{} int the table {}  in the plugin.lua", DEFINE_LUA_STRING_SERVER_PLUGINS, serverPluginName, DEFINE_LUA_STRING_LOAD_PLUGIN);
 			assert(0);
 		}
 		mPluginConfig.emplace(serverPluginName, pConfig);
 	}
 
+	return true;
+}
+
+bool NFCConfigModule::LoadServerConfig()
+{
+	TryRunGlobalScriptFunc("InitServer");
+
 	NFLuaRef serverRef = GetGlobal(DEFINE_LUA_STRING_SERVER);
 	if (!serverRef.isValid())
 	{
-		std::cerr << "lua file can't find the '" << DEFINE_LUA_STRING_SERVER << "'" << std::endl;
+		NFLogError(NF_LOG_LOAD_CONFIG, 0, "lua file can't find the ({})", DEFINE_LUA_STRING_SERVER);
 		assert(0);
 	}
 
@@ -150,15 +209,15 @@ bool NFCConfigModule::LoadConfig()
 	{
 		NFLuaRef serverConfigRef = it.value();
 		NFServerConfig* pConfig = NF_NEW NFServerConfig();
-		
+
 		if (!GetLuaTableValue(serverConfigRef, DEFINE_LUA_STRING_SERVER_ID, pConfig->mServerId))
 		{
-			NFLogError(NF_LOG_SYSTEMLOG, 0, "must be config the ServerId........");
+			NFLogError(NF_LOG_LOAD_CONFIG, 0, "must be config the ServerId........");
 			assert(0);
 		}
 		if (!GetLuaTableValue(serverConfigRef, DEFINE_LUA_STRING_SERVER_TYPE, pConfig->mServerType))
 		{
-			NFLogError(NF_LOG_SYSTEMLOG, 0, "must be config the ServerType........");
+			NFLogError(NF_LOG_LOAD_CONFIG, 0, "must be config the ServerType........");
 			assert(0);
 		}
 
@@ -166,7 +225,7 @@ bool NFCConfigModule::LoadConfig()
 		GetLuaTableValue(serverConfigRef, DEFINE_LUA_STRING_SERVER_NAME, pConfig->mServerName);
 		GetLuaTableValue(serverConfigRef, DEFINE_LUA_STRING_SERVER_GAME_NAME, pConfig->mGameName);
 		GetLuaTableValue(serverConfigRef, DEFINE_LUA_STRING_SERVER_MONGO_IP, pConfig->mMongoIp);
-		GetLuaTableValue(serverConfigRef, DEFINE_LUA_STRING_SERVER_MONGO_PORT, pConfig->mMongoPort); 
+		GetLuaTableValue(serverConfigRef, DEFINE_LUA_STRING_SERVER_MONGO_PORT, pConfig->mMongoPort);
 		GetLuaTableValue(serverConfigRef, DEFINE_LUA_STRING_SERVER_MONGO_DBNAME, pConfig->mMongoDbName);
 		GetLuaTableValue(serverConfigRef, DEFINE_LUA_STRING_SERVER_IP, pConfig->mServerIp);
 		GetLuaTableValue(serverConfigRef, DEFINE_LUA_STRING_SERVER_PORT, pConfig->mServerPort);
@@ -178,6 +237,7 @@ bool NFCConfigModule::LoadConfig()
 		GetLuaTableValue(serverConfigRef, DEFINE_LUA_STRING_HttpPort, pConfig->mHttpPort);
 		mServerConfig.emplace(pConfig->mServerId, pConfig);
 	}
+
 	return true;
 }
 

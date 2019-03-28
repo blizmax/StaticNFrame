@@ -54,7 +54,7 @@ bool NFCWorldClient_MasterModule::AfterInit()
 	}
 	else
 	{
-		NFLogError("I Can't get the Master Server config!");
+		NFLogError(NF_LOG_SERVER_CONNECT_SERVER, 0, "I Can't get the Master Server config!");
 		return false;
 	}
 
@@ -83,16 +83,16 @@ void NFCWorldClient_MasterModule::OnProxySocketEvent(const eMsgType nEvent, cons
 
 	if (nEvent == eMsgType_CONNECTED)
 	{
-		NFLogDebug("World Server Connect Master Server Success!");
+		NFLogDebug(NF_LOG_SERVER_CONNECT_SERVER, 0, "World Server Connect Master Server Success!");
 	
 		RegisterServer();
 	}
 	else if (nEvent == eMsgType_DISCONNECTED)
 	{
-		NFLogDebug("World Server DisConnect Master Server!");
+		NFLogDebug(NF_LOG_SERVER_CONNECT_SERVER, 0, "World Server DisConnect Master Server!");
 
 		m_pMasterServerData->SetSendString([this](const std::string& msg) {
-			NFLogError("master disconnect, can't send msg:{}", msg);
+			NFLogError(NF_LOG_SERVER_CONNECT_SERVER, 0, "master disconnect, can't send msg:{}", msg);
 		});
 		m_pServerNetEventModule->OnServerNetEvent(eMsgType_DISCONNECTED, NF_ST_WORLD, NF_ST_MASTER, m_pMasterServerData->mUnlinkId, m_pMasterServerData);
 	}
@@ -102,7 +102,7 @@ void NFCWorldClient_MasterModule::OnHandleOtherMessage(const uint32_t unLinkId, 
 {
 	if (unLinkId != m_pMasterServerData->mUnlinkId) return;
 
-	NFLogWarning("msg:{} not handled", nMsgId);
+	NFLogWarning(NF_LOG_SERVER_NOT_HANDLE_MESSAGE, playerId, "msg:{} not handled", nMsgId);
 }
 
 void NFCWorldClient_MasterModule::RegisterServer()

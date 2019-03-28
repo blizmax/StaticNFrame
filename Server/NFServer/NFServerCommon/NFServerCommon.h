@@ -12,6 +12,16 @@
 #include "NFComm/NFCore/NFPlatform.h"
 #include "NFComm/NFPluginModule/NFConfigMgr.h"
 #include "NFMessageDefine/NFMsgDefine.h"
+#include "NFComm/NFPluginModule/NFLogMgr.h"
+
+
+enum NF_SERVER_LOG_ID
+{
+	NF_LOG_MIN_SERVER_LOG = 101,			//101-1000是系统框架层LOG
+	NF_LOG_SERVER_CONNECT_SERVER = 101,		//服务器与服务器连接LOG
+	NF_LOG_SERVER_NOT_HANDLE_MESSAGE = 102, //服务器未处理消息的LOG
+	NF_LOG_MAX_SERVER_LOG = 1000,			//
+};
 
 class _NFExport NFServerCommon
 {

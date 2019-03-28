@@ -41,16 +41,16 @@ bool NFCGameServerModule::Init()
 		uint32_t unlinkId = m_pNetServerModule->AddServer(NF_ST_GAME, pConfig->mServerId, pConfig->mMaxConnectNum, pConfig->mServerPort);
 		if (unlinkId != 0)
 		{
-			NFLogInfo("game server listen success, serverId:{}, maxConnectNum:{}, port:{}", pConfig->mServerId, pConfig->mMaxConnectNum, pConfig->mServerPort);
+			NFLogInfo(NF_LOG_SERVER_CONNECT_SERVER, 0, "game server listen success, serverId:{}, maxConnectNum:{}, port:{}", pConfig->mServerId, pConfig->mMaxConnectNum, pConfig->mServerPort);
 		}
 		else
 		{
-			NFLogInfo("game server listen failed!, serverId:{}, maxConnectNum:{}, port:{}", pConfig->mServerId, pConfig->mMaxConnectNum, pConfig->mServerPort);
+			NFLogInfo(NF_LOG_SERVER_CONNECT_SERVER, 0, "game server listen failed!, serverId:{}, maxConnectNum:{}, port:{}", pConfig->mServerId, pConfig->mMaxConnectNum, pConfig->mServerPort);
 		}
 	}
 	else
 	{
-		NFLogError("I Can't get the Game Server config!");
+		NFLogError(NF_LOG_SERVER_CONNECT_SERVER, 0, "I Can't get the Game Server config!");
 		return false;
 	}
 
@@ -91,7 +91,7 @@ void NFCGameServerModule::OnProxySocketEvent(const eMsgType nEvent, const uint32
 
 void NFCGameServerModule::OnHandleOtherMessage(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen)
 {
-	NFLogWarning("msg:{} not handled!", nMsgId);
+	NFLogWarning(NF_LOG_SERVER_NOT_HANDLE_MESSAGE, playerId, "msg:{} not handled!", nMsgId);
 }
 
 //游戏服务器注册协议回调
@@ -119,7 +119,7 @@ void NFCGameServerModule::OnProxyServerRegisterProcess(const uint32_t unLinkId, 
 			pServerData->mServerInfo.set_server_ip(ip);
 		}
 
-		NFLogInfo("Proxy Server Register Game Server Success, serverName:{}, serverId:{}, ip:{}, port:{}", pServerData->mServerInfo.server_name(), pServerData->mServerInfo.server_id(), pServerData->mServerInfo.server_ip(), pServerData->mServerInfo.server_port());
+		NFLogInfo(NF_LOG_SERVER_CONNECT_SERVER, 0, "Proxy Server Register Game Server Success, serverName:{}, serverId:{}, ip:{}, port:{}", pServerData->mServerInfo.server_name(), pServerData->mServerInfo.server_id(), pServerData->mServerInfo.server_ip(), pServerData->mServerInfo.server_port());
 
 		pServerData->SetSendString([this, pServerData](const std::string& msg) {
 			m_pNetServerModule->SendByServerID(pServerData->mUnlinkId, 0, msg, 0);
@@ -138,7 +138,7 @@ void NFCGameServerModule::OnProxyServerUnRegisterProcess(const uint32_t unLinkId
 		const NFMsg::ServerInfoReport& xData = xMsg.server_list(i);
 		mProxyMap.RemoveElement(xData.server_id());
 
-		NFLogInfo("Game Server UnRegister Proxy Server Success, serverName:{}, serverId:{}, ip:{}, port:{}", xData.server_name(), xData.server_id(), xData.server_ip(), xData.server_port());
+		NFLogInfo(NF_LOG_SERVER_CONNECT_SERVER, 0, "Game Server UnRegister Proxy Server Success, serverName:{}, serverId:{}, ip:{}, port:{}", xData.server_name(), xData.server_id(), xData.server_ip(), xData.server_port());
 	}
 }
 
@@ -182,11 +182,11 @@ void NFCGameServerModule::OnHandleServerDisconnect(uint32_t unLinkId)
 			pServerData->mServerInfo.set_server_state(NFMsg::EST_CRASH);
 			pServerData->mUnlinkId = 0;
 
-			NFLogError("the game server disconnect from proxy server, serverName:{}, serverId:{}, serverIp:{}, serverPort:{}"
+			NFLogError(NF_LOG_SERVER_CONNECT_SERVER, 0, "the game server disconnect from proxy server, serverName:{}, serverId:{}, serverIp:{}, serverPort:{}"
 				, pServerData->mServerInfo.server_name(), pServerData->mServerInfo.server_id(), pServerData->mServerInfo.server_ip(), pServerData->mServerInfo.server_port());
 
 			pServerData->SetSendString([this, pServerData](const std::string& msg) {
-				NFLogError("game disconnect, can't send msg:{}", msg);
+				NFLogError(NF_LOG_SERVER_CONNECT_SERVER, 0, "game disconnect, can't send msg:{}", msg);
 			});
 			m_pServerNetEventModule->OnServerNetEvent(eMsgType_DISCONNECTED, NF_ST_GAME, NF_ST_PROXY, unLinkId, pServerData);
 			return;

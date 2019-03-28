@@ -54,7 +54,7 @@ bool NFCLoginClient_MasterModule::AfterInit()
 	}
 	else
 	{
-		NFLogError("I Can't get the Master Server config!");
+		NFLogError(NF_LOG_SERVER_NOT_HANDLE_MESSAGE, 0, "I Can't get the Master Server config!");
 		return false;
 	}
 
@@ -133,13 +133,13 @@ void NFCLoginClient_MasterModule::OnProxySocketEvent(const eMsgType nEvent, cons
 
 	if (nEvent == eMsgType_CONNECTED)
 	{
-		NFLogDebug("Login Server Connect Master Server Success!");
+		NFLogDebug(NF_LOG_SERVER_NOT_HANDLE_MESSAGE, 0, "Login Server Connect Master Server Success!");
 	
 		RegisterServer();
 	}
 	else if (nEvent == eMsgType_DISCONNECTED)
 	{
-		NFLogDebug("Login Server DisConnect Master Server!");
+		NFLogDebug(NF_LOG_SERVER_NOT_HANDLE_MESSAGE, 0, "Login Server DisConnect Master Server!");
 	}
 }
 
@@ -147,7 +147,7 @@ void NFCLoginClient_MasterModule::OnHandleOtherMessage(const uint32_t unLinkId, 
 {
 	if (unLinkId != m_pMasterServerData->mUnlinkId) return;
 
-	NFLogWarning("msg:{} not handled", nMsgId);
+	NFLogWarning(NF_LOG_SERVER_NOT_HANDLE_MESSAGE, 0, "msg:{} not handled", nMsgId);
 }
 
 void NFCLoginClient_MasterModule::RegisterServer()

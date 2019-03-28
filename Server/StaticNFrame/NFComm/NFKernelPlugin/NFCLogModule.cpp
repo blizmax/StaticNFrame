@@ -23,6 +23,8 @@
 NFCLogModule::NFCLogModule(NFIPluginManager* p)
 {
 	pPluginManager = p;
+	//只要是为了效率，浪费点内存
+	m_logInfoConfig.resize(NF_LOG_MAX_ID);
 	//Create spdlog
 	try
 	{
@@ -46,6 +48,7 @@ bool NFCLogModule::Awake()
 {
 	SetDefaultLevel((NF_LOG_LEVEL)NFConfigMgr::Instance()->GetLogLevel());
 	SetDefaultFlush((NF_LOG_LEVEL)NFConfigMgr::Instance()->GetLogFlushLevel());
+	SetDefaultLogConfig(NFConfigMgr::Instance()->GetLogInfoConfig());
 	return true;
 }
 
@@ -54,9 +57,37 @@ bool NFCLogModule::Shut()
 	return true;
 }
 
+void NFCLogModule::LogDefault(NF_LOG_LEVEL log_level, const char* function, int line, uint32_t logId, uint64_t guid, const std::string& log)
+{
+	if (logId < m_logInfoConfig.size() && m_logInfoConfig[logId].mDisplay && m_logInfoConfig[logId].mLevel <= (uint32_t)log_level)
+	{
+		if (m_logInfoConfig[logId].mGuid == 0 || m_logInfoConfig[logId].mGuid == guid)
+		{
+			std::string str = fmt::format("[{}:{}] |[{}:{}] | {}", function, line, m_logInfoConfig[logId].mLogName, guid, log);
+			m_defaultLogger->log((spdlog::level::level_enum)log_level, str.c_str());
+		}
+	}
+}
+
+/**
+* @brief 对外接口输出默认的LOG
+*
+* @param  log_level log等级
+* @param  logId LOG选项ID，可以配置输出
+* @param  guid 一般是玩家ID，某些情况下，只想输出一个玩家的LOG
+* @param  log
+* @return bool
+*/
 void NFCLogModule::LogDefault(NF_LOG_LEVEL log_level, uint32_t logId, uint64_t guid, const std::string& log)
 {
-	m_defaultLogger->log((spdlog::level::level_enum)log_level, log.c_str());
+	if (logId < m_logInfoConfig.size() && m_logInfoConfig[logId].mDisplay && m_logInfoConfig[logId].mLevel <= (uint32_t)log_level)
+	{
+		if (m_logInfoConfig[logId].mGuid == 0 || m_logInfoConfig[logId].mGuid == guid)
+		{
+			std::string str = fmt::format("|[{}:{}] | {}", m_logInfoConfig[logId].mLogName, guid, log);
+			m_defaultLogger->log((spdlog::level::level_enum)log_level, str.c_str());
+		}
+	}
 }
 
 void NFCLogModule::LogOthers(uint32_t logNameId, NF_LOG_LEVEL log_level, const std::string& log)
@@ -76,6 +107,27 @@ void NFCLogModule::SetDefaultLevel(NF_LOG_LEVEL log_level)
 void NFCLogModule::SetDefaultFlush(NF_LOG_LEVEL log_level)
 {
 	m_defaultLogger->flush_on((spdlog::level::level_enum)(log_level));
+}
+
+/**
+* @brief 设置log的配置
+*
+* @param  vecLogConfig
+* @return
+*/
+void NFCLogModule::SetDefaultLogConfig(const std::vector<LogInfoConfig>& vecLogConfig)
+{
+	m_logInfoConfig.clear();
+	//主要是为了效率，浪费点内存
+	m_logInfoConfig.resize(NF_LOG_MAX_ID);
+	for (size_t i = 0; i < vecLogConfig.size(); i++)
+	{
+		const LogInfoConfig& config = vecLogConfig[i];
+		if (config.mLogId >= 0 && config.mLogId < m_logInfoConfig.size())
+		{
+			m_logInfoConfig[config.mLogId] = config;
+		}
+	}
 }
 
 void NFCLogModule::CreateDefaultLogger()

@@ -13,28 +13,6 @@
 #include "common/spdlog/fmt/fmt.h"
 #include "NFILogModule.h"
 
-/**
-* @brief 服务器分层架构，这里只能填写系统引擎的LOG
-*
-*/
-enum NF_LOG_ID
-{
-	NF_LOG_DEFAULT = 0,						//默认LOG
-	NF_LOG_SYSTEMLOG = 1,					//系统LOG
-	NF_LOG_ACTOR_PLUGIN = 2,				//Actor 引擎 
-	NF_LOG_KERNEL_PLUGIN = 3,				//kernel 引擎
-	NF_LOG_LUA_PLUGIN = 4,					//lua 引擎
-	NF_LOG_MONGO_PLUGIN = 5,				//mongo 引擎
-	NF_LOG_MONITOR_PLUGIN = 5,				//monitor 引擎
-	NF_LOG_MYSQL_PLUGIN = 7,				//mysql 引擎
-	NF_LOG_NET_PLUGIN = 8,					//net 引擎
-	NF_LOG_SQLITE_PLUGIN = 9,				//sqlite 引擎
-	NF_LOG_TEST_PLUGIN = 10,				//test 引擎
-	NF_LOG_PLUGIN_MANAGER = 100,				//引擎加载器
-	NF_LOG_MAX_SYSTEM_PLUGIN = 100,
-	NF_LOG_MAX_ID = 10240, //最大LOGID
-};
-
 class _NFExport NFLogMgr : public NFSingleton<NFLogMgr>
 {
 public:
@@ -57,21 +35,10 @@ public:
 	{
 		if (m_pLogModule)
 		{
-			std::string str = fmt::format(std::string("[{}:{}] | [{}:{}] |") + my_fmt, function, line, logId, guid, args...);
-			LogDefault(log_level, logId, guid, str);
+			std::string str = fmt::format(my_fmt, args...);
+			m_pLogModule->LogDefault((NF_LOG_LEVEL)log_level, function, line, logId, guid, str);
 		}
 	}
-
-	/**
-	* @brief 对外接口输出默认的LOG
-	*
-	* @param  log_level log等级
-	* @param  logId LOG选项ID，可以配置输出
-	* @param  guid 一般是玩家ID，某些情况下，只想输出一个玩家的LOG
-	* @param  log
-	* @return bool
-	*/
-	void LogDefault(uint32_t log_level, uint32_t logId, uint64_t guid, const std::string& log);
 
 	/**
 	* @brief 设置默认的LOG的输出等级

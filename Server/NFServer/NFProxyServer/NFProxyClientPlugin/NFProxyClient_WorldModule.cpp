@@ -63,14 +63,14 @@ void NFCProxyClient_WorldModule::OnProxySocketEvent(const eMsgType nEvent, const
 
 	if (nEvent == eMsgType_CONNECTED)
 	{
-		NFLogDebug("Proxy Server Connect World Server Success!");
+		NFLogDebug(NF_LOG_SERVER_CONNECT_SERVER, 0, "Proxy Server Connect World Server Success!");
 
 		//连接成功，发送网关服务器IP以及数据给World服务器
 		RegisterServer(unLinkId);
 	}
 	else if (nEvent == eMsgType_DISCONNECTED)
 	{
-		NFLogDebug("Proxy Server DisConnect World Server!");
+		NFLogDebug(NF_LOG_SERVER_CONNECT_SERVER, 0, "Proxy Server DisConnect World Server!");
 
 		OnClientDisconnect(unLinkId);
 	}
@@ -85,7 +85,7 @@ void NFCProxyClient_WorldModule::OnClientDisconnect(uint32_t unLinkId)
 		pServerData->mUnlinkId = 0;
 		pServerData->mServerInfo.set_server_state(NFMsg::EST_CRASH);
 
-		NFLogError("the world server disconnect, serverName:{}, serverId:{}, serverIp:{}, serverPort:{}"
+		NFLogError(NF_LOG_SERVER_CONNECT_SERVER, 0, "the world server disconnect, serverName:{}, serverId:{}, serverIp:{}, serverPort:{}"
 			, pServerData->mServerInfo.server_name(), pServerData->mServerInfo.server_id(), pServerData->mServerInfo.server_ip(), pServerData->mServerInfo.server_port());
 
 		m_pServerNetEventModule->OnServerNetEvent(eMsgType_DISCONNECTED, NF_ST_PROXY, NF_ST_WORLD, unLinkId, pServerData);
@@ -123,7 +123,7 @@ void NFCProxyClient_WorldModule::OnHandleOtherMessage(const uint32_t unLinkId, c
 {
 	if (GetServerByUnlinkId(unLinkId) == nullptr) return;
 
-	NFLogWarning("msg:{} not handled!", nMsgId);
+	NFLogWarning(NF_LOG_SERVER_NOT_HANDLE_MESSAGE, 0, "msg:{} not handled!", nMsgId);
 }
 
 void NFCProxyClient_WorldModule::RegisterServer(uint32_t linkId)

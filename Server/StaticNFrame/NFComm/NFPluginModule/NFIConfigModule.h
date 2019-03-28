@@ -75,4 +75,5 @@ public:
 	virtual std::vector<NFServerConfig*> GetServerConfigFromServerType(uint32_t serverType) = 0;
 	virtual uint32_t GetLogLevel() const = 0;
 	virtual uint32_t GetLogFlushLevel() const = 0;
+	virtual const std::vector<LogInfoConfig>& GetLogInfoConfig() const = 0;
 };

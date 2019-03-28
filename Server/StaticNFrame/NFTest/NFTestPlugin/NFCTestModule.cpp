@@ -222,7 +222,6 @@ void testLog()
 
 bool NFCTestModule::Init()
 {
-	testSqlite3();
 	return true;
 }
 

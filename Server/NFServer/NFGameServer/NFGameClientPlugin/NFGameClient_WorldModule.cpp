@@ -62,14 +62,14 @@ void NFCGameClient_WorldModule::OnProxySocketEvent(const eMsgType nEvent, const 
 
 	if (nEvent == eMsgType_CONNECTED)
 	{
-		NFLogDebug("Game Server Connect World Server Success!");
+		NFLogDebug(NF_LOG_SERVER_CONNECT_SERVER, 0, "Game Server Connect World Server Success!");
 		
 		//连接成功，发送游戏服务器IP以及数据给世界服务器
 		RegisterServer(unLinkId);
 	}
 	else if (nEvent == eMsgType_DISCONNECTED)
 	{
-		NFLogDebug("Game Server DisConnect World Server!");
+		NFLogDebug(NF_LOG_SERVER_CONNECT_SERVER, 0, "Game Server DisConnect World Server!");
 
 		OnClientDisconnect(unLinkId);
 	}
@@ -84,11 +84,11 @@ void NFCGameClient_WorldModule::OnClientDisconnect(uint32_t unLinkId)
 		pServerData->mUnlinkId = 0;
 		pServerData->mServerInfo.set_server_state(NFMsg::EST_CRASH);
 
-		NFLogError("the world server disconnect, serverName:{}, serverId:{}, serverIp:{}, serverPort:{}"
+		NFLogError(NF_LOG_SERVER_CONNECT_SERVER, 0, "the world server disconnect, serverName:{}, serverId:{}, serverIp:{}, serverPort:{}"
 			, pServerData->mServerInfo.server_name(), pServerData->mServerInfo.server_id(), pServerData->mServerInfo.server_ip(), pServerData->mServerInfo.server_port());
 
 		pServerData->SetSendString([this, pServerData](const std::string& msg) {
-			NFLogError("world disconnect, can't send msg:{}", msg);
+			NFLogError(NF_LOG_SERVER_CONNECT_SERVER, 0, "world disconnect, can't send msg:{}", msg);
 		});
 		m_pServerNetEventModule->OnServerNetEvent(eMsgType_DISCONNECTED, NF_ST_GAME, NF_ST_WORLD, unLinkId, pServerData);
 
@@ -125,7 +125,7 @@ void NFCGameClient_WorldModule::OnHandleOtherMessage(const uint32_t unLinkId, co
 {
 	if (GetServerByUnlinkId(unLinkId) == nullptr) return;
 
-	NFLogWarning("msg:{} not handled!", nMsgId);
+	NFLogWarning(NF_LOG_SERVER_NOT_HANDLE_MESSAGE, 0, "msg:{} not handled!", nMsgId);
 }
 
 void NFCGameClient_WorldModule::RegisterServer(uint32_t linkId)

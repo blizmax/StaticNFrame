@@ -12,6 +12,8 @@
 #include "NFIModule.h"
 #include "common/spdlog/fmt/fmt.h"
 
+class LogInfoConfig;
+
 enum NF_LOG_LEVEL
 {
 	NLL_TRACE_NORMAL = 0,
@@ -21,6 +23,38 @@ enum NF_LOG_LEVEL
 	NLL_ERROR_NORMAL = 4,
 	NLL_CRITICAL_NORMAL = 5,
 	NLL_OFF_NORMAL = 6,
+};
+
+/**
+* @brief 服务器分层架构，这里只能填写系统引擎的LOG
+*
+*/
+enum NF_LOG_ID
+{
+	//0-100是基础框架层LOG
+	NF_LOG_DEFAULT = 0,						//默认LOG
+	NF_LOG_SYSTEMLOG = 1,					//系统LOG
+	NF_LOG_ACTOR_PLUGIN = 2,				//Actor 引擎 
+	NF_LOG_KERNEL_PLUGIN = 3,				//kernel 引擎
+	NF_LOG_LUA_PLUGIN = 4,					//lua 引擎
+	NF_LOG_MONGO_PLUGIN = 5,				//mongo 引擎
+	NF_LOG_MONITOR_PLUGIN = 5,				//monitor 引擎
+	NF_LOG_MYSQL_PLUGIN = 7,				//mysql 引擎
+	NF_LOG_NET_PLUGIN = 8,					//net 引擎
+	NF_LOG_SQLITE_PLUGIN = 9,				//sqlite 引擎
+	NF_LOG_TEST_PLUGIN = 10,				//test 引擎
+
+	//-----------------------------------------------------------
+	NF_LOG_LOAD_CONFIG = 21,				//加载配置
+	NF_LOG_PROTOBUF_PARSE = 22,				//protobuf解析出错
+	NF_LOG_PLUGIN_MANAGER = 100,			//引擎加载器
+	NF_LOG_MAX_SYSTEM_PLUGIN = 100,
+	//-----------------------------------------------------------
+	NF_LOG_BEGIN_SERVER_LOG = 101,			//101-1000是系统框架层LOG
+	NF_LOG_END_SERVER_LOG = 1000,			//
+	//-----------------------------------------------------------
+	NF_LOG_BEGIN_LOGIC_LOG = 1001,			//1001以后是逻辑框架层
+	NF_LOG_MAX_ID = 10240, //最大LOGID
 };
 
 class NFILogModule
@@ -38,9 +72,22 @@ public:
 	template<typename... ARGS>
 	void Log(NF_LOG_LEVEL log_level, const char* function, int line, uint32_t logId, uint64_t guid, const char* my_fmt, const ARGS& ... args)
 	{
-		std::string str = fmt::format(std::string("[{}:{}] | [{}:{}] |") + my_fmt, function, line, logId, guid, args...);
-		LogDefault(log_level, logId, guid, str);
+		std::string str = fmt::format(my_fmt, args...);
+		LogDefault(log_level, function, line, logId, guid, str);
 	}
+
+	/**
+	* @brief 对外接口输出默认的LOG
+	*
+	* @param  log_level log等级
+	* @param  function
+	* @param  line
+	* @param  logId LOG选项ID，可以配置输出
+	* @param  guid 一般是玩家ID，某些情况下，只想输出一个玩家的LOG
+	* @param  log
+	* @return bool
+	*/
+	virtual void LogDefault(NF_LOG_LEVEL log_level, const char* function, int line, uint32_t logId, uint64_t guid, const std::string& log) = 0;
 
 	/**
 	* @brief 对外接口输出默认的LOG
@@ -48,7 +95,7 @@ public:
 	* @param  log_level log等级
 	* @param  logId LOG选项ID，可以配置输出
 	* @param  guid 一般是玩家ID，某些情况下，只想输出一个玩家的LOG
-	* @param  log 
+	* @param  log
 	* @return bool
 	*/
 	virtual void LogDefault(NF_LOG_LEVEL log_level, uint32_t logId, uint64_t guid, const std::string& log) = 0;
@@ -68,6 +115,14 @@ public:
 	* @return bool
 	*/
 	virtual void SetDefaultFlush(NF_LOG_LEVEL log_level) = 0;
+
+	/**
+	* @brief 设置log的配置
+	*
+	* @param  vecLogConfig
+	* @return
+	*/
+	virtual void SetDefaultLogConfig(const std::vector<LogInfoConfig>& vecLogConfig) = 0;
 
 	/**
 	* @brief 创建别的LOG系统

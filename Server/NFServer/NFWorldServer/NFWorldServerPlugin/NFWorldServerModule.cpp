@@ -51,16 +51,16 @@ bool NFCWorldServerModule::Init()
 		uint32_t unlinkId = m_pNetServerModule->AddServer(NF_ST_WORLD, pConfig->mServerId, pConfig->mMaxConnectNum, pConfig->mServerPort);
 		if (unlinkId != 0)
 		{
-			NFLogInfo("world server listen success, serverId:{}, maxConnectNum:{}, port:{}", pConfig->mServerId, pConfig->mMaxConnectNum, pConfig->mServerPort);
+			NFLogInfo(NF_LOG_SERVER_CONNECT_SERVER, 0, "world server listen success, serverId:{}, maxConnectNum:{}, port:{}", pConfig->mServerId, pConfig->mMaxConnectNum, pConfig->mServerPort);
 		}
 		else
 		{
-			NFLogInfo("world server listen failed!, serverId:{}, maxConnectNum:{}, port:{}", pConfig->mServerId, pConfig->mMaxConnectNum, pConfig->mServerPort);
+			NFLogInfo(NF_LOG_SERVER_CONNECT_SERVER, 0, "world server listen failed!, serverId:{}, maxConnectNum:{}, port:{}", pConfig->mServerId, pConfig->mMaxConnectNum, pConfig->mServerPort);
 		}
 	}
 	else
 	{
-		NFLogError("I Can't get the World Server config!");
+		NFLogError(NF_LOG_SERVER_CONNECT_SERVER, 0, "I Can't get the World Server config!");
 		return false;
 	}
 
@@ -111,11 +111,11 @@ void NFCWorldServerModule::OnClientDisconnect(uint32_t unLinkId)
 			pServerData->mServerInfo.set_server_state(NFMsg::EST_CRASH);
 			pServerData->mUnlinkId = 0;
 
-			NFLogError("the game server disconnect from world server, serverName:{}, serverId:{}, serverIp:{}, serverPort:{}"
+			NFLogError(NF_LOG_SERVER_CONNECT_SERVER, 0, "the game server disconnect from world server, serverName:{}, serverId:{}, serverIp:{}, serverPort:{}"
 				, pServerData->mServerInfo.server_name(), pServerData->mServerInfo.server_id(), pServerData->mServerInfo.server_ip(), pServerData->mServerInfo.server_port());
 
 			pServerData->SetSendString([this, pServerData](const std::string& msg) {
-				NFLogError("game disconnect, can't send msg:{}", msg);
+				NFLogError(NF_LOG_SERVER_CONNECT_SERVER, 0, "game disconnect, can't send msg:{}", msg);
 			});
 			m_pServerNetEventModule->OnServerNetEvent(eMsgType_DISCONNECTED, NF_ST_WORLD, NF_ST_GAME, unLinkId, pServerData);
 			return;
@@ -132,11 +132,11 @@ void NFCWorldServerModule::OnClientDisconnect(uint32_t unLinkId)
 			pServerData->mServerInfo.set_server_state(NFMsg::EST_CRASH);
 			pServerData->mUnlinkId = 0;
 
-			NFLogError("the proxy server disconnect from world server, serverName:{}, serverId:{}, serverIp:{}, serverPort:{}"
+			NFLogError(NF_LOG_SERVER_CONNECT_SERVER, 0, "the proxy server disconnect from world server, serverName:{}, serverId:{}, serverIp:{}, serverPort:{}"
 				, pServerData->mServerInfo.server_name(), pServerData->mServerInfo.server_id(), pServerData->mServerInfo.server_ip(), pServerData->mServerInfo.server_port());
 
 			pServerData->SetSendString([this, pServerData](const std::string& msg) {
-				NFLogError("proxy disconnect, can't send msg:{}", msg);
+				NFLogError(NF_LOG_SERVER_CONNECT_SERVER, 0, "proxy disconnect, can't send msg:{}", msg);
 			});
 			m_pServerNetEventModule->OnServerNetEvent(eMsgType_DISCONNECTED, NF_ST_WORLD, NF_ST_PROXY, unLinkId, pServerData);
 			return;
@@ -148,7 +148,7 @@ void NFCWorldServerModule::OnClientDisconnect(uint32_t unLinkId)
 
 void NFCWorldServerModule::OnHandleOtherMessage(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen)
 {
-	NFLogWarning("msg:{} not handled!", nMsgId);
+	NFLogWarning(NF_LOG_SERVER_NOT_HANDLE_MESSAGE, playerId, "msg:{} not handled!", nMsgId);
 }
 
 void NFCWorldServerModule::OnGameServerUnRegisterProcess(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen)
@@ -162,7 +162,7 @@ void NFCWorldServerModule::OnGameServerUnRegisterProcess(const uint32_t unLinkId
 
 		mGameMap.RemoveElement(xData.server_id());
 
-		NFLogInfo("Game Server UnRegister World Server Success, serverName:{}, serverId:{}, ip:{}, port:{}", xData.server_name(), xData.server_id(), xData.server_ip(), xData.server_port());
+		NFLogInfo(NF_LOG_SERVER_CONNECT_SERVER, 0, "Game Server UnRegister World Server Success, serverName:{}, serverId:{}, ip:{}, port:{}", xData.server_name(), xData.server_id(), xData.server_ip(), xData.server_port());
 	}
 }
 
@@ -217,7 +217,7 @@ void NFCWorldServerModule::OnGameServerRegisterProcess(const uint32_t unLinkId, 
 			pServerData->mServerInfo.set_server_ip(ip);
 		}
 
-		NFLogInfo("Game Server Register World Server Success, serverName:{}, serverId:{}, ip:{}, port:{}", pServerData->mServerInfo.server_name(), pServerData->mServerInfo.server_id(), pServerData->mServerInfo.server_ip(), pServerData->mServerInfo.server_port());
+		NFLogInfo(NF_LOG_SERVER_CONNECT_SERVER, 0, "Game Server Register World Server Success, serverName:{}, serverId:{}, ip:{}, port:{}", pServerData->mServerInfo.server_name(), pServerData->mServerInfo.server_id(), pServerData->mServerInfo.server_ip(), pServerData->mServerInfo.server_port());
 	
 		pServerData->SetSendString([this, pServerData](const std::string& msg) {
 			m_pNetServerModule->SendByServerID(pServerData->mUnlinkId, 0, msg, 0);
@@ -251,7 +251,7 @@ void NFCWorldServerModule::OnProxyServerRegisterProcess(const uint32_t unLinkId,
 		}
 
 
-		NFLogInfo("Proxy Server Register World Server Success, serverName:{}, serverId:{}, ip:{}, port:{}", pServerData->mServerInfo.server_name(), pServerData->mServerInfo.server_id(), pServerData->mServerInfo.server_ip(), pServerData->mServerInfo.server_port());
+		NFLogInfo(NF_LOG_SERVER_CONNECT_SERVER, 0, "Proxy Server Register World Server Success, serverName:{}, serverId:{}, ip:{}, port:{}", pServerData->mServerInfo.server_name(), pServerData->mServerInfo.server_id(), pServerData->mServerInfo.server_ip(), pServerData->mServerInfo.server_port());
 
 		pServerData->SetSendString([this, pServerData](const std::string& msg) {
 			m_pNetServerModule->SendByServerID(pServerData->mUnlinkId, 0, msg, 0);
@@ -270,7 +270,7 @@ void NFCWorldServerModule::OnProxyServerUnRegisterProcess(const uint32_t unLinkI
 		const NFMsg::ServerInfoReport& xData = xMsg.server_list(i);
 		mProxyMap.RemoveElement(xData.server_id());
 
-		NFLogInfo("World Server UnRegister Proxy Server Success, serverName:{}, serverId:{}, ip:{}, port:{}", xData.server_name(), xData.server_id(), xData.server_ip(), xData.server_port());
+		NFLogInfo(NF_LOG_SERVER_CONNECT_SERVER, 0, "World Server UnRegister Proxy Server Success, serverName:{}, serverId:{}, ip:{}, port:{}", xData.server_name(), xData.server_id(), xData.server_ip(), xData.server_port());
 	}
 }
 
