@@ -246,6 +246,25 @@ public:
 
 		return strto<T>(s);
 	}
+#else
+	/**
+	* @brief  字符串转化成T型，如果T是数值类型, 如果str为空,则T为0.
+	*
+	* @param sStr  要转换的字符串
+	* @return T    T型类型
+	*/
+	template<typename T>
+	static T strto(const std::string &sStr);
+
+	/**
+	* @brief  字符串转化成T型.
+	*
+	* @param sStr      要转换的字符串
+	* @param sDefault  缺省值
+	* @return T        转换后的T类型
+	*/
+	template<typename T>
+	static T strto(const std::string &sStr, const std::string &sDefault);
 #endif
 
 	typedef bool(*depthJudge)(const std::string& str1, const std::string& str2);
@@ -649,6 +668,81 @@ public:
 	{
 		return t;
 	}
+#else
+/**
+* @brief  解析字符串,用分隔符号分隔,保存在vector里
+*
+* 例子: |a|b||c|
+*
+* 如果withEmpty=true时, 采用|分隔为:"","a", "b", "", "c", ""
+*
+* 如果withEmpty=false时, 采用|分隔为:"a", "b", "c"
+*
+* 如果T类型为int等数值类型, 则分隔的字符串为"", 则强制转化为0
+*
+* @param sStr      输入字符串
+* @param sSep      分隔字符串(每个字符都算为分隔符)
+* @param withEmpty true代表空的也算一个元素, false时空的过滤
+* @param depthJudge 对分割后的字符再次进行判断
+* @return          解析后的字符vector
+*/
+template<typename T>
+static std::vector<T> sepstr(const std::string &sStr, const std::string &sSep, bool withEmpty = false, depthJudge judge = nullptr);
+
+/**
+* @brief T型转换成字符串，只要T能够使用ostream对象用<<重载,即可以被该函数支持
+* @param t 要转换的数据
+* @return  转换后的字符串
+*/
+template<typename T>
+static std::string tostr(const T &t);
+
+/**
+* @brief  vector转换成string.
+*
+* @param t 要转换的vector型的数据
+* @return  转换后的字符串
+*/
+template<typename T>
+static std::string tostr(const std::vector<T> &t);
+
+/**
+* @brief  把map输出为字符串.
+*
+* @param map<K, V, D, A>  要转换的map对象
+* @return                    string 输出的字符串
+*/
+template<typename K, typename V, typename D, typename A>
+static std::string tostr(const std::map<K, V, D, A> &t);
+
+/**
+* @brief  map输出为字符串.
+*
+* @param multimap<K, V, D, A>  map对象
+* @return                      输出的字符串
+*/
+template<typename K, typename V, typename D, typename A>
+static std::string tostr(const std::multimap<K, V, D, A> &t);
+
+/**
+* @brief  pair 转化为字符串，保证map等关系容器可以直接用tostr来输出
+* @param pair<F, S> pair对象
+* @return           输出的字符串
+*/
+template<typename F, typename S>
+static std::string tostr(const std::pair<F, S> &itPair);
+
+/**
+* @brief  container 转换成字符串.
+*
+* @param iFirst  迭代器
+* @param iLast   迭代器
+* @param sSep    两个元素之间的分隔符
+* @return        转换后的字符串
+*/
+template <typename InputIter>
+static std::string tostr(InputIter iFirst, InputIter iLast, const std::string &sSep = "|");
+
 #endif
 
 	/**
