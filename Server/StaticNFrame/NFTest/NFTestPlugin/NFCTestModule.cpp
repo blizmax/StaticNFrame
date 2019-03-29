@@ -19,6 +19,7 @@
 #include "NFComm/NFPluginModule/NFProtobufCommon.h"
 #include "NFMessageDefine/NFMsgDefine.h"
 #include "NFComm/NFSqlitePlugin/NFCSqliteDriver.h"
+#include "NFComm/NFCore/NFCommon.h"
 
 struct Test
 {
@@ -222,6 +223,7 @@ void testLog()
 
 bool NFCTestModule::Init()
 {
+	std::string str = NFCommon::tostr(true);
 	return true;
 }
 

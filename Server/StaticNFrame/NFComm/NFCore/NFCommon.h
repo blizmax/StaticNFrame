@@ -208,6 +208,7 @@ public:
 	*/
 	static int64_t now2us();
 
+#if NF_PLATFORM == NF_PLATFORM_WIN
 	/**
 	* @brief  字符串转化成T型，如果T是数值类型, 如果str为空,则T为0.
 	*
@@ -230,7 +231,7 @@ public:
 	* @return T        转换后的T类型
 	*/
 	template<typename T>
-	T NFCommon::strto(const std::string &sStr, const std::string &sDefault)
+	T strto(const std::string &sStr, const std::string &sDefault)
 	{
 		string s;
 
@@ -245,8 +246,11 @@ public:
 
 		return strto<T>(s);
 	}
+#endif
 
 	typedef bool(*depthJudge)(const std::string& str1, const std::string& str2);
+
+#if NF_PLATFORM == NF_PLATFORM_WIN
 	/**
 	* @brief  解析字符串,用分隔符号分隔,保存在vector里
 	*
@@ -645,6 +649,7 @@ public:
 	{
 		return t;
 	}
+#endif
 
 	/**
 	* @brief  二进制数据转换成字符串.
