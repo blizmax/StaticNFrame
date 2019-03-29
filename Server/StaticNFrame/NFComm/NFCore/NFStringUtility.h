@@ -347,6 +347,7 @@ public:
 		return Demangle(typeid(T).name());
 	}
 
+#if NF_PLATFORM == NF_PLATFORM_WIN
 	static std::string ws2s(const std::wstring &ws)
 	{
 		size_t i;
@@ -378,6 +379,7 @@ public:
 		setlocale(LC_ALL, curLocale.c_str());
 		return result;
 	}
+#endif
 };
 
 class NFStringUtilW
