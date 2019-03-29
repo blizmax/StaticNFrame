@@ -109,6 +109,11 @@ typedef std::function<NFWebStatus(uint32_t linkId, const NFHttpHandle& req)> HTT
 class NFIHttpServer
 {
 public:
+	virtual ~NFIHttpServer()
+	{
+
+	}
+
 	virtual bool Execute() = 0;
 
 	virtual uint32_t GetLinkId() const = 0;

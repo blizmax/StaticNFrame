@@ -6,8 +6,6 @@
 //
 // -------------------------------------------------------------------------
 
-#pragma once
-
 #include "NFServerNetEventModule.h"
 #include "NFComm/NFPluginModule/NFILuaScriptModule.h"
 #include "NFComm/NFPluginModule/NFIPluginManager.h"
