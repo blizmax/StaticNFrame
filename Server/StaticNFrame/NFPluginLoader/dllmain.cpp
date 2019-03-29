@@ -38,15 +38,13 @@
 #pragma comment( lib, "Dbghelp.lib" )
 #pragma comment( lib, "mysqlclient.lib" )
 #pragma comment( lib, "mysqlpp.lib" )
-
+#pragma comment( lib, "sqlite3.lib" )
 
 /////////////////////////////////////////////////////////////////
 #pragma comment( lib, "NFCore.lib" )
 #pragma comment( lib, "NFPluginModule.lib" )
 #pragma comment( lib, "NFMessageDefine.lib" )
 #pragma comment( lib, "NFMath.lib" )
-
-#pragma comment( lib, "NFServerCommon.lib" )
 
 ////////////////////////////////////////////////////////////////
 #pragma comment( lib, "NFKernelPlugin.lib" )
@@ -56,8 +54,12 @@
 #pragma comment( lib, "NFLuaScriptPlugin.lib" )
 #pragma comment( lib, "NFTestPlugin.lib" )
 #pragma comment( lib, "NFMongoPlugin.lib" )
+#pragma comment( lib, "NFMonitorPlugin.lib" )
+#pragma comment( lib, "NFSqlitePlugin.lib" )
 
 /////////////////////////////////////////////////////
+
+#pragma comment( lib, "NFServerCommon.lib" )
 
 #pragma comment( lib, "NFMasterServerPlugin.lib" )
 #pragma comment( lib, "NFLoginClientPlugin.lib" )

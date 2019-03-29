@@ -25,8 +25,12 @@
 
 #include "NFComm/NFNetPlugin/NFNetPlugin.h"
 #include "NFTest/NFTestPlugin/NFTestPlugin.h"
-#include <NFComm/NFMysqlPlugin/NFMysqlPlugin.h>
+#include "NFComm/NFMysqlPlugin/NFMysqlPlugin.h"
 #include "NFComm/NFMongoPlugin/NFMongoPlugin.h"
+#include "NFComm/NFMonitorPlugin/NFMonitorPlugin.h"
+#include "NFComm/NFSqlitePlugin/NFSqlitePlugin.h"
+
+#include <NFComm/NFXPlugin/NFLuaScriptPlugin/NFLuaScriptPlugin.h>
 
 #include <NFServer/NFMasterServer/NFMasterServerPlugin/NFMasterServerPlugin.h>
 #include <NFServer/NFLoginServer/NFLoginClientPlugin/NFLoginClientPlugin.h>
@@ -38,8 +42,6 @@
 #include <NFServer/NFGameServer/NFGameServerPlugin/NFGameServerPlugin.h>
 #include <NFServer/NFProxyServer/NFProxyServerPlugin/NFProxyServerPlugin.h>
 #include <NFServer/NFProxyServer/NFProxyClientPlugin/NFProxyClientPlugin.h>
-
-#include <NFComm/NFXPlugin/NFLuaScriptPlugin/NFLuaScriptPlugin.h>
 
 #include <NFServerLogic/NFLoginServerLogic/NFLoginLogicPlugin/NFLoginLogicPlugin.h>
 #include <NFServerLogic/NFGameServerLogic/NFGameLogicPlugin/NFGameLogicPlugin.h>
@@ -105,6 +107,8 @@ bool NFCPluginManager::RegisterStaticPlugin()
 	REGISTER_STATIC_PLUGIN(this, NFLuaScriptPlugin);
 	REGISTER_STATIC_PLUGIN(this, NFTestPlugin);
 	REGISTER_STATIC_PLUGIN(this, NFMongoPlugin);
+	REGISTER_STATIC_PLUGIN(this, NFMonitorPlugin);
+	REGISTER_STATIC_PLUGIN(this, NFSqlitePlugin);
 	/////////////////////////////////////////////////////////
 	REGISTER_STATIC_PLUGIN(this, NFMasterServerPlugin);
 

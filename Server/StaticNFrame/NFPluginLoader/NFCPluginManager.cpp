@@ -78,7 +78,7 @@ bool NFCPluginManager::Awake()
 
 	InitSingleton();
 
-	NFLogInfo("NFPluginLoader Awake................");
+	NFLogInfo(NF_LOG_PLUGIN_MANAGER, 0, "NFPluginLoader Awake................");
 	//加载引擎配置plugin.xml, 创建引擎，生成module
 	LoadPluginConfig();
 	for (PluginNameMap::iterator it = mPluginNameMap.begin(); it != mPluginNameMap.end(); ++it)
@@ -89,6 +89,7 @@ bool NFCPluginManager::Awake()
 	LoadKernelPlugin(); //NFKernelPlugin比较特殊，提前加载
 	InitSingleton();
 
+	NFLogInfo(NF_LOG_PLUGIN_MANAGER, 0, "NFPluginLoader Awake................");
 	//加载引擎配置plugin.xml, 创建引擎，生成module
 	LoadPluginConfig();
 	for (PluginNameMap::iterator it = mPluginNameMap.begin(); it != mPluginNameMap.end(); ++it)
