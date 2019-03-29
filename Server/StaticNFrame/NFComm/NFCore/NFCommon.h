@@ -942,5 +942,381 @@ namespace p
 
 }
 
+#if NF_PLATFORM == NF_PLATFORM_LINUX
+
+template<typename T>
+T NFCommon::strto(const std::string &sStr)
+{
+	using strto_type = typename std::conditional<std::is_arithmetic<T>::value, p::strto1<T>, p::strto2<T>>::type;
+
+	return strto_type()(sStr);
+}
+
+template<typename T>
+T NFCommon::strto(const std::string &sStr, const std::string &sDefault)
+{
+	string s;
+
+	if (!sStr.empty())
+	{
+		s = sStr;
+	}
+	else
+	{
+		s = sDefault;
+	}
+
+	return strto<T>(s);
+}
+
+
+template<typename T>
+std::vector<T> NFCommon::sepstr(const std::string &sStr, const std::string &sSep, bool withEmpty, NFCommon::depthJudge judge)
+{
+	std::vector<T> vt;
+
+	std::string::size_type pos = 0;
+	std::string::size_type pos1 = 0;
+	int pos_tmp = -1;
+
+	while (true)
+	{
+		std::string s;
+		std::string s1;
+		pos1 = sStr.find_first_of(sSep, pos);
+		if (pos1 == std::string::npos)
+		{
+			if (pos + 1 <= sStr.length())
+			{
+				s = sStr.substr(-1 != pos_tmp ? pos_tmp : pos);
+				s1 = "";
+			}
+		}
+		else if (pos1 == pos && (pos1 + 1 == sStr.length()))
+		{
+			s = "";
+			s1 = "";
+		}
+		else
+		{
+			s = sStr.substr(-1 != pos_tmp ? pos_tmp : pos, pos1 - (-1 != pos_tmp ? pos_tmp : pos));
+			s1 = sStr.substr(pos1 + 1);
+			if (-1 == pos_tmp)
+				pos_tmp = pos;
+			pos = pos1;
+		}
+
+		if (nullptr == judge || judge(s, s1))
+		{
+			if (withEmpty)
+			{
+				vt.push_back(strto<T>(s));
+			}
+			else
+			{
+				if (!s.empty())
+				{
+					T tmp = strto<T>(s);
+					vt.push_back(tmp);
+				}
+			}
+			pos_tmp = -1;
+		}
+
+		if (pos1 == string::npos)
+		{
+			break;
+		}
+
+		pos++;
+	}
+
+	return vt;
+}
+template<typename T>
+std::string NFCommon::tostr(const T &t)
+{
+	ostringstream sBuffer;
+	sBuffer << t;
+	return sBuffer.str();
+}
+
+template<typename T>
+std::string NFCommon::tostr(const std::vector<T> &t)
+{
+	string s;
+	for (size_t i = 0; i < t.size(); i++)
+	{
+		s += tostr(t[i]);
+		s += " ";
+	}
+	return s;
+}
+
+template<typename K, typename V, typename D, typename A>
+std::string NFCommon::tostr(const std::map<K, V, D, A> &t)
+{
+	string sBuffer;
+	typename map<K, V, D, A>::const_iterator it = t.begin();
+	while (it != t.end())
+	{
+		sBuffer += " [";
+		sBuffer += tostr(it->first);
+		sBuffer += "]=[";
+		sBuffer += tostr(it->second);
+		sBuffer += "] ";
+		++it;
+	}
+	return sBuffer;
+}
+
+template<typename K, typename V, typename D, typename A>
+std::string NFCommon::tostr(const std::multimap<K, V, D, A> &t)
+{
+	string sBuffer;
+	typename multimap<K, V, D, A>::const_iterator it = t.begin();
+	while (it != t.end())
+	{
+		sBuffer += " [";
+		sBuffer += tostr(it->first);
+		sBuffer += "]=[";
+		sBuffer += tostr(it->second);
+		sBuffer += "] ";
+		++it;
+	}
+	return sBuffer;
+}
+
+template<typename F, typename S>
+std::string NFCommon::tostr(const std::pair<F, S> &itPair)
+{
+	string sBuffer;
+	sBuffer += "[";
+	sBuffer += tostr(itPair.first);
+	sBuffer += "]=[";
+	sBuffer += tostr(itPair.second);
+	sBuffer += "]";
+	return sBuffer;
+}
+
+template <typename InputIter>
+std::string NFCommon::tostr(InputIter iFirst, InputIter iLast, const std::string &sSep)
+{
+	std::string sBuffer;
+	InputIter it = iFirst;
+
+	while (it != iLast)
+	{
+		sBuffer += tostr(*it);
+		++it;
+
+		if (it != iLast)
+		{
+			sBuffer += sSep;
+		}
+		else
+		{
+			break;
+		}
+	}
+
+	return sBuffer;
+}
+
+template <>
+std::string NFCommon::tostr<bool>(const bool &t)
+{
+	char buf[2];
+	buf[0] = t ? '1' : '0';
+	buf[1] = '\0';
+	return std::string(buf);
+}
+
+
+template <>
+std::string NFCommon::tostr<char>(const char &t)
+{
+	char buf[2];
+	snprintf(buf, 2, "%c", t);
+	return std::string(buf);
+}
+
+template <>
+std::string NFCommon::tostr<unsigned char>(const unsigned char &t)
+{
+	char buf[2];
+	snprintf(buf, 2, "%c", t);
+	return std::string(buf);
+}
+
+template <>
+std::string NFCommon::tostr<short>(const short &t)
+{
+	char buf[16];
+	snprintf(buf, 16, "%d", t);
+	return std::string(buf);
+}
+
+template <>
+std::string NFCommon::tostr<unsigned short>(const unsigned short &t)
+{
+	char buf[16];
+	snprintf(buf, 16, "%u", t);
+	return std::string(buf);
+}
+
+template <>
+std::string NFCommon::tostr<int>(const int &t)
+{
+	char buf[16];
+	snprintf(buf, 16, "%d", t);
+	return std::string(buf);
+}
+
+template <>
+std::string NFCommon::tostr<unsigned int>(const unsigned int &t)
+{
+	char buf[16];
+	snprintf(buf, 16, "%u", t);
+	return std::string(buf);
+}
+
+template <>
+std::string NFCommon::tostr<long>(const long &t)
+{
+	char buf[32];
+	snprintf(buf, 32, "%ld", t);
+	return std::string(buf);
+}
+
+template <>
+std::string NFCommon::tostr<long long>(const long long &t)
+{
+	char buf[32];
+	snprintf(buf, 32, "%lld", t);
+	return std::string(buf);
+}
+
+
+template <>
+std::string NFCommon::tostr<unsigned long>(const unsigned long &t)
+{
+	char buf[32];
+	snprintf(buf, 32, "%lu", t);
+	return std::string(buf);
+}
+
+template <>
+std::string NFCommon::tostr<float>(const float &t)
+{
+	char buf[32];
+	snprintf(buf, 32, "%.5f", t);
+	std::string s(buf);
+
+	//去掉无效0, eg. 1.0300 -> 1.03;1.00 -> 1
+	bool bFlag = false;
+	int pos = int(s.size() - 1);
+	for (; pos > 0; --pos)
+	{
+		if (s[pos] == '0')
+		{
+			bFlag = true;
+			if (s[pos - 1] == '.')
+			{
+				//-2为了去掉"."号
+				pos -= 2;
+				break;
+			}
+		}
+		else
+		{
+			break;
+		}
+	}
+
+	if (bFlag)
+		s = s.substr(0, pos + 1);
+
+	return s;
+}
+
+template <>
+std::string NFCommon::tostr<double>(const double &t)
+{
+	char buf[32];
+	snprintf(buf, 32, "%.5f", t);
+	std::string s(buf);
+
+	//去掉无效0, eg. 1.0300 -> 1.03;1.00 -> 1
+	bool bFlag = false;
+	int pos = int(s.size() - 1);
+	for (; pos > 0; --pos)
+	{
+		if (s[pos] == '0')
+		{
+			bFlag = true;
+			if (s[pos - 1] == '.')
+			{
+				//-2为了去掉"."号
+				pos -= 2;
+				break;
+			}
+		}
+		else
+		{
+			break;
+		}
+	}
+
+	if (bFlag)
+		s = s.substr(0, pos + 1);
+
+	return s;
+
+}
+
+template <>
+std::string NFCommon::tostr<long double>(const long double &t)
+{
+	char buf[32];
+	snprintf(buf, 32, "%Lf", t);
+	std::string s(buf);
+
+	//去掉无效0, eg. 1.0300 -> 1.03;1.00 -> 1
+	bool bFlag = false;
+	int pos = int(s.size() - 1);
+	for (; pos > 0; --pos)
+	{
+		if (s[pos] == '0')
+		{
+			bFlag = true;
+			if (s[pos - 1] == '.')
+			{
+				//-2为了去掉"."号
+				pos -= 2;
+				break;
+			}
+		}
+		else
+		{
+			break;
+		}
+	}
+
+	if (bFlag)
+		s = s.substr(0, pos + 1);
+
+	return s;
+
+}
+
+template <>
+std::string NFCommon::tostr<std::string>(const std::string &t)
+{
+	return t;
+}
+#endif
+
+
 
 
