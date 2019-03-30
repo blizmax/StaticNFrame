@@ -88,6 +88,10 @@ public:
 		return NULL;
 	}
 
+	virtual bool Begin() = 0;
+
+	virtual bool End() = 0;
+
 	virtual void RegisterAloneModule(const std::string& strModuleName, const CREATE_ALONE_MODULE& createFunc) = 0;   //
 
 	virtual NFIModule* CreateAloneModule(const std::string& strModuleName) = 0;

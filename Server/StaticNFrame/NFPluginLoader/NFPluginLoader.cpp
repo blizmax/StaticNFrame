@@ -75,53 +75,6 @@ void CloseXButton()
 #endif
 }
 
-static void sig_usr(int signo)
-{
-#if NF_PLATFORM != NF_PLATFORM_WIN
-	switch (signo)
-	{
-	case SIGUSR1:
-	case SIGUSR2:
-	case SIGKILL:
-	case SIGINT:
-	case SIGQUIT:
-	case SIGHUP:
-	case SIGTERM:
-	{
-		NFCPluginManager::GetSingletonPtr()->BeforeShut();
-		NFCPluginManager::GetSingletonPtr()->Shut();
-		NFCPluginManager::GetSingletonPtr()->Finalize();
-
-		NFCPluginManager::GetSingletonPtr()->ReleaseInstance();
-	}
-	break;
-	default:
-		break;
-	}
-#endif
-	exit(0);
-}
-
-void InitSignal()
-{
-#if NF_PLATFORM != NF_PLATFORM_WIN
-	signal(SIGUSR1, sig_usr);
-	signal(SIGUSR2, sig_usr);
-	signal(SIGKILL, sig_usr);
-	signal(SIGINT, sig_usr);
-	signal(SIGQUIT, sig_usr);
-	signal(SIGHUP, sig_usr);
-	signal(SIGTERM, sig_usr);
-	// ignore signals
-
-
-
-	signal(SIGPIPE, SIG_IGN);
-	signal(SIGTTOU, SIG_IGN);
-	signal(SIGTTIN, SIG_IGN);
-#endif
-}
-
 //转变成守护进程后，会新建一个进程
 void InitDaemon()
 {
@@ -195,8 +148,6 @@ void ProcessParameter(int argc, char* argv[])
 			NFCPluginManager::GetSingletonPtr()->SetDaemon();
 			InitDaemon();
 		}
-
-		InitSignal();
 #endif
 
 		std::string strPluginName = cmdParser.Get<std::string>("Plugin");
@@ -241,11 +192,7 @@ int main(int argc, char* argv[])
 	ProcessParameter(argc, argv);
 	PrintfLogo();
 
-	NFCPluginManager::GetSingletonPtr()->Awake();
-	NFCPluginManager::GetSingletonPtr()->Init();
-	NFCPluginManager::GetSingletonPtr()->AfterInit();
-	NFCPluginManager::GetSingletonPtr()->CheckConfig();
-	NFCPluginManager::GetSingletonPtr()->ReadyExecute();
+	NFCPluginManager::GetSingletonPtr()->Begin();
 
 	uint64_t nIndex = 0;
 	bool bExitApp = false;
@@ -275,11 +222,7 @@ int main(int argc, char* argv[])
 		}
 	}
 
-	NFCPluginManager::GetSingletonPtr()->BeforeShut();
-	NFCPluginManager::GetSingletonPtr()->Shut();
-	NFCPluginManager::GetSingletonPtr()->Finalize();
-
-	NFCPluginManager::GetSingletonPtr()->ReleaseInstance();
+	NFCPluginManager::GetSingletonPtr()->End();
 
 	return 0;
 }

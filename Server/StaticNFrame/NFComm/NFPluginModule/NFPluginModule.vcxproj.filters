@@ -184,6 +184,9 @@
     <ClInclude Include="NFICallBackModule.h">
       <Filter>Net</Filter>
     </ClInclude>
+    <ClInclude Include="NFISignalHandleModule.h">
+      <Filter>Monitor</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Event">

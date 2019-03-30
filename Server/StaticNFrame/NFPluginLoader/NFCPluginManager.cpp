@@ -108,6 +108,26 @@ bool NFCPluginManager::Awake()
 	return true;
 }
 
+bool NFCPluginManager::Begin()
+{
+	Awake();
+	Init();
+	AfterInit();
+	CheckConfig();
+	ReadyExecute();
+	return true;
+}
+
+bool NFCPluginManager::End()
+{
+	NFCPluginManager::GetSingletonPtr()->BeforeShut();
+	NFCPluginManager::GetSingletonPtr()->Shut();
+	NFCPluginManager::GetSingletonPtr()->Finalize();
+
+	NFCPluginManager::GetSingletonPtr()->ReleaseInstance();
+	return true;
+}
+
 inline bool NFCPluginManager::Init()
 {
 	NFLogInfo(NF_LOG_PLUGIN_MANAGER, 0, "NFPluginLoader Init................");

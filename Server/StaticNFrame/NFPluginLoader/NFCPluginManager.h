@@ -39,6 +39,10 @@ public:
 
 	virtual bool InitSingleton();
 
+	virtual bool Begin() override;
+
+	virtual bool End() override;
+
 	virtual bool Awake() override;
 
 	virtual bool Init() override;

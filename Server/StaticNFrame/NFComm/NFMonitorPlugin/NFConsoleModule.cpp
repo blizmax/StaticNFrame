@@ -25,23 +25,19 @@ NFCConsoleModule::~NFCConsoleModule()
 
 bool NFCConsoleModule::Awake()
 {
-	try
-	{
-		mCmdParser.Add("Exit", 0, "Exit App");
-		mCmdParser.Add("Reload", 0, "Reload Plugin Config");
-		mCmdParser.Add("Profiler", 0, "Open Profiler");
-
-		//mCmdParser.ParseCheck();
-
-		//std::string strPluginName = mCmdParser.Get<std::string>("Plugin");
-	}
-	catch (NFCmdLine::NFCmdLine_Error& e)
-	{
-		NFLogWarning(NF_LOG_MONITOR_PLUGIN, 0, e.what());
-	}
-
 	if (m_pPluginManager->IsDaemon() == false)
 	{
+		try
+		{
+			mCmdParser.Add("Exit", 0, "Exit App");
+			mCmdParser.Add("Reload", 0, "Reload Plugin Config");
+			mCmdParser.Add("Profiler", 0, "Open Profiler");
+		}
+		catch (NFCmdLine::NFCmdLine_Error& e)
+		{
+			NFLogWarning(NF_LOG_MONITOR_PLUGIN, 0, e.what());
+		}
+
 		CreateBackThread();
 	}
 

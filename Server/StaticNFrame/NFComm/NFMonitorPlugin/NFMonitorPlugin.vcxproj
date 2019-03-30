@@ -301,11 +301,13 @@
     <ClCompile Include="NFConsoleModule.cpp" />
     <ClCompile Include="NFMonitorModule.cpp" />
     <ClCompile Include="NFMonitorPlugin.cpp" />
+    <ClCompile Include="NFSignalHandleModule.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="NFConsoleModule.h" />
     <ClInclude Include="NFMonitorModule.h" />
     <ClInclude Include="NFMonitorPlugin.h" />
+    <ClInclude Include="NFSignalHandleModule.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
