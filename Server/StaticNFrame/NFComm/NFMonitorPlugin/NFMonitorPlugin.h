@@ -24,11 +24,6 @@ public:
 		m_pPluginManager = p;
 	}
 
-	virtual ~NFMonitorPlugin()
-	{
-
-	}
-
 	virtual int GetPluginVersion() override;
 
 	virtual std::string GetPluginName() override;

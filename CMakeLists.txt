@@ -65,16 +65,16 @@ else()
 		"${CMAKE_SOURCE_DIR}/Product/Lib/Debug")
 endif()
 
-SET(LIB_LINK_DEP resolv dl rt libssl.a libcrypto.a pthread libbson-static-1.0.a libmysqlpp.a libmysqlclient.a libevent_core.a libevent_extra.a libtheron.a
-		libevent.a libLuaBind.a libtheron.a libprotobuf.a libmongoc-static-1.0.a libbson-static-1.0.a libCommon.a libSqlite3.a)
+SET(LIB_LINK_DEP resolv dl rt libprotobuf.a  libssl.a libcrypto.a pthread libbson-static-1.0.a libmysqlpp.a libmysqlclient.a libevent_core.a libevent_extra.a libtheron.a
+		libevent.a libLuaBind.a libtheron.a libmongoc-static-1.0.a libbson-static-1.0.a libCommon.a libSqlite3.a libNFMessageDefine.a)
 		
-SET(LIB_LINK_NF libNFActorPlugin.a libNFCore.a libNFKernelPlugin.a libNFLuaScriptPlugin.a
-				libNFMath.a libNFMessageDefine.a libNFNetPlugin.a libNFPluginModule.a libNFMongoPlugin.a libNFSqlitePlugin.a
+SET(LIB_LINK_NF  libNFCore.a libNFPluginModule.a libprotobuf.a libNFActorPlugin.a libNFKernelPlugin.a libNFLuaScriptPlugin.a
+				libNFMath.a  libNFNetPlugin.a libNFMongoPlugin.a libNFSqlitePlugin.a libNFMonitorPlugin.a
 				libNFTestPlugin.a libNFMysqlPlugin.a libNFGameClientPlugin.a libNFGameServerPlugin.a 
 				libNFLoginClientPlugin.a libNFLoginServerPlugin.a libNFMasterServerPlugin.a 
 				libNFProxyClientPlugin.a libNFProxyServerPlugin.a 
 				libNFServerCommon.a libNFWorldClientPlugin.a libNFWorldServerPlugin.a
-				libNFGameLogicPlugin.a libNFLoginLogicPlugin.a libNFProxyLogicPlugin.a libNFServerLogicCommon.a libprotobuf.a)
+				libNFGameLogicPlugin.a libNFLoginLogicPlugin.a libNFProxyLogicPlugin.a libNFServerLogicCommon.a )
 	
 include_directories( ${INCLUDE_DIR} )
 	

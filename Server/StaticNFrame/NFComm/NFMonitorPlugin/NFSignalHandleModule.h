@@ -22,7 +22,7 @@
 class NFCSignalHandleModule : public NFISignalHandleModule
 {
 public:
-	NFCSignalHandleModule();
+	NFCSignalHandleModule(NFIPluginManager* p);
 	virtual ~NFCSignalHandleModule();
 
 	virtual bool Init();

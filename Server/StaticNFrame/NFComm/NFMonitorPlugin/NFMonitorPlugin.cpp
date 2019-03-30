@@ -1,8 +1,8 @@
 //------------------------------------------------------------------------ -
-//    @FileName         :    NFSqlitePlugin.cpp
+//    @FileName         :    NFMonitorPlugin.cpp
 //    @Author           :    Yi.Gao
 //    @Date             :    2019-03-21
-//    @Module           :    NFMysqlPlugin
+//    @Module           :    NFMonitorPlugin
 //
 // -------------------------------------------------------------------------
 
@@ -10,6 +10,7 @@
 #include "NFComm/NFPluginModule/NFIPluginManager.h"
 #include "NFMonitorModule.h"
 #include "NFConsoleModule.h"
+#include "NFSignalHandleModule.h"
 
 #ifdef NF_DYNAMIC_PLUGIN
 
@@ -43,11 +44,13 @@ void NFMonitorPlugin::Install()
 {
 	REGISTER_MODULE(m_pPluginManager, NFIMonitorModule, NFCMonitorModule);
 	REGISTER_MODULE(m_pPluginManager, NFIConsoleModule, NFCConsoleModule);
+	REGISTER_MODULE(m_pPluginManager, NFISignalHandleModule, NFCSignalHandleModule);
 }
 
 void NFMonitorPlugin::Uninstall()
 {
 	UNREGISTER_MODULE(m_pPluginManager, NFIMonitorModule, NFCMonitorModule);
 	UNREGISTER_MODULE(m_pPluginManager, NFIConsoleModule, NFCConsoleModule);
+	UNREGISTER_MODULE(m_pPluginManager, NFISignalHandleModule, NFCSignalHandleModule);
 }
 
