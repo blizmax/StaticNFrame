@@ -14,7 +14,7 @@
 NFCObject::NFCObject(const uint64_t objectId, NFIPluginManager* pLuginManager)
 	: mObjectId(objectId)
 {
-	pPluginManager = pLuginManager;
+	m_pPluginManager = pLuginManager;
 
 	m_pNodeManager = NF_NEW NFCDataNodeManager(objectId);
 	m_pTableManager = NF_NEW NFCDataTableManager(objectId);

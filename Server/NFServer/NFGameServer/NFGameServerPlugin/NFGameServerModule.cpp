@@ -17,7 +17,7 @@
 
 NFCGameServerModule::NFCGameServerModule(NFIPluginManager* p)
 {
-	pPluginManager = p;
+	m_pPluginManager = p;
 }
 
 NFCGameServerModule::~NFCGameServerModule()
@@ -26,8 +26,8 @@ NFCGameServerModule::~NFCGameServerModule()
 
 bool NFCGameServerModule::Init()
 {
-	m_pServerNetEventModule = pPluginManager->FindModule<NFIServerNetEventModule>();
-	m_pNetServerModule = pPluginManager->FindModule<NFINetServerModule>();
+	m_pServerNetEventModule = m_pPluginManager->FindModule<NFIServerNetEventModule>();
+	m_pNetServerModule = m_pPluginManager->FindModule<NFINetServerModule>();
 	m_pNetServerModule->AddEventCallBack(NF_ST_GAME, this, &NFCGameServerModule::OnProxySocketEvent);
 	m_pNetServerModule->AddReceiveCallBack(NF_ST_GAME, this, &NFCGameServerModule::OnHandleOtherMessage);
 
@@ -35,7 +35,7 @@ bool NFCGameServerModule::Init()
 	m_pNetServerModule->AddReceiveCallBack(NF_ST_GAME, EGMI_NET_PROXY_TO_GAME_UNREGISTER, this, &NFCGameServerModule::OnProxyServerUnRegisterProcess);
 	m_pNetServerModule->AddReceiveCallBack(NF_ST_GAME, EGMI_NET_PROXY_TO_GAME_REFRESH, this, &NFCGameServerModule::OnProxyServerRefreshProcess);
 
-	NFServerConfig* pConfig = NFServerCommon::GetAppConfig(pPluginManager, NF_ST_GAME);
+	NFServerConfig* pConfig = NFServerCommon::GetAppConfig(m_pPluginManager, NF_ST_GAME);
 	if (pConfig)
 	{
 		uint32_t unlinkId = m_pNetServerModule->AddServer(NF_ST_GAME, pConfig->mServerId, pConfig->mMaxConnectNum, pConfig->mServerPort);

@@ -331,6 +331,7 @@
     <ClInclude Include="NFIClassModule.h" />
     <ClInclude Include="NFCDataTableManager.h" />
     <ClInclude Include="NFIConfigModule.h" />
+    <ClInclude Include="NFIConsoleModule.h" />
     <ClInclude Include="NFIDataTableManager.h" />
     <ClInclude Include="NFDataTable.h" />
     <ClInclude Include="NFCObject.h" />

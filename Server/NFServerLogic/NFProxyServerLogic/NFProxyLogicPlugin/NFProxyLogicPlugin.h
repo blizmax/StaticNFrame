@@ -19,7 +19,7 @@ class NFProxyLogicPlugin : public NFIPlugin
 public:
 	explicit NFProxyLogicPlugin(NFIPluginManager* p)
 	{
-		pPluginManager = p;
+		m_pPluginManager = p;
 	}
 
 	virtual int GetPluginVersion() override;

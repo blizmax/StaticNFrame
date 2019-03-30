@@ -41,13 +41,13 @@ std::string NFSqlitePlugin::GetPluginName()
 
 void NFSqlitePlugin::Install()
 {
-	REGISTER_MODULE(pPluginManager, NFISqliteModule, NFCSqliteModule);
+	REGISTER_MODULE(m_pPluginManager, NFISqliteModule, NFCSqliteModule);
 	//REGISTER_MODULE(pPluginManager, NFIAsynMongoModule, NFCAsynMongoModule);
 }
 
 void NFSqlitePlugin::Uninstall()
 {
-	UNREGISTER_MODULE(pPluginManager, NFISqliteModule, NFCSqliteModule);
+	UNREGISTER_MODULE(m_pPluginManager, NFISqliteModule, NFCSqliteModule);
 	//UNREGISTER_MODULE(pPluginManager, NFIAsynMongoModule, NFCAsynMongoModule);
 }
 

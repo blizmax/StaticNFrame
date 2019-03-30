@@ -178,6 +178,9 @@
     <ClInclude Include="NFIMonitorModule.h">
       <Filter>Monitor</Filter>
     </ClInclude>
+    <ClInclude Include="NFIConsoleModule.h">
+      <Filter>Monitor</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Event">

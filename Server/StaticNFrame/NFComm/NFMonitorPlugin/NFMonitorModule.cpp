@@ -7,6 +7,7 @@
 // -------------------------------------------------------------------------
 
 #include "NFMonitorModule.h"
+#include "NFComm/NFPluginModule/NFLogMgr.h"
 
 enum MonitorTimerEnum
 {
@@ -17,7 +18,7 @@ enum MonitorTimerEnum
 
 NFCMonitorModule::NFCMonitorModule(NFIPluginManager* p)
 {
-	pPluginManager = p;
+	m_pPluginManager = p;
 }
 
 NFCMonitorModule::~NFCMonitorModule()
@@ -52,6 +53,7 @@ void NFCMonitorModule::OnTimer(uint32_t nTimerID)
 	if (nTimerID == MonitorTimer_SYSTEMINFO)
 	{
 		mSystemInfo.CountSystemInfo();
+		NFLogInfo(NF_LOG_MONITOR_PLUGIN, 0, "cpu:%{}, mem:{}M", mSystemInfo.GetProcessInfo().mCpuUsed, mSystemInfo.GetProcessInfo().mMemUsed /(double)1024 / (double)1024);
 	}
 }
 

@@ -39,7 +39,7 @@
 
 NFCConfigModule::NFCConfigModule(NFIPluginManager* p)
 {
-	pPluginManager = p;
+	m_pPluginManager = p;
 	mLogLevel = NLL_TRACE_NORMAL;
 	mLogFlushLevel = NLL_TRACE_NORMAL;
 	//比较特殊，必须在这里加载配置，不然plugginmanager::Awake会出问题， 引擎配置没有数据
@@ -72,9 +72,9 @@ NFCConfigModule::~NFCConfigModule()
 
 bool NFCConfigModule::LoadConfig()
 {
-	TryAddPackagePath(pPluginManager->GetConfigPath()); //Add Search Path to Lua
+	TryAddPackagePath(m_pPluginManager->GetConfigPath()); //Add Search Path to Lua
 	std::list<std::string> fileList;
-	NFFileUtility::GetFiles(pPluginManager->GetConfigPath(), fileList, true, "*.lua");
+	NFFileUtility::GetFiles(m_pPluginManager->GetConfigPath(), fileList, true, "*.lua");
 
 	for (auto it = fileList.begin(); it != fileList.end(); it++)
 	{
@@ -215,6 +215,7 @@ bool NFCConfigModule::LoadServerConfig()
 			NFLogError(NF_LOG_LOAD_CONFIG, 0, "must be config the ServerId........");
 			assert(0);
 		}
+
 		if (!GetLuaTableValue(serverConfigRef, DEFINE_LUA_STRING_SERVER_TYPE, pConfig->mServerType))
 		{
 			NFLogError(NF_LOG_LOAD_CONFIG, 0, "must be config the ServerType........");
@@ -269,6 +270,26 @@ bool NFCConfigModule::Shut()
 
 bool NFCConfigModule::Execute()
 {
+	return true;
+}
+
+bool  NFCConfigModule::OnReloadPlugin()
+{
+	TryAddPackagePath(m_pPluginManager->GetConfigPath()); //Add Search Path to Lua
+	std::list<std::string> fileList;
+	NFFileUtility::GetFiles(m_pPluginManager->GetConfigPath(), fileList, true, "*.lua");
+
+	for (auto it = fileList.begin(); it != fileList.end(); it++)
+	{
+		if (TryLoadScriptFile(*it) == false)
+		{
+			NFLogError(NF_LOG_SYSTEMLOG, 0, "Load {} Failed!", *it);
+			return false;
+		}
+	}
+
+	LoadLogConfig();
+
 	return true;
 }
 

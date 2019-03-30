@@ -16,6 +16,7 @@
 #include <vector>
 #include "NFComm/NFCore/NFPlatform.h"
 #include <map>
+#include <atomic>
 
 #ifdef _MSC_VER
 #include <windows.h>
@@ -111,6 +112,8 @@ public:
 	void BeginProfiler(PROFILE_TIMER* timer);
 	void BeginProfiler(const std::string& luaFunc);
 	uint64_t EndProfiler(); //return this time cost time(us) ОўГо
+	void SetOpenProfiler(bool b) { mIsOpenProfiler = b; }
+	bool IsOpenProfiler() const { return mIsOpenProfiler; }
 public:
 	// for support profile main thread in multi thread program(ignore another, only main thread)
 	void SetProfilerThreadID();
@@ -125,7 +128,7 @@ protected:
 	void OutputNode(const CALL_TREE_NODE& node, bool showSplitLine, long long totalTime, int level, std::string& report);
 	void OutputCallTree(const CALL_TREE_NODE& node, long long totalTime, long long minShowTime, int level, std::string& report);
 private:
-	bool mIsOpenProfiler;
+	atomic_bool mIsOpenProfiler;
 	NF_THREAD_ID mProfileThreadID;
 private:
 	unsigned mTimerCount;

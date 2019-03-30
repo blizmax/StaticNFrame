@@ -16,7 +16,7 @@
 
 NFCGameClient_WorldModule::NFCGameClient_WorldModule(NFIPluginManager* p)
 {
-	pPluginManager = p;
+	m_pPluginManager = p;
 	m_pNetClientModule = nullptr;
 }
 
@@ -26,8 +26,8 @@ NFCGameClient_WorldModule::~NFCGameClient_WorldModule()
 
 bool NFCGameClient_WorldModule::Init()
 {
-	m_pServerNetEventModule = pPluginManager->FindModule<NFIServerNetEventModule>();
-	m_pNetClientModule = pPluginManager->FindModule<NFINetClientModule>();
+	m_pServerNetEventModule = m_pPluginManager->FindModule<NFIServerNetEventModule>();
+	m_pNetClientModule = m_pPluginManager->FindModule<NFINetClientModule>();
 	return true;
 }
 
@@ -130,7 +130,7 @@ void NFCGameClient_WorldModule::OnHandleOtherMessage(const uint32_t unLinkId, co
 
 void NFCGameClient_WorldModule::RegisterServer(uint32_t linkId)
 {
-	NFServerConfig* pConfig = NFServerCommon::GetAppConfig(pPluginManager, NF_ST_GAME);
+	NFServerConfig* pConfig = NFServerCommon::GetAppConfig(m_pPluginManager, NF_ST_GAME);
 	if (pConfig)
 	{
 		NFMsg::ServerInfoReportList xMsg;

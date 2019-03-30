@@ -17,7 +17,7 @@
 
 NFCLoginClient_MasterModule::NFCLoginClient_MasterModule(NFIPluginManager* p)
 {
-	pPluginManager = p;
+	m_pPluginManager = p;
 	m_pNetClientModule = nullptr;
 	mhashf = NFHash::hash_new<std::string>();
 }
@@ -28,7 +28,7 @@ NFCLoginClient_MasterModule::~NFCLoginClient_MasterModule()
 
 bool NFCLoginClient_MasterModule::Init()
 {
-	m_pNetClientModule = pPluginManager->FindModule<NFINetClientModule>();
+	m_pNetClientModule = m_pPluginManager->FindModule<NFINetClientModule>();
 	m_pMasterServerData = NF_SHARE_PTR<NFServerData>(NF_NEW NFServerData());
 	return true;
 }
@@ -40,7 +40,7 @@ bool NFCLoginClient_MasterModule::AfterInit()
 
 	m_pNetClientModule->AddReceiveCallBack(NF_ST_MASTER, EGMI_NET_MASTER_SEND_OTHERS_TO_LOGIN, this, &NFCLoginClient_MasterModule::OnServerReport);
 
-	NFServerConfig* pConfig = NFServerCommon::GetServerConfig(pPluginManager, NF_ST_MASTER);
+	NFServerConfig* pConfig = NFServerCommon::GetServerConfig(m_pPluginManager, NF_ST_MASTER);
 	if (pConfig)
 	{
 		//AddServer会自动重连，断开连接时，m_pMasterServerData->mUnlinkId不用清理，不变
@@ -152,7 +152,7 @@ void NFCLoginClient_MasterModule::OnHandleOtherMessage(const uint32_t unLinkId, 
 
 void NFCLoginClient_MasterModule::RegisterServer()
 {
-	NFServerConfig* pConfig = NFServerCommon::GetAppConfig(pPluginManager, NF_ST_LOGIN);
+	NFServerConfig* pConfig = NFServerCommon::GetAppConfig(m_pPluginManager, NF_ST_LOGIN);
 	if (pConfig)
 	{
 		NFMsg::ServerInfoReportList xMsg;
@@ -171,15 +171,15 @@ void NFCLoginClient_MasterModule::RegisterServer()
 
 void NFCLoginClient_MasterModule::ServerReport()
 {
-	static uint64_t mLastReportTime = pPluginManager->GetNowTime();
-	if (mLastReportTime + 10000 > pPluginManager->GetNowTime())
+	static uint64_t mLastReportTime = m_pPluginManager->GetNowTime();
+	if (mLastReportTime + 10000 > m_pPluginManager->GetNowTime())
 	{
 		return;
 	}
 
-	mLastReportTime = pPluginManager->GetNowTime();
+	mLastReportTime = m_pPluginManager->GetNowTime();
 
-	NFServerConfig* pConfig = NFServerCommon::GetAppConfig(pPluginManager, NF_ST_LOGIN);
+	NFServerConfig* pConfig = NFServerCommon::GetAppConfig(m_pPluginManager, NF_ST_LOGIN);
 	if (pConfig)
 	{
 		NFMsg::ServerInfoReportList xMsg;

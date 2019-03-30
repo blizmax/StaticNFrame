@@ -19,7 +19,7 @@
 
 NFCMasterServerModule::NFCMasterServerModule(NFIPluginManager* p)
 {
-	pPluginManager = p;
+	m_pPluginManager = p;
 }
 
 NFCMasterServerModule::~NFCMasterServerModule()
@@ -28,12 +28,12 @@ NFCMasterServerModule::~NFCMasterServerModule()
 
 bool NFCMasterServerModule::Init()
 {
-	m_pKernelModule = pPluginManager->FindModule<NFIKernelModule>();
-	m_pHttpServerModule = pPluginManager->FindModule<NFIHttpServerModule>();
+	m_pKernelModule = m_pPluginManager->FindModule<NFIKernelModule>();
+	m_pHttpServerModule = m_pPluginManager->FindModule<NFIHttpServerModule>();
 	m_pHttpServerModule->AddRequestHandler(NF_ST_MASTER, "/gm", NFHttpType::NF_HTTP_REQ_POST, this, &NFCMasterServerModule::HttpHandleHttpGm);
 	m_pHttpServerModule->AddRequestHandler(NF_ST_MASTER, "/GM", NFHttpType::NF_HTTP_REQ_POST, this, &NFCMasterServerModule::HttpHandleHttpGm);
 
-	m_pNetServerModule = pPluginManager->FindModule<NFINetServerModule>();
+	m_pNetServerModule = m_pPluginManager->FindModule<NFINetServerModule>();
 	m_pNetServerModule->AddEventCallBack(NF_ST_MASTER, this, &NFCMasterServerModule::OnProxySocketEvent);
 	m_pNetServerModule->AddReceiveCallBack(NF_ST_MASTER, this, &NFCMasterServerModule::OnHandleOtherMessage);
 
@@ -56,7 +56,7 @@ bool NFCMasterServerModule::Init()
 
 	m_pNetServerModule->AddReceiveCallBack(NF_ST_MASTER, EGMI_NET_LOGIN_TO_MASTER_PLAT_LOGIN, this, &NFCMasterServerModule::OnHandleAccountLogin);
 
-	NFServerConfig* pConfig = NFServerCommon::GetAppConfig(pPluginManager, NF_ST_MASTER);
+	NFServerConfig* pConfig = NFServerCommon::GetAppConfig(m_pPluginManager, NF_ST_MASTER);
 	if (pConfig)
 	{
 		uint32_t unlinkId = m_pNetServerModule->AddServer(NF_ST_MASTER, pConfig->mServerId, pConfig->mMaxConnectNum, pConfig->mServerPort);

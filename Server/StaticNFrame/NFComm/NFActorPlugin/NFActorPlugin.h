@@ -15,7 +15,7 @@ class NFActorPlugin : public NFIPlugin
 public:
 	explicit NFActorPlugin(NFIPluginManager* p)
 	{
-		pPluginManager = p;
+		m_pPluginManager = p;
 	}
 
 	virtual ~NFActorPlugin()

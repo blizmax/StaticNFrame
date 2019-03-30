@@ -25,6 +25,7 @@ public:
 
 	virtual bool Awake() override;
 	virtual bool Shut() override;
+	virtual bool OnReloadPlugin() override;
 
 	/**
 	* @brief 对外接口输出默认的LOG

@@ -33,7 +33,7 @@ class NFIPluginManager : public NFIModule
 public:
 	NFIPluginManager()
 	{
-		pPluginManager = this;
+		m_pPluginManager = this;
 	}
 
 	virtual ~NFIPluginManager()
@@ -144,9 +144,16 @@ public:
 	virtual bool IsDaemon() const = 0;
 	virtual void SetDaemon() = 0;
 
+	virtual void SetOpenProfiler(bool b) = 0;
+	virtual bool IsOpenProfiler() = 0;
+
 	virtual void BeginProfiler(const std::string& luaFunc) = 0;
 	//return BeginProfiler - EndProfiler 本次的时间差，单位微妙
 	virtual uint64_t EndProfiler() = 0;
+
+	//通过console控制服务器
+	virtual bool GetExitApp() const = 0;
+	virtual void SetExitApp(bool exitApp) = 0;
 };
 
 #endif

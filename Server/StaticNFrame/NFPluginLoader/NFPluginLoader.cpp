@@ -31,9 +31,6 @@
 #include <sys/prctl.h>
 #endif
 
-bool bExitApp = false;
-std::thread gThread;
-
 #if NF_PLATFORM == NF_PLATFORM_WIN
 
 void CreateDumpFile(const std::string& strDumpFilePathName, EXCEPTION_POINTERS* pException)
@@ -76,29 +73,6 @@ void CloseXButton()
 		EnableMenuItem(hMenu, SC_CLOSE, MF_DISABLED | MF_BYCOMMAND);
 	}
 #endif
-}
-
-void ThreadFunc()
-{
-	while (!bExitApp)
-	{
-		std::this_thread::sleep_for(std::chrono::milliseconds(1000));
-
-		std::string s;
-		std::cin >> s;
-		if (0 == stricmp(s.c_str(), "exit"))
-		{
-			bExitApp = true;
-			gThread.detach();
-		}
-	}
-}
-
-void CreateBackThread()
-{
-	gThread = std::thread(std::bind(&ThreadFunc));
-	std::async(std::launch::deferred, std::bind(ThreadFunc));
-	std::cout << "CreateBackThread, thread ID = " << gThread.get_id() << std::endl;
 }
 
 static void sig_usr(int signo)
@@ -179,7 +153,9 @@ void PrintfLogo()
 	std::cout << "--PATH=../Config Load the Config Path when programs be launched" << std::endl;
 	std::cout << "--LuaScript=../ScriptModule Load the Config Path when programs be launched" << std::endl;
 	std::cout << "--LogPath=./spdlog Load the Config Path when programs be launched" << std::endl;
-	std::cout << "Input 'Exit' Programs will exit when it runs" << std::endl;
+	std::cout << "Input '--Exit' Programs will exit when it runs" << std::endl; 
+	std::cout << "Input '--Reload' Programs will reload config when it runs" << std::endl;
+	std::cout << "Input '--Profiler' Programs will open/close profiler when it runs" << std::endl;
 	std::cout << "\n" << std::endl;
 
 #if NF_PLATFORM == NF_PLATFORM_WIN
@@ -263,9 +239,7 @@ int main(int argc, char* argv[])
 #endif
 
 	ProcessParameter(argc, argv);
-
 	PrintfLogo();
-	CreateBackThread();
 
 	NFCPluginManager::GetSingletonPtr()->Awake();
 	NFCPluginManager::GetSingletonPtr()->Init();
@@ -274,6 +248,7 @@ int main(int argc, char* argv[])
 	NFCPluginManager::GetSingletonPtr()->ReadyExecute();
 
 	uint64_t nIndex = 0;
+	bool bExitApp = false;
 	while (!bExitApp)
 	{
 		while (true)
@@ -290,6 +265,7 @@ int main(int argc, char* argv[])
 			{
 #endif
 				NFCPluginManager::GetSingletonPtr()->Execute();
+				bExitApp = NFCPluginManager::GetSingletonPtr()->GetExitApp();
 #if NF_PLATFORM == NF_PLATFORM_WIN
 			}
 			__except (ApplicationCrashHandler(GetExceptionInformation()))

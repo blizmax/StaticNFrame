@@ -16,7 +16,7 @@ class NFTestPlugin : public NFIPlugin
 public:
 	explicit NFTestPlugin(NFIPluginManager* p)
 	{
-		pPluginManager = p;
+		m_pPluginManager = p;
 	}
 
 	virtual int GetPluginVersion();

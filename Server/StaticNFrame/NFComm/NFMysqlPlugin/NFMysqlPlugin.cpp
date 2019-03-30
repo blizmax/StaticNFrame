@@ -40,11 +40,11 @@ std::string NFMysqlPlugin::GetPluginName()
 
 void NFMysqlPlugin::Install()
 {
-	REGISTER_MODULE(pPluginManager, NFIMysqlModule, NFCMysqlModule)
+	REGISTER_MODULE(m_pPluginManager, NFIMysqlModule, NFCMysqlModule)
 }
 
 void NFMysqlPlugin::Uninstall()
 {
-	UNREGISTER_MODULE(pPluginManager, NFIMysqlModule, NFCMysqlModule)
+	UNREGISTER_MODULE(m_pPluginManager, NFIMysqlModule, NFCMysqlModule)
 }
 

@@ -60,7 +60,7 @@ class NFCLuaScriptModule
 public:
     NFCLuaScriptModule(NFIPluginManager* p)
     {
-        pPluginManager = p;
+        m_pPluginManager = p;
 		m_luaTimerIndex = 10000;
     }
 public:

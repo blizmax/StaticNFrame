@@ -18,7 +18,7 @@
 
 NFCLoginServerModule::NFCLoginServerModule(NFIPluginManager* p)
 {
-	pPluginManager = p;
+	m_pPluginManager = p;
 }
 
 NFCLoginServerModule::~NFCLoginServerModule()
@@ -27,14 +27,14 @@ NFCLoginServerModule::~NFCLoginServerModule()
 
 bool NFCLoginServerModule::Init()
 {
-	m_pMongoModule = pPluginManager->FindModule<NFIMongoModule>();
-	m_pAsynMongoModule = pPluginManager->FindModule<NFIAsynMongoModule>();
-	m_pHttpServerModule = pPluginManager->FindModule<NFIHttpServerModule>();
-	m_pNetServerModule = pPluginManager->FindModule<NFINetServerModule>();
+	m_pMongoModule = m_pPluginManager->FindModule<NFIMongoModule>();
+	m_pAsynMongoModule = m_pPluginManager->FindModule<NFIAsynMongoModule>();
+	m_pHttpServerModule = m_pPluginManager->FindModule<NFIHttpServerModule>();
+	m_pNetServerModule = m_pPluginManager->FindModule<NFINetServerModule>();
 	m_pNetServerModule->AddEventCallBack(NF_ST_LOGIN, this, &NFCLoginServerModule::OnProxySocketEvent);
 	m_pNetServerModule->AddReceiveCallBack(NF_ST_LOGIN, this, &NFCLoginServerModule::OnHandleOtherMessage);
 
-	NFServerConfig* pConfig = NFServerCommon::GetAppConfig(pPluginManager, NF_ST_LOGIN);
+	NFServerConfig* pConfig = NFServerCommon::GetAppConfig(m_pPluginManager, NF_ST_LOGIN);
 	if (pConfig)
 	{
 		uint32_t unlinkId = m_pNetServerModule->AddServer(NF_ST_LOGIN, pConfig->mServerId, pConfig->mMaxConnectNum, pConfig->mServerPort);

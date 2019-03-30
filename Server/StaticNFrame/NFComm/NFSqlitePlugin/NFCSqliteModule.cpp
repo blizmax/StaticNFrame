@@ -10,7 +10,7 @@
 
 NFCSqliteModule::NFCSqliteModule(NFIPluginManager* p)
 {
-	pPluginManager = p;
+	m_pPluginManager = p;
 	m_pSqliteDriverManager = NF_NEW NFCSqliteDriverManager();
 }
 

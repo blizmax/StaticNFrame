@@ -15,7 +15,7 @@ class NFNetPlugin : public NFIPlugin
 public:
 	explicit NFNetPlugin(NFIPluginManager* p)
 	{
-		pPluginManager = p;
+		m_pPluginManager = p;
 	}
 
 	virtual int GetPluginVersion() override;

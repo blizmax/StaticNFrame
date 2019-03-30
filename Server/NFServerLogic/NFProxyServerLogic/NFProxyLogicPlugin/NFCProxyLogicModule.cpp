@@ -9,7 +9,7 @@
 
 NFCProxyLogicModule::NFCProxyLogicModule(NFIPluginManager* p)
 {
-	pPluginManager = p;
+	m_pPluginManager = p;
 }
 
 NFCProxyLogicModule::~NFCProxyLogicModule()
@@ -19,11 +19,11 @@ NFCProxyLogicModule::~NFCProxyLogicModule()
 
 bool NFCProxyLogicModule::Init()
 {
-	m_pServerNetEventModule = pPluginManager->FindModule<NFIServerNetEventModule>();
+	m_pServerNetEventModule = m_pPluginManager->FindModule<NFIServerNetEventModule>();
 
-	m_pNetClientModule = pPluginManager->FindModule<NFINetClientModule>();
-	m_pNetServerModule = pPluginManager->FindModule<NFINetServerModule>();
-	m_pNetProxyServerModule = pPluginManager->FindModule<NFIProxyServerModule>();
+	m_pNetClientModule = m_pPluginManager->FindModule<NFINetClientModule>();
+	m_pNetServerModule = m_pPluginManager->FindModule<NFINetServerModule>();
+	m_pNetProxyServerModule = m_pPluginManager->FindModule<NFIProxyServerModule>();
 
 	m_pNetServerModule->AddEventCallBack(NF_ST_PROXY, this, &NFCProxyLogicModule::OnProxySocketEvent);
 

@@ -41,10 +41,10 @@ std::string NFGameLogicPlugin::GetPluginName()
 
 void NFGameLogicPlugin::Install()
 {
-	REGISTER_MODULE(pPluginManager, NFIGameLogicModule, NFCGameLogicModule);
+	REGISTER_MODULE(m_pPluginManager, NFIGameLogicModule, NFCGameLogicModule);
 }
 
 void NFGameLogicPlugin::Uninstall()
 {
-	UNREGISTER_MODULE(pPluginManager, NFIGameLogicModule, NFCGameLogicModule);
+	UNREGISTER_MODULE(m_pPluginManager, NFIGameLogicModule, NFCGameLogicModule);
 }

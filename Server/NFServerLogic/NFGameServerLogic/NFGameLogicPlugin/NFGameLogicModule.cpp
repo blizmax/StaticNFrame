@@ -9,7 +9,7 @@
 
 NFCGameLogicModule::NFCGameLogicModule(NFIPluginManager* p)
 {
-	pPluginManager = p;
+	m_pPluginManager = p;
 	m_onlineNum = 0;
 }
 
@@ -20,10 +20,10 @@ NFCGameLogicModule::~NFCGameLogicModule()
 
 bool NFCGameLogicModule::Init()
 {
-	m_pGameClient_MasterModule = pPluginManager->FindModule<NFIGameClient_MasterModule>();
-	m_pServerNetEventModule = pPluginManager->FindModule<NFIServerNetEventModule>();
+	m_pGameClient_MasterModule = m_pPluginManager->FindModule<NFIGameClient_MasterModule>();
+	m_pServerNetEventModule = m_pPluginManager->FindModule<NFIServerNetEventModule>();
 
-	m_pNetClientModule = pPluginManager->FindModule<NFINetClientModule>();
+	m_pNetClientModule = m_pPluginManager->FindModule<NFINetClientModule>();
 	
 	m_pNetClientModule->AddEventCallBack(NF_ST_PROXY, this, &NFCGameLogicModule::OnProxySocketEvent);
 
@@ -139,7 +139,7 @@ void NFCGameLogicModule::OnProxySocketEvent(const eMsgType nEvent, const uint32_
 
 void NFCGameLogicModule::OnHandleProxyDisconnect(const uint32_t unLinkId)
 {
-	NFILuaScriptModule* pLuaScriptModule = (NFILuaScriptModule*)pPluginManager->FindModule(typeid(NFILuaScriptModule).name());
+	NFILuaScriptModule* pLuaScriptModule = (NFILuaScriptModule*)m_pPluginManager->FindModule(typeid(NFILuaScriptModule).name());
 	NF_SHARE_PTR<AccountInfo> pInfo = m_playerAccountInfo.First();
 	while (pInfo)
 	{

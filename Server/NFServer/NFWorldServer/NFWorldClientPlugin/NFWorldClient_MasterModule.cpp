@@ -17,7 +17,7 @@
 
 NFCWorldClient_MasterModule::NFCWorldClient_MasterModule(NFIPluginManager* p)
 {
-	pPluginManager = p;
+	m_pPluginManager = p;
 	m_pNetClientModule = nullptr;
 }
 
@@ -27,8 +27,8 @@ NFCWorldClient_MasterModule::~NFCWorldClient_MasterModule()
 
 bool NFCWorldClient_MasterModule::Init()
 {
-	m_pServerNetEventModule = pPluginManager->FindModule<NFIServerNetEventModule>();
-	m_pNetClientModule = pPluginManager->FindModule<NFINetClientModule>();
+	m_pServerNetEventModule = m_pPluginManager->FindModule<NFIServerNetEventModule>();
+	m_pNetClientModule = m_pPluginManager->FindModule<NFINetClientModule>();
 	m_pMasterServerData = NF_SHARE_PTR<NFServerData>(NF_NEW NFServerData());
 	return true;
 }
@@ -40,7 +40,7 @@ bool NFCWorldClient_MasterModule::AfterInit()
 
 	m_pNetClientModule->AddReceiveCallBack(NF_ST_MASTER, EGMI_NET_MASTER_SEND_OTHERS_TO_WORLD, this, &NFCWorldClient_MasterModule::OnHandleServerReport);
 
-	NFServerConfig* pConfig = NFServerCommon::GetServerConfig(pPluginManager, NF_ST_MASTER);
+	NFServerConfig* pConfig = NFServerCommon::GetServerConfig(m_pPluginManager, NF_ST_MASTER);
 	if (pConfig)
 	{
 		//AddServer会自动重连，断开连接时，m_pMasterServerData->mUnlinkId不用清理，不变
@@ -107,7 +107,7 @@ void NFCWorldClient_MasterModule::OnHandleOtherMessage(const uint32_t unLinkId, 
 
 void NFCWorldClient_MasterModule::RegisterServer()
 {
-	NFServerConfig* pConfig = NFServerCommon::GetAppConfig(pPluginManager, NF_ST_WORLD);
+	NFServerConfig* pConfig = NFServerCommon::GetAppConfig(m_pPluginManager, NF_ST_WORLD);
 	if (pConfig)
 	{
 		NFMsg::ServerInfoReportList xMsg;
@@ -133,15 +133,15 @@ void NFCWorldClient_MasterModule::RegisterServer()
 
 void NFCWorldClient_MasterModule::ServerReport()
 {
-	static uint64_t mLastReportTime = pPluginManager->GetNowTime();
-	if (mLastReportTime + 10000 > pPluginManager->GetNowTime())
+	static uint64_t mLastReportTime = m_pPluginManager->GetNowTime();
+	if (mLastReportTime + 10000 > m_pPluginManager->GetNowTime())
 	{
 		return;
 	}
 
-	mLastReportTime = pPluginManager->GetNowTime();
+	mLastReportTime = m_pPluginManager->GetNowTime();
 
-	NFServerConfig* pConfig = NFServerCommon::GetAppConfig(pPluginManager, NF_ST_WORLD);
+	NFServerConfig* pConfig = NFServerCommon::GetAppConfig(m_pPluginManager, NF_ST_WORLD);
 	if (pConfig)
 	{
 		NFMsg::ServerInfoReportList xMsg;

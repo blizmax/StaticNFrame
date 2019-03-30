@@ -18,7 +18,7 @@ class NFSqlitePlugin : public NFIPlugin
 public:
 	explicit NFSqlitePlugin(NFIPluginManager* p)
 	{
-		pPluginManager = p;
+		m_pPluginManager = p;
 	}
 
 	virtual int GetPluginVersion() override;

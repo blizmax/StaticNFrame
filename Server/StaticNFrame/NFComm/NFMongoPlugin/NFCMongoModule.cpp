@@ -13,7 +13,7 @@
 
 NFCMongoModule::NFCMongoModule(NFIPluginManager* p)
 {
-	pPluginManager = p;
+	m_pPluginManager = p;
 	mnLastCheckTime = 0;
 	m_pMongoDriverManager = NF_NEW NFCMongoDriverManager();
 }

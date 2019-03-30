@@ -41,10 +41,10 @@ std::string NFWorldClientPlugin::GetPluginName()
 
 void NFWorldClientPlugin::Install()
 {
-	REGISTER_MODULE(pPluginManager, NFIWorldClient_MasterModule, NFCWorldClient_MasterModule);
+	REGISTER_MODULE(m_pPluginManager, NFIWorldClient_MasterModule, NFCWorldClient_MasterModule);
 }
 
 void NFWorldClientPlugin::Uninstall()
 {
-	UNREGISTER_MODULE(pPluginManager, NFIWorldClient_MasterModule, NFCWorldClient_MasterModule);
+	UNREGISTER_MODULE(m_pPluginManager, NFIWorldClient_MasterModule, NFCWorldClient_MasterModule);
 }

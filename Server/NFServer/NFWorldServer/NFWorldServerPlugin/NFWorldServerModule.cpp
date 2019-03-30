@@ -21,7 +21,7 @@
 
 NFCWorldServerModule::NFCWorldServerModule(NFIPluginManager* p)
 {
-	pPluginManager = p;
+	m_pPluginManager = p;
 }
 
 NFCWorldServerModule::~NFCWorldServerModule()
@@ -30,9 +30,9 @@ NFCWorldServerModule::~NFCWorldServerModule()
 
 bool NFCWorldServerModule::Init()
 {
-	m_pServerNetEventModule = pPluginManager->FindModule<NFIServerNetEventModule>();
-	m_pNetClientModule = pPluginManager->FindModule<NFINetClientModule>();
-	m_pNetServerModule = pPluginManager->FindModule<NFINetServerModule>();
+	m_pServerNetEventModule = m_pPluginManager->FindModule<NFIServerNetEventModule>();
+	m_pNetClientModule = m_pPluginManager->FindModule<NFINetClientModule>();
+	m_pNetServerModule = m_pPluginManager->FindModule<NFINetServerModule>();
 	m_pNetServerModule->AddEventCallBack(NF_ST_WORLD, this, &NFCWorldServerModule::OnProxySocketEvent);
 	m_pNetServerModule->AddReceiveCallBack(NF_ST_WORLD, this, &NFCWorldServerModule::OnHandleOtherMessage);
 
@@ -44,7 +44,7 @@ bool NFCWorldServerModule::Init()
 	m_pNetServerModule->AddReceiveCallBack(NF_ST_WORLD, EGMI_NET_PROXY_TO_WORLD_UNREGISTER, this, &NFCWorldServerModule::OnProxyServerUnRegisterProcess);
 	m_pNetServerModule->AddReceiveCallBack(NF_ST_WORLD, EGMI_NET_PROXY_TO_WORLD_REFRESH, this, &NFCWorldServerModule::OnProxyServerRefreshProcess);
 
-	NFServerConfig* pConfig = NFServerCommon::GetAppConfig(pPluginManager, NF_ST_WORLD);
+	NFServerConfig* pConfig = NFServerCommon::GetAppConfig(m_pPluginManager, NF_ST_WORLD);
 	if (pConfig)
 	{
 		mServerId = pConfig->mServerId;

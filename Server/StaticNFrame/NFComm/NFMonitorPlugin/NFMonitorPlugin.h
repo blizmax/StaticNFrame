@@ -21,7 +21,7 @@ class NFMonitorPlugin : public NFIPlugin
 public:
 	explicit NFMonitorPlugin(NFIPluginManager* p)
 	{
-		pPluginManager = p;
+		m_pPluginManager = p;
 	}
 
 	virtual int GetPluginVersion() override;

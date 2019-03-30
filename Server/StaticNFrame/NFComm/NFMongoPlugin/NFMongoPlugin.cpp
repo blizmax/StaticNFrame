@@ -41,13 +41,13 @@ std::string NFMongoPlugin::GetPluginName()
 
 void NFMongoPlugin::Install()
 {
-	REGISTER_MODULE(pPluginManager, NFIMongoModule, NFCMongoModule);
-	REGISTER_MODULE(pPluginManager, NFIAsynMongoModule, NFCAsynMongoModule);
+	REGISTER_MODULE(m_pPluginManager, NFIMongoModule, NFCMongoModule);
+	REGISTER_MODULE(m_pPluginManager, NFIAsynMongoModule, NFCAsynMongoModule);
 }
 
 void NFMongoPlugin::Uninstall()
 {
-	UNREGISTER_MODULE(pPluginManager, NFIMongoModule, NFCMongoModule);
-	UNREGISTER_MODULE(pPluginManager, NFIAsynMongoModule, NFCAsynMongoModule);
+	UNREGISTER_MODULE(m_pPluginManager, NFIMongoModule, NFCMongoModule);
+	UNREGISTER_MODULE(m_pPluginManager, NFIAsynMongoModule, NFCAsynMongoModule);
 }
 

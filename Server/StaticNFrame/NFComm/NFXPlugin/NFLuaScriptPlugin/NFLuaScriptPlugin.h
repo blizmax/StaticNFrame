@@ -18,7 +18,7 @@ class NFLuaScriptPlugin : public NFIPlugin
 public:
     NFLuaScriptPlugin(NFIPluginManager* p)
     {
-        pPluginManager = p;
+        m_pPluginManager = p;
     }
 
     virtual int GetPluginVersion() override;

@@ -8,6 +8,8 @@
 
 #include "NFMonitorPlugin.h"
 #include "NFComm/NFPluginModule/NFIPluginManager.h"
+#include "NFMonitorModule.h"
+#include "NFConsoleModule.h"
 
 #ifdef NF_DYNAMIC_PLUGIN
 
@@ -39,13 +41,13 @@ std::string NFMonitorPlugin::GetPluginName()
 
 void NFMonitorPlugin::Install()
 {
-	//REGISTER_MODULE(pPluginManager, NFISqliteModule, NFCSqliteModule);
-	//REGISTER_MODULE(pPluginManager, NFIAsynMongoModule, NFCAsynMongoModule);
+	REGISTER_MODULE(m_pPluginManager, NFIMonitorModule, NFCMonitorModule);
+	REGISTER_MODULE(m_pPluginManager, NFIConsoleModule, NFCConsoleModule);
 }
 
 void NFMonitorPlugin::Uninstall()
 {
-	//UNREGISTER_MODULE(pPluginManager, NFISqliteModule, NFCSqliteModule);
-	//UNREGISTER_MODULE(pPluginManager, NFIAsynMongoModule, NFCAsynMongoModule);
+	UNREGISTER_MODULE(m_pPluginManager, NFIMonitorModule, NFCMonitorModule);
+	UNREGISTER_MODULE(m_pPluginManager, NFIConsoleModule, NFCConsoleModule);
 }
 

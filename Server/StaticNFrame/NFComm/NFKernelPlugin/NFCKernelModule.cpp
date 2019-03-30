@@ -22,7 +22,7 @@
 
 NFCKernelModule::NFCKernelModule(NFIPluginManager* p)
 {
-	pPluginManager = p;
+	m_pPluginManager = p;
 }
 
 NFCKernelModule::~NFCKernelModule()
@@ -87,7 +87,7 @@ uint64_t NFCKernelModule::Get64UUID()
 	}
 
 	//高16位 appId
-	uint64_t appId = pPluginManager->GetAppID();
+	uint64_t appId = m_pPluginManager->GetAppID();
 	//保留后41位时间
 	uint64_t dataId = (time - NF_EPOCH);
 	dataId = dataId << 22;

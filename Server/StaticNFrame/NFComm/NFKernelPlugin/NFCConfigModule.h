@@ -25,6 +25,7 @@ public:
 	virtual bool BeforeShut() override;
 	virtual bool Shut() override;
 	virtual bool Execute() override;
+	virtual bool OnReloadPlugin() override;
 public:
 	bool LoadConfig();
 	bool LoadPluginConfig();

@@ -13,6 +13,7 @@
 #include <string>
 #include <time.h>
 #include <list>
+#include <atomic>
 #include "NFComm/NFCore/NFSingleton.hpp"
 #include "NFComm/NFPluginModule/NFIPluginManager.h"
 #include "NFComm/NFCore/NFRandom.hpp"
@@ -53,6 +54,8 @@ public:
 	virtual bool Shut() override;
 
 	virtual bool Finalize() override;
+
+	virtual bool OnReloadPlugin() override;
 
 	virtual bool ReleaseSingletion();
 
@@ -134,6 +137,8 @@ protected:
 	virtual uint64_t EndProfiler();//return this time cost time(us) 微妙
 	virtual void ClearProfiler();
 	virtual void PrintProfiler();
+	virtual void SetOpenProfiler(bool b);
+	virtual bool IsOpenProfiler();
 private:
 	const uint32_t mFrame = 30; //服务器帧率，一秒30帧
 	const uint32_t mFrameTime = 1000 / mFrame; //一帧多少时间
@@ -175,6 +180,13 @@ private:
 	ModuleAloneMultiMap mModuleAloneMultiMap;       //名字以及单独创建的Module集合
 
 	NFProfiler m_profilerMgr;
+public:
+	//通过console控制服务器
+	virtual bool GetExitApp() const { return mExitApp; }
+	virtual void SetExitApp(bool exitApp) { mExitApp = exitApp; }
+private:
+	//通过console控制服务器变量
+	std::atomic_bool mExitApp;
 };
 
 #endif

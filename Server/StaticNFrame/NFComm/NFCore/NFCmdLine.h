@@ -465,8 +465,8 @@ namespace NFCmdLine
 			if (buf.length() > 0)
 				args.push_back(buf);
 
-			for (size_t i = 0; i < args.size(); i++)
-				std::cout << "\"" << args[i] << "\"" << std::endl;
+			//for (size_t i = 0; i < args.size(); i++)
+			//	std::cout << "\"" << args[i] << "\"" << std::endl;
 
 			return Parse(args);
 		}
@@ -608,6 +608,14 @@ namespace NFCmdLine
 			}
 
 			return errors.size() == 0;
+		}
+
+		bool ParseConsoleCommand(const std::string& arg)
+		{
+			if (!options.count("help"))
+				Add("help", '?', "print this message");
+			
+			return Parse(arg);
 		}
 
 		void ParseCheck(const std::string& arg)

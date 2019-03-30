@@ -41,10 +41,10 @@ std::string NFProxyServerPlugin::GetPluginName()
 
 void NFProxyServerPlugin::Install()
 {
-	REGISTER_MODULE(pPluginManager, NFIProxyServerModule, NFCProxyServerModule)
+	REGISTER_MODULE(m_pPluginManager, NFIProxyServerModule, NFCProxyServerModule)
 }
 
 void NFProxyServerPlugin::Uninstall()
 {
-	UNREGISTER_MODULE(pPluginManager, NFIProxyServerModule, NFCProxyServerModule)
+	UNREGISTER_MODULE(m_pPluginManager, NFIProxyServerModule, NFCProxyServerModule)
 }

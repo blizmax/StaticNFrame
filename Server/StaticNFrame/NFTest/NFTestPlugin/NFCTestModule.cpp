@@ -49,7 +49,7 @@ struct Test
 
 NFCTestModule::NFCTestModule(NFIPluginManager* p)
 {
-	pPluginManager = p;
+	m_pPluginManager = p;
 }
 
 NFCTestModule::~NFCTestModule()

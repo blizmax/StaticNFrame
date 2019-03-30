@@ -14,7 +14,7 @@
 
 NFCMysqlModule::NFCMysqlModule(NFIPluginManager* p)
 {
-	pPluginManager = p;
+	m_pPluginManager = p;
 	mnLastCheckTime = 0;
 	m_pMysqlDriverManager = NF_NEW NFCMysqlDriverManager();
 }

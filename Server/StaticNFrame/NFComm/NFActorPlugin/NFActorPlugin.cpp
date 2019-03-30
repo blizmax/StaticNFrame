@@ -40,12 +40,12 @@ std::string NFActorPlugin::GetPluginName()
 void NFActorPlugin::Install()
 {
 	//REGISTER_MODULE(pPluginManager, NFIActorModule, NFCActorModule);
-	REGISTER_MODULE(pPluginManager, NFITaskModule, NFCTaskModule);
+	REGISTER_MODULE(m_pPluginManager, NFITaskModule, NFCTaskModule);
 }
 
 void NFActorPlugin::Uninstall()
 {
 	//UNREGISTER_MODULE(pPluginManager, NFIActorModule, NFCActorModule);
-	UNREGISTER_MODULE(pPluginManager, NFITaskModule, NFCTaskModule)
+	UNREGISTER_MODULE(m_pPluginManager, NFITaskModule, NFCTaskModule)
 }
 

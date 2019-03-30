@@ -14,7 +14,7 @@
 
 NFCTaskModule::NFCTaskModule(NFIPluginManager* p)
 {
-	pPluginManager = p;
+	m_pPluginManager = p;
 	mnSuitIndex = 0;
 	nRecvTaskCount = 0;
 	nHandleTaskCount = 0;

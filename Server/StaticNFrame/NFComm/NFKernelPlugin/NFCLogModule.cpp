@@ -22,7 +22,7 @@
 
 NFCLogModule::NFCLogModule(NFIPluginManager* p)
 {
-	pPluginManager = p;
+	m_pPluginManager = p;
 	//只要是为了效率，浪费点内存
 	m_logInfoConfig.resize(NF_LOG_MAX_ID);
 	//Create spdlog
@@ -54,6 +54,14 @@ bool NFCLogModule::Awake()
 
 bool NFCLogModule::Shut()
 {
+	return true;
+}
+
+bool NFCLogModule::OnReloadPlugin()
+{
+	SetDefaultLevel((NF_LOG_LEVEL)NFConfigMgr::Instance()->GetLogLevel());
+	SetDefaultFlush((NF_LOG_LEVEL)NFConfigMgr::Instance()->GetLogFlushLevel());
+	SetDefaultLogConfig(NFConfigMgr::Instance()->GetLogInfoConfig());
 	return true;
 }
 
@@ -133,14 +141,14 @@ void NFCLogModule::SetDefaultLogConfig(const std::vector<LogInfoConfig>& vecLogC
 void NFCLogModule::CreateDefaultLogger()
 {
 	std::vector<spdlog::sink_ptr> sinks_vec;
-	std::string log_name = NF_FORMAT("{}{}{}{}{}.log", pPluginManager->GetLogPath(), spdlog::details::os::folder_sep, pPluginManager->GetAppName()+lexical_cast<std::string>(pPluginManager->GetAppID()), spdlog::details::os::folder_sep, pPluginManager->GetAppName());
+	std::string log_name = NF_FORMAT("{}{}{}{}{}.log", m_pPluginManager->GetLogPath(), spdlog::details::os::folder_sep, m_pPluginManager->GetAppName()+lexical_cast<std::string>(m_pPluginManager->GetAppID()), spdlog::details::os::folder_sep, m_pPluginManager->GetAppName());
 	auto date_and_hour_sink = std::make_shared<spdlog::sinks::my_date_and_hour_file_sink_mt>(log_name);
 
 #if NF_PLATFORM == NF_PLATFORM_WIN
 	auto color_sink = std::make_shared<spdlog::sinks::wincolor_stdout_sink_mt>();
 	sinks_vec.push_back(color_sink);
 #else
-	if (pPluginManager->IsDaemon() == false)
+	if (m_pPluginManager->IsDaemon() == false)
 	{
 		auto color_sink = std::make_shared<spdlog::sinks::ansicolor_stdout_sink_mt>();
 		sinks_vec.push_back(color_sink);
@@ -149,9 +157,9 @@ void NFCLogModule::CreateDefaultLogger()
 
 	sinks_vec.push_back(date_and_hour_sink);
 #ifdef NF_DEBUG_MODE
-	m_defaultLogger = std::make_shared<spdlog::logger>(pPluginManager->GetAppName(), std::begin(sinks_vec), std::end(sinks_vec));
+	m_defaultLogger = std::make_shared<spdlog::logger>(m_pPluginManager->GetAppName(), std::begin(sinks_vec), std::end(sinks_vec));
 #else
-	m_defaultLogger = std::make_shared<spdlog::async_logger>(pPluginManager->GetAppName(), std::begin(sinks_vec), std::end(sinks_vec), 1024,
+	m_defaultLogger = std::make_shared<spdlog::async_logger>(m_pPluginManager->GetAppName(), std::begin(sinks_vec), std::end(sinks_vec), 1024,
 		spdlog::async_overflow_policy::block_retry, nullptr, std::chrono::milliseconds(1000), nullptr);
 #endif
 
@@ -168,14 +176,14 @@ void NFCLogModule::CreateDefaultLogger()
 void NFCLogModule::CreateOthersLogger(uint32_t logNameId, const std::string& logName, bool async)
 {
 	std::vector<spdlog::sink_ptr> sinks_vec;
-	std::string log_name = NF_FORMAT("{}{}{}{}{}.log", pPluginManager->GetLogPath(), spdlog::details::os::folder_sep, pPluginManager->GetAppName() + lexical_cast<std::string>(pPluginManager->GetAppID()) + "_" + logName, spdlog::details::os::folder_sep, logName);
+	std::string log_name = NF_FORMAT("{}{}{}{}{}.log", m_pPluginManager->GetLogPath(), spdlog::details::os::folder_sep, m_pPluginManager->GetAppName() + lexical_cast<std::string>(m_pPluginManager->GetAppID()) + "_" + logName, spdlog::details::os::folder_sep, logName);
 	auto date_and_hour_sink = std::make_shared<spdlog::sinks::my_date_and_hour_file_sink_mt>(log_name);
 
 #if NF_PLATFORM == NF_PLATFORM_WIN
 	auto color_sink = std::make_shared<spdlog::sinks::wincolor_stdout_sink_mt>();
 	sinks_vec.push_back(color_sink);
 #else
-	if (pPluginManager->IsDaemon() == false)
+	if (m_pPluginManager->IsDaemon() == false)
 	{
 		auto color_sink = std::make_shared<spdlog::sinks::ansicolor_stdout_sink_mt>();
 		sinks_vec.push_back(color_sink);
@@ -187,12 +195,12 @@ void NFCLogModule::CreateOthersLogger(uint32_t logNameId, const std::string& log
 	std::shared_ptr<spdlog::logger> pLogger;
 	if (async)
 	{
-		pLogger = std::make_shared<spdlog::async_logger>(pPluginManager->GetAppName() + "_" + logName, std::begin(sinks_vec), std::end(sinks_vec), 1024,
+		pLogger = std::make_shared<spdlog::async_logger>(m_pPluginManager->GetAppName() + "_" + logName, std::begin(sinks_vec), std::end(sinks_vec), 1024,
 			spdlog::async_overflow_policy::block_retry, nullptr, std::chrono::milliseconds(1000), nullptr);
 	}
 	else
 	{
-		pLogger = std::make_shared<spdlog::logger>(pPluginManager->GetAppName() + "_" + logName, std::begin(sinks_vec), std::end(sinks_vec));
+		pLogger = std::make_shared<spdlog::logger>(m_pPluginManager->GetAppName() + "_" + logName, std::begin(sinks_vec), std::end(sinks_vec));
 	}
 
 	pLogger->set_level(spdlog::level::level_enum::trace);

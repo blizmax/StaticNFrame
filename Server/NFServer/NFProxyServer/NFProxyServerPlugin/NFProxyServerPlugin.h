@@ -19,7 +19,7 @@ class NFProxyServerPlugin : public NFIPlugin
 public:
 	explicit NFProxyServerPlugin(NFIPluginManager* p)
 	{
-		pPluginManager = p;
+		m_pPluginManager = p;
 	}
 
 	virtual int GetPluginVersion() override;

@@ -18,7 +18,7 @@
 
 NFCProxyClient_MasterModule::NFCProxyClient_MasterModule(NFIPluginManager* p)
 {
-	pPluginManager = p;
+	m_pPluginManager = p;
 	m_pNetClientModule = nullptr;
 }
 
@@ -28,23 +28,23 @@ NFCProxyClient_MasterModule::~NFCProxyClient_MasterModule()
 
 bool NFCProxyClient_MasterModule::Init()
 {
-	m_pProxyClient_GameModule = pPluginManager->FindModule<NFIProxyClient_GameModule>();
-	m_pProxyClient_WorldModule = pPluginManager->FindModule<NFIProxyClient_WorldModule>();
-	m_pProxyClient_LoginModule = pPluginManager->FindModule<NFIProxyClient_LoginModule>();
-	m_pNetClientModule = pPluginManager->FindModule<NFINetClientModule>();
+	m_pProxyClient_GameModule = m_pPluginManager->FindModule<NFIProxyClient_GameModule>();
+	m_pProxyClient_WorldModule = m_pPluginManager->FindModule<NFIProxyClient_WorldModule>();
+	m_pProxyClient_LoginModule = m_pPluginManager->FindModule<NFIProxyClient_LoginModule>();
+	m_pNetClientModule = m_pPluginManager->FindModule<NFINetClientModule>();
 	m_pMasterServerData = NF_SHARE_PTR<NFServerData>(NF_NEW NFServerData());
 	return true;
 }
 
 bool NFCProxyClient_MasterModule::AfterInit()
 {
-	m_pServerNetEventModule = pPluginManager->FindModule<NFIServerNetEventModule>();
+	m_pServerNetEventModule = m_pPluginManager->FindModule<NFIServerNetEventModule>();
 	m_pNetClientModule->AddEventCallBack(NF_ST_MASTER, this, &NFCProxyClient_MasterModule::OnProxySocketEvent);
 	m_pNetClientModule->AddReceiveCallBack(NF_ST_MASTER, this, &NFCProxyClient_MasterModule::OnHandleOtherMessage);
 
 	m_pNetClientModule->AddReceiveCallBack(NF_ST_MASTER, EGMI_NET_MASTER_SEND_OTHERS_TO_PROXY, this, &NFCProxyClient_MasterModule::OnHandleServerReport);
 
-	NFServerConfig* pConfig = NFServerCommon::GetServerConfig(pPluginManager, NF_ST_MASTER);
+	NFServerConfig* pConfig = NFServerCommon::GetServerConfig(m_pPluginManager, NF_ST_MASTER);
 	if (pConfig)
 	{
 		//AddServer会自动重连，断开连接时，m_pMasterServerData->mUnlinkId不用清理，不变
@@ -83,7 +83,7 @@ bool NFCProxyClient_MasterModule::Shut()
 
 void NFCProxyClient_MasterModule::RegisterServer()
 {
-	NFServerConfig* pConfig = NFServerCommon::GetAppConfig(pPluginManager, NF_ST_PROXY);
+	NFServerConfig* pConfig = NFServerCommon::GetAppConfig(m_pPluginManager, NF_ST_PROXY);
 	if (pConfig)
 	{
 		NFMsg::ServerInfoReportList xMsg;
@@ -137,15 +137,15 @@ void NFCProxyClient_MasterModule::OnHandleOtherMessage(const uint32_t unLinkId, 
 
 void NFCProxyClient_MasterModule::ServerReport()
 {
-	static uint64_t mLastReportTime = pPluginManager->GetNowTime();
-	if (mLastReportTime + 10000 > pPluginManager->GetNowTime())
+	static uint64_t mLastReportTime = m_pPluginManager->GetNowTime();
+	if (mLastReportTime + 10000 > m_pPluginManager->GetNowTime())
 	{
 		return;
 	}
 
-	mLastReportTime = pPluginManager->GetNowTime();
+	mLastReportTime = m_pPluginManager->GetNowTime();
 
-	NFServerConfig* pConfig = NFServerCommon::GetAppConfig(pPluginManager, NF_ST_PROXY);
+	NFServerConfig* pConfig = NFServerCommon::GetAppConfig(m_pPluginManager, NF_ST_PROXY);
 	if (pConfig)
 	{
 		NFMsg::ServerInfoReportList xMsg;

@@ -16,7 +16,7 @@
 
 NFCHttpServerModule::NFCHttpServerModule(NFIPluginManager* p)
 {
-	pPluginManager = p;
+	m_pPluginManager = p;
 	mServerArray.resize(NF_ST_MAX);
 	for (int i = 0; i < NF_SERVER_TYPES::NF_ST_MAX; ++i)
 	{
@@ -41,7 +41,7 @@ NFCHttpServerModule::~NFCHttpServerModule()
 bool NFCHttpServerModule::Awake()
 {
 	//可以允许Lua Module不存在
-	m_pLuaScriptModule = dynamic_cast<NFILuaScriptModule*>(pPluginManager->FindModule(typeid(NFILuaScriptModule).name()));
+	m_pLuaScriptModule = dynamic_cast<NFILuaScriptModule*>(m_pPluginManager->FindModule(typeid(NFILuaScriptModule).name()));
 	return true;
 }
 

@@ -19,7 +19,7 @@ class NFLoginServerPlugin : public NFIPlugin
 public:
 	explicit NFLoginServerPlugin(NFIPluginManager* p)
 	{
-		pPluginManager = p;
+		m_pPluginManager = p;
 	}
 
 	virtual int GetPluginVersion() override;

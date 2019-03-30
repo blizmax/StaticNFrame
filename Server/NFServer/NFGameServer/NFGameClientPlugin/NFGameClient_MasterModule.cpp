@@ -17,7 +17,7 @@
 
 NFCGameClient_MasterModule::NFCGameClient_MasterModule(NFIPluginManager* p)
 {
-	pPluginManager = p;
+	m_pPluginManager = p;
 	m_pNetClientModule = nullptr;
 	m_onlineNum = 0;
 }
@@ -28,9 +28,9 @@ NFCGameClient_MasterModule::~NFCGameClient_MasterModule()
 
 bool NFCGameClient_MasterModule::Init()
 {
-	m_pServerNetEventModule = pPluginManager->FindModule<NFIServerNetEventModule>();
-	m_pNetClientModule = pPluginManager->FindModule<NFINetClientModule>();
-	m_pGameClient_WorldModule = pPluginManager->FindModule<NFIGameClient_WorldModule>();
+	m_pServerNetEventModule = m_pPluginManager->FindModule<NFIServerNetEventModule>();
+	m_pNetClientModule = m_pPluginManager->FindModule<NFINetClientModule>();
+	m_pGameClient_WorldModule = m_pPluginManager->FindModule<NFIGameClient_WorldModule>();
 	m_pMasterServerData = NF_SHARE_PTR<NFServerData>(NF_NEW NFServerData());
 	return true;
 }
@@ -44,7 +44,7 @@ bool NFCGameClient_MasterModule::AfterInit()
 	
 	m_pNetClientModule->AddReceiveCallBack(NF_ST_MASTER, EGMI_NET_MASTER_SEND_OTHERS_TO_GAME, this, &NFCGameClient_MasterModule::OnHandleServerReport);
 
-	NFServerConfig* pConfig = NFServerCommon::GetServerConfig(pPluginManager, NF_ST_MASTER);
+	NFServerConfig* pConfig = NFServerCommon::GetServerConfig(m_pPluginManager, NF_ST_MASTER);
 	if (pConfig)
 	{
 		//AddServer会自动重连，断开连接时，m_pMasterServerData->mUnlinkId不用清理，不变
@@ -112,7 +112,7 @@ void NFCGameClient_MasterModule::OnHandleOtherMessage(const uint32_t unLinkId, c
 
 void NFCGameClient_MasterModule::RegisterServer()
 {
-	NFServerConfig* pConfig = NFServerCommon::GetAppConfig(pPluginManager, NF_ST_GAME);
+	NFServerConfig* pConfig = NFServerCommon::GetAppConfig(m_pPluginManager, NF_ST_GAME);
 	if (pConfig)
 	{
 		NFMsg::ServerInfoReportList xMsg;
@@ -138,15 +138,15 @@ void NFCGameClient_MasterModule::RegisterServer()
 
 void NFCGameClient_MasterModule::ServerReport()
 {
-	static uint64_t mLastReportTime = pPluginManager->GetNowTime();
-	if (mLastReportTime + 10000 > pPluginManager->GetNowTime())
+	static uint64_t mLastReportTime = m_pPluginManager->GetNowTime();
+	if (mLastReportTime + 10000 > m_pPluginManager->GetNowTime())
 	{
 		return;
 	}
 
-	mLastReportTime = pPluginManager->GetNowTime();
+	mLastReportTime = m_pPluginManager->GetNowTime();
 
-	NFServerConfig* pConfig = NFServerCommon::GetAppConfig(pPluginManager, NF_ST_GAME);
+	NFServerConfig* pConfig = NFServerCommon::GetAppConfig(m_pPluginManager, NF_ST_GAME);
 	if (pConfig)
 	{
 		NFMsg::ServerInfoReportList xMsg;

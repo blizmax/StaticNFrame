@@ -42,13 +42,13 @@ std::string NFGameClientPlugin::GetPluginName()
 
 void NFGameClientPlugin::Install()
 {
-	REGISTER_MODULE(pPluginManager, NFIGameClient_WorldModule, NFCGameClient_WorldModule);
-	REGISTER_MODULE(pPluginManager, NFIGameClient_MasterModule, NFCGameClient_MasterModule);
+	REGISTER_MODULE(m_pPluginManager, NFIGameClient_WorldModule, NFCGameClient_WorldModule);
+	REGISTER_MODULE(m_pPluginManager, NFIGameClient_MasterModule, NFCGameClient_MasterModule);
 }
 
 void NFGameClientPlugin::Uninstall()
 {
-	UNREGISTER_MODULE(pPluginManager, NFIGameClient_WorldModule, NFCGameClient_WorldModule);
-	UNREGISTER_MODULE(pPluginManager, NFIGameClient_MasterModule, NFCGameClient_MasterModule);
+	UNREGISTER_MODULE(m_pPluginManager, NFIGameClient_WorldModule, NFCGameClient_WorldModule);
+	UNREGISTER_MODULE(m_pPluginManager, NFIGameClient_MasterModule, NFCGameClient_MasterModule);
 }
 

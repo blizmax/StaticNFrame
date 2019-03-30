@@ -18,7 +18,7 @@ class NFMysqlPlugin : public NFIPlugin
 public:
 	explicit NFMysqlPlugin(NFIPluginManager* p)
 	{
-		pPluginManager = p;
+		m_pPluginManager = p;
 	}
 
 	virtual int GetPluginVersion() override;

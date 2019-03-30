@@ -13,7 +13,7 @@
 
 NFCTimerModule::NFCTimerModule(NFIPluginManager* p)
 {
-	pPluginManager = p;
+	m_pPluginManager = p;
 	NFTimerMgr::Instance()->Init(this);
 }
 

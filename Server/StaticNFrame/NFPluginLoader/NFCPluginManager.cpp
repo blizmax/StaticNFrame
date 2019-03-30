@@ -31,6 +31,7 @@ NFCPluginManager::NFCPluginManager() : NFIPluginManager()
 {
 	mCurFrameCount = 0;
 	mnAppID = 0;
+	mExitApp = false;
 
 	mstrConfigPath = "../Config";
 
@@ -469,6 +470,34 @@ bool NFCPluginManager::Shut()
 	return true;
 }
 
+bool NFCPluginManager::OnReloadPlugin()
+{
+	NFLogInfo(NF_LOG_PLUGIN_MANAGER, 0, "NFPluginLoader OnReloadPlugin................");
+
+	auto kernelIter = mPluginInstanceMap.find("NFKernelPlugin");
+	if (kernelIter != mPluginInstanceMap.end())
+	{
+		kernelIter->second->OnReloadPlugin();
+	}
+
+	for (PluginInstanceMap::iterator itInstance = mPluginInstanceMap.begin(); itInstance != mPluginInstanceMap.end(); ++itInstance)
+	{
+		if (itInstance->first != "NFKernelPlugin")
+		{
+			itInstance->second->OnReloadPlugin();
+		}
+	}
+
+	for (auto it = mModuleAloneMultiMap.begin(); it != mModuleAloneMultiMap.end(); it++)
+	{
+		if (it->first != "NFKernelPlugin")
+		{
+			it->second->OnReloadPlugin();
+		}
+	}
+	return true;
+}
+
 bool NFCPluginManager::Finalize()
 {
 	NFLogInfo(NF_LOG_PLUGIN_MANAGER, 0, "NFPluginLoader Finalize................");
@@ -533,9 +562,7 @@ bool NFCPluginManager::LoadStaticPlugin(const std::string& strPluginName)
 	auto it = mPluginFuncMap.find(strPluginName);
 	if (it == mPluginFuncMap.end())
 	{
-		std::cerr << " Load Static Plugin [" << strPluginName
-			<< "] Failed, The Plugin Not Registered, Please Registed like this 'REGISTER_STATIC_PLUGIN(this, "
-			<< strPluginName << ")' in the NFCLoadStaticPlugin.cpp" << std::endl;
+		NFLogError(NF_LOG_PLUGIN_MANAGER, 0, " Load Static Plugin [{0}] Failed, The Plugin Not Registered, Please Registed like this 'REGISTER_STATIC_PLUGIN(this, {0})' in the NFCLoadStaticPlugin.cpp", strPluginName);
 		assert(0);
 		return false;
 	}
@@ -632,7 +659,7 @@ bool NFCPluginManager::LoadPluginLibrary(const std::string& strPluginDLLName)
 			DLL_START_PLUGIN_FUNC pFunc = (DLL_START_PLUGIN_FUNC)pLib->GetSymbol("DllStartPlugin");
 			if (!pFunc)
 			{
-				std::cout << "Find function DllStartPlugin Failed in [" << pLib->GetName() << "]" << std::endl;
+				NFLogError(NF_LOG_PLUGIN_MANAGER, 0, "Find function DllStartPlugin Failed in [{}]", pLib->GetName());
 				assert(0);
 				return false;
 			}
@@ -647,14 +674,12 @@ bool NFCPluginManager::LoadPluginLibrary(const std::string& strPluginDLLName)
 			char* error = dlerror();
 			if (error)
 			{
-				std::cout << stderr << " Load shared lib[" << pLib->GetName() << "] failed, ErrorNo. = [" << error << "]" << std::endl;
-				std::cout << "Load [" << pLib->GetName() << "] failed" << std::endl;
+				NFLogError(NF_LOG_PLUGIN_MANAGER, 0, " Load shared lib[{0}] failed, ErrorNo. = [{1}] Load [{0}] failed", pLib->GetName(), error);
 				assert(0);
 				return false;
 			}
 #elif NF_PLATFORM == NF_PLATFORM_WIN
-			std::cout << stderr << " Load DLL[" << pLib->GetName() << "] failed, ErrorNo. = [" << GetLastError() << "]" << std::endl;
-			std::cout << "Load [" << pLib->GetName() << "] failed" << std::endl;
+			NFLogError(NF_LOG_PLUGIN_MANAGER, 0, " Load DLL[{0}] failed, ErrorNo. = [{1}] Load [{0}] failed", pLib->GetName(), GetLastError());
 			assert(0);
 			return false;
 #endif // NF_PLATFORM
@@ -708,4 +733,14 @@ void NFCPluginManager::PrintProfiler()
 {
 	std::string str = m_profilerMgr.OutputTopProfilerTimer();
 	NFLogDebug(NF_LOG_PLUGIN_MANAGER, 0, "{}", str);
+}
+
+void NFCPluginManager::SetOpenProfiler(bool b)
+{
+	m_profilerMgr.SetOpenProfiler(b);
+}
+
+bool NFCPluginManager::IsOpenProfiler()
+{
+	return m_profilerMgr.IsOpenProfiler();
 }

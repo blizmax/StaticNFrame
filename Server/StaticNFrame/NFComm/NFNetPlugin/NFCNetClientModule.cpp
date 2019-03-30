@@ -14,7 +14,7 @@
 
 NFCNetClientModule::NFCNetClientModule(NFIPluginManager* p)
 {
-	pPluginManager = p;
+	m_pPluginManager = p;
 	mxServerMap.resize(NF_ST_MAX);
 	for (int serverType = NF_ST_NONE + 1; serverType < NF_ST_MAX; serverType++)
 	{
@@ -31,7 +31,7 @@ NFCNetClientModule::~NFCNetClientModule()
 bool NFCNetClientModule::Awake()
 {
 	//可以允许Lua Module不存在
-	m_pLuaScriptModule = dynamic_cast<NFILuaScriptModule*>(pPluginManager->FindModule(typeid(NFILuaScriptModule).name()));
+	m_pLuaScriptModule = dynamic_cast<NFILuaScriptModule*>(m_pPluginManager->FindModule(typeid(NFILuaScriptModule).name()));
 	return true;
 }
 

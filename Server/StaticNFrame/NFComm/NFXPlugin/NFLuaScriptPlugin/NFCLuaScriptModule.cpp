@@ -97,10 +97,10 @@ bool NFCLuaScriptModule::BeforeShut()
 
 void NFCLuaScriptModule::LoadScript()
 {
-	TryAddPackagePath(pPluginManager->GetLuaScriptPath());
+	TryAddPackagePath(m_pPluginManager->GetLuaScriptPath());
 	TryLoadScriptFile("init.lua");
 
-	TryRunGlobalScriptFunc("init_script_system", pPluginManager, this);
+	TryRunGlobalScriptFunc("init_script_system", m_pPluginManager, this);
 }
 
 bool NFCLuaScriptModule::Register()
@@ -331,14 +331,14 @@ uint32_t NFCLuaScriptModule::AddClocker(const std::string& luaFunc, uint64_t nSt
 
 void NFCLuaScriptModule::RunServerNetEventLuaFunc(const std::string& luaFunc, eMsgType nEvent, uint32_t unLinkId, NF_SHARE_PTR<NFServerData> pServerData)
 {
-	pPluginManager->BeginProfiler(luaFunc);
+	m_pPluginManager->BeginProfiler(luaFunc);
 	TryRunGlobalScriptFunc(luaFunc, nEvent, unLinkId, pServerData);
-	pPluginManager->EndProfiler();
+	m_pPluginManager->EndProfiler();
 }
 
 void NFCLuaScriptModule::RunAccountNetEventLuaFunc(const std::string& luaFunc, uint32_t nEvent, uint32_t unLinkId, NF_SHARE_PTR<AccountInfo> pServerData)
 {
-	pPluginManager->BeginProfiler(luaFunc);
+	m_pPluginManager->BeginProfiler(luaFunc);
 	TryRunGlobalScriptFunc(luaFunc, nEvent, unLinkId, pServerData);
-	pPluginManager->EndProfiler();
+	m_pPluginManager->EndProfiler();
 }

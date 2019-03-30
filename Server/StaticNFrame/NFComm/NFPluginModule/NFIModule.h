@@ -96,12 +96,12 @@ public:
 
 	virtual NFIPluginManager* GetPluginManager() const
 	{
-		return pPluginManager;
+		return m_pPluginManager;
 	}
 
 	std::string strName;
 protected:
-	NFIPluginManager* pPluginManager = NULL;
+	NFIPluginManager* m_pPluginManager = NULL;
 };
 #endif
 

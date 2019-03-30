@@ -12,7 +12,7 @@
 
 NFCAsynMongoModule::NFCAsynMongoModule(NFIPluginManager* p)
 {
-	pPluginManager = p;
+	m_pPluginManager = p;
 }
 
 NFCAsynMongoModule::~NFCAsynMongoModule()
@@ -22,7 +22,7 @@ NFCAsynMongoModule::~NFCAsynMongoModule()
 
 bool NFCAsynMongoModule::Awake()
 {
-	m_pTaskModule = pPluginManager->FindModule<NFITaskModule>();
+	m_pTaskModule = m_pPluginManager->FindModule<NFITaskModule>();
 
 	StartActorPool(10);
 	return true;

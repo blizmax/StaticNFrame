@@ -16,7 +16,7 @@
 
 NFCProxyClient_LoginModule::NFCProxyClient_LoginModule(NFIPluginManager* p)
 {
-	pPluginManager = p;
+	m_pPluginManager = p;
 	m_pNetClientModule = nullptr;
 }
 
@@ -26,8 +26,8 @@ NFCProxyClient_LoginModule::~NFCProxyClient_LoginModule()
 
 bool NFCProxyClient_LoginModule::Init()
 {
-	m_pServerNetEventModule = pPluginManager->FindModule<NFIServerNetEventModule>();
-	m_pNetClientModule = pPluginManager->FindModule<NFINetClientModule>();
+	m_pServerNetEventModule = m_pPluginManager->FindModule<NFIServerNetEventModule>();
+	m_pNetClientModule = m_pPluginManager->FindModule<NFINetClientModule>();
 
 	return true;
 }
@@ -128,7 +128,7 @@ void NFCProxyClient_LoginModule::OnHandleOtherMessage(const uint32_t unLinkId, c
 
 void NFCProxyClient_LoginModule::RegisterServer(uint32_t linkId)
 {
-	NFServerConfig* pConfig = NFServerCommon::GetAppConfig(pPluginManager, NF_ST_PROXY);
+	NFServerConfig* pConfig = NFServerCommon::GetAppConfig(m_pPluginManager, NF_ST_PROXY);
 	if (pConfig)
 	{
 		NFMsg::ServerInfoReportList xMsg;

@@ -11,7 +11,7 @@
 
 NFCActorModule::NFCActorModule(NFIPluginManager* p)
 {
-	pPluginManager = p;
+	m_pPluginManager = p;
 
 	srand(static_cast<unsigned>(time(nullptr)));
 

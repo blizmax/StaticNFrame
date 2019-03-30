@@ -19,7 +19,7 @@ class NFGameServerPlugin : public NFIPlugin
 public:
 	explicit NFGameServerPlugin(NFIPluginManager* p)
 	{
-		pPluginManager = p;
+		m_pPluginManager = p;
 	}
 
 	virtual int GetPluginVersion() override;

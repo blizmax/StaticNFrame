@@ -19,7 +19,7 @@ class NFWorldClientPlugin : public NFIPlugin
 public:
 	explicit NFWorldClientPlugin(NFIPluginManager* p)
 	{
-		pPluginManager = p;
+		m_pPluginManager = p;
 	}
 
 	virtual int GetPluginVersion() override;

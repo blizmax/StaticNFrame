@@ -12,7 +12,7 @@
 
 NFCServerNetEventModule::NFCServerNetEventModule(NFIPluginManager* p)
 {
-	pPluginManager = p;
+	m_pPluginManager = p;
 	m_pLuaScriptModule = nullptr;
 }
 
@@ -24,7 +24,7 @@ NFCServerNetEventModule::~NFCServerNetEventModule()
 bool NFCServerNetEventModule::Awake()
 {
 	//可以允许Lua Module不存在
-	m_pLuaScriptModule = dynamic_cast<NFILuaScriptModule*>(pPluginManager->FindModule(typeid(NFILuaScriptModule).name()));
+	m_pLuaScriptModule = dynamic_cast<NFILuaScriptModule*>(m_pPluginManager->FindModule(typeid(NFILuaScriptModule).name()));
 	return true;
 }
 

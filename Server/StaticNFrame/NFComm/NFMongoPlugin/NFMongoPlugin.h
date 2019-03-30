@@ -18,7 +18,7 @@ class NFMongoPlugin : public NFIPlugin
 public:
 	explicit NFMongoPlugin(NFIPluginManager* p)
 	{
-		pPluginManager = p;
+		m_pPluginManager = p;
 	}
 
 	virtual int GetPluginVersion() override;

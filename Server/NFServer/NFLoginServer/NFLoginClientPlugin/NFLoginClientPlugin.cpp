@@ -41,10 +41,10 @@ std::string NFLoginClientPlugin::GetPluginName()
 
 void NFLoginClientPlugin::Install()
 {
-	REGISTER_MODULE(pPluginManager, NFILoginClient_MasterModule, NFCLoginClient_MasterModule)
+	REGISTER_MODULE(m_pPluginManager, NFILoginClient_MasterModule, NFCLoginClient_MasterModule)
 }
 
 void NFLoginClientPlugin::Uninstall()
 {
-	UNREGISTER_MODULE(pPluginManager, NFILoginClient_MasterModule, NFCLoginClient_MasterModule)
+	UNREGISTER_MODULE(m_pPluginManager, NFILoginClient_MasterModule, NFCLoginClient_MasterModule)
 }

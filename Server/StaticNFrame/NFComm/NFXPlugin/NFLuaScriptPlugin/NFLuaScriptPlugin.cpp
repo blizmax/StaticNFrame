@@ -38,11 +38,11 @@ std::string NFLuaScriptPlugin::GetPluginName()
 
 void NFLuaScriptPlugin::Install()
 {
-    REGISTER_MODULE(pPluginManager, NFILuaScriptModule, NFCLuaScriptModule);
+    REGISTER_MODULE(m_pPluginManager, NFILuaScriptModule, NFCLuaScriptModule);
 
 }
 
 void NFLuaScriptPlugin::Uninstall()
 {
-    UNREGISTER_MODULE(pPluginManager, NFILuaScriptModule, NFCLuaScriptModule);
+    UNREGISTER_MODULE(m_pPluginManager, NFILuaScriptModule, NFCLuaScriptModule);
 }

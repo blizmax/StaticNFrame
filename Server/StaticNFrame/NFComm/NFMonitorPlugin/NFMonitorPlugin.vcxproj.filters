@@ -3,9 +3,11 @@
   <ItemGroup>
     <ClInclude Include="NFMonitorPlugin.h" />
     <ClInclude Include="NFMonitorModule.h" />
+    <ClInclude Include="NFConsoleModule.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="NFMonitorPlugin.cpp" />
     <ClCompile Include="NFMonitorModule.cpp" />
+    <ClCompile Include="NFConsoleModule.cpp" />
   </ItemGroup>
 </Project>

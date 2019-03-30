@@ -13,7 +13,7 @@
 
 NFCEventModule::NFCEventModule(NFIPluginManager* p)
 {
-	pPluginManager = p;
+	m_pPluginManager = p;
 	NFEventMgr::Instance()->Init(this);
 }
 

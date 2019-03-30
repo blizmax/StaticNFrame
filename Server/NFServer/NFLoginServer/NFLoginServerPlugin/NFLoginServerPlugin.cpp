@@ -41,10 +41,10 @@ std::string NFLoginServerPlugin::GetPluginName()
 
 void NFLoginServerPlugin::Install()
 {
-	REGISTER_MODULE(pPluginManager, NFILoginServerModule, NFCLoginServerModule);
+	REGISTER_MODULE(m_pPluginManager, NFILoginServerModule, NFCLoginServerModule);
 }
 
 void NFLoginServerPlugin::Uninstall()
 {
-	UNREGISTER_MODULE(pPluginManager, NFILoginServerModule, NFCLoginServerModule);
+	UNREGISTER_MODULE(m_pPluginManager, NFILoginServerModule, NFCLoginServerModule);
 }
