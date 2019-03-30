@@ -8,6 +8,7 @@ NF_LOG_LEVEL_ERROR = 4 --    err = 4,
 LogLevel = NF_LOG_LEVEL_TRACE;				--log等级配置		当前日志输出级别，大于此等于级别的才会输出到console
 LogFlushLevel = NF_LOG_LEVEL_TRACE;			--log刷新等级配置, 当前日志输出级别，大于此等于级别的才会刷新到LOG文件里
 
+
 NFLogId = {
 	--0-100是基础框架层LOG
 	NF_LOG_DEFAULT = 0,						--默认LOG
@@ -43,6 +44,11 @@ NFLogId = {
 	NF_LOG_MAX_ID = 10240, --最大LOGID
 }
 
+--	配置要打印的LOG
+--	display 是否打印log
+--	level 打印log最低等级
+--  logname 打印时显示的名字
+--  guid 只打印一个或几个玩家的LOG 打印几个玩家的LOG系统guid={guid1, guid2}
 LogInfo = {
 	--基础框架层LOG
 	{logid = NFLogId.NF_LOG_DEFAULT, display=true, level=0, logname = "DefaultLog", guid = 0, desc = "默认LOG"},

@@ -141,13 +141,25 @@ public:
 		mLogId = 0;
 		mDisplay = false;
 		mLevel = 0;
-		mGuid = 0;
+	}
+
+	bool Exist(uint64_t guid)
+	{
+		for (size_t i = 0; i < mVecGuid.size(); i++)
+		{
+			if (mVecGuid[i] == guid)
+			{
+				return true;
+			}
+			return false;
+		}
+		return true;
 	}
 
 	uint32_t mLogId;
 	bool mDisplay;
 	uint32_t mLevel;
 	std::string mLogName;
-	uint64_t mGuid;
+	std::vector<uint64_t> mVecGuid;
 };
 

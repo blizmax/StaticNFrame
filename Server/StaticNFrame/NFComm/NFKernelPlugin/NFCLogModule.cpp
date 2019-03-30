@@ -69,7 +69,7 @@ void NFCLogModule::LogDefault(NF_LOG_LEVEL log_level, const char* function, int 
 {
 	if (logId < m_logInfoConfig.size() && m_logInfoConfig[logId].mDisplay && m_logInfoConfig[logId].mLevel <= (uint32_t)log_level)
 	{
-		if (m_logInfoConfig[logId].mGuid == 0 || m_logInfoConfig[logId].mGuid == guid)
+		if (m_logInfoConfig[logId].mVecGuid.empty() || m_logInfoConfig[logId].Exist(guid))
 		{
 			std::string str = fmt::format("[{}:{}] |[{}:{}] | {}", function, line, m_logInfoConfig[logId].mLogName, guid, log);
 			m_defaultLogger->log((spdlog::level::level_enum)log_level, str.c_str());
@@ -90,7 +90,7 @@ void NFCLogModule::LogDefault(NF_LOG_LEVEL log_level, uint32_t logId, uint64_t g
 {
 	if (logId < m_logInfoConfig.size() && m_logInfoConfig[logId].mDisplay && m_logInfoConfig[logId].mLevel <= (uint32_t)log_level)
 	{
-		if (m_logInfoConfig[logId].mGuid == 0 || m_logInfoConfig[logId].mGuid == guid)
+		if (m_logInfoConfig[logId].mVecGuid.empty() || m_logInfoConfig[logId].Exist(guid))
 		{
 			std::string str = fmt::format("|[{}:{}] | {}", m_logInfoConfig[logId].mLogName, guid, log);
 			m_defaultLogger->log((spdlog::level::level_enum)log_level, str.c_str());

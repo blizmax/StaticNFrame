@@ -130,7 +130,30 @@ bool NFCConfigModule::LoadLogConfig()
 		GetLuaTableValue(logRef, "display", logConfig.mDisplay);
 		GetLuaTableValue(logRef, "level", logConfig.mLevel);
 		GetLuaTableValue(logRef, "logname", logConfig.mLogName);
-		GetLuaTableValue(logRef, "guid", logConfig.mGuid);
+
+		NFLuaRef guidRef;
+		GetLuaTableValue(logRef, "guid", guidRef);
+
+		if (guidRef.isTable())
+		{
+			for (size_t j = 0; j < guidRef.len(); j++)
+			{
+				NFLuaRef guidLuaRef = guidRef[j];
+				uint64_t guid = guidLuaRef.toValue<uint64_t>();
+				if (guid != 0)
+				{
+					logConfig.mVecGuid.push_back(guid);
+				}
+			}
+		}
+		else
+		{
+			uint64_t guid = guidRef.toValue<uint64_t>();
+			if (guid != 0)
+			{
+				logConfig.mVecGuid.push_back(guid);
+			}
+		}
 
 		mLogInfoConfig.push_back(logConfig);
 	}
