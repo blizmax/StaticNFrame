@@ -146,7 +146,7 @@ void PrintfLogo()
 	std::cout << "************************************************" << std::endl;
 	std::cout << "\n" << std::endl;
 	std::cout << "--Daemon or -d Run it as daemon mode, only on linux" << std::endl;
-	std::cout << "--XButton or -x1 Close the 'X' button, only on windows" << std::endl;
+	std::cout << "--XButton or -x Close the 'X' button, only on windows" << std::endl;
 	std::cout << "--Plugin=Plugin.lua Load the plugin when programs be launched" << std::endl;
 	std::cout << "--Server=AllServer Load the AllServer plugin when programs be launched" << std::endl;
 	std::cout << "--ID=number(0) Load the number Server when programs be launched" << std::endl;

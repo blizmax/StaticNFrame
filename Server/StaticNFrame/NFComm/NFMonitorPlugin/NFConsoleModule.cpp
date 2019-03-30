@@ -20,7 +20,7 @@ NFCConsoleModule::NFCConsoleModule(NFIPluginManager* p)
 
 NFCConsoleModule::~NFCConsoleModule()
 {
-	mThread.join();
+	
 }
 
 bool NFCConsoleModule::Awake()
@@ -89,6 +89,7 @@ void NFCConsoleModule::BackThreadLoop()
 			if (mCmdParser.Exist("Exit"))
 			{
 				m_pPluginManager->SetExitApp(true);
+				mThread.detach();
 				return;
 			}
 
