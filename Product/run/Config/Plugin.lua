@@ -17,7 +17,8 @@ LoadPlugin =
 			"NFActorPlugin",
 			"NFNetPlugin",
 			"NFTestPlugin",
-			"NFSqlitePlugin",
+			"NFMonitorPlugin",
+			--"NFSqlitePlugin",
 			--"NFMysqlPlugin",
 			--"NFMongoPlugin",
 			
