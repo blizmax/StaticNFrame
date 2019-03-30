@@ -21,10 +21,9 @@
 static NFCSignalHandleModule* g_signalHandleModule = nullptr;
 
 #if NF_PLATFORM != NF_PLATFORM_WIN
-// TODO: Support other environments.
+
 bool Symbolize(void *pc, char *out, int out_size) {
-  assert(0);
-  return false;
+	return false;
 }
 
 const struct {
@@ -136,16 +135,6 @@ class MinimalFormatter {
   const char * const end_;
 };
 
-// Writes the given data with the size to the standard error.
-void WriteToStderr(const char* data, int size) {
-  if (write(STDERR_FILENO, data, size) < 0) {
-    // Ignore errors.
-  }
-}
-
-// The writer function can be changed by InstallFailureWriter().
-void (*g_failure_writer)(const char* data, int size) = WriteToStderr;
-
 // Dumps time information.  We don't dump human-readable time information
 // as localtime() is not guaranteed to be async signal safe.
 void DumpTimeInfo() {
@@ -158,7 +147,8 @@ void DumpTimeInfo() {
   formatter.AppendString(" try \"date -d @");
   formatter.AppendUint64(time_in_sec, 10);
   formatter.AppendString("\" if you are using GNU date ***\n");
-  g_failure_writer(buf, formatter.num_bytes_written());
+
+  NFLogError(NF_LOG_SYSTEMLOG, 0, "{}", std::string(buf, formatter.num_bytes_written()));
 }
 
 // Dumps information about the signal to STDERR.
@@ -203,7 +193,7 @@ void DumpSignalInfo(int signal_number, siginfo_t *siginfo) {
   formatter.AppendString("; ");
 #endif
   formatter.AppendString("stack trace: ***\n");
-  g_failure_writer(buf, formatter.num_bytes_written());
+  NFLogError(NF_LOG_SYSTEMLOG, 0, "{}", std::string(buf, formatter.num_bytes_written()));
 }
 
 // Dumps information about the stack frame to STDERR.
@@ -228,7 +218,7 @@ void DumpStackFrameInfo(const char* prefix, void* pc) {
   formatter.AppendString(" ");
   formatter.AppendString(symbol);
   formatter.AppendString("\n");
-  g_failure_writer(buf, formatter.num_bytes_written());
+  NFLogError(NF_LOG_SYSTEMLOG, 0, "{}", std::string(buf, formatter.num_bytes_written()));
 }
 
 // Invoke the default signal handler.
