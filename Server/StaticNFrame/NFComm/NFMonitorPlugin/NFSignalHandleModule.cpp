@@ -79,7 +79,14 @@ static void sig_usr(int signo)
 
 void  NFCSignalHandleModule::HandleSignal(int signo)
 {
-	NFLogWarning(NF_LOG_MONITOR_PLUGIN, 0, "recv signo:{} desc:{}", signo, SIGNAL_NAMES[signo]);
+	if (signo >= 1 && signo < NF_ARRAYSIZE(SIGNAL_NAMES))
+	{
+		NFLogWarning(NF_LOG_MONITOR_PLUGIN, 0, "recv signo:{} desc:{}", signo, SIGNAL_NAMES[signo]);
+	}
+	else
+	{
+		NFLogWarning(NF_LOG_MONITOR_PLUGIN, 0, "recv signo:{} desc:unknown signal", signo);
+	}
 #if NF_PLATFORM != NF_PLATFORM_WIN
 	switch (signo)
 	{
@@ -91,7 +98,7 @@ void  NFCSignalHandleModule::HandleSignal(int signo)
 	case SIGHUP:
 	case SIGTERM:
 	{
-		NFCPluginManager::GetSingletonPtr()->End();
+		m_pPluginManager->End();
 	}
 	break;
 	default:
@@ -112,8 +119,6 @@ void NFCSignalHandleModule::InitSignal()
 	signal(SIGHUP, sig_usr);
 	signal(SIGTERM, sig_usr);
 	// ignore signals
-
-
 
 	signal(SIGPIPE, SIG_IGN);
 	signal(SIGTTOU, SIG_IGN);

@@ -374,10 +374,14 @@
     <ClCompile Include="dllmain.cpp" />
     <ClCompile Include="NFCLoadStaticPlugin.cpp" />
     <ClCompile Include="NFCPluginManager.cpp" />
+    <ClCompile Include="NFCrashHandlerMgr.cpp" />
     <ClCompile Include="NFPluginLoader.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="NFCPluginManager.h" />
+    <ClInclude Include="NFCrashHandlerMgr.h" />
+    <ClInclude Include="NFPrintfLogo.h" />
+    <ClInclude Include="NFProcessParameter.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

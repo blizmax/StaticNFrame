@@ -380,6 +380,44 @@ public:
 		return result;
 	}
 #endif
+
+	char* wchar2char(const wchar_t* ts, size_t* outlen)
+	{
+		int len = (int)((wcslen(ts) + 1) * sizeof(wchar_t));
+		char* ccattr = (char *)malloc(len);
+		memset(ccattr, 0, len);
+
+		size_t slen = wcstombs(ccattr, ts, len);
+
+		if (outlen)
+		{
+			if ((size_t)-1 != slen)
+				*outlen = slen;
+			else
+				*outlen = 0;
+		}
+
+		return ccattr;
+	};
+
+	wchar_t* char2wchar(const char* cs, size_t* outlen)
+	{
+		int len = (int)((strlen(cs) + 1) * sizeof(wchar_t));
+		wchar_t* ccattr = (wchar_t *)malloc(len);
+		memset(ccattr, 0, len);
+
+		size_t slen = mbstowcs(ccattr, cs, len);
+
+		if (outlen)
+		{
+			if ((size_t)-1 != slen)
+				*outlen = slen;
+			else
+				*outlen = 0;
+		}
+
+		return ccattr;
+	};
 };
 
 class NFStringUtilW

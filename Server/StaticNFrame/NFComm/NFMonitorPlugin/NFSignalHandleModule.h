@@ -9,6 +9,15 @@
 #pragma once
 
 #include "NFComm/NFPluginModule/NFISignalHandleModule.h"
+#include "NFComm/NFCore/NFPlatform.h"
+
+#if NF_PLATFORM == NF_PLATFORM_LINUX
+#include <unistd.h>
+#include <netdb.h>
+#include <arpa/inet.h>
+#include <signal.h>
+#include <sys/prctl.h>
+#endif
 
 class NFCSignalHandleModule : public NFISignalHandleModule
 {
@@ -23,6 +32,4 @@ public:
 	virtual void InitSignal();
 
 	virtual void HandleSignal(int signo);
-private:
-
 };
