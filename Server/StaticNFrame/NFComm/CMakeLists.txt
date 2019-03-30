@@ -9,5 +9,7 @@ ADD_SUBDIRECTORY("NFPluginModule")
 ADD_SUBDIRECTORY("NFMysqlPlugin")
 ADD_SUBDIRECTORY("NFMongoPlugin")
 ADD_SUBDIRECTORY("NFXPlugin/NFLuaScriptPlugin")
+ADD_SUBDIRECTORY("NFSqlitePlugin")
+#ADD_SUBDIRECTORY("NFMonitorPlugin")
 
 

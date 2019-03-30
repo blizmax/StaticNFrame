@@ -8,6 +8,7 @@ if( CMAKE_BUILD_TYPE MATCHES "Release" )
 	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}  -fPIC -std=c++11 -O3 -Wall")
 	add_definitions(
         -DNDEBUG
+        -DNF_STATIC_PLUGIN
         -fPIC
     )
 else()
@@ -15,6 +16,7 @@ else()
 	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -O0 -Wall -g -ggdb -fPIC")
 	add_definitions(
         -D_DEBUG
+        -DNF_STATIC_PLUGIN
         -fPIC
     )
 endif()
@@ -64,15 +66,15 @@ else()
 endif()
 
 SET(LIB_LINK_DEP resolv dl rt libssl.a libcrypto.a pthread libbson-static-1.0.a libmysqlpp.a libmysqlclient.a libevent_core.a libevent_extra.a libtheron.a
-		libevent.a libLuaBind.a libtheron.a libprotobuf.a libmongoc-static-1.0.a libbson-static-1.0.a libCommon.a)
+		libevent.a libLuaBind.a libtheron.a libprotobuf.a libmongoc-static-1.0.a libbson-static-1.0.a libCommon.a libSqlite3.a)
 		
 SET(LIB_LINK_NF libNFActorPlugin.a libNFCore.a libNFKernelPlugin.a libNFLuaScriptPlugin.a
-				libNFMath.a libNFMessageDefine.a libNFNetPlugin.a libNFPluginModule.a libNFMongoPlugin.a
+				libNFMath.a libNFMessageDefine.a libNFNetPlugin.a libNFPluginModule.a libNFMongoPlugin.a libNFSqlitePlugin.a
 				libNFTestPlugin.a libNFMysqlPlugin.a libNFGameClientPlugin.a libNFGameServerPlugin.a 
 				libNFLoginClientPlugin.a libNFLoginServerPlugin.a libNFMasterServerPlugin.a 
 				libNFProxyClientPlugin.a libNFProxyServerPlugin.a 
 				libNFServerCommon.a libNFWorldClientPlugin.a libNFWorldServerPlugin.a
-				libNFGameLogicPlugin.a libNFLoginLogicPlugin.a libNFProxyLogicPlugin.a libNFServerLogicCommon.a)
+				libNFGameLogicPlugin.a libNFLoginLogicPlugin.a libNFProxyLogicPlugin.a libNFServerLogicCommon.a libprotobuf.a)
 	
 include_directories( ${INCLUDE_DIR} )
 	

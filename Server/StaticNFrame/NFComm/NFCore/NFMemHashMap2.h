@@ -400,7 +400,6 @@ public:
 		*/
 		size_t allocateMemBlock(size_t index)
 		{
-		begin:
 			void *pAddr = _pChunkAllocator->allocate();
 			if (pAddr == NULL)
 			{
@@ -660,7 +659,7 @@ public:
 			}
 		}
 
-		bool NFMemHashMap::HashMapItem::equal(const KEY& k)
+		bool equal(const KEY& k)
 		{
 			const KEY& key = getKey();
 
@@ -924,11 +923,10 @@ public:
 		char   _cMaxVersion;        /**大版本*/
 		char   _cMinVersion;         /**小版本*/
 		size_t _iMemSize;            /**内存大小*/
-		size_t _iMinDataSize;        /**最小数据块大小*/
-		size_t _iMaxDataSize;        /**最大数据块大小*/
-		float  _fFactor;             /**因子*/
+		size_t _iBlockSize;         /**最小数据块大小*/
 		float   _fRadio;              /**chunks个数/hash个数*/
 		size_t _iElementCount;       /**总元素个数*/
+		size_t _iUsedChunk;          /**已经使用的内存块*/
 		size_t _iReserve[4];        /**保留*/
 	}__attribute__((packed));
 
@@ -1010,7 +1008,7 @@ public:
 	* @brief 构造函数
 	*/
 	NFMemHashMap()
-		:_iBlockSize(sizeof(NFMemHashPair) * 2 + sizeof(Block::tagBlockHead))
+		:_iBlockSize(sizeof(NFMemHashPair) * 2 + sizeof(typename NFMemHashMap<KEY, VALUE>::Block::tagBlockHead))
 		, _fRadio(2)
 		, _pDataAllocator(new BlockAllocator(this))
 		, _end(this, 0, 0, 0)
