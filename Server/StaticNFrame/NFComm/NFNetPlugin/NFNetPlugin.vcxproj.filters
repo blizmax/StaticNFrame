@@ -38,6 +38,9 @@
     <ClCompile Include="NFServerNeEventModule.cpp">
       <Filter>NFServerNetEvent</Filter>
     </ClCompile>
+    <ClCompile Include="NFCallBackModule.cpp">
+      <Filter>NFServerNetEvent</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="NFNetPlugin.h" />
@@ -85,6 +88,9 @@
     </ClInclude>
     <ClInclude Include="NFHttpFormat.h">
       <Filter>NFHttpClient</Filter>
+    </ClInclude>
+    <ClInclude Include="NFCallBackModule.h">
+      <Filter>NFServerNetEvent</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -36,6 +36,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ArpaNetPacketParse.cpp" />
+    <ClCompile Include="NFCallBackModule.cpp" />
     <ClCompile Include="NFCHttpClientModule.cpp" />
     <ClCompile Include="NFCHttpServer.cpp" />
     <ClCompile Include="NFCHttpServerModule.cpp" />
@@ -51,6 +52,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ArpgNetPacketParse.h" />
+    <ClInclude Include="NFCallBackModule.h" />
     <ClInclude Include="NFCHttpClientModule.h" />
     <ClInclude Include="NFCHttpServer.h" />
     <ClInclude Include="NFCHttpServerModule.h" />
