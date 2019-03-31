@@ -12,15 +12,16 @@
 
 #include <signal.h>
 #include <time.h>
-#include <ucontext.h>
-#include <sys/ucontext.h>
 #include <algorithm>
-#include <execinfo.h>
 #include <string.h>
 
 static NFCSignalHandleModule* g_signalHandleModule = nullptr;
 
 #if NF_PLATFORM != NF_PLATFORM_WIN
+
+#include <ucontext.h>
+#include <sys/ucontext.h>
+#include <execinfo.h>
 
 bool Symbolize(void *pc, char *out, int out_size) {
 	return false;
