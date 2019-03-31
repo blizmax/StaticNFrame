@@ -266,10 +266,12 @@ bool NFCPluginManager::Execute()
 		std::this_thread::sleep_for(std::chrono::milliseconds(1));
 	}
 
+	int *a = nullptr;
 	if (mCurFrameCount % 1000 == 0)
 	{
 		PrintProfiler();
 	}
+	*a = 10;
 	return bRet;
 }
 
