@@ -180,14 +180,3 @@ function ClearBits( curr, enum_tb )
     return curr;
 end
 
--- 位标识符操作  End
-
-function DumpMemorySnapshot()
-    collectgarbage("collect")
-    MemoryRefInfo.m_cMethods.DumpMemorySnapshot("./", "All", -1)
-end
-
-function DumpMemorySnapshotComparedFile( file_1, file_2 )
-    MemoryRefInfo.m_cMethods.DumpMemorySnapshotComparedFile("./", "Compared", -1, file_1, file_2)
-end
-

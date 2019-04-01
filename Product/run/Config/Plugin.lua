@@ -20,9 +20,9 @@ LoadPlugin =
 			"NFMonitorPlugin",
 			--"NFSqlitePlugin",
 			--"NFMysqlPlugin",
-			--"NFMongoPlugin",
+			"NFMongoPlugin",
 			
-			--"NFLuaScriptPlugin",
+			"NFLuaScriptPlugin",
 			
 			--"NFMasterServerPlugin",
 			

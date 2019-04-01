@@ -228,12 +228,10 @@ bool NFCLuaScriptModule::Register()
 		.addProperty("ServerId", &NFServerData::GetServerId)
 		.addProperty("GetGameId", &NFServerData::LuaGetGameId)
 		.addProperty("GetZoneId", &NFServerData::LuaGetZoneId)
-		.addProperty("SendString", &NFServerData::GetSendString)
 		.endClass();
 
 	LuaIntf::LuaBinding(l).beginClass<AccountInfo>("PlayerAccountInfo")
 		.addProperty("Id", &AccountInfo::GetUid, &AccountInfo::SetUid)
-		.addProperty("SendString", &AccountInfo::GetSendMsg, &AccountInfo::SetSendMsg)
 		.endClass();
 	return true;
 }

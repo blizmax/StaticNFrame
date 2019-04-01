@@ -8,7 +8,7 @@
             "type": "shell",
             //"command": "cd ../Debug && ./NFPluginLoader --Server=GameServer --ID=11 --Path=../Config --LuaScript=../ScriptModule",
            // "command": "cd ../Debug && ./NFPluginLoader --Server=RebotServer --ID=11 --Path=../Config --LuaScript=../ScriptModule",
-            "command": "cd ../Debug && ./NFPluginLoader --Server=AllServer --ID=11 --Path=../Config --LuaScript=../ScriptModule",
+            "command": "cd ../Debug && NFPluginLoader --Server=AllServer --ID=11 --Path=../Config --LuaScript=../ScriptModule",
             "problemMatcher": []
         }
     ]

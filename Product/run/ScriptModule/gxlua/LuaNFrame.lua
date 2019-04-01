@@ -1,9 +1,13 @@
 require "gxlua/class"
 
-CreateClass("LuaNFrame")
+local LuaNFrame = class("LuaNFrame")
 
 --用来存放加载函数
 LuaNFrame.LoadScriptList = { }
+
+function LuaNFrame:ctor()
+
+end
 
 function LuaNFrame:init(pluginManager, luaModule)
 
