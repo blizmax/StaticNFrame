@@ -403,6 +403,12 @@
     <ClInclude Include="ctlib\include\CTTimeEscapeCheck.h">
       <Filter>ctlib</Filter>
     </ClInclude>
+    <ClInclude Include="redis-cplusplus-client\redisclient.h">
+      <Filter>redis</Filter>
+    </ClInclude>
+    <ClInclude Include="redis-cplusplus-client\msvc\anet_win32\anet_win32.h">
+      <Filter>redis</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="sigar">
@@ -431,6 +437,9 @@
     </Filter>
     <Filter Include="ctlib">
       <UniqueIdentifier>{9b8cc0a6-298a-43db-840f-e02e0371f79d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="redis">
+      <UniqueIdentifier>{b3ee1515-c8bb-453b-b16c-72cf59e3a727}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -478,6 +487,9 @@
     </ClCompile>
     <ClCompile Include="spdlog\fmt\bundled\printf.cc">
       <Filter>spdlog\fmt</Filter>
+    </ClCompile>
+    <ClCompile Include="redis-cplusplus-client\msvc\anet_win32\anet_win32.c">
+      <Filter>redis</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

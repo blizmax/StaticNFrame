@@ -187,6 +187,9 @@
     <ClInclude Include="NFISignalHandleModule.h">
       <Filter>Monitor</Filter>
     </ClInclude>
+    <ClInclude Include="NFINoSqlModule.h">
+      <Filter>Nosql</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Event">
@@ -236,6 +239,9 @@
     </Filter>
     <Filter Include="Monitor">
       <UniqueIdentifier>{4703a76e-0e65-426e-893f-e31741f2f386}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Nosql">
+      <UniqueIdentifier>{b209c585-6875-432c-85be-cb96d85f0596}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

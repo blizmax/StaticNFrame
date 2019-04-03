@@ -350,6 +350,7 @@
     <ClInclude Include="NFILuaModule.h" />
     <ClInclude Include="NFIMongoModule.h" />
     <ClInclude Include="NFIMonitorModule.h" />
+    <ClInclude Include="NFINoSqlModule.h" />
     <ClInclude Include="NFIObject.h" />
     <ClInclude Include="NFIAsyMysqlModule.h" />
     <ClInclude Include="NFIMysqlDriver.h" />
