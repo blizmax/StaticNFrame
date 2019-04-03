@@ -8,7 +8,6 @@
 
 #include "NFNoSqlPlugin.h"
 #include "NFCNoSqlModule.h"
-#include "NFCAsyNoSqlModule.h"
 
 #ifdef NF_DYNAMIC_PLUGIN
 
@@ -25,24 +24,22 @@ NF_EXPORT void DllStopPlugin(NFIPluginManager* pm)
 #endif
 //////////////////////////////////////////////////////////////////////////
 
-const int NFNoSqlPlugin::GetPluginVersion()
+int NFNoSqlPlugin::GetPluginVersion()
 {
     return 0;
 }
 
-const std::string NFNoSqlPlugin::GetPluginName()
+std::string NFNoSqlPlugin::GetPluginName()
 {
     return GET_CLASS_NAME(NFNoSqlPlugin);
 }
 
 void NFNoSqlPlugin::Install()
 {
-    REGISTER_MODULE(pPluginManager, NFINoSqlModule, NFCNoSqlModule)
-    REGISTER_MODULE(pPluginManager, NFIAsyNoSqlModule, NFCAsyNoSqlModule)
+	REGISTER_MODULE(m_pPluginManager, NFINoSqlModule, NFCNoSqlModule);
 }
 
 void NFNoSqlPlugin::Uninstall()
 {
-    UNREGISTER_MODULE(pPluginManager, NFINoSqlModule, NFCNoSqlModule)
-    UNREGISTER_MODULE(pPluginManager, NFIAsyNoSqlModule, NFCAsyNoSqlModule)
+	UNREGISTER_MODULE(m_pPluginManager, NFINoSqlModule, NFCNoSqlModule);
 }

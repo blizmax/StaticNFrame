@@ -54,12 +54,12 @@ typedef void* BUFPTR;
 #include <sstream>
 #include <iostream>
 
-#include "./Dependencies/common/optional.hpp"
-#include "./Dependencies/common/lexical_cast.hpp"
-#include "./Dependencies/common/variant.hpp"
+#include "common/optional.hpp"
+#include "common/lexical_cast.hpp"
+#include "common/variant.hpp"
 
 #ifdef _WIN32
-#include "anet_win32.h"
+#include "common/redis-cplusplus-client/msvc/anet_win32/anet_win32.h"
 #ifndef INFINITY
 #define INFINITY 0x7fffffff
 #endif

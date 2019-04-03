@@ -9,24 +9,18 @@
 #include "NFComm/NFPluginModule/NFIPlugin.h"
 #include "NFComm/NFPluginModule/NFIPluginManager.h"
 
-#ifdef NFDATABASEPLUGIN_EXPORTS
-#define NFDATABASEPLUGIN_API __declspec(dllexport)
-#else
-#define NFDATABASEPLUGIN_API __declspec(dllimport)
-#endif
-
 //////////////////////////////////////////////////////////////////////////
 class NFNoSqlPlugin : public NFIPlugin
 {
 public:
     NFNoSqlPlugin(NFIPluginManager* p)
     {
-        pPluginManager = p;
+        m_pPluginManager = p;
     }
 
-    virtual const int GetPluginVersion();
+	virtual int GetPluginVersion() override;
 
-    virtual const std::string GetPluginName();
+	virtual std::string GetPluginName() override;
 
     virtual void Install();
 

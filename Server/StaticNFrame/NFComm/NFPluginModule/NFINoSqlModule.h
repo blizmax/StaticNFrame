@@ -11,7 +11,7 @@
 
 #include "NFComm/NFPluginModule/NFIModule.h"
 #include "NFComm/NFPluginModule/NFINoSqlDriver.h"
-
+#include "NFComm/NFCore/NFPlatform.h"
 
 class NFINoSqlModule
     : public NFIModule
@@ -22,7 +22,6 @@ public:
     virtual bool AddConnectSql(const std::string& strID, const std::string& strIP, const int nPort) = 0;
     virtual bool AddConnectSql(const std::string& strID, const std::string& strIP, const int nPort, const std::string& strPass) = 0;
 
-    virtual NFList<std::string> GetDriverIdList() = 0;
     virtual NF_SHARE_PTR<NFINoSqlDriver>  GetDriver(const std::string& strID) = 0;
     virtual NF_SHARE_PTR<NFINoSqlDriver>  GetDriverBySuitRandom() = 0;
     virtual NF_SHARE_PTR<NFINoSqlDriver>  GetDriverBySuitConsistent() = 0;

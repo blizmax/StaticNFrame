@@ -190,6 +190,12 @@
     <ClInclude Include="NFINoSqlModule.h">
       <Filter>Nosql</Filter>
     </ClInclude>
+    <ClInclude Include="NFINoSqlDriver.h">
+      <Filter>Nosql</Filter>
+    </ClInclude>
+    <ClInclude Include="NFINoSqlDriverManager.h">
+      <Filter>Nosql</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Event">

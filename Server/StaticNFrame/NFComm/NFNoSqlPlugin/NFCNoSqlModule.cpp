@@ -8,11 +8,11 @@
 
 #include <algorithm>
 #include "NFCNoSqlModule.h"
-#include "NFComm/NFMessageDefine/NFProtocolDefine.hpp"
+#include "NFMessageDefine/NFMsgDefine.h"
 
 NFCNoSqlModule::NFCNoSqlModule(NFIPluginManager* p)
 {
-    pPluginManager = p;
+    m_pPluginManager = p;
 }
 
 NFCNoSqlModule::~NFCNoSqlModule()
@@ -35,50 +35,11 @@ bool NFCNoSqlModule::Shut()
 
 bool NFCNoSqlModule::AfterInit()
 {
-    m_pClassModule = pPluginManager->FindModule<NFIClassModule>();
-    m_pElementModule = pPluginManager->FindModule<NFIElementModule>();
-    m_pLogModule = pPluginManager->FindModule<NFILogModule>();
-
-    NF_SHARE_PTR<NFIClass> xLogicClass = m_pClassModule->GetElement(NFrame::NoSqlServer::ThisName());
-    if (xLogicClass)
-    {
-        const std::vector<std::string>& strIdList = xLogicClass->GetIDList();
-        for (int i = 0; i < strIdList.size(); ++i)
-        {
-            const std::string& strId = strIdList[i];
-
-            //const int nServerID = m_pElementModule->GetPropertyInt(strId, NFrame::NoSqlServer::ServerID());
-            const int nPort = (int)m_pElementModule->GetPropertyInt(strId, NFrame::NoSqlServer::Port());
-            const std::string& strIP = m_pElementModule->GetPropertyString(strId, NFrame::NoSqlServer::IP());
-            const std::string& strAuth = m_pElementModule->GetPropertyString(strId, NFrame::NoSqlServer::Auth());
-
-            if (this->AddConnectSql(strId, strIP, nPort, strAuth))
-            {
-                std::ostringstream strLog;
-                strLog << "Connected NoSqlServer[" << strIP << "], Port = [" << nPort << "], Passsword = [" << strAuth << "]";
-                m_pLogModule->LogNormal(NFILogModule::NF_LOG_LEVEL::NLL_INFO_NORMAL, NULL_OBJECT, strLog, __FUNCTION__, __LINE__);
-
-            }
-            else
-            {
-                std::ostringstream strLog;
-                strLog << "Cannot connect NoSqlServer[" << strIP << "], Port = " << nPort << "], Passsword = [" << strAuth << "]";
-                m_pLogModule->LogNormal(NFILogModule::NLL_ERROR_NORMAL, NULL_OBJECT, strLog, __FUNCTION__, __LINE__);
-            }
-        }
-    }
-
     return true;
 }
 
 bool NFCNoSqlModule::Execute()
 {
-    if (mLastCheckTime + 10 > pPluginManager->GetNowTime())
-    {
-        return false;
-    }
-    mLastCheckTime = pPluginManager->GetNowTime();
-
     NF_SHARE_PTR<NFINoSqlDriver> xNosqlDriver = this->mxNoSqlDriver.First();
     while (xNosqlDriver)
     {
@@ -126,12 +87,6 @@ NF_SHARE_PTR<NFINoSqlDriver> NFCNoSqlModule::GetDriverBySuit(const std::string& 
     return nullptr;
 }
 
-/*
-NF_SHARE_PTR<NFINoSqlDriver> NFCNoSqlModule::GetDriverBySuit(const int nHash)
-{
-return mxNoSqlDriver.GetElementBySuit(nHash);
-}
-*/
 bool NFCNoSqlModule::AddConnectSql(const std::string& strID, const std::string& strIP)
 {
     if (!mxNoSqlDriver.ExistElement(strID))
@@ -173,19 +128,6 @@ bool NFCNoSqlModule::AddConnectSql(const std::string& strID, const std::string& 
     }
 
     return true;
-}
-
-NFList<std::string> NFCNoSqlModule::GetDriverIdList()
-{
-    NFList<std::string> lDriverIdList;
-    std::string strDriverId;
-    NF_SHARE_PTR<NFINoSqlDriver> pDriver = mxNoSqlDriver.First(strDriverId);
-    while (pDriver)
-    {
-        lDriverIdList.Add(strDriverId);
-        pDriver = mxNoSqlDriver.Next(strDriverId);
-    }
-    return lDriverIdList;
 }
 
 NF_SHARE_PTR<NFINoSqlDriver> NFCNoSqlModule::GetDriver(const std::string& strID)

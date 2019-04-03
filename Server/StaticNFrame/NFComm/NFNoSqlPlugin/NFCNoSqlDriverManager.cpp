@@ -127,13 +127,13 @@ std::string NFCNoSqlDriverManager::GetIPByHostName(const std::string& strHostNam
 {
     if (strHostName.empty())
     {
-        return NULL_STR;
+        return std::string();
     }
 
     hostent* pHost = gethostbyname(strHostName.c_str());
     if (pHost == NULL)
     {
-        return NULL_STR;
+        return std::string();
     }
 
     if (pHost->h_addr_list[0] != NULL)
@@ -143,5 +143,5 @@ std::string NFCNoSqlDriverManager::GetIPByHostName(const std::string& strHostNam
         return std::string(strIp);
     }
 
-    return NULL_STR;
+    return std::string();
 }
