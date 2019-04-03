@@ -1,6 +1,3 @@
-if Do == nil then
-	Do = {}
-end
 
 TcpServer = TcpServer or { }
 TcpClient = TcpClient or { }
