@@ -199,6 +199,15 @@ void NFCPluginManager::UnRegistered(NFIPlugin* plugin)
 			return;
 		}
 
+		for (auto listIt = mPluginInstanceList.begin(); listIt != mPluginInstanceList.end(); listIt++)
+		{
+			if (it->second == *listIt)
+			{
+				mPluginInstanceList.erase(listIt);
+				break;
+			}
+		}
+
 		it->second->Uninstall();
 		NF_SAFE_DELETE(it->second);
 		it->second = nullptr;
@@ -232,7 +241,11 @@ bool NFCPluginManager::Execute()
 		BeginProfiler(it->first + "--Loop");
 		bool tembRet = it->second->Execute();
 		bRet = bRet && tembRet;
-		EndProfiler();
+		uint64_t useTime = EndProfiler();
+		if (useTime >= 10000) //>= 10ºÁÃë
+		{
+			NFLogError(NF_LOG_PLUGIN_MANAGER, 0, "{} use time:{} ms", it->first + "--Loop", useTime / 1000);
+		}
 	}
 
 	for (auto iter = mModuleAloneMultiMap.begin(); iter != mModuleAloneMultiMap.end(); iter++)
@@ -240,7 +253,11 @@ bool NFCPluginManager::Execute()
 		BeginProfiler(iter->first + "--Alone-Loop");
 		bool tembRet = iter->second->Execute();
 		bRet = bRet && tembRet;
-		EndProfiler();
+		uint64_t useTime = EndProfiler();
+		if (useTime >= 10000) //>= 10ºÁÃë
+		{
+			NFLogError(NF_LOG_PLUGIN_MANAGER, 0, "{} use time:{} ms", iter->first + "--Alone--Loop", useTime / 1000);
+		}
 	}
 
 	EndProfiler();
@@ -606,6 +623,11 @@ bool NFCPluginManager::UnLoadStaticPlugin(const std::string& strPluginDLLName)
 void NFCPluginManager::RegisterAloneModule(const std::string& strModuleName, const CREATE_ALONE_MODULE& createFunc)
 {
 	mModuleAloneFuncMap.emplace(strModuleName, createFunc);
+}
+
+void NFCPluginManager::UnRegisterAloneModule(const std::string& strModuleName)
+{
+	mModuleAloneFuncMap.erase(strModuleName);
 }
 
 NFIModule* NFCPluginManager::CreateAloneModule(const std::string& strModuleName)

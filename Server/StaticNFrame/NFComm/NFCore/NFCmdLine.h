@@ -639,6 +639,16 @@ namespace NFCmdLine
 			Check(argc, Parse(argc, argv));
 		}
 
+		void ClearParse()
+		{
+			errors.clear();
+			others.clear();
+			for (auto p = options.begin(); p != options.end(); ++p)
+			{
+				p->second->clear();
+			}
+		}
+
 		std::string Error() const
 		{
 			return errors.size() > 0 ? errors[0] : "";
@@ -751,6 +761,7 @@ namespace NFCmdLine
 			virtual bool has_set() const = 0;
 			virtual bool valid() const = 0;
 			virtual bool must() const = 0;
+			virtual void clear() = 0;
 
 			virtual const std::string& name() const = 0;
 			virtual char short_name() const = 0;
@@ -801,6 +812,11 @@ namespace NFCmdLine
 			virtual bool must() const override
 			{
 				return false;
+			}
+
+			virtual void clear() override
+			{
+				has = false;
 			}
 
 			virtual const std::string& name() const override
@@ -915,6 +931,10 @@ namespace NFCmdLine
 				return "--" + nam + "=" + NFDetail::readable_typename<T>();
 			}
 
+			virtual void clear() override
+			{
+				has = false;
+			}
 		protected:
 			std::string full_description(const std::string& xdesc)
 			{

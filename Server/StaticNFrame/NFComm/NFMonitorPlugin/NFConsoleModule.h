@@ -9,7 +9,7 @@
 #pragma once
 
 #include "NFComm/NFPluginModule/NFIConsoleModule.h"
-
+#include "NFComm/NFPluginModule/NFTimerObj.h"
 #include "NFComm/NFCore/NFCmdLine.h"
 #include "NFComm/NFCore/NFQueue.hpp"
 
@@ -35,7 +35,7 @@ struct NFConsoleMsg
 	std::string mParam5;
 };
 
-class NFCConsoleModule : public NFIConsoleModule
+class NFCConsoleModule : public NFIConsoleModule, public NFTimerObj
 {
 public:
 	NFCConsoleModule(NFIPluginManager* p);
@@ -46,6 +46,8 @@ public:
 	virtual bool Execute();
 
 	virtual bool OnReloadPlugin();
+
+	virtual void OnTimer(uint32_t nTimerID);
 public:
 	virtual void CreateBackThread();
 	virtual void BackThreadLoop();

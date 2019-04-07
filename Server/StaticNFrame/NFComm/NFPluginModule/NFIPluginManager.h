@@ -94,6 +94,8 @@ public:
 
 	virtual void RegisterAloneModule(const std::string& strModuleName, const CREATE_ALONE_MODULE& createFunc) = 0;   //
 
+	virtual void UnRegisterAloneModule(const std::string& strModuleName) = 0;
+
 	virtual NFIModule* CreateAloneModule(const std::string& strModuleName) = 0;
 
 	//初始化单件系统
@@ -114,6 +116,10 @@ public:
 	virtual void RemoveModule(const std::string& strModuleName) = 0;
 
 	virtual NFIModule* FindModule(const std::string& strModuleName) = 0;
+
+	virtual bool LoadPluginLibrary(const std::string& strPluginDLLName) = 0;
+
+	virtual bool UnLoadPluginLibrary(const std::string& strPluginDLLName) = 0;
 
 	virtual int GetAppID() const = 0;
 

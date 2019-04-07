@@ -12,6 +12,8 @@
 #include <string>
 #include "NFComm/NFPluginModule/NFLogMgr.h"
 #include "NFComm/NFPluginModule/NFIPluginManager.h"
+#include "NFComm/NFPluginModule/NFTimerMgr.h"
+#include "NFComm/NFPluginModule/NFIPlugin.h"
 
 NFCConsoleModule::NFCConsoleModule(NFIPluginManager* p)
 {
@@ -33,14 +35,21 @@ bool NFCConsoleModule::Awake()
 			mCmdParser.Add("Reload", 0, "Reload Plugin Config");
 			mCmdParser.Add("Profiler", 0, "Open Profiler");
 
-			mCmdParser.Add("Dynamic", 0, "Dynamic Load Plugin", false, "");
+			mCmdParser.Add<std::string>("Dynamic", 0, "Dynamic Load Plugin", false, "xxPlugin");
 		}
 		catch (NFCmdLine::NFCmdLine_Error& e)
 		{
 			NFLogWarning(NF_LOG_MONITOR_PLUGIN, 0, e.what());
 		}
 
+		/*
+		* 创建检查输入线程
+		*/
 		CreateBackThread();
+		/*
+		* 定时器每1秒检查一次， 看是否有输入
+		*/
+		SetTimer(0, 1000, INFINITY_CALL);
 	}
 
 	return true;
@@ -79,32 +88,104 @@ void NFCConsoleModule::BackThreadLoop()
 		std::string cmd = m_pPluginManager->GetAppName() + " " + s;
 		try
 		{
+			mCmdParser.ClearParse();
 			if (!mCmdParser.ParseConsoleCommand(cmd))
 			{
+				std::cout << mCmdParser.ErrorFull() << std::endl;
+				std::cout << mCmdParser.Usage() << std::endl;
 				continue;
 			}
 
 			if (mCmdParser.Exist("Exit"))
 			{
-				mQueueMsg.
-				m_pPluginManager->SetExitApp(true);
+				NFConsoleMsg msg;
+				msg.mMsgType = NFConsoleMsg_Exit;
+				mQueueMsg.Push(msg);
 				mThread.detach();
 				return;
 			}
 
 			if (mCmdParser.Exist("Reload"))
 			{
-				m_pPluginManager->OnReloadPlugin();
+				NFConsoleMsg msg;
+				msg.mMsgType = NFConsoleMsg_Reload;
+				mQueueMsg.Push(msg);
 			}
 
 			if (mCmdParser.Exist("Profiler"))
 			{
-				m_pPluginManager->SetOpenProfiler(!m_pPluginManager->IsOpenProfiler());
+				NFConsoleMsg msg;
+				msg.mMsgType = NFConsoleMsg_Profiler;
+				mQueueMsg.Push(msg);
+			}
+
+			if (mCmdParser.Exist("Dynamic"))
+			{
+				std::string strPluginName = mCmdParser.Get<std::string>("Dynamic");
+				if (!strPluginName.empty())
+				{
+					NFConsoleMsg msg;
+					msg.mMsgType = NFConsoleMsg_Dynamic;
+					msg.mParam1 = strPluginName;
+					mQueueMsg.Push(msg);
+				}
 			}
 		}
 		catch (NFCmdLine::NFCmdLine_Error& e)
 		{
 			NFLogWarning(NF_LOG_MONITOR_PLUGIN, 0, e.what());
+		}
+	}
+}
+
+void NFCConsoleModule::OnTimer(uint32_t nTimerID)
+{
+	std::vector<NFConsoleMsg> vec;
+	mQueueMsg.Pop(vec);
+
+	for (size_t i = 0; i < vec.size(); i++)
+	{
+		const NFConsoleMsg& msg = vec[i];
+
+		if (msg.mMsgType == NFConsoleMsg_Exit)
+		{
+			m_pPluginManager->SetExitApp(true);
+		}
+		else if (msg.mMsgType == NFConsoleMsg_Profiler)
+		{
+			m_pPluginManager->SetOpenProfiler(!m_pPluginManager->IsOpenProfiler());
+		}
+		else if (msg.mMsgType == NFConsoleMsg_Reload)
+		{
+			m_pPluginManager->OnReloadPlugin();
+		}
+		else if (msg.mMsgType == NFConsoleMsg_Dynamic)
+		{
+			NFIPlugin* pPlugin = m_pPluginManager->FindPlugin(msg.mParam1);
+			if (pPlugin)
+			{
+				if (pPlugin->IsDynamicLoad() == false)
+				{
+					NFLogError(NF_LOG_MONITOR_PLUGIN, 0, "plugin:{} can't not dynamic load!", msg.mParam1);
+					continue;
+				}
+
+				m_pPluginManager->UnLoadPluginLibrary(msg.mParam1);
+				m_pPluginManager->LoadPluginLibrary(msg.mParam1);
+
+				pPlugin = m_pPluginManager->FindPlugin(msg.mParam1);
+				if (pPlugin)
+				{
+					pPlugin->Awake();
+					pPlugin->Init();
+					pPlugin->AfterInit();
+					pPlugin->ReadyExecute();
+				}
+			}
+			else
+			{
+				NFLogError(NF_LOG_MONITOR_PLUGIN, 0, "plugin:{} is not exist!", msg.mParam1);
+			}
 		}
 	}
 }

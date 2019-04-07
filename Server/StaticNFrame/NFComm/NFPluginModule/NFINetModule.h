@@ -56,6 +56,7 @@ protected:
 public:
 	virtual ~NFINetModule()
 	{
+		mxCallBack.clear();
 	}
 
 	template <typename BaseType>

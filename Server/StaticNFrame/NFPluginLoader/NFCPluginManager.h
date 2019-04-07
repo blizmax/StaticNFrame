@@ -83,7 +83,12 @@ public:
 
 	virtual void RegisterAloneModule(const std::string& strModuleName, const CREATE_ALONE_MODULE& createFunc) override;
 
+	virtual void UnRegisterAloneModule(const std::string& strModuleName) override;
+
 	virtual NFIModule* CreateAloneModule(const std::string& strModuleName) override;
+
+	virtual bool LoadPluginLibrary(const std::string& strPluginDLLName) override;
+	virtual bool UnLoadPluginLibrary(const std::string& strPluginDLLName) override;
 
 	virtual bool Execute() override;
 
@@ -126,14 +131,12 @@ public:
 	virtual bool IsDaemon() const;
 	virtual void SetDaemon();
 protected:
-	bool LoadPluginConfig();
-	bool RegisterStaticPlugin();
 
 	bool LoadStaticPlugin(const std::string& strPluginDLLName);
 	bool UnLoadStaticPlugin(const std::string& strPluginDLLName);
 
-	bool LoadPluginLibrary(const std::string& strPluginDLLName);
-	bool UnLoadPluginLibrary(const std::string& strPluginDLLName);
+	bool LoadPluginConfig();
+	bool RegisterStaticPlugin();
 
 	bool LoadKernelPlugin();
 
