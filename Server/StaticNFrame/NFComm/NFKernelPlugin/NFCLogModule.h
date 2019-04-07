@@ -36,9 +36,19 @@ public:
 	* @param  logId LOG选项ID，可以配置输出
 	* @param  guid 一般是玩家ID，某些情况下，只想输出一个玩家的LOG
 	* @param  log
-	* @return bool
+	* @return void
 	*/
 	virtual void LogDefault(NF_LOG_LEVEL log_level, const char* function, int line, uint32_t logId, uint64_t guid, const std::string& log);
+
+	/**
+	* @brief 是否输出对应等级的logId的log
+	*
+	* @param  log_level log等级
+	* @param  logId LOG选项ID，可以配置输出
+	* @param  guid 一般是玩家ID，某些情况下，只想输出一个玩家的LOG
+	* @return bool
+	*/
+	virtual bool IsLogIdEnable(NF_LOG_LEVEL log_level, uint32_t logId, uint64_t guid);
 
 	/**
 	* @brief 对外接口输出默认的LOG

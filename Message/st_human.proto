@@ -1,5 +1,5 @@
 syntax = "proto2";
-package progame;
+package NFMsg;
 
 message playerinfo
 {
@@ -212,6 +212,7 @@ message stringlist
 {
 	repeated string slist = 1;
 }
+
 message specialinfo
 {
 	optional int32 userid = 1;

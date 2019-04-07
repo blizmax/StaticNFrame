@@ -108,6 +108,8 @@ public:
 
 	virtual void Uninstall() = 0;
 
+	virtual bool IsDynamicLoad();
+
 	virtual void AddModule(const std::string& moduleName, NFIModule* pModule);
 
 	virtual void RemoveModule(const std::string& moduleName);
@@ -126,7 +128,7 @@ inline bool NFIPlugin::Awake()
 			bool bRet = pModule->Awake();
 			if (!bRet)
 			{
-				std::cout << pModule->strName << "Awake failed!"<< std::endl;
+				NFLogError(NF_LOG_SYSTEMLOG, 0, "{} Awake failed!", pModule->strName);
 				assert(0);
 			}
 		}
@@ -144,7 +146,7 @@ inline bool NFIPlugin::Init()
 			bool bRet = pModule->Init();
 			if (!bRet)
 			{
-				std::cout << pModule->strName << " Init failed!" << std::endl;
+				NFLogError(NF_LOG_SYSTEMLOG, 0, "{} Init failed!", pModule->strName);
 				assert(0);
 			}
 		}
@@ -162,7 +164,7 @@ inline bool NFIPlugin::AfterInit()
 			bool bRet = pModule->AfterInit();
 			if (!bRet)
 			{
-				std::cout << pModule->strName << "AfterInit failed!" << std::endl;
+				NFLogError(NF_LOG_SYSTEMLOG, 0, "{} AfterInit failed!", pModule->strName);
 				assert(0);
 			}
 		}
@@ -180,7 +182,7 @@ inline bool NFIPlugin::CheckConfig()
 			bool bRet = pModule->CheckConfig();
 			if (!bRet)
 			{
-				std::cout << pModule->strName << "CheckConfig failed!" << std::endl;
+				NFLogError(NF_LOG_SYSTEMLOG, 0, "{} CheckConfig failed!", pModule->strName);
 				assert(0);
 			}
 		}
@@ -199,7 +201,7 @@ inline bool NFIPlugin::ReadyExecute()
 			bool bRet = pModule->ReadyExecute();
 			if (!bRet)
 			{
-				std::cout << pModule->strName << "ReadyExecute failed!" << std::endl;
+				NFLogError(NF_LOG_SYSTEMLOG, 0, "{} ReadyExecute failed!", pModule->strName);
 				assert(0);
 			}
 		}
@@ -218,8 +220,7 @@ inline bool NFIPlugin::Execute()
 			bool bRet = pModule->Execute();
 			if (!bRet)
 			{
-				std::cout << pModule->strName << "Execute failed!" << std::endl;
-				assert(0);
+				NFLogError(NF_LOG_SYSTEMLOG, 0, "{} Execute failed!", pModule->strName);
 			}
 		}
 	}
@@ -237,8 +238,7 @@ inline bool NFIPlugin::BeforeShut()
 			bool bRet = pModule->BeforeShut();
 			if (!bRet)
 			{
-				std::cout << pModule->strName << "BeforeShut failed!" << std::endl;
-				assert(0);
+				NFLogError(NF_LOG_SYSTEMLOG, 0, "{} BeforeShut failed!", pModule->strName);
 			}
 		}
 	}
@@ -255,8 +255,7 @@ inline bool NFIPlugin::Shut()
 			bool bRet = pModule->Shut();
 			if (!bRet)
 			{
-				std::cout << pModule->strName << "Shut failed!" << std::endl;
-				assert(0);
+				NFLogError(NF_LOG_SYSTEMLOG, 0, "{} Shut failed!", pModule->strName);
 			}
 		}
 	}
@@ -274,8 +273,7 @@ inline bool NFIPlugin::Finalize()
 			bool bRet = pModule->Finalize();
 			if (!bRet)
 			{
-				std::cout << pModule->strName << "Finalize failed!" << std::endl;
-				assert(0);
+				NFLogError(NF_LOG_SYSTEMLOG, 0, "{} Finalize failed!", pModule->strName);
 			}
 		}
 	}
@@ -293,8 +291,7 @@ inline bool NFIPlugin::OnReloadPlugin()
 			bool bRet = pModule->OnReloadPlugin();
 			if (!bRet)
 			{
-				std::cout << pModule->strName << "OnReleadPlugin failed!" << std::endl;
-				assert(0);
+				NFLogError(NF_LOG_SYSTEMLOG, 0, "{} OnReloadPlugin failed!", pModule->strName);
 			}
 		}
 	}
@@ -329,6 +326,11 @@ inline void NFIPlugin::RemoveModule(const std::string& moduleName)
 		}
 		m_mapModule.erase(it);
 	}
+}
+
+inline bool NFIPlugin::IsDynamicLoad()
+{
+	return false;
 }
 #endif
 

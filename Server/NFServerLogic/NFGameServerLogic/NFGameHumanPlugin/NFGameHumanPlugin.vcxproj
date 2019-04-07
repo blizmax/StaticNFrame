@@ -19,10 +19,16 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="NFHumanControllerModule.h" />
     <ClInclude Include="NFGameHumanPlugin.h" />
+    <ClInclude Include="NFHumanModule.h" />
+    <ClInclude Include="NFHumanServicesModule.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="NFHumanControllerModule.cpp" />
     <ClCompile Include="NFGameHumanPlugin.cpp" />
+    <ClCompile Include="NFHumanModule.cpp" />
+    <ClCompile Include="NFHumanServicesModule.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{76AEA86D-9BB1-4DFD-BFA6-CA9AF8B6C558}</ProjectGuid>

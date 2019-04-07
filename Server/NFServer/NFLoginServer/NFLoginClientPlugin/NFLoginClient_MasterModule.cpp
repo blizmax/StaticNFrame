@@ -64,7 +64,7 @@ bool NFCLoginClient_MasterModule::AfterInit()
 void NFCLoginClient_MasterModule::OnServerReport(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen)
 {
 	NFMsg::ServerInfoReportList xMsg;
-	CLIENT_MSG_PROCESS_NO_OBJECT(nMsgId, msg, nLen, xMsg);
+	CLIENT_MSG_PROCESS_NO_OBJECT(nMsgId, playerId, msg, nLen, xMsg);
 
 	for (int i = 0; i < xMsg.server_list_size(); ++i)
 	{

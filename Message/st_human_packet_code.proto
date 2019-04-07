@@ -1,5 +1,5 @@
 syntax = "proto2";
-package progame;
+package NFMsg;
 
 enum st_human_packet_code
 {

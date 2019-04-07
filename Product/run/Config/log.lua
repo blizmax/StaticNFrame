@@ -26,6 +26,8 @@ NFLogId = {
 	
 	NF_LOG_LOAD_CONFIG = 21,				--加载配置
 	NF_LOG_PROTOBUF_PARSE = 22,				--protobuf解析出错
+	NF_LOG_RECV_MSG = 23,					--接受消息
+	NF_LOG_RECV_MSG_JSON_PRINTF = 24,		--接受消息Json输出
 	NF_LOG_PLUGIN_MANAGER = 100,			--引擎加载器
 	NF_LOG_MAX_SYSTEM_PLUGIN = 100,
 
@@ -65,6 +67,8 @@ LogInfo = {
 	-------------------------------------------------------------------------------------------------
 	{logid = NFLogId.NF_LOG_LOAD_CONFIG, display=true, level=0, logname = "LoadConfigLog", guid = 0, desc = "加载配置LOG"},
 	{logid = NFLogId.NF_LOG_PROTOBUF_PARSE, display=true, level=0, logname = "ProtobufParse", guid = 0, desc = "protobuf解析出错LOG"},
+	{logid = NFLogId.NF_LOG_RECV_MSG, display=false, level=0, logname = "RecvMsg", guid = 0, desc = "接受消息LOG"},
+	{logid = NFLogId.NF_LOG_RECV_MSG_JSON_PRINTF, display=false, level=0, logname = "RecvMsgJson", guid = 0, desc = "接受消息Json输出LOG"},
 	--服务器层架构LOG
 	
 	{logid = NFLogId.NF_LOG_SERVER_CONNECT_SERVER, display=true, level=0, logname = "ServerConnectServerLog", guid = 0, desc = "服务器与服务器连接LOG"},

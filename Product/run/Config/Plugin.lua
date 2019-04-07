@@ -13,34 +13,46 @@ LoadPlugin =
 {
 	AllServer = {
 		ServerPlugins = {
+			-------------------------
+			-----基础框架引擎-------------
 			"NFKernelPlugin",
 			"NFActorPlugin",
 			"NFNetPlugin",
-			"NFTestPlugin",
 			"NFMonitorPlugin",
-			--"NFSqlitePlugin",
-			--"NFMysqlPlugin",
+			"NFSqlitePlugin",
+			"NFNoSqlPlugin",
+			"NFMysqlPlugin",
 			"NFMongoPlugin",
+			------------------------------------------
+			--"NFTestPlugin",
 			
-			"NFLuaScriptPlugin",
+			--"NFLuaScriptPlugin",
+			--------------------------------------------
+			-----服务器架构引擎-------------------------
+			"NFMasterServerPlugin",
 			
-			--"NFMasterServerPlugin",
+			"NFLoginClientPlugin",
+			"NFLoginServerPlugin",
 			
-			--"NFLoginClientPlugin",
-			--"NFLoginServerPlugin",
+			"NFWorldClientPlugin",
+			"NFWorldServerPlugin",
 			
-			--"NFWorldClientPlugin",
-			--"NFWorldServerPlugin",
+			"NFGameClientPlugin",
+			"NFGameServerPlugin",
 			
-			--"NFGameClientPlugin",
-			--"NFGameServerPlugin",
+			"NFProxyServerPlugin",
+			"NFProxyClientPlugin",
 			
-			--"NFProxyServerPlugin",
-			--"NFProxyClientPlugin",
+			------------------------------------------------
+			-----服务器基础逻辑引擎-------------------------
+			"NFGameLogicPlugin",
+			"NFLoginLogicPlugin",
+			"NFProxyLogicPlugin",
 			
-			--"NFGameLogicPlugin",
-			--"NFLoginLogicPlugin",
-			--"NFProxyLogicPlugin",
+			--------------------------------------------------------
+			-----服务器游戏具体内容逻辑引擎-------------------------
+			-----可以动态加载的引擎---------------------------------
+			"NFGameHumanPlugin"
 
 		};
 		ServerType = NF_ST_NONE;

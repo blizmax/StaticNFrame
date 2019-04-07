@@ -15,13 +15,8 @@
 
 #include "NFServerLogic/NFServerLogicCommon/NFIGameLogicModule.h"
 #include "NFComm/NFPluginModule/NFEventObj.h"
-
-#include "NFComm/NFCore/NFJson.h"
 #include "NFComm/NFPluginModule/NFIKernelModule.h"
-#include "NFComm/NFPluginModule/NFILuaScriptModule.h"
 #include "NFComm/NFCore/NFMap.hpp"
-#include "NFComm/NFPluginModule/NFIServerNetEventModule.h"
-#include "NFServer/NFServerCommon/NFIGameClient_MasterModule.h"
 
 class NFCGameLogicModule : public NFIGameLogicModule
 {
@@ -38,20 +33,4 @@ public:
 	virtual bool BeforeShut() override;
 
 	virtual bool Shut() override;
-
-	void OnProxySocketEvent(const eMsgType nEvent, const uint32_t unLinkId);
-	void OnHandleProxyDisconnect(const uint32_t unLinkId);
-	void OnHandleAccountConnect(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen);
-	void OnHandleAccountDisConnect(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen);
-	void OnHandleAccountReConnect(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen);
-
-	virtual NF_SHARE_PTR<AccountInfo> GetPlayerAccountInfo(uint64_t uid) { return m_playerAccountInfo.GetElement(uid); }
-private:
-	NFIServerNetEventModule* m_pServerNetEventModule;
-	NFINetClientModule* m_pNetClientModule;
-	NFILuaScriptModule* m_pLuaScriptModule;
-	NFIGameClient_MasterModule* m_pGameClient_MasterModule;
-
-	NFMapEx<uint64_t, AccountInfo> m_playerAccountInfo;
-	uint32_t m_onlineNum;
 };

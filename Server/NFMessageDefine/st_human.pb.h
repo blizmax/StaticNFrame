@@ -45,7 +45,7 @@ struct TableStruct {
 };
 void AddDescriptors();
 }  // namespace protobuf_st_5fhuman_2eproto
-namespace progame {
+namespace NFMsg {
 class agencyinfo;
 class agencyinfoDefaultTypeInternal;
 extern agencyinfoDefaultTypeInternal _agencyinfo_default_instance_;
@@ -91,31 +91,31 @@ extern specialinfoDefaultTypeInternal _specialinfo_default_instance_;
 class stringlist;
 class stringlistDefaultTypeInternal;
 extern stringlistDefaultTypeInternal _stringlist_default_instance_;
-}  // namespace progame
+}  // namespace NFMsg
 namespace google {
 namespace protobuf {
-template<> ::progame::agencyinfo* Arena::CreateMaybeMessage<::progame::agencyinfo>(Arena*);
-template<> ::progame::broadcastinfo* Arena::CreateMaybeMessage<::progame::broadcastinfo>(Arena*);
-template<> ::progame::givemoneyrecord* Arena::CreateMaybeMessage<::progame::givemoneyrecord>(Arena*);
-template<> ::progame::goodsinfo* Arena::CreateMaybeMessage<::progame::goodsinfo>(Arena*);
-template<> ::progame::goodslist* Arena::CreateMaybeMessage<::progame::goodslist>(Arena*);
-template<> ::progame::intlist* Arena::CreateMaybeMessage<::progame::intlist>(Arena*);
-template<> ::progame::inviteinfo* Arena::CreateMaybeMessage<::progame::inviteinfo>(Arena*);
-template<> ::progame::mailinfo* Arena::CreateMaybeMessage<::progame::mailinfo>(Arena*);
-template<> ::progame::maillist* Arena::CreateMaybeMessage<::progame::maillist>(Arena*);
-template<> ::progame::noticeinfo* Arena::CreateMaybeMessage<::progame::noticeinfo>(Arena*);
-template<> ::progame::playerinfo* Arena::CreateMaybeMessage<::progame::playerinfo>(Arena*);
-template<> ::progame::playersimpleinfo* Arena::CreateMaybeMessage<::progame::playersimpleinfo>(Arena*);
-template<> ::progame::playerstats* Arena::CreateMaybeMessage<::progame::playerstats>(Arena*);
-template<> ::progame::specialinfo* Arena::CreateMaybeMessage<::progame::specialinfo>(Arena*);
-template<> ::progame::stringlist* Arena::CreateMaybeMessage<::progame::stringlist>(Arena*);
+template<> ::NFMsg::agencyinfo* Arena::CreateMaybeMessage<::NFMsg::agencyinfo>(Arena*);
+template<> ::NFMsg::broadcastinfo* Arena::CreateMaybeMessage<::NFMsg::broadcastinfo>(Arena*);
+template<> ::NFMsg::givemoneyrecord* Arena::CreateMaybeMessage<::NFMsg::givemoneyrecord>(Arena*);
+template<> ::NFMsg::goodsinfo* Arena::CreateMaybeMessage<::NFMsg::goodsinfo>(Arena*);
+template<> ::NFMsg::goodslist* Arena::CreateMaybeMessage<::NFMsg::goodslist>(Arena*);
+template<> ::NFMsg::intlist* Arena::CreateMaybeMessage<::NFMsg::intlist>(Arena*);
+template<> ::NFMsg::inviteinfo* Arena::CreateMaybeMessage<::NFMsg::inviteinfo>(Arena*);
+template<> ::NFMsg::mailinfo* Arena::CreateMaybeMessage<::NFMsg::mailinfo>(Arena*);
+template<> ::NFMsg::maillist* Arena::CreateMaybeMessage<::NFMsg::maillist>(Arena*);
+template<> ::NFMsg::noticeinfo* Arena::CreateMaybeMessage<::NFMsg::noticeinfo>(Arena*);
+template<> ::NFMsg::playerinfo* Arena::CreateMaybeMessage<::NFMsg::playerinfo>(Arena*);
+template<> ::NFMsg::playersimpleinfo* Arena::CreateMaybeMessage<::NFMsg::playersimpleinfo>(Arena*);
+template<> ::NFMsg::playerstats* Arena::CreateMaybeMessage<::NFMsg::playerstats>(Arena*);
+template<> ::NFMsg::specialinfo* Arena::CreateMaybeMessage<::NFMsg::specialinfo>(Arena*);
+template<> ::NFMsg::stringlist* Arena::CreateMaybeMessage<::NFMsg::stringlist>(Arena*);
 }  // namespace protobuf
 }  // namespace google
-namespace progame {
+namespace NFMsg {
 
 // ===================================================================
 
-class playerinfo : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:progame.playerinfo) */ {
+class playerinfo : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:NFMsg.playerinfo) */ {
  public:
   playerinfo();
   virtual ~playerinfo();
@@ -824,7 +824,7 @@ class playerinfo : public ::google::protobuf::Message /* @@protoc_insertion_poin
   ::google::protobuf::int32 totalgames() const;
   void set_totalgames(::google::protobuf::int32 value);
 
-  // @@protoc_insertion_point(class_scope:progame.playerinfo)
+  // @@protoc_insertion_point(class_scope:NFMsg.playerinfo)
  private:
   void set_has_userid();
   void clear_has_userid();
@@ -1005,7 +1005,7 @@ class playerinfo : public ::google::protobuf::Message /* @@protoc_insertion_poin
 };
 // -------------------------------------------------------------------
 
-class playerstats : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:progame.playerstats) */ {
+class playerstats : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:NFMsg.playerstats) */ {
  public:
   playerstats();
   virtual ~playerstats();
@@ -1204,7 +1204,7 @@ class playerstats : public ::google::protobuf::Message /* @@protoc_insertion_poi
   ::google::protobuf::int32 daypaytime() const;
   void set_daypaytime(::google::protobuf::int32 value);
 
-  // @@protoc_insertion_point(class_scope:progame.playerstats)
+  // @@protoc_insertion_point(class_scope:NFMsg.playerstats)
  private:
   void set_has_userid();
   void clear_has_userid();
@@ -1259,7 +1259,7 @@ class playerstats : public ::google::protobuf::Message /* @@protoc_insertion_poi
 };
 // -------------------------------------------------------------------
 
-class goodsinfo : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:progame.goodsinfo) */ {
+class goodsinfo : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:NFMsg.goodsinfo) */ {
  public:
   goodsinfo();
   virtual ~goodsinfo();
@@ -1410,7 +1410,7 @@ class goodsinfo : public ::google::protobuf::Message /* @@protoc_insertion_point
   ::google::protobuf::int32 iswear() const;
   void set_iswear(::google::protobuf::int32 value);
 
-  // @@protoc_insertion_point(class_scope:progame.goodsinfo)
+  // @@protoc_insertion_point(class_scope:NFMsg.goodsinfo)
  private:
   void set_has_itemid();
   void clear_has_itemid();
@@ -1441,7 +1441,7 @@ class goodsinfo : public ::google::protobuf::Message /* @@protoc_insertion_point
 };
 // -------------------------------------------------------------------
 
-class goodslist : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:progame.goodslist) */ {
+class goodslist : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:NFMsg.goodslist) */ {
  public:
   goodslist();
   virtual ~goodslist();
@@ -1535,30 +1535,30 @@ class goodslist : public ::google::protobuf::Message /* @@protoc_insertion_point
 
   // accessors -------------------------------------------------------
 
-  // repeated .progame.goodsinfo glist = 1;
+  // repeated .NFMsg.goodsinfo glist = 1;
   int glist_size() const;
   void clear_glist();
   static const int kGlistFieldNumber = 1;
-  ::progame::goodsinfo* mutable_glist(int index);
-  ::google::protobuf::RepeatedPtrField< ::progame::goodsinfo >*
+  ::NFMsg::goodsinfo* mutable_glist(int index);
+  ::google::protobuf::RepeatedPtrField< ::NFMsg::goodsinfo >*
       mutable_glist();
-  const ::progame::goodsinfo& glist(int index) const;
-  ::progame::goodsinfo* add_glist();
-  const ::google::protobuf::RepeatedPtrField< ::progame::goodsinfo >&
+  const ::NFMsg::goodsinfo& glist(int index) const;
+  ::NFMsg::goodsinfo* add_glist();
+  const ::google::protobuf::RepeatedPtrField< ::NFMsg::goodsinfo >&
       glist() const;
 
-  // @@protoc_insertion_point(class_scope:progame.goodslist)
+  // @@protoc_insertion_point(class_scope:NFMsg.goodslist)
  private:
 
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
   ::google::protobuf::internal::HasBits<1> _has_bits_;
   mutable ::google::protobuf::internal::CachedSize _cached_size_;
-  ::google::protobuf::RepeatedPtrField< ::progame::goodsinfo > glist_;
+  ::google::protobuf::RepeatedPtrField< ::NFMsg::goodsinfo > glist_;
   friend struct ::protobuf_st_5fhuman_2eproto::TableStruct;
 };
 // -------------------------------------------------------------------
 
-class noticeinfo : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:progame.noticeinfo) */ {
+class noticeinfo : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:NFMsg.noticeinfo) */ {
  public:
   noticeinfo();
   virtual ~noticeinfo();
@@ -1666,7 +1666,7 @@ class noticeinfo : public ::google::protobuf::Message /* @@protoc_insertion_poin
   ::google::protobuf::int32 amount() const;
   void set_amount(::google::protobuf::int32 value);
 
-  // @@protoc_insertion_point(class_scope:progame.noticeinfo)
+  // @@protoc_insertion_point(class_scope:NFMsg.noticeinfo)
  private:
   void set_has_noticetype();
   void clear_has_noticetype();
@@ -1682,7 +1682,7 @@ class noticeinfo : public ::google::protobuf::Message /* @@protoc_insertion_poin
 };
 // -------------------------------------------------------------------
 
-class playersimpleinfo : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:progame.playersimpleinfo) */ {
+class playersimpleinfo : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:NFMsg.playersimpleinfo) */ {
  public:
   playersimpleinfo();
   virtual ~playersimpleinfo();
@@ -1929,7 +1929,7 @@ class playersimpleinfo : public ::google::protobuf::Message /* @@protoc_insertio
   ::google::protobuf::int32 jifen() const;
   void set_jifen(::google::protobuf::int32 value);
 
-  // @@protoc_insertion_point(class_scope:progame.playersimpleinfo)
+  // @@protoc_insertion_point(class_scope:NFMsg.playersimpleinfo)
  private:
   void set_has_userid();
   void clear_has_userid();
@@ -1984,7 +1984,7 @@ class playersimpleinfo : public ::google::protobuf::Message /* @@protoc_insertio
 };
 // -------------------------------------------------------------------
 
-class broadcastinfo : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:progame.broadcastinfo) */ {
+class broadcastinfo : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:NFMsg.broadcastinfo) */ {
  public:
   broadcastinfo();
   virtual ~broadcastinfo();
@@ -2165,7 +2165,7 @@ class broadcastinfo : public ::google::protobuf::Message /* @@protoc_insertion_p
   ::google::protobuf::int32 cycletype() const;
   void set_cycletype(::google::protobuf::int32 value);
 
-  // @@protoc_insertion_point(class_scope:progame.broadcastinfo)
+  // @@protoc_insertion_point(class_scope:NFMsg.broadcastinfo)
  private:
   void set_has_id();
   void clear_has_id();
@@ -2202,7 +2202,7 @@ class broadcastinfo : public ::google::protobuf::Message /* @@protoc_insertion_p
 };
 // -------------------------------------------------------------------
 
-class mailinfo : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:progame.mailinfo) */ {
+class mailinfo : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:NFMsg.mailinfo) */ {
  public:
   mailinfo();
   virtual ~mailinfo();
@@ -2458,7 +2458,7 @@ class mailinfo : public ::google::protobuf::Message /* @@protoc_insertion_point(
   ::google::protobuf::int32 validity() const;
   void set_validity(::google::protobuf::int32 value);
 
-  // @@protoc_insertion_point(class_scope:progame.mailinfo)
+  // @@protoc_insertion_point(class_scope:NFMsg.mailinfo)
  private:
   void set_has_mailid();
   void clear_has_mailid();
@@ -2510,7 +2510,7 @@ class mailinfo : public ::google::protobuf::Message /* @@protoc_insertion_point(
 };
 // -------------------------------------------------------------------
 
-class maillist : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:progame.maillist) */ {
+class maillist : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:NFMsg.maillist) */ {
  public:
   maillist();
   virtual ~maillist();
@@ -2604,30 +2604,30 @@ class maillist : public ::google::protobuf::Message /* @@protoc_insertion_point(
 
   // accessors -------------------------------------------------------
 
-  // repeated .progame.mailinfo mlist = 1;
+  // repeated .NFMsg.mailinfo mlist = 1;
   int mlist_size() const;
   void clear_mlist();
   static const int kMlistFieldNumber = 1;
-  ::progame::mailinfo* mutable_mlist(int index);
-  ::google::protobuf::RepeatedPtrField< ::progame::mailinfo >*
+  ::NFMsg::mailinfo* mutable_mlist(int index);
+  ::google::protobuf::RepeatedPtrField< ::NFMsg::mailinfo >*
       mutable_mlist();
-  const ::progame::mailinfo& mlist(int index) const;
-  ::progame::mailinfo* add_mlist();
-  const ::google::protobuf::RepeatedPtrField< ::progame::mailinfo >&
+  const ::NFMsg::mailinfo& mlist(int index) const;
+  ::NFMsg::mailinfo* add_mlist();
+  const ::google::protobuf::RepeatedPtrField< ::NFMsg::mailinfo >&
       mlist() const;
 
-  // @@protoc_insertion_point(class_scope:progame.maillist)
+  // @@protoc_insertion_point(class_scope:NFMsg.maillist)
  private:
 
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
   ::google::protobuf::internal::HasBits<1> _has_bits_;
   mutable ::google::protobuf::internal::CachedSize _cached_size_;
-  ::google::protobuf::RepeatedPtrField< ::progame::mailinfo > mlist_;
+  ::google::protobuf::RepeatedPtrField< ::NFMsg::mailinfo > mlist_;
   friend struct ::protobuf_st_5fhuman_2eproto::TableStruct;
 };
 // -------------------------------------------------------------------
 
-class inviteinfo : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:progame.inviteinfo) */ {
+class inviteinfo : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:NFMsg.inviteinfo) */ {
  public:
   inviteinfo();
   virtual ~inviteinfo();
@@ -2780,7 +2780,7 @@ class inviteinfo : public ::google::protobuf::Message /* @@protoc_insertion_poin
   ::google::protobuf::int32 binduserid() const;
   void set_binduserid(::google::protobuf::int32 value);
 
-  // @@protoc_insertion_point(class_scope:progame.inviteinfo)
+  // @@protoc_insertion_point(class_scope:NFMsg.inviteinfo)
  private:
   void set_has_userid();
   void clear_has_userid();
@@ -2805,7 +2805,7 @@ class inviteinfo : public ::google::protobuf::Message /* @@protoc_insertion_poin
 };
 // -------------------------------------------------------------------
 
-class givemoneyrecord : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:progame.givemoneyrecord) */ {
+class givemoneyrecord : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:NFMsg.givemoneyrecord) */ {
  public:
   givemoneyrecord();
   virtual ~givemoneyrecord();
@@ -2943,7 +2943,7 @@ class givemoneyrecord : public ::google::protobuf::Message /* @@protoc_insertion
   ::google::protobuf::int32 amount() const;
   void set_amount(::google::protobuf::int32 value);
 
-  // @@protoc_insertion_point(class_scope:progame.givemoneyrecord)
+  // @@protoc_insertion_point(class_scope:NFMsg.givemoneyrecord)
  private:
   void set_has_userid();
   void clear_has_userid();
@@ -2965,7 +2965,7 @@ class givemoneyrecord : public ::google::protobuf::Message /* @@protoc_insertion
 };
 // -------------------------------------------------------------------
 
-class agencyinfo : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:progame.agencyinfo) */ {
+class agencyinfo : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:NFMsg.agencyinfo) */ {
  public:
   agencyinfo();
   virtual ~agencyinfo();
@@ -3059,28 +3059,28 @@ class agencyinfo : public ::google::protobuf::Message /* @@protoc_insertion_poin
 
   // accessors -------------------------------------------------------
 
-  // repeated .progame.inviteinfo invitelist = 9;
+  // repeated .NFMsg.inviteinfo invitelist = 9;
   int invitelist_size() const;
   void clear_invitelist();
   static const int kInvitelistFieldNumber = 9;
-  ::progame::inviteinfo* mutable_invitelist(int index);
-  ::google::protobuf::RepeatedPtrField< ::progame::inviteinfo >*
+  ::NFMsg::inviteinfo* mutable_invitelist(int index);
+  ::google::protobuf::RepeatedPtrField< ::NFMsg::inviteinfo >*
       mutable_invitelist();
-  const ::progame::inviteinfo& invitelist(int index) const;
-  ::progame::inviteinfo* add_invitelist();
-  const ::google::protobuf::RepeatedPtrField< ::progame::inviteinfo >&
+  const ::NFMsg::inviteinfo& invitelist(int index) const;
+  ::NFMsg::inviteinfo* add_invitelist();
+  const ::google::protobuf::RepeatedPtrField< ::NFMsg::inviteinfo >&
       invitelist() const;
 
-  // repeated .progame.givemoneyrecord givemoneylist = 14;
+  // repeated .NFMsg.givemoneyrecord givemoneylist = 14;
   int givemoneylist_size() const;
   void clear_givemoneylist();
   static const int kGivemoneylistFieldNumber = 14;
-  ::progame::givemoneyrecord* mutable_givemoneylist(int index);
-  ::google::protobuf::RepeatedPtrField< ::progame::givemoneyrecord >*
+  ::NFMsg::givemoneyrecord* mutable_givemoneylist(int index);
+  ::google::protobuf::RepeatedPtrField< ::NFMsg::givemoneyrecord >*
       mutable_givemoneylist();
-  const ::progame::givemoneyrecord& givemoneylist(int index) const;
-  ::progame::givemoneyrecord* add_givemoneylist();
-  const ::google::protobuf::RepeatedPtrField< ::progame::givemoneyrecord >&
+  const ::NFMsg::givemoneyrecord& givemoneylist(int index) const;
+  ::NFMsg::givemoneyrecord* add_givemoneylist();
+  const ::google::protobuf::RepeatedPtrField< ::NFMsg::givemoneyrecord >&
       givemoneylist() const;
 
   // optional string invitestr = 2;
@@ -3191,7 +3191,7 @@ class agencyinfo : public ::google::protobuf::Message /* @@protoc_insertion_poin
   ::google::protobuf::int32 weekmoney() const;
   void set_weekmoney(::google::protobuf::int32 value);
 
-  // @@protoc_insertion_point(class_scope:progame.agencyinfo)
+  // @@protoc_insertion_point(class_scope:NFMsg.agencyinfo)
  private:
   void set_has_userid();
   void clear_has_userid();
@@ -3221,8 +3221,8 @@ class agencyinfo : public ::google::protobuf::Message /* @@protoc_insertion_poin
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
   ::google::protobuf::internal::HasBits<1> _has_bits_;
   mutable ::google::protobuf::internal::CachedSize _cached_size_;
-  ::google::protobuf::RepeatedPtrField< ::progame::inviteinfo > invitelist_;
-  ::google::protobuf::RepeatedPtrField< ::progame::givemoneyrecord > givemoneylist_;
+  ::google::protobuf::RepeatedPtrField< ::NFMsg::inviteinfo > invitelist_;
+  ::google::protobuf::RepeatedPtrField< ::NFMsg::givemoneyrecord > givemoneylist_;
   ::google::protobuf::internal::ArenaStringPtr invitestr_;
   ::google::protobuf::internal::ArenaStringPtr qrcodeurl_;
   ::google::protobuf::internal::ArenaStringPtr datemark_;
@@ -3239,7 +3239,7 @@ class agencyinfo : public ::google::protobuf::Message /* @@protoc_insertion_poin
 };
 // -------------------------------------------------------------------
 
-class intlist : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:progame.intlist) */ {
+class intlist : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:NFMsg.intlist) */ {
  public:
   intlist();
   virtual ~intlist();
@@ -3345,7 +3345,7 @@ class intlist : public ::google::protobuf::Message /* @@protoc_insertion_point(c
   ::google::protobuf::RepeatedField< ::google::protobuf::int32 >*
       mutable_ilist();
 
-  // @@protoc_insertion_point(class_scope:progame.intlist)
+  // @@protoc_insertion_point(class_scope:NFMsg.intlist)
  private:
 
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
@@ -3356,7 +3356,7 @@ class intlist : public ::google::protobuf::Message /* @@protoc_insertion_point(c
 };
 // -------------------------------------------------------------------
 
-class stringlist : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:progame.stringlist) */ {
+class stringlist : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:NFMsg.stringlist) */ {
  public:
   stringlist();
   virtual ~stringlist();
@@ -3472,7 +3472,7 @@ class stringlist : public ::google::protobuf::Message /* @@protoc_insertion_poin
   const ::google::protobuf::RepeatedPtrField< ::std::string>& slist() const;
   ::google::protobuf::RepeatedPtrField< ::std::string>* mutable_slist();
 
-  // @@protoc_insertion_point(class_scope:progame.stringlist)
+  // @@protoc_insertion_point(class_scope:NFMsg.stringlist)
  private:
 
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
@@ -3483,7 +3483,7 @@ class stringlist : public ::google::protobuf::Message /* @@protoc_insertion_poin
 };
 // -------------------------------------------------------------------
 
-class specialinfo : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:progame.specialinfo) */ {
+class specialinfo : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:NFMsg.specialinfo) */ {
  public:
   specialinfo();
   virtual ~specialinfo();
@@ -3659,7 +3659,7 @@ class specialinfo : public ::google::protobuf::Message /* @@protoc_insertion_poi
   ::google::protobuf::int32 iszhuang() const;
   void set_iszhuang(::google::protobuf::int32 value);
 
-  // @@protoc_insertion_point(class_scope:progame.specialinfo)
+  // @@protoc_insertion_point(class_scope:NFMsg.specialinfo)
  private:
   void set_has_userid();
   void clear_has_userid();
@@ -3724,13 +3724,13 @@ inline void playerinfo::clear_userid() {
   clear_has_userid();
 }
 inline ::google::protobuf::int32 playerinfo::userid() const {
-  // @@protoc_insertion_point(field_get:progame.playerinfo.userid)
+  // @@protoc_insertion_point(field_get:NFMsg.playerinfo.userid)
   return userid_;
 }
 inline void playerinfo::set_userid(::google::protobuf::int32 value) {
   set_has_userid();
   userid_ = value;
-  // @@protoc_insertion_point(field_set:progame.playerinfo.userid)
+  // @@protoc_insertion_point(field_set:NFMsg.playerinfo.userid)
 }
 
 // optional string cid = 2;
@@ -3748,41 +3748,41 @@ inline void playerinfo::clear_cid() {
   clear_has_cid();
 }
 inline const ::std::string& playerinfo::cid() const {
-  // @@protoc_insertion_point(field_get:progame.playerinfo.cid)
+  // @@protoc_insertion_point(field_get:NFMsg.playerinfo.cid)
   return cid_.GetNoArena();
 }
 inline void playerinfo::set_cid(const ::std::string& value) {
   set_has_cid();
   cid_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
-  // @@protoc_insertion_point(field_set:progame.playerinfo.cid)
+  // @@protoc_insertion_point(field_set:NFMsg.playerinfo.cid)
 }
 #if LANG_CXX11
 inline void playerinfo::set_cid(::std::string&& value) {
   set_has_cid();
   cid_.SetNoArena(
     &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
-  // @@protoc_insertion_point(field_set_rvalue:progame.playerinfo.cid)
+  // @@protoc_insertion_point(field_set_rvalue:NFMsg.playerinfo.cid)
 }
 #endif
 inline void playerinfo::set_cid(const char* value) {
   GOOGLE_DCHECK(value != NULL);
   set_has_cid();
   cid_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
-  // @@protoc_insertion_point(field_set_char:progame.playerinfo.cid)
+  // @@protoc_insertion_point(field_set_char:NFMsg.playerinfo.cid)
 }
 inline void playerinfo::set_cid(const char* value, size_t size) {
   set_has_cid();
   cid_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
       ::std::string(reinterpret_cast<const char*>(value), size));
-  // @@protoc_insertion_point(field_set_pointer:progame.playerinfo.cid)
+  // @@protoc_insertion_point(field_set_pointer:NFMsg.playerinfo.cid)
 }
 inline ::std::string* playerinfo::mutable_cid() {
   set_has_cid();
-  // @@protoc_insertion_point(field_mutable:progame.playerinfo.cid)
+  // @@protoc_insertion_point(field_mutable:NFMsg.playerinfo.cid)
   return cid_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
 inline ::std::string* playerinfo::release_cid() {
-  // @@protoc_insertion_point(field_release:progame.playerinfo.cid)
+  // @@protoc_insertion_point(field_release:NFMsg.playerinfo.cid)
   if (!has_cid()) {
     return NULL;
   }
@@ -3796,7 +3796,7 @@ inline void playerinfo::set_allocated_cid(::std::string* cid) {
     clear_has_cid();
   }
   cid_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), cid);
-  // @@protoc_insertion_point(field_set_allocated:progame.playerinfo.cid)
+  // @@protoc_insertion_point(field_set_allocated:NFMsg.playerinfo.cid)
 }
 
 // optional string account = 3;
@@ -3814,41 +3814,41 @@ inline void playerinfo::clear_account() {
   clear_has_account();
 }
 inline const ::std::string& playerinfo::account() const {
-  // @@protoc_insertion_point(field_get:progame.playerinfo.account)
+  // @@protoc_insertion_point(field_get:NFMsg.playerinfo.account)
   return account_.GetNoArena();
 }
 inline void playerinfo::set_account(const ::std::string& value) {
   set_has_account();
   account_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
-  // @@protoc_insertion_point(field_set:progame.playerinfo.account)
+  // @@protoc_insertion_point(field_set:NFMsg.playerinfo.account)
 }
 #if LANG_CXX11
 inline void playerinfo::set_account(::std::string&& value) {
   set_has_account();
   account_.SetNoArena(
     &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
-  // @@protoc_insertion_point(field_set_rvalue:progame.playerinfo.account)
+  // @@protoc_insertion_point(field_set_rvalue:NFMsg.playerinfo.account)
 }
 #endif
 inline void playerinfo::set_account(const char* value) {
   GOOGLE_DCHECK(value != NULL);
   set_has_account();
   account_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
-  // @@protoc_insertion_point(field_set_char:progame.playerinfo.account)
+  // @@protoc_insertion_point(field_set_char:NFMsg.playerinfo.account)
 }
 inline void playerinfo::set_account(const char* value, size_t size) {
   set_has_account();
   account_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
       ::std::string(reinterpret_cast<const char*>(value), size));
-  // @@protoc_insertion_point(field_set_pointer:progame.playerinfo.account)
+  // @@protoc_insertion_point(field_set_pointer:NFMsg.playerinfo.account)
 }
 inline ::std::string* playerinfo::mutable_account() {
   set_has_account();
-  // @@protoc_insertion_point(field_mutable:progame.playerinfo.account)
+  // @@protoc_insertion_point(field_mutable:NFMsg.playerinfo.account)
   return account_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
 inline ::std::string* playerinfo::release_account() {
-  // @@protoc_insertion_point(field_release:progame.playerinfo.account)
+  // @@protoc_insertion_point(field_release:NFMsg.playerinfo.account)
   if (!has_account()) {
     return NULL;
   }
@@ -3862,7 +3862,7 @@ inline void playerinfo::set_allocated_account(::std::string* account) {
     clear_has_account();
   }
   account_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), account);
-  // @@protoc_insertion_point(field_set_allocated:progame.playerinfo.account)
+  // @@protoc_insertion_point(field_set_allocated:NFMsg.playerinfo.account)
 }
 
 // optional string password = 4;
@@ -3880,41 +3880,41 @@ inline void playerinfo::clear_password() {
   clear_has_password();
 }
 inline const ::std::string& playerinfo::password() const {
-  // @@protoc_insertion_point(field_get:progame.playerinfo.password)
+  // @@protoc_insertion_point(field_get:NFMsg.playerinfo.password)
   return password_.GetNoArena();
 }
 inline void playerinfo::set_password(const ::std::string& value) {
   set_has_password();
   password_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
-  // @@protoc_insertion_point(field_set:progame.playerinfo.password)
+  // @@protoc_insertion_point(field_set:NFMsg.playerinfo.password)
 }
 #if LANG_CXX11
 inline void playerinfo::set_password(::std::string&& value) {
   set_has_password();
   password_.SetNoArena(
     &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
-  // @@protoc_insertion_point(field_set_rvalue:progame.playerinfo.password)
+  // @@protoc_insertion_point(field_set_rvalue:NFMsg.playerinfo.password)
 }
 #endif
 inline void playerinfo::set_password(const char* value) {
   GOOGLE_DCHECK(value != NULL);
   set_has_password();
   password_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
-  // @@protoc_insertion_point(field_set_char:progame.playerinfo.password)
+  // @@protoc_insertion_point(field_set_char:NFMsg.playerinfo.password)
 }
 inline void playerinfo::set_password(const char* value, size_t size) {
   set_has_password();
   password_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
       ::std::string(reinterpret_cast<const char*>(value), size));
-  // @@protoc_insertion_point(field_set_pointer:progame.playerinfo.password)
+  // @@protoc_insertion_point(field_set_pointer:NFMsg.playerinfo.password)
 }
 inline ::std::string* playerinfo::mutable_password() {
   set_has_password();
-  // @@protoc_insertion_point(field_mutable:progame.playerinfo.password)
+  // @@protoc_insertion_point(field_mutable:NFMsg.playerinfo.password)
   return password_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
 inline ::std::string* playerinfo::release_password() {
-  // @@protoc_insertion_point(field_release:progame.playerinfo.password)
+  // @@protoc_insertion_point(field_release:NFMsg.playerinfo.password)
   if (!has_password()) {
     return NULL;
   }
@@ -3928,7 +3928,7 @@ inline void playerinfo::set_allocated_password(::std::string* password) {
     clear_has_password();
   }
   password_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), password);
-  // @@protoc_insertion_point(field_set_allocated:progame.playerinfo.password)
+  // @@protoc_insertion_point(field_set_allocated:NFMsg.playerinfo.password)
 }
 
 // optional string nickname = 5;
@@ -3946,41 +3946,41 @@ inline void playerinfo::clear_nickname() {
   clear_has_nickname();
 }
 inline const ::std::string& playerinfo::nickname() const {
-  // @@protoc_insertion_point(field_get:progame.playerinfo.nickname)
+  // @@protoc_insertion_point(field_get:NFMsg.playerinfo.nickname)
   return nickname_.GetNoArena();
 }
 inline void playerinfo::set_nickname(const ::std::string& value) {
   set_has_nickname();
   nickname_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
-  // @@protoc_insertion_point(field_set:progame.playerinfo.nickname)
+  // @@protoc_insertion_point(field_set:NFMsg.playerinfo.nickname)
 }
 #if LANG_CXX11
 inline void playerinfo::set_nickname(::std::string&& value) {
   set_has_nickname();
   nickname_.SetNoArena(
     &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
-  // @@protoc_insertion_point(field_set_rvalue:progame.playerinfo.nickname)
+  // @@protoc_insertion_point(field_set_rvalue:NFMsg.playerinfo.nickname)
 }
 #endif
 inline void playerinfo::set_nickname(const char* value) {
   GOOGLE_DCHECK(value != NULL);
   set_has_nickname();
   nickname_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
-  // @@protoc_insertion_point(field_set_char:progame.playerinfo.nickname)
+  // @@protoc_insertion_point(field_set_char:NFMsg.playerinfo.nickname)
 }
 inline void playerinfo::set_nickname(const char* value, size_t size) {
   set_has_nickname();
   nickname_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
       ::std::string(reinterpret_cast<const char*>(value), size));
-  // @@protoc_insertion_point(field_set_pointer:progame.playerinfo.nickname)
+  // @@protoc_insertion_point(field_set_pointer:NFMsg.playerinfo.nickname)
 }
 inline ::std::string* playerinfo::mutable_nickname() {
   set_has_nickname();
-  // @@protoc_insertion_point(field_mutable:progame.playerinfo.nickname)
+  // @@protoc_insertion_point(field_mutable:NFMsg.playerinfo.nickname)
   return nickname_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
 inline ::std::string* playerinfo::release_nickname() {
-  // @@protoc_insertion_point(field_release:progame.playerinfo.nickname)
+  // @@protoc_insertion_point(field_release:NFMsg.playerinfo.nickname)
   if (!has_nickname()) {
     return NULL;
   }
@@ -3994,7 +3994,7 @@ inline void playerinfo::set_allocated_nickname(::std::string* nickname) {
     clear_has_nickname();
   }
   nickname_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), nickname);
-  // @@protoc_insertion_point(field_set_allocated:progame.playerinfo.nickname)
+  // @@protoc_insertion_point(field_set_allocated:NFMsg.playerinfo.nickname)
 }
 
 // optional string regdate = 7;
@@ -4012,41 +4012,41 @@ inline void playerinfo::clear_regdate() {
   clear_has_regdate();
 }
 inline const ::std::string& playerinfo::regdate() const {
-  // @@protoc_insertion_point(field_get:progame.playerinfo.regdate)
+  // @@protoc_insertion_point(field_get:NFMsg.playerinfo.regdate)
   return regdate_.GetNoArena();
 }
 inline void playerinfo::set_regdate(const ::std::string& value) {
   set_has_regdate();
   regdate_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
-  // @@protoc_insertion_point(field_set:progame.playerinfo.regdate)
+  // @@protoc_insertion_point(field_set:NFMsg.playerinfo.regdate)
 }
 #if LANG_CXX11
 inline void playerinfo::set_regdate(::std::string&& value) {
   set_has_regdate();
   regdate_.SetNoArena(
     &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
-  // @@protoc_insertion_point(field_set_rvalue:progame.playerinfo.regdate)
+  // @@protoc_insertion_point(field_set_rvalue:NFMsg.playerinfo.regdate)
 }
 #endif
 inline void playerinfo::set_regdate(const char* value) {
   GOOGLE_DCHECK(value != NULL);
   set_has_regdate();
   regdate_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
-  // @@protoc_insertion_point(field_set_char:progame.playerinfo.regdate)
+  // @@protoc_insertion_point(field_set_char:NFMsg.playerinfo.regdate)
 }
 inline void playerinfo::set_regdate(const char* value, size_t size) {
   set_has_regdate();
   regdate_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
       ::std::string(reinterpret_cast<const char*>(value), size));
-  // @@protoc_insertion_point(field_set_pointer:progame.playerinfo.regdate)
+  // @@protoc_insertion_point(field_set_pointer:NFMsg.playerinfo.regdate)
 }
 inline ::std::string* playerinfo::mutable_regdate() {
   set_has_regdate();
-  // @@protoc_insertion_point(field_mutable:progame.playerinfo.regdate)
+  // @@protoc_insertion_point(field_mutable:NFMsg.playerinfo.regdate)
   return regdate_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
 inline ::std::string* playerinfo::release_regdate() {
-  // @@protoc_insertion_point(field_release:progame.playerinfo.regdate)
+  // @@protoc_insertion_point(field_release:NFMsg.playerinfo.regdate)
   if (!has_regdate()) {
     return NULL;
   }
@@ -4060,7 +4060,7 @@ inline void playerinfo::set_allocated_regdate(::std::string* regdate) {
     clear_has_regdate();
   }
   regdate_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), regdate);
-  // @@protoc_insertion_point(field_set_allocated:progame.playerinfo.regdate)
+  // @@protoc_insertion_point(field_set_allocated:NFMsg.playerinfo.regdate)
 }
 
 // optional int32 sex = 8;
@@ -4078,13 +4078,13 @@ inline void playerinfo::clear_sex() {
   clear_has_sex();
 }
 inline ::google::protobuf::int32 playerinfo::sex() const {
-  // @@protoc_insertion_point(field_get:progame.playerinfo.sex)
+  // @@protoc_insertion_point(field_get:NFMsg.playerinfo.sex)
   return sex_;
 }
 inline void playerinfo::set_sex(::google::protobuf::int32 value) {
   set_has_sex();
   sex_ = value;
-  // @@protoc_insertion_point(field_set:progame.playerinfo.sex)
+  // @@protoc_insertion_point(field_set:NFMsg.playerinfo.sex)
 }
 
 // optional int32 age = 9;
@@ -4102,13 +4102,13 @@ inline void playerinfo::clear_age() {
   clear_has_age();
 }
 inline ::google::protobuf::int32 playerinfo::age() const {
-  // @@protoc_insertion_point(field_get:progame.playerinfo.age)
+  // @@protoc_insertion_point(field_get:NFMsg.playerinfo.age)
   return age_;
 }
 inline void playerinfo::set_age(::google::protobuf::int32 value) {
   set_has_age();
   age_ = value;
-  // @@protoc_insertion_point(field_set:progame.playerinfo.age)
+  // @@protoc_insertion_point(field_set:NFMsg.playerinfo.age)
 }
 
 // optional string email = 10;
@@ -4126,41 +4126,41 @@ inline void playerinfo::clear_email() {
   clear_has_email();
 }
 inline const ::std::string& playerinfo::email() const {
-  // @@protoc_insertion_point(field_get:progame.playerinfo.email)
+  // @@protoc_insertion_point(field_get:NFMsg.playerinfo.email)
   return email_.GetNoArena();
 }
 inline void playerinfo::set_email(const ::std::string& value) {
   set_has_email();
   email_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
-  // @@protoc_insertion_point(field_set:progame.playerinfo.email)
+  // @@protoc_insertion_point(field_set:NFMsg.playerinfo.email)
 }
 #if LANG_CXX11
 inline void playerinfo::set_email(::std::string&& value) {
   set_has_email();
   email_.SetNoArena(
     &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
-  // @@protoc_insertion_point(field_set_rvalue:progame.playerinfo.email)
+  // @@protoc_insertion_point(field_set_rvalue:NFMsg.playerinfo.email)
 }
 #endif
 inline void playerinfo::set_email(const char* value) {
   GOOGLE_DCHECK(value != NULL);
   set_has_email();
   email_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
-  // @@protoc_insertion_point(field_set_char:progame.playerinfo.email)
+  // @@protoc_insertion_point(field_set_char:NFMsg.playerinfo.email)
 }
 inline void playerinfo::set_email(const char* value, size_t size) {
   set_has_email();
   email_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
       ::std::string(reinterpret_cast<const char*>(value), size));
-  // @@protoc_insertion_point(field_set_pointer:progame.playerinfo.email)
+  // @@protoc_insertion_point(field_set_pointer:NFMsg.playerinfo.email)
 }
 inline ::std::string* playerinfo::mutable_email() {
   set_has_email();
-  // @@protoc_insertion_point(field_mutable:progame.playerinfo.email)
+  // @@protoc_insertion_point(field_mutable:NFMsg.playerinfo.email)
   return email_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
 inline ::std::string* playerinfo::release_email() {
-  // @@protoc_insertion_point(field_release:progame.playerinfo.email)
+  // @@protoc_insertion_point(field_release:NFMsg.playerinfo.email)
   if (!has_email()) {
     return NULL;
   }
@@ -4174,7 +4174,7 @@ inline void playerinfo::set_allocated_email(::std::string* email) {
     clear_has_email();
   }
   email_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), email);
-  // @@protoc_insertion_point(field_set_allocated:progame.playerinfo.email)
+  // @@protoc_insertion_point(field_set_allocated:NFMsg.playerinfo.email)
 }
 
 // optional string phonenum = 11;
@@ -4192,41 +4192,41 @@ inline void playerinfo::clear_phonenum() {
   clear_has_phonenum();
 }
 inline const ::std::string& playerinfo::phonenum() const {
-  // @@protoc_insertion_point(field_get:progame.playerinfo.phonenum)
+  // @@protoc_insertion_point(field_get:NFMsg.playerinfo.phonenum)
   return phonenum_.GetNoArena();
 }
 inline void playerinfo::set_phonenum(const ::std::string& value) {
   set_has_phonenum();
   phonenum_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
-  // @@protoc_insertion_point(field_set:progame.playerinfo.phonenum)
+  // @@protoc_insertion_point(field_set:NFMsg.playerinfo.phonenum)
 }
 #if LANG_CXX11
 inline void playerinfo::set_phonenum(::std::string&& value) {
   set_has_phonenum();
   phonenum_.SetNoArena(
     &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
-  // @@protoc_insertion_point(field_set_rvalue:progame.playerinfo.phonenum)
+  // @@protoc_insertion_point(field_set_rvalue:NFMsg.playerinfo.phonenum)
 }
 #endif
 inline void playerinfo::set_phonenum(const char* value) {
   GOOGLE_DCHECK(value != NULL);
   set_has_phonenum();
   phonenum_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
-  // @@protoc_insertion_point(field_set_char:progame.playerinfo.phonenum)
+  // @@protoc_insertion_point(field_set_char:NFMsg.playerinfo.phonenum)
 }
 inline void playerinfo::set_phonenum(const char* value, size_t size) {
   set_has_phonenum();
   phonenum_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
       ::std::string(reinterpret_cast<const char*>(value), size));
-  // @@protoc_insertion_point(field_set_pointer:progame.playerinfo.phonenum)
+  // @@protoc_insertion_point(field_set_pointer:NFMsg.playerinfo.phonenum)
 }
 inline ::std::string* playerinfo::mutable_phonenum() {
   set_has_phonenum();
-  // @@protoc_insertion_point(field_mutable:progame.playerinfo.phonenum)
+  // @@protoc_insertion_point(field_mutable:NFMsg.playerinfo.phonenum)
   return phonenum_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
 inline ::std::string* playerinfo::release_phonenum() {
-  // @@protoc_insertion_point(field_release:progame.playerinfo.phonenum)
+  // @@protoc_insertion_point(field_release:NFMsg.playerinfo.phonenum)
   if (!has_phonenum()) {
     return NULL;
   }
@@ -4240,7 +4240,7 @@ inline void playerinfo::set_allocated_phonenum(::std::string* phonenum) {
     clear_has_phonenum();
   }
   phonenum_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), phonenum);
-  // @@protoc_insertion_point(field_set_allocated:progame.playerinfo.phonenum)
+  // @@protoc_insertion_point(field_set_allocated:NFMsg.playerinfo.phonenum)
 }
 
 // optional int32 exp = 12;
@@ -4258,13 +4258,13 @@ inline void playerinfo::clear_exp() {
   clear_has_exp();
 }
 inline ::google::protobuf::int32 playerinfo::exp() const {
-  // @@protoc_insertion_point(field_get:progame.playerinfo.exp)
+  // @@protoc_insertion_point(field_get:NFMsg.playerinfo.exp)
   return exp_;
 }
 inline void playerinfo::set_exp(::google::protobuf::int32 value) {
   set_has_exp();
   exp_ = value;
-  // @@protoc_insertion_point(field_set:progame.playerinfo.exp)
+  // @@protoc_insertion_point(field_set:NFMsg.playerinfo.exp)
 }
 
 // optional int32 level = 13;
@@ -4282,13 +4282,13 @@ inline void playerinfo::clear_level() {
   clear_has_level();
 }
 inline ::google::protobuf::int32 playerinfo::level() const {
-  // @@protoc_insertion_point(field_get:progame.playerinfo.level)
+  // @@protoc_insertion_point(field_get:NFMsg.playerinfo.level)
   return level_;
 }
 inline void playerinfo::set_level(::google::protobuf::int32 value) {
   set_has_level();
   level_ = value;
-  // @@protoc_insertion_point(field_set:progame.playerinfo.level)
+  // @@protoc_insertion_point(field_set:NFMsg.playerinfo.level)
 }
 
 // optional int32 viplevel = 14;
@@ -4306,13 +4306,13 @@ inline void playerinfo::clear_viplevel() {
   clear_has_viplevel();
 }
 inline ::google::protobuf::int32 playerinfo::viplevel() const {
-  // @@protoc_insertion_point(field_get:progame.playerinfo.viplevel)
+  // @@protoc_insertion_point(field_get:NFMsg.playerinfo.viplevel)
   return viplevel_;
 }
 inline void playerinfo::set_viplevel(::google::protobuf::int32 value) {
   set_has_viplevel();
   viplevel_ = value;
-  // @@protoc_insertion_point(field_set:progame.playerinfo.viplevel)
+  // @@protoc_insertion_point(field_set:NFMsg.playerinfo.viplevel)
 }
 
 // optional int64 jetton = 15;
@@ -4330,13 +4330,13 @@ inline void playerinfo::clear_jetton() {
   clear_has_jetton();
 }
 inline ::google::protobuf::int64 playerinfo::jetton() const {
-  // @@protoc_insertion_point(field_get:progame.playerinfo.jetton)
+  // @@protoc_insertion_point(field_get:NFMsg.playerinfo.jetton)
   return jetton_;
 }
 inline void playerinfo::set_jetton(::google::protobuf::int64 value) {
   set_has_jetton();
   jetton_ = value;
-  // @@protoc_insertion_point(field_set:progame.playerinfo.jetton)
+  // @@protoc_insertion_point(field_set:NFMsg.playerinfo.jetton)
 }
 
 // optional int32 gold = 16;
@@ -4354,13 +4354,13 @@ inline void playerinfo::clear_gold() {
   clear_has_gold();
 }
 inline ::google::protobuf::int32 playerinfo::gold() const {
-  // @@protoc_insertion_point(field_get:progame.playerinfo.gold)
+  // @@protoc_insertion_point(field_get:NFMsg.playerinfo.gold)
   return gold_;
 }
 inline void playerinfo::set_gold(::google::protobuf::int32 value) {
   set_has_gold();
   gold_ = value;
-  // @@protoc_insertion_point(field_set:progame.playerinfo.gold)
+  // @@protoc_insertion_point(field_set:NFMsg.playerinfo.gold)
 }
 
 // optional int32 money = 17;
@@ -4378,13 +4378,13 @@ inline void playerinfo::clear_money() {
   clear_has_money();
 }
 inline ::google::protobuf::int32 playerinfo::money() const {
-  // @@protoc_insertion_point(field_get:progame.playerinfo.money)
+  // @@protoc_insertion_point(field_get:NFMsg.playerinfo.money)
   return money_;
 }
 inline void playerinfo::set_money(::google::protobuf::int32 value) {
   set_has_money();
   money_ = value;
-  // @@protoc_insertion_point(field_set:progame.playerinfo.money)
+  // @@protoc_insertion_point(field_set:NFMsg.playerinfo.money)
 }
 
 // optional string channel = 18;
@@ -4402,41 +4402,41 @@ inline void playerinfo::clear_channel() {
   clear_has_channel();
 }
 inline const ::std::string& playerinfo::channel() const {
-  // @@protoc_insertion_point(field_get:progame.playerinfo.channel)
+  // @@protoc_insertion_point(field_get:NFMsg.playerinfo.channel)
   return channel_.GetNoArena();
 }
 inline void playerinfo::set_channel(const ::std::string& value) {
   set_has_channel();
   channel_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
-  // @@protoc_insertion_point(field_set:progame.playerinfo.channel)
+  // @@protoc_insertion_point(field_set:NFMsg.playerinfo.channel)
 }
 #if LANG_CXX11
 inline void playerinfo::set_channel(::std::string&& value) {
   set_has_channel();
   channel_.SetNoArena(
     &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
-  // @@protoc_insertion_point(field_set_rvalue:progame.playerinfo.channel)
+  // @@protoc_insertion_point(field_set_rvalue:NFMsg.playerinfo.channel)
 }
 #endif
 inline void playerinfo::set_channel(const char* value) {
   GOOGLE_DCHECK(value != NULL);
   set_has_channel();
   channel_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
-  // @@protoc_insertion_point(field_set_char:progame.playerinfo.channel)
+  // @@protoc_insertion_point(field_set_char:NFMsg.playerinfo.channel)
 }
 inline void playerinfo::set_channel(const char* value, size_t size) {
   set_has_channel();
   channel_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
       ::std::string(reinterpret_cast<const char*>(value), size));
-  // @@protoc_insertion_point(field_set_pointer:progame.playerinfo.channel)
+  // @@protoc_insertion_point(field_set_pointer:NFMsg.playerinfo.channel)
 }
 inline ::std::string* playerinfo::mutable_channel() {
   set_has_channel();
-  // @@protoc_insertion_point(field_mutable:progame.playerinfo.channel)
+  // @@protoc_insertion_point(field_mutable:NFMsg.playerinfo.channel)
   return channel_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
 inline ::std::string* playerinfo::release_channel() {
-  // @@protoc_insertion_point(field_release:progame.playerinfo.channel)
+  // @@protoc_insertion_point(field_release:NFMsg.playerinfo.channel)
   if (!has_channel()) {
     return NULL;
   }
@@ -4450,7 +4450,7 @@ inline void playerinfo::set_allocated_channel(::std::string* channel) {
     clear_has_channel();
   }
   channel_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), channel);
-  // @@protoc_insertion_point(field_set_allocated:progame.playerinfo.channel)
+  // @@protoc_insertion_point(field_set_allocated:NFMsg.playerinfo.channel)
 }
 
 // optional string province = 19;
@@ -4468,41 +4468,41 @@ inline void playerinfo::clear_province() {
   clear_has_province();
 }
 inline const ::std::string& playerinfo::province() const {
-  // @@protoc_insertion_point(field_get:progame.playerinfo.province)
+  // @@protoc_insertion_point(field_get:NFMsg.playerinfo.province)
   return province_.GetNoArena();
 }
 inline void playerinfo::set_province(const ::std::string& value) {
   set_has_province();
   province_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
-  // @@protoc_insertion_point(field_set:progame.playerinfo.province)
+  // @@protoc_insertion_point(field_set:NFMsg.playerinfo.province)
 }
 #if LANG_CXX11
 inline void playerinfo::set_province(::std::string&& value) {
   set_has_province();
   province_.SetNoArena(
     &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
-  // @@protoc_insertion_point(field_set_rvalue:progame.playerinfo.province)
+  // @@protoc_insertion_point(field_set_rvalue:NFMsg.playerinfo.province)
 }
 #endif
 inline void playerinfo::set_province(const char* value) {
   GOOGLE_DCHECK(value != NULL);
   set_has_province();
   province_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
-  // @@protoc_insertion_point(field_set_char:progame.playerinfo.province)
+  // @@protoc_insertion_point(field_set_char:NFMsg.playerinfo.province)
 }
 inline void playerinfo::set_province(const char* value, size_t size) {
   set_has_province();
   province_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
       ::std::string(reinterpret_cast<const char*>(value), size));
-  // @@protoc_insertion_point(field_set_pointer:progame.playerinfo.province)
+  // @@protoc_insertion_point(field_set_pointer:NFMsg.playerinfo.province)
 }
 inline ::std::string* playerinfo::mutable_province() {
   set_has_province();
-  // @@protoc_insertion_point(field_mutable:progame.playerinfo.province)
+  // @@protoc_insertion_point(field_mutable:NFMsg.playerinfo.province)
   return province_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
 inline ::std::string* playerinfo::release_province() {
-  // @@protoc_insertion_point(field_release:progame.playerinfo.province)
+  // @@protoc_insertion_point(field_release:NFMsg.playerinfo.province)
   if (!has_province()) {
     return NULL;
   }
@@ -4516,7 +4516,7 @@ inline void playerinfo::set_allocated_province(::std::string* province) {
     clear_has_province();
   }
   province_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), province);
-  // @@protoc_insertion_point(field_set_allocated:progame.playerinfo.province)
+  // @@protoc_insertion_point(field_set_allocated:NFMsg.playerinfo.province)
 }
 
 // optional string city = 20;
@@ -4534,41 +4534,41 @@ inline void playerinfo::clear_city() {
   clear_has_city();
 }
 inline const ::std::string& playerinfo::city() const {
-  // @@protoc_insertion_point(field_get:progame.playerinfo.city)
+  // @@protoc_insertion_point(field_get:NFMsg.playerinfo.city)
   return city_.GetNoArena();
 }
 inline void playerinfo::set_city(const ::std::string& value) {
   set_has_city();
   city_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
-  // @@protoc_insertion_point(field_set:progame.playerinfo.city)
+  // @@protoc_insertion_point(field_set:NFMsg.playerinfo.city)
 }
 #if LANG_CXX11
 inline void playerinfo::set_city(::std::string&& value) {
   set_has_city();
   city_.SetNoArena(
     &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
-  // @@protoc_insertion_point(field_set_rvalue:progame.playerinfo.city)
+  // @@protoc_insertion_point(field_set_rvalue:NFMsg.playerinfo.city)
 }
 #endif
 inline void playerinfo::set_city(const char* value) {
   GOOGLE_DCHECK(value != NULL);
   set_has_city();
   city_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
-  // @@protoc_insertion_point(field_set_char:progame.playerinfo.city)
+  // @@protoc_insertion_point(field_set_char:NFMsg.playerinfo.city)
 }
 inline void playerinfo::set_city(const char* value, size_t size) {
   set_has_city();
   city_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
       ::std::string(reinterpret_cast<const char*>(value), size));
-  // @@protoc_insertion_point(field_set_pointer:progame.playerinfo.city)
+  // @@protoc_insertion_point(field_set_pointer:NFMsg.playerinfo.city)
 }
 inline ::std::string* playerinfo::mutable_city() {
   set_has_city();
-  // @@protoc_insertion_point(field_mutable:progame.playerinfo.city)
+  // @@protoc_insertion_point(field_mutable:NFMsg.playerinfo.city)
   return city_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
 inline ::std::string* playerinfo::release_city() {
-  // @@protoc_insertion_point(field_release:progame.playerinfo.city)
+  // @@protoc_insertion_point(field_release:NFMsg.playerinfo.city)
   if (!has_city()) {
     return NULL;
   }
@@ -4582,7 +4582,7 @@ inline void playerinfo::set_allocated_city(::std::string* city) {
     clear_has_city();
   }
   city_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), city);
-  // @@protoc_insertion_point(field_set_allocated:progame.playerinfo.city)
+  // @@protoc_insertion_point(field_set_allocated:NFMsg.playerinfo.city)
 }
 
 // optional int32 popularity = 21;
@@ -4600,13 +4600,13 @@ inline void playerinfo::clear_popularity() {
   clear_has_popularity();
 }
 inline ::google::protobuf::int32 playerinfo::popularity() const {
-  // @@protoc_insertion_point(field_get:progame.playerinfo.popularity)
+  // @@protoc_insertion_point(field_get:NFMsg.playerinfo.popularity)
   return popularity_;
 }
 inline void playerinfo::set_popularity(::google::protobuf::int32 value) {
   set_has_popularity();
   popularity_ = value;
-  // @@protoc_insertion_point(field_set:progame.playerinfo.popularity)
+  // @@protoc_insertion_point(field_set:NFMsg.playerinfo.popularity)
 }
 
 // optional int32 idenstatus = 22;
@@ -4624,13 +4624,13 @@ inline void playerinfo::clear_idenstatus() {
   clear_has_idenstatus();
 }
 inline ::google::protobuf::int32 playerinfo::idenstatus() const {
-  // @@protoc_insertion_point(field_get:progame.playerinfo.idenstatus)
+  // @@protoc_insertion_point(field_get:NFMsg.playerinfo.idenstatus)
   return idenstatus_;
 }
 inline void playerinfo::set_idenstatus(::google::protobuf::int32 value) {
   set_has_idenstatus();
   idenstatus_ = value;
-  // @@protoc_insertion_point(field_set:progame.playerinfo.idenstatus)
+  // @@protoc_insertion_point(field_set:NFMsg.playerinfo.idenstatus)
 }
 
 // optional int32 bindtype = 23;
@@ -4648,13 +4648,13 @@ inline void playerinfo::clear_bindtype() {
   clear_has_bindtype();
 }
 inline ::google::protobuf::int32 playerinfo::bindtype() const {
-  // @@protoc_insertion_point(field_get:progame.playerinfo.bindtype)
+  // @@protoc_insertion_point(field_get:NFMsg.playerinfo.bindtype)
   return bindtype_;
 }
 inline void playerinfo::set_bindtype(::google::protobuf::int32 value) {
   set_has_bindtype();
   bindtype_ = value;
-  // @@protoc_insertion_point(field_set:progame.playerinfo.bindtype)
+  // @@protoc_insertion_point(field_set:NFMsg.playerinfo.bindtype)
 }
 
 // optional string bindnick = 24;
@@ -4672,41 +4672,41 @@ inline void playerinfo::clear_bindnick() {
   clear_has_bindnick();
 }
 inline const ::std::string& playerinfo::bindnick() const {
-  // @@protoc_insertion_point(field_get:progame.playerinfo.bindnick)
+  // @@protoc_insertion_point(field_get:NFMsg.playerinfo.bindnick)
   return bindnick_.GetNoArena();
 }
 inline void playerinfo::set_bindnick(const ::std::string& value) {
   set_has_bindnick();
   bindnick_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
-  // @@protoc_insertion_point(field_set:progame.playerinfo.bindnick)
+  // @@protoc_insertion_point(field_set:NFMsg.playerinfo.bindnick)
 }
 #if LANG_CXX11
 inline void playerinfo::set_bindnick(::std::string&& value) {
   set_has_bindnick();
   bindnick_.SetNoArena(
     &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
-  // @@protoc_insertion_point(field_set_rvalue:progame.playerinfo.bindnick)
+  // @@protoc_insertion_point(field_set_rvalue:NFMsg.playerinfo.bindnick)
 }
 #endif
 inline void playerinfo::set_bindnick(const char* value) {
   GOOGLE_DCHECK(value != NULL);
   set_has_bindnick();
   bindnick_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
-  // @@protoc_insertion_point(field_set_char:progame.playerinfo.bindnick)
+  // @@protoc_insertion_point(field_set_char:NFMsg.playerinfo.bindnick)
 }
 inline void playerinfo::set_bindnick(const char* value, size_t size) {
   set_has_bindnick();
   bindnick_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
       ::std::string(reinterpret_cast<const char*>(value), size));
-  // @@protoc_insertion_point(field_set_pointer:progame.playerinfo.bindnick)
+  // @@protoc_insertion_point(field_set_pointer:NFMsg.playerinfo.bindnick)
 }
 inline ::std::string* playerinfo::mutable_bindnick() {
   set_has_bindnick();
-  // @@protoc_insertion_point(field_mutable:progame.playerinfo.bindnick)
+  // @@protoc_insertion_point(field_mutable:NFMsg.playerinfo.bindnick)
   return bindnick_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
 inline ::std::string* playerinfo::release_bindnick() {
-  // @@protoc_insertion_point(field_release:progame.playerinfo.bindnick)
+  // @@protoc_insertion_point(field_release:NFMsg.playerinfo.bindnick)
   if (!has_bindnick()) {
     return NULL;
   }
@@ -4720,7 +4720,7 @@ inline void playerinfo::set_allocated_bindnick(::std::string* bindnick) {
     clear_has_bindnick();
   }
   bindnick_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), bindnick);
-  // @@protoc_insertion_point(field_set_allocated:progame.playerinfo.bindnick)
+  // @@protoc_insertion_point(field_set_allocated:NFMsg.playerinfo.bindnick)
 }
 
 // optional string platformid = 25;
@@ -4738,41 +4738,41 @@ inline void playerinfo::clear_platformid() {
   clear_has_platformid();
 }
 inline const ::std::string& playerinfo::platformid() const {
-  // @@protoc_insertion_point(field_get:progame.playerinfo.platformid)
+  // @@protoc_insertion_point(field_get:NFMsg.playerinfo.platformid)
   return platformid_.GetNoArena();
 }
 inline void playerinfo::set_platformid(const ::std::string& value) {
   set_has_platformid();
   platformid_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
-  // @@protoc_insertion_point(field_set:progame.playerinfo.platformid)
+  // @@protoc_insertion_point(field_set:NFMsg.playerinfo.platformid)
 }
 #if LANG_CXX11
 inline void playerinfo::set_platformid(::std::string&& value) {
   set_has_platformid();
   platformid_.SetNoArena(
     &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
-  // @@protoc_insertion_point(field_set_rvalue:progame.playerinfo.platformid)
+  // @@protoc_insertion_point(field_set_rvalue:NFMsg.playerinfo.platformid)
 }
 #endif
 inline void playerinfo::set_platformid(const char* value) {
   GOOGLE_DCHECK(value != NULL);
   set_has_platformid();
   platformid_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
-  // @@protoc_insertion_point(field_set_char:progame.playerinfo.platformid)
+  // @@protoc_insertion_point(field_set_char:NFMsg.playerinfo.platformid)
 }
 inline void playerinfo::set_platformid(const char* value, size_t size) {
   set_has_platformid();
   platformid_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
       ::std::string(reinterpret_cast<const char*>(value), size));
-  // @@protoc_insertion_point(field_set_pointer:progame.playerinfo.platformid)
+  // @@protoc_insertion_point(field_set_pointer:NFMsg.playerinfo.platformid)
 }
 inline ::std::string* playerinfo::mutable_platformid() {
   set_has_platformid();
-  // @@protoc_insertion_point(field_mutable:progame.playerinfo.platformid)
+  // @@protoc_insertion_point(field_mutable:NFMsg.playerinfo.platformid)
   return platformid_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
 inline ::std::string* playerinfo::release_platformid() {
-  // @@protoc_insertion_point(field_release:progame.playerinfo.platformid)
+  // @@protoc_insertion_point(field_release:NFMsg.playerinfo.platformid)
   if (!has_platformid()) {
     return NULL;
   }
@@ -4786,7 +4786,7 @@ inline void playerinfo::set_allocated_platformid(::std::string* platformid) {
     clear_has_platformid();
   }
   platformid_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), platformid);
-  // @@protoc_insertion_point(field_set_allocated:progame.playerinfo.platformid)
+  // @@protoc_insertion_point(field_set_allocated:NFMsg.playerinfo.platformid)
 }
 
 // optional string imei = 26;
@@ -4804,41 +4804,41 @@ inline void playerinfo::clear_imei() {
   clear_has_imei();
 }
 inline const ::std::string& playerinfo::imei() const {
-  // @@protoc_insertion_point(field_get:progame.playerinfo.imei)
+  // @@protoc_insertion_point(field_get:NFMsg.playerinfo.imei)
   return imei_.GetNoArena();
 }
 inline void playerinfo::set_imei(const ::std::string& value) {
   set_has_imei();
   imei_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
-  // @@protoc_insertion_point(field_set:progame.playerinfo.imei)
+  // @@protoc_insertion_point(field_set:NFMsg.playerinfo.imei)
 }
 #if LANG_CXX11
 inline void playerinfo::set_imei(::std::string&& value) {
   set_has_imei();
   imei_.SetNoArena(
     &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
-  // @@protoc_insertion_point(field_set_rvalue:progame.playerinfo.imei)
+  // @@protoc_insertion_point(field_set_rvalue:NFMsg.playerinfo.imei)
 }
 #endif
 inline void playerinfo::set_imei(const char* value) {
   GOOGLE_DCHECK(value != NULL);
   set_has_imei();
   imei_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
-  // @@protoc_insertion_point(field_set_char:progame.playerinfo.imei)
+  // @@protoc_insertion_point(field_set_char:NFMsg.playerinfo.imei)
 }
 inline void playerinfo::set_imei(const char* value, size_t size) {
   set_has_imei();
   imei_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
       ::std::string(reinterpret_cast<const char*>(value), size));
-  // @@protoc_insertion_point(field_set_pointer:progame.playerinfo.imei)
+  // @@protoc_insertion_point(field_set_pointer:NFMsg.playerinfo.imei)
 }
 inline ::std::string* playerinfo::mutable_imei() {
   set_has_imei();
-  // @@protoc_insertion_point(field_mutable:progame.playerinfo.imei)
+  // @@protoc_insertion_point(field_mutable:NFMsg.playerinfo.imei)
   return imei_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
 inline ::std::string* playerinfo::release_imei() {
-  // @@protoc_insertion_point(field_release:progame.playerinfo.imei)
+  // @@protoc_insertion_point(field_release:NFMsg.playerinfo.imei)
   if (!has_imei()) {
     return NULL;
   }
@@ -4852,7 +4852,7 @@ inline void playerinfo::set_allocated_imei(::std::string* imei) {
     clear_has_imei();
   }
   imei_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), imei);
-  // @@protoc_insertion_point(field_set_allocated:progame.playerinfo.imei)
+  // @@protoc_insertion_point(field_set_allocated:NFMsg.playerinfo.imei)
 }
 
 // optional string devname = 27;
@@ -4870,41 +4870,41 @@ inline void playerinfo::clear_devname() {
   clear_has_devname();
 }
 inline const ::std::string& playerinfo::devname() const {
-  // @@protoc_insertion_point(field_get:progame.playerinfo.devname)
+  // @@protoc_insertion_point(field_get:NFMsg.playerinfo.devname)
   return devname_.GetNoArena();
 }
 inline void playerinfo::set_devname(const ::std::string& value) {
   set_has_devname();
   devname_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
-  // @@protoc_insertion_point(field_set:progame.playerinfo.devname)
+  // @@protoc_insertion_point(field_set:NFMsg.playerinfo.devname)
 }
 #if LANG_CXX11
 inline void playerinfo::set_devname(::std::string&& value) {
   set_has_devname();
   devname_.SetNoArena(
     &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
-  // @@protoc_insertion_point(field_set_rvalue:progame.playerinfo.devname)
+  // @@protoc_insertion_point(field_set_rvalue:NFMsg.playerinfo.devname)
 }
 #endif
 inline void playerinfo::set_devname(const char* value) {
   GOOGLE_DCHECK(value != NULL);
   set_has_devname();
   devname_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
-  // @@protoc_insertion_point(field_set_char:progame.playerinfo.devname)
+  // @@protoc_insertion_point(field_set_char:NFMsg.playerinfo.devname)
 }
 inline void playerinfo::set_devname(const char* value, size_t size) {
   set_has_devname();
   devname_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
       ::std::string(reinterpret_cast<const char*>(value), size));
-  // @@protoc_insertion_point(field_set_pointer:progame.playerinfo.devname)
+  // @@protoc_insertion_point(field_set_pointer:NFMsg.playerinfo.devname)
 }
 inline ::std::string* playerinfo::mutable_devname() {
   set_has_devname();
-  // @@protoc_insertion_point(field_mutable:progame.playerinfo.devname)
+  // @@protoc_insertion_point(field_mutable:NFMsg.playerinfo.devname)
   return devname_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
 inline ::std::string* playerinfo::release_devname() {
-  // @@protoc_insertion_point(field_release:progame.playerinfo.devname)
+  // @@protoc_insertion_point(field_release:NFMsg.playerinfo.devname)
   if (!has_devname()) {
     return NULL;
   }
@@ -4918,7 +4918,7 @@ inline void playerinfo::set_allocated_devname(::std::string* devname) {
     clear_has_devname();
   }
   devname_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), devname);
-  // @@protoc_insertion_point(field_set_allocated:progame.playerinfo.devname)
+  // @@protoc_insertion_point(field_set_allocated:NFMsg.playerinfo.devname)
 }
 
 // optional string ip = 28;
@@ -4936,41 +4936,41 @@ inline void playerinfo::clear_ip() {
   clear_has_ip();
 }
 inline const ::std::string& playerinfo::ip() const {
-  // @@protoc_insertion_point(field_get:progame.playerinfo.ip)
+  // @@protoc_insertion_point(field_get:NFMsg.playerinfo.ip)
   return ip_.GetNoArena();
 }
 inline void playerinfo::set_ip(const ::std::string& value) {
   set_has_ip();
   ip_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
-  // @@protoc_insertion_point(field_set:progame.playerinfo.ip)
+  // @@protoc_insertion_point(field_set:NFMsg.playerinfo.ip)
 }
 #if LANG_CXX11
 inline void playerinfo::set_ip(::std::string&& value) {
   set_has_ip();
   ip_.SetNoArena(
     &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
-  // @@protoc_insertion_point(field_set_rvalue:progame.playerinfo.ip)
+  // @@protoc_insertion_point(field_set_rvalue:NFMsg.playerinfo.ip)
 }
 #endif
 inline void playerinfo::set_ip(const char* value) {
   GOOGLE_DCHECK(value != NULL);
   set_has_ip();
   ip_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
-  // @@protoc_insertion_point(field_set_char:progame.playerinfo.ip)
+  // @@protoc_insertion_point(field_set_char:NFMsg.playerinfo.ip)
 }
 inline void playerinfo::set_ip(const char* value, size_t size) {
   set_has_ip();
   ip_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
       ::std::string(reinterpret_cast<const char*>(value), size));
-  // @@protoc_insertion_point(field_set_pointer:progame.playerinfo.ip)
+  // @@protoc_insertion_point(field_set_pointer:NFMsg.playerinfo.ip)
 }
 inline ::std::string* playerinfo::mutable_ip() {
   set_has_ip();
-  // @@protoc_insertion_point(field_mutable:progame.playerinfo.ip)
+  // @@protoc_insertion_point(field_mutable:NFMsg.playerinfo.ip)
   return ip_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
 inline ::std::string* playerinfo::release_ip() {
-  // @@protoc_insertion_point(field_release:progame.playerinfo.ip)
+  // @@protoc_insertion_point(field_release:NFMsg.playerinfo.ip)
   if (!has_ip()) {
     return NULL;
   }
@@ -4984,7 +4984,7 @@ inline void playerinfo::set_allocated_ip(::std::string* ip) {
     clear_has_ip();
   }
   ip_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ip);
-  // @@protoc_insertion_point(field_set_allocated:progame.playerinfo.ip)
+  // @@protoc_insertion_point(field_set_allocated:NFMsg.playerinfo.ip)
 }
 
 // optional int32 mobiletype = 29;
@@ -5002,13 +5002,13 @@ inline void playerinfo::clear_mobiletype() {
   clear_has_mobiletype();
 }
 inline ::google::protobuf::int32 playerinfo::mobiletype() const {
-  // @@protoc_insertion_point(field_get:progame.playerinfo.mobiletype)
+  // @@protoc_insertion_point(field_get:NFMsg.playerinfo.mobiletype)
   return mobiletype_;
 }
 inline void playerinfo::set_mobiletype(::google::protobuf::int32 value) {
   set_has_mobiletype();
   mobiletype_ = value;
-  // @@protoc_insertion_point(field_set:progame.playerinfo.mobiletype)
+  // @@protoc_insertion_point(field_set:NFMsg.playerinfo.mobiletype)
 }
 
 // optional int32 lasttime = 30;
@@ -5026,13 +5026,13 @@ inline void playerinfo::clear_lasttime() {
   clear_has_lasttime();
 }
 inline ::google::protobuf::int32 playerinfo::lasttime() const {
-  // @@protoc_insertion_point(field_get:progame.playerinfo.lasttime)
+  // @@protoc_insertion_point(field_get:NFMsg.playerinfo.lasttime)
   return lasttime_;
 }
 inline void playerinfo::set_lasttime(::google::protobuf::int32 value) {
   set_has_lasttime();
   lasttime_ = value;
-  // @@protoc_insertion_point(field_set:progame.playerinfo.lasttime)
+  // @@protoc_insertion_point(field_set:NFMsg.playerinfo.lasttime)
 }
 
 // optional int32 penulttime = 31;
@@ -5050,13 +5050,13 @@ inline void playerinfo::clear_penulttime() {
   clear_has_penulttime();
 }
 inline ::google::protobuf::int32 playerinfo::penulttime() const {
-  // @@protoc_insertion_point(field_get:progame.playerinfo.penulttime)
+  // @@protoc_insertion_point(field_get:NFMsg.playerinfo.penulttime)
   return penulttime_;
 }
 inline void playerinfo::set_penulttime(::google::protobuf::int32 value) {
   set_has_penulttime();
   penulttime_ = value;
-  // @@protoc_insertion_point(field_set:progame.playerinfo.penulttime)
+  // @@protoc_insertion_point(field_set:NFMsg.playerinfo.penulttime)
 }
 
 // optional int32 silent = 32;
@@ -5074,13 +5074,13 @@ inline void playerinfo::clear_silent() {
   clear_has_silent();
 }
 inline ::google::protobuf::int32 playerinfo::silent() const {
-  // @@protoc_insertion_point(field_get:progame.playerinfo.silent)
+  // @@protoc_insertion_point(field_get:NFMsg.playerinfo.silent)
   return silent_;
 }
 inline void playerinfo::set_silent(::google::protobuf::int32 value) {
   set_has_silent();
   silent_ = value;
-  // @@protoc_insertion_point(field_set:progame.playerinfo.silent)
+  // @@protoc_insertion_point(field_set:NFMsg.playerinfo.silent)
 }
 
 // optional int32 isban = 33;
@@ -5098,13 +5098,13 @@ inline void playerinfo::clear_isban() {
   clear_has_isban();
 }
 inline ::google::protobuf::int32 playerinfo::isban() const {
-  // @@protoc_insertion_point(field_get:progame.playerinfo.isban)
+  // @@protoc_insertion_point(field_get:NFMsg.playerinfo.isban)
   return isban_;
 }
 inline void playerinfo::set_isban(::google::protobuf::int32 value) {
   set_has_isban();
   isban_ = value;
-  // @@protoc_insertion_point(field_set:progame.playerinfo.isban)
+  // @@protoc_insertion_point(field_set:NFMsg.playerinfo.isban)
 }
 
 // optional string face_1 = 34;
@@ -5122,41 +5122,41 @@ inline void playerinfo::clear_face_1() {
   clear_has_face_1();
 }
 inline const ::std::string& playerinfo::face_1() const {
-  // @@protoc_insertion_point(field_get:progame.playerinfo.face_1)
+  // @@protoc_insertion_point(field_get:NFMsg.playerinfo.face_1)
   return face_1_.GetNoArena();
 }
 inline void playerinfo::set_face_1(const ::std::string& value) {
   set_has_face_1();
   face_1_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
-  // @@protoc_insertion_point(field_set:progame.playerinfo.face_1)
+  // @@protoc_insertion_point(field_set:NFMsg.playerinfo.face_1)
 }
 #if LANG_CXX11
 inline void playerinfo::set_face_1(::std::string&& value) {
   set_has_face_1();
   face_1_.SetNoArena(
     &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
-  // @@protoc_insertion_point(field_set_rvalue:progame.playerinfo.face_1)
+  // @@protoc_insertion_point(field_set_rvalue:NFMsg.playerinfo.face_1)
 }
 #endif
 inline void playerinfo::set_face_1(const char* value) {
   GOOGLE_DCHECK(value != NULL);
   set_has_face_1();
   face_1_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
-  // @@protoc_insertion_point(field_set_char:progame.playerinfo.face_1)
+  // @@protoc_insertion_point(field_set_char:NFMsg.playerinfo.face_1)
 }
 inline void playerinfo::set_face_1(const char* value, size_t size) {
   set_has_face_1();
   face_1_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
       ::std::string(reinterpret_cast<const char*>(value), size));
-  // @@protoc_insertion_point(field_set_pointer:progame.playerinfo.face_1)
+  // @@protoc_insertion_point(field_set_pointer:NFMsg.playerinfo.face_1)
 }
 inline ::std::string* playerinfo::mutable_face_1() {
   set_has_face_1();
-  // @@protoc_insertion_point(field_mutable:progame.playerinfo.face_1)
+  // @@protoc_insertion_point(field_mutable:NFMsg.playerinfo.face_1)
   return face_1_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
 inline ::std::string* playerinfo::release_face_1() {
-  // @@protoc_insertion_point(field_release:progame.playerinfo.face_1)
+  // @@protoc_insertion_point(field_release:NFMsg.playerinfo.face_1)
   if (!has_face_1()) {
     return NULL;
   }
@@ -5170,7 +5170,7 @@ inline void playerinfo::set_allocated_face_1(::std::string* face_1) {
     clear_has_face_1();
   }
   face_1_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), face_1);
-  // @@protoc_insertion_point(field_set_allocated:progame.playerinfo.face_1)
+  // @@protoc_insertion_point(field_set_allocated:NFMsg.playerinfo.face_1)
 }
 
 // optional string face_2 = 35;
@@ -5188,41 +5188,41 @@ inline void playerinfo::clear_face_2() {
   clear_has_face_2();
 }
 inline const ::std::string& playerinfo::face_2() const {
-  // @@protoc_insertion_point(field_get:progame.playerinfo.face_2)
+  // @@protoc_insertion_point(field_get:NFMsg.playerinfo.face_2)
   return face_2_.GetNoArena();
 }
 inline void playerinfo::set_face_2(const ::std::string& value) {
   set_has_face_2();
   face_2_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
-  // @@protoc_insertion_point(field_set:progame.playerinfo.face_2)
+  // @@protoc_insertion_point(field_set:NFMsg.playerinfo.face_2)
 }
 #if LANG_CXX11
 inline void playerinfo::set_face_2(::std::string&& value) {
   set_has_face_2();
   face_2_.SetNoArena(
     &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
-  // @@protoc_insertion_point(field_set_rvalue:progame.playerinfo.face_2)
+  // @@protoc_insertion_point(field_set_rvalue:NFMsg.playerinfo.face_2)
 }
 #endif
 inline void playerinfo::set_face_2(const char* value) {
   GOOGLE_DCHECK(value != NULL);
   set_has_face_2();
   face_2_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
-  // @@protoc_insertion_point(field_set_char:progame.playerinfo.face_2)
+  // @@protoc_insertion_point(field_set_char:NFMsg.playerinfo.face_2)
 }
 inline void playerinfo::set_face_2(const char* value, size_t size) {
   set_has_face_2();
   face_2_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
       ::std::string(reinterpret_cast<const char*>(value), size));
-  // @@protoc_insertion_point(field_set_pointer:progame.playerinfo.face_2)
+  // @@protoc_insertion_point(field_set_pointer:NFMsg.playerinfo.face_2)
 }
 inline ::std::string* playerinfo::mutable_face_2() {
   set_has_face_2();
-  // @@protoc_insertion_point(field_mutable:progame.playerinfo.face_2)
+  // @@protoc_insertion_point(field_mutable:NFMsg.playerinfo.face_2)
   return face_2_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
 inline ::std::string* playerinfo::release_face_2() {
-  // @@protoc_insertion_point(field_release:progame.playerinfo.face_2)
+  // @@protoc_insertion_point(field_release:NFMsg.playerinfo.face_2)
   if (!has_face_2()) {
     return NULL;
   }
@@ -5236,7 +5236,7 @@ inline void playerinfo::set_allocated_face_2(::std::string* face_2) {
     clear_has_face_2();
   }
   face_2_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), face_2);
-  // @@protoc_insertion_point(field_set_allocated:progame.playerinfo.face_2)
+  // @@protoc_insertion_point(field_set_allocated:NFMsg.playerinfo.face_2)
 }
 
 // optional string face_3 = 36;
@@ -5254,41 +5254,41 @@ inline void playerinfo::clear_face_3() {
   clear_has_face_3();
 }
 inline const ::std::string& playerinfo::face_3() const {
-  // @@protoc_insertion_point(field_get:progame.playerinfo.face_3)
+  // @@protoc_insertion_point(field_get:NFMsg.playerinfo.face_3)
   return face_3_.GetNoArena();
 }
 inline void playerinfo::set_face_3(const ::std::string& value) {
   set_has_face_3();
   face_3_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
-  // @@protoc_insertion_point(field_set:progame.playerinfo.face_3)
+  // @@protoc_insertion_point(field_set:NFMsg.playerinfo.face_3)
 }
 #if LANG_CXX11
 inline void playerinfo::set_face_3(::std::string&& value) {
   set_has_face_3();
   face_3_.SetNoArena(
     &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
-  // @@protoc_insertion_point(field_set_rvalue:progame.playerinfo.face_3)
+  // @@protoc_insertion_point(field_set_rvalue:NFMsg.playerinfo.face_3)
 }
 #endif
 inline void playerinfo::set_face_3(const char* value) {
   GOOGLE_DCHECK(value != NULL);
   set_has_face_3();
   face_3_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
-  // @@protoc_insertion_point(field_set_char:progame.playerinfo.face_3)
+  // @@protoc_insertion_point(field_set_char:NFMsg.playerinfo.face_3)
 }
 inline void playerinfo::set_face_3(const char* value, size_t size) {
   set_has_face_3();
   face_3_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
       ::std::string(reinterpret_cast<const char*>(value), size));
-  // @@protoc_insertion_point(field_set_pointer:progame.playerinfo.face_3)
+  // @@protoc_insertion_point(field_set_pointer:NFMsg.playerinfo.face_3)
 }
 inline ::std::string* playerinfo::mutable_face_3() {
   set_has_face_3();
-  // @@protoc_insertion_point(field_mutable:progame.playerinfo.face_3)
+  // @@protoc_insertion_point(field_mutable:NFMsg.playerinfo.face_3)
   return face_3_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
 inline ::std::string* playerinfo::release_face_3() {
-  // @@protoc_insertion_point(field_release:progame.playerinfo.face_3)
+  // @@protoc_insertion_point(field_release:NFMsg.playerinfo.face_3)
   if (!has_face_3()) {
     return NULL;
   }
@@ -5302,7 +5302,7 @@ inline void playerinfo::set_allocated_face_3(::std::string* face_3) {
     clear_has_face_3();
   }
   face_3_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), face_3);
-  // @@protoc_insertion_point(field_set_allocated:progame.playerinfo.face_3)
+  // @@protoc_insertion_point(field_set_allocated:NFMsg.playerinfo.face_3)
 }
 
 // optional string face_4 = 37;
@@ -5320,41 +5320,41 @@ inline void playerinfo::clear_face_4() {
   clear_has_face_4();
 }
 inline const ::std::string& playerinfo::face_4() const {
-  // @@protoc_insertion_point(field_get:progame.playerinfo.face_4)
+  // @@protoc_insertion_point(field_get:NFMsg.playerinfo.face_4)
   return face_4_.GetNoArena();
 }
 inline void playerinfo::set_face_4(const ::std::string& value) {
   set_has_face_4();
   face_4_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
-  // @@protoc_insertion_point(field_set:progame.playerinfo.face_4)
+  // @@protoc_insertion_point(field_set:NFMsg.playerinfo.face_4)
 }
 #if LANG_CXX11
 inline void playerinfo::set_face_4(::std::string&& value) {
   set_has_face_4();
   face_4_.SetNoArena(
     &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
-  // @@protoc_insertion_point(field_set_rvalue:progame.playerinfo.face_4)
+  // @@protoc_insertion_point(field_set_rvalue:NFMsg.playerinfo.face_4)
 }
 #endif
 inline void playerinfo::set_face_4(const char* value) {
   GOOGLE_DCHECK(value != NULL);
   set_has_face_4();
   face_4_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
-  // @@protoc_insertion_point(field_set_char:progame.playerinfo.face_4)
+  // @@protoc_insertion_point(field_set_char:NFMsg.playerinfo.face_4)
 }
 inline void playerinfo::set_face_4(const char* value, size_t size) {
   set_has_face_4();
   face_4_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
       ::std::string(reinterpret_cast<const char*>(value), size));
-  // @@protoc_insertion_point(field_set_pointer:progame.playerinfo.face_4)
+  // @@protoc_insertion_point(field_set_pointer:NFMsg.playerinfo.face_4)
 }
 inline ::std::string* playerinfo::mutable_face_4() {
   set_has_face_4();
-  // @@protoc_insertion_point(field_mutable:progame.playerinfo.face_4)
+  // @@protoc_insertion_point(field_mutable:NFMsg.playerinfo.face_4)
   return face_4_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
 inline ::std::string* playerinfo::release_face_4() {
-  // @@protoc_insertion_point(field_release:progame.playerinfo.face_4)
+  // @@protoc_insertion_point(field_release:NFMsg.playerinfo.face_4)
   if (!has_face_4()) {
     return NULL;
   }
@@ -5368,7 +5368,7 @@ inline void playerinfo::set_allocated_face_4(::std::string* face_4) {
     clear_has_face_4();
   }
   face_4_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), face_4);
-  // @@protoc_insertion_point(field_set_allocated:progame.playerinfo.face_4)
+  // @@protoc_insertion_point(field_set_allocated:NFMsg.playerinfo.face_4)
 }
 
 // optional int32 isrobot = 38;
@@ -5386,13 +5386,13 @@ inline void playerinfo::clear_isrobot() {
   clear_has_isrobot();
 }
 inline ::google::protobuf::int32 playerinfo::isrobot() const {
-  // @@protoc_insertion_point(field_get:progame.playerinfo.isrobot)
+  // @@protoc_insertion_point(field_get:NFMsg.playerinfo.isrobot)
   return isrobot_;
 }
 inline void playerinfo::set_isrobot(::google::protobuf::int32 value) {
   set_has_isrobot();
   isrobot_ = value;
-  // @@protoc_insertion_point(field_set:progame.playerinfo.isrobot)
+  // @@protoc_insertion_point(field_set:NFMsg.playerinfo.isrobot)
 }
 
 // optional int32 playtype = 39;
@@ -5410,13 +5410,13 @@ inline void playerinfo::clear_playtype() {
   clear_has_playtype();
 }
 inline ::google::protobuf::int32 playerinfo::playtype() const {
-  // @@protoc_insertion_point(field_get:progame.playerinfo.playtype)
+  // @@protoc_insertion_point(field_get:NFMsg.playerinfo.playtype)
   return playtype_;
 }
 inline void playerinfo::set_playtype(::google::protobuf::int32 value) {
   set_has_playtype();
   playtype_ = value;
-  // @@protoc_insertion_point(field_set:progame.playerinfo.playtype)
+  // @@protoc_insertion_point(field_set:NFMsg.playerinfo.playtype)
 }
 
 // optional string description = 40;
@@ -5434,41 +5434,41 @@ inline void playerinfo::clear_description() {
   clear_has_description();
 }
 inline const ::std::string& playerinfo::description() const {
-  // @@protoc_insertion_point(field_get:progame.playerinfo.description)
+  // @@protoc_insertion_point(field_get:NFMsg.playerinfo.description)
   return description_.GetNoArena();
 }
 inline void playerinfo::set_description(const ::std::string& value) {
   set_has_description();
   description_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
-  // @@protoc_insertion_point(field_set:progame.playerinfo.description)
+  // @@protoc_insertion_point(field_set:NFMsg.playerinfo.description)
 }
 #if LANG_CXX11
 inline void playerinfo::set_description(::std::string&& value) {
   set_has_description();
   description_.SetNoArena(
     &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
-  // @@protoc_insertion_point(field_set_rvalue:progame.playerinfo.description)
+  // @@protoc_insertion_point(field_set_rvalue:NFMsg.playerinfo.description)
 }
 #endif
 inline void playerinfo::set_description(const char* value) {
   GOOGLE_DCHECK(value != NULL);
   set_has_description();
   description_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
-  // @@protoc_insertion_point(field_set_char:progame.playerinfo.description)
+  // @@protoc_insertion_point(field_set_char:NFMsg.playerinfo.description)
 }
 inline void playerinfo::set_description(const char* value, size_t size) {
   set_has_description();
   description_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
       ::std::string(reinterpret_cast<const char*>(value), size));
-  // @@protoc_insertion_point(field_set_pointer:progame.playerinfo.description)
+  // @@protoc_insertion_point(field_set_pointer:NFMsg.playerinfo.description)
 }
 inline ::std::string* playerinfo::mutable_description() {
   set_has_description();
-  // @@protoc_insertion_point(field_mutable:progame.playerinfo.description)
+  // @@protoc_insertion_point(field_mutable:NFMsg.playerinfo.description)
   return description_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
 inline ::std::string* playerinfo::release_description() {
-  // @@protoc_insertion_point(field_release:progame.playerinfo.description)
+  // @@protoc_insertion_point(field_release:NFMsg.playerinfo.description)
   if (!has_description()) {
     return NULL;
   }
@@ -5482,7 +5482,7 @@ inline void playerinfo::set_allocated_description(::std::string* description) {
     clear_has_description();
   }
   description_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), description);
-  // @@protoc_insertion_point(field_set_allocated:progame.playerinfo.description)
+  // @@protoc_insertion_point(field_set_allocated:NFMsg.playerinfo.description)
 }
 
 // optional string location = 41;
@@ -5500,41 +5500,41 @@ inline void playerinfo::clear_location() {
   clear_has_location();
 }
 inline const ::std::string& playerinfo::location() const {
-  // @@protoc_insertion_point(field_get:progame.playerinfo.location)
+  // @@protoc_insertion_point(field_get:NFMsg.playerinfo.location)
   return location_.GetNoArena();
 }
 inline void playerinfo::set_location(const ::std::string& value) {
   set_has_location();
   location_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
-  // @@protoc_insertion_point(field_set:progame.playerinfo.location)
+  // @@protoc_insertion_point(field_set:NFMsg.playerinfo.location)
 }
 #if LANG_CXX11
 inline void playerinfo::set_location(::std::string&& value) {
   set_has_location();
   location_.SetNoArena(
     &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
-  // @@protoc_insertion_point(field_set_rvalue:progame.playerinfo.location)
+  // @@protoc_insertion_point(field_set_rvalue:NFMsg.playerinfo.location)
 }
 #endif
 inline void playerinfo::set_location(const char* value) {
   GOOGLE_DCHECK(value != NULL);
   set_has_location();
   location_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
-  // @@protoc_insertion_point(field_set_char:progame.playerinfo.location)
+  // @@protoc_insertion_point(field_set_char:NFMsg.playerinfo.location)
 }
 inline void playerinfo::set_location(const char* value, size_t size) {
   set_has_location();
   location_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
       ::std::string(reinterpret_cast<const char*>(value), size));
-  // @@protoc_insertion_point(field_set_pointer:progame.playerinfo.location)
+  // @@protoc_insertion_point(field_set_pointer:NFMsg.playerinfo.location)
 }
 inline ::std::string* playerinfo::mutable_location() {
   set_has_location();
-  // @@protoc_insertion_point(field_mutable:progame.playerinfo.location)
+  // @@protoc_insertion_point(field_mutable:NFMsg.playerinfo.location)
   return location_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
 inline ::std::string* playerinfo::release_location() {
-  // @@protoc_insertion_point(field_release:progame.playerinfo.location)
+  // @@protoc_insertion_point(field_release:NFMsg.playerinfo.location)
   if (!has_location()) {
     return NULL;
   }
@@ -5548,7 +5548,7 @@ inline void playerinfo::set_allocated_location(::std::string* location) {
     clear_has_location();
   }
   location_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), location);
-  // @@protoc_insertion_point(field_set_allocated:progame.playerinfo.location)
+  // @@protoc_insertion_point(field_set_allocated:NFMsg.playerinfo.location)
 }
 
 // optional int64 bankjetton = 42;
@@ -5566,13 +5566,13 @@ inline void playerinfo::clear_bankjetton() {
   clear_has_bankjetton();
 }
 inline ::google::protobuf::int64 playerinfo::bankjetton() const {
-  // @@protoc_insertion_point(field_get:progame.playerinfo.bankjetton)
+  // @@protoc_insertion_point(field_get:NFMsg.playerinfo.bankjetton)
   return bankjetton_;
 }
 inline void playerinfo::set_bankjetton(::google::protobuf::int64 value) {
   set_has_bankjetton();
   bankjetton_ = value;
-  // @@protoc_insertion_point(field_set:progame.playerinfo.bankjetton)
+  // @@protoc_insertion_point(field_set:NFMsg.playerinfo.bankjetton)
 }
 
 // optional string title = 43;
@@ -5590,41 +5590,41 @@ inline void playerinfo::clear_title() {
   clear_has_title();
 }
 inline const ::std::string& playerinfo::title() const {
-  // @@protoc_insertion_point(field_get:progame.playerinfo.title)
+  // @@protoc_insertion_point(field_get:NFMsg.playerinfo.title)
   return title_.GetNoArena();
 }
 inline void playerinfo::set_title(const ::std::string& value) {
   set_has_title();
   title_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
-  // @@protoc_insertion_point(field_set:progame.playerinfo.title)
+  // @@protoc_insertion_point(field_set:NFMsg.playerinfo.title)
 }
 #if LANG_CXX11
 inline void playerinfo::set_title(::std::string&& value) {
   set_has_title();
   title_.SetNoArena(
     &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
-  // @@protoc_insertion_point(field_set_rvalue:progame.playerinfo.title)
+  // @@protoc_insertion_point(field_set_rvalue:NFMsg.playerinfo.title)
 }
 #endif
 inline void playerinfo::set_title(const char* value) {
   GOOGLE_DCHECK(value != NULL);
   set_has_title();
   title_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
-  // @@protoc_insertion_point(field_set_char:progame.playerinfo.title)
+  // @@protoc_insertion_point(field_set_char:NFMsg.playerinfo.title)
 }
 inline void playerinfo::set_title(const char* value, size_t size) {
   set_has_title();
   title_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
       ::std::string(reinterpret_cast<const char*>(value), size));
-  // @@protoc_insertion_point(field_set_pointer:progame.playerinfo.title)
+  // @@protoc_insertion_point(field_set_pointer:NFMsg.playerinfo.title)
 }
 inline ::std::string* playerinfo::mutable_title() {
   set_has_title();
-  // @@protoc_insertion_point(field_mutable:progame.playerinfo.title)
+  // @@protoc_insertion_point(field_mutable:NFMsg.playerinfo.title)
   return title_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
 inline ::std::string* playerinfo::release_title() {
-  // @@protoc_insertion_point(field_release:progame.playerinfo.title)
+  // @@protoc_insertion_point(field_release:NFMsg.playerinfo.title)
   if (!has_title()) {
     return NULL;
   }
@@ -5638,7 +5638,7 @@ inline void playerinfo::set_allocated_title(::std::string* title) {
     clear_has_title();
   }
   title_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), title);
-  // @@protoc_insertion_point(field_set_allocated:progame.playerinfo.title)
+  // @@protoc_insertion_point(field_set_allocated:NFMsg.playerinfo.title)
 }
 
 // optional int32 blacklist = 44;
@@ -5656,13 +5656,13 @@ inline void playerinfo::clear_blacklist() {
   clear_has_blacklist();
 }
 inline ::google::protobuf::int32 playerinfo::blacklist() const {
-  // @@protoc_insertion_point(field_get:progame.playerinfo.blacklist)
+  // @@protoc_insertion_point(field_get:NFMsg.playerinfo.blacklist)
   return blacklist_;
 }
 inline void playerinfo::set_blacklist(::google::protobuf::int32 value) {
   set_has_blacklist();
   blacklist_ = value;
-  // @@protoc_insertion_point(field_set:progame.playerinfo.blacklist)
+  // @@protoc_insertion_point(field_set:NFMsg.playerinfo.blacklist)
 }
 
 // optional int32 propertyid = 45;
@@ -5680,13 +5680,13 @@ inline void playerinfo::clear_propertyid() {
   clear_has_propertyid();
 }
 inline ::google::protobuf::int32 playerinfo::propertyid() const {
-  // @@protoc_insertion_point(field_get:progame.playerinfo.propertyid)
+  // @@protoc_insertion_point(field_get:NFMsg.playerinfo.propertyid)
   return propertyid_;
 }
 inline void playerinfo::set_propertyid(::google::protobuf::int32 value) {
   set_has_propertyid();
   propertyid_ = value;
-  // @@protoc_insertion_point(field_set:progame.playerinfo.propertyid)
+  // @@protoc_insertion_point(field_set:NFMsg.playerinfo.propertyid)
 }
 
 // optional int32 agencystatus = 46;
@@ -5704,13 +5704,13 @@ inline void playerinfo::clear_agencystatus() {
   clear_has_agencystatus();
 }
 inline ::google::protobuf::int32 playerinfo::agencystatus() const {
-  // @@protoc_insertion_point(field_get:progame.playerinfo.agencystatus)
+  // @@protoc_insertion_point(field_get:NFMsg.playerinfo.agencystatus)
   return agencystatus_;
 }
 inline void playerinfo::set_agencystatus(::google::protobuf::int32 value) {
   set_has_agencystatus();
   agencystatus_ = value;
-  // @@protoc_insertion_point(field_set:progame.playerinfo.agencystatus)
+  // @@protoc_insertion_point(field_set:NFMsg.playerinfo.agencystatus)
 }
 
 // optional string location_x = 47;
@@ -5728,41 +5728,41 @@ inline void playerinfo::clear_location_x() {
   clear_has_location_x();
 }
 inline const ::std::string& playerinfo::location_x() const {
-  // @@protoc_insertion_point(field_get:progame.playerinfo.location_x)
+  // @@protoc_insertion_point(field_get:NFMsg.playerinfo.location_x)
   return location_x_.GetNoArena();
 }
 inline void playerinfo::set_location_x(const ::std::string& value) {
   set_has_location_x();
   location_x_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
-  // @@protoc_insertion_point(field_set:progame.playerinfo.location_x)
+  // @@protoc_insertion_point(field_set:NFMsg.playerinfo.location_x)
 }
 #if LANG_CXX11
 inline void playerinfo::set_location_x(::std::string&& value) {
   set_has_location_x();
   location_x_.SetNoArena(
     &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
-  // @@protoc_insertion_point(field_set_rvalue:progame.playerinfo.location_x)
+  // @@protoc_insertion_point(field_set_rvalue:NFMsg.playerinfo.location_x)
 }
 #endif
 inline void playerinfo::set_location_x(const char* value) {
   GOOGLE_DCHECK(value != NULL);
   set_has_location_x();
   location_x_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
-  // @@protoc_insertion_point(field_set_char:progame.playerinfo.location_x)
+  // @@protoc_insertion_point(field_set_char:NFMsg.playerinfo.location_x)
 }
 inline void playerinfo::set_location_x(const char* value, size_t size) {
   set_has_location_x();
   location_x_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
       ::std::string(reinterpret_cast<const char*>(value), size));
-  // @@protoc_insertion_point(field_set_pointer:progame.playerinfo.location_x)
+  // @@protoc_insertion_point(field_set_pointer:NFMsg.playerinfo.location_x)
 }
 inline ::std::string* playerinfo::mutable_location_x() {
   set_has_location_x();
-  // @@protoc_insertion_point(field_mutable:progame.playerinfo.location_x)
+  // @@protoc_insertion_point(field_mutable:NFMsg.playerinfo.location_x)
   return location_x_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
 inline ::std::string* playerinfo::release_location_x() {
-  // @@protoc_insertion_point(field_release:progame.playerinfo.location_x)
+  // @@protoc_insertion_point(field_release:NFMsg.playerinfo.location_x)
   if (!has_location_x()) {
     return NULL;
   }
@@ -5776,7 +5776,7 @@ inline void playerinfo::set_allocated_location_x(::std::string* location_x) {
     clear_has_location_x();
   }
   location_x_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), location_x);
-  // @@protoc_insertion_point(field_set_allocated:progame.playerinfo.location_x)
+  // @@protoc_insertion_point(field_set_allocated:NFMsg.playerinfo.location_x)
 }
 
 // optional string location_y = 48;
@@ -5794,41 +5794,41 @@ inline void playerinfo::clear_location_y() {
   clear_has_location_y();
 }
 inline const ::std::string& playerinfo::location_y() const {
-  // @@protoc_insertion_point(field_get:progame.playerinfo.location_y)
+  // @@protoc_insertion_point(field_get:NFMsg.playerinfo.location_y)
   return location_y_.GetNoArena();
 }
 inline void playerinfo::set_location_y(const ::std::string& value) {
   set_has_location_y();
   location_y_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
-  // @@protoc_insertion_point(field_set:progame.playerinfo.location_y)
+  // @@protoc_insertion_point(field_set:NFMsg.playerinfo.location_y)
 }
 #if LANG_CXX11
 inline void playerinfo::set_location_y(::std::string&& value) {
   set_has_location_y();
   location_y_.SetNoArena(
     &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
-  // @@protoc_insertion_point(field_set_rvalue:progame.playerinfo.location_y)
+  // @@protoc_insertion_point(field_set_rvalue:NFMsg.playerinfo.location_y)
 }
 #endif
 inline void playerinfo::set_location_y(const char* value) {
   GOOGLE_DCHECK(value != NULL);
   set_has_location_y();
   location_y_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
-  // @@protoc_insertion_point(field_set_char:progame.playerinfo.location_y)
+  // @@protoc_insertion_point(field_set_char:NFMsg.playerinfo.location_y)
 }
 inline void playerinfo::set_location_y(const char* value, size_t size) {
   set_has_location_y();
   location_y_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
       ::std::string(reinterpret_cast<const char*>(value), size));
-  // @@protoc_insertion_point(field_set_pointer:progame.playerinfo.location_y)
+  // @@protoc_insertion_point(field_set_pointer:NFMsg.playerinfo.location_y)
 }
 inline ::std::string* playerinfo::mutable_location_y() {
   set_has_location_y();
-  // @@protoc_insertion_point(field_mutable:progame.playerinfo.location_y)
+  // @@protoc_insertion_point(field_mutable:NFMsg.playerinfo.location_y)
   return location_y_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
 inline ::std::string* playerinfo::release_location_y() {
-  // @@protoc_insertion_point(field_release:progame.playerinfo.location_y)
+  // @@protoc_insertion_point(field_release:NFMsg.playerinfo.location_y)
   if (!has_location_y()) {
     return NULL;
   }
@@ -5842,7 +5842,7 @@ inline void playerinfo::set_allocated_location_y(::std::string* location_y) {
     clear_has_location_y();
   }
   location_y_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), location_y);
-  // @@protoc_insertion_point(field_set_allocated:progame.playerinfo.location_y)
+  // @@protoc_insertion_point(field_set_allocated:NFMsg.playerinfo.location_y)
 }
 
 // optional string registration1 = 49;
@@ -5860,41 +5860,41 @@ inline void playerinfo::clear_registration1() {
   clear_has_registration1();
 }
 inline const ::std::string& playerinfo::registration1() const {
-  // @@protoc_insertion_point(field_get:progame.playerinfo.registration1)
+  // @@protoc_insertion_point(field_get:NFMsg.playerinfo.registration1)
   return registration1_.GetNoArena();
 }
 inline void playerinfo::set_registration1(const ::std::string& value) {
   set_has_registration1();
   registration1_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
-  // @@protoc_insertion_point(field_set:progame.playerinfo.registration1)
+  // @@protoc_insertion_point(field_set:NFMsg.playerinfo.registration1)
 }
 #if LANG_CXX11
 inline void playerinfo::set_registration1(::std::string&& value) {
   set_has_registration1();
   registration1_.SetNoArena(
     &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
-  // @@protoc_insertion_point(field_set_rvalue:progame.playerinfo.registration1)
+  // @@protoc_insertion_point(field_set_rvalue:NFMsg.playerinfo.registration1)
 }
 #endif
 inline void playerinfo::set_registration1(const char* value) {
   GOOGLE_DCHECK(value != NULL);
   set_has_registration1();
   registration1_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
-  // @@protoc_insertion_point(field_set_char:progame.playerinfo.registration1)
+  // @@protoc_insertion_point(field_set_char:NFMsg.playerinfo.registration1)
 }
 inline void playerinfo::set_registration1(const char* value, size_t size) {
   set_has_registration1();
   registration1_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
       ::std::string(reinterpret_cast<const char*>(value), size));
-  // @@protoc_insertion_point(field_set_pointer:progame.playerinfo.registration1)
+  // @@protoc_insertion_point(field_set_pointer:NFMsg.playerinfo.registration1)
 }
 inline ::std::string* playerinfo::mutable_registration1() {
   set_has_registration1();
-  // @@protoc_insertion_point(field_mutable:progame.playerinfo.registration1)
+  // @@protoc_insertion_point(field_mutable:NFMsg.playerinfo.registration1)
   return registration1_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
 inline ::std::string* playerinfo::release_registration1() {
-  // @@protoc_insertion_point(field_release:progame.playerinfo.registration1)
+  // @@protoc_insertion_point(field_release:NFMsg.playerinfo.registration1)
   if (!has_registration1()) {
     return NULL;
   }
@@ -5908,7 +5908,7 @@ inline void playerinfo::set_allocated_registration1(::std::string* registration1
     clear_has_registration1();
   }
   registration1_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), registration1);
-  // @@protoc_insertion_point(field_set_allocated:progame.playerinfo.registration1)
+  // @@protoc_insertion_point(field_set_allocated:NFMsg.playerinfo.registration1)
 }
 
 // optional string registration2 = 50;
@@ -5926,41 +5926,41 @@ inline void playerinfo::clear_registration2() {
   clear_has_registration2();
 }
 inline const ::std::string& playerinfo::registration2() const {
-  // @@protoc_insertion_point(field_get:progame.playerinfo.registration2)
+  // @@protoc_insertion_point(field_get:NFMsg.playerinfo.registration2)
   return registration2_.GetNoArena();
 }
 inline void playerinfo::set_registration2(const ::std::string& value) {
   set_has_registration2();
   registration2_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
-  // @@protoc_insertion_point(field_set:progame.playerinfo.registration2)
+  // @@protoc_insertion_point(field_set:NFMsg.playerinfo.registration2)
 }
 #if LANG_CXX11
 inline void playerinfo::set_registration2(::std::string&& value) {
   set_has_registration2();
   registration2_.SetNoArena(
     &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
-  // @@protoc_insertion_point(field_set_rvalue:progame.playerinfo.registration2)
+  // @@protoc_insertion_point(field_set_rvalue:NFMsg.playerinfo.registration2)
 }
 #endif
 inline void playerinfo::set_registration2(const char* value) {
   GOOGLE_DCHECK(value != NULL);
   set_has_registration2();
   registration2_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
-  // @@protoc_insertion_point(field_set_char:progame.playerinfo.registration2)
+  // @@protoc_insertion_point(field_set_char:NFMsg.playerinfo.registration2)
 }
 inline void playerinfo::set_registration2(const char* value, size_t size) {
   set_has_registration2();
   registration2_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
       ::std::string(reinterpret_cast<const char*>(value), size));
-  // @@protoc_insertion_point(field_set_pointer:progame.playerinfo.registration2)
+  // @@protoc_insertion_point(field_set_pointer:NFMsg.playerinfo.registration2)
 }
 inline ::std::string* playerinfo::mutable_registration2() {
   set_has_registration2();
-  // @@protoc_insertion_point(field_mutable:progame.playerinfo.registration2)
+  // @@protoc_insertion_point(field_mutable:NFMsg.playerinfo.registration2)
   return registration2_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
 inline ::std::string* playerinfo::release_registration2() {
-  // @@protoc_insertion_point(field_release:progame.playerinfo.registration2)
+  // @@protoc_insertion_point(field_release:NFMsg.playerinfo.registration2)
   if (!has_registration2()) {
     return NULL;
   }
@@ -5974,7 +5974,7 @@ inline void playerinfo::set_allocated_registration2(::std::string* registration2
     clear_has_registration2();
   }
   registration2_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), registration2);
-  // @@protoc_insertion_point(field_set_allocated:progame.playerinfo.registration2)
+  // @@protoc_insertion_point(field_set_allocated:NFMsg.playerinfo.registration2)
 }
 
 // optional string registration3 = 51;
@@ -5992,41 +5992,41 @@ inline void playerinfo::clear_registration3() {
   clear_has_registration3();
 }
 inline const ::std::string& playerinfo::registration3() const {
-  // @@protoc_insertion_point(field_get:progame.playerinfo.registration3)
+  // @@protoc_insertion_point(field_get:NFMsg.playerinfo.registration3)
   return registration3_.GetNoArena();
 }
 inline void playerinfo::set_registration3(const ::std::string& value) {
   set_has_registration3();
   registration3_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
-  // @@protoc_insertion_point(field_set:progame.playerinfo.registration3)
+  // @@protoc_insertion_point(field_set:NFMsg.playerinfo.registration3)
 }
 #if LANG_CXX11
 inline void playerinfo::set_registration3(::std::string&& value) {
   set_has_registration3();
   registration3_.SetNoArena(
     &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
-  // @@protoc_insertion_point(field_set_rvalue:progame.playerinfo.registration3)
+  // @@protoc_insertion_point(field_set_rvalue:NFMsg.playerinfo.registration3)
 }
 #endif
 inline void playerinfo::set_registration3(const char* value) {
   GOOGLE_DCHECK(value != NULL);
   set_has_registration3();
   registration3_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
-  // @@protoc_insertion_point(field_set_char:progame.playerinfo.registration3)
+  // @@protoc_insertion_point(field_set_char:NFMsg.playerinfo.registration3)
 }
 inline void playerinfo::set_registration3(const char* value, size_t size) {
   set_has_registration3();
   registration3_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
       ::std::string(reinterpret_cast<const char*>(value), size));
-  // @@protoc_insertion_point(field_set_pointer:progame.playerinfo.registration3)
+  // @@protoc_insertion_point(field_set_pointer:NFMsg.playerinfo.registration3)
 }
 inline ::std::string* playerinfo::mutable_registration3() {
   set_has_registration3();
-  // @@protoc_insertion_point(field_mutable:progame.playerinfo.registration3)
+  // @@protoc_insertion_point(field_mutable:NFMsg.playerinfo.registration3)
   return registration3_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
 inline ::std::string* playerinfo::release_registration3() {
-  // @@protoc_insertion_point(field_release:progame.playerinfo.registration3)
+  // @@protoc_insertion_point(field_release:NFMsg.playerinfo.registration3)
   if (!has_registration3()) {
     return NULL;
   }
@@ -6040,7 +6040,7 @@ inline void playerinfo::set_allocated_registration3(::std::string* registration3
     clear_has_registration3();
   }
   registration3_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), registration3);
-  // @@protoc_insertion_point(field_set_allocated:progame.playerinfo.registration3)
+  // @@protoc_insertion_point(field_set_allocated:NFMsg.playerinfo.registration3)
 }
 
 // optional int32 signinmonth = 52;
@@ -6058,13 +6058,13 @@ inline void playerinfo::clear_signinmonth() {
   clear_has_signinmonth();
 }
 inline ::google::protobuf::int32 playerinfo::signinmonth() const {
-  // @@protoc_insertion_point(field_get:progame.playerinfo.signinmonth)
+  // @@protoc_insertion_point(field_get:NFMsg.playerinfo.signinmonth)
   return signinmonth_;
 }
 inline void playerinfo::set_signinmonth(::google::protobuf::int32 value) {
   set_has_signinmonth();
   signinmonth_ = value;
-  // @@protoc_insertion_point(field_set:progame.playerinfo.signinmonth)
+  // @@protoc_insertion_point(field_set:NFMsg.playerinfo.signinmonth)
 }
 
 // optional int32 bsignin = 53;
@@ -6082,13 +6082,13 @@ inline void playerinfo::clear_bsignin() {
   clear_has_bsignin();
 }
 inline ::google::protobuf::int32 playerinfo::bsignin() const {
-  // @@protoc_insertion_point(field_get:progame.playerinfo.bsignin)
+  // @@protoc_insertion_point(field_get:NFMsg.playerinfo.bsignin)
   return bsignin_;
 }
 inline void playerinfo::set_bsignin(::google::protobuf::int32 value) {
   set_has_bsignin();
   bsignin_ = value;
-  // @@protoc_insertion_point(field_set:progame.playerinfo.bsignin)
+  // @@protoc_insertion_point(field_set:NFMsg.playerinfo.bsignin)
 }
 
 // optional int32 turntablenum = 54;
@@ -6106,13 +6106,13 @@ inline void playerinfo::clear_turntablenum() {
   clear_has_turntablenum();
 }
 inline ::google::protobuf::int32 playerinfo::turntablenum() const {
-  // @@protoc_insertion_point(field_get:progame.playerinfo.turntablenum)
+  // @@protoc_insertion_point(field_get:NFMsg.playerinfo.turntablenum)
   return turntablenum_;
 }
 inline void playerinfo::set_turntablenum(::google::protobuf::int32 value) {
   set_has_turntablenum();
   turntablenum_ = value;
-  // @@protoc_insertion_point(field_set:progame.playerinfo.turntablenum)
+  // @@protoc_insertion_point(field_set:NFMsg.playerinfo.turntablenum)
 }
 
 // optional int32 tengames = 55;
@@ -6130,13 +6130,13 @@ inline void playerinfo::clear_tengames() {
   clear_has_tengames();
 }
 inline ::google::protobuf::int32 playerinfo::tengames() const {
-  // @@protoc_insertion_point(field_get:progame.playerinfo.tengames)
+  // @@protoc_insertion_point(field_get:NFMsg.playerinfo.tengames)
   return tengames_;
 }
 inline void playerinfo::set_tengames(::google::protobuf::int32 value) {
   set_has_tengames();
   tengames_ = value;
-  // @@protoc_insertion_point(field_set:progame.playerinfo.tengames)
+  // @@protoc_insertion_point(field_set:NFMsg.playerinfo.tengames)
 }
 
 // optional int32 todayshare = 56;
@@ -6154,13 +6154,13 @@ inline void playerinfo::clear_todayshare() {
   clear_has_todayshare();
 }
 inline ::google::protobuf::int32 playerinfo::todayshare() const {
-  // @@protoc_insertion_point(field_get:progame.playerinfo.todayshare)
+  // @@protoc_insertion_point(field_get:NFMsg.playerinfo.todayshare)
   return todayshare_;
 }
 inline void playerinfo::set_todayshare(::google::protobuf::int32 value) {
   set_has_todayshare();
   todayshare_ = value;
-  // @@protoc_insertion_point(field_set:progame.playerinfo.todayshare)
+  // @@protoc_insertion_point(field_set:NFMsg.playerinfo.todayshare)
 }
 
 // optional int32 caninvite = 57;
@@ -6178,13 +6178,13 @@ inline void playerinfo::clear_caninvite() {
   clear_has_caninvite();
 }
 inline ::google::protobuf::int32 playerinfo::caninvite() const {
-  // @@protoc_insertion_point(field_get:progame.playerinfo.caninvite)
+  // @@protoc_insertion_point(field_get:NFMsg.playerinfo.caninvite)
   return caninvite_;
 }
 inline void playerinfo::set_caninvite(::google::protobuf::int32 value) {
   set_has_caninvite();
   caninvite_ = value;
-  // @@protoc_insertion_point(field_set:progame.playerinfo.caninvite)
+  // @@protoc_insertion_point(field_set:NFMsg.playerinfo.caninvite)
 }
 
 // optional int32 totalgames = 58;
@@ -6202,13 +6202,13 @@ inline void playerinfo::clear_totalgames() {
   clear_has_totalgames();
 }
 inline ::google::protobuf::int32 playerinfo::totalgames() const {
-  // @@protoc_insertion_point(field_get:progame.playerinfo.totalgames)
+  // @@protoc_insertion_point(field_get:NFMsg.playerinfo.totalgames)
   return totalgames_;
 }
 inline void playerinfo::set_totalgames(::google::protobuf::int32 value) {
   set_has_totalgames();
   totalgames_ = value;
-  // @@protoc_insertion_point(field_set:progame.playerinfo.totalgames)
+  // @@protoc_insertion_point(field_set:NFMsg.playerinfo.totalgames)
 }
 
 // -------------------------------------------------------------------
@@ -6230,13 +6230,13 @@ inline void playerstats::clear_userid() {
   clear_has_userid();
 }
 inline ::google::protobuf::int32 playerstats::userid() const {
-  // @@protoc_insertion_point(field_get:progame.playerstats.userid)
+  // @@protoc_insertion_point(field_get:NFMsg.playerstats.userid)
   return userid_;
 }
 inline void playerstats::set_userid(::google::protobuf::int32 value) {
   set_has_userid();
   userid_ = value;
-  // @@protoc_insertion_point(field_set:progame.playerstats.userid)
+  // @@protoc_insertion_point(field_set:NFMsg.playerstats.userid)
 }
 
 // optional int32 mdynickamount = 2;
@@ -6254,13 +6254,13 @@ inline void playerstats::clear_mdynickamount() {
   clear_has_mdynickamount();
 }
 inline ::google::protobuf::int32 playerstats::mdynickamount() const {
-  // @@protoc_insertion_point(field_get:progame.playerstats.mdynickamount)
+  // @@protoc_insertion_point(field_get:NFMsg.playerstats.mdynickamount)
   return mdynickamount_;
 }
 inline void playerstats::set_mdynickamount(::google::protobuf::int32 value) {
   set_has_mdynickamount();
   mdynickamount_ = value;
-  // @@protoc_insertion_point(field_set:progame.playerstats.mdynickamount)
+  // @@protoc_insertion_point(field_set:NFMsg.playerstats.mdynickamount)
 }
 
 // optional int32 loginday = 3;
@@ -6278,13 +6278,13 @@ inline void playerstats::clear_loginday() {
   clear_has_loginday();
 }
 inline ::google::protobuf::int32 playerstats::loginday() const {
-  // @@protoc_insertion_point(field_get:progame.playerstats.loginday)
+  // @@protoc_insertion_point(field_get:NFMsg.playerstats.loginday)
   return loginday_;
 }
 inline void playerstats::set_loginday(::google::protobuf::int32 value) {
   set_has_loginday();
   loginday_ = value;
-  // @@protoc_insertion_point(field_set:progame.playerstats.loginday)
+  // @@protoc_insertion_point(field_set:NFMsg.playerstats.loginday)
 }
 
 // optional int32 loginconday = 4;
@@ -6302,13 +6302,13 @@ inline void playerstats::clear_loginconday() {
   clear_has_loginconday();
 }
 inline ::google::protobuf::int32 playerstats::loginconday() const {
-  // @@protoc_insertion_point(field_get:progame.playerstats.loginconday)
+  // @@protoc_insertion_point(field_get:NFMsg.playerstats.loginconday)
   return loginconday_;
 }
 inline void playerstats::set_loginconday(::google::protobuf::int32 value) {
   set_has_loginconday();
   loginconday_ = value;
-  // @@protoc_insertion_point(field_set:progame.playerstats.loginconday)
+  // @@protoc_insertion_point(field_set:NFMsg.playerstats.loginconday)
 }
 
 // optional int32 maxloginconday = 5;
@@ -6326,13 +6326,13 @@ inline void playerstats::clear_maxloginconday() {
   clear_has_maxloginconday();
 }
 inline ::google::protobuf::int32 playerstats::maxloginconday() const {
-  // @@protoc_insertion_point(field_get:progame.playerstats.maxloginconday)
+  // @@protoc_insertion_point(field_get:NFMsg.playerstats.maxloginconday)
   return maxloginconday_;
 }
 inline void playerstats::set_maxloginconday(::google::protobuf::int32 value) {
   set_has_maxloginconday();
   maxloginconday_ = value;
-  // @@protoc_insertion_point(field_set:progame.playerstats.maxloginconday)
+  // @@protoc_insertion_point(field_set:NFMsg.playerstats.maxloginconday)
 }
 
 // optional int32 loginamount = 6;
@@ -6350,13 +6350,13 @@ inline void playerstats::clear_loginamount() {
   clear_has_loginamount();
 }
 inline ::google::protobuf::int32 playerstats::loginamount() const {
-  // @@protoc_insertion_point(field_get:progame.playerstats.loginamount)
+  // @@protoc_insertion_point(field_get:NFMsg.playerstats.loginamount)
   return loginamount_;
 }
 inline void playerstats::set_loginamount(::google::protobuf::int32 value) {
   set_has_loginamount();
   loginamount_ = value;
-  // @@protoc_insertion_point(field_set:progame.playerstats.loginamount)
+  // @@protoc_insertion_point(field_set:NFMsg.playerstats.loginamount)
 }
 
 // optional int32 onlinetime = 7;
@@ -6374,13 +6374,13 @@ inline void playerstats::clear_onlinetime() {
   clear_has_onlinetime();
 }
 inline ::google::protobuf::int32 playerstats::onlinetime() const {
-  // @@protoc_insertion_point(field_get:progame.playerstats.onlinetime)
+  // @@protoc_insertion_point(field_get:NFMsg.playerstats.onlinetime)
   return onlinetime_;
 }
 inline void playerstats::set_onlinetime(::google::protobuf::int32 value) {
   set_has_onlinetime();
   onlinetime_ = value;
-  // @@protoc_insertion_point(field_set:progame.playerstats.onlinetime)
+  // @@protoc_insertion_point(field_set:NFMsg.playerstats.onlinetime)
 }
 
 // optional int32 maxjetton = 8;
@@ -6398,13 +6398,13 @@ inline void playerstats::clear_maxjetton() {
   clear_has_maxjetton();
 }
 inline ::google::protobuf::int32 playerstats::maxjetton() const {
-  // @@protoc_insertion_point(field_get:progame.playerstats.maxjetton)
+  // @@protoc_insertion_point(field_get:NFMsg.playerstats.maxjetton)
   return maxjetton_;
 }
 inline void playerstats::set_maxjetton(::google::protobuf::int32 value) {
   set_has_maxjetton();
   maxjetton_ = value;
-  // @@protoc_insertion_point(field_set:progame.playerstats.maxjetton)
+  // @@protoc_insertion_point(field_set:NFMsg.playerstats.maxjetton)
 }
 
 // optional int32 payrmb = 9;
@@ -6422,13 +6422,13 @@ inline void playerstats::clear_payrmb() {
   clear_has_payrmb();
 }
 inline ::google::protobuf::int32 playerstats::payrmb() const {
-  // @@protoc_insertion_point(field_get:progame.playerstats.payrmb)
+  // @@protoc_insertion_point(field_get:NFMsg.playerstats.payrmb)
   return payrmb_;
 }
 inline void playerstats::set_payrmb(::google::protobuf::int32 value) {
   set_has_payrmb();
   payrmb_ = value;
-  // @@protoc_insertion_point(field_set:progame.playerstats.payrmb)
+  // @@protoc_insertion_point(field_set:NFMsg.playerstats.payrmb)
 }
 
 // optional int32 callpayrmb = 10;
@@ -6446,13 +6446,13 @@ inline void playerstats::clear_callpayrmb() {
   clear_has_callpayrmb();
 }
 inline ::google::protobuf::int32 playerstats::callpayrmb() const {
-  // @@protoc_insertion_point(field_get:progame.playerstats.callpayrmb)
+  // @@protoc_insertion_point(field_get:NFMsg.playerstats.callpayrmb)
   return callpayrmb_;
 }
 inline void playerstats::set_callpayrmb(::google::protobuf::int32 value) {
   set_has_callpayrmb();
   callpayrmb_ = value;
-  // @@protoc_insertion_point(field_set:progame.playerstats.callpayrmb)
+  // @@protoc_insertion_point(field_set:NFMsg.playerstats.callpayrmb)
 }
 
 // optional int32 paytime = 11;
@@ -6470,13 +6470,13 @@ inline void playerstats::clear_paytime() {
   clear_has_paytime();
 }
 inline ::google::protobuf::int32 playerstats::paytime() const {
-  // @@protoc_insertion_point(field_get:progame.playerstats.paytime)
+  // @@protoc_insertion_point(field_get:NFMsg.playerstats.paytime)
   return paytime_;
 }
 inline void playerstats::set_paytime(::google::protobuf::int32 value) {
   set_has_paytime();
   paytime_ = value;
-  // @@protoc_insertion_point(field_set:progame.playerstats.paytime)
+  // @@protoc_insertion_point(field_set:NFMsg.playerstats.paytime)
 }
 
 // optional int32 callpaytime = 12;
@@ -6494,13 +6494,13 @@ inline void playerstats::clear_callpaytime() {
   clear_has_callpaytime();
 }
 inline ::google::protobuf::int32 playerstats::callpaytime() const {
-  // @@protoc_insertion_point(field_get:progame.playerstats.callpaytime)
+  // @@protoc_insertion_point(field_get:NFMsg.playerstats.callpaytime)
   return callpaytime_;
 }
 inline void playerstats::set_callpaytime(::google::protobuf::int32 value) {
   set_has_callpaytime();
   callpaytime_ = value;
-  // @@protoc_insertion_point(field_set:progame.playerstats.callpaytime)
+  // @@protoc_insertion_point(field_set:NFMsg.playerstats.callpaytime)
 }
 
 // optional int32 maxmoney = 13;
@@ -6518,13 +6518,13 @@ inline void playerstats::clear_maxmoney() {
   clear_has_maxmoney();
 }
 inline ::google::protobuf::int32 playerstats::maxmoney() const {
-  // @@protoc_insertion_point(field_get:progame.playerstats.maxmoney)
+  // @@protoc_insertion_point(field_get:NFMsg.playerstats.maxmoney)
   return maxmoney_;
 }
 inline void playerstats::set_maxmoney(::google::protobuf::int32 value) {
   set_has_maxmoney();
   maxmoney_ = value;
-  // @@protoc_insertion_point(field_set:progame.playerstats.maxmoney)
+  // @@protoc_insertion_point(field_set:NFMsg.playerstats.maxmoney)
 }
 
 // optional int32 dayrmb = 14;
@@ -6542,13 +6542,13 @@ inline void playerstats::clear_dayrmb() {
   clear_has_dayrmb();
 }
 inline ::google::protobuf::int32 playerstats::dayrmb() const {
-  // @@protoc_insertion_point(field_get:progame.playerstats.dayrmb)
+  // @@protoc_insertion_point(field_get:NFMsg.playerstats.dayrmb)
   return dayrmb_;
 }
 inline void playerstats::set_dayrmb(::google::protobuf::int32 value) {
   set_has_dayrmb();
   dayrmb_ = value;
-  // @@protoc_insertion_point(field_set:progame.playerstats.dayrmb)
+  // @@protoc_insertion_point(field_set:NFMsg.playerstats.dayrmb)
 }
 
 // optional int32 daypaytime = 15;
@@ -6566,13 +6566,13 @@ inline void playerstats::clear_daypaytime() {
   clear_has_daypaytime();
 }
 inline ::google::protobuf::int32 playerstats::daypaytime() const {
-  // @@protoc_insertion_point(field_get:progame.playerstats.daypaytime)
+  // @@protoc_insertion_point(field_get:NFMsg.playerstats.daypaytime)
   return daypaytime_;
 }
 inline void playerstats::set_daypaytime(::google::protobuf::int32 value) {
   set_has_daypaytime();
   daypaytime_ = value;
-  // @@protoc_insertion_point(field_set:progame.playerstats.daypaytime)
+  // @@protoc_insertion_point(field_set:NFMsg.playerstats.daypaytime)
 }
 
 // -------------------------------------------------------------------
@@ -6594,13 +6594,13 @@ inline void goodsinfo::clear_itemid() {
   clear_has_itemid();
 }
 inline ::google::protobuf::int32 goodsinfo::itemid() const {
-  // @@protoc_insertion_point(field_get:progame.goodsinfo.itemid)
+  // @@protoc_insertion_point(field_get:NFMsg.goodsinfo.itemid)
   return itemid_;
 }
 inline void goodsinfo::set_itemid(::google::protobuf::int32 value) {
   set_has_itemid();
   itemid_ = value;
-  // @@protoc_insertion_point(field_set:progame.goodsinfo.itemid)
+  // @@protoc_insertion_point(field_set:NFMsg.goodsinfo.itemid)
 }
 
 // optional int32 userid = 2;
@@ -6618,13 +6618,13 @@ inline void goodsinfo::clear_userid() {
   clear_has_userid();
 }
 inline ::google::protobuf::int32 goodsinfo::userid() const {
-  // @@protoc_insertion_point(field_get:progame.goodsinfo.userid)
+  // @@protoc_insertion_point(field_get:NFMsg.goodsinfo.userid)
   return userid_;
 }
 inline void goodsinfo::set_userid(::google::protobuf::int32 value) {
   set_has_userid();
   userid_ = value;
-  // @@protoc_insertion_point(field_set:progame.goodsinfo.userid)
+  // @@protoc_insertion_point(field_set:NFMsg.goodsinfo.userid)
 }
 
 // optional int32 goodsid = 3;
@@ -6642,13 +6642,13 @@ inline void goodsinfo::clear_goodsid() {
   clear_has_goodsid();
 }
 inline ::google::protobuf::int32 goodsinfo::goodsid() const {
-  // @@protoc_insertion_point(field_get:progame.goodsinfo.goodsid)
+  // @@protoc_insertion_point(field_get:NFMsg.goodsinfo.goodsid)
   return goodsid_;
 }
 inline void goodsinfo::set_goodsid(::google::protobuf::int32 value) {
   set_has_goodsid();
   goodsid_ = value;
-  // @@protoc_insertion_point(field_set:progame.goodsinfo.goodsid)
+  // @@protoc_insertion_point(field_set:NFMsg.goodsinfo.goodsid)
 }
 
 // optional int32 amount = 4;
@@ -6666,13 +6666,13 @@ inline void goodsinfo::clear_amount() {
   clear_has_amount();
 }
 inline ::google::protobuf::int32 goodsinfo::amount() const {
-  // @@protoc_insertion_point(field_get:progame.goodsinfo.amount)
+  // @@protoc_insertion_point(field_get:NFMsg.goodsinfo.amount)
   return amount_;
 }
 inline void goodsinfo::set_amount(::google::protobuf::int32 value) {
   set_has_amount();
   amount_ = value;
-  // @@protoc_insertion_point(field_set:progame.goodsinfo.amount)
+  // @@protoc_insertion_point(field_set:NFMsg.goodsinfo.amount)
 }
 
 // optional int32 validity = 5;
@@ -6690,13 +6690,13 @@ inline void goodsinfo::clear_validity() {
   clear_has_validity();
 }
 inline ::google::protobuf::int32 goodsinfo::validity() const {
-  // @@protoc_insertion_point(field_get:progame.goodsinfo.validity)
+  // @@protoc_insertion_point(field_get:NFMsg.goodsinfo.validity)
   return validity_;
 }
 inline void goodsinfo::set_validity(::google::protobuf::int32 value) {
   set_has_validity();
   validity_ = value;
-  // @@protoc_insertion_point(field_set:progame.goodsinfo.validity)
+  // @@protoc_insertion_point(field_set:NFMsg.goodsinfo.validity)
 }
 
 // optional string createdate = 6;
@@ -6714,41 +6714,41 @@ inline void goodsinfo::clear_createdate() {
   clear_has_createdate();
 }
 inline const ::std::string& goodsinfo::createdate() const {
-  // @@protoc_insertion_point(field_get:progame.goodsinfo.createdate)
+  // @@protoc_insertion_point(field_get:NFMsg.goodsinfo.createdate)
   return createdate_.GetNoArena();
 }
 inline void goodsinfo::set_createdate(const ::std::string& value) {
   set_has_createdate();
   createdate_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
-  // @@protoc_insertion_point(field_set:progame.goodsinfo.createdate)
+  // @@protoc_insertion_point(field_set:NFMsg.goodsinfo.createdate)
 }
 #if LANG_CXX11
 inline void goodsinfo::set_createdate(::std::string&& value) {
   set_has_createdate();
   createdate_.SetNoArena(
     &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
-  // @@protoc_insertion_point(field_set_rvalue:progame.goodsinfo.createdate)
+  // @@protoc_insertion_point(field_set_rvalue:NFMsg.goodsinfo.createdate)
 }
 #endif
 inline void goodsinfo::set_createdate(const char* value) {
   GOOGLE_DCHECK(value != NULL);
   set_has_createdate();
   createdate_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
-  // @@protoc_insertion_point(field_set_char:progame.goodsinfo.createdate)
+  // @@protoc_insertion_point(field_set_char:NFMsg.goodsinfo.createdate)
 }
 inline void goodsinfo::set_createdate(const char* value, size_t size) {
   set_has_createdate();
   createdate_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
       ::std::string(reinterpret_cast<const char*>(value), size));
-  // @@protoc_insertion_point(field_set_pointer:progame.goodsinfo.createdate)
+  // @@protoc_insertion_point(field_set_pointer:NFMsg.goodsinfo.createdate)
 }
 inline ::std::string* goodsinfo::mutable_createdate() {
   set_has_createdate();
-  // @@protoc_insertion_point(field_mutable:progame.goodsinfo.createdate)
+  // @@protoc_insertion_point(field_mutable:NFMsg.goodsinfo.createdate)
   return createdate_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
 inline ::std::string* goodsinfo::release_createdate() {
-  // @@protoc_insertion_point(field_release:progame.goodsinfo.createdate)
+  // @@protoc_insertion_point(field_release:NFMsg.goodsinfo.createdate)
   if (!has_createdate()) {
     return NULL;
   }
@@ -6762,7 +6762,7 @@ inline void goodsinfo::set_allocated_createdate(::std::string* createdate) {
     clear_has_createdate();
   }
   createdate_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), createdate);
-  // @@protoc_insertion_point(field_set_allocated:progame.goodsinfo.createdate)
+  // @@protoc_insertion_point(field_set_allocated:NFMsg.goodsinfo.createdate)
 }
 
 // optional int32 iswear = 7;
@@ -6780,46 +6780,46 @@ inline void goodsinfo::clear_iswear() {
   clear_has_iswear();
 }
 inline ::google::protobuf::int32 goodsinfo::iswear() const {
-  // @@protoc_insertion_point(field_get:progame.goodsinfo.iswear)
+  // @@protoc_insertion_point(field_get:NFMsg.goodsinfo.iswear)
   return iswear_;
 }
 inline void goodsinfo::set_iswear(::google::protobuf::int32 value) {
   set_has_iswear();
   iswear_ = value;
-  // @@protoc_insertion_point(field_set:progame.goodsinfo.iswear)
+  // @@protoc_insertion_point(field_set:NFMsg.goodsinfo.iswear)
 }
 
 // -------------------------------------------------------------------
 
 // goodslist
 
-// repeated .progame.goodsinfo glist = 1;
+// repeated .NFMsg.goodsinfo glist = 1;
 inline int goodslist::glist_size() const {
   return glist_.size();
 }
 inline void goodslist::clear_glist() {
   glist_.Clear();
 }
-inline ::progame::goodsinfo* goodslist::mutable_glist(int index) {
-  // @@protoc_insertion_point(field_mutable:progame.goodslist.glist)
+inline ::NFMsg::goodsinfo* goodslist::mutable_glist(int index) {
+  // @@protoc_insertion_point(field_mutable:NFMsg.goodslist.glist)
   return glist_.Mutable(index);
 }
-inline ::google::protobuf::RepeatedPtrField< ::progame::goodsinfo >*
+inline ::google::protobuf::RepeatedPtrField< ::NFMsg::goodsinfo >*
 goodslist::mutable_glist() {
-  // @@protoc_insertion_point(field_mutable_list:progame.goodslist.glist)
+  // @@protoc_insertion_point(field_mutable_list:NFMsg.goodslist.glist)
   return &glist_;
 }
-inline const ::progame::goodsinfo& goodslist::glist(int index) const {
-  // @@protoc_insertion_point(field_get:progame.goodslist.glist)
+inline const ::NFMsg::goodsinfo& goodslist::glist(int index) const {
+  // @@protoc_insertion_point(field_get:NFMsg.goodslist.glist)
   return glist_.Get(index);
 }
-inline ::progame::goodsinfo* goodslist::add_glist() {
-  // @@protoc_insertion_point(field_add:progame.goodslist.glist)
+inline ::NFMsg::goodsinfo* goodslist::add_glist() {
+  // @@protoc_insertion_point(field_add:NFMsg.goodslist.glist)
   return glist_.Add();
 }
-inline const ::google::protobuf::RepeatedPtrField< ::progame::goodsinfo >&
+inline const ::google::protobuf::RepeatedPtrField< ::NFMsg::goodsinfo >&
 goodslist::glist() const {
-  // @@protoc_insertion_point(field_list:progame.goodslist.glist)
+  // @@protoc_insertion_point(field_list:NFMsg.goodslist.glist)
   return glist_;
 }
 
@@ -6842,13 +6842,13 @@ inline void noticeinfo::clear_noticetype() {
   clear_has_noticetype();
 }
 inline ::google::protobuf::int32 noticeinfo::noticetype() const {
-  // @@protoc_insertion_point(field_get:progame.noticeinfo.noticetype)
+  // @@protoc_insertion_point(field_get:NFMsg.noticeinfo.noticetype)
   return noticetype_;
 }
 inline void noticeinfo::set_noticetype(::google::protobuf::int32 value) {
   set_has_noticetype();
   noticetype_ = value;
-  // @@protoc_insertion_point(field_set:progame.noticeinfo.noticetype)
+  // @@protoc_insertion_point(field_set:NFMsg.noticeinfo.noticetype)
 }
 
 // optional int32 amount = 2;
@@ -6866,13 +6866,13 @@ inline void noticeinfo::clear_amount() {
   clear_has_amount();
 }
 inline ::google::protobuf::int32 noticeinfo::amount() const {
-  // @@protoc_insertion_point(field_get:progame.noticeinfo.amount)
+  // @@protoc_insertion_point(field_get:NFMsg.noticeinfo.amount)
   return amount_;
 }
 inline void noticeinfo::set_amount(::google::protobuf::int32 value) {
   set_has_amount();
   amount_ = value;
-  // @@protoc_insertion_point(field_set:progame.noticeinfo.amount)
+  // @@protoc_insertion_point(field_set:NFMsg.noticeinfo.amount)
 }
 
 // -------------------------------------------------------------------
@@ -6894,13 +6894,13 @@ inline void playersimpleinfo::clear_userid() {
   clear_has_userid();
 }
 inline ::google::protobuf::int32 playersimpleinfo::userid() const {
-  // @@protoc_insertion_point(field_get:progame.playersimpleinfo.userid)
+  // @@protoc_insertion_point(field_get:NFMsg.playersimpleinfo.userid)
   return userid_;
 }
 inline void playersimpleinfo::set_userid(::google::protobuf::int32 value) {
   set_has_userid();
   userid_ = value;
-  // @@protoc_insertion_point(field_set:progame.playersimpleinfo.userid)
+  // @@protoc_insertion_point(field_set:NFMsg.playersimpleinfo.userid)
 }
 
 // optional string nickname = 5;
@@ -6918,41 +6918,41 @@ inline void playersimpleinfo::clear_nickname() {
   clear_has_nickname();
 }
 inline const ::std::string& playersimpleinfo::nickname() const {
-  // @@protoc_insertion_point(field_get:progame.playersimpleinfo.nickname)
+  // @@protoc_insertion_point(field_get:NFMsg.playersimpleinfo.nickname)
   return nickname_.GetNoArena();
 }
 inline void playersimpleinfo::set_nickname(const ::std::string& value) {
   set_has_nickname();
   nickname_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
-  // @@protoc_insertion_point(field_set:progame.playersimpleinfo.nickname)
+  // @@protoc_insertion_point(field_set:NFMsg.playersimpleinfo.nickname)
 }
 #if LANG_CXX11
 inline void playersimpleinfo::set_nickname(::std::string&& value) {
   set_has_nickname();
   nickname_.SetNoArena(
     &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
-  // @@protoc_insertion_point(field_set_rvalue:progame.playersimpleinfo.nickname)
+  // @@protoc_insertion_point(field_set_rvalue:NFMsg.playersimpleinfo.nickname)
 }
 #endif
 inline void playersimpleinfo::set_nickname(const char* value) {
   GOOGLE_DCHECK(value != NULL);
   set_has_nickname();
   nickname_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
-  // @@protoc_insertion_point(field_set_char:progame.playersimpleinfo.nickname)
+  // @@protoc_insertion_point(field_set_char:NFMsg.playersimpleinfo.nickname)
 }
 inline void playersimpleinfo::set_nickname(const char* value, size_t size) {
   set_has_nickname();
   nickname_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
       ::std::string(reinterpret_cast<const char*>(value), size));
-  // @@protoc_insertion_point(field_set_pointer:progame.playersimpleinfo.nickname)
+  // @@protoc_insertion_point(field_set_pointer:NFMsg.playersimpleinfo.nickname)
 }
 inline ::std::string* playersimpleinfo::mutable_nickname() {
   set_has_nickname();
-  // @@protoc_insertion_point(field_mutable:progame.playersimpleinfo.nickname)
+  // @@protoc_insertion_point(field_mutable:NFMsg.playersimpleinfo.nickname)
   return nickname_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
 inline ::std::string* playersimpleinfo::release_nickname() {
-  // @@protoc_insertion_point(field_release:progame.playersimpleinfo.nickname)
+  // @@protoc_insertion_point(field_release:NFMsg.playersimpleinfo.nickname)
   if (!has_nickname()) {
     return NULL;
   }
@@ -6966,7 +6966,7 @@ inline void playersimpleinfo::set_allocated_nickname(::std::string* nickname) {
     clear_has_nickname();
   }
   nickname_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), nickname);
-  // @@protoc_insertion_point(field_set_allocated:progame.playersimpleinfo.nickname)
+  // @@protoc_insertion_point(field_set_allocated:NFMsg.playersimpleinfo.nickname)
 }
 
 // optional int32 sex = 8;
@@ -6984,13 +6984,13 @@ inline void playersimpleinfo::clear_sex() {
   clear_has_sex();
 }
 inline ::google::protobuf::int32 playersimpleinfo::sex() const {
-  // @@protoc_insertion_point(field_get:progame.playersimpleinfo.sex)
+  // @@protoc_insertion_point(field_get:NFMsg.playersimpleinfo.sex)
   return sex_;
 }
 inline void playersimpleinfo::set_sex(::google::protobuf::int32 value) {
   set_has_sex();
   sex_ = value;
-  // @@protoc_insertion_point(field_set:progame.playersimpleinfo.sex)
+  // @@protoc_insertion_point(field_set:NFMsg.playersimpleinfo.sex)
 }
 
 // optional int32 level = 13;
@@ -7008,13 +7008,13 @@ inline void playersimpleinfo::clear_level() {
   clear_has_level();
 }
 inline ::google::protobuf::int32 playersimpleinfo::level() const {
-  // @@protoc_insertion_point(field_get:progame.playersimpleinfo.level)
+  // @@protoc_insertion_point(field_get:NFMsg.playersimpleinfo.level)
   return level_;
 }
 inline void playersimpleinfo::set_level(::google::protobuf::int32 value) {
   set_has_level();
   level_ = value;
-  // @@protoc_insertion_point(field_set:progame.playersimpleinfo.level)
+  // @@protoc_insertion_point(field_set:NFMsg.playersimpleinfo.level)
 }
 
 // optional int32 viplevel = 14;
@@ -7032,13 +7032,13 @@ inline void playersimpleinfo::clear_viplevel() {
   clear_has_viplevel();
 }
 inline ::google::protobuf::int32 playersimpleinfo::viplevel() const {
-  // @@protoc_insertion_point(field_get:progame.playersimpleinfo.viplevel)
+  // @@protoc_insertion_point(field_get:NFMsg.playersimpleinfo.viplevel)
   return viplevel_;
 }
 inline void playersimpleinfo::set_viplevel(::google::protobuf::int32 value) {
   set_has_viplevel();
   viplevel_ = value;
-  // @@protoc_insertion_point(field_set:progame.playersimpleinfo.viplevel)
+  // @@protoc_insertion_point(field_set:NFMsg.playersimpleinfo.viplevel)
 }
 
 // optional int64 jetton = 15;
@@ -7056,13 +7056,13 @@ inline void playersimpleinfo::clear_jetton() {
   clear_has_jetton();
 }
 inline ::google::protobuf::int64 playersimpleinfo::jetton() const {
-  // @@protoc_insertion_point(field_get:progame.playersimpleinfo.jetton)
+  // @@protoc_insertion_point(field_get:NFMsg.playersimpleinfo.jetton)
   return jetton_;
 }
 inline void playersimpleinfo::set_jetton(::google::protobuf::int64 value) {
   set_has_jetton();
   jetton_ = value;
-  // @@protoc_insertion_point(field_set:progame.playersimpleinfo.jetton)
+  // @@protoc_insertion_point(field_set:NFMsg.playersimpleinfo.jetton)
 }
 
 // optional int32 gold = 16;
@@ -7080,13 +7080,13 @@ inline void playersimpleinfo::clear_gold() {
   clear_has_gold();
 }
 inline ::google::protobuf::int32 playersimpleinfo::gold() const {
-  // @@protoc_insertion_point(field_get:progame.playersimpleinfo.gold)
+  // @@protoc_insertion_point(field_get:NFMsg.playersimpleinfo.gold)
   return gold_;
 }
 inline void playersimpleinfo::set_gold(::google::protobuf::int32 value) {
   set_has_gold();
   gold_ = value;
-  // @@protoc_insertion_point(field_set:progame.playersimpleinfo.gold)
+  // @@protoc_insertion_point(field_set:NFMsg.playersimpleinfo.gold)
 }
 
 // optional int32 popularity = 21;
@@ -7104,13 +7104,13 @@ inline void playersimpleinfo::clear_popularity() {
   clear_has_popularity();
 }
 inline ::google::protobuf::int32 playersimpleinfo::popularity() const {
-  // @@protoc_insertion_point(field_get:progame.playersimpleinfo.popularity)
+  // @@protoc_insertion_point(field_get:NFMsg.playersimpleinfo.popularity)
   return popularity_;
 }
 inline void playersimpleinfo::set_popularity(::google::protobuf::int32 value) {
   set_has_popularity();
   popularity_ = value;
-  // @@protoc_insertion_point(field_set:progame.playersimpleinfo.popularity)
+  // @@protoc_insertion_point(field_set:NFMsg.playersimpleinfo.popularity)
 }
 
 // optional string ip = 31;
@@ -7128,41 +7128,41 @@ inline void playersimpleinfo::clear_ip() {
   clear_has_ip();
 }
 inline const ::std::string& playersimpleinfo::ip() const {
-  // @@protoc_insertion_point(field_get:progame.playersimpleinfo.ip)
+  // @@protoc_insertion_point(field_get:NFMsg.playersimpleinfo.ip)
   return ip_.GetNoArena();
 }
 inline void playersimpleinfo::set_ip(const ::std::string& value) {
   set_has_ip();
   ip_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
-  // @@protoc_insertion_point(field_set:progame.playersimpleinfo.ip)
+  // @@protoc_insertion_point(field_set:NFMsg.playersimpleinfo.ip)
 }
 #if LANG_CXX11
 inline void playersimpleinfo::set_ip(::std::string&& value) {
   set_has_ip();
   ip_.SetNoArena(
     &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
-  // @@protoc_insertion_point(field_set_rvalue:progame.playersimpleinfo.ip)
+  // @@protoc_insertion_point(field_set_rvalue:NFMsg.playersimpleinfo.ip)
 }
 #endif
 inline void playersimpleinfo::set_ip(const char* value) {
   GOOGLE_DCHECK(value != NULL);
   set_has_ip();
   ip_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
-  // @@protoc_insertion_point(field_set_char:progame.playersimpleinfo.ip)
+  // @@protoc_insertion_point(field_set_char:NFMsg.playersimpleinfo.ip)
 }
 inline void playersimpleinfo::set_ip(const char* value, size_t size) {
   set_has_ip();
   ip_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
       ::std::string(reinterpret_cast<const char*>(value), size));
-  // @@protoc_insertion_point(field_set_pointer:progame.playersimpleinfo.ip)
+  // @@protoc_insertion_point(field_set_pointer:NFMsg.playersimpleinfo.ip)
 }
 inline ::std::string* playersimpleinfo::mutable_ip() {
   set_has_ip();
-  // @@protoc_insertion_point(field_mutable:progame.playersimpleinfo.ip)
+  // @@protoc_insertion_point(field_mutable:NFMsg.playersimpleinfo.ip)
   return ip_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
 inline ::std::string* playersimpleinfo::release_ip() {
-  // @@protoc_insertion_point(field_release:progame.playersimpleinfo.ip)
+  // @@protoc_insertion_point(field_release:NFMsg.playersimpleinfo.ip)
   if (!has_ip()) {
     return NULL;
   }
@@ -7176,7 +7176,7 @@ inline void playersimpleinfo::set_allocated_ip(::std::string* ip) {
     clear_has_ip();
   }
   ip_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ip);
-  // @@protoc_insertion_point(field_set_allocated:progame.playersimpleinfo.ip)
+  // @@protoc_insertion_point(field_set_allocated:NFMsg.playersimpleinfo.ip)
 }
 
 // optional string face_1 = 34;
@@ -7194,41 +7194,41 @@ inline void playersimpleinfo::clear_face_1() {
   clear_has_face_1();
 }
 inline const ::std::string& playersimpleinfo::face_1() const {
-  // @@protoc_insertion_point(field_get:progame.playersimpleinfo.face_1)
+  // @@protoc_insertion_point(field_get:NFMsg.playersimpleinfo.face_1)
   return face_1_.GetNoArena();
 }
 inline void playersimpleinfo::set_face_1(const ::std::string& value) {
   set_has_face_1();
   face_1_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
-  // @@protoc_insertion_point(field_set:progame.playersimpleinfo.face_1)
+  // @@protoc_insertion_point(field_set:NFMsg.playersimpleinfo.face_1)
 }
 #if LANG_CXX11
 inline void playersimpleinfo::set_face_1(::std::string&& value) {
   set_has_face_1();
   face_1_.SetNoArena(
     &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
-  // @@protoc_insertion_point(field_set_rvalue:progame.playersimpleinfo.face_1)
+  // @@protoc_insertion_point(field_set_rvalue:NFMsg.playersimpleinfo.face_1)
 }
 #endif
 inline void playersimpleinfo::set_face_1(const char* value) {
   GOOGLE_DCHECK(value != NULL);
   set_has_face_1();
   face_1_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
-  // @@protoc_insertion_point(field_set_char:progame.playersimpleinfo.face_1)
+  // @@protoc_insertion_point(field_set_char:NFMsg.playersimpleinfo.face_1)
 }
 inline void playersimpleinfo::set_face_1(const char* value, size_t size) {
   set_has_face_1();
   face_1_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
       ::std::string(reinterpret_cast<const char*>(value), size));
-  // @@protoc_insertion_point(field_set_pointer:progame.playersimpleinfo.face_1)
+  // @@protoc_insertion_point(field_set_pointer:NFMsg.playersimpleinfo.face_1)
 }
 inline ::std::string* playersimpleinfo::mutable_face_1() {
   set_has_face_1();
-  // @@protoc_insertion_point(field_mutable:progame.playersimpleinfo.face_1)
+  // @@protoc_insertion_point(field_mutable:NFMsg.playersimpleinfo.face_1)
   return face_1_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
 inline ::std::string* playersimpleinfo::release_face_1() {
-  // @@protoc_insertion_point(field_release:progame.playersimpleinfo.face_1)
+  // @@protoc_insertion_point(field_release:NFMsg.playersimpleinfo.face_1)
   if (!has_face_1()) {
     return NULL;
   }
@@ -7242,7 +7242,7 @@ inline void playersimpleinfo::set_allocated_face_1(::std::string* face_1) {
     clear_has_face_1();
   }
   face_1_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), face_1);
-  // @@protoc_insertion_point(field_set_allocated:progame.playersimpleinfo.face_1)
+  // @@protoc_insertion_point(field_set_allocated:NFMsg.playersimpleinfo.face_1)
 }
 
 // optional string location = 41;
@@ -7260,41 +7260,41 @@ inline void playersimpleinfo::clear_location() {
   clear_has_location();
 }
 inline const ::std::string& playersimpleinfo::location() const {
-  // @@protoc_insertion_point(field_get:progame.playersimpleinfo.location)
+  // @@protoc_insertion_point(field_get:NFMsg.playersimpleinfo.location)
   return location_.GetNoArena();
 }
 inline void playersimpleinfo::set_location(const ::std::string& value) {
   set_has_location();
   location_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
-  // @@protoc_insertion_point(field_set:progame.playersimpleinfo.location)
+  // @@protoc_insertion_point(field_set:NFMsg.playersimpleinfo.location)
 }
 #if LANG_CXX11
 inline void playersimpleinfo::set_location(::std::string&& value) {
   set_has_location();
   location_.SetNoArena(
     &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
-  // @@protoc_insertion_point(field_set_rvalue:progame.playersimpleinfo.location)
+  // @@protoc_insertion_point(field_set_rvalue:NFMsg.playersimpleinfo.location)
 }
 #endif
 inline void playersimpleinfo::set_location(const char* value) {
   GOOGLE_DCHECK(value != NULL);
   set_has_location();
   location_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
-  // @@protoc_insertion_point(field_set_char:progame.playersimpleinfo.location)
+  // @@protoc_insertion_point(field_set_char:NFMsg.playersimpleinfo.location)
 }
 inline void playersimpleinfo::set_location(const char* value, size_t size) {
   set_has_location();
   location_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
       ::std::string(reinterpret_cast<const char*>(value), size));
-  // @@protoc_insertion_point(field_set_pointer:progame.playersimpleinfo.location)
+  // @@protoc_insertion_point(field_set_pointer:NFMsg.playersimpleinfo.location)
 }
 inline ::std::string* playersimpleinfo::mutable_location() {
   set_has_location();
-  // @@protoc_insertion_point(field_mutable:progame.playersimpleinfo.location)
+  // @@protoc_insertion_point(field_mutable:NFMsg.playersimpleinfo.location)
   return location_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
 inline ::std::string* playersimpleinfo::release_location() {
-  // @@protoc_insertion_point(field_release:progame.playersimpleinfo.location)
+  // @@protoc_insertion_point(field_release:NFMsg.playersimpleinfo.location)
   if (!has_location()) {
     return NULL;
   }
@@ -7308,7 +7308,7 @@ inline void playersimpleinfo::set_allocated_location(::std::string* location) {
     clear_has_location();
   }
   location_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), location);
-  // @@protoc_insertion_point(field_set_allocated:progame.playersimpleinfo.location)
+  // @@protoc_insertion_point(field_set_allocated:NFMsg.playersimpleinfo.location)
 }
 
 // optional int32 propertyid = 45;
@@ -7326,13 +7326,13 @@ inline void playersimpleinfo::clear_propertyid() {
   clear_has_propertyid();
 }
 inline ::google::protobuf::int32 playersimpleinfo::propertyid() const {
-  // @@protoc_insertion_point(field_get:progame.playersimpleinfo.propertyid)
+  // @@protoc_insertion_point(field_get:NFMsg.playersimpleinfo.propertyid)
   return propertyid_;
 }
 inline void playersimpleinfo::set_propertyid(::google::protobuf::int32 value) {
   set_has_propertyid();
   propertyid_ = value;
-  // @@protoc_insertion_point(field_set:progame.playersimpleinfo.propertyid)
+  // @@protoc_insertion_point(field_set:NFMsg.playersimpleinfo.propertyid)
 }
 
 // optional int32 jifen = 99;
@@ -7350,13 +7350,13 @@ inline void playersimpleinfo::clear_jifen() {
   clear_has_jifen();
 }
 inline ::google::protobuf::int32 playersimpleinfo::jifen() const {
-  // @@protoc_insertion_point(field_get:progame.playersimpleinfo.jifen)
+  // @@protoc_insertion_point(field_get:NFMsg.playersimpleinfo.jifen)
   return jifen_;
 }
 inline void playersimpleinfo::set_jifen(::google::protobuf::int32 value) {
   set_has_jifen();
   jifen_ = value;
-  // @@protoc_insertion_point(field_set:progame.playersimpleinfo.jifen)
+  // @@protoc_insertion_point(field_set:NFMsg.playersimpleinfo.jifen)
 }
 
 // optional string location_x = 47;
@@ -7374,41 +7374,41 @@ inline void playersimpleinfo::clear_location_x() {
   clear_has_location_x();
 }
 inline const ::std::string& playersimpleinfo::location_x() const {
-  // @@protoc_insertion_point(field_get:progame.playersimpleinfo.location_x)
+  // @@protoc_insertion_point(field_get:NFMsg.playersimpleinfo.location_x)
   return location_x_.GetNoArena();
 }
 inline void playersimpleinfo::set_location_x(const ::std::string& value) {
   set_has_location_x();
   location_x_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
-  // @@protoc_insertion_point(field_set:progame.playersimpleinfo.location_x)
+  // @@protoc_insertion_point(field_set:NFMsg.playersimpleinfo.location_x)
 }
 #if LANG_CXX11
 inline void playersimpleinfo::set_location_x(::std::string&& value) {
   set_has_location_x();
   location_x_.SetNoArena(
     &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
-  // @@protoc_insertion_point(field_set_rvalue:progame.playersimpleinfo.location_x)
+  // @@protoc_insertion_point(field_set_rvalue:NFMsg.playersimpleinfo.location_x)
 }
 #endif
 inline void playersimpleinfo::set_location_x(const char* value) {
   GOOGLE_DCHECK(value != NULL);
   set_has_location_x();
   location_x_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
-  // @@protoc_insertion_point(field_set_char:progame.playersimpleinfo.location_x)
+  // @@protoc_insertion_point(field_set_char:NFMsg.playersimpleinfo.location_x)
 }
 inline void playersimpleinfo::set_location_x(const char* value, size_t size) {
   set_has_location_x();
   location_x_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
       ::std::string(reinterpret_cast<const char*>(value), size));
-  // @@protoc_insertion_point(field_set_pointer:progame.playersimpleinfo.location_x)
+  // @@protoc_insertion_point(field_set_pointer:NFMsg.playersimpleinfo.location_x)
 }
 inline ::std::string* playersimpleinfo::mutable_location_x() {
   set_has_location_x();
-  // @@protoc_insertion_point(field_mutable:progame.playersimpleinfo.location_x)
+  // @@protoc_insertion_point(field_mutable:NFMsg.playersimpleinfo.location_x)
   return location_x_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
 inline ::std::string* playersimpleinfo::release_location_x() {
-  // @@protoc_insertion_point(field_release:progame.playersimpleinfo.location_x)
+  // @@protoc_insertion_point(field_release:NFMsg.playersimpleinfo.location_x)
   if (!has_location_x()) {
     return NULL;
   }
@@ -7422,7 +7422,7 @@ inline void playersimpleinfo::set_allocated_location_x(::std::string* location_x
     clear_has_location_x();
   }
   location_x_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), location_x);
-  // @@protoc_insertion_point(field_set_allocated:progame.playersimpleinfo.location_x)
+  // @@protoc_insertion_point(field_set_allocated:NFMsg.playersimpleinfo.location_x)
 }
 
 // optional string location_y = 48;
@@ -7440,41 +7440,41 @@ inline void playersimpleinfo::clear_location_y() {
   clear_has_location_y();
 }
 inline const ::std::string& playersimpleinfo::location_y() const {
-  // @@protoc_insertion_point(field_get:progame.playersimpleinfo.location_y)
+  // @@protoc_insertion_point(field_get:NFMsg.playersimpleinfo.location_y)
   return location_y_.GetNoArena();
 }
 inline void playersimpleinfo::set_location_y(const ::std::string& value) {
   set_has_location_y();
   location_y_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
-  // @@protoc_insertion_point(field_set:progame.playersimpleinfo.location_y)
+  // @@protoc_insertion_point(field_set:NFMsg.playersimpleinfo.location_y)
 }
 #if LANG_CXX11
 inline void playersimpleinfo::set_location_y(::std::string&& value) {
   set_has_location_y();
   location_y_.SetNoArena(
     &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
-  // @@protoc_insertion_point(field_set_rvalue:progame.playersimpleinfo.location_y)
+  // @@protoc_insertion_point(field_set_rvalue:NFMsg.playersimpleinfo.location_y)
 }
 #endif
 inline void playersimpleinfo::set_location_y(const char* value) {
   GOOGLE_DCHECK(value != NULL);
   set_has_location_y();
   location_y_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
-  // @@protoc_insertion_point(field_set_char:progame.playersimpleinfo.location_y)
+  // @@protoc_insertion_point(field_set_char:NFMsg.playersimpleinfo.location_y)
 }
 inline void playersimpleinfo::set_location_y(const char* value, size_t size) {
   set_has_location_y();
   location_y_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
       ::std::string(reinterpret_cast<const char*>(value), size));
-  // @@protoc_insertion_point(field_set_pointer:progame.playersimpleinfo.location_y)
+  // @@protoc_insertion_point(field_set_pointer:NFMsg.playersimpleinfo.location_y)
 }
 inline ::std::string* playersimpleinfo::mutable_location_y() {
   set_has_location_y();
-  // @@protoc_insertion_point(field_mutable:progame.playersimpleinfo.location_y)
+  // @@protoc_insertion_point(field_mutable:NFMsg.playersimpleinfo.location_y)
   return location_y_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
 inline ::std::string* playersimpleinfo::release_location_y() {
-  // @@protoc_insertion_point(field_release:progame.playersimpleinfo.location_y)
+  // @@protoc_insertion_point(field_release:NFMsg.playersimpleinfo.location_y)
   if (!has_location_y()) {
     return NULL;
   }
@@ -7488,7 +7488,7 @@ inline void playersimpleinfo::set_allocated_location_y(::std::string* location_y
     clear_has_location_y();
   }
   location_y_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), location_y);
-  // @@protoc_insertion_point(field_set_allocated:progame.playersimpleinfo.location_y)
+  // @@protoc_insertion_point(field_set_allocated:NFMsg.playersimpleinfo.location_y)
 }
 
 // -------------------------------------------------------------------
@@ -7510,13 +7510,13 @@ inline void broadcastinfo::clear_id() {
   clear_has_id();
 }
 inline ::google::protobuf::int32 broadcastinfo::id() const {
-  // @@protoc_insertion_point(field_get:progame.broadcastinfo.id)
+  // @@protoc_insertion_point(field_get:NFMsg.broadcastinfo.id)
   return id_;
 }
 inline void broadcastinfo::set_id(::google::protobuf::int32 value) {
   set_has_id();
   id_ = value;
-  // @@protoc_insertion_point(field_set:progame.broadcastinfo.id)
+  // @@protoc_insertion_point(field_set:NFMsg.broadcastinfo.id)
 }
 
 // optional int32 broadtype = 2;
@@ -7534,13 +7534,13 @@ inline void broadcastinfo::clear_broadtype() {
   clear_has_broadtype();
 }
 inline ::google::protobuf::int32 broadcastinfo::broadtype() const {
-  // @@protoc_insertion_point(field_get:progame.broadcastinfo.broadtype)
+  // @@protoc_insertion_point(field_get:NFMsg.broadcastinfo.broadtype)
   return broadtype_;
 }
 inline void broadcastinfo::set_broadtype(::google::protobuf::int32 value) {
   set_has_broadtype();
   broadtype_ = value;
-  // @@protoc_insertion_point(field_set:progame.broadcastinfo.broadtype)
+  // @@protoc_insertion_point(field_set:NFMsg.broadcastinfo.broadtype)
 }
 
 // optional int32 senderid = 3;
@@ -7558,13 +7558,13 @@ inline void broadcastinfo::clear_senderid() {
   clear_has_senderid();
 }
 inline ::google::protobuf::int32 broadcastinfo::senderid() const {
-  // @@protoc_insertion_point(field_get:progame.broadcastinfo.senderid)
+  // @@protoc_insertion_point(field_get:NFMsg.broadcastinfo.senderid)
   return senderid_;
 }
 inline void broadcastinfo::set_senderid(::google::protobuf::int32 value) {
   set_has_senderid();
   senderid_ = value;
-  // @@protoc_insertion_point(field_set:progame.broadcastinfo.senderid)
+  // @@protoc_insertion_point(field_set:NFMsg.broadcastinfo.senderid)
 }
 
 // optional string sender = 4;
@@ -7582,41 +7582,41 @@ inline void broadcastinfo::clear_sender() {
   clear_has_sender();
 }
 inline const ::std::string& broadcastinfo::sender() const {
-  // @@protoc_insertion_point(field_get:progame.broadcastinfo.sender)
+  // @@protoc_insertion_point(field_get:NFMsg.broadcastinfo.sender)
   return sender_.GetNoArena();
 }
 inline void broadcastinfo::set_sender(const ::std::string& value) {
   set_has_sender();
   sender_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
-  // @@protoc_insertion_point(field_set:progame.broadcastinfo.sender)
+  // @@protoc_insertion_point(field_set:NFMsg.broadcastinfo.sender)
 }
 #if LANG_CXX11
 inline void broadcastinfo::set_sender(::std::string&& value) {
   set_has_sender();
   sender_.SetNoArena(
     &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
-  // @@protoc_insertion_point(field_set_rvalue:progame.broadcastinfo.sender)
+  // @@protoc_insertion_point(field_set_rvalue:NFMsg.broadcastinfo.sender)
 }
 #endif
 inline void broadcastinfo::set_sender(const char* value) {
   GOOGLE_DCHECK(value != NULL);
   set_has_sender();
   sender_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
-  // @@protoc_insertion_point(field_set_char:progame.broadcastinfo.sender)
+  // @@protoc_insertion_point(field_set_char:NFMsg.broadcastinfo.sender)
 }
 inline void broadcastinfo::set_sender(const char* value, size_t size) {
   set_has_sender();
   sender_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
       ::std::string(reinterpret_cast<const char*>(value), size));
-  // @@protoc_insertion_point(field_set_pointer:progame.broadcastinfo.sender)
+  // @@protoc_insertion_point(field_set_pointer:NFMsg.broadcastinfo.sender)
 }
 inline ::std::string* broadcastinfo::mutable_sender() {
   set_has_sender();
-  // @@protoc_insertion_point(field_mutable:progame.broadcastinfo.sender)
+  // @@protoc_insertion_point(field_mutable:NFMsg.broadcastinfo.sender)
   return sender_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
 inline ::std::string* broadcastinfo::release_sender() {
-  // @@protoc_insertion_point(field_release:progame.broadcastinfo.sender)
+  // @@protoc_insertion_point(field_release:NFMsg.broadcastinfo.sender)
   if (!has_sender()) {
     return NULL;
   }
@@ -7630,7 +7630,7 @@ inline void broadcastinfo::set_allocated_sender(::std::string* sender) {
     clear_has_sender();
   }
   sender_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), sender);
-  // @@protoc_insertion_point(field_set_allocated:progame.broadcastinfo.sender)
+  // @@protoc_insertion_point(field_set_allocated:NFMsg.broadcastinfo.sender)
 }
 
 // optional string msg = 5;
@@ -7648,41 +7648,41 @@ inline void broadcastinfo::clear_msg() {
   clear_has_msg();
 }
 inline const ::std::string& broadcastinfo::msg() const {
-  // @@protoc_insertion_point(field_get:progame.broadcastinfo.msg)
+  // @@protoc_insertion_point(field_get:NFMsg.broadcastinfo.msg)
   return msg_.GetNoArena();
 }
 inline void broadcastinfo::set_msg(const ::std::string& value) {
   set_has_msg();
   msg_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
-  // @@protoc_insertion_point(field_set:progame.broadcastinfo.msg)
+  // @@protoc_insertion_point(field_set:NFMsg.broadcastinfo.msg)
 }
 #if LANG_CXX11
 inline void broadcastinfo::set_msg(::std::string&& value) {
   set_has_msg();
   msg_.SetNoArena(
     &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
-  // @@protoc_insertion_point(field_set_rvalue:progame.broadcastinfo.msg)
+  // @@protoc_insertion_point(field_set_rvalue:NFMsg.broadcastinfo.msg)
 }
 #endif
 inline void broadcastinfo::set_msg(const char* value) {
   GOOGLE_DCHECK(value != NULL);
   set_has_msg();
   msg_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
-  // @@protoc_insertion_point(field_set_char:progame.broadcastinfo.msg)
+  // @@protoc_insertion_point(field_set_char:NFMsg.broadcastinfo.msg)
 }
 inline void broadcastinfo::set_msg(const char* value, size_t size) {
   set_has_msg();
   msg_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
       ::std::string(reinterpret_cast<const char*>(value), size));
-  // @@protoc_insertion_point(field_set_pointer:progame.broadcastinfo.msg)
+  // @@protoc_insertion_point(field_set_pointer:NFMsg.broadcastinfo.msg)
 }
 inline ::std::string* broadcastinfo::mutable_msg() {
   set_has_msg();
-  // @@protoc_insertion_point(field_mutable:progame.broadcastinfo.msg)
+  // @@protoc_insertion_point(field_mutable:NFMsg.broadcastinfo.msg)
   return msg_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
 inline ::std::string* broadcastinfo::release_msg() {
-  // @@protoc_insertion_point(field_release:progame.broadcastinfo.msg)
+  // @@protoc_insertion_point(field_release:NFMsg.broadcastinfo.msg)
   if (!has_msg()) {
     return NULL;
   }
@@ -7696,7 +7696,7 @@ inline void broadcastinfo::set_allocated_msg(::std::string* msg) {
     clear_has_msg();
   }
   msg_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), msg);
-  // @@protoc_insertion_point(field_set_allocated:progame.broadcastinfo.msg)
+  // @@protoc_insertion_point(field_set_allocated:NFMsg.broadcastinfo.msg)
 }
 
 // optional int32 broadtimes = 6;
@@ -7714,13 +7714,13 @@ inline void broadcastinfo::clear_broadtimes() {
   clear_has_broadtimes();
 }
 inline ::google::protobuf::int32 broadcastinfo::broadtimes() const {
-  // @@protoc_insertion_point(field_get:progame.broadcastinfo.broadtimes)
+  // @@protoc_insertion_point(field_get:NFMsg.broadcastinfo.broadtimes)
   return broadtimes_;
 }
 inline void broadcastinfo::set_broadtimes(::google::protobuf::int32 value) {
   set_has_broadtimes();
   broadtimes_ = value;
-  // @@protoc_insertion_point(field_set:progame.broadcastinfo.broadtimes)
+  // @@protoc_insertion_point(field_set:NFMsg.broadcastinfo.broadtimes)
 }
 
 // optional int32 validday = 7;
@@ -7738,13 +7738,13 @@ inline void broadcastinfo::clear_validday() {
   clear_has_validday();
 }
 inline ::google::protobuf::int32 broadcastinfo::validday() const {
-  // @@protoc_insertion_point(field_get:progame.broadcastinfo.validday)
+  // @@protoc_insertion_point(field_get:NFMsg.broadcastinfo.validday)
   return validday_;
 }
 inline void broadcastinfo::set_validday(::google::protobuf::int32 value) {
   set_has_validday();
   validday_ = value;
-  // @@protoc_insertion_point(field_set:progame.broadcastinfo.validday)
+  // @@protoc_insertion_point(field_set:NFMsg.broadcastinfo.validday)
 }
 
 // optional string createtime = 8;
@@ -7762,41 +7762,41 @@ inline void broadcastinfo::clear_createtime() {
   clear_has_createtime();
 }
 inline const ::std::string& broadcastinfo::createtime() const {
-  // @@protoc_insertion_point(field_get:progame.broadcastinfo.createtime)
+  // @@protoc_insertion_point(field_get:NFMsg.broadcastinfo.createtime)
   return createtime_.GetNoArena();
 }
 inline void broadcastinfo::set_createtime(const ::std::string& value) {
   set_has_createtime();
   createtime_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
-  // @@protoc_insertion_point(field_set:progame.broadcastinfo.createtime)
+  // @@protoc_insertion_point(field_set:NFMsg.broadcastinfo.createtime)
 }
 #if LANG_CXX11
 inline void broadcastinfo::set_createtime(::std::string&& value) {
   set_has_createtime();
   createtime_.SetNoArena(
     &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
-  // @@protoc_insertion_point(field_set_rvalue:progame.broadcastinfo.createtime)
+  // @@protoc_insertion_point(field_set_rvalue:NFMsg.broadcastinfo.createtime)
 }
 #endif
 inline void broadcastinfo::set_createtime(const char* value) {
   GOOGLE_DCHECK(value != NULL);
   set_has_createtime();
   createtime_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
-  // @@protoc_insertion_point(field_set_char:progame.broadcastinfo.createtime)
+  // @@protoc_insertion_point(field_set_char:NFMsg.broadcastinfo.createtime)
 }
 inline void broadcastinfo::set_createtime(const char* value, size_t size) {
   set_has_createtime();
   createtime_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
       ::std::string(reinterpret_cast<const char*>(value), size));
-  // @@protoc_insertion_point(field_set_pointer:progame.broadcastinfo.createtime)
+  // @@protoc_insertion_point(field_set_pointer:NFMsg.broadcastinfo.createtime)
 }
 inline ::std::string* broadcastinfo::mutable_createtime() {
   set_has_createtime();
-  // @@protoc_insertion_point(field_mutable:progame.broadcastinfo.createtime)
+  // @@protoc_insertion_point(field_mutable:NFMsg.broadcastinfo.createtime)
   return createtime_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
 inline ::std::string* broadcastinfo::release_createtime() {
-  // @@protoc_insertion_point(field_release:progame.broadcastinfo.createtime)
+  // @@protoc_insertion_point(field_release:NFMsg.broadcastinfo.createtime)
   if (!has_createtime()) {
     return NULL;
   }
@@ -7810,7 +7810,7 @@ inline void broadcastinfo::set_allocated_createtime(::std::string* createtime) {
     clear_has_createtime();
   }
   createtime_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), createtime);
-  // @@protoc_insertion_point(field_set_allocated:progame.broadcastinfo.createtime)
+  // @@protoc_insertion_point(field_set_allocated:NFMsg.broadcastinfo.createtime)
 }
 
 // optional int32 cycletype = 9;
@@ -7828,13 +7828,13 @@ inline void broadcastinfo::clear_cycletype() {
   clear_has_cycletype();
 }
 inline ::google::protobuf::int32 broadcastinfo::cycletype() const {
-  // @@protoc_insertion_point(field_get:progame.broadcastinfo.cycletype)
+  // @@protoc_insertion_point(field_get:NFMsg.broadcastinfo.cycletype)
   return cycletype_;
 }
 inline void broadcastinfo::set_cycletype(::google::protobuf::int32 value) {
   set_has_cycletype();
   cycletype_ = value;
-  // @@protoc_insertion_point(field_set:progame.broadcastinfo.cycletype)
+  // @@protoc_insertion_point(field_set:NFMsg.broadcastinfo.cycletype)
 }
 
 // -------------------------------------------------------------------
@@ -7856,13 +7856,13 @@ inline void mailinfo::clear_mailid() {
   clear_has_mailid();
 }
 inline ::google::protobuf::int32 mailinfo::mailid() const {
-  // @@protoc_insertion_point(field_get:progame.mailinfo.mailid)
+  // @@protoc_insertion_point(field_get:NFMsg.mailinfo.mailid)
   return mailid_;
 }
 inline void mailinfo::set_mailid(::google::protobuf::int32 value) {
   set_has_mailid();
   mailid_ = value;
-  // @@protoc_insertion_point(field_set:progame.mailinfo.mailid)
+  // @@protoc_insertion_point(field_set:NFMsg.mailinfo.mailid)
 }
 
 // optional int32 senderid = 2;
@@ -7880,13 +7880,13 @@ inline void mailinfo::clear_senderid() {
   clear_has_senderid();
 }
 inline ::google::protobuf::int32 mailinfo::senderid() const {
-  // @@protoc_insertion_point(field_get:progame.mailinfo.senderid)
+  // @@protoc_insertion_point(field_get:NFMsg.mailinfo.senderid)
   return senderid_;
 }
 inline void mailinfo::set_senderid(::google::protobuf::int32 value) {
   set_has_senderid();
   senderid_ = value;
-  // @@protoc_insertion_point(field_set:progame.mailinfo.senderid)
+  // @@protoc_insertion_point(field_set:NFMsg.mailinfo.senderid)
 }
 
 // optional string sender = 3;
@@ -7904,41 +7904,41 @@ inline void mailinfo::clear_sender() {
   clear_has_sender();
 }
 inline const ::std::string& mailinfo::sender() const {
-  // @@protoc_insertion_point(field_get:progame.mailinfo.sender)
+  // @@protoc_insertion_point(field_get:NFMsg.mailinfo.sender)
   return sender_.GetNoArena();
 }
 inline void mailinfo::set_sender(const ::std::string& value) {
   set_has_sender();
   sender_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
-  // @@protoc_insertion_point(field_set:progame.mailinfo.sender)
+  // @@protoc_insertion_point(field_set:NFMsg.mailinfo.sender)
 }
 #if LANG_CXX11
 inline void mailinfo::set_sender(::std::string&& value) {
   set_has_sender();
   sender_.SetNoArena(
     &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
-  // @@protoc_insertion_point(field_set_rvalue:progame.mailinfo.sender)
+  // @@protoc_insertion_point(field_set_rvalue:NFMsg.mailinfo.sender)
 }
 #endif
 inline void mailinfo::set_sender(const char* value) {
   GOOGLE_DCHECK(value != NULL);
   set_has_sender();
   sender_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
-  // @@protoc_insertion_point(field_set_char:progame.mailinfo.sender)
+  // @@protoc_insertion_point(field_set_char:NFMsg.mailinfo.sender)
 }
 inline void mailinfo::set_sender(const char* value, size_t size) {
   set_has_sender();
   sender_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
       ::std::string(reinterpret_cast<const char*>(value), size));
-  // @@protoc_insertion_point(field_set_pointer:progame.mailinfo.sender)
+  // @@protoc_insertion_point(field_set_pointer:NFMsg.mailinfo.sender)
 }
 inline ::std::string* mailinfo::mutable_sender() {
   set_has_sender();
-  // @@protoc_insertion_point(field_mutable:progame.mailinfo.sender)
+  // @@protoc_insertion_point(field_mutable:NFMsg.mailinfo.sender)
   return sender_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
 inline ::std::string* mailinfo::release_sender() {
-  // @@protoc_insertion_point(field_release:progame.mailinfo.sender)
+  // @@protoc_insertion_point(field_release:NFMsg.mailinfo.sender)
   if (!has_sender()) {
     return NULL;
   }
@@ -7952,7 +7952,7 @@ inline void mailinfo::set_allocated_sender(::std::string* sender) {
     clear_has_sender();
   }
   sender_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), sender);
-  // @@protoc_insertion_point(field_set_allocated:progame.mailinfo.sender)
+  // @@protoc_insertion_point(field_set_allocated:NFMsg.mailinfo.sender)
 }
 
 // optional int32 receiverid = 4;
@@ -7970,13 +7970,13 @@ inline void mailinfo::clear_receiverid() {
   clear_has_receiverid();
 }
 inline ::google::protobuf::int32 mailinfo::receiverid() const {
-  // @@protoc_insertion_point(field_get:progame.mailinfo.receiverid)
+  // @@protoc_insertion_point(field_get:NFMsg.mailinfo.receiverid)
   return receiverid_;
 }
 inline void mailinfo::set_receiverid(::google::protobuf::int32 value) {
   set_has_receiverid();
   receiverid_ = value;
-  // @@protoc_insertion_point(field_set:progame.mailinfo.receiverid)
+  // @@protoc_insertion_point(field_set:NFMsg.mailinfo.receiverid)
 }
 
 // optional string receiver = 5;
@@ -7994,41 +7994,41 @@ inline void mailinfo::clear_receiver() {
   clear_has_receiver();
 }
 inline const ::std::string& mailinfo::receiver() const {
-  // @@protoc_insertion_point(field_get:progame.mailinfo.receiver)
+  // @@protoc_insertion_point(field_get:NFMsg.mailinfo.receiver)
   return receiver_.GetNoArena();
 }
 inline void mailinfo::set_receiver(const ::std::string& value) {
   set_has_receiver();
   receiver_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
-  // @@protoc_insertion_point(field_set:progame.mailinfo.receiver)
+  // @@protoc_insertion_point(field_set:NFMsg.mailinfo.receiver)
 }
 #if LANG_CXX11
 inline void mailinfo::set_receiver(::std::string&& value) {
   set_has_receiver();
   receiver_.SetNoArena(
     &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
-  // @@protoc_insertion_point(field_set_rvalue:progame.mailinfo.receiver)
+  // @@protoc_insertion_point(field_set_rvalue:NFMsg.mailinfo.receiver)
 }
 #endif
 inline void mailinfo::set_receiver(const char* value) {
   GOOGLE_DCHECK(value != NULL);
   set_has_receiver();
   receiver_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
-  // @@protoc_insertion_point(field_set_char:progame.mailinfo.receiver)
+  // @@protoc_insertion_point(field_set_char:NFMsg.mailinfo.receiver)
 }
 inline void mailinfo::set_receiver(const char* value, size_t size) {
   set_has_receiver();
   receiver_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
       ::std::string(reinterpret_cast<const char*>(value), size));
-  // @@protoc_insertion_point(field_set_pointer:progame.mailinfo.receiver)
+  // @@protoc_insertion_point(field_set_pointer:NFMsg.mailinfo.receiver)
 }
 inline ::std::string* mailinfo::mutable_receiver() {
   set_has_receiver();
-  // @@protoc_insertion_point(field_mutable:progame.mailinfo.receiver)
+  // @@protoc_insertion_point(field_mutable:NFMsg.mailinfo.receiver)
   return receiver_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
 inline ::std::string* mailinfo::release_receiver() {
-  // @@protoc_insertion_point(field_release:progame.mailinfo.receiver)
+  // @@protoc_insertion_point(field_release:NFMsg.mailinfo.receiver)
   if (!has_receiver()) {
     return NULL;
   }
@@ -8042,7 +8042,7 @@ inline void mailinfo::set_allocated_receiver(::std::string* receiver) {
     clear_has_receiver();
   }
   receiver_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), receiver);
-  // @@protoc_insertion_point(field_set_allocated:progame.mailinfo.receiver)
+  // @@protoc_insertion_point(field_set_allocated:NFMsg.mailinfo.receiver)
 }
 
 // optional int32 mailtype = 6;
@@ -8060,13 +8060,13 @@ inline void mailinfo::clear_mailtype() {
   clear_has_mailtype();
 }
 inline ::google::protobuf::int32 mailinfo::mailtype() const {
-  // @@protoc_insertion_point(field_get:progame.mailinfo.mailtype)
+  // @@protoc_insertion_point(field_get:NFMsg.mailinfo.mailtype)
   return mailtype_;
 }
 inline void mailinfo::set_mailtype(::google::protobuf::int32 value) {
   set_has_mailtype();
   mailtype_ = value;
-  // @@protoc_insertion_point(field_set:progame.mailinfo.mailtype)
+  // @@protoc_insertion_point(field_set:NFMsg.mailinfo.mailtype)
 }
 
 // optional string title = 7;
@@ -8084,41 +8084,41 @@ inline void mailinfo::clear_title() {
   clear_has_title();
 }
 inline const ::std::string& mailinfo::title() const {
-  // @@protoc_insertion_point(field_get:progame.mailinfo.title)
+  // @@protoc_insertion_point(field_get:NFMsg.mailinfo.title)
   return title_.GetNoArena();
 }
 inline void mailinfo::set_title(const ::std::string& value) {
   set_has_title();
   title_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
-  // @@protoc_insertion_point(field_set:progame.mailinfo.title)
+  // @@protoc_insertion_point(field_set:NFMsg.mailinfo.title)
 }
 #if LANG_CXX11
 inline void mailinfo::set_title(::std::string&& value) {
   set_has_title();
   title_.SetNoArena(
     &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
-  // @@protoc_insertion_point(field_set_rvalue:progame.mailinfo.title)
+  // @@protoc_insertion_point(field_set_rvalue:NFMsg.mailinfo.title)
 }
 #endif
 inline void mailinfo::set_title(const char* value) {
   GOOGLE_DCHECK(value != NULL);
   set_has_title();
   title_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
-  // @@protoc_insertion_point(field_set_char:progame.mailinfo.title)
+  // @@protoc_insertion_point(field_set_char:NFMsg.mailinfo.title)
 }
 inline void mailinfo::set_title(const char* value, size_t size) {
   set_has_title();
   title_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
       ::std::string(reinterpret_cast<const char*>(value), size));
-  // @@protoc_insertion_point(field_set_pointer:progame.mailinfo.title)
+  // @@protoc_insertion_point(field_set_pointer:NFMsg.mailinfo.title)
 }
 inline ::std::string* mailinfo::mutable_title() {
   set_has_title();
-  // @@protoc_insertion_point(field_mutable:progame.mailinfo.title)
+  // @@protoc_insertion_point(field_mutable:NFMsg.mailinfo.title)
   return title_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
 inline ::std::string* mailinfo::release_title() {
-  // @@protoc_insertion_point(field_release:progame.mailinfo.title)
+  // @@protoc_insertion_point(field_release:NFMsg.mailinfo.title)
   if (!has_title()) {
     return NULL;
   }
@@ -8132,7 +8132,7 @@ inline void mailinfo::set_allocated_title(::std::string* title) {
     clear_has_title();
   }
   title_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), title);
-  // @@protoc_insertion_point(field_set_allocated:progame.mailinfo.title)
+  // @@protoc_insertion_point(field_set_allocated:NFMsg.mailinfo.title)
 }
 
 // optional string content = 8;
@@ -8150,41 +8150,41 @@ inline void mailinfo::clear_content() {
   clear_has_content();
 }
 inline const ::std::string& mailinfo::content() const {
-  // @@protoc_insertion_point(field_get:progame.mailinfo.content)
+  // @@protoc_insertion_point(field_get:NFMsg.mailinfo.content)
   return content_.GetNoArena();
 }
 inline void mailinfo::set_content(const ::std::string& value) {
   set_has_content();
   content_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
-  // @@protoc_insertion_point(field_set:progame.mailinfo.content)
+  // @@protoc_insertion_point(field_set:NFMsg.mailinfo.content)
 }
 #if LANG_CXX11
 inline void mailinfo::set_content(::std::string&& value) {
   set_has_content();
   content_.SetNoArena(
     &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
-  // @@protoc_insertion_point(field_set_rvalue:progame.mailinfo.content)
+  // @@protoc_insertion_point(field_set_rvalue:NFMsg.mailinfo.content)
 }
 #endif
 inline void mailinfo::set_content(const char* value) {
   GOOGLE_DCHECK(value != NULL);
   set_has_content();
   content_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
-  // @@protoc_insertion_point(field_set_char:progame.mailinfo.content)
+  // @@protoc_insertion_point(field_set_char:NFMsg.mailinfo.content)
 }
 inline void mailinfo::set_content(const char* value, size_t size) {
   set_has_content();
   content_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
       ::std::string(reinterpret_cast<const char*>(value), size));
-  // @@protoc_insertion_point(field_set_pointer:progame.mailinfo.content)
+  // @@protoc_insertion_point(field_set_pointer:NFMsg.mailinfo.content)
 }
 inline ::std::string* mailinfo::mutable_content() {
   set_has_content();
-  // @@protoc_insertion_point(field_mutable:progame.mailinfo.content)
+  // @@protoc_insertion_point(field_mutable:NFMsg.mailinfo.content)
   return content_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
 inline ::std::string* mailinfo::release_content() {
-  // @@protoc_insertion_point(field_release:progame.mailinfo.content)
+  // @@protoc_insertion_point(field_release:NFMsg.mailinfo.content)
   if (!has_content()) {
     return NULL;
   }
@@ -8198,7 +8198,7 @@ inline void mailinfo::set_allocated_content(::std::string* content) {
     clear_has_content();
   }
   content_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), content);
-  // @@protoc_insertion_point(field_set_allocated:progame.mailinfo.content)
+  // @@protoc_insertion_point(field_set_allocated:NFMsg.mailinfo.content)
 }
 
 // optional string senddate = 9;
@@ -8216,41 +8216,41 @@ inline void mailinfo::clear_senddate() {
   clear_has_senddate();
 }
 inline const ::std::string& mailinfo::senddate() const {
-  // @@protoc_insertion_point(field_get:progame.mailinfo.senddate)
+  // @@protoc_insertion_point(field_get:NFMsg.mailinfo.senddate)
   return senddate_.GetNoArena();
 }
 inline void mailinfo::set_senddate(const ::std::string& value) {
   set_has_senddate();
   senddate_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
-  // @@protoc_insertion_point(field_set:progame.mailinfo.senddate)
+  // @@protoc_insertion_point(field_set:NFMsg.mailinfo.senddate)
 }
 #if LANG_CXX11
 inline void mailinfo::set_senddate(::std::string&& value) {
   set_has_senddate();
   senddate_.SetNoArena(
     &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
-  // @@protoc_insertion_point(field_set_rvalue:progame.mailinfo.senddate)
+  // @@protoc_insertion_point(field_set_rvalue:NFMsg.mailinfo.senddate)
 }
 #endif
 inline void mailinfo::set_senddate(const char* value) {
   GOOGLE_DCHECK(value != NULL);
   set_has_senddate();
   senddate_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
-  // @@protoc_insertion_point(field_set_char:progame.mailinfo.senddate)
+  // @@protoc_insertion_point(field_set_char:NFMsg.mailinfo.senddate)
 }
 inline void mailinfo::set_senddate(const char* value, size_t size) {
   set_has_senddate();
   senddate_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
       ::std::string(reinterpret_cast<const char*>(value), size));
-  // @@protoc_insertion_point(field_set_pointer:progame.mailinfo.senddate)
+  // @@protoc_insertion_point(field_set_pointer:NFMsg.mailinfo.senddate)
 }
 inline ::std::string* mailinfo::mutable_senddate() {
   set_has_senddate();
-  // @@protoc_insertion_point(field_mutable:progame.mailinfo.senddate)
+  // @@protoc_insertion_point(field_mutable:NFMsg.mailinfo.senddate)
   return senddate_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
 inline ::std::string* mailinfo::release_senddate() {
-  // @@protoc_insertion_point(field_release:progame.mailinfo.senddate)
+  // @@protoc_insertion_point(field_release:NFMsg.mailinfo.senddate)
   if (!has_senddate()) {
     return NULL;
   }
@@ -8264,7 +8264,7 @@ inline void mailinfo::set_allocated_senddate(::std::string* senddate) {
     clear_has_senddate();
   }
   senddate_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), senddate);
-  // @@protoc_insertion_point(field_set_allocated:progame.mailinfo.senddate)
+  // @@protoc_insertion_point(field_set_allocated:NFMsg.mailinfo.senddate)
 }
 
 // optional string markdate = 10;
@@ -8282,41 +8282,41 @@ inline void mailinfo::clear_markdate() {
   clear_has_markdate();
 }
 inline const ::std::string& mailinfo::markdate() const {
-  // @@protoc_insertion_point(field_get:progame.mailinfo.markdate)
+  // @@protoc_insertion_point(field_get:NFMsg.mailinfo.markdate)
   return markdate_.GetNoArena();
 }
 inline void mailinfo::set_markdate(const ::std::string& value) {
   set_has_markdate();
   markdate_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
-  // @@protoc_insertion_point(field_set:progame.mailinfo.markdate)
+  // @@protoc_insertion_point(field_set:NFMsg.mailinfo.markdate)
 }
 #if LANG_CXX11
 inline void mailinfo::set_markdate(::std::string&& value) {
   set_has_markdate();
   markdate_.SetNoArena(
     &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
-  // @@protoc_insertion_point(field_set_rvalue:progame.mailinfo.markdate)
+  // @@protoc_insertion_point(field_set_rvalue:NFMsg.mailinfo.markdate)
 }
 #endif
 inline void mailinfo::set_markdate(const char* value) {
   GOOGLE_DCHECK(value != NULL);
   set_has_markdate();
   markdate_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
-  // @@protoc_insertion_point(field_set_char:progame.mailinfo.markdate)
+  // @@protoc_insertion_point(field_set_char:NFMsg.mailinfo.markdate)
 }
 inline void mailinfo::set_markdate(const char* value, size_t size) {
   set_has_markdate();
   markdate_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
       ::std::string(reinterpret_cast<const char*>(value), size));
-  // @@protoc_insertion_point(field_set_pointer:progame.mailinfo.markdate)
+  // @@protoc_insertion_point(field_set_pointer:NFMsg.mailinfo.markdate)
 }
 inline ::std::string* mailinfo::mutable_markdate() {
   set_has_markdate();
-  // @@protoc_insertion_point(field_mutable:progame.mailinfo.markdate)
+  // @@protoc_insertion_point(field_mutable:NFMsg.mailinfo.markdate)
   return markdate_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
 inline ::std::string* mailinfo::release_markdate() {
-  // @@protoc_insertion_point(field_release:progame.mailinfo.markdate)
+  // @@protoc_insertion_point(field_release:NFMsg.mailinfo.markdate)
   if (!has_markdate()) {
     return NULL;
   }
@@ -8330,7 +8330,7 @@ inline void mailinfo::set_allocated_markdate(::std::string* markdate) {
     clear_has_markdate();
   }
   markdate_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), markdate);
-  // @@protoc_insertion_point(field_set_allocated:progame.mailinfo.markdate)
+  // @@protoc_insertion_point(field_set_allocated:NFMsg.mailinfo.markdate)
 }
 
 // optional int32 mailstate = 11;
@@ -8348,13 +8348,13 @@ inline void mailinfo::clear_mailstate() {
   clear_has_mailstate();
 }
 inline ::google::protobuf::int32 mailinfo::mailstate() const {
-  // @@protoc_insertion_point(field_get:progame.mailinfo.mailstate)
+  // @@protoc_insertion_point(field_get:NFMsg.mailinfo.mailstate)
   return mailstate_;
 }
 inline void mailinfo::set_mailstate(::google::protobuf::int32 value) {
   set_has_mailstate();
   mailstate_ = value;
-  // @@protoc_insertion_point(field_set:progame.mailinfo.mailstate)
+  // @@protoc_insertion_point(field_set:NFMsg.mailinfo.mailstate)
 }
 
 // optional string externdata = 12;
@@ -8372,41 +8372,41 @@ inline void mailinfo::clear_externdata() {
   clear_has_externdata();
 }
 inline const ::std::string& mailinfo::externdata() const {
-  // @@protoc_insertion_point(field_get:progame.mailinfo.externdata)
+  // @@protoc_insertion_point(field_get:NFMsg.mailinfo.externdata)
   return externdata_.GetNoArena();
 }
 inline void mailinfo::set_externdata(const ::std::string& value) {
   set_has_externdata();
   externdata_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
-  // @@protoc_insertion_point(field_set:progame.mailinfo.externdata)
+  // @@protoc_insertion_point(field_set:NFMsg.mailinfo.externdata)
 }
 #if LANG_CXX11
 inline void mailinfo::set_externdata(::std::string&& value) {
   set_has_externdata();
   externdata_.SetNoArena(
     &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
-  // @@protoc_insertion_point(field_set_rvalue:progame.mailinfo.externdata)
+  // @@protoc_insertion_point(field_set_rvalue:NFMsg.mailinfo.externdata)
 }
 #endif
 inline void mailinfo::set_externdata(const char* value) {
   GOOGLE_DCHECK(value != NULL);
   set_has_externdata();
   externdata_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
-  // @@protoc_insertion_point(field_set_char:progame.mailinfo.externdata)
+  // @@protoc_insertion_point(field_set_char:NFMsg.mailinfo.externdata)
 }
 inline void mailinfo::set_externdata(const char* value, size_t size) {
   set_has_externdata();
   externdata_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
       ::std::string(reinterpret_cast<const char*>(value), size));
-  // @@protoc_insertion_point(field_set_pointer:progame.mailinfo.externdata)
+  // @@protoc_insertion_point(field_set_pointer:NFMsg.mailinfo.externdata)
 }
 inline ::std::string* mailinfo::mutable_externdata() {
   set_has_externdata();
-  // @@protoc_insertion_point(field_mutable:progame.mailinfo.externdata)
+  // @@protoc_insertion_point(field_mutable:NFMsg.mailinfo.externdata)
   return externdata_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
 inline ::std::string* mailinfo::release_externdata() {
-  // @@protoc_insertion_point(field_release:progame.mailinfo.externdata)
+  // @@protoc_insertion_point(field_release:NFMsg.mailinfo.externdata)
   if (!has_externdata()) {
     return NULL;
   }
@@ -8420,7 +8420,7 @@ inline void mailinfo::set_allocated_externdata(::std::string* externdata) {
     clear_has_externdata();
   }
   externdata_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), externdata);
-  // @@protoc_insertion_point(field_set_allocated:progame.mailinfo.externdata)
+  // @@protoc_insertion_point(field_set_allocated:NFMsg.mailinfo.externdata)
 }
 
 // optional string remark = 13;
@@ -8438,41 +8438,41 @@ inline void mailinfo::clear_remark() {
   clear_has_remark();
 }
 inline const ::std::string& mailinfo::remark() const {
-  // @@protoc_insertion_point(field_get:progame.mailinfo.remark)
+  // @@protoc_insertion_point(field_get:NFMsg.mailinfo.remark)
   return remark_.GetNoArena();
 }
 inline void mailinfo::set_remark(const ::std::string& value) {
   set_has_remark();
   remark_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
-  // @@protoc_insertion_point(field_set:progame.mailinfo.remark)
+  // @@protoc_insertion_point(field_set:NFMsg.mailinfo.remark)
 }
 #if LANG_CXX11
 inline void mailinfo::set_remark(::std::string&& value) {
   set_has_remark();
   remark_.SetNoArena(
     &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
-  // @@protoc_insertion_point(field_set_rvalue:progame.mailinfo.remark)
+  // @@protoc_insertion_point(field_set_rvalue:NFMsg.mailinfo.remark)
 }
 #endif
 inline void mailinfo::set_remark(const char* value) {
   GOOGLE_DCHECK(value != NULL);
   set_has_remark();
   remark_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
-  // @@protoc_insertion_point(field_set_char:progame.mailinfo.remark)
+  // @@protoc_insertion_point(field_set_char:NFMsg.mailinfo.remark)
 }
 inline void mailinfo::set_remark(const char* value, size_t size) {
   set_has_remark();
   remark_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
       ::std::string(reinterpret_cast<const char*>(value), size));
-  // @@protoc_insertion_point(field_set_pointer:progame.mailinfo.remark)
+  // @@protoc_insertion_point(field_set_pointer:NFMsg.mailinfo.remark)
 }
 inline ::std::string* mailinfo::mutable_remark() {
   set_has_remark();
-  // @@protoc_insertion_point(field_mutable:progame.mailinfo.remark)
+  // @@protoc_insertion_point(field_mutable:NFMsg.mailinfo.remark)
   return remark_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
 inline ::std::string* mailinfo::release_remark() {
-  // @@protoc_insertion_point(field_release:progame.mailinfo.remark)
+  // @@protoc_insertion_point(field_release:NFMsg.mailinfo.remark)
   if (!has_remark()) {
     return NULL;
   }
@@ -8486,7 +8486,7 @@ inline void mailinfo::set_allocated_remark(::std::string* remark) {
     clear_has_remark();
   }
   remark_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), remark);
-  // @@protoc_insertion_point(field_set_allocated:progame.mailinfo.remark)
+  // @@protoc_insertion_point(field_set_allocated:NFMsg.mailinfo.remark)
 }
 
 // optional int32 validity = 14;
@@ -8504,46 +8504,46 @@ inline void mailinfo::clear_validity() {
   clear_has_validity();
 }
 inline ::google::protobuf::int32 mailinfo::validity() const {
-  // @@protoc_insertion_point(field_get:progame.mailinfo.validity)
+  // @@protoc_insertion_point(field_get:NFMsg.mailinfo.validity)
   return validity_;
 }
 inline void mailinfo::set_validity(::google::protobuf::int32 value) {
   set_has_validity();
   validity_ = value;
-  // @@protoc_insertion_point(field_set:progame.mailinfo.validity)
+  // @@protoc_insertion_point(field_set:NFMsg.mailinfo.validity)
 }
 
 // -------------------------------------------------------------------
 
 // maillist
 
-// repeated .progame.mailinfo mlist = 1;
+// repeated .NFMsg.mailinfo mlist = 1;
 inline int maillist::mlist_size() const {
   return mlist_.size();
 }
 inline void maillist::clear_mlist() {
   mlist_.Clear();
 }
-inline ::progame::mailinfo* maillist::mutable_mlist(int index) {
-  // @@protoc_insertion_point(field_mutable:progame.maillist.mlist)
+inline ::NFMsg::mailinfo* maillist::mutable_mlist(int index) {
+  // @@protoc_insertion_point(field_mutable:NFMsg.maillist.mlist)
   return mlist_.Mutable(index);
 }
-inline ::google::protobuf::RepeatedPtrField< ::progame::mailinfo >*
+inline ::google::protobuf::RepeatedPtrField< ::NFMsg::mailinfo >*
 maillist::mutable_mlist() {
-  // @@protoc_insertion_point(field_mutable_list:progame.maillist.mlist)
+  // @@protoc_insertion_point(field_mutable_list:NFMsg.maillist.mlist)
   return &mlist_;
 }
-inline const ::progame::mailinfo& maillist::mlist(int index) const {
-  // @@protoc_insertion_point(field_get:progame.maillist.mlist)
+inline const ::NFMsg::mailinfo& maillist::mlist(int index) const {
+  // @@protoc_insertion_point(field_get:NFMsg.maillist.mlist)
   return mlist_.Get(index);
 }
-inline ::progame::mailinfo* maillist::add_mlist() {
-  // @@protoc_insertion_point(field_add:progame.maillist.mlist)
+inline ::NFMsg::mailinfo* maillist::add_mlist() {
+  // @@protoc_insertion_point(field_add:NFMsg.maillist.mlist)
   return mlist_.Add();
 }
-inline const ::google::protobuf::RepeatedPtrField< ::progame::mailinfo >&
+inline const ::google::protobuf::RepeatedPtrField< ::NFMsg::mailinfo >&
 maillist::mlist() const {
-  // @@protoc_insertion_point(field_list:progame.maillist.mlist)
+  // @@protoc_insertion_point(field_list:NFMsg.maillist.mlist)
   return mlist_;
 }
 
@@ -8566,13 +8566,13 @@ inline void inviteinfo::clear_userid() {
   clear_has_userid();
 }
 inline ::google::protobuf::int32 inviteinfo::userid() const {
-  // @@protoc_insertion_point(field_get:progame.inviteinfo.userid)
+  // @@protoc_insertion_point(field_get:NFMsg.inviteinfo.userid)
   return userid_;
 }
 inline void inviteinfo::set_userid(::google::protobuf::int32 value) {
   set_has_userid();
   userid_ = value;
-  // @@protoc_insertion_point(field_set:progame.inviteinfo.userid)
+  // @@protoc_insertion_point(field_set:NFMsg.inviteinfo.userid)
 }
 
 // optional int32 binduserid = 2;
@@ -8590,13 +8590,13 @@ inline void inviteinfo::clear_binduserid() {
   clear_has_binduserid();
 }
 inline ::google::protobuf::int32 inviteinfo::binduserid() const {
-  // @@protoc_insertion_point(field_get:progame.inviteinfo.binduserid)
+  // @@protoc_insertion_point(field_get:NFMsg.inviteinfo.binduserid)
   return binduserid_;
 }
 inline void inviteinfo::set_binduserid(::google::protobuf::int32 value) {
   set_has_binduserid();
   binduserid_ = value;
-  // @@protoc_insertion_point(field_set:progame.inviteinfo.binduserid)
+  // @@protoc_insertion_point(field_set:NFMsg.inviteinfo.binduserid)
 }
 
 // optional string bindnickname = 3;
@@ -8614,41 +8614,41 @@ inline void inviteinfo::clear_bindnickname() {
   clear_has_bindnickname();
 }
 inline const ::std::string& inviteinfo::bindnickname() const {
-  // @@protoc_insertion_point(field_get:progame.inviteinfo.bindnickname)
+  // @@protoc_insertion_point(field_get:NFMsg.inviteinfo.bindnickname)
   return bindnickname_.GetNoArena();
 }
 inline void inviteinfo::set_bindnickname(const ::std::string& value) {
   set_has_bindnickname();
   bindnickname_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
-  // @@protoc_insertion_point(field_set:progame.inviteinfo.bindnickname)
+  // @@protoc_insertion_point(field_set:NFMsg.inviteinfo.bindnickname)
 }
 #if LANG_CXX11
 inline void inviteinfo::set_bindnickname(::std::string&& value) {
   set_has_bindnickname();
   bindnickname_.SetNoArena(
     &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
-  // @@protoc_insertion_point(field_set_rvalue:progame.inviteinfo.bindnickname)
+  // @@protoc_insertion_point(field_set_rvalue:NFMsg.inviteinfo.bindnickname)
 }
 #endif
 inline void inviteinfo::set_bindnickname(const char* value) {
   GOOGLE_DCHECK(value != NULL);
   set_has_bindnickname();
   bindnickname_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
-  // @@protoc_insertion_point(field_set_char:progame.inviteinfo.bindnickname)
+  // @@protoc_insertion_point(field_set_char:NFMsg.inviteinfo.bindnickname)
 }
 inline void inviteinfo::set_bindnickname(const char* value, size_t size) {
   set_has_bindnickname();
   bindnickname_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
       ::std::string(reinterpret_cast<const char*>(value), size));
-  // @@protoc_insertion_point(field_set_pointer:progame.inviteinfo.bindnickname)
+  // @@protoc_insertion_point(field_set_pointer:NFMsg.inviteinfo.bindnickname)
 }
 inline ::std::string* inviteinfo::mutable_bindnickname() {
   set_has_bindnickname();
-  // @@protoc_insertion_point(field_mutable:progame.inviteinfo.bindnickname)
+  // @@protoc_insertion_point(field_mutable:NFMsg.inviteinfo.bindnickname)
   return bindnickname_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
 inline ::std::string* inviteinfo::release_bindnickname() {
-  // @@protoc_insertion_point(field_release:progame.inviteinfo.bindnickname)
+  // @@protoc_insertion_point(field_release:NFMsg.inviteinfo.bindnickname)
   if (!has_bindnickname()) {
     return NULL;
   }
@@ -8662,7 +8662,7 @@ inline void inviteinfo::set_allocated_bindnickname(::std::string* bindnickname) 
     clear_has_bindnickname();
   }
   bindnickname_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), bindnickname);
-  // @@protoc_insertion_point(field_set_allocated:progame.inviteinfo.bindnickname)
+  // @@protoc_insertion_point(field_set_allocated:NFMsg.inviteinfo.bindnickname)
 }
 
 // optional string bindfaceid = 4;
@@ -8680,41 +8680,41 @@ inline void inviteinfo::clear_bindfaceid() {
   clear_has_bindfaceid();
 }
 inline const ::std::string& inviteinfo::bindfaceid() const {
-  // @@protoc_insertion_point(field_get:progame.inviteinfo.bindfaceid)
+  // @@protoc_insertion_point(field_get:NFMsg.inviteinfo.bindfaceid)
   return bindfaceid_.GetNoArena();
 }
 inline void inviteinfo::set_bindfaceid(const ::std::string& value) {
   set_has_bindfaceid();
   bindfaceid_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
-  // @@protoc_insertion_point(field_set:progame.inviteinfo.bindfaceid)
+  // @@protoc_insertion_point(field_set:NFMsg.inviteinfo.bindfaceid)
 }
 #if LANG_CXX11
 inline void inviteinfo::set_bindfaceid(::std::string&& value) {
   set_has_bindfaceid();
   bindfaceid_.SetNoArena(
     &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
-  // @@protoc_insertion_point(field_set_rvalue:progame.inviteinfo.bindfaceid)
+  // @@protoc_insertion_point(field_set_rvalue:NFMsg.inviteinfo.bindfaceid)
 }
 #endif
 inline void inviteinfo::set_bindfaceid(const char* value) {
   GOOGLE_DCHECK(value != NULL);
   set_has_bindfaceid();
   bindfaceid_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
-  // @@protoc_insertion_point(field_set_char:progame.inviteinfo.bindfaceid)
+  // @@protoc_insertion_point(field_set_char:NFMsg.inviteinfo.bindfaceid)
 }
 inline void inviteinfo::set_bindfaceid(const char* value, size_t size) {
   set_has_bindfaceid();
   bindfaceid_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
       ::std::string(reinterpret_cast<const char*>(value), size));
-  // @@protoc_insertion_point(field_set_pointer:progame.inviteinfo.bindfaceid)
+  // @@protoc_insertion_point(field_set_pointer:NFMsg.inviteinfo.bindfaceid)
 }
 inline ::std::string* inviteinfo::mutable_bindfaceid() {
   set_has_bindfaceid();
-  // @@protoc_insertion_point(field_mutable:progame.inviteinfo.bindfaceid)
+  // @@protoc_insertion_point(field_mutable:NFMsg.inviteinfo.bindfaceid)
   return bindfaceid_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
 inline ::std::string* inviteinfo::release_bindfaceid() {
-  // @@protoc_insertion_point(field_release:progame.inviteinfo.bindfaceid)
+  // @@protoc_insertion_point(field_release:NFMsg.inviteinfo.bindfaceid)
   if (!has_bindfaceid()) {
     return NULL;
   }
@@ -8728,7 +8728,7 @@ inline void inviteinfo::set_allocated_bindfaceid(::std::string* bindfaceid) {
     clear_has_bindfaceid();
   }
   bindfaceid_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), bindfaceid);
-  // @@protoc_insertion_point(field_set_allocated:progame.inviteinfo.bindfaceid)
+  // @@protoc_insertion_point(field_set_allocated:NFMsg.inviteinfo.bindfaceid)
 }
 
 // optional string binddate = 5;
@@ -8746,41 +8746,41 @@ inline void inviteinfo::clear_binddate() {
   clear_has_binddate();
 }
 inline const ::std::string& inviteinfo::binddate() const {
-  // @@protoc_insertion_point(field_get:progame.inviteinfo.binddate)
+  // @@protoc_insertion_point(field_get:NFMsg.inviteinfo.binddate)
   return binddate_.GetNoArena();
 }
 inline void inviteinfo::set_binddate(const ::std::string& value) {
   set_has_binddate();
   binddate_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
-  // @@protoc_insertion_point(field_set:progame.inviteinfo.binddate)
+  // @@protoc_insertion_point(field_set:NFMsg.inviteinfo.binddate)
 }
 #if LANG_CXX11
 inline void inviteinfo::set_binddate(::std::string&& value) {
   set_has_binddate();
   binddate_.SetNoArena(
     &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
-  // @@protoc_insertion_point(field_set_rvalue:progame.inviteinfo.binddate)
+  // @@protoc_insertion_point(field_set_rvalue:NFMsg.inviteinfo.binddate)
 }
 #endif
 inline void inviteinfo::set_binddate(const char* value) {
   GOOGLE_DCHECK(value != NULL);
   set_has_binddate();
   binddate_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
-  // @@protoc_insertion_point(field_set_char:progame.inviteinfo.binddate)
+  // @@protoc_insertion_point(field_set_char:NFMsg.inviteinfo.binddate)
 }
 inline void inviteinfo::set_binddate(const char* value, size_t size) {
   set_has_binddate();
   binddate_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
       ::std::string(reinterpret_cast<const char*>(value), size));
-  // @@protoc_insertion_point(field_set_pointer:progame.inviteinfo.binddate)
+  // @@protoc_insertion_point(field_set_pointer:NFMsg.inviteinfo.binddate)
 }
 inline ::std::string* inviteinfo::mutable_binddate() {
   set_has_binddate();
-  // @@protoc_insertion_point(field_mutable:progame.inviteinfo.binddate)
+  // @@protoc_insertion_point(field_mutable:NFMsg.inviteinfo.binddate)
   return binddate_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
 inline ::std::string* inviteinfo::release_binddate() {
-  // @@protoc_insertion_point(field_release:progame.inviteinfo.binddate)
+  // @@protoc_insertion_point(field_release:NFMsg.inviteinfo.binddate)
   if (!has_binddate()) {
     return NULL;
   }
@@ -8794,7 +8794,7 @@ inline void inviteinfo::set_allocated_binddate(::std::string* binddate) {
     clear_has_binddate();
   }
   binddate_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), binddate);
-  // @@protoc_insertion_point(field_set_allocated:progame.inviteinfo.binddate)
+  // @@protoc_insertion_point(field_set_allocated:NFMsg.inviteinfo.binddate)
 }
 
 // -------------------------------------------------------------------
@@ -8816,13 +8816,13 @@ inline void givemoneyrecord::clear_userid() {
   clear_has_userid();
 }
 inline ::google::protobuf::int32 givemoneyrecord::userid() const {
-  // @@protoc_insertion_point(field_get:progame.givemoneyrecord.userid)
+  // @@protoc_insertion_point(field_get:NFMsg.givemoneyrecord.userid)
   return userid_;
 }
 inline void givemoneyrecord::set_userid(::google::protobuf::int32 value) {
   set_has_userid();
   userid_ = value;
-  // @@protoc_insertion_point(field_set:progame.givemoneyrecord.userid)
+  // @@protoc_insertion_point(field_set:NFMsg.givemoneyrecord.userid)
 }
 
 // optional string nickname = 2;
@@ -8840,41 +8840,41 @@ inline void givemoneyrecord::clear_nickname() {
   clear_has_nickname();
 }
 inline const ::std::string& givemoneyrecord::nickname() const {
-  // @@protoc_insertion_point(field_get:progame.givemoneyrecord.nickname)
+  // @@protoc_insertion_point(field_get:NFMsg.givemoneyrecord.nickname)
   return nickname_.GetNoArena();
 }
 inline void givemoneyrecord::set_nickname(const ::std::string& value) {
   set_has_nickname();
   nickname_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
-  // @@protoc_insertion_point(field_set:progame.givemoneyrecord.nickname)
+  // @@protoc_insertion_point(field_set:NFMsg.givemoneyrecord.nickname)
 }
 #if LANG_CXX11
 inline void givemoneyrecord::set_nickname(::std::string&& value) {
   set_has_nickname();
   nickname_.SetNoArena(
     &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
-  // @@protoc_insertion_point(field_set_rvalue:progame.givemoneyrecord.nickname)
+  // @@protoc_insertion_point(field_set_rvalue:NFMsg.givemoneyrecord.nickname)
 }
 #endif
 inline void givemoneyrecord::set_nickname(const char* value) {
   GOOGLE_DCHECK(value != NULL);
   set_has_nickname();
   nickname_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
-  // @@protoc_insertion_point(field_set_char:progame.givemoneyrecord.nickname)
+  // @@protoc_insertion_point(field_set_char:NFMsg.givemoneyrecord.nickname)
 }
 inline void givemoneyrecord::set_nickname(const char* value, size_t size) {
   set_has_nickname();
   nickname_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
       ::std::string(reinterpret_cast<const char*>(value), size));
-  // @@protoc_insertion_point(field_set_pointer:progame.givemoneyrecord.nickname)
+  // @@protoc_insertion_point(field_set_pointer:NFMsg.givemoneyrecord.nickname)
 }
 inline ::std::string* givemoneyrecord::mutable_nickname() {
   set_has_nickname();
-  // @@protoc_insertion_point(field_mutable:progame.givemoneyrecord.nickname)
+  // @@protoc_insertion_point(field_mutable:NFMsg.givemoneyrecord.nickname)
   return nickname_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
 inline ::std::string* givemoneyrecord::release_nickname() {
-  // @@protoc_insertion_point(field_release:progame.givemoneyrecord.nickname)
+  // @@protoc_insertion_point(field_release:NFMsg.givemoneyrecord.nickname)
   if (!has_nickname()) {
     return NULL;
   }
@@ -8888,7 +8888,7 @@ inline void givemoneyrecord::set_allocated_nickname(::std::string* nickname) {
     clear_has_nickname();
   }
   nickname_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), nickname);
-  // @@protoc_insertion_point(field_set_allocated:progame.givemoneyrecord.nickname)
+  // @@protoc_insertion_point(field_set_allocated:NFMsg.givemoneyrecord.nickname)
 }
 
 // optional int32 amount = 3;
@@ -8906,13 +8906,13 @@ inline void givemoneyrecord::clear_amount() {
   clear_has_amount();
 }
 inline ::google::protobuf::int32 givemoneyrecord::amount() const {
-  // @@protoc_insertion_point(field_get:progame.givemoneyrecord.amount)
+  // @@protoc_insertion_point(field_get:NFMsg.givemoneyrecord.amount)
   return amount_;
 }
 inline void givemoneyrecord::set_amount(::google::protobuf::int32 value) {
   set_has_amount();
   amount_ = value;
-  // @@protoc_insertion_point(field_set:progame.givemoneyrecord.amount)
+  // @@protoc_insertion_point(field_set:NFMsg.givemoneyrecord.amount)
 }
 
 // optional string timemark = 4;
@@ -8930,41 +8930,41 @@ inline void givemoneyrecord::clear_timemark() {
   clear_has_timemark();
 }
 inline const ::std::string& givemoneyrecord::timemark() const {
-  // @@protoc_insertion_point(field_get:progame.givemoneyrecord.timemark)
+  // @@protoc_insertion_point(field_get:NFMsg.givemoneyrecord.timemark)
   return timemark_.GetNoArena();
 }
 inline void givemoneyrecord::set_timemark(const ::std::string& value) {
   set_has_timemark();
   timemark_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
-  // @@protoc_insertion_point(field_set:progame.givemoneyrecord.timemark)
+  // @@protoc_insertion_point(field_set:NFMsg.givemoneyrecord.timemark)
 }
 #if LANG_CXX11
 inline void givemoneyrecord::set_timemark(::std::string&& value) {
   set_has_timemark();
   timemark_.SetNoArena(
     &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
-  // @@protoc_insertion_point(field_set_rvalue:progame.givemoneyrecord.timemark)
+  // @@protoc_insertion_point(field_set_rvalue:NFMsg.givemoneyrecord.timemark)
 }
 #endif
 inline void givemoneyrecord::set_timemark(const char* value) {
   GOOGLE_DCHECK(value != NULL);
   set_has_timemark();
   timemark_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
-  // @@protoc_insertion_point(field_set_char:progame.givemoneyrecord.timemark)
+  // @@protoc_insertion_point(field_set_char:NFMsg.givemoneyrecord.timemark)
 }
 inline void givemoneyrecord::set_timemark(const char* value, size_t size) {
   set_has_timemark();
   timemark_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
       ::std::string(reinterpret_cast<const char*>(value), size));
-  // @@protoc_insertion_point(field_set_pointer:progame.givemoneyrecord.timemark)
+  // @@protoc_insertion_point(field_set_pointer:NFMsg.givemoneyrecord.timemark)
 }
 inline ::std::string* givemoneyrecord::mutable_timemark() {
   set_has_timemark();
-  // @@protoc_insertion_point(field_mutable:progame.givemoneyrecord.timemark)
+  // @@protoc_insertion_point(field_mutable:NFMsg.givemoneyrecord.timemark)
   return timemark_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
 inline ::std::string* givemoneyrecord::release_timemark() {
-  // @@protoc_insertion_point(field_release:progame.givemoneyrecord.timemark)
+  // @@protoc_insertion_point(field_release:NFMsg.givemoneyrecord.timemark)
   if (!has_timemark()) {
     return NULL;
   }
@@ -8978,7 +8978,7 @@ inline void givemoneyrecord::set_allocated_timemark(::std::string* timemark) {
     clear_has_timemark();
   }
   timemark_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), timemark);
-  // @@protoc_insertion_point(field_set_allocated:progame.givemoneyrecord.timemark)
+  // @@protoc_insertion_point(field_set_allocated:NFMsg.givemoneyrecord.timemark)
 }
 
 // -------------------------------------------------------------------
@@ -9000,13 +9000,13 @@ inline void agencyinfo::clear_userid() {
   clear_has_userid();
 }
 inline ::google::protobuf::int32 agencyinfo::userid() const {
-  // @@protoc_insertion_point(field_get:progame.agencyinfo.userid)
+  // @@protoc_insertion_point(field_get:NFMsg.agencyinfo.userid)
   return userid_;
 }
 inline void agencyinfo::set_userid(::google::protobuf::int32 value) {
   set_has_userid();
   userid_ = value;
-  // @@protoc_insertion_point(field_set:progame.agencyinfo.userid)
+  // @@protoc_insertion_point(field_set:NFMsg.agencyinfo.userid)
 }
 
 // optional string invitestr = 2;
@@ -9024,41 +9024,41 @@ inline void agencyinfo::clear_invitestr() {
   clear_has_invitestr();
 }
 inline const ::std::string& agencyinfo::invitestr() const {
-  // @@protoc_insertion_point(field_get:progame.agencyinfo.invitestr)
+  // @@protoc_insertion_point(field_get:NFMsg.agencyinfo.invitestr)
   return invitestr_.GetNoArena();
 }
 inline void agencyinfo::set_invitestr(const ::std::string& value) {
   set_has_invitestr();
   invitestr_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
-  // @@protoc_insertion_point(field_set:progame.agencyinfo.invitestr)
+  // @@protoc_insertion_point(field_set:NFMsg.agencyinfo.invitestr)
 }
 #if LANG_CXX11
 inline void agencyinfo::set_invitestr(::std::string&& value) {
   set_has_invitestr();
   invitestr_.SetNoArena(
     &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
-  // @@protoc_insertion_point(field_set_rvalue:progame.agencyinfo.invitestr)
+  // @@protoc_insertion_point(field_set_rvalue:NFMsg.agencyinfo.invitestr)
 }
 #endif
 inline void agencyinfo::set_invitestr(const char* value) {
   GOOGLE_DCHECK(value != NULL);
   set_has_invitestr();
   invitestr_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
-  // @@protoc_insertion_point(field_set_char:progame.agencyinfo.invitestr)
+  // @@protoc_insertion_point(field_set_char:NFMsg.agencyinfo.invitestr)
 }
 inline void agencyinfo::set_invitestr(const char* value, size_t size) {
   set_has_invitestr();
   invitestr_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
       ::std::string(reinterpret_cast<const char*>(value), size));
-  // @@protoc_insertion_point(field_set_pointer:progame.agencyinfo.invitestr)
+  // @@protoc_insertion_point(field_set_pointer:NFMsg.agencyinfo.invitestr)
 }
 inline ::std::string* agencyinfo::mutable_invitestr() {
   set_has_invitestr();
-  // @@protoc_insertion_point(field_mutable:progame.agencyinfo.invitestr)
+  // @@protoc_insertion_point(field_mutable:NFMsg.agencyinfo.invitestr)
   return invitestr_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
 inline ::std::string* agencyinfo::release_invitestr() {
-  // @@protoc_insertion_point(field_release:progame.agencyinfo.invitestr)
+  // @@protoc_insertion_point(field_release:NFMsg.agencyinfo.invitestr)
   if (!has_invitestr()) {
     return NULL;
   }
@@ -9072,7 +9072,7 @@ inline void agencyinfo::set_allocated_invitestr(::std::string* invitestr) {
     clear_has_invitestr();
   }
   invitestr_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), invitestr);
-  // @@protoc_insertion_point(field_set_allocated:progame.agencyinfo.invitestr)
+  // @@protoc_insertion_point(field_set_allocated:NFMsg.agencyinfo.invitestr)
 }
 
 // optional int32 level = 3;
@@ -9090,13 +9090,13 @@ inline void agencyinfo::clear_level() {
   clear_has_level();
 }
 inline ::google::protobuf::int32 agencyinfo::level() const {
-  // @@protoc_insertion_point(field_get:progame.agencyinfo.level)
+  // @@protoc_insertion_point(field_get:NFMsg.agencyinfo.level)
   return level_;
 }
 inline void agencyinfo::set_level(::google::protobuf::int32 value) {
   set_has_level();
   level_ = value;
-  // @@protoc_insertion_point(field_set:progame.agencyinfo.level)
+  // @@protoc_insertion_point(field_set:NFMsg.agencyinfo.level)
 }
 
 // optional int32 soleagent = 4;
@@ -9114,13 +9114,13 @@ inline void agencyinfo::clear_soleagent() {
   clear_has_soleagent();
 }
 inline ::google::protobuf::int32 agencyinfo::soleagent() const {
-  // @@protoc_insertion_point(field_get:progame.agencyinfo.soleagent)
+  // @@protoc_insertion_point(field_get:NFMsg.agencyinfo.soleagent)
   return soleagent_;
 }
 inline void agencyinfo::set_soleagent(::google::protobuf::int32 value) {
   set_has_soleagent();
   soleagent_ = value;
-  // @@protoc_insertion_point(field_set:progame.agencyinfo.soleagent)
+  // @@protoc_insertion_point(field_set:NFMsg.agencyinfo.soleagent)
 }
 
 // optional int32 agent1 = 5;
@@ -9138,13 +9138,13 @@ inline void agencyinfo::clear_agent1() {
   clear_has_agent1();
 }
 inline ::google::protobuf::int32 agencyinfo::agent1() const {
-  // @@protoc_insertion_point(field_get:progame.agencyinfo.agent1)
+  // @@protoc_insertion_point(field_get:NFMsg.agencyinfo.agent1)
   return agent1_;
 }
 inline void agencyinfo::set_agent1(::google::protobuf::int32 value) {
   set_has_agent1();
   agent1_ = value;
-  // @@protoc_insertion_point(field_set:progame.agencyinfo.agent1)
+  // @@protoc_insertion_point(field_set:NFMsg.agencyinfo.agent1)
 }
 
 // optional int32 agent2 = 6;
@@ -9162,13 +9162,13 @@ inline void agencyinfo::clear_agent2() {
   clear_has_agent2();
 }
 inline ::google::protobuf::int32 agencyinfo::agent2() const {
-  // @@protoc_insertion_point(field_get:progame.agencyinfo.agent2)
+  // @@protoc_insertion_point(field_get:NFMsg.agencyinfo.agent2)
   return agent2_;
 }
 inline void agencyinfo::set_agent2(::google::protobuf::int32 value) {
   set_has_agent2();
   agent2_ = value;
-  // @@protoc_insertion_point(field_set:progame.agencyinfo.agent2)
+  // @@protoc_insertion_point(field_set:NFMsg.agencyinfo.agent2)
 }
 
 // optional int32 agent3 = 7;
@@ -9186,13 +9186,13 @@ inline void agencyinfo::clear_agent3() {
   clear_has_agent3();
 }
 inline ::google::protobuf::int32 agencyinfo::agent3() const {
-  // @@protoc_insertion_point(field_get:progame.agencyinfo.agent3)
+  // @@protoc_insertion_point(field_get:NFMsg.agencyinfo.agent3)
   return agent3_;
 }
 inline void agencyinfo::set_agent3(::google::protobuf::int32 value) {
   set_has_agent3();
   agent3_ = value;
-  // @@protoc_insertion_point(field_set:progame.agencyinfo.agent3)
+  // @@protoc_insertion_point(field_set:NFMsg.agencyinfo.agent3)
 }
 
 // optional int32 agent4 = 8;
@@ -9210,42 +9210,42 @@ inline void agencyinfo::clear_agent4() {
   clear_has_agent4();
 }
 inline ::google::protobuf::int32 agencyinfo::agent4() const {
-  // @@protoc_insertion_point(field_get:progame.agencyinfo.agent4)
+  // @@protoc_insertion_point(field_get:NFMsg.agencyinfo.agent4)
   return agent4_;
 }
 inline void agencyinfo::set_agent4(::google::protobuf::int32 value) {
   set_has_agent4();
   agent4_ = value;
-  // @@protoc_insertion_point(field_set:progame.agencyinfo.agent4)
+  // @@protoc_insertion_point(field_set:NFMsg.agencyinfo.agent4)
 }
 
-// repeated .progame.inviteinfo invitelist = 9;
+// repeated .NFMsg.inviteinfo invitelist = 9;
 inline int agencyinfo::invitelist_size() const {
   return invitelist_.size();
 }
 inline void agencyinfo::clear_invitelist() {
   invitelist_.Clear();
 }
-inline ::progame::inviteinfo* agencyinfo::mutable_invitelist(int index) {
-  // @@protoc_insertion_point(field_mutable:progame.agencyinfo.invitelist)
+inline ::NFMsg::inviteinfo* agencyinfo::mutable_invitelist(int index) {
+  // @@protoc_insertion_point(field_mutable:NFMsg.agencyinfo.invitelist)
   return invitelist_.Mutable(index);
 }
-inline ::google::protobuf::RepeatedPtrField< ::progame::inviteinfo >*
+inline ::google::protobuf::RepeatedPtrField< ::NFMsg::inviteinfo >*
 agencyinfo::mutable_invitelist() {
-  // @@protoc_insertion_point(field_mutable_list:progame.agencyinfo.invitelist)
+  // @@protoc_insertion_point(field_mutable_list:NFMsg.agencyinfo.invitelist)
   return &invitelist_;
 }
-inline const ::progame::inviteinfo& agencyinfo::invitelist(int index) const {
-  // @@protoc_insertion_point(field_get:progame.agencyinfo.invitelist)
+inline const ::NFMsg::inviteinfo& agencyinfo::invitelist(int index) const {
+  // @@protoc_insertion_point(field_get:NFMsg.agencyinfo.invitelist)
   return invitelist_.Get(index);
 }
-inline ::progame::inviteinfo* agencyinfo::add_invitelist() {
-  // @@protoc_insertion_point(field_add:progame.agencyinfo.invitelist)
+inline ::NFMsg::inviteinfo* agencyinfo::add_invitelist() {
+  // @@protoc_insertion_point(field_add:NFMsg.agencyinfo.invitelist)
   return invitelist_.Add();
 }
-inline const ::google::protobuf::RepeatedPtrField< ::progame::inviteinfo >&
+inline const ::google::protobuf::RepeatedPtrField< ::NFMsg::inviteinfo >&
 agencyinfo::invitelist() const {
-  // @@protoc_insertion_point(field_list:progame.agencyinfo.invitelist)
+  // @@protoc_insertion_point(field_list:NFMsg.agencyinfo.invitelist)
   return invitelist_;
 }
 
@@ -9264,41 +9264,41 @@ inline void agencyinfo::clear_qrcodeurl() {
   clear_has_qrcodeurl();
 }
 inline const ::std::string& agencyinfo::qrcodeurl() const {
-  // @@protoc_insertion_point(field_get:progame.agencyinfo.qrcodeurl)
+  // @@protoc_insertion_point(field_get:NFMsg.agencyinfo.qrcodeurl)
   return qrcodeurl_.GetNoArena();
 }
 inline void agencyinfo::set_qrcodeurl(const ::std::string& value) {
   set_has_qrcodeurl();
   qrcodeurl_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
-  // @@protoc_insertion_point(field_set:progame.agencyinfo.qrcodeurl)
+  // @@protoc_insertion_point(field_set:NFMsg.agencyinfo.qrcodeurl)
 }
 #if LANG_CXX11
 inline void agencyinfo::set_qrcodeurl(::std::string&& value) {
   set_has_qrcodeurl();
   qrcodeurl_.SetNoArena(
     &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
-  // @@protoc_insertion_point(field_set_rvalue:progame.agencyinfo.qrcodeurl)
+  // @@protoc_insertion_point(field_set_rvalue:NFMsg.agencyinfo.qrcodeurl)
 }
 #endif
 inline void agencyinfo::set_qrcodeurl(const char* value) {
   GOOGLE_DCHECK(value != NULL);
   set_has_qrcodeurl();
   qrcodeurl_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
-  // @@protoc_insertion_point(field_set_char:progame.agencyinfo.qrcodeurl)
+  // @@protoc_insertion_point(field_set_char:NFMsg.agencyinfo.qrcodeurl)
 }
 inline void agencyinfo::set_qrcodeurl(const char* value, size_t size) {
   set_has_qrcodeurl();
   qrcodeurl_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
       ::std::string(reinterpret_cast<const char*>(value), size));
-  // @@protoc_insertion_point(field_set_pointer:progame.agencyinfo.qrcodeurl)
+  // @@protoc_insertion_point(field_set_pointer:NFMsg.agencyinfo.qrcodeurl)
 }
 inline ::std::string* agencyinfo::mutable_qrcodeurl() {
   set_has_qrcodeurl();
-  // @@protoc_insertion_point(field_mutable:progame.agencyinfo.qrcodeurl)
+  // @@protoc_insertion_point(field_mutable:NFMsg.agencyinfo.qrcodeurl)
   return qrcodeurl_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
 inline ::std::string* agencyinfo::release_qrcodeurl() {
-  // @@protoc_insertion_point(field_release:progame.agencyinfo.qrcodeurl)
+  // @@protoc_insertion_point(field_release:NFMsg.agencyinfo.qrcodeurl)
   if (!has_qrcodeurl()) {
     return NULL;
   }
@@ -9312,7 +9312,7 @@ inline void agencyinfo::set_allocated_qrcodeurl(::std::string* qrcodeurl) {
     clear_has_qrcodeurl();
   }
   qrcodeurl_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), qrcodeurl);
-  // @@protoc_insertion_point(field_set_allocated:progame.agencyinfo.qrcodeurl)
+  // @@protoc_insertion_point(field_set_allocated:NFMsg.agencyinfo.qrcodeurl)
 }
 
 // optional string datemark = 11;
@@ -9330,41 +9330,41 @@ inline void agencyinfo::clear_datemark() {
   clear_has_datemark();
 }
 inline const ::std::string& agencyinfo::datemark() const {
-  // @@protoc_insertion_point(field_get:progame.agencyinfo.datemark)
+  // @@protoc_insertion_point(field_get:NFMsg.agencyinfo.datemark)
   return datemark_.GetNoArena();
 }
 inline void agencyinfo::set_datemark(const ::std::string& value) {
   set_has_datemark();
   datemark_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
-  // @@protoc_insertion_point(field_set:progame.agencyinfo.datemark)
+  // @@protoc_insertion_point(field_set:NFMsg.agencyinfo.datemark)
 }
 #if LANG_CXX11
 inline void agencyinfo::set_datemark(::std::string&& value) {
   set_has_datemark();
   datemark_.SetNoArena(
     &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
-  // @@protoc_insertion_point(field_set_rvalue:progame.agencyinfo.datemark)
+  // @@protoc_insertion_point(field_set_rvalue:NFMsg.agencyinfo.datemark)
 }
 #endif
 inline void agencyinfo::set_datemark(const char* value) {
   GOOGLE_DCHECK(value != NULL);
   set_has_datemark();
   datemark_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
-  // @@protoc_insertion_point(field_set_char:progame.agencyinfo.datemark)
+  // @@protoc_insertion_point(field_set_char:NFMsg.agencyinfo.datemark)
 }
 inline void agencyinfo::set_datemark(const char* value, size_t size) {
   set_has_datemark();
   datemark_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
       ::std::string(reinterpret_cast<const char*>(value), size));
-  // @@protoc_insertion_point(field_set_pointer:progame.agencyinfo.datemark)
+  // @@protoc_insertion_point(field_set_pointer:NFMsg.agencyinfo.datemark)
 }
 inline ::std::string* agencyinfo::mutable_datemark() {
   set_has_datemark();
-  // @@protoc_insertion_point(field_mutable:progame.agencyinfo.datemark)
+  // @@protoc_insertion_point(field_mutable:NFMsg.agencyinfo.datemark)
   return datemark_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
 inline ::std::string* agencyinfo::release_datemark() {
-  // @@protoc_insertion_point(field_release:progame.agencyinfo.datemark)
+  // @@protoc_insertion_point(field_release:NFMsg.agencyinfo.datemark)
   if (!has_datemark()) {
     return NULL;
   }
@@ -9378,7 +9378,7 @@ inline void agencyinfo::set_allocated_datemark(::std::string* datemark) {
     clear_has_datemark();
   }
   datemark_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), datemark);
-  // @@protoc_insertion_point(field_set_allocated:progame.agencyinfo.datemark)
+  // @@protoc_insertion_point(field_set_allocated:NFMsg.agencyinfo.datemark)
 }
 
 // optional int32 moneymark = 12;
@@ -9396,13 +9396,13 @@ inline void agencyinfo::clear_moneymark() {
   clear_has_moneymark();
 }
 inline ::google::protobuf::int32 agencyinfo::moneymark() const {
-  // @@protoc_insertion_point(field_get:progame.agencyinfo.moneymark)
+  // @@protoc_insertion_point(field_get:NFMsg.agencyinfo.moneymark)
   return moneymark_;
 }
 inline void agencyinfo::set_moneymark(::google::protobuf::int32 value) {
   set_has_moneymark();
   moneymark_ = value;
-  // @@protoc_insertion_point(field_set:progame.agencyinfo.moneymark)
+  // @@protoc_insertion_point(field_set:NFMsg.agencyinfo.moneymark)
 }
 
 // optional int32 weekmoney = 13;
@@ -9420,42 +9420,42 @@ inline void agencyinfo::clear_weekmoney() {
   clear_has_weekmoney();
 }
 inline ::google::protobuf::int32 agencyinfo::weekmoney() const {
-  // @@protoc_insertion_point(field_get:progame.agencyinfo.weekmoney)
+  // @@protoc_insertion_point(field_get:NFMsg.agencyinfo.weekmoney)
   return weekmoney_;
 }
 inline void agencyinfo::set_weekmoney(::google::protobuf::int32 value) {
   set_has_weekmoney();
   weekmoney_ = value;
-  // @@protoc_insertion_point(field_set:progame.agencyinfo.weekmoney)
+  // @@protoc_insertion_point(field_set:NFMsg.agencyinfo.weekmoney)
 }
 
-// repeated .progame.givemoneyrecord givemoneylist = 14;
+// repeated .NFMsg.givemoneyrecord givemoneylist = 14;
 inline int agencyinfo::givemoneylist_size() const {
   return givemoneylist_.size();
 }
 inline void agencyinfo::clear_givemoneylist() {
   givemoneylist_.Clear();
 }
-inline ::progame::givemoneyrecord* agencyinfo::mutable_givemoneylist(int index) {
-  // @@protoc_insertion_point(field_mutable:progame.agencyinfo.givemoneylist)
+inline ::NFMsg::givemoneyrecord* agencyinfo::mutable_givemoneylist(int index) {
+  // @@protoc_insertion_point(field_mutable:NFMsg.agencyinfo.givemoneylist)
   return givemoneylist_.Mutable(index);
 }
-inline ::google::protobuf::RepeatedPtrField< ::progame::givemoneyrecord >*
+inline ::google::protobuf::RepeatedPtrField< ::NFMsg::givemoneyrecord >*
 agencyinfo::mutable_givemoneylist() {
-  // @@protoc_insertion_point(field_mutable_list:progame.agencyinfo.givemoneylist)
+  // @@protoc_insertion_point(field_mutable_list:NFMsg.agencyinfo.givemoneylist)
   return &givemoneylist_;
 }
-inline const ::progame::givemoneyrecord& agencyinfo::givemoneylist(int index) const {
-  // @@protoc_insertion_point(field_get:progame.agencyinfo.givemoneylist)
+inline const ::NFMsg::givemoneyrecord& agencyinfo::givemoneylist(int index) const {
+  // @@protoc_insertion_point(field_get:NFMsg.agencyinfo.givemoneylist)
   return givemoneylist_.Get(index);
 }
-inline ::progame::givemoneyrecord* agencyinfo::add_givemoneylist() {
-  // @@protoc_insertion_point(field_add:progame.agencyinfo.givemoneylist)
+inline ::NFMsg::givemoneyrecord* agencyinfo::add_givemoneylist() {
+  // @@protoc_insertion_point(field_add:NFMsg.agencyinfo.givemoneylist)
   return givemoneylist_.Add();
 }
-inline const ::google::protobuf::RepeatedPtrField< ::progame::givemoneyrecord >&
+inline const ::google::protobuf::RepeatedPtrField< ::NFMsg::givemoneyrecord >&
 agencyinfo::givemoneylist() const {
-  // @@protoc_insertion_point(field_list:progame.agencyinfo.givemoneylist)
+  // @@protoc_insertion_point(field_list:NFMsg.agencyinfo.givemoneylist)
   return givemoneylist_;
 }
 
@@ -9471,25 +9471,25 @@ inline void intlist::clear_ilist() {
   ilist_.Clear();
 }
 inline ::google::protobuf::int32 intlist::ilist(int index) const {
-  // @@protoc_insertion_point(field_get:progame.intlist.ilist)
+  // @@protoc_insertion_point(field_get:NFMsg.intlist.ilist)
   return ilist_.Get(index);
 }
 inline void intlist::set_ilist(int index, ::google::protobuf::int32 value) {
   ilist_.Set(index, value);
-  // @@protoc_insertion_point(field_set:progame.intlist.ilist)
+  // @@protoc_insertion_point(field_set:NFMsg.intlist.ilist)
 }
 inline void intlist::add_ilist(::google::protobuf::int32 value) {
   ilist_.Add(value);
-  // @@protoc_insertion_point(field_add:progame.intlist.ilist)
+  // @@protoc_insertion_point(field_add:NFMsg.intlist.ilist)
 }
 inline const ::google::protobuf::RepeatedField< ::google::protobuf::int32 >&
 intlist::ilist() const {
-  // @@protoc_insertion_point(field_list:progame.intlist.ilist)
+  // @@protoc_insertion_point(field_list:NFMsg.intlist.ilist)
   return ilist_;
 }
 inline ::google::protobuf::RepeatedField< ::google::protobuf::int32 >*
 intlist::mutable_ilist() {
-  // @@protoc_insertion_point(field_mutable_list:progame.intlist.ilist)
+  // @@protoc_insertion_point(field_mutable_list:NFMsg.intlist.ilist)
   return &ilist_;
 }
 
@@ -9505,64 +9505,64 @@ inline void stringlist::clear_slist() {
   slist_.Clear();
 }
 inline const ::std::string& stringlist::slist(int index) const {
-  // @@protoc_insertion_point(field_get:progame.stringlist.slist)
+  // @@protoc_insertion_point(field_get:NFMsg.stringlist.slist)
   return slist_.Get(index);
 }
 inline ::std::string* stringlist::mutable_slist(int index) {
-  // @@protoc_insertion_point(field_mutable:progame.stringlist.slist)
+  // @@protoc_insertion_point(field_mutable:NFMsg.stringlist.slist)
   return slist_.Mutable(index);
 }
 inline void stringlist::set_slist(int index, const ::std::string& value) {
-  // @@protoc_insertion_point(field_set:progame.stringlist.slist)
+  // @@protoc_insertion_point(field_set:NFMsg.stringlist.slist)
   slist_.Mutable(index)->assign(value);
 }
 #if LANG_CXX11
 inline void stringlist::set_slist(int index, ::std::string&& value) {
-  // @@protoc_insertion_point(field_set:progame.stringlist.slist)
+  // @@protoc_insertion_point(field_set:NFMsg.stringlist.slist)
   slist_.Mutable(index)->assign(std::move(value));
 }
 #endif
 inline void stringlist::set_slist(int index, const char* value) {
   GOOGLE_DCHECK(value != NULL);
   slist_.Mutable(index)->assign(value);
-  // @@protoc_insertion_point(field_set_char:progame.stringlist.slist)
+  // @@protoc_insertion_point(field_set_char:NFMsg.stringlist.slist)
 }
 inline void stringlist::set_slist(int index, const char* value, size_t size) {
   slist_.Mutable(index)->assign(
     reinterpret_cast<const char*>(value), size);
-  // @@protoc_insertion_point(field_set_pointer:progame.stringlist.slist)
+  // @@protoc_insertion_point(field_set_pointer:NFMsg.stringlist.slist)
 }
 inline ::std::string* stringlist::add_slist() {
-  // @@protoc_insertion_point(field_add_mutable:progame.stringlist.slist)
+  // @@protoc_insertion_point(field_add_mutable:NFMsg.stringlist.slist)
   return slist_.Add();
 }
 inline void stringlist::add_slist(const ::std::string& value) {
   slist_.Add()->assign(value);
-  // @@protoc_insertion_point(field_add:progame.stringlist.slist)
+  // @@protoc_insertion_point(field_add:NFMsg.stringlist.slist)
 }
 #if LANG_CXX11
 inline void stringlist::add_slist(::std::string&& value) {
   slist_.Add(std::move(value));
-  // @@protoc_insertion_point(field_add:progame.stringlist.slist)
+  // @@protoc_insertion_point(field_add:NFMsg.stringlist.slist)
 }
 #endif
 inline void stringlist::add_slist(const char* value) {
   GOOGLE_DCHECK(value != NULL);
   slist_.Add()->assign(value);
-  // @@protoc_insertion_point(field_add_char:progame.stringlist.slist)
+  // @@protoc_insertion_point(field_add_char:NFMsg.stringlist.slist)
 }
 inline void stringlist::add_slist(const char* value, size_t size) {
   slist_.Add()->assign(reinterpret_cast<const char*>(value), size);
-  // @@protoc_insertion_point(field_add_pointer:progame.stringlist.slist)
+  // @@protoc_insertion_point(field_add_pointer:NFMsg.stringlist.slist)
 }
 inline const ::google::protobuf::RepeatedPtrField< ::std::string>&
 stringlist::slist() const {
-  // @@protoc_insertion_point(field_list:progame.stringlist.slist)
+  // @@protoc_insertion_point(field_list:NFMsg.stringlist.slist)
   return slist_;
 }
 inline ::google::protobuf::RepeatedPtrField< ::std::string>*
 stringlist::mutable_slist() {
-  // @@protoc_insertion_point(field_mutable_list:progame.stringlist.slist)
+  // @@protoc_insertion_point(field_mutable_list:NFMsg.stringlist.slist)
   return &slist_;
 }
 
@@ -9585,13 +9585,13 @@ inline void specialinfo::clear_userid() {
   clear_has_userid();
 }
 inline ::google::protobuf::int32 specialinfo::userid() const {
-  // @@protoc_insertion_point(field_get:progame.specialinfo.userid)
+  // @@protoc_insertion_point(field_get:NFMsg.specialinfo.userid)
   return userid_;
 }
 inline void specialinfo::set_userid(::google::protobuf::int32 value) {
   set_has_userid();
   userid_ = value;
-  // @@protoc_insertion_point(field_set:progame.specialinfo.userid)
+  // @@protoc_insertion_point(field_set:NFMsg.specialinfo.userid)
 }
 
 // optional int32 starttime = 2;
@@ -9609,13 +9609,13 @@ inline void specialinfo::clear_starttime() {
   clear_has_starttime();
 }
 inline ::google::protobuf::int32 specialinfo::starttime() const {
-  // @@protoc_insertion_point(field_get:progame.specialinfo.starttime)
+  // @@protoc_insertion_point(field_get:NFMsg.specialinfo.starttime)
   return starttime_;
 }
 inline void specialinfo::set_starttime(::google::protobuf::int32 value) {
   set_has_starttime();
   starttime_ = value;
-  // @@protoc_insertion_point(field_set:progame.specialinfo.starttime)
+  // @@protoc_insertion_point(field_set:NFMsg.specialinfo.starttime)
 }
 
 // optional int32 endtime = 3;
@@ -9633,13 +9633,13 @@ inline void specialinfo::clear_endtime() {
   clear_has_endtime();
 }
 inline ::google::protobuf::int32 specialinfo::endtime() const {
-  // @@protoc_insertion_point(field_get:progame.specialinfo.endtime)
+  // @@protoc_insertion_point(field_get:NFMsg.specialinfo.endtime)
   return endtime_;
 }
 inline void specialinfo::set_endtime(::google::protobuf::int32 value) {
   set_has_endtime();
   endtime_ = value;
-  // @@protoc_insertion_point(field_set:progame.specialinfo.endtime)
+  // @@protoc_insertion_point(field_set:NFMsg.specialinfo.endtime)
 }
 
 // optional int32 state = 4;
@@ -9657,13 +9657,13 @@ inline void specialinfo::clear_state() {
   clear_has_state();
 }
 inline ::google::protobuf::int32 specialinfo::state() const {
-  // @@protoc_insertion_point(field_get:progame.specialinfo.state)
+  // @@protoc_insertion_point(field_get:NFMsg.specialinfo.state)
   return state_;
 }
 inline void specialinfo::set_state(::google::protobuf::int32 value) {
   set_has_state();
   state_ = value;
-  // @@protoc_insertion_point(field_set:progame.specialinfo.state)
+  // @@protoc_insertion_point(field_set:NFMsg.specialinfo.state)
 }
 
 // optional int32 rate = 5;
@@ -9681,13 +9681,13 @@ inline void specialinfo::clear_rate() {
   clear_has_rate();
 }
 inline ::google::protobuf::int32 specialinfo::rate() const {
-  // @@protoc_insertion_point(field_get:progame.specialinfo.rate)
+  // @@protoc_insertion_point(field_get:NFMsg.specialinfo.rate)
   return rate_;
 }
 inline void specialinfo::set_rate(::google::protobuf::int32 value) {
   set_has_rate();
   rate_ = value;
-  // @@protoc_insertion_point(field_set:progame.specialinfo.rate)
+  // @@protoc_insertion_point(field_set:NFMsg.specialinfo.rate)
 }
 
 // optional int32 winall = 6;
@@ -9705,13 +9705,13 @@ inline void specialinfo::clear_winall() {
   clear_has_winall();
 }
 inline ::google::protobuf::int32 specialinfo::winall() const {
-  // @@protoc_insertion_point(field_get:progame.specialinfo.winall)
+  // @@protoc_insertion_point(field_get:NFMsg.specialinfo.winall)
   return winall_;
 }
 inline void specialinfo::set_winall(::google::protobuf::int32 value) {
   set_has_winall();
   winall_ = value;
-  // @@protoc_insertion_point(field_set:progame.specialinfo.winall)
+  // @@protoc_insertion_point(field_set:NFMsg.specialinfo.winall)
 }
 
 // optional int32 peinum = 7;
@@ -9729,13 +9729,13 @@ inline void specialinfo::clear_peinum() {
   clear_has_peinum();
 }
 inline ::google::protobuf::int32 specialinfo::peinum() const {
-  // @@protoc_insertion_point(field_get:progame.specialinfo.peinum)
+  // @@protoc_insertion_point(field_get:NFMsg.specialinfo.peinum)
   return peinum_;
 }
 inline void specialinfo::set_peinum(::google::protobuf::int32 value) {
   set_has_peinum();
   peinum_ = value;
-  // @@protoc_insertion_point(field_set:progame.specialinfo.peinum)
+  // @@protoc_insertion_point(field_set:NFMsg.specialinfo.peinum)
 }
 
 // optional int32 marknum = 8;
@@ -9753,13 +9753,13 @@ inline void specialinfo::clear_marknum() {
   clear_has_marknum();
 }
 inline ::google::protobuf::int32 specialinfo::marknum() const {
-  // @@protoc_insertion_point(field_get:progame.specialinfo.marknum)
+  // @@protoc_insertion_point(field_get:NFMsg.specialinfo.marknum)
   return marknum_;
 }
 inline void specialinfo::set_marknum(::google::protobuf::int32 value) {
   set_has_marknum();
   marknum_ = value;
-  // @@protoc_insertion_point(field_set:progame.specialinfo.marknum)
+  // @@protoc_insertion_point(field_set:NFMsg.specialinfo.marknum)
 }
 
 // repeated int32 gametype = 9;
@@ -9770,25 +9770,25 @@ inline void specialinfo::clear_gametype() {
   gametype_.Clear();
 }
 inline ::google::protobuf::int32 specialinfo::gametype(int index) const {
-  // @@protoc_insertion_point(field_get:progame.specialinfo.gametype)
+  // @@protoc_insertion_point(field_get:NFMsg.specialinfo.gametype)
   return gametype_.Get(index);
 }
 inline void specialinfo::set_gametype(int index, ::google::protobuf::int32 value) {
   gametype_.Set(index, value);
-  // @@protoc_insertion_point(field_set:progame.specialinfo.gametype)
+  // @@protoc_insertion_point(field_set:NFMsg.specialinfo.gametype)
 }
 inline void specialinfo::add_gametype(::google::protobuf::int32 value) {
   gametype_.Add(value);
-  // @@protoc_insertion_point(field_add:progame.specialinfo.gametype)
+  // @@protoc_insertion_point(field_add:NFMsg.specialinfo.gametype)
 }
 inline const ::google::protobuf::RepeatedField< ::google::protobuf::int32 >&
 specialinfo::gametype() const {
-  // @@protoc_insertion_point(field_list:progame.specialinfo.gametype)
+  // @@protoc_insertion_point(field_list:NFMsg.specialinfo.gametype)
   return gametype_;
 }
 inline ::google::protobuf::RepeatedField< ::google::protobuf::int32 >*
 specialinfo::mutable_gametype() {
-  // @@protoc_insertion_point(field_mutable_list:progame.specialinfo.gametype)
+  // @@protoc_insertion_point(field_mutable_list:NFMsg.specialinfo.gametype)
   return &gametype_;
 }
 
@@ -9807,13 +9807,13 @@ inline void specialinfo::clear_cardtype() {
   clear_has_cardtype();
 }
 inline ::google::protobuf::int32 specialinfo::cardtype() const {
-  // @@protoc_insertion_point(field_get:progame.specialinfo.cardtype)
+  // @@protoc_insertion_point(field_get:NFMsg.specialinfo.cardtype)
   return cardtype_;
 }
 inline void specialinfo::set_cardtype(::google::protobuf::int32 value) {
   set_has_cardtype();
   cardtype_ = value;
-  // @@protoc_insertion_point(field_set:progame.specialinfo.cardtype)
+  // @@protoc_insertion_point(field_set:NFMsg.specialinfo.cardtype)
 }
 
 // optional int32 iszhuang = 11;
@@ -9831,13 +9831,13 @@ inline void specialinfo::clear_iszhuang() {
   clear_has_iszhuang();
 }
 inline ::google::protobuf::int32 specialinfo::iszhuang() const {
-  // @@protoc_insertion_point(field_get:progame.specialinfo.iszhuang)
+  // @@protoc_insertion_point(field_get:NFMsg.specialinfo.iszhuang)
   return iszhuang_;
 }
 inline void specialinfo::set_iszhuang(::google::protobuf::int32 value) {
   set_has_iszhuang();
   iszhuang_ = value;
-  // @@protoc_insertion_point(field_set:progame.specialinfo.iszhuang)
+  // @@protoc_insertion_point(field_set:NFMsg.specialinfo.iszhuang)
 }
 
 #ifdef __GNUC__
@@ -9874,7 +9874,7 @@ inline void specialinfo::set_iszhuang(::google::protobuf::int32 value) {
 
 // @@protoc_insertion_point(namespace_scope)
 
-}  // namespace progame
+}  // namespace NFMsg
 
 // @@protoc_insertion_point(global_scope)
 

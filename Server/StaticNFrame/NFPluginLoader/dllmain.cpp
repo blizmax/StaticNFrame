@@ -56,6 +56,7 @@
 #pragma comment( lib, "NFMongoPlugin.lib" )
 #pragma comment( lib, "NFMonitorPlugin.lib" )
 #pragma comment( lib, "NFSqlitePlugin.lib" )
+#pragma comment( lib, "NFNoSqlPlugin.lib" )
 
 /////////////////////////////////////////////////////
 
@@ -79,6 +80,10 @@
 #pragma comment( lib, "NFGameLogicPlugin.lib" )
 #pragma comment( lib, "NFProxyLogicPlugin.lib" )
 #pragma comment( lib, "NFLoginLogicPlugin.lib" )
+
+//////////////////////////////Game Plugin/////////////////////////////////
+#pragma comment( lib, "NFGameHumanPlugin.lib" )
+//////////////////////////////Game Plugin/////////////////////////////////
 #else
 /////////////////////////////////////////////////////////////////
 //windows“¿¿µø‚

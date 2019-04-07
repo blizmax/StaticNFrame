@@ -40,6 +40,15 @@ public:
 		}
 	}
 
+	virtual bool IsLogIdEnable(NF_LOG_LEVEL log_level, uint32_t logId, uint64_t guid)
+	{
+		if (m_pLogModule)
+		{
+			return m_pLogModule->IsLogIdEnable(log_level, logId, guid);
+		}
+		return false;
+	}
+
 	/**
 	* @brief 设置默认的LOG的输出等级
 	*
@@ -63,4 +72,8 @@ protected:
 #define NFLogInfo(logID, guid, format, ...) NFLogMgr::Instance()->Log(NLL_INFO_NORMAL, NF_FUNCTION_LINE, logID, guid, format, ##__VA_ARGS__);
 #define NFLogWarning(logID, guid, format, ...) NFLogMgr::Instance()->Log(NLL_WARING_NORMAL, NF_FUNCTION_LINE, logID, guid, format, ##__VA_ARGS__);
 #define NFLogError(logID, guid, format, ...) NFLogMgr::Instance()->Log(NLL_ERROR_NORMAL, NF_FUNCTION_LINE, logID, guid, format, ##__VA_ARGS__);
+#define NFLogDebugEnable(logID, guid) NFLogMgr::Instance()->IsLogIdEnable(NLL_DEBUG_NORMAL, logID, guid)
+#define NFLogInfoEnable(logID, guid) NFLogMgr::Instance()->IsLogIdEnable(NLL_INFO_NORMAL, logID, guid)
+#define NFLogWarningEnable(logID, guid) NFLogMgr::Instance()->IsLogIdEnable(NLL_WARING_NORMAL, logID, guid)
+#define NFLogErrorEnable(logID, guid) NFLogMgr::Instance()->IsLogIdEnable(NLL_ERROR_NORMAL, logID, guid)
 

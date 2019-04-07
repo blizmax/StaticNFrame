@@ -54,8 +54,6 @@ bool NFCMasterServerModule::Init()
 	
 	m_pNetServerModule->AddReceiveCallBack(NF_ST_MASTER, EGMI_STS_SERVER_REPORT, this, &NFCMasterServerModule::OnServerReport);
 
-	m_pNetServerModule->AddReceiveCallBack(NF_ST_MASTER, EGMI_NET_LOGIN_TO_MASTER_PLAT_LOGIN, this, &NFCMasterServerModule::OnHandleAccountLogin);
-
 	NFServerConfig* pConfig = NFServerCommon::GetAppConfig(m_pPluginManager, NF_ST_MASTER);
 	if (pConfig)
 	{
@@ -204,7 +202,7 @@ void NFCMasterServerModule::OnClientDisconnect(uint32_t unLinkId)
 void NFCMasterServerModule::OnLoginServerRegisterProcess(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen)
 {
 	NFMsg::ServerInfoReportList xMsg;
-	CLIENT_MSG_PROCESS_NO_OBJECT(nMsgId, msg, nLen, xMsg);
+	CLIENT_MSG_PROCESS_NO_OBJECT(nMsgId, playerId, msg, nLen, xMsg);
 
 	for (int i = 0; i < xMsg.server_list_size(); ++i)
 	{
@@ -234,7 +232,7 @@ void NFCMasterServerModule::OnLoginServerRegisterProcess(const uint32_t unLinkId
 void NFCMasterServerModule::OnLoginServerUnRegisterProcess(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen)
 {
 	NFMsg::ServerInfoReportList xMsg;
-	CLIENT_MSG_PROCESS_NO_OBJECT(nMsgId, msg, nLen, xMsg);
+	CLIENT_MSG_PROCESS_NO_OBJECT(nMsgId, playerId, msg, nLen, xMsg);
 
 	for (int i = 0; i < xMsg.server_list_size(); ++i)
 	{
@@ -248,7 +246,7 @@ void NFCMasterServerModule::OnLoginServerUnRegisterProcess(const uint32_t unLink
 void NFCMasterServerModule::OnLoginServerRefreshProcess(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen)
 {
 	NFMsg::ServerInfoReportList xMsg;
-	CLIENT_MSG_PROCESS_NO_OBJECT(nMsgId, msg, nLen, xMsg);
+	CLIENT_MSG_PROCESS_NO_OBJECT(nMsgId, playerId, msg, nLen, xMsg);
 
 	for (int i = 0; i < xMsg.server_list_size(); ++i)
 	{
@@ -277,7 +275,7 @@ void NFCMasterServerModule::OnLoginServerRefreshProcess(const uint32_t unLinkId,
 void NFCMasterServerModule::OnGameServerRegisterProcess(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen)
 {
 	NFMsg::ServerInfoReportList xMsg;
-	CLIENT_MSG_PROCESS_NO_OBJECT(nMsgId, msg, nLen, xMsg);
+	CLIENT_MSG_PROCESS_NO_OBJECT(nMsgId, playerId, msg, nLen, xMsg);
 
 	for (int i = 0; i < xMsg.server_list_size(); ++i)
 	{
@@ -306,7 +304,7 @@ void NFCMasterServerModule::OnGameServerRegisterProcess(const uint32_t unLinkId,
 void NFCMasterServerModule::OnGameServerUnRegisterProcess(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen)
 {
 	NFMsg::ServerInfoReportList xMsg;
-	CLIENT_MSG_PROCESS_NO_OBJECT(nMsgId, msg, nLen, xMsg);
+	CLIENT_MSG_PROCESS_NO_OBJECT(nMsgId, playerId, msg, nLen, xMsg);
 
 	for (int i = 0; i < xMsg.server_list_size(); ++i)
 	{
@@ -320,7 +318,7 @@ void NFCMasterServerModule::OnGameServerUnRegisterProcess(const uint32_t unLinkI
 void NFCMasterServerModule::OnGameServerRefreshProcess(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen)
 {
 	NFMsg::ServerInfoReportList xMsg;
-	CLIENT_MSG_PROCESS_NO_OBJECT(nMsgId, msg, nLen, xMsg);
+	CLIENT_MSG_PROCESS_NO_OBJECT(nMsgId, playerId, msg, nLen, xMsg);
 
 	for (int i = 0; i < xMsg.server_list_size(); ++i)
 	{
@@ -348,7 +346,7 @@ void NFCMasterServerModule::OnGameServerRefreshProcess(const uint32_t unLinkId, 
 void NFCMasterServerModule::OnProxyServerRegisterProcess(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen)
 {
 	NFMsg::ServerInfoReportList xMsg;
-	CLIENT_MSG_PROCESS_NO_OBJECT(nMsgId, msg, nLen, xMsg);
+	CLIENT_MSG_PROCESS_NO_OBJECT(nMsgId, playerId, msg, nLen, xMsg);
 
 	for (int i = 0; i < xMsg.server_list_size(); ++i)
 	{
@@ -377,7 +375,7 @@ void NFCMasterServerModule::OnProxyServerRegisterProcess(const uint32_t unLinkId
 void NFCMasterServerModule::OnProxyServerUnRegisterProcess(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen)
 {
 	NFMsg::ServerInfoReportList xMsg;
-	CLIENT_MSG_PROCESS_NO_OBJECT(nMsgId, msg, nLen, xMsg);
+	CLIENT_MSG_PROCESS_NO_OBJECT(nMsgId, playerId, msg, nLen, xMsg);
 
 	for (int i = 0; i < xMsg.server_list_size(); ++i)
 	{
@@ -391,7 +389,7 @@ void NFCMasterServerModule::OnProxyServerUnRegisterProcess(const uint32_t unLink
 void NFCMasterServerModule::OnProxyServerRefreshProcess(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen)
 {
 	NFMsg::ServerInfoReportList xMsg;
-	CLIENT_MSG_PROCESS_NO_OBJECT(nMsgId, msg, nLen, xMsg);
+	CLIENT_MSG_PROCESS_NO_OBJECT(nMsgId, playerId, msg, nLen, xMsg);
 
 	for (int i = 0; i < xMsg.server_list_size(); ++i)
 	{
@@ -419,7 +417,7 @@ void NFCMasterServerModule::OnProxyServerRefreshProcess(const uint32_t unLinkId,
 void NFCMasterServerModule::OnWorldServerRegisterProcess(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen)
 {
 	NFMsg::ServerInfoReportList xMsg;
-	CLIENT_MSG_PROCESS_NO_OBJECT(nMsgId, msg, nLen, xMsg);
+	CLIENT_MSG_PROCESS_NO_OBJECT(nMsgId, playerId, msg, nLen, xMsg);
 
 	for (int i = 0; i < xMsg.server_list_size(); ++i)
 	{
@@ -448,7 +446,7 @@ void NFCMasterServerModule::OnWorldServerRegisterProcess(const uint32_t unLinkId
 void NFCMasterServerModule::OnWorldServerUnRegisterProcess(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen)
 {
 	NFMsg::ServerInfoReportList xMsg;
-	CLIENT_MSG_PROCESS_NO_OBJECT(nMsgId, msg, nLen, xMsg);
+	CLIENT_MSG_PROCESS_NO_OBJECT(nMsgId, playerId, msg, nLen, xMsg);
 
 	for (int i = 0; i < xMsg.server_list_size(); ++i)
 	{
@@ -462,7 +460,7 @@ void NFCMasterServerModule::OnWorldServerUnRegisterProcess(const uint32_t unLink
 void NFCMasterServerModule::OnWorldServerRefreshProcess(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen)
 {
 	NFMsg::ServerInfoReportList xMsg;
-	CLIENT_MSG_PROCESS_NO_OBJECT(nMsgId, msg, nLen, xMsg);
+	CLIENT_MSG_PROCESS_NO_OBJECT(nMsgId, playerId, msg, nLen, xMsg);
 
 	for (int i = 0; i < xMsg.server_list_size(); ++i)
 	{
@@ -490,7 +488,7 @@ void NFCMasterServerModule::OnWorldServerRefreshProcess(const uint32_t unLinkId,
 void NFCMasterServerModule::OnServerReport(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen)
 {
 	NFMsg::ServerInfoReportList xMsg;
-	CLIENT_MSG_PROCESS_NO_OBJECT(nMsgId, msg, nLen, xMsg);
+	CLIENT_MSG_PROCESS_NO_OBJECT(nMsgId, playerId, msg, nLen, xMsg);
 
 	for (int i = 0; i < xMsg.server_list_size(); ++i)
 	{
@@ -659,33 +657,6 @@ bool NFCMasterServerModule::HttpHandleHttpGm(uint32_t linkId, const NFHttpHandle
 	m_pHttpServerModule->ResponseMsg(NF_ST_MASTER, req, "{}", NFWebStatus::WEB_OK, "OK");
 
 	return true;
-}
-
-void NFCMasterServerModule::OnHandleAccountLogin(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen)
-{
-	NFMsg::LoginAccount xMsg;
-	CLIENT_MSG_PROCESS_NO_OBJECT(nMsgId, msg, nLen, xMsg);
-
-	NF_SHARE_PTR<NFMsg::LoginAccount> pAccount = m_loginAccountMap.GetElement(xMsg.account());
-	if (pAccount == nullptr)
-	{
-		pAccount = NF_SHARE_PTR<NFMsg::LoginAccount>(NF_NEW NFMsg::LoginAccount());
-		pAccount->set_uid(xMsg.uid());
-		pAccount->set_account(xMsg.account());
-		m_loginAccountMap.AddElement(xMsg.account(), pAccount);
-	}
-
-	pAccount->set_openkey(xMsg.openkey());
-	pAccount->set_platid(xMsg.platid());
-	pAccount->set_gameid(xMsg.gameid());
-
-	//std::string plat_key = NFMD5::md5str(lexical_cast<std::string>(pAccount->uid()) + xMsg.openkey() + lexical_cast<std::string>(pAccount->platid()));
-	std::string plat_key = NFMD5::md5str(lexical_cast<std::string>(pAccount->uid()));
-	pAccount->set_md5_plat_key(plat_key);
-
-	xMsg.set_md5_plat_key(plat_key);
-
-	m_pNetServerModule->SendToServerByPB(unLinkId, EGMI_NET_MASTER_TO_LOGIN_PLAT_LOGIN, xMsg, playerId);
 }
 
 void NFCMasterServerModule::SynServerToOthers(NF_SHARE_PTR<NFServerData> pServerData)

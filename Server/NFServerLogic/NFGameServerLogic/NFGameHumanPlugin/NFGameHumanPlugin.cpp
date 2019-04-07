@@ -38,6 +38,11 @@ std::string NFGameHumanPlugin::GetPluginName()
 	return GET_CLASS_NAME(NFGameHumanPlugin);
 }
 
+bool NFGameHumanPlugin::IsDynamicLoad()
+{
+	return true;
+}
+
 void NFGameHumanPlugin::Install()
 {
 	//REGISTER_MODULE(m_pPluginManager, NFIGameLogicModule, NFCGameLogicModule);

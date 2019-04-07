@@ -32,6 +32,8 @@ bool NFCConsoleModule::Awake()
 			mCmdParser.Add("Exit", 0, "Exit App");
 			mCmdParser.Add("Reload", 0, "Reload Plugin Config");
 			mCmdParser.Add("Profiler", 0, "Open Profiler");
+
+			mCmdParser.Add("Dynamic", 0, "Dynamic Load Plugin", false, "");
 		}
 		catch (NFCmdLine::NFCmdLine_Error& e)
 		{
@@ -84,6 +86,7 @@ void NFCConsoleModule::BackThreadLoop()
 
 			if (mCmdParser.Exist("Exit"))
 			{
+				mQueueMsg.
 				m_pPluginManager->SetExitApp(true);
 				mThread.detach();
 				return;

@@ -19,6 +19,7 @@
 #include <map>
 #include <functional>
 #include "NFComm/NFPluginModule/NFLogMgr.h"
+#include "NFComm/NFPluginModule/NFProtobufCommon.h"
 
 #include "google/protobuf/message.h"
 
@@ -29,12 +30,19 @@
 #define GetServerTypeFromUnlinkId(UnlinkId)		((UnlinkId) >> 24);
 #define GetServerIndexFromUnlinkId(UnlinkId)	((UnlinkId) & MAX_CLIENT_MASK);
 
-#define CLIENT_MSG_PROCESS_NO_OBJECT(nMsgId, msg, nLen, xMsg)                 \
+#define CLIENT_MSG_PROCESS_NO_OBJECT(nMsgId, nValueId, msg, nLen, xMsg)                 \
 	if (!xMsg.ParseFromArray(msg, nLen))				\
     {													\
 		NFLogError(NF_LOG_PROTOBUF_PARSE, 0, "Protobuf Parse Message Failed, msgId:{}, nLen:{}", nMsgId, nLen); \
         return ;										\
-    }													\
+    }\
+	if (NFLogDebugEnable(NF_LOG_RECV_MSG_JSON_PRINTF, nValueId))\
+	{\
+		std::string jsonStr;\
+		NFProtobufCommon::MessageToJsonString(xMsg, jsonStr);\
+		NFLogDebug(NF_LOG_RECV_MSG_JSON_PRINTF, nValueId, "recv msg:{}, json:{}", nMsgId, jsonStr); \
+	}\
+
 
 
 class NFINetModule : public NFIModule
@@ -160,6 +168,7 @@ public:
 			auto it = mxCallBack[eServerType].mxReceiveCallBack.find(nMsgId);
 			if (it != mxCallBack[eServerType].mxReceiveCallBack.end())
 			{
+				NFLogDebug(NF_LOG_RECV_MSG, valueId, "recv msg:{}", nMsgId);
 				NET_RECEIVE_FUNCTOR& pFun = it->second;
 				pFun(unLinkId, valueId, nMsgId, msg, nLen);
 			}
@@ -168,6 +177,7 @@ public:
 				auto iter = mxCallBack[eServerType].mxReceiveLuaCallBack.find(nMsgId);
 				if (iter != mxCallBack[eServerType].mxReceiveLuaCallBack.end())
 				{
+					NFLogDebug(NF_LOG_RECV_MSG, valueId, "recv msg:{}", nMsgId);
 					std::string strMsg(msg, nLen);
 					RunNetRecvLuaFunc(iter->second, unLinkId, valueId, nMsgId, strMsg);
 				}
@@ -175,12 +185,14 @@ public:
 				{
 					for (auto iterator = mxCallBack[eServerType].mxCallBackList.begin(); iterator != mxCallBack[eServerType].mxCallBackList.end(); ++iterator)
 					{
+						NFLogDebug(NF_LOG_RECV_MSG, valueId, "recv msg:{}", nMsgId);
 						NET_RECEIVE_FUNCTOR& pFun = *iterator;
 						pFun(unLinkId, valueId, nMsgId, msg, nLen);
 					}
 
 					for (auto iterator = mxCallBack[eServerType].mxCallLuaBackList.begin(); iterator != mxCallBack[eServerType].mxCallLuaBackList.end(); ++iterator)
 					{
+						NFLogDebug(NF_LOG_RECV_MSG, valueId, "recv msg:{}", nMsgId);
 						std::string strMsg(msg, nLen);
 						RunNetRecvLuaFunc(*iterator, unLinkId, valueId, nMsgId, strMsg);
 					}

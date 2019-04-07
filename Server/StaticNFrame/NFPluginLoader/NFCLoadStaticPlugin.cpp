@@ -29,6 +29,7 @@
 #include "NFComm/NFMongoPlugin/NFMongoPlugin.h"
 #include "NFComm/NFMonitorPlugin/NFMonitorPlugin.h"
 #include "NFComm/NFSqlitePlugin/NFSqlitePlugin.h"
+#include "NFComm/NFNosqlPlugin/NFNoSqlPlugin.h"
 
 #include <NFComm/NFXPlugin/NFLuaScriptPlugin/NFLuaScriptPlugin.h>
 
@@ -46,6 +47,8 @@
 #include <NFServerLogic/NFLoginServerLogic/NFLoginLogicPlugin/NFLoginLogicPlugin.h>
 #include <NFServerLogic/NFGameServerLogic/NFGameLogicPlugin/NFGameLogicPlugin.h>
 #include <NFServerLogic/NFProxyServerLogic/NFProxyLogicPlugin/NFProxyLogicPlugin.h>
+
+#include <NFServerLogic/NFGameServerLogic/NFGameHumanPlugin/NFGameHumanPlugin.h>
 #endif
 
 bool NFCPluginManager::InitSingleton()
@@ -109,6 +112,7 @@ bool NFCPluginManager::RegisterStaticPlugin()
 	REGISTER_STATIC_PLUGIN(this, NFMongoPlugin);
 	REGISTER_STATIC_PLUGIN(this, NFMonitorPlugin);
 	REGISTER_STATIC_PLUGIN(this, NFSqlitePlugin);
+	REGISTER_STATIC_PLUGIN(this, NFNoSqlPlugin);
 	/////////////////////////////////////////////////////////
 	REGISTER_STATIC_PLUGIN(this, NFMasterServerPlugin);
 
@@ -128,6 +132,15 @@ bool NFCPluginManager::RegisterStaticPlugin()
 	REGISTER_STATIC_PLUGIN(this, NFLoginLogicPlugin);
 	REGISTER_STATIC_PLUGIN(this, NFGameLogicPlugin);
 	REGISTER_STATIC_PLUGIN(this, NFProxyLogicPlugin);
+
+
+	////////////////////游戏服务器具体逻辑引擎实现////////////////////////////
+	/////////////////////////////////////////////////////////////////////////
+
+	REGISTER_STATIC_PLUGIN(this, NFGameHumanPlugin);
+
+	////////////////////////////////////////////////////////////////////////
+	///////////////////////////////////////////////////////////////////////
 #endif
 	return true;
 }

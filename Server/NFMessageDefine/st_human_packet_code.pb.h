@@ -44,9 +44,9 @@ struct TableStruct {
 };
 void AddDescriptors();
 }  // namespace protobuf_st_5fhuman_5fpacket_5fcode_2eproto
-namespace progame {
-}  // namespace progame
-namespace progame {
+namespace NFMsg {
+}  // namespace NFMsg
+namespace NFMsg {
 
 enum st_human_packet_code {
   Client_Msg_AccountLogin = 1001,
@@ -113,15 +113,15 @@ inline bool st_human_packet_code_Parse(
 
 // @@protoc_insertion_point(namespace_scope)
 
-}  // namespace progame
+}  // namespace NFMsg
 
 namespace google {
 namespace protobuf {
 
-template <> struct is_proto_enum< ::progame::st_human_packet_code> : ::std::true_type {};
+template <> struct is_proto_enum< ::NFMsg::st_human_packet_code> : ::std::true_type {};
 template <>
-inline const EnumDescriptor* GetEnumDescriptor< ::progame::st_human_packet_code>() {
-  return ::progame::st_human_packet_code_descriptor();
+inline const EnumDescriptor* GetEnumDescriptor< ::NFMsg::st_human_packet_code>() {
+  return ::NFMsg::st_human_packet_code_descriptor();
 }
 
 }  // namespace protobuf

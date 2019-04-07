@@ -61,8 +61,6 @@ protected:
 
 	void OnServerReport(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen);
 
-	void OnHandleAccountLogin(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen);
-
 	void SynServerToOthers(NF_SHARE_PTR<NFServerData> pServerData);
 
 	void OnClientDisconnect(uint32_t unLinkId);
@@ -77,5 +75,4 @@ private:
 	NFConsistentHashMapEx<int, NFServerData> mWorldMap;
 	NFConsistentHashMapEx<int, NFServerData> mProxyMap;
 	NFConsistentHashMapEx<int, NFServerData> mGameMap;
-	NFMapEx<std::string, NFMsg::LoginAccount> m_loginAccountMap;
 };

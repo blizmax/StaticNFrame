@@ -98,7 +98,7 @@ void NFCGameServerModule::OnHandleOtherMessage(const uint32_t unLinkId, const ui
 void NFCGameServerModule::OnProxyServerRegisterProcess(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen)
 {
 	NFMsg::ServerInfoReportList xMsg;
-	CLIENT_MSG_PROCESS_NO_OBJECT(nMsgId, msg, nLen, xMsg);
+	CLIENT_MSG_PROCESS_NO_OBJECT(nMsgId, playerId, msg, nLen, xMsg);
 
 	for (int i = 0; i < xMsg.server_list_size(); ++i)
 	{
@@ -131,7 +131,7 @@ void NFCGameServerModule::OnProxyServerRegisterProcess(const uint32_t unLinkId, 
 void NFCGameServerModule::OnProxyServerUnRegisterProcess(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen)
 {
 	NFMsg::ServerInfoReportList xMsg;
-	CLIENT_MSG_PROCESS_NO_OBJECT(nMsgId, msg, nLen, xMsg);
+	CLIENT_MSG_PROCESS_NO_OBJECT(nMsgId, playerId, msg, nLen, xMsg);
 
 	for (int i = 0; i < xMsg.server_list_size(); ++i)
 	{
@@ -145,7 +145,7 @@ void NFCGameServerModule::OnProxyServerUnRegisterProcess(const uint32_t unLinkId
 void NFCGameServerModule::OnProxyServerRefreshProcess(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen)
 {
 	NFMsg::ServerInfoReportList xMsg;
-	CLIENT_MSG_PROCESS_NO_OBJECT(nMsgId, msg, nLen, xMsg);
+	CLIENT_MSG_PROCESS_NO_OBJECT(nMsgId, playerId, msg, nLen, xMsg);
 
 	for (int i = 0; i < xMsg.server_list_size(); ++i)
 	{

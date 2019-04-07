@@ -35,9 +35,11 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="NFHumanDefine.h" />
     <ClInclude Include="NFIGameLogicModule.h" />
     <ClInclude Include="NFILoginLogicModule.h" />
     <ClInclude Include="NFIProxyLogicModule.h" />
+    <ClInclude Include="NFPacketHuman.h" />
     <ClInclude Include="NFServerLogicCommon.h" />
   </ItemGroup>
   <ItemGroup>

@@ -47,6 +47,8 @@ enum NF_LOG_ID
 	//-----------------------------------------------------------
 	NF_LOG_LOAD_CONFIG = 21,				//加载配置
 	NF_LOG_PROTOBUF_PARSE = 22,				//protobuf解析出错
+	NF_LOG_RECV_MSG = 23,					//接受消息
+	NF_LOG_RECV_MSG_JSON_PRINTF = 24,		//接受消息Json输出
 	NF_LOG_PLUGIN_MANAGER = 100,			//引擎加载器
 	NF_LOG_MAX_SYSTEM_PLUGIN = 100,
 	//-----------------------------------------------------------
@@ -99,6 +101,16 @@ public:
 	* @return bool
 	*/
 	virtual void LogDefault(NF_LOG_LEVEL log_level, uint32_t logId, uint64_t guid, const std::string& log) = 0;
+
+	/**
+	* @brief 是否输出对应等级的logId的log
+	*
+	* @param  log_level log等级
+	* @param  logId LOG选项ID，可以配置输出
+	* @param  guid 一般是玩家ID，某些情况下，只想输出一个玩家的LOG
+	* @return bool
+	*/
+	virtual bool IsLogIdEnable(NF_LOG_LEVEL log_level, uint32_t logId, uint64_t guid) = 0;
 
 	/**
 	* @brief 设置默认的LOG的输出等级

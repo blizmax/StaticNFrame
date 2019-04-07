@@ -19,8 +19,8 @@
 #endif
 // @@protoc_insertion_point(includes)
 
-namespace progame {
-}  // namespace progame
+namespace NFMsg {
+}  // namespace NFMsg
 namespace protobuf_st_5fhuman_5fpacket_5fcode_2eproto {
 void InitDefaults() {
 }
@@ -50,33 +50,33 @@ void protobuf_RegisterTypes(const ::std::string&) {
 void AddDescriptorsImpl() {
   InitDefaults();
   static const char descriptor[] GOOGLE_PROTOBUF_ATTRIBUTE_SECTION_VARIABLE(protodesc_cold) = {
-      "\n\032st_human_packet_code.proto\022\007progame*\204\007"
-      "\n\024st_human_packet_code\022\034\n\027Client_Msg_Acc"
-      "ountLogin\020\351\007\022\034\n\027Server_Msg_AccountLogin\020"
-      "\352\007\022\035\n\030Client_Msg_GetPlayerInfo\020\353\007\022\035\n\030Ser"
-      "ver_Msg_GetPlayerInfo\020\354\007\022\031\n\024Client_Msg_R"
-      "eConnect\020\355\007\022\031\n\024Server_Msg_ReConnect\020\356\007\022\031"
-      "\n\024Client_Msg_KitPlayer\020\357\007\022\031\n\024Server_Msg_"
-      "KitPlayer\020\360\007\022\031\n\024Client_Msg_HeartBeat\020\361\007\022"
-      "\031\n\024Server_Msg_HeartBeat\020\362\007\022\033\n\026Client_Msg"
-      "_GetInitInfo\020\363\007\022\033\n\026Server_Msg_GetInitInf"
-      "o\020\364\007\022\031\n\024Client_Msg_BroadCast\020\365\007\022\031\n\024Serve"
-      "r_Msg_BroadCast\020\366\007\022\033\n\026Client_Msg_GetMail"
-      "List\020\367\007\022\033\n\026Server_Msg_GetMailList\020\370\007\022\033\n\026"
-      "Client_Msg_GetReadMail\020\371\007\022\033\n\026Server_Msg_"
-      "GetReadMail\020\372\007\022\034\n\027Client_Msg_GetMailGood"
-      "s\020\373\007\022\034\n\027Server_Msg_GetMailGoods\020\374\007\022\032\n\025Cl"
-      "ient_Msg_DeleteMail\020\375\007\022\032\n\025Server_Msg_Del"
-      "eteMail\020\376\007\022\034\n\027Client_Msg_PlayerStatus\020\377\007"
-      "\022\034\n\027Server_Msg_PlayerStatus\020\200\010\022 \n\033Client"
-      "_Msg_UpdatePlayerInfo\020\201\010\022 \n\033Server_Msg_U"
-      "pdatePlayerInfo\020\202\010\022\037\n\032Client_Msg_UpdateG"
-      "oodsList\020\203\010\022\037\n\032Server_Msg_UpdateGoodsLis"
-      "t\020\204\010\022\032\n\025Client_Msg_NoticeInfo\020\205\010\022\032\n\025Serv"
-      "er_Msg_NoticeInfo\020\206\010"
+      "\n\032st_human_packet_code.proto\022\005NFMsg*\204\007\n\024"
+      "st_human_packet_code\022\034\n\027Client_Msg_Accou"
+      "ntLogin\020\351\007\022\034\n\027Server_Msg_AccountLogin\020\352\007"
+      "\022\035\n\030Client_Msg_GetPlayerInfo\020\353\007\022\035\n\030Serve"
+      "r_Msg_GetPlayerInfo\020\354\007\022\031\n\024Client_Msg_ReC"
+      "onnect\020\355\007\022\031\n\024Server_Msg_ReConnect\020\356\007\022\031\n\024"
+      "Client_Msg_KitPlayer\020\357\007\022\031\n\024Server_Msg_Ki"
+      "tPlayer\020\360\007\022\031\n\024Client_Msg_HeartBeat\020\361\007\022\031\n"
+      "\024Server_Msg_HeartBeat\020\362\007\022\033\n\026Client_Msg_G"
+      "etInitInfo\020\363\007\022\033\n\026Server_Msg_GetInitInfo\020"
+      "\364\007\022\031\n\024Client_Msg_BroadCast\020\365\007\022\031\n\024Server_"
+      "Msg_BroadCast\020\366\007\022\033\n\026Client_Msg_GetMailLi"
+      "st\020\367\007\022\033\n\026Server_Msg_GetMailList\020\370\007\022\033\n\026Cl"
+      "ient_Msg_GetReadMail\020\371\007\022\033\n\026Server_Msg_Ge"
+      "tReadMail\020\372\007\022\034\n\027Client_Msg_GetMailGoods\020"
+      "\373\007\022\034\n\027Server_Msg_GetMailGoods\020\374\007\022\032\n\025Clie"
+      "nt_Msg_DeleteMail\020\375\007\022\032\n\025Server_Msg_Delet"
+      "eMail\020\376\007\022\034\n\027Client_Msg_PlayerStatus\020\377\007\022\034"
+      "\n\027Server_Msg_PlayerStatus\020\200\010\022 \n\033Client_M"
+      "sg_UpdatePlayerInfo\020\201\010\022 \n\033Server_Msg_Upd"
+      "atePlayerInfo\020\202\010\022\037\n\032Client_Msg_UpdateGoo"
+      "dsList\020\203\010\022\037\n\032Server_Msg_UpdateGoodsList\020"
+      "\204\010\022\032\n\025Client_Msg_NoticeInfo\020\205\010\022\032\n\025Server"
+      "_Msg_NoticeInfo\020\206\010"
   };
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
-      descriptor, 940);
+      descriptor, 938);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "st_human_packet_code.proto", &protobuf_RegisterTypes);
 }
@@ -92,7 +92,7 @@ struct StaticDescriptorInitializer {
   }
 } static_descriptor_initializer;
 }  // namespace protobuf_st_5fhuman_5fpacket_5fcode_2eproto
-namespace progame {
+namespace NFMsg {
 const ::google::protobuf::EnumDescriptor* st_human_packet_code_descriptor() {
   protobuf_st_5fhuman_5fpacket_5fcode_2eproto::protobuf_AssignDescriptorsOnce();
   return protobuf_st_5fhuman_5fpacket_5fcode_2eproto::file_level_enum_descriptors[0];
@@ -137,7 +137,7 @@ bool st_human_packet_code_IsValid(int value) {
 
 
 // @@protoc_insertion_point(namespace_scope)
-}  // namespace progame
+}  // namespace NFMsg
 namespace google {
 namespace protobuf {
 }  // namespace protobuf
