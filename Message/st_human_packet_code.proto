@@ -1,0 +1,50 @@
+syntax = "proto2";
+package progame;
+
+enum st_human_packet_code
+{
+	Client_Msg_AccountLogin = 1001;			//账号登录
+	Server_Msg_AccountLogin = 1002;		
+	
+	Client_Msg_GetPlayerInfo = 1003;
+	Server_Msg_GetPlayerInfo = 1004;
+	
+	Client_Msg_ReConnect = 1005;
+	Server_Msg_ReConnect = 1006;
+	
+	Client_Msg_KitPlayer = 1007;
+	Server_Msg_KitPlayer = 1008;
+	
+	Client_Msg_HeartBeat = 1009;
+	Server_Msg_HeartBeat = 1010;
+	
+	Client_Msg_GetInitInfo = 1011;
+	Server_Msg_GetInitInfo = 1012;
+	
+	Client_Msg_BroadCast = 1013;
+	Server_Msg_BroadCast = 1014;
+	
+	Client_Msg_GetMailList = 1015;
+	Server_Msg_GetMailList = 1016;
+	
+	Client_Msg_GetReadMail = 1017;
+	Server_Msg_GetReadMail = 1018;
+	
+	Client_Msg_GetMailGoods = 1019;
+	Server_Msg_GetMailGoods = 1020;
+	
+	Client_Msg_DeleteMail = 1021;
+	Server_Msg_DeleteMail = 1022;
+	
+	Client_Msg_PlayerStatus = 1023;
+	Server_Msg_PlayerStatus = 1024;
+	
+	Client_Msg_UpdatePlayerInfo = 1025;
+	Server_Msg_UpdatePlayerInfo = 1026;
+	
+	Client_Msg_UpdateGoodsList = 1027;
+	Server_Msg_UpdateGoodsList = 1028;
+	
+	Client_Msg_NoticeInfo = 1029;
+	Server_Msg_NoticeInfo = 1030;
+};

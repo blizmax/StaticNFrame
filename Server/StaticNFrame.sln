@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+VisualStudioVersion = 14.0.23107.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "NFrame", "NFrame", "{A65AF30D-E33C-48FF-9021-CC3D958C6BCC}"
 EndProject
@@ -250,6 +250,8 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "NFMonitorPlugin", "StaticNFrame\NFComm\NFMonitorPlugin\NFMonitorPlugin.vcxproj", "{881632FF-114E-4DC9-B863-B824033A53A9}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "NFNoSqlPlugin", "StaticNFrame\NFComm\NFNoSqlPlugin\NFNoSqlPlugin.vcxproj", "{3F68CD92-8AA1-48C4-84EF-CD63690C8DCB}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "NFGameHumanPlugin", "NFServerLogic\NFGameServerLogic\NFGameHumanPlugin\NFGameHumanPlugin.vcxproj", "{76AEA86D-9BB1-4DFD-BFA6-CA9AF8B6C558}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -821,6 +823,22 @@ Global
 		{3F68CD92-8AA1-48C4-84EF-CD63690C8DCB}.Release|x64.ActiveCfg = Release|x64
 		{3F68CD92-8AA1-48C4-84EF-CD63690C8DCB}.Release|x64.Build.0 = Release|x64
 		{3F68CD92-8AA1-48C4-84EF-CD63690C8DCB}.Release|x86.ActiveCfg = Release|x64
+		{76AEA86D-9BB1-4DFD-BFA6-CA9AF8B6C558}.Debug|x64.ActiveCfg = Debug|x64
+		{76AEA86D-9BB1-4DFD-BFA6-CA9AF8B6C558}.Debug|x64.Build.0 = Debug|x64
+		{76AEA86D-9BB1-4DFD-BFA6-CA9AF8B6C558}.Debug|x86.ActiveCfg = Debug|Win32
+		{76AEA86D-9BB1-4DFD-BFA6-CA9AF8B6C558}.Debug|x86.Build.0 = Debug|Win32
+		{76AEA86D-9BB1-4DFD-BFA6-CA9AF8B6C558}.Dynamic_Debug|x64.ActiveCfg = Debug|x64
+		{76AEA86D-9BB1-4DFD-BFA6-CA9AF8B6C558}.Dynamic_Debug|x64.Build.0 = Debug|x64
+		{76AEA86D-9BB1-4DFD-BFA6-CA9AF8B6C558}.Dynamic_Debug|x86.ActiveCfg = Debug|Win32
+		{76AEA86D-9BB1-4DFD-BFA6-CA9AF8B6C558}.Dynamic_Debug|x86.Build.0 = Debug|Win32
+		{76AEA86D-9BB1-4DFD-BFA6-CA9AF8B6C558}.Dynamic_Release|x64.ActiveCfg = Release|x64
+		{76AEA86D-9BB1-4DFD-BFA6-CA9AF8B6C558}.Dynamic_Release|x64.Build.0 = Release|x64
+		{76AEA86D-9BB1-4DFD-BFA6-CA9AF8B6C558}.Dynamic_Release|x86.ActiveCfg = Release|Win32
+		{76AEA86D-9BB1-4DFD-BFA6-CA9AF8B6C558}.Dynamic_Release|x86.Build.0 = Release|Win32
+		{76AEA86D-9BB1-4DFD-BFA6-CA9AF8B6C558}.Release|x64.ActiveCfg = Release|x64
+		{76AEA86D-9BB1-4DFD-BFA6-CA9AF8B6C558}.Release|x64.Build.0 = Release|x64
+		{76AEA86D-9BB1-4DFD-BFA6-CA9AF8B6C558}.Release|x86.ActiveCfg = Release|Win32
+		{76AEA86D-9BB1-4DFD-BFA6-CA9AF8B6C558}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -875,5 +893,6 @@ Global
 		{FA079C71-D71F-4889-906C-2FA2B2FDB294} = {FD763E2E-5AF1-46BE-B218-DE34F9C4D1A9}
 		{881632FF-114E-4DC9-B863-B824033A53A9} = {FD763E2E-5AF1-46BE-B218-DE34F9C4D1A9}
 		{3F68CD92-8AA1-48C4-84EF-CD63690C8DCB} = {FD763E2E-5AF1-46BE-B218-DE34F9C4D1A9}
+		{76AEA86D-9BB1-4DFD-BFA6-CA9AF8B6C558} = {334E0F88-EC87-4A7A-B0EB-C5AD6EE67301}
 	EndGlobalSection
 EndGlobal

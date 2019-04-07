@@ -8,6 +8,7 @@
     <ClInclude Include="db_base.pb.h" />
     <ClInclude Include="proxy_msg.pb.h" />
     <ClInclude Include="sqlite_db.pb.h" />
+    <ClInclude Include="st_human.pb.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="mysql_db.pb.cc" />
@@ -16,5 +17,6 @@
     <ClCompile Include="db_base.pb.cc" />
     <ClCompile Include="proxy_msg.pb.cc" />
     <ClCompile Include="sqlite_db.pb.cc" />
+    <ClCompile Include="st_human.pb.cc" />
   </ItemGroup>
 </Project>

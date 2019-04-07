@@ -10,3 +10,5 @@
 #include "db_base.pb.h"
 #include "proxy_msg.pb.h"
 #include "sqlite_db.pb.h"
+
+#include "st_human.pb.h"
