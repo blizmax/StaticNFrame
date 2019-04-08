@@ -12,6 +12,7 @@
 #include <stdio.h>
 #include <iostream>
 #include "NFComm/NFCore/NFPlatform.h"
+#include "NFComm/NFPluginModule/NFLogMgr.h"
 
 #if NF_PLATFORM == NF_PLATFORM_WIN
 #    define DYNLIB_HANDLE hInstance
@@ -55,8 +56,6 @@ public:
 #elif NF_PLATFORM == NF_PLATFORM_APPLE || NF_PLATFORM == NF_PLATFORM_APPLE_IOS
         mstrName.append(".so");
 #endif
-
-        printf("LoadPlugin:%s\n", mstrName.c_str());
     }
 
     ~NFCDynLib()

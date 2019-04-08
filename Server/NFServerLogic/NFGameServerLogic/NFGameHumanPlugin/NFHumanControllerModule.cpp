@@ -54,6 +54,25 @@ bool NFHumanControllerModule::Init()
 
 bool NFHumanControllerModule::Shut()
 {
+	NFINetServerModule* pNetServerModule = m_pPluginManager->FindModule<NFINetServerModule>();
+	/**
+	* @brief 删除绑定协议处理函数
+	*/
+	pNetServerModule->DelReceiveCallBack(NF_ST_GAME, ::NFMsg::Client_Msg_AccountLogin);
+	pNetServerModule->DelReceiveCallBack(NF_ST_GAME, ::NFMsg::Client_Msg_GetPlayerInfo);
+	pNetServerModule->DelReceiveCallBack(NF_ST_GAME, ::NFMsg::Client_Msg_ReConnect);
+	pNetServerModule->DelReceiveCallBack(NF_ST_GAME, ::NFMsg::Client_Msg_KitPlayer);
+	pNetServerModule->DelReceiveCallBack(NF_ST_GAME, ::NFMsg::Client_Msg_HeartBeat);
+	pNetServerModule->DelReceiveCallBack(NF_ST_GAME, ::NFMsg::Client_Msg_GetInitInfo);
+	pNetServerModule->DelReceiveCallBack(NF_ST_GAME, ::NFMsg::Client_Msg_BroadCast);
+	pNetServerModule->DelReceiveCallBack(NF_ST_GAME, ::NFMsg::Client_Msg_GetMailList);
+	pNetServerModule->DelReceiveCallBack(NF_ST_GAME, ::NFMsg::Client_Msg_GetReadMail);
+	pNetServerModule->DelReceiveCallBack(NF_ST_GAME, ::NFMsg::Client_Msg_GetMailGoods);
+	pNetServerModule->DelReceiveCallBack(NF_ST_GAME, ::NFMsg::Client_Msg_DeleteMail);
+	pNetServerModule->DelReceiveCallBack(NF_ST_GAME, ::NFMsg::Client_Msg_PlayerStatus);
+	pNetServerModule->DelReceiveCallBack(NF_ST_GAME, ::NFMsg::Client_Msg_UpdatePlayerInfo);
+	pNetServerModule->DelReceiveCallBack(NF_ST_GAME, ::NFMsg::Client_Msg_UpdateGoodsList);
+	pNetServerModule->DelReceiveCallBack(NF_ST_GAME, ::NFMsg::Client_Msg_NoticeInfo);
 	return true;
 }
 
@@ -74,7 +93,7 @@ void NFHumanControllerModule::OnHandleAccountLogin(const uint32_t unLinkId, cons
 		std::string cid = NFRandomString(8);
 		cgMsg.set_cid(cid);
 
-		NFBehaviorLog(0, cid, "login", "AccountLogin", 0, "自动创建随机的CID=" + cid);
+		NFBehaviorLog(playerId, cid, "login", "AccountLogin", 0, "自动创建随机的CID=" + cid);
 	}
 
 	bool quickLogin = false;
@@ -83,8 +102,24 @@ void NFHumanControllerModule::OnHandleAccountLogin(const uint32_t unLinkId, cons
 		quickLogin = true;
 		cgMsg.set_account(cgMsg.cid());
 		cgMsg.set_password(cgMsg.cid());
-		NFBehaviorLog()
+		NFBehaviorLog(playerId, cgMsg.cid(), "login", "AccountLogin", 0, "快速登录，account=" + cgMsg.cid());
 	}
+
+	if (cgMsg.nickname() == "")
+	{
+		if (cgMsg.devname() != "")
+		{
+			cgMsg.set_nickname(cgMsg.devname());
+		}
+		else
+		{
+			cgMsg.set_nickname(cgMsg.cid());
+		}
+	}
+
+	gcMsg.set_result(0);
+	gcMsg.mutable_pinfo()->set_userid(0);
+
 }
 
 /**

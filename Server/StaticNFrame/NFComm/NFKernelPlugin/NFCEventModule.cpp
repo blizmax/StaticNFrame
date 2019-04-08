@@ -19,7 +19,7 @@ NFCEventModule::NFCEventModule(NFIPluginManager* p)
 
 NFCEventModule::~NFCEventModule()
 {
-
+	NFEventMgr::Instance()->UnInit();
 }
 
 bool NFCEventModule::Init()

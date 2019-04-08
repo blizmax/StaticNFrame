@@ -77,7 +77,7 @@ public:
 
 	bool DelReceiveCallBack(const NF_SERVER_TYPES eType, const uint32_t nMsgID)
 	{
-		if (eType >= 0 && eType < NF_ST_MAX)
+		if (eType >= 0 && eType < mxCallBack.size())
 		{
 			mxCallBack[eType].mxReceiveCallBack.erase(nMsgID);
 			return true;
@@ -87,7 +87,7 @@ public:
 
 	virtual bool AddReceiveCallBack(const NF_SERVER_TYPES eType, const uint32_t nMsgID, const NET_RECEIVE_FUNCTOR& cb)
 	{
-		if (eType >= 0 && eType < NF_ST_MAX)
+		if (eType >= 0 && eType < mxCallBack.size())
 		{
 			mxCallBack[eType].mxReceiveCallBack.emplace(nMsgID, cb);
 			return true;
@@ -97,7 +97,7 @@ public:
 
 	virtual bool AddReceiveLuaCallBackByMsgId(const NF_SERVER_TYPES eType, const uint32_t nMsgID, const std::string& luaFunc)
 	{
-		if (eType >= 0 && eType < NF_ST_MAX)
+		if (eType >= 0 && eType < mxCallBack.size())
 		{
 			mxCallBack[eType].mxReceiveLuaCallBack.emplace(nMsgID, luaFunc);
 			return true;
@@ -107,7 +107,7 @@ public:
 
 	virtual bool AddReceiveCallBack(const NF_SERVER_TYPES eType, const NET_RECEIVE_FUNCTOR& cb)
 	{
-		if (eType >= 0 && eType < NF_ST_MAX)
+		if (eType >= 0 && eType < mxCallBack.size())
 		{
 			mxCallBack[eType].mxCallBackList.push_back(cb);
 			return true;
@@ -117,7 +117,7 @@ public:
 
 	virtual bool AddReceiveLuaCallBackToOthers(const NF_SERVER_TYPES eType, const std::string& luaFunc)
 	{
-		if (eType >= 0 && eType < NF_ST_MAX)
+		if (eType >= 0 && eType < mxCallBack.size())
 		{
 			mxCallBack[eType].mxCallLuaBackList.push_back(luaFunc);
 			return true;
@@ -134,7 +134,7 @@ public:
 
 	virtual bool AddEventCallBack(const NF_SERVER_TYPES eType, const NET_EVENT_FUNCTOR& cb)
 	{
-		if (eType >= 0 && eType < NF_ST_MAX)
+		if (eType >= 0 && eType < mxCallBack.size())
 		{
 			mxCallBack[eType].mxEventCallBack.push_back(cb);
 			return true;
@@ -144,7 +144,7 @@ public:
 
 	virtual bool AddEventLuaCallBack(const NF_SERVER_TYPES eType, const std::string& luaFunc)
 	{
-		if (eType >= 0 && eType < NF_ST_MAX)
+		if (eType >= 0 && eType < mxCallBack.size())
 		{
 			mxCallBack[eType].mxEventLuaCallBack.push_back(luaFunc);
 			return true;
@@ -174,7 +174,7 @@ public:
 	void OnReceiveNetPack(const uint32_t unLinkId, const uint64_t valueId, const uint32_t nMsgId, const char* msg, const uint32_t nLen)
 	{
 		uint32_t eServerType = GetServerTypeFromUnlinkId(unLinkId);
-		if (eServerType < NF_ST_MAX)
+		if (eServerType < mxCallBack.size())
 		{
 			auto it = mxCallBack[eServerType].mxReceiveCallBack.find(nMsgId);
 			if (it != mxCallBack[eServerType].mxReceiveCallBack.end())
@@ -215,7 +215,7 @@ public:
 	void OnSocketNetEvent(const eMsgType nEvent, const uint32_t unLinkId)
 	{
 		uint32_t eServerType = GetServerTypeFromUnlinkId(unLinkId);
-		if (eServerType < NF_ST_MAX)
+		if (eServerType < mxCallBack.size())
 		{
 			for (auto it = mxCallBack[eServerType].mxEventCallBack.begin(); it != mxCallBack[eServerType].mxEventCallBack.end(); ++it)
 			{

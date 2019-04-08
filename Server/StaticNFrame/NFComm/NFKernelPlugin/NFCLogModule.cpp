@@ -25,6 +25,9 @@ NFCLogModule::NFCLogModule(NFIPluginManager* p)
 	m_pPluginManager = p;
 	//只要是为了效率，浪费点内存
 	m_logInfoConfig.resize(NF_LOG_MAX_ID);
+	m_logInfoConfig[NF_LOG_SYSTEMLOG].mDisplay = true;
+	m_logInfoConfig[NF_LOG_SYSTEMLOG].mLogId = NF_LOG_SYSTEMLOG;
+	m_logInfoConfig[NF_LOG_SYSTEMLOG].mLogName = "SystemLog";
 	//Create spdlog
 	try
 	{
@@ -41,6 +44,7 @@ NFCLogModule::NFCLogModule(NFIPluginManager* p)
 
 NFCLogModule::~NFCLogModule()
 {
+	NFLogMgr::Instance()->UnInit();
 	spdlog::drop_all();
 }
 

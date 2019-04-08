@@ -21,30 +21,6 @@
 #include "NFComm/NFPluginModule/NFTimerMgr.h"
 #include "NFComm/NFPluginModule/NFEventMgr.h"
 
-/*
-	说明:动态加载时，当公共库比如NFPluginModule编译的是一个静态库时，这时候单件模式里的static变量，
-	在每个plugin编译的DLL里都有一个单独的全景变量，所以需要下面的代码来把所有的变量重新设置一遍
-*/
-#define INIT_SINGLETON_PLUGINMANAGER(pManager)			\
-NFIEventModule* pEventModule = (NFIEventModule*)pManager->FindModule(typeid(NFIEventModule).name());\
-NFITimerModule* pTimerModule = (NFITimerModule*)pManager->FindModule(typeid(NFITimerModule).name());\
-NFILogModule* pLogModule = (NFILogModule*)pManager->FindModule(typeid(NFILogModule).name());\
-NFIConfigModule* pConfigModule = (NFIConfigModule*)pManager->FindModule(typeid(NFIConfigModule).name());\
-NFConfigMgr::Instance()->Init(pConfigModule);\
-NFEventMgr::Instance()->Init(pEventModule);\
-NFTimerMgr::Instance()->Init(pTimerModule);\
-NFLogMgr::Instance()->Init(pLogModule);\
-
-#define RELEASE_SINGLETON_PLUGINMANAGER		\
-NFConfigMgr::Instance()->UnInit();\
-NFConfigMgr::Instance()->ReleaseInstance();\
-NFTimerMgr::Instance()->UnInit();\
-NFTimerMgr::Instance()->ReleaseInstance();\
-NFEventMgr::Instance()->UnInit();\
-NFEventMgr::Instance()->ReleaseInstance();\
-NFLogMgr::Instance()->UnInit();\
-NFLogMgr::Instance()->ReleaseInstance();\
-
 #define REGISTER_ALONE_MODULE(pManager, classBaseName, className)  \
     pManager->RegisterAloneModule(#classBaseName, [] (NFIPluginManager* pMan) ->NFIModule* { return NF_NEW className(pMan);}); \
 
@@ -67,8 +43,7 @@ NFLogMgr::Instance()->ReleaseInstance();\
 
 #define REGISTER_STATIC_PLUGIN(pManager, className)  pManager->RegisteredStaticPlugin(#className, [] (NFIPluginManager* pMan) ->NFIPlugin* { return NF_NEW className(pMan);});
 
-//#define CREATE_PLUGIN(pManager, className)  NFIPlugin* pCreatePlugin##className = new className(pManager); pManager->Registered( pCreatePlugin##className );
-#define CREATE_PLUGIN(pManager, className)  NFIPlugin* pCreatePlugin##className = new className(pManager); INIT_SINGLETON_PLUGINMANAGER(pManager); pManager->Registered( pCreatePlugin##className );
+#define CREATE_PLUGIN(pManager, className)  NFIPlugin* pCreatePlugin##className = new className(pManager); pManager->Registered( pCreatePlugin##className );
 
 #define DESTROY_PLUGIN(pManager, className) pManager->UnRegistered( pManager->FindPlugin((#className)) );
 

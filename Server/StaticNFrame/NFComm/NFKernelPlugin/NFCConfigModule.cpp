@@ -49,6 +49,7 @@ NFCConfigModule::NFCConfigModule(NFIPluginManager* p)
 
 NFCConfigModule::~NFCConfigModule()
 {
+	NFConfigMgr::Instance()->UnInit();
 	for (auto it = mPluginConfig.begin(); it != mPluginConfig.end(); it++)
 	{
 		NFPluginConfig* pConfig = it->second;

@@ -37,8 +37,6 @@ public:
 	NFCPluginManager();
 	virtual ~NFCPluginManager();
 
-	virtual bool InitSingleton();
-
 	virtual bool Begin() override;
 
 	virtual bool End() override;
@@ -60,8 +58,6 @@ public:
 	virtual bool Finalize() override;
 
 	virtual bool OnReloadPlugin() override;
-
-	virtual bool ReleaseSingletion();
 
 	//////////////////////////////////////////////////////////////////////////
 

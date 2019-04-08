@@ -77,8 +77,6 @@ bool NFCPluginManager::Awake()
 	RegisterStaticPlugin(); //注册静态引擎
 	LoadKernelPlugin(); //NFKernelPlugin比较特殊，提前加载
 
-	InitSingleton();
-
 	NFLogInfo(NF_LOG_PLUGIN_MANAGER, 0, "NFPluginLoader Awake................");
 	//加载引擎配置plugin.xml, 创建引擎，生成module
 	LoadPluginConfig();
@@ -88,7 +86,6 @@ bool NFCPluginManager::Awake()
 	}
 #else
 	LoadKernelPlugin(); //NFKernelPlugin比较特殊，提前加载
-	InitSingleton();
 
 	NFLogInfo(NF_LOG_PLUGIN_MANAGER, 0, "NFPluginLoader Awake................");
 	//加载引擎配置plugin.xml, 创建引擎，生成module
@@ -588,9 +585,6 @@ bool NFCPluginManager::Finalize()
 	mPluginInstanceList.clear();
 	mModuleInstanceMap.clear();
 	mPluginNameMap.clear();
-
-	//最后释放单件系统
-	ReleaseSingletion();
 	return true;
 }
 
@@ -773,8 +767,11 @@ void NFCPluginManager::ClearProfiler()
 
 void NFCPluginManager::PrintProfiler()
 {
-	std::string str = m_profilerMgr.OutputTopProfilerTimer();
-	NFLogDebug(NF_LOG_PLUGIN_MANAGER, 0, "{}", str);
+	if (m_profilerMgr.IsOpenProfiler())
+	{
+		std::string str = m_profilerMgr.OutputTopProfilerTimer();
+		NFLogDebug(NF_LOG_PLUGIN_MANAGER, 0, "{}", str);
+	}
 }
 
 void NFCPluginManager::SetOpenProfiler(bool b)

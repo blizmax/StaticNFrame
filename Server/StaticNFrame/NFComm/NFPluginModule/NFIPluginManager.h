@@ -98,11 +98,6 @@ public:
 
 	virtual NFIModule* CreateAloneModule(const std::string& strModuleName) = 0;
 
-	//初始化单件系统
-	virtual bool InitSingleton() = 0;
-
-	virtual bool ReleaseSingletion() = 0;
-
 	virtual void RegisteredStaticPlugin(const std::string& strPluginName, const CREATE_PLUGIN_FUNCTION& createFunc) = 0;
 
 	virtual void Registered(NFIPlugin* plugin) = 0;

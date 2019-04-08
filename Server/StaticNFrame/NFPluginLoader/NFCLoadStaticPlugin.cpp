@@ -51,43 +51,6 @@
 #include <NFServerLogic/NFGameServerLogic/NFGameHumanPlugin/NFGameHumanPlugin.h>
 #endif
 
-bool NFCPluginManager::InitSingleton()
-{
-	NFIEventModule* pEventModule = (NFIEventModule*)FindModule(typeid(NFIEventModule).name());
-	NFITimerModule* pTimerModule = (NFITimerModule*)FindModule(typeid(NFITimerModule).name());
-	NFILogModule* pLogModule = (NFILogModule*)FindModule(typeid(NFILogModule).name());
-	NFIConfigModule* pConfigModule = (NFIConfigModule*)FindModule(typeid(NFIConfigModule).name());
-
-	//初始化事件系统
-	NFConfigMgr::Instance()->Init(pConfigModule);
-	NFEventMgr::Instance()->Init(pEventModule);
-	NFTimerMgr::Instance()->Init(pTimerModule);
-	NFLogMgr::Instance()->Init(pLogModule);
-
-	return true;
-}
-
-bool NFCPluginManager::ReleaseSingletion()
-{
-	//系统配置
-	NFConfigMgr::Instance()->UnInit();
-	NFConfigMgr::Instance()->ReleaseInstance();
-
-	//释放定时器
-	NFTimerMgr::Instance()->UnInit();
-	NFTimerMgr::Instance()->ReleaseInstance();
-
-	//事件系统
-	NFEventMgr::Instance()->UnInit();
-	NFEventMgr::Instance()->ReleaseInstance();
-
-	//释放LOG
-	NFLogMgr::Instance()->UnInit();
-	NFLogMgr::Instance()->ReleaseInstance();
-
-	return true;
-}
-
 bool NFCPluginManager::LoadKernelPlugin()
 {
 #ifndef NF_DYNAMIC_PLUGIN

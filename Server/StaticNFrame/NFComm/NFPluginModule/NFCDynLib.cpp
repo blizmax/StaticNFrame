@@ -14,12 +14,14 @@ bool NFCDynLib::Load()
     strLibPath += mstrName;
     mInst = (DYNLIB_HANDLE)DYNLIB_LOAD(strLibPath.c_str());
 
+	NFLogInfo(NF_LOG_SYSTEMLOG, 0, "LoadPlugin:{}", mstrName);
     return mInst != NULL;
 }
 
 bool NFCDynLib::UnLoad()
 {
     DYNLIB_UNLOAD(mInst);
+	NFLogInfo(NF_LOG_SYSTEMLOG, 0, "UnLoadPlugin:{}", mstrName);
     return true;
 }
 

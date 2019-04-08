@@ -17,6 +17,11 @@ NFCTimerModule::NFCTimerModule(NFIPluginManager* p)
 	NFTimerMgr::Instance()->Init(this);
 }
 
+NFCTimerModule::~NFCTimerModule()
+{
+	NFTimerMgr::Instance()->UnInit();
+}
+
 bool NFCTimerModule::Init()
 {
 	mTimerAxis.Init();
