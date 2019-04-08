@@ -76,6 +76,15 @@ void NFHumanControllerModule::OnHandleAccountLogin(const uint32_t unLinkId, cons
 
 		NFBehaviorLog(0, cid, "login", "AccountLogin", 0, "自动创建随机的CID=" + cid);
 	}
+
+	bool quickLogin = false;
+	if (cgMsg.account() == "")
+	{
+		quickLogin = true;
+		cgMsg.set_account(cgMsg.cid());
+		cgMsg.set_password(cgMsg.cid());
+		NFBehaviorLog()
+	}
 }
 
 /**
