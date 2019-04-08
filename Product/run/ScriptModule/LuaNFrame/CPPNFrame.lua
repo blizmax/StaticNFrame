@@ -58,7 +58,9 @@ end
 
 --执行定时函数
 function CPPNFrame.RunTimer(luaFunc, timerId)
-    CPPNFrame.RunStringFunction(luaFunc, timerId)
+    local function timerExecute()
+        
+    end
 end
 
 function CPPNFrame:AddClocker(luaFunc, startSec, intervalSec, param_table)
