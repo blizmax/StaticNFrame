@@ -36,6 +36,7 @@ NFLogId = {
 	
 	NF_LOG_SERVER_CONNECT_SERVER = 101,		--服务器与服务器连接LOG
 	NF_LOG_SERVER_NOT_HANDLE_MESSAGE = 102,		--服务器未处理消息的LOG
+	NF_LOG_BEHAVIOR_LOGIC_LOG = 103,		--行为LOG日志
 	
 	NF_LOG_END_SERVER_LOG = 1000,			--
 	
@@ -43,6 +44,9 @@ NFLogId = {
 	
 
 	NF_LOG_BEGIN_LOGIC_LOG = 1001,			--1001以后是逻辑框架层
+	
+	
+	
 	NF_LOG_MAX_ID = 10240, --最大LOGID
 }
 
@@ -73,5 +77,6 @@ LogInfo = {
 	
 	{logid = NFLogId.NF_LOG_SERVER_CONNECT_SERVER, display=true, level=0, logname = "ServerConnectServerLog", guid = 0, desc = "服务器与服务器连接LOG"},
 	{logid = NFLogId.NF_LOG_SERVER_NOT_HANDLE_MESSAGE, display=true, level=0, logname = "NotHandleMessageLog", guid = 0, desc = "服务器未处理消息的LOG"},
+	{logid = NFLogId.NF_LOG_BEHAVIOR_LOGIC_LOG, display=true, level=0, logname = "BehaviorLog", guid = 0, desc = "行为LOG日志"},
 	--逻辑代码LOG
 }

@@ -1,0 +1,22 @@
+syntax = "proto2";
+package NFMsg;
+
+
+
+message behavior_log_data
+{
+	optional uint32 ID = 1;
+	optional uint64 userid = 2;
+	optional string nickname = 3;
+	optional string createdate = 4;
+	optional string category= 5;
+	optional string tag = 6;
+	optional uint32 retcode = 7;
+	optional string msg = 8;
+}
+
+message db_behavior_log
+{
+	optional string log_behavior = 1;
+	optional behavior_log_data db_fields = 2;
+}

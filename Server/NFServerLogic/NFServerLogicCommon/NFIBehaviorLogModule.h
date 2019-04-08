@@ -22,5 +22,5 @@ public:
 	* @param  category
 	* @return bool
 	*/
-	virtual void BehaviorLog(const std::string& guid, const std::string& nickName, const std::string& category, const std::string& tag, uint32_t retCode, const std::string& msg) = 0;
+	virtual void BehaviorLog(uint64_t guid, const std::string& nickName, const std::string& category, const std::string& tag, uint32_t retCode, const std::string& msg) = 0;
 };

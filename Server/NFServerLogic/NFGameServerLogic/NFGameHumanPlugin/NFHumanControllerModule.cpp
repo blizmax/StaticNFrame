@@ -74,7 +74,7 @@ void NFHumanControllerModule::OnHandleAccountLogin(const uint32_t unLinkId, cons
 		std::string cid = NFRandomString(8);
 		cgMsg.set_cid(cid);
 
-		NFBehaviorLog(cid, cgMsg.nickname(), "login", "AccountLogin", 0, "自动创建随机的CID=" + cid);
+		NFBehaviorLog(0, cid, "login", "AccountLogin", 0, "自动创建随机的CID=" + cid);
 	}
 }
 

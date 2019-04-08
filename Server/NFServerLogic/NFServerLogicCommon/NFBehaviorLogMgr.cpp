@@ -12,6 +12,7 @@
 
 #include "NFIBehaviorLogModule.h"
 
+
 NFBehaviorLogMgr::NFBehaviorLogMgr()
 {
 	m_pLogModule = nullptr;
@@ -40,11 +41,11 @@ void NFBehaviorLogMgr::UnInit()
 * @param  category
 * @return bool
 */
-void NFBehaviorLogMgr::BehaviorLog(const std::string& cid, const std::string& nickName, const std::string& category, const std::string& tag, uint32_t retCode, const std::string& msg)
+void NFBehaviorLogMgr::BehaviorLog(uint64_t guid, const std::string& nickName, const std::string& category, const std::string& tag, uint32_t retCode, const std::string& msg)
 {
 	if (m_pLogModule)
 	{
-		m_pLogModule->BehaviorLog(cid, nickName, category, tag, retCode, msg);
+		m_pLogModule->BehaviorLog(guid, nickName, category, tag, retCode, msg);
 	}
 }
 

@@ -30,11 +30,11 @@ public:
 	* @param  category
 	* @return bool
 	*/
-	void BehaviorLog(const std::string& cid, const std::string& nickName, const std::string& category, const std::string& tag, uint32_t retCode, const std::string& msg);
+	void BehaviorLog(uint64_t guid, const std::string& nickName, const std::string& category, const std::string& tag, uint32_t retCode, const std::string& msg);
 protected:
 	NFIBehaviorLogModule* m_pLogModule;
 };
 
-#define NFBehaviorLog(guid, nickName, category, tag, retCode, msg) NFBehaviorLogMgr::Instance()->BehaviorLog(cid, nickName, category, tag, retCode, msg);
+#define NFBehaviorLog(guid, nickName, category, tag, retCode, msg) NFBehaviorLogMgr::Instance()->BehaviorLog(guid, nickName, category, tag, retCode, msg);
 
 

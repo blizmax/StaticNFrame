@@ -57,7 +57,6 @@ enum NF_LOG_ID
 	//-----------------------------------------------------------
 	NF_LOG_BEGIN_LOGIC_LOG = 1001,			//1001以后是逻辑框架层
 
-	NF_LOG_BEHAVIOR_LOGIC_LOG = 1002,		//行为LOG日志
 
 	NF_LOG_MAX_ID = 10240, //最大LOGID
 };

@@ -11,6 +11,13 @@
 
 #include "NFComm/NFCore/NFPlatform.h"
 
+enum NF_GAME_DB_ID
+{
+	NF_GAME_BEHAVIOR_LOG_DB = 1,
+	NF_GAME_USER_DB = 2,
+};
+
+
 class _NFExport NFServerLogicCommon
 {
 public:

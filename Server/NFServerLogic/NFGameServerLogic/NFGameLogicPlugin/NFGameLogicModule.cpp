@@ -6,6 +6,7 @@
 #include "NFServer/NFServerCommon/NFServerCommon.h"
 #include "NFComm/NFPluginModule/NFISqliteModule.h"
 #include "NFComm/NFPluginModule/NFINoSqlModule.h"
+#include "NFServerLogic/NFServerLogicCommon/NFServerLogicCommon.h"
 
 NFCGameLogicModule::NFCGameLogicModule(NFIPluginManager* p)
 {
@@ -21,7 +22,7 @@ bool NFCGameLogicModule::Init()
 {
 	bool ret = true;
 	NFISqliteModule* pSqliteModule = m_pPluginManager->FindModule<NFISqliteModule>();
-	ret = pSqliteModule->AddSqliteServer(NF_ST_GAME, "sqlite/db_user");
+	ret = pSqliteModule->AddSqliteServer(NF_GAME_USER_DB, "sqlite/db_user.db");
 	if (ret == false)
 	{
 		NFLogError(NF_LOG_SYSTEMLOG, 0, "sqlite AddSqliteServer:db_user failed!");

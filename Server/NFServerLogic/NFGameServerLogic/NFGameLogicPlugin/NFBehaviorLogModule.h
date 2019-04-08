@@ -13,6 +13,7 @@
 #include "NFServerLogic/NFServerLogicCommon/NFIBehaviorLogModule.h"
 
 class NFILogModule;
+class NFISqliteModule;
 
 class NFCBehaviorLogModule : public NFIBehaviorLogModule
 {
@@ -24,7 +25,8 @@ public:
 	virtual bool Shut() override;
 
 public:
-	void BehaviorLog(const std::string& cid, const std::string& nickName, const std::string& category, const std::string& tag, uint32_t retCode, const std::string& msg);
+	void BehaviorLog(uint64_t guid, const std::string& nickName, const std::string& category, const std::string& tag, uint32_t retCode, const std::string& msg);
 private:
 	NFILogModule* m_pLogModule;
+	NFISqliteModule* m_pSqliteModule;
 };

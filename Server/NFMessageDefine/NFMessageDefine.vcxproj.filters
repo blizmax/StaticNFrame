@@ -10,6 +10,8 @@
     <ClInclude Include="st_human_packet_code.pb.h" />
     <ClInclude Include="msg_human.pb.h" />
     <ClInclude Include="st_shop.pb.h" />
+    <ClInclude Include="db_behavior_log.pb.h" />
+    <ClInclude Include="db_human.pb.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="mysql_db.pb.cc" />
@@ -20,5 +22,7 @@
     <ClCompile Include="st_human_packet_code.pb.cc" />
     <ClCompile Include="msg_human.pb.cc" />
     <ClCompile Include="st_shop.pb.cc" />
+    <ClCompile Include="db_behavior_log.pb.cc" />
+    <ClCompile Include="db_human.pb.cc" />
   </ItemGroup>
 </Project>

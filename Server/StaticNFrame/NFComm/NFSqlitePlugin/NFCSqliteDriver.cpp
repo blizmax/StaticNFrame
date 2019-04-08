@@ -580,7 +580,7 @@ bool NFCSqliteDriver::SqliteBindStep(const google::protobuf::Message& message, s
 		case google::protobuf::FieldDescriptor::CPPTYPE_STRING:
 		{
 			std::string value = pReflect->GetString(message, pFieldDesc);
-			result = sqlite3_bind_text(pStmt, i + 1, value.data(), value.size(), NULL);
+			result = sqlite3_bind_text(pStmt, i + 1, value.data(), -1, SQLITE_TRANSIENT);
 		}
 		break;
 		case google::protobuf::FieldDescriptor::CPPTYPE_MESSAGE:
@@ -588,7 +588,7 @@ bool NFCSqliteDriver::SqliteBindStep(const google::protobuf::Message& message, s
 			const google::protobuf::Message& data = pReflect->GetMessage(message, pFieldDesc);
 			std::string value;
 			data.SerializePartialToString(&value);
-			result = sqlite3_bind_blob(pStmt, i + 1, value.data(), value.size(), NULL);
+			result = sqlite3_bind_blob(pStmt, i + 1, value.data(), value.size(), SQLITE_TRANSIENT);
 		}
 		break;
 		default:
