@@ -15,6 +15,7 @@
     <ClInclude Include="NFBehaviorLogMgr.h">
       <Filter>BehaviorLog</Filter>
     </ClInclude>
+    <ClInclude Include="NFIDynamicModule.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="NFServerLogicCommon.cpp" />
