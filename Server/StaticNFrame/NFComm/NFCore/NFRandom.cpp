@@ -80,33 +80,28 @@ double NFRandomDouble(double min, double max)
 }
 
 //Ëæ»ú×Ö·û´®
-const char* NFRandomChar(size_t nChar)
+std::string NFRandomString(size_t nChar)
 {
-	if (nChar == 0)
-		return nullptr;
-	static std::vector<char> s_aStr;
-	s_aStr.resize(nChar + 1);
+	static std::string strList = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+	std::string str;
 	for (size_t i = 0; i < nChar; i++)
-		s_aStr[i] = static_cast<char>(NFRandomUInt(1, 0xff));
-	s_aStr[nChar] = 0;
-	return &s_aStr.front();
+	{
+		size_t index = NFRandomUInt(0, strList.size());
+		str += strList[index];
+	}
+	return str;
 }
 
 //Ëæ»úÓ¢ÎÄ
-const char* NFRandomEnglish(size_t nChar)
+std::string NFRandomEnglish(size_t nChar)
 {
-	if (nChar == 0)
-		return nullptr;
-	static std::vector<char> s_aStr;
-	s_aStr.resize(nChar + 1);
+	static std::string strList = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+	std::string str;
 	for (size_t i = 0; i < nChar; i++)
 	{
-		if (NFRandomAInt() % 2 == 0)
-			s_aStr[i] = static_cast<char>(NFRandomUInt('A', 'Z'));
-		else
-			s_aStr[i] = static_cast<char>(NFRandomUInt('a', 'z'));
+		size_t index = NFRandomUInt(0, strList.size());
+		str += strList[index];
 	}
-	s_aStr[nChar] = 0;
-	return &s_aStr.front();
+	return str;
 }
 

@@ -103,7 +103,7 @@ public:
 	* @param  log
 	* @return bool
 	*/
-	virtual void LogOthers(uint32_t logNameId, NF_LOG_LEVEL log_level, const std::string& log);
+	virtual void LogOthers(uint32_t logNameId, NF_LOG_LEVEL log_level, uint32_t logId, uint64_t guid, const std::string& log);
 protected:
 	/*创建默认系统LOG系统*/
 	void CreateDefaultLogger();

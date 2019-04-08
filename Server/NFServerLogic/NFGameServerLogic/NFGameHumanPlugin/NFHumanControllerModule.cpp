@@ -13,6 +13,8 @@
 
 #include "NFServerLogic/NFServerLogicCommon/NFHumanDefine.h"
 #include "NFServerLogic/NFServerLogicCommon/NFPacketHuman.h"
+#include "NFServerLogic/NFServerLogicCommon/NFBehaviorLogMgr.h"
+#include "NFComm/NFCore/NFRandom.hpp"
 
 NFHumanControllerModule::NFHumanControllerModule(NFIPluginManager* p)
 {
@@ -50,6 +52,11 @@ bool NFHumanControllerModule::Init()
 	return true;
 }
 
+bool NFHumanControllerModule::Shut()
+{
+	return true;
+}
+
 /**
 * @brief 处理帐号登录功能
 *
@@ -57,10 +64,18 @@ bool NFHumanControllerModule::Init()
 */
 void NFHumanControllerModule::OnHandleAccountLogin(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen)
 {
-	NFMsg::playerinfo xMsg;
-	CLIENT_MSG_PROCESS_NO_OBJECT(nMsgId, playerId, msg, nLen, xMsg);
+	NFMsg::cgaccountlogin cgMsg;
+	CLIENT_MSG_PROCESS_NO_OBJECT(nMsgId, playerId, msg, nLen, cgMsg);
 
+	NFMsg::gcaccountlogin gcMsg;
 
+	if (cgMsg.cid() == "")
+	{
+		std::string cid = NFRandomString(8);
+		cgMsg.set_cid(cid);
+
+		NFBehaviorLog(cid, cgMsg.nickname(), "login", "AccountLogin", 0, "自动创建随机的CID=" + cid);
+	}
 }
 
 /**

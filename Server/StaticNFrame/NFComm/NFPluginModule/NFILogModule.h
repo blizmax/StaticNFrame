@@ -56,6 +56,9 @@ enum NF_LOG_ID
 	NF_LOG_END_SERVER_LOG = 1000,			//
 	//-----------------------------------------------------------
 	NF_LOG_BEGIN_LOGIC_LOG = 1001,			//1001以后是逻辑框架层
+
+	NF_LOG_BEHAVIOR_LOGIC_LOG = 1002,		//行为LOG日志
+
 	NF_LOG_MAX_ID = 10240, //最大LOGID
 };
 
@@ -154,7 +157,7 @@ public:
 	* @param  log
 	* @return bool
 	*/
-	virtual void LogOthers(uint32_t logNameId, NF_LOG_LEVEL log_level, const std::string& log) = 0;
+	virtual void LogOthers(uint32_t logNameId, NF_LOG_LEVEL log_level, uint32_t logId, uint64_t guid, const std::string& log) = 0;
 
 	/**
 	* @brief 用于LUA系统的LOG

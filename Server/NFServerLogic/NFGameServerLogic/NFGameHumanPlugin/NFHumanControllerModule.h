@@ -19,6 +19,8 @@ public:
 	virtual ~NFHumanControllerModule();
 
 	virtual bool Init();
+
+	virtual bool Shut();
 public:
 	/**
 	* @brief 处理帐号登录功能

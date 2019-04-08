@@ -13,3 +13,4 @@
 
 #include "NFMessageDefine/st_human.pb.h"
 #include "NFMessageDefine/st_human_packet_code.pb.h"
+#include "NFMessageDefine/msg_human.pb.h"

@@ -97,22 +97,23 @@ bool NFCLogModule::IsLogIdEnable(NF_LOG_LEVEL log_level, uint32_t logId, uint64_
 */
 void NFCLogModule::LogDefault(NF_LOG_LEVEL log_level, uint32_t logId, uint64_t guid, const std::string& log)
 {
-	if (logId < m_logInfoConfig.size() && m_logInfoConfig[logId].mDisplay && m_logInfoConfig[logId].mLevel <= (uint32_t)log_level)
+	if (IsLogIdEnable(log_level, logId, guid))
 	{
-		if (m_logInfoConfig[logId].mVecGuid.empty() || m_logInfoConfig[logId].Exist(guid))
-		{
-			std::string str = fmt::format("|[{}:{}] | {}", m_logInfoConfig[logId].mLogName, guid, log);
-			m_defaultLogger->log((spdlog::level::level_enum)log_level, str.c_str());
-		}
+		std::string str = fmt::format("| [{}:{}] | {}", m_logInfoConfig[logId].mLogName, guid, log);
+		m_defaultLogger->log((spdlog::level::level_enum)log_level, str.c_str());
 	}
 }
 
-void NFCLogModule::LogOthers(uint32_t logNameId, NF_LOG_LEVEL log_level, const std::string& log)
+void NFCLogModule::LogOthers(uint32_t logNameId, NF_LOG_LEVEL log_level, uint32_t logId, uint64_t guid, const std::string& log)
 {
-	auto iter = m_loggerMap.find(logNameId);
-	if (iter != m_loggerMap.end())
+	if (IsLogIdEnable(log_level, logId, guid))
 	{
-		iter->second->log((spdlog::level::level_enum)log_level, log.c_str());
+		auto iter = m_loggerMap.find(logNameId);
+		if (iter != m_loggerMap.end())
+		{
+			std::string str = fmt::format("| [{}:{}] | {}", m_logInfoConfig[logId].mLogName, guid, log);
+			iter->second->log((spdlog::level::level_enum)log_level, str.c_str());
+		}
 	}
 }
 

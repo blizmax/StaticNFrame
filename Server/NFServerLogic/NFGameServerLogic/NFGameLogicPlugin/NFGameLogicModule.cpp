@@ -21,7 +21,7 @@ bool NFCGameLogicModule::Init()
 {
 	bool ret = true;
 	NFISqliteModule* pSqliteModule = m_pPluginManager->FindModule<NFISqliteModule>();
-	ret = pSqliteModule->AddSqliteServer(NF_ST_GAME, "db_user");
+	ret = pSqliteModule->AddSqliteServer(NF_ST_GAME, "sqlite/db_user");
 	if (ret == false)
 	{
 		NFLogError(NF_LOG_SYSTEMLOG, 0, "sqlite AddSqliteServer:db_user failed!");

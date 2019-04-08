@@ -75,6 +75,16 @@ public:
 		return AddReceiveCallBack(eType, functor);
 	}
 
+	bool DelReceiveCallBack(const NF_SERVER_TYPES eType, const uint32_t nMsgID)
+	{
+		if (eType >= 0 && eType < NF_ST_MAX)
+		{
+			mxCallBack[eType].mxReceiveCallBack.erase(nMsgID);
+			return true;
+		}
+		return false;
+	}
+
 	virtual bool AddReceiveCallBack(const NF_SERVER_TYPES eType, const uint32_t nMsgID, const NET_RECEIVE_FUNCTOR& cb)
 	{
 		if (eType >= 0 && eType < NF_ST_MAX)

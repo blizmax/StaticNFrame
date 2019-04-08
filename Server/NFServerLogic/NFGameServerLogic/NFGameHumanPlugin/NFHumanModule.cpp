@@ -6,3 +6,15 @@
 //    @Module           :    NFGameHumanPlugin
 //
 // -------------------------------------------------------------------------
+
+#include "NFHumanModule.h"
+
+NFHumanModule::NFHumanModule(NFIPluginManager* p)
+{
+	m_pPluginManager = p;
+}
+
+NFHumanModule::~NFHumanModule()
+{
+
+}

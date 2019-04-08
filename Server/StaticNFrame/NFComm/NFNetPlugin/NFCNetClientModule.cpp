@@ -48,6 +48,7 @@ bool NFCNetClientModule::AfterInit()
 
 bool NFCNetClientModule::BeforeShut()
 {
+	mxCallBack.clear();
 	return true;
 }
 

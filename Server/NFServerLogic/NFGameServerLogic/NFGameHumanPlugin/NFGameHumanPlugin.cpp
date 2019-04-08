@@ -9,6 +9,9 @@
 
 #include "NFGameHumanPlugin.h"
 #include "NFComm/NFPluginModule/NFIPluginManager.h"
+#include "NFHumanControllerModule.h"
+#include "NFHumanModule.h"
+#include "NFHumanServicesModule.h"
 
 #ifdef NF_DYNAMIC_PLUGIN
 
@@ -45,10 +48,14 @@ bool NFGameHumanPlugin::IsDynamicLoad()
 
 void NFGameHumanPlugin::Install()
 {
-	//REGISTER_MODULE(m_pPluginManager, NFIGameLogicModule, NFCGameLogicModule);
+	REGISTER_MODULE(m_pPluginManager, NFHumanControllerModule, NFHumanControllerModule);
+	REGISTER_MODULE(m_pPluginManager, NFHumanModule, NFHumanModule);
+	REGISTER_MODULE(m_pPluginManager, NFHumanServicesModule, NFHumanServicesModule);
 }
 
 void NFGameHumanPlugin::Uninstall()
 {
-	//UNREGISTER_MODULE(m_pPluginManager, NFIGameLogicModule, NFCGameLogicModule);
+	UNREGISTER_MODULE(m_pPluginManager, NFHumanControllerModule, NFHumanControllerModule);
+	UNREGISTER_MODULE(m_pPluginManager, NFHumanModule, NFHumanModule);
+	UNREGISTER_MODULE(m_pPluginManager, NFHumanServicesModule, NFHumanServicesModule);
 }

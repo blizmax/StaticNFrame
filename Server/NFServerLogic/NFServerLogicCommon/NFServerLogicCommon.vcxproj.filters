@@ -6,21 +6,31 @@
     <ClInclude Include="NFILoginLogicModule.h" />
     <ClInclude Include="NFIGameLogicModule.h" />
     <ClInclude Include="NFPacketHuman.h">
-      <Filter>packet</Filter>
+      <Filter>Packet</Filter>
     </ClInclude>
     <ClInclude Include="NFHumanDefine.h">
-      <Filter>define</Filter>
+      <Filter>Define</Filter>
+    </ClInclude>
+    <ClInclude Include="NFIBehaviorLogModule.h" />
+    <ClInclude Include="NFBehaviorLogMgr.h">
+      <Filter>BehaviorLog</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="NFServerLogicCommon.cpp" />
+    <ClCompile Include="NFBehaviorLogMgr.cpp">
+      <Filter>BehaviorLog</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <Filter Include="packet">
-      <UniqueIdentifier>{860f74c8-8e7f-4411-8b3e-bae8d1e252d0}</UniqueIdentifier>
+    <Filter Include="BehaviorLog">
+      <UniqueIdentifier>{ce6bd5a2-5d35-40e7-8ba7-98589061fdb7}</UniqueIdentifier>
     </Filter>
-    <Filter Include="define">
+    <Filter Include="Define">
       <UniqueIdentifier>{1838bd43-96bf-4473-9eb0-91e7b7d7ae2d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Packet">
+      <UniqueIdentifier>{860f74c8-8e7f-4411-8b3e-bae8d1e252d0}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

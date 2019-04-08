@@ -8,3 +8,12 @@
 // -------------------------------------------------------------------------
 
 #pragma once
+
+#include "NFComm/NFPluginModule/NFIModule.h"
+
+class NFHumanModule : public NFIModule
+{
+public:
+	NFHumanModule(NFIPluginManager* p);
+	virtual ~NFHumanModule();
+};

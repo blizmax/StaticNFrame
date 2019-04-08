@@ -8,6 +8,8 @@
     <ClInclude Include="sqlite_db.pb.h" />
     <ClInclude Include="st_human.pb.h" />
     <ClInclude Include="st_human_packet_code.pb.h" />
+    <ClInclude Include="msg_human.pb.h" />
+    <ClInclude Include="st_shop.pb.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="mysql_db.pb.cc" />
@@ -16,5 +18,7 @@
     <ClCompile Include="sqlite_db.pb.cc" />
     <ClCompile Include="st_human.pb.cc" />
     <ClCompile Include="st_human_packet_code.pb.cc" />
+    <ClCompile Include="msg_human.pb.cc" />
+    <ClCompile Include="st_shop.pb.cc" />
   </ItemGroup>
 </Project>

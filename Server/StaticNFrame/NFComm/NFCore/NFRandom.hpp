@@ -98,9 +98,9 @@ _NFExport float NFRandomFloat(float min, float max);
 
 _NFExport double NFRandomDouble(double min, double max);
 
-_NFExport const char* NFRandomChar(size_t nChar);
+_NFExport std::string NFRandomString(size_t nChar);
 
-_NFExport const char* NFRandomEnglish(size_t nChar);;
+_NFExport std::string NFRandomEnglish(size_t nChar);;
 
 //[min, max)范围内的随机数
 template <typename T>

@@ -35,7 +35,9 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="NFBehaviorLogMgr.h" />
     <ClInclude Include="NFHumanDefine.h" />
+    <ClInclude Include="NFIBehaviorLogModule.h" />
     <ClInclude Include="NFIGameLogicModule.h" />
     <ClInclude Include="NFILoginLogicModule.h" />
     <ClInclude Include="NFIProxyLogicModule.h" />
@@ -43,6 +45,7 @@
     <ClInclude Include="NFServerLogicCommon.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="NFBehaviorLogMgr.cpp" />
     <ClCompile Include="NFServerLogicCommon.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
