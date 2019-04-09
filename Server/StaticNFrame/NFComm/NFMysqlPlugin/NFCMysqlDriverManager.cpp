@@ -100,6 +100,7 @@ bool NFCMysqlDriverManager::AddMysqlServer(const int nServerID, const std::strin
 	else
 	{
 		mvInvalidMsyql.AddElement(nServerID, pMysqlDriver);
+		return false;
 	}
 
 	return true;

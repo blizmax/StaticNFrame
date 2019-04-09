@@ -37,7 +37,6 @@ public:
 	{
 		mServerType = NF_ST_NONE;
 		mServerId = 0;
-		mGameId = 0;
 		mMongoPort = 0;
 		mServerPort = 0;
 		mMaxConnectNum = 100;
@@ -45,21 +44,27 @@ public:
 		mSecurity = false;
 		mWebSocket = false;
 		mHttpPort = 0;
-		mServerInnerPort = 0;
+		mMysqlPort = 0;
+		mNosqlPort = 0;
 	}
 
 public:
 	std::string mServerName;	//服务器名字
 	uint32_t mServerType;	//服务器类型
 	uint32_t mServerId;		//服务器唯一ID
-	uint32_t mGameId;	//游戏ID
 	std::string mGameName;	//游戏名字
 	std::string mMongoIp;	//mongodb 地址
 	uint32_t	mMongoPort;	//mongodb port
 	std::string mMongoDbName; //mongo dbname数据库名字
+	std::string mMysqlIp;
+	uint32_t	mMysqlPort;
+	std::string mMysqlDbName;
+	std::string mMysqlUser;
+	std::string mMysqlPassword;
+	std::string mNosqlIp;
+	uint32_t	mNosqlPort;
 	std::string mServerIp;  //服务器监听IP
 	uint32_t mServerPort;	//服务器监听端口
-	uint32_t mServerInnerPort;	//对内服务器端口，只要用于网关
 	uint32_t mHttpPort;		//服务器http监听ip
 	uint32_t mMaxConnectNum;	//最大连接数目
 	uint32_t mWorkThreadNum;	//线程数目

@@ -7,6 +7,7 @@
 #include "NFComm/NFPluginModule/NFISqliteModule.h"
 #include "NFComm/NFPluginModule/NFINoSqlModule.h"
 #include "NFServerLogic/NFServerLogicCommon/NFServerLogicCommon.h"
+#include "NFComm/NFPluginModule/NFIMysqlModule.h"
 
 NFCGameLogicModule::NFCGameLogicModule(NFIPluginManager* p)
 {
@@ -21,8 +22,15 @@ NFCGameLogicModule::~NFCGameLogicModule()
 bool NFCGameLogicModule::Init()
 {
 	bool ret = true;
-	NFISqliteModule* pSqliteModule = m_pPluginManager->FindModule<NFISqliteModule>();
-	ret = pSqliteModule->AddSqliteServer(NF_GAME_USER_DB, "sqlite/db_user.db");
+	NFServerConfig* pConfig = NFServerCommon::GetAppConfig(m_pPluginManager, NF_ST_GAME);
+	if (pConfig == nullptr)
+	{
+		NFLogError(NF_LOG_SYSTEMLOG, 0, "NFServerCommon::GetAppConfig:NF_ST_GAME failed!");
+		return false;
+	}
+
+	NFIMysqlModule* pDBModule = m_pPluginManager->FindModule<NFIMysqlModule>();
+	ret = pDBModule->AddMysqlServer(NF_ST_GAME, pConfig->mMysqlIp, pConfig->mMysqlPort, pConfig->mMysqlDbName, pConfig->mMysqlUser, pConfig->mMysqlPassword);
 	if (ret == false)
 	{
 		NFLogError(NF_LOG_SYSTEMLOG, 0, "sqlite AddSqliteServer:db_user failed!");
@@ -30,7 +38,7 @@ bool NFCGameLogicModule::Init()
 	}
 
 	NFINoSqlModule* pNosqlModule = m_pPluginManager->FindModule<NFINoSqlModule>();
-	ret = pNosqlModule->AddConnectSql("nosql", "127.0.0.1");
+	ret = pNosqlModule->AddConnectSql("nosql", pConfig->mNosqlIp, pConfig->mNosqlPort);
 	if (ret == false)
 	{
 		NFLogError(NF_LOG_SYSTEMLOG, 0, "redis connect 127.0.0.1 server failed!");

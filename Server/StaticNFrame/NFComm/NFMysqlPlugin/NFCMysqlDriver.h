@@ -13,50 +13,52 @@
 #include <string>
 #include <mysqlpp/lib/connection.h>
 #include "NFMessageDefine/NFMsgDefine.h"
+#include "NFComm/NFPluginModule/NFLogMgr.h"
 
 #define  NFMYSQLTRYBEGIN try {
 
 #define  NFMYSQLTRYEND(msg) }\
     catch (mysqlpp::BadQuery er) \
     { \
-        std::cout << "BadQuery [" << msg << "] Error: " << er.what() << std::endl; \
+		NFLogError(NF_LOG_SYSTEMLOG, 0, "BadQuery [{}] Error:{}", msg, er.what());\
         return false; \
     } \
     catch (const mysqlpp::BadConversion& er)  \
     { \
-        std::cout << "BadConversion [" << msg << "] Error:" << er.what() << " retrieved data size:" << er.retrieved << ", actual size:" << er.actual_size << std::endl; \
+		NFLogError(NF_LOG_SYSTEMLOG, 0, "BadConversion [{}] Error:{} retrieved data size:{}, actual size:{}", msg, er.what(), er.retrieved, er.actual_size);\
         return false; \
     } \
     catch (const mysqlpp::Exception& er) \
     { \
-        std::cout << "mysqlpp::Exception [" << msg << "] Error:" << er.what() << std::endl; \
+		NFLogError(NF_LOG_SYSTEMLOG, 0, "mysqlpp::Exception [{}] Error:{}", msg, er.what());\
         return false; \
     }\
     catch ( ... ) \
     { \
-        std::cout << "std::exception [" <<msg << "] Error:Unknown " << std::endl; \
+		NFLogError(NF_LOG_SYSTEMLOG, 0, "std::exception [{}] Error:Error:Unknown", msg);\
         return false; \
     }
 
 #define  NFMYSQLTRYENDNULLRETURN(msg) }\
     catch (mysqlpp::BadQuery er) \
     { \
+		NFLogError(NF_LOG_SYSTEMLOG, 0, "BadQuery [{}] Error:{}", msg, er.what());\
         std::cout << "BadQuery [" << msg << "] Error: " << er.what() << std::endl; \
         return ; \
     } \
     catch (const mysqlpp::BadConversion& er)  \
     { \
-        std::cout << "BadConversion [" << msg << "] Error:" << er.what() << " retrieved data size:" << er.retrieved << ", actual size:" << er.actual_size << std::endl; \
+        NFLogError(NF_LOG_SYSTEMLOG, 0, "BadConversion [{}] Error:{} retrieved data size:{}, actual size:{}", msg, er.what(), er.retrieved, er.actual_size);\
         return ; \
     } \
     catch (const mysqlpp::Exception& er) \
     { \
-        std::cout << "mysqlpp::Exception ["<<msg<<"] Error:" << er.what() << std::endl; \
+        NFLogError(NF_LOG_SYSTEMLOG, 0, "mysqlpp::Exception [{}] Error:{}", msg, er.what());\
         return ; \
     }\
     catch ( ... ) \
     { \
-        std::cout << "std::exception [" << msg << "] Error:Unknown " << std::endl; \
+        NFLogError(NF_LOG_SYSTEMLOG, 0, "std::exception [{}] Error:Error:Unknown", msg);\
         return ; \
     }
 

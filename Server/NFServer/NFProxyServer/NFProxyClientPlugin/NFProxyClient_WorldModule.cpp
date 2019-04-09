@@ -140,7 +140,6 @@ void NFCProxyClient_WorldModule::RegisterServer(uint32_t linkId)
 		pData->set_server_type(pConfig->mServerType);
 		pData->set_server_max_online(pConfig->mMaxConnectNum);
 		pData->set_server_state(NFMsg::EST_NARMAL);
-		pData->set_game_id(pConfig->mGameId);
 		pData->set_game_name(pConfig->mGameName);
 
 		m_pNetClientModule->SendToServerByPB(linkId, EGMI_NET_PROXY_TO_WORLD_REGISTER, xMsg, 0);

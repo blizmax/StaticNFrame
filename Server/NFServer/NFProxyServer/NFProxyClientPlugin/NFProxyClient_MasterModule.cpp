@@ -93,7 +93,6 @@ void NFCProxyClient_MasterModule::RegisterServer()
 		pData->set_server_ip(pConfig->mServerIp);
 		pData->set_server_type(pConfig->mServerType);
 		pData->set_server_port(pConfig->mServerPort);
-		pData->set_server_inner_port(pConfig->mServerInnerPort);
 		pData->set_server_max_online(pConfig->mMaxConnectNum);
 		pData->set_server_state(NFMsg::EST_NARMAL);
 
@@ -154,7 +153,6 @@ void NFCProxyClient_MasterModule::ServerReport()
 		pData->set_server_name(pConfig->mServerName);
 		pData->set_server_ip(pConfig->mServerIp);
 		pData->set_server_port(pConfig->mServerPort);
-		pData->set_server_inner_port(pConfig->mServerInnerPort);
 		pData->set_server_type(pConfig->mServerType);
 		pData->set_server_max_online(pConfig->mMaxConnectNum);
 		pData->set_server_state(NFMsg::EST_NARMAL);

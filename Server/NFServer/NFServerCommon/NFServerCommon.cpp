@@ -38,31 +38,19 @@ NFServerConfig* NFServerCommon::GetServerConfig(NFIPluginManager* pPluginManager
 				}
 				else if (eServerType == NF_ST_LOGIN)
 				{
-					if (pConfig->mGameId == pAppConfig->mGameId)
-					{
-						return pConfig;
-					}
+					return pConfig;
 				}
 				else if (eServerType == NF_ST_WORLD)
 				{
-					if (pConfig->mGameId == pAppConfig->mGameId)
-					{
-						return pConfig;
-					}
+					return pConfig;
 				}
 				else if (eServerType == NF_ST_GAME)
 				{
-					if (pConfig->mGameId == pAppConfig->mGameId)
-					{
-						return pConfig;
-					}
+					return pConfig;
 				}
 				else if (eServerType == NF_ST_PROXY)
 				{
-					if (pConfig->mGameId == pAppConfig->mGameId)
-					{
-						return pConfig;
-					}
+					return pConfig;
 				}
 			}
 		}

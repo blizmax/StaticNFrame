@@ -123,7 +123,6 @@ void NFCGameClient_MasterModule::RegisterServer()
 		pData->set_server_port(pConfig->mServerPort);
 		pData->set_server_type(pConfig->mServerType);
 		pData->set_server_max_online(pConfig->mMaxConnectNum);
-		pData->set_game_id(pConfig->mGameId);
 		pData->set_game_name(pConfig->mGameName);
 		pData->set_server_state(NFMsg::EST_NARMAL);
 
@@ -157,7 +156,6 @@ void NFCGameClient_MasterModule::ServerReport()
 		pData->set_server_port(pConfig->mServerPort);
 		pData->set_server_type(pConfig->mServerType);
 		pData->set_server_max_online(pConfig->mMaxConnectNum);
-		pData->set_game_id(pConfig->mGameId);
 		pData->set_game_name(pConfig->mGameName);
 		pData->set_server_state(NFMsg::EST_NARMAL);
 		pData->set_server_cur_count(m_onlineNum);

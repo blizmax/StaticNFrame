@@ -18,7 +18,6 @@
 
 #define DEFINE_LUA_STRING_SERVER_NAME			"ServerName"
 #define DEFINE_LUA_STRING_SERVER_ID				"ServerId"
-#define DEFINE_LUA_STRING_SERVER_GAME_ID		"GameId"
 #define DEFINE_LUA_STRING_SERVER_GAME_NAME		"GameName"
 #define DEFINE_LUA_STRING_SERVER_MONGO_IP		"MongoIp"
 #define DEFINE_LUA_STRING_SERVER_MONGO_PORT		"MongoPort"
@@ -33,7 +32,6 @@
 #define DEFINE_LUA_STRING_LOG_FLUSH_LEVEL		"LogFlushLevel"				//logË¢ÐÂµÈ¼¶ÅäÖÃ
 #define DEFINE_LUA_STRING_WebSocket				"WebSocket"
 #define DEFINE_LUA_STRING_HttpPort				"HttpPort"
-#define DEFINE_LUA_STRING_SERVER_INNER_PROT		"ServerInnerPort"
 
 #define DEFINE_LUA_STRING_LOG_INFO				"LogInfo"			//logÅäÖÃ
 
@@ -246,20 +244,28 @@ bool NFCConfigModule::LoadServerConfig()
 			assert(0);
 		}
 
-		GetLuaTableValue(serverConfigRef, DEFINE_LUA_STRING_SERVER_GAME_ID, pConfig->mGameId);
 		GetLuaTableValue(serverConfigRef, DEFINE_LUA_STRING_SERVER_NAME, pConfig->mServerName);
 		GetLuaTableValue(serverConfigRef, DEFINE_LUA_STRING_SERVER_GAME_NAME, pConfig->mGameName);
-		GetLuaTableValue(serverConfigRef, DEFINE_LUA_STRING_SERVER_MONGO_IP, pConfig->mMongoIp);
-		GetLuaTableValue(serverConfigRef, DEFINE_LUA_STRING_SERVER_MONGO_PORT, pConfig->mMongoPort);
-		GetLuaTableValue(serverConfigRef, DEFINE_LUA_STRING_SERVER_MONGO_DBNAME, pConfig->mMongoDbName);
 		GetLuaTableValue(serverConfigRef, DEFINE_LUA_STRING_SERVER_IP, pConfig->mServerIp);
 		GetLuaTableValue(serverConfigRef, DEFINE_LUA_STRING_SERVER_PORT, pConfig->mServerPort);
 		GetLuaTableValue(serverConfigRef, DEFINE_LUA_STRING_MAX_CONNECT_NUM, pConfig->mMaxConnectNum);
 		GetLuaTableValue(serverConfigRef, DEFINE_LUA_STRING_WORK_THREAD_NUM, pConfig->mWorkThreadNum);
 		GetLuaTableValue(serverConfigRef, DEFINE_LUA_STRING_SECURITY, pConfig->mSecurity);
-		GetLuaTableValue(serverConfigRef, DEFINE_LUA_STRING_SERVER_INNER_PROT, pConfig->mServerInnerPort);
 		GetLuaTableValue(serverConfigRef, DEFINE_LUA_STRING_WebSocket, pConfig->mWebSocket);
 		GetLuaTableValue(serverConfigRef, DEFINE_LUA_STRING_HttpPort, pConfig->mHttpPort);
+
+		GetLuaTableValue(serverConfigRef, DEFINE_LUA_STRING_SERVER_MONGO_IP, pConfig->mMongoIp);
+		GetLuaTableValue(serverConfigRef, DEFINE_LUA_STRING_SERVER_MONGO_PORT, pConfig->mMongoPort);
+		GetLuaTableValue(serverConfigRef, DEFINE_LUA_STRING_SERVER_MONGO_DBNAME, pConfig->mMongoDbName);
+
+		GetLuaTableValue(serverConfigRef, "MysqlIp", pConfig->mMysqlIp);
+		GetLuaTableValue(serverConfigRef, "MysqlPort", pConfig->mMysqlPort);
+		GetLuaTableValue(serverConfigRef, "MysqlDbName", pConfig->mMysqlDbName);
+		GetLuaTableValue(serverConfigRef, "MysqlUser", pConfig->mMysqlUser);
+		GetLuaTableValue(serverConfigRef, "MysqlPassword", pConfig->mMysqlPassword);
+
+		GetLuaTableValue(serverConfigRef, "NosqlIp", pConfig->mNosqlIp);
+		GetLuaTableValue(serverConfigRef, "NosqlPort", pConfig->mNosqlPort);
 		mServerConfig.emplace(pConfig->mServerId, pConfig);
 	}
 
