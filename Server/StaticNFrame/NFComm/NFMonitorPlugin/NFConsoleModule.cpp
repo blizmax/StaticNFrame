@@ -161,31 +161,7 @@ void NFCConsoleModule::OnTimer(uint32_t nTimerID)
 		}
 		else if (msg.mMsgType == NFConsoleMsg_Dynamic)
 		{
-			NFIPlugin* pPlugin = m_pPluginManager->FindPlugin(msg.mParam1);
-			if (pPlugin)
-			{
-				if (pPlugin->IsDynamicLoad() == false)
-				{
-					NFLogError(NF_LOG_MONITOR_PLUGIN, 0, "plugin:{} can't not dynamic load!", msg.mParam1);
-					continue;
-				}
-
-				m_pPluginManager->UnLoadPluginLibrary(msg.mParam1);
-				m_pPluginManager->LoadPluginLibrary(msg.mParam1);
-
-				pPlugin = m_pPluginManager->FindPlugin(msg.mParam1);
-				if (pPlugin)
-				{
-					pPlugin->Awake();
-					pPlugin->Init();
-					pPlugin->AfterInit();
-					pPlugin->ReadyExecute();
-				}
-			}
-			else
-			{
-				NFLogError(NF_LOG_MONITOR_PLUGIN, 0, "plugin:{} is not exist!", msg.mParam1);
-			}
+			m_pPluginManager->DynamicLoadPluginLibrary(msg.mParam1);
 		}
 	}
 }

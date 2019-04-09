@@ -86,6 +86,8 @@ public:
 	virtual bool LoadPluginLibrary(const std::string& strPluginDLLName) override;
 	virtual bool UnLoadPluginLibrary(const std::string& strPluginDLLName) override;
 
+	virtual bool DynamicLoadPluginLibrary(const std::string& strPluginDLLName) override;
+
 	virtual bool Execute() override;
 
 	virtual int GetAppID() const override;

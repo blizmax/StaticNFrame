@@ -9,9 +9,9 @@
 
 #pragma once
 
-#include "NFComm/NFPluginModule/NFIModule.h"
+#include "NFServerLogic/NFServerLogicCommon/NFIDynamicModule.h"
 
-class NFHumanControllerModule : public NFIModule
+class NFHumanControllerModule : public NFIDynamicModule
 {
 public:
 	NFHumanControllerModule(NFIPluginManager* p);

@@ -116,6 +116,8 @@ public:
 
 	virtual bool UnLoadPluginLibrary(const std::string& strPluginDLLName) = 0;
 
+	virtual bool DynamicLoadPluginLibrary(const std::string& strPluginDLLName) = 0;
+
 	virtual int GetAppID() const = 0;
 
 	virtual int GetAppID(int serverType) const = 0;

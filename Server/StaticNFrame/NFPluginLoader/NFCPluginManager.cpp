@@ -50,6 +50,7 @@ NFCPluginManager::NFCPluginManager() : NFIPluginManager()
 	}
 
 	NFRandomSeed();
+	SetOpenProfiler(false);
 }
 
 NFCPluginManager::~NFCPluginManager()
@@ -748,6 +749,55 @@ bool NFCPluginManager::UnLoadPluginLibrary(const std::string& strPluginDLLName)
 	}
 
 	return false;
+}
+
+bool NFCPluginManager::DynamicLoadPluginLibrary(const std::string& strPluginDLLName)
+{
+#ifndef NF_DYNAMIC_PLUGIN
+	NFLogError(NF_LOG_PLUGIN_MANAGER, 0, "can't load plugin:{}, you are static load!", strPluginDLLName);
+#else
+	NFIPlugin* pPlugin = FindPlugin(strPluginDLLName);
+	if (pPlugin)
+	{
+		if (pPlugin->IsDynamicLoad() == false)
+		{
+			NFLogError(NF_LOG_PLUGIN_MANAGER, 0, "plugin:{} can't not dynamic load!", strPluginDLLName);
+			return false;
+		}
+
+		/*
+		**卸载动态库
+		*/
+		pPlugin->BeforeShut();
+		pPlugin->Shut();
+		pPlugin->Finalize();
+		pPlugin = nullptr;
+		UnLoadPluginLibrary(strPluginDLLName);
+
+		/*
+		**重新加载动态库
+		*/
+		LoadPluginLibrary(strPluginDLLName);
+		pPlugin = FindPlugin(strPluginDLLName);
+		if (pPlugin)
+		{
+			pPlugin->Awake();
+			pPlugin->Init();
+			pPlugin->AfterInit();
+			pPlugin->ReadyExecute();
+		}
+		else
+		{
+			NFLogError(NF_LOG_PLUGIN_MANAGER, 0, "dynamic load plugin:{} failed!", strPluginDLLName);
+		}
+	}
+	else
+	{
+		NFLogError(NF_LOG_PLUGIN_MANAGER, 0, "plugin:{} is not exist!", strPluginDLLName);
+		return false;
+	}
+#endif
+	return true;
 }
 
 void NFCPluginManager::BeginProfiler(const std::string& funcName)

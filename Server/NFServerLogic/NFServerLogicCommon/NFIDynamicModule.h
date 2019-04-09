@@ -29,24 +29,24 @@ public:
 
 	}
 
-	virtual bool Awake() final
-	{
-		NFINetServerModule* pNetServerModule = m_pPluginManager->FindModule<NFINetServerModule>();
-		return true;
-	}
-
 	virtual bool Finalize() final
 	{
 		NFINetServerModule* pNetServerModule = m_pPluginManager->FindModule<NFINetServerModule>();
+
+		for (auto it = mNetServerMap.begin(); it != mNetServerMap.end(); it++)
+		{
+			pNetServerModule->DelReceiveCallBack((NF_SERVER_TYPES)it->first, it->second);
+		}
 		return true;
 	}
 
 	template <typename BaseType>
-	bool AddNetServerReceiveCallBack(const NF_SERVER_TYPES eType, BaseType* pBase, void (BaseType::*handleRecieve)(const uint32_t unLinkId, const uint64_t valueId, const uint32_t nMsgId, const char* msg, const uint32_t nLen))
+	bool AddNetServerReceiveCallBack(const NF_SERVER_TYPES eType, const uint32_t nMsgID, BaseType* pBase, void (BaseType::*handleRecieve)(const uint32_t unLinkId, const uint64_t valueId, const uint32_t nMsgId, const char* msg, const uint32_t nLen))
 	{
 		NFINetServerModule* pNetServerModule = m_pPluginManager->FindModule<NFINetServerModule>();
-		return pNetServerModule->AddReceiveCallBack(eType, pBase, handleRecieve);
+		mNetServerMap.emplace((uint32_t)eType, nMsgID);
+		return pNetServerModule->AddReceiveCallBack(eType, nMsgID, pBase, handleRecieve);
 	}
 protected:
-	std::unordered_map<uint32_t, uint32_t> mNetServerMap;
+	std::unordered_multimap<uint32_t, uint32_t> mNetServerMap;
 };

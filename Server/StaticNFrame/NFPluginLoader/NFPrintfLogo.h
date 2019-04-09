@@ -50,6 +50,7 @@ void PrintfLogo()
 	std::cout << "Input '--Exit' Programs will exit when it runs" << std::endl;
 	std::cout << "Input '--Reload' Programs will reload config when it runs" << std::endl;
 	std::cout << "Input '--Profiler' Programs will open/close profiler when it runs" << std::endl;
+	std::cout << "Input '--Dynamic=xxplugin' Programs will dynamic load plugin when it runs" << std::endl;
 	std::cout << "\n" << std::endl;
 
 #if NF_PLATFORM == NF_PLATFORM_WIN

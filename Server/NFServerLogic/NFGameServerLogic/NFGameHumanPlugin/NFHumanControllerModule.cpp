@@ -16,7 +16,7 @@
 #include "NFServerLogic/NFServerLogicCommon/NFBehaviorLogMgr.h"
 #include "NFComm/NFCore/NFRandom.hpp"
 
-NFHumanControllerModule::NFHumanControllerModule(NFIPluginManager* p)
+NFHumanControllerModule::NFHumanControllerModule(NFIPluginManager* p):NFIDynamicModule(p)
 {
 	m_pPluginManager = p;
 }
@@ -28,51 +28,30 @@ NFHumanControllerModule::~NFHumanControllerModule()
 
 bool NFHumanControllerModule::Init()
 {
-	NFINetServerModule* pNetServerModule = m_pPluginManager->FindModule<NFINetServerModule>();
-
 	/**
 	* @brief 绑定协议处理函数
 	*/
-	pNetServerModule->AddReceiveCallBack(NF_ST_GAME, ::NFMsg::Client_Msg_AccountLogin, this, &NFHumanControllerModule::OnHandleAccountLogin);
-	pNetServerModule->AddReceiveCallBack(NF_ST_GAME, ::NFMsg::Client_Msg_GetPlayerInfo, this, &NFHumanControllerModule::OnHandleGetPlayerInfo);
-	pNetServerModule->AddReceiveCallBack(NF_ST_GAME, ::NFMsg::Client_Msg_ReConnect, this, &NFHumanControllerModule::OnHandleReConnect);
-	pNetServerModule->AddReceiveCallBack(NF_ST_GAME, ::NFMsg::Client_Msg_KitPlayer, this, &NFHumanControllerModule::OnHandleKitPlayer);
-	pNetServerModule->AddReceiveCallBack(NF_ST_GAME, ::NFMsg::Client_Msg_HeartBeat, this, &NFHumanControllerModule::OnHandleHeartBeat);
-	pNetServerModule->AddReceiveCallBack(NF_ST_GAME, ::NFMsg::Client_Msg_GetInitInfo, this, &NFHumanControllerModule::OnHandleGetInitInfo);
-	pNetServerModule->AddReceiveCallBack(NF_ST_GAME, ::NFMsg::Client_Msg_BroadCast, this, &NFHumanControllerModule::OnHandleBroadCast);
-	pNetServerModule->AddReceiveCallBack(NF_ST_GAME, ::NFMsg::Client_Msg_GetMailList, this, &NFHumanControllerModule::OnHandleGetMailList);
-	pNetServerModule->AddReceiveCallBack(NF_ST_GAME, ::NFMsg::Client_Msg_GetReadMail, this, &NFHumanControllerModule::OnHandleGetReadMail);
-	pNetServerModule->AddReceiveCallBack(NF_ST_GAME, ::NFMsg::Client_Msg_GetMailGoods, this, &NFHumanControllerModule::OnHandleGetMailGoods);
-	pNetServerModule->AddReceiveCallBack(NF_ST_GAME, ::NFMsg::Client_Msg_DeleteMail, this, &NFHumanControllerModule::OnHandleDeleteMail);
-	pNetServerModule->AddReceiveCallBack(NF_ST_GAME, ::NFMsg::Client_Msg_PlayerStatus, this, &NFHumanControllerModule::OnHandlePlayerStatus);
-	pNetServerModule->AddReceiveCallBack(NF_ST_GAME, ::NFMsg::Client_Msg_UpdatePlayerInfo, this, &NFHumanControllerModule::OnHandleUpdatePlayerInfo);
-	pNetServerModule->AddReceiveCallBack(NF_ST_GAME, ::NFMsg::Client_Msg_UpdateGoodsList, this, &NFHumanControllerModule::OnHandleUpdateGoodsList);
-	pNetServerModule->AddReceiveCallBack(NF_ST_GAME, ::NFMsg::Client_Msg_NoticeInfo, this, &NFHumanControllerModule::OnHandleNoticeInfo);
+	AddNetServerReceiveCallBack(NF_ST_GAME, ::NFMsg::Client_Msg_AccountLogin, this, &NFHumanControllerModule::OnHandleAccountLogin);
+	AddNetServerReceiveCallBack(NF_ST_GAME, ::NFMsg::Client_Msg_GetPlayerInfo, this, &NFHumanControllerModule::OnHandleGetPlayerInfo);
+	AddNetServerReceiveCallBack(NF_ST_GAME, ::NFMsg::Client_Msg_ReConnect, this, &NFHumanControllerModule::OnHandleReConnect);
+	AddNetServerReceiveCallBack(NF_ST_GAME, ::NFMsg::Client_Msg_KitPlayer, this, &NFHumanControllerModule::OnHandleKitPlayer);
+	AddNetServerReceiveCallBack(NF_ST_GAME, ::NFMsg::Client_Msg_HeartBeat, this, &NFHumanControllerModule::OnHandleHeartBeat);
+	AddNetServerReceiveCallBack(NF_ST_GAME, ::NFMsg::Client_Msg_GetInitInfo, this, &NFHumanControllerModule::OnHandleGetInitInfo);
+	AddNetServerReceiveCallBack(NF_ST_GAME, ::NFMsg::Client_Msg_BroadCast, this, &NFHumanControllerModule::OnHandleBroadCast);
+	AddNetServerReceiveCallBack(NF_ST_GAME, ::NFMsg::Client_Msg_GetMailList, this, &NFHumanControllerModule::OnHandleGetMailList);
+	AddNetServerReceiveCallBack(NF_ST_GAME, ::NFMsg::Client_Msg_GetReadMail, this, &NFHumanControllerModule::OnHandleGetReadMail);
+	AddNetServerReceiveCallBack(NF_ST_GAME, ::NFMsg::Client_Msg_GetMailGoods, this, &NFHumanControllerModule::OnHandleGetMailGoods);
+	AddNetServerReceiveCallBack(NF_ST_GAME, ::NFMsg::Client_Msg_DeleteMail, this, &NFHumanControllerModule::OnHandleDeleteMail);
+	AddNetServerReceiveCallBack(NF_ST_GAME, ::NFMsg::Client_Msg_PlayerStatus, this, &NFHumanControllerModule::OnHandlePlayerStatus);
+	AddNetServerReceiveCallBack(NF_ST_GAME, ::NFMsg::Client_Msg_UpdatePlayerInfo, this, &NFHumanControllerModule::OnHandleUpdatePlayerInfo);
+	AddNetServerReceiveCallBack(NF_ST_GAME, ::NFMsg::Client_Msg_UpdateGoodsList, this, &NFHumanControllerModule::OnHandleUpdateGoodsList);
+	AddNetServerReceiveCallBack(NF_ST_GAME, ::NFMsg::Client_Msg_NoticeInfo, this, &NFHumanControllerModule::OnHandleNoticeInfo);
 
 	return true;
 }
 
 bool NFHumanControllerModule::Shut()
 {
-	NFINetServerModule* pNetServerModule = m_pPluginManager->FindModule<NFINetServerModule>();
-	/**
-	* @brief 删除绑定协议处理函数
-	*/
-	pNetServerModule->DelReceiveCallBack(NF_ST_GAME, ::NFMsg::Client_Msg_AccountLogin);
-	pNetServerModule->DelReceiveCallBack(NF_ST_GAME, ::NFMsg::Client_Msg_GetPlayerInfo);
-	pNetServerModule->DelReceiveCallBack(NF_ST_GAME, ::NFMsg::Client_Msg_ReConnect);
-	pNetServerModule->DelReceiveCallBack(NF_ST_GAME, ::NFMsg::Client_Msg_KitPlayer);
-	pNetServerModule->DelReceiveCallBack(NF_ST_GAME, ::NFMsg::Client_Msg_HeartBeat);
-	pNetServerModule->DelReceiveCallBack(NF_ST_GAME, ::NFMsg::Client_Msg_GetInitInfo);
-	pNetServerModule->DelReceiveCallBack(NF_ST_GAME, ::NFMsg::Client_Msg_BroadCast);
-	pNetServerModule->DelReceiveCallBack(NF_ST_GAME, ::NFMsg::Client_Msg_GetMailList);
-	pNetServerModule->DelReceiveCallBack(NF_ST_GAME, ::NFMsg::Client_Msg_GetReadMail);
-	pNetServerModule->DelReceiveCallBack(NF_ST_GAME, ::NFMsg::Client_Msg_GetMailGoods);
-	pNetServerModule->DelReceiveCallBack(NF_ST_GAME, ::NFMsg::Client_Msg_DeleteMail);
-	pNetServerModule->DelReceiveCallBack(NF_ST_GAME, ::NFMsg::Client_Msg_PlayerStatus);
-	pNetServerModule->DelReceiveCallBack(NF_ST_GAME, ::NFMsg::Client_Msg_UpdatePlayerInfo);
-	pNetServerModule->DelReceiveCallBack(NF_ST_GAME, ::NFMsg::Client_Msg_UpdateGoodsList);
-	pNetServerModule->DelReceiveCallBack(NF_ST_GAME, ::NFMsg::Client_Msg_NoticeInfo);
 	return true;
 }
 
