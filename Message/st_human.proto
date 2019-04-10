@@ -1,6 +1,13 @@
 syntax = "proto2";
 package NFMsg;
 
+message accountinfo
+{
+	optional string account = 1;
+	optional string password = 2;
+	optional uint64 userid = 3; 
+}
+
 message playerinfo
 {
 	optional int32 userid = 1;   //用户标识ID

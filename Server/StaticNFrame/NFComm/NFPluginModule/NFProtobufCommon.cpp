@@ -115,6 +115,96 @@ std::string NFProtobufCommon::GetFieldsString(const google::protobuf::Message& m
 	return std::string();
 }
 
+void NFProtobufCommon::SetFieldsString(google::protobuf::Message& message, const google::protobuf::FieldDescriptor* pFieldDesc, const std::string& strValue)
+{
+	const google::protobuf::Reflection* pReflect = message.GetReflection();
+	if (pReflect == nullptr || pFieldDesc == nullptr) return;
+
+	switch (pFieldDesc->cpp_type())
+	{
+	case google::protobuf::FieldDescriptor::CPPTYPE_INT32:
+	{
+		int32_t value = (int32_t)lexical_cast<long long>(strValue);
+		pReflect->SetInt32(&message, pFieldDesc, value);
+		return;
+	}
+	break;
+	case google::protobuf::FieldDescriptor::CPPTYPE_INT64:
+	{
+		int64_t value = (int64_t)lexical_cast<long long>(strValue);
+		pReflect->SetInt64(&message, pFieldDesc, value);
+		return;
+	}
+	break;
+	case google::protobuf::FieldDescriptor::CPPTYPE_UINT32:
+	{
+		uint32_t value = (uint32_t)lexical_cast<long long>(strValue);
+		pReflect->SetUInt32(&message, pFieldDesc, value);
+		return;
+	}
+	break;
+	case google::protobuf::FieldDescriptor::CPPTYPE_UINT64:
+	{
+		uint64_t value = (uint64_t)lexical_cast<long long>(strValue);
+		pReflect->SetUInt64(&message, pFieldDesc, value);
+		return;
+	}
+	break;
+	case google::protobuf::FieldDescriptor::CPPTYPE_DOUBLE:
+	{
+		double value = lexical_cast<double>(strValue);
+		pReflect->SetDouble(&message, pFieldDesc, value);
+		return;
+	}
+	break;
+	case google::protobuf::FieldDescriptor::CPPTYPE_FLOAT:
+	{
+		float value = lexical_cast<float>(strValue);
+		pReflect->SetFloat(&message, pFieldDesc, value);
+		return;
+	}
+	break;
+	case google::protobuf::FieldDescriptor::CPPTYPE_BOOL:
+	{
+		bool value = (bool)lexical_cast<long long>(strValue);
+		pReflect->SetBool(&message, pFieldDesc, value);
+		return;
+	}
+	break;
+	case google::protobuf::FieldDescriptor::CPPTYPE_ENUM:
+	{
+		int value = lexical_cast<int>(strValue);
+		const google::protobuf::EnumDescriptor* pEnumDesc = pFieldDesc->enum_type();
+		if (pEnumDesc == nullptr) return;
+
+		const google::protobuf::EnumValueDescriptor* pEnumValueDesc = pEnumDesc->FindValueByNumber(value);
+		if (pEnumValueDesc == nullptr) return;
+
+		pReflect->SetEnum(&message, pFieldDesc, pEnumValueDesc);
+		return;
+	}
+	break;
+	case google::protobuf::FieldDescriptor::CPPTYPE_STRING:
+	{
+		pReflect->SetString(&message, pFieldDesc, strValue);
+		return;
+	}
+	break;
+	case google::protobuf::FieldDescriptor::CPPTYPE_MESSAGE:
+	{
+		google::protobuf::Message* pMutableMessage = pReflect->MutableMessage(&message, pFieldDesc);
+		if (pMutableMessage == nullptr) return;
+
+		pMutableMessage->ParsePartialFromString(strValue);
+		return;
+	}
+	break;
+	default:
+		break;
+	}
+	return;
+}
+
 /*
 ** sqlite,mysql从message利用反射取出数据库名字
 */

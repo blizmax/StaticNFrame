@@ -26,8 +26,10 @@
 #include <google/protobuf/generated_message_util.h>
 #include <google/protobuf/inlined_string_field.h>
 #include <google/protobuf/metadata.h>
+#include <google/protobuf/message.h>
 #include <google/protobuf/repeated_field.h>  // IWYU pragma: export
 #include <google/protobuf/extension_set.h>  // IWYU pragma: export
+#include <google/protobuf/unknown_field_set.h>
 // @@protoc_insertion_point(includes)
 #define PROTOBUF_INTERNAL_EXPORT_protobuf_db_5fhuman_2eproto 
 
@@ -36,7 +38,7 @@ namespace protobuf_db_5fhuman_2eproto {
 struct TableStruct {
   static const ::google::protobuf::internal::ParseTableField entries[];
   static const ::google::protobuf::internal::AuxillaryParseTableField aux[];
-  static const ::google::protobuf::internal::ParseTable schema[1];
+  static const ::google::protobuf::internal::ParseTable schema[3];
   static const ::google::protobuf::internal::FieldMetadata field_metadata[];
   static const ::google::protobuf::internal::SerializationTable serialization_table[];
   static const ::google::protobuf::uint32 offsets[];
@@ -44,12 +46,1107 @@ struct TableStruct {
 void AddDescriptors();
 }  // namespace protobuf_db_5fhuman_2eproto
 namespace NFMsg {
+class db_playerinfo;
+class db_playerinfoDefaultTypeInternal;
+extern db_playerinfoDefaultTypeInternal _db_playerinfo_default_instance_;
+class db_query_playerinfo;
+class db_query_playerinfoDefaultTypeInternal;
+extern db_query_playerinfoDefaultTypeInternal _db_query_playerinfo_default_instance_;
+class db_query_playerinfo_cond;
+class db_query_playerinfo_condDefaultTypeInternal;
+extern db_query_playerinfo_condDefaultTypeInternal _db_query_playerinfo_cond_default_instance_;
 }  // namespace NFMsg
+namespace google {
+namespace protobuf {
+template<> ::NFMsg::db_playerinfo* Arena::CreateMaybeMessage<::NFMsg::db_playerinfo>(Arena*);
+template<> ::NFMsg::db_query_playerinfo* Arena::CreateMaybeMessage<::NFMsg::db_query_playerinfo>(Arena*);
+template<> ::NFMsg::db_query_playerinfo_cond* Arena::CreateMaybeMessage<::NFMsg::db_query_playerinfo_cond>(Arena*);
+}  // namespace protobuf
+}  // namespace google
 namespace NFMsg {
 
 // ===================================================================
 
+class db_playerinfo : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:NFMsg.db_playerinfo) */ {
+ public:
+  db_playerinfo();
+  virtual ~db_playerinfo();
 
+  db_playerinfo(const db_playerinfo& from);
+
+  inline db_playerinfo& operator=(const db_playerinfo& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  #if LANG_CXX11
+  db_playerinfo(db_playerinfo&& from) noexcept
+    : db_playerinfo() {
+    *this = ::std::move(from);
+  }
+
+  inline db_playerinfo& operator=(db_playerinfo&& from) noexcept {
+    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
+      if (this != &from) InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+  #endif
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _internal_metadata_.unknown_fields();
+  }
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return _internal_metadata_.mutable_unknown_fields();
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const db_playerinfo& default_instance();
+
+  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
+  static inline const db_playerinfo* internal_default_instance() {
+    return reinterpret_cast<const db_playerinfo*>(
+               &_db_playerinfo_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    0;
+
+  void Swap(db_playerinfo* other);
+  friend void swap(db_playerinfo& a, db_playerinfo& b) {
+    a.Swap(&b);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline db_playerinfo* New() const final {
+    return CreateMaybeMessage<db_playerinfo>(NULL);
+  }
+
+  db_playerinfo* New(::google::protobuf::Arena* arena) const final {
+    return CreateMaybeMessage<db_playerinfo>(arena);
+  }
+  void CopyFrom(const ::google::protobuf::Message& from) final;
+  void MergeFrom(const ::google::protobuf::Message& from) final;
+  void CopyFrom(const db_playerinfo& from);
+  void MergeFrom(const db_playerinfo& from);
+  void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input) final;
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const final;
+  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
+      bool deterministic, ::google::protobuf::uint8* target) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(db_playerinfo* other);
+  private:
+  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
+    return NULL;
+  }
+  inline void* MaybeArenaPtr() const {
+    return NULL;
+  }
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // optional string cid = 2;
+  bool has_cid() const;
+  void clear_cid();
+  static const int kCidFieldNumber = 2;
+  const ::std::string& cid() const;
+  void set_cid(const ::std::string& value);
+  #if LANG_CXX11
+  void set_cid(::std::string&& value);
+  #endif
+  void set_cid(const char* value);
+  void set_cid(const char* value, size_t size);
+  ::std::string* mutable_cid();
+  ::std::string* release_cid();
+  void set_allocated_cid(::std::string* cid);
+
+  // optional string account = 3;
+  bool has_account() const;
+  void clear_account();
+  static const int kAccountFieldNumber = 3;
+  const ::std::string& account() const;
+  void set_account(const ::std::string& value);
+  #if LANG_CXX11
+  void set_account(::std::string&& value);
+  #endif
+  void set_account(const char* value);
+  void set_account(const char* value, size_t size);
+  ::std::string* mutable_account();
+  ::std::string* release_account();
+  void set_allocated_account(::std::string* account);
+
+  // optional string password = 4;
+  bool has_password() const;
+  void clear_password();
+  static const int kPasswordFieldNumber = 4;
+  const ::std::string& password() const;
+  void set_password(const ::std::string& value);
+  #if LANG_CXX11
+  void set_password(::std::string&& value);
+  #endif
+  void set_password(const char* value);
+  void set_password(const char* value, size_t size);
+  ::std::string* mutable_password();
+  ::std::string* release_password();
+  void set_allocated_password(::std::string* password);
+
+  // optional string nickname = 5;
+  bool has_nickname() const;
+  void clear_nickname();
+  static const int kNicknameFieldNumber = 5;
+  const ::std::string& nickname() const;
+  void set_nickname(const ::std::string& value);
+  #if LANG_CXX11
+  void set_nickname(::std::string&& value);
+  #endif
+  void set_nickname(const char* value);
+  void set_nickname(const char* value, size_t size);
+  ::std::string* mutable_nickname();
+  ::std::string* release_nickname();
+  void set_allocated_nickname(::std::string* nickname);
+
+  // optional string regdate = 7;
+  bool has_regdate() const;
+  void clear_regdate();
+  static const int kRegdateFieldNumber = 7;
+  const ::std::string& regdate() const;
+  void set_regdate(const ::std::string& value);
+  #if LANG_CXX11
+  void set_regdate(::std::string&& value);
+  #endif
+  void set_regdate(const char* value);
+  void set_regdate(const char* value, size_t size);
+  ::std::string* mutable_regdate();
+  ::std::string* release_regdate();
+  void set_allocated_regdate(::std::string* regdate);
+
+  // optional string email = 10;
+  bool has_email() const;
+  void clear_email();
+  static const int kEmailFieldNumber = 10;
+  const ::std::string& email() const;
+  void set_email(const ::std::string& value);
+  #if LANG_CXX11
+  void set_email(::std::string&& value);
+  #endif
+  void set_email(const char* value);
+  void set_email(const char* value, size_t size);
+  ::std::string* mutable_email();
+  ::std::string* release_email();
+  void set_allocated_email(::std::string* email);
+
+  // optional string phonenum = 11;
+  bool has_phonenum() const;
+  void clear_phonenum();
+  static const int kPhonenumFieldNumber = 11;
+  const ::std::string& phonenum() const;
+  void set_phonenum(const ::std::string& value);
+  #if LANG_CXX11
+  void set_phonenum(::std::string&& value);
+  #endif
+  void set_phonenum(const char* value);
+  void set_phonenum(const char* value, size_t size);
+  ::std::string* mutable_phonenum();
+  ::std::string* release_phonenum();
+  void set_allocated_phonenum(::std::string* phonenum);
+
+  // optional string channel = 18;
+  bool has_channel() const;
+  void clear_channel();
+  static const int kChannelFieldNumber = 18;
+  const ::std::string& channel() const;
+  void set_channel(const ::std::string& value);
+  #if LANG_CXX11
+  void set_channel(::std::string&& value);
+  #endif
+  void set_channel(const char* value);
+  void set_channel(const char* value, size_t size);
+  ::std::string* mutable_channel();
+  ::std::string* release_channel();
+  void set_allocated_channel(::std::string* channel);
+
+  // optional string province = 19;
+  bool has_province() const;
+  void clear_province();
+  static const int kProvinceFieldNumber = 19;
+  const ::std::string& province() const;
+  void set_province(const ::std::string& value);
+  #if LANG_CXX11
+  void set_province(::std::string&& value);
+  #endif
+  void set_province(const char* value);
+  void set_province(const char* value, size_t size);
+  ::std::string* mutable_province();
+  ::std::string* release_province();
+  void set_allocated_province(::std::string* province);
+
+  // optional string city = 20;
+  bool has_city() const;
+  void clear_city();
+  static const int kCityFieldNumber = 20;
+  const ::std::string& city() const;
+  void set_city(const ::std::string& value);
+  #if LANG_CXX11
+  void set_city(::std::string&& value);
+  #endif
+  void set_city(const char* value);
+  void set_city(const char* value, size_t size);
+  ::std::string* mutable_city();
+  ::std::string* release_city();
+  void set_allocated_city(::std::string* city);
+
+  // optional string bindnick = 24;
+  bool has_bindnick() const;
+  void clear_bindnick();
+  static const int kBindnickFieldNumber = 24;
+  const ::std::string& bindnick() const;
+  void set_bindnick(const ::std::string& value);
+  #if LANG_CXX11
+  void set_bindnick(::std::string&& value);
+  #endif
+  void set_bindnick(const char* value);
+  void set_bindnick(const char* value, size_t size);
+  ::std::string* mutable_bindnick();
+  ::std::string* release_bindnick();
+  void set_allocated_bindnick(::std::string* bindnick);
+
+  // optional string platformid = 25;
+  bool has_platformid() const;
+  void clear_platformid();
+  static const int kPlatformidFieldNumber = 25;
+  const ::std::string& platformid() const;
+  void set_platformid(const ::std::string& value);
+  #if LANG_CXX11
+  void set_platformid(::std::string&& value);
+  #endif
+  void set_platformid(const char* value);
+  void set_platformid(const char* value, size_t size);
+  ::std::string* mutable_platformid();
+  ::std::string* release_platformid();
+  void set_allocated_platformid(::std::string* platformid);
+
+  // optional string imei = 26;
+  bool has_imei() const;
+  void clear_imei();
+  static const int kImeiFieldNumber = 26;
+  const ::std::string& imei() const;
+  void set_imei(const ::std::string& value);
+  #if LANG_CXX11
+  void set_imei(::std::string&& value);
+  #endif
+  void set_imei(const char* value);
+  void set_imei(const char* value, size_t size);
+  ::std::string* mutable_imei();
+  ::std::string* release_imei();
+  void set_allocated_imei(::std::string* imei);
+
+  // optional string devname = 27;
+  bool has_devname() const;
+  void clear_devname();
+  static const int kDevnameFieldNumber = 27;
+  const ::std::string& devname() const;
+  void set_devname(const ::std::string& value);
+  #if LANG_CXX11
+  void set_devname(::std::string&& value);
+  #endif
+  void set_devname(const char* value);
+  void set_devname(const char* value, size_t size);
+  ::std::string* mutable_devname();
+  ::std::string* release_devname();
+  void set_allocated_devname(::std::string* devname);
+
+  // optional string macname = 28;
+  bool has_macname() const;
+  void clear_macname();
+  static const int kMacnameFieldNumber = 28;
+  const ::std::string& macname() const;
+  void set_macname(const ::std::string& value);
+  #if LANG_CXX11
+  void set_macname(::std::string&& value);
+  #endif
+  void set_macname(const char* value);
+  void set_macname(const char* value, size_t size);
+  ::std::string* mutable_macname();
+  ::std::string* release_macname();
+  void set_allocated_macname(::std::string* macname);
+
+  // optional string face_1 = 34;
+  bool has_face_1() const;
+  void clear_face_1();
+  static const int kFace1FieldNumber = 34;
+  const ::std::string& face_1() const;
+  void set_face_1(const ::std::string& value);
+  #if LANG_CXX11
+  void set_face_1(::std::string&& value);
+  #endif
+  void set_face_1(const char* value);
+  void set_face_1(const char* value, size_t size);
+  ::std::string* mutable_face_1();
+  ::std::string* release_face_1();
+  void set_allocated_face_1(::std::string* face_1);
+
+  // optional string face_2 = 35;
+  bool has_face_2() const;
+  void clear_face_2();
+  static const int kFace2FieldNumber = 35;
+  const ::std::string& face_2() const;
+  void set_face_2(const ::std::string& value);
+  #if LANG_CXX11
+  void set_face_2(::std::string&& value);
+  #endif
+  void set_face_2(const char* value);
+  void set_face_2(const char* value, size_t size);
+  ::std::string* mutable_face_2();
+  ::std::string* release_face_2();
+  void set_allocated_face_2(::std::string* face_2);
+
+  // optional string face_3 = 36;
+  bool has_face_3() const;
+  void clear_face_3();
+  static const int kFace3FieldNumber = 36;
+  const ::std::string& face_3() const;
+  void set_face_3(const ::std::string& value);
+  #if LANG_CXX11
+  void set_face_3(::std::string&& value);
+  #endif
+  void set_face_3(const char* value);
+  void set_face_3(const char* value, size_t size);
+  ::std::string* mutable_face_3();
+  ::std::string* release_face_3();
+  void set_allocated_face_3(::std::string* face_3);
+
+  // optional string face_4 = 37;
+  bool has_face_4() const;
+  void clear_face_4();
+  static const int kFace4FieldNumber = 37;
+  const ::std::string& face_4() const;
+  void set_face_4(const ::std::string& value);
+  #if LANG_CXX11
+  void set_face_4(::std::string&& value);
+  #endif
+  void set_face_4(const char* value);
+  void set_face_4(const char* value, size_t size);
+  ::std::string* mutable_face_4();
+  ::std::string* release_face_4();
+  void set_allocated_face_4(::std::string* face_4);
+
+  // optional string description = 40;
+  bool has_description() const;
+  void clear_description();
+  static const int kDescriptionFieldNumber = 40;
+  const ::std::string& description() const;
+  void set_description(const ::std::string& value);
+  #if LANG_CXX11
+  void set_description(::std::string&& value);
+  #endif
+  void set_description(const char* value);
+  void set_description(const char* value, size_t size);
+  ::std::string* mutable_description();
+  ::std::string* release_description();
+  void set_allocated_description(::std::string* description);
+
+  // optional string registration1 = 49;
+  bool has_registration1() const;
+  void clear_registration1();
+  static const int kRegistration1FieldNumber = 49;
+  const ::std::string& registration1() const;
+  void set_registration1(const ::std::string& value);
+  #if LANG_CXX11
+  void set_registration1(::std::string&& value);
+  #endif
+  void set_registration1(const char* value);
+  void set_registration1(const char* value, size_t size);
+  ::std::string* mutable_registration1();
+  ::std::string* release_registration1();
+  void set_allocated_registration1(::std::string* registration1);
+
+  // optional string registration2 = 50;
+  bool has_registration2() const;
+  void clear_registration2();
+  static const int kRegistration2FieldNumber = 50;
+  const ::std::string& registration2() const;
+  void set_registration2(const ::std::string& value);
+  #if LANG_CXX11
+  void set_registration2(::std::string&& value);
+  #endif
+  void set_registration2(const char* value);
+  void set_registration2(const char* value, size_t size);
+  ::std::string* mutable_registration2();
+  ::std::string* release_registration2();
+  void set_allocated_registration2(::std::string* registration2);
+
+  // optional string registration3 = 51;
+  bool has_registration3() const;
+  void clear_registration3();
+  static const int kRegistration3FieldNumber = 51;
+  const ::std::string& registration3() const;
+  void set_registration3(const ::std::string& value);
+  #if LANG_CXX11
+  void set_registration3(::std::string&& value);
+  #endif
+  void set_registration3(const char* value);
+  void set_registration3(const char* value, size_t size);
+  ::std::string* mutable_registration3();
+  ::std::string* release_registration3();
+  void set_allocated_registration3(::std::string* registration3);
+
+  // optional int32 userid = 1;
+  bool has_userid() const;
+  void clear_userid();
+  static const int kUseridFieldNumber = 1;
+  ::google::protobuf::int32 userid() const;
+  void set_userid(::google::protobuf::int32 value);
+
+  // optional int32 sex = 8;
+  bool has_sex() const;
+  void clear_sex();
+  static const int kSexFieldNumber = 8;
+  ::google::protobuf::int32 sex() const;
+  void set_sex(::google::protobuf::int32 value);
+
+  // optional int32 age = 9;
+  bool has_age() const;
+  void clear_age();
+  static const int kAgeFieldNumber = 9;
+  ::google::protobuf::int32 age() const;
+  void set_age(::google::protobuf::int32 value);
+
+  // optional int32 exp = 12;
+  bool has_exp() const;
+  void clear_exp();
+  static const int kExpFieldNumber = 12;
+  ::google::protobuf::int32 exp() const;
+  void set_exp(::google::protobuf::int32 value);
+
+  // optional int32 level = 13;
+  bool has_level() const;
+  void clear_level();
+  static const int kLevelFieldNumber = 13;
+  ::google::protobuf::int32 level() const;
+  void set_level(::google::protobuf::int32 value);
+
+  // optional int32 viplevel = 14;
+  bool has_viplevel() const;
+  void clear_viplevel();
+  static const int kViplevelFieldNumber = 14;
+  ::google::protobuf::int32 viplevel() const;
+  void set_viplevel(::google::protobuf::int32 value);
+
+  // optional int64 jetton = 15;
+  bool has_jetton() const;
+  void clear_jetton();
+  static const int kJettonFieldNumber = 15;
+  ::google::protobuf::int64 jetton() const;
+  void set_jetton(::google::protobuf::int64 value);
+
+  // optional int32 gold = 16;
+  bool has_gold() const;
+  void clear_gold();
+  static const int kGoldFieldNumber = 16;
+  ::google::protobuf::int32 gold() const;
+  void set_gold(::google::protobuf::int32 value);
+
+  // optional int32 money = 17;
+  bool has_money() const;
+  void clear_money();
+  static const int kMoneyFieldNumber = 17;
+  ::google::protobuf::int32 money() const;
+  void set_money(::google::protobuf::int32 value);
+
+  // optional int32 popularity = 21;
+  bool has_popularity() const;
+  void clear_popularity();
+  static const int kPopularityFieldNumber = 21;
+  ::google::protobuf::int32 popularity() const;
+  void set_popularity(::google::protobuf::int32 value);
+
+  // optional int32 idenstatus = 22;
+  bool has_idenstatus() const;
+  void clear_idenstatus();
+  static const int kIdenstatusFieldNumber = 22;
+  ::google::protobuf::int32 idenstatus() const;
+  void set_idenstatus(::google::protobuf::int32 value);
+
+  // optional int32 bindtype = 23;
+  bool has_bindtype() const;
+  void clear_bindtype();
+  static const int kBindtypeFieldNumber = 23;
+  ::google::protobuf::int32 bindtype() const;
+  void set_bindtype(::google::protobuf::int32 value);
+
+  // optional int32 mobiletype = 29;
+  bool has_mobiletype() const;
+  void clear_mobiletype();
+  static const int kMobiletypeFieldNumber = 29;
+  ::google::protobuf::int32 mobiletype() const;
+  void set_mobiletype(::google::protobuf::int32 value);
+
+  // optional int32 lasttime = 30;
+  bool has_lasttime() const;
+  void clear_lasttime();
+  static const int kLasttimeFieldNumber = 30;
+  ::google::protobuf::int32 lasttime() const;
+  void set_lasttime(::google::protobuf::int32 value);
+
+  // optional int32 penulttime = 31;
+  bool has_penulttime() const;
+  void clear_penulttime();
+  static const int kPenulttimeFieldNumber = 31;
+  ::google::protobuf::int32 penulttime() const;
+  void set_penulttime(::google::protobuf::int32 value);
+
+  // optional int32 silent = 32;
+  bool has_silent() const;
+  void clear_silent();
+  static const int kSilentFieldNumber = 32;
+  ::google::protobuf::int32 silent() const;
+  void set_silent(::google::protobuf::int32 value);
+
+  // optional int32 isban = 33;
+  bool has_isban() const;
+  void clear_isban();
+  static const int kIsbanFieldNumber = 33;
+  ::google::protobuf::int32 isban() const;
+  void set_isban(::google::protobuf::int32 value);
+
+  // optional int32 isrobot = 38;
+  bool has_isrobot() const;
+  void clear_isrobot();
+  static const int kIsrobotFieldNumber = 38;
+  ::google::protobuf::int32 isrobot() const;
+  void set_isrobot(::google::protobuf::int32 value);
+
+  // optional int32 playtype = 39;
+  bool has_playtype() const;
+  void clear_playtype();
+  static const int kPlaytypeFieldNumber = 39;
+  ::google::protobuf::int32 playtype() const;
+  void set_playtype(::google::protobuf::int32 value);
+
+  // optional int64 bank_jetton = 42;
+  bool has_bank_jetton() const;
+  void clear_bank_jetton();
+  static const int kBankJettonFieldNumber = 42;
+  ::google::protobuf::int64 bank_jetton() const;
+  void set_bank_jetton(::google::protobuf::int64 value);
+
+  // optional int32 blacklist = 44;
+  bool has_blacklist() const;
+  void clear_blacklist();
+  static const int kBlacklistFieldNumber = 44;
+  ::google::protobuf::int32 blacklist() const;
+  void set_blacklist(::google::protobuf::int32 value);
+
+  // optional int32 propertyid = 45;
+  bool has_propertyid() const;
+  void clear_propertyid();
+  static const int kPropertyidFieldNumber = 45;
+  ::google::protobuf::int32 propertyid() const;
+  void set_propertyid(::google::protobuf::int32 value);
+
+  // optional int32 agencystatus = 46;
+  bool has_agencystatus() const;
+  void clear_agencystatus();
+  static const int kAgencystatusFieldNumber = 46;
+  ::google::protobuf::int32 agencystatus() const;
+  void set_agencystatus(::google::protobuf::int32 value);
+
+  // optional int32 signinmonth = 52;
+  bool has_signinmonth() const;
+  void clear_signinmonth();
+  static const int kSigninmonthFieldNumber = 52;
+  ::google::protobuf::int32 signinmonth() const;
+  void set_signinmonth(::google::protobuf::int32 value);
+
+  // optional int32 caninvite = 57;
+  bool has_caninvite() const;
+  void clear_caninvite();
+  static const int kCaninviteFieldNumber = 57;
+  ::google::protobuf::int32 caninvite() const;
+  void set_caninvite(::google::protobuf::int32 value);
+
+  // optional int32 bsignin = 53;
+  bool has_bsignin() const;
+  void clear_bsignin();
+  static const int kBsigninFieldNumber = 53;
+  ::google::protobuf::int32 bsignin() const;
+  void set_bsignin(::google::protobuf::int32 value);
+
+  // optional int32 turntablenum = 54;
+  bool has_turntablenum() const;
+  void clear_turntablenum();
+  static const int kTurntablenumFieldNumber = 54;
+  ::google::protobuf::int32 turntablenum() const;
+  void set_turntablenum(::google::protobuf::int32 value);
+
+  // optional int32 tengames = 55;
+  bool has_tengames() const;
+  void clear_tengames();
+  static const int kTengamesFieldNumber = 55;
+  ::google::protobuf::int32 tengames() const;
+  void set_tengames(::google::protobuf::int32 value);
+
+  // optional int32 todayshare = 56;
+  bool has_todayshare() const;
+  void clear_todayshare();
+  static const int kTodayshareFieldNumber = 56;
+  ::google::protobuf::int32 todayshare() const;
+  void set_todayshare(::google::protobuf::int32 value);
+
+  // @@protoc_insertion_point(class_scope:NFMsg.db_playerinfo)
+ private:
+  void set_has_userid();
+  void clear_has_userid();
+  void set_has_cid();
+  void clear_has_cid();
+  void set_has_account();
+  void clear_has_account();
+  void set_has_password();
+  void clear_has_password();
+  void set_has_nickname();
+  void clear_has_nickname();
+  void set_has_regdate();
+  void clear_has_regdate();
+  void set_has_sex();
+  void clear_has_sex();
+  void set_has_age();
+  void clear_has_age();
+  void set_has_email();
+  void clear_has_email();
+  void set_has_phonenum();
+  void clear_has_phonenum();
+  void set_has_exp();
+  void clear_has_exp();
+  void set_has_level();
+  void clear_has_level();
+  void set_has_viplevel();
+  void clear_has_viplevel();
+  void set_has_jetton();
+  void clear_has_jetton();
+  void set_has_gold();
+  void clear_has_gold();
+  void set_has_money();
+  void clear_has_money();
+  void set_has_channel();
+  void clear_has_channel();
+  void set_has_province();
+  void clear_has_province();
+  void set_has_city();
+  void clear_has_city();
+  void set_has_popularity();
+  void clear_has_popularity();
+  void set_has_idenstatus();
+  void clear_has_idenstatus();
+  void set_has_bindtype();
+  void clear_has_bindtype();
+  void set_has_bindnick();
+  void clear_has_bindnick();
+  void set_has_platformid();
+  void clear_has_platformid();
+  void set_has_imei();
+  void clear_has_imei();
+  void set_has_devname();
+  void clear_has_devname();
+  void set_has_macname();
+  void clear_has_macname();
+  void set_has_mobiletype();
+  void clear_has_mobiletype();
+  void set_has_lasttime();
+  void clear_has_lasttime();
+  void set_has_penulttime();
+  void clear_has_penulttime();
+  void set_has_silent();
+  void clear_has_silent();
+  void set_has_isban();
+  void clear_has_isban();
+  void set_has_face_1();
+  void clear_has_face_1();
+  void set_has_face_2();
+  void clear_has_face_2();
+  void set_has_face_3();
+  void clear_has_face_3();
+  void set_has_face_4();
+  void clear_has_face_4();
+  void set_has_isrobot();
+  void clear_has_isrobot();
+  void set_has_playtype();
+  void clear_has_playtype();
+  void set_has_description();
+  void clear_has_description();
+  void set_has_bank_jetton();
+  void clear_has_bank_jetton();
+  void set_has_blacklist();
+  void clear_has_blacklist();
+  void set_has_propertyid();
+  void clear_has_propertyid();
+  void set_has_agencystatus();
+  void clear_has_agencystatus();
+  void set_has_registration1();
+  void clear_has_registration1();
+  void set_has_registration2();
+  void clear_has_registration2();
+  void set_has_registration3();
+  void clear_has_registration3();
+  void set_has_signinmonth();
+  void clear_has_signinmonth();
+  void set_has_bsignin();
+  void clear_has_bsignin();
+  void set_has_turntablenum();
+  void clear_has_turntablenum();
+  void set_has_tengames();
+  void clear_has_tengames();
+  void set_has_todayshare();
+  void clear_has_todayshare();
+  void set_has_caninvite();
+  void clear_has_caninvite();
+
+  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+  ::google::protobuf::internal::HasBits<2> _has_bits_;
+  ::google::protobuf::internal::ArenaStringPtr cid_;
+  ::google::protobuf::internal::ArenaStringPtr account_;
+  ::google::protobuf::internal::ArenaStringPtr password_;
+  ::google::protobuf::internal::ArenaStringPtr nickname_;
+  ::google::protobuf::internal::ArenaStringPtr regdate_;
+  ::google::protobuf::internal::ArenaStringPtr email_;
+  ::google::protobuf::internal::ArenaStringPtr phonenum_;
+  ::google::protobuf::internal::ArenaStringPtr channel_;
+  ::google::protobuf::internal::ArenaStringPtr province_;
+  ::google::protobuf::internal::ArenaStringPtr city_;
+  ::google::protobuf::internal::ArenaStringPtr bindnick_;
+  ::google::protobuf::internal::ArenaStringPtr platformid_;
+  ::google::protobuf::internal::ArenaStringPtr imei_;
+  ::google::protobuf::internal::ArenaStringPtr devname_;
+  ::google::protobuf::internal::ArenaStringPtr macname_;
+  ::google::protobuf::internal::ArenaStringPtr face_1_;
+  ::google::protobuf::internal::ArenaStringPtr face_2_;
+  ::google::protobuf::internal::ArenaStringPtr face_3_;
+  ::google::protobuf::internal::ArenaStringPtr face_4_;
+  ::google::protobuf::internal::ArenaStringPtr description_;
+  ::google::protobuf::internal::ArenaStringPtr registration1_;
+  ::google::protobuf::internal::ArenaStringPtr registration2_;
+  ::google::protobuf::internal::ArenaStringPtr registration3_;
+  ::google::protobuf::int32 userid_;
+  ::google::protobuf::int32 sex_;
+  ::google::protobuf::int32 age_;
+  ::google::protobuf::int32 exp_;
+  ::google::protobuf::int32 level_;
+  ::google::protobuf::int32 viplevel_;
+  ::google::protobuf::int64 jetton_;
+  ::google::protobuf::int32 gold_;
+  ::google::protobuf::int32 money_;
+  ::google::protobuf::int32 popularity_;
+  ::google::protobuf::int32 idenstatus_;
+  ::google::protobuf::int32 bindtype_;
+  ::google::protobuf::int32 mobiletype_;
+  ::google::protobuf::int32 lasttime_;
+  ::google::protobuf::int32 penulttime_;
+  ::google::protobuf::int32 silent_;
+  ::google::protobuf::int32 isban_;
+  ::google::protobuf::int32 isrobot_;
+  ::google::protobuf::int32 playtype_;
+  ::google::protobuf::int64 bank_jetton_;
+  ::google::protobuf::int32 blacklist_;
+  ::google::protobuf::int32 propertyid_;
+  ::google::protobuf::int32 agencystatus_;
+  ::google::protobuf::int32 signinmonth_;
+  ::google::protobuf::int32 caninvite_;
+  ::google::protobuf::int32 bsignin_;
+  ::google::protobuf::int32 turntablenum_;
+  ::google::protobuf::int32 tengames_;
+  ::google::protobuf::int32 todayshare_;
+  mutable ::google::protobuf::internal::CachedSize _cached_size_;
+  friend struct ::protobuf_db_5fhuman_2eproto::TableStruct;
+};
+// -------------------------------------------------------------------
+
+class db_query_playerinfo_cond : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:NFMsg.db_query_playerinfo_cond) */ {
+ public:
+  db_query_playerinfo_cond();
+  virtual ~db_query_playerinfo_cond();
+
+  db_query_playerinfo_cond(const db_query_playerinfo_cond& from);
+
+  inline db_query_playerinfo_cond& operator=(const db_query_playerinfo_cond& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  #if LANG_CXX11
+  db_query_playerinfo_cond(db_query_playerinfo_cond&& from) noexcept
+    : db_query_playerinfo_cond() {
+    *this = ::std::move(from);
+  }
+
+  inline db_query_playerinfo_cond& operator=(db_query_playerinfo_cond&& from) noexcept {
+    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
+      if (this != &from) InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+  #endif
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _internal_metadata_.unknown_fields();
+  }
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return _internal_metadata_.mutable_unknown_fields();
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const db_query_playerinfo_cond& default_instance();
+
+  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
+  static inline const db_query_playerinfo_cond* internal_default_instance() {
+    return reinterpret_cast<const db_query_playerinfo_cond*>(
+               &_db_query_playerinfo_cond_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    1;
+
+  void Swap(db_query_playerinfo_cond* other);
+  friend void swap(db_query_playerinfo_cond& a, db_query_playerinfo_cond& b) {
+    a.Swap(&b);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline db_query_playerinfo_cond* New() const final {
+    return CreateMaybeMessage<db_query_playerinfo_cond>(NULL);
+  }
+
+  db_query_playerinfo_cond* New(::google::protobuf::Arena* arena) const final {
+    return CreateMaybeMessage<db_query_playerinfo_cond>(arena);
+  }
+  void CopyFrom(const ::google::protobuf::Message& from) final;
+  void MergeFrom(const ::google::protobuf::Message& from) final;
+  void CopyFrom(const db_query_playerinfo_cond& from);
+  void MergeFrom(const db_query_playerinfo_cond& from);
+  void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input) final;
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const final;
+  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
+      bool deterministic, ::google::protobuf::uint8* target) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(db_query_playerinfo_cond* other);
+  private:
+  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
+    return NULL;
+  }
+  inline void* MaybeArenaPtr() const {
+    return NULL;
+  }
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // optional string account = 1;
+  bool has_account() const;
+  void clear_account();
+  static const int kAccountFieldNumber = 1;
+  const ::std::string& account() const;
+  void set_account(const ::std::string& value);
+  #if LANG_CXX11
+  void set_account(::std::string&& value);
+  #endif
+  void set_account(const char* value);
+  void set_account(const char* value, size_t size);
+  ::std::string* mutable_account();
+  ::std::string* release_account();
+  void set_allocated_account(::std::string* account);
+
+  // @@protoc_insertion_point(class_scope:NFMsg.db_query_playerinfo_cond)
+ private:
+  void set_has_account();
+  void clear_has_account();
+
+  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+  ::google::protobuf::internal::HasBits<1> _has_bits_;
+  mutable ::google::protobuf::internal::CachedSize _cached_size_;
+  ::google::protobuf::internal::ArenaStringPtr account_;
+  friend struct ::protobuf_db_5fhuman_2eproto::TableStruct;
+};
+// -------------------------------------------------------------------
+
+class db_query_playerinfo : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:NFMsg.db_query_playerinfo) */ {
+ public:
+  db_query_playerinfo();
+  virtual ~db_query_playerinfo();
+
+  db_query_playerinfo(const db_query_playerinfo& from);
+
+  inline db_query_playerinfo& operator=(const db_query_playerinfo& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  #if LANG_CXX11
+  db_query_playerinfo(db_query_playerinfo&& from) noexcept
+    : db_query_playerinfo() {
+    *this = ::std::move(from);
+  }
+
+  inline db_query_playerinfo& operator=(db_query_playerinfo&& from) noexcept {
+    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
+      if (this != &from) InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+  #endif
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _internal_metadata_.unknown_fields();
+  }
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return _internal_metadata_.mutable_unknown_fields();
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const db_query_playerinfo& default_instance();
+
+  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
+  static inline const db_query_playerinfo* internal_default_instance() {
+    return reinterpret_cast<const db_query_playerinfo*>(
+               &_db_query_playerinfo_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    2;
+
+  void Swap(db_query_playerinfo* other);
+  friend void swap(db_query_playerinfo& a, db_query_playerinfo& b) {
+    a.Swap(&b);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline db_query_playerinfo* New() const final {
+    return CreateMaybeMessage<db_query_playerinfo>(NULL);
+  }
+
+  db_query_playerinfo* New(::google::protobuf::Arena* arena) const final {
+    return CreateMaybeMessage<db_query_playerinfo>(arena);
+  }
+  void CopyFrom(const ::google::protobuf::Message& from) final;
+  void MergeFrom(const ::google::protobuf::Message& from) final;
+  void CopyFrom(const db_query_playerinfo& from);
+  void MergeFrom(const db_query_playerinfo& from);
+  void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input) final;
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const final;
+  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
+      bool deterministic, ::google::protobuf::uint8* target) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(db_query_playerinfo* other);
+  private:
+  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
+    return NULL;
+  }
+  inline void* MaybeArenaPtr() const {
+    return NULL;
+  }
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // optional string dy_player = 1;
+  bool has_dy_player() const;
+  void clear_dy_player();
+  static const int kDyPlayerFieldNumber = 1;
+  const ::std::string& dy_player() const;
+  void set_dy_player(const ::std::string& value);
+  #if LANG_CXX11
+  void set_dy_player(::std::string&& value);
+  #endif
+  void set_dy_player(const char* value);
+  void set_dy_player(const char* value, size_t size);
+  ::std::string* mutable_dy_player();
+  ::std::string* release_dy_player();
+  void set_allocated_dy_player(::std::string* dy_player);
+
+  // optional .NFMsg.db_playerinfo db_fields = 2;
+  bool has_db_fields() const;
+  void clear_db_fields();
+  static const int kDbFieldsFieldNumber = 2;
+  private:
+  const ::NFMsg::db_playerinfo& _internal_db_fields() const;
+  public:
+  const ::NFMsg::db_playerinfo& db_fields() const;
+  ::NFMsg::db_playerinfo* release_db_fields();
+  ::NFMsg::db_playerinfo* mutable_db_fields();
+  void set_allocated_db_fields(::NFMsg::db_playerinfo* db_fields);
+
+  // optional .NFMsg.db_query_playerinfo_cond db_cond = 3;
+  bool has_db_cond() const;
+  void clear_db_cond();
+  static const int kDbCondFieldNumber = 3;
+  private:
+  const ::NFMsg::db_query_playerinfo_cond& _internal_db_cond() const;
+  public:
+  const ::NFMsg::db_query_playerinfo_cond& db_cond() const;
+  ::NFMsg::db_query_playerinfo_cond* release_db_cond();
+  ::NFMsg::db_query_playerinfo_cond* mutable_db_cond();
+  void set_allocated_db_cond(::NFMsg::db_query_playerinfo_cond* db_cond);
+
+  // @@protoc_insertion_point(class_scope:NFMsg.db_query_playerinfo)
+ private:
+  void set_has_dy_player();
+  void clear_has_dy_player();
+  void set_has_db_fields();
+  void clear_has_db_fields();
+  void set_has_db_cond();
+  void clear_has_db_cond();
+
+  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+  ::google::protobuf::internal::HasBits<1> _has_bits_;
+  mutable ::google::protobuf::internal::CachedSize _cached_size_;
+  ::google::protobuf::internal::ArenaStringPtr dy_player_;
+  ::NFMsg::db_playerinfo* db_fields_;
+  ::NFMsg::db_query_playerinfo_cond* db_cond_;
+  friend struct ::protobuf_db_5fhuman_2eproto::TableStruct;
+};
 // ===================================================================
 
 
@@ -59,9 +1156,2485 @@ namespace NFMsg {
   #pragma GCC diagnostic push
   #pragma GCC diagnostic ignored "-Wstrict-aliasing"
 #endif  // __GNUC__
+// db_playerinfo
+
+// optional int32 userid = 1;
+inline bool db_playerinfo::has_userid() const {
+  return (_has_bits_[0] & 0x00800000u) != 0;
+}
+inline void db_playerinfo::set_has_userid() {
+  _has_bits_[0] |= 0x00800000u;
+}
+inline void db_playerinfo::clear_has_userid() {
+  _has_bits_[0] &= ~0x00800000u;
+}
+inline void db_playerinfo::clear_userid() {
+  userid_ = 0;
+  clear_has_userid();
+}
+inline ::google::protobuf::int32 db_playerinfo::userid() const {
+  // @@protoc_insertion_point(field_get:NFMsg.db_playerinfo.userid)
+  return userid_;
+}
+inline void db_playerinfo::set_userid(::google::protobuf::int32 value) {
+  set_has_userid();
+  userid_ = value;
+  // @@protoc_insertion_point(field_set:NFMsg.db_playerinfo.userid)
+}
+
+// optional string cid = 2;
+inline bool db_playerinfo::has_cid() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void db_playerinfo::set_has_cid() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void db_playerinfo::clear_has_cid() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void db_playerinfo::clear_cid() {
+  cid_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  clear_has_cid();
+}
+inline const ::std::string& db_playerinfo::cid() const {
+  // @@protoc_insertion_point(field_get:NFMsg.db_playerinfo.cid)
+  return cid_.GetNoArena();
+}
+inline void db_playerinfo::set_cid(const ::std::string& value) {
+  set_has_cid();
+  cid_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:NFMsg.db_playerinfo.cid)
+}
+#if LANG_CXX11
+inline void db_playerinfo::set_cid(::std::string&& value) {
+  set_has_cid();
+  cid_.SetNoArena(
+    &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+  // @@protoc_insertion_point(field_set_rvalue:NFMsg.db_playerinfo.cid)
+}
+#endif
+inline void db_playerinfo::set_cid(const char* value) {
+  GOOGLE_DCHECK(value != NULL);
+  set_has_cid();
+  cid_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:NFMsg.db_playerinfo.cid)
+}
+inline void db_playerinfo::set_cid(const char* value, size_t size) {
+  set_has_cid();
+  cid_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:NFMsg.db_playerinfo.cid)
+}
+inline ::std::string* db_playerinfo::mutable_cid() {
+  set_has_cid();
+  // @@protoc_insertion_point(field_mutable:NFMsg.db_playerinfo.cid)
+  return cid_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline ::std::string* db_playerinfo::release_cid() {
+  // @@protoc_insertion_point(field_release:NFMsg.db_playerinfo.cid)
+  if (!has_cid()) {
+    return NULL;
+  }
+  clear_has_cid();
+  return cid_.ReleaseNonDefaultNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline void db_playerinfo::set_allocated_cid(::std::string* cid) {
+  if (cid != NULL) {
+    set_has_cid();
+  } else {
+    clear_has_cid();
+  }
+  cid_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), cid);
+  // @@protoc_insertion_point(field_set_allocated:NFMsg.db_playerinfo.cid)
+}
+
+// optional string account = 3;
+inline bool db_playerinfo::has_account() const {
+  return (_has_bits_[0] & 0x00000002u) != 0;
+}
+inline void db_playerinfo::set_has_account() {
+  _has_bits_[0] |= 0x00000002u;
+}
+inline void db_playerinfo::clear_has_account() {
+  _has_bits_[0] &= ~0x00000002u;
+}
+inline void db_playerinfo::clear_account() {
+  account_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  clear_has_account();
+}
+inline const ::std::string& db_playerinfo::account() const {
+  // @@protoc_insertion_point(field_get:NFMsg.db_playerinfo.account)
+  return account_.GetNoArena();
+}
+inline void db_playerinfo::set_account(const ::std::string& value) {
+  set_has_account();
+  account_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:NFMsg.db_playerinfo.account)
+}
+#if LANG_CXX11
+inline void db_playerinfo::set_account(::std::string&& value) {
+  set_has_account();
+  account_.SetNoArena(
+    &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+  // @@protoc_insertion_point(field_set_rvalue:NFMsg.db_playerinfo.account)
+}
+#endif
+inline void db_playerinfo::set_account(const char* value) {
+  GOOGLE_DCHECK(value != NULL);
+  set_has_account();
+  account_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:NFMsg.db_playerinfo.account)
+}
+inline void db_playerinfo::set_account(const char* value, size_t size) {
+  set_has_account();
+  account_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:NFMsg.db_playerinfo.account)
+}
+inline ::std::string* db_playerinfo::mutable_account() {
+  set_has_account();
+  // @@protoc_insertion_point(field_mutable:NFMsg.db_playerinfo.account)
+  return account_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline ::std::string* db_playerinfo::release_account() {
+  // @@protoc_insertion_point(field_release:NFMsg.db_playerinfo.account)
+  if (!has_account()) {
+    return NULL;
+  }
+  clear_has_account();
+  return account_.ReleaseNonDefaultNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline void db_playerinfo::set_allocated_account(::std::string* account) {
+  if (account != NULL) {
+    set_has_account();
+  } else {
+    clear_has_account();
+  }
+  account_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), account);
+  // @@protoc_insertion_point(field_set_allocated:NFMsg.db_playerinfo.account)
+}
+
+// optional string password = 4;
+inline bool db_playerinfo::has_password() const {
+  return (_has_bits_[0] & 0x00000004u) != 0;
+}
+inline void db_playerinfo::set_has_password() {
+  _has_bits_[0] |= 0x00000004u;
+}
+inline void db_playerinfo::clear_has_password() {
+  _has_bits_[0] &= ~0x00000004u;
+}
+inline void db_playerinfo::clear_password() {
+  password_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  clear_has_password();
+}
+inline const ::std::string& db_playerinfo::password() const {
+  // @@protoc_insertion_point(field_get:NFMsg.db_playerinfo.password)
+  return password_.GetNoArena();
+}
+inline void db_playerinfo::set_password(const ::std::string& value) {
+  set_has_password();
+  password_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:NFMsg.db_playerinfo.password)
+}
+#if LANG_CXX11
+inline void db_playerinfo::set_password(::std::string&& value) {
+  set_has_password();
+  password_.SetNoArena(
+    &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+  // @@protoc_insertion_point(field_set_rvalue:NFMsg.db_playerinfo.password)
+}
+#endif
+inline void db_playerinfo::set_password(const char* value) {
+  GOOGLE_DCHECK(value != NULL);
+  set_has_password();
+  password_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:NFMsg.db_playerinfo.password)
+}
+inline void db_playerinfo::set_password(const char* value, size_t size) {
+  set_has_password();
+  password_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:NFMsg.db_playerinfo.password)
+}
+inline ::std::string* db_playerinfo::mutable_password() {
+  set_has_password();
+  // @@protoc_insertion_point(field_mutable:NFMsg.db_playerinfo.password)
+  return password_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline ::std::string* db_playerinfo::release_password() {
+  // @@protoc_insertion_point(field_release:NFMsg.db_playerinfo.password)
+  if (!has_password()) {
+    return NULL;
+  }
+  clear_has_password();
+  return password_.ReleaseNonDefaultNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline void db_playerinfo::set_allocated_password(::std::string* password) {
+  if (password != NULL) {
+    set_has_password();
+  } else {
+    clear_has_password();
+  }
+  password_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), password);
+  // @@protoc_insertion_point(field_set_allocated:NFMsg.db_playerinfo.password)
+}
+
+// optional string nickname = 5;
+inline bool db_playerinfo::has_nickname() const {
+  return (_has_bits_[0] & 0x00000008u) != 0;
+}
+inline void db_playerinfo::set_has_nickname() {
+  _has_bits_[0] |= 0x00000008u;
+}
+inline void db_playerinfo::clear_has_nickname() {
+  _has_bits_[0] &= ~0x00000008u;
+}
+inline void db_playerinfo::clear_nickname() {
+  nickname_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  clear_has_nickname();
+}
+inline const ::std::string& db_playerinfo::nickname() const {
+  // @@protoc_insertion_point(field_get:NFMsg.db_playerinfo.nickname)
+  return nickname_.GetNoArena();
+}
+inline void db_playerinfo::set_nickname(const ::std::string& value) {
+  set_has_nickname();
+  nickname_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:NFMsg.db_playerinfo.nickname)
+}
+#if LANG_CXX11
+inline void db_playerinfo::set_nickname(::std::string&& value) {
+  set_has_nickname();
+  nickname_.SetNoArena(
+    &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+  // @@protoc_insertion_point(field_set_rvalue:NFMsg.db_playerinfo.nickname)
+}
+#endif
+inline void db_playerinfo::set_nickname(const char* value) {
+  GOOGLE_DCHECK(value != NULL);
+  set_has_nickname();
+  nickname_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:NFMsg.db_playerinfo.nickname)
+}
+inline void db_playerinfo::set_nickname(const char* value, size_t size) {
+  set_has_nickname();
+  nickname_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:NFMsg.db_playerinfo.nickname)
+}
+inline ::std::string* db_playerinfo::mutable_nickname() {
+  set_has_nickname();
+  // @@protoc_insertion_point(field_mutable:NFMsg.db_playerinfo.nickname)
+  return nickname_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline ::std::string* db_playerinfo::release_nickname() {
+  // @@protoc_insertion_point(field_release:NFMsg.db_playerinfo.nickname)
+  if (!has_nickname()) {
+    return NULL;
+  }
+  clear_has_nickname();
+  return nickname_.ReleaseNonDefaultNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline void db_playerinfo::set_allocated_nickname(::std::string* nickname) {
+  if (nickname != NULL) {
+    set_has_nickname();
+  } else {
+    clear_has_nickname();
+  }
+  nickname_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), nickname);
+  // @@protoc_insertion_point(field_set_allocated:NFMsg.db_playerinfo.nickname)
+}
+
+// optional string regdate = 7;
+inline bool db_playerinfo::has_regdate() const {
+  return (_has_bits_[0] & 0x00000010u) != 0;
+}
+inline void db_playerinfo::set_has_regdate() {
+  _has_bits_[0] |= 0x00000010u;
+}
+inline void db_playerinfo::clear_has_regdate() {
+  _has_bits_[0] &= ~0x00000010u;
+}
+inline void db_playerinfo::clear_regdate() {
+  regdate_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  clear_has_regdate();
+}
+inline const ::std::string& db_playerinfo::regdate() const {
+  // @@protoc_insertion_point(field_get:NFMsg.db_playerinfo.regdate)
+  return regdate_.GetNoArena();
+}
+inline void db_playerinfo::set_regdate(const ::std::string& value) {
+  set_has_regdate();
+  regdate_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:NFMsg.db_playerinfo.regdate)
+}
+#if LANG_CXX11
+inline void db_playerinfo::set_regdate(::std::string&& value) {
+  set_has_regdate();
+  regdate_.SetNoArena(
+    &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+  // @@protoc_insertion_point(field_set_rvalue:NFMsg.db_playerinfo.regdate)
+}
+#endif
+inline void db_playerinfo::set_regdate(const char* value) {
+  GOOGLE_DCHECK(value != NULL);
+  set_has_regdate();
+  regdate_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:NFMsg.db_playerinfo.regdate)
+}
+inline void db_playerinfo::set_regdate(const char* value, size_t size) {
+  set_has_regdate();
+  regdate_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:NFMsg.db_playerinfo.regdate)
+}
+inline ::std::string* db_playerinfo::mutable_regdate() {
+  set_has_regdate();
+  // @@protoc_insertion_point(field_mutable:NFMsg.db_playerinfo.regdate)
+  return regdate_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline ::std::string* db_playerinfo::release_regdate() {
+  // @@protoc_insertion_point(field_release:NFMsg.db_playerinfo.regdate)
+  if (!has_regdate()) {
+    return NULL;
+  }
+  clear_has_regdate();
+  return regdate_.ReleaseNonDefaultNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline void db_playerinfo::set_allocated_regdate(::std::string* regdate) {
+  if (regdate != NULL) {
+    set_has_regdate();
+  } else {
+    clear_has_regdate();
+  }
+  regdate_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), regdate);
+  // @@protoc_insertion_point(field_set_allocated:NFMsg.db_playerinfo.regdate)
+}
+
+// optional int32 sex = 8;
+inline bool db_playerinfo::has_sex() const {
+  return (_has_bits_[0] & 0x01000000u) != 0;
+}
+inline void db_playerinfo::set_has_sex() {
+  _has_bits_[0] |= 0x01000000u;
+}
+inline void db_playerinfo::clear_has_sex() {
+  _has_bits_[0] &= ~0x01000000u;
+}
+inline void db_playerinfo::clear_sex() {
+  sex_ = 0;
+  clear_has_sex();
+}
+inline ::google::protobuf::int32 db_playerinfo::sex() const {
+  // @@protoc_insertion_point(field_get:NFMsg.db_playerinfo.sex)
+  return sex_;
+}
+inline void db_playerinfo::set_sex(::google::protobuf::int32 value) {
+  set_has_sex();
+  sex_ = value;
+  // @@protoc_insertion_point(field_set:NFMsg.db_playerinfo.sex)
+}
+
+// optional int32 age = 9;
+inline bool db_playerinfo::has_age() const {
+  return (_has_bits_[0] & 0x02000000u) != 0;
+}
+inline void db_playerinfo::set_has_age() {
+  _has_bits_[0] |= 0x02000000u;
+}
+inline void db_playerinfo::clear_has_age() {
+  _has_bits_[0] &= ~0x02000000u;
+}
+inline void db_playerinfo::clear_age() {
+  age_ = 0;
+  clear_has_age();
+}
+inline ::google::protobuf::int32 db_playerinfo::age() const {
+  // @@protoc_insertion_point(field_get:NFMsg.db_playerinfo.age)
+  return age_;
+}
+inline void db_playerinfo::set_age(::google::protobuf::int32 value) {
+  set_has_age();
+  age_ = value;
+  // @@protoc_insertion_point(field_set:NFMsg.db_playerinfo.age)
+}
+
+// optional string email = 10;
+inline bool db_playerinfo::has_email() const {
+  return (_has_bits_[0] & 0x00000020u) != 0;
+}
+inline void db_playerinfo::set_has_email() {
+  _has_bits_[0] |= 0x00000020u;
+}
+inline void db_playerinfo::clear_has_email() {
+  _has_bits_[0] &= ~0x00000020u;
+}
+inline void db_playerinfo::clear_email() {
+  email_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  clear_has_email();
+}
+inline const ::std::string& db_playerinfo::email() const {
+  // @@protoc_insertion_point(field_get:NFMsg.db_playerinfo.email)
+  return email_.GetNoArena();
+}
+inline void db_playerinfo::set_email(const ::std::string& value) {
+  set_has_email();
+  email_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:NFMsg.db_playerinfo.email)
+}
+#if LANG_CXX11
+inline void db_playerinfo::set_email(::std::string&& value) {
+  set_has_email();
+  email_.SetNoArena(
+    &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+  // @@protoc_insertion_point(field_set_rvalue:NFMsg.db_playerinfo.email)
+}
+#endif
+inline void db_playerinfo::set_email(const char* value) {
+  GOOGLE_DCHECK(value != NULL);
+  set_has_email();
+  email_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:NFMsg.db_playerinfo.email)
+}
+inline void db_playerinfo::set_email(const char* value, size_t size) {
+  set_has_email();
+  email_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:NFMsg.db_playerinfo.email)
+}
+inline ::std::string* db_playerinfo::mutable_email() {
+  set_has_email();
+  // @@protoc_insertion_point(field_mutable:NFMsg.db_playerinfo.email)
+  return email_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline ::std::string* db_playerinfo::release_email() {
+  // @@protoc_insertion_point(field_release:NFMsg.db_playerinfo.email)
+  if (!has_email()) {
+    return NULL;
+  }
+  clear_has_email();
+  return email_.ReleaseNonDefaultNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline void db_playerinfo::set_allocated_email(::std::string* email) {
+  if (email != NULL) {
+    set_has_email();
+  } else {
+    clear_has_email();
+  }
+  email_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), email);
+  // @@protoc_insertion_point(field_set_allocated:NFMsg.db_playerinfo.email)
+}
+
+// optional string phonenum = 11;
+inline bool db_playerinfo::has_phonenum() const {
+  return (_has_bits_[0] & 0x00000040u) != 0;
+}
+inline void db_playerinfo::set_has_phonenum() {
+  _has_bits_[0] |= 0x00000040u;
+}
+inline void db_playerinfo::clear_has_phonenum() {
+  _has_bits_[0] &= ~0x00000040u;
+}
+inline void db_playerinfo::clear_phonenum() {
+  phonenum_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  clear_has_phonenum();
+}
+inline const ::std::string& db_playerinfo::phonenum() const {
+  // @@protoc_insertion_point(field_get:NFMsg.db_playerinfo.phonenum)
+  return phonenum_.GetNoArena();
+}
+inline void db_playerinfo::set_phonenum(const ::std::string& value) {
+  set_has_phonenum();
+  phonenum_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:NFMsg.db_playerinfo.phonenum)
+}
+#if LANG_CXX11
+inline void db_playerinfo::set_phonenum(::std::string&& value) {
+  set_has_phonenum();
+  phonenum_.SetNoArena(
+    &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+  // @@protoc_insertion_point(field_set_rvalue:NFMsg.db_playerinfo.phonenum)
+}
+#endif
+inline void db_playerinfo::set_phonenum(const char* value) {
+  GOOGLE_DCHECK(value != NULL);
+  set_has_phonenum();
+  phonenum_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:NFMsg.db_playerinfo.phonenum)
+}
+inline void db_playerinfo::set_phonenum(const char* value, size_t size) {
+  set_has_phonenum();
+  phonenum_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:NFMsg.db_playerinfo.phonenum)
+}
+inline ::std::string* db_playerinfo::mutable_phonenum() {
+  set_has_phonenum();
+  // @@protoc_insertion_point(field_mutable:NFMsg.db_playerinfo.phonenum)
+  return phonenum_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline ::std::string* db_playerinfo::release_phonenum() {
+  // @@protoc_insertion_point(field_release:NFMsg.db_playerinfo.phonenum)
+  if (!has_phonenum()) {
+    return NULL;
+  }
+  clear_has_phonenum();
+  return phonenum_.ReleaseNonDefaultNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline void db_playerinfo::set_allocated_phonenum(::std::string* phonenum) {
+  if (phonenum != NULL) {
+    set_has_phonenum();
+  } else {
+    clear_has_phonenum();
+  }
+  phonenum_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), phonenum);
+  // @@protoc_insertion_point(field_set_allocated:NFMsg.db_playerinfo.phonenum)
+}
+
+// optional int32 exp = 12;
+inline bool db_playerinfo::has_exp() const {
+  return (_has_bits_[0] & 0x04000000u) != 0;
+}
+inline void db_playerinfo::set_has_exp() {
+  _has_bits_[0] |= 0x04000000u;
+}
+inline void db_playerinfo::clear_has_exp() {
+  _has_bits_[0] &= ~0x04000000u;
+}
+inline void db_playerinfo::clear_exp() {
+  exp_ = 0;
+  clear_has_exp();
+}
+inline ::google::protobuf::int32 db_playerinfo::exp() const {
+  // @@protoc_insertion_point(field_get:NFMsg.db_playerinfo.exp)
+  return exp_;
+}
+inline void db_playerinfo::set_exp(::google::protobuf::int32 value) {
+  set_has_exp();
+  exp_ = value;
+  // @@protoc_insertion_point(field_set:NFMsg.db_playerinfo.exp)
+}
+
+// optional int32 level = 13;
+inline bool db_playerinfo::has_level() const {
+  return (_has_bits_[0] & 0x08000000u) != 0;
+}
+inline void db_playerinfo::set_has_level() {
+  _has_bits_[0] |= 0x08000000u;
+}
+inline void db_playerinfo::clear_has_level() {
+  _has_bits_[0] &= ~0x08000000u;
+}
+inline void db_playerinfo::clear_level() {
+  level_ = 0;
+  clear_has_level();
+}
+inline ::google::protobuf::int32 db_playerinfo::level() const {
+  // @@protoc_insertion_point(field_get:NFMsg.db_playerinfo.level)
+  return level_;
+}
+inline void db_playerinfo::set_level(::google::protobuf::int32 value) {
+  set_has_level();
+  level_ = value;
+  // @@protoc_insertion_point(field_set:NFMsg.db_playerinfo.level)
+}
+
+// optional int32 viplevel = 14;
+inline bool db_playerinfo::has_viplevel() const {
+  return (_has_bits_[0] & 0x10000000u) != 0;
+}
+inline void db_playerinfo::set_has_viplevel() {
+  _has_bits_[0] |= 0x10000000u;
+}
+inline void db_playerinfo::clear_has_viplevel() {
+  _has_bits_[0] &= ~0x10000000u;
+}
+inline void db_playerinfo::clear_viplevel() {
+  viplevel_ = 0;
+  clear_has_viplevel();
+}
+inline ::google::protobuf::int32 db_playerinfo::viplevel() const {
+  // @@protoc_insertion_point(field_get:NFMsg.db_playerinfo.viplevel)
+  return viplevel_;
+}
+inline void db_playerinfo::set_viplevel(::google::protobuf::int32 value) {
+  set_has_viplevel();
+  viplevel_ = value;
+  // @@protoc_insertion_point(field_set:NFMsg.db_playerinfo.viplevel)
+}
+
+// optional int64 jetton = 15;
+inline bool db_playerinfo::has_jetton() const {
+  return (_has_bits_[0] & 0x20000000u) != 0;
+}
+inline void db_playerinfo::set_has_jetton() {
+  _has_bits_[0] |= 0x20000000u;
+}
+inline void db_playerinfo::clear_has_jetton() {
+  _has_bits_[0] &= ~0x20000000u;
+}
+inline void db_playerinfo::clear_jetton() {
+  jetton_ = GOOGLE_LONGLONG(0);
+  clear_has_jetton();
+}
+inline ::google::protobuf::int64 db_playerinfo::jetton() const {
+  // @@protoc_insertion_point(field_get:NFMsg.db_playerinfo.jetton)
+  return jetton_;
+}
+inline void db_playerinfo::set_jetton(::google::protobuf::int64 value) {
+  set_has_jetton();
+  jetton_ = value;
+  // @@protoc_insertion_point(field_set:NFMsg.db_playerinfo.jetton)
+}
+
+// optional int32 gold = 16;
+inline bool db_playerinfo::has_gold() const {
+  return (_has_bits_[0] & 0x40000000u) != 0;
+}
+inline void db_playerinfo::set_has_gold() {
+  _has_bits_[0] |= 0x40000000u;
+}
+inline void db_playerinfo::clear_has_gold() {
+  _has_bits_[0] &= ~0x40000000u;
+}
+inline void db_playerinfo::clear_gold() {
+  gold_ = 0;
+  clear_has_gold();
+}
+inline ::google::protobuf::int32 db_playerinfo::gold() const {
+  // @@protoc_insertion_point(field_get:NFMsg.db_playerinfo.gold)
+  return gold_;
+}
+inline void db_playerinfo::set_gold(::google::protobuf::int32 value) {
+  set_has_gold();
+  gold_ = value;
+  // @@protoc_insertion_point(field_set:NFMsg.db_playerinfo.gold)
+}
+
+// optional int32 money = 17;
+inline bool db_playerinfo::has_money() const {
+  return (_has_bits_[0] & 0x80000000u) != 0;
+}
+inline void db_playerinfo::set_has_money() {
+  _has_bits_[0] |= 0x80000000u;
+}
+inline void db_playerinfo::clear_has_money() {
+  _has_bits_[0] &= ~0x80000000u;
+}
+inline void db_playerinfo::clear_money() {
+  money_ = 0;
+  clear_has_money();
+}
+inline ::google::protobuf::int32 db_playerinfo::money() const {
+  // @@protoc_insertion_point(field_get:NFMsg.db_playerinfo.money)
+  return money_;
+}
+inline void db_playerinfo::set_money(::google::protobuf::int32 value) {
+  set_has_money();
+  money_ = value;
+  // @@protoc_insertion_point(field_set:NFMsg.db_playerinfo.money)
+}
+
+// optional string channel = 18;
+inline bool db_playerinfo::has_channel() const {
+  return (_has_bits_[0] & 0x00000080u) != 0;
+}
+inline void db_playerinfo::set_has_channel() {
+  _has_bits_[0] |= 0x00000080u;
+}
+inline void db_playerinfo::clear_has_channel() {
+  _has_bits_[0] &= ~0x00000080u;
+}
+inline void db_playerinfo::clear_channel() {
+  channel_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  clear_has_channel();
+}
+inline const ::std::string& db_playerinfo::channel() const {
+  // @@protoc_insertion_point(field_get:NFMsg.db_playerinfo.channel)
+  return channel_.GetNoArena();
+}
+inline void db_playerinfo::set_channel(const ::std::string& value) {
+  set_has_channel();
+  channel_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:NFMsg.db_playerinfo.channel)
+}
+#if LANG_CXX11
+inline void db_playerinfo::set_channel(::std::string&& value) {
+  set_has_channel();
+  channel_.SetNoArena(
+    &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+  // @@protoc_insertion_point(field_set_rvalue:NFMsg.db_playerinfo.channel)
+}
+#endif
+inline void db_playerinfo::set_channel(const char* value) {
+  GOOGLE_DCHECK(value != NULL);
+  set_has_channel();
+  channel_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:NFMsg.db_playerinfo.channel)
+}
+inline void db_playerinfo::set_channel(const char* value, size_t size) {
+  set_has_channel();
+  channel_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:NFMsg.db_playerinfo.channel)
+}
+inline ::std::string* db_playerinfo::mutable_channel() {
+  set_has_channel();
+  // @@protoc_insertion_point(field_mutable:NFMsg.db_playerinfo.channel)
+  return channel_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline ::std::string* db_playerinfo::release_channel() {
+  // @@protoc_insertion_point(field_release:NFMsg.db_playerinfo.channel)
+  if (!has_channel()) {
+    return NULL;
+  }
+  clear_has_channel();
+  return channel_.ReleaseNonDefaultNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline void db_playerinfo::set_allocated_channel(::std::string* channel) {
+  if (channel != NULL) {
+    set_has_channel();
+  } else {
+    clear_has_channel();
+  }
+  channel_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), channel);
+  // @@protoc_insertion_point(field_set_allocated:NFMsg.db_playerinfo.channel)
+}
+
+// optional string province = 19;
+inline bool db_playerinfo::has_province() const {
+  return (_has_bits_[0] & 0x00000100u) != 0;
+}
+inline void db_playerinfo::set_has_province() {
+  _has_bits_[0] |= 0x00000100u;
+}
+inline void db_playerinfo::clear_has_province() {
+  _has_bits_[0] &= ~0x00000100u;
+}
+inline void db_playerinfo::clear_province() {
+  province_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  clear_has_province();
+}
+inline const ::std::string& db_playerinfo::province() const {
+  // @@protoc_insertion_point(field_get:NFMsg.db_playerinfo.province)
+  return province_.GetNoArena();
+}
+inline void db_playerinfo::set_province(const ::std::string& value) {
+  set_has_province();
+  province_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:NFMsg.db_playerinfo.province)
+}
+#if LANG_CXX11
+inline void db_playerinfo::set_province(::std::string&& value) {
+  set_has_province();
+  province_.SetNoArena(
+    &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+  // @@protoc_insertion_point(field_set_rvalue:NFMsg.db_playerinfo.province)
+}
+#endif
+inline void db_playerinfo::set_province(const char* value) {
+  GOOGLE_DCHECK(value != NULL);
+  set_has_province();
+  province_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:NFMsg.db_playerinfo.province)
+}
+inline void db_playerinfo::set_province(const char* value, size_t size) {
+  set_has_province();
+  province_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:NFMsg.db_playerinfo.province)
+}
+inline ::std::string* db_playerinfo::mutable_province() {
+  set_has_province();
+  // @@protoc_insertion_point(field_mutable:NFMsg.db_playerinfo.province)
+  return province_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline ::std::string* db_playerinfo::release_province() {
+  // @@protoc_insertion_point(field_release:NFMsg.db_playerinfo.province)
+  if (!has_province()) {
+    return NULL;
+  }
+  clear_has_province();
+  return province_.ReleaseNonDefaultNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline void db_playerinfo::set_allocated_province(::std::string* province) {
+  if (province != NULL) {
+    set_has_province();
+  } else {
+    clear_has_province();
+  }
+  province_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), province);
+  // @@protoc_insertion_point(field_set_allocated:NFMsg.db_playerinfo.province)
+}
+
+// optional string city = 20;
+inline bool db_playerinfo::has_city() const {
+  return (_has_bits_[0] & 0x00000200u) != 0;
+}
+inline void db_playerinfo::set_has_city() {
+  _has_bits_[0] |= 0x00000200u;
+}
+inline void db_playerinfo::clear_has_city() {
+  _has_bits_[0] &= ~0x00000200u;
+}
+inline void db_playerinfo::clear_city() {
+  city_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  clear_has_city();
+}
+inline const ::std::string& db_playerinfo::city() const {
+  // @@protoc_insertion_point(field_get:NFMsg.db_playerinfo.city)
+  return city_.GetNoArena();
+}
+inline void db_playerinfo::set_city(const ::std::string& value) {
+  set_has_city();
+  city_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:NFMsg.db_playerinfo.city)
+}
+#if LANG_CXX11
+inline void db_playerinfo::set_city(::std::string&& value) {
+  set_has_city();
+  city_.SetNoArena(
+    &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+  // @@protoc_insertion_point(field_set_rvalue:NFMsg.db_playerinfo.city)
+}
+#endif
+inline void db_playerinfo::set_city(const char* value) {
+  GOOGLE_DCHECK(value != NULL);
+  set_has_city();
+  city_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:NFMsg.db_playerinfo.city)
+}
+inline void db_playerinfo::set_city(const char* value, size_t size) {
+  set_has_city();
+  city_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:NFMsg.db_playerinfo.city)
+}
+inline ::std::string* db_playerinfo::mutable_city() {
+  set_has_city();
+  // @@protoc_insertion_point(field_mutable:NFMsg.db_playerinfo.city)
+  return city_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline ::std::string* db_playerinfo::release_city() {
+  // @@protoc_insertion_point(field_release:NFMsg.db_playerinfo.city)
+  if (!has_city()) {
+    return NULL;
+  }
+  clear_has_city();
+  return city_.ReleaseNonDefaultNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline void db_playerinfo::set_allocated_city(::std::string* city) {
+  if (city != NULL) {
+    set_has_city();
+  } else {
+    clear_has_city();
+  }
+  city_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), city);
+  // @@protoc_insertion_point(field_set_allocated:NFMsg.db_playerinfo.city)
+}
+
+// optional int32 popularity = 21;
+inline bool db_playerinfo::has_popularity() const {
+  return (_has_bits_[1] & 0x00000001u) != 0;
+}
+inline void db_playerinfo::set_has_popularity() {
+  _has_bits_[1] |= 0x00000001u;
+}
+inline void db_playerinfo::clear_has_popularity() {
+  _has_bits_[1] &= ~0x00000001u;
+}
+inline void db_playerinfo::clear_popularity() {
+  popularity_ = 0;
+  clear_has_popularity();
+}
+inline ::google::protobuf::int32 db_playerinfo::popularity() const {
+  // @@protoc_insertion_point(field_get:NFMsg.db_playerinfo.popularity)
+  return popularity_;
+}
+inline void db_playerinfo::set_popularity(::google::protobuf::int32 value) {
+  set_has_popularity();
+  popularity_ = value;
+  // @@protoc_insertion_point(field_set:NFMsg.db_playerinfo.popularity)
+}
+
+// optional int32 idenstatus = 22;
+inline bool db_playerinfo::has_idenstatus() const {
+  return (_has_bits_[1] & 0x00000002u) != 0;
+}
+inline void db_playerinfo::set_has_idenstatus() {
+  _has_bits_[1] |= 0x00000002u;
+}
+inline void db_playerinfo::clear_has_idenstatus() {
+  _has_bits_[1] &= ~0x00000002u;
+}
+inline void db_playerinfo::clear_idenstatus() {
+  idenstatus_ = 0;
+  clear_has_idenstatus();
+}
+inline ::google::protobuf::int32 db_playerinfo::idenstatus() const {
+  // @@protoc_insertion_point(field_get:NFMsg.db_playerinfo.idenstatus)
+  return idenstatus_;
+}
+inline void db_playerinfo::set_idenstatus(::google::protobuf::int32 value) {
+  set_has_idenstatus();
+  idenstatus_ = value;
+  // @@protoc_insertion_point(field_set:NFMsg.db_playerinfo.idenstatus)
+}
+
+// optional int32 bindtype = 23;
+inline bool db_playerinfo::has_bindtype() const {
+  return (_has_bits_[1] & 0x00000004u) != 0;
+}
+inline void db_playerinfo::set_has_bindtype() {
+  _has_bits_[1] |= 0x00000004u;
+}
+inline void db_playerinfo::clear_has_bindtype() {
+  _has_bits_[1] &= ~0x00000004u;
+}
+inline void db_playerinfo::clear_bindtype() {
+  bindtype_ = 0;
+  clear_has_bindtype();
+}
+inline ::google::protobuf::int32 db_playerinfo::bindtype() const {
+  // @@protoc_insertion_point(field_get:NFMsg.db_playerinfo.bindtype)
+  return bindtype_;
+}
+inline void db_playerinfo::set_bindtype(::google::protobuf::int32 value) {
+  set_has_bindtype();
+  bindtype_ = value;
+  // @@protoc_insertion_point(field_set:NFMsg.db_playerinfo.bindtype)
+}
+
+// optional string bindnick = 24;
+inline bool db_playerinfo::has_bindnick() const {
+  return (_has_bits_[0] & 0x00000400u) != 0;
+}
+inline void db_playerinfo::set_has_bindnick() {
+  _has_bits_[0] |= 0x00000400u;
+}
+inline void db_playerinfo::clear_has_bindnick() {
+  _has_bits_[0] &= ~0x00000400u;
+}
+inline void db_playerinfo::clear_bindnick() {
+  bindnick_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  clear_has_bindnick();
+}
+inline const ::std::string& db_playerinfo::bindnick() const {
+  // @@protoc_insertion_point(field_get:NFMsg.db_playerinfo.bindnick)
+  return bindnick_.GetNoArena();
+}
+inline void db_playerinfo::set_bindnick(const ::std::string& value) {
+  set_has_bindnick();
+  bindnick_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:NFMsg.db_playerinfo.bindnick)
+}
+#if LANG_CXX11
+inline void db_playerinfo::set_bindnick(::std::string&& value) {
+  set_has_bindnick();
+  bindnick_.SetNoArena(
+    &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+  // @@protoc_insertion_point(field_set_rvalue:NFMsg.db_playerinfo.bindnick)
+}
+#endif
+inline void db_playerinfo::set_bindnick(const char* value) {
+  GOOGLE_DCHECK(value != NULL);
+  set_has_bindnick();
+  bindnick_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:NFMsg.db_playerinfo.bindnick)
+}
+inline void db_playerinfo::set_bindnick(const char* value, size_t size) {
+  set_has_bindnick();
+  bindnick_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:NFMsg.db_playerinfo.bindnick)
+}
+inline ::std::string* db_playerinfo::mutable_bindnick() {
+  set_has_bindnick();
+  // @@protoc_insertion_point(field_mutable:NFMsg.db_playerinfo.bindnick)
+  return bindnick_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline ::std::string* db_playerinfo::release_bindnick() {
+  // @@protoc_insertion_point(field_release:NFMsg.db_playerinfo.bindnick)
+  if (!has_bindnick()) {
+    return NULL;
+  }
+  clear_has_bindnick();
+  return bindnick_.ReleaseNonDefaultNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline void db_playerinfo::set_allocated_bindnick(::std::string* bindnick) {
+  if (bindnick != NULL) {
+    set_has_bindnick();
+  } else {
+    clear_has_bindnick();
+  }
+  bindnick_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), bindnick);
+  // @@protoc_insertion_point(field_set_allocated:NFMsg.db_playerinfo.bindnick)
+}
+
+// optional string platformid = 25;
+inline bool db_playerinfo::has_platformid() const {
+  return (_has_bits_[0] & 0x00000800u) != 0;
+}
+inline void db_playerinfo::set_has_platformid() {
+  _has_bits_[0] |= 0x00000800u;
+}
+inline void db_playerinfo::clear_has_platformid() {
+  _has_bits_[0] &= ~0x00000800u;
+}
+inline void db_playerinfo::clear_platformid() {
+  platformid_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  clear_has_platformid();
+}
+inline const ::std::string& db_playerinfo::platformid() const {
+  // @@protoc_insertion_point(field_get:NFMsg.db_playerinfo.platformid)
+  return platformid_.GetNoArena();
+}
+inline void db_playerinfo::set_platformid(const ::std::string& value) {
+  set_has_platformid();
+  platformid_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:NFMsg.db_playerinfo.platformid)
+}
+#if LANG_CXX11
+inline void db_playerinfo::set_platformid(::std::string&& value) {
+  set_has_platformid();
+  platformid_.SetNoArena(
+    &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+  // @@protoc_insertion_point(field_set_rvalue:NFMsg.db_playerinfo.platformid)
+}
+#endif
+inline void db_playerinfo::set_platformid(const char* value) {
+  GOOGLE_DCHECK(value != NULL);
+  set_has_platformid();
+  platformid_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:NFMsg.db_playerinfo.platformid)
+}
+inline void db_playerinfo::set_platformid(const char* value, size_t size) {
+  set_has_platformid();
+  platformid_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:NFMsg.db_playerinfo.platformid)
+}
+inline ::std::string* db_playerinfo::mutable_platformid() {
+  set_has_platformid();
+  // @@protoc_insertion_point(field_mutable:NFMsg.db_playerinfo.platformid)
+  return platformid_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline ::std::string* db_playerinfo::release_platformid() {
+  // @@protoc_insertion_point(field_release:NFMsg.db_playerinfo.platformid)
+  if (!has_platformid()) {
+    return NULL;
+  }
+  clear_has_platformid();
+  return platformid_.ReleaseNonDefaultNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline void db_playerinfo::set_allocated_platformid(::std::string* platformid) {
+  if (platformid != NULL) {
+    set_has_platformid();
+  } else {
+    clear_has_platformid();
+  }
+  platformid_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), platformid);
+  // @@protoc_insertion_point(field_set_allocated:NFMsg.db_playerinfo.platformid)
+}
+
+// optional string imei = 26;
+inline bool db_playerinfo::has_imei() const {
+  return (_has_bits_[0] & 0x00001000u) != 0;
+}
+inline void db_playerinfo::set_has_imei() {
+  _has_bits_[0] |= 0x00001000u;
+}
+inline void db_playerinfo::clear_has_imei() {
+  _has_bits_[0] &= ~0x00001000u;
+}
+inline void db_playerinfo::clear_imei() {
+  imei_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  clear_has_imei();
+}
+inline const ::std::string& db_playerinfo::imei() const {
+  // @@protoc_insertion_point(field_get:NFMsg.db_playerinfo.imei)
+  return imei_.GetNoArena();
+}
+inline void db_playerinfo::set_imei(const ::std::string& value) {
+  set_has_imei();
+  imei_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:NFMsg.db_playerinfo.imei)
+}
+#if LANG_CXX11
+inline void db_playerinfo::set_imei(::std::string&& value) {
+  set_has_imei();
+  imei_.SetNoArena(
+    &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+  // @@protoc_insertion_point(field_set_rvalue:NFMsg.db_playerinfo.imei)
+}
+#endif
+inline void db_playerinfo::set_imei(const char* value) {
+  GOOGLE_DCHECK(value != NULL);
+  set_has_imei();
+  imei_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:NFMsg.db_playerinfo.imei)
+}
+inline void db_playerinfo::set_imei(const char* value, size_t size) {
+  set_has_imei();
+  imei_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:NFMsg.db_playerinfo.imei)
+}
+inline ::std::string* db_playerinfo::mutable_imei() {
+  set_has_imei();
+  // @@protoc_insertion_point(field_mutable:NFMsg.db_playerinfo.imei)
+  return imei_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline ::std::string* db_playerinfo::release_imei() {
+  // @@protoc_insertion_point(field_release:NFMsg.db_playerinfo.imei)
+  if (!has_imei()) {
+    return NULL;
+  }
+  clear_has_imei();
+  return imei_.ReleaseNonDefaultNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline void db_playerinfo::set_allocated_imei(::std::string* imei) {
+  if (imei != NULL) {
+    set_has_imei();
+  } else {
+    clear_has_imei();
+  }
+  imei_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), imei);
+  // @@protoc_insertion_point(field_set_allocated:NFMsg.db_playerinfo.imei)
+}
+
+// optional string devname = 27;
+inline bool db_playerinfo::has_devname() const {
+  return (_has_bits_[0] & 0x00002000u) != 0;
+}
+inline void db_playerinfo::set_has_devname() {
+  _has_bits_[0] |= 0x00002000u;
+}
+inline void db_playerinfo::clear_has_devname() {
+  _has_bits_[0] &= ~0x00002000u;
+}
+inline void db_playerinfo::clear_devname() {
+  devname_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  clear_has_devname();
+}
+inline const ::std::string& db_playerinfo::devname() const {
+  // @@protoc_insertion_point(field_get:NFMsg.db_playerinfo.devname)
+  return devname_.GetNoArena();
+}
+inline void db_playerinfo::set_devname(const ::std::string& value) {
+  set_has_devname();
+  devname_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:NFMsg.db_playerinfo.devname)
+}
+#if LANG_CXX11
+inline void db_playerinfo::set_devname(::std::string&& value) {
+  set_has_devname();
+  devname_.SetNoArena(
+    &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+  // @@protoc_insertion_point(field_set_rvalue:NFMsg.db_playerinfo.devname)
+}
+#endif
+inline void db_playerinfo::set_devname(const char* value) {
+  GOOGLE_DCHECK(value != NULL);
+  set_has_devname();
+  devname_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:NFMsg.db_playerinfo.devname)
+}
+inline void db_playerinfo::set_devname(const char* value, size_t size) {
+  set_has_devname();
+  devname_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:NFMsg.db_playerinfo.devname)
+}
+inline ::std::string* db_playerinfo::mutable_devname() {
+  set_has_devname();
+  // @@protoc_insertion_point(field_mutable:NFMsg.db_playerinfo.devname)
+  return devname_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline ::std::string* db_playerinfo::release_devname() {
+  // @@protoc_insertion_point(field_release:NFMsg.db_playerinfo.devname)
+  if (!has_devname()) {
+    return NULL;
+  }
+  clear_has_devname();
+  return devname_.ReleaseNonDefaultNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline void db_playerinfo::set_allocated_devname(::std::string* devname) {
+  if (devname != NULL) {
+    set_has_devname();
+  } else {
+    clear_has_devname();
+  }
+  devname_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), devname);
+  // @@protoc_insertion_point(field_set_allocated:NFMsg.db_playerinfo.devname)
+}
+
+// optional string macname = 28;
+inline bool db_playerinfo::has_macname() const {
+  return (_has_bits_[0] & 0x00004000u) != 0;
+}
+inline void db_playerinfo::set_has_macname() {
+  _has_bits_[0] |= 0x00004000u;
+}
+inline void db_playerinfo::clear_has_macname() {
+  _has_bits_[0] &= ~0x00004000u;
+}
+inline void db_playerinfo::clear_macname() {
+  macname_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  clear_has_macname();
+}
+inline const ::std::string& db_playerinfo::macname() const {
+  // @@protoc_insertion_point(field_get:NFMsg.db_playerinfo.macname)
+  return macname_.GetNoArena();
+}
+inline void db_playerinfo::set_macname(const ::std::string& value) {
+  set_has_macname();
+  macname_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:NFMsg.db_playerinfo.macname)
+}
+#if LANG_CXX11
+inline void db_playerinfo::set_macname(::std::string&& value) {
+  set_has_macname();
+  macname_.SetNoArena(
+    &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+  // @@protoc_insertion_point(field_set_rvalue:NFMsg.db_playerinfo.macname)
+}
+#endif
+inline void db_playerinfo::set_macname(const char* value) {
+  GOOGLE_DCHECK(value != NULL);
+  set_has_macname();
+  macname_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:NFMsg.db_playerinfo.macname)
+}
+inline void db_playerinfo::set_macname(const char* value, size_t size) {
+  set_has_macname();
+  macname_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:NFMsg.db_playerinfo.macname)
+}
+inline ::std::string* db_playerinfo::mutable_macname() {
+  set_has_macname();
+  // @@protoc_insertion_point(field_mutable:NFMsg.db_playerinfo.macname)
+  return macname_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline ::std::string* db_playerinfo::release_macname() {
+  // @@protoc_insertion_point(field_release:NFMsg.db_playerinfo.macname)
+  if (!has_macname()) {
+    return NULL;
+  }
+  clear_has_macname();
+  return macname_.ReleaseNonDefaultNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline void db_playerinfo::set_allocated_macname(::std::string* macname) {
+  if (macname != NULL) {
+    set_has_macname();
+  } else {
+    clear_has_macname();
+  }
+  macname_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), macname);
+  // @@protoc_insertion_point(field_set_allocated:NFMsg.db_playerinfo.macname)
+}
+
+// optional int32 mobiletype = 29;
+inline bool db_playerinfo::has_mobiletype() const {
+  return (_has_bits_[1] & 0x00000008u) != 0;
+}
+inline void db_playerinfo::set_has_mobiletype() {
+  _has_bits_[1] |= 0x00000008u;
+}
+inline void db_playerinfo::clear_has_mobiletype() {
+  _has_bits_[1] &= ~0x00000008u;
+}
+inline void db_playerinfo::clear_mobiletype() {
+  mobiletype_ = 0;
+  clear_has_mobiletype();
+}
+inline ::google::protobuf::int32 db_playerinfo::mobiletype() const {
+  // @@protoc_insertion_point(field_get:NFMsg.db_playerinfo.mobiletype)
+  return mobiletype_;
+}
+inline void db_playerinfo::set_mobiletype(::google::protobuf::int32 value) {
+  set_has_mobiletype();
+  mobiletype_ = value;
+  // @@protoc_insertion_point(field_set:NFMsg.db_playerinfo.mobiletype)
+}
+
+// optional int32 lasttime = 30;
+inline bool db_playerinfo::has_lasttime() const {
+  return (_has_bits_[1] & 0x00000010u) != 0;
+}
+inline void db_playerinfo::set_has_lasttime() {
+  _has_bits_[1] |= 0x00000010u;
+}
+inline void db_playerinfo::clear_has_lasttime() {
+  _has_bits_[1] &= ~0x00000010u;
+}
+inline void db_playerinfo::clear_lasttime() {
+  lasttime_ = 0;
+  clear_has_lasttime();
+}
+inline ::google::protobuf::int32 db_playerinfo::lasttime() const {
+  // @@protoc_insertion_point(field_get:NFMsg.db_playerinfo.lasttime)
+  return lasttime_;
+}
+inline void db_playerinfo::set_lasttime(::google::protobuf::int32 value) {
+  set_has_lasttime();
+  lasttime_ = value;
+  // @@protoc_insertion_point(field_set:NFMsg.db_playerinfo.lasttime)
+}
+
+// optional int32 penulttime = 31;
+inline bool db_playerinfo::has_penulttime() const {
+  return (_has_bits_[1] & 0x00000020u) != 0;
+}
+inline void db_playerinfo::set_has_penulttime() {
+  _has_bits_[1] |= 0x00000020u;
+}
+inline void db_playerinfo::clear_has_penulttime() {
+  _has_bits_[1] &= ~0x00000020u;
+}
+inline void db_playerinfo::clear_penulttime() {
+  penulttime_ = 0;
+  clear_has_penulttime();
+}
+inline ::google::protobuf::int32 db_playerinfo::penulttime() const {
+  // @@protoc_insertion_point(field_get:NFMsg.db_playerinfo.penulttime)
+  return penulttime_;
+}
+inline void db_playerinfo::set_penulttime(::google::protobuf::int32 value) {
+  set_has_penulttime();
+  penulttime_ = value;
+  // @@protoc_insertion_point(field_set:NFMsg.db_playerinfo.penulttime)
+}
+
+// optional int32 silent = 32;
+inline bool db_playerinfo::has_silent() const {
+  return (_has_bits_[1] & 0x00000040u) != 0;
+}
+inline void db_playerinfo::set_has_silent() {
+  _has_bits_[1] |= 0x00000040u;
+}
+inline void db_playerinfo::clear_has_silent() {
+  _has_bits_[1] &= ~0x00000040u;
+}
+inline void db_playerinfo::clear_silent() {
+  silent_ = 0;
+  clear_has_silent();
+}
+inline ::google::protobuf::int32 db_playerinfo::silent() const {
+  // @@protoc_insertion_point(field_get:NFMsg.db_playerinfo.silent)
+  return silent_;
+}
+inline void db_playerinfo::set_silent(::google::protobuf::int32 value) {
+  set_has_silent();
+  silent_ = value;
+  // @@protoc_insertion_point(field_set:NFMsg.db_playerinfo.silent)
+}
+
+// optional int32 isban = 33;
+inline bool db_playerinfo::has_isban() const {
+  return (_has_bits_[1] & 0x00000080u) != 0;
+}
+inline void db_playerinfo::set_has_isban() {
+  _has_bits_[1] |= 0x00000080u;
+}
+inline void db_playerinfo::clear_has_isban() {
+  _has_bits_[1] &= ~0x00000080u;
+}
+inline void db_playerinfo::clear_isban() {
+  isban_ = 0;
+  clear_has_isban();
+}
+inline ::google::protobuf::int32 db_playerinfo::isban() const {
+  // @@protoc_insertion_point(field_get:NFMsg.db_playerinfo.isban)
+  return isban_;
+}
+inline void db_playerinfo::set_isban(::google::protobuf::int32 value) {
+  set_has_isban();
+  isban_ = value;
+  // @@protoc_insertion_point(field_set:NFMsg.db_playerinfo.isban)
+}
+
+// optional string face_1 = 34;
+inline bool db_playerinfo::has_face_1() const {
+  return (_has_bits_[0] & 0x00008000u) != 0;
+}
+inline void db_playerinfo::set_has_face_1() {
+  _has_bits_[0] |= 0x00008000u;
+}
+inline void db_playerinfo::clear_has_face_1() {
+  _has_bits_[0] &= ~0x00008000u;
+}
+inline void db_playerinfo::clear_face_1() {
+  face_1_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  clear_has_face_1();
+}
+inline const ::std::string& db_playerinfo::face_1() const {
+  // @@protoc_insertion_point(field_get:NFMsg.db_playerinfo.face_1)
+  return face_1_.GetNoArena();
+}
+inline void db_playerinfo::set_face_1(const ::std::string& value) {
+  set_has_face_1();
+  face_1_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:NFMsg.db_playerinfo.face_1)
+}
+#if LANG_CXX11
+inline void db_playerinfo::set_face_1(::std::string&& value) {
+  set_has_face_1();
+  face_1_.SetNoArena(
+    &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+  // @@protoc_insertion_point(field_set_rvalue:NFMsg.db_playerinfo.face_1)
+}
+#endif
+inline void db_playerinfo::set_face_1(const char* value) {
+  GOOGLE_DCHECK(value != NULL);
+  set_has_face_1();
+  face_1_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:NFMsg.db_playerinfo.face_1)
+}
+inline void db_playerinfo::set_face_1(const char* value, size_t size) {
+  set_has_face_1();
+  face_1_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:NFMsg.db_playerinfo.face_1)
+}
+inline ::std::string* db_playerinfo::mutable_face_1() {
+  set_has_face_1();
+  // @@protoc_insertion_point(field_mutable:NFMsg.db_playerinfo.face_1)
+  return face_1_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline ::std::string* db_playerinfo::release_face_1() {
+  // @@protoc_insertion_point(field_release:NFMsg.db_playerinfo.face_1)
+  if (!has_face_1()) {
+    return NULL;
+  }
+  clear_has_face_1();
+  return face_1_.ReleaseNonDefaultNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline void db_playerinfo::set_allocated_face_1(::std::string* face_1) {
+  if (face_1 != NULL) {
+    set_has_face_1();
+  } else {
+    clear_has_face_1();
+  }
+  face_1_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), face_1);
+  // @@protoc_insertion_point(field_set_allocated:NFMsg.db_playerinfo.face_1)
+}
+
+// optional string face_2 = 35;
+inline bool db_playerinfo::has_face_2() const {
+  return (_has_bits_[0] & 0x00010000u) != 0;
+}
+inline void db_playerinfo::set_has_face_2() {
+  _has_bits_[0] |= 0x00010000u;
+}
+inline void db_playerinfo::clear_has_face_2() {
+  _has_bits_[0] &= ~0x00010000u;
+}
+inline void db_playerinfo::clear_face_2() {
+  face_2_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  clear_has_face_2();
+}
+inline const ::std::string& db_playerinfo::face_2() const {
+  // @@protoc_insertion_point(field_get:NFMsg.db_playerinfo.face_2)
+  return face_2_.GetNoArena();
+}
+inline void db_playerinfo::set_face_2(const ::std::string& value) {
+  set_has_face_2();
+  face_2_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:NFMsg.db_playerinfo.face_2)
+}
+#if LANG_CXX11
+inline void db_playerinfo::set_face_2(::std::string&& value) {
+  set_has_face_2();
+  face_2_.SetNoArena(
+    &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+  // @@protoc_insertion_point(field_set_rvalue:NFMsg.db_playerinfo.face_2)
+}
+#endif
+inline void db_playerinfo::set_face_2(const char* value) {
+  GOOGLE_DCHECK(value != NULL);
+  set_has_face_2();
+  face_2_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:NFMsg.db_playerinfo.face_2)
+}
+inline void db_playerinfo::set_face_2(const char* value, size_t size) {
+  set_has_face_2();
+  face_2_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:NFMsg.db_playerinfo.face_2)
+}
+inline ::std::string* db_playerinfo::mutable_face_2() {
+  set_has_face_2();
+  // @@protoc_insertion_point(field_mutable:NFMsg.db_playerinfo.face_2)
+  return face_2_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline ::std::string* db_playerinfo::release_face_2() {
+  // @@protoc_insertion_point(field_release:NFMsg.db_playerinfo.face_2)
+  if (!has_face_2()) {
+    return NULL;
+  }
+  clear_has_face_2();
+  return face_2_.ReleaseNonDefaultNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline void db_playerinfo::set_allocated_face_2(::std::string* face_2) {
+  if (face_2 != NULL) {
+    set_has_face_2();
+  } else {
+    clear_has_face_2();
+  }
+  face_2_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), face_2);
+  // @@protoc_insertion_point(field_set_allocated:NFMsg.db_playerinfo.face_2)
+}
+
+// optional string face_3 = 36;
+inline bool db_playerinfo::has_face_3() const {
+  return (_has_bits_[0] & 0x00020000u) != 0;
+}
+inline void db_playerinfo::set_has_face_3() {
+  _has_bits_[0] |= 0x00020000u;
+}
+inline void db_playerinfo::clear_has_face_3() {
+  _has_bits_[0] &= ~0x00020000u;
+}
+inline void db_playerinfo::clear_face_3() {
+  face_3_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  clear_has_face_3();
+}
+inline const ::std::string& db_playerinfo::face_3() const {
+  // @@protoc_insertion_point(field_get:NFMsg.db_playerinfo.face_3)
+  return face_3_.GetNoArena();
+}
+inline void db_playerinfo::set_face_3(const ::std::string& value) {
+  set_has_face_3();
+  face_3_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:NFMsg.db_playerinfo.face_3)
+}
+#if LANG_CXX11
+inline void db_playerinfo::set_face_3(::std::string&& value) {
+  set_has_face_3();
+  face_3_.SetNoArena(
+    &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+  // @@protoc_insertion_point(field_set_rvalue:NFMsg.db_playerinfo.face_3)
+}
+#endif
+inline void db_playerinfo::set_face_3(const char* value) {
+  GOOGLE_DCHECK(value != NULL);
+  set_has_face_3();
+  face_3_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:NFMsg.db_playerinfo.face_3)
+}
+inline void db_playerinfo::set_face_3(const char* value, size_t size) {
+  set_has_face_3();
+  face_3_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:NFMsg.db_playerinfo.face_3)
+}
+inline ::std::string* db_playerinfo::mutable_face_3() {
+  set_has_face_3();
+  // @@protoc_insertion_point(field_mutable:NFMsg.db_playerinfo.face_3)
+  return face_3_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline ::std::string* db_playerinfo::release_face_3() {
+  // @@protoc_insertion_point(field_release:NFMsg.db_playerinfo.face_3)
+  if (!has_face_3()) {
+    return NULL;
+  }
+  clear_has_face_3();
+  return face_3_.ReleaseNonDefaultNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline void db_playerinfo::set_allocated_face_3(::std::string* face_3) {
+  if (face_3 != NULL) {
+    set_has_face_3();
+  } else {
+    clear_has_face_3();
+  }
+  face_3_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), face_3);
+  // @@protoc_insertion_point(field_set_allocated:NFMsg.db_playerinfo.face_3)
+}
+
+// optional string face_4 = 37;
+inline bool db_playerinfo::has_face_4() const {
+  return (_has_bits_[0] & 0x00040000u) != 0;
+}
+inline void db_playerinfo::set_has_face_4() {
+  _has_bits_[0] |= 0x00040000u;
+}
+inline void db_playerinfo::clear_has_face_4() {
+  _has_bits_[0] &= ~0x00040000u;
+}
+inline void db_playerinfo::clear_face_4() {
+  face_4_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  clear_has_face_4();
+}
+inline const ::std::string& db_playerinfo::face_4() const {
+  // @@protoc_insertion_point(field_get:NFMsg.db_playerinfo.face_4)
+  return face_4_.GetNoArena();
+}
+inline void db_playerinfo::set_face_4(const ::std::string& value) {
+  set_has_face_4();
+  face_4_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:NFMsg.db_playerinfo.face_4)
+}
+#if LANG_CXX11
+inline void db_playerinfo::set_face_4(::std::string&& value) {
+  set_has_face_4();
+  face_4_.SetNoArena(
+    &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+  // @@protoc_insertion_point(field_set_rvalue:NFMsg.db_playerinfo.face_4)
+}
+#endif
+inline void db_playerinfo::set_face_4(const char* value) {
+  GOOGLE_DCHECK(value != NULL);
+  set_has_face_4();
+  face_4_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:NFMsg.db_playerinfo.face_4)
+}
+inline void db_playerinfo::set_face_4(const char* value, size_t size) {
+  set_has_face_4();
+  face_4_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:NFMsg.db_playerinfo.face_4)
+}
+inline ::std::string* db_playerinfo::mutable_face_4() {
+  set_has_face_4();
+  // @@protoc_insertion_point(field_mutable:NFMsg.db_playerinfo.face_4)
+  return face_4_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline ::std::string* db_playerinfo::release_face_4() {
+  // @@protoc_insertion_point(field_release:NFMsg.db_playerinfo.face_4)
+  if (!has_face_4()) {
+    return NULL;
+  }
+  clear_has_face_4();
+  return face_4_.ReleaseNonDefaultNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline void db_playerinfo::set_allocated_face_4(::std::string* face_4) {
+  if (face_4 != NULL) {
+    set_has_face_4();
+  } else {
+    clear_has_face_4();
+  }
+  face_4_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), face_4);
+  // @@protoc_insertion_point(field_set_allocated:NFMsg.db_playerinfo.face_4)
+}
+
+// optional int32 isrobot = 38;
+inline bool db_playerinfo::has_isrobot() const {
+  return (_has_bits_[1] & 0x00000100u) != 0;
+}
+inline void db_playerinfo::set_has_isrobot() {
+  _has_bits_[1] |= 0x00000100u;
+}
+inline void db_playerinfo::clear_has_isrobot() {
+  _has_bits_[1] &= ~0x00000100u;
+}
+inline void db_playerinfo::clear_isrobot() {
+  isrobot_ = 0;
+  clear_has_isrobot();
+}
+inline ::google::protobuf::int32 db_playerinfo::isrobot() const {
+  // @@protoc_insertion_point(field_get:NFMsg.db_playerinfo.isrobot)
+  return isrobot_;
+}
+inline void db_playerinfo::set_isrobot(::google::protobuf::int32 value) {
+  set_has_isrobot();
+  isrobot_ = value;
+  // @@protoc_insertion_point(field_set:NFMsg.db_playerinfo.isrobot)
+}
+
+// optional int32 playtype = 39;
+inline bool db_playerinfo::has_playtype() const {
+  return (_has_bits_[1] & 0x00000200u) != 0;
+}
+inline void db_playerinfo::set_has_playtype() {
+  _has_bits_[1] |= 0x00000200u;
+}
+inline void db_playerinfo::clear_has_playtype() {
+  _has_bits_[1] &= ~0x00000200u;
+}
+inline void db_playerinfo::clear_playtype() {
+  playtype_ = 0;
+  clear_has_playtype();
+}
+inline ::google::protobuf::int32 db_playerinfo::playtype() const {
+  // @@protoc_insertion_point(field_get:NFMsg.db_playerinfo.playtype)
+  return playtype_;
+}
+inline void db_playerinfo::set_playtype(::google::protobuf::int32 value) {
+  set_has_playtype();
+  playtype_ = value;
+  // @@protoc_insertion_point(field_set:NFMsg.db_playerinfo.playtype)
+}
+
+// optional string description = 40;
+inline bool db_playerinfo::has_description() const {
+  return (_has_bits_[0] & 0x00080000u) != 0;
+}
+inline void db_playerinfo::set_has_description() {
+  _has_bits_[0] |= 0x00080000u;
+}
+inline void db_playerinfo::clear_has_description() {
+  _has_bits_[0] &= ~0x00080000u;
+}
+inline void db_playerinfo::clear_description() {
+  description_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  clear_has_description();
+}
+inline const ::std::string& db_playerinfo::description() const {
+  // @@protoc_insertion_point(field_get:NFMsg.db_playerinfo.description)
+  return description_.GetNoArena();
+}
+inline void db_playerinfo::set_description(const ::std::string& value) {
+  set_has_description();
+  description_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:NFMsg.db_playerinfo.description)
+}
+#if LANG_CXX11
+inline void db_playerinfo::set_description(::std::string&& value) {
+  set_has_description();
+  description_.SetNoArena(
+    &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+  // @@protoc_insertion_point(field_set_rvalue:NFMsg.db_playerinfo.description)
+}
+#endif
+inline void db_playerinfo::set_description(const char* value) {
+  GOOGLE_DCHECK(value != NULL);
+  set_has_description();
+  description_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:NFMsg.db_playerinfo.description)
+}
+inline void db_playerinfo::set_description(const char* value, size_t size) {
+  set_has_description();
+  description_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:NFMsg.db_playerinfo.description)
+}
+inline ::std::string* db_playerinfo::mutable_description() {
+  set_has_description();
+  // @@protoc_insertion_point(field_mutable:NFMsg.db_playerinfo.description)
+  return description_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline ::std::string* db_playerinfo::release_description() {
+  // @@protoc_insertion_point(field_release:NFMsg.db_playerinfo.description)
+  if (!has_description()) {
+    return NULL;
+  }
+  clear_has_description();
+  return description_.ReleaseNonDefaultNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline void db_playerinfo::set_allocated_description(::std::string* description) {
+  if (description != NULL) {
+    set_has_description();
+  } else {
+    clear_has_description();
+  }
+  description_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), description);
+  // @@protoc_insertion_point(field_set_allocated:NFMsg.db_playerinfo.description)
+}
+
+// optional int64 bank_jetton = 42;
+inline bool db_playerinfo::has_bank_jetton() const {
+  return (_has_bits_[1] & 0x00000400u) != 0;
+}
+inline void db_playerinfo::set_has_bank_jetton() {
+  _has_bits_[1] |= 0x00000400u;
+}
+inline void db_playerinfo::clear_has_bank_jetton() {
+  _has_bits_[1] &= ~0x00000400u;
+}
+inline void db_playerinfo::clear_bank_jetton() {
+  bank_jetton_ = GOOGLE_LONGLONG(0);
+  clear_has_bank_jetton();
+}
+inline ::google::protobuf::int64 db_playerinfo::bank_jetton() const {
+  // @@protoc_insertion_point(field_get:NFMsg.db_playerinfo.bank_jetton)
+  return bank_jetton_;
+}
+inline void db_playerinfo::set_bank_jetton(::google::protobuf::int64 value) {
+  set_has_bank_jetton();
+  bank_jetton_ = value;
+  // @@protoc_insertion_point(field_set:NFMsg.db_playerinfo.bank_jetton)
+}
+
+// optional int32 blacklist = 44;
+inline bool db_playerinfo::has_blacklist() const {
+  return (_has_bits_[1] & 0x00000800u) != 0;
+}
+inline void db_playerinfo::set_has_blacklist() {
+  _has_bits_[1] |= 0x00000800u;
+}
+inline void db_playerinfo::clear_has_blacklist() {
+  _has_bits_[1] &= ~0x00000800u;
+}
+inline void db_playerinfo::clear_blacklist() {
+  blacklist_ = 0;
+  clear_has_blacklist();
+}
+inline ::google::protobuf::int32 db_playerinfo::blacklist() const {
+  // @@protoc_insertion_point(field_get:NFMsg.db_playerinfo.blacklist)
+  return blacklist_;
+}
+inline void db_playerinfo::set_blacklist(::google::protobuf::int32 value) {
+  set_has_blacklist();
+  blacklist_ = value;
+  // @@protoc_insertion_point(field_set:NFMsg.db_playerinfo.blacklist)
+}
+
+// optional int32 propertyid = 45;
+inline bool db_playerinfo::has_propertyid() const {
+  return (_has_bits_[1] & 0x00001000u) != 0;
+}
+inline void db_playerinfo::set_has_propertyid() {
+  _has_bits_[1] |= 0x00001000u;
+}
+inline void db_playerinfo::clear_has_propertyid() {
+  _has_bits_[1] &= ~0x00001000u;
+}
+inline void db_playerinfo::clear_propertyid() {
+  propertyid_ = 0;
+  clear_has_propertyid();
+}
+inline ::google::protobuf::int32 db_playerinfo::propertyid() const {
+  // @@protoc_insertion_point(field_get:NFMsg.db_playerinfo.propertyid)
+  return propertyid_;
+}
+inline void db_playerinfo::set_propertyid(::google::protobuf::int32 value) {
+  set_has_propertyid();
+  propertyid_ = value;
+  // @@protoc_insertion_point(field_set:NFMsg.db_playerinfo.propertyid)
+}
+
+// optional int32 agencystatus = 46;
+inline bool db_playerinfo::has_agencystatus() const {
+  return (_has_bits_[1] & 0x00002000u) != 0;
+}
+inline void db_playerinfo::set_has_agencystatus() {
+  _has_bits_[1] |= 0x00002000u;
+}
+inline void db_playerinfo::clear_has_agencystatus() {
+  _has_bits_[1] &= ~0x00002000u;
+}
+inline void db_playerinfo::clear_agencystatus() {
+  agencystatus_ = 0;
+  clear_has_agencystatus();
+}
+inline ::google::protobuf::int32 db_playerinfo::agencystatus() const {
+  // @@protoc_insertion_point(field_get:NFMsg.db_playerinfo.agencystatus)
+  return agencystatus_;
+}
+inline void db_playerinfo::set_agencystatus(::google::protobuf::int32 value) {
+  set_has_agencystatus();
+  agencystatus_ = value;
+  // @@protoc_insertion_point(field_set:NFMsg.db_playerinfo.agencystatus)
+}
+
+// optional string registration1 = 49;
+inline bool db_playerinfo::has_registration1() const {
+  return (_has_bits_[0] & 0x00100000u) != 0;
+}
+inline void db_playerinfo::set_has_registration1() {
+  _has_bits_[0] |= 0x00100000u;
+}
+inline void db_playerinfo::clear_has_registration1() {
+  _has_bits_[0] &= ~0x00100000u;
+}
+inline void db_playerinfo::clear_registration1() {
+  registration1_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  clear_has_registration1();
+}
+inline const ::std::string& db_playerinfo::registration1() const {
+  // @@protoc_insertion_point(field_get:NFMsg.db_playerinfo.registration1)
+  return registration1_.GetNoArena();
+}
+inline void db_playerinfo::set_registration1(const ::std::string& value) {
+  set_has_registration1();
+  registration1_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:NFMsg.db_playerinfo.registration1)
+}
+#if LANG_CXX11
+inline void db_playerinfo::set_registration1(::std::string&& value) {
+  set_has_registration1();
+  registration1_.SetNoArena(
+    &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+  // @@protoc_insertion_point(field_set_rvalue:NFMsg.db_playerinfo.registration1)
+}
+#endif
+inline void db_playerinfo::set_registration1(const char* value) {
+  GOOGLE_DCHECK(value != NULL);
+  set_has_registration1();
+  registration1_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:NFMsg.db_playerinfo.registration1)
+}
+inline void db_playerinfo::set_registration1(const char* value, size_t size) {
+  set_has_registration1();
+  registration1_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:NFMsg.db_playerinfo.registration1)
+}
+inline ::std::string* db_playerinfo::mutable_registration1() {
+  set_has_registration1();
+  // @@protoc_insertion_point(field_mutable:NFMsg.db_playerinfo.registration1)
+  return registration1_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline ::std::string* db_playerinfo::release_registration1() {
+  // @@protoc_insertion_point(field_release:NFMsg.db_playerinfo.registration1)
+  if (!has_registration1()) {
+    return NULL;
+  }
+  clear_has_registration1();
+  return registration1_.ReleaseNonDefaultNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline void db_playerinfo::set_allocated_registration1(::std::string* registration1) {
+  if (registration1 != NULL) {
+    set_has_registration1();
+  } else {
+    clear_has_registration1();
+  }
+  registration1_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), registration1);
+  // @@protoc_insertion_point(field_set_allocated:NFMsg.db_playerinfo.registration1)
+}
+
+// optional string registration2 = 50;
+inline bool db_playerinfo::has_registration2() const {
+  return (_has_bits_[0] & 0x00200000u) != 0;
+}
+inline void db_playerinfo::set_has_registration2() {
+  _has_bits_[0] |= 0x00200000u;
+}
+inline void db_playerinfo::clear_has_registration2() {
+  _has_bits_[0] &= ~0x00200000u;
+}
+inline void db_playerinfo::clear_registration2() {
+  registration2_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  clear_has_registration2();
+}
+inline const ::std::string& db_playerinfo::registration2() const {
+  // @@protoc_insertion_point(field_get:NFMsg.db_playerinfo.registration2)
+  return registration2_.GetNoArena();
+}
+inline void db_playerinfo::set_registration2(const ::std::string& value) {
+  set_has_registration2();
+  registration2_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:NFMsg.db_playerinfo.registration2)
+}
+#if LANG_CXX11
+inline void db_playerinfo::set_registration2(::std::string&& value) {
+  set_has_registration2();
+  registration2_.SetNoArena(
+    &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+  // @@protoc_insertion_point(field_set_rvalue:NFMsg.db_playerinfo.registration2)
+}
+#endif
+inline void db_playerinfo::set_registration2(const char* value) {
+  GOOGLE_DCHECK(value != NULL);
+  set_has_registration2();
+  registration2_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:NFMsg.db_playerinfo.registration2)
+}
+inline void db_playerinfo::set_registration2(const char* value, size_t size) {
+  set_has_registration2();
+  registration2_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:NFMsg.db_playerinfo.registration2)
+}
+inline ::std::string* db_playerinfo::mutable_registration2() {
+  set_has_registration2();
+  // @@protoc_insertion_point(field_mutable:NFMsg.db_playerinfo.registration2)
+  return registration2_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline ::std::string* db_playerinfo::release_registration2() {
+  // @@protoc_insertion_point(field_release:NFMsg.db_playerinfo.registration2)
+  if (!has_registration2()) {
+    return NULL;
+  }
+  clear_has_registration2();
+  return registration2_.ReleaseNonDefaultNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline void db_playerinfo::set_allocated_registration2(::std::string* registration2) {
+  if (registration2 != NULL) {
+    set_has_registration2();
+  } else {
+    clear_has_registration2();
+  }
+  registration2_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), registration2);
+  // @@protoc_insertion_point(field_set_allocated:NFMsg.db_playerinfo.registration2)
+}
+
+// optional string registration3 = 51;
+inline bool db_playerinfo::has_registration3() const {
+  return (_has_bits_[0] & 0x00400000u) != 0;
+}
+inline void db_playerinfo::set_has_registration3() {
+  _has_bits_[0] |= 0x00400000u;
+}
+inline void db_playerinfo::clear_has_registration3() {
+  _has_bits_[0] &= ~0x00400000u;
+}
+inline void db_playerinfo::clear_registration3() {
+  registration3_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  clear_has_registration3();
+}
+inline const ::std::string& db_playerinfo::registration3() const {
+  // @@protoc_insertion_point(field_get:NFMsg.db_playerinfo.registration3)
+  return registration3_.GetNoArena();
+}
+inline void db_playerinfo::set_registration3(const ::std::string& value) {
+  set_has_registration3();
+  registration3_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:NFMsg.db_playerinfo.registration3)
+}
+#if LANG_CXX11
+inline void db_playerinfo::set_registration3(::std::string&& value) {
+  set_has_registration3();
+  registration3_.SetNoArena(
+    &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+  // @@protoc_insertion_point(field_set_rvalue:NFMsg.db_playerinfo.registration3)
+}
+#endif
+inline void db_playerinfo::set_registration3(const char* value) {
+  GOOGLE_DCHECK(value != NULL);
+  set_has_registration3();
+  registration3_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:NFMsg.db_playerinfo.registration3)
+}
+inline void db_playerinfo::set_registration3(const char* value, size_t size) {
+  set_has_registration3();
+  registration3_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:NFMsg.db_playerinfo.registration3)
+}
+inline ::std::string* db_playerinfo::mutable_registration3() {
+  set_has_registration3();
+  // @@protoc_insertion_point(field_mutable:NFMsg.db_playerinfo.registration3)
+  return registration3_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline ::std::string* db_playerinfo::release_registration3() {
+  // @@protoc_insertion_point(field_release:NFMsg.db_playerinfo.registration3)
+  if (!has_registration3()) {
+    return NULL;
+  }
+  clear_has_registration3();
+  return registration3_.ReleaseNonDefaultNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline void db_playerinfo::set_allocated_registration3(::std::string* registration3) {
+  if (registration3 != NULL) {
+    set_has_registration3();
+  } else {
+    clear_has_registration3();
+  }
+  registration3_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), registration3);
+  // @@protoc_insertion_point(field_set_allocated:NFMsg.db_playerinfo.registration3)
+}
+
+// optional int32 signinmonth = 52;
+inline bool db_playerinfo::has_signinmonth() const {
+  return (_has_bits_[1] & 0x00004000u) != 0;
+}
+inline void db_playerinfo::set_has_signinmonth() {
+  _has_bits_[1] |= 0x00004000u;
+}
+inline void db_playerinfo::clear_has_signinmonth() {
+  _has_bits_[1] &= ~0x00004000u;
+}
+inline void db_playerinfo::clear_signinmonth() {
+  signinmonth_ = 0;
+  clear_has_signinmonth();
+}
+inline ::google::protobuf::int32 db_playerinfo::signinmonth() const {
+  // @@protoc_insertion_point(field_get:NFMsg.db_playerinfo.signinmonth)
+  return signinmonth_;
+}
+inline void db_playerinfo::set_signinmonth(::google::protobuf::int32 value) {
+  set_has_signinmonth();
+  signinmonth_ = value;
+  // @@protoc_insertion_point(field_set:NFMsg.db_playerinfo.signinmonth)
+}
+
+// optional int32 bsignin = 53;
+inline bool db_playerinfo::has_bsignin() const {
+  return (_has_bits_[1] & 0x00010000u) != 0;
+}
+inline void db_playerinfo::set_has_bsignin() {
+  _has_bits_[1] |= 0x00010000u;
+}
+inline void db_playerinfo::clear_has_bsignin() {
+  _has_bits_[1] &= ~0x00010000u;
+}
+inline void db_playerinfo::clear_bsignin() {
+  bsignin_ = 0;
+  clear_has_bsignin();
+}
+inline ::google::protobuf::int32 db_playerinfo::bsignin() const {
+  // @@protoc_insertion_point(field_get:NFMsg.db_playerinfo.bsignin)
+  return bsignin_;
+}
+inline void db_playerinfo::set_bsignin(::google::protobuf::int32 value) {
+  set_has_bsignin();
+  bsignin_ = value;
+  // @@protoc_insertion_point(field_set:NFMsg.db_playerinfo.bsignin)
+}
+
+// optional int32 turntablenum = 54;
+inline bool db_playerinfo::has_turntablenum() const {
+  return (_has_bits_[1] & 0x00020000u) != 0;
+}
+inline void db_playerinfo::set_has_turntablenum() {
+  _has_bits_[1] |= 0x00020000u;
+}
+inline void db_playerinfo::clear_has_turntablenum() {
+  _has_bits_[1] &= ~0x00020000u;
+}
+inline void db_playerinfo::clear_turntablenum() {
+  turntablenum_ = 0;
+  clear_has_turntablenum();
+}
+inline ::google::protobuf::int32 db_playerinfo::turntablenum() const {
+  // @@protoc_insertion_point(field_get:NFMsg.db_playerinfo.turntablenum)
+  return turntablenum_;
+}
+inline void db_playerinfo::set_turntablenum(::google::protobuf::int32 value) {
+  set_has_turntablenum();
+  turntablenum_ = value;
+  // @@protoc_insertion_point(field_set:NFMsg.db_playerinfo.turntablenum)
+}
+
+// optional int32 tengames = 55;
+inline bool db_playerinfo::has_tengames() const {
+  return (_has_bits_[1] & 0x00040000u) != 0;
+}
+inline void db_playerinfo::set_has_tengames() {
+  _has_bits_[1] |= 0x00040000u;
+}
+inline void db_playerinfo::clear_has_tengames() {
+  _has_bits_[1] &= ~0x00040000u;
+}
+inline void db_playerinfo::clear_tengames() {
+  tengames_ = 0;
+  clear_has_tengames();
+}
+inline ::google::protobuf::int32 db_playerinfo::tengames() const {
+  // @@protoc_insertion_point(field_get:NFMsg.db_playerinfo.tengames)
+  return tengames_;
+}
+inline void db_playerinfo::set_tengames(::google::protobuf::int32 value) {
+  set_has_tengames();
+  tengames_ = value;
+  // @@protoc_insertion_point(field_set:NFMsg.db_playerinfo.tengames)
+}
+
+// optional int32 todayshare = 56;
+inline bool db_playerinfo::has_todayshare() const {
+  return (_has_bits_[1] & 0x00080000u) != 0;
+}
+inline void db_playerinfo::set_has_todayshare() {
+  _has_bits_[1] |= 0x00080000u;
+}
+inline void db_playerinfo::clear_has_todayshare() {
+  _has_bits_[1] &= ~0x00080000u;
+}
+inline void db_playerinfo::clear_todayshare() {
+  todayshare_ = 0;
+  clear_has_todayshare();
+}
+inline ::google::protobuf::int32 db_playerinfo::todayshare() const {
+  // @@protoc_insertion_point(field_get:NFMsg.db_playerinfo.todayshare)
+  return todayshare_;
+}
+inline void db_playerinfo::set_todayshare(::google::protobuf::int32 value) {
+  set_has_todayshare();
+  todayshare_ = value;
+  // @@protoc_insertion_point(field_set:NFMsg.db_playerinfo.todayshare)
+}
+
+// optional int32 caninvite = 57;
+inline bool db_playerinfo::has_caninvite() const {
+  return (_has_bits_[1] & 0x00008000u) != 0;
+}
+inline void db_playerinfo::set_has_caninvite() {
+  _has_bits_[1] |= 0x00008000u;
+}
+inline void db_playerinfo::clear_has_caninvite() {
+  _has_bits_[1] &= ~0x00008000u;
+}
+inline void db_playerinfo::clear_caninvite() {
+  caninvite_ = 0;
+  clear_has_caninvite();
+}
+inline ::google::protobuf::int32 db_playerinfo::caninvite() const {
+  // @@protoc_insertion_point(field_get:NFMsg.db_playerinfo.caninvite)
+  return caninvite_;
+}
+inline void db_playerinfo::set_caninvite(::google::protobuf::int32 value) {
+  set_has_caninvite();
+  caninvite_ = value;
+  // @@protoc_insertion_point(field_set:NFMsg.db_playerinfo.caninvite)
+}
+
+// -------------------------------------------------------------------
+
+// db_query_playerinfo_cond
+
+// optional string account = 1;
+inline bool db_query_playerinfo_cond::has_account() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void db_query_playerinfo_cond::set_has_account() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void db_query_playerinfo_cond::clear_has_account() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void db_query_playerinfo_cond::clear_account() {
+  account_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  clear_has_account();
+}
+inline const ::std::string& db_query_playerinfo_cond::account() const {
+  // @@protoc_insertion_point(field_get:NFMsg.db_query_playerinfo_cond.account)
+  return account_.GetNoArena();
+}
+inline void db_query_playerinfo_cond::set_account(const ::std::string& value) {
+  set_has_account();
+  account_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:NFMsg.db_query_playerinfo_cond.account)
+}
+#if LANG_CXX11
+inline void db_query_playerinfo_cond::set_account(::std::string&& value) {
+  set_has_account();
+  account_.SetNoArena(
+    &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+  // @@protoc_insertion_point(field_set_rvalue:NFMsg.db_query_playerinfo_cond.account)
+}
+#endif
+inline void db_query_playerinfo_cond::set_account(const char* value) {
+  GOOGLE_DCHECK(value != NULL);
+  set_has_account();
+  account_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:NFMsg.db_query_playerinfo_cond.account)
+}
+inline void db_query_playerinfo_cond::set_account(const char* value, size_t size) {
+  set_has_account();
+  account_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:NFMsg.db_query_playerinfo_cond.account)
+}
+inline ::std::string* db_query_playerinfo_cond::mutable_account() {
+  set_has_account();
+  // @@protoc_insertion_point(field_mutable:NFMsg.db_query_playerinfo_cond.account)
+  return account_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline ::std::string* db_query_playerinfo_cond::release_account() {
+  // @@protoc_insertion_point(field_release:NFMsg.db_query_playerinfo_cond.account)
+  if (!has_account()) {
+    return NULL;
+  }
+  clear_has_account();
+  return account_.ReleaseNonDefaultNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline void db_query_playerinfo_cond::set_allocated_account(::std::string* account) {
+  if (account != NULL) {
+    set_has_account();
+  } else {
+    clear_has_account();
+  }
+  account_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), account);
+  // @@protoc_insertion_point(field_set_allocated:NFMsg.db_query_playerinfo_cond.account)
+}
+
+// -------------------------------------------------------------------
+
+// db_query_playerinfo
+
+// optional string dy_player = 1;
+inline bool db_query_playerinfo::has_dy_player() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void db_query_playerinfo::set_has_dy_player() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void db_query_playerinfo::clear_has_dy_player() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void db_query_playerinfo::clear_dy_player() {
+  dy_player_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  clear_has_dy_player();
+}
+inline const ::std::string& db_query_playerinfo::dy_player() const {
+  // @@protoc_insertion_point(field_get:NFMsg.db_query_playerinfo.dy_player)
+  return dy_player_.GetNoArena();
+}
+inline void db_query_playerinfo::set_dy_player(const ::std::string& value) {
+  set_has_dy_player();
+  dy_player_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:NFMsg.db_query_playerinfo.dy_player)
+}
+#if LANG_CXX11
+inline void db_query_playerinfo::set_dy_player(::std::string&& value) {
+  set_has_dy_player();
+  dy_player_.SetNoArena(
+    &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+  // @@protoc_insertion_point(field_set_rvalue:NFMsg.db_query_playerinfo.dy_player)
+}
+#endif
+inline void db_query_playerinfo::set_dy_player(const char* value) {
+  GOOGLE_DCHECK(value != NULL);
+  set_has_dy_player();
+  dy_player_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:NFMsg.db_query_playerinfo.dy_player)
+}
+inline void db_query_playerinfo::set_dy_player(const char* value, size_t size) {
+  set_has_dy_player();
+  dy_player_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:NFMsg.db_query_playerinfo.dy_player)
+}
+inline ::std::string* db_query_playerinfo::mutable_dy_player() {
+  set_has_dy_player();
+  // @@protoc_insertion_point(field_mutable:NFMsg.db_query_playerinfo.dy_player)
+  return dy_player_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline ::std::string* db_query_playerinfo::release_dy_player() {
+  // @@protoc_insertion_point(field_release:NFMsg.db_query_playerinfo.dy_player)
+  if (!has_dy_player()) {
+    return NULL;
+  }
+  clear_has_dy_player();
+  return dy_player_.ReleaseNonDefaultNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline void db_query_playerinfo::set_allocated_dy_player(::std::string* dy_player) {
+  if (dy_player != NULL) {
+    set_has_dy_player();
+  } else {
+    clear_has_dy_player();
+  }
+  dy_player_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), dy_player);
+  // @@protoc_insertion_point(field_set_allocated:NFMsg.db_query_playerinfo.dy_player)
+}
+
+// optional .NFMsg.db_playerinfo db_fields = 2;
+inline bool db_query_playerinfo::has_db_fields() const {
+  return (_has_bits_[0] & 0x00000002u) != 0;
+}
+inline void db_query_playerinfo::set_has_db_fields() {
+  _has_bits_[0] |= 0x00000002u;
+}
+inline void db_query_playerinfo::clear_has_db_fields() {
+  _has_bits_[0] &= ~0x00000002u;
+}
+inline void db_query_playerinfo::clear_db_fields() {
+  if (db_fields_ != NULL) db_fields_->Clear();
+  clear_has_db_fields();
+}
+inline const ::NFMsg::db_playerinfo& db_query_playerinfo::_internal_db_fields() const {
+  return *db_fields_;
+}
+inline const ::NFMsg::db_playerinfo& db_query_playerinfo::db_fields() const {
+  const ::NFMsg::db_playerinfo* p = db_fields_;
+  // @@protoc_insertion_point(field_get:NFMsg.db_query_playerinfo.db_fields)
+  return p != NULL ? *p : *reinterpret_cast<const ::NFMsg::db_playerinfo*>(
+      &::NFMsg::_db_playerinfo_default_instance_);
+}
+inline ::NFMsg::db_playerinfo* db_query_playerinfo::release_db_fields() {
+  // @@protoc_insertion_point(field_release:NFMsg.db_query_playerinfo.db_fields)
+  clear_has_db_fields();
+  ::NFMsg::db_playerinfo* temp = db_fields_;
+  db_fields_ = NULL;
+  return temp;
+}
+inline ::NFMsg::db_playerinfo* db_query_playerinfo::mutable_db_fields() {
+  set_has_db_fields();
+  if (db_fields_ == NULL) {
+    auto* p = CreateMaybeMessage<::NFMsg::db_playerinfo>(GetArenaNoVirtual());
+    db_fields_ = p;
+  }
+  // @@protoc_insertion_point(field_mutable:NFMsg.db_query_playerinfo.db_fields)
+  return db_fields_;
+}
+inline void db_query_playerinfo::set_allocated_db_fields(::NFMsg::db_playerinfo* db_fields) {
+  ::google::protobuf::Arena* message_arena = GetArenaNoVirtual();
+  if (message_arena == NULL) {
+    delete db_fields_;
+  }
+  if (db_fields) {
+    ::google::protobuf::Arena* submessage_arena = NULL;
+    if (message_arena != submessage_arena) {
+      db_fields = ::google::protobuf::internal::GetOwnedMessage(
+          message_arena, db_fields, submessage_arena);
+    }
+    set_has_db_fields();
+  } else {
+    clear_has_db_fields();
+  }
+  db_fields_ = db_fields;
+  // @@protoc_insertion_point(field_set_allocated:NFMsg.db_query_playerinfo.db_fields)
+}
+
+// optional .NFMsg.db_query_playerinfo_cond db_cond = 3;
+inline bool db_query_playerinfo::has_db_cond() const {
+  return (_has_bits_[0] & 0x00000004u) != 0;
+}
+inline void db_query_playerinfo::set_has_db_cond() {
+  _has_bits_[0] |= 0x00000004u;
+}
+inline void db_query_playerinfo::clear_has_db_cond() {
+  _has_bits_[0] &= ~0x00000004u;
+}
+inline void db_query_playerinfo::clear_db_cond() {
+  if (db_cond_ != NULL) db_cond_->Clear();
+  clear_has_db_cond();
+}
+inline const ::NFMsg::db_query_playerinfo_cond& db_query_playerinfo::_internal_db_cond() const {
+  return *db_cond_;
+}
+inline const ::NFMsg::db_query_playerinfo_cond& db_query_playerinfo::db_cond() const {
+  const ::NFMsg::db_query_playerinfo_cond* p = db_cond_;
+  // @@protoc_insertion_point(field_get:NFMsg.db_query_playerinfo.db_cond)
+  return p != NULL ? *p : *reinterpret_cast<const ::NFMsg::db_query_playerinfo_cond*>(
+      &::NFMsg::_db_query_playerinfo_cond_default_instance_);
+}
+inline ::NFMsg::db_query_playerinfo_cond* db_query_playerinfo::release_db_cond() {
+  // @@protoc_insertion_point(field_release:NFMsg.db_query_playerinfo.db_cond)
+  clear_has_db_cond();
+  ::NFMsg::db_query_playerinfo_cond* temp = db_cond_;
+  db_cond_ = NULL;
+  return temp;
+}
+inline ::NFMsg::db_query_playerinfo_cond* db_query_playerinfo::mutable_db_cond() {
+  set_has_db_cond();
+  if (db_cond_ == NULL) {
+    auto* p = CreateMaybeMessage<::NFMsg::db_query_playerinfo_cond>(GetArenaNoVirtual());
+    db_cond_ = p;
+  }
+  // @@protoc_insertion_point(field_mutable:NFMsg.db_query_playerinfo.db_cond)
+  return db_cond_;
+}
+inline void db_query_playerinfo::set_allocated_db_cond(::NFMsg::db_query_playerinfo_cond* db_cond) {
+  ::google::protobuf::Arena* message_arena = GetArenaNoVirtual();
+  if (message_arena == NULL) {
+    delete db_cond_;
+  }
+  if (db_cond) {
+    ::google::protobuf::Arena* submessage_arena = NULL;
+    if (message_arena != submessage_arena) {
+      db_cond = ::google::protobuf::internal::GetOwnedMessage(
+          message_arena, db_cond, submessage_arena);
+    }
+    set_has_db_cond();
+  } else {
+    clear_has_db_cond();
+  }
+  db_cond_ = db_cond;
+  // @@protoc_insertion_point(field_set_allocated:NFMsg.db_query_playerinfo.db_cond)
+}
+
 #ifdef __GNUC__
   #pragma GCC diagnostic pop
 #endif  // __GNUC__
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
 
 // @@protoc_insertion_point(namespace_scope)
 

@@ -12,7 +12,6 @@
 #include "NFComm/NFPluginModule/NFINetServerModule.h"
 
 #include "NFServerLogic/NFServerLogicCommon/NFHumanDefine.h"
-#include "NFServerLogic/NFServerLogicCommon/NFPacketHuman.h"
 #include "NFServerLogic/NFServerLogicCommon/NFBehaviorLogMgr.h"
 #include "NFComm/NFCore/NFRandom.hpp"
 
@@ -53,6 +52,11 @@ bool NFHumanControllerModule::Init()
 bool NFHumanControllerModule::Shut()
 {
 	return true;
+}
+
+void NFHumanControllerModule::OnTimer(uint32_t nTimerID)
+{
+
 }
 
 /**

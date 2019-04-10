@@ -1,2 +1,71 @@
 syntax = "proto2";
 package NFMsg;
+
+message db_playerinfo
+{
+	optional int32 userid = 1;   //用户标识ID
+	optional string cid = 2;                 //用作判断手机标识的唯一字符串
+	optional string account = 3;
+	optional string password = 4;
+	optional string nickname = 5;
+	optional string regdate = 7;   //注册日期
+	optional int32 sex = 8;
+	optional int32 age = 9;
+	optional string email = 10;
+	optional string phonenum = 11;
+	optional int32 exp = 12;      //经验
+	optional int32 level = 13;    //等级
+	optional int32 viplevel = 14;   //vip等级
+	optional int64 jetton = 15;     //筹码必须用64位的
+	optional int32 gold = 16;       //金币，暂时先不用这个
+	optional int32 money = 17;      //钻石
+	optional string channel = 18;   //平台标识
+	optional string province = 19;       //省份
+	optional string city = 20;           //城市
+	optional int32 popularity = 21;      //魅力值
+	optional int32 idenstatus = 22;      //头像认证状态
+	optional int32 bindtype = 23;            //绑定类型
+	optional string bindnick = 24;            //实名认证消息
+	optional string platformid = 25;          //平台返回的标识ID
+	optional string imei = 26;
+	optional string devname = 27;             //设备号
+	optional string macname = 28;
+	optional int32 mobiletype = 29;           //运营商
+	optional int32 lasttime = 30;             //上次登录时间
+	optional int32 penulttime = 31;           //倒数第二次登录
+	optional int32 silent = 32;               //是否禁言
+	optional int32 isban = 33;                //是否禁号，列入黑名单
+	optional string face_1 = 34;
+	optional string face_2 = 35;
+	optional string face_3 = 36;
+	optional string face_4 = 37;
+	optional int32 isrobot = 38;
+	optional int32 playtype = 39;           //玩家玩牌的类型：1:一般型，没有特点；2：小白型：全凭喜好。3：保守型，一定要拿到好牌才跟或者加注；4：激进型：一般有好牌就加注或者跟了。5：冒险型：非常喜欢诈唬，有好牌一定allin或者跟
+	optional string description = 40;       //个性签名
+	optional int64 bank_jetton = 42;
+
+	optional int32 blacklist = 44;
+	optional int32 propertyid = 45;         //玩家佩戴的物品ID
+	optional int32 agencystatus = 46;       //代理的状态，最高两位数，个尾数是0：表示没有绑定代理，1：已经绑定代理；十位数：0：没申请代理，1：已经申请代理，2：成为了代理
+	optional string registration1 = 49;		//签到详情 上旬
+	optional string registration2 = 50;		//签到详情	中旬
+	optional string registration3 = 51;		//签到详情	下旬
+	optional int32  signinmonth = 52;		//签到月份
+	optional int32  bsignin	= 53;			//今天是否已签到   //未签到:0  已签到:签到时间
+	optional int32  turntablenum = 54;		//转盘次数
+	optional int32  tengames = 55;			// 十局是否完成
+	optional int32  todayshare = 56;		//今天是否分享	
+	optional int32  caninvite = 57;			//是否能被邀请
+}
+
+message db_query_playerinfo_cond
+{
+	optional string account = 1;
+}
+
+message db_query_playerinfo
+{
+	optional string dy_player = 1;
+	optional db_playerinfo db_fields = 2;
+	optional db_query_playerinfo_cond db_cond = 3;
+}

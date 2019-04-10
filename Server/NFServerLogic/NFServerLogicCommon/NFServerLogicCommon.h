@@ -17,6 +17,11 @@ enum NF_GAME_DB_ID
 	NF_GAME_USER_DB = 2,
 };
 
+enum ReturnCode
+{
+	RETURN_CODE_SUCCESS = 0,
+};
+
 
 class _NFExport NFServerLogicCommon
 {

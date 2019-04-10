@@ -19,7 +19,7 @@ NFCGameLogicModule::~NFCGameLogicModule()
 
 }
 
-bool NFCGameLogicModule::Init()
+bool NFCGameLogicModule::Awake()
 {
 	bool ret = true;
 	NFServerConfig* pConfig = NFServerCommon::GetAppConfig(m_pPluginManager, NF_ST_GAME);

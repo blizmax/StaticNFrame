@@ -18,6 +18,8 @@ public:
 	static bool MessageToJsonString(const google::protobuf::Message& message, std::string& json);
 	static bool JsonStringToMessage(const string& json, google::protobuf::Message& message);
 
+	static void SetFieldsString(google::protobuf::Message& message, const google::protobuf::FieldDescriptor* pFieldDesc, const std::string& strValue);
+
 	/*
 	** sqlite,mysql从message利用反射取出数据库名字
 	*/

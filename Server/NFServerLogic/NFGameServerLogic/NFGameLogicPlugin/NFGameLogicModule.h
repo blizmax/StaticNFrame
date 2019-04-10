@@ -24,7 +24,7 @@ public:
 	explicit NFCGameLogicModule(NFIPluginManager* p);
 	virtual ~NFCGameLogicModule();
 public:
-	virtual bool Init() override;
+	virtual bool Awake() override;
 
 	virtual bool AfterInit() override;
 

@@ -38,9 +38,7 @@
     }\
 	if (NFLogDebugEnable(NF_LOG_RECV_MSG_JSON_PRINTF, nValueId))\
 	{\
-		std::string jsonStr;\
-		NFProtobufCommon::MessageToJsonString(xMsg, jsonStr);\
-		NFLogDebug(NF_LOG_RECV_MSG_JSON_PRINTF, nValueId, "recv msg:{}, json:{}", nMsgId, jsonStr); \
+		NFLogDebug(NF_LOG_RECV_MSG_JSON_PRINTF, nValueId, "recv msg:{}, json:{}", nMsgId, xMsg.DebugString()); \
 	}\
 
 

@@ -21,6 +21,8 @@ public:
 	virtual bool Init();
 
 	virtual bool Shut();
+
+	virtual void OnTimer(uint32_t nTimerID);
 public:
 	/**
 	* @brief 处理帐号登录功能

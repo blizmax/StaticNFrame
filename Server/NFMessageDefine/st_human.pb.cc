@@ -26,6 +26,11 @@ extern PROTOBUF_INTERNAL_EXPORT_protobuf_st_5fhuman_2eproto ::google::protobuf::
 extern PROTOBUF_INTERNAL_EXPORT_protobuf_st_5fhuman_2eproto ::google::protobuf::internal::SCCInfo<0> scc_info_mailinfo;
 }  // namespace protobuf_st_5fhuman_2eproto
 namespace NFMsg {
+class accountinfoDefaultTypeInternal {
+ public:
+  ::google::protobuf::internal::ExplicitlyConstructed<accountinfo>
+      _instance;
+} _accountinfo_default_instance_;
 class playerinfoDefaultTypeInternal {
  public:
   ::google::protobuf::internal::ExplicitlyConstructed<playerinfo>
@@ -103,6 +108,20 @@ class specialinfoDefaultTypeInternal {
 } _specialinfo_default_instance_;
 }  // namespace NFMsg
 namespace protobuf_st_5fhuman_2eproto {
+static void InitDefaultsaccountinfo() {
+  GOOGLE_PROTOBUF_VERIFY_VERSION;
+
+  {
+    void* ptr = &::NFMsg::_accountinfo_default_instance_;
+    new (ptr) ::NFMsg::accountinfo();
+    ::google::protobuf::internal::OnShutdownDestroyMessage(ptr);
+  }
+  ::NFMsg::accountinfo::InitAsDefaultInstance();
+}
+
+::google::protobuf::internal::SCCInfo<0> scc_info_accountinfo =
+    {{ATOMIC_VAR_INIT(::google::protobuf::internal::SCCInfoBase::kUninitialized), 0, InitDefaultsaccountinfo}, {}};
+
 static void InitDefaultsplayerinfo() {
   GOOGLE_PROTOBUF_VERIFY_VERSION;
 
@@ -318,6 +337,7 @@ static void InitDefaultsspecialinfo() {
     {{ATOMIC_VAR_INIT(::google::protobuf::internal::SCCInfoBase::kUninitialized), 0, InitDefaultsspecialinfo}, {}};
 
 void InitDefaults() {
+  ::google::protobuf::internal::InitSCC(&scc_info_accountinfo.base);
   ::google::protobuf::internal::InitSCC(&scc_info_playerinfo.base);
   ::google::protobuf::internal::InitSCC(&scc_info_playerstats.base);
   ::google::protobuf::internal::InitSCC(&scc_info_goodsinfo.base);
@@ -335,9 +355,20 @@ void InitDefaults() {
   ::google::protobuf::internal::InitSCC(&scc_info_specialinfo.base);
 }
 
-::google::protobuf::Metadata file_level_metadata[15];
+::google::protobuf::Metadata file_level_metadata[16];
 
 const ::google::protobuf::uint32 TableStruct::offsets[] GOOGLE_PROTOBUF_ATTRIBUTE_SECTION_VARIABLE(protodesc_cold) = {
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::NFMsg::accountinfo, _has_bits_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::NFMsg::accountinfo, _internal_metadata_),
+  ~0u,  // no _extensions_
+  ~0u,  // no _oneof_case_
+  ~0u,  // no _weak_field_map_
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::NFMsg::accountinfo, account_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::NFMsg::accountinfo, password_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::NFMsg::accountinfo, userid_),
+  0,
+  1,
+  2,
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::NFMsg::playerinfo, _has_bits_),
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::NFMsg::playerinfo, _internal_metadata_),
   ~0u,  // no _extensions_
@@ -729,24 +760,26 @@ const ::google::protobuf::uint32 TableStruct::offsets[] GOOGLE_PROTOBUF_ATTRIBUT
   9,
 };
 static const ::google::protobuf::internal::MigrationSchema schemas[] GOOGLE_PROTOBUF_ATTRIBUTE_SECTION_VARIABLE(protodesc_cold) = {
-  { 0, 62, sizeof(::NFMsg::playerinfo)},
-  { 119, 139, sizeof(::NFMsg::playerstats)},
-  { 154, 166, sizeof(::NFMsg::goodsinfo)},
-  { 173, 179, sizeof(::NFMsg::goodslist)},
-  { 180, 187, sizeof(::NFMsg::noticeinfo)},
-  { 189, 209, sizeof(::NFMsg::playersimpleinfo)},
-  { 224, 238, sizeof(::NFMsg::broadcastinfo)},
-  { 247, 266, sizeof(::NFMsg::mailinfo)},
-  { 280, 286, sizeof(::NFMsg::maillist)},
-  { 287, 297, sizeof(::NFMsg::inviteinfo)},
-  { 302, 311, sizeof(::NFMsg::givemoneyrecord)},
-  { 315, 334, sizeof(::NFMsg::agencyinfo)},
-  { 348, 354, sizeof(::NFMsg::intlist)},
-  { 355, 361, sizeof(::NFMsg::stringlist)},
-  { 362, 378, sizeof(::NFMsg::specialinfo)},
+  { 0, 8, sizeof(::NFMsg::accountinfo)},
+  { 11, 73, sizeof(::NFMsg::playerinfo)},
+  { 130, 150, sizeof(::NFMsg::playerstats)},
+  { 165, 177, sizeof(::NFMsg::goodsinfo)},
+  { 184, 190, sizeof(::NFMsg::goodslist)},
+  { 191, 198, sizeof(::NFMsg::noticeinfo)},
+  { 200, 220, sizeof(::NFMsg::playersimpleinfo)},
+  { 235, 249, sizeof(::NFMsg::broadcastinfo)},
+  { 258, 277, sizeof(::NFMsg::mailinfo)},
+  { 291, 297, sizeof(::NFMsg::maillist)},
+  { 298, 308, sizeof(::NFMsg::inviteinfo)},
+  { 313, 322, sizeof(::NFMsg::givemoneyrecord)},
+  { 326, 345, sizeof(::NFMsg::agencyinfo)},
+  { 359, 365, sizeof(::NFMsg::intlist)},
+  { 366, 372, sizeof(::NFMsg::stringlist)},
+  { 373, 389, sizeof(::NFMsg::specialinfo)},
 };
 
 static ::google::protobuf::Message const * const file_default_instances[] = {
+  reinterpret_cast<const ::google::protobuf::Message*>(&::NFMsg::_accountinfo_default_instance_),
   reinterpret_cast<const ::google::protobuf::Message*>(&::NFMsg::_playerinfo_default_instance_),
   reinterpret_cast<const ::google::protobuf::Message*>(&::NFMsg::_playerstats_default_instance_),
   reinterpret_cast<const ::google::protobuf::Message*>(&::NFMsg::_goodsinfo_default_instance_),
@@ -779,93 +812,94 @@ void protobuf_AssignDescriptorsOnce() {
 void protobuf_RegisterTypes(const ::std::string&) GOOGLE_PROTOBUF_ATTRIBUTE_COLD;
 void protobuf_RegisterTypes(const ::std::string&) {
   protobuf_AssignDescriptorsOnce();
-  ::google::protobuf::internal::RegisterAllTypes(file_level_metadata, 15);
+  ::google::protobuf::internal::RegisterAllTypes(file_level_metadata, 16);
 }
 
 void AddDescriptorsImpl() {
   InitDefaults();
   static const char descriptor[] GOOGLE_PROTOBUF_ATTRIBUTE_SECTION_VARIABLE(protodesc_cold) = {
-      "\n\016st_human.proto\022\005NFMsg\"\372\007\n\nplayerinfo\022\016"
-      "\n\006userid\030\001 \001(\005\022\013\n\003cid\030\002 \001(\t\022\017\n\007account\030\003"
-      " \001(\t\022\020\n\010password\030\004 \001(\t\022\020\n\010nickname\030\005 \001(\t"
-      "\022\017\n\007regdate\030\007 \001(\t\022\013\n\003sex\030\010 \001(\005\022\013\n\003age\030\t "
-      "\001(\005\022\r\n\005email\030\n \001(\t\022\020\n\010phonenum\030\013 \001(\t\022\013\n\003"
-      "exp\030\014 \001(\005\022\r\n\005level\030\r \001(\005\022\020\n\010viplevel\030\016 \001"
-      "(\005\022\016\n\006jetton\030\017 \001(\003\022\014\n\004gold\030\020 \001(\005\022\r\n\005mone"
-      "y\030\021 \001(\005\022\017\n\007channel\030\022 \001(\t\022\020\n\010province\030\023 \001"
-      "(\t\022\014\n\004city\030\024 \001(\t\022\022\n\npopularity\030\025 \001(\005\022\022\n\n"
-      "idenstatus\030\026 \001(\005\022\020\n\010bindtype\030\027 \001(\005\022\020\n\010bi"
-      "ndnick\030\030 \001(\t\022\022\n\nplatformid\030\031 \001(\t\022\014\n\004imei"
-      "\030\032 \001(\t\022\017\n\007devname\030\033 \001(\t\022\n\n\002ip\030\034 \001(\t\022\022\n\nm"
-      "obiletype\030\035 \001(\005\022\020\n\010lasttime\030\036 \001(\005\022\022\n\npen"
-      "ulttime\030\037 \001(\005\022\016\n\006silent\030  \001(\005\022\r\n\005isban\030!"
-      " \001(\005\022\016\n\006face_1\030\" \001(\t\022\016\n\006face_2\030# \001(\t\022\016\n\006"
-      "face_3\030$ \001(\t\022\016\n\006face_4\030% \001(\t\022\017\n\007isrobot\030"
-      "& \001(\005\022\020\n\010playtype\030\' \001(\005\022\023\n\013description\030("
-      " \001(\t\022\020\n\010location\030) \001(\t\022\022\n\nbankjetton\030* \001"
-      "(\003\022\r\n\005title\030+ \001(\t\022\021\n\tblacklist\030, \001(\005\022\022\n\n"
-      "propertyid\030- \001(\005\022\024\n\014agencystatus\030. \001(\005\022\022"
-      "\n\nlocation_x\030/ \001(\t\022\022\n\nlocation_y\0300 \001(\t\022\025"
-      "\n\rregistration1\0301 \001(\t\022\025\n\rregistration2\0302"
-      " \001(\t\022\025\n\rregistration3\0303 \001(\t\022\023\n\013signinmon"
-      "th\0304 \001(\005\022\017\n\007bsignin\0305 \001(\005\022\024\n\014turntablenu"
-      "m\0306 \001(\005\022\020\n\010tengames\0307 \001(\005\022\022\n\ntodayshare\030"
-      "8 \001(\005\022\021\n\tcaninvite\0309 \001(\005\022\022\n\ntotalgames\030:"
-      " \001(\005\"\257\002\n\013playerstats\022\016\n\006userid\030\001 \001(\005\022\025\n\r"
-      "mdynickamount\030\002 \001(\005\022\020\n\010loginday\030\003 \001(\005\022\023\n"
-      "\013loginconday\030\004 \001(\005\022\026\n\016maxloginconday\030\005 \001"
-      "(\005\022\023\n\013loginamount\030\006 \001(\005\022\022\n\nonlinetime\030\007 "
-      "\001(\005\022\021\n\tmaxjetton\030\010 \001(\005\022\016\n\006payrmb\030\t \001(\005\022\022"
-      "\n\ncallpayrmb\030\n \001(\005\022\017\n\007paytime\030\013 \001(\005\022\023\n\013c"
-      "allpaytime\030\014 \001(\005\022\020\n\010maxmoney\030\r \001(\005\022\016\n\006da"
-      "yrmb\030\016 \001(\005\022\022\n\ndaypaytime\030\017 \001(\005\"\202\001\n\tgoods"
-      "info\022\016\n\006itemid\030\001 \001(\005\022\016\n\006userid\030\002 \001(\005\022\017\n\007"
-      "goodsid\030\003 \001(\005\022\016\n\006amount\030\004 \001(\005\022\020\n\010validit"
-      "y\030\005 \001(\005\022\022\n\ncreatedate\030\006 \001(\t\022\016\n\006iswear\030\007 "
-      "\001(\005\",\n\tgoodslist\022\037\n\005glist\030\001 \003(\0132\020.NFMsg."
-      "goodsinfo\"0\n\nnoticeinfo\022\022\n\nnoticetype\030\001 "
-      "\001(\005\022\016\n\006amount\030\002 \001(\005\"\215\002\n\020playersimpleinfo"
-      "\022\016\n\006userid\030\001 \001(\005\022\020\n\010nickname\030\005 \001(\t\022\013\n\003se"
-      "x\030\010 \001(\005\022\r\n\005level\030\r \001(\005\022\020\n\010viplevel\030\016 \001(\005"
-      "\022\016\n\006jetton\030\017 \001(\003\022\014\n\004gold\030\020 \001(\005\022\022\n\npopula"
-      "rity\030\025 \001(\005\022\n\n\002ip\030\037 \001(\t\022\016\n\006face_1\030\" \001(\t\022\020"
-      "\n\010location\030) \001(\t\022\022\n\npropertyid\030- \001(\005\022\r\n\005"
-      "jifen\030c \001(\005\022\022\n\nlocation_x\030/ \001(\t\022\022\n\nlocat"
-      "ion_y\0300 \001(\t\"\252\001\n\rbroadcastinfo\022\n\n\002id\030\001 \001("
-      "\005\022\021\n\tbroadtype\030\002 \001(\005\022\020\n\010senderid\030\003 \001(\005\022\016"
-      "\n\006sender\030\004 \001(\t\022\013\n\003msg\030\005 \001(\t\022\022\n\nbroadtime"
-      "s\030\006 \001(\005\022\020\n\010validday\030\007 \001(\005\022\022\n\ncreatetime\030"
-      "\010 \001(\t\022\021\n\tcycletype\030\t \001(\005\"\201\002\n\010mailinfo\022\016\n"
-      "\006mailid\030\001 \001(\005\022\020\n\010senderid\030\002 \001(\005\022\016\n\006sende"
-      "r\030\003 \001(\t\022\022\n\nreceiverid\030\004 \001(\005\022\020\n\010receiver\030"
-      "\005 \001(\t\022\020\n\010mailtype\030\006 \001(\005\022\r\n\005title\030\007 \001(\t\022\017"
-      "\n\007content\030\010 \001(\t\022\020\n\010senddate\030\t \001(\t\022\020\n\010mar"
-      "kdate\030\n \001(\t\022\021\n\tmailstate\030\013 \001(\005\022\022\n\nextern"
-      "data\030\014 \001(\t\022\016\n\006remark\030\r \001(\t\022\020\n\010validity\030\016"
-      " \001(\005\"*\n\010maillist\022\036\n\005mlist\030\001 \003(\0132\017.NFMsg."
-      "mailinfo\"l\n\ninviteinfo\022\016\n\006userid\030\001 \001(\005\022\022"
-      "\n\nbinduserid\030\002 \001(\005\022\024\n\014bindnickname\030\003 \001(\t"
-      "\022\022\n\nbindfaceid\030\004 \001(\t\022\020\n\010binddate\030\005 \001(\t\"U"
-      "\n\017givemoneyrecord\022\016\n\006userid\030\001 \001(\005\022\020\n\010nic"
-      "kname\030\002 \001(\t\022\016\n\006amount\030\003 \001(\005\022\020\n\010timemark\030"
-      "\004 \001(\t\"\262\002\n\nagencyinfo\022\016\n\006userid\030\001 \001(\005\022\021\n\t"
-      "invitestr\030\002 \001(\t\022\r\n\005level\030\003 \001(\005\022\021\n\tsoleag"
-      "ent\030\004 \001(\005\022\016\n\006agent1\030\005 \001(\005\022\016\n\006agent2\030\006 \001("
-      "\005\022\016\n\006agent3\030\007 \001(\005\022\016\n\006agent4\030\010 \001(\005\022%\n\ninv"
-      "itelist\030\t \003(\0132\021.NFMsg.inviteinfo\022\021\n\tqrco"
-      "deurl\030\n \001(\t\022\020\n\010datemark\030\013 \001(\t\022\021\n\tmoneyma"
-      "rk\030\014 \001(\005\022\021\n\tweekmoney\030\r \001(\005\022-\n\rgivemoney"
-      "list\030\016 \003(\0132\026.NFMsg.givemoneyrecord\"\030\n\007in"
-      "tlist\022\r\n\005ilist\030\001 \003(\005\"\033\n\nstringlist\022\r\n\005sl"
-      "ist\030\001 \003(\t\"\305\001\n\013specialinfo\022\016\n\006userid\030\001 \001("
-      "\005\022\021\n\tstarttime\030\002 \001(\005\022\017\n\007endtime\030\003 \001(\005\022\r\n"
-      "\005state\030\004 \001(\005\022\014\n\004rate\030\005 \001(\005\022\016\n\006winall\030\006 \001"
-      "(\005\022\016\n\006peinum\030\007 \001(\005\022\017\n\007marknum\030\010 \001(\005\022\020\n\010g"
-      "ametype\030\t \003(\005\022\020\n\010cardtype\030\n \001(\005\022\020\n\010iszhu"
-      "ang\030\013 \001(\005"
+      "\n\016st_human.proto\022\005NFMsg\"@\n\013accountinfo\022\017"
+      "\n\007account\030\001 \001(\t\022\020\n\010password\030\002 \001(\t\022\016\n\006use"
+      "rid\030\003 \001(\004\"\372\007\n\nplayerinfo\022\016\n\006userid\030\001 \001(\005"
+      "\022\013\n\003cid\030\002 \001(\t\022\017\n\007account\030\003 \001(\t\022\020\n\010passwo"
+      "rd\030\004 \001(\t\022\020\n\010nickname\030\005 \001(\t\022\017\n\007regdate\030\007 "
+      "\001(\t\022\013\n\003sex\030\010 \001(\005\022\013\n\003age\030\t \001(\005\022\r\n\005email\030\n"
+      " \001(\t\022\020\n\010phonenum\030\013 \001(\t\022\013\n\003exp\030\014 \001(\005\022\r\n\005l"
+      "evel\030\r \001(\005\022\020\n\010viplevel\030\016 \001(\005\022\016\n\006jetton\030\017"
+      " \001(\003\022\014\n\004gold\030\020 \001(\005\022\r\n\005money\030\021 \001(\005\022\017\n\007cha"
+      "nnel\030\022 \001(\t\022\020\n\010province\030\023 \001(\t\022\014\n\004city\030\024 \001"
+      "(\t\022\022\n\npopularity\030\025 \001(\005\022\022\n\nidenstatus\030\026 \001"
+      "(\005\022\020\n\010bindtype\030\027 \001(\005\022\020\n\010bindnick\030\030 \001(\t\022\022"
+      "\n\nplatformid\030\031 \001(\t\022\014\n\004imei\030\032 \001(\t\022\017\n\007devn"
+      "ame\030\033 \001(\t\022\n\n\002ip\030\034 \001(\t\022\022\n\nmobiletype\030\035 \001("
+      "\005\022\020\n\010lasttime\030\036 \001(\005\022\022\n\npenulttime\030\037 \001(\005\022"
+      "\016\n\006silent\030  \001(\005\022\r\n\005isban\030! \001(\005\022\016\n\006face_1"
+      "\030\" \001(\t\022\016\n\006face_2\030# \001(\t\022\016\n\006face_3\030$ \001(\t\022\016"
+      "\n\006face_4\030% \001(\t\022\017\n\007isrobot\030& \001(\005\022\020\n\010playt"
+      "ype\030\' \001(\005\022\023\n\013description\030( \001(\t\022\020\n\010locati"
+      "on\030) \001(\t\022\022\n\nbankjetton\030* \001(\003\022\r\n\005title\030+ "
+      "\001(\t\022\021\n\tblacklist\030, \001(\005\022\022\n\npropertyid\030- \001"
+      "(\005\022\024\n\014agencystatus\030. \001(\005\022\022\n\nlocation_x\030/"
+      " \001(\t\022\022\n\nlocation_y\0300 \001(\t\022\025\n\rregistration"
+      "1\0301 \001(\t\022\025\n\rregistration2\0302 \001(\t\022\025\n\rregist"
+      "ration3\0303 \001(\t\022\023\n\013signinmonth\0304 \001(\005\022\017\n\007bs"
+      "ignin\0305 \001(\005\022\024\n\014turntablenum\0306 \001(\005\022\020\n\010ten"
+      "games\0307 \001(\005\022\022\n\ntodayshare\0308 \001(\005\022\021\n\tcanin"
+      "vite\0309 \001(\005\022\022\n\ntotalgames\030: \001(\005\"\257\002\n\013playe"
+      "rstats\022\016\n\006userid\030\001 \001(\005\022\025\n\rmdynickamount\030"
+      "\002 \001(\005\022\020\n\010loginday\030\003 \001(\005\022\023\n\013loginconday\030\004"
+      " \001(\005\022\026\n\016maxloginconday\030\005 \001(\005\022\023\n\013loginamo"
+      "unt\030\006 \001(\005\022\022\n\nonlinetime\030\007 \001(\005\022\021\n\tmaxjett"
+      "on\030\010 \001(\005\022\016\n\006payrmb\030\t \001(\005\022\022\n\ncallpayrmb\030\n"
+      " \001(\005\022\017\n\007paytime\030\013 \001(\005\022\023\n\013callpaytime\030\014 \001"
+      "(\005\022\020\n\010maxmoney\030\r \001(\005\022\016\n\006dayrmb\030\016 \001(\005\022\022\n\n"
+      "daypaytime\030\017 \001(\005\"\202\001\n\tgoodsinfo\022\016\n\006itemid"
+      "\030\001 \001(\005\022\016\n\006userid\030\002 \001(\005\022\017\n\007goodsid\030\003 \001(\005\022"
+      "\016\n\006amount\030\004 \001(\005\022\020\n\010validity\030\005 \001(\005\022\022\n\ncre"
+      "atedate\030\006 \001(\t\022\016\n\006iswear\030\007 \001(\005\",\n\tgoodsli"
+      "st\022\037\n\005glist\030\001 \003(\0132\020.NFMsg.goodsinfo\"0\n\nn"
+      "oticeinfo\022\022\n\nnoticetype\030\001 \001(\005\022\016\n\006amount\030"
+      "\002 \001(\005\"\215\002\n\020playersimpleinfo\022\016\n\006userid\030\001 \001"
+      "(\005\022\020\n\010nickname\030\005 \001(\t\022\013\n\003sex\030\010 \001(\005\022\r\n\005lev"
+      "el\030\r \001(\005\022\020\n\010viplevel\030\016 \001(\005\022\016\n\006jetton\030\017 \001"
+      "(\003\022\014\n\004gold\030\020 \001(\005\022\022\n\npopularity\030\025 \001(\005\022\n\n\002"
+      "ip\030\037 \001(\t\022\016\n\006face_1\030\" \001(\t\022\020\n\010location\030) \001"
+      "(\t\022\022\n\npropertyid\030- \001(\005\022\r\n\005jifen\030c \001(\005\022\022\n"
+      "\nlocation_x\030/ \001(\t\022\022\n\nlocation_y\0300 \001(\t\"\252\001"
+      "\n\rbroadcastinfo\022\n\n\002id\030\001 \001(\005\022\021\n\tbroadtype"
+      "\030\002 \001(\005\022\020\n\010senderid\030\003 \001(\005\022\016\n\006sender\030\004 \001(\t"
+      "\022\013\n\003msg\030\005 \001(\t\022\022\n\nbroadtimes\030\006 \001(\005\022\020\n\010val"
+      "idday\030\007 \001(\005\022\022\n\ncreatetime\030\010 \001(\t\022\021\n\tcycle"
+      "type\030\t \001(\005\"\201\002\n\010mailinfo\022\016\n\006mailid\030\001 \001(\005\022"
+      "\020\n\010senderid\030\002 \001(\005\022\016\n\006sender\030\003 \001(\t\022\022\n\nrec"
+      "eiverid\030\004 \001(\005\022\020\n\010receiver\030\005 \001(\t\022\020\n\010mailt"
+      "ype\030\006 \001(\005\022\r\n\005title\030\007 \001(\t\022\017\n\007content\030\010 \001("
+      "\t\022\020\n\010senddate\030\t \001(\t\022\020\n\010markdate\030\n \001(\t\022\021\n"
+      "\tmailstate\030\013 \001(\005\022\022\n\nexterndata\030\014 \001(\t\022\016\n\006"
+      "remark\030\r \001(\t\022\020\n\010validity\030\016 \001(\005\"*\n\010mailli"
+      "st\022\036\n\005mlist\030\001 \003(\0132\017.NFMsg.mailinfo\"l\n\nin"
+      "viteinfo\022\016\n\006userid\030\001 \001(\005\022\022\n\nbinduserid\030\002"
+      " \001(\005\022\024\n\014bindnickname\030\003 \001(\t\022\022\n\nbindfaceid"
+      "\030\004 \001(\t\022\020\n\010binddate\030\005 \001(\t\"U\n\017givemoneyrec"
+      "ord\022\016\n\006userid\030\001 \001(\005\022\020\n\010nickname\030\002 \001(\t\022\016\n"
+      "\006amount\030\003 \001(\005\022\020\n\010timemark\030\004 \001(\t\"\262\002\n\nagen"
+      "cyinfo\022\016\n\006userid\030\001 \001(\005\022\021\n\tinvitestr\030\002 \001("
+      "\t\022\r\n\005level\030\003 \001(\005\022\021\n\tsoleagent\030\004 \001(\005\022\016\n\006a"
+      "gent1\030\005 \001(\005\022\016\n\006agent2\030\006 \001(\005\022\016\n\006agent3\030\007 "
+      "\001(\005\022\016\n\006agent4\030\010 \001(\005\022%\n\ninvitelist\030\t \003(\0132"
+      "\021.NFMsg.inviteinfo\022\021\n\tqrcodeurl\030\n \001(\t\022\020\n"
+      "\010datemark\030\013 \001(\t\022\021\n\tmoneymark\030\014 \001(\005\022\021\n\twe"
+      "ekmoney\030\r \001(\005\022-\n\rgivemoneylist\030\016 \003(\0132\026.N"
+      "FMsg.givemoneyrecord\"\030\n\007intlist\022\r\n\005ilist"
+      "\030\001 \003(\005\"\033\n\nstringlist\022\r\n\005slist\030\001 \003(\t\"\305\001\n\013"
+      "specialinfo\022\016\n\006userid\030\001 \001(\005\022\021\n\tstarttime"
+      "\030\002 \001(\005\022\017\n\007endtime\030\003 \001(\005\022\r\n\005state\030\004 \001(\005\022\014"
+      "\n\004rate\030\005 \001(\005\022\016\n\006winall\030\006 \001(\005\022\016\n\006peinum\030\007"
+      " \001(\005\022\017\n\007marknum\030\010 \001(\005\022\020\n\010gametype\030\t \003(\005\022"
+      "\020\n\010cardtype\030\n \001(\005\022\020\n\010iszhuang\030\013 \001(\005"
   };
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
-      descriptor, 3089);
+      descriptor, 3155);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "st_human.proto", &protobuf_RegisterTypes);
 }
@@ -882,6 +916,363 @@ struct StaticDescriptorInitializer {
 } static_descriptor_initializer;
 }  // namespace protobuf_st_5fhuman_2eproto
 namespace NFMsg {
+
+// ===================================================================
+
+void accountinfo::InitAsDefaultInstance() {
+}
+#if !defined(_MSC_VER) || _MSC_VER >= 1900
+const int accountinfo::kAccountFieldNumber;
+const int accountinfo::kPasswordFieldNumber;
+const int accountinfo::kUseridFieldNumber;
+#endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
+
+accountinfo::accountinfo()
+  : ::google::protobuf::Message(), _internal_metadata_(NULL) {
+  ::google::protobuf::internal::InitSCC(
+      &protobuf_st_5fhuman_2eproto::scc_info_accountinfo.base);
+  SharedCtor();
+  // @@protoc_insertion_point(constructor:NFMsg.accountinfo)
+}
+accountinfo::accountinfo(const accountinfo& from)
+  : ::google::protobuf::Message(),
+      _internal_metadata_(NULL),
+      _has_bits_(from._has_bits_) {
+  _internal_metadata_.MergeFrom(from._internal_metadata_);
+  account_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  if (from.has_account()) {
+    account_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.account_);
+  }
+  password_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  if (from.has_password()) {
+    password_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.password_);
+  }
+  userid_ = from.userid_;
+  // @@protoc_insertion_point(copy_constructor:NFMsg.accountinfo)
+}
+
+void accountinfo::SharedCtor() {
+  account_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  password_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  userid_ = GOOGLE_ULONGLONG(0);
+}
+
+accountinfo::~accountinfo() {
+  // @@protoc_insertion_point(destructor:NFMsg.accountinfo)
+  SharedDtor();
+}
+
+void accountinfo::SharedDtor() {
+  account_.DestroyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  password_.DestroyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+
+void accountinfo::SetCachedSize(int size) const {
+  _cached_size_.Set(size);
+}
+const ::google::protobuf::Descriptor* accountinfo::descriptor() {
+  ::protobuf_st_5fhuman_2eproto::protobuf_AssignDescriptorsOnce();
+  return ::protobuf_st_5fhuman_2eproto::file_level_metadata[kIndexInFileMessages].descriptor;
+}
+
+const accountinfo& accountinfo::default_instance() {
+  ::google::protobuf::internal::InitSCC(&protobuf_st_5fhuman_2eproto::scc_info_accountinfo.base);
+  return *internal_default_instance();
+}
+
+
+void accountinfo::Clear() {
+// @@protoc_insertion_point(message_clear_start:NFMsg.accountinfo)
+  ::google::protobuf::uint32 cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  cached_has_bits = _has_bits_[0];
+  if (cached_has_bits & 3u) {
+    if (cached_has_bits & 0x00000001u) {
+      account_.ClearNonDefaultToEmptyNoArena();
+    }
+    if (cached_has_bits & 0x00000002u) {
+      password_.ClearNonDefaultToEmptyNoArena();
+    }
+  }
+  userid_ = GOOGLE_ULONGLONG(0);
+  _has_bits_.Clear();
+  _internal_metadata_.Clear();
+}
+
+bool accountinfo::MergePartialFromCodedStream(
+    ::google::protobuf::io::CodedInputStream* input) {
+#define DO_(EXPRESSION) if (!GOOGLE_PREDICT_TRUE(EXPRESSION)) goto failure
+  ::google::protobuf::uint32 tag;
+  // @@protoc_insertion_point(parse_start:NFMsg.accountinfo)
+  for (;;) {
+    ::std::pair<::google::protobuf::uint32, bool> p = input->ReadTagWithCutoffNoLastTag(127u);
+    tag = p.first;
+    if (!p.second) goto handle_unusual;
+    switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
+      // optional string account = 1;
+      case 1: {
+        if (static_cast< ::google::protobuf::uint8>(tag) ==
+            static_cast< ::google::protobuf::uint8>(10u /* 10 & 0xFF */)) {
+          DO_(::google::protobuf::internal::WireFormatLite::ReadString(
+                input, this->mutable_account()));
+          ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
+            this->account().data(), static_cast<int>(this->account().length()),
+            ::google::protobuf::internal::WireFormat::PARSE,
+            "NFMsg.accountinfo.account");
+        } else {
+          goto handle_unusual;
+        }
+        break;
+      }
+
+      // optional string password = 2;
+      case 2: {
+        if (static_cast< ::google::protobuf::uint8>(tag) ==
+            static_cast< ::google::protobuf::uint8>(18u /* 18 & 0xFF */)) {
+          DO_(::google::protobuf::internal::WireFormatLite::ReadString(
+                input, this->mutable_password()));
+          ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
+            this->password().data(), static_cast<int>(this->password().length()),
+            ::google::protobuf::internal::WireFormat::PARSE,
+            "NFMsg.accountinfo.password");
+        } else {
+          goto handle_unusual;
+        }
+        break;
+      }
+
+      // optional uint64 userid = 3;
+      case 3: {
+        if (static_cast< ::google::protobuf::uint8>(tag) ==
+            static_cast< ::google::protobuf::uint8>(24u /* 24 & 0xFF */)) {
+          set_has_userid();
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::uint64, ::google::protobuf::internal::WireFormatLite::TYPE_UINT64>(
+                 input, &userid_)));
+        } else {
+          goto handle_unusual;
+        }
+        break;
+      }
+
+      default: {
+      handle_unusual:
+        if (tag == 0) {
+          goto success;
+        }
+        DO_(::google::protobuf::internal::WireFormat::SkipField(
+              input, tag, _internal_metadata_.mutable_unknown_fields()));
+        break;
+      }
+    }
+  }
+success:
+  // @@protoc_insertion_point(parse_success:NFMsg.accountinfo)
+  return true;
+failure:
+  // @@protoc_insertion_point(parse_failure:NFMsg.accountinfo)
+  return false;
+#undef DO_
+}
+
+void accountinfo::SerializeWithCachedSizes(
+    ::google::protobuf::io::CodedOutputStream* output) const {
+  // @@protoc_insertion_point(serialize_start:NFMsg.accountinfo)
+  ::google::protobuf::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  cached_has_bits = _has_bits_[0];
+  // optional string account = 1;
+  if (cached_has_bits & 0x00000001u) {
+    ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
+      this->account().data(), static_cast<int>(this->account().length()),
+      ::google::protobuf::internal::WireFormat::SERIALIZE,
+      "NFMsg.accountinfo.account");
+    ::google::protobuf::internal::WireFormatLite::WriteStringMaybeAliased(
+      1, this->account(), output);
+  }
+
+  // optional string password = 2;
+  if (cached_has_bits & 0x00000002u) {
+    ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
+      this->password().data(), static_cast<int>(this->password().length()),
+      ::google::protobuf::internal::WireFormat::SERIALIZE,
+      "NFMsg.accountinfo.password");
+    ::google::protobuf::internal::WireFormatLite::WriteStringMaybeAliased(
+      2, this->password(), output);
+  }
+
+  // optional uint64 userid = 3;
+  if (cached_has_bits & 0x00000004u) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt64(3, this->userid(), output);
+  }
+
+  if (_internal_metadata_.have_unknown_fields()) {
+    ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
+        _internal_metadata_.unknown_fields(), output);
+  }
+  // @@protoc_insertion_point(serialize_end:NFMsg.accountinfo)
+}
+
+::google::protobuf::uint8* accountinfo::InternalSerializeWithCachedSizesToArray(
+    bool deterministic, ::google::protobuf::uint8* target) const {
+  (void)deterministic; // Unused
+  // @@protoc_insertion_point(serialize_to_array_start:NFMsg.accountinfo)
+  ::google::protobuf::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  cached_has_bits = _has_bits_[0];
+  // optional string account = 1;
+  if (cached_has_bits & 0x00000001u) {
+    ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
+      this->account().data(), static_cast<int>(this->account().length()),
+      ::google::protobuf::internal::WireFormat::SERIALIZE,
+      "NFMsg.accountinfo.account");
+    target =
+      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
+        1, this->account(), target);
+  }
+
+  // optional string password = 2;
+  if (cached_has_bits & 0x00000002u) {
+    ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
+      this->password().data(), static_cast<int>(this->password().length()),
+      ::google::protobuf::internal::WireFormat::SERIALIZE,
+      "NFMsg.accountinfo.password");
+    target =
+      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
+        2, this->password(), target);
+  }
+
+  // optional uint64 userid = 3;
+  if (cached_has_bits & 0x00000004u) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt64ToArray(3, this->userid(), target);
+  }
+
+  if (_internal_metadata_.have_unknown_fields()) {
+    target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
+        _internal_metadata_.unknown_fields(), target);
+  }
+  // @@protoc_insertion_point(serialize_to_array_end:NFMsg.accountinfo)
+  return target;
+}
+
+size_t accountinfo::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:NFMsg.accountinfo)
+  size_t total_size = 0;
+
+  if (_internal_metadata_.have_unknown_fields()) {
+    total_size +=
+      ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
+        _internal_metadata_.unknown_fields());
+  }
+  if (_has_bits_[0 / 32] & 7u) {
+    // optional string account = 1;
+    if (has_account()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::StringSize(
+          this->account());
+    }
+
+    // optional string password = 2;
+    if (has_password()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::StringSize(
+          this->password());
+    }
+
+    // optional uint64 userid = 3;
+    if (has_userid()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::UInt64Size(
+          this->userid());
+    }
+
+  }
+  int cached_size = ::google::protobuf::internal::ToCachedSize(total_size);
+  SetCachedSize(cached_size);
+  return total_size;
+}
+
+void accountinfo::MergeFrom(const ::google::protobuf::Message& from) {
+// @@protoc_insertion_point(generalized_merge_from_start:NFMsg.accountinfo)
+  GOOGLE_DCHECK_NE(&from, this);
+  const accountinfo* source =
+      ::google::protobuf::internal::DynamicCastToGenerated<const accountinfo>(
+          &from);
+  if (source == NULL) {
+  // @@protoc_insertion_point(generalized_merge_from_cast_fail:NFMsg.accountinfo)
+    ::google::protobuf::internal::ReflectionOps::Merge(from, this);
+  } else {
+  // @@protoc_insertion_point(generalized_merge_from_cast_success:NFMsg.accountinfo)
+    MergeFrom(*source);
+  }
+}
+
+void accountinfo::MergeFrom(const accountinfo& from) {
+// @@protoc_insertion_point(class_specific_merge_from_start:NFMsg.accountinfo)
+  GOOGLE_DCHECK_NE(&from, this);
+  _internal_metadata_.MergeFrom(from._internal_metadata_);
+  ::google::protobuf::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  cached_has_bits = from._has_bits_[0];
+  if (cached_has_bits & 7u) {
+    if (cached_has_bits & 0x00000001u) {
+      set_has_account();
+      account_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.account_);
+    }
+    if (cached_has_bits & 0x00000002u) {
+      set_has_password();
+      password_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.password_);
+    }
+    if (cached_has_bits & 0x00000004u) {
+      userid_ = from.userid_;
+    }
+    _has_bits_[0] |= cached_has_bits;
+  }
+}
+
+void accountinfo::CopyFrom(const ::google::protobuf::Message& from) {
+// @@protoc_insertion_point(generalized_copy_from_start:NFMsg.accountinfo)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+void accountinfo::CopyFrom(const accountinfo& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:NFMsg.accountinfo)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool accountinfo::IsInitialized() const {
+  return true;
+}
+
+void accountinfo::Swap(accountinfo* other) {
+  if (other == this) return;
+  InternalSwap(other);
+}
+void accountinfo::InternalSwap(accountinfo* other) {
+  using std::swap;
+  account_.Swap(&other->account_, &::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+    GetArenaNoVirtual());
+  password_.Swap(&other->password_, &::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+    GetArenaNoVirtual());
+  swap(userid_, other->userid_);
+  swap(_has_bits_[0], other->_has_bits_[0]);
+  _internal_metadata_.Swap(&other->_internal_metadata_);
+}
+
+::google::protobuf::Metadata accountinfo::GetMetadata() const {
+  protobuf_st_5fhuman_2eproto::protobuf_AssignDescriptorsOnce();
+  return ::protobuf_st_5fhuman_2eproto::file_level_metadata[kIndexInFileMessages];
+}
+
 
 // ===================================================================
 
@@ -11037,6 +11428,9 @@ void specialinfo::InternalSwap(specialinfo* other) {
 }  // namespace NFMsg
 namespace google {
 namespace protobuf {
+template<> GOOGLE_PROTOBUF_ATTRIBUTE_NOINLINE ::NFMsg::accountinfo* Arena::CreateMaybeMessage< ::NFMsg::accountinfo >(Arena* arena) {
+  return Arena::CreateInternal< ::NFMsg::accountinfo >(arena);
+}
 template<> GOOGLE_PROTOBUF_ATTRIBUTE_NOINLINE ::NFMsg::playerinfo* Arena::CreateMaybeMessage< ::NFMsg::playerinfo >(Arena* arena) {
   return Arena::CreateInternal< ::NFMsg::playerinfo >(arena);
 }

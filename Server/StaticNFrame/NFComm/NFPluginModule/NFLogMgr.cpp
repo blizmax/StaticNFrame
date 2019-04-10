@@ -11,6 +11,16 @@
 #include <sstream>
 
 #include "NFILogModule.h"
+#include "protobuf/src/google/protobuf/stubs/logging.h"
+
+/*
+** 将一些protobuf的错误输出打印到日志里,方便查错
+*/
+void ProtobufLogHandler(google::protobuf::LogLevel level, const char* filename, int line,
+	const std::string& message)
+{
+	NFLogError(NF_LOG_SYSTEMLOG, 0, "[{}:{}]:{}", filename, line, message);
+}
 
 NFLogMgr::NFLogMgr()
 {
@@ -24,11 +34,13 @@ NFLogMgr::~NFLogMgr()
 bool NFLogMgr::Init(NFILogModule* pSpdlogModule)
 {
 	m_pLogModule = pSpdlogModule;
+	google::protobuf::SetLogHandler(ProtobufLogHandler);
 	return true;
 }
 
 void NFLogMgr::UnInit()
 {
+	google::protobuf::SetLogHandler(nullptr);
 	m_pLogModule = nullptr;
 }
 
