@@ -11,10 +11,8 @@
 
 #include "NFComm/NFPluginModule/NFIModule.h"
 #include "NFServerLogicCommon.h"
-#include "NFComm/NFPluginModule/NFTimerMgr.h"
-#include "NFComm/NFPluginModule/NFEventMgr.h"
 
-class NFIBehaviorLogModule : public NFIModule, public NFTimerObj, public NFEventObj
+class NFIBehaviorLogModule : public NFIModule
 {
 public:
 	/**
@@ -26,8 +24,4 @@ public:
 	* @return bool
 	*/
 	virtual void BehaviorLog(uint64_t guid, const std::string& nickName, const std::string& category, const std::string& tag, uint32_t retCode, const std::string& msg) = 0;
-
-	virtual void OnTimer(uint32_t nTimerID) override { }
-
-	virtual void OnExecute(uint16_t nEventID, uint64_t nSrcID, uint8_t bySrcType, NFEventContext* pEventContext) override { }
 };

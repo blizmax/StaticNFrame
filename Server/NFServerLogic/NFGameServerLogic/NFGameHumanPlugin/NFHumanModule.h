@@ -25,4 +25,8 @@ public:
 	virtual uint32_t LoadPlayerInfoByCID(const std::string& account, const std::string& password, NFMsg::playerinfo* pInfo);
 
 	virtual uint32_t GetPlayerInfo(uint32_t playerId, NFMsg::playerinfo* pInfo);
+
+	virtual uint32_t LoadPlayerInfo(uint32_t playerId, NFMsg::playerinfo* pInfo);
+
+	static void CopyFromDB(NFMsg::playerinfo* pInfo, NFMsg::db_playerinfo* pDbInfo);
 };

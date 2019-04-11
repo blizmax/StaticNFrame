@@ -984,15 +984,33 @@ class db_query_playerinfo_cond : public ::google::protobuf::Message /* @@protoc_
   ::std::string* release_account();
   void set_allocated_account(::std::string* account);
 
+  // optional string userid = 2;
+  bool has_userid() const;
+  void clear_userid();
+  static const int kUseridFieldNumber = 2;
+  const ::std::string& userid() const;
+  void set_userid(const ::std::string& value);
+  #if LANG_CXX11
+  void set_userid(::std::string&& value);
+  #endif
+  void set_userid(const char* value);
+  void set_userid(const char* value, size_t size);
+  ::std::string* mutable_userid();
+  ::std::string* release_userid();
+  void set_allocated_userid(::std::string* userid);
+
   // @@protoc_insertion_point(class_scope:NFMsg.db_query_playerinfo_cond)
  private:
   void set_has_account();
   void clear_has_account();
+  void set_has_userid();
+  void clear_has_userid();
 
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
   ::google::protobuf::internal::HasBits<1> _has_bits_;
   mutable ::google::protobuf::internal::CachedSize _cached_size_;
   ::google::protobuf::internal::ArenaStringPtr account_;
+  ::google::protobuf::internal::ArenaStringPtr userid_;
   friend struct ::protobuf_db_5fhuman_2eproto::TableStruct;
 };
 // -------------------------------------------------------------------
@@ -3440,6 +3458,72 @@ inline void db_query_playerinfo_cond::set_allocated_account(::std::string* accou
   }
   account_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), account);
   // @@protoc_insertion_point(field_set_allocated:NFMsg.db_query_playerinfo_cond.account)
+}
+
+// optional string userid = 2;
+inline bool db_query_playerinfo_cond::has_userid() const {
+  return (_has_bits_[0] & 0x00000002u) != 0;
+}
+inline void db_query_playerinfo_cond::set_has_userid() {
+  _has_bits_[0] |= 0x00000002u;
+}
+inline void db_query_playerinfo_cond::clear_has_userid() {
+  _has_bits_[0] &= ~0x00000002u;
+}
+inline void db_query_playerinfo_cond::clear_userid() {
+  userid_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  clear_has_userid();
+}
+inline const ::std::string& db_query_playerinfo_cond::userid() const {
+  // @@protoc_insertion_point(field_get:NFMsg.db_query_playerinfo_cond.userid)
+  return userid_.GetNoArena();
+}
+inline void db_query_playerinfo_cond::set_userid(const ::std::string& value) {
+  set_has_userid();
+  userid_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:NFMsg.db_query_playerinfo_cond.userid)
+}
+#if LANG_CXX11
+inline void db_query_playerinfo_cond::set_userid(::std::string&& value) {
+  set_has_userid();
+  userid_.SetNoArena(
+    &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+  // @@protoc_insertion_point(field_set_rvalue:NFMsg.db_query_playerinfo_cond.userid)
+}
+#endif
+inline void db_query_playerinfo_cond::set_userid(const char* value) {
+  GOOGLE_DCHECK(value != NULL);
+  set_has_userid();
+  userid_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:NFMsg.db_query_playerinfo_cond.userid)
+}
+inline void db_query_playerinfo_cond::set_userid(const char* value, size_t size) {
+  set_has_userid();
+  userid_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:NFMsg.db_query_playerinfo_cond.userid)
+}
+inline ::std::string* db_query_playerinfo_cond::mutable_userid() {
+  set_has_userid();
+  // @@protoc_insertion_point(field_mutable:NFMsg.db_query_playerinfo_cond.userid)
+  return userid_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline ::std::string* db_query_playerinfo_cond::release_userid() {
+  // @@protoc_insertion_point(field_release:NFMsg.db_query_playerinfo_cond.userid)
+  if (!has_userid()) {
+    return NULL;
+  }
+  clear_has_userid();
+  return userid_.ReleaseNonDefaultNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline void db_query_playerinfo_cond::set_allocated_userid(::std::string* userid) {
+  if (userid != NULL) {
+    set_has_userid();
+  } else {
+    clear_has_userid();
+  }
+  userid_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), userid);
+  // @@protoc_insertion_point(field_set_allocated:NFMsg.db_query_playerinfo_cond.userid)
 }
 
 // -------------------------------------------------------------------

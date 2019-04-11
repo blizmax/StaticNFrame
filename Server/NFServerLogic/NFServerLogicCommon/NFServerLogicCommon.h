@@ -10,11 +10,19 @@
 #pragma once
 
 #include "NFComm/NFCore/NFPlatform.h"
+#include "NFServer/NFServerCommon/NFServerCommon.h"
 
 enum NF_GAME_DB_ID
 {
 	NF_GAME_BEHAVIOR_LOG_DB = 1,
-	NF_GAME_USER_DB = 2,
+};
+
+enum NF_SERVER_LOGIC_LOG_ID
+{
+	NF_LOG_BEGIN_SERVER_LOGIC_ID = 1001,			//1001以后是逻辑框架层
+	NF_LOG_LOGIN_MODULE_LOG = 1002,			//登陆相关LOG打印
+
+	NF_SERVER_LOGIC_LOG_MAX_ID = 10240, //最大LOGID
 };
 
 enum ReturnCode

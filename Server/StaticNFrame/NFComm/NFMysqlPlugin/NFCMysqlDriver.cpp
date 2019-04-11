@@ -364,18 +364,24 @@ bool NFCMysqlDriver::Query(google::protobuf::Message& message)
 
 			query << " FROM " << strTableName << " WHERE ";
 
+			uint32_t count = 0;
 			for (int i = 0; i < pDbCondsDesc->field_count(); i++)
 			{
 				const google::protobuf::FieldDescriptor* pTemp = pDbCondsDesc->field(i);
 				if (pTemp == nullptr) return false;
 
-				if (i == 0)
+				std::string fValue = NFProtobufCommon::GetFieldsString(dbCondsMessage, pTemp);
+				if (fValue.empty() == false)
 				{
-					query << pTemp->name() << " = " << mysqlpp::quote << NFProtobufCommon::GetFieldsString(dbCondsMessage, pTemp);
-				}
-				else
-				{
-					query << " and " << pTemp->name() << " = " << mysqlpp::quote << NFProtobufCommon::GetFieldsString(dbCondsMessage, pTemp);
+					if (count == 0)
+					{
+						query << pTemp->name() << " = " << mysqlpp::quote << fValue;
+					}
+					else
+					{
+						query << " and " << pTemp->name() << " = " << mysqlpp::quote << fValue;
+					}
+					count++;
 				}
 			}
 
@@ -497,18 +503,24 @@ bool NFCMysqlDriver::QueryMore(google::protobuf::Message& message)
 
 			query << " FROM " << strTableName << " WHERE ";
 
+			uint32_t count = 0;
 			for (int i = 0; i < pDbCondsDesc->field_count(); i++)
 			{
 				const google::protobuf::FieldDescriptor* pTemp = pDbCondsDesc->field(i);
 				if (pTemp == nullptr) return false;
 
-				if (i == 0)
+				std::string fValue = NFProtobufCommon::GetFieldsString(dbCondsMessage, pTemp);
+				if (fValue.empty() == false)
 				{
-					query << pTemp->name() << " = " << mysqlpp::quote << NFProtobufCommon::GetFieldsString(dbCondsMessage, pTemp);
-				}
-				else
-				{
-					query << " and " << pTemp->name() << " = " << mysqlpp::quote << NFProtobufCommon::GetFieldsString(dbCondsMessage, pTemp);
+					if (count == 0)
+					{
+						query << pTemp->name() << " = " << mysqlpp::quote << fValue;
+					}
+					else
+					{
+						query << " and " << pTemp->name() << " = " << mysqlpp::quote << fValue;
+					}
+					count++;
 				}
 			}
 

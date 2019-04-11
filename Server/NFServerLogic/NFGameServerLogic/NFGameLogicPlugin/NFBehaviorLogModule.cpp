@@ -31,7 +31,7 @@ NFCBehaviorLogModule::~NFCBehaviorLogModule()
 
 }
 
-bool NFCBehaviorLogModule::Init()
+bool NFCBehaviorLogModule::Awake()
 {
 	m_pLogModule = m_pPluginManager->FindModule<NFILogModule>();
 	if (m_pLogModule)
@@ -58,7 +58,7 @@ bool NFCBehaviorLogModule::Init()
 	return true;
 }
 
-bool NFCBehaviorLogModule::Shut()
+bool NFCBehaviorLogModule::Finalize()
 {
 	return true;
 }

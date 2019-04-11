@@ -209,7 +209,9 @@ const ::google::protobuf::uint32 TableStruct::offsets[] GOOGLE_PROTOBUF_ATTRIBUT
   ~0u,  // no _oneof_case_
   ~0u,  // no _weak_field_map_
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::NFMsg::db_query_playerinfo_cond, account_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::NFMsg::db_query_playerinfo_cond, userid_),
   0,
+  1,
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::NFMsg::db_query_playerinfo, _has_bits_),
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::NFMsg::db_query_playerinfo, _internal_metadata_),
   ~0u,  // no _extensions_
@@ -224,8 +226,8 @@ const ::google::protobuf::uint32 TableStruct::offsets[] GOOGLE_PROTOBUF_ATTRIBUT
 };
 static const ::google::protobuf::internal::MigrationSchema schemas[] GOOGLE_PROTOBUF_ATTRIBUTE_SECTION_VARIABLE(protodesc_cold) = {
   { 0, 57, sizeof(::NFMsg::db_playerinfo)},
-  { 109, 115, sizeof(::NFMsg::db_query_playerinfo_cond)},
-  { 116, 124, sizeof(::NFMsg::db_query_playerinfo)},
+  { 109, 116, sizeof(::NFMsg::db_query_playerinfo_cond)},
+  { 118, 126, sizeof(::NFMsg::db_query_playerinfo)},
 };
 
 static ::google::protobuf::Message const * const file_default_instances[] = {
@@ -279,14 +281,14 @@ void AddDescriptorsImpl() {
       "\001(\t\022\023\n\013signinmonth\0304 \001(\005\022\017\n\007bsignin\0305 \001("
       "\005\022\024\n\014turntablenum\0306 \001(\005\022\020\n\010tengames\0307 \001("
       "\005\022\022\n\ntodayshare\0308 \001(\005\022\021\n\tcaninvite\0309 \001(\005"
-      "\"+\n\030db_query_playerinfo_cond\022\017\n\007account\030"
-      "\001 \001(\t\"\203\001\n\023db_query_playerinfo\022\021\n\tdy_play"
-      "er\030\001 \001(\t\022\'\n\tdb_fields\030\002 \001(\0132\024.NFMsg.db_p"
-      "layerinfo\0220\n\007db_cond\030\003 \001(\0132\037.NFMsg.db_qu"
-      "ery_playerinfo_cond"
+      "\";\n\030db_query_playerinfo_cond\022\017\n\007account\030"
+      "\001 \001(\t\022\016\n\006userid\030\002 \001(\t\"\203\001\n\023db_query_playe"
+      "rinfo\022\021\n\tdy_player\030\001 \001(\t\022\'\n\tdb_fields\030\002 "
+      "\001(\0132\024.NFMsg.db_playerinfo\0220\n\007db_cond\030\003 \001"
+      "(\0132\037.NFMsg.db_query_playerinfo_cond"
   };
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
-      descriptor, 1139);
+      descriptor, 1155);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "db_human.proto", &protobuf_RegisterTypes);
 }
@@ -3012,6 +3014,7 @@ void db_query_playerinfo_cond::InitAsDefaultInstance() {
 }
 #if !defined(_MSC_VER) || _MSC_VER >= 1900
 const int db_query_playerinfo_cond::kAccountFieldNumber;
+const int db_query_playerinfo_cond::kUseridFieldNumber;
 #endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
 
 db_query_playerinfo_cond::db_query_playerinfo_cond()
@@ -3030,11 +3033,16 @@ db_query_playerinfo_cond::db_query_playerinfo_cond(const db_query_playerinfo_con
   if (from.has_account()) {
     account_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.account_);
   }
+  userid_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  if (from.has_userid()) {
+    userid_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.userid_);
+  }
   // @@protoc_insertion_point(copy_constructor:NFMsg.db_query_playerinfo_cond)
 }
 
 void db_query_playerinfo_cond::SharedCtor() {
   account_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  userid_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
 
 db_query_playerinfo_cond::~db_query_playerinfo_cond() {
@@ -3044,6 +3052,7 @@ db_query_playerinfo_cond::~db_query_playerinfo_cond() {
 
 void db_query_playerinfo_cond::SharedDtor() {
   account_.DestroyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  userid_.DestroyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
 
 void db_query_playerinfo_cond::SetCachedSize(int size) const {
@@ -3067,8 +3076,13 @@ void db_query_playerinfo_cond::Clear() {
   (void) cached_has_bits;
 
   cached_has_bits = _has_bits_[0];
-  if (cached_has_bits & 0x00000001u) {
-    account_.ClearNonDefaultToEmptyNoArena();
+  if (cached_has_bits & 3u) {
+    if (cached_has_bits & 0x00000001u) {
+      account_.ClearNonDefaultToEmptyNoArena();
+    }
+    if (cached_has_bits & 0x00000002u) {
+      userid_.ClearNonDefaultToEmptyNoArena();
+    }
   }
   _has_bits_.Clear();
   _internal_metadata_.Clear();
@@ -3094,6 +3108,22 @@ bool db_query_playerinfo_cond::MergePartialFromCodedStream(
             this->account().data(), static_cast<int>(this->account().length()),
             ::google::protobuf::internal::WireFormat::PARSE,
             "NFMsg.db_query_playerinfo_cond.account");
+        } else {
+          goto handle_unusual;
+        }
+        break;
+      }
+
+      // optional string userid = 2;
+      case 2: {
+        if (static_cast< ::google::protobuf::uint8>(tag) ==
+            static_cast< ::google::protobuf::uint8>(18u /* 18 & 0xFF */)) {
+          DO_(::google::protobuf::internal::WireFormatLite::ReadString(
+                input, this->mutable_userid()));
+          ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
+            this->userid().data(), static_cast<int>(this->userid().length()),
+            ::google::protobuf::internal::WireFormat::PARSE,
+            "NFMsg.db_query_playerinfo_cond.userid");
         } else {
           goto handle_unusual;
         }
@@ -3137,6 +3167,16 @@ void db_query_playerinfo_cond::SerializeWithCachedSizes(
       1, this->account(), output);
   }
 
+  // optional string userid = 2;
+  if (cached_has_bits & 0x00000002u) {
+    ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
+      this->userid().data(), static_cast<int>(this->userid().length()),
+      ::google::protobuf::internal::WireFormat::SERIALIZE,
+      "NFMsg.db_query_playerinfo_cond.userid");
+    ::google::protobuf::internal::WireFormatLite::WriteStringMaybeAliased(
+      2, this->userid(), output);
+  }
+
   if (_internal_metadata_.have_unknown_fields()) {
     ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
         _internal_metadata_.unknown_fields(), output);
@@ -3163,6 +3203,17 @@ void db_query_playerinfo_cond::SerializeWithCachedSizes(
         1, this->account(), target);
   }
 
+  // optional string userid = 2;
+  if (cached_has_bits & 0x00000002u) {
+    ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
+      this->userid().data(), static_cast<int>(this->userid().length()),
+      ::google::protobuf::internal::WireFormat::SERIALIZE,
+      "NFMsg.db_query_playerinfo_cond.userid");
+    target =
+      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
+        2, this->userid(), target);
+  }
+
   if (_internal_metadata_.have_unknown_fields()) {
     target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
         _internal_metadata_.unknown_fields(), target);
@@ -3180,13 +3231,22 @@ size_t db_query_playerinfo_cond::ByteSizeLong() const {
       ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
         _internal_metadata_.unknown_fields());
   }
-  // optional string account = 1;
-  if (has_account()) {
-    total_size += 1 +
-      ::google::protobuf::internal::WireFormatLite::StringSize(
-        this->account());
-  }
+  if (_has_bits_[0 / 32] & 3u) {
+    // optional string account = 1;
+    if (has_account()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::StringSize(
+          this->account());
+    }
 
+    // optional string userid = 2;
+    if (has_userid()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::StringSize(
+          this->userid());
+    }
+
+  }
   int cached_size = ::google::protobuf::internal::ToCachedSize(total_size);
   SetCachedSize(cached_size);
   return total_size;
@@ -3214,9 +3274,16 @@ void db_query_playerinfo_cond::MergeFrom(const db_query_playerinfo_cond& from) {
   ::google::protobuf::uint32 cached_has_bits = 0;
   (void) cached_has_bits;
 
-  if (from.has_account()) {
-    set_has_account();
-    account_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.account_);
+  cached_has_bits = from._has_bits_[0];
+  if (cached_has_bits & 3u) {
+    if (cached_has_bits & 0x00000001u) {
+      set_has_account();
+      account_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.account_);
+    }
+    if (cached_has_bits & 0x00000002u) {
+      set_has_userid();
+      userid_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.userid_);
+    }
   }
 }
 
@@ -3245,6 +3312,8 @@ void db_query_playerinfo_cond::Swap(db_query_playerinfo_cond* other) {
 void db_query_playerinfo_cond::InternalSwap(db_query_playerinfo_cond* other) {
   using std::swap;
   account_.Swap(&other->account_, &::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+    GetArenaNoVirtual());
+  userid_.Swap(&other->userid_, &::google::protobuf::internal::GetEmptyStringAlreadyInited(),
     GetArenaNoVirtual());
   swap(_has_bits_[0], other->_has_bits_[0]);
   _internal_metadata_.Swap(&other->_internal_metadata_);

@@ -21,8 +21,8 @@ public:
 	NFCBehaviorLogModule(NFIPluginManager* p);
 	virtual ~NFCBehaviorLogModule();
 
-	virtual bool Init() override;
-	virtual bool Shut() override;
+	virtual bool Awake() override;
+	virtual bool Finalize() override;
 
 public:
 	void BehaviorLog(uint64_t guid, const std::string& nickName, const std::string& category, const std::string& tag, uint32_t retCode, const std::string& msg);

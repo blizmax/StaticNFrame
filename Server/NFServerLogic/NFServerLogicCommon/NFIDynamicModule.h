@@ -12,11 +12,13 @@
 #include "NFComm/NFPluginModule/NFIModule.h"
 #include "NFComm/NFPluginModule/NFINetServerModule.h"
 #include "NFComm/NFPluginModule/NFIPluginManager.h"
+#include "NFComm/NFPluginModule/NFTimerMgr.h"
+#include "NFComm/NFPluginModule/NFEventMgr.h"
 
 /**
 * @brief 用来实现动态加载的模块，所有可以动态加载的引擎的module都需要继承这个类
 */
-class NFIDynamicModule : public NFIModule
+class NFIDynamicModule : public NFIModule, public NFTimerObj, public NFEventObj
 {
 public:
 	NFIDynamicModule(NFIPluginManager* p)
@@ -27,6 +29,11 @@ public:
 	virtual ~NFIDynamicModule()
 	{
 
+	}
+
+	virtual bool Awake() final
+	{
+		return true;
 	}
 
 	virtual bool Finalize() final
@@ -47,6 +54,10 @@ public:
 		mNetServerMap.emplace((uint32_t)eType, nMsgID);
 		return pNetServerModule->AddReceiveCallBack(eType, nMsgID, pBase, handleRecieve);
 	}
+
+	virtual void OnTimer(uint32_t nTimerID) override { }
+
+	virtual void OnExecute(uint16_t nEventID, uint64_t nSrcID, uint8_t bySrcType, NFEventContext* pEventContext) override { }
 protected:
 	std::unordered_multimap<uint32_t, uint32_t> mNetServerMap;
 };

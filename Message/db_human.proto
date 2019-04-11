@@ -61,6 +61,7 @@ message db_playerinfo
 message db_query_playerinfo_cond
 {
 	optional string account = 1;
+	optional string userid = 2;
 }
 
 message db_query_playerinfo
