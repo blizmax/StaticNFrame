@@ -9,12 +9,12 @@
 
 #include "NFHumanServicesModule.h"
 
-NFHumanServicesModule::NFHumanServicesModule(NFIPluginManager* p):NFIDynamicModule(p)
+NFCHumanServicesModule::NFCHumanServicesModule(NFIPluginManager* p)
 {
 	m_pPluginManager = p;
 }
 
-NFHumanServicesModule::~NFHumanServicesModule()
+NFCHumanServicesModule::~NFCHumanServicesModule()
 {
 
 }

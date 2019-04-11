@@ -21,11 +21,6 @@
 class NFIDynamicModule : public NFIModule, public NFTimerObj, public NFEventObj
 {
 public:
-	NFIDynamicModule(NFIPluginManager* p)
-	{
-		m_pPluginManager = p;
-	}
-
 	virtual ~NFIDynamicModule()
 	{
 

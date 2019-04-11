@@ -3,17 +3,15 @@
 //    @Author           :    GaoYi
 //    @Date             :    2019/04/07
 //    @Email			:    445267987@qq.com
-//    @Module           :    NFGameHumanPlugin
+//    @Module           :    NFIHumanServicesModule
 //
 // -------------------------------------------------------------------------
 
 #pragma once
 
-#include "NFServerLogic/NFServerLogicCommon/NFIHumanServicesModule.h"
+#include "NFServerLogic/NFServerLogicCommon/NFIDynamicModule.h"
 
-class NFCHumanServicesModule : public NFIHumanServicesModule
+class NFIHumanServicesModule : public NFIDynamicModule
 {
 public:
-	NFCHumanServicesModule(NFIPluginManager* p);
-	virtual ~NFCHumanServicesModule();
 };

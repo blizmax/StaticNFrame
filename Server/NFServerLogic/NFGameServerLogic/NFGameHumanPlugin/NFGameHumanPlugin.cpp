@@ -48,14 +48,14 @@ bool NFGameHumanPlugin::IsDynamicLoad()
 
 void NFGameHumanPlugin::Install()
 {
-	REGISTER_MODULE(m_pPluginManager, NFHumanControllerModule, NFHumanControllerModule);
-	REGISTER_MODULE(m_pPluginManager, NFHumanModule, NFHumanModule);
-	REGISTER_MODULE(m_pPluginManager, NFHumanServicesModule, NFHumanServicesModule);
+	REGISTER_MODULE(m_pPluginManager, NFCHumanControllerModule, NFCHumanControllerModule);
+	REGISTER_MODULE(m_pPluginManager, NFIHumanModule, NFCHumanModule);
+	REGISTER_MODULE(m_pPluginManager, NFCHumanServicesModule, NFCHumanServicesModule);
 }
 
 void NFGameHumanPlugin::Uninstall()
 {
-	UNREGISTER_MODULE(m_pPluginManager, NFHumanControllerModule, NFHumanControllerModule);
-	UNREGISTER_MODULE(m_pPluginManager, NFHumanModule, NFHumanModule);
-	UNREGISTER_MODULE(m_pPluginManager, NFHumanServicesModule, NFHumanServicesModule);
+	UNREGISTER_MODULE(m_pPluginManager, NFCHumanControllerModule, NFCHumanControllerModule);
+	UNREGISTER_MODULE(m_pPluginManager, NFIHumanModule, NFCHumanModule);
+	UNREGISTER_MODULE(m_pPluginManager, NFCHumanServicesModule, NFCHumanServicesModule);
 }

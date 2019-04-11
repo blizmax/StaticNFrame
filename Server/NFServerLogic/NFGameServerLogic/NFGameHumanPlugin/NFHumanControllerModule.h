@@ -9,14 +9,14 @@
 
 #pragma once
 
-#include "NFServerLogic/NFServerLogicCommon/NFIDynamicModule.h"
+#include "NFServerLogic/NFServerLogicCommon/NFIHumanControllerModule.h"
 
-class NFHumanControllerModule : public NFIDynamicModule
+class NFCHumanControllerModule : public NFIHumanControllerModule
 {
 public:
-	NFHumanControllerModule(NFIPluginManager* p);
+	NFCHumanControllerModule(NFIPluginManager* p);
 
-	virtual ~NFHumanControllerModule();
+	virtual ~NFCHumanControllerModule();
 
 	virtual bool Init();
 

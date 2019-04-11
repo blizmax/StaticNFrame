@@ -13,48 +13,49 @@
 
 #include "NFServerLogic/NFServerLogicCommon/NFHumanDefine.h"
 #include "NFServerLogic/NFServerLogicCommon/NFBehaviorLogMgr.h"
+#include "NFServerLogic/NFServerLogicCommon/NFIHumanModule.h"
 #include "NFComm/NFCore/NFRandom.hpp"
 
-NFHumanControllerModule::NFHumanControllerModule(NFIPluginManager* p):NFIDynamicModule(p)
+NFCHumanControllerModule::NFCHumanControllerModule(NFIPluginManager* p)
 {
 	m_pPluginManager = p;
 }
 
-NFHumanControllerModule::~NFHumanControllerModule()
+NFCHumanControllerModule::~NFCHumanControllerModule()
 {
 
 }
 
-bool NFHumanControllerModule::Init()
+bool NFCHumanControllerModule::Init()
 {
 	/**
 	* @brief 绑定协议处理函数
 	*/
-	AddNetServerReceiveCallBack(NF_ST_GAME, ::NFMsg::Client_Msg_AccountLogin, this, &NFHumanControllerModule::OnHandleAccountLogin);
-	AddNetServerReceiveCallBack(NF_ST_GAME, ::NFMsg::Client_Msg_GetPlayerInfo, this, &NFHumanControllerModule::OnHandleGetPlayerInfo);
-	AddNetServerReceiveCallBack(NF_ST_GAME, ::NFMsg::Client_Msg_ReConnect, this, &NFHumanControllerModule::OnHandleReConnect);
-	AddNetServerReceiveCallBack(NF_ST_GAME, ::NFMsg::Client_Msg_KitPlayer, this, &NFHumanControllerModule::OnHandleKitPlayer);
-	AddNetServerReceiveCallBack(NF_ST_GAME, ::NFMsg::Client_Msg_HeartBeat, this, &NFHumanControllerModule::OnHandleHeartBeat);
-	AddNetServerReceiveCallBack(NF_ST_GAME, ::NFMsg::Client_Msg_GetInitInfo, this, &NFHumanControllerModule::OnHandleGetInitInfo);
-	AddNetServerReceiveCallBack(NF_ST_GAME, ::NFMsg::Client_Msg_BroadCast, this, &NFHumanControllerModule::OnHandleBroadCast);
-	AddNetServerReceiveCallBack(NF_ST_GAME, ::NFMsg::Client_Msg_GetMailList, this, &NFHumanControllerModule::OnHandleGetMailList);
-	AddNetServerReceiveCallBack(NF_ST_GAME, ::NFMsg::Client_Msg_GetReadMail, this, &NFHumanControllerModule::OnHandleGetReadMail);
-	AddNetServerReceiveCallBack(NF_ST_GAME, ::NFMsg::Client_Msg_GetMailGoods, this, &NFHumanControllerModule::OnHandleGetMailGoods);
-	AddNetServerReceiveCallBack(NF_ST_GAME, ::NFMsg::Client_Msg_DeleteMail, this, &NFHumanControllerModule::OnHandleDeleteMail);
-	AddNetServerReceiveCallBack(NF_ST_GAME, ::NFMsg::Client_Msg_PlayerStatus, this, &NFHumanControllerModule::OnHandlePlayerStatus);
-	AddNetServerReceiveCallBack(NF_ST_GAME, ::NFMsg::Client_Msg_UpdatePlayerInfo, this, &NFHumanControllerModule::OnHandleUpdatePlayerInfo);
-	AddNetServerReceiveCallBack(NF_ST_GAME, ::NFMsg::Client_Msg_UpdateGoodsList, this, &NFHumanControllerModule::OnHandleUpdateGoodsList);
-	AddNetServerReceiveCallBack(NF_ST_GAME, ::NFMsg::Client_Msg_NoticeInfo, this, &NFHumanControllerModule::OnHandleNoticeInfo);
+	AddNetServerReceiveCallBack(NF_ST_GAME, ::NFMsg::Client_Msg_AccountLogin, this, &NFCHumanControllerModule::OnHandleAccountLogin);
+	AddNetServerReceiveCallBack(NF_ST_GAME, ::NFMsg::Client_Msg_GetPlayerInfo, this, &NFCHumanControllerModule::OnHandleGetPlayerInfo);
+	AddNetServerReceiveCallBack(NF_ST_GAME, ::NFMsg::Client_Msg_ReConnect, this, &NFCHumanControllerModule::OnHandleReConnect);
+	AddNetServerReceiveCallBack(NF_ST_GAME, ::NFMsg::Client_Msg_KitPlayer, this, &NFCHumanControllerModule::OnHandleKitPlayer);
+	AddNetServerReceiveCallBack(NF_ST_GAME, ::NFMsg::Client_Msg_HeartBeat, this, &NFCHumanControllerModule::OnHandleHeartBeat);
+	AddNetServerReceiveCallBack(NF_ST_GAME, ::NFMsg::Client_Msg_GetInitInfo, this, &NFCHumanControllerModule::OnHandleGetInitInfo);
+	AddNetServerReceiveCallBack(NF_ST_GAME, ::NFMsg::Client_Msg_BroadCast, this, &NFCHumanControllerModule::OnHandleBroadCast);
+	AddNetServerReceiveCallBack(NF_ST_GAME, ::NFMsg::Client_Msg_GetMailList, this, &NFCHumanControllerModule::OnHandleGetMailList);
+	AddNetServerReceiveCallBack(NF_ST_GAME, ::NFMsg::Client_Msg_GetReadMail, this, &NFCHumanControllerModule::OnHandleGetReadMail);
+	AddNetServerReceiveCallBack(NF_ST_GAME, ::NFMsg::Client_Msg_GetMailGoods, this, &NFCHumanControllerModule::OnHandleGetMailGoods);
+	AddNetServerReceiveCallBack(NF_ST_GAME, ::NFMsg::Client_Msg_DeleteMail, this, &NFCHumanControllerModule::OnHandleDeleteMail);
+	AddNetServerReceiveCallBack(NF_ST_GAME, ::NFMsg::Client_Msg_PlayerStatus, this, &NFCHumanControllerModule::OnHandlePlayerStatus);
+	AddNetServerReceiveCallBack(NF_ST_GAME, ::NFMsg::Client_Msg_UpdatePlayerInfo, this, &NFCHumanControllerModule::OnHandleUpdatePlayerInfo);
+	AddNetServerReceiveCallBack(NF_ST_GAME, ::NFMsg::Client_Msg_UpdateGoodsList, this, &NFCHumanControllerModule::OnHandleUpdateGoodsList);
+	AddNetServerReceiveCallBack(NF_ST_GAME, ::NFMsg::Client_Msg_NoticeInfo, this, &NFCHumanControllerModule::OnHandleNoticeInfo);
 
 	return true;
 }
 
-bool NFHumanControllerModule::Shut()
+bool NFCHumanControllerModule::Shut()
 {
 	return true;
 }
 
-void NFHumanControllerModule::OnTimer(uint32_t nTimerID)
+void NFCHumanControllerModule::OnTimer(uint32_t nTimerID)
 {
 
 }
@@ -64,7 +65,7 @@ void NFHumanControllerModule::OnTimer(uint32_t nTimerID)
 *
 * @return void
 */
-void NFHumanControllerModule::OnHandleAccountLogin(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen)
+void NFCHumanControllerModule::OnHandleAccountLogin(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen)
 {
 	NFMsg::cgaccountlogin cgMsg;
 	CLIENT_MSG_PROCESS_NO_OBJECT(nMsgId, playerId, msg, nLen, cgMsg);
@@ -101,8 +102,17 @@ void NFHumanControllerModule::OnHandleAccountLogin(const uint32_t unLinkId, cons
 	}
 
 	gcMsg.set_result(0);
-	gcMsg.mutable_pinfo()->set_userid(0);
+	NFMsg::playerinfo* pInfo = gcMsg.mutable_pinfo();
 
+	NFIHumanModule* pHumanModule = m_pPluginManager->FindModule<NFIHumanModule>();
+
+	uint32_t ret = pHumanModule->GetPlayerInfoByCID(cgMsg.account(), cgMsg.password(), pInfo);
+	bool isNewPlayer = false;
+
+	if (ret == RETURN_CODE_ACCOUNT_NO_EXIST)
+	{
+
+	}
 }
 
 /**
@@ -110,7 +120,7 @@ void NFHumanControllerModule::OnHandleAccountLogin(const uint32_t unLinkId, cons
 *
 * @return void
 */
-void NFHumanControllerModule::OnHandleGetPlayerInfo(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen)
+void NFCHumanControllerModule::OnHandleGetPlayerInfo(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen)
 {
 
 }
@@ -120,7 +130,7 @@ void NFHumanControllerModule::OnHandleGetPlayerInfo(const uint32_t unLinkId, con
 *
 * @return void
 */
-void NFHumanControllerModule::OnHandleReConnect(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen)
+void NFCHumanControllerModule::OnHandleReConnect(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen)
 {
 
 }
@@ -130,7 +140,7 @@ void NFHumanControllerModule::OnHandleReConnect(const uint32_t unLinkId, const u
 *
 * @return void
 */
-void NFHumanControllerModule::OnHandleKitPlayer(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen)
+void NFCHumanControllerModule::OnHandleKitPlayer(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen)
 {
 
 }
@@ -140,7 +150,7 @@ void NFHumanControllerModule::OnHandleKitPlayer(const uint32_t unLinkId, const u
 *
 * @return void
 */
-void NFHumanControllerModule::OnHandleHeartBeat(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen)
+void NFCHumanControllerModule::OnHandleHeartBeat(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen)
 {
 
 }
@@ -150,7 +160,7 @@ void NFHumanControllerModule::OnHandleHeartBeat(const uint32_t unLinkId, const u
 *
 * @return void
 */
-void NFHumanControllerModule::OnHandleGetInitInfo(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen)
+void NFCHumanControllerModule::OnHandleGetInitInfo(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen)
 {
 
 }
@@ -160,7 +170,7 @@ void NFHumanControllerModule::OnHandleGetInitInfo(const uint32_t unLinkId, const
 *
 * @return void
 */
-void NFHumanControllerModule::OnHandleBroadCast(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen)
+void NFCHumanControllerModule::OnHandleBroadCast(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen)
 {
 
 }
@@ -170,7 +180,7 @@ void NFHumanControllerModule::OnHandleBroadCast(const uint32_t unLinkId, const u
 *
 * @return void
 */
-void NFHumanControllerModule::OnHandleGetMailList(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen)
+void NFCHumanControllerModule::OnHandleGetMailList(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen)
 {
 
 }
@@ -180,7 +190,7 @@ void NFHumanControllerModule::OnHandleGetMailList(const uint32_t unLinkId, const
 *
 * @return void
 */
-void NFHumanControllerModule::OnHandleGetReadMail(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen)
+void NFCHumanControllerModule::OnHandleGetReadMail(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen)
 {
 
 }
@@ -190,7 +200,7 @@ void NFHumanControllerModule::OnHandleGetReadMail(const uint32_t unLinkId, const
 *
 * @return void
 */
-void NFHumanControllerModule::OnHandleGetMailGoods(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen)
+void NFCHumanControllerModule::OnHandleGetMailGoods(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen)
 {
 
 }
@@ -200,7 +210,7 @@ void NFHumanControllerModule::OnHandleGetMailGoods(const uint32_t unLinkId, cons
 *
 * @return void
 */
-void NFHumanControllerModule::OnHandleDeleteMail(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen)
+void NFCHumanControllerModule::OnHandleDeleteMail(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen)
 {
 
 }
@@ -210,7 +220,7 @@ void NFHumanControllerModule::OnHandleDeleteMail(const uint32_t unLinkId, const 
 *
 * @return void
 */
-void NFHumanControllerModule::OnHandlePlayerStatus(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen)
+void NFCHumanControllerModule::OnHandlePlayerStatus(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen)
 {
 
 }
@@ -220,7 +230,7 @@ void NFHumanControllerModule::OnHandlePlayerStatus(const uint32_t unLinkId, cons
 *
 * @return void
 */
-void NFHumanControllerModule::OnHandleUpdatePlayerInfo(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen)
+void NFCHumanControllerModule::OnHandleUpdatePlayerInfo(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen)
 {
 
 }
@@ -230,7 +240,7 @@ void NFHumanControllerModule::OnHandleUpdatePlayerInfo(const uint32_t unLinkId, 
 *
 * @return void
 */
-void NFHumanControllerModule::OnHandleUpdateGoodsList(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen)
+void NFCHumanControllerModule::OnHandleUpdateGoodsList(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen)
 {
 
 }
@@ -240,7 +250,7 @@ void NFHumanControllerModule::OnHandleUpdateGoodsList(const uint32_t unLinkId, c
 *
 * @return void
 */
-void NFHumanControllerModule::OnHandleNoticeInfo(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen)
+void NFCHumanControllerModule::OnHandleNoticeInfo(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen)
 {
 
 }

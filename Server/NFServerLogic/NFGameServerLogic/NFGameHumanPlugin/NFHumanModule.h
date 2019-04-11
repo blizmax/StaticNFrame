@@ -9,22 +9,21 @@
 
 #pragma once
 
-#include "NFServerLogic/NFServerLogicCommon/NFIDynamicModule.h"
-#include "NFServerLogic/NFServerLogicCommon/NFHumanDefine.h"
+#include "NFServerLogic/NFServerLogicCommon/NFIHumanModule.h"
 
-class NFHumanModule : public NFIDynamicModule
+class NFCHumanModule : public NFIHumanModule
 {
 public:
-	NFHumanModule(NFIPluginManager* p);
-	virtual ~NFHumanModule();
+	NFCHumanModule(NFIPluginManager* p);
+	virtual ~NFCHumanModule();
 
 	virtual bool Init() override;
 
 	virtual uint32_t GetPlayerInfoByCID(const std::string& account, const std::string& password, NFMsg::playerinfo* pInfo);
 
-	virtual uint32_t LoadPlayerInfoByCID(const std::string& account, const std::string& password, NFMsg::playerinfo* pInfo);
-
 	virtual uint32_t GetPlayerInfo(uint32_t playerId, NFMsg::playerinfo* pInfo);
+
+	virtual uint32_t LoadPlayerInfoByCID(const std::string& account, const std::string& password, NFMsg::playerinfo* pInfo);
 
 	virtual uint32_t LoadPlayerInfo(uint32_t playerId, NFMsg::playerinfo* pInfo);
 

@@ -6,25 +6,34 @@
     <ClInclude Include="NFILoginLogicModule.h" />
     <ClInclude Include="NFIGameLogicModule.h" />
     <ClInclude Include="NFHumanDefine.h">
-      <Filter>Define</Filter>
+      <Filter>Human</Filter>
     </ClInclude>
     <ClInclude Include="NFIBehaviorLogModule.h" />
     <ClInclude Include="NFBehaviorLogMgr.h">
       <Filter>BehaviorLog</Filter>
     </ClInclude>
     <ClInclude Include="NFIDynamicModule.h" />
+    <ClInclude Include="NFIHumanModule.h">
+      <Filter>Human</Filter>
+    </ClInclude>
+    <ClInclude Include="NFIHumanControllerModule.h">
+      <Filter>Human</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="NFServerLogicCommon.cpp" />
     <ClCompile Include="NFBehaviorLogMgr.cpp">
       <Filter>BehaviorLog</Filter>
     </ClCompile>
+    <ClCompile Include="NFIHumanServicesModule.h">
+      <Filter>Human</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="BehaviorLog">
       <UniqueIdentifier>{ce6bd5a2-5d35-40e7-8ba7-98589061fdb7}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Define">
+    <Filter Include="Human">
       <UniqueIdentifier>{1838bd43-96bf-4473-9eb0-91e7b7d7ae2d}</UniqueIdentifier>
     </Filter>
   </ItemGroup>

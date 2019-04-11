@@ -14,22 +14,22 @@
 #include "NFServerLogic/NFServerLogicCommon/NFBehaviorLogMgr.h"
 #include "NFComm/NFCore/NFCommon.h"
 
-NFHumanModule::NFHumanModule(NFIPluginManager* p):NFIDynamicModule(p)
+NFCHumanModule::NFCHumanModule(NFIPluginManager* p)
 {
 	m_pPluginManager = p;
 }
 
-NFHumanModule::~NFHumanModule()
+NFCHumanModule::~NFCHumanModule()
 {
 
 }
 
-bool NFHumanModule::Init()
+bool NFCHumanModule::Init()
 {
 	return true;
 }
 
-void NFHumanModule::CopyFromDB(NFMsg::playerinfo* pInfo, NFMsg::db_playerinfo* pDbInfo)
+void NFCHumanModule::CopyFromDB(NFMsg::playerinfo* pInfo, NFMsg::db_playerinfo* pDbInfo)
 {
 	if (pInfo == nullptr || pDbInfo == nullptr) return;
 
@@ -91,7 +91,7 @@ void NFHumanModule::CopyFromDB(NFMsg::playerinfo* pInfo, NFMsg::db_playerinfo* p
 	pInfo->set_totalgames(0);
 }
 
-uint32_t NFHumanModule::LoadPlayerInfoByCID(const std::string& account, const std::string& password, NFMsg::playerinfo* pInfo)
+uint32_t NFCHumanModule::LoadPlayerInfoByCID(const std::string& account, const std::string& password, NFMsg::playerinfo* pInfo)
 {
 	if (pInfo == nullptr)
 	{
@@ -117,7 +117,7 @@ uint32_t NFHumanModule::LoadPlayerInfoByCID(const std::string& account, const st
 		return RETURN_CODE_PASSWORD_NOT_MATCH;
 	}
 
-	NFHumanModule::CopyFromDB(pInfo, pDbInfo);
+	NFCHumanModule::CopyFromDB(pInfo, pDbInfo);
 
 	NFINoSqlModule* pNosqlModule = m_pPluginManager->FindModule<NFINoSqlModule>();
 	NF_SHARE_PTR<NFINoSqlDriver> pNosqlDriver = pNosqlModule->GetDriverBySuitConsistent();
@@ -155,7 +155,7 @@ uint32_t NFHumanModule::LoadPlayerInfoByCID(const std::string& account, const st
 	return RETURN_CODE_SUCCESS;
 }
 
-uint32_t NFHumanModule::GetPlayerInfoByCID(const std::string& account, const std::string& password, NFMsg::playerinfo* pInfo)
+uint32_t NFCHumanModule::GetPlayerInfoByCID(const std::string& account, const std::string& password, NFMsg::playerinfo* pInfo)
 {
 	if (pInfo == nullptr)
 	{
@@ -190,7 +190,7 @@ uint32_t NFHumanModule::GetPlayerInfoByCID(const std::string& account, const std
 	return LoadPlayerInfoByCID(account, password, pInfo);
 }
 
-uint32_t  NFHumanModule::GetPlayerInfo(uint32_t playerId, NFMsg::playerinfo* pInfo)
+uint32_t  NFCHumanModule::GetPlayerInfo(uint32_t playerId, NFMsg::playerinfo* pInfo)
 {
 	if (pInfo == nullptr)
 	{
@@ -218,7 +218,7 @@ uint32_t  NFHumanModule::GetPlayerInfo(uint32_t playerId, NFMsg::playerinfo* pIn
 	return LoadPlayerInfo(playerId, pInfo);
 }
 
-uint32_t NFHumanModule::LoadPlayerInfo(uint32_t playerId, NFMsg::playerinfo* pInfo)
+uint32_t NFCHumanModule::LoadPlayerInfo(uint32_t playerId, NFMsg::playerinfo* pInfo)
 {
 	NFIMysqlModule* pMysqlModule = m_pPluginManager->FindModule<NFIMysqlModule>();
 	NFMsg::db_query_playerinfo db_playerinfo;
@@ -237,7 +237,7 @@ uint32_t NFHumanModule::LoadPlayerInfo(uint32_t playerId, NFMsg::playerinfo* pIn
 		pInfo = new NFMsg::playerinfo();
 	}
 
-	NFHumanModule::CopyFromDB(pInfo, pDbInfo);
+	NFCHumanModule::CopyFromDB(pInfo, pDbInfo);
 
 	NFINoSqlModule* pNosqlModule = m_pPluginManager->FindModule<NFINoSqlModule>();
 	NF_SHARE_PTR<NFINoSqlDriver> pNosqlDriver = pNosqlModule->GetDriverBySuitConsistent();

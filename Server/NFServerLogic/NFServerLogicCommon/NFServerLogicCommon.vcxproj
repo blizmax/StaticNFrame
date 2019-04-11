@@ -40,12 +40,15 @@
     <ClInclude Include="NFIBehaviorLogModule.h" />
     <ClInclude Include="NFIDynamicModule.h" />
     <ClInclude Include="NFIGameLogicModule.h" />
+    <ClInclude Include="NFIHumanControllerModule.h" />
+    <ClInclude Include="NFIHumanModule.h" />
     <ClInclude Include="NFILoginLogicModule.h" />
     <ClInclude Include="NFIProxyLogicModule.h" />
     <ClInclude Include="NFServerLogicCommon.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="NFBehaviorLogMgr.cpp" />
+    <ClCompile Include="NFIHumanServicesModule.h" />
     <ClCompile Include="NFServerLogicCommon.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
