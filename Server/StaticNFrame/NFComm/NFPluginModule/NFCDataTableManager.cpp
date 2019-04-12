@@ -132,16 +132,20 @@ bool NFCDataTableManager::AddTableCallback(uint32_t index, const DATA_TABLE_EVEN
 	return mTables[index]->AddCallback(cb);
 }
 
-bool NFCDataTableManager::AddTableRow(const std::string& table_name)
+int NFCDataTableManager::AddTableRow(const std::string& table_name)
 {
 	size_t index;
 	if (!FindIndex(table_name, index))
 	{
-		return false;
+		return -1;
 	}
 
 	NF_ASSERT(index < mTables.size());
-	return mTables[index]->AddRow();
+	if (mTables[index]->AddRow())
+	{
+		return mTables[index]->GetRowCount() - 1;
+	}
+	return -1;
 }
 
 size_t NFCDataTableManager::GetTableRowCount(const std::string& table_name)
@@ -154,18 +158,6 @@ size_t NFCDataTableManager::GetTableRowCount(const std::string& table_name)
 
 	NF_ASSERT(index < mTables.size());
 	return mTables[index]->GetRowCount();
-}
-
-int NFCDataTableManager::GetTableCurRow(const std::string& table_name)
-{
-	size_t index;
-	if (!FindIndex(table_name, index))
-	{
-		return 0;
-	}
-
-	NF_ASSERT(index < mTables.size());
-	return (int)mTables[index]->GetRowCount() - 1;
 }
 
 void NFCDataTableManager::Clear()

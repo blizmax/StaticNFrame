@@ -30,9 +30,8 @@ public:
 	virtual bool AddTableCallback(const std::string& table_name, const DATA_TABLE_EVENT_FUNCTOR_PTR& cb) override;
 	virtual bool AddTableCallback(uint32_t index, const DATA_TABLE_EVENT_FUNCTOR_PTR& cb) override;
 
-	virtual bool AddTableRow(const std::string& table_name) override;
+	virtual int AddTableRow(const std::string& table_name) override;
 	virtual size_t GetTableRowCount(const std::string& table_name) override;
-	virtual int GetTableCurRow(const std::string& table_name) override;
 	virtual void Clear() override final;
 	virtual NFDataTable* GetTable(const std::string& name) const override;
 	virtual size_t GetCount() const override;

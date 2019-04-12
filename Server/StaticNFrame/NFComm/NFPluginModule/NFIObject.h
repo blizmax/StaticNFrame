@@ -27,9 +27,8 @@ public:
 
 	virtual uint64_t GetObjectId() = 0;
 
-	virtual bool AddTableRow(const std::string& table_name) = 0;
+	virtual int AddTableRow(const std::string& table_name) = 0;
 	virtual size_t GetTableRowCount(const std::string& table_name) = 0;
-	virtual int GetTableCurRow(const std::string& table_name) = 0;
 
 	virtual bool CheckNodeExist(const std::string& name) = 0;
 	virtual bool CheckNodeExist(uint32_t index) = 0;

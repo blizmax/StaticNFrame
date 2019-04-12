@@ -145,6 +145,18 @@ void NFCLogModule::SetDefaultLogConfig(const std::vector<LogInfoConfig>& vecLogC
 	SetDefaultLevel((NF_LOG_LEVEL)GetGlobalConfigObject()->GetNodeUInt32(DEFINE_LUA_STRING_LOG_LEVEL));
 	SetDefaultFlush((NF_LOG_LEVEL)GetGlobalConfigObject()->GetNodeUInt32(DEFINE_LUA_STRING_LOG_FLUSH_LEVEL));
 
+	for (size_t row = 0; row < GetGlobalConfigObject()->GetTableRowCount(DEFINE_LUA_STRING_LOG_INFO); row++)
+	{
+		LogInfoConfig config;
+		config.mLogId = GetGlobalConfigObject()->GetTableUInt32(DEFINE_LUA_STRING_LOG_INFO, row, LOG_INFO_LOG_ID);
+		config.mDisplay = GetGlobalConfigObject()->GetTableBool(DEFINE_LUA_STRING_LOG_INFO, row, LOG_INFO_DISPLAY);
+		config.mLevel = GetGlobalConfigObject()->GetTableUInt32(DEFINE_LUA_STRING_LOG_INFO, row, LOG_INFO_LEVEL);
+		config.mLogName = GetGlobalConfigObject()->GetTableString(DEFINE_LUA_STRING_LOG_INFO, row, LOG_INFO_LOG_NAME);
+		if (config.mLogId >= 0 && config.mLogId < m_logInfoConfig.size())
+		{
+			m_logInfoConfig[config.mLogId] = config;
+		}
+	}
 	for (size_t i = 0; i < vecLogConfig.size(); i++)
 	{
 		const LogInfoConfig& config = vecLogConfig[i];

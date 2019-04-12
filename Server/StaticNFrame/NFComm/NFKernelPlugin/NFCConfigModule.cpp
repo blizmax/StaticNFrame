@@ -123,8 +123,8 @@ bool NFCConfigModule::LoadLogConfig()
 		GetLuaTableValue(logRef, "level", logConfig.mLevel);
 		GetLuaTableValue(logRef, "logname", logConfig.mLogName);
 
-		mGlobalConfig->AddTableRow(DEFINE_LUA_STRING_LOG_INFO);
-		int curRow = mGlobalConfig->GetTableCurRow(DEFINE_LUA_STRING_LOG_INFO);
+		int curRow = mGlobalConfig->AddTableRow(DEFINE_LUA_STRING_LOG_INFO);
+
 		mGlobalConfig->SetTableUInt32(DEFINE_LUA_STRING_LOG_INFO, curRow, LOG_INFO_LOG_ID, logConfig.mLogId);
 		mGlobalConfig->SetTableBool(DEFINE_LUA_STRING_LOG_INFO, curRow, LOG_INFO_DISPLAY, logConfig.mDisplay);
 		mGlobalConfig->SetTableUInt32(DEFINE_LUA_STRING_LOG_INFO, curRow, LOG_INFO_LEVEL, logConfig.mLevel);

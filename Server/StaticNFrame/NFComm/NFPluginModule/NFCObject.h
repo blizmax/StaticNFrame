@@ -32,9 +32,8 @@ public:
 	virtual bool Execute() override;
 	virtual uint64_t GetObjectId() override;
 
-	virtual bool AddTableRow(const std::string& table_name);
+	virtual int AddTableRow(const std::string& table_name);
 	virtual size_t GetTableRowCount(const std::string& table_name);
-	virtual int GetTableCurRow(const std::string& table_name);
 
 	virtual bool CheckNodeExist(const std::string& name) override;
 	virtual bool CheckNodeExist(uint32_t index) override;
