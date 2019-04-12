@@ -30,7 +30,7 @@ enum NF_DATA_TYPE
 	DT_MAX, //max
 };
 
-class NFCData
+class _NFExport NFCData
 {
 public:
 	typedef std::vector<NFCData> Array;

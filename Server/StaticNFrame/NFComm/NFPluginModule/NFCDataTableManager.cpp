@@ -69,7 +69,7 @@ bool NFCDataTableManager::AddTable(uint64_t objectId, const std::string& table_n
 	pTable->SetColCount(col_type_list.GetArray().size());
 	for (size_t i = 0; i < col_type_list.GetArray().size(); ++i)
 	{
-		pTable->SetColType(i, col_type_list.GetArray()[i].GetType());
+		pTable->SetColType(i, col_type_list.GetArray()[i].GetInt32());
 	}
 
 	pTable->SetFeature(feature);
@@ -130,6 +130,42 @@ bool NFCDataTableManager::AddTableCallback(uint32_t index, const DATA_TABLE_EVEN
 {
 	NF_ASSERT(index < mTables.size());
 	return mTables[index]->AddCallback(cb);
+}
+
+bool NFCDataTableManager::AddTableRow(const std::string& table_name)
+{
+	size_t index;
+	if (!FindIndex(table_name, index))
+	{
+		return false;
+	}
+
+	NF_ASSERT(index < mTables.size());
+	return mTables[index]->AddRow();
+}
+
+size_t NFCDataTableManager::GetTableRowCount(const std::string& table_name)
+{
+	size_t index;
+	if (!FindIndex(table_name, index))
+	{
+		return 0;
+	}
+
+	NF_ASSERT(index < mTables.size());
+	return mTables[index]->GetRowCount();
+}
+
+int NFCDataTableManager::GetTableCurRow(const std::string& table_name)
+{
+	size_t index;
+	if (!FindIndex(table_name, index))
+	{
+		return 0;
+	}
+
+	NF_ASSERT(index < mTables.size());
+	return (int)mTables[index]->GetRowCount() - 1;
 }
 
 void NFCDataTableManager::Clear()

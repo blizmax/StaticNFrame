@@ -39,6 +39,7 @@
     <ClInclude Include="NFHumanDefine.h" />
     <ClInclude Include="NFIBehaviorLogModule.h" />
     <ClInclude Include="NFIDynamicModule.h" />
+    <ClInclude Include="NFIGameConfigModule.h" />
     <ClInclude Include="NFIGameLogicModule.h" />
     <ClInclude Include="NFIHumanControllerModule.h" />
     <ClInclude Include="NFIHumanModule.h" />

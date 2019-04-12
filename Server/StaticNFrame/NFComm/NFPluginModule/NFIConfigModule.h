@@ -13,10 +13,43 @@
 
 #include "NFIPluginManager.h"
 #include "NFServerDefine.h"
+#include "NFIObject.h"
 
 #include <unordered_map>
 #include <vector>
 
+#define DEFINE_LUA_STRING_LOAD_PLUGIN			"LoadPlugin"
+#define DEFINE_LUA_STRING_SERVER_PLUGINS		"ServerPlugins"
+#define DEFINE_LUA_STRING_SERVER_TYPE			"ServerType"
+#define DEFINE_LUA_STRING_SERVER				"ServerList"
+
+#define DEFINE_LUA_STRING_SERVER_NAME			"ServerName"
+#define DEFINE_LUA_STRING_SERVER_ID				"ServerId"
+#define DEFINE_LUA_STRING_SERVER_GAME_NAME		"GameName"
+#define DEFINE_LUA_STRING_SERVER_MONGO_IP		"MongoIp"
+#define DEFINE_LUA_STRING_SERVER_MONGO_PORT		"MongoPort"
+#define DEFINE_LUA_STRING_SERVER_MONGO_DBNAME	"MongonName"
+#define DEFINE_LUA_STRING_SERVER_ZONE_ID		"ZoneId"
+#define DEFINE_LUA_STRING_SERVER_IP				"ServerIp"
+#define DEFINE_LUA_STRING_SERVER_PORT			"ServerPort"
+#define DEFINE_LUA_STRING_MAX_CONNECT_NUM		"MaxConnectNum"
+#define DEFINE_LUA_STRING_WORK_THREAD_NUM		"WorkThreadNum"
+#define DEFINE_LUA_STRING_SECURITY				"Security"
+#define DEFINE_LUA_STRING_LOG_LEVEL				"LogLevel"					//log等级配置
+#define DEFINE_LUA_STRING_LOG_FLUSH_LEVEL		"LogFlushLevel"				//log刷新等级配置
+#define DEFINE_LUA_STRING_WebSocket				"WebSocket"
+#define DEFINE_LUA_STRING_HttpPort				"HttpPort"
+
+#define DEFINE_LUA_STRING_LOG_INFO				"LogInfo"			//log配置
+
+enum EnumLogInfoLuaString
+{
+	LOG_INFO_LOG_ID = 0,
+	LOG_INFO_DISPLAY = 1,
+	LOG_INFO_LEVEL = 2,
+	LOG_INFO_LOG_NAME = 3,
+	LOG_INFO_LOG_GUID = 4,
+};
 
 struct NFPluginConfig
 {
@@ -81,4 +114,6 @@ public:
 	virtual uint32_t GetLogLevel() const = 0;
 	virtual uint32_t GetLogFlushLevel() const = 0;
 	virtual const std::vector<LogInfoConfig>& GetLogInfoConfig() const = 0;
+
+	virtual NFIObject* GetGlobalConfig() const = 0;
 };

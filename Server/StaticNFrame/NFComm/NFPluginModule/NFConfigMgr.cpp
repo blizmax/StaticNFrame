@@ -78,4 +78,14 @@ const std::vector<LogInfoConfig>& NFConfigMgr::GetLogInfoConfig() const
 	return vec;
 }
 
+NFIObject* NFConfigMgr::GetGlobalConfig() const
+{
+	if (m_pConfigModule)
+	{
+		return m_pConfigModule->GetGlobalConfig();
+	}
+
+	return nullptr;
+}
+
 

@@ -10,36 +10,17 @@
 #include "NFComm/NFCore/NFFileUtility.h"
 #include "NFComm/NFPluginModule/NFLogMgr.h"
 #include "NFComm/NFPluginModule/NFConfigMgr.h"
-
-#define DEFINE_LUA_STRING_LOAD_PLUGIN			"LoadPlugin"
-#define DEFINE_LUA_STRING_SERVER_PLUGINS		"ServerPlugins"
-#define DEFINE_LUA_STRING_SERVER_TYPE			"ServerType"
-#define DEFINE_LUA_STRING_SERVER				"ServerList"
-
-#define DEFINE_LUA_STRING_SERVER_NAME			"ServerName"
-#define DEFINE_LUA_STRING_SERVER_ID				"ServerId"
-#define DEFINE_LUA_STRING_SERVER_GAME_NAME		"GameName"
-#define DEFINE_LUA_STRING_SERVER_MONGO_IP		"MongoIp"
-#define DEFINE_LUA_STRING_SERVER_MONGO_PORT		"MongoPort"
-#define DEFINE_LUA_STRING_SERVER_MONGO_DBNAME	"MongonName"
-#define DEFINE_LUA_STRING_SERVER_ZONE_ID		"ZoneId"
-#define DEFINE_LUA_STRING_SERVER_IP				"ServerIp"
-#define DEFINE_LUA_STRING_SERVER_PORT			"ServerPort"
-#define DEFINE_LUA_STRING_MAX_CONNECT_NUM		"MaxConnectNum"
-#define DEFINE_LUA_STRING_WORK_THREAD_NUM		"WorkThreadNum"
-#define DEFINE_LUA_STRING_SECURITY				"Security"
-#define DEFINE_LUA_STRING_LOG_LEVEL				"LogLevel"					//log等级配置
-#define DEFINE_LUA_STRING_LOG_FLUSH_LEVEL		"LogFlushLevel"				//log刷新等级配置
-#define DEFINE_LUA_STRING_WebSocket				"WebSocket"
-#define DEFINE_LUA_STRING_HttpPort				"HttpPort"
-
-#define DEFINE_LUA_STRING_LOG_INFO				"LogInfo"			//log配置
+#include "NFComm/NFPluginModule/NFCObject.h"
 
 NFCConfigModule::NFCConfigModule(NFIPluginManager* p)
 {
 	m_pPluginManager = p;
 	mLogLevel = NLL_TRACE_NORMAL;
 	mLogFlushLevel = NLL_TRACE_NORMAL;
+	mGlobalConfig = NF_NEW NFCObject(0, m_pPluginManager);
+
+	mGlobalConfig->SetNodeUInt32(DEFINE_LUA_STRING_LOG_LEVEL, NLL_TRACE_NORMAL);
+	mGlobalConfig->SetNodeUInt32(DEFINE_LUA_STRING_LOG_FLUSH_LEVEL, NLL_TRACE_NORMAL);
 	//比较特殊，必须在这里加载配置，不然plugginmanager::Awake会出问题， 引擎配置没有数据
 	LoadConfig();
 	NFConfigMgr::Instance()->Init(this);
@@ -100,6 +81,9 @@ bool NFCConfigModule::LoadLogConfig()
 	GetValue(DEFINE_LUA_STRING_LOG_LEVEL, mLogLevel);
 	GetValue(DEFINE_LUA_STRING_LOG_FLUSH_LEVEL, mLogFlushLevel);
 
+	mGlobalConfig->SetNodeUInt32(DEFINE_LUA_STRING_LOG_LEVEL, mLogLevel);
+	mGlobalConfig->SetNodeUInt32(DEFINE_LUA_STRING_LOG_FLUSH_LEVEL, mLogFlushLevel);
+
 	NFLuaRef logInfoRef = GetGlobal(DEFINE_LUA_STRING_LOG_INFO);
 	if (!logInfoRef.isValid())
 	{
@@ -112,6 +96,15 @@ bool NFCConfigModule::LoadLogConfig()
 		NFLogError(NF_LOG_LOAD_CONFIG, 0, "{} is not table in the log.lua", DEFINE_LUA_STRING_LOG_INFO);
 		assert(0);
 	}
+
+	NFCData dataColType(DT_ARRAY, NFCData::Array());
+	dataColType.AddArrayItem(NFCData(DT_INT, DT_INT));
+	dataColType.AddArrayItem(NFCData(DT_INT, DT_BOOLEAN));
+	dataColType.AddArrayItem(NFCData(DT_INT, DT_INT));
+	dataColType.AddArrayItem(NFCData(DT_INT, DT_STRING));
+	dataColType.AddArrayItem(NFCData(DT_INT, DT_ARRAY));
+
+	mGlobalConfig->GetTableManager()->AddTable(0, DEFINE_LUA_STRING_LOG_INFO, dataColType, 0);
 
 	/* lua 是从1开始的 */
 	for (int i = 1; i <= logInfoRef.len(); i++)
@@ -130,9 +123,15 @@ bool NFCConfigModule::LoadLogConfig()
 		GetLuaTableValue(logRef, "level", logConfig.mLevel);
 		GetLuaTableValue(logRef, "logname", logConfig.mLogName);
 
+		mGlobalConfig->AddTableRow(DEFINE_LUA_STRING_LOG_INFO);
+		int curRow = mGlobalConfig->GetTableCurRow(DEFINE_LUA_STRING_LOG_INFO);
+		mGlobalConfig->SetTableUInt32(DEFINE_LUA_STRING_LOG_INFO, curRow, LOG_INFO_LOG_ID, logConfig.mLogId);
+		mGlobalConfig->SetTableBool(DEFINE_LUA_STRING_LOG_INFO, curRow, LOG_INFO_DISPLAY, logConfig.mDisplay);
+		mGlobalConfig->SetTableUInt32(DEFINE_LUA_STRING_LOG_INFO, curRow, LOG_INFO_LEVEL, logConfig.mLevel);
+		mGlobalConfig->SetTableString(DEFINE_LUA_STRING_LOG_INFO, curRow, LOG_INFO_LOG_NAME, logConfig.mLogName);
+
 		NFLuaRef guidRef;
 		GetLuaTableValue(logRef, "guid", guidRef);
-
 		if (guidRef.isTable())
 		{
 			for (size_t j = 0; j < guidRef.len(); j++)
@@ -141,6 +140,7 @@ bool NFCConfigModule::LoadLogConfig()
 				uint64_t guid = guidLuaRef.toValue<uint64_t>();
 				if (guid != 0)
 				{
+					mGlobalConfig->AddTableArrayItem(DEFINE_LUA_STRING_LOG_INFO, curRow, LOG_INFO_LOG_GUID, NFCData(DT_INT, guid));
 					logConfig.mVecGuid.push_back(guid);
 				}
 			}
@@ -150,6 +150,7 @@ bool NFCConfigModule::LoadLogConfig()
 			uint64_t guid = guidRef.toValue<uint64_t>();
 			if (guid != 0)
 			{
+				mGlobalConfig->AddTableArrayItem(DEFINE_LUA_STRING_LOG_INFO, curRow, LOG_INFO_LOG_GUID, NFCData(DT_INT, guid));
 				logConfig.mVecGuid.push_back(guid);
 			}
 		}

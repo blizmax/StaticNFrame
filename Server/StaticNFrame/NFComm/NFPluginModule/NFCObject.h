@@ -13,11 +13,13 @@
 #include "NFEventObj.h"
 #include "NFCData.h"
 #include "NFIDataTableManager.h"
+#include "NFIDataNodeManager.h"
+#include "NFComm/NFCore/NFPlatform.h"
 
 class NFIPluginManager;
 class NFIDataNodeManager;
 
-class NFCObject : public NFIObject
+class _NFExport NFCObject : public NFIObject
 {
 public:
 	NFCObject() = delete;
@@ -29,6 +31,10 @@ public:
 	virtual bool Shut() override;
 	virtual bool Execute() override;
 	virtual uint64_t GetObjectId() override;
+
+	virtual bool AddTableRow(const std::string& table_name);
+	virtual size_t GetTableRowCount(const std::string& table_name);
+	virtual int GetTableCurRow(const std::string& table_name);
 
 	virtual bool CheckNodeExist(const std::string& name) override;
 	virtual bool CheckNodeExist(uint32_t index) override;

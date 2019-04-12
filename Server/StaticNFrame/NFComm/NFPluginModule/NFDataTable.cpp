@@ -9,6 +9,7 @@
 #include "NFDataTable.h"
 #include "NFBitValue.hpp"
 #include <NFComm/NFMath/NFMath.h>
+#include "NFLogMgr.h"
 
 NFDataTable::NFDataTable() noexcept: mFeature(0)
 {

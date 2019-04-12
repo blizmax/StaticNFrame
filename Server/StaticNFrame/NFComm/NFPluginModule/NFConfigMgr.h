@@ -37,7 +37,10 @@ public:
 	virtual uint32_t GetLogLevel() const;
 	virtual uint32_t GetLogFlushLevel() const;
 	virtual const std::vector<LogInfoConfig>& GetLogInfoConfig() const;
+	virtual NFIObject* GetGlobalConfig() const;
 protected:
 	NFIConfigModule* m_pConfigModule;
 };
+
+#define GetGlobalConfigObject()  NFConfigMgr::Instance()->GetGlobalConfig()
 

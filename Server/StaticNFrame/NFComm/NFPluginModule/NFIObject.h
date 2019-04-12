@@ -11,6 +11,7 @@
 #include "NFComm/NFCore/NFPlatform.h"
 #include "NFIModule.h"
 #include "NFCData.h"
+#include "NFDefine.h"
 
 class NFIDataNodeManager;
 class NFIDataTableManager;
@@ -25,6 +26,10 @@ public:
 	virtual ~NFIObject() = default;
 
 	virtual uint64_t GetObjectId() = 0;
+
+	virtual bool AddTableRow(const std::string& table_name) = 0;
+	virtual size_t GetTableRowCount(const std::string& table_name) = 0;
+	virtual int GetTableCurRow(const std::string& table_name) = 0;
 
 	virtual bool CheckNodeExist(const std::string& name) = 0;
 	virtual bool CheckNodeExist(uint32_t index) = 0;

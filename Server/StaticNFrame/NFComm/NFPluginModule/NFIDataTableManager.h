@@ -27,6 +27,9 @@ public:
 	virtual bool AddTableCallback(const std::string& table_name, const DATA_TABLE_EVENT_FUNCTOR_PTR& cb) = 0;
 	virtual bool AddTableCallback(uint32_t index, const DATA_TABLE_EVENT_FUNCTOR_PTR& cb) = 0;
 
+	virtual bool AddTableRow(const std::string& table_name) = 0;
+	virtual size_t GetTableRowCount(const std::string& table_name) = 0;
+	virtual int GetTableCurRow(const std::string& table_name) = 0;
 	virtual void Clear() = 0;
 	virtual NFDataTable* GetTable(const std::string& name) const = 0;
 	virtual size_t GetCount() const = 0;

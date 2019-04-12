@@ -50,8 +50,8 @@ NFCLogModule::~NFCLogModule()
 
 bool NFCLogModule::Awake()
 {
-	SetDefaultLevel((NF_LOG_LEVEL)NFConfigMgr::Instance()->GetLogLevel());
-	SetDefaultFlush((NF_LOG_LEVEL)NFConfigMgr::Instance()->GetLogFlushLevel());
+	SetDefaultLevel((NF_LOG_LEVEL)GetGlobalConfigObject()->GetNodeUInt32(DEFINE_LUA_STRING_LOG_LEVEL));
+	SetDefaultFlush((NF_LOG_LEVEL)GetGlobalConfigObject()->GetNodeUInt32(DEFINE_LUA_STRING_LOG_FLUSH_LEVEL));
 	SetDefaultLogConfig(NFConfigMgr::Instance()->GetLogInfoConfig());
 	return true;
 }
@@ -63,8 +63,8 @@ bool NFCLogModule::Shut()
 
 bool NFCLogModule::OnReloadPlugin()
 {
-	SetDefaultLevel((NF_LOG_LEVEL)NFConfigMgr::Instance()->GetLogLevel());
-	SetDefaultFlush((NF_LOG_LEVEL)NFConfigMgr::Instance()->GetLogFlushLevel());
+	SetDefaultLevel((NF_LOG_LEVEL)GetGlobalConfigObject()->GetNodeUInt32(DEFINE_LUA_STRING_LOG_LEVEL));
+	SetDefaultFlush((NF_LOG_LEVEL)GetGlobalConfigObject()->GetNodeUInt32(DEFINE_LUA_STRING_LOG_FLUSH_LEVEL));
 	SetDefaultLogConfig(NFConfigMgr::Instance()->GetLogInfoConfig());
 	return true;
 }
@@ -142,6 +142,9 @@ void NFCLogModule::SetDefaultLogConfig(const std::vector<LogInfoConfig>& vecLogC
 	m_logInfoConfig.clear();
 	//主要是为了效率，浪费点内存
 	m_logInfoConfig.resize(NF_LOG_MAX_ID);
+	SetDefaultLevel((NF_LOG_LEVEL)GetGlobalConfigObject()->GetNodeUInt32(DEFINE_LUA_STRING_LOG_LEVEL));
+	SetDefaultFlush((NF_LOG_LEVEL)GetGlobalConfigObject()->GetNodeUInt32(DEFINE_LUA_STRING_LOG_FLUSH_LEVEL));
+
 	for (size_t i = 0; i < vecLogConfig.size(); i++)
 	{
 		const LogInfoConfig& config = vecLogConfig[i];

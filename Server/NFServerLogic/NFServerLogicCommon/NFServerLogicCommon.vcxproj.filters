@@ -19,6 +19,7 @@
     <ClInclude Include="NFIHumanControllerModule.h">
       <Filter>Human</Filter>
     </ClInclude>
+    <ClInclude Include="NFIGameConfigModule.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="NFServerLogicCommon.cpp" />

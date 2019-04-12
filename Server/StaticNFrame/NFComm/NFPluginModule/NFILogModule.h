@@ -45,6 +45,7 @@ enum NF_LOG_ID
 	NF_LOG_TEST_PLUGIN = 10,				//test 引擎
 
 	//-----------------------------------------------------------
+	NF_LOG_OBJECT_DATA_LOG = 20,			//结构体NFCObject的LOG
 	NF_LOG_LOAD_CONFIG = 21,				//加载配置
 	NF_LOG_PROTOBUF_PARSE = 22,				//protobuf解析出错
 	NF_LOG_RECV_MSG = 23,					//接受消息
