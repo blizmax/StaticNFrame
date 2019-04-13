@@ -311,6 +311,8 @@ public:
 	virtual void SendHandleShark();
 
 	virtual void SetOrigin(const std::string& str) { m_origin = str; }
+
+	virtual void SetPacketParseType(uint32_t packetType) { mPacketParseType = packetType; }
 protected:
 	/**
 	 * @brief	处理接受数据的回调
@@ -376,6 +378,11 @@ protected:
 	* @brief is server
 	*/
 	bool mIsServer; //是否是服务器端
+
+	/**
+	* @brief 解码消息类型
+	*/
+	uint32_t mPacketParseType;
 
 	/**
 	* @brief websocket header map

@@ -48,7 +48,7 @@ function InitGlobalServer()
 			WorkThreadNum = 5,
 			Security = false,
 			WebSocket = false,
-			HttpPort = 7000,
+			HttpPort = 7001,
 		};
 
 	RegisterServer(MasterServer)

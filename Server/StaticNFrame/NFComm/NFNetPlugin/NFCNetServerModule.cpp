@@ -88,7 +88,7 @@ bool NFCNetServerModule::Execute()
 	return true;
 }
 
-uint32_t NFCNetServerModule::AddServer(const NF_SERVER_TYPES eServerType, uint32_t nServerID, uint32_t nMaxClient, uint32_t nPort, bool bWebSocket)
+uint32_t NFCNetServerModule::AddServer(const NF_SERVER_TYPES eServerType, uint32_t nServerID, uint32_t nMaxClient, uint32_t nPort, bool bWebSocket, uint32_t nPacketParseType)
 {
 	if (eServerType > NF_ST_NONE && eServerType < NF_ST_MAX)
 	{
@@ -102,6 +102,7 @@ uint32_t NFCNetServerModule::AddServer(const NF_SERVER_TYPES eServerType, uint32
 		flag.nPort = nPort;
 		flag.nMaxConnectNum = nMaxClient;
 		flag.bWebSocket = bWebSocket;
+		flag.mPacketParseType = nPacketParseType;
 		NFServer* pServer = NF_NEW NFServer(eServerType, nServerID, flag);
 		pServer->SetRecvCB((NFINetModule*)this, &NFINetModule::OnReceiveNetPack);
 		pServer->SetEventCB((NFINetModule*)this, &NFINetModule::OnSocketNetEvent);
@@ -259,7 +260,7 @@ void NFCNetServerModule::SendMsg(NFServer* pServer, uint32_t usLinkId, const uin
 	}
 	else
 	{
-		NFIPacketParse::EnCode(nMsgID, nPlayerID, msg, nLen, mxSendBuffer);
+		NFIPacketParse::EnCode(pServer->mPacketParseType, nMsgID, nPlayerID, msg, nLen, mxSendBuffer);
 	}
 	
 	if (pServer)
@@ -280,7 +281,7 @@ void NFCNetServerModule::SendAllMsg(NFServer* pServer, const uint32_t nMsgID, co
 	}
 	else
 	{
-		NFIPacketParse::EnCode(nMsgID, nPlayerID, msg, nLen, mxSendBuffer);
+		NFIPacketParse::EnCode(pServer->mPacketParseType, nMsgID, nPlayerID, msg, nLen, mxSendBuffer);
 	}
 	
 	if (pServer)

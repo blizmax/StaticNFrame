@@ -24,7 +24,7 @@ public:
 	 * @param  nPort		服务器监听端口
 	 * @return int			返回0错误
 	 */
-	virtual uint32_t AddServer(const NF_SERVER_TYPES eType, uint32_t nServerID, uint32_t nMaxClient, uint32_t nPort, bool bWebSocket = false) = 0;
+	virtual uint32_t AddServer(const NF_SERVER_TYPES eType, uint32_t nServerID, uint32_t nMaxClient, uint32_t nPort, bool bWebSocket = false, uint32_t nPacketParseType = 0) = 0;
 
 	/**
 	 * @brief 获得连接的IP

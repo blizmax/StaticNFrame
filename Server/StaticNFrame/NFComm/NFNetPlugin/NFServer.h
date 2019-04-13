@@ -15,9 +15,11 @@
 struct evconnlistener;
 struct event_base;
 class NetObject;
+class NFCNetServerModule;
 
 class NFServer : public NFIModule
 {
+	friend NFCNetServerModule;
 public:
 	/**
 	 * @brief 构造函数
@@ -249,5 +251,10 @@ private:
 	* @brief 是否是websocket
 	*/
 	bool mWebSocket;
+
+	/**
+	* @brief 解码消息类型
+	*/
+	uint32_t mPacketParseType;
 };
 

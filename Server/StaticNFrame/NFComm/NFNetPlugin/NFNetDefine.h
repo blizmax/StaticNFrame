@@ -94,6 +94,7 @@ struct NFServerFlag
 	bool bWebSocket; //是否是websocket
 	uint32_t nMaxMsgNumMinPer; //每一分钟最大的消息包数
 	uint32_t nTimeoutDisconnect; //超时断开连接断开连接
+	uint32_t mPacketParseType; //解码消息类型
 	NFServerFlag()
 	{
 		nInitConnectNum = 10;
@@ -103,6 +104,7 @@ struct NFServerFlag
 		nPort = 0;
 		nMaxMsgNumMinPer = 800;
 		nTimeoutDisconnect = 0;
+		mPacketParseType = 0;
 		bWebSocket = false;
 	}
 };

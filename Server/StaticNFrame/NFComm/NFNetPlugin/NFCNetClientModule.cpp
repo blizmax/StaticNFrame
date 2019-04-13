@@ -324,7 +324,7 @@ void NFCNetClientModule::SendMsg(NFClient* pClient, const uint32_t nMsgID, const
 	}
 	else
 	{
-		NFIPacketParse::EnCode(nMsgID, nPlayerID, msg, nLen, mxSendBuffer);
+		NFIPacketParse::EnCode(0, nMsgID, nPlayerID, msg, nLen, mxSendBuffer);
 	}
 	
 	if (pClient)

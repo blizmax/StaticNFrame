@@ -24,6 +24,12 @@ enum NF_SERVER_TYPES
 	NF_ST_MAX = 10, //
 };
 
+enum PacketParseType
+{
+	PACKET_PARSE_TYPE_NORMAL = 0,
+	PACKET_PARSE_TYPE_QIPAI = 1,
+};
+
 #define NF_JSON_MSG_ID 0
 
 const std::string gArrayServer[NF_ST_MAX] = {
@@ -33,7 +39,6 @@ const std::string gArrayServer[NF_ST_MAX] = {
 	"WorldServer",
 	"GameServer",
 	"ProxyServer",
-	"ProxyInnerServer",
 };
 
 std::string _NFExport GetServerName(NF_SERVER_TYPES serverId);

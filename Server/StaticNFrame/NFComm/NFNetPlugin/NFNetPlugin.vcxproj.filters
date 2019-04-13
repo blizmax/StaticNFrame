@@ -41,6 +41,9 @@
     <ClCompile Include="NFCallBackModule.cpp">
       <Filter>NFServerNetEvent</Filter>
     </ClCompile>
+    <ClCompile Include="QiPaiNetPacketParse.cpp">
+      <Filter>PacketParse</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="NFNetPlugin.h" />
@@ -91,6 +94,9 @@
     </ClInclude>
     <ClInclude Include="NFCallBackModule.h">
       <Filter>NFServerNetEvent</Filter>
+    </ClInclude>
+    <ClInclude Include="QiPaiNetPacketParse.h">
+      <Filter>PacketParse</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

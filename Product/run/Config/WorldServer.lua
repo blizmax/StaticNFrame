@@ -60,7 +60,7 @@ function InitGameServer()
 			ServerType = NF_ST_PROXY,
 			ServerId = 6,			--对每一个服务器来说都是唯一的， 应用程序需要通过这个ServerId才能知道需要加载的配置是他
 			ServerIp = MasterIP,
-			ServerPort = GetNewPort(),
+			ServerPort = 7101,
 			MaxConnectNum = 100000,
 			WorkThreadNum = 5,
 			Security = false,

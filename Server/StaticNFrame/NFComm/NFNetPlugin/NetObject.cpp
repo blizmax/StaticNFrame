@@ -96,6 +96,7 @@ NetObject::NetObject() : m_pBev(nullptr), m_usLinkId(0), m_port(0), mNeedRemove(
 	mHandleShark = false;
 	mWebSocket = false;
 	mIsServer = true;
+	mPacketParseType = 0;
 }
 
 NetObject::~NetObject()
@@ -421,7 +422,7 @@ int NetObject::Dismantle()
 	uint32_t allLen = 0;
 	uint32_t nMsgId = 0;
 	uint64_t nValue = 0;
-	int ret = NFIPacketParse::DeCode(m_buffer.ReadAddr(), m_buffer.ReadableSize(), outData, outLen, allLen, nMsgId, nValue);
+	int ret = NFIPacketParse::DeCode(mPacketParseType, m_buffer.ReadAddr(), m_buffer.ReadableSize(), outData, outLen, allLen, nMsgId, nValue);
 	if (ret < 0)
 	{
 		m_buffer.Consume(m_buffer.ReadableSize());
