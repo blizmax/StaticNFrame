@@ -32,8 +32,12 @@ public:
 	virtual bool Execute() override;
 	virtual uint64_t GetObjectId() override;
 
-	virtual int AddTableRow(const std::string& table_name);
-	virtual size_t GetTableRowCount(const std::string& table_name);
+	virtual bool AddTable(uint64_t objectId, const std::string& table_name, const std::vector<int>& col_type_list, const int8_t feature) override;
+	virtual int AddTableRow(const std::string& table_name) override;
+	virtual size_t GetTableRowCount(const std::string& table_name) override;
+
+	virtual void Clear() override;
+	virtual void ClearTable(const std::string& table_name) override;
 
 	virtual bool CheckNodeExist(const std::string& name) override;
 	virtual bool CheckNodeExist(uint32_t index) override;

@@ -30,6 +30,10 @@ public:
 	virtual int AddTableRow(const std::string& table_name) = 0;
 	virtual size_t GetTableRowCount(const std::string& table_name) = 0;
 
+	virtual bool AddTable(uint64_t objectId, const std::string& table_name, const std::vector<int>& col_type_list, const int8_t feature) = 0;
+	virtual void Clear() = 0;
+	virtual void ClearTable(const std::string& table_name) = 0;
+
 	virtual bool CheckNodeExist(const std::string& name) = 0;
 	virtual bool CheckNodeExist(uint32_t index) = 0;
 

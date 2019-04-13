@@ -6,6 +6,7 @@
     <ClCompile Include="NFCLoadStaticPlugin.cpp" />
     <ClCompile Include="NFCPluginManager.cpp" />
     <ClCompile Include="NFCrashHandlerMgr.cpp" />
+    <ClCompile Include="NFPrintfLogo.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="NFCPluginManager.h" />

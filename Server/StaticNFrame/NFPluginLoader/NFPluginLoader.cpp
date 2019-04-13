@@ -24,7 +24,6 @@
 #include "NFComm/NFCore/NFFileUtility.h"
 
 #include "NFCrashHandlerMgr.h"
-#include "NFPrintfLogo.h"
 #include "NFProcessParameter.h"
 
 int main(int argc, char* argv[])
@@ -36,7 +35,6 @@ int main(int argc, char* argv[])
 #endif
 
 	ProcessParameter(argc, argv);
-	PrintfLogo();
 
 	NFCPluginManager::GetSingletonPtr()->Begin();
 

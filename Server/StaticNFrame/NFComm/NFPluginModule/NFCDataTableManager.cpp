@@ -9,6 +9,7 @@
 #include "NFCDataTableManager.h"
 #include "NFDataTable.h"
 #include <NFComm/NFMath/NFMath.h>
+#include "NFLogMgr.h"
 
 NFCDataTableManager::NFCDataTableManager(const uint64_t objectId)
 	: mObjectId(objectId)
@@ -27,6 +28,7 @@ uint64_t NFCDataTableManager::GetObjectId()
 
 void NFCDataTableManager::ReleaseAll()
 {
+	mIndices.clear();
 	for (size_t i = 0; i < mTables.size(); ++i)
 	{
 		NF_SAFE_DELETE(mTables[i]);
@@ -59,17 +61,16 @@ bool NFCDataTableManager::Exist(const std::string& name, size_t& index) const
 	return FindIndex(name, index);
 }
 
-bool NFCDataTableManager::AddTable(uint64_t objectId, const std::string& table_name, const NFCData& col_type_list, const int8_t feature)
+bool NFCDataTableManager::AddTable(uint64_t objectId, const std::string& table_name, const std::vector<int>& col_type_list, const int8_t feature)
 {
 	NF_ASSERT_MSG(table_name.size() > 0, "Table name is invalid");
-	NF_ASSERT_MSG(col_type_list.GetType() == DT_ARRAY, "Table name is invalid");
 
 	NFDataTable* pTable = NF_NEW NFDataTable();
 	pTable->SetName(table_name);
-	pTable->SetColCount(col_type_list.GetArray().size());
-	for (size_t i = 0; i < col_type_list.GetArray().size(); ++i)
+	pTable->SetColCount(col_type_list.size());
+	for (size_t i = 0; i < col_type_list.size(); ++i)
 	{
-		pTable->SetColType(i, col_type_list.GetArray()[i].GetInt32());
+		pTable->SetColType(i, col_type_list[i]);
 	}
 
 	pTable->SetFeature(feature);
@@ -82,6 +83,7 @@ bool NFCDataTableManager::GetTableData(const std::string& name, const int row, c
 	NFDataTable* pTable = GetTable(name);
 	if (pTable == nullptr)
 	{
+		NFLogWarning(NF_LOG_OBJECT_DATA_LOG, 0, "table name:{} not exist", name);
 		return false;
 	}
 
@@ -119,6 +121,7 @@ bool NFCDataTableManager::AddTableCallback(const std::string& table_name, const 
 	size_t index;
 	if (!FindIndex(table_name, index))
 	{
+		NFLogWarning(NF_LOG_OBJECT_DATA_LOG, 0, "table name:{} not exist", table_name);
 		return false;
 	}
 
@@ -137,6 +140,7 @@ int NFCDataTableManager::AddTableRow(const std::string& table_name)
 	size_t index;
 	if (!FindIndex(table_name, index))
 	{
+		NFLogWarning(NF_LOG_OBJECT_DATA_LOG, 0, "table name:{} not exist", table_name);
 		return -1;
 	}
 
@@ -153,6 +157,7 @@ size_t NFCDataTableManager::GetTableRowCount(const std::string& table_name)
 	size_t index;
 	if (!FindIndex(table_name, index))
 	{
+		NFLogWarning(NF_LOG_OBJECT_DATA_LOG, 0, "table name:{} not exist", table_name);
 		return 0;
 	}
 
@@ -162,7 +167,23 @@ size_t NFCDataTableManager::GetTableRowCount(const std::string& table_name)
 
 void NFCDataTableManager::Clear()
 {
-	ReleaseAll();
+	for (size_t i = 0; i < mTables.size(); ++i)
+	{
+		mTables[i]->Clear();
+	}
+}
+
+void NFCDataTableManager::ClearTable(const std::string& table_name)
+{
+	size_t index;
+	if (!FindIndex(table_name, index))
+	{
+		NFLogWarning(NF_LOG_OBJECT_DATA_LOG, 0, "table name:{} not exist", table_name);
+		return;
+	}
+
+	NF_ASSERT(index < mTables.size());
+	mTables[index]->Clear();
 }
 
 NFDataTable* NFCDataTableManager::GetTable(const std::string& name) const
@@ -170,6 +191,7 @@ NFDataTable* NFCDataTableManager::GetTable(const std::string& name) const
 	size_t index;
 	if (!FindIndex(name, index))
 	{
+		NFLogWarning(NF_LOG_OBJECT_DATA_LOG, 0, "table name:{} not exist", name);
 		return nullptr;
 	}
 

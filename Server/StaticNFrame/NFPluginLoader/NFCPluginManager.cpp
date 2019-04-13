@@ -18,6 +18,7 @@
 #include "NFComm/NFCore/NFFileUtility.h"
 #include "NFComm/NFPluginModule/NFConfigMgr.h"
 #include "NFComm/NFCore/NFCpu.h"
+#include "NFPrintfLogo.h"
 
 #include <utility>
 #include <thread>
@@ -77,8 +78,12 @@ bool NFCPluginManager::Awake()
 #ifndef NF_DYNAMIC_PLUGIN
 	RegisterStaticPlugin(); //注册静态引擎
 	LoadKernelPlugin(); //NFKernelPlugin比较特殊，提前加载
+	//打印LOG
+	NFLogInfo(NF_LOG_SYSTEMLOG, 0, "{}", PrintfLogo());
 
 	NFLogInfo(NF_LOG_PLUGIN_MANAGER, 0, "NFPluginLoader Awake................");
+
+	NFLogWarning(NF_LOG_SYSTEMLOG, 0, "LoadPlugin:NFKernelPlugin");
 	//加载引擎配置plugin.xml, 创建引擎，生成module
 	LoadPluginConfig();
 	for (PluginNameMap::iterator it = mPluginNameMap.begin(); it != mPluginNameMap.end(); ++it)
@@ -87,8 +92,11 @@ bool NFCPluginManager::Awake()
 	}
 #else
 	LoadKernelPlugin(); //NFKernelPlugin比较特殊，提前加载
+	//打印LOG
+	NFLogInfo(NF_LOG_SYSTEMLOG, 0, "{}", PrintfLogo());
 
 	NFLogInfo(NF_LOG_PLUGIN_MANAGER, 0, "NFPluginLoader Awake................");
+	NFLogWarning(NF_LOG_SYSTEMLOG, 0, "LoadPlugin:NFKernelPlugin");
 	//加载引擎配置plugin.xml, 创建引擎，生成module
 	LoadPluginConfig();
 	for (PluginNameMap::iterator it = mPluginNameMap.begin(); it != mPluginNameMap.end(); ++it)
@@ -569,6 +577,7 @@ bool NFCPluginManager::Finalize()
 		}
 	}
 
+	NFLogWarning(NF_LOG_SYSTEMLOG, 0, "UnLoadPlugin:NFKernelPlugin");
 	UnLoadStaticPlugin("NFKernelPlugin");
 #else
 	for (auto it = mPluginNameMap.begin(); it != mPluginNameMap.end(); ++it)
@@ -579,6 +588,7 @@ bool NFCPluginManager::Finalize()
 		}
 	}
 
+	NFLogWarning(NF_LOG_SYSTEMLOG, 0, "UnLoadPlugin:NFKernelPlugin");
 	UnLoadPluginLibrary("NFKernelPlugin");
 #endif
 

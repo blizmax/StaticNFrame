@@ -26,13 +26,14 @@ public:
 	virtual bool Exist(const std::string& name) const override;
 	virtual bool Exist(const std::string& name, size_t& index) const override;
 
-	virtual bool AddTable(uint64_t objectId, const std::string& table_name, const NFCData& col_type_list, const int8_t feature) override;
+	virtual bool AddTable(uint64_t objectId, const std::string& table_name, const std::vector<int>& col_type_list, const int8_t feature) override;
 	virtual bool AddTableCallback(const std::string& table_name, const DATA_TABLE_EVENT_FUNCTOR_PTR& cb) override;
 	virtual bool AddTableCallback(uint32_t index, const DATA_TABLE_EVENT_FUNCTOR_PTR& cb) override;
 
 	virtual int AddTableRow(const std::string& table_name) override;
 	virtual size_t GetTableRowCount(const std::string& table_name) override;
-	virtual void Clear() override final;
+	virtual void Clear() override;
+	virtual void ClearTable(const std::string& table_name) override;
 	virtual NFDataTable* GetTable(const std::string& name) const override;
 	virtual size_t GetCount() const override;
 	virtual NFDataTable* GetTableByIndex(size_t index) const override;

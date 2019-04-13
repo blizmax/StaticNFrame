@@ -23,6 +23,8 @@ NFDataTable::~NFDataTable()
 void NFDataTable::ReleaseAll()
 {
 	mRowDatas.clear();
+	mTableCallbacks.clear();
+	mColTypes.clear();
 }
 
 bool NFDataTable::AddCallback(const DATA_TABLE_EVENT_FUNCTOR_PTR& cb)
@@ -160,7 +162,7 @@ bool NFDataTable::AddRow(size_t row, const NFCData& data)
 
 void NFDataTable::Clear()
 {
-	ReleaseAll();
+	mRowDatas.clear();
 }
 
 void NFDataTable::SetFeature(int8_t new_feature)

@@ -23,13 +23,15 @@ public:
 	virtual bool Exist(const std::string& name) const = 0;
 	virtual bool Exist(const std::string& name, size_t& index) const = 0;
 
-	virtual bool AddTable(uint64_t objectId, const std::string& table_name, const NFCData& col_type_list, const int8_t feature) = 0;
+	virtual bool AddTable(uint64_t objectId, const std::string& table_name, const std::vector<int>& col_type_list, const int8_t feature) = 0;
 	virtual bool AddTableCallback(const std::string& table_name, const DATA_TABLE_EVENT_FUNCTOR_PTR& cb) = 0;
 	virtual bool AddTableCallback(uint32_t index, const DATA_TABLE_EVENT_FUNCTOR_PTR& cb) = 0;
 
 	virtual int AddTableRow(const std::string& table_name) = 0;
 	virtual size_t GetTableRowCount(const std::string& table_name) = 0;
 	virtual void Clear() = 0;
+	virtual void ClearTable(const std::string& table_name) = 0;
+
 	virtual NFDataTable* GetTable(const std::string& name) const = 0;
 	virtual size_t GetCount() const = 0;
 	virtual NFDataTable* GetTableByIndex(size_t index) const = 0;

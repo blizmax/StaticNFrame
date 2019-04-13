@@ -52,7 +52,7 @@ bool NFCLogModule::Awake()
 {
 	SetDefaultLevel((NF_LOG_LEVEL)GetGlobalConfigObject()->GetNodeUInt32(DEFINE_LUA_STRING_LOG_LEVEL));
 	SetDefaultFlush((NF_LOG_LEVEL)GetGlobalConfigObject()->GetNodeUInt32(DEFINE_LUA_STRING_LOG_FLUSH_LEVEL));
-	SetDefaultLogConfig(NFConfigMgr::Instance()->GetLogInfoConfig());
+	SetDefaultLogConfig();
 	return true;
 }
 
@@ -65,7 +65,7 @@ bool NFCLogModule::OnReloadPlugin()
 {
 	SetDefaultLevel((NF_LOG_LEVEL)GetGlobalConfigObject()->GetNodeUInt32(DEFINE_LUA_STRING_LOG_LEVEL));
 	SetDefaultFlush((NF_LOG_LEVEL)GetGlobalConfigObject()->GetNodeUInt32(DEFINE_LUA_STRING_LOG_FLUSH_LEVEL));
-	SetDefaultLogConfig(NFConfigMgr::Instance()->GetLogInfoConfig());
+	SetDefaultLogConfig();
 	return true;
 }
 
@@ -137,7 +137,7 @@ void NFCLogModule::SetDefaultFlush(NF_LOG_LEVEL log_level)
 * @param  vecLogConfig
 * @return
 */
-void NFCLogModule::SetDefaultLogConfig(const std::vector<LogInfoConfig>& vecLogConfig)
+void NFCLogModule::SetDefaultLogConfig()
 {
 	m_logInfoConfig.clear();
 	//主要是为了效率，浪费点内存
@@ -152,14 +152,12 @@ void NFCLogModule::SetDefaultLogConfig(const std::vector<LogInfoConfig>& vecLogC
 		config.mDisplay = GetGlobalConfigObject()->GetTableBool(DEFINE_LUA_STRING_LOG_INFO, row, LOG_INFO_DISPLAY);
 		config.mLevel = GetGlobalConfigObject()->GetTableUInt32(DEFINE_LUA_STRING_LOG_INFO, row, LOG_INFO_LEVEL);
 		config.mLogName = GetGlobalConfigObject()->GetTableString(DEFINE_LUA_STRING_LOG_INFO, row, LOG_INFO_LOG_NAME);
-		if (config.mLogId >= 0 && config.mLogId < m_logInfoConfig.size())
+		const NFCData::Array& vecGuid = GetGlobalConfigObject()->GetTableArray(DEFINE_LUA_STRING_LOG_INFO, row, LOG_INFO_LOG_GUID);
+		for (size_t i = 0; i < vecGuid.size(); i++)
 		{
-			m_logInfoConfig[config.mLogId] = config;
+			const NFCData& guid = vecGuid[i];
+			config.mVecGuid.push_back(guid.GetUInt64());
 		}
-	}
-	for (size_t i = 0; i < vecLogConfig.size(); i++)
-	{
-		const LogInfoConfig& config = vecLogConfig[i];
 		if (config.mLogId >= 0 && config.mLogId < m_logInfoConfig.size())
 		{
 			m_logInfoConfig[config.mLogId] = config;

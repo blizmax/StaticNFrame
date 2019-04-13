@@ -83,7 +83,7 @@ public:
 	* @param  vecLogConfig
 	* @return
 	*/
-	virtual void SetDefaultLogConfig(const std::vector<LogInfoConfig>& vecLogConfig);
+	virtual void SetDefaultLogConfig();
 
 	/**
 	* @brief 创建别的LOG系统

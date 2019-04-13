@@ -376,6 +376,7 @@
     <ClCompile Include="NFCPluginManager.cpp" />
     <ClCompile Include="NFCrashHandlerMgr.cpp" />
     <ClCompile Include="NFPluginLoader.cpp" />
+    <ClCompile Include="NFPrintfLogo.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="NFCPluginManager.h" />

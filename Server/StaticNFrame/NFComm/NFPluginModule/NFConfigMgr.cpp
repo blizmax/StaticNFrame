@@ -48,36 +48,6 @@ std::vector<NFServerConfig*> NFConfigMgr::GetServerConfigFromServerType(uint32_t
 	return std::vector<NFServerConfig*>();
 }
 
-uint32_t NFConfigMgr::GetLogLevel() const
-{
-	if (m_pConfigModule)
-	{
-		return m_pConfigModule->GetLogLevel();
-	}
-	return 0;
-}
-
-uint32_t NFConfigMgr::GetLogFlushLevel() const
-{
-	if (m_pConfigModule)
-	{
-		return m_pConfigModule->GetLogFlushLevel();
-	}
-	return 0;
-}
-
-const std::vector<LogInfoConfig>& NFConfigMgr::GetLogInfoConfig() const
-{
-	static std::vector<LogInfoConfig> vec;
-
-	if (m_pConfigModule)
-	{
-		return m_pConfigModule->GetLogInfoConfig();
-	}
-
-	return vec;
-}
-
 NFIObject* NFConfigMgr::GetGlobalConfig() const
 {
 	if (m_pConfigModule)

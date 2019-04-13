@@ -461,6 +461,12 @@ const std::string& NFCObject::GetNodeString(uint32_t index) const
 	return m_pNodeManager->GetNodeString(index);
 }
 
+bool NFCObject::AddTable(uint64_t objectId, const std::string& table_name, const std::vector<int>& col_type_list, const int8_t feature)
+{
+	NF_ASSERT(m_pTableManager != nullptr);
+	return m_pTableManager->AddTable(objectId, table_name, col_type_list, feature);
+}
+
 int NFCObject::AddTableRow(const std::string& table_name)
 {
 	NF_ASSERT(m_pTableManager != nullptr);
@@ -471,6 +477,18 @@ size_t NFCObject::GetTableRowCount(const std::string& table_name)
 {
 	NF_ASSERT(m_pTableManager != nullptr);
 	return m_pTableManager->GetTableRowCount(table_name);
+}
+
+void NFCObject::Clear()
+{
+	NF_ASSERT(m_pTableManager != nullptr);
+	return m_pTableManager->Clear();
+}
+
+void NFCObject::ClearTable(const std::string& table_name)
+{
+	NF_ASSERT(m_pTableManager != nullptr);
+	return m_pTableManager->ClearTable(table_name);
 }
 
 bool NFCObject::SetTableBool(const std::string& name, const int row, const int col, const bool value)
