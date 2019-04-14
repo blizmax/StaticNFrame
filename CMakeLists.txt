@@ -69,7 +69,7 @@ SET(LIB_LINK_DEP resolv dl rt libprotobuf.a  libssl.a libcrypto.a pthread libbso
 		libevent.a libLuaBind.a libtheron.a libmongoc-static-1.0.a libbson-static-1.0.a libCommon.a libSqlite3.a libNFMessageDefine.a)
 		
 SET(LIB_LINK_NF  libNFCore.a libNFPluginModule.a libprotobuf.a libNFActorPlugin.a libNFKernelPlugin.a libNFLuaScriptPlugin.a
-				libNFMath.a  libNFNetPlugin.a libNFMongoPlugin.a libNFSqlitePlugin.a libNFMonitorPlugin.a
+				libNFMath.a  libNFNetPlugin.a libNFMongoPlugin.a libNFSqlitePlugin.a libNFMonitorPlugin.a libNFNoSqlPlugin
 				libNFTestPlugin.a libNFMysqlPlugin.a libNFGameClientPlugin.a libNFGameServerPlugin.a 
 				libNFLoginClientPlugin.a libNFLoginServerPlugin.a libNFMasterServerPlugin.a 
 				libNFProxyClientPlugin.a libNFProxyServerPlugin.a 
