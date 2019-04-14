@@ -1,2 +1,0 @@
-/usr/bin/ar qc ../../../../Lib/Dynamic_Debug/libSqlite3.a  CMakeFiles/Sqlite3.dir/sqlite3.c.o
-/usr/bin/ranlib ../../../../Lib/Dynamic_Debug/libSqlite3.a
