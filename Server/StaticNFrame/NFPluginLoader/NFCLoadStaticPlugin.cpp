@@ -29,7 +29,7 @@
 #include "NFComm/NFMongoPlugin/NFMongoPlugin.h"
 #include "NFComm/NFMonitorPlugin/NFMonitorPlugin.h"
 #include "NFComm/NFSqlitePlugin/NFSqlitePlugin.h"
-#include "NFComm/NFNosqlPlugin/NFNoSqlPlugin.h"
+#include "NFComm/NFNoSqlPlugin/NFNoSqlPlugin.h"
 
 #include <NFComm/NFXPlugin/NFLuaScriptPlugin/NFLuaScriptPlugin.h>
 
