@@ -38,21 +38,6 @@ do_work ProxyServer 3
 do_work WorldServer 10
 do_work GameServer 11
 
-do_work RebotServer 20
-do_work RebotServer 21
-do_work RebotServer 22
-do_work RebotServer 23
-do_work RebotServer 24
-do_work RebotServer 25
-do_work RebotServer 26
-do_work RebotServer 27
-do_work RebotServer 28
-do_work RebotServer 29
-do_work RebotServer 30
-do_work RebotServer 31
-do_work RebotServer 32
-do_work RebotServer 33
-
 echo "rm Stop.sh -rf" >> Clear.sh
 echo "rm Start.sh -rf" >> Clear.sh
 echo "rm Clear.sh -rf" >> Clear.sh
