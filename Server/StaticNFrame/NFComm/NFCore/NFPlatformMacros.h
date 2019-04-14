@@ -153,6 +153,12 @@
 
 //#include <syswait.h>
 
+//#define NF_STATIC_PLUGIN 1
+
+#ifndef NF_STATIC_PLUGIN
+#define NF_DYNAMIC_PLUGIN 1
+#endif
+
 // Enable GCC symbol visibility
 #   if defined( NF_GCC_VISIBILITY )
 #       define _NFExport  __attribute__ ((visibility("default")))

@@ -52,9 +52,9 @@ public:
 #if NF_PLATFORM == NF_PLATFORM_WIN
         mstrName.append(".dll");
 #elif NF_PLATFORM == NF_PLATFORM_LINUX || NF_PLATFORM == NF_PLATFORM_ANDROID
-        mstrName.append(".so");
+        mstrName = "lib" + mstrName + ".so";
 #elif NF_PLATFORM == NF_PLATFORM_APPLE || NF_PLATFORM == NF_PLATFORM_APPLE_IOS
-        mstrName.append(".so");
+        mstrName = "lib" + mstrName + ".so";
 #endif
     }
 

@@ -29,19 +29,19 @@ LoadPlugin =
 			--"NFLuaScriptPlugin",
 			--------------------------------------------
 			-----服务器架构引擎-------------------------
-			"NFMasterServerPlugin",
+			--"NFMasterServerPlugin",
 			
-			"NFLoginClientPlugin",
-			"NFLoginServerPlugin",
+			--"NFLoginClientPlugin",
+			--"NFLoginServerPlugin",
 			
-			"NFWorldClientPlugin",
-			"NFWorldServerPlugin",
+			--"NFWorldClientPlugin",
+			--"NFWorldServerPlugin",
 			
-			"NFGameClientPlugin",
-			"NFGameServerPlugin",
+			--"NFGameClientPlugin",
+			--"NFGameServerPlugin",
 			
-			"NFProxyServerPlugin",
-			"NFProxyClientPlugin",
+			--"NFProxyServerPlugin",
+			--"NFProxyClientPlugin",
 			
 			------------------------------------------------
 			-----服务器基础逻辑引擎-------------------------

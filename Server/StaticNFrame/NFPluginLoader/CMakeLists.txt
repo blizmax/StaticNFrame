@@ -5,23 +5,30 @@ AUX_SOURCE_DIRECTORY(. SRC)
 
 ADD_EXECUTABLE(${PROJECT_NAME} ${SRC})
 
-TARGET_LINK_LIBRARIES(${PROJECT_NAME} rt dl ${LIB_LINK_DEP} ${LIB_LINK_NF})
+TARGET_LINK_LIBRARIES(${PROJECT_NAME} rt dl Common LuaBind protobuf NFMessageDefine NFCore NFPluginModule)
 
-ADD_DEPENDENCIES(NFPluginLoader LuaBind G3Dlite Common Navigation 
-NFMessageDefine NFCore NFKernelPlugin NFMath NFNetPlugin NFPluginModule NFTestPlugin NFActorPlugin NFLuaScriptPlugin NFMongoPlugin NFMysqlPlugin 
-NFGameClientPlugin NFGameServerPlugin NFLoginClientPlugin NFLoginServerPlugin NFMasterServerPlugin NFProxyClientPlugin NFProxyServerPlugin 
-NFServerCommon NFWorldClientPlugin NFWorldServerPlugin NFGameLogicPlugin NFLoginLogicPlugin NFProxyLogicPlugin NFServerLogicCommon)
+ADD_DEPENDENCIES(NFPluginLoader LuaBind G3Dlite Common 
+NFMessageDefine NFCore NFMath NFPluginModule)
 
-
-if (CMAKE_BUILD_TYPE MATCHES "Release")
+if (CMAKE_BUILD_TYPE STREQUAL "Release")
 	SET_TARGET_PROPERTIES(${PROJECT_NAME} 
 		PROPERTIES 
 		RUNTIME_OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}/Product/run/Release"
 	)
-else()
+elseif(CMAKE_BUILD_TYPE STREQUAL "Debug")
 	SET_TARGET_PROPERTIES(${PROJECT_NAME} 
 		PROPERTIES 
 		RUNTIME_OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}/Product/run/Debug"
+	)
+elseif (CMAKE_BUILD_TYPE STREQUAL "DynamicRelease")
+	SET_TARGET_PROPERTIES(${PROJECT_NAME} 
+		PROPERTIES 
+		RUNTIME_OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}/Product/run/Dynamic_Release"
+	)
+elseif(CMAKE_BUILD_TYPE STREQUAL "DynamicDebug")
+	SET_TARGET_PROPERTIES(${PROJECT_NAME} 
+		PROPERTIES 
+		RUNTIME_OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}/Product/run/Dynamic_Debug"
 	)
 endif()
 

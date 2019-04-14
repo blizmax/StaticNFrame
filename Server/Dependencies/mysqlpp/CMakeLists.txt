@@ -3,10 +3,14 @@ PROJECT(mysqlpp)
 
 AUX_SOURCE_DIRECTORY(./lib SRC)
 
-if (CMAKE_BUILD_TYPE MATCHES "Release")
+if (CMAKE_BUILD_TYPE STREQUAL "Release")
 	SET(LIBRARY_OUTPUT_PATH "${CMAKE_SOURCE_DIR}/Product/Lib/Release")
-else()
+elseif(CMAKE_BUILD_TYPE STREQUAL "Debug")
 	SET(LIBRARY_OUTPUT_PATH "${CMAKE_SOURCE_DIR}/Product/Lib/Debug")
+elseif (CMAKE_BUILD_TYPE STREQUAL "DynamicRelease")
+	SET(LIBRARY_OUTPUT_PATH "${CMAKE_SOURCE_DIR}/Product/Lib/Dynamic_Release")
+elseif(CMAKE_BUILD_TYPE STREQUAL "DynamicDebug")
+	SET(LIBRARY_OUTPUT_PATH "${CMAKE_SOURCE_DIR}/Product/Lib/Dynamic_Debug")
 endif()
 
 

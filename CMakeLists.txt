@@ -2,7 +2,7 @@ CMAKE_MINIMUM_REQUIRED(VERSION 2.8)
 
 add_compile_options(-std=c++11)
 
-if( CMAKE_BUILD_TYPE MATCHES "Release" )
+if( CMAKE_BUILD_TYPE STREQUAL "Release" )
 	set(CMAKE_BUILD_TYPE "Release")
 	set(CMAKE_C_FLAGS  "${CMAKE_C_FLAGS} -fPIC")
 	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}  -fPIC -std=c++11 -O3 -Wall")
@@ -11,12 +11,27 @@ if( CMAKE_BUILD_TYPE MATCHES "Release" )
         -DNF_STATIC_PLUGIN
         -fPIC
     )
-else()
+elseif(CMAKE_BUILD_TYPE STREQUAL "Debug")
 	set(CMAKE_C_FLAGS  "${CMAKE_C_FLAGS} -fPIC")
 	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -O0 -Wall -g -ggdb -fPIC")
 	add_definitions(
         -D_DEBUG
         -DNF_STATIC_PLUGIN
+        -fPIC
+    )
+elseif(CMAKE_BUILD_TYPE STREQUAL "DynamicDebug")
+	set(CMAKE_C_FLAGS  "${CMAKE_C_FLAGS} -fPIC")
+	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -O0 -Wall -g -ggdb -fPIC")
+	add_definitions(
+        -D_DEBUG
+        -fPIC
+    )
+elseif(CMAKE_BUILD_TYPE STREQUAL "DynimicRelease")
+	set(CMAKE_BUILD_TYPE "Release")
+	set(CMAKE_C_FLAGS  "${CMAKE_C_FLAGS} -fPIC")
+	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}  -fPIC -std=c++11 -O3 -Wall")
+	add_definitions(
+        -DNDEBUG
         -fPIC
     )
 endif()
@@ -49,20 +64,34 @@ SET(INCLUDE_DIR "./" "/usr/local/include"
 	"${CMAKE_SOURCE_DIR}/Server/StaticNFrame/")
 
 
-if (CMAKE_BUILD_TYPE MATCHES "Release")
+if (CMAKE_BUILD_TYPE STREQUAL "Release")
 		SET(LIB_DIR "/usr/lib"
 			"/usr/local/lib"
 			"/usr/lib64"
 			"/usr/local/lib64"
 			"${CMAKE_SOURCE_DIR}/Product/run/Release"
 			"${CMAKE_SOURCE_DIR}/Product/Lib/Release")
-else()
+elseif(CMAKE_BUILD_TYPE STREQUAL "Debug")
 	SET(LIB_DIR "/usr/lib"
 		"/usr/local/lib"
 		"/usr/lib64"
 		"/usr/local/lib64"
 		"${CMAKE_SOURCE_DIR}/Product/run/Debug"
 		"${CMAKE_SOURCE_DIR}/Product/Lib/Debug")
+elseif (CMAKE_BUILD_TYPE STREQUAL "DynamicRelease")
+		SET(LIB_DIR "/usr/lib"
+			"/usr/local/lib"
+			"/usr/lib64"
+			"/usr/local/lib64"
+			"${CMAKE_SOURCE_DIR}/Product/run/Dynamic_Release"
+			"${CMAKE_SOURCE_DIR}/Product/Lib/Dynamic_Release")
+elseif(CMAKE_BUILD_TYPE STREQUAL "DynamicDebug")
+	SET(LIB_DIR "/usr/lib"
+		"/usr/local/lib"
+		"/usr/lib64"
+		"/usr/local/lib64"
+		"${CMAKE_SOURCE_DIR}/Product/run/Dynamic_Debug"
+		"${CMAKE_SOURCE_DIR}/Product/Lib/Dynamic_Debug")
 endif()
 
 SET(LIB_LINK_DEP resolv dl rt libprotobuf.a  libssl.a libcrypto.a pthread libbson-static-1.0.a libmysqlpp.a libmysqlclient.a libevent_core.a libevent_extra.a libtheron.a
@@ -86,6 +115,6 @@ ADD_SUBDIRECTORY("Server/Dependencies")
 ADD_SUBDIRECTORY("Server/NFMessageDefine")
 ADD_SUBDIRECTORY("Server/StaticNFrame/NFComm")
 ADD_SUBDIRECTORY("Server/StaticNFrame/NFTest")
-ADD_SUBDIRECTORY("Server/NFServer")
-ADD_SUBDIRECTORY("Server/NFServerLogic")
+#ADD_SUBDIRECTORY("Server/NFServer")
+#ADD_SUBDIRECTORY("Server/NFServerLogic")
 ADD_SUBDIRECTORY("Server/StaticNFrame/NFPluginLoader")
