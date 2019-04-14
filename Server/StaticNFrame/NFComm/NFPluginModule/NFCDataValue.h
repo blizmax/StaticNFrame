@@ -95,7 +95,7 @@ public:
 	T m_value;
 };
 
-class NFCDataDouble : public NFBaseValue<NF_DATA_TYPE::DT_DOUBLE, double>
+class NFCDataDouble : public NFBaseValue<NF_DATA_TYPE::NF_DT_DOUBLE, double>
 {
 public:
 	explicit NFCDataDouble(double value) : NFBaseValue(value)
@@ -178,7 +178,7 @@ public:
 	}
 };
 
-class NFCDataInt final : public NFBaseValue<NF_DATA_TYPE::DT_INT, int64_t>
+class NFCDataInt final : public NFBaseValue<NF_DATA_TYPE::NF_DT_INT, int64_t>
 {
 public:
 	explicit NFCDataInt(int64_t value) : NFBaseValue(value)
@@ -257,7 +257,7 @@ public:
 	}
 };
 
-class NFCDataBoolean final : public NFBaseValue<NF_DATA_TYPE::DT_BOOLEAN, bool>
+class NFCDataBoolean final : public NFBaseValue<NF_DATA_TYPE::NF_DT_BOOLEAN, bool>
 {
 public:
 	explicit NFCDataBoolean(bool value) : NFBaseValue(value)
@@ -275,7 +275,7 @@ public:
 	}
 };
 
-class NFCDataString final : public NFBaseValue<NF_DATA_TYPE::DT_STRING, string>
+class NFCDataString final : public NFBaseValue<NF_DATA_TYPE::NF_DT_STRING, string>
 {
 public:
 	explicit NFCDataString(const std::string& value) : NFBaseValue(value)
@@ -297,7 +297,7 @@ public:
 	}
 };
 
-class NFCDataArray final : public NFBaseValue<NF_DATA_TYPE::DT_ARRAY, NFCData::Array>
+class NFCDataArray final : public NFBaseValue<NF_DATA_TYPE::NF_DT_ARRAY, NFCData::Array>
 {
 public:
 	explicit NFCDataArray(const NFCData::Array& value) : NFBaseValue(value)
@@ -334,7 +334,7 @@ public:
 	}
 };
 
-class NFCDataList final : public NFBaseValue<NF_DATA_TYPE::DT_LIST, NFCData::List>
+class NFCDataList final : public NFBaseValue<NF_DATA_TYPE::NF_DT_LIST, NFCData::List>
 {
 public:
 	explicit NFCDataList(const NFCData::List& value) : NFBaseValue(value)
@@ -371,7 +371,7 @@ public:
 	}
 };
 
-class NFCDataMapStringData final : public NFBaseValue<NF_DATA_TYPE::DT_MAPSTRING, NFCData::MapStringData>
+class NFCDataMapStringData final : public NFBaseValue<NF_DATA_TYPE::NF_DT_MAPSTRING, NFCData::MapStringData>
 {
 public:
 	explicit NFCDataMapStringData(const NFCData::MapStringData& value) : NFBaseValue(value)
@@ -408,7 +408,7 @@ public:
 	}
 };
 
-class NFCDataMapIntData final : public NFBaseValue<NF_DATA_TYPE::DT_MAPINT, NFCData::MapIntData>
+class NFCDataMapIntData final : public NFBaseValue<NF_DATA_TYPE::NF_DT_MAPINT, NFCData::MapIntData>
 {
 public:
 	explicit NFCDataMapIntData(const NFCData::MapIntData& value) : NFBaseValue(value)

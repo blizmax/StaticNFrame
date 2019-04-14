@@ -18,16 +18,16 @@ class NFCDataValue;
 
 enum NF_DATA_TYPE
 {
-	DT_UNKNOWN, //unknown type
-	DT_BOOLEAN, //bool
-	DT_INT, //int64_t
-	DT_DOUBLE, //doubl
-	DT_STRING, //string(char*)
-	DT_ARRAY, //std::vector<NFIData>
-	DT_LIST, //std::list<NFIData>
-	DT_MAPSTRING, //std::map<std::string,NFIData>
-	DT_MAPINT, //std::map<int,NFIData>
-	DT_MAX, //max
+	NF_DT_UNKNOWN, //unknown type
+	NF_DT_BOOLEAN, //bool
+	NF_DT_INT, //int64_t
+	NF_DT_DOUBLE, //doubl
+	NF_DT_STRING, //string(char*)
+	NF_DT_ARRAY, //std::vector<NFIData>
+	NF_DT_LIST, //std::list<NFIData>
+	NF_DT_MAPSTRING, //std::map<std::string,NFIData>
+	NF_DT_MAPINT, //std::map<int,NFIData>
+	NF_DT_MAX, //max
 };
 
 class _NFExport NFCData
@@ -40,7 +40,7 @@ public:
 
 	NFCData()
 	{
-		mType = DT_UNKNOWN;
+		mType = NF_DT_UNKNOWN;
 	}
 
 	virtual ~NFCData()

@@ -21,11 +21,11 @@ NFCConfigModule::NFCConfigModule(NFIPluginManager* p)
 	mGlobalConfig->SetNodeUInt32(DEFINE_LUA_STRING_LOG_FLUSH_LEVEL, NLL_TRACE_NORMAL);
 
 	std::vector<int> dataColType;
-	dataColType.push_back(DT_INT);
-	dataColType.push_back(DT_BOOLEAN);
-	dataColType.push_back(DT_INT);
-	dataColType.push_back(DT_STRING);
-	dataColType.push_back(DT_ARRAY);
+	dataColType.push_back(NF_DT_INT);
+	dataColType.push_back(NF_DT_BOOLEAN);
+	dataColType.push_back(NF_DT_INT);
+	dataColType.push_back(NF_DT_STRING);
+	dataColType.push_back(NF_DT_ARRAY);
 	mGlobalConfig->AddTable(0, DEFINE_LUA_STRING_LOG_INFO, dataColType, 0);
 
 	//比较特殊，必须在这里加载配置，不然plugginmanager::Awake会出问题， 引擎配置没有数据
@@ -143,7 +143,7 @@ bool NFCConfigModule::LoadLogConfig()
 				uint64_t guid = guidLuaRef.toValue<uint64_t>();
 				if (guid != 0)
 				{
-					mGlobalConfig->AddTableArrayItem(DEFINE_LUA_STRING_LOG_INFO, curRow, LOG_INFO_LOG_GUID, NFCData(DT_INT, guid));
+					mGlobalConfig->AddTableArrayItem(DEFINE_LUA_STRING_LOG_INFO, curRow, LOG_INFO_LOG_GUID, NFCData(NF_DT_INT, guid));
 				}
 			}
 		}
@@ -152,7 +152,7 @@ bool NFCConfigModule::LoadLogConfig()
 			uint64_t guid = guidRef.toValue<uint64_t>();
 			if (guid != 0)
 			{
-				mGlobalConfig->AddTableArrayItem(DEFINE_LUA_STRING_LOG_INFO, curRow, LOG_INFO_LOG_GUID, NFCData(DT_INT, guid));
+				mGlobalConfig->AddTableArrayItem(DEFINE_LUA_STRING_LOG_INFO, curRow, LOG_INFO_LOG_GUID, NFCData(NF_DT_INT, guid));
 			}
 		}
 	}

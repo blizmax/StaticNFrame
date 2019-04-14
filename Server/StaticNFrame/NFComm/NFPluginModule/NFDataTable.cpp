@@ -73,7 +73,7 @@ size_t NFDataTable::GetColCount() const
 bool NFDataTable::SetColType(size_t index, int type)
 {
 	NF_ASSERT(index < mColTypes.size());
-	NF_ASSERT(type > DT_UNKNOWN);
+	NF_ASSERT(type > NF_DT_UNKNOWN);
 
 	mColTypes[index] = type;
 	return true;
@@ -89,7 +89,7 @@ int NFDataTable::GetColType(int col) const
 bool NFDataTable::AddRow()
 {
 	//default insert row
-	NFCData row_data(DT_ARRAY, NFCData::Array());
+	NFCData row_data(NF_DT_ARRAY, NFCData::Array());
 	for (size_t i = 0; i < mColTypes.size(); i++)
 	{
 		NFCData tmp;
@@ -103,7 +103,7 @@ bool NFDataTable::AddRow()
 
 bool NFDataTable::AddRow(size_t row)
 {
-	NFCData row_data(DT_ARRAY, NFCData::Array());
+	NFCData row_data(NF_DT_ARRAY, NFCData::Array());
 	for (size_t i = 0; i < mColTypes.size(); i++)
 	{
 		NFCData tmp;
@@ -134,7 +134,7 @@ bool NFDataTable::DeleteRow(size_t row)
 
 bool NFDataTable::AddRow(size_t row, const NFCData& data)
 {
-	NF_ASSERT(data.GetType() == DT_ARRAY);
+	NF_ASSERT(data.GetType() == NF_DT_ARRAY);
 	size_t col_num = GetColCount();
 	if (data.GetArray().size() != col_num)
 	{
@@ -665,7 +665,7 @@ const std::string& NFDataTable::GetString(size_t row, size_t col) const
 
 bool NFDataTable::GetColTypeList(NFCData& col_type_list) const
 {
-	col_type_list.SetDefaultValue(DT_ARRAY);
+	col_type_list.SetDefaultValue(NF_DT_ARRAY);
 	for (size_t i = 0; i < mColTypes.size(); ++i)
 	{
 		NFCData data;
@@ -685,13 +685,13 @@ int NFDataTable::FindRow(size_t col, const NFCData& key, size_t begin_row /*= 0*
 
 	switch (key.GetType())
 	{
-	case DT_BOOLEAN:
+	case NF_DT_BOOLEAN:
 		return FindBool(col, key.GetBool(), begin_row);
-	case DT_INT:
+	case NF_DT_INT:
 		return FindInt64(col, key.GetInt64(), begin_row);
-	case DT_DOUBLE:
+	case NF_DT_DOUBLE:
 		return FindDouble(col, key.GetDouble(), begin_row);
-	case DT_STRING:
+	case NF_DT_STRING:
 		return FindString(col, key.GetString(), begin_row);
 	default:
 		break;
@@ -854,7 +854,7 @@ bool NFDataTable::QueryRow(const int row, NFCData& varList) const
 {
 	NF_ASSERT_RET_VAL(row < mRowDatas.size(), false);
 
-	varList.SetDefaultValue(DT_ARRAY);
+	varList.SetDefaultValue(NF_DT_ARRAY);
 	const NFCData& rowData = mRowDatas[row];
 	for (size_t i = 0; i < mColTypes.size(); ++i)
 	{

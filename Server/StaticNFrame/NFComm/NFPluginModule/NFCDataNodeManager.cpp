@@ -240,7 +240,7 @@ bool NFCDataNodeManager::AddArrayItem(const std::string& name, const NFCData& da
 	if (!FindIndex(name, index))
 	{
 		NFLogWarning(NF_LOG_OBJECT_DATA_LOG, 0, "node name:{} not exist!", name);
-		AddNode(name, NFCData(DT_ARRAY, NFCData::Array()), 0);
+		AddNode(name, NFCData(NF_DT_ARRAY, NFCData::Array()), 0);
 		if (!FindIndex(name, index))
 		{
 			NFLogError(NF_LOG_OBJECT_DATA_LOG, 0, "add node:{} failed!", name);
@@ -260,7 +260,7 @@ bool NFCDataNodeManager::AddListItem(const std::string& name, const NFCData& dat
 	if (!FindIndex(name, index))
 	{
 		NFLogWarning(NF_LOG_OBJECT_DATA_LOG, 0, "node name:{} not exist!", name);
-		AddNode(name, NFCData(DT_LIST, NFCData::List()), 0);
+		AddNode(name, NFCData(NF_DT_LIST, NFCData::List()), 0);
 		if (!FindIndex(name, index))
 		{
 			NFLogError(NF_LOG_OBJECT_DATA_LOG, 0, "add node:{} failed!", name);
@@ -280,7 +280,7 @@ bool NFCDataNodeManager::AddMapStringItem(const std::string& name, const std::st
 	if (!FindIndex(name, index))
 	{
 		NFLogWarning(NF_LOG_OBJECT_DATA_LOG, 0, "node name:{} not exist!", name);
-		AddNode(name, NFCData(DT_MAPSTRING, NFCData::MapStringData()), 0);
+		AddNode(name, NFCData(NF_DT_MAPSTRING, NFCData::MapStringData()), 0);
 		if (!FindIndex(name, index))
 		{
 			NFLogError(NF_LOG_OBJECT_DATA_LOG, 0, "add node:{} failed!", name);
@@ -300,7 +300,7 @@ bool NFCDataNodeManager::AddMapIntItem(const std::string& name, uint64_t key, co
 	if (!FindIndex(name, index))
 	{
 		NFLogWarning(NF_LOG_OBJECT_DATA_LOG, 0, "node name:{} not exist!", name);
-		AddNode(name, NFCData(DT_MAPINT, NFCData::MapIntData()), 0);
+		AddNode(name, NFCData(NF_DT_MAPINT, NFCData::MapIntData()), 0);
 		if (!FindIndex(name, index))
 		{
 			NFLogError(NF_LOG_OBJECT_DATA_LOG, 0, "add node:{} failed!", name);
@@ -408,7 +408,7 @@ bool NFCDataNodeManager::SetNodeBool(const std::string& name, const bool value)
 	if (!FindIndex(name, index))
 	{
 		NFLogWarning(NF_LOG_OBJECT_DATA_LOG, 0, "node name:{} not exist!", name);
-		AddNode(name, NFCData(DT_BOOLEAN, value), 0);
+		AddNode(name, NFCData(NF_DT_BOOLEAN, value), 0);
 		if (!FindIndex(name, index))
 		{
 			NFLogError(NF_LOG_OBJECT_DATA_LOG, 0, "add node:{} failed!", name);
@@ -439,7 +439,7 @@ bool NFCDataNodeManager::SetNodeInt(const std::string& name, const int32_t value
 	if (!FindIndex(name, index))
 	{
 		NFLogWarning(NF_LOG_OBJECT_DATA_LOG, 0, "node name:{} not exist!", name);
-		AddNode(name, NFCData(DT_INT, value), 0);
+		AddNode(name, NFCData(NF_DT_INT, value), 0);
 		if (!FindIndex(name, index))
 		{
 			NFLogError(NF_LOG_OBJECT_DATA_LOG, 0, "add node:{} failed!", name);
@@ -470,7 +470,7 @@ bool NFCDataNodeManager::SetNodeInt32(const std::string& name, const int32_t val
 	if (!FindIndex(name, index))
 	{
 		NFLogWarning(NF_LOG_OBJECT_DATA_LOG, 0, "node name:{} not exist!", name);
-		AddNode(name, NFCData(DT_INT, value), 0);
+		AddNode(name, NFCData(NF_DT_INT, value), 0);
 		if (!FindIndex(name, index))
 		{
 			NFLogError(NF_LOG_OBJECT_DATA_LOG, 0, "add node:{} failed!", name);
@@ -501,7 +501,7 @@ bool NFCDataNodeManager::SetNodeUInt32(const std::string& name, const uint32_t v
 	if (!FindIndex(name, index))
 	{
 		NFLogWarning(NF_LOG_OBJECT_DATA_LOG, 0, "node name:{} not exist!", name);
-		AddNode(name, NFCData(DT_INT, value), 0);
+		AddNode(name, NFCData(NF_DT_INT, value), 0);
 		if (!FindIndex(name, index))
 		{
 			NFLogError(NF_LOG_OBJECT_DATA_LOG, 0, "add node:{} failed!", name);
@@ -532,7 +532,7 @@ bool NFCDataNodeManager::SetNodeInt64(const std::string& name, const int64_t val
 	if (!FindIndex(name, index))
 	{
 		NFLogWarning(NF_LOG_OBJECT_DATA_LOG, 0, "node name:{} not exist!", name);
-		AddNode(name, NFCData(DT_INT, value), 0);
+		AddNode(name, NFCData(NF_DT_INT, value), 0);
 		if (!FindIndex(name, index))
 		{
 			NFLogError(NF_LOG_OBJECT_DATA_LOG, 0, "add node:{} failed!", name);
@@ -563,7 +563,7 @@ bool NFCDataNodeManager::SetNodeUInt64(const std::string& name, const uint64_t v
 	if (!FindIndex(name, index))
 	{
 		NFLogWarning(NF_LOG_OBJECT_DATA_LOG, 0, "node name:{} not exist!", name);
-		AddNode(name, NFCData(DT_INT, value), 0);
+		AddNode(name, NFCData(NF_DT_INT, value), 0);
 		if (!FindIndex(name, index))
 		{
 			NFLogError(NF_LOG_OBJECT_DATA_LOG, 0, "add node:{} failed!", name);
@@ -594,7 +594,7 @@ bool NFCDataNodeManager::SetNodeFloat(const std::string& name, const float value
 	if (!FindIndex(name, index))
 	{
 		NFLogWarning(NF_LOG_OBJECT_DATA_LOG, 0, "node name:{} not exist!", name);
-		AddNode(name, NFCData(DT_DOUBLE, value), 0);
+		AddNode(name, NFCData(NF_DT_DOUBLE, value), 0);
 		if (!FindIndex(name, index))
 		{
 			NFLogError(NF_LOG_OBJECT_DATA_LOG, 0, "add node:{} failed!", name);
@@ -625,7 +625,7 @@ bool NFCDataNodeManager::SetNodeDouble(const std::string& name, const double val
 	if (!FindIndex(name, index))
 	{
 		NFLogWarning(NF_LOG_OBJECT_DATA_LOG, 0, "node name:{} not exist!", name);
-		AddNode(name, NFCData(DT_DOUBLE, value), 0);
+		AddNode(name, NFCData(NF_DT_DOUBLE, value), 0);
 		if (!FindIndex(name, index))
 		{
 			NFLogError(NF_LOG_OBJECT_DATA_LOG, 0, "add node:{} failed!", name);
@@ -656,7 +656,7 @@ bool NFCDataNodeManager::SetNodeString(const std::string& name, const std::strin
 	if (!FindIndex(name, index))
 	{
 		NFLogWarning(NF_LOG_OBJECT_DATA_LOG, 0, "node name:{} not exist!", name);
-		AddNode(name, NFCData(DT_STRING, value), 0);
+		AddNode(name, NFCData(NF_DT_STRING, value), 0);
 		if (!FindIndex(name, index))
 		{
 			NFLogError(NF_LOG_OBJECT_DATA_LOG, 0, "add node:{} failed!", name);
