@@ -3,6 +3,7 @@ PROJECT(Common)
 
 AUX_SOURCE_DIRECTORY(. SRC)
 AUX_SOURCE_DIRECTORY(./sigar/linux SRC)
+AUX_SOURCE_DIRECTORY(./redis-cplusplus-client SRC)
 
 if (CMAKE_BUILD_TYPE MATCHES "Release")
 	SET(LIBRARY_OUTPUT_PATH "${CMAKE_SOURCE_DIR}/Product/Lib/Release")
