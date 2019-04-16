@@ -12,6 +12,7 @@
 #include "NFComm/NFPluginModule/NFIMysqlModule.h"
 #include "NFServerLogic/NFServerLogicCommon/NFHumanDefine.h"
 #include "NFServerLogic/NFServerLogicCommon/NFBehaviorLogMgr.h"
+#include "NFComm/NFPluginModule/NFCObject.h"
 #include "NFComm/NFCore/NFCommon.h"
 
 NFCHumanModule::NFCHumanModule(NFIPluginManager* p)
@@ -117,6 +118,8 @@ uint32_t NFCHumanModule::LoadPlayerInfoByCID(const std::string& account, const s
 		return RETURN_CODE_PASSWORD_NOT_MATCH;
 	}
 
+	NFIObject* pObject = NF_NEW NFCObject(0, m_pPluginManager);
+	NFProtobufCommon::NFObjectFromMessage(pObject, *pDbInfo);
 	NFCHumanModule::CopyFromDB(pInfo, pDbInfo);
 
 	NFINoSqlModule* pNosqlModule = m_pPluginManager->FindModule<NFINoSqlModule>();
@@ -218,8 +221,48 @@ uint32_t  NFCHumanModule::GetPlayerInfo(uint32_t playerId, NFMsg::playerinfo* pI
 	return LoadPlayerInfo(playerId, pInfo);
 }
 
+void NFCHumanModule::CreatePlayer(NFMsg::playerinfo* pInfo)
+{
+	if (pInfo == nullptr)
+	{
+		NFLogError(NF_LOG_LOGIN_MODULE_LOG, 0, "function param error");
+		return;
+	}
+
+	NFIMysqlModule* pMysqlModule = m_pPluginManager->FindModule<NFIMysqlModule>();
+	NFMsg::db_query_playerinfo db_playerinfo;
+	NFMsg::db_playerinfo* pDbInfo = db_playerinfo.mutable_db_fields();
+	pDbInfo->set_cid(pInfo->cid());
+	pDbInfo->set_account(pInfo->account());
+	pDbInfo->set_password(pInfo->password());
+	pDbInfo->set_nickname(pInfo->nickname());
+	pDbInfo->set_channel(pInfo->channel());
+	pDbInfo->set_province(pInfo->province());
+	pDbInfo->set_city(pInfo->city());
+	pDbInfo->set_bindtype(pInfo->bindtype());
+	pDbInfo->set_bindnick(pInfo->bindnick());
+	pDbInfo->set_platformid(pDbInfo->platformid());
+	pDbInfo->set_imei(pDbInfo->imei());
+	pDbInfo->set_devname(pDbInfo->devname());
+	pDbInfo->set_mobiletype(pDbInfo->mobiletype());
+	pDbInfo->set_jetton(GetGlobalConfigObject()->GetNodeInt32("init_jetton"));
+	pDbInfo->set_money(GetGlobalConfigObject()->GetNodeInt32("init_money"));
+	bool ret = pMysqlModule->Query(db_playerinfo);
+	if (ret == false)
+	{
+		NFBehaviorLog(0, "", "player", "LoadPlayerInfoByCID", -1, "加载数据库玩家信息失败");
+		return;
+	}
+}
+
 uint32_t NFCHumanModule::LoadPlayerInfo(uint32_t playerId, NFMsg::playerinfo* pInfo)
 {
+	if (pInfo == nullptr)
+	{
+		NFLogError(NF_LOG_LOGIN_MODULE_LOG, playerId, "function param error");
+		return RETURN_CODE_ACCOUNT_NO_EXIST;
+	}
+
 	NFIMysqlModule* pMysqlModule = m_pPluginManager->FindModule<NFIMysqlModule>();
 	NFMsg::db_query_playerinfo db_playerinfo;
 	db_playerinfo.mutable_db_cond()->set_userid(NFCommon::tostr(playerId));
@@ -231,11 +274,6 @@ uint32_t NFCHumanModule::LoadPlayerInfo(uint32_t playerId, NFMsg::playerinfo* pI
 	}
 
 	NFMsg::db_playerinfo* pDbInfo = db_playerinfo.mutable_db_fields();
-
-	if (pInfo == nullptr)
-	{
-		pInfo = new NFMsg::playerinfo();
-	}
 
 	NFCHumanModule::CopyFromDB(pInfo, pDbInfo);
 

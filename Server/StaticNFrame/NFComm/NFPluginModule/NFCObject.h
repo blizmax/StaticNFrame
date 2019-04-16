@@ -32,7 +32,7 @@ public:
 	virtual bool Execute() override;
 	virtual uint64_t GetObjectId() override;
 
-	virtual bool AddTable(uint64_t objectId, const std::string& table_name, const std::vector<int>& col_type_list, const int8_t feature) override;
+	virtual bool AddTable(uint64_t objectId, const std::string& table_name, const std::vector<int>& col_type_list, const int8_t feature = 0) override;
 	virtual int AddTableRow(const std::string& table_name) override;
 	virtual size_t GetTableRowCount(const std::string& table_name) override;
 
@@ -41,6 +41,8 @@ public:
 
 	virtual bool CheckNodeExist(const std::string& name) override;
 	virtual bool CheckNodeExist(uint32_t index) override;
+
+	virtual bool AddNode(const std::string& name, const NFCData& value, const int8_t feature = 0) override;
 
 	virtual const NFCData::Array& GetArray(const std::string& name) const override;
 	virtual const NFCData::List& GetList(const std::string& name) const override;

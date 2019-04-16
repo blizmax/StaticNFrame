@@ -8,29 +8,24 @@
 // -------------------------------------------------------------------------
 
 #include "NFGameConfigModule.h"
+#include "NFComm/NFPluginModule/NFConfigMgr.h"
 #include "NFComm/NFPluginModule/NFCObject.h"
 
 NFCGameConfigModule::NFCGameConfigModule(NFIPluginManager* p)
 {
 	m_pPluginManager = p;
-	m_globalConfig = NF_NEW NFCObject(0, m_pPluginManager);;
 }
 
 NFCGameConfigModule::~NFCGameConfigModule()
 {
-	if (m_globalConfig)
-	{
-		NF_SAFE_DELETE(m_globalConfig);
-	}
+
 }
 
-NFIObject* NFCGameConfigModule::GetGlobalConfig() const
-{
-	return m_globalConfig;
-}
 
 bool NFCGameConfigModule::Awake()
 {
+	GetGlobalConfigObject()->AddNode(GAME_CONFIG_INIT_JETTON, NFCData(NF_DT_INT, 0));
+	GetGlobalConfigObject()->AddNode(GAME_CONFIG_INIT_MONEY, NFCData(NF_DT_INT, 0));
 	return true;
 }
 

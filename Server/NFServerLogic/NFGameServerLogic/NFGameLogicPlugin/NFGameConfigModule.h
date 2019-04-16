@@ -23,9 +23,4 @@ public:
 	virtual bool Finalize();
 
 	virtual bool OnReloadPlugin();
-public:
-	virtual NFIObject* GetGlobalConfig() const;
-private:
-	std::unordered_map<uint32_t, NFIObject*> m_configMgr;
-	NFIObject* m_globalConfig;
 };

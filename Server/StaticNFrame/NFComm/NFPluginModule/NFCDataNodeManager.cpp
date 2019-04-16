@@ -115,12 +115,26 @@ bool NFCDataNodeManager::OnNodeCallback(const size_t index, const NFCData& oldDa
 
 bool NFCDataNodeManager::AddNode(const std::string& name, const NFCData& value, const int8_t feature)
 {
-	NFDataNode* pNode = new NFDataNode();
-	pNode->mName = name;
-	pNode->mValue = value;
-	pNode->mFeature = feature;
-	mIndices.emplace(name, mNodes.size());
-	mNodes.push_back(pNode);
+	size_t index;
+	if (!FindIndex(name, index))
+	{
+		NFDataNode* pNode = new NFDataNode();
+		pNode->mName = name;
+		pNode->mValue = value;
+		pNode->mFeature = feature;
+		mIndices.emplace(name, mNodes.size());
+		mNodes.push_back(pNode);
+		return true;
+	}
+
+	if (mNodes[index]->mValue.GetType() != value.GetType())
+	{
+		NFLogError(NF_LOG_OBJECT_DATA_LOG, 0, "node name:{} exist, but data type error, AddNode failed!", name);
+		return false;
+	}
+
+	mNodes[index]->mValue = value;
+	mNodes[index]->mFeature = feature;
 	return true;
 }
 

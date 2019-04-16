@@ -44,7 +44,9 @@ NFLogId = {
 	
 
 	NF_LOG_BEGIN_LOGIC_LOG = 1001,			--1001以后是逻辑框架层
-	NF_LOG_LOGIN_MODULE_LOG = 1002,			--登陆相关LOG打印
+	NF_LOG_PROXY_RECV_MSG_LOG = 1001,		--网关接受消息LOG
+	NF_LOG_PROXY_SEND_MSG_LOG = 1002,		--网关发送消息LOG
+	NF_LOG_LOGIN_MODULE_LOG = 1102,			--登陆相关LOG打印
 	
 	
 	NF_LOG_MAX_ID = 10240, --最大LOGID
@@ -79,6 +81,10 @@ LogInfo = {
 	{logid = NFLogId.NF_LOG_SERVER_NOT_HANDLE_MESSAGE, display=true, level=0, logname = "NotHandleMessageLog", guid = 0, desc = "服务器未处理消息的LOG"},
 	{logid = NFLogId.NF_LOG_BEHAVIOR_LOGIC_LOG, display=true, level=0, logname = "BehaviorLog", guid = 0, desc = "行为LOG日志"},
 	--逻辑代码LOG
+	--------------------网关服务器LOG信息
+	{logid = NFLogId.NF_LOG_PROXY_RECV_MSG_LOG, display=true, level=0, logname = "ProxyRecvMsg", guid = 0, desc = "网关接受消息LOG"},
+	{logid = NFLogId.NF_LOG_PROXY_SEND_MSG_LOG, display=true, level=0, logname = "ProxySendMsg", guid = 0, desc = "网关发送消息LOG"},
 	
+	--------------------游戏服务器LOG信息
 	{logid = NFLogId.NF_LOG_LOGIN_MODULE_LOG, display=true, level=0, logname = "LoginModule", guid = 0, desc = "登陆相关LOG打印"},
 }

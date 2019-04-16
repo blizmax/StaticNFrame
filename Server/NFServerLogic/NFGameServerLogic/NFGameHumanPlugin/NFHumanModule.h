@@ -23,6 +23,8 @@ public:
 
 	virtual uint32_t GetPlayerInfo(uint32_t playerId, NFMsg::playerinfo* pInfo);
 
+	virtual void CreatePlayer(NFMsg::playerinfo* pInfo);
+
 	virtual uint32_t LoadPlayerInfoByCID(const std::string& account, const std::string& password, NFMsg::playerinfo* pInfo);
 
 	virtual uint32_t LoadPlayerInfo(uint32_t playerId, NFMsg::playerinfo* pInfo);

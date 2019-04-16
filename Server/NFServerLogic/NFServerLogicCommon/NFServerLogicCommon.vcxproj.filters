@@ -37,5 +37,8 @@
     <Filter Include="Human">
       <UniqueIdentifier>{1838bd43-96bf-4473-9eb0-91e7b7d7ae2d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="GameConfig">
+      <UniqueIdentifier>{5c1dbee5-7041-4b97-b091-a24b1e77ee87}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
 </Project>

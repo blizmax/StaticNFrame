@@ -12,10 +12,10 @@
 #include "NFComm/NFPluginModule/NFIModule.h"
 #include "NFComm/NFPluginModule/NFIObject.h"
 
-#pragma once
+#define GAME_CONFIG_INIT_JETTON "init_jetton"
+#define GAME_CONFIG_INIT_MONEY  "init_money"
 
 class NFIGameConfigModule : public NFIModule
 {
 public:
-	virtual NFIObject* GetGlobalConfig() const = 0;
 };

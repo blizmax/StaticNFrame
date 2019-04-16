@@ -10,6 +10,404 @@
 #include "NFProtobufCommon.h"
 #include "NFLogMgr.h"
 #include "common/lexical_cast.hpp"
+#include "NFIObject.h"
+
+bool NFProtobufCommon::NFObjectToMessage(NFIObject* pObject, google::protobuf::Message& message)
+{
+	if (pObject == nullptr) return false;
+
+	const google::protobuf::Descriptor* pDesc = message.GetDescriptor();
+	if (pDesc == nullptr) return false;
+
+	const google::protobuf::Reflection* pReflect = message.GetReflection();
+	if (pReflect == nullptr) return false;
+
+	for (int i = 0; i < pDesc->field_count(); i++)
+	{
+		const google::protobuf::FieldDescriptor* pFieldDesc = pDesc->field(i);
+		if (pFieldDesc == nullptr) return false;
+		switch (pFieldDesc->cpp_type())
+		{
+		case google::protobuf::FieldDescriptor::CPPTYPE_INT32:
+		{
+			int32_t value = pObject->GetNodeInt32(pFieldDesc->name());
+			pReflect->SetInt32(&message, pFieldDesc, value);
+		}
+		break;
+		case google::protobuf::FieldDescriptor::CPPTYPE_INT64:
+		{
+			int64_t value = pObject->GetNodeInt64(pFieldDesc->name());
+			pReflect->SetInt64(&message, pFieldDesc, value);
+		}
+		break;
+		case google::protobuf::FieldDescriptor::CPPTYPE_UINT32:
+		{
+			uint32_t value = pObject->GetNodeUInt32(pFieldDesc->name());
+			pReflect->SetUInt32(&message, pFieldDesc, value);
+		}
+		break;
+		case google::protobuf::FieldDescriptor::CPPTYPE_UINT64:
+		{
+			uint64_t value = pObject->GetNodeUInt64(pFieldDesc->name());
+			pReflect->SetUInt64(&message, pFieldDesc, value);
+		}
+		break;
+		case google::protobuf::FieldDescriptor::CPPTYPE_DOUBLE:
+		{
+			double value = pObject->GetNodeDouble(pFieldDesc->name());
+			pReflect->SetDouble(&message, pFieldDesc, value);
+		}
+		break;
+		case google::protobuf::FieldDescriptor::CPPTYPE_FLOAT:
+		{
+			float value = pObject->GetNodeFloat(pFieldDesc->name());
+			pReflect->SetFloat(&message, pFieldDesc, value);
+		}
+		break;
+		case google::protobuf::FieldDescriptor::CPPTYPE_BOOL:
+		{
+			bool value = pObject->GetNodeBool(pFieldDesc->name());
+			pReflect->SetBool(&message, pFieldDesc, value);
+		}
+		break;
+		case google::protobuf::FieldDescriptor::CPPTYPE_ENUM:
+		{
+			int32_t value = pObject->GetNodeInt32(pFieldDesc->name());
+			pReflect->SetEnumValue(&message, pFieldDesc, value);
+		}
+		break;
+		case google::protobuf::FieldDescriptor::CPPTYPE_STRING:
+		{
+			std::string value = pObject->GetNodeString(pFieldDesc->name());
+			pReflect->SetString(&message, pFieldDesc, value);
+		}
+		break;
+		case google::protobuf::FieldDescriptor::CPPTYPE_MESSAGE:
+		{
+			std::string value = pObject->GetNodeString(pFieldDesc->name());
+			google::protobuf::Message* pMessageValue = pReflect->MutableMessage(&message, pFieldDesc);
+			pMessageValue->ParseFromString(value);
+		}
+		break;
+		default:
+			break;
+		}
+	}
+
+	return true;
+}
+
+bool NFProtobufCommon::NFObjectFromMessage(NFIObject* pObject, const google::protobuf::Message& message)
+{
+	if (pObject == nullptr) return false;
+
+	const google::protobuf::Descriptor* pDesc = message.GetDescriptor();
+	if (pDesc == nullptr) return false;
+
+	const google::protobuf::Reflection* pReflect = message.GetReflection();
+	if (pReflect == nullptr) return false;
+
+	for (int i = 0; i < pDesc->field_count(); i++)
+	{
+		const google::protobuf::FieldDescriptor* pFieldDesc = pDesc->field(i);
+		if (pFieldDesc == nullptr) return false;
+		switch (pFieldDesc->cpp_type())
+		{
+		case google::protobuf::FieldDescriptor::CPPTYPE_INT32:
+		{
+			int32_t value = pReflect->GetInt32(message, pFieldDesc);
+			pObject->AddNode(pFieldDesc->name(), NFCData(NF_DT_INT, value), 0);
+		}
+		break;
+		case google::protobuf::FieldDescriptor::CPPTYPE_INT64:
+		{
+			int64_t value = pReflect->GetInt64(message, pFieldDesc);
+			pObject->AddNode(pFieldDesc->name(), NFCData(NF_DT_INT, value), 0);
+		}
+		break;
+		case google::protobuf::FieldDescriptor::CPPTYPE_UINT32:
+		{
+			uint32_t value = pReflect->GetUInt32(message, pFieldDesc);
+			pObject->AddNode(pFieldDesc->name(), NFCData(NF_DT_INT, value), 0);
+		}
+		break;
+		case google::protobuf::FieldDescriptor::CPPTYPE_UINT64:
+		{
+			uint64_t value = pReflect->GetUInt64(message, pFieldDesc);
+			pObject->AddNode(pFieldDesc->name(), NFCData(NF_DT_INT, value), 0);
+		}
+		break;
+		case google::protobuf::FieldDescriptor::CPPTYPE_DOUBLE:
+		{
+			double value = pReflect->GetDouble(message, pFieldDesc);
+			pObject->AddNode(pFieldDesc->name(), NFCData(NF_DT_DOUBLE, value), 0);
+		}
+		break;
+		case google::protobuf::FieldDescriptor::CPPTYPE_FLOAT:
+		{
+			float value = pReflect->GetFloat(message, pFieldDesc);
+			pObject->AddNode(pFieldDesc->name(), NFCData(NF_DT_DOUBLE, value), 0);
+		}
+		break;
+		case google::protobuf::FieldDescriptor::CPPTYPE_BOOL:
+		{
+			bool value = pReflect->GetBool(message, pFieldDesc);
+			pObject->AddNode(pFieldDesc->name(), NFCData(NF_DT_BOOLEAN, value), 0);
+		}
+		break;
+		case google::protobuf::FieldDescriptor::CPPTYPE_ENUM:
+		{
+			const google::protobuf::EnumValueDescriptor* pEnumDesc = pReflect->GetEnum(message, pFieldDesc);
+			if (pEnumDesc)
+			{
+				pObject->AddNode(pFieldDesc->name(), NFCData(NF_DT_INT, pEnumDesc->number()), 0);
+			}
+		}
+		break;
+		case google::protobuf::FieldDescriptor::CPPTYPE_STRING:
+		{
+			std::string value = pReflect->GetString(message, pFieldDesc);
+			pObject->AddNode(pFieldDesc->name(), NFCData(NF_DT_STRING, value), 0);
+		}
+		break;
+		case google::protobuf::FieldDescriptor::CPPTYPE_MESSAGE:
+		{
+			const google::protobuf::Message& value = pReflect->GetMessage(message, pFieldDesc);
+			std::string msg;
+			value.SerializePartialToString(&msg);
+			pObject->AddNode(pFieldDesc->name(), NFCData(NF_DT_STRING, msg), 0);
+		}
+		break;
+		default:
+			break;
+		}
+	}
+
+	return true;
+}
+
+bool NFProtobufCommon::NFObjectAddTableFromMessage(NFIObject* pObject, const std::string& tableName, const google::protobuf::Message& message)
+{
+	if (pObject == nullptr) return false;
+
+	const google::protobuf::Descriptor* pDesc = message.GetDescriptor();
+	if (pDesc == nullptr) return false;
+
+	const google::protobuf::Reflection* pReflect = message.GetReflection();
+	if (pReflect == nullptr) return false;
+
+	std::vector<int> vecColType;
+	for (int i = 0; i < pDesc->field_count(); i++)
+	{
+		const google::protobuf::FieldDescriptor* pFieldDesc = pDesc->field(i);
+		if (pFieldDesc == nullptr) return false;
+		switch (pFieldDesc->cpp_type())
+		{
+		case google::protobuf::FieldDescriptor::CPPTYPE_INT32:
+		{
+			vecColType.push_back(NF_DT_INT);
+		}
+		break;
+		case google::protobuf::FieldDescriptor::CPPTYPE_INT64:
+		{
+			vecColType.push_back(NF_DT_INT);
+		}
+		break;
+		case google::protobuf::FieldDescriptor::CPPTYPE_UINT32:
+		{
+			vecColType.push_back(NF_DT_INT);
+		}
+		break;
+		case google::protobuf::FieldDescriptor::CPPTYPE_UINT64:
+		{
+			vecColType.push_back(NF_DT_INT);
+		}
+		break;
+		case google::protobuf::FieldDescriptor::CPPTYPE_DOUBLE:
+		{
+			vecColType.push_back(NF_DT_DOUBLE);
+		}
+		break;
+		case google::protobuf::FieldDescriptor::CPPTYPE_FLOAT:
+		{
+			vecColType.push_back(NF_DT_DOUBLE);
+		}
+		break;
+		case google::protobuf::FieldDescriptor::CPPTYPE_BOOL:
+		{
+			vecColType.push_back(NF_DT_BOOLEAN);
+		}
+		break;
+		case google::protobuf::FieldDescriptor::CPPTYPE_ENUM:
+		{
+			vecColType.push_back(NF_DT_INT);
+		}
+		break;
+		case google::protobuf::FieldDescriptor::CPPTYPE_STRING:
+		{
+			vecColType.push_back(NF_DT_STRING);
+		}
+		break;
+		case google::protobuf::FieldDescriptor::CPPTYPE_MESSAGE:
+		{
+			vecColType.push_back(NF_DT_STRING);
+		}
+		break;
+		default:
+			break;
+		}
+	}
+
+	pObject->AddTable(pObject->GetObjectId(), tableName, vecColType, 0);
+	return true;
+}
+
+bool NFProtobufCommon::NFObjectAddTableFromMessage(NFIObject* pObject, const google::protobuf::Message& message)
+{
+	if (pObject == nullptr) return false;
+
+	const google::protobuf::Descriptor* pDesc = message.GetDescriptor();
+	if (pDesc == nullptr) return false;
+
+	const google::protobuf::Reflection* pReflect = message.GetReflection();
+	if (pReflect == nullptr) return false;
+
+	std::string strTableName = NFProtobufCommon::GetDBNameFromMessage(message);
+	if (strTableName.empty()) return false;
+
+	const google::protobuf::FieldDescriptor* pDbFieldsFieldDesc = pDesc->FindFieldByLowercaseName("db_fields");
+	if (pDbFieldsFieldDesc == nullptr || pDbFieldsFieldDesc->cpp_type() != google::protobuf::FieldDescriptor::CPPTYPE_MESSAGE) return false;
+
+	const google::protobuf::Message& dbFieldsMessage = pReflect->GetMessage(message, pDbFieldsFieldDesc);
+
+	return NFObjectAddTableFromMessage(pObject, strTableName, dbFieldsMessage);
+}
+
+bool NFProtobufCommon::NFObjectAddTableRowsFromMessage(NFIObject* pObject, const std::string& strTableName, const google::protobuf::Message& message)
+{
+	if (pObject == nullptr) return false;
+
+	const google::protobuf::Descriptor* pDesc = message.GetDescriptor();
+	if (pDesc == nullptr) return false;
+
+	const google::protobuf::Reflection* pReflect = message.GetReflection();
+	if (pReflect == nullptr) return false;
+
+	int curRow = pObject->AddTableRow(strTableName);
+
+	for (int i = 0; i < pDesc->field_count(); i++)
+	{
+		const google::protobuf::FieldDescriptor* pFieldDesc = pDesc->field(i);
+		if (pFieldDesc == nullptr) return false;
+		switch (pFieldDesc->cpp_type())
+		{
+		case google::protobuf::FieldDescriptor::CPPTYPE_INT32:
+		{
+			int32_t value = pReflect->GetInt32(message, pFieldDesc);
+			pObject->SetTableInt32(strTableName, curRow, i, value);
+		}
+		break;
+		case google::protobuf::FieldDescriptor::CPPTYPE_INT64:
+		{
+			int64_t value = pReflect->GetInt64(message, pFieldDesc);
+			pObject->SetTableInt64(strTableName, curRow, i, value);
+		}
+		break;
+		case google::protobuf::FieldDescriptor::CPPTYPE_UINT32:
+		{
+			uint32_t value = pReflect->GetUInt32(message, pFieldDesc);
+			pObject->SetTableUInt32(strTableName, curRow, i, value);
+		}
+		break;
+		case google::protobuf::FieldDescriptor::CPPTYPE_UINT64:
+		{
+			uint64_t value = pReflect->GetUInt64(message, pFieldDesc);
+			pObject->SetTableUInt32(strTableName, curRow, i, value);
+		}
+		break;
+		case google::protobuf::FieldDescriptor::CPPTYPE_DOUBLE:
+		{
+			double value = pReflect->GetDouble(message, pFieldDesc);
+			pObject->SetTableDouble(strTableName, curRow, i, value);
+		}
+		break;
+		case google::protobuf::FieldDescriptor::CPPTYPE_FLOAT:
+		{
+			float value = pReflect->GetFloat(message, pFieldDesc);
+			pObject->SetTableFloat(strTableName, curRow, i, value);
+		}
+		break;
+		case google::protobuf::FieldDescriptor::CPPTYPE_BOOL:
+		{
+			bool value = pReflect->GetBool(message, pFieldDesc);
+			pObject->SetTableBool(strTableName, curRow, i, value);
+		}
+		break;
+		case google::protobuf::FieldDescriptor::CPPTYPE_ENUM:
+		{
+			const google::protobuf::EnumValueDescriptor* pEnumDesc = pReflect->GetEnum(message, pFieldDesc);
+			if (pEnumDesc)
+			{
+				pObject->SetTableInt32(strTableName, curRow, i, pEnumDesc->number());
+			}
+		}
+		break;
+		case google::protobuf::FieldDescriptor::CPPTYPE_STRING:
+		{
+			std::string value = pReflect->GetString(message, pFieldDesc);
+			pObject->SetTableString(strTableName, curRow, i, value);
+		}
+		break;
+		case google::protobuf::FieldDescriptor::CPPTYPE_MESSAGE:
+		{
+			const google::protobuf::Message& value = pReflect->GetMessage(message, pFieldDesc);
+			std::string msg;
+			value.SerializePartialToString(&msg);
+			pObject->SetTableString(strTableName, curRow, i, msg);
+		}
+		break;
+		default:
+			break;
+		}
+	}
+	return true;
+}
+
+bool NFProtobufCommon::NFObjectAddTableRowsFromMessage(NFIObject* pObject, const google::protobuf::Message& message)
+{
+	if (pObject == nullptr) return false;
+
+	NFProtobufCommon::NFObjectAddTableFromMessage(pObject, message);
+
+	const google::protobuf::Descriptor* pDesc = message.GetDescriptor();
+	if (pDesc == nullptr) return false;
+
+	const google::protobuf::Reflection* pReflect = message.GetReflection();
+	if (pReflect == nullptr) return false;
+
+	std::string strTableName = NFProtobufCommon::GetDBNameFromMessage(message);
+	if (strTableName.empty()) return false;
+
+	const google::protobuf::FieldDescriptor* pDbFieldsFieldDesc = pDesc->FindFieldByLowercaseName("db_fields");
+	if (pDbFieldsFieldDesc == nullptr || pDbFieldsFieldDesc->cpp_type() != google::protobuf::FieldDescriptor::CPPTYPE_MESSAGE) return false;
+
+	if (pDbFieldsFieldDesc->is_repeated() == false)
+	{
+		const google::protobuf::Message& repeatedMessage = pReflect->GetMessage(message, pDbFieldsFieldDesc);
+		NFProtobufCommon::NFObjectAddTableRowsFromMessage(pObject, strTableName, repeatedMessage);
+		return true;
+	}
+
+	int field_size = pReflect->FieldSize(message, pDbFieldsFieldDesc);
+	for (int i = 0; i < field_size; i++)
+	{
+		const google::protobuf::Message& repeatedMessage = pReflect->GetRepeatedMessage(message, pDbFieldsFieldDesc, i);
+
+		NFProtobufCommon::NFObjectAddTableRowsFromMessage(pObject, strTableName, repeatedMessage);
+	}
+	
+	return true;
+}
 
 bool NFProtobufCommon::MessageToJsonString(const google::protobuf::Message& msg, std::string& json)
 {

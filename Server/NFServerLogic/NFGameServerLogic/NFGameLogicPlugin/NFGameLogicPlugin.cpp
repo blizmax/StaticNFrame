@@ -11,6 +11,7 @@
 #include "NFComm/NFPluginModule/NFIPluginManager.h"
 #include "NFGameLogicModule.h"
 #include "NFBehaviorLogModule.h"
+#include "NFGameConfigModule.h"
 
 #ifdef NF_DYNAMIC_PLUGIN
 
@@ -44,10 +45,12 @@ void NFGameLogicPlugin::Install()
 {
 	REGISTER_MODULE(m_pPluginManager, NFIGameLogicModule, NFCGameLogicModule);
 	REGISTER_MODULE(m_pPluginManager, NFIBehaviorLogModule, NFCBehaviorLogModule);
+	REGISTER_MODULE(m_pPluginManager, NFIGameConfigModule, NFCGameConfigModule);
 }
 
 void NFGameLogicPlugin::Uninstall()
 {
 	UNREGISTER_MODULE(m_pPluginManager, NFIGameLogicModule, NFCGameLogicModule);
 	UNREGISTER_MODULE(m_pPluginManager, NFIBehaviorLogModule, NFCBehaviorLogModule);
+	UNREGISTER_MODULE(m_pPluginManager, NFIGameConfigModule, NFCGameConfigModule);
 }
