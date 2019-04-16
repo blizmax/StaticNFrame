@@ -14,6 +14,9 @@
 #include "NFServerLogic/NFServerLogicCommon/NFBehaviorLogMgr.h"
 #include "NFComm/NFPluginModule/NFCObject.h"
 #include "NFComm/NFCore/NFCommon.h"
+#include "NFServerLogic/NFServerLogicCommon/NFIGameConfigModule.h"
+#include "NFComm/NFCore/NFStringUtility.h"
+#include "NFComm/NFCore/NFRandom.hpp"
 
 NFCHumanModule::NFCHumanModule(NFIPluginManager* p)
 {
@@ -221,6 +224,21 @@ uint32_t  NFCHumanModule::GetPlayerInfo(uint32_t playerId, NFMsg::playerinfo* pI
 	return LoadPlayerInfo(playerId, pInfo);
 }
 
+std::string NFCHumanModule::GetInitFaceID()
+{
+	std::string initFace = GetGlobalConfigObject()->GetNodeString(GAME_CONFIG_INIT_FACE);
+	std::vector<std::string> vecInitFace;
+	NFStringUtility::Split(vecInitFace, initFace, ";");
+
+	if (vecInitFace.size() <= 0)
+	{
+		return std::string();
+	}
+
+	int index = NFRandInt(0, (int)vecInitFace.size());
+	return vecInitFace[index];
+}
+
 void NFCHumanModule::CreatePlayer(NFMsg::playerinfo* pInfo)
 {
 	if (pInfo == nullptr)
@@ -245,8 +263,11 @@ void NFCHumanModule::CreatePlayer(NFMsg::playerinfo* pInfo)
 	pDbInfo->set_imei(pDbInfo->imei());
 	pDbInfo->set_devname(pDbInfo->devname());
 	pDbInfo->set_mobiletype(pDbInfo->mobiletype());
-	pDbInfo->set_jetton(GetGlobalConfigObject()->GetNodeInt32("init_jetton"));
-	pDbInfo->set_money(GetGlobalConfigObject()->GetNodeInt32("init_money"));
+	pDbInfo->set_jetton(GetGlobalConfigObject()->GetNodeInt32(GAME_CONFIG_INIT_JETTON));
+	pDbInfo->set_money(GetGlobalConfigObject()->GetNodeInt32(GAME_CONFIG_INIT_MONEY));
+	pDbInfo->set_lasttime(NFGetSecondTime());
+	pDbInfo->set_face_1(NFCHumanModule::GetInitFaceID());
+	pDbInfo->set_sex(pInfo->sex());
 	bool ret = pMysqlModule->Query(db_playerinfo);
 	if (ret == false)
 	{

@@ -14,6 +14,7 @@
 
 #define GAME_CONFIG_INIT_JETTON "init_jetton"
 #define GAME_CONFIG_INIT_MONEY  "init_money"
+#define GAME_CONFIG_INIT_FACE	"init_face"
 
 class NFIGameConfigModule : public NFIModule
 {

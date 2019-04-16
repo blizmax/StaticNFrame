@@ -18,4 +18,6 @@ public:
 	virtual uint32_t GetPlayerInfoByCID(const std::string& account, const std::string& password, NFMsg::playerinfo* pInfo) = 0;
 
 	virtual uint32_t GetPlayerInfo(uint32_t playerId, NFMsg::playerinfo* pInfo) = 0;
+
+	virtual void CreatePlayer(NFMsg::playerinfo* pInfo) = 0;
 };
