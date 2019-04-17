@@ -52,7 +52,7 @@ public:
     virtual const bool HValues(const std::string& strKey, std::vector<std::string>& valueVec) = 0;
     virtual const bool HGetAll(const std::string& strKey, std::vector<std::pair<std::string, std::string> >& valueVec) = 0;
 
-
+	virtual const bool Incr(const std::string& strKey, int64_t& value) = 0;
 
     virtual const bool ZAdd(const std::string& strKey, const double nScore, const std::string& strMember) = 0;
     virtual const bool ZIncrBy(const std::string& strKey, const std::string& strMember, const double dwIncrement) = 0;

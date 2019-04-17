@@ -26,6 +26,7 @@ bool NFCGameConfigModule::Awake()
 {
 	GetGlobalConfigObject()->AddNode(GAME_CONFIG_INIT_JETTON, NFCData(NF_DT_INT, 0));
 	GetGlobalConfigObject()->AddNode(GAME_CONFIG_INIT_MONEY, NFCData(NF_DT_INT, 0));
+	GetGlobalConfigObject()->AddNode(GAME_CONFIG_INIT_FACE, NFCData(NF_DT_STRING, ""));
 	return true;
 }
 

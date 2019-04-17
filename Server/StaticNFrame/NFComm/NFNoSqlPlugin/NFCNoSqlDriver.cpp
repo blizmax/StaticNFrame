@@ -438,6 +438,22 @@ const bool NFCNoSqlDriver::HGetAll(const std::string& strKey, std::vector<std::p
     return false;
 }
 
+const bool NFCNoSqlDriver::Incr(const std::string& strKey, int64_t& value)
+{
+	if (!Enable())
+	{
+		return false;
+	}
+
+	try
+	{
+		value = m_pNoSqlClient->incr(strKey);
+		return true;
+	}
+	REDIS_CATCH(__FUNCTION__, __LINE__);
+	return false;
+}
+
 const bool NFCNoSqlDriver::ZAdd(const std::string& strKey, const double nScore, const std::string& strMember)
 {
     if (!Enable())

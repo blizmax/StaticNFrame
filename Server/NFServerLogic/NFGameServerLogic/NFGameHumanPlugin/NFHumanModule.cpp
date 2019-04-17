@@ -18,6 +18,8 @@
 #include "NFComm/NFCore/NFStringUtility.h"
 #include "NFComm/NFCore/NFRandom.hpp"
 
+#define REDIS_KEY_PLAYER_ALL	"playerall"
+
 NFCHumanModule::NFCHumanModule(NFIPluginManager* p)
 {
 	m_pPluginManager = p;
@@ -196,7 +198,7 @@ uint32_t NFCHumanModule::GetPlayerInfoByCID(const std::string& account, const st
 	return LoadPlayerInfoByCID(account, password, pInfo);
 }
 
-uint32_t  NFCHumanModule::GetPlayerInfo(uint32_t playerId, NFMsg::playerinfo* pInfo)
+uint32_t  NFCHumanModule::GetPlayerInfo(uint64_t playerId, NFMsg::playerinfo* pInfo)
 {
 	if (pInfo == nullptr)
 	{
@@ -276,7 +278,28 @@ void NFCHumanModule::CreatePlayer(NFMsg::playerinfo* pInfo)
 	}
 }
 
-uint32_t NFCHumanModule::LoadPlayerInfo(uint32_t playerId, NFMsg::playerinfo* pInfo)
+void NFCHumanModule::AddPlayerAllCount()
+{
+	NFINoSqlModule* pNosqlModule = m_pPluginManager->FindModule<NFINoSqlModule>();
+	NF_SHARE_PTR<NFINoSqlDriver> pNosqlDriver = pNosqlModule->GetDriverBySuitConsistent();
+
+	int64_t value = 0;
+	if (pNosqlDriver->Incr(REDIS_KEY_PLAYER_ALL, value))
+	{
+		NFLogInfo(NF_LOG_LOGIN_MODULE_LOG, 0, "redis key:playerall={}", value);
+	}
+	else
+	{
+		NFLogError(NF_LOG_LOGIN_MODULE_LOG, 0, "redis key:playerall={}, incr failed!", value);
+	}
+}
+
+void NFCHumanModule::CreatePlayerStates(uint64_t playerId, const std::string& account)
+{
+
+}
+
+uint32_t NFCHumanModule::LoadPlayerInfo(uint64_t playerId, NFMsg::playerinfo* pInfo)
 {
 	if (pInfo == nullptr)
 	{

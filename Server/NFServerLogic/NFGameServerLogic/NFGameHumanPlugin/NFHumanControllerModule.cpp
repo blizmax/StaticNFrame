@@ -125,6 +125,8 @@ void NFCHumanControllerModule::OnHandleAccountLogin(const uint32_t unLinkId, con
 		}
 
 		isNewPlayer = true;
+		pHumanModule->AddPlayerAllCount();
+		pHumanModule->CreatePlayerStates(pInfo->userid(), pInfo->nickname());
 	}
 	else if (ret == RETURN_CODE_PASSWORD_NOT_MATCH)
 	{

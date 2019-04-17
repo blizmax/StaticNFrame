@@ -19,17 +19,21 @@ public:
 
 	virtual bool Init() override;
 
-	virtual uint32_t GetPlayerInfoByCID(const std::string& account, const std::string& password, NFMsg::playerinfo* pInfo);
+	virtual uint32_t GetPlayerInfoByCID(const std::string& account, const std::string& password, NFMsg::playerinfo* pInfo) override;
 
-	virtual uint32_t GetPlayerInfo(uint32_t playerId, NFMsg::playerinfo* pInfo);
+	virtual uint32_t GetPlayerInfo(uint64_t playerId, NFMsg::playerinfo* pInfo) override;
 
-	virtual void CreatePlayer(NFMsg::playerinfo* pInfo);
+	virtual void CreatePlayer(NFMsg::playerinfo* pInfo) override;
+
+	virtual void AddPlayerAllCount() override;
+
+	virtual void CreatePlayerStates(uint64_t playerId, const std::string& account) override;
 private:
 	virtual std::string GetInitFaceID();
 
 	virtual uint32_t LoadPlayerInfoByCID(const std::string& account, const std::string& password, NFMsg::playerinfo* pInfo);
 
-	virtual uint32_t LoadPlayerInfo(uint32_t playerId, NFMsg::playerinfo* pInfo);
+	virtual uint32_t LoadPlayerInfo(uint64_t playerId, NFMsg::playerinfo* pInfo);
 
 	static void CopyFromDB(NFMsg::playerinfo* pInfo, NFMsg::db_playerinfo* pDbInfo);
 };

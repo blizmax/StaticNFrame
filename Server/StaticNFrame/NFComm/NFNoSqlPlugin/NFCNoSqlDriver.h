@@ -64,6 +64,7 @@ public:
     virtual const bool HGetAll(const std::string& strKey, std::vector<std::pair<std::string, std::string> >& valueVec);
 
     /////////////
+	virtual const bool Incr(const std::string& strKey, int64_t& value);
 
     virtual const bool ZAdd(const std::string& strKey, const double nScore, const std::string& strMember);
     virtual const bool ZIncrBy(const std::string& strKey, const std::string& strMember, const double nIncrement);
