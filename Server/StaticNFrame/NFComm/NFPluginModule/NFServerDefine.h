@@ -85,13 +85,6 @@ public:
 	uint32_t GetServerId() { return mServerInfo.server_id(); }
 	uint32_t GetServerType() { return mServerInfo.server_type(); }
 	std::string GetServerName() { return mServerInfo.server_name(); }
-	uint32_t GetGameId() { return mServerInfo.game_id(); }
-	std::string GetGameName() { return mServerInfo.game_name(); }
-	uint32_t GetZoneId() { return mServerInfo.server_id(); }
-	std::function<uint32_t()> LuaGetGameId() { return [this]()->uint32_t { return mServerInfo.game_id(); }; }
-	std::function<uint32_t()> LuaGetZoneId() { return [this]()->uint32_t { return mServerInfo.server_id(); }; }
-	LUA_SEND_MSG_FUNCTION GetSendString() { return mSendString; }
-	void SetSendString(LUA_SEND_MSG_FUNCTION cb) { mSendString = cb; }
 
 	uint32_t mUnlinkId;
 	NFMsg::ServerInfoReport mServerInfo;
@@ -111,22 +104,33 @@ public:
 	uint64_t uid;
 	std::string ip;
 	std::string account;
-	LUA_SEND_MSG_FUNCTION sendMsgFunc;
+};
 
-	void SetUnlinkId(uint32_t id) { unlinkId = id; }
-	uint32_t GetUnlinkId() { return unlinkId; }
+class ProxyLinkInfo
+{
+public:
+	ProxyLinkInfo()
+	{
+		mUnlinkId = 0;
+		mPlayerId = 0;
+		mIsLogin = false;
+		mGameServerId = 0;
+		mWorldServerId = 0;
+		mGameServerUnlinkId = 0;
+		mSendMsgCount = 0;
+		mRecvMsgCount = 0;
+	}
 
-	void SetUid(uint64_t id) { uid = id; }
-	uint64_t GetUid() { return uid; }
-
-	void SetIp(const std::string& _ip) { ip = _ip; }
-	std::string GetIp() { return ip; }
-
-	void SetAccount(const std::string& a) { account = a; }
-	std::string GetAccount() { return account; }
-
-	void SetSendMsg(const LUA_SEND_MSG_FUNCTION& func) { sendMsgFunc = func; }
-	LUA_SEND_MSG_FUNCTION GetSendMsg() { return sendMsgFunc; }
+	uint32_t mUnlinkId;
+	uint64_t mPlayerId;
+	std::string mIPAddr;
+	std::string mAccount;
+	bool mIsLogin;
+	uint32_t mGameServerUnlinkId;
+	uint32_t mGameServerId;
+	uint32_t mWorldServerId;
+	uint32_t mSendMsgCount;
+	uint32_t mRecvMsgCount;
 };
 
 /**

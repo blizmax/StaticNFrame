@@ -23,7 +23,7 @@ public:
 
 	virtual uint32_t GetPlayerInfo(uint64_t playerId, NFMsg::playerinfo* pInfo) override;
 
-	virtual void CreatePlayer(NFMsg::playerinfo* pInfo) override;
+	virtual void CreatePlayer(const NFMsg::cgaccountlogin& cgMsg) override;
 
 	virtual void AddPlayerAllCount() override;
 

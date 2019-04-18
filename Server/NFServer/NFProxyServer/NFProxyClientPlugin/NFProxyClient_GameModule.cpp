@@ -35,7 +35,7 @@ bool NFCProxyClient_GameModule::Init()
 bool NFCProxyClient_GameModule::AfterInit()
 {
 	m_pNetClientModule->AddEventCallBack(NF_ST_GAME, this, &NFCProxyClient_GameModule::OnProxySocketEvent);
-	m_pNetClientModule->AddReceiveCallBack(NF_ST_GAME, this, &NFCProxyClient_GameModule::OnHandleOtherMessage);
+	//m_pNetClientModule->AddReceiveCallBack(NF_ST_GAME, this, &NFCProxyClient_GameModule::OnHandleOtherMessage);
 
 	return true;
 }

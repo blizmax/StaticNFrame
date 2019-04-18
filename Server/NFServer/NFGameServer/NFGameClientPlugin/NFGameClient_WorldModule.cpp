@@ -87,9 +87,6 @@ void NFCGameClient_WorldModule::OnClientDisconnect(uint32_t unLinkId)
 		NFLogError(NF_LOG_SERVER_CONNECT_SERVER, 0, "the world server disconnect, serverName:{}, serverId:{}, serverIp:{}, serverPort:{}"
 			, pServerData->mServerInfo.server_name(), pServerData->mServerInfo.server_id(), pServerData->mServerInfo.server_ip(), pServerData->mServerInfo.server_port());
 
-		pServerData->SetSendString([this, pServerData](const std::string& msg) {
-			NFLogError(NF_LOG_SERVER_CONNECT_SERVER, 0, "world disconnect, can't send msg:{}", msg);
-		});
 		m_pServerNetEventModule->OnServerNetEvent(eMsgType_DISCONNECTED, NF_ST_GAME, NF_ST_WORLD, unLinkId, pServerData);
 
 		mUnlinkWorldMap.RemoveElement(unLinkId);
@@ -150,9 +147,6 @@ void NFCGameClient_WorldModule::RegisterServer(uint32_t linkId)
 	NF_SHARE_PTR<NFServerData> pServerData = mUnlinkWorldMap.GetElement(linkId);
 	if (pServerData)
 	{
-		pServerData->SetSendString([this, pServerData](const std::string& msg) {
-			m_pNetClientModule->SendByServerID(pServerData->mUnlinkId, 0, msg, 0);
-		});
 		m_pServerNetEventModule->OnServerNetEvent(eMsgType_CONNECTED, NF_ST_GAME, NF_ST_WORLD, linkId, pServerData);
 	}
 }

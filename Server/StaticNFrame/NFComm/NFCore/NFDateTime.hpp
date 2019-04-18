@@ -513,6 +513,14 @@ public:
 		return stream.str();
 	}
 
+	std::string GetDbTimeString() const
+	{
+		std::stringstream stream;
+		stream << GetYear() << "-" << GetMonth() << "-" << GetDay() << " ";
+		stream << GetHour() << ":" << GetMinute() << ":" << GetSecond();
+		return stream.str();
+	}
+
 	std::string GetShortTimeString() const
 	{
 		std::stringstream ss(std::stringstream::in | std::stringstream::out);

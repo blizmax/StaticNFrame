@@ -17,6 +17,7 @@
 #include "NFServerLogic/NFServerLogicCommon/NFIGameConfigModule.h"
 #include "NFComm/NFCore/NFStringUtility.h"
 #include "NFComm/NFCore/NFRandom.hpp"
+#include "NFComm/NFCore/NFDateTime.hpp"
 
 #define REDIS_KEY_PLAYER_ALL	"playerall"
 
@@ -241,35 +242,30 @@ std::string NFCHumanModule::GetInitFaceID()
 	return vecInitFace[index];
 }
 
-void NFCHumanModule::CreatePlayer(NFMsg::playerinfo* pInfo)
+void NFCHumanModule::CreatePlayer(const NFMsg::cgaccountlogin& cgMsg)
 {
-	if (pInfo == nullptr)
-	{
-		NFLogError(NF_LOG_LOGIN_MODULE_LOG, 0, "function param error");
-		return;
-	}
-
 	NFIMysqlModule* pMysqlModule = m_pPluginManager->FindModule<NFIMysqlModule>();
 	NFMsg::db_query_playerinfo db_playerinfo;
 	NFMsg::db_playerinfo* pDbInfo = db_playerinfo.mutable_db_fields();
-	pDbInfo->set_cid(pInfo->cid());
-	pDbInfo->set_account(pInfo->account());
-	pDbInfo->set_password(pInfo->password());
-	pDbInfo->set_nickname(pInfo->nickname());
-	pDbInfo->set_channel(pInfo->channel());
-	pDbInfo->set_province(pInfo->province());
-	pDbInfo->set_city(pInfo->city());
-	pDbInfo->set_bindtype(pInfo->bindtype());
-	pDbInfo->set_bindnick(pInfo->bindnick());
-	pDbInfo->set_platformid(pDbInfo->platformid());
-	pDbInfo->set_imei(pDbInfo->imei());
-	pDbInfo->set_devname(pDbInfo->devname());
-	pDbInfo->set_mobiletype(pDbInfo->mobiletype());
+	pDbInfo->set_cid(cgMsg.cid());
+	pDbInfo->set_account(cgMsg.account());
+	pDbInfo->set_password(cgMsg.password());
+	pDbInfo->set_nickname(cgMsg.nickname());
+	pDbInfo->set_channel(cgMsg.channel());
+	pDbInfo->set_province(cgMsg.province());
+	pDbInfo->set_city(cgMsg.city());
+	pDbInfo->set_bindtype(cgMsg.bindtype());
+	pDbInfo->set_bindnick(cgMsg.bindnick());
+	pDbInfo->set_platformid(cgMsg.platformid());
+	pDbInfo->set_imei(cgMsg.imei());
+	pDbInfo->set_devname(cgMsg.devname());
+	pDbInfo->set_mobiletype(cgMsg.mobiletype());
 	pDbInfo->set_jetton(GetGlobalConfigObject()->GetNodeInt32(GAME_CONFIG_INIT_JETTON));
 	pDbInfo->set_money(GetGlobalConfigObject()->GetNodeInt32(GAME_CONFIG_INIT_MONEY));
 	pDbInfo->set_lasttime(NFGetSecondTime());
 	pDbInfo->set_face_1(NFCHumanModule::GetInitFaceID());
-	pDbInfo->set_sex(pInfo->sex());
+	pDbInfo->set_sex(cgMsg.sex());
+	pDbInfo->set_regdate(NFDateTime::Now().GetDbTimeString());
 	bool ret = pMysqlModule->Updata(db_playerinfo);
 	if (ret == false)
 	{

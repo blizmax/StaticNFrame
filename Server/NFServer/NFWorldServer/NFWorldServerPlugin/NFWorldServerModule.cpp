@@ -114,9 +114,6 @@ void NFCWorldServerModule::OnClientDisconnect(uint32_t unLinkId)
 			NFLogError(NF_LOG_SERVER_CONNECT_SERVER, 0, "the game server disconnect from world server, serverName:{}, serverId:{}, serverIp:{}, serverPort:{}"
 				, pServerData->mServerInfo.server_name(), pServerData->mServerInfo.server_id(), pServerData->mServerInfo.server_ip(), pServerData->mServerInfo.server_port());
 
-			pServerData->SetSendString([this, pServerData](const std::string& msg) {
-				NFLogError(NF_LOG_SERVER_CONNECT_SERVER, 0, "game disconnect, can't send msg:{}", msg);
-			});
 			m_pServerNetEventModule->OnServerNetEvent(eMsgType_DISCONNECTED, NF_ST_WORLD, NF_ST_GAME, unLinkId, pServerData);
 			return;
 		}
@@ -135,9 +132,6 @@ void NFCWorldServerModule::OnClientDisconnect(uint32_t unLinkId)
 			NFLogError(NF_LOG_SERVER_CONNECT_SERVER, 0, "the proxy server disconnect from world server, serverName:{}, serverId:{}, serverIp:{}, serverPort:{}"
 				, pServerData->mServerInfo.server_name(), pServerData->mServerInfo.server_id(), pServerData->mServerInfo.server_ip(), pServerData->mServerInfo.server_port());
 
-			pServerData->SetSendString([this, pServerData](const std::string& msg) {
-				NFLogError(NF_LOG_SERVER_CONNECT_SERVER, 0, "proxy disconnect, can't send msg:{}", msg);
-			});
 			m_pServerNetEventModule->OnServerNetEvent(eMsgType_DISCONNECTED, NF_ST_WORLD, NF_ST_PROXY, unLinkId, pServerData);
 			return;
 		}
@@ -219,9 +213,6 @@ void NFCWorldServerModule::OnGameServerRegisterProcess(const uint32_t unLinkId, 
 
 		NFLogInfo(NF_LOG_SERVER_CONNECT_SERVER, 0, "Game Server Register World Server Success, serverName:{}, serverId:{}, ip:{}, port:{}", pServerData->mServerInfo.server_name(), pServerData->mServerInfo.server_id(), pServerData->mServerInfo.server_ip(), pServerData->mServerInfo.server_port());
 	
-		pServerData->SetSendString([this, pServerData](const std::string& msg) {
-			m_pNetServerModule->SendByServerID(pServerData->mUnlinkId, 0, msg, 0);
-		});
 		m_pServerNetEventModule->OnServerNetEvent(eMsgType_CONNECTED, NF_ST_WORLD, NF_ST_GAME, unLinkId, pServerData);
 	}
 }
@@ -253,9 +244,6 @@ void NFCWorldServerModule::OnProxyServerRegisterProcess(const uint32_t unLinkId,
 
 		NFLogInfo(NF_LOG_SERVER_CONNECT_SERVER, 0, "Proxy Server Register World Server Success, serverName:{}, serverId:{}, ip:{}, port:{}", pServerData->mServerInfo.server_name(), pServerData->mServerInfo.server_id(), pServerData->mServerInfo.server_ip(), pServerData->mServerInfo.server_port());
 
-		pServerData->SetSendString([this, pServerData](const std::string& msg) {
-			m_pNetServerModule->SendByServerID(pServerData->mUnlinkId, 0, msg, 0);
-		});
 		m_pServerNetEventModule->OnServerNetEvent(eMsgType_CONNECTED, NF_ST_WORLD, NF_ST_PROXY, unLinkId, pServerData);
 	}
 }

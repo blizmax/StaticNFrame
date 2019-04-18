@@ -213,13 +213,8 @@ bool NFCLuaScriptModule::Register()
 	LuaIntf::LuaBinding(l).beginClass<NFServerData>("NFServerData")
 		.addProperty("UnlinkId", &NFServerData::GetUnlinkId)
 		.addProperty("ServerId", &NFServerData::GetServerId)
-		.addProperty("GetGameId", &NFServerData::LuaGetGameId)
-		.addProperty("GetZoneId", &NFServerData::LuaGetZoneId)
 		.endClass();
 
-	LuaIntf::LuaBinding(l).beginClass<AccountInfo>("PlayerAccountInfo")
-		.addProperty("Id", &AccountInfo::GetUid, &AccountInfo::SetUid)
-		.endClass();
 	return true;
 }
 

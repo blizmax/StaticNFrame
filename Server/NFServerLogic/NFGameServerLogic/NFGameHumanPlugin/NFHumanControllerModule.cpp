@@ -70,6 +70,7 @@ void NFCHumanControllerModule::OnHandleAccountLogin(const uint32_t unLinkId, con
 	NFMsg::cgaccountlogin cgMsg;
 	CLIENT_MSG_PROCESS_NO_OBJECT(nMsgId, playerId, msg, nLen, cgMsg);
 
+	uint32_t clientLinkId = (uint32_t)playerId;
 	NFMsg::gcaccountlogin gcMsg;
 	NFINetServerModule* pNetServerModule = m_pPluginManager->FindModule<NFINetServerModule>();
 
@@ -112,14 +113,14 @@ void NFCHumanControllerModule::OnHandleAccountLogin(const uint32_t unLinkId, con
 
 	if (ret == RETURN_CODE_ACCOUNT_NO_EXIST)
 	{
-		pHumanModule->CreatePlayer(pInfo);
+		pHumanModule->CreatePlayer(cgMsg);
 
 		uint32_t ret = pHumanModule->GetPlayerInfoByCID(cgMsg.account(), cgMsg.password(), pInfo);
 
 		if (ret == RETURN_CODE_ACCOUNT_NO_EXIST)
 		{
 			gcMsg.set_result(RETURN_CODE_ACCOUNT_NO_EXIST);
-			pNetServerModule->SendToServerByPB(unLinkId, ::NFMsg::Server_Msg_AccountLogin, gcMsg, 0);
+			pNetServerModule->SendToServerByPB(unLinkId, ::NFMsg::Server_Msg_AccountLogin, gcMsg, clientLinkId);
 			NFBehaviorLog(playerId, cgMsg.cid(), "login", "AccountLogin", RETURN_CODE_ACCOUNT_NO_EXIST, "创建角色失败，account=" + cgMsg.account() + ",cid=" + cgMsg.cid());
 			return;
 		}
@@ -131,13 +132,13 @@ void NFCHumanControllerModule::OnHandleAccountLogin(const uint32_t unLinkId, con
 	else if (ret == RETURN_CODE_PASSWORD_NOT_MATCH)
 	{
 		gcMsg.set_result(RETURN_CODE_PASSWORD_NOT_MATCH);
-		pNetServerModule->SendToServerByPB(unLinkId, ::NFMsg::Server_Msg_AccountLogin, gcMsg, 0);
+		pNetServerModule->SendToServerByPB(unLinkId, ::NFMsg::Server_Msg_AccountLogin, gcMsg, clientLinkId);
 		NFBehaviorLog(playerId, cgMsg.cid(), "login", "AccountLogin", RETURN_CODE_PASSWORD_NOT_MATCH, "登入失败，密码不匹配=" + cgMsg.account() + ",password=" + cgMsg.password());
 		return;
 	}
 
 	gcMsg.set_result(RETURN_CODE_SUCCESS);
-	pNetServerModule->SendToServerByPB(unLinkId, ::NFMsg::Server_Msg_AccountLogin, gcMsg, 0);
+	pNetServerModule->SendToServerByPB(unLinkId, ::NFMsg::Server_Msg_AccountLogin, gcMsg, clientLinkId);
 	NFBehaviorLog(pInfo->userid(), cgMsg.cid(), "login", "AccountLogin", RETURN_CODE_SUCCESS, "玩家登入游戏");
 	return;
 }

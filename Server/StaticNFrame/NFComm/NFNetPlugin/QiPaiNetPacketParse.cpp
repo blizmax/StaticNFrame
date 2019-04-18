@@ -12,10 +12,10 @@
 #pragma pack(push)
 #pragma pack(1)
 
-struct stMsg
+struct qipaiMsg
 {
 public:
-	stMsg() : mSZ(0), mCmdID(0), mValue(0)
+	qipaiMsg() : mSZ(0), mCmdID(0), mValue(0)
 	{
 		mHead[0] = 'h';
 		mHead[1] = 'e';
@@ -39,56 +39,46 @@ int QiPaiNetPacketParse::DeCodeImpl(const char* strData, const uint32_t unLen, c
 {
 	if (strData == nullptr || unLen == 0) return 1;
 
-	stMsg* packHead = nullptr;
+	qipaiMsg* packHead = nullptr;
 
-	if (unLen < static_cast<uint32_t>(sizeof(stMsg)))
+	if (unLen < static_cast<uint32_t>(sizeof(qipaiMsg)))
 	{
 		return 1;
 	}
 
-	packHead = (stMsg*)strData; //-V519
-	uint32_t msgSize = 0;
-	uint16_t tmpMsgId = 0;
-	uint16_t tmpValue = 0;
-	NFDataStream stream(packHead, sizeof(stMsg), false);
-	stream.SeekWriteIndex(sizeof(stMsg));
-	stream.SeekReadIndex(4);
-	stream.Read(&msgSize, sizeof(msgSize));
-	stream.Read(&tmpMsgId, sizeof(uint16_t));
-	stream.Read(&tmpValue, sizeof(uint16_t));
+	packHead = (qipaiMsg*)strData; //-V519
+	uint32_t msgSize = packHead->mSZ;
+	uint16_t tmpMsgId = packHead->mCmdID;
+	uint16_t tmpValue = packHead->mValue;
 
-	if (sizeof(stMsg) + msgSize >= MAX_RECV_BUFFER_SIZE) //-V560
+	if (sizeof(qipaiMsg) + msgSize >= MAX_RECV_BUFFER_SIZE) //-V560
 	{
 		return -1;
 	}
 
-	if (sizeof(stMsg) + msgSize > unLen)
+	if (sizeof(qipaiMsg) + msgSize > unLen)
 	{
 		return 1;
 	}
 
-	outData = const_cast<char*>(strData + sizeof(stMsg));
+	outData = const_cast<char*>(strData + sizeof(qipaiMsg));
 	outLen = msgSize;
 	nMsgId = tmpMsgId;
 	nValue = tmpValue;
-	allLen = sizeof(stMsg) + msgSize;
+	allLen = sizeof(qipaiMsg) + msgSize;
 	return 0;
 }
 
 int QiPaiNetPacketParse::EnCodeImpl(const uint32_t unMsgID, const uint64_t nValue, const char* strData, const uint32_t unDataLen, NFBuffer& buffer)
 {
-	stMsg packHead;
-	NFDataStream stream;
-	uint16_t tmpMsgId = unMsgID;
-	uint16_t tmpValue = nValue;
-	stream.SeekWriteIndex(4);
-	stream.Write(&unDataLen, sizeof(unDataLen));
-	stream.Write(&tmpMsgId, sizeof(tmpMsgId));
-	stream.Write(&tmpValue, sizeof(tmpValue));
+	qipaiMsg packHead;
+	packHead.mSZ = unDataLen;
+	packHead.mCmdID = (uint16_t)unMsgID;
+	packHead.mValue = (uint16_t)nValue;
 
-	buffer.PushData(&packHead, sizeof(stMsg));
+	buffer.PushData(&packHead, sizeof(qipaiMsg));
 	buffer.PushData(strData, unDataLen);
 
-	return unDataLen + sizeof(stMsg);
+	return unDataLen + sizeof(qipaiMsg);
 }
 

@@ -99,9 +99,6 @@ void NFCProxyClient_MasterModule::RegisterServer()
 		m_pNetClientModule->SendToServerByPB(m_pMasterServerData->mUnlinkId, EGMI_NET_PROXY_TO_MASTER_REGISTER, xMsg, 0);
 	}
 
-	m_pMasterServerData->SetSendString([this](const std::string& msg) {
-		m_pNetClientModule->SendByServerID(m_pMasterServerData->mUnlinkId, 0, msg, 0);
-	});
 	m_pServerNetEventModule->OnServerNetEvent(eMsgType_CONNECTED, NF_ST_PROXY, NF_ST_MASTER, m_pMasterServerData->mUnlinkId, m_pMasterServerData);
 }
 
@@ -119,11 +116,8 @@ void NFCProxyClient_MasterModule::OnProxySocketEvent(const eMsgType nEvent, cons
 	else if (nEvent == eMsgType_DISCONNECTED)
 	{
 		NFLogDebug(NF_LOG_SERVER_CONNECT_SERVER, 0, "Proxy Server DisConnect Master Server!");
-		m_pMasterServerData->SetSendString([this](const std::string& msg) {
-			NFLogError(NF_LOG_SERVER_CONNECT_SERVER, 0, "master disconnect, can't send msg:{}", msg);
-		});
-		m_pServerNetEventModule->OnServerNetEvent(eMsgType_DISCONNECTED, NF_ST_PROXY, NF_ST_MASTER, m_pMasterServerData->mUnlinkId, m_pMasterServerData);
 
+		m_pServerNetEventModule->OnServerNetEvent(eMsgType_DISCONNECTED, NF_ST_PROXY, NF_ST_MASTER, m_pMasterServerData->mUnlinkId, m_pMasterServerData);
 	}
 }
 
