@@ -230,7 +230,7 @@ std::string NFCHumanModule::GetInitFaceID()
 {
 	std::string initFace = GetGlobalConfigObject()->GetNodeString(GAME_CONFIG_INIT_FACE);
 	std::vector<std::string> vecInitFace;
-	NFStringUtility::Split(vecInitFace, initFace, ";");
+	NFStringUtility::Split(vecInitFace, initFace, ",");
 
 	if (vecInitFace.size() <= 0)
 	{
@@ -270,7 +270,7 @@ void NFCHumanModule::CreatePlayer(NFMsg::playerinfo* pInfo)
 	pDbInfo->set_lasttime(NFGetSecondTime());
 	pDbInfo->set_face_1(NFCHumanModule::GetInitFaceID());
 	pDbInfo->set_sex(pInfo->sex());
-	bool ret = pMysqlModule->Query(db_playerinfo);
+	bool ret = pMysqlModule->Updata(db_playerinfo);
 	if (ret == false)
 	{
 		NFBehaviorLog(0, "", "player", "LoadPlayerInfoByCID", -1, "加载数据库玩家信息失败");
