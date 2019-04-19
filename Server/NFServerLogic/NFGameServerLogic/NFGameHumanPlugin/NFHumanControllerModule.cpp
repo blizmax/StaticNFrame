@@ -31,7 +31,7 @@ bool NFCHumanControllerModule::Init()
 	/**
 	* @brief 绑定协议处理函数
 	*/
-	AddNetClientReceiveCallBack(NF_ST_GAME, ::NFMsg::Client_Msg_AccountLogin, this, &NFCHumanControllerModule::OnHandleAccountLogin);
+	AddNetClientReceiveCallBack(NF_ST_WORLD, ::NFMsg::Client_Msg_AccountLogin, this, &NFCHumanControllerModule::OnHandleAccountLogin);
 
 	AddNetServerReceiveCallBack(NF_ST_GAME, ::NFMsg::Client_Msg_GetPlayerInfo, this, &NFCHumanControllerModule::OnHandleGetPlayerInfo);
 	AddNetServerReceiveCallBack(NF_ST_GAME, ::NFMsg::Client_Msg_ReConnect, this, &NFCHumanControllerModule::OnHandleReConnect);
@@ -71,7 +71,7 @@ void NFCHumanControllerModule::OnHandleAccountLogin(const uint32_t unLinkId, con
 	NFMsg::cgaccountlogin cgMsg;
 	CLIENT_MSG_PROCESS_NO_OBJECT(nMsgId, playerId, msg, nLen, cgMsg);
 
-	uint32_t clientLinkId = (uint32_t)playerId;
+	uint32_t proxyServerId = (uint32_t)playerId;
 	NFMsg::gcaccountlogin gcMsg;
 	NFINetClientModule* pNetClientModule = m_pPluginManager->FindModule<NFINetClientModule>();
 
@@ -121,7 +121,7 @@ void NFCHumanControllerModule::OnHandleAccountLogin(const uint32_t unLinkId, con
 		if (ret == RETURN_CODE_ACCOUNT_NO_EXIST)
 		{
 			gcMsg.set_result(RETURN_CODE_ACCOUNT_NO_EXIST);
-			pNetClientModule->SendToServerByPB(unLinkId, ::NFMsg::Server_Msg_AccountLogin, gcMsg, clientLinkId);
+			pNetClientModule->SendToServerByPB(unLinkId, ::NFMsg::Server_Msg_AccountLogin, gcMsg, 0);
 			NFBehaviorLog(playerId, cgMsg.cid(), "login", "AccountLogin", RETURN_CODE_ACCOUNT_NO_EXIST, "创建角色失败，account=" + cgMsg.account() + ",cid=" + cgMsg.cid());
 			return;
 		}
@@ -133,13 +133,13 @@ void NFCHumanControllerModule::OnHandleAccountLogin(const uint32_t unLinkId, con
 	else if (ret == RETURN_CODE_PASSWORD_NOT_MATCH)
 	{
 		gcMsg.set_result(RETURN_CODE_PASSWORD_NOT_MATCH);
-		pNetClientModule->SendToServerByPB(unLinkId, ::NFMsg::Server_Msg_AccountLogin, gcMsg, clientLinkId);
+		pNetClientModule->SendToServerByPB(unLinkId, ::NFMsg::Server_Msg_AccountLogin, gcMsg, 0);
 		NFBehaviorLog(playerId, cgMsg.cid(), "login", "AccountLogin", RETURN_CODE_PASSWORD_NOT_MATCH, "登入失败，密码不匹配=" + cgMsg.account() + ",password=" + cgMsg.password());
 		return;
 	}
 
 	gcMsg.set_result(RETURN_CODE_SUCCESS);
-	pNetClientModule->SendToServerByPB(unLinkId, ::NFMsg::Server_Msg_AccountLogin, gcMsg, clientLinkId);
+	pNetClientModule->SendToServerByPB(unLinkId, ::NFMsg::Server_Msg_AccountLogin, gcMsg, 0);
 	NFBehaviorLog(pInfo->userid(), cgMsg.cid(), "login", "AccountLogin", RETURN_CODE_SUCCESS, "玩家登入游戏");
 	return;
 }

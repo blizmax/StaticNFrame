@@ -190,7 +190,7 @@ void NFCWorldLogicModule::OnHandleAccountLoginFromProxyServer(const uint32_t unL
 	{
 		if (pServerData->GetServerId() == pInfo->mGameServerId)
 		{
-			m_pNetServerModule->SendToServerByPB(pInfo->mGameServerUnlinkId, nMsgId, cgMsg, 0);
+			m_pNetServerModule->SendToServerByPB(pInfo->mGameServerUnlinkId, nMsgId, cgMsg, pInfo->mProxyServerId);
 			return;
 		}
 		else
@@ -200,7 +200,7 @@ void NFCWorldLogicModule::OnHandleAccountLoginFromProxyServer(const uint32_t unL
 			if (pServerData)
 			{
 				pInfo->mGameServerUnlinkId = pServerData->GetUnlinkId();
-				m_pNetServerModule->SendToServerByPB(pInfo->mGameServerUnlinkId, nMsgId, cgMsg, 0);
+				m_pNetServerModule->SendToServerByPB(pInfo->mGameServerUnlinkId, nMsgId, cgMsg, pInfo->mProxyServerId);
 				return;
 			}
 		}
@@ -211,7 +211,7 @@ void NFCWorldLogicModule::OnHandleAccountLoginFromProxyServer(const uint32_t unL
 		if (pServerData)
 		{
 			pInfo->mGameServerUnlinkId = pServerData->GetUnlinkId();
-			m_pNetServerModule->SendToServerByPB(pInfo->mGameServerUnlinkId, nMsgId, cgMsg, 0);
+			m_pNetServerModule->SendToServerByPB(pInfo->mGameServerUnlinkId, nMsgId, cgMsg, pInfo->mProxyServerId);
 			return;
 		}
 		else
@@ -221,7 +221,7 @@ void NFCWorldLogicModule::OnHandleAccountLoginFromProxyServer(const uint32_t unL
 			{
 				pInfo->mGameServerId = pServerData->GetServerId();
 				pInfo->mGameServerUnlinkId = pServerData->GetUnlinkId();
-				m_pNetServerModule->SendToServerByPB(pInfo->mGameServerUnlinkId, nMsgId, cgMsg, 0);
+				m_pNetServerModule->SendToServerByPB(pInfo->mGameServerUnlinkId, nMsgId, cgMsg, pInfo->mProxyServerId);
 				return;
 			}
 		}
@@ -248,7 +248,7 @@ void NFCWorldLogicModule::OnHandleAccountLoginFromGameServer(const uint32_t unLi
 		mPlayerInfoByPlayerId.AddElement(pLinkInfo->mPlayerId, pLinkInfo);
 	}
 
-	NF_SHARE_PTR<NFServerData> pServerData = mGameMap.GetElement(pLinkInfo->mProxyServerUnlinkId);
+	NF_SHARE_PTR<NFServerData> pServerData = mProxyMap.GetElement(pLinkInfo->mProxyServerUnlinkId);
 	if (pServerData == nullptr)
 	{
 		NFLogWarning(NF_LOG_SYSTEMLOG, 0, "account login return, proxy disconnet! account:{}", account);
