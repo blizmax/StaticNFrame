@@ -37,12 +37,15 @@ public:
 	virtual bool Shut() override;
 
 	void OnHandleMessageFromServer(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen);
-	void OnHandleMessageFromGameServer(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen);
+	
 	void OnHandleAccountLoginFromGameServer(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen);
 	void OnHandleAccountLoginFromProxyServer(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen);
 
 	void OnHandleGameEventCallBack(eMsgType nEvent, uint32_t unLinkId, NF_SHARE_PTR<NFServerData> pServerData);
 	void OnHandleProxyEventCallBack(eMsgType nEvent, uint32_t unLinkId, NF_SHARE_PTR<NFServerData> pServerData);
+
+	NF_SHARE_PTR<NFServerData> FindGameServerByServerId(uint32_t serverId);
+	NF_SHARE_PTR<NFServerData> FindProxyServerByServerId(uint32_t serverId);
 private:
 	NFINetServerModule* m_pNetServerModule;
 	NFINetClientModule* m_pNetClientModule;

@@ -39,7 +39,8 @@ public:
 	void OnProxySocketEvent(const eMsgType nEvent, const uint32_t unLinkId);
 	void OnHandleMessageFromClient(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen);
 	void OnHandleMessageFromGameServer(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen);
-	void OnHandleAccountLoginFromGameServer(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen);
+	void OnHandleMessageFromWorldServer(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen);
+	void OnHandleAccountLoginFromWorldServer(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen);
 	void OnHandleAccountLoginFromClient(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen);
 
 	void OnHandleGameEventCallBack(eMsgType nEvent, uint32_t unLinkId, NF_SHARE_PTR<NFServerData> pServerData);
@@ -52,4 +53,5 @@ private:
 	NFMapEx<uint32_t, NFServerData> mGameMap;	//serverid -- serverdata
 	NFMapEx<uint32_t, NFServerData> mWorldMap;	//serverid -- serverdata
 	NFMapEx<uint32_t, ProxyLinkInfo> mClientLinkInfo; //unlink -- proxyLinkInfo
+	NFMapEx<uint64_t, ProxyLinkInfo> mPlayerLinkInfo; //playerId -- proxyLinkInfo
 };

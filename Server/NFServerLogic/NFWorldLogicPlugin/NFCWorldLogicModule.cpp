@@ -85,19 +85,49 @@ bool NFCWorldLogicModule::Shut()
 	return true;
 }
 
+NF_SHARE_PTR<NFServerData> NFCWorldLogicModule::FindGameServerByServerId(uint32_t serverId)
+{
+	NF_SHARE_PTR<NFServerData> pServerData = mGameMap.First();
+	while (pServerData)
+	{
+		if (pServerData->GetServerId() == serverId)
+		{
+			return pServerData;
+		}
+		pServerData = mGameMap.Next();
+	}
+
+	return nullptr;
+}
+
+NF_SHARE_PTR<NFServerData> NFCWorldLogicModule::FindProxyServerByServerId(uint32_t serverId)
+{
+	NF_SHARE_PTR<NFServerData> pServerData = mProxyMap.First();
+	while (pServerData)
+	{
+		if (pServerData->GetServerId() == serverId)
+		{
+			return pServerData;
+		}
+		pServerData = mProxyMap.Next();
+	}
+
+	return nullptr;
+}
+
 void NFCWorldLogicModule::OnHandleMessageFromServer(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen)
 {
 	NF_SHARE_PTR<NFServerData> pServerData = mProxyMap.GetElement(unLinkId);
 	if (pServerData)
 	{
-		NFLogInfo(NF_LOG_WORLD_RECV_MSG_LOG, 0, "recv msg from server -- serverType:{}, serverId:{}, playerId:{}, msgId:{}, msglen:{}, not handled!", GetServerName((NF_SERVER_TYPES)pServerData->GetServerType()), pServerData->GetServerId(), playerId, nMsgId, nLen);
+		NFLogWarning(NF_LOG_WORLD_RECV_MSG_LOG, 0, "recv msg from server -- serverType:{}, serverId:{}, playerId:{}, msgId:{}, msglen:{}, not handled!", GetServerName((NF_SERVER_TYPES)pServerData->GetServerType()), pServerData->GetServerId(), playerId, nMsgId, nLen);
 		return;
 	}
 
-	NF_SHARE_PTR<NFServerData> pServerData = mGameMap.GetElement(unLinkId);
+	pServerData = mGameMap.GetElement(unLinkId);
 	if (pServerData)
 	{
-		NFLogInfo(NF_LOG_WORLD_RECV_MSG_LOG, 0, "recv msg from server -- serverType:{}, serverId:{}, playerId:{}, msgId:{}, msglen:{}, not handled!", GetServerName((NF_SERVER_TYPES)pServerData->GetServerType()), pServerData->GetServerId(), playerId, nMsgId, nLen);
+		NFLogWarning(NF_LOG_WORLD_RECV_MSG_LOG, 0, "recv msg from server -- serverType:{}, serverId:{}, playerId:{}, msgId:{}, msglen:{}, not handled!", GetServerName((NF_SERVER_TYPES)pServerData->GetServerType()), pServerData->GetServerId(), playerId, nMsgId, nLen);
 		return;
 	}
 }
@@ -107,7 +137,7 @@ void NFCWorldLogicModule::OnHandleAccountLoginFromProxyServer(const uint32_t unL
 	NFMsg::cgaccountlogin cgMsg;
 	CLIENT_MSG_PROCESS_NO_OBJECT(nMsgId, playerId, msg, nLen, cgMsg);
 
-	uint32_t proxyUnlinkId = (uint32_t)(playerId);
+	uint32_t clientUnlinkId = (uint32_t)(playerId);
 	if (cgMsg.cid() == "")
 	{
 		std::string cid = NFRandomString(8);
@@ -134,12 +164,67 @@ void NFCWorldLogicModule::OnHandleAccountLoginFromProxyServer(const uint32_t unL
 		mPlayerInfoByAccount.AddElement(pInfo->mAccount, pInfo);
 	}
 
-	pInfo->mProxyUnlinkId = proxyUnlinkId;
+	pInfo->mClientUnlinkId = clientUnlinkId;
+
+	NF_SHARE_PTR<NFServerData> pProxyServerData = mProxyMap.GetElement(unLinkId);
+	if (pProxyServerData)
+	{
+		if (pInfo->mProxyServerUnlinkId != unLinkId)
+		{
+			NFLogWarning(NF_LOG_SYSTEMLOG, 0, "account login, player:{} switch proxy server!", cgMsg.account());
+		}
+
+		pInfo->mProxyServerUnlinkId = unLinkId;
+		pInfo->mProxyServerId = pProxyServerData->GetServerId();
+	}
+	else
+	{
+		NFLogError(NF_LOG_SYSTEMLOG, 0, "account login, but proxy disconnect!");
+		return;
+	}
+	
 	NFLogInfo(NF_LOG_SYSTEMLOG, 0, "account login:{} world server!", pInfo->mAccount);
 
-	if (pInfo->mGameServerId > 0)
+	NF_SHARE_PTR<NFServerData> pServerData = mGameMap.GetElement(pInfo->mGameServerUnlinkId);
+	if (pServerData)
 	{
-
+		if (pServerData->GetServerId() == pInfo->mGameServerId)
+		{
+			m_pNetServerModule->SendToServerByPB(pInfo->mGameServerUnlinkId, nMsgId, cgMsg, 0);
+			return;
+		}
+		else
+		{
+			NFLogError(NF_LOG_SYSTEMLOG, 0, "player game server link error! the gameserverid:{} != player game serverId:{}", pServerData->GetServerId(), pInfo->mGameServerId);
+			pServerData = FindGameServerByServerId(pInfo->mGameServerId);
+			if (pServerData)
+			{
+				pInfo->mGameServerUnlinkId = pServerData->GetUnlinkId();
+				m_pNetServerModule->SendToServerByPB(pInfo->mGameServerUnlinkId, nMsgId, cgMsg, 0);
+				return;
+			}
+		}
+	}
+	else
+	{
+		pServerData = FindGameServerByServerId(pInfo->mGameServerId);
+		if (pServerData)
+		{
+			pInfo->mGameServerUnlinkId = pServerData->GetUnlinkId();
+			m_pNetServerModule->SendToServerByPB(pInfo->mGameServerUnlinkId, nMsgId, cgMsg, 0);
+			return;
+		}
+		else
+		{
+			pServerData = mGameMap.First();
+			if (pServerData)
+			{
+				pInfo->mGameServerId = pServerData->GetServerId();
+				pInfo->mGameServerUnlinkId = pServerData->GetUnlinkId();
+				m_pNetServerModule->SendToServerByPB(pInfo->mGameServerUnlinkId, nMsgId, cgMsg, 0);
+				return;
+			}
+		}
 	}
 }
 
@@ -148,43 +233,27 @@ void NFCWorldLogicModule::OnHandleAccountLoginFromGameServer(const uint32_t unLi
 	NFMsg::gcaccountlogin gcMsg;
 	CLIENT_MSG_PROCESS_NO_OBJECT(nMsgId, playerId, msg, nLen, gcMsg);
 
-	uint32_t clientLinkId = (uint32_t)playerId;
-	NF_SHARE_PTR<ProxyLinkInfo> pLinkInfo = mClientLinkInfo.GetElement(clientLinkId);
+	std::string account = gcMsg.mutable_pinfo()->account();
+	NF_SHARE_PTR<PlayerWorldServerInfo> pLinkInfo = mPlayerInfoByAccount.GetElement(account);
 	if (pLinkInfo == nullptr)
 	{
-		NFLogWarning(NF_LOG_SYSTEMLOG, 0, "clientLinkId:{} not exist, client maybe disconnect!", clientLinkId);
+		NFLogError(NF_LOG_SYSTEMLOG, 0, "account login return, but can't find the account info:{}", account);
 		return;
 	}
 
 	if (gcMsg.result() == 0)
 	{
 		pLinkInfo->mIsLogin = true;
-		pLinkInfo->mAccount = gcMsg.mutable_pinfo()->account();
-	}
-	pLinkInfo->mSendMsgCount++;
-	m_pNetServerModule->SendByServerID(clientLinkId, nMsgId, msg, nLen, pLinkInfo->mSendMsgCount);
-}
-
-void NFCWorldLogicModule::OnHandleMessageFromGameServer(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen)
-{
-	NF_SHARE_PTR<NFServerData> pServerData = mGameMap.GetElement(unLinkId);
-	if (pServerData)
-	{
-		NFLogInfo(NF_LOG_PROXY_RECV_MSG_LOG, 0, "recv msg from gameserver:{} -- playerId:{}, msgId:{}, msglen:{}", pServerData->GetServerName(), playerId, nMsgId, nLen);
-	}
-	else
-	{
-		NFLogInfo(NF_LOG_PROXY_RECV_MSG_LOG, 0, "recv msg from gameserver:(unknown disconnect) -- playerId:{}, msgId:{}, msglen:{}", playerId, nMsgId, nLen);
+		pLinkInfo->mPlayerId = gcMsg.mutable_pinfo()->userid();
+		mPlayerInfoByPlayerId.AddElement(pLinkInfo->mPlayerId, pLinkInfo);
 	}
 
-	uint32_t clientLinkId = (uint32_t)playerId;
-	NF_SHARE_PTR<ProxyLinkInfo> pLinkInfo = mClientLinkInfo.GetElement(clientLinkId);
-	if (pLinkInfo == nullptr)
+	NF_SHARE_PTR<NFServerData> pServerData = mGameMap.GetElement(pLinkInfo->mProxyServerUnlinkId);
+	if (pServerData == nullptr)
 	{
-		NFLogWarning(NF_LOG_SYSTEMLOG, 0, "clientLinkId:{} not exist, client maybe disconnect!", clientLinkId);
+		NFLogWarning(NF_LOG_SYSTEMLOG, 0, "account login return, proxy disconnet! account:{}", account);
 		return;
 	}
 
-	pLinkInfo->mSendMsgCount++;
-	m_pNetServerModule->SendByServerID(clientLinkId, nMsgId, msg, nLen, pLinkInfo->mSendMsgCount);
+	m_pNetServerModule->SendByServerID(pLinkInfo->mProxyServerUnlinkId, nMsgId, msg, nLen, pLinkInfo->mClientUnlinkId);
 }

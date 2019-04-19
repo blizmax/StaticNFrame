@@ -133,13 +133,13 @@ void NFCLoginClient_MasterModule::OnProxySocketEvent(const eMsgType nEvent, cons
 
 	if (nEvent == eMsgType_CONNECTED)
 	{
-		NFLogDebug(NF_LOG_SERVER_NOT_HANDLE_MESSAGE, 0, "Login Server Connect Master Server Success!");
+		NFLogDebug(NF_LOG_SERVER_CONNECT_SERVER, 0, "Login Server Connect Master Server Success!");
 	
 		RegisterServer();
 	}
 	else if (nEvent == eMsgType_DISCONNECTED)
 	{
-		NFLogDebug(NF_LOG_SERVER_NOT_HANDLE_MESSAGE, 0, "Login Server DisConnect Master Server!");
+		NFLogDebug(NF_LOG_SERVER_CONNECT_SERVER, 0, "Login Server DisConnect Master Server!");
 	}
 }
 

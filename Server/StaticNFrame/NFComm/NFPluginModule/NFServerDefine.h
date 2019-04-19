@@ -134,20 +134,24 @@ class PlayerWorldServerInfo
 public:
 	PlayerWorldServerInfo()
 	{
-		mProxyUnlinkId = 0;
+		mClientUnlinkId = 0;
 		mPlayerId = 0;
 		mIsLogin = false;
 		mGameServerId = 0;
 		mGameServerUnlinkId = 0;
+		mProxyServerUnlinkId = 0;
+		mProxyServerId = 0;
 	}
 
-	uint32_t mProxyUnlinkId;
+	uint32_t mClientUnlinkId;
 	uint64_t mPlayerId;
 	std::string mIPAddr;
 	std::string mAccount;
 	bool mIsLogin;
 	uint32_t mGameServerUnlinkId;
 	uint32_t mGameServerId;
+	uint32_t mProxyServerUnlinkId;
+	uint32_t mProxyServerId;
 };
 
 /**
