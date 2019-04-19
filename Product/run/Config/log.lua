@@ -46,6 +46,10 @@ NFLogId = {
 	NF_LOG_BEGIN_LOGIC_LOG = 1001,			--1001以后是逻辑框架层
 	NF_LOG_PROXY_RECV_MSG_LOG = 1001,		--网关接受消息LOG
 	NF_LOG_PROXY_SEND_MSG_LOG = 1002,		--网关发送消息LOG
+	NF_LOG_WORLD_RECV_MSG_LOG = 1003,		--WORLD接受消息LOG
+	NF_LOG_WORLD_SEND_MSG_LOG = 1004,		--WORLD发送消息LOG
+	NF_LOG_GAME_RECV_MSG_LOG = 1005,		--GAME接受消息LOG
+	NF_LOG_GAME_SEND_MSG_LOG = 1006,		--GAME发送消息LOG
 	NF_LOG_LOGIN_MODULE_LOG = 1102,			--登陆相关LOG打印
 	
 	
@@ -77,13 +81,17 @@ LogInfo = {
 	{logid = NFLogId.NF_LOG_RECV_MSG_JSON_PRINTF, display=false, level=0, logname = "RecvMsgJson", guid = 0, desc = "接受消息Json输出LOG"},
 	--服务器层架构LOG
 	
-	{logid = NFLogId.NF_LOG_SERVER_CONNECT_SERVER, display=true, level=0, logname = "ServerConnectServerLog", guid = 0, desc = "服务器与服务器连接LOG"},
+	{logid = NFLogId.NF_LOG_SERVER_CONNECT_SERVER, display=false, level=0, logname = "ServerConnectServerLog", guid = 0, desc = "服务器与服务器连接LOG"},
 	{logid = NFLogId.NF_LOG_SERVER_NOT_HANDLE_MESSAGE, display=true, level=0, logname = "NotHandleMessageLog", guid = 0, desc = "服务器未处理消息的LOG"},
 	{logid = NFLogId.NF_LOG_BEHAVIOR_LOGIC_LOG, display=true, level=0, logname = "BehaviorLog", guid = 0, desc = "行为LOG日志"},
 	--逻辑代码LOG
 	--------------------网关服务器LOG信息
 	{logid = NFLogId.NF_LOG_PROXY_RECV_MSG_LOG, display=true, level=0, logname = "ProxyRecvMsg", guid = 0, desc = "网关接受消息LOG"},
 	{logid = NFLogId.NF_LOG_PROXY_SEND_MSG_LOG, display=true, level=0, logname = "ProxySendMsg", guid = 0, desc = "网关发送消息LOG"},
+	{logid = NFLogId.NF_LOG_WORLD_RECV_MSG_LOG, display=true, level=0, logname = "WorldRecvMsg", guid = 0, desc = "WORLD接受消息LOG"},
+	{logid = NFLogId.NF_LOG_WORLD_SEND_MSG_LOG, display=true, level=0, logname = "WorldSendMsg", guid = 0, desc = "WORLD发送消息LOG"},
+	{logid = NFLogId.NF_LOG_GAME_RECV_MSG_LOG, display=true, level=0, logname = "GameRecvMsg", guid = 0, desc = "GAME接受消息LOG"},
+	{logid = NFLogId.NF_LOG_GAME_SEND_MSG_LOG, display=true, level=0, logname = "GameSendMsg", guid = 0, desc = "GAME发送消息LOG"},
 	
 	--------------------游戏服务器LOG信息
 	{logid = NFLogId.NF_LOG_LOGIN_MODULE_LOG, display=true, level=0, logname = "LoginModule", guid = 0, desc = "登陆相关LOG打印"},

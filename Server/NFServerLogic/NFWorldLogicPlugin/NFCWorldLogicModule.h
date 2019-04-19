@@ -14,36 +14,17 @@
 #include <NFComm/NFPluginModule/NFEventObj.h>
 #include <NFComm/NFPluginModule/NFINetClientModule.h>
 
-#include "NFServerLogic/NFServerLogicCommon/NFIProxyLogicModule.h"
+#include "NFServerLogic/NFServerLogicCommon/NFIWorldLogicModule.h"
 #include "NFComm/NFPluginModule/NFEventObj.h"
 #include "NFComm/NFPluginModule/NFIServerNetEventModule.h"
 
 #include "NFComm/NFCore/NFMap.hpp"
 
-class ProxyPlayerData
+class NFCWorldLogicModule : public NFIWorldLogicModule
 {
 public:
-	ProxyPlayerData()
-	{
-		gameId = 0;
-		unlinkId = 0;
-		gameServerId = 0;
-		gameUnlinkId = 0;
-		uid = 0;
-	}
-	uint32_t unlinkId;		//玩家连接ID
-	uint32_t gameServerId;	//玩家连接点逻辑服务器
-	uint32_t gameId;		//玩家所在游戏ID
-	uint32_t gameUnlinkId;	//玩家连接逻辑服务器连接ID
-	uint64_t uid;
-	std::string account;
-};
-
-class NFCProxyLogicModule : public NFIProxyLogicModule
-{
-public:
-	explicit NFCProxyLogicModule(NFIPluginManager* p);
-	virtual ~NFCProxyLogicModule();
+	explicit NFCWorldLogicModule(NFIPluginManager* p);
+	virtual ~NFCWorldLogicModule();
 public:
 	virtual bool Init() override;
 
@@ -55,20 +36,20 @@ public:
 
 	virtual bool Shut() override;
 
-	void OnProxySocketEvent(const eMsgType nEvent, const uint32_t unLinkId);
-	void OnHandleMessageFromClient(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen);
+	void OnHandleMessageFromServer(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen);
 	void OnHandleMessageFromGameServer(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen);
 	void OnHandleAccountLoginFromGameServer(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen);
-	void OnHandleAccountLoginFromClient(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen);
+	void OnHandleAccountLoginFromProxyServer(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen);
 
 	void OnHandleGameEventCallBack(eMsgType nEvent, uint32_t unLinkId, NF_SHARE_PTR<NFServerData> pServerData);
-	void OnHandleWorldEventCallBack(eMsgType nEvent, uint32_t unLinkId, NF_SHARE_PTR<NFServerData> pServerData);
+	void OnHandleProxyEventCallBack(eMsgType nEvent, uint32_t unLinkId, NF_SHARE_PTR<NFServerData> pServerData);
 private:
 	NFINetServerModule* m_pNetServerModule;
 	NFINetClientModule* m_pNetClientModule;
 	NFIProxyServerModule* m_pNetProxyServerModule;
 	NFIServerNetEventModule* m_pServerNetEventModule;
 	NFMapEx<uint32_t, NFServerData> mGameMap;	//serverid -- serverdata
-	NFMapEx<uint32_t, NFServerData> mWorldMap;	//serverid -- serverdata
-	NFMapEx<uint32_t, ProxyLinkInfo> mClientLinkInfo; //unlink -- proxyLinkInfo
+	NFMapEx<uint32_t, NFServerData> mProxyMap;	//serverid -- serverdata
+	NFMapEx<std::string, PlayerWorldServerInfo> mPlayerInfoByAccount; //account -- PlayerWorldServerInfo
+	NFMapEx<uint64_t, PlayerWorldServerInfo> mPlayerInfoByPlayerId; //playerId -- PlayerWorldServerInfo
 };

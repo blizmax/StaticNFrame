@@ -14,10 +14,10 @@
 #include <string>
 
 //////////////////////////////////////////////////////////////////////////
-class NFProxyLogicPlugin : public NFIPlugin
+class NFWorldLogicPlugin : public NFIPlugin
 {
 public:
-	explicit NFProxyLogicPlugin(NFIPluginManager* p)
+	explicit NFWorldLogicPlugin(NFIPluginManager* p)
 	{
 		m_pPluginManager = p;
 	}

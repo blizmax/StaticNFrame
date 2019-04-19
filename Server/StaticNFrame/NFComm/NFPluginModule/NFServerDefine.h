@@ -88,8 +88,6 @@ public:
 
 	uint32_t mUnlinkId;
 	NFMsg::ServerInfoReport mServerInfo;
-
-	LUA_SEND_MSG_FUNCTION mSendString;
 };
 
 class AccountInfo
@@ -115,7 +113,6 @@ public:
 		mPlayerId = 0;
 		mIsLogin = false;
 		mGameServerId = 0;
-		mWorldServerId = 0;
 		mGameServerUnlinkId = 0;
 		mSendMsgCount = 0;
 		mRecvMsgCount = 0;
@@ -128,9 +125,29 @@ public:
 	bool mIsLogin;
 	uint32_t mGameServerUnlinkId;
 	uint32_t mGameServerId;
-	uint32_t mWorldServerId;
 	uint32_t mSendMsgCount;
 	uint32_t mRecvMsgCount;
+};
+
+class PlayerWorldServerInfo
+{
+public:
+	PlayerWorldServerInfo()
+	{
+		mProxyUnlinkId = 0;
+		mPlayerId = 0;
+		mIsLogin = false;
+		mGameServerId = 0;
+		mGameServerUnlinkId = 0;
+	}
+
+	uint32_t mProxyUnlinkId;
+	uint64_t mPlayerId;
+	std::string mIPAddr;
+	std::string mAccount;
+	bool mIsLogin;
+	uint32_t mGameServerUnlinkId;
+	uint32_t mGameServerId;
 };
 
 /**

@@ -45,6 +45,7 @@
     <ClInclude Include="NFIHumanModule.h" />
     <ClInclude Include="NFILoginLogicModule.h" />
     <ClInclude Include="NFIProxyLogicModule.h" />
+    <ClInclude Include="NFIWorldLogicModule.h" />
     <ClInclude Include="NFServerLogicCommon.h" />
   </ItemGroup>
   <ItemGroup>

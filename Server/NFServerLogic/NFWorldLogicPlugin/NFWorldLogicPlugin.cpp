@@ -7,21 +7,21 @@
 //
 // -------------------------------------------------------------------------
 
-#include "NFProxyLogicPlugin.h"
+#include "NFWorldLogicPlugin.h"
 #include "NFComm/NFPluginModule/NFIPluginManager.h"
-#include "NFCProxyLogicModule.h"
+#include "NFCWorldLogicModule.h"
 
 #ifdef NF_DYNAMIC_PLUGIN
 
 NF_EXPORT void DllStartPlugin(NFIPluginManager* pm)
 {
-    CREATE_PLUGIN(pm, NFProxyLogicPlugin)
+    CREATE_PLUGIN(pm, NFWorldLogicPlugin)
 
 };
 
 NF_EXPORT void DllStopPlugin(NFIPluginManager* pm)
 {
-    DESTROY_PLUGIN(pm, NFProxyLogicPlugin)
+    DESTROY_PLUGIN(pm, NFWorldLogicPlugin)
 };
 
 #endif
@@ -29,22 +29,22 @@ NF_EXPORT void DllStopPlugin(NFIPluginManager* pm)
 
 //////////////////////////////////////////////////////////////////////////
 
-int NFProxyLogicPlugin::GetPluginVersion()
+int NFWorldLogicPlugin::GetPluginVersion()
 {
 	return 0;
 }
 
-std::string NFProxyLogicPlugin::GetPluginName()
+std::string NFWorldLogicPlugin::GetPluginName()
 {
-	return GET_CLASS_NAME(NFProxyLogicPlugin);
+	return GET_CLASS_NAME(NFWorldLogicPlugin);
 }
 
-void NFProxyLogicPlugin::Install()
+void NFWorldLogicPlugin::Install()
 {
-	REGISTER_MODULE(m_pPluginManager, NFIProxyLogicModule, NFCProxyLogicModule);
+	REGISTER_MODULE(m_pPluginManager, NFIWorldLogicModule, NFCWorldLogicModule);
 }
 
-void NFProxyLogicPlugin::Uninstall()
+void NFWorldLogicPlugin::Uninstall()
 {
-	UNREGISTER_MODULE(m_pPluginManager, NFIProxyLogicModule, NFCProxyLogicModule);
+	UNREGISTER_MODULE(m_pPluginManager, NFIWorldLogicModule, NFCWorldLogicModule);
 }
