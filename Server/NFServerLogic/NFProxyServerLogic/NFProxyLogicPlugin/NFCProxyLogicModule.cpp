@@ -9,6 +9,7 @@
 #include "NFServerLogic/NFServerLogicCommon/NFServerLogicCommon.h"
 #include "NFMessageDefine/st_human_packet_code.pb.h"
 #include "NFMessageDefine/msg_human.pb.h"
+#include "NFMessageDefine/server_to_server_msg.pb.h"
 
 NFCProxyLogicModule::NFCProxyLogicModule(NFIPluginManager* p)
 {
@@ -28,13 +29,20 @@ bool NFCProxyLogicModule::Init()
 	m_pNetServerModule = m_pPluginManager->FindModule<NFINetServerModule>();
 	m_pNetProxyServerModule = m_pPluginManager->FindModule<NFIProxyServerModule>();
 
+	/*
+	** 处理来自客户端的连接和消息
+	*/
 	m_pNetServerModule->AddEventCallBack(NF_ST_PROXY, this, &NFCProxyLogicModule::OnProxySocketEvent);
 	m_pNetServerModule->AddReceiveCallBack(NF_ST_PROXY, this, &NFCProxyLogicModule::OnHandleMessageFromClient);
 	m_pNetServerModule->AddReceiveCallBack(NF_ST_PROXY, ::NFMsg::Client_Msg_AccountLogin, this, &NFCProxyLogicModule::OnHandleAccountLoginFromClient);
 
+	/*
+	** 处理来自客户端的连接和消息
+	*/
 	m_pNetClientModule->AddReceiveCallBack(NF_ST_GAME, this, &NFCProxyLogicModule::OnHandleMessageFromGameServer);
 	m_pNetClientModule->AddReceiveCallBack(NF_ST_WORLD, this, &NFCProxyLogicModule::OnHandleMessageFromWorldServer);
 	m_pNetClientModule->AddReceiveCallBack(NF_ST_WORLD, ::NFMsg::Server_Msg_AccountLogin, this, &NFCProxyLogicModule::OnHandleAccountLoginFromWorldServer);
+	m_pNetClientModule->AddReceiveCallBack(NF_ST_WORLD, EGMI_NET_WORLD_NOTIFY_PROXY_CHANGE_GAME, this, &NFCProxyLogicModule::OnHandleNotifyChangeGameFromWorldServer);
 
 	m_pServerNetEventModule->AddEventCallBack(NF_ST_PROXY, NF_ST_GAME, this, &NFCProxyLogicModule::OnHandleGameEventCallBack);
 	m_pServerNetEventModule->AddEventCallBack(NF_ST_PROXY, NF_ST_WORLD, this, &NFCProxyLogicModule::OnHandleWorldEventCallBack);
@@ -64,6 +72,20 @@ void NFCProxyLogicModule::OnHandleWorldEventCallBack(eMsgType nEvent, uint32_t u
 	{
 		mWorldMap.RemoveElement(unLinkId);
 	}
+}
+
+NF_SHARE_PTR<NFServerData> NFCProxyLogicModule::GetGameServerByServerId(uint32_t serverId)
+{
+	NF_SHARE_PTR<NFServerData> pServerData = mGameMap.First();
+	while (pServerData)
+	{
+		if (pServerData->GetServerId() == serverId)
+		{
+			return pServerData;
+		}
+		pServerData = mGameMap.Next();
+	}
+	return nullptr;
 }
 
 bool NFCProxyLogicModule::AfterInit()
@@ -125,6 +147,11 @@ void NFCProxyLogicModule::OnHandleMessageFromClient(const uint32_t unLinkId, con
 	{
 		m_pNetClientModule->SendByServerID(pServerData->mUnlinkId, nMsgId, msg, nLen, unLinkId);
 	}
+	else
+	{
+		NFLogWarning(NF_LOG_PROXY_RECV_MSG_LOG, 0, "ip:{} ,send msg:{}, can not find game server link, some thing wrong", ip, nMsgId);
+		return;
+	}
 }
 
 void NFCProxyLogicModule::OnHandleAccountLoginFromClient(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen)
@@ -140,7 +167,6 @@ void NFCProxyLogicModule::OnHandleAccountLoginFromClient(const uint32_t unLinkId
 			pLinkInfo = NF_SHARE_PTR<ProxyLinkInfo>(NF_NEW ProxyLinkInfo());
 			pLinkInfo->mUnlinkId = unLinkId;
 			pLinkInfo->mIsLogin = false;
-			pLinkInfo->mPlayerId = 0;
 			pLinkInfo->mIPAddr = ip;
 			mClientLinkInfo.AddElement(unLinkId, pLinkInfo);
 		}
@@ -154,6 +180,50 @@ void NFCProxyLogicModule::OnHandleAccountLoginFromClient(const uint32_t unLinkId
 
 		pLinkInfo->mRecvMsgCount++;
 		m_pNetClientModule->SendByServerID(pServerData->mUnlinkId, nMsgId, msg, nLen, unLinkId);
+	}
+}
+
+void NFCProxyLogicModule::OnHandleNotifyChangeGameFromWorldServer(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen)
+{
+	NFMsg::NotifyProxyChangeGame gcMsg;
+	CLIENT_MSG_PROCESS_NO_OBJECT(nMsgId, playerId, msg, nLen, gcMsg);
+
+	NF_SHARE_PTR<ProxyLinkInfo> pLinkInfo = mClientLinkInfo.GetElement(gcMsg.client_link_id());
+	if (pLinkInfo == nullptr)
+	{
+		NFLogWarning(NF_LOG_SYSTEMLOG, 0, "clientLinkId:{} not exist, client maybe disconnect!", gcMsg.client_link_id());
+		return;
+	}
+
+	do 
+	{
+		NF_SHARE_PTR<ProxyLinkInfo> pPlayerInfo = mPlayerLinkInfo.GetElement(gcMsg.user_id());
+		if (pPlayerInfo)
+		{
+			if (pPlayerInfo != pLinkInfo)
+			{
+				mPlayerLinkInfo.RemoveElement(gcMsg.user_id());
+				pPlayerInfo = nullptr;
+
+				mPlayerLinkInfo.AddElement(gcMsg.user_id(), pLinkInfo);
+			}
+		}
+		else
+		{
+			mPlayerLinkInfo.AddElement(gcMsg.user_id(), pLinkInfo);
+		}
+	} while (false);
+
+	pLinkInfo->mPlayerId = gcMsg.user_id();
+	pLinkInfo->mGameServerId = gcMsg.game_id();
+	NF_SHARE_PTR<NFServerData> pGameServer = GetGameServerByServerId(pLinkInfo->mGameServerId);
+	if (pGameServer)
+	{
+		pLinkInfo->mGameServerUnlinkId = pGameServer->GetUnlinkId();
+	}
+	else
+	{
+		NFLogError(NF_LOG_SYSTEMLOG, 0, "notify change game, but proxy disconnect the game server id:{}", pLinkInfo->mGameServerId);
 	}
 }
 
@@ -175,7 +245,11 @@ void NFCProxyLogicModule::OnHandleAccountLoginFromWorldServer(const uint32_t unL
 		pLinkInfo->mIsLogin = true;
 		pLinkInfo->mAccount = gcMsg.mutable_pinfo()->account();
 		uint64_t realPlayerId = gcMsg.mutable_pinfo()->userid();
-		mPlayerLinkInfo.AddElement(realPlayerId, pLinkInfo);
+		pLinkInfo->mPlayerId = realPlayerId;
+		if (mPlayerLinkInfo.GetElement(pLinkInfo->mPlayerId) == nullptr)
+		{
+			NFLogError(NF_LOG_SYSTEMLOG, 0, "player:{} login, but not find the game server....", pLinkInfo->mPlayerId);
+		}
 	}
 	pLinkInfo->mSendMsgCount++;
 	m_pNetServerModule->SendByServerID(clientLinkId, nMsgId, msg, nLen, pLinkInfo->mSendMsgCount);

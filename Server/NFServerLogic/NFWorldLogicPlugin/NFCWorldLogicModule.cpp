@@ -9,6 +9,7 @@
 #include "NFServerLogic/NFServerLogicCommon/NFServerLogicCommon.h"
 #include "NFMessageDefine/st_human_packet_code.pb.h"
 #include "NFMessageDefine/msg_human.pb.h"
+#include "NFMessageDefine/server_to_server_msg.pb.h"
 #include "NFComm/NFCore/NFRandom.hpp"
 
 NFCWorldLogicModule::NFCWorldLogicModule(NFIPluginManager* p)
@@ -255,5 +256,16 @@ void NFCWorldLogicModule::OnHandleAccountLoginFromGameServer(const uint32_t unLi
 		return;
 	}
 
-	m_pNetServerModule->SendByServerID(pLinkInfo->mProxyServerUnlinkId, nMsgId, msg, nLen, pLinkInfo->mClientUnlinkId);
+	NFMsg::NotifyGameChangeProxy msgChangeProxy;
+	msgChangeProxy.set_user_id(pLinkInfo->mPlayerId);
+	msgChangeProxy.set_proxy_id(pLinkInfo->mProxyServerId);
+	m_pNetServerModule->SendToServerByPB(unLinkId, EGMI_NET_WORLD_NOTIFY_GAME_CHANGE_PROXY, msgChangeProxy, pLinkInfo->mPlayerId);
+
+	NFMsg::NotifyProxyChangeGame msgChangeGame;
+	msgChangeGame.set_user_id(pLinkInfo->mPlayerId);
+	msgChangeGame.set_game_id(pLinkInfo->mGameServerId);
+	msgChangeGame.set_client_link_id(pLinkInfo->mClientUnlinkId);
+	m_pNetServerModule->SendToServerByPB(pLinkInfo->mProxyServerUnlinkId, EGMI_NET_WORLD_NOTIFY_PROXY_CHANGE_GAME, msgChangeGame, pLinkInfo->mClientUnlinkId);
+
+	m_pNetServerModule->SendToServerByPB(pLinkInfo->mProxyServerUnlinkId, nMsgId,gcMsg, pLinkInfo->mClientUnlinkId);
 }

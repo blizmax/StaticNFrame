@@ -12,6 +12,7 @@
     <ClInclude Include="st_shop.pb.h" />
     <ClInclude Include="db_behavior_log.pb.h" />
     <ClInclude Include="db_human.pb.h" />
+    <ClInclude Include="server_to_server_msg.pb.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="mysql_db.pb.cc" />
@@ -24,5 +25,6 @@
     <ClCompile Include="st_shop.pb.cc" />
     <ClCompile Include="db_behavior_log.pb.cc" />
     <ClCompile Include="db_human.pb.cc" />
+    <ClCompile Include="server_to_server_msg.pb.cc" />
   </ItemGroup>
 </Project>
