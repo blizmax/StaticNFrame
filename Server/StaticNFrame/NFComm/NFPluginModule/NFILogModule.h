@@ -43,6 +43,7 @@ enum NF_LOG_ID
 	NF_LOG_NET_PLUGIN = 8,					//net 引擎
 	NF_LOG_SQLITE_PLUGIN = 9,				//sqlite 引擎
 	NF_LOG_TEST_PLUGIN = 10,				//test 引擎
+	NF_LOG_PROXY_LOGIC_PLUGIN = 11,			//proxy 引擎
 
 	//-----------------------------------------------------------
 	NF_LOG_OBJECT_DATA_LOG = 20,			//结构体NFCObject的LOG

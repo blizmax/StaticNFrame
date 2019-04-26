@@ -18,6 +18,7 @@
 #include "NFComm/NFCore/NFStringUtility.h"
 #include "NFComm/NFCore/NFRandom.hpp"
 #include "NFComm/NFCore/NFDateTime.hpp"
+#include "NFComm/NFPluginModule/NFIKernelModule.h"
 
 #define REDIS_KEY_PLAYER_ALL	"playerall"
 
@@ -98,6 +99,52 @@ void NFCHumanModule::CopyFromDB(NFMsg::playerinfo* pInfo, NFMsg::db_playerinfo* 
 	pInfo->set_totalgames(0);
 }
 
+NFIObject* NFCHumanModule::CreatePlayerObject(NFMsg::playerinfo* pInfo)
+{
+	if (pInfo == nullptr)
+	{
+		NFLogError(NF_LOG_LOGIN_MODULE_LOG, 0, "function param error, pInfo == nullptr");
+		return nullptr;
+	}
+
+	NFIKernelModule* pKernelModule = m_pPluginManager->FindModule<NFIKernelModule>();
+	NFIObject* pObject = pKernelModule->CreateNFObject(pInfo->userid());
+	if (pObject)
+	{
+		if (NFProtobufCommon::NFObjectFromMessage(pObject, *pInfo))
+		{
+			NFLogError(NF_LOG_LOGIN_MODULE_LOG, 0, "create player success, userid:{}", pInfo->userid());
+			return nullptr;
+		}
+		else
+		{
+			NFLogError(NF_LOG_LOGIN_MODULE_LOG, 0, "create player failed, userid:{}", pInfo->userid());
+			return nullptr;
+		}
+	}
+	else
+	{
+		NFLogError(NF_LOG_LOGIN_MODULE_LOG, 0, "create player failed, userid:{}", pInfo->userid());
+		return nullptr;
+	}
+}
+
+NFIObject* NFCHumanModule::GetPlayerObject(uint64_t playerId)
+{
+	NFIKernelModule* pKernelModule = m_pPluginManager->FindModule<NFIKernelModule>();
+	NFIObject* pObject = pKernelModule->CreateNFObject(playerId);
+	if (pObject)
+	{
+		if (pObject->GetNodeInt32("ClassName") == 0)
+		{
+			return pObject;
+		}
+	}
+
+	NFLogWarning(NF_LOG_LOGIN_MODULE_LOG, playerId, "Get Player Failed!, not exist player:{} where the Node 'ClassName' is player", playerId);
+	return nullptr;
+}
+
 uint32_t NFCHumanModule::LoadPlayerInfoByCID(const std::string& account, const std::string& password, NFMsg::playerinfo* pInfo)
 {
 	if (pInfo == nullptr)
@@ -124,8 +171,6 @@ uint32_t NFCHumanModule::LoadPlayerInfoByCID(const std::string& account, const s
 		return RETURN_CODE_PASSWORD_NOT_MATCH;
 	}
 
-	NFIObject* pObject = NF_NEW NFCObject(0, m_pPluginManager);
-	NFProtobufCommon::NFObjectFromMessage(pObject, *pDbInfo);
 	NFCHumanModule::CopyFromDB(pInfo, pDbInfo);
 
 	NFINoSqlModule* pNosqlModule = m_pPluginManager->FindModule<NFINoSqlModule>();

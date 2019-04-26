@@ -170,7 +170,7 @@ void NFCWorldLogicModule::OnHandleAccountLoginFromProxyServer(const uint32_t unL
 	NF_SHARE_PTR<NFServerData> pProxyServerData = mProxyMap.GetElement(unLinkId);
 	if (pProxyServerData)
 	{
-		if (pInfo->mProxyServerUnlinkId != unLinkId)
+		if (pInfo->mProxyServerUnlinkId != 0 && pInfo->mProxyServerUnlinkId != unLinkId)
 		{
 			NFLogWarning(NF_LOG_SYSTEMLOG, 0, "account login, player:{} switch proxy server!", cgMsg.account());
 		}

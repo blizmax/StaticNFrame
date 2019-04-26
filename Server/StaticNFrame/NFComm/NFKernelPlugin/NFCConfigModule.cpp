@@ -160,6 +160,11 @@ bool NFCConfigModule::LoadLogConfig()
 	return true;
 }
 
+bool NFCConfigModule::LoadClass()
+{
+	return true;
+}
+
 bool NFCConfigModule::LoadPluginConfig()
 {
 	NFLuaRef pluginRef = GetGlobal(DEFINE_LUA_STRING_LOAD_PLUGIN);

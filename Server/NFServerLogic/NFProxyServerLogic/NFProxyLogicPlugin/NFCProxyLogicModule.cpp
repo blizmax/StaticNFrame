@@ -121,7 +121,7 @@ void NFCProxyLogicModule::OnProxySocketEvent(const eMsgType nEvent, const uint32
 		NF_SHARE_PTR<ProxyLinkInfo> pLinkInfo = mClientLinkInfo.GetElement(unLinkId);
 		if (pLinkInfo == nullptr)
 		{
-			NFLogError(NF_LOG_SYSTEMLOG, 0, "client disconnect, but can not find linkId, unLinkId:{}, system error!", unLinkId);
+			NFLogError(NF_LOG_PROXY_LOGIC_PLUGIN, 0, "client disconnect, but can not find linkId, unLinkId:{}, system error!", unLinkId);
 			return;
 		}
 		mClientLinkInfo.RemoveElement(unLinkId);
@@ -138,7 +138,7 @@ void NFCProxyLogicModule::OnHandleMessageFromClient(const uint32_t unLinkId, con
 	NF_SHARE_PTR<ProxyLinkInfo> pLinkInfo = mClientLinkInfo.GetElement(unLinkId);
 	if (pLinkInfo == nullptr || pLinkInfo->mIsLogin == false)
 	{
-		NFLogWarning(NF_LOG_PROXY_RECV_MSG_LOG, 0, "ip:{} not login,send msg:{}, the msg will not send to gameserver", ip, nMsgId);
+		NFLogWarning(NF_LOG_PROXY_LOGIC_PLUGIN, 0, "ip:{} not login,send msg:{}, the msg will not send to gameserver", ip, nMsgId);
 		return;
 	}
 
@@ -149,7 +149,7 @@ void NFCProxyLogicModule::OnHandleMessageFromClient(const uint32_t unLinkId, con
 	}
 	else
 	{
-		NFLogWarning(NF_LOG_PROXY_RECV_MSG_LOG, 0, "ip:{} ,send msg:{}, can not find game server link, some thing wrong", ip, nMsgId);
+		NFLogWarning(NF_LOG_PROXY_LOGIC_PLUGIN, 0, "ip:{} ,send msg:{}, can not find game server link, some thing wrong", ip, nMsgId);
 		return;
 	}
 }
@@ -174,7 +174,7 @@ void NFCProxyLogicModule::OnHandleAccountLoginFromClient(const uint32_t unLinkId
 		{
 			if (pLinkInfo->mIsLogin && pLinkInfo->mPlayerId > 0)
 			{
-				NFLogWarning(NF_LOG_SYSTEMLOG, 0, "IpAddr:{} playerId:{}, account:{} 同一个连接重复登入!", pLinkInfo->mIPAddr, pLinkInfo->mPlayerId, pLinkInfo->mAccount);
+				NFLogWarning(NF_LOG_PROXY_LOGIC_PLUGIN, 0, "IpAddr:{} playerId:{}, account:{} 同一个连接重复登入!", pLinkInfo->mIPAddr, pLinkInfo->mPlayerId, pLinkInfo->mAccount);
 			}
 		}
 
@@ -191,7 +191,7 @@ void NFCProxyLogicModule::OnHandleNotifyChangeGameFromWorldServer(const uint32_t
 	NF_SHARE_PTR<ProxyLinkInfo> pLinkInfo = mClientLinkInfo.GetElement(gcMsg.client_link_id());
 	if (pLinkInfo == nullptr)
 	{
-		NFLogWarning(NF_LOG_SYSTEMLOG, 0, "clientLinkId:{} not exist, client maybe disconnect!", gcMsg.client_link_id());
+		NFLogWarning(NF_LOG_PROXY_LOGIC_PLUGIN, 0, "clientLinkId:{} not exist, client maybe disconnect!", gcMsg.client_link_id());
 		return;
 	}
 
@@ -223,7 +223,7 @@ void NFCProxyLogicModule::OnHandleNotifyChangeGameFromWorldServer(const uint32_t
 	}
 	else
 	{
-		NFLogError(NF_LOG_SYSTEMLOG, 0, "notify change game, but proxy disconnect the game server id:{}", pLinkInfo->mGameServerId);
+		NFLogError(NF_LOG_PROXY_LOGIC_PLUGIN, 0, "notify change game, but proxy disconnect the game server id:{}", pLinkInfo->mGameServerId);
 	}
 }
 
@@ -236,7 +236,7 @@ void NFCProxyLogicModule::OnHandleAccountLoginFromWorldServer(const uint32_t unL
 	NF_SHARE_PTR<ProxyLinkInfo> pLinkInfo = mClientLinkInfo.GetElement(clientLinkId);
 	if (pLinkInfo == nullptr)
 	{
-		NFLogWarning(NF_LOG_SYSTEMLOG, 0, "clientLinkId:{} not exist, client maybe disconnect!", clientLinkId);
+		NFLogWarning(NF_LOG_PROXY_LOGIC_PLUGIN, 0, "clientLinkId:{} not exist, client maybe disconnect!", clientLinkId);
 		return;
 	}
 
@@ -248,7 +248,7 @@ void NFCProxyLogicModule::OnHandleAccountLoginFromWorldServer(const uint32_t unL
 		pLinkInfo->mPlayerId = realPlayerId;
 		if (mPlayerLinkInfo.GetElement(pLinkInfo->mPlayerId) == nullptr)
 		{
-			NFLogError(NF_LOG_SYSTEMLOG, 0, "player:{} login, but not find the game server....", pLinkInfo->mPlayerId);
+			NFLogError(NF_LOG_PROXY_LOGIC_PLUGIN, 0, "player:{} login, but not find the game server....", pLinkInfo->mPlayerId);
 		}
 	}
 	pLinkInfo->mSendMsgCount++;
@@ -258,19 +258,17 @@ void NFCProxyLogicModule::OnHandleAccountLoginFromWorldServer(const uint32_t unL
 void NFCProxyLogicModule::OnHandleMessageFromWorldServer(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen)
 {
 	NF_SHARE_PTR<NFServerData> pServerData = mWorldMap.GetElement(unLinkId);
-	if (pServerData)
+	if (pServerData == nullptr)
 	{
-		NFLogInfo(NF_LOG_PROXY_RECV_MSG_LOG, 0, "recv msg from worldserver:{} -- playerId:{}, msgId:{}, msglen:{}", pServerData->GetServerName(), playerId, nMsgId, nLen);
+		return;
 	}
-	else
-	{
-		NFLogInfo(NF_LOG_PROXY_RECV_MSG_LOG, 0, "recv msg from worldserver:(unknown disconnect) -- playerId:{}, msgId:{}, msglen:{}", playerId, nMsgId, nLen);
-	}
+
+	NFLogInfo(NF_LOG_PROXY_RECV_MSG_LOG, 0, "recv msg from worldserver:{} -- playerId:{}, msgId:{}, msglen:{}", pServerData->GetServerName(), playerId, nMsgId, nLen);
 
 	NF_SHARE_PTR<ProxyLinkInfo> pLinkInfo = mPlayerLinkInfo.GetElement(playerId);
 	if (pLinkInfo == nullptr)
 	{
-		NFLogWarning(NF_LOG_SYSTEMLOG, 0, "recv msg from worldserver, but can't find playerId:{} link info!", playerId);
+		NFLogWarning(NF_LOG_PROXY_LOGIC_PLUGIN, 0, "recv msg from worldserver, but can't find playerId:{} link info!", playerId);
 		return;
 	}
 
@@ -281,19 +279,19 @@ void NFCProxyLogicModule::OnHandleMessageFromWorldServer(const uint32_t unLinkId
 void NFCProxyLogicModule::OnHandleMessageFromGameServer(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen)
 {
 	NF_SHARE_PTR<NFServerData> pServerData = mGameMap.GetElement(unLinkId);
-	if (pServerData)
+	if (pServerData == nullptr)
 	{
-		NFLogInfo(NF_LOG_PROXY_RECV_MSG_LOG, 0, "recv msg from gameserver:{} -- playerId:{}, msgId:{}, msglen:{}", pServerData->GetServerName(), playerId, nMsgId, nLen);
+		return;
 	}
 	else
 	{
-		NFLogInfo(NF_LOG_PROXY_RECV_MSG_LOG, 0, "recv msg from gameserver:(unknown disconnect) -- playerId:{}, msgId:{}, msglen:{}", playerId, nMsgId, nLen);
+		NFLogInfo(NF_LOG_PROXY_RECV_MSG_LOG, 0, "recv msg from gameserver:{} -- playerId:{}, msgId:{}, msglen:{}", pServerData->GetServerName(), playerId, nMsgId, nLen);
 	}
 
 	NF_SHARE_PTR<ProxyLinkInfo> pLinkInfo = mPlayerLinkInfo.GetElement(playerId);
 	if (pLinkInfo == nullptr)
 	{
-		NFLogWarning(NF_LOG_SYSTEMLOG, 0, "recv msg from gameserver, but can't find playerId:{} link info!", playerId);
+		NFLogWarning(NF_LOG_PROXY_LOGIC_PLUGIN, 0, "recv msg from gameserver, but can't find playerId:{} link info!", playerId);
 		return;
 	}
 

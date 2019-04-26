@@ -196,6 +196,9 @@
     <ClInclude Include="NFINoSqlDriverManager.h">
       <Filter>Nosql</Filter>
     </ClInclude>
+    <ClInclude Include="NFCommonNode.h">
+      <Filter>Common</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Event">

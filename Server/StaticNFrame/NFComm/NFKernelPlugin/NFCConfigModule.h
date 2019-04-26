@@ -32,6 +32,7 @@ public:
 	bool LoadPluginConfig();
 	bool LoadServerConfig();
 	bool LoadLogConfig();
+	bool LoadClass();
 public:
 	virtual NFPluginConfig* GetPluginConfig(const std::string& pluginName);
 	virtual NFServerConfig* GetServerConfig(uint32_t serverId);
@@ -41,4 +42,5 @@ protected:
 	std::unordered_map<std::string, NFPluginConfig*> mPluginConfig; //pluginName--key
 	std::unordered_map<int, NFServerConfig*> mServerConfig; //serverid--key
 	NFIObject* mGlobalConfig;
+	std::unordered_map<std::string, NFIObject*> mClassConfig;
 };

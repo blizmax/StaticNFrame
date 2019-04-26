@@ -1,0 +1,16 @@
+syntax = "proto3";
+
+package NFMsg; 
+
+message NotifyGameChangeProxy
+{
+	uint64 user_id = 1;
+	uint32 proxy_id = 2;
+}
+
+message NotifyProxyChangeGame
+{
+	uint64 user_id = 1;
+	uint32 game_id = 2;
+	uint32 client_link_id = 3;
+}

@@ -36,4 +36,7 @@ private:
 	virtual uint32_t LoadPlayerInfo(uint64_t playerId, NFMsg::playerinfo* pInfo);
 
 	static void CopyFromDB(NFMsg::playerinfo* pInfo, NFMsg::db_playerinfo* pDbInfo);
+private:
+	virtual NFIObject* CreatePlayerObject(NFMsg::playerinfo* pInfo);
+	virtual NFIObject* GetPlayerObject(uint64_t playerId);
 };
