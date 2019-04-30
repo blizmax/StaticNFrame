@@ -19,6 +19,7 @@
 #include "NFComm/NFCore/NFRandom.hpp"
 #include "NFComm/NFCore/NFDateTime.hpp"
 #include "NFComm/NFPluginModule/NFIKernelModule.h"
+#include "NFComm/NFPluginModule/NFCommonNode.h"
 
 #define REDIS_KEY_PLAYER_ALL	"playerall"
 
@@ -99,7 +100,7 @@ void NFCHumanModule::CopyFromDB(NFMsg::playerinfo* pInfo, NFMsg::db_playerinfo* 
 	pInfo->set_totalgames(0);
 }
 
-NFIObject* NFCHumanModule::CreatePlayerObject(NFMsg::playerinfo* pInfo)
+NFIObject* NFCHumanModule::CreatePlayerObject(NFMsg::db_playerinfo* pInfo)
 {
 	if (pInfo == nullptr)
 	{
@@ -108,7 +109,7 @@ NFIObject* NFCHumanModule::CreatePlayerObject(NFMsg::playerinfo* pInfo)
 	}
 
 	NFIKernelModule* pKernelModule = m_pPluginManager->FindModule<NFIKernelModule>();
-	NFIObject* pObject = pKernelModule->CreateNFObject(pInfo->userid());
+	NFIObject* pObject = pKernelModule->CreateNFObject(pInfo->userid(), NF_NODE_STRING_CLASS_NAME_PLAYER);
 	if (pObject)
 	{
 		if (NFProtobufCommon::NFObjectFromMessage(pObject, *pInfo))
@@ -132,27 +133,19 @@ NFIObject* NFCHumanModule::CreatePlayerObject(NFMsg::playerinfo* pInfo)
 NFIObject* NFCHumanModule::GetPlayerObject(uint64_t playerId)
 {
 	NFIKernelModule* pKernelModule = m_pPluginManager->FindModule<NFIKernelModule>();
-	NFIObject* pObject = pKernelModule->CreateNFObject(playerId);
+	NFIObject* pObject = pKernelModule->GetNFObject(playerId, NF_NODE_STRING_CLASS_NAME_PLAYER);
 	if (pObject)
 	{
-		if (pObject->GetNodeInt32("ClassName") == 0)
-		{
-			return pObject;
-		}
+		return pObject;
 	}
 
 	NFLogWarning(NF_LOG_LOGIN_MODULE_LOG, playerId, "Get Player Failed!, not exist player:{} where the Node 'ClassName' is player", playerId);
 	return nullptr;
 }
 
-uint32_t NFCHumanModule::LoadPlayerInfoByCID(const std::string& account, const std::string& password, NFMsg::playerinfo* pInfo)
+NFIObject* NFCHumanModule::LoadPlayerInfoByCID(const std::string& account, const std::string& password, uint32_t& retCode)
 {
-	if (pInfo == nullptr)
-	{
-		NFLogError(NF_LOG_LOGIN_MODULE_LOG, 0, "function param error, pInfo == nullptr, account:{}, password:{}", account, password);
-		return RETURN_CODE_ACCOUNT_NO_EXIST;
-	}
-
+	NFIObject* pObject = nullptr;
 	NFIMysqlModule* pMysqlModule = m_pPluginManager->FindModule<NFIMysqlModule>();
 	NFMsg::db_query_playerinfo db_playerinfo;
 	db_playerinfo.mutable_db_cond()->set_account(account);
@@ -160,7 +153,8 @@ uint32_t NFCHumanModule::LoadPlayerInfoByCID(const std::string& account, const s
 	if (ret == false)
 	{
 		NFBehaviorLog(0, account, "player", "LoadPlayerInfoByCID", -1, "ÕËºÅ²»´æÔÚ,account=" + account);
-		return RETURN_CODE_ACCOUNT_NO_EXIST;
+		retCode = RETURN_CODE_ACCOUNT_NO_EXIST;
+		return pObject;
 	}
 
 	NFMsg::db_playerinfo* pDbInfo = db_playerinfo.mutable_db_fields();
@@ -168,10 +162,17 @@ uint32_t NFCHumanModule::LoadPlayerInfoByCID(const std::string& account, const s
 	if (pDbInfo->password() != password)
 	{
 		NFBehaviorLog(0, account, "player", "LoadPlayerInfoByCID", -1, "µÇÂ¼ÃÜÂë²»Æ¥Åä,password=" + password);
-		return RETURN_CODE_PASSWORD_NOT_MATCH;
+		retCode = RETURN_CODE_PASSWORD_NOT_MATCH;
+		return pObject;
 	}
 
-	NFCHumanModule::CopyFromDB(pInfo, pDbInfo);
+	NFIObject* pObject = NFCHumanModule::CreatePlayerObject(pDbInfo);
+	if (pObject == nullptr)
+	{
+		NFLogError(NF_LOG_LOGIN_MODULE_LOG, pDbInfo->userid(), "NFCHumanModule::CreatePlayerObject failed:{}", pDbInfo->DebugString());
+		retCode = RETURN_CODE_ACCOUNT_NO_EXIST;
+		return pObject;
+	}
 
 	NFINoSqlModule* pNosqlModule = m_pPluginManager->FindModule<NFINoSqlModule>();
 	NF_SHARE_PTR<NFINoSqlDriver> pNosqlDriver = pNosqlModule->GetDriverBySuitConsistent();
@@ -179,44 +180,40 @@ uint32_t NFCHumanModule::LoadPlayerInfoByCID(const std::string& account, const s
 	NFMsg::accountinfo accountInfo;
 	accountInfo.set_account(account);
 	accountInfo.set_password(password);
-	accountInfo.set_userid(pInfo->userid());
+	accountInfo.set_userid(pDbInfo->userid());
 
 	std::string strValue;
 	if (accountInfo.SerializeToString(&strValue))
 	{
-		if (pNosqlDriver->Set("account" + pInfo->account(), strValue) == false)
+		if (pNosqlDriver->Set("account" + pDbInfo->account(), strValue) == false)
 		{
-			NFLogError(NF_LOG_LOGIN_MODULE_LOG, pInfo->userid(), "Nosql set account failed, pInfo:{}", accountInfo.DebugString());
+			NFLogError(NF_LOG_LOGIN_MODULE_LOG, pDbInfo->userid(), "Nosql set account failed, pInfo:{}", accountInfo.DebugString());
 		}
 	}
 	else
 	{
-		NFLogError(NF_LOG_LOGIN_MODULE_LOG, pInfo->userid(), "accountInfo.SerializeToString error:{}", accountInfo.DebugString());
+		NFLogError(NF_LOG_LOGIN_MODULE_LOG, pDbInfo->userid(), "accountInfo.SerializeToString error:{}", accountInfo.DebugString());
 	}
 	
-	if (pInfo->SerializeToString(&strValue))
+	if (pDbInfo->SerializeToString(&strValue))
 	{
-		if (pNosqlDriver->Set("playerinfo" + NFCommon::tostr(pInfo->userid()), strValue) == false)
+		if (pNosqlDriver->Set("playerinfo" + NFCommon::tostr(pDbInfo->userid()), strValue) == false)
 		{
-			NFLogError(NF_LOG_LOGIN_MODULE_LOG, pInfo->userid(), "Nosql set playerinfo failed, pInfo:{}", pInfo->DebugString());
+			NFLogError(NF_LOG_LOGIN_MODULE_LOG, pDbInfo->userid(), "Nosql set playerinfo failed, pInfo:{}", pDbInfo->DebugString());
 		}
 	}
 	else
 	{
-		NFLogError(NF_LOG_LOGIN_MODULE_LOG, pInfo->userid(), "pInfo.SerializeToString error:{}", pInfo->DebugString());
+		NFLogError(NF_LOG_LOGIN_MODULE_LOG, pDbInfo->userid(), "pInfo.SerializeToString error:{}", pDbInfo->DebugString());
 	}
 
-	return RETURN_CODE_SUCCESS;
+	retCode = RETURN_CODE_SUCCESS;
+	return pObject;
 }
 
-uint32_t NFCHumanModule::GetPlayerInfoByCID(const std::string& account, const std::string& password, NFMsg::playerinfo* pInfo)
+NFIObject* NFCHumanModule::GetPlayerInfoByCID(const std::string& account, const std::string& password, uint32_t& retCode)
 {
-	if (pInfo == nullptr)
-	{
-		NFLogError(NF_LOG_LOGIN_MODULE_LOG, 0, "function param error, pInfo == nullptr, account:{}, password:{}", account, password);
-		return RETURN_CODE_ACCOUNT_NO_EXIST;
-	}
-
+	NFIObject* pObject = nullptr;
 	NFINoSqlModule* pNosqlModule = m_pPluginManager->FindModule<NFINoSqlModule>();
 	NF_SHARE_PTR<NFINoSqlDriver> pNosqlDriver = pNosqlModule->GetDriverBySuitConsistent();
 
@@ -229,32 +226,31 @@ uint32_t NFCHumanModule::GetPlayerInfoByCID(const std::string& account, const st
 			if (accountInfo.password() != password)
 			{
 				NFBehaviorLog(0, account, "player", "GetPlayerInfoByCID", RETURN_CODE_PASSWORD_NOT_MATCH, "µÇÂ¼ÃÜÂë²»Æ¥Åä,password=" + password);
-				return RETURN_CODE_PASSWORD_NOT_MATCH;
+				retCode = RETURN_CODE_PASSWORD_NOT_MATCH;
+				return pObject;
 			}
 
-			if (GetPlayerInfo(accountInfo.userid(), pInfo) == RETURN_CODE_SUCCESS)
+			pObject = GetPlayerInfo(accountInfo.userid(), retCode);
+			if (pObject)
 			{
-				return RETURN_CODE_SUCCESS;
+				retCode = RETURN_CODE_SUCCESS;
+				return pObject;
 			}
 
-			return RETURN_CODE_SUCCESS;
+			retCode = RETURN_CODE_SUCCESS;
 		}
 	}
 
-	return LoadPlayerInfoByCID(account, password, pInfo);
+	return LoadPlayerInfoByCID(account, password, retCode);
 }
 
-uint32_t  NFCHumanModule::GetPlayerInfo(uint64_t playerId, NFMsg::playerinfo* pInfo)
+NFIObject*  NFCHumanModule::GetPlayerInfo(uint64_t playerId, uint32_t& retCode)
 {
-	if (pInfo == nullptr)
+	NFIObject* pObject = GetPlayerObject(playerId);
+	if (pObject)
 	{
-		NFLogError(NF_LOG_LOGIN_MODULE_LOG, playerId, "function param error");
-		return RETURN_CODE_ACCOUNT_NO_EXIST;
-	}
-
-	if (playerId == 0)
-	{
-		return 0;
+		retCode = RETURN_CODE_SUCCESS;
+		return pObject;
 	}
 
 	NFINoSqlModule* pNosqlModule = m_pPluginManager->FindModule<NFINoSqlModule>();
@@ -263,13 +259,22 @@ uint32_t  NFCHumanModule::GetPlayerInfo(uint64_t playerId, NFMsg::playerinfo* pI
 	std::string strValue;
 	if (pNosqlDriver->Get("playerinfo" + NFCommon::tostr(playerId), strValue))
 	{
-		if (pInfo->ParseFromString(strValue))
+		NFMsg::db_playerinfo dbInfo;
+		if (dbInfo.ParseFromString(strValue))
 		{
-			return RETURN_CODE_SUCCESS;
+			pObject = NFCHumanModule::CreatePlayerObject(&dbInfo);
+			if (pObject == nullptr)
+			{
+				NFLogError(NF_LOG_LOGIN_MODULE_LOG, dbInfo.userid(), "NFCHumanModule::CreatePlayerObject failed:{}", dbInfo.DebugString());
+				retCode = RETURN_CODE_ACCOUNT_NO_EXIST;
+				return pObject;
+			}
+			retCode = RETURN_CODE_SUCCESS;
+			return pObject;
 		}
 	}
 
-	return LoadPlayerInfo(playerId, pInfo);
+	return LoadPlayerInfo(playerId, retCode);
 }
 
 std::string NFCHumanModule::GetInitFaceID()
@@ -340,14 +345,9 @@ void NFCHumanModule::CreatePlayerStates(uint64_t playerId, const std::string& ac
 
 }
 
-uint32_t NFCHumanModule::LoadPlayerInfo(uint64_t playerId, NFMsg::playerinfo* pInfo)
+NFIObject* NFCHumanModule::LoadPlayerInfo(uint64_t playerId, uint32_t& retCode)
 {
-	if (pInfo == nullptr)
-	{
-		NFLogError(NF_LOG_LOGIN_MODULE_LOG, playerId, "function param error");
-		return RETURN_CODE_ACCOUNT_NO_EXIST;
-	}
-
+	NFIObject* pObject = nullptr;
 	NFIMysqlModule* pMysqlModule = m_pPluginManager->FindModule<NFIMysqlModule>();
 	NFMsg::db_query_playerinfo db_playerinfo;
 	db_playerinfo.mutable_db_cond()->set_userid(NFCommon::tostr(playerId));
@@ -355,34 +355,36 @@ uint32_t NFCHumanModule::LoadPlayerInfo(uint64_t playerId, NFMsg::playerinfo* pI
 	if (ret == false)
 	{
 		NFBehaviorLog(playerId, "", "player", "LoadPlayerInfoByCID", -1, "¼ÓÔØÊý¾Ý¿âÍæ¼ÒÐÅÏ¢Ê§°Ü");
-		return RETURN_CODE_ACCOUNT_NO_EXIST;
+		retCode = RETURN_CODE_ACCOUNT_NO_EXIST;
+		return pObject;
 	}
 
 	NFMsg::db_playerinfo* pDbInfo = db_playerinfo.mutable_db_fields();
 
-	NFCHumanModule::CopyFromDB(pInfo, pDbInfo);
+	pObject = NFCHumanModule::CreatePlayerObject(pDbInfo);
+	if (pObject == nullptr)
+	{
+		NFLogError(NF_LOG_LOGIN_MODULE_LOG, pDbInfo->userid(), "NFCHumanModule::CreatePlayerObject failed:{}", pDbInfo->DebugString());
+		retCode = RETURN_CODE_ACCOUNT_NO_EXIST;
+		return pObject;
+	}
 
 	NFINoSqlModule* pNosqlModule = m_pPluginManager->FindModule<NFINoSqlModule>();
 	NF_SHARE_PTR<NFINoSqlDriver> pNosqlDriver = pNosqlModule->GetDriverBySuitConsistent();
 
-
-	if (pNosqlDriver->Set("cidinfo" + pInfo->cid(), NFCommon::tostr(pInfo->userid())) == false)
-	{
-		NFLogError(NF_LOG_LOGIN_MODULE_LOG, pInfo->userid(), "nosql set cidinfo failed:{}", pInfo->userid());
-	}
-
 	std::string strValue;
-	if (pInfo->SerializeToString(&strValue))
+	if (pDbInfo->SerializeToString(&strValue))
 	{
-		if (pNosqlDriver->Set("playerinfo" + NFCommon::tostr(pInfo->userid()), strValue) == false)
+		if (pNosqlDriver->Set("playerinfo" + NFCommon::tostr(pDbInfo->userid()), strValue) == false)
 		{
-			NFLogError(NF_LOG_LOGIN_MODULE_LOG, pInfo->userid(), "nosql set playerifo failed:{}", pInfo->DebugString());
+			NFLogError(NF_LOG_LOGIN_MODULE_LOG, pDbInfo->userid(), "nosql set playerifo failed:{}", pDbInfo->DebugString());
 		}
 	}
 	else
 	{
-		NFLogError(NF_LOG_LOGIN_MODULE_LOG, pInfo->userid(), "pInfo.SerializeToString error:{}", pInfo->DebugString());
+		NFLogError(NF_LOG_LOGIN_MODULE_LOG, pDbInfo->userid(), "pInfo.SerializeToString error:{}", pDbInfo->DebugString());
 	}
 
-	return RETURN_CODE_SUCCESS;
+	retCode = RETURN_CODE_SUCCESS;
+	return pObject;
 }

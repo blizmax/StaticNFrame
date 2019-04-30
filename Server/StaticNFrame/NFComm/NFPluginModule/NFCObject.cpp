@@ -89,6 +89,12 @@ bool NFCObject::AddNode(const std::string& name, const NFCData& value, const int
 	return m_pNodeManager->AddNode(name, value, feature);
 }
 
+bool NFCObject::AddNode(const std::string& name, const uint32_t valueType, const int8_t feature)
+{
+	NF_ASSERT(m_pNodeManager != nullptr);
+	return m_pNodeManager->AddNode(name, valueType, feature);
+}
+
 const NFCData::Array& NFCObject::GetArray(const std::string& name) const
 {
 	NF_ASSERT(m_pNodeManager != nullptr);

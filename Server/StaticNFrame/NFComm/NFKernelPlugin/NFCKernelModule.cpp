@@ -16,6 +16,7 @@
 #include "NFComm/NFCore/NFCRC16.h"
 #include "NFComm/NFCore/NFBase64.h"
 #include "NFComm/NFPluginModule/NFCommonNode.h"
+#include "NFComm/NFPluginModule/NFIConfigModule.h"
 
 #define NF_GUID_POWER 100000
 #define NF_EPOCH 1288834974657
@@ -147,7 +148,7 @@ std::string NFCKernelModule::Base64Decode(const std::string& s)
 	return NFBase64::Decode(s);
 }
 
-NFIObject* NFCKernelModule::CreateNFObject(uint64_t guid)
+NFIObject* NFCKernelModule::CreateNFObject(uint64_t guid, const std::string& className)
 {
 	NFIObject* pObject = nullptr;
 	if (ExistNFObject(guid))
@@ -158,18 +159,36 @@ NFIObject* NFCKernelModule::CreateNFObject(uint64_t guid)
 
 	pObject = NF_NEW NFCObject(guid, m_pPluginManager);
 
-	pObject->AddNode(NF_NODE_INT_CLASS_NAME, NFCData(NF_DT_INT, 0), 0);
+	pObject->AddNode(NF_NODE_STRING_CLASS_NAME, NFCData(NF_DT_STRING, className), 0);
+
+	NFIConfigModule* pConfigModule = m_pPluginManager->FindModule<NFIConfigModule>();
+	NFClassObject* pClassObject = pConfigModule->GetClassObject(className);
+	if (pClassObject)
+	{
+		for (auto iter = pClassObject->mClassNodeMap.begin(); iter != pClassObject->mClassNodeMap.end(); iter++)
+		{
+			NFClassNode& classNode = iter->second;
+			pObject->AddNode(classNode.mNodeName, classNode.mNodeType, classNode.mFeature);
+		}
+	}
 
 	mObjectMap.emplace(guid, pObject);
 	return pObject;
 }
 
-NFIObject* NFCKernelModule::GetNFObject(uint64_t guid)
+NFIObject* NFCKernelModule::GetNFObject(uint64_t guid, const std::string& className)
 {
 	auto iter = mObjectMap.find(guid);
 	if (iter != mObjectMap.end())
 	{
-		return iter->second;
+		if (className.empty())
+		{
+			return iter->second;
+		}
+		else if (className == iter->second->GetNodeString(NF_NODE_STRING_CLASS_NAME))
+		{
+			return iter->second;
+		}
 	}
 
 	return nullptr;

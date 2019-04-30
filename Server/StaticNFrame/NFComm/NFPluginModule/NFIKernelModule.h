@@ -29,8 +29,8 @@ public:
 	virtual std::string Base64Encode(const std::string& s) = 0;
 	virtual std::string Base64Decode(const std::string& s) = 0;
 
-	virtual NFIObject* CreateNFObject(uint64_t guid) = 0;
-	virtual NFIObject* GetNFObject(uint64_t guid) = 0;
+	virtual NFIObject* CreateNFObject(uint64_t guid, const std::string& className) = 0;
+	virtual NFIObject* GetNFObject(uint64_t guid, const std::string& className) = 0;
 	virtual bool ExistNFObject(uint64_t guid) = 0;
 	virtual bool DeleteNFObject(uint64_t guid) = 0;
 };

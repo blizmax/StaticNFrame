@@ -1,4 +1,5 @@
 className = className or {}
+dbTableName = dbTableName or {}
 
 NF_DT_TYPE = {
 	NF_DT_UNKNOWN = 0, --unknown type

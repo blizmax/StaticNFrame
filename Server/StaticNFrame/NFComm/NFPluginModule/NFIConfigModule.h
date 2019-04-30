@@ -105,6 +105,51 @@ public:
 	bool mWebSocket;			//是否开启websocket功能
 };
 
+struct NFClassNode
+{
+	NFClassNode()
+	{
+		mNodeType = 0;
+		mSave = false;
+		mPrivate = false;
+		mPublic = false;
+	}
+	std::string mNodeName;
+	uint32_t mNodeType;
+	bool mSave;
+	bool mPublic;
+	bool mPrivate;
+	int8_t mFeature;
+	std::string mDBTable;
+	std::vector<std::string> mVecTableName;
+};
+
+struct NFClassObject
+{
+	std::string mClassName;
+	std::unordered_map<std::string, NFClassNode> mClassNodeMap;
+};
+
+struct NFDBTableCol
+{
+	NFDBTableCol()
+	{
+		mPrimaryKey = false;
+		mIndex = false;
+		mAutoIncrement = false;
+	}
+	std::string mColName;
+	bool mPrimaryKey;
+	bool mIndex;
+	bool mAutoIncrement;
+};
+
+struct NFDBTable
+{
+	std::string mTableName;
+	std::unordered_map<std::string, NFDBTableCol> mDBTableColMap;
+};
+
 class NFIConfigModule : public NFIModule
 {
 public:
@@ -113,4 +158,5 @@ public:
 	virtual std::vector<NFServerConfig*> GetServerConfigFromServerType(uint32_t serverType) = 0;
 
 	virtual NFIObject* GetGlobalConfig() const = 0;
+	virtual NFClassObject* GetClassObject(const std::string& className) const = 0;
 };

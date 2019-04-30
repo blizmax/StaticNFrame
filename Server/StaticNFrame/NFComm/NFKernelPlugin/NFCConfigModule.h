@@ -12,6 +12,7 @@
 
 #include "NFComm/NFPluginModule/NFILuaModule.h"
 #include "NFComm/NFPluginModule/NFIObject.h"
+#include <string>
 
 class NFCConfigModule : public NFIConfigModule, public NFILuaModule
 {
@@ -38,9 +39,10 @@ public:
 	virtual NFServerConfig* GetServerConfig(uint32_t serverId);
 	virtual std::vector<NFServerConfig*> GetServerConfigFromServerType(uint32_t serverType);
 	virtual NFIObject* GetGlobalConfig() const { return mGlobalConfig; }
+	virtual NFClassObject* GetClassObject(const std::string& className) const;
 protected:
 	std::unordered_map<std::string, NFPluginConfig*> mPluginConfig; //pluginName--key
 	std::unordered_map<int, NFServerConfig*> mServerConfig; //serverid--key
 	NFIObject* mGlobalConfig;
-	std::unordered_map<std::string, NFIObject*> mClassConfig;
+	std::unordered_map<std::string, NFClassObject*> mClassObjectConfig;
 };

@@ -26,6 +26,7 @@ public:
 	virtual NFDataNode* GetNodeByIndex(size_t index) = 0;
 	virtual NFDataNode* GetNode(const std::string& name) = 0;
 	virtual bool AddNode(const std::string& name, const NFCData& value, const int8_t feature) = 0;
+	virtual bool AddNode(const std::string& name, const uint32_t valueType, const int8_t feature) = 0;
 	virtual bool SetNode(const std::string& name, const NFCData& value) = 0;
 
 	virtual const NFCData::Array& GetArray(const std::string& name) const = 0;

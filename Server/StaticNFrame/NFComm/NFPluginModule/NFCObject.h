@@ -43,6 +43,7 @@ public:
 	virtual bool CheckNodeExist(uint32_t index) override;
 
 	virtual bool AddNode(const std::string& name, const NFCData& value, const int8_t feature = 0) override;
+	virtual bool AddNode(const std::string& name, const uint32_t valueType, const int8_t feature = 0) override;
 
 	virtual const NFCData::Array& GetArray(const std::string& name) const override;
 	virtual const NFCData::List& GetList(const std::string& name) const override;

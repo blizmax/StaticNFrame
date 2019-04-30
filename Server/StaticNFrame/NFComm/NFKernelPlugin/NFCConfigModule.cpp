@@ -11,6 +11,8 @@
 #include "NFComm/NFPluginModule/NFLogMgr.h"
 #include "NFComm/NFPluginModule/NFConfigMgr.h"
 #include "NFComm/NFPluginModule/NFCObject.h"
+#include "NFComm/NFCore/NFStringUtility.h"
+#include "NFComm/NFPluginModule/NFDataNode.h"
 
 NFCConfigModule::NFCConfigModule(NFIPluginManager* p)
 {
@@ -75,7 +77,7 @@ bool NFCConfigModule::LoadConfig()
 	LoadLogConfig();
 	LoadPluginConfig();
 	LoadServerConfig();
-
+	LoadClass();
 	return true;
 }
 
@@ -162,6 +164,58 @@ bool NFCConfigModule::LoadLogConfig()
 
 bool NFCConfigModule::LoadClass()
 {
+	NFLuaRef ref = GetGlobal("className");
+	if (!ref.isValid())
+	{
+		NFLogError(NF_LOG_LOAD_CONFIG, 0, "lua can't find className");
+		assert(0);
+	}
+
+	if (!ref.isTable())
+	{
+		NFLogError(NF_LOG_LOAD_CONFIG, 0, "className is not table in the lua", DEFINE_LUA_STRING_LOAD_PLUGIN);
+		assert(0);
+	}
+
+	for (auto it = ref.begin(); it != ref.end(); ++it)
+	{
+		std::string className = it.key<std::string>();
+		NFLuaRef classNameRef = it.value();
+
+		NFClassObject *pClassObject = NF_NEW NFClassObject();
+		pClassObject->mClassName = className;
+		for (auto classit = classNameRef.begin(); classit != classNameRef.end(); ++classit)
+		{
+			NFLuaRef nodeRef = classit.value();
+
+			NFClassNode classNode;
+			std::string dbTable;
+
+			GetLuaTableValue(nodeRef, "nodeName", classNode.mNodeName);
+			GetLuaTableValue(nodeRef, "nodeType", classNode.mNodeType);
+			GetLuaTableValue(nodeRef, "save", classNode.mSave);
+			GetLuaTableValue(nodeRef, "public", classNode.mPublic);
+			GetLuaTableValue(nodeRef, "private", classNode.mPrivate);
+			GetLuaTableValue(nodeRef, "dbTable", classNode.mDBTable);
+
+			if (classNode.mSave)
+			{
+				NFBitValue<int8_t>::SetBitValue(classNode.mFeature, NFDataNode::PF_SAVE);
+			}
+			if (classNode.mPublic)
+			{
+				NFBitValue<int8_t>::SetBitValue(classNode.mFeature, NFDataNode::PF_PUBLIC);
+			}
+			if (classNode.mPrivate)
+			{
+				NFBitValue<int8_t>::SetBitValue(classNode.mFeature, NFDataNode::PF_PRIVATE);
+			}
+			
+			NFStringUtility::Split(classNode.mVecTableName, classNode.mDBTable, ",");
+			pClassObject->mClassNodeMap.emplace(classNode.mNodeName, classNode);
+		}
+		mClassObjectConfig.emplace(pClassObject->mClassName, pClassObject);
+	}
 	return true;
 }
 
@@ -363,4 +417,14 @@ std::vector<NFServerConfig*> NFCConfigModule::GetServerConfigFromServerType(uint
 		}
 	}
 	return vec;
+}
+
+NFClassObject* NFCConfigModule::GetClassObject(const std::string& className) const
+{
+	auto iter = mClassObjectConfig.find(className);
+	if (iter != mClassObjectConfig.end())
+	{
+		return iter->second;
+	}
+	return nullptr;
 }

@@ -1,5 +1,9 @@
 require 'class'
 
+dbTableName["dy_player"] = {
+	
+}
+
 className["player"] = {
 	{nodeName="userid", nodeType=NF_DT_TYPE.NF_DT_INT, public=false, private=false, save=true, dbTable = "dy_player", desc="玩家ID"},
 	---------------------------------------------------------------玩家基本信息------------------------------------------------------------------------------------

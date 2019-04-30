@@ -15,13 +15,5 @@
 class NFIHumanModule : public NFIDynamicModule
 {
 public:
-	virtual uint32_t GetPlayerInfoByCID(const std::string& account, const std::string& password, NFMsg::playerinfo* pInfo) = 0;
 
-	virtual uint32_t GetPlayerInfo(uint64_t playerId, NFMsg::playerinfo* pInfo) = 0;
-
-	virtual void CreatePlayer(const NFMsg::cgaccountlogin& cgMsg) = 0;
-
-	virtual void AddPlayerAllCount() = 0;
-
-	virtual void CreatePlayerStates(uint64_t playerId, const std::string& account) = 0;
 };

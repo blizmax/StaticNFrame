@@ -138,6 +138,40 @@ bool NFCDataNodeManager::AddNode(const std::string& name, const NFCData& value, 
 	return true;
 }
 
+bool NFCDataNodeManager::AddNode(const std::string& name, const uint32_t valueType, const int8_t feature)
+{
+	size_t index;
+	if (!FindIndex(name, index))
+	{
+		NFDataNode* pNode = new NFDataNode();
+		pNode->mName = name;
+		if (valueType > NF_DT_UNKNOWN && valueType < NF_DT_MAX)
+		{
+			pNode->mValue.SetDefaultValue(valueType);
+		}
+		else
+		{
+			NFLogError(NF_LOG_OBJECT_DATA_LOG, 0, "add node name:{}, but data type error, AddNode failed!", name);
+			delete pNode;
+			return false;
+		}
+		
+		pNode->mFeature = feature;
+		mIndices.emplace(name, mNodes.size());
+		mNodes.push_back(pNode);
+		return true;
+	}
+
+	if (mNodes[index]->mValue.GetType() != valueType)
+	{
+		NFLogError(NF_LOG_OBJECT_DATA_LOG, 0, "node name:{} exist, but data type error, AddNode failed!", name);
+		return false;
+	}
+
+	mNodes[index]->mFeature = feature;
+	return true;
+}
+
 bool NFCDataNodeManager::SetNode(const std::string& name, const NFCData& value)
 {
 	size_t index;

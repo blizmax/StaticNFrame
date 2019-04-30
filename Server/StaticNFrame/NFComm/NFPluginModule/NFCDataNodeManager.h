@@ -31,6 +31,7 @@ public:
 	virtual NFDataNode* GetNodeByIndex(size_t index) override;
 	virtual NFDataNode* GetNode(const std::string& name) override;
 	virtual bool AddNode(const std::string& name, const NFCData& value, const int8_t feature) override;
+	virtual bool AddNode(const std::string& name, const uint32_t valueType, const int8_t feature) override;
 	virtual bool SetNode(const std::string& name, const NFCData& value) override;
 
 	virtual const NFCData::Array& GetArray(const std::string& name) const override;

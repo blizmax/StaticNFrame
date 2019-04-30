@@ -35,6 +35,7 @@ public:
 	virtual void ClearTable(const std::string& table_name) = 0;
 
 	virtual bool AddNode(const std::string& name, const NFCData& value, const int8_t feature = 0) = 0;
+	virtual bool AddNode(const std::string& name, const uint32_t valueType, const int8_t feature = 0) = 0;
 	virtual bool CheckNodeExist(const std::string& name) = 0;
 	virtual bool CheckNodeExist(uint32_t index) = 0;
 
