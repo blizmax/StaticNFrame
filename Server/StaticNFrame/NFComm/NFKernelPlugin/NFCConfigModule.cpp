@@ -13,6 +13,9 @@
 #include "NFComm/NFPluginModule/NFCObject.h"
 #include "NFComm/NFCore/NFStringUtility.h"
 #include "NFComm/NFPluginModule/NFDataNode.h"
+#include "NFComm/NFCore/NFFileUtility.h"
+#include "NFComm/NFPluginModule/NFLogMgr.h"
+#include "NFComm/NFCore/NFDateTime.hpp"
 
 NFCConfigModule::NFCConfigModule(NFIPluginManager* p)
 {
@@ -77,7 +80,8 @@ bool NFCConfigModule::LoadConfig()
 	LoadLogConfig();
 	LoadPluginConfig();
 	LoadServerConfig();
-	LoadClass();
+	LoadClassNode();
+	LoadDBTable();
 	return true;
 }
 
@@ -162,7 +166,101 @@ bool NFCConfigModule::LoadLogConfig()
 	return true;
 }
 
-bool NFCConfigModule::LoadClass()
+bool NFCConfigModule::LoadDBTable()
+{
+	NFLuaRef ref = GetGlobal("dbTableName");
+	if (!ref.isValid())
+	{
+		NFLogError(NF_LOG_LOAD_CONFIG, 0, "lua can't find dbTableName");
+		assert(0);
+	}
+
+	if (!ref.isTable())
+	{
+		NFLogError(NF_LOG_LOAD_CONFIG, 0, "dbTableName is not table in the lua");
+		assert(0);
+	}
+
+	for (auto it = ref.begin(); it != ref.end(); ++it)
+	{
+		std::string dbTableName = it.key<std::string>();
+		NFLuaRef dbTableNameRef = it.value();
+
+		NFDBTable* pDBTable = NF_NEW NFDBTable();
+		pDBTable->mTableName = dbTableName;
+
+		for (auto colit = dbTableNameRef.begin(); colit != dbTableNameRef.end(); ++colit)
+		{
+			NFLuaRef colRef = colit.value();
+			NFDBTableCol tableCol;
+			GetLuaTableValue(colRef, "colName", tableCol.mColName);
+			GetLuaTableValue(colRef, "colType", tableCol.mColType);
+			GetLuaTableValue(colRef, "colTypeNum", tableCol.mColTypeNum);
+			GetLuaTableValue(colRef, "colTypeLength", tableCol.mColTypeLength);
+			GetLuaTableValue(colRef, "primaryKey", tableCol.mPrimaryKey);
+			GetLuaTableValue(colRef, "index", tableCol.mIndex);
+			GetLuaTableValue(colRef, "autoincrement", tableCol.mAutoIncrement);
+
+			if (tableCol.mPrimaryKey)
+			{
+				pDBTable->mPrimaryKeyCol = tableCol.mColName;
+			}
+			pDBTable->mDBTableColMap.emplace(tableCol.mColName, tableCol);
+		}
+
+		for (auto classiter = mClassObjectConfig.begin(); classiter != mClassObjectConfig.end(); classiter++)
+		{
+			for (auto nodeiter = classiter->second->mClassNodeArray.begin(); nodeiter != classiter->second->mClassNodeArray.end(); nodeiter++)
+			{
+				for (size_t i = 0; i < nodeiter->mVecTableName.size(); i++)
+				{
+					if (dbTableName == nodeiter->mVecTableName[i])
+					{
+						if (pDBTable->mDBTableColMap.find(nodeiter->mNodeName) == pDBTable->mDBTableColMap.end())
+						{
+							NFDBTableCol tableCol;
+							tableCol.mColName = nodeiter->mNodeName;
+							tableCol.mPrimaryKey = false;
+							tableCol.mIndex = false;
+							tableCol.mAutoIncrement = false;
+
+							tableCol.mColTypeNum = nodeiter->mNodeType;
+							if (nodeiter->mNodeType == NF_DT_BOOLEAN)
+							{
+								tableCol.mColType = "real";
+								
+							}
+							else if (nodeiter->mNodeType == NF_DT_INT)
+							{
+								tableCol.mColType = "int";
+							}
+							else if (nodeiter->mNodeType == NF_DT_DOUBLE)
+							{
+								tableCol.mColType = "double";
+							}
+							else if (nodeiter->mNodeType == NF_DT_STRING)
+							{
+								tableCol.mColType = "varchar";
+								tableCol.mColTypeLength = 45;
+							}
+							else
+							{
+								tableCol.mColType = "varchar";
+								tableCol.mColTypeLength = 512;
+							}
+							pDBTable->mDBTableColMap.emplace(tableCol.mColName, tableCol);
+						}
+					}
+				}
+			}
+		}
+	
+		mDBTableColConfig.emplace(dbTableName, pDBTable);
+	}
+	return true;
+}
+
+bool NFCConfigModule::LoadClassNode()
 {
 	NFLuaRef ref = GetGlobal("className");
 	if (!ref.isValid())
@@ -173,7 +271,7 @@ bool NFCConfigModule::LoadClass()
 
 	if (!ref.isTable())
 	{
-		NFLogError(NF_LOG_LOAD_CONFIG, 0, "className is not table in the lua", DEFINE_LUA_STRING_LOAD_PLUGIN);
+		NFLogError(NF_LOG_LOAD_CONFIG, 0, "className is not table in the lua");
 		assert(0);
 	}
 
@@ -184,6 +282,7 @@ bool NFCConfigModule::LoadClass()
 
 		NFClassObject *pClassObject = NF_NEW NFClassObject();
 		pClassObject->mClassName = className;
+
 		for (auto classit = classNameRef.begin(); classit != classNameRef.end(); ++classit)
 		{
 			NFLuaRef nodeRef = classit.value();
@@ -197,6 +296,7 @@ bool NFCConfigModule::LoadClass()
 			GetLuaTableValue(nodeRef, "public", classNode.mPublic);
 			GetLuaTableValue(nodeRef, "private", classNode.mPrivate);
 			GetLuaTableValue(nodeRef, "dbTable", classNode.mDBTable);
+			GetLuaTableValue(nodeRef, "desc", classNode.mDesc);
 
 			if (classNode.mSave)
 			{
@@ -213,10 +313,191 @@ bool NFCConfigModule::LoadClass()
 			
 			NFStringUtility::Split(classNode.mVecTableName, classNode.mDBTable, ",");
 			pClassObject->mClassNodeMap.emplace(classNode.mNodeName, classNode);
+			pClassObject->mClassNodeArray.push_back(classNode);
 		}
 		mClassObjectConfig.emplace(pClassObject->mClassName, pClassObject);
 	}
 	return true;
+}
+
+void NFCConfigModule::CreateSqlFile()
+{
+	NFLogInfo(NF_LOG_SYSTEMLOG, 0, "create db sql file...........");
+
+	std::stringstream sqlFile;
+	sqlFile << "/*" << std::endl;
+	sqlFile << "---------------------mysql-----------------------" << std::endl;
+	sqlFile << "Date:" << NFDateTime::Now().GetDbTimeString() << std::endl;
+	sqlFile << "*/" << std::endl;
+	sqlFile << std::endl;
+
+	for (auto iter = mDBTableColConfig.begin(); iter != mDBTableColConfig.end(); iter++)
+	{
+		NFDBTable* pDBTable = iter->second;
+		sqlFile << "/*-- ----------------------------" << std::endl;
+		sqlFile << "-- Table structure for " << pDBTable->mTableName << std::endl;
+		sqlFile << "-- ----------------------------*/" << std::endl;
+
+		NFDBTableCol* pPrimaryKey = nullptr;
+		if (pDBTable->mDBTableColMap.find(pDBTable->mPrimaryKeyCol) != pDBTable->mDBTableColMap.end())
+		{
+			pPrimaryKey = &pDBTable->mDBTableColMap[pDBTable->mPrimaryKeyCol];
+		}
+
+		if (pPrimaryKey == nullptr)
+		{
+			NFLogError(NF_LOG_SYSTEMLOG, 0, "db table:{} not find the primary col:{}", pDBTable->mTableName, pDBTable->mPrimaryKeyCol);
+			continue;
+		}
+
+		sqlFile << "CREATE TABLE IF NOT EXISTS `" << pDBTable->mTableName << "` (\n";
+		sqlFile << "`" << pPrimaryKey->mColName << "`";
+		if (pPrimaryKey->mColType != "varchar")
+		{
+			sqlFile << " " << pPrimaryKey->mColType << " not null";
+		}
+		else
+		{
+			sqlFile << " " << pPrimaryKey->mColType << "(" << pPrimaryKey->mColTypeLength << ") CHARACTER SET latin1 not null";
+		}
+
+		if (pPrimaryKey->mAutoIncrement)
+		{
+			sqlFile << " AUTO_INCREMENT,\n";
+		}
+
+		sqlFile << " PRIMARY KEY(`" << pPrimaryKey->mColName << "`)\n";
+
+		sqlFile << "\n) ENGINE=InnoDB DEFAULT CHARSET=utf8;" << std::endl;
+		for (auto colIter = pDBTable->mDBTableColMap.begin(); colIter != pDBTable->mDBTableColMap.end(); colIter++)
+		{
+			NFDBTableCol& tableCol = colIter->second;
+
+			if (tableCol.mColName == pPrimaryKey->mColName)
+			{
+				continue;
+			}
+
+			sqlFile << "ALTER TABLE `" << pDBTable->mTableName << "` ADD COLUMN " << tableCol.mColName;
+			
+			if (tableCol.mColType != "varchar")
+			{
+				if (tableCol.mAutoIncrement == false)
+				{
+					sqlFile << " " << tableCol.mColType << " default 0";
+				}
+				else
+				{
+					sqlFile << " " << tableCol.mColType << " not null";
+				}
+			}
+			else
+			{
+				if (tableCol.mAutoIncrement == false)
+				{
+					sqlFile << " " << tableCol.mColType << "(" << tableCol.mColTypeLength << ") CHARACTER SET latin1 DEFAULT ''";
+				}
+				else
+				{
+					sqlFile << " " << tableCol.mColType << "(" << tableCol.mColTypeLength << ") CHARACTER SET latin1 not null";
+				}
+				
+			}
+
+			sqlFile << ";";
+			sqlFile << std::endl;
+		}
+	}
+
+	NFFileUtility::WriteFile("../../../Sql/mysql_create_table.sql", sqlFile.str().c_str(), sqlFile.str().length());
+}
+
+void NFCConfigModule::ProductFile()
+{
+	CreateHeaderFile();
+	CreateSqlFile();
+}
+
+void NFCConfigModule::CreateHeaderFile()
+{
+	NFLogInfo(NF_LOG_SYSTEMLOG, 0, "create class header file...........");
+	std::stringstream classHeaderFile;
+	classHeaderFile << "#pragma once" << std::endl;
+	classHeaderFile << std::endl;
+
+	std::stringstream classNodeFile;
+	classNodeFile << "#pragma once" << std::endl;
+	classNodeFile << std::endl;
+	
+	classHeaderFile << "#define NF_NODE_STRING_CLASS_NAME \t\t\t\t\t\"ClassName\"" << std::endl;
+
+	for (auto iter = mClassObjectConfig.begin(); iter != mClassObjectConfig.end(); iter++)
+	{
+		std::string className = iter->first;
+		NFStringUtility::ToUpper(className);
+		classHeaderFile << "#define NF_NODE_STRING_CLASS_NAME_" << className << "\t\t\t\t\t\"" << iter->first << "\"" << std::endl;
+
+		classNodeFile << "////////////////////////////// " << iter->first << " node name /////////////////////////////" << std::endl;
+		
+		for (auto nodeIter = iter->second->mClassNodeArray.begin(); nodeIter != iter->second->mClassNodeArray.end(); nodeIter++)
+		{
+			std::string nodeName = nodeIter->mNodeName;
+			NFStringUtility::ToUpper(nodeName);
+
+			std::stringstream classNodeLine;
+			if (nodeIter->mNodeType == NF_DT_BOOLEAN)
+			{
+				classNodeLine << "#define NF_" << className << "_NODE_BOOL_" << nodeName;
+			}
+			else if (nodeIter->mNodeType == NF_DT_INT)
+			{
+				classNodeLine << "#define NF_" << className << "_NODE_INT_" << nodeName;
+			}
+			else if (nodeIter->mNodeType == NF_DT_DOUBLE)
+			{
+				classNodeLine << "#define NF_" << className << "_NODE_DOUBLE_" << nodeName;
+			}
+			else if (nodeIter->mNodeType == NF_DT_STRING)
+			{
+				classNodeLine << "#define NF_" << className << "_NODE_STRING_" << nodeName;
+			}
+			else if (nodeIter->mNodeType == NF_DT_ARRAY)
+			{
+				classNodeLine << "#define NF_" << className << "_NODE_ARRAY_" << nodeName;
+			}
+			else if (nodeIter->mNodeType == NF_DT_LIST)
+			{
+				classNodeLine << "#define NF_" << className << "_NODE_LIST_" << nodeName;
+			}
+			else if (nodeIter->mNodeType == NF_DT_MAPSTRING)
+			{
+				classNodeLine << "#define NF_" << className << "_NODE_MAPSTRING_" << nodeName;
+			}
+			else if (nodeIter->mNodeType == NF_DT_MAPINT)
+			{
+				classNodeLine << "#define NF_" << className << "_NODE_MAPINT_" << nodeName;
+			}
+
+			while (classNodeLine.str().length() <= 60)
+			{
+				classNodeLine << " ";
+			}
+
+			classNodeLine << "\"" << nodeIter->mNodeName << "\"";
+
+			while (classNodeLine.str().length() <= 100)
+			{
+				classNodeLine << " ";
+			}
+
+			classNodeLine << "//" << nodeIter->mDesc << std::endl;
+
+			classNodeFile << classNodeLine.str();
+		}
+	}
+
+	NFFileUtility::WriteFile("../../../Server/NFMessageDefine/NFNodeClassName.h", classHeaderFile.str().c_str(), classHeaderFile.str().length());
+	NFFileUtility::WriteFile("../../../Server/NFMessageDefine/NFNodeClass.h", classNodeFile.str().c_str(), classNodeFile.str().length());
 }
 
 bool NFCConfigModule::LoadPluginConfig()

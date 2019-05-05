@@ -46,6 +46,7 @@ std::string PrintfLogo()
 	ios << "Input '--Reload' Programs will reload config when it runs" << std::endl;
 	ios << "Input '--Profiler' Programs will open/close profiler when it runs" << std::endl;
 	ios << "Input '--Dynamic=xxplugin' Programs will dynamic load plugin when it runs" << std::endl;
+	ios << "Input '--ProductFile' Programs will product file,  class node header file and sql file, proto file when it runs" << std::endl;
 	ios << "\n" << std::endl;
 
 	return ios.str();

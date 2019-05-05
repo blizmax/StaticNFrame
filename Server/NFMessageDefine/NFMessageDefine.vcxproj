@@ -41,6 +41,8 @@
     <ClInclude Include="msg_human.pb.h" />
     <ClInclude Include="mysql_db.pb.h" />
     <ClInclude Include="NFMsgDefine.h" />
+    <ClInclude Include="NFNodeClass.h" />
+    <ClInclude Include="NFNodeClassName.h" />
     <ClInclude Include="server_msg.pb.h" />
     <ClInclude Include="server_to_server_msg.pb.h" />
     <ClInclude Include="sqlite_db.pb.h" />

@@ -25,8 +25,6 @@ public:
 
 	virtual void CreatePlayer(const NFMsg::cgaccountlogin& cgMsg);
 
-	virtual void AddPlayerAllCount();
-
 	virtual void CreatePlayerStates(uint64_t playerId, const std::string& account);
 private:
 	virtual std::string GetInitFaceID();

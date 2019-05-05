@@ -1,7 +1,7 @@
 require 'class'
 
 dbTableName["dy_player"] = {
-	
+	{colName="userid", colType="int",  colTypeNum = NF_DT_TYPE.NF_DT_INT, colTypeLength=0, primaryKey=true, index=true, autoincrement=true, },
 }
 
 className["player"] = {

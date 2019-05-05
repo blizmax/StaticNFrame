@@ -28,12 +28,16 @@ public:
 	virtual bool Shut() override;
 	virtual bool Execute() override;
 	virtual bool OnReloadPlugin() override;
+	virtual void ProductFile() override;
+	virtual void CreateHeaderFile();
+	virtual void CreateSqlFile();
 public:
 	bool LoadConfig();
 	bool LoadPluginConfig();
 	bool LoadServerConfig();
 	bool LoadLogConfig();
-	bool LoadClass();
+	bool LoadClassNode();
+	bool LoadDBTable();
 public:
 	virtual NFPluginConfig* GetPluginConfig(const std::string& pluginName);
 	virtual NFServerConfig* GetServerConfig(uint32_t serverId);
@@ -45,4 +49,5 @@ protected:
 	std::unordered_map<int, NFServerConfig*> mServerConfig; //serverid--key
 	NFIObject* mGlobalConfig;
 	std::unordered_map<std::string, NFClassObject*> mClassObjectConfig;
+	std::unordered_map<std::string, NFDBTable*> mDBTableColConfig;
 };

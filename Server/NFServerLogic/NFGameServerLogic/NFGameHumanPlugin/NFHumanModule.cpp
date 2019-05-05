@@ -19,9 +19,8 @@
 #include "NFComm/NFCore/NFRandom.hpp"
 #include "NFComm/NFCore/NFDateTime.hpp"
 #include "NFComm/NFPluginModule/NFIKernelModule.h"
-#include "NFComm/NFPluginModule/NFCommonNode.h"
-
-#define REDIS_KEY_PLAYER_ALL	"playerall"
+#include "NFMessageDefine/NFNodeClass.h"
+#include "NFMessageDefine/NFNodeClassName.h"
 
 NFCHumanModule::NFCHumanModule(NFIPluginManager* p)
 {
@@ -147,6 +146,9 @@ NFIObject* NFCHumanModule::LoadPlayerInfoByCID(const std::string& account, const
 {
 	NFIObject* pObject = nullptr;
 	NFIMysqlModule* pMysqlModule = m_pPluginManager->FindModule<NFIMysqlModule>();
+	NFINoSqlModule* pNosqlModule = m_pPluginManager->FindModule<NFINoSqlModule>();
+	NF_SHARE_PTR<NFINoSqlDriver> pNosqlDriver = pNosqlModule->GetDriverBySuitConsistent();
+
 	NFMsg::db_query_playerinfo db_playerinfo;
 	db_playerinfo.mutable_db_cond()->set_account(account);
 	bool ret = pMysqlModule->Query(db_playerinfo);
@@ -166,16 +168,13 @@ NFIObject* NFCHumanModule::LoadPlayerInfoByCID(const std::string& account, const
 		return pObject;
 	}
 
-	NFIObject* pObject = NFCHumanModule::CreatePlayerObject(pDbInfo);
+	pObject = NFCHumanModule::CreatePlayerObject(pDbInfo);
 	if (pObject == nullptr)
 	{
 		NFLogError(NF_LOG_LOGIN_MODULE_LOG, pDbInfo->userid(), "NFCHumanModule::CreatePlayerObject failed:{}", pDbInfo->DebugString());
 		retCode = RETURN_CODE_ACCOUNT_NO_EXIST;
 		return pObject;
 	}
-
-	NFINoSqlModule* pNosqlModule = m_pPluginManager->FindModule<NFINoSqlModule>();
-	NF_SHARE_PTR<NFINoSqlDriver> pNosqlDriver = pNosqlModule->GetDriverBySuitConsistent();
 
 	NFMsg::accountinfo accountInfo;
 	accountInfo.set_account(account);
@@ -321,22 +320,6 @@ void NFCHumanModule::CreatePlayer(const NFMsg::cgaccountlogin& cgMsg)
 	{
 		NFBehaviorLog(0, "", "player", "LoadPlayerInfoByCID", -1, "加载数据库玩家信息失败");
 		return;
-	}
-}
-
-void NFCHumanModule::AddPlayerAllCount()
-{
-	NFINoSqlModule* pNosqlModule = m_pPluginManager->FindModule<NFINoSqlModule>();
-	NF_SHARE_PTR<NFINoSqlDriver> pNosqlDriver = pNosqlModule->GetDriverBySuitConsistent();
-
-	int64_t value = 0;
-	if (pNosqlDriver->Incr(REDIS_KEY_PLAYER_ALL, value))
-	{
-		NFLogInfo(NF_LOG_LOGIN_MODULE_LOG, 0, "redis key:playerall={}", value);
-	}
-	else
-	{
-		NFLogError(NF_LOG_LOGIN_MODULE_LOG, 0, "redis key:playerall={}, incr failed!", value);
 	}
 }
 

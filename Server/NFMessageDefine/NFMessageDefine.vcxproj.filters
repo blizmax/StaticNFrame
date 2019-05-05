@@ -13,6 +13,8 @@
     <ClInclude Include="db_behavior_log.pb.h" />
     <ClInclude Include="db_human.pb.h" />
     <ClInclude Include="server_to_server_msg.pb.h" />
+    <ClInclude Include="NFNodeClass.h" />
+    <ClInclude Include="NFNodeClassName.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="mysql_db.pb.cc" />

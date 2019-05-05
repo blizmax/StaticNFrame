@@ -326,7 +326,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="NFCDynLib.h" />
-    <ClInclude Include="NFCommonNode.h" />
     <ClInclude Include="NFIAsyncSqliteModule.h" />
     <ClInclude Include="NFIAsynMongoModule.h" />
     <ClInclude Include="NFICallBackModule.h" />

@@ -121,6 +121,7 @@ struct NFClassNode
 	bool mPrivate;
 	int8_t mFeature;
 	std::string mDBTable;
+	std::string mDesc;
 	std::vector<std::string> mVecTableName;
 };
 
@@ -128,6 +129,7 @@ struct NFClassObject
 {
 	std::string mClassName;
 	std::unordered_map<std::string, NFClassNode> mClassNodeMap;
+	std::vector<NFClassNode> mClassNodeArray;
 };
 
 struct NFDBTableCol
@@ -137,8 +139,12 @@ struct NFDBTableCol
 		mPrimaryKey = false;
 		mIndex = false;
 		mAutoIncrement = false;
+		mColTypeLength = 0;
 	}
 	std::string mColName;
+	std::string mColType;
+	uint32_t mColTypeNum;
+	uint32_t mColTypeLength;	//如果列类型是字符串,这里是字符串长度
 	bool mPrimaryKey;
 	bool mIndex;
 	bool mAutoIncrement;
@@ -147,6 +153,7 @@ struct NFDBTableCol
 struct NFDBTable
 {
 	std::string mTableName;
+	std::string mPrimaryKeyCol;
 	std::unordered_map<std::string, NFDBTableCol> mDBTableColMap;
 };
 
@@ -159,4 +166,5 @@ public:
 
 	virtual NFIObject* GetGlobalConfig() const = 0;
 	virtual NFClassObject* GetClassObject(const std::string& className) const = 0;
+	virtual void ProductFile() = 0;
 };

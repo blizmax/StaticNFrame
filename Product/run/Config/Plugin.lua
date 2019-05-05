@@ -11,6 +11,16 @@ NF_ST_MAX = 9;    		--
 
 LoadPlugin = 
 {
+	KernelServer = {
+		ServerPlugins = {
+			-------------------------
+			-----基础框架引擎-------------
+			"NFKernelPlugin",
+			"NFMonitorPlugin",
+		};
+		ServerType = NF_ST_NONE;
+	},
+	
 	AllServer = {
 		ServerPlugins = {
 			-------------------------

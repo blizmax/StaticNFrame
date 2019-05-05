@@ -71,10 +71,12 @@ void NFCHumanControllerModule::OnHandleAccountLogin(const uint32_t unLinkId, con
 	NFMsg::cgaccountlogin cgMsg;
 	CLIENT_MSG_PROCESS_NO_OBJECT(nMsgId, playerId, msg, nLen, cgMsg);
 
+	NFINetClientModule* pNetClientModule = m_pPluginManager->FindModule<NFINetClientModule>();
+	NFIHumanModule* pHumanModule = m_pPluginManager->FindModule<NFIHumanModule>();
+
 	uint32_t proxyServerId = (uint32_t)playerId;
 	NFMsg::gcaccountlogin gcMsg;
-	NFINetClientModule* pNetClientModule = m_pPluginManager->FindModule<NFINetClientModule>();
-
+	
 	if (cgMsg.cid() == "")
 	{
 		std::string cid = NFRandomString(8);
@@ -107,18 +109,18 @@ void NFCHumanControllerModule::OnHandleAccountLogin(const uint32_t unLinkId, con
 	gcMsg.set_result(0);
 	NFMsg::playerinfo* pInfo = gcMsg.mutable_pinfo();
 
-	NFIHumanModule* pHumanModule = m_pPluginManager->FindModule<NFIHumanModule>();
-
-	uint32_t ret = pHumanModule->GetPlayerInfoByCID(cgMsg.account(), cgMsg.password(), pInfo);
+	uint32_t ret = 0;
+	NFIObject* pPlayerObject = pHumanModule->GetPlayerInfoByCID(cgMsg.account(), cgMsg.password(), ret);
 	bool isNewPlayer = false;
 
-	if (ret == RETURN_CODE_ACCOUNT_NO_EXIST)
+	if (ret == RETURN_CODE_ACCOUNT_NO_EXIST || pPlayerObject == nullptr)
 	{
 		pHumanModule->CreatePlayer(cgMsg);
 
-		uint32_t ret = pHumanModule->GetPlayerInfoByCID(cgMsg.account(), cgMsg.password(), pInfo);
+		ret = 0;
+		pPlayerObject = pHumanModule->GetPlayerInfoByCID(cgMsg.account(), cgMsg.password(), ret);
 
-		if (ret == RETURN_CODE_ACCOUNT_NO_EXIST)
+		if (ret == RETURN_CODE_ACCOUNT_NO_EXIST || pPlayerObject == nullptr)
 		{
 			gcMsg.set_result(RETURN_CODE_ACCOUNT_NO_EXIST);
 			pNetClientModule->SendToServerByPB(unLinkId, ::NFMsg::Server_Msg_AccountLogin, gcMsg, 0);
@@ -127,8 +129,6 @@ void NFCHumanControllerModule::OnHandleAccountLogin(const uint32_t unLinkId, con
 		}
 
 		isNewPlayer = true;
-		pHumanModule->AddPlayerAllCount();
-		pHumanModule->CreatePlayerStates(pInfo->userid(), pInfo->nickname());
 	}
 	else if (ret == RETURN_CODE_PASSWORD_NOT_MATCH)
 	{

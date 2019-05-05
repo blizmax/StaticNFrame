@@ -14,6 +14,7 @@
 #include "NFComm/NFPluginModule/NFIPluginManager.h"
 #include "NFComm/NFPluginModule/NFTimerMgr.h"
 #include "NFComm/NFPluginModule/NFIPlugin.h"
+#include "NFComm/NFPluginModule/NFIClassModule.h"
 
 NFCConsoleModule::NFCConsoleModule(NFIPluginManager* p)
 {
@@ -34,6 +35,7 @@ bool NFCConsoleModule::Awake()
 			mCmdParser.Add("Exit", 0, "Exit App");
 			mCmdParser.Add("Reload", 0, "Reload Plugin Config");
 			mCmdParser.Add("Profiler", 0, "Open Profiler");
+			mCmdParser.Add("ProductFile", 0, "Product File, node header file, sql file, prrotobuf file");
 
 			mCmdParser.Add<std::string>("Dynamic", 0, "Dynamic Load Plugin", false, "xxPlugin");
 		}
@@ -130,6 +132,13 @@ void NFCConsoleModule::BackThreadLoop()
 					mQueueMsg.Push(msg);
 				}
 			}
+
+			if (mCmdParser.Exist("ProductFile"))
+			{
+				NFConsoleMsg msg;
+				msg.mMsgType = NFConsoleMsg_ProductFile;
+				mQueueMsg.Push(msg);
+			}
 		}
 		catch (NFCmdLine::NFCmdLine_Error& e)
 		{
@@ -162,6 +171,11 @@ void NFCConsoleModule::OnTimer(uint32_t nTimerID)
 		else if (msg.mMsgType == NFConsoleMsg_Dynamic)
 		{
 			m_pPluginManager->DynamicLoadPluginLibrary(msg.mParam1);
+		}
+		else if (msg.mMsgType == NFConsoleMsg_ProductFile)
+		{
+			NFIConfigModule* pConfigModule = m_pPluginManager->FindModule<NFIConfigModule>();
+			pConfigModule->ProductFile();
 		}
 	}
 }

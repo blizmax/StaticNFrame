@@ -15,7 +15,8 @@
 #include "NFComm/NFCore/NFCRC32.h"
 #include "NFComm/NFCore/NFCRC16.h"
 #include "NFComm/NFCore/NFBase64.h"
-#include "NFComm/NFPluginModule/NFCommonNode.h"
+
+#include "NFMessageDefine/NFNodeClassName.h"
 #include "NFComm/NFPluginModule/NFIConfigModule.h"
 
 #define NF_GUID_POWER 100000
