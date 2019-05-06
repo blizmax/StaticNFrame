@@ -7,7 +7,7 @@ ADD_EXECUTABLE(${PROJECT_NAME} ${SRC})
 
 TARGET_LINK_LIBRARIES(${PROJECT_NAME} rt dl protobuf  
 	 bson-1.0 event_core event_extra event crypto mongoc-1.0 
-	mysqlclient mysqlpp ssl Common LuaBind  NFMessageDefine NFCore NFPluginModule NFServerCommon NFServerLogicCommon)
+	mysqlclient Sqlite3 mysqlpp ssl Common LuaBind  NFMessageDefine NFCore NFPluginModule NFServerCommon NFServerLogicCommon)
 
 ADD_DEPENDENCIES(${PROJECT_NAME} Common 
 NFMessageDefine NFCore NFMath NFPluginModule)
