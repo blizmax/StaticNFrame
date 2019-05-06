@@ -9,6 +9,8 @@
 /Server/run/
 /Server/Lib/Debug
 /Server/Lib/Release
+/Server/Lib/Dynamic_Debug
+/Server/Lib/Dynamic_Release
 /Server/run/Release
 /Server/*.sdf
 /Server/run/Debug/
@@ -16,6 +18,8 @@
 /Product/Temp/
 /Product/run/Debug/
 /Product/run/Release/
+/Product/run/Dynamic_Debug/
+/Product/run/Dynamic_Release/
 /Product/build
 /Product/build_release
 /Server/Dependencies
