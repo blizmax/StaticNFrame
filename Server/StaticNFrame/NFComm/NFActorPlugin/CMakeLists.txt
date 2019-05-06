@@ -11,12 +11,14 @@ elseif(CMAKE_BUILD_TYPE STREQUAL "Debug")
 	ADD_LIBRARY( ${PROJECT_NAME} STATIC ${SRC} )
 elseif (CMAKE_BUILD_TYPE STREQUAL "DynamicRelease")
 	SET(LIBRARY_OUTPUT_PATH "${CMAKE_SOURCE_DIR}/Product/run/Dynamic_Release")
-	target_link_libraries(${PROJECT_NAME} libtheron.a)
+
 	ADD_LIBRARY( ${PROJECT_NAME} SHARED ${SRC} )
+	target_link_libraries(${PROJECT_NAME} libtheron.a)
 elseif(CMAKE_BUILD_TYPE STREQUAL "DynamicDebug")
 	SET(LIBRARY_OUTPUT_PATH "${CMAKE_SOURCE_DIR}/Product/run/Dynamic_Debug")
-	target_link_libraries(${PROJECT_NAME} libtheron.a)
+	
 	ADD_LIBRARY( ${PROJECT_NAME} SHARED ${SRC} )
+	target_link_libraries(${PROJECT_NAME} libtheron.a)
 endif()
 
 
