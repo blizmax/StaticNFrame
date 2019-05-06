@@ -5,9 +5,11 @@ AUX_SOURCE_DIRECTORY(. SRC)
 
 ADD_EXECUTABLE(${PROJECT_NAME} ${SRC})
 
-TARGET_LINK_LIBRARIES(${PROJECT_NAME} rt dl Common LuaBind protobuf NFMessageDefine NFCore NFPluginModule)
+TARGET_LINK_LIBRARIES(${PROJECT_NAME} rt dl protobuf  
+	 bson1.0 event_core event_extra event crypto mongoc-1.0 
+	mysqlclient ssl Common LuaBind  NFMessageDefine NFCore NFPluginModule NFServerCommon NFServerLogicCommon)
 
-ADD_DEPENDENCIES(NFPluginLoader LuaBind G3Dlite Common 
+ADD_DEPENDENCIES(${PROJECT_NAME} Common 
 NFMessageDefine NFCore NFMath NFPluginModule)
 
 if (CMAKE_BUILD_TYPE STREQUAL "Release")
