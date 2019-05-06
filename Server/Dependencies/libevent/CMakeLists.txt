@@ -39,8 +39,10 @@ project(libevent C)
 set(CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/cmake/")
 string(REGEX MATCH "SunOS" SOLARIS "${CMAKE_SYSTEM_NAME}")
 
-set(OPENSSL_INCLUDE_DIR "${PROJECT_SOURCE_DIR}/../openssl/include;${PROJECT_SOURCE_DIR}/../openssl/include/win")
-set(OPENSSL_LIBRARIES "${PROJECT_SOURCE_DIR}/../../../Product/Lib/Release")
+set(OPENSSL_INCLUDE_DIR "${PROJECT_SOURCE_DIR}/../openssl/include;${PROJECT_SOURCE_DIR}/../openssl/include/linux")
+#set(OPENSSL_LIBRARIES "${PROJECT_SOURCE_DIR}/../../../Product/Lib/Release;${PROJECT_SOURCE_DIR}/../../../Product/run/Dynamic_Release")
+set(OPENSSL_LIBRARIES dl ssl crypto)
+link_directories("${PROJECT_SOURCE_DIR}/../../../Product/Lib/Release" "${PROJECT_SOURCE_DIR}/../../../Product/run/Dynamic_Release")
 
 
 include(CheckTypeSize)
@@ -105,7 +107,7 @@ set(EVENT_VERSION
 	"${EVENT_VERSION_MAJOR}.${EVENT_VERSION_MINOR}.${EVENT_VERSION_PATCH}-${EVENT_STAGE_NAME}")
 
 option(EVENT__BUILD_SHARED_LIBRARIES
-    "Define if libevent should be built with shared libraries instead of archives" OFF)
+    "Define if libevent should be built with shared libraries instead of archives" ON)
 
 option(EVENT__DISABLE_DEBUG_MODE
     "Define if libevent should build without support for a debug mode" OFF)
