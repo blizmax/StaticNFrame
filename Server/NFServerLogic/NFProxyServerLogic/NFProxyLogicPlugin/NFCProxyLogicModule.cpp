@@ -202,6 +202,16 @@ void NFCProxyLogicModule::OnHandleNotifyChangeGameFromWorldServer(const uint32_t
 		{
 			if (pPlayerInfo != pLinkInfo)
 			{
+				if (pPlayerInfo->mUnlinkId != pLinkInfo->mUnlinkId)
+				{
+					NFMsg::gckitplayer kitMsg;
+					kitMsg.set_result(0);
+					kitMsg.set_kittype(1);
+					kitMsg.set_msg("您的账号已在别处登入，若非本人操作，请联系系统管理员！");
+					m_pNetServerModule->SendToServerByPB(pPlayerInfo->mUnlinkId, NFMsg::Server_Msg_KitPlayer, kitMsg, 0);
+					m_pNetServerModule->CloseLinkId(pPlayerInfo->mUnlinkId);
+				}
+
 				mPlayerLinkInfo.RemoveElement(gcMsg.user_id());
 				pPlayerInfo = nullptr;
 
@@ -244,15 +254,28 @@ void NFCProxyLogicModule::OnHandleAccountLoginFromWorldServer(const uint32_t unL
 	{
 		pLinkInfo->mIsLogin = true;
 		pLinkInfo->mAccount = gcMsg.mutable_pinfo()->account();
-		uint64_t realPlayerId = gcMsg.mutable_pinfo()->userid();
-		pLinkInfo->mPlayerId = realPlayerId;
+		pLinkInfo->mPlayerId = gcMsg.mutable_pinfo()->userid();
 		if (mPlayerLinkInfo.GetElement(pLinkInfo->mPlayerId) == nullptr)
 		{
 			NFLogError(NF_LOG_PROXY_LOGIC_PLUGIN, 0, "player:{} login, but not find the game server....", pLinkInfo->mPlayerId);
 		}
+
+		pLinkInfo->mSendMsgCount++;
+		m_pNetServerModule->SendByServerID(clientLinkId, nMsgId, msg, nLen, pLinkInfo->mSendMsgCount);
 	}
-	pLinkInfo->mSendMsgCount++;
-	m_pNetServerModule->SendByServerID(clientLinkId, nMsgId, msg, nLen, pLinkInfo->mSendMsgCount);
+	else
+	{
+		pLinkInfo->mIsLogin = false;
+
+		pLinkInfo->mSendMsgCount++;
+		m_pNetServerModule->SendByServerID(clientLinkId, nMsgId, msg, nLen, pLinkInfo->mSendMsgCount);
+
+		if (pLinkInfo->mPlayerId > 0)
+		{
+			mPlayerLinkInfo.RemoveElement(pLinkInfo->mPlayerId);
+		}
+		m_pNetServerModule->CloseLinkId(clientLinkId);
+	}
 }
 
 void NFCProxyLogicModule::OnHandleMessageFromWorldServer(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen)

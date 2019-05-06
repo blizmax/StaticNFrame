@@ -10,6 +10,7 @@
 #pragma once
 
 #include "NFServerLogic/NFServerLogicCommon/NFIHumanControllerModule.h"
+#include "NFServerLogic/NFServerLogicCommon/NFHumanDefine.h"
 
 class NFCHumanControllerModule : public NFIHumanControllerModule
 {
@@ -128,4 +129,6 @@ public:
 	* @return void
 	*/
 	void OnHandleNoticeInfo(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen);
+public:
+	static void CopyFromPlayerObject(NFMsg::playerinfo* pInfo, NFIObject* pPlayerObject);
 };

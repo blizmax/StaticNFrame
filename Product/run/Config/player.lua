@@ -33,7 +33,7 @@ className["player"] = {
 	
 	-----------------------------------------------------------玩家详情----------------------------------------------------------------------------------------
 	{nodeName="bindnick", nodeType=NF_DT_TYPE.NF_DT_STRING, public=false, private=false, save=true, dbTable = "dy_player", desc="实名认证消息"},
-	{nodeName="platformid", nodeType=NF_DT_TYPE.NF_DT_INT, public=false, private=false, save=true, dbTable = "dy_player", desc="平台返回的标识ID"},
+	{nodeName="platformid", nodeType=NF_DT_TYPE.NF_DT_STRING, public=false, private=false, save=true, dbTable = "dy_player", desc="平台返回的标识ID"},
 	
 	
 	-----------------------------------------------------------玩家基本信息----------------------------------------------------------------------------------------
@@ -72,13 +72,18 @@ className["player"] = {
 	{nodeName="agencystatus", nodeType=NF_DT_TYPE.NF_DT_INT, public=false, private=false, save=true, dbTable = "dy_player", desc="代理的状态，最高两位数，个尾数是0：表示没有绑定代理，1：已经绑定代理；十位数：0：没申请代理，1：已经申请代理，2：成为了代理"},
 	
 	---------------------------------------------------------------玩家签到和分享------------------------------------------------------------------------------------
-	{nodeName="registration1", nodeType=NF_DT_TYPE.NF_DT_INT, public=false, private=false, save=true, dbTable = "dy_player", desc="签到详情 上旬"},
-	{nodeName="registration2", nodeType=NF_DT_TYPE.NF_DT_INT, public=false, private=false, save=true, dbTable = "dy_player", desc="签到详情	中旬"},
-	{nodeName="registration3", nodeType=NF_DT_TYPE.NF_DT_INT, public=false, private=false, save=true, dbTable = "dy_player", desc="签到详情	下旬"},
+	{nodeName="registration1", nodeType=NF_DT_TYPE.NF_DT_STRING, public=false, private=false, save=true, dbTable = "dy_player", desc="签到详情 上旬"},
+	{nodeName="registration2", nodeType=NF_DT_TYPE.NF_DT_STRING, public=false, private=false, save=true, dbTable = "dy_player", desc="签到详情	中旬"},
+	{nodeName="registration3", nodeType=NF_DT_TYPE.NF_DT_STRING, public=false, private=false, save=true, dbTable = "dy_player", desc="签到详情	下旬"},
 	{nodeName="signinmonth", nodeType=NF_DT_TYPE.NF_DT_INT, public=false, private=false, save=true, dbTable = "dy_player", desc="签到月份"},
 	{nodeName="bsignin", nodeType=NF_DT_TYPE.NF_DT_INT, public=false, private=false, save=true, dbTable = "dy_player", desc="今天是否已签到   //未签到:0  已签到:签到时间"},
 	{nodeName="turntablenum", nodeType=NF_DT_TYPE.NF_DT_INT, public=false, private=false, save=true, dbTable = "dy_player", desc="转盘次数"},
 	{nodeName="tengames", nodeType=NF_DT_TYPE.NF_DT_INT, public=false, private=false, save=true, dbTable = "dy_player", desc="十局是否完成"},
 	{nodeName="todayshare", nodeType=NF_DT_TYPE.NF_DT_INT, public=false, private=false, save=true, dbTable = "dy_player", desc="今天是否分享"},
 	{nodeName="caninvite", nodeType=NF_DT_TYPE.NF_DT_INT, public=false, private=false, save=true, dbTable = "dy_player", desc="是否能被邀请	"},
+	
+	---------------------------------------------------------------玩家线上信息------------------------------------------------------------------------------------
+	{nodeName="online", nodeType=NF_DT_TYPE.NF_DT_BOOLEAN, public=false, private=false, save=false, desc="是否在线"},
+	{nodeName="loginTime", nodeType=NF_DT_TYPE.NF_DT_INT, public=false, private=false, save=false, desc="登陆时间"},
+	{nodeName="logoutTime", nodeType=NF_DT_TYPE.NF_DT_INT, public=false, private=false, save=false, desc="下线时间"},
 }

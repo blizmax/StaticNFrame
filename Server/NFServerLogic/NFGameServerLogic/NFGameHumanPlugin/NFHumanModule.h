@@ -10,6 +10,7 @@
 #pragma once
 
 #include "NFServerLogic/NFServerLogicCommon/NFIHumanModule.h"
+#include "NFServerLogic/NFServerLogicCommon/NFHumanDefine.h"
 
 class NFCHumanModule : public NFIHumanModule
 {
@@ -32,8 +33,6 @@ private:
 	virtual NFIObject* LoadPlayerInfoByCID(const std::string& account, const std::string& password, uint32_t& retCode);
 
 	virtual NFIObject* LoadPlayerInfo(uint64_t playerId, uint32_t& retCode);
-
-	static void CopyFromDB(NFMsg::playerinfo* pInfo, NFMsg::db_playerinfo* pDbInfo);
 private:
 	virtual NFIObject* CreatePlayerObject(NFMsg::db_playerinfo* pInfo);
 	virtual NFIObject* GetPlayerObject(uint64_t playerId);

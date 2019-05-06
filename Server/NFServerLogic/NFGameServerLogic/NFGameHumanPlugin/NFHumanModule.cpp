@@ -37,68 +37,6 @@ bool NFCHumanModule::Init()
 	return true;
 }
 
-void NFCHumanModule::CopyFromDB(NFMsg::playerinfo* pInfo, NFMsg::db_playerinfo* pDbInfo)
-{
-	if (pInfo == nullptr || pDbInfo == nullptr) return;
-
-	pInfo->set_userid(pDbInfo->userid());
-	pInfo->set_account(pDbInfo->account());
-	pInfo->set_password(pDbInfo->password());
-	pInfo->set_nickname(pDbInfo->nickname());
-	pInfo->set_face_1(pDbInfo->face_1());
-	pInfo->set_face_2(pDbInfo->face_2());
-	pInfo->set_face_3(pDbInfo->face_3());
-	pInfo->set_face_4(pDbInfo->face_4());
-	pInfo->set_regdate(pDbInfo->regdate());
-
-	pInfo->set_sex(pDbInfo->sex());
-	pInfo->set_age(pDbInfo->age());
-	pInfo->set_email(pDbInfo->email());
-
-	pInfo->set_phonenum(pDbInfo->phonenum());
-	pInfo->set_exp(pDbInfo->exp());
-	pInfo->set_level(pDbInfo->level());
-	pInfo->set_viplevel(pDbInfo->viplevel());
-	pInfo->set_jetton(pDbInfo->jetton());
-
-	pInfo->set_gold(pDbInfo->gold());
-	pInfo->set_money(pDbInfo->money());
-
-	pInfo->set_channel(pDbInfo->channel());
-	pInfo->set_province(pDbInfo->province());
-	pInfo->set_city(pDbInfo->city());
-
-	pInfo->set_popularity(pDbInfo->popularity());
-	pInfo->set_idenstatus(pDbInfo->idenstatus());
-	pInfo->set_bindtype(pDbInfo->bindtype());
-
-	pInfo->set_lasttime(pDbInfo->lasttime());
-	pInfo->set_penulttime(pDbInfo->penulttime());
-	pInfo->set_silent(pDbInfo->silent());
-	pInfo->set_isban(pDbInfo->isban());
-	pInfo->set_isrobot(pDbInfo->isrobot());
-	pInfo->set_playtype(pDbInfo->playtype());
-	pInfo->set_description(pDbInfo->description());
-	pInfo->set_blacklist(pDbInfo->blacklist());
-
-	pInfo->set_propertyid(pDbInfo->propertyid());
-	pInfo->set_agencystatus(pDbInfo->agencystatus());
-	pInfo->set_location("online");
-
-	pInfo->set_registration1(pDbInfo->registration1());
-	pInfo->set_registration2(pDbInfo->registration2());
-	pInfo->set_registration3(pDbInfo->registration3());
-
-	pInfo->set_signinmonth(pDbInfo->signinmonth());
-	pInfo->set_bsignin(pDbInfo->bsignin());
-	pInfo->set_turntablenum(pDbInfo->turntablenum());
-	pInfo->set_tengames(pDbInfo->tengames());
-
-	pInfo->set_todayshare(pDbInfo->todayshare());
-	pInfo->set_caninvite(pDbInfo->caninvite());
-	pInfo->set_totalgames(0);
-}
-
 NFIObject* NFCHumanModule::CreatePlayerObject(NFMsg::db_playerinfo* pInfo)
 {
 	if (pInfo == nullptr)

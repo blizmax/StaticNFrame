@@ -246,26 +246,52 @@ void NFCWorldLogicModule::OnHandleAccountLoginFromGameServer(const uint32_t unLi
 	{
 		pLinkInfo->mIsLogin = true;
 		pLinkInfo->mPlayerId = gcMsg.mutable_pinfo()->userid();
+
+		NF_SHARE_PTR<PlayerWorldServerInfo> pPlayerInfo = mPlayerInfoByPlayerId.GetElement(pLinkInfo->mPlayerId);
+		if (pPlayerInfo)
+		{
+			if (pPlayerInfo->mAccount != pLinkInfo->mAccount)
+			{
+				NFLogError(NF_LOG_SYSTEMLOG, 0, "account:{} and account:{} has a same playerid:{}, some wrong error", pPlayerInfo->mAccount, pLinkInfo->mAccount);
+			}
+			//处理以前的网关, 和游戏服务器, 这里本事就出现错误了
+
+			mPlayerInfoByPlayerId.RemoveElement(pLinkInfo->mPlayerId);
+			pPlayerInfo = nullptr;
+		}
 		mPlayerInfoByPlayerId.AddElement(pLinkInfo->mPlayerId, pLinkInfo);
-	}
 
-	NF_SHARE_PTR<NFServerData> pServerData = mProxyMap.GetElement(pLinkInfo->mProxyServerUnlinkId);
-	if (pServerData == nullptr)
+		NF_SHARE_PTR<NFServerData> pServerData = mProxyMap.GetElement(pLinkInfo->mProxyServerUnlinkId);
+		if (pServerData == nullptr)
+		{
+			NFLogWarning(NF_LOG_SYSTEMLOG, 0, "account login return, proxy disconnet! account:{}", account);
+			return;
+		}
+
+		NFMsg::NotifyGameChangeProxy msgChangeProxy;
+		msgChangeProxy.set_user_id(pLinkInfo->mPlayerId);
+		msgChangeProxy.set_proxy_id(pLinkInfo->mProxyServerId);
+		m_pNetServerModule->SendToServerByPB(unLinkId, EGMI_NET_WORLD_NOTIFY_GAME_CHANGE_PROXY, msgChangeProxy, pLinkInfo->mPlayerId);
+
+		NFMsg::NotifyProxyChangeGame msgChangeGame;
+		msgChangeGame.set_user_id(pLinkInfo->mPlayerId);
+		msgChangeGame.set_game_id(pLinkInfo->mGameServerId);
+		msgChangeGame.set_client_link_id(pLinkInfo->mClientUnlinkId);
+		m_pNetServerModule->SendToServerByPB(pLinkInfo->mProxyServerUnlinkId, EGMI_NET_WORLD_NOTIFY_PROXY_CHANGE_GAME, msgChangeGame, pLinkInfo->mClientUnlinkId);
+
+		m_pNetServerModule->SendToServerByPB(pLinkInfo->mProxyServerUnlinkId, nMsgId, gcMsg, pLinkInfo->mClientUnlinkId);
+	}
+	else
 	{
-		NFLogWarning(NF_LOG_SYSTEMLOG, 0, "account login return, proxy disconnet! account:{}", account);
-		return;
+		pLinkInfo->mIsLogin = false;
+		pLinkInfo->mPlayerId = gcMsg.mutable_pinfo()->userid();
+
+		if (pLinkInfo->mPlayerId > 0)
+		{
+			mPlayerInfoByPlayerId.RemoveElement(pLinkInfo->mPlayerId);
+		}
+		mPlayerInfoByAccount.RemoveElement(account);
+
+		m_pNetServerModule->SendToServerByPB(pLinkInfo->mProxyServerUnlinkId, nMsgId, gcMsg, pLinkInfo->mClientUnlinkId);
 	}
-
-	NFMsg::NotifyGameChangeProxy msgChangeProxy;
-	msgChangeProxy.set_user_id(pLinkInfo->mPlayerId);
-	msgChangeProxy.set_proxy_id(pLinkInfo->mProxyServerId);
-	m_pNetServerModule->SendToServerByPB(unLinkId, EGMI_NET_WORLD_NOTIFY_GAME_CHANGE_PROXY, msgChangeProxy, pLinkInfo->mPlayerId);
-
-	NFMsg::NotifyProxyChangeGame msgChangeGame;
-	msgChangeGame.set_user_id(pLinkInfo->mPlayerId);
-	msgChangeGame.set_game_id(pLinkInfo->mGameServerId);
-	msgChangeGame.set_client_link_id(pLinkInfo->mClientUnlinkId);
-	m_pNetServerModule->SendToServerByPB(pLinkInfo->mProxyServerUnlinkId, EGMI_NET_WORLD_NOTIFY_PROXY_CHANGE_GAME, msgChangeGame, pLinkInfo->mClientUnlinkId);
-
-	m_pNetServerModule->SendToServerByPB(pLinkInfo->mProxyServerUnlinkId, nMsgId,gcMsg, pLinkInfo->mClientUnlinkId);
 }

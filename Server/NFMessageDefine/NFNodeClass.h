@@ -21,7 +21,7 @@
 #define NF_PLAYER_NODE_STRING_DEVNAME                        "devname"                               //设备号
 #define NF_PLAYER_NODE_STRING_MACNAME                        "macname"                               //macname
 #define NF_PLAYER_NODE_STRING_BINDNICK                       "bindnick"                              //实名认证消息
-#define NF_PLAYER_NODE_INT_PLATFORMID                        "platformid"                            //平台返回的标识ID
+#define NF_PLAYER_NODE_STRING_PLATFORMID                     "platformid"                            //平台返回的标识ID
 #define NF_PLAYER_NODE_INT_SEX                               "sex"                                   //性别
 #define NF_PLAYER_NODE_INT_AGE                               "age"                                   //年龄
 #define NF_PLAYER_NODE_INT_ISROBOT                           "isrobot"                               //是否是机器人
@@ -44,12 +44,15 @@
 #define NF_PLAYER_NODE_INT_BLACKLIST                         "blacklist"                             //黑名单
 #define NF_PLAYER_NODE_INT_PROPERTYID                        "propertyid"                            //玩家佩戴的物品ID
 #define NF_PLAYER_NODE_INT_AGENCYSTATUS                      "agencystatus"                          //代理的状态，最高两位数，个尾数是0：表示没有绑定代理，1：已经绑定代理；十位数：0：没申请代理，1：已经申请代理，2：成为了代理
-#define NF_PLAYER_NODE_INT_REGISTRATION1                     "registration1"                         //签到详情 上旬
-#define NF_PLAYER_NODE_INT_REGISTRATION2                     "registration2"                         //签到详情	中旬
-#define NF_PLAYER_NODE_INT_REGISTRATION3                     "registration3"                         //签到详情	下旬
+#define NF_PLAYER_NODE_STRING_REGISTRATION1                  "registration1"                         //签到详情 上旬
+#define NF_PLAYER_NODE_STRING_REGISTRATION2                  "registration2"                         //签到详情	中旬
+#define NF_PLAYER_NODE_STRING_REGISTRATION3                  "registration3"                         //签到详情	下旬
 #define NF_PLAYER_NODE_INT_SIGNINMONTH                       "signinmonth"                           //签到月份
 #define NF_PLAYER_NODE_INT_BSIGNIN                           "bsignin"                               //今天是否已签到   //未签到:0  已签到:签到时间
 #define NF_PLAYER_NODE_INT_TURNTABLENUM                      "turntablenum"                          //转盘次数
 #define NF_PLAYER_NODE_INT_TENGAMES                          "tengames"                              //十局是否完成
 #define NF_PLAYER_NODE_INT_TODAYSHARE                        "todayshare"                            //今天是否分享
 #define NF_PLAYER_NODE_INT_CANINVITE                         "caninvite"                             //是否能被邀请	
+#define NF_PLAYER_NODE_BOOL_ONLINE                           "online"                                //是否在线
+#define NF_PLAYER_NODE_INT_LOGINTIME                         "loginTime"                             //登陆时间
+#define NF_PLAYER_NODE_INT_LOGOUTTIME                        "logoutTime"                            //下线时间

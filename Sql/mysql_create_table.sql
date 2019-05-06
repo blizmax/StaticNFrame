@@ -1,6 +1,6 @@
 /*
 ---------------------mysql-----------------------
-Date:2019-5-5 16:14:25
+Date:2019-5-6 19:47:14
 */
 
 /*-- ----------------------------
@@ -35,7 +35,7 @@ ALTER TABLE `dy_player` ADD COLUMN imei varchar(45) CHARACTER SET latin1 DEFAULT
 ALTER TABLE `dy_player` ADD COLUMN tengames int default 0;
 ALTER TABLE `dy_player` ADD COLUMN devname varchar(45) CHARACTER SET latin1 DEFAULT '';
 ALTER TABLE `dy_player` ADD COLUMN macname varchar(45) CHARACTER SET latin1 DEFAULT '';
-ALTER TABLE `dy_player` ADD COLUMN platformid int default 0;
+ALTER TABLE `dy_player` ADD COLUMN platformid varchar(45) CHARACTER SET latin1 DEFAULT '';
 ALTER TABLE `dy_player` ADD COLUMN age int default 0;
 ALTER TABLE `dy_player` ADD COLUMN signinmonth int default 0;
 ALTER TABLE `dy_player` ADD COLUMN mobiletype int default 0;
@@ -57,8 +57,8 @@ ALTER TABLE `dy_player` ADD COLUMN playtype int default 0;
 ALTER TABLE `dy_player` ADD COLUMN agencystatus int default 0;
 ALTER TABLE `dy_player` ADD COLUMN blacklist int default 0;
 ALTER TABLE `dy_player` ADD COLUMN propertyid int default 0;
-ALTER TABLE `dy_player` ADD COLUMN registration1 int default 0;
-ALTER TABLE `dy_player` ADD COLUMN registration2 int default 0;
-ALTER TABLE `dy_player` ADD COLUMN registration3 int default 0;
+ALTER TABLE `dy_player` ADD COLUMN registration1 varchar(45) CHARACTER SET latin1 DEFAULT '';
+ALTER TABLE `dy_player` ADD COLUMN registration2 varchar(45) CHARACTER SET latin1 DEFAULT '';
+ALTER TABLE `dy_player` ADD COLUMN registration3 varchar(45) CHARACTER SET latin1 DEFAULT '';
 ALTER TABLE `dy_player` ADD COLUMN turntablenum int default 0;
 ALTER TABLE `dy_player` ADD COLUMN todayshare int default 0;

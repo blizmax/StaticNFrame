@@ -15,6 +15,7 @@
 #include "NFServerLogic/NFServerLogicCommon/NFBehaviorLogMgr.h"
 #include "NFServerLogic/NFServerLogicCommon/NFIHumanModule.h"
 #include "NFComm/NFCore/NFRandom.hpp"
+#include "NFMessageDefine/NFNodeClass.h"
 
 NFCHumanControllerModule::NFCHumanControllerModule(NFIPluginManager* p)
 {
@@ -137,6 +138,21 @@ void NFCHumanControllerModule::OnHandleAccountLogin(const uint32_t unLinkId, con
 		NFBehaviorLog(playerId, cgMsg.cid(), "login", "AccountLogin", RETURN_CODE_PASSWORD_NOT_MATCH, "µÇÈëÊ§°Ü£¬ÃÜÂë²»Æ¥Åä=" + cgMsg.account() + ",password=" + cgMsg.password());
 		return;
 	}
+
+	pPlayerObject->SetNodeBool(NF_PLAYER_NODE_BOOL_ONLINE, true);
+	pPlayerObject->SetNodeInt64(NF_PLAYER_NODE_INT_LOGINTIME, NFGetSecondTime());
+	pPlayerObject->SetNodeInt64(NF_PLAYER_NODE_INT_LOGOUTTIME, 0);
+
+	if (pPlayerObject->GetNodeUInt32(NF_PLAYER_NODE_INT_BLACKLIST) != 0)
+	{
+		pPlayerObject->SetNodeInt64(NF_PLAYER_NODE_INT_LOGOUTTIME, NFGetSecondTime());
+		pPlayerObject->SetNodeBool(NF_PLAYER_NODE_BOOL_ONLINE, false);
+		gcMsg.set_result(RETURN_CODE_ACCOUNT_LOGIN_ERROR);
+		pNetClientModule->SendToServerByPB(unLinkId, ::NFMsg::Server_Msg_AccountLogin, gcMsg, 0);
+		return;
+	}
+
+	CopyFromPlayerObject(pInfo, pPlayerObject);
 
 	gcMsg.set_result(RETURN_CODE_SUCCESS);
 	pNetClientModule->SendToServerByPB(unLinkId, ::NFMsg::Server_Msg_AccountLogin, gcMsg, 0);
@@ -282,4 +298,11 @@ void NFCHumanControllerModule::OnHandleUpdateGoodsList(const uint32_t unLinkId, 
 void NFCHumanControllerModule::OnHandleNoticeInfo(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen)
 {
 
+}
+
+void NFCHumanControllerModule::CopyFromPlayerObject(NFMsg::playerinfo* pInfo, NFIObject* pPlayerObject)
+{
+	if (pInfo == nullptr || pPlayerObject == nullptr) return;
+
+	NFProtobufCommon::NFObjectToMessage(pPlayerObject, *pInfo);
 }
