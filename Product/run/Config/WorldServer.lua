@@ -36,7 +36,7 @@ function InitGameServer()
 		
 	--GameServer 游戏服务器, 一般一个小区只有一个， 负责游戏非战斗的业务， 连接世界服务器
 	GameServer5 = {
-			ServerName = "GameServer_3010_12",
+			ServerName = "GameServer5",
 			ServerType = NF_ST_GAME,
 			ServerId = 5,			--对每一个服务器来说都是唯一的， 应用程序需要通过这个ServerId才能知道需要加载的配置是他
 			ServerIp = ZoneIP,
