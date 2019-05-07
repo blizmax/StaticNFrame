@@ -32,7 +32,7 @@ LoadPlugin =
 			"NFSqlitePlugin",
 			"NFNoSqlPlugin",
 			"NFMysqlPlugin",
-			"NFMongoPlugin",
+			--"NFMongoPlugin",
 			------------------------------------------
 			--"NFTestPlugin",
 			
@@ -72,7 +72,7 @@ LoadPlugin =
 			"NFKernelPlugin",
 			"NFActorPlugin",
 			"NFNetPlugin",
-			"NFMongoPlugin",
+			"NFMonitorPlugin",
 			
 			"NFMasterServerPlugin",
 		};
@@ -83,7 +83,7 @@ LoadPlugin =
 			"NFKernelPlugin",
 			"NFActorPlugin",
 			"NFNetPlugin",
-			"NFMongoPlugin",
+			"NFMonitorPlugin",
 			
 			"NFLoginClientPlugin",
 			"NFLoginServerPlugin",
@@ -97,12 +97,12 @@ LoadPlugin =
 			"NFKernelPlugin",
 			"NFActorPlugin",
 			"NFNetPlugin",
-			"NFMongoPlugin",
+			"NFMonitorPlugin",
 			
 			"NFWorldClientPlugin",
 			"NFWorldServerPlugin",
 			
-			--"NFLuaScriptPlugin",
+			"NFWorldLogicPlugin",
 		};
 		ServerType = NF_ST_WORLD;
 	},
@@ -110,6 +110,7 @@ LoadPlugin =
 		ServerPlugins = {
 			"NFKernelPlugin",
 			"NFNetPlugin",
+			"NFMonitorPlugin",
 			
 			"NFProxyServerPlugin",
 			"NFProxyClientPlugin",
@@ -123,12 +124,16 @@ LoadPlugin =
 			"NFKernelPlugin",
 			"NFActorPlugin",
 			"NFNetPlugin",
-			"NFMongoPlugin",
+			"NFMonitorPlugin",
+			"NFSqlitePlugin",
+			"NFNoSqlPlugin",
+			"NFMysqlPlugin",
 			
 			"NFGameClientPlugin",
 			"NFGameServerPlugin",
 			
 			"NFGameLogicPlugin",
+			"NFGameHumanPlugin"
 			
 			--"NFLuaScriptPlugin",
 		};

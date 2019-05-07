@@ -70,7 +70,7 @@ LogInfo = {
 	{logid = NFLogId.NF_LOG_KERNEL_PLUGIN, display=false, level=0, logname = "KernelLog", guid = 0, desc = "Kernel引擎LOG"},
 	{logid = NFLogId.NF_LOG_LUA_PLUGIN, display=false, level=0, logname = "LuaLog", guid = 0, desc = "Lua引擎LOG"},
 	{logid = NFLogId.NF_LOG_MONGO_PLUGIN, display=false, level=0, logname = "MongoLog", guid = 0, desc = "Mongo引擎LOG"},
-	{logid = NFLogId.NF_LOG_MONITOR_PLUGIN, display=false, level=0, logname = "MonitorLog", guid = 0, desc = "Monitor引擎LOG"},
+	{logid = NFLogId.NF_LOG_MONITOR_PLUGIN, display=true, level=0, logname = "MonitorLog", guid = 0, desc = "Monitor引擎LOG"},
 	{logid = NFLogId.NF_LOG_MYSQL_PLUGIN, display=true, level=0, logname = "MysqlLog", guid = 0, desc = "Mysql引擎LOG"},
 	{logid = NFLogId.NF_LOG_NET_PLUGIN, display=true, level=0, logname = "NetLog", guid = 0, desc = "Net引擎LOG"},
 	{logid = NFLogId.NF_LOG_SQLITE_PLUGIN, display=true, level=0, logname = "SqliteLog", guid = 0, desc = "Sqlite引擎LOG"},
@@ -79,12 +79,12 @@ LogInfo = {
 	-------------------------------------------------------------------------------------------------
 	{logid = NFLogId.NF_LOG_LOAD_CONFIG, display=true, level=0, logname = "LoadConfigLog", guid = 0, desc = "加载配置LOG"},
 	{logid = NFLogId.NF_LOG_PROTOBUF_PARSE, display=true, level=0, logname = "ProtobufParse", guid = 0, desc = "protobuf解析出错LOG"},
-	{logid = NFLogId.NF_LOG_RECV_MSG, display=false, level=0, logname = "RecvMsg", guid = 0, desc = "接受消息LOG"},
-	{logid = NFLogId.NF_LOG_RECV_MSG_JSON_PRINTF, display=false, level=0, logname = "RecvMsgJson", guid = 0, desc = "接受消息Json输出LOG"},
+	{logid = NFLogId.NF_LOG_RECV_MSG, display=true, level=0, logname = "RecvMsg", guid = 0, desc = "接受消息LOG"},
+	{logid = NFLogId.NF_LOG_RECV_MSG_JSON_PRINTF, display=true, level=0, logname = "RecvMsgJson", guid = 0, desc = "接受消息Json输出LOG"},
 	{logid = NFLogId.NF_LOG_PLUGIN_MANAGER, display=true, level=0, logname = "PluginLog", guid = 0, desc = "引擎管理LOG"},
 	--服务器层架构LOG
 	
-	{logid = NFLogId.NF_LOG_SERVER_CONNECT_SERVER, display=false, level=0, logname = "ServerConnectServerLog", guid = 0, desc = "服务器与服务器连接LOG"},
+	{logid = NFLogId.NF_LOG_SERVER_CONNECT_SERVER, display=true, level=0, logname = "ServerConnectServerLog", guid = 0, desc = "服务器与服务器连接LOG"},
 	{logid = NFLogId.NF_LOG_SERVER_NOT_HANDLE_MESSAGE, display=true, level=0, logname = "NotHandleMessageLog", guid = 0, desc = "服务器未处理消息的LOG"},
 	{logid = NFLogId.NF_LOG_BEHAVIOR_LOGIC_LOG, display=true, level=0, logname = "BehaviorLog", guid = 0, desc = "行为LOG日志"},
 	--逻辑代码LOG
