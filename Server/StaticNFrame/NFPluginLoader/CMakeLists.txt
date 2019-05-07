@@ -5,9 +5,9 @@ AUX_SOURCE_DIRECTORY(. SRC)
 
 ADD_EXECUTABLE(${PROJECT_NAME} ${SRC})
 
-TARGET_LINK_LIBRARIES(${PROJECT_NAME} protobuf NFServerLogicCommon NFServerCommon NFPluginModule  LuaBind NFCore  NFMessageDefine  Common protobuf rt dl  
+TARGET_LINK_LIBRARIES(${PROJECT_NAME} protobuf NFServerLogicCommon NFServerCommon  LuaBind NFCore  NFMessageDefine  Common protobuf rt dl  
 	 bson-1.0 event_core event_extra event crypto mongoc-1.0 
-	mysqlclient Sqlite3 mysqlpp ssl  protobuf)
+	mysqlclient Sqlite3 mysqlpp ssl  protobuf NFPluginModule)
 
 ADD_DEPENDENCIES(${PROJECT_NAME} NFServerLogicCommon NFServerCommon NFPluginModule  LuaBind NFCore  NFMessageDefine  Common)
 
