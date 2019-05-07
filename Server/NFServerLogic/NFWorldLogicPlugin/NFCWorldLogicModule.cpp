@@ -28,7 +28,6 @@ bool NFCWorldLogicModule::Init()
 
 	m_pNetClientModule = m_pPluginManager->FindModule<NFINetClientModule>();
 	m_pNetServerModule = m_pPluginManager->FindModule<NFINetServerModule>();
-	m_pNetProxyServerModule = m_pPluginManager->FindModule<NFIProxyServerModule>();
 
 	m_pNetServerModule->AddReceiveCallBack(NF_ST_WORLD, this, &NFCWorldLogicModule::OnHandleMessageFromServer);
 	m_pNetServerModule->AddReceiveCallBack(NF_ST_WORLD, ::NFMsg::Client_Msg_AccountLogin, this, &NFCWorldLogicModule::OnHandleAccountLoginFromProxyServer);

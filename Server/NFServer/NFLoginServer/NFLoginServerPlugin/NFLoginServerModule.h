@@ -37,6 +37,4 @@ public:
 private:
 	NFINetServerModule* m_pNetServerModule;
 	NFIHttpServerModule* m_pHttpServerModule;
-	NFIMongoModule* m_pMongoModule;
-	NFIAsynMongoModule* m_pAsynMongoModule;
 };

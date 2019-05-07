@@ -27,8 +27,6 @@ NFCLoginServerModule::~NFCLoginServerModule()
 
 bool NFCLoginServerModule::Init()
 {
-	m_pMongoModule = m_pPluginManager->FindModule<NFIMongoModule>();
-	m_pAsynMongoModule = m_pPluginManager->FindModule<NFIAsynMongoModule>();
 	m_pHttpServerModule = m_pPluginManager->FindModule<NFIHttpServerModule>();
 	m_pNetServerModule = m_pPluginManager->FindModule<NFINetServerModule>();
 	m_pNetServerModule->AddEventCallBack(NF_ST_LOGIN, this, &NFCLoginServerModule::OnProxySocketEvent);
