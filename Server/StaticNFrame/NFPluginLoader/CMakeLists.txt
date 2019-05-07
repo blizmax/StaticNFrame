@@ -9,8 +9,7 @@ TARGET_LINK_LIBRARIES(${PROJECT_NAME} protobuf NFServerLogicCommon NFServerCommo
 	 bson-1.0 event_core event_extra event crypto mongoc-1.0 
 	mysqlclient Sqlite3 mysqlpp ssl  protobuf)
 
-ADD_DEPENDENCIES(${PROJECT_NAME} Common 
-NFMessageDefine NFCore NFMath NFPluginModule)
+ADD_DEPENDENCIES(${PROJECT_NAME} NFServerLogicCommon NFServerCommon NFPluginModule  LuaBind NFCore  NFMessageDefine  Common)
 
 if (CMAKE_BUILD_TYPE STREQUAL "Release")
 	SET_TARGET_PROPERTIES(${PROJECT_NAME} 
