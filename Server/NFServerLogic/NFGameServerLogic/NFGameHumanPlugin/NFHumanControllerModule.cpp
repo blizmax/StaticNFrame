@@ -16,6 +16,7 @@
 #include "NFServerLogic/NFServerLogicCommon/NFIHumanModule.h"
 #include "NFComm/NFCore/NFRandom.hpp"
 #include "NFMessageDefine/NFNodeClass.h"
+#include "NFMessageDefine/server_to_server_msg.pb.h"
 
 NFCHumanControllerModule::NFCHumanControllerModule(NFIPluginManager* p)
 {
@@ -37,7 +38,7 @@ bool NFCHumanControllerModule::Init()
 	AddNetServerReceiveCallBack(NF_ST_GAME, ::NFMsg::Client_Msg_GetPlayerInfo, this, &NFCHumanControllerModule::OnHandleGetPlayerInfo);
 	AddNetServerReceiveCallBack(NF_ST_GAME, ::NFMsg::Client_Msg_ReConnect, this, &NFCHumanControllerModule::OnHandleReConnect);
 	AddNetServerReceiveCallBack(NF_ST_GAME, ::NFMsg::Client_Msg_KitPlayer, this, &NFCHumanControllerModule::OnHandleKitPlayer);
-	AddNetServerReceiveCallBack(NF_ST_GAME, ::NFMsg::Client_Msg_HeartBeat, this, &NFCHumanControllerModule::OnHandleHeartBeat);
+
 	AddNetServerReceiveCallBack(NF_ST_GAME, ::NFMsg::Client_Msg_GetInitInfo, this, &NFCHumanControllerModule::OnHandleGetInitInfo);
 	AddNetServerReceiveCallBack(NF_ST_GAME, ::NFMsg::Client_Msg_BroadCast, this, &NFCHumanControllerModule::OnHandleBroadCast);
 	AddNetServerReceiveCallBack(NF_ST_GAME, ::NFMsg::Client_Msg_GetMailList, this, &NFCHumanControllerModule::OnHandleGetMailList);
@@ -186,16 +187,6 @@ void NFCHumanControllerModule::OnHandleReConnect(const uint32_t unLinkId, const 
 * @return void
 */
 void NFCHumanControllerModule::OnHandleKitPlayer(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen)
-{
-
-}
-
-/**
-* @brief ´¦ÀíÐÄÌø
-*
-* @return void
-*/
-void NFCHumanControllerModule::OnHandleHeartBeat(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen)
 {
 
 }

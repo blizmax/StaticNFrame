@@ -17,10 +17,10 @@
 #include "NFServerLogic/NFServerLogicCommon/NFIProxyLogicModule.h"
 #include "NFComm/NFPluginModule/NFEventObj.h"
 #include "NFComm/NFPluginModule/NFIServerNetEventModule.h"
-
+#include "NFComm/NFPluginModule/NFTimerMgr.h"
 #include "NFComm/NFCore/NFMap.hpp"
 
-class NFCProxyLogicModule : public NFIProxyLogicModule
+class NFCProxyLogicModule : public NFIProxyLogicModule, public NFTimerObj
 {
 public:
 	explicit NFCProxyLogicModule(NFIPluginManager* p);
@@ -36,6 +36,8 @@ public:
 
 	virtual bool Shut() override;
 
+	virtual void OnTimer(uint32_t nTimerID) override;
+
 	void OnProxySocketEvent(const eMsgType nEvent, const uint32_t unLinkId);
 	void OnHandleMessageFromClient(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen);
 	void OnHandleMessageFromGameServer(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen);
@@ -43,6 +45,13 @@ public:
 	void OnHandleAccountLoginFromWorldServer(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen);
 	void OnHandleAccountLoginFromClient(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen);
 	void OnHandleNotifyChangeGameFromWorldServer(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen);
+
+	/**
+	* @brief ´¦ÀíÐÄÌø
+	*
+	* @return void
+	*/
+	void OnHandleHeartBeat(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen);
 
 	void OnHandleGameEventCallBack(eMsgType nEvent, uint32_t unLinkId, NF_SHARE_PTR<NFServerData> pServerData);
 	void OnHandleWorldEventCallBack(eMsgType nEvent, uint32_t unLinkId, NF_SHARE_PTR<NFServerData> pServerData);

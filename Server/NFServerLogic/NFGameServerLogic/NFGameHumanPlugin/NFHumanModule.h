@@ -11,6 +11,7 @@
 
 #include "NFServerLogic/NFServerLogicCommon/NFIHumanModule.h"
 #include "NFServerLogic/NFServerLogicCommon/NFHumanDefine.h"
+#include "NFComm/NFCore/NFMapEx.hpp"
 
 class NFCHumanModule : public NFIHumanModule
 {
@@ -26,7 +27,6 @@ public:
 
 	virtual void CreatePlayer(const NFMsg::cgaccountlogin& cgMsg);
 
-	virtual void CreatePlayerStates(uint64_t playerId, const std::string& account);
 private:
 	virtual std::string GetInitFaceID();
 
@@ -36,4 +36,5 @@ private:
 private:
 	virtual NFIObject* CreatePlayerObject(NFMsg::db_playerinfo* pInfo);
 	virtual NFIObject* GetPlayerObject(uint64_t playerId);
+
 };

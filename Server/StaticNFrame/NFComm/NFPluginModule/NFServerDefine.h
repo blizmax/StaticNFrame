@@ -90,16 +90,22 @@ public:
 	NFMsg::ServerInfoReport mServerInfo;
 };
 
-class AccountInfo
+class PlayerGameServerInfo
 {
 public:
-	AccountInfo()
+	PlayerGameServerInfo()
 	{
-		unlinkId = 0;
-		uid = 0;
+		mProxyUnlinkId = 0;
+		mProxyId = 0;
+		mPlayerId = 0;
+		mWorldId = 0;
+		mWorldUnlinkId = 0;
 	}
-	uint32_t unlinkId;
-	uint64_t uid;
+	uint32_t mProxyUnlinkId;
+	uint32_t mProxyId;
+	uint32_t mWorldId;
+	uint32_t mWorldUnlinkId;
+	uint64_t mPlayerId;
 	std::string ip;
 	std::string account;
 };
@@ -116,6 +122,7 @@ public:
 		mGameServerUnlinkId = 0;
 		mSendMsgCount = 0;
 		mRecvMsgCount = 0;
+		mRecvHeartBeatTime = 0;
 	}
 
 	uint32_t mUnlinkId;
@@ -127,6 +134,7 @@ public:
 	uint32_t mGameServerId;
 	uint32_t mSendMsgCount;
 	uint32_t mRecvMsgCount;
+	uint64_t mRecvHeartBeatTime;
 };
 
 class PlayerWorldServerInfo

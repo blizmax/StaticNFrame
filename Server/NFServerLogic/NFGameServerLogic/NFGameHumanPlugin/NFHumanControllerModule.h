@@ -54,13 +54,6 @@ public:
 	void OnHandleKitPlayer(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen);
 
 	/**
-	* @brief 处理心跳
-	*
-	* @return void
-	*/
-	void OnHandleHeartBeat(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen);
-
-	/**
 	* @brief 处理获取初始化信息
 	*
 	* @return void

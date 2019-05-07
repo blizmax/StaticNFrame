@@ -330,7 +330,7 @@ void NFCLuaScriptModule::RunServerNetEventLuaFunc(const std::string& luaFunc, eM
 	m_pPluginManager->EndProfiler();
 }
 
-void NFCLuaScriptModule::RunAccountNetEventLuaFunc(const std::string& luaFunc, uint32_t nEvent, uint32_t unLinkId, NF_SHARE_PTR<AccountInfo> pServerData)
+void NFCLuaScriptModule::RunAccountNetEventLuaFunc(const std::string& luaFunc, uint32_t nEvent, uint32_t unLinkId, NF_SHARE_PTR<PlayerGameServerInfo> pServerData)
 {
 	m_pPluginManager->BeginProfiler(luaFunc);
 	TryRunGlobalScriptFunc(luaFunc, nEvent, unLinkId, pServerData);

@@ -36,6 +36,7 @@ bool NFCProxyLogicModule::Init()
 	m_pNetServerModule->AddReceiveCallBack(NF_ST_PROXY, this, &NFCProxyLogicModule::OnHandleMessageFromClient);
 	m_pNetServerModule->AddReceiveCallBack(NF_ST_PROXY, ::NFMsg::Client_Msg_AccountLogin, this, &NFCProxyLogicModule::OnHandleAccountLoginFromClient);
 
+	m_pNetServerModule->AddReceiveCallBack(NF_ST_PROXY, ::NFMsg::Client_Msg_HeartBeat, this, &NFCProxyLogicModule::OnHandleHeartBeat);
 	/*
 	** 处理来自客户端的连接和消息
 	*/
@@ -47,6 +48,8 @@ bool NFCProxyLogicModule::Init()
 	m_pServerNetEventModule->AddEventCallBack(NF_ST_PROXY, NF_ST_GAME, this, &NFCProxyLogicModule::OnHandleGameEventCallBack);
 	m_pServerNetEventModule->AddEventCallBack(NF_ST_PROXY, NF_ST_WORLD, this, &NFCProxyLogicModule::OnHandleWorldEventCallBack);
 
+	//10秒钟检查一次心跳包
+	this->SetTimer(0, 1000, INFINITY_CALL);
 	return true;
 }
 
@@ -108,6 +111,24 @@ bool NFCProxyLogicModule::Shut()
 	mGameMap.ClearAll();
 	mWorldMap.ClearAll();
 	return true;
+}
+
+void NFCProxyLogicModule::OnTimer(uint32_t nTimerID)
+{
+	auto pLinkInfo = mClientLinkInfo.First();
+	while (pLinkInfo)
+	{
+		if (pLinkInfo->mRecvHeartBeatTime > 0)
+		{
+			if (NFGetSecondTime() - pLinkInfo->mRecvHeartBeatTime > 10)
+			{
+				NFMsg::gcheartbeat gcMsg;
+				gcMsg.set_result(0);
+				m_pNetServerModule->SendToServerByPB(pLinkInfo->mUnlinkId, NFMsg::Server_Msg_HeartBeat, gcMsg, 0);
+			}
+		}
+		pLinkInfo = mClientLinkInfo.Next();
+	}
 }
 
 void NFCProxyLogicModule::OnProxySocketEvent(const eMsgType nEvent, const uint32_t unLinkId)
@@ -320,4 +341,28 @@ void NFCProxyLogicModule::OnHandleMessageFromGameServer(const uint32_t unLinkId,
 
 	pLinkInfo->mSendMsgCount++;
 	m_pNetServerModule->SendByServerID(pLinkInfo->mUnlinkId, nMsgId, msg, nLen, pLinkInfo->mSendMsgCount);
+}
+
+/**
+* @brief 处理心跳
+*
+* @return void
+*/
+void NFCProxyLogicModule::OnHandleHeartBeat(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen)
+{
+	NFMsg::cgheartbeat cgMsg;
+	CLIENT_MSG_PROCESS_NO_OBJECT(nMsgId, playerId, msg, nLen, cgMsg);
+
+	NF_SHARE_PTR<ProxyLinkInfo> pLinkInfo = mClientLinkInfo.GetElement(unLinkId);
+	if (pLinkInfo == nullptr)
+	{
+		NFLogWarning(NF_LOG_PROXY_LOGIC_PLUGIN, 0, "recv hearbeat, but can't find linkinfo:{}", unLinkId);
+		return;
+	}
+
+	pLinkInfo->mRecvHeartBeatTime = NFGetSecondTime();
+
+	NFMsg::gcheartbeat gcMsg;
+	gcMsg.set_result(0);
+	m_pNetServerModule->SendToServerByPB(unLinkId, NFMsg::Server_Msg_HeartBeat, gcMsg, 0);
 }

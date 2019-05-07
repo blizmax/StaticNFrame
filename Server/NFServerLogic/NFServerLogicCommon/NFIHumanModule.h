@@ -20,6 +20,4 @@ public:
 	virtual  NFIObject*  GetPlayerInfo(uint64_t playerId, uint32_t& retCode) = 0;
 
 	virtual void CreatePlayer(const NFMsg::cgaccountlogin& cgMsg) = 0;
-
-	virtual void CreatePlayerStates(uint64_t playerId, const std::string& account) = 0;
 };

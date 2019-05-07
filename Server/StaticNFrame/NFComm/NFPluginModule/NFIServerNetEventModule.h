@@ -15,7 +15,7 @@
 #include "NFComm/NFPluginModule/NFINetModule.h"
 
 typedef std::function<void(eMsgType nEvent, uint32_t unLinkId, NF_SHARE_PTR<NFServerData> pServerData)> SERVER_NET_EVENT_FUNCTOR;
-typedef std::function<void(uint32_t nEvent, uint32_t unLinkId, NF_SHARE_PTR<AccountInfo> pServerData)> ACCOUNT_NET_EVENT_FUNCTOR;
+typedef std::function<void(uint32_t nEvent, uint32_t unLinkId, NF_SHARE_PTR<PlayerGameServerInfo> pServerData)> ACCOUNT_NET_EVENT_FUNCTOR;
 
 class NFIServerNetEventModule : public NFIModule
 {
@@ -49,7 +49,7 @@ public:
 	}
 
 	template <typename BaseType>
-	bool AddAccountEventCallBack(NF_SERVER_TYPES eServerType, BaseType* pBase, void (BaseType::*handleRecieve)(uint32_t nEvent, uint32_t unLinkId, NF_SHARE_PTR<AccountInfo> pServerData))
+	bool AddAccountEventCallBack(NF_SERVER_TYPES eServerType, BaseType* pBase, void (BaseType::*handleRecieve)(uint32_t nEvent, uint32_t unLinkId, NF_SHARE_PTR<PlayerGameServerInfo> pServerData))
 	{
 		ACCOUNT_NET_EVENT_FUNCTOR functor = std::bind(handleRecieve, pBase, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3);
 
@@ -96,7 +96,7 @@ public:
 		}
 	}
 
-	void OnAccountNetEvent(uint32_t nEvent, NF_SERVER_TYPES eServerType, uint32_t unLinkId, NF_SHARE_PTR<AccountInfo> pServerData)
+	void OnAccountNetEvent(uint32_t nEvent, NF_SERVER_TYPES eServerType, uint32_t unLinkId, NF_SHARE_PTR<PlayerGameServerInfo> pServerData)
 	{
 		if (eServerType < NF_ST_MAX)
 		{
@@ -121,7 +121,7 @@ public:
 
 	}
 
-	virtual void RunAccountNetEventLuaFunc(const std::string& luaFunc, uint32_t nEvent, uint32_t unLinkId, NF_SHARE_PTR<AccountInfo> pServerData)
+	virtual void RunAccountNetEventLuaFunc(const std::string& luaFunc, uint32_t nEvent, uint32_t unLinkId, NF_SHARE_PTR<PlayerGameServerInfo> pServerData)
 	{
 
 	}

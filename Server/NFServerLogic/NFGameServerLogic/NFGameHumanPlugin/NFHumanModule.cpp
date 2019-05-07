@@ -51,18 +51,18 @@ NFIObject* NFCHumanModule::CreatePlayerObject(NFMsg::db_playerinfo* pInfo)
 	{
 		if (NFProtobufCommon::NFObjectFromMessage(pObject, *pInfo))
 		{
-			NFLogError(NF_LOG_LOGIN_MODULE_LOG, 0, "create player success, userid:{}", pInfo->userid());
-			return nullptr;
+			NFLogInfo(NF_LOG_LOGIN_MODULE_LOG, 0, "create player success, userid:{}", pInfo->userid());
+			return pObject;
 		}
 		else
 		{
-			NFLogError(NF_LOG_LOGIN_MODULE_LOG, 0, "create player failed, userid:{}", pInfo->userid());
+			NFLogError(NF_LOG_LOGIN_MODULE_LOG, 0, "NFProtobufCommon::NFObjectFromMessage create player failed, userid:{}", pInfo->userid());
 			return nullptr;
 		}
 	}
 	else
 	{
-		NFLogError(NF_LOG_LOGIN_MODULE_LOG, 0, "create player failed, userid:{}", pInfo->userid());
+		NFLogError(NF_LOG_LOGIN_MODULE_LOG, 0, "pKernelModule->CreateNFObject create player failed, userid:{}", pInfo->userid());
 		return nullptr;
 	}
 }
@@ -173,8 +173,6 @@ NFIObject* NFCHumanModule::GetPlayerInfoByCID(const std::string& account, const 
 				retCode = RETURN_CODE_SUCCESS;
 				return pObject;
 			}
-
-			retCode = RETURN_CODE_SUCCESS;
 		}
 	}
 
@@ -259,11 +257,6 @@ void NFCHumanModule::CreatePlayer(const NFMsg::cgaccountlogin& cgMsg)
 		NFBehaviorLog(0, "", "player", "LoadPlayerInfoByCID", -1, "加载数据库玩家信息失败");
 		return;
 	}
-}
-
-void NFCHumanModule::CreatePlayerStates(uint64_t playerId, const std::string& account)
-{
-
 }
 
 NFIObject* NFCHumanModule::LoadPlayerInfo(uint64_t playerId, uint32_t& retCode)
