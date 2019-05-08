@@ -9,12 +9,22 @@
 
 #pragma once
 
-#include "NFServerLogic/NFServerLogicCommon/NFIDynamicModule.h"
+#include "NFServerLogic/NFServerLogicCommon/NFIGameDynamicModule.h"
 #include "NFServerLogic/NFServerLogicCommon/NFHumanDefine.h"
 
-class NFIHumanModule : public NFIDynamicModule
+class NFIHumanModule : public NFIGameDynamicModule
 {
 public:
+	NFIHumanModule(NFIPluginManager* p) :NFIGameDynamicModule(p)
+	{
+
+	}
+
+	virtual ~NFIHumanModule()
+	{
+
+	}
+
 	virtual NFIObject* GetPlayerInfoByCID(const std::string& account, const std::string& password, uint32_t& retCode) = 0;
 
 	virtual  NFIObject*  GetPlayerInfo(uint64_t playerId, uint32_t& retCode) = 0;

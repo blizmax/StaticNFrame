@@ -37,6 +37,9 @@
     <ClInclude Include="NFServerLogicCommon.h">
       <Filter>Common</Filter>
     </ClInclude>
+    <ClInclude Include="NFIGameDynamicModule.h">
+      <Filter>Head</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="NFBehaviorLogMgr.cpp">

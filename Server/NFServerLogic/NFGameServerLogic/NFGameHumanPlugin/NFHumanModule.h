@@ -11,6 +11,9 @@
 
 #include "NFServerLogic/NFServerLogicCommon/NFIHumanModule.h"
 #include "NFServerLogic/NFServerLogicCommon/NFHumanDefine.h"
+#include "NFComm/NFPluginModule/NFINoSqlModule.h"
+#include "NFComm/NFPluginModule/NFIMysqlModule.h"
+#include "NFComm/NFPluginModule/NFIKernelModule.h"
 #include "NFComm/NFCore/NFMapEx.hpp"
 
 class NFCHumanModule : public NFIHumanModule
@@ -20,6 +23,11 @@ public:
 	virtual ~NFCHumanModule();
 
 	virtual bool Init() override;
+
+	/*
+	** 这个函数主要用来保存引擎指针, 动态加载的时候引擎指针可能会失效
+	*/
+	virtual bool DynamicLoadPlugin() override;
 
 	virtual NFIObject* GetPlayerInfoByCID(const std::string& account, const std::string& password, uint32_t& retCode);
 
@@ -36,5 +44,8 @@ private:
 private:
 	virtual NFIObject* CreatePlayerObject(NFMsg::db_playerinfo* pInfo);
 	virtual NFIObject* GetPlayerObject(uint64_t playerId);
-
+protected:
+	NFIKernelModule* m_pKernelModule;
+	NFIMysqlModule* m_pMysqlModule;
+	NFINoSqlModule* m_pNosqlModule;
 };

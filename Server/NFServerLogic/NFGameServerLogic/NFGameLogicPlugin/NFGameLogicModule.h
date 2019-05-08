@@ -45,6 +45,9 @@ public:
 	void ChangePlayerGameInfo(uint64_t playerId, uint32_t proxyId);
 	void OnHandleProxyEventCallBack(eMsgType nEvent, uint32_t unLinkId, NF_SHARE_PTR<NFServerData> pServerData);
 	void OnHandleWorldEventCallBack(eMsgType nEvent, uint32_t unLinkId, NF_SHARE_PTR<NFServerData> pServerData);
+
+	virtual void SendMsgToClientByPlayerId(uint64_t playerId, uint32_t nMsgId, const google::protobuf::Message& xData);
+	virtual void SendMsgToWorldByPlayerId(uint64_t playerId, uint32_t nMsgId, const google::protobuf::Message& xData);
 private:
 	NFMapEx<uint32_t, NFServerData> mProxyMap;	//unlink -- serverdata
 	NFMapEx<uint32_t, NFServerData> mWorldMap;	//unlink -- serverdata

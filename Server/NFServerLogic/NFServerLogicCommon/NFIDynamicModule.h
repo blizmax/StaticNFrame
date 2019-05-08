@@ -22,27 +22,38 @@
 class NFIDynamicModule : public NFIModule, public NFTimerObj, public NFEventObj
 {
 public:
+	NFIDynamicModule(NFIPluginManager* p)
+	{
+		m_pPluginManager = p;
+	}
+
 	virtual ~NFIDynamicModule()
 	{
 
 	}
 
-	virtual bool Awake() final
+	virtual bool Awake()
 	{
+		m_pNetServerModule = m_pPluginManager->FindModule<NFINetServerModule>();
+		m_pNetClientModule = m_pPluginManager->FindModule<NFINetClientModule>();
+		DynamicLoadPlugin();
 		return true;
 	}
 
-	virtual bool Finalize() final
+	/*
+	** 这个函数主要用来保存引擎指针, 动态加载的时候引擎指针可能会失效 
+	*/
+	virtual bool DynamicLoadPlugin() = 0;
+
+	virtual bool Finalize()
 	{
-		NFINetServerModule* pNetServerModule = m_pPluginManager->FindModule<NFINetServerModule>();
-		NFINetClientModule* pNetClientModule = m_pPluginManager->FindModule<NFINetClientModule>();
 		for (auto it = mNetServerMap.begin(); it != mNetServerMap.end(); it++)
 		{
-			pNetServerModule->DelReceiveCallBack((NF_SERVER_TYPES)it->first, it->second);
+			m_pNetServerModule->DelReceiveCallBack((NF_SERVER_TYPES)it->first, it->second);
 		}
 		for (auto it = mNetClientMap.begin(); it != mNetClientMap.end(); it++)
 		{
-			pNetClientModule->DelReceiveCallBack((NF_SERVER_TYPES)it->first, it->second);
+			m_pNetClientModule->DelReceiveCallBack((NF_SERVER_TYPES)it->first, it->second);
 		}
 		return true;
 	}
@@ -50,17 +61,15 @@ public:
 	template <typename BaseType>
 	bool AddNetServerReceiveCallBack(const NF_SERVER_TYPES eType, const uint32_t nMsgID, BaseType* pBase, void (BaseType::*handleRecieve)(const uint32_t unLinkId, const uint64_t valueId, const uint32_t nMsgId, const char* msg, const uint32_t nLen))
 	{
-		NFINetServerModule* pNetServerModule = m_pPluginManager->FindModule<NFINetServerModule>();
 		mNetServerMap.emplace((uint32_t)eType, nMsgID);
-		return pNetServerModule->AddReceiveCallBack(eType, nMsgID, pBase, handleRecieve);
+		return m_pNetServerModule->AddReceiveCallBack(eType, nMsgID, pBase, handleRecieve);
 	}
 
 	template <typename BaseType>
 	bool AddNetClientReceiveCallBack(const NF_SERVER_TYPES eType, const uint32_t nMsgID, BaseType* pBase, void (BaseType::*handleRecieve)(const uint32_t unLinkId, const uint64_t valueId, const uint32_t nMsgId, const char* msg, const uint32_t nLen))
 	{
-		NFINetClientModule* pNetClientModule = m_pPluginManager->FindModule<NFINetClientModule>();
 		mNetClientMap.emplace((uint32_t)eType, nMsgID);
-		return pNetClientModule->AddReceiveCallBack(eType, nMsgID, pBase, handleRecieve);
+		return m_pNetClientModule->AddReceiveCallBack(eType, nMsgID, pBase, handleRecieve);
 	}
 
 	virtual void OnTimer(uint32_t nTimerID) override { }
@@ -69,4 +78,6 @@ public:
 protected:
 	std::unordered_multimap<uint32_t, uint32_t> mNetServerMap;
 	std::unordered_multimap<uint32_t, uint32_t> mNetClientMap;
+	NFINetServerModule* m_pNetServerModule;
+	NFINetClientModule* m_pNetClientModule;
 };

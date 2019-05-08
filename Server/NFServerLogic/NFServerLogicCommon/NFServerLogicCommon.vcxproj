@@ -36,6 +36,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="NFBehaviorLogMgr.h" />
+    <ClInclude Include="NFIGameDynamicModule.h" />
     <ClInclude Include="NFHumanDefine.h" />
     <ClInclude Include="NFIBehaviorLogModule.h" />
     <ClInclude Include="NFIDynamicModule.h" />

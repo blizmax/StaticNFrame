@@ -9,9 +9,18 @@
 
 #pragma once
 
-#include "NFServerLogic/NFServerLogicCommon/NFIDynamicModule.h"
+#include "NFServerLogic/NFServerLogicCommon/NFIGameDynamicModule.h"
 
-class NFIHumanServicesModule : public NFIDynamicModule
+class NFIHumanServicesModule : public NFIGameDynamicModule
 {
 public:
+	NFIHumanServicesModule(NFIPluginManager* p) :NFIGameDynamicModule(p)
+	{
+
+	}
+
+	virtual ~NFIHumanServicesModule()
+	{
+
+	}
 };

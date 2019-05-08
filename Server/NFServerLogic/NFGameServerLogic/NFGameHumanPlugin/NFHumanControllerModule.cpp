@@ -13,14 +13,14 @@
 
 #include "NFServerLogic/NFServerLogicCommon/NFHumanDefine.h"
 #include "NFServerLogic/NFServerLogicCommon/NFBehaviorLogMgr.h"
-#include "NFServerLogic/NFServerLogicCommon/NFIHumanModule.h"
+
 #include "NFComm/NFCore/NFRandom.hpp"
 #include "NFMessageDefine/NFNodeClass.h"
 #include "NFMessageDefine/server_to_server_msg.pb.h"
 
-NFCHumanControllerModule::NFCHumanControllerModule(NFIPluginManager* p)
+NFCHumanControllerModule::NFCHumanControllerModule(NFIPluginManager* p):NFIHumanControllerModule(p)
 {
-	m_pPluginManager = p;
+	
 }
 
 NFCHumanControllerModule::~NFCHumanControllerModule()
@@ -53,6 +53,12 @@ bool NFCHumanControllerModule::Init()
 	return true;
 }
 
+bool NFCHumanControllerModule::DynamicLoadPlugin()
+{
+	m_pHumanModule = m_pPluginManager->FindModule<NFIHumanModule>();
+	return true;
+}
+
 bool NFCHumanControllerModule::Shut()
 {
 	return true;
@@ -72,9 +78,6 @@ void NFCHumanControllerModule::OnHandleAccountLogin(const uint32_t unLinkId, con
 {
 	NFMsg::cgaccountlogin cgMsg;
 	CLIENT_MSG_PROCESS_NO_OBJECT(nMsgId, playerId, msg, nLen, cgMsg);
-
-	NFINetClientModule* pNetClientModule = m_pPluginManager->FindModule<NFINetClientModule>();
-	NFIHumanModule* pHumanModule = m_pPluginManager->FindModule<NFIHumanModule>();
 
 	uint32_t proxyServerId = (uint32_t)playerId;
 	NFMsg::gcaccountlogin gcMsg;
@@ -112,20 +115,20 @@ void NFCHumanControllerModule::OnHandleAccountLogin(const uint32_t unLinkId, con
 	NFMsg::playerinfo* pInfo = gcMsg.mutable_pinfo();
 
 	uint32_t ret = 0;
-	NFIObject* pPlayerObject = pHumanModule->GetPlayerInfoByCID(cgMsg.account(), cgMsg.password(), ret);
+	NFIObject* pPlayerObject = m_pHumanModule->GetPlayerInfoByCID(cgMsg.account(), cgMsg.password(), ret);
 	bool isNewPlayer = false;
 
 	if (ret == RETURN_CODE_ACCOUNT_NO_EXIST || pPlayerObject == nullptr)
 	{
-		pHumanModule->CreatePlayer(cgMsg);
+		m_pHumanModule->CreatePlayer(cgMsg);
 
 		ret = 0;
-		pPlayerObject = pHumanModule->GetPlayerInfoByCID(cgMsg.account(), cgMsg.password(), ret);
+		pPlayerObject = m_pHumanModule->GetPlayerInfoByCID(cgMsg.account(), cgMsg.password(), ret);
 
 		if (ret == RETURN_CODE_ACCOUNT_NO_EXIST || pPlayerObject == nullptr)
 		{
 			gcMsg.set_result(RETURN_CODE_ACCOUNT_NO_EXIST);
-			pNetClientModule->SendToServerByPB(unLinkId, ::NFMsg::Server_Msg_AccountLogin, gcMsg, 0);
+			m_pNetClientModule->SendToServerByPB(unLinkId, ::NFMsg::Server_Msg_AccountLogin, gcMsg, 0);
 			NFBehaviorLog(playerId, cgMsg.cid(), "login", "AccountLogin", RETURN_CODE_ACCOUNT_NO_EXIST, "创建角色失败，account=" + cgMsg.account() + ",cid=" + cgMsg.cid());
 			return;
 		}
@@ -135,7 +138,7 @@ void NFCHumanControllerModule::OnHandleAccountLogin(const uint32_t unLinkId, con
 	else if (ret == RETURN_CODE_PASSWORD_NOT_MATCH)
 	{
 		gcMsg.set_result(RETURN_CODE_PASSWORD_NOT_MATCH);
-		pNetClientModule->SendToServerByPB(unLinkId, ::NFMsg::Server_Msg_AccountLogin, gcMsg, 0);
+		m_pNetClientModule->SendToServerByPB(unLinkId, ::NFMsg::Server_Msg_AccountLogin, gcMsg, 0);
 		NFBehaviorLog(playerId, cgMsg.cid(), "login", "AccountLogin", RETURN_CODE_PASSWORD_NOT_MATCH, "登入失败，密码不匹配=" + cgMsg.account() + ",password=" + cgMsg.password());
 		return;
 	}
@@ -149,14 +152,14 @@ void NFCHumanControllerModule::OnHandleAccountLogin(const uint32_t unLinkId, con
 		pPlayerObject->SetNodeInt64(NF_PLAYER_NODE_INT_LOGOUTTIME, NFGetSecondTime());
 		pPlayerObject->SetNodeBool(NF_PLAYER_NODE_BOOL_ONLINE, false);
 		gcMsg.set_result(RETURN_CODE_ACCOUNT_LOGIN_ERROR);
-		pNetClientModule->SendToServerByPB(unLinkId, ::NFMsg::Server_Msg_AccountLogin, gcMsg, 0);
+		m_pNetClientModule->SendToServerByPB(unLinkId, ::NFMsg::Server_Msg_AccountLogin, gcMsg, 0);
 		return;
 	}
 
 	CopyFromPlayerObject(pInfo, pPlayerObject);
 
 	gcMsg.set_result(RETURN_CODE_SUCCESS);
-	pNetClientModule->SendToServerByPB(unLinkId, ::NFMsg::Server_Msg_AccountLogin, gcMsg, 0);
+	m_pNetClientModule->SendToServerByPB(unLinkId, ::NFMsg::Server_Msg_AccountLogin, gcMsg, 0);
 	NFBehaviorLog(pInfo->userid(), cgMsg.cid(), "login", "AccountLogin", RETURN_CODE_SUCCESS, "玩家登入游戏");
 	return;
 }

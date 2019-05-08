@@ -141,3 +141,29 @@ void NFCGameLogicModule::OnHandleWorldEventCallBack(eMsgType nEvent, uint32_t un
 		mWorldMap.RemoveElement(unLinkId);
 	}
 }
+
+void NFCGameLogicModule::SendMsgToClientByPlayerId(uint64_t playerId, uint32_t nMsgId, const google::protobuf::Message& xData)
+{
+	auto pInfo = mPlayerProxyInfoMap.GetElement(playerId);
+	if (pInfo)
+	{
+		m_pNetServerModule->SendToServerByPB(pInfo->mProxyUnlinkId, nMsgId, xData, playerId);
+	}
+	else
+	{
+		NFLogWarning(NF_LOG_SYSTEMLOG, 0, "playerId:{} not exist, can't find send message!", playerId);
+	}
+}
+
+void NFCGameLogicModule::SendMsgToWorldByPlayerId(uint64_t playerId, uint32_t nMsgId, const google::protobuf::Message& xData)
+{
+	auto pInfo = mPlayerProxyInfoMap.GetElement(playerId);
+	if (pInfo)
+	{
+		m_pNetClientModule->SendToServerByPB(pInfo->mWorldUnlinkId, nMsgId, xData, playerId);
+	}
+	else
+	{
+		NFLogWarning(NF_LOG_SYSTEMLOG, 0, "playerId:{} not exist, can't find send message!", playerId);
+	}
+}
