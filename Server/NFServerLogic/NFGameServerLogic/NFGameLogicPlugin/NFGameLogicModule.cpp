@@ -8,6 +8,7 @@
 #include "NFComm/NFPluginModule/NFINoSqlModule.h"
 #include "NFServerLogic/NFServerLogicCommon/NFServerLogicCommon.h"
 #include "NFComm/NFPluginModule/NFIMysqlModule.h"
+#include "NFComm/NFPluginModule/NFIAsyMysqlModule.h"
 #include "NFMessageDefine/server_to_server_msg.pb.h"
 
 NFCGameLogicModule::NFCGameLogicModule(NFIPluginManager* p)
@@ -33,11 +34,19 @@ bool NFCGameLogicModule::Awake()
 		return false;
 	}
 
-	NFIMysqlModule* pDBModule = m_pPluginManager->FindModule<NFIMysqlModule>();
-	ret = pDBModule->AddMysqlServer(NF_ST_GAME, pConfig->mMysqlIp, pConfig->mMysqlPort, pConfig->mMysqlDbName, pConfig->mMysqlUser, pConfig->mMysqlPassword);
+	NFIMysqlModule* pMysqlModule = m_pPluginManager->FindModule<NFIMysqlModule>();
+	ret = pMysqlModule->AddMysqlServer(NF_ST_GAME, pConfig->mMysqlIp, pConfig->mMysqlPort, pConfig->mMysqlDbName, pConfig->mMysqlUser, pConfig->mMysqlPassword);
 	if (ret == false)
 	{
-		NFLogError(NF_LOG_SYSTEMLOG, 0, "sqlite AddSqliteServer:db_user failed!");
+		NFLogError(NF_LOG_SYSTEMLOG, 0, "NFIMysqlModule AddMysqlServer failed!");
+		return false;
+	}
+
+	NFIAsyMysqlModule* pAsyMsql = m_pPluginManager->FindModule<NFIAsyMysqlModule>();
+	ret = pAsyMsql->AddMysqlServer(NF_ST_GAME, pConfig->mMysqlIp, pConfig->mMysqlPort, pConfig->mMysqlDbName, pConfig->mMysqlUser, pConfig->mMysqlPassword);
+	if (ret == false)
+	{
+		NFLogError(NF_LOG_SYSTEMLOG, 0, "NFIAsyMysqlModule AddMysqlServer failed!");
 		return false;
 	}
 
@@ -45,7 +54,7 @@ bool NFCGameLogicModule::Awake()
 	ret = pNosqlModule->AddConnectSql("nosql", pConfig->mNosqlIp, pConfig->mNosqlPort);
 	if (ret == false)
 	{
-		NFLogError(NF_LOG_SYSTEMLOG, 0, "redis connect 127.0.0.1 server failed!");
+		NFLogError(NF_LOG_SYSTEMLOG, 0, "redis connect server failed, ip:{}, port:{}", pConfig->mNosqlIp, pConfig->mNosqlPort);
 		return false;
 	}
 

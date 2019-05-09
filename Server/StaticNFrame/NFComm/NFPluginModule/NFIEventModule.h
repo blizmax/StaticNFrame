@@ -24,10 +24,10 @@ public:
 	* @param nEventID		事件ID
 	* @param nSrcID			事件源ID，一般都是玩家，生物唯一id
 	* @param bySrcType		事件源类型，玩家类型，怪物类型之类的
-	* @param pEventContext	事件传输的数据
+	* @param message	事件传输的数据
 	* @return				执行是否成功
 	*/
-	virtual void FireExecute(uint16_t nEventID, uint64_t nSrcID, uint8_t bySrcType, NFEventContext* pEventContext) = 0;
+	virtual void FireExecute(uint16_t nEventID, uint64_t nSrcID, uint8_t bySrcType, const google::protobuf::Message& message) = 0;
 
 	/**
 	* @brief 订阅事件

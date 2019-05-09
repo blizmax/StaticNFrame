@@ -41,6 +41,7 @@ bool NFCHumanModule::DynamicLoadPlugin()
 	m_pKernelModule = m_pPluginManager->FindModule<NFIKernelModule>();
 	m_pMysqlModule = m_pPluginManager->FindModule<NFIMysqlModule>();
 	m_pNosqlModule = m_pPluginManager->FindModule<NFINoSqlModule>();
+	m_pAsyMysqlModule = m_pPluginManager->FindModule<NFIAsyMysqlModule>();
 	return true;
 }
 

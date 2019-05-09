@@ -86,9 +86,9 @@ bool NFCPluginManager::Awake()
 	NFLogWarning(NF_LOG_SYSTEMLOG, 0, "LoadPlugin:NFKernelPlugin");
 	//加载引擎配置plugin.xml, 创建引擎，生成module
 	LoadPluginConfig();
-	for (PluginNameMap::iterator it = mPluginNameMap.begin(); it != mPluginNameMap.end(); ++it)
+	for (PluginNameVec::iterator it = mPluginNameVec.begin(); it != mPluginNameVec.end(); ++it)
 	{
-		LoadStaticPlugin(it->first);
+		LoadStaticPlugin(*it);
 	}
 #else
 	LoadKernelPlugin(); //NFKernelPlugin比较特殊，提前加载
@@ -99,9 +99,9 @@ bool NFCPluginManager::Awake()
 	NFLogWarning(NF_LOG_SYSTEMLOG, 0, "LoadPlugin:NFKernelPlugin");
 	//加载引擎配置plugin.xml, 创建引擎，生成module
 	LoadPluginConfig();
-	for (PluginNameMap::iterator it = mPluginNameMap.begin(); it != mPluginNameMap.end(); ++it)
+	for (PluginNameVec::iterator it = mPluginNameVec.begin(); it != mPluginNameVec.end(); ++it)
 	{
-		LoadPluginLibrary(it->first);
+		LoadPluginLibrary(*it);
 	}
 #endif
 
@@ -157,7 +157,7 @@ bool NFCPluginManager::LoadPluginConfig()
 	for (size_t i = 0; i < pConfig->mVecPlugins.size(); i++)
 	{
 		std::string strPluginName = pConfig->mVecPlugins[i];
-		mPluginNameMap.emplace(strPluginName, true);
+		mPluginNameVec.push_back(strPluginName);
 	}
 
 	return true;
@@ -569,9 +569,9 @@ bool NFCPluginManager::Finalize()
 #ifndef NF_DYNAMIC_PLUGIN
 	////////////////////////////////////////////////
 
-	for (auto it = mPluginNameMap.begin(); it != mPluginNameMap.end(); ++it)
+	for (auto it = mPluginNameVec.begin(); it != mPluginNameVec.end(); ++it)
 	{
-		if (it->first != "NFKernelPlugin")
+		if (*it != "NFKernelPlugin")
 		{
 			UnLoadStaticPlugin(it->first);
 		}
@@ -580,11 +580,11 @@ bool NFCPluginManager::Finalize()
 	NFLogWarning(NF_LOG_SYSTEMLOG, 0, "UnLoadPlugin:NFKernelPlugin");
 	UnLoadStaticPlugin("NFKernelPlugin");
 #else
-	for (auto it = mPluginNameMap.begin(); it != mPluginNameMap.end(); ++it)
+	for (auto it = mPluginNameVec.begin(); it != mPluginNameVec.end(); ++it)
 	{
-		if (it->first != "NFKernelPlugin")
+		if (*it != "NFKernelPlugin")
 		{
-			UnLoadPluginLibrary(it->first);
+			UnLoadPluginLibrary(*it);
 		}
 	}
 
@@ -595,7 +595,7 @@ bool NFCPluginManager::Finalize()
 	mPluginInstanceMap.clear();
 	mPluginInstanceList.clear();
 	mModuleInstanceMap.clear();
-	mPluginNameMap.clear();
+	mPluginNameVec.clear();
 	return true;
 }
 

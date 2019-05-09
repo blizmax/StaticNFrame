@@ -17,6 +17,7 @@
 #include "NFComm/NFCore/NFRandom.hpp"
 #include "NFMessageDefine/NFNodeClass.h"
 #include "NFMessageDefine/server_to_server_msg.pb.h"
+#include "NFComm/NFPluginModule/NFEventDefine.h"
 
 NFCHumanControllerModule::NFCHumanControllerModule(NFIPluginManager* p):NFIHumanControllerModule(p)
 {
@@ -50,6 +51,7 @@ bool NFCHumanControllerModule::Init()
 	AddNetServerReceiveCallBack(NF_ST_GAME, ::NFMsg::Client_Msg_UpdateGoodsList, this, &NFCHumanControllerModule::OnHandleUpdateGoodsList);
 	AddNetServerReceiveCallBack(NF_ST_GAME, ::NFMsg::Client_Msg_NoticeInfo, this, &NFCHumanControllerModule::OnHandleNoticeInfo);
 
+	this->Subscribe(NFEVENT_MYSQL_UPDATE_MESSAGE, 0, NF_MYSQL_LOGIN_EVENT, __FUNCTION__);
 	return true;
 }
 
@@ -59,14 +61,20 @@ bool NFCHumanControllerModule::DynamicLoadPlugin()
 	return true;
 }
 
+void NFCHumanControllerModule::OnExecute(uint16_t nEventID, uint64_t nSrcID, uint8_t bySrcType, const google::protobuf::Message& message)
+{
+	if (nEventID == NFEVENT_MYSQL_UPDATE_MESSAGE)
+	{
+		if (bySrcType == NF_MYSQL_LOGIN_EVENT)
+		{
+			NFLogInfo(NF_LOG_SYSTEMLOG, 0, "player asyn login");
+		}
+	}
+}
+
 bool NFCHumanControllerModule::Shut()
 {
 	return true;
-}
-
-void NFCHumanControllerModule::OnTimer(uint32_t nTimerID)
-{
-
 }
 
 /**

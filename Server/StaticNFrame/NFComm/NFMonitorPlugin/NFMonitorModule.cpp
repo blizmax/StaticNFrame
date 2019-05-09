@@ -62,7 +62,7 @@ void NFCMonitorModule::OnTimer(uint32_t nTimerID)
 *
 * @return void
 */
-void NFCMonitorModule::OnExecute(uint16_t nEventID, uint64_t nSrcID, uint8_t bySrcType, NFEventContext* pEventContext)
+void NFCMonitorModule::OnExecute(uint16_t nEventID, uint64_t nSrcID, uint8_t bySrcType, const google::protobuf::Message& message)
 {
 
 }

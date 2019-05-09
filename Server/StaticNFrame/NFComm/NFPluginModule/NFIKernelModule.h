@@ -12,6 +12,7 @@
 #include <iostream>
 #include <string>
 #include <functional>
+#include <unordered_map>
 #include "NFIModule.h"
 
 class NFIObject;
@@ -33,6 +34,7 @@ public:
 	virtual NFIObject* GetNFObject(uint64_t guid, const std::string& className = "") = 0;
 	virtual bool ExistNFObject(uint64_t guid) = 0;
 	virtual bool DeleteNFObject(uint64_t guid) = 0;
+	virtual std::unordered_map<uint64_t, NFIObject*>& GetAllObject() = 0;
 };
 
 #endif

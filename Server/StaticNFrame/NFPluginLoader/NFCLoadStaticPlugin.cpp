@@ -54,10 +54,10 @@
 bool NFCPluginManager::LoadKernelPlugin()
 {
 #ifndef NF_DYNAMIC_PLUGIN
-	mPluginNameMap.insert(PluginNameMap::value_type("NFKernelPlugin", true));
+	mPluginNameVec.push_back("NFKernelPlugin");
 	LoadStaticPlugin("NFKernelPlugin");
 #else
-	mPluginNameMap.insert(PluginNameMap::value_type("NFKernelPlugin", true));
+	mPluginNameVec.push_back("NFKernelPlugin");
 	LoadPluginLibrary("NFKernelPlugin");
 #endif
 	return true;

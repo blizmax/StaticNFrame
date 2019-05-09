@@ -48,9 +48,9 @@ bool NFCEventModule::Execute()
 }
 
 //发送执行事件
-void NFCEventModule::FireExecute(uint16_t nEventID, uint64_t nSrcID, uint8_t bySrcType, NFEventContext* pEventContext)
+void NFCEventModule::FireExecute(uint16_t nEventID, uint64_t nSrcID, uint8_t bySrcType, const google::protobuf::Message& message)
 {
-	m_ExecuteCenter.Fire(nEventID, nSrcID, bySrcType, pEventContext);
+	m_ExecuteCenter.Fire(nEventID, nSrcID, bySrcType, message);
 }
 
 //订阅执行事件

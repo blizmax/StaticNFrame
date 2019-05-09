@@ -18,8 +18,7 @@
 
 #include "NFComm/NFCore/NFPlatform.h"
 #include "NFComm/NFCore/NFHash.hpp"
-
-class NFEventContext;
+#include "google/protobuf/message.h"
 
 /**
  *@brief  对所有事件最大嵌套层数支持20层.
@@ -350,7 +349,7 @@ public:
 	* 问题3:假设我在Fire事件里， Fire了别的事件，会导致迭代问题，事件系统已经了做了预付， 相同的事件，最多迭代5次，
 	*       所有的Fire事件最多迭代20次
 	*/
-	bool Fire(uint16_t nEventID, uint64_t nSrcID, uint8_t bySrcType, NFEventContext* pEventContext)
+	bool Fire(uint16_t nEventID, uint64_t nSrcID, uint8_t bySrcType, const google::protobuf::Message& message)
 	{
 		SEventKey skey;
 		skey.nEventID = nEventID;
@@ -362,7 +361,7 @@ public:
 		*/
 		if (skey.nSrcID != 0)
 		{
-			bool bRes = Fire(skey, nEventID, nSrcID, bySrcType, pEventContext);
+			bool bRes = Fire(skey, nEventID, nSrcID, bySrcType, message);
 			if (!bRes)
 			{
 				return false;
@@ -375,7 +374,7 @@ public:
 		* 订阅时将nSrcId=0，会受到所有玩家产生的该类事件
 		*/
 		skey.nSrcID = 0;
-		bool bRes = Fire(skey, nEventID, nSrcID, bySrcType, pEventContext);
+		bool bRes = Fire(skey, nEventID, nSrcID, bySrcType, message);
 		if (!bRes)
 		{
 			return false;
@@ -431,7 +430,7 @@ private:
 	* @param pEventContext	事件传输的数据
 	* @return				执行是否成功
 	*/
-	bool Fire(const SEventKey& skey, uint16_t nEventID, uint64_t nSrcID, uint8_t bySrcType, NFEventContext* pEventContex)
+	bool Fire(const SEventKey& skey, uint16_t nEventID, uint64_t nSrcID, uint8_t bySrcType, const google::protobuf::Message& message)
 	{
 		m_nFireLayer++;
 		if (m_nFireLayer >= EVENT_FIRE_MAX_LAYER)
@@ -463,7 +462,7 @@ private:
 					try
 					{
 						pSubscribeInfo->Add();
-						bRes = m_FireEventObj(pSubscribeInfo->pSink, nEventID, nSrcID, bySrcType, pEventContex);
+						bRes = m_FireEventObj(pSubscribeInfo->pSink, nEventID, nSrcID, bySrcType, message);
 						pSubscribeInfo->Sub();
 					}
 					catch (...)

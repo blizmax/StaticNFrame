@@ -160,7 +160,7 @@ private:
 	bool mIsDaemon;
 
 	typedef std::map<std::string, NFCDynLib*> PluginLibMap;
-	typedef std::map<std::string, bool> PluginNameMap;
+	typedef std::vector<std::string> PluginNameVec;
 	typedef std::map<std::string, NFIPlugin*> PluginInstanceMap;
 	typedef std::list<NFIPlugin*> PluginInstanceList;
 	typedef std::map<std::string, NFIModule*> ModuleInstanceMap;
@@ -174,7 +174,7 @@ private:
 	typedef void (*DLL_STOP_PLUGIN_FUNC)(NFIPluginManager* pm);
 
 	PluginLibMap mPluginLibMap;
-	PluginNameMap mPluginNameMap;
+	PluginNameVec mPluginNameVec;
 	PluginInstanceMap mPluginInstanceMap;
 	PluginInstanceList mPluginInstanceList;
 	ModuleInstanceMap mModuleInstanceMap;

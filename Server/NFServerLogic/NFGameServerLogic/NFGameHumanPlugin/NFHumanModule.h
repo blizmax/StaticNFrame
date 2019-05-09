@@ -13,6 +13,7 @@
 #include "NFServerLogic/NFServerLogicCommon/NFHumanDefine.h"
 #include "NFComm/NFPluginModule/NFINoSqlModule.h"
 #include "NFComm/NFPluginModule/NFIMysqlModule.h"
+#include "NFComm/NFPluginModule/NFIAsyMysqlModule.h"
 #include "NFComm/NFPluginModule/NFIKernelModule.h"
 #include "NFComm/NFCore/NFMapEx.hpp"
 
@@ -48,4 +49,5 @@ protected:
 	NFIKernelModule* m_pKernelModule;
 	NFIMysqlModule* m_pMysqlModule;
 	NFINoSqlModule* m_pNosqlModule;
+	NFIAsyMysqlModule* m_pAsyMysqlModule;
 };

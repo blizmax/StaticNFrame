@@ -74,7 +74,7 @@ public:
 
 	virtual void OnTimer(uint32_t nTimerID) override { }
 
-	virtual void OnExecute(uint16_t nEventID, uint64_t nSrcID, uint8_t bySrcType, NFEventContext* pEventContext) override { }
+	virtual void OnExecute(uint16_t nEventID, uint64_t nSrcID, uint8_t bySrcType, const google::protobuf::Message& message) override { }
 protected:
 	std::unordered_multimap<uint32_t, uint32_t> mNetServerMap;
 	std::unordered_multimap<uint32_t, uint32_t> mNetClientMap;

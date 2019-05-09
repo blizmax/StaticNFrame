@@ -8,6 +8,7 @@
 
 #include "NFMysqlPlugin.h"
 #include "NFCMysqlModule.h"
+#include "NFCAsyMysqlModule.h"
 #include "NFComm/NFPluginModule/NFIPluginManager.h"
 
 #ifdef NF_DYNAMIC_PLUGIN
@@ -40,11 +41,13 @@ std::string NFMysqlPlugin::GetPluginName()
 
 void NFMysqlPlugin::Install()
 {
-	REGISTER_MODULE(m_pPluginManager, NFIMysqlModule, NFCMysqlModule)
+	REGISTER_MODULE(m_pPluginManager, NFIMysqlModule, NFCMysqlModule);
+	REGISTER_MODULE(m_pPluginManager, NFIAsyMysqlModule, NFCAsyMysqlModule);
 }
 
 void NFMysqlPlugin::Uninstall()
 {
-	UNREGISTER_MODULE(m_pPluginManager, NFIMysqlModule, NFCMysqlModule)
+	UNREGISTER_MODULE(m_pPluginManager, NFIMysqlModule, NFCMysqlModule);
+	UNREGISTER_MODULE(m_pPluginManager, NFIAsyMysqlModule, NFCAsyMysqlModule);
 }
 

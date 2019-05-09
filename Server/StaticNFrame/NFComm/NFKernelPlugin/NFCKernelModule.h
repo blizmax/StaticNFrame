@@ -52,6 +52,8 @@ public:
 	virtual NFIObject* GetNFObject(uint64_t guid, const std::string& className = "") override;
 	virtual bool ExistNFObject(uint64_t guid) override;
 	virtual bool DeleteNFObject(uint64_t guid) override;
+
+	virtual std::unordered_map<uint64_t, NFIObject*>& GetAllObject() override { return mObjectMap; }
 protected:
 	static void ProcessMemFree();
 	virtual bool DestroyNFObject(uint64_t guid);

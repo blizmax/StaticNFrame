@@ -15,5 +15,7 @@ enum NFEventDefine
 	NFEVENT_TEST = 0, //测试事件， 用来测试
 	NFEVENT_TEST1 = 1, //测试事件， 用来测试
 	NFEVENT_TEST2 = 2, //测试事件， 用来测试
+
+	NFEVENT_MYSQL_UPDATE_MESSAGE = 10, //mysql 数据库 update 操作
 };
 

@@ -367,12 +367,14 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="NFCAsyMysqlModule.cpp" />
     <ClCompile Include="NFCMysqlDriver.cpp" />
     <ClCompile Include="NFCMysqlDriverManager.cpp" />
     <ClCompile Include="NFCMysqlModule.cpp" />
     <ClCompile Include="NFMysqlPlugin.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="NFCAsyMysqlModule.h" />
     <ClInclude Include="NFCMysqlDriver.h" />
     <ClInclude Include="NFCMysqlDriverManager.h" />
     <ClInclude Include="NFCMysqlModule.h" />

@@ -12,6 +12,7 @@
 #include <string>
 #include <stdint.h>
 #include "NFComm/NFCore/NFPlatform.h"
+#include "google/protobuf/message.h"
 
 /* 事件使用注意事项
  取消订阅事件的时传入的参数一定要和订阅事件时传入的参数一致，
@@ -20,17 +21,6 @@
 
  事件嵌套层数不能太多，如果可以，尽量不要使用事件嵌套，主要是为了避免造成死循环，目前事件最大嵌套层数支持5层
 */
-
-//所有事件发送过去的数据必须继承
-class NFEventContext
-{
-public:
-	virtual ~NFEventContext()
-	{
-	}
-
-	virtual void PrintConext() = 0; //实属无赖之举，要使用dynamic_cast，必须有多态，而static_cast转换无法对指针的有效做检查,dynamic_cast可以
-};
 
 /**
  *@brief 事件系统对象，所有想使用事件系统的都必须继承这个对象
@@ -64,7 +54,7 @@ public:
 	* 问题2:如果在OnExecute函数里， Fire了别的事件，会导致迭代问题，事件系统已经了做了预付， 相同的事件，最多迭代5次，
 	*       所有的Fire事件最多迭代20次
 	*/
-	virtual void OnExecute(uint16_t nEventID, uint64_t nSrcID, uint8_t bySrcType, NFEventContext* pEventContext) = 0;
+	virtual void OnExecute(uint16_t nEventID, uint64_t nSrcID, uint8_t bySrcType, const google::protobuf::Message& message) = 0;
 public:
 	/**
 	* @brief 发送事件,并执行收到事件的对象的对应函数
@@ -84,7 +74,7 @@ public:
 	* 问题3:假设我在Fire事件里， Fire了别的事件，会导致迭代问题，事件系统已经了做了预付， 相同的事件，最多迭代5次，
 	*       所有的Fire事件最多迭代20次
 	*/
-	void FireExecute(uint16_t nEventID, uint64_t nSrcID, uint8_t bySrcType, NFEventContext* pEventContext);
+	void FireExecute(uint16_t nEventID, uint64_t nSrcID, uint8_t bySrcType, const google::protobuf::Message& message);
 
 	/**
 	* @brief 订阅事件

@@ -27,11 +27,11 @@
 //事件执行对象
 struct OnEventExecuteObj
 {
-	bool operator()(NFEventObj* pSink, uint16_t nEventID, uint64_t nSrcID, uint8_t bySrcType, NFEventContext* pEventContext) const
+	bool operator()(NFEventObj* pSink, uint16_t nEventID, uint64_t nSrcID, uint8_t bySrcType, const google::protobuf::Message& message) const
 	{
 		if (nullptr == pSink) return false;
 
-		pSink->OnExecute(nEventID, nSrcID, bySrcType, pEventContext);
+		pSink->OnExecute(nEventID, nSrcID, bySrcType, message);
 		return true;
 	}
 };
@@ -70,7 +70,7 @@ public:
 	* 问题3:假设我在Fire事件里， Fire了别的事件，会导致迭代问题，事件系统已经了做了预付， 相同的事件，最多迭代5次，
 	*       所有的Fire事件最多迭代20次
 	*/
-	virtual void FireExecute(uint16_t nEventID, uint64_t nSrcID, uint8_t bySrcType, NFEventContext* pEventContext) override;
+	virtual void FireExecute(uint16_t nEventID, uint64_t nSrcID, uint8_t bySrcType, const google::protobuf::Message& message) override;
 
 	/**
 	* @brief 订阅事件

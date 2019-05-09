@@ -31,11 +31,11 @@ void NFEventMgr::UnInit()
 }
 
 //发送执行事件
-void NFEventMgr::FireExecute(uint16_t nEventID, uint64_t nSrcID, uint8_t bySrcType, NFEventContext* pEventContext) const
+void NFEventMgr::FireExecute(uint16_t nEventID, uint64_t nSrcID, uint8_t bySrcType, const google::protobuf::Message& message) const
 {
 	if (m_pEventModule)
 	{
-		m_pEventModule->FireExecute(nEventID, nSrcID, bySrcType, pEventContext);
+		m_pEventModule->FireExecute(nEventID, nSrcID, bySrcType, message);
 	}
 }
 
