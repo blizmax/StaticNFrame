@@ -4,15 +4,15 @@ echo Building dependencies...
 cd openssl
 chmod a+x ./config
 ./config
-make
+
 cp -rf libcrypto.a ../../../Product/Lib/Debug/
 cp -rf libcrypto.a ../../../Product/Lib/Release/
 cp -rf libssl.a ../../../Product/Lib/Debug/
 cp -rf libssl.a ../../../Product/Lib/Release/
-cp -rf libcrypto.so.1.1 ../../../Product/run/Dynamic_Debug/libcrypto.so
-cp -rf libssl.so.1.1 ../../../Product/run/Dynamic_Debug/libssl.so
-cp -rf libcrypto.so.1.1 ../../../Product/run/Dynamic_Release/libcrypto.so
-cp -rf libssl.so.1.1 ../../../Product/run/Dynamic_Release/libssl.so
+cp -rf libcrypto.so.1.1 ../../../Product/run/Dynamic_Debug/
+cp -rf libssl.so.1.1 ../../../Product/run/Dynamic_Debug/
+cp -rf libcrypto.so.1.1 ../../../Product/run/Dynamic_Release/
+cp -rf libssl.so.1.1 ../../../Product/run/Dynamic_Release/
 cd ..
 
 #compiling mysql
@@ -22,8 +22,8 @@ make
 
 cp -R -f ./libmysql/libmysqlclient.a ../../../Product/Lib/Debug/
 cp -R -f ./libmysql/libmysqlclient.a ../../../Product/Lib/Release/
-cp -R -f ./libmysql/libmysqlclient.so.18.4. ../../../Product/run/Dynamic_Debug/libmysqlclient.so
-cp -R -f ./libmysql/libmysqlclient.so.18.4. ../../../Product/run/Dynamic_Release/libmysqlclient.so
+cp -R -f ./libmysql/libmysqlclient.so.18.4. ../../../Product/run/Dynamic_Debug/
+cp -R -f ./libmysql/libmysqlclient.so.18.4. ../../../Product/run/Dynamic_Release/
 
 cd ..
 
@@ -47,7 +47,7 @@ cd protobuf
 cd cmake
 mkdir build
 cd build
-cmake ..
+cmake .. -DBUILD_SHARED_LIBS=On
 make
 
 cd ../../
@@ -64,9 +64,11 @@ cd Theron
 make library mode=debug boost=off c++11=on posix=on shared=on
 cp -r -f ./Lib/libtheron.a ../../../Product/Lib/Debug/
 cp -r -f ./Lib/libtheron.a ../../../Product/Lib/Dynamic_Debug/
+make clean
 make library mode=release boost=off c++11=on posix=on shared=on
 cp -r -f ./Lib/libtheron.a ../../../Product/Lib/Release/
 cp -r -f ./Lib/libtheron.a ../../../Product/Lib/Dynamic_Release/
+make clean
 cd ../
 
 
