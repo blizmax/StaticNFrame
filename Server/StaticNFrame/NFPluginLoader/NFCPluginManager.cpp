@@ -721,7 +721,8 @@ bool NFCPluginManager::LoadPluginLibrary(const std::string& strPluginDLLName)
 			char* error = dlerror();
 			if (error)
 			{
-				NFLogError(NF_LOG_PLUGIN_MANAGER, 0, " Load shared lib[{0}] failed, ErrorNo. = [{1}] Load [{0}] failed", pLib->GetName(), error);
+				std::cout << "Load shared lib failed: " << strPluginDLLName << std::endl;
+				NFLogError(NF_LOG_PLUGIN_MANAGER, 0, " Load DLL[{0}] failed, ErrorNo. = [{1}] Load [{0}] failed", strPluginDLLName, error);
 				assert(0);
 				return false;
 			}
