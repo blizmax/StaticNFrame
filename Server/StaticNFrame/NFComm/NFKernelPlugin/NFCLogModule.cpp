@@ -175,14 +175,11 @@ void NFCLogModule::CreateDefaultLogger()
 	auto color_sink = std::make_shared<spdlog::sinks::wincolor_stdout_sink_mt>();
 	sinks_vec.push_back(color_sink);
 #else
-#ifdef NF_DEBUG_MODE
-#else
 	if (m_pPluginManager->IsDaemon() == false)
 	{
 		auto color_sink = std::make_shared<spdlog::sinks::ansicolor_stdout_sink_mt>();
 		sinks_vec.push_back(color_sink);
 	}
-#endif
 #endif
 
 	sinks_vec.push_back(date_and_hour_sink);
