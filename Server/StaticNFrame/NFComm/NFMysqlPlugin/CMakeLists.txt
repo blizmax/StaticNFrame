@@ -15,6 +15,5 @@ elseif (CMAKE_BUILD_TYPE STREQUAL "DynamicRelease")
 elseif(CMAKE_BUILD_TYPE STREQUAL "DynamicDebug")
 	SET(LIBRARY_OUTPUT_PATH "${CMAKE_SOURCE_DIR}/Product/run/Dynamic_Debug")
 	ADD_LIBRARY( ${PROJECT_NAME} SHARED ${SRC} )
-	TARGET_LINK_LIBRARIES(${PROJECT_NAME} mysqlclient mysqlpp)
 endif()
 
