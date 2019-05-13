@@ -118,6 +118,8 @@ const ::google::protobuf::uint32 TableStruct::offsets[] GOOGLE_PROTOBUF_ATTRIBUT
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::NFMsg::db_server_detail, proc_cpu_),
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::NFMsg::db_server_detail, proc_mem_),
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::NFMsg::db_server_detail, proc_thread_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::NFMsg::db_server_detail, last_date_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::NFMsg::db_server_detail, last_time_),
   ~0u,  // no _has_bits_
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::NFMsg::db_query_server_detail, _internal_metadata_),
   ~0u,  // no _extensions_
@@ -129,7 +131,7 @@ const ::google::protobuf::uint32 TableStruct::offsets[] GOOGLE_PROTOBUF_ATTRIBUT
 static const ::google::protobuf::internal::MigrationSchema schemas[] GOOGLE_PROTOBUF_ATTRIBUTE_SECTION_VARIABLE(protodesc_cold) = {
   { 0, -1, sizeof(::NFMsg::db_query_server)},
   { 7, -1, sizeof(::NFMsg::db_server_detail)},
-  { 22, -1, sizeof(::NFMsg::db_query_server_detail)},
+  { 24, -1, sizeof(::NFMsg::db_query_server_detail)},
 };
 
 static ::google::protobuf::Message const * const file_default_instances[] = {
@@ -162,18 +164,18 @@ void AddDescriptorsImpl() {
       "\n\017db_server.proto\022\005NFMsg\032\020server_msg.pro"
       "to\"P\n\017db_query_server\022\021\n\tdy_server\030\001 \001(\t"
       "\022*\n\tdb_fields\030\002 \001(\0132\027.NFMsg.ServerInfoRe"
-      "port\"\322\001\n\020db_server_detail\022\n\n\002id\030\001 \001(\005\022\021\n"
+      "port\"\370\001\n\020db_server_detail\022\n\n\002id\030\001 \001(\005\022\021\n"
       "\tserver_id\030\002 \001(\005\022\031\n\021server_cur_online\030\003 "
       "\001(\005\022\024\n\014server_state\030\004 \001(\r\022\021\n\ttotal_mem\030\005"
       " \001(\004\022\020\n\010free_mem\030\006 \001(\004\022\020\n\010used_mem\030\007 \001(\004"
       "\022\020\n\010proc_cpu\030\010 \001(\001\022\020\n\010proc_mem\030\t \001(\004\022\023\n\013"
-      "proc_thread\030\n \001(\r\"^\n\026db_query_server_det"
-      "ail\022\030\n\020dy_server_detail\030\001 \001(\t\022*\n\tdb_fiel"
-      "ds\030\002 \001(\0132\027.NFMsg.db_server_detailb\006proto"
-      "3"
+      "proc_thread\030\n \001(\r\022\021\n\tlast_date\030\013 \001(\t\022\021\n\t"
+      "last_time\030\014 \001(\004\"^\n\026db_query_server_detai"
+      "l\022\030\n\020dy_server_detail\030\001 \001(\t\022*\n\tdb_fields"
+      "\030\002 \001(\0132\027.NFMsg.db_server_detailb\006proto3"
   };
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
-      descriptor, 441);
+      descriptor, 479);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "db_server.proto", &protobuf_RegisterTypes);
   ::protobuf_server_5fmsg_2eproto::AddDescriptors();
@@ -505,6 +507,8 @@ const int db_server_detail::kUsedMemFieldNumber;
 const int db_server_detail::kProcCpuFieldNumber;
 const int db_server_detail::kProcMemFieldNumber;
 const int db_server_detail::kProcThreadFieldNumber;
+const int db_server_detail::kLastDateFieldNumber;
+const int db_server_detail::kLastTimeFieldNumber;
 #endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
 
 db_server_detail::db_server_detail()
@@ -518,6 +522,10 @@ db_server_detail::db_server_detail(const db_server_detail& from)
   : ::google::protobuf::Message(),
       _internal_metadata_(NULL) {
   _internal_metadata_.MergeFrom(from._internal_metadata_);
+  last_date_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  if (from.last_date().size() > 0) {
+    last_date_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.last_date_);
+  }
   ::memcpy(&id_, &from.id_,
     static_cast<size_t>(reinterpret_cast<char*>(&proc_thread_) -
     reinterpret_cast<char*>(&id_)) + sizeof(proc_thread_));
@@ -525,6 +533,7 @@ db_server_detail::db_server_detail(const db_server_detail& from)
 }
 
 void db_server_detail::SharedCtor() {
+  last_date_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   ::memset(&id_, 0, static_cast<size_t>(
       reinterpret_cast<char*>(&proc_thread_) -
       reinterpret_cast<char*>(&id_)) + sizeof(proc_thread_));
@@ -536,6 +545,7 @@ db_server_detail::~db_server_detail() {
 }
 
 void db_server_detail::SharedDtor() {
+  last_date_.DestroyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
 
 void db_server_detail::SetCachedSize(int size) const {
@@ -558,6 +568,7 @@ void db_server_detail::Clear() {
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
+  last_date_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   ::memset(&id_, 0, static_cast<size_t>(
       reinterpret_cast<char*>(&proc_thread_) -
       reinterpret_cast<char*>(&id_)) + sizeof(proc_thread_));
@@ -714,6 +725,36 @@ bool db_server_detail::MergePartialFromCodedStream(
         break;
       }
 
+      // string last_date = 11;
+      case 11: {
+        if (static_cast< ::google::protobuf::uint8>(tag) ==
+            static_cast< ::google::protobuf::uint8>(90u /* 90 & 0xFF */)) {
+          DO_(::google::protobuf::internal::WireFormatLite::ReadString(
+                input, this->mutable_last_date()));
+          DO_(::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+            this->last_date().data(), static_cast<int>(this->last_date().length()),
+            ::google::protobuf::internal::WireFormatLite::PARSE,
+            "NFMsg.db_server_detail.last_date"));
+        } else {
+          goto handle_unusual;
+        }
+        break;
+      }
+
+      // uint64 last_time = 12;
+      case 12: {
+        if (static_cast< ::google::protobuf::uint8>(tag) ==
+            static_cast< ::google::protobuf::uint8>(96u /* 96 & 0xFF */)) {
+
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::uint64, ::google::protobuf::internal::WireFormatLite::TYPE_UINT64>(
+                 input, &last_time_)));
+        } else {
+          goto handle_unusual;
+        }
+        break;
+      }
+
       default: {
       handle_unusual:
         if (tag == 0) {
@@ -790,6 +831,21 @@ void db_server_detail::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteUInt32(10, this->proc_thread(), output);
   }
 
+  // string last_date = 11;
+  if (this->last_date().size() > 0) {
+    ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+      this->last_date().data(), static_cast<int>(this->last_date().length()),
+      ::google::protobuf::internal::WireFormatLite::SERIALIZE,
+      "NFMsg.db_server_detail.last_date");
+    ::google::protobuf::internal::WireFormatLite::WriteStringMaybeAliased(
+      11, this->last_date(), output);
+  }
+
+  // uint64 last_time = 12;
+  if (this->last_time() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt64(12, this->last_time(), output);
+  }
+
   if ((_internal_metadata_.have_unknown_fields() &&  ::google::protobuf::internal::GetProto3PreserveUnknownsDefault())) {
     ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
         (::google::protobuf::internal::GetProto3PreserveUnknownsDefault()   ? _internal_metadata_.unknown_fields()   : _internal_metadata_.default_instance()), output);
@@ -854,6 +910,22 @@ void db_server_detail::SerializeWithCachedSizes(
     target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(10, this->proc_thread(), target);
   }
 
+  // string last_date = 11;
+  if (this->last_date().size() > 0) {
+    ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+      this->last_date().data(), static_cast<int>(this->last_date().length()),
+      ::google::protobuf::internal::WireFormatLite::SERIALIZE,
+      "NFMsg.db_server_detail.last_date");
+    target =
+      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
+        11, this->last_date(), target);
+  }
+
+  // uint64 last_time = 12;
+  if (this->last_time() != 0) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt64ToArray(12, this->last_time(), target);
+  }
+
   if ((_internal_metadata_.have_unknown_fields() &&  ::google::protobuf::internal::GetProto3PreserveUnknownsDefault())) {
     target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
         (::google::protobuf::internal::GetProto3PreserveUnknownsDefault()   ? _internal_metadata_.unknown_fields()   : _internal_metadata_.default_instance()), target);
@@ -871,6 +943,13 @@ size_t db_server_detail::ByteSizeLong() const {
       ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
         (::google::protobuf::internal::GetProto3PreserveUnknownsDefault()   ? _internal_metadata_.unknown_fields()   : _internal_metadata_.default_instance()));
   }
+  // string last_date = 11;
+  if (this->last_date().size() > 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::StringSize(
+        this->last_date());
+  }
+
   // int32 id = 1;
   if (this->id() != 0) {
     total_size += 1 +
@@ -932,6 +1011,13 @@ size_t db_server_detail::ByteSizeLong() const {
         this->proc_mem());
   }
 
+  // uint64 last_time = 12;
+  if (this->last_time() != 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::UInt64Size(
+        this->last_time());
+  }
+
   // uint32 proc_thread = 10;
   if (this->proc_thread() != 0) {
     total_size += 1 +
@@ -966,6 +1052,10 @@ void db_server_detail::MergeFrom(const db_server_detail& from) {
   ::google::protobuf::uint32 cached_has_bits = 0;
   (void) cached_has_bits;
 
+  if (from.last_date().size() > 0) {
+
+    last_date_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.last_date_);
+  }
   if (from.id() != 0) {
     set_id(from.id());
   }
@@ -992,6 +1082,9 @@ void db_server_detail::MergeFrom(const db_server_detail& from) {
   }
   if (from.proc_mem() != 0) {
     set_proc_mem(from.proc_mem());
+  }
+  if (from.last_time() != 0) {
+    set_last_time(from.last_time());
   }
   if (from.proc_thread() != 0) {
     set_proc_thread(from.proc_thread());
@@ -1022,6 +1115,8 @@ void db_server_detail::Swap(db_server_detail* other) {
 }
 void db_server_detail::InternalSwap(db_server_detail* other) {
   using std::swap;
+  last_date_.Swap(&other->last_date_, &::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+    GetArenaNoVirtual());
   swap(id_, other->id_);
   swap(server_id_, other->server_id_);
   swap(server_cur_online_, other->server_cur_online_);
@@ -1031,6 +1126,7 @@ void db_server_detail::InternalSwap(db_server_detail* other) {
   swap(used_mem_, other->used_mem_);
   swap(proc_cpu_, other->proc_cpu_);
   swap(proc_mem_, other->proc_mem_);
+  swap(last_time_, other->last_time_);
   swap(proc_thread_, other->proc_thread_);
   _internal_metadata_.Swap(&other->_internal_metadata_);
 }

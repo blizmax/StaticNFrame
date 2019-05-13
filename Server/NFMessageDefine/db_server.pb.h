@@ -279,6 +279,20 @@ class db_server_detail : public ::google::protobuf::Message /* @@protoc_insertio
 
   // accessors -------------------------------------------------------
 
+  // string last_date = 11;
+  void clear_last_date();
+  static const int kLastDateFieldNumber = 11;
+  const ::std::string& last_date() const;
+  void set_last_date(const ::std::string& value);
+  #if LANG_CXX11
+  void set_last_date(::std::string&& value);
+  #endif
+  void set_last_date(const char* value);
+  void set_last_date(const char* value, size_t size);
+  ::std::string* mutable_last_date();
+  ::std::string* release_last_date();
+  void set_allocated_last_date(::std::string* last_date);
+
   // int32 id = 1;
   void clear_id();
   static const int kIdFieldNumber = 1;
@@ -333,6 +347,12 @@ class db_server_detail : public ::google::protobuf::Message /* @@protoc_insertio
   ::google::protobuf::uint64 proc_mem() const;
   void set_proc_mem(::google::protobuf::uint64 value);
 
+  // uint64 last_time = 12;
+  void clear_last_time();
+  static const int kLastTimeFieldNumber = 12;
+  ::google::protobuf::uint64 last_time() const;
+  void set_last_time(::google::protobuf::uint64 value);
+
   // uint32 proc_thread = 10;
   void clear_proc_thread();
   static const int kProcThreadFieldNumber = 10;
@@ -343,6 +363,7 @@ class db_server_detail : public ::google::protobuf::Message /* @@protoc_insertio
  private:
 
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+  ::google::protobuf::internal::ArenaStringPtr last_date_;
   ::google::protobuf::int32 id_;
   ::google::protobuf::int32 server_id_;
   ::google::protobuf::int32 server_cur_online_;
@@ -352,6 +373,7 @@ class db_server_detail : public ::google::protobuf::Message /* @@protoc_insertio
   ::google::protobuf::uint64 used_mem_;
   double proc_cpu_;
   ::google::protobuf::uint64 proc_mem_;
+  ::google::protobuf::uint64 last_time_;
   ::google::protobuf::uint32 proc_thread_;
   mutable ::google::protobuf::internal::CachedSize _cached_size_;
   friend struct ::protobuf_db_5fserver_2eproto::TableStruct;
@@ -734,6 +756,73 @@ inline void db_server_detail::set_proc_thread(::google::protobuf::uint32 value) 
   
   proc_thread_ = value;
   // @@protoc_insertion_point(field_set:NFMsg.db_server_detail.proc_thread)
+}
+
+// string last_date = 11;
+inline void db_server_detail::clear_last_date() {
+  last_date_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline const ::std::string& db_server_detail::last_date() const {
+  // @@protoc_insertion_point(field_get:NFMsg.db_server_detail.last_date)
+  return last_date_.GetNoArena();
+}
+inline void db_server_detail::set_last_date(const ::std::string& value) {
+  
+  last_date_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:NFMsg.db_server_detail.last_date)
+}
+#if LANG_CXX11
+inline void db_server_detail::set_last_date(::std::string&& value) {
+  
+  last_date_.SetNoArena(
+    &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+  // @@protoc_insertion_point(field_set_rvalue:NFMsg.db_server_detail.last_date)
+}
+#endif
+inline void db_server_detail::set_last_date(const char* value) {
+  GOOGLE_DCHECK(value != NULL);
+  
+  last_date_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:NFMsg.db_server_detail.last_date)
+}
+inline void db_server_detail::set_last_date(const char* value, size_t size) {
+  
+  last_date_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:NFMsg.db_server_detail.last_date)
+}
+inline ::std::string* db_server_detail::mutable_last_date() {
+  
+  // @@protoc_insertion_point(field_mutable:NFMsg.db_server_detail.last_date)
+  return last_date_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline ::std::string* db_server_detail::release_last_date() {
+  // @@protoc_insertion_point(field_release:NFMsg.db_server_detail.last_date)
+  
+  return last_date_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline void db_server_detail::set_allocated_last_date(::std::string* last_date) {
+  if (last_date != NULL) {
+    
+  } else {
+    
+  }
+  last_date_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), last_date);
+  // @@protoc_insertion_point(field_set_allocated:NFMsg.db_server_detail.last_date)
+}
+
+// uint64 last_time = 12;
+inline void db_server_detail::clear_last_time() {
+  last_time_ = GOOGLE_ULONGLONG(0);
+}
+inline ::google::protobuf::uint64 db_server_detail::last_time() const {
+  // @@protoc_insertion_point(field_get:NFMsg.db_server_detail.last_time)
+  return last_time_;
+}
+inline void db_server_detail::set_last_time(::google::protobuf::uint64 value) {
+  
+  last_time_ = value;
+  // @@protoc_insertion_point(field_set:NFMsg.db_server_detail.last_time)
 }
 
 // -------------------------------------------------------------------

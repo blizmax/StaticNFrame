@@ -337,6 +337,12 @@ class ServerInfoReport : public ::google::protobuf::Message /* @@protoc_insertio
   ::google::protobuf::uint64 proc_mem() const;
   void set_proc_mem(::google::protobuf::uint64 value);
 
+  // uint64 last_time = 21;
+  void clear_last_time();
+  static const int kLastTimeFieldNumber = 21;
+  ::google::protobuf::uint64 last_time() const;
+  void set_last_time(::google::protobuf::uint64 value);
+
   // uint32 proc_pid = 19;
   void clear_proc_pid();
   static const int kProcPidFieldNumber = 19;
@@ -366,6 +372,7 @@ class ServerInfoReport : public ::google::protobuf::Message /* @@protoc_insertio
   ::google::protobuf::uint64 used_mem_;
   double proc_cpu_;
   ::google::protobuf::uint64 proc_mem_;
+  ::google::protobuf::uint64 last_time_;
   ::google::protobuf::uint32 proc_pid_;
   mutable ::google::protobuf::internal::CachedSize _cached_size_;
   friend struct ::protobuf_server_5fmsg_2eproto::TableStruct;
@@ -1002,6 +1009,20 @@ inline void ServerInfoReport::set_allocated_last_date(::std::string* last_date) 
   }
   last_date_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), last_date);
   // @@protoc_insertion_point(field_set_allocated:NFMsg.ServerInfoReport.last_date)
+}
+
+// uint64 last_time = 21;
+inline void ServerInfoReport::clear_last_time() {
+  last_time_ = GOOGLE_ULONGLONG(0);
+}
+inline ::google::protobuf::uint64 ServerInfoReport::last_time() const {
+  // @@protoc_insertion_point(field_get:NFMsg.ServerInfoReport.last_time)
+  return last_time_;
+}
+inline void ServerInfoReport::set_last_time(::google::protobuf::uint64 value) {
+  
+  last_time_ = value;
+  // @@protoc_insertion_point(field_set:NFMsg.ServerInfoReport.last_time)
 }
 
 // -------------------------------------------------------------------

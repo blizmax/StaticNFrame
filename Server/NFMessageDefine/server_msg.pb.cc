@@ -98,6 +98,7 @@ const ::google::protobuf::uint32 TableStruct::offsets[] GOOGLE_PROTOBUF_ATTRIBUT
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::NFMsg::ServerInfoReport, proc_cwd_),
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::NFMsg::ServerInfoReport, proc_pid_),
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::NFMsg::ServerInfoReport, last_date_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::NFMsg::ServerInfoReport, last_time_),
   ~0u,  // no _has_bits_
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::NFMsg::ServerInfoReportList, _internal_metadata_),
   ~0u,  // no _extensions_
@@ -107,7 +108,7 @@ const ::google::protobuf::uint32 TableStruct::offsets[] GOOGLE_PROTOBUF_ATTRIBUT
 };
 static const ::google::protobuf::internal::MigrationSchema schemas[] GOOGLE_PROTOBUF_ATTRIBUTE_SECTION_VARIABLE(protodesc_cold) = {
   { 0, -1, sizeof(::NFMsg::ServerInfoReport)},
-  { 25, -1, sizeof(::NFMsg::ServerInfoReportList)},
+  { 26, -1, sizeof(::NFMsg::ServerInfoReportList)},
 };
 
 static ::google::protobuf::Message const * const file_default_instances[] = {
@@ -136,7 +137,7 @@ void protobuf_RegisterTypes(const ::std::string&) {
 void AddDescriptorsImpl() {
   InitDefaults();
   static const char descriptor[] GOOGLE_PROTOBUF_ATTRIBUTE_SECTION_VARIABLE(protodesc_cold) = {
-      "\n\020server_msg.proto\022\005NFMsg\"\254\003\n\020ServerInfo"
+      "\n\020server_msg.proto\022\005NFMsg\"\277\003\n\020ServerInfo"
       "Report\022\021\n\tserver_id\030\001 \001(\005\022\023\n\013server_type"
       "\030\002 \001(\005\022\023\n\013server_name\030\003 \001(\t\022\021\n\tserver_ip"
       "\030\004 \001(\t\022\023\n\013server_port\030\005 \001(\005\022\030\n\020server_ht"
@@ -147,14 +148,15 @@ void AddDescriptorsImpl() {
       "\r \001(\004\022\020\n\010proc_cpu\030\016 \001(\001\022\020\n\010proc_mem\030\017 \001("
       "\004\022\023\n\013proc_thread\030\020 \001(\r\022\021\n\tproc_name\030\021 \001("
       "\t\022\020\n\010proc_cwd\030\022 \001(\t\022\020\n\010proc_pid\030\023 \001(\r\022\021\n"
-      "\tlast_date\030\024 \001(\t\"D\n\024ServerInfoReportList"
-      "\022,\n\013server_list\030\001 \003(\0132\027.NFMsg.ServerInfo"
-      "Report*Z\n\014EServerState\022\r\n\tEST_CRASH\020\000\022\016\n"
-      "\nEST_NARMAL\020\001\022\014\n\010EST_BUSY\020\002\022\014\n\010EST_FIRE\020"
-      "\003\022\017\n\013EST_MAINTEN\020\004b\006proto3"
+      "\tlast_date\030\024 \001(\t\022\021\n\tlast_time\030\025 \001(\004\"D\n\024S"
+      "erverInfoReportList\022,\n\013server_list\030\001 \003(\013"
+      "2\027.NFMsg.ServerInfoReport*Z\n\014EServerStat"
+      "e\022\r\n\tEST_CRASH\020\000\022\016\n\nEST_NARMAL\020\001\022\014\n\010EST_"
+      "BUSY\020\002\022\014\n\010EST_FIRE\020\003\022\017\n\013EST_MAINTEN\020\004b\006p"
+      "roto3"
   };
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
-      descriptor, 626);
+      descriptor, 645);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "server_msg.proto", &protobuf_RegisterTypes);
 }
@@ -214,6 +216,7 @@ const int ServerInfoReport::kProcNameFieldNumber;
 const int ServerInfoReport::kProcCwdFieldNumber;
 const int ServerInfoReport::kProcPidFieldNumber;
 const int ServerInfoReport::kLastDateFieldNumber;
+const int ServerInfoReport::kLastTimeFieldNumber;
 #endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
 
 ServerInfoReport::ServerInfoReport()
@@ -617,6 +620,20 @@ bool ServerInfoReport::MergePartialFromCodedStream(
         break;
       }
 
+      // uint64 last_time = 21;
+      case 21: {
+        if (static_cast< ::google::protobuf::uint8>(tag) ==
+            static_cast< ::google::protobuf::uint8>(168u /* 168 & 0xFF */)) {
+
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::uint64, ::google::protobuf::internal::WireFormatLite::TYPE_UINT64>(
+                 input, &last_time_)));
+        } else {
+          goto handle_unusual;
+        }
+        break;
+      }
+
       default: {
       handle_unusual:
         if (tag == 0) {
@@ -773,6 +790,11 @@ void ServerInfoReport::SerializeWithCachedSizes(
       20, this->last_date(), output);
   }
 
+  // uint64 last_time = 21;
+  if (this->last_time() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt64(21, this->last_time(), output);
+  }
+
   if ((_internal_metadata_.have_unknown_fields() &&  ::google::protobuf::internal::GetProto3PreserveUnknownsDefault())) {
     ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
         (::google::protobuf::internal::GetProto3PreserveUnknownsDefault()   ? _internal_metadata_.unknown_fields()   : _internal_metadata_.default_instance()), output);
@@ -923,6 +945,11 @@ void ServerInfoReport::SerializeWithCachedSizes(
         20, this->last_date(), target);
   }
 
+  // uint64 last_time = 21;
+  if (this->last_time() != 0) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt64ToArray(21, this->last_time(), target);
+  }
+
   if ((_internal_metadata_.have_unknown_fields() &&  ::google::protobuf::internal::GetProto3PreserveUnknownsDefault())) {
     target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
         (::google::protobuf::internal::GetProto3PreserveUnknownsDefault()   ? _internal_metadata_.unknown_fields()   : _internal_metadata_.default_instance()), target);
@@ -1071,6 +1098,13 @@ size_t ServerInfoReport::ByteSizeLong() const {
         this->proc_mem());
   }
 
+  // uint64 last_time = 21;
+  if (this->last_time() != 0) {
+    total_size += 2 +
+      ::google::protobuf::internal::WireFormatLite::UInt64Size(
+        this->last_time());
+  }
+
   // uint32 proc_pid = 19;
   if (this->proc_pid() != 0) {
     total_size += 2 +
@@ -1168,6 +1202,9 @@ void ServerInfoReport::MergeFrom(const ServerInfoReport& from) {
   if (from.proc_mem() != 0) {
     set_proc_mem(from.proc_mem());
   }
+  if (from.last_time() != 0) {
+    set_last_time(from.last_time());
+  }
   if (from.proc_pid() != 0) {
     set_proc_pid(from.proc_pid());
   }
@@ -1222,6 +1259,7 @@ void ServerInfoReport::InternalSwap(ServerInfoReport* other) {
   swap(used_mem_, other->used_mem_);
   swap(proc_cpu_, other->proc_cpu_);
   swap(proc_mem_, other->proc_mem_);
+  swap(last_time_, other->last_time_);
   swap(proc_pid_, other->proc_pid_);
   _internal_metadata_.Swap(&other->_internal_metadata_);
 }

@@ -21,6 +21,8 @@ message db_server_detail
 	double  proc_cpu = 8;	//cur process cpu used
 	uint64  proc_mem = 9;	//cur process mem used
 	uint32  proc_thread = 10; //cur process thread num
+	string  last_date = 11;
+	uint64  last_time = 12;
 }
 
 message db_query_server_detail

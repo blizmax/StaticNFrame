@@ -33,6 +33,7 @@ message ServerInfoReport
 	string  proc_cwd = 18; 
 	uint32  proc_pid = 19;
 	string  last_date = 20;
+	uint64  last_time = 21;
 }
 
 message ServerInfoReportList

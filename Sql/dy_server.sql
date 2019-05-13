@@ -25,6 +25,7 @@ CREATE TABLE `dy_server` (
   `proc_name` varchar(127) DEFAULT '',
   `proc_cwd` varchar(127) DEFAULT '',
   `last_date` varchar(127) DEFAULT '',
+  `last_time` bigint(20) DEFAULT '0',
   PRIMARY KEY (`server_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -44,5 +45,6 @@ CREATE TABLE `dy_server_detail` (
   `free_mem` bigint(20) DEFAULT '0',
   `used_mem` bigint(20) DEFAULT '0',
   `last_date` varchar(127) DEFAULT '',
+  `last_time` bigint(20) DEFAULT '0',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
