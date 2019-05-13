@@ -175,23 +175,9 @@ class ServerInfoReport : public ::google::protobuf::Message /* @@protoc_insertio
 
   // accessors -------------------------------------------------------
 
-  // string game_name = 2;
-  void clear_game_name();
-  static const int kGameNameFieldNumber = 2;
-  const ::std::string& game_name() const;
-  void set_game_name(const ::std::string& value);
-  #if LANG_CXX11
-  void set_game_name(::std::string&& value);
-  #endif
-  void set_game_name(const char* value);
-  void set_game_name(const char* value, size_t size);
-  ::std::string* mutable_game_name();
-  ::std::string* release_game_name();
-  void set_allocated_game_name(::std::string* game_name);
-
-  // string server_name = 5;
+  // string server_name = 3;
   void clear_server_name();
-  static const int kServerNameFieldNumber = 5;
+  static const int kServerNameFieldNumber = 3;
   const ::std::string& server_name() const;
   void set_server_name(const ::std::string& value);
   #if LANG_CXX11
@@ -203,9 +189,9 @@ class ServerInfoReport : public ::google::protobuf::Message /* @@protoc_insertio
   ::std::string* release_server_name();
   void set_allocated_server_name(::std::string* server_name);
 
-  // string server_ip = 6;
+  // string server_ip = 4;
   void clear_server_ip();
-  static const int kServerIpFieldNumber = 6;
+  static const int kServerIpFieldNumber = 4;
   const ::std::string& server_ip() const;
   void set_server_ip(const ::std::string& value);
   #if LANG_CXX11
@@ -217,9 +203,9 @@ class ServerInfoReport : public ::google::protobuf::Message /* @@protoc_insertio
   ::std::string* release_server_ip();
   void set_allocated_server_ip(::std::string* server_ip);
 
-  // string system_info = 12;
+  // string system_info = 10;
   void clear_system_info();
-  static const int kSystemInfoFieldNumber = 12;
+  static const int kSystemInfoFieldNumber = 10;
   const ::std::string& system_info() const;
   void set_system_info(const ::std::string& value);
   #if LANG_CXX11
@@ -231,142 +217,156 @@ class ServerInfoReport : public ::google::protobuf::Message /* @@protoc_insertio
   ::std::string* release_system_info();
   void set_allocated_system_info(::std::string* system_info);
 
-  // string cur_proc_name = 19;
-  void clear_cur_proc_name();
-  static const int kCurProcNameFieldNumber = 19;
-  const ::std::string& cur_proc_name() const;
-  void set_cur_proc_name(const ::std::string& value);
+  // string proc_name = 17;
+  void clear_proc_name();
+  static const int kProcNameFieldNumber = 17;
+  const ::std::string& proc_name() const;
+  void set_proc_name(const ::std::string& value);
   #if LANG_CXX11
-  void set_cur_proc_name(::std::string&& value);
+  void set_proc_name(::std::string&& value);
   #endif
-  void set_cur_proc_name(const char* value);
-  void set_cur_proc_name(const char* value, size_t size);
-  ::std::string* mutable_cur_proc_name();
-  ::std::string* release_cur_proc_name();
-  void set_allocated_cur_proc_name(::std::string* cur_proc_name);
+  void set_proc_name(const char* value);
+  void set_proc_name(const char* value, size_t size);
+  ::std::string* mutable_proc_name();
+  ::std::string* release_proc_name();
+  void set_allocated_proc_name(::std::string* proc_name);
 
-  // string cur_proc_cwd = 20;
-  void clear_cur_proc_cwd();
-  static const int kCurProcCwdFieldNumber = 20;
-  const ::std::string& cur_proc_cwd() const;
-  void set_cur_proc_cwd(const ::std::string& value);
+  // string proc_cwd = 18;
+  void clear_proc_cwd();
+  static const int kProcCwdFieldNumber = 18;
+  const ::std::string& proc_cwd() const;
+  void set_proc_cwd(const ::std::string& value);
   #if LANG_CXX11
-  void set_cur_proc_cwd(::std::string&& value);
+  void set_proc_cwd(::std::string&& value);
   #endif
-  void set_cur_proc_cwd(const char* value);
-  void set_cur_proc_cwd(const char* value, size_t size);
-  ::std::string* mutable_cur_proc_cwd();
-  ::std::string* release_cur_proc_cwd();
-  void set_allocated_cur_proc_cwd(::std::string* cur_proc_cwd);
+  void set_proc_cwd(const char* value);
+  void set_proc_cwd(const char* value, size_t size);
+  ::std::string* mutable_proc_cwd();
+  ::std::string* release_proc_cwd();
+  void set_allocated_proc_cwd(::std::string* proc_cwd);
 
-  // int32 game_id = 1;
-  void clear_game_id();
-  static const int kGameIdFieldNumber = 1;
-  ::google::protobuf::int32 game_id() const;
-  void set_game_id(::google::protobuf::int32 value);
+  // string last_date = 20;
+  void clear_last_date();
+  static const int kLastDateFieldNumber = 20;
+  const ::std::string& last_date() const;
+  void set_last_date(const ::std::string& value);
+  #if LANG_CXX11
+  void set_last_date(::std::string&& value);
+  #endif
+  void set_last_date(const char* value);
+  void set_last_date(const char* value, size_t size);
+  ::std::string* mutable_last_date();
+  ::std::string* release_last_date();
+  void set_allocated_last_date(::std::string* last_date);
 
-  // int32 server_id = 3;
+  // int32 server_id = 1;
   void clear_server_id();
-  static const int kServerIdFieldNumber = 3;
+  static const int kServerIdFieldNumber = 1;
   ::google::protobuf::int32 server_id() const;
   void set_server_id(::google::protobuf::int32 value);
 
-  // int32 server_type = 4;
+  // int32 server_type = 2;
   void clear_server_type();
-  static const int kServerTypeFieldNumber = 4;
+  static const int kServerTypeFieldNumber = 2;
   ::google::protobuf::int32 server_type() const;
   void set_server_type(::google::protobuf::int32 value);
 
-  // int32 server_port = 7;
+  // int32 server_port = 5;
   void clear_server_port();
-  static const int kServerPortFieldNumber = 7;
+  static const int kServerPortFieldNumber = 5;
   ::google::protobuf::int32 server_port() const;
   void set_server_port(::google::protobuf::int32 value);
 
-  // int32 server_inner_port = 8;
-  void clear_server_inner_port();
-  static const int kServerInnerPortFieldNumber = 8;
-  ::google::protobuf::int32 server_inner_port() const;
-  void set_server_inner_port(::google::protobuf::int32 value);
+  // int32 server_http_port = 6;
+  void clear_server_http_port();
+  static const int kServerHttpPortFieldNumber = 6;
+  ::google::protobuf::int32 server_http_port() const;
+  void set_server_http_port(::google::protobuf::int32 value);
 
-  // int32 server_max_online = 9;
+  // int32 server_max_online = 7;
   void clear_server_max_online();
-  static const int kServerMaxOnlineFieldNumber = 9;
+  static const int kServerMaxOnlineFieldNumber = 7;
   ::google::protobuf::int32 server_max_online() const;
   void set_server_max_online(::google::protobuf::int32 value);
 
-  // int32 server_cur_count = 10;
-  void clear_server_cur_count();
-  static const int kServerCurCountFieldNumber = 10;
-  ::google::protobuf::int32 server_cur_count() const;
-  void set_server_cur_count(::google::protobuf::int32 value);
+  // int32 server_cur_online = 8;
+  void clear_server_cur_online();
+  static const int kServerCurOnlineFieldNumber = 8;
+  ::google::protobuf::int32 server_cur_online() const;
+  void set_server_cur_online(::google::protobuf::int32 value);
 
-  // uint32 server_state = 11;
-  void clear_server_state();
-  static const int kServerStateFieldNumber = 11;
-  ::google::protobuf::uint32 server_state() const;
-  void set_server_state(::google::protobuf::uint32 value);
-
-  // uint64 total_mem = 13;
+  // uint64 total_mem = 11;
   void clear_total_mem();
-  static const int kTotalMemFieldNumber = 13;
+  static const int kTotalMemFieldNumber = 11;
   ::google::protobuf::uint64 total_mem() const;
   void set_total_mem(::google::protobuf::uint64 value);
 
-  // uint64 free_mem = 14;
+  // uint64 free_mem = 12;
   void clear_free_mem();
-  static const int kFreeMemFieldNumber = 14;
+  static const int kFreeMemFieldNumber = 12;
   ::google::protobuf::uint64 free_mem() const;
   void set_free_mem(::google::protobuf::uint64 value);
 
-  // uint64 used_mem = 15;
+  // uint32 server_state = 9;
+  void clear_server_state();
+  static const int kServerStateFieldNumber = 9;
+  ::google::protobuf::uint32 server_state() const;
+  void set_server_state(::google::protobuf::uint32 value);
+
+  // uint32 proc_thread = 16;
+  void clear_proc_thread();
+  static const int kProcThreadFieldNumber = 16;
+  ::google::protobuf::uint32 proc_thread() const;
+  void set_proc_thread(::google::protobuf::uint32 value);
+
+  // uint64 used_mem = 13;
   void clear_used_mem();
-  static const int kUsedMemFieldNumber = 15;
+  static const int kUsedMemFieldNumber = 13;
   ::google::protobuf::uint64 used_mem() const;
   void set_used_mem(::google::protobuf::uint64 value);
 
-  // double cur_cpu_used = 16;
-  void clear_cur_cpu_used();
-  static const int kCurCpuUsedFieldNumber = 16;
-  double cur_cpu_used() const;
-  void set_cur_cpu_used(double value);
+  // double proc_cpu = 14;
+  void clear_proc_cpu();
+  static const int kProcCpuFieldNumber = 14;
+  double proc_cpu() const;
+  void set_proc_cpu(double value);
 
-  // uint64 cur_mem_used = 17;
-  void clear_cur_mem_used();
-  static const int kCurMemUsedFieldNumber = 17;
-  ::google::protobuf::uint64 cur_mem_used() const;
-  void set_cur_mem_used(::google::protobuf::uint64 value);
+  // uint64 proc_mem = 15;
+  void clear_proc_mem();
+  static const int kProcMemFieldNumber = 15;
+  ::google::protobuf::uint64 proc_mem() const;
+  void set_proc_mem(::google::protobuf::uint64 value);
 
-  // uint32 cur_thread_num = 18;
-  void clear_cur_thread_num();
-  static const int kCurThreadNumFieldNumber = 18;
-  ::google::protobuf::uint32 cur_thread_num() const;
-  void set_cur_thread_num(::google::protobuf::uint32 value);
+  // uint32 proc_pid = 19;
+  void clear_proc_pid();
+  static const int kProcPidFieldNumber = 19;
+  ::google::protobuf::uint32 proc_pid() const;
+  void set_proc_pid(::google::protobuf::uint32 value);
 
   // @@protoc_insertion_point(class_scope:NFMsg.ServerInfoReport)
  private:
 
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
-  ::google::protobuf::internal::ArenaStringPtr game_name_;
   ::google::protobuf::internal::ArenaStringPtr server_name_;
   ::google::protobuf::internal::ArenaStringPtr server_ip_;
   ::google::protobuf::internal::ArenaStringPtr system_info_;
-  ::google::protobuf::internal::ArenaStringPtr cur_proc_name_;
-  ::google::protobuf::internal::ArenaStringPtr cur_proc_cwd_;
-  ::google::protobuf::int32 game_id_;
+  ::google::protobuf::internal::ArenaStringPtr proc_name_;
+  ::google::protobuf::internal::ArenaStringPtr proc_cwd_;
+  ::google::protobuf::internal::ArenaStringPtr last_date_;
   ::google::protobuf::int32 server_id_;
   ::google::protobuf::int32 server_type_;
   ::google::protobuf::int32 server_port_;
-  ::google::protobuf::int32 server_inner_port_;
+  ::google::protobuf::int32 server_http_port_;
   ::google::protobuf::int32 server_max_online_;
-  ::google::protobuf::int32 server_cur_count_;
-  ::google::protobuf::uint32 server_state_;
+  ::google::protobuf::int32 server_cur_online_;
   ::google::protobuf::uint64 total_mem_;
   ::google::protobuf::uint64 free_mem_;
+  ::google::protobuf::uint32 server_state_;
+  ::google::protobuf::uint32 proc_thread_;
   ::google::protobuf::uint64 used_mem_;
-  double cur_cpu_used_;
-  ::google::protobuf::uint64 cur_mem_used_;
-  ::google::protobuf::uint32 cur_thread_num_;
+  double proc_cpu_;
+  ::google::protobuf::uint64 proc_mem_;
+  ::google::protobuf::uint32 proc_pid_;
   mutable ::google::protobuf::internal::CachedSize _cached_size_;
   friend struct ::protobuf_server_5fmsg_2eproto::TableStruct;
 };
@@ -490,74 +490,7 @@ class ServerInfoReportList : public ::google::protobuf::Message /* @@protoc_inse
 #endif  // __GNUC__
 // ServerInfoReport
 
-// int32 game_id = 1;
-inline void ServerInfoReport::clear_game_id() {
-  game_id_ = 0;
-}
-inline ::google::protobuf::int32 ServerInfoReport::game_id() const {
-  // @@protoc_insertion_point(field_get:NFMsg.ServerInfoReport.game_id)
-  return game_id_;
-}
-inline void ServerInfoReport::set_game_id(::google::protobuf::int32 value) {
-  
-  game_id_ = value;
-  // @@protoc_insertion_point(field_set:NFMsg.ServerInfoReport.game_id)
-}
-
-// string game_name = 2;
-inline void ServerInfoReport::clear_game_name() {
-  game_name_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-}
-inline const ::std::string& ServerInfoReport::game_name() const {
-  // @@protoc_insertion_point(field_get:NFMsg.ServerInfoReport.game_name)
-  return game_name_.GetNoArena();
-}
-inline void ServerInfoReport::set_game_name(const ::std::string& value) {
-  
-  game_name_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
-  // @@protoc_insertion_point(field_set:NFMsg.ServerInfoReport.game_name)
-}
-#if LANG_CXX11
-inline void ServerInfoReport::set_game_name(::std::string&& value) {
-  
-  game_name_.SetNoArena(
-    &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
-  // @@protoc_insertion_point(field_set_rvalue:NFMsg.ServerInfoReport.game_name)
-}
-#endif
-inline void ServerInfoReport::set_game_name(const char* value) {
-  GOOGLE_DCHECK(value != NULL);
-  
-  game_name_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
-  // @@protoc_insertion_point(field_set_char:NFMsg.ServerInfoReport.game_name)
-}
-inline void ServerInfoReport::set_game_name(const char* value, size_t size) {
-  
-  game_name_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
-      ::std::string(reinterpret_cast<const char*>(value), size));
-  // @@protoc_insertion_point(field_set_pointer:NFMsg.ServerInfoReport.game_name)
-}
-inline ::std::string* ServerInfoReport::mutable_game_name() {
-  
-  // @@protoc_insertion_point(field_mutable:NFMsg.ServerInfoReport.game_name)
-  return game_name_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-}
-inline ::std::string* ServerInfoReport::release_game_name() {
-  // @@protoc_insertion_point(field_release:NFMsg.ServerInfoReport.game_name)
-  
-  return game_name_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-}
-inline void ServerInfoReport::set_allocated_game_name(::std::string* game_name) {
-  if (game_name != NULL) {
-    
-  } else {
-    
-  }
-  game_name_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), game_name);
-  // @@protoc_insertion_point(field_set_allocated:NFMsg.ServerInfoReport.game_name)
-}
-
-// int32 server_id = 3;
+// int32 server_id = 1;
 inline void ServerInfoReport::clear_server_id() {
   server_id_ = 0;
 }
@@ -571,7 +504,7 @@ inline void ServerInfoReport::set_server_id(::google::protobuf::int32 value) {
   // @@protoc_insertion_point(field_set:NFMsg.ServerInfoReport.server_id)
 }
 
-// int32 server_type = 4;
+// int32 server_type = 2;
 inline void ServerInfoReport::clear_server_type() {
   server_type_ = 0;
 }
@@ -585,7 +518,7 @@ inline void ServerInfoReport::set_server_type(::google::protobuf::int32 value) {
   // @@protoc_insertion_point(field_set:NFMsg.ServerInfoReport.server_type)
 }
 
-// string server_name = 5;
+// string server_name = 3;
 inline void ServerInfoReport::clear_server_name() {
   server_name_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
@@ -638,7 +571,7 @@ inline void ServerInfoReport::set_allocated_server_name(::std::string* server_na
   // @@protoc_insertion_point(field_set_allocated:NFMsg.ServerInfoReport.server_name)
 }
 
-// string server_ip = 6;
+// string server_ip = 4;
 inline void ServerInfoReport::clear_server_ip() {
   server_ip_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
@@ -691,7 +624,7 @@ inline void ServerInfoReport::set_allocated_server_ip(::std::string* server_ip) 
   // @@protoc_insertion_point(field_set_allocated:NFMsg.ServerInfoReport.server_ip)
 }
 
-// int32 server_port = 7;
+// int32 server_port = 5;
 inline void ServerInfoReport::clear_server_port() {
   server_port_ = 0;
 }
@@ -705,21 +638,21 @@ inline void ServerInfoReport::set_server_port(::google::protobuf::int32 value) {
   // @@protoc_insertion_point(field_set:NFMsg.ServerInfoReport.server_port)
 }
 
-// int32 server_inner_port = 8;
-inline void ServerInfoReport::clear_server_inner_port() {
-  server_inner_port_ = 0;
+// int32 server_http_port = 6;
+inline void ServerInfoReport::clear_server_http_port() {
+  server_http_port_ = 0;
 }
-inline ::google::protobuf::int32 ServerInfoReport::server_inner_port() const {
-  // @@protoc_insertion_point(field_get:NFMsg.ServerInfoReport.server_inner_port)
-  return server_inner_port_;
+inline ::google::protobuf::int32 ServerInfoReport::server_http_port() const {
+  // @@protoc_insertion_point(field_get:NFMsg.ServerInfoReport.server_http_port)
+  return server_http_port_;
 }
-inline void ServerInfoReport::set_server_inner_port(::google::protobuf::int32 value) {
+inline void ServerInfoReport::set_server_http_port(::google::protobuf::int32 value) {
   
-  server_inner_port_ = value;
-  // @@protoc_insertion_point(field_set:NFMsg.ServerInfoReport.server_inner_port)
+  server_http_port_ = value;
+  // @@protoc_insertion_point(field_set:NFMsg.ServerInfoReport.server_http_port)
 }
 
-// int32 server_max_online = 9;
+// int32 server_max_online = 7;
 inline void ServerInfoReport::clear_server_max_online() {
   server_max_online_ = 0;
 }
@@ -733,21 +666,21 @@ inline void ServerInfoReport::set_server_max_online(::google::protobuf::int32 va
   // @@protoc_insertion_point(field_set:NFMsg.ServerInfoReport.server_max_online)
 }
 
-// int32 server_cur_count = 10;
-inline void ServerInfoReport::clear_server_cur_count() {
-  server_cur_count_ = 0;
+// int32 server_cur_online = 8;
+inline void ServerInfoReport::clear_server_cur_online() {
+  server_cur_online_ = 0;
 }
-inline ::google::protobuf::int32 ServerInfoReport::server_cur_count() const {
-  // @@protoc_insertion_point(field_get:NFMsg.ServerInfoReport.server_cur_count)
-  return server_cur_count_;
+inline ::google::protobuf::int32 ServerInfoReport::server_cur_online() const {
+  // @@protoc_insertion_point(field_get:NFMsg.ServerInfoReport.server_cur_online)
+  return server_cur_online_;
 }
-inline void ServerInfoReport::set_server_cur_count(::google::protobuf::int32 value) {
+inline void ServerInfoReport::set_server_cur_online(::google::protobuf::int32 value) {
   
-  server_cur_count_ = value;
-  // @@protoc_insertion_point(field_set:NFMsg.ServerInfoReport.server_cur_count)
+  server_cur_online_ = value;
+  // @@protoc_insertion_point(field_set:NFMsg.ServerInfoReport.server_cur_online)
 }
 
-// uint32 server_state = 11;
+// uint32 server_state = 9;
 inline void ServerInfoReport::clear_server_state() {
   server_state_ = 0u;
 }
@@ -761,7 +694,7 @@ inline void ServerInfoReport::set_server_state(::google::protobuf::uint32 value)
   // @@protoc_insertion_point(field_set:NFMsg.ServerInfoReport.server_state)
 }
 
-// string system_info = 12;
+// string system_info = 10;
 inline void ServerInfoReport::clear_system_info() {
   system_info_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
@@ -814,7 +747,7 @@ inline void ServerInfoReport::set_allocated_system_info(::std::string* system_in
   // @@protoc_insertion_point(field_set_allocated:NFMsg.ServerInfoReport.system_info)
 }
 
-// uint64 total_mem = 13;
+// uint64 total_mem = 11;
 inline void ServerInfoReport::clear_total_mem() {
   total_mem_ = GOOGLE_ULONGLONG(0);
 }
@@ -828,7 +761,7 @@ inline void ServerInfoReport::set_total_mem(::google::protobuf::uint64 value) {
   // @@protoc_insertion_point(field_set:NFMsg.ServerInfoReport.total_mem)
 }
 
-// uint64 free_mem = 14;
+// uint64 free_mem = 12;
 inline void ServerInfoReport::clear_free_mem() {
   free_mem_ = GOOGLE_ULONGLONG(0);
 }
@@ -842,7 +775,7 @@ inline void ServerInfoReport::set_free_mem(::google::protobuf::uint64 value) {
   // @@protoc_insertion_point(field_set:NFMsg.ServerInfoReport.free_mem)
 }
 
-// uint64 used_mem = 15;
+// uint64 used_mem = 13;
 inline void ServerInfoReport::clear_used_mem() {
   used_mem_ = GOOGLE_ULONGLONG(0);
 }
@@ -856,152 +789,219 @@ inline void ServerInfoReport::set_used_mem(::google::protobuf::uint64 value) {
   // @@protoc_insertion_point(field_set:NFMsg.ServerInfoReport.used_mem)
 }
 
-// double cur_cpu_used = 16;
-inline void ServerInfoReport::clear_cur_cpu_used() {
-  cur_cpu_used_ = 0;
+// double proc_cpu = 14;
+inline void ServerInfoReport::clear_proc_cpu() {
+  proc_cpu_ = 0;
 }
-inline double ServerInfoReport::cur_cpu_used() const {
-  // @@protoc_insertion_point(field_get:NFMsg.ServerInfoReport.cur_cpu_used)
-  return cur_cpu_used_;
+inline double ServerInfoReport::proc_cpu() const {
+  // @@protoc_insertion_point(field_get:NFMsg.ServerInfoReport.proc_cpu)
+  return proc_cpu_;
 }
-inline void ServerInfoReport::set_cur_cpu_used(double value) {
+inline void ServerInfoReport::set_proc_cpu(double value) {
   
-  cur_cpu_used_ = value;
-  // @@protoc_insertion_point(field_set:NFMsg.ServerInfoReport.cur_cpu_used)
+  proc_cpu_ = value;
+  // @@protoc_insertion_point(field_set:NFMsg.ServerInfoReport.proc_cpu)
 }
 
-// uint64 cur_mem_used = 17;
-inline void ServerInfoReport::clear_cur_mem_used() {
-  cur_mem_used_ = GOOGLE_ULONGLONG(0);
+// uint64 proc_mem = 15;
+inline void ServerInfoReport::clear_proc_mem() {
+  proc_mem_ = GOOGLE_ULONGLONG(0);
 }
-inline ::google::protobuf::uint64 ServerInfoReport::cur_mem_used() const {
-  // @@protoc_insertion_point(field_get:NFMsg.ServerInfoReport.cur_mem_used)
-  return cur_mem_used_;
+inline ::google::protobuf::uint64 ServerInfoReport::proc_mem() const {
+  // @@protoc_insertion_point(field_get:NFMsg.ServerInfoReport.proc_mem)
+  return proc_mem_;
 }
-inline void ServerInfoReport::set_cur_mem_used(::google::protobuf::uint64 value) {
+inline void ServerInfoReport::set_proc_mem(::google::protobuf::uint64 value) {
   
-  cur_mem_used_ = value;
-  // @@protoc_insertion_point(field_set:NFMsg.ServerInfoReport.cur_mem_used)
+  proc_mem_ = value;
+  // @@protoc_insertion_point(field_set:NFMsg.ServerInfoReport.proc_mem)
 }
 
-// uint32 cur_thread_num = 18;
-inline void ServerInfoReport::clear_cur_thread_num() {
-  cur_thread_num_ = 0u;
+// uint32 proc_thread = 16;
+inline void ServerInfoReport::clear_proc_thread() {
+  proc_thread_ = 0u;
 }
-inline ::google::protobuf::uint32 ServerInfoReport::cur_thread_num() const {
-  // @@protoc_insertion_point(field_get:NFMsg.ServerInfoReport.cur_thread_num)
-  return cur_thread_num_;
+inline ::google::protobuf::uint32 ServerInfoReport::proc_thread() const {
+  // @@protoc_insertion_point(field_get:NFMsg.ServerInfoReport.proc_thread)
+  return proc_thread_;
 }
-inline void ServerInfoReport::set_cur_thread_num(::google::protobuf::uint32 value) {
+inline void ServerInfoReport::set_proc_thread(::google::protobuf::uint32 value) {
   
-  cur_thread_num_ = value;
-  // @@protoc_insertion_point(field_set:NFMsg.ServerInfoReport.cur_thread_num)
+  proc_thread_ = value;
+  // @@protoc_insertion_point(field_set:NFMsg.ServerInfoReport.proc_thread)
 }
 
-// string cur_proc_name = 19;
-inline void ServerInfoReport::clear_cur_proc_name() {
-  cur_proc_name_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+// string proc_name = 17;
+inline void ServerInfoReport::clear_proc_name() {
+  proc_name_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-inline const ::std::string& ServerInfoReport::cur_proc_name() const {
-  // @@protoc_insertion_point(field_get:NFMsg.ServerInfoReport.cur_proc_name)
-  return cur_proc_name_.GetNoArena();
+inline const ::std::string& ServerInfoReport::proc_name() const {
+  // @@protoc_insertion_point(field_get:NFMsg.ServerInfoReport.proc_name)
+  return proc_name_.GetNoArena();
 }
-inline void ServerInfoReport::set_cur_proc_name(const ::std::string& value) {
+inline void ServerInfoReport::set_proc_name(const ::std::string& value) {
   
-  cur_proc_name_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
-  // @@protoc_insertion_point(field_set:NFMsg.ServerInfoReport.cur_proc_name)
+  proc_name_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:NFMsg.ServerInfoReport.proc_name)
 }
 #if LANG_CXX11
-inline void ServerInfoReport::set_cur_proc_name(::std::string&& value) {
+inline void ServerInfoReport::set_proc_name(::std::string&& value) {
   
-  cur_proc_name_.SetNoArena(
+  proc_name_.SetNoArena(
     &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
-  // @@protoc_insertion_point(field_set_rvalue:NFMsg.ServerInfoReport.cur_proc_name)
+  // @@protoc_insertion_point(field_set_rvalue:NFMsg.ServerInfoReport.proc_name)
 }
 #endif
-inline void ServerInfoReport::set_cur_proc_name(const char* value) {
+inline void ServerInfoReport::set_proc_name(const char* value) {
   GOOGLE_DCHECK(value != NULL);
   
-  cur_proc_name_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
-  // @@protoc_insertion_point(field_set_char:NFMsg.ServerInfoReport.cur_proc_name)
+  proc_name_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:NFMsg.ServerInfoReport.proc_name)
 }
-inline void ServerInfoReport::set_cur_proc_name(const char* value, size_t size) {
+inline void ServerInfoReport::set_proc_name(const char* value, size_t size) {
   
-  cur_proc_name_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+  proc_name_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
       ::std::string(reinterpret_cast<const char*>(value), size));
-  // @@protoc_insertion_point(field_set_pointer:NFMsg.ServerInfoReport.cur_proc_name)
+  // @@protoc_insertion_point(field_set_pointer:NFMsg.ServerInfoReport.proc_name)
 }
-inline ::std::string* ServerInfoReport::mutable_cur_proc_name() {
+inline ::std::string* ServerInfoReport::mutable_proc_name() {
   
-  // @@protoc_insertion_point(field_mutable:NFMsg.ServerInfoReport.cur_proc_name)
-  return cur_proc_name_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  // @@protoc_insertion_point(field_mutable:NFMsg.ServerInfoReport.proc_name)
+  return proc_name_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-inline ::std::string* ServerInfoReport::release_cur_proc_name() {
-  // @@protoc_insertion_point(field_release:NFMsg.ServerInfoReport.cur_proc_name)
+inline ::std::string* ServerInfoReport::release_proc_name() {
+  // @@protoc_insertion_point(field_release:NFMsg.ServerInfoReport.proc_name)
   
-  return cur_proc_name_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  return proc_name_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-inline void ServerInfoReport::set_allocated_cur_proc_name(::std::string* cur_proc_name) {
-  if (cur_proc_name != NULL) {
+inline void ServerInfoReport::set_allocated_proc_name(::std::string* proc_name) {
+  if (proc_name != NULL) {
     
   } else {
     
   }
-  cur_proc_name_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), cur_proc_name);
-  // @@protoc_insertion_point(field_set_allocated:NFMsg.ServerInfoReport.cur_proc_name)
+  proc_name_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), proc_name);
+  // @@protoc_insertion_point(field_set_allocated:NFMsg.ServerInfoReport.proc_name)
 }
 
-// string cur_proc_cwd = 20;
-inline void ServerInfoReport::clear_cur_proc_cwd() {
-  cur_proc_cwd_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+// string proc_cwd = 18;
+inline void ServerInfoReport::clear_proc_cwd() {
+  proc_cwd_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-inline const ::std::string& ServerInfoReport::cur_proc_cwd() const {
-  // @@protoc_insertion_point(field_get:NFMsg.ServerInfoReport.cur_proc_cwd)
-  return cur_proc_cwd_.GetNoArena();
+inline const ::std::string& ServerInfoReport::proc_cwd() const {
+  // @@protoc_insertion_point(field_get:NFMsg.ServerInfoReport.proc_cwd)
+  return proc_cwd_.GetNoArena();
 }
-inline void ServerInfoReport::set_cur_proc_cwd(const ::std::string& value) {
+inline void ServerInfoReport::set_proc_cwd(const ::std::string& value) {
   
-  cur_proc_cwd_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
-  // @@protoc_insertion_point(field_set:NFMsg.ServerInfoReport.cur_proc_cwd)
+  proc_cwd_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:NFMsg.ServerInfoReport.proc_cwd)
 }
 #if LANG_CXX11
-inline void ServerInfoReport::set_cur_proc_cwd(::std::string&& value) {
+inline void ServerInfoReport::set_proc_cwd(::std::string&& value) {
   
-  cur_proc_cwd_.SetNoArena(
+  proc_cwd_.SetNoArena(
     &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
-  // @@protoc_insertion_point(field_set_rvalue:NFMsg.ServerInfoReport.cur_proc_cwd)
+  // @@protoc_insertion_point(field_set_rvalue:NFMsg.ServerInfoReport.proc_cwd)
 }
 #endif
-inline void ServerInfoReport::set_cur_proc_cwd(const char* value) {
+inline void ServerInfoReport::set_proc_cwd(const char* value) {
   GOOGLE_DCHECK(value != NULL);
   
-  cur_proc_cwd_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
-  // @@protoc_insertion_point(field_set_char:NFMsg.ServerInfoReport.cur_proc_cwd)
+  proc_cwd_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:NFMsg.ServerInfoReport.proc_cwd)
 }
-inline void ServerInfoReport::set_cur_proc_cwd(const char* value, size_t size) {
+inline void ServerInfoReport::set_proc_cwd(const char* value, size_t size) {
   
-  cur_proc_cwd_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+  proc_cwd_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
       ::std::string(reinterpret_cast<const char*>(value), size));
-  // @@protoc_insertion_point(field_set_pointer:NFMsg.ServerInfoReport.cur_proc_cwd)
+  // @@protoc_insertion_point(field_set_pointer:NFMsg.ServerInfoReport.proc_cwd)
 }
-inline ::std::string* ServerInfoReport::mutable_cur_proc_cwd() {
+inline ::std::string* ServerInfoReport::mutable_proc_cwd() {
   
-  // @@protoc_insertion_point(field_mutable:NFMsg.ServerInfoReport.cur_proc_cwd)
-  return cur_proc_cwd_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  // @@protoc_insertion_point(field_mutable:NFMsg.ServerInfoReport.proc_cwd)
+  return proc_cwd_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-inline ::std::string* ServerInfoReport::release_cur_proc_cwd() {
-  // @@protoc_insertion_point(field_release:NFMsg.ServerInfoReport.cur_proc_cwd)
+inline ::std::string* ServerInfoReport::release_proc_cwd() {
+  // @@protoc_insertion_point(field_release:NFMsg.ServerInfoReport.proc_cwd)
   
-  return cur_proc_cwd_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  return proc_cwd_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-inline void ServerInfoReport::set_allocated_cur_proc_cwd(::std::string* cur_proc_cwd) {
-  if (cur_proc_cwd != NULL) {
+inline void ServerInfoReport::set_allocated_proc_cwd(::std::string* proc_cwd) {
+  if (proc_cwd != NULL) {
     
   } else {
     
   }
-  cur_proc_cwd_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), cur_proc_cwd);
-  // @@protoc_insertion_point(field_set_allocated:NFMsg.ServerInfoReport.cur_proc_cwd)
+  proc_cwd_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), proc_cwd);
+  // @@protoc_insertion_point(field_set_allocated:NFMsg.ServerInfoReport.proc_cwd)
+}
+
+// uint32 proc_pid = 19;
+inline void ServerInfoReport::clear_proc_pid() {
+  proc_pid_ = 0u;
+}
+inline ::google::protobuf::uint32 ServerInfoReport::proc_pid() const {
+  // @@protoc_insertion_point(field_get:NFMsg.ServerInfoReport.proc_pid)
+  return proc_pid_;
+}
+inline void ServerInfoReport::set_proc_pid(::google::protobuf::uint32 value) {
+  
+  proc_pid_ = value;
+  // @@protoc_insertion_point(field_set:NFMsg.ServerInfoReport.proc_pid)
+}
+
+// string last_date = 20;
+inline void ServerInfoReport::clear_last_date() {
+  last_date_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline const ::std::string& ServerInfoReport::last_date() const {
+  // @@protoc_insertion_point(field_get:NFMsg.ServerInfoReport.last_date)
+  return last_date_.GetNoArena();
+}
+inline void ServerInfoReport::set_last_date(const ::std::string& value) {
+  
+  last_date_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:NFMsg.ServerInfoReport.last_date)
+}
+#if LANG_CXX11
+inline void ServerInfoReport::set_last_date(::std::string&& value) {
+  
+  last_date_.SetNoArena(
+    &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+  // @@protoc_insertion_point(field_set_rvalue:NFMsg.ServerInfoReport.last_date)
+}
+#endif
+inline void ServerInfoReport::set_last_date(const char* value) {
+  GOOGLE_DCHECK(value != NULL);
+  
+  last_date_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:NFMsg.ServerInfoReport.last_date)
+}
+inline void ServerInfoReport::set_last_date(const char* value, size_t size) {
+  
+  last_date_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:NFMsg.ServerInfoReport.last_date)
+}
+inline ::std::string* ServerInfoReport::mutable_last_date() {
+  
+  // @@protoc_insertion_point(field_mutable:NFMsg.ServerInfoReport.last_date)
+  return last_date_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline ::std::string* ServerInfoReport::release_last_date() {
+  // @@protoc_insertion_point(field_release:NFMsg.ServerInfoReport.last_date)
+  
+  return last_date_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline void ServerInfoReport::set_allocated_last_date(::std::string* last_date) {
+  if (last_date != NULL) {
+    
+  } else {
+    
+  }
+  last_date_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), last_date);
+  // @@protoc_insertion_point(field_set_allocated:NFMsg.ServerInfoReport.last_date)
 }
 
 // -------------------------------------------------------------------

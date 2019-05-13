@@ -16,6 +16,7 @@
 #include "NFComm/NFPluginModule/NFIHttpServerModule.h"
 #include "NFServer/NFServerCommon/NFServerCommon.h"
 #include "NFComm/NFCore/NFMD5.h"
+#include "NFMessageDefine/db_server.pb.h"
 
 NFCMasterServerModule::NFCMasterServerModule(NFIPluginManager* p)
 {
@@ -29,6 +30,7 @@ NFCMasterServerModule::~NFCMasterServerModule()
 bool NFCMasterServerModule::Init()
 {
 	m_pKernelModule = m_pPluginManager->FindModule<NFIKernelModule>();
+	m_pAsyMysqlModule = m_pPluginManager->FindModule<NFIAsyMysqlModule>();
 	m_pHttpServerModule = m_pPluginManager->FindModule<NFIHttpServerModule>();
 	m_pHttpServerModule->AddRequestHandler(NF_ST_MASTER, "/gm", NFHttpType::NF_HTTP_REQ_POST, this, &NFCMasterServerModule::HttpHandleHttpGm);
 	m_pHttpServerModule->AddRequestHandler(NF_ST_MASTER, "/GM", NFHttpType::NF_HTTP_REQ_POST, this, &NFCMasterServerModule::HttpHandleHttpGm);
@@ -77,6 +79,13 @@ bool NFCMasterServerModule::Init()
 				return false;
 			}
 			NFLogInfo(NF_LOG_SERVER_CONNECT_SERVER, 0, "Master Server Open Http Port:{} Success!", pConfig->mHttpPort);
+		}
+
+		bool ret = m_pAsyMysqlModule->AddMysqlServer(NF_ST_MASTER, pConfig->mMysqlIp, pConfig->mMysqlPort, pConfig->mMysqlDbName, pConfig->mMysqlUser, pConfig->mMysqlPassword);
+		if (ret == false)
+		{
+			NFLogError(NF_LOG_SYSTEMLOG, 0, "NFIAsyMysqlModule AddMysqlServer failed!");
+			return false;
 		}
 	}
 	else
@@ -536,35 +545,6 @@ void NFCMasterServerModule::OnServerReport(const uint32_t unLinkId, const uint64
 					pServerData->mServerInfo.set_server_ip(ip);
 				}
 			}
-			//SynReportToLogin(pServerData);
-			/*
-			if (pServerData)
-			{
-				NFLogInfo("********************************************************");
-				NFLogInfo("\t****************{}****************", xData.server_name());
-				NFLogInfo("\t\t********systeinfo:{}********", xData.system_info());
-				NFLogInfo("\t\t********totalmem:{}M********", xData.total_mem() / (1024 * 1024));
-				NFLogInfo("\t\t********usedmem:{}M********", xData.used_mem() / (1024 * 1024));
-				NFLogInfo("\t\t********online_num:{}********", xData.server_cur_count());
-				NFLogInfo("\t\t********proc_name:{}********", xData.cur_proc_name());
-				NFLogInfo("\t\t********proc_cwd:{}********", xData.cur_proc_cwd());
-				NFLogInfo("\t\t********proc_thread:{}********", xData.cur_thread_num());
-				NFLogInfo("\t\t********proc_cpu:{}%********", xData.cur_cpu_used());
-				if (xData.cur_mem_used() < 1024)
-				{
-					NFLogInfo("\t\t********proc_mem:{}B********", xData.cur_mem_used());
-				}
-				else if (xData.cur_mem_used() < 1024 * 1024)
-				{
-					NFLogInfo("\t\t********proc_mem:{}K********", xData.cur_mem_used() / 1024);
-				}
-				else
-				{
-					NFLogInfo("\t\t********proc_mem:{}M********", xData.cur_mem_used() / (1024 * 1024));
-				}
-				NFLogInfo("********************************************************");
-			}
-			*/
 		}
 		break;
 		case NF_SERVER_TYPES::NF_ST_PROXY:
@@ -608,38 +588,12 @@ void NFCMasterServerModule::OnServerReport(const uint32_t unLinkId, const uint64
 					pServerData->mServerInfo.set_server_ip(ip);
 				}
 			}
-			//SynReportToLogin(pServerData);
-			/*
-			if (pServerData)
-			{
-				NFLogError("********************************************************");
-				NFLogError("\t****************{}****************", xData.server_name());
-				NFLogError("\t\t********systeinfo:{}********", xData.system_info());
-				NFLogError("\t\t********totalmem:{}M********", xData.total_mem() / (1024 * 1024));
-				NFLogError("\t\t********usedmem:{}M********", xData.used_mem() / (1024 * 1024));
-				NFLogError("\t\t********online_num:{}********", xData.server_cur_count());
-				NFLogError("\t\t********proc_name:{}********", xData.cur_proc_name());
-				NFLogError("\t\t********proc_cwd:{}********", xData.cur_proc_cwd());
-				NFLogError("\t\t********proc_thread:{}********", xData.cur_thread_num());
-				NFLogError("\t\t********proc_cpu:{}%********", xData.cur_cpu_used());
-				if (xData.cur_mem_used() < 1024)
-				{
-					NFLogError("\t\t********proc_mem:{}B********", xData.cur_mem_used());
-				}
-				else if (xData.cur_mem_used() < 1024 * 1024)
-				{
-					NFLogError("\t\t********proc_mem:{}K********", xData.cur_mem_used() / 1024);
-				}
-				else
-				{
-					NFLogError("\t\t********proc_mem:{}M********", xData.cur_mem_used() / (1024 * 1024));
-				}
-				NFLogError("********************************************************");
-			}
-			*/
 		}
 		break;
 		}
+		NFMsg::db_query_server dbserver;
+		*dbserver.mutable_db_fields() = xData;
+		m_pAsyMysqlModule->Update(dbserver);
 	}
 }
 

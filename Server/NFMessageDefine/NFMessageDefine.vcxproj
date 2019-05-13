@@ -38,6 +38,7 @@
     <ClInclude Include="db_base.pb.h" />
     <ClInclude Include="db_behavior_log.pb.h" />
     <ClInclude Include="db_human.pb.h" />
+    <ClInclude Include="db_server.pb.h" />
     <ClInclude Include="msg_human.pb.h" />
     <ClInclude Include="mysql_db.pb.h" />
     <ClInclude Include="NFMsgDefine.h" />
@@ -54,6 +55,7 @@
     <ClCompile Include="db_base.pb.cc" />
     <ClCompile Include="db_behavior_log.pb.cc" />
     <ClCompile Include="db_human.pb.cc" />
+    <ClCompile Include="db_server.pb.cc" />
     <ClCompile Include="msg_human.pb.cc" />
     <ClCompile Include="mysql_db.pb.cc" />
     <ClCompile Include="server_msg.pb.cc" />

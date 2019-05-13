@@ -585,7 +585,6 @@ bool NFCConfigModule::LoadServerConfig()
 		}
 
 		GetLuaTableValue(serverConfigRef, DEFINE_LUA_STRING_SERVER_NAME, pConfig->mServerName);
-		GetLuaTableValue(serverConfigRef, DEFINE_LUA_STRING_SERVER_GAME_NAME, pConfig->mGameName);
 		GetLuaTableValue(serverConfigRef, DEFINE_LUA_STRING_SERVER_IP, pConfig->mServerIp);
 		GetLuaTableValue(serverConfigRef, DEFINE_LUA_STRING_SERVER_PORT, pConfig->mServerPort);
 		GetLuaTableValue(serverConfigRef, DEFINE_LUA_STRING_MAX_CONNECT_NUM, pConfig->mMaxConnectNum);

@@ -11,6 +11,7 @@
 #include "NFIModule.h"
 #include <vector>
 #include <string>
+#include "NFSystemInfo.h"
 
 class NFIMonitorModule : public NFIModule
 {
@@ -19,5 +20,7 @@ public:
 	{
 
 	}
+
+	virtual const NFSystemInfo& GetSystemInfo() const = 0;
 };
 

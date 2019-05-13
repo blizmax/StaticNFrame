@@ -1,0 +1,30 @@
+syntax = "proto3";
+package NFMsg;
+
+import "server_msg.proto";
+
+message db_query_server
+{
+	string dy_server = 1;
+	ServerInfoReport db_fields = 2;
+}
+
+message db_server_detail
+{
+	int32   id = 1;
+	int32   server_id = 2;
+	int32   server_cur_online = 3;
+	uint32  server_state = 4;
+	uint64  total_mem = 5;
+	uint64  free_mem = 6;
+	uint64  used_mem = 7;
+	double  proc_cpu = 8;	//cur process cpu used
+	uint64  proc_mem = 9;	//cur process mem used
+	uint32  proc_thread = 10; //cur process thread num
+}
+
+message db_query_server_detail
+{
+	string dy_server = 1;
+	db_server_detail db_fields = 2;
+}

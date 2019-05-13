@@ -15,6 +15,7 @@
     <ClInclude Include="server_to_server_msg.pb.h" />
     <ClInclude Include="NFNodeClass.h" />
     <ClInclude Include="NFNodeClassName.h" />
+    <ClInclude Include="db_server.pb.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="mysql_db.pb.cc" />
@@ -28,5 +29,6 @@
     <ClCompile Include="db_behavior_log.pb.cc" />
     <ClCompile Include="db_human.pb.cc" />
     <ClCompile Include="server_to_server_msg.pb.cc" />
+    <ClCompile Include="db_server.pb.cc" />
   </ItemGroup>
 </Project>

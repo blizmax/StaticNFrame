@@ -18,6 +18,7 @@
 #include "NFComm/NFCore/NFMapEx.hpp"
 #include "NFServer/NFServerCommon/NFServerCommon.h"
 #include "NFComm/NFCore/NFMap.hpp"
+#include "NFComm/NFPluginModule/NFIAsyMysqlModule.h"
 
 class NFCMasterServerModule : public NFIMasterServerModule
 {
@@ -70,6 +71,7 @@ private:
 	NFINetServerModule* m_pNetServerModule;
 	NFIHttpServerModule* m_pHttpServerModule;
 	NFIKernelModule* m_pKernelModule;
+	NFIAsyMysqlModule* m_pAsyMysqlModule;
 private:
 	NFMapEx<int, NFServerData> mLoginMap;
 	NFConsistentHashMapEx<int, NFServerData> mWorldMap;

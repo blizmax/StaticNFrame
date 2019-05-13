@@ -14,6 +14,7 @@
 #include <NFComm/NFPluginModule/NFEventDefine.h>
 #include "NFServer/NFServerCommon/NFServerCommon.h"
 #include "NFComm/NFCore/NFCpu.h"
+#include "NFComm/NFPluginModule/NFIMonitorModule.h"
 
 NFCGameClient_MasterModule::NFCGameClient_MasterModule(NFIPluginManager* p)
 {
@@ -120,7 +121,6 @@ void NFCGameClient_MasterModule::RegisterServer()
 		pData->set_server_port(pConfig->mServerPort);
 		pData->set_server_type(pConfig->mServerType);
 		pData->set_server_max_online(pConfig->mMaxConnectNum);
-		pData->set_game_name(pConfig->mGameName);
 		pData->set_server_state(NFMsg::EST_NARMAL);
 
 		m_pNetClientModule->SendToServerByPB(m_pMasterServerData->mUnlinkId, EGMI_NET_GAME_TO_MASTER_REGISTER, xMsg, 0);
@@ -150,9 +150,26 @@ void NFCGameClient_MasterModule::ServerReport()
 		pData->set_server_port(pConfig->mServerPort);
 		pData->set_server_type(pConfig->mServerType);
 		pData->set_server_max_online(pConfig->mMaxConnectNum);
-		pData->set_game_name(pConfig->mGameName);
 		pData->set_server_state(NFMsg::EST_NARMAL);
-		pData->set_server_cur_count(m_onlineNum);
+		pData->set_server_cur_online(m_onlineNum);
+
+		NFIMonitorModule* pMonitorModule = (NFIMonitorModule*)m_pPluginManager->FindModule("NFIMonitorModule");
+		if (pMonitorModule)
+		{
+			const NFSystemInfo& systemInfo = pMonitorModule->GetSystemInfo();
+
+			pData->set_system_info(systemInfo.GetOsInfo().mOsMachine);
+			pData->set_total_mem(systemInfo.GetMemInfo().mTotalMem);
+			pData->set_free_mem(systemInfo.GetMemInfo().mFreeMem);
+			pData->set_used_mem(systemInfo.GetMemInfo().mUsedMem);
+
+			pData->set_proc_cpu(systemInfo.GetProcessInfo().mCpuUsed);
+			pData->set_proc_mem(systemInfo.GetProcessInfo().mMemUsed);
+			pData->set_proc_thread(systemInfo.GetProcessInfo().mThreads);
+			pData->set_proc_name(systemInfo.GetProcessInfo().mName);
+			pData->set_proc_cwd(systemInfo.GetProcessInfo().mCwd);
+			pData->set_proc_pid(systemInfo.GetProcessInfo().mPid);
+		}
 
 		m_pNetClientModule->SendToServerByPB(m_pMasterServerData->mUnlinkId, EGMI_STS_SERVER_REPORT, xMsg, 0);
 	}

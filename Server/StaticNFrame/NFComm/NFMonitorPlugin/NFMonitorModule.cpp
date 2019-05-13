@@ -66,3 +66,8 @@ void NFCMonitorModule::OnExecute(uint16_t nEventID, uint64_t nSrcID, uint8_t byS
 {
 
 }
+
+const NFSystemInfo& NFCMonitorModule::GetSystemInfo() const
+{
+	return mSystemInfo;
+}

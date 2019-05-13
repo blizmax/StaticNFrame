@@ -42,6 +42,8 @@ public:
 	* @return void
 	*/
 	virtual void OnExecute(uint16_t nEventID, uint64_t nSrcID, uint8_t bySrcType, const google::protobuf::Message& message);
+
+	virtual const NFSystemInfo& GetSystemInfo() const;
 private:
 	NFSystemInfo mSystemInfo;
 };

@@ -85,7 +85,6 @@ public:
 	std::string mServerName;	//服务器名字
 	uint32_t mServerType;	//服务器类型
 	uint32_t mServerId;		//服务器唯一ID
-	std::string mGameName;	//游戏名字
 	std::string mMongoIp;	//mongodb 地址
 	uint32_t	mMongoPort;	//mongodb port
 	std::string mMongoDbName; //mongo dbname数据库名字
