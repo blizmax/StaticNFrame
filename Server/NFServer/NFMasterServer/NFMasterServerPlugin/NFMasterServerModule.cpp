@@ -17,6 +17,10 @@
 #include "NFServer/NFServerCommon/NFServerCommon.h"
 #include "NFComm/NFCore/NFMD5.h"
 #include "NFMessageDefine/db_server.pb.h"
+#include "NFComm/NFPluginModule/NFIMonitorModule.h"
+
+#define NF_MASTER_TIMER_SAVE_SERVER_DATA 0
+#define NF_MASTER_TIMER_SAVE_SERVER_DATA_TIME 30000
 
 NFCMasterServerModule::NFCMasterServerModule(NFIPluginManager* p)
 {
@@ -29,6 +33,7 @@ NFCMasterServerModule::~NFCMasterServerModule()
 
 bool NFCMasterServerModule::Init()
 {
+	this->SetTimer(NF_MASTER_TIMER_SAVE_SERVER_DATA, NF_MASTER_TIMER_SAVE_SERVER_DATA_TIME, INFINITY_CALL);
 	m_pKernelModule = m_pPluginManager->FindModule<NFIKernelModule>();
 	m_pAsyMysqlModule = m_pPluginManager->FindModule<NFIAsyMysqlModule>();
 	m_pHttpServerModule = m_pPluginManager->FindModule<NFIHttpServerModule>();
@@ -117,6 +122,154 @@ bool NFCMasterServerModule::Shut()
 	return true;
 }
 
+void NFCMasterServerModule::OnTimer(uint32_t nTimerID)
+{
+	if (nTimerID == NF_MASTER_TIMER_SAVE_SERVER_DATA)
+	{
+		SaveServerDataToDB();
+	}
+}
+
+void NFCMasterServerModule::SaveServerDataToDB()
+{
+	NFServerConfig* pConfig = NFServerCommon::GetAppConfig(m_pPluginManager, NF_ST_MASTER);
+	if (pConfig)
+	{
+		NFMsg::ServerInfoReportList xMsg;
+		NFMsg::ServerInfoReport* pData = xMsg.add_server_list();
+		pData->set_server_id(pConfig->mServerId);
+		pData->set_server_name(pConfig->mServerName);
+		pData->set_server_ip(pConfig->mServerIp);
+		pData->set_server_port(pConfig->mServerPort);
+		pData->set_server_http_port(pConfig->mHttpPort);
+		pData->set_server_type(pConfig->mServerType);
+		pData->set_server_max_online(pConfig->mMaxConnectNum);
+		pData->set_server_state(NFMsg::EST_NARMAL);
+
+		NFIMonitorModule* pMonitorModule = (NFIMonitorModule*)m_pPluginManager->FindModule("NFIMonitorModule");
+		if (pMonitorModule)
+		{
+			const NFSystemInfo& systemInfo = pMonitorModule->GetSystemInfo();
+
+			pData->set_system_info(systemInfo.GetOsInfo().mOsDescription);
+			pData->set_total_mem(systemInfo.GetMemInfo().mTotalMem);
+			pData->set_free_mem(systemInfo.GetMemInfo().mFreeMem);
+			pData->set_used_mem(systemInfo.GetMemInfo().mUsedMem);
+
+			pData->set_proc_cpu(systemInfo.GetProcessInfo().mCpuUsed);
+			pData->set_proc_mem(systemInfo.GetProcessInfo().mMemUsed);
+			pData->set_proc_thread(systemInfo.GetProcessInfo().mThreads);
+			pData->set_proc_name(systemInfo.GetProcessInfo().mName);
+			pData->set_proc_cwd(systemInfo.GetProcessInfo().mCwd);
+			pData->set_proc_pid(systemInfo.GetProcessInfo().mPid);
+		}
+
+		NFMsg::db_query_server dbserver;
+		*dbserver.mutable_db_fields() = *pData;
+		m_pAsyMysqlModule->Update(dbserver, pData->server_id());
+
+		NFMsg::db_query_server_detail dbserverDetail;
+		dbserverDetail.mutable_db_fields()->set_server_id(dbserver.mutable_db_fields()->server_id());
+		dbserverDetail.mutable_db_fields()->set_server_cur_online(dbserver.mutable_db_fields()->server_cur_online());
+		dbserverDetail.mutable_db_fields()->set_server_state(dbserver.mutable_db_fields()->server_state());
+		dbserverDetail.mutable_db_fields()->set_total_mem(dbserver.mutable_db_fields()->total_mem());
+		dbserverDetail.mutable_db_fields()->set_used_mem(dbserver.mutable_db_fields()->used_mem());
+		dbserverDetail.mutable_db_fields()->set_proc_cpu(dbserver.mutable_db_fields()->proc_cpu());
+		dbserverDetail.mutable_db_fields()->set_proc_mem(dbserver.mutable_db_fields()->proc_mem());
+		dbserverDetail.mutable_db_fields()->set_proc_thread(dbserver.mutable_db_fields()->proc_thread());
+		m_pAsyMysqlModule->Update(dbserverDetail, pData->server_id());
+	}
+
+	NF_SHARE_PTR<NFServerData> pServerData = nullptr;
+	pServerData = mWorldMap.First();
+	while (pServerData)
+	{
+		NFMsg::db_query_server dbserver;
+		*dbserver.mutable_db_fields() = pServerData->mServerInfo;
+		m_pAsyMysqlModule->Update(dbserver, pServerData->mServerInfo.server_id());
+
+		NFMsg::db_query_server_detail dbserverDetail;
+		dbserverDetail.mutable_db_fields()->set_server_id(dbserver.mutable_db_fields()->server_id());
+		dbserverDetail.mutable_db_fields()->set_server_cur_online(dbserver.mutable_db_fields()->server_cur_online());
+		dbserverDetail.mutable_db_fields()->set_server_state(dbserver.mutable_db_fields()->server_state());
+		dbserverDetail.mutable_db_fields()->set_total_mem(dbserver.mutable_db_fields()->total_mem());
+		dbserverDetail.mutable_db_fields()->set_used_mem(dbserver.mutable_db_fields()->used_mem());
+		dbserverDetail.mutable_db_fields()->set_proc_cpu(dbserver.mutable_db_fields()->proc_cpu());
+		dbserverDetail.mutable_db_fields()->set_proc_mem(dbserver.mutable_db_fields()->proc_mem());
+		dbserverDetail.mutable_db_fields()->set_proc_thread(dbserver.mutable_db_fields()->proc_thread());
+		m_pAsyMysqlModule->Update(dbserverDetail, pServerData->mServerInfo.server_id());
+
+		pServerData = mWorldMap.Next();
+	}
+
+	pServerData = mProxyMap.First();
+	while (pServerData)
+	{
+		NFMsg::db_query_server dbserver;
+		*dbserver.mutable_db_fields() = pServerData->mServerInfo;
+		m_pAsyMysqlModule->Update(dbserver, pServerData->mServerInfo.server_id());
+
+		NFMsg::db_query_server_detail dbserverDetail;
+		dbserverDetail.mutable_db_fields()->set_server_id(dbserver.mutable_db_fields()->server_id());
+		dbserverDetail.mutable_db_fields()->set_server_cur_online(dbserver.mutable_db_fields()->server_cur_online());
+		dbserverDetail.mutable_db_fields()->set_server_state(dbserver.mutable_db_fields()->server_state());
+		dbserverDetail.mutable_db_fields()->set_total_mem(dbserver.mutable_db_fields()->total_mem());
+		dbserverDetail.mutable_db_fields()->set_used_mem(dbserver.mutable_db_fields()->used_mem());
+		dbserverDetail.mutable_db_fields()->set_proc_cpu(dbserver.mutable_db_fields()->proc_cpu());
+		dbserverDetail.mutable_db_fields()->set_proc_mem(dbserver.mutable_db_fields()->proc_mem());
+		dbserverDetail.mutable_db_fields()->set_proc_thread(dbserver.mutable_db_fields()->proc_thread());
+		m_pAsyMysqlModule->Update(dbserverDetail, pServerData->mServerInfo.server_id());
+
+		pServerData = mProxyMap.Next();
+	}
+
+	pServerData = mGameMap.First();
+	while (pServerData)
+	{
+		NFMsg::db_query_server dbserver;
+		*dbserver.mutable_db_fields() = pServerData->mServerInfo;
+		m_pAsyMysqlModule->Update(dbserver, pServerData->mServerInfo.server_id());
+
+		NFMsg::db_query_server_detail dbserverDetail;
+		dbserverDetail.mutable_db_fields()->set_server_id(dbserver.mutable_db_fields()->server_id());
+		dbserverDetail.mutable_db_fields()->set_server_cur_online(dbserver.mutable_db_fields()->server_cur_online());
+		dbserverDetail.mutable_db_fields()->set_server_state(dbserver.mutable_db_fields()->server_state());
+		dbserverDetail.mutable_db_fields()->set_total_mem(dbserver.mutable_db_fields()->total_mem());
+		dbserverDetail.mutable_db_fields()->set_used_mem(dbserver.mutable_db_fields()->used_mem());
+		dbserverDetail.mutable_db_fields()->set_proc_cpu(dbserver.mutable_db_fields()->proc_cpu());
+		dbserverDetail.mutable_db_fields()->set_proc_mem(dbserver.mutable_db_fields()->proc_mem());
+		dbserverDetail.mutable_db_fields()->set_proc_thread(dbserver.mutable_db_fields()->proc_thread());
+		m_pAsyMysqlModule->Update(dbserverDetail, pServerData->mServerInfo.server_id());
+
+		pServerData = mGameMap.Next();
+	}
+
+	//////////////////////////////////////////////////////////////////////////
+
+	int nServerID = 0;
+	pServerData = mLoginMap.First();
+	while (pServerData)
+	{
+
+		NFMsg::db_query_server dbserver;
+		*dbserver.mutable_db_fields() = pServerData->mServerInfo;
+		m_pAsyMysqlModule->Update(dbserver, pServerData->mServerInfo.server_id());
+
+		NFMsg::db_query_server_detail dbserverDetail;
+		dbserverDetail.mutable_db_fields()->set_server_id(dbserver.mutable_db_fields()->server_id());
+		dbserverDetail.mutable_db_fields()->set_server_cur_online(dbserver.mutable_db_fields()->server_cur_online());
+		dbserverDetail.mutable_db_fields()->set_server_state(dbserver.mutable_db_fields()->server_state());
+		dbserverDetail.mutable_db_fields()->set_total_mem(dbserver.mutable_db_fields()->total_mem());
+		dbserverDetail.mutable_db_fields()->set_used_mem(dbserver.mutable_db_fields()->used_mem());
+		dbserverDetail.mutable_db_fields()->set_proc_cpu(dbserver.mutable_db_fields()->proc_cpu());
+		dbserverDetail.mutable_db_fields()->set_proc_mem(dbserver.mutable_db_fields()->proc_mem());
+		dbserverDetail.mutable_db_fields()->set_proc_thread(dbserver.mutable_db_fields()->proc_thread());
+		m_pAsyMysqlModule->Update(dbserverDetail, pServerData->mServerInfo.server_id());
+
+		pServerData = mLoginMap.Next();
+	}
+}
+
 void NFCMasterServerModule::OnProxySocketEvent(const eMsgType nEvent, const uint32_t unLinkId)
 {
 	if (nEvent == eMsgType_CONNECTED)
@@ -143,6 +296,24 @@ void NFCMasterServerModule::OnClientDisconnect(uint32_t unLinkId)
 		{
 			pServerData->mServerInfo.set_server_state(NFMsg::EST_CRASH);
 			pServerData->mUnlinkId = 0;
+			pServerData->mServerInfo.set_proc_cpu(0);
+			pServerData->mServerInfo.set_proc_mem(0);
+			pServerData->mServerInfo.set_proc_thread(0);
+			pServerData->mServerInfo.set_proc_pid(0);
+			NFMsg::db_query_server dbserver;
+			*dbserver.mutable_db_fields() = pServerData->mServerInfo;
+			m_pAsyMysqlModule->Update(dbserver);
+
+			NFMsg::db_query_server_detail dbserverDetail;
+			dbserverDetail.mutable_db_fields()->set_server_id(dbserver.mutable_db_fields()->server_id());
+			dbserverDetail.mutable_db_fields()->set_server_cur_online(dbserver.mutable_db_fields()->server_cur_online());
+			dbserverDetail.mutable_db_fields()->set_server_state(dbserver.mutable_db_fields()->server_state());
+			dbserverDetail.mutable_db_fields()->set_total_mem(dbserver.mutable_db_fields()->total_mem());
+			dbserverDetail.mutable_db_fields()->set_used_mem(dbserver.mutable_db_fields()->used_mem());
+			dbserverDetail.mutable_db_fields()->set_proc_cpu(dbserver.mutable_db_fields()->proc_cpu());
+			dbserverDetail.mutable_db_fields()->set_proc_mem(dbserver.mutable_db_fields()->proc_mem());
+			dbserverDetail.mutable_db_fields()->set_proc_thread(dbserver.mutable_db_fields()->proc_thread());
+			m_pAsyMysqlModule->Update(dbserverDetail, pServerData->mServerInfo.server_id());
 
 			NFLogError(NF_LOG_SERVER_CONNECT_SERVER, 0, "the world server disconnect from master server, serverName:{}, serverId:{}, serverIp:{}, serverPort:{}"
 				, pServerData->mServerInfo.server_name(), pServerData->mServerInfo.server_id(), pServerData->mServerInfo.server_ip(), pServerData->mServerInfo.server_port());
@@ -160,6 +331,24 @@ void NFCMasterServerModule::OnClientDisconnect(uint32_t unLinkId)
 		{
 			pServerData->mServerInfo.set_server_state(NFMsg::EST_CRASH);
 			pServerData->mUnlinkId = 0;
+			pServerData->mServerInfo.set_proc_cpu(0);
+			pServerData->mServerInfo.set_proc_mem(0);
+			pServerData->mServerInfo.set_proc_thread(0);
+			pServerData->mServerInfo.set_proc_pid(0);
+			NFMsg::db_query_server dbserver;
+			*dbserver.mutable_db_fields() = pServerData->mServerInfo;
+			m_pAsyMysqlModule->Update(dbserver);
+
+			NFMsg::db_query_server_detail dbserverDetail;
+			dbserverDetail.mutable_db_fields()->set_server_id(dbserver.mutable_db_fields()->server_id());
+			dbserverDetail.mutable_db_fields()->set_server_cur_online(dbserver.mutable_db_fields()->server_cur_online());
+			dbserverDetail.mutable_db_fields()->set_server_state(dbserver.mutable_db_fields()->server_state());
+			dbserverDetail.mutable_db_fields()->set_total_mem(dbserver.mutable_db_fields()->total_mem());
+			dbserverDetail.mutable_db_fields()->set_used_mem(dbserver.mutable_db_fields()->used_mem());
+			dbserverDetail.mutable_db_fields()->set_proc_cpu(dbserver.mutable_db_fields()->proc_cpu());
+			dbserverDetail.mutable_db_fields()->set_proc_mem(dbserver.mutable_db_fields()->proc_mem());
+			dbserverDetail.mutable_db_fields()->set_proc_thread(dbserver.mutable_db_fields()->proc_thread());
+			m_pAsyMysqlModule->Update(dbserverDetail, pServerData->mServerInfo.server_id());
 
 			NFLogError(NF_LOG_SERVER_CONNECT_SERVER, 0, "the proxy server disconnect from master server, serverName:{}, serverId:{}, serverIp:{}, serverPort:{}"
 				, pServerData->mServerInfo.server_name(), pServerData->mServerInfo.server_id(), pServerData->mServerInfo.server_ip(), pServerData->mServerInfo.server_port());
@@ -177,6 +366,24 @@ void NFCMasterServerModule::OnClientDisconnect(uint32_t unLinkId)
 		{
 			pServerData->mServerInfo.set_server_state(NFMsg::EST_CRASH);
 			pServerData->mUnlinkId = 0;
+			pServerData->mServerInfo.set_proc_cpu(0);
+			pServerData->mServerInfo.set_proc_mem(0);
+			pServerData->mServerInfo.set_proc_thread(0);
+			pServerData->mServerInfo.set_proc_pid(0);
+			NFMsg::db_query_server dbserver;
+			*dbserver.mutable_db_fields() = pServerData->mServerInfo;
+			m_pAsyMysqlModule->Update(dbserver);
+
+			NFMsg::db_query_server_detail dbserverDetail;
+			dbserverDetail.mutable_db_fields()->set_server_id(dbserver.mutable_db_fields()->server_id());
+			dbserverDetail.mutable_db_fields()->set_server_cur_online(dbserver.mutable_db_fields()->server_cur_online());
+			dbserverDetail.mutable_db_fields()->set_server_state(dbserver.mutable_db_fields()->server_state());
+			dbserverDetail.mutable_db_fields()->set_total_mem(dbserver.mutable_db_fields()->total_mem());
+			dbserverDetail.mutable_db_fields()->set_used_mem(dbserver.mutable_db_fields()->used_mem());
+			dbserverDetail.mutable_db_fields()->set_proc_cpu(dbserver.mutable_db_fields()->proc_cpu());
+			dbserverDetail.mutable_db_fields()->set_proc_mem(dbserver.mutable_db_fields()->proc_mem());
+			dbserverDetail.mutable_db_fields()->set_proc_thread(dbserver.mutable_db_fields()->proc_thread());
+			m_pAsyMysqlModule->Update(dbserverDetail, pServerData->mServerInfo.server_id());
 
 			NFLogError(NF_LOG_SERVER_CONNECT_SERVER, 0, "the game server disconnect from master server, serverName:{}, serverId:{}, serverIp:{}, serverPort:{}"
 				, pServerData->mServerInfo.server_name(), pServerData->mServerInfo.server_id(), pServerData->mServerInfo.server_ip(), pServerData->mServerInfo.server_port());
@@ -196,6 +403,24 @@ void NFCMasterServerModule::OnClientDisconnect(uint32_t unLinkId)
 		if (unLinkId == pServerData->mUnlinkId)
 		{
 			nServerID = pServerData->mServerInfo.server_id();
+			pServerData->mServerInfo.set_proc_cpu(0);
+			pServerData->mServerInfo.set_proc_mem(0);
+			pServerData->mServerInfo.set_proc_thread(0);
+			pServerData->mServerInfo.set_proc_pid(0);
+			NFMsg::db_query_server dbserver;
+			*dbserver.mutable_db_fields() = pServerData->mServerInfo;
+			m_pAsyMysqlModule->Update(dbserver);
+
+			NFMsg::db_query_server_detail dbserverDetail;
+			dbserverDetail.mutable_db_fields()->set_server_id(dbserver.mutable_db_fields()->server_id());
+			dbserverDetail.mutable_db_fields()->set_server_cur_online(dbserver.mutable_db_fields()->server_cur_online());
+			dbserverDetail.mutable_db_fields()->set_server_state(dbserver.mutable_db_fields()->server_state());
+			dbserverDetail.mutable_db_fields()->set_total_mem(dbserver.mutable_db_fields()->total_mem());
+			dbserverDetail.mutable_db_fields()->set_used_mem(dbserver.mutable_db_fields()->used_mem());
+			dbserverDetail.mutable_db_fields()->set_proc_cpu(dbserver.mutable_db_fields()->proc_cpu());
+			dbserverDetail.mutable_db_fields()->set_proc_mem(dbserver.mutable_db_fields()->proc_mem());
+			dbserverDetail.mutable_db_fields()->set_proc_thread(dbserver.mutable_db_fields()->proc_thread());
+			m_pAsyMysqlModule->Update(dbserverDetail, pServerData->mServerInfo.server_id());
 
 			NFLogError(NF_LOG_SERVER_CONNECT_SERVER, 0, "the login server disconnect from master server, serverName:{}, serverId:{}, serverIp:{}, serverPort:{}"
 				, pServerData->mServerInfo.server_name(), pServerData->mServerInfo.server_id(), pServerData->mServerInfo.server_ip(), pServerData->mServerInfo.server_port());
@@ -591,9 +816,6 @@ void NFCMasterServerModule::OnServerReport(const uint32_t unLinkId, const uint64
 		}
 		break;
 		}
-		NFMsg::db_query_server dbserver;
-		*dbserver.mutable_db_fields() = xData;
-		m_pAsyMysqlModule->Update(dbserver);
 	}
 }
 

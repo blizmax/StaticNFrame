@@ -158,7 +158,7 @@ void NFCGameClient_MasterModule::ServerReport()
 		{
 			const NFSystemInfo& systemInfo = pMonitorModule->GetSystemInfo();
 
-			pData->set_system_info(systemInfo.GetOsInfo().mOsMachine);
+			pData->set_system_info(systemInfo.GetOsInfo().mOsDescription);
 			pData->set_total_mem(systemInfo.GetMemInfo().mTotalMem);
 			pData->set_free_mem(systemInfo.GetMemInfo().mFreeMem);
 			pData->set_used_mem(systemInfo.GetMemInfo().mUsedMem);

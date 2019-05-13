@@ -19,8 +19,9 @@
 #include "NFServer/NFServerCommon/NFServerCommon.h"
 #include "NFComm/NFCore/NFMap.hpp"
 #include "NFComm/NFPluginModule/NFIAsyMysqlModule.h"
+#include "NFComm/NFPluginModule/NFTimerMgr.h"
 
-class NFCMasterServerModule : public NFIMasterServerModule
+class NFCMasterServerModule : public NFIMasterServerModule, public NFTimerObj
 {
 public:
 	explicit NFCMasterServerModule(NFIPluginManager* p);
@@ -36,6 +37,7 @@ public:
 
 	virtual bool Shut() override;
 
+	virtual void OnTimer(uint32_t nTimerID) override;
 protected:
 	void OnProxySocketEvent(const eMsgType nEvent, const uint32_t unLinkId);
 	void OnHandleOtherMessage(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen);
@@ -67,6 +69,8 @@ protected:
 	void OnClientDisconnect(uint32_t unLinkId);
 
 	virtual bool HttpHandleHttpGm(uint32_t linkId, const NFHttpHandle& req);
+
+	void SaveServerDataToDB();
 private:
 	NFINetServerModule* m_pNetServerModule;
 	NFIHttpServerModule* m_pHttpServerModule;

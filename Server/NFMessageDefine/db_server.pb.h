@@ -445,19 +445,19 @@ class db_query_server_detail : public ::google::protobuf::Message /* @@protoc_in
 
   // accessors -------------------------------------------------------
 
-  // string dy_server = 1;
-  void clear_dy_server();
-  static const int kDyServerFieldNumber = 1;
-  const ::std::string& dy_server() const;
-  void set_dy_server(const ::std::string& value);
+  // string dy_server_detail = 1;
+  void clear_dy_server_detail();
+  static const int kDyServerDetailFieldNumber = 1;
+  const ::std::string& dy_server_detail() const;
+  void set_dy_server_detail(const ::std::string& value);
   #if LANG_CXX11
-  void set_dy_server(::std::string&& value);
+  void set_dy_server_detail(::std::string&& value);
   #endif
-  void set_dy_server(const char* value);
-  void set_dy_server(const char* value, size_t size);
-  ::std::string* mutable_dy_server();
-  ::std::string* release_dy_server();
-  void set_allocated_dy_server(::std::string* dy_server);
+  void set_dy_server_detail(const char* value);
+  void set_dy_server_detail(const char* value, size_t size);
+  ::std::string* mutable_dy_server_detail();
+  ::std::string* release_dy_server_detail();
+  void set_allocated_dy_server_detail(::std::string* dy_server_detail);
 
   // .NFMsg.db_server_detail db_fields = 2;
   bool has_db_fields() const;
@@ -475,7 +475,7 @@ class db_query_server_detail : public ::google::protobuf::Message /* @@protoc_in
  private:
 
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
-  ::google::protobuf::internal::ArenaStringPtr dy_server_;
+  ::google::protobuf::internal::ArenaStringPtr dy_server_detail_;
   ::NFMsg::db_server_detail* db_fields_;
   mutable ::google::protobuf::internal::CachedSize _cached_size_;
   friend struct ::protobuf_db_5fserver_2eproto::TableStruct;
@@ -740,57 +740,57 @@ inline void db_server_detail::set_proc_thread(::google::protobuf::uint32 value) 
 
 // db_query_server_detail
 
-// string dy_server = 1;
-inline void db_query_server_detail::clear_dy_server() {
-  dy_server_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+// string dy_server_detail = 1;
+inline void db_query_server_detail::clear_dy_server_detail() {
+  dy_server_detail_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-inline const ::std::string& db_query_server_detail::dy_server() const {
-  // @@protoc_insertion_point(field_get:NFMsg.db_query_server_detail.dy_server)
-  return dy_server_.GetNoArena();
+inline const ::std::string& db_query_server_detail::dy_server_detail() const {
+  // @@protoc_insertion_point(field_get:NFMsg.db_query_server_detail.dy_server_detail)
+  return dy_server_detail_.GetNoArena();
 }
-inline void db_query_server_detail::set_dy_server(const ::std::string& value) {
+inline void db_query_server_detail::set_dy_server_detail(const ::std::string& value) {
   
-  dy_server_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
-  // @@protoc_insertion_point(field_set:NFMsg.db_query_server_detail.dy_server)
+  dy_server_detail_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:NFMsg.db_query_server_detail.dy_server_detail)
 }
 #if LANG_CXX11
-inline void db_query_server_detail::set_dy_server(::std::string&& value) {
+inline void db_query_server_detail::set_dy_server_detail(::std::string&& value) {
   
-  dy_server_.SetNoArena(
+  dy_server_detail_.SetNoArena(
     &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
-  // @@protoc_insertion_point(field_set_rvalue:NFMsg.db_query_server_detail.dy_server)
+  // @@protoc_insertion_point(field_set_rvalue:NFMsg.db_query_server_detail.dy_server_detail)
 }
 #endif
-inline void db_query_server_detail::set_dy_server(const char* value) {
+inline void db_query_server_detail::set_dy_server_detail(const char* value) {
   GOOGLE_DCHECK(value != NULL);
   
-  dy_server_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
-  // @@protoc_insertion_point(field_set_char:NFMsg.db_query_server_detail.dy_server)
+  dy_server_detail_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:NFMsg.db_query_server_detail.dy_server_detail)
 }
-inline void db_query_server_detail::set_dy_server(const char* value, size_t size) {
+inline void db_query_server_detail::set_dy_server_detail(const char* value, size_t size) {
   
-  dy_server_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+  dy_server_detail_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
       ::std::string(reinterpret_cast<const char*>(value), size));
-  // @@protoc_insertion_point(field_set_pointer:NFMsg.db_query_server_detail.dy_server)
+  // @@protoc_insertion_point(field_set_pointer:NFMsg.db_query_server_detail.dy_server_detail)
 }
-inline ::std::string* db_query_server_detail::mutable_dy_server() {
+inline ::std::string* db_query_server_detail::mutable_dy_server_detail() {
   
-  // @@protoc_insertion_point(field_mutable:NFMsg.db_query_server_detail.dy_server)
-  return dy_server_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  // @@protoc_insertion_point(field_mutable:NFMsg.db_query_server_detail.dy_server_detail)
+  return dy_server_detail_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-inline ::std::string* db_query_server_detail::release_dy_server() {
-  // @@protoc_insertion_point(field_release:NFMsg.db_query_server_detail.dy_server)
+inline ::std::string* db_query_server_detail::release_dy_server_detail() {
+  // @@protoc_insertion_point(field_release:NFMsg.db_query_server_detail.dy_server_detail)
   
-  return dy_server_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  return dy_server_detail_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-inline void db_query_server_detail::set_allocated_dy_server(::std::string* dy_server) {
-  if (dy_server != NULL) {
+inline void db_query_server_detail::set_allocated_dy_server_detail(::std::string* dy_server_detail) {
+  if (dy_server_detail != NULL) {
     
   } else {
     
   }
-  dy_server_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), dy_server);
-  // @@protoc_insertion_point(field_set_allocated:NFMsg.db_query_server_detail.dy_server)
+  dy_server_detail_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), dy_server_detail);
+  // @@protoc_insertion_point(field_set_allocated:NFMsg.db_query_server_detail.dy_server_detail)
 }
 
 // .NFMsg.db_server_detail db_fields = 2;

@@ -38,11 +38,11 @@ CREATE TABLE `dy_server_detail` (
   `server_cur_online` int(11) DEFAULT '0',
   `server_state` int(11) DEFAULT '0',
   `proc_cpu` double(10,2) DEFAULT '0',
-  `proc_mem` int(11) DEFAULT '0',
+  `proc_mem` bigint(20) DEFAULT '0',
   `proc_thread` int(11) DEFAULT '0',
-  `total_mem` int(11) DEFAULT '0',
-  `free_mem` int(11) DEFAULT '0',
-  `used_mem` int(11) DEFAULT '0',
+  `total_mem` bigint(20) DEFAULT '0',
+  `free_mem` bigint(20) DEFAULT '0',
+  `used_mem` bigint(20) DEFAULT '0',
   `last_date` varchar(127) DEFAULT '',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;

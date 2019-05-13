@@ -123,7 +123,7 @@ const ::google::protobuf::uint32 TableStruct::offsets[] GOOGLE_PROTOBUF_ATTRIBUT
   ~0u,  // no _extensions_
   ~0u,  // no _oneof_case_
   ~0u,  // no _weak_field_map_
-  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::NFMsg::db_query_server_detail, dy_server_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::NFMsg::db_query_server_detail, dy_server_detail_),
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::NFMsg::db_query_server_detail, db_fields_),
 };
 static const ::google::protobuf::internal::MigrationSchema schemas[] GOOGLE_PROTOBUF_ATTRIBUTE_SECTION_VARIABLE(protodesc_cold) = {
@@ -167,12 +167,13 @@ void AddDescriptorsImpl() {
       "\001(\005\022\024\n\014server_state\030\004 \001(\r\022\021\n\ttotal_mem\030\005"
       " \001(\004\022\020\n\010free_mem\030\006 \001(\004\022\020\n\010used_mem\030\007 \001(\004"
       "\022\020\n\010proc_cpu\030\010 \001(\001\022\020\n\010proc_mem\030\t \001(\004\022\023\n\013"
-      "proc_thread\030\n \001(\r\"W\n\026db_query_server_det"
-      "ail\022\021\n\tdy_server\030\001 \001(\t\022*\n\tdb_fields\030\002 \001("
-      "\0132\027.NFMsg.db_server_detailb\006proto3"
+      "proc_thread\030\n \001(\r\"^\n\026db_query_server_det"
+      "ail\022\030\n\020dy_server_detail\030\001 \001(\t\022*\n\tdb_fiel"
+      "ds\030\002 \001(\0132\027.NFMsg.db_server_detailb\006proto"
+      "3"
   };
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
-      descriptor, 434);
+      descriptor, 441);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "db_server.proto", &protobuf_RegisterTypes);
   ::protobuf_server_5fmsg_2eproto::AddDescriptors();
@@ -1047,7 +1048,7 @@ void db_query_server_detail::InitAsDefaultInstance() {
       ::NFMsg::db_server_detail::internal_default_instance());
 }
 #if !defined(_MSC_VER) || _MSC_VER >= 1900
-const int db_query_server_detail::kDyServerFieldNumber;
+const int db_query_server_detail::kDyServerDetailFieldNumber;
 const int db_query_server_detail::kDbFieldsFieldNumber;
 #endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
 
@@ -1062,9 +1063,9 @@ db_query_server_detail::db_query_server_detail(const db_query_server_detail& fro
   : ::google::protobuf::Message(),
       _internal_metadata_(NULL) {
   _internal_metadata_.MergeFrom(from._internal_metadata_);
-  dy_server_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-  if (from.dy_server().size() > 0) {
-    dy_server_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.dy_server_);
+  dy_server_detail_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  if (from.dy_server_detail().size() > 0) {
+    dy_server_detail_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.dy_server_detail_);
   }
   if (from.has_db_fields()) {
     db_fields_ = new ::NFMsg::db_server_detail(*from.db_fields_);
@@ -1075,7 +1076,7 @@ db_query_server_detail::db_query_server_detail(const db_query_server_detail& fro
 }
 
 void db_query_server_detail::SharedCtor() {
-  dy_server_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  dy_server_detail_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   db_fields_ = NULL;
 }
 
@@ -1085,7 +1086,7 @@ db_query_server_detail::~db_query_server_detail() {
 }
 
 void db_query_server_detail::SharedDtor() {
-  dy_server_.DestroyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  dy_server_detail_.DestroyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   if (this != internal_default_instance()) delete db_fields_;
 }
 
@@ -1109,7 +1110,7 @@ void db_query_server_detail::Clear() {
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
-  dy_server_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  dy_server_detail_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   if (GetArenaNoVirtual() == NULL && db_fields_ != NULL) {
     delete db_fields_;
   }
@@ -1127,16 +1128,16 @@ bool db_query_server_detail::MergePartialFromCodedStream(
     tag = p.first;
     if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // string dy_server = 1;
+      // string dy_server_detail = 1;
       case 1: {
         if (static_cast< ::google::protobuf::uint8>(tag) ==
             static_cast< ::google::protobuf::uint8>(10u /* 10 & 0xFF */)) {
           DO_(::google::protobuf::internal::WireFormatLite::ReadString(
-                input, this->mutable_dy_server()));
+                input, this->mutable_dy_server_detail()));
           DO_(::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
-            this->dy_server().data(), static_cast<int>(this->dy_server().length()),
+            this->dy_server_detail().data(), static_cast<int>(this->dy_server_detail().length()),
             ::google::protobuf::internal::WireFormatLite::PARSE,
-            "NFMsg.db_query_server_detail.dy_server"));
+            "NFMsg.db_query_server_detail.dy_server_detail"));
         } else {
           goto handle_unusual;
         }
@@ -1181,14 +1182,14 @@ void db_query_server_detail::SerializeWithCachedSizes(
   ::google::protobuf::uint32 cached_has_bits = 0;
   (void) cached_has_bits;
 
-  // string dy_server = 1;
-  if (this->dy_server().size() > 0) {
+  // string dy_server_detail = 1;
+  if (this->dy_server_detail().size() > 0) {
     ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
-      this->dy_server().data(), static_cast<int>(this->dy_server().length()),
+      this->dy_server_detail().data(), static_cast<int>(this->dy_server_detail().length()),
       ::google::protobuf::internal::WireFormatLite::SERIALIZE,
-      "NFMsg.db_query_server_detail.dy_server");
+      "NFMsg.db_query_server_detail.dy_server_detail");
     ::google::protobuf::internal::WireFormatLite::WriteStringMaybeAliased(
-      1, this->dy_server(), output);
+      1, this->dy_server_detail(), output);
   }
 
   // .NFMsg.db_server_detail db_fields = 2;
@@ -1211,15 +1212,15 @@ void db_query_server_detail::SerializeWithCachedSizes(
   ::google::protobuf::uint32 cached_has_bits = 0;
   (void) cached_has_bits;
 
-  // string dy_server = 1;
-  if (this->dy_server().size() > 0) {
+  // string dy_server_detail = 1;
+  if (this->dy_server_detail().size() > 0) {
     ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
-      this->dy_server().data(), static_cast<int>(this->dy_server().length()),
+      this->dy_server_detail().data(), static_cast<int>(this->dy_server_detail().length()),
       ::google::protobuf::internal::WireFormatLite::SERIALIZE,
-      "NFMsg.db_query_server_detail.dy_server");
+      "NFMsg.db_query_server_detail.dy_server_detail");
     target =
       ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
-        1, this->dy_server(), target);
+        1, this->dy_server_detail(), target);
   }
 
   // .NFMsg.db_server_detail db_fields = 2;
@@ -1246,11 +1247,11 @@ size_t db_query_server_detail::ByteSizeLong() const {
       ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
         (::google::protobuf::internal::GetProto3PreserveUnknownsDefault()   ? _internal_metadata_.unknown_fields()   : _internal_metadata_.default_instance()));
   }
-  // string dy_server = 1;
-  if (this->dy_server().size() > 0) {
+  // string dy_server_detail = 1;
+  if (this->dy_server_detail().size() > 0) {
     total_size += 1 +
       ::google::protobuf::internal::WireFormatLite::StringSize(
-        this->dy_server());
+        this->dy_server_detail());
   }
 
   // .NFMsg.db_server_detail db_fields = 2;
@@ -1287,9 +1288,9 @@ void db_query_server_detail::MergeFrom(const db_query_server_detail& from) {
   ::google::protobuf::uint32 cached_has_bits = 0;
   (void) cached_has_bits;
 
-  if (from.dy_server().size() > 0) {
+  if (from.dy_server_detail().size() > 0) {
 
-    dy_server_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.dy_server_);
+    dy_server_detail_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.dy_server_detail_);
   }
   if (from.has_db_fields()) {
     mutable_db_fields()->::NFMsg::db_server_detail::MergeFrom(from.db_fields());
@@ -1320,7 +1321,7 @@ void db_query_server_detail::Swap(db_query_server_detail* other) {
 }
 void db_query_server_detail::InternalSwap(db_query_server_detail* other) {
   using std::swap;
-  dy_server_.Swap(&other->dy_server_, &::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+  dy_server_detail_.Swap(&other->dy_server_detail_, &::google::protobuf::internal::GetEmptyStringAlreadyInited(),
     GetArenaNoVirtual());
   swap(db_fields_, other->db_fields_);
   _internal_metadata_.Swap(&other->_internal_metadata_);

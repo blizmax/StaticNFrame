@@ -25,6 +25,6 @@ message db_server_detail
 
 message db_query_server_detail
 {
-	string dy_server = 1;
+	string dy_server_detail = 1;
 	db_server_detail db_fields = 2;
 }
