@@ -146,7 +146,7 @@ void NFCWorldClient_MasterModule::ServerReport()
 		pData->set_server_max_online(pConfig->mMaxConnectNum);
 		pData->set_server_state(NFMsg::EST_NARMAL);
 
-		NFIMonitorModule* pMonitorModule = (NFIMonitorModule*)m_pPluginManager->FindModule("NFIMonitorModule");
+		NFIMonitorModule* pMonitorModule = (NFIMonitorModule*)m_pPluginManager->FindModule(typeid(NFIMonitorModule).name());
 		if (pMonitorModule)
 		{
 			const NFSystemInfo& systemInfo = pMonitorModule->GetSystemInfo();
