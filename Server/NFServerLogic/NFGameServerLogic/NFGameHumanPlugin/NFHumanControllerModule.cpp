@@ -152,12 +152,12 @@ void NFCHumanControllerModule::OnHandleAccountLogin(const uint32_t unLinkId, con
 	}
 
 	pPlayerObject->SetNodeBool(NF_PLAYER_NODE_BOOL_ONLINE, true);
-	pPlayerObject->SetNodeInt64(NF_PLAYER_NODE_INT_LOGINTIME, NFGetSecondTime());
-	pPlayerObject->SetNodeInt64(NF_PLAYER_NODE_INT_LOGOUTTIME, 0);
+	pPlayerObject->SetNodeInt64(NF_PLAYER_NODE_UINT64_LOGINTIME, NFGetSecondTime());
+	pPlayerObject->SetNodeInt64(NF_PLAYER_NODE_UINT64_LOGOUTTIME, 0);
 
-	if (pPlayerObject->GetNodeUInt32(NF_PLAYER_NODE_INT_BLACKLIST) != 0)
+	if (pPlayerObject->GetNodeUInt32(NF_PLAYER_NODE_UINT32_BLACKLIST) != 0)
 	{
-		pPlayerObject->SetNodeInt64(NF_PLAYER_NODE_INT_LOGOUTTIME, NFGetSecondTime());
+		pPlayerObject->SetNodeInt64(NF_PLAYER_NODE_UINT64_LOGOUTTIME, NFGetSecondTime());
 		pPlayerObject->SetNodeBool(NF_PLAYER_NODE_BOOL_ONLINE, false);
 		gcMsg.set_result(RETURN_CODE_ACCOUNT_LOGIN_ERROR);
 		m_pNetClientModule->SendToServerByPB(unLinkId, ::NFMsg::Server_Msg_AccountLogin, gcMsg, 0);

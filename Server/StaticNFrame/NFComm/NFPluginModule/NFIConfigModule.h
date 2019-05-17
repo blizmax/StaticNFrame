@@ -115,6 +115,7 @@ struct NFClassNode
 	}
 	std::string mNodeName;
 	uint32_t mNodeType;
+	std::string mStrNodeType;
 	bool mSave;
 	bool mPublic;
 	bool mPrivate;

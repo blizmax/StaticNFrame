@@ -225,20 +225,24 @@ bool NFCConfigModule::LoadDBTable()
 							tableCol.mAutoIncrement = false;
 
 							tableCol.mColTypeNum = nodeiter->mNodeType;
-							if (nodeiter->mNodeType == NF_DT_BOOLEAN)
+							if (nodeiter->mStrNodeType == "bool")
 							{
 								tableCol.mColType = "real";
 								
 							}
-							else if (nodeiter->mNodeType == NF_DT_INT)
+							else if (nodeiter->mStrNodeType == "int32" || nodeiter->mStrNodeType == "uint32")
 							{
 								tableCol.mColType = "int";
 							}
-							else if (nodeiter->mNodeType == NF_DT_DOUBLE)
+							else if (nodeiter->mStrNodeType == "int64" || nodeiter->mStrNodeType == "uint64")
+							{
+								tableCol.mColType = "bigint";
+							}
+							else if (nodeiter->mStrNodeType == "double")
 							{
 								tableCol.mColType = "double";
 							}
-							else if (nodeiter->mNodeType == NF_DT_STRING)
+							else if (nodeiter->mStrNodeType == "string")
 							{
 								tableCol.mColType = "varchar";
 								tableCol.mColTypeLength = 45;
@@ -289,14 +293,50 @@ bool NFCConfigModule::LoadClassNode()
 
 			NFClassNode classNode;
 			std::string dbTable;
+			std::string strNodeType;
 
 			GetLuaTableValue(nodeRef, "nodeName", classNode.mNodeName);
-			GetLuaTableValue(nodeRef, "nodeType", classNode.mNodeType);
+			GetLuaTableValue(nodeRef, "nodeType", strNodeType);
 			GetLuaTableValue(nodeRef, "save", classNode.mSave);
 			GetLuaTableValue(nodeRef, "public", classNode.mPublic);
 			GetLuaTableValue(nodeRef, "private", classNode.mPrivate);
 			GetLuaTableValue(nodeRef, "dbTable", classNode.mDBTable);
 			GetLuaTableValue(nodeRef, "desc", classNode.mDesc);
+
+			if (strNodeType == "bool")
+			{
+				classNode.mNodeType = NF_DT_BOOLEAN;
+			}
+			else if (strNodeType == "int32" || strNodeType == "uint32" || strNodeType == "int64" || strNodeType == "uint64")
+			{
+				classNode.mNodeType = NF_DT_INT;
+			}
+			else if (strNodeType == "double")
+			{
+				classNode.mNodeType = NF_DT_DOUBLE;
+			}
+			else if (strNodeType == "string")
+			{
+				classNode.mNodeType = NF_DT_STRING;
+			}
+			else if (strNodeType == "array")
+			{
+				classNode.mNodeType = NF_DT_ARRAY;
+			}
+			else if (strNodeType == "list")
+			{
+				classNode.mNodeType = NF_DT_LIST;
+			}
+			else if (strNodeType == "mapstring")
+			{
+				classNode.mNodeType = NF_DT_MAPSTRING;
+			}
+			else if (strNodeType == "mapint")
+			{
+				classNode.mNodeType = NF_DT_MAPINT;
+			}
+
+			classNode.mStrNodeType = strNodeType;
 
 			if (classNode.mSave)
 			{
@@ -451,7 +491,9 @@ void NFCConfigModule::CreateHeaderFile()
 			}
 			else if (nodeIter->mNodeType == NF_DT_INT)
 			{
-				classNodeLine << "#define NF_" << className << "_NODE_INT_" << nodeName;
+				std::string inttype = nodeIter->mStrNodeType;
+				NFStringUtility::ToUpper(inttype);
+				classNodeLine << "#define NF_" << className << "_NODE_" << inttype << "_" << nodeName;
 			}
 			else if (nodeIter->mNodeType == NF_DT_DOUBLE)
 			{
