@@ -39,7 +39,7 @@ function InitGlobalServer()
 			MysqlPassword = "cgt=+erhk",
 			Security = false,
 			WebSocket = false,
-			HttpPort = 3000,
+			HttpPort = 6005,
 	};
 
 	--LoginServer 登录服务器，负责登录连接

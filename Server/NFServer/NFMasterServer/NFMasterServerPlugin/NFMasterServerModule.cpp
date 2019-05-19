@@ -19,9 +19,10 @@
 #include "NFMessageDefine/db_server.pb.h"
 #include "NFComm/NFPluginModule/NFIMonitorModule.h"
 #include "NFComm/NFCore/NFDateTime.hpp"
+#include "NFMessageDefine/msg_gm.pb.h"
 
 #define NF_MASTER_TIMER_SAVE_SERVER_DATA 0
-#define NF_MASTER_TIMER_SAVE_SERVER_DATA_TIME 30000
+#define NF_MASTER_TIMER_SAVE_SERVER_DATA_TIME 60000
 
 NFCMasterServerModule::NFCMasterServerModule(NFIPluginManager* p)
 {
@@ -859,10 +860,13 @@ void NFCMasterServerModule::OnServerReport(const uint32_t unLinkId, const uint64
 bool NFCMasterServerModule::HttpHandleHttpGm(uint32_t linkId, const NFHttpHandle& req)
 {
 	std::string jsonMsg = req.bodySlice.ToString();
+	NFMsg::http_msg_gm gm;
+	NFProtobufCommon::JsonStringToMessage(jsonMsg, gm);
+
 	NF_SHARE_PTR<NFServerData> pServerData = mProxyMap.First();
 	while (pServerData)
 	{
-		m_pNetServerModule->SendByServerID(pServerData->mUnlinkId, EGMI_STS_GM_MSG, jsonMsg, 0);
+		m_pNetServerModule->SendToServerByPB(pServerData->mUnlinkId, EGMI_STS_GM_MSG, gm, 0);
 
 		pServerData = mProxyMap.Next();
 	}

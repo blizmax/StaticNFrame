@@ -1,0 +1,9 @@
+syntax = "proto2";
+package NFMsg;
+
+message http_msg_gm
+{
+	optional string cmd = 1;
+	optional uint32 server_id = 2;
+	optional string data = 3;
+}
