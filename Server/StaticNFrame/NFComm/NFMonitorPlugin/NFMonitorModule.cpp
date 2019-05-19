@@ -8,6 +8,9 @@
 
 #include "NFMonitorModule.h"
 #include "NFComm/NFPluginModule/NFLogMgr.h"
+#include "NFComm/NFPluginModule/NFEventDefine.h"
+#include "NFMessageDefine/msg_gm.pb.h"
+#include "NFComm/NFPluginModule/NFIPluginManager.h"
 
 enum MonitorTimerEnum
 {
@@ -28,6 +31,7 @@ NFCMonitorModule::~NFCMonitorModule()
 
 bool NFCMonitorModule::Init()
 {
+	this->Subscribe(NFEVENT_GM, 0, 0, __FUNCTION__);
 	this->SetTimer(MonitorTimer_SYSTEMINFO, MONITOR_TIMER_SYSTEIMINFO_INTERNAL_TIME, INFINITY_CALL);
 	mSystemInfo.Init();
 	return true;
@@ -64,7 +68,29 @@ void NFCMonitorModule::OnTimer(uint32_t nTimerID)
 */
 void NFCMonitorModule::OnExecute(uint16_t nEventID, uint64_t nSrcID, uint8_t bySrcType, const google::protobuf::Message& message)
 {
-
+	if (nEventID == NFEVENT_GM)
+	{
+		const NFMsg::http_msg_gm* msg_gm = dynamic_cast<const NFMsg::http_msg_gm*>(&message);
+		if (msg_gm)
+		{
+			if (msg_gm->cmd() == "reload")
+			{
+				m_pPluginManager->OnReloadPlugin();
+			}
+			else if (msg_gm->cmd() == "exit")
+			{
+				m_pPluginManager->SetExitApp(true);
+			}
+			else if (msg_gm->cmd() == "profiler")
+			{
+				m_pPluginManager->SetOpenProfiler(!m_pPluginManager->IsOpenProfiler());
+			}
+			else if (msg_gm->cmd() == "dynamic")
+			{
+				m_pPluginManager->DynamicLoadPluginLibrary(msg_gm->data());
+			}
+		}
+	}
 }
 
 const NFSystemInfo& NFCMonitorModule::GetSystemInfo() const

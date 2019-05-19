@@ -20,6 +20,7 @@
 #include "NFComm/NFPluginModule/NFIMonitorModule.h"
 #include "NFComm/NFCore/NFDateTime.hpp"
 #include "NFMessageDefine/msg_gm.pb.h"
+#include "NFComm/NFPluginModule/NFEventDefine.h"
 
 #define NF_MASTER_TIMER_SAVE_SERVER_DATA 0
 #define NF_MASTER_TIMER_SAVE_SERVER_DATA_TIME 60000
@@ -130,6 +131,92 @@ void NFCMasterServerModule::OnTimer(uint32_t nTimerID)
 	{
 		SaveServerDataToDB();
 	}
+}
+
+void NFCMasterServerModule::SendMsgToServer(uint32_t serverId, const uint32_t nMsgID, const google::protobuf::Message& xData, const uint64_t nPlayerID)
+{
+	NF_SHARE_PTR<NFServerData> pServerData = GetServerByServerId(serverId);
+	if (pServerData)
+	{
+		if (pServerData->mServerInfo.server_state() != NFMsg::EST_CRASH)
+		{
+			m_pNetServerModule->SendToServerByPB(pServerData->mUnlinkId, nMsgID, xData, nPlayerID);
+		}
+	}
+}
+
+void NFCMasterServerModule::SendMsgToAllServer(const uint32_t nMsgID, const google::protobuf::Message& xData, const uint64_t nPlayerID)
+{
+	NF_SHARE_PTR<NFServerData> pServerData = nullptr;
+	pServerData = mWorldMap.First();
+	if (pServerData)
+	{
+		if (pServerData->mServerInfo.server_state() != NFMsg::EST_CRASH)
+		{
+			m_pNetServerModule->SendToServerByPB(pServerData->mUnlinkId, nMsgID, xData, nPlayerID);
+		}
+		pServerData = mWorldMap.Next();
+	}
+
+	pServerData = mProxyMap.First();
+	if (pServerData)
+	{
+		if (pServerData->mServerInfo.server_state() != NFMsg::EST_CRASH)
+		{
+			m_pNetServerModule->SendToServerByPB(pServerData->mUnlinkId, nMsgID, xData, nPlayerID);
+		}
+		pServerData = mProxyMap.Next();
+	}
+
+	pServerData = mGameMap.First();
+	if (pServerData)
+	{
+		if (pServerData->mServerInfo.server_state() != NFMsg::EST_CRASH)
+		{
+			m_pNetServerModule->SendToServerByPB(pServerData->mUnlinkId, nMsgID, xData, nPlayerID);
+		}
+		pServerData = mGameMap.Next();
+	}
+
+	pServerData = mLoginMap.First();
+	if (pServerData)
+	{
+		if (pServerData->mServerInfo.server_state() != NFMsg::EST_CRASH)
+		{
+			m_pNetServerModule->SendToServerByPB(pServerData->mUnlinkId, nMsgID, xData, nPlayerID);
+		}
+		pServerData = mLoginMap.Next();
+	}
+}
+
+NF_SHARE_PTR<NFServerData> NFCMasterServerModule::GetServerByServerId(uint32_t serverId)
+{
+	NF_SHARE_PTR<NFServerData> pServerData = nullptr;
+	pServerData = mWorldMap.GetElement(serverId);
+	if (pServerData)
+	{
+		return pServerData;
+	}
+
+	pServerData = mProxyMap.GetElement(serverId);
+	if (pServerData)
+	{
+		return pServerData;
+	}
+
+	pServerData = mGameMap.GetElement(serverId);
+	if (pServerData)
+	{
+		return pServerData;
+	}
+
+	pServerData = mLoginMap.GetElement(serverId);
+	if (pServerData)
+	{
+		return pServerData;
+	}
+
+	return nullptr;
 }
 
 void NFCMasterServerModule::SaveServerDataToDB()
@@ -863,15 +950,27 @@ bool NFCMasterServerModule::HttpHandleHttpGm(uint32_t linkId, const NFHttpHandle
 	NFMsg::http_msg_gm gm;
 	NFProtobufCommon::JsonStringToMessage(jsonMsg, gm);
 
-	NF_SHARE_PTR<NFServerData> pServerData = mProxyMap.First();
-	while (pServerData)
+	if (gm.server_id() == 0)
 	{
-		m_pNetServerModule->SendToServerByPB(pServerData->mUnlinkId, EGMI_STS_GM_MSG, gm, 0);
-
-		pServerData = mProxyMap.Next();
+		SendMsgToAllServer(EGMI_STS_GM_MSG, gm, 0);
+		NFEventMgr::Instance()->FireExecute(NFEVENT_GM, 0, 0, gm);
+	}
+	else if (gm.server_id() == 1)
+	{
+		NFEventMgr::Instance()->FireExecute(NFEVENT_GM, 0, 0, gm);
+	}
+	else
+	{
+		SendMsgToServer(gm.server_id(), EGMI_STS_GM_MSG, gm, 0);
 	}
 
-	m_pHttpServerModule->ResponseMsg(NF_ST_MASTER, req, "{}", NFWebStatus::WEB_OK, "OK");
+	NFMsg::http_msg_gm_ret msg_gm_ret;
+	msg_gm_ret.set_code("success");
+	msg_gm_ret.set_msg("success");
+	std::string strMsg;
+	NFProtobufCommon::MessageToJsonString(msg_gm_ret, strMsg);
+
+	m_pHttpServerModule->ResponseMsg(NF_ST_MASTER, req, strMsg, NFWebStatus::WEB_OK, "OK");
 
 	return true;
 }

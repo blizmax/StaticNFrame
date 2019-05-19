@@ -20,6 +20,7 @@
 #include "NFComm/NFCore/NFMap.hpp"
 #include "NFComm/NFPluginModule/NFIAsyMysqlModule.h"
 #include "NFComm/NFPluginModule/NFTimerMgr.h"
+#include "NFComm/NFPluginModule/NFEventMgr.h"
 
 class NFCMasterServerModule : public NFIMasterServerModule, public NFTimerObj
 {
@@ -71,6 +72,10 @@ protected:
 	virtual bool HttpHandleHttpGm(uint32_t linkId, const NFHttpHandle& req);
 
 	void SaveServerDataToDB();
+
+	NF_SHARE_PTR<NFServerData> GetServerByServerId(uint32_t serverId);
+	void SendMsgToAllServer(const uint32_t nMsgID, const google::protobuf::Message& xData, const uint64_t nPlayerID);
+	void SendMsgToServer(uint32_t serverId, const uint32_t nMsgID, const google::protobuf::Message& xData, const uint64_t nPlayerID);
 private:
 	NFINetServerModule* m_pNetServerModule;
 	NFIHttpServerModule* m_pHttpServerModule;

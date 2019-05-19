@@ -26,6 +26,15 @@ NFCConsoleModule::~NFCConsoleModule()
 	
 }
 
+bool NFCConsoleModule::Shut()
+{
+	if (mThread.joinable())
+	{
+		mThread.detach();
+	}
+	return true;
+}
+
 bool NFCConsoleModule::Awake()
 {
 	if (m_pPluginManager->IsDaemon() == false)
