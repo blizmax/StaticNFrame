@@ -125,11 +125,19 @@ struct NFClassNode
 	std::vector<std::string> mVecTableName;
 };
 
+struct NFClassTable
+{
+	std::string mTableName;
+	std::unordered_map<std::string, NFClassNode> mClassNodeMap;
+	std::vector<NFClassNode> mClassNodeArray;
+};
+
 struct NFClassObject
 {
 	std::string mClassName;
 	std::unordered_map<std::string, NFClassNode> mClassNodeMap;
 	std::vector<NFClassNode> mClassNodeArray;
+	std::unordered_map<std::string, NFClassTable> mClassTableMap;
 };
 
 struct NFDBTableCol

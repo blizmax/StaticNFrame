@@ -289,7 +289,65 @@ bool NFCConfigModule::LoadClassNode()
 
 		for (auto classit = classNameRef.begin(); classit != classNameRef.end(); ++classit)
 		{
+			NFLuaRef keyRef = classit.key();
+			std::string keyValue = keyRef.toValue<std::string>();
 			NFLuaRef nodeRef = classit.value();
+
+			if (keyValue.find("table") != std::string::npos)
+			{
+				NFClassTable classTable;
+				classTable.mTableName = keyValue;
+				for (auto tableit = nodeRef.begin(); tableit != nodeRef.end(); ++tableit)
+				{
+					NFLuaRef tableNodeRef = tableit.value();
+
+					NFClassNode classNode;
+					std::string strNodeType;
+
+					GetLuaTableValue(tableNodeRef, "nodeName", classNode.mNodeName);
+					GetLuaTableValue(tableNodeRef, "nodeType", strNodeType);
+					GetLuaTableValue(tableNodeRef, "desc", classNode.mDesc);
+
+					if (strNodeType == "bool")
+					{
+						classNode.mNodeType = NF_DT_BOOLEAN;
+					}
+					else if (strNodeType == "int32" || strNodeType == "uint32" || strNodeType == "int64" || strNodeType == "uint64")
+					{
+						classNode.mNodeType = NF_DT_INT;
+					}
+					else if (strNodeType == "double")
+					{
+						classNode.mNodeType = NF_DT_DOUBLE;
+					}
+					else if (strNodeType == "string")
+					{
+						classNode.mNodeType = NF_DT_STRING;
+					}
+					else if (strNodeType == "array")
+					{
+						classNode.mNodeType = NF_DT_ARRAY;
+					}
+					else if (strNodeType == "list")
+					{
+						classNode.mNodeType = NF_DT_LIST;
+					}
+					else if (strNodeType == "mapstring")
+					{
+						classNode.mNodeType = NF_DT_MAPSTRING;
+					}
+					else if (strNodeType == "mapint")
+					{
+						classNode.mNodeType = NF_DT_MAPINT;
+					}
+
+					classNode.mStrNodeType = strNodeType;
+					classTable.mClassNodeMap.emplace(classNode.mNodeName, classNode);
+					classTable.mClassNodeArray.push_back(classNode);
+				}
+				pClassObject->mClassTableMap.emplace(classTable.mTableName, classTable);
+				continue;
+			}
 
 			NFClassNode classNode;
 			std::string dbTable;

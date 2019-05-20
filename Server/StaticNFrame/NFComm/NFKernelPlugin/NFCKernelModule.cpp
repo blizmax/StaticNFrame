@@ -172,10 +172,25 @@ NFIObject* NFCKernelModule::CreateNFObject(uint64_t guid, const std::string& cla
 	NFClassObject* pClassObject = pConfigModule->GetClassObject(className);
 	if (pClassObject)
 	{
-		for (auto iter = pClassObject->mClassNodeMap.begin(); iter != pClassObject->mClassNodeMap.end(); iter++)
+		for (auto iter = pClassObject->mClassNodeArray.begin(); iter != pClassObject->mClassNodeArray.end(); iter++)
 		{
-			NFClassNode& classNode = iter->second;
+			NFClassNode& classNode = *iter;
 			pObject->AddNode(classNode.mNodeName, classNode.mNodeType, classNode.mFeature);
+		}
+
+		for (auto iterTable = pClassObject->mClassTableMap.begin(); iterTable != pClassObject->mClassTableMap.end(); iterTable++)
+		{
+			NFClassTable& tableNode = iterTable->second;
+
+			std::vector<int> dataColType;
+
+			for (auto iter = tableNode.mClassNodeArray.begin(); iter != tableNode.mClassNodeArray.end(); iter++)
+			{
+				NFClassNode& classNode = *iter;
+				dataColType.push_back(classNode.mNodeType);
+			}
+
+			pObject->AddTable(guid, tableNode.mTableName, dataColType, 0);
 		}
 	}
 
