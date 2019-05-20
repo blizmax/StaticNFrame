@@ -1,0 +1,168 @@
+syntax = "proto2";
+package NFMsg;
+
+import "st_lhd.proto";
+
+message cglhdcreatetable
+{
+	optional int32 userid = 1;  
+	optional lhd_tableconfiginfo conf_info = 2;
+}
+
+message gclhdcreatetable
+{
+	optional int32 result = 1;
+	optional int32 tableid = 2;   //牌桌id
+	optional int32 frameid = 3;   //变化，没完一局增加1, 当前局数
+	optional int32 state = 4;     //状态
+	optional int32 timemark = 5;        //时间标签
+}
+
+message cglhdenter
+{
+	optional int32 userid = 1;  
+	optional int32 tableid = 2;    //如果是0，则随机分配
+	optional string password = 3;   //如果该牌桌是需要密码的
+	optional int32 tabletype = 4;   //加一个对应的类型
+}
+
+
+
+message gclhdenter
+{
+	optional int32 result = 1;
+	optional lhd_tableinfo tableinfo = 2;
+}
+
+
+message cglhdsitdown  //坐下牌桌
+{
+	optional int32 userid = 1;
+	optional int32 tableid = 2;
+	optional int32 chairid = 3;    //坐下来的位置
+}
+
+
+message gclhdsitdown      //当有玩家坐下来时，把该协议同时广播给牌桌里面所有的其他的玩家
+{
+	optional int32 result = 1;
+	optional lhd_userinfo userinfo = 2;
+}
+
+message cglhdready
+{
+	optional int32 userid = 1;
+}
+
+message gclhdready
+{
+	optional int32 result = 1;
+	optional int32 userid = 2;
+}
+
+//游戏开始
+message cglhdstart
+{
+	optional int32 userid = 1;
+}
+
+
+message gclhdstart
+{
+	optional int32 result = 1;
+	optional int32 tableid = 2;   //牌桌id
+	optional int32 frameid = 3;   //变化，没完一局增加1, 当前局数
+	optional int32 state = 4;     //状态
+	optional int32 timemark = 5;  //时间标签
+}
+
+//玩家抢庄
+message cglhdrushbank
+{
+	optional int32 userid = 1;
+	optional int32 operatetype = 2; //1:抢,2:不抢,0:未操作
+}
+
+message gclhdrushbank
+{
+	optional int32 result = 1;
+	optional int32 userid = 2;
+	optional int32 operatetype = 3; //1:抢,2:不抢,0:未操作
+}
+
+//定庄
+message gclhdcommitbank
+{
+	optional int32 result = 1;
+	optional int32 bankid = 2;
+}
+
+//放宝开始
+message gclhdcheststart
+{
+	optional int32 result = 1;
+	optional int32 bankid = 2;
+	optional int32 tableid = 3;   //牌桌id
+	optional int32 frameid = 4;   //变化，没完一局增加1, 当前局数
+	optional int32 state = 5;     //状态
+	optional int32 timemark = 6;  //时间标签
+}
+
+//玩家放宝
+message cglhdchestarea
+{
+	optional int32 userid = 1;
+	optional int32 chestarea = 2;		//放宝区域
+}
+
+//玩家放宝结果
+//进入下注阶段
+message gclhdchestarea
+{
+	optional int32 result = 1;
+	optional int32 userid = 2;
+	optional int32 chestarea = 3;		//放宝区域
+	optional int32 state = 5;     //状态
+	optional int32 timemark = 6;  //时间标签
+}
+
+//玩家下注
+message cglhdplayerpour
+{
+	optional int32 userid = 1;
+	optional int32 pourarea = 2;		//下注区域  1表示红方, 2表示黑方, 3表示幸运一击区域
+	optional int32 pourscore = 3;		//下注金额
+}
+
+//玩家下注结果
+message gclhdplayerpour
+{
+	optional int32 result = 1;
+	optional int32 userid = 2;
+	optional int32 pourarea = 3;		//下注区域 1表示红方, 2表示黑方, 3表示幸运一击区域
+	optional int32 pourscore = 4;		//下注金额
+}
+
+//亮牌
+message gclhdblightcard
+{
+	optional int32 result = 1;
+	repeated lhd_areainfo area_info = 2;
+}
+
+//小局结算
+message gclhdgamecount
+{
+	optional int32 result = 1;
+	optional lhd_gamecount count = 2;
+}
+
+//大局结算
+message gclhdgamefinish
+{
+	optional int32 result = 1;
+	optional int32 starttime = 2;				//起始时间戳
+	optional int32 endtime = 3;					//结束时间戳
+	repeated lhd_gamecount gamecount = 4;	//小局详情
+}
+

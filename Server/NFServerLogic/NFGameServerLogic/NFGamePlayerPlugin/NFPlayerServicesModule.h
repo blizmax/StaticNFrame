@@ -9,16 +9,16 @@
 
 #pragma once
 
-#include "NFServerLogic/NFServerLogicCommon/NFIHumanServicesModule.h"
+#include "NFServerLogic/NFServerLogicCommon/NFIPlayerServicesModule.h"
 #include "NFComm/NFPluginModule/NFIKernelModule.h"
 #include "NFComm/NFPluginModule/NFINoSqlModule.h"
 #include "NFComm/NFPluginModule/NFIAsyMysqlModule.h"
 
-class NFCHumanServicesModule : public NFIHumanServicesModule
+class NFCPlayerServicesModule : public NFIPlayerServicesModule
 {
 public:
-	NFCHumanServicesModule(NFIPluginManager* p);
-	virtual ~NFCHumanServicesModule();
+	NFCPlayerServicesModule(NFIPluginManager* p);
+	virtual ~NFCPlayerServicesModule();
 
 	virtual bool Init() override;
 

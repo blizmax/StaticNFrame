@@ -17,12 +17,7 @@
 
 class NFHttpHandle;
 
-#ifndef NF_DYNAMIC_PLUGIN
-#include "NFComm/NFPluginModule/NFILuaModule.h"
-class NFILuaScriptModule : public NFIModule, public NFILuaModule
-#else
 class NFILuaScriptModule : public NFIModule
-#endif
 {
 public:
 	NFILuaScriptModule()

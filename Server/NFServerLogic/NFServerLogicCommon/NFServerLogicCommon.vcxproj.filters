@@ -1,17 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClInclude Include="NFHumanDefine.h">
-      <Filter>Human</Filter>
-    </ClInclude>
     <ClInclude Include="NFBehaviorLogMgr.h">
       <Filter>BehaviorLog</Filter>
-    </ClInclude>
-    <ClInclude Include="NFIHumanModule.h">
-      <Filter>Human</Filter>
-    </ClInclude>
-    <ClInclude Include="NFIHumanControllerModule.h">
-      <Filter>Human</Filter>
     </ClInclude>
     <ClInclude Include="NFIBehaviorLogModule.h">
       <Filter>Head</Filter>
@@ -40,30 +31,48 @@
     <ClInclude Include="NFIGameDynamicModule.h">
       <Filter>Head</Filter>
     </ClInclude>
+    <ClInclude Include="NFILhdControllerModule.h">
+      <Filter>Lhd</Filter>
+    </ClInclude>
+    <ClInclude Include="NFLhdDefine.h">
+      <Filter>Lhd</Filter>
+    </ClInclude>
+    <ClInclude Include="NFPlayerDefine.h">
+      <Filter>Player</Filter>
+    </ClInclude>
+    <ClInclude Include="NFIPlayerControllerModule.h">
+      <Filter>Player</Filter>
+    </ClInclude>
+    <ClInclude Include="NFIPlayerModule.h">
+      <Filter>Player</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="NFBehaviorLogMgr.cpp">
       <Filter>BehaviorLog</Filter>
     </ClCompile>
-    <ClCompile Include="NFIHumanServicesModule.h">
-      <Filter>Human</Filter>
-    </ClCompile>
     <ClCompile Include="NFServerLogicCommon.cpp">
       <Filter>Common</Filter>
+    </ClCompile>
+    <ClCompile Include="NFIPlayerServicesModule.h">
+      <Filter>Player</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="BehaviorLog">
       <UniqueIdentifier>{ce6bd5a2-5d35-40e7-8ba7-98589061fdb7}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Human">
-      <UniqueIdentifier>{1838bd43-96bf-4473-9eb0-91e7b7d7ae2d}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Head">
       <UniqueIdentifier>{1578a742-36e3-47c5-afac-1fdf41673315}</UniqueIdentifier>
     </Filter>
     <Filter Include="Common">
       <UniqueIdentifier>{407be0bc-3daa-4b1e-9b0f-5b062b9d2cfe}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Lhd">
+      <UniqueIdentifier>{ba2289fa-6cc0-4448-8609-5defc633c09e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Player">
+      <UniqueIdentifier>{1838bd43-96bf-4473-9eb0-91e7b7d7ae2d}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

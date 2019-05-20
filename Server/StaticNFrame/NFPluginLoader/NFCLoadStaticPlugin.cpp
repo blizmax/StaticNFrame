@@ -48,7 +48,8 @@
 #include <NFServerLogic/NFGameServerLogic/NFGameLogicPlugin/NFGameLogicPlugin.h>
 #include <NFServerLogic/NFProxyServerLogic/NFProxyLogicPlugin/NFProxyLogicPlugin.h>
 #include <NFServerLogic/NFWorldLogicPlugin/NFWorldLogicPlugin.h>
-#include <NFServerLogic/NFGameServerLogic/NFGameHumanPlugin/NFGameHumanPlugin.h>
+#include <NFServerLogic/NFGameServerLogic/NFGameHumanPlugin/NFGamePlayerPlugin.h>
+#include <NFServerLogic/NFGameServerLogic/NFGameHumanPlugin/NFGameLhdPlugin.h>
 #endif
 
 bool NFCPluginManager::LoadKernelPlugin()
@@ -100,7 +101,8 @@ bool NFCPluginManager::RegisterStaticPlugin()
 	////////////////////游戏服务器具体逻辑引擎实现////////////////////////////
 	/////////////////////////////////////////////////////////////////////////
 
-	REGISTER_STATIC_PLUGIN(this, NFGameHumanPlugin);
+	REGISTER_STATIC_PLUGIN(this, NFGamePlayerPlugin);
+	REGISTER_STATIC_PLUGIN(this, NFGameLhdPlugin);
 
 	////////////////////////////////////////////////////////////////////////
 	///////////////////////////////////////////////////////////////////////

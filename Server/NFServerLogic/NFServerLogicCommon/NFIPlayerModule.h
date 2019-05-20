@@ -10,17 +10,17 @@
 #pragma once
 
 #include "NFServerLogic/NFServerLogicCommon/NFIGameDynamicModule.h"
-#include "NFServerLogic/NFServerLogicCommon/NFHumanDefine.h"
+#include "NFServerLogic/NFServerLogicCommon/NFPlayerDefine.h"
 
-class NFIHumanModule : public NFIGameDynamicModule
+class NFIPlayerModule : public NFIGameDynamicModule
 {
 public:
-	NFIHumanModule(NFIPluginManager* p) :NFIGameDynamicModule(p)
+	NFIPlayerModule(NFIPluginManager* p) :NFIGameDynamicModule(p)
 	{
 
 	}
 
-	virtual ~NFIHumanModule()
+	virtual ~NFIPlayerModule()
 	{
 
 	}
@@ -30,4 +30,6 @@ public:
 	virtual  NFIObject*  GetPlayerInfo(uint64_t playerId, uint32_t& retCode) = 0;
 
 	virtual void CreatePlayer(const NFMsg::cgaccountlogin& cgMsg) = 0;
+
+	virtual NFIObject* GetPlayerObject(uint64_t playerId) = 0;
 };

@@ -9,16 +9,16 @@
 
 #pragma once
 
-#include "NFServerLogic/NFServerLogicCommon/NFIHumanControllerModule.h"
-#include "NFServerLogic/NFServerLogicCommon/NFHumanDefine.h"
-#include "NFServerLogic/NFServerLogicCommon/NFIHumanModule.h"
+#include "NFServerLogic/NFServerLogicCommon/NFIPlayerControllerModule.h"
+#include "NFServerLogic/NFServerLogicCommon/NFPlayerDefine.h"
+#include "NFServerLogic/NFServerLogicCommon/NFIPlayerModule.h"
 
-class NFCHumanControllerModule : public NFIHumanControllerModule
+class NFCPlayerControllerModule : public NFIPlayerControllerModule
 {
 public:
-	NFCHumanControllerModule(NFIPluginManager* p);
+	NFCPlayerControllerModule(NFIPluginManager* p);
 
-	virtual ~NFCHumanControllerModule();
+	virtual ~NFCPlayerControllerModule();
 
 	virtual bool Init();
 
@@ -131,5 +131,5 @@ public:
 public:
 	static void CopyFromPlayerObject(NFMsg::playerinfo* pInfo, NFIObject* pPlayerObject);
 protected:
-	NFIHumanModule* m_pHumanModule;
+	NFIPlayerModule* m_pPlayerModule;
 };

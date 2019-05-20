@@ -30,20 +30,10 @@ function init_script_system(pluginManager, luaModule)
 	LoadLuaFile("../ScriptModule/LuaNFrame")
 	--LoadLuaFile("../ScriptModule/trdlib", true)
 
-	breakSocketHandle,debugXpCall = require("LuaDebug")("localhost",7003)
-
 	if pluginManager:IsLoadAllServer() then
 		--vscode luaide调试工具需要
 	end
 
 	--初始化LuaNFrame
 	LuaNFrame.init(pluginManager, luaModule)
-	LuaNFrame.AddTimer("ok", "xx")
-	LuaNFrame.AddTimer("update_debugsocket", 1)
-end
-
-function update_debugsocket()
-	if breakSocketHandle ~= nil then
-		breakSocketHandle()
-	end
 end

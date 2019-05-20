@@ -1,9 +1,9 @@
 // -------------------------------------------------------------------------
-//    @FileName         :    NFIHumanControllerModule.h
+//    @FileName         :    NFHumanServicesModule.h
 //    @Author           :    GaoYi
 //    @Date             :    2019/04/07
 //    @Email			:    445267987@qq.com
-//    @Module           :    NFIHumanControllerModule
+//    @Module           :    NFIHumanServicesModule
 //
 // -------------------------------------------------------------------------
 
@@ -11,15 +11,15 @@
 
 #include "NFServerLogic/NFServerLogicCommon/NFIGameDynamicModule.h"
 
-class NFIHumanControllerModule : public NFIGameDynamicModule
+class NFIPlayerServicesModule : public NFIGameDynamicModule
 {
 public:
-	NFIHumanControllerModule(NFIPluginManager* p) :NFIGameDynamicModule(p)
+	NFIPlayerServicesModule(NFIPluginManager* p) :NFIGameDynamicModule(p)
 	{
 
 	}
 
-	virtual ~NFIHumanControllerModule()
+	virtual ~NFIPlayerServicesModule()
 	{
 
 	}

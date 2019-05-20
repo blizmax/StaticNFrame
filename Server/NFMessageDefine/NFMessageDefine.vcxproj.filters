@@ -17,6 +17,9 @@
     <ClInclude Include="NFNodeClassName.h" />
     <ClInclude Include="db_server.pb.h" />
     <ClInclude Include="msg_gm.pb.h" />
+    <ClInclude Include="st_lhd.pb.h" />
+    <ClInclude Include="st_lhd_packet_code.pb.h" />
+    <ClInclude Include="msg_lhd.pb.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="mysql_db.pb.cc" />
@@ -32,5 +35,8 @@
     <ClCompile Include="server_to_server_msg.pb.cc" />
     <ClCompile Include="db_server.pb.cc" />
     <ClCompile Include="msg_gm.pb.cc" />
+    <ClCompile Include="st_lhd.pb.cc" />
+    <ClCompile Include="st_lhd_packet_code.pb.cc" />
+    <ClCompile Include="msg_lhd.pb.cc" />
   </ItemGroup>
 </Project>

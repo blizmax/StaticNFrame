@@ -7,34 +7,34 @@
 //
 // -------------------------------------------------------------------------
 
-#include "NFHumanServicesModule.h"
+#include "NFPlayerServicesModule.h"
 #include "NFComm/NFPluginModule/NFTimerMgr.h"
 #include "NFMessageDefine/NFNodeClass.h"
 #include "NFMessageDefine/NFNodeClassName.h"
 #include "NFComm/NFPluginModule/NFIObject.h"
-#include "NFServerLogic/NFServerLogicCommon/NFHumanDefine.h"
+#include "NFServerLogic/NFServerLogicCommon/NFPlayerDefine.h"
 #include "NFComm/NFCore/NFCommon.h"
 
 #define SAVE_PLAYER_DATA_TIMER 0
 #define SAVE_PLAYER_DATA_TIMER_TIME (1 * 60 * 1000)
 
-NFCHumanServicesModule::NFCHumanServicesModule(NFIPluginManager* p):NFIHumanServicesModule(p)
+NFCPlayerServicesModule::NFCPlayerServicesModule(NFIPluginManager* p):NFIPlayerServicesModule(p)
 {
 
 }
 
-NFCHumanServicesModule::~NFCHumanServicesModule()
+NFCPlayerServicesModule::~NFCPlayerServicesModule()
 {
 
 }
 
-bool NFCHumanServicesModule::Init()
+bool NFCPlayerServicesModule::Init()
 {
 	this->SetTimer(SAVE_PLAYER_DATA_TIMER, SAVE_PLAYER_DATA_TIMER_TIME, INFINITY_CALL);
 	return true;
 }
 
-void NFCHumanServicesModule::OnTimer(uint32_t nTimerID)
+void NFCPlayerServicesModule::OnTimer(uint32_t nTimerID)
 {
 	if (nTimerID == SAVE_PLAYER_DATA_TIMER)
 	{
@@ -42,7 +42,7 @@ void NFCHumanServicesModule::OnTimer(uint32_t nTimerID)
 	}
 }
 
-bool NFCHumanServicesModule::DynamicLoadPlugin()
+bool NFCPlayerServicesModule::DynamicLoadPlugin()
 {
 	m_pKernelModule = m_pPluginManager->FindModule<NFIKernelModule>();
 	m_pNosqlModule = m_pPluginManager->FindModule<NFINoSqlModule>();
@@ -50,10 +50,15 @@ bool NFCHumanServicesModule::DynamicLoadPlugin()
 	return true;
 }
 
-void NFCHumanServicesModule::SavePlayerDataToDB()
+void NFCPlayerServicesModule::SavePlayerDataToDB()
 {
-	std::unordered_map<uint64_t, NFIObject*>& objectMap = m_pKernelModule->GetAllObject();
-	for (auto iter = objectMap.begin(); iter != objectMap.end(); iter++)
+	std::unordered_map<uint64_t, NFIObject*>* pObjectMap = m_pKernelModule->GetAllObject(NF_NODE_STRING_CLASS_NAME_PLAYER);
+	if (pObjectMap == nullptr)
+	{
+		return;
+	}
+
+	for (auto iter = pObjectMap->begin(); iter != pObjectMap->end(); iter++)
 	{
 		NFIObject* pObject = iter->second;
 		if (pObject->GetNodeString(NF_NODE_STRING_CLASS_NAME) == NF_NODE_STRING_CLASS_NAME_PLAYER)

@@ -9,19 +9,19 @@
 
 #pragma once
 
-#include "NFServerLogic/NFServerLogicCommon/NFIHumanModule.h"
-#include "NFServerLogic/NFServerLogicCommon/NFHumanDefine.h"
+#include "NFServerLogic/NFServerLogicCommon/NFIPlayerModule.h"
+#include "NFServerLogic/NFServerLogicCommon/NFPlayerDefine.h"
 #include "NFComm/NFPluginModule/NFINoSqlModule.h"
 #include "NFComm/NFPluginModule/NFIMysqlModule.h"
 #include "NFComm/NFPluginModule/NFIAsyMysqlModule.h"
 #include "NFComm/NFPluginModule/NFIKernelModule.h"
 #include "NFComm/NFCore/NFMapEx.hpp"
 
-class NFCHumanModule : public NFIHumanModule
+class NFCPlayerModule : public NFIPlayerModule
 {
 public:
-	NFCHumanModule(NFIPluginManager* p);
-	virtual ~NFCHumanModule();
+	NFCPlayerModule(NFIPluginManager* p);
+	virtual ~NFCPlayerModule();
 
 	virtual bool Init() override;
 
@@ -36,6 +36,7 @@ public:
 
 	virtual void CreatePlayer(const NFMsg::cgaccountlogin& cgMsg);
 
+	virtual NFIObject* GetPlayerObject(uint64_t playerId);
 private:
 	virtual std::string GetInitFaceID();
 
@@ -44,7 +45,6 @@ private:
 	virtual NFIObject* LoadPlayerInfo(uint64_t playerId, uint32_t& retCode);
 private:
 	virtual NFIObject* CreatePlayerObject(NFMsg::db_playerinfo* pInfo);
-	virtual NFIObject* GetPlayerObject(uint64_t playerId);
 protected:
 	NFIKernelModule* m_pKernelModule;
 	NFIMysqlModule* m_pMysqlModule;

@@ -152,9 +152,15 @@ std::string NFCKernelModule::Base64Decode(const std::string& s)
 NFIObject* NFCKernelModule::CreateNFObject(uint64_t guid, const std::string& className)
 {
 	NFIObject* pObject = nullptr;
-	if (ExistNFObject(guid))
+	if (ExistNFObject(guid, className))
 	{
-		NFLogWarning(NF_LOG_KERNEL_PLUGIN, 0, "the object:{} has Exist!", guid);
+		NFLogWarning(NF_LOG_KERNEL_PLUGIN, guid, "the object:{} has Exist!", guid);
+		return nullptr;
+	}
+
+	if (className.empty())
+	{
+		NFLogWarning(NF_LOG_KERNEL_PLUGIN, guid, "the className is empty", guid);
 		return nullptr;
 	}
 
@@ -173,32 +179,37 @@ NFIObject* NFCKernelModule::CreateNFObject(uint64_t guid, const std::string& cla
 		}
 	}
 
-	mObjectMap.emplace(guid, pObject);
+	mObjectMap[className].emplace(guid, pObject);
 	return pObject;
 }
 
 NFIObject* NFCKernelModule::GetNFObject(uint64_t guid, const std::string& className)
 {
-	auto iter = mObjectMap.find(guid);
-	if (iter != mObjectMap.end())
+	auto iterClass = mObjectMap.find(className);
+	if (iterClass == mObjectMap.end())
 	{
-		if (className.empty())
-		{
-			return iter->second;
-		}
-		else if (className == iter->second->GetNodeString(NF_NODE_STRING_CLASS_NAME))
-		{
-			return iter->second;
-		}
+		return nullptr;
+	}
+
+	auto iter = iterClass->second.find(guid);
+	if (iter != iterClass->second.end())
+	{
+		return iter->second;
 	}
 
 	return nullptr;
 }
 
-bool NFCKernelModule::ExistNFObject(uint64_t guid)
+bool NFCKernelModule::ExistNFObject(uint64_t guid, const std::string& className)
 {
-	auto iter = mObjectMap.find(guid);
-	if (iter != mObjectMap.end())
+	auto iterClass = mObjectMap.find(className);
+	if (iterClass == mObjectMap.end())
+	{
+		return false;
+	}
+
+	auto iter = iterClass->second.find(guid);
+	if (iter != iterClass->second.end())
 	{
 		return true;
 	}
@@ -206,12 +217,12 @@ bool NFCKernelModule::ExistNFObject(uint64_t guid)
 	return false;
 }
 
-bool NFCKernelModule::DeleteNFObject(uint64_t guid)
+bool NFCKernelModule::DeleteNFObject(uint64_t guid, const std::string& className)
 {
-	NFIObject* pObject = GetNFObject(guid);
+	NFIObject* pObject = GetNFObject(guid, className);
 	if (pObject)
 	{
-		mDeleteList.push_back(guid);
+		mDeleteList.push_back(std::pair<std::string, uint64_t>(className, guid));
 		return true;
 	}
 
@@ -219,13 +230,23 @@ bool NFCKernelModule::DeleteNFObject(uint64_t guid)
 	return false;
 }
 
-bool NFCKernelModule::DestroyNFObject(uint64_t guid)
+std::unordered_map<uint64_t, NFIObject*>* NFCKernelModule::GetAllObject(const std::string& className)
 {
-	NFIObject* pObject = GetNFObject(guid);
+	auto iterClass = mObjectMap.find(className);
+	if (iterClass == mObjectMap.end())
+	{
+		return &iterClass->second;
+	}
+	return nullptr;
+}
+
+bool NFCKernelModule::DestroyNFObject(uint64_t guid, const std::string& className)
+{
+	NFIObject* pObject = GetNFObject(guid, className);
 	if (pObject)
 	{
 		NF_SAFE_DELETE(pObject);
-		mObjectMap.erase(guid);
+		mObjectMap[className].erase(guid);
 		return true;
 	}
 
@@ -235,9 +256,13 @@ bool NFCKernelModule::DestroyNFObject(uint64_t guid)
 
 bool NFCKernelModule::DestroyAll()
 {
-	for (auto iter = mObjectMap.begin(); iter != mObjectMap.end(); iter++)
+	for (auto iterclass = mObjectMap.begin(); iterclass != mObjectMap.end(); iterclass++)
 	{
-		NF_SAFE_DELETE(iter->second);
+		for (auto iter = iterclass->second.begin(); iter != iterclass->second.end(); iter++)
+		{
+			NF_SAFE_DELETE(iter->second);
+		}
+		iterclass->second.clear();
 	}
 	mObjectMap.clear();
 	return true;
@@ -247,7 +272,7 @@ void NFCKernelModule::DeleteNFObjectList()
 {
 	for (auto iter = mDeleteList.begin(); iter != mDeleteList.end(); iter++)
 	{
-		DestroyNFObject(*iter);
+		DestroyNFObject(iter->second, iter->first);
 	}
 	mDeleteList.clear();
 }

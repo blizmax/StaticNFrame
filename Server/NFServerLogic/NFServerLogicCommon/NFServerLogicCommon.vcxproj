@@ -37,21 +37,23 @@
   <ItemGroup>
     <ClInclude Include="NFBehaviorLogMgr.h" />
     <ClInclude Include="NFIGameDynamicModule.h" />
-    <ClInclude Include="NFHumanDefine.h" />
+    <ClInclude Include="NFPlayerDefine.h" />
     <ClInclude Include="NFIBehaviorLogModule.h" />
     <ClInclude Include="NFIDynamicModule.h" />
     <ClInclude Include="NFIGameConfigModule.h" />
     <ClInclude Include="NFIGameLogicModule.h" />
-    <ClInclude Include="NFIHumanControllerModule.h" />
-    <ClInclude Include="NFIHumanModule.h" />
+    <ClInclude Include="NFIPlayerControllerModule.h" />
+    <ClInclude Include="NFIPlayerModule.h" />
+    <ClInclude Include="NFILhdControllerModule.h" />
     <ClInclude Include="NFILoginLogicModule.h" />
     <ClInclude Include="NFIProxyLogicModule.h" />
     <ClInclude Include="NFIWorldLogicModule.h" />
+    <ClInclude Include="NFLhdDefine.h" />
     <ClInclude Include="NFServerLogicCommon.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="NFBehaviorLogMgr.cpp" />
-    <ClCompile Include="NFIHumanServicesModule.h" />
+    <ClCompile Include="NFIPlayerServicesModule.h" />
     <ClCompile Include="NFServerLogicCommon.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

@@ -1,9 +1,9 @@
 // -------------------------------------------------------------------------
-//    @FileName         :    NFGameHumanPlugin.h
+//    @FileName         :    NFGameLhdPlugin.h
 //    @Author           :    GaoYi
-//    @Date             :    2019/04/7
+//    @Date             :    2019/05/20
 //    @Email			:    445267987@qq.com
-//    @Module           :    NFGameHumanPlugin
+//    @Module           :    NFGameLhdPlugin
 //
 // -------------------------------------------------------------------------
 
@@ -14,10 +14,10 @@
 #include <string>
 
 //////////////////////////////////////////////////////////////////////////
-class NFGameHumanPlugin : public NFIPlugin
+class NFGameLhdPlugin : public NFIPlugin
 {
 public:
-	explicit NFGameHumanPlugin(NFIPluginManager* p)
+	explicit NFGameLhdPlugin(NFIPluginManager* p)
 	{
 		m_pPluginManager = p;
 	}

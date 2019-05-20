@@ -50,21 +50,21 @@ public:
 
 	virtual NFIObject* CreateNFObject(uint64_t guid, const std::string& className) override;
 	virtual NFIObject* GetNFObject(uint64_t guid, const std::string& className = "") override;
-	virtual bool ExistNFObject(uint64_t guid) override;
-	virtual bool DeleteNFObject(uint64_t guid) override;
+	virtual bool ExistNFObject(uint64_t guid, const std::string& className) override;
+	virtual bool DeleteNFObject(uint64_t guid, const std::string& className) override;
 
-	virtual std::unordered_map<uint64_t, NFIObject*>& GetAllObject() override { return mObjectMap; }
+	virtual std::unordered_map<uint64_t, NFIObject*>* GetAllObject(const std::string& className) override;
 protected:
 	static void ProcessMemFree();
-	virtual bool DestroyNFObject(uint64_t guid);
+	virtual bool DestroyNFObject(uint64_t guid, const std::string& className);
 	virtual bool DestroyAll();
 	virtual void DeleteNFObjectList();
 private:
 	uint64_t nGUIDIndex = 0;
 	uint64_t mLastGuidTimeStamp = 0;
 private:
-	std::unordered_map<uint64_t, NFIObject*> mObjectMap;
-	std::list<uint64_t> mDeleteList;
+	std::unordered_map<std::string, std::unordered_map<uint64_t, NFIObject*>> mObjectMap;
+	std::list<std::pair<std::string, uint64_t>> mDeleteList;
 };
 
 #endif

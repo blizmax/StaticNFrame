@@ -7,9 +7,9 @@
 //
 // -------------------------------------------------------------------------
 
-#include "NFHumanModule.h"
+#include "NFPlayerModule.h"
 
-#include "NFServerLogic/NFServerLogicCommon/NFHumanDefine.h"
+#include "NFServerLogic/NFServerLogicCommon/NFPlayerDefine.h"
 #include "NFServerLogic/NFServerLogicCommon/NFBehaviorLogMgr.h"
 #include "NFComm/NFPluginModule/NFCObject.h"
 #include "NFComm/NFCore/NFCommon.h"
@@ -21,22 +21,22 @@
 #include "NFMessageDefine/NFNodeClass.h"
 #include "NFMessageDefine/NFNodeClassName.h"
 
-NFCHumanModule::NFCHumanModule(NFIPluginManager* p):NFIHumanModule(p)
+NFCPlayerModule::NFCPlayerModule(NFIPluginManager* p):NFIPlayerModule(p)
 {
 
 }
 
-NFCHumanModule::~NFCHumanModule()
+NFCPlayerModule::~NFCPlayerModule()
 {
 
 }
 
-bool NFCHumanModule::Init()
+bool NFCPlayerModule::Init()
 {
 	return true;
 }
 
-bool NFCHumanModule::DynamicLoadPlugin()
+bool NFCPlayerModule::DynamicLoadPlugin()
 {
 	m_pKernelModule = m_pPluginManager->FindModule<NFIKernelModule>();
 	m_pMysqlModule = m_pPluginManager->FindModule<NFIMysqlModule>();
@@ -45,7 +45,7 @@ bool NFCHumanModule::DynamicLoadPlugin()
 	return true;
 }
 
-NFIObject* NFCHumanModule::CreatePlayerObject(NFMsg::db_playerinfo* pInfo)
+NFIObject* NFCPlayerModule::CreatePlayerObject(NFMsg::db_playerinfo* pInfo)
 {
 	if (pInfo == nullptr)
 	{
@@ -74,7 +74,7 @@ NFIObject* NFCHumanModule::CreatePlayerObject(NFMsg::db_playerinfo* pInfo)
 	}
 }
 
-NFIObject* NFCHumanModule::GetPlayerObject(uint64_t playerId)
+NFIObject* NFCPlayerModule::GetPlayerObject(uint64_t playerId)
 {
 	NFIObject* pObject = m_pKernelModule->GetNFObject(playerId, NF_NODE_STRING_CLASS_NAME_PLAYER);
 	if (pObject)
@@ -86,7 +86,7 @@ NFIObject* NFCHumanModule::GetPlayerObject(uint64_t playerId)
 	return nullptr;
 }
 
-NFIObject* NFCHumanModule::LoadPlayerInfoByCID(const std::string& account, const std::string& password, uint32_t& retCode)
+NFIObject* NFCPlayerModule::LoadPlayerInfoByCID(const std::string& account, const std::string& password, uint32_t& retCode)
 {
 	NFIObject* pObject = nullptr;
 
@@ -109,7 +109,7 @@ NFIObject* NFCHumanModule::LoadPlayerInfoByCID(const std::string& account, const
 		return pObject;
 	}
 
-	pObject = NFCHumanModule::CreatePlayerObject(pDbInfo);
+	pObject = NFCPlayerModule::CreatePlayerObject(pDbInfo);
 	if (pObject == nullptr)
 	{
 		NFLogError(NF_LOG_LOGIN_MODULE_LOG, pDbInfo->userid(), "NFCHumanModule::CreatePlayerObject failed:{}", pDbInfo->DebugString());
@@ -151,7 +151,7 @@ NFIObject* NFCHumanModule::LoadPlayerInfoByCID(const std::string& account, const
 	return pObject;
 }
 
-NFIObject* NFCHumanModule::GetPlayerInfoByCID(const std::string& account, const std::string& password, uint32_t& retCode)
+NFIObject* NFCPlayerModule::GetPlayerInfoByCID(const std::string& account, const std::string& password, uint32_t& retCode)
 {
 	NFIObject* pObject = nullptr;
 
@@ -180,7 +180,7 @@ NFIObject* NFCHumanModule::GetPlayerInfoByCID(const std::string& account, const 
 	return LoadPlayerInfoByCID(account, password, retCode);
 }
 
-NFIObject*  NFCHumanModule::GetPlayerInfo(uint64_t playerId, uint32_t& retCode)
+NFIObject*  NFCPlayerModule::GetPlayerInfo(uint64_t playerId, uint32_t& retCode)
 {
 	NFIObject* pObject = GetPlayerObject(playerId);
 	if (pObject)
@@ -210,7 +210,7 @@ NFIObject*  NFCHumanModule::GetPlayerInfo(uint64_t playerId, uint32_t& retCode)
 	return LoadPlayerInfo(playerId, retCode);
 }
 
-std::string NFCHumanModule::GetInitFaceID()
+std::string NFCPlayerModule::GetInitFaceID()
 {
 	std::string initFace = GetGlobalConfigObject()->GetNodeString(GAME_CONFIG_INIT_FACE);
 	std::vector<std::string> vecInitFace;
@@ -225,7 +225,7 @@ std::string NFCHumanModule::GetInitFaceID()
 	return vecInitFace[index];
 }
 
-void NFCHumanModule::CreatePlayer(const NFMsg::cgaccountlogin& cgMsg)
+void NFCPlayerModule::CreatePlayer(const NFMsg::cgaccountlogin& cgMsg)
 {
 	NFMsg::db_query_playerinfo db_playerinfo;
 	NFMsg::db_playerinfo* pDbInfo = db_playerinfo.mutable_db_fields();
@@ -245,7 +245,7 @@ void NFCHumanModule::CreatePlayer(const NFMsg::cgaccountlogin& cgMsg)
 	pDbInfo->set_jetton(GetGlobalConfigObject()->GetNodeInt32(GAME_CONFIG_INIT_JETTON));
 	pDbInfo->set_money(GetGlobalConfigObject()->GetNodeInt32(GAME_CONFIG_INIT_MONEY));
 	pDbInfo->set_lasttime(NFGetSecondTime());
-	pDbInfo->set_face_1(NFCHumanModule::GetInitFaceID());
+	pDbInfo->set_face_1(NFCPlayerModule::GetInitFaceID());
 	pDbInfo->set_sex(cgMsg.sex());
 	pDbInfo->set_regdate(NFDateTime::Now().GetDbTimeString());
 	bool ret = m_pMysqlModule->Updata(db_playerinfo);
@@ -256,7 +256,7 @@ void NFCHumanModule::CreatePlayer(const NFMsg::cgaccountlogin& cgMsg)
 	}
 }
 
-NFIObject* NFCHumanModule::LoadPlayerInfo(uint64_t playerId, uint32_t& retCode)
+NFIObject* NFCPlayerModule::LoadPlayerInfo(uint64_t playerId, uint32_t& retCode)
 {
 	NFIObject* pObject = nullptr;
 	NFMsg::db_query_playerinfo db_playerinfo;
