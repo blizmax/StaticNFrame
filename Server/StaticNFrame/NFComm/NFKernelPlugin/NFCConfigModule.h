@@ -44,10 +44,16 @@ public:
 	virtual std::vector<NFServerConfig*> GetServerConfigFromServerType(uint32_t serverType);
 	virtual NFIObject* GetGlobalConfig() const { return mGlobalConfig; }
 	virtual NFClassObject* GetClassObject(const std::string& className) const;
+
+	virtual NFIObject* CreateConfigObject(uint64_t guid, const std::string& className);
+	virtual NFIObject* GetConfigObject(uint64_t guid, const std::string& className);
+	virtual bool ExistConfigObject(uint64_t guid, const std::string& className);
+	virtual bool DeleteConfigObject(uint64_t guid, const std::string& className);
 protected:
 	std::unordered_map<std::string, NFPluginConfig*> mPluginConfig; //pluginName--key
 	std::unordered_map<int, NFServerConfig*> mServerConfig; //serverid--key
 	NFIObject* mGlobalConfig;
+	std::unordered_map<std::string, std::unordered_map<uint64_t, NFIObject*>> mObjectMap;
 	std::unordered_map<std::string, NFClassObject*> mClassObjectConfig;
 	std::unordered_map<std::string, NFDBTable*> mDBTableColConfig;
 };

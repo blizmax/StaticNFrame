@@ -56,3 +56,6 @@
 #define NF_PLAYER_NODE_BOOL_ONLINE                           "online"                                //是否在线
 #define NF_PLAYER_NODE_UINT64_LOGINTIME                      "loginTime"                             //登陆时间
 #define NF_PLAYER_NODE_UINT64_LOGOUTTIME                     "logoutTime"                            //下线时间
+////////////////////////////// loginfo node name /////////////////////////////
+#define NF_LOGINFO_NODE_UINT32_LOGLEVEL                      "loglevel"                              //日志等级
+#define NF_LOGINFO_NODE_UINT32_LOGFLUSHLEVEL                 "logflushlevel"                         //日志刷新

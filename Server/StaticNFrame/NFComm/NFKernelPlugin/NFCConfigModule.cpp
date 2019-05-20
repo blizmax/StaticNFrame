@@ -16,6 +16,8 @@
 #include "NFComm/NFCore/NFFileUtility.h"
 #include "NFComm/NFPluginModule/NFLogMgr.h"
 #include "NFComm/NFCore/NFDateTime.hpp"
+#include "NFMessageDefine/NFNodeClassName.h"
+#include "NFMessageDefine/NFNodeClass.h"
 
 NFCConfigModule::NFCConfigModule(NFIPluginManager* p)
 {
@@ -77,16 +79,20 @@ bool NFCConfigModule::LoadConfig()
 		}
 	}
 
-	LoadLogConfig();
 	LoadPluginConfig();
 	LoadServerConfig();
 	LoadClassNode();
 	LoadDBTable();
+
+	LoadLogConfig();
 	return true;
 }
 
 bool NFCConfigModule::LoadLogConfig()
 {
+	DeleteConfigObject(0, NF_NODE_STRING_CLASS_NAME_LOGINFO);
+	NFIObject* pLogObject = CreateConfigObject(0, NF_NODE_STRING_CLASS_NAME_LOGINFO);
+
 	mGlobalConfig->SetNodeUInt32(DEFINE_LUA_STRING_LOG_LEVEL, 0);
 	mGlobalConfig->SetNodeUInt32(DEFINE_LUA_STRING_LOG_FLUSH_LEVEL, 0);
 	mGlobalConfig->ClearTable(DEFINE_LUA_STRING_LOG_INFO);
@@ -99,16 +105,19 @@ bool NFCConfigModule::LoadLogConfig()
 	mGlobalConfig->SetNodeUInt32(DEFINE_LUA_STRING_LOG_LEVEL, logLevel);
 	mGlobalConfig->SetNodeUInt32(DEFINE_LUA_STRING_LOG_FLUSH_LEVEL, logFlushLevel);
 
+	pLogObject->SetNodeUInt32(NF_LOGINFO_NODE_UINT32_LOGLEVEL, logLevel);
+	pLogObject->SetNodeUInt32(NF_LOGINFO_NODE_UINT32_LOGFLUSHLEVEL, logFlushLevel);
+
 	NFLuaRef logInfoRef = GetGlobal(DEFINE_LUA_STRING_LOG_INFO);
 	if (!logInfoRef.isValid())
 	{
-		NFLogError(NF_LOG_LOAD_CONFIG, 0, "log.lua can't find ({})", DEFINE_LUA_STRING_LOG_INFO);
+		NFLogError(NF_LOG_SYSTEMLOG, 0, "log.lua can't find ({})", DEFINE_LUA_STRING_LOG_INFO);
 		assert(0);
 	}
 
 	if (!logInfoRef.isTable())
 	{
-		NFLogError(NF_LOG_LOAD_CONFIG, 0, "{} is not table in the log.lua", DEFINE_LUA_STRING_LOG_INFO);
+		NFLogError(NF_LOG_SYSTEMLOG, 0, "{} is not table in the log.lua", DEFINE_LUA_STRING_LOG_INFO);
 		assert(0);
 	}
 
@@ -118,7 +127,7 @@ bool NFCConfigModule::LoadLogConfig()
 		NFLuaRef logRef = logInfoRef[i];
 		if (!logRef.isTable())
 		{
-			NFLogError(NF_LOG_LOAD_CONFIG, 0, "logInfo some wrong in the log.lua");
+			NFLogError(NF_LOG_SYSTEMLOG, 0, "logInfo some wrong in the log.lua");
 			assert(0);
 		}
 
@@ -171,13 +180,13 @@ bool NFCConfigModule::LoadDBTable()
 	NFLuaRef ref = GetGlobal("dbTableName");
 	if (!ref.isValid())
 	{
-		NFLogError(NF_LOG_LOAD_CONFIG, 0, "lua can't find dbTableName");
+		NFLogError(NF_LOG_SYSTEMLOG, 0, "lua can't find dbTableName");
 		assert(0);
 	}
 
 	if (!ref.isTable())
 	{
-		NFLogError(NF_LOG_LOAD_CONFIG, 0, "dbTableName is not table in the lua");
+		NFLogError(NF_LOG_SYSTEMLOG, 0, "dbTableName is not table in the lua");
 		assert(0);
 	}
 
@@ -269,13 +278,13 @@ bool NFCConfigModule::LoadClassNode()
 	NFLuaRef ref = GetGlobal("className");
 	if (!ref.isValid())
 	{
-		NFLogError(NF_LOG_LOAD_CONFIG, 0, "lua can't find className");
+		NFLogError(NF_LOG_SYSTEMLOG, 0, "lua can't find className");
 		assert(0);
 	}
 
 	if (!ref.isTable())
 	{
-		NFLogError(NF_LOG_LOAD_CONFIG, 0, "className is not table in the lua");
+		NFLogError(NF_LOG_SYSTEMLOG, 0, "className is not table in the lua");
 		assert(0);
 	}
 
@@ -536,7 +545,71 @@ void NFCConfigModule::CreateHeaderFile()
 		classHeaderFile << "#define NF_NODE_STRING_CLASS_NAME_" << className << "\t\t\t\t\t\"" << iter->first << "\"" << std::endl;
 
 		classNodeFile << "////////////////////////////// " << iter->first << " node name /////////////////////////////" << std::endl;
-		
+		for (auto tableIter = iter->second->mClassTableMap.begin(); tableIter != iter->second->mClassTableMap.end(); tableIter++)
+		{
+			std::string tableName = tableIter->second.mTableName;
+			NFStringUtility::ToUpper(tableName);
+			classNodeLine << "enum " << "NF_" << className << "_TABLE_" << tableName;
+
+			for (auto nodeIter = tableIter->second.mClassNodeArray.begin(); nodeIter != tableIter->second.mClassNodeArray.end(); nodeIter++)
+			{
+				std::string nodeName = nodeIter->mNodeName;
+				NFStringUtility::ToUpper(nodeName);
+
+				std::stringstream classNodeLine;
+				if (nodeIter->mNodeType == NF_DT_BOOLEAN)
+				{
+					classNodeLine << "#define NF_" << className << "_NODE_BOOL_" << nodeName;
+				}
+				else if (nodeIter->mNodeType == NF_DT_INT)
+				{
+					std::string inttype = nodeIter->mStrNodeType;
+					NFStringUtility::ToUpper(inttype);
+					classNodeLine << "#define NF_" << className << "_NODE_" << inttype << "_" << nodeName;
+				}
+				else if (nodeIter->mNodeType == NF_DT_DOUBLE)
+				{
+					classNodeLine << "#define NF_" << className << "_NODE_DOUBLE_" << nodeName;
+				}
+				else if (nodeIter->mNodeType == NF_DT_STRING)
+				{
+					classNodeLine << "#define NF_" << className << "_NODE_STRING_" << nodeName;
+				}
+				else if (nodeIter->mNodeType == NF_DT_ARRAY)
+				{
+					classNodeLine << "#define NF_" << className << "_NODE_ARRAY_" << nodeName;
+				}
+				else if (nodeIter->mNodeType == NF_DT_LIST)
+				{
+					classNodeLine << "#define NF_" << className << "_NODE_LIST_" << nodeName;
+				}
+				else if (nodeIter->mNodeType == NF_DT_MAPSTRING)
+				{
+					classNodeLine << "#define NF_" << className << "_NODE_MAPSTRING_" << nodeName;
+				}
+				else if (nodeIter->mNodeType == NF_DT_MAPINT)
+				{
+					classNodeLine << "#define NF_" << className << "_NODE_MAPINT_" << nodeName;
+				}
+
+				while (classNodeLine.str().length() <= 60)
+				{
+					classNodeLine << " ";
+				}
+
+				classNodeLine << "\"" << nodeIter->mNodeName << "\"";
+
+				while (classNodeLine.str().length() <= 100)
+				{
+					classNodeLine << " ";
+				}
+
+				classNodeLine << "//" << nodeIter->mDesc << std::endl;
+
+				classNodeFile << classNodeLine.str();
+			}
+		}
+
 		for (auto nodeIter = iter->second->mClassNodeArray.begin(); nodeIter != iter->second->mClassNodeArray.end(); nodeIter++)
 		{
 			std::string nodeName = nodeIter->mNodeName;
@@ -605,13 +678,13 @@ bool NFCConfigModule::LoadPluginConfig()
 	NFLuaRef pluginRef = GetGlobal(DEFINE_LUA_STRING_LOAD_PLUGIN);
 	if (!pluginRef.isValid())
 	{
-		NFLogError(NF_LOG_LOAD_CONFIG, 0, "Plugin.lua can't find ({})", DEFINE_LUA_STRING_LOAD_PLUGIN);
+		NFLogError(NF_LOG_SYSTEMLOG, 0, "Plugin.lua can't find ({})", DEFINE_LUA_STRING_LOAD_PLUGIN);
 		assert(0);
 	}
 
 	if (!pluginRef.isTable())
 	{
-		NFLogError(NF_LOG_LOAD_CONFIG, 0, "{} is not table in the plugin.lua", DEFINE_LUA_STRING_LOAD_PLUGIN);
+		NFLogError(NF_LOG_SYSTEMLOG, 0, "{} is not table in the plugin.lua", DEFINE_LUA_STRING_LOAD_PLUGIN);
 		assert(0);
 	}
 
@@ -622,7 +695,7 @@ bool NFCConfigModule::LoadPluginConfig()
 		NFLuaRef serverPluginListRef;
 		if (!GetLuaTableValue(serverPluginRef, DEFINE_LUA_STRING_SERVER_PLUGINS, serverPluginListRef))
 		{
-			NFLogError(NF_LOG_LOAD_CONFIG, 0, "{} can't find int server:{} int the table {}  in the plugin.lua", DEFINE_LUA_STRING_SERVER_PLUGINS, serverPluginName, DEFINE_LUA_STRING_LOAD_PLUGIN);
+			NFLogError(NF_LOG_SYSTEMLOG, 0, "{} can't find int server:{} int the table {}  in the plugin.lua", DEFINE_LUA_STRING_SERVER_PLUGINS, serverPluginName, DEFINE_LUA_STRING_LOAD_PLUGIN);
 			assert(0);
 		}
 
@@ -641,13 +714,13 @@ bool NFCConfigModule::LoadPluginConfig()
 
 		if (!GetLuaTableValue(serverPluginRef, DEFINE_LUA_STRING_SERVER_TYPE, pConfig->mServerType))
 		{
-			NFLogError(NF_LOG_LOAD_CONFIG, 0, "{} can't find int server:{} int the table {}  in the plugin.lua", DEFINE_LUA_STRING_SERVER_PLUGINS, serverPluginName, DEFINE_LUA_STRING_LOAD_PLUGIN);
+			NFLogError(NF_LOG_SYSTEMLOG, 0, "{} can't find int server:{} int the table {}  in the plugin.lua", DEFINE_LUA_STRING_SERVER_PLUGINS, serverPluginName, DEFINE_LUA_STRING_LOAD_PLUGIN);
 			assert(0);
 		}
 
 		if (pConfig->mServerType >= NF_ST_MAX)
 		{
-			NFLogError(NF_LOG_LOAD_CONFIG, 0, "{} can't find int server:{} int the table {}  in the plugin.lua", DEFINE_LUA_STRING_SERVER_PLUGINS, serverPluginName, DEFINE_LUA_STRING_LOAD_PLUGIN);
+			NFLogError(NF_LOG_SYSTEMLOG, 0, "{} can't find int server:{} int the table {}  in the plugin.lua", DEFINE_LUA_STRING_SERVER_PLUGINS, serverPluginName, DEFINE_LUA_STRING_LOAD_PLUGIN);
 			assert(0);
 		}
 		mPluginConfig.emplace(serverPluginName, pConfig);
@@ -663,7 +736,7 @@ bool NFCConfigModule::LoadServerConfig()
 	NFLuaRef serverRef = GetGlobal(DEFINE_LUA_STRING_SERVER);
 	if (!serverRef.isValid())
 	{
-		NFLogError(NF_LOG_LOAD_CONFIG, 0, "lua file can't find the ({})", DEFINE_LUA_STRING_SERVER);
+		NFLogError(NF_LOG_SYSTEMLOG, 0, "lua file can't find the ({})", DEFINE_LUA_STRING_SERVER);
 		assert(0);
 	}
 
@@ -674,13 +747,13 @@ bool NFCConfigModule::LoadServerConfig()
 
 		if (!GetLuaTableValue(serverConfigRef, DEFINE_LUA_STRING_SERVER_ID, pConfig->mServerId))
 		{
-			NFLogError(NF_LOG_LOAD_CONFIG, 0, "must be config the ServerId........");
+			NFLogError(NF_LOG_SYSTEMLOG, 0, "must be config the ServerId........");
 			assert(0);
 		}
 
 		if (!GetLuaTableValue(serverConfigRef, DEFINE_LUA_STRING_SERVER_TYPE, pConfig->mServerType))
 		{
-			NFLogError(NF_LOG_LOAD_CONFIG, 0, "must be config the ServerType........");
+			NFLogError(NF_LOG_SYSTEMLOG, 0, "must be config the ServerType........");
 			assert(0);
 		}
 
@@ -807,4 +880,105 @@ NFClassObject* NFCConfigModule::GetClassObject(const std::string& className) con
 		return iter->second;
 	}
 	return nullptr;
+}
+
+NFIObject* NFCConfigModule::CreateConfigObject(uint64_t guid, const std::string& className)
+{
+	NFIObject* pObject = nullptr;
+	if (ExistConfigObject(guid, className))
+	{
+		NFLogWarning(NF_LOG_KERNEL_PLUGIN, guid, "the object:{} has Exist!", guid);
+		return nullptr;
+	}
+
+	if (className.empty())
+	{
+		NFLogWarning(NF_LOG_KERNEL_PLUGIN, guid, "the className is empty", guid);
+		return nullptr;
+	}
+
+	pObject = NF_NEW NFCObject(guid, m_pPluginManager);
+
+	pObject->AddNode(NF_NODE_STRING_CLASS_NAME, NFCData(NF_DT_STRING, className), 0);
+
+	NFClassObject* pClassObject = GetClassObject(className);
+	if (pClassObject)
+	{
+		for (auto iter = pClassObject->mClassNodeArray.begin(); iter != pClassObject->mClassNodeArray.end(); iter++)
+		{
+			NFClassNode& classNode = *iter;
+			pObject->AddNode(classNode.mNodeName, classNode.mNodeType, classNode.mFeature);
+		}
+
+		for (auto iterTable = pClassObject->mClassTableMap.begin(); iterTable != pClassObject->mClassTableMap.end(); iterTable++)
+		{
+			NFClassTable& tableNode = iterTable->second;
+
+			std::vector<int> dataColType;
+
+			for (auto iter = tableNode.mClassNodeArray.begin(); iter != tableNode.mClassNodeArray.end(); iter++)
+			{
+				NFClassNode& classNode = *iter;
+				dataColType.push_back(classNode.mNodeType);
+			}
+
+			pObject->AddTable(guid, tableNode.mTableName, dataColType, 0);
+		}
+	}
+
+	mObjectMap[className].emplace(guid, pObject);
+	return pObject;
+}
+
+NFIObject* NFCConfigModule::GetConfigObject(uint64_t guid, const std::string& className)
+{
+	auto iterClass = mObjectMap.find(className);
+	if (iterClass == mObjectMap.end())
+	{
+		return nullptr;
+	}
+
+	auto iter = iterClass->second.find(guid);
+	if (iter != iterClass->second.end())
+	{
+		return iter->second;
+	}
+
+	return nullptr;
+}
+
+bool NFCConfigModule::DeleteConfigObject(uint64_t guid, const std::string& className)
+{
+	auto iterClass = mObjectMap.find(className);
+	if (iterClass == mObjectMap.end())
+	{
+		return false;
+	}
+
+	auto iter = iterClass->second.find(guid);
+	if (iter == iterClass->second.end())
+	{
+		return false;
+	}
+
+	NF_SAFE_DELETE(iter->second);
+	iterClass->second.erase(iter);
+	return true;
+}
+
+bool NFCConfigModule::ExistConfigObject(uint64_t guid, const std::string& className)
+{
+	auto iterClass = mObjectMap.find(className);
+	if (iterClass == mObjectMap.end())
+	{
+		return false;
+	}
+
+	auto iter = iterClass->second.find(guid);
+	if (iter != iterClass->second.end())
+	{
+		return true;
+	}
+
+	return false;
 }

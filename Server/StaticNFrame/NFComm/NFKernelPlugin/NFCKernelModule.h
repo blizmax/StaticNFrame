@@ -49,7 +49,7 @@ public:
 	virtual uint64_t Get32UUID() override;
 
 	virtual NFIObject* CreateNFObject(uint64_t guid, const std::string& className) override;
-	virtual NFIObject* GetNFObject(uint64_t guid, const std::string& className = "") override;
+	virtual NFIObject* GetNFObject(uint64_t guid, const std::string& className) override;
 	virtual bool ExistNFObject(uint64_t guid, const std::string& className) override;
 	virtual bool DeleteNFObject(uint64_t guid, const std::string& className) override;
 
