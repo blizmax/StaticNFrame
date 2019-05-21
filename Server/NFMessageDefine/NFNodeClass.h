@@ -1,5 +1,17 @@
 #pragma once
 
+////////////////////////////// LogInfo node name /////////////////////////////
+#define NF_LOGINFO_NODE_TABLE_DETAIL_TABLE		"detail_table"
+enum NF_ENUM_LOGINFO_TABLE_DETAIL_TABLE
+{
+	NF_LOGINFO_DETAIL_TABLE_COL_UINT32_LOGID                    = 0,                                    //日志ID
+	NF_LOGINFO_DETAIL_TABLE_COL_BOOL_DISPLAY                    = 1,                                    //是否显示日志
+	NF_LOGINFO_DETAIL_TABLE_COL_UINT32_LEVEL                    = 2,                                    //日志等级
+	NF_LOGINFO_DETAIL_TABLE_COL_STRING_LOGNAME                  = 3,                                    //日志名字
+	NF_LOGINFO_DETAIL_TABLE_COL_ARRAY_GUID                      = 4,                                    //guid
+};
+#define NF_LOGINFO_NODE_UINT32_LOGLEVEL                      "LogLevel"                              //日志等级
+#define NF_LOGINFO_NODE_UINT32_LOGFLUSHLEVEL                 "LogFlushLevel"                         //日志刷新
 ////////////////////////////// player node name /////////////////////////////
 #define NF_PLAYER_NODE_UINT64_USERID                         "userid"                                //玩家ID
 #define NF_PLAYER_NODE_STRING_CID                            "cid"                                   //用作判断手机标识的唯一字符串
@@ -56,6 +68,3 @@
 #define NF_PLAYER_NODE_BOOL_ONLINE                           "online"                                //是否在线
 #define NF_PLAYER_NODE_UINT64_LOGINTIME                      "loginTime"                             //登陆时间
 #define NF_PLAYER_NODE_UINT64_LOGOUTTIME                     "logoutTime"                            //下线时间
-////////////////////////////// loginfo node name /////////////////////////////
-#define NF_LOGINFO_NODE_UINT32_LOGLEVEL                      "loglevel"                              //日志等级
-#define NF_LOGINFO_NODE_UINT32_LOGFLUSHLEVEL                 "logflushlevel"                         //日志刷新

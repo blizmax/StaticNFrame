@@ -175,4 +175,8 @@ public:
 	virtual NFIObject* GetGlobalConfig() const = 0;
 	virtual NFClassObject* GetClassObject(const std::string& className) const = 0;
 	virtual void ProductFile() = 0;
+	virtual NFIObject* CreateConfigObject(uint64_t guid, const std::string& className) = 0;
+	virtual NFIObject* GetConfigObject(uint64_t guid, const std::string& className) = 0;
+	virtual bool ExistConfigObject(uint64_t guid, const std::string& className) = 0;
+	virtual bool DeleteConfigObject(uint64_t guid, const std::string& className) = 0;
 };

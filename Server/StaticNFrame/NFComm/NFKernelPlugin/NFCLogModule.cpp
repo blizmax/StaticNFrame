@@ -17,6 +17,8 @@
 #include "NFComm/NFCore/NFCommon.h"
 #include "NFComm/NFPluginModule/NFLogMgr.h"
 #include "NFComm/NFPluginModule/NFConfigMgr.h"
+#include "NFMessageDefine/NFNodeClass.h"
+#include "NFMessageDefine/NFNodeClassName.h"
 
 #include <iostream>
 
@@ -50,8 +52,6 @@ NFCLogModule::~NFCLogModule()
 
 bool NFCLogModule::Awake()
 {
-	SetDefaultLevel((NF_LOG_LEVEL)GetGlobalConfigObject()->GetNodeUInt32(DEFINE_LUA_STRING_LOG_LEVEL));
-	SetDefaultFlush((NF_LOG_LEVEL)GetGlobalConfigObject()->GetNodeUInt32(DEFINE_LUA_STRING_LOG_FLUSH_LEVEL));
 	SetDefaultLogConfig();
 	return true;
 }
@@ -63,8 +63,6 @@ bool NFCLogModule::Shut()
 
 bool NFCLogModule::OnReloadPlugin()
 {
-	SetDefaultLevel((NF_LOG_LEVEL)GetGlobalConfigObject()->GetNodeUInt32(DEFINE_LUA_STRING_LOG_LEVEL));
-	SetDefaultFlush((NF_LOG_LEVEL)GetGlobalConfigObject()->GetNodeUInt32(DEFINE_LUA_STRING_LOG_FLUSH_LEVEL));
 	SetDefaultLogConfig();
 	return true;
 }
@@ -139,20 +137,27 @@ void NFCLogModule::SetDefaultFlush(NF_LOG_LEVEL log_level)
 */
 void NFCLogModule::SetDefaultLogConfig()
 {
+	NFIObject* pLogObject = NFConfigMgr::Instance()->GetConfigObject(0, NF_NODE_STRING_CLASS_NAME_LOGINFO);
+	if (pLogObject == nullptr)
+	{
+		return;
+	}
+
 	m_logInfoConfig.clear();
 	//主要是为了效率，浪费点内存
 	m_logInfoConfig.resize(NF_LOG_MAX_ID);
-	SetDefaultLevel((NF_LOG_LEVEL)GetGlobalConfigObject()->GetNodeUInt32(DEFINE_LUA_STRING_LOG_LEVEL));
-	SetDefaultFlush((NF_LOG_LEVEL)GetGlobalConfigObject()->GetNodeUInt32(DEFINE_LUA_STRING_LOG_FLUSH_LEVEL));
 
-	for (size_t row = 0; row < GetGlobalConfigObject()->GetTableRowCount(DEFINE_LUA_STRING_LOG_INFO); row++)
+	SetDefaultLevel((NF_LOG_LEVEL)pLogObject->GetNodeUInt32(NF_LOGINFO_NODE_UINT32_LOGLEVEL));
+	SetDefaultFlush((NF_LOG_LEVEL)pLogObject->GetNodeUInt32(NF_LOGINFO_NODE_UINT32_LOGFLUSHLEVEL));
+
+	for (size_t row = 0; row < pLogObject->GetTableRowCount(NF_LOGINFO_NODE_TABLE_DETAIL_TABLE); row++)
 	{
 		LogInfoConfig config;
-		config.mLogId = GetGlobalConfigObject()->GetTableUInt32(DEFINE_LUA_STRING_LOG_INFO, row, LOG_INFO_LOG_ID);
-		config.mDisplay = GetGlobalConfigObject()->GetTableBool(DEFINE_LUA_STRING_LOG_INFO, row, LOG_INFO_DISPLAY);
-		config.mLevel = GetGlobalConfigObject()->GetTableUInt32(DEFINE_LUA_STRING_LOG_INFO, row, LOG_INFO_LEVEL);
-		config.mLogName = GetGlobalConfigObject()->GetTableString(DEFINE_LUA_STRING_LOG_INFO, row, LOG_INFO_LOG_NAME);
-		const NFCData::Array& vecGuid = GetGlobalConfigObject()->GetTableArray(DEFINE_LUA_STRING_LOG_INFO, row, LOG_INFO_LOG_GUID);
+		config.mLogId = pLogObject->GetTableUInt32(NF_LOGINFO_NODE_TABLE_DETAIL_TABLE, row, NF_LOGINFO_DETAIL_TABLE_COL_UINT32_LOGID);
+		config.mDisplay = pLogObject->GetTableBool(NF_LOGINFO_NODE_TABLE_DETAIL_TABLE, row, NF_LOGINFO_DETAIL_TABLE_COL_BOOL_DISPLAY);
+		config.mLevel = pLogObject->GetTableUInt32(NF_LOGINFO_NODE_TABLE_DETAIL_TABLE, row, NF_LOGINFO_DETAIL_TABLE_COL_UINT32_LEVEL);
+		config.mLogName = pLogObject->GetTableString(NF_LOGINFO_NODE_TABLE_DETAIL_TABLE, row, NF_LOGINFO_DETAIL_TABLE_COL_STRING_LOGNAME);
+		const NFCData::Array& vecGuid = pLogObject->GetTableArray(NF_LOGINFO_NODE_TABLE_DETAIL_TABLE, row, NF_LOGINFO_DETAIL_TABLE_COL_ARRAY_GUID);
 		for (size_t i = 0; i < vecGuid.size(); i++)
 		{
 			const NFCData& guid = vecGuid[i];

@@ -58,4 +58,44 @@ NFIObject* NFConfigMgr::GetGlobalConfig() const
 	return nullptr;
 }
 
+NFIObject* NFConfigMgr::CreateConfigObject(uint64_t guid, const std::string& className)
+{
+	if (m_pConfigModule)
+	{
+		return m_pConfigModule->CreateConfigObject(guid, className);
+	}
+
+	return nullptr;
+}
+
+NFIObject* NFConfigMgr::GetConfigObject(uint64_t guid, const std::string& className)
+{
+	if (m_pConfigModule)
+	{
+		return m_pConfigModule->GetConfigObject(guid, className);
+	}
+
+	return nullptr;
+}
+
+bool NFConfigMgr::ExistConfigObject(uint64_t guid, const std::string& className)
+{
+	if (m_pConfigModule)
+	{
+		return m_pConfigModule->ExistConfigObject(guid, className);
+	}
+
+	return false;
+}
+
+bool NFConfigMgr::DeleteConfigObject(uint64_t guid, const std::string& className)
+{
+	if (m_pConfigModule)
+	{
+		return m_pConfigModule->DeleteConfigObject(guid, className);
+	}
+
+	return false;
+}
+
 

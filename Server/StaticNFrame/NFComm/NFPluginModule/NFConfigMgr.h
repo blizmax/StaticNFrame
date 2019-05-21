@@ -35,6 +35,11 @@ public:
 	virtual NFServerConfig* GetServerConfig(uint32_t serverId);
 	virtual std::vector<NFServerConfig*> GetServerConfigFromServerType(uint32_t serverType);
 	virtual NFIObject* GetGlobalConfig() const;
+
+	virtual NFIObject* CreateConfigObject(uint64_t guid, const std::string& className);
+	virtual NFIObject* GetConfigObject(uint64_t guid, const std::string& className);
+	virtual bool ExistConfigObject(uint64_t guid, const std::string& className);
+	virtual bool DeleteConfigObject(uint64_t guid, const std::string& className);
 protected:
 	NFIConfigModule* m_pConfigModule;
 };

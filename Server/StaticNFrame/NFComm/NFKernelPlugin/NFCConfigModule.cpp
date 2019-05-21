@@ -24,17 +24,6 @@ NFCConfigModule::NFCConfigModule(NFIPluginManager* p)
 	m_pPluginManager = p;
 	mGlobalConfig = NF_NEW NFCObject(0, m_pPluginManager);
 
-	mGlobalConfig->SetNodeUInt32(DEFINE_LUA_STRING_LOG_LEVEL, NLL_TRACE_NORMAL);
-	mGlobalConfig->SetNodeUInt32(DEFINE_LUA_STRING_LOG_FLUSH_LEVEL, NLL_TRACE_NORMAL);
-
-	std::vector<int> dataColType;
-	dataColType.push_back(NF_DT_INT);
-	dataColType.push_back(NF_DT_BOOLEAN);
-	dataColType.push_back(NF_DT_INT);
-	dataColType.push_back(NF_DT_STRING);
-	dataColType.push_back(NF_DT_ARRAY);
-	mGlobalConfig->AddTable(0, DEFINE_LUA_STRING_LOG_INFO, dataColType, 0);
-
 	//比较特殊，必须在这里加载配置，不然plugginmanager::Awake会出问题， 引擎配置没有数据
 	LoadConfig();
 	NFConfigMgr::Instance()->Init(this);
@@ -93,17 +82,10 @@ bool NFCConfigModule::LoadLogConfig()
 	DeleteConfigObject(0, NF_NODE_STRING_CLASS_NAME_LOGINFO);
 	NFIObject* pLogObject = CreateConfigObject(0, NF_NODE_STRING_CLASS_NAME_LOGINFO);
 
-	mGlobalConfig->SetNodeUInt32(DEFINE_LUA_STRING_LOG_LEVEL, 0);
-	mGlobalConfig->SetNodeUInt32(DEFINE_LUA_STRING_LOG_FLUSH_LEVEL, 0);
-	mGlobalConfig->ClearTable(DEFINE_LUA_STRING_LOG_INFO);
-
 	uint32_t logLevel = 0;
 	uint32_t logFlushLevel = 0;
 	GetValue(DEFINE_LUA_STRING_LOG_LEVEL, logLevel);
 	GetValue(DEFINE_LUA_STRING_LOG_FLUSH_LEVEL, logFlushLevel);
-
-	mGlobalConfig->SetNodeUInt32(DEFINE_LUA_STRING_LOG_LEVEL, logLevel);
-	mGlobalConfig->SetNodeUInt32(DEFINE_LUA_STRING_LOG_FLUSH_LEVEL, logFlushLevel);
 
 	pLogObject->SetNodeUInt32(NF_LOGINFO_NODE_UINT32_LOGLEVEL, logLevel);
 	pLogObject->SetNodeUInt32(NF_LOGINFO_NODE_UINT32_LOGFLUSHLEVEL, logFlushLevel);
@@ -141,12 +123,12 @@ bool NFCConfigModule::LoadLogConfig()
 		GetLuaTableValue(logRef, "level", level);
 		GetLuaTableValue(logRef, "logname", logName);
 
-		int curRow = mGlobalConfig->AddTableRow(DEFINE_LUA_STRING_LOG_INFO);
+		int newRow = pLogObject->AddTableRow(NF_LOGINFO_NODE_TABLE_DETAIL_TABLE);
 
-		mGlobalConfig->SetTableUInt32(DEFINE_LUA_STRING_LOG_INFO, curRow, LOG_INFO_LOG_ID, logId);
-		mGlobalConfig->SetTableBool(DEFINE_LUA_STRING_LOG_INFO, curRow, LOG_INFO_DISPLAY, display);
-		mGlobalConfig->SetTableUInt32(DEFINE_LUA_STRING_LOG_INFO, curRow, LOG_INFO_LEVEL, level);
-		mGlobalConfig->SetTableString(DEFINE_LUA_STRING_LOG_INFO, curRow, LOG_INFO_LOG_NAME, logName);
+		pLogObject->SetTableUInt32(NF_LOGINFO_NODE_TABLE_DETAIL_TABLE, newRow, NF_LOGINFO_DETAIL_TABLE_COL_UINT32_LOGID, logId);
+		pLogObject->SetTableBool(NF_LOGINFO_NODE_TABLE_DETAIL_TABLE, newRow, NF_LOGINFO_DETAIL_TABLE_COL_BOOL_DISPLAY, display);
+		pLogObject->SetTableUInt32(NF_LOGINFO_NODE_TABLE_DETAIL_TABLE, newRow, NF_LOGINFO_DETAIL_TABLE_COL_UINT32_LEVEL, level);
+		pLogObject->SetTableString(NF_LOGINFO_NODE_TABLE_DETAIL_TABLE, newRow, NF_LOGINFO_DETAIL_TABLE_COL_STRING_LOGNAME, logName);
 
 		NFLuaRef guidRef;
 		GetLuaTableValue(logRef, "guid", guidRef);
@@ -158,7 +140,7 @@ bool NFCConfigModule::LoadLogConfig()
 				uint64_t guid = guidLuaRef.toValue<uint64_t>();
 				if (guid != 0)
 				{
-					mGlobalConfig->AddTableArrayItem(DEFINE_LUA_STRING_LOG_INFO, curRow, LOG_INFO_LOG_GUID, NFCData(NF_DT_INT, guid));
+					pLogObject->AddTableArrayItem(NF_LOGINFO_NODE_TABLE_DETAIL_TABLE, newRow, NF_LOGINFO_DETAIL_TABLE_COL_ARRAY_GUID, NFCData(NF_DT_INT, guid));
 				}
 			}
 		}
@@ -167,7 +149,7 @@ bool NFCConfigModule::LoadLogConfig()
 			uint64_t guid = guidRef.toValue<uint64_t>();
 			if (guid != 0)
 			{
-				mGlobalConfig->AddTableArrayItem(DEFINE_LUA_STRING_LOG_INFO, curRow, LOG_INFO_LOG_GUID, NFCData(NF_DT_INT, guid));
+				pLogObject->AddTableArrayItem(NF_LOGINFO_NODE_TABLE_DETAIL_TABLE, newRow, NF_LOGINFO_DETAIL_TABLE_COL_ARRAY_GUID, NFCData(NF_DT_INT, guid));
 			}
 		}
 	}
@@ -549,47 +531,53 @@ void NFCConfigModule::CreateHeaderFile()
 		{
 			std::string tableName = tableIter->second.mTableName;
 			NFStringUtility::ToUpper(tableName);
-			classNodeLine << "enum " << "NF_" << className << "_TABLE_" << tableName;
 
-			for (auto nodeIter = tableIter->second.mClassNodeArray.begin(); nodeIter != tableIter->second.mClassNodeArray.end(); nodeIter++)
+			std::stringstream classTableLine;
+			classTableLine << "#define NF_" << className << "_NODE_TABLE_" << tableName << "\t\t\"" << tableIter->second.mTableName << "\"" << std::endl;
+			classTableLine << "enum " << "NF_ENUM_" << className << "_TABLE_" << tableName << std::endl;
+			classTableLine << "{" << std::endl;
+
+			for (auto i = 0; i < tableIter->second.mClassNodeArray.size(); i++)
 			{
-				std::string nodeName = nodeIter->mNodeName;
+				NFClassNode& classNode = tableIter->second.mClassNodeArray[i];
+				std::string nodeName = classNode.mNodeName;
 				NFStringUtility::ToUpper(nodeName);
 
 				std::stringstream classNodeLine;
-				if (nodeIter->mNodeType == NF_DT_BOOLEAN)
+
+				if (classNode.mNodeType == NF_DT_BOOLEAN)
 				{
-					classNodeLine << "#define NF_" << className << "_NODE_BOOL_" << nodeName;
+					classNodeLine << "\tNF_" << className << "_" << tableName << "_COL_BOOL_" << nodeName;
 				}
-				else if (nodeIter->mNodeType == NF_DT_INT)
+				else if (classNode.mNodeType == NF_DT_INT)
 				{
-					std::string inttype = nodeIter->mStrNodeType;
+					std::string inttype = classNode.mStrNodeType;
 					NFStringUtility::ToUpper(inttype);
-					classNodeLine << "#define NF_" << className << "_NODE_" << inttype << "_" << nodeName;
+					classNodeLine << "\tNF_" << className << "_" << tableName << "_COL_" << inttype << "_" << nodeName;
 				}
-				else if (nodeIter->mNodeType == NF_DT_DOUBLE)
+				else if (classNode.mNodeType == NF_DT_DOUBLE)
 				{
-					classNodeLine << "#define NF_" << className << "_NODE_DOUBLE_" << nodeName;
+					classNodeLine << "\tNF_" << className << "_" << tableName << "_COL_DOUBLE_" << nodeName;
 				}
-				else if (nodeIter->mNodeType == NF_DT_STRING)
+				else if (classNode.mNodeType == NF_DT_STRING)
 				{
-					classNodeLine << "#define NF_" << className << "_NODE_STRING_" << nodeName;
+					classNodeLine << "\tNF_" << className << "_" << tableName << "_COL_STRING_" << nodeName;
 				}
-				else if (nodeIter->mNodeType == NF_DT_ARRAY)
+				else if (classNode.mNodeType == NF_DT_ARRAY)
 				{
-					classNodeLine << "#define NF_" << className << "_NODE_ARRAY_" << nodeName;
+					classNodeLine << "\tNF_" << className << "_" << tableName << "_COL_ARRAY_" << nodeName;
 				}
-				else if (nodeIter->mNodeType == NF_DT_LIST)
+				else if (classNode.mNodeType == NF_DT_LIST)
 				{
-					classNodeLine << "#define NF_" << className << "_NODE_LIST_" << nodeName;
+					classNodeLine << "\tNF_" << className << "_" << tableName << "_COL_LIST_" << nodeName;
 				}
-				else if (nodeIter->mNodeType == NF_DT_MAPSTRING)
+				else if (classNode.mNodeType == NF_DT_MAPSTRING)
 				{
-					classNodeLine << "#define NF_" << className << "_NODE_MAPSTRING_" << nodeName;
+					classNodeLine << "\tNF_" << className << "_" << tableName << "_COL_MAPSTRING_" << nodeName;
 				}
-				else if (nodeIter->mNodeType == NF_DT_MAPINT)
+				else if (classNode.mNodeType == NF_DT_MAPINT)
 				{
-					classNodeLine << "#define NF_" << className << "_NODE_MAPINT_" << nodeName;
+					classNodeLine << "\tNF_" << className << "_" << tableName << "_COL_MAPINT_" << nodeName;
 				}
 
 				while (classNodeLine.str().length() <= 60)
@@ -597,17 +585,18 @@ void NFCConfigModule::CreateHeaderFile()
 					classNodeLine << " ";
 				}
 
-				classNodeLine << "\"" << nodeIter->mNodeName << "\"";
+				classNodeLine << "= " << i << ",";
 
 				while (classNodeLine.str().length() <= 100)
 				{
 					classNodeLine << " ";
 				}
 
-				classNodeLine << "//" << nodeIter->mDesc << std::endl;
-
-				classNodeFile << classNodeLine.str();
+				classNodeLine << "//" << classNode.mDesc << std::endl;
+				classTableLine << classNodeLine.str();
 			}
+			classTableLine << "};" << std::endl;
+			classNodeFile << classTableLine.str();
 		}
 
 		for (auto nodeIter = iter->second->mClassNodeArray.begin(); nodeIter != iter->second->mClassNodeArray.end(); nodeIter++)

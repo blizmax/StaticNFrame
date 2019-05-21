@@ -35,9 +35,10 @@ public:
 	bool LoadConfig();
 	bool LoadPluginConfig();
 	bool LoadServerConfig();
-	bool LoadLogConfig();
 	bool LoadClassNode();
 	bool LoadDBTable();
+
+	bool LoadLogConfig();
 public:
 	virtual NFPluginConfig* GetPluginConfig(const std::string& pluginName);
 	virtual NFServerConfig* GetServerConfig(uint32_t serverId);

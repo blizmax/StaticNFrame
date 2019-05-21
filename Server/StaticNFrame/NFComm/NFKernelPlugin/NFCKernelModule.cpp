@@ -248,7 +248,7 @@ bool NFCKernelModule::DeleteNFObject(uint64_t guid, const std::string& className
 std::unordered_map<uint64_t, NFIObject*>* NFCKernelModule::GetAllObject(const std::string& className)
 {
 	auto iterClass = mObjectMap.find(className);
-	if (iterClass == mObjectMap.end())
+	if (iterClass != mObjectMap.end())
 	{
 		return &iterClass->second;
 	}
