@@ -17,8 +17,6 @@ NFCAsyMysqlModule::~NFCAsyMysqlModule()
 
 bool NFCAsyMysqlModule::Awake()
 {
-	m_pTaskModule = m_pPluginManager->FindModule<NFITaskModule>();
-
 	StartActorPool(10);
 	return true;
 }
@@ -53,7 +51,7 @@ bool NFCAsyMysqlModule::StartActorPool(const int nCount)
 {
 	for (int i = 0; i < nCount; i++)
 	{
-		int actorId = m_pTaskModule->RequireActor();
+		int actorId = FindModule<NFITaskModule>()->RequireActor();
 		if (actorId <= 0)
 		{
 			return false;
@@ -147,7 +145,7 @@ bool NFCAsyMysqlModule::Update(const google::protobuf::Message& message, uint64_
 	if (pMysqlDriverManager)
 	{
 		NFMysqlUpdateMessageTask* pTask = NF_NEW NFMysqlUpdateMessageTask(m_pPluginManager, pMysqlDriverManager, message, balanceId, mysqlEventType);
-		m_pTaskModule->AddTask(actorId, pTask);
+		FindModule<NFITaskModule>()->AddTask(actorId, pTask);
 	}
 	return true;
 }

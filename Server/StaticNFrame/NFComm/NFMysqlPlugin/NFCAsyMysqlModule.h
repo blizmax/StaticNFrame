@@ -60,8 +60,7 @@ public:
 	{
 		if (mMysqlEventType != 0)
 		{
-			NFIEventModule* pEventModule = m_pPluginManager->FindModule<NFIEventModule>();
-			pEventModule->FireExecute(NFEVENT_MYSQL_UPDATE_MESSAGE, m_balanceId, mMysqlEventType, *m_pMessage);
+			m_pPluginManager->FindModule<NFIEventModule>()->FireExecute(NFEVENT_MYSQL_UPDATE_MESSAGE, m_balanceId, mMysqlEventType, *m_pMessage);
 		}
 
 		return TPTASK_STATE_COMPLETED;
@@ -219,8 +218,6 @@ private:
 	* @brief 用来平衡随机获得actor
 	*/
 	size_t mnSuitIndex = 0;
-private:
-	NFITaskModule* m_pTaskModule = nullptr;
 };
 
 #endif

@@ -168,8 +168,7 @@ NFIObject* NFCKernelModule::CreateNFObject(uint64_t guid, const std::string& cla
 
 	pObject->AddNode(NF_NODE_STRING_CLASS_NAME, NFCData(NF_DT_STRING, className), 0);
 
-	NFIConfigModule* pConfigModule = m_pPluginManager->FindModule<NFIConfigModule>();
-	NFClassObject* pClassObject = pConfigModule->GetClassObject(className);
+	NFClassObject* pClassObject = FindModule<NFIConfigModule>()->GetClassObject(className);
 	if (pClassObject)
 	{
 		for (auto iter = pClassObject->mClassNodeArray.begin(); iter != pClassObject->mClassNodeArray.end(); iter++)

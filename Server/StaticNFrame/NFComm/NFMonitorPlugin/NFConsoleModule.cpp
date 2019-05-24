@@ -183,8 +183,7 @@ void NFCConsoleModule::OnTimer(uint32_t nTimerID)
 		}
 		else if (msg.mMsgType == NFConsoleMsg_ProductFile)
 		{
-			NFIConfigModule* pConfigModule = m_pPluginManager->FindModule<NFIConfigModule>();
-			pConfigModule->ProductFile();
+			FindModule<NFIConfigModule>()->ProductFile();
 		}
 	}
 }

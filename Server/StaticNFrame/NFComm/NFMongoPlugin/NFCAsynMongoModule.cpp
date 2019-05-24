@@ -22,8 +22,6 @@ NFCAsynMongoModule::~NFCAsynMongoModule()
 
 bool NFCAsynMongoModule::Awake()
 {
-	m_pTaskModule = m_pPluginManager->FindModule<NFITaskModule>();
-
 	StartActorPool(10);
 	return true;
 }
@@ -58,7 +56,7 @@ bool NFCAsynMongoModule::StartActorPool(const int nCount)
 {
 	for (int i = 0; i < nCount; i++)
 	{
-		int actorId = m_pTaskModule->RequireActor();
+		int actorId = FindModule<NFITaskModule>()->RequireActor();
 		if (actorId <= 0)
 		{
 			return false;
@@ -169,7 +167,7 @@ bool NFCAsynMongoModule::InsertJson(const int nServerID, const std::string& coll
 	if (pMongoDriverManager)
 	{
 		NFMongoInsertJsonTask* pTask = NF_NEW NFMongoInsertJsonTask(pMongoDriverManager, nServerID, collectionName, json_query);
-		m_pTaskModule->AddTask(actorId, pTask);
+		FindModule<NFITaskModule>()->AddTask(actorId, pTask);
 	}
 	return true;
 }
@@ -181,7 +179,7 @@ bool NFCAsynMongoModule::InsertMessage(const int nServerID, const std::string& c
 	if (pMongoDriverManager)
 	{
 		NFMongoInsertMessageTask* pTask = NF_NEW NFMongoInsertMessageTask(pMongoDriverManager, nServerID, collectionName, message);
-		m_pTaskModule->AddTask(actorId, pTask);
+		FindModule<NFITaskModule>()->AddTask(actorId, pTask);
 	}
 	return true;
 }
@@ -193,7 +191,7 @@ bool NFCAsynMongoModule::UpdateOneByKey(const int nServerID, const std::string& 
 	if (pMongoDriverManager)
 	{
 		NFMongoUpdateOneByIntKeyTask* pTask = NF_NEW NFMongoUpdateOneByIntKeyTask(pMongoDriverManager, nServerID, collectionName, json, key);
-		m_pTaskModule->AddTask(actorId, pTask);
+		FindModule<NFITaskModule>()->AddTask(actorId, pTask);
 	}
 	return true;
 }
@@ -205,7 +203,7 @@ bool NFCAsynMongoModule::UpdateOneByKey(const int nServerID, const std::string& 
 	if (pMongoDriverManager)
 	{
 		NFMongoUpdateOneByStringKeyTask* pTask = NF_NEW NFMongoUpdateOneByStringKeyTask(pMongoDriverManager, nServerID, collectionName, json, key);
-		m_pTaskModule->AddTask(actorId, pTask);
+		FindModule<NFITaskModule>()->AddTask(actorId, pTask);
 	}
 	return true;
 }
@@ -217,7 +215,7 @@ bool NFCAsynMongoModule::UpdateOneByKey(const int nServerID, const std::string& 
 	if (pMongoDriverManager)
 	{
 		NFMongoUpdateOneMessageByIntKeyTask* pTask = NF_NEW NFMongoUpdateOneMessageByIntKeyTask(pMongoDriverManager, nServerID, collectionName, message, key);
-		m_pTaskModule->AddTask(actorId, pTask);
+		FindModule<NFITaskModule>()->AddTask(actorId, pTask);
 	}
 	return true;
 }
@@ -229,7 +227,7 @@ bool NFCAsynMongoModule::UpdateOneByKey(const int nServerID, const std::string& 
 	if (pMongoDriverManager)
 	{
 		NFMongoUpdateOneMessageByStringKeyTask* pTask = NF_NEW NFMongoUpdateOneMessageByStringKeyTask(pMongoDriverManager, nServerID, collectionName, message, key);
-		m_pTaskModule->AddTask(actorId, pTask);
+		FindModule<NFITaskModule>()->AddTask(actorId, pTask);
 	}
 	return true;
 }
@@ -241,7 +239,7 @@ bool NFCAsynMongoModule::UpdateOne(const int nServerID, const std::string& colle
 	if (pMongoDriverManager)
 	{
 		NFMongoUpdateOneJsonTask* pTask = NF_NEW NFMongoUpdateOneJsonTask(pMongoDriverManager, nServerID, collectionName, json);
-		m_pTaskModule->AddTask(actorId, pTask);
+		FindModule<NFITaskModule>()->AddTask(actorId, pTask);
 	}
 	return true;
 }
@@ -253,7 +251,7 @@ bool NFCAsynMongoModule::UpdateOne(const int nServerID, const std::string& colle
 	if (pMongoDriverManager)
 	{
 		NFMongoUpdateOneMessageTask* pTask = NF_NEW NFMongoUpdateOneMessageTask(pMongoDriverManager, nServerID, collectionName, message);
-		m_pTaskModule->AddTask(actorId, pTask);
+		FindModule<NFITaskModule>()->AddTask(actorId, pTask);
 	}
 	return false;
 }
@@ -270,7 +268,7 @@ bool NFCAsynMongoModule::FindOne(const int nServerID, const std::string& collect
 	if (pMongoDriverManager)
 	{
 		NFMongoFindOneJsonTask* pTask = NF_NEW NFMongoFindOneJsonTask(pMongoDriverManager, nServerID, collectionName, json_query);
-		m_pTaskModule->AddTask(actorId, pTask);
+		FindModule<NFITaskModule>()->AddTask(actorId, pTask);
 	}
 	return true;
 }
@@ -287,7 +285,7 @@ bool NFCAsynMongoModule::FindMany(const int nServerID, const std::string& collec
 	if (pMongoDriverManager)
 	{
 		NFMongoFindManyTask* pTask = NF_NEW NFMongoFindManyTask(pMongoDriverManager, nServerID, collectionName, json_query, json_opts);
-		m_pTaskModule->AddTask(actorId, pTask);
+		FindModule<NFITaskModule>()->AddTask(actorId, pTask);
 	}
 	return true;
 }
@@ -304,7 +302,7 @@ bool NFCAsynMongoModule::FindAll(const int nServerID, const std::string& collect
 	if (pMongoDriverManager)
 	{
 		NFMongoFindAllTask* pTask = NF_NEW NFMongoFindAllTask(pMongoDriverManager, nServerID, collectionName);
-		m_pTaskModule->AddTask(actorId, pTask);
+		FindModule<NFITaskModule>()->AddTask(actorId, pTask);
 	}
 	return true;
 }
@@ -316,7 +314,7 @@ bool NFCAsynMongoModule::FindAllToJson(const int nServerID, const std::string& c
 	if (pMongoDriverManager)
 	{
 		NFMongoFindAllToJsonTask* pTask = NF_NEW NFMongoFindAllToJsonTask(pMongoDriverManager, nServerID, collectionName);
-		m_pTaskModule->AddTask(actorId, pTask);
+		FindModule<NFITaskModule>()->AddTask(actorId, pTask);
 	}
 	return true;
 }
@@ -333,7 +331,7 @@ bool NFCAsynMongoModule::FindOneByKey(const int nServerID, const std::string& co
 	if (pMongoDriverManager)
 	{
 		FindOneByIntKey* pTask = NF_NEW FindOneByIntKey(pMongoDriverManager, nServerID, collectionName, key);
-		m_pTaskModule->AddTask(actorId, pTask);
+		FindModule<NFITaskModule>()->AddTask(actorId, pTask);
 	}
 	return true;
 }
@@ -350,7 +348,7 @@ bool NFCAsynMongoModule::FindOneByKey(const int nServerID, const std::string& co
 	if (pMongoDriverManager)
 	{
 		FindOneByStringKey* pTask = NF_NEW FindOneByStringKey(pMongoDriverManager, nServerID, collectionName, key);
-		m_pTaskModule->AddTask(actorId, pTask);
+		FindModule<NFITaskModule>()->AddTask(actorId, pTask);
 	}
 	return true;
 }
@@ -367,7 +365,7 @@ bool NFCAsynMongoModule::UpdateFieldByKey(const int nServerID, const std::string
 	if (pMongoDriverManager)
 	{
 		NFMongoUpdateFieldByStringKeyTask* pTask = NF_NEW NFMongoUpdateFieldByStringKeyTask(pMongoDriverManager, nServerID, collectionName, json, key);
-		m_pTaskModule->AddTask(actorId, pTask);
+		FindModule<NFITaskModule>()->AddTask(actorId, pTask);
 	}
 	return true;
 }
@@ -384,7 +382,7 @@ bool NFCAsynMongoModule::UpdateFieldByKey(const int nServerID, const std::string
 	if (pMongoDriverManager)
 	{
 		NFMongoUpdateFieldByIntKeyTask* pTask = NF_NEW NFMongoUpdateFieldByIntKeyTask(pMongoDriverManager, nServerID, collectionName, json, key);
-		m_pTaskModule->AddTask(actorId, pTask);
+		FindModule<NFITaskModule>()->AddTask(actorId, pTask);
 	}
 
 	return true;
@@ -402,7 +400,7 @@ bool NFCAsynMongoModule::UpdateFieldByKey(const int nServerID, const std::string
 	if (pMongoDriverManager)
 	{
 		NFMongoUpdateFieldMessageByIntKeyTask* pTask = NF_NEW NFMongoUpdateFieldMessageByIntKeyTask(pMongoDriverManager, nServerID, collectionName, message, key);
-		m_pTaskModule->AddTask(actorId, pTask);
+		FindModule<NFITaskModule>()->AddTask(actorId, pTask);
 	}
 	return true;
 }
@@ -419,7 +417,7 @@ bool NFCAsynMongoModule::UpdateFieldByKey(const int nServerID, const std::string
 	if (pMongoDriverManager)
 	{
 		NFMongoUpdateFieldMessageByStringKeyTask* pTask = NF_NEW NFMongoUpdateFieldMessageByStringKeyTask(pMongoDriverManager, nServerID, collectionName, message, key);
-		m_pTaskModule->AddTask(actorId, pTask);
+		FindModule<NFITaskModule>()->AddTask(actorId, pTask);
 	}
 	return true;
 }
@@ -436,7 +434,7 @@ bool NFCAsynMongoModule::FindFieldByKey(const int nServerID, const std::string& 
 	if (pMongoDriverManager)
 	{
 		FindFieldByIntKey* pTask = NF_NEW FindFieldByIntKey(pMongoDriverManager, nServerID, collectionName, fieldPath, key);
-		m_pTaskModule->AddTask(actorId, pTask);
+		FindModule<NFITaskModule>()->AddTask(actorId, pTask);
 	}
 	return true;
 }
@@ -453,7 +451,7 @@ bool NFCAsynMongoModule::FindFieldByKey(const int nServerID, const std::string& 
 	if (pMongoDriverManager)
 	{
 		NFMongoFindFieldByStringKeyTask* pTask = NF_NEW NFMongoFindFieldByStringKeyTask(pMongoDriverManager, nServerID, collectionName, fieldPath, key);
-		m_pTaskModule->AddTask(actorId, pTask);
+		FindModule<NFITaskModule>()->AddTask(actorId, pTask);
 	}
 
 	return true;

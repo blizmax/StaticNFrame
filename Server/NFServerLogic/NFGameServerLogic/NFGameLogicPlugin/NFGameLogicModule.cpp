@@ -31,24 +31,21 @@ bool NFCGameLogicModule::Awake()
 		return false;
 	}
 
-	NFIMysqlModule* pMysqlModule = m_pPluginManager->FindModule<NFIMysqlModule>();
-	ret = pMysqlModule->AddMysqlServer(NF_ST_GAME, pConfig->mMysqlIp, pConfig->mMysqlPort, pConfig->mMysqlDbName, pConfig->mMysqlUser, pConfig->mMysqlPassword);
+	ret = FindModule<NFIMysqlModule>()->AddMysqlServer(NF_ST_GAME, pConfig->mMysqlIp, pConfig->mMysqlPort, pConfig->mMysqlDbName, pConfig->mMysqlUser, pConfig->mMysqlPassword);
 	if (ret == false)
 	{
 		NFLogError(NF_LOG_SYSTEMLOG, 0, "NFIMysqlModule AddMysqlServer failed!");
 		return false;
 	}
 
-	NFIAsyMysqlModule* pAsyMsql = m_pPluginManager->FindModule<NFIAsyMysqlModule>();
-	ret = pAsyMsql->AddMysqlServer(NF_ST_GAME, pConfig->mMysqlIp, pConfig->mMysqlPort, pConfig->mMysqlDbName, pConfig->mMysqlUser, pConfig->mMysqlPassword);
+	ret = FindModule<NFIAsyMysqlModule>()->AddMysqlServer(NF_ST_GAME, pConfig->mMysqlIp, pConfig->mMysqlPort, pConfig->mMysqlDbName, pConfig->mMysqlUser, pConfig->mMysqlPassword);
 	if (ret == false)
 	{
 		NFLogError(NF_LOG_SYSTEMLOG, 0, "NFIAsyMysqlModule AddMysqlServer failed!");
 		return false;
 	}
 
-	NFINoSqlModule* pNosqlModule = m_pPluginManager->FindModule<NFINoSqlModule>();
-	ret = pNosqlModule->AddConnectSql("nosql", pConfig->mNosqlIp, pConfig->mNosqlPort);
+	ret = FindModule<NFINoSqlModule>()->AddConnectSql("nosql", pConfig->mNosqlIp, pConfig->mNosqlPort);
 	if (ret == false)
 	{
 		NFLogError(NF_LOG_SYSTEMLOG, 0, "redis connect server failed, ip:{}, port:{}", pConfig->mNosqlIp, pConfig->mNosqlPort);

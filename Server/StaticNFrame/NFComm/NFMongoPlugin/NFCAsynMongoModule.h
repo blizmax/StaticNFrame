@@ -933,7 +933,5 @@ private:
 	* @brief 用来平衡随机获得actor
 	*/
 	int mnSuitIndex = 0;
-private:
-	NFITaskModule* m_pTaskModule = nullptr;
 };
 

@@ -149,7 +149,7 @@ void NFCGameClient_MasterModule::ServerReport()
 		pData->set_server_state(NFMsg::EST_NARMAL);
 		pData->set_server_cur_online(m_onlineNum);
 
-		NFIMonitorModule* pMonitorModule = (NFIMonitorModule*)m_pPluginManager->FindModule(typeid(NFIMonitorModule).name());
+		NFIMonitorModule* pMonitorModule = m_pPluginManager->FindModule<NFIMonitorModule>();
 		if (pMonitorModule)
 		{
 			const NFSystemInfo& systemInfo = pMonitorModule->GetSystemInfo();
