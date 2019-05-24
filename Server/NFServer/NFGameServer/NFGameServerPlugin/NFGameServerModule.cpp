@@ -26,19 +26,17 @@ NFCGameServerModule::~NFCGameServerModule()
 
 bool NFCGameServerModule::Init()
 {
-	m_pServerNetEventModule = m_pPluginManager->FindModule<NFIServerNetEventModule>();
-	m_pNetServerModule = m_pPluginManager->FindModule<NFINetServerModule>();
-	m_pNetServerModule->AddEventCallBack(NF_ST_GAME, this, &NFCGameServerModule::OnProxySocketEvent);
-	m_pNetServerModule->AddReceiveCallBack(NF_ST_GAME, this, &NFCGameServerModule::OnHandleOtherMessage);
+	FindModule<NFINetServerModule>()->AddEventCallBack(NF_ST_GAME, this, &NFCGameServerModule::OnProxySocketEvent);
+	FindModule<NFINetServerModule>()->AddReceiveCallBack(NF_ST_GAME, this, &NFCGameServerModule::OnHandleOtherMessage);
 
-	m_pNetServerModule->AddReceiveCallBack(NF_ST_GAME, EGMI_NET_PROXY_TO_GAME_REGISTER, this, &NFCGameServerModule::OnProxyServerRegisterProcess);
-	m_pNetServerModule->AddReceiveCallBack(NF_ST_GAME, EGMI_NET_PROXY_TO_GAME_UNREGISTER, this, &NFCGameServerModule::OnProxyServerUnRegisterProcess);
-	m_pNetServerModule->AddReceiveCallBack(NF_ST_GAME, EGMI_NET_PROXY_TO_GAME_REFRESH, this, &NFCGameServerModule::OnProxyServerRefreshProcess);
+	FindModule<NFINetServerModule>()->AddReceiveCallBack(NF_ST_GAME, EGMI_NET_PROXY_TO_GAME_REGISTER, this, &NFCGameServerModule::OnProxyServerRegisterProcess);
+	FindModule<NFINetServerModule>()->AddReceiveCallBack(NF_ST_GAME, EGMI_NET_PROXY_TO_GAME_UNREGISTER, this, &NFCGameServerModule::OnProxyServerUnRegisterProcess);
+	FindModule<NFINetServerModule>()->AddReceiveCallBack(NF_ST_GAME, EGMI_NET_PROXY_TO_GAME_REFRESH, this, &NFCGameServerModule::OnProxyServerRefreshProcess);
 
 	NFServerConfig* pConfig = NFServerCommon::GetAppConfig(m_pPluginManager, NF_ST_GAME);
 	if (pConfig)
 	{
-		uint32_t unlinkId = m_pNetServerModule->AddServer(NF_ST_GAME, pConfig->mServerId, pConfig->mMaxConnectNum, pConfig->mServerPort);
+		uint32_t unlinkId = FindModule<NFINetServerModule>()->AddServer(NF_ST_GAME, pConfig->mServerId, pConfig->mMaxConnectNum, pConfig->mServerPort);
 		if (unlinkId != 0)
 		{
 			NFLogInfo(NF_LOG_SERVER_CONNECT_SERVER, 0, "game server listen success, serverId:{}, maxConnectNum:{}, port:{}", pConfig->mServerId, pConfig->mMaxConnectNum, pConfig->mServerPort);
@@ -115,13 +113,13 @@ void NFCGameServerModule::OnProxyServerRegisterProcess(const uint32_t unLinkId, 
 
 		if (xData.server_ip().empty())
 		{
-			std::string ip = m_pNetServerModule->GetLinkIp(unLinkId);
+			std::string ip = FindModule<NFINetServerModule>()->GetLinkIp(unLinkId);
 			pServerData->mServerInfo.set_server_ip(ip);
 		}
 
 		NFLogInfo(NF_LOG_SERVER_CONNECT_SERVER, 0, "Proxy Server Register Game Server Success, serverName:{}, serverId:{}, ip:{}, port:{}", pServerData->mServerInfo.server_name(), pServerData->mServerInfo.server_id(), pServerData->mServerInfo.server_ip(), pServerData->mServerInfo.server_port());
 
-		m_pServerNetEventModule->OnServerNetEvent(eMsgType_CONNECTED, NF_ST_GAME, NF_ST_PROXY, unLinkId, pServerData);
+		FindModule<NFIServerNetEventModule>()->OnServerNetEvent(eMsgType_CONNECTED, NF_ST_GAME, NF_ST_PROXY, unLinkId, pServerData);
 	}
 }
 
@@ -159,7 +157,7 @@ void NFCGameServerModule::OnProxyServerRefreshProcess(const uint32_t unLinkId, c
 
 		if (xData.server_ip().empty())
 		{
-			std::string ip = m_pNetServerModule->GetLinkIp(unLinkId);
+			std::string ip = FindModule<NFINetServerModule>()->GetLinkIp(unLinkId);
 			pServerData->mServerInfo.set_server_ip(ip);
 		}
 
@@ -183,7 +181,7 @@ void NFCGameServerModule::OnHandleServerDisconnect(uint32_t unLinkId)
 				, pServerData->mServerInfo.server_name(), pServerData->mServerInfo.server_id(), pServerData->mServerInfo.server_ip(), pServerData->mServerInfo.server_port());
 
 
-			m_pServerNetEventModule->OnServerNetEvent(eMsgType_DISCONNECTED, NF_ST_GAME, NF_ST_PROXY, unLinkId, pServerData);
+			FindModule<NFIServerNetEventModule>()->OnServerNetEvent(eMsgType_DISCONNECTED, NF_ST_GAME, NF_ST_PROXY, unLinkId, pServerData);
 			return;
 		}
 

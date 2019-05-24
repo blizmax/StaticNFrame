@@ -28,10 +28,6 @@ bool NFCLoginLogicModule::Init()
 
 bool NFCLoginLogicModule::AfterInit()
 {
-	m_pNetClientModule = m_pPluginManager->FindModule<NFINetClientModule>();
-	m_pKernelModule = m_pPluginManager->FindModule<NFIKernelModule>();
-	m_pLoginClient_MasterModule = m_pPluginManager->FindModule<NFILoginClient_MasterModule>();
-	m_pHttpServerModule = m_pPluginManager->FindModule<NFIHttpServerModule>();
 	return true;
 }
 

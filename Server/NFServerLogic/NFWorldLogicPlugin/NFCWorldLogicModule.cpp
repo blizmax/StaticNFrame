@@ -24,17 +24,12 @@ NFCWorldLogicModule::~NFCWorldLogicModule()
 
 bool NFCWorldLogicModule::Init()
 {
-	m_pServerNetEventModule = m_pPluginManager->FindModule<NFIServerNetEventModule>();
+	FindModule<NFINetServerModule>()->AddReceiveCallBack(NF_ST_WORLD, this, &NFCWorldLogicModule::OnHandleMessageFromServer);
+	FindModule<NFINetServerModule>()->AddReceiveCallBack(NF_ST_WORLD, ::NFMsg::Client_Msg_AccountLogin, this, &NFCWorldLogicModule::OnHandleAccountLoginFromProxyServer);
+	FindModule<NFINetServerModule>()->AddReceiveCallBack(NF_ST_WORLD, ::NFMsg::Server_Msg_AccountLogin, this, &NFCWorldLogicModule::OnHandleAccountLoginFromGameServer);
 
-	m_pNetClientModule = m_pPluginManager->FindModule<NFINetClientModule>();
-	m_pNetServerModule = m_pPluginManager->FindModule<NFINetServerModule>();
-
-	m_pNetServerModule->AddReceiveCallBack(NF_ST_WORLD, this, &NFCWorldLogicModule::OnHandleMessageFromServer);
-	m_pNetServerModule->AddReceiveCallBack(NF_ST_WORLD, ::NFMsg::Client_Msg_AccountLogin, this, &NFCWorldLogicModule::OnHandleAccountLoginFromProxyServer);
-	m_pNetServerModule->AddReceiveCallBack(NF_ST_WORLD, ::NFMsg::Server_Msg_AccountLogin, this, &NFCWorldLogicModule::OnHandleAccountLoginFromGameServer);
-
-	m_pServerNetEventModule->AddEventCallBack(NF_ST_WORLD, NF_ST_PROXY, this, &NFCWorldLogicModule::OnHandleProxyEventCallBack);
-	m_pServerNetEventModule->AddEventCallBack(NF_ST_WORLD, NF_ST_GAME, this, &NFCWorldLogicModule::OnHandleGameEventCallBack);
+	FindModule<NFIServerNetEventModule>()->AddEventCallBack(NF_ST_WORLD, NF_ST_PROXY, this, &NFCWorldLogicModule::OnHandleProxyEventCallBack);
+	FindModule<NFIServerNetEventModule>()->AddEventCallBack(NF_ST_WORLD, NF_ST_GAME, this, &NFCWorldLogicModule::OnHandleGameEventCallBack);
 
 	return true;
 }
@@ -190,7 +185,7 @@ void NFCWorldLogicModule::OnHandleAccountLoginFromProxyServer(const uint32_t unL
 	{
 		if (pServerData->GetServerId() == pInfo->mGameServerId)
 		{
-			m_pNetServerModule->SendToServerByPB(pInfo->mGameServerUnlinkId, nMsgId, cgMsg, pInfo->mProxyServerId);
+			FindModule<NFINetServerModule>()->SendToServerByPB(pInfo->mGameServerUnlinkId, nMsgId, cgMsg, pInfo->mProxyServerId);
 			return;
 		}
 		else
@@ -200,7 +195,7 @@ void NFCWorldLogicModule::OnHandleAccountLoginFromProxyServer(const uint32_t unL
 			if (pServerData)
 			{
 				pInfo->mGameServerUnlinkId = pServerData->GetUnlinkId();
-				m_pNetServerModule->SendToServerByPB(pInfo->mGameServerUnlinkId, nMsgId, cgMsg, pInfo->mProxyServerId);
+				FindModule<NFINetServerModule>()->SendToServerByPB(pInfo->mGameServerUnlinkId, nMsgId, cgMsg, pInfo->mProxyServerId);
 				return;
 			}
 		}
@@ -211,7 +206,7 @@ void NFCWorldLogicModule::OnHandleAccountLoginFromProxyServer(const uint32_t unL
 		if (pServerData)
 		{
 			pInfo->mGameServerUnlinkId = pServerData->GetUnlinkId();
-			m_pNetServerModule->SendToServerByPB(pInfo->mGameServerUnlinkId, nMsgId, cgMsg, pInfo->mProxyServerId);
+			FindModule<NFINetServerModule>()->SendToServerByPB(pInfo->mGameServerUnlinkId, nMsgId, cgMsg, pInfo->mProxyServerId);
 			return;
 		}
 		else
@@ -221,7 +216,7 @@ void NFCWorldLogicModule::OnHandleAccountLoginFromProxyServer(const uint32_t unL
 			{
 				pInfo->mGameServerId = pServerData->GetServerId();
 				pInfo->mGameServerUnlinkId = pServerData->GetUnlinkId();
-				m_pNetServerModule->SendToServerByPB(pInfo->mGameServerUnlinkId, nMsgId, cgMsg, pInfo->mProxyServerId);
+				FindModule<NFINetServerModule>()->SendToServerByPB(pInfo->mGameServerUnlinkId, nMsgId, cgMsg, pInfo->mProxyServerId);
 				return;
 			}
 		}
@@ -270,15 +265,15 @@ void NFCWorldLogicModule::OnHandleAccountLoginFromGameServer(const uint32_t unLi
 		NFMsg::NotifyGameChangeProxy msgChangeProxy;
 		msgChangeProxy.set_user_id(pLinkInfo->mPlayerId);
 		msgChangeProxy.set_proxy_id(pLinkInfo->mProxyServerId);
-		m_pNetServerModule->SendToServerByPB(unLinkId, EGMI_NET_WORLD_NOTIFY_GAME_CHANGE_PROXY, msgChangeProxy, pLinkInfo->mPlayerId);
+		FindModule<NFINetServerModule>()->SendToServerByPB(unLinkId, EGMI_NET_WORLD_NOTIFY_GAME_CHANGE_PROXY, msgChangeProxy, pLinkInfo->mPlayerId);
 
 		NFMsg::NotifyProxyChangeGame msgChangeGame;
 		msgChangeGame.set_user_id(pLinkInfo->mPlayerId);
 		msgChangeGame.set_game_id(pLinkInfo->mGameServerId);
 		msgChangeGame.set_client_link_id(pLinkInfo->mClientUnlinkId);
-		m_pNetServerModule->SendToServerByPB(pLinkInfo->mProxyServerUnlinkId, EGMI_NET_WORLD_NOTIFY_PROXY_CHANGE_GAME, msgChangeGame, pLinkInfo->mClientUnlinkId);
+		FindModule<NFINetServerModule>()->SendToServerByPB(pLinkInfo->mProxyServerUnlinkId, EGMI_NET_WORLD_NOTIFY_PROXY_CHANGE_GAME, msgChangeGame, pLinkInfo->mClientUnlinkId);
 
-		m_pNetServerModule->SendToServerByPB(pLinkInfo->mProxyServerUnlinkId, nMsgId, gcMsg, pLinkInfo->mClientUnlinkId);
+		FindModule<NFINetServerModule>()->SendToServerByPB(pLinkInfo->mProxyServerUnlinkId, nMsgId, gcMsg, pLinkInfo->mClientUnlinkId);
 	}
 	else
 	{
@@ -291,6 +286,6 @@ void NFCWorldLogicModule::OnHandleAccountLoginFromGameServer(const uint32_t unLi
 		}
 		mPlayerInfoByAccount.RemoveElement(account);
 
-		m_pNetServerModule->SendToServerByPB(pLinkInfo->mProxyServerUnlinkId, nMsgId, gcMsg, pLinkInfo->mClientUnlinkId);
+		FindModule<NFINetServerModule>()->SendToServerByPB(pLinkInfo->mProxyServerUnlinkId, nMsgId, gcMsg, pLinkInfo->mClientUnlinkId);
 	}
 }

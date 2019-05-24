@@ -23,9 +23,6 @@ NFCGameLogicModule::~NFCGameLogicModule()
 
 bool NFCGameLogicModule::Awake()
 {
-	m_pServerNetEventModule = m_pPluginManager->FindModule<NFIServerNetEventModule>();
-	m_pNetClientModule = m_pPluginManager->FindModule<NFINetClientModule>();
-	m_pNetServerModule = m_pPluginManager->FindModule<NFINetServerModule>();
 	bool ret = true;
 	NFServerConfig* pConfig = NFServerCommon::GetAppConfig(m_pPluginManager, NF_ST_GAME);
 	if (pConfig == nullptr)
@@ -58,10 +55,10 @@ bool NFCGameLogicModule::Awake()
 		return false;
 	}
 
-	m_pServerNetEventModule->AddEventCallBack(NF_ST_GAME, NF_ST_PROXY, this, &NFCGameLogicModule::OnHandleProxyEventCallBack);
-	m_pServerNetEventModule->AddEventCallBack(NF_ST_GAME, NF_ST_WORLD, this, &NFCGameLogicModule::OnHandleWorldEventCallBack);
+	FindModule<NFIServerNetEventModule>()->AddEventCallBack(NF_ST_GAME, NF_ST_PROXY, this, &NFCGameLogicModule::OnHandleProxyEventCallBack);
+	FindModule<NFIServerNetEventModule>()->AddEventCallBack(NF_ST_GAME, NF_ST_WORLD, this, &NFCGameLogicModule::OnHandleWorldEventCallBack);
 
-	m_pNetClientModule->AddReceiveCallBack(NF_ST_WORLD, EGMI_NET_WORLD_NOTIFY_GAME_CHANGE_PROXY, this, &NFCGameLogicModule::OnHandleChangeProxy);
+	FindModule<NFINetClientModule>()->AddReceiveCallBack(NF_ST_WORLD, EGMI_NET_WORLD_NOTIFY_GAME_CHANGE_PROXY, this, &NFCGameLogicModule::OnHandleChangeProxy);
 	return true;
 }
 
@@ -156,7 +153,7 @@ void NFCGameLogicModule::SendMsgToClientByPlayerId(uint64_t playerId, uint32_t n
 	auto pInfo = mPlayerProxyInfoMap.GetElement(playerId);
 	if (pInfo)
 	{
-		m_pNetServerModule->SendToServerByPB(pInfo->mProxyUnlinkId, nMsgId, xData, playerId);
+		FindModule<NFINetServerModule>()->SendToServerByPB(pInfo->mProxyUnlinkId, nMsgId, xData, playerId);
 	}
 	else
 	{
@@ -169,7 +166,7 @@ void NFCGameLogicModule::SendMsgToWorldByPlayerId(uint64_t playerId, uint32_t nM
 	auto pInfo = mPlayerProxyInfoMap.GetElement(playerId);
 	if (pInfo)
 	{
-		m_pNetClientModule->SendToServerByPB(pInfo->mWorldUnlinkId, nMsgId, xData, playerId);
+		FindModule<NFINetClientModule>()->SendToServerByPB(pInfo->mWorldUnlinkId, nMsgId, xData, playerId);
 	}
 	else
 	{

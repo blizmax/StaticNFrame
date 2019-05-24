@@ -51,10 +51,6 @@ protected:
 
 	virtual NF_SHARE_PTR<NFServerData> GetGameByLink(uint32_t unLinkId) { return mLinkGamMap.GetElement(unLinkId); }
 private:
-	NFINetServerModule* m_pNetServerModule;
-	NFINetClientModule* m_pNetClientModule;
-	NFIServerNetEventModule* m_pServerNetEventModule;
-private:
 	NFMapEx<uint32_t, NFServerData> mGameMap;
 	NFMapEx<uint32_t, NFServerData> mLinkGamMap; //linkid -- key
 	NFMapEx<uint32_t, NFServerData> mProxyMap;

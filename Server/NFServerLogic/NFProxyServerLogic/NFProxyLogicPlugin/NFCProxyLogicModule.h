@@ -58,10 +58,6 @@ public:
 
 	NF_SHARE_PTR<NFServerData> GetGameServerByServerId(uint32_t serverId);
 private:
-	NFINetServerModule* m_pNetServerModule;
-	NFINetClientModule* m_pNetClientModule;
-	NFIProxyServerModule* m_pNetProxyServerModule;
-	NFIServerNetEventModule* m_pServerNetEventModule;
 	NFMapEx<uint32_t, NFServerData> mGameMap;	//unlink -- serverdata
 	NFMapEx<uint32_t, NFServerData> mWorldMap;	//unlink -- serverdata
 	NFMapEx<uint32_t, ProxyLinkInfo> mClientLinkInfo; //unlink -- proxyLinkInfo

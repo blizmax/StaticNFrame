@@ -23,30 +23,24 @@ NFCProxyLogicModule::~NFCProxyLogicModule()
 
 bool NFCProxyLogicModule::Init()
 {
-	m_pServerNetEventModule = m_pPluginManager->FindModule<NFIServerNetEventModule>();
-
-	m_pNetClientModule = m_pPluginManager->FindModule<NFINetClientModule>();
-	m_pNetServerModule = m_pPluginManager->FindModule<NFINetServerModule>();
-	m_pNetProxyServerModule = m_pPluginManager->FindModule<NFIProxyServerModule>();
-
 	/*
 	** 处理来自客户端的连接和消息
 	*/
-	m_pNetServerModule->AddEventCallBack(NF_ST_PROXY, this, &NFCProxyLogicModule::OnProxySocketEvent);
-	m_pNetServerModule->AddReceiveCallBack(NF_ST_PROXY, this, &NFCProxyLogicModule::OnHandleMessageFromClient);
-	m_pNetServerModule->AddReceiveCallBack(NF_ST_PROXY, ::NFMsg::Client_Msg_AccountLogin, this, &NFCProxyLogicModule::OnHandleAccountLoginFromClient);
+	FindModule<NFINetServerModule>()->AddEventCallBack(NF_ST_PROXY, this, &NFCProxyLogicModule::OnProxySocketEvent);
+	FindModule<NFINetServerModule>()->AddReceiveCallBack(NF_ST_PROXY, this, &NFCProxyLogicModule::OnHandleMessageFromClient);
+	FindModule<NFINetServerModule>()->AddReceiveCallBack(NF_ST_PROXY, ::NFMsg::Client_Msg_AccountLogin, this, &NFCProxyLogicModule::OnHandleAccountLoginFromClient);
 
-	m_pNetServerModule->AddReceiveCallBack(NF_ST_PROXY, ::NFMsg::Client_Msg_HeartBeat, this, &NFCProxyLogicModule::OnHandleHeartBeat);
+	FindModule<NFINetServerModule>()->AddReceiveCallBack(NF_ST_PROXY, ::NFMsg::Client_Msg_HeartBeat, this, &NFCProxyLogicModule::OnHandleHeartBeat);
 	/*
 	** 处理来自客户端的连接和消息
 	*/
-	m_pNetClientModule->AddReceiveCallBack(NF_ST_GAME, this, &NFCProxyLogicModule::OnHandleMessageFromGameServer);
-	m_pNetClientModule->AddReceiveCallBack(NF_ST_WORLD, this, &NFCProxyLogicModule::OnHandleMessageFromWorldServer);
-	m_pNetClientModule->AddReceiveCallBack(NF_ST_WORLD, ::NFMsg::Server_Msg_AccountLogin, this, &NFCProxyLogicModule::OnHandleAccountLoginFromWorldServer);
-	m_pNetClientModule->AddReceiveCallBack(NF_ST_WORLD, EGMI_NET_WORLD_NOTIFY_PROXY_CHANGE_GAME, this, &NFCProxyLogicModule::OnHandleNotifyChangeGameFromWorldServer);
+	FindModule<NFINetClientModule>()->AddReceiveCallBack(NF_ST_GAME, this, &NFCProxyLogicModule::OnHandleMessageFromGameServer);
+	FindModule<NFINetClientModule>()->AddReceiveCallBack(NF_ST_WORLD, this, &NFCProxyLogicModule::OnHandleMessageFromWorldServer);
+	FindModule<NFINetClientModule>()->AddReceiveCallBack(NF_ST_WORLD, ::NFMsg::Server_Msg_AccountLogin, this, &NFCProxyLogicModule::OnHandleAccountLoginFromWorldServer);
+	FindModule<NFINetClientModule>()->AddReceiveCallBack(NF_ST_WORLD, EGMI_NET_WORLD_NOTIFY_PROXY_CHANGE_GAME, this, &NFCProxyLogicModule::OnHandleNotifyChangeGameFromWorldServer);
 
-	m_pServerNetEventModule->AddEventCallBack(NF_ST_PROXY, NF_ST_GAME, this, &NFCProxyLogicModule::OnHandleGameEventCallBack);
-	m_pServerNetEventModule->AddEventCallBack(NF_ST_PROXY, NF_ST_WORLD, this, &NFCProxyLogicModule::OnHandleWorldEventCallBack);
+	FindModule<NFIServerNetEventModule>()->AddEventCallBack(NF_ST_PROXY, NF_ST_GAME, this, &NFCProxyLogicModule::OnHandleGameEventCallBack);
+	FindModule<NFIServerNetEventModule>()->AddEventCallBack(NF_ST_PROXY, NF_ST_WORLD, this, &NFCProxyLogicModule::OnHandleWorldEventCallBack);
 
 	//10秒钟检查一次心跳包
 	this->SetTimer(0, 1000, INFINITY_CALL);
@@ -124,7 +118,7 @@ void NFCProxyLogicModule::OnTimer(uint32_t nTimerID)
 			{
 				NFMsg::gcheartbeat gcMsg;
 				gcMsg.set_result(0);
-				m_pNetServerModule->SendToServerByPB(pLinkInfo->mUnlinkId, NFMsg::Server_Msg_HeartBeat, gcMsg, 0);
+				FindModule<NFINetServerModule>()->SendToServerByPB(pLinkInfo->mUnlinkId, NFMsg::Server_Msg_HeartBeat, gcMsg, 0);
 			}
 		}
 		pLinkInfo = mClientLinkInfo.Next();
@@ -153,7 +147,7 @@ void NFCProxyLogicModule::OnProxySocketEvent(const eMsgType nEvent, const uint32
 
 void NFCProxyLogicModule::OnHandleMessageFromClient(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen)
 {
-	std::string ip = m_pNetServerModule->GetLinkIp(unLinkId);
+	std::string ip = FindModule<NFINetServerModule>()->GetLinkIp(unLinkId);
 	NFLogInfo(NF_LOG_PROXY_RECV_MSG_LOG, 0, "recv msg -- ip:{}, operateId:{}, msgId:{}, msglen:{}", ip, playerId, nMsgId, nLen);
 
 	NF_SHARE_PTR<ProxyLinkInfo> pLinkInfo = mClientLinkInfo.GetElement(unLinkId);
@@ -166,7 +160,7 @@ void NFCProxyLogicModule::OnHandleMessageFromClient(const uint32_t unLinkId, con
 	NF_SHARE_PTR<NFServerData> pServerData = mGameMap.GetElement(pLinkInfo->mGameServerUnlinkId);
 	if (pServerData)
 	{
-		m_pNetClientModule->SendByServerID(pServerData->mUnlinkId, nMsgId, msg, nLen, unLinkId);
+		FindModule<NFINetClientModule>()->SendByServerID(pServerData->mUnlinkId, nMsgId, msg, nLen, unLinkId);
 	}
 	else
 	{
@@ -177,7 +171,7 @@ void NFCProxyLogicModule::OnHandleMessageFromClient(const uint32_t unLinkId, con
 
 void NFCProxyLogicModule::OnHandleAccountLoginFromClient(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen)
 {
-	std::string ip = m_pNetServerModule->GetLinkIp(unLinkId);
+	std::string ip = FindModule<NFINetServerModule>()->GetLinkIp(unLinkId);
 	NFLogInfo(NF_LOG_PROXY_RECV_MSG_LOG, 0, "recv msg -- ip:{}, operateId:{}, msgId:{}, msglen:{}", ip, playerId, nMsgId, nLen);
 	NF_SHARE_PTR<NFServerData> pServerData = mWorldMap.First();
 	if (pServerData)
@@ -200,7 +194,7 @@ void NFCProxyLogicModule::OnHandleAccountLoginFromClient(const uint32_t unLinkId
 		}
 
 		pLinkInfo->mRecvMsgCount++;
-		m_pNetClientModule->SendByServerID(pServerData->mUnlinkId, nMsgId, msg, nLen, unLinkId);
+		FindModule<NFINetClientModule>()->SendByServerID(pServerData->mUnlinkId, nMsgId, msg, nLen, unLinkId);
 	}
 }
 
@@ -229,8 +223,8 @@ void NFCProxyLogicModule::OnHandleNotifyChangeGameFromWorldServer(const uint32_t
 					kitMsg.set_result(0);
 					kitMsg.set_kittype(1);
 					kitMsg.set_msg("您的账号已在别处登入，若非本人操作，请联系系统管理员！");
-					m_pNetServerModule->SendToServerByPB(pPlayerInfo->mUnlinkId, NFMsg::Server_Msg_KitPlayer, kitMsg, 0);
-					m_pNetServerModule->CloseLinkId(pPlayerInfo->mUnlinkId);
+					FindModule<NFINetServerModule>()->SendToServerByPB(pPlayerInfo->mUnlinkId, NFMsg::Server_Msg_KitPlayer, kitMsg, 0);
+					FindModule<NFINetServerModule>()->CloseLinkId(pPlayerInfo->mUnlinkId);
 				}
 
 				mPlayerLinkInfo.RemoveElement(gcMsg.user_id());
@@ -282,20 +276,20 @@ void NFCProxyLogicModule::OnHandleAccountLoginFromWorldServer(const uint32_t unL
 		}
 
 		pLinkInfo->mSendMsgCount++;
-		m_pNetServerModule->SendByServerID(clientLinkId, nMsgId, msg, nLen, pLinkInfo->mSendMsgCount);
+		FindModule<NFINetServerModule>()->SendByServerID(clientLinkId, nMsgId, msg, nLen, pLinkInfo->mSendMsgCount);
 	}
 	else
 	{
 		pLinkInfo->mIsLogin = false;
 
 		pLinkInfo->mSendMsgCount++;
-		m_pNetServerModule->SendByServerID(clientLinkId, nMsgId, msg, nLen, pLinkInfo->mSendMsgCount);
+		FindModule<NFINetServerModule>()->SendByServerID(clientLinkId, nMsgId, msg, nLen, pLinkInfo->mSendMsgCount);
 
 		if (pLinkInfo->mPlayerId > 0)
 		{
 			mPlayerLinkInfo.RemoveElement(pLinkInfo->mPlayerId);
 		}
-		m_pNetServerModule->CloseLinkId(clientLinkId);
+		FindModule<NFINetServerModule>()->CloseLinkId(clientLinkId);
 	}
 }
 
@@ -317,7 +311,7 @@ void NFCProxyLogicModule::OnHandleMessageFromWorldServer(const uint32_t unLinkId
 	}
 
 	pLinkInfo->mSendMsgCount++;
-	m_pNetServerModule->SendByServerID(pLinkInfo->mUnlinkId, nMsgId, msg, nLen, pLinkInfo->mSendMsgCount);
+	FindModule<NFINetServerModule>()->SendByServerID(pLinkInfo->mUnlinkId, nMsgId, msg, nLen, pLinkInfo->mSendMsgCount);
 }
 
 void NFCProxyLogicModule::OnHandleMessageFromGameServer(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen)
@@ -340,7 +334,7 @@ void NFCProxyLogicModule::OnHandleMessageFromGameServer(const uint32_t unLinkId,
 	}
 
 	pLinkInfo->mSendMsgCount++;
-	m_pNetServerModule->SendByServerID(pLinkInfo->mUnlinkId, nMsgId, msg, nLen, pLinkInfo->mSendMsgCount);
+	FindModule<NFINetServerModule>()->SendByServerID(pLinkInfo->mUnlinkId, nMsgId, msg, nLen, pLinkInfo->mSendMsgCount);
 }
 
 /**
@@ -364,5 +358,5 @@ void NFCProxyLogicModule::OnHandleHeartBeat(const uint32_t unLinkId, const uint6
 
 	NFMsg::gcheartbeat gcMsg;
 	gcMsg.set_result(0);
-	m_pNetServerModule->SendToServerByPB(unLinkId, NFMsg::Server_Msg_HeartBeat, gcMsg, 0);
+	FindModule<NFINetServerModule>()->SendToServerByPB(unLinkId, NFMsg::Server_Msg_HeartBeat, gcMsg, 0);
 }

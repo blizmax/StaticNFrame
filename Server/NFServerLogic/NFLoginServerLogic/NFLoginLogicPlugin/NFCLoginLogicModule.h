@@ -38,9 +38,4 @@ public:
 	virtual bool BeforeShut() override;
 
 	virtual bool Shut() override;
-private:
-	NFIHttpServerModule* m_pHttpServerModule;
-	NFINetClientModule* m_pNetClientModule;
-	NFILoginClient_MasterModule* m_pLoginClient_MasterModule;
-	NFIKernelModule* m_pKernelModule;
 };

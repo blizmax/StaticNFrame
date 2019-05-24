@@ -25,11 +25,6 @@ public:
 
 	virtual bool Init() override;
 
-	/*
-	** 这个函数主要用来保存引擎指针, 动态加载的时候引擎指针可能会失效
-	*/
-	virtual bool DynamicLoadPlugin() override;
-
 	virtual NFIObject* GetPlayerInfoByCID(const std::string& account, const std::string& password, uint32_t& retCode);
 
 	virtual  NFIObject*  GetPlayerInfo(uint64_t playerId, uint32_t& retCode);
@@ -45,9 +40,4 @@ private:
 	virtual NFIObject* LoadPlayerInfo(uint64_t playerId, uint32_t& retCode);
 private:
 	virtual NFIObject* CreatePlayerObject(NFMsg::db_playerinfo* pInfo);
-protected:
-	NFIKernelModule* m_pKernelModule;
-	NFIMysqlModule* m_pMysqlModule;
-	NFINoSqlModule* m_pNosqlModule;
-	NFIAsyMysqlModule* m_pAsyMysqlModule;
 };

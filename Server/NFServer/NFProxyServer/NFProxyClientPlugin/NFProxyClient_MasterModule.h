@@ -42,11 +42,6 @@ protected:
 	void RegisterServer();
 	void ServerReport();
 private:
-	NFINetClientModule* m_pNetClientModule;
-	NFIServerNetEventModule* m_pServerNetEventModule;
-	NFIProxyClient_GameModule* m_pProxyClient_GameModule;
-	NFIProxyClient_WorldModule* m_pProxyClient_WorldModule;
-	NFIProxyClient_LoginModule* m_pProxyClient_LoginModule;
 	NF_SHARE_PTR<NFServerData> m_pMasterServerData;
 };
 

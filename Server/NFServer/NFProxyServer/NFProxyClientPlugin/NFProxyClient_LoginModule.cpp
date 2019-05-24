@@ -17,7 +17,6 @@
 NFCProxyClient_LoginModule::NFCProxyClient_LoginModule(NFIPluginManager* p)
 {
 	m_pPluginManager = p;
-	m_pNetClientModule = nullptr;
 }
 
 NFCProxyClient_LoginModule::~NFCProxyClient_LoginModule()
@@ -26,16 +25,13 @@ NFCProxyClient_LoginModule::~NFCProxyClient_LoginModule()
 
 bool NFCProxyClient_LoginModule::Init()
 {
-	m_pServerNetEventModule = m_pPluginManager->FindModule<NFIServerNetEventModule>();
-	m_pNetClientModule = m_pPluginManager->FindModule<NFINetClientModule>();
-
 	return true;
 }
 
 bool NFCProxyClient_LoginModule::AfterInit()
 {
-	m_pNetClientModule->AddEventCallBack(NF_ST_LOGIN, this, &NFCProxyClient_LoginModule::OnProxySocketEvent);
-	m_pNetClientModule->AddReceiveCallBack(NF_ST_LOGIN, this, &NFCProxyClient_LoginModule::OnHandleOtherMessage);
+	FindModule<NFINetClientModule>()->AddEventCallBack(NF_ST_LOGIN, this, &NFCProxyClient_LoginModule::OnProxySocketEvent);
+	FindModule<NFINetClientModule>()->AddReceiveCallBack(NF_ST_LOGIN, this, &NFCProxyClient_LoginModule::OnHandleOtherMessage);
 
 	return true;
 }
@@ -88,11 +84,11 @@ void NFCProxyClient_LoginModule::OnClientDisconnect(uint32_t unLinkId)
 		NFLogError(NF_LOG_SERVER_CONNECT_SERVER, 0, "the login server disconnect, serverName:{}, serverId:{}, serverIp:{}, serverPort:{}"
 			, pServerData->mServerInfo.server_name(), pServerData->mServerInfo.server_id(), pServerData->mServerInfo.server_ip(), pServerData->mServerInfo.server_port());
 
-		m_pServerNetEventModule->OnServerNetEvent(eMsgType_DISCONNECTED, NF_ST_PROXY, NF_ST_LOGIN, unLinkId, pServerData);
+		FindModule<NFIServerNetEventModule>()->OnServerNetEvent(eMsgType_DISCONNECTED, NF_ST_PROXY, NF_ST_LOGIN, unLinkId, pServerData);
 
 		mUnlinkLoginMap.RemoveElement(unLinkId);
 
-		m_pNetClientModule->CloseServer(unLinkId);
+		FindModule<NFINetClientModule>()->CloseServer(unLinkId);
 	}
 }
 
@@ -106,13 +102,13 @@ void NFCProxyClient_LoginModule::OnHandleServerReport(const NFMsg::ServerInfoRep
 		pServerData = NF_SHARE_PTR<NFServerData>(NF_NEW NFServerData());
 		mLoginMap.AddElement(xData.server_id(), pServerData);
 
-		pServerData->mUnlinkId = m_pNetClientModule->AddServer(NF_ST_LOGIN, xData.server_ip(), xData.server_port());
+		pServerData->mUnlinkId = FindModule<NFINetClientModule>()->AddServer(NF_ST_LOGIN, xData.server_ip(), xData.server_port());
 		mUnlinkLoginMap.AddElement(pServerData->mUnlinkId, pServerData);
 	}
 
 	if (pServerData->mUnlinkId <= 0)
 	{
-		pServerData->mUnlinkId = m_pNetClientModule->AddServer(NF_ST_LOGIN, xData.server_ip(), xData.server_port());
+		pServerData->mUnlinkId = FindModule<NFINetClientModule>()->AddServer(NF_ST_LOGIN, xData.server_ip(), xData.server_port());
 		mUnlinkLoginMap.AddElement(pServerData->mUnlinkId, pServerData);
 	}
 
@@ -141,12 +137,12 @@ void NFCProxyClient_LoginModule::RegisterServer(uint32_t linkId)
 		pData->set_server_max_online(pConfig->mMaxConnectNum);
 		pData->set_server_state(NFMsg::EST_NARMAL);
 
-		m_pNetClientModule->SendToServerByPB(linkId, EGMI_NET_PROXY_TO_LOGIN_REGISTER, xMsg, 0);
+		FindModule<NFINetClientModule>()->SendToServerByPB(linkId, EGMI_NET_PROXY_TO_LOGIN_REGISTER, xMsg, 0);
 	}
 
 	NF_SHARE_PTR<NFServerData> pServerData = mUnlinkLoginMap.GetElement(linkId);
 	if (pServerData)
 	{
-		m_pServerNetEventModule->OnServerNetEvent(eMsgType_CONNECTED, NF_ST_PROXY, NF_ST_LOGIN, linkId, pServerData);
+		FindModule<NFIServerNetEventModule>()->OnServerNetEvent(eMsgType_CONNECTED, NF_ST_PROXY, NF_ST_LOGIN, linkId, pServerData);
 	}
 }

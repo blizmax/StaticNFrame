@@ -76,11 +76,7 @@ protected:
 	NF_SHARE_PTR<NFServerData> GetServerByServerId(uint32_t serverId);
 	void SendMsgToAllServer(const uint32_t nMsgID, const google::protobuf::Message& xData, const uint64_t nPlayerID);
 	void SendMsgToServer(uint32_t serverId, const uint32_t nMsgID, const google::protobuf::Message& xData, const uint64_t nPlayerID);
-private:
-	NFINetServerModule* m_pNetServerModule;
-	NFIHttpServerModule* m_pHttpServerModule;
-	NFIKernelModule* m_pKernelModule;
-	NFIAsyMysqlModule* m_pAsyMysqlModule;
+
 private:
 	NFMapEx<int, NFServerData> mLoginMap;
 	NFConsistentHashMapEx<int, NFServerData> mWorldMap;

@@ -36,15 +36,6 @@ bool NFCPlayerModule::Init()
 	return true;
 }
 
-bool NFCPlayerModule::DynamicLoadPlugin()
-{
-	m_pKernelModule = m_pPluginManager->FindModule<NFIKernelModule>();
-	m_pMysqlModule = m_pPluginManager->FindModule<NFIMysqlModule>();
-	m_pNosqlModule = m_pPluginManager->FindModule<NFINoSqlModule>();
-	m_pAsyMysqlModule = m_pPluginManager->FindModule<NFIAsyMysqlModule>();
-	return true;
-}
-
 NFIObject* NFCPlayerModule::CreatePlayerObject(NFMsg::db_playerinfo* pInfo)
 {
 	if (pInfo == nullptr)
@@ -53,7 +44,7 @@ NFIObject* NFCPlayerModule::CreatePlayerObject(NFMsg::db_playerinfo* pInfo)
 		return nullptr;
 	}
 
-	NFIObject* pObject = m_pKernelModule->CreateNFObject(pInfo->userid(), NF_NODE_STRING_CLASS_NAME_PLAYER);
+	NFIObject* pObject = FindModule<NFIKernelModule>()->CreateNFObject(pInfo->userid(), NF_NODE_STRING_CLASS_NAME_PLAYER);
 	if (pObject)
 	{
 		if (NFProtobufCommon::NFObjectFromMessage(pObject, *pInfo))
@@ -76,7 +67,7 @@ NFIObject* NFCPlayerModule::CreatePlayerObject(NFMsg::db_playerinfo* pInfo)
 
 NFIObject* NFCPlayerModule::GetPlayerObject(uint64_t playerId)
 {
-	NFIObject* pObject = m_pKernelModule->GetNFObject(playerId, NF_NODE_STRING_CLASS_NAME_PLAYER);
+	NFIObject* pObject = FindModule<NFIKernelModule>()->GetNFObject(playerId, NF_NODE_STRING_CLASS_NAME_PLAYER);
 	if (pObject)
 	{
 		return pObject;
@@ -92,7 +83,7 @@ NFIObject* NFCPlayerModule::LoadPlayerInfoByCID(const std::string& account, cons
 
 	NFMsg::db_query_playerinfo db_playerinfo;
 	db_playerinfo.mutable_db_cond()->set_account(account);
-	bool ret = m_pMysqlModule->Query(db_playerinfo);
+	bool ret = FindModule<NFIMysqlModule>()->Query(db_playerinfo);
 	if (ret == false)
 	{
 		NFBehaviorLog(0, account, "player", "LoadPlayerInfoByCID", -1, "账号不存在,account=" + account);
@@ -125,7 +116,7 @@ NFIObject* NFCPlayerModule::LoadPlayerInfoByCID(const std::string& account, cons
 	std::string strValue;
 	if (accountInfo.SerializeToString(&strValue))
 	{
-		if (m_pNosqlModule->Set("account" + pDbInfo->account(), strValue) == false)
+		if (FindModule<NFINoSqlModule>()->Set("account" + pDbInfo->account(), strValue) == false)
 		{
 			NFLogError(NF_LOG_LOGIN_MODULE_LOG, pDbInfo->userid(), "Nosql set account failed, pInfo:{}", accountInfo.DebugString());
 		}
@@ -137,7 +128,7 @@ NFIObject* NFCPlayerModule::LoadPlayerInfoByCID(const std::string& account, cons
 	
 	if (pDbInfo->SerializeToString(&strValue))
 	{
-		if (m_pNosqlModule->Set("playerinfo" + NFCommon::tostr(pDbInfo->userid()), strValue) == false)
+		if (FindModule<NFINoSqlModule>()->Set("playerinfo" + NFCommon::tostr(pDbInfo->userid()), strValue) == false)
 		{
 			NFLogError(NF_LOG_LOGIN_MODULE_LOG, pDbInfo->userid(), "Nosql set playerinfo failed, pInfo:{}", pDbInfo->DebugString());
 		}
@@ -156,7 +147,7 @@ NFIObject* NFCPlayerModule::GetPlayerInfoByCID(const std::string& account, const
 	NFIObject* pObject = nullptr;
 
 	std::string strUserID;
-	if (m_pNosqlModule->Get("account" + account, strUserID))
+	if (FindModule<NFINoSqlModule>()->Get("account" + account, strUserID))
 	{
 		NFMsg::accountinfo accountInfo;
 		if (accountInfo.ParseFromString(strUserID))
@@ -190,7 +181,7 @@ NFIObject*  NFCPlayerModule::GetPlayerInfo(uint64_t playerId, uint32_t& retCode)
 	}
 
 	std::string strValue;
-	if (m_pNosqlModule->Get("playerinfo" + NFCommon::tostr(playerId), strValue))
+	if (FindModule<NFINoSqlModule>()->Get("playerinfo" + NFCommon::tostr(playerId), strValue))
 	{
 		NFMsg::db_playerinfo dbInfo;
 		if (dbInfo.ParseFromString(strValue))
@@ -248,7 +239,7 @@ void NFCPlayerModule::CreatePlayer(const NFMsg::cgaccountlogin& cgMsg)
 	pDbInfo->set_face_1(NFCPlayerModule::GetInitFaceID());
 	pDbInfo->set_sex(cgMsg.sex());
 	pDbInfo->set_regdate(NFDateTime::Now().GetDbTimeString());
-	bool ret = m_pMysqlModule->Updata(db_playerinfo);
+	bool ret = FindModule<NFIMysqlModule>()->Updata(db_playerinfo);
 	if (ret == false)
 	{
 		NFBehaviorLog(0, "", "player", "LoadPlayerInfoByCID", -1, "加载数据库玩家信息失败");
@@ -261,7 +252,7 @@ NFIObject* NFCPlayerModule::LoadPlayerInfo(uint64_t playerId, uint32_t& retCode)
 	NFIObject* pObject = nullptr;
 	NFMsg::db_query_playerinfo db_playerinfo;
 	db_playerinfo.mutable_db_cond()->set_userid(NFCommon::tostr(playerId));
-	bool ret = m_pMysqlModule->Query(db_playerinfo);
+	bool ret = FindModule<NFIMysqlModule>()->Query(db_playerinfo);
 	if (ret == false)
 	{
 		NFBehaviorLog(playerId, "", "player", "LoadPlayerInfoByCID", -1, "加载数据库玩家信息失败");
@@ -282,7 +273,7 @@ NFIObject* NFCPlayerModule::LoadPlayerInfo(uint64_t playerId, uint32_t& retCode)
 	std::string strValue;
 	if (pDbInfo->SerializeToString(&strValue))
 	{
-		if (m_pNosqlModule->Set("playerinfo" + NFCommon::tostr(pDbInfo->userid()), strValue) == false)
+		if (FindModule<NFINoSqlModule>()->Set("playerinfo" + NFCommon::tostr(pDbInfo->userid()), strValue) == false)
 		{
 			NFLogError(NF_LOG_LOGIN_MODULE_LOG, pDbInfo->userid(), "nosql set playerifo failed:{}", pDbInfo->DebugString());
 		}

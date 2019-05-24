@@ -19,7 +19,6 @@
 NFCGameClient_MasterModule::NFCGameClient_MasterModule(NFIPluginManager* p)
 {
 	m_pPluginManager = p;
-	m_pNetClientModule = nullptr;
 	m_onlineNum = 0;
 }
 
@@ -29,27 +28,24 @@ NFCGameClient_MasterModule::~NFCGameClient_MasterModule()
 
 bool NFCGameClient_MasterModule::Init()
 {
-	m_pServerNetEventModule = m_pPluginManager->FindModule<NFIServerNetEventModule>();
-	m_pNetClientModule = m_pPluginManager->FindModule<NFINetClientModule>();
-	m_pGameClient_WorldModule = m_pPluginManager->FindModule<NFIGameClient_WorldModule>();
 	m_pMasterServerData = NF_SHARE_PTR<NFServerData>(NF_NEW NFServerData());
 	return true;
 }
 
 bool NFCGameClient_MasterModule::AfterInit()
 {
-	m_pNetClientModule->AddEventCallBack(NF_ST_MASTER, this, &NFCGameClient_MasterModule::OnProxySocketEvent);
-	m_pNetClientModule->AddReceiveCallBack(NF_ST_MASTER, this, &NFCGameClient_MasterModule::OnHandleOtherMessage);
+	FindModule<NFINetClientModule>()->AddEventCallBack(NF_ST_MASTER, this, &NFCGameClient_MasterModule::OnProxySocketEvent);
+	FindModule<NFINetClientModule>()->AddReceiveCallBack(NF_ST_MASTER, this, &NFCGameClient_MasterModule::OnHandleOtherMessage);
 
-	m_pNetClientModule->AddReceiveCallBack(NF_ST_MASTER, this, &NFCGameClient_MasterModule::OnHandleOtherMessage);
+	FindModule<NFINetClientModule>()->AddReceiveCallBack(NF_ST_MASTER, this, &NFCGameClient_MasterModule::OnHandleOtherMessage);
 	
-	m_pNetClientModule->AddReceiveCallBack(NF_ST_MASTER, EGMI_NET_MASTER_SEND_OTHERS_TO_GAME, this, &NFCGameClient_MasterModule::OnHandleServerReport);
+	FindModule<NFINetClientModule>()->AddReceiveCallBack(NF_ST_MASTER, EGMI_NET_MASTER_SEND_OTHERS_TO_GAME, this, &NFCGameClient_MasterModule::OnHandleServerReport);
 
 	NFServerConfig* pConfig = NFServerCommon::GetServerConfig(m_pPluginManager, NF_ST_MASTER);
 	if (pConfig)
 	{
 		//AddServer会自动重连，断开连接时，m_pMasterServerData->mUnlinkId不用清理，不变
-		m_pMasterServerData->mUnlinkId = m_pNetClientModule->AddServer(NF_ST_MASTER, pConfig->mServerIp, pConfig->mServerPort);
+		m_pMasterServerData->mUnlinkId = FindModule<NFINetClientModule>()->AddServer(NF_ST_MASTER, pConfig->mServerIp, pConfig->mServerPort);
 		m_pMasterServerData->mServerInfo.set_server_id(pConfig->mServerId);
 		m_pMasterServerData->mServerInfo.set_server_ip(pConfig->mServerIp);
 		m_pMasterServerData->mServerInfo.set_server_port(pConfig->mServerPort);
@@ -97,7 +93,7 @@ void NFCGameClient_MasterModule::OnProxySocketEvent(const eMsgType nEvent, const
 	{
 		NFLogDebug(NF_LOG_SERVER_CONNECT_SERVER, 0, "Game Server DisConnect Master Server!");
 
-		m_pServerNetEventModule->OnServerNetEvent(eMsgType_DISCONNECTED, NF_ST_GAME, NF_ST_MASTER, m_pMasterServerData->mUnlinkId, m_pMasterServerData);
+		FindModule<NFIServerNetEventModule>()->OnServerNetEvent(eMsgType_DISCONNECTED, NF_ST_GAME, NF_ST_MASTER, m_pMasterServerData->mUnlinkId, m_pMasterServerData);
 	}
 }
 
@@ -123,10 +119,10 @@ void NFCGameClient_MasterModule::RegisterServer()
 		pData->set_server_max_online(pConfig->mMaxConnectNum);
 		pData->set_server_state(NFMsg::EST_NARMAL);
 
-		m_pNetClientModule->SendToServerByPB(m_pMasterServerData->mUnlinkId, EGMI_NET_GAME_TO_MASTER_REGISTER, xMsg, 0);
+		FindModule<NFINetClientModule>()->SendToServerByPB(m_pMasterServerData->mUnlinkId, EGMI_NET_GAME_TO_MASTER_REGISTER, xMsg, 0);
 	}
 
-	m_pServerNetEventModule->OnServerNetEvent(eMsgType_CONNECTED, NF_ST_GAME, NF_ST_MASTER, m_pMasterServerData->mUnlinkId, m_pMasterServerData);
+	FindModule<NFIServerNetEventModule>()->OnServerNetEvent(eMsgType_CONNECTED, NF_ST_GAME, NF_ST_MASTER, m_pMasterServerData->mUnlinkId, m_pMasterServerData);
 }
 
 void NFCGameClient_MasterModule::ServerReport()
@@ -171,7 +167,7 @@ void NFCGameClient_MasterModule::ServerReport()
 			pData->set_proc_pid(systemInfo.GetProcessInfo().mPid);
 		}
 
-		m_pNetClientModule->SendToServerByPB(m_pMasterServerData->mUnlinkId, EGMI_STS_SERVER_REPORT, xMsg, 0);
+		FindModule<NFINetClientModule>()->SendToServerByPB(m_pMasterServerData->mUnlinkId, EGMI_STS_SERVER_REPORT, xMsg, 0);
 	}
 }
 
@@ -187,7 +183,7 @@ void NFCGameClient_MasterModule::OnHandleServerReport(const uint32_t unLinkId, c
 		{
 		case NF_SERVER_TYPES::NF_ST_WORLD:
 		{
-			m_pGameClient_WorldModule->OnHandleWorldReport(xData);
+			FindModule<NFIGameClient_WorldModule>()->OnHandleWorldReport(xData);
 		}
 		break;
 		}

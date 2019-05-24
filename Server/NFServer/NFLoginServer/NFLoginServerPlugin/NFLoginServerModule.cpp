@@ -27,15 +27,13 @@ NFCLoginServerModule::~NFCLoginServerModule()
 
 bool NFCLoginServerModule::Init()
 {
-	m_pHttpServerModule = m_pPluginManager->FindModule<NFIHttpServerModule>();
-	m_pNetServerModule = m_pPluginManager->FindModule<NFINetServerModule>();
-	m_pNetServerModule->AddEventCallBack(NF_ST_LOGIN, this, &NFCLoginServerModule::OnProxySocketEvent);
-	m_pNetServerModule->AddReceiveCallBack(NF_ST_LOGIN, this, &NFCLoginServerModule::OnHandleOtherMessage);
+	FindModule<NFINetServerModule>()->AddEventCallBack(NF_ST_LOGIN, this, &NFCLoginServerModule::OnProxySocketEvent);
+	FindModule<NFINetServerModule>()->AddReceiveCallBack(NF_ST_LOGIN, this, &NFCLoginServerModule::OnHandleOtherMessage);
 
 	NFServerConfig* pConfig = NFServerCommon::GetAppConfig(m_pPluginManager, NF_ST_LOGIN);
 	if (pConfig)
 	{
-		uint32_t unlinkId = m_pNetServerModule->AddServer(NF_ST_LOGIN, pConfig->mServerId, pConfig->mMaxConnectNum, pConfig->mServerPort);
+		uint32_t unlinkId = FindModule<NFINetServerModule>()->AddServer(NF_ST_LOGIN, pConfig->mServerId, pConfig->mMaxConnectNum, pConfig->mServerPort);
 		if (unlinkId != 0)
 		{
 			NFLogInfo(NF_LOG_SERVER_CONNECT_SERVER, 0, "login server listen success, serverId:{}, maxConnectNum:{}, port:{}", pConfig->mServerId, pConfig->mMaxConnectNum, pConfig->mServerPort);
@@ -47,7 +45,7 @@ bool NFCLoginServerModule::Init()
 
 		if (pConfig->mHttpPort > 0)
 		{
-			int ret = m_pHttpServerModule->InitServer(NF_ST_LOGIN, pConfig->mHttpPort);
+			int ret = FindModule<NFIHttpServerModule>()->InitServer(NF_ST_LOGIN, pConfig->mHttpPort);
 			if (ret == 0)
 			{
 				NFLogError(NF_LOG_SERVER_CONNECT_SERVER, 0, "Login Server Open Http Port:{} Failed!", pConfig->mHttpPort);
@@ -89,12 +87,12 @@ void NFCLoginServerModule::OnProxySocketEvent(const eMsgType nEvent, const uint3
 {
 	if (nEvent == eMsgType_CONNECTED)
 	{
-		std::string ip = m_pNetServerModule->GetLinkIp(unLinkId);
+		std::string ip = FindModule<NFINetServerModule>()->GetLinkIp(unLinkId);
 		NFLogDebug(NF_LOG_SERVER_CONNECT_SERVER, 0, "Client Connect Login Server Success, Ip:{}", ip);
 	}
 	else if (nEvent == eMsgType_DISCONNECTED)
 	{
-		std::string ip = m_pNetServerModule->GetLinkIp(unLinkId);
+		std::string ip = FindModule<NFINetServerModule>()->GetLinkIp(unLinkId);
 		NFLogDebug(NF_LOG_SERVER_CONNECT_SERVER, 0, "Client DisConnect From Login Server, Ip:{}", ip);
 	}
 }

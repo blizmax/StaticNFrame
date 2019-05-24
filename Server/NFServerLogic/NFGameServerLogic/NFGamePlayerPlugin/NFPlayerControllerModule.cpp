@@ -55,12 +55,6 @@ bool NFCPlayerControllerModule::Init()
 	return true;
 }
 
-bool NFCPlayerControllerModule::DynamicLoadPlugin()
-{
-	m_pPlayerModule = m_pPluginManager->FindModule<NFIPlayerModule>();
-	return true;
-}
-
 void NFCPlayerControllerModule::OnExecute(uint16_t nEventID, uint64_t nSrcID, uint8_t bySrcType, const google::protobuf::Message& message)
 {
 	if (nEventID == NFEVENT_MYSQL_UPDATE_MESSAGE)
@@ -123,15 +117,15 @@ void NFCPlayerControllerModule::OnHandleAccountLogin(const uint32_t unLinkId, co
 	NFMsg::playerinfo* pInfo = gcMsg.mutable_pinfo();
 
 	uint32_t ret = 0;
-	NFIObject* pPlayerObject = m_pPlayerModule->GetPlayerInfoByCID(cgMsg.account(), cgMsg.password(), ret);
+	NFIObject* pPlayerObject = FindModule<NFIPlayerModule>()->GetPlayerInfoByCID(cgMsg.account(), cgMsg.password(), ret);
 	bool isNewPlayer = false;
 
 	if (ret == RETURN_CODE_ACCOUNT_NO_EXIST || pPlayerObject == nullptr)
 	{
-		m_pPlayerModule->CreatePlayer(cgMsg);
+		FindModule<NFIPlayerModule>()->CreatePlayer(cgMsg);
 
 		ret = 0;
-		pPlayerObject = m_pPlayerModule->GetPlayerInfoByCID(cgMsg.account(), cgMsg.password(), ret);
+		pPlayerObject = FindModule<NFIPlayerModule>()->GetPlayerInfoByCID(cgMsg.account(), cgMsg.password(), ret);
 
 		if (ret == RETURN_CODE_ACCOUNT_NO_EXIST || pPlayerObject == nullptr)
 		{

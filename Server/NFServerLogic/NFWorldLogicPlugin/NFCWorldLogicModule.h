@@ -47,9 +47,6 @@ public:
 	NF_SHARE_PTR<NFServerData> FindGameServerByServerId(uint32_t serverId);
 	NF_SHARE_PTR<NFServerData> FindProxyServerByServerId(uint32_t serverId);
 private:
-	NFINetServerModule* m_pNetServerModule;
-	NFINetClientModule* m_pNetClientModule;
-	NFIServerNetEventModule* m_pServerNetEventModule;
 	NFMapEx<uint32_t, NFServerData> mGameMap;	//serverid -- serverdata
 	NFMapEx<uint32_t, NFServerData> mProxyMap;	//serverid -- serverdata
 	NFMapEx<std::string, PlayerWorldServerInfo> mPlayerInfoByAccount; //account -- PlayerWorldServerInfo

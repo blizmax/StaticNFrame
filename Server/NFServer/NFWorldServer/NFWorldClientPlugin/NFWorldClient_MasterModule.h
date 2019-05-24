@@ -39,7 +39,5 @@ protected:
 	void RegisterServer();
 	void ServerReport();
 private:
-	NFIServerNetEventModule* m_pServerNetEventModule;
-	NFINetClientModule* m_pNetClientModule;
 	NF_SHARE_PTR<NFServerData> m_pMasterServerData;
 };

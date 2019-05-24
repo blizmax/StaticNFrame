@@ -24,10 +24,6 @@ public:
 
 	virtual bool Shut();
 
-	/*
-	** 这个函数主要用来保存引擎指针, 动态加载的时候引擎指针可能会失效
-	*/
-	virtual bool DynamicLoadPlugin();
 public:
 	/**
 	* @brief 处理帐号登录功能
@@ -130,6 +126,4 @@ public:
 	virtual void OnExecute(uint16_t nEventID, uint64_t nSrcID, uint8_t bySrcType, const google::protobuf::Message& message) override;
 public:
 	static void CopyFromPlayerObject(NFMsg::playerinfo* pInfo, NFIObject* pPlayerObject);
-protected:
-	NFIPlayerModule* m_pPlayerModule;
 };

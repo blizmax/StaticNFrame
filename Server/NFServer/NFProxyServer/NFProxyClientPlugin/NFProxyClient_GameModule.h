@@ -44,8 +44,6 @@ protected:
 	NF_SHARE_PTR<NFServerData> GetServerByServerId(uint32_t serverId) { return mGameMap.GetElement(serverId); }
 	NF_SHARE_PTR<NFServerData> GetServerByUnlinkId(uint32_t unlinkId) { return mUnlinkGameMap.GetElement(unlinkId); }
 private:
-	NFINetClientModule* m_pNetClientModule;
-	NFIServerNetEventModule* m_pServerNetEventModule;
 
 	NFMapEx<uint32_t, NFServerData> mGameMap;	//serverid -- serverdata
 	NFMapEx<uint32_t, NFServerData> mUnlinkGameMap; //unlinkid -- serverdata

@@ -44,6 +44,16 @@ public:
 	{
 	}
 
+	template <typename T>
+	T* FindModule()
+	{
+		if (m_pPluginManager)
+		{
+			return m_pPluginManager->FindModule<T>();
+		}
+		return nullptr;
+	}
+
 	virtual bool Awake()
 	{
 		return true;

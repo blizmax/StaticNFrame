@@ -46,19 +46,13 @@ void NFCLhdControllerModule::OnHandleCreateTable(const uint32_t unLinkId, const 
 
 	const NFMsg::lhd_tableconfiginfo& lhdConfigInfo = cgMsg.conf_info();
 
-	NFIObject* pPlayerObject = m_pPlayerModule->GetPlayerObject(cgMsg.userid());
+	NFIObject* pPlayerObject = FindModule<NFIPlayerModule>()->GetPlayerObject(cgMsg.userid());
 
 	if (pPlayerObject == nullptr)
 	{
 		NFLogError(NF_LOG_SYSTEMLOG, cgMsg.userid(), "Lhd Create Failed! player:{} is not exist!", cgMsg.userid());
 		gcMsg.set_result(RETURN_CODE_PLAYER_NOT_EXIST);
 	}
-}
-
-bool NFCLhdControllerModule::DynamicLoadPlugin()
-{
-	m_pPlayerModule = m_pPluginManager->FindModule<NFIPlayerModule>();
-	return true;
 }
 
 bool NFCLhdControllerModule::Shut()

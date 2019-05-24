@@ -27,20 +27,16 @@ public:
 
 	virtual bool Awake() final
 	{
-		m_pGameLogicModule = m_pPluginManager->FindModule<NFIGameLogicModule>();
-		NFIDynamicModule::Awake();
 		return true;
 	}
 
 	virtual void SendMsgToClientByPlayerId(uint64_t playerId, uint32_t nMsgId, const google::protobuf::Message& xData)
 	{
-		m_pGameLogicModule->SendMsgToClientByPlayerId(playerId, nMsgId, xData);
+		FindModule<NFIGameLogicModule>()->SendMsgToClientByPlayerId(playerId, nMsgId, xData);
 	}
 
 	virtual void SendMsgToWorldByPlayerId(uint64_t playerId, uint32_t nMsgId, const google::protobuf::Message& xData)
 	{
-		m_pGameLogicModule->SendMsgToWorldByPlayerId(playerId, nMsgId, xData);
+		FindModule<NFIGameLogicModule>()->SendMsgToWorldByPlayerId(playerId, nMsgId, xData);
 	}
-protected:
-	NFIGameLogicModule* m_pGameLogicModule;
 };

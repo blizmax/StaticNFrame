@@ -17,7 +17,6 @@
 NFCProxyClient_GameModule::NFCProxyClient_GameModule(NFIPluginManager* p)
 {
 	m_pPluginManager = p;
-	m_pNetClientModule = nullptr;
 }
 
 NFCProxyClient_GameModule::~NFCProxyClient_GameModule()
@@ -26,15 +25,12 @@ NFCProxyClient_GameModule::~NFCProxyClient_GameModule()
 
 bool NFCProxyClient_GameModule::Init()
 {
-	m_pServerNetEventModule = m_pPluginManager->FindModule<NFIServerNetEventModule>();
-	m_pNetClientModule = m_pPluginManager->FindModule<NFINetClientModule>();
-	
 	return true;
 }
 
 bool NFCProxyClient_GameModule::AfterInit()
 {
-	m_pNetClientModule->AddEventCallBack(NF_ST_GAME, this, &NFCProxyClient_GameModule::OnProxySocketEvent);
+	FindModule<NFINetClientModule>()->AddEventCallBack(NF_ST_GAME, this, &NFCProxyClient_GameModule::OnProxySocketEvent);
 	//m_pNetClientModule->AddReceiveCallBack(NF_ST_GAME, this, &NFCProxyClient_GameModule::OnHandleOtherMessage);
 
 	return true;
@@ -88,11 +84,11 @@ void NFCProxyClient_GameModule::OnClientDisconnect(uint32_t unLinkId)
 		NFLogError(NF_LOG_SERVER_CONNECT_SERVER, 0, "the game server disconnect, serverName:{}, serverId:{}, serverIp:{}, serverPort:{}"
 			, pServerData->mServerInfo.server_name(), pServerData->mServerInfo.server_id(), pServerData->mServerInfo.server_ip(), pServerData->mServerInfo.server_port());
 
-		m_pServerNetEventModule->OnServerNetEvent(eMsgType_DISCONNECTED, NF_ST_PROXY, NF_ST_GAME, unLinkId, pServerData);
+		FindModule<NFIServerNetEventModule>()->OnServerNetEvent(eMsgType_DISCONNECTED, NF_ST_PROXY, NF_ST_GAME, unLinkId, pServerData);
 
 		mUnlinkGameMap.RemoveElement(unLinkId);
 
-		m_pNetClientModule->CloseServer(unLinkId);
+		FindModule<NFINetClientModule>()->CloseServer(unLinkId);
 	}
 }
 
@@ -106,13 +102,13 @@ void NFCProxyClient_GameModule::OnHandleServerReport(const NFMsg::ServerInfoRepo
 		pServerData = NF_SHARE_PTR<NFServerData>(NF_NEW NFServerData());
 		mGameMap.AddElement(xData.server_id(), pServerData);
 
-		pServerData->mUnlinkId = m_pNetClientModule->AddServer(NF_ST_GAME, xData.server_ip(), xData.server_port());
+		pServerData->mUnlinkId = FindModule<NFINetClientModule>()->AddServer(NF_ST_GAME, xData.server_ip(), xData.server_port());
 		mUnlinkGameMap.AddElement(pServerData->mUnlinkId, pServerData);
 	}
 
 	if (pServerData->mUnlinkId <= 0)
 	{
-		pServerData->mUnlinkId = m_pNetClientModule->AddServer(NF_ST_GAME, xData.server_ip(), xData.server_port());
+		pServerData->mUnlinkId = FindModule<NFINetClientModule>()->AddServer(NF_ST_GAME, xData.server_ip(), xData.server_port());
 		mUnlinkGameMap.AddElement(pServerData->mUnlinkId, pServerData);
 	}
 
@@ -141,13 +137,13 @@ void NFCProxyClient_GameModule::RegisterServer(uint32_t linkId)
 		pData->set_server_max_online(pConfig->mMaxConnectNum);
 		pData->set_server_state(NFMsg::EST_NARMAL);
 
-		m_pNetClientModule->SendToServerByPB(linkId, EGMI_NET_PROXY_TO_GAME_REGISTER, xMsg, 0);
+		FindModule<NFINetClientModule>()->SendToServerByPB(linkId, EGMI_NET_PROXY_TO_GAME_REGISTER, xMsg, 0);
 	}
 
 	NF_SHARE_PTR<NFServerData> pServerData = mUnlinkGameMap.GetElement(linkId);
 	if (pServerData)
 	{
-		m_pServerNetEventModule->OnServerNetEvent(eMsgType_CONNECTED, NF_ST_PROXY, NF_ST_GAME, linkId, pServerData);
+		FindModule<NFIServerNetEventModule>()->OnServerNetEvent(eMsgType_CONNECTED, NF_ST_PROXY, NF_ST_GAME, linkId, pServerData);
 	}
 }
 

@@ -19,7 +19,6 @@
 NFCProxyClient_MasterModule::NFCProxyClient_MasterModule(NFIPluginManager* p)
 {
 	m_pPluginManager = p;
-	m_pNetClientModule = nullptr;
 }
 
 NFCProxyClient_MasterModule::~NFCProxyClient_MasterModule()
@@ -28,27 +27,22 @@ NFCProxyClient_MasterModule::~NFCProxyClient_MasterModule()
 
 bool NFCProxyClient_MasterModule::Init()
 {
-	m_pProxyClient_GameModule = m_pPluginManager->FindModule<NFIProxyClient_GameModule>();
-	m_pProxyClient_WorldModule = m_pPluginManager->FindModule<NFIProxyClient_WorldModule>();
-	m_pProxyClient_LoginModule = m_pPluginManager->FindModule<NFIProxyClient_LoginModule>();
-	m_pNetClientModule = m_pPluginManager->FindModule<NFINetClientModule>();
 	m_pMasterServerData = NF_SHARE_PTR<NFServerData>(NF_NEW NFServerData());
 	return true;
 }
 
 bool NFCProxyClient_MasterModule::AfterInit()
 {
-	m_pServerNetEventModule = m_pPluginManager->FindModule<NFIServerNetEventModule>();
-	m_pNetClientModule->AddEventCallBack(NF_ST_MASTER, this, &NFCProxyClient_MasterModule::OnProxySocketEvent);
-	m_pNetClientModule->AddReceiveCallBack(NF_ST_MASTER, this, &NFCProxyClient_MasterModule::OnHandleOtherMessage);
+	FindModule<NFINetClientModule>()->AddEventCallBack(NF_ST_MASTER, this, &NFCProxyClient_MasterModule::OnProxySocketEvent);
+	FindModule<NFINetClientModule>()->AddReceiveCallBack(NF_ST_MASTER, this, &NFCProxyClient_MasterModule::OnHandleOtherMessage);
 
-	m_pNetClientModule->AddReceiveCallBack(NF_ST_MASTER, EGMI_NET_MASTER_SEND_OTHERS_TO_PROXY, this, &NFCProxyClient_MasterModule::OnHandleServerReport);
+	FindModule<NFINetClientModule>()->AddReceiveCallBack(NF_ST_MASTER, EGMI_NET_MASTER_SEND_OTHERS_TO_PROXY, this, &NFCProxyClient_MasterModule::OnHandleServerReport);
 
 	NFServerConfig* pConfig = NFServerCommon::GetServerConfig(m_pPluginManager, NF_ST_MASTER);
 	if (pConfig)
 	{
 		//AddServer会自动重连，断开连接时，m_pMasterServerData->mUnlinkId不用清理，不变
-		m_pMasterServerData->mUnlinkId = m_pNetClientModule->AddServer(NF_ST_MASTER, pConfig->mServerIp, pConfig->mServerPort);
+		m_pMasterServerData->mUnlinkId = FindModule<NFINetClientModule>()->AddServer(NF_ST_MASTER, pConfig->mServerIp, pConfig->mServerPort);
 		m_pMasterServerData->mServerInfo.set_server_id(pConfig->mServerId);
 		m_pMasterServerData->mServerInfo.set_server_ip(pConfig->mServerIp);
 		m_pMasterServerData->mServerInfo.set_server_port(pConfig->mServerPort);
@@ -96,10 +90,10 @@ void NFCProxyClient_MasterModule::RegisterServer()
 		pData->set_server_max_online(pConfig->mMaxConnectNum);
 		pData->set_server_state(NFMsg::EST_NARMAL);
 
-		m_pNetClientModule->SendToServerByPB(m_pMasterServerData->mUnlinkId, EGMI_NET_PROXY_TO_MASTER_REGISTER, xMsg, 0);
+		FindModule<NFINetClientModule>()->SendToServerByPB(m_pMasterServerData->mUnlinkId, EGMI_NET_PROXY_TO_MASTER_REGISTER, xMsg, 0);
 	}
 
-	m_pServerNetEventModule->OnServerNetEvent(eMsgType_CONNECTED, NF_ST_PROXY, NF_ST_MASTER, m_pMasterServerData->mUnlinkId, m_pMasterServerData);
+	FindModule<NFIServerNetEventModule>()->OnServerNetEvent(eMsgType_CONNECTED, NF_ST_PROXY, NF_ST_MASTER, m_pMasterServerData->mUnlinkId, m_pMasterServerData);
 }
 
 void NFCProxyClient_MasterModule::OnProxySocketEvent(const eMsgType nEvent, const uint32_t unLinkId)
@@ -117,7 +111,7 @@ void NFCProxyClient_MasterModule::OnProxySocketEvent(const eMsgType nEvent, cons
 	{
 		NFLogDebug(NF_LOG_SERVER_CONNECT_SERVER, 0, "Proxy Server DisConnect Master Server!");
 
-		m_pServerNetEventModule->OnServerNetEvent(eMsgType_DISCONNECTED, NF_ST_PROXY, NF_ST_MASTER, m_pMasterServerData->mUnlinkId, m_pMasterServerData);
+		FindModule<NFIServerNetEventModule>()->OnServerNetEvent(eMsgType_DISCONNECTED, NF_ST_PROXY, NF_ST_MASTER, m_pMasterServerData->mUnlinkId, m_pMasterServerData);
 	}
 }
 
@@ -169,7 +163,7 @@ void NFCProxyClient_MasterModule::ServerReport()
 			pData->set_proc_pid(systemInfo.GetProcessInfo().mPid);
 		}
 
-		m_pNetClientModule->SendToServerByPB(m_pMasterServerData->mUnlinkId, EGMI_STS_SERVER_REPORT, xMsg, 0);
+		FindModule<NFINetClientModule>()->SendToServerByPB(m_pMasterServerData->mUnlinkId, EGMI_STS_SERVER_REPORT, xMsg, 0);
 	}
 }
 
@@ -185,17 +179,17 @@ void NFCProxyClient_MasterModule::OnHandleServerReport(const uint32_t unLinkId, 
 		{
 		case NF_SERVER_TYPES::NF_ST_WORLD:
 		{
-			m_pProxyClient_WorldModule->OnHandleServerReport(xData);
+			FindModule<NFIProxyClient_WorldModule>()->OnHandleServerReport(xData);
 		}
 		break;
 		case NF_SERVER_TYPES::NF_ST_GAME:
 		{
-			m_pProxyClient_GameModule->OnHandleServerReport(xData);
+			FindModule<NFIProxyClient_GameModule>()->OnHandleServerReport(xData);
 		}
 		break;
 		case NF_SERVER_TYPES::NF_ST_LOGIN:
 		{
-			m_pProxyClient_LoginModule->OnHandleServerReport(xData);
+			FindModule<NFIProxyClient_LoginModule>()->OnHandleServerReport(xData);
 		}
 		break;
 		}

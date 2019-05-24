@@ -37,37 +37,34 @@ NFCMasterServerModule::~NFCMasterServerModule()
 bool NFCMasterServerModule::Init()
 {
 	this->SetTimer(NF_MASTER_TIMER_SAVE_SERVER_DATA, NF_MASTER_TIMER_SAVE_SERVER_DATA_TIME, INFINITY_CALL);
-	m_pKernelModule = m_pPluginManager->FindModule<NFIKernelModule>();
-	m_pAsyMysqlModule = m_pPluginManager->FindModule<NFIAsyMysqlModule>();
-	m_pHttpServerModule = m_pPluginManager->FindModule<NFIHttpServerModule>();
-	m_pHttpServerModule->AddRequestHandler(NF_ST_MASTER, "/gm", NFHttpType::NF_HTTP_REQ_POST, this, &NFCMasterServerModule::HttpHandleHttpGm);
-	m_pHttpServerModule->AddRequestHandler(NF_ST_MASTER, "/GM", NFHttpType::NF_HTTP_REQ_POST, this, &NFCMasterServerModule::HttpHandleHttpGm);
 
-	m_pNetServerModule = m_pPluginManager->FindModule<NFINetServerModule>();
-	m_pNetServerModule->AddEventCallBack(NF_ST_MASTER, this, &NFCMasterServerModule::OnProxySocketEvent);
-	m_pNetServerModule->AddReceiveCallBack(NF_ST_MASTER, this, &NFCMasterServerModule::OnHandleOtherMessage);
+	FindModule<NFIHttpServerModule>()->AddRequestHandler(NF_ST_MASTER, "/gm", NFHttpType::NF_HTTP_REQ_POST, this, &NFCMasterServerModule::HttpHandleHttpGm);
+	FindModule<NFIHttpServerModule>()->AddRequestHandler(NF_ST_MASTER, "/GM", NFHttpType::NF_HTTP_REQ_POST, this, &NFCMasterServerModule::HttpHandleHttpGm);
 
-	m_pNetServerModule->AddReceiveCallBack(NF_ST_MASTER, EGMI_NET_LOGIN_TO_MASTER_REGISTER, this, &NFCMasterServerModule::OnLoginServerRegisterProcess);
-	m_pNetServerModule->AddReceiveCallBack(NF_ST_MASTER, EGMI_NET_WORLD_TO_MASTER_REGISTER, this, &NFCMasterServerModule::OnWorldServerRegisterProcess);
-	m_pNetServerModule->AddReceiveCallBack(NF_ST_MASTER, EGMI_NET_PROXY_TO_MASTER_REGISTER, this, &NFCMasterServerModule::OnProxyServerRegisterProcess);
-	m_pNetServerModule->AddReceiveCallBack(NF_ST_MASTER, EGMI_NET_GAME_TO_MASTER_REGISTER, this, &NFCMasterServerModule::OnGameServerRegisterProcess);
+	FindModule<NFINetServerModule>()->AddEventCallBack(NF_ST_MASTER, this, &NFCMasterServerModule::OnProxySocketEvent);
+	FindModule<NFINetServerModule>()->AddReceiveCallBack(NF_ST_MASTER, this, &NFCMasterServerModule::OnHandleOtherMessage);
 
-	m_pNetServerModule->AddReceiveCallBack(NF_ST_MASTER, EGMI_NET_LOGIN_TO_MASTER_UNREGISTER, this, &NFCMasterServerModule::OnLoginServerUnRegisterProcess);
-	m_pNetServerModule->AddReceiveCallBack(NF_ST_MASTER, EGMI_NET_WORLD_TO_MASTER_UNREGISTER, this, &NFCMasterServerModule::OnWorldServerUnRegisterProcess);
-	m_pNetServerModule->AddReceiveCallBack(NF_ST_MASTER, EGMI_NET_PROXY_TO_MASTER_UNREGISTER, this, &NFCMasterServerModule::OnProxyServerUnRegisterProcess);
-	m_pNetServerModule->AddReceiveCallBack(NF_ST_MASTER, EGMI_NET_GAME_TO_MASTER_UNREGISTER, this, &NFCMasterServerModule::OnGameServerUnRegisterProcess);
+	FindModule<NFINetServerModule>()->AddReceiveCallBack(NF_ST_MASTER, EGMI_NET_LOGIN_TO_MASTER_REGISTER, this, &NFCMasterServerModule::OnLoginServerRegisterProcess);
+	FindModule<NFINetServerModule>()->AddReceiveCallBack(NF_ST_MASTER, EGMI_NET_WORLD_TO_MASTER_REGISTER, this, &NFCMasterServerModule::OnWorldServerRegisterProcess);
+	FindModule<NFINetServerModule>()->AddReceiveCallBack(NF_ST_MASTER, EGMI_NET_PROXY_TO_MASTER_REGISTER, this, &NFCMasterServerModule::OnProxyServerRegisterProcess);
+	FindModule<NFINetServerModule>()->AddReceiveCallBack(NF_ST_MASTER, EGMI_NET_GAME_TO_MASTER_REGISTER, this, &NFCMasterServerModule::OnGameServerRegisterProcess);
 
-	m_pNetServerModule->AddReceiveCallBack(NF_ST_MASTER, EGMI_NET_LOGIN_TO_MASTER_REFRESH, this, &NFCMasterServerModule::OnLoginServerRefreshProcess);
-	m_pNetServerModule->AddReceiveCallBack(NF_ST_MASTER, EGMI_NET_WORLD_TO_MASTER_REFRESH, this, &NFCMasterServerModule::OnWorldServerRefreshProcess);
-	m_pNetServerModule->AddReceiveCallBack(NF_ST_MASTER, EGMI_NET_PROXY_TO_MASTER_REFRESH, this, &NFCMasterServerModule::OnProxyServerRefreshProcess);
-	m_pNetServerModule->AddReceiveCallBack(NF_ST_MASTER, EGMI_NET_GAME_TO_MASTER_REFRESH, this, &NFCMasterServerModule::OnGameServerRefreshProcess);
+	FindModule<NFINetServerModule>()->AddReceiveCallBack(NF_ST_MASTER, EGMI_NET_LOGIN_TO_MASTER_UNREGISTER, this, &NFCMasterServerModule::OnLoginServerUnRegisterProcess);
+	FindModule<NFINetServerModule>()->AddReceiveCallBack(NF_ST_MASTER, EGMI_NET_WORLD_TO_MASTER_UNREGISTER, this, &NFCMasterServerModule::OnWorldServerUnRegisterProcess);
+	FindModule<NFINetServerModule>()->AddReceiveCallBack(NF_ST_MASTER, EGMI_NET_PROXY_TO_MASTER_UNREGISTER, this, &NFCMasterServerModule::OnProxyServerUnRegisterProcess);
+	FindModule<NFINetServerModule>()->AddReceiveCallBack(NF_ST_MASTER, EGMI_NET_GAME_TO_MASTER_UNREGISTER, this, &NFCMasterServerModule::OnGameServerUnRegisterProcess);
+
+	FindModule<NFINetServerModule>()->AddReceiveCallBack(NF_ST_MASTER, EGMI_NET_LOGIN_TO_MASTER_REFRESH, this, &NFCMasterServerModule::OnLoginServerRefreshProcess);
+	FindModule<NFINetServerModule>()->AddReceiveCallBack(NF_ST_MASTER, EGMI_NET_WORLD_TO_MASTER_REFRESH, this, &NFCMasterServerModule::OnWorldServerRefreshProcess);
+	FindModule<NFINetServerModule>()->AddReceiveCallBack(NF_ST_MASTER, EGMI_NET_PROXY_TO_MASTER_REFRESH, this, &NFCMasterServerModule::OnProxyServerRefreshProcess);
+	FindModule<NFINetServerModule>()->AddReceiveCallBack(NF_ST_MASTER, EGMI_NET_GAME_TO_MASTER_REFRESH, this, &NFCMasterServerModule::OnGameServerRefreshProcess);
 	
-	m_pNetServerModule->AddReceiveCallBack(NF_ST_MASTER, EGMI_STS_SERVER_REPORT, this, &NFCMasterServerModule::OnServerReport);
+	FindModule<NFINetServerModule>()->AddReceiveCallBack(NF_ST_MASTER, EGMI_STS_SERVER_REPORT, this, &NFCMasterServerModule::OnServerReport);
 
 	NFServerConfig* pConfig = NFServerCommon::GetAppConfig(m_pPluginManager, NF_ST_MASTER);
 	if (pConfig)
 	{
-		uint32_t unlinkId = m_pNetServerModule->AddServer(NF_ST_MASTER, pConfig->mServerId, pConfig->mMaxConnectNum, pConfig->mServerPort);
+		uint32_t unlinkId = FindModule<NFINetServerModule>()->AddServer(NF_ST_MASTER, pConfig->mServerId, pConfig->mMaxConnectNum, pConfig->mServerPort);
 		if (unlinkId != 0)
 		{
 			NFLogInfo(NF_LOG_SERVER_CONNECT_SERVER, 0, "master server listen success, serverId:{}, maxConnectNum:{}, port:{}", pConfig->mServerId, pConfig->mMaxConnectNum, pConfig->mServerPort);
@@ -80,7 +77,7 @@ bool NFCMasterServerModule::Init()
 
 		if (pConfig->mHttpPort > 0)
 		{
-			unlinkId = (uint32_t)m_pHttpServerModule->InitServer(NF_ST_MASTER, pConfig->mHttpPort);
+			unlinkId = (uint32_t)FindModule<NFIHttpServerModule>()->InitServer(NF_ST_MASTER, pConfig->mHttpPort);
 			if (unlinkId == 0)
 			{
 				NFLogError(NF_LOG_SERVER_CONNECT_SERVER, 0, "Master Server Open Http Port:{} Failed!", pConfig->mHttpPort);
@@ -89,7 +86,7 @@ bool NFCMasterServerModule::Init()
 			NFLogInfo(NF_LOG_SERVER_CONNECT_SERVER, 0, "Master Server Open Http Port:{} Success!", pConfig->mHttpPort);
 		}
 
-		bool ret = m_pAsyMysqlModule->AddMysqlServer(NF_ST_MASTER, pConfig->mMysqlIp, pConfig->mMysqlPort, pConfig->mMysqlDbName, pConfig->mMysqlUser, pConfig->mMysqlPassword);
+		bool ret = FindModule<NFIAsyMysqlModule>()->AddMysqlServer(NF_ST_MASTER, pConfig->mMysqlIp, pConfig->mMysqlPort, pConfig->mMysqlDbName, pConfig->mMysqlUser, pConfig->mMysqlPassword);
 		if (ret == false)
 		{
 			NFLogError(NF_LOG_SYSTEMLOG, 0, "NFIAsyMysqlModule AddMysqlServer failed!");
@@ -140,7 +137,7 @@ void NFCMasterServerModule::SendMsgToServer(uint32_t serverId, const uint32_t nM
 	{
 		if (pServerData->mServerInfo.server_state() != NFMsg::EST_CRASH)
 		{
-			m_pNetServerModule->SendToServerByPB(pServerData->mUnlinkId, nMsgID, xData, nPlayerID);
+			FindModule<NFINetServerModule>()->SendToServerByPB(pServerData->mUnlinkId, nMsgID, xData, nPlayerID);
 		}
 	}
 }
@@ -153,7 +150,7 @@ void NFCMasterServerModule::SendMsgToAllServer(const uint32_t nMsgID, const goog
 	{
 		if (pServerData->mServerInfo.server_state() != NFMsg::EST_CRASH)
 		{
-			m_pNetServerModule->SendToServerByPB(pServerData->mUnlinkId, nMsgID, xData, nPlayerID);
+			FindModule<NFINetServerModule>()->SendToServerByPB(pServerData->mUnlinkId, nMsgID, xData, nPlayerID);
 		}
 		pServerData = mWorldMap.Next();
 	}
@@ -163,7 +160,7 @@ void NFCMasterServerModule::SendMsgToAllServer(const uint32_t nMsgID, const goog
 	{
 		if (pServerData->mServerInfo.server_state() != NFMsg::EST_CRASH)
 		{
-			m_pNetServerModule->SendToServerByPB(pServerData->mUnlinkId, nMsgID, xData, nPlayerID);
+			FindModule<NFINetServerModule>()->SendToServerByPB(pServerData->mUnlinkId, nMsgID, xData, nPlayerID);
 		}
 		pServerData = mProxyMap.Next();
 	}
@@ -173,7 +170,7 @@ void NFCMasterServerModule::SendMsgToAllServer(const uint32_t nMsgID, const goog
 	{
 		if (pServerData->mServerInfo.server_state() != NFMsg::EST_CRASH)
 		{
-			m_pNetServerModule->SendToServerByPB(pServerData->mUnlinkId, nMsgID, xData, nPlayerID);
+			FindModule<NFINetServerModule>()->SendToServerByPB(pServerData->mUnlinkId, nMsgID, xData, nPlayerID);
 		}
 		pServerData = mGameMap.Next();
 	}
@@ -183,7 +180,7 @@ void NFCMasterServerModule::SendMsgToAllServer(const uint32_t nMsgID, const goog
 	{
 		if (pServerData->mServerInfo.server_state() != NFMsg::EST_CRASH)
 		{
-			m_pNetServerModule->SendToServerByPB(pServerData->mUnlinkId, nMsgID, xData, nPlayerID);
+			FindModule<NFINetServerModule>()->SendToServerByPB(pServerData->mUnlinkId, nMsgID, xData, nPlayerID);
 		}
 		pServerData = mLoginMap.Next();
 	}
@@ -257,7 +254,7 @@ void NFCMasterServerModule::SaveServerDataToDB()
 		*dbserver.mutable_db_fields() = *pData;
 		dbserver.mutable_db_fields()->set_last_date(NFDateTime::Now().GetDbTimeString());
 		dbserver.mutable_db_fields()->set_last_time(NFGetSecondTime());
-		m_pAsyMysqlModule->Update(dbserver, pData->server_id());
+		FindModule<NFIAsyMysqlModule>()->Update(dbserver, pData->server_id());
 
 		NFMsg::db_query_server_detail dbserverDetail;
 		dbserverDetail.mutable_db_fields()->set_server_id(dbserver.mutable_db_fields()->server_id());
@@ -270,7 +267,7 @@ void NFCMasterServerModule::SaveServerDataToDB()
 		dbserverDetail.mutable_db_fields()->set_proc_thread(dbserver.mutable_db_fields()->proc_thread());
 		dbserverDetail.mutable_db_fields()->set_last_date(NFDateTime::Now().GetDbTimeString());
 		dbserverDetail.mutable_db_fields()->set_last_time(NFGetSecondTime());
-		m_pAsyMysqlModule->Update(dbserverDetail, pData->server_id());
+		FindModule<NFIAsyMysqlModule>()->Update(dbserverDetail, pData->server_id());
 	}
 
 	NF_SHARE_PTR<NFServerData> pServerData = nullptr;
@@ -281,7 +278,7 @@ void NFCMasterServerModule::SaveServerDataToDB()
 		*dbserver.mutable_db_fields() = pServerData->mServerInfo;
 		dbserver.mutable_db_fields()->set_last_date(NFDateTime::Now().GetDbTimeString());
 		dbserver.mutable_db_fields()->set_last_time(NFGetSecondTime());
-		m_pAsyMysqlModule->Update(dbserver, pServerData->mServerInfo.server_id());
+		FindModule<NFIAsyMysqlModule>()->Update(dbserver, pServerData->mServerInfo.server_id());
 
 		NFMsg::db_query_server_detail dbserverDetail;
 		dbserverDetail.mutable_db_fields()->set_server_id(dbserver.mutable_db_fields()->server_id());
@@ -294,7 +291,7 @@ void NFCMasterServerModule::SaveServerDataToDB()
 		dbserverDetail.mutable_db_fields()->set_proc_thread(dbserver.mutable_db_fields()->proc_thread());
 		dbserverDetail.mutable_db_fields()->set_last_date(NFDateTime::Now().GetDbTimeString());
 		dbserverDetail.mutable_db_fields()->set_last_time(NFGetSecondTime());
-		m_pAsyMysqlModule->Update(dbserverDetail, pServerData->mServerInfo.server_id());
+		FindModule<NFIAsyMysqlModule>()->Update(dbserverDetail, pServerData->mServerInfo.server_id());
 
 		pServerData = mWorldMap.Next();
 	}
@@ -306,7 +303,7 @@ void NFCMasterServerModule::SaveServerDataToDB()
 		*dbserver.mutable_db_fields() = pServerData->mServerInfo;
 		dbserver.mutable_db_fields()->set_last_date(NFDateTime::Now().GetDbTimeString());
 		dbserver.mutable_db_fields()->set_last_time(NFGetSecondTime());
-		m_pAsyMysqlModule->Update(dbserver, pServerData->mServerInfo.server_id());
+		FindModule<NFIAsyMysqlModule>()->Update(dbserver, pServerData->mServerInfo.server_id());
 
 		NFMsg::db_query_server_detail dbserverDetail;
 		dbserverDetail.mutable_db_fields()->set_server_id(dbserver.mutable_db_fields()->server_id());
@@ -319,7 +316,7 @@ void NFCMasterServerModule::SaveServerDataToDB()
 		dbserverDetail.mutable_db_fields()->set_proc_thread(dbserver.mutable_db_fields()->proc_thread());
 		dbserverDetail.mutable_db_fields()->set_last_date(NFDateTime::Now().GetDbTimeString());
 		dbserverDetail.mutable_db_fields()->set_last_time(NFGetSecondTime());
-		m_pAsyMysqlModule->Update(dbserverDetail, pServerData->mServerInfo.server_id());
+		FindModule<NFIAsyMysqlModule>()->Update(dbserverDetail, pServerData->mServerInfo.server_id());
 
 		pServerData = mProxyMap.Next();
 	}
@@ -331,7 +328,7 @@ void NFCMasterServerModule::SaveServerDataToDB()
 		*dbserver.mutable_db_fields() = pServerData->mServerInfo;
 		dbserver.mutable_db_fields()->set_last_date(NFDateTime::Now().GetDbTimeString());
 		dbserver.mutable_db_fields()->set_last_time(NFGetSecondTime());
-		m_pAsyMysqlModule->Update(dbserver, pServerData->mServerInfo.server_id());
+		FindModule<NFIAsyMysqlModule>()->Update(dbserver, pServerData->mServerInfo.server_id());
 
 		NFMsg::db_query_server_detail dbserverDetail;
 		dbserverDetail.mutable_db_fields()->set_server_id(dbserver.mutable_db_fields()->server_id());
@@ -344,7 +341,7 @@ void NFCMasterServerModule::SaveServerDataToDB()
 		dbserverDetail.mutable_db_fields()->set_proc_thread(dbserver.mutable_db_fields()->proc_thread());
 		dbserverDetail.mutable_db_fields()->set_last_date(NFDateTime::Now().GetDbTimeString());
 		dbserverDetail.mutable_db_fields()->set_last_time(NFGetSecondTime());
-		m_pAsyMysqlModule->Update(dbserverDetail, pServerData->mServerInfo.server_id());
+		FindModule<NFIAsyMysqlModule>()->Update(dbserverDetail, pServerData->mServerInfo.server_id());
 
 		pServerData = mGameMap.Next();
 	}
@@ -360,7 +357,7 @@ void NFCMasterServerModule::SaveServerDataToDB()
 		*dbserver.mutable_db_fields() = pServerData->mServerInfo;
 		dbserver.mutable_db_fields()->set_last_date(NFDateTime::Now().GetDbTimeString());
 		dbserver.mutable_db_fields()->set_last_time(NFGetSecondTime());
-		m_pAsyMysqlModule->Update(dbserver, pServerData->mServerInfo.server_id());
+		FindModule<NFIAsyMysqlModule>()->Update(dbserver, pServerData->mServerInfo.server_id());
 
 		NFMsg::db_query_server_detail dbserverDetail;
 		dbserverDetail.mutable_db_fields()->set_server_id(dbserver.mutable_db_fields()->server_id());
@@ -373,7 +370,7 @@ void NFCMasterServerModule::SaveServerDataToDB()
 		dbserverDetail.mutable_db_fields()->set_proc_thread(dbserver.mutable_db_fields()->proc_thread());
 		dbserverDetail.mutable_db_fields()->set_last_date(NFDateTime::Now().GetDbTimeString());
 		dbserverDetail.mutable_db_fields()->set_last_time(NFGetSecondTime());
-		m_pAsyMysqlModule->Update(dbserverDetail, pServerData->mServerInfo.server_id());
+		FindModule<NFIAsyMysqlModule>()->Update(dbserverDetail, pServerData->mServerInfo.server_id());
 
 		pServerData = mLoginMap.Next();
 	}
@@ -413,7 +410,7 @@ void NFCMasterServerModule::OnClientDisconnect(uint32_t unLinkId)
 			*dbserver.mutable_db_fields() = pServerData->mServerInfo;
 			dbserver.mutable_db_fields()->set_last_date(NFDateTime::Now().GetDbTimeString());
 			dbserver.mutable_db_fields()->set_last_time(NFGetSecondTime());
-			m_pAsyMysqlModule->Update(dbserver);
+			FindModule<NFIAsyMysqlModule>()->Update(dbserver);
 
 			NFMsg::db_query_server_detail dbserverDetail;
 			dbserverDetail.mutable_db_fields()->set_server_id(dbserver.mutable_db_fields()->server_id());
@@ -426,7 +423,7 @@ void NFCMasterServerModule::OnClientDisconnect(uint32_t unLinkId)
 			dbserverDetail.mutable_db_fields()->set_proc_thread(dbserver.mutable_db_fields()->proc_thread());
 			dbserverDetail.mutable_db_fields()->set_last_date(NFDateTime::Now().GetDbTimeString());
 			dbserverDetail.mutable_db_fields()->set_last_time(NFGetSecondTime());
-			m_pAsyMysqlModule->Update(dbserverDetail, pServerData->mServerInfo.server_id());
+			FindModule<NFIAsyMysqlModule>()->Update(dbserverDetail, pServerData->mServerInfo.server_id());
 
 			NFLogError(NF_LOG_SERVER_CONNECT_SERVER, 0, "the world server disconnect from master server, serverName:{}, serverId:{}, serverIp:{}, serverPort:{}"
 				, pServerData->mServerInfo.server_name(), pServerData->mServerInfo.server_id(), pServerData->mServerInfo.server_ip(), pServerData->mServerInfo.server_port());
@@ -452,7 +449,7 @@ void NFCMasterServerModule::OnClientDisconnect(uint32_t unLinkId)
 			*dbserver.mutable_db_fields() = pServerData->mServerInfo;
 			dbserver.mutable_db_fields()->set_last_date(NFDateTime::Now().GetDbTimeString());
 			dbserver.mutable_db_fields()->set_last_time(NFGetSecondTime());
-			m_pAsyMysqlModule->Update(dbserver);
+			FindModule<NFIAsyMysqlModule>()->Update(dbserver);
 
 			NFMsg::db_query_server_detail dbserverDetail;
 			dbserverDetail.mutable_db_fields()->set_server_id(dbserver.mutable_db_fields()->server_id());
@@ -465,7 +462,7 @@ void NFCMasterServerModule::OnClientDisconnect(uint32_t unLinkId)
 			dbserverDetail.mutable_db_fields()->set_proc_thread(dbserver.mutable_db_fields()->proc_thread());
 			dbserverDetail.mutable_db_fields()->set_last_date(NFDateTime::Now().GetDbTimeString());
 			dbserverDetail.mutable_db_fields()->set_last_time(NFGetSecondTime());
-			m_pAsyMysqlModule->Update(dbserverDetail, pServerData->mServerInfo.server_id());
+			FindModule<NFIAsyMysqlModule>()->Update(dbserverDetail, pServerData->mServerInfo.server_id());
 
 			NFLogError(NF_LOG_SERVER_CONNECT_SERVER, 0, "the proxy server disconnect from master server, serverName:{}, serverId:{}, serverIp:{}, serverPort:{}"
 				, pServerData->mServerInfo.server_name(), pServerData->mServerInfo.server_id(), pServerData->mServerInfo.server_ip(), pServerData->mServerInfo.server_port());
@@ -491,7 +488,7 @@ void NFCMasterServerModule::OnClientDisconnect(uint32_t unLinkId)
 			*dbserver.mutable_db_fields() = pServerData->mServerInfo;
 			dbserver.mutable_db_fields()->set_last_date(NFDateTime::Now().GetDbTimeString());
 			dbserver.mutable_db_fields()->set_last_time(NFGetSecondTime());
-			m_pAsyMysqlModule->Update(dbserver);
+			FindModule<NFIAsyMysqlModule>()->Update(dbserver);
 
 			NFMsg::db_query_server_detail dbserverDetail;
 			dbserverDetail.mutable_db_fields()->set_server_id(dbserver.mutable_db_fields()->server_id());
@@ -504,7 +501,7 @@ void NFCMasterServerModule::OnClientDisconnect(uint32_t unLinkId)
 			dbserverDetail.mutable_db_fields()->set_proc_thread(dbserver.mutable_db_fields()->proc_thread());
 			dbserverDetail.mutable_db_fields()->set_last_date(NFDateTime::Now().GetDbTimeString());
 			dbserverDetail.mutable_db_fields()->set_last_time(NFGetSecondTime());
-			m_pAsyMysqlModule->Update(dbserverDetail, pServerData->mServerInfo.server_id());
+			FindModule<NFIAsyMysqlModule>()->Update(dbserverDetail, pServerData->mServerInfo.server_id());
 
 			NFLogError(NF_LOG_SERVER_CONNECT_SERVER, 0, "the game server disconnect from master server, serverName:{}, serverId:{}, serverIp:{}, serverPort:{}"
 				, pServerData->mServerInfo.server_name(), pServerData->mServerInfo.server_id(), pServerData->mServerInfo.server_ip(), pServerData->mServerInfo.server_port());
@@ -532,7 +529,7 @@ void NFCMasterServerModule::OnClientDisconnect(uint32_t unLinkId)
 			*dbserver.mutable_db_fields() = pServerData->mServerInfo;
 			dbserver.mutable_db_fields()->set_last_date(NFDateTime::Now().GetDbTimeString());
 			dbserver.mutable_db_fields()->set_last_time(NFGetSecondTime());
-			m_pAsyMysqlModule->Update(dbserver);
+			FindModule<NFIAsyMysqlModule>()->Update(dbserver);
 
 			NFMsg::db_query_server_detail dbserverDetail;
 			dbserverDetail.mutable_db_fields()->set_server_id(dbserver.mutable_db_fields()->server_id());
@@ -545,7 +542,7 @@ void NFCMasterServerModule::OnClientDisconnect(uint32_t unLinkId)
 			dbserverDetail.mutable_db_fields()->set_proc_thread(dbserver.mutable_db_fields()->proc_thread());
 			dbserverDetail.mutable_db_fields()->set_last_date(NFDateTime::Now().GetDbTimeString());
 			dbserverDetail.mutable_db_fields()->set_last_time(NFGetSecondTime());
-			m_pAsyMysqlModule->Update(dbserverDetail, pServerData->mServerInfo.server_id());
+			FindModule<NFIAsyMysqlModule>()->Update(dbserverDetail, pServerData->mServerInfo.server_id());
 
 			NFLogError(NF_LOG_SERVER_CONNECT_SERVER, 0, "the login server disconnect from master server, serverName:{}, serverId:{}, serverIp:{}, serverPort:{}"
 				, pServerData->mServerInfo.server_name(), pServerData->mServerInfo.server_id(), pServerData->mServerInfo.server_ip(), pServerData->mServerInfo.server_port());
@@ -578,7 +575,7 @@ void NFCMasterServerModule::OnLoginServerRegisterProcess(const uint32_t unLinkId
 
 		if (xData.server_ip().empty())
 		{
-			std::string ip = m_pNetServerModule->GetLinkIp(unLinkId);
+			std::string ip = FindModule<NFINetServerModule>()->GetLinkIp(unLinkId);
 			pServerData->mServerInfo.set_server_ip(ip);
 		}
 
@@ -622,7 +619,7 @@ void NFCMasterServerModule::OnLoginServerRefreshProcess(const uint32_t unLinkId,
 
 		if (xData.server_ip().empty())
 		{
-			std::string ip = m_pNetServerModule->GetLinkIp(unLinkId);
+			std::string ip = FindModule<NFINetServerModule>()->GetLinkIp(unLinkId);
 			pServerData->mServerInfo.set_server_ip(ip);
 		}
 
@@ -651,7 +648,7 @@ void NFCMasterServerModule::OnGameServerRegisterProcess(const uint32_t unLinkId,
 
 		if (xData.server_ip().empty())
 		{
-			std::string ip = m_pNetServerModule->GetLinkIp(unLinkId);
+			std::string ip = FindModule<NFINetServerModule>()->GetLinkIp(unLinkId);
 			pServerData->mServerInfo.set_server_ip(ip);
 		}
 
@@ -694,7 +691,7 @@ void NFCMasterServerModule::OnGameServerRefreshProcess(const uint32_t unLinkId, 
 
 		if (xData.server_ip().empty())
 		{
-			std::string ip = m_pNetServerModule->GetLinkIp(unLinkId);
+			std::string ip = FindModule<NFINetServerModule>()->GetLinkIp(unLinkId);
 			pServerData->mServerInfo.set_server_ip(ip);
 		}
 
@@ -722,7 +719,7 @@ void NFCMasterServerModule::OnProxyServerRegisterProcess(const uint32_t unLinkId
 
 		if (xData.server_ip().empty())
 		{
-			std::string ip = m_pNetServerModule->GetLinkIp(unLinkId);
+			std::string ip = FindModule<NFINetServerModule>()->GetLinkIp(unLinkId);
 			pServerData->mServerInfo.set_server_ip(ip);
 		}
 
@@ -765,7 +762,7 @@ void NFCMasterServerModule::OnProxyServerRefreshProcess(const uint32_t unLinkId,
 
 		if (xData.server_ip().empty())
 		{
-			std::string ip = m_pNetServerModule->GetLinkIp(unLinkId);
+			std::string ip = FindModule<NFINetServerModule>()->GetLinkIp(unLinkId);
 			pServerData->mServerInfo.set_server_ip(ip);
 		}
 
@@ -793,7 +790,7 @@ void NFCMasterServerModule::OnWorldServerRegisterProcess(const uint32_t unLinkId
 
 		if (xData.server_ip().empty())
 		{
-			std::string ip = m_pNetServerModule->GetLinkIp(unLinkId);
+			std::string ip = FindModule<NFINetServerModule>()->GetLinkIp(unLinkId);
 			pServerData->mServerInfo.set_server_ip(ip);
 		}
 
@@ -836,7 +833,7 @@ void NFCMasterServerModule::OnWorldServerRefreshProcess(const uint32_t unLinkId,
 
 		if (xData.server_ip().empty())
 		{
-			std::string ip = m_pNetServerModule->GetLinkIp(unLinkId);
+			std::string ip = FindModule<NFINetServerModule>()->GetLinkIp(unLinkId);
 			pServerData->mServerInfo.set_server_ip(ip);
 		}
 
@@ -870,7 +867,7 @@ void NFCMasterServerModule::OnServerReport(const uint32_t unLinkId, const uint64
 
 				if (xData.server_ip().empty())
 				{
-					std::string ip = m_pNetServerModule->GetLinkIp(unLinkId);
+					std::string ip = FindModule<NFINetServerModule>()->GetLinkIp(unLinkId);
 					pServerData->mServerInfo.set_server_ip(ip);
 				}
 			}
@@ -891,7 +888,7 @@ void NFCMasterServerModule::OnServerReport(const uint32_t unLinkId, const uint64
 
 				if (xData.server_ip().empty())
 				{
-					std::string ip = m_pNetServerModule->GetLinkIp(unLinkId);
+					std::string ip = FindModule<NFINetServerModule>()->GetLinkIp(unLinkId);
 					pServerData->mServerInfo.set_server_ip(ip);
 				}
 			}
@@ -912,7 +909,7 @@ void NFCMasterServerModule::OnServerReport(const uint32_t unLinkId, const uint64
 
 				if (xData.server_ip().empty())
 				{
-					std::string ip = m_pNetServerModule->GetLinkIp(unLinkId);
+					std::string ip = FindModule<NFINetServerModule>()->GetLinkIp(unLinkId);
 					pServerData->mServerInfo.set_server_ip(ip);
 				}
 			}
@@ -934,7 +931,7 @@ void NFCMasterServerModule::OnServerReport(const uint32_t unLinkId, const uint64
 
 				if (xData.server_ip().empty())
 				{
-					std::string ip = m_pNetServerModule->GetLinkIp(unLinkId);
+					std::string ip = FindModule<NFINetServerModule>()->GetLinkIp(unLinkId);
 					pServerData->mServerInfo.set_server_ip(ip);
 				}
 			}
@@ -970,7 +967,7 @@ bool NFCMasterServerModule::HttpHandleHttpGm(uint32_t linkId, const NFHttpHandle
 	std::string strMsg;
 	NFProtobufCommon::MessageToJsonString(msg_gm_ret, strMsg);
 
-	m_pHttpServerModule->ResponseMsg(NF_ST_MASTER, req, strMsg, NFWebStatus::WEB_OK, "OK");
+	FindModule<NFIHttpServerModule>()->ResponseMsg(NF_ST_MASTER, req, strMsg, NFWebStatus::WEB_OK, "OK");
 
 	return true;
 }
@@ -993,7 +990,7 @@ void NFCMasterServerModule::SynServerToOthers(NF_SHARE_PTR<NFServerData> pServer
 				NFMsg::ServerInfoReport* pData = xData.add_server_list();
 				*pData = pLoginServer->mServerInfo;
 
-				m_pNetServerModule->SendToServerByPB(pLoginServer->mUnlinkId, EGMI_NET_MASTER_SEND_OTHERS_TO_LOGIN, xSelfData, 0);
+				FindModule<NFINetServerModule>()->SendToServerByPB(pLoginServer->mUnlinkId, EGMI_NET_MASTER_SEND_OTHERS_TO_LOGIN, xSelfData, 0);
 			}
 
 			pLoginServer = mLoginMap.Next();
@@ -1010,7 +1007,7 @@ void NFCMasterServerModule::SynServerToOthers(NF_SHARE_PTR<NFServerData> pServer
 				NFMsg::ServerInfoReport* pData = xData.add_server_list();
 				*pData = pWorldServer->mServerInfo;
 
-				m_pNetServerModule->SendToServerByPB(pWorldServer->mUnlinkId, EGMI_NET_MASTER_SEND_OTHERS_TO_WORLD, xSelfData, 0);
+				FindModule<NFINetServerModule>()->SendToServerByPB(pWorldServer->mUnlinkId, EGMI_NET_MASTER_SEND_OTHERS_TO_WORLD, xSelfData, 0);
 			}
 
 			pWorldServer = mWorldMap.Next();
@@ -1027,7 +1024,7 @@ void NFCMasterServerModule::SynServerToOthers(NF_SHARE_PTR<NFServerData> pServer
 				NFMsg::ServerInfoReport* pData = xData.add_server_list();
 				*pData = pGameServer->mServerInfo;
 
-				m_pNetServerModule->SendToServerByPB(pGameServer->mUnlinkId, EGMI_NET_MASTER_SEND_OTHERS_TO_GAME, xSelfData, 0);
+				FindModule<NFINetServerModule>()->SendToServerByPB(pGameServer->mUnlinkId, EGMI_NET_MASTER_SEND_OTHERS_TO_GAME, xSelfData, 0);
 			}
 
 			pGameServer = mGameMap.Next();
@@ -1044,7 +1041,7 @@ void NFCMasterServerModule::SynServerToOthers(NF_SHARE_PTR<NFServerData> pServer
 				NFMsg::ServerInfoReport* pData = xData.add_server_list();
 				*pData = pProxyServer->mServerInfo;
 
-				m_pNetServerModule->SendToServerByPB(pProxyServer->mUnlinkId, EGMI_NET_MASTER_SEND_OTHERS_TO_PROXY, xSelfData, 0);
+				FindModule<NFINetServerModule>()->SendToServerByPB(pProxyServer->mUnlinkId, EGMI_NET_MASTER_SEND_OTHERS_TO_PROXY, xSelfData, 0);
 			}
 
 			pProxyServer = mProxyMap.Next();
@@ -1055,18 +1052,18 @@ void NFCMasterServerModule::SynServerToOthers(NF_SHARE_PTR<NFServerData> pServer
 
 	if (pServerData->mServerInfo.server_type() == NF_ST_GAME)
 	{
-		m_pNetServerModule->SendToServerByPB(pServerData->mUnlinkId, EGMI_NET_MASTER_SEND_OTHERS_TO_GAME, xData, 0);
+		FindModule<NFINetServerModule>()->SendToServerByPB(pServerData->mUnlinkId, EGMI_NET_MASTER_SEND_OTHERS_TO_GAME, xData, 0);
 	}
 	else if (pServerData->mServerInfo.server_type() == NF_ST_WORLD)
 	{
-		m_pNetServerModule->SendToServerByPB(pServerData->mUnlinkId, EGMI_NET_MASTER_SEND_OTHERS_TO_WORLD, xData, 0);
+		FindModule<NFINetServerModule>()->SendToServerByPB(pServerData->mUnlinkId, EGMI_NET_MASTER_SEND_OTHERS_TO_WORLD, xData, 0);
 	}
 	else if (pServerData->mServerInfo.server_type() == NF_ST_PROXY)
 	{
-		m_pNetServerModule->SendToServerByPB(pServerData->mUnlinkId, EGMI_NET_MASTER_SEND_OTHERS_TO_PROXY, xData, 0);
+		FindModule<NFINetServerModule>()->SendToServerByPB(pServerData->mUnlinkId, EGMI_NET_MASTER_SEND_OTHERS_TO_PROXY, xData, 0);
 	}
 	else if (pServerData->mServerInfo.server_type() == NF_ST_LOGIN)
 	{
-		m_pNetServerModule->SendToServerByPB(pServerData->mUnlinkId, EGMI_NET_MASTER_SEND_OTHERS_TO_LOGIN, xData, 0);
+		FindModule<NFINetServerModule>()->SendToServerByPB(pServerData->mUnlinkId, EGMI_NET_MASTER_SEND_OTHERS_TO_LOGIN, xData, 0);
 	}
 }

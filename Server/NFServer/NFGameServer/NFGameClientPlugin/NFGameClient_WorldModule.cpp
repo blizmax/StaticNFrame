@@ -17,7 +17,6 @@
 NFCGameClient_WorldModule::NFCGameClient_WorldModule(NFIPluginManager* p)
 {
 	m_pPluginManager = p;
-	m_pNetClientModule = nullptr;
 }
 
 NFCGameClient_WorldModule::~NFCGameClient_WorldModule()
@@ -26,15 +25,13 @@ NFCGameClient_WorldModule::~NFCGameClient_WorldModule()
 
 bool NFCGameClient_WorldModule::Init()
 {
-	m_pServerNetEventModule = m_pPluginManager->FindModule<NFIServerNetEventModule>();
-	m_pNetClientModule = m_pPluginManager->FindModule<NFINetClientModule>();
 	return true;
 }
 
 bool NFCGameClient_WorldModule::AfterInit()
 {
-	m_pNetClientModule->AddEventCallBack(NF_ST_WORLD, this, &NFCGameClient_WorldModule::OnProxySocketEvent);
-	m_pNetClientModule->AddReceiveCallBack(NF_ST_WORLD, this, &NFCGameClient_WorldModule::OnHandleOtherMessage);
+	FindModule<NFINetClientModule>()->AddEventCallBack(NF_ST_WORLD, this, &NFCGameClient_WorldModule::OnProxySocketEvent);
+	FindModule<NFINetClientModule>()->AddReceiveCallBack(NF_ST_WORLD, this, &NFCGameClient_WorldModule::OnHandleOtherMessage);
 
 	return true;
 }
@@ -87,11 +84,11 @@ void NFCGameClient_WorldModule::OnClientDisconnect(uint32_t unLinkId)
 		NFLogError(NF_LOG_SERVER_CONNECT_SERVER, 0, "the world server disconnect, serverName:{}, serverId:{}, serverIp:{}, serverPort:{}"
 			, pServerData->mServerInfo.server_name(), pServerData->mServerInfo.server_id(), pServerData->mServerInfo.server_ip(), pServerData->mServerInfo.server_port());
 
-		m_pServerNetEventModule->OnServerNetEvent(eMsgType_DISCONNECTED, NF_ST_GAME, NF_ST_WORLD, unLinkId, pServerData);
+		FindModule<NFIServerNetEventModule>()->OnServerNetEvent(eMsgType_DISCONNECTED, NF_ST_GAME, NF_ST_WORLD, unLinkId, pServerData);
 
 		mUnlinkWorldMap.RemoveElement(unLinkId);
 
-		m_pNetClientModule->CloseServer(unLinkId);
+		FindModule<NFINetClientModule>()->CloseServer(unLinkId);
 	}
 }
 
@@ -105,13 +102,13 @@ void NFCGameClient_WorldModule::OnHandleWorldReport(const NFMsg::ServerInfoRepor
 		pServerData = NF_SHARE_PTR<NFServerData>(NF_NEW NFServerData());
 		mWorldMap.AddElement(xData.server_id(), pServerData);
 
-		pServerData->mUnlinkId = m_pNetClientModule->AddServer(NF_ST_WORLD, xData.server_ip(), xData.server_port());
+		pServerData->mUnlinkId = FindModule<NFINetClientModule>()->AddServer(NF_ST_WORLD, xData.server_ip(), xData.server_port());
 		mUnlinkWorldMap.AddElement(pServerData->mUnlinkId, pServerData);
 	}
 
 	if (pServerData->mUnlinkId <= 0)
 	{
-		pServerData->mUnlinkId = m_pNetClientModule->AddServer(NF_ST_WORLD, xData.server_ip(), xData.server_port());
+		pServerData->mUnlinkId = FindModule<NFINetClientModule>()->AddServer(NF_ST_WORLD, xData.server_ip(), xData.server_port());
 		mUnlinkWorldMap.AddElement(pServerData->mUnlinkId, pServerData);
 	}
 
@@ -140,13 +137,13 @@ void NFCGameClient_WorldModule::RegisterServer(uint32_t linkId)
 		pData->set_server_max_online(pConfig->mMaxConnectNum);
 		pData->set_server_state(NFMsg::EST_NARMAL);
 
-		m_pNetClientModule->SendToServerByPB(linkId, EGMI_NET_GAME_TO_WORLD_REGISTER, xMsg, 0);
+		FindModule<NFINetClientModule>()->SendToServerByPB(linkId, EGMI_NET_GAME_TO_WORLD_REGISTER, xMsg, 0);
 	}
 
 	NF_SHARE_PTR<NFServerData> pServerData = mUnlinkWorldMap.GetElement(linkId);
 	if (pServerData)
 	{
-		m_pServerNetEventModule->OnServerNetEvent(eMsgType_CONNECTED, NF_ST_GAME, NF_ST_WORLD, linkId, pServerData);
+		FindModule<NFIServerNetEventModule>()->OnServerNetEvent(eMsgType_CONNECTED, NF_ST_GAME, NF_ST_WORLD, linkId, pServerData);
 	}
 }
 

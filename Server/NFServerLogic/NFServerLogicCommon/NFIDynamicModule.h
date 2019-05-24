@@ -32,28 +32,15 @@ public:
 
 	}
 
-	virtual bool Awake()
-	{
-		m_pNetServerModule = m_pPluginManager->FindModule<NFINetServerModule>();
-		m_pNetClientModule = m_pPluginManager->FindModule<NFINetClientModule>();
-		DynamicLoadPlugin();
-		return true;
-	}
-
-	/*
-	** 这个函数主要用来保存引擎指针, 动态加载的时候引擎指针可能会失效 
-	*/
-	virtual bool DynamicLoadPlugin() = 0;
-
 	virtual bool Finalize()
 	{
 		for (auto it = mNetServerMap.begin(); it != mNetServerMap.end(); it++)
 		{
-			m_pNetServerModule->DelReceiveCallBack((NF_SERVER_TYPES)it->first, it->second);
+			FindModule<NFINetServerModule>()->DelReceiveCallBack((NF_SERVER_TYPES)it->first, it->second);
 		}
 		for (auto it = mNetClientMap.begin(); it != mNetClientMap.end(); it++)
 		{
-			m_pNetClientModule->DelReceiveCallBack((NF_SERVER_TYPES)it->first, it->second);
+			FindModule<NFINetClientModule>()->DelReceiveCallBack((NF_SERVER_TYPES)it->first, it->second);
 		}
 		return true;
 	}
@@ -62,14 +49,14 @@ public:
 	bool AddNetServerReceiveCallBack(const NF_SERVER_TYPES eType, const uint32_t nMsgID, BaseType* pBase, void (BaseType::*handleRecieve)(const uint32_t unLinkId, const uint64_t valueId, const uint32_t nMsgId, const char* msg, const uint32_t nLen))
 	{
 		mNetServerMap.emplace((uint32_t)eType, nMsgID);
-		return m_pNetServerModule->AddReceiveCallBack(eType, nMsgID, pBase, handleRecieve);
+		return FindModule<NFINetServerModule>()->AddReceiveCallBack(eType, nMsgID, pBase, handleRecieve);
 	}
 
 	template <typename BaseType>
 	bool AddNetClientReceiveCallBack(const NF_SERVER_TYPES eType, const uint32_t nMsgID, BaseType* pBase, void (BaseType::*handleRecieve)(const uint32_t unLinkId, const uint64_t valueId, const uint32_t nMsgId, const char* msg, const uint32_t nLen))
 	{
 		mNetClientMap.emplace((uint32_t)eType, nMsgID);
-		return m_pNetClientModule->AddReceiveCallBack(eType, nMsgID, pBase, handleRecieve);
+		return FindModule<NFINetClientModule>()->AddReceiveCallBack(eType, nMsgID, pBase, handleRecieve);
 	}
 
 	virtual void OnTimer(uint32_t nTimerID) override { }

@@ -30,25 +30,22 @@ NFCWorldServerModule::~NFCWorldServerModule()
 
 bool NFCWorldServerModule::Init()
 {
-	m_pServerNetEventModule = m_pPluginManager->FindModule<NFIServerNetEventModule>();
-	m_pNetClientModule = m_pPluginManager->FindModule<NFINetClientModule>();
-	m_pNetServerModule = m_pPluginManager->FindModule<NFINetServerModule>();
-	m_pNetServerModule->AddEventCallBack(NF_ST_WORLD, this, &NFCWorldServerModule::OnProxySocketEvent);
+	FindModule<NFINetServerModule>()->AddEventCallBack(NF_ST_WORLD, this, &NFCWorldServerModule::OnProxySocketEvent);
 	//m_pNetServerModule->AddReceiveCallBack(NF_ST_WORLD, this, &NFCWorldServerModule::OnHandleOtherMessage);
 
-	m_pNetServerModule->AddReceiveCallBack(NF_ST_WORLD, EGMI_NET_GAME_TO_WORLD_REGISTER, this, &NFCWorldServerModule::OnGameServerRegisterProcess);
-	m_pNetServerModule->AddReceiveCallBack(NF_ST_WORLD, EGMI_NET_GAME_TO_WORLD_UNREGISTER, this, &NFCWorldServerModule::OnGameServerUnRegisterProcess);
-	m_pNetServerModule->AddReceiveCallBack(NF_ST_WORLD, EGMI_NET_GAME_TO_WORLD_REFRESH, this, &NFCWorldServerModule::OnGameServerRefreshProcess);
+	FindModule<NFINetServerModule>()->AddReceiveCallBack(NF_ST_WORLD, EGMI_NET_GAME_TO_WORLD_REGISTER, this, &NFCWorldServerModule::OnGameServerRegisterProcess);
+	FindModule<NFINetServerModule>()->AddReceiveCallBack(NF_ST_WORLD, EGMI_NET_GAME_TO_WORLD_UNREGISTER, this, &NFCWorldServerModule::OnGameServerUnRegisterProcess);
+	FindModule<NFINetServerModule>()->AddReceiveCallBack(NF_ST_WORLD, EGMI_NET_GAME_TO_WORLD_REFRESH, this, &NFCWorldServerModule::OnGameServerRefreshProcess);
 
-	m_pNetServerModule->AddReceiveCallBack(NF_ST_WORLD, EGMI_NET_PROXY_TO_WORLD_REGISTER, this, &NFCWorldServerModule::OnProxyServerRegisterProcess);
-	m_pNetServerModule->AddReceiveCallBack(NF_ST_WORLD, EGMI_NET_PROXY_TO_WORLD_UNREGISTER, this, &NFCWorldServerModule::OnProxyServerUnRegisterProcess);
-	m_pNetServerModule->AddReceiveCallBack(NF_ST_WORLD, EGMI_NET_PROXY_TO_WORLD_REFRESH, this, &NFCWorldServerModule::OnProxyServerRefreshProcess);
+	FindModule<NFINetServerModule>()->AddReceiveCallBack(NF_ST_WORLD, EGMI_NET_PROXY_TO_WORLD_REGISTER, this, &NFCWorldServerModule::OnProxyServerRegisterProcess);
+	FindModule<NFINetServerModule>()->AddReceiveCallBack(NF_ST_WORLD, EGMI_NET_PROXY_TO_WORLD_UNREGISTER, this, &NFCWorldServerModule::OnProxyServerUnRegisterProcess);
+	FindModule<NFINetServerModule>()->AddReceiveCallBack(NF_ST_WORLD, EGMI_NET_PROXY_TO_WORLD_REFRESH, this, &NFCWorldServerModule::OnProxyServerRefreshProcess);
 
 	NFServerConfig* pConfig = NFServerCommon::GetAppConfig(m_pPluginManager, NF_ST_WORLD);
 	if (pConfig)
 	{
 		mServerId = pConfig->mServerId;
-		uint32_t unlinkId = m_pNetServerModule->AddServer(NF_ST_WORLD, pConfig->mServerId, pConfig->mMaxConnectNum, pConfig->mServerPort);
+		uint32_t unlinkId = FindModule<NFINetServerModule>()->AddServer(NF_ST_WORLD, pConfig->mServerId, pConfig->mMaxConnectNum, pConfig->mServerPort);
 		if (unlinkId != 0)
 		{
 			NFLogInfo(NF_LOG_SERVER_CONNECT_SERVER, 0, "world server listen success, serverId:{}, maxConnectNum:{}, port:{}", pConfig->mServerId, pConfig->mMaxConnectNum, pConfig->mServerPort);
@@ -114,7 +111,7 @@ void NFCWorldServerModule::OnClientDisconnect(uint32_t unLinkId)
 			NFLogError(NF_LOG_SERVER_CONNECT_SERVER, 0, "the game server disconnect from world server, serverName:{}, serverId:{}, serverIp:{}, serverPort:{}"
 				, pServerData->mServerInfo.server_name(), pServerData->mServerInfo.server_id(), pServerData->mServerInfo.server_ip(), pServerData->mServerInfo.server_port());
 
-			m_pServerNetEventModule->OnServerNetEvent(eMsgType_DISCONNECTED, NF_ST_WORLD, NF_ST_GAME, unLinkId, pServerData);
+			FindModule<NFIServerNetEventModule>()->OnServerNetEvent(eMsgType_DISCONNECTED, NF_ST_WORLD, NF_ST_GAME, unLinkId, pServerData);
 			return;
 		}
 
@@ -132,7 +129,7 @@ void NFCWorldServerModule::OnClientDisconnect(uint32_t unLinkId)
 			NFLogError(NF_LOG_SERVER_CONNECT_SERVER, 0, "the proxy server disconnect from world server, serverName:{}, serverId:{}, serverIp:{}, serverPort:{}"
 				, pServerData->mServerInfo.server_name(), pServerData->mServerInfo.server_id(), pServerData->mServerInfo.server_ip(), pServerData->mServerInfo.server_port());
 
-			m_pServerNetEventModule->OnServerNetEvent(eMsgType_DISCONNECTED, NF_ST_WORLD, NF_ST_PROXY, unLinkId, pServerData);
+			FindModule<NFIServerNetEventModule>()->OnServerNetEvent(eMsgType_DISCONNECTED, NF_ST_WORLD, NF_ST_PROXY, unLinkId, pServerData);
 			return;
 		}
 
@@ -207,13 +204,13 @@ void NFCWorldServerModule::OnGameServerRegisterProcess(const uint32_t unLinkId, 
 
 		if (xData.server_ip().empty())
 		{
-			std::string ip = m_pNetServerModule->GetLinkIp(unLinkId);
+			std::string ip = FindModule<NFINetServerModule>()->GetLinkIp(unLinkId);
 			pServerData->mServerInfo.set_server_ip(ip);
 		}
 
 		NFLogInfo(NF_LOG_SERVER_CONNECT_SERVER, 0, "Game Server Register World Server Success, serverName:{}, serverId:{}, ip:{}, port:{}", pServerData->mServerInfo.server_name(), pServerData->mServerInfo.server_id(), pServerData->mServerInfo.server_ip(), pServerData->mServerInfo.server_port());
 	
-		m_pServerNetEventModule->OnServerNetEvent(eMsgType_CONNECTED, NF_ST_WORLD, NF_ST_GAME, unLinkId, pServerData);
+		FindModule<NFIServerNetEventModule>()->OnServerNetEvent(eMsgType_CONNECTED, NF_ST_WORLD, NF_ST_GAME, unLinkId, pServerData);
 	}
 }
 
@@ -237,14 +234,14 @@ void NFCWorldServerModule::OnProxyServerRegisterProcess(const uint32_t unLinkId,
 
 		if (xData.server_ip().empty())
 		{
-			std::string ip = m_pNetServerModule->GetLinkIp(unLinkId);
+			std::string ip = FindModule<NFINetServerModule>()->GetLinkIp(unLinkId);
 			pServerData->mServerInfo.set_server_ip(ip);
 		}
 
 
 		NFLogInfo(NF_LOG_SERVER_CONNECT_SERVER, 0, "Proxy Server Register World Server Success, serverName:{}, serverId:{}, ip:{}, port:{}", pServerData->mServerInfo.server_name(), pServerData->mServerInfo.server_id(), pServerData->mServerInfo.server_ip(), pServerData->mServerInfo.server_port());
 
-		m_pServerNetEventModule->OnServerNetEvent(eMsgType_CONNECTED, NF_ST_WORLD, NF_ST_PROXY, unLinkId, pServerData);
+		FindModule<NFIServerNetEventModule>()->OnServerNetEvent(eMsgType_CONNECTED, NF_ST_WORLD, NF_ST_PROXY, unLinkId, pServerData);
 	}
 }
 
@@ -282,7 +279,7 @@ void NFCWorldServerModule::OnProxyServerRefreshProcess(const uint32_t unLinkId, 
 
 		if (xData.server_ip().empty())
 		{
-			std::string ip = m_pNetServerModule->GetLinkIp(unLinkId);
+			std::string ip = FindModule<NFINetServerModule>()->GetLinkIp(unLinkId);
 			pServerData->mServerInfo.set_server_ip(ip);
 		}
 

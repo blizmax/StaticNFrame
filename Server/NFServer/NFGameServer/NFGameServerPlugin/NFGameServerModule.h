@@ -43,8 +43,5 @@ public:
 
 	void OnHandleServerDisconnect(uint32_t unLinkId);
 private:
-	NFINetServerModule* m_pNetServerModule;
-	NFIServerNetEventModule* m_pServerNetEventModule;
-
 	NFMapEx<uint32_t, NFServerData> mProxyMap;
 };

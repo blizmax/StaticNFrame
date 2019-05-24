@@ -42,17 +42,9 @@ void NFCPlayerServicesModule::OnTimer(uint32_t nTimerID)
 	}
 }
 
-bool NFCPlayerServicesModule::DynamicLoadPlugin()
-{
-	m_pKernelModule = m_pPluginManager->FindModule<NFIKernelModule>();
-	m_pNosqlModule = m_pPluginManager->FindModule<NFINoSqlModule>();
-	m_pAsyMysqlModule = m_pPluginManager->FindModule<NFIAsyMysqlModule>();
-	return true;
-}
-
 void NFCPlayerServicesModule::SavePlayerDataToDB()
 {
-	std::unordered_map<uint64_t, NFIObject*>* pObjectMap = m_pKernelModule->GetAllObject(NF_NODE_STRING_CLASS_NAME_PLAYER);
+	std::unordered_map<uint64_t, NFIObject*>* pObjectMap = FindModule<NFIKernelModule>()->GetAllObject(NF_NODE_STRING_CLASS_NAME_PLAYER);
 	if (pObjectMap == nullptr)
 	{
 		return;
@@ -69,12 +61,12 @@ void NFCPlayerServicesModule::SavePlayerDataToDB()
 			std::string strValue;
 			if (info.SerializeToString(&strValue))
 			{
-				if (m_pNosqlModule->Set("playerinfo" + NFCommon::tostr(info.userid()), strValue) == false)
+				if (FindModule<NFINoSqlModule>()->Set("playerinfo" + NFCommon::tostr(info.userid()), strValue) == false)
 				{
 					NFLogError(NF_LOG_LOGIN_MODULE_LOG, info.userid(), "Nosql set playerinfo failed, pInfo:{}", info.DebugString());
 				}
 
-				if (m_pAsyMysqlModule->Update(info, info.userid()) == false)
+				if (FindModule<NFIAsyMysqlModule>()->Update(info, info.userid()) == false)
 				{
 					NFLogError(NF_LOG_LOGIN_MODULE_LOG, info.userid(), "Nosql set playerinfo failed, pInfo:{}", info.DebugString());
 				}

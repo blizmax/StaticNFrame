@@ -52,7 +52,4 @@ private:
 	NFMapEx<uint32_t, NFServerData> mProxyMap;	//unlink -- serverdata
 	NFMapEx<uint32_t, NFServerData> mWorldMap;	//unlink -- serverdata
 	NFMapEx<uint64_t, PlayerGameServerInfo> mPlayerProxyInfoMap;
-	NFIServerNetEventModule* m_pServerNetEventModule;
-	NFINetClientModule* m_pNetClientModule;
-	NFINetServerModule* m_pNetServerModule;
 };

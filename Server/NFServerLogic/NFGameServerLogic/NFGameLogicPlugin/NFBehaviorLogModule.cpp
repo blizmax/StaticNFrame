@@ -22,7 +22,6 @@
 NFCBehaviorLogModule::NFCBehaviorLogModule(NFIPluginManager* p)
 {
 	m_pPluginManager = p;
-	m_pLogModule = nullptr;
 	NFBehaviorLogMgr::GetSingletonPtr()->Init(this);
 }
 
@@ -33,21 +32,16 @@ NFCBehaviorLogModule::~NFCBehaviorLogModule()
 
 bool NFCBehaviorLogModule::Awake()
 {
-	m_pLogModule = m_pPluginManager->FindModule<NFILogModule>();
-	if (m_pLogModule)
-	{
-		m_pLogModule->CreateOthersLogger(NF_LOG_BEHAVIOR_LOGIC_LOG, "behavior_log", false);
-	}
+	FindModule<NFILogModule>()->CreateOthersLogger(NF_LOG_BEHAVIOR_LOGIC_LOG, "behavior_log", false);
 
-	m_pSqliteModule = m_pPluginManager->FindModule<NFISqliteModule>();
-	bool ret = m_pSqliteModule->AddSqliteServer(NF_GAME_BEHAVIOR_LOG_DB, "sqlite/behavior_log.db");
+	bool ret = FindModule<NFISqliteModule>()->AddSqliteServer(NF_GAME_BEHAVIOR_LOG_DB, "sqlite/behavior_log.db");
 	if (ret == false)
 	{
 		NFLogError(NF_LOG_SYSTEMLOG, 0, "sqlite AddSqliteServer:sqlite/behavior_log failed!");
 		return false;
 	}
 
-	ret = m_pSqliteModule->CreateTable(NF_GAME_BEHAVIOR_LOG_DB, NFMsg::db_behavior_log::default_instance());
+	ret = FindModule<NFISqliteModule>()->CreateTable(NF_GAME_BEHAVIOR_LOG_DB, NFMsg::db_behavior_log::default_instance());
 	if (ret == false)
 	{
 		NFLogError(NF_LOG_SYSTEMLOG, 0, "sqlite CreateTable:behavior_log failed!");
@@ -66,7 +60,7 @@ bool NFCBehaviorLogModule::Finalize()
 void NFCBehaviorLogModule::BehaviorLog(uint64_t guid, const std::string& nickName, const std::string& category, const std::string& tag, uint32_t retCode, const std::string& msg)
 {
 	std::string str = NF_FORMAT("{} | {} | {} | {} | {} | {});", guid, nickName, category, tag, retCode, msg);
-	m_pLogModule->LogOthers(NF_LOG_BEHAVIOR_LOGIC_LOG, NLL_INFO_NORMAL, NF_LOG_BEHAVIOR_LOGIC_LOG, guid, str);
+	FindModule<NFILogModule>()->LogOthers(NF_LOG_BEHAVIOR_LOGIC_LOG, NLL_INFO_NORMAL, NF_LOG_BEHAVIOR_LOGIC_LOG, guid, str);
 
 	NFMsg::db_behavior_log msgLog;
 	NFMsg::behavior_log_data* pData = msgLog.mutable_db_fields();
@@ -80,5 +74,5 @@ void NFCBehaviorLogModule::BehaviorLog(uint64_t guid, const std::string& nickNam
 		pData->set_msg(msg);
 	}
 
-	m_pSqliteModule->InsertMessage(NF_GAME_BEHAVIOR_LOG_DB, msgLog);
+	FindModule<NFISqliteModule>()->InsertMessage(NF_GAME_BEHAVIOR_LOG_DB, msgLog);
 }

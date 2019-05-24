@@ -18,7 +18,6 @@
 NFCLoginClient_MasterModule::NFCLoginClient_MasterModule(NFIPluginManager* p)
 {
 	m_pPluginManager = p;
-	m_pNetClientModule = nullptr;
 	mhashf = NFHash::hash_new<std::string>();
 }
 
@@ -28,23 +27,22 @@ NFCLoginClient_MasterModule::~NFCLoginClient_MasterModule()
 
 bool NFCLoginClient_MasterModule::Init()
 {
-	m_pNetClientModule = m_pPluginManager->FindModule<NFINetClientModule>();
 	m_pMasterServerData = NF_SHARE_PTR<NFServerData>(NF_NEW NFServerData());
 	return true;
 }
 
 bool NFCLoginClient_MasterModule::AfterInit()
 {
-	m_pNetClientModule->AddEventCallBack(NF_ST_MASTER, this, &NFCLoginClient_MasterModule::OnProxySocketEvent);
-	m_pNetClientModule->AddReceiveCallBack(NF_ST_MASTER, this, &NFCLoginClient_MasterModule::OnHandleOtherMessage);
+	FindModule<NFINetClientModule>()->AddEventCallBack(NF_ST_MASTER, this, &NFCLoginClient_MasterModule::OnProxySocketEvent);
+	FindModule<NFINetClientModule>()->AddReceiveCallBack(NF_ST_MASTER, this, &NFCLoginClient_MasterModule::OnHandleOtherMessage);
 
-	m_pNetClientModule->AddReceiveCallBack(NF_ST_MASTER, EGMI_NET_MASTER_SEND_OTHERS_TO_LOGIN, this, &NFCLoginClient_MasterModule::OnServerReport);
+	FindModule<NFINetClientModule>()->AddReceiveCallBack(NF_ST_MASTER, EGMI_NET_MASTER_SEND_OTHERS_TO_LOGIN, this, &NFCLoginClient_MasterModule::OnServerReport);
 
 	NFServerConfig* pConfig = NFServerCommon::GetServerConfig(m_pPluginManager, NF_ST_MASTER);
 	if (pConfig)
 	{
 		//AddServer会自动重连，断开连接时，m_pMasterServerData->mUnlinkId不用清理，不变
-		m_pMasterServerData->mUnlinkId = m_pNetClientModule->AddServer(NF_ST_MASTER, pConfig->mServerIp, pConfig->mServerPort);
+		m_pMasterServerData->mUnlinkId = FindModule<NFINetClientModule>()->AddServer(NF_ST_MASTER, pConfig->mServerIp, pConfig->mServerPort);
 		m_pMasterServerData->mServerInfo.set_server_id(pConfig->mServerId);
 		m_pMasterServerData->mServerInfo.set_server_ip(pConfig->mServerIp);
 		m_pMasterServerData->mServerInfo.set_server_port(pConfig->mServerPort);
@@ -165,7 +163,7 @@ void NFCLoginClient_MasterModule::RegisterServer()
 		pData->set_server_max_online(pConfig->mMaxConnectNum);
 		pData->set_server_state(NFMsg::EST_NARMAL);
 
-		m_pNetClientModule->SendToServerByPB(m_pMasterServerData->mUnlinkId, EGMI_NET_LOGIN_TO_MASTER_REGISTER, xMsg, 0);
+		FindModule<NFINetClientModule>()->SendToServerByPB(m_pMasterServerData->mUnlinkId, EGMI_NET_LOGIN_TO_MASTER_REGISTER, xMsg, 0);
 	}
 }
 
@@ -210,7 +208,7 @@ void NFCLoginClient_MasterModule::ServerReport()
 			pData->set_proc_pid(systemInfo.GetProcessInfo().mPid);
 		}
 
-		m_pNetClientModule->SendToServerByPB(m_pMasterServerData->mUnlinkId, EGMI_STS_SERVER_REPORT, xMsg, 0);
+		FindModule<NFINetClientModule>()->SendToServerByPB(m_pMasterServerData->mUnlinkId, EGMI_STS_SERVER_REPORT, xMsg, 0);
 	}
 }
 

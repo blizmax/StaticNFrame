@@ -55,7 +55,6 @@ protected:
 
 	virtual uint32_t GetMasterLinkId() const { return m_pMasterServerData->mUnlinkId; }
 private:
-	NFINetClientModule* m_pNetClientModule;
 	NF_SHARE_PTR<NFServerData> m_pMasterServerData;
 	NFMapEx<int, NFServerData> mWorldMap;
 	NFConsistentHashMapEx<int, NFServerData> mProxyMap;
