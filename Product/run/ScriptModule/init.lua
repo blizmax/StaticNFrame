@@ -23,6 +23,8 @@ function LoadLuaFile(path, subdir)
 end
 
 function init_script_system(pluginManager, luaModule)
+	breakSocketHandle,debugXpCall = require("LuaDebug")("localhost",7003)
+
 	package.path = package.path .. ";../ScriptModule/?.lua;"
 	package.path = package.path .. ";../ScriptModule/LuaNFrame/?.lua;"
 
@@ -30,10 +32,14 @@ function init_script_system(pluginManager, luaModule)
 	LoadLuaFile("../ScriptModule/LuaNFrame")
 	--LoadLuaFile("../ScriptModule/trdlib", true)
 
-	if pluginManager:IsLoadAllServer() then
-		--vscode luaide调试工具需要
-	end
-
 	--初始化LuaNFrame
 	LuaNFrame.init(pluginManager, luaModule)
+
+	LuaNFrame.addtimer("update_debugsocket", 1)
+end
+
+function update_debugsocket()
+	if breakSocketHandle ~= nil then
+		breakSocketHandle()
+	end
 end
