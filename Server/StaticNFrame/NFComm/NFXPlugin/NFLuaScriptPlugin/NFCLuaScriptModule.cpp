@@ -23,7 +23,7 @@
 
 void NFLuaTimer::OnTimer(uint32_t nTimerID)
 {
-	m_pLuaScriptModule->TryRunGlobalScriptFunc("CPPNFrame.RunTimer", mLuaFunc, nTimerID);
+	m_pLuaScriptModule->TryRunGlobalScriptFunc("LuaNFrame.DispatchTimer", mLuaFunc, nTimerID);
 }
 
 bool NFCLuaScriptModule::Init()
@@ -194,7 +194,7 @@ bool NFCLuaScriptModule::Register()
 
 void NFCLuaScriptModule::RunNetRecvLuaFunc(const std::string& luaFunc, const uint32_t unLinkId, const uint64_t valueId, const uint32_t nMsgId, const std::string& strMsg)
 {
-	TryRunGlobalScriptFunc(luaFunc, unLinkId, valueId, nMsgId, strMsg);
+	TryRunGlobalScriptFunc("LuaNFrame.DispatchTcp", luaFunc, unLinkId, valueId, nMsgId, strMsg);
 }
 
 void NFCLuaScriptModule::RunNetEventLuaFunc(const std::string& luaFunc, const eMsgType nEvent, const uint32_t unLinkId)

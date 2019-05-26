@@ -23,22 +23,24 @@ function LoadLuaFile(path, subdir)
 end
 
 function init_script_system(pluginManager, luaModule)
-	breakSocketHandle,debugXpCall = require("LuaDebug")("localhost",7003)
-
 	package.path = package.path .. ";../ScriptModule/?.lua;"
 	package.path = package.path .. ";../ScriptModule/LuaNFrame/?.lua;"
+	package.path = package.path .. ";../ScriptModule/Game/?.lua;"
 
 	LoadLuaFile("../ScriptModule")
 	LoadLuaFile("../ScriptModule/LuaNFrame")
+	LoadLuaFile("../ScriptModule/Game", true)
 	--LoadLuaFile("../ScriptModule/trdlib", true)
-
+	breakSocketHandle,debugXpCall = require("LuaDebug")("localhost",7003)
 	--初始化LuaNFrame
 	LuaNFrame.init(pluginManager, luaModule)
 
-	LuaNFrame.addtimer("update_debugsocket", 1)
+	LuaNFrame.AddTimer("update_debugsocket", 1)
 end
 
-function update_debugsocket()
+NFTimer = NFTimer or {}
+
+function NFTimer.update_debugsocket()
 	if breakSocketHandle ~= nil then
 		breakSocketHandle()
 	end

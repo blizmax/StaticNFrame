@@ -14,6 +14,7 @@
 #include "NFComm/NFPluginModule/NFIHttpClientModule.h"
 #include "NFComm/NFPluginModule/NFIHttpServerModule.h"
 #include "NFServer/NFServerCommon/NFServerCommon.h"
+#include "NFComm/NFPluginModule/NFILuaScriptModule.h"
 
 NFCGameServerModule::NFCGameServerModule(NFIPluginManager* p)
 {
@@ -89,7 +90,16 @@ void NFCGameServerModule::OnProxySocketEvent(const eMsgType nEvent, const uint32
 
 void NFCGameServerModule::OnHandleOtherMessage(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen)
 {
-	NFLogWarning(NF_LOG_SERVER_NOT_HANDLE_MESSAGE, playerId, "msg:{} not handled!", nMsgId);
+	NFILuaScriptModule* pLuaScriptModule = FindModule<NFILuaScriptModule>();
+	if (pLuaScriptModule)
+	{
+		std::string strMsg(msg, nLen);
+		pLuaScriptModule->RunNetRecvLuaFunc("", unLinkId, playerId, nMsgId, strMsg);
+	}
+	else
+	{
+		NFLogWarning(NF_LOG_SERVER_NOT_HANDLE_MESSAGE, playerId, "msg:{} not handled!", nMsgId);
+	}
 }
 
 //游戏服务器注册协议回调

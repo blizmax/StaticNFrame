@@ -65,6 +65,4 @@ public:
 protected:
 	std::unordered_multimap<uint32_t, uint32_t> mNetServerMap;
 	std::unordered_multimap<uint32_t, uint32_t> mNetClientMap;
-	NFINetServerModule* m_pNetServerModule;
-	NFINetClientModule* m_pNetClientModule;
 };

@@ -15,6 +15,7 @@
 #include "NFServer/NFServerCommon/NFServerCommon.h"
 #include "NFComm/NFCore/NFCpu.h"
 #include "NFComm/NFPluginModule/NFIMonitorModule.h"
+#include "NFComm/NFPluginModule/NFILuaScriptModule.h"
 
 NFCGameClient_MasterModule::NFCGameClient_MasterModule(NFIPluginManager* p)
 {
@@ -101,7 +102,16 @@ void NFCGameClient_MasterModule::OnHandleOtherMessage(const uint32_t unLinkId, c
 {
 	if (unLinkId != m_pMasterServerData->mUnlinkId) return;
 
-	NFLogWarning(NF_LOG_SERVER_NOT_HANDLE_MESSAGE, 0, "msg:{} not handled!", nMsgId);
+	NFILuaScriptModule* pLuaScriptModule = FindModule<NFILuaScriptModule>();
+	if (pLuaScriptModule)
+	{
+		std::string strMsg(msg, nLen);
+		pLuaScriptModule->RunNetRecvLuaFunc("", unLinkId, playerId, nMsgId, strMsg);
+	}
+	else
+	{
+		NFLogWarning(NF_LOG_SERVER_NOT_HANDLE_MESSAGE, 0, "msg:{} not handled!", nMsgId);
+	}
 }
 
 void NFCGameClient_MasterModule::RegisterServer()

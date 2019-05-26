@@ -130,7 +130,7 @@ void NFCPlayerControllerModule::OnHandleAccountLogin(const uint32_t unLinkId, co
 		if (ret == RETURN_CODE_ACCOUNT_NO_EXIST || pPlayerObject == nullptr)
 		{
 			gcMsg.set_result(RETURN_CODE_ACCOUNT_NO_EXIST);
-			m_pNetClientModule->SendToServerByPB(unLinkId, ::NFMsg::Server_Msg_AccountLogin, gcMsg, 0);
+			FindModule<NFINetClientModule>()->SendToServerByPB(unLinkId, ::NFMsg::Server_Msg_AccountLogin, gcMsg, 0);
 			NFBehaviorLog(playerId, cgMsg.cid(), "login", "AccountLogin", RETURN_CODE_ACCOUNT_NO_EXIST, "创建角色失败，account=" + cgMsg.account() + ",cid=" + cgMsg.cid());
 			return;
 		}
@@ -140,7 +140,7 @@ void NFCPlayerControllerModule::OnHandleAccountLogin(const uint32_t unLinkId, co
 	else if (ret == RETURN_CODE_PASSWORD_NOT_MATCH)
 	{
 		gcMsg.set_result(RETURN_CODE_PASSWORD_NOT_MATCH);
-		m_pNetClientModule->SendToServerByPB(unLinkId, ::NFMsg::Server_Msg_AccountLogin, gcMsg, 0);
+		FindModule<NFINetClientModule>()->SendToServerByPB(unLinkId, ::NFMsg::Server_Msg_AccountLogin, gcMsg, 0);
 		NFBehaviorLog(playerId, cgMsg.cid(), "login", "AccountLogin", RETURN_CODE_PASSWORD_NOT_MATCH, "登入失败，密码不匹配=" + cgMsg.account() + ",password=" + cgMsg.password());
 		return;
 	}
@@ -154,14 +154,14 @@ void NFCPlayerControllerModule::OnHandleAccountLogin(const uint32_t unLinkId, co
 		pPlayerObject->SetNodeInt64(NF_PLAYER_NODE_UINT64_LOGOUTTIME, NFGetSecondTime());
 		pPlayerObject->SetNodeBool(NF_PLAYER_NODE_BOOL_ONLINE, false);
 		gcMsg.set_result(RETURN_CODE_ACCOUNT_LOGIN_ERROR);
-		m_pNetClientModule->SendToServerByPB(unLinkId, ::NFMsg::Server_Msg_AccountLogin, gcMsg, 0);
+		FindModule<NFINetClientModule>()->SendToServerByPB(unLinkId, ::NFMsg::Server_Msg_AccountLogin, gcMsg, 0);
 		return;
 	}
 
 	CopyFromPlayerObject(pInfo, pPlayerObject);
 
 	gcMsg.set_result(RETURN_CODE_SUCCESS);
-	m_pNetClientModule->SendToServerByPB(unLinkId, ::NFMsg::Server_Msg_AccountLogin, gcMsg, 0);
+	FindModule<NFINetClientModule>()->SendToServerByPB(unLinkId, ::NFMsg::Server_Msg_AccountLogin, gcMsg, 0);
 	NFBehaviorLog(pInfo->userid(), cgMsg.cid(), "login", "AccountLogin", RETURN_CODE_SUCCESS, "玩家登入游戏");
 	return;
 }

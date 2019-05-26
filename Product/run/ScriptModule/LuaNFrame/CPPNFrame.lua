@@ -54,13 +54,6 @@ function CPPNFrame:StopTimer(timerId)
     self.luaModule:StopTimer(timerId)
 end
 
---执行定时函数
-function CPPNFrame.RunTimer(luaFunc, timerId)
-    local function timerExecute()
-        
-    end
-end
-
 function CPPNFrame:AddClocker(luaFunc, startSec, intervalSec, param_table)
     return self.luaModule:AddClocker(luaFunc, startSec, intervalSec, param_table)
 end

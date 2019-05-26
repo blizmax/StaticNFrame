@@ -13,6 +13,7 @@
 #include <NFComm/NFPluginModule/NFEventMgr.h>
 #include <NFComm/NFPluginModule/NFEventDefine.h>
 #include "NFServer/NFServerCommon/NFServerCommon.h"
+#include "NFComm/NFPluginModule/NFILuaScriptModule.h"
 
 NFCGameClient_WorldModule::NFCGameClient_WorldModule(NFIPluginManager* p)
 {
@@ -119,7 +120,16 @@ void NFCGameClient_WorldModule::OnHandleOtherMessage(const uint32_t unLinkId, co
 {
 	if (GetServerByUnlinkId(unLinkId) == nullptr) return;
 
-	NFLogWarning(NF_LOG_SERVER_NOT_HANDLE_MESSAGE, 0, "msg:{} not handled!", nMsgId);
+	NFILuaScriptModule* pLuaScriptModule = FindModule<NFILuaScriptModule>();
+	if (pLuaScriptModule)
+	{
+		std::string strMsg(msg, nLen);
+		pLuaScriptModule->RunNetRecvLuaFunc("", unLinkId, playerId, nMsgId, strMsg);
+	}
+	else
+	{
+		NFLogWarning(NF_LOG_SERVER_NOT_HANDLE_MESSAGE, 0, "msg:{} not handled!", nMsgId);
+	}
 }
 
 void NFCGameClient_WorldModule::RegisterServer(uint32_t linkId)

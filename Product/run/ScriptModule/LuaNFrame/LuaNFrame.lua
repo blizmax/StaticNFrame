@@ -227,9 +227,45 @@ LuaNFrame.Error = function(logId, guid, ...)
 end
 
 LuaNFrame.ExeFunc = function(func)
-	local status, msg = xpcall (func, __G_TRACKBACK__)
+	local status, msg = xpcall (func, __G__TRACKBACK__)
 
     if not status then
-        LuaNFrame.Error(msg)
+        LuaNFrame.Error(NFLogId.NF_LOG_SYSTEMLOG, 0, msg)
+    end
+end
+
+--执行定时函数
+function LuaNFrame.DispatchTcp(luaFunc, unLinkId, valueId, nMsgId, strMsg)
+	local function TcpExecute()
+		if type(luaFunc) == "string" and luaFunc ~= "" then
+			TcpManager.execute(luaFunc, unLinkId, valueId, nMsgId, strMsg)
+		else
+			controller = TcpManager.CreateController(nMsgId)
+		
+			if controller == nil then
+				LuaNFrame.Error(NFLogId.NF_LOG_SYSTEMLOG, valueId, "nMsgId:"..nMsgId.." not handled!")
+			else
+				controller.execute(unLinkId, valueId, nMsgId, strMsg)
+			end
+		end
+	end
+	
+	local status, msg = xpcall (TcpExecute, __G__TRACKBACK__)
+
+    if not status then
+        LuaNFrame.Error(NFLogId.NF_LOG_SYSTEMLOG, 0, msg)
+    end
+end
+
+--执行定时函数
+function LuaNFrame.DispatchTimer(luaFunc, timerId)
+	local function timerExecute()
+		TimerManager.execute(luaFunc, timerId)
+	end
+	
+	local status, msg = xpcall (timerExecute, __G__TRACKBACK__)
+
+    if not status then
+        LuaNFrame.Error(NFLogId.NF_LOG_SYSTEMLOG, 0, msg)
     end
 end
