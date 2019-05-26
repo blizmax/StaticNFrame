@@ -23,6 +23,13 @@ static const luaL_Reg lualibs[] = {
   {LUA_STRLIBNAME, luaopen_string},
   {LUA_MATHLIBNAME, luaopen_math},
   {LUA_DBLIBNAME, luaopen_debug},
+
+  { LUA_CJSONLIBNAME, luaopen_cjson },
+  { LUA_LUASQLNAME, luaopen_luasql_mysql },
+  { LUA_LPEG, luaopen_lpeg },
+  { LUA_LUASOCKET, luaopen_socket_core },
+  { LUA_LUALFS, luaopen_lfs },
+  {LUA_LUAPB, luaopen_pb},
   {NULL, NULL}
 };
 

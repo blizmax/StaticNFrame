@@ -26,11 +26,14 @@ function init_script_system(pluginManager, luaModule)
 	package.path = package.path .. ";../ScriptModule/?.lua;"
 	package.path = package.path .. ";../ScriptModule/LuaNFrame/?.lua;"
 	package.path = package.path .. ";../ScriptModule/Game/?.lua;"
+	package.path = package.path..";../ScriptModule/trdlib/libprotobuf/?.lua"   --由于这里protobuf的特殊性，必须把包含protobuf的目录加到环境变量中
+	package.path = package.path..";../ScriptModule/trdlib/lua/?.lua"
 
+	--LoadLuaFile("../ScriptModule/trdlib")
 	LoadLuaFile("../ScriptModule")
 	LoadLuaFile("../ScriptModule/LuaNFrame")
 	LoadLuaFile("../ScriptModule/Game", true)
-	--LoadLuaFile("../ScriptModule/trdlib", true)
+
 	breakSocketHandle,debugXpCall = require("LuaDebug")("localhost",7003)
 	--初始化LuaNFrame
 	LuaNFrame.init(pluginManager, luaModule)

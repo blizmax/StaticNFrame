@@ -39,6 +39,24 @@ LUALIB_API int (luaopen_debug) (lua_State *L);
 #define LUA_LOADLIBNAME	"package"
 LUALIB_API int (luaopen_package) (lua_State *L);
 
+#define LUA_CJSONLIBNAME "cjson"  
+LUALIB_API int (luaopen_cjson)(lua_State *L);
+
+#define LUA_LUASQLNAME "luasql"  
+LUALIB_API int (luaopen_luasql_mysql)(lua_State *L);
+
+#define LUA_LPEG "lpeg"  
+LUALIB_API int (luaopen_lpeg)(lua_State *L);
+
+#define LUA_LUASOCKET "socket.core"
+LUALIB_API int (luaopen_socket_core)(lua_State *L);
+
+#define LUA_LUALFS "luaopen_lfs"
+LUALIB_API int (luaopen_lfs)(lua_State *L);
+
+#define LUA_LUAPB "pb"
+LUALIB_API int (luaopen_pb)(lua_State *L);
+
 
 /* open all previous libraries */
 LUALIB_API void (luaL_openlibs) (lua_State *L); 

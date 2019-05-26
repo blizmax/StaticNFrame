@@ -1,5 +1,3 @@
--- json
-json = cjson.new()
 
 LuaNFrame = LuaNFrame or {}
 
