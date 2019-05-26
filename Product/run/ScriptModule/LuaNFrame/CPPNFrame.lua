@@ -103,29 +103,29 @@ function CPPNFrame:GetNowTime()
 end
 
 --添加网络服务器
-function CPPNFrame:addServer(server_type, server_id, max_client, port, websocket)
+function CPPNFrame:AddServer(server_type, server_id, max_client, port, websocket)
     return self.serverModule:AddServer(server_type, server_id, max_client, port, websocket)
 end
 
 --添加网络协议回调函数
-function CPPNFrame:addRecvCallBack(serverType, nMsgId, luaFunc)
+function CPPNFrame:AddRecvCallBack(serverType, nMsgId, luaFunc)
     self.serverModule:AddReceiveLuaCallBackByMsgId(serverType, nMsgId, luaFunc)
 end
 
 --添加网络协议回调函数
-function CPPNFrame:addRecvCallBackToOthers(serverType, luaFunc)
+function CPPNFrame:AddRecvCallBackToOthers(serverType, luaFunc)
     self.serverModule:AddReceiveLuaCallBackToOthers(serverType, luaFunc)
 end
 
-function CPPNFrame:addEventCallBack(serverType, luaFunc)
+function CPPNFrame:AddEventCallBack(serverType, luaFunc)
     self.serverModule:AddEventLuaCallBack(serverType, luaFunc)
 end
 
-function CPPNFrame:sendByServerID(unLinkId, nMsgId, strData, nPlayerId)
+function CPPNFrame:SendByServerID(unLinkId, nMsgId, strData, nPlayerId)
     self.serverModule:SendByServerID(unLinkId, nMsgId, strData, nPlayerId)
 end
 
-function CPPNFrame:sendToAllServer(nMsgId, strData, nPlayerId)
+function CPPNFrame:SendToAllServer(nMsgId, strData, nPlayerId)
     self.serverModule:SendToAllServer(nMsgId, strData, nPlayerId)
 end
 
@@ -133,11 +133,11 @@ function CPPNFrame:SendToAllServerByServerType(serverType, nMsgId, strData, nPla
     self.serverModule:SendToAllServerByServerType(serverType, nMsgId, strData, nPlayerId)
 end
 
-function CPPNFrame:sendByServerIDForClient(unLinkId, nMsgId, strData, nPlayerId)
+function CPPNFrame:SendByServerIDForClient(unLinkId, nMsgId, strData, nPlayerId)
     self.clientModule:SendByServerID(unLinkId, nMsgId, strData, nPlayerId)
 end
 
-function CPPNFrame:sendToAllServerForClient(nMsgId, strData, nPlayerId)
+function CPPNFrame:SendToAllServerForClient(nMsgId, strData, nPlayerId)
     self.clientModule:SendToAllServer(nMsgId, strData, nPlayerId)
 end
 
@@ -145,26 +145,26 @@ function CPPNFrame:SendToAllServerByServerTypeForClient(serverType, nMsgId, strD
     self.clientModule:SendToAllServerByServerType(serverType, nMsgId, strData, nPlayerId)
 end
 
-function CPPNFrame:addServerForClient(serverType, ip, port, websocket)
+function CPPNFrame:AddServerForClient(serverType, ip, port, websocket)
     websocket = websocket or false
     return self.clientModule:AddServer(serverType, ip, port, websocket)
 end
 
-function CPPNFrame:addWebServerForClient(serverType, url)
+function CPPNFrame:AddWebServerForClient(serverType, url)
     return self.clientModule:AddWebServer(serverType, url)
 end
 
 --添加网络协议回调函数
-function CPPNFrame:addRecvCallBackForClient(serverType, nMsgId, luaFunc)
+function CPPNFrame:AddRecvCallBackForClient(serverType, nMsgId, luaFunc)
     self.clientModule:AddReceiveLuaCallBackByMsgId(serverType, nMsgId, luaFunc)
 end
 
 --添加网络协议回调函数
-function CPPNFrame:addRecvCallBackToOthersForClient(serverType, luaFunc)
+function CPPNFrame:AddRecvCallBackToOthersForClient(serverType, luaFunc)
     self.clientModule:AddReceiveLuaCallBackToOthers(serverType, luaFunc)
 end
 
-function CPPNFrame:addEventCallBackForClient(serverType, luaFunc)
+function CPPNFrame:AddEventCallBackForClient(serverType, luaFunc)
     self.clientModule:AddEventLuaCallBack(serverType, luaFunc)
 end
 

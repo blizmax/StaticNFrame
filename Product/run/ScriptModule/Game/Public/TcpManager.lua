@@ -6,7 +6,7 @@ function TcpManager.CreateController(packetid)
 		return nil
 	end
 	
-	return _G[PacketCode[packetid].func]
+	return PacketCode[packetid]["client"],_G[PacketCode[packetid].func]
 end
 
 function TcpManager.execute(luaFunc, unLinkId, valueId, nMsgId, strMsg)

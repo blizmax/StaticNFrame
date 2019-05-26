@@ -240,12 +240,13 @@ function LuaNFrame.DispatchTcp(luaFunc, unLinkId, valueId, nMsgId, strMsg)
 		if type(luaFunc) == "string" and luaFunc ~= "" then
 			TcpManager.execute(luaFunc, unLinkId, valueId, nMsgId, strMsg)
 		else
-			controller = TcpManager.CreateController(nMsgId)
+			retMsgID,controller = TcpManager.CreateController(nMsgId)
 		
 			if controller == nil then
 				LuaNFrame.Error(NFLogId.NF_LOG_SYSTEMLOG, valueId, "nMsgId:"..nMsgId.." not handled!")
 			else
-				controller.execute(unLinkId, valueId, nMsgId, strMsg)
+				playerID, retCode, retBufferLen, retString, otString = controller.execute(unLinkId, valueId, nMsgId, strMsg)
+				TcpServer.sendByServerID(unLinkId, retMsgID, retString, playerID)
 			end
 		end
 	end
