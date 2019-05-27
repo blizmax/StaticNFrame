@@ -191,7 +191,7 @@ end
 LuaNFrame.Debug = function(logId, guid, ...)
 	local cStackInfo = debug.getinfo(2, "Sl")
 	if cStackInfo then
-		CPPNFrame:Debug("["..tostring(cStackInfo.short_src)..":"..tostring(cStackInfo.currentline).."] | "..tostring(...))
+		CPPNFrame:Debug(logId, guid,"["..tostring(cStackInfo.short_src)..":"..tostring(cStackInfo.currentline).."] | "..tostring(...))
 	else
 		CPPNFrame:Debug(logId, guid, tostring(...))
 	end
@@ -200,18 +200,18 @@ end
 LuaNFrame.Info = function(logId, guid, ...)
 	local cStackInfo = debug.getinfo(2, "Sl")
 	if cStackInfo then
-		CPPNFrame:Info("["..tostring(cStackInfo.short_src)..":"..tostring(cStackInfo.currentline).."] | "..tostring(...))
+		CPPNFrame:Info(logId, guid,"["..tostring(cStackInfo.short_src)..":"..tostring(cStackInfo.currentline).."] | "..tostring(...))
 	else
-		CPPNFrame:Info(tostring(...))
+		CPPNFrame:Info(logId, guid,tostring(...))
 	end
 end
 
 LuaNFrame.Warn = function(logId, guid, ...)
 	local cStackInfo = debug.getinfo(2, "Sl")
 	if cStackInfo then
-		CPPNFrame:Warn("["..tostring(cStackInfo.short_src)..":"..tostring(cStackInfo.currentline).."] | "..tostring(...))
+		CPPNFrame:Warn(logId, guid,"["..tostring(cStackInfo.short_src)..":"..tostring(cStackInfo.currentline).."] | "..tostring(...))
 	else
-		CPPNFrame:Warn(tostring(...))
+		CPPNFrame:Warn(logId, guid,tostring(...))
 	end
 end
 
@@ -232,6 +232,8 @@ LuaNFrame.ExeFunc = function(func)
     end
 end
 
+g_operateID = g_operateID or 0
+
 --执行定时函数
 function LuaNFrame.DispatchTcp(luaFunc, unLinkId, valueId, nMsgId, strMsg)
 	local function TcpExecute()
@@ -243,7 +245,9 @@ function LuaNFrame.DispatchTcp(luaFunc, unLinkId, valueId, nMsgId, strMsg)
 			if controller == nil then
 				LuaNFrame.Error(NFLogId.NF_LOG_SYSTEMLOG, valueId, "nMsgId:"..nMsgId.." not handled!")
 			else
-				playerID, retCode, retBufferLen, retString, otString = controller.execute(unLinkId, valueId, nMsgId, strMsg)
+				g_operateID = g_operateID + 1
+				playerID, retCode, retBufferLen, retString, otString = controller.execute(nMsgId, g_operateID, strMsg)
+				--playerID, retCode, retBufferLen, retString, otString = controller.execute(unLinkId, valueId, nMsgId, strMsg)
 				TcpServer.sendByServerID(unLinkId, retMsgID, retString, playerID)
 			end
 		end

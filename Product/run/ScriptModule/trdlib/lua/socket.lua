@@ -39,7 +39,7 @@ function bind(host, port, backlog)
     return sock
 end
 
-try = newtry()
+try = socket.newtry()
 
 function choose(table)
     return function(name, opt1, opt2)

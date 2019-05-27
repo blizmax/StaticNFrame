@@ -21,10 +21,10 @@ g_dbtype = 'mysql'
 --g_dbPort2 = 3306
 --g_dbDatabase2 = 'db_mmmj'
 
-g_dbHost = '127.0.0.1'
-g_dbUser = 'root'
-g_dbPassword = ""
-g_dbPort = 3306
+g_dbHost = '45.249.246.175'
+g_dbUser = 'user_yj'
+g_dbPassword = "cgt=+erhk"
+g_dbPort = 6001
 g_dbDatabase = 'db_handspoker'
 
 g_redisInfo = {}

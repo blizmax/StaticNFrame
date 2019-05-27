@@ -18,10 +18,10 @@ function execute(packetID, operateID, buffer)
 	local jifen = JulebuModel.GetAwardJiFen(cgmsg.julebuid, cgmsg.userid)
 	
 	if jifen ~= cgmsg.awardcount then
-		LogFile("error", "jifen not match julebuid="..cgmsg.julebuid..", userid="..cgmsg.userid)
+		LuaNFrame.Error(NFLogId.NF_LOG_SYSTEMLOG, cgmsg.userid,  "jifen not match julebuid="..cgmsg.julebuid..", userid="..cgmsg.userid)
 	end
-	--ÕâÀïÐèÒªÌí¼Ó»ý·Öµ½Íæ¼ÒµÄ»ý·ÖÀïÃæ
-	JulebuModel.AddUserJiFen( cgmsg.julebuid, cgmsg.userid, jifen, -1 )  --ÓÃ-1À´±íÊ¾ÊÇÁìÈ¡µÄ»ý·Ö
+	--ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Òªï¿½ï¿½ï¿½Ó»ï¿½ï¿½Öµï¿½ï¿½ï¿½ÒµÄ»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	JulebuModel.AddUserJiFen( cgmsg.julebuid, cgmsg.userid, jifen, -1 )  --ï¿½ï¿½-1ï¿½ï¿½ï¿½ï¿½Ê¾ï¿½ï¿½ï¿½ï¿½È¡ï¿½Ä»ï¿½ï¿½ï¿½
 	
 	redisItem:hincrby( JulebuModel.JulebuGetJifen..cgmsg.julebuid, cgmsg.userid, -jifen, JulebuModel.redis_index)
 	redisItem:del(JulebuModel.JulebuJifenHistory..cgmsg.julebuid.."_"..cgmsg.userid, JulebuModel.redis_index)

@@ -160,7 +160,6 @@ function PlayerModel.CreatePlayer(cgmsg)
 	..",'"..cgmsg.bindnick.."','"..cgmsg.platformid.."','"..cgmsg.imei.."','"..string.htmlspecialchars(cgmsg.devname).."',"..cgmsg.mobiletype..","..g_initData.jetton..","..g_initData.money..","..TimeUtils.GetTime()..",'"..PlayerModel.GetInitFaceID().."',"..cgmsg.sex..")"
 	local ret = mysqlItem:execute(sqlCase)
 	
-	LogFile("new_player","sqlCase="..sqlCase)
 	if ret == nil then
 		LogBehavior.Error(cgmsg.cid,"Player", "CreatePlayer", -1, "创建角色失败")
 		return nil

@@ -108,7 +108,6 @@ function SpecialModel.GameEnd(countInfo)
 		if sInfo.state ~= 0 then
 			local sqlCase = "insert into log_special(tableid,nickname,userid,timemark,specialstate,winnum,des) VALUES("..
 			countInfo['tableid']..",'"..v['nick'].."',"..v['userid']..",'"..countInfo['time'].."',"..sInfo.state..","..v['jifen']..",'"..strEnd.."')"
-			LogFile("info", sqlCase)
 			mysqlItem:execute(sqlCase)
 			sInfo.peinum = 0
 			sInfo.marknum = 0

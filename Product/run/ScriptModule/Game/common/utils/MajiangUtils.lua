@@ -462,8 +462,7 @@ function MajiangUtils.SendAction(gcmsg, tItem)
 			dataStr=dataStr..v..","
 		end
 	end
-	
-	LogFile(tItem.m_tInfo.tableid, "action+++"..dataStr)
+	LuaNFrame.Info(NFLogId.NF_LOG_SYSTEMLOG, tItem.m_tInfo.tableid,"action+++"..dataStr)
 end
 
 function MajiangUtils.SendUpdate(gcmsg, tItem)
@@ -487,7 +486,7 @@ function MajiangUtils.SendUpdate(gcmsg, tItem)
 		dataStr = dataStr..v..","
 	end
 	
-	LogFile(tItem.m_tInfo.tableid, "update---"..dataStr)
+	LuaNFrame.Info(NFLogId.NF_LOG_SYSTEMLOG, tItem.m_tInfo.tableid,"update---"..dataStr)
 	
 end
 

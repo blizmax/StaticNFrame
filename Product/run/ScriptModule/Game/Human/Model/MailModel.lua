@@ -180,8 +180,6 @@ function MailModel.AddMail(mItem)
 	mItem.senderid..",'"..mItem.sender.."',"..mItem.receiverid..",'"..mItem.receiver.."',"..mItem.mailtype..",'"..mItem.title.."','"..mItem.content.."','"..mItem.senddate.."','"..
 	mItem.markdate.."',"..mItem.mailstate..",'"..mItem.externdata.."','"..mItem.remark.."',"..mItem.validity..")"
 
-	--LogFile("info", sqlCase)
-
 	local mailID = mysqlItem:execute(sqlCase)
 	if mailID == nil then
 		return nil

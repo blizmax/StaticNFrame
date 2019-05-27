@@ -843,7 +843,7 @@ local function create_connection(parameters)
             local scheme = parameters.scheme
             assert(scheme == 'redis' or scheme == 'tcp', 'invalid scheme: '..scheme)
         end
-        perform_connection, socket = connect_tcp, require('socket').tcp
+        perform_connection, socket = connect_tcp, require("socket.core").tcp
     end
 
     return perform_connection(socket(), parameters)

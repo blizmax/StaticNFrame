@@ -44,6 +44,9 @@ function init_script_system(pluginManager, luaModule)
 	LuaNFrame.init(pluginManager, luaModule)
 
 	LuaNFrame.AddTimer("update_debugsocket", 1)
+
+	mysqlItem = mysqlConnect.new()
+	redisItem = redisConnect.new()
 end
 
 NFTimer = NFTimer or {}
