@@ -20,6 +20,7 @@ require("Human.Controller.LuckTurnTable")
 require("Human.Controller.UpdatePlayerMoney")
 require("Human.Controller.AlterSomePlayerInfo")
 
+
 require("common.st_shop_pb")
 require("common.msg_shop_pb")
 require("common.st_human_pb")
@@ -43,13 +44,10 @@ require("Human.Model.MailModel")
 require("Human.Model.AgencyModel")
 require("Human.Model.SpecialModel")
 
+
+
 require("Human.Services.TimeCheckService")
 require("Human.Services.SysCountService")
-
-
-require("Http.HttpDebug")
-require("Http.HttpGame")
-
 
 g_redisIndex[NoticeModel.redis_index] = {index = g_redisInfo.redis_one, des="notice"}     --系统唯一的邮件
 

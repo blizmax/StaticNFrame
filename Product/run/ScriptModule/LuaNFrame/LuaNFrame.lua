@@ -248,7 +248,11 @@ function LuaNFrame.DispatchTcp(luaFunc, unLinkId, valueId, nMsgId, strMsg)
 				g_operateID = g_operateID + 1
 				playerID, retCode, retBufferLen, retString, otString = controller.execute(nMsgId, g_operateID, strMsg)
 				--playerID, retCode, retBufferLen, retString, otString = controller.execute(unLinkId, valueId, nMsgId, strMsg)
-				TcpServer.sendByServerID(unLinkId, retMsgID, retString, playerID)
+				if nMsgId == 1001 then
+					TcpClient.SendMsgByServerId(unLinkId, retMsgID, retString, playerID)
+				else
+					TcpServer.SendMsgByServerId(unLinkId, retMsgID, retString, playerID)
+				end
 			end
 		end
 	end
@@ -271,4 +275,25 @@ function LuaNFrame.DispatchTimer(luaFunc, timerId)
     if not status then
         LuaNFrame.Error(NFLogId.NF_LOG_SYSTEMLOG, 0, msg)
     end
+end
+
+function LuaNFrame.DispatchAccountNetEvent(luaFunc, nEvent, unLinkId, pServerData)
+	local function accountExecute()
+		AccountNetManager.execute(luaFunc, nEvent, unLinkId, pServerData)
+	end
+	
+	local status, msg = xpcall (accountExecute, __G__TRACKBACK__)
+
+    if not status then
+        LuaNFrame.Error(NFLogId.NF_LOG_SYSTEMLOG, 0, msg)
+    end	
+end
+
+g_randomsee = 0
+function math.myrandom(...)
+	if g_randomsee == 0 then
+		math.newrandomseed()
+		g_randomsee = 1
+	end
+	return math.random(...)
 end

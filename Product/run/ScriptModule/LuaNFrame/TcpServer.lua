@@ -24,7 +24,7 @@ function TcpServer.AddEventCallBack(serverType, luaFunc)
 	CPPNFrame:AddEventCallBack(serverType, luaFunc)
 end
 
-function TcpServer.SendByServerID(unLinkId, nMsgId, strData, nPlayerId)
+function TcpServer.SendMsgByServerId(unLinkId, nMsgId, strData, nPlayerId)
 	if type(unLinkId) == "number" and type(nMsgId) == "number" and type(strData) == "string" and type(nPlayerId) == "number" then
 		CPPNFrame:SendByServerID(unLinkId, nMsgId, strData, nPlayerId)
 	else

@@ -119,6 +119,8 @@ void NFCGameLogicModule::ChangePlayerGameInfo(uint64_t playerId, uint32_t proxyI
 		pInfo->mWorldId = pWorldData->GetServerId();
 		pInfo->mWorldUnlinkId = pWorldData->GetUnlinkId();
 	}
+
+	FindModule<NFIServerNetEventModule>()->OnAccountNetEvent(eAccountEventType_CONNECTED, NF_ST_GAME, 0, pInfo);
 }
 
 void NFCGameLogicModule::OnHandleProxyEventCallBack(eMsgType nEvent, uint32_t unLinkId, NF_SHARE_PTR<NFServerData> pServerData)

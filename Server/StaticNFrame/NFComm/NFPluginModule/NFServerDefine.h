@@ -108,6 +108,14 @@ public:
 	uint64_t mPlayerId;
 	std::string ip;
 	std::string account;
+
+	uint32_t GetProxyUnlinkId() { return mProxyUnlinkId; }
+	uint32_t GetProxyId() { return mProxyId; }
+	uint32_t GetWorldId() { return mWorldId; }
+	uint32_t GetWorldUnlinkId() { return mWorldUnlinkId; }
+	uint64_t GetPlayerId() { return mPlayerId; }
+	std::string GetIp() { return ip; }
+	std::string GetAccount() { return account; }
 };
 
 class ProxyLinkInfo

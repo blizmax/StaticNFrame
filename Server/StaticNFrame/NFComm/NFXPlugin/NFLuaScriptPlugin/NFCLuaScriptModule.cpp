@@ -189,6 +189,16 @@ bool NFCLuaScriptModule::Register()
 		.addProperty("ServerId", &NFServerData::GetServerId)
 		.endClass();
 
+	LuaIntf::LuaBinding(l).beginClass<PlayerGameServerInfo>("PlayerGameServerInfo")
+		.addProperty("ProxyUnlinkId", &PlayerGameServerInfo::GetProxyUnlinkId)
+		.addProperty("ProxyId", &PlayerGameServerInfo::GetProxyId)
+		.addProperty("WorldId", &PlayerGameServerInfo::GetWorldId)
+		.addProperty("WorldUnlinkId", &PlayerGameServerInfo::GetWorldUnlinkId)
+		.addProperty("PlayerId", &PlayerGameServerInfo::GetPlayerId)
+		.addProperty("Ip", &PlayerGameServerInfo::GetIp)
+		.addProperty("Account", &PlayerGameServerInfo::GetAccount)
+		.endClass();
+
 	return true;
 }
 
@@ -307,6 +317,6 @@ void NFCLuaScriptModule::RunServerNetEventLuaFunc(const std::string& luaFunc, eM
 void NFCLuaScriptModule::RunAccountNetEventLuaFunc(const std::string& luaFunc, uint32_t nEvent, uint32_t unLinkId, NF_SHARE_PTR<PlayerGameServerInfo> pServerData)
 {
 	m_pPluginManager->BeginProfiler(luaFunc);
-	TryRunGlobalScriptFunc(luaFunc, nEvent, unLinkId, pServerData);
+	TryRunGlobalScriptFunc("LuaNFrame.DispatchAccountNetEvent", luaFunc, nEvent, unLinkId, pServerData);
 	m_pPluginManager->EndProfiler();
 }

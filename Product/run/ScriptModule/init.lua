@@ -38,21 +38,23 @@ function init_script_system(pluginManager, luaModule)
 	LoadLuaFile("../ScriptModule/Game/Human")
 	LoadLuaFile("../ScriptModule/Game/Julebu")
 	LoadLuaFile("../ScriptModule/Game/LogServer")
+	LoadLuaFile("../ScriptModule/Game/Mission")
+	LoadLuaFile("../ScriptModule/Game/Rank")
+	LoadLuaFile("../ScriptModule/Game/Shop")
+	LoadLuaFile("../ScriptModule/Game/Gdmj")
+
 
 	breakSocketHandle,debugXpCall = require("LuaDebug")("localhost",7003)
 	--初始化LuaNFrame
 	LuaNFrame.init(pluginManager, luaModule)
 
 	LuaNFrame.AddTimer("update_debugsocket", 1)
+	LuaNFrame.AddTimer("LoopSec", 1)
+
+	LuaNFrame.AddAccountEventCallBack(NF_SERVER_TYPES.NF_ST_GAME, "AccountNet")
 
 	mysqlItem = mysqlConnect.new()
 	redisItem = redisConnect.new()
-end
 
-NFTimer = NFTimer or {}
-
-function NFTimer.update_debugsocket()
-	if breakSocketHandle ~= nil then
-		breakSocketHandle()
-	end
+	TimerManager.Init()
 end

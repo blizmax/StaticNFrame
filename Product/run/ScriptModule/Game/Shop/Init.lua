@@ -11,7 +11,7 @@ if g_servername == "run_test" then
 elseif g_servername == "run_gdmj" or g_servername == "run_ylmj" then
 	require("common.data.db_paygdmj")
 	require("common.data.db_shopgdmj")
-	require("Http.HttpHlyd")
+	--require("Http.HttpHlyd")
 elseif g_servername == "run_zsmj" or g_servername == "run_xwpk" then
 	require("common.data.db_payzsmj")
 	require("common.data.db_shopzsmj")
