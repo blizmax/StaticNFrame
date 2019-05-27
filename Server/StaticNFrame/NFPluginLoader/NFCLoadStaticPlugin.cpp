@@ -48,8 +48,8 @@
 #include <NFServerLogic/NFGameServerLogic/NFGameLogicPlugin/NFGameLogicPlugin.h>
 #include <NFServerLogic/NFProxyServerLogic/NFProxyLogicPlugin/NFProxyLogicPlugin.h>
 #include <NFServerLogic/NFWorldLogicPlugin/NFWorldLogicPlugin.h>
-#include <NFServerLogic/NFGameServerLogic/NFGameHumanPlugin/NFGamePlayerPlugin.h>
-#include <NFServerLogic/NFGameServerLogic/NFGameHumanPlugin/NFGameLhdPlugin.h>
+#include <NFServerLogic/NFGameServerLogic/NFGamePlayerPlugin/NFGamePlayerPlugin.h>
+#include <NFServerLogic/NFGameServerLogic/NFGameLhdPlugin/NFGameLhdPlugin.h>
 #endif
 
 bool NFCPluginManager::LoadKernelPlugin()

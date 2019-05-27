@@ -1,9 +1,0 @@
-{
-    "files.associations": {
-        "functional": "cpp",
-        "thread": "cpp",
-        "condition_variable": "cpp",
-        "mutex": "cpp",
-        "xiosbase": "cpp"
-    }
-}
