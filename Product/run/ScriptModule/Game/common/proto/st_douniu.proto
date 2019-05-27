@@ -1,0 +1,158 @@
+package progame;
+import "st_human.proto";
+
+
+message buyjettoninfo 
+{
+	optional int32 userid = 1;		//买码的对象
+	optional int32 pour = 2;		//买码的数量
+
+}
+
+message douniuuser   //斗牛
+{
+	optional int32 userid = 1;
+	repeated int32 handpoker = 2;          	//手上的牌列表
+	optional int32 carryjetton = 4;        	//每局玩家的积分 初始化是都为0
+	optional int32 chairid = 6;           	//座位ID，取值为1,2,3,4
+	optional int32 pourtype = 8; 			//下注的类型
+	optional int32 jetton = 9;   			//下注的多少
+	optional int32 state = 10;				//玩家状态标志位
+	optional int32 nntype = 11;				//牛牛的类型 如牛一，牛二 
+	optional int32 basicsmul = 12; 			//抢庄倍数
+	optional int32 winnum = 14;				//胜利次数
+	optional int32 maxdntype = 15;			//最大牌型
+	optional int32 maxscore	 = 16;			//单局最高的分
+	optional int32 bankernum = 17;			//当庄的次数
+
+	optional int32 volun = 18;		        //自动亮牌
+	optional int32 overtimenum = 19;		//超时次数
+	optional int32 trusteeship = 20;		//托管 1：托管 0 ：不托管
+	optional int32 TZnum = 21;				//推注		0： 不能推注 -1: 已经推过注了， 大于0:推注数量
+	optional buyjettoninfo buyjetton = 22;	//买码的信息
+	optional int32 double = 23;				//能否加倍 1: 可以加倍, 2:不能加倍 3:已经加过倍
+	repeated int32 pourList = 24;			//下注列表
+	optional int32 buyInfo = 25;			//买码信息列表
+	optional int32 isbuy = 26;				//能否买码 1: 可以买码, 2:不能买码 3:已经过买码
+	optional int32 endcard = 27;			//最后一张牌
+	optional int32 countjetton = 28;		//净输赢
+	optional int32 tgbet = 29;				//1: 1分  2: 2分  智能下注:(8:牛八以上 9:牛九 10:牛牛)  --智能托管相关
+	optional int32 tgbanker = 30;			//0: 不抢庄  8:牛八   9 牛九  10 牛牛    固定 1倍抢庄	--智能托管相关
+	optional int32 tgbolus = 31;			//0: 不推注  8:牛八   9 牛九  10 牛牛					--智能托管相关
+	optional int32 fourcardtype = 32;		//给玩家看的四张牌所组成的牛牛类型
+}
+
+message douniuinfo
+{
+	optional int32 tableid = 1;				//牌桌ID
+	optional int32 tablemark = 2;   		//牌桌的一个标签
+	optional int32 tabletime = 3;
+	optional int32 state = 4;       		//斗牛桌子的状态
+	optional int32 timemark = 5;      		//时间的标签
+	optional int32 viptable = 6;      		//是否是贵宾房
+	optional int32 julebuid = 7;        	//俱乐部ID，如果是属于俱乐部的，就有值
+	
+	optional int32 tabletype = 8;   		//斗牛场次类型：初级场：1；中级场：2；高级场：3；专家场：4；好友场(暂时不需要)：6；贵宾场：8
+	optional int32 dntype = 9; 				//斗牛玩法的类型 ：通比牛牛等等	
+	optional int32 difen = 10;  	 		//底注			
+	optional int32 maxplaynum = 11;     	//最大的场次 	10局或20局
+	optional int32 paytype = 12;			//支付类型：暂时提供由钻石来支付的，后期可能提供其他的支付方式
+	optional int32 typeodds = 14;			//牌型倍数		两种方式 牛牛*3或牛牛*4
+	optional string specialtype = 15; 		//特殊牌型		炸弹*5 五花牛*6 五小牛*8  炸弹不选默认4倍，其他不选默认5倍，后面的倍数不能小于前面的倍数(与下面的straction相同暂时不用)
+	optional int32 restrict = 16;			//限制  		游戏开始后不加人
+	optional int32 integralmax = 17;		//携带上限
+	optional int32 bankermultiple = 18;		//抢庄最高倍数
+	
+	optional int32 ownerid = 19;      		//房主ID
+	optional int32 bankerID = 20;			//庄家ID
+	repeated douniuuser situser = 21;      	//坐下的玩家列表
+	repeated int32 standuser = 22;    		//无座玩家列表
+	optional int32 usernum = 23;     		//房间所以玩家的数量(只有坐下才算玩家）
+	optional int32 usevipnum = 24;     		//已经玩了几局
+	optional string dissolveinfo = 25;       //这个是退出时候的位数运行：总共五位，2~5位分别表示1~4号玩家的状态：0：等待操作；1：申请退出，2：已经同意
+	optional string straction = 26;        	//通常的情况下，这个变量是空串，只有在有玩家申请解散房间时，会被用来保存【玩家["..pInfo.nickname.."]申请解散房间，请问是否同意？(超过5分钟未做选择，则默认同意)"】
+	
+	optional int32 frameid = 27;       		//变化的id,在房卡麻将中，这个是日+时+分+秒+牌桌数量
+	optional int32 payway = 30;   			//支付类型：1：房主支付，2：均摊
+	optional int32 paynum = 31;   			//支付了多少钱，如果房主解散房间，需要把钱返回
+	optional int32 autoready = 33;			//自动准备
+
+	optional int32 usermaxnum = 35;			//最大人数
+	optional int32 autoStart = 36; 			//自动开桌，手动开桌:g_douNiuAutoStart_Manual、 满4人开:g_douNiuAutoStart_Auto_4  等等
+	optional int32 TZmax = 37;				//最大推注，无:g_douNiuTZ_no 10倍:g_douNiuTZ_10 等等
+	optional int32 banrubcard = 38;  		//禁止搓牌
+	optional int32 playerbuycode = 39;  	//闲家买码
+	optional int32 pourrestrict	= 40; 		//下注限制
+	optional int32 kongwildcard	= 41; 		//王牌癞子
+	optional int32 pourdouble = 42; 		//下注加倍
+	optional int32 julebutype = 43; 		//俱乐部类型
+	optional int32 ruleset = 44;    		//规则选项： 1 不可负分 2：可负分
+	optional int32 bankercount = 45;    	//参与抢庄分数
+	
+}
+
+message douniuhandpoker
+{
+	repeated int32 handpoker = 1;
+}
+
+message douniuspecialtype 	//特殊牌型结构体
+{  
+	optional int32 zhadan = 1;		//炸弹
+	optional int32 wuhua = 2;		//五花牛
+	optional int32 wuxiao = 3;		//五小牛
+	optional int32 shunziNiu = 4;	//顺子牛
+	optional int32 tonghuaNiu = 5;	//同花牛
+	optional int32 huluNiu = 6;		//葫芦牛 
+	optional int32 chongtianNiu = 7;//冲天牛
+	
+}
+
+
+
+
+message douniuhistoryitem    //单局牌的结算信息
+{
+	optional int32 leg = 1;		  				//第几局
+	optional int32 bankerID = 2;	  			//每局的庄家	
+	repeated int32 useridlist = 3;    			//对应的userid
+	repeated string nicklist = 4;     			//对应的昵称
+	repeated int32 winlist = 5;       			//对应的赢输单局积分
+	repeated douniuhandpoker pokerlist = 6; 	//对应的玩家的手牌列表
+	repeated int32 nntypelist = 7;   			//对应的玩家的牛牛类型
+	repeated int32 qzbslist = 8;				//对应的抢庄倍数
+	repeated int32 pournumlist = 9;	 			//对应的下注数量
+	optional int32 isBuyJetton = 10;			//这局是否有买码
+	repeated buyjettoninfo buylist = 11;		//买码的信息列表
+	
+
+}
+
+message douniuhistory	//一整个牌局的结算信息
+{
+	optional int32 tableid = 1;   	//房间号
+	optional int32 playnummax= 2;   //最大局数
+	optional int32 playnum = 3;     //已完局数
+	optional int32 difen = 4;		//下注底分 
+	optional int32 dntypelist = 5;  //对应牌局的斗牛类型
+	optional int32 gametime = 6;   	//时间
+	optional int32 ownerid = 7;		//房主ID
+	repeated string nicklist = 8;   //对应的昵称
+	repeated int32 useridlist = 9;  //对应的userid
+	repeated int32 winlist = 10;     //对应的赢输总积分
+	repeated douniuhistoryitem hitemlist = 11;   //详细的列表
+
+	optional int32 tablemark = 12;  //每个牌局唯一的标识	
+	repeated int32 limitjifen = 13;     //对应的积分
+}
+
+message douniuoptions 
+{
+	optional int32 restrict = 1;  		//中途禁入
+	optional int32 banrubcard = 2;  	//禁止搓牌
+	optional int32 playerbuycode = 3;  	//闲家买码
+	optional int32 pourrestrict	= 4; 	//下注限制
+	optional int32 kongwildcard	= 5; 	//王牌癞子
+	optional int32 pourdouble = 6; 		//下注加倍
+}
+

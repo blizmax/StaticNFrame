@@ -1,0 +1,25 @@
+package progame;
+
+message payinfo
+{
+	optional int32 payid = 1;     //支付的id
+	optional string description = 2;   //支付的物品描述
+	optional int32 paymoney = 3;       //需要支付的金额
+	optional int32 getmoney = 4;       //得到的钻石的数量
+	optional int32 addtype = 5;        //加成的类型：0：没有加成；1：按照固定数量加成；2：按照固定比例加成
+	optional int32 addamount = 6;      //加成的数量
+	optional string adddes = 7;        //加成的描述
+	optional int32 addtime = 8;        //加成的倒计时：单位：天
+}
+
+message buymoneyinfo
+{
+	optional int32 orderid = 1;
+	optional int32 userid = 2;
+	optional int32 buyid = 3;
+	optional int32 timeid = 4;
+	optional int32 status = 5;
+	optional string channel = 6;
+	optional string sign = 7;
+	optional int32 shoptype = 8;    //购买的类型
+}

@@ -1,0 +1,80 @@
+package progame;
+import "st_human.proto";
+
+
+message sangonguser
+{
+	optional int32 userid = 1;
+	optional int32 chairid = 2;
+	repeated int32 cardlist = 3; //手上的牌
+	optional int32 status = 4;   //玩家的状态
+	optional int32 jifen = 5;    //玩家手上的积分
+	optional int32 pourbei = 6;  //选择的倍数
+	optional int32 wincount = 7;  //赢牌次数的统计
+	optional int32 maxtype = 9;   //最大的牌型
+	optional int32 cardtype = 10;   //牌的类型
+	optional int32 bankeropt = 11;     //抢庄的时候会用到，0:还没抢，1：不抢，2：抢庄
+	optional int32 sangongcount = 12;   //五小次数
+	optional int32 baojiucount = 13;      //十点半次数
+	optional int32 zhuangcount = 14;   //当庄次数
+}
+
+message sangonginfo
+{
+	optional int32 tableid = 1;   //牌桌id，固定
+	optional int32 tabletype = 2;    //牌桌类型：金币场，私人房:g_hgyxDefine.table_
+	optional int32 playnum = 3;   //已经打了几局
+	optional int32 difen = 4;     //底分
+	optional int32 sgtype = 5;     //三公的类型：广东三公，福建三公  g_sangongDefine.sgtype
+	optional int32 state = 6;     //状态
+	optional int32 timemark = 7;        //时间标签
+	repeated sangonguser situser = 8;         //有几个玩家，就放几个玩家，最大不会超过8个
+	repeated int32 standuser = 10;      //站立的玩家的列表
+	
+	optional int32 usernum = 11;        //牌桌中玩家的数量，包括庄家
+	optional int32 bankerid = 12;
+	optional int32 maxplaynum = 13;     //最大的能打几局
+	optional int32 maxuser = 14;    //最大人数
+	repeated int32 pokerlist = 15;  //公共扑克牌的列表
+	optional int32 ownerid = 16;
+	optional int32 moverid = 17;    //行动者ID
+	optional int32 bindex = 18;   //situser  中，庄家的位置索引，是为了方便找庄家用的，没有别的用意
+	optional int32 dissolveinfo = 19;  //剩余人员的信息
+	optional int32 payway = 20;     //1：房主支付，2：均摊
+	optional int32 paynum = 21;      //支付的数额
+	optional int32 zhuangtype = 22;   //庄家类型  g_sdbDefine.zhuang_ding
+	optional int32 tablemark = 23;  //牌桌的状态标签
+	optional int32 moshi = 24;       //明牌，暗牌
+	repeated int32 readyuser = 25;   //在牌桌开始后，点击了坐下的列表
+	optional int32 paytype = 26;      //支付货币：1001：钻石，1003：玉
+	optional int32 julebuid = 27;           //如果是属于俱乐部的
+}
+
+message sangonghtyuser
+{
+	optional int32 userid = 1;
+	optional string nickname = 2;
+	optional string faceid = 3;
+	optional int32 cardtype = 4;    //卡牌的类型
+	repeated int32 cardlist = 6;
+	optional int32 winjifen = 7;    //本局赢的积分
+	optional int32 alljifen = 8;    //总的积分
+}
+
+message sangonghtyinfo
+{
+	optional int32 frameid = 1;    //这是第几局的
+	repeated sangonghtyuser htyusrlist = 2;   //玩家牌型列表
+}
+
+
+message sangonghistory   //好友房结算
+{
+	optional int32 tableid = 1;
+	optional string ownername = 2;    //房主名称
+	optional string timestr = 3;     //结算时间
+	optional int32 usevipnum = 4;    //总共玩了几局
+	optional string ownerfaceid = 5;  //
+	
+	repeated sangonghtyinfo htylist = 6;
+}

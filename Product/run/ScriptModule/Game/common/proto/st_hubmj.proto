@@ -1,0 +1,191 @@
+package progame;
+import "st_human.proto";
+
+message hubmjpoker
+{
+	optional int32 pokertype = 1;   //亮牌类型：1：吃；2：碰；3：杠
+	optional int32 typedetail = 2;  //类型的详细,暗杠，明杠，抢杠
+	repeated int32 pokerlist = 3;   //组成亮牌的扑克
+	optional int32 tarchairid = 4;  //目标的ID ,如果是0.表示是全部人	
+}
+
+message hubmjuser   //湖北麻将
+{
+	optional int32 userid = 1;
+	repeated int32 handpoker = 2;          //手上的牌列表,已经经过排列组合的了
+	repeated int32 outpoker = 3;           //已经打出去的牌型
+	repeated hubmjpoker mjpokerlist = 4;    //亮给别人看的
+	optional int32 playstate = 5;          //玩家玩牌的状态
+	optional int32 autoplayer = 6;         //是否自动玩牌，如果超过时间没行动，机器或执行自动玩牌的逻辑
+	optional int32 carryjetton = 8;        //每局开始的时候携带的筹码或者分数，在每次结算的时候同步更新到玩家信息中
+	optional playersimpleinfo psinfo = 9;    //携带的信息
+	optional int32 chairid = 10;             //座位ID，取值为1,2,3,4
+	optional int32 robottime = 11;           //机器人等候的时间
+	repeated int32 tinglist = 12;            //听牌的列表
+    repeated int32 tingtype = 13;            //听牌的赢牌类型,在每一次检查胡牌的时候查出来放到这里，然后后面胡牌的时候不用在判断
+	optional int32 isrobot = 14;
+	optional int32 beinum = 15;              //监洪麻将：加赠：0:不加赠，1：加赠1
+	optional int32 prop1 = 30;               //
+	optional int32 humark = 31;              //
+	optional int32 guohu = 32;           //碰到胡不胡的时候，下家打过来也不能胡,这里用optional,不用repeated,因为这个概率太低了，如果实在是碰到，再说吧
+}
+
+message hubmjnextaction                 //指示下一个玩家行动的信息
+{
+	repeated int32 actchairid = 1;     //行动者的座位id,有四个长度，如果非零的，就表示可以行动的。
+	optional int32 tarchairid = 2;     //碰以及杠的情况下，带上了上一个人的chairid
+	repeated int32 actiontype = 3;     //行动者的行动类型
+	optional int32 actpokerid = 4;     //行动的牌
+	optional int32 typedetail = 5;     //明杠，抢杠
+	optional int32 canplay = 6;        //能够过的判断，0:是不能打牌，1：是可以打牌的,
+}
+
+message hubmjviprecord
+{
+	optional int32 roundid = 1;   //第几场，0表示是统计的总和
+	repeated int32 score = 2;     //按照东南西北方向的得分
+}
+
+message mjvipinfo   //私人房的麻将桌中，对应的麻将信息
+{
+	optional int32 viptype = 1;     //广东麻将，四川麻将...
+	//以下是广东麻将的玩法
+}
+
+message hubmjplaydetail   //开房中需要战绩播报，这个是记录贵宾房玩家每盘结束后的数据的
+{
+	optional int32 chairid = 1;
+	optional int32 winnum = 2;    //赢的总分
+	optional int32 zimo = 3;      //自摸次数      :晃晃，一癞到底，一脚癞油
+	optional int32 jiepao = 4;    //接炮次数      :晃晃，一癞到底
+	optional int32 dianpao = 5;   //点炮次数      :晃晃，一癞到底
+	optional int32 angang = 6;    //暗杠次数      :一脚癞油
+	optional int32 minggang = 7;  //明杠次数	  :晃晃，一癞到底，一脚癞油
+	optional int32 chaotian = 8;  //朝天          :一脚癞油
+	optional int32 laiyou = 9;    //癞油             一脚癞油
+}
+
+message hubmjinfo
+{
+	optional int32 mjtype = 1;   //类型：1：推倒胡，g_gdmjType
+	optional int32 tabletype = 2;    //麻将场次类型：初级场：1；中级场：2；高级场：3；专家场：4；好友场(暂时不需要)：6；贵宾场：8
+	optional int32 tableid = 3;
+	optional int32 tablemark = 4;   //牌桌的一个标签
+	optional int32 manum = 5;       //金币场中，计算马的数量
+	optional int32 doubleamount = 6;  //计马算马数
+	optional int32 pourjetton = 7;    //底注
+	optional int32 fengid = 8;        //风门的id
+	optional int32 laizinum = 9;      //金币场中，癞子的个数
+	optional int32 frameid = 10;       //变化的id,在房卡麻将中，这个是日+时+分+秒+牌桌数量
+	optional int32 status = 11;       //麻将桌子的状态
+	repeated int32 publicpoker = 12;   //还没发出的公共牌
+	optional int32 maxplayernum = 13;        //最大的玩家数量
+	optional int32 playernum = 14;     //已经进去的玩家的数量
+	optional int32 viptable = 15;      //0:金币场，1：在玩得贵宾房，2：已经结束的贵宾房
+	optional int32 timemark = 16;      //时间的标签，
+	optional int32 bankerpos = 17;     //庄家的位置
+	optional int32 prevpos = 18;       //这个值用来记录抢杠胡和杠爆的记录，在卡五星中，是记录杠的倍数
+	optional int32 userstate = 19;     //针对整个牌桌来说，玩家的状态
+	optional int32 bankercount = 20;       //连庄的次数
+	optional int32 beingpoker = 21;   //是否需要发牌，0：不需要发牌，1：需要发牌
+	optional int32 actiontime = 22;   //行动的时间
+	optional int32 ownerid = 23;      //房主ID
+	repeated int32 situser = 24;      //坐下的玩家列表
+	repeated int32 standuser = 25;    //无座玩家列表
+	optional hubmjnextaction nextinfo = 26;   //指示下一个玩行动的结果
+	repeated int32 winchairlist = 27;    //胜利者的ID，如果是一炮多响的时候，就有用处了
+	optional int32 tableuserid = 28;   //房主ID
+	optional int32 maxvipnum = 29;     //最大的场次
+	optional int32 usevipnum = 30;     //已经使用了几次
+	optional hubmjviprecord viprecord = 31;    //vip总额
+	repeated hubmjviprecord recordlist = 32;   //详细列表
+	repeated int32 guilist = 33;            //鬼牌的列表
+	optional int32 wintype = 35;            //最后玩家胜利的时候，赢牌的类型的判断，这里只有一个的，不用两个
+	optional int32 dissolveinfo = 37;       //这个是退出时候的位数运行：总共五位，2~5位分别表示1~4号玩家的状态：0：等待操作；1：申请退出，2：已经同意
+	optional string straction = 38;         //通常的情况下，这个变量是空串，只有在多个人操作的情况下，才会保存下来
+	optional int32 guibase = 39;            //鬼牌的前一个，俗称癞子皮
+	optional int32 payway = 40;             //支付方式:1:房主付费，2：
+	optional int32 paytype = 41;            //支付类型：1001：钻石，1002：金币
+	optional int32 paynum = 42;             //支付数量
+	optional int32 julebuid = 43;    //俱乐部的ID
+}
+
+
+message hubmjjzhh    //湖北麻将荆州晃晃
+{
+	optional int32 mjtype = 1;   //类型：1：推倒胡，g_hubmjType
+}
+
+message hubmjyldd   //湖北麻将一癞到底
+{
+	optional int32 mjtype = 1;   //类型：1：推倒胡，g_hubmjType
+}
+
+message hubmjyjly    //湖北麻将一脚癞油
+{
+	optional int32 mjtype = 1;   //类型：1：推倒胡，g_hubmjType
+	optional int32 playtype = 2;    //1:经典玩法，2：半癞，3：无癞到底
+}
+
+
+
+message hubmjjhmj    //湖北监洪麻将
+{
+	optional int32 mjtype = 1;    //类型：1：推倒胡，g_hubmjType
+	optional int32 dingzeng = 2;  //定增0,1,2
+	optional int32 jiazeng = 3;   //0:不加增，1，加赠
+	optional int32 zimohupai = 4; //0:可以吃胡，1：自摸胡牌
+	optional int32 hongzhong = 5;  //1:选红中，2：选中发白
+	
+}
+
+message hubmjcountinfo //麻将结算结构体
+{
+	optional int32 userid = 1;
+	optional int32 iswin = 2;   
+	optional int32 winjetton = 3;    //筹码变化，有正负数
+	optional int32 gangjetton = 4;   //杠牌所获得的牌型
+	optional int32 fannum = 5;       //番数
+	repeated string des = 6;         //胡牌描述
+	optional int32 beinum = 7;       //监洪麻将：定增的数量
+	optional int32 hunum = 8;        //胡的分数
+	optional int32 carryjetton = 9;  //每次结算后玩家身上的筹码数
+}
+
+message hubmjhistoryitem
+{
+	optional int32 tableplayid = 1; //每次牌桌唯一的标识，由：日时分秒组成+牌局次数组成
+	optional int32 tableid = 2;     //牌桌的ID号
+	optional int32 playtime = 3;    //玩牌的时间
+	optional int32 playstate = 4;   //是否中途退出的,1是中途退出
+	repeated int32 useridlist = 5;  //对应的userid
+	repeated string nicklist = 6;   //对应的昵称
+	repeated int32 winlist = 7;     //对应的赢的数量
+	optional string quitdes = 8;    //牌桌的状态
+	repeated string userdes = 9;    //如果是离开状态，这里表示对玩家离开的描述：同意离开，超时解散
+}
+
+message hubmjhistory
+{
+	optional int32 tableid = 1;   //房间号
+	optional int32 tablemark = 2;  //每个牌局唯一的标识
+	optional int32 gametime = 3;   //时间
+	optional int32 playnum = 4;     //局数
+	repeated int32 useridlist = 5;  //对应的userid
+	repeated string nicklist = 6;   //对应的昵称
+	repeated int32 winlist = 7;     //对应的赢的数量
+	repeated hubmjhistoryitem hitemlist = 8;   //详细的列表
+}
+
+message hubmjhistorypair
+{
+	optional int32 packetcode = 1;
+	optional string pkginfo = 2;       //这个是用来存储用的
+}
+message hubmjhandpoker
+{
+	optional int32 userid = 1;
+	repeated hubmjpoker mjpokerlist = 2;   //碰杠的牌型
+	repeated int32 handpoker = 3;     //在最后结算的时候，把
+}
+

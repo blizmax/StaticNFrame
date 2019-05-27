@@ -1,0 +1,270 @@
+package progame;
+import "st_human.proto";
+import "st_sangong.proto";
+
+message cgsangongenter
+{
+	optional int32 userid = 1;  
+	optional int32 tableid = 2;     //如果是0，则随机分配
+	optional string password = 3;   //如果该牌桌是需要密码的
+	optional int32 tabletype = 4;   //也有可能是金币场：g_sangongDefine.table_srf：私人房; g_sangongDefine.table_jbc['junior']：金币场初级;g_sangongDefine.table_jbc['medium']:金币场中级
+}
+
+
+message gcsangongenter
+{
+	optional int32 result = 1;
+	repeated playersimpleinfo pslist = 2;     //坐在8个位置上的人物信息,每个玩家的信息，里面的积分对应玩家的积分
+	optional sangonginfo hinfo = 3;              //火锅英雄的信息
+}
+
+message cgsangongsitdown  //坐下牌桌
+{
+	optional int32 userid = 1;
+	optional int32 tableid = 2;
+	optional int32 chairid = 3;    //如果座位是0，就表示由系统自动分配
+}
+
+message gcsangongsitdown      //当有玩家坐下来时，把该协议同时广播给牌桌里面所有的其他的玩家
+{
+	optional int32 result = 1;
+	optional int32 chairid = 2;
+	optional playersimpleinfo psinfo = 3;     //
+}
+
+
+message gcsangongstandup    //当玩家上庄的时候,要把坐下的座位让出来
+{
+	optional int32 result = 1;
+	optional int32 userid = 2;
+	optional int32 chairid = 3;
+}
+
+message cgsangongleave
+{
+	optional int32 userid = 1;
+	optional int32 tableid = 2;
+	optional int32 chairid = 3;      //如果玩家坐下8个列表中，则需要携带
+}
+
+message gcsangongleave    //当坐下来的玩家离开的时候，需要广播给全部玩家
+{
+	optional int32 result = 1;
+	optional int32 chairid = 2;
+	optional int32 userid = 3;
+	optional int32 leavetype = 4;
+	optional string msg = 5;
+}
+
+message cgsangongpour    //下注，2，还是5倍，还是10倍
+{
+	optional int32 userid = 1;
+	optional int32 tableid = 2;
+	optional int32 pourbei = 3;   //下注的倍数
+	
+}
+
+message gcsangongpour
+{
+	optional int32 result = 1;
+	optional int32 userid = 2;    //如果检查到是坐在座位的玩家，需要客户端自己同步这里的数值
+	optional int32 pourbei = 3;
+}
+
+message cgsangongstart    //向前端发送开始的协议
+{
+	optional int32 tableid = 1;
+	optional int32 userid = 2;	
+}
+
+message gcsangongstart    //向前端发送开始的协议
+{
+	optional int32 result = 1;
+	optional sangonginfo hinfo = 2;              //火锅英雄的信息
+}
+
+message gcsangongcount   //结算是服务器主动发送给玩家的
+{
+	optional int32 result = 1;
+	optional int32 counttype = 2;   //0:单局的结算，1：整个牌局的结算
+	optional int32 timemark = 3;    //单局结束的时候，结算的时间
+	repeated playersimpleinfo pslist = 4;    //整个牌局结算的时候，才会有这个牌桌
+	optional sangonginfo hinfo = 5;              //的信息
+}
+
+message cgsangongtablelist  //获取房间列表，每页显示8个
+{
+	optional int32 userid = 1;
+	optional int32 pagenum = 2;    //第几页
+}
+
+message gcsangongtablelist
+{
+	optional int32 result = 1;
+	repeated int32 tableid = 2;      //牌桌ID列表
+	repeated int32 pourjetton = 3;   //底注
+	repeated int32 gamenum = 4;      //打牌的局数
+	repeated int32 usernum = 5;      //人数
+	repeated int32 createtime = 6;    //创建时间
+	repeated int32 maxgamenum = 7;    //最大局数
+	repeated int32 maxusernum = 8;    //最大玩家数量
+}
+
+message cgsangongcreatetable
+{
+	optional int32 userid = 1;
+	optional int32 maxuser = 2;  //最大人数
+	optional int32 difen = 3;    //底分
+	optional int32 maxplaynum = 4;  //局数
+	optional int32 payway = 5;      //支付方式：1：房主，2：均摊
+	optional int32 paynum = 6;      //支付的数额
+	optional int32 zhuangtype = 7;  //庄家类型:g_sangongDefine.zhuang_ding
+	optional int32 moshi = 8;       //明牌，暗牌
+	optional int32 paytype = 9;     //支付类型， 1001是钻石支付，1003是玉支付
+	optional int32 julebuid = 10;
+	optional int32 sgtype = 11;    //三公的玩法：广东三公，福建三公：g_sangongDefine.sgtype
+}
+
+message gcsangongcreatetable
+{
+	optional int32 result = 1;
+	//optional brnninfo hinfo = 2;
+}
+
+message cgsangongchat   //欢乐赢都里面的聊天
+{
+	optional int32 senderid = 1;
+	optional string sender = 2;
+	optional int32 chattype = 3;   //对应g_brnnDefine.chat 中的类型
+	optional string msg = 4;       //
+	optional int32 tableid = 5;    //牌桌的ID
+}
+
+message gcsangongchat
+{
+	optional int32 result = 1;
+	optional int32 chatdate = 2;   //聊天时间
+	optional int32 senderid = 3;   
+	optional string sender = 4;
+	optional int32 chattype = 5;
+	optional string msg = 6;
+}
+
+message cgsangongready     //每个开局钱需要发一个准备
+{
+	optional int32 userid = 1;
+	optional int32 tableid = 2;
+}
+
+message gcsangongready
+{
+	optional int32 result = 1;
+	optional int32 userid = 2;
+	optional int32 status = 3;
+}
+
+message cgsangongplay
+{
+	optional int32 userid = 1;
+	optional int32 tableid = 2;
+	optional int32 opttype = 3;   //0:不要，1：要牌
+}
+message gcsangongplay
+{
+	optional int32 result = 1;       
+	optional int32 userid = 2;
+	optional int32 opttype = 3;
+	optional int32 pokerid = 4;
+	optional int32 cardtype = 5;
+	optional int32 status = 6;
+	optional int32 nextmoverid = 7;     //下一个行动者ID,有可能也是他自己。
+	optional int32 timemark = 8;       //行动时间,如果不行动，不会自动帮忙操作
+	optional int32 iscount = 9;        //是否需要结算：0，不用，1：需要(爆点，满5张，不要牌)
+	
+}
+
+message gcsangongupdate
+{
+	optional int32 result = 1;
+	optional int32 moverid = 2;        //行动者的ID
+	repeated int32 useridlist = 3;     //桌上玩家的ID
+	repeated intlist cardlist = 4;       //对应玩家的手牌
+	repeated int32 cardtypelist = 5;       //对应玩家的手牌
+	optional int32 timemark = 6;           //显示手牌的时间
+}
+
+
+message cgsangongdissolve   //解散房间，有两种情况，在牌局没开始的时候，房主可以解散房间,这个时候，房间是直接解散的
+{                        //另外一个情况是，牌局开始了，只有里面坐下去玩的四个人有解散的权利，其他的均没有。
+	optional int32 userid = 1;
+	optional int32 tableid = 2;
+}
+
+message gcsangongdissolve
+{
+	optional int32 result = 1;
+	optional int32 tableid = 2;
+	optional int32 disolvetype = 3;   //解散的类型，如果是0，就直接解散。如果是1的话表示是牌局中解散，需要其他玩家同意
+	optional int32 timemark = 4;      //申请解散房间的倒计时，倒计时到了，默认全部解散
+	optional int32 dissolveinfo = 5;  //剩余人员的信息
+	optional string msg = 6;   // 提示信息："玩家【xxx】申请解散房间"
+}
+
+message cgsangongdissolveopt     //有玩家发起了解散的请求，其他玩家的响应操作
+{
+	optional int32 userid = 1;
+	optional int32 tableid = 2;
+	optional int32 opttype = 3;     //0:同意解散房间，1：不同意解散房间
+}
+
+message gcsangongdissolveopt    //   
+{
+	optional int32 result = 1;
+	optional int32 userid = 2;
+	optional int32 tableid = 3;
+	optional int32 opttype = 4;    //0:同意解散房间，1：不同意解散房间
+	optional string msg = 5;       //如果是有人不同意解散房间，就显示这条信息，显示谁不同意解散。
+	optional int32 dissolveinfo = 6;  //剩余人员的信息
+}
+
+
+message cgsangongqiangzhuang    //如果选了是抢庄的类型，则需要抢庄
+{
+	optional int32 userid = 1;
+	optional int32 tableid = 2;
+	optional int32 opttype = 3;   //0:还没有操作 1：不抢，2：抢庄
+}
+
+message gcsangongqiangzhuang     //这个协议发过来的时候，不会立刻返回的。是全部人发过来后才会返回这个协议
+{
+	optional int32 result = 1;
+	optional int32 userid = 2;
+	optional int32 tableid = 3;
+	optional int32 opttype = 4;    //0:还没有操作 1：不抢，2：抢庄
+	
+	optional int32 bankerid = 5;   //在最后一个人做决定的时候，定出庄家，也就是这个不为0的时候，客户端需要做效果了
+	repeated int32 qianglistid = 6;   //这个是定出庄家后，给前端做的效果用的 
+	optional int32 timemark = 7;
+}
+
+message gcsangongnoticeqiang //通知客户端抢庄
+{
+	optional int32 result = 1;
+	optional int32 tableid = 2;
+	optional int32 timemark = 3;      //抢庄的时间
+	repeated int32 useridlist = 4;    //如果是看牌抢庄的情况下，这个列表用户ID
+	repeated intlist pokeridlist = 5;   //如果是看牌抢庄的情况下，玩家需要看的牌
+}
+
+
+message cgsangonghistory
+{
+	optional int32 userid = 1;
+	optional int32 page = 2;
+}
+
+message gcsangonghistory
+{
+	optional int32 result = 1;
+	repeated sangonghistory htylist = 2;
+}

@@ -1,0 +1,238 @@
+package progame;
+import "st_julebu.proto";
+
+
+message cgjulebuinvite   //邀请加入俱乐部
+{
+	optional int32 userid = 1;
+	optional int32 julebuid = 2;   
+	optional int32 inviteuserid = 3; //邀请玩家
+}
+
+message gcjulebuinvite
+{
+	optional int32 result = 1;
+}
+
+
+message cgjulebuplayingmethod   //玩法设置
+{
+	optional int32 userid = 1;
+	optional int32 julebuid = 2;   
+	optional string playingmethod = 3; //玩法设置
+	optional int32 julebutype = 4; 	   //俱乐部类型   1:普通俱乐部房 2: 比赛房
+	optional int32 requesttype = 5;    //请求类型   1:设置 2: 获取
+	optional int32 gametype = 6;	   //游戏类型： 跑胡子：g_JulebuDefine.modules_phz 牛牛： g_JulebuDefine.modules_douniu
+}
+
+message gcjulebuplayingmethod
+{
+	optional int32 result = 1;
+	optional int32 julebuid = 2;
+	optional string playingmethod = 3; //玩法设置
+	optional int32 gametype = 4;	   //游戏类型： 跑胡子：g_JulebuDefine.modules_phz 牛牛： g_JulebuDefine.modules_douniu
+}
+
+
+message cgjulebusetbisai   //设置比赛限制
+{
+	optional int32 userid = 1;
+	optional int32 julebuid = 2;   
+	optional int32 gamecount = 3; 		//参与游戏的分数
+	optional int32 bankercount = 4; 	//参与抢庄分数
+	optional int32 ruleset = 5;    		//规则选项： 1 不可负分 2：可负分
+	optional int32 faceaward_figure = 6;    
+	optional int32 faceaward_num = 7;    
+	optional int32 faceaward_count = 8;  
+	optional int32 requesttype = 9;    //请求类型   1:设置 2: 获取
+}
+
+message gcjulebusetbisai
+{
+	optional int32 result = 1;
+	optional int32 gamecount = 2; 		//参与游戏的分数
+	optional int32 bankercount = 3; 	//参与抢庄分数
+	optional int32 ruleset = 4;    		//规则选项： 1 不可负分 2：可负分
+	optional int32 faceaward_figure = 5;    
+	optional int32 faceaward_num = 6;    
+	optional int32 faceaward_count = 7;  
+}
+
+message cgjulebugetjimitjifenhistory   //设置比赛限制
+{
+	optional int32 julebuid = 1;   
+	optional int32 recordtype= 2;		// 1 上分记录   2 下分记录 
+	optional int32 requesttype = 3;    //请求类型   1:获取全部 2: 获取某个ID的记录     （暂时只支持 1）
+	optional int32 targetid = 4;		//要查询的ID
+}
+
+message gcjulebugetjimitjifenhistory
+{
+	optional int32 result = 1;
+	optional int32 recordtype= 2;		// 1 上分记录   2 下分记录  3 全部记录   
+	optional int32 requesttype = 3;    //请求类型   1:获取全部 2: 获取某个ID的记录     （暂时只支持 1）
+	repeated julebujimitjifeninfo infolist = 4; 
+
+}
+
+message cgjulebudianzan
+{
+	optional int32 julebuid = 1;
+	optional int32 userid = 2;   //只有管理员允许点赞
+	optional int32 touserid = 3;  //被点赞者的ID
+	optional int32 numindex = 4;  //顺序下来第几个，这个是为了方便查找的，如果有就天，没有就算了。
+	optional int32 opttype = 5;   //1:点赞，2：取消点赞
+	optional string timemark = 6;  //时间标签
+}
+message gcjulebudianzan
+{
+	optional int32 result = 1;
+	optional julebumember dzinfo = 2;   //被点赞的信息
+}
+
+
+message cgjulebuaddpartner
+{
+	optional int32 julebuid = 1;
+	optional int32 userid = 2;   	
+	optional int32 targetid = 3;
+	optional int32 requesttype = 4; //操作类型：1 设置， 2 删除
+}
+
+message gcjulebuaddpartner
+{
+	optional int32 result = 1;
+	repeated julebupartnerinfo partnerlist = 2;
+}
+
+
+message cgjulebugetpartner
+{
+	optional int32 julebuid = 1;
+	optional int32 userid = 2;   	
+	optional int32 targetid = 3;
+	optional int32 requesttype = 4; //操作类型：1 获得合伙人列表， 2 获得某一位合伙人的下线列表
+	optional int32 opttype = 5; //1 查询全部合伙人， 2 查询某个合伙人 
+	optional int32 page = 6;
+}
+
+
+message gcjulebugetpartner
+{
+	optional int32 result = 1;
+	repeated julebupartnerinfo partnerlist = 2;
+	optional int32 requesttype = 3; //操作类型：1 获得合伙人列表， 2 获得某一位合伙人的下线列表
+	optional int32 opttype = 4;		 //1 查询全部合伙人， 2 查询某个合伙人 
+	optional int32 page = 6;
+	optional int32 targetid = 7;
+	optional int32 partnerjifen = 8;   //该合伙人的总消耗
+	optional int32 isconfirm = 9;   //是否确认删除的按钮
+}
+
+message cgjulebuaddnextplayer
+{
+	optional int32 julebuid = 1;
+	optional int32 userid = 2;  
+ 	optional int32 partnerid = 3;	//合伙人id
+	optional int32 targetid = 4;	//操作目标id
+	optional int32 requesttype = 5; //操作类型：1  调配玩家 2 删除 , 3 邀请玩家
+}
+
+message gcjulebuaddnextplayer
+{
+	optional int32 result = 1;
+	repeated julebupartnerinfo partnerlist = 2;
+	optional int32 julebuid = 3;
+	optional int32 requesttype = 4; //操作类型：1 调配玩家 2 删除，  3 邀请玩家
+}
+
+message cgjulebudalpartnerdata
+{
+	optional int32 julebuid = 1;
+	optional int32 userid = 2;  
+ 	optional int32 partnerid = 3;	//合伙人id
+	optional int32 requesttype = 4; //操作类型：1 删除，  2 确定删除
+}
+
+message gcjulebudalpartnerdata
+{
+	optional int32 result = 1;
+	optional int32 userid = 2;  
+ 	optional int32 partnerid = 3;	//合伙人id
+	optional int32 requesttype = 4; //操作类型：1 删除，  2 确定删除
+	optional int32 julebuid = 5;
+	repeated julebupartnerinfo partnerlist = 6;
+}
+
+message cgjulebucreaktable
+{
+	optional int32 julebuid = 1;
+	optional int32 userid = 2;  
+	optional int32 julebutype = 3;
+}
+
+message gcjulebucreaktable
+{
+	optional int32 result = 1;
+	optional int32 julebuid = 2;
+	optional int32 userid = 3;  
+	optional int32 julebutype = 4;
+}
+
+message cggetjulebuawardinfo      //获取分享领奖的信息
+{
+	optional int32 userid = 1;
+	optional int32 julebuid = 2;
+}
+
+message gcgetjulebuawardinfo
+{
+	optional int32 result = 1;
+	optional int32 awardcount = 2;   //能够领到的奖励的数额
+	optional string qrcodeurl = 3;    //分享二维码的链接
+	optional int32 usernum = 4;       //邀请的人数
+}
+
+message cggetjulebuaward                 
+{
+	optional int32 userid = 1;
+	optional int32 julebuid = 2;   
+	optional int32 awardcount = 3;      //发送领奖数额的多少
+}
+
+message gcgetjulebuaward
+{
+	optional int32 result = 1;     //返回0 领取成功
+}
+
+message cgjulebuawardlist    //获取俱乐部奖励的列表
+{
+	optional int32 userid  = 1;
+	optional int32 julebuid = 2;
+	optional int32 pagenum = 3;    //按照翻页来算，每一页返回10个
+}
+
+message gcjulebuawardlist
+{
+	optional int32 result = 1;
+	repeated int32 userid = 2;        //用户ID
+	repeated string nickname = 3;     //昵称列表
+	repeated int32 awardcount = 4;    //奖励列表
+}
+
+message cgsetjulebuproportion		//设置分成比例
+{
+	optional int32 userid = 1;
+	optional int32 julebuid = 2;
+	optional int32 optype = 3;		//操作类型 0: 查询 1:修改
+	optional int32 proportion = 4;	//分成比例 0:五五 1:四六 2:三七 3:二八
+}
+
+message gcsetjulebuproportion
+{
+	optional int32 result = 1;
+	optional int32 userid = 2;
+	optional int32 julebuid = 3;
+	optional int32 optype = 4;		//操作类型 0: 查询 1:修改
+	optional int32 proportion = 5;	//分成比例 0:五五 1:四六 2:三七 3:二八
+}

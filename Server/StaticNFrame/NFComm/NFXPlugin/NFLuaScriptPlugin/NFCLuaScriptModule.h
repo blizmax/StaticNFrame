@@ -60,13 +60,6 @@ public:
     {
         m_pPluginManager = p;
 		m_luaTimerIndex = 10000;
-
-		luaopen_cjson(GetLuaState());
-		luaopen_luasql_mysql(GetLuaState());
-		luaopen_lpeg(GetLuaState());
-		luaopen_socket_core(GetLuaState());
-		luaopen_lfs(GetLuaState());
-		luaopen_pb(GetLuaState());
     }
 public:
 

@@ -1,0 +1,277 @@
+package progame;
+import "st_human.proto";
+import "st_hlyd.proto";
+
+message cghlydenter
+{
+	optional int32 userid = 1;  
+	optional int32 tableid = 2;    //如果是0，则随机分配
+	optional string password = 3;   //如果该牌桌是需要密码的
+}
+
+message gchlydenter
+{
+	optional int32 result = 1;
+	optional playersimpleinfo bankerinfo = 2;
+	repeated playersimpleinfo pslist = 3;     //坐在8个位置上的人物信息
+	optional int32 tableid = 4;
+	optional int32 pour1 = 5;     //第一个下注额
+	optional int32 pour2 = 6;     //第二个下注额
+	optional int32 pour3 = 7;     //第三个下注额
+	optional int32 state = 8;     //状态
+	optional int32 timemark = 9;        //时间标签
+	repeated int32 situser = 10;         //对应位置的userID，总共8个长度，在第几个非0就表示该座位有玩家	
+	optional int32 popularity = 11;     //这个是显示在庄家傍边的人气值
+	optional int32 hlydtype = 12;
+	optional int32 maxvipnum = 13;      //最大的场次
+	optional int32 usevipnum = 14;      //已经使用了多少场次
+	optional int32 paytype = 15;        //支付类型，1：房主支付，2：玩家均摊
+	optional int32 jifen = 16;          //如果是私人房
+	optional int32 ownerid = 17;        //房主ID
+	optional int32 minbankerjetton = 18;   //最小上庄金币
+	optional int32 bankerjetton = 19;      //庄家的上庄携带的钱
+}
+
+message cghlydsitdown  //坐下牌桌
+{
+	optional int32 userid = 1;
+	optional int32 tableid = 2;
+	optional int32 chairid = 3;    //坐下来的位置
+}
+
+message gchlydsitdown      //当有玩家坐下来时，把该协议同时广播给牌桌里面所有的其他的玩家
+{
+	optional int32 result = 1;
+	optional int32 chairid = 2;
+	optional playersimpleinfo psinfo = 3;     //
+	
+}
+
+message gchlydstandup    //当玩家上庄的时候,要把坐下的座位让出来
+{
+	optional int32 result = 1;
+	optional int32 userid = 2;
+	optional int32 chairid = 3;
+}
+
+message cghlydleave
+{
+	optional int32 userid = 1;
+	optional int32 tableid = 2;
+	optional int32 chairid = 3;      //如果玩家坐下8个列表中，则需要携带
+}
+
+message gchlydleave    //当坐下来的玩家离开的时候，需要广播给全部玩家
+{
+	optional int32 result = 1;
+	optional int32 chairid = 2;
+	optional int32 userid = 3;
+	optional int32 leavetype = 4;
+	optional string msg = 5;
+}
+
+message cghlydpourjetton
+{
+	optional int32 userid = 1;
+	optional int32 tableid = 2;
+	optional int32 jetton = 3;   //下注的额度
+	optional int32 pourtype = 4;  //下注的类型
+	
+}
+
+message gchlydpourjetton
+{
+	optional int32 result = 1;
+	optional int32 userid = 2;    //如果检查到是坐在座位的玩家，需要客户端自己同步这里的数值
+	optional int32 jetton = 3;    //
+	optional int32 pourtype = 4;   //下注的类型
+	optional int32 chairid = 5;    //
+	optional int32 alljetton = 6; //玩家身上的总数
+}
+
+message gchlydgroupjetton
+{
+	optional int32 result = 1;
+	repeated int32 pourtype = 2;
+	repeated int32 jetton = 3;
+}
+
+message gchlydcount   //结算是服务器主动发送给玩家的
+{
+	optional int32 result = 1;
+	optional int32 selfwin = 2;     //自己赢的钱
+	optional int32 selfall = 3;     //自己赢的钱
+	optional int32 dounum = 4;    //豆子的数量
+	optional int32 bankerwin = 5;   //庄家赢的数量,庄家是有正和负
+	optional int32 bankerall = 6;   //庄家携带的钱
+	optional int32 standwin = 7;    //站立的玩家赢的钱的总和
+	repeated int32 wintypelist = 8;  //胜利的牌型的列表
+	repeated int32 tuseridlist = 9;
+	repeated int32 twinlist = 10;
+	repeated int32 talllist = 11;
+	optional int32 state = 12;
+	optional int32 timemark = 13;
+	optional int32 popularity = 14;   //显示在庄家旁边的人气值
+	optional int32 bankerid = 15;     //需要加上bankerid，如果庄家在结算的时候，有切换，不需要更新前端的数据
+	optional int32 isend = 16;        //如果这个是1的时候，表示积分场也结束了，需要显示结果。
+	
+}
+
+message cghlydtablelist  //获取房间列表，每页显示8个
+{
+	optional int32 userid = 1;
+	optional int32 pagenum = 2;    //第几页
+}
+
+message gchlydtablelist
+{
+	optional int32 result = 1;
+	repeated int32 tableidlist = 2;
+	repeated int32 usernumlist = 3;
+	repeated int32 owneridlist = 4;
+	repeated int32 maxvipnumlist = 5;           //总共局数
+	repeated int32 usevipnumlist = 6;           //已经使用的局数
+}
+
+message cghlydcreatetable
+{
+	optional int32 userid = 1;
+	optional int32 maxuser = 2;  //最大人数
+	optional int32 minpour = 3;  //最小下注
+	optional int32 jetton = 4;   //上庄金币,在新的系统中，这个是最小上庄金币
+	optional int32 maxvipnum = 5;  //打牌的局数,
+	optional int32 paytype = 6;  //支付类型，1001：钻石；1002：金币支付；1003：掌上币支付
+	optional int32 payway = 7;   //支付方式：1：房主支付，2：玩家均摊
+	optional int32 paynum = 8;
+	optional int32 julebuid = 9;
+}
+
+message gchlydcreatetable
+{
+	optional int32 result = 1;
+	optional hlydinfo hinfo = 2;
+}
+
+message cghlydbeingbanker
+{
+	optional int32 userid = 1;
+	optional int32 jetton = 2; 
+	optional int32 tableid = 3;
+}
+
+message gchlydbeingbanker
+{
+	optional int32 result = 1;
+	optional playersimpleinfo bankerinfo = 2;   //庄家的信息	
+	optional int32 popularity = 3;              //如果上庄成功了，就必定是0，如果不成功，则不用处理
+}
+
+message cghlyddropbanker
+{
+	optional int32 userid = 1;   //下庄
+	optional int32 tableid = 3;
+}
+
+message gchlyddropbanker            //上庄
+{
+	optional int32 result = 1;
+	optional int32 userid = 2;
+}
+
+message cghlydstart        //发送这个start后，收到的是gchlydstart 注意这里
+{
+	optional int32 tableid = 1;
+	optional int32 userid = 2;
+}
+
+message gchlydstart
+{
+	optional int32 result = 1;
+	optional int32 state = 2;
+	optional int32 timemark = 3;
+	optional int32 usevipnum = 4;
+}
+
+
+
+message cghlydhistory
+{
+	optional int32 userid = 1;
+	optional int32 pagenum = 2;  //每次获取20条，不能多
+	optional int32 tableid = 3;
+}
+
+message gchyldhistory
+{
+	optional int32 result = 1;
+	optional int32 winall = 2;          //玩家自己总的胜利的记录
+	repeated int32 framelist = 3;       //如果类型是1：开奖的局数
+	repeated int32 doulist = 4;         //如果类型是1：开奖的结果
+	repeated int32 winjetton = 5;       //胜利的列表
+	optional int32 allnum = 6;          //开奖的总数
+	optional int32 allnum1 = 7;         //开1的总数
+	optional int32 allnum2 = 8;         //开2的总数
+	optional int32 allnum3 = 9;         //开3的总数
+	optional int32 allnum4 = 10;        //开4的总数
+}
+
+message cghlydchat   //欢乐赢都里面的聊天
+{
+	optional int32 senderid = 1;
+	optional string sender = 2;
+	optional int32 chattype = 3;   //对应g_hlydDefine.chat 中的类型
+	optional string msg = 4;
+	optional int32 tableid = 5;    //牌桌的ID
+}
+
+message gchlydchat
+{
+	optional int32 result = 1;
+	optional int32 chatdate = 2;   //聊天时间
+	optional int32 senderid = 3;   
+	optional string sender = 4;
+	optional int32 chattype = 5;
+	optional string msg = 6;
+}
+
+message cghlydstandlist //获取站立的列表信息
+{
+	optional int32 userid = 1;
+	optional int32 tableid = 2;
+	optional int32 pagenum = 3;   //每一次获取10个
+	optional int32 gettype = 4;   //获取的类型：1是全部，2是站立的列表 
+}
+
+message gchlydstandlist
+{
+	optional int32 result = 1;
+	repeated playersimpleinfo pslist = 2;
+	
+	optional int32 gettype = 3;  //获取的类型：1是全部，2是站立的列表
+	repeated int32 initjifen = 4;   //初始化的积分列表
+	
+}
+
+message cghlydbankerlist  //获取庄家列表
+{
+	optional int32 userid = 1;
+	optional int32 pagenum = 2;
+	optional int32 tableid = 3;
+}
+
+message gchlydbankerlist   //获取上庄列表
+{
+	optional int32 result = 1;
+	repeated int32 useridlist = 2;
+	repeated int32 jettonlist = 3;
+	repeated string nicklist = 4;
+	repeated string faceidlist = 5;
+}
+
+message gchlydupdate
+{
+	optional int32 result = 1;
+	optional int32 state = 2;
+	optional int32 timemark = 3;
+	
+}

@@ -1,0 +1,340 @@
+package progame;
+
+import "st_human.proto";
+import "st_phz.proto";
+import "st_phz2.proto";
+import "msg_phz.proto";
+
+//获取个人战绩列表
+message cgPhzGetRecordList
+{
+	optional int32 userID = 1;					//玩家ID
+}
+
+//获取个人战绩列表
+message gcPhzGetRecordList
+{
+	optional int32 result = 1;					//结果
+	repeated phzPlayRecordInfo recordList = 2;	//记录列表
+}
+
+//玩家申请回放单局战绩
+message cgPhzReplayRecord
+{
+	optional int32 userID = 1;					//玩家ID
+	optional string recordID = 2;				//回放ID
+}
+
+//玩家申请回放单局战绩
+message gcPhzReplayRecord
+{
+	optional int32 result = 1;					//结果
+	
+	//以下数据帮助恢复牌桌
+	optional int32 tableID = 2;					//牌桌ID
+	optional int32 gameType = 3;				//游戏类型，跑胡子、十胡卡、扯胡子.......
+	optional int32 needUsersNum = 4;			//开局需要的玩家数
+	optional int32 maxJetton = 5;				//牌桌的封顶上限
+	optional int32 kingNum = 6;					//支持的王牌个数
+	optional int32 genXing = 7;					//翻醒与跟醒
+	optional int32 huPai = 8;					//是否必胡，g_phzDefine.yes 或 g_phzDefine.no
+	optional int32 yiWuShi = 9;					//是否支持一五十，g_phzDefine.yes 或 g_phzDefine.no
+	optional int32 totalTurns = 10;				//总共可以玩的局数
+	optional int32 currTurns = 11;				//当前玩了多少局
+	optional int32 bankerChairID = 12;			//庄家座位ID
+	optional int32 idlerChairID = 13;			//坐醒的座位ID
+	repeated phzPlayerCards userCards = 14;		//玩家的当局手牌
+	
+	optional int32 totalOprCnt = 15;			//单局回放记录的总操作数
+	optional int32 cardsNum = 16;				//开局牌数
+	
+	optional string recordID = 17;				//回放ID
+	
+	optional int32 dianPao = 18;				//是否支持点炮或放炮，g_phzDefine.yes 或 g_phzDefine.no
+	optional int32 hongHei = 19;				//是否支持红黑胡，g_phzDefine.yes 或 g_phzDefine.no
+	optional int32 ziMoDouble = 20;				//是否支持自摸翻倍，g_phzDefine.yes 或 g_phzDefine.no
+	optional int32 tunPerHuxi = 21;				//多少胡息算作一囤，g_phzDefine.tun_per_1 或 g_phzDefine.tun_per_3
+	optional int32 shuangXing = 22;				//是否支持双醒，g_phzDefine.yes 或 g_phzDefine.no
+}
+
+//玩家申请单步回放
+message cgPhzReplayOpr
+{
+	optional int32 userID = 1;					//玩家ID
+	optional string recordID = 2;				//回放ID
+	optional int32 oprID = 3;					//单步操作ID
+}
+
+//玩家申请单步回放
+message gcPhzReplayOpr
+{
+	optional int32 result = 1;					//结果
+	optional int32 oprID = 2;					//单步操作ID
+	optional gcPhzOprCards gcmsg = 3;			//单步操作
+}
+
+//跑胡子排行榜
+message cgPhzRank
+{
+	optional int32 userID = 1;					//玩家ID
+	optional int32 rankType = 2;    			//榜单类型，g_phzRankType
+	optional int32 pageNum = 3;					//页号
+}
+
+//跑胡子排行榜
+message gcPhzRank
+{
+	optional int32 result = 1;					//结果
+	optional int32 rankType = 2;				//榜单类型，g_phzRankType
+	optional int32 myRank = 3;					//自己的排名
+	optional int64 myValue = 4; 				//自己的排行榜数值
+	repeated phzRankInfo rankList = 5;			//排行榜列表
+	optional int32 pageNum = 6;					//页号
+}
+
+//跑胡子玩家申请解散房间
+message cgPhzReqDismiss
+{
+	optional int32 userID = 1;					//玩家ID
+	optional int32 tableID = 2;					//牌桌ID
+	optional int32 resp = 3;					//同意或拒绝解散房间，g_phzDismissResp
+}
+
+//跑胡子玩家申请解散房间
+message gcPhzReqDismiss
+{
+	optional int32 result = 1;					//结果
+	optional int32 userID = 2;					//发起人ID
+	optional string nick = 3;					//发起人昵称
+	repeated phzUserSimpleInfo userList = 4;	//需要回应解散申请的玩家列表
+	optional int32 waiteSecs = 5;				//等待玩家做决策的秒数
+}
+
+//跑胡子明招，协议含义已经扩展，不止限于明招
+message cgPhzMingZhao
+{
+	optional int32 userID = 1;					//玩家ID
+	optional int32 resp = 2;					//回应，g_phzDefine.yes 或 g_phzDefine.no
+	optional int32 msgType = 3;					//消息类型，g_phzMsgNotify
+}
+
+//跑胡子明招，协议含义已经扩展，不止限于明招
+message gcPhzMingZhao
+{
+	optional int32 result = 1;					//结果
+	optional int32 mzType = 2;					//明招消息类型，g_phzMingZhaoType
+	optional string msgStr = 3;					//消息字符串
+	optional int32 msgType = 4;					//消息类型，g_phzMsgNotify
+}
+
+//获取任务列表
+message cgPhzTaskList
+{
+	optional int32 userID = 1;					//玩家ID
+}
+
+//获取任务列表
+message gcPhzTaskList
+{
+	optional int32 result = 1;					//结果
+	repeated phzTaskInfo taskList = 2;			//任务列表
+}
+
+//更新任务
+message cgPhzUpdateTask
+{
+	optional int32 userID = 1;					//玩家ID
+	optional int32 taskID = 2;					//任务ID
+	optional int32 updateType = 3;				//更新任务类型，g_phzTaskUpdate
+	optional int32 updateVal = 4;				//更新数据，可以是提交任务的完成次数、申请奖励的对应完成量
+}
+
+//更新任务
+message gcPhzUpdateTask
+{
+	optional int32 result = 1;					//结果
+	optional phzTaskInfo taskInfo = 2;			//任务
+}
+
+//每日签到
+message cgPhzSignIn
+{
+	optional int32 userID = 1;					//玩家ID
+	optional int32 oprType = 2;					//签到操作类型，g_phzSignIn
+}
+
+//每日签到
+message gcPhzSignIn
+{
+	optional int32 result = 1;					//结果
+	optional int32 oprType = 2;					//签到操作类型，g_phzSignIn
+	optional int32 currDays = 3;				//当前连续登录的天数
+	optional int32 signDays = 4;				//已经签到的天数
+}
+
+//推广码，即代理人的编码
+message cgPhzAgentCode
+{
+	optional int32 userID = 1;					//玩家ID
+}
+
+//推广码，即代理人的编码
+message gcPhzAgentCode
+{
+	optional int32 result = 1;					//结果
+	
+	//自己绑定的信息
+	optional int32 agentCode = 2;				//关联的推广码，大于0表示已经关联玩家，-1表示绑定了系统，0表示没有绑定
+	optional string agentNick = 3;				//代理人昵称
+	optional string agentFace = 4;				//代理人头像
+	optional int32 isGetAward = 5;				//今日奖励是否已经领取，g_phzDefine.yes 或 g_phzDefine.no
+	optional int32 bindDate = 6;				//绑定时间
+	
+	//绑定自己的信息
+	optional int32 myCode = 7;					//我的推广码
+	optional int32 myStatus = 8;				//我的推广码申请状态，g_phzAgentStatus
+	optional int32 myBindNum = 9;				//绑定我的人数
+	optional int32 myAwardNum = 10;				//我已经领取到的绑定人数奖励
+	repeated phzUserSimpleInfo userList = 11;	//绑定我的玩家简单的信息
+}
+
+//申请推广码
+message cgPhzApplyAgentCode
+{
+	optional int32 userID = 1;					//玩家ID
+	optional string name = 2;					//真实姓名
+	optional string phoneNum = 3;				//联系电话
+	optional string wxqq = 4;					//微信或QQ
+}
+
+//申请推广码
+message gcPhzApplyAgentCode
+{
+	optional int32 result = 1;					//结果
+	optional int32 myStatus = 2;				//我的推广码申请状态，g_phzAgentStatus
+}
+
+//领取代理人奖励
+message cgPhzAgentAward
+{
+	optional int32 userID = 1;					//玩家ID
+	optional int32 awardType = 2;				//奖励类型，g_phzAgentAward
+}
+
+//领取代理人奖励
+message gcPhzAgentAward
+{
+	optional int32 result = 1;					//结果
+	optional int32 awardType = 2;				//奖励类型，g_phzAgentAward
+	optional int32 myBindNum = 3;				//领取绑定人数奖励时才有此值
+	optional int32 myAwardNum = 4;				//领取绑定人数奖励时才有此值
+}
+
+//请求绑定
+message cgPhzBindAgentCode
+{
+	optional int32 userID = 1;					//玩家ID
+	optional int32 agentCode = 2;				//请求绑定的推广码
+}
+
+//请求绑定
+message gcPhzBindAgentCode
+{
+	optional int32 result = 1;					//结果
+}
+
+//黄庄结算
+message gcPhzHuangZhuang
+{
+	optional int32 result = 1;					//结果
+	repeated int32 kingNum = 2;					//各个位置上玩家的王牌数量
+	repeated int32 userResult = 3;				//各个位置上玩家的输赢情况，正为赢，负为输
+	repeated int64 userScore = 4;				//结算之后，各个位置上玩家剩余的积分
+	repeated phzPlayerCards playerCards = 5;	//结算时展示的各个玩家的手牌
+	optional int32 tableOnwerID = 6;			//房主ID
+	optional string tableOnwerNick = 7;			//房主昵称
+	optional int32 reconnectFlg = 8;			//是否断线重连发送的,g_phzDefine.yes 或 g_phzDefine.no
+}
+
+//牌桌上的动作通知
+message gcPhzTableNotify
+{
+	optional int32 result = 1;					//结果
+	optional int32 operType = 2;				//操作类型，具体参见g_phzOperType定义
+	optional int32 operTypeTxt = 3;				//notifyType对应的文字类型g_phzOperType
+	optional int32 operTypeVoice = 4;			//notifyType对应的语音类型g_phzOperType
+	optional int32 chairID = 5;					//动作绑定的座位ID，如果是0则表示公有的动作
+	optional int32 visibleChairID = 6;			//对此动作通知可见的座位ID，如果是0则表示所有人可见
+}
+
+//牌桌上玩家申请托管与取消托管
+message cgPhzPlayerStatus
+{
+	optional int32 userID = 1;					//玩家ID
+	optional int32 playerStatus = 2;			//申请变更的状态，g_phzPlayerStatus
+}
+
+//牌桌上玩家的打牌状态有变更，系统通过这个协议群发通知
+message gcPhzPlayerStatus
+{
+	optional int32 chairID = 1;					//玩家位置
+	optional int32 playerStatus = 2;			//变更后的状态，g_phzPlayerStatus
+	optional int32 isOnline = 3;				//是否在线，默认在线，g_phzDefine.yes 或 g_phzDefine.no
+}
+
+//客户端上传玩家的最新经纬度
+message cgPhzLocation
+{
+	optional int32 userID = 1;					//玩家的ID
+	optional double longitude = 2;				//经度
+	optional double latitude = 3;				//纬度
+}
+
+//系统群发玩家的经纬度
+message gcPhzLocation
+{
+	optional int32 chairID = 1;					//玩家位置
+	optional double longitude = 2;				//经度
+	optional double latitude = 3;				//纬度
+}
+
+//客户端前后台切换主动通知服务器的在线状态
+message cgPhzSwitchStatus
+{
+	optional int32 userID = 1;					//玩家的ID
+	optional int32 isOnline = 2;				//切换到在线或离线状态，g_phzDefine.yes 或 g_phzDefine.no
+}
+
+//客户端前后台切换主动通知服务器的在线状态
+message gcPhzSwitchStatus
+{
+	optional int32 chairID = 1;					//玩家位置
+	optional int32 isOnline = 2;				//切换到在线或离线状态，g_phzDefine.yes 或 g_phzDefine.no
+}
+
+//根据玩家的ID获取玩家的信息
+message cgPhzGetHumanInfo
+{
+	optional int32 userID = 1;					//玩家的ID
+}
+
+//根据玩家的ID获取玩家的信息
+message gcPhzGetHumanInfo
+{
+	optional int32 userID = 1;					//玩家的ID
+	optional string nick = 2;					//用户昵称
+	optional string face_1 = 3;					//用户头像
+	optional int64 jetton = 4;     				//金币必须用64位的
+	optional int32 money = 5;      				//钻石或房卡
+	optional string motto = 6;					//个性签名
+	optional int32 sex = 7;						//性别
+}
+
+//修改玩家的信息，目前仅支持玩家修改个性签名
+message cgPhzModifyHumanInfo
+{
+	optional int32 userID = 1;					//玩家的ID
+	optional string motto = 2;					//个性签名
+}
+
+

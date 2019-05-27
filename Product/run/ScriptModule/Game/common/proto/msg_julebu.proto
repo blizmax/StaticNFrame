@@ -1,0 +1,320 @@
+package progame;
+import "st_julebu.proto";
+
+message cgjulebuenter
+{
+	optional int32 userid = 1;
+	optional int32 julebuid = 2;
+}
+
+message gcjulebuenter
+{
+	optional int32 result = 1;
+	optional julebuinfo jinfo = 2;
+}
+
+message cgjulebucreate
+{
+	optional int32 userid = 1;
+	optional string name = 2;      //俱乐部的名字
+	repeated int32 moduleslist = 3;   //包含的游戏模块,
+}
+
+message gcjulebucreate
+{
+	optional int32 result = 1;
+	optional int32 julebuid = 2;
+	optional string name = 3;
+	optional int32 membernum = 4;    //当前成员数量
+	optional int32 maxmembernum = 5;  //最大成员数量
+}
+
+message cgjulebulist    //获取个人的俱乐部列表
+{
+	optional int32 userid = 1;
+	optional int32 gettype = 2;   //1:自己的俱乐部列表，2：是推荐的俱乐部列表
+}
+
+message gcjulebulist     //获取俱乐部列表
+{
+	optional int32 result = 1;
+	repeated int32 julebuid = 2;
+	repeated string name = 3;
+	repeated int32 membernum = 4;
+	repeated int32 maxmembernum = 5;
+	repeated string ownerfaceid = 6;  //创建者的头像
+	repeated string ownernick = 7;   
+	repeated int32 tablenum = 8;    //已开房间数量
+	optional int32 gettype = 9;   //1:自己的俱乐部列表，2：是推荐的俱乐部列表
+	repeated julebuadminlist adminlist = 10; 
+	
+}
+
+message cgjulebutablelist //获取俱乐部中牌桌信息
+{
+	optional int32 userid = 1;
+	optional int32 julebuid = 2;
+	optional int32 pagenum = 3;
+	optional int32 julebutype = 4;
+}
+
+message gcjulebutablelist
+{
+	optional int32 result = 1;        //
+	repeated julebutable jlist = 2;   //tablelist
+	optional int32 julebutype = 3;
+}
+
+message cgjulebumemberlist    //获取成员列表
+{
+	optional int32 userid = 1;
+	optional int32 julebuid = 2;
+	optional int32 pagenum = 3;
+	optional int32 checkoutid = 4;
+	optional int32 checktype = 5;     //查询模式 1 为普通模式， 2 为 排行模式
+}
+
+
+message gcjulebumemberlist
+{
+	optional int32 result = 1;
+	repeated julebumember jmlist = 2;    //成员列表
+	optional int32 checkoutid = 3;
+	optional int32 checktype = 5;     //查询模式 1 为普通模式， 2 为 排行模式
+	optional int32 headcount = 6;	  //总人数
+	optional int32 totaljifen = 7; //计算全部积分
+	optional int32 yesterdaypump = 8;	//昨日抽水积分
+}
+
+message cgjulebuapplylist   //获取请求列表
+{
+	optional int32 userid = 1;
+	optional int32 julebuid = 2;
+	optional int32 pagenum = 3;
+}
+
+message gcjulebuapplylist
+{
+	optional int32 result = 1;
+	repeated julebumember jalist = 2;    //成员列表
+	optional int32 julebuid =3;	
+}
+
+message cgjulebupass   //申请通过
+{
+	optional int32 userid = 1;      //审核者的ID
+	optional int32 julebuid = 2;    //
+	optional int32 applyid = 3;     //申请者ID
+	optional int32 opttype = 4;     //1:同意，2：拒绝
+}
+
+message gcjulebupass
+{
+	optional int32 result = 1;
+	optional int32 julebuid = 2;    //
+	optional int32 applyid = 3;     //申请者ID
+	optional int32 opttype = 4;    //1:同意，2：拒绝
+	
+}
+
+message cgjulebukict
+{
+	optional int32 userid = 1;
+	optional int32 julebuid = 2;
+	repeated int32 kictid = 3;    //被提出这ID
+}
+
+message gcjulebukict
+{
+	optional int32 result = 1;
+	optional int32 kictret = 2;   //结果
+	repeated int32 kictid = 3;    //被踢者ID
+}
+
+message cgjulebuapply    //申请加入俱乐部
+{
+	optional int32 userid = 1;
+	optional int32 julebuid = 2;   
+}
+
+message gcjulebuapply
+{
+	optional int32 result = 1;
+}
+
+message cgjulebuquit
+{
+	optional int32 userid = 1;
+	optional int32 julebuid = 2;    //如果是房主，就是解散圈子
+}
+
+message gcjulebuquit
+{
+	optional int32 result = 1;
+	optional int32 julebuid = 2;
+}
+
+message cgjulebuchat   //欢乐赢都里面的聊天
+{
+	optional int32 senderid = 1;
+	optional string sender = 2;
+	optional int32 chattype = 3;   //对应g_JulebuDefine.chat 中的类型
+	optional string msg = 4;       //
+	optional int32 julebuid = 5;    //牌桌的ID
+}
+
+message gcjulebuchat
+{
+	optional int32 result = 1;
+	optional julebuchat jchat = 2;
+}
+
+message cgjulebuchatlist
+{
+	optional int32 userid = 1;
+	optional int32 julebuid = 2;
+	optional int32 startchatid = 3;    //获取的开始的chatid，往前递减，如果是0，表示获取最新的列表，每次20条
+}
+
+message gcjulebuchatlist
+{
+	optional int32 result = 1;
+	optional int32 pagenum = 2;
+	repeated julebuchat chatlist = 3;    //聊天的列表
+}
+
+message cgjulebuleave
+{
+	optional int32 userid = 1;
+	optional int32 julebuid = 2;
+}
+
+message gcjulebuleave
+{
+	optional int32 result = 1;
+	optional int32 julebuid = 2;
+}
+
+message gcjulebutableupdate    //这个是当牌桌信息，主要是人数有变化的时候，主动通知前端修改的
+{
+	optional int32 result = 1;
+	optional int32 opttype = 2;   //1:增加，2：修改，3：删除
+	optional julebutable jtinfo = 3;
+	optional int32 julebutype = 4;
+}
+
+message cgjulebuhistory   //战绩的历史记录
+{
+	optional int32 userid = 1;
+	optional int32 julebuid = 3;
+}
+
+message gcjulebuhistory
+{
+	optional int32 result = 1;
+	repeated julebuzhanjiinfo zjlist = 2;    //获取10天的战绩列表
+}
+
+message cgjulebunowjifen   //获取实时的积分
+{
+	optional int32 userid = 1;
+	optional int32 julebuid = 2;
+}
+
+message gcjulebunowjifen 
+{
+	optional int32 result = 1;
+	repeated julebumember mlist = 2;
+}
+
+message cgjulebuselfjifen  //获取个人的积分
+{
+	optional int32 userid = 1;
+	optional int32 julebuid = 2;
+	optional int32 pagenum = 3;     //个人战绩的列表，按页数来分
+	optional int32 isself = 4;     //如果是0，表示是管理员获取信息，不用获取战绩，如果是1：表示是自己，需要下发战绩
+}
+
+message gcjulebuselfjifen
+{
+	optional int32 result = 1;
+	optional julebumember minfo = 2;   //这个是当前
+	repeated julebumemberzhanjiday zjdaylist = 3;
+	optional int32 isself = 4;
+}
+
+message cgjulebuselfday   //获取某个人一天的记录列表
+{
+	optional int32 userid = 1;
+	optional int32 julebuid = 2;
+	optional string timemark = 3;   //时间的标签
+	optional int32 pagenum = 4;     //每页显示10个
+	optional int32 daynum = 5;     //主要是为了区分第一天的，因为第一天没法用时间来区别
+}
+message gcjulebuselfday
+{
+	optional int32 result = 1;
+	repeated julebuzhanjilist zjlist = 2;     //每天的战绩列表
+}
+
+message cgjulebusetlimitjifen //设置限制的积分
+{
+	optional int32 userid = 1;  //群主或者管理员的ID
+	optional int32 touserid = 2;   //被设置的用户ID
+	optional int32 limitjifen = 3;   //限制的积分
+	optional int32 julebuid = 4;     //俱乐部的ID
+}
+
+message gcjulebusetlimitjifen    //设置的结果
+{
+	optional int32 result = 1;
+	optional julebumember minfo = 2;
+}
+
+message cgjulebusetnotice   //设置俱乐部的公告
+{
+	optional int32 userid = 1;    //只有管理员才能设置俱乐部的公告,这里需要检查管理员的职位
+	optional int32 julebuid = 2;
+	optional string notice = 3;
+	optional int32 settype = 4;    //1:设置公告，2：设置群名字
+}
+
+message gcjulebusetnotice
+{
+	optional int32 result = 1;    //只有管理员才能设置俱乐部的公告,这里需要检查管理员的职位
+	optional int32 julebuid = 2;
+	optional string notice = 3;
+	optional int32 settype = 4;    //1:设置公告，2：设置群名字
+}
+
+message cgjulebudayhistory
+{
+	optional int32 userid = 1;
+	optional int32 julebuid = 2;
+	optional string timemark = 3;
+}
+
+message gcjulebudayhistory
+{
+	optional int32 result = 1;					//结果
+	repeated julebugamehistoryinfo recordList = 2;	//记录列表
+}
+
+message cgjulebusetadmin  //设置管理员,只有管理员才能设置管理员
+{
+	optional int32 userid = 1;
+	optional int32 julebuid = 2;
+	optional int32 adminid = 3;  //被设置者的ID	
+	optional int32 opttype = 4;   //1：设置，2：取消
+	optional int32 settype = 5;	//1: 转让群主  2:设置副管理员 	3:开房设置
+	optional int32 setroom = 6;  // 房间管理 0: 管理开房 1：所有人开房
+	optional int32 autoroom = 7;	//0：不自动 1：自动开房 
+	optional int32 requesttype = 8;    //请求类型   1:设置 2: 获取
+	
+}
+
+message gcjulebusetadmin
+{
+	optional int32 result = 1;
+	optional julebuinfo jinfo = 2;
+}

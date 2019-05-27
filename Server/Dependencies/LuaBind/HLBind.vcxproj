@@ -65,7 +65,10 @@
     <ClCompile Include="lua\lapi.c" />
     <ClCompile Include="lua\lauxlib.c" />
     <ClCompile Include="lua\lbaselib.c" />
+    <ClCompile Include="lua\lbitlib.c" />
     <ClCompile Include="lua\lcode.c" />
+    <ClCompile Include="lua\lcorolib.c" />
+    <ClCompile Include="lua\lctype.c" />
     <ClCompile Include="lua\ldblib.c" />
     <ClCompile Include="lua\ldebug.c" />
     <ClCompile Include="lua\ldo.c" />
@@ -88,12 +91,10 @@
     <ClCompile Include="lua\ltable.c" />
     <ClCompile Include="lua\ltablib.c" />
     <ClCompile Include="lua\ltm.c" />
-    <ClCompile Include="lua\lua.c" />
-    <ClCompile Include="lua\luac.c" />
     <ClCompile Include="lua\lundump.c" />
+    <ClCompile Include="lua\lutf8lib.c" />
     <ClCompile Include="lua\lvm.c" />
     <ClCompile Include="lua\lzio.c" />
-    <ClCompile Include="lua\print.c" />
     <ClCompile Include="protoc-gen-lua\pb.c" />
   </ItemGroup>
   <ItemGroup>
@@ -142,6 +143,7 @@
     <ClInclude Include="lua\lapi.h" />
     <ClInclude Include="lua\lauxlib.h" />
     <ClInclude Include="lua\lcode.h" />
+    <ClInclude Include="lua\lctype.h" />
     <ClInclude Include="lua\ldebug.h" />
     <ClInclude Include="lua\ldo.h" />
     <ClInclude Include="lua\lfunc.h" />
@@ -152,16 +154,19 @@
     <ClInclude Include="lua\lobject.h" />
     <ClInclude Include="lua\lopcodes.h" />
     <ClInclude Include="lua\lparser.h" />
+    <ClInclude Include="lua\lprefix.h" />
     <ClInclude Include="lua\lstate.h" />
     <ClInclude Include="lua\lstring.h" />
     <ClInclude Include="lua\ltable.h" />
     <ClInclude Include="lua\ltm.h" />
     <ClInclude Include="lua\lua.h" />
+    <ClInclude Include="lua\lua.hpp" />
     <ClInclude Include="lua\luaconf.h" />
     <ClInclude Include="lua\lualib.h" />
     <ClInclude Include="lua\lundump.h" />
     <ClInclude Include="lua\lvm.h" />
     <ClInclude Include="lua\lzio.h" />
+    <ClInclude Include="protoc-gen-lua\pb.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{E7BBF1FE-3F40-4F7D-9618-DCE1D808417E}</ProjectGuid>
@@ -338,7 +343,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Dynamic_Debug|x64'">
     <ClCompile>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
-      <PreprocessorDefinitions>WIN32;_CRT_SECURE_NO_WARNINGS;_WINSOCK_DEPRECATED_NO_WARNINGS;_DEBUG;_LIB;BSON_STATIC;MONGOC_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>LUA_COMPAT_5_1;WIN32;_CRT_SECURE_NO_WARNINGS;_WINSOCK_DEPRECATED_NO_WARNINGS;_DEBUG;_LIB;BSON_STATIC;MONGOC_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <Optimization>Disabled</Optimization>
       <AdditionalIncludeDirectories>$(SolutionDir)/Dependencies/mysql/win;$(SolutionDir)/Dependencies/mysql/include;$(SolutionDir)/Dependencies/LuaBind/luaintf;$(SolutionDir)/Dependencies/LuaBind/pbc;$(SolutionDir)/Dependencies/LuaBind/luasql;$(SolutionDir)/Dependencies/LuaBind/luasocket;$(SolutionDir)/Dependencies/LuaBind/luacjson;$(SolutionDir)/Dependencies/LuaBind/lua/;$(SolutionDir)/Dependencies/mongo/src/libbson/src/bson;$(SolutionDir)/Dependencies/mongo/src/libmongoc/src/mongoc;$(SolutionDir)/Dependencies/mongo/src/libbson/src;$(SolutionDir)/Dependencies/mongo/src/libmongoc/src;$(SolutionDir)/Dependencies/mongo/win/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>

@@ -1,0 +1,274 @@
+package progame;
+import "st_hubmj.proto";
+import "st_human.proto";
+
+message cghubmjenter
+{
+	optional int32 userid = 1;
+	optional int32 tableid = 2;     //0：表示服务器随机
+	optional int32 mjtype = 3;      
+	optional int32 tabletype = 4;   //牌桌的类型：初级，中级，高级:g_gdmjTableType
+	
+}
+
+message gchubmjenter   //进入广东麻将
+{
+	optional int32 result = 1;
+	optional hubmjinfo mjinfo = 2;
+	repeated hubmjuser userlist = 3;  //玩家列表
+	optional string strvipinfo = 4;   //同时返回给前端的vip信息的字符串
+}
+
+message gchubmjaddplayer   //当有玩家进来的时候，对于其他的玩家，发送该协议
+{
+	optional int32 result = 1;
+	optional int32 chairid = 2;
+	optional hubmjuser mjuser = 3;
+}
+
+message cghubmjaction
+{
+	optional int32 userid = 1;
+	optional int32 tableid = 2;
+	optional int32 actiontype = 3; //行动类型，出牌，过，吃，碰，杠，胡:g_gdmjAction
+	optional int32 actpokerid = 4;
+	optional int32 actchairid = 5;
+	optional int32 tarchairid = 6;
+}
+
+message gchubmjaction
+{
+	optional int32 result = 1;
+	repeated hubmjuser actplayer = 3;     //一炮多响的时候，存在多个行动者
+	repeated hubmjuser tarplayer = 4;     //暗杠，补杠的时候，存在多个目标者
+	
+	repeated int32 actiontype = 5;       //每个行动者的行动类型
+	repeated int32 actpokerid = 6;       //每个行动者的行动的牌
+	repeated int32 changejetton  = 7;    //这是有四个元素的筹码变动的类别，分别对应东南西北,用来显示用的,主要是杠的时候用到
+	
+	optional hubmjpoker showpoker = 9;      //显示出来的牌型
+}
+
+message cghubmjcreate    //创建房间列表
+{
+	optional int32 userid = 1;
+	optional int32 mjtype = 2;    //广东麻将的类型：推倒胡，做牌推倒胡，鸡平胡:g_gdmjType
+	optional int32 playnum = 3;   //局数
+	optional int32 paytype = 4;   //支付类型：暂时提供由钻石来支付的，后期可能提供其他的支付方式
+	optional int32 tableid = 5;   //牌局没有结束的时候，可以由玩家接着创建
+	optional string strvipinfo = 6; //这个是每个字符串类型的针对每个麻将的序列化后的字符串 
+	optional int32 payway = 7;      //支付方式，1：房主支付，2：均摊
+	optional int32 playernum = 8;   //人数
+	optional int32 pourjetton = 9 ; //底分
+	optional int32 paynum = 10;     //支付的数量
+}
+
+message gchubmjcreate
+{
+	optional int32 result = 1;
+	optional hubmjinfo mjinfo = 2;
+	optional string strvipinfo = 3;  //同时返回给前端的vip信息的字符串
+}
+
+message gchubmjupdate
+{
+	optional int32 result = 1;
+	repeated int32 actchairid = 2;   //行动者ID列表,四个长度，分别是四个座位的人，用chairid能够直接读取
+	optional int32 tarchairid = 3;   //目标id列表
+	repeated int32 actiontype = 4;   //行动类型列表
+	optional int32 pokerid = 5;      //如果是0，表示没有发牌，如果是非0，表示是发牌
+	optional int32 actpokerid = 6;   //指导行动的pokerid，杠牌的时候，对应杠的牌，碰牌的时候，对应碰的牌
+	optional int32 canplay = 7;           //能够过的判断，0:是不能打牌，1：是可以打牌的,
+	optional int32 actiontime = 8;        //行动时间
+	optional int32 lastpokerlen = 9;      //剩余公共牌的长度
+}
+
+message gchubmjstart    //为了方便战绩，开始协议的内容可进入的协议内容一样
+{
+	optional int32 result = 1;
+	optional hubmjinfo mjinfo = 2;
+	repeated hubmjuser userlist = 3;   //玩家列表	
+}
+
+
+message cghubmjleave
+{
+	optional int32 userid = 1;
+	optional int32 tableid = 2;
+	optional int32 chairid = 3;
+}
+
+message gchubmjleave
+{
+	optional int32 result = 1;
+	optional int32 userid = 2;
+	optional int32 chairid = 3;
+	optional int32 leavetype = 4;   //离开的类型，用于前端显示
+	optional string leavemsg = 5;   //如果这个是非空的时候，最好显示出来。明确告知玩家为什么离开了房间
+}
+
+message cghubmjready
+{
+	optional int32 userid = 1;
+	optional int32 tableid = 2;
+	optional int32 beinum = 3;      //监洪麻将中选了加赠是，加赠的选项
+}
+
+message gchubmjready
+{
+	optional int32 result = 1;
+	optional hubmjuser mjuser = 2;
+}
+
+message cghubmjsitdown
+{
+	optional int32 userid = 1;
+	optional int32 tableid = 2;
+	optional int32 chairid = 3;    //选好坐下的座位ID
+}
+
+message gchubmjsitdown
+{
+	optional int32 result = 1;
+	optional hubmjuser mjuser = 2;    //坐下来的的玩家
+}
+
+message cghubmjstandup  //站起
+{
+	optional int32 userid = 1;
+	optional int32 tableid = 2;
+	optional int32 chairid = 3;
+}
+
+message gchubmjstandup     //站起
+{
+	optional int32 result = 1;
+	optional int32 chairid = 2;
+}
+
+message gchubmjaccount
+{
+	optional int32 result = 1;
+	repeated int32 winid = 2;        //获取的userID，如果长度是0，则是流局
+	repeated int32 winchairid = 3;   //获胜者的座位ID,如果是一炮多响，表示是
+	repeated  hubmjcountinfo countlist = 6;   //
+	optional hubmjviprecord viprecord = 7;    //vip总额
+	repeated hubmjviprecord recordlist = 8;   //详细列表
+	optional int32 counttype = 9;            //0:普通的结算；1：VIP牌局打完就结算(包括八局打完，一局没打完退出)；2：在牌桌准备状态退出
+	repeated hubmjplaydetail detaillist = 10;   //只有在牌局结束的时候，才会把这个下发
+	optional int32 dianchairid = 11;           //如果是非0，这里是被点炮者的座位ID
+	repeated int32 wintypelist = 12;           //每个玩家最大的赢牌类型，用于前端显示
+	repeated hubmjhandpoker hpokerlist = 13;    //结算的时候，显示的牌的组合类型
+	repeated int32 restcardlist = 14;      //剩余的公共牌列表
+}
+
+message cghubmjdissolve   //解散房间，有两种情况，在牌局没开始的时候，房主可以解散房间,这个时候，房间是直接解散的
+{                        //另外一个情况是，牌局开始了，只有里面坐下去玩的四个人有解散的权利，其他的均没有。
+	optional int32 userid = 1;
+	optional int32 tableid = 2;
+}
+
+message gchubmjdissolve
+{
+	optional int32 result = 1;
+	optional int32 tableid = 2;
+	optional int32 disolvetype = 3;   //解散的类型，如果是0，就直接解散。如果是1的话表示是牌局中解散，需要其他玩家同意
+	optional int32 timemark = 4;      //申请解散房间的倒计时，倒计时到了，默认全部解散
+	optional int32 dissolveinfo = 5;  //剩余人员的信息
+	optional string msg = 6;   // 提示信息："玩家【xxx】申请解散房间"
+}
+
+message cghubmjdissolveopt     //有玩家发起了解散的请求，其他玩家的响应操作
+{
+	optional int32 userid = 1;
+	optional int32 tableid = 2;
+	optional int32 opttype = 3;     //0:同意解散房间，1：不同意解散房间
+}
+
+message gchubmjdissolveopt    //   
+{
+	optional int32 result = 1;
+	optional int32 userid = 2;
+	optional int32 tableid = 3;
+	optional int32 opttype = 4;    //0:同意解散房间，1：不同意解散房间
+	optional string msg = 5;       //如果是有人不同意解散房间，就显示这条信息，显示谁不同意解散。
+	optional int32 dissolveinfo = 6;  //剩余人员的信息
+}
+message cghubmjtablelist
+{
+	optional int32 userid = 1;
+	optional int32 pagenum = 2;     //还是按照数量来，每一次获取20个
+	optional int32 mjtype = 3;       //麻将类型
+}
+
+message gchubmjtablelist
+{
+	optional int32 result = 1;
+	repeated int32 tableid = 2;      //牌桌ID列表
+	repeated int32 pourjetton = 3;   //底注
+	repeated int32 gamenum = 4;      //打牌的局数
+	repeated int32 usernum = 5;      //人数
+	repeated int32 createtime = 6;    //创建时间
+}
+
+message cghubmjhistory
+{
+	optional int32 userid = 1;
+	optional int32 page = 2;
+	optional int32 mjtype = 3;  
+}
+
+message gchubmjhistory
+{
+	optional int32 result = 1;
+	repeated hubmjhistory htylist = 2;
+}
+
+message cghubmjhistorystep
+{
+	optional int32 tablepalyid = 1;
+	optional int32 stepid = 2;
+	
+}
+
+message gchubmjhistorystep
+{
+	optional int32 result = 1;
+	optional hubmjhistorypair htypair = 2;
+	optional int32 steplen = 3;
+}
+
+message cghubmjcancelauto  //取消机器人自动交易
+{
+	optional int32 userid = 1;
+	optional int32 chairid = 2;
+	optional int32 tableid = 3;
+}
+
+message gchubmjcancelauto
+{
+	optional int32 result = 1;
+	optional int32 chairid = 2;
+	optional int32 userid = 3;
+	optional int32 autoplayer = 4;
+}
+
+message cghubmjchat   //欢乐赢都里面的聊天
+{
+	optional int32 senderid = 1;
+	optional string sender = 2;
+	optional int32 chattype = 3;   //g_gdmjDefine.chat 中的类型
+	optional string msg = 4;       //
+	optional int32 tableid = 5;    //牌桌的ID
+}
+
+message gchubmjchat
+{
+	optional int32 result = 1;
+	optional int32 chatdate = 2;   //聊天时间
+	optional int32 senderid = 3;   
+	optional string sender = 4;
+	optional int32 chattype = 5;
+	optional string msg = 6;
+}
+

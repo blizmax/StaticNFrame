@@ -1,0 +1,272 @@
+package progame;
+
+import "st_human.proto";
+import "st_phz2.proto";
+
+//牌型组合
+message phzCardsArray
+{
+	optional int32 cardType = 1;				//牌型:g_phzCardType
+	optional int32 huxi = 2;					//该牌型对应的胡息
+	optional int32 cardEye = 3;					//牌眼，该牌型组合围绕这张牌进行组合
+	repeated int32 cardsArray = 4;				//牌型组合中所有的牌
+}
+
+//操作纸牌:吃、碰、倾......
+message phzOprCards
+{
+	optional int32 operType = 1;				//操作类型:g_phzOperType
+	optional int32 cardEye = 2;					//牌眼
+	repeated int32 cards = 3;					//对应的牌
+	optional int32 operTypeTxt = 4;				//执行这个动作时，operType对应的文字展示类型g_phzOperType
+}
+
+//玩家操作纸牌
+message phzUserOprCards
+{
+	optional int32 chairID = 1;				//座位ID
+	repeated phzOprCards oprCards = 2;		//操作纸牌
+}
+
+//帮助胡牌数据分析
+message phzAnalyzeData
+{
+	repeated int32 handCards = 1;				//手牌
+	repeated phzCardsArray sortedCards = 2;		//排列、整理后的手牌，不包括王牌
+	repeated phzCardsArray tableCards = 3;		//牌桌上吃、碰、倾、啸的牌
+	repeated int32 kingCards = 4;				//王牌
+	repeated int32 xCards = 5;					//王牌在胡牌时所当成的牌
+	optional int32 tableHuxi = 6;				//桌面牌型的总胡息
+	optional int32 handHuxi = 7;				//手牌总胡息
+	optional int32 blackCnt = 8;				//黑牌数量
+	optional int32 redCnt = 9;					//红牌数量
+	optional int32 isWin = 10;					//是否可以胡牌，0不能胡，1可以胡
+}
+
+//牌桌上的玩家信息
+message phzUserPlayInfo
+{
+	optional int32 userID = 1;					//玩家ID
+	repeated int32 handCards = 2;				//手牌
+	repeated phzCardsArray sortedCards = 3;		//排列、整理后的手牌，王牌集中放在最后一列
+	repeated phzCardsArray tableCards = 4;		//牌桌上吃、碰、倾、啸的牌
+	repeated int32 outCards = 5;				//打出到桌上的牌
+	repeated int32 badCards = 6;				//不能吃的臭牌
+	optional int32 huxi = 7;					//玩家牌桌上的胡息，不包括手牌上的胡息
+	optional int64 score = 8;					//玩家的积分或金币数量
+	optional phzAnalyzeData analyzeData = 9;	//检查胡牌时的分析数据，如果可以胡牌，这里保存胡牌的最终牌型数据
+	optional int32 isFettered = 10;				//是否死守，0否，1是
+	optional int32 isMingZhao = 11;				//是否明招，0否，1是
+	optional int32 lastTun = 12;				//上次胡牌但选择过牌时的总囤数
+	optional int32 isFrozen = 13;				//起手牌有两倾及以上，第一次碰、吃等引起出牌的操作时，冻结出牌的动作，直接下家摸牌
+	optional double longitude = 14;				//经度
+	optional double latitude = 15;				//纬度
+	optional int32 playerStatus = 16;			//打牌的状态,g_phzPlayerStatus
+	optional int32 isHuPass = 17;				//在衡阳玩法中，是否已经胡牌选择了过牌，0否，1是
+	repeated int32 badCardsPeng = 18;			//不能碰的臭牌
+}
+
+//玩家信息
+message phzUserInfo
+{
+	optional int64 score = 1;					//玩家在牌桌上的积分或金币数目
+	optional int32 readyState = 2;				//准备状态，已准备：g_phzDefine.yes，未准备：g_phzDefine.no
+	optional playersimpleinfo userInfo = 3;		//玩家的基础信息
+	
+	//如果是断线重连，则会有以下信息
+	repeated int32 handCards = 4;				//手牌，仅告知重连玩家的手牌
+	repeated phzCardsArray tableCards = 5;		//牌桌上吃、碰、倾、啸的牌
+	repeated int32 outCards = 6;				//打出到桌上的牌
+	optional int32 huxi = 7;					//玩家牌桌上的胡息，不包括手牌上的胡息
+	repeated phzCardsArray sortedCards = 8;		//排列、整理后的手牌，只填写cardsArray
+}
+
+//玩家多局的总结算信息
+message phzTotalResult
+{
+	optional int32 winCnt = 1;					//胜利次数
+	repeated int32 score = 2;					//每局输或赢的积分
+	optional string nick = 3;					//昵称
+	optional string face_1 = 4;					//用户头像
+	optional int32 userID = 5;					//用户ID
+}
+
+//结算时各个座位的手牌
+message phzPlayerCards
+{
+	optional int32 chairID = 1;					//座位ID
+	repeated phzCardsArray sortedCards = 2;		//排序后的手牌
+	
+	//牌桌回放时，存储无序的手牌，结算时用排序的手牌
+	repeated int32 handCards = 3;				//无排序的手牌
+	optional playersimpleinfo playerInfo = 4; 	//该位置上的人物简单信息
+	optional int64 score = 5;					//玩家在牌桌上的积分或金币数目
+}
+
+//简单的牌桌信息
+message phzSimpleTableInfo
+{
+	optional int32 tableID = 1;   				//牌桌id
+	optional int32 gameType = 2;				//游戏类型
+	optional int32 needUsersNum = 3;			//开局需要的玩家数
+	optional int32 currUsersNum = 4;			//当前牌桌内的玩家个数
+	optional int32 kingNum = 5;					//支持的王牌个数
+	optional int32 genXing = 6;					//翻醒与跟醒
+	optional int32 totalTurns = 7;				//总共可以玩的局数
+	optional int32 currTurns = 8;				//当前玩了多少局
+	optional int32 huPai = 9;					//是否必胡，g_phzDefine.yes 或 g_phzDefine.no
+	optional int32 yiWuShi = 10;				//是否支持一五十，g_phzDefine.yes 或 g_phzDefine.no
+	optional int32 maxJetton = 11;				//牌桌的封顶上限
+	optional int32 timeSecs = 12;				//距离牌桌自动解散剩余的秒数
+	optional int32 dianPao = 13;				//是否支持点炮或放炮，g_phzDefine.yes 或 g_phzDefine.no
+	optional int32 hongHei = 14;				//是否支持红黑胡，g_phzDefine.yes 或 g_phzDefine.no
+	optional int32 ziMoDouble = 15;				//是否支持自摸翻倍，g_phzDefine.yes 或 g_phzDefine.no
+	optional int32 tunPerHuxi = 16;				//多少胡息算作一囤，g_phzDefine.tun_per_1 或 g_phzDefine.tun_per_3
+	optional int32 shuangXing = 17;				//是否支持双醒，g_phzDefine.yes 或 g_phzDefine.no
+}
+
+//跑胡子的牌桌信息
+message phzTableInfo
+{
+	optional int32 tableID = 1;   				//牌桌id，创建的房间也就是房间号
+	optional int32 gameType = 2;				//游戏类型，跑胡子、十胡卡、扯胡子.......
+	optional int32 tableType = 3;				//牌桌类型，金币场、玩家包房
+	optional int32 state = 4;     				//状态
+	optional int32 timeMark = 5;        		//时间标签
+	optional int32 needUsersNum = 6;			//开局需要的玩家数
+	repeated int32 sitUsers = 7;        		//对应位置的userID
+	repeated int32 readyState = 8;				//对应位置上的玩家是否准备了，1已准备，0未准备
+	optional int32 userNum = 9;        			//牌桌中已经坐下的玩家数量
+	optional int32 baseJetton = 10;				//牌桌的基本低注
+	optional int32 maxJetton = 11;				//牌桌的封顶上限
+	optional int32 kingNum = 12;				//支持的王牌个数
+	optional int32 genXing = 13;				//翻醒与跟醒
+	optional int32 huPai = 14;					//是否支持有胡必胡，g_phzDefine.yes 或 g_phzDefine.no
+	optional int32 yiWuShi = 15;				//是否支持一五十，g_phzDefine.yes 或 g_phzDefine.no
+	optional int32 SwitchAI = 16;				//是否开启AI帮助打牌，0否，1是
+	
+	repeated int32 tableCards = 17;      		//桌上剩余的牌
+	optional int32 bankerChairID = 18;			//庄家座位ID
+	optional int32 idlerChairID = 19;			//坐醒的座位ID
+	optional int32 currOperChairID = 20;		//当前摸牌、出牌的玩家座位ID
+	optional int32 currOperCard = 21;			//当前摸到或打出的牌
+	optional int32 operType = 22;				//当前玩家的操作类型
+	optional int32 operState = 23;				//当前玩家操作的状态
+	optional int32 winnerChairID = 24;			//上一把胡牌的玩家座位
+	optional int32 winCard = 25;				//胡哪张牌
+	optional int32 kingOprType = 26;			//玩家选择了王钓、王闯或王炸
+	optional int32 kingOprChairID = 27;			//玩家位置
+	
+	optional int32 tableOnwerID = 28;			//房主ID
+	optional int32 totalTurns = 29;				//消耗房卡总共可以玩的局数
+	optional int32 currTurns = 30;				//当前玩了多少局
+	
+	repeated phzUserOprCards oprCards = 31;		//对于当前打出或摸出的牌，系统建议各位玩家操作牌
+	repeated phzUserOprCards oprCardsEx = 32;	//玩家对于系统建议所作出的选择，只存优先级最高的那一个
+	
+	repeated phzTotalResult userResult = 33;	//玩家在包房中的每局结算数据都要记录，在8或16局后统一发出来
+	
+	optional int32 timeSecs = 34;				//距离牌桌自动解散剩余的秒数
+	
+	optional int32 startDate = 35;				//第一局的开局时间
+	optional int32 oprCnt = 36;					//用于存储回放记录的操作计数
+	
+	optional int32 dismissReqID = 37;			//申请解散房间的玩家ID
+	repeated int32 dismissResp = 38;			//关于解散房间，各个玩家的回应
+	optional int32 reqWaiteSecs = 39;			//发起解散申请后，等待各个玩家做决策的时间
+	
+	optional int32 dianPao = 40;				//是否支持点炮或放炮，g_phzDefine.yes 或 g_phzDefine.no
+	optional int32 hongHei = 41;				//是否支持红黑胡，g_phzDefine.yes 或 g_phzDefine.no
+	optional int32 ziMoDouble = 42;				//是否支持自摸翻倍，g_phzDefine.yes 或 g_phzDefine.no
+	optional int32 tunPerHuxi = 43;				//多少胡息算作一囤，g_phzDefine.tun_per_1 或 g_phzDefine.tun_per_3
+	optional int32 shuangXing = 44;				//是否支持双醒，g_phzDefine.yes 或 g_phzDefine.no
+	
+	optional int32 dianPaoChairID = 45;			//点炮的玩家位置
+	
+	//以下两个数据只用于辅助游戏逻辑进程
+	optional int32 paoUserPos = 46;				//打出或摸起一张牌后，跑牌的玩家位置
+	optional int32 huUserPos = 47;				//打出或摸起一张牌后，胡牌的玩家位置
+	
+	//红包
+	repeated redpackinfo  redpacklist 	= 48;   // 红包列表
+	optional int32        redpacktime   = 49;	// 发放红包的时间
+	
+	repeated int32 playerCardsNum = 50;			//每个玩家当前手牌的数量，用于手牌校正，跟座位号一一对应
+	
+	optional int32 managerid = 51;				//俱乐部经理ID
+	optional int32 lobbyid = 52;				//俱乐部大厅ID
+
+	optional int32 daNiao = 53;					// 是否支持打鸟, g_phzDefine.yes 或 g_phzDefine.no
+	optional int32 hongHeiDian = 54;			// 是否支持红黑点, g_phzDefine.yes 或 g_phzDefine.no
+}
+
+//玩家简单的信息
+message phzUserSimpleInfo
+{
+	optional int32 userID = 1;					//玩家ID
+	optional string nick = 2;					//各个玩家的昵称
+	
+	optional int32 chairID = 3;					//座位ID
+	optional string face_1 = 4;					//用户头像
+	
+	optional int32 resp = 5;					//同意或拒绝解散房间，g_phzDismissResp
+	
+	optional int32 playTurns = 6;				//玩的局数
+}
+
+//玩家简单的战绩信息
+message phzPlayRecordSimpleInfo
+{
+	optional string recordID = 1;				//回放ID
+	optional int32 playDate = 2;				//每一局的开局时间
+	repeated int32 score = 3;					//玩家单局战绩积分
+	
+	//下面的数据系统存储时使用，不发送
+	repeated phzPlayerCards userCards = 4;		//玩家的当局手牌
+	optional int32 bankerChairID = 5;			//庄家座位ID
+	optional int32 idlerChairID = 6;			//坐醒的座位ID
+}
+
+//玩家的战绩信息
+message phzPlayRecordInfo
+{
+	optional int32 tableID = 1;					//牌桌ID
+	optional int32 gameType = 2;				//游戏类型，跑胡子、十胡卡、扯胡子.......
+	optional int32 startDate = 3;				//第一局的开局时间
+	optional int32 needUsersNum = 4;			//开局需要的玩家数
+	optional int32 maxJetton = 5;				//牌桌的封顶上限
+	optional int32 kingNum = 6;					//支持的王牌个数
+	optional int32 genXing = 7;					//翻醒与跟醒
+	optional int32 huPai = 8;					//是否必胡，g_phzDefine.yes 或 g_phzDefine.no
+	optional int32 yiWuShi = 9;					//是否支持一五十，g_phzDefine.yes 或 g_phzDefine.no
+	repeated phzUserSimpleInfo userList = 10;			//各个玩家的昵称
+	repeated phzPlayRecordSimpleInfo simpleInfo = 11;	//每一局的简单战绩信息
+	
+	optional int32 totalTurns = 12;				//总共可以玩的局数
+	optional int32 currTurns = 13;				//当前玩了多少局
+	
+	optional int32 dianPao = 14;				//是否支持点炮或放炮，g_phzDefine.yes 或 g_phzDefine.no
+	optional int32 hongHei = 15;				//是否支持红黑胡，g_phzDefine.yes 或 g_phzDefine.no
+	optional int32 ziMoDouble = 16;				//是否支持自摸翻倍，g_phzDefine.yes 或 g_phzDefine.no
+	optional int32 tunPerHuxi = 17;				//多少胡息算作一囤，g_phzDefine.tun_per_1 或 g_phzDefine.tun_per_3
+	optional int32 shuangXing = 18;				//是否支持双醒，g_phzDefine.yes 或 g_phzDefine.no
+}
+
+//玩家的排行榜信息
+message phzRankInfo
+{
+	optional int32 rank = 1;					//排名
+	optional int32 userID = 2;					//用户ID
+	optional string nick = 3;					//用户昵称
+	optional string face_1 = 4;					//用户头像
+	optional int64 val = 5;						//排行榜数值
+}
+
+//任务信息
+message phzTaskInfo
+{
+	optional int32 taskID = 1;					//任务ID
+	optional int32 compVal = 2;					//完成量
+	optional int32 currVal = 3;					//当前量
+}
+

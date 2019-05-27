@@ -1,0 +1,18 @@
+package progame;
+import "st_human.proto";
+
+message cggetranklist
+{
+	optional int32 userid = 1;
+	optional int32 ranktype = 2;    //排行榜的类型,RankDefine
+	optional int32 pagenum = 3;
+}
+
+message gcgetranklist
+{
+	optional int32 result = 1;
+	optional int32 ranktype = 2;
+	optional int32 myrank = 3;
+	optional int32 myscore = 4; //我自己的分数
+	repeated playersimpleinfo plist = 5;
+}

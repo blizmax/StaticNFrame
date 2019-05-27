@@ -1,0 +1,50 @@
+package progame;
+
+import "st_human.proto";
+
+message jingsaiinfo   //竞赛的信息
+{
+	optional int32 jingsaiid = 1;
+	optional int32 julebuid = 2;      //俱乐部的ID
+	optional string name = 3;   //比赛的名字
+	optional int32 maxmembernum = 4;   //最大成员数量,这两个可以暂时不用
+	optional int32 membernum = 5;      //当前成员数量,这两个可以暂时不用
+	optional string des = 6;           //描述
+	optional int32 ownerid = 7;         //俱乐部创建者的ID,数
+	optional int32 moduletype = 8;      //玩法类型
+	optional string strcreate = 9;      //创建每个玩法的时候的，createtable
+	optional int32 starttime = 10;      //开始时间，时间戳
+	optional int32 longtime = 11;       //持续的时间，以秒为计算
+	optional int32 state = 12;          //比赛的状态
+	optional int32 lasttime = 13;       //剩余的时间
+	optional string rule = 14;          //规则说明
+	optional int32 payway = 15;        //支付方式 g_gamePayWay 1:房主付费，2：AA付费，3：免费，4：报名费
+	optional int32 paytype = 16;      //支付类型，1001,钻石(如果有小蛙玉，就用小蛙玉)  1003:金币
+	optional int32 paynum = 17;       //支付数额, 小蛙玉和钻石的兑换比例是1:10，优先扣完小蛙玉
+}
+
+message jingsaitable
+{
+	optional int32 jingsaiid = 1;
+	optional int32 tableid = 2;
+	optional int32 maxusernum = 3;  //最大人员数量
+	optional int32 usernum = 4;     //当前人数
+	optional int32 state = 8;       //1:没开始，2：已经开始
+}
+
+message jingsaihistory
+{
+	optional int32 jingsaiid = 1;
+	optional string name = 2;   //比赛的名字
+	optional string des = 3;           //描述
+	optional int32 moduletype = 5;      //玩法类型
+	optional int32 starttime = 6;       //开始时间，时间戳
+	optional int32 endtime = 7;       //开始时间，时间戳
+	repeated int32 useridlist = 8;
+	repeated string nicklist = 9;
+	repeated int32 jifenlist = 10;
+	repeated string faceidlist = 11;
+}
+
+
+

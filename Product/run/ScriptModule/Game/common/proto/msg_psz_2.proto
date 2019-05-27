@@ -1,0 +1,77 @@
+package progame;
+
+import "st_psz.proto";
+import "st_human.proto";
+
+//最后亮牌
+message cgpszendshow
+{
+	optional int32 userid = 1;
+	optional int32 tableid = 2;
+}
+
+message gcpszendshow
+{
+	optional int32 result = 1;
+	optional int32 userid = 2;
+	optional int32 chairid = 4;
+}
+
+
+//游戏还是后，动态加入
+message cgpszdynamicjion
+{
+	optional int32 userid = 1;
+	optional int32 tableid = 2;
+}
+
+message gcpszdynamicjion
+{
+	optional int32 result = 1;
+	optional int32 userid = 2;
+} 
+
+//自动跟注
+message cgpszaudocingl
+{
+	optional int32 userid = 1;
+	optional int32 tableid = 2;
+	optional int32 audocingl = 3;  //1 自动跟注  0 不自动跟注 
+
+}
+
+message gcpszaudocingl
+{
+	optional int32 result = 1;
+	optional int32 userid = 2;
+	optional int32 tableid = 3;
+	optional int32 audocingl = 4;
+
+}
+
+//游戏托管
+message cgpsztrusteeship
+{
+	optional int32 userid = 1;
+	optional int32 tableid = 2;    
+	optional int32 trusteeship = 3;       	//是否托管 0:取消托管(未托管) 1:托管
+	optional int32 followbet = 4;			//跟注 0:跟到底 1:对子以上跟注 3:顺子 4金花
+	optional int32 addbet = 5;				//加注 0:不加注 2 5 10 分 1:对子及以上 3:顺子及以上 4:金花及以上
+	optional int32 addbetpoint = 6;			//加注的分 0:0分 2: 2分 5:5分 10:10分
+	optional int32 lookcards = 7;			//闷牌(是否看牌) 0:闷到底 1:不闷 3:闷3轮 5:闷5轮 7:闷7轮
+	optional int32 comparecards = 8;		//比牌	0:不比牌	3:3轮比牌	5:5轮比牌 7:7轮比牌
+	optional int32 discard = 9;				//弃牌	0:不弃牌	1:对子及以下弃牌 3:顺子及以下弃牌 4:金花及以下弃牌
+}
+
+message gcpsztrusteeship
+{
+	optional int32 result = 1;
+	optional int32 userid = 2;
+	optional int32 trusteeship = 3;       	//是否托管 0:取消托管(未托管) 1:托管
+	optional int32 followbet = 4;			//跟注 0:跟到底 1:对子以上跟注 3:顺子 4金花
+	optional int32 addbet = 5;				//加注 0:不加注 2 5 10 分 1:对子及以上 3:顺子及以上 4:金花及以上
+	optional int32 addbetpoint = 6;			//加注的分 0:0分 2: 2分 5:5分 10:10分
+	optional int32 lookcards = 7;			//闷牌(是否看牌) 0:闷到底 1:不闷 3:闷3轮 5:闷5轮 7:闷7轮
+	optional int32 comparecards = 8;		//比牌	0:不比牌	3:3轮比牌	5:5轮比牌 7:7轮比牌
+	optional int32 discard = 9;				//弃牌	0:不弃牌	1:对子及以下弃牌 3:顺子及以下弃牌 4:金花及以下弃牌
+}

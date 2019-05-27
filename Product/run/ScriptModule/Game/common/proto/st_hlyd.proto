@@ -1,0 +1,60 @@
+package progame;
+import "st_human.proto";
+
+message hlydjetton
+{
+	optional int32 userid = 1;
+	optional int32 pourtype = 2; //下注的类型
+	optional int32 jetton = 3;   //筹码的多少
+}
+
+message hlydinfo
+{
+	optional int32 tableid = 1;   //牌桌id，固定
+	optional int32 frameid = 2;   //变化，没完一局增加1
+	optional int32 pour1 = 3;     //第一个下注额
+	optional int32 pour2 = 4;     //第二个下注额
+	optional int32 pour3 = 5;     //第三个下注额
+	optional int32 state = 6;     //状态
+	optional int32 timemark = 7;        //时间标签
+	repeated int32 situser = 8;         //对应位置的userID，总共8个长度，在第几个非0就表示该座位有玩家
+	optional int32 dounum = 9;          //这个是每个牌桌豆子的数量
+	repeated int32 standuser = 10;      //站立的玩家的列表
+	optional int32 usernum = 11;        //牌桌中玩家的数量，包括庄家
+	optional int32 bankerid = 12;       //
+	optional int32 bankjetton = 13;    //庄家携带的筹码
+	optional int32 maxuser = 14;       //最大人数
+	optional string pwd = 15;          //密码，没有则为空
+	optional int32 ownerid = 16;
+	optional string ownername = 17;
+	optional string faceid = 18;
+	optional int32 popularity = 19;     //庄家魅力值，每次结算的时候或者上下庄需要对这个值做设计
+	optional int32 applydrop = 20;      //申请下庄
+	optional int32 hlydtype = 21;       //欢乐赢豆的类型：1.赢豆场，2：练习场，练习场是系统坐庄
+	optional int32 maxvipnum = 22;      //最大的开场次数
+	optional int32 usevipnum = 23;      //已经使用的次数
+	optional int32 paytype = 24;        //支付类型，1001：钻石；1002：金币支付；1003：掌上币支付
+	optional int32 minbankerjetton = 25;   //最小上庄额度
+	
+	optional int32 payway = 26;   //支付方式：1：房主支付，2：玩家均摊
+	optional int32 paynum = 27;
+	optional int32 julebuid = 28;    //俱乐部的ID
+	
+}
+
+message hlydvipcount   //好友房结算
+{
+	optional int32 tableid = 1;
+	optional string ownername = 2;    //房主名称
+	optional string timestr = 3;     //结算时间
+	optional int32 usevipnum = 4;    //总共玩了几局
+	optional string ownerfaceid = 5;  //
+	repeated int32 frameidlist = 6;  //期号
+	repeated int32 dounumlist = 7;   //开奖结果
+	
+	repeated int32 rankuserid = 11;    //一下三个实在最后院一局结算中出现
+	repeated string ranknick = 12;     //排行榜
+	repeated string rankfaceid = 13;   //
+	repeated int32 initjifen = 14;     //初始积分
+	repeated int32 rankjifen = 15;     //最后的积分
+}
