@@ -117,7 +117,7 @@ message douniuhistoryitem    //单局牌的结算信息
 	optional int32 bankerID = 2;	  			//每局的庄家	
 	repeated int32 useridlist = 3;    			//对应的userid
 	repeated string nicklist = 4;     			//对应的昵称
-	repeated int32 winlist = 5;       			//对应的赢输单局积分
+	repeated int64 winlist = 5;       			//对应的赢输单局积分
 	repeated douniuhandpoker pokerlist = 6; 	//对应的玩家的手牌列表
 	repeated int32 nntypelist = 7;   			//对应的玩家的牛牛类型
 	repeated int32 qzbslist = 8;				//对应的抢庄倍数
@@ -139,7 +139,7 @@ message douniuhistory	//一整个牌局的结算信息
 	optional int32 ownerid = 7;		//房主ID
 	repeated string nicklist = 8;   //对应的昵称
 	repeated int32 useridlist = 9;  //对应的userid
-	repeated int32 winlist = 10;     //对应的赢输总积分
+	repeated int64 winlist = 10;     //对应的赢输总积分
 	repeated douniuhistoryitem hitemlist = 11;   //详细的列表
 
 	optional int32 tablemark = 12;  //每个牌局唯一的标识	

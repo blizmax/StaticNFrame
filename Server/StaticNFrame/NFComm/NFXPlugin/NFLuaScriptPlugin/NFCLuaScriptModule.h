@@ -47,13 +47,8 @@ public:
 	virtual void OnTimer(uint32_t nTimerID) override;
 };
 
-#ifndef NF_DYNAMIC_PLUGIN
-class NFCLuaScriptModule
-    : public NFILuaScriptModule
-#else
 class NFCLuaScriptModule
 	: public NFILuaScriptModule, public NFILuaModule
-#endif
 {
 public:
     NFCLuaScriptModule(NFIPluginManager* p)

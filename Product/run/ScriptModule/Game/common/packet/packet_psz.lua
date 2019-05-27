@@ -83,6 +83,10 @@ PacketCode[3342] = {server = 3341, client = 3342, des = "gcpszdynamicjion", func
 PacketCode[3343] = {server = 3343, client = 3344, des = "cgpsztrusteeship", func = "PszTrusteeship"}
 PacketCode[3344] = {server = 3343, client = 3344, des = "gcpsztrusteeship", func = "PszTrusteeship"}
 
+--托管
+PacketCode[3345] = {server = 3345, client = 3346, des = "cgpsznotifyjifen", func = "PszNotifyJifen"}
+PacketCode[3346] = {server = 3345, client = 3346, des = "gcpsznotifyjifen", func = "PszNotifyJifen"}
+
 ReturnCode["psz_not_exist"] = 3301			--该牌桌不存在
 ReturnCode["psz_chair_isplyaer"] = 3302		--该座位已经有玩家
 ReturnCode["psz_is_sitdown"] = 3303			--你已经坐下了，请勿重复操作

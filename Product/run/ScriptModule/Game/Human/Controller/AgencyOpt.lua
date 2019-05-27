@@ -25,12 +25,12 @@ function execute(packetID, operateID, buffer)
 		local pInfo = PlayerModel.GetPlayerInfo(cgmsg.userid)
 		if pInfo == nil then
 			gcmsg.result = ReturnCode["player_not_exist"]
-			LuaNFrame.Error(NFLogId.NF_LOG_SYSTEMLOG, cgmsg.userid, "player_not_exist")
+			LogFile("debug","player_not_exist")
 			return cgmsg.userid, 0 , gcmsg:ByteSize(), gcmsg:SerializeToString()		
 		end
 		
 		if cgmsg.optstr == nil or 0 == string.len(cgmsg.optstr) then
-			LuaNFrame.Error(NFLogId.NF_LOG_SYSTEMLOG, cgmsg.userid, "cgmsg.optstr is error")
+			LogFile("debug","cgmsg.optstr is error")
 			gcmsg.result = ReturnCode["agency_bind_error"]
 			return cgmsg.userid, 0 , gcmsg:ByteSize(), gcmsg:SerializeToString()		
 		end
@@ -38,7 +38,7 @@ function execute(packetID, operateID, buffer)
 		local myAgency = AgencyModel.GetAgencyInfo(cgmsg.userid)
 		if myAgency ~= nil and myAgency.agent1 ~= 0 then
 			--说明还没有绑定代理
-			LuaNFrame.Error(NFLogId.NF_LOG_SYSTEMLOG, cgmsg.userid, "agency_is_band")
+			LogFile("debug","agency_is_band")
 			gcmsg.result = ReturnCode["agency_is_band"]
 			return cgmsg.userid, 0 , gcmsg:ByteSize(), gcmsg:SerializeToString()				
 		else
@@ -54,7 +54,7 @@ function execute(packetID, operateID, buffer)
 			--说明被绑定的玩家还没有绑定别人。
 			--gcmsg.result = 
 			gcmsg.result = ReturnCode["agency_bind_error"]
-			LuaNFrame.Error(NFLogId.NF_LOG_SYSTEMLOG, cgmsg.userid, "agency_bind_error optstr="..cgmsg.optstr)
+			LogFile("debug","agency_bind_error optstr="..cgmsg.optstr)
 			return cgmsg.userid, 0 , gcmsg:ByteSize(), gcmsg:SerializeToString()
 		end
 		

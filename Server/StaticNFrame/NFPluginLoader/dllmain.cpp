@@ -80,9 +80,11 @@
 #pragma comment( lib, "NFGameLogicPlugin.lib" )
 #pragma comment( lib, "NFProxyLogicPlugin.lib" )
 #pragma comment( lib, "NFLoginLogicPlugin.lib" )
+#pragma comment( lib, "NFWorldLogicPlugin.lib" )
 
 //////////////////////////////Game Plugin/////////////////////////////////
-#pragma comment( lib, "NFGameHumanPlugin.lib" )
+#pragma comment( lib, "NFGamePlayerPlugin.lib" )
+#pragma comment( lib, "NFGameLhdPlugin.lib" )
 //////////////////////////////Game Plugin/////////////////////////////////
 #else
 /////////////////////////////////////////////////////////////////

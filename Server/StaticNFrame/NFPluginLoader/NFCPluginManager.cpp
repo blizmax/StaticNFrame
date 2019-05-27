@@ -573,7 +573,7 @@ bool NFCPluginManager::Finalize()
 	{
 		if (*it != "NFKernelPlugin")
 		{
-			UnLoadStaticPlugin(it->first);
+			UnLoadStaticPlugin(*it);
 		}
 	}
 

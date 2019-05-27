@@ -47,6 +47,10 @@ require("Human.Services.TimeCheckService")
 require("Human.Services.SysCountService")
 
 
+require("Http.HttpDebug")
+require("Http.HttpGame")
+
+
 g_redisIndex[NoticeModel.redis_index] = {index = g_redisInfo.redis_one, des="notice"}     --系统唯一的邮件
 
 g_redisIndex[OnlineModel.redis_index] = {index = g_redisInfo.redis_one, key = MailModel.mail_list, link = 1}  --每个玩家自己的邮件

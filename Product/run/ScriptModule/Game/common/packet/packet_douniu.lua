@@ -117,6 +117,9 @@ PacketCode[3062] = {server = 3061, client = 3062, des = "gcdouniudouble", func =
 --队长更换通知
 PacketCode[3064] = {server = 3063, client = 3064, des = "gcdouniucaptainchangeinform", func = "DouNiuCaptainChangeInform"}
 
+PacketCode[3065] = {server = 3065, client = 3066, des = "cgdouniunotifyjifen", func = "DouniuNotifyJifen"}
+PacketCode[3066] = {server = 3065, client = 3066, des = "gcdouniunotifyjifen", func = "DouniuNotifyJifen"}
+
 ReturnCode["douniu_not_exist"] = 3001
 ReturnCode["douniu_chair_notmatch"] = 3002
 ReturnCode["douniu_chair_isplyaer"] = 3003

@@ -169,3 +169,10 @@ message gcdouniucaptainchangeinform
 	optional int32 captainid = 2;
 }
 
+message gcdouniunotifyjifen
+{
+	optional int32 userid = 1;
+	optional int32 carryjetton = 2;
+	optional int32 result = 3;
+}
+

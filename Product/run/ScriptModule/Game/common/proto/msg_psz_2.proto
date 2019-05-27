@@ -75,3 +75,10 @@ message gcpsztrusteeship
 	optional int32 comparecards = 8;		//比牌	0:不比牌	3:3轮比牌	5:5轮比牌 7:7轮比牌
 	optional int32 discard = 9;				//弃牌	0:不弃牌	1:对子及以下弃牌 3:顺子及以下弃牌 4:金花及以下弃牌
 }
+
+message gcpsznotifyjifen
+{
+	optional int32 userid = 1;
+	optional int32 jifen = 2;
+	optional int32 result = 3;
+}

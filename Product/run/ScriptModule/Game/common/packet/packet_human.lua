@@ -17,6 +17,19 @@
 --3300~3400 是拼三张
 --3400~3500 是竞赛
 
+PacketInfo = {}
+PacketInfo.msgBegin = "head"
+PacketInfo.headSize = 12
+PacketInfo.beginSsize = 4
+PacketInfo.buffSize = 4
+PacketInfo.packetIDSize = 2
+PacketInfo.operatorIDSize = 2
+PacketInfo.buffMaxSize = 10240
+
+
+PacketCode = { }
+ReturnCode = {}
+
 --1000~1100 是人物信息的ID区间
 PacketCode[1001] = {server = 1001, client = 1002, des = "cgaccountlogin", func = "AccountLogin"}
 PacketCode[1002] = {server = 1001, client = 1002, des = "gcaccountlogin", func = "AccountLogin"}

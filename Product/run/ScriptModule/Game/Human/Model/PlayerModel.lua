@@ -153,13 +153,12 @@ function PlayerModel.GetInitFaceID()
 end
 
 function PlayerModel.CreatePlayer(cgmsg)
-	--nickname 有些玩家的微信名字里带表情，导致无法插入数据库
-	local nickname = string.filterspecchars(string.htmlspecialchars(cgmsg.nickname))
 	local sqlCase = "insert into dy_player(cid,account,password,nickname,channel,province,city,bindtype,bindnick,platformid,imei,devname,mobiletype,jetton,money,lasttime,face_1,sex) values('"..
-	cgmsg.cid.."','"..cgmsg.account.."','"..cgmsg.password.."','"..nickname.."','"..cgmsg.channel.."','"..cgmsg.province.."','"..cgmsg.city.."',"..cgmsg.bindtype
+	cgmsg.cid.."','"..cgmsg.account.."','"..cgmsg.password.."','"..string.htmlspecialchars(cgmsg.nickname).."','"..cgmsg.channel.."','"..cgmsg.province.."','"..cgmsg.city.."',"..cgmsg.bindtype
 	..",'"..cgmsg.bindnick.."','"..cgmsg.platformid.."','"..cgmsg.imei.."','"..string.htmlspecialchars(cgmsg.devname).."',"..cgmsg.mobiletype..","..g_initData.jetton..","..g_initData.money..","..TimeUtils.GetTime()..",'"..PlayerModel.GetInitFaceID().."',"..cgmsg.sex..")"
 	local ret = mysqlItem:execute(sqlCase)
 	
+	LogFile("new_player","sqlCase="..sqlCase)
 	if ret == nil then
 		LogBehavior.Error(cgmsg.cid,"Player", "CreatePlayer", -1, "创建角色失败")
 		return nil
