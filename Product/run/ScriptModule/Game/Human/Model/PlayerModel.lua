@@ -664,6 +664,16 @@ function PlayerModel.GetPlayerTableInfo(userID) --检查玩家是否在牌桌中
 		if tableID ~= nil and tonumber(tableID) ~= 0 then
 			return g_logintable.type_gdmj, tonumber(tableID)
 		end
+
+		tableID = DouNiuModel.GetUserTableID(userID)
+		if tableID ~= nil and tonumber(tableID) ~= 0 then
+			return g_logintable.type_douniu, tonumber(tableID)
+		end
+
+		tableID = PszModel.GetUserTableID(userID)
+		if tableID ~= nil and tonumber(tableID) ~= 0 then
+			return g_logintable.type_psz, tonumber(tableID)
+		end
 	end
 
 	return 0,0
@@ -708,6 +718,24 @@ function PlayerModel.GetCurrTableID(userID)
 			if tInfo ~= nil then
 				local userList = GdmjWork.GetUserList(tInfo, userID)
 				return tableID, userList
+			end
+		end
+
+		tableID = DouNiuModel.GetUserTableID(userID)
+		if tableID ~= nil and tonumber(tableID) ~= 0 then
+			local tInfo = DouNiuModel.GetTableInfo(tableID)
+			if tInfo ~= nil then
+				local userList = DouNiuModel.GetUserList(tInfo)
+				return tableID, userList		
+			end
+		end
+
+		tableID = PszModel.GetUserTableID(userID)
+		if tableID ~= nil and tonumber(tableID) ~= 0 then
+			local tInfo = PszModel.GetTableInfo(tableID)
+			if tInfo ~= nil then
+				local userList = PszService.GetUserIDList(tInfo,exceptID)
+				return tableID, userList		
 			end
 		end
 	end

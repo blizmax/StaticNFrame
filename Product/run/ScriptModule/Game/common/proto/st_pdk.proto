@@ -8,86 +8,86 @@ message lasplayinfo
 	repeated int32 pokerList = 3;
 }
 
-message pdkuser   //ÅÜµÃ¿ì´òÅÆÍæ¼ÒĞÅÏ¢ 
+message pdkuser   //è·‘å¾—å¿«æ‰“ç‰Œç©å®¶ä¿¡æ¯ 
 {
 	optional int32 userid = 1;
-	optional string nickname = 2; 			//êÇ³Æ
-	optional string face_1 = 3; 			//Í·Ïñ
-	optional int32 jifen = 4;        		//Ã¿¾ÖÍæ¼ÒµÄ»ı·Ö ³õÊ¼»¯ÊÇ¶¼Îª0
-	optional int32 chairid = 5;           	//×ùÎ»ID£¬È¡ÖµÎª1,2,3
-	repeated int32 handpoker = 6;          	//ÊÖÉÏµÄÅÆÁĞ±í
-	optional int32 playsum = 7;				//³öÅÆ´ÎÊı
-	optional int32 state = 8;				//Íæ¼Ò×´Ì¬±êÖ¾Î»
-	optional int32 bombNum = 9;				//´ò³öµÄÕ¨µ¯ÊıÁ¿
-	optional int32 autoplayer = 10;			//ÍĞ¹Ü£º ÍĞ¹Ü£ºg_DdzDefine.autoplayer_Yes ²»ÍĞ¹Ü£ºg_DdzDefine.autoplayer_No
-	optional int32 timeouts = 11;			//³¬Ê±´ÎÊı
-	optional int32 winnum = 12;				//Ê¤Àû´ÎÊı
-	optional int32 maxscore	 = 13;			//µ¥¾Ö×î¸ßµÄ·Ö
-	optional int32 sex = 14;				//ĞÔ±ğ
-	optional int32 pokerSum = 15;			//ÊÖÅÆµÄÊıÁ¿
-	optional int32 lasttype = 16;			//ÉÏ´Î³öµÄÅÆĞÍ
-	repeated int32 lastpokerlist = 17;		//ÉÏ´Î³öµÄÅÆÁĞ±í
-	optional int32 mPoker = 18;				//Ã÷ÅÆ£ºÃ÷ÅÆ£ºg_DdzDefine.mPoker_Yes£¬²»Ã÷ÅÆ£ºg_DdzDefine.mPoker_No
-	optional int32 allbombNum = 19;			//´ò³öµÄ×ÜÕ¨µ¯ÊıÁ¿
-	optional int32 alljifen = 20;			//×Ü»ı·Ö
-	optional int32 allcatchnum = 21;		//×Ü×¥ÄñÊı
-	optional double longitude = 22;			//¾­¶È
-	optional double latitude = 23;			//Î³¶È
+	optional string nickname = 2; 			//æ˜µç§°
+	optional string face_1 = 3; 			//å¤´åƒ
+	optional int32 jifen = 4;        		//æ¯å±€ç©å®¶çš„ç§¯åˆ† åˆå§‹åŒ–æ˜¯éƒ½ä¸º0
+	optional int32 chairid = 5;           	//åº§ä½IDï¼Œå–å€¼ä¸º1,2,3
+	repeated int32 handpoker = 6;          	//æ‰‹ä¸Šçš„ç‰Œåˆ—è¡¨
+	optional int32 playsum = 7;				//å‡ºç‰Œæ¬¡æ•°
+	optional int32 state = 8;				//ç©å®¶çŠ¶æ€æ ‡å¿—ä½
+	optional int32 bombNum = 9;				//æ‰“å‡ºçš„ç‚¸å¼¹æ•°é‡
+	optional int32 autoplayer = 10;			//æ‰˜ç®¡ï¼š æ‰˜ç®¡ï¼šg_DdzDefine.autoplayer_Yes ä¸æ‰˜ç®¡ï¼šg_DdzDefine.autoplayer_No
+	optional int32 timeouts = 11;			//è¶…æ—¶æ¬¡æ•°
+	optional int32 winnum = 12;				//èƒœåˆ©æ¬¡æ•°
+	optional int32 maxscore	 = 13;			//å•å±€æœ€é«˜çš„åˆ†
+	optional int32 sex = 14;				//æ€§åˆ«
+	optional int32 pokerSum = 15;			//æ‰‹ç‰Œçš„æ•°é‡
+	optional int32 lasttype = 16;			//ä¸Šæ¬¡å‡ºçš„ç‰Œå‹
+	repeated int32 lastpokerlist = 17;		//ä¸Šæ¬¡å‡ºçš„ç‰Œåˆ—è¡¨
+	optional int32 mPoker = 18;				//æ˜ç‰Œï¼šæ˜ç‰Œï¼šg_DdzDefine.mPoker_Yesï¼Œä¸æ˜ç‰Œï¼šg_DdzDefine.mPoker_No
+	optional int32 allbombNum = 19;			//æ‰“å‡ºçš„æ€»ç‚¸å¼¹æ•°é‡
+	optional int32 alljifen = 20;			//æ€»ç§¯åˆ†
+	optional int32 allcatchnum = 21;		//æ€»æŠ“é¸Ÿæ•°
+	optional double longitude = 22;			//ç»åº¦
+	optional double latitude = 23;			//çº¬åº¦
 }
 
-message pdkinfo	//ÅÜµÃ¿ìÅÆ¾ÖĞÅÏ¢
+message pdkinfo	//è·‘å¾—å¿«ç‰Œå±€ä¿¡æ¯
 {
-	optional int32 tableid = 1;				//ÅÆ×ÀID
-	optional int32 tabletype = 2;   		//³¡´ÎÀàĞÍ£º
-	optional int32 pdktype = 3;   			//ÀàĞÍ
-	optional int32 pourjetton = 4;  	 	//µ××¢
-	optional int32 maxvipnum = 5;     		//×î´óµÄ³¡´Î 	20¾Ö»ò10¾Ö
-	optional int32 playernum = 6;			//¼¸ÈË¾Ö		2ÈË»òÕß3ÈË
-	optional int32 cardnum = 7;				//¼¸ÕÅÅÆ		15ÕÅÅÆ»òÕß16ÕÅÅÆ
-	optional int32 bcatchbird = 8; 			//×¥Äñ(ºìÌÒ10)	×¥Äñ:1  ²»×¥:0
-	optional int32 bspadethree = 9;			//ºÚÌÒ3ÏÈ³ö		ÊÇ:1	·ñ:0
-	optional int32 bremainnum = 10;			//ÊÇ·ñÏÔÊ¾ÓàÅÆÊı	ÊÇ:1 ·ñ:0
-	optional int32 bcheat = 11;				//ÊÇ·ñ·À×÷±×		ÊÇ:1 ·ñ:0
-	optional int32 bfourthree = 12;			//ÊÇ·ñÔÊĞíËÄ´øÈı	ÊÇ:1 ·ñ:0
-	optional int32 bthreeA = 13;			//ÊÇ·ñ3¸öAµ±Õ¨µ¯	ÊÇ:1 ·ñ:0
-	optional int32 bthreeAone = 14;			//ÊÇ·ñ3¸öA´ø1µ±Õ¨µ¯ ÊÇ:1 ·ñ:0
-	optional int32 paytype = 15;			//Ö§¸¶ÀàĞÍ£¬×êÊ¯£ºg_PdkDefine.pay_money£¬Óñ£ºg_PdkDefine.pay_gold£¬ Ò²¿ÉÄÜÊÇÆäËû
-	optional int32 payway = 16;   			//Ö§¸¶·½Ê½£¬·¿Ö÷Ö§¸¶: g_PdkDefine.payment_owner ¾ùÌ¯£ºg_PdkDefine.payment_A
-	optional int32 paynum = 17;   			//Ö§¸¶µÄÊı¶î
-	optional int32 ownerid = 18;      		//·¿Ö÷ID
-	optional int32 julebuid = 19;        	//¾ãÀÖ²¿ID£¬Èç¹ûÊÇÊôÓÚ¾ãÀÖ²¿µÄ£¬¾ÍÓĞÖµ
+	optional int32 tableid = 1;				//ç‰Œæ¡ŒID
+	optional int32 tabletype = 2;   		//åœºæ¬¡ç±»å‹ï¼š
+	optional int32 pdktype = 3;   			//ç±»å‹
+	optional int32 pourjetton = 4;  	 	//åº•æ³¨
+	optional int32 maxvipnum = 5;     		//æœ€å¤§çš„åœºæ¬¡ 	20å±€æˆ–10å±€
+	optional int32 playernum = 6;			//å‡ äººå±€		2äººæˆ–è€…3äºº
+	optional int32 cardnum = 7;				//å‡ å¼ ç‰Œ		15å¼ ç‰Œæˆ–è€…16å¼ ç‰Œ
+	optional int32 bcatchbird = 8; 			//æŠ“é¸Ÿ(çº¢æ¡ƒ10)	æŠ“é¸Ÿ:1  ä¸æŠ“:0
+	optional int32 bspadethree = 9;			//é»‘æ¡ƒ3å…ˆå‡º		æ˜¯:1	å¦:0
+	optional int32 bremainnum = 10;			//æ˜¯å¦æ˜¾ç¤ºä½™ç‰Œæ•°	æ˜¯:1 å¦:0
+	optional int32 bcheat = 11;				//æ˜¯å¦é˜²ä½œå¼Š		æ˜¯:1 å¦:0
+	optional int32 bfourthree = 12;			//æ˜¯å¦å…è®¸å››å¸¦ä¸‰	æ˜¯:1 å¦:0
+	optional int32 bthreeA = 13;			//æ˜¯å¦3ä¸ªAå½“ç‚¸å¼¹	æ˜¯:1 å¦:0
+	optional int32 bthreeAone = 14;			//æ˜¯å¦3ä¸ªAå¸¦1å½“ç‚¸å¼¹ æ˜¯:1 å¦:0
+	optional int32 paytype = 15;			//æ”¯ä»˜ç±»å‹ï¼Œé’»çŸ³ï¼šg_PdkDefine.pay_moneyï¼Œç‰ï¼šg_PdkDefine.pay_goldï¼Œ ä¹Ÿå¯èƒ½æ˜¯å…¶ä»–
+	optional int32 payway = 16;   			//æ”¯ä»˜æ–¹å¼ï¼Œæˆ¿ä¸»æ”¯ä»˜: g_PdkDefine.payment_owner å‡æ‘Šï¼šg_PdkDefine.payment_A
+	optional int32 paynum = 17;   			//æ”¯ä»˜çš„æ•°é¢
+	optional int32 ownerid = 18;      		//æˆ¿ä¸»ID
+	optional int32 julebuid = 19;        	//ä¿±ä¹éƒ¨IDï¼Œå¦‚æœæ˜¯å±äºä¿±ä¹éƒ¨çš„ï¼Œå°±æœ‰å€¼
 	
-	optional int32 tablemark = 20;   		//ÅÆ×ÀµÄÒ»¸ö±êÇ©,ÉêÇë½âÉ¢ÊÇ±£´æÅÆ×ÀµÄ×´Ì¬
-	optional int32 tabletime = 21;			//ÉêÇë½âÉ¢ÊÇ±£´æÅÆ×ÀµÄ×´Ì¬»¹Ê£µÄÊ±¼ä
-	optional int32 state = 22;       		//×À×ÓµÄ×´Ì¬
-	optional int32 timemark = 23;      		//Ê±¼äµÄ±êÇ©
-	repeated pdkuser situser = 24;      	//×øÏÂµÄÍæ¼ÒÁĞ±í
-	repeated int32 standuser = 25;    		//ÎŞ×ùÍæ¼ÒÁĞ±í 	
-	optional lasplayinfo lasInfo = 26;		//ÉÏÎ»Íæ¼Ò³öÅÆµÄĞÅÏ¢
-	optional int32 usevipnum = 27;     		//ÒÑ¾­ÍæÁË¼¸¾Ö
-	optional int32 dissolveinfo = 28;      	//Õâ¸öÊÇÍË³öÊ±ºòµÄÎ»ÊıÔËĞĞ£º×Ü¹²ÎåÎ»£¬2~5Î»·Ö±ğ±íÊ¾1~4ºÅÍæ¼ÒµÄ×´Ì¬£º0£ºµÈ´ı²Ù×÷£»1£ºÉêÇëÍË³ö£¬2£ºÒÑ¾­Í¬Òâ
-	optional string straction = 29;        	//Í¨³£µÄÇé¿öÏÂ£¬Õâ¸ö±äÁ¿ÊÇ¿Õ´®£¬Ö»ÓĞÔÚÓĞÍæ¼ÒÉêÇë½âÉ¢·¿¼äÊ±£¬»á±»ÓÃÀ´±£´æ¡¾Íæ¼Ò["..pInfo.nickname.."]ÉêÇë½âÉ¢·¿¼ä£¬ÇëÎÊÊÇ·ñÍ¬Òâ£¿(³¬¹ı5·ÖÖÓÎ´×öÑ¡Ôñ£¬ÔòÄ¬ÈÏÍ¬Òâ)"¡¿
-	optional int32 maxplaynum = 30;     	//×î´óÈËÊı
-	optional int32 actionuser = 31; 		//µ±Ç°ĞĞ¶¯Íæ¼ÒÏÂ±ê£¬ ÎªÁË·½±ãÕÒµ½µ±Ç°ĞĞ¶¯Íæ¼Ò¶øÒÑ
-	optional int32 frameid = 32; 			//¸ÃÅÆ×ÀÔÚÀúÊ·ÀúÊ·¼ÇÂ¼ÖĞÎ¨Ò»µÄ±êÇ©£¬Õâ¸öÊÇÈÕ+Ê±+·Ö+Ãë+ÅÆ×ÀÊıÁ¿
-	optional int32 actionuserid = 33; 		//µ±Ç°ĞĞ¶¯Íæ¼ÒµÄUserid
-	optional int32 isnotplay = 34;			//µ±Ç°Íæ¼ÒÊÇ·ñÒª²»Æğ£¬ Òª²»Æğ: 1  ·ñÔòÎª: 0
-	optional int32 catchuserid = 35;		//Èç¹ûÑ¡ÔñÁË×¥Äñ,ÓĞÍæ¼Ò×¥Äñ,Ôò»á´æ·ÅÍæ¼ÒµÄ×ùÎ»ID  1 2 3
-	optional int32 firstoutflag = 36;		//×îÏÈ³öÅÆµÄÀàĞÍ, 0 Ëæ»ú  1ÉÏ°ÑÓ®¼ÒÏÈ³ö 2 ºÚÌÒ3ÏÈ³ö
-	optional int32 laswinner = 37;			//ÉÏ°ÑÓ®¼ÒµÄuserid
-	optional int32 julebutype = 38;			//ÓÃÀ´´æ´¢¾ãÀÖ²¿ÀàĞÍ
+	optional int32 tablemark = 20;   		//ç‰Œæ¡Œçš„ä¸€ä¸ªæ ‡ç­¾,ç”³è¯·è§£æ•£æ˜¯ä¿å­˜ç‰Œæ¡Œçš„çŠ¶æ€
+	optional int32 tabletime = 21;			//ç”³è¯·è§£æ•£æ˜¯ä¿å­˜ç‰Œæ¡Œçš„çŠ¶æ€è¿˜å‰©çš„æ—¶é—´
+	optional int32 state = 22;       		//æ¡Œå­çš„çŠ¶æ€
+	optional int32 timemark = 23;      		//æ—¶é—´çš„æ ‡ç­¾
+	repeated pdkuser situser = 24;      	//åä¸‹çš„ç©å®¶åˆ—è¡¨
+	repeated int32 standuser = 25;    		//æ— åº§ç©å®¶åˆ—è¡¨ 	
+	optional lasplayinfo lasInfo = 26;		//ä¸Šä½ç©å®¶å‡ºç‰Œçš„ä¿¡æ¯
+	optional int32 usevipnum = 27;     		//å·²ç»ç©äº†å‡ å±€
+	optional int32 dissolveinfo = 28;      	//è¿™ä¸ªæ˜¯é€€å‡ºæ—¶å€™çš„ä½æ•°è¿è¡Œï¼šæ€»å…±äº”ä½ï¼Œ2~5ä½åˆ†åˆ«è¡¨ç¤º1~4å·ç©å®¶çš„çŠ¶æ€ï¼š0ï¼šç­‰å¾…æ“ä½œï¼›1ï¼šç”³è¯·é€€å‡ºï¼Œ2ï¼šå·²ç»åŒæ„
+	optional string straction = 29;        	//é€šå¸¸çš„æƒ…å†µä¸‹ï¼Œè¿™ä¸ªå˜é‡æ˜¯ç©ºä¸²ï¼Œåªæœ‰åœ¨æœ‰ç©å®¶ç”³è¯·è§£æ•£æˆ¿é—´æ—¶ï¼Œä¼šè¢«ç”¨æ¥ä¿å­˜ã€ç©å®¶["..pInfo.nickname.."]ç”³è¯·è§£æ•£æˆ¿é—´ï¼Œè¯·é—®æ˜¯å¦åŒæ„ï¼Ÿ(è¶…è¿‡5åˆ†é’Ÿæœªåšé€‰æ‹©ï¼Œåˆ™é»˜è®¤åŒæ„)"ã€‘
+	optional int32 maxplaynum = 30;     	//æœ€å¤§äººæ•°
+	optional int32 actionuser = 31; 		//å½“å‰è¡ŒåŠ¨ç©å®¶ä¸‹æ ‡ï¼Œ ä¸ºäº†æ–¹ä¾¿æ‰¾åˆ°å½“å‰è¡ŒåŠ¨ç©å®¶è€Œå·²
+	optional int32 frameid = 32; 			//è¯¥ç‰Œæ¡Œåœ¨å†å²å†å²è®°å½•ä¸­å”¯ä¸€çš„æ ‡ç­¾ï¼Œè¿™ä¸ªæ˜¯æ—¥+æ—¶+åˆ†+ç§’+ç‰Œæ¡Œæ•°é‡
+	optional int32 actionuserid = 33; 		//å½“å‰è¡ŒåŠ¨ç©å®¶çš„Userid
+	optional int32 isnotplay = 34;			//å½“å‰ç©å®¶æ˜¯å¦è¦ä¸èµ·ï¼Œ è¦ä¸èµ·: 1  å¦åˆ™ä¸º: 0
+	optional int32 catchuserid = 35;		//å¦‚æœé€‰æ‹©äº†æŠ“é¸Ÿ,æœ‰ç©å®¶æŠ“é¸Ÿ,åˆ™ä¼šå­˜æ”¾ç©å®¶çš„åº§ä½ID  1 2 3
+	optional int32 firstoutflag = 36;		//æœ€å…ˆå‡ºç‰Œçš„ç±»å‹, 0 éšæœº  1ä¸ŠæŠŠèµ¢å®¶å…ˆå‡º 2 é»‘æ¡ƒ3å…ˆå‡º
+	optional int32 laswinner = 37;			//ä¸ŠæŠŠèµ¢å®¶çš„userid
+	optional int32 julebutype = 38;			//ç”¨æ¥å­˜å‚¨ä¿±ä¹éƒ¨ç±»å‹
 }
 
 
 
-message multipleinfo	//ÏêÏ¸±¶ÊıĞÅÏ¢
+message multipleinfo	//è¯¦ç»†å€æ•°ä¿¡æ¯
 {
-	optional int32 spring = 1;					//´ºÌì±¶Êı
-	optional int32 zhuaniao = 2;				//×¥Äñ±¶Êı
-	optional int32 summultiple = 3;				//×Ü±¶Êı
+	optional int32 spring = 1;					//æ˜¥å¤©å€æ•°
+	optional int32 zhuaniao = 2;				//æŠ“é¸Ÿå€æ•°
+	optional int32 summultiple = 3;				//æ€»å€æ•°
 }
 
-message noad	//¼ÇÅÆÆ÷
+message noad	//è®°ç‰Œå™¨
 {
 	optional int32 poker_A = 1;
 	optional int32 poker_2 = 2;
@@ -108,49 +108,49 @@ message noad	//¼ÇÅÆÆ÷
 
 message pdkhistoryitem
 {
-	optional int32 tableplayid = 1;   //Ã¿´ÎÅÆ×ÀÎ¨Ò»µÄ±êÊ¶£¬ÓÉ£ºÈÕÊ±·ÖÃë×é³É+ÅÆ¾Ö´ÎÊı×é³É
-	optional int32 tableid = 2;       //ÅÆ×ÀµÄIDºÅ
-	optional int32 playtime = 3;      //ÍæÅÆµÄÊ±¼ä
-	optional int32 playstate = 4;     //ÊÇ·ñÖĞÍ¾ÍË³öµÄ,1ÊÇÖĞÍ¾ÍË³ö
-	repeated int32 useridlist = 5;    //¶ÔÓ¦µÄuserid
-	repeated string nicklist = 6;     //¶ÔÓ¦µÄêÇ³Æ
-	repeated int32 winlist = 7;       //¶ÔÓ¦µÄÓ®µÄÊıÁ¿
-	optional string quitdes = 8;      //ÅÆ×ÀµÄ×´Ì¬
-	repeated string userdes = 9;      //Èç¹ûÊÇÀë¿ª×´Ì¬£¬ÕâÀï±íÊ¾¶ÔÍæ¼ÒÀë¿ªµÄÃèÊö£ºÍ¬ÒâÀë¿ª£¬³¬Ê±½âÉ¢
+	optional int32 tableplayid = 1;   //æ¯æ¬¡ç‰Œæ¡Œå”¯ä¸€çš„æ ‡è¯†ï¼Œç”±ï¼šæ—¥æ—¶åˆ†ç§’ç»„æˆ+ç‰Œå±€æ¬¡æ•°ç»„æˆ
+	optional int32 tableid = 2;       //ç‰Œæ¡Œçš„IDå·
+	optional int32 playtime = 3;      //ç©ç‰Œçš„æ—¶é—´
+	optional int32 playstate = 4;     //æ˜¯å¦ä¸­é€”é€€å‡ºçš„,1æ˜¯ä¸­é€”é€€å‡º
+	repeated int32 useridlist = 5;    //å¯¹åº”çš„userid
+	repeated string nicklist = 6;     //å¯¹åº”çš„æ˜µç§°
+	repeated int32 winlist = 7;       //å¯¹åº”çš„èµ¢çš„æ•°é‡
+	optional string quitdes = 8;      //ç‰Œæ¡Œçš„çŠ¶æ€
+	repeated string userdes = 9;      //å¦‚æœæ˜¯ç¦»å¼€çŠ¶æ€ï¼Œè¿™é‡Œè¡¨ç¤ºå¯¹ç©å®¶ç¦»å¼€çš„æè¿°ï¼šåŒæ„ç¦»å¼€ï¼Œè¶…æ—¶è§£æ•£
 }
 
 message pdkhistory
 {
-	optional int32 tableid = 1;   			//·¿¼äºÅ
-	optional int32 tablemark = 2; 	 		//Ã¿¸öÅÆ¾ÖÎ¨Ò»µÄ±êÊ¶
-	optional int32 gametime = 3;   			//Ê±¼ä
-	optional int32 playnum = 4;     		//¾ÖÊı
-	repeated int32 useridlist = 5;  		//¶ÔÓ¦µÄuserid
-	repeated string nicklist = 6;   		//¶ÔÓ¦µÄêÇ³Æ
-	repeated int32 winlist = 7;     		//¶ÔÓ¦µÄÓ®µÄÊıÁ¿
-	repeated pdkhistoryitem hitemlist = 8;  //ÏêÏ¸µÄÁĞ±í 
+	optional int32 tableid = 1;   			//æˆ¿é—´å·
+	optional int32 tablemark = 2; 	 		//æ¯ä¸ªç‰Œå±€å”¯ä¸€çš„æ ‡è¯†
+	optional int32 gametime = 3;   			//æ—¶é—´
+	optional int32 playnum = 4;     		//å±€æ•°
+	repeated int32 useridlist = 5;  		//å¯¹åº”çš„userid
+	repeated string nicklist = 6;   		//å¯¹åº”çš„æ˜µç§°
+	repeated int32 winlist = 7;     		//å¯¹åº”çš„èµ¢çš„æ•°é‡
+	repeated pdkhistoryitem hitemlist = 8;  //è¯¦ç»†çš„åˆ—è¡¨ 
 }
 
 message pdkhistorypair
 {
 	optional int32 packetcode = 1;
-	optional string pkginfo = 2;       	//Õâ¸öÊÇÓÃÀ´´æ´¢ÓÃµÄ
+	optional string pkginfo = 2;       	//è¿™ä¸ªæ˜¯ç”¨æ¥å­˜å‚¨ç”¨çš„
 }
 
 message pdktaganalyseresult
 {
-	optional int32 onecount = 1;		//µ¥ÕÅÊıÄ¿
-	optional int32 twocount = 2;		//Á½ÕÅÊıÄ¿ 
-	optional int32 threecount = 3;		//ÈıÕÅÊıÄ¿
-	optional int32 fourcount = 4;		//ËÄÕÅÊıÄ¿
-	repeated int32 onelist = 5;			//µ¥ÕÅÂß¼­ÁĞ±í
-	repeated int32 twolist = 6;			//Á½ÕÅÂß¼­ÁĞ±í
-	repeated int32 threelist = 7;		//ÈıÕÅÂß¼­ÁĞ±í
-	repeated int32 fourlist = 8;		//ËÄÕÅÂß¼­ÁĞ±í
-	repeated int32 onecarddata = 9;		//µ¥ÕÅµÄÅÆÁĞ±í
-	repeated int32 twocarddata = 10;	//Á½ÕÅµÄÅÆÁĞ±í
-	repeated int32 threecarddata = 11;	//ÈıÕÅµÄÅÆÁĞ±í
-	repeated int32 fourcarddata = 12; 	//ËÄÕÅµÄÅÆÁĞ±í	
+	optional int32 onecount = 1;		//å•å¼ æ•°ç›®
+	optional int32 twocount = 2;		//ä¸¤å¼ æ•°ç›® 
+	optional int32 threecount = 3;		//ä¸‰å¼ æ•°ç›®
+	optional int32 fourcount = 4;		//å››å¼ æ•°ç›®
+	repeated int32 onelist = 5;			//å•å¼ é€»è¾‘åˆ—è¡¨
+	repeated int32 twolist = 6;			//ä¸¤å¼ é€»è¾‘åˆ—è¡¨
+	repeated int32 threelist = 7;		//ä¸‰å¼ é€»è¾‘åˆ—è¡¨
+	repeated int32 fourlist = 8;		//å››å¼ é€»è¾‘åˆ—è¡¨
+	repeated int32 onecarddata = 9;		//å•å¼ çš„ç‰Œåˆ—è¡¨
+	repeated int32 twocarddata = 10;	//ä¸¤å¼ çš„ç‰Œåˆ—è¡¨
+	repeated int32 threecarddata = 11;	//ä¸‰å¼ çš„ç‰Œåˆ—è¡¨
+	repeated int32 fourcarddata = 12; 	//å››å¼ çš„ç‰Œåˆ—è¡¨	
 }
 
 message pdkpokerlist

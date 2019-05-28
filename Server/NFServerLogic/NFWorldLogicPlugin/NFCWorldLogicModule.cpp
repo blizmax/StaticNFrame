@@ -27,6 +27,9 @@ bool NFCWorldLogicModule::Init()
 	FindModule<NFINetServerModule>()->AddReceiveCallBack(NF_ST_WORLD, this, &NFCWorldLogicModule::OnHandleMessageFromServer);
 	FindModule<NFINetServerModule>()->AddReceiveCallBack(NF_ST_WORLD, ::NFMsg::Client_Msg_AccountLogin, this, &NFCWorldLogicModule::OnHandleAccountLoginFromProxyServer);
 	FindModule<NFINetServerModule>()->AddReceiveCallBack(NF_ST_WORLD, ::NFMsg::Server_Msg_AccountLogin, this, &NFCWorldLogicModule::OnHandleAccountLoginFromGameServer);
+	FindModule<NFINetServerModule>()->AddReceiveCallBack(NF_ST_WORLD, ::EGMI_NET_PROXY_NOTIFY_WORLD_PLAYER_DISCONNECT, this, &NFCWorldLogicModule::OnHandlePlayerDisconnectFromProxyServer);
+	FindModule<NFINetServerModule>()->AddReceiveCallBack(NF_ST_WORLD, NFMsg::Client_Msg_ReConnect, this, &NFCWorldLogicModule::OnHandlePlayerReconnectFromProxyServer);
+	FindModule<NFINetServerModule>()->AddReceiveCallBack(NF_ST_WORLD, NFMsg::Server_Msg_ReConnect, this, &NFCWorldLogicModule::OnHandlePlayerReconnectFromGameServer);
 
 	FindModule<NFIServerNetEventModule>()->AddEventCallBack(NF_ST_WORLD, NF_ST_PROXY, this, &NFCWorldLogicModule::OnHandleProxyEventCallBack);
 	FindModule<NFIServerNetEventModule>()->AddEventCallBack(NF_ST_WORLD, NF_ST_GAME, this, &NFCWorldLogicModule::OnHandleGameEventCallBack);
@@ -223,6 +226,74 @@ void NFCWorldLogicModule::OnHandleAccountLoginFromProxyServer(const uint32_t unL
 	}
 }
 
+void  NFCWorldLogicModule::OnHandlePlayerDisconnectFromProxyServer(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen)
+{
+	NFMsg::NotifyWorldPlayerDisconnect cgMsg;
+	CLIENT_MSG_PROCESS_NO_OBJECT(nMsgId, playerId, msg, nLen, cgMsg);
+
+	NF_SHARE_PTR<PlayerWorldServerInfo> pInfo = mPlayerInfoByAccount.GetElement(cgMsg.account());
+	if (pInfo == nullptr)
+	{
+		pInfo = mPlayerInfoByPlayerId.GetElement(cgMsg.user_id());
+		if (pInfo == nullptr)
+		{
+			NFLogError(NF_LOG_SYSTEMLOG, 0, "player disconect, but can't find the account info, account:{}, userid:{}", cgMsg.account(), cgMsg.user_id());
+			return;
+		}
+	}
+
+	pInfo->mClientUnlinkId = 0;
+	pInfo->mIPAddr = "";
+	pInfo->mProxyServerId = 0;
+	pInfo->mProxyServerUnlinkId = 0;
+
+	if (pInfo->mGameServerUnlinkId > 0)
+	{
+		NFMsg::NotifyGamePlayerDisconnect gcMsg;
+		gcMsg.set_user_id(pInfo->mPlayerId);
+		gcMsg.set_account(pInfo->mAccount);
+
+		FindModule<NFINetServerModule>()->SendToServerByPB(pInfo->mGameServerUnlinkId, EGMI_NET_PROXY_NOTIFY_GAME_PLAYER_DISCONNECT, gcMsg, pInfo->mPlayerId);
+	}
+}
+
+void NFCWorldLogicModule::OnHandlePlayerReconnectFromProxyServer(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen)
+{
+	NFMsg::cgreconnect cgMsg;
+	CLIENT_MSG_PROCESS_NO_OBJECT(nMsgId, playerId, msg, nLen, cgMsg);
+
+	NF_SHARE_PTR<PlayerWorldServerInfo> pInfo = mPlayerInfoByPlayerId.GetElement(cgMsg.userid());
+	if (pInfo == nullptr)
+	{
+		NFLogError(NF_LOG_SYSTEMLOG, 0, "player reconnect, but can't find the player info, userid:{}", cgMsg.userid());
+		return;
+	}
+
+	NF_SHARE_PTR<NFServerData> pProxyServerData = mProxyMap.GetElement(unLinkId);
+	if (pProxyServerData)
+	{
+		pInfo->mProxyServerUnlinkId = unLinkId;
+		pInfo->mProxyServerId = pProxyServerData->GetServerId();
+	}
+	else
+	{
+		NFLogError(NF_LOG_SYSTEMLOG, 0, "player:{} reconnect, but proxy disconnect!", cgMsg.userid());
+		return;
+	}
+
+	if (pInfo->mGameServerUnlinkId > 0)
+	{
+		NFMsg::NotifyGamePlayerReconnect gcMsg;
+		gcMsg.set_user_id(cgMsg.userid());
+		gcMsg.set_proxy_id(pInfo->mProxyServerId);
+		FindModule<NFINetServerModule>()->SendToServerByPB(pInfo->mGameServerUnlinkId, EGMI_NET_PROXY_NOTIFY_GAME_PLAYER_RECONNECT, gcMsg, pInfo->mPlayerId);
+
+		FindModule<NFINetServerModule>()->SendToServerByPB(pInfo->mGameServerUnlinkId, nMsgId, cgMsg, pInfo->mPlayerId);
+
+		NFLogInfo(NF_LOG_SYSTEMLOG, pInfo->mPlayerId, "Player:{} reconnect world server!", pInfo->mPlayerId);
+	}
+}
+
 void NFCWorldLogicModule::OnHandleAccountLoginFromGameServer(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen)
 {
 	NFMsg::gcaccountlogin gcMsg;
@@ -287,5 +358,17 @@ void NFCWorldLogicModule::OnHandleAccountLoginFromGameServer(const uint32_t unLi
 		mPlayerInfoByAccount.RemoveElement(account);
 
 		FindModule<NFINetServerModule>()->SendToServerByPB(pLinkInfo->mProxyServerUnlinkId, nMsgId, gcMsg, pLinkInfo->mClientUnlinkId);
+	}
+}
+
+void NFCWorldLogicModule::OnHandlePlayerReconnectFromGameServer(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen)
+{
+	NFMsg::gcreconnect gcMsg;
+	CLIENT_MSG_PROCESS_NO_OBJECT(nMsgId, playerId, msg, nLen, gcMsg);
+
+	NF_SHARE_PTR<PlayerWorldServerInfo> pPlayerInfo = mPlayerInfoByPlayerId.GetElement(playerId);
+	if (pPlayerInfo)
+	{
+		FindModule<NFINetServerModule>()->SendToServerByPB(pPlayerInfo->mProxyServerUnlinkId, nMsgId, gcMsg, playerId);
 	}
 }

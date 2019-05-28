@@ -157,7 +157,7 @@ function GdmjModel.SitDown(tInfo,mjUser,pos)
 	end
 	tInfo.situser[pos] = mjUser.userid
 	
-	mjUser.playstate = g_gdmjPlayerState.play_waiting  --进入就是等待的状态
+	mjUser.playstate = g_gdmjPlayerState.play_ready --g_gdmjPlayerState.play_waiting  --进入就是等待的状态
 	mjUser.chairid = pos
 	
 	if tInfo.viptable == 0 then

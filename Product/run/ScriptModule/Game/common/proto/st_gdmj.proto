@@ -60,11 +60,13 @@ message gdmjplaydetail   //开房中需要战绩播报，这个是记录贵宾�
 	optional int32 zimonum = 3;      //自摸次数
 	optional int32 hunum = 4;        //胡牌次数
 	optional int32 dianpaonum = 5;   //点炮次数
-	optional int32 angangnum = 6;    //暗杠次数
-	optional int32 minggangnum = 7;  //明杠次
-	optional int32 wuguizimo = 8;    //无鬼自摸
-	optional int32 youguizimo = 9;   //有鬼自摸
-	optional int32 zhongmanum = 10;  //中码
+	optional int32 jiepaonum = 6;  //接炮次数
+	optional int32 angangnum = 7;    //暗杠次数
+	optional int32 minggangnum = 8;  //明杠次
+	optional int32 wuguizimo = 9;    //无鬼自摸
+	optional int32 youguizimo = 10;   //有鬼自摸
+	optional int32 zhongmanum = 11;  //中码
+	optional int32 maxMultiple = 12; //最大倍数
 }
 
 message gdmjinfo
@@ -243,21 +245,5 @@ message gdmjhandpoker
 	optional int32 userid = 1;
 	repeated gdmjpoker mjpokerlist = 2;   //碰杠的牌型
 	repeated int32 handpoker = 3;         //在最后结算的时候，把
-}
-
-message gdmjhbz  //广东麻将惠博庄
-{
-	optional int32 mjtype = 1;
-	optional int32 bukejihu = 2;          //可鸡胡
-	optional int32 qgmaima = 3;         //抢杠胡买马
-	optional int32 bhhpjiafen = 4;      //补花胡牌加分
-	optional int32 kehuqidui = 5;       //可胡七对
-	optional int32 ganggenma = 6;       //流局算杠
-	optional int32 manum = 7;           //买马的数量	
-	optional int32 menqingjiafen = 8;    //门清加分
-	optional int32 genzhuang = 9;       //跟庄
-	optional int32 duohuahupai = 10;     //多花胡牌
-	optional int32 genhua = 11;     //跟花
-	optional int32 queyimen = 12;     //跟花
 }
 

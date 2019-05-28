@@ -204,7 +204,7 @@ bool NFCLuaScriptModule::Register()
 
 void NFCLuaScriptModule::RunNetRecvLuaFunc(const std::string& luaFunc, const uint32_t unLinkId, const uint64_t valueId, const uint32_t nMsgId, const std::string& strMsg)
 {
-	TryRunGlobalScriptFunc("LuaNFrame.DispatchTcp", luaFunc, unLinkId, valueId, nMsgId, strMsg);
+	TryRunGlobalScriptFunc(luaFunc, unLinkId, valueId, nMsgId, strMsg);
 }
 
 void NFCLuaScriptModule::RunNetEventLuaFunc(const std::string& luaFunc, const eMsgType nEvent, const uint32_t unLinkId)

@@ -35,6 +35,7 @@ g_gdmjType.type_hzz = 214    --惠州庄麻将
 g_gdmjType.type_hdz = 215    --惠东庄
 g_gdmjType.type_hbz = 216    --惠博庄
 g_gdmjType.type_hzmj = 217    --红中麻将
+g_gdmjType.type_rpmj = 218    --饶平麻将
 
 g_gdmjType.type_jbc = 311    --金币场,金币场中，默认是推倒胡
 

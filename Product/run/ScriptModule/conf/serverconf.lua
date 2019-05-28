@@ -28,10 +28,10 @@ g_dbPort = 6001
 g_dbDatabase = 'db_handspoker'
 
 g_redisInfo = {}
-g_redisInfo.redis_one = 10     --玩家属性
-g_redisInfo.redis_two = 11     --
-g_redisInfo.redis_three = 12   --
-g_redisInfo.redis_four = 13    --这个数据是设置历史记录的
+g_redisInfo.redis_one = 1     --玩家属性
+g_redisInfo.redis_two = 2     --
+g_redisInfo.redis_three = 3   --
+g_redisInfo.redis_four = 4   --这个数据是设置历史记录的
 g_signKey = "w2ctsethjcyu7r9b"
 g_markTime = {}
 function ServerInit()  --在函数启动的时候，会调用该函数，获取服务器的配置信息

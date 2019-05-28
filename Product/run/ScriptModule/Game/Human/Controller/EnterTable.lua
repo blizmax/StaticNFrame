@@ -55,7 +55,7 @@ function execute(packetID, operateID, buffer)
 		tempPacketID = 2201
 	end
 	
-	retPacketID, controller = tcpManager:createController(tempPacketID)
+	retPacketID, controller = TcpManager.CreateController(tempPacketID)
 	
 	if controller ~= nil then
 		

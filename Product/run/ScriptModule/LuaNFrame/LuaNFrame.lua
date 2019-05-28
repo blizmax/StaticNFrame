@@ -234,26 +234,64 @@ end
 
 g_operateID = g_operateID or 0
 
---执行定时函数
-function LuaNFrame.DispatchTcp(luaFunc, unLinkId, valueId, nMsgId, strMsg)
+--执行游戏服务器信息
+function LuaNFrame.DispatchTcp(unLinkId, valueId, nMsgId, strMsg)
 	local function TcpExecute()
-		if type(luaFunc) == "string" and luaFunc ~= "" then
-			TcpManager.execute(luaFunc, unLinkId, valueId, nMsgId, strMsg)
+		retMsgID,controller = TcpManager.CreateController(nMsgId)
+	
+		if controller == nil then
+			LuaNFrame.Error(NFLogId.NF_LOG_SYSTEMLOG, valueId, "nMsgId:"..nMsgId.." not handled!")
 		else
-			retMsgID,controller = TcpManager.CreateController(nMsgId)
-		
-			if controller == nil then
-				LuaNFrame.Error(NFLogId.NF_LOG_SYSTEMLOG, valueId, "nMsgId:"..nMsgId.." not handled!")
-			else
-				g_operateID = g_operateID + 1
-				playerID, retCode, retBufferLen, retString, otString = controller.execute(nMsgId, g_operateID, strMsg)
-				--playerID, retCode, retBufferLen, retString, otString = controller.execute(unLinkId, valueId, nMsgId, strMsg)
-				if nMsgId == 1001 then
-					TcpClient.SendMsgByServerId(unLinkId, retMsgID, retString, playerID)
-				else
-					TcpServer.SendMsgByServerId(unLinkId, retMsgID, retString, playerID)
-				end
-			end
+			g_operateID = g_operateID + 1
+			playerID, retCode, retBufferLen, retString, otString = controller.execute(nMsgId, g_operateID, strMsg)
+			--playerID, retCode, retBufferLen, retString, otString = controller.execute(unLinkId, valueId, nMsgId, strMsg)
+
+			TcpServer.SendMsgByServerId(unLinkId, retMsgID, retString, playerID)
+		end
+	end
+	
+	local status, msg = xpcall (TcpExecute, __G__TRACKBACK__)
+
+    if not status then
+        LuaNFrame.Error(NFLogId.NF_LOG_SYSTEMLOG, 0, msg)
+    end
+end
+
+
+--处理世界服务器消息
+function LuaNFrame.DispatchWorldTcp(unLinkId, valueId, nMsgId, strMsg)
+	local function TcpExecute()
+		retMsgID,controller = TcpManager.CreateController(nMsgId)
+	
+		if controller == nil then
+			LuaNFrame.Error(NFLogId.NF_LOG_SYSTEMLOG, valueId, "nMsgId:"..nMsgId.." not handled!")
+		else
+			g_operateID = g_operateID + 1
+			playerID, retCode, retBufferLen, retString, otString = controller.execute(nMsgId, g_operateID, strMsg)
+			--playerID, retCode, retBufferLen, retString, otString = controller.execute(unLinkId, valueId, nMsgId, strMsg)
+			TcpClient.SendMsgByServerId(unLinkId, retMsgID, retString, playerID)
+		end
+	end
+	
+	local status, msg = xpcall (TcpExecute, __G__TRACKBACK__)
+
+    if not status then
+        LuaNFrame.Error(NFLogId.NF_LOG_SYSTEMLOG, 0, msg)
+    end
+end
+
+--处理Master服务器消息
+function LuaNFrame.DispatchMasterTcp(unLinkId, valueId, nMsgId, strMsg)
+	local function TcpExecute()
+		retMsgID,controller = TcpManager.CreateController(nMsgId)
+	
+		if controller == nil then
+			LuaNFrame.Error(NFLogId.NF_LOG_SYSTEMLOG, valueId, "nMsgId:"..nMsgId.." not handled!")
+		else
+			g_operateID = g_operateID + 1
+			playerID, retCode, retBufferLen, retString, otString = controller.execute(nMsgId, g_operateID, strMsg)
+			--playerID, retCode, retBufferLen, retString, otString = controller.execute(unLinkId, valueId, nMsgId, strMsg)
+			TcpClient.SendMsgByServerId(unLinkId, retMsgID, retString, playerID)
 		end
 	end
 	
@@ -296,4 +334,8 @@ function math.myrandom(...)
 		g_randomsee = 1
 	end
 	return math.random(...)
+end
+
+function LogFile(file, msg)
+	LuaNFrame.Error(NFLogId.NF_LOG_SYSTEMLOG, 0, msg)
 end

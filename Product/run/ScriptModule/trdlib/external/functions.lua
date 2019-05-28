@@ -544,41 +544,22 @@ end
 
 -- end --
 
+function math.mod(a, b)
+	return math.fmod(a,b)
+end
+
 function math.newrandomseed()
-	local ok, socket = pcall(function()
-		return require("socket")
-	end)
+	local rseed = tostring(os.time()):reverse()
+	rseed = string.sub(rseed, 1, 9)
+	math.randomseed(rseed)
 	
-	if ok then
-		-- 如果集成了 socket 模块，则使用 socket.gettime() 获取随机数种子
-		
-		local rseed = tostring(socket.gettime()):reverse()
-		rseed=rseed*10000000000
-		rseed = string.sub(rseed, 1, 9)
-		math.randomseed(rseed)
-	else
-		local rseed = tostring(os.time()):reverse()
-		rseed = string.sub(rseed, 1, 9)
-		math.randomseed(rseed)
-	end
 	math.random()
 end
 
 function math.newrandom(...)
-	local ok, socket = pcall(function()
-		return require("socket")
-	end)
-	
-	if ok then
-		local rseed = tostring(socket.gettime()):reverse()
-		rseed=rseed*10000000000
-		rseed = string.sub(rseed, 1, 9)
-		math.randomseed(rseed)
-	else
 		local rseed = tostring(os.time()):reverse()
 		rseed = string.sub(rseed, 1, 9)
 		math.randomseed(rseed)
-	end
 	
 	return math.random(...)
 	-- body

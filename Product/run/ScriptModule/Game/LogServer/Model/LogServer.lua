@@ -131,6 +131,8 @@ function LogServer.AddJetton(modules, amount)
 		sqlCase = "update log_sysdaily set remain3=remain3+"..amount.." where dateid='"..TimeUtils.GetDayString().."'"
 	elseif modules == "pdk" then
 		sqlCase = "update log_sysdaily set remain30=remain30+"..amount.." where dateid='"..TimeUtils.GetDayString().."'"
+	elseif modules == "gdmj" then
+		sqlCase = "update log_sysdaily set remain30=remain30+"..amount.." where dateid='"..TimeUtils.GetDayString().."'"
 	end
 	if sqlCase ~= '' then
 		mysqlItem:execute(sqlCase)
@@ -144,6 +146,8 @@ function LogServer.DecJetton(modules, amount)
 	elseif modules == "psz" then
 		sqlCase = "update log_sysdaily set remain15=remain15-"..amount.." where dateid='"..TimeUtils.GetDayString().."'"
 	elseif modules == "pdk" then
+		sqlCase = "update log_sysdaily set remain30=remain30-"..amount.." where dateid='"..TimeUtils.GetDayString().."'"
+	elseif modules == "gdmj" then
 		sqlCase = "update log_sysdaily set remain30=remain30-"..amount.." where dateid='"..TimeUtils.GetDayString().."'"
 	end
 	if sqlCase ~= '' then

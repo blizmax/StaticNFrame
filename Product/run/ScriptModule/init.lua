@@ -42,6 +42,8 @@ function init_script_system(pluginManager, luaModule)
 	LoadLuaFile("../ScriptModule/Game/Rank")
 	LoadLuaFile("../ScriptModule/Game/Shop")
 	LoadLuaFile("../ScriptModule/Game/Gdmj")
+	LoadLuaFile("../ScriptModule/Game/DouNiu")
+	LoadLuaFile("../ScriptModule/Game/PSZ")
 
 
 	breakSocketHandle,debugXpCall = require("LuaDebug")("localhost",7003)

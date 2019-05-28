@@ -2,61 +2,61 @@ package progame;
 
 import "st_pdk.proto";
 
- //»ñÈ¡·¿¼äÁĞ±í£¬Ã¿Ò³ÏÔÊ¾8¸ö
+ //è·å–æˆ¿é—´åˆ—è¡¨ï¼Œæ¯é¡µæ˜¾ç¤º8ä¸ª
 message cgpdktablelist 
 {
 	optional int32 userid = 1;
-	optional int32 pagenum = 2;     //»¹ÊÇ°´ÕÕÊıÁ¿À´£¬Ã¿Ò»´Î»ñÈ¡20¸ö
+	optional int32 pagenum = 2;     //è¿˜æ˜¯æŒ‰ç…§æ•°é‡æ¥ï¼Œæ¯ä¸€æ¬¡è·å–20ä¸ª
 }
 
 message gcpdktablelist
 {
 	optional int32 result = 1;
-	repeated int32 tableid = 2;      	//ÅÆ×ÀIDÁĞ±í
-	repeated int32 pourjetton = 3;   	//µ××¢
-	repeated int32 gamenum = 4;      	//´òÅÆµÄ¾ÖÊı
-	repeated int32 maxvipnum = 5;		//×î´ó¾ÖÊı
-	repeated int32 usernum = 6;      	//ÈËÊı
-	repeated int32 createtime = 7;    	//´´½¨Ê±¼ä
-	repeated int32 julebuid = 8;		//¾ãÀÖ²¿ÀàĞÍ
-	repeated int32 julebutype = 9;		//¾ãÀÖ²¿ÀàĞÍ
+	repeated int32 tableid = 2;      	//ç‰Œæ¡ŒIDåˆ—è¡¨
+	repeated int32 pourjetton = 3;   	//åº•æ³¨
+	repeated int32 gamenum = 4;      	//æ‰“ç‰Œçš„å±€æ•°
+	repeated int32 maxvipnum = 5;		//æœ€å¤§å±€æ•°
+	repeated int32 usernum = 6;      	//äººæ•°
+	repeated int32 createtime = 7;    	//åˆ›å»ºæ—¶é—´
+	repeated int32 julebuid = 8;		//ä¿±ä¹éƒ¨ç±»å‹
+	repeated int32 julebutype = 9;		//ä¿±ä¹éƒ¨ç±»å‹
 }
 
-//´´½¨·¿¼ä
+//åˆ›å»ºæˆ¿é—´
 message cgpdkcreate    
 {
 	optional int32 userid = 1;
-	optional int32 pdktype = 2;   			//ÀàĞÍ 
-	optional int32 maxvipnum = 3;  			//¾ÖÊı
-	optional int32 playernum = 4;			//ÈËÊı
-	optional int32 cardnum	= 5;			//ÅÆÊı
-	optional int32 bcatchbird = 6;			//×¥Äñ	ÊÇ:1 ·ñ:0
-	optional int32 bspadethree = 7;			//ºÚÌÒ3ÏÈ³ö ÊÇ:1 ·ñ:0
-	optional int32 bremainnum = 8;			//ÏÔÊ¾ÓàÅÆ	ÊÇ:1 ·ñ:0
-	optional int32 bcheat 	= 9;			//ÊÇ·ñ·À×÷±× ÊÇ:1 ·ñ:0
-	optional int32 bfourthree = 10;			//ÊÇ·ñËÄ´øÈı ÊÇ:1 ·ñ:0
-	optional int32 bthreeA	= 11;			//ÊÇ·ñ3Aµ±Õ¨µ¯	ÊÇ:1 ·ñ:0
-	optional int32 bthreeAone = 12;			//ÊÇ·ñ3A´ø1µ±Õ¨µ¯ ÊÇ:1 ·ñ:0
-	optional int32 payway = 13;      		//Ö§¸¶·½Ê½£¬·¿Ö÷Ö§¸¶: g_PdkDefine.payment_owner ¾ùÌ¯£ºg_PdkDefine.payment_A
-	optional int32 paynum = 14;      		//Ö§¸¶µÄÊı¶î
-	optional int32 paytype = 15; 			//Ö§¸¶ÀàĞÍ£¬×êÊ¯£ºg_PdkDefine.pay_money£¬Óñ£ºg_PdkDefine.pay_gold£¬ Ò²¿ÉÄÜÊÇÆäËû
-	optional int32 julebuid = 16;			//¾ãÀÖ²¿id
-	optional int32 julebutype = 17;			//¾ãÀÖ²¿·¿¼äÀàĞÍ
+	optional int32 pdktype = 2;   			//ç±»å‹ 
+	optional int32 maxvipnum = 3;  			//å±€æ•°
+	optional int32 playernum = 4;			//äººæ•°
+	optional int32 cardnum	= 5;			//ç‰Œæ•°
+	optional int32 bcatchbird = 6;			//æŠ“é¸Ÿ	æ˜¯:1 å¦:0
+	optional int32 bspadethree = 7;			//é»‘æ¡ƒ3å…ˆå‡º æ˜¯:1 å¦:0
+	optional int32 bremainnum = 8;			//æ˜¾ç¤ºä½™ç‰Œ	æ˜¯:1 å¦:0
+	optional int32 bcheat 	= 9;			//æ˜¯å¦é˜²ä½œå¼Š æ˜¯:1 å¦:0
+	optional int32 bfourthree = 10;			//æ˜¯å¦å››å¸¦ä¸‰ æ˜¯:1 å¦:0
+	optional int32 bthreeA	= 11;			//æ˜¯å¦3Aå½“ç‚¸å¼¹	æ˜¯:1 å¦:0
+	optional int32 bthreeAone = 12;			//æ˜¯å¦3Aå¸¦1å½“ç‚¸å¼¹ æ˜¯:1 å¦:0
+	optional int32 payway = 13;      		//æ”¯ä»˜æ–¹å¼ï¼Œæˆ¿ä¸»æ”¯ä»˜: g_PdkDefine.payment_owner å‡æ‘Šï¼šg_PdkDefine.payment_A
+	optional int32 paynum = 14;      		//æ”¯ä»˜çš„æ•°é¢
+	optional int32 paytype = 15; 			//æ”¯ä»˜ç±»å‹ï¼Œé’»çŸ³ï¼šg_PdkDefine.pay_moneyï¼Œç‰ï¼šg_PdkDefine.pay_goldï¼Œ ä¹Ÿå¯èƒ½æ˜¯å…¶ä»–
+	optional int32 julebuid = 16;			//ä¿±ä¹éƒ¨id
+	optional int32 julebutype = 17;			//ä¿±ä¹éƒ¨æˆ¿é—´ç±»å‹
 }
 
 message gcpdkcreate    
 {
 	optional int32 result = 1;
-	optional pdkinfo hinfo = 2;              //·¿¼äĞÅÏ¢
+	optional pdkinfo hinfo = 2;              //æˆ¿é—´ä¿¡æ¯
 
 }
 
-//½øÈë·¿¼ä
+//è¿›å…¥æˆ¿é—´
 message cgpdkenter
 {
 	optional int32 userid = 1;
-	optional int32 tableid = 2;     //0£º±íÊ¾·şÎñÆ÷Ëæ»ú
-	optional int32 tabletype = 3;   //ÅÆ×ÀµÄÀàĞÍ£ºË½ÈË³¡£ºg_DdzDefine.table_srf
+	optional int32 tableid = 2;     //0ï¼šè¡¨ç¤ºæœåŠ¡å™¨éšæœº
+	optional int32 tabletype = 3;   //ç‰Œæ¡Œçš„ç±»å‹ï¼šç§äººåœºï¼šg_DdzDefine.table_srf
 	
 }
 
@@ -66,21 +66,21 @@ message gcpdkenter
 	optional pdkinfo hinfo = 2;
 }
 
-//×øÏÂ
+//åä¸‹
 message cgpdksitdown
 {
 	optional int32 userid = 1;
 	optional int32 tableid = 2;
-	optional int32 chairid = 3;    //Ñ¡ºÃ×øÏÂµÄ×ùÎ»ID
+	optional int32 chairid = 3;    //é€‰å¥½åä¸‹çš„åº§ä½ID
 }
 
 message gcpdksitdown
 {
 	optional int32 result = 1;
-	optional pdkuser situser = 2;    //×øÏÂÀ´µÄµÄÍæ¼Ò
+	optional pdkuser situser = 2;    //åä¸‹æ¥çš„çš„ç©å®¶
 }
 
-//Àë¿ª
+//ç¦»å¼€
 message cgpdkleave
 {
 	optional int32 userid = 1;
@@ -93,11 +93,11 @@ message gcpdkleave
 	optional int32 result = 1;
 	optional int32 userid = 2;
 	optional int32 chairid = 3;
-	optional int32 leavetype = 4;   //Àë¿ªµÄÀàĞÍ£¬ÓÃÓÚÇ°¶ËÏÔÊ¾
-	optional string leavemsg = 5;   //Èç¹ûÕâ¸öÊÇ·Ç¿ÕµÄÊ±ºò£¬×îºÃÏÔÊ¾³öÀ´¡£Ã÷È·¸æÖªÍæ¼ÒÎªÊ²Ã´Àë¿ªÁË·¿¼ä
+	optional int32 leavetype = 4;   //ç¦»å¼€çš„ç±»å‹ï¼Œç”¨äºå‰ç«¯æ˜¾ç¤º
+	optional string leavemsg = 5;   //å¦‚æœè¿™ä¸ªæ˜¯éç©ºçš„æ—¶å€™ï¼Œæœ€å¥½æ˜¾ç¤ºå‡ºæ¥ã€‚æ˜ç¡®å‘ŠçŸ¥ç©å®¶ä¸ºä»€ä¹ˆç¦»å¼€äº†æˆ¿é—´
 }
 
-//Õ¾Æğ
+//ç«™èµ·
 message cgpdkstandup  
 {
 	optional int32 userid = 1;
@@ -113,9 +113,9 @@ message gcpdkstandup
 	
 }
 
-//ÉêÇë½âÉ¢
-message cgpdkdissolve   //½âÉ¢·¿¼ä£¬ÓĞÁ½ÖÖÇé¿ö£¬ÔÚÅÆ¾ÖÃ»¿ªÊ¼µÄÊ±ºò£¬·¿Ö÷¿ÉÒÔ½âÉ¢·¿¼ä,Õâ¸öÊ±ºò£¬·¿¼äÊÇÖ±½Ó½âÉ¢µÄ
-{                        //ÁíÍâÒ»¸öÇé¿öÊÇ£¬ÅÆ¾Ö¿ªÊ¼ÁË£¬Ö»ÓĞÀïÃæ×øÏÂÈ¥ÍæµÄ3¸öÈËÓĞ½âÉ¢µÄÈ¨Àû£¬ÆäËûµÄ¾ùÃ»ÓĞ¡£
+//ç”³è¯·è§£æ•£
+message cgpdkdissolve   //è§£æ•£æˆ¿é—´ï¼Œæœ‰ä¸¤ç§æƒ…å†µï¼Œåœ¨ç‰Œå±€æ²¡å¼€å§‹çš„æ—¶å€™ï¼Œæˆ¿ä¸»å¯ä»¥è§£æ•£æˆ¿é—´,è¿™ä¸ªæ—¶å€™ï¼Œæˆ¿é—´æ˜¯ç›´æ¥è§£æ•£çš„
+{                        //å¦å¤–ä¸€ä¸ªæƒ…å†µæ˜¯ï¼Œç‰Œå±€å¼€å§‹äº†ï¼Œåªæœ‰é‡Œé¢åä¸‹å»ç©çš„3ä¸ªäººæœ‰è§£æ•£çš„æƒåˆ©ï¼Œå…¶ä»–çš„å‡æ²¡æœ‰ã€‚
 	optional int32 userid = 1;
 	optional int32 tableid = 2;
 }
@@ -124,18 +124,18 @@ message gcpdkdissolve
 {
 	optional int32 result = 1;
 	optional int32 tableid = 2;
-	optional int32 disolvetype = 3;   //½âÉ¢µÄÀàĞÍ£¬Èç¹ûÊÇ0£¬¾ÍÖ±½Ó½âÉ¢¡£Èç¹ûÊÇ1µÄ»°±íÊ¾ÊÇÅÆ¾ÖÖĞ½âÉ¢£¬ĞèÒªÆäËûÍæ¼ÒÍ¬Òâ
-	optional int32 timemark = 4;      //ÉêÇë½âÉ¢·¿¼äµÄµ¹¼ÆÊ±£¬µ¹¼ÆÊ±µ½ÁË£¬Ä¬ÈÏÈ«²¿½âÉ¢
-	optional int32 dissolveinfo = 5;  //Ê£ÓàÈËÔ±µÄĞÅÏ¢
-	optional string msg = 6;   // ÌáÊ¾ĞÅÏ¢£º"Íæ¼Ò¡¾xxx¡¿ÉêÇë½âÉ¢·¿¼ä"
+	optional int32 disolvetype = 3;   //è§£æ•£çš„ç±»å‹ï¼Œå¦‚æœæ˜¯0ï¼Œå°±ç›´æ¥è§£æ•£ã€‚å¦‚æœæ˜¯1çš„è¯è¡¨ç¤ºæ˜¯ç‰Œå±€ä¸­è§£æ•£ï¼Œéœ€è¦å…¶ä»–ç©å®¶åŒæ„
+	optional int32 timemark = 4;      //ç”³è¯·è§£æ•£æˆ¿é—´çš„å€’è®¡æ—¶ï¼Œå€’è®¡æ—¶åˆ°äº†ï¼Œé»˜è®¤å…¨éƒ¨è§£æ•£
+	optional int32 dissolveinfo = 5;  //å‰©ä½™äººå‘˜çš„ä¿¡æ¯
+	optional string msg = 6;   // æç¤ºä¿¡æ¯ï¼š"ç©å®¶ã€xxxã€‘ç”³è¯·è§£æ•£æˆ¿é—´"
 }
 
-//»ØÓ¦Éê½âÉ¢
-message cgpdkdissolveopt     //ÓĞÍæ¼Ò·¢ÆğÁË½âÉ¢µÄÇëÇó£¬ÆäËûÍæ¼ÒµÄÏìÓ¦²Ù×÷
+//å›åº”ç”³è§£æ•£
+message cgpdkdissolveopt     //æœ‰ç©å®¶å‘èµ·äº†è§£æ•£çš„è¯·æ±‚ï¼Œå…¶ä»–ç©å®¶çš„å“åº”æ“ä½œ
 {
 	optional int32 userid = 1;
 	optional int32 tableid = 2;
-	optional int32 opttype = 3;     //0:Í¬Òâ½âÉ¢·¿¼ä£¬1£º²»Í¬Òâ½âÉ¢·¿¼ä
+	optional int32 opttype = 3;     //0:åŒæ„è§£æ•£æˆ¿é—´ï¼Œ1ï¼šä¸åŒæ„è§£æ•£æˆ¿é—´
 }
 
 message gcpdkdissolveopt    
@@ -143,32 +143,32 @@ message gcpdkdissolveopt
 	optional int32 result = 1;
 	optional int32 userid = 2;
 	optional int32 tableid = 3;
-	optional int32 opttype = 4;    //0:Í¬Òâ½âÉ¢·¿¼ä£¬1£º²»Í¬Òâ½âÉ¢·¿¼ä
-	optional string msg = 5;       //Èç¹ûÊÇÓĞÈË²»Í¬Òâ½âÉ¢·¿¼ä£¬¾ÍÏÔÊ¾ÕâÌõĞÅÏ¢£¬ÏÔÊ¾Ë­²»Í¬Òâ½âÉ¢¡£
-	optional int32 dissolveinfo = 6;  //Ê£ÓàÈËÔ±µÄĞÅÏ¢
+	optional int32 opttype = 4;    //0:åŒæ„è§£æ•£æˆ¿é—´ï¼Œ1ï¼šä¸åŒæ„è§£æ•£æˆ¿é—´
+	optional string msg = 5;       //å¦‚æœæ˜¯æœ‰äººä¸åŒæ„è§£æ•£æˆ¿é—´ï¼Œå°±æ˜¾ç¤ºè¿™æ¡ä¿¡æ¯ï¼Œæ˜¾ç¤ºè°ä¸åŒæ„è§£æ•£ã€‚
+	optional int32 dissolveinfo = 6;  //å‰©ä½™äººå‘˜çš„ä¿¡æ¯
 }
 
-//ÁÄÌì
+//èŠå¤©
 message cgpdkchat   
 {
 	optional int32 senderid = 1;
 	optional string sender = 2;
-	optional int32 chattype = 3;   //g_gdmjDefine.chat ÖĞµÄÀàĞÍ
+	optional int32 chattype = 3;   //g_gdmjDefine.chat ä¸­çš„ç±»å‹
 	optional string msg = 4;
-	optional int32 tableid = 5;    //ÅÆ×ÀµÄID
+	optional int32 tableid = 5;    //ç‰Œæ¡Œçš„ID
 }
 
 message gcpdkchat
 {
 	optional int32 result = 1;
-	optional int32 chatdate = 2;   //ÁÄÌìÊ±¼ä
+	optional int32 chatdate = 2;   //èŠå¤©æ—¶é—´
 	optional int32 senderid = 3;   
 	optional string sender = 4;
 	optional int32 chattype = 5;
 	optional string msg = 6;
 }
 
-//¿ªÊ¼
+//å¼€å§‹
 message cgpdkstart
 {
 	optional int32 userid = 1;
@@ -179,28 +179,28 @@ message cgpdkstart
 message gcpdkstart
 {
 	optional int32 result = 1;
-	optional pdkinfo hinfo = 2;              //¶·µØÖ÷ÅÆ×ÀµÄĞÅÏ¢
+	optional pdkinfo hinfo = 2;              //æ–—åœ°ä¸»ç‰Œæ¡Œçš„ä¿¡æ¯
 }
 
-//Í¨ÖªÍæ¼ÒĞĞ¶¯
+//é€šçŸ¥ç©å®¶è¡ŒåŠ¨
 message gcpdkinformaction
 {
 	optional int32 result = 1; 
-	optional int32 userid = 2;		//µ±Ç°ĞĞ¶¯Íæ¼Ò
+	optional int32 userid = 2;		//å½“å‰è¡ŒåŠ¨ç©å®¶
 	optional int32 chairid = 3;  			
-	optional int32 actionTime = 4;  //ĞĞ¶¯Ê±¼ä
-	optional lasplayinfo lasInfo = 5; //ÉÏÒ»Î»Íæ¼Ò³öµÄÅÆµÄĞÅÏ¢
-	optional int32 isnotplay = 6;	 //µ±Ç°Íæ¼ÒÊÇ·ñÒª²»Æğ£¬ Òª²»Æğ: 1  ·ñÔòÎª: 0
+	optional int32 actionTime = 4;  //è¡ŒåŠ¨æ—¶é—´
+	optional lasplayinfo lasInfo = 5; //ä¸Šä¸€ä½ç©å®¶å‡ºçš„ç‰Œçš„ä¿¡æ¯
+	optional int32 isnotplay = 6;	 //å½“å‰ç©å®¶æ˜¯å¦è¦ä¸èµ·ï¼Œ è¦ä¸èµ·: 1  å¦åˆ™ä¸º: 0
 }
 
-//³öÅÆ
+//å‡ºç‰Œ
 message cgpdkplay
 {
 	optional int32 userid = 1;
 	optional int32 tableid = 2; 
-	optional int32 playType = 3;	//³öÅÆÀàĞÍ ¹ı: g_DdzPlay_poker.doNot £¬ ³öÅÆ£ºg_DdzPlay_poker.play 
-	repeated int32 pokerList = 4;	//ÅÆµÄÁĞ±í
-	optional int32 resolute = 5; 	//Èç¹û¶àÖÖÅÆĞÍ£¬È·¶¨³öÄÇÖÖÅÆĞÍÊÇ¸³Öµ 1
+	optional int32 playType = 3;	//å‡ºç‰Œç±»å‹ è¿‡: g_DdzPlay_poker.doNot ï¼Œ å‡ºç‰Œï¼šg_DdzPlay_poker.play 
+	repeated int32 pokerList = 4;	//ç‰Œçš„åˆ—è¡¨
+	optional int32 resolute = 5; 	//å¦‚æœå¤šç§ç‰Œå‹ï¼Œç¡®å®šå‡ºé‚£ç§ç‰Œå‹æ˜¯èµ‹å€¼ 1
 } 
 
 message gcpdkplay
@@ -208,39 +208,39 @@ message gcpdkplay
 	optional int32 result = 1;
 	optional int32 userid = 2;
 	optional int32 chairid = 3;
-	optional int32 playType = 4;	//³öÅÆÀàĞÍ ¹ı: g_DdzPlay_poker.doNot £¬ ³öÅÆ£ºg_DdzPlay_poker.play 
-	optional int32 pokerType = 5;	//ÅÆĞÍ
-	repeated int32 pokerList = 6;	//ÅÆµÄÁĞ±í
-	optional int32 multiple = 7;	//µ±Ç°ÅÆ¾ÖµÄ±¶Êı
-	repeated int32 playpokerlist = 8;	//Íæ¼ÒµÄÅÆÁĞ±í
-	optional int32 pokerSum = 9; 	//»¹Ê£µÄÅÆÊıÁ¿
-	optional int32 nextuserid = 10;		//µ±Ç°ĞĞ¶¯Íæ¼Ò
+	optional int32 playType = 4;	//å‡ºç‰Œç±»å‹ è¿‡: g_DdzPlay_poker.doNot ï¼Œ å‡ºç‰Œï¼šg_DdzPlay_poker.play 
+	optional int32 pokerType = 5;	//ç‰Œå‹
+	repeated int32 pokerList = 6;	//ç‰Œçš„åˆ—è¡¨
+	optional int32 multiple = 7;	//å½“å‰ç‰Œå±€çš„å€æ•°
+	repeated int32 playpokerlist = 8;	//ç©å®¶çš„ç‰Œåˆ—è¡¨
+	optional int32 pokerSum = 9; 	//è¿˜å‰©çš„ç‰Œæ•°é‡
+	optional int32 nextuserid = 10;		//å½“å‰è¡ŒåŠ¨ç©å®¶
 	optional int32 nextchairid = 11;  			
-	optional int32 nextactionTime = 12;  //ĞĞ¶¯Ê±¼ä
-	optional lasplayinfo nextlasInfo = 13; //ÉÏÒ»Î»Íæ¼Ò³öµÄÅÆµÄĞÅÏ¢
-	optional int32 nextisnotplay = 14;	 //µ±Ç°Íæ¼ÒÊÇ·ñÒª²»Æğ£¬ Òª²»Æğ: 1  ·ñÔòÎª: 0
+	optional int32 nextactionTime = 12;  //è¡ŒåŠ¨æ—¶é—´
+	optional lasplayinfo nextlasInfo = 13; //ä¸Šä¸€ä½ç©å®¶å‡ºçš„ç‰Œçš„ä¿¡æ¯
+	optional int32 nextisnotplay = 14;	 //å½“å‰ç©å®¶æ˜¯å¦è¦ä¸èµ·ï¼Œ è¦ä¸èµ·: 1  å¦åˆ™ä¸º: 0
 }
 
-//½áËã
-message gcpdkcount   //½áËãÊÇ·şÎñÆ÷Ö÷¶¯·¢ËÍ¸øÍæ¼ÒµÄ
+//ç»“ç®—
+message gcpdkcount   //ç»“ç®—æ˜¯æœåŠ¡å™¨ä¸»åŠ¨å‘é€ç»™ç©å®¶çš„
 {
 	optional int32 result = 1;
-	optional int32 spring = 2;			//´ò³ö´ºÌìµÄÍæ¼Ò
-	optional int32 counttype = 3;   	//0:µ¥¾ÖµÄ½áËã£¬1£ºÕû¸öÅÆ¾ÖµÄ½áËã
-	optional int32 timemark = 4;    	//µ¥¾Ö½áÊøµÄÊ±ºò£¬½áËãµÄÊ±¼ä
-	optional pdkinfo hinfo = 5;         //ÅÆ×ÀµÄĞÅÏ¢
-	repeated int32 jifenlist = 6;		//Ã¿Î»Íæ¼ÒÖĞ×Ü·Ö
-	repeated int32 winjifenlist	= 7;	//Ã¿Î»Íæ¼ÒÖĞµ¥¾Ö»ı·Ö·Ö
-	repeated int32 bombNumlist = 8;		//Ã¿Î»Íæ¼ÒÖĞµ¥¾Ö´òµÄÕ¨µ¯·Ö
+	optional int32 spring = 2;			//æ‰“å‡ºæ˜¥å¤©çš„ç©å®¶
+	optional int32 counttype = 3;   	//0:å•å±€çš„ç»“ç®—ï¼Œ1ï¼šæ•´ä¸ªç‰Œå±€çš„ç»“ç®—
+	optional int32 timemark = 4;    	//å•å±€ç»“æŸçš„æ—¶å€™ï¼Œç»“ç®—çš„æ—¶é—´
+	optional pdkinfo hinfo = 5;         //ç‰Œæ¡Œçš„ä¿¡æ¯
+	repeated int32 jifenlist = 6;		//æ¯ä½ç©å®¶ä¸­æ€»åˆ†
+	repeated int32 winjifenlist	= 7;	//æ¯ä½ç©å®¶ä¸­å•å±€ç§¯åˆ†åˆ†
+	repeated int32 bombNumlist = 8;		//æ¯ä½ç©å®¶ä¸­å•å±€æ‰“çš„ç‚¸å¼¹åˆ†
 }
 
 
-//×¼±¸
+//å‡†å¤‡
 message cgpdkready
 {
 	optional int32 userid = 1;
 	optional int32 tableid = 2; 
-	optional int32 readyType = 3;	//È¡Ïû×¼±¸: g_DdzPlayerState.status_notReady, ×¼±¸: g_DdzPlayerState.status_ready	
+	optional int32 readyType = 3;	//å–æ¶ˆå‡†å¤‡: g_DdzPlayerState.status_notReady, å‡†å¤‡: g_DdzPlayerState.status_ready	
 }
 
 message gcpdkready
@@ -248,10 +248,10 @@ message gcpdkready
 	optional int32 result = 1;
 	optional int32 userid = 2;
 	optional int32 chairid = 3;
-	optional int32 readyType = 4;	//È¡Ïû×¼±¸: g_DdzPlayerState.status_notReady, ×¼±¸: g_DdzPlayerState.status_ready
+	optional int32 readyType = 4;	//å–æ¶ˆå‡†å¤‡: g_DdzPlayerState.status_notReady, å‡†å¤‡: g_DdzPlayerState.status_ready
 }
 
-//Õ½¼¨
+//æˆ˜ç»©
 message cgpdkhistory
 {
 	optional int32 userid = 1;
@@ -264,7 +264,7 @@ message gcpdkhistory
 	repeated pdkhistory htylist = 2;
 }
 
-//»Ø·Å
+//å›æ”¾
 message cgpdkhistorystep
 {
 	optional int32 tablepalyid = 1;
@@ -279,34 +279,34 @@ message gcpdkhistorystep
 	optional int32 steplen = 3;
 }
 
-//ÍĞ¹Ü
+//æ‰˜ç®¡
 message cgpdkautoplayer
 {
 	optional int32 userid = 1;
 	optional int32 tableid = 2;
-	optional int32 autoplayer = 3; 	//È¡ÏûÍĞ¹Ü:g_DdzDefine.autoplayer_No = 0	ÍĞ¹Ü:g_DdzDefine.autoplayer_Yes = 1	
-	optional double longitude = 4;				//¾­¶È
-	optional double latitude = 5;				//Î³¶È
+	optional int32 autoplayer = 3; 	//å–æ¶ˆæ‰˜ç®¡:g_DdzDefine.autoplayer_No = 0	æ‰˜ç®¡:g_DdzDefine.autoplayer_Yes = 1	
+	optional double longitude = 4;				//ç»åº¦
+	optional double latitude = 5;				//çº¬åº¦
 }
 
 message gcpdkautoplayer
 {
 	optional int32 result = 1;
 	optional int32 userid = 2;
-	optional int32 autoplayer = 3;	//È¡ÏûÍĞ¹Ü:g_DdzDefine.autoplayer_No = 0	ÍĞ¹Ü:g_DdzDefine.autoplayer_Yes = 1	
-	optional int32 chairID = 4;					//Íæ¼ÒÎ»ÖÃ
-	optional double longitude = 5;				//¾­¶È
-	optional double latitude = 6;				//Î³¶È
+	optional int32 autoplayer = 3;	//å–æ¶ˆæ‰˜ç®¡:g_DdzDefine.autoplayer_No = 0	æ‰˜ç®¡:g_DdzDefine.autoplayer_Yes = 1	
+	optional int32 chairID = 4;					//ç©å®¶ä½ç½®
+	optional double longitude = 5;				//ç»åº¦
+	optional double latitude = 6;				//çº¬åº¦
 }
 
 
-//µÈ´ıÏÂÒ»¾ÖÓÎÏ·¿ªÊ¼
+//ç­‰å¾…ä¸‹ä¸€å±€æ¸¸æˆå¼€å§‹
 message gcpdknext
 {
 	optional int32 result = 1;
 }
 
-//¿Í»§¶ËÖ÷¶¯ÇëÇóÅÆ×ÀĞÅÏ¢
+//å®¢æˆ·ç«¯ä¸»åŠ¨è¯·æ±‚ç‰Œæ¡Œä¿¡æ¯
 message cgpdkgettableinfo
 {
 	optional int32 userid = 1;
@@ -316,6 +316,6 @@ message cgpdkgettableinfo
 message gcpdkgettableinfo
 {
 	optional int32 result = 1;
-	optional pdkinfo hinfo = 2;              //ÅÆ×ÀµÄĞÅÏ¢	
+	optional pdkinfo hinfo = 2;              //ç‰Œæ¡Œçš„ä¿¡æ¯	
 }
 

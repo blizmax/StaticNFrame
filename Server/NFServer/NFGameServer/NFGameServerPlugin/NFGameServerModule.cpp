@@ -94,7 +94,7 @@ void NFCGameServerModule::OnHandleOtherMessage(const uint32_t unLinkId, const ui
 	if (pLuaScriptModule)
 	{
 		std::string strMsg(msg, nLen);
-		pLuaScriptModule->RunNetRecvLuaFunc("", unLinkId, playerId, nMsgId, strMsg);
+		pLuaScriptModule->RunNetRecvLuaFunc("LuaNFrame.DispatchTcp", unLinkId, playerId, nMsgId, strMsg);
 	}
 	else
 	{

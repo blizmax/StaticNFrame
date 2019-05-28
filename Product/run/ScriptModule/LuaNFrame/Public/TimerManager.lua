@@ -16,6 +16,8 @@ function TimerManager.Init()
 
     if g_servername == "run_gdmj" then
         GdmjService.Init()
+        DouNiuService.Init()
+        PszService.Init()	
     end
 end
 
@@ -23,6 +25,8 @@ function NFTimer.LoopSec()
     NoticeModel.SeverLoop()
     if g_servername == "run_gdmj" then
         GdmjService.ServerLoop()
+        PszService.ServerLoop()
+        DouNiuService.ServerLoop()		
     end
 end
 

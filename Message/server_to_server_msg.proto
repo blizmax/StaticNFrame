@@ -14,3 +14,21 @@ message NotifyProxyChangeGame
 	uint32 game_id = 2;
 	uint32 client_link_id = 3;
 }
+
+message NotifyWorldPlayerDisconnect
+{
+	uint64 user_id = 1;
+	string account = 2;
+}
+
+message NotifyGamePlayerDisconnect
+{
+	uint64 user_id = 1;
+	string account = 2;
+}
+
+message NotifyGamePlayerReconnect
+{
+	uint64 user_id = 1;
+	uint32 proxy_id = 2;
+}
