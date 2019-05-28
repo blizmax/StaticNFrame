@@ -44,6 +44,90 @@
     <ClCompile Include="QiPaiNetPacketParse.cpp">
       <Filter>PacketParse</Filter>
     </ClCompile>
+    <ClCompile Include="evpp\buffer.cc">
+      <Filter>evpp</Filter>
+    </ClCompile>
+    <ClCompile Include="evpp\connector.cc">
+      <Filter>evpp</Filter>
+    </ClCompile>
+    <ClCompile Include="evpp\dns_resolver.cc">
+      <Filter>evpp</Filter>
+    </ClCompile>
+    <ClCompile Include="evpp\duration.cc">
+      <Filter>evpp</Filter>
+    </ClCompile>
+    <ClCompile Include="evpp\event_loop.cc">
+      <Filter>evpp</Filter>
+    </ClCompile>
+    <ClCompile Include="evpp\event_loop_thread.cc">
+      <Filter>evpp</Filter>
+    </ClCompile>
+    <ClCompile Include="evpp\event_loop_thread_pool.cc">
+      <Filter>evpp</Filter>
+    </ClCompile>
+    <ClCompile Include="evpp\event_watcher.cc">
+      <Filter>evpp</Filter>
+    </ClCompile>
+    <ClCompile Include="evpp\fd_channel.cc">
+      <Filter>evpp</Filter>
+    </ClCompile>
+    <ClCompile Include="evpp\inner_pre.cc">
+      <Filter>evpp</Filter>
+    </ClCompile>
+    <ClCompile Include="evpp\invoke_timer.cc">
+      <Filter>evpp</Filter>
+    </ClCompile>
+    <ClCompile Include="evpp\libevent.cc">
+      <Filter>evpp</Filter>
+    </ClCompile>
+    <ClCompile Include="evpp\listener.cc">
+      <Filter>evpp</Filter>
+    </ClCompile>
+    <ClCompile Include="evpp\sockets.cc">
+      <Filter>evpp</Filter>
+    </ClCompile>
+    <ClCompile Include="evpp\tcp_client.cc">
+      <Filter>evpp</Filter>
+    </ClCompile>
+    <ClCompile Include="evpp\tcp_conn.cc">
+      <Filter>evpp</Filter>
+    </ClCompile>
+    <ClCompile Include="evpp\tcp_server.cc">
+      <Filter>evpp</Filter>
+    </ClCompile>
+    <ClCompile Include="evpp\http\context.cc">
+      <Filter>evpp\http</Filter>
+    </ClCompile>
+    <ClCompile Include="evpp\http\http_server.cc">
+      <Filter>evpp\http</Filter>
+    </ClCompile>
+    <ClCompile Include="evpp\http\service.cc">
+      <Filter>evpp\http</Filter>
+    </ClCompile>
+    <ClCompile Include="evpp\httpc\conn.cc">
+      <Filter>evpp\httpc</Filter>
+    </ClCompile>
+    <ClCompile Include="evpp\httpc\conn_pool.cc">
+      <Filter>evpp\httpc</Filter>
+    </ClCompile>
+    <ClCompile Include="evpp\httpc\request.cc">
+      <Filter>evpp\httpc</Filter>
+    </ClCompile>
+    <ClCompile Include="evpp\httpc\response.cc">
+      <Filter>evpp\httpc</Filter>
+    </ClCompile>
+    <ClCompile Include="evpp\httpc\ssl.cc">
+      <Filter>evpp\httpc</Filter>
+    </ClCompile>
+    <ClCompile Include="evpp\httpc\url_parser.cc">
+      <Filter>evpp\httpc</Filter>
+    </ClCompile>
+    <ClCompile Include="evpp\udp\sync_udp_client.cc">
+      <Filter>evpp\udp</Filter>
+    </ClCompile>
+    <ClCompile Include="evpp\udp\udp_server.cc">
+      <Filter>evpp\udp</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="NFNetPlugin.h" />
@@ -98,6 +182,144 @@
     <ClInclude Include="QiPaiNetPacketParse.h">
       <Filter>PacketParse</Filter>
     </ClInclude>
+    <ClInclude Include="evpp\any.h">
+      <Filter>evpp</Filter>
+    </ClInclude>
+    <ClInclude Include="evpp\buffer.h">
+      <Filter>evpp</Filter>
+    </ClInclude>
+    <ClInclude Include="evpp\connector.h">
+      <Filter>evpp</Filter>
+    </ClInclude>
+    <ClInclude Include="evpp\dns_resolver.h">
+      <Filter>evpp</Filter>
+    </ClInclude>
+    <ClInclude Include="evpp\duration.h">
+      <Filter>evpp</Filter>
+    </ClInclude>
+    <ClInclude Include="evpp\duration.inl.h">
+      <Filter>evpp</Filter>
+    </ClInclude>
+    <ClInclude Include="evpp\event_loop.h">
+      <Filter>evpp</Filter>
+    </ClInclude>
+    <ClInclude Include="evpp\event_loop_thread.h">
+      <Filter>evpp</Filter>
+    </ClInclude>
+    <ClInclude Include="evpp\event_loop_thread_pool.h">
+      <Filter>evpp</Filter>
+    </ClInclude>
+    <ClInclude Include="evpp\event_watcher.h">
+      <Filter>evpp</Filter>
+    </ClInclude>
+    <ClInclude Include="evpp\fd_channel.h">
+      <Filter>evpp</Filter>
+    </ClInclude>
+    <ClInclude Include="evpp\gettimeofday.h">
+      <Filter>evpp</Filter>
+    </ClInclude>
+    <ClInclude Include="evpp\inner_pre.h">
+      <Filter>evpp</Filter>
+    </ClInclude>
+    <ClInclude Include="evpp\invoke_timer.h">
+      <Filter>evpp</Filter>
+    </ClInclude>
+    <ClInclude Include="evpp\libevent.h">
+      <Filter>evpp</Filter>
+    </ClInclude>
+    <ClInclude Include="evpp\listener.h">
+      <Filter>evpp</Filter>
+    </ClInclude>
+    <ClInclude Include="evpp\logging.h">
+      <Filter>evpp</Filter>
+    </ClInclude>
+    <ClInclude Include="evpp\memmem.h">
+      <Filter>evpp</Filter>
+    </ClInclude>
+    <ClInclude Include="evpp\platform_config.h">
+      <Filter>evpp</Filter>
+    </ClInclude>
+    <ClInclude Include="evpp\server_status.h">
+      <Filter>evpp</Filter>
+    </ClInclude>
+    <ClInclude Include="evpp\slice.h">
+      <Filter>evpp</Filter>
+    </ClInclude>
+    <ClInclude Include="evpp\sockets.h">
+      <Filter>evpp</Filter>
+    </ClInclude>
+    <ClInclude Include="evpp\sys_addrinfo.h">
+      <Filter>evpp</Filter>
+    </ClInclude>
+    <ClInclude Include="evpp\sys_sockets.h">
+      <Filter>evpp</Filter>
+    </ClInclude>
+    <ClInclude Include="evpp\tcp_callbacks.h">
+      <Filter>evpp</Filter>
+    </ClInclude>
+    <ClInclude Include="evpp\tcp_client.h">
+      <Filter>evpp</Filter>
+    </ClInclude>
+    <ClInclude Include="evpp\tcp_conn.h">
+      <Filter>evpp</Filter>
+    </ClInclude>
+    <ClInclude Include="evpp\tcp_server.h">
+      <Filter>evpp</Filter>
+    </ClInclude>
+    <ClInclude Include="evpp\thread_dispatch_policy.h">
+      <Filter>evpp</Filter>
+    </ClInclude>
+    <ClInclude Include="evpp\timestamp.h">
+      <Filter>evpp</Filter>
+    </ClInclude>
+    <ClInclude Include="evpp\timestamp.inl.h">
+      <Filter>evpp</Filter>
+    </ClInclude>
+    <ClInclude Include="evpp\utility.h">
+      <Filter>evpp</Filter>
+    </ClInclude>
+    <ClInclude Include="evpp\windows_port.h">
+      <Filter>evpp</Filter>
+    </ClInclude>
+    <ClInclude Include="evpp\http\context.h">
+      <Filter>evpp\http</Filter>
+    </ClInclude>
+    <ClInclude Include="evpp\http\http_server.h">
+      <Filter>evpp\http</Filter>
+    </ClInclude>
+    <ClInclude Include="evpp\http\service.h">
+      <Filter>evpp\http</Filter>
+    </ClInclude>
+    <ClInclude Include="evpp\http\stats.h">
+      <Filter>evpp\http</Filter>
+    </ClInclude>
+    <ClInclude Include="evpp\httpc\conn.h">
+      <Filter>evpp\httpc</Filter>
+    </ClInclude>
+    <ClInclude Include="evpp\httpc\conn_pool.h">
+      <Filter>evpp\httpc</Filter>
+    </ClInclude>
+    <ClInclude Include="evpp\httpc\request.h">
+      <Filter>evpp\httpc</Filter>
+    </ClInclude>
+    <ClInclude Include="evpp\httpc\response.h">
+      <Filter>evpp\httpc</Filter>
+    </ClInclude>
+    <ClInclude Include="evpp\httpc\ssl.h">
+      <Filter>evpp\httpc</Filter>
+    </ClInclude>
+    <ClInclude Include="evpp\httpc\url_parser.h">
+      <Filter>evpp\httpc</Filter>
+    </ClInclude>
+    <ClInclude Include="evpp\udp\sync_udp_client.h">
+      <Filter>evpp\udp</Filter>
+    </ClInclude>
+    <ClInclude Include="evpp\udp\udp_message.h">
+      <Filter>evpp\udp</Filter>
+    </ClInclude>
+    <ClInclude Include="evpp\udp\udp_server.h">
+      <Filter>evpp\udp</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="NFClient">
@@ -120,6 +342,18 @@
     </Filter>
     <Filter Include="NFServerNetEvent">
       <UniqueIdentifier>{8811a49f-5dc4-4b11-a187-97245bd2102c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="evpp">
+      <UniqueIdentifier>{45ea7bb5-a845-46a2-ae9d-38b236ecfb5e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="evpp\http">
+      <UniqueIdentifier>{31d31f45-b970-424d-9da3-934364a50cd4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="evpp\httpc">
+      <UniqueIdentifier>{c728dfdf-9cde-4e5d-ba27-1c874ab0c2bc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="evpp\udp">
+      <UniqueIdentifier>{58f6f72c-f550-4d8a-95fb-b7d7d6e8cc8d}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
