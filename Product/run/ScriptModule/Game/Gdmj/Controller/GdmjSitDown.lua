@@ -82,6 +82,13 @@ function execute(packetID, operateID, buffer)
 		cgmsg.chairid = 3
 	end
 	
+	--防止出错
+	if tInfo.situser[cgmsg.chairid] == nil then
+		ThreadManager.GdmjUnLock(cgmsg.tableid)
+		gcmsg.result = ReturnCode["gdmj_sitdown_fail"]
+		return cgmsg.userid, 0, gcmsg:ByteSize(), gcmsg:SerializeToString()	
+	end
+	
 	if tInfo.situser[cgmsg.chairid] ~= 0 then
 		if tInfo.situser[cgmsg.chairid] == cgmsg.userid then
 			--已经坐下来了，重复发送的

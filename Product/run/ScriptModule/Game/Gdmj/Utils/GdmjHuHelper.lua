@@ -49,6 +49,8 @@ function GdmjHuHelper.GetHuList(handList, guiPubList, mjType, vipInfo)
 		return GdmjHuHelper.HuListHzz(cardList, guiLen, vipInfo, guiPubList)
 	elseif mjType == g_gdmjType.type_hzmj then
 		return GdmjHuHelper.HuListZptdh(cardList, guiLen, vipInfo, guiPubList)
+	elseif mjType == g_gdmjType.type_rpmj then
+		return GdmjHuHelper.HuListRpmj(cardList, guiLen, vipInfo, guiPubList)
 	end
 	
 end
@@ -75,6 +77,75 @@ function GdmjHuHelper.HuListTdh(handList, guiLen, vipInfo, guiPubList)
 	
 	if huType ~= 0 then
 		
+		for k,v in ipairs(huList) do
+			if v == -1 then    --如果存在-1的情况，就直接返回了
+				return {-1}
+			else
+				allList[v] = 1
+			end
+			
+		end
+		for k,v in ipairs(guiPubList) do
+			--把鬼牌也加上
+			allList[v] = 1
+		end
+	end
+	
+	for k,v in pairs(allList) do
+		table.AscInsert(retList,k)
+	end
+
+	return retList
+	
+end
+
+function GdmjHuHelper.HuListRpmj(handList, guiLen, vipInfo, guiPubList)
+
+	local retList = {}
+	local allList = {}
+	
+	if vipInfo.qiduisibei == 1 or vipInfo.kehuqidui == 1 then
+		--如果可胡七对, 豪华七对四倍
+		local huType,huList = MajiangHuUtils.QiDui(handList,guiLen)
+		if huType ~= 0 then
+			
+			if huList == -1 then    --如果是-1，表示直接可以胡了
+				return {-1}
+			else
+				
+				for k,v in ipairs(huList) do
+					if v == -1 then
+						return {-1}
+					else
+						allList[v] = 1
+					end
+				end
+			end
+		end
+	end
+
+	if vipInfo.shisanyao == 1 then
+		--十三幺胡牌
+		local huType, huList = MajiangHuUtils.ShiSanYao(handList,guiLen)  --十三幺的判断
+		if huType ~= 0 then
+			for k,v in ipairs(huList) do
+				if v == -1 then
+					return {-1}
+				else
+					allList[v] = 1
+				end
+			end
+			for k,v in ipairs(guiPubList) do
+				--把鬼牌也加上
+				allList[v] = 1
+			end			
+		end
+	end
+
+	local huType,huList = MajiangHuUtils.CommonHu(handList,guiLen)
+	
+	if huType ~= 0 then
+				
 		for k,v in ipairs(huList) do
 			if v == -1 then    --如果存在-1的情况，就直接返回了
 				return {-1}

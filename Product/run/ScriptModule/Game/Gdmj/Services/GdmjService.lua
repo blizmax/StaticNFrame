@@ -67,6 +67,8 @@ function GdmjService.ServerLoop()
 			HbzmjService.DoWork(GdmjService.tableList[v])
 		elseif GdmjService.tableList[v].m_tInfo.mjtype == g_gdmjType.type_hzmj then
 			HzmjService.DoWork(GdmjService.tableList[v])
+		elseif GdmjService.tableList[v].m_tInfo.mjtype == g_gdmjType.type_rpmj then
+			RpmjService.DoWork(GdmjService.tableList[v])
 		end
 		
 		GdmjService.tableList[v]:SetRedis()         --把更新设置到缓存中
@@ -155,6 +157,8 @@ function GdmjService.PlayerAction(tItem,cgmsg,gcmsg)
 		HbzmjService.PlayingAction(tItem, cgmsg, gcmsg)
 	elseif tItem.m_tInfo.mjtype == g_gdmjType.type_hzmj then
 		HzmjService.PlayingAction(tItem, cgmsg, gcmsg)
+	elseif tItem.m_tInfo.mjtype == g_gdmjType.type_rpmj then
+		RpmjService.PlayingAction(tItem, cgmsg, gcmsg)
 	end
 	
 end
@@ -176,6 +180,8 @@ function GdmjService.CheckMoving(tItem, isLog)
 		HbzmjService.CheckMoving(tItem, isLog)
 	elseif tItem.m_tInfo.mjtype == g_gdmjType.type_hzmj then
 		HzmjService.CheckMoving(tItem, isLog)
+	elseif tItem.m_tInfo.mjtype == g_gdmjType.type_rpmj then
+		RpmjService.CheckMoving(tItem, isLog)
 	end	
 	
 end

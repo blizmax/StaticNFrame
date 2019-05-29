@@ -39,12 +39,14 @@ message gdmjhzmj  //广东麻将红中麻将
 message gdmjrpmj //广东麻将饶平麻将
 {
 	optional int32 mjtype = 1;
-	optional int32 baogang = 2;		//包杠
+	optional int32 gangbaoquanbao = 2;		//包杠
 	optional int32 bishu1 = 3;		//逼胡
 	optional int32 bishu2 = 4;		//逼胡2
 	optional int32 zimo = 5;		//自摸
 	optional int32 shisanyao = 6;	//十三幺
 	optional int32 qingyise = 7;	//清一色
 	optional int32 manum = 11;     //买马的数量，99表示1码全中。
+	optional int32 kehuqidui = 12;	//可以胡七对
+	optional int32 qiduisibei = 13; //豪华七对四倍
 	optional int32 difen = 15;     //底分
 }

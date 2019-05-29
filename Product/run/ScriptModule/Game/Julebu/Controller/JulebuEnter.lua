@@ -51,7 +51,7 @@ function execute(packetID, operateID, buffer)
 	cgTest.userid = cgmsg.userid
 	
 	--local cgtest = msg_julebu2_pb.cggetjulebuawardinfo()
-	local packeID, controller = TcpManager.CreateController(3265)
+	local packeID, controller = tcpManager:createController(3265)
 	--controller.execute(3265, operateID, cgTest:SerializeToString())	
 	
 	

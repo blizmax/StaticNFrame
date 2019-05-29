@@ -785,7 +785,7 @@ function GdmjWork.ActionGang(tItem, cgmsg, gcmsg)
 		gcmsg.showpoker.pokerlist:append(cgmsg.actpokerid)		
 	end
 	local diFen = 1
-	if tItem.m_tInfo.mjtype == g_gdmjType.type_hzmj then
+	if tItem.m_tInfo.mjtype == g_gdmjType.type_hzmj or tItem.m_tInfo.mjtype == g_gdmjType.type_rpmj then
 		diFen = tItem.m_vipRoomInfo.difen
 	end
 	
@@ -1191,7 +1191,7 @@ function GdmjWork.GenZhuangCheck(tItem,cgmsg)
 		if tItem.m_vipRoomInfo.gengzhuang ~= 1 then
 			return false
 		end
-	elseif tItem.m_tInfo.mjtype == g_gdmjType.type_jph or tItem.m_tInfo.mjtype == g_gdmjType.type_hzmj then
+	elseif tItem.m_tInfo.mjtype == g_gdmjType.type_jph or tItem.m_tInfo.mjtype == g_gdmjType.type_hzmj or tItem.m_tInfo.mjtype == g_gdmjType.type_rpmj then
 		--鸡平胡不用检查跟庄
 		return false
 		

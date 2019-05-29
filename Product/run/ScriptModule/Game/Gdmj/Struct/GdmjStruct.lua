@@ -77,7 +77,15 @@ function GdmjStruct:SetInfo(tInfo)
 			self.m_vipRoomInfo:ParseFromString(strGet)
 		else
 			LogFile("error", "get vip room info error tableid="..self.m_tInfo.tableid)
-		end			
+		end	
+	elseif self.m_tInfo.mjtype == g_gdmjType.type_rpmj then
+		self.m_vipRoomInfo = st_gdmj2_pb.gdmjrpmj()
+		local strGet = GdmjModel.GetRoomInfoStr(self.m_tInfo.tableid)
+		if strGet ~= nil then
+			self.m_vipRoomInfo:ParseFromString(strGet)
+		else
+			LogFile("error", "get vip room info error tableid="..self.m_tInfo.tableid)
+		end				
 	end
 
 	

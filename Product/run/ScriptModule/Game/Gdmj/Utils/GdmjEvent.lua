@@ -29,6 +29,8 @@ function GdmjEvent.JulebuGameCreate(m_tInfo, strVipInfo)
 		strDes = "惠博庄"
 	elseif m_tInfo.mjtype == g_gdmjType.type_hzmj then
 		strDes = "红中麻将"
+	elseif m_tInfo.mjtype == g_gdmjType.type_rpmj then
+		strDes = "绕平客家麻将"
 	end
 		
 	strDes = strDes..m_tInfo.maxvipnum.."局"
@@ -253,6 +255,36 @@ function GdmjEvent.JulebuGameCreate(m_tInfo, strVipInfo)
 		if m_vipRoomInfo.gangbaoquanbao ~= 0 then
 			strDes = strDes..",杠爆全包"
 		end	
+	elseif m_tInfo.mjtype == g_gdmjType.type_rpmj then
+		m_vipRoomInfo = st_gdmj2_pb.gdmjrpmj()
+		m_vipRoomInfo:ParseFromString(strVipInfo)
+		if m_vipRoomInfo.manum ~= 0 then
+			if m_vipRoomInfo.manum == 99 then
+				strDes = strDes..",一马全中"
+			else
+				strDes = strDes..","..m_vipRoomInfo.manum.."马"
+			
+			end
+			
+		end		
+		if m_vipRoomInfo.kehuqidui ~= 0 then
+			strDes = strDes..",可胡七对"
+		end
+		if m_vipRoomInfo.qiduisibei ~= 0 then
+			strDes = strDes..",豪华七对四倍"
+		end			
+		if m_vipRoomInfo.gskhjiama ~= 0 then
+			strDes = strDes..",杠上开花加码"
+		end
+		if m_vipRoomInfo.gangbaoquanbao ~= 0 then
+			strDes = strDes..",杠爆全包"
+		end
+		if m_vipRoomInfo.qingyise ~= 0 then
+			strDes = strDes..",清一色"
+		end	
+		if m_vipRoomInfo.shisanyao ~= 0 then
+			strDes = strDes..",十三幺"
+		end		
 	end
 	JulebuService.CreateGame(g_JulebuDefine.modules_gdmj, m_tInfo.julebuid, m_tInfo.tableid, m_tInfo.maxplayernum, m_tInfo.playernum, strDes)
 end
