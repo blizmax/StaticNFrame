@@ -139,7 +139,7 @@ bool NFTimerAxis::SetTimer(uint32_t nTimerID, uint64_t nInterVal, NFTimerObj* ha
 	if (nCallCount == 0)
 	{
 		//错误，调用次数为0，需要打印日志
-		return false;
+		nCallCount = INFINITY_CALL;
 	}
 	if (nInterVal < TIMER_AXIS_CHECK_FREQUENCE)
 	{

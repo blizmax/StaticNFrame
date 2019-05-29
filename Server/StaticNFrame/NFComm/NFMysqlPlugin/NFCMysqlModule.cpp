@@ -26,6 +26,7 @@ NFCMysqlModule::~NFCMysqlModule()
 
 bool NFCMysqlModule::Init()
 {
+	this->SetTimer(0, 10000, INFINITY_CALL);
 	return true;
 }
 
@@ -108,6 +109,14 @@ bool NFCMysqlModule::Query(const std::string& strTableName, const std::string& s
 bool NFCMysqlModule::Execute()
 {
 	return true;
+}
+
+void NFCMysqlModule::OnTimer(uint32_t nTimerID)
+{
+	if (m_pMysqlDriverManager)
+	{
+		m_pMysqlDriverManager->CheckMysql();
+	}
 }
 
 bool NFCMysqlModule::AddMysqlServer(const int nServerID, const std::string& strIP, const int nPort, const std::string strDBName, const std::string strDBUser, const std::string strDBPwd, const int nRconnectTime/* = 10*/, const int nRconneCount/* = -1*/)

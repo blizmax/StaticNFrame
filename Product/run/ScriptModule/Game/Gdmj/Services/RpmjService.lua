@@ -812,6 +812,8 @@ function RpmjService.PlayCountWin(tItem)
 	
 	local winChairID = tItem.m_tInfo.winchairlist[1]  --因为前面已经确定长度是1了
 	local getMaNum = 0
+	local otherMaNum = 0;
+	local maList = {0,0,0,0}
 	local desList = {}
 	local fenList = {0,0,0,0}
 	local tarChairID = tItem.m_tInfo.nextinfo.tarchairid   --这里还不会被清空,暂时先用这个来
@@ -819,16 +821,11 @@ function RpmjService.PlayCountWin(tItem)
 	
 	--推倒胡不能吃胡
 	
-	local isQiangGangQuanBao = 0
-	local isGangBaoQuanBao = 0   --杠爆全包
-	
 	if tItem.m_tInfo.wintype == g_gdmjAction.type_qiangganghu then
 		--允许抢杠胡
 		--如果是抢杠胡，看看是不是抢杠全包
 		doubleAccount = doubleAccount + 2
 		table.insert(desList,"抢杠胡")
-		
-		isQiangGangQuanBao = GdmjWork.IsQiangGangQuanBao(tItem)
 		
 		tItem.m_detailList[winChairID].hunum = tItem.m_detailList[winChairID].hunum + 1
 		
@@ -837,53 +834,41 @@ function RpmjService.PlayCountWin(tItem)
 		table.insert(desList,"自摸")   --自摸
 		doubleAccount = doubleAccount + 2
 		if tItem.m_tInfo.prevpos ~= 0 then
-			--表示是杠爆的，在检查是否选择了杠包全包
-			isGangBaoQuanBao = GdmjWork.IsGangBaoQuanBao(tItem)
-			if isGangBaoQuanBao == 1 then
-				tarChairID = tItem.m_tInfo.prevpos  --这个是认定的ID
-				table.insert(desList,"杠爆全包")   --自摸
-			end
-		end
-		
 
-		if tItem.m_vipRoomInfo.dachuhzjiafen == 1 then   --打出红中翻倍
-			local daCount = GdmjHuHelper.DaChuhzjiafen(tItem,winChairID)
-			
-			if 0 ~= daCount then
-				table.insert(desList, "打出红中加分")
-				LogFile("hzmj", "daCount="..daCount)
-				doubleAccount = doubleAccount + 5*tonumber(daCount)
-			end
 		end
-		
-		if tItem.m_vipRoomInfo.gskhjiama == 1 then    --判断是否杠上开花
-			if 0 ~= GdmjHuHelper.GskhJiama(tItem,winChairID) then
-				table.insert(desList, "杠上开花")
-				doubleAccount = doubleAccount + 2
-			end			
+
+		--这里指的是豪华7对
+		if tItem.m_vipRoomInfo.kehuqidui == 1 then
+			--如果是七对加番的，就必须检查胡的是否是七对了
+			if 0 ~= GdmjHuHelper.IsQiDui(tItem, winChairID) then
+				table.insert(desList,"七对")   --自摸
+				doubleAccount = 4
+			end
 		end
 
 		if tItem.m_vipRoomInfo.qiduisibei == 1 then
 			--如果是七对加番的，就必须检查胡的是否是七对了
 			if 0 ~= GdmjHuHelper.IsQiDui(tItem, winChairID) then
-				table.insert(desList,"七对四倍")   --自摸
-				doubleAccount = 8 --doubleAccount + 4
+				table.insert(desList,"豪华七对")   --自摸
+				doubleAccount = 8
 			end
 		end
 		
 		if tItem.m_vipRoomInfo.qingyises == 1 then
 			if 0 ~= GdmjHuHelper.IsQingYiSe(tItem,winChairID) then
 				table.insert(desList, "清一色")
-				doubleAccount = 8 --doubleAccount + 4
+				doubleAccount = 4
+			end				
+		end
+
+		if tItem.m_vipRoomInfo.shisanyao == 1 then
+			if 0 ~= GdmjHuHelper.IsShiSanYao(tItem,winChairID) then
+				table.insert(desList, "十三幺")
+				doubleAccount = 16
 			end				
 		end
 		
 		if 0 ~= GdmjHuHelper.WuhzJiafen(tItem,winChairID) then
-			if tItem.m_vipRoomInfo.wuhzjiafen == 1 then    --无红中自摸
-				table.insert(desList, "无红中")
-				doubleAccount = doubleAccount + 1
-				
-			end
 			tItem.m_detailList[winChairID].wuguizimo = tItem.m_detailList[winChairID].wuguizimo + 1	
 		else
 			tItem.m_detailList[winChairID].youguizimo = tItem.m_detailList[winChairID].youguizimo + 1	
@@ -911,8 +896,6 @@ function RpmjService.PlayCountWin(tItem)
 
 	
 		if tItem.m_vipRoomInfo.manum ~= 99 then
-
-			local maList = {0,0,0,0}
 			local maIndexList = {0,0,0,0}
 			local maIndex = 1
 			for i = tItem.m_tInfo.bankerpos,tItem.m_maxUser do
@@ -936,31 +919,34 @@ function RpmjService.PlayCountWin(tItem)
 					getMaNum = getMaNum + 1
 				end				
 			end
+
+			for i = 1,tItem.m_maxUser do
+				tItem.m_detailList[i].zhongmanum = tItem.m_detailList[i].zhongmanum + maList[i]
+				if i ~= winChairID then
+					otherMaNum = otherMaNum + maList[i]
+				end
+			end
 		end
 		if getMaNum > 0 then
 			table.insert(desList,"中码+"..getMaNum)   --自摸
 		end
-		tItem.m_detailList[winChairID].zhongmanum = tItem.m_detailList[winChairID].zhongmanum + getMaNum
+		--tItem.m_detailList[winChairID].zhongmanum = tItem.m_detailList[winChairID].zhongmanum + getMaNum
 		
 		--稍后在看看要不要统计有鬼和无给自摸
 	end
 
-	if tItem.m_tInfo.genzhuang ~= 0 then
-		--跟庄
-		for i =1,tItem.m_maxUser do
-			if i == tItem.m_tInfo.bankerpos then
-				fenList[i] = fenList[i] -2*(tItem.m_maxUser - 1)
-				table.insert(desList,"跟庄")
-			else
-				fenList[i] = fenList[i] + 2   --鸡胡的分数
-			end
-		end
+	doubleAccount = doubleAccount + getMaNum*2
+	if tItem.m_detailList[winChairID].angangnum > 0 then
+		doubleAccount = doubleAccount + tItem.m_detailList[winChairID].angangnum * 2
 	end
 
+	if tItem.m_detailList[winChairID].minggangnum > 0 then
+		doubleAccount = doubleAccount + tItem.m_detailList[winChairID].minggangnum
+	end
 
-	doubleAccount = doubleAccount + getMaNum*2
 	local countJetton = doubleAccount*tItem.m_vipRoomInfo.difen
 	--countJetton = countJetton*(1+getMaNum)   --有几个马就番几倍
+
 	for i = 1,tItem.m_maxUser do
 		
 		local item = gcAccount.countlist:add()
@@ -979,19 +965,37 @@ function RpmjService.PlayCountWin(tItem)
 				item.des:append(v2)
 			end
 			
-			item.hunum = (tItem.m_maxUser - 1)*countJetton
+			item.hunum = (tItem.m_maxUser - 1 + otherMaNum)*countJetton
+
+			--减去暗杠的时候当初已经扣掉的
+			if tItem.m_detailList[winChairID].angangnum > 0 then
+				item.hunum = item.hunum - tItem.m_detailList[winChairID].angangnum * 2 * (tItem.m_maxUser - 1)
+			end
+
+			if tItem.m_detailList[winChairID].minggangnum > 0 then
+				item.hunum = item.hunum - tItem.m_detailList[winChairID].minggangnum * (tItem.m_maxUser - 1)
+			end
 		else
+			item.hunum = -countJetton*(1+maList[i])
 			
-			if isQiangGangQuanBao == 1 or isGangBaoQuanBao == 1 then
-				--如果是抢杠全包
-				if i == tarChairID then
-					--如果是输的人
-					item.hunum = -(tItem.m_maxUser - 1)*countJetton
-				end
-			else
-				item.hunum = -countJetton
+			if tItem.m_detailList[winChairID].angangnum > 0 then
+				item.hunum = item.hunum - countJetton*tItem.m_detailList[winChairID].angangnum * 2 + tItem.m_detailList[winChairID].angangnum * 2
 			end
 			
+			if tItem.m_detailList[winChairID].minggangnum > 0 then
+				--如果明杠不包杠的话，就全部扣一分
+				if tItem.m_vipRoomInfo.gangbaoquanbao == 0 then
+					item.hunum = item.hunum - countJetton*tItem.m_detailList[winChairID].minggangnum + tItem.m_detailList[winChairID].minggangnum
+				else
+					for kk, vv in ipairs(tItem.m_userList[winChairID].mjpokerlist) do
+						if vv.pokertype == g_gdmjAction.type_gang and vv.typedetail == g_gdmjGangDetail.type_minggang then
+							if i == vv.tarchairid then
+								item.hunum = item.hunum - countJetton * (tItem.m_maxUser - 1) + (tItem.m_maxUser - 1)
+							end
+						end
+					end
+				end
+			end
 		end
 		item.hunum = item.hunum + fenList[i]   --跟庄的也要顶上  跟庄的不包,
 		item.winjetton = item.gangjetton + item.hunum
@@ -1004,7 +1008,6 @@ function RpmjService.PlayCountWin(tItem)
 		
 		gcAccount.viprecord.score:append(tItem.m_userList[i].carryjetton)
 		tItem.m_detailList[i].winnum = tItem.m_detailList[i].winnum + item.winjetton
-		
 	end
 
 	if tItem.m_tInfo.viptable ~= 0 and tItem.m_tInfo.usevipnum == tItem.m_tInfo.maxvipnum then
@@ -1054,15 +1057,9 @@ function RpmjService.PlayCountWin(tItem)
 			end			
 		end
 
-		
-
-		
 		addPoker.userid = tItem.m_userList[i].userid
 		
 		tItem.m_userModify[i] = 1
-		
-
-		
 	end
 	
 	--GdmjHistoryModel.SetTableAction(tItem.m_tInfo.frameid, PacketCode[2222].client, gcAccount:SerializeToString())

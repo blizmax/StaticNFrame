@@ -13,9 +13,10 @@
 #include "NFComm/NFPluginModule/NFIPluginManager.h"
 #include "NFComm/NFPluginModule/NFIMysqlModule.h"
 #include "NFComm/NFPluginModule/NFIMysqlDriverManager.h"
+#include "NFComm/NFPluginModule/NFTimerMgr.h"
 
 class NFCMysqlModule
-	: public NFIMysqlModule
+	: public NFIMysqlModule, public NFTimerObj
 {
 public:
 	/**
@@ -50,6 +51,9 @@ public:
 	 * @return bool 
 	 */
 	virtual bool Execute() override;
+
+	virtual void OnTimer(uint32_t nTimerID) override;
+
 	/**
 	 * @brief
 	 *

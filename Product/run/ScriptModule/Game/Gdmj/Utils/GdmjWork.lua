@@ -811,10 +811,16 @@ function GdmjWork.ActionGang(tItem, cgmsg, gcmsg)
 		--如果被杠玩家的筹码不足了，就补到0,这里要区分对待贵宾房和普通房
 		
 		if tItem.m_tInfo.viptable ~= 0 then
-			--如果是贵宾房
-			
-			gcmsg.changejetton[cgmsg.tarchairid] = 0 - changeJetton
-			tItem.m_userList[cgmsg.tarchairid].carryjetton = tItem.m_userList[cgmsg.tarchairid].carryjetton - changeJetton
+			--如果是贵宾房 --
+			if tItem.m_tInfo.mjtype == g_gdmjType.type_rpmj and tItem.m_vipRoomInfo.gangbaoquanbao == 1 then
+				for i = 1, #tItem.m_userList do
+					gcmsg.changejetton[i] = 0 - 1
+					tItem.m_userList[i].carryjetton = tItem.m_userList[cgmsg.tarchairid].carryjetton - 1
+				end
+			else
+				gcmsg.changejetton[cgmsg.tarchairid] = 0 - changeJetton
+				tItem.m_userList[cgmsg.tarchairid].carryjetton = tItem.m_userList[cgmsg.tarchairid].carryjetton - changeJetton
+			end
 
 		else --如果不是贵宾房，则要考虑到为0的情况
 			changeJetton = changeJetton > tItem.m_userList[cgmsg.tarchairid].carryjetton and tItem.m_userList[cgmsg.tarchairid].carryjetton or changeJetton

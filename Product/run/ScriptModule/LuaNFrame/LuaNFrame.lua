@@ -337,5 +337,10 @@ function math.myrandom(...)
 end
 
 function LogFile(file, msg)
-	LuaNFrame.Error(NFLogId.NF_LOG_SYSTEMLOG, 0, msg)
+	local cStackInfo = debug.getinfo(2, "Sl")
+	if cStackInfo then
+		CPPNFrame:Error(NFLogId.NF_LOG_SYSTEMLOG, 0, "["..tostring(cStackInfo.short_src)..":"..tostring(cStackInfo.currentline).."] | "..tostring(msg))
+	else
+		CPPNFrame:Error(NFLogId.NF_LOG_SYSTEMLOG, 0, tostring(msg))
+	end
 end
