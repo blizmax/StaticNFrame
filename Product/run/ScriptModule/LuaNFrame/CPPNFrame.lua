@@ -26,6 +26,7 @@ function CPPNFrame:init(pluginManager, luaModule)
     self.httpClientModule = self.pluginManager:GetHttpClientModule()
     self.httpServerModule = self.pluginManager:GetHttpServerModule()
     self.serverNetEventModule = self.pluginManager:GetServerNetEventModule()
+    self.mysqlModule = self.pluginManager:GetMysqlModule()
     self.app_name = pluginManager:GetAppName()
     self.app_id = pluginManager:GetAppID()
     self.app_dir = self.app_name .. tostring(self.app_id)
@@ -277,6 +278,42 @@ end
 --
 function CPPNFrame:AddAccountEventCallBack(eServerType, luaFuncStr)
     self.serverNetEventModule:AddAccountEventCallBack(eServerType, luaFuncStr)
+end
+
+function CPPNFrame:AddMysqlServer(nServerID, strIP, nPort, strDBName, strDBUser, strDBPwd)
+    return self.mysqlModule:AddMysqlServer(nServerID, strIP, nPort, strDBName, strDBUser, strDBPwd)
+end
+
+function CPPNFrame:MysqlExecute(str)
+    return self.mysqlModule:Execute(str)
+end
+
+function CPPNFrame:MysqlUpdate(strTableName, strKeyColName, strKey, fieldVec, valueVec)
+    return self.mysqlModule:Update(strTableName, strKeyColName, strKey, fieldVec, valueVec)
+end
+
+function CPPNFrame:MysqlQueryOne(strTableName, strKeyColName, strKey, fieldVec)
+    return self.mysqlModule:QueryOne(strTableName, strKeyColName, strKey, fieldVec)
+end
+
+function CPPNFrame:MysqlQueryMore(strTableName, strKeyColName, strKey, fieldVec)
+    return self.mysqlModule:QueryMore(strTableName, strKeyColName, strKey, fieldVec)
+end
+
+function CPPNFrame:MysqlQueryMoreWithCond(strTableName,strKeyColName, nOffset, nRows, fieldVec)
+    return self.mysqlModule:QueryMoreWithCond(strTableName,strKeyColName, nOffset, nRows, fieldVec)
+end
+
+function CPPNFrame:Delete(strTableName, strKeyColName, strKey)
+    return self.mysqlModule:Delete(strTableName, strKeyColName, strKey)
+end
+
+function CPPNFrame:Exists(strTableName, strKeyColName, strKey)
+    return self.mysqlModule:Exists(strTableName, strKeyColName, strKey)
+end
+
+function CPPNFrame:Keys(strTableName, strKeyColName, strKeyName)
+    return self.mysqlModule:Keys(strTableName, strKeyColName, strKeyName)
 end
 
 --执行函数, 函数被字符串表达出来

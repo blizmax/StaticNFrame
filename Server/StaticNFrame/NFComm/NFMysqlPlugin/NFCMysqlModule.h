@@ -45,6 +45,7 @@ public:
 	 * @return bool 
 	 */
 	virtual bool Shut() override;
+
 	/**
 	 * @brief
 	 *
@@ -52,6 +53,11 @@ public:
 	 */
 	virtual bool Execute() override;
 
+	/**
+	 * @brief
+	 *
+	 * @return bool
+	 */
 	virtual void OnTimer(uint32_t nTimerID) override;
 
 	/**
@@ -68,7 +74,7 @@ public:
 	 * @param  message
 	 * @return bool 
 	 */
-	virtual bool Updata(const google::protobuf::Message& message) override;
+	virtual bool Update(const google::protobuf::Message& message) override;
 	
 	/**
 	 * @brief
@@ -85,6 +91,14 @@ public:
 	 * @return bool 
 	 */
 	virtual bool QueryMore(google::protobuf::Message& message) override;
+
+	/**
+	 * @brief
+	 *
+	 * @param  message
+	 * @return bool
+	 */
+	virtual bool Execute(const std::string& qstr) override;
 	
 	/**
 	 * @brief
@@ -96,7 +110,7 @@ public:
 	 * @param  valueVec
 	 * @return bool 
 	 */
-	virtual bool Updata(const std::string& strTableName, const std::string& strKeyColName, const std::string& strKey, const std::vector<std::string>& fieldVec, const std::vector<std::string>& valueVec) override;
+	virtual bool Update(const std::string& strTableName, const std::string& strKeyColName, const std::string& strKey, const std::vector<std::string>& fieldVec, const std::vector<std::string>& valueVec) override;
 	
 	/**
 	 * @brief
@@ -108,7 +122,19 @@ public:
 	 * @param  valueVec
 	 * @return bool 
 	 */
-	virtual bool Query(const std::string& strTableName, const std::string& strKeyColName, const std::string& strKey, const std::vector<std::string>& fieldVec, std::vector<std::string>& valueVec) override;
+	virtual bool QueryOne(const std::string& strTableName, const std::string& strKeyColName, const std::string& strKey, const std::vector<std::string>& fieldVec, std::vector<std::string>& valueVec) override;
+
+	/**
+	 * @brief
+	 *
+	 * @param  strTableName
+	 * @param  strKeyColName
+	 * @param  strKey
+	 * @param  fieldVec
+	 * @param  valueVec
+	 * @return bool
+	 */
+	virtual bool QueryMore(const std::string& strTableName, const std::string& strKeyColName, const std::string& strKey, const std::vector<std::string>& fieldVec, std::vector<std::vector<std::string>>& valueVec) override;
 	
 	/**
 	 * @brief
@@ -121,7 +147,7 @@ public:
 	 * @param  valueVec
 	 * @return bool 
 	 */
-	virtual bool Query(const std::string& strTableName, const std::string& strKeyColName, int nOffset, int nRows, const std::vector<std::string>& fieldVec, std::vector<std::string>& valueVec) override;
+	virtual bool QueryMoreWithCond(const std::string& strTableName, const std::string& strKeyColName, int nOffset, int nRows, const std::vector<std::string>& fieldVec, std::vector<std::vector<std::string>>& valueVec) override;
 	
 	/**
 	 * @brief

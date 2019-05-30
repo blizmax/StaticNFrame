@@ -230,7 +230,7 @@ public:
 	 * @param  qstr sql语句
 	 * @return bool 执行成功或失败
 	 */
-	virtual bool Query(const std::string& qstr) override;
+	virtual bool Execute(const std::string& qstr) override;
 
 	/**
 	 * @brief 获得mysqlpp的连接
@@ -273,7 +273,7 @@ public:
 	 * @param  message
 	 * @return bool 
 	 */
-	virtual bool Updata(const google::protobuf::Message& message) override;
+	virtual bool Update(const google::protobuf::Message& message) override;
 
 	/**
 	 * @brief 通过protobuf反射，实现查询一条数据，并把语句放在protobuf中
@@ -301,10 +301,10 @@ public:
 	 * @param  valueVec			要插入的数据
 	 * @return bool				成功或失败
 	 */
-	virtual bool Updata(const std::string& strTableName, const std::string& strKeyColName, const std::string& strKey, const std::vector<std::string>& fieldVec, const std::vector<std::string>& valueVec) override;
+	virtual bool Update(const std::string& strTableName, const std::string& strKeyColName, const std::string& strKey, const std::vector<std::string>& fieldVec, const std::vector<std::string>& valueVec) override;
 
 	/**
-	 * @brief 查询数据
+	 * @brief 查询数据一条数据
 	 *
 	 * @param  strTableName		表名
 	 * @param  strKeyColName	key所在列的列名
@@ -313,7 +313,19 @@ public:
 	 * @param  valueVec			要取出的数据
 	 * @return bool				成功或失败
 	 */
-	virtual bool Query(const std::string& strTableName, const std::string& strKeyColName, const std::string& strKey, const std::vector<std::string>& fieldVec, std::vector<std::string>& valueVec) override;
+	virtual bool QueryOne(const std::string& strTableName, const std::string& strKeyColName, const std::string& strKey, const std::vector<std::string>& fieldVec, std::vector<std::string>& valueVec) override;
+
+	/**
+	 * @brief 查询数据许多数据
+	 *
+	 * @param  strTableName		表名
+	 * @param  strKeyColName	key所在列的列名
+	 * @param  strKey			key数据
+	 * @param  fieldVec			要取出的数据的列名
+	 * @param  valueVec			要取出的数据
+	 * @return bool				成功或失败
+	 */
+	virtual bool QueryMore(const std::string& strTableName, const std::string& strKeyColName, const std::string& strKey, const std::vector<std::string>& fieldVec, std::vector<std::vector<std::string>>& valueVec) override;
 
 	/**
 	 * @brief 查询数据
@@ -327,7 +339,7 @@ public:
 	 * @param  valueVec			要取出的数据
 	 * @return bool				成功或失败
 	 */
-	virtual bool Query(const std::string& strTableName, const std::string& strKeyColName, int nOffset, int nRows, const std::vector<std::string>& fieldVec, std::vector<std::string>& valueVec) override;
+	virtual bool QueryMoreWithCond(const std::string& strTableName, const std::string& strKeyColName, int nOffset, int nRows, const std::vector<std::string>& fieldVec, std::vector<std::vector<std::string>>& valueVec) override;
 
 	/**
 	 * @brief 删一行数据

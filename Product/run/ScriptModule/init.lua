@@ -59,4 +59,12 @@ function init_script_system(pluginManager, luaModule)
 	redisItem = redisConnect.new()
 
 	TimerManager.Init()
+
+	--local fields = {"userid", "cid", "account", "password", "nickname", 123}
+	--local values = LuaNFrame.MysqlQueryOneTable("dy_player", "age", 1, fields)
+	--luaDump(values)
+	--local values = LuaNFrame.MysqlQueryMoreTable("dy_player", "age", 1, fields)
+	--luaDump(values)
+	--local values = LuaNFrame.MysqlQueryMoreWithCondTable("dy_player", "userid", 0, 5, fields)
+	--luaDump(values)
 end

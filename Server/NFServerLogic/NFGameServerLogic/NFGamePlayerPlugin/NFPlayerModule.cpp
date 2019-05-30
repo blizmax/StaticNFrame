@@ -239,7 +239,7 @@ void NFCPlayerModule::CreatePlayer(const NFMsg::cgaccountlogin& cgMsg)
 	pDbInfo->set_face_1(NFCPlayerModule::GetInitFaceID());
 	pDbInfo->set_sex(cgMsg.sex());
 	pDbInfo->set_regdate(NFDateTime::Now().GetDbTimeString());
-	bool ret = FindModule<NFIMysqlModule>()->Updata(db_playerinfo);
+	bool ret = FindModule<NFIMysqlModule>()->Update(db_playerinfo);
 	if (ret == false)
 	{
 		NFBehaviorLog(0, "", "player", "LoadPlayerInfoByCID", -1, "加载数据库玩家信息失败");

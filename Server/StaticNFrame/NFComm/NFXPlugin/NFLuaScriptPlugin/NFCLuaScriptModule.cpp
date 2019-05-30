@@ -20,6 +20,7 @@
 #include "NFComm/NFPluginModule/NFIHttpClientModule.h"
 #include "NFComm/NFPluginModule/NFIHttpServerModule.h"
 #include "NFComm/NFPluginModule/NFIServerNetEventModule.h"
+#include "NFComm/NFPluginModule/NFIMysqlModule.h"
 
 void NFLuaTimer::OnTimer(uint32_t nTimerID)
 {
@@ -107,6 +108,7 @@ bool NFCLuaScriptModule::Register()
 		.addFunction("GetHttpClientModule", &NFIPluginManager::FindModule<NFIHttpClientModule>)
 		.addFunction("GetHttpServerModule", &NFIPluginManager::FindModule<NFIHttpServerModule>)
 		.addFunction("GetServerNetEventModule", &NFIPluginManager::FindModule<NFIServerNetEventModule>)
+		.addFunction("GetMysqlModule", &NFIPluginManager::FindModule<NFIMysqlModule>)
 		.endClass();
 
 	LuaIntf::LuaBinding(l).beginClass<NFIKernelModule>("NFIKernelModule")
@@ -168,6 +170,18 @@ bool NFCLuaScriptModule::Register()
 		.addFunction("SendByServerID", (void (NFINetClientModule::*)(const uint32_t unLinkId, const uint32_t nMsgID, const std::string& strData, const uint64_t nPlayerID))(&NFINetClientModule::SendByServerID))
 		.addFunction("SendToAllServer", (void (NFINetClientModule::*)(const uint32_t nMsgID, const std::string& strData, const uint64_t nPlayerID))(&NFINetClientModule::SendToAllServer))
 		.addFunction("SendToAllServerByServerType", (void (NFINetClientModule::*)(NF_SERVER_TYPES eServerType, uint32_t nMsgID, const std::string& strData, const uint64_t nPlayerID))(&NFINetClientModule::SendToAllServer))
+		.endClass();
+
+	LuaIntf::LuaBinding(l).beginClass<NFIMysqlModule>("NFIMysqlModule")
+		.addFunction("AddMysqlServer", &NFIMysqlModule::AddMysqlServer)
+		.addFunction("Execute", &NFIMysqlModule::Execute)
+		.addFunction("Delete", &NFIMysqlModule::Delete)
+		.addFunction("Exists", &NFIMysqlModule::LuaExists)
+		.addFunction("Keys", &NFIMysqlModule::LuaKeys)
+		.addFunction("QueryOne", &NFIMysqlModule::LuaQueryOne)
+		.addFunction("QueryMore", &NFIMysqlModule::LuaQueryMore)
+		.addFunction("QueryMoreWithCond",&NFIMysqlModule::LuaQueryMoreWithCond)
+		.addFunction("Update", (bool (NFIMysqlModule::*)(const std::string& strTableName, const std::string& strKeyColName, const std::string& strKey, const std::vector<std::string>& fieldVec, const std::vector<std::string>& valueVec))&NFIMysqlModule::Update)
 		.endClass();
 
 	LuaIntf::LuaBinding(l).beginClass<NFILogModule>("NFILogModule")

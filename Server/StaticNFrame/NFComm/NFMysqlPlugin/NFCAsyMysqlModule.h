@@ -46,7 +46,7 @@ public:
 			NFIMysqlDriver* pDriver = m_pMysqlDriverManager->GetMysqlDriver();
 			if (pDriver)
 			{
-				ret = pDriver->Updata(*m_pMessage);
+				ret = pDriver->Update(*m_pMessage);
 			}
 		}
 		return true;

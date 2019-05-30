@@ -483,6 +483,7 @@ function GdmjWork.SendAction(tItem, gcAction, isEnd)
 end
 
 function GdmjWork.CheckPengGang(tItem, pokerID, actChairid)
+
 	--检查是否有碰以及杠
 	if #tItem.m_tInfo.publicpoker == 0 then
 		return 0,0  --剩下最后一张牌了，不能碰和杠，因为碰和杠后就不能够出牌了

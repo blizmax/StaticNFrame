@@ -188,7 +188,7 @@ function LuaNFrame.AddAccountEventCallBack(eServerType, luaFuncStr)
     CPPNFrame:AddAccountEventCallBack(eServerType, luaFuncStr)
 end
 
-LuaNFrame.Debug = function(logId, guid, ...)
+function LuaNFrame.Debug(logId, guid, ...)
 	local cStackInfo = debug.getinfo(2, "Sl")
 	if cStackInfo then
 		CPPNFrame:Debug(logId, guid,"["..tostring(cStackInfo.short_src)..":"..tostring(cStackInfo.currentline).."] | "..tostring(...))
@@ -197,7 +197,7 @@ LuaNFrame.Debug = function(logId, guid, ...)
 	end
 end
 
-LuaNFrame.Info = function(logId, guid, ...)
+function LuaNFrame.Info(logId, guid, ...)
 	local cStackInfo = debug.getinfo(2, "Sl")
 	if cStackInfo then
 		CPPNFrame:Info(logId, guid,"["..tostring(cStackInfo.short_src)..":"..tostring(cStackInfo.currentline).."] | "..tostring(...))
@@ -206,7 +206,7 @@ LuaNFrame.Info = function(logId, guid, ...)
 	end
 end
 
-LuaNFrame.Warn = function(logId, guid, ...)
+function LuaNFrame.Warn(logId, guid, ...)
 	local cStackInfo = debug.getinfo(2, "Sl")
 	if cStackInfo then
 		CPPNFrame:Warn(logId, guid,"["..tostring(cStackInfo.short_src)..":"..tostring(cStackInfo.currentline).."] | "..tostring(...))
@@ -215,7 +215,7 @@ LuaNFrame.Warn = function(logId, guid, ...)
 	end
 end
 
-LuaNFrame.Error = function(logId, guid, ...)
+function LuaNFrame.Error(logId, guid, ...)
 	local cStackInfo = debug.getinfo(2, "Sl")
 	if cStackInfo then
 		CPPNFrame:Error(logId, guid, "["..tostring(cStackInfo.short_src)..":"..tostring(cStackInfo.currentline).."] | "..tostring(...))
@@ -224,12 +224,97 @@ LuaNFrame.Error = function(logId, guid, ...)
 	end
 end
 
-LuaNFrame.ExeFunc = function(func)
+function LuaNFrame.ExeFunc(func)
 	local status, msg = xpcall (func, __G__TRACKBACK__)
 
     if not status then
         LuaNFrame.Error(NFLogId.NF_LOG_SYSTEMLOG, 0, msg)
     end
+end
+
+function LuaNFrame.AddMysqlServer(nServerID, strIP, nPort, strDBName, strDBUser, strDBPwd)
+    return CPPNFrame:AddMysqlServer(nServerID, strIP, nPort, strDBName, strDBUser, strDBPwd)
+end
+
+function LuaNFrame.MysqlExecute(str)
+    return CPPNFrame:MysqlExecute(str)
+end
+
+function LuaNFrame.MysqlUpdate(strTableName, strKeyColName, strKey, fieldVec, valueVec)
+    return CPPNFrame:MysqlUpdate(strTableName, strKeyColName, strKey, fieldVec, valueVec)
+end
+
+--返回一个数组
+function LuaNFrame.MysqlQueryOne(strTableName, strKeyColName, strKey, fieldVec)
+	return CPPNFrame:MysqlQueryOne(strTableName, strKeyColName, strKey, fieldVec)
+end
+
+--返回一个二维数组
+function LuaNFrame.MysqlQueryMore(strTableName, strKeyColName, strKey, fieldVec)
+	return CPPNFrame:MysqlQueryMore(strTableName, strKeyColName, strKey, fieldVec)
+end
+
+--返回一个二维数组
+function LuaNFrame.MysqlQueryMoreWithCond(strTableName,strKeyColName, nOffset, nRows, fieldVec)
+    return CPPNFrame:MysqlQueryMoreWithCond(strTableName,strKeyColName, nOffset, nRows, fieldVec)
+end
+
+
+--返回一个table
+function LuaNFrame.MysqlQueryOneTable(strTableName, strKeyColName, strKey, fieldVec)
+	local array = CPPNFrame:MysqlQueryOne(strTableName, strKeyColName, strKey, fieldVec)
+	local map = {}
+	if #fieldVec == #array then
+		for i = 1, #fieldVec do
+			map[fieldVec[i]] = array[i]
+		end
+	end
+	return map
+end
+
+--返回一个数组, 数组里都是table
+function LuaNFrame.MysqlQueryMoreTable(strTableName, strKeyColName, strKey, fieldVec)
+	local arrays = CPPNFrame:MysqlQueryMore(strTableName, strKeyColName, strKey, fieldVec)
+	local maps = {}
+	for x = 1, #arrays do
+		local array = arrays[x]
+		local map = {}
+		if #fieldVec == #array then
+			for i = 1, #fieldVec do
+				map[fieldVec[i]] = array[i]
+			end
+		end
+		table.insert(maps, map)
+	end
+	return maps
+end
+
+function LuaNFrame.MysqlQueryMoreWithCondTable(strTableName,strKeyColName, nOffset, nRows, fieldVec)
+	local arrays =  CPPNFrame:MysqlQueryMoreWithCond(strTableName,strKeyColName, nOffset, nRows, fieldVec)
+	local maps = {}
+	for x = 1, #arrays do
+		local array = arrays[x]
+		local map = {}
+		if #fieldVec == #array then
+			for i = 1, #fieldVec do
+				map[fieldVec[i]] = array[i]
+			end
+		end
+		table.insert(maps, map)
+	end
+	return maps
+end
+
+function LuaNFrame.Delete(strTableName, strKeyColName, strKey)
+    return CPPNFrame:Delete(strTableName, strKeyColName, strKey)
+end
+
+function LuaNFrame.Exists(strTableName, strKeyColName, strKey)
+    return CPPNFrame:Exists(strTableName, strKeyColName, strKey)
+end
+
+function LuaNFrame.Keys(strTableName, strKeyColName, strKeyName)
+    return CPPNFrame:Keys(strTableName, strKeyColName, strKeyName)
 end
 
 g_operateID = g_operateID or 0

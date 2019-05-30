@@ -482,10 +482,14 @@ function RpmjService.DoPlay(tItem, cgmsg, gcmsg)
 	--首先，在手牌中去掉
 	
 	tItem.m_tInfo.prevpos = 0  --首先，把这个设置为0，为什么要把这个设置为0呢，这个是杠爆全包的,只要是出牌了，这个就不算了
+
+	while #tItem.m_userList[cgmsg.actchairid].guopeng > 0 do   --过碰过碰
+		tItem.m_userList[cgmsg.actchairid].guopeng:remove(1)
+	end
 	
 	GdmjWork.DelPokerFromHand(tItem.m_userList[cgmsg.actchairid],cgmsg.actpokerid)
 	GdmjWork.AddPokerToOutList(tItem.m_userList[cgmsg.actchairid],cgmsg.actpokerid)
-	local nextPos,num = GdmjWork.CheckPengGang(tItem,cgmsg.actpokerid, cgmsg.actchairid)
+	local nextPos,num = GdmjWork.CheckNewPengGang(tItem,cgmsg.actpokerid, cgmsg.actchairid)
 	
 	if nextPos ~= 0 then
 		--表示是可以碰和或者杠的
@@ -500,12 +504,14 @@ function RpmjService.DoPlay(tItem, cgmsg, gcmsg)
 			tItem.m_nextInfo.actiontype:append(g_gdmjAction.type_peng)  --如果等于2，只有碰的情况
 		else
 			tItem.m_nextInfo.actiontype:append(g_gdmjAction.type_peng)
-			tItem.m_nextInfo.actiontype:append(g_gdmjAction.type_gang)
+			--饶平麻将， 当牌堆减去马牌剩最后四张牌是， 不能杠, 只能自摸
+			if #tItem.m_tInfo.publicpoker > #tItem.m_tInfo.manum + 4 then
+				tItem.m_nextInfo.actiontype:append(g_gdmjAction.type_gang)
+				tItem.m_userList[nextPos].guopeng:append(cgmsg.actpokerid)   --在这里就需要把过碰的加进去了
+			end
 					
 			tItem.m_tInfo.prevpos = cgmsg.actchairid   --这里是记录放杠者的位置
 		end
-		
-		
 	else
 		--如果没有碰或者杠，表示轮到下一个人了
 		tItem.m_tInfo.beingpoker = 1
@@ -641,8 +647,9 @@ function RpmjService.DoWin(tItem, pos, pokerID)
 	tItem.m_tInfo.timemark = g_gdmjTime.counting_time
 end
 
+--饶平麻将， 码数不能打
 function RpmjService.CheckLiuJu(tItem)
-	if #tItem.m_tInfo.publicpoker > 0 then
+	if #tItem.m_tInfo.publicpoker > tItem.m_tInfo.manum then
 		return nil
 	end
 	
