@@ -288,8 +288,8 @@ function CPPNFrame:MysqlExecute(str)
     return self.mysqlModule:Execute(str)
 end
 
-function CPPNFrame:MysqlUpdate(strTableName, strKeyColName, strKey, fieldVec, valueVec)
-    return self.mysqlModule:Update(strTableName, strKeyColName, strKey, fieldVec, valueVec)
+function CPPNFrame:MysqlUpdate(strTableName, strKeyColName, strKey, keyvalueMap)
+    return self.mysqlModule:Update(strTableName, strKeyColName, strKey, keyvalueMap)
 end
 
 function CPPNFrame:MysqlQueryOne(strTableName, strKeyColName, strKey, fieldVec)
@@ -304,15 +304,15 @@ function CPPNFrame:MysqlQueryMoreWithCond(strTableName,strKeyColName, nOffset, n
     return self.mysqlModule:QueryMoreWithCond(strTableName,strKeyColName, nOffset, nRows, fieldVec)
 end
 
-function CPPNFrame:Delete(strTableName, strKeyColName, strKey)
+function CPPNFrame:MysqlDelete(strTableName, strKeyColName, strKey)
     return self.mysqlModule:Delete(strTableName, strKeyColName, strKey)
 end
 
-function CPPNFrame:Exists(strTableName, strKeyColName, strKey)
+function CPPNFrame:MysqlExists(strTableName, strKeyColName, strKey)
     return self.mysqlModule:Exists(strTableName, strKeyColName, strKey)
 end
 
-function CPPNFrame:Keys(strTableName, strKeyColName, strKey, fieldVec)
+function CPPNFrame:MysqlKeys(strTableName, strKeyColName, strKey, fieldVec)
     return self.mysqlModule:Keys(strTableName, strKeyColName, strKey, fieldVec)
 end
 

@@ -111,6 +111,18 @@ public:
 	 * @return bool 
 	 */
 	virtual bool Update(const std::string& strTableName, const std::string& strKeyColName, const std::string& strKey, const std::vector<std::string>& fieldVec, const std::vector<std::string>& valueVec) override;
+
+	/**
+	 * @brief
+	 *
+	 * @param  strTableName
+	 * @param  strKeyColName
+	 * @param  strKey
+	 * @param  fieldVec
+	 * @param  valueVec
+	 * @return bool
+	 */
+	virtual bool Update(const std::string& strTableName, const std::string& strKeyColName, const std::string& strKey, const std::map<std::string, std::string>& keyvalueMap) override;
 	
 	/**
 	 * @brief

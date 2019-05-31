@@ -6,8 +6,7 @@
 //
 // -------------------------------------------------------------------------
 
-#ifndef NFC_ASY_MYSQL_MODULE_H
-#define NFC_ASY_MYSQL_MODULE_H
+#pragma once
 
 #include "NFComm/NFPluginModule/NFIAsyMysqlModule.h"
 #include "NFComm/NFPluginModule/NFITaskModule.h"
@@ -16,6 +15,8 @@
 #include "NFCMysqlDriverManager.h"
 #include "NFCMysqlDriver.h"
 #include "NFComm/NFPluginModule/NFEventDefine.h"
+
+class NFCAsyMysqlModule;
 
 class NFMysqlUpdateMessageTask : public NFTask
 {
@@ -71,6 +72,56 @@ private:
 	NFIPluginManager* m_pPluginManager;
 	bool ret;
 	uint8_t mMysqlEventType;
+};
+
+class NFMysqlUpdateTask : public NFTask
+{
+public:
+	NFMysqlUpdateTask(NFIAsyMysqlModule* pModule, NFIMysqlDriver* pDriver, uint64_t balanceId)
+	{
+		m_pAsyncMysqlModule = pModule;
+		m_pMysqlDriver = pDriver;
+		m_balanceId = balanceId;
+		m_result = false;
+	}
+
+	virtual ~NFMysqlUpdateTask()
+	{
+
+	}
+
+	/**
+	**  异步线程处理函数，将在另一个线程里运行
+	*/
+	virtual bool ThreadProcess()
+	{
+		if (m_pMysqlDriver)
+		{
+			m_result = m_pMysqlDriver->Update(m_strTableName, m_strKeyColName, m_strKey, m_fieldValueMap);
+		}
+		return true;
+	}
+
+	/**
+	** 主线程处理函数，将在线程处理完后，提交给主线程来处理，根据返回函数是否继续处理
+	返回值： thread::TPTask::TPTaskState， 请参看TPTaskState
+	*/
+	virtual TPTaskState MainThreadProcess()
+	{
+		if (m_pAsyncMysqlModule)
+		{
+			m_pAsyncMysqlModule->UpdateCallBack(m_result);
+		}
+		return TPTASK_STATE_COMPLETED;
+	}
+public:
+	NFIMysqlDriver* m_pMysqlDriver;
+	NFIAsyMysqlModule* m_pAsyncMysqlModule;
+	bool m_result;
+	std::string m_strTableName;
+	std::string m_strKeyColName;
+	std::string m_strKey;
+	std::map<std::string, std::string> m_fieldValueMap;
 };
 
 class NFCAsyMysqlModule
@@ -158,6 +209,18 @@ public:
 	* @param  valueVec
 	* @return bool
 	*/
+	virtual bool Update(const std::string& strTableName, const std::string& strKeyColName, const std::string& strKey, const std::map<std::string, std::string>& fieldValueMap, uint64_t balanceId = 0) override;
+
+	/**
+	* @brief
+	*
+	* @param  strTableName
+	* @param  strKeyColName
+	* @param  strKey
+	* @param  fieldVec
+	* @param  valueVec
+	* @return bool
+	*/
 	virtual bool Query(const std::string& strTableName, const std::string& strKeyColName, const std::string& strKey, const std::vector<std::string>& fieldVec, std::vector<std::string>& valueVec, uint64_t balanceId = 0) override;
 
 	/**
@@ -205,6 +268,8 @@ public:
 	*/
 	virtual bool Keys(const std::string& strTableName, const std::string& strKeyColName, const std::string& strKeyName, std::vector<std::string>& valueVec, uint64_t balanceId = 0) override;
 
+public:
+	virtual void UpdateCallBack(bool result) override;
 private:
 	std::unordered_map<int, NFCMysqlDriverManager*> m_mysqlDriverMap;
 	uint64_t mnLastCheckTime;
@@ -219,5 +284,3 @@ private:
 	*/
 	size_t mnSuitIndex = 0;
 };
-
-#endif

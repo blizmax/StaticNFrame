@@ -184,6 +184,40 @@ bool NFCAsyMysqlModule::QueryMore(google::protobuf::Message& message, uint64_t b
 */
 bool NFCAsyMysqlModule::Update(const std::string& strTableName, const std::string& strKeyColName, const std::string& strKey, const std::vector<std::string>& fieldVec, const std::vector<std::string>& valueVec, uint64_t balanceId)
 {
+	int actorId = GetBalanceActor(balanceId);
+	NFCMysqlDriverManager* pMysqlDriverManager = GetDriver(actorId);
+	if (pMysqlDriverManager)
+	{
+		NFMysqlUpdateTask* pTask = NF_NEW NFMysqlUpdateTask(this, pMysqlDriverManager->GetMysqlDriver(), balanceId);
+		pTask->m_strTableName = strTableName;
+		pTask->m_strKeyColName = strKeyColName;
+		pTask->m_strKey = strKey;
+		if (fieldVec.size() == valueVec.size())
+		{
+			for(size_t i = 0; i < fieldVec.size(); ++i)
+			{
+				pTask->m_fieldValueMap.emplace(fieldVec[i], valueVec[i]);
+			}
+		}
+		FindModule<NFITaskModule>()->AddTask(actorId, pTask);
+	}
+	return true;
+}
+
+bool NFCAsyMysqlModule::Update(const std::string& strTableName, const std::string& strKeyColName,
+	const std::string& strKey, const std::map<std::string, std::string>& fieldValueMap, uint64_t balanceId)
+{
+	int actorId = GetBalanceActor(balanceId);
+	NFCMysqlDriverManager* pMysqlDriverManager = GetDriver(actorId);
+	if (pMysqlDriverManager)
+	{
+		NFMysqlUpdateTask* pTask = NF_NEW NFMysqlUpdateTask(this, pMysqlDriverManager->GetMysqlDriver(), balanceId);
+		pTask->m_strTableName = strTableName;
+		pTask->m_strKeyColName = strKeyColName;
+		pTask->m_strKey = strKey;
+		pTask->m_fieldValueMap = fieldValueMap;
+		FindModule<NFITaskModule>()->AddTask(actorId, pTask);
+	}
 	return true;
 }
 
@@ -257,4 +291,9 @@ bool NFCAsyMysqlModule::Exists(const std::string& strTableName, const std::strin
 bool NFCAsyMysqlModule::Keys(const std::string& strTableName, const std::string& strKeyColName, const std::string& strKeyName, std::vector<std::string>& valueVec, uint64_t balanceId)
 {
 	return true;
+}
+
+void NFCAsyMysqlModule::UpdateCallBack(bool result)
+{
+
 }

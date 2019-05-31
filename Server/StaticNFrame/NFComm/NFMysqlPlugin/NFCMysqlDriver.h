@@ -304,6 +304,18 @@ public:
 	virtual bool Update(const std::string& strTableName, const std::string& strKeyColName, const std::string& strKey, const std::vector<std::string>& fieldVec, const std::vector<std::string>& valueVec) override;
 
 	/**
+	 * @brief mysql语句更新和插入
+	 *
+	 * @param  strTableName		表名
+	 * @param  strKeyColName	key所在列的列名
+	 * @param  strKey			key数据
+	 * @param  fieldVec			要插入的数据的列名
+	 * @param  valueVec			要插入的数据
+	 * @return bool				成功或失败
+	 */
+	virtual bool Update(const std::string& strTableName, const std::string& strKeyColName, const std::string& strKey, const std::map<std::string, std::string>& keyvalueMap) override;
+
+	/**
 	 * @brief 查询数据一条数据
 	 *
 	 * @param  strTableName		表名

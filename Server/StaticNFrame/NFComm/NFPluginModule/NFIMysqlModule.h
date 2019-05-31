@@ -22,7 +22,9 @@ public:
 	virtual bool Query(google::protobuf::Message& message) = 0;
 	virtual bool QueryMore(google::protobuf::Message& message) = 0;
 	virtual bool Execute(const std::string& qstr) = 0;
+
 	virtual bool Update(const std::string& strTableName, const std::string& strKeyColName, const std::string& strKey, const std::vector<std::string>& fieldVec, const std::vector<std::string>& valueVec) = 0;
+	virtual bool Update(const std::string& strTableName, const std::string& strKeyColName, const std::string& strKey, const std::map<std::string, std::string>& keyvalueMap) = 0;
 
 	virtual bool QueryOne(const std::string& strTableName, const std::string& strKeyColName, const std::string& strKey, const std::vector<std::string>& fieldVec, std::vector<std::string>& valueVec) = 0;
 	virtual bool QueryMoreWithCond(const std::string& strTableName, const std::string& strKeyColName, int nOffset, int nRows, const std::vector<std::string>& fieldVec, std::vector<std::vector<std::string>>& valueVec) = 0;
@@ -37,6 +39,11 @@ public:
 
 	virtual bool Keys(const std::string& strTableName, const std::string& strKeyColName, const std::string& strKey, const std::vector<std::string>& fieldVec, std::vector<std::vector<std::string>>& valueVec) = 0;
 	virtual bool Keys(const std::string& strTableName, const std::string& strKeyColName, const std::string& strKey, const std::vector<std::string>& fieldVec, std::vector<std::map<std::string, std::string>>& valueVec) = 0;
+
+	virtual bool LuaUpdate(const std::string& strTableName, const std::string& strKeyColName, const std::string& strKey, const std::map<std::string, std::string>& keyvalueMap)
+	{
+		return Update(strTableName, strKeyColName, strKey, keyvalueMap);
+	}
 
 	virtual std::map<std::string, std::string> LuaQueryOne(const std::string& strTableName, const std::string& strKeyColName, const std::string& strKey, const std::vector<std::string>& fieldVec)
 	{

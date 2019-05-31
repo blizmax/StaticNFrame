@@ -67,6 +67,18 @@ public:
 	* @param  valueVec
 	* @return bool
 	*/
+	virtual bool Update(const std::string& strTableName, const std::string& strKeyColName, const std::string& strKey, const std::map<std::string, std::string>& fieldValueMap, uint64_t balanceId = 0) = 0;
+
+	/**
+	* @brief
+	*
+	* @param  strTableName
+	* @param  strKeyColName
+	* @param  strKey
+	* @param  fieldVec
+	* @param  valueVec
+	* @return bool
+	*/
 	virtual bool Query(const std::string& strTableName, const std::string& strKeyColName, const std::string& strKey, const std::vector<std::string>& fieldVec, std::vector<std::string>& valueVec, uint64_t balanceId = 0) = 0;
 
 	/**
@@ -113,5 +125,13 @@ public:
 	* @return bool
 	*/
 	virtual bool Keys(const std::string& strTableName, const std::string& strKeyColName, const std::string& strKeyName, std::vector<std::string>& valueVec, uint64_t balanceId = 0) = 0;
+
+	/**
+	* @brief 异步更新回调
+	*
+	* @param  result
+	* @return
+	*/
+	virtual void UpdateCallBack(bool result) = 0;
 };
 

@@ -240,8 +240,17 @@ function LuaNFrame.MysqlExecute(str)
     return CPPNFrame:MysqlExecute(str)
 end
 
-function LuaNFrame.MysqlUpdate(strTableName, strKeyColName, strKey, fieldVec, valueVec)
-    return CPPNFrame:MysqlUpdate(strTableName, strKeyColName, strKey, fieldVec, valueVec)
+-- values = {
+--     "123"      = "123"
+--     "account"  = "name115"
+--     "cid"      = "cid115"
+--     "nickname" = "nick115"
+--     "password" = "pwd115"
+--     "userid"   = "101200"
+-- }
+--LuaNFrame.MysqlUpdate("dy_player", "userid", 101200, values)
+function LuaNFrame.MysqlUpdate(strTableName, strKeyColName, strKey, keyvalueMap)
+    return CPPNFrame:MysqlUpdate(strTableName, strKeyColName, strKey, keyvalueMap)
 end
 
 --local fields = {"userid", "cid", "account", "password", "nickname", 123}
@@ -307,16 +316,16 @@ function LuaNFrame.MysqlQueryMoreWithCond(strTableName,strKeyColName, nOffset, n
     return CPPNFrame:MysqlQueryMoreWithCond(strTableName,strKeyColName, nOffset, nRows, fieldVec)
 end
 
-function LuaNFrame.Delete(strTableName, strKeyColName, strKey)
-    return CPPNFrame:Delete(strTableName, strKeyColName, strKey)
+function LuaNFrame.MysqlDelete(strTableName, strKeyColName, strKey)
+    return CPPNFrame:MysqlDelete(strTableName, strKeyColName, strKey)
 end
 
-function LuaNFrame.Exists(strTableName, strKeyColName, strKey)
-    return CPPNFrame:Exists(strTableName, strKeyColName, strKey)
+function LuaNFrame.MysqlExists(strTableName, strKeyColName, strKey)
+    return CPPNFrame:MysqlExists(strTableName, strKeyColName, strKey)
 end
 
-function LuaNFrame.Keys(strTableName, strKeyColName, strKey, fieldVec)
-    return CPPNFrame:Keys(strTableName, strKeyColName, strKey, fieldVec)
+function LuaNFrame.MysqlKeys(strTableName, strKeyColName, strKey, fieldVec)
+    return CPPNFrame:MysqlKeys(strTableName, strKeyColName, strKey, fieldVec)
 end
 
 g_operateID = g_operateID or 0

@@ -60,11 +60,8 @@ function init_script_system(pluginManager, luaModule)
 
 	TimerManager.Init()
 
-	local fields = {"userid", "cid", "account", "password", "nickname", 123}
-	local values = LuaNFrame.MysqlQueryOne("dy_player", "age", 1, fields)
-	luaDump(values)
-	local values = LuaNFrame.MysqlQueryMore("dy_player", "age", 1, fields)
-	luaDump(values)
-	local values = LuaNFrame.MysqlQueryMoreWithCond("dy_player", "userid", 0, 5, fields)
-	luaDump(values)
+	local fields = {"userid", "cid", "account", "password", "nickname"}
+	local values = LuaNFrame.MysqlQueryOne("dy_player", "userid", 101200, fields)
+	values['nickname'] = "gaoyi"
+	LuaNFrame.MysqlUpdate("dy_player", "userid", 101200, values)
 end

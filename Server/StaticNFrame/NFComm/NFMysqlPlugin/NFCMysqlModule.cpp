@@ -95,6 +95,17 @@ bool NFCMysqlModule::Update(const std::string& strTableName, const std::string& 
 	return false;
 }
 
+bool NFCMysqlModule::Update(const std::string& strTableName, const std::string& strKeyColName, const std::string& strKey, const std::map<std::string, std::string>& keyvalueMap)
+{
+	NFIMysqlDriver* pDriver = m_pMysqlDriverManager->GetMysqlDriver();
+	if (pDriver)
+	{
+		return pDriver->Update(strTableName, strKeyColName, strKey, keyvalueMap);
+	}
+
+	return false;
+}
+
 bool NFCMysqlModule::QueryOne(const std::string& strTableName, const std::string& strKeyColName, const std::string& strKey, const std::vector<std::string>& fieldVec, std::vector<std::string>& valueVec)
 {
 	NFIMysqlDriver* pDriver = m_pMysqlDriverManager->GetMysqlDriver();

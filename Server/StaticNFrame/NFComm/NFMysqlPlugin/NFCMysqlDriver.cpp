@@ -650,6 +650,85 @@ bool NFCMysqlDriver::Update(const std::string& strTableName, const std::string& 
 	return true;
 }
 
+bool NFCMysqlDriver::Update(const std::string& strTableName, const std::string& strKeyColName, const std::string& strKey, const std::map<std::string, std::string>& keyvalueMap)
+{
+	mysqlpp::Connection* pConnection = GetConnection();
+	if (NULL == pConnection)
+	{
+		return false;
+	}
+
+	bool bExist = false;
+	if (!Exists(strTableName, strKeyColName, strKey, bExist))
+	{
+		return false;
+	}
+
+	NFMYSQLTRYBEGIN
+	mysqlpp::Query query = pConnection->query();
+	if (bExist)
+	{
+		// update
+		query << "UPDATE " << strTableName << " SET ";
+		int i = 0;
+		for (auto iter = keyvalueMap.begin(); iter != keyvalueMap.end(); ++iter)
+		{
+			if (i == 0)
+			{
+				query << iter->first << " = " << mysqlpp::quote << iter->second;
+			}
+			else
+			{
+				query << "," << iter->first << " = " << mysqlpp::quote << iter->second;
+			}
+			i++;
+		}
+
+		query << " WHERE " << strKeyColName << " = " << mysqlpp::quote << strKey << ";";
+	}
+	else
+	{
+		// insert
+		query << "INSERT INTO " << strTableName << "(" << strKeyColName << ",";
+		int i = 0;
+		for (auto iter = keyvalueMap.begin(); iter != keyvalueMap.end(); ++iter)
+		{
+			if (i == 0)
+			{
+				query << iter->first;
+			}
+			else
+			{
+				query << ", " << iter->first;
+			}
+			i++;
+		}
+
+		query << ") VALUES(" << mysqlpp::quote << strKey << ",";
+		i = 0;
+		for (auto iter = keyvalueMap.begin(); iter != keyvalueMap.end(); ++iter)
+		{
+			if (i == 0)
+			{
+				query << mysqlpp::quote << iter->second;
+			}
+			else
+			{
+				query << ", " << mysqlpp::quote << iter->second;
+			}
+			i++;
+		}
+
+		query << ");";
+	}
+
+	query.execute();
+	query.reset();
+	NFMYSQLTRYEND("update or insert error")
+
+	return true;
+}
+
 bool NFCMysqlDriver::QueryMoreWithCond(const std::string& strTableName, const std::string& strKeyColName, int nOffset, int nRows, const std::vector<std::string>& fieldVec, std::vector<std::vector<std::string>>& valueVec)
 {
 	mysqlpp::Connection* pConnection = GetConnection();

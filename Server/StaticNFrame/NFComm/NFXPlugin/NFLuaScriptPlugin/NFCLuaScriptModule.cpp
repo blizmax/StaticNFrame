@@ -181,7 +181,7 @@ bool NFCLuaScriptModule::Register()
 		.addFunction("QueryOne", &NFIMysqlModule::LuaQueryOne)
 		.addFunction("QueryMore", &NFIMysqlModule::LuaQueryMore)
 		.addFunction("QueryMoreWithCond",&NFIMysqlModule::LuaQueryMoreWithCond)
-		.addFunction("Update", (bool (NFIMysqlModule::*)(const std::string& strTableName, const std::string& strKeyColName, const std::string& strKey, const std::vector<std::string>& fieldVec, const std::vector<std::string>& valueVec))&NFIMysqlModule::Update)
+		.addFunction("Update", &NFIMysqlModule::LuaUpdate)
 		.endClass();
 
 	LuaIntf::LuaBinding(l).beginClass<NFILogModule>("NFILogModule")
