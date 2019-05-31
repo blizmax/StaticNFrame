@@ -244,65 +244,67 @@ function LuaNFrame.MysqlUpdate(strTableName, strKeyColName, strKey, fieldVec, va
     return CPPNFrame:MysqlUpdate(strTableName, strKeyColName, strKey, fieldVec, valueVec)
 end
 
---返回一个数组
+--local fields = {"userid", "cid", "account", "password", "nickname", 123}
+--local values = LuaNFrame.MysqlQueryOne("dy_player", "age", 1, fields)
+-- "<var>" = {
+--     "123"      = "123"
+--     "account"  = "name115"
+--     "cid"      = "cid115"
+--     "nickname" = "nick115"
+--     "password" = "pwd115"
+--     "userid"   = "101200"
+-- }
 function LuaNFrame.MysqlQueryOne(strTableName, strKeyColName, strKey, fieldVec)
 	return CPPNFrame:MysqlQueryOne(strTableName, strKeyColName, strKey, fieldVec)
 end
 
---返回一个二维数组
+--local fields = {"userid", "cid", "account", "password", "nickname", 123}
+--local values = LuaNFrame.MysqlQueryMore("dy_player", "age", 1, fields)
+-- "<var>" = {
+--     1 = {
+--         "123"      = "123"
+--         "account"  = "name115"
+--         "cid"      = "cid115"
+--         "nickname" = "nick115"
+--         "password" = "pwd115"
+--         "userid"   = "101200"
+--     }
+--     2 = {
+--         "123"      = "123"
+--         "account"  = "name117"
+--         "cid"      = "cid117"
+--         "nickname" = "nick117"
+--         "password" = "pwd117"
+--         "userid"   = "101201"
+--     }
+-- }
 function LuaNFrame.MysqlQueryMore(strTableName, strKeyColName, strKey, fieldVec)
 	return CPPNFrame:MysqlQueryMore(strTableName, strKeyColName, strKey, fieldVec)
 end
 
---返回一个二维数组
+--local fields = {"userid", "cid", "account", "password", "nickname", 123}
+--local values = LuaNFrame.MysqlQueryMoreWithCond("dy_player", "userid", 0, 2, fields)
+-- "<var>" = {
+--     1 = {
+--         "123"      = "123"
+--         "account"  = "name115"
+--         "cid"      = "cid115"
+--         "nickname" = "nick115"
+--         "password" = "pwd115"
+--         "userid"   = "101200"
+--     }
+--     2 = {
+--         "123"      = "123"
+--         "account"  = "name117"
+--         "cid"      = "cid117"
+--         "nickname" = "nick117"
+--         "password" = "pwd117"
+--         "userid"   = "101201"
+--     }
+-- }
+--返回一个table数组, 字段与值对应
 function LuaNFrame.MysqlQueryMoreWithCond(strTableName,strKeyColName, nOffset, nRows, fieldVec)
     return CPPNFrame:MysqlQueryMoreWithCond(strTableName,strKeyColName, nOffset, nRows, fieldVec)
-end
-
-
---返回一个table
-function LuaNFrame.MysqlQueryOneTable(strTableName, strKeyColName, strKey, fieldVec)
-	local array = CPPNFrame:MysqlQueryOne(strTableName, strKeyColName, strKey, fieldVec)
-	local map = {}
-	if #fieldVec == #array then
-		for i = 1, #fieldVec do
-			map[fieldVec[i]] = array[i]
-		end
-	end
-	return map
-end
-
---返回一个数组, 数组里都是table
-function LuaNFrame.MysqlQueryMoreTable(strTableName, strKeyColName, strKey, fieldVec)
-	local arrays = CPPNFrame:MysqlQueryMore(strTableName, strKeyColName, strKey, fieldVec)
-	local maps = {}
-	for x = 1, #arrays do
-		local array = arrays[x]
-		local map = {}
-		if #fieldVec == #array then
-			for i = 1, #fieldVec do
-				map[fieldVec[i]] = array[i]
-			end
-		end
-		table.insert(maps, map)
-	end
-	return maps
-end
-
-function LuaNFrame.MysqlQueryMoreWithCondTable(strTableName,strKeyColName, nOffset, nRows, fieldVec)
-	local arrays =  CPPNFrame:MysqlQueryMoreWithCond(strTableName,strKeyColName, nOffset, nRows, fieldVec)
-	local maps = {}
-	for x = 1, #arrays do
-		local array = arrays[x]
-		local map = {}
-		if #fieldVec == #array then
-			for i = 1, #fieldVec do
-				map[fieldVec[i]] = array[i]
-			end
-		end
-		table.insert(maps, map)
-	end
-	return maps
 end
 
 function LuaNFrame.Delete(strTableName, strKeyColName, strKey)
@@ -313,8 +315,8 @@ function LuaNFrame.Exists(strTableName, strKeyColName, strKey)
     return CPPNFrame:Exists(strTableName, strKeyColName, strKey)
 end
 
-function LuaNFrame.Keys(strTableName, strKeyColName, strKeyName)
-    return CPPNFrame:Keys(strTableName, strKeyColName, strKeyName)
+function LuaNFrame.Keys(strTableName, strKeyColName, strKey, fieldVec)
+    return CPPNFrame:Keys(strTableName, strKeyColName, strKey, fieldVec)
 end
 
 g_operateID = g_operateID or 0

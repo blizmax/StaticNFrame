@@ -23,37 +23,45 @@ public:
 	virtual bool QueryMore(google::protobuf::Message& message) = 0;
 	virtual bool Execute(const std::string& qstr) = 0;
 	virtual bool Update(const std::string& strTableName, const std::string& strKeyColName, const std::string& strKey, const std::vector<std::string>& fieldVec, const std::vector<std::string>& valueVec) = 0;
+
 	virtual bool QueryOne(const std::string& strTableName, const std::string& strKeyColName, const std::string& strKey, const std::vector<std::string>& fieldVec, std::vector<std::string>& valueVec) = 0;
 	virtual bool QueryMoreWithCond(const std::string& strTableName, const std::string& strKeyColName, int nOffset, int nRows, const std::vector<std::string>& fieldVec, std::vector<std::vector<std::string>>& valueVec) = 0;
 	virtual bool QueryMore(const std::string& strTableName, const std::string& strKeyColName, const std::string& strKey, const std::vector<std::string>& fieldVec, std::vector<std::vector<std::string>>& valueVec) = 0;
+	
+	virtual bool QueryOne(const std::string& strTableName, const std::string& strKeyColName, const std::string& strKey, const std::vector<std::string>& fieldVec, std::map<std::string, std::string>& valueVec) = 0;
+	virtual bool QueryMoreWithCond(const std::string& strTableName, const std::string& strKeyColName, int nOffset, int nRows, const std::vector<std::string>& fieldVec, std::vector<std::map<std::string, std::string>>& valueVec) = 0;
+	virtual bool QueryMore(const std::string& strTableName, const std::string& strKeyColName, const std::string& strKey, const std::vector<std::string>& fieldVec, std::vector<std::map<std::string, std::string>>& valueVec) = 0;
+	
 	virtual bool Delete(const std::string& strTableName, const std::string& strKeyColName, const std::string& strKey) = 0;
 	virtual bool Exists(const std::string& strTableName, const std::string& strKeyColName, const std::string& strKey, bool& bExit) = 0;
-	virtual bool Keys(const std::string& strTableName, const std::string& strKeyColName, const std::string& strKeyName, std::vector<std::string>& valueVec) = 0;
 
-	virtual std::vector<std::string> LuaQueryOne(const std::string& strTableName, const std::string& strKeyColName, const std::string& strKey, const std::vector<std::string>& fieldVec)
+	virtual bool Keys(const std::string& strTableName, const std::string& strKeyColName, const std::string& strKey, const std::vector<std::string>& fieldVec, std::vector<std::vector<std::string>>& valueVec) = 0;
+	virtual bool Keys(const std::string& strTableName, const std::string& strKeyColName, const std::string& strKey, const std::vector<std::string>& fieldVec, std::vector<std::map<std::string, std::string>>& valueVec) = 0;
+
+	virtual std::map<std::string, std::string> LuaQueryOne(const std::string& strTableName, const std::string& strKeyColName, const std::string& strKey, const std::vector<std::string>& fieldVec)
 	{
-		std::vector<std::string> valueVec;
-		if (QueryOne(strTableName, strKeyColName, strKey, fieldVec, valueVec) == false)
+		std::map<std::string, std::string> valueVec;
+		if (!QueryOne(strTableName, strKeyColName, strKey, fieldVec, valueVec))
 		{
 			NFLogError(NF_LOG_SYSTEMLOG, 0, "LuaQueryOne error!");
 		}
 		return valueVec;
 	}
 
-	virtual std::vector<std::vector<std::string>> LuaQueryMore(const std::string& strTableName, const std::string& strKeyColName, const std::string& strKey, const std::vector<std::string>& fieldVec)
+	virtual std::vector<std::map<std::string, std::string>> LuaQueryMore(const std::string& strTableName, const std::string& strKeyColName, const std::string& strKey, const std::vector<std::string>& fieldVec)
 	{
-		std::vector<std::vector<std::string>> valueVec;
-		if (QueryMore(strTableName, strKeyColName, strKey, fieldVec, valueVec) == false)
+		std::vector<std::map<std::string, std::string>> valueVec;
+		if (!QueryMore(strTableName, strKeyColName, strKey, fieldVec, valueVec))
 		{
 			NFLogError(NF_LOG_SYSTEMLOG, 0, "LuaQueryMore error!");
 		}
 		return valueVec;
 	}
 
-	virtual std::vector<std::vector<std::string>> LuaQueryMoreWithCond(const std::string& strTableName, const std::string& strKeyColName, int nOffset, int nRows, const std::vector<std::string>& fieldVec)
+	virtual std::vector<std::map<std::string, std::string>> LuaQueryMoreWithCond(const std::string& strTableName, const std::string& strKeyColName, int nOffset, int nRows, const std::vector<std::string>& fieldVec)
 	{
-		std::vector<std::vector<std::string>> valueVec;
-		if (QueryMoreWithCond(strTableName, strKeyColName, nOffset, nRows, fieldVec, valueVec) == false)
+		std::vector<std::map<std::string, std::string>> valueVec;
+		if (!QueryMoreWithCond(strTableName, strKeyColName, nOffset, nRows, fieldVec, valueVec))
 		{
 			NFLogError(NF_LOG_SYSTEMLOG, 0, "QueryMoreWithCond error!");
 		}
@@ -63,17 +71,17 @@ public:
 	virtual bool LuaExists(const std::string& strTableName, const std::string& strKeyColName, const std::string& strKey)
 	{
 		bool bExit = false;
-		if (Exists(strTableName, strKeyColName, strKey, bExit) == false)
+		if (!Exists(strTableName, strKeyColName, strKey, bExit))
 		{
 			NFLogError(NF_LOG_SYSTEMLOG, 0, "LuaExists error!");
 		}
 		return bExit;
 	}
 
-	virtual std::vector<std::string> LuaKeys(const std::string& strTableName, const std::string& strKeyColName, const std::string& strKeyName)
+	virtual std::vector<std::map<std::string, std::string>> LuaKeys(const std::string& strTableName, const std::string& strKeyColName, const std::string& strKey, const std::vector<std::string>& fieldVec)
 	{
-		std::vector<std::string> valueVec;
-		if (Keys(strTableName, strKeyColName, strKeyName, valueVec) == false)
+		std::vector<std::map<std::string, std::string>> valueVec;
+		if (!Keys(strTableName, strKeyColName, strKey, fieldVec, valueVec))
 		{
 			NFLogError(NF_LOG_SYSTEMLOG, 0, "LuaKeys error!");
 		}

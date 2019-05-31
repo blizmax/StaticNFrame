@@ -312,8 +312,8 @@ function CPPNFrame:Exists(strTableName, strKeyColName, strKey)
     return self.mysqlModule:Exists(strTableName, strKeyColName, strKey)
 end
 
-function CPPNFrame:Keys(strTableName, strKeyColName, strKeyName)
-    return self.mysqlModule:Keys(strTableName, strKeyColName, strKeyName)
+function CPPNFrame:Keys(strTableName, strKeyColName, strKey, fieldVec)
+    return self.mysqlModule:Keys(strTableName, strKeyColName, strKey, fieldVec)
 end
 
 --执行函数, 函数被字符串表达出来

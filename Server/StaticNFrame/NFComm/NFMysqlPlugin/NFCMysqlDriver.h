@@ -316,6 +316,18 @@ public:
 	virtual bool QueryOne(const std::string& strTableName, const std::string& strKeyColName, const std::string& strKey, const std::vector<std::string>& fieldVec, std::vector<std::string>& valueVec) override;
 
 	/**
+	 * @brief 查询数据一条数据
+	 *
+	 * @param  strTableName		表名
+	 * @param  strKeyColName	key所在列的列名
+	 * @param  strKey			key数据
+	 * @param  fieldVec			要取出的数据的列名
+	 * @param  valueVec			要取出的数据
+	 * @return bool				成功或失败
+	 */
+	virtual bool QueryOne(const std::string& strTableName, const std::string& strKeyColName, const std::string& strKey, const std::vector<std::string>& fieldVec,std::map<std::string, std::string>& valueVec) override;
+
+	/**
 	 * @brief 查询数据许多数据
 	 *
 	 * @param  strTableName		表名
@@ -328,11 +340,22 @@ public:
 	virtual bool QueryMore(const std::string& strTableName, const std::string& strKeyColName, const std::string& strKey, const std::vector<std::string>& fieldVec, std::vector<std::vector<std::string>>& valueVec) override;
 
 	/**
-	 * @brief 查询数据
+	 * @brief 查询数据许多数据
 	 *
 	 * @param  strTableName		表名
 	 * @param  strKeyColName	key所在列的列名
 	 * @param  strKey			key数据
+	 * @param  fieldVec			要取出的数据的列名
+	 * @param  valueVec			要取出的数据
+	 * @return bool				成功或失败
+	 */
+	virtual bool QueryMore(const std::string& strTableName, const std::string& strKeyColName, const std::string& strKey, const std::vector<std::string>& fieldVec, std::vector<std::map<std::string, std::string>>& valueVec) override;
+
+	/**
+	 * @brief 查询数据
+	 *
+	 * @param  strTableName		表名
+	 * @param  strKeyColName	key所在列的列名
 	 * @param  nOffset			要取出数据偏移
 	 * @param  nRows			要取出数据的数目
 	 * @param  fieldVec			要取出的数据的列名
@@ -340,6 +363,19 @@ public:
 	 * @return bool				成功或失败
 	 */
 	virtual bool QueryMoreWithCond(const std::string& strTableName, const std::string& strKeyColName, int nOffset, int nRows, const std::vector<std::string>& fieldVec, std::vector<std::vector<std::string>>& valueVec) override;
+
+	/**
+	 * @brief 查询数据
+	 *
+	 * @param  strTableName		表名
+	 * @param  strKeyColName	key所在列的列名
+	 * @param  nOffset			要取出数据偏移
+	 * @param  nRows			要取出数据的数目
+	 * @param  fieldVec			要取出的数据的列名
+	 * @param  valueVec			要取出的数据
+	 * @return bool				成功或失败
+	 */
+	virtual bool QueryMoreWithCond(const std::string& strTableName, const std::string& strKeyColName, int nOffset, int nRows, const std::vector<std::string>& fieldVec, std::vector<std::map<std::string, std::string>>& valueVec) override;
 
 	/**
 	 * @brief 删一行数据
@@ -371,7 +407,18 @@ public:
 	 * @param  valueVec
 	 * @return bool 
 	 */
-	virtual bool Keys(const std::string& strTableName, const std::string& strKeyColName, const std::string& strKeyName, std::vector<std::string>& valueVec) override;
+	virtual bool Keys(const std::string& strTableName, const std::string& strKeyColName, const std::string& strKeyName, const std::vector<std::string>& fieldVec, std::vector<std::vector<std::string>>& valueVec);
+
+	/**
+	 * @brief 根据类似key的数据，取出一堆来
+	 *
+	 * @param  strTableName
+	 * @param  strKeyColName
+	 * @param  strKeyName
+	 * @param  valueVec
+	 * @return bool
+	 */
+	virtual bool Keys(const std::string& strTableName, const std::string& strKeyColName, const std::string& strKeyName, const std::vector<std::string>& fieldVec, std::vector<std::map<std::string, std::string>>& valueVec);
 protected:
 	/**
 	 * @brief 是否需要重连

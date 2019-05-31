@@ -144,9 +144,6 @@ function RpmjService.InitPublicPoker(tItem)
 		table.remove(pokerList,randNum)
 	end
 	tItem.m_tInfo.genzhuang = 0
-	GdmjWork.InitPubGuiPai(tItem)
-	--在这里设置鬼牌
-	--在这里还需要确定鬼牌的长度
 end
 
 function RpmjService.GameStart(tItem)
@@ -259,6 +256,63 @@ function RpmjService.TablePlay(tItem,currPos)
 
 end
 
+function RpmjService.CheckIsGang(mjUser, pokerID)
+	
+	if pokerID > 60 then
+		return 0
+	end
+	
+	--这个是在发牌的时候
+	for k,v in ipairs(mjUser.mjpokerlist) do
+		--先检查碰中是否有杠
+		if v.pokertype == g_gdmjAction.type_peng then
+			if v.pokerlist[1] == pokerID then
+				return pokerID
+			end
+		end
+	end
+
+
+	local count = 0
+	
+	local gangList = {}
+	
+	for k,v in ipairs(mjUser.handpoker) do
+		if v == pokerID then
+			count = count + 1
+		end
+		if gangList[v] == nil then
+			gangList[v] = 1 
+		else
+			gangList[v] = gangList[v] + 1
+		end
+
+		for k2,v2 in ipairs(mjUser.mjpokerlist) do
+			--先检查碰中是否有杠
+			if v2.pokertype == g_gdmjAction.type_peng then
+				if v2.pokerlist[1] == v then
+					--直接返回对应,如果
+					return v
+				end
+			end
+		end
+	end
+	if count == 4 then
+		return pokerID
+	end
+	--在检查剩下的
+	for k,v in pairs(gangList) do
+		if v == 4 then
+			return k
+		end
+	end
+	--这里还需要见见其他四个的问题
+	
+	
+	
+	return 0
+end
+
 function RpmjService.CheckMoving(tItem)
 	
 	local currPosList = GdmjWork.GetCurrPosList(tItem.m_tInfo)
@@ -274,13 +328,15 @@ function RpmjService.CheckMoving(tItem)
 		--这个是需要发牌的
 		--local pokerID = GdmjWork.GetRandPoker(tItem.m_tInfo)
 		local pokerID = GdmjWork.HandPokerInsert(tItem, currPos)
+
+		tItem.m_userList[currPos].guohu = 0   --这里改为摸牌，只有摸牌才算，出牌的不算，过胡的时候
 		
 		local checkHu = GdmjWork.CheckIsHu(tItem, currPos, pokerID) --为什么是humark呢
-		local checkGang = GdmjWork.CheckIsGang(tItem.m_userList[currPos], pokerID)
+		local checkGang = RpmjService.CheckIsGang(tItem.m_userList[currPos], pokerID)
 		tItem.m_tInfo.nextinfo.actpokerid = pokerID
 		tItem.m_tInfo.nextinfo.actchairid[currPos] = 1
 		tItem.m_tInfo.nextinfo.tarchairid = 0   --设置
-
+		tItem.m_userList[currPos].humark = pokerID    --设置成这里
 		
 		if checkHu > 0 or checkGang > 0 then
 			--已经可以胡了
@@ -292,9 +348,12 @@ function RpmjService.CheckMoving(tItem)
 			end
 			
 			if checkGang > 0 then
-				tItem.m_tInfo.nextinfo.actiontype:append(g_gdmjAction.type_gang)
+				if #tItem.m_tInfo.publicpoker > #tItem.m_tInfo.manum + 4 then
+					tItem.m_tInfo.nextinfo.actiontype:append(g_gdmjAction.type_gang)
+				else
+					checkGang = 0
+				end
 			end
-			
 		else
 			tItem.m_tInfo.nextinfo.actiontype:append(g_gdmjAction.type_play)
 		end
@@ -350,12 +409,6 @@ end
 
 function RpmjService.PlayingAction(tItem,cgmsg, gcmsg)
 	
-
-	--print
-	--if tItem.m_tInfo.straction ~= '' then
-	--	gcmsg.ParseFromString(tItem.m_tInfo.straction)
-	--end
-	
 	local isWin = false
 	
 	local currPosList = GdmjWork.GetCurrPosList(tItem.m_tInfo)
@@ -386,10 +439,14 @@ function RpmjService.PlayingAction(tItem,cgmsg, gcmsg)
 		tItem.m_tInfo.nextinfo.tarchairid = cgmsg.tarchairid     --modyfy 1121  landy 抢杠胡算谁输的问题
 		tItem.m_tInfo.wintype = g_gdmjAction.type_qiangganghu
 		tItem.m_tInfo.winchairlist:append(cgmsg.actchairid)
+		GdmjWork.HandPokerInsert(tItem, cgmsg.actchairid, cgmsg.actpokerid)
 	elseif cgmsg.actiontype == g_gdmjAction.type_chihu then
-		
-	elseif cgmsg.actiontype == g_gdmjAction.type_genzhuang then
-	
+		if #currPosList == 1 then
+			isWin = true
+		end
+		tItem.m_tInfo.wintype = g_gdmjAction.type_chihu
+		tItem.m_tInfo.winchairlist:append(cgmsg.actchairid)
+		GdmjWork.HandPokerInsert(tItem, cgmsg.actchairid, cgmsg.actpokerid)	
 	end
 	
 	
@@ -472,13 +529,142 @@ function RpmjService.PlayingAction(tItem,cgmsg, gcmsg)
 	
 end
 
+function RpmjService.CheckNewPengGang(tItem, pokerID, actChairid)
+	--该函数是检查新型的碰和杠的，碰的时候需要检查是否存在过碰不碰的情况
+	--返回的时候，是返回财政的列表
+	if #tItem.m_tInfo.publicpoker <= #tItem.m_tInfo.manum then
+		return 0,0  --剩下最后一张牌了，不能碰和杠，因为碰和杠后就不能够出牌了
+	end
+
+	local retList = {}
+	local checkList = GdmjWork.GetCheckList(actChairid, tItem.m_maxUser)   --
+	for k1,v1 in ipairs(checkList) do
+		--开始检查碰，杠
+		local num = 0
+		for k2,v2 in ipairs(tItem.m_userList[v1].handpoker) do
+			
+			if pokerID == v2 then
+				num = num + 1
+			end
+		end 
+		if num >= 2 then
+			--在这里，表示就可以碰或者杠了
+			local isExist = false
+
+			for k2,v2 in ipairs(tItem.m_userList[v1].guopeng) do
+				if v2 == pokerID then
+					isExist = true
+					break
+				end
+			end
+			
+			if isExist == false then
+				table.insert(retList, g_gdmjAction.type_peng)
+				if num > 2 then
+					if #tItem.m_tInfo.publicpoker > #tItem.m_tInfo.manum + 4 then
+						table.insert(retList, g_gdmjAction.type_gang)  --剩下最后一张牌了，不能碰和杠，因为碰和杠后就不能够出牌了
+					end
+				end
+			elseif num == 2 then
+				table.insert(retList, g_gdmjAction.type_peng)
+			end				
+			return #retList == 0 and 0 or v1,retList
+		end
+	end
+	return 0,{}
+end
+
+function RpmjService.NewCheckChiHu(tItem,actPokerID,actChairID,isQiangGang)
+
+	while #tItem.m_tInfo.chihulist > 0 do
+		tItem.m_tInfo.chihulist:remove(1)
+	end
+
+	local userIDList = GdmjWork.GetCheckList(actChairID, tItem.m_maxUser) --默认是四个玩家
+	--先把需要检查的玩家找出来
+	
+	local huChairList = {}
+	
+	for i = 1,#userIDList do
+		--在这里必须要判断鸡胡，鸡胡是不允许吃胡的
+		for k,v in ipairs(tItem.m_userList[ userIDList[i] ].tinglist) do
+			if tItem.m_userList[ userIDList[i] ].guohu == 0 and v == actPokerID then
+				--同时必须要满足不是鸡胡才可以,过胡不胡
+				--抢杠胡是可以鸡胡的
+				--这里再加一个，惠东庄也是允许吃鸡胡的,但是惠州庄，是不允许吃鸡胡的,所以最后一个是判断惠州庄吃胡的
+				
+
+				if isQiangGang == true then
+					--tItem.m_userList[userIDList[i]].guohu = 1   --过胡不胡
+					--return userIDList[i]
+					if tItem.m_userList[ userIDList[i] ].tingtype[k] == g_gdmjWinType.type_hzz_shisanyao then
+						--这里是的为了优先给十三幺胡牌
+						local isInsert = #huChairList + 1
+						for j = 1,#huChairList do
+							if huChairList[j][1] ~= g_gdmjWinType.type_hzz_shisanyao then
+								isInsert = j
+								break
+							end
+						end
+						local addItem = {}
+						addItem[1] = tItem.m_userList[ userIDList[i] ].tingtype[k]
+						addItem[2] = userIDList[i]
+						table.insert(huChairList,isInsert, addItem)
+					else
+						local addItem = {}
+						addItem[1] = tItem.m_userList[ userIDList[i] ].tingtype[k]
+						addItem[2] = userIDList[i]
+						table.insert(huChairList,addItem)
+					end
+				end
+			end
+		end
+	end
+	
+	if #huChairList > 0 then
+		for k,v in ipairs(huChairList) do
+			tItem.m_tInfo.chihulist:append(v[2])			
+		end
+		tItem.m_userList[huChairList[1][2]].guohu = 1
+		return huChairList[1][2]
+	end
+	
+	return 0
+	
+end
+
+function RpmjService.NewCheckChiHu2(tItem)
+	if #tItem.m_tInfo.chihulist > 0 then
+		local chairID = tItem.m_tInfo.chihulist[1]
+		tItem.m_userList[chairID].guohu = chairID
+		return chairID
+	end
+	return 0
+end
+
+function RpmjService.GetChiHuList(tItem,actPokerID,actChairID)
+	--获取胡牌的列表，这个是发生在过吃胡之后，用来检查是否需要检查碰的情况的。
+	--如果是单一个胡的，则检查这个胡是不是已经检查过了
+	local userIDList = GdmjWork.GetCheckList(actChairID, tItem.m_maxUser) --默认是四个玩家
+	
+	
+	local huChairList = {}
+	
+	for i = 1,#userIDList do
+		--在这里必须要判断鸡胡，鸡胡是不允许吃胡的
+		for k,v in ipairs(tItem.m_userList[ userIDList[i] ].tinglist) do
+			if v == actPokerID and tItem.m_userList[ userIDList[i] ].tingtype[k] ~= g_gdmjWinType.type_hzz_jihu then
+				table.insert(huChairList,userIDList[i])
+			end
+		end
+	end	
+	return huChairList
+end
+
 
 function RpmjService.DoPlay(tItem, cgmsg, gcmsg)
 	--这个是打牌的操作
 	--在打牌的操作中，只有一个人的行动，不会存在多个人的
-	--local chiHuList = 
-	--推倒胡中，不能够吃胡，所以这里不用检查吃胡
-	
 	--首先，在手牌中去掉
 	
 	tItem.m_tInfo.prevpos = 0  --首先，把这个设置为0，为什么要把这个设置为0呢，这个是杠爆全包的,只要是出牌了，这个就不算了
@@ -489,47 +675,72 @@ function RpmjService.DoPlay(tItem, cgmsg, gcmsg)
 	
 	GdmjWork.DelPokerFromHand(tItem.m_userList[cgmsg.actchairid],cgmsg.actpokerid)
 	GdmjWork.AddPokerToOutList(tItem.m_userList[cgmsg.actchairid],cgmsg.actpokerid)
-	local nextPos,num = GdmjWork.CheckNewPengGang(tItem,cgmsg.actpokerid, cgmsg.actchairid)
 	
-	if nextPos ~= 0 then
-		--表示是可以碰和或者杠的
-		tItem.m_nextInfo.actchairid[nextPos] = 1
+	local chiHu = RpmjService.NewCheckChiHu(tItem,cgmsg.actpokerid, cgmsg.actchairid, true)  --这里检查吃胡的时候，在自己本地检查	
+
+	if chiHu > 0 then
+		--表示可以吃胡
+		--for k,v in ipairs(ChiHuList) do
+			
+		tItem.m_nextInfo.actchairid[chiHu] = 1
+		--end
+		tItem.m_nextInfo.tarchairid = cgmsg.actchairid
+		tItem.m_tInfo.beingpoker = 0
 		tItem.m_nextInfo.actpokerid = cgmsg.actpokerid
 		tItem.m_nextInfo.actiontype:append(g_gdmjAction.type_guo)
 		
-		tItem.m_nextInfo.tarchairid = cgmsg.actchairid   --设置目标ID是当前目标
 		
-		if num ==  2 then
-			--表示是碰的
-			tItem.m_nextInfo.actiontype:append(g_gdmjAction.type_peng)  --如果等于2，只有碰的情况
-		else
-			tItem.m_nextInfo.actiontype:append(g_gdmjAction.type_peng)
-			--饶平麻将， 当牌堆减去马牌剩最后四张牌是， 不能杠, 只能自摸
-			if #tItem.m_tInfo.publicpoker > #tItem.m_tInfo.manum + 4 then
-				tItem.m_nextInfo.actiontype:append(g_gdmjAction.type_gang)
-				tItem.m_userList[nextPos].guopeng:append(cgmsg.actpokerid)   --在这里就需要把过碰的加进去了
+		if #tItem.m_tInfo.chihulist == 1 then
+			--这里加上过，碰，杠
+			local nextPos,actList = RpmjService.CheckNewPengGang(tItem,cgmsg.actpokerid, cgmsg.actchairid)
+			if nextPos == chiHu then
+				for k1,v1 in ipairs(actList) do
+					tItem.m_nextInfo.actiontype:append(v1)
+					if v1 == g_gdmjAction.type_gang then
+						tItem.m_tInfo.prevpos = cgmsg.actchairid
+					end				
+				end
 			end
-					
-			tItem.m_tInfo.prevpos = cgmsg.actchairid   --这里是记录放杠者的位置
 		end
+		tItem.m_nextInfo.actiontype:append(g_gdmjAction.type_chihu)
 	else
-		--如果没有碰或者杠，表示轮到下一个人了
-		tItem.m_tInfo.beingpoker = 1
-		nextPos = cgmsg.actchairid == tItem.m_maxUser and 1 or cgmsg.actchairid + 1
-		tItem.m_nextInfo.actchairid[nextPos] = 1   --轮到他行动了
+		local nextPos,actList = GdmjWork.CheckNewPengGang(tItem,cgmsg.actpokerid, cgmsg.actchairid)
+
+		if nextPos ~= 0 then
+			--表示是可以碰和或者杠的
+			tItem.m_nextInfo.actchairid[nextPos] = 1
+			tItem.m_nextInfo.actpokerid = cgmsg.actpokerid
+			tItem.m_nextInfo.actiontype:append(g_gdmjAction.type_guo)
+			tItem.m_nextInfo.tarchairid = cgmsg.actchairid   --设置目标ID是当前目标
+			for k1,v1 in ipairs(actList) do
+				tItem.m_nextInfo.actiontype:append(v1)
+				if v1 == g_gdmjAction.type_gang then
+					tItem.m_tInfo.prevpos = cgmsg.actchairid
+				end				
+			end
+			tItem.m_userList[nextPos].guopeng:append(cgmsg.actpokerid)   --在这里就需要把过碰的加进去了
+		else
+			--如果没有碰或者杠，表示轮到下一个人了
+			
+			tItem.m_tInfo.beingpoker = 1
+			nextPos = cgmsg.actchairid == tItem.m_maxUser and 1 or cgmsg.actchairid + 1
+			tItem.m_nextInfo.actchairid[nextPos] = 1   --轮到他行动了
+		end
+		
 	end
-	GdmjWork.GenZhuangCheck(tItem,cgmsg)   --检查跟庄
 end
 
 function RpmjService.DoGuo(tItem,cgmsg,gcmsg)
 	--这里是过牌的操作，过牌的操作，可能存在几个人同时操作，必须等到最后的人操作完成了，才发送行动的类型
 	--如果是抢杠胡，而且是同时抢杠胡，或者同时吃胡
 	--
+	--tItem.m_nextInfo:ParseFromString(tItem.m_tInfo.nextinfo:SerializeToString())
 	tItem.m_tInfo.prevpos = 0   --在这里也要对这个设置
 	if tItem.m_tInfo.nextinfo.tarchairid == 0 then
 		--如果目标ID是0，表示是自摸的杠牌的过，或者是胡牌的过，这里的牌权依然在自己手上，只是
 		--是出牌，现在这种情况已经忽略了。
 		tItem.m_nextInfo.actchairid[cgmsg.actchairid] = 1
+		tItem.m_nextInfo.canplay = 1
 	else
 
 		local prevType = 0   --上一个玩家的出牌类型
@@ -538,48 +749,108 @@ function RpmjService.DoGuo(tItem,cgmsg,gcmsg)
 			if v == g_gdmjAction.type_qiangganghu then
 				--广东麻将只有抢杠胡才会出现胡
 				prevType = v    
+			elseif v == g_gdmjAction.type_chihu then
+				prevType = v
+			elseif v == g_gdmjAction.type_peng then
+				prevType = v
+			elseif v == g_gdmjAction.type_gang then
+				prevType = v
 			end
 		end
 		
 		if prevType == g_gdmjAction.type_qiangganghu then
-			--就是TMD的抢杠胡也不胡
-			--这里开始胡的操作
-			--为了实现胡的操作，这里需要构造出cgmsg
+			--抢杠胡是不用检查吃的
+			--如果是吃胡的过，检查有没有下一个吃胡
+			tItem.m_nextInfo.actchairid[cgmsg.actchairid] = 0  --首先需要把自己的置为空
+			--过了抢杠胡了
+			tItem.m_tInfo.chihulist:remove(1)
+			local chiHu = RpmjService.NewCheckChiHu2(tItem)
 			
-			local currPosList = GdmjWork.GetCurrPosList(tItem.m_tInfo)
-			
-			if #currPosList == 1 then
-				
-				if tItem.m_tInfo.wintype == g_gdmjAction.type_qiangganghu then
-					--如果赢牌类型有变化，表示已经结束了
-					return true
-				else
-					
-					local cgGang = msg_gdmj_pb.cggdmjaction()
-					cgGang.actchairid = cgmsg.tarchairid                  --tItem.m_tInfo.nextinfo.actchairid
-					cgGang.tarchairid = tItem.m_tInfo.prevpos             --这个是记录在前面放杠的位置
-					cgGang.actpokerid = cgmsg.actpokerid                  
-					
-					GdmjWork.ActionGang(tItem, cgGang, gcmsg)
-					
-					tItem.m_tInfo.beingpoker = 1   --杠完后需要发牌的
-					tItem.m_nextInfo.actchairid[cgGang.actchairid] = cgGang.actchairid
-					
-					
-					local addUser = gcmsg.actplayer:add()
-					addUser:ParseFromString(tItem.m_userList[cgGang.actchairid]:SerializeToString())
-					
-					gcmsg.actpokerid:append(cgmsg.actpokerid)
-					gcmsg.actiontype:append(g_gdmjAction.type_gang)
-				end
+			if chiHu > 0 then
+				tItem.m_nextInfo.actchairid[chiHu] = 1
+				tItem.m_nextInfo.tarchairid = tItem.m_tInfo.nextinfo.tarchairid
+				tItem.m_tInfo.beingpoker = 0
+				tItem.m_nextInfo.actpokerid = tItem.m_tInfo.nextinfo.actpokerid
+				tItem.m_nextInfo.actiontype:append(g_gdmjAction.type_guo)
+				tItem.m_nextInfo.actiontype:append(g_gdmjAction.type_qiangganghu)
 			else
+				
+				local cgGang = msg_gdmj_pb.cggdmjaction()
+				cgGang.actchairid = cgmsg.tarchairid                  --tItem.m_tInfo.nextinfo.actchairid
+				cgGang.tarchairid = tItem.m_tInfo.prevpos             --这个是记录在前面放杠的位置
+				cgGang.actpokerid = cgmsg.actpokerid
+				GdmjWork.ActionGang(tItem, cgGang, gcmsg)
+				tItem.m_tInfo.beingpoker = 1   --杠完后需要发牌的
+				tItem.m_nextInfo.actchairid[cgGang.actchairid] = cgGang.actchairid
+				local addUser = gcmsg.actplayer:add()
+				addUser:ParseFromString(tItem.m_userList[cgGang.actchairid]:SerializeToString())
+				
+				gcmsg.actpokerid:append(cgmsg.actpokerid)
+				gcmsg.actiontype:append(g_gdmjAction.type_gang)
+			end				
+		elseif prevType == g_gdmjAction.type_chihu then
+			--如果是吃胡的过，检查有没有下一个吃胡
+			--吃胡是的需要检查吃的
+			tItem.m_nextInfo.actchairid[cgmsg.actchairid] = 0  --首先需要把自己的置为空
+			tItem.m_tInfo.chihulist:remove(1)
+			local chiHu = RpmjService.NewCheckChiHu2(tItem)
+			
+			if chiHu > 0 then
+				tItem.m_nextInfo.actchairid[chiHu] = 1
+				tItem.m_nextInfo.tarchairid = tItem.m_tInfo.nextinfo.tarchairid
+				tItem.m_tInfo.beingpoker = 0
+				tItem.m_nextInfo.actpokerid = tItem.m_tInfo.nextinfo.actpokerid
+				tItem.m_nextInfo.actiontype:append(g_gdmjAction.type_guo)
+				tItem.m_nextInfo.actiontype:append(g_gdmjAction.type_chihu)
+			else
+				
+				
+				local nextPos,actList = RpmjService.CheckNewPengGang(tItem,tItem.m_tInfo.nextinfo.actpokerid, tItem.m_tInfo.nextinfo.tarchairid)
 
+				if nextPos ~= 0 then
+					local tempList = RpmjService.GetChiHuList(tItem, cgmsg.actpokerid, cgmsg.tarchairid)
+					if #tempList == 1 and tempList[1] == nextPos then
+						--只有一个吃胡列表的时候，已经被检查过了
+						nextPos = 0
+					end
+				end
+				
+				if nextPos ~= 0 then
+					--表示是可以碰和或者杠的
+					tItem.m_nextInfo.actchairid[nextPos] = 1
+					tItem.m_nextInfo.tarchairid = tItem.m_tInfo.nextinfo.tarchairid
+					tItem.m_nextInfo.actpokerid = tItem.m_tInfo.nextinfo.actpokerid
+					tItem.m_nextInfo.actiontype:append(g_gdmjAction.type_guo)
+
+					for k1,v1 in ipairs(actList) do
+						tItem.m_nextInfo.actiontype:append(v1)
+						if v1 == g_gdmjAction.type_gang then
+							tItem.m_tInfo.prevpos = tItem.m_tInfo.nextinfo.tarchairid
+						end
+					end
+					
+					tItem.m_userList[nextPos].guopeng:append(tItem.m_tInfo.nextinfo.actpokerid)   --在这里就需要把过碰的加进去了					
+				else
+					--如果没有碰或者杠，表示轮到下一个人了					
+
+					tItem.m_tInfo.beingpoker = 1
+					nextPos = tItem.m_tInfo.nextinfo.tarchairid == tItem.m_maxUser and 1 or tItem.m_tInfo.nextinfo.tarchairid + 1
+					tItem.m_nextInfo.actchairid[nextPos] = 1   --轮到他行动了
+					tItem.m_nextInfo.canplay = 1
+					
+				end
+				--GdmjWork.GenZhuangCheck(tItem,cgmsg)   --这里不检查跟庄了，如果TMD有这种情况出现，我就认命了			
 			end
-						
+		elseif prevType == g_gdmjAction.type_peng or prevType == g_gdmjAction.type_gang then					
+				tItem.m_tInfo.beingpoker = 1
+				nextPos = tItem.m_tInfo.nextinfo.tarchairid == tItem.m_maxUser and 1 or tItem.m_tInfo.nextinfo.tarchairid + 1
+				tItem.m_nextInfo.actchairid[nextPos] = 1   --轮到他行动了
+				tItem.m_nextInfo.canplay = 1		
 		else
 			local nextPos = tItem.m_tInfo.nextinfo.tarchairid == tItem.m_maxUser and 1 or tItem.m_tInfo.nextinfo.tarchairid + 1
 			tItem.m_nextInfo.actchairid[nextPos] = 1
-			tItem.m_tInfo.beingpoker = 1	
+			tItem.m_tInfo.beingpoker = 1
+			tItem.m_nextInfo.canplay = 1
 		end
 	end
 	
@@ -594,21 +865,34 @@ function RpmjService.DoPeng(tItem, cgmsg, gcmsg)
 	
 	tItem.m_nextInfo.actchairid[cgmsg.actchairid] = 1
 end
+
 function RpmjService.DoGang(tItem, cgmsg, gcmsg)
 	
 	--杠牌，要检查抢杠胡
 	--先检查抢杠杠胡
-	local qghList = GdmjWork.CheckQiangGangHu(tItem, cgmsg)
+	local qgHuChair = 0
 	
-	if #qghList > 0 then
+	
+	if cgmsg.tarchairid == 0 then
+		
+		local isBuGang = false
+		for k,v in ipairs(tItem.m_userList[cgmsg.actchairid].mjpokerlist) do
+			if v.pokerlist[1] == cgmsg.actpokerid and v.pokertype == g_gdmjAction.type_peng then
+				qgHuChair = RpmjService.NewCheckChiHu(tItem, cgmsg.actpokerid, cgmsg.actchairid, true)
+				break
+			end
+		end
+	else
+		--明杠可以抢，而且还是翻倍
+		qgHuChair = RpmjService.NewCheckChiHu(tItem, cgmsg.actpokerid, cgmsg.actchairid, true)
+	end
+
+	if qgHuChair > 0 then
 		--如果抢杠胡的列表大于0
 		--
 		--开始吹抢杠胡的流程
 		--先处理一个的
-		
-		for k,v in ipairs(qghList) do
-			tItem.m_nextInfo.actchairid[v] = 1
-		end
+		tItem.m_nextInfo.actchairid[qgHuChair] = 1
 		tItem.m_nextInfo.tarchairid = cgmsg.actchairid
 		tItem.m_tInfo.beingpoker = 0
 		tItem.m_nextInfo.actpokerid = cgmsg.actpokerid
@@ -618,12 +902,13 @@ function RpmjService.DoGang(tItem, cgmsg, gcmsg)
 	else
 		--如果没有抢杠胡，表示开始杠牌了
 	
-		GdmjWork.ActionGang(tItem,cgmsg,gcmsg)
+		GdmjWork.ActionGang2(tItem,cgmsg,gcmsg)
 		tItem.m_tInfo.beingpoker = 1   --杠完后需要发牌的
 		tItem.m_nextInfo.actchairid[cgmsg.actchairid] = cgmsg.actchairid
+		tItem.m_nextInfo.canplay = 1
 
+		tItem.m_tInfo.prevpos = cgmsg.actpokerid       --这里是一个坑，这个的身份比较复杂，后面看看会不会出现坑的地方。先用这个来表示杠爆的
 	end
-	
 end
 function RpmjService.DoHu(tItem, cgmsg, gcmsg)
 	--胡牌
@@ -827,8 +1112,11 @@ function RpmjService.PlayCountWin(tItem)
 	local pokerID = tItem.m_tInfo.nextinfo.actpokerid   --这里还不会被清空,暂时先用这个来
 	
 	--推倒胡不能吃胡
-	
-	if tItem.m_tInfo.wintype == g_gdmjAction.type_qiangganghu then
+	if tItem.m_tInfo.wintype == g_gdmjAction.type_chihu then
+		table.insert(desList[winChairID],"胡")
+		table.insert(desList[tarChairID],"点炮")
+		tItem.m_detailList[winChairID].hunum = tItem.m_detailList[winChairID].hunum + 1	
+	elseif tItem.m_tInfo.wintype == g_gdmjAction.type_qiangganghu then
 		--允许抢杠胡
 		--如果是抢杠胡，看看是不是抢杠全包
 		doubleAccount = doubleAccount + 2
@@ -879,61 +1167,62 @@ function RpmjService.PlayCountWin(tItem)
 			tItem.m_detailList[winChairID].wuguizimo = tItem.m_detailList[winChairID].wuguizimo + 1	
 		else
 			tItem.m_detailList[winChairID].youguizimo = tItem.m_detailList[winChairID].youguizimo + 1	
-		end		
+		end
+	end		
 
 		
-		local maNum = tItem.m_vipRoomInfo.manum
+	local maNum = tItem.m_vipRoomInfo.manum
 
-		while maNum > 0 do
-			if #tItem.m_tInfo.publicpoker == 0 then
-				break
-			end			
-			if maNum == 99 then
-				local getMaPoker = GdmjWork.GetRandPoker(tItem, 0)
-				gcAccount.malist:append(getMaPoker)
-				getMaNum = math.mod( getMaPoker, 10 )   --这时候中码的数量，就是码的面值
-				break
-			else	
+	while maNum > 0 do
+		if #tItem.m_tInfo.publicpoker == 0 then
+			break
+		end			
+		if maNum == 99 then
+			local getMaPoker = GdmjWork.GetRandPoker(tItem, 0)
+			gcAccount.malist:append(getMaPoker)
+			getMaNum = math.mod( getMaPoker, 10 )   --这时候中码的数量，就是码的面值
+			break
+		else	
 
-				
-				gcAccount.malist:append(GdmjWork.GetRandPoker(tItem, 0))
-				maNum = maNum - 1
+			
+			gcAccount.malist:append(GdmjWork.GetRandPoker(tItem, 0))
+			maNum = maNum - 1
+		end
+	end
+
+
+	if tItem.m_vipRoomInfo.manum ~= 99 then
+		local maIndexList = {0,0,0,0}
+		local maIndex = 1
+		for i = tItem.m_tInfo.bankerpos,tItem.m_maxUser do
+			maIndexList[maIndex] = i
+			maIndex = maIndex + 1
+		end
+		for i = 1,tItem.m_tInfo.bankerpos - 1 do
+			maIndexList[maIndex] = i
+			maIndex = maIndex + 1
+		end
+
+
+		for k,v in ipairs(gcAccount.malist) do
+			local index = math.mod(v,10)
+			index = math.mod(index,tItem.m_maxUser)
+			index = index == 0 and tItem.m_maxUser or index
+			
+			maList[ maIndexList[index] ] = maList[ maIndexList[index] ] + 1
+			if maIndexList[index] == winChairID then
+				gcAccount.magetlist:append(v)
+				getMaNum = getMaNum + 1
+			end				
+		end
+
+		for i = 1,tItem.m_maxUser do
+			tItem.m_detailList[i].zhongmanum = tItem.m_detailList[i].zhongmanum + maList[i]
+			if i ~= winChairID then
+				otherMaNum = otherMaNum + maList[i]
 			end
 		end
 
-	
-		if tItem.m_vipRoomInfo.manum ~= 99 then
-			local maIndexList = {0,0,0,0}
-			local maIndex = 1
-			for i = tItem.m_tInfo.bankerpos,tItem.m_maxUser do
-				maIndexList[maIndex] = i
-				maIndex = maIndex + 1
-			end
-			for i = 1,tItem.m_tInfo.bankerpos - 1 do
-				maIndexList[maIndex] = i
-				maIndex = maIndex + 1
-			end
-
-
-			for k,v in ipairs(gcAccount.malist) do
-				local index = math.mod(v,10)
-				index = math.mod(index,tItem.m_maxUser)
-				index = index == 0 and tItem.m_maxUser or index
-				
-				maList[ maIndexList[index] ] = maList[ maIndexList[index] ] + 1
-				if maIndexList[index] == winChairID then
-					gcAccount.magetlist:append(v)
-					getMaNum = getMaNum + 1
-				end				
-			end
-
-			for i = 1,tItem.m_maxUser do
-				tItem.m_detailList[i].zhongmanum = tItem.m_detailList[i].zhongmanum + maList[i]
-				if i ~= winChairID then
-					otherMaNum = otherMaNum + maList[i]
-				end
-			end
-		end
 		if getMaNum > 0 then
 			table.insert(desList,"中码+"..getMaNum)   --自摸
 		end

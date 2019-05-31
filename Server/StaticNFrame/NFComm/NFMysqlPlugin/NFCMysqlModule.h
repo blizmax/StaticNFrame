@@ -134,8 +134,32 @@ public:
 	 * @param  valueVec
 	 * @return bool
 	 */
+	virtual bool QueryOne(const std::string& strTableName, const std::string& strKeyColName, const std::string& strKey, const std::vector<std::string>& fieldVec, std::map<std::string, ::string>& valueVec) override;
+
+	/**
+	 * @brief
+	 *
+	 * @param  strTableName
+	 * @param  strKeyColName
+	 * @param  strKey
+	 * @param  fieldVec
+	 * @param  valueVec
+	 * @return bool
+	 */
 	virtual bool QueryMore(const std::string& strTableName, const std::string& strKeyColName, const std::string& strKey, const std::vector<std::string>& fieldVec, std::vector<std::vector<std::string>>& valueVec) override;
-	
+
+	/**
+	 * @brief
+	 *
+	 * @param  strTableName
+	 * @param  strKeyColName
+	 * @param  strKey
+	 * @param  fieldVec
+	 * @param  valueVec
+	 * @return bool
+	 */
+	virtual bool QueryMore(const std::string& strTableName, const std::string& strKeyColName, const std::string& strKey, const std::vector<std::string>& fieldVec, std::vector<std::map<std::string, std::string>>& valueVec) override;
+
 	/**
 	 * @brief
 	 *
@@ -148,6 +172,19 @@ public:
 	 * @return bool 
 	 */
 	virtual bool QueryMoreWithCond(const std::string& strTableName, const std::string& strKeyColName, int nOffset, int nRows, const std::vector<std::string>& fieldVec, std::vector<std::vector<std::string>>& valueVec) override;
+
+	/**
+	 * @brief
+	 *
+	 * @param  strTableName
+	 * @param  strKeyColName
+	 * @param  nOffset
+	 * @param  nRows
+	 * @param  fieldVec
+	 * @param  valueVec
+	 * @return bool
+	 */
+	virtual bool QueryMoreWithCond(const std::string& strTableName, const std::string& strKeyColName, int nOffset, int nRows, const std::vector<std::string>& fieldVec, std::vector<std::map<std::string, std::string>>& valueVec) override;
 	
 	/**
 	 * @brief
@@ -179,7 +216,18 @@ public:
 	 * @param  valueVec
 	 * @return bool 
 	 */
-	virtual bool Keys(const std::string& strTableName, const std::string& strKeyColName, const std::string& strKeyName, std::vector<std::string>& valueVec) override;
+	virtual bool Keys(const std::string& strTableName, const std::string& strKeyColName, const std::string& strKey, const std::vector<std::string>& fieldVec, std::vector<std::vector<std::string>>& valueVec) override;
+
+	/**
+	 * @brief
+	 *
+	 * @param  strTableName
+	 * @param  strKeyColName
+	 * @param  strKeyName
+	 * @param  valueVec
+	 * @return bool
+	 */
+	virtual bool Keys(const std::string& strTableName, const std::string& strKeyColName, const std::string& strKey, const std::vector<std::string>& fieldVec, std::vector<std::map<std::string, std::string>>& valueVec) override;
 
 	/**
 	 * @brief

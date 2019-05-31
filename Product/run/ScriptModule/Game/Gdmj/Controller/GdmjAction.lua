@@ -131,13 +131,6 @@ function execute(packetID, operateID, buffer)
 				
 			end
 		end
-
-		--饶平麻将， 当牌堆减去马牌剩最后四张牌是， 不能杠
-		if tItem.m_tInfo.mjtype == g_gdmjType.type_rpmj then
-			if #tItem.m_tInfo.publicpoker <= #tItem.m_tInfo.manum + 4 then
-				pokerCount = 0
-			end
-		end
 		
 		if pokerCount < 2 then
 			--小于两张这样的牌，根本不能碰
@@ -227,13 +220,6 @@ function execute(packetID, operateID, buffer)
 					pokerCount = 1
 				end
 			end			
-		end
-
-		--饶平麻将， 当牌堆减去马牌剩最后四张牌是， 不能杠, 只能自摸
-		if tItem.m_tInfo.mjtype == g_gdmjType.type_rpmj then
-			if #tItem.m_tInfo.publicpoker <= #tItem.m_tInfo.manum + 4 then
-				pokerCount = 0
-			end
 		end
 				
 		if pokerCount == 0 then
