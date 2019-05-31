@@ -116,6 +116,7 @@ message gdmjinfo
 	optional int32 paynum = 41;      //支付的数额
 	optional int32 genzhuang = 42;   //跟庄的显示
 	optional int32 julebuid = 43;    //俱乐部的ID
+	optional int32 julebutype = 44;
 }
 
 

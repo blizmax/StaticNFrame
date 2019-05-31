@@ -128,7 +128,7 @@ function GdmjHistoryModel.SetHistory(tItem, isDissolve, gcAcount)
 				addTemp['jifen'] = tItem.m_userList[i].psinfo.jetton
 				table.insert(userArr,addTemp)
 				--把同步的积分放到这里来同步，在GameCount中不做同步了
-				GdmjEvent.AddJiFen(tItem.m_tInfo.julebuid, tItem.m_userList[i].userid, tItem.m_userList[i].psinfo.jetton)
+				GdmjEvent.AddJiFen(tItem.m_tInfo.julebuid, tItem.m_userList[i].userid, tItem.m_userList[i].psinfo.jetton,tItem.m_tInfo.tableid,tItem.m_tInfo.julebutype)
 			end
 		end		
 		GdmjEvent.JulebuGameCount(tItem.m_tInfo.julebuid, tItem.m_tInfo.tableid, userArr)

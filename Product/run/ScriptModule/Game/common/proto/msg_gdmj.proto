@@ -62,6 +62,7 @@ message cggdmjcreate    //创建房间列表
 	optional int32 paynum = 8;       //支付的数量
 	optional int32 playernum = 9;    //玩家的数量
 	optional int32 julebuid = 10;
+	optional int32 julebutype = 11;
 }
 
 message gcgdmjcreate

@@ -49,7 +49,7 @@ function TimeUtils.GetTimeDay(t)
 		tab = os.date("*t", t)
 	end
 
-	tab.hour = 0
+	tab.hour = 8
 	tab.min = 0
 	tab.sec = 0
 

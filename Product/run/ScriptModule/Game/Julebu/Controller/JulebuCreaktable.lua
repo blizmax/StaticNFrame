@@ -69,6 +69,13 @@ function execute(packetID, operateID, buffer)
 			cgCr.menpai = cgCr.menpai + 1
 			cgCr.julebutype = cgmsg.julebutype
 			ret = PszEvent.CreateGame(cgCr, jInfo.ownerid)
+		elseif gInfo.gametype == g_JulebuDefine.modules_gdmj then
+			local cgCr = msg_gdmj_pb.cggdmjcreate()
+			cgCr:ParseFromString(gInfo.playingmethod)
+			cgCr.userid = cgmsg.userid
+			cgCr.julebuid = cgmsg.julebuid
+			cgCr.julebutype = cgmsg.julebutype
+			ret =  GdmjEvent.CreateGame(cgCr, jInfo.ownerid)
 		end
 	end
 	

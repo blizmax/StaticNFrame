@@ -41,6 +41,7 @@ function init_script_system(pluginManager, luaModule)
 	LoadLuaFile("../ScriptModule/Game/Mission")
 	LoadLuaFile("../ScriptModule/Game/Rank")
 	LoadLuaFile("../ScriptModule/Game/Shop")
+	LoadLuaFile("../ScriptModule/Game/JingSai")
 	LoadLuaFile("../ScriptModule/Game/Gdmj")
 	LoadLuaFile("../ScriptModule/Game/DouNiu")
 	LoadLuaFile("../ScriptModule/Game/PSZ")
@@ -59,9 +60,4 @@ function init_script_system(pluginManager, luaModule)
 	redisItem = redisConnect.new()
 
 	TimerManager.Init()
-
-	local fields = {"userid", "cid", "account", "password", "nickname"}
-	local values = LuaNFrame.MysqlQueryOne("dy_player", "userid", 101200, fields)
-	values['nickname'] = "gaoyi"
-	LuaNFrame.MysqlUpdate("dy_player", "userid", 101200, values)
 end

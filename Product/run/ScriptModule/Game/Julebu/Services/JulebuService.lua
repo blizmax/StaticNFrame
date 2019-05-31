@@ -47,10 +47,14 @@ function JulebuService.CreateGame(gameType, julebuID, tableID, maxUserNum,
 	gcUpdate.jtinfo.playingtype= playingtype
 	
 	for k,v in ipairs(useridList)do
-		gcUpdate.jtinfo.useridlist:append(v)
-		local pInfo = PlayerModel.GetPlayerInfo(v)
-		gcUpdate.jtinfo.facelist:append(pInfo.face_1)
-		gcUpdate.jtinfo.nickname:append(pInfo.nickname)
+		if v > 0 then
+			gcUpdate.jtinfo.useridlist:append(v)
+			local pInfo = PlayerModel.GetPlayerInfo(v)
+			if pInfo ~= nil then
+				gcUpdate.jtinfo.facelist:append(pInfo.face_1)
+				gcUpdate.jtinfo.nickname:append(pInfo.nickname)
+			end
+		end
 	end
 	JulebuModel.SetGameInfo(gcUpdate.jtinfo)
 	JulebuModel.PushGame(julebuID, tableID, julebuType)
@@ -495,6 +499,9 @@ function JulebuService.CreatTable(tInfo, gameType)
 	elseif gameType == g_JulebuDefine.modules_psz then
 		local cgC = PszEvent.GetCreateInfo(tInfo, jInfo.ownerid)
 		PszEvent.CreateGame(cgC, jInfo.ownerid)
+	elseif gameType == g_JulebuDefine.modules_gdmj then
+		local cgC = GdmjEvent.GetCreateInfo(tInfo, jInfo.ownerid)
+		GdmjEvent.JulebuGameCreate(cgC, jInfo.ownerid)
 	end
 	
 end

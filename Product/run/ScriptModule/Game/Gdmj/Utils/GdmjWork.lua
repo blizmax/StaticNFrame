@@ -1665,7 +1665,7 @@ function GdmjWork.CheckJiFen(tItem)
 						
 			--在这里需要把积分同步到俱乐部
 			--
-			GdmjEvent.AddJiFen(tItem.m_tInfo.julebuid, tItem.m_userList[i].userid, tItem.m_userList[i].carryjetton)
+			GdmjEvent.AddJiFen(tItem.m_tInfo.julebuid, tItem.m_userList[i].userid, tItem.m_userList[i].carryjetton, tItem.m_tInfo.tableid,tItem.m_tInfo.julebutype)
 			tItem.m_tInfo.situser[i] = 0
 		end
 	end
