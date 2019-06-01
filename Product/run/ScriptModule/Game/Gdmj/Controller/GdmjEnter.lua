@@ -83,13 +83,14 @@ function execute(packetID, operateID, buffer, isPrivate)
 		end
 		--看看积分是否足够
 
-		if false == GdmjEvent.CheckJiFen(tInfo.julebuid, cgmsg.userid) then
-			--低于50就不能进入房间了
-			ThreadManager.GdmjUnLock(tableID)
-			gcmsg.result = ReturnCode["jlb_enter_error"]
-			return cgmsg.userid, 0, gcmsg:ByteSize(), gcmsg:SerializeToString()				
+		if tInfo.julebutype == 2 then
+			if false == GdmjEvent.CheckJiFen(tInfo.julebuid, cgmsg.userid) then
+				--低于50就不能进入房间了
+				ThreadManager.GdmjUnLock(tableID)
+				gcmsg.result = ReturnCode["jlb_enter_error"]
+				return cgmsg.userid, 0, gcmsg:ByteSize(), gcmsg:SerializeToString()				
+			end
 		end
-		
 	end	
 	
 	local isExist = false

@@ -287,11 +287,13 @@ function JulebuModel.LoadMemberList(julebuID)
 	local mItem = st_julebu_pb.julebumember()
 	for i = 1,#itemList do
 		local pInfo = PlayerModel.GetPlayerInfo(itemList[i]['userid'])
+		if pInfo then
+			mItem.nickname = pInfo.nickname
+			mItem.faceid = pInfo.face_1
+		end
 		mItem.userid = itemList[i]['userid']
-		mItem.nickname = pInfo.nickname
 		mItem.state = 0
 		mItem.id = itemList[i]['id']
-		mItem.faceid = pInfo.face_1
 		mItem.jifen = itemList[i]['jifen']
 		mItem.limitjifen = itemList[i]['limitjifen']
 		mItem.higherid = itemList[i]['higherid']
@@ -629,34 +631,36 @@ function JulebuModel.GetPlayingMethod(julebuid, julebutype)
 	local tmsg = redisItem:get(redisKey, JulebuModel.redis_index)
 	if tmsg == nil then
 		local gInfo = st_julebu_pb.julebuplayingmethodinfo()
-		local cgCreateTable = msg_douniu_2_pb.cgdouniucreate() 
-		cgCreateTable.maxuser = 6
-		cgCreateTable.julebutype = julebutype
-		cgCreateTable.dntype = 104
-		cgCreateTable.difen = 24
-		cgCreateTable.maxplaynum = 10
-		cgCreateTable.payway = 1
-		cgCreateTable.paynum = 3
-		cgCreateTable.typeodds = 1
-		cgCreateTable.restrict = 0
-		cgCreateTable.integralmax = 0
-		cgCreateTable.bankermultiple = 4
-		cgCreateTable.autoready = 1
-		cgCreateTable.paytype = 0
+		local cgCreateTable = msg_gdmj_pb.cggdmjcreate()
+		local rpmj = st_gdmj2_pb.gdmjrpmj()
+
+		rpmj.gangbaoquanbao = 0
+		rpmj.bishu1 = 0
+		rpmj.bishu2 = 1
+		rpmj.zimo = 1
+		rpmj.shisanyao = 1
+		rpmj.qingyise = 1
+		rpmj.manum = 6
+		rpmj.kehuqidui = 1
+		rpmj.qiduisibei = 0
+		rpmj.difen = 1
+
+		local strVipInfo = rpmj:SerializeToString()
+
 		cgCreateTable.julebuid = julebuid
-		cgCreateTable.autoStart = 99
-		cgCreateTable.TZmax = 20
-		cgCreateTable.banrubcard = 0
-		cgCreateTable.playerbuycode = 0
-		cgCreateTable.pourrestrict	= 0
-		cgCreateTable.kongwildcard	= 0
-		cgCreateTable.pourdouble = 0
+		cgCreateTable.julebutype = julebutype
+		cgCreateTable.mjtype = g_gdmjType.type_rpmj 
+		cgCreateTable.playnum = 6
+		cgCreateTable.payway = 1
+		cgCreateTable.paynum = 6
+		cgCreateTable.playernum = 4
+		cgCreateTable.strvipinfo = strVipInfo
 		
 		local Cmsg = cgCreateTable:SerializeToString()
-		gInfo.gametype = g_JulebuDefine.modules_douniu
+		gInfo.gametype = g_JulebuDefine.modules_gdmj
 		gInfo.playingmethod = Cmsg
 		tmsg = gInfo:SerializeToString()
-		JulebuModel.SetPlayingMethod(julebuid, julebutype, Cmsg, g_JulebuDefine.modules_douniu)
+		JulebuModel.SetPlayingMethod(julebuid, julebutype, Cmsg, g_JulebuDefine.modules_gdmj)
 	end
 	return tmsg
 end

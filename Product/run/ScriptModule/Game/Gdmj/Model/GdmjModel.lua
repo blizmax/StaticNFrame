@@ -168,7 +168,7 @@ function GdmjModel.SitDown(tInfo,mjUser,pos)
 	end
 	tInfo.playernum = tInfo.playernum + 1   --只有坐下来的时候，才算一个玩家
 	GdmjModel.SetChairUser(tInfo.tableid,mjUser)
-	GdmjEvent.JulebuGameUpdate(tInfo)
+	GdmjEvent.JulebuGameUpdate(tInfo,mjUser.userid)
 	return pos
 end
 

@@ -26,13 +26,13 @@ function execute(packetID, operateID, buffer)
 		gcmsg.result = ReturnCode["player_not_exist"]
 		return cgmsg.userid, gcmsg.result, gcmsg:ByteSize(), gcmsg:SerializeToString()
 	end
+
+	
 	if false == GdmjEvent.CheckJiFen(cgmsg.julebuid, cgmsg.userid) then
 		--低于50就不能进入房间了
 		gcmsg.result = ReturnCode["jlb_create_error"]
 		return cgmsg.userid, 0, gcmsg:ByteSize(), gcmsg:SerializeToString()				
 	end
-
-
 	
 	if cgmsg.payway == 1 then
 		if cgmsg.paytype == g_gdmjDefine.pay_gold then

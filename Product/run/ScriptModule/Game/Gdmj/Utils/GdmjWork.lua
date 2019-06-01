@@ -1633,9 +1633,6 @@ end
 function GdmjWork.CheckJiFen(tItem)
 	--这个的函数放在这里了。
 	--检查每个玩家的积分是否足够
-	if true then
-		return nil
-	end
 	
 	local gcHistory = nil
 	for i = 1,tItem.m_maxUser do

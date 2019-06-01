@@ -142,7 +142,7 @@ function execute(packetID, operateID, buffer)
 			chairID = k
 			tInfo.situser[k] = 0    --这里设置为0
 			tInfo.playernum = tInfo.playernum - 1
-			GdmjEvent.JulebuGameUpdate(tInfo)
+			GdmjEvent.JulebuGameUpdate(tInfo,cgmsg.userid)
 			break
 		end
 		

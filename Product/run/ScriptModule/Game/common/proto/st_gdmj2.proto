@@ -49,4 +49,6 @@ message gdmjrpmj //广东麻将饶平麻将
 	optional int32 kehuqidui = 12;	//可以胡七对
 	optional int32 qiduisibei = 13; //豪华七对四倍
 	optional int32 difen = 15;     //底分
+	optional int32 liuju = 16;		//流局
+	optional int32 xuezhan = 17;	//血战到底
 }

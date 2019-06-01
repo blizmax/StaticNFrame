@@ -273,11 +273,9 @@ function GdmjEvent.JulebuGameCreate(m_tInfo, strVipInfo)
 		if m_vipRoomInfo.qiduisibei ~= 0 then
 			strDes = strDes..",豪华七对四倍"
 		end			
-		if m_vipRoomInfo.gskhjiama ~= 0 then
-			strDes = strDes..",杠上开花加码"
-		end
+
 		if m_vipRoomInfo.gangbaoquanbao ~= 0 then
-			strDes = strDes..",杠爆全包"
+			strDes = strDes..",包杠"
 		end
 		if m_vipRoomInfo.qingyise ~= 0 then
 			strDes = strDes..",清一色"
@@ -322,7 +320,7 @@ function GdmjEvent.JulebuGameStart(tInfo)
 	if tInfo == nil or tInfo.julebuid == 0 then
 		return
 	end
-	JulebuService.JulebuGameStart(tInfo.julebuid, tInfo.tableid)		
+	JulebuService.JulebuGameStart(tInfo.julebuid, tInfo.tableid, tInfo.julebutype)		
 end
 
 function GdmjEvent.CheckJiFen(julebuID, userID)
