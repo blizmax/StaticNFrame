@@ -155,8 +155,10 @@ function execute(packetID, operateID, buffer)
 				gcmsg.membernum:append(jInfo.membernum)
 				gcmsg.maxmembernum:append(jInfo.maxmembernum)
 				local pInfo = PlayerModel.GetPlayerInfo(jInfo.ownerid)
-				gcmsg.ownerfaceid:append(pInfo.face_1)
-				gcmsg.ownernick:append(pInfo.nickname)
+				if pInfo then
+					gcmsg.ownerfaceid:append(pInfo.face_1)
+					gcmsg.ownernick:append(pInfo.nickname)
+				end
 				gcmsg.tablenum:append(0)
 				local addadminlist = gcmsg.adminlist:add()
 				for k,v in ipairs(jInfo.adminlist)do 

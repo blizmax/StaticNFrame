@@ -61,15 +61,37 @@ function RpmjService.DoWork(tItem) --传入的是TdhStruct类型的Item
 	GdmjWork.CheckOver(tItem)
 end
 
+function RpmjService.CheckJiFen2(julebuID, userID, carryjetton)
+	local jInfo	 = JulebuModel.GetJulebuInfo(julebuID)
+	if jInfo == nil then
+		return 
+	end
+
+	if julebuID == nil or julebuID == 0 then
+		return true
+	end
+	
+	local member = JulebuModel.GetUserMemberInfo(julebuID, userID)
+	if  member == nil or member == 0 then
+		return false
+	end
+	
+	if member.limitjifen + carryjetton < jInfo.gamecount then
+		return false
+	end	
+	return true
+end
+
 function RpmjService.CheckJiFen(tItem)
 	--这个的函数放在这里了。
 	--检查每个玩家的积分是否足够
 	
 	local gcHistory = nil
 	for i = 1,tItem.m_maxUser do
-		if tItem.m_tInfo.julebutype == 2 and false == GdmjEvent.CheckJiFen(tItem.m_tInfo.julebuid, tItem.m_userList[i].userid, tItem.m_userList[i].carryjetton) then
-			if tItem.m_vipRoomInfo.liuju == 1 then
-				RpmjService.PlayCountLiuJu(tItem)
+		if tItem.m_tInfo.julebutype == 2 and false == RpmjService.CheckJiFen2(tItem.m_tInfo.julebuid, tItem.m_userList[i].userid, tItem.m_userList[i].carryjetton) then
+			if tItem.m_vipRoomInfo.liuju == 1 or true then
+				tItem.m_tInfo.timemark = g_gdmjTime.end_time
+				tItem.m_tInfo.status = g_gdmjStatus.status_dissolve
 				return
 			end
 
@@ -83,20 +105,19 @@ function RpmjService.CheckJiFen(tItem)
 
 			tItem.m_tInfo.situser[i] = 0    --这里设置为0
 			tItem.m_tInfo.playernum = tItem.m_tInfo.playernum - 1
-			tItem.m_tInfo.standuser:append(tItem.m_userList[i].userid)
-			GdmjModel.SetTableInfo(tInfo, 1)
+			GdmjModel.SetTableInfo(tItem.m_tInfo, 1)
 			GdmjEvent.JulebuGameUpdate(tItem.m_tInfo,tItem.m_userList[i].userid)
 
-			--local gcLeave = msg_gdmj_pb.gcgdmjleave()
-			--gcLeave.userid = tItem.m_userList[i].userid
-			--gcLeave.chairid = i
-			--gcLeave.tableid = tItem.m_tInfo.tableid
-			--gcLeave.leavemsg = "你积分不足，已被移出房间！"
+			local gcLeave = msg_gdmj_pb.gcgdmjleave()
+			gcLeave.userid = tItem.m_userList[i].userid
+			gcLeave.chairid = i
+			gcLeave.tableid = tItem.m_tInfo.tableid
+			gcLeave.leavemsg = "你积分不足，已被移出房间！"
 
 
-			--SendMessage(tItem.m_userList[i].userid, PacketCode[2212].client, gcLeave:ByteSize(), gcLeave:SerializeToString())
+			SendMessage(tItem.m_userList[i].userid, PacketCode[2212].client, gcLeave:ByteSize(), gcLeave:SerializeToString())
 
-			--GdmjModel.DelUserTableID(tItem.m_userList[i].userid)   --这里还需要把
+			GdmjModel.DelUserTableID(tItem.m_userList[i].userid)   --这里还需要把
 						
 			--在这里需要把积分同步到俱乐部
 			--
@@ -1271,7 +1292,7 @@ function RpmjService.PlayCountWin(tItem)
 		if tarChairID >= 1 and tarChairID <= tItem.m_maxUser then
 			--如果是吃胡的话， 点炮的人输钱
 			local winItem = gcAccount.countlist[winChairID]
-			local costItem = tarChairID
+			local costItem = gcAccount.countlist[tarChairID]
 			winItem.hunum = winItem.hunum + doubleAccount * (1 + tItem.m_detailList[winChairID].zhongmanum) * (1 + tItem.m_detailList[tarChairID].zhongmanum)
 			costItem.hunum = costItem.hunum - doubleAccount * (1 + tItem.m_detailList[winChairID].zhongmanum) * (1 + tItem.m_detailList[tarChairID].zhongmanum)
 		end
@@ -1532,7 +1553,7 @@ function RpmjService.PlayCountWinMore(tItem)
 			for k,v in ipairs(winList) do
 				local winChairID = v
 				local winItem = gcAccount.countlist[winChairID]
-				local costItem = tarChairID
+				local costItem = gcAccount.countlist[tarChairID]
 				winItem.hunum = winItem.hunum + doubleAccount * (1 + tItem.m_detailList[winChairID].zhongmanum) * (1 + tItem.m_detailList[tarChairID].zhongmanum)
 				costItem.hunum = costItem.hunum - doubleAccount * (1 + tItem.m_detailList[winChairID].zhongmanum) * (1 + tItem.m_detailList[tarChairID].zhongmanum)
 			end

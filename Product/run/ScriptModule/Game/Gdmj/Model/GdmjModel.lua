@@ -163,8 +163,8 @@ function GdmjModel.SitDown(tInfo,mjUser,pos)
 	if tInfo.viptable == 0 then
 		mjUser.carryjetton = mjUser.psinfo.jetton  --如果不是私人房，那就是
 	else
-		mjUser.carryjetton =  0  --JulebuService.GetJiFen(tInfo.julebuid, mjUser.userid)     --如果是私人房
-		mjUser.psinfo.jetton =  0 --JulebuService.GetJiFen(tInfo.julebuid, mjUser.userid)
+		mjUser.carryjetton = 0 --JulebuService.GetJiFen(tInfo.julebuid, mjUser.userid)     --如果是私人房
+		mjUser.psinfo.jetton = 0 --JulebuService.GetJiFen(tInfo.julebuid, mjUser.userid)
 	end
 	tInfo.playernum = tInfo.playernum + 1   --只有坐下来的时候，才算一个玩家
 	GdmjModel.SetChairUser(tInfo.tableid,mjUser)
