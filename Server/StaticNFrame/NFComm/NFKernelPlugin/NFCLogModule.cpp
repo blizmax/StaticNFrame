@@ -227,8 +227,8 @@ void NFCLogModule::CreateOthersLogger(uint32_t logNameId, const std::string& log
 	std::shared_ptr<spdlog::logger> pLogger;
 	if (async)
 	{
-		//pLogger = std::make_shared<spdlog::async_logger>(m_pPluginManager->GetAppName() + "_" + logName, std::begin(sinks_vec), std::end(sinks_vec), 1024,
-		//	spdlog::async_overflow_policy::block_retry, nullptr, std::chrono::milliseconds(1000), nullptr);
+		pLogger = std::make_shared<spdlog::async_logger>(m_pPluginManager->GetAppName() + "_" + logName, std::begin(sinks_vec), std::end(sinks_vec), 1024,
+			spdlog::async_overflow_policy::block_retry, nullptr, std::chrono::milliseconds(1000), nullptr);
 		pLogger = std::make_shared<spdlog::logger>(m_pPluginManager->GetAppName() + "_" + logName, std::begin(sinks_vec), std::end(sinks_vec));
 	}
 	else
