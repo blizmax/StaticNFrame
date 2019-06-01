@@ -84,7 +84,7 @@ namespace spdlog
 				std::tm tm = spdlog::details::os::localtime();
 				filename_t pre_dir, basename, ext;
 				std::tie(pre_dir, basename, ext) = split_by_dir_and_extenstion(filename);
-				std::conditional<std::is_same<filename_t::value_type, char>::value, fmt::MemoryWriter, fmt::WMemoryWriter>::type w;
+				std::conditional<std::is_same<filename_t::value_type, char>::value, fmt::memory_buffer, fmt::wmemory_buffer>::type w;
 				auto dir_path = fmt::format(SPDLOG_FILENAME_T("{}{}{:04d}{:02d}{:02d}{}"), pre_dir, spdlog::details::os::folder_sep, tm.tm_year + 1900, tm.tm_mon + 1, tm.tm_mday, spdlog::details::os::folder_sep);
 
 				//CHECK if directory is already existed
@@ -105,8 +105,9 @@ namespace spdlog
 					}
 				}
 
-				w.write(SPDLOG_FILENAME_T("{}{}_{:04d}_{:02d}_{:02d}_{:02d}{}"), dir_path, basename, tm.tm_year + 1900, tm.tm_mon + 1, tm.tm_mday, tm.tm_hour, ext);
-				return w.str();
+				fmt::format_to(
+					w, SPDLOG_FILENAME_T("{}{}_{:04d}_{:02d}_{:02d}_{:02d}{}"), dir_path, basename, tm.tm_year + 1900, tm.tm_mon + 1, tm.tm_mday, tm.tm_hour, ext);
+				return fmt::to_string(w);
 			}
 
 			// Create filename for the form pre_dir/filename.YYYY-MM-DD_hh-mm.ext
@@ -115,7 +116,7 @@ namespace spdlog
 				std::tm tm = spdlog::details::os::localtime();
 				filename_t pre_dir, basename, ext;
 				std::tie(pre_dir, basename, ext) = split_by_dir_and_extenstion(filename);
-				std::conditional<std::is_same<filename_t::value_type, char>::value, fmt::MemoryWriter, fmt::WMemoryWriter>::type w;
+				std::conditional<std::is_same<filename_t::value_type, char>::value, fmt::memory_buffer, fmt::wmemory_buffer>::type w;
 				auto dir_path = fmt::format(SPDLOG_FILENAME_T("{}{}"), pre_dir, spdlog::details::os::folder_sep);
 
 				//CHECK if directory is already existed
@@ -136,8 +137,9 @@ namespace spdlog
 					}
 				}
 
-				w.write(SPDLOG_FILENAME_T("{}{}{}"), dir_path, basename, ext);
-				return w.str();
+				fmt::format_to(
+					w, SPDLOG_FILENAME_T("{}{}{}"), dir_path, basename, ext);
+				return fmt::to_string(w);
 			}
 		};
 
@@ -146,7 +148,7 @@ namespace spdlog
 		* Target path is Date/filename_hour.ext
 		*/
 		template<class Mutex, class FileNameCalc = my_date_and_hour_file_name_calculator>
-		class my_date_and_hour_file_sink SPDLOG_FINAL : public base_sink<Mutex>
+		class my_date_and_hour_file_sink final : public base_sink<Mutex>
 		{
 		public:
 			// create daily file sink which rotates on given time
@@ -166,7 +168,7 @@ namespace spdlog
 			}
 
 		protected:
-			void _sink_it(const details::log_msg& msg) override
+			void sink_it_(const details::log_msg& msg) override
 			{
 				if (std::chrono::system_clock::now() >= _rotation_tp)
 				{
@@ -181,10 +183,12 @@ namespace spdlog
 					_rotation_tp = _next_rotation_tp();
 				}
 
-				_file_helper.write(msg);
+				fmt::memory_buffer formatted;
+				sink::formatter_->format(msg, formatted);
+				_file_helper.write(formatted);
 			}
 
-			void _flush() override
+			void flush_() override
 			{
 				_file_helper.flush();
 			}

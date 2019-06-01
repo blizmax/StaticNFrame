@@ -11,6 +11,7 @@
 
 #include <map>
 #include <functional>
+#include <vector>
 
 #include "NFComm/NFPluginModule/NFIHttpClientModule.h"
 #include "NFComm/NFCore/NFSlice.hpp"

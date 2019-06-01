@@ -133,25 +133,34 @@
     <ClInclude Include="sigar\win32\sigar_private.h" />
     <ClInclude Include="sigar\win32\sigar_ptql.h" />
     <ClInclude Include="sigar\win32\sigar_util.h" />
+    <ClInclude Include="spdlog\async.h" />
     <ClInclude Include="spdlog\async_logger.h" />
     <ClInclude Include="spdlog\common.h" />
-    <ClInclude Include="spdlog\contrib\sinks\date_and_hour_file_sink.h" />
-    <ClInclude Include="spdlog\contrib\sinks\step_file_sink.h" />
     <ClInclude Include="spdlog\details\async_logger_impl.h" />
-    <ClInclude Include="spdlog\details\async_log_helper.h" />
+    <ClInclude Include="spdlog\details\circular_q.h" />
+    <ClInclude Include="spdlog\details\console_globals.h" />
     <ClInclude Include="spdlog\details\file_helper.h" />
+    <ClInclude Include="spdlog\details\fmt_helper.h" />
     <ClInclude Include="spdlog\details\logger_impl.h" />
     <ClInclude Include="spdlog\details\log_msg.h" />
     <ClInclude Include="spdlog\details\mpmc_blocking_q.h" />
     <ClInclude Include="spdlog\details\null_mutex.h" />
     <ClInclude Include="spdlog\details\os.h" />
-    <ClInclude Include="spdlog\details\pattern_formatter_impl.h" />
+    <ClInclude Include="spdlog\details\pattern_formatter.h" />
+    <ClInclude Include="spdlog\details\periodic_worker.h" />
     <ClInclude Include="spdlog\details\registry.h" />
-    <ClInclude Include="spdlog\details\spdlog_impl.h" />
+    <ClInclude Include="spdlog\details\thread_pool.h" />
+    <ClInclude Include="spdlog\fmt\bin_to_hex.h" />
+    <ClInclude Include="spdlog\fmt\bundled\chrono.h" />
+    <ClInclude Include="spdlog\fmt\bundled\color.h" />
+    <ClInclude Include="spdlog\fmt\bundled\core.h" />
+    <ClInclude Include="spdlog\fmt\bundled\format-inl.h" />
     <ClInclude Include="spdlog\fmt\bundled\format.h" />
+    <ClInclude Include="spdlog\fmt\bundled\locale.h" />
     <ClInclude Include="spdlog\fmt\bundled\ostream.h" />
     <ClInclude Include="spdlog\fmt\bundled\posix.h" />
     <ClInclude Include="spdlog\fmt\bundled\printf.h" />
+    <ClInclude Include="spdlog\fmt\bundled\ranges.h" />
     <ClInclude Include="spdlog\fmt\bundled\time.h" />
     <ClInclude Include="spdlog\fmt\fmt.h" />
     <ClInclude Include="spdlog\fmt\ostr.h" />
@@ -160,18 +169,21 @@
     <ClInclude Include="spdlog\sinks\android_sink.h" />
     <ClInclude Include="spdlog\sinks\ansicolor_sink.h" />
     <ClInclude Include="spdlog\sinks\base_sink.h" />
+    <ClInclude Include="spdlog\sinks\basic_file_sink.h" />
+    <ClInclude Include="spdlog\sinks\daily_file_sink.h" />
     <ClInclude Include="spdlog\sinks\dist_sink.h" />
-    <ClInclude Include="spdlog\sinks\file_sinks.h" />
     <ClInclude Include="spdlog\sinks\msvc_sink.h" />
     <ClInclude Include="spdlog\sinks\null_sink.h" />
     <ClInclude Include="spdlog\sinks\ostream_sink.h" />
+    <ClInclude Include="spdlog\sinks\rotating_file_sink.h" />
     <ClInclude Include="spdlog\sinks\sink.h" />
+    <ClInclude Include="spdlog\sinks\stdout_color_sinks.h" />
     <ClInclude Include="spdlog\sinks\stdout_sinks.h" />
     <ClInclude Include="spdlog\sinks\syslog_sink.h" />
     <ClInclude Include="spdlog\sinks\wincolor_sink.h" />
-    <ClInclude Include="spdlog\sinks\windebug_sink.h" />
     <ClInclude Include="spdlog\spdlog.h" />
     <ClInclude Include="spdlog\tweakme.h" />
+    <ClInclude Include="spdlog\version.h" />
     <ClInclude Include="variant.hpp" />
   </ItemGroup>
   <ItemGroup>
@@ -187,14 +199,11 @@
     <ClCompile Include="sigar\win32\sigar_util.c" />
     <ClCompile Include="sigar\win32\win32_sigar.c" />
     <ClCompile Include="sigar\win32\wmi.cpp" />
-    <ClCompile Include="spdlog\fmt\bundled\format.cc" />
-    <ClCompile Include="spdlog\fmt\bundled\ostream.cc" />
-    <ClCompile Include="spdlog\fmt\bundled\posix.cc" />
-    <ClCompile Include="spdlog\fmt\bundled\printf.cc" />
   </ItemGroup>
   <ItemGroup>
     <None Include="sigar\win32\sigar.rc.in" />
     <None Include="sigar\win32\sigar_version.c.in" />
+    <None Include="spdlog\fmt\bundled\LICENSE.rst" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{5CEE5C46-2CA6-41AB-BCA9-2EB9DAF0B620}</ProjectGuid>
@@ -367,6 +376,7 @@
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <DisableSpecificWarnings>4018;4065;4146;4244;4251;4267;4305;4307;4309;4334;4355;4506;4800;4996</DisableSpecificWarnings>
+      <AdditionalIncludeDirectories>$(SolutionDir)/Dependencies/common;</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <AdditionalDependencies>msvcrtd.lib;Dbghelp.lib;ws2_32.lib;version.lib;netapi32.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>

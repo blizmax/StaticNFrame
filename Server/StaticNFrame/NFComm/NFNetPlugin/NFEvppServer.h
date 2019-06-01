@@ -8,13 +8,13 @@
 // -------------------------------------------------------------------------
 #pragma once
 
+
+#include "NFComm/NFPluginModule/NFIModule.h"
+#include "NFNetDefine.h"
+
 #include <evpp/tcp_server.h>
 #include <evpp/buffer.h>
 #include <evpp/tcp_conn.h>
-
-#include "NFComm/NFCore/NFPlatform.h"
-#include "NFComm/NFPluginModule/NFIModule.h"
-#include "NFNetDefine.h"
 
 class NFCNetServerModule;
 

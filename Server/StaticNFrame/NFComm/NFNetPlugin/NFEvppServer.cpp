@@ -8,10 +8,7 @@
 // -------------------------------------------------------------------------
 
 #include "NFEvppServer.h"
-#include "NFLibEvent.h"
-#include "NFComm/NFPluginModule/NFLogMgr.h"
-#include <NFComm/NFPluginModule/NFINetModule.h>
-#include "NetObject.h"
+
 
 NFEvppServer::NFEvppServer(NF_SERVER_TYPES serverType, uint32_t serverId, const NFServerFlag& flag) : mFlag(flag), mServerType(serverType), mServerId(serverId)
 {
