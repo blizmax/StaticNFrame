@@ -13,6 +13,7 @@
 #include "NFComm/NFPluginModule/NFITaskModule.h"
 #include "NFCMongoDriverManager.h"
 #include "NFComm/NFPluginModule/NFTask.h"
+#include "NFComm/NFPluginModule/NFIPluginManager.h"
 
 class NFMongoInsertJsonTask : public NFTask
 {
