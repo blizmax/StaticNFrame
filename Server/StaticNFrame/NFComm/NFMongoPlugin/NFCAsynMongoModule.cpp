@@ -9,6 +9,7 @@
 
 #include "NFCAsynMongoModule.h"
 #include "NFComm/NFPluginModule/NFTask.h"
+#include "NFComm/NFPluginModule/NFIPluginManager.h"
 
 NFCAsynMongoModule::NFCAsynMongoModule(NFIPluginManager* p)
 {
