@@ -9,7 +9,6 @@
 #ifndef NFI_PLUGIN_MANAGER_H
 #define NFI_PLUGIN_MANAGER_H
 
-#include "NFIModule.h"
 #include "NFComm/NFCore/NFPlatform.h"
 #include "NFSystemInfo.h"
 
@@ -18,6 +17,7 @@
 
 #define ALL_SERVER ("AllServer")
 
+class NFIModule;
 class NFIPlugin;
 class NFIPluginManager;
 
@@ -28,16 +28,66 @@ typedef std::function<NFIPlugin*(NFIPluginManager* pMan)> CREATE_PLUGIN_FUNCTION
 #define FIND_MODULE(classBaseName, className)  \
     assert((TIsDerived<classBaseName, NFIModule>::Result));
 
-class NFIPluginManager : public NFIModule
+class NFIPluginManager
 {
 public:
 	NFIPluginManager()
 	{
-		m_pPluginManager = this;
+		
 	}
 
 	virtual ~NFIPluginManager()
 	{
+	}
+
+	virtual bool Awake()
+	{
+		return true;
+	}
+
+	virtual bool Init()
+	{
+		return true;
+	}
+
+	virtual bool AfterInit()
+	{
+		return true;
+	}
+
+	virtual bool CheckConfig()
+	{
+		return true;
+	}
+
+	virtual bool ReadyExecute()
+	{
+		return true;
+	}
+
+	virtual bool Execute()
+	{
+		return true;
+	}
+
+	virtual bool BeforeShut()
+	{
+		return true;
+	}
+
+	virtual bool Shut()
+	{
+		return true;
+	}
+
+	virtual bool Finalize()
+	{
+		return true;
+	}
+
+	virtual bool OnReloadPlugin()
+	{
+		return true;
 	}
 
 	template <typename T>

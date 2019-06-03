@@ -10,6 +10,7 @@
 #define NFI_LOGIC_MODULE_H
 
 #include <string>
+#include "NFIPluginManager.h"
 
 template <typename DerivedType, typename BaseType>
 class TIsDerived
