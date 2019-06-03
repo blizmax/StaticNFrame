@@ -37,6 +37,19 @@
 #include <evpp/tcp_server.h>
 #include <evpp/buffer.h>
 #include <evpp/tcp_conn.h>
+#include "NFComm/NFCore/NFQueue.hpp"
+
+struct MsgFromNetInfo
+{
+	MsgFromNetInfo(const evpp::TCPConnPtr TCPConPtr) : mTCPConPtr(TCPConPtr)
+	{
+		nType = eMsgType_Num;
+	}
+
+	eMsgType nType;
+	evpp::TCPConnPtr mTCPConPtr;
+	std::string strMsg;
+};
 
 class NFCNetServerModule;
 
@@ -61,7 +74,7 @@ public:
 	 * @param  sa
 	 * @return bool
 	 */
-	bool AddNetObject(const evpp::TCPConnPtr& conn);
+	NetEvppObject* AddNetObject(const evpp::TCPConnPtr& conn);
 
 	/**
 	* @brief	初始化
@@ -162,8 +175,9 @@ protected:
 	 */
 	virtual void OnSocketNetEvent(const eMsgType nEvent, const uint32_t unLinkId);
 
+	virtual void ProcessMsgLogicThread();
 private:
-	evpp::EventLoop* m_eventLoop;
+	evpp::EventLoopThread* m_eventLoop;
 	evpp::TCPServer* m_tcpServer;
 private:
 	/**
@@ -176,5 +190,8 @@ private:
 	*/
 	std::vector<uint32_t> mvRemoveObject;
 
-	atomic_bool mExit;
+	/**
+	* @brief 需要消息队列
+	*/
+	NFQueueVector<MsgFromNetInfo*> mMsgQueue;
 };

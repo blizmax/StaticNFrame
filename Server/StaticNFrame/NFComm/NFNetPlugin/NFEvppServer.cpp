@@ -38,48 +38,110 @@ NFEvppServer::NFEvppServer(NF_SERVER_TYPES serverType, uint32_t serverId, const 
 {
 	m_eventLoop = nullptr;
 	m_tcpServer = nullptr;
-	mExit = false;
 }
 
 NFEvppServer::~NFEvppServer()
 {
 	if (m_eventLoop)
 	{
-		NF_SAFE_DELETE(m_tcpServer);
 		NF_SAFE_DELETE(m_eventLoop);
+	}
+
+	if (m_tcpServer)
+	{
+		NF_SAFE_DELETE(m_tcpServer);
+	}
+
+	m_eventLoop = nullptr;
+	m_tcpServer = nullptr;
+}
+
+void NFEvppServer::ProcessMsgLogicThread()
+{
+	std::vector<MsgFromNetInfo*> vecMsg;
+	mMsgQueue.Pop(vecMsg);
+	for(size_t i = 0; i < vecMsg.size(); i++)
+	{
+		MsgFromNetInfo* pMsg = vecMsg[i];
+		if (pMsg == nullptr) continue;
+
+		if (pMsg->nType == eMsgType_CONNECTED)
+		{
+			NetEvppObject* pObject = AddNetObject(pMsg->mTCPConPtr);
+			if (pObject)
+			{
+				pMsg->mTCPConPtr->set_context(evpp::Any(pObject));
+				pObject->OnHandleConnect();
+			}
+		}
+		else if (pMsg->nType == eMsgType_DISCONNECTED)
+		{
+			if (!pMsg->mTCPConPtr->context().IsEmpty())
+			{
+				NetEvppObject* pObject = evpp::any_cast<NetEvppObject*>(pMsg->mTCPConPtr->context());
+				if (pObject)
+				{
+					pObject->OnHandleDisConnect();
+				}
+				pMsg->mTCPConPtr->set_context(evpp::Any(nullptr));
+			}
+		}
+		else if (pMsg->nType == eMsgType_RECIVEDATA)
+		{
+			if (!pMsg->mTCPConPtr->context().IsEmpty())
+			{
+				NetEvppObject* pObject = evpp::any_cast<NetEvppObject*>(pMsg->mTCPConPtr->context());
+				if (pObject)
+				{
+					pObject->OnRecvData(pMsg->strMsg.data(), pMsg->strMsg.length());
+				}
+			}
+		}
+		else
+		{
+			//
+		}
 	}
 }
 
 bool NFEvppServer::Init()
 {
-	m_eventLoop = NF_NEW evpp::EventLoop();
+	m_eventLoop = NF_NEW evpp::EventLoopThread();
+	m_eventLoop->set_name(GetServerName(mServerType));
+	m_eventLoop->Start(true);
 	std::string listenAddr = NF_FORMAT("0.0.0.0:{}", mFlag.nPort);
 
-	m_tcpServer = NF_NEW evpp::TCPServer(m_eventLoop, listenAddr, GetServerName(mServerType), mFlag.nWorkThreadNum);
-	
+	m_tcpServer = NF_NEW evpp::TCPServer(m_eventLoop->loop(), listenAddr, GetServerName(mServerType), mFlag.nWorkThreadNum);
+
+	//链接回调是在别的线程里运行的
 	m_tcpServer->SetConnectionCallback([this](const evpp::TCPConnPtr& conn) {
 		if (conn->IsConnected())
 		{
-			this->AddNetObject(conn);
+			conn->SetTCPNoDelay(true);
+			MsgFromNetInfo* pMsg = new MsgFromNetInfo(conn);
+			pMsg->nType = eMsgType_CONNECTED;
+			mMsgQueue.Push(pMsg);
 		}
 		else
 		{
-			uint32_t uslinkId = conn->GetLinkId();
-			NetEvppObject* pObject = GetNetObject(uslinkId);
-			if (pObject)
-			{
-				pObject->OnHandleDisConnect();
-			}
+			MsgFromNetInfo* pMsg = new MsgFromNetInfo(conn);
+			pMsg->nType = eMsgType_DISCONNECTED;
+			mMsgQueue.Push(pMsg);
 		}
 	});
 
+	//消息回调是在别的线程里运行的
 	m_tcpServer->SetMessageCallback([this](const evpp::TCPConnPtr& conn,
 		evpp::Buffer* msg) {
-		uint32_t uslinkId = conn->GetLinkId();
-		NetEvppObject* pObject = GetNetObject(uslinkId);
-		if (pObject)
+
+		evpp::Slice xMsgBuff;
+		if (msg)
 		{
-			pObject->OnRecvData(msg->data(), msg->length());
+			xMsgBuff = msg->NextAll();
+			MsgFromNetInfo* pMsg = new MsgFromNetInfo(conn);
+			pMsg->nType = eMsgType_RECIVEDATA;
+			pMsg->strMsg = std::string(xMsgBuff.data(), xMsgBuff.size());
+			mMsgQueue.Push(pMsg);
 		}
 	});
 
@@ -102,29 +164,28 @@ std::string NFEvppServer::GetLinkIp(uint32_t usLinkId)
 	return std::string("");
 }
 
-bool NFEvppServer::AddNetObject(const evpp::TCPConnPtr& conn)
+NetEvppObject* NFEvppServer::AddNetObject(const evpp::TCPConnPtr& conn)
 {
 	if (GetNetObjectCount() >= GetMaxConnectNum())
 	{
 		NFLogError(NF_LOG_NET_PLUGIN, 0, "connected count >= mnMaxConnect:%d! Can't add connect", GetMaxConnectNum());
-		return false;
+		return nullptr;
 	}
 
 	uint32_t usLinkId = GetFreeUnLinkId();
 	if (usLinkId == 0)
 	{
 		NFLogError(NF_LOG_NET_PLUGIN, 0, "connected count >= mnMaxConnect:%d! Can't add connect", GetMaxConnectNum());
-		return false;
+		return nullptr;
 	}
 
 	uint32_t index = GetServerIndexFromUnlinkId(usLinkId);
 	if (index >= mNetObjectArray.size() || mNetObjectArray[index] != nullptr)
 	{
 		NFLogError(NF_LOG_NET_PLUGIN, 0, "GetServerIndexFromUnLinkId Failed!");
-		return false;
+		return nullptr;
 	}
 
-	conn->SetLinkId(usLinkId);
 	NetEvppObject* pObject = NF_NEW NetEvppObject(conn);
 	mNetObjectArray[index] = pObject;
 	mNetObjectCount++;
@@ -138,9 +199,7 @@ bool NFEvppServer::AddNetObject(const evpp::TCPConnPtr& conn)
 	pObject->SetRecvCB(this, &NFEvppServer::OnReceiveNetPack);
 	pObject->SetEventCB(this, &NFEvppServer::OnSocketNetEvent);
 
-	pObject->OnHandleConnect();
-
-	return true;
+	return pObject;
 }
 
 NetEvppObject* NFEvppServer::GetNetObject(uint32_t usLinkId)
@@ -209,24 +268,8 @@ uint32_t NFEvppServer::GetFreeUnLinkId()
 
 bool NFEvppServer::Shut()
 {
-	m_tcpServer->Stop([this]
-	{
-		mExit = true;
-	});
-
-	//while(!mExit)
-	//{
-	//	NFSLEEP(1);
-	//}
-	//m_eventLoop->Stop();
-	for (size_t i = 0; i < mNetObjectArray.size(); i++)
-	{
-		if (mNetObjectArray[i] != nullptr)
-		{
-			mNetObjectArray[i]->SetNeedRemove(true);
-			mNetObjectArray[i]->CloseObject();
-		}
-	}
+	m_tcpServer->Stop();
+	m_eventLoop->Stop(true);
 	return true;
 }
 
@@ -241,13 +284,26 @@ bool NFEvppServer::Finalize()
 		}
 	}
 	mNetObjectArray.clear();
+
+	if (m_eventLoop)
+	{
+		NF_SAFE_DELETE(m_eventLoop);
+	}
+
+	if (m_tcpServer)
+	{
+		NF_SAFE_DELETE(m_tcpServer);
+	}
+
+	m_eventLoop = nullptr;
+	m_tcpServer = nullptr;
 	return true;
 }
 
 bool NFEvppServer::Execute()
 {
 	ExecuteClose();
-	//m_eventLoop->Run();
+	ProcessMsgLogicThread();
 	return true;
 }
 

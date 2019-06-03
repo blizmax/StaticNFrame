@@ -21,11 +21,11 @@ g_dbtype = 'mysql'
 --g_dbPort2 = 3306
 --g_dbDatabase2 = 'db_mmmj'
 
-g_dbHost = '45.249.246.175'
+g_dbHost = '23.91.101.148'
 g_dbUser = 'user_yj'
 g_dbPassword = "cgt=+erhk"
-g_dbPort = 6001
-g_dbDatabase = 'db_handspoker'
+g_dbPort = 3306
+g_dbDatabase = 'db_rpmj'
 
 g_redisInfo = {}
 g_redisInfo.redis_one = 1     --玩家属性
