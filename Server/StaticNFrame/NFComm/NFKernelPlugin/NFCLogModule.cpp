@@ -7,7 +7,7 @@
 // -------------------------------------------------------------------------
 
 #include "NFComm/NFCore/NFPlatform.h"
-#include "common/spdlog/sinks/ansicolor_sink.h"
+
 #include "NFCLogModule.h"
 
 #include "NFComm/NFPluginModule/NFIPluginManager.h"
@@ -21,6 +21,7 @@
 
 #include <iostream>
 #include "spdlog/async_logger.h"
+#include "common/spdlog/sinks/ansicolor_sink.h"
 
 NFCLogModule::NFCLogModule(NFIPluginManager* p)
 {

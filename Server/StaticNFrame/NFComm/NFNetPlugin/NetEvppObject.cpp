@@ -223,7 +223,7 @@ void NetEvppObject::OnHandleConnect()
 void NetEvppObject::OnHandleDisConnect()
 {
 	SetNeedRemove(true);
-	CloseObject();
+	//CloseObject();
 	OnHandleMsgPeer(eMsgType_DISCONNECTED, m_usLinkId, nullptr, 0, 0, 0);
 }
 
