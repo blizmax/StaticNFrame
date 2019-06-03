@@ -59,8 +59,8 @@ function execute(packetID, operateID, buffer)
 	jInfo.bankercount = 1000
 	jInfo.ruleset = 2
 	jInfo.faceaward_figure = 1
-	jInfo.faceaward_num = 1
-	jInfo.faceaward_count = 1
+	jInfo.faceaward_num = 5
+	jInfo.faceaward_count = 0
 	jInfo.proportion = 0  
 	jInfo.totaljifen = 0
 	jInfo.yesterdaypump = 0

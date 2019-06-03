@@ -193,61 +193,9 @@ function JulebuService.GameCount(julebuID, tableID, userArr, moduleType)
 		elseif jInfo.faceaward_figure == 6 then 
 			pumpingNum = 4 
 		end
-		if jInfo.faceaward_num == 1 then
-			pumpingRatio = 0
-		elseif jInfo.faceaward_num == 2 then
-			pumpingRatio = 1	
-		elseif jInfo.faceaward_num == 3 then
-			pumpingRatio = 2
-		elseif jInfo.faceaward_num == 4 then
-			pumpingRatio = 3
-		elseif jInfo.faceaward_num == 5 then
-			pumpingRatio = 4
-		elseif jInfo.faceaward_num == 6 then
-			pumpingRatio = 5
-		elseif jInfo.faceaward_num == 7 then
-			pumpingRatio = 6
-		elseif jInfo.faceaward_num == 8 then
-			pumpingRatio = 7
-		elseif jInfo.faceaward_num == 9 then
-			pumpingRatio = 8
-		elseif jInfo.faceaward_num == 10 then
-			pumpingRatio = 9
-		elseif jInfo.faceaward_num == 11 then
-			pumpingRatio = 10
-		end
 
-		if jInfo.faceaward_count == 1 then
-			pumpingOrigin = 0
-		elseif jInfo.faceaward_count == 2 then
-			pumpingOrigin = 50
-		elseif jInfo.faceaward_count == 3 then
-			pumpingOrigin = 100
-		elseif jInfo.faceaward_count == 4 then
-			pumpingOrigin = 200
-		elseif jInfo.faceaward_count == 5 then
-			pumpingOrigin = 300
-		elseif jInfo.faceaward_count == 6 then
-			pumpingOrigin = 400
-		elseif jInfo.faceaward_count == 7 then
-			pumpingOrigin = 500
-		elseif jInfo.faceaward_count == 8 then
-			pumpingOrigin = 600
-		elseif jInfo.faceaward_count == 9 then
-			pumpingOrigin = 700
-		elseif jInfo.faceaward_count == 10 then
-			pumpingOrigin = 800
-		elseif jInfo.faceaward_count == 11 then
-			pumpingOrigin = 900
-		elseif jInfo.faceaward_count == 12 then
-			pumpingOrigin = 100
-		elseif jInfo.faceaward_count == 13 then
-			pumpingOrigin = 1100
-		elseif jInfo.faceaward_count == 14 then
-			pumpingOrigin = 1200
-		elseif jInfo.faceaward_count == 15 then
-			pumpingOrigin = 1300
-		end
+		pumpingRatio = jInfo.faceaward_num
+		pumpingOrigin = jInfo.faceaward_count
 	end
 	local tmpNum = 1
 	for k,v in ipairs(userArr['userlist']) do
@@ -307,6 +255,7 @@ function JulebuService.GameCount(julebuID, tableID, userArr, moduleType)
 	JulebuModel.SetJulebuInfo(jInfo)
 	JulebuModel.SetJiFenCheck(julebuID..tableID) 
 end
+
 function JulebuService.ServerLoop(currTime)
 	--在这里轮询中，做每天结算的工作
 	--只有在晚上八点的时候，才对对应的玩家做统计

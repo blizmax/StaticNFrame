@@ -129,8 +129,8 @@ function JulebuModel.LoadJulebuInfo(julebuID, jInfo)
 	jInfo.bankercount = 1000
 	jInfo.ruleset = 1
 	jInfo.faceaward_figure = 1
-	jInfo.faceaward_num = 1
-	jInfo.faceaward_count = 1
+	jInfo.faceaward_num = 5
+	jInfo.faceaward_count = 0
 	JulebuModel.SetJulebuInfo(jInfo)
 	return jInfo
 end
