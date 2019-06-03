@@ -11,6 +11,7 @@
 
 #include "NFComm/NFCore/NFPlatform.h"
 #include "NFComm/NFPluginModule/NFIPluginManager.h"
+#include "NFComm/NFPluginModule/NFIModule.h"
 #include "google/protobuf/message.h"
 #include <vector>
 
