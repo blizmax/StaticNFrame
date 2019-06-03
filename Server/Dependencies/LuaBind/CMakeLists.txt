@@ -10,6 +10,10 @@ AUX_SOURCE_DIRECTORY(./luasocket SRC)
 AUX_SOURCE_DIRECTORY(./luasql SRC)
 AUX_SOURCE_DIRECTORY(./lua-protobuf SRC)
 
+add_definitions(
+        -DLUA_COMPAT_5_1
+    )
+
 if (CMAKE_BUILD_TYPE STREQUAL "Release")
 	SET(LIBRARY_OUTPUT_PATH "${CMAKE_SOURCE_DIR}/Product/Lib/Release")
 	ADD_LIBRARY( ${PROJECT_NAME} STATIC ${SRC} )
