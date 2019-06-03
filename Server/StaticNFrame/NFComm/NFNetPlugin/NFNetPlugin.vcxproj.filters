@@ -131,6 +131,9 @@
     <ClCompile Include="NFEvppServer.cpp">
       <Filter>NFServer</Filter>
     </ClCompile>
+    <ClCompile Include="NetEvppObject.cpp">
+      <Filter>NFNetObject</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="NFNetPlugin.h" />
@@ -324,6 +327,12 @@
       <Filter>evpp\udp</Filter>
     </ClInclude>
     <ClInclude Include="NFEvppServer.h">
+      <Filter>NFServer</Filter>
+    </ClInclude>
+    <ClInclude Include="NetEvppObject.h">
+      <Filter>NFNetObject</Filter>
+    </ClInclude>
+    <ClInclude Include="NFIServer.h">
       <Filter>NFServer</Filter>
     </ClInclude>
   </ItemGroup>

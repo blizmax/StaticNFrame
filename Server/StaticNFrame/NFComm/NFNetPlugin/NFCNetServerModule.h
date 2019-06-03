@@ -10,7 +10,7 @@
 
 #include "NFComm/NFPluginModule/NFINetServerModule.h"
 #include "NFComm/NFPluginModule/NFIPluginManager.h"
-#include "NFServer.h"
+#include "NFIServer.h"
 #include <NFComm/NFCore/NFBuffer.h>
 
 class NFILuaScriptModule;
@@ -218,7 +218,7 @@ protected:
 	 * @param  nPlayerID
 	 * @return void
 	 */
-	void SendMsg(NFServer* pServer, uint32_t usLinkId, const uint32_t nMsgID, const char* msg, const uint32_t nLen, const uint64_t nPlayerID);
+	void SendMsg(NFIServer* pServer, uint32_t usLinkId, const uint32_t nMsgID, const char* msg, const uint32_t nLen, const uint64_t nPlayerID);
 
 	/**
 	 * @brief
@@ -230,9 +230,9 @@ protected:
 	 * @param  nPlayerID
 	 * @return void
 	 */
-	void SendAllMsg(NFServer* pServer, const uint32_t nMsgID, const char* msg, const uint32_t nLen, const uint64_t nPlayerID);
+	void SendAllMsg(NFIServer* pServer, const uint32_t nMsgID, const char* msg, const uint32_t nLen, const uint64_t nPlayerID);
 private:
-	std::vector<NFServer*> mServerArray;
+	std::vector<NFIServer*> mServerArray;
 	NFBuffer mxSendBuffer;
 	NFILuaScriptModule* m_pLuaScriptModule;
 };

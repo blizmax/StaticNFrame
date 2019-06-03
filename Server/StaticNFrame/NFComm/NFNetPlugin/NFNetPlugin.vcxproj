@@ -71,6 +71,7 @@
     <ClCompile Include="NFCNetServerModule.cpp" />
     <ClCompile Include="NFClient.cpp" />
     <ClCompile Include="NFCHttpClient.cpp" />
+    <ClCompile Include="NetEvppObject.cpp" />
     <ClCompile Include="NFEvppServer.cpp" />
     <ClCompile Include="NFServer.cpp" />
     <ClCompile Include="NetObject.cpp" />
@@ -135,8 +136,10 @@
     <ClInclude Include="NFClient.h" />
     <ClInclude Include="NFCNetServerModule.h" />
     <ClInclude Include="NFCHttpClient.h" />
+    <ClInclude Include="NetEvppObject.h" />
     <ClInclude Include="NFEvppServer.h" />
     <ClInclude Include="NFHttpFormat.h" />
+    <ClInclude Include="NFIServer.h" />
     <ClInclude Include="NFLibEvent.h" />
     <ClInclude Include="NFServer.h" />
     <ClInclude Include="NFCNetClientModule.h" />

@@ -5,12 +5,34 @@
 //    @Email			:    445267987@qq.com
 //    @Module           :    NFNetPlugin
 //
+//
+//                    .::::.
+//                  .::::::::.
+//                 :::::::::::  FUCK YOU
+//             ..:::::::::::'
+//           '::::::::::::'
+//             .::::::::::
+//        '::::::::::::::..
+//             ..::::::::::::.
+//           ``::::::::::::::::
+//            ::::``:::::::::'        .:::.
+//           ::::'   ':::::'       .::::::::.
+//         .::::'      ::::     .:::::::'::::.
+//        .:::'       :::::  .:::::::::' ':::::.
+//       .::'        :::::.:::::::::'      ':::::.
+//      .::'         ::::::::::::::'         ``::::.
+//  ...:::           ::::::::::::'              ``::.
+// ```` ':.          ':::::::::'                  ::::..
+//                    '.:::::'                    ':'````..
+//
 // -------------------------------------------------------------------------
 #pragma once
 
 
 #include "NFComm/NFPluginModule/NFIModule.h"
 #include "NFNetDefine.h"
+#include "NetEvppObject.h"
+#include "NFIServer.h"
 
 #include <evpp/tcp_server.h>
 #include <evpp/buffer.h>
@@ -18,7 +40,7 @@
 
 class NFCNetServerModule;
 
-class NFEvppServer : public NFIModule
+class NFEvppServer : public NFIServer
 {
 	friend NFCNetServerModule;
 public:
@@ -33,43 +55,13 @@ public:
 	virtual ~NFEvppServer();
 
 	/**
-	 *@brief  设置接收回调.
+	 * @brief 添加网络对象
+	 *
+	 * @param  fd
+	 * @param  sa
+	 * @return bool
 	 */
-	template <typename BaseType>
-	void SetRecvCB(BaseType* pBaseType, void (BaseType::*handleRecieve)(const uint32_t unLinkId, const uint64_t valueId, const uint32_t nMsgId, const char* msg, const uint32_t nLen))
-	{
-		mRecvCB = std::bind(handleRecieve, pBaseType, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3, std::placeholders::_4, std::placeholders::_5);
-	}
-
-	/**
-	 *@brief  设置连接事件回调.
-	 */
-	template <typename BaseType>
-	void SetEventCB(BaseType* pBaseType, void (BaseType::*handleEvent)(const eMsgType nEvent, const uint32_t unLinkId))
-	{
-		mEventCB = std::bind(handleEvent, pBaseType, std::placeholders::_1, std::placeholders::_2);
-	}
-
-	/**
-	* @brief	获得唯一ID
-	*
-	* @return
-	*/
-	uint32_t GetServerId() const;
-
-	/**
-	* @brief	获得服务器类型
-	*
-	* @return
-	*/
-	uint32_t GetServerType() const;
-
-	/**
-	* @brief	是否是web服务器
-	*
-	* @return
-	*/
-	bool IsWebSocket() const;
+	bool AddNetObject(const evpp::TCPConnPtr& conn);
 
 	/**
 	* @brief	初始化
@@ -98,42 +90,91 @@ public:
 	* @return	是否成功
 	*/
 	virtual bool Execute() override;
+
+	/**
+	 * @brief 获得连接IP
+	 *
+	 * @param  usLinkId
+	 * @return std::string
+	 */
+	virtual std::string GetLinkIp(uint32_t usLinkId) override;
+
+	/**
+	* @brief 关闭连接
+	*
+	* @param  usLinkId
+	* @return
+	*/
+	virtual void CloseLinkId(uint32_t usLinkId) override;
+
+	/**
+	 * @brief 获得一个可用的ID
+	 *
+	 * @return uint32_t
+	 */
+	virtual uint32_t GetFreeUnLinkId();
+
+	/**
+	 * @brief	发送数据
+	 *
+	 * @param pData		发送的数据, 这里的数据已经包含了数据头
+	 * @param unSize	数据的大小
+	 * @return
+	 */
+	virtual bool SendAll(const void* pData, uint32_t unSize) override;
+
+	/**
+	 * @brief	发送数据
+	 *
+	 * @param pData		发送的数据, 这里的数据已经包含了数据头
+	 * @param unSize	数据的大小
+	 * @return
+	 */
+	virtual bool Send(uint32_t usLinkId, const void* pData, uint32_t unSize) override;
+
+	NetEvppObject* GetNetObject(uint32_t uslinkId);
+protected:
+	/**
+	 * @brief
+	 *
+	 * @return void
+	 */
+	virtual void ExecuteClose();
+
+	/**
+	 * @brief 网络接受数据包回调
+	 *
+	 * @param  unLinkId
+	 * @param  playerId
+	 * @param  nMsgId
+	 * @param  msg
+	 * @param  nLen
+	 * @return void
+	 */
+	virtual void OnReceiveNetPack(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen);
+
+	/**
+	 * @brief 网络事件，连接和断开连接处理
+	 *
+	 * @param  nEvent
+	 * @param  unLinkId
+	 * @return void
+	 */
+	virtual void OnSocketNetEvent(const eMsgType nEvent, const uint32_t unLinkId);
+
 private:
 	evpp::EventLoop* m_eventLoop;
 	evpp::TCPServer* m_tcpServer;
 private:
 	/**
-	 * @brief	处理接受数据的回调
-	 */
-	NET_RECEIVE_FUNCTOR mRecvCB;
-
-	/**
-	 * @brief	网络事件回调
-	 */
-	NET_EVENT_FUNCTOR mEventCB;
-
-	/**
-	* @brief 服务器配置数据
+	* @brief 链接对象数组
 	*/
-	NFServerFlag mFlag;
+	std::vector<NetEvppObject*> mNetObjectArray;
 
 	/**
-	* @brief 服务器类型
+	* @brief 需要删除的连接对象
 	*/
-	NF_SERVER_TYPES mServerType;
+	std::vector<uint32_t> mvRemoveObject;
 
-	/**
-	* @brief 服务器Id，一般一个应用程序一个服务器类型，一个服务器ID
-	*/
-	uint32_t mServerId;
-
-	/**
-	* @brief 是否是websocket
-	*/
-	bool mWebSocket;
-
-	/**
-	* @brief 解码消息类型
-	*/
-	uint32_t mPacketParseType;
+	atomic_bool mExit;
 };

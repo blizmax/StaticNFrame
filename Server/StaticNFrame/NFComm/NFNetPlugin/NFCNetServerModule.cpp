@@ -11,6 +11,8 @@
 #include "NFComm/NFPluginModule/NFIPlugin.h"
 #include "NFIPacketParse.h"
 #include "NFComm/NFPluginModule/NFILuaScriptModule.h"
+#include "NFServer.h"
+#include "NFEvppServer.h"
 
 NFCNetServerModule::NFCNetServerModule(NFIPluginManager* p)
 {
@@ -103,7 +105,8 @@ uint32_t NFCNetServerModule::AddServer(const NF_SERVER_TYPES eServerType, uint32
 		flag.nMaxConnectNum = nMaxClient;
 		flag.bWebSocket = bWebSocket;
 		flag.mPacketParseType = nPacketParseType;
-		NFServer* pServer = NF_NEW NFServer(eServerType, nServerID, flag);
+		//NFIServer* pServer = NF_NEW NFEvppServer(eServerType, nServerID, flag);
+		NFIServer* pServer = NF_NEW NFServer(eServerType, nServerID, flag);
 		pServer->SetRecvCB((NFINetModule*)this, &NFINetModule::OnReceiveNetPack);
 		pServer->SetEventCB((NFINetModule*)this, &NFINetModule::OnSocketNetEvent);
 		if (pServer->Init())
@@ -249,7 +252,7 @@ void NFCNetServerModule::SendToAllServerByPB(NF_SERVER_TYPES eServerType, const 
 	SendToAllServer(eServerType, nMsgID, strData, nPlayerID);
 }
 
-void NFCNetServerModule::SendMsg(NFServer* pServer, uint32_t usLinkId, const uint32_t nMsgID, const char* msg, const uint32_t nLen, const uint64_t nPlayerID)
+void NFCNetServerModule::SendMsg(NFIServer* pServer, uint32_t usLinkId, const uint32_t nMsgID, const char* msg, const uint32_t nLen, const uint64_t nPlayerID)
 {
 	mxSendBuffer.Clear();
 	if (pServer->IsWebSocket())
@@ -270,7 +273,7 @@ void NFCNetServerModule::SendMsg(NFServer* pServer, uint32_t usLinkId, const uin
 	mxSendBuffer.Clear();
 }
 
-void NFCNetServerModule::SendAllMsg(NFServer* pServer, const uint32_t nMsgID, const char* msg, const uint32_t nLen, const uint64_t nPlayerID)
+void NFCNetServerModule::SendAllMsg(NFIServer* pServer, const uint32_t nMsgID, const char* msg, const uint32_t nLen, const uint64_t nPlayerID)
 {
 	mxSendBuffer.Clear();
 	if (pServer->IsWebSocket())

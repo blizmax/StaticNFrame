@@ -25,11 +25,9 @@ void listener_cb(struct evconnlistener* listener, evutil_socket_t fd, struct soc
 	}
 }
 
-NFServer::NFServer(NF_SERVER_TYPES serverType, uint32_t serverId, const NFServerFlag& flag) : mBase(nullptr), mListener(nullptr), mFlag(flag), mServerType(serverType), mServerId(serverId), mNetObjectCount(0)
+NFServer::NFServer(NF_SERVER_TYPES serverType, uint32_t serverId, const NFServerFlag& flag) : NFIServer(serverType, serverId, flag), mBase(nullptr), mListener(nullptr)
 {
-	mWebSocket = flag.bWebSocket;
-	mPacketParseType = flag.mPacketParseType;
-	assert(serverType > NF_ST_NONE && serverType < NF_ST_MAX);
+
 }
 
 NFServer::~NFServer()
@@ -201,21 +199,6 @@ bool NFServer::SendAll(const void* pData, uint32_t unSize)
 	return true;
 }
 
-uint32_t NFServer::GetServerId() const
-{
-	return mServerId;
-}
-
-uint32_t NFServer::GetServerType() const
-{
-	return mServerType;
-}
-
-bool NFServer::IsWebSocket() const
-{
-	return mWebSocket;
-}
-
 bool NFServer::Init()
 {
 #if NF_PLATFORM == NF_PLATFORM_WIN
@@ -333,16 +316,6 @@ uint32_t NFServer::GetFreeUnLinkId()
 	mNetObjectArray.push_back(nullptr);
 
 	return GetUnLinkId(mServerType, sz);
-}
-
-uint32_t NFServer::GetNetObjectCount() const
-{
-	return mNetObjectCount;
-}
-
-uint32_t NFServer::GetMaxConnectNum() const
-{
-	return mFlag.nMaxConnectNum;
 }
 
 event_base* NFServer::GetEventBase() const

@@ -172,6 +172,7 @@ void NFCLogModule::SetDefaultLogConfig()
 
 void NFCLogModule::CreateDefaultLogger()
 {
+	m_logThreadPool = NF_SHARE_PTR<spdlog::details::thread_pool>(NF_NEW spdlog::details::thread_pool(1024, 1));
 	std::vector<spdlog::sink_ptr> sinks_vec;
 	std::string log_name = NF_FORMAT("{}{}{}{}{}.log", m_pPluginManager->GetLogPath(), spdlog::details::os::folder_sep, m_pPluginManager->GetAppName()+lexical_cast<std::string>(m_pPluginManager->GetAppID()), spdlog::details::os::folder_sep, m_pPluginManager->GetAppName());
 	auto date_and_hour_sink = std::make_shared<spdlog::sinks::my_date_and_hour_file_sink_mt>(log_name);
@@ -189,10 +190,10 @@ void NFCLogModule::CreateDefaultLogger()
 
 	sinks_vec.push_back(date_and_hour_sink);
 #ifdef NF_DEBUG_MODE
-	m_defaultLogger = std::make_shared<spdlog::logger>(m_pPluginManager->GetAppName(), std::begin(sinks_vec), std::end(sinks_vec));
+	//m_defaultLogger = std::make_shared<spdlog::logger>(m_pPluginManager->GetAppName(), std::begin(sinks_vec), std::end(sinks_vec));
+	m_defaultLogger = std::make_shared<spdlog::async_logger>(m_pPluginManager->GetAppName(), std::begin(sinks_vec), std::end(sinks_vec), m_logThreadPool);
 #else
-	m_defaultLogger = std::make_shared<spdlog::async_logger>(m_pPluginManager->GetAppName(), std::begin(sinks_vec), std::end(sinks_vec), 1024,
-		spdlog::async_overflow_policy::block_retry, nullptr, std::chrono::milliseconds(1000), nullptr);
+	m_defaultLogger = std::make_shared<spdlog::async_logger>(m_pPluginManager->GetAppName(), std::begin(sinks_vec), std::end(sinks_vec), m_logThreadPool);
 #endif
 
 	m_defaultLogger->set_level(spdlog::level::level_enum::trace);
@@ -227,9 +228,7 @@ void NFCLogModule::CreateOthersLogger(uint32_t logNameId, const std::string& log
 	std::shared_ptr<spdlog::logger> pLogger;
 	if (async)
 	{
-		pLogger = std::make_shared<spdlog::async_logger>(m_pPluginManager->GetAppName() + "_" + logName, std::begin(sinks_vec), std::end(sinks_vec), 1024,
-			spdlog::async_overflow_policy::block_retry, nullptr, std::chrono::milliseconds(1000), nullptr);
-		pLogger = std::make_shared<spdlog::logger>(m_pPluginManager->GetAppName() + "_" + logName, std::begin(sinks_vec), std::end(sinks_vec));
+		pLogger = std::make_shared<spdlog::async_logger>(m_pPluginManager->GetAppName() + "_" + logName, std::begin(sinks_vec), std::end(sinks_vec), m_logThreadPool);
 	}
 	else
 	{

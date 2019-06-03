@@ -85,44 +85,31 @@ end
 function RpmjService.CheckJiFen(tItem)
 	--这个的函数放在这里了。
 	--检查每个玩家的积分是否足够
+	local jInfo	 = JulebuModel.GetJulebuInfo(tItem.m_tInfo.julebuid)
+	if jInfo == nil then
+		return 
+	end
 	
-	local gcHistory = nil
 	for i = 1,tItem.m_maxUser do
-		if tItem.m_tInfo.julebutype == 2 and false == RpmjService.CheckJiFen2(tItem.m_tInfo.julebuid, tItem.m_userList[i].userid, tItem.m_userList[i].carryjetton) then
-			if tItem.m_vipRoomInfo.liuju == 1 or true then
+		if tItem.m_tInfo.julebutype == 2 and false == RpmjService.CheckJiFen2(tItem.m_tInfo.julebuid, tItem.m_userList[i].userid, tItem.m_userList[i].carryjetton) and tItem.m_tInfo.usevipnum ~= tItem.m_tInfo.maxvipnum then
+			if jInfo.ruleset == 1 then
 				tItem.m_tInfo.timemark = g_gdmjTime.end_time
 				tItem.m_tInfo.status = g_gdmjStatus.status_dissolve
+
+				for x = 1,tItem.m_maxUser do
+					--需要把人清出房间
+					--local gcLeave = msg_gdmj_pb.gcgdmjleave()
+					--gcLeave.userid = tItem.m_userList[x].userid
+					--gcLeave.chairid = x
+					--gcLeave.tableid = tItem.m_tInfo.tableid
+					--gcLeave.leavemsg = "玩家:"..tItem.m_userList[i].userid.." 积分不足，本局将流局！"
+
+					--SendMessage(tItem.m_userList[x].userid, PacketCode[2212].client, gcLeave:ByteSize(), gcLeave:SerializeToString())
+				end
+
+				GdmjModel.SetTableInfo(tItem.m_tInfo, 1)
 				return
 			end
-
-			--需要把人清出房间
-			local gcStandUp = msg_gdmj_pb.gcgdmjstandup()
-			gcStandUp.chairid = i
-			gcStandUp.tableid = tItem.m_tInfo.tableid
-			local userList = GdmjWork.GetUserList(tItem.m_tInfo, tItem.m_userList[i].userid)
-			
-			SendMessage(userList, PacketCode[2218].client, gcStandUp:ByteSize(), gcStandUp:SerializeToString())
-
-			tItem.m_tInfo.situser[i] = 0    --这里设置为0
-			tItem.m_tInfo.playernum = tItem.m_tInfo.playernum - 1
-			GdmjModel.SetTableInfo(tItem.m_tInfo, 1)
-			GdmjEvent.JulebuGameUpdate(tItem.m_tInfo,tItem.m_userList[i].userid)
-
-			local gcLeave = msg_gdmj_pb.gcgdmjleave()
-			gcLeave.userid = tItem.m_userList[i].userid
-			gcLeave.chairid = i
-			gcLeave.tableid = tItem.m_tInfo.tableid
-			gcLeave.leavemsg = "你积分不足，已被移出房间！"
-
-
-			SendMessage(tItem.m_userList[i].userid, PacketCode[2212].client, gcLeave:ByteSize(), gcLeave:SerializeToString())
-
-			GdmjModel.DelUserTableID(tItem.m_userList[i].userid)   --这里还需要把
-						
-			--在这里需要把积分同步到俱乐部
-			--
-			GdmjEvent.AddJiFen(tItem.m_tInfo.julebuid, tItem.m_userList[i].userid, tItem.m_userList[i].carryjetton, tItem.m_tInfo.tableid,tItem.m_tInfo.julebutype)
-			tItem.m_tInfo.situser[i] = 0
 		end
 	end
 end

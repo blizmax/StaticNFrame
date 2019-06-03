@@ -113,6 +113,7 @@ private:
 	std::unordered_map<uint32_t, std::shared_ptr<spdlog::logger>> m_loggerMap;
 	std::unordered_set<std::string> m_loggerName;
 	std::vector<LogInfoConfig> m_logInfoConfig;
+	NF_SHARE_PTR<spdlog::details::thread_pool> m_logThreadPool;
 };
 
 
