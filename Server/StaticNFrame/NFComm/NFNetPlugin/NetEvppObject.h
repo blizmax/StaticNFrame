@@ -231,6 +231,8 @@ public:
 	* @return void
 	*/
 	virtual void SetPacketParseType(uint32_t packetType) { mPacketParseType = packetType; }
+
+	virtual void SetConnPtr(const evpp::TCPConnPtr conn) { mConnPtr = conn; }
 protected:
 	/**
 	 * @brief	处理接受数据的回调
@@ -280,6 +282,6 @@ protected:
 	/**
 	* @brief 来自EVPP的链接代理
 	*/
-	const evpp::TCPConnPtr mConnPtr;
+	evpp::TCPConnPtr mConnPtr;
 };
 

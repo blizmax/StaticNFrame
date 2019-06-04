@@ -42,6 +42,7 @@ NFEvppClient::NFEvppClient(uint32_t nId, const NFClientFlag& flag):NFIClient(nId
 
 	m_eventLoop = NF_NEW evpp::EventLoopThread();
 	m_eventLoop->set_name("NFEvppClientThread");
+	m_eventLoop->Start();
 
 	std::string strIpPort = NF_FORMAT("{}:{}", m_flag.strIP, m_flag.nPort);
 	m_tcpClient = NF_NEW evpp::TCPClient(m_eventLoop->loop(), strIpPort, "NFEvppClient");
@@ -78,6 +79,7 @@ bool NFEvppClient::Shut()
 
 bool NFEvppClient::Finalize()
 {
+	m_eventLoop->Stop(true);
 	if (m_pObject)
 	{
 		NF_SAFE_DELETE(m_pObject);
@@ -115,8 +117,6 @@ void NFEvppClient::ExecuteClose()
 
 bool NFEvppClient::Connect()
 {
-	m_eventLoop->Start();
-
 	//消息回调是在别的线程里运行的
 	m_tcpClient->SetConnectionCallback([this](const evpp::TCPConnPtr& conn)
 	{
@@ -150,6 +150,17 @@ bool NFEvppClient::Connect()
 		}
 	});
 	m_tcpClient->set_auto_reconnect(m_flag.bAutoConnect);
+
+	m_pObject = new NetEvppObject(nullptr);
+
+	m_pObject->SetIsServer(false);
+	m_pObject->SetLinkId(m_usLinkId);
+	m_pObject->SetStrIp(m_flag.strIP);
+	m_pObject->SetPort(m_flag.nPort);
+
+	m_pObject->SetRecvCB(mRecvCB);
+	m_pObject->SetEventCB(mEventCB);
+
 	m_tcpClient->Connect();
 
 	return true;
@@ -166,18 +177,12 @@ void NFEvppClient::ProcessMsgLogicThread()
 
 		if (pMsg->nType == eMsgType_CONNECTED)
 		{
-			m_pObject = new NetEvppObject(pMsg->mTCPConPtr);
-
-			m_pObject->SetIsServer(false);
-			m_pObject->SetLinkId(m_usLinkId);
-			m_pObject->SetStrIp(m_flag.strIP);
-			m_pObject->SetPort(m_flag.nPort);
-
-			m_pObject->SetRecvCB(mRecvCB);
-			m_pObject->SetEventCB(mEventCB);
-
-			pMsg->mTCPConPtr->set_context(evpp::Any(m_pObject));
-			m_pObject->OnHandleConnect();
+			if (m_pObject)
+			{
+				m_pObject->SetConnPtr(pMsg->mTCPConPtr);
+				pMsg->mTCPConPtr->set_context(evpp::Any(m_pObject));
+				m_pObject->OnHandleConnect();
+			}
 		}
 		else if (pMsg->nType == eMsgType_DISCONNECTED)
 		{
@@ -186,7 +191,7 @@ void NFEvppClient::ProcessMsgLogicThread()
 				NetEvppObject* pObject = evpp::any_cast<NetEvppObject*>(pMsg->mTCPConPtr->context());
 				if (pObject && pObject == m_pObject)
 				{
-					pObject->OnHandleDisConnect();
+					m_pObject->OnHandleDisConnect();
 				}
 				else
 				{
@@ -196,7 +201,10 @@ void NFEvppClient::ProcessMsgLogicThread()
 			}
 			else
 			{
-				NFLogError(NF_LOG_SYSTEMLOG, 0, "connect failed!");
+				if (m_pObject)
+				{
+					m_pObject->OnHandleDisConnect();
+				}
 			}
 		}
 		else if (pMsg->nType == eMsgType_RECIVEDATA)
@@ -225,8 +233,15 @@ void NFEvppClient::ProcessMsgLogicThread()
 
 void NFEvppClient::Close()
 {
-	m_tcpClient->Disconnect();
-	m_eventLoop->Stop(true);
+	if (m_tcpClient->conn() && m_tcpClient->conn()->IsConnected())
+	{
+		m_tcpClient->Disconnect();
+	}
+	
+	if (m_pObject)
+	{
+		NF_SAFE_DELETE(m_pObject);
+	}
 	m_pObject = nullptr;
 }
 
