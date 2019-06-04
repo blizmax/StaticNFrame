@@ -134,6 +134,9 @@
     <ClCompile Include="NetEvppObject.cpp">
       <Filter>NFNetObject</Filter>
     </ClCompile>
+    <ClCompile Include="NFEvppClient.cpp">
+      <Filter>NFClient</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="NFNetPlugin.h" />
@@ -334,6 +337,12 @@
     </ClInclude>
     <ClInclude Include="NFIServer.h">
       <Filter>NFServer</Filter>
+    </ClInclude>
+    <ClInclude Include="NFEvppClient.h">
+      <Filter>NFClient</Filter>
+    </ClInclude>
+    <ClInclude Include="NFIClient.h">
+      <Filter>NFClient</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

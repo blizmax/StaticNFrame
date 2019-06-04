@@ -13,7 +13,7 @@
 #include "NFIPacketParse.h"
 #include "NFComm/NFCore/NFCommon.h"
 
-NFClient::NFClient(uint32_t nId, const NFClientFlag& flag) : m_pMainBase(nullptr), m_pObject(nullptr), m_usLinkId(nId), mLastActionTime(0)
+NFClient::NFClient(uint32_t nId, const NFClientFlag& flag) : NFIClient(nId, flag), m_pMainBase(nullptr), m_pObject(nullptr)
 {
 #ifdef _MSC_VER
 	WSADATA wsaData;
@@ -24,9 +24,6 @@ NFClient::NFClient(uint32_t nId, const NFClientFlag& flag) : m_pMainBase(nullptr
 		return;
 	}
 #endif
-	m_usLinkId = nId;
-	m_flag = flag;
-	mStatus = eConnectStatus_Disconnect;
 
 	m_pMainBase = event_base_new();
 	if (m_pMainBase == nullptr)
@@ -99,16 +96,6 @@ void NFClient::ExecuteClose()
 	}
 }
 
-const string& NFClient::GetName() const
-{
-	return m_strName;
-}
-
-const NFClientFlag& NFClient::GetFlag() const
-{
-	return m_flag;
-}
-
 bool NFClient::Connect()
 {
 	m_pObject = new NetObject();
@@ -161,16 +148,6 @@ event_base* NFClient::GetMainBase() const
 	return m_pMainBase;
 }
 
-uint32_t NFClient::GetLinkId() const
-{
-	return m_usLinkId;
-}
-
-void NFClient::SetLinkId(uint32_t linkId)
-{
-	m_usLinkId = linkId;
-}
-
 bool NFClient::Send(const void* pData, uint32_t unSize)
 {
 	if (m_pObject)
@@ -178,30 +155,5 @@ bool NFClient::Send(const void* pData, uint32_t unSize)
 		return m_pObject->Send(pData, unSize);
 	}
 	return false;
-}
-
-eConnectStatus NFClient::GetStatus() const
-{
-	return mStatus;
-}
-
-void NFClient::SetStatus(eConnectStatus val)
-{
-	mStatus = val;
-}
-
-bool NFClient::IsNeedRemve() const
-{
-	return mStatus == eConnectStatus_REMOVE;
-}
-
-uint64_t NFClient::GetLastActionTime() const
-{
-	return mLastActionTime;
-}
-
-void NFClient::SetLastActionTime(uint64_t time)
-{
-	mLastActionTime = time;
 }
 

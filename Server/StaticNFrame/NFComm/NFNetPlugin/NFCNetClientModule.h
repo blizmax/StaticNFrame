@@ -10,7 +10,7 @@
 
 #include "NFComm/NFPluginModule/NFINetClientModule.h"
 #include "NFComm/NFPluginModule/NFServerDefine.h"
-#include "NFClient.h"
+#include "NFIClient.h"
 #include "NFComm/NFCore/NFDataStream.h"
 #include "NFComm/NFCore/NFBuffer.h"
 
@@ -242,7 +242,7 @@ protected:
 	 * @param  pClient
 	 * @return void
 	 */
-	void KeepState(NFClient* pClient);
+	void KeepState(NFIClient* pClient);
 
 	/**
 	 * @brief
@@ -262,7 +262,7 @@ protected:
 	 * @param  nPlayerID
 	 * @return void
 	 */
-	void SendMsg(NFClient* pClient, const uint32_t nMsgID, const char* msg, const uint32_t nLen, const uint64_t nPlayerID);
+	void SendMsg(NFIClient* pClient, const uint32_t nMsgID, const char* msg, const uint32_t nLen, const uint64_t nPlayerID);
 
 	/**
 	 * @brief
@@ -279,7 +279,7 @@ protected:
 	 * @param  pClient
 	 * @return void
 	 */
-	void OnConnected(NFClient* pClient);
+	void OnConnected(NFIClient* pClient);
 
 	/**
 	 * @brief
@@ -287,14 +287,14 @@ protected:
 	 * @param  pClient
 	 * @return void
 	 */
-	void OnDisConnected(NFClient* pClient);
+	void OnDisConnected(NFIClient* pClient);
 
 public:
 	virtual void RunNetRecvLuaFunc(const std::string& luaFunc, const uint32_t unLinkId, const uint64_t valueId, const uint32_t nMsgId, const std::string& strMsg);
 
 	virtual void RunNetEventLuaFunc(const std::string& luaFunc, const eMsgType nEvent, const uint32_t unLinkId);
 private:
-	std::vector<std::vector<NFClient*>> mxServerMap;
+	std::vector<std::vector<NFIClient*>> mxServerMap;
 	NFBuffer mxSendBuffer;
 	NFILuaScriptModule* m_pLuaScriptModule;
 };

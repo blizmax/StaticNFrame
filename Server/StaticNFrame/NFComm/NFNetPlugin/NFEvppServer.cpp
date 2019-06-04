@@ -101,6 +101,8 @@ void NFEvppServer::ProcessMsgLogicThread()
 		{
 			//
 		}
+
+		NF_SAFE_DELETE(pMsg);
 	}
 }
 

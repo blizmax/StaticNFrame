@@ -105,8 +105,8 @@ uint32_t NFCNetServerModule::AddServer(const NF_SERVER_TYPES eServerType, uint32
 		flag.nMaxConnectNum = nMaxClient;
 		flag.bWebSocket = bWebSocket;
 		flag.mPacketParseType = nPacketParseType;
-		//NFIServer* pServer = NF_NEW NFEvppServer(eServerType, nServerID, flag);
-		NFIServer* pServer = NF_NEW NFServer(eServerType, nServerID, flag);
+		NFIServer* pServer = NF_NEW NFEvppServer(eServerType, nServerID, flag);
+		//NFIServer* pServer = NF_NEW NFServer(eServerType, nServerID, flag);
 		pServer->SetRecvCB((NFINetModule*)this, &NFINetModule::OnReceiveNetPack);
 		pServer->SetEventCB((NFINetModule*)this, &NFINetModule::OnSocketNetEvent);
 		if (pServer->Init())

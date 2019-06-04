@@ -64,6 +64,12 @@ public:
 	* @return bool
 	*/
 	void SetDefaultFlush(NF_LOG_LEVEL log_level);
+
+	template<typename T>
+	NFLogMgr& operator<<(const T& str)
+	{
+		return *this;
+	}
 protected:
 	NFILogModule* m_pLogModule;
 };

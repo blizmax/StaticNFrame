@@ -11,6 +11,8 @@
 #include "NFIPacketParse.h"
 #include "NFComm/NFPluginModule/NFILuaScriptModule.h"
 #include "NFComm/NFPluginModule/NFIPluginManager.h"
+#include "NFEvppClient.h"
+#include "NFClient.h"
 
 NFCNetClientModule::NFCNetClientModule(NFIPluginManager* p)
 {
@@ -213,7 +215,8 @@ uint32_t NFCNetClientModule::AddServer(NF_SERVER_TYPES eServerType, const std::s
 		flag.strIP = strIp;
 		flag.nPort = nPort;
 		flag.bWebSocket = bWebSocket;
-		NFClient* pClient = NF_NEW NFClient(usId, flag);
+		//NFIClient* pClient = NF_NEW NFClient(usId, flag);
+		NFEvppClient* pClient = NF_NEW NFEvppClient(usId, flag);
 		pClient->SetRecvCB((NFINetModule*)this, &NFINetModule::OnReceiveNetPack);
 		pClient->SetEventCB((NFINetModule*)this, &NFINetModule::OnSocketNetEvent);
 		if (index < mxServerMap[eServerType].size() && mxServerMap[eServerType][index] == nullptr)
@@ -237,7 +240,7 @@ void NFCNetClientModule::CloseServer(const uint32_t unLinkId)
 
 	if (serverType < NF_ST_MAX && serverIndex < mxServerMap[serverType].size())
 	{
-		NFClient* pClient = mxServerMap[serverType][serverIndex];
+		NFIClient* pClient = mxServerMap[serverType][serverIndex];
 		if (pClient)
 		{
 			pClient->Shut();
@@ -299,7 +302,7 @@ void NFCNetClientModule::SendByServerID(const uint32_t unLinkId, const uint32_t 
 
 	if (serverType < NF_ST_MAX && serverIndex < mxServerMap[serverType].size())
 	{
-		NFClient* pClient = mxServerMap[serverType][serverIndex];
+		NFIClient* pClient = mxServerMap[serverType][serverIndex];
 		if (pClient)
 		{
 			SendMsg(pClient, nMsgID, msg, nLen, nPlayerID);
@@ -311,7 +314,7 @@ void NFCNetClientModule::SendByServerID(const uint32_t unLinkId, const uint32_t 
 	}
 }
 
-void NFCNetClientModule::SendMsg(NFClient* pClient, const uint32_t nMsgID, const char* msg, const uint32_t nLen, const uint64_t nPlayerID)
+void NFCNetClientModule::SendMsg(NFIClient* pClient, const uint32_t nMsgID, const char* msg, const uint32_t nLen, const uint64_t nPlayerID)
 {
 	if (pClient == nullptr) return;
 
@@ -462,7 +465,7 @@ void NFCNetClientModule::ExecuteClose()
 	}
 }
 
-void NFCNetClientModule::KeepState(NFClient* pClient)
+void NFCNetClientModule::KeepState(NFIClient* pClient)
 {
 	if (pClient)
 	{
@@ -479,7 +482,7 @@ void NFCNetClientModule::OnHandleNetEvent(const eMsgType nEvent, const uint32_t 
 
 	if (serverType < NF_ST_MAX && serverIndex < mxServerMap[serverType].size())
 	{
-		NFClient* pClient = mxServerMap[serverType][serverIndex];
+		NFIClient* pClient = mxServerMap[serverType][serverIndex];
 		if (pClient)
 		{
 			switch (nEvent)
@@ -501,7 +504,7 @@ void NFCNetClientModule::OnHandleNetEvent(const eMsgType nEvent, const uint32_t 
 	}
 }
 
-void NFCNetClientModule::OnConnected(NFClient* pClient)
+void NFCNetClientModule::OnConnected(NFIClient* pClient)
 {
 	if (pClient)
 	{
@@ -509,7 +512,7 @@ void NFCNetClientModule::OnConnected(NFClient* pClient)
 	}
 }
 
-void NFCNetClientModule::OnDisConnected(NFClient* pClient)
+void NFCNetClientModule::OnDisConnected(NFIClient* pClient)
 {
 	if (pClient)
 	{

@@ -7,6 +7,7 @@
 #define GLOG_NO_ABBREVIATED_SEVERITIES // 没这个编译会出错,传说因为和Windows.h冲突
 
 //#include <glog/logging.h>
+#include "NFComm/NFPluginModule/NFLogMgr.h"
 
 #ifdef GOOGLE_STRIP_LOG
 
@@ -34,14 +35,14 @@
 #define LOG_FATAL LOG(FATAL)
 
 #else
-#define LOG_TRACE std::cout << __FILE__ << ":" << __LINE__ << " "
-#define LOG_DEBUG std::cout << __FILE__ << ":" << __LINE__ << " "
-#define LOG_INFO  std::cout << __FILE__ << ":" << __LINE__ << " "
-#define LOG_WARN  std::cout << __FILE__ << ":" << __LINE__ << " "
-#define LOG_ERROR std::cout << __FILE__ << ":" << __LINE__ << " "
-#define LOG_FATAL std::cout << __FILE__ << ":" << __LINE__ << " "
-#define DLOG_TRACE std::cout << __FILE__ << ":" << __LINE__ << " "
-#define DLOG_WARN std::cout << __FILE__ << ":" << __LINE__ << " "
+#define LOG_TRACE NFLogMgr::GetSingletonRef()
+#define LOG_DEBUG NFLogMgr::GetSingletonRef()
+#define LOG_INFO  NFLogMgr::GetSingletonRef()
+#define LOG_WARN  NFLogMgr::GetSingletonRef()
+#define LOG_ERROR NFLogMgr::GetSingletonRef()
+#define LOG_FATAL NFLogMgr::GetSingletonRef()
+#define DLOG_TRACE NFLogMgr::GetSingletonRef()
+#define DLOG_WARN NFLogMgr::GetSingletonRef()
 #define CHECK_NOTnullptr(val) LOG_ERROR << "'" #val "' Must be non nullptr";
 #endif
 #endif // end of define __cplusplus

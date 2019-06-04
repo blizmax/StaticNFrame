@@ -865,6 +865,52 @@ function DouNiuHuUtils.maxhandpoker2(pos, tInfo)
 	return max
 end
 
+function DouNiuHuUtils.maxhandpoker3(pos, tInfo)
+	local num = 0
+	for k,v in ipairs(tInfo.situser[pos].handpoker) do
+		if v == 525 or v == 515 then
+			num = num + 1
+		end
+	end
+	
+	if num == 5 then
+		return 525
+	end
+
+	local max = tInfo.situser[pos].handpoker[1]
+	local index = 1
+	if max == 525 or max == 515 then
+		for i = 2, #tInfo.situser[pos].handpoker do
+			local max = tInfo.situser[pos].handpoker[i]
+			index = i
+			if max ~= 525 and max ~= 515 then
+				break
+			end
+		end
+	end
+
+	if max == 525 or max == 515 then
+		return max
+	end
+
+	for i = index+1, #tInfo.situser[pos].handpoker do 
+		local type_a = math.mod(tInfo.situser[pos].handpoker[i],100)
+		local type_b = math.mod(max, 100)
+		local hua_a = math.floor(tInfo.situser[pos].handpoker[i]/100)
+		local hua_b = math.floor(max/100)
+		if hua_b ~= 5 then
+			if type_a > type_b then
+				max = tInfo.situser[pos].handpoker[i]
+			else
+				if hua_a > hua_b then
+					max = tInfo.situser[pos].handpoker[i]	
+				end
+			end
+		end
+	end
+	return max
+end
+
 function DouNiuHuUtils.maxhandpoker_shunzi(pos, tInfo)
 	
 	local dianList = {}
@@ -917,6 +963,7 @@ function DouNiuHuUtils.DouNiuWin(banker,v, tInfo)
 					end
 				end
 			end
+
 			if flag1 and flag2 then
 				local max1 = DouNiuHuUtils.maxhandpoker2(banker, tInfo)	
 				local max2 = DouNiuHuUtils.maxhandpoker2(v, tInfo)

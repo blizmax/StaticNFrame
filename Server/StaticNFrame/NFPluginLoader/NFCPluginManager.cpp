@@ -614,6 +614,7 @@ bool NFCPluginManager::LoadStaticPlugin(const std::string& strPluginName)
 	NFIPlugin* pPlugin = it->second(this);
 	if (pPlugin)
 	{
+		NFLogWarning(NF_LOG_SYSTEMLOG, 0, "LoadPlugin:{}", strPluginName);
 		Registered(pPlugin);
 	}
 	return true;
@@ -621,6 +622,7 @@ bool NFCPluginManager::LoadStaticPlugin(const std::string& strPluginName)
 
 bool NFCPluginManager::UnLoadStaticPlugin(const std::string& strPluginDLLName)
 {
+	NFLogWarning(NF_LOG_SYSTEMLOG, 0, "UnLoadPlugin:{}", strPluginDLLName);
 	UnRegistered(FindPlugin(strPluginDLLName));
 	return true;
 }
