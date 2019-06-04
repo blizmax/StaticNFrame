@@ -1,1 +1,1 @@
-start NFPluginLoader --Server=ProxyServer --ID=4 --Path=../Config --LuaScript=../ScriptModule                         
+start NFPluginLoader --Server=ProxyServer --ID=6 --Path=../Config --LuaScript=../ScriptModule                         

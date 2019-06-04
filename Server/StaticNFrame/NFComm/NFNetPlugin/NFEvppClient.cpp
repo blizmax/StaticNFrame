@@ -34,18 +34,17 @@
 #include "NFComm/NFCore/NFCommon.h"
 #include "NFEvppServer.h"
 
-NFEvppClient::NFEvppClient(uint32_t nId, const NFClientFlag& flag):NFIClient(nId, flag)
+NFEvppClient::NFEvppClient(evpp::EventLoopThread* eventLoop, uint32_t nId, const NFClientFlag& flag):NFIClient(nId, flag)
 {
 	m_pObject = nullptr;
-	m_eventLoop = nullptr;
 	m_tcpClient = nullptr;
 
-	m_eventLoop = NF_NEW evpp::EventLoopThread();
-	m_eventLoop->set_name("NFEvppClientThread");
-	m_eventLoop->Start();
-
 	std::string strIpPort = NF_FORMAT("{}:{}", m_flag.strIP, m_flag.nPort);
-	m_tcpClient = NF_NEW evpp::TCPClient(m_eventLoop->loop(), strIpPort, "NFEvppClient");
+
+	if (eventLoop)
+	{
+		m_tcpClient = NF_NEW evpp::TCPClient(eventLoop->loop(), strIpPort, "NFEvppClient");
+	}
 }
 
 NFEvppClient::~NFEvppClient()
@@ -65,35 +64,24 @@ bool NFEvppClient::Init()
 
 bool NFEvppClient::Shut()
 {
-	if (m_pObject)
-	{
-		if (m_pObject->GetNeedRemove() == false)
-		{
-			m_pObject->SetNeedRemove(true);
-			m_pObject->CloseObject();
-		}
-	}
-	NFEvppClient::Close();
+	m_tcpClient->Disconnect();
 	return true;
 }
 
 bool NFEvppClient::Finalize()
 {
-	m_eventLoop->Stop(true);
+	
 	if (m_pObject)
 	{
 		NF_SAFE_DELETE(m_pObject);
 	}
+
 	if (m_tcpClient)
 	{
 		NF_SAFE_DELETE(m_tcpClient);
 	}
-	if (m_eventLoop)
-	{
-		NF_SAFE_DELETE(m_eventLoop);
-	}
+
 	m_tcpClient = nullptr;
-	m_eventLoop = nullptr;
 	return true;
 }
 
@@ -112,6 +100,23 @@ void NFEvppClient::ExecuteClose()
 		{
 			Close();
 		}
+	}
+}
+
+void NFEvppClient::CloseServer()
+{
+	if (m_pObject)
+	{
+		if (m_pObject->GetNeedRemove() == false)
+		{
+			m_pObject->SetNeedRemove(true);
+			m_pObject->CloseObject();
+		}
+	}
+
+	if (m_tcpClient && m_tcpClient->conn())
+	{
+		m_tcpClient->Disconnect();
 	}
 }
 
@@ -233,7 +238,7 @@ void NFEvppClient::ProcessMsgLogicThread()
 
 void NFEvppClient::Close()
 {
-	if (m_tcpClient->conn() && m_tcpClient->conn()->IsConnected())
+	if (m_tcpClient && m_tcpClient->conn())
 	{
 		m_tcpClient->Disconnect();
 	}

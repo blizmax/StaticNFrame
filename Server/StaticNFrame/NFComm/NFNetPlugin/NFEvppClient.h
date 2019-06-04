@@ -55,7 +55,7 @@ public:
 	/**
 	 *@brief  构造函数.
 	 */
-	NFEvppClient(uint32_t nId, const NFClientFlag& flag);
+	NFEvppClient(evpp::EventLoopThread* eventLoop, uint32_t nId, const NFClientFlag& flag);
 
 	/**
 	 *@brief  析构函数.
@@ -98,6 +98,13 @@ public:
 	virtual void ExecuteClose();
 
 	/**
+	 * @brief	关闭连接
+	 *
+	 * @return	是否成功
+	 */
+	virtual void CloseServer();
+
+	/**
 	 * @brief	连接服务端
 	 *
 	 * @return  连接成功与否
@@ -123,7 +130,6 @@ public:
 
 	void ProcessMsgLogicThread();
 private:
-	evpp::EventLoopThread* m_eventLoop;
 	evpp::TCPClient* m_tcpClient;
 protected:
 	/**

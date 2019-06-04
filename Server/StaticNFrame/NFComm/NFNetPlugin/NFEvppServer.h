@@ -194,4 +194,9 @@ private:
 	* @brief 需要消息队列
 	*/
 	NFQueueVector<MsgFromNetInfo*> mMsgQueue;
+
+	/**
+	* @brief 退出的时候用来确认
+	*/
+	atomic_bool mExit;
 };

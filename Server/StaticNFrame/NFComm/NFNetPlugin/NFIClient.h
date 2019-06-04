@@ -94,6 +94,13 @@ public:
 	virtual void ExecuteClose() = 0;
 
 	/**
+	 * @brief	关闭连接
+	 *
+	 * @return	是否成功
+	 */
+	virtual void CloseServer() = 0;
+
+	/**
 	 * @brief	获得服务器名字
 	 *
 	 * @return

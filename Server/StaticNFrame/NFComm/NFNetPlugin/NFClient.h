@@ -77,6 +77,13 @@ public:
 	virtual void ExecuteClose();
 
 	/**
+	 * @brief	关闭连接
+	 *
+	 * @return	是否成功
+	 */
+	virtual void CloseServer();
+
+	/**
 	 * @brief	连接服务端
 	 *
 	 * @return  连接成功与否

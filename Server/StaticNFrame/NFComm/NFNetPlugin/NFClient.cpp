@@ -58,6 +58,12 @@ bool NFClient::Init()
 
 bool NFClient::Shut()
 {
+	CloseServer();
+	return true;
+}
+
+void NFClient::CloseServer()
+{
 	if (m_pObject)
 	{
 		if (m_pObject->GetNeedRemove() == false)
@@ -66,7 +72,6 @@ bool NFClient::Shut()
 			m_pObject->CloseObject();
 		}
 	}
-	return true;
 }
 
 bool NFClient::Finalize()

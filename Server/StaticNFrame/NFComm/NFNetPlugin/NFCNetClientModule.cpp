@@ -24,6 +24,9 @@ NFCNetClientModule::NFCNetClientModule(NFIPluginManager* p)
 	}
 	mxSendBuffer.AssureSpace(MAX_SEND_BUFFER_SIZE);
 	m_pLuaScriptModule = nullptr;
+	m_eventLoop = NF_NEW evpp::EventLoopThread();
+	m_eventLoop->set_name("NFEvppClientThread");
+	m_eventLoop->Start();
 }
 
 NFCNetClientModule::~NFCNetClientModule()
@@ -33,7 +36,7 @@ NFCNetClientModule::~NFCNetClientModule()
 bool NFCNetClientModule::Awake()
 {
 	//可以允许Lua Module不存在
-	m_pLuaScriptModule = dynamic_cast<NFILuaScriptModule*>(m_pPluginManager->FindModule(typeid(NFILuaScriptModule).name()));
+	m_pLuaScriptModule = FindModule<NFILuaScriptModule>();
 	return true;
 }
 
@@ -66,8 +69,7 @@ bool NFCNetClientModule::Shut()
 			}
 		}
 	}
-
-	NFSLEEP(2000);
+	m_eventLoop->Stop(true);
 	return true;
 }
 
@@ -85,6 +87,11 @@ bool NFCNetClientModule::Finalize()
 		}
 	}
 	mxServerMap.clear();
+	
+	if (m_eventLoop)
+	{
+		NF_SAFE_DELETE(m_eventLoop);
+	}
 	return true;
 }
 
@@ -216,7 +223,8 @@ uint32_t NFCNetClientModule::AddServer(NF_SERVER_TYPES eServerType, const std::s
 		flag.nPort = nPort;
 		flag.bWebSocket = bWebSocket;
 		//NFIClient* pClient = NF_NEW NFClient(usId, flag);
-		NFEvppClient* pClient = NF_NEW NFEvppClient(usId, flag);
+
+		NFEvppClient* pClient = NF_NEW NFEvppClient(m_eventLoop, usId, flag);
 		pClient->SetRecvCB((NFINetModule*)this, &NFINetModule::OnReceiveNetPack);
 		pClient->SetEventCB((NFINetModule*)this, &NFINetModule::OnSocketNetEvent);
 		if (index < mxServerMap[eServerType].size() && mxServerMap[eServerType][index] == nullptr)
@@ -243,7 +251,7 @@ void NFCNetClientModule::CloseServer(const uint32_t unLinkId)
 		NFIClient* pClient = mxServerMap[serverType][serverIndex];
 		if (pClient)
 		{
-			pClient->Shut();
+			pClient->CloseServer();
 			pClient->SetStatus(eConnectStatus_REMOVE);
 		}
 	}

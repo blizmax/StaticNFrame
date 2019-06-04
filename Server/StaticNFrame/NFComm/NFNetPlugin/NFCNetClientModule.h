@@ -297,5 +297,6 @@ private:
 	std::vector<std::vector<NFIClient*>> mxServerMap;
 	NFBuffer mxSendBuffer;
 	NFILuaScriptModule* m_pLuaScriptModule;
+	evpp::EventLoopThread* m_eventLoop;
 };
 

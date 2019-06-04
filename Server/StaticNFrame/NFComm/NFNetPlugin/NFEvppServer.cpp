@@ -38,6 +38,7 @@ NFEvppServer::NFEvppServer(NF_SERVER_TYPES serverType, uint32_t serverId, const 
 {
 	m_eventLoop = nullptr;
 	m_tcpServer = nullptr;
+	mExit = false;
 }
 
 NFEvppServer::~NFEvppServer()
@@ -270,8 +271,18 @@ uint32_t NFEvppServer::GetFreeUnLinkId()
 
 bool NFEvppServer::Shut()
 {
-	m_tcpServer->Stop();
+	mExit = false;
+	m_tcpServer->Stop([this]() {
+		this->mExit = true;
+	});
+
+	while (!mExit)
+	{
+		NFSLEEP(1);
+	}
+
 	m_eventLoop->Stop(true);
+
 	return true;
 }
 
