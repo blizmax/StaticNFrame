@@ -27,6 +27,13 @@ public:
 	}
 
 	template<typename BaseType>
+	bool AddRequestHandler(NF_SERVER_TYPES serverType, const NFHttpType eRequestType, BaseType* pBase, bool (BaseType::*handleRecieve)(uint32_t, const NFHttpHandle& req))
+	{
+		HTTP_RECEIVE_FUNCTOR functor = std::bind(handleRecieve, pBase, std::placeholders::_1, std::placeholders::_2);
+		return AddOtherMsgCB(serverType, eRequestType, functor);
+	}
+
+	template<typename BaseType>
 	bool AddNetFilter(NF_SERVER_TYPES serverType, const std::string& strPath, BaseType* pBase, NFWebStatus(BaseType::*handleFilter)(uint32_t, const NFHttpHandle& req))
 	{
 		HTTP_FILTER_FUNCTOR functor = std::bind(handleFilter, pBase, std::placeholders::_1, std::placeholders::_2);
@@ -37,6 +44,11 @@ public:
 	bool LuaAddRequestHandler(NF_SERVER_TYPES serverType, const std::string& strPath, const NFHttpType eRequestType, const std::string& luaFunc)
 	{
 		return LuaAddMsgCB(serverType, strPath, eRequestType, luaFunc);
+	}
+
+	bool LuaAddOtherRequestHandler(NF_SERVER_TYPES serverType, const NFHttpType eRequestType, const std::string& luaFunc)
+	{
+		return LuaAddOtherMsgCB(serverType, eRequestType, luaFunc);
 	}
 public:
 	virtual int InitServer(NF_SERVER_TYPES serverType, uint32_t nPort) = 0;
@@ -49,7 +61,9 @@ public:
 		const std::string& reason = "OK") = 0;
 private:
 	virtual bool AddMsgCB(NF_SERVER_TYPES serverType, const std::string& strCommand, const NFHttpType eRequestType, const HTTP_RECEIVE_FUNCTOR& cb) = 0;
+	virtual bool AddOtherMsgCB(NF_SERVER_TYPES serverType, const NFHttpType eRequestType, const HTTP_RECEIVE_FUNCTOR& cb) = 0;
 	virtual bool AddFilterCB(NF_SERVER_TYPES serverType, const std::string& strCommand, const HTTP_FILTER_FUNCTOR& cb) = 0;
 
 	virtual bool LuaAddMsgCB(NF_SERVER_TYPES serverType, const std::string& strCommand, const NFHttpType eRequestType, const std::string& luaFunc) = 0;
+	virtual bool LuaAddOtherMsgCB(NF_SERVER_TYPES serverType, const NFHttpType eRequestType, const std::string& luaFunc) = 0;
 };

@@ -398,6 +398,26 @@ function LuaNFrame.DispatchMasterTcp(unLinkId, valueId, nMsgId, strMsg)
     end
 end
 
+--处理Master服务器消息
+function LuaNFrame.DispatchMasterHttp(unLinkId, requestId, firstPath, secondPath, strMsg)
+	local function HttpExecute()
+		controller = HttpManager.CreateController(firstPath)
+	
+		if controller == nil then
+			LuaNFrame.Error(NFLogId.NF_LOG_SYSTEMLOG, 0, "http msg:/"..firstPath.."/"..secondPath.." not handled!")
+		else
+			retString,retSize = controller[secondPath](strMsg) 
+			TcpClient.SendMsgByServerId(unLinkId, 5, retString, requestId)
+		end
+	end
+	
+	local status, msg = xpcall (HttpExecute, __G__TRACKBACK__)
+
+    if not status then
+        LuaNFrame.Error(NFLogId.NF_LOG_SYSTEMLOG, 0, msg)
+    end
+end
+
 --执行定时函数
 function LuaNFrame.DispatchTimer(luaFunc, timerId)
 	local function timerExecute()

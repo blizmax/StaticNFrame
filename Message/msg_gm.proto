@@ -14,3 +14,19 @@ message http_msg_gm_ret
 	optional string msg = 2;
 	optional string data = 3;
 }
+
+message http_msg
+{
+	optional string cmd = 1;
+	optional uint32 server_id = 2;
+	optional string data = 3;
+	optional uint32 request_id = 4;
+}
+
+message http_msg_ret
+{
+	optional string code = 1;
+	optional string msg = 2;
+	optional string data = 3;
+	optional uint32 request_id = 4;
+}

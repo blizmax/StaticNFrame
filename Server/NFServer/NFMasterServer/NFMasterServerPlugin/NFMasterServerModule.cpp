@@ -38,8 +38,8 @@ bool NFCMasterServerModule::Init()
 {
 	this->SetTimer(NF_MASTER_TIMER_SAVE_SERVER_DATA, NF_MASTER_TIMER_SAVE_SERVER_DATA_TIME, INFINITY_CALL);
 
-	FindModule<NFIHttpServerModule>()->AddRequestHandler(NF_ST_MASTER, "/gm", NFHttpType::NF_HTTP_REQ_POST, this, &NFCMasterServerModule::HttpHandleHttpGm);
 	FindModule<NFIHttpServerModule>()->AddRequestHandler(NF_ST_MASTER, "/GM", NFHttpType::NF_HTTP_REQ_POST, this, &NFCMasterServerModule::HttpHandleHttpGm);
+	FindModule<NFIHttpServerModule>()->AddRequestHandler(NF_ST_MASTER, NFHttpType::NF_HTTP_REQ_POST, this, &NFCMasterServerModule::HttpHandleHttpMsg);
 
 	FindModule<NFINetServerModule>()->AddEventCallBack(NF_ST_MASTER, this, &NFCMasterServerModule::OnProxySocketEvent);
 	FindModule<NFINetServerModule>()->AddReceiveCallBack(NF_ST_MASTER, this, &NFCMasterServerModule::OnHandleOtherMessage);
@@ -60,6 +60,7 @@ bool NFCMasterServerModule::Init()
 	FindModule<NFINetServerModule>()->AddReceiveCallBack(NF_ST_MASTER, EGMI_NET_GAME_TO_MASTER_REFRESH, this, &NFCMasterServerModule::OnGameServerRefreshProcess);
 	
 	FindModule<NFINetServerModule>()->AddReceiveCallBack(NF_ST_MASTER, EGMI_STS_SERVER_REPORT, this, &NFCMasterServerModule::OnServerReport);
+	FindModule<NFINetServerModule>()->AddReceiveCallBack(NF_ST_MASTER, EGMI_STS_HTTP_MSG_RET, this, &NFCMasterServerModule::OnServerHttpMsgRet);
 
 	NFServerConfig* pConfig = NFServerCommon::GetAppConfig(m_pPluginManager, NF_ST_MASTER);
 	if (pConfig)
@@ -390,6 +391,8 @@ void NFCMasterServerModule::OnProxySocketEvent(const eMsgType nEvent, const uint
 
 void NFCMasterServerModule::OnHandleOtherMessage(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen)
 {
+	std::string ip = FindModule<NFINetServerModule>()->GetLinkIp(unLinkId);
+	NFLogWarning(NF_LOG_SERVER_NOT_HANDLE_MESSAGE, 0, "other message not handled:playerId:{},msgId:{},ip:{}", playerId, nMsgId, ip);
 }
 
 void NFCMasterServerModule::OnClientDisconnect(uint32_t unLinkId)
@@ -841,6 +844,22 @@ void NFCMasterServerModule::OnWorldServerRefreshProcess(const uint32_t unLinkId,
 	}
 }
 
+void NFCMasterServerModule::OnServerHttpMsgRet(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen)
+{
+	std::string strMsg(msg, nLen);
+	uint32_t requestId = (uint32_t)playerId;
+
+	NFMsg::http_msg_gm_ret msg_gm_ret;
+	msg_gm_ret.set_code("success");
+	msg_gm_ret.set_msg("success");
+	msg_gm_ret.set_data(strMsg);
+
+	std::string retMsg;
+	NFProtobufCommon::MessageToJsonString(msg_gm_ret, retMsg);
+
+	FindModule<NFIHttpServerModule>()->ResponseMsg(NF_ST_MASTER, requestId, retMsg, NFWebStatus::WEB_OK, "OK");
+}
+
 void NFCMasterServerModule::OnServerReport(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen)
 {
 	NFMsg::ServerInfoReportList xMsg;
@@ -939,6 +958,27 @@ void NFCMasterServerModule::OnServerReport(const uint32_t unLinkId, const uint64
 		break;
 		}
 	}
+}
+
+bool NFCMasterServerModule::HttpHandleHttpMsg(uint32_t linkId, const NFHttpHandle& req)
+{
+	std::string jsonMsg = req.bodySlice.ToString();
+	NFMsg::http_msg msg;
+	msg.set_cmd(req.path);
+	msg.set_data(jsonMsg);
+	msg.set_request_id(req.requestId);
+
+	SendMsgToAllServer(EGMI_STS_HTTP_MSG, msg, 0);
+
+	//NFMsg::http_msg_ret msg_ret;
+	//msg_ret.set_code("success");
+	//msg_ret.set_msg("success");
+	//std::string strMsg;
+	//NFProtobufCommon::MessageToJsonString(msg_ret, strMsg);
+
+	//FindModule<NFIHttpServerModule>()->ResponseMsg(NF_ST_MASTER, req, strMsg, NFWebStatus::WEB_OK, "OK");
+
+	return true;
 }
 
 bool NFCMasterServerModule::HttpHandleHttpGm(uint32_t linkId, const NFHttpHandle& req)

@@ -55,8 +55,10 @@ enum NF_EGMI_MsgId
 
 	EGMI_STS_SERVER_REPORT = 2,
 
-	//3 Master收到GM协议数据，转发给网关
+	//3 Master收到GM协议数据，转发给别的服务器
 	EGMI_STS_GM_MSG = 3,
+	EGMI_STS_HTTP_MSG = 4,
+	EGMI_STS_HTTP_MSG_RET = 5,
 	////////////////////////////////////////////
 	
 	EGMI_NET_PROXY_TO_MASTER_REGISTER = 11,	//网关服务器	注册	MASTER服务器协议

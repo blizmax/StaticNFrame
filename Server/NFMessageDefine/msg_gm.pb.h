@@ -38,7 +38,7 @@ namespace protobuf_msg_5fgm_2eproto {
 struct TableStruct {
   static const ::google::protobuf::internal::ParseTableField entries[];
   static const ::google::protobuf::internal::AuxillaryParseTableField aux[];
-  static const ::google::protobuf::internal::ParseTable schema[2];
+  static const ::google::protobuf::internal::ParseTable schema[4];
   static const ::google::protobuf::internal::FieldMetadata field_metadata[];
   static const ::google::protobuf::internal::SerializationTable serialization_table[];
   static const ::google::protobuf::uint32 offsets[];
@@ -46,17 +46,25 @@ struct TableStruct {
 void AddDescriptors();
 }  // namespace protobuf_msg_5fgm_2eproto
 namespace NFMsg {
+class http_msg;
+class http_msgDefaultTypeInternal;
+extern http_msgDefaultTypeInternal _http_msg_default_instance_;
 class http_msg_gm;
 class http_msg_gmDefaultTypeInternal;
 extern http_msg_gmDefaultTypeInternal _http_msg_gm_default_instance_;
 class http_msg_gm_ret;
 class http_msg_gm_retDefaultTypeInternal;
 extern http_msg_gm_retDefaultTypeInternal _http_msg_gm_ret_default_instance_;
+class http_msg_ret;
+class http_msg_retDefaultTypeInternal;
+extern http_msg_retDefaultTypeInternal _http_msg_ret_default_instance_;
 }  // namespace NFMsg
 namespace google {
 namespace protobuf {
+template<> ::NFMsg::http_msg* Arena::CreateMaybeMessage<::NFMsg::http_msg>(Arena*);
 template<> ::NFMsg::http_msg_gm* Arena::CreateMaybeMessage<::NFMsg::http_msg_gm>(Arena*);
 template<> ::NFMsg::http_msg_gm_ret* Arena::CreateMaybeMessage<::NFMsg::http_msg_gm_ret>(Arena*);
+template<> ::NFMsg::http_msg_ret* Arena::CreateMaybeMessage<::NFMsg::http_msg_ret>(Arena*);
 }  // namespace protobuf
 }  // namespace google
 namespace NFMsg {
@@ -367,6 +375,334 @@ class http_msg_gm_ret : public ::google::protobuf::Message /* @@protoc_insertion
   ::google::protobuf::internal::ArenaStringPtr code_;
   ::google::protobuf::internal::ArenaStringPtr msg_;
   ::google::protobuf::internal::ArenaStringPtr data_;
+  friend struct ::protobuf_msg_5fgm_2eproto::TableStruct;
+};
+// -------------------------------------------------------------------
+
+class http_msg : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:NFMsg.http_msg) */ {
+ public:
+  http_msg();
+  virtual ~http_msg();
+
+  http_msg(const http_msg& from);
+
+  inline http_msg& operator=(const http_msg& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  #if LANG_CXX11
+  http_msg(http_msg&& from) noexcept
+    : http_msg() {
+    *this = ::std::move(from);
+  }
+
+  inline http_msg& operator=(http_msg&& from) noexcept {
+    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
+      if (this != &from) InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+  #endif
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _internal_metadata_.unknown_fields();
+  }
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return _internal_metadata_.mutable_unknown_fields();
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const http_msg& default_instance();
+
+  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
+  static inline const http_msg* internal_default_instance() {
+    return reinterpret_cast<const http_msg*>(
+               &_http_msg_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    2;
+
+  void Swap(http_msg* other);
+  friend void swap(http_msg& a, http_msg& b) {
+    a.Swap(&b);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline http_msg* New() const final {
+    return CreateMaybeMessage<http_msg>(NULL);
+  }
+
+  http_msg* New(::google::protobuf::Arena* arena) const final {
+    return CreateMaybeMessage<http_msg>(arena);
+  }
+  void CopyFrom(const ::google::protobuf::Message& from) final;
+  void MergeFrom(const ::google::protobuf::Message& from) final;
+  void CopyFrom(const http_msg& from);
+  void MergeFrom(const http_msg& from);
+  void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input) final;
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const final;
+  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
+      bool deterministic, ::google::protobuf::uint8* target) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(http_msg* other);
+  private:
+  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
+    return NULL;
+  }
+  inline void* MaybeArenaPtr() const {
+    return NULL;
+  }
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // optional string cmd = 1;
+  bool has_cmd() const;
+  void clear_cmd();
+  static const int kCmdFieldNumber = 1;
+  const ::std::string& cmd() const;
+  void set_cmd(const ::std::string& value);
+  #if LANG_CXX11
+  void set_cmd(::std::string&& value);
+  #endif
+  void set_cmd(const char* value);
+  void set_cmd(const char* value, size_t size);
+  ::std::string* mutable_cmd();
+  ::std::string* release_cmd();
+  void set_allocated_cmd(::std::string* cmd);
+
+  // optional string data = 3;
+  bool has_data() const;
+  void clear_data();
+  static const int kDataFieldNumber = 3;
+  const ::std::string& data() const;
+  void set_data(const ::std::string& value);
+  #if LANG_CXX11
+  void set_data(::std::string&& value);
+  #endif
+  void set_data(const char* value);
+  void set_data(const char* value, size_t size);
+  ::std::string* mutable_data();
+  ::std::string* release_data();
+  void set_allocated_data(::std::string* data);
+
+  // optional uint32 server_id = 2;
+  bool has_server_id() const;
+  void clear_server_id();
+  static const int kServerIdFieldNumber = 2;
+  ::google::protobuf::uint32 server_id() const;
+  void set_server_id(::google::protobuf::uint32 value);
+
+  // optional uint32 request_id = 4;
+  bool has_request_id() const;
+  void clear_request_id();
+  static const int kRequestIdFieldNumber = 4;
+  ::google::protobuf::uint32 request_id() const;
+  void set_request_id(::google::protobuf::uint32 value);
+
+  // @@protoc_insertion_point(class_scope:NFMsg.http_msg)
+ private:
+  void set_has_cmd();
+  void clear_has_cmd();
+  void set_has_server_id();
+  void clear_has_server_id();
+  void set_has_data();
+  void clear_has_data();
+  void set_has_request_id();
+  void clear_has_request_id();
+
+  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+  ::google::protobuf::internal::HasBits<1> _has_bits_;
+  mutable ::google::protobuf::internal::CachedSize _cached_size_;
+  ::google::protobuf::internal::ArenaStringPtr cmd_;
+  ::google::protobuf::internal::ArenaStringPtr data_;
+  ::google::protobuf::uint32 server_id_;
+  ::google::protobuf::uint32 request_id_;
+  friend struct ::protobuf_msg_5fgm_2eproto::TableStruct;
+};
+// -------------------------------------------------------------------
+
+class http_msg_ret : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:NFMsg.http_msg_ret) */ {
+ public:
+  http_msg_ret();
+  virtual ~http_msg_ret();
+
+  http_msg_ret(const http_msg_ret& from);
+
+  inline http_msg_ret& operator=(const http_msg_ret& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  #if LANG_CXX11
+  http_msg_ret(http_msg_ret&& from) noexcept
+    : http_msg_ret() {
+    *this = ::std::move(from);
+  }
+
+  inline http_msg_ret& operator=(http_msg_ret&& from) noexcept {
+    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
+      if (this != &from) InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+  #endif
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _internal_metadata_.unknown_fields();
+  }
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return _internal_metadata_.mutable_unknown_fields();
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const http_msg_ret& default_instance();
+
+  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
+  static inline const http_msg_ret* internal_default_instance() {
+    return reinterpret_cast<const http_msg_ret*>(
+               &_http_msg_ret_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    3;
+
+  void Swap(http_msg_ret* other);
+  friend void swap(http_msg_ret& a, http_msg_ret& b) {
+    a.Swap(&b);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline http_msg_ret* New() const final {
+    return CreateMaybeMessage<http_msg_ret>(NULL);
+  }
+
+  http_msg_ret* New(::google::protobuf::Arena* arena) const final {
+    return CreateMaybeMessage<http_msg_ret>(arena);
+  }
+  void CopyFrom(const ::google::protobuf::Message& from) final;
+  void MergeFrom(const ::google::protobuf::Message& from) final;
+  void CopyFrom(const http_msg_ret& from);
+  void MergeFrom(const http_msg_ret& from);
+  void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input) final;
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const final;
+  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
+      bool deterministic, ::google::protobuf::uint8* target) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(http_msg_ret* other);
+  private:
+  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
+    return NULL;
+  }
+  inline void* MaybeArenaPtr() const {
+    return NULL;
+  }
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // optional string code = 1;
+  bool has_code() const;
+  void clear_code();
+  static const int kCodeFieldNumber = 1;
+  const ::std::string& code() const;
+  void set_code(const ::std::string& value);
+  #if LANG_CXX11
+  void set_code(::std::string&& value);
+  #endif
+  void set_code(const char* value);
+  void set_code(const char* value, size_t size);
+  ::std::string* mutable_code();
+  ::std::string* release_code();
+  void set_allocated_code(::std::string* code);
+
+  // optional string msg = 2;
+  bool has_msg() const;
+  void clear_msg();
+  static const int kMsgFieldNumber = 2;
+  const ::std::string& msg() const;
+  void set_msg(const ::std::string& value);
+  #if LANG_CXX11
+  void set_msg(::std::string&& value);
+  #endif
+  void set_msg(const char* value);
+  void set_msg(const char* value, size_t size);
+  ::std::string* mutable_msg();
+  ::std::string* release_msg();
+  void set_allocated_msg(::std::string* msg);
+
+  // optional string data = 3;
+  bool has_data() const;
+  void clear_data();
+  static const int kDataFieldNumber = 3;
+  const ::std::string& data() const;
+  void set_data(const ::std::string& value);
+  #if LANG_CXX11
+  void set_data(::std::string&& value);
+  #endif
+  void set_data(const char* value);
+  void set_data(const char* value, size_t size);
+  ::std::string* mutable_data();
+  ::std::string* release_data();
+  void set_allocated_data(::std::string* data);
+
+  // optional uint32 request_id = 4;
+  bool has_request_id() const;
+  void clear_request_id();
+  static const int kRequestIdFieldNumber = 4;
+  ::google::protobuf::uint32 request_id() const;
+  void set_request_id(::google::protobuf::uint32 value);
+
+  // @@protoc_insertion_point(class_scope:NFMsg.http_msg_ret)
+ private:
+  void set_has_code();
+  void clear_has_code();
+  void set_has_msg();
+  void clear_has_msg();
+  void set_has_data();
+  void clear_has_data();
+  void set_has_request_id();
+  void clear_has_request_id();
+
+  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+  ::google::protobuf::internal::HasBits<1> _has_bits_;
+  mutable ::google::protobuf::internal::CachedSize _cached_size_;
+  ::google::protobuf::internal::ArenaStringPtr code_;
+  ::google::protobuf::internal::ArenaStringPtr msg_;
+  ::google::protobuf::internal::ArenaStringPtr data_;
+  ::google::protobuf::uint32 request_id_;
   friend struct ::protobuf_msg_5fgm_2eproto::TableStruct;
 };
 // ===================================================================
@@ -738,9 +1074,423 @@ inline void http_msg_gm_ret::set_allocated_data(::std::string* data) {
   // @@protoc_insertion_point(field_set_allocated:NFMsg.http_msg_gm_ret.data)
 }
 
+// -------------------------------------------------------------------
+
+// http_msg
+
+// optional string cmd = 1;
+inline bool http_msg::has_cmd() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void http_msg::set_has_cmd() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void http_msg::clear_has_cmd() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void http_msg::clear_cmd() {
+  cmd_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  clear_has_cmd();
+}
+inline const ::std::string& http_msg::cmd() const {
+  // @@protoc_insertion_point(field_get:NFMsg.http_msg.cmd)
+  return cmd_.GetNoArena();
+}
+inline void http_msg::set_cmd(const ::std::string& value) {
+  set_has_cmd();
+  cmd_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:NFMsg.http_msg.cmd)
+}
+#if LANG_CXX11
+inline void http_msg::set_cmd(::std::string&& value) {
+  set_has_cmd();
+  cmd_.SetNoArena(
+    &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+  // @@protoc_insertion_point(field_set_rvalue:NFMsg.http_msg.cmd)
+}
+#endif
+inline void http_msg::set_cmd(const char* value) {
+  GOOGLE_DCHECK(value != NULL);
+  set_has_cmd();
+  cmd_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:NFMsg.http_msg.cmd)
+}
+inline void http_msg::set_cmd(const char* value, size_t size) {
+  set_has_cmd();
+  cmd_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:NFMsg.http_msg.cmd)
+}
+inline ::std::string* http_msg::mutable_cmd() {
+  set_has_cmd();
+  // @@protoc_insertion_point(field_mutable:NFMsg.http_msg.cmd)
+  return cmd_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline ::std::string* http_msg::release_cmd() {
+  // @@protoc_insertion_point(field_release:NFMsg.http_msg.cmd)
+  if (!has_cmd()) {
+    return NULL;
+  }
+  clear_has_cmd();
+  return cmd_.ReleaseNonDefaultNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline void http_msg::set_allocated_cmd(::std::string* cmd) {
+  if (cmd != NULL) {
+    set_has_cmd();
+  } else {
+    clear_has_cmd();
+  }
+  cmd_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), cmd);
+  // @@protoc_insertion_point(field_set_allocated:NFMsg.http_msg.cmd)
+}
+
+// optional uint32 server_id = 2;
+inline bool http_msg::has_server_id() const {
+  return (_has_bits_[0] & 0x00000004u) != 0;
+}
+inline void http_msg::set_has_server_id() {
+  _has_bits_[0] |= 0x00000004u;
+}
+inline void http_msg::clear_has_server_id() {
+  _has_bits_[0] &= ~0x00000004u;
+}
+inline void http_msg::clear_server_id() {
+  server_id_ = 0u;
+  clear_has_server_id();
+}
+inline ::google::protobuf::uint32 http_msg::server_id() const {
+  // @@protoc_insertion_point(field_get:NFMsg.http_msg.server_id)
+  return server_id_;
+}
+inline void http_msg::set_server_id(::google::protobuf::uint32 value) {
+  set_has_server_id();
+  server_id_ = value;
+  // @@protoc_insertion_point(field_set:NFMsg.http_msg.server_id)
+}
+
+// optional string data = 3;
+inline bool http_msg::has_data() const {
+  return (_has_bits_[0] & 0x00000002u) != 0;
+}
+inline void http_msg::set_has_data() {
+  _has_bits_[0] |= 0x00000002u;
+}
+inline void http_msg::clear_has_data() {
+  _has_bits_[0] &= ~0x00000002u;
+}
+inline void http_msg::clear_data() {
+  data_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  clear_has_data();
+}
+inline const ::std::string& http_msg::data() const {
+  // @@protoc_insertion_point(field_get:NFMsg.http_msg.data)
+  return data_.GetNoArena();
+}
+inline void http_msg::set_data(const ::std::string& value) {
+  set_has_data();
+  data_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:NFMsg.http_msg.data)
+}
+#if LANG_CXX11
+inline void http_msg::set_data(::std::string&& value) {
+  set_has_data();
+  data_.SetNoArena(
+    &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+  // @@protoc_insertion_point(field_set_rvalue:NFMsg.http_msg.data)
+}
+#endif
+inline void http_msg::set_data(const char* value) {
+  GOOGLE_DCHECK(value != NULL);
+  set_has_data();
+  data_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:NFMsg.http_msg.data)
+}
+inline void http_msg::set_data(const char* value, size_t size) {
+  set_has_data();
+  data_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:NFMsg.http_msg.data)
+}
+inline ::std::string* http_msg::mutable_data() {
+  set_has_data();
+  // @@protoc_insertion_point(field_mutable:NFMsg.http_msg.data)
+  return data_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline ::std::string* http_msg::release_data() {
+  // @@protoc_insertion_point(field_release:NFMsg.http_msg.data)
+  if (!has_data()) {
+    return NULL;
+  }
+  clear_has_data();
+  return data_.ReleaseNonDefaultNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline void http_msg::set_allocated_data(::std::string* data) {
+  if (data != NULL) {
+    set_has_data();
+  } else {
+    clear_has_data();
+  }
+  data_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), data);
+  // @@protoc_insertion_point(field_set_allocated:NFMsg.http_msg.data)
+}
+
+// optional uint32 request_id = 4;
+inline bool http_msg::has_request_id() const {
+  return (_has_bits_[0] & 0x00000008u) != 0;
+}
+inline void http_msg::set_has_request_id() {
+  _has_bits_[0] |= 0x00000008u;
+}
+inline void http_msg::clear_has_request_id() {
+  _has_bits_[0] &= ~0x00000008u;
+}
+inline void http_msg::clear_request_id() {
+  request_id_ = 0u;
+  clear_has_request_id();
+}
+inline ::google::protobuf::uint32 http_msg::request_id() const {
+  // @@protoc_insertion_point(field_get:NFMsg.http_msg.request_id)
+  return request_id_;
+}
+inline void http_msg::set_request_id(::google::protobuf::uint32 value) {
+  set_has_request_id();
+  request_id_ = value;
+  // @@protoc_insertion_point(field_set:NFMsg.http_msg.request_id)
+}
+
+// -------------------------------------------------------------------
+
+// http_msg_ret
+
+// optional string code = 1;
+inline bool http_msg_ret::has_code() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void http_msg_ret::set_has_code() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void http_msg_ret::clear_has_code() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void http_msg_ret::clear_code() {
+  code_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  clear_has_code();
+}
+inline const ::std::string& http_msg_ret::code() const {
+  // @@protoc_insertion_point(field_get:NFMsg.http_msg_ret.code)
+  return code_.GetNoArena();
+}
+inline void http_msg_ret::set_code(const ::std::string& value) {
+  set_has_code();
+  code_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:NFMsg.http_msg_ret.code)
+}
+#if LANG_CXX11
+inline void http_msg_ret::set_code(::std::string&& value) {
+  set_has_code();
+  code_.SetNoArena(
+    &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+  // @@protoc_insertion_point(field_set_rvalue:NFMsg.http_msg_ret.code)
+}
+#endif
+inline void http_msg_ret::set_code(const char* value) {
+  GOOGLE_DCHECK(value != NULL);
+  set_has_code();
+  code_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:NFMsg.http_msg_ret.code)
+}
+inline void http_msg_ret::set_code(const char* value, size_t size) {
+  set_has_code();
+  code_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:NFMsg.http_msg_ret.code)
+}
+inline ::std::string* http_msg_ret::mutable_code() {
+  set_has_code();
+  // @@protoc_insertion_point(field_mutable:NFMsg.http_msg_ret.code)
+  return code_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline ::std::string* http_msg_ret::release_code() {
+  // @@protoc_insertion_point(field_release:NFMsg.http_msg_ret.code)
+  if (!has_code()) {
+    return NULL;
+  }
+  clear_has_code();
+  return code_.ReleaseNonDefaultNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline void http_msg_ret::set_allocated_code(::std::string* code) {
+  if (code != NULL) {
+    set_has_code();
+  } else {
+    clear_has_code();
+  }
+  code_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), code);
+  // @@protoc_insertion_point(field_set_allocated:NFMsg.http_msg_ret.code)
+}
+
+// optional string msg = 2;
+inline bool http_msg_ret::has_msg() const {
+  return (_has_bits_[0] & 0x00000002u) != 0;
+}
+inline void http_msg_ret::set_has_msg() {
+  _has_bits_[0] |= 0x00000002u;
+}
+inline void http_msg_ret::clear_has_msg() {
+  _has_bits_[0] &= ~0x00000002u;
+}
+inline void http_msg_ret::clear_msg() {
+  msg_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  clear_has_msg();
+}
+inline const ::std::string& http_msg_ret::msg() const {
+  // @@protoc_insertion_point(field_get:NFMsg.http_msg_ret.msg)
+  return msg_.GetNoArena();
+}
+inline void http_msg_ret::set_msg(const ::std::string& value) {
+  set_has_msg();
+  msg_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:NFMsg.http_msg_ret.msg)
+}
+#if LANG_CXX11
+inline void http_msg_ret::set_msg(::std::string&& value) {
+  set_has_msg();
+  msg_.SetNoArena(
+    &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+  // @@protoc_insertion_point(field_set_rvalue:NFMsg.http_msg_ret.msg)
+}
+#endif
+inline void http_msg_ret::set_msg(const char* value) {
+  GOOGLE_DCHECK(value != NULL);
+  set_has_msg();
+  msg_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:NFMsg.http_msg_ret.msg)
+}
+inline void http_msg_ret::set_msg(const char* value, size_t size) {
+  set_has_msg();
+  msg_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:NFMsg.http_msg_ret.msg)
+}
+inline ::std::string* http_msg_ret::mutable_msg() {
+  set_has_msg();
+  // @@protoc_insertion_point(field_mutable:NFMsg.http_msg_ret.msg)
+  return msg_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline ::std::string* http_msg_ret::release_msg() {
+  // @@protoc_insertion_point(field_release:NFMsg.http_msg_ret.msg)
+  if (!has_msg()) {
+    return NULL;
+  }
+  clear_has_msg();
+  return msg_.ReleaseNonDefaultNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline void http_msg_ret::set_allocated_msg(::std::string* msg) {
+  if (msg != NULL) {
+    set_has_msg();
+  } else {
+    clear_has_msg();
+  }
+  msg_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), msg);
+  // @@protoc_insertion_point(field_set_allocated:NFMsg.http_msg_ret.msg)
+}
+
+// optional string data = 3;
+inline bool http_msg_ret::has_data() const {
+  return (_has_bits_[0] & 0x00000004u) != 0;
+}
+inline void http_msg_ret::set_has_data() {
+  _has_bits_[0] |= 0x00000004u;
+}
+inline void http_msg_ret::clear_has_data() {
+  _has_bits_[0] &= ~0x00000004u;
+}
+inline void http_msg_ret::clear_data() {
+  data_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  clear_has_data();
+}
+inline const ::std::string& http_msg_ret::data() const {
+  // @@protoc_insertion_point(field_get:NFMsg.http_msg_ret.data)
+  return data_.GetNoArena();
+}
+inline void http_msg_ret::set_data(const ::std::string& value) {
+  set_has_data();
+  data_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:NFMsg.http_msg_ret.data)
+}
+#if LANG_CXX11
+inline void http_msg_ret::set_data(::std::string&& value) {
+  set_has_data();
+  data_.SetNoArena(
+    &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+  // @@protoc_insertion_point(field_set_rvalue:NFMsg.http_msg_ret.data)
+}
+#endif
+inline void http_msg_ret::set_data(const char* value) {
+  GOOGLE_DCHECK(value != NULL);
+  set_has_data();
+  data_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:NFMsg.http_msg_ret.data)
+}
+inline void http_msg_ret::set_data(const char* value, size_t size) {
+  set_has_data();
+  data_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:NFMsg.http_msg_ret.data)
+}
+inline ::std::string* http_msg_ret::mutable_data() {
+  set_has_data();
+  // @@protoc_insertion_point(field_mutable:NFMsg.http_msg_ret.data)
+  return data_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline ::std::string* http_msg_ret::release_data() {
+  // @@protoc_insertion_point(field_release:NFMsg.http_msg_ret.data)
+  if (!has_data()) {
+    return NULL;
+  }
+  clear_has_data();
+  return data_.ReleaseNonDefaultNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline void http_msg_ret::set_allocated_data(::std::string* data) {
+  if (data != NULL) {
+    set_has_data();
+  } else {
+    clear_has_data();
+  }
+  data_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), data);
+  // @@protoc_insertion_point(field_set_allocated:NFMsg.http_msg_ret.data)
+}
+
+// optional uint32 request_id = 4;
+inline bool http_msg_ret::has_request_id() const {
+  return (_has_bits_[0] & 0x00000008u) != 0;
+}
+inline void http_msg_ret::set_has_request_id() {
+  _has_bits_[0] |= 0x00000008u;
+}
+inline void http_msg_ret::clear_has_request_id() {
+  _has_bits_[0] &= ~0x00000008u;
+}
+inline void http_msg_ret::clear_request_id() {
+  request_id_ = 0u;
+  clear_has_request_id();
+}
+inline ::google::protobuf::uint32 http_msg_ret::request_id() const {
+  // @@protoc_insertion_point(field_get:NFMsg.http_msg_ret.request_id)
+  return request_id_;
+}
+inline void http_msg_ret::set_request_id(::google::protobuf::uint32 value) {
+  set_has_request_id();
+  request_id_ = value;
+  // @@protoc_insertion_point(field_set:NFMsg.http_msg_ret.request_id)
+}
+
 #ifdef __GNUC__
   #pragma GCC diagnostic pop
 #endif  // __GNUC__
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
 // -------------------------------------------------------------------
 
 

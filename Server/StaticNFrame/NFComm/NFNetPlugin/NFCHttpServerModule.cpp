@@ -13,6 +13,7 @@
 #include "NFComm/NFPluginModule/NFILuaScriptModule.h"
 #include "NFComm/NFPluginModule/NFIPluginManager.h"
 #include "NFComm/NFCore/NFCommon.h"
+#include "NFComm/NFCore/NFStringUtility.h"
 
 NFCHttpServerModule::NFCHttpServerModule(NFIPluginManager* p)
 {
@@ -168,7 +169,8 @@ bool NFCHttpServerModule::OnReceiveNetPack(uint32_t unlinkId, const NFHttpHandle
 	auto iter = mxCallBack[serverType].mMsgCBMap.find(req.type);
 	if (iter != mxCallBack[serverType].mMsgCBMap.end())
 	{
-		auto itPath = iter->second.find(req.path);
+		std::string lowerPath = NFStringUtility::ToLower(req.path);
+		auto itPath = iter->second.find(lowerPath);
 		if (itPath != iter->second.end())
 		{
 			HTTP_RECEIVE_FUNCTOR& pFunPtr = itPath->second;
@@ -182,12 +184,29 @@ bool NFCHttpServerModule::OnReceiveNetPack(uint32_t unlinkId, const NFHttpHandle
 			}
 			return true;
 		}
+		else
+		{
+			for (int i = 0; i < mxCallBack[serverType].mOtherMsgCBMap[req.type].size(); ++i)
+			{
+				HTTP_RECEIVE_FUNCTOR& pFunPtr = mxCallBack[serverType].mOtherMsgCBMap[req.type][i];
+				try
+				{
+					pFunPtr(serverType, req);
+				}
+				catch (const std::exception&)
+				{
+					ResponseMsg((NF_SERVER_TYPES)serverType, req, "unknow error", NFWebStatus::WEB_INTER_ERROR);
+				}
+				return true;
+			}
+		}
 	}
 
 	auto luaiter = mxCallBack[serverType].mMsgLuaCBMap.find(req.type);
 	if (luaiter != mxCallBack[serverType].mMsgLuaCBMap.end())
 	{
-		auto luaitPath = luaiter->second.find(req.path);
+		std::string lowerPath = NFStringUtility::ToLower(req.path);
+		auto luaitPath = luaiter->second.find(lowerPath);
 		if (luaitPath != luaiter->second.end())
 		{
 			std::string& luaFunc = luaitPath->second;
@@ -204,6 +223,24 @@ bool NFCHttpServerModule::OnReceiveNetPack(uint32_t unlinkId, const NFHttpHandle
 			}
 			return true;
 		}
+		else
+		{
+			for (int i = 0; i < mxCallBack[serverType].mOtherMsgLuaCBMap[req.type].size(); ++i)
+			{
+				std::string& luaFunc = mxCallBack[serverType].mOtherMsgLuaCBMap[req.type][i];
+				try
+				{
+					if (m_pLuaScriptModule)
+					{
+						m_pLuaScriptModule->RunHttpServerLuaFunc(luaFunc, serverType, req);
+					}
+				}
+				catch (const std::exception&)
+				{
+					ResponseMsg((NF_SERVER_TYPES)serverType, req, "unknow error", NFWebStatus::WEB_INTER_ERROR);
+				}
+			}
+		}
 	}
 
 	return ResponseMsg((NF_SERVER_TYPES)serverType, req, "", NFWebStatus::WEB_ERROR);
@@ -214,7 +251,8 @@ NFWebStatus NFCHttpServerModule::OnFilterPack(uint32_t unlinkId, const NFHttpHan
 	uint32_t serverType = unlinkId;
 	if (serverType <= NF_ST_NONE || serverType >= NF_ST_MAX) return NFWebStatus::WEB_ERROR;
 
-	auto itPath = mxCallBack[serverType].mMsgFliterMap.find(req.path);
+	std::string lowerPath = NFStringUtility::ToLower(req.path);
+	auto itPath = mxCallBack[serverType].mMsgFliterMap.find(lowerPath);
 	if (itPath != mxCallBack[serverType].mMsgFliterMap.end())
 	{
 		HTTP_FILTER_FUNCTOR& pFunPtr = itPath->second;
@@ -228,7 +266,18 @@ bool NFCHttpServerModule::LuaAddMsgCB(NF_SERVER_TYPES serverType, const std::str
 {
 	if (serverType > NF_ST_NONE && serverType < NF_ST_MAX)
 	{
-		mxCallBack[serverType].mMsgLuaCBMap[eRequestType].emplace(strCommand, luaFunc);
+		std::string lowerCmd = NFStringUtility::ToLower(strCommand);
+		mxCallBack[serverType].mMsgLuaCBMap[eRequestType].emplace(lowerCmd, luaFunc);
+	}
+
+	return false;
+}
+
+bool NFCHttpServerModule::LuaAddOtherMsgCB(NF_SERVER_TYPES serverType, const NFHttpType eRequestType, const std::string& luaFunc)
+{
+	if (serverType > NF_ST_NONE && serverType < NF_ST_MAX)
+	{
+		mxCallBack[serverType].mOtherMsgLuaCBMap[eRequestType].push_back(luaFunc);
 	}
 
 	return false;
@@ -238,7 +287,18 @@ bool NFCHttpServerModule::AddMsgCB(NF_SERVER_TYPES serverType, const std::string
 {
 	if (serverType > NF_ST_NONE && serverType < NF_ST_MAX)
 	{
-		mxCallBack[serverType].mMsgCBMap[eRequestType].emplace(strCommand, cb);
+		std::string lowerCmd = NFStringUtility::ToLower(strCommand);
+		mxCallBack[serverType].mMsgCBMap[eRequestType].emplace(lowerCmd, cb);
+	}
+
+	return false;
+}
+
+bool NFCHttpServerModule::AddOtherMsgCB(NF_SERVER_TYPES serverType, const NFHttpType eRequestType, const HTTP_RECEIVE_FUNCTOR& cb)
+{
+	if (serverType > NF_ST_NONE && serverType < NF_ST_MAX)
+	{
+		mxCallBack[serverType].mOtherMsgCBMap[eRequestType].push_back(cb);
 	}
 
 	return false;
@@ -248,7 +308,8 @@ bool NFCHttpServerModule::AddFilterCB(NF_SERVER_TYPES serverType, const std::str
 {
 	if (serverType > NF_ST_NONE && serverType < NF_ST_MAX)
 	{
-		mxCallBack[serverType].mMsgFliterMap.emplace(strCommand, cb);
+		std::string lowerCmd = NFStringUtility::ToLower(strCommand);
+		mxCallBack[serverType].mMsgFliterMap.emplace(lowerCmd, cb);
 	}
 
 	return true;

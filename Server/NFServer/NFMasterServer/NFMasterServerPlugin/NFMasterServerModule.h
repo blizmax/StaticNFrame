@@ -64,12 +64,14 @@ protected:
 	void OnGameServerRefreshProcess(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen);
 
 	void OnServerReport(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen);
+	void OnServerHttpMsgRet(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen);
 
 	void SynServerToOthers(NF_SHARE_PTR<NFServerData> pServerData);
 
 	void OnClientDisconnect(uint32_t unLinkId);
 
 	virtual bool HttpHandleHttpGm(uint32_t linkId, const NFHttpHandle& req);
+	virtual bool HttpHandleHttpMsg(uint32_t linkId, const NFHttpHandle& req);
 
 	void SaveServerDataToDB();
 

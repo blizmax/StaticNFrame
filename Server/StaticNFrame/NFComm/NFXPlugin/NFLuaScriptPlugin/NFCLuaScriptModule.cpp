@@ -216,6 +216,11 @@ bool NFCLuaScriptModule::Register()
 	return true;
 }
 
+void NFCLuaScriptModule::RunHttpRecvLuaFunc(const std::string& luaFunc, const uint32_t unLinkId, const uint32_t requestId, const std::string& firstPath, const std::string& secondPath, const std::string& strMsg)
+{
+	TryRunGlobalScriptFunc(luaFunc, unLinkId, requestId, firstPath, secondPath, strMsg);
+}
+
 void NFCLuaScriptModule::RunNetRecvLuaFunc(const std::string& luaFunc, const uint32_t unLinkId, const uint64_t valueId, const uint32_t nMsgId, const std::string& strMsg)
 {
 	TryRunGlobalScriptFunc(luaFunc, unLinkId, valueId, nMsgId, strMsg);

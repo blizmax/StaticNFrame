@@ -38,7 +38,7 @@ namespace protobuf_server_5fto_5fserver_5fmsg_2eproto {
 struct TableStruct {
   static const ::google::protobuf::internal::ParseTableField entries[];
   static const ::google::protobuf::internal::AuxillaryParseTableField aux[];
-  static const ::google::protobuf::internal::ParseTable schema[6];
+  static const ::google::protobuf::internal::ParseTable schema[5];
   static const ::google::protobuf::internal::FieldMetadata field_metadata[];
   static const ::google::protobuf::internal::SerializationTable serialization_table[];
   static const ::google::protobuf::uint32 offsets[];
@@ -61,9 +61,6 @@ extern NotifyProxyChangeGameDefaultTypeInternal _NotifyProxyChangeGame_default_i
 class NotifyWorldPlayerDisconnect;
 class NotifyWorldPlayerDisconnectDefaultTypeInternal;
 extern NotifyWorldPlayerDisconnectDefaultTypeInternal _NotifyWorldPlayerDisconnect_default_instance_;
-class NotifyWorldPlayerReconnect;
-class NotifyWorldPlayerReconnectDefaultTypeInternal;
-extern NotifyWorldPlayerReconnectDefaultTypeInternal _NotifyWorldPlayerReconnect_default_instance_;
 }  // namespace NFMsg
 namespace google {
 namespace protobuf {
@@ -72,7 +69,6 @@ template<> ::NFMsg::NotifyGamePlayerDisconnect* Arena::CreateMaybeMessage<::NFMs
 template<> ::NFMsg::NotifyGamePlayerReconnect* Arena::CreateMaybeMessage<::NFMsg::NotifyGamePlayerReconnect>(Arena*);
 template<> ::NFMsg::NotifyProxyChangeGame* Arena::CreateMaybeMessage<::NFMsg::NotifyProxyChangeGame>(Arena*);
 template<> ::NFMsg::NotifyWorldPlayerDisconnect* Arena::CreateMaybeMessage<::NFMsg::NotifyWorldPlayerDisconnect>(Arena*);
-template<> ::NFMsg::NotifyWorldPlayerReconnect* Arena::CreateMaybeMessage<::NFMsg::NotifyWorldPlayerReconnect>(Arena*);
 }  // namespace protobuf
 }  // namespace google
 namespace NFMsg {
@@ -542,116 +538,6 @@ class NotifyGamePlayerDisconnect : public ::google::protobuf::Message /* @@proto
 };
 // -------------------------------------------------------------------
 
-class NotifyWorldPlayerReconnect : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:NFMsg.NotifyWorldPlayerReconnect) */ {
- public:
-  NotifyWorldPlayerReconnect();
-  virtual ~NotifyWorldPlayerReconnect();
-
-  NotifyWorldPlayerReconnect(const NotifyWorldPlayerReconnect& from);
-
-  inline NotifyWorldPlayerReconnect& operator=(const NotifyWorldPlayerReconnect& from) {
-    CopyFrom(from);
-    return *this;
-  }
-  #if LANG_CXX11
-  NotifyWorldPlayerReconnect(NotifyWorldPlayerReconnect&& from) noexcept
-    : NotifyWorldPlayerReconnect() {
-    *this = ::std::move(from);
-  }
-
-  inline NotifyWorldPlayerReconnect& operator=(NotifyWorldPlayerReconnect&& from) noexcept {
-    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
-      if (this != &from) InternalSwap(&from);
-    } else {
-      CopyFrom(from);
-    }
-    return *this;
-  }
-  #endif
-  static const ::google::protobuf::Descriptor* descriptor();
-  static const NotifyWorldPlayerReconnect& default_instance();
-
-  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
-  static inline const NotifyWorldPlayerReconnect* internal_default_instance() {
-    return reinterpret_cast<const NotifyWorldPlayerReconnect*>(
-               &_NotifyWorldPlayerReconnect_default_instance_);
-  }
-  static constexpr int kIndexInFileMessages =
-    4;
-
-  void Swap(NotifyWorldPlayerReconnect* other);
-  friend void swap(NotifyWorldPlayerReconnect& a, NotifyWorldPlayerReconnect& b) {
-    a.Swap(&b);
-  }
-
-  // implements Message ----------------------------------------------
-
-  inline NotifyWorldPlayerReconnect* New() const final {
-    return CreateMaybeMessage<NotifyWorldPlayerReconnect>(NULL);
-  }
-
-  NotifyWorldPlayerReconnect* New(::google::protobuf::Arena* arena) const final {
-    return CreateMaybeMessage<NotifyWorldPlayerReconnect>(arena);
-  }
-  void CopyFrom(const ::google::protobuf::Message& from) final;
-  void MergeFrom(const ::google::protobuf::Message& from) final;
-  void CopyFrom(const NotifyWorldPlayerReconnect& from);
-  void MergeFrom(const NotifyWorldPlayerReconnect& from);
-  void Clear() final;
-  bool IsInitialized() const final;
-
-  size_t ByteSizeLong() const final;
-  bool MergePartialFromCodedStream(
-      ::google::protobuf::io::CodedInputStream* input) final;
-  void SerializeWithCachedSizes(
-      ::google::protobuf::io::CodedOutputStream* output) const final;
-  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
-      bool deterministic, ::google::protobuf::uint8* target) const final;
-  int GetCachedSize() const final { return _cached_size_.Get(); }
-
-  private:
-  void SharedCtor();
-  void SharedDtor();
-  void SetCachedSize(int size) const final;
-  void InternalSwap(NotifyWorldPlayerReconnect* other);
-  private:
-  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
-    return NULL;
-  }
-  inline void* MaybeArenaPtr() const {
-    return NULL;
-  }
-  public:
-
-  ::google::protobuf::Metadata GetMetadata() const final;
-
-  // nested types ----------------------------------------------------
-
-  // accessors -------------------------------------------------------
-
-  // uint64 user_id = 1;
-  void clear_user_id();
-  static const int kUserIdFieldNumber = 1;
-  ::google::protobuf::uint64 user_id() const;
-  void set_user_id(::google::protobuf::uint64 value);
-
-  // uint32 proxy_id = 2;
-  void clear_proxy_id();
-  static const int kProxyIdFieldNumber = 2;
-  ::google::protobuf::uint32 proxy_id() const;
-  void set_proxy_id(::google::protobuf::uint32 value);
-
-  // @@protoc_insertion_point(class_scope:NFMsg.NotifyWorldPlayerReconnect)
- private:
-
-  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
-  ::google::protobuf::uint64 user_id_;
-  ::google::protobuf::uint32 proxy_id_;
-  mutable ::google::protobuf::internal::CachedSize _cached_size_;
-  friend struct ::protobuf_server_5fto_5fserver_5fmsg_2eproto::TableStruct;
-};
-// -------------------------------------------------------------------
-
 class NotifyGamePlayerReconnect : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:NFMsg.NotifyGamePlayerReconnect) */ {
  public:
   NotifyGamePlayerReconnect();
@@ -687,7 +573,7 @@ class NotifyGamePlayerReconnect : public ::google::protobuf::Message /* @@protoc
                &_NotifyGamePlayerReconnect_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    5;
+    4;
 
   void Swap(NotifyGamePlayerReconnect* other);
   friend void swap(NotifyGamePlayerReconnect& a, NotifyGamePlayerReconnect& b) {
@@ -989,38 +875,6 @@ inline void NotifyGamePlayerDisconnect::set_allocated_account(::std::string* acc
 
 // -------------------------------------------------------------------
 
-// NotifyWorldPlayerReconnect
-
-// uint64 user_id = 1;
-inline void NotifyWorldPlayerReconnect::clear_user_id() {
-  user_id_ = GOOGLE_ULONGLONG(0);
-}
-inline ::google::protobuf::uint64 NotifyWorldPlayerReconnect::user_id() const {
-  // @@protoc_insertion_point(field_get:NFMsg.NotifyWorldPlayerReconnect.user_id)
-  return user_id_;
-}
-inline void NotifyWorldPlayerReconnect::set_user_id(::google::protobuf::uint64 value) {
-  
-  user_id_ = value;
-  // @@protoc_insertion_point(field_set:NFMsg.NotifyWorldPlayerReconnect.user_id)
-}
-
-// uint32 proxy_id = 2;
-inline void NotifyWorldPlayerReconnect::clear_proxy_id() {
-  proxy_id_ = 0u;
-}
-inline ::google::protobuf::uint32 NotifyWorldPlayerReconnect::proxy_id() const {
-  // @@protoc_insertion_point(field_get:NFMsg.NotifyWorldPlayerReconnect.proxy_id)
-  return proxy_id_;
-}
-inline void NotifyWorldPlayerReconnect::set_proxy_id(::google::protobuf::uint32 value) {
-  
-  proxy_id_ = value;
-  // @@protoc_insertion_point(field_set:NFMsg.NotifyWorldPlayerReconnect.proxy_id)
-}
-
-// -------------------------------------------------------------------
-
 // NotifyGamePlayerReconnect
 
 // uint64 user_id = 1;
@@ -1054,8 +908,6 @@ inline void NotifyGamePlayerReconnect::set_proxy_id(::google::protobuf::uint32 v
 #ifdef __GNUC__
   #pragma GCC diagnostic pop
 #endif  // __GNUC__
-// -------------------------------------------------------------------
-
 // -------------------------------------------------------------------
 
 // -------------------------------------------------------------------
