@@ -119,9 +119,9 @@ public:
 
 	virtual uint32_t GetLinkId() const = 0;
 
-	virtual int InitServer(uint32_t nPort) = 0;
-	virtual int InitServer(std::vector<uint32_t> nPorts) = 0;
-	virtual int InitServer(const std::string& portStr) = 0;
+	virtual bool InitServer(uint32_t nPort) = 0;
+	virtual bool InitServer(const std::vector<uint32_t>& listen_ports) = 0;
+	virtual bool InitServer(const std::string& portStr) = 0;
 
 	virtual bool ResponseMsg(const NFHttpHandle& req, const std::string& strMsg, NFWebStatus code,
 		const std::string& strReason = "OK") = 0;

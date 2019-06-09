@@ -156,9 +156,9 @@ inline NF_THREAD_ID ThreadId()
 #define NF_ENABLE_SSL 1
 #endif
 
-//#ifndef USE_THREAD_CLIENT
-//#define USE_THREAD_CLIENT 1
-//#endif
+#ifndef USE_NET_EVPP
+#define USE_NET_EVPP
+#endif
 
 #endif
 //use actor mode--end

@@ -57,10 +57,10 @@ public:
 	virtual bool Init();
 	virtual bool Execute();
 
-	int InitServerImpl(uint32_t nPort);
-	virtual int InitServer(uint32_t nPort);
-	virtual int InitServer(std::vector<uint32_t> nPorts);
-	virtual int InitServer(const std::string& portStr);
+	bool InitServerImpl(uint32_t nPort);
+	virtual bool InitServer(uint32_t nPort);
+	virtual bool InitServer(const std::vector<uint32_t>& listen_ports);
+	virtual bool InitServer(const std::string& portStr);
 
 	virtual bool ResponseMsg(const NFHttpHandle& req, const std::string& strMsg, NFWebStatus code, const std::string& strReason = "OK");
 	virtual bool ResponseMsg(uint64_t reqeustId, const std::string& strMsg, NFWebStatus code, const std::string& strReason = "OK");

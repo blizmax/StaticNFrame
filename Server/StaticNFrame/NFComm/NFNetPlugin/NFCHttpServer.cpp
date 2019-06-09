@@ -184,7 +184,7 @@ bool NFCHttpServer::Execute()
 	return true;
 }
 
-int NFCHttpServer::InitServer(std::vector<uint32_t> nPorts)
+bool NFCHttpServer::InitServer(const std::vector<uint32_t>& nPorts)
 {
 	Init();
 	for (size_t i = 0; i < nPorts.size(); i++)
@@ -193,7 +193,7 @@ int NFCHttpServer::InitServer(std::vector<uint32_t> nPorts)
 		if (ret != 0)
 		{
 			NFLogError(NF_LOG_NET_PLUGIN, 0, "Listen Port:{} Failed!", nPorts[i]);
-			return 1;
+			return false;
 		}
 	}
 
@@ -202,10 +202,10 @@ int NFCHttpServer::InitServer(std::vector<uint32_t> nPorts)
 		initSSL();
 	}
 #endif
-	return 0;
+	return true;
 }
 
-int NFCHttpServer::InitServer(const std::string& portStr)
+bool NFCHttpServer::InitServer(const std::string& portStr)
 {
 	Init();
 
@@ -220,7 +220,7 @@ int NFCHttpServer::InitServer(const std::string& portStr)
 		if (ret != 0)
 		{
 			NFLogError(NF_LOG_NET_PLUGIN, 0, "Listen Port:{} from Port String:{} Failed!", port, portStr);
-			return 1;
+			return false;
 		}
 	}
 
@@ -229,7 +229,7 @@ int NFCHttpServer::InitServer(const std::string& portStr)
 		initSSL();
 	}
 #endif
-	return 0;
+	return true;
 }
 
 bool NFCHttpServer::Init()
@@ -254,11 +254,11 @@ bool NFCHttpServer::Init()
 	return true;
 }
 
-int NFCHttpServer::InitServer(uint32_t port)
+bool NFCHttpServer::InitServer(uint32_t port)
 {
 	Init();
 
-	int ret = InitServerImpl(port);
+	bool ret = InitServerImpl(port);
 
 #if NF_ENABLE_SSL
 	if (mEnableSSL) {
@@ -269,7 +269,7 @@ int NFCHttpServer::InitServer(uint32_t port)
 	return ret;
 }
 
-int NFCHttpServer::InitServerImpl(uint32_t port)
+bool NFCHttpServer::InitServerImpl(uint32_t port)
 {
 	mPort = port;
 	mVecPort.push_back(port);
@@ -323,12 +323,12 @@ int NFCHttpServer::InitServerImpl(uint32_t port)
 	if (!handle)
 	{
 		NFLogError(NF_LOG_NET_PLUGIN, 0, "http server bind port :{} fail!", mPort);
-		return 1;
+		return false;
 	}
 
 	evhttp_set_gencb(http, listener_cb, (void*) this);
 
-	return 0;
+	return true;
 }
 
 void NFCHttpServer::listener_cb(struct evhttp_request* req, void* arg)

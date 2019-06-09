@@ -4,6 +4,28 @@
 //    @Date             :    2017-10-16
 //    @Module           :    NFCNetServerModule
 //
+//                    _ooOoo_
+//                   o8888888o
+//                   88" . "88
+//                   (| -_- |)
+//                    O\ = /O
+//                ____/`---'\____
+//              .   ' \\| |// `.
+//               / \\||| : |||// \
+//             / _||||| -:- |||||- \
+//               | | \\\ - /// | |
+//            | \_| ''\---/'' | |
+//              \ .-\__ `-` ___/-. /
+//           ___`. .' /--.--\ `. . __
+//        ."" '< `.___\_<|>_/___.' >'"".
+//       | | : `- \`.;`\ _ /`;.`/ - ` : | |
+//         \ \ `-. \_ __\ /__ _/ .-` / /
+// ======`-.____`-.___\_____/___.-`____.-'======
+//                    `=---='
+//
+// .............................................
+//          ·ð×æ±£ÓÓ             ÓÀÎÞBUG
+//
 // -------------------------------------------------------------------------
 
 #include "NFCNetServerModule.h"
@@ -105,8 +127,11 @@ uint32_t NFCNetServerModule::AddServer(const NF_SERVER_TYPES eServerType, uint32
 		flag.nMaxConnectNum = nMaxClient;
 		flag.bWebSocket = bWebSocket;
 		flag.mPacketParseType = nPacketParseType;
+#ifdef USE_NET_EVPP
 		NFIServer* pServer = NF_NEW NFEvppServer(eServerType, nServerID, flag);
-		//NFIServer* pServer = NF_NEW NFServer(eServerType, nServerID, flag);
+#else
+		NFIServer* pServer = NF_NEW NFServer(eServerType, nServerID, flag);
+#endif
 		pServer->SetRecvCB((NFINetModule*)this, &NFINetModule::OnReceiveNetPack);
 		pServer->SetEventCB((NFINetModule*)this, &NFINetModule::OnSocketNetEvent);
 		if (pServer->Init())

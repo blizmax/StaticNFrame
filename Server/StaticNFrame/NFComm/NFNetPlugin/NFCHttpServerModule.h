@@ -31,7 +31,7 @@ public:
 	virtual bool Finalize();
 
 	virtual int InitServer(NF_SERVER_TYPES serverType, uint32_t nPort);
-	virtual int InitServer(NF_SERVER_TYPES serverType, std::vector<uint32_t> nPorts);
+	virtual int InitServer(NF_SERVER_TYPES serverType, const std::vector<uint32_t>& nPorts);
 	virtual int InitServer(NF_SERVER_TYPES serverType, const std::string& portStr);
 
 	virtual bool ResponseMsg(NF_SERVER_TYPES serverType, const NFHttpHandle& req, const std::string& strMsg, NFWebStatus code = NFWebStatus::WEB_OK,

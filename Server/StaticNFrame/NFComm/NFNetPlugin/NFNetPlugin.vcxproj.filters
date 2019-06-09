@@ -137,6 +137,9 @@
     <ClCompile Include="NFEvppClient.cpp">
       <Filter>NFClient</Filter>
     </ClCompile>
+    <ClCompile Include="NFCEvppHttpServer.cpp">
+      <Filter>NFHttpServer</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="NFNetPlugin.h" />
@@ -343,6 +346,9 @@
     </ClInclude>
     <ClInclude Include="NFIClient.h">
       <Filter>NFClient</Filter>
+    </ClInclude>
+    <ClInclude Include="NFCEvppHttpServer.h">
+      <Filter>NFHttpServer</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

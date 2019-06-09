@@ -65,6 +65,7 @@
     <ClCompile Include="evpp\udp\sync_udp_client.cc" />
     <ClCompile Include="evpp\udp\udp_server.cc" />
     <ClCompile Include="NFCallBackModule.cpp" />
+    <ClCompile Include="NFCEvppHttpServer.cpp" />
     <ClCompile Include="NFCHttpClientModule.cpp" />
     <ClCompile Include="NFCHttpServer.cpp" />
     <ClCompile Include="NFCHttpServerModule.cpp" />
@@ -131,6 +132,7 @@
     <ClInclude Include="evpp\utility.h" />
     <ClInclude Include="evpp\windows_port.h" />
     <ClInclude Include="NFCallBackModule.h" />
+    <ClInclude Include="NFCEvppHttpServer.h" />
     <ClInclude Include="NFCHttpClientModule.h" />
     <ClInclude Include="NFCHttpServer.h" />
     <ClInclude Include="NFCHttpServerModule.h" />

@@ -222,9 +222,12 @@ uint32_t NFCNetClientModule::AddServer(NF_SERVER_TYPES eServerType, const std::s
 		flag.strIP = strIp;
 		flag.nPort = nPort;
 		flag.bWebSocket = bWebSocket;
-		//NFIClient* pClient = NF_NEW NFClient(usId, flag);
-
+		
+#ifdef USE_NET_EVPP
 		NFEvppClient* pClient = NF_NEW NFEvppClient(m_eventLoop, usId, flag);
+#else
+		NFIClient* pClient = NF_NEW NFClient(usId, flag);
+#endif
 		pClient->SetRecvCB((NFINetModule*)this, &NFINetModule::OnReceiveNetPack);
 		pClient->SetEventCB((NFINetModule*)this, &NFINetModule::OnSocketNetEvent);
 		if (index < mxServerMap[eServerType].size() && mxServerMap[eServerType][index] == nullptr)
