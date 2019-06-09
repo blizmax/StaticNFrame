@@ -35,20 +35,7 @@
 class NFCHttpEvppServer : public NFIHttpServer
 {
 public:
-	NFCHttpEvppServer()
-	{
-		mPort = 0;
-		m_pHttpServer = new evpp::http::Server(1);
-	}
-
-	template<typename BaseType>
-	NFCHttpEvppServer(uint32_t unLinkId, BaseType* pBaseType, bool (BaseType::*handleRecieve)(uint32_t, const NFHttpHandle& req), NFWebStatus(BaseType::*handleFilter)(uint32_t, const NFHttpHandle& req))
-	{
-		mReceiveCB = std::bind(handleRecieve, pBaseType, std::placeholders::_1, std::placeholders::_2);
-		mFilter = std::bind(handleFilter, pBaseType, std::placeholders::_1, std::placeholders::_2);
-		mPort = 0;
-		m_pHttpServer = new evpp::http::Server(1);
-	}
+	NFCHttpEvppServer(uint32_t serverType);
 
 	virtual ~NFCHttpEvppServer();
 
@@ -61,6 +48,7 @@ private:
 	evpp::http::Server* m_pHttpServer;
 private:
 	uint32_t mPort;
+	uint32_t mServerType;
 	std::vector<uint32_t> mVecPort;
 	HTTP_RECEIVE_FUNCTOR mReceiveCB;
 	HTTP_FILTER_FUNCTOR mFilter;

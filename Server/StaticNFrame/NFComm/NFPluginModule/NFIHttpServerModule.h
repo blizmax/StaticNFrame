@@ -52,7 +52,7 @@ public:
 	}
 public:
 	virtual int InitServer(NF_SERVER_TYPES serverType, uint32_t nPort) = 0;
-	virtual int InitServer(NF_SERVER_TYPES serverType, std::vector<uint32_t> nPorts) = 0;
+	virtual int InitServer(NF_SERVER_TYPES serverType, const std::vector<uint32_t>& nPorts) = 0;
 	virtual int InitServer(NF_SERVER_TYPES serverType, const std::string& portStr) = 0;
 
 	virtual bool ResponseMsg(NF_SERVER_TYPES serverType, const NFHttpHandle& req, const std::string& strMsg, NFWebStatus code = NFWebStatus::WEB_OK, const std::string& reason = "OK") = 0;

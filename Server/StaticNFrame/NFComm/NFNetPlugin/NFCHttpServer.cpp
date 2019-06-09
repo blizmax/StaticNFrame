@@ -134,9 +134,9 @@ bool NFCHttpServer::initSSL(bool force_enable) {
 }
 #endif
 
-uint32_t NFCHttpServer::GetLinkId() const
+uint32_t NFCHttpServer::GetServerType() const
 {
-	return mUnLinkId;
+	return mServerType;
 }
 
 NFHttpHandle* NFCHttpServer::AllocHttpRequest()
@@ -440,7 +440,7 @@ void NFCHttpServer::listener_cb(struct evhttp_request* req, void* arg)
 		//return 401
 		try
 		{
-			NFWebStatus xWebStatus = pNet->mFilter(pNet->mUnLinkId, *pRequest);
+			NFWebStatus xWebStatus = pNet->mFilter(pNet->mServerType, *pRequest);
 			if (xWebStatus != NFWebStatus::WEB_OK)
 			{
 				//401
@@ -466,7 +466,7 @@ void NFCHttpServer::listener_cb(struct evhttp_request* req, void* arg)
 	{
 		if (pNet->mReceiveCB)
 		{
-			pNet->mReceiveCB(pNet->mUnLinkId, *pRequest);
+			pNet->mReceiveCB(pNet->mServerType, *pRequest);
 			return;
 		}
 		else

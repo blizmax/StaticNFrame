@@ -104,8 +104,8 @@ public:
 };
 
 //it should be
-typedef std::function<bool(uint32_t linkId, const NFHttpHandle& req)> HTTP_RECEIVE_FUNCTOR;
-typedef std::function<NFWebStatus(uint32_t linkId, const NFHttpHandle& req)> HTTP_FILTER_FUNCTOR;
+typedef std::function<bool(uint32_t serverType, const NFHttpHandle& req)> HTTP_RECEIVE_FUNCTOR;
+typedef std::function<NFWebStatus(uint32_t serverType, const NFHttpHandle& req)> HTTP_FILTER_FUNCTOR;
 
 class NFIHttpServer
 {
@@ -117,7 +117,7 @@ public:
 
 	virtual bool Execute() = 0;
 
-	virtual uint32_t GetLinkId() const = 0;
+	virtual uint32_t GetServerType() const = 0;
 
 	virtual bool InitServer(uint32_t nPort) = 0;
 	virtual bool InitServer(const std::vector<uint32_t>& listen_ports) = 0;
@@ -127,5 +127,27 @@ public:
 		const std::string& strReason = "OK") = 0;
 
 	virtual bool ResponseMsg(uint64_t reqeustId, const std::string& strMsg, NFWebStatus code, const std::string& strReason = "OK") = 0;
+
+	/**
+	 *@brief  设置接收回调.
+	 */
+	template <typename BaseType>
+	void SetRecvCB(BaseType* pBaseType, bool (BaseType::*handleRecieve)(uint32_t, const NFHttpHandle& req))
+	{
+		mReceiveCB = std::bind(handleRecieve, pBaseType, std::placeholders::_1, std::placeholders::_2);
+	}
+
+	/**
+	 *@brief  设置连接事件回调.
+	 */
+	template <typename BaseType>
+	void SetFilterCB(BaseType* pBaseType, NFWebStatus(BaseType::*handleFilter)(uint32_t, const NFHttpHandle& req))
+	{
+		mFilter = std::bind(handleFilter, pBaseType, std::placeholders::_1, std::placeholders::_2);
+	}
+
+protected:
+	HTTP_RECEIVE_FUNCTOR mReceiveCB;
+	HTTP_FILTER_FUNCTOR mFilter;
 };
 

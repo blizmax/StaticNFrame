@@ -17,28 +17,11 @@
 class NFCHttpServer : public NFIHttpServer
 {
 public:
-	NFCHttpServer()
-	{
-		mIndex = 10000;
-		mPort = 0;
-		mUnLinkId = 0;
-		mEventBase = NULL;
-#if NF_ENABLE_SSL
-		mEnableSSL = true;
-		mSSLCtx = NULL;
-		certificate_chain_file_ = "server-certificate-chain.pem";
-		private_key_file_ = "server-private-key.pem";
-#endif
-	}
-
-	template<typename BaseType>
-	NFCHttpServer(uint32_t unLinkId, BaseType* pBaseType, bool (BaseType::*handleRecieve)(uint32_t,const NFHttpHandle& req), NFWebStatus(BaseType::*handleFilter)(uint32_t, const NFHttpHandle& req))
+	NFCHttpServer(uint32_t serverType)
 	{
 		mEventBase = NULL;
-		mReceiveCB = std::bind(handleRecieve, pBaseType, std::placeholders::_1, std::placeholders::_2);
-		mFilter = std::bind(handleFilter, pBaseType, std::placeholders::_1, std::placeholders::_2);
 		mPort = 0;
-		mUnLinkId = unLinkId;
+		mServerType = serverType;
 		mIndex = 10000;
 		certificate_chain_file_ = "server-certificate-chain.pem";
 		private_key_file_ = "server-private-key.pem";
@@ -52,7 +35,7 @@ public:
 
 	NFHttpHandle* AllocHttpRequest();
 
-	virtual uint32_t GetLinkId() const;
+	virtual uint32_t GetServerType() const;
 
 	virtual bool Init();
 	virtual bool Execute();
@@ -92,9 +75,7 @@ private:
 	std::vector<uint32_t> mVecPort;
 	struct event_base* mEventBase;
 	std::vector<struct evhttp*> mEvhttpList;
-	HTTP_RECEIVE_FUNCTOR mReceiveCB;
-	HTTP_FILTER_FUNCTOR mFilter;
-	uint32_t mUnLinkId;
+	uint32_t mServerType;
 	uint64_t mIndex;
 	std::map<uint64_t, NFHttpHandle*> mHttpRequestMap;
 	std::list<NFHttpHandle*> mListHttpRequestPool;

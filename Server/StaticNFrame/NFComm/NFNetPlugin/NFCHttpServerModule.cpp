@@ -96,8 +96,10 @@ int NFCHttpServerModule::InitServer(NF_SERVER_TYPES serverType, const std::strin
 			return 0;
 		}
 
-		NFCHttpServer* pHttpServer = new NFCHttpServer(serverType, this, &NFCHttpServerModule::OnReceiveNetPack, &NFCHttpServerModule::OnFilterPack);
+		NFCHttpServer* pHttpServer = new NFCHttpServer(serverType);
 
+		pHttpServer->SetRecvCB(this, &NFCHttpServerModule::OnReceiveNetPack);
+		pHttpServer->SetFilterCB(this, &NFCHttpServerModule::OnFilterPack);
 		if (pHttpServer->InitServer(portStr))
 		{
 			mServerArray[serverType] = pHttpServer;
@@ -121,8 +123,10 @@ int NFCHttpServerModule::InitServer(NF_SERVER_TYPES serverType, const std::vecto
 			return 0;
 		}
 
-		NFCHttpServer* pHttpServer = new NFCHttpServer(serverType, this, &NFCHttpServerModule::OnReceiveNetPack, &NFCHttpServerModule::OnFilterPack);
+		NFCHttpServer* pHttpServer = new NFCHttpServer(serverType);
 
+		pHttpServer->SetRecvCB(this, &NFCHttpServerModule::OnReceiveNetPack);
+		pHttpServer->SetFilterCB(this, &NFCHttpServerModule::OnFilterPack);
 		if (pHttpServer->InitServer(nPorts))
 		{
 			mServerArray[serverType] = pHttpServer;
@@ -146,8 +150,10 @@ int NFCHttpServerModule::InitServer(NF_SERVER_TYPES serverType, uint32_t nPort)
 			return 0;
 		}
 
-		NFCHttpServer* pHttpServer = new NFCHttpServer(serverType, this, &NFCHttpServerModule::OnReceiveNetPack, &NFCHttpServerModule::OnFilterPack);
+		NFCHttpServer* pHttpServer = new NFCHttpServer(serverType);
 
+		pHttpServer->SetRecvCB(this, &NFCHttpServerModule::OnReceiveNetPack);
+		pHttpServer->SetFilterCB(this, &NFCHttpServerModule::OnFilterPack);
 		if (pHttpServer->InitServer(nPort))
 		{
 			mServerArray[serverType] = pHttpServer;
