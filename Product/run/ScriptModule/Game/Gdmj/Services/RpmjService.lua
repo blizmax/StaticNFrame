@@ -1325,6 +1325,8 @@ function RpmjService.PlayCountWin(tItem)
 				for kk, vv in ipairs(tItem.m_userList[i].mjpokerlist) do
 					if vv.pokertype == g_gdmjAction.type_gang and vv.typedetail == g_gdmjGangDetail.type_minggang then
 						minggangnum = minggangnum + 1
+					elseif vv.pokertype == g_gdmjAction.type_gang and vv.typedetail == g_gdmjGangDetail.type_bugang then
+						minggangnum = minggangnum + 1
 					end
 				end
 				table.insert(desList[i], "明杠"..minggangnum)
@@ -1349,6 +1351,15 @@ function RpmjService.PlayCountWin(tItem)
 						srcItem.hunum = srcItem.hunum + (tItem.m_maxUser - 1) * (1 + maList[i]) * (1 + maList[vv.tarchairid])
 						local dstItem = gcAccount.countlist[vv.tarchairid]
 						dstItem.hunum = dstItem.hunum - (tItem.m_maxUser - 1) * (1 + maList[i]) * (1 + maList[vv.tarchairid])
+					elseif vv.pokertype == g_gdmjAction.type_gang and vv.typedetail == g_gdmjGangDetail.type_bugang then
+						minggangnum = minggangnum + 1
+						for j = 1, tItem.m_maxUser do
+							local dstItem = gcAccount.countlist[j]
+							if j ~= i then
+								srcItem.hunum = srcItem.hunum + 1 * (1 + maList[i]) * (1 + maList[j])
+								dstItem.hunum = dstItem.hunum - 1 * (1 + maList[i]) * (1 + maList[j])
+							end
+						end
 					end
 				end
 				table.insert(desList[i], "明杠"..minggangnum)
@@ -1602,6 +1613,8 @@ function RpmjService.PlayCountWinMore(tItem)
 				for kk, vv in ipairs(tItem.m_userList[i].mjpokerlist) do
 					if vv.pokertype == g_gdmjAction.type_gang and vv.typedetail == g_gdmjGangDetail.type_minggang then
 						minggangnum = minggangnum + 1
+					elseif vv.pokertype == g_gdmjAction.type_gang and vv.typedetail == g_gdmjGangDetail.type_bugang then
+						minggangnum = minggangnum + 1
 					end
 				end
 				table.insert(desList[i], "明杠"..minggangnum)
@@ -1626,6 +1639,15 @@ function RpmjService.PlayCountWinMore(tItem)
 						srcItem.hunum = srcItem.hunum + (tItem.m_maxUser - 1) * (1 + maList[i]) * (1 + maList[vv.tarchairid])
 						local dstItem = gcAccount.countlist[vv.tarchairid]
 						dstItem.hunum = dstItem.hunum - (tItem.m_maxUser - 1) * (1 + maList[i]) * (1 + maList[vv.tarchairid])
+					elseif vv.pokertype == g_gdmjAction.type_gang and vv.typedetail == g_gdmjGangDetail.type_bugang then
+						minggangnum = minggangnum + 1
+						for j = 1, tItem.m_maxUser do
+							local dstItem = gcAccount.countlist[j]
+							if j ~= i then
+								srcItem.hunum = srcItem.hunum + 1 * (1 + maList[i]) * (1 + maList[j])
+								dstItem.hunum = dstItem.hunum - 1 * (1 + maList[i]) * (1 + maList[j])
+							end
+						end
 					end
 				end
 				table.insert(desList[i], "明杠"..minggangnum)
