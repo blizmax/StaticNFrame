@@ -212,8 +212,9 @@ message gcgdmjtablelist
 	repeated int32 tableid = 2;      //牌桌ID列表
 	repeated int32 pourjetton = 3;   //底注
 	repeated int32 gamenum = 4;      //打牌的局数
-	repeated int32 usernum = 5;      //人数
-	repeated int32 createtime = 6;    //创建时间
+	repeated int32 maxplaynum = 5;		//最大局数
+	repeated int32 usernum = 6;      //人数
+	repeated int32 createtime = 7;    //创建时间
 }
 
 message cggdmjhistory

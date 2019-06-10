@@ -49,7 +49,9 @@ function execute(packetID, operateID, buffer)
 				--就不能够再把这个列表加进来
 				gcmsg.tableid:append(tInfo.tableid)
 				gcmsg.pourjetton:append(tInfo.pourjetton)
-				gcmsg.gamenum:append(tInfo.maxvipnum)
+				gcmsg.gamenum:append(tInfo.usevipnum)
+				gcmsg.maxplaynum:append(tInfo.maxvipnum)
+				
 				local userNum = 0
 				for k,v in ipairs(tInfo.situser) do
 					if v ~=0 then
