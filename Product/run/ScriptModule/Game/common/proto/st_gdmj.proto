@@ -29,6 +29,7 @@ message gdmjuser   //广东麻将的
 	optional int32 humark = 31;              //用作胡牌的判断,避免每次出牌的时候都检查胡牌的列表
 	optional int32 guohu = 32;                //过胡不胡
 	repeated int32 guopeng = 33;              //过碰不碰
+	optional int32 jinhu = 34;                //只能自摸不能吃胡，碰胡
 }
 
 message gdmjnextaction   //指示下一个玩家行动的信息

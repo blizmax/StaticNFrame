@@ -87,7 +87,6 @@ function execute(packetID, operateID, buffer)
 	if isStand == true then
 		--一定要确保全部能够
 		--如果是在站立的列表中
-		tInfo.standuser:remove(k)
 		GdmjModel.SetTableInfo(tInfo, 1)  --这里需要设置的
 		ThreadManager.GdmjUnLock(cgmsg.tableid)
 		gcmsg.userid = cgmsg.userid

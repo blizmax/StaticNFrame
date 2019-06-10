@@ -37,6 +37,8 @@ function GdmjEvent.JulebuGameCreate(m_tInfo, strVipInfo)
 	if m_tInfo.payway == 2 then
 		strDes = strDes..",AA付费"
 	end
+
+	local m_vipRoomInfo = {}
 	
 	if m_tInfo.mjtype == g_gdmjType.type_tdh then
 		m_vipRoomInfo = st_gdmj_pb.gdmjtdh()

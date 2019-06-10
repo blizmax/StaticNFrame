@@ -641,7 +641,7 @@ function RpmjService.NewCheckChiHu(tItem,actPokerID,actChairID,isQiangGang)
 	for i = 1,#userIDList do
 		--在这里必须要判断鸡胡，鸡胡是不允许吃胡的
 		for k,v in ipairs(tItem.m_userList[ userIDList[i] ].tinglist) do
-			if tItem.m_userList[ userIDList[i] ].guohu == 0 and v == actPokerID then
+			if tItem.m_userList[ userIDList[i] ].guohu == 0 and tItem.m_userList[ userIDList[i] ].jinhu == 0 and v == actPokerID then
 				--同时必须要满足不是鸡胡才可以,过胡不胡
 				--抢杠胡是可以鸡胡的
 				--这里再加一个，惠东庄也是允许吃鸡胡的,但是惠州庄，是不允许吃鸡胡的,所以最后一个是判断惠州庄吃胡的
@@ -678,7 +678,10 @@ function RpmjService.NewCheckChiHu(tItem,actPokerID,actChairID,isQiangGang)
 		for k,v in ipairs(huChairList) do
 			tItem.m_tInfo.chihulist:append(v[2])			
 		end
-		tItem.m_userList[huChairList[1][2]].guohu = 1
+
+		if tItem.m_vipRoomInfo.bishu1 ~= 0 or tItem.m_vipRoomInfo.bishu2 ~= 0 then
+			tItem.m_userList[huChairList[1][2]].guohu = 1
+		end
 		return huChairList[1][2]
 	end
 	
@@ -689,7 +692,9 @@ end
 function RpmjService.NewCheckChiHu2(tItem)
 	if #tItem.m_tInfo.chihulist > 0 then
 		local chairID = tItem.m_tInfo.chihulist[1]
-		tItem.m_userList[chairID].guohu = chairID
+		if tItem.m_vipRoomInfo.bishu1 ~= 0 or tItem.m_vipRoomInfo.bishu2 ~= 0 then
+			tItem.m_userList[chairID].guohu = chairID
+		end
 		return chairID
 	end
 	return 0
@@ -816,6 +821,9 @@ function RpmjService.DoGuo(tItem,cgmsg,gcmsg)
 			--如果是吃胡的过，检查有没有下一个吃胡
 			tItem.m_nextInfo.actchairid[cgmsg.actchairid] = 0  --首先需要把自己的置为空
 			--过了抢杠胡了
+			if tItem.m_vipRoomInfo.bishu1 ~= 0 then
+				tItem.m_userList[chairID].jinhu = 1
+			end
 			tItem.m_tInfo.chihulist:remove(1)
 			local chiHu = RpmjService.NewCheckChiHu2(tItem)
 			
@@ -845,6 +853,9 @@ function RpmjService.DoGuo(tItem,cgmsg,gcmsg)
 			--如果是吃胡的过，检查有没有下一个吃胡
 			--吃胡是的需要检查吃的
 			tItem.m_nextInfo.actchairid[cgmsg.actchairid] = 0  --首先需要把自己的置为空
+			if tItem.m_vipRoomInfo.bishu1 ~= 0 then
+				tItem.m_userList[cgmsg.actchairid].jinhu = 1
+			end
 			tItem.m_tInfo.chihulist:remove(1)
 			local chiHu = RpmjService.NewCheckChiHu2(tItem)
 			
