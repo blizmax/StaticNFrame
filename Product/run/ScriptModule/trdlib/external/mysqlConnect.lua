@@ -6,19 +6,19 @@ end
 local mysqlConnect = class("mysqlConnect")
 
 function mysqlConnect:ctor()
-	LuaNFrame.Info(NFLogId.NF_LOG_SYSTEMLOG, 0,  'mysql connect start:dbtype='..g_dbtype..',dbuser='..g_dbUser..',dbhost='..g_dbHost..',dbPort='..g_dbPort)
+	--LuaNFrame.Info(NFLogId.NF_LOG_SYSTEMLOG, 0,  'mysql connect start:dbtype='..g_dbtype..',dbuser='..g_dbUser..',dbhost='..g_dbHost..',dbPort='..g_dbPort)
 	self.m_env = luasql.mysql()
 	self.m_connect = assert(self.m_env:connect(g_dbtype, g_dbUser, g_dbPassword, g_dbHost, g_dbPort))
 	self.m_connect:execute[[set names utf8]]
 	self.m_connect:execute("use "..g_dbDatabase)
 
-	LuaNFrame.Info(NFLogId.NF_LOG_SYSTEMLOG, 0,  'mysql connect success')
+	--LuaNFrame.Info(NFLogId.NF_LOG_SYSTEMLOG, 0,  'mysql connect success')
 end
 
 
 function mysqlConnect:reConnect()
 	--body
-	LuaNFrame.Info(NFLogId.NF_LOG_SYSTEMLOG, 0,  'mysql reconnect dbtype='..g_dbtype..',dbuser='..g_dbUser..',dbhost='..g_dbHost..',dbPort='..g_dbPort)
+	--LuaNFrame.Info(NFLogId.NF_LOG_SYSTEMLOG, 0,  'mysql reconnect dbtype='..g_dbtype..',dbuser='..g_dbUser..',dbhost='..g_dbHost..',dbPort='..g_dbPort)
 	self:release()
 
 	self.m_env = luasql.mysql()

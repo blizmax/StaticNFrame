@@ -11,15 +11,15 @@ function redisConnect:ctor()
 	host = '127.0.0.1',
 	port = 6379,
 	}
-	LuaNFrame.Info(NFLogId.NF_LOG_SYSTEMLOG, 0,  "redis connect start")
+	--LuaNFrame.Info(NFLogId.NF_LOG_SYSTEMLOG, 0,  "redis connect start")
 
 	if redis == nil then
-		LuaNFrame.Info(NFLogId.NF_LOG_SYSTEMLOG, 0,  "redis is nil")
+		--LuaNFrame.Info(NFLogId.NF_LOG_SYSTEMLOG, 0,  "redis is nil")
 	end
 	self.m_client = redis.connect(self.m_params)
 	self.m_indexList = {}
 	self.m_currIndex = 0
-	LuaNFrame.Info(NFLogId.NF_LOG_SYSTEMLOG, 0,  "redis connect success")
+	--LuaNFrame.Info(NFLogId.NF_LOG_SYSTEMLOG, 0,  "redis connect success")
 end
 
 
