@@ -18,6 +18,12 @@ function GdmjWork.UserStartInit(tItem, mjUser)
 	while #mjUser.mjpokerlist > 0 do
 		mjUser.mjpokerlist:remove(1)
 	end
+
+	mjUser.jinhu = 0
+
+	while #mjUser.guogang > 0 do
+		mjUser.guogang:remove(1)
+	end
 	
 	while #mjUser.handpoker > 0 do
 		mjUser.handpoker:remove(1)

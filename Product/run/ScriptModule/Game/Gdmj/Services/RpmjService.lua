@@ -305,8 +305,6 @@ function RpmjService.TablePlay(tItem,currPos)
 			end
 		end
 	end
-	
-
 end
 
 function RpmjService.CheckIsGang(mjUser, pokerID)
@@ -320,7 +318,18 @@ function RpmjService.CheckIsGang(mjUser, pokerID)
 		--先检查碰中是否有杠
 		if v.pokertype == g_gdmjAction.type_peng then
 			if v.pokerlist[1] == pokerID then
-				return pokerID
+				--这个是在发牌的时候
+
+				local exist = false
+				for k1, v1 in ipairs(mjUser.guogang) do
+					--先检查碰中是否有杠
+					if v1 == pokerID then
+						exist = true
+					end
+				end
+				if exist == false then
+					return pokerID
+				end
 			end
 		end
 	end
@@ -345,24 +354,48 @@ function RpmjService.CheckIsGang(mjUser, pokerID)
 			if v2.pokertype == g_gdmjAction.type_peng then
 				if v2.pokerlist[1] == v then
 					--直接返回对应,如果
-					return v
+					--检查过杠
+					local exist = false
+					for k1, v1 in ipairs(mjUser.guogang) do
+						if v1 == v then
+							exist = true
+						end
+					end
+					if exist == false then
+						return v
+					end
 				end
 			end
 		end
 	end
 	if count == 4 then
-		return pokerID
+		--检查过杠
+		local exist = false
+		for k1, v1 in ipairs(mjUser.guogang) do
+			if v1 == pokerID then
+				exist = true
+			end
+		end
+		if exist == false then
+			return pokerID
+		end
 	end
 	--在检查剩下的
 	for k,v in pairs(gangList) do
 		if v == 4 then
-			return k
+			--检查过杠
+			local exist = false
+			for k1, v1 in ipairs(mjUser.guogang) do
+				if v1 == k then
+					exist = true
+				end
+			end
+			if exist == false then
+				return k
+			end
 		end
 	end
 	--这里还需要见见其他四个的问题
-	
-	
-	
 	return 0
 end
 
@@ -603,6 +636,7 @@ function RpmjService.CheckNewPengGang(tItem, pokerID, actChairid)
 		if num >= 2 then
 			--在这里，表示就可以碰或者杠了
 			local isExist = false
+			local isExistGang = false
 
 			for k2,v2 in ipairs(tItem.m_userList[v1].guopeng) do
 				if v2 == pokerID then
@@ -610,10 +644,17 @@ function RpmjService.CheckNewPengGang(tItem, pokerID, actChairid)
 					break
 				end
 			end
+
+			for k2,v2 in ipairs(tItem.m_userList[v1].guogang) do
+				if v2 == pokerID then
+					isExistGang = true
+					break
+				end
+			end
 			
 			if isExist == false then
 				table.insert(retList, g_gdmjAction.type_peng)
-				if num > 2 then
+				if num > 2 and isExistGang == false then
 					if #tItem.m_tInfo.publicpoker > tItem.m_tInfo.manum + 4 then
 						table.insert(retList, g_gdmjAction.type_gang)  --剩下最后一张牌了，不能碰和杠，因为碰和杠后就不能够出牌了
 					end
@@ -777,6 +818,7 @@ function RpmjService.DoPlay(tItem, cgmsg, gcmsg)
 				end				
 			end
 			tItem.m_userList[nextPos].guopeng:append(cgmsg.actpokerid)   --在这里就需要把过碰的加进去了
+			
 		else
 			--如果没有碰或者杠，表示轮到下一个人了
 			
@@ -799,6 +841,12 @@ function RpmjService.DoGuo(tItem,cgmsg,gcmsg)
 		--是出牌，现在这种情况已经忽略了。
 		tItem.m_nextInfo.actchairid[cgmsg.actchairid] = 1
 		tItem.m_nextInfo.canplay = 1
+
+		for k,v in ipairs(tItem.m_tInfo.nextinfo.actiontype) do
+			if v == g_gdmjAction.type_gang then
+				tItem.m_userList[cgmsg.actchairid].guogang:append(cgmsg.actpokerid)   --在这里就需要把过碰的加进去了
+			end
+		end
 	else
 
 		local prevType = 0   --上一个玩家的出牌类型
@@ -813,6 +861,7 @@ function RpmjService.DoGuo(tItem,cgmsg,gcmsg)
 				prevType = v
 			elseif v == g_gdmjAction.type_gang then
 				prevType = v
+				tItem.m_userList[cgmsg.actchairid].guogang:append(cgmsg.actpokerid)   --在这里就需要把过碰的加进去了
 			end
 		end
 		
@@ -909,7 +958,7 @@ function RpmjService.DoGuo(tItem,cgmsg,gcmsg)
 				tItem.m_tInfo.beingpoker = 1
 				nextPos = tItem.m_tInfo.nextinfo.tarchairid == tItem.m_maxUser and 1 or tItem.m_tInfo.nextinfo.tarchairid + 1
 				tItem.m_nextInfo.actchairid[nextPos] = 1   --轮到他行动了
-				tItem.m_nextInfo.canplay = 1		
+				tItem.m_nextInfo.canplay = 1
 		else
 			local nextPos = tItem.m_tInfo.nextinfo.tarchairid == tItem.m_maxUser and 1 or tItem.m_tInfo.nextinfo.tarchairid + 1
 			tItem.m_nextInfo.actchairid[nextPos] = 1
@@ -924,6 +973,12 @@ end
 
 function RpmjService.DoPeng(tItem, cgmsg, gcmsg)
 	
+	for k,v in ipairs(tItem.m_tInfo.nextinfo.actiontype) do
+		if v == g_gdmjAction.type_gang then
+			tItem.m_userList[cgmsg.actchairid].guogang:append(cgmsg.actpokerid)   --在这里就需要把过碰的加进去了
+		end
+	end
+
 	GdmjWork.ActionPeng(tItem,cgmsg, gcmsg)
 	--碰了后轮到自己出牌了 ，但是不用发牌的
 	
