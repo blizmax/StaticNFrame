@@ -18,7 +18,7 @@ function execute(packetID, operateID, buffer)
 	local jifen = JulebuModel.GetAwardJiFen(cgmsg.julebuid, cgmsg.userid)
 	
 	if jifen ~= cgmsg.awardcount then
-		LuaNFrame.Error(NFLogId.NF_LOG_SYSTEMLOG, cgmsg.userid,  "jifen not match julebuid="..cgmsg.julebuid..", userid="..cgmsg.userid)
+		--LuaNFrame.Error(NFLogId.NF_LOG_SYSTEMLOG, cgmsg.userid,  "jifen not match julebuid="..cgmsg.julebuid..", userid="..cgmsg.userid)
 	end
 	--������Ҫ���ӻ��ֵ���ҵĻ�������
 	JulebuModel.AddUserJiFen( cgmsg.julebuid, cgmsg.userid, jifen, -1 )  --��-1����ʾ����ȡ�Ļ���

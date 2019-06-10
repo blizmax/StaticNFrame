@@ -399,7 +399,7 @@ function JulebuModel.LoadChatID(julebuID)
 	mysqlItem:executeQuery(sqlCase)
 	local chatID = mysqlItem:fetch()
 	if chatID == nil then
-		LuaNFrame.Error(NFLogId.NF_LOG_SYSTEMLOG, julebuID,  "load chatid is nil julebuID="..julebuID)
+		--LuaNFrame.Error(NFLogId.NF_LOG_SYSTEMLOG, julebuID,  "load chatid is nil julebuID="..julebuID)
 		return 1
 	end
 	redisItem:set(JulebuModel.chat_id..julebuID, chatID, JulebuModel.redis_index)

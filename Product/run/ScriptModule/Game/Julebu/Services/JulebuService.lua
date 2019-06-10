@@ -153,7 +153,7 @@ function JulebuService.GameCount(julebuID, tableID, userArr, moduleType)
 		
 	if true == JulebuModel.IsCount(julebuID..tableID) then
 		--如果已经被统计过了，就不用重复统计了。
-		LuaNFrame.Error(NFLogId.NF_LOG_SYSTEMLOG, julebuID,   "recount game count julebuID="..julebuID..", tableID="..tableID)
+		--LuaNFrame.Error(NFLogId.NF_LOG_SYSTEMLOG, julebuID,   "recount game count julebuID="..julebuID..", tableID="..tableID)
 		return
 	end
 
@@ -225,7 +225,7 @@ function JulebuService.GameCount(julebuID, tableID, userArr, moduleType)
 			
 			LogBehavior.Info(v['userid'], "julebu="..julebuID, "rate", pumpingcount, "tableID="..tableID)  --记录返奖的额度
 
-			LuaNFrame.Error(NFLogId.NF_LOG_SYSTEMLOG, julebuID,   "userid="..v['userid'].."higherid="..jMember.higherid..", pumpingNum="..pumpingNum..", Count="..Count)
+			--LuaNFrame.Error(NFLogId.NF_LOG_SYSTEMLOG, julebuID,   "userid="..v['userid'].."higherid="..jMember.higherid..", pumpingNum="..pumpingNum..", Count="..Count)
 			if jMember.higherid ~= 0 then
 				--说明这个玩家是被邀请进来的。需要把一半的佣金分给这个兄弟
 				local num = 0.5

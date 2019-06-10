@@ -153,8 +153,9 @@ function PlayerModel.GetInitFaceID()
 end
 
 function PlayerModel.CreatePlayer(cgmsg)
+	local nickname = string.filterspecchars(string.htmlspecialchars(cgmsg.nickname))
 	local sqlCase = "insert into dy_player(cid,account,password,nickname,channel,province,city,bindtype,bindnick,platformid,imei,devname,mobiletype,jetton,money,lasttime,face_1,sex) values('"..
-	cgmsg.cid.."','"..cgmsg.account.."','"..cgmsg.password.."','"..string.htmlspecialchars(cgmsg.nickname).."','"..cgmsg.channel.."','"..cgmsg.province.."','"..cgmsg.city.."',"..cgmsg.bindtype
+	cgmsg.cid.."','"..cgmsg.account.."','"..cgmsg.password.."','"..nickname.."','"..cgmsg.channel.."','"..cgmsg.province.."','"..cgmsg.city.."',"..cgmsg.bindtype
 	..",'"..cgmsg.bindnick.."','"..cgmsg.platformid.."','"..cgmsg.imei.."','"..string.htmlspecialchars(cgmsg.devname).."',"..cgmsg.mobiletype..","..g_initData.jetton..","..g_initData.money..","..TimeUtils.GetTime()..",'"..PlayerModel.GetInitFaceID().."',"..cgmsg.sex..")"
 	local ret = mysqlItem:execute(sqlCase)
 	
