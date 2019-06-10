@@ -215,6 +215,8 @@ message gcgdmjtablelist
 	repeated int32 maxplaynum = 5;		//最大局数
 	repeated int32 usernum = 6;      //人数
 	repeated int32 createtime = 7;    //创建时间
+	repeated int32 julebuid = 9;		//俱乐部id
+	repeated int32 julebutype = 10;		//俱乐部房间类型
 }
 
 message cggdmjhistory

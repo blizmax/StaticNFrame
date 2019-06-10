@@ -51,7 +51,8 @@ function execute(packetID, operateID, buffer)
 				gcmsg.pourjetton:append(tInfo.pourjetton)
 				gcmsg.gamenum:append(tInfo.usevipnum)
 				gcmsg.maxplaynum:append(tInfo.maxvipnum)
-				
+				gcmsg.julebuid:append(tInfo.julebuid)
+				gcmsg.julebutype:append(tInfo.julebutype)
 				local userNum = 0
 				for k,v in ipairs(tInfo.situser) do
 					if v ~=0 then
