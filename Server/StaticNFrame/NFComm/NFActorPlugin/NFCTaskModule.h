@@ -47,6 +47,13 @@ public:
 	virtual int RequireActor();
 
 	/**
+	* @brief 添加一个Actor组件
+	*
+	* @return 
+	*/
+	virtual bool AddActorComponent(const int nActorIndex, NFITaskComponent* pComonnet);
+
+	/**
 	* @brief 主线程通过自己保存的actorIndex将发送数据给actor线程
 	*
 	* @param nActorIndex	actor唯一索引

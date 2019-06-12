@@ -12,6 +12,8 @@
 #include "NFComm/NFPluginModule/NFTask.h"
 #include "NFComm/NFPluginModule/NFLogMgr.h"
 
+#include "NFComm/NFPluginModule/NFITaskComponent.h"
+
 NFCTaskModule::NFCTaskModule(NFIPluginManager* p)
 {
 	m_pPluginManager = p;
@@ -163,6 +165,24 @@ NFTaskActor* NFCTaskModule::GetActor(const int nActorIndex)
 		return iter->second;
 	}
 	return nullptr;
+}
+
+/**
+* @brief 添加一个Actor组件
+*
+* @return
+*/
+bool NFCTaskModule::AddActorComponent(const int nActorIndex, NFITaskComponent* pComonnet)
+{
+	NFTaskActor* pActor = GetActor(nActorIndex);
+	if (pActor == nullptr)
+	{
+		return false;
+	}
+
+	pComonnet->SetTaskActor(pActor);
+	pActor->AddComponnet(pComonnet);
+	return true;
 }
 
 int NFCTaskModule::GetNumQueuedMessages()

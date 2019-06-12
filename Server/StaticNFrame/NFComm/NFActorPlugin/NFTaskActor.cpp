@@ -3,6 +3,7 @@
 #include "NFTaskActor.h"
 #include "NFComm/NFPluginModule/NFTask.h"
 #include "NFComm/NFPluginModule/NFITaskModule.h"
+#include "NFComm/NFPluginModule/NFITaskComponent.h"
 
 /**
 * @brief 构造函数
@@ -45,6 +46,18 @@ bool NFTaskActor::SendMsg(const Theron::Address& address, const NFTaskActorMessa
 	return Send(message, address);
 }
 
+/**
+* @brief 添加component
+*
+* @param
+* @return
+*/
+bool NFTaskActor::AddComponnet(NFITaskComponent* pComponnet)
+{
+	m_taskComponents.push_back(pComponnet);
+	return true;
+}
+
 void NFTaskActor::Handler(const NFTaskActorMessage& message, const Theron::Address from)
 {
 	NFTask* pTask = message.pData;
@@ -85,17 +98,36 @@ void NFTaskActor::DefaultHandler(const NFTaskActorMessage& message, const Theron
 
 void NFTaskActor::ProcessTaskStart(NFTask* pTask)
 {
+	for (size_t i = 0; i < m_taskComponents.size(); i++)
+	{
+		NFITaskComponent* pComponent = m_taskComponents[i];
+		if (pComponent)
+		{
+			pComponent->ProcessTaskStart(pTask);
+		}
+	}
 }
 
 void NFTaskActor::ProcessTask(NFTask* pTask)
 {
-	if (pTask)
+	for (size_t i = 0; i < m_taskComponents.size(); i++)
 	{
-		//NFLogError("actor id:{}, threadid:{}", this->GetAddress().AsInteger(), ThreadId());
-		pTask->ThreadProcess();
+		NFITaskComponent* pComponent = m_taskComponents[i];
+		if (pComponent)
+		{
+			pComponent->ProcessTask(pTask);
+		}
 	}
 }
 
 void NFTaskActor::ProcessTaskEnd(NFTask* pTask)
 {
+	for (size_t i = 0; i < m_taskComponents.size(); i++)
+	{
+		NFITaskComponent* pComponent = m_taskComponents[i];
+		if (pComponent)
+		{
+			pComponent->ProcessTaskEnd(pTask);
+		}
+	}
 }

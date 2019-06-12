@@ -3,11 +3,13 @@
 #define THERON_USE_STD_THREADS 1
 
 #include <map>
+#include <vector>
 #include <Theron/Theron.h>
 #include "NFComm/NFCore/NFPlatform.h"
 
 class NFTask;
 class NFITaskModule;
+class NFITaskComponent;
 
 /**
 * @brief actor消息数据
@@ -107,6 +109,14 @@ public:
 	* @return 返回发送是否成功
 	*/
 	virtual bool SendMsg(const Theron::Address& address, const NFTaskActorMessage& message);
+
+	/**
+	* @brief 添加component
+	*
+	* @param
+	* @return
+	*/
+	virtual bool AddComponnet(NFITaskComponent* pComponnet);
 protected:
 	/**
 	* @brief 处理已经被处理过的消息
@@ -163,5 +173,10 @@ protected:
 	* @brief actor管理基类
 	*/
 	NFITaskModule* m_pTaskModule;
+
+	/**
+	* @brief component管理
+	*/
+	std::vector<NFITaskComponent*> m_taskComponents;
 };
 

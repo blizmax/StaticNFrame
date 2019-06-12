@@ -196,6 +196,12 @@
     <ClInclude Include="NFINoSqlDriverManager.h">
       <Filter>Nosql</Filter>
     </ClInclude>
+    <ClInclude Include="NFITaskComponent.h">
+      <Filter>Task</Filter>
+    </ClInclude>
+    <ClInclude Include="NFIAsycModule.h">
+      <Filter>Task</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Event">

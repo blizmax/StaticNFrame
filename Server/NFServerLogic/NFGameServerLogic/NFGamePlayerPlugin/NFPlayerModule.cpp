@@ -240,6 +240,10 @@ void NFCPlayerModule::CreatePlayer(const NFMsg::cgaccountlogin& cgMsg)
 	pDbInfo->set_sex(cgMsg.sex());
 	pDbInfo->set_regdate(NFDateTime::Now().GetDbTimeString());
 	bool ret = FindModule<NFIMysqlModule>()->Update(db_playerinfo);
+	if (FindModule<NFIAsyMysqlModule>()->Update(db_playerinfo, 0) == false)
+	{
+		NFLogError(NF_LOG_LOGIN_MODULE_LOG,0, "Nosql set playerinfo failed, pInfo:{}", db_playerinfo.DebugString());
+	}
 	if (ret == false)
 	{
 		NFBehaviorLog(0, "", "player", "LoadPlayerInfoByCID", -1, "加载数据库玩家信息失败");

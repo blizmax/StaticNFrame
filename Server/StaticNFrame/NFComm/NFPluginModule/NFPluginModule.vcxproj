@@ -326,6 +326,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="NFCDynLib.h" />
+    <ClInclude Include="NFIAsycModule.h" />
     <ClInclude Include="NFIAsyncSqliteModule.h" />
     <ClInclude Include="NFIAsynMongoModule.h" />
     <ClInclude Include="NFICallBackModule.h" />
@@ -361,6 +362,7 @@
     <ClInclude Include="NFIServerNetEventModule.h" />
     <ClInclude Include="NFISignalHandleModule.h" />
     <ClInclude Include="NFISqliteModule.h" />
+    <ClInclude Include="NFITaskComponent.h" />
     <ClInclude Include="NFITaskModule.h" />
     <ClInclude Include="NFProfiler.h" />
     <ClInclude Include="NFProtobufCommon.h" />

@@ -12,11 +12,12 @@
 #include "NFComm/NFCore/NFPlatform.h"
 #include "NFComm/NFPluginModule/NFIPluginManager.h"
 #include "NFComm/NFPluginModule/NFIModule.h"
+#include "NFComm/NFPluginModule/NFIAsycModule.h"
 #include "google/protobuf/message.h"
 #include <vector>
 
 class NFIAsyMysqlModule
-	: public NFIModule
+	: public NFIAsycModule
 {
 public:
 	virtual bool AddMysqlServer(const int nServerID, const std::string& strIP, const int nPort, const std::string strDBName, const std::string strDBUser, const std::string strDBPwd, const int nRconnectTime = 10, const int nRconneCount = -1) = 0;
@@ -126,13 +127,5 @@ public:
 	* @return bool
 	*/
 	virtual bool Keys(const std::string& strTableName, const std::string& strKeyColName, const std::string& strKeyName, std::vector<std::string>& valueVec, uint64_t balanceId = 0) = 0;
-
-	/**
-	* @brief 异步更新回调
-	*
-	* @param  result
-	* @return
-	*/
-	virtual void UpdateCallBack(bool result) = 0;
 };
 

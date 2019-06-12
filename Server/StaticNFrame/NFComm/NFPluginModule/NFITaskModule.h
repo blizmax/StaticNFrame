@@ -4,6 +4,7 @@
 
 class NFTaskActorMessage;
 class NFTask;
+class NFITaskComponent;
 
 class NFITaskModule : public NFIModule
 {
@@ -47,4 +48,11 @@ public:
 	* @return 未完成的任务数目
 	*/
 	virtual int GetNumQueuedMessages() = 0;
+
+	/**
+	* @brief 添加一个Actor组件
+	*
+	* @return
+	*/
+	virtual bool AddActorComponent(const int nActorIndex, NFITaskComponent* pComonnet) = 0;
 };

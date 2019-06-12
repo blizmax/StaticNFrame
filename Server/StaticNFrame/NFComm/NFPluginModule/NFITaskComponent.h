@@ -28,60 +28,53 @@
 
 #pragma once
 
-#include <string>
+#include "NFComm/NFCore/NFPlatform.h"
+#include "NFTask.h"
 
-/*
-线程池的线程基类
-*/
+class NFTaskActor;
 
-class NFTask
+class NFITaskComponent
 {
 public:
-	NFTask()
+	NFITaskComponent()
 	{
-		m_balanceId = 0;
+		mTaskActor = nullptr;
 	}
 
-	virtual ~NFTask()
+	virtual ~NFITaskComponent()
 	{
 	}
 
-	enum TPTaskState
+	virtual void SetTaskActor(NFTaskActor* taskActor)
 	{
-		/// 一个任务已经完成
-		TPTASK_STATE_COMPLETED = 0,
-
-		/// 继续在主线程执行
-		TPTASK_STATE_CONTINUE_MAINTHREAD = 1,
-
-		// 继续在子线程执行
-		TPTASK_STATE_CONTINUE_CHILDTHREAD = 2,
-	};
-
-	uint64_t GetBalanceId() const
-	{
-		return m_balanceId;
+		mTaskActor = taskActor;
 	}
 
-	void SetBalanceId(uint64_t balanceId)
+	virtual NFTaskActor* GetActor()
 	{
-		m_balanceId = balanceId;
+		return mTaskActor;
 	}
 
-	/**
-	**  异步线程处理函数，将在另一个线程里运行
-	*/
-	virtual bool ThreadProcess() = 0;
 
-	/**
-	** 主线程处理函数，将在线程处理完后，提交给主先来处理，根据返回函数是否继续处理
-		返回值： thread::TPTask::TPTaskState， 请参看TPTaskState
-	*/
-	virtual TPTaskState MainThreadProcess()
+	virtual void ProcessTaskStart(NFTask* pTask)
 	{
-		return TPTASK_STATE_COMPLETED;
 	}
-protected:
-	uint64_t m_balanceId; //动态均衡ID, 如果是玩家就是玩家CharId, 如果不是一般填0
+
+	virtual void ProcessTask(NFTask* pTask)
+	{
+		if (pTask)
+		{
+			//NFLogError("actor id:{}, threadid:{}", this->GetAddress().AsInteger(), ThreadId());
+			pTask->ThreadProcess();
+		}
+	}
+
+	virtual void ProcessTaskEnd(NFTask* pTask)
+	{
+
+	}
+private:
+	NFTaskActor* mTaskActor;
 };
+
 
