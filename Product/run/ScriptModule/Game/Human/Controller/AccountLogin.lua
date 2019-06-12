@@ -64,7 +64,7 @@ function execute(packetID, operateID, buffer)
 		isNewPlayer = true
 		redisItem:incr("playerall", PlayerModel.redis_index)
 		PlayerStatsModel.CreateStats(gcmsg.pinfo.userid, cgmsg.nickname)
-		PlayerModel.CheckIsBindAgency(gcmsg.pinfo, cgmsg.platformid)   --在这里检查是否绑定了别的推广码
+		--PlayerModel.CheckIsBindAgency(gcmsg.pinfo, cgmsg.platformid)   --在这里检查是否绑定了别的推广码
 	elseif ret == ReturnCode["password_not_match"] then
 		--密码不匹配
 		gcmsg.result = ReturnCode["password_not_match"]

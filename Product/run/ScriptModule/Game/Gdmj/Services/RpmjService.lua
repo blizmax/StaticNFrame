@@ -162,6 +162,7 @@ function RpmjService.InitPublicPoker(tItem)
 	GdmjWork.NextInfoInit(tItem.m_tInfo.nextinfo)
 	
 	local pokerList = {}
+	local pokerInit = {}
 	
 
 	if (tItem.m_maxUser == 3) or (tItem.m_maxUser == 2) then
@@ -169,7 +170,7 @@ function RpmjService.InitPublicPoker(tItem)
 		for i = 1,4 do
 			for j = 1,3 do
 				for k,v in ipairs(g_gdmjPokerList[j]) do
-					table.insert(pokerList, v)
+					table.insert(pokerInit, v)
 				end
 			end
 		end	
@@ -178,11 +179,30 @@ function RpmjService.InitPublicPoker(tItem)
 		for i = 1,4 do
 			for j = 1,5 do
 				for k,v in ipairs(g_gdmjPokerList[j]) do
-					table.insert(pokerList, v)
+					table.insert(pokerInit, v)
 				end
 			end
 		end
+	end
+	
+	for i = 1,500 do
+		--这里洗牌100次
+		local index1 = math.myrandom(1, #pokerInit)
+		local index2 = math.myrandom(1, #pokerInit)
+		local numTemp = pokerInit[index1]
+		pokerInit[index1] = pokerInit[index2]
+		pokerInit[index2] = numTemp
 	end	
+	
+	--在这里先做一次随机
+	for i = 1,1000 do
+		local index = math.myrandom(1,#pokerInit)
+		table.insert(pokerList, pokerInit[index])
+		table.remove(pokerInit, index)
+		if #pokerInit == 0 then
+			break
+		end
+	end
 
 	local len = #tItem.m_tInfo.publicpoker
 	local mark = 1
@@ -1233,6 +1253,8 @@ function RpmjService.PlayCountWin(tItem)
 		table.insert(desList[winChairID],"胡")
 		table.insert(desList[tarChairID],"点炮")
 		tItem.m_detailList[winChairID].hunum = tItem.m_detailList[winChairID].hunum + 1
+		tItem.m_detailList[tarChairID].dianpaonum = tItem.m_detailList[tarChairID].dianpaonum + 1
+		tItem.m_detailList[winChairID].jiepaonum = tItem.m_detailList[winChairID].jiepaonum + 1
 		doubleAccount = doubleAccount + 2	
 	elseif tItem.m_tInfo.wintype == g_gdmjAction.type_qiangganghu then
 		--允许抢杠胡
@@ -1242,7 +1264,8 @@ function RpmjService.PlayCountWin(tItem)
 		table.insert(desList[tarChairID],"点炮")
 		
 		tItem.m_detailList[winChairID].hunum = tItem.m_detailList[winChairID].hunum + 1
-		
+		tItem.m_detailList[tarChairID].dianpaonum = tItem.m_detailList[tarChairID].dianpaonum + 1
+		tItem.m_detailList[winChairID].jiepaonum = tItem.m_detailList[winChairID].jiepaonum + 1
 	elseif tItem.m_tInfo.wintype == g_gdmjAction.type_hu then  --这个是自摸胡
 		--这个看看是不是要杠爆全包，杠爆全包就是放杠后，杠上花，放杠者全包。
 		table.insert(desList[winChairID],"自摸")   --自摸
@@ -1282,14 +1305,18 @@ function RpmjService.PlayCountWin(tItem)
 			end				
 		end
 		
+		tItem.m_detailList[winChairID].zimonum = tItem.m_detailList[winChairID].zimonum + 1
 		if 0 ~= GdmjHuHelper.WuhzJiafen(tItem,winChairID) then
 			tItem.m_detailList[winChairID].wuguizimo = tItem.m_detailList[winChairID].wuguizimo + 1	
 		else
 			tItem.m_detailList[winChairID].youguizimo = tItem.m_detailList[winChairID].youguizimo + 1	
 		end
-	end		
+	end
+	
+	if doubleAccount > tItem.m_detailList[winChairID].maxMultiple then
+		tItem.m_detailList[winChairID].maxMultiple = doubleAccount
+	end
 
-		
 	local maNum = tItem.m_vipRoomInfo.manum
 
 	while maNum > 0 do
@@ -1572,8 +1599,11 @@ function RpmjService.PlayCountWinMore(tItem)
 		for k,v in ipairs(winList) do
 			table.insert(desList[k],"抢杠胡")
 			tItem.m_detailList[v].hunum = tItem.m_detailList[v].hunum + 1
+			tItem.m_detailList[v].jiepaonum = tItem.m_detailList[v].jiepaonum + 1
 		end
 		table.insert(desList[tarChairID],"点炮")
+		tItem.m_detailList[tarChairID].dianpaonum = tItem.m_detailList[tarChairID].dianpaonum + 1
+		
 		doubleAccount = doubleAccount + 2	
 	elseif tItem.m_tInfo.wintype == g_gdmjAction.type_qiangganghu then
 		--允许抢杠胡
@@ -1582,9 +1612,17 @@ function RpmjService.PlayCountWinMore(tItem)
 		for k,v in ipairs(winList) do
 			table.insert(desList[k],"吃胡")
 			tItem.m_detailList[v].hunum = tItem.m_detailList[v].hunum + 1
+			tItem.m_detailList[v].jiepaonum = tItem.m_detailList[v].jiepaonum + 1
 		end
 		table.insert(desList[tarChairID],"点炮")
+		tItem.m_detailList[tarChairID].dianpaonum = tItem.m_detailList[tarChairID].dianpaonum + 1
 		doubleAccount = doubleAccount + 2
+	end
+
+	for k,v in ipairs(winList) do
+		if doubleAccount > tItem.m_detailList[v].maxMultiple then
+			tItem.m_detailList[v].maxMultiple = doubleAccount
+		end
 	end
 	
 	local maNum = tItem.m_vipRoomInfo.manum
