@@ -162,13 +162,14 @@ function RpmjService.InitPublicPoker(tItem)
 	GdmjWork.NextInfoInit(tItem.m_tInfo.nextinfo)
 	
 	local pokerList = {}
-
+	local pokerInit = {}
+	
 	if (tItem.m_maxUser == 3) or (tItem.m_maxUser == 2) then
 		--二人，三人情况下108张牌
 		for i = 1,4 do
 			for j = 1,3 do
 				for k,v in ipairs(g_gdmjPokerList[j]) do
-					table.insert(pokerList, v)
+					table.insert(pokerInit, v)
 				end
 			end
 		end	
@@ -177,30 +178,50 @@ function RpmjService.InitPublicPoker(tItem)
 		for i = 1,4 do
 			for j = 1,5 do
 				for k,v in ipairs(g_gdmjPokerList[j]) do
-					table.insert(pokerList, v)
+					table.insert(pokerInit, v)
 				end
 			end
 		end
 	end
+
+	for i = 2,#pokerInit do
+		--这里洗牌100次
+		local index1 = math.myrandom(i, #pokerInit)
+		local numTemp = pokerInit[index1]
+		pokerInit[index1] = pokerInit[i-1]
+		pokerInit[i-1] = numTemp
+	end
 	
-	local len = #pokerList
-	for i = 2, len do
-		local index = math.myrandom(i, #pokerList)
-		local numTemp = pokerList[index]
-		pokerList[index] = pokerList[i-1]
-		pokerList[i-1] = numTemp
+	for i = 1,500 do
+		--这里洗牌100次
+		local index1 = math.myrandom(1, #pokerInit)
+		local index2 = math.myrandom(1, #pokerInit)
+		local numTemp = pokerInit[index1]
+		pokerInit[index1] = pokerInit[index2]
+		pokerInit[index2] = numTemp
 	end	
+	
+	--在这里先做一次随机
+	for i = 1,1000 do
+		local index = math.myrandom(1,#pokerInit)
+		table.insert(pokerList, pokerInit[index])
+		table.remove(pokerInit, index)
+		if #pokerInit == 0 then
+			break
+		end
+	end
 
 	local len = #tItem.m_tInfo.publicpoker
 	local mark = 1
 	while #pokerList > 0 do
+		local randNum = math.myrandom(1,#pokerList)
 		if mark > len then
-			tItem.m_tInfo.publicpoker:append(pokerList[1])
+			tItem.m_tInfo.publicpoker:append(pokerList[randNum])
 		else
-			tItem.m_tInfo.publicpoker[mark] = pokerList[1]
+			tItem.m_tInfo.publicpoker[mark] = pokerList[randNum]
 			mark = mark + 1
 		end
-		table.remove(pokerList,1)
+		table.remove(pokerList,randNum)
 	end
 	tItem.m_tInfo.genzhuang = 0
 end

@@ -82,11 +82,11 @@ function GdmjWork.GetRandPoker(tItem, pos)
 		return pokerID
 	end	
 	
-	--local random = math.myrandom(1, #tItem.m_tInfo.publicpoker)
+	local random = math.myrandom(1, #tItem.m_tInfo.publicpoker)
 	
-	local poker = tItem.m_tInfo.publicpoker[1]
+	local poker = tItem.m_tInfo.publicpoker[random]
 	
-	tItem.m_tInfo.publicpoker:remove(1)
+	tItem.m_tInfo.publicpoker:remove(random)
 	return poker
 end
 
