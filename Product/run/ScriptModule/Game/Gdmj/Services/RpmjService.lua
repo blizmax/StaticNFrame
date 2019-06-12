@@ -162,15 +162,13 @@ function RpmjService.InitPublicPoker(tItem)
 	GdmjWork.NextInfoInit(tItem.m_tInfo.nextinfo)
 	
 	local pokerList = {}
-	local pokerInit = {}
-	
 
 	if (tItem.m_maxUser == 3) or (tItem.m_maxUser == 2) then
 		--二人，三人情况下108张牌
 		for i = 1,4 do
 			for j = 1,3 do
 				for k,v in ipairs(g_gdmjPokerList[j]) do
-					table.insert(pokerInit, v)
+					table.insert(pokerList, v)
 				end
 			end
 		end	
@@ -179,42 +177,30 @@ function RpmjService.InitPublicPoker(tItem)
 		for i = 1,4 do
 			for j = 1,5 do
 				for k,v in ipairs(g_gdmjPokerList[j]) do
-					table.insert(pokerInit, v)
+					table.insert(pokerList, v)
 				end
 			end
 		end
 	end
 	
-	for i = 1,500 do
-		--这里洗牌100次
-		local index1 = math.myrandom(1, #pokerInit)
-		local index2 = math.myrandom(1, #pokerInit)
-		local numTemp = pokerInit[index1]
-		pokerInit[index1] = pokerInit[index2]
-		pokerInit[index2] = numTemp
+	local len = #pokerList
+	for i = 2, len do
+		local index = math.myrandom(i, #pokerList)
+		local numTemp = pokerList[index]
+		pokerList[index] = pokerList[i-1]
+		pokerList[i-1] = numTemp
 	end	
-	
-	--在这里先做一次随机
-	for i = 1,1000 do
-		local index = math.myrandom(1,#pokerInit)
-		table.insert(pokerList, pokerInit[index])
-		table.remove(pokerInit, index)
-		if #pokerInit == 0 then
-			break
-		end
-	end
 
 	local len = #tItem.m_tInfo.publicpoker
 	local mark = 1
 	while #pokerList > 0 do
-		local randNum = math.myrandom(1,#pokerList)
 		if mark > len then
-			tItem.m_tInfo.publicpoker:append(pokerList[randNum])
+			tItem.m_tInfo.publicpoker:append(pokerList[1])
 		else
-			tItem.m_tInfo.publicpoker[mark] = pokerList[randNum]
+			tItem.m_tInfo.publicpoker[mark] = pokerList[1]
 			mark = mark + 1
 		end
-		table.remove(pokerList,randNum)
+		table.remove(pokerList,1)
 	end
 	tItem.m_tInfo.genzhuang = 0
 end
@@ -434,8 +420,6 @@ function RpmjService.CheckMoving(tItem)
 		--这个是需要发牌的
 		--local pokerID = GdmjWork.GetRandPoker(tItem.m_tInfo)
 		local pokerID = GdmjWork.HandPokerInsert(tItem, currPos)
-
-		tItem.m_userList[currPos].guohu = 0   --这里改为摸牌，只有摸牌才算，出牌的不算，过胡的时候
 		
 		local checkHu = GdmjWork.CheckIsHu(tItem, currPos, pokerID) --为什么是humark呢
 		local checkGang = RpmjService.CheckIsGang(tItem.m_userList[currPos], pokerID)
@@ -447,14 +431,22 @@ function RpmjService.CheckMoving(tItem)
 		if checkHu > 0 or checkGang > 0 then
 			--已经可以胡了
 			--
-			tItem.m_tInfo.nextinfo.actiontype:append(g_gdmjAction.type_guo)
 			
 			if checkHu > 0 then
-				tItem.m_tInfo.nextinfo.actiontype:append(g_gdmjAction.type_hu)
+				if tItem.m_userList[currPos].guohu == 0 then
+					if tItem.m_vipRoomInfo.bishu1 ~= 0 or tItem.m_vipRoomInfo.bishu2 ~= 0 then
+						tItem.m_userList[currPos].zimoguohu = 1
+						tItem.m_userList[currPos].guohu = 1
+					end
+
+					tItem.m_tInfo.nextinfo.actiontype:append(g_gdmjAction.type_guo)
+					tItem.m_tInfo.nextinfo.actiontype:append(g_gdmjAction.type_hu)
+				end
 			end
 			
 			if checkGang > 0 then
-				if #tItem.m_tInfo.publicpoker > tItem.m_tInfo.manum + 4 then
+				if #tItem.m_tInfo.publicpoker > tItem.m_vipRoomInfo.manum + 4 then
+					tItem.m_tInfo.nextinfo.actiontype:append(g_gdmjAction.type_guo)
 					tItem.m_tInfo.nextinfo.actiontype:append(g_gdmjAction.type_gang)
 				else
 					checkGang = 0
@@ -638,7 +630,7 @@ end
 function RpmjService.CheckNewPengGang(tItem, pokerID, actChairid)
 	--该函数是检查新型的碰和杠的，碰的时候需要检查是否存在过碰不碰的情况
 	--返回的时候，是返回财政的列表
-	if #tItem.m_tInfo.publicpoker <= tItem.m_tInfo.manum then
+	if #tItem.m_tInfo.publicpoker <= tItem.m_vipRoomInfo.manum then
 		return 0,0  --剩下最后一张牌了，不能碰和杠，因为碰和杠后就不能够出牌了
 	end
 
@@ -675,7 +667,7 @@ function RpmjService.CheckNewPengGang(tItem, pokerID, actChairid)
 			if isExist == false then
 				table.insert(retList, g_gdmjAction.type_peng)
 				if num > 2 and isExistGang == false then
-					if #tItem.m_tInfo.publicpoker > tItem.m_tInfo.manum + 4 then
+					if #tItem.m_tInfo.publicpoker > tItem.m_vipRoomInfo.manum + 4 then
 						table.insert(retList, g_gdmjAction.type_gang)  --剩下最后一张牌了，不能碰和杠，因为碰和杠后就不能够出牌了
 					end
 				end
@@ -787,7 +779,23 @@ function RpmjService.DoPlay(tItem, cgmsg, gcmsg)
 	--首先，在手牌中去掉
 	
 	tItem.m_tInfo.prevpos = 0  --首先，把这个设置为0，为什么要把这个设置为0呢，这个是杠爆全包的,只要是出牌了，这个就不算了
-
+	
+	if tItem.m_userList[cgmsg.actchairid].zimoguohu == 0 then
+		tItem.m_userList[cgmsg.actchairid].guohu = 0   --出牌，过胡的时候
+	else
+		local exist = false
+		for k,v in ipairs(tItem.m_userList[cgmsg.actchairid].tinglist) do
+			if v == cgmsg.actpokerid then
+				exist = true
+			end
+		end
+		
+		if exist == false then
+			tItem.m_userList[cgmsg.actchairid].zimoguohu = 0
+			tItem.m_userList[cgmsg.actchairid].guohu = 0   --出牌，过胡的时候
+		end
+	end
+	
 	while #tItem.m_userList[cgmsg.actchairid].guopeng > 0 do   --过碰过碰
 		tItem.m_userList[cgmsg.actchairid].guopeng:remove(1)
 	end
@@ -1073,7 +1081,7 @@ end
 
 --饶平麻将， 码数不能打
 function RpmjService.CheckLiuJu(tItem)
-	if #tItem.m_tInfo.publicpoker > tItem.m_tInfo.manum then
+	if #tItem.m_tInfo.publicpoker > tItem.m_vipRoomInfo.manum then
 		return nil
 	end
 	

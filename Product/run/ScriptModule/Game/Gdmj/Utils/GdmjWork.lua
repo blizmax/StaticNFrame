@@ -20,6 +20,12 @@ function GdmjWork.UserStartInit(tItem, mjUser)
 	end
 
 	mjUser.jinhu = 0
+	mjUser.guohu = 0
+	mjUser.zimoguohu = 0
+
+	while #mjUser.guopeng > 0 do
+		mjUser.guopeng:remove(1)
+	end
 
 	while #mjUser.guogang > 0 do
 		mjUser.guogang:remove(1)
@@ -76,11 +82,11 @@ function GdmjWork.GetRandPoker(tItem, pos)
 		return pokerID
 	end	
 	
-	local random = math.myrandom(1, #tItem.m_tInfo.publicpoker)
+	--local random = math.myrandom(1, #tItem.m_tInfo.publicpoker)
 	
-	local poker = tItem.m_tInfo.publicpoker[random]
+	local poker = tItem.m_tInfo.publicpoker[1]
 	
-	tItem.m_tInfo.publicpoker:remove(random)
+	tItem.m_tInfo.publicpoker:remove(1)
 	return poker
 end
 

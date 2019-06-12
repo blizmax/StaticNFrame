@@ -31,6 +31,7 @@ message gdmjuser   //广东麻将的
 	repeated int32 guopeng = 33;              //过碰不碰
 	repeated int32 guogang = 34;              //过碰不碰
 	optional int32 jinhu = 35;                //只能自摸不能吃胡，碰胡
+	optional int32 zimoguohu = 36;             //自摸的情况下， 选择了过, 需要特殊处理
 }
 
 message gdmjnextaction   //指示下一个玩家行动的信息

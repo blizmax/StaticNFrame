@@ -40,6 +40,7 @@ bool NFCProxyLogicModule::Init()
 	FindModule<NFINetClientModule>()->AddReceiveCallBack(NF_ST_WORLD, this, &NFCProxyLogicModule::OnHandleMessageFromWorldServer);
 	FindModule<NFINetClientModule>()->AddReceiveCallBack(NF_ST_WORLD, ::NFMsg::Server_Msg_AccountLogin, this, &NFCProxyLogicModule::OnHandleAccountLoginFromWorldServer);
 	FindModule<NFINetClientModule>()->AddReceiveCallBack(NF_ST_WORLD, EGMI_NET_WORLD_NOTIFY_PROXY_CHANGE_GAME, this, &NFCProxyLogicModule::OnHandleNotifyChangeGameFromWorldServer);
+	FindModule<NFINetClientModule>()->AddReceiveCallBack(NF_ST_WORLD, NFMsg::Server_Msg_ReConnect, this, &NFCProxyLogicModule::OnHandleReconnectFromWorldServer);
 
 	FindModule<NFIServerNetEventModule>()->AddEventCallBack(NF_ST_PROXY, NF_ST_GAME, this, &NFCProxyLogicModule::OnHandleGameEventCallBack);
 	FindModule<NFIServerNetEventModule>()->AddEventCallBack(NF_ST_PROXY, NF_ST_WORLD, this, &NFCProxyLogicModule::OnHandleWorldEventCallBack);
@@ -138,7 +139,7 @@ void NFCProxyLogicModule::OnProxySocketEvent(const eMsgType nEvent, const uint32
 		NF_SHARE_PTR<ProxyLinkInfo> pLinkInfo = mClientLinkInfo.GetElement(unLinkId);
 		if (pLinkInfo == nullptr)
 		{
-			NFLogError(NF_LOG_PROXY_LOGIC_PLUGIN, 0, "client disconnect, but can not find linkId, unLinkId:{}, system error!", unLinkId);
+			NFLogError(NF_LOG_PROXY_LOGIC_PLUGIN, 0, "client disconnect, but can not find linkId, unLinkId:{}, player maybe not login!", unLinkId);
 			return;
 		}
 
@@ -154,6 +155,7 @@ void NFCProxyLogicModule::OnProxySocketEvent(const eMsgType nEvent, const uint32
 		mClientLinkInfo.RemoveElement(unLinkId);
 
 		pLinkInfo->mUnlinkId = 0;
+		pLinkInfo->mIsLogin = false;
 	}
 }
 
@@ -231,6 +233,20 @@ void NFCProxyLogicModule::OnHandleAccountLoginFromClient(const uint32_t unLinkId
 	}
 }
 
+void NFCProxyLogicModule::OnHandleReconnectFromWorldServer(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen)
+{
+	NFMsg::gcreconnect gcMsg;
+	CLIENT_MSG_PROCESS_NO_OBJECT(nMsgId, playerId, msg, nLen, gcMsg);
+
+	NF_SHARE_PTR<ProxyLinkInfo> pPlayerLinkInfo = mPlayerLinkInfo.GetElement(playerId);
+	if (pPlayerLinkInfo)
+	{
+		NFLogWarning(NF_LOG_PROXY_LOGIC_PLUGIN, 0, "Player:{} reocnnect success!", playerId);
+		pPlayerLinkInfo->mIsLogin = true;
+		FindModule<NFINetServerModule>()->SendToServerByPB(pPlayerLinkInfo->mUnlinkId, NFMsg::Server_Msg_ReConnect, gcMsg, playerId);
+	}
+}
+
 void NFCProxyLogicModule::OnHandleReconnectFromClient(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen)
 {
 	NFMsg::cgreconnect cgMsg;
@@ -238,36 +254,49 @@ void NFCProxyLogicModule::OnHandleReconnectFromClient(const uint32_t unLinkId, c
 
 	std::string ip = FindModule<NFINetServerModule>()->GetLinkIp(unLinkId);
 	NFLogInfo(NF_LOG_PROXY_RECV_MSG_LOG, 0, "recv msg -- ip:{}, operateId:{}, msgId:{}, msglen:{}", ip, playerId, nMsgId, nLen);
+
+	NF_SHARE_PTR<ProxyLinkInfo> pPlayerLinkInfo = mPlayerLinkInfo.GetElement(cgMsg.userid());
+	if (pPlayerLinkInfo == nullptr)
+	{
+		NFMsg::gcreconnect gcMsg;
+		gcMsg.set_result(-1);
+		FindModule<NFINetServerModule>()->SendToServerByPB(unLinkId, NFMsg::Server_Msg_ReConnect, gcMsg, cgMsg.userid());
+		return;
+	}
+
+	if (pPlayerLinkInfo->mUnlinkId > 0)
+	{
+		if (pPlayerLinkInfo->mUnlinkId == unLinkId)
+		{
+			NFLogInfo(NF_LOG_PROXY_RECV_MSG_LOG, 0, "Player:{} reconnect proxy server, but unlink not change! some wrong!", cgMsg.userid());
+		}
+
+		if (mClientLinkInfo.GetElement(pPlayerLinkInfo->mUnlinkId))
+		{
+			NFMsg::gckitplayer kitMsg;
+			kitMsg.set_result(0);
+			kitMsg.set_kittype(1);
+			kitMsg.set_msg("您的账号已在别处登入，若非本人操作，请联系系统管理员！");
+			FindModule<NFINetServerModule>()->SendToServerByPB(pPlayerLinkInfo->mUnlinkId, NFMsg::Server_Msg_KitPlayer, kitMsg, 0);
+			FindModule<NFINetServerModule>()->CloseLinkId(pPlayerLinkInfo->mUnlinkId);
+		}
+
+		mClientLinkInfo.RemoveElement(pPlayerLinkInfo->mUnlinkId);
+	}
+
+	pPlayerLinkInfo->mUnlinkId = unLinkId;
+	pPlayerLinkInfo->mIsLogin = false;
+	pPlayerLinkInfo->mIPAddr = ip;
+	pPlayerLinkInfo->mPlayerId = cgMsg.userid();
+	pPlayerLinkInfo->mRecvMsgCount++;
+
+	mClientLinkInfo.AddElement(unLinkId, pPlayerLinkInfo);
+
 	NF_SHARE_PTR<NFServerData> pServerData = mWorldMap.First();
 	if (pServerData)
 	{
-		NF_SHARE_PTR<ProxyLinkInfo> pLinkInfo = mPlayerLinkInfo.GetElement(cgMsg.userid());
-		if (pLinkInfo)
-		{
-			if (pLinkInfo->mUnlinkId > 0)
-			{
-				if (pLinkInfo->mUnlinkId == unLinkId)
-				{
-					NFLogInfo(NF_LOG_PROXY_RECV_MSG_LOG, 0, "Player:{} reconnect proxy server, but unlink not change! some wrong!", cgMsg.userid());
-				}
-				mClientLinkInfo.RemoveElement(pLinkInfo->mUnlinkId);
-			}
-			pLinkInfo->mUnlinkId = unLinkId;
-			pLinkInfo->mIsLogin = true;
-			pLinkInfo->mIPAddr = ip;
-			pLinkInfo->mRecvMsgCount++;
-
-			mClientLinkInfo.AddElement(unLinkId, pLinkInfo);
-
-			NFLogInfo(NF_LOG_PROXY_LOGIC_PLUGIN, cgMsg.userid(), "Player:{} reconnect proxy server!", cgMsg.userid());
-			FindModule<NFINetClientModule>()->SendToServerByPB(pServerData->mUnlinkId, nMsgId, cgMsg, cgMsg.userid());
-		}
-		else
-		{
-			NFMsg::gcreconnect gcMsg;
-			gcMsg.set_result(-1);
-			FindModule<NFINetServerModule>()->SendToServerByPB(unLinkId, NFMsg::Server_Msg_ReConnect, gcMsg, cgMsg.userid());
-		}
+		NFLogInfo(NF_LOG_PROXY_LOGIC_PLUGIN, cgMsg.userid(), "Player:{} reconnect proxy server!", cgMsg.userid());
+		FindModule<NFINetClientModule>()->SendToServerByPB(pServerData->mUnlinkId, nMsgId, cgMsg, cgMsg.userid());
 	}
 }
 
@@ -290,7 +319,7 @@ void NFCProxyLogicModule::OnHandleNotifyChangeGameFromWorldServer(const uint32_t
 		{
 			if (pPlayerInfo != pLinkInfo)
 			{
-				if (pPlayerInfo->mUnlinkId != pLinkInfo->mUnlinkId)
+				if (pPlayerInfo->mUnlinkId != 0 && pPlayerInfo->mUnlinkId != pLinkInfo->mUnlinkId)
 				{
 					NFMsg::gckitplayer kitMsg;
 					kitMsg.set_result(0);
