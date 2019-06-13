@@ -82,6 +82,27 @@ function RpmjService.CheckJiFen2(julebuID, userID, carryjetton, strVipInfo)
 	return true
 end
 
+function RpmjService.CheckJiFenLiuju(julebuID, userID, carryjetton)
+	local jInfo	 = JulebuModel.GetJulebuInfo(julebuID)
+	if jInfo == nil then
+		return 
+	end
+
+	if julebuID == nil or julebuID == 0 then
+		return true
+	end
+	
+	local member = JulebuModel.GetUserMemberInfo(julebuID, userID)
+	if  member == nil or member == 0 then
+		return false
+	end
+	
+	if member.limitjifen + carryjetton < 0 then
+		return false
+	end	
+	return true
+end
+
 function RpmjService.CheckJiFen(tItem)
 	--这个的函数放在这里了。
 	--检查每个玩家的积分是否足够
@@ -91,7 +112,7 @@ function RpmjService.CheckJiFen(tItem)
 	end
 	
 	for i = 1,tItem.m_maxUser do
-		if tItem.m_tInfo.julebutype == 2 and false == RpmjService.CheckJiFen2(tItem.m_tInfo.julebuid, tItem.m_userList[i].userid, tItem.m_userList[i].carryjetton, tItem.m_vipRoomInfo) and tItem.m_tInfo.usevipnum ~= tItem.m_tInfo.maxvipnum then
+		if tItem.m_tInfo.julebutype == 2 and false == RpmjService.CheckJiFenLiuju(tItem.m_tInfo.julebuid, tItem.m_userList[i].userid, tItem.m_userList[i].carryjetton) and tItem.m_tInfo.usevipnum ~= tItem.m_tInfo.maxvipnum then
 			tItem.m_tInfo.timemark = g_gdmjTime.end_time
 			tItem.m_tInfo.status = g_gdmjStatus.status_dissolve
 
@@ -1497,6 +1518,8 @@ function RpmjService.PlayCountWin(tItem)
 		item.winjetton = item.gangjetton + item.hunum
 		tItem.m_userList[i].psinfo.jetton = tItem.m_userList[i].psinfo.jetton + item.winjetton
 		tItem.m_userList[i].carryjetton = tItem.m_userList[i].psinfo.jetton
+		item.carryjetton = tItem.m_userList[i].carryjetton
+		item.julebu_jetton = JulebuService.GetJiFen(tItem.m_tInfo.julebuid, tItem.m_userList[i].userid) + item.carryjetton
 		
 		
 		recoreItem.score:append(item.winjetton) --这里是安装顺序去的
@@ -1798,7 +1821,8 @@ function RpmjService.PlayCountWinMore(tItem)
 		item.winjetton = item.gangjetton + item.hunum
 		tItem.m_userList[i].psinfo.jetton = tItem.m_userList[i].psinfo.jetton + item.winjetton
 		tItem.m_userList[i].carryjetton = tItem.m_userList[i].psinfo.jetton
-		
+		item.carryjetton = tItem.m_userList[i].carryjetton
+		item.julebu_jetton = JulebuService.GetJiFen(tItem.m_tInfo.julebuid, tItem.m_userList[i].userid) + item.carryjetton
 		
 		recoreItem.score:append(item.winjetton) --这里是安装顺序去的
 		tItem.m_tInfo.viprecord.score[i] = tItem.m_userList[i].carryjetton

@@ -124,7 +124,7 @@ function execute(packetID, operateID, buffer)
 	
 	if tInfo.usevipnum ~= 0 and tInfo.julebuid ~= 0 then
 		local userInfo = GdmjModel.GetChairUser(tInfo.tableid, cgmsg.userid)
-		GdmjEvent.AddJiFen(tInfo.julebuid, cgmsg.userid, userInfo.carryjetton,tInfo.tableid,tinfo.julebutype)   --同步积分
+		--GdmjEvent.AddJiFen(tInfo.julebuid, cgmsg.userid, userInfo.carryjetton,tInfo.tableid, tInfo.julebutype)   --同步积分
 	end
 	
 	local chairID = 0

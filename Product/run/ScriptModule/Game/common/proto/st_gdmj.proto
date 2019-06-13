@@ -213,6 +213,7 @@ message gdmjcountinfo //麻将结算结构体
 	optional int32 beinum = 7;       //卡五星：漂的数量
 	optional int32 hunum = 8;        //胡的分数
 	optional int32 carryjetton = 9;   //每次结算后玩家身上的筹码数
+	optional int32 julebu_jetton = 10;   //每次结算后玩家身上的筹码数
 }
 
 message gdmjhistoryitem

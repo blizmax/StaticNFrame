@@ -11,6 +11,7 @@
 #include "NFMessageDefine/msg_human.pb.h"
 #include "NFMessageDefine/server_to_server_msg.pb.h"
 #include "NFComm/NFCore/NFRandom.hpp"
+#include "NFComm/NFCore/NFStringUtility.h"
 
 NFCProxyLogicModule::NFCProxyLogicModule(NFIPluginManager* p)
 {
