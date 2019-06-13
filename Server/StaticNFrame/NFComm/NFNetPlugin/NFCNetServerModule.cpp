@@ -97,6 +97,7 @@ bool NFCNetServerModule::Finalize()
 			NF_SAFE_DELETE(mServerArray[i]);
 		}
 	}
+	mServerArray.clear();
 	return true;
 }
 
@@ -127,11 +128,11 @@ uint32_t NFCNetServerModule::AddServer(const NF_SERVER_TYPES eServerType, uint32
 		flag.nMaxConnectNum = nMaxClient;
 		flag.bWebSocket = bWebSocket;
 		flag.mPacketParseType = nPacketParseType;
-#ifdef USE_NET_EVPP
-		NFIServer* pServer = NF_NEW NFEvppServer(eServerType, nServerID, flag);
-#else
+//#ifdef USE_NET_EVPP
+//		NFIServer* pServer = NF_NEW NFEvppServer(eServerType, nServerID, flag);
+//#else
 		NFIServer* pServer = NF_NEW NFServer(eServerType, nServerID, flag);
-#endif
+//#endif
 		pServer->SetRecvCB((NFINetModule*)this, &NFINetModule::OnReceiveNetPack);
 		pServer->SetEventCB((NFINetModule*)this, &NFINetModule::OnSocketNetEvent);
 		if (pServer->Init())

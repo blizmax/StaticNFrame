@@ -43,6 +43,7 @@ void listener_cb(struct evconnlistener* listener, evutil_socket_t fd, struct soc
 	bool ret = pServer->AddNetObject(fd, sa);
 	if (ret == false)
 	{
+		evutil_closesocket(fd);
 		NFLogError(NF_LOG_NET_PLUGIN, 0, "pServer AddNetObject Failed!");
 		return;
 	}
@@ -55,11 +56,12 @@ NFServer::NFServer(NF_SERVER_TYPES serverType, uint32_t serverId, const NFServer
 
 NFServer::~NFServer()
 {
-	for (size_t i = 0; i < mNetObjectArray.size(); i++)
+	for (auto iter = mNetObjectArray.begin(); iter != mNetObjectArray.end(); ++iter)
 	{
-		if (mNetObjectArray[i] != nullptr)
+		auto pObject = iter->second;
+		if (pObject)
 		{
-			NF_SAFE_DELETE(mNetObjectArray[i]);
+			NF_SAFE_DELETE(pObject);
 		}
 	}
 	mNetObjectArray.clear();
@@ -80,22 +82,21 @@ bool NFServer::AddNetObject(SOCKET fd, sockaddr* sa)
 {
 	if (GetNetObjectCount() >= GetMaxConnectNum())
 	{
-		NFLogError(NF_LOG_NET_PLUGIN, 0, "connected count >= mnMaxConnect:%d! Can't add connect", GetMaxConnectNum());
+		NFLogError(NF_LOG_NET_PLUGIN, 0, "connected count >= mnMaxConnect:{}! Can't add connect", GetMaxConnectNum());
 		return false;
 	}
 
 	uint32_t usLinkId = GetFreeUnLinkId();
 	if (usLinkId == 0)
 	{
-		NFLogError(NF_LOG_NET_PLUGIN, 0, "connected count >= mnMaxConnect:%d! Can't add connect", GetMaxConnectNum());
+		NFLogError(NF_LOG_NET_PLUGIN, 0, "connected count >= mnMaxConnect:{}! Can't add connect", GetMaxConnectNum());
 		return false;
 	}
 
-	uint32_t index = GetServerIndexFromUnlinkId(usLinkId);
-	if (index >= mNetObjectArray.size() || mNetObjectArray[index] != nullptr)
+	if (mNetObjectArray.find(usLinkId) != mNetObjectArray.end())
 	{
 		NFLogError(NF_LOG_NET_PLUGIN, 0, "GetServerIndexFromUnLinkId Failed!");
-		return false;
+		return nullptr;
 	}
 
 	struct bufferevent* bev = bufferevent_socket_new(mBase, fd, BEV_OPT_CLOSE_ON_FREE);
@@ -110,7 +111,7 @@ bool NFServer::AddNetObject(SOCKET fd, sockaddr* sa)
 	uint32_t port = pSin->sin_port;
 
 	NetObject* pObject = NF_NEW NetObject();
-	mNetObjectArray[index] = pObject;
+	mNetObjectArray.emplace(usLinkId, pObject);
 	mNetObjectCount++;
 
 	pObject->SetWebSocket(mWebSocket);
@@ -133,7 +134,6 @@ bool NFServer::AddNetObject(SOCKET fd, sockaddr* sa)
 void NFServer::CloseLinkId(uint32_t usLinkId)
 {
 	uint32_t serverType = GetServerTypeFromUnlinkId(usLinkId);
-	uint32_t serverIndex = GetServerIndexFromUnlinkId(usLinkId);
 
 	if (serverType != mServerType)
 	{
@@ -141,9 +141,10 @@ void NFServer::CloseLinkId(uint32_t usLinkId)
 		return;
 	}
 
-	if (serverIndex < mNetObjectArray.size())
+	auto iter = mNetObjectArray.find(usLinkId);
+	if (iter != mNetObjectArray.end())
 	{
-		auto pObject = mNetObjectArray[serverIndex];
+		auto pObject = iter->second;
 		if (pObject)
 		{
 			pObject->SetNeedRemove(true);
@@ -160,7 +161,6 @@ void NFServer::CloseLinkId(uint32_t usLinkId)
 bool NFServer::Send(uint32_t usLinkId, const void* pData, uint32_t unSize)
 {
 	uint32_t serverType = GetServerTypeFromUnlinkId(usLinkId);
-	uint32_t serverIndex = GetServerIndexFromUnlinkId(usLinkId);
 
 	if (serverType != mServerType)
 	{
@@ -168,9 +168,10 @@ bool NFServer::Send(uint32_t usLinkId, const void* pData, uint32_t unSize)
 		return false;
 	}
 
-	if (serverIndex < mNetObjectArray.size())
+	auto iter = mNetObjectArray.find(usLinkId);
+	if (iter != mNetObjectArray.end())
 	{
-		auto pObject = mNetObjectArray[serverIndex];
+		auto pObject = iter->second;
 		if (pObject)
 		{
 			return pObject->Send(pData, unSize);
@@ -186,7 +187,6 @@ bool NFServer::Send(uint32_t usLinkId, const void* pData, uint32_t unSize)
 std::string NFServer::GetLinkIp(uint32_t usLinkId)
 {
 	uint32_t serverType = GetServerTypeFromUnlinkId(usLinkId);
-	uint32_t serverIndex = GetServerIndexFromUnlinkId(usLinkId);
 
 	if (serverType != mServerType)
 	{
@@ -194,9 +194,10 @@ std::string NFServer::GetLinkIp(uint32_t usLinkId)
 		return std::string();
 	}
 
-	if (serverIndex < mNetObjectArray.size())
+	auto iter = mNetObjectArray.find(usLinkId);
+	if (iter != mNetObjectArray.end())
 	{
-		auto pObject = mNetObjectArray[serverIndex];
+		auto pObject = iter->second;
 		if (pObject)
 		{
 			return pObject->GetStrIp();
@@ -211,9 +212,9 @@ std::string NFServer::GetLinkIp(uint32_t usLinkId)
 
 bool NFServer::SendAll(const void* pData, uint32_t unSize)
 {
-	for (size_t i = 0; i < mNetObjectArray.size(); i++)
+	for (auto iter = mNetObjectArray.begin(); iter != mNetObjectArray.end(); ++iter)
 	{
-		auto pObject = mNetObjectArray[i];
+		auto pObject = iter->second;
 		if (pObject)
 		{
 			return pObject->Send(pData, unSize);
@@ -277,12 +278,13 @@ bool NFServer::Init()
 
 bool NFServer::Shut()
 {
-	for (size_t i = 0; i < mNetObjectArray.size(); i++)
+	for (auto iter = mNetObjectArray.begin(); iter != mNetObjectArray.end(); ++iter)
 	{
-		if (mNetObjectArray[i] != nullptr)
+		auto pObject = iter->second;
+		if (pObject)
 		{
-			mNetObjectArray[i]->SetNeedRemove(true);
-			mNetObjectArray[i]->CloseObject();
+			pObject->SetNeedRemove(true);
+			pObject->CloseObject();
 		}
 	}
 	return true;
@@ -290,14 +292,16 @@ bool NFServer::Shut()
 
 bool NFServer::Finalize()
 {
-	for (size_t i = 0; i < mNetObjectArray.size(); i++)
+	for (auto iter = mNetObjectArray.begin(); iter != mNetObjectArray.end(); ++iter)
 	{
-		if (mNetObjectArray[i] != nullptr)
+		auto pObject = iter->second;
+		if (pObject)
 		{
 			mNetObjectCount--;
-			NF_SAFE_DELETE(mNetObjectArray[i]);
+			NF_SAFE_DELETE(pObject);
 		}
 	}
+
 	mNetObjectArray.clear();
 	return true;
 }
@@ -315,30 +319,26 @@ bool NFServer::Execute()
 
 uint32_t NFServer::GetFreeUnLinkId()
 {
-	if (mNetObjectArray.empty())
+	uint32_t loopCount = 0;
+	while (loopCount < MAX_CLIENT_MASK)
 	{
-		mNetObjectArray.push_back(nullptr);
-		return GetUnLinkId(mServerType, 0);
-	}
-
-	size_t sz = mNetObjectArray.size();
-
-	for (size_t index = 0; index < sz; index++)
-	{
-		if (mNetObjectArray[index] == nullptr)
+		loopCount++;
+		mNetObjectMaxIndex++;
+		if (mNetObjectMaxIndex >= MAX_CLIENT_MASK)
 		{
-			return GetUnLinkId(mServerType, index);
+			mNetObjectMaxIndex = 0;
+		}
+
+		uint32_t unlinkId = GetUnLinkId(mServerType, mNetObjectMaxIndex);
+
+		if (mNetObjectArray.find(unlinkId) == mNetObjectArray.end())
+		{
+			return unlinkId;
 		}
 	}
 
-	if (sz >= mFlag.nMaxConnectNum)
-	{
-		return 0;
-	}
-
-	mNetObjectArray.push_back(nullptr);
-
-	return GetUnLinkId(mServerType, sz);
+	NFLogError(NF_LOG_NET_PLUGIN, 0, "GetFreeUnLinkId failed!");
+	return 0;
 }
 
 event_base* NFServer::GetEventBase() const
@@ -352,15 +352,15 @@ void NFServer::ExecuteClose()
 	{
 		uint32_t unLinkId = mvRemoveObject[i];
 		uint32_t serverType = GetServerTypeFromUnlinkId(unLinkId);
-		uint32_t serverIndex = GetServerIndexFromUnlinkId(unLinkId);
 
 		NF_ASSERT_MSG(serverType == mServerType, "the unlinkId is not of the server");
-		if (serverIndex < mNetObjectArray.size())
+		auto iter = mNetObjectArray.find(unLinkId);
+		if (iter != mNetObjectArray.end())
 		{
-			auto pObject = mNetObjectArray[serverIndex];
+			auto pObject = iter->second;
 			if (pObject && pObject->GetNeedRemove())
 			{
-				mNetObjectArray[serverIndex] = nullptr;
+				mNetObjectArray.erase(iter);
 				mNetObjectCount--;
 				NF_SAFE_DELETE(pObject);
 			}
@@ -391,12 +391,12 @@ void NFServer::OnSocketNetEvent(const eMsgType nEvent, const uint32_t unLinkId)
 	if (nEvent == eMsgType_DISCONNECTED)
 	{
 		uint32_t serverType = GetServerTypeFromUnlinkId(unLinkId);
-		uint32_t serverIndex = GetServerIndexFromUnlinkId(unLinkId);
 
 		NF_ASSERT_MSG(serverType == mServerType, "the unlinkId is not of the server");
-		if (serverIndex < mNetObjectArray.size())
+		auto iter = mNetObjectArray.find(unLinkId);
+		if (iter != mNetObjectArray.end())
 		{
-			auto pObject = mNetObjectArray[serverIndex];
+			auto pObject = iter->second;
 			if (pObject && pObject->GetNeedRemove())
 			{
 				mvRemoveObject.push_back(unLinkId);
@@ -408,7 +408,7 @@ void NFServer::OnSocketNetEvent(const eMsgType nEvent, const uint32_t unLinkId)
 		}
 		else
 		{
-			NF_ASSERT_MSG(serverIndex < mNetObjectArray.size(), "the unlinkId is not right!");
+			NF_ASSERT_MSG(iter != mNetObjectArray.end(), "the unlinkId is not right!");
 		}
 	}
 

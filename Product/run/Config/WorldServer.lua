@@ -61,7 +61,7 @@ function InitGameServer()
 			ServerId = 6,			--对每一个服务器来说都是唯一的， 应用程序需要通过这个ServerId才能知道需要加载的配置是他
 			ServerIp = MasterIP,
 			ServerPort = 6101,
-			MaxConnectNum = 1,
+			MaxConnectNum = 100,
 			WorkThreadNum = 5,
 			Security = false,
 			WebSocket = false,

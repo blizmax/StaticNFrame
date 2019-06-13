@@ -43,6 +43,16 @@ NFEvppServer::NFEvppServer(NF_SERVER_TYPES serverType, uint32_t serverId, const 
 
 NFEvppServer::~NFEvppServer()
 {
+	for (auto iter = mNetObjectArray.begin(); iter != mNetObjectArray.end(); ++iter)
+	{
+		auto pObject = iter->second;
+		if (pObject)
+		{
+			NF_SAFE_DELETE(pObject);
+		}
+	}
+	mNetObjectArray.clear();
+
 	if (m_eventLoop)
 	{
 		NF_SAFE_DELETE(m_eventLoop);

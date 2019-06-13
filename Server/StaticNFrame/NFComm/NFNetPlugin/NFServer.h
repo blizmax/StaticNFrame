@@ -177,7 +177,7 @@ private:
 	/**
 	* @brief 链接对象数组
 	*/
-	std::vector<NetObject*> mNetObjectArray;
+	std::unordered_map<uint32_t, NetObject*> mNetObjectArray;
 
 	/**
 	* @brief 需要删除的连接对象
