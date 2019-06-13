@@ -78,6 +78,7 @@ function execute(packetID, operateID, buffer)
 	gcEnter.mjinfo.paynum = cgmsg.paynum
 	gcEnter.mjinfo.payway = cgmsg.payway
 	gcEnter.mjinfo.julebuid = cgmsg.julebuid
+	gcEnter.mjinfo.julebutype = cgmsg.julebutype
 	--gcEnter.mjinfo.playernum = 0
 	for i = 1,cgmsg.playernum do    --先暂时在这里设置
 		gcEnter.mjinfo.nextinfo.actchairid:append(0)   --初始化四个玩家

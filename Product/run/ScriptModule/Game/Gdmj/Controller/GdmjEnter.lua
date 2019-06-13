@@ -74,6 +74,12 @@ function execute(packetID, operateID, buffer, isPrivate)
 		return cgmsg.userid, 0, gcmsg:ByteSize(), gcmsg:SerializeToString()
 	end
 
+	local strVipInfo = GdmjModel.GetRoomInfoStr(cgmsg.tableid)
+	if strVipInfo ~= nil then
+		--设置VIPInfo，在这里设定vipInfo的字符串
+		gcmsg.strvipinfo = strVipInfo
+	end
+
 	if tInfo.julebuid ~= 0 then
 		--检查是否是俱乐部的成员,如果不是俱乐部的成员，不能进去
 		if false == JulebuService.IsJoinIn(cgmsg.userid, tInfo.julebuid) then
@@ -84,11 +90,24 @@ function execute(packetID, operateID, buffer, isPrivate)
 		--看看积分是否足够
 
 		if tInfo.julebutype == 2 then
-			if false == GdmjEvent.CheckJiFen(tInfo.julebuid, cgmsg.userid) then
-				--低于50就不能进入房间了
-				ThreadManager.GdmjUnLock(tableID)
-				gcmsg.result = ReturnCode["jlb_enter_error"]
-				return cgmsg.userid, 0, gcmsg:ByteSize(), gcmsg:SerializeToString()				
+			local vipRoomInfo = st_gdmj2_pb.gdmjrpmj()
+			vipRoomInfo:ParseFromString(strVipInfo)
+
+			if tInfo.mjtype == g_gdmjType.type_rpmj then
+				if false == RpmjService.CheckJiFen2(tInfo.julebuid, cgmsg.userid, 0, vipRoomInfo) then
+					--低于50就不能进入房间了
+					ThreadManager.GdmjUnLock(tableID)
+					gcmsg.result = ReturnCode["jlb_enter_error"]
+					return cgmsg.userid, 0, gcmsg:ByteSize(), gcmsg:SerializeToString()				
+				end
+			else
+				
+				if false == GdmjEvent.CheckJiFen(tInfo.julebuid, cgmsg.userid) then
+					--低于50就不能进入房间了
+					ThreadManager.GdmjUnLock(tableID)
+					gcmsg.result = ReturnCode["jlb_enter_error"]
+					return cgmsg.userid, 0, gcmsg:ByteSize(), gcmsg:SerializeToString()				
+				end
 			end
 		end
 	end	
@@ -112,10 +131,6 @@ function execute(packetID, operateID, buffer, isPrivate)
 		
 		gcmsg.mjinfo:ParseFromString(tInfo:SerializeToString())
 		
-		local strVip = GdmjModel.GetRoomInfoStr(tableID)
-		if strVip ~= nil then
-			gcmsg.strvipinfo = strVip
-		end
 		gcmsg.result = 0
 		ThreadManager.GdmjUnLock(tableID)
 		return cgmsg.userid, 0 , gcmsg:ByteSize(), gcmsg:SerializeToString()
@@ -127,12 +142,6 @@ function execute(packetID, operateID, buffer, isPrivate)
 		gcmsg.result = ReturnCode["gdmj_full"]
 		LogFile("info","GdmjEnter max player tableid="..tableID..",userid="..cgmsg.userid)
 		return cgmsg.userid, 0 ,gcmsg:ByteSize(), gcmsg:SerializeToString()
-	end
-	
-	local strVipInfo = GdmjModel.GetRoomInfoStr(cgmsg.tableid)
-	if strVipInfo ~= nil then
-		--设置VIPInfo，在这里设定vipInfo的字符串
-		gcmsg.strvipinfo = strVipInfo
 	end
 	
 	local isStand = false

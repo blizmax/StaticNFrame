@@ -61,7 +61,7 @@ function RpmjService.DoWork(tItem) --传入的是TdhStruct类型的Item
 	GdmjWork.CheckOver(tItem)
 end
 
-function RpmjService.CheckJiFen2(julebuID, userID, carryjetton)
+function RpmjService.CheckJiFen2(julebuID, userID, carryjetton, strVipInfo)
 	local jInfo	 = JulebuModel.GetJulebuInfo(julebuID)
 	if jInfo == nil then
 		return 
@@ -76,7 +76,7 @@ function RpmjService.CheckJiFen2(julebuID, userID, carryjetton)
 		return false
 	end
 	
-	if member.limitjifen + carryjetton < jInfo.gamecount then
+	if member.limitjifen + carryjetton < strVipInfo.limitjifen then
 		return false
 	end	
 	return true
@@ -91,25 +91,12 @@ function RpmjService.CheckJiFen(tItem)
 	end
 	
 	for i = 1,tItem.m_maxUser do
-		if tItem.m_tInfo.julebutype == 2 and false == RpmjService.CheckJiFen2(tItem.m_tInfo.julebuid, tItem.m_userList[i].userid, tItem.m_userList[i].carryjetton) and tItem.m_tInfo.usevipnum ~= tItem.m_tInfo.maxvipnum then
-			if jInfo.ruleset == 1 then
-				tItem.m_tInfo.timemark = g_gdmjTime.end_time
-				tItem.m_tInfo.status = g_gdmjStatus.status_dissolve
+		if tItem.m_tInfo.julebutype == 2 and false == RpmjService.CheckJiFen2(tItem.m_tInfo.julebuid, tItem.m_userList[i].userid, tItem.m_userList[i].carryjetton, tItem.m_vipRoomInfo) and tItem.m_tInfo.usevipnum ~= tItem.m_tInfo.maxvipnum then
+			tItem.m_tInfo.timemark = g_gdmjTime.end_time
+			tItem.m_tInfo.status = g_gdmjStatus.status_dissolve
 
-				for x = 1,tItem.m_maxUser do
-					--需要把人清出房间
-					--local gcLeave = msg_gdmj_pb.gcgdmjleave()
-					--gcLeave.userid = tItem.m_userList[x].userid
-					--gcLeave.chairid = x
-					--gcLeave.tableid = tItem.m_tInfo.tableid
-					--gcLeave.leavemsg = "玩家:"..tItem.m_userList[i].userid.." 积分不足，本局将流局！"
-
-					--SendMessage(tItem.m_userList[x].userid, PacketCode[2212].client, gcLeave:ByteSize(), gcLeave:SerializeToString())
-				end
-
-				GdmjModel.SetTableInfo(tItem.m_tInfo, 1)
-				return
-			end
+			GdmjModel.SetTableInfo(tItem.m_tInfo, 1)
+			return
 		end
 	end
 end
@@ -145,6 +132,9 @@ function RpmjService.TableReady(tItem)
 		end
 		GdmjWork.CheckLeave(tItem)
 		RpmjService.GameStart(tItem)
+		if tItem.m_tInfo.julebuid ~= 0 then
+			JulebuService.CreatTable(tItem.m_tInfo, g_JulebuDefine.modules_gdmj)
+		end
 	else
 		tItem.m_tInfo.timemark = tItem.m_tInfo.timemark - 1
 	end
@@ -1432,8 +1422,8 @@ function RpmjService.PlayCountWin(tItem)
 			for j = 1, tItem.m_maxUser do
 				local dstItem = gcAccount.countlist[j]
 				if j ~= i then
-					srcItem.hunum = srcItem.hunum + 2 * angangnum * (1 + maList[i]) * (1 + maList[j])
-					dstItem.hunum = dstItem.hunum - 2 * angangnum * (1 + maList[i]) * (1 + maList[j])
+					srcItem.gangjetton = srcItem.gangjetton + 2 * angangnum * (1 + maList[i]) * (1 + maList[j])
+					dstItem.gangjetton = dstItem.gangjetton - 2 * angangnum * (1 + maList[i]) * (1 + maList[j])
 				end
 			end
 		end
@@ -1456,8 +1446,8 @@ function RpmjService.PlayCountWin(tItem)
 				for j = 1, tItem.m_maxUser do
 					local dstItem = gcAccount.countlist[j]
 					if j ~= i then
-						srcItem.hunum = srcItem.hunum + minggangnum * (1 + maList[i]) * (1 + maList[j])
-						dstItem.hunum = dstItem.hunum - minggangnum * (1 + maList[i]) * (1 + maList[j])
+						srcItem.gangjetton = srcItem.gangjetton + minggangnum * (1 + maList[i]) * (1 + maList[j])
+						dstItem.gangjetton = dstItem.gangjetton - minggangnum * (1 + maList[i]) * (1 + maList[j])
 					end
 				end
 			end
@@ -1470,16 +1460,16 @@ function RpmjService.PlayCountWin(tItem)
 				for kk, vv in ipairs(tItem.m_userList[i].mjpokerlist) do
 					if vv.pokertype == g_gdmjAction.type_gang and vv.typedetail == g_gdmjGangDetail.type_minggang then
 						minggangnum = minggangnum + 1
-						srcItem.hunum = srcItem.hunum + (tItem.m_maxUser - 1) * (1 + maList[i]) * (1 + maList[vv.tarchairid])
+						srcItem.gangjetton = srcItem.gangjetton + (tItem.m_maxUser - 1) * (1 + maList[i]) * (1 + maList[vv.tarchairid])
 						local dstItem = gcAccount.countlist[vv.tarchairid]
-						dstItem.hunum = dstItem.hunum - (tItem.m_maxUser - 1) * (1 + maList[i]) * (1 + maList[vv.tarchairid])
+						dstItem.gangjetton = dstItem.gangjetton - (tItem.m_maxUser - 1) * (1 + maList[i]) * (1 + maList[vv.tarchairid])
 					elseif vv.pokertype == g_gdmjAction.type_gang and vv.typedetail == g_gdmjGangDetail.type_bugang then
 						minggangnum = minggangnum + 1
 						for j = 1, tItem.m_maxUser do
 							local dstItem = gcAccount.countlist[j]
 							if j ~= i then
-								srcItem.hunum = srcItem.hunum + 1 * (1 + maList[i]) * (1 + maList[j])
-								dstItem.hunum = dstItem.hunum - 1 * (1 + maList[i]) * (1 + maList[j])
+								srcItem.gangjetton = srcItem.gangjetton + 1 * (1 + maList[i]) * (1 + maList[j])
+								dstItem.gangjetton = dstItem.gangjetton - 1 * (1 + maList[i]) * (1 + maList[j])
 							end
 						end
 					end
@@ -1731,8 +1721,8 @@ function RpmjService.PlayCountWinMore(tItem)
 			for j = 1, tItem.m_maxUser do
 				local dstItem = gcAccount.countlist[j]
 				if j ~= i then
-					srcItem.hunum = srcItem.hunum + 2 * angangnum * (1 + maList[i]) * (1 + maList[j])
-					dstItem.hunum = dstItem.hunum - 2 * angangnum * (1 + maList[i]) * (1 + maList[j])
+					srcItem.gangjetton = srcItem.gangjetton + 2 * angangnum * (1 + maList[i]) * (1 + maList[j])
+					dstItem.gangjetton = dstItem.gangjetton - 2 * angangnum * (1 + maList[i]) * (1 + maList[j])
 				end
 			end
 		end
@@ -1755,8 +1745,8 @@ function RpmjService.PlayCountWinMore(tItem)
 				for j = 1, tItem.m_maxUser do
 					local dstItem = gcAccount.countlist[j]
 					if j ~= i then
-						srcItem.hunum = srcItem.hunum + minggangnum * (1 + maList[i]) * (1 +  maList[j])
-						dstItem.hunum = dstItem.hunum - minggangnum * (1 + maList[i]) * (1 +  maList[j])
+						srcItem.gangjetton = srcItem.gangjetton + minggangnum * (1 + maList[i]) * (1 +  maList[j])
+						dstItem.gangjetton = dstItem.gangjetton - minggangnum * (1 + maList[i]) * (1 +  maList[j])
 					end
 				end
 			end
@@ -1769,16 +1759,16 @@ function RpmjService.PlayCountWinMore(tItem)
 				for kk, vv in ipairs(tItem.m_userList[i].mjpokerlist) do
 					if vv.pokertype == g_gdmjAction.type_gang and vv.typedetail == g_gdmjGangDetail.type_minggang then
 						minggangnum = minggangnum + 1
-						srcItem.hunum = srcItem.hunum + (tItem.m_maxUser - 1) * (1 + maList[i]) * (1 + maList[vv.tarchairid])
+						srcItem.gangjetton = srcItem.gangjetton + (tItem.m_maxUser - 1) * (1 + maList[i]) * (1 + maList[vv.tarchairid])
 						local dstItem = gcAccount.countlist[vv.tarchairid]
-						dstItem.hunum = dstItem.hunum - (tItem.m_maxUser - 1) * (1 + maList[i]) * (1 + maList[vv.tarchairid])
+						dstItem.gangjetton = dstItem.gangjetton - (tItem.m_maxUser - 1) * (1 + maList[i]) * (1 + maList[vv.tarchairid])
 					elseif vv.pokertype == g_gdmjAction.type_gang and vv.typedetail == g_gdmjGangDetail.type_bugang then
 						minggangnum = minggangnum + 1
 						for j = 1, tItem.m_maxUser do
 							local dstItem = gcAccount.countlist[j]
 							if j ~= i then
-								srcItem.hunum = srcItem.hunum + 1 * (1 + maList[i]) * (1 + maList[j])
-								dstItem.hunum = dstItem.hunum - 1 * (1 + maList[i]) * (1 + maList[j])
+								srcItem.gangjetton = srcItem.gangjetton + 1 * (1 + maList[i]) * (1 + maList[j])
+								dstItem.gangjetton = dstItem.gangjetton - 1 * (1 + maList[i]) * (1 + maList[j])
 							end
 						end
 					end

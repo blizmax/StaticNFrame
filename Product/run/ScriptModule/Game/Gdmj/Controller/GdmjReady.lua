@@ -39,26 +39,6 @@ function execute(packetID, operateID, buffer)
 		return cgmsg.userid, 0, gcmsg:ByteSize(), gcmsg:SerializeToString()
 	end
 
-	if tInfo.julebuid ~= 0 then
-		--检查是否是俱乐部的成员,如果不是俱乐部的成员，不能进去
-		if false == JulebuService.IsJoinIn(cgmsg.userid, tInfo.julebuid) then
-			gcmsg.result = ReturnCode["jlb_game_enter_error"]
-			ThreadManager.GdmjUnLock(tableID)
-			return cgmsg.userid, 0, gcmsg:ByteSize(), gcmsg:SerializeToString()	
-		end
-		--看看积分是否足够
-
-		if tInfo.julebutype == 2 then
-			if false == GdmjEvent.CheckJiFen(tInfo.julebuid, cgmsg.userid) then
-				--低于50就不能进入房间了
-				ThreadManager.GdmjUnLock(tableID)
-				gcmsg.result = ReturnCode["jlb_enter_error"]
-				return cgmsg.userid, 0, gcmsg:ByteSize(), gcmsg:SerializeToString()				
-			end
-		end
-	end	
-
-
 	--这里还需要看筹码是否足够
 	--如果筹码不足，就自动调整
 	

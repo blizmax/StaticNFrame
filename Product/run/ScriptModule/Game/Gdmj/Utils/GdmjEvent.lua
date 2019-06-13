@@ -431,13 +431,14 @@ function GdmjEvent.GetCreateInfo(tInfo, userid)
 	local cgCre = msg_gdmj_pb.cggdmjcreate()
 	cgCre.userid = userid
 	cgCre.mjtype = tInfo.mjtype
-	cgCre.playernum = tInfo.playernum
-	cgCre.playnum = tInfo.playnum
+	cgCre.playernum = tInfo.maxplayernum
+	cgCre.playnum = tInfo.maxvipnum
 	cgCre.payway = tInfo.payway
 	cgCre.paytype = tInfo.paytype
-	cgCre.julebuid = tInfo.julebuid
 	cgCre.paynum = tInfo.paynum
+	cgCre.julebuid = tInfo.julebuid
 	cgCre.julebutype = tInfo.julebutype
+
 	local strVip =  GdmjModel.GetRoomInfoStr(tInfo.tableid)
 	if strVip ~= nil then
 		cgCre.strvipinfo = strVip

@@ -450,7 +450,7 @@ function JulebuService.CreatTable(tInfo, gameType)
 		PszEvent.CreateGame(cgC, jInfo.ownerid)
 	elseif gameType == g_JulebuDefine.modules_gdmj then
 		local cgC = GdmjEvent.GetCreateInfo(tInfo, jInfo.ownerid)
-		GdmjEvent.JulebuGameCreate(cgC, jInfo.ownerid)
+		GdmjEvent.CreateGame(cgC, jInfo.ownerid)
 	end
 	
 end
