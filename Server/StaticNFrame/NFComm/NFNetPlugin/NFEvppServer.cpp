@@ -74,6 +74,11 @@ void NFEvppServer::ProcessMsgLogicThread()
 				pMsg->mTCPConPtr->set_context(evpp::Any(pObject));
 				pObject->OnHandleConnect();
 			}
+			else
+			{
+				//这里应该断开链接
+				pMsg->mTCPConPtr->Close();
+			}
 		}
 		else if (pMsg->nType == eMsgType_DISCONNECTED)
 		{
@@ -169,28 +174,27 @@ std::string NFEvppServer::GetLinkIp(uint32_t usLinkId)
 
 NetEvppObject* NFEvppServer::AddNetObject(const evpp::TCPConnPtr& conn)
 {
-	if (GetNetObjectCount() >= GetMaxConnectNum())
+	if (mNetObjectCount >= GetMaxConnectNum())
 	{
-		NFLogError(NF_LOG_NET_PLUGIN, 0, "connected count >= mnMaxConnect:%d! Can't add connect", GetMaxConnectNum());
+		NFLogError(NF_LOG_NET_PLUGIN, 0, "connected count:{} >= mnMaxConnect:{}! Can't add connect", mNetObjectCount, GetMaxConnectNum());
 		return nullptr;
 	}
 
 	uint32_t usLinkId = GetFreeUnLinkId();
 	if (usLinkId == 0)
 	{
-		NFLogError(NF_LOG_NET_PLUGIN, 0, "connected count >= mnMaxConnect:%d! Can't add connect", GetMaxConnectNum());
+		NFLogError(NF_LOG_NET_PLUGIN, 0, "connected count:{} >= mnMaxConnect:{}! Can't add connect", mNetObjectCount, GetMaxConnectNum());
 		return nullptr;
 	}
 
-	uint32_t index = GetServerIndexFromUnlinkId(usLinkId);
-	if (index >= mNetObjectArray.size() || mNetObjectArray[index] != nullptr)
+	if (mNetObjectArray.find(usLinkId) != mNetObjectArray.end())
 	{
 		NFLogError(NF_LOG_NET_PLUGIN, 0, "GetServerIndexFromUnLinkId Failed!");
 		return nullptr;
 	}
 
 	NetEvppObject* pObject = NF_NEW NetEvppObject(conn);
-	mNetObjectArray[index] = pObject;
+	mNetObjectArray.emplace(usLinkId, pObject);
 	mNetObjectCount++;
 
 	pObject->SetLinkId(usLinkId);
@@ -208,7 +212,6 @@ NetEvppObject* NFEvppServer::AddNetObject(const evpp::TCPConnPtr& conn)
 NetEvppObject* NFEvppServer::GetNetObject(uint32_t usLinkId)
 {
 	uint32_t serverType = GetServerTypeFromUnlinkId(usLinkId);
-	uint32_t serverIndex = GetServerIndexFromUnlinkId(usLinkId);
 
 	if (serverType != mServerType)
 	{
@@ -216,9 +219,11 @@ NetEvppObject* NFEvppServer::GetNetObject(uint32_t usLinkId)
 		return nullptr;
 	}
 
-	if (serverIndex < mNetObjectArray.size())
+	auto iter = mNetObjectArray.find(usLinkId);
+
+	if (iter != mNetObjectArray.end())
 	{
-		auto pObject = mNetObjectArray[serverIndex];
+		auto pObject = iter->second;
 		if (pObject)
 		{
 			return pObject;
@@ -243,30 +248,26 @@ void NFEvppServer::CloseLinkId(uint32_t usLinkId)
 
 uint32_t NFEvppServer::GetFreeUnLinkId()
 {
-	if (mNetObjectArray.empty())
+	uint32_t loopCount = 0;
+	while(loopCount < MAX_CLIENT_MASK)
 	{
-		mNetObjectArray.push_back(nullptr);
-		return GetUnLinkId(mServerType, 0);
-	}
-
-	size_t sz = mNetObjectArray.size();
-
-	for (size_t index = 0; index < sz; index++)
-	{
-		if (mNetObjectArray[index] == nullptr)
+		loopCount++;
+		mNetObjectMaxIndex++;
+		if (mNetObjectMaxIndex >= MAX_CLIENT_MASK)
 		{
-			return GetUnLinkId(mServerType, index);
+			mNetObjectMaxIndex = 0;
+		}
+
+		uint32_t unlinkId = GetUnLinkId(mServerType, mNetObjectMaxIndex);
+
+		if (mNetObjectArray.find(unlinkId) == mNetObjectArray.end())
+		{
+			return unlinkId;
 		}
 	}
 
-	if (sz >= mFlag.nMaxConnectNum)
-	{
-		return 0;
-	}
-
-	mNetObjectArray.push_back(nullptr);
-
-	return GetUnLinkId(mServerType, sz);
+	NFLogError(NF_LOG_NET_PLUGIN, 0, "GetFreeUnLinkId failed!");
+	return 0;
 }
 
 bool NFEvppServer::Shut()
@@ -288,14 +289,15 @@ bool NFEvppServer::Shut()
 
 bool NFEvppServer::Finalize()
 {
-	for (size_t i = 0; i < mNetObjectArray.size(); i++)
+	for(auto iter = mNetObjectArray.begin(); iter != mNetObjectArray.end(); ++iter)
 	{
-		if (mNetObjectArray[i] != nullptr)
+		auto pObject = iter->second;
+		if (pObject)
 		{
-			mNetObjectCount--;
-			NF_SAFE_DELETE(mNetObjectArray[i]);
+			NF_SAFE_DELETE(pObject);
 		}
 	}
+
 	mNetObjectArray.clear();
 
 	if (m_eventLoop)
@@ -326,15 +328,15 @@ void NFEvppServer::ExecuteClose()
 	{
 		uint32_t unLinkId = mvRemoveObject[i];
 		uint32_t serverType = GetServerTypeFromUnlinkId(unLinkId);
-		uint32_t serverIndex = GetServerIndexFromUnlinkId(unLinkId);
 
 		NF_ASSERT_MSG(serverType == mServerType, "the unlinkId is not of the server");
-		if (serverIndex < mNetObjectArray.size())
+		auto iter = mNetObjectArray.find(unLinkId);
+		if (iter != mNetObjectArray.end())
 		{
-			auto pObject = mNetObjectArray[serverIndex];
+			auto pObject = iter->second;
 			if (pObject && pObject->GetNeedRemove())
 			{
-				mNetObjectArray[serverIndex] = nullptr;
+				mNetObjectArray.erase(iter);
 				mNetObjectCount--;
 				NF_SAFE_DELETE(pObject);
 			}
@@ -365,24 +367,16 @@ void NFEvppServer::OnSocketNetEvent(const eMsgType nEvent, const uint32_t unLink
 	if (nEvent == eMsgType_DISCONNECTED)
 	{
 		uint32_t serverType = GetServerTypeFromUnlinkId(unLinkId);
-		uint32_t serverIndex = GetServerIndexFromUnlinkId(unLinkId);
 
 		NF_ASSERT_MSG(serverType == mServerType, "the unlinkId is not of the server");
-		if (serverIndex < mNetObjectArray.size())
+		auto pObject = GetNetObject(unLinkId);
+		if (pObject && pObject->GetNeedRemove())
 		{
-			auto pObject = mNetObjectArray[serverIndex];
-			if (pObject && pObject->GetNeedRemove())
-			{
-				mvRemoveObject.push_back(unLinkId);
-			}
-			else
-			{
-				NF_ASSERT_MSG(pObject && pObject->GetNeedRemove(), "the pObject is nullptr or is not remove!");
-			}
+			mvRemoveObject.push_back(unLinkId);
 		}
 		else
 		{
-			NF_ASSERT_MSG(serverIndex < mNetObjectArray.size(), "the unlinkId is not right!");
+			NF_ASSERT_MSG(pObject && pObject->GetNeedRemove(), "the pObject is nullptr or is not remove!");
 		}
 	}
 
@@ -394,14 +388,15 @@ void NFEvppServer::OnSocketNetEvent(const eMsgType nEvent, const uint32_t unLink
 
 bool NFEvppServer::SendAll(const void* pData, uint32_t unSize)
 {
-	for (size_t i = 0; i < mNetObjectArray.size(); i++)
+	for(auto iter = mNetObjectArray.begin(); iter != mNetObjectArray.end(); ++iter)
 	{
-		auto pObject = mNetObjectArray[i];
+		auto pObject = iter->second;
 		if (pObject)
 		{
 			return pObject->Send(pData, unSize);
 		}
 	}
+
 	return true;
 }
 

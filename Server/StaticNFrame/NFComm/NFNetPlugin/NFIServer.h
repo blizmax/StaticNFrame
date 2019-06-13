@@ -44,6 +44,7 @@ public:
 	{
 		mWebSocket = flag.bWebSocket;
 		mPacketParseType = flag.mPacketParseType;
+		mNetObjectMaxIndex = 0;
 		assert(serverType > NF_ST_NONE && serverType < NF_ST_MAX);
 	}
 
@@ -170,6 +171,11 @@ protected:
 	* @brief 链接对象真实数目
 	*/
 	uint32_t mNetObjectCount;
+
+	/**
+	* @brief 当前链接对象最大索引
+	*/
+	uint32_t mNetObjectMaxIndex;
 
 	/**
 	* @brief 是否是websocket

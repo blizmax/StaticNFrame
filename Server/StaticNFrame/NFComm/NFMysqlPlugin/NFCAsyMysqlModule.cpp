@@ -366,10 +366,10 @@ bool NFCAsyMysqlModule::Keys(const std::string& strTableName, const std::string&
 
 void NFCAsyMysqlModule::UpdateCallBack(bool result)
 {
-	NFLogInfo(NF_LOG_MYSQL_PLUGIN, 0, "UpdateCallBack");
+	//NFLogInfo(NF_LOG_MYSQL_PLUGIN, 0, "UpdateCallBack");
 }
 
 void NFCAsyMysqlModule::UpdateMessageCallBack(bool result)
 {
-	NFLogInfo(NF_LOG_MYSQL_PLUGIN, 0, "UpdateMessageCallBack");
+	//NFLogInfo(NF_LOG_MYSQL_PLUGIN, 0, "UpdateMessageCallBack");
 }
