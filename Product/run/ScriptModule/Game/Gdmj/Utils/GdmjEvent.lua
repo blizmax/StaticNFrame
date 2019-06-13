@@ -315,7 +315,145 @@ function GdmjEvent.JulebuGameCount(julebuID, tableID, userArr)
 	userArrTemp['time'] = TimeUtils.GetTimeString()
 	userArrTemp['userlist'] = userArr	
 	userArrTemp['module'] = "麻将"
-	JulebuService.GameCount(julebuID, tableID, userArrTemp,g_JulebuDefine.modules_gdmj)
+
+	local tInfo = GdmjModel.GetTableInfo(tableID)
+	if tInfo ~= nil and tInfo.julebuid ~= 0 then
+		if tInfo.julebutype == 2 then
+			GdmjEvent.GameCount(julebuID, tableID, userArrTemp, g_JulebuDefine.modules_gdmj)
+		else
+			JulebuService.GameCount(julebuID, tableID, userArrTemp, g_JulebuDefine.modules_gdmj)
+		end
+	end
+	
+end
+
+function GdmjEvent.GameCount(julebuID, tableID, userArr, moduleType)
+
+	--这里需要加一个防护，防止重复计费
+	--已经出现两次重复计费的
+		
+	if true == JulebuModel.IsCount(julebuID..tableID) then
+		--如果已经被统计过了，就不用重复统计了。
+		--LuaNFrame.Error(NFLogId.NF_LOG_SYSTEMLOG, julebuID,   "recount game count julebuID="..julebuID..", tableID="..tableID)
+		return
+	end
+	
+	table.sort(userArr['userlist'], function(a,b) return a['jifen'] > b['jifen'] end)
+	
+	local pumpingNum = 1
+	local pumpingRatio = 0
+	local pumpingOrigin = 0
+	local vipRoomInfo = st_gdmj2_pb.gdmjrpmj()
+	
+	local jInfo = JulebuModel.GetJulebuInfo(julebuID)
+	--检查更新昨日数据
+	local temptime = os.date("*t", os.time())
+	if temptime.day ~= jInfo.updateday and temptime.hour > 7 then
+		jInfo.updateday = temptime.day
+		jInfo.yesterdaypump = jInfo.todaypump
+		jInfo.todaypump = 0
+	end
+	
+	local strVipInfo = GdmjModel.GetRoomInfoStr(tableID)
+	if strVipInfo ~= nil then
+		--设置VIPInfo，在这里设定vipInfo的字符串
+		vipRoomInfo:ParseFromString(strVipInfo)
+
+		if vipRoomInfo.faceaward_figure == 1 then
+			pumpingNum = 99
+		elseif vipRoomInfo.faceaward_figure == 2 then 
+			pumpingNum = 1 
+		elseif vipRoomInfo.faceaward_figure == 3 then 
+			pumpingNum = 1 
+		elseif vipRoomInfo.faceaward_figure == 4 then 
+			pumpingNum = 2 
+		elseif vipRoomInfo.faceaward_figure == 5 then 
+			pumpingNum = 3 
+		elseif vipRoomInfo.faceaward_figure == 6 then 
+			pumpingNum = 4 
+		end
+
+		pumpingRatio = vipRoomInfo.faceaward_num
+		pumpingOrigin = vipRoomInfo.faceaward_count
+	else
+		if jInfo ~= 0 then
+			if jInfo.faceaward_figure == 1 then
+				pumpingNum = 99
+			elseif jInfo.faceaward_figure == 2 then 
+				pumpingNum = 1 
+			elseif jInfo.faceaward_figure == 3 then 
+				pumpingNum = 1 
+			elseif jInfo.faceaward_figure == 4 then 
+				pumpingNum = 2 
+			elseif jInfo.faceaward_figure == 5 then 
+				pumpingNum = 3 
+			elseif jInfo.faceaward_figure == 6 then 
+				pumpingNum = 4 
+			end
+	
+			pumpingRatio = jInfo.faceaward_num
+			pumpingOrigin = jInfo.faceaward_count
+		end
+	end
+
+
+	local tmpNum = 1
+	for k,v in ipairs(userArr['userlist']) do
+		local Count = v['jifen']
+		if tonumber(k) == 1 then
+			JulebuService.RecordDayingjia(julebuID, v['userid'], 1)
+		end
+		
+		if Count >= 500 then
+			JulebuService.RecordDayingjia(julebuID, v['userid'], 4)
+		elseif Count >= 300 then
+			JulebuService.RecordDayingjia(julebuID, v['userid'], 3)
+		elseif Count >= 100 then
+			JulebuService.RecordDayingjia(julebuID, v['userid'], 2)
+		end	
+		local pumpingcount = 0
+		if Count > 0 and tmpNum <= pumpingNum and pumpingOrigin <= Count and pumpingRatio > 0 then
+			pumpingcount = math.ceil(Count * (pumpingRatio/100))
+			--pumpingcount =  > Count and Count or pumpingRatio
+			Count = Count - pumpingcount
+			tmpNum = tmpNum + 1
+			
+			jInfo.todaypump = jInfo.todaypump + pumpingcount
+
+			local jMember = JulebuModel.GetUserMemberInfo(julebuID, v['userid'])
+
+			
+			LogBehavior.Info(v['userid'], "julebu="..julebuID, "rate", pumpingcount, "tableID="..tableID)  --记录返奖的额度
+
+			--LuaNFrame.Error(NFLogId.NF_LOG_SYSTEMLOG, julebuID,   "userid="..v['userid'].."higherid="..jMember.higherid..", pumpingNum="..pumpingNum..", Count="..Count)
+			if jMember.higherid ~= 0 then
+				--说明这个玩家是被邀请进来的。需要把一半的佣金分给这个兄弟
+				local num = 0.5
+				if jInfo.proportion then
+					if jInfo.proportion == 1 then
+						num = 0.6
+					elseif jInfo.proportion == 2 then
+						num = 0.7
+					elseif jInfo.proportion == 3 then
+						num = 0.8
+					end
+				end
+				local getJifen = math.floor(pumpingcount * num)
+				pumpingcount = pumpingcount - getJifen
+				JulebuModel.AddGetJiFen(julebuID, jMember.higherid, v['userid'], getJifen)
+			else
+				
+			end
+			LogBehavior.Info(v['userid'], "julebu="..julebuID, "rate", pumpingcount, "tableID="..tableID)  --记录返奖的额度
+		end
+		
+		
+		JulebuService.StatisticsPartnerRecordDay(jInfo, v['userid'], v['jifen'], tonumber(k), pumpingcount) --把这个也到合伙人里面去
+		JulebuModel.AddUserJiFen(julebuID, v['userid'], Count, tableID)  --把积分同步更新]]
+	end
+	
+	JulebuModel.SetJulebuInfo(jInfo)
+	JulebuModel.SetJiFenCheck(julebuID..tableID) 
 end
 
 function GdmjEvent.JulebuGameStart(tInfo)

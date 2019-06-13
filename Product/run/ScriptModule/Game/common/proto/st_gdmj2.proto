@@ -50,4 +50,7 @@ message gdmjrpmj //广东麻将饶平麻将
 	optional int32 qiduisibei = 13; //豪华七对四倍
 	optional int32 difen = 15;     //底分
 	optional int32 limitjifen = 16; //限制积分
+	optional int32 faceaward_figure = 17;    
+	optional int32 faceaward_num = 18;    
+	optional int32 faceaward_count = 19;
 }
