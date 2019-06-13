@@ -153,8 +153,11 @@ function RpmjService.TableReady(tItem)
 		end
 		GdmjWork.CheckLeave(tItem)
 		RpmjService.GameStart(tItem)
-		if tItem.m_tInfo.julebuid ~= 0 then
-			JulebuService.CreatTable(tItem.m_tInfo, g_JulebuDefine.modules_gdmj)
+
+		if tItem.m_tInfo.usevipnum == 1 then
+			if tItem.m_tInfo.julebuid ~= 0 then
+				JulebuService.CreatTable(tItem.m_tInfo, g_JulebuDefine.modules_gdmj)
+			end
 		end
 	else
 		tItem.m_tInfo.timemark = tItem.m_tInfo.timemark - 1
