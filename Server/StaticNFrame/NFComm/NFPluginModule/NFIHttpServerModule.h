@@ -20,21 +20,21 @@ public:
 
 	// register msg callback
 	template<typename BaseType>
-	bool AddRequestHandler(NF_SERVER_TYPES serverType, const std::string& strPath, const NFHttpType eRequestType, BaseType* pBase, bool (BaseType::*handleRecieve)(uint32_t, const NFHttpHandle& req))
+	bool AddRequestHandler(NF_SERVER_TYPES serverType, const std::string& strPath, const NFHttpType eRequestType, BaseType* pBase, bool (BaseType::*handleRecieve)(uint32_t, const NFIHttpHandle& req))
 	{
 		HTTP_RECEIVE_FUNCTOR functor = std::bind(handleRecieve, pBase, std::placeholders::_1, std::placeholders::_2);
 		return AddMsgCB(serverType, strPath, eRequestType, functor);
 	}
 
 	template<typename BaseType>
-	bool AddRequestHandler(NF_SERVER_TYPES serverType, const NFHttpType eRequestType, BaseType* pBase, bool (BaseType::*handleRecieve)(uint32_t, const NFHttpHandle& req))
+	bool AddRequestHandler(NF_SERVER_TYPES serverType, const NFHttpType eRequestType, BaseType* pBase, bool (BaseType::*handleRecieve)(uint32_t, const NFIHttpHandle& req))
 	{
 		HTTP_RECEIVE_FUNCTOR functor = std::bind(handleRecieve, pBase, std::placeholders::_1, std::placeholders::_2);
 		return AddOtherMsgCB(serverType, eRequestType, functor);
 	}
 
 	template<typename BaseType>
-	bool AddNetFilter(NF_SERVER_TYPES serverType, const std::string& strPath, BaseType* pBase, NFWebStatus(BaseType::*handleFilter)(uint32_t, const NFHttpHandle& req))
+	bool AddNetFilter(NF_SERVER_TYPES serverType, const std::string& strPath, BaseType* pBase, NFWebStatus(BaseType::*handleFilter)(uint32_t, const NFIHttpHandle& req))
 	{
 		HTTP_FILTER_FUNCTOR functor = std::bind(handleFilter, pBase, std::placeholders::_1, std::placeholders::_2);
 
@@ -55,7 +55,7 @@ public:
 	virtual int InitServer(NF_SERVER_TYPES serverType, const std::vector<uint32_t>& nPorts) = 0;
 	virtual int InitServer(NF_SERVER_TYPES serverType, const std::string& portStr) = 0;
 
-	virtual bool ResponseMsg(NF_SERVER_TYPES serverType, const NFHttpHandle& req, const std::string& strMsg, NFWebStatus code = NFWebStatus::WEB_OK, const std::string& reason = "OK") = 0;
+	virtual bool ResponseMsg(NF_SERVER_TYPES serverType, const NFIHttpHandle& req, const std::string& strMsg, NFWebStatus code = NFWebStatus::WEB_OK, const std::string& reason = "OK") = 0;
 
 	virtual bool ResponseMsg(NF_SERVER_TYPES serverType, uint64_t requestId, const std::string& strMsg, NFWebStatus code = NFWebStatus::WEB_OK,
 		const std::string& reason = "OK") = 0;

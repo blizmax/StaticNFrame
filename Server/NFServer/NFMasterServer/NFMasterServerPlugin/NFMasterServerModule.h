@@ -70,8 +70,8 @@ protected:
 
 	void OnClientDisconnect(uint32_t unLinkId);
 
-	virtual bool HttpHandleHttpGm(uint32_t linkId, const NFHttpHandle& req);
-	virtual bool HttpHandleHttpMsg(uint32_t linkId, const NFHttpHandle& req);
+	virtual bool HttpHandleHttpGm(uint32_t linkId, const NFIHttpHandle& req);
+	virtual bool HttpHandleHttpMsg(uint32_t linkId, const NFIHttpHandle& req);
 
 	void SaveServerDataToDB();
 

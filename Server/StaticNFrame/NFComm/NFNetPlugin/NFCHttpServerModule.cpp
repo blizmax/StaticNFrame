@@ -14,6 +14,7 @@
 #include "NFComm/NFPluginModule/NFIPluginManager.h"
 #include "NFComm/NFCore/NFCommon.h"
 #include "NFComm/NFCore/NFStringUtility.h"
+#include "NFCEvppHttpServer.h"
 
 NFCHttpServerModule::NFCHttpServerModule(NFIPluginManager* p)
 {
@@ -150,11 +151,14 @@ int NFCHttpServerModule::InitServer(NF_SERVER_TYPES serverType, uint32_t nPort)
 			return 0;
 		}
 
+		NFCHttpEvppServer* pEvppHttpServer = new NFCHttpEvppServer(serverType);
+		pEvppHttpServer->InitServer(nPort);
+
 		NFCHttpServer* pHttpServer = new NFCHttpServer(serverType);
 
 		pHttpServer->SetRecvCB(this, &NFCHttpServerModule::OnReceiveNetPack);
 		pHttpServer->SetFilterCB(this, &NFCHttpServerModule::OnFilterPack);
-		if (pHttpServer->InitServer(nPort))
+		if (pHttpServer->InitServer(nPort+1))
 		{
 			mServerArray[serverType] = pHttpServer;
 			return serverType;
@@ -167,7 +171,7 @@ int NFCHttpServerModule::InitServer(NF_SERVER_TYPES serverType, uint32_t nPort)
 	return 0;
 }
 
-bool NFCHttpServerModule::OnReceiveNetPack(uint32_t unlinkId, const NFHttpHandle& req)
+bool NFCHttpServerModule::OnReceiveNetPack(uint32_t unlinkId, const NFIHttpHandle& req)
 {
 	uint32_t serverType = unlinkId;
 	if (serverType <= NF_ST_NONE || serverType >= NF_ST_MAX) return false;
@@ -252,7 +256,7 @@ bool NFCHttpServerModule::OnReceiveNetPack(uint32_t unlinkId, const NFHttpHandle
 	return ResponseMsg((NF_SERVER_TYPES)serverType, req, "", NFWebStatus::WEB_ERROR);
 }
 
-NFWebStatus NFCHttpServerModule::OnFilterPack(uint32_t unlinkId, const NFHttpHandle & req)
+NFWebStatus NFCHttpServerModule::OnFilterPack(uint32_t unlinkId, const NFIHttpHandle & req)
 {
 	uint32_t serverType = unlinkId;
 	if (serverType <= NF_ST_NONE || serverType >= NF_ST_MAX) return NFWebStatus::WEB_ERROR;
@@ -321,7 +325,7 @@ bool NFCHttpServerModule::AddFilterCB(NF_SERVER_TYPES serverType, const std::str
 	return true;
 }
 
-bool NFCHttpServerModule::ResponseMsg(NF_SERVER_TYPES serverType, const NFHttpHandle& req, const std::string& strMsg, NFWebStatus code,
+bool NFCHttpServerModule::ResponseMsg(NF_SERVER_TYPES serverType, const NFIHttpHandle& req, const std::string& strMsg, NFWebStatus code,
 	const std::string& strReason)
 {
 	if (serverType > NF_ST_NONE && serverType < NF_ST_MAX)

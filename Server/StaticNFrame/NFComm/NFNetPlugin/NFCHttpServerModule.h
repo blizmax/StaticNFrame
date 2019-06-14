@@ -34,14 +34,14 @@ public:
 	virtual int InitServer(NF_SERVER_TYPES serverType, const std::vector<uint32_t>& nPorts);
 	virtual int InitServer(NF_SERVER_TYPES serverType, const std::string& portStr);
 
-	virtual bool ResponseMsg(NF_SERVER_TYPES serverType, const NFHttpHandle& req, const std::string& strMsg, NFWebStatus code = NFWebStatus::WEB_OK,
+	virtual bool ResponseMsg(NF_SERVER_TYPES serverType, const NFIHttpHandle& req, const std::string& strMsg, NFWebStatus code = NFWebStatus::WEB_OK,
 			const std::string& reason = "OK");
 
 	virtual bool ResponseMsg(NF_SERVER_TYPES serverType, uint64_t requestId, const std::string& strMsg, NFWebStatus code = NFWebStatus::WEB_OK,
 		const std::string& reason = "OK");
 private:
-	virtual bool OnReceiveNetPack(uint32_t unlinkId, const NFHttpHandle& req);
-	virtual NFWebStatus OnFilterPack(uint32_t unlinkId, const NFHttpHandle& req);
+	virtual bool OnReceiveNetPack(uint32_t unlinkId, const NFIHttpHandle& req);
+	virtual NFWebStatus OnFilterPack(uint32_t unlinkId, const NFIHttpHandle& req);
 
 	virtual bool AddMsgCB(NF_SERVER_TYPES serverType, const std::string& strCommand, const NFHttpType eRequestType, const HTTP_RECEIVE_FUNCTOR& cb);
 	virtual bool AddOtherMsgCB(NF_SERVER_TYPES serverType, const NFHttpType eRequestType, const HTTP_RECEIVE_FUNCTOR& cb);

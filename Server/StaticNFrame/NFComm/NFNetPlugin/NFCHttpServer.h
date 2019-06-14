@@ -33,7 +33,7 @@ public:
 
 	virtual ~NFCHttpServer();
 
-	NFHttpHandle* AllocHttpRequest();
+	NFIHttpHandle* AllocHttpRequest();
 
 	virtual uint32_t GetServerType() const;
 
@@ -45,7 +45,7 @@ public:
 	virtual bool InitServer(const std::vector<uint32_t>& listen_ports);
 	virtual bool InitServer(const std::string& portStr);
 
-	virtual bool ResponseMsg(const NFHttpHandle& req, const std::string& strMsg, NFWebStatus code, const std::string& strReason = "OK");
+	virtual bool ResponseMsg(const NFIHttpHandle& req, const std::string& strMsg, NFWebStatus code, const std::string& strReason = "OK");
 	virtual bool ResponseMsg(uint64_t reqeustId, const std::string& strMsg, NFWebStatus code, const std::string& strReason = "OK");
 
 #if NF_ENABLE_SSL
@@ -69,7 +69,7 @@ public:
 private:
 	static void listener_cb(struct evhttp_request* req, void* arg);
 
-	static void AddResponseHeader(const NFHttpHandle& req, const std::string& key, const std::string& value);
+	static void AddResponseHeader(const NFIHttpHandle& req, const std::string& key, const std::string& value);
 private:
 	uint32_t mPort;
 	std::vector<uint32_t> mVecPort;
@@ -77,8 +77,8 @@ private:
 	std::vector<struct evhttp*> mEvhttpList;
 	uint32_t mServerType;
 	uint64_t mIndex;
-	std::map<uint64_t, NFHttpHandle*> mHttpRequestMap;
-	std::list<NFHttpHandle*> mListHttpRequestPool;
+	std::map<uint64_t, NFIHttpHandle*> mHttpRequestMap;
+	std::list<NFIHttpHandle*> mListHttpRequestPool;
 
 #if NF_ENABLE_SSL
 	bool mEnableSSL;

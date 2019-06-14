@@ -103,26 +103,6 @@ function GdmjHuHelper.HuListRpmj(handList, guiLen, vipInfo, guiPubList)
 
 	local retList = {}
 	local allList = {}
-	
-	if vipInfo.qiduisibei == 1 or vipInfo.kehuqidui == 1 then
-		--如果可胡七对, 豪华七对四倍
-		local huType,huList = MajiangHuUtils.QiDui(handList,guiLen)
-		if huType ~= 0 then
-			
-			if huList == -1 then    --如果是-1，表示直接可以胡了
-				return {-1}
-			else
-				
-				for k,v in ipairs(huList) do
-					if v == -1 then
-						return {-1}
-					else
-						allList[v] = 1
-					end
-				end
-			end
-		end
-	end
 
 	if vipInfo.shisanyao == 1 then
 		--十三幺胡牌
@@ -431,6 +411,7 @@ function GdmjHuHelper.IsQiDui(tItem, pos)
 		--如果长度不对，肯定就不行了
 		return 0
 	end
+
 	local handList = GdmjWork.GetHandList(tItem.m_userList[pos])
 	local guiPubList = GdmjWork.GetGuiList(tItem.m_tInfo)
 	--MajiangUtils.Get55CardSList()

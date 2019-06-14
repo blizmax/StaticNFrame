@@ -960,7 +960,7 @@ void NFCMasterServerModule::OnServerReport(const uint32_t unLinkId, const uint64
 	}
 }
 
-bool NFCMasterServerModule::HttpHandleHttpMsg(uint32_t linkId, const NFHttpHandle& req)
+bool NFCMasterServerModule::HttpHandleHttpMsg(uint32_t linkId, const NFIHttpHandle& req)
 {
 	std::string jsonMsg = req.bodySlice.ToString();
 	NFMsg::http_msg msg;
@@ -981,7 +981,7 @@ bool NFCMasterServerModule::HttpHandleHttpMsg(uint32_t linkId, const NFHttpHandl
 	return true;
 }
 
-bool NFCMasterServerModule::HttpHandleHttpGm(uint32_t linkId, const NFHttpHandle& req)
+bool NFCMasterServerModule::HttpHandleHttpGm(uint32_t linkId, const NFIHttpHandle& req)
 {
 	std::string jsonMsg = req.bodySlice.ToString();
 	NFMsg::http_msg_gm gm;

@@ -32,10 +32,6 @@
 #include "NFCEvppHttpServer.h"
 #include "NFComm/NFPluginModule/NFLogMgr.h"
 #include "NFComm/NFCore/NFStringUtility.h"
-#include "common/rapidjson/rapidjson.h"
-#include "common/rapidjson/document.h"
-#include "common/rapidjson/stringbuffer.h"
-#include "common/rapidjson/writer.h"
 #include "NFComm/NFCore/NFCommon.h"
 
 #include "evpp/http/context.h"

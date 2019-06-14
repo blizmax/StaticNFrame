@@ -32,7 +32,7 @@
 #include <list>
 #include <map>
 
-class NFCHttpEvppServer : public NFIHttpServer
+class NFCHttpEvppServer : public NFIModule
 {
 public:
 	NFCHttpEvppServer(uint32_t serverType);

@@ -139,17 +139,17 @@ uint32_t NFCHttpServer::GetServerType() const
 	return mServerType;
 }
 
-NFHttpHandle* NFCHttpServer::AllocHttpRequest()
+NFIHttpHandle* NFCHttpServer::AllocHttpRequest()
 {
 	if (mListHttpRequestPool.size() <= 0)
 	{
 		for (int i = 0; i < 1024; i++)
 		{
-			mListHttpRequestPool.push_back(NF_NEW NFHttpHandle());
+			mListHttpRequestPool.push_back(NF_NEW NFIHttpHandle());
 		}
 	}
 
-	NFHttpHandle* pRequest = mListHttpRequestPool.front();
+	NFIHttpHandle* pRequest = mListHttpRequestPool.front();
 	mListHttpRequestPool.pop_front();
 	pRequest->Reset();
 
@@ -165,10 +165,10 @@ bool NFCHttpServer::Execute()
 		event_base_loop(mEventBase, EVLOOP_ONCE | EVLOOP_NONBLOCK);
 	}
 
-	std::vector<NFHttpHandle*> vec;
+	std::vector<NFIHttpHandle*> vec;
 	for (auto iter = mHttpRequestMap.begin(); iter != mHttpRequestMap.end();iter++)
 	{
-		NFHttpHandle* pRequest = iter->second;
+		NFIHttpHandle* pRequest = iter->second;
 		if (pRequest->timeOut + 10 <= (uint64_t)NFGetSecondTime())
 		{
 			vec.push_back(pRequest);
@@ -177,7 +177,7 @@ bool NFCHttpServer::Execute()
 
 	for (int i = 0; i < (int)vec.size(); i++)
 	{
-		NFHttpHandle* pRequest = vec[i];
+		NFIHttpHandle* pRequest = vec[i];
 		ResponseMsg(*pRequest, "TimeOut Error", NFWebStatus::WEB_TIMEOUT);
 	}
 
@@ -353,7 +353,7 @@ void NFCHttpServer::listener_cb(struct evhttp_request* req, void* arg)
 		return;
 	}
 
-	NFHttpHandle* pRequest = pNet->AllocHttpRequest();
+	NFIHttpHandle* pRequest = pNet->AllocHttpRequest();
 	if (pRequest == nullptr)
 	{
 		NFLogError(NF_LOG_NET_PLUGIN, 0, "pRequest ==NULL");
@@ -487,13 +487,13 @@ void NFCHttpServer::listener_cb(struct evhttp_request* req, void* arg)
 	}
 }
 
-void NFCHttpServer::AddResponseHeader(const NFHttpHandle& req, const std::string& key, const std::string& value)
+void NFCHttpServer::AddResponseHeader(const NFIHttpHandle& req, const std::string& key, const std::string& value)
 {
 	evhttp_request* pHttpReq = (evhttp_request*)req.req;
 	evhttp_add_header(evhttp_request_get_output_headers(pHttpReq), key.data(), value.data());
 }
 
-bool NFCHttpServer::ResponseMsg(const NFHttpHandle& req, const std::string& strMsg, NFWebStatus code,
+bool NFCHttpServer::ResponseMsg(const NFIHttpHandle& req, const std::string& strMsg, NFWebStatus code,
 	const std::string& strReason)
 {
 	evhttp_request* pHttpReq = (evhttp_request*)req.req;
@@ -524,7 +524,7 @@ bool NFCHttpServer::ResponseMsg(const NFHttpHandle& req, const std::string& strM
 bool NFCHttpServer::ResponseMsg(uint64_t requestId, const std::string& strMsg, NFWebStatus code,
 	const std::string& strReason)
 {
-	NFHttpHandle* req = nullptr;
+	NFIHttpHandle* req = nullptr;
 	auto it = mHttpRequestMap.find(requestId);
 	if (it == mHttpRequestMap.end())
 	{
