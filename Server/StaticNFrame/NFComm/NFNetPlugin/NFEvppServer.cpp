@@ -222,12 +222,19 @@ NetEvppObject* NFEvppServer::AddNetObject(const evpp::TCPConnPtr& conn)
 NetEvppObject* NFEvppServer::GetNetObject(uint32_t usLinkId)
 {
 	uint32_t serverType = GetServerTypeFromUnlinkId(usLinkId);
-
 	if (serverType != mServerType)
 	{
 		NFLogError(NF_LOG_NET_PLUGIN, 0, "serverType != mServerType, this usLinkId:%s is not of the server:%s", usLinkId, GetServerName(mServerType).c_str());
 		return nullptr;
 	}
+
+	uint32_t isServer = GetIsServerFromUnlinkId(usLinkId);
+	if (isServer != NF_IS_SERVER)
+	{
+		NFLogError(NF_LOG_NET_PLUGIN, 0, "usLinkId is not a server link, this usLinkId:%s is not of the server:%s", usLinkId, GetServerName(mServerType).c_str());
+		return nullptr;
+	}
+
 
 	auto iter = mNetObjectArray.find(usLinkId);
 
@@ -268,7 +275,7 @@ uint32_t NFEvppServer::GetFreeUnLinkId()
 			mNetObjectMaxIndex = 0;
 		}
 
-		uint32_t unlinkId = GetUnLinkId(mServerType, mNetObjectMaxIndex);
+		uint32_t unlinkId = GetUnLinkId(NF_IS_SERVER, mServerType, mNetObjectMaxIndex);
 
 		if (mNetObjectArray.find(unlinkId) == mNetObjectArray.end())
 		{
@@ -338,7 +345,9 @@ void NFEvppServer::ExecuteClose()
 	{
 		uint32_t unLinkId = mvRemoveObject[i];
 		uint32_t serverType = GetServerTypeFromUnlinkId(unLinkId);
+		uint32_t isServer = GetIsServerFromUnlinkId(unLinkId);
 
+		NF_ASSERT_MSG(isServer == NF_IS_SERVER, "the unlinkId is not a server");
 		NF_ASSERT_MSG(serverType == mServerType, "the unlinkId is not of the server");
 		auto iter = mNetObjectArray.find(unLinkId);
 		if (iter != mNetObjectArray.end())
@@ -377,7 +386,9 @@ void NFEvppServer::OnSocketNetEvent(const eMsgType nEvent, const uint32_t unLink
 	if (nEvent == eMsgType_DISCONNECTED)
 	{
 		uint32_t serverType = GetServerTypeFromUnlinkId(unLinkId);
+		uint32_t isServer = GetIsServerFromUnlinkId(unLinkId);
 
+		NF_ASSERT_MSG(isServer == NF_IS_SERVER, "the unlinkId is not a server");
 		NF_ASSERT_MSG(serverType == mServerType, "the unlinkId is not of the server");
 		auto pObject = GetNetObject(unLinkId);
 		if (pObject && pObject->GetNeedRemove())

@@ -141,6 +141,13 @@ void NFServer::CloseLinkId(uint32_t usLinkId)
 		return;
 	}
 
+	uint32_t isServer = GetIsServerFromUnlinkId(usLinkId);
+	if (isServer != NF_IS_SERVER)
+	{
+		NFLogError(NF_LOG_NET_PLUGIN, 0, "usLinkId is not a server link, this usLinkId:%s is not of the server:%s", usLinkId, GetServerName(mServerType).c_str());
+		return;
+	}
+
 	auto iter = mNetObjectArray.find(usLinkId);
 	if (iter != mNetObjectArray.end())
 	{
@@ -168,6 +175,13 @@ bool NFServer::Send(uint32_t usLinkId, const void* pData, uint32_t unSize)
 		return false;
 	}
 
+	uint32_t isServer = GetIsServerFromUnlinkId(usLinkId);
+	if (isServer != NF_IS_SERVER)
+	{
+		NFLogError(NF_LOG_NET_PLUGIN, 0, "usLinkId is not a server link, this usLinkId:%s is not of the server:%s", usLinkId, GetServerName(mServerType).c_str());
+		return false;
+	}
+
 	auto iter = mNetObjectArray.find(usLinkId);
 	if (iter != mNetObjectArray.end())
 	{
@@ -191,6 +205,13 @@ std::string NFServer::GetLinkIp(uint32_t usLinkId)
 	if (serverType != mServerType)
 	{
 		NFLogError(NF_LOG_NET_PLUGIN, 0, "serverType != mServerType, this usLinkId:%s is not of the server:%s", usLinkId, GetServerName(mServerType).c_str());
+		return std::string();
+	}
+
+	uint32_t isServer = GetIsServerFromUnlinkId(usLinkId);
+	if (isServer != NF_IS_SERVER)
+	{
+		NFLogError(NF_LOG_NET_PLUGIN, 0, "usLinkId is not a server link, this usLinkId:%s is not of the server:%s", usLinkId, GetServerName(mServerType).c_str());
 		return std::string();
 	}
 
@@ -329,7 +350,7 @@ uint32_t NFServer::GetFreeUnLinkId()
 			mNetObjectMaxIndex = 0;
 		}
 
-		uint32_t unlinkId = GetUnLinkId(mServerType, mNetObjectMaxIndex);
+		uint32_t unlinkId = GetUnLinkId(NF_IS_SERVER, mServerType, mNetObjectMaxIndex);
 
 		if (mNetObjectArray.find(unlinkId) == mNetObjectArray.end())
 		{
@@ -352,7 +373,9 @@ void NFServer::ExecuteClose()
 	{
 		uint32_t unLinkId = mvRemoveObject[i];
 		uint32_t serverType = GetServerTypeFromUnlinkId(unLinkId);
+		uint32_t isServer = GetIsServerFromUnlinkId(unLinkId);
 
+		NF_ASSERT_MSG(isServer == NF_IS_SERVER, "the unlinkId is not a server");
 		NF_ASSERT_MSG(serverType == mServerType, "the unlinkId is not of the server");
 		auto iter = mNetObjectArray.find(unLinkId);
 		if (iter != mNetObjectArray.end())
@@ -391,7 +414,9 @@ void NFServer::OnSocketNetEvent(const eMsgType nEvent, const uint32_t unLinkId)
 	if (nEvent == eMsgType_DISCONNECTED)
 	{
 		uint32_t serverType = GetServerTypeFromUnlinkId(unLinkId);
+		uint32_t isServer = GetIsServerFromUnlinkId(unLinkId);
 
+		NF_ASSERT_MSG(isServer == NF_IS_SERVER, "the unlinkId is not a server");
 		NF_ASSERT_MSG(serverType == mServerType, "the unlinkId is not of the server");
 		auto iter = mNetObjectArray.find(unLinkId);
 		if (iter != mNetObjectArray.end())

@@ -168,6 +168,13 @@ std::string NFCNetServerModule::GetLinkIp(uint32_t usLinkId)
 void NFCNetServerModule::CloseLinkId(uint32_t usLinkId)
 {
 	uint32_t serverType = GetServerTypeFromUnlinkId(usLinkId);
+	uint32_t isServer = GetIsServerFromUnlinkId(usLinkId);
+	if (isServer != NF_IS_SERVER)
+	{
+		NFLogError(NF_LOG_NET_PLUGIN, 0, "usLinkId is not a client link, this usLinkId:{} is not of the client", usLinkId);
+		return;
+	}
+
 	if (serverType > NF_ST_NONE && serverType < NF_ST_MAX)
 	{
 		auto pServer = mServerArray[serverType];
@@ -192,6 +199,12 @@ void NFCNetServerModule::SendByServerID(uint32_t usLinkId, const uint32_t nMsgID
 void NFCNetServerModule::SendByServerID(uint32_t usLinkId, const uint32_t nMsgID, const char* msg, const uint32_t nLen, const uint64_t nPlayerID)
 {
 	uint32_t serverType = GetServerTypeFromUnlinkId(usLinkId);
+	uint32_t isServer = GetIsServerFromUnlinkId(usLinkId);
+	if (isServer != NF_IS_SERVER)
+	{
+		NFLogError(NF_LOG_NET_PLUGIN, 0, "usLinkId is not a client link, this usLinkId:{} is not of the client", usLinkId);
+		return;
+	}
 	if (serverType > NF_ST_NONE && serverType < NF_ST_MAX)
 	{
 		auto pServer = mServerArray[serverType];

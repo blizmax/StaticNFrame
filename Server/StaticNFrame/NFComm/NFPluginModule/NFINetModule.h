@@ -24,10 +24,16 @@
 #include "google/protobuf/message.h"
 
 #define MAX_CLIENT_MASK 0x00ffffff					//客户端掩码16777215
+#define MAX_SERVER_TYPE_MASK 0x7f000000					//客户端掩码16777215
+#define MAX_IS_SERVER_MASK 0x80000000					//客户端掩码16777215
 #define MAX_SERVER_TYPE_CLIENT_COUNT 0x0000ffff		//客户端实际数目65535
 
-#define GetUnLinkId(serverType, serverIndex)	(((serverIndex) & MAX_CLIENT_MASK) | (serverType) << 24);
-#define GetServerTypeFromUnlinkId(UnlinkId)		((UnlinkId) >> 24);
+#define NF_IS_SERVER 1
+#define NF_IS_CLIENT 0
+
+#define GetUnLinkId(isServer, serverType, serverIndex)	(((serverIndex) & MAX_CLIENT_MASK) | (((serverType) << 24) & MAX_SERVER_TYPE_MASK) | (((isServer << 31) & MAX_IS_SERVER_MASK)));
+#define GetServerTypeFromUnlinkId(UnlinkId)		(((UnlinkId) & MAX_SERVER_TYPE_MASK) >> 24);
+#define GetIsServerFromUnlinkId(UnlinkId)		(((UnlinkId) & MAX_IS_SERVER_MASK) >> 31);
 #define GetServerIndexFromUnlinkId(UnlinkId)	((UnlinkId) & MAX_CLIENT_MASK);
 
 #define CLIENT_MSG_PROCESS_NO_OBJECT(nMsgId, nValueId, msg, nLen, xMsg)                 \

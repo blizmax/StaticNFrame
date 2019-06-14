@@ -111,8 +111,8 @@ uint32_t NFCNetClientModule::GetFreeUnLinkId(NF_SERVER_TYPES eServerType)
 		for (size_t index = 0; index < sz; index++)
 		{
 			if (mxServerMap[eServerType][index] == nullptr)
-			{
-				return GetUnLinkId(eServerType, index);
+			{	
+				return GetUnLinkId(NF_IS_CLIENT, eServerType, index);
 			}
 		}
 
@@ -123,7 +123,9 @@ uint32_t NFCNetClientModule::GetFreeUnLinkId(NF_SERVER_TYPES eServerType)
 
 		mxServerMap[eServerType].push_back(nullptr);
 
-		return GetUnLinkId(eServerType, sz);
+		uint32_t usLinkId = GetUnLinkId(NF_IS_CLIENT, eServerType, sz);
+
+		return usLinkId;
 	}
 	return 0;
 }
@@ -249,6 +251,13 @@ void NFCNetClientModule::CloseServer(const uint32_t unLinkId)
 	uint32_t serverType = GetServerTypeFromUnlinkId(unLinkId);
 	uint32_t serverIndex = GetServerIndexFromUnlinkId(unLinkId);
 
+	uint32_t isServer = GetIsServerFromUnlinkId(unLinkId);
+	if (isServer != NF_IS_CLIENT)
+	{
+		NFLogError(NF_LOG_NET_PLUGIN, 0, "usLinkId is not a client link, this usLinkId:{} is not of the client", unLinkId);
+		return;
+	}
+
 	if (serverType < NF_ST_MAX && serverIndex < mxServerMap[serverType].size())
 	{
 		NFIClient* pClient = mxServerMap[serverType][serverIndex];
@@ -310,6 +319,12 @@ void NFCNetClientModule::SendByServerID(const uint32_t unLinkId, const uint32_t 
 {
 	uint32_t serverType = GetServerTypeFromUnlinkId(unLinkId);
 	uint32_t serverIndex = GetServerIndexFromUnlinkId(unLinkId);
+	uint32_t isServer = GetIsServerFromUnlinkId(unLinkId);
+	if (isServer != NF_IS_CLIENT)
+	{
+		NFLogError(NF_LOG_NET_PLUGIN, 0, "usLinkId is not a client link, this usLinkId:{} is not of the client", unLinkId);
+		return;
+	}
 
 	if (serverType < NF_ST_MAX && serverIndex < mxServerMap[serverType].size())
 	{
@@ -490,6 +505,12 @@ void NFCNetClientModule::OnHandleNetEvent(const eMsgType nEvent, const uint32_t 
 {
 	uint32_t serverType = GetServerTypeFromUnlinkId(unLinkId);
 	uint32_t serverIndex = GetServerIndexFromUnlinkId(unLinkId);
+	uint32_t isServer = GetIsServerFromUnlinkId(unLinkId);
+	if (isServer != NF_IS_CLIENT)
+	{
+		NFLogError(NF_LOG_NET_PLUGIN, 0, "usLinkId is not a client link, this usLinkId:{} is not of the client", unLinkId);
+		return;
+	}
 
 	if (serverType < NF_ST_MAX && serverIndex < mxServerMap[serverType].size())
 	{
