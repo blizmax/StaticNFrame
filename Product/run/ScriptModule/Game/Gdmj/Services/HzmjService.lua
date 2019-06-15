@@ -873,7 +873,7 @@ function HzmjService.PlayCountDissolve(tItem)
 		
 	end	
 	
-	--GdmjHistoryModel.SetTableAction(tItem.m_tInfo.frameid, PacketCode[2222].client, gcAccount:SerializeToString())
+	GdmjHistoryModel.SetTableAction(tItem.m_tInfo.frameid, PacketCode[2222].client, gcAccount:SerializeToString())
 	GdmjHistoryModel.SetHistory(tItem, 1, gcAccount)
 	gcAccount.result = 0
 

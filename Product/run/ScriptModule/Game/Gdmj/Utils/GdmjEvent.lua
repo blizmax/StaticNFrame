@@ -412,8 +412,8 @@ function GdmjEvent.GameCount(julebuID, tableID, userArr, moduleType)
 			JulebuService.RecordDayingjia(julebuID, v['userid'], 2)
 		end	
 		local pumpingcount = 0
-		if Count > 0 and tmpNum <= pumpingNum and pumpingOrigin <= Count and pumpingRatio > 0 then
-			pumpingcount = math.ceil(Count * (pumpingRatio/100))
+		if Count > 0 and tmpNum <= pumpingNum and pumpingOrigin <= Count and pumpingRatio > 0 and pumpingRatio <= Count then
+			pumpingcount = pumpingRatio
 			--pumpingcount =  > Count and Count or pumpingRatio
 			Count = Count - pumpingcount
 			tmpNum = tmpNum + 1

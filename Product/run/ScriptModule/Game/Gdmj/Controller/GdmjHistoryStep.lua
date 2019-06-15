@@ -23,6 +23,6 @@ function execute(packetID, operateID, buffer)
 	end
 	
 	gcmsg.result = 0
-	return cgmsg.userid, 0, gcmsg:ByteSize(), gcmsg:SerializeToString()	
+	return 0, 0, gcmsg:ByteSize(), gcmsg:SerializeToString()	
 	
 end
