@@ -145,12 +145,13 @@ NFIHttpHandle* NFCHttpServer::AllocHttpRequest()
 	{
 		for (int i = 0; i < 1024; i++)
 		{
-			mListHttpRequestPool.push_back(NF_NEW NFIHttpHandle());
+			mListHttpRequestPool.push_back(NF_NEW NFHttpHandle());
 		}
 	}
 
-	NFIHttpHandle* pRequest = mListHttpRequestPool.front();
+	NFHttpHandle* pRequest = dynamic_cast<NFHttpHandle*>(mListHttpRequestPool.front());
 	mListHttpRequestPool.pop_front();
+
 	pRequest->Reset();
 
 	pRequest->requestId = ++mIndex;
@@ -168,7 +169,7 @@ bool NFCHttpServer::Execute()
 	std::vector<NFIHttpHandle*> vec;
 	for (auto iter = mHttpRequestMap.begin(); iter != mHttpRequestMap.end();iter++)
 	{
-		NFIHttpHandle* pRequest = iter->second;
+		NFHttpHandle* pRequest = dynamic_cast<NFHttpHandle*>(iter->second);
 		if (pRequest->timeOut + 10 <= (uint64_t)NFGetSecondTime())
 		{
 			vec.push_back(pRequest);
@@ -353,7 +354,7 @@ void NFCHttpServer::listener_cb(struct evhttp_request* req, void* arg)
 		return;
 	}
 
-	NFIHttpHandle* pRequest = pNet->AllocHttpRequest();
+	NFHttpHandle* pRequest = dynamic_cast<NFHttpHandle*>(pNet->AllocHttpRequest());
 	if (pRequest == nullptr)
 	{
 		NFLogError(NF_LOG_NET_PLUGIN, 0, "pRequest ==NULL");
@@ -489,29 +490,15 @@ void NFCHttpServer::listener_cb(struct evhttp_request* req, void* arg)
 
 void NFCHttpServer::AddResponseHeader(const NFIHttpHandle& req, const std::string& key, const std::string& value)
 {
-	evhttp_request* pHttpReq = (evhttp_request*)req.req;
-	evhttp_add_header(evhttp_request_get_output_headers(pHttpReq), key.data(), value.data());
+	req.AddResponseHeader(key, value);
 }
 
 bool NFCHttpServer::ResponseMsg(const NFIHttpHandle& req, const std::string& strMsg, NFWebStatus code,
 	const std::string& strReason)
 {
-	evhttp_request* pHttpReq = (evhttp_request*)req.req;
-	//create buffer
-	struct evbuffer* eventBuffer = evbuffer_new();
+	req.ResponseMsg(strMsg, code, strReason);
 
-	//send data
-	evbuffer_add_printf(eventBuffer, strMsg.c_str());
-
-	AddResponseHeader(req, "Content-Type", "application/json");
-	AddResponseHeader(req, "Access-Control-Allow-Origin", "*");
-
-	evhttp_send_reply(pHttpReq, code, strReason.c_str(), eventBuffer);
-
-	//free
-	evbuffer_free(eventBuffer);
-
-	auto it = mHttpRequestMap.find(req.requestId);
+	auto it = mHttpRequestMap.find(req.GetRequestId());
 	if (it != mHttpRequestMap.end())
 	{
 		it->second->Reset();
@@ -534,20 +521,11 @@ bool NFCHttpServer::ResponseMsg(uint64_t requestId, const std::string& strMsg, N
 
 	req = it->second;
 
-	evhttp_request* pHttpReq = (evhttp_request*)req->req;
-	//create buffer
-	struct evbuffer* eventBuffer = evbuffer_new();
-
-	//send data
-	evbuffer_add_printf(eventBuffer, strMsg.c_str());
-
-	AddResponseHeader(*req, "Content-Type", "application/json");
-	AddResponseHeader(*req, "Access-Control-Allow-Origin", "*");
-
-	evhttp_send_reply(pHttpReq, code, strReason.c_str(), eventBuffer);
-
-	//free
-	evbuffer_free(eventBuffer);
+	bool ret = req->ResponseMsg(strMsg, code, strReason);
+	if (!ret)
+	{
+		NFLogError(NF_LOG_NET_PLUGIN, 0, "Response Msg error........ requestId:{}, strMsg:{}", requestId, strMsg);
+	}
 
 	req->Reset();
 	mListHttpRequestPool.push_back(req);

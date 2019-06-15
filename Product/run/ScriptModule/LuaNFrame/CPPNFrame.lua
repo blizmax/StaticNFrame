@@ -23,8 +23,6 @@ function CPPNFrame:init(pluginManager, luaModule)
     self.luaModule = luaModule
     self.serverModule = self.pluginManager:GetServerModule()
     self.clientModule = self.pluginManager:GetClientModule()
-    self.httpClientModule = self.pluginManager:GetHttpClientModule()
-    self.httpServerModule = self.pluginManager:GetHttpServerModule()
     self.serverNetEventModule = self.pluginManager:GetServerNetEventModule()
     self.mysqlModule = self.pluginManager:GetMysqlModule()
     self.app_name = pluginManager:GetAppName()

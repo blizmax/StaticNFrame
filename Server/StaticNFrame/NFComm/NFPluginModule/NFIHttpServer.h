@@ -71,36 +71,21 @@ class NFCHttpServer;
 class NFIHttpHandle
 {
 public:
-	NFIHttpHandle()
-	{
-		Reset();
-	}
+	NFIHttpHandle() = default;
 
-	void Reset()
-	{
-		requestId = 0;
-		url.clear();
-		path.clear();
-		remoteHost.clear();
-		httpServer = nullptr;
-		timeOut = 0;
-	}
+	virtual ~NFIHttpHandle() = default;
 
-	std::string get_url() { return url; }
-	std::string get_path() { return path; }
-	std::string get_remoteHost() { return remoteHost; }
-	int get_type() { return type; }
-	std::string get_body() { return bodySlice.ToString(); }
+	virtual void Reset() = 0;
+	virtual const std::string& GetUrl() const = 0;
+	virtual const std::string& GetPath() const = 0;
+	virtual const std::string& GetRemoteHost() const = 0;
+	virtual int GetType() const = 0;
+	virtual std::string GetBody() const = 0;
+	virtual uint64_t GetRequestId() const = 0;
+	virtual uint64_t GetTimeOut() const = 0;
 
-	void* req;
-	std::string url;
-	std::string path;
-	std::string remoteHost;
-	NFHttpType type;
-	NFSlice bodySlice;
-	uint64_t requestId;
-	NFCHttpServer* httpServer;
-	uint64_t timeOut;
+	virtual void AddResponseHeader(const std::string& key, const std::string& value) const = 0;
+	virtual bool ResponseMsg(const std::string& strMsg, NFWebStatus code, const std::string& strReason = "OK") const = 0;
 };
 
 class NFEvppHttpHandle

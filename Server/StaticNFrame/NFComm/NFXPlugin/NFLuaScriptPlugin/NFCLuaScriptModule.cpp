@@ -126,28 +126,6 @@ bool NFCLuaScriptModule::Register()
 		.addFunction("StopClocker", &NFCLuaScriptModule::StopClocker)
 		.endClass();
 
-	LuaIntf::LuaBinding(l).beginClass<NFIHttpClientModule>("NFIHttpClientModule")
-		.addFunction("HttpRequestGet", &NFIHttpClientModule::LuaHttpGet)
-		.addFunction("HttpRequestPost", &NFIHttpClientModule::LuaHttpPost)
-		.endClass();
-
-	LuaIntf::LuaBinding(l).beginClass<NFIHttpHandle>("NFHttpRequest")
-		.addProperty("url", &NFIHttpHandle::get_url)
-		.addProperty("path", &NFIHttpHandle::get_path)
-		.addProperty("remoteHost", &NFIHttpHandle::get_remoteHost)
-		.addProperty("type", &NFIHttpHandle::get_type)
-		.addProperty("body", &NFIHttpHandle::get_body)
-	.endClass();
-
-	LuaIntf::LuaBinding(l).beginClass<NFIHttpServerModule>("NFIHttpServerModule")
-		.addFunction("AddRequestHandler", &NFIHttpServerModule::LuaAddRequestHandler)
-		.addFunction("InitServer", (int (NFIHttpServerModule::*)(NF_SERVER_TYPES serverType, uint32_t nPort))&NFIHttpServerModule::InitServer)
-		.addFunction("ResponseMsg", (bool (NFIHttpServerModule::*)(NF_SERVER_TYPES serverType, const NFIHttpHandle& req, const std::string& strMsg, NFWebStatus code,
-			const std::string& reason))&NFIHttpServerModule::ResponseMsg)
-		.addFunction("ResponseMsgByRequestId", (bool (NFIHttpServerModule::*)(NF_SERVER_TYPES serverType, uint64_t requestId, const std::string& strMsg, NFWebStatus code,
-			const std::string& reason))&NFIHttpServerModule::ResponseMsg)
-		.endClass();
-
 	LuaIntf::LuaBinding(l).beginClass<NFINetServerModule>("NFINetServerModule")
 		.addFunction("AddServer", &NFINetServerModule::AddServer)
 		.addFunction("GetLinkIp", &NFINetServerModule::GetLinkIp)
@@ -232,12 +210,12 @@ void NFCLuaScriptModule::RunNetEventLuaFunc(const std::string& luaFunc, const eM
 
 void NFCLuaScriptModule::RunHtttpClientLuaFunc(const std::string& luaFunc, const int state_code, const std::string& strRespData, const std::string& strUserData)
 {
-	TryRunGlobalScriptFunc("unilight.HttpClientRequestCallBack", luaFunc, state_code, strRespData, strUserData);
+	//TryRunGlobalScriptFunc("unilight.HttpClientRequestCallBack", luaFunc, state_code, strRespData, strUserData);
 }
 
 void NFCLuaScriptModule::RunHttpServerLuaFunc(const std::string& luaFunc, uint32_t serverType, const NFIHttpHandle & req)
 {
-	TryRunGlobalScriptFunc("unilight.HttpServerRequestCallBack", luaFunc, serverType, req);
+	//TryRunGlobalScriptFunc("unilight.HttpServerRequestCallBack", luaFunc, serverType, req);
 }
 
 void NFCLuaScriptModule::StopTimer(uint32_t nTimerID)

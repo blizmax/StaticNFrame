@@ -962,28 +962,20 @@ void NFCMasterServerModule::OnServerReport(const uint32_t unLinkId, const uint64
 
 bool NFCMasterServerModule::HttpHandleHttpMsg(uint32_t linkId, const NFIHttpHandle& req)
 {
-	std::string jsonMsg = req.bodySlice.ToString();
+	std::string jsonMsg = req.GetBody();
 	NFMsg::http_msg msg;
-	msg.set_cmd(req.path);
+	msg.set_cmd(req.GetPath());
 	msg.set_data(jsonMsg);
-	msg.set_request_id(req.requestId);
+	msg.set_request_id(req.GetRequestId());
 
 	SendMsgToAllServer(EGMI_STS_HTTP_MSG, msg, 0);
-
-	//NFMsg::http_msg_ret msg_ret;
-	//msg_ret.set_code("success");
-	//msg_ret.set_msg("success");
-	//std::string strMsg;
-	//NFProtobufCommon::MessageToJsonString(msg_ret, strMsg);
-
-	//FindModule<NFIHttpServerModule>()->ResponseMsg(NF_ST_MASTER, req, strMsg, NFWebStatus::WEB_OK, "OK");
 
 	return true;
 }
 
 bool NFCMasterServerModule::HttpHandleHttpGm(uint32_t linkId, const NFIHttpHandle& req)
 {
-	std::string jsonMsg = req.bodySlice.ToString();
+	std::string jsonMsg = req.GetBody();
 	NFMsg::http_msg_gm gm;
 	NFProtobufCommon::JsonStringToMessage(jsonMsg, gm);
 

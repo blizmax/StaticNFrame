@@ -176,10 +176,10 @@ bool NFCHttpServerModule::OnReceiveNetPack(uint32_t unlinkId, const NFIHttpHandl
 	uint32_t serverType = unlinkId;
 	if (serverType <= NF_ST_NONE || serverType >= NF_ST_MAX) return false;
 
-	auto iter = mxCallBack[serverType].mMsgCBMap.find(req.type);
+	auto iter = mxCallBack[serverType].mMsgCBMap.find((NFHttpType)req.GetType());
 	if (iter != mxCallBack[serverType].mMsgCBMap.end())
 	{
-		std::string lowerPath = NFStringUtility::ToLower(req.path);
+		std::string lowerPath = NFStringUtility::ToLower(req.GetPath());
 		auto itPath = iter->second.find(lowerPath);
 		if (itPath != iter->second.end())
 		{
@@ -196,9 +196,9 @@ bool NFCHttpServerModule::OnReceiveNetPack(uint32_t unlinkId, const NFIHttpHandl
 		}
 		else
 		{
-			for (int i = 0; i < mxCallBack[serverType].mOtherMsgCBMap[req.type].size(); ++i)
+			for (int i = 0; i < mxCallBack[serverType].mOtherMsgCBMap[(NFHttpType)req.GetType()].size(); ++i)
 			{
-				HTTP_RECEIVE_FUNCTOR& pFunPtr = mxCallBack[serverType].mOtherMsgCBMap[req.type][i];
+				HTTP_RECEIVE_FUNCTOR& pFunPtr = mxCallBack[serverType].mOtherMsgCBMap[(NFHttpType)req.GetType()][i];
 				try
 				{
 					pFunPtr(serverType, req);
@@ -212,10 +212,10 @@ bool NFCHttpServerModule::OnReceiveNetPack(uint32_t unlinkId, const NFIHttpHandl
 		}
 	}
 
-	auto luaiter = mxCallBack[serverType].mMsgLuaCBMap.find(req.type);
+	auto luaiter = mxCallBack[serverType].mMsgLuaCBMap.find((NFHttpType)req.GetType());
 	if (luaiter != mxCallBack[serverType].mMsgLuaCBMap.end())
 	{
-		std::string lowerPath = NFStringUtility::ToLower(req.path);
+		std::string lowerPath = NFStringUtility::ToLower(req.GetPath());
 		auto luaitPath = luaiter->second.find(lowerPath);
 		if (luaitPath != luaiter->second.end())
 		{
@@ -235,9 +235,9 @@ bool NFCHttpServerModule::OnReceiveNetPack(uint32_t unlinkId, const NFIHttpHandl
 		}
 		else
 		{
-			for (int i = 0; i < mxCallBack[serverType].mOtherMsgLuaCBMap[req.type].size(); ++i)
+			for (int i = 0; i < mxCallBack[serverType].mOtherMsgLuaCBMap[(NFHttpType)req.GetType()].size(); ++i)
 			{
-				std::string& luaFunc = mxCallBack[serverType].mOtherMsgLuaCBMap[req.type][i];
+				std::string& luaFunc = mxCallBack[serverType].mOtherMsgLuaCBMap[(NFHttpType)req.GetType()][i];
 				try
 				{
 					if (m_pLuaScriptModule)
@@ -261,7 +261,7 @@ NFWebStatus NFCHttpServerModule::OnFilterPack(uint32_t unlinkId, const NFIHttpHa
 	uint32_t serverType = unlinkId;
 	if (serverType <= NF_ST_NONE || serverType >= NF_ST_MAX) return NFWebStatus::WEB_ERROR;
 
-	std::string lowerPath = NFStringUtility::ToLower(req.path);
+	std::string lowerPath = NFStringUtility::ToLower(req.GetPath());
 	auto itPath = mxCallBack[serverType].mMsgFliterMap.find(lowerPath);
 	if (itPath != mxCallBack[serverType].mMsgFliterMap.end())
 	{

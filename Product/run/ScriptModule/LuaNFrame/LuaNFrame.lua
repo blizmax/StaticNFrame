@@ -341,7 +341,9 @@ function LuaNFrame.DispatchTcp(unLinkId, valueId, nMsgId, strMsg)
 			g_operateID = g_operateID + 1
 			playerID, retCode, retBufferLen, retString, otString = controller.execute(nMsgId, g_operateID, strMsg)
 			--playerID, retCode, retBufferLen, retString, otString = controller.execute(unLinkId, valueId, nMsgId, strMsg)
-
+			if type(playerID) == "number" and playerID == 0 then
+				playerID = valueId
+			end
 			TcpServer.SendMsgByServerId(unLinkId, retMsgID, retString, playerID)
 		end
 	end
