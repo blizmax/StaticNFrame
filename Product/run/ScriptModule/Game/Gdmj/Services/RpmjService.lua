@@ -454,6 +454,9 @@ function RpmjService.CheckMoving(tItem)
 					if tItem.m_vipRoomInfo.bishu1 ~= 0 or tItem.m_vipRoomInfo.bishu2 ~= 0 then
 						tItem.m_userList[currPos].zimoguohu = 1
 						tItem.m_userList[currPos].guohu = 1
+						if tItem.m_vipRoomInfo.bishu1 ~= 0 then
+							tItem.m_userList[currPos].jinhu = 1
+						end
 					end
 
 					tItem.m_tInfo.nextinfo.actiontype:append(g_gdmjAction.type_guo)
