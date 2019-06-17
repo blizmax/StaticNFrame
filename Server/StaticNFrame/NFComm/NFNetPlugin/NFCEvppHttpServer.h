@@ -50,7 +50,7 @@ public:
 		mResponseCb = nullptr;
 	}
 
-	virtual  const std::string& GetUrl() const  override { return mCtx->original_uri(); }
+	virtual  const std::string& GetUrl() const  override { return mCtx->uri(); }
 	virtual const std::string& GetPath() const  override { return mCtx->uri(); }
 	virtual const std::string& GetRemoteHost() const  override { return mCtx->remote_ip(); }
 	virtual int GetType() const  override { return type; }

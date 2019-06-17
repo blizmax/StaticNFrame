@@ -1,3 +1,4 @@
+
 // -------------------------------------------------------------------------
 //    @FileName         :    NFHttpServerModule.cpp
 //    @Author           :    GaoYi
@@ -84,6 +85,14 @@ bool NFCHttpServerModule::Shut()
 
 bool NFCHttpServerModule::Finalize()
 {
+	for (size_t i = 0; i < mServerArray.size(); i++)
+	{
+		if (mServerArray[i] != nullptr)
+		{
+			NF_SAFE_DELETE(mServerArray[i]);
+		}
+	}
+	mServerArray.clear();
 	return true;
 }
 
@@ -97,7 +106,11 @@ int NFCHttpServerModule::InitServer(NF_SERVER_TYPES serverType, const std::strin
 			return 0;
 		}
 
+#ifdef USE_NET_EVPP
+		NFCHttpEvppServer* pHttpServer = new NFCHttpEvppServer(serverType);
+#else
 		NFCHttpServer* pHttpServer = new NFCHttpServer(serverType);
+#endif
 
 		pHttpServer->SetRecvCB(this, &NFCHttpServerModule::OnReceiveNetPack);
 		pHttpServer->SetFilterCB(this, &NFCHttpServerModule::OnFilterPack);
@@ -124,7 +137,11 @@ int NFCHttpServerModule::InitServer(NF_SERVER_TYPES serverType, const std::vecto
 			return 0;
 		}
 
+#ifdef USE_NET_EVPP
+		NFCHttpEvppServer* pHttpServer = new NFCHttpEvppServer(serverType);
+#else
 		NFCHttpServer* pHttpServer = new NFCHttpServer(serverType);
+#endif
 
 		pHttpServer->SetRecvCB(this, &NFCHttpServerModule::OnReceiveNetPack);
 		pHttpServer->SetFilterCB(this, &NFCHttpServerModule::OnFilterPack);

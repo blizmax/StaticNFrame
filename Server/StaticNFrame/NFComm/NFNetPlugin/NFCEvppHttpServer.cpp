@@ -55,7 +55,23 @@ NFCHttpEvppServer::NFCHttpEvppServer(uint32_t serverType)
 
 NFCHttpEvppServer::~NFCHttpEvppServer()
 {
+	for (auto iter = mHttpRequestMap.begin(); iter != mHttpRequestMap.end(); iter++)
+	{
+		NF_SAFE_DELETE(iter->second);
+	}
+	mHttpRequestMap.clear();
 
+	for (auto iter = mListHttpRequestPool.begin(); iter != mListHttpRequestPool.end(); iter++)
+	{
+		NF_SAFE_DELETE(*iter);
+	}
+	mListHttpRequestPool.clear();
+
+	if (m_pHttpServer)
+	{
+		m_pHttpServer->Stop();
+		NF_SAFE_DELETE(m_pHttpServer);
+	}
 }
 
 bool NFCHttpEvppServer::Execute()
