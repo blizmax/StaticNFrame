@@ -76,11 +76,11 @@ function GdmjWork.GetRandPoker(tItem, pos)
 	end
 	
 
-	local pokerID = GdmjWork.AllocateCard(tItem,pos)
+	--local pokerID = GdmjWork.AllocateCard(tItem,pos)
 	
-	if pokerID ~= 0 then
-		return pokerID
-	end	
+	--if pokerID ~= 0 then
+	--	return pokerID
+	--end	
 	
 	local random = math.myrandom(1, #tItem.m_tInfo.publicpoker)
 	

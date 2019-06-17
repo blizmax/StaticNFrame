@@ -333,14 +333,13 @@ g_operateID = g_operateID or 0
 --执行游戏服务器信息
 function LuaNFrame.DispatchTcp(unLinkId, valueId, nMsgId, strMsg)
 	local function TcpExecute()
-		retMsgID,controller = TcpManager.CreateController(nMsgId)
+		local retMsgID,controller = TcpManager.CreateController(nMsgId)
 	
 		if controller == nil then
 			LuaNFrame.Error(NFLogId.NF_LOG_SYSTEMLOG, valueId, "nMsgId:"..nMsgId.." not handled!")
 		else
 			g_operateID = g_operateID + 1
-			playerID, retCode, retBufferLen, retString, otString = controller.execute(nMsgId, g_operateID, strMsg)
-			--playerID, retCode, retBufferLen, retString, otString = controller.execute(unLinkId, valueId, nMsgId, strMsg)
+			local playerID, retCode, retBufferLen, retString, otString = controller.execute(nMsgId, g_operateID, strMsg)
 			if type(playerID) == "number" and playerID == 0 then
 				playerID = valueId
 			end
@@ -359,14 +358,13 @@ end
 --处理世界服务器消息
 function LuaNFrame.DispatchWorldTcp(unLinkId, valueId, nMsgId, strMsg)
 	local function TcpExecute()
-		retMsgID,controller = TcpManager.CreateController(nMsgId)
+		local retMsgID,controller = TcpManager.CreateController(nMsgId)
 	
 		if controller == nil then
 			LuaNFrame.Error(NFLogId.NF_LOG_SYSTEMLOG, valueId, "nMsgId:"..nMsgId.." not handled!")
 		else
 			g_operateID = g_operateID + 1
-			playerID, retCode, retBufferLen, retString, otString = controller.execute(nMsgId, g_operateID, strMsg)
-			--playerID, retCode, retBufferLen, retString, otString = controller.execute(unLinkId, valueId, nMsgId, strMsg)
+			local playerID, retCode, retBufferLen, retString, otString = controller.execute(nMsgId, g_operateID, strMsg)
 			TcpClient.SendMsgByServerId(unLinkId, retMsgID, retString, playerID)
 		end
 	end
@@ -388,7 +386,6 @@ function LuaNFrame.DispatchMasterTcp(unLinkId, valueId, nMsgId, strMsg)
 		else
 			g_operateID = g_operateID + 1
 			playerID, retCode, retBufferLen, retString, otString = controller.execute(nMsgId, g_operateID, strMsg)
-			--playerID, retCode, retBufferLen, retString, otString = controller.execute(unLinkId, valueId, nMsgId, strMsg)
 			TcpClient.SendMsgByServerId(unLinkId, retMsgID, retString, playerID)
 		end
 	end
