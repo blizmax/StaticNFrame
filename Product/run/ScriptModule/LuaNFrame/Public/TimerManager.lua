@@ -2,11 +2,11 @@ TimerManager = TimerManager or {}
 NFTimer = NFTimer or {}
 
 function TimerManager.execute(luaFunc, timerId)
-    NFTimer[luaFunc](timerId)
+    TimerManager[luaFunc](timerId)
 end
 
 
-function TimerManager.Init()
+function TimerManager.InitRpmj()
     BroadCastModel.Init()
 
     MailModel.LoadSysMail()
@@ -22,7 +22,7 @@ function TimerManager.Init()
     end
 end
 
-function NFTimer.LoopSec()
+function TimerManager.LoopRpmjSec()
     NoticeModel.SeverLoop()
     if g_servername == "run_gdmj" then
         GdmjService.ServerLoop()
@@ -31,7 +31,15 @@ function NFTimer.LoopSec()
     end
 end
 
-function NFTimer.update_debugsocket()
+function TimerManager.InitWuxiandai()
+
+end
+
+function TimerManager.LoopWuxianDaiSec()
+
+end
+
+function TimerManager.update_debugsocket()
 	if breakSocketHandle ~= nil then
 		breakSocketHandle()
 	end

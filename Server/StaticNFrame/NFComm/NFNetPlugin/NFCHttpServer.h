@@ -94,7 +94,7 @@ public:
 
 	virtual ~NFCHttpServer();
 
-	NFIHttpHandle* AllocHttpRequest();
+	NFHttpHandle* AllocHttpRequest();
 
 	virtual uint32_t GetServerType() const;
 

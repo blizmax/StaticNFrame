@@ -150,15 +150,14 @@ int NFCHttpServerModule::InitServer(NF_SERVER_TYPES serverType, uint32_t nPort)
 			NFLogError(NF_LOG_NET_PLUGIN, 0, "the serverType:{} has existing! Add Server Failed!", GetServerName(serverType));
 			return 0;
 		}
-
-		NFCHttpEvppServer* pEvppHttpServer = new NFCHttpEvppServer(serverType);
-		pEvppHttpServer->InitServer(nPort);
-
+#ifdef USE_NET_EVPP
+		NFCHttpEvppServer* pHttpServer = new NFCHttpEvppServer(serverType);
+#else
 		NFCHttpServer* pHttpServer = new NFCHttpServer(serverType);
-
+#endif
 		pHttpServer->SetRecvCB(this, &NFCHttpServerModule::OnReceiveNetPack);
 		pHttpServer->SetFilterCB(this, &NFCHttpServerModule::OnFilterPack);
-		if (pHttpServer->InitServer(nPort+1))
+		if (pHttpServer->InitServer(nPort))
 		{
 			mServerArray[serverType] = pHttpServer;
 			return serverType;

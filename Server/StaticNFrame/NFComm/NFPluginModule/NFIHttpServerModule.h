@@ -59,7 +59,7 @@ public:
 
 	virtual bool ResponseMsg(NF_SERVER_TYPES serverType, uint64_t requestId, const std::string& strMsg, NFWebStatus code = NFWebStatus::WEB_OK,
 		const std::string& reason = "OK") = 0;
-private:
+protected:
 	virtual bool AddMsgCB(NF_SERVER_TYPES serverType, const std::string& strCommand, const NFHttpType eRequestType, const HTTP_RECEIVE_FUNCTOR& cb) = 0;
 	virtual bool AddOtherMsgCB(NF_SERVER_TYPES serverType, const NFHttpType eRequestType, const HTTP_RECEIVE_FUNCTOR& cb) = 0;
 	virtual bool AddFilterCB(NF_SERVER_TYPES serverType, const std::string& strCommand, const HTTP_FILTER_FUNCTOR& cb) = 0;

@@ -58,7 +58,54 @@ function RpmjService.DoWork(tItem) --传入的是TdhStruct类型的Item
 		--
 	end
 
-	GdmjWork.CheckOver(tItem)
+	RpmjService.CheckOver(tItem)
+end
+
+function RpmjService.CheckOver(tItem)
+	--超过一定的时间，还没有开始或者没有行动，房间就会解散
+	if tItem.m_tInfo.status == g_gdmjStatus.status_delete or tItem.m_tInfo.status == g_gdmjStatus.status_dissolve then
+		return nil
+	end
+	
+	if tItem.m_tInfo.timemark < -7200 then  --两个小时
+		--一个小时如果还没有开始，就需要解散了
+		if tItem.m_tInfo.usevipnum == 0 then
+			--表示整个牌局还没有开始，需要退还钻石
+			if tItem.m_tInfo.julebutype ~= 2 then
+				if tItem.m_tInfo.payway == 1 then
+					--房主支付的
+					local pInfo = PlayerModel.GetPlayerInfo(tItem.m_tInfo.tableuserid)
+					if tItem.m_tInfo.paytype == g_gdmjDefine.pay_gold then
+						PlayerModel.AddGold(pInfo, tItem.m_tInfo.paynum, "gdmj", "dissolve gold")
+						PlayerModel.SendPlayerInfo(pInfo, {"gold"})
+					else
+						PlayerModel.AddMoney(pInfo, tItem.m_tInfo.paynum, "gdmj", "dissolve money")
+						PlayerModel.SendPlayerInfo(pInfo, {"money"})
+					end
+					PlayerModel.SetPlayerInfo(pInfo)
+				end
+				local gcLeave = msg_gdmj_pb.gcgdmjleave()
+				gcLeave.result = 0
+				gcLeave.leavemsg = "房间超时未开始，已经解散!!!"
+				gcLeave.tableid = tItem.m_tInfo.tableid
+				for k,v in ipairs(tItem.m_tInfo.standuser) do
+					gcLeave.userid = v
+					SendMessage(v, PacketCode[2212].client, gcLeave:ByteSize(), gcLeave:SerializeToString())
+				end
+				for k,v in ipairs(tItem.m_tInfo.situser) do
+					if v ~= 0 then
+						gcLeave.userid = v
+						gcLeave.chairid = k
+						SendMessage(v, PacketCode[2212].client, gcLeave:ByteSize(), gcLeave:SerializeToString())
+					end
+				end				
+				tItem.m_tInfo.status = g_gdmjStatus.status_delete
+			end
+		else
+			tItem.m_tInfo.status = g_gdmjStatus.status_dissolve
+		end
+		tItem.m_isModify = true
+	end	
 end
 
 function RpmjService.CheckJiFen2(julebuID, userID, carryjetton, strVipInfo)

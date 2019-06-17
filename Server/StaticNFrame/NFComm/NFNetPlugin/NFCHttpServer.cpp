@@ -139,7 +139,7 @@ uint32_t NFCHttpServer::GetServerType() const
 	return mServerType;
 }
 
-NFIHttpHandle* NFCHttpServer::AllocHttpRequest()
+NFHttpHandle* NFCHttpServer::AllocHttpRequest()
 {
 	if (mListHttpRequestPool.size() <= 0)
 	{
@@ -166,7 +166,7 @@ bool NFCHttpServer::Execute()
 		event_base_loop(mEventBase, EVLOOP_ONCE | EVLOOP_NONBLOCK);
 	}
 
-	std::vector<NFIHttpHandle*> vec;
+	std::vector<NFHttpHandle*> vec;
 	for (auto iter = mHttpRequestMap.begin(); iter != mHttpRequestMap.end();iter++)
 	{
 		NFHttpHandle* pRequest = dynamic_cast<NFHttpHandle*>(iter->second);
@@ -178,7 +178,7 @@ bool NFCHttpServer::Execute()
 
 	for (int i = 0; i < (int)vec.size(); i++)
 	{
-		NFIHttpHandle* pRequest = vec[i];
+		NFHttpHandle* pRequest = vec[i];
 		ResponseMsg(*pRequest, "TimeOut Error", NFWebStatus::WEB_TIMEOUT);
 	}
 

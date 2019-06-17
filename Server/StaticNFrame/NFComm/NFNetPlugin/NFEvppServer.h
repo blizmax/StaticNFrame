@@ -175,6 +175,9 @@ protected:
 	 */
 	virtual void OnSocketNetEvent(const eMsgType nEvent, const uint32_t unLinkId);
 
+	/**
+	 * @brief 主线程处理消息队列
+	 */
 	virtual void ProcessMsgLogicThread();
 private:
 	evpp::EventLoopThread* m_eventLoop;

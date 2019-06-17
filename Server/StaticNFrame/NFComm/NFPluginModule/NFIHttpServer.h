@@ -88,31 +88,6 @@ public:
 	virtual bool ResponseMsg(const std::string& strMsg, NFWebStatus code, const std::string& strReason = "OK") const = 0;
 };
 
-class NFEvppHttpHandle
-{
-public:
-	NFEvppHttpHandle()
-	{
-		
-	}
-
-	std::string get_url() { return url; }
-	std::string get_path() { return path; }
-	std::string get_remoteHost() { return remoteHost; }
-	int get_type() { return type; }
-	std::string get_body() { return bodySlice.ToString(); }
-
-	void* req;
-	std::string url;
-	std::string path;
-	std::string remoteHost;
-	NFHttpType type;
-	NFSlice bodySlice;
-	uint64_t requestId;
-	NFCHttpServer* httpServer;
-	uint64_t timeOut;
-};
-
 //it should be
 typedef std::function<bool(uint32_t serverType, const NFIHttpHandle& req)> HTTP_RECEIVE_FUNCTOR;
 typedef std::function<NFWebStatus(uint32_t serverType, const NFIHttpHandle& req)> HTTP_FILTER_FUNCTOR;
