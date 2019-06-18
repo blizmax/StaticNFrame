@@ -11,7 +11,7 @@ function TcpManager.CreateController(packetid)
 	return PacketCode[packetid]["client"],_G[PacketCode[packetid].func]
 end
 
---兼容
+
 tcpManager = tcpManager or {}
 function tcpManager:createController(packetid)
 	return TcpManager.CreateController(packetid)

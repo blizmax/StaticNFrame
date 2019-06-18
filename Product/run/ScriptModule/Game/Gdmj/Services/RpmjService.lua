@@ -1855,22 +1855,38 @@ function RpmjService.PlayCountWin(tItem)
 					local leftJetton = JulebuService.GetJiFen(tItem.m_tInfo.julebuid, tItem.m_userList[i].userid) + tItem.m_userList[i].carryjetton
 					item.winjetton = -leftJetton
 					local allJetton = 0
+					local maxJetton = 0
+					local maxIndex = 0
 					for j = 1, tItem.m_maxUser do
 						if i ~= j then
 							if winItemList[i][j] > 0 then
 								local dstItem = gcAccount.countlist[j]
 								dstItem.winjetton = dstItem.winjetton - winItemList[i][j]
 								allJetton = allJetton + winItemList[i][j]
+								if winItemList[i][j] > maxJetton then
+									maxJetton = winItemList[i][j]
+									maxIndex = j
+								end
 							end
 						end
 					end
+
+					local allTmp = 0
 					for j = 1, tItem.m_maxUser do
 						if i ~= j then
 							if winItemList[i][j] > 0 then
 								local dstItem = gcAccount.countlist[j]
-								dstItem.winjetton = dstItem.winjetton + math.floor(leftJetton * winItemList[i][j] / allJetton)
+								local tmp = math.floor(leftJetton * winItemList[i][j] / allJetton)
+								allTmp = allTmp + tmp
+								dstItem.winjetton = dstItem.winjetton + tmp
 							end
 						end
+					end
+
+					local leftTmp = leftJetton - allTmp
+					if maxIndex > 0 then
+						local dstItem = gcAccount.countlist[maxIndex]
+						dstItem.winjetton = dstItem.winjetton + leftTmp
 					end
 				end
 			end
@@ -2271,22 +2287,38 @@ function RpmjService.PlayCountWinMore(tItem)
 					local leftJetton = JulebuService.GetJiFen(tItem.m_tInfo.julebuid, tItem.m_userList[i].userid) + tItem.m_userList[i].carryjetton
 					item.winjetton = -leftJetton
 					local allJetton = 0
+					local maxJetton = 0
+					local maxIndex = 0
 					for j = 1, tItem.m_maxUser do
 						if i ~= j then
 							if winItemList[i][j] > 0 then
 								local dstItem = gcAccount.countlist[j]
 								dstItem.winjetton = dstItem.winjetton - winItemList[i][j]
 								allJetton = allJetton + winItemList[i][j]
+								if winItemList[i][j] > maxJetton then
+									maxJetton = winItemList[i][j]
+									maxIndex = j
+								end
 							end
 						end
 					end
+
+					local allTmp = 0
 					for j = 1, tItem.m_maxUser do
 						if i ~= j then
 							if winItemList[i][j] > 0 then
 								local dstItem = gcAccount.countlist[j]
-								dstItem.winjetton = dstItem.winjetton + math.floor(leftJetton * winItemList[i][j] / allJetton)
+								local tmp = math.floor(leftJetton * winItemList[i][j] / allJetton)
+								allTmp = allTmp + tmp
+								dstItem.winjetton = dstItem.winjetton + tmp
 							end
 						end
+					end
+
+					local leftTmp = leftJetton - allTmp
+					if maxIndex > 0 then
+						local dstItem = gcAccount.countlist[maxIndex]
+						dstItem.winjetton = dstItem.winjetton + leftTmp
 					end
 				end
 			end
