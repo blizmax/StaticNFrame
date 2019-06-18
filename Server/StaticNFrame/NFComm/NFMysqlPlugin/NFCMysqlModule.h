@@ -74,7 +74,7 @@ public:
 	 * @param  message
 	 * @return bool 
 	 */
-	virtual bool Update(const google::protobuf::Message& message) override;
+	virtual bool UpdateOne(const google::protobuf::Message& message) override;
 	
 	/**
 	 * @brief
@@ -82,7 +82,7 @@ public:
 	 * @param  message
 	 * @return bool 
 	 */
-	virtual bool Query(google::protobuf::Message& message) override;
+	virtual bool QueryOne(google::protobuf::Message& message) override;
 	
 	/**
 	 * @brief
@@ -110,7 +110,7 @@ public:
 	 * @param  valueVec
 	 * @return bool 
 	 */
-	virtual bool Update(const std::string& strTableName, const std::string& strKeyColName, const std::string& strKey, const std::vector<std::string>& fieldVec, const std::vector<std::string>& valueVec) override;
+	virtual bool UpdateOne(const std::string& strTableName, const std::string& strKeyColName, const std::string& strKey, const std::vector<std::string>& fieldVec, const std::vector<std::string>& valueVec) override;
 
 	/**
 	 * @brief
@@ -122,7 +122,7 @@ public:
 	 * @param  valueVec
 	 * @return bool
 	 */
-	virtual bool Update(const std::string& strTableName, const std::string& strKeyColName, const std::string& strKey, const std::map<std::string, std::string>& keyvalueMap) override;
+	virtual bool UpdateOne(const std::string& strTableName, const std::string& strKeyColName, const std::string& strKey, const std::map<std::string, std::string>& keyvalueMap) override;
 	
 	/**
 	 * @brief
@@ -228,7 +228,7 @@ public:
 	 * @param  valueVec
 	 * @return bool 
 	 */
-	virtual bool Keys(const std::string& strTableName, const std::string& strKeyColName, const std::string& strKey, const std::vector<std::string>& fieldVec, std::vector<std::vector<std::string>>& valueVec) override;
+	virtual bool QueryMoreByLike(const std::string& strTableName, const std::string& strKeyColName, const std::string& strKey, const std::vector<std::string>& fieldVec, std::vector<std::vector<std::string>>& valueVec) override;
 
 	/**
 	 * @brief
@@ -239,7 +239,7 @@ public:
 	 * @param  valueVec
 	 * @return bool
 	 */
-	virtual bool Keys(const std::string& strTableName, const std::string& strKeyColName, const std::string& strKey, const std::vector<std::string>& fieldVec, std::vector<std::map<std::string, std::string>>& valueVec) override;
+	virtual bool QueryMoreByLike(const std::string& strTableName, const std::string& strKeyColName, const std::string& strKey, const std::vector<std::string>& fieldVec, std::vector<std::map<std::string, std::string>>& valueVec) override;
 
 	/**
 	 * @brief

@@ -18,13 +18,13 @@ class NFIMysqlModule
 {
 public:
 	virtual bool AddMysqlServer(const int nServerID, const std::string& strIP, const int nPort, const std::string strDBName, const std::string strDBUser, const std::string strDBPwd, const int nRconnectTime = 10, const int nRconneCount = -1) = 0;
-	virtual bool Update(const google::protobuf::Message& message) = 0;
-	virtual bool Query(google::protobuf::Message& message) = 0;
+	virtual bool UpdateOne(const google::protobuf::Message& message) = 0;
+	virtual bool QueryOne(google::protobuf::Message& message) = 0;
 	virtual bool QueryMore(google::protobuf::Message& message) = 0;
 	virtual bool Execute(const std::string& qstr) = 0;
 
-	virtual bool Update(const std::string& strTableName, const std::string& strKeyColName, const std::string& strKey, const std::vector<std::string>& fieldVec, const std::vector<std::string>& valueVec) = 0;
-	virtual bool Update(const std::string& strTableName, const std::string& strKeyColName, const std::string& strKey, const std::map<std::string, std::string>& keyvalueMap) = 0;
+	virtual bool UpdateOne(const std::string& strTableName, const std::string& strKeyColName, const std::string& strKey, const std::vector<std::string>& fieldVec, const std::vector<std::string>& valueVec) = 0;
+	virtual bool UpdateOne(const std::string& strTableName, const std::string& strKeyColName, const std::string& strKey, const std::map<std::string, std::string>& keyvalueMap) = 0;
 
 	virtual bool QueryOne(const std::string& strTableName, const std::string& strKeyColName, const std::string& strKey, const std::vector<std::string>& fieldVec, std::vector<std::string>& valueVec) = 0;
 	virtual bool QueryMoreWithCond(const std::string& strTableName, const std::string& strKeyColName, int nOffset, int nRows, const std::vector<std::string>& fieldVec, std::vector<std::vector<std::string>>& valueVec) = 0;
@@ -37,12 +37,12 @@ public:
 	virtual bool Delete(const std::string& strTableName, const std::string& strKeyColName, const std::string& strKey) = 0;
 	virtual bool Exists(const std::string& strTableName, const std::string& strKeyColName, const std::string& strKey, bool& bExit) = 0;
 
-	virtual bool Keys(const std::string& strTableName, const std::string& strKeyColName, const std::string& strKey, const std::vector<std::string>& fieldVec, std::vector<std::vector<std::string>>& valueVec) = 0;
-	virtual bool Keys(const std::string& strTableName, const std::string& strKeyColName, const std::string& strKey, const std::vector<std::string>& fieldVec, std::vector<std::map<std::string, std::string>>& valueVec) = 0;
+	virtual bool QueryMoreByLike(const std::string& strTableName, const std::string& strKeyColName, const std::string& strKey, const std::vector<std::string>& fieldVec, std::vector<std::vector<std::string>>& valueVec) = 0;
+	virtual bool QueryMoreByLike(const std::string& strTableName, const std::string& strKeyColName, const std::string& strKey, const std::vector<std::string>& fieldVec, std::vector<std::map<std::string, std::string>>& valueVec) = 0;
 
-	virtual bool LuaUpdate(const std::string& strTableName, const std::string& strKeyColName, const std::string& strKey, const std::map<std::string, std::string>& keyvalueMap)
+	virtual bool LuaUpdateOne(const std::string& strTableName, const std::string& strKeyColName, const std::string& strKey, const std::map<std::string, std::string>& keyvalueMap)
 	{
-		return Update(strTableName, strKeyColName, strKey, keyvalueMap);
+		return UpdateOne(strTableName, strKeyColName, strKey, keyvalueMap);
 	}
 
 	virtual std::map<std::string, std::string> LuaQueryOne(const std::string& strTableName, const std::string& strKeyColName, const std::string& strKey, const std::vector<std::string>& fieldVec)
@@ -85,10 +85,10 @@ public:
 		return bExit;
 	}
 
-	virtual std::vector<std::map<std::string, std::string>> LuaKeys(const std::string& strTableName, const std::string& strKeyColName, const std::string& strKey, const std::vector<std::string>& fieldVec)
+	virtual std::vector<std::map<std::string, std::string>> LuaQueryMoreByLike(const std::string& strTableName, const std::string& strKeyColName, const std::string& strKey, const std::vector<std::string>& fieldVec)
 	{
 		std::vector<std::map<std::string, std::string>> valueVec;
-		if (!Keys(strTableName, strKeyColName, strKey, fieldVec, valueVec))
+		if (!QueryMoreByLike(strTableName, strKeyColName, strKey, fieldVec, valueVec))
 		{
 			NFLogError(NF_LOG_SYSTEMLOG, 0, "LuaKeys error!");
 		}

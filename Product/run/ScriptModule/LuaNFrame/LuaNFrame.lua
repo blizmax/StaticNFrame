@@ -265,8 +265,8 @@ end
 --     "userid"   = "101200"
 -- }
 --LuaNFrame.MysqlUpdate("dy_player", "userid", 101200, values)
-function LuaNFrame.MysqlUpdate(strTableName, strKeyColName, strKey, keyvalueMap)
-    return CPPNFrame:MysqlUpdate(strTableName, strKeyColName, strKey, keyvalueMap)
+function LuaNFrame.MysqlUpdateOne(strTableName, strKeyColName, strKey, keyvalueMap)
+    return CPPNFrame:MysqlUpdateOne(strTableName, strKeyColName, strKey, keyvalueMap)
 end
 
 --local fields = {"userid", "cid", "account", "password", "nickname", 123}
@@ -340,8 +340,8 @@ function LuaNFrame.MysqlExists(strTableName, strKeyColName, strKey)
     return CPPNFrame:MysqlExists(strTableName, strKeyColName, strKey)
 end
 
-function LuaNFrame.MysqlKeys(strTableName, strKeyColName, strKey, fieldVec)
-    return CPPNFrame:MysqlKeys(strTableName, strKeyColName, strKey, fieldVec)
+function LuaNFrame.MysqlQueryMoreByLike(strTableName, strKeyColName, strKey, fieldVec)
+    return CPPNFrame:MysqlQueryMoreByLike(strTableName, strKeyColName, strKey, fieldVec)
 end
 
 g_operateID = g_operateID or 0

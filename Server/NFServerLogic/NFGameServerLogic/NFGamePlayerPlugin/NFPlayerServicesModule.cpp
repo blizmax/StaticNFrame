@@ -66,7 +66,7 @@ void NFCPlayerServicesModule::SavePlayerDataToDB()
 					NFLogError(NF_LOG_LOGIN_MODULE_LOG, info.userid(), "Nosql set playerinfo failed, pInfo:{}", info.DebugString());
 				}
 
-				if (FindModule<NFIAsyMysqlModule>()->Update(info, info.userid()) == false)
+				if (FindModule<NFIAsyMysqlModule>()->UpdateOne(info, info.userid()) == false)
 				{
 					NFLogError(NF_LOG_LOGIN_MODULE_LOG, info.userid(), "Nosql set playerinfo failed, pInfo:{}", info.DebugString());
 				}

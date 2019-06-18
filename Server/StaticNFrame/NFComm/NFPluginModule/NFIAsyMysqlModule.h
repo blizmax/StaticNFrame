@@ -29,7 +29,7 @@ public:
 	* @param  message
 	* @return bool
 	*/
-	virtual bool Update(const google::protobuf::Message& message, uint64_t balanceId = 0, uint8_t mysqlEventType = 0) = 0;
+	virtual bool UpdateOne(const google::protobuf::Message& message, uint64_t balanceId = 0, uint8_t mysqlEventType = 0) = 0;
 
 	/**
 	* @brief
@@ -37,7 +37,7 @@ public:
 	* @param  message
 	* @return bool
 	*/
-	virtual bool Query(google::protobuf::Message& message, uint64_t balanceId = 0) = 0;
+	virtual bool QueryOne(google::protobuf::Message& message, uint64_t balanceId = 0) = 0;
 
 	/**
 	* @brief
@@ -57,19 +57,7 @@ public:
 	* @param  valueVec
 	* @return bool
 	*/
-	virtual bool Update(const std::string& strTableName, const std::string& strKeyColName, const std::string& strKey, const std::vector<std::string>& fieldVec, const std::vector<std::string>& valueVec, uint64_t balanceId = 0) = 0;
-
-	/**
-	* @brief
-	*
-	* @param  strTableName
-	* @param  strKeyColName
-	* @param  strKey
-	* @param  fieldVec
-	* @param  valueVec
-	* @return bool
-	*/
-	virtual bool Update(const std::string& strTableName, const std::string& strKeyColName, const std::string& strKey, const std::map<std::string, std::string>& fieldValueMap, uint64_t balanceId = 0) = 0;
+	virtual bool UpdateOne(const std::string& strTableName, const std::string& strKeyColName, const std::string& strKey, const std::map<std::string, std::string>& fieldValueMap, uint64_t balanceId = 0) = 0;
 
 	/**
 	* @brief
@@ -106,28 +94,7 @@ public:
 	* @param  valueVec
 	* @return bool
 	*/
-	virtual bool Query(const std::string& strTableName, const std::string& strKeyColName, int nOffset, int nRows, const std::vector<std::string>& fieldVec, uint64_t balanceId = 0) = 0;
-
-	/**
-	* @brief
-	*
-	* @param  strTableName
-	* @param  strKeyColName
-	* @param  strKey
-	* @return bool
-	*/
-	virtual bool Delete(const std::string& strTableName, const std::string& strKeyColName, const std::string& strKey, uint64_t balanceId = 0) = 0;
-
-	/**
-	* @brief
-	*
-	* @param  strTableName
-	* @param  strKeyColName
-	* @param  strKey
-	* @param  bExit
-	* @return bool
-	*/
-	virtual bool Exists(const std::string& strTableName, const std::string& strKeyColName, const std::string& strKey, bool& bExit, uint64_t balanceId = 0) = 0;
+	virtual bool QueryMoreWithCond(const std::string& strTableName, const std::string& strKeyColName, int nOffset, int nRows, const std::vector<std::string>& fieldVec, uint64_t balanceId = 0) = 0;
 
 	/**
 	* @brief
@@ -138,6 +105,6 @@ public:
 	* @param  valueVec
 	* @return bool
 	*/
-	virtual bool Keys(const std::string& strTableName, const std::string& strKeyColName, const std::string& strKeyName, std::vector<std::string>& valueVec, uint64_t balanceId = 0) = 0;
+	virtual bool QueryMoreByLike(const std::string& strTableName, const std::string& strKeyColName, const std::string& strKeyName, std::vector<std::string>& valueVec, uint64_t balanceId = 0) = 0;
 };
 

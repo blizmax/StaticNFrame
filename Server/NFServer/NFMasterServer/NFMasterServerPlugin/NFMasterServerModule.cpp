@@ -255,7 +255,7 @@ void NFCMasterServerModule::SaveServerDataToDB()
 		*dbserver.mutable_db_fields() = *pData;
 		dbserver.mutable_db_fields()->set_last_date(NFDateTime::Now().GetDbTimeString());
 		dbserver.mutable_db_fields()->set_last_time(NFGetSecondTime());
-		FindModule<NFIAsyMysqlModule>()->Update(dbserver, pData->server_id());
+		FindModule<NFIAsyMysqlModule>()->UpdateOne(dbserver, pData->server_id());
 
 		NFMsg::db_query_server_detail dbserverDetail;
 		dbserverDetail.mutable_db_fields()->set_server_id(dbserver.mutable_db_fields()->server_id());
@@ -268,7 +268,7 @@ void NFCMasterServerModule::SaveServerDataToDB()
 		dbserverDetail.mutable_db_fields()->set_proc_thread(dbserver.mutable_db_fields()->proc_thread());
 		dbserverDetail.mutable_db_fields()->set_last_date(NFDateTime::Now().GetDbTimeString());
 		dbserverDetail.mutable_db_fields()->set_last_time(NFGetSecondTime());
-		FindModule<NFIAsyMysqlModule>()->Update(dbserverDetail, pData->server_id());
+		FindModule<NFIAsyMysqlModule>()->UpdateOne(dbserverDetail, pData->server_id());
 	}
 
 	NF_SHARE_PTR<NFServerData> pServerData = nullptr;
@@ -279,7 +279,7 @@ void NFCMasterServerModule::SaveServerDataToDB()
 		*dbserver.mutable_db_fields() = pServerData->mServerInfo;
 		dbserver.mutable_db_fields()->set_last_date(NFDateTime::Now().GetDbTimeString());
 		dbserver.mutable_db_fields()->set_last_time(NFGetSecondTime());
-		FindModule<NFIAsyMysqlModule>()->Update(dbserver, pServerData->mServerInfo.server_id());
+		FindModule<NFIAsyMysqlModule>()->UpdateOne(dbserver, pServerData->mServerInfo.server_id());
 
 		NFMsg::db_query_server_detail dbserverDetail;
 		dbserverDetail.mutable_db_fields()->set_server_id(dbserver.mutable_db_fields()->server_id());
@@ -292,7 +292,7 @@ void NFCMasterServerModule::SaveServerDataToDB()
 		dbserverDetail.mutable_db_fields()->set_proc_thread(dbserver.mutable_db_fields()->proc_thread());
 		dbserverDetail.mutable_db_fields()->set_last_date(NFDateTime::Now().GetDbTimeString());
 		dbserverDetail.mutable_db_fields()->set_last_time(NFGetSecondTime());
-		FindModule<NFIAsyMysqlModule>()->Update(dbserverDetail, pServerData->mServerInfo.server_id());
+		FindModule<NFIAsyMysqlModule>()->UpdateOne(dbserverDetail, pServerData->mServerInfo.server_id());
 
 		pServerData = mWorldMap.Next();
 	}
@@ -304,7 +304,7 @@ void NFCMasterServerModule::SaveServerDataToDB()
 		*dbserver.mutable_db_fields() = pServerData->mServerInfo;
 		dbserver.mutable_db_fields()->set_last_date(NFDateTime::Now().GetDbTimeString());
 		dbserver.mutable_db_fields()->set_last_time(NFGetSecondTime());
-		FindModule<NFIAsyMysqlModule>()->Update(dbserver, pServerData->mServerInfo.server_id());
+		FindModule<NFIAsyMysqlModule>()->UpdateOne(dbserver, pServerData->mServerInfo.server_id());
 
 		NFMsg::db_query_server_detail dbserverDetail;
 		dbserverDetail.mutable_db_fields()->set_server_id(dbserver.mutable_db_fields()->server_id());
@@ -317,7 +317,7 @@ void NFCMasterServerModule::SaveServerDataToDB()
 		dbserverDetail.mutable_db_fields()->set_proc_thread(dbserver.mutable_db_fields()->proc_thread());
 		dbserverDetail.mutable_db_fields()->set_last_date(NFDateTime::Now().GetDbTimeString());
 		dbserverDetail.mutable_db_fields()->set_last_time(NFGetSecondTime());
-		FindModule<NFIAsyMysqlModule>()->Update(dbserverDetail, pServerData->mServerInfo.server_id());
+		FindModule<NFIAsyMysqlModule>()->UpdateOne(dbserverDetail, pServerData->mServerInfo.server_id());
 
 		pServerData = mProxyMap.Next();
 	}
@@ -329,7 +329,7 @@ void NFCMasterServerModule::SaveServerDataToDB()
 		*dbserver.mutable_db_fields() = pServerData->mServerInfo;
 		dbserver.mutable_db_fields()->set_last_date(NFDateTime::Now().GetDbTimeString());
 		dbserver.mutable_db_fields()->set_last_time(NFGetSecondTime());
-		FindModule<NFIAsyMysqlModule>()->Update(dbserver, pServerData->mServerInfo.server_id());
+		FindModule<NFIAsyMysqlModule>()->UpdateOne(dbserver, pServerData->mServerInfo.server_id());
 
 		NFMsg::db_query_server_detail dbserverDetail;
 		dbserverDetail.mutable_db_fields()->set_server_id(dbserver.mutable_db_fields()->server_id());
@@ -342,7 +342,7 @@ void NFCMasterServerModule::SaveServerDataToDB()
 		dbserverDetail.mutable_db_fields()->set_proc_thread(dbserver.mutable_db_fields()->proc_thread());
 		dbserverDetail.mutable_db_fields()->set_last_date(NFDateTime::Now().GetDbTimeString());
 		dbserverDetail.mutable_db_fields()->set_last_time(NFGetSecondTime());
-		FindModule<NFIAsyMysqlModule>()->Update(dbserverDetail, pServerData->mServerInfo.server_id());
+		FindModule<NFIAsyMysqlModule>()->UpdateOne(dbserverDetail, pServerData->mServerInfo.server_id());
 
 		pServerData = mGameMap.Next();
 	}
@@ -358,7 +358,7 @@ void NFCMasterServerModule::SaveServerDataToDB()
 		*dbserver.mutable_db_fields() = pServerData->mServerInfo;
 		dbserver.mutable_db_fields()->set_last_date(NFDateTime::Now().GetDbTimeString());
 		dbserver.mutable_db_fields()->set_last_time(NFGetSecondTime());
-		FindModule<NFIAsyMysqlModule>()->Update(dbserver, pServerData->mServerInfo.server_id());
+		FindModule<NFIAsyMysqlModule>()->UpdateOne(dbserver, pServerData->mServerInfo.server_id());
 
 		NFMsg::db_query_server_detail dbserverDetail;
 		dbserverDetail.mutable_db_fields()->set_server_id(dbserver.mutable_db_fields()->server_id());
@@ -371,7 +371,7 @@ void NFCMasterServerModule::SaveServerDataToDB()
 		dbserverDetail.mutable_db_fields()->set_proc_thread(dbserver.mutable_db_fields()->proc_thread());
 		dbserverDetail.mutable_db_fields()->set_last_date(NFDateTime::Now().GetDbTimeString());
 		dbserverDetail.mutable_db_fields()->set_last_time(NFGetSecondTime());
-		FindModule<NFIAsyMysqlModule>()->Update(dbserverDetail, pServerData->mServerInfo.server_id());
+		FindModule<NFIAsyMysqlModule>()->UpdateOne(dbserverDetail, pServerData->mServerInfo.server_id());
 
 		pServerData = mLoginMap.Next();
 	}
@@ -413,7 +413,7 @@ void NFCMasterServerModule::OnClientDisconnect(uint32_t unLinkId)
 			*dbserver.mutable_db_fields() = pServerData->mServerInfo;
 			dbserver.mutable_db_fields()->set_last_date(NFDateTime::Now().GetDbTimeString());
 			dbserver.mutable_db_fields()->set_last_time(NFGetSecondTime());
-			FindModule<NFIAsyMysqlModule>()->Update(dbserver);
+			FindModule<NFIAsyMysqlModule>()->UpdateOne(dbserver);
 
 			NFMsg::db_query_server_detail dbserverDetail;
 			dbserverDetail.mutable_db_fields()->set_server_id(dbserver.mutable_db_fields()->server_id());
@@ -426,7 +426,7 @@ void NFCMasterServerModule::OnClientDisconnect(uint32_t unLinkId)
 			dbserverDetail.mutable_db_fields()->set_proc_thread(dbserver.mutable_db_fields()->proc_thread());
 			dbserverDetail.mutable_db_fields()->set_last_date(NFDateTime::Now().GetDbTimeString());
 			dbserverDetail.mutable_db_fields()->set_last_time(NFGetSecondTime());
-			FindModule<NFIAsyMysqlModule>()->Update(dbserverDetail, pServerData->mServerInfo.server_id());
+			FindModule<NFIAsyMysqlModule>()->UpdateOne(dbserverDetail, pServerData->mServerInfo.server_id());
 
 			NFLogError(NF_LOG_SERVER_CONNECT_SERVER, 0, "the world server disconnect from master server, serverName:{}, serverId:{}, serverIp:{}, serverPort:{}"
 				, pServerData->mServerInfo.server_name(), pServerData->mServerInfo.server_id(), pServerData->mServerInfo.server_ip(), pServerData->mServerInfo.server_port());
@@ -452,7 +452,7 @@ void NFCMasterServerModule::OnClientDisconnect(uint32_t unLinkId)
 			*dbserver.mutable_db_fields() = pServerData->mServerInfo;
 			dbserver.mutable_db_fields()->set_last_date(NFDateTime::Now().GetDbTimeString());
 			dbserver.mutable_db_fields()->set_last_time(NFGetSecondTime());
-			FindModule<NFIAsyMysqlModule>()->Update(dbserver);
+			FindModule<NFIAsyMysqlModule>()->UpdateOne(dbserver);
 
 			NFMsg::db_query_server_detail dbserverDetail;
 			dbserverDetail.mutable_db_fields()->set_server_id(dbserver.mutable_db_fields()->server_id());
@@ -465,7 +465,7 @@ void NFCMasterServerModule::OnClientDisconnect(uint32_t unLinkId)
 			dbserverDetail.mutable_db_fields()->set_proc_thread(dbserver.mutable_db_fields()->proc_thread());
 			dbserverDetail.mutable_db_fields()->set_last_date(NFDateTime::Now().GetDbTimeString());
 			dbserverDetail.mutable_db_fields()->set_last_time(NFGetSecondTime());
-			FindModule<NFIAsyMysqlModule>()->Update(dbserverDetail, pServerData->mServerInfo.server_id());
+			FindModule<NFIAsyMysqlModule>()->UpdateOne(dbserverDetail, pServerData->mServerInfo.server_id());
 
 			NFLogError(NF_LOG_SERVER_CONNECT_SERVER, 0, "the proxy server disconnect from master server, serverName:{}, serverId:{}, serverIp:{}, serverPort:{}"
 				, pServerData->mServerInfo.server_name(), pServerData->mServerInfo.server_id(), pServerData->mServerInfo.server_ip(), pServerData->mServerInfo.server_port());
@@ -491,7 +491,7 @@ void NFCMasterServerModule::OnClientDisconnect(uint32_t unLinkId)
 			*dbserver.mutable_db_fields() = pServerData->mServerInfo;
 			dbserver.mutable_db_fields()->set_last_date(NFDateTime::Now().GetDbTimeString());
 			dbserver.mutable_db_fields()->set_last_time(NFGetSecondTime());
-			FindModule<NFIAsyMysqlModule>()->Update(dbserver);
+			FindModule<NFIAsyMysqlModule>()->UpdateOne(dbserver);
 
 			NFMsg::db_query_server_detail dbserverDetail;
 			dbserverDetail.mutable_db_fields()->set_server_id(dbserver.mutable_db_fields()->server_id());
@@ -504,7 +504,7 @@ void NFCMasterServerModule::OnClientDisconnect(uint32_t unLinkId)
 			dbserverDetail.mutable_db_fields()->set_proc_thread(dbserver.mutable_db_fields()->proc_thread());
 			dbserverDetail.mutable_db_fields()->set_last_date(NFDateTime::Now().GetDbTimeString());
 			dbserverDetail.mutable_db_fields()->set_last_time(NFGetSecondTime());
-			FindModule<NFIAsyMysqlModule>()->Update(dbserverDetail, pServerData->mServerInfo.server_id());
+			FindModule<NFIAsyMysqlModule>()->UpdateOne(dbserverDetail, pServerData->mServerInfo.server_id());
 
 			NFLogError(NF_LOG_SERVER_CONNECT_SERVER, 0, "the game server disconnect from master server, serverName:{}, serverId:{}, serverIp:{}, serverPort:{}"
 				, pServerData->mServerInfo.server_name(), pServerData->mServerInfo.server_id(), pServerData->mServerInfo.server_ip(), pServerData->mServerInfo.server_port());
@@ -532,7 +532,7 @@ void NFCMasterServerModule::OnClientDisconnect(uint32_t unLinkId)
 			*dbserver.mutable_db_fields() = pServerData->mServerInfo;
 			dbserver.mutable_db_fields()->set_last_date(NFDateTime::Now().GetDbTimeString());
 			dbserver.mutable_db_fields()->set_last_time(NFGetSecondTime());
-			FindModule<NFIAsyMysqlModule>()->Update(dbserver);
+			FindModule<NFIAsyMysqlModule>()->UpdateOne(dbserver);
 
 			NFMsg::db_query_server_detail dbserverDetail;
 			dbserverDetail.mutable_db_fields()->set_server_id(dbserver.mutable_db_fields()->server_id());
@@ -545,7 +545,7 @@ void NFCMasterServerModule::OnClientDisconnect(uint32_t unLinkId)
 			dbserverDetail.mutable_db_fields()->set_proc_thread(dbserver.mutable_db_fields()->proc_thread());
 			dbserverDetail.mutable_db_fields()->set_last_date(NFDateTime::Now().GetDbTimeString());
 			dbserverDetail.mutable_db_fields()->set_last_time(NFGetSecondTime());
-			FindModule<NFIAsyMysqlModule>()->Update(dbserverDetail, pServerData->mServerInfo.server_id());
+			FindModule<NFIAsyMysqlModule>()->UpdateOne(dbserverDetail, pServerData->mServerInfo.server_id());
 
 			NFLogError(NF_LOG_SERVER_CONNECT_SERVER, 0, "the login server disconnect from master server, serverName:{}, serverId:{}, serverIp:{}, serverPort:{}"
 				, pServerData->mServerInfo.server_name(), pServerData->mServerInfo.server_id(), pServerData->mServerInfo.server_ip(), pServerData->mServerInfo.server_port());

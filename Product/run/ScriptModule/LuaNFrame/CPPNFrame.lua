@@ -286,8 +286,8 @@ function CPPNFrame:MysqlExecute(str)
     return self.mysqlModule:Execute(str)
 end
 
-function CPPNFrame:MysqlUpdate(strTableName, strKeyColName, strKey, keyvalueMap)
-    return self.mysqlModule:Update(strTableName, strKeyColName, strKey, keyvalueMap)
+function CPPNFrame:MysqlUpdateOne(strTableName, strKeyColName, strKey, keyvalueMap)
+    return self.mysqlModule:UpdateOne(strTableName, strKeyColName, strKey, keyvalueMap)
 end
 
 function CPPNFrame:MysqlQueryOne(strTableName, strKeyColName, strKey, fieldVec)
@@ -310,8 +310,8 @@ function CPPNFrame:MysqlExists(strTableName, strKeyColName, strKey)
     return self.mysqlModule:Exists(strTableName, strKeyColName, strKey)
 end
 
-function CPPNFrame:MysqlKeys(strTableName, strKeyColName, strKey, fieldVec)
-    return self.mysqlModule:Keys(strTableName, strKeyColName, strKey, fieldVec)
+function CPPNFrame:MysqlQueryMoreByLike(strTableName, strKeyColName, strKey, fieldVec)
+    return self.mysqlModule:QueryMoreByLike(strTableName, strKeyColName, strKey, fieldVec)
 end
 
 --执行函数, 函数被字符串表达出来

@@ -419,7 +419,7 @@ public:
 	 * @param  valueVec
 	 * @return bool 
 	 */
-	virtual bool Keys(const std::string& strTableName, const std::string& strKeyColName, const std::string& strKeyName, const std::vector<std::string>& fieldVec, std::vector<std::vector<std::string>>& valueVec);
+	virtual bool QueryMoreByLike(const std::string& strTableName, const std::string& strKeyColName, const std::string& strKeyName, const std::vector<std::string>& fieldVec, std::vector<std::vector<std::string>>& valueVec);
 
 	/**
 	 * @brief 根据类似key的数据，取出一堆来
@@ -430,7 +430,7 @@ public:
 	 * @param  valueVec
 	 * @return bool
 	 */
-	virtual bool Keys(const std::string& strTableName, const std::string& strKeyColName, const std::string& strKeyName, const std::vector<std::string>& fieldVec, std::vector<std::map<std::string, std::string>>& valueVec);
+	virtual bool QueryMoreByLike(const std::string& strTableName, const std::string& strKeyColName, const std::string& strKeyName, const std::vector<std::string>& fieldVec, std::vector<std::map<std::string, std::string>>& valueVec);
 protected:
 	/**
 	 * @brief 是否需要重连

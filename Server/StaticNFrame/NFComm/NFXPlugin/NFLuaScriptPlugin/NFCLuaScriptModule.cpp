@@ -152,11 +152,11 @@ bool NFCLuaScriptModule::Register()
 		.addFunction("Execute", &NFIMysqlModule::Execute)
 		.addFunction("Delete", &NFIMysqlModule::Delete)
 		.addFunction("Exists", &NFIMysqlModule::LuaExists)
-		.addFunction("Keys", &NFIMysqlModule::LuaKeys)
+		.addFunction("QueryMoreByLike", &NFIMysqlModule::LuaQueryMoreByLike)
 		.addFunction("QueryOne", &NFIMysqlModule::LuaQueryOne)
 		.addFunction("QueryMore", &NFIMysqlModule::LuaQueryMore)
 		.addFunction("QueryMoreWithCond",&NFIMysqlModule::LuaQueryMoreWithCond)
-		.addFunction("Update", &NFIMysqlModule::LuaUpdate)
+		.addFunction("UpdateOne", &NFIMysqlModule::LuaUpdateOne)
 		.endClass();
 
 	LuaIntf::LuaBinding(l).beginClass<NFILogModule>("NFILogModule")

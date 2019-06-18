@@ -1084,7 +1084,7 @@ bool NFCMysqlDriver::Exists(const std::string& strTableName, const std::string& 
 	return true;
 }
 
-bool NFCMysqlDriver::Keys(const std::string& strTableName, const std::string& strKeyColName,
+bool NFCMysqlDriver::QueryMoreByLike(const std::string& strTableName, const std::string& strKeyColName,
 	const std::string& strKeyName, const std::vector<std::string>& fieldVec,
 	std::vector<std::vector<std::string>>& valueVec)
 {
@@ -1139,7 +1139,7 @@ bool NFCMysqlDriver::Keys(const std::string& strTableName, const std::string& st
 	return true;
 }
 
-bool NFCMysqlDriver::Keys(const std::string& strTableName, const std::string& strKeyColName, const std::string& strKeyName, const std::vector<std::string>& fieldVec, std::vector<std::map<std::string, std::string>>& valueVec)
+bool NFCMysqlDriver::QueryMoreByLike(const std::string& strTableName, const std::string& strKeyColName, const std::string& strKeyName, const std::vector<std::string>& fieldVec, std::vector<std::map<std::string, std::string>>& valueVec)
 {
 	valueVec.clear();
 	mysqlpp::Connection* pConnection = GetConnection();

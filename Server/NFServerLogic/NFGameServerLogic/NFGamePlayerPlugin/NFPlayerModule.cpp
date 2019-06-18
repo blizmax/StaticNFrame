@@ -83,7 +83,7 @@ NFIObject* NFCPlayerModule::LoadPlayerInfoByCID(const std::string& account, cons
 
 	NFMsg::db_query_playerinfo db_playerinfo;
 	db_playerinfo.mutable_db_cond()->set_account(account);
-	bool ret = FindModule<NFIMysqlModule>()->Query(db_playerinfo);
+	bool ret = FindModule<NFIMysqlModule>()->QueryOne(db_playerinfo);
 	if (ret == false)
 	{
 		NFBehaviorLog(0, account, "player", "LoadPlayerInfoByCID", -1, "账号不存在,account=" + account);
@@ -235,12 +235,12 @@ void NFCPlayerModule::CreatePlayer(const NFMsg::cgaccountlogin& cgMsg)
 	pDbInfo->set_mobiletype(cgMsg.mobiletype());
 	pDbInfo->set_jetton(GetGlobalConfigObject()->GetNodeInt32(GAME_CONFIG_INIT_JETTON));
 	pDbInfo->set_money(GetGlobalConfigObject()->GetNodeInt32(GAME_CONFIG_INIT_MONEY));
-	pDbInfo->set_lasttime(NFGetSecondTime());
+	pDbInfo->set_lasttime((int32_t)NFGetSecondTime());
 	pDbInfo->set_face_1(NFCPlayerModule::GetInitFaceID());
 	pDbInfo->set_sex(cgMsg.sex());
 	pDbInfo->set_regdate(NFDateTime::Now().GetDbTimeString());
-	bool ret = FindModule<NFIMysqlModule>()->Update(db_playerinfo);
-	if (FindModule<NFIAsyMysqlModule>()->Update(db_playerinfo, 0) == false)
+	bool ret = FindModule<NFIMysqlModule>()->UpdateOne(db_playerinfo);
+	if (FindModule<NFIAsyMysqlModule>()->UpdateOne(db_playerinfo, 0) == false)
 	{
 		NFLogError(NF_LOG_LOGIN_MODULE_LOG,0, "Nosql set playerinfo failed, pInfo:{}", db_playerinfo.DebugString());
 	}
@@ -256,7 +256,7 @@ NFIObject* NFCPlayerModule::LoadPlayerInfo(uint64_t playerId, uint32_t& retCode)
 	NFIObject* pObject = nullptr;
 	NFMsg::db_query_playerinfo db_playerinfo;
 	db_playerinfo.mutable_db_cond()->set_userid(NFCommon::tostr(playerId));
-	bool ret = FindModule<NFIMysqlModule>()->Query(db_playerinfo);
+	bool ret = FindModule<NFIMysqlModule>()->QueryOne(db_playerinfo);
 	if (ret == false)
 	{
 		NFBehaviorLog(playerId, "", "player", "LoadPlayerInfoByCID", -1, "加载数据库玩家信息失败");
