@@ -81,7 +81,19 @@ public:
 	* @param  valueVec
 	* @return bool
 	*/
-	virtual bool Query(const std::string& strTableName, const std::string& strKeyColName, const std::string& strKey, const std::vector<std::string>& fieldVec, std::vector<std::string>& valueVec, uint64_t balanceId = 0) = 0;
+	virtual bool QueryOne(const std::string& strTableName, const std::string& strKeyColName, const std::string& strKey, const std::vector<std::string>& fieldVec, uint64_t balanceId = 0) = 0;
+
+	/**
+	* @brief
+	*
+	* @param  strTableName
+	* @param  strKeyColName
+	* @param  strKey
+	* @param  fieldVec
+	* @param  valueVec
+	* @return bool
+	*/
+	virtual bool QueryMore(const std::string& strTableName, const std::string& strKeyColName, const std::string& strKey, const std::vector<std::string>& fieldVec, uint64_t balanceId = 0) = 0;
 
 	/**
 	* @brief
@@ -94,7 +106,7 @@ public:
 	* @param  valueVec
 	* @return bool
 	*/
-	virtual bool Query(const std::string& strTableName, const std::string& strKeyColName, int nOffset, int nRows, const std::vector<std::string>& fieldVec, std::vector<std::string>& valueVec, uint64_t balanceId = 0) = 0;
+	virtual bool Query(const std::string& strTableName, const std::string& strKeyColName, int nOffset, int nRows, const std::vector<std::string>& fieldVec, uint64_t balanceId = 0) = 0;
 
 	/**
 	* @brief

@@ -302,7 +302,7 @@ bool NFCAsyMysqlModule::Update(const std::string& strTableName, const std::strin
 * @param  valueVec
 * @return bool
 */
-bool NFCAsyMysqlModule::Query(const std::string& strTableName, const std::string& strKeyColName, const std::string& strKey, const std::vector<std::string>& fieldVec, std::vector<std::string>& valueVec, uint64_t balanceId)
+bool NFCAsyMysqlModule::Query(const std::string& strTableName, const std::string& strKeyColName, const std::string& strKey, const std::vector<std::string>& fieldVec, uint64_t balanceId)
 {
 	return true;
 }
@@ -318,7 +318,7 @@ bool NFCAsyMysqlModule::Query(const std::string& strTableName, const std::string
 * @param  valueVec
 * @return bool
 */
-bool NFCAsyMysqlModule::Query(const std::string& strTableName, const std::string& strKeyColName, int nOffset, int nRows, const std::vector<std::string>& fieldVec, std::vector<std::string>& valueVec, uint64_t balanceId)
+bool NFCAsyMysqlModule::Query(const std::string& strTableName, const std::string& strKeyColName, int nOffset, int nRows, const std::vector<std::string>& fieldVec, uint64_t balanceId)
 {
 	return true;
 }
