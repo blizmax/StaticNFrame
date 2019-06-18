@@ -8,12 +8,12 @@ TimeUtils = {}
 function TimeUtils.GetTime(t)
 	local tab = {}
 	if type(t) == "string" then
-		tab.year = string.sub(t, 1, 4)
-		tab.month = string.sub(t, 6, 7)
-		tab.day = string.sub(t, 9, 10)
-		tab.hour = string.sub(t, 12, 13)
-		tab.min = string.sub(t, 15, 16)
-		tab.sec = string.sub(t, 18, 19)
+		tab.year = tonumber(string.sub(t, 1, 4))
+		tab.month = tonumber(string.sub(t, 6, 7))
+		tab.day = tonumber(string.sub(t, 9, 10))
+		tab.hour = tonumber(string.sub(t, 12, 13))
+		tab.min = tonumber(string.sub(t, 15, 16))
+		tab.sec = tonumber(string.sub(t, 18, 19))
 		tab.isdst = false
 	elseif type(t) == "number" then
 		return t
@@ -26,7 +26,7 @@ end
 
 --获取当前毫秒时间，没有参数
 function TimeUtils.GetMescTime()
-	return socket.gettime()
+	return os.time()*1000
 end
 
 

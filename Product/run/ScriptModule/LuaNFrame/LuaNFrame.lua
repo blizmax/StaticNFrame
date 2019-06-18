@@ -6,11 +6,15 @@ function LuaNFrame.init(pluginManager, luaModule)
 end
 
 --添加服务器秒定时器
-function LuaNFrame.AddTimer(luaFunc, nInterValSec, nCallCount)
+function LuaNFrame.AddTimer(luaFunc, nInterValSec, nCallCount, dataStr)
     if nInterValSec == nil or type(luaFunc) ~= "string" then
 		LuaNFrame.Error(NFLogId.NF_LOG_SYSTEMLOG, 0, __G__TRACKBACK__("AddTimer Para Error"))
 		return
-    end
+	end
+	
+	if type(dataStr) ~= "string" then
+		dataStr = ""
+	end
 
     if nCallCount == nil then
 		nCallCount = 0;
@@ -19,12 +23,12 @@ function LuaNFrame.AddTimer(luaFunc, nInterValSec, nCallCount)
 		return
 	end
 
-	return CPPNFrame:AddTimer(luaFunc, nInterValSec*1000, nCallCount)
+	return CPPNFrame:AddTimer(luaFunc, nInterValSec*1000, nCallCount, dataStr)
 end
 
 --每嗝1毫秒的定时器示例, 300ms执行testtimer函数一次,总共执行5此
 --LuaNFrame.addtimermsec("testtimer",300, 5)
-function LuaNFrame.AddTimerMsec(luaFunc, nInterValMSec, nCallCount)
+function LuaNFrame.AddTimerMsec(luaFunc, nInterValMSec, nCallCount, dataStr)
 	if nInterValMSec == nil or type(luaFunc) ~= "string" then
 		LuaNFrame.Error(NFLogId.NF_LOG_SYSTEMLOG, 0, __G__TRACKBACK__("AddTimerMsec Para Error"))
 		return
@@ -32,6 +36,10 @@ function LuaNFrame.AddTimerMsec(luaFunc, nInterValMSec, nCallCount)
 
     if nCallCount == nil then
         nCallCount = 0;
+	end
+
+	if type(dataStr) ~= "string" then
+		dataStr = ""
 	end
 	
 	if nCallCount == nil then
@@ -41,7 +49,7 @@ function LuaNFrame.AddTimerMsec(luaFunc, nInterValMSec, nCallCount)
 		return
 	end
 
-	return CPPNFrame:AddTimer(luaFunc, nInterValMSec, nCallCount)
+	return CPPNFrame:AddTimer(luaFunc, nInterValMSec, nCallCount, dataStr)
 end
 
 --停止服务器定时器
@@ -71,7 +79,7 @@ end
 	--end
 -- (3) 每周（7*24*3600）的第34个小时触发闹钟：LuaNFrame.addclocker("OnClocker", 34*3600, 7*24*3600, 0);
 -- 
-function LuaNFrame.AddClocker(luaFunc, sec, intervalSec, nCallCount)
+function LuaNFrame.AddClocker(luaFunc, sec, intervalSec, nCallCount, dataStr)
 	if type(luaFunc) ~= "string" or type(sec) ~= "number" or type(intervalSec) ~= "number" then
 		LuaNFrame.Error(NFLogId.NF_LOG_SYSTEMLOG, 0, __G__TRACKBACK__("AddClocker Para Error"))
 		return
@@ -79,6 +87,10 @@ function LuaNFrame.AddClocker(luaFunc, sec, intervalSec, nCallCount)
 
     if nCallCount == nil then
         nCallCount = 0;
+	end
+
+	if type(dataStr) ~= "string" then
+		dataStr = ""
 	end
 	
 	if nCallCount == nil then
@@ -88,7 +100,7 @@ function LuaNFrame.AddClocker(luaFunc, sec, intervalSec, nCallCount)
 		return
 	end
 
-	return CPPNFrame:AddClocker(luaFunc, sec, intervalSec, nCallCount)
+	return CPPNFrame:AddClocker(luaFunc, sec, intervalSec, nCallCount, dataStr)
 end
 
 --创建全局唯一的UUID
@@ -113,6 +125,10 @@ function LuaNFrame.GetMD5(str)
 		return
     end
     return CPPNFrame:GetMD5(str)
+end
+
+function md5(md5Str)
+	return LuaNFrame.GetMD5(md5Str)
 end
 
 --通过字符串获得对应的CRC32, 返回数字
@@ -418,9 +434,9 @@ function LuaNFrame.DispatchMasterHttp(unLinkId, requestId, firstPath, secondPath
 end
 
 --执行定时函数
-function LuaNFrame.DispatchTimer(luaFunc, timerId)
+function LuaNFrame.DispatchTimer(luaFunc, dataStr, timerId)
 	local function timerExecute()
-		TimerManager.execute(luaFunc, timerId)
+		TimerManager.execute(luaFunc, dataStr, timerId)
 	end
 	
 	local status, msg = xpcall (timerExecute, __G__TRACKBACK__)

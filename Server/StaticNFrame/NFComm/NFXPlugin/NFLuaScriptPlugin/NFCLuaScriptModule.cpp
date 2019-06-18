@@ -24,7 +24,7 @@
 
 void NFLuaTimer::OnTimer(uint32_t nTimerID)
 {
-	m_pLuaScriptModule->TryRunGlobalScriptFunc("LuaNFrame.DispatchTimer", mLuaFunc, nTimerID);
+	m_pLuaScriptModule->TryRunGlobalScriptFunc("LuaNFrame.DispatchTimer", mLuaFunc, mDataStr, nTimerID);
 }
 
 bool NFCLuaScriptModule::Init()
@@ -235,7 +235,7 @@ void NFCLuaScriptModule::StopClocker(uint32_t nTimerID)
 	StopTimer(nTimerID);
 }
 
-uint32_t NFCLuaScriptModule::AddTimer(const std::string& luaFunc, uint64_t nInterVal, uint32_t nCallCount)
+uint32_t NFCLuaScriptModule::AddTimer(const std::string& luaFunc, uint64_t nInterVal, uint32_t nCallCount, const std::string& dataStr)
 {
 	NFLuaTimer* luaTimer = nullptr;
 	if (m_luaTimerList.empty())
@@ -251,6 +251,7 @@ uint32_t NFCLuaScriptModule::AddTimer(const std::string& luaFunc, uint64_t nInte
 
 	luaTimer->mLuaFunc = luaFunc;
 	luaTimer->mInterVal = nInterVal;
+	luaTimer->mDataStr = dataStr;
 
 	if (nCallCount == 0)
 	{
@@ -270,7 +271,7 @@ uint32_t NFCLuaScriptModule::AddTimer(const std::string& luaFunc, uint64_t nInte
 	return luaTimer->mTimerId;
 }
 
-uint32_t NFCLuaScriptModule::AddClocker(const std::string& luaFunc, uint64_t nStartTime, uint32_t nInterDays, uint32_t nCallCount)
+uint32_t NFCLuaScriptModule::AddClocker(const std::string& luaFunc, uint64_t nStartTime, uint32_t nInterDays, uint32_t nCallCount, const std::string& dataStr)
 {
 	NFLuaTimer* luaTimer = nullptr;
 	if (m_luaTimerList.empty())
@@ -285,6 +286,8 @@ uint32_t NFCLuaScriptModule::AddClocker(const std::string& luaFunc, uint64_t nSt
 	}
 
 	luaTimer->mLuaFunc = luaFunc;
+	luaTimer->mDataStr = dataStr;
+
 	if (nCallCount == 0)
 	{
 		luaTimer->mCallCount = INFINITY_CALL;

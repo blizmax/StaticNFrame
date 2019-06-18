@@ -3,6 +3,7 @@ GameWuxiandai = GameWuxiandai or {}
 function GameWuxiandai.Load()
 	package.path = package.path .. ";../ScriptModule/wuxiandai/?.lua;"
 	package.path = package.path .. ";../ScriptModule/wuxiandai/common/?.lua;"
+	LoadLuaFile("../ScriptModule/Public/GameWuxiandai", true)
 	LoadLuaFile("../ScriptModule/wuxiandai/common", true)
 	LoadLuaFile("../ScriptModule/wuxiandai/Human")
 	LoadLuaFile("../ScriptModule/wuxiandai/Agent")
@@ -34,7 +35,7 @@ function GameWuxiandai.Load()
 	LoadLuaFile("../ScriptModule/wuxiandai/Lhdb")
 	LoadLuaFile("../ScriptModule/wuxiandai/Lkpy")
 	LoadLuaFile("../ScriptModule/wuxiandai/PSZ")
-	LoadLuaFile("../ScriptModule/wuxiandai/Scibo")
+	LoadLuaFile("../ScriptModule/wuxiandai/Sicbo")
 	LoadLuaFile("../ScriptModule/wuxiandai/Sscai")
 	LoadLuaFile("../ScriptModule/wuxiandai/Texas")
 	LoadLuaFile("../ScriptModule/wuxiandai/Tgpd")
@@ -43,13 +44,61 @@ end
 
 function GameWuxiandai.Init()
     GameWuxiandai.Load()
-    
+    breakSocketHandle,debugXpCall = require("LuaDebug")("localhost",7003)
     mysqlItem = mysqlConnect.new()
     redisItem = redisConnect.new()
-    LuaNFrame.AddTimer("LoopWuxianDaiSec", 1)
+	LuaNFrame.AddTimer("LoopWuxianDaiSec", 1)
+	
+	LogService.Init()
+	RobotService.Init()   --先在这里加载机器人,后面再分开每个游戏单独管理
+	MailModel.LoadSysMail()
+	JettonModel.Init()
+	PopularModel.Init()
+	OnlineModel.Init()    --把非在线的全部清空
+
+	
+	BrnnNewService.Init()
+	HongHeiNewService.Init()
+	BarccatatNewService.Init()
+	BcbmNewService.Init()
+	LhdNewService.Init()
+	
+	DdzNewService.Init()
+	PszNewService.Init()
+	DouNiuNewService.Init()
+	SicboNewService.Init()
+	FqzsNewService.Init()
+	YqsNewService.Init()
+	TexasNewService.Init()
+	if g_gamename == "hhgj" then
+		CjmpNewService.Init()
+	end
+	LogServer.Init()
 end
 
 LoopWuxianDaiSec = LoopWuxianDaiSec or {}
-function LoopWuxianDaiSec.execute(timerId)
+function LoopWuxianDaiSec.execute(dataStr, timerId)
+	g_markTime.curr = TimeUtils.GetTableTime()
+	
+	BrnnNewService.ServerLoop()
+			
+	HongHeiNewService.ServerLoop()
+	BarccatatNewService.ServerLoop()
+	BcbmNewService.ServerLoop()
+	LhdNewService.ServerLoop()
+	DdzNewService.ServerLoop()
+	PszNewService.ServerLoop()
+	
+	DouNiuNewService.ServerLoop()
+	
+	SicboNewService.ServerLoop()
+	FqzsNewService.ServerLoop()
+	YqsNewService.ServerLoop()
+	TexasNewService.ServerLoop()
+	AgentService.ServiceLoop()
+	CjmpNewService.ServerLoop()
 
+	LegalService.UtilsLoop()
+	LogService.UtilsLoop()
+	AgentService.UtilsLoop()
 end

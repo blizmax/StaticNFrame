@@ -818,6 +818,13 @@ function table.nums(t)
 	return count
 end
 
+function table.isnull(t)
+	for k, v in pairs(t) do
+		return false
+	end
+	return true
+end
+
 -- start --
 
 --------------------------------
@@ -2023,4 +2030,28 @@ function table.slice (t,i1,i2)
     k = k + 1
   end
   return res
+end
+
+function string.numtostring(num)
+
+	local retStr = ""
+	while  true do
+		
+		--if num < 100000000 then
+		--	retStr = retStr..tostring(num)
+		--	breank
+		--end
+		
+		if num < 10 then
+			retStr = tostring(num)..retStr
+			break
+		end
+		
+		local tem = math.mod(num, 10)
+		
+		num = math.floor( num/10)
+		
+		retStr = tostring(tem)..retStr
+	end
+	return retStr
 end

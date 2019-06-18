@@ -44,8 +44,8 @@ function CPPNFrame:EndProfiler()
 end
 
 --添加服务器定时器, 返回定时器ID
-function CPPNFrame:AddTimer(luaFunc, nInterVal, nCallCount)
-    return self.luaModule:AddTimer(luaFunc, nInterVal, nCallCount)
+function CPPNFrame:AddTimer(luaFunc, nInterVal, nCallCount, dataStr)
+    return self.luaModule:AddTimer(luaFunc, nInterVal, nCallCount, dataStr)
 end
 
 --停止服务器定时器
@@ -53,8 +53,8 @@ function CPPNFrame:StopTimer(timerId)
     self.luaModule:StopTimer(timerId)
 end
 
-function CPPNFrame:AddClocker(luaFunc, startSec, intervalSec, param_table)
-    return self.luaModule:AddClocker(luaFunc, startSec, intervalSec, param_table)
+function CPPNFrame:AddClocker(luaFunc, startSec, intervalSec, nCallCount, dataStr)
+    return self.luaModule:AddClocker(luaFunc, startSec, intervalSec, nCallCount, dataStr)
 end
 
 function CPPNFrame:StopClocker(timerId)
