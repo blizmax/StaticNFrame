@@ -244,14 +244,12 @@ function RpmjService.InitPublicPoker(tItem)
 		end
 	end
 
-	for j = 1, 100 do
-		for i = 1,#pokerList do
-			--这里洗牌100次
-			local index1 = math.myrandom(1, #pokerList)
-			local numTemp = pokerList[index1]
-			pokerList[index1] = pokerList[i]
-			pokerList[i] = numTemp
-		end
+	for i = 1,#pokerList do
+		--这里洗牌100次
+		local index1 = math.myrandom(1, #pokerList)
+		local numTemp = pokerList[index1]
+		pokerList[index1] = pokerList[i]
+		pokerList[i] = numTemp
 	end
 
 	local len = #tItem.m_tInfo.publicpoker
@@ -1632,6 +1630,7 @@ function RpmjService.PlayCountWin(tItem)
 	elseif tItem.m_tInfo.wintype == g_gdmjAction.type_hu then  --这个是自摸胡
 		--这个看看是不是要杠爆全包，杠爆全包就是放杠后，杠上花，放杠者全包。
 		table.insert(desList[winChairID],"自摸")   --自摸
+		tItem.m_detailList[winChairID].zimonum = tItem.m_detailList[winChairID].zimonum + 1
 		doubleAccount = 2
 	end
 
@@ -1660,8 +1659,6 @@ function RpmjService.PlayCountWin(tItem)
 			doubleAccount = doubleAccount * 8
 		end				
 	end
-	
-	tItem.m_detailList[winChairID].zimonum = tItem.m_detailList[winChairID].zimonum + 1
 	
 	if doubleAccount > tItem.m_detailList[winChairID].maxMultiple then
 		tItem.m_detailList[winChairID].maxMultiple = doubleAccount
