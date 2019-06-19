@@ -1599,3 +1599,113 @@ std::string NFStringUtility::Demangle(const std::string& name)
 #endif
 }
 
+void NFStringUtility::SplitString(const std::string& sSrc, std::string sDelimit, std::vector<std::string>& vResult, std::string sNull_subst)
+{
+	typedef std::basic_string<char>::size_type s_t;
+	if (sSrc.empty() || sDelimit.empty()) {
+		//throw "split:empty string\0";
+		return;
+	}
+	std::vector<std::string> v;
+	s_t deli_len = sDelimit.size();
+	s_t index = std::string::npos;
+	s_t last_search_position = 0;
+	while ((index = sSrc.find(sDelimit, last_search_position)) != std::string::npos) {
+		if (index == last_search_position) {
+			vResult.push_back(sNull_subst);
+		}
+		else {
+			vResult.push_back(sSrc.substr(last_search_position, index
+				- last_search_position));
+		}
+		last_search_position = index + deli_len;
+	}
+	std::string last_one = sSrc.substr(last_search_position);
+	vResult.push_back(last_one.empty() ? sNull_subst : last_one);
+}
+
+
+void NFStringUtility::SplitStringToUint32(const std::string& strSrc, const std::string& strToken, std::vector<uint32_t>& vecResult, int nBase /*= 10*/)
+{
+	vecResult.clear();
+	std::string::size_type nBegin = 0;
+	std::string::size_type nEnd = 0;
+
+	while ((nBegin = strSrc.find_first_not_of(strToken.c_str(), nEnd)) != std::string::npos)
+	{
+		nEnd = strSrc.find_first_of(strToken.c_str(), nBegin);
+		vecResult.push_back((uint32_t)strtol(strSrc.substr(nBegin, nEnd - nBegin).c_str(), NULL, nBase));
+	}
+}
+
+bool NFStringUtility::SplitStringToUint32Ex(const std::string& strSrc, vector<pair<uint32_t, uint32_t> >& vecResult)
+{
+	vecResult.clear();
+	std::string::size_type nBegin = 0;
+	std::string::size_type nEnd = 0;
+
+	vector<uint32_t> tmpvec;
+	std::string::size_type nSubBegin = 0;
+	std::string::size_type nSubEnd = 0;
+
+	while ((nBegin = strSrc.find_first_not_of("$", nEnd)) != std::string::npos)
+	{
+		nEnd = strSrc.find_first_of("$", nBegin);
+		string strSubSrc = strSrc.substr(nBegin, nEnd - nBegin);
+		nSubBegin = 0;
+		nSubEnd = 0;
+		tmpvec.clear();
+		while ((nSubBegin = strSubSrc.find_first_not_of("~", nSubEnd)) != std::string::npos)
+		{
+			nSubEnd = strSubSrc.find_first_of("~", nSubBegin);
+			tmpvec.push_back((uint32_t)strtol(strSubSrc.substr(nSubBegin, nSubEnd - nSubBegin).c_str(), NULL, 10));
+		}
+		if (tmpvec.size() < 2)
+		{
+			return false;
+		}
+		vecResult.push_back(make_pair(tmpvec[0], tmpvec[1]));
+	}
+
+	return true;
+}
+
+bool NFStringUtility::SplitStringToInt32(const std::string& strSrc, std::vector<std::pair<int32_t, int32_t> >& vecResult)
+{
+	vecResult.clear();
+	std::string::size_type nBegin = 0;
+	std::string::size_type nEnd = 0;
+
+	std::vector<int32_t> tmpvec;
+	std::string::size_type nSubBegin = 0;
+	std::string::size_type nSubEnd = 0;
+
+	while ((nBegin = strSrc.find_first_not_of("$", nEnd)) != std::string::npos)
+	{
+		nEnd = strSrc.find_first_of("$", nBegin);
+		string strSubSrc = strSrc.substr(nBegin, nEnd - nBegin);
+		nSubBegin = 0;
+		nSubEnd = 0;
+		tmpvec.clear();
+		while ((nSubBegin = strSubSrc.find_first_not_of("~", nSubEnd)) != std::string::npos)
+		{
+			nSubEnd = strSubSrc.find_first_of("~", nSubBegin);
+			tmpvec.push_back((uint32_t)strtol(strSubSrc.substr(nSubBegin, nSubEnd - nSubBegin).c_str(), NULL, 10));
+		}
+
+		//只填了一个0的话  补齐成0~0
+		if (tmpvec.size() == 1 && tmpvec[0] == 0)
+		{
+			tmpvec.push_back(0);
+		}
+
+		if (tmpvec.size() < 2)
+		{
+			return false;
+		}
+		vecResult.push_back(make_pair(tmpvec[0], tmpvec[1]));
+	}
+
+	return true;
+}
+

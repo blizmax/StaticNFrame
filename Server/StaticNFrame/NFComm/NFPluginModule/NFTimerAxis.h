@@ -12,6 +12,7 @@
 #include "NFComm/NFCore/NFSingleton.hpp"
 #include "NFComm/NFCore/NFPlatform.h"
 #include "NFTimerObj.h"
+#include "NFComm/NFCore/NFTime.h"
 
 //时间轴检查频率 ms
 #define TIMER_AXIS_CHECK_FREQUENCE 32
@@ -57,7 +58,7 @@ private:
 protected:
 	static uint64_t GetTick()
 	{
-		return NFGetTime();
+		return NFTime::Now().UnixMSec();
 	}
 
 	struct Timer

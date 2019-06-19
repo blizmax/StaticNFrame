@@ -8,6 +8,7 @@
 // -------------------------------------------------------------------------
 
 #include "NFRandom.hpp"
+#include "NFTime.h"
 #include <vector>
 
 static uint32_t g_seed = 0;
@@ -23,7 +24,7 @@ static const uint32_t g_nPar7 = 0x7fffffff;
 
 void NFRandomSeed()
 {
-	g_seed = static_cast<uint32_t>(NFGetTime());
+	g_seed = static_cast<uint32_t>(NFTime::Tick());
 }
 
 uint32_t NFRandomAUInt()

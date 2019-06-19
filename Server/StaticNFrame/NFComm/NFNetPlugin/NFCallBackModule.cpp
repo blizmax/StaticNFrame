@@ -40,7 +40,7 @@ bool NFCCallBackModule::Finalize()
 
 void NFCCallBackModule::HandleTimeout()
 {
-	int64_t nowTime = NFGetTime();
+	int64_t nowTime = NFTime::Tick();
 	for (auto iter = m_callbackMap.begin(); iter != m_callbackMap.end();)
 	{
 		if (nowTime >= iter->second.m_timeOut)
@@ -57,7 +57,7 @@ void NFCCallBackModule::HandleTimeout()
 
 bool NFCCallBackModule::ProcessTimeout(const NFCCallBackModule::NFCallBack& back)
 {
-	NFLogWarning(NF_LOG_NET_PLUGIN, 0, "call back:{}ms, desc:{}", NFGetTime() - back.m_timeOut, back.m_desc);
+	NFLogWarning(NF_LOG_NET_PLUGIN, 0, "call back:{}ms, desc:{}", NFTime::Tick() - back.m_timeOut, back.m_desc);
 	return true;
 }
 

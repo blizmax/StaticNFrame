@@ -12,7 +12,30 @@
 #include <signal.h>
 #include <string.h>
 #include <cmath>
+#include "NFTime.h"
 #include "NFPlatform.h"
+
+bool NFCommon::GetBit(uint32_t src, uint32_t pos)
+{
+	bool retval = false;
+	if (pos <= sizeof(uint32_t) * 8 - 1) {
+		uint32_t nMask = 1 << pos;
+		retval = (src & nMask) == nMask;
+	};
+	return retval;
+}
+
+void NFCommon::SetBit(uint32_t &src, uint32_t pos, bool flag)
+{
+	if (pos <= sizeof(uint32_t) * 8 - 1) {
+		if (flag) {
+			src |= (1 << pos);
+		}
+		else {
+			src &= ~(1 << pos);
+		}
+	};
+}
 
 #if NF_PLATFORM == NF_PLATFORM_WIN
 #include "windows.h"
@@ -435,7 +458,7 @@ std::string NFCommon::nowtime2str()
 
 int64_t NFCommon::now2ms()
 {
-	return NFGetTime();
+	return NFTime::Tick();
 }
 
 int64_t NFCommon::now2us()
@@ -689,3 +712,22 @@ size_t NFCommon::toSize(const std::string &s, size_t iDefaultSize)
 	return iDefaultSize;
 }
 
+NFIdGenerator::NFIdGenerator(uint64_t server_id)
+{
+	m_nServerID = server_id;
+	m_nLastTime = time(NULL);
+	m_nLastID = (m_nServerID << 52) + (m_nLastTime << 20) + 0;
+}
+
+uint64_t NFIdGenerator::GenId()
+{
+	uint64_t nCurrTime = time(NULL);
+	if (nCurrTime == m_nLastTime)
+	{
+		return ++m_nLastID;
+	}
+
+	m_nLastTime = nCurrTime;
+	m_nLastID = (m_nServerID << 52) + (m_nLastTime << 20) + 0;
+	return m_nLastID;
+}

@@ -108,6 +108,12 @@
     <ClCompile Include="NFShm.cpp">
       <Filter>Common</Filter>
     </ClCompile>
+    <ClCompile Include="NFServerTime.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
+    <ClCompile Include="NFTime.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="NFBase64.h">
@@ -285,6 +291,12 @@
       <Filter>Common</Filter>
     </ClInclude>
     <ClInclude Include="NFMemHashMap2.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="NFServerTime.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="NFTime.h">
       <Filter>Common</Filter>
     </ClInclude>
   </ItemGroup>

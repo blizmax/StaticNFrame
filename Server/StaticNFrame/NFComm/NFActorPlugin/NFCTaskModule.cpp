@@ -13,6 +13,7 @@
 #include "NFComm/NFPluginModule/NFLogMgr.h"
 
 #include "NFComm/NFPluginModule/NFITaskComponent.h"
+#include "NFComm/NFCore/NFTime.h"
 
 NFCTaskModule::NFCTaskModule(NFIPluginManager* p)
 {
@@ -287,7 +288,7 @@ void NFCTaskModule::OnMainThreadTick()
 	bool ret = m_mQueue.Pop(listTask);
 	if (ret)
 	{
-		uint64_t start = NFGetTime();
+		uint64_t start = NFTime::Tick();
 		for (auto it = listTask.begin(); it != listTask.end(); it++)
 		{
 			NFTaskActorMessage& xMsg = *it;
@@ -342,7 +343,7 @@ void NFCTaskModule::OnMainThreadTick()
 
 		if (listTask.size() > 0)
 		{
-			NFLogDebug(NF_LOG_ACTOR_PLUGIN, 0, "handle main thread tick task num:{}, use time:{}", listTask.size(), NFGetTime() - start);
+			NFLogDebug(NF_LOG_ACTOR_PLUGIN, 0, "handle main thread tick task num:{}, use time:{}", listTask.size(), NFTime::Tick() - start);
 		}
 	}
 

@@ -54,6 +54,10 @@ class _NFExport NFCommon
 {
 public:
 
+	//操作bit
+	static bool GetBit(uint32_t src, uint32_t pos);
+	static void SetBit(uint32_t &src, uint32_t pos, bool flag);
+
 	/**
 	* @brief  去掉头部以及尾部的字符或字符串.
 	*
@@ -1219,6 +1223,17 @@ std::string NFCommon::tostr(InputIter iFirst, InputIter iLast, const std::string
 
 #endif
 
+class NFIdGenerator
+{
+private:
+	uint64_t m_nServerID;
+	uint64_t m_nLastTime;
+	uint64_t m_nLastID;
+
+public:
+	NFIdGenerator(uint64_t server_id);
+	uint64_t GenId();
+};
 
 
 

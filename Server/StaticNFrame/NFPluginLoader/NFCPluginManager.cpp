@@ -19,6 +19,7 @@
 #include "NFComm/NFPluginModule/NFConfigMgr.h"
 #include "NFComm/NFCore/NFCpu.h"
 #include "NFPrintfLogo.h"
+#include "NFComm/NFCore/NFServerTime.h"
 
 #include <utility>
 #include <thread>
@@ -40,9 +41,11 @@ NFCPluginManager::NFCPluginManager() : NFIPluginManager()
 
 	mstrLogPath = "logs";
 
-	mnInitTime = NFGetTime();
+	mnInitTime = NFTime::Now().UnixMSec();
 	mnNowTime = mnInitTime;
 	mIsDaemon = false;
+
+	g_GetGlobalServerTime()->Init(mFrame);
 
 	//    注册AllServer
 	for (int i = 1; i < NF_ST_MAX; i++)
@@ -235,10 +238,12 @@ NFIPlugin* NFCPluginManager::FindPlugin(const std::string& strPluginName)
 bool NFCPluginManager::Execute()
 {
 	bool bRet = true;
-	mnNowTime = NFGetTime();
-	uint64_t startTime = NFGetTime();
+	mnNowTime = NFTime::Now().UnixMSec();
+	uint64_t startTime = NFTime::Tick();
 	uint64_t endTime = 0;
 	mCurFrameCount++;
+
+	g_GetGlobalServerTime()->Update(startTime);   //
 
 	BeginProfiler("MainLoop");
 	
@@ -269,7 +274,7 @@ bool NFCPluginManager::Execute()
 	EndProfiler();
 
 	//采用固定帧率
-	endTime = NFGetTime();
+	endTime = NFTime::Tick();
 	uint32_t cost = static_cast<uint32_t>(endTime > startTime ? (endTime - startTime) : 0);
 	uint32_t sleepTime = mFrameTime > cost ? (mFrameTime - cost) : 0;
 	if (sleepTime > 0)

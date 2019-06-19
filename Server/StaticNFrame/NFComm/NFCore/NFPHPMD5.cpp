@@ -9,10 +9,11 @@
 
 #include "NFPHPMD5.h"
 #include "NFRandom.hpp"
+#include "NFTime.h"
 
 string NFPHPMD5::GenBinMD5(const size_t random_data_len)
 {
-	thread_local static NFRandom rand(uint32_t(NFGetTime() / 1000));
+	thread_local static NFRandom rand(uint32_t(NFTime::Tick() / 1000));
 	string data;
 	data.resize(random_data_len);
 

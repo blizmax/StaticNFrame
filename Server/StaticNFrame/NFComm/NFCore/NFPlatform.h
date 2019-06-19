@@ -208,6 +208,10 @@ inline int64_t NFGetNanoSeccondTime()
 #define NF_FORMAT(my_fmt, ...)             fmt::format(my_fmt, ##__VA_ARGS__);
 #define NF_FORMAT_FUNCTION(my_fmt, ...)    fmt::format(std::string("[{}:{}]") + my_fmt, NF_FUNCTION_LINE, ##__VA_ARGS__);
 
+#define MAKE_UINT32(low, high)	((uint32)(((uint16)((uint32)(low) & 0xffff)) | ((uint32)((uint16)((uint32)(high) & 0xffff))) << 16))
+#define HIGH_UINT16(l) ((uint16)((uint32)(l) >> 16))
+#define LOW_UINT16(l) ((uint16)((uint32)(l) & 0xffff))
+
 
 #endif
 

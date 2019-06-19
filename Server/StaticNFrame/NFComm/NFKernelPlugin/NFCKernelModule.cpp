@@ -69,6 +69,20 @@ void NFCKernelModule::ProcessMemFree()
 
 }
 
+uint64_t CreateUUID(int32_t nServerID)
+{
+
+	static uint32_t serialID = 0;
+	++serialID;
+	time_t now_time = time(NULL);
+	uint64_t newid = (((uint64_t)nServerID << 40) | ((uint64_t)now_time << 16) | ((uint64_t)(serialID & 0x0FFFF)));
+	if (serialID == 65534)
+	{
+		serialID = 0;
+	}
+	return newid;
+}
+
 uint64_t NFCKernelModule::Get64UUID()
 {
 	uint64_t time = NFGetTime();

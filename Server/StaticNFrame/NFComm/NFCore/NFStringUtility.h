@@ -14,6 +14,7 @@
 #include <cstring>
 #include <ctype.h>
 #include <wctype.h>
+#include <iostream>
 
 #include "NFSlice.hpp"
 
@@ -418,6 +419,698 @@ public:
 
 		return ccattr;
 	};
+
+	//字符集转换
+	inline string GBKToUTF8(const std::string& strGBK)
+	{
+#ifdef _WIN32
+		wchar_t* str1;
+		int n = MultiByteToWideChar(CP_ACP, 0, strGBK.c_str(), -1, NULL, 0);
+		str1 = new wchar_t[n];
+		MultiByteToWideChar(CP_ACP, 0, strGBK.c_str(), -1, str1, n);
+		n = WideCharToMultiByte(CP_UTF8, 0, str1, -1, NULL, 0, NULL, NULL);
+		char * str2 = new char[n];
+		WideCharToMultiByte(CP_UTF8, 0, str1, -1, str2, n, NULL, NULL);
+		string strOutUTF8(str2);
+		delete[]str1;
+		str1 = NULL;
+		delete[]str2;
+		str2 = NULL;
+		return strOutUTF8;
+#else
+		if (strGBK.empty())
+		{
+			return "";
+		}
+		iconv_t cd = iconv_open("UTF-8", "GB18030");
+		size_t inlen = strGBK.length();
+		char *outbuf = (char *)malloc(inlen * 4);
+		bzero(outbuf, inlen * 4);
+		const char *in = strGBK.c_str();
+		char *out = outbuf;
+		size_t outlen = inlen * 4;
+		if (iconv(cd, (char**)&in, (size_t *)&inlen, &out, &outlen) == (size_t)-1)
+		{
+			int nErr = errno;
+			switch (nErr)
+			{
+			case E2BIG:
+			{
+				printf("errno:E2BGI（OutBuf空间不够）\n");
+				break;
+			}
+			case EILSEQ:
+			{
+				printf("errno:EILSEQ（InBuf多字节序无效）\n");
+				break;
+			}
+			case EINVAL:
+			{
+				printf("errno:EINVAL（有残留的字节未转换）\n");
+				break;
+			}
+			default:
+				break;
+			}
+			free(outbuf);
+			iconv_close(cd);
+			return "";
+		}
+		else
+		{
+			outlen = strlen(outbuf);
+			string strOutUTF8(outbuf);
+			free(outbuf);
+			iconv_close(cd);
+			return strOutUTF8;
+		}
+#endif
+	}
+
+	//utf-8 转 gbk
+	inline string UTF8ToGBK(const std::string& strUTF8)
+	{
+#ifdef _WIN32
+		int len = MultiByteToWideChar(CP_UTF8, 0, strUTF8.c_str(), -1, NULL, 0);
+		unsigned short * wszGBK = new unsigned short[len + 1];
+		//wchar_t * wszGBK = new wchar_t[len+1];
+		memset(wszGBK, 0, len * 2 + 2);
+		MultiByteToWideChar(CP_UTF8, 0, (const char*)strUTF8.c_str(), -1, (LPWSTR)wszGBK, len);
+		len = WideCharToMultiByte(CP_ACP, 0, (LPCWSTR)wszGBK, -1, NULL, 0, NULL, NULL);
+		char *szGBK = new char[len + 1];
+		memset(szGBK, 0, len + 1);
+		WideCharToMultiByte(CP_ACP, 0, (LPCWSTR)wszGBK, -1, szGBK, len, NULL, NULL);
+		string strTemp(szGBK);
+		delete[]szGBK;
+		delete[]wszGBK;
+		return strTemp;
+#else
+		iconv_t cd = iconv_open("gb18030", "utf-8");
+		size_t inlen = strUTF8.length();
+		char *outbuf = (char *)malloc(inlen * 4);
+		bzero(outbuf, inlen * 4);
+		const char *in = strUTF8.c_str();
+		char *out = outbuf;
+		size_t outlen = inlen * 4;
+		if (iconv(cd, (char**)&in, (size_t *)&inlen, &out, &outlen) == (size_t)-1)
+		{
+			int nErr = errno;
+			switch (nErr)
+			{
+			case E2BIG:
+			{
+				printf("errno:E2BGI（OutBuf空间不够）\n");
+				break;
+			}
+			case EILSEQ:
+			{
+				printf("errno:EILSEQ（InBuf多字节序无效）\n");
+				break;
+			}
+			case EINVAL:
+			{
+				printf("errno:EINVAL（有残留的字节未转换）\n");
+				break;
+			}
+			default:
+				break;
+			}
+			free(outbuf);
+			iconv_close(cd);
+			return "";
+		}
+		else
+		{
+			outlen = strlen(outbuf);
+			string strOutGBK(outbuf);
+			free(outbuf);
+			iconv_close(cd);
+			return strOutGBK;
+		}
+
+#endif
+	}
+
+	inline bool IsDigital(const std::string &s)
+	{
+		int len = s.length();
+		int i = 0;
+		for (; i < len; ++i)
+		{
+			if (s[i] < '0' || s[i] > '9')
+			{
+				return false;
+			}
+		}
+
+		return i ? true : false;
+	}
+
+	inline bool IsDigital_2(const std::string &s)
+	{
+		int len = s.length();
+		int i = 0;
+		for (; i < len; ++i)
+		{
+			if (i == 0 && s[0] == '-')
+			{
+				continue;
+			}
+			if (s[i] < '0' || s[i] > '9')
+			{
+				return false;
+			}
+		}
+
+		return i ? true : false;
+	}
+
+	inline time_t StringToUnixTime(const char *str)
+	{
+		tm tm_;
+		int year = 1900, month = 1, day = 0, hour = 0, minute = 0, second = 0;
+		sscanf(str, "%d-%d-%d %d:%d:%d", &year, &month, &day, &hour, &minute, &second);
+		tm_.tm_year = year - 1900;
+		tm_.tm_mon = month - 1;
+		tm_.tm_mday = day;
+		tm_.tm_hour = hour;
+		tm_.tm_min = minute;
+		tm_.tm_sec = second;
+		tm_.tm_isdst = 0;
+
+		return mktime(&tm_); //已经减了8个时区  
+	}
+
+	inline bool CheckIsDigit(const std::string& str)
+	{
+		int nCount = str.length(); // 获得字符个数
+		for (int i = 0; i < nCount; i++)
+		{
+			if (0 == isdigit(str.at(i))) // 不是数字就置标志位
+			{
+				return false;
+			}
+		}
+		return true;
+	}
+
+	inline std::string RemoveSpace(const std::string & str)
+	{
+		std::string sNew;
+
+		for (size_t i = 0; i < str.size(); ++i)
+		{
+			if (/*str[i] == ' ' || */str[i] == '\n' || str[i] == '\r')
+			{
+				continue;
+			}
+
+			sNew.push_back(str[i]);
+		}
+
+		return sNew;
+	}
+
+	inline time_t GetTimeStamp(uint32_t uiYear, uint32_t uiMon, uint32_t uiDay, uint32_t uiHour = 0, uint32_t uiMin = 0, uint32_t uiSec = 0)
+	{
+		tm tm_;
+		tm_.tm_year = uiYear - 1900;
+		tm_.tm_mon = uiMon - 1;
+		tm_.tm_mday = uiDay;
+		tm_.tm_hour = uiHour;
+		tm_.tm_min = uiMin;
+		tm_.tm_sec = uiSec;
+		tm_.tm_isdst = 0;
+		return  mktime(&tm_);
+	}
+
+	//获得今天或明天几点几分钟的时间
+	inline time_t GetDesignatedTime(uint32_t hour, uint32_t min, time_t Destime, bool isCurrDay)
+	{
+		hour = hour > 0 ? hour : 0;
+		min = min > 0 ? min : 0;
+		uint32_t sec = 0;
+		hour = hour < 24 ? hour : (hour % 24);
+		min = min < 60 ? min : (min % 60);
+		sec = sec < 60 ? sec : (sec % 60);
+
+		time_t tmpTime = Destime > 0 ? Destime : time(NULL);
+		tm* tmp_tm = localtime(&tmpTime);
+		if (tmp_tm == NULL)
+		{
+			return 0;
+		}
+		tmpTime -= tmp_tm->tm_hour * 3600 + tmp_tm->tm_min * 60 + tmp_tm->tm_sec;
+		tmpTime += hour * 3600 + min * 60 + sec;
+
+		if (isCurrDay)
+		{
+			return tmpTime;
+		}
+		else
+			return tmpTime + 24 * 3600;
+	}
+
+	//获得今天或明天几点几分钟的时间
+	//参数 intraday 判断是不是只计算当天的 某时刻
+	inline time_t GetNextTime(int32_t hour, int32_t min, int32_t sec, time_t Destime = 0)
+	{
+		hour = hour > 0 ? hour : 0;
+		min = min > 0 ? min : 0;
+		sec = sec > 0 ? sec : 0;
+		hour = hour < 24 ? hour : (hour % 24);
+		min = min < 60 ? min : (min % 60);
+		sec = sec < 60 ? sec : (sec % 60);
+		time_t tmpTime = Destime > 0 ? Destime : time(NULL);
+		tm* tmp_tm = localtime(&tmpTime);
+		if (tmp_tm == NULL)
+		{
+			return 0;
+		}
+		tmpTime -= tmp_tm->tm_hour * 3600 + tmp_tm->tm_min * 60 + tmp_tm->tm_sec;
+		tmpTime += hour * 3600 + min * 60 + sec;
+
+		if (tmpTime > time(NULL))
+		{
+			return tmpTime;
+		}
+		return tmpTime + 24 * 3600;
+	}
+
+	// 获取整点
+	inline time_t GetIntPoint()
+	{
+		time_t tmpTime = time(NULL);
+		tm* tmp_tm = localtime(&tmpTime);
+		if (tmp_tm == NULL)
+		{
+			return 0;
+		}
+		return 3600 - tmp_tm->tm_min * 60 - tmp_tm->tm_sec;
+	}
+
+	// 获取0点
+	inline time_t GetZeroPoint()
+	{
+		time_t tmpTime = time(NULL);
+		tm* tmp_tm = localtime(&tmpTime);
+		if (tmp_tm == NULL)
+		{
+			return 0;
+		}
+		return 24 * 3600 - tmp_tm->tm_hour * 3600 - tmp_tm->tm_min * 60 - tmp_tm->tm_sec;
+	}
+
+	// 获取某个时间戳的当日零点
+	inline time_t GetOneDayZero(time_t stamp)
+	{
+		time_t tmpTime = stamp;
+		tm* tmp_tm = localtime(&tmpTime);
+		if (tmp_tm == NULL)
+		{
+			return 0;
+		}
+		tmpTime -= tmp_tm->tm_hour * 3600 + tmp_tm->tm_min * 60 + tmp_tm->tm_sec;
+		return tmpTime;
+	}
+
+	// 获取今日0点
+	inline time_t GetTodayZero()
+	{
+		time_t tmpTime = time(NULL);
+		tm* tmp_tm = localtime(&tmpTime);
+		if (tmp_tm == NULL)
+		{
+			return 0;
+		}
+		tmpTime -= tmp_tm->tm_hour * 3600 + tmp_tm->tm_min * 60 + tmp_tm->tm_sec;
+		return tmpTime;
+	}
+
+	// 获取下一个间隔时间距当前时间 还剩多少秒 参数 秒
+	// 从0点开始算，除不尽 算0点  比如参数是 600秒 当前是0点59分， 就会返回60秒
+	// 参数必须大于0 小于86400否则致命错误
+	inline time_t GetNextCheckPointTime(uint32_t checkSec)
+	{
+		if (checkSec <= 0 || checkSec >= 86400) {
+			std::cout << "dead error int CommFun.h:429 ";
+
+			return 86400;
+		}
+		time_t nowTime = time(NULL) - GetTodayZero();
+		time_t temTime = checkSec;
+		while (temTime < nowTime) {
+			temTime += checkSec;
+			if (temTime >= 86400) {
+				return 86400 - nowTime;
+			}
+		}
+		if (temTime - nowTime <= 1) {
+			temTime += checkSec;
+		}
+		return temTime - nowTime;
+	}
+
+	// 获取下一个时间点到当前还剩多少秒， 参数 星期 时分秒
+	inline time_t GetNextPointGapTick(int weekday, int hour, int min, int sec, time_t basetime = 0)
+	{
+		weekday -= 1;
+		weekday = weekday > 0 ? weekday : 0;
+		hour = hour > 0 ? hour : 0;
+		min = min > 0 ? min : 0;
+		sec = sec > 0 ? sec : 0;
+		weekday = weekday < 7 ? weekday : (weekday % 7);
+		hour = hour < 24 ? hour : (hour % 24);
+		min = min < 60 ? min : (min % 60);
+		sec = sec < 60 ? sec : (sec % 60);
+
+		time_t tmpTime = basetime;
+
+		if (tmpTime <= 0)
+		{
+			tmpTime = time(NULL);
+		}
+
+		tm* tmp_tm = localtime(&tmpTime);
+		if (tmp_tm == NULL)
+		{
+			return 0;
+		}
+		tmpTime -= tmp_tm->tm_hour * 3600 + tmp_tm->tm_min * 60 + tmp_tm->tm_sec;
+		tmpTime += hour * 3600 + min * 60 + sec;
+
+		if (tmp_tm->tm_wday == weekday) {
+			if (tmpTime > time(NULL))
+			{
+				// 同一天 直接减
+				return tmpTime - time(NULL);
+			}
+			else {
+				// 目标时间小于当前时间 + 7天
+				return tmpTime + 7 * 24 * 3600 - time(NULL);
+			}
+		}
+		else if (tmp_tm->tm_wday < weekday) {
+			// 同一个星期， + 间隔天数
+			return tmpTime + (weekday - tmp_tm->tm_wday) * 24 * 3600 - time(NULL);
+		}
+		// 下个星期 +7天 再减天数 再减
+		return  tmpTime + (weekday + 7 - tmp_tm->tm_wday) * 24 * 3600 - time(NULL);
+	}
+
+	// 获取明日凌晨的时间(今晚24点)
+	inline time_t GetNextDateTime()
+	{
+		static time_t nextTime = 0;
+
+		if (nextTime <= time(NULL))
+		{
+			nextTime = GetNextTime(0, 0, 0);
+		}
+
+		return nextTime;
+	}
+
+	inline bool IsDiffDay(int32_t nTime, int32_t base = 0)
+	{
+		if (nTime == 0) return true;
+		time_t todayTime = base == 0 ? time(NULL) : base;
+		time_t targetTime = nTime;
+		tm Today, TargetDay;
+
+#ifdef _WIN32
+		localtime_s(&Today, &todayTime);
+		localtime_s(&TargetDay, &targetTime);
+#else
+		localtime_r(&todayTime, &Today);
+		localtime_r(&targetTime, &TargetDay);
+#endif
+
+		if ((Today.tm_yday != TargetDay.tm_yday) || (Today.tm_year != TargetDay.tm_year))
+		{
+			return true;
+		}
+		return false;
+	}
+
+	// 获取星期
+	inline int32_t GetWeek()
+	{
+		time_t tmpTime = time(NULL);
+		tm* tmp_tm = localtime(&tmpTime);
+		if (tmp_tm == NULL)
+		{
+			return 0;
+		}
+		return tmp_tm->tm_wday;
+	}
+
+	// 获取这周一0点
+	inline time_t GetWeekZero()
+	{
+		time_t tmpTime = time(NULL);
+		tm* tmp_tm = localtime(&tmpTime);
+		if (tmp_tm == NULL)
+		{
+			return 0;
+		}
+		tmpTime -= tmp_tm->tm_hour * 3600 + tmp_tm->tm_min * 60 + tmp_tm->tm_sec;
+		if (tmp_tm->tm_wday == 0)  //周日
+		{
+			return tmpTime - (6) * 24 * 3600;
+		}
+		return tmpTime - (tmp_tm->tm_wday - 1) * 24 * 3600;
+	}
+
+	inline time_t GetWeekendZero()
+	{
+		return GetWeekZero() + 7 * 24 * 3600;
+	}
+
+	// 根据对应时间戳获取周一0点
+	inline time_t GetWeekZeroByTimeStamp(time_t tmpTime)
+	{
+		tm* tmp_tm = localtime(&tmpTime);
+		if (tmp_tm == NULL)
+		{
+			return 0;
+		}
+		tmpTime -= tmp_tm->tm_hour * 3600 + tmp_tm->tm_min * 60 + tmp_tm->tm_sec;
+		return tmpTime - (tmp_tm->tm_wday - 1) * 24 * 3600;
+	}
+
+	// 获取本月0点
+	inline time_t GetMonthZero()
+	{
+		tm tm_;
+		time_t tmpTime = time(NULL);
+		tm* tmp_tm = localtime(&tmpTime);
+		if (tmp_tm == NULL)
+		{
+			return 0;
+		}
+		tm_.tm_year = tmp_tm->tm_year;
+		tm_.tm_mon = tmp_tm->tm_mon;
+		tm_.tm_mday = 1;
+		tm_.tm_hour = 0;
+		tm_.tm_min = 0;
+		tm_.tm_sec = 0;
+		tm_.tm_isdst = 0;
+
+		return mktime(&tm_); //已经减了8个时区  
+
+	}
+
+	inline bool IsDiffWeek(time_t nTime)
+	{
+		time_t monday = GetWeekZero();
+		time_t  nextmonday = monday + 7 * 24 * 3600;
+		if (nTime >= monday && nTime < nextmonday)
+		{
+			return false;
+		}
+		return true;
+	}
+
+	//检测字符串中是否含有标点或者特殊字符（不包含中文标点）
+	inline bool CheckContextHasPunct(const string str)
+	{
+		size_t size = str.length();
+		//if (size < 0) return false;
+		const char* pStr = str.c_str();
+		for (size_t x = 0; x < size; ++x)
+		{
+			//如果是中文则跳过
+			if (!((pStr[x] >= 0) && (pStr[x] <= 127)))
+			{
+				continue;
+			}
+			//是否为英文 标点或者特殊字符
+			if (ispunct(pStr[x]) || pStr[x] == 32)
+			{
+				return true;
+			}
+		}
+		return false;
+	}
+
+	//字符串分割
+	void SplitString(const std::string& sSrc, std::string sDelimit, std::vector<std::string>& vResult, std::string sNull_subst = "");
+	void SplitStringToUint32(const std::string& strSrc, const std::string& strToken, std::vector<uint32_t>& vecResult, int nBase = 10);
+	bool SplitStringToUint32Ex(const std::string& strSrc, std::vector<std::pair<uint32_t, uint32_t> >& vecResult);
+	bool SplitStringToInt32(const std::string& strSrc, std::vector<std::pair<int32_t, int32_t> >& vecResult);
+
+	template<typename T1>
+	void SplitStringToVector(const std::string& strSrc, const std::string& strToken, std::vector<T1>& vecResult)
+	{
+		vecResult.clear();
+		std::string::size_type nBegin = 0;
+		std::string::size_type nEnd = 0;
+		std::stringstream ss;
+		while ((nBegin = strSrc.find_first_not_of(strToken, nEnd)) != std::string::npos)
+		{
+			ss.clear();
+			nEnd = strSrc.find_first_of(strToken, nBegin);
+			ss << strSrc.substr(nBegin, nEnd - nBegin).c_str();
+			T1 firstTemp;
+			ss >> firstTemp;
+			vecResult.push_back(firstTemp);
+		}
+	}
+
+	template<typename T1>
+	bool SplitStringToVectorVec(const std::string& strSrc, vector<vector<T1> >& vecResult)
+	{
+		vector<string> vStrData;
+		SplitString(strSrc, "$", vStrData);
+		for (size_t i = 0; i < vStrData.size(); ++i)
+		{
+			vector<string> vSubData;
+			vector<T1> vIntData;
+			SplitString(vStrData[i], "~", vSubData);
+			for (size_t j = 0; j < vSubData.size(); ++j)
+			{
+				vIntData.push_back(atoi(vSubData[j].c_str()));
+			}
+
+			vecResult.push_back(vIntData);
+		}
+
+		return true;
+	}
+
+	// 支持0或多个$字段(1005~3或1002~3$1003~3.0)，支持单字段(1005)，T1、T2不支持字符类型
+	template<typename T1, typename T2>
+	bool SplitStringToVectorPair(const std::string& strSrc, vector<pair<T1, T2> >& vecResult, const string  subdelimiter = "~")
+	{
+		std::string strTemp = strSrc;
+		vecResult.clear();
+		std::string::size_type nBegin = 0;
+		std::string::size_type nEnd = 0;
+		std::string::size_type nSubBegin = 0;
+		std::string::size_type nSubEnd = 0;
+
+		std::stringstream ss;
+		while ((nBegin = strTemp.find_first_not_of('$', nEnd)) != std::string::npos)
+		{
+			ss.clear();
+			nSubBegin = 0;
+			nSubEnd = 0;
+			nEnd = strTemp.find_first_of('$', nBegin);
+			if (nEnd == std::string::npos)
+			{
+				if ((nSubBegin = strTemp.find_first_not_of('~', nSubEnd)) != std::string::npos)
+				{
+					if ((nSubEnd = strTemp.find_first_of('~', nSubBegin)) == std::string::npos)
+					{
+						T1 firstTemp;
+						ss << strTemp.substr(nSubBegin, nSubEnd - nSubBegin).c_str();
+						ss >> firstTemp;
+						vecResult.push_back(make_pair(firstTemp, 0));
+					}
+					else
+					{
+						if (nSubEnd != strTemp.length() - 1)
+						{
+							T1 firstTemp;
+							T2 secondTemp;
+							ss << strTemp.substr(nSubBegin, nSubEnd - nSubBegin).c_str();
+							ss >> firstTemp;
+							ss.clear();
+							ss << strTemp.substr(nSubEnd + 1, strTemp.length() - 1).c_str();
+							ss >> secondTemp;
+							vecResult.push_back(make_pair(firstTemp, secondTemp));
+						}
+					}
+				}
+				return true;
+			}
+
+			string strSubSrc = strTemp.substr(nBegin, nEnd - nBegin);
+			strTemp = strTemp.substr(nEnd + 1, strTemp.length() - nEnd + 1);
+			nEnd = 0;
+			if ((nSubBegin = strSubSrc.find_first_not_of('~', nSubEnd)) != std::string::npos)
+			{
+				if ((nSubEnd = strSubSrc.find_first_of('~', nSubBegin)) == std::string::npos)
+				{
+					ss << strSubSrc.substr(nSubBegin, nSubEnd - nSubBegin).c_str();
+					T1 firstTemp;
+					ss >> firstTemp;
+					vecResult.push_back(make_pair(firstTemp, 0));
+				}
+				else
+				{
+					if (nSubEnd != strSubSrc.length() - 1)
+					{
+						T1 firstTemp;
+						T2 secondTemp;
+						ss << strSubSrc.substr(nSubBegin, nSubEnd - nSubBegin).c_str();
+						ss >> firstTemp;
+						ss.clear();
+						ss << strSubSrc.substr(nSubEnd + 1, strSubSrc.length() - 1).c_str();
+						ss >> secondTemp;
+						vecResult.push_back(make_pair(firstTemp, secondTemp));
+					}
+				}
+			}
+		}
+		return true;
+	}
+
+	//支持单字段(1005)，T1、T2不支持字符类型
+	template<typename T1, typename T2>
+	bool SplitStringToPair(const std::string& strSrc, pair<T1, T2>& pairResult)
+	{
+		std::string strSubSrc = strSrc;
+		std::string::size_type nSubBegin = 0;
+		std::string::size_type nSubEnd = 0;
+		std::stringstream ss;
+		if ((nSubBegin = strSubSrc.find_first_not_of('~', nSubEnd)) != std::string::npos)
+		{
+			if ((nSubEnd = strSubSrc.find_first_of('~', nSubBegin)) == std::string::npos)
+			{
+				ss << strSubSrc.substr(nSubBegin, nSubEnd - nSubBegin).c_str();
+				T1 firstTemp;
+				ss >> firstTemp;
+				pairResult = make_pair(firstTemp, 0);
+			}
+			else
+			{
+				if (nSubEnd != strSubSrc.length() - 1)
+				{
+					T1 firstTemp;
+					T2 secondTemp;
+					ss << strSubSrc.substr(nSubBegin, nSubEnd - nSubBegin).c_str();
+					ss >> firstTemp;
+					ss.clear();
+					ss << strSubSrc.substr(nSubEnd + 1, strSubSrc.length() - 1).c_str();
+					ss >> secondTemp;
+					pairResult = make_pair(firstTemp, secondTemp);
+				}
+			}
+		}
+		return true;
+	}
 };
 
 class NFStringUtilW

@@ -452,7 +452,7 @@ void NFCNetClientModule::ProcessExecute()
 					break;
 				case eConnectStatus_RECONNECT:
 					{
-						if (pClient->GetLastActionTime() + 10000 >= (uint64_t)NFGetTime())
+						if (pClient->GetLastActionTime() + 10000 >= (uint64_t)NFTime::Tick())
 						{
 							break;
 						}
@@ -495,9 +495,9 @@ void NFCNetClientModule::KeepState(NFIClient* pClient)
 {
 	if (pClient)
 	{
-		if (pClient->GetLastActionTime() + 10000 >= (uint64_t)NFGetTime()) return;
+		if (pClient->GetLastActionTime() + 10000 >= (uint64_t)NFTime::Tick()) return;
 
-		pClient->SetLastActionTime(NFGetTime());
+		pClient->SetLastActionTime(NFTime::Tick());
 	}
 }
 
@@ -551,7 +551,7 @@ void NFCNetClientModule::OnDisConnected(NFIClient* pClient)
 		if (pClient->GetStatus() != eConnectStatus_REMOVE)
 		{
 			pClient->SetStatus(eConnectStatus_Disconnect);
-			pClient->SetLastActionTime(NFGetTime());
+			pClient->SetLastActionTime(NFTime::Tick());
 		}
 	}
 }
