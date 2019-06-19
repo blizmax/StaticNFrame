@@ -729,7 +729,58 @@ bool NFCMysqlDriver::Update(const std::string& strTableName, const std::string& 
 	return true;
 }
 
-bool NFCMysqlDriver::QueryMoreWithCond(const std::string& strTableName, const std::string& strKeyColName, int nOffset, int nRows, const std::vector<std::string>& fieldVec, std::vector<std::vector<std::string>>& valueVec)
+bool NFCMysqlDriver::QueryMoreWithCond(const std::string& strTableName, const std::string& strWhereSql, const std::vector<std::string>& fieldVec, std::vector<std::map<std::string, std::string>>& valueVec)
+{
+	mysqlpp::Connection* pConnection = GetConnection();
+	if (NULL == pConnection)
+	{
+		return false;
+	}
+
+	NFMYSQLTRYBEGIN
+	mysqlpp::Query query = pConnection->query();
+	query << "SELECT ";
+	for (std::vector<std::string>::const_iterator iter = fieldVec.begin(); iter != fieldVec.end(); ++iter)
+	{
+		if (iter == fieldVec.begin())
+		{
+			query << *iter;
+		}
+		else
+		{
+			query << "," << *iter;
+		}
+	}
+
+	query << " FROM " << strTableName << " where " << strWhereSql << ";";
+
+	//query.execute(); // 官网例子不需要execute
+	mysqlpp::StoreQueryResult xResult = query.store();
+	query.reset();
+
+	if (xResult.empty() || !xResult)
+	{
+		return false;
+	}
+
+	//
+	for (size_t i = 0; i < xResult.size(); ++i)
+	{
+		valueVec.push_back(std::map<std::string, std::string>());
+		std::map<std::string, std::string>& tmpVec = valueVec.back();
+		for (size_t j = 0; j < fieldVec.size(); ++j)
+		{
+			const std::string& strFieldName = fieldVec[j];
+			std::string strValue(xResult[i][strFieldName.data()].data(), xResult[i][strFieldName.data()].length());
+			tmpVec.emplace(strFieldName, strValue);
+		}
+	}
+	NFMYSQLTRYEND("query error")
+
+	return true;
+}
+
+bool NFCMysqlDriver::QueryMoreWithLimit(const std::string& strTableName, const std::string& strKeyColName, int nOffset, int nRows, const std::vector<std::string>& fieldVec, std::vector<std::vector<std::string>>& valueVec)
 {
 	mysqlpp::Connection* pConnection = GetConnection();
 	if (NULL == pConnection)
@@ -763,7 +814,7 @@ bool NFCMysqlDriver::QueryMoreWithCond(const std::string& strTableName, const st
 			return false;
 		}
 
-		// xResult应该只有一行的，为了以后可能出现的多条，所以用了循环
+		//
 		for (size_t i = 0; i < xResult.size(); ++i)
 		{
 			valueVec.push_back(std::vector<std::string>());
@@ -780,7 +831,7 @@ bool NFCMysqlDriver::QueryMoreWithCond(const std::string& strTableName, const st
 	return true;
 }
 
-bool NFCMysqlDriver::QueryMoreWithCond(const std::string& strTableName, const std::string& strKeyColName, int nOffset,
+bool NFCMysqlDriver::QueryMoreWithLimit(const std::string& strTableName, const std::string& strKeyColName, int nOffset,
 	int nRows, const std::vector<std::string>& fieldVec, std::vector<std::map<std::string, std::string>>& valueVec)
 {
 	valueVec.clear();
@@ -816,7 +867,6 @@ bool NFCMysqlDriver::QueryMoreWithCond(const std::string& strTableName, const st
 		return false;
 	}
 
-	// xResult应该只有一行的，为了以后可能出现的多条，所以用了循环
 	for (size_t i = 0; i < xResult.size(); ++i)
 	{
 		valueVec.push_back(std::map<std::string, std::string>());

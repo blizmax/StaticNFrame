@@ -374,7 +374,7 @@ public:
 	 * @param  valueVec			要取出的数据
 	 * @return bool				成功或失败
 	 */
-	virtual bool QueryMoreWithCond(const std::string& strTableName, const std::string& strKeyColName, int nOffset, int nRows, const std::vector<std::string>& fieldVec, std::vector<std::vector<std::string>>& valueVec) override;
+	virtual bool QueryMoreWithLimit(const std::string& strTableName, const std::string& strKeyColName, int nOffset, int nRows, const std::vector<std::string>& fieldVec, std::vector<std::vector<std::string>>& valueVec) override;
 
 	/**
 	 * @brief 查询数据
@@ -387,7 +387,18 @@ public:
 	 * @param  valueVec			要取出的数据
 	 * @return bool				成功或失败
 	 */
-	virtual bool QueryMoreWithCond(const std::string& strTableName, const std::string& strKeyColName, int nOffset, int nRows, const std::vector<std::string>& fieldVec, std::vector<std::map<std::string, std::string>>& valueVec) override;
+	virtual bool QueryMoreWithLimit(const std::string& strTableName, const std::string& strKeyColName, int nOffset, int nRows, const std::vector<std::string>& fieldVec, std::vector<std::map<std::string, std::string>>& valueVec) override;
+
+	/**
+	 * @brief 查询数据
+	 *
+	 * @param  strTableName		表名
+	 * @param  strWhereSql		查询条件
+	 * @param  fieldVec			要取出的数据的列名
+	 * @param  valueVec			要取出的数据
+	 * @return bool				成功或失败
+	 */
+	virtual bool QueryMoreWithCond(const std::string& strTableName, const std::string& strWhereSql, const std::vector<std::string>& fieldVec, std::vector<std::map<std::string, std::string>>& valueVec) override;
 
 	/**
 	 * @brief 删一行数据

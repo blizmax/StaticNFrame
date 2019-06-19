@@ -155,7 +155,8 @@ bool NFCLuaScriptModule::Register()
 		.addFunction("QueryMoreByLike", &NFIMysqlModule::LuaQueryMoreByLike)
 		.addFunction("QueryOne", &NFIMysqlModule::LuaQueryOne)
 		.addFunction("QueryMore", &NFIMysqlModule::LuaQueryMore)
-		.addFunction("QueryMoreWithCond",&NFIMysqlModule::LuaQueryMoreWithCond)
+		.addFunction("QueryMoreWithLimit",&NFIMysqlModule::LuaQueryMoreWithLimit)
+		.addFunction("QueryMoreWithCond", &NFIMysqlModule::LuaQueryMoreWithCond)
 		.addFunction("UpdateOne", &NFIMysqlModule::LuaUpdateOne)
 		.endClass();
 

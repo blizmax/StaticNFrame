@@ -84,6 +84,17 @@ public:
 	virtual bool QueryMore(const std::string& strTableName, const std::string& strKeyColName, const std::string& strKey, const std::vector<std::string>& fieldVec, uint64_t balanceId = 0) = 0;
 
 	/**
+	 * @brief 查询数据
+	 *
+	 * @param  strTableName		表名
+	 * @param  strWhereSql		查询条件
+	 * @param  fieldVec			要取出的数据的列名
+	 * @param  valueVec			要取出的数据
+	 * @return bool				成功或失败
+	 */
+	virtual bool QueryMoreWithCond(const std::string& strTableName, const std::string& strWhereSql, const std::vector<std::string>& fieldVec, uint64_t balanceId = 0) = 0;
+	
+	/**
 	* @brief
 	*
 	* @param  strTableName
@@ -94,7 +105,7 @@ public:
 	* @param  valueVec
 	* @return bool
 	*/
-	virtual bool QueryMoreWithCond(const std::string& strTableName, const std::string& strKeyColName, int nOffset, int nRows, const std::vector<std::string>& fieldVec, uint64_t balanceId = 0) = 0;
+	virtual bool QueryMoreWithLimit(const std::string& strTableName, const std::string& strKeyColName, int nOffset, int nRows, const std::vector<std::string>& fieldVec, uint64_t balanceId = 0) = 0;
 
 	/**
 	* @brief

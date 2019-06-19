@@ -308,7 +308,7 @@ function LuaNFrame.MysqlQueryMore(strTableName, strKeyColName, strKey, fieldVec)
 end
 
 --local fields = {"userid", "cid", "account", "password", "nickname", 123}
---local values = LuaNFrame.MysqlQueryMoreWithCond("dy_player", "userid", 0, 2, fields)
+--local values = LuaNFrame.MysqlQueryMoreWithLimit("dy_player", "userid", 0, 2, fields)
 -- "<var>" = {
 --     1 = {
 --         "123"      = "123"
@@ -328,8 +328,33 @@ end
 --     }
 -- }
 --返回一个table数组, 字段与值对应
-function LuaNFrame.MysqlQueryMoreWithCond(strTableName,strKeyColName, nOffset, nRows, fieldVec)
-    return CPPNFrame:MysqlQueryMoreWithCond(strTableName,strKeyColName, nOffset, nRows, fieldVec)
+function LuaNFrame.MysqlQueryMoreWithLimit(strTableName,strKeyColName, nOffset, nRows, fieldVec)
+    return CPPNFrame:MysqlQueryMoreWithLimit(strTableName,strKeyColName, nOffset, nRows, fieldVec)
+end
+
+--local fields = {"userid", "cid", "account", "password", "nickname", 123}
+--local values = LuaNFrame.MysqlQueryMoreWithCond("dy_player", "userid > 0", fields)
+-- "<var>" = {
+--     1 = {
+--         "123"      = "123"
+--         "account"  = "name115"
+--         "cid"      = "cid115"
+--         "nickname" = "nick115"
+--         "password" = "pwd115"
+--         "userid"   = "101200"
+--     }
+--     2 = {
+--         "123"      = "123"
+--         "account"  = "name117"
+--         "cid"      = "cid117"
+--         "nickname" = "nick117"
+--         "password" = "pwd117"
+--         "userid"   = "101201"
+--     }
+-- }
+--返回一个table数组, 字段与值对应
+function LuaNFrame.MysqlQueryMoreWithCond(strTableName, strWhereSql, fieldVec)
+    return CPPNFrame:MysqlQueryMoreWithCond(strTableName, strWhereSql, fieldVec)
 end
 
 function LuaNFrame.MysqlDelete(strTableName, strKeyColName, strKey)

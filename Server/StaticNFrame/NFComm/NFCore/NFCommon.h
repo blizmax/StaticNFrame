@@ -918,7 +918,7 @@ namespace p
 		{
 			if (!sStr.empty())
 			{
-				return strtoul(sStr.c_str(), NULL, 10);
+				return (unsigned short)strtoul(sStr.c_str(), NULL, 10);
 			}
 			return 0;
 		}
@@ -996,7 +996,7 @@ namespace p
 		{
 			if (!sStr.empty())
 			{
-				return atof(sStr.c_str());
+				return (float)atof(sStr.c_str());
 			}
 			return 0;
 		}

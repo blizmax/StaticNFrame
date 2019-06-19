@@ -27,11 +27,12 @@ public:
 	virtual bool UpdateOne(const std::string& strTableName, const std::string& strKeyColName, const std::string& strKey, const std::map<std::string, std::string>& keyvalueMap) = 0;
 
 	virtual bool QueryOne(const std::string& strTableName, const std::string& strKeyColName, const std::string& strKey, const std::vector<std::string>& fieldVec, std::vector<std::string>& valueVec) = 0;
-	virtual bool QueryMoreWithCond(const std::string& strTableName, const std::string& strKeyColName, int nOffset, int nRows, const std::vector<std::string>& fieldVec, std::vector<std::vector<std::string>>& valueVec) = 0;
+	virtual bool QueryMoreWithLimit(const std::string& strTableName, const std::string& strKeyColName, int nOffset, int nRows, const std::vector<std::string>& fieldVec, std::vector<std::vector<std::string>>& valueVec) = 0;
 	virtual bool QueryMore(const std::string& strTableName, const std::string& strKeyColName, const std::string& strKey, const std::vector<std::string>& fieldVec, std::vector<std::vector<std::string>>& valueVec) = 0;
 	
 	virtual bool QueryOne(const std::string& strTableName, const std::string& strKeyColName, const std::string& strKey, const std::vector<std::string>& fieldVec, std::map<std::string, std::string>& valueVec) = 0;
-	virtual bool QueryMoreWithCond(const std::string& strTableName, const std::string& strKeyColName, int nOffset, int nRows, const std::vector<std::string>& fieldVec, std::vector<std::map<std::string, std::string>>& valueVec) = 0;
+	virtual bool QueryMoreWithLimit(const std::string& strTableName, const std::string& strKeyColName, int nOffset, int nRows, const std::vector<std::string>& fieldVec, std::vector<std::map<std::string, std::string>>& valueVec) = 0;
+	virtual bool QueryMoreWithCond(const std::string& strTableName, const std::string& strWhereSql, const std::vector<std::string>& fieldVec, std::vector<std::map<std::string, std::string>>& valueVec) = 0;
 	virtual bool QueryMore(const std::string& strTableName, const std::string& strKeyColName, const std::string& strKey, const std::vector<std::string>& fieldVec, std::vector<std::map<std::string, std::string>>& valueVec) = 0;
 	
 	virtual bool Delete(const std::string& strTableName, const std::string& strKeyColName, const std::string& strKey) = 0;
@@ -65,12 +66,22 @@ public:
 		return valueVec;
 	}
 
-	virtual std::vector<std::map<std::string, std::string>> LuaQueryMoreWithCond(const std::string& strTableName, const std::string& strKeyColName, int nOffset, int nRows, const std::vector<std::string>& fieldVec)
+	virtual std::vector<std::map<std::string, std::string>> LuaQueryMoreWithLimit(const std::string& strTableName, const std::string& strKeyColName, int nOffset, int nRows, const std::vector<std::string>& fieldVec)
 	{
 		std::vector<std::map<std::string, std::string>> valueVec;
-		if (!QueryMoreWithCond(strTableName, strKeyColName, nOffset, nRows, fieldVec, valueVec))
+		if (!QueryMoreWithLimit(strTableName, strKeyColName, nOffset, nRows, fieldVec, valueVec))
 		{
-			NFLogError(NF_LOG_SYSTEMLOG, 0, "QueryMoreWithCond error!");
+			NFLogError(NF_LOG_SYSTEMLOG, 0, "QueryMoreWithLimit error!");
+		}
+		return valueVec;
+	}
+
+	virtual std::vector<std::map<std::string, std::string>> LuaQueryMoreWithCond(const std::string& strTableName, const std::string& strWhereSql, const std::vector<std::string>& fieldVec)
+	{
+		std::vector<std::map<std::string, std::string>> valueVec;
+		if (!QueryMoreWithCond(strTableName, strWhereSql, fieldVec, valueVec))
+		{
+			NFLogError(NF_LOG_SYSTEMLOG, 0, "QueryMoreWithLimit error!");
 		}
 		return valueVec;
 	}
@@ -90,7 +101,7 @@ public:
 		std::vector<std::map<std::string, std::string>> valueVec;
 		if (!QueryMoreByLike(strTableName, strKeyColName, strKey, fieldVec, valueVec))
 		{
-			NFLogError(NF_LOG_SYSTEMLOG, 0, "LuaKeys error!");
+			NFLogError(NF_LOG_SYSTEMLOG, 0, "LuaQueryMoreByLike error!");
 		}
 		return valueVec;
 	}

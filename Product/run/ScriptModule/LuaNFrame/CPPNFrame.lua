@@ -298,8 +298,12 @@ function CPPNFrame:MysqlQueryMore(strTableName, strKeyColName, strKey, fieldVec)
     return self.mysqlModule:QueryMore(strTableName, strKeyColName, strKey, fieldVec)
 end
 
-function CPPNFrame:MysqlQueryMoreWithCond(strTableName,strKeyColName, nOffset, nRows, fieldVec)
-    return self.mysqlModule:QueryMoreWithCond(strTableName,strKeyColName, nOffset, nRows, fieldVec)
+function CPPNFrame:MysqlQueryMoreWithLimit(strTableName,strKeyColName, nOffset, nRows, fieldVec)
+    return self.mysqlModule:QueryMoreWithLimit(strTableName,strKeyColName, nOffset, nRows, fieldVec)
+end
+
+function CPPNFrame:MysqlQueryMoreWithCond(strTableName, strWhereSql, fieldVec)
+    return self.mysqlModule:QueryMoreWithCond(strTableName, strWhereSql, fieldVec)
 end
 
 function CPPNFrame:MysqlDelete(strTableName, strKeyColName, strKey)

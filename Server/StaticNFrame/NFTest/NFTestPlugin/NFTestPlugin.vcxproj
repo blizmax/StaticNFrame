@@ -39,9 +39,7 @@
     <ClCompile Include="NFTestPlugin.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="NFAsynMsgHelper.h" />
     <ClInclude Include="NFCTestModule.h" />
-    <ClInclude Include="NFMpmcBlockingQueue.h" />
     <ClInclude Include="NFTestPlugin.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

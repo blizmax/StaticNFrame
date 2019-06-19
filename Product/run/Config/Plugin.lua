@@ -34,7 +34,7 @@ LoadPlugin =
 			"NFMysqlPlugin",
 			--"NFMongoPlugin",
 			------------------------------------------
-			--"NFTestPlugin",
+			"NFTestPlugin",
 			
 			--------------------------------------------
 			-----服务器架构引擎-------------------------
@@ -63,7 +63,7 @@ LoadPlugin =
 			-----可以动态加载的引擎---------------------------------
 			--"NFGamePlayerPlugin",
 			--"NFGameLhdPlugin",
-			"NFLuaScriptPlugin",
+			--"NFLuaScriptPlugin",
 
 		};
 		ServerType = NF_ST_NONE;

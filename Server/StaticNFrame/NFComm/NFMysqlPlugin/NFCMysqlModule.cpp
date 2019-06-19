@@ -128,12 +128,23 @@ bool NFCMysqlModule::QueryMore(const std::string& strTableName, const std::strin
 	return false;
 }
 
-bool NFCMysqlModule::QueryMoreWithCond(const std::string& strTableName, const std::string& strKeyColName, int nOffset, int nRows, const std::vector<std::string>& fieldVec, std::vector<std::vector<std::string>>& valueVec)
+bool NFCMysqlModule::QueryMoreWithCond(const std::string& strTableName, const std::string& strWhereSql, const std::vector<std::string>& fieldVec, std::vector<std::map<std::string, std::string>>& valueVec)
 {
 	NFIMysqlDriver* pDriver = m_pMysqlDriverManager->GetMysqlDriver();
 	if (pDriver)
 	{
-		return pDriver->QueryMoreWithCond(strTableName, strKeyColName, nOffset, nRows, fieldVec, valueVec);
+		return pDriver->QueryMoreWithCond(strTableName, strWhereSql, fieldVec, valueVec);
+	}
+
+	return false;
+}
+
+bool NFCMysqlModule::QueryMoreWithLimit(const std::string& strTableName, const std::string& strKeyColName, int nOffset, int nRows, const std::vector<std::string>& fieldVec, std::vector<std::vector<std::string>>& valueVec)
+{
+	NFIMysqlDriver* pDriver = m_pMysqlDriverManager->GetMysqlDriver();
+	if (pDriver)
+	{
+		return pDriver->QueryMoreWithLimit(strTableName, strKeyColName, nOffset, nRows, fieldVec, valueVec);
 	}
 
 	return false;
@@ -161,12 +172,12 @@ bool NFCMysqlModule::QueryMore(const std::string& strTableName, const std::strin
 	return false;
 }
 
-bool NFCMysqlModule::QueryMoreWithCond(const std::string& strTableName, const std::string& strKeyColName, int nOffset, int nRows, const std::vector<std::string>& fieldVec, std::vector<std::map<std::string, std::string>>& valueVec)
+bool NFCMysqlModule::QueryMoreWithLimit(const std::string& strTableName, const std::string& strKeyColName, int nOffset, int nRows, const std::vector<std::string>& fieldVec, std::vector<std::map<std::string, std::string>>& valueVec)
 {
 	NFIMysqlDriver* pDriver = m_pMysqlDriverManager->GetMysqlDriver();
 	if (pDriver)
 	{
-		return pDriver->QueryMoreWithCond(strTableName, strKeyColName, nOffset, nRows, fieldVec, valueVec);
+		return pDriver->QueryMoreWithLimit(strTableName, strKeyColName, nOffset, nRows, fieldVec, valueVec);
 	}
 
 	return false;
