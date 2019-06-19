@@ -1,7 +1,5 @@
 #ifdef _MSC_VER
-#include <WinSock2.h>
 #include <winsock.h>
-#include <ws2tcpip.h>
 #else
 #include <sys/socket.h>
 #include <netdb.h>
@@ -24,7 +22,8 @@ NFCMysqlDriverManager::~NFCMysqlDriverManager()
 		pMysqlDriver = nullptr;
 	}
 	mvMysql.ClearAll();
-	for (NFIMysqlDriver* pMysqlDriver = mvInvalidMsyql.First(); nullptr != pMysqlDriver; pMysqlDriver = mvInvalidMsyql.Next())
+	for (NFIMysqlDriver* pMysqlDriver = mvInvalidMsyql.First(); nullptr != pMysqlDriver; pMysqlDriver = mvInvalidMsyql.
+	     Next())
 	{
 		NF_SAFE_DELETE(pMysqlDriver);
 		pMysqlDriver = nullptr;
@@ -41,7 +40,8 @@ void NFCMysqlDriverManager::CheckMysql()
 {
 	int nServerID = 0;
 	std::vector<int> xIntVec;
-	for (NFIMysqlDriver* pMysqlDriver = mvMysql.First(nServerID); pMysqlDriver != NULL; pMysqlDriver = mvMysql.Next(nServerID))
+	for (NFIMysqlDriver* pMysqlDriver = mvMysql.First(nServerID); pMysqlDriver != nullptr; pMysqlDriver = mvMysql.
+	     Next(nServerID))
 	{
 		if (!pMysqlDriver->Enable())
 		{
@@ -58,7 +58,8 @@ void NFCMysqlDriverManager::CheckMysql()
 	xIntVec.clear();
 	nServerID = 0;
 
-	for (NFIMysqlDriver* pMysqlDriver = mvInvalidMsyql.First(nServerID); pMysqlDriver != NULL; pMysqlDriver = mvInvalidMsyql.Next(nServerID))
+	for (NFIMysqlDriver* pMysqlDriver = mvInvalidMsyql.First(nServerID); pMysqlDriver != nullptr; pMysqlDriver =
+	     mvInvalidMsyql.Next(nServerID))
 	{
 		if (!pMysqlDriver->Enable() && pMysqlDriver->CanReconnect())
 		{
@@ -77,7 +78,10 @@ void NFCMysqlDriverManager::CheckMysql()
 	}
 }
 
-bool NFCMysqlDriverManager::AddMysqlServer(const int nServerID, const std::string& strIP, const int nPort, const std::string strDBName, const std::string strDBUser, const std::string strDBPwd, const int nRconnectTime/* = 10*/, const int nRconneCount/* = -1*/)
+bool NFCMysqlDriverManager::AddMysqlServer(const int nServerID, const std::string& strIP, const int nPort,
+                                           const std::string strDBName, const std::string strDBUser,
+                                           const std::string strDBPwd, const int nRconnectTime/* = 10*/,
+                                           const int nRconneCount/* = -1*/)
 {
 	NFIMysqlDriver* pMysqlDriver = mvMysql.GetElement(nServerID);
 	if (pMysqlDriver)
@@ -105,4 +109,3 @@ bool NFCMysqlDriverManager::AddMysqlServer(const int nServerID, const std::strin
 
 	return true;
 }
-

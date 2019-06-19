@@ -175,7 +175,7 @@ public:
 	 * @param  nReconnectCount 重连次数，-1表示无数次
 	 * @return  
 	 */
-	NFCMysqlDriver(const int nReconnectTime = 60, const int nReconnectCount = -1);
+	NFCMysqlDriver(int nReconnectTime = 60, int nReconnectCount = -1);
 
 	/**
 	 * @brief 构造函数
@@ -187,7 +187,8 @@ public:
 	 * @param  strDBPwd  数据库密码
 	 * @return  
 	 */
-	NFCMysqlDriver(const std::string& strDBName, const std::string& strDBHost, const int nDBPort, const std::string& strDBUser, const std::string& strDBPwd);
+	NFCMysqlDriver(const std::string& strDBName, const std::string& strDBHost, int nDBPort,
+	               const std::string& strDBUser, const std::string& strDBPwd);
 
 	/**
 	 * @brief 析构函数
@@ -205,14 +206,15 @@ public:
 	 * @param  strDBPwd  数据库密码
 	 * @return bool 
 	 */
-	virtual bool Connect(const std::string& strDBName, const std::string& strDBHost, const int nDBPort, const std::string& strDBUser, const std::string& strDBPwd) override;
+	bool Connect(const std::string& strDBName, const std::string& strDBHost, int nDBPort, const std::string& strDBUser,
+	             const std::string& strDBPwd) override;
 
 	/**
 	 * @brief 循环执行
 	 *
 	 * @return bool 
 	 */
-	virtual bool Execute() override;
+	bool Execute() override;
 
 	/**
 	 * @brief 通过sql语句查询数据
@@ -221,7 +223,7 @@ public:
 	 * @param  queryResult 查询结果
 	 * @return bool 查询成功或失败
 	 */
-	virtual bool Query(const std::string& qstr, mysqlpp::StoreQueryResult& queryResult) override;
+	bool Query(const std::string& qstr, mysqlpp::StoreQueryResult& queryResult) override;
 
 	/**
 	 * @brief 执行sql语句
@@ -229,14 +231,14 @@ public:
 	 * @param  qstr sql语句
 	 * @return bool 执行成功或失败
 	 */
-	virtual bool Execute(const std::string& qstr) override;
+	bool Execute(const std::string& qstr) override;
 
 	/**
 	 * @brief 获得mysqlpp的连接
 	 *
 	 * @return mysqlpp::Connection* 
 	 */
-	virtual mysqlpp::Connection* GetConnection() override;
+	mysqlpp::Connection* GetConnection() override;
 
 	/**
 	 * @brief 关闭连接
@@ -250,21 +252,21 @@ public:
 	 *
 	 * @return bool 
 	 */
-	virtual bool Enable() override;
+	bool Enable() override;
 
 	/**
 	 * @brief 是否可以重连
 	 *
 	 * @return bool 
 	 */
-	virtual bool CanReconnect() override;
+	bool CanReconnect() override;
 
 	/**
 	 * @brief 重连
 	 *
 	 * @return bool 
 	 */
-	virtual bool Reconnect() override;
+	bool Reconnect() override;
 
 	/**
 	 * @brief 通过protobuf反射， 来实现mysql的更新和插入
@@ -272,7 +274,7 @@ public:
 	 * @param  message
 	 * @return bool 
 	 */
-	virtual bool Update(const google::protobuf::Message& message) override;
+	bool Update(const google::protobuf::Message& message) override;
 
 	/**
 	 * @brief 通过protobuf反射，实现查询一条数据，并把语句放在protobuf中
@@ -280,7 +282,7 @@ public:
 	 * @param  message
 	 * @return bool 
 	 */
-	virtual bool Query(google::protobuf::Message& message) override;
+	bool Query(google::protobuf::Message& message) override;
 
 	/**
 	 * @brief 通过protobuf反射，实现查询很多数据，并把语句放在protobuf中
@@ -288,7 +290,7 @@ public:
 	 * @param  message
 	 * @return bool 
 	 */
-	virtual bool QueryMore(google::protobuf::Message& message) override;
+	bool QueryMore(google::protobuf::Message& message) override;
 
 	/**
 	 * @brief mysql语句更新和插入
@@ -300,7 +302,8 @@ public:
 	 * @param  valueVec			要插入的数据
 	 * @return bool				成功或失败
 	 */
-	virtual bool Update(const std::string& strTableName, const std::string& strKeyColName, const std::string& strKey, const std::vector<std::string>& fieldVec, const std::vector<std::string>& valueVec) override;
+	bool Update(const std::string& strTableName, const std::string& strKeyColName, const std::string& strKey,
+	            const std::vector<std::string>& fieldVec, const std::vector<std::string>& valueVec) override;
 
 	/**
 	 * @brief mysql语句更新和插入
@@ -311,7 +314,8 @@ public:
 	 * @param  keyvalueMap		数据
 	 * @return bool				成功或失败
 	 */
-	virtual bool Update(const std::string& strTableName, const std::string& strKeyColName, const std::string& strKey, const std::map<std::string, std::string>& keyvalueMap) override;
+	bool Update(const std::string& strTableName, const std::string& strKeyColName, const std::string& strKey,
+	            const std::map<std::string, std::string>& keyvalueMap) override;
 
 	/**
 	 * @brief 查询数据一条数据
@@ -323,7 +327,8 @@ public:
 	 * @param  valueVec			要取出的数据
 	 * @return bool				成功或失败
 	 */
-	virtual bool QueryOne(const std::string& strTableName, const std::string& strKeyColName, const std::string& strKey, const std::vector<std::string>& fieldVec, std::vector<std::string>& valueVec) override;
+	bool QueryOne(const std::string& strTableName, const std::string& strKeyColName, const std::string& strKey,
+	              const std::vector<std::string>& fieldVec, std::vector<std::string>& valueVec) override;
 
 	/**
 	 * @brief 查询数据一条数据
@@ -335,7 +340,8 @@ public:
 	 * @param  valueVec			要取出的数据
 	 * @return bool				成功或失败
 	 */
-	virtual bool QueryOne(const std::string& strTableName, const std::string& strKeyColName, const std::string& strKey, const std::vector<std::string>& fieldVec,std::map<std::string, std::string>& valueVec) override;
+	bool QueryOne(const std::string& strTableName, const std::string& strKeyColName, const std::string& strKey,
+	              const std::vector<std::string>& fieldVec, std::map<std::string, std::string>& valueVec) override;
 
 	/**
 	 * @brief 查询数据许多数据
@@ -347,7 +353,8 @@ public:
 	 * @param  valueVec			要取出的数据
 	 * @return bool				成功或失败
 	 */
-	virtual bool QueryMore(const std::string& strTableName, const std::string& strKeyColName, const std::string& strKey, const std::vector<std::string>& fieldVec, std::vector<std::vector<std::string>>& valueVec) override;
+	bool QueryMore(const std::string& strTableName, const std::string& strKeyColName, const std::string& strKey,
+	               const std::vector<std::string>& fieldVec, std::vector<std::vector<std::string>>& valueVec) override;
 
 	/**
 	 * @brief 查询数据许多数据
@@ -359,7 +366,9 @@ public:
 	 * @param  valueVec			要取出的数据
 	 * @return bool				成功或失败
 	 */
-	virtual bool QueryMore(const std::string& strTableName, const std::string& strKeyColName, const std::string& strKey, const std::vector<std::string>& fieldVec, std::vector<std::map<std::string, std::string>>& valueVec) override;
+	bool QueryMore(const std::string& strTableName, const std::string& strKeyColName, const std::string& strKey,
+	               const std::vector<std::string>& fieldVec,
+	               std::vector<std::map<std::string, std::string>>& valueVec) override;
 
 	/**
 	 * @brief 查询数据
@@ -372,7 +381,9 @@ public:
 	 * @param  valueVec			要取出的数据
 	 * @return bool				成功或失败
 	 */
-	virtual bool QueryMoreWithLimit(const std::string& strTableName, const std::string& strKeyColName, int nOffset, int nRows, const std::vector<std::string>& fieldVec, std::vector<std::vector<std::string>>& valueVec) override;
+	bool QueryMoreWithLimit(const std::string& strTableName, const std::string& strKeyColName, int nOffset, int nRows,
+	                        const std::vector<std::string>& fieldVec,
+	                        std::vector<std::vector<std::string>>& valueVec) override;
 
 	/**
 	 * @brief 查询数据
@@ -385,7 +396,9 @@ public:
 	 * @param  valueVec			要取出的数据
 	 * @return bool				成功或失败
 	 */
-	virtual bool QueryMoreWithLimit(const std::string& strTableName, const std::string& strKeyColName, int nOffset, int nRows, const std::vector<std::string>& fieldVec, std::vector<std::map<std::string, std::string>>& valueVec) override;
+	bool QueryMoreWithLimit(const std::string& strTableName, const std::string& strKeyColName, int nOffset, int nRows,
+	                        const std::vector<std::string>& fieldVec,
+	                        std::vector<std::map<std::string, std::string>>& valueVec) override;
 
 	/**
 	 * @brief 查询数据
@@ -396,7 +409,9 @@ public:
 	 * @param  valueVec			要取出的数据
 	 * @return bool				成功或失败
 	 */
-	virtual bool QueryMoreWithCond(const std::string& strTableName, const std::string& strWhereSql, const std::vector<std::string>& fieldVec, std::vector<std::map<std::string, std::string>>& valueVec) override;
+	bool QueryMoreWithCond(const std::string& strTableName, const std::string& strWhereSql,
+	                       const std::vector<std::string>& fieldVec,
+	                       std::vector<std::map<std::string, std::string>>& valueVec) override;
 
 	/**
 	 * @brief 删一行数据
@@ -406,7 +421,7 @@ public:
 	 * @param  strKey
 	 * @return bool 
 	 */
-	virtual bool Delete(const std::string& strTableName, const std::string& strKeyColName, const std::string& strKey) override;
+	bool Delete(const std::string& strTableName, const std::string& strKeyColName, const std::string& strKey) override;
 
 	/**
 	 * @brief 判断数据是否存在
@@ -417,7 +432,8 @@ public:
 	 * @param  bExit
 	 * @return bool 
 	 */
-	virtual bool Exists(const std::string& strTableName, const std::string& strKeyColName, const std::string& strKey, bool& bExit) override;
+	bool Exists(const std::string& strTableName, const std::string& strKeyColName, const std::string& strKey,
+	            bool& bExit) override;
 
 	/**
 	 * @brief 根据类似key的数据，取出一堆来
@@ -429,7 +445,9 @@ public:
 	 * @param  valueVec
 	 * @return bool 
 	 */
-	virtual bool QueryMoreByLike(const std::string& strTableName, const std::string& strKeyColName, const std::string& strKeyName, const std::vector<std::string>& fieldVec, std::vector<std::vector<std::string>>& valueVec);
+	bool QueryMoreByLike(const std::string& strTableName, const std::string& strKeyColName,
+	                     const std::string& strKeyName, const std::vector<std::string>& fieldVec,
+	                     std::vector<std::vector<std::string>>& valueVec) override;
 
 	/**
 	 * @brief 根据类似key的数据，取出一堆来
@@ -441,7 +459,9 @@ public:
 	 * @param  valueVec
 	 * @return bool
 	 */
-	virtual bool QueryMoreByLike(const std::string& strTableName, const std::string& strKeyColName, const std::string& strKeyName, const std::vector<std::string>& fieldVec, std::vector<std::map<std::string, std::string>>& valueVec) override;
+	bool QueryMoreByLike(const std::string& strTableName, const std::string& strKeyColName,
+	                     const std::string& strKeyName, const std::vector<std::string>& fieldVec,
+	                     std::vector<std::map<std::string, std::string>>& valueVec) override;
 protected:
 	/**
 	 * @brief 是否需要重连
@@ -472,4 +492,3 @@ private:
 
 	static NFMutex ConnectLock; //m_pMysqlConnect在调用Connect会引发多线程的崩溃，必须枷锁
 };
-

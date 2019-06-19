@@ -50,4 +50,3 @@ void NFMysqlPlugin::Uninstall()
 	UNREGISTER_MODULE(m_pPluginManager, NFIMysqlModule, NFCMysqlModule);
 	UNREGISTER_MODULE(m_pPluginManager, NFIAsyMysqlModule, NFCAsyMysqlModule);
 }
-

@@ -1,6 +1,6 @@
 //------------------------------------------------------------------------ -
 //    @FileName         :    NFMysqlPlugin.h
-//    @Author           :    LvSheng.Huang
+//    @Author           :    Gao.Yi
 //    @Date             :    2017-02-08
 //    @Module           :    NFMysqlPlugin
 //
@@ -21,12 +21,11 @@ public:
 		m_pPluginManager = p;
 	}
 
-	virtual int GetPluginVersion() override;
+	int GetPluginVersion() override;
 
-	virtual std::string GetPluginName() override;
+	std::string GetPluginName() override;
 
-	virtual void Install() override;
+	void Install() override;
 
-	virtual void Uninstall() override;
+	void Uninstall() override;
 };
-

@@ -8,7 +8,6 @@
 
 #pragma once
 
-
 #include "NFComm/NFPluginModule/NFIMysqlDriver.h"
 #include "NFComm/NFPluginModule/NFIMysqlDriverManager.h"
 #include <NFComm/NFCore/NFMap.hpp>
@@ -33,24 +32,25 @@ public:
 	 * @param  nRconneCount
 	 * @return bool 
 	 */
-	virtual bool AddMysqlServer(const int nServerID, const std::string& strIP, const int nPort, const std::string strDBName, const std::string strDBUser, const std::string strDBPwd, const int nRconnectTime/* = 10*/, const int nRconneCount/* = -1*/) override;
-	
+	bool AddMysqlServer(int nServerID, const std::string& strIP, int nPort, std::string strDBName,
+	                    std::string strDBUser, std::string strDBPwd, int nRconnectTime/* = 10*/,
+	                    int nRconneCount/* = -1*/) override;
+
 	/**
 	 * @brief
 	 *
 	 * @return NFIMysqlDriver* 
 	 */
-	virtual NFIMysqlDriver* GetMysqlDriver() override;
-	
+	NFIMysqlDriver* GetMysqlDriver() override;
+
 	/**
 	 * @brief
 	 *
 	 * @return void 
 	 */
-	virtual void CheckMysql() override;
+	void CheckMysql() override;
 protected:
 	NFMap<int, NFIMysqlDriver> mvMysql;
 	NFMap<int, NFIMysqlDriver> mvInvalidMsyql;
 	uint64_t mnLastCheckTime;
 };
-
