@@ -63,7 +63,7 @@ public:
 	virtual bool Execute() = 0;
 	virtual mysqlpp::Connection* GetConnection() = 0;
 	virtual bool Query(const std::string& qstr, mysqlpp::StoreQueryResult& queryResult) = 0;
-	virtual bool Execute(const std::string& qstr) = 0;
+	virtual bool Execute(const std::string& qstr, std::vector<std::map<std::string, std::string>>& keyvalueMap) = 0;
 
 	virtual bool Enable() = 0;
 	virtual bool Reconnect() = 0;

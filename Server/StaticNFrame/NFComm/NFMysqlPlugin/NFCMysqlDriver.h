@@ -231,7 +231,7 @@ public:
 	 * @param  qstr sql语句
 	 * @return bool 执行成功或失败
 	 */
-	bool Execute(const std::string& qstr) override;
+	bool Execute(const std::string& qstr, std::vector<std::map<std::string, std::string>>& keyvalueMap) override;
 
 	/**
 	 * @brief 获得mysqlpp的连接

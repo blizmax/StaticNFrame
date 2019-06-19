@@ -73,12 +73,12 @@ bool NFCMysqlModule::QueryMore(google::protobuf::Message& message)
 	return false;
 }
 
-bool NFCMysqlModule::Execute(const std::string& qstr)
+bool NFCMysqlModule::Execute(const std::string& qstr, std::vector<std::map<std::string, std::string>>& keyvalueMap)
 {
 	NFIMysqlDriver* pDriver = m_pMysqlDriverManager->GetMysqlDriver();
 	if (pDriver)
 	{
-		return pDriver->Execute(qstr);
+		return pDriver->Execute(qstr, keyvalueMap);
 	}
 
 	return false;

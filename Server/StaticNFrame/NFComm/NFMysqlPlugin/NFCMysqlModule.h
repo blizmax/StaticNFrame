@@ -13,7 +13,7 @@
 #include "NFComm/NFPluginModule/NFIMysqlDriverManager.h"
 #include "NFComm/NFPluginModule/NFTimerMgr.h"
 
-class NFCMysqlModule
+class NFCMysqlModule final
 	: public NFIMysqlModule, public NFTimerObj
 {
 public:
@@ -58,7 +58,7 @@ public:
 	 * @param  qstr			执行sql语句
 	 * @return bool			成功或失败
 	 */
-	bool Execute(const std::string& qstr) override;
+	bool Execute(const std::string& qstr, std::vector<std::map<std::string, std::string>>& keyvalueMap) override;
 
 	/**
 	 * @brief 更新或插入数据

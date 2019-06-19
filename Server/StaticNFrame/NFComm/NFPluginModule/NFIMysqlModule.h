@@ -60,9 +60,10 @@ public:
 	 * @brief 查询数据
 	 *
 	 * @param  qstr			执行sql语句
+	 * @param keyvalueMap
 	 * @return bool			成功或失败
 	 */
-	virtual bool Execute(const std::string& qstr) = 0;
+	virtual bool Execute(const std::string& qstr, std::vector<std::map<std::string, std::string>>& keyvalueMap) = 0;
 
 	/**
 	 * @brief 更新或插入数据
@@ -373,4 +374,3 @@ public:
 		return valueVec;
 	}
 };
-

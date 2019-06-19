@@ -74,21 +74,25 @@ bool NFCMysqlDriver::Query(const std::string& qstr, mysqlpp::StoreQueryResult& q
 	return false;
 }
 
-bool NFCMysqlDriver::Execute(const std::string& qstr)
+bool NFCMysqlDriver::Execute(const std::string& qstr, std::vector<std::map<std::string, std::string>>& valueVec)
 {
-	mysqlpp::Connection* pConection = GetConnection();
-	if (pConection)
+	mysqlpp::StoreQueryResult queryResult;
+	if (NFCMysqlDriver::Query(qstr, queryResult))
 	{
-		NFMYSQLTRYBEGIN
-			mysqlpp::Query query = pConection->query(qstr);
-			query.execute();
-
-			query.reset();
-
-		NFMYSQLTRYEND(qstr)
+		for (size_t i = 0; i < queryResult.num_rows(); ++i)
+		{
+			valueVec.push_back(std::map<std::string, std::string>());
+			std::map<std::string, std::string>& tmpVec = valueVec.back();
+			for(size_t index = 0; index < queryResult.num_fields(); index++)
+			{
+				const std::string& strFieldName = queryResult.field_name(i);
+				std::string strValue(queryResult[i][strFieldName.data()].data(), queryResult[i][strFieldName.data()].length());
+				tmpVec.emplace(strFieldName, strValue);
+			}
+			
+		}
 		return true;
 	}
-
 	return false;
 }
 
