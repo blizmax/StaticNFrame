@@ -164,6 +164,9 @@ function execute(packetID, operateID, buffer)
 				for k,v in ipairs(jInfo.adminlist)do 
 					addadminlist.adminlist:append(v)
 				end
+		
+				local julebu_jetton = JulebuService.GetJiFen(jInfo.julebuid, cgmsg.userid)
+				gcmsg.julebu_jetton:append(julebu_jetton)
 			else
 				JulebuModel.DelFromMemberList(v, cgmsg.userid)
 			end

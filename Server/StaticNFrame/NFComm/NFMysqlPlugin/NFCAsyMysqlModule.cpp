@@ -1,7 +1,16 @@
+// -------------------------------------------------------------------------
+//    @FileName         :    NFCAsyMysqlModule.h
+//    @Author           :    Gao.Yi
+//    @Date             :    2016-01-31
+//    @Module           :    NFCAsyMysqlModule
+//
+// -------------------------------------------------------------------------
+
 #include "NFCAsyMysqlModule.h"
 
 #include "NFComm/NFPluginModule/NFIPluginManager.h"
-#include "NFComm/NFPluginModule/NFITaskModule.h"
+#include "NFComm/NFPluginModule/NFTask.h"
+#include "NFComm/NFPluginModule/NFITaskComponent.h"
 
 class NFMysqlTask : public NFTask
 {
@@ -14,8 +23,8 @@ public:
 
 	virtual ~NFMysqlTask()
 	{
-
 	}
+
 public:
 	NFIMysqlDriver* m_pMysqlDriver;
 	NFCAsyMysqlModule* m_pAsyncMysqlModule;
@@ -40,7 +49,7 @@ public:
 	/**
 	**  异步线程处理函数，将在另一个线程里运行
 	*/
-	virtual bool ThreadProcess()
+	bool ThreadProcess() override
 	{
 		if (m_pMysqlDriver)
 		{
@@ -53,7 +62,7 @@ public:
 	** 主线程处理函数，将在线程处理完后，提交给主线程来处理，根据返回函数是否继续处理
 	返回值： thread::TPTask::TPTaskState， 请参看TPTaskState
 	*/
-	virtual TPTaskState MainThreadProcess()
+	TPTaskState MainThreadProcess() override
 	{
 		if (m_pAsyncMysqlModule)
 		{
@@ -61,6 +70,7 @@ public:
 		}
 		return TPTASK_STATE_COMPLETED;
 	}
+
 private:
 	google::protobuf::Message* m_pMessage;
 	bool m_result;
@@ -85,7 +95,7 @@ public:
 	/**
 	**  异步线程处理函数，将在另一个线程里运行
 	*/
-	virtual bool ThreadProcess()
+	bool ThreadProcess() override
 	{
 		if (m_pMysqlDriver)
 		{
@@ -98,7 +108,7 @@ public:
 	** 主线程处理函数，将在线程处理完后，提交给主线程来处理，根据返回函数是否继续处理
 	返回值： thread::TPTask::TPTaskState， 请参看TPTaskState
 	*/
-	virtual TPTaskState MainThreadProcess()
+	TPTaskState MainThreadProcess() override
 	{
 		if (m_pAsyncMysqlModule)
 		{
@@ -106,6 +116,7 @@ public:
 		}
 		return TPTASK_STATE_COMPLETED;
 	}
+
 private:
 	google::protobuf::Message* m_pMessage;
 	bool m_result;
@@ -114,6 +125,11 @@ private:
 class NFMysqlQueryMoreMessageTask : public NFMysqlTask
 {
 public:
+	/**
+	 * \brief 
+	 * \param message 
+	 * \param balanceId 
+	 */
 	NFMysqlQueryMoreMessageTask(const google::protobuf::Message& message, uint64_t balanceId)
 	{
 		m_balanceId = balanceId;
@@ -130,7 +146,7 @@ public:
 	/**
 	**  异步线程处理函数，将在另一个线程里运行
 	*/
-	virtual bool ThreadProcess()
+	bool ThreadProcess() override
 	{
 		if (m_pMysqlDriver)
 		{
@@ -143,7 +159,7 @@ public:
 	** 主线程处理函数，将在线程处理完后，提交给主线程来处理，根据返回函数是否继续处理
 	返回值： thread::TPTask::TPTaskState， 请参看TPTaskState
 	*/
-	virtual TPTaskState MainThreadProcess()
+	TPTaskState MainThreadProcess() override
 	{
 		if (m_pAsyncMysqlModule)
 		{
@@ -151,6 +167,7 @@ public:
 		}
 		return TPTASK_STATE_COMPLETED;
 	}
+
 private:
 	google::protobuf::Message* m_pMessage;
 	bool m_result;
@@ -168,13 +185,12 @@ public:
 
 	virtual ~NFMysqlUpdateTask()
 	{
-
 	}
 
 	/**
 	**  异步线程处理函数，将在另一个线程里运行
 	*/
-	virtual bool ThreadProcess()
+	bool ThreadProcess() override
 	{
 		if (m_pMysqlDriver)
 		{
@@ -187,7 +203,7 @@ public:
 	** 主线程处理函数，将在线程处理完后，提交给主线程来处理，根据返回函数是否继续处理
 	返回值： thread::TPTask::TPTaskState， 请参看TPTaskState
 	*/
-	virtual TPTaskState MainThreadProcess()
+	TPTaskState MainThreadProcess() override
 	{
 		if (m_pAsyncMysqlModule)
 		{
@@ -195,6 +211,7 @@ public:
 		}
 		return TPTASK_STATE_COMPLETED;
 	}
+
 public:
 	bool m_result;
 	std::string m_strTableName;
@@ -214,13 +231,12 @@ public:
 
 	virtual ~NFMysqlQueryOneTask()
 	{
-
 	}
 
 	/**
 	**  异步线程处理函数，将在另一个线程里运行
 	*/
-	virtual bool ThreadProcess()
+	bool ThreadProcess() override
 	{
 		if (m_pMysqlDriver)
 		{
@@ -233,7 +249,7 @@ public:
 	** 主线程处理函数，将在线程处理完后，提交给主线程来处理，根据返回函数是否继续处理
 	返回值： thread::TPTask::TPTaskState， 请参看TPTaskState
 	*/
-	virtual TPTaskState MainThreadProcess()
+	TPTaskState MainThreadProcess() override
 	{
 		if (m_pAsyncMysqlModule)
 		{
@@ -241,6 +257,7 @@ public:
 		}
 		return TPTASK_STATE_COMPLETED;
 	}
+
 public:
 	bool m_result;
 	std::string m_strTableName;
@@ -261,17 +278,17 @@ public:
 
 	virtual ~NFMysqlQueryMoreTask()
 	{
-
 	}
 
 	/**
 	**  异步线程处理函数，将在另一个线程里运行
 	*/
-	virtual bool ThreadProcess()
+	bool ThreadProcess() override
 	{
 		if (m_pMysqlDriver)
 		{
-			m_result = m_pMysqlDriver->QueryMore(m_strTableName, m_strKeyColName, m_strKey, m_fieldVec, m_fieldValueMap);
+			m_result = m_pMysqlDriver->QueryMore(m_strTableName, m_strKeyColName, m_strKey, m_fieldVec,
+			                                     m_fieldValueMap);
 		}
 		return true;
 	}
@@ -280,7 +297,7 @@ public:
 	** 主线程处理函数，将在线程处理完后，提交给主线程来处理，根据返回函数是否继续处理
 	返回值： thread::TPTask::TPTaskState， 请参看TPTaskState
 	*/
-	virtual TPTaskState MainThreadProcess()
+	TPTaskState MainThreadProcess() override
 	{
 		if (m_pAsyncMysqlModule)
 		{
@@ -288,6 +305,7 @@ public:
 		}
 		return TPTASK_STATE_COMPLETED;
 	}
+
 public:
 	bool m_result;
 	std::string m_strTableName;
@@ -308,13 +326,12 @@ public:
 
 	virtual ~NFMysqlQueryMoreWithCondTask()
 	{
-
 	}
 
 	/**
 	**  异步线程处理函数，将在另一个线程里运行
 	*/
-	virtual bool ThreadProcess()
+	bool ThreadProcess() override
 	{
 		if (m_pMysqlDriver)
 		{
@@ -327,7 +344,7 @@ public:
 	** 主线程处理函数，将在线程处理完后，提交给主线程来处理，根据返回函数是否继续处理
 	返回值： thread::TPTask::TPTaskState， 请参看TPTaskState
 	*/
-	virtual TPTaskState MainThreadProcess()
+	TPTaskState MainThreadProcess() override
 	{
 		if (m_pAsyncMysqlModule)
 		{
@@ -335,6 +352,7 @@ public:
 		}
 		return TPTASK_STATE_COMPLETED;
 	}
+
 public:
 	bool m_result;
 	std::string m_strTableName;
@@ -346,7 +364,7 @@ public:
 class NFMysqlQueryMoreWithLimitTask : public NFMysqlTask
 {
 public:
-	NFMysqlQueryMoreWithLimitTask(uint64_t balanceId)
+	explicit NFMysqlQueryMoreWithLimitTask(uint64_t balanceId): m_nOffset(0), m_nRows(0)
 	{
 		m_balanceId = balanceId;
 		m_result = false;
@@ -354,17 +372,17 @@ public:
 
 	virtual ~NFMysqlQueryMoreWithLimitTask()
 	{
-
 	}
 
 	/**
 	**  异步线程处理函数，将在另一个线程里运行
 	*/
-	virtual bool ThreadProcess()
+	bool ThreadProcess() override
 	{
 		if (m_pMysqlDriver)
 		{
-			m_result = m_pMysqlDriver->QueryMoreWithLimit(m_strTableName, m_strKeyColName, m_nOffset, m_nRows, m_fieldVec, m_fieldValueMap);
+			m_result = m_pMysqlDriver->QueryMoreWithLimit(m_strTableName, m_strKeyColName, m_nOffset, m_nRows,
+			                                              m_fieldVec, m_fieldValueMap);
 		}
 		return true;
 	}
@@ -373,7 +391,7 @@ public:
 	** 主线程处理函数，将在线程处理完后，提交给主线程来处理，根据返回函数是否继续处理
 	返回值： thread::TPTask::TPTaskState， 请参看TPTaskState
 	*/
-	virtual TPTaskState MainThreadProcess()
+	TPTaskState MainThreadProcess() override
 	{
 		if (m_pAsyncMysqlModule)
 		{
@@ -381,6 +399,7 @@ public:
 		}
 		return TPTASK_STATE_COMPLETED;
 	}
+
 public:
 	bool m_result;
 	std::string m_strTableName;
@@ -402,17 +421,17 @@ public:
 
 	virtual ~NFMysqlQueryMoreByLikeTask()
 	{
-
 	}
 
 	/**
 	**  异步线程处理函数，将在另一个线程里运行
 	*/
-	virtual bool ThreadProcess()
+	bool ThreadProcess() override
 	{
 		if (m_pMysqlDriver)
 		{
-			m_result = m_pMysqlDriver->QueryMoreByLike(m_strTableName, m_strKeyColName, m_strKey, m_fieldVec, m_fieldValueMap);
+			m_result = m_pMysqlDriver->QueryMoreByLike(m_strTableName, m_strKeyColName, m_strKey, m_fieldVec,
+			                                           m_fieldValueMap);
 		}
 		return true;
 	}
@@ -421,7 +440,7 @@ public:
 	** 主线程处理函数，将在线程处理完后，提交给主线程来处理，根据返回函数是否继续处理
 	返回值： thread::TPTask::TPTaskState， 请参看TPTaskState
 	*/
-	virtual TPTaskState MainThreadProcess()
+	TPTaskState MainThreadProcess() override
 	{
 		if (m_pAsyncMysqlModule)
 		{
@@ -429,6 +448,7 @@ public:
 		}
 		return TPTASK_STATE_COMPLETED;
 	}
+
 public:
 	bool m_result;
 	std::string m_strTableName;
@@ -453,7 +473,7 @@ public:
 	}
 
 
-	virtual void ProcessTaskStart(NFTask* pTask)
+	void ProcessTaskStart(NFTask* pTask) override
 	{
 		NFMysqlTask* pMysqlTask = dynamic_cast<NFMysqlTask*>(pTask);
 		if (pMysqlTask)
@@ -462,7 +482,7 @@ public:
 		}
 	}
 
-	virtual void ProcessTask(NFTask* pTask)
+	void ProcessTask(NFTask* pTask) override
 	{
 		if (pTask)
 		{
@@ -470,7 +490,7 @@ public:
 		}
 	}
 
-	virtual void ProcessTaskEnd(NFTask* pTask)
+	void ProcessTaskEnd(NFTask* pTask) override
 	{
 		NFMysqlTask* pMysqlTask = dynamic_cast<NFMysqlTask*>(pTask);
 		if (pMysqlTask)
@@ -479,6 +499,7 @@ public:
 			pMysqlTask->m_pAsyncMysqlModule = m_pAsyMysqlModule;
 		}
 	}
+
 public:
 	NFCMysqlDriverManager* m_pMysqlDriverManager;
 	NFCAsyMysqlModule* m_pAsyMysqlModule;
@@ -487,13 +508,12 @@ public:
 
 NFCAsyMysqlModule::NFCAsyMysqlModule(NFIPluginManager* p)
 {
-    m_pPluginManager = p;
-    mnLastCheckTime = 0;
+	m_pPluginManager = p;
+	mnLastCheckTime = 0;
 }
 
 NFCAsyMysqlModule::~NFCAsyMysqlModule()
 {
-
 }
 
 bool NFCAsyMysqlModule::Awake()
@@ -503,35 +523,39 @@ bool NFCAsyMysqlModule::Awake()
 
 bool NFCAsyMysqlModule::Init()
 {
-    return true;
+	return true;
 }
 
 bool NFCAsyMysqlModule::BeforeShut()
 {
-    return true;
+	return true;
 }
 
 bool NFCAsyMysqlModule::Shut()
 {
-    return true;
+	return true;
 }
 
 bool NFCAsyMysqlModule::Execute()
 {
-    return true;
+	return true;
 }
 
 bool NFCAsyMysqlModule::AfterInit()
 {
-    return true;
+	return true;
 }
 
-bool NFCAsyMysqlModule::AddMysqlServer(const int nServerID, const std::string& strIP, const int nPort, const std::string strDBName, const std::string strDBUser, const std::string strDBPwd, const int nRconnectTime /*= 10*/, const int nRconneCount /*= -1*/)
+bool NFCAsyMysqlModule::AddMysqlServer(const int nServerID, const std::string& strIP, const int nPort,
+                                       const std::string strDBName, const std::string strDBUser,
+                                       const std::string strDBPwd, const int nRconnectTime /*= 10*/,
+                                       const int nRconneCount /*= -1*/)
 {
 	for (int i = 0; i < 10; i++)
 	{
 		NFMysqlTaskComponent* pComonnet = NF_NEW NFMysqlTaskComponent(this);
-		bool ret = pComonnet->m_pMysqlDriverManager->AddMysqlServer(nServerID, strIP, nPort, strDBName, strDBUser, strDBPwd, nRconnectTime, nRconneCount);
+		bool ret = pComonnet->m_pMysqlDriverManager->AddMysqlServer(nServerID, strIP, nPort, strDBName, strDBUser,
+		                                                            strDBPwd, nRconnectTime, nRconneCount);
 		if (ret == false)
 		{
 			return false;
@@ -540,41 +564,22 @@ bool NFCAsyMysqlModule::AddMysqlServer(const int nServerID, const std::string& s
 		AddActorComponent(pComonnet);
 	}
 
-    return true;
+	return true;
 }
 
-
-//////////////////////////////////////////////////////////////////////////
-/**
-* @brief
-*
-* @param  message
-* @return bool
-*/
-bool NFCAsyMysqlModule::UpdateOne(const google::protobuf::Message& message, uint64_t balanceId, uint8_t mysqlEventType)
+bool NFCAsyMysqlModule::UpdateOne(const google::protobuf::Message& message, uint64_t balanceId)
 {
 	NFMysqlUpdateMessageTask* pTask = NF_NEW NFMysqlUpdateMessageTask(message, balanceId);
 	return AddTask(pTask);
 }
 
-/**
-* @brief
-*
-* @param  message
-* @return bool
-*/
+
 bool NFCAsyMysqlModule::QueryOne(google::protobuf::Message& message, uint64_t balanceId)
 {
 	NFMysqlQueryOneMessageTask* pTask = NF_NEW NFMysqlQueryOneMessageTask(message, balanceId);
 	return AddTask(pTask);
 }
 
-/**
-* @brief
-*
-* @param  message
-* @return bool
-*/
 bool NFCAsyMysqlModule::QueryMore(google::protobuf::Message& message, uint64_t balanceId)
 {
 	NFMysqlQueryMoreMessageTask* pTask = NF_NEW NFMysqlQueryMoreMessageTask(message, balanceId);
@@ -582,7 +587,8 @@ bool NFCAsyMysqlModule::QueryMore(google::protobuf::Message& message, uint64_t b
 }
 
 bool NFCAsyMysqlModule::UpdateOne(const std::string& strTableName, const std::string& strKeyColName,
-	const std::string& strKey, const std::map<std::string, std::string>& fieldValueMap, uint64_t balanceId)
+                                  const std::string& strKey, const std::map<std::string, std::string>& fieldValueMap,
+                                  uint64_t balanceId)
 {
 	NFMysqlUpdateTask* pTask = NF_NEW NFMysqlUpdateTask(balanceId);
 	pTask->m_strTableName = strTableName;
@@ -593,17 +599,9 @@ bool NFCAsyMysqlModule::UpdateOne(const std::string& strTableName, const std::st
 	return AddTask(pTask);
 }
 
-/**
-* @brief
-*
-* @param  strTableName
-* @param  strKeyColName
-* @param  strKey
-* @param  fieldVec
-* @param  valueVec
-* @return bool
-*/
-bool NFCAsyMysqlModule::QueryOne(const std::string& strTableName, const std::string& strKeyColName, const std::string& strKey, const std::vector<std::string>& fieldVec, uint64_t balanceId)
+bool NFCAsyMysqlModule::QueryOne(const std::string& strTableName, const std::string& strKeyColName,
+                                 const std::string& strKey, const std::vector<std::string>& fieldVec,
+                                 uint64_t balanceId)
 {
 	NFMysqlQueryOneTask* pTask = NF_NEW NFMysqlQueryOneTask(balanceId);
 	pTask->m_strTableName = strTableName;
@@ -614,17 +612,9 @@ bool NFCAsyMysqlModule::QueryOne(const std::string& strTableName, const std::str
 	return AddTask(pTask);
 }
 
-/**
-* @brief
-*
-* @param  strTableName
-* @param  strKeyColName
-* @param  strKey
-* @param  fieldVec
-* @param  valueVec
-* @return bool
-*/
-bool NFCAsyMysqlModule::QueryMore(const std::string& strTableName, const std::string& strKeyColName, const std::string& strKey, const std::vector<std::string>& fieldVec, uint64_t balanceId)
+bool NFCAsyMysqlModule::QueryMore(const std::string& strTableName, const std::string& strKeyColName,
+                                  const std::string& strKey, const std::vector<std::string>& fieldVec,
+                                  uint64_t balanceId)
 {
 	NFMysqlQueryMoreTask* pTask = NF_NEW NFMysqlQueryMoreTask(balanceId);
 	pTask->m_strTableName = strTableName;
@@ -635,7 +625,8 @@ bool NFCAsyMysqlModule::QueryMore(const std::string& strTableName, const std::st
 	return AddTask(pTask);
 }
 
-bool NFCAsyMysqlModule::QueryMoreWithCond(const std::string& strTableName, const std::string& whereSql, const std::vector<std::string>& fieldVec, uint64_t balanceId)
+bool NFCAsyMysqlModule::QueryMoreWithCond(const std::string& strTableName, const std::string& whereSql,
+                                          const std::vector<std::string>& fieldVec, uint64_t balanceId)
 {
 	NFMysqlQueryMoreWithCondTask* pTask = NF_NEW NFMysqlQueryMoreWithCondTask(balanceId);
 	pTask->m_strTableName = strTableName;
@@ -645,18 +636,9 @@ bool NFCAsyMysqlModule::QueryMoreWithCond(const std::string& strTableName, const
 	return AddTask(pTask);
 }
 
-/**
-* @brief
-*
-* @param  strTableName
-* @param  strKeyColName
-* @param  nOffset
-* @param  nRows
-* @param  fieldVec
-* @param  valueVec
-* @return bool
-*/
-bool NFCAsyMysqlModule::QueryMoreWithLimit(const std::string& strTableName, const std::string& strKeyColName, int nOffset, int nRows, const std::vector<std::string>& fieldVec, uint64_t balanceId)
+bool NFCAsyMysqlModule::QueryMoreWithLimit(const std::string& strTableName, const std::string& strKeyColName,
+                                           int nOffset, int nRows, const std::vector<std::string>& fieldVec,
+                                           uint64_t balanceId)
 {
 	NFMysqlQueryMoreWithLimitTask* pTask = NF_NEW NFMysqlQueryMoreWithLimitTask(balanceId);
 	pTask->m_strTableName = strTableName;
@@ -668,16 +650,9 @@ bool NFCAsyMysqlModule::QueryMoreWithLimit(const std::string& strTableName, cons
 	return AddTask(pTask);
 }
 
-/**
-* @brief
-*
-* @param  strTableName
-* @param  strKeyColName
-* @param  strKeyName
-* @param  valueVec
-* @return bool
-*/
-bool NFCAsyMysqlModule::QueryMoreByLike(const std::string& strTableName, const std::string& strKeyColName, const std::string& strKeyName, std::vector<std::string>& fieldVec, uint64_t balanceId)
+bool NFCAsyMysqlModule::QueryMoreByLike(const std::string& strTableName, const std::string& strKeyColName,
+                                        const std::string& strKeyName, std::vector<std::string>& fieldVec,
+                                        uint64_t balanceId)
 {
 	NFMysqlQueryMoreByLikeTask* pTask = NF_NEW NFMysqlQueryMoreByLikeTask(balanceId);
 	pTask->m_strTableName = strTableName;
@@ -703,17 +678,20 @@ void NFCAsyMysqlModule::QueryOneCallBack(bool result, const std::map<std::string
 	NFLogInfo(NF_LOG_MYSQL_PLUGIN, 0, "result:{}, data:{}", result, NFCommon::tostr(fieldValueMap));
 }
 
-void NFCAsyMysqlModule::QueryMoreCallBack(bool result, const std::vector<std::map<std::string, std::string>>& fieldValueMap)
+void NFCAsyMysqlModule::QueryMoreCallBack(bool result,
+                                          const std::vector<std::map<std::string, std::string>>& fieldValueMap)
 {
 	NFLogInfo(NF_LOG_MYSQL_PLUGIN, 0, "result:{}, data:{}", result, NFCommon::tostr(fieldValueMap));
 }
 
-void NFCAsyMysqlModule::QueryMoreWithCondCallBack(bool result, const std::vector<std::map<std::string, std::string>>& fieldValueMap)
+void NFCAsyMysqlModule::QueryMoreWithCondCallBack(bool result,
+                                                  const std::vector<std::map<std::string, std::string>>& fieldValueMap)
 {
 	NFLogInfo(NF_LOG_MYSQL_PLUGIN, 0, "result:{}, data:{}", result, NFCommon::tostr(fieldValueMap));
 }
 
-void NFCAsyMysqlModule::QueryMoreByLikeCallBack(bool result, const std::vector<std::map<std::string, std::string>>& fieldValueMap)
+void NFCAsyMysqlModule::QueryMoreByLikeCallBack(bool result,
+                                                const std::vector<std::map<std::string, std::string>>& fieldValueMap)
 {
 	NFLogInfo(NF_LOG_MYSQL_PLUGIN, 0, "result:{}, data:{}", result, NFCommon::tostr(fieldValueMap));
 }
@@ -728,7 +706,8 @@ void NFCAsyMysqlModule::QueryMoreMessageCallBack(bool result, const google::prot
 	NFLogInfo(NF_LOG_MYSQL_PLUGIN, 0, "result:{}, data:{}", result, message.DebugString());
 }
 
-void NFCAsyMysqlModule::QueryMoreWithLimitCallBack(bool result, const std::vector<std::map<std::string, std::string>>& fieldValueMap)
+void NFCAsyMysqlModule::QueryMoreWithLimitCallBack(bool result,
+                                                   const std::vector<std::map<std::string, std::string>>& fieldValueMap)
 {
 	NFLogInfo(NF_LOG_MYSQL_PLUGIN, 0, "result:{}, data:{}", result, NFCommon::tostr(fieldValueMap));
 }

@@ -46,7 +46,8 @@ message gcjulebulist     //获取俱乐部列表
 	repeated string ownernick = 7;   
 	repeated int32 tablenum = 8;    //已开房间数量
 	optional int32 gettype = 9;   //1:自己的俱乐部列表，2：是推荐的俱乐部列表
-	repeated julebuadminlist adminlist = 10; 
+	repeated julebuadminlist adminlist = 10;
+	repeated int32 julebu_jetton = 11; //比赛场俱乐部积分 
 	
 }
 

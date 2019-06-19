@@ -43,7 +43,6 @@
     catch (mysqlpp::BadQuery er) \
     { \
 		NFLogError(NF_LOG_SYSTEMLOG, 0, "BadQuery [{}] Error:{}", msg, er.what());\
-        std::cout << "BadQuery [" << msg << "] Error: " << er.what() << std::endl; \
         return ; \
     } \
     catch (const mysqlpp::BadConversion& er)  \
@@ -309,8 +308,7 @@ public:
 	 * @param  strTableName		表名
 	 * @param  strKeyColName	key所在列的列名
 	 * @param  strKey			key数据
-	 * @param  fieldVec			要插入的数据的列名
-	 * @param  valueVec			要插入的数据
+	 * @param  keyvalueMap		数据
 	 * @return bool				成功或失败
 	 */
 	virtual bool Update(const std::string& strTableName, const std::string& strKeyColName, const std::string& strKey, const std::map<std::string, std::string>& keyvalueMap) override;
@@ -427,6 +425,7 @@ public:
 	 * @param  strTableName
 	 * @param  strKeyColName
 	 * @param  strKeyName
+	 * @param  fieldVec
 	 * @param  valueVec
 	 * @return bool 
 	 */
@@ -438,10 +437,11 @@ public:
 	 * @param  strTableName
 	 * @param  strKeyColName
 	 * @param  strKeyName
+	 * @param  fieldVec
 	 * @param  valueVec
 	 * @return bool
 	 */
-	virtual bool QueryMoreByLike(const std::string& strTableName, const std::string& strKeyColName, const std::string& strKeyName, const std::vector<std::string>& fieldVec, std::vector<std::map<std::string, std::string>>& valueVec);
+	virtual bool QueryMoreByLike(const std::string& strTableName, const std::string& strKeyColName, const std::string& strKeyName, const std::vector<std::string>& fieldVec, std::vector<std::map<std::string, std::string>>& valueVec) override;
 protected:
 	/**
 	 * @brief 是否需要重连

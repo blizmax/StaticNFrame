@@ -553,8 +553,8 @@ public:
 
 	inline bool IsDigital(const std::string &s)
 	{
-		int len = s.length();
-		int i = 0;
+		size_t len = s.length();
+		size_t i = 0;
 		for (; i < len; ++i)
 		{
 			if (s[i] < '0' || s[i] > '9')
@@ -568,8 +568,8 @@ public:
 
 	inline bool IsDigital_2(const std::string &s)
 	{
-		int len = s.length();
-		int i = 0;
+		size_t len = s.length();
+		size_t i = 0;
 		for (; i < len; ++i)
 		{
 			if (i == 0 && s[0] == '-')
@@ -603,8 +603,8 @@ public:
 
 	inline bool CheckIsDigit(const std::string& str)
 	{
-		int nCount = str.length(); // 获得字符个数
-		for (int i = 0; i < nCount; i++)
+		size_t nCount = str.length(); // 获得字符个数
+		for (size_t i = 0; i < nCount; i++)
 		{
 			if (0 == isdigit(str.at(i))) // 不是数字就置标志位
 			{
