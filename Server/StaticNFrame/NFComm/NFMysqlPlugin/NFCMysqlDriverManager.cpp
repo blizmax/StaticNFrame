@@ -1,5 +1,7 @@
 #ifdef _MSC_VER
+#include <WinSock2.h>
 #include <winsock.h>
+#include <ws2tcpip.h>
 #else
 #include <sys/socket.h>
 #include <netdb.h>
