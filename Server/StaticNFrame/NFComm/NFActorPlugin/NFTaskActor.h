@@ -2,10 +2,8 @@
 
 #define THERON_USE_STD_THREADS 1
 
-#include <map>
 #include <vector>
 #include <Theron/Theron.h>
-#include "NFComm/NFCore/NFPlatform.h"
 
 class NFTask;
 class NFITaskModule;
@@ -125,7 +123,7 @@ protected:
 	* @param from	 发送消息的actor地址
 	* @return 返回发送是否成功
 	*/
-	virtual void HandlerEx(const NFTaskActorMessage& message, const Theron::Address from);
+	virtual void HandlerEx(const NFTaskActorMessage& message, Theron::Address from);
 
 	/**
 	* @brief 处理发送的数据
@@ -134,7 +132,7 @@ protected:
 	* @param from	 发送消息的actor地址
 	* @return
 	*/
-	virtual void Handler(const NFTaskActorMessage& message, const Theron::Address from);
+	virtual void Handler(const NFTaskActorMessage& message, Theron::Address from);
 public:
 	/**
 	* @brief 处理task前的处理
@@ -167,7 +165,7 @@ protected:
 	* @param from	 发送消息的actor地址
 	* @return
 	*/
-	virtual void DefaultHandler(const NFTaskActorMessage& message, const Theron::Address from);
+	virtual void DefaultHandler(const NFTaskActorMessage& message, Theron::Address from);
 protected:
 	/**
 	* @brief actor管理基类
@@ -179,4 +177,3 @@ protected:
 	*/
 	std::vector<NFITaskComponent*> m_taskComponents;
 };
-

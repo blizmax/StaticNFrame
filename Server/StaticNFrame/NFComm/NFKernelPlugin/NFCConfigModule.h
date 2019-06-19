@@ -21,16 +21,16 @@ public:
 
 	virtual ~NFCConfigModule();
 
-	virtual bool Awake() override;
-	virtual bool Init() override;
-	virtual bool AfterInit() override;
-	virtual bool BeforeShut() override;
-	virtual bool Shut() override;
-	virtual bool Execute() override;
-	virtual bool OnReloadPlugin() override;
-	virtual void ProductFile() override;
-	virtual void CreateHeaderFile();
-	virtual void CreateSqlFile();
+	bool Awake() override;
+	bool Init() override;
+	bool AfterInit() override;
+	bool BeforeShut() override;
+	bool Shut() override;
+	bool Execute() override;
+	bool OnReloadPlugin() override;
+	void ProductFile() override;
+	void CreateHeaderFile();
+	void CreateSqlFile();
 public:
 	bool LoadConfig();
 	bool LoadPluginConfig();
@@ -40,16 +40,16 @@ public:
 
 	bool LoadLogConfig();
 public:
-	virtual NFPluginConfig* GetPluginConfig(const std::string& pluginName);
-	virtual NFServerConfig* GetServerConfig(uint32_t serverId);
-	virtual std::vector<NFServerConfig*> GetServerConfigFromServerType(uint32_t serverType);
-	virtual NFIObject* GetGlobalConfig() const { return mGlobalConfig; }
-	virtual NFClassObject* GetClassObject(const std::string& className) const;
+	NFPluginConfig* GetPluginConfig(const std::string& pluginName) override;
+	NFServerConfig* GetServerConfig(uint32_t serverId) override;
+	std::vector<NFServerConfig*> GetServerConfigFromServerType(uint32_t serverType) override;
+	NFIObject* GetGlobalConfig() const override { return mGlobalConfig; }
+	NFClassObject* GetClassObject(const std::string& className) const override;
 
-	virtual NFIObject* CreateConfigObject(uint64_t guid, const std::string& className);
-	virtual NFIObject* GetConfigObject(uint64_t guid, const std::string& className);
-	virtual bool ExistConfigObject(uint64_t guid, const std::string& className);
-	virtual bool DeleteConfigObject(uint64_t guid, const std::string& className);
+	NFIObject* CreateConfigObject(uint64_t guid, const std::string& className) override;
+	NFIObject* GetConfigObject(uint64_t guid, const std::string& className) override;
+	bool ExistConfigObject(uint64_t guid, const std::string& className) override;
+	bool DeleteConfigObject(uint64_t guid, const std::string& className) override;
 protected:
 	std::unordered_map<std::string, NFPluginConfig*> mPluginConfig; //pluginName--key
 	std::unordered_map<int, NFServerConfig*> mServerConfig; //serverid--key

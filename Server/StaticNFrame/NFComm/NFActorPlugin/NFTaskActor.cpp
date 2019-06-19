@@ -1,5 +1,3 @@
-
-
 #include "NFTaskActor.h"
 #include "NFComm/NFPluginModule/NFTask.h"
 #include "NFComm/NFPluginModule/NFITaskModule.h"
@@ -9,7 +7,7 @@
 * @brief 构造函数
 *        必须调用RegisterHandler，注册异步过程中用来处理的函数
 */
-NFTaskActor::NFTaskActor(Theron::Framework& framework, NFITaskModule* pTaskModule) : Theron::Actor(framework)
+NFTaskActor::NFTaskActor(Theron::Framework& framework, NFITaskModule* pTaskModule) : Actor(framework)
 {
 	RegisterHandler(this, &NFTaskActor::DefaultHandler);
 	m_pTaskModule = pTaskModule;
@@ -19,9 +17,7 @@ NFTaskActor::NFTaskActor(Theron::Framework& framework, NFITaskModule* pTaskModul
 * @brief 析构函数
 *
 */
-NFTaskActor::~NFTaskActor()
-{
-}
+NFTaskActor::~NFTaskActor() = default;
 
 /**
 * @brief 初始化

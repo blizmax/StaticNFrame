@@ -35,15 +35,11 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="NFCActor.cpp" />
-    <ClCompile Include="NFCActorModule.cpp" />
     <ClCompile Include="NFActorPlugin.cpp" />
     <ClCompile Include="NFCTaskModule.cpp" />
     <ClCompile Include="NFTaskActor.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="NFCActor.h" />
-    <ClInclude Include="NFCActorModule.h" />
     <ClInclude Include="NFActorPlugin.h" />
     <ClInclude Include="NFCTaskModule.h" />
     <ClInclude Include="NFTaskActor.h" />

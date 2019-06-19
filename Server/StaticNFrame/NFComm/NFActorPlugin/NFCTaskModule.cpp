@@ -23,13 +23,10 @@ NFCTaskModule::NFCTaskModule(NFIPluginManager* p)
 	nHandleTaskCount = 0;
 	srand(static_cast<unsigned>(time(nullptr)));
 	//首先初始化
-	InitActorThread(std::thread::hardware_concurrency());
+	NFCTaskModule::InitActorThread(std::thread::hardware_concurrency());
 }
 
-NFCTaskModule::~NFCTaskModule()
-{
-
-}
+NFCTaskModule::~NFCTaskModule() = default;
 
 bool NFCTaskModule::Init()
 {
@@ -135,7 +132,7 @@ bool NFCTaskModule::SendMsgToActor(const int nActorIndex, NFTask* pData)
 */
 void NFCTaskModule::ReleaseActor()
 {
-	for (auto it = m_mActorMap.begin(); it != m_mActorMap.end(); it++)
+	for (auto it = m_mActorMap.begin(); it != m_mActorMap.end(); ++it)
 	{
 		NF_SAFE_DELETE(it->second);
 	}
@@ -160,7 +157,7 @@ void NFCTaskModule::ReleaseActor()
 */
 NFTaskActor* NFCTaskModule::GetActor(const int nActorIndex)
 {
-	auto iter = m_mActorMap.find(nActorIndex);
+	const auto iter = m_mActorMap.find(nActorIndex);
 	if (iter != m_mActorMap.end())
 	{
 		return iter->second;
@@ -194,7 +191,7 @@ int NFCTaskModule::GetNumQueuedMessages()
 		count += m_pMainActor->GetNumQueuedMessages();
 	}
 
-	for (auto it = m_mActorMap.begin(); it != m_mActorMap.end(); it++)
+	for (auto it = m_mActorMap.begin(); it != m_mActorMap.end(); ++it)
 	{
 		count += it->second->GetNumQueuedMessages();
 	}
@@ -221,7 +218,7 @@ bool NFCTaskModule::HandlerEx(const NFTaskActorMessage& message, const int from)
 
 bool NFCTaskModule::AddTask(NFTask* pTask)
 {
-	int nActorId = GetBalanceActor(pTask->GetBalanceId());
+	const int nActorId = GetBalanceActor(pTask->GetBalanceId());
 	if (nActorId <= 0)
 	{
 		return false;
@@ -258,20 +255,17 @@ int NFCTaskModule::GetBalanceActor(uint64_t balanceId)
 	{
 		return GetRandActor();
 	}
-	else
+	if (m_vecActorPool.empty())
 	{
-		if (m_vecActorPool.size() <= 0)
-		{
-			return -1;
-		}
-		mnSuitIndex = balanceId % m_vecActorPool.size();
-		return m_vecActorPool[mnSuitIndex];
+		return -1;
 	}
+	mnSuitIndex = balanceId % m_vecActorPool.size();
+	return m_vecActorPool[mnSuitIndex];
 }
 
 int NFCTaskModule::GetRandActor()
 {
-	if (m_vecActorPool.size() <= 0)
+	if (m_vecActorPool.empty())
 	{
 		return -1;
 	}
@@ -285,50 +279,50 @@ int NFCTaskModule::GetRandActor()
 void NFCTaskModule::OnMainThreadTick()
 {
 	std::vector<NFTaskActorMessage> listTask;
-	bool ret = m_mQueue.Pop(listTask);
+	const bool ret = m_mQueue.Pop(listTask);
 	if (ret)
 	{
-		uint64_t start = NFTime::Tick();
-		for (auto it = listTask.begin(); it != listTask.end(); it++)
+		const uint64_t start = NFTime::Tick();
+		for (auto it = listTask.begin(); it != listTask.end(); ++it)
 		{
 			NFTaskActorMessage& xMsg = *it;
 			if (xMsg.nMsgType != NFTaskActorMessage::ACTOR_MSG_TYPE_COMPONENT)
 			{
-				NFTask* pTask = static_cast<NFTask*>(xMsg.pData);
+				auto pTask = static_cast<NFTask*>(xMsg.pData);
 				if (pTask)
 				{
-					NFTask::TPTaskState state = pTask->MainThreadProcess();
+					const NFTask::TPTaskState state = pTask->MainThreadProcess();
 					switch (state)
 					{
 					case NFTask::TPTASK_STATE_COMPLETED:
-					{
-						nHandleTaskCount++;
-						NF_SAFE_DELETE(pTask);
-					}
-					break;
+						{
+							nHandleTaskCount++;
+							NF_SAFE_DELETE(pTask);
+						}
+						break;
 					case NFTask::TPTASK_STATE_CONTINUE_CHILDTHREAD:
-					{
-						AddTask(pTask);
-					}
-					break;
+						{
+							AddTask(pTask);
+						}
+						break;
 					case NFTask::TPTASK_STATE_CONTINUE_MAINTHREAD:
-					{
-						m_mQueue.Push(xMsg);
-					}
-					break;
+						{
+							m_mQueue.Push(xMsg);
+						}
+						break;
 					default:
-					{
-						//error
-						nHandleTaskCount++;
-						NF_SAFE_DELETE(pTask);
-					}
+						{
+							//error
+							nHandleTaskCount++;
+							NF_SAFE_DELETE(pTask);
+						}
 					}
 				}
 			}
 			else
 			{
 				//error
-				NFTask* pTask = static_cast<NFTask*>(xMsg.pData);
+				auto pTask = static_cast<NFTask*>(xMsg.pData);
 				if (pTask)
 				{
 					NF_SAFE_DELETE(pTask);
@@ -337,13 +331,14 @@ void NFCTaskModule::OnMainThreadTick()
 				{
 					//error
 				}
-				NFLogError(NF_LOG_ACTOR_PLUGIN,0,"task actor module error................");
+				NFLogError(NF_LOG_ACTOR_PLUGIN, 0, "task actor module error................");
 			}
 		}
 
-		if (listTask.size() > 0)
+		if (!listTask.empty())
 		{
-			NFLogDebug(NF_LOG_ACTOR_PLUGIN, 0, "handle main thread tick task num:{}, use time:{}", listTask.size(), NFTime::Tick() - start);
+			NFLogDebug(NF_LOG_ACTOR_PLUGIN, 0, "handle main thread tick task num:{}, use time:{}", listTask.size(),
+			           NFTime::Tick() - start);
 		}
 	}
 

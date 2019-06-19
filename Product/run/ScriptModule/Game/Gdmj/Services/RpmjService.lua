@@ -1965,6 +1965,10 @@ function RpmjService.PlayCountWin(tItem)
 		end
 
 		addPoker.userid = tItem.m_userList[i].userid
+
+		for k, v in ipairs(userMaList[i]) do
+			addPoker.magetlist:append(v)
+		end
 		
 		tItem.m_userModify[i] = 1
 	end
@@ -1973,21 +1977,8 @@ function RpmjService.PlayCountWin(tItem)
 	
 	GdmjHistoryModel.SetHistory(tItem, 0, gcAccount)
 	gcAccount.result = 0
-	--local userIDList = GdmjWork.GetUserList(tItem.m_tInfo)
-	--SendMessage(userIDList, PacketCode[2222].client, gcAccount:ByteSize(), gcAccount:SerializeToString())
-
-	for i = 1,tItem.m_maxUser do
-		local userid = tItem.m_userList[i].userid
-		while #gcAccount.magetlist > 0 do
-			gcAccount.magetlist:remove(1)
-		end
-		
-		for k, v in ipairs(userMaList[i]) do
-			gcAccount.magetlist:append(v)
-		end
-	
-		SendMessage(userid, PacketCode[2222].client, gcAccount:ByteSize(), gcAccount:SerializeToString())
-	end
+	local userIDList = GdmjWork.GetUserList(tItem.m_tInfo)
+	SendMessage(userIDList, PacketCode[2222].client, gcAccount:ByteSize(), gcAccount:SerializeToString())
 
 		
 	--tItem.m_tInfo.status = g_gdmjStatus.status_end
@@ -2388,6 +2379,10 @@ function RpmjService.PlayCountWinMore(tItem)
 			end
 		end
 		addPoker.userid = tItem.m_userList[i].userid
+
+		for k, v in ipairs(userMaList[i]) do
+			addPoker.magetlist:append(v)
+		end
 		tItem.m_userModify[i] = 1
 	end
 	
@@ -2395,21 +2390,8 @@ function RpmjService.PlayCountWinMore(tItem)
 	
 	GdmjHistoryModel.SetHistory(tItem, 0, gcAccount)
 	gcAccount.result = 0
-	--local userIDList = GdmjWork.GetUserList(tItem.m_tInfo)
-	--SendMessage(userIDList, PacketCode[2222].client, gcAccount:ByteSize(), gcAccount:SerializeToString())
-
-	for i = 1,tItem.m_maxUser do
-		local userid = tItem.m_userList[i].userid
-		while #gcAccount.magetlist > 0 do
-			gcAccount.magetlist:remove(1)
-		end
-		
-		for k, v in ipairs(userMaList[i]) do
-			gcAccount.magetlist:append(v)
-		end
-	
-		SendMessage(userid, PacketCode[2222].client, gcAccount:ByteSize(), gcAccount:SerializeToString())
-	end
+	local userIDList = GdmjWork.GetUserList(tItem.m_tInfo)
+	SendMessage(userIDList, PacketCode[2222].client, gcAccount:ByteSize(), gcAccount:SerializeToString())
 
 	if tItem.m_tInfo.bankerpos == winList[1] then
 		--连庄的设置

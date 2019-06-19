@@ -7,7 +7,6 @@
 //
 // -------------------------------------------------------------------------
 #include "NFActorPlugin.h"
-#include "NFCActorModule.h"
 #include "NFCTaskModule.h"
 
 
@@ -39,13 +38,11 @@ std::string NFActorPlugin::GetPluginName()
 
 void NFActorPlugin::Install()
 {
-	//REGISTER_MODULE(pPluginManager, NFIActorModule, NFCActorModule);
 	REGISTER_MODULE(m_pPluginManager, NFITaskModule, NFCTaskModule);
 }
 
 void NFActorPlugin::Uninstall()
 {
-	//UNREGISTER_MODULE(pPluginManager, NFIActorModule, NFCActorModule);
 	UNREGISTER_MODULE(m_pPluginManager, NFITaskModule, NFCTaskModule)
 }
 

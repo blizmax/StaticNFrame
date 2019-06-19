@@ -12,24 +12,25 @@
 #include "NFComm/NFPluginModule/NFITaskModule.h"
 #include "NFComm/NFCore/NFQueue.hpp"
 #include "NFTaskActor.h"
+#include <map>
 
-class NFCTaskModule : public NFITaskModule
+class NFCTaskModule final : public NFITaskModule
 {
 public:
 	explicit NFCTaskModule(NFIPluginManager* p);
 	virtual ~NFCTaskModule();
 
-	virtual bool Init() override;
+	bool Init() override;
 
-	virtual bool AfterInit() override;
+	bool AfterInit() override;
 
-	virtual bool BeforeShut() override;
+	bool BeforeShut() override;
 
-	virtual bool Shut() override;
+	bool Shut() override;
 
-	virtual bool Finalize() override;
+	bool Finalize() override;
 
-	virtual bool Execute() override;
+	bool Execute() override;
 public:
 	/**
 	* @brief 初始化actor系统, 配置线程个数
@@ -44,14 +45,14 @@ public:
 	*
 	* @return 返回actor的唯一索引
 	*/
-	virtual int RequireActor();
+	virtual int RequireActor() override;
 
 	/**
 	* @brief 添加一个Actor组件
 	*
 	* @return 
 	*/
-	virtual bool AddActorComponent(const int nActorIndex, NFITaskComponent* pComonnet);
+	virtual bool AddActorComponent(int nActorIndex, NFITaskComponent* pComonnet) override;
 
 	/**
 	* @brief 主线程通过自己保存的actorIndex将发送数据给actor线程
@@ -60,7 +61,7 @@ public:
 	* @param pData			要发送的数据
 	* @return 是否成功
 	*/
-	virtual bool SendMsgToActor(const int nActorIndex, NFTask* pData);
+	virtual bool SendMsgToActor(int nActorIndex, NFTask* pData);
 
 	/**
 	* @brief 释放actor资源
@@ -75,14 +76,14 @@ public:
 	* @param nActorIndex	actor索引地址
 	* @return 返回获得的actor, 若没有，为NULL
 	*/
-	virtual NFTaskActor* GetActor(const int nActorIndex);
+	virtual NFTaskActor* GetActor(int nActorIndex);
 
 	/**
 	* @brief 获得系统还没有处理完的任务数目
 	*
 	* @return 未完成的任务数目
 	*/
-	virtual int GetNumQueuedMessages();
+	virtual int GetNumQueuedMessages() override;
 
 	/**
 	* @brief 释放申请的actor数据，关闭actor池
@@ -95,11 +96,11 @@ public:
 	* @brief 消息数据处理完后，如果有必要将数据返回给主线程，
 	*		 在这个函数里，将消息数据推送给主线程，这个函数在actor线程中执行
 	*
-	* @param messag	消息数据
+	* @param message	消息数据
 	* @param from	发送消息的actor地址
 	* @return 是否成功
 	*/
-	virtual bool HandlerEx(const NFTaskActorMessage& message, const int from);
+	virtual bool HandlerEx(const NFTaskActorMessage& message, int from) override;
 
 	/**
 	* @brief 通过任务的动态均衡id，获得actor
@@ -123,7 +124,7 @@ public:
 	* @param pTask 要异步处理的task
 	* @return
 	*/
-	bool AddTask(NFTask* pTask);
+	virtual bool AddTask(NFTask* pTask) override;
 
 	/**
 	* @brief 添加要异步处理的task
@@ -131,7 +132,7 @@ public:
 	* @param pTask 要异步处理的task
 	* @return
 	*/
-	bool AddTask(int actorId, NFTask* pTask);
+	virtual bool AddTask(int actorId, NFTask* pTask) override;
 
 	/**
 	* @brief 主线程处理actor返回的任务
@@ -140,8 +141,8 @@ public:
 	*/
 	void OnMainThreadTick();
 protected:
-	Theron::Framework* m_pFramework;
-	NFTaskActor* m_pMainActor;
+	Theron::Framework* m_pFramework{};
+	NFTaskActor* m_pMainActor{};
 	std::map<int, NFTaskActor*> m_mActorMap;
 
 protected:
@@ -153,19 +154,19 @@ protected:
 	/**
 	* @brief 用来平衡随机获得actor
 	*/
-	int mnSuitIndex;
+	uint64_t mnSuitIndex;
 
 	/**
 	* @brief 接收的任务数目
 	*
 	*/
-	int nRecvTaskCount;
+	uint64_t nRecvTaskCount;
 
 	/**
 	* @brief 处理的任务数目
 	* @return
 	*/
-	int nHandleTaskCount;
+	uint64_t nHandleTaskCount;
 
 	/**
 	* @brief 返回的消息队列，线程安全,

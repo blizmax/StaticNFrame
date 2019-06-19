@@ -246,10 +246,12 @@ message gdmjhistorypair
 	optional int32 packetcode = 1;
 	optional string pkginfo = 2;       //这个是用来存储用的
 }
+
 message gdmjhandpoker
 {
 	optional int32 userid = 1;
 	repeated gdmjpoker mjpokerlist = 2;   //碰杠的牌型
 	repeated int32 handpoker = 3;         //在最后结算的时候，把
+	repeated int32 magetlist = 4;			  //中码
 }
 
