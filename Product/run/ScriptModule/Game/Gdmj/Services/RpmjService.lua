@@ -1689,11 +1689,13 @@ function RpmjService.PlayCountWin(tItem)
 
 		for k,v in ipairs(gcAccount.malist) do
 			local index = math.mod(v,10)
-			index = math.mod(index,tItem.m_maxUser)
+			index = math.mod(index,4)
 			index = index == 0 and tItem.m_maxUser or index
 			
-			maList[ maIndexList[index] ] = maList[ maIndexList[index] ] + 1
-			table.insert(userMaList[maIndexList[index]], v)			
+			if maIndexList[index] ~= 0 then
+				maList[ maIndexList[index] ] = maList[ maIndexList[index] ] + 1
+				table.insert(userMaList[maIndexList[index]], v)
+			end			
 		end
 
 		for i = 1,tItem.m_maxUser do
@@ -2121,14 +2123,15 @@ function RpmjService.PlayCountWinMore(tItem)
 			maIndex = maIndex + 1
 		end
 
-
 		for k,v in ipairs(gcAccount.malist) do
 			local index = math.mod(v,10)
-			index = math.mod(index,tItem.m_maxUser)
+			index = math.mod(index,4)
 			index = index == 0 and tItem.m_maxUser or index
 			
-			maList[ maIndexList[index] ] = maList[ maIndexList[index] ] + 1
-			table.insert(userMaList[maIndexList[index]], v)				
+			if maIndexList[index] ~= 0 then
+				maList[ maIndexList[index] ] = maList[ maIndexList[index] ] + 1
+				table.insert(userMaList[maIndexList[index]], v)
+			end			
 		end
 
 		for i = 1,tItem.m_maxUser do

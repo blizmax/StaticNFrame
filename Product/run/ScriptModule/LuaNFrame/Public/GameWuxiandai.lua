@@ -3,7 +3,7 @@ GameWuxiandai = GameWuxiandai or {}
 function GameWuxiandai.Load()
 	package.path = package.path .. ";../ScriptModule/wuxiandai/?.lua;"
 	package.path = package.path .. ";../ScriptModule/wuxiandai/common/?.lua;"
-	LoadLuaFile("../ScriptModule/Public/GameWuxiandai", true)
+	LoadLuaFile("../ScriptModule/LuaNFrame/Public/GameWuxiandai", true)
 	LoadLuaFile("../ScriptModule/wuxiandai/common", true)
 	LoadLuaFile("../ScriptModule/wuxiandai/Human")
 	LoadLuaFile("../ScriptModule/wuxiandai/Agent")

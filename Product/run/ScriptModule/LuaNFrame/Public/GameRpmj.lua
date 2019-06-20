@@ -3,7 +3,7 @@ GameRpmj = GameRpmj or {}
 function GameRpmj.Load()
 	package.path = package.path .. ";../ScriptModule/Game/?.lua;"
     package.path = package.path .. ";../ScriptModule/Game/common/?.lua;"
-    LoadLuaFile("../ScriptModule/Public/GameRpmj", true)
+    LoadLuaFile("../ScriptModule/LuaNFrame/Public/GameRpmj", true)
 	LoadLuaFile("../ScriptModule/Game/common", true)
 	LoadLuaFile("../ScriptModule/Game/Human")
 	LoadLuaFile("../ScriptModule/Game/Julebu")

@@ -30,7 +30,8 @@ function init_script_system(pluginManager, luaModule)
 
 	LoadLuaFile("../ScriptModule/trdlib")
 	LoadLuaFile("../ScriptModule")
-	LoadLuaFile("../ScriptModule/LuaNFrame", true)
+	LoadLuaFile("../ScriptModule/LuaNFrame")
+	LoadLuaFile("../ScriptModule/LuaNFrame/Public")
 	LoadLuaFile("../ScriptModule/conf", true)
 
 	--初始化LuaNFrame
