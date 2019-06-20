@@ -9,6 +9,7 @@
 
 #include "NFCTestModule.h"
 #include "NFComm/NFPluginModule/NFIAsyMysqlModule.h"
+#include "NFComm/NFPluginModule/NFIMysqlModule.h"
 
 NFCTestModule::NFCTestModule(NFIPluginManager* p)
 {
@@ -36,7 +37,10 @@ bool NFCTestModule::Execute()
 	{
 		flag = false;
 		std::vector<std::string> vec = { "userid", "regdate" };
-		FindModule<NFIAsyMysqlModule>()->QueryMoreWithCond("dy_player", "userid>=101200 and userid < 101203", vec);
+		std::vector<std::map<std::string, std::string>> data;
+		FindModule<NFIMysqlModule>()->QueryMoreWithCond("dy_player", "userid>=101200 and userid < 101203", vec, data);
+		data.clear();
+		FindModule<NFIMysqlModule>()->Execute("select * from dy_player limit 1", data);
 	}
 	return true;
 }

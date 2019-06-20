@@ -298,37 +298,11 @@ public:
 	 * @param  strTableName		表名
 	 * @param  strKeyColName	key所在列的列名
 	 * @param  strKey			key数据
-	 * @param  fieldVec			要插入的数据的列名
-	 * @param  valueVec			要插入的数据
-	 * @return bool				成功或失败
-	 */
-	bool Update(const std::string& strTableName, const std::string& strKeyColName, const std::string& strKey,
-	            const std::vector<std::string>& fieldVec, const std::vector<std::string>& valueVec) override;
-
-	/**
-	 * @brief mysql语句更新和插入
-	 *
-	 * @param  strTableName		表名
-	 * @param  strKeyColName	key所在列的列名
-	 * @param  strKey			key数据
 	 * @param  keyvalueMap		数据
 	 * @return bool				成功或失败
 	 */
 	bool Update(const std::string& strTableName, const std::string& strKeyColName, const std::string& strKey,
 	            const std::map<std::string, std::string>& keyvalueMap) override;
-
-	/**
-	 * @brief 查询数据一条数据
-	 *
-	 * @param  strTableName		表名
-	 * @param  strKeyColName	key所在列的列名
-	 * @param  strKey			key数据
-	 * @param  fieldVec			要取出的数据的列名
-	 * @param  valueVec			要取出的数据
-	 * @return bool				成功或失败
-	 */
-	bool QueryOne(const std::string& strTableName, const std::string& strKeyColName, const std::string& strKey,
-	              const std::vector<std::string>& fieldVec, std::vector<std::string>& valueVec) override;
 
 	/**
 	 * @brief 查询数据一条数据
@@ -354,36 +328,8 @@ public:
 	 * @return bool				成功或失败
 	 */
 	bool QueryMore(const std::string& strTableName, const std::string& strKeyColName, const std::string& strKey,
-	               const std::vector<std::string>& fieldVec, std::vector<std::vector<std::string>>& valueVec) override;
-
-	/**
-	 * @brief 查询数据许多数据
-	 *
-	 * @param  strTableName		表名
-	 * @param  strKeyColName	key所在列的列名
-	 * @param  strKey			key数据
-	 * @param  fieldVec			要取出的数据的列名
-	 * @param  valueVec			要取出的数据
-	 * @return bool				成功或失败
-	 */
-	bool QueryMore(const std::string& strTableName, const std::string& strKeyColName, const std::string& strKey,
 	               const std::vector<std::string>& fieldVec,
 	               std::vector<std::map<std::string, std::string>>& valueVec) override;
-
-	/**
-	 * @brief 查询数据
-	 *
-	 * @param  strTableName		表名
-	 * @param  strKeyColName	key所在列的列名
-	 * @param  nOffset			要取出数据偏移
-	 * @param  nRows			要取出数据的数目
-	 * @param  fieldVec			要取出的数据的列名
-	 * @param  valueVec			要取出的数据
-	 * @return bool				成功或失败
-	 */
-	bool QueryMoreWithLimit(const std::string& strTableName, const std::string& strKeyColName, int nOffset, int nRows,
-	                        const std::vector<std::string>& fieldVec,
-	                        std::vector<std::vector<std::string>>& valueVec) override;
 
 	/**
 	 * @brief 查询数据
@@ -434,20 +380,6 @@ public:
 	 */
 	bool Exists(const std::string& strTableName, const std::string& strKeyColName, const std::string& strKey,
 	            bool& bExit) override;
-
-	/**
-	 * @brief 根据类似key的数据，取出一堆来
-	 *
-	 * @param  strTableName
-	 * @param  strKeyColName
-	 * @param  strKeyName
-	 * @param  fieldVec
-	 * @param  valueVec
-	 * @return bool 
-	 */
-	bool QueryMoreByLike(const std::string& strTableName, const std::string& strKeyColName,
-	                     const std::string& strKeyName, const std::vector<std::string>& fieldVec,
-	                     std::vector<std::vector<std::string>>& valueVec) override;
 
 	/**
 	 * @brief 根据类似key的数据，取出一堆来

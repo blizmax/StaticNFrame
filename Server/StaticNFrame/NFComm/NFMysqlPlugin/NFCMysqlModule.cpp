@@ -85,51 +85,12 @@ bool NFCMysqlModule::Execute(const std::string& qstr, std::vector<std::map<std::
 }
 
 bool NFCMysqlModule::UpdateOne(const std::string& strTableName, const std::string& strKeyColName,
-                               const std::string& strKey, const std::vector<std::string>& fieldVec,
-                               const std::vector<std::string>& valueVec)
-{
-	NFIMysqlDriver* pDriver = m_pMysqlDriverManager->GetMysqlDriver();
-	if (pDriver)
-	{
-		return pDriver->Update(strTableName, strKeyColName, strKey, fieldVec, valueVec);
-	}
-
-	return false;
-}
-
-bool NFCMysqlModule::UpdateOne(const std::string& strTableName, const std::string& strKeyColName,
                                const std::string& strKey, const std::map<std::string, std::string>& keyvalueMap)
 {
 	NFIMysqlDriver* pDriver = m_pMysqlDriverManager->GetMysqlDriver();
 	if (pDriver)
 	{
 		return pDriver->Update(strTableName, strKeyColName, strKey, keyvalueMap);
-	}
-
-	return false;
-}
-
-bool NFCMysqlModule::QueryOne(const std::string& strTableName, const std::string& strKeyColName,
-                              const std::string& strKey, const std::vector<std::string>& fieldVec,
-                              std::vector<std::string>& valueVec)
-{
-	NFIMysqlDriver* pDriver = m_pMysqlDriverManager->GetMysqlDriver();
-	if (pDriver)
-	{
-		return pDriver->QueryOne(strTableName, strKeyColName, strKey, fieldVec, valueVec);
-	}
-
-	return false;
-}
-
-bool NFCMysqlModule::QueryMore(const std::string& strTableName, const std::string& strKeyColName,
-                               const std::string& strKey, const std::vector<std::string>& fieldVec,
-                               std::vector<std::vector<std::string>>& valueVec)
-{
-	NFIMysqlDriver* pDriver = m_pMysqlDriverManager->GetMysqlDriver();
-	if (pDriver)
-	{
-		return pDriver->QueryMore(strTableName, strKeyColName, strKey, fieldVec, valueVec);
 	}
 
 	return false;
@@ -143,19 +104,6 @@ bool NFCMysqlModule::QueryMoreWithCond(const std::string& strTableName, const st
 	if (pDriver)
 	{
 		return pDriver->QueryMoreWithCond(strTableName, strWhereSql, fieldVec, valueVec);
-	}
-
-	return false;
-}
-
-bool NFCMysqlModule::QueryMoreWithLimit(const std::string& strTableName, const std::string& strKeyColName, int nOffset,
-                                        int nRows, const std::vector<std::string>& fieldVec,
-                                        std::vector<std::vector<std::string>>& valueVec)
-{
-	NFIMysqlDriver* pDriver = m_pMysqlDriverManager->GetMysqlDriver();
-	if (pDriver)
-	{
-		return pDriver->QueryMoreWithLimit(strTableName, strKeyColName, nOffset, nRows, fieldVec, valueVec);
 	}
 
 	return false;
@@ -246,19 +194,6 @@ bool NFCMysqlModule::Exists(const std::string& strTableName, const std::string& 
 	if (pDriver)
 	{
 		return pDriver->Exists(strTableName, strKeyColName, strKey, bExit);
-	}
-
-	return false;
-}
-
-bool NFCMysqlModule::QueryMoreByLike(const std::string& strTableName, const std::string& strKeyColName,
-                                     const std::string& strKey, const std::vector<std::string>& fieldVec,
-                                     std::vector<std::vector<std::string>>& valueVec)
-{
-	NFIMysqlDriver* pDriver = m_pMysqlDriverManager->GetMysqlDriver();
-	if (pDriver)
-	{
-		return pDriver->QueryMoreByLike(strTableName, strKeyColName, strKey, fieldVec, valueVec);
 	}
 
 	return false;
