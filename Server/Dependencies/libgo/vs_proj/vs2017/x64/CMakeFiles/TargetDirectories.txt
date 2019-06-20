@@ -1,0 +1,3 @@
+F:/StaticNFrame/Server/Dependencies/libgo/vs_proj/vs2017/x64/CMakeFiles/libgo_static.dir
+F:/StaticNFrame/Server/Dependencies/libgo/vs_proj/vs2017/x64/CMakeFiles/ALL_BUILD.dir
+F:/StaticNFrame/Server/Dependencies/libgo/vs_proj/vs2017/x64/CMakeFiles/ZERO_CHECK.dir

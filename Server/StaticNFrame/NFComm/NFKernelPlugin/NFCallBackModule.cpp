@@ -14,12 +14,10 @@
 
 NFCCallBackModule::NFCCallBackModule(NFIPluginManager* p)
 {
-
 }
 
 NFCCallBackModule::~NFCCallBackModule()
 {
-
 }
 
 bool NFCCallBackModule::Init()
@@ -51,11 +49,11 @@ void NFCCallBackModule::HandleTimeout()
 				continue;
 			}
 		}
-		iter++;
+		++iter;
 	}
 }
 
-bool NFCCallBackModule::ProcessTimeout(const NFCCallBackModule::NFCallBack& back)
+bool NFCCallBackModule::ProcessTimeout(const NFCallBack& back)
 {
 	NFLogWarning(NF_LOG_NET_PLUGIN, 0, "call back:{}ms, desc:{}", NFTime::Tick() - back.m_timeOut, back.m_desc);
 	return true;

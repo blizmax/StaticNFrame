@@ -38,9 +38,6 @@
     <ClCompile Include="NFServerNeEventModule.cpp">
       <Filter>NFServerNetEvent</Filter>
     </ClCompile>
-    <ClCompile Include="NFCallBackModule.cpp">
-      <Filter>NFServerNetEvent</Filter>
-    </ClCompile>
     <ClCompile Include="QiPaiNetPacketParse.cpp">
       <Filter>PacketParse</Filter>
     </ClCompile>
@@ -187,9 +184,6 @@
     </ClInclude>
     <ClInclude Include="NFHttpFormat.h">
       <Filter>NFHttpClient</Filter>
-    </ClInclude>
-    <ClInclude Include="NFCallBackModule.h">
-      <Filter>NFServerNetEvent</Filter>
     </ClInclude>
     <ClInclude Include="QiPaiNetPacketParse.h">
       <Filter>PacketParse</Filter>
