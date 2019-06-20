@@ -74,7 +74,25 @@ bool NFCMysqlDriver::Query(const std::string& qstr, mysqlpp::StoreQueryResult& q
 	return false;
 }
 
-bool NFCMysqlDriver::Execute(const std::string& qstr, std::vector<std::map<std::string, std::string>>& valueVec)
+bool NFCMysqlDriver::ExecuteOne(const std::string& qstr, std::map<std::string, std::string>& valueVec)
+{
+	mysqlpp::StoreQueryResult queryResult;
+	if (NFCMysqlDriver::Query(qstr, queryResult))
+	{
+		for (size_t i = 0; i < queryResult.num_rows(); ++i)
+		{
+			for (size_t j = 0; j < queryResult[i].size(); j++)
+			{
+				valueVec.emplace(queryResult.field_name(j), queryResult[i][j]);
+			}
+			break;
+		}
+		return true;
+	}
+	return false;
+}
+
+bool NFCMysqlDriver::ExecuteMore(const std::string& qstr, std::vector<std::map<std::string, std::string>>& valueVec)
 {
 	mysqlpp::StoreQueryResult queryResult;
 	if (NFCMysqlDriver::Query(qstr, queryResult))
@@ -83,10 +101,10 @@ bool NFCMysqlDriver::Execute(const std::string& qstr, std::vector<std::map<std::
 		{
 			valueVec.push_back(std::map<std::string, std::string>());
 			std::map<std::string, std::string>& tmpVec = valueVec.back();
-			for(size_t j = 0; j < queryResult[i].size(); j++)
+			for (size_t j = 0; j < queryResult[i].size(); j++)
 			{
 				tmpVec.emplace(queryResult.field_name(j), queryResult[i][j]);
-			}		
+			}
 		}
 		return true;
 	}
@@ -225,7 +243,8 @@ bool NFCMysqlDriver::Update(const google::protobuf::Message& message)
 	{
 		const google::protobuf::FieldDescriptor* pDbFieldsFieldDesc = pDesc->FindFieldByLowercaseName("db_fields");
 		if (pDbFieldsFieldDesc == nullptr || pDbFieldsFieldDesc->cpp_type() != google::protobuf::FieldDescriptor::
-			CPPTYPE_MESSAGE) return false;
+			CPPTYPE_MESSAGE)
+			return false;
 
 		const google::protobuf::Message& dbFieldsMessage = pReflect->GetMessage(message, pDbFieldsFieldDesc);
 
@@ -339,7 +358,8 @@ bool NFCMysqlDriver::Query(google::protobuf::Message& message)
 	{
 		const google::protobuf::FieldDescriptor* pDbFieldsFieldDesc = pDesc->FindFieldByLowercaseName("db_fields");
 		if (pDbFieldsFieldDesc == nullptr || pDbFieldsFieldDesc->cpp_type() != google::protobuf::FieldDescriptor::
-			CPPTYPE_MESSAGE) return false;
+			CPPTYPE_MESSAGE)
+			return false;
 
 		const google::protobuf::Descriptor* pDbFieldsDesc = pDbFieldsFieldDesc->message_type();
 		if (pDbFieldsDesc == nullptr) return false;
@@ -348,7 +368,8 @@ bool NFCMysqlDriver::Query(google::protobuf::Message& message)
 
 		const google::protobuf::FieldDescriptor* pDbCondsFieldDesc = pDesc->FindFieldByLowercaseName("db_cond");
 		if (pDbCondsFieldDesc == nullptr || pDbCondsFieldDesc->cpp_type() != google::protobuf::FieldDescriptor::
-			CPPTYPE_MESSAGE) return false;
+			CPPTYPE_MESSAGE)
+			return false;
 
 		const google::protobuf::Message& dbCondsMessage = pReflect->GetMessage(message, pDbCondsFieldDesc);
 
@@ -449,7 +470,8 @@ bool NFCMysqlDriver::QueryMore(google::protobuf::Message& message)
 	{
 		const google::protobuf::FieldDescriptor* pDbBaseFieldDesc = pDesc->FindFieldByLowercaseName("db_base");
 		if (pDbBaseFieldDesc == nullptr || pDbBaseFieldDesc->cpp_type() != google::protobuf::FieldDescriptor::
-			CPPTYPE_MESSAGE) return false;
+			CPPTYPE_MESSAGE)
+			return false;
 
 		const google::protobuf::Message& dbBaseMessage = pReflect->GetMessage(message, pDbBaseFieldDesc);
 
@@ -461,15 +483,17 @@ bool NFCMysqlDriver::QueryMore(google::protobuf::Message& message)
 
 		const google::protobuf::FieldDescriptor* pTableNameDesc = pDbBaseDesc->FindFieldByLowercaseName("table_name");
 		if (pTableNameDesc == nullptr || pTableNameDesc->cpp_type() != google::protobuf::FieldDescriptor::CPPTYPE_STRING
-		) return false;
+		)
+			return false;
 
 		const google::protobuf::FieldDescriptor* pOffsetDesc = pDbBaseDesc->FindFieldByLowercaseName("offset");
 		if (pOffsetDesc == nullptr || pOffsetDesc->cpp_type() != google::protobuf::FieldDescriptor::CPPTYPE_UINT32)
 			return false;
 
 		const google::protobuf::FieldDescriptor* pRowsDesc = pDbBaseDesc->FindFieldByLowercaseName("rows");
-		if (pRowsDesc == nullptr || pRowsDesc->cpp_type() != google::protobuf::FieldDescriptor::CPPTYPE_UINT32) return
-			false;
+		if (pRowsDesc == nullptr || pRowsDesc->cpp_type() != google::protobuf::FieldDescriptor::CPPTYPE_UINT32)
+			return
+				false;
 
 		const google::protobuf::FieldDescriptor* pOrderKeyDesc = pDbBaseDesc->FindFieldByLowercaseName("order_key");
 		if (pOrderKeyDesc == nullptr || pOrderKeyDesc->cpp_type() != google::protobuf::FieldDescriptor::CPPTYPE_STRING)
@@ -495,7 +519,8 @@ bool NFCMysqlDriver::QueryMore(google::protobuf::Message& message)
 
 		const google::protobuf::FieldDescriptor* pDbCondsFieldDesc = pDesc->FindFieldByLowercaseName("db_cond");
 		if (pDbCondsFieldDesc == nullptr || pDbCondsFieldDesc->cpp_type() != google::protobuf::FieldDescriptor::
-			CPPTYPE_MESSAGE) return false;
+			CPPTYPE_MESSAGE)
+			return false;
 
 		const google::protobuf::Message& dbCondsMessage = pReflect->GetMessage(message, pDbCondsFieldDesc);
 

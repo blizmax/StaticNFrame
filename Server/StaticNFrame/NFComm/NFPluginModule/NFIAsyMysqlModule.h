@@ -131,5 +131,23 @@ public:
 	 * @return bool				成功或失败
 	 */
 	virtual bool QueryMoreByLike(const std::string& strTableName, const std::string& strKeyColName, const std::string& strKeyName, std::vector<std::string>& fieldVec, uint64_t balanceId = 0) = 0;
+
+	/**
+	 * @brief 查询数据
+	 *
+	 * @param  qstr			执行sql语句
+	 * @param balanceId     平衡ID
+	 * @return bool			成功或失败
+	 */
+	virtual bool ExecuteMore(const std::string& qstr, uint64_t balanceId = 0) = 0;
+
+	/**
+	 * @brief 查询数据
+	 *
+	 * @param  qstr			执行sql语句
+	 * @param balanceId     平衡ID
+	 * @return bool			成功或失败
+	 */
+	virtual bool ExecuteOne(const std::string& qstr, uint64_t balanceId = 0) = 0;
 };
 

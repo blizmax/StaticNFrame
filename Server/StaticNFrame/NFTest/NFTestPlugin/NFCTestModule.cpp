@@ -38,9 +38,11 @@ bool NFCTestModule::Execute()
 		flag = false;
 		std::vector<std::string> vec = { "userid", "regdate" };
 		std::vector<std::map<std::string, std::string>> data;
-		FindModule<NFIMysqlModule>()->QueryMoreWithCond("dy_player", "userid>=101200 and userid < 101203", vec, data);
+		std::map<std::string, std::string> oneData;
+		FindModule<NFIAsyMysqlModule>()->QueryMoreWithCond("dy_player", "userid>=101200 and userid < 101203", vec);
 		data.clear();
-		FindModule<NFIMysqlModule>()->Execute("select * from dy_player limit 1", data);
+		FindModule<NFIAsyMysqlModule>()->ExecuteOne("select * from dy_player limit 1");
+		FindModule<NFIAsyMysqlModule>()->ExecuteMore("select * from dy_player limit 1");
 	}
 	return true;
 }

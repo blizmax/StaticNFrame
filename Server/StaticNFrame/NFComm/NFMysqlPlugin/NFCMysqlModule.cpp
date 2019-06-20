@@ -73,12 +73,23 @@ bool NFCMysqlModule::QueryMore(google::protobuf::Message& message)
 	return false;
 }
 
-bool NFCMysqlModule::Execute(const std::string& qstr, std::vector<std::map<std::string, std::string>>& keyvalueMap)
+bool NFCMysqlModule::ExecuteMore(const std::string& qstr, std::vector<std::map<std::string, std::string>>& keyvalueMap)
 {
 	NFIMysqlDriver* pDriver = m_pMysqlDriverManager->GetMysqlDriver();
 	if (pDriver)
 	{
-		return pDriver->Execute(qstr, keyvalueMap);
+		return pDriver->ExecuteMore(qstr, keyvalueMap);
+	}
+
+	return false;
+}
+
+bool NFCMysqlModule::ExecuteOne(const std::string& qstr, std::map<std::string, std::string>& keyvalueMap)
+{
+	NFIMysqlDriver* pDriver = m_pMysqlDriverManager->GetMysqlDriver();
+	if (pDriver)
+	{
+		return pDriver->ExecuteOne(qstr, keyvalueMap);
 	}
 
 	return false;

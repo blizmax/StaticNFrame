@@ -56,9 +56,19 @@ public:
 	 * @brief 查询数据
 	 *
 	 * @param  qstr			执行sql语句
+	 * @param keyvalueMap   数据结果
 	 * @return bool			成功或失败
 	 */
-	bool Execute(const std::string& qstr, std::vector<std::map<std::string, std::string>>& keyvalueMap) override;
+	bool ExecuteMore(const std::string& qstr, std::vector<std::map<std::string, std::string>>& keyvalueMap) override;
+
+	/**
+	 * @brief 查询数据
+	 *
+	 * @param  qstr			执行sql语句
+	 * @param keyvalueMap   数据结果
+	 * @return bool			成功或失败
+	 */
+	bool ExecuteOne(const std::string& qstr, std::map<std::string, std::string>& keyvalueMap) override;
 
 	/**
 	 * @brief 更新或插入数据

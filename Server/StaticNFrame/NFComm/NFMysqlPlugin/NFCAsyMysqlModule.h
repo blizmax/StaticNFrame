@@ -161,6 +161,23 @@ public:
 	                     const std::string& strKeyName, std::vector<std::string>& fieldVec,
 	                     uint64_t balanceId = 0) override;
 
+	/**
+	 * @brief 查询数据
+	 *
+	 * @param  qstr			执行sql语句
+	 * @param balanceId     平衡ID
+	 * @return bool			成功或失败
+	 */
+	bool ExecuteMore(const std::string& qstr, uint64_t balanceId = 0) override;
+
+	/**
+	 * @brief 查询数据
+	 *
+	 * @param  qstr			执行sql语句
+	 * @param balanceId     平衡ID
+	 * @return bool			成功或失败
+	 */
+	bool ExecuteOne(const std::string& qstr, uint64_t balanceId = 0) override;
 public:
 	/**
 	 * @brief 更新或插入数据回调
@@ -240,6 +257,24 @@ public:
 	 * @return void
 	 */
 	void QueryMoreMessageCallBack(bool result, const google::protobuf::Message& message);
+
+	/**
+	 * @brief 查询数据
+	 *
+	 * @param  result			成功或失败
+	 * @param fieldValueMap     返回的数据
+	 * @return bool			成功或失败
+	 */
+	void ExecuteMoreCallBack(bool result, const std::vector<std::map<std::string, std::string>>& fieldValueMap);
+
+	/**
+	 * @brief 查询数据
+	 *
+	 * @param  result			成功或失败
+	 * @param  fieldValueMap     返回的数据
+	 * @return bool			成功或失败
+	 */
+	void ExecuteOneCallBack(bool result, const std::map<std::string, std::string>& fieldValueMap);
 private:
 	uint64_t mnLastCheckTime;
 };

@@ -229,9 +229,19 @@ public:
 	 * @brief 执行sql语句
 	 *
 	 * @param  qstr sql语句
+	 * @param  valueVec 返回数据
 	 * @return bool 执行成功或失败
 	 */
-	bool Execute(const std::string& qstr, std::vector<std::map<std::string, std::string>>& keyvalueMap) override;
+	bool ExecuteOne(const std::string& qstr, std::map<std::string, std::string>& valueVec) override;
+
+	/**
+	 * @brief 执行sql语句
+	 *
+	 * @param  qstr sql语句
+	 * @param  valueVec 返回数据
+	 * @return bool 执行成功或失败
+	 */
+	bool ExecuteMore(const std::string& qstr, std::vector<std::map<std::string, std::string>>& valueVec) override;
 
 	/**
 	 * @brief 获得mysqlpp的连接

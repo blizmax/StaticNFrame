@@ -61,10 +61,19 @@ public:
 	 * @brief 查询数据
 	 *
 	 * @param  qstr			执行sql语句
-	 * @param keyvalueMap
+	 * @param keyvalueMap	数据结果
 	 * @return bool			成功或失败
 	 */
-	virtual bool Execute(const std::string& qstr, std::vector<std::map<std::string, std::string>>& keyvalueMap) = 0;
+	virtual bool ExecuteMore(const std::string& qstr, std::vector<std::map<std::string, std::string>>& keyvalueMap) = 0;
+
+	/**
+	 * @brief 查询数据
+	 *
+	 * @param  qstr			执行sql语句
+	 * @param keyvalueMap	数据结果
+	 * @return bool			成功或失败
+	 */
+	virtual bool ExecuteOne(const std::string& qstr, std::map<std::string, std::string>& keyvalueMap) = 0;
 
 	/**
 	 * @brief 更新或插入数据
