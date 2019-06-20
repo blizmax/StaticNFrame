@@ -12,6 +12,8 @@
 #include <string>
 
 #include "NFComm/NFPluginModule/NFIModule.h"
+#include "libgo/libgo/coroutine.h"
+#include "libgo/libgo/libgo.h"
 
 class NFCTestModule : public NFIModule
 {

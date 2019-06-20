@@ -21,14 +21,6 @@ class NFIAsyMysqlModule
 	: public NFIAsycModule
 {
 public:
-	template <typename BaseType>
-	bool AddUpdateCallBack(const uint32_t nMsgID, BaseType* pBase, void (BaseType::*handleRecieve)(bool result))
-	{
-		ASYC_MYSQL_UPDATE_CALLBACK_FUNCTOR functor = std::bind(handleRecieve, pBase, std::placeholders::_1);
-
-		return AddReceiveCallBack(eType, nMsgID, functor);
-	}
-public:
 	/**
 	 * @brief ÃÌº”Mysql¡¥Ω”
 	 *

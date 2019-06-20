@@ -22,7 +22,7 @@ NFCCallBackModule::~NFCCallBackModule()
 
 bool NFCCallBackModule::Init()
 {
-	this->SetTimer(0, CALL_BACK_TIME_OUT_TIMER, INFINITY_CALL);
+	//this->SetTimer(0, CALL_BACK_TIME_OUT_TIMER, INFINITY_CALL);
 	return true;
 }
 
@@ -38,19 +38,7 @@ bool NFCCallBackModule::Finalize()
 
 void NFCCallBackModule::HandleTimeout()
 {
-	int64_t nowTime = NFTime::Tick();
-	for (auto iter = m_callbackMap.begin(); iter != m_callbackMap.end();)
-	{
-		if (nowTime >= iter->second.m_timeOut)
-		{
-			if (ProcessTimeout(iter->second))
-			{
-				iter = m_callbackMap.erase(iter);
-				continue;
-			}
-		}
-		++iter;
-	}
+
 }
 
 bool NFCCallBackModule::ProcessTimeout(const NFCallBack& back)
