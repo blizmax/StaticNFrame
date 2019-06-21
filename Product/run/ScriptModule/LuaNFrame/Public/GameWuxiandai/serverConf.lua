@@ -43,6 +43,12 @@ function ServerInit()  --在函数启动的时候，会调用该函数，获取�
 	g_tcpmaxthreads,g_httpmaxthreads,g_websocketmaxthreads,g_isDebug
 end
 
+g_redisIndex = {
+
+	["default"] = {index = g_redisInfo.redis_three, des = "default_"} --签到奖励
+	
+}
+
 
 --以下是Utils服务器的配置，放在同一个配置文件中。
 

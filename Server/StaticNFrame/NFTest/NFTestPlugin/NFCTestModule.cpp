@@ -12,6 +12,7 @@
 #include "NFComm/NFPluginModule/NFIMysqlModule.h"
 #include "libgo/libgo/coroutine.h"
 #include "libgo/libgo/libgo.h"
+#include "NFComm/NFCore/NFTime.h"
 
 NFCTestModule::NFCTestModule(NFIPluginManager* p)
 {
@@ -43,10 +44,10 @@ void NFCTestModule::test(bool result)
 bool NFCTestModule::Execute()
 {
 	static bool flag = true;
+	
 	if (flag)
 	{
 		flag = false;
-
 	}
 	return true;
 }

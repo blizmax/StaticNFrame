@@ -41,9 +41,9 @@ function init_script_system(pluginManager, luaModule)
 	LuaNFrame.AddAccountEventCallBack(NF_SERVER_TYPES.NF_ST_GAME, "AccountNet")	
 
 	--饶平麻将
-	GameRpmj.Init()
+	--GameRpmj.Init()
 	--无线代
-	--GameWuxiandai.Init()
+	GameWuxiandai.Init()
 
 	--breakSocketHandle,debugXpCall = require("LuaDebug")("localhost",7003)
 end

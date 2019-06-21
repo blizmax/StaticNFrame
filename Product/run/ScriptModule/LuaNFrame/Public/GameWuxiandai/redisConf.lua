@@ -2,13 +2,6 @@
 redisConf = {}
 
 
-
-g_redisIndex = {
-
-	["default"] = {index = g_redisInfo.redis_three, des = "default_"} --签到奖励
-	
-}
-
 function redisConf:getRedisIndex(p_index)
 
 	if g_redisIndex[p_index] == nil then

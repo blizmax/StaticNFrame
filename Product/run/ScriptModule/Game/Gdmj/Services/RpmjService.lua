@@ -160,7 +160,7 @@ function RpmjService.CheckJiFen(tItem)
 	
 	for i = 1,tItem.m_maxUser do
 		if tItem.m_tInfo.julebutype == 2 and false == RpmjService.CheckJiFenLiuju(tItem.m_tInfo.julebuid, tItem.m_userList[i].userid, tItem.m_userList[i].carryjetton) and tItem.m_tInfo.usevipnum ~= tItem.m_tInfo.maxvipnum then
-			tItem.m_tInfo.timemark = g_gdmjTime.end_time
+			tItem.m_tInfo.timemark = 1
 			tItem.m_tInfo.status = g_gdmjStatus.status_dissolve
 
 			GdmjModel.SetTableInfo(tItem.m_tInfo, 1)
