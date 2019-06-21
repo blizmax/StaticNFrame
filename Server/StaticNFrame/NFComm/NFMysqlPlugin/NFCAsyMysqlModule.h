@@ -180,6 +180,122 @@ public:
 	bool ExecuteOne(const std::string& qstr, uint64_t balanceId = 0) override;
 public:
 	/**
+	 * @brief 添加回调
+	 *
+	 * @param  nMsgID		回调消息ID
+	 * @param callBack      回调
+	 * @return void			
+	 */
+	void AddUpdateCallBack(uint32_t nMsgID,
+	                       const NFAsyMysqlCallBack<ASYC_MYSQL_UPDATE_CALLBACK_FUNCTOR>& callBack) override;
+
+	/**
+	 * @brief 添加回调
+	 *
+	 * @param  nMsgID		回调消息ID
+	 * @param callBack      回调
+	 * @return void
+	 */
+	void AddUpdateMessageCallBack(uint32_t nMsgID,
+	                              const NFAsyMysqlCallBack<ASYC_MYSQL_UPDATE_MESSAGE_CALLBACK_FUNCTOR>&
+	                              callBack) override;
+
+	/**
+	 * @brief 添加回调
+	 *
+	 * @param  nMsgID		回调消息ID
+	 * @param callBack      回调
+	 * @return void
+	 */
+	void AddQueryOneCallBack(uint32_t nMsgID,
+	                         const NFAsyMysqlCallBack<ASYC_MYSQL_QUERY_ONE_CALLBACK_FUNCTOR>& callBack) override;
+
+	/**
+	 * @brief 添加回调
+	 *
+	 * @param  nMsgID		回调消息ID
+	 * @param callBack      回调
+	 * @return void
+	 */
+	void AddQueryMoreCallBack(uint32_t nMsgID,
+	                          const NFAsyMysqlCallBack<ASYC_MYSQL_QUERY_MORE_CALLBACK_FUNCTOR>& callBack) override;
+
+	/**
+	 * @brief 添加回调
+	 *
+	 * @param  nMsgID		回调消息ID
+	 * @param callBack      回调
+	 * @return void
+	 */
+	void AddQueryMoreWithCondCallBack(uint32_t nMsgID,
+	                                  const NFAsyMysqlCallBack<ASYC_MYSQL_QUERY_MORE_WITH_COND_CALLBACK_FUNCTOR>
+	                                  & callBack) override;
+
+	/**
+	 * @brief 添加回调
+	 *
+	 * @param  nMsgID		回调消息ID
+	 * @param callBack      回调
+	 * @return void
+	 */
+	void AddQueryMoreWithLimitCallBack(uint32_t nMsgID,
+	                                   const NFAsyMysqlCallBack<
+		                                   ASYC_MYSQL_QUERY_MORE_WITH_LIMIT_CALLBACK_FUNCTOR>& callBack) override;
+
+	/**
+	 * @brief 添加回调
+	 *
+	 * @param  nMsgID		回调消息ID
+	 * @param callBack      回调
+	 * @return void
+	 */
+	void AddQueryMoreByLikeCallBack(uint32_t nMsgID,
+	                                const NFAsyMysqlCallBack<ASYC_MYSQL_QUERY_MORE_BY_LIKE_CALLBACK_FUNCTOR>&
+	                                callBack) override;
+
+	/**
+	 * @brief 添加回调
+	 *
+	 * @param  nMsgID		回调消息ID
+	 * @param callBack      回调
+	 * @return void
+	 */
+	void AddQueryOneMessageCallBack(uint32_t nMsgID,
+	                                const NFAsyMysqlCallBack<ASYC_MYSQL_QUERY_ONE_MESSAGE_CALLBACK_FUNCTOR>&
+	                                callBack) override;
+
+	/**
+	 * @brief 添加回调
+	 *
+	 * @param  nMsgID		回调消息ID
+	 * @param callBack      回调
+	 * @return void
+	 */
+	void AddQueryMoreMessageCallBack(uint32_t nMsgID,
+	                                 const NFAsyMysqlCallBack<ASYC_MYSQL_QUERY_MORE_MESSAGE_CALLBACK_FUNCTOR>&
+	                                 callBack) override;
+
+	/**
+	 * @brief 添加回调
+	 *
+	 * @param  nMsgID		回调消息ID
+	 * @param callBack      回调
+	 * @return void
+	 */
+	void AddExecuteOneCallBack(uint32_t nMsgID,
+	                           const NFAsyMysqlCallBack<ASYC_MYSQL_EXECUTE_ONE_CALLBACK_FUNCTOR>& callBack) override;
+
+	/**
+	 * @brief 添加回调
+	 *
+	 * @param  nMsgID		回调消息ID
+	 * @param callBack      回调
+	 * @return void
+	 */
+	void AddExecuteMoreCallBack(uint32_t nMsgID,
+	                            const NFAsyMysqlCallBack<ASYC_MYSQL_EXECUTE_MORE_CALLBACK_FUNCTOR>& callBack) override;
+public:
+	/**
 	 * @brief 更新或插入数据回调
 	 *
 	 * @param  result		成功或失败
@@ -277,4 +393,21 @@ public:
 	void ExecuteOneCallBack(bool result, const std::map<std::string, std::string>& fieldValueMap);
 private:
 	uint64_t mnLastCheckTime;
+	std::unordered_map<uint32_t, NFAsyMysqlCallBack<ASYC_MYSQL_UPDATE_CALLBACK_FUNCTOR>> m_updateCallBackMap;
+	std::unordered_map<uint32_t, NFAsyMysqlCallBack<ASYC_MYSQL_UPDATE_MESSAGE_CALLBACK_FUNCTOR>>
+	m_updateMessageCallBackMap;
+	std::unordered_map<uint32_t, NFAsyMysqlCallBack<ASYC_MYSQL_QUERY_ONE_CALLBACK_FUNCTOR>> m_queryOneCallBackMap;
+	std::unordered_map<uint32_t, NFAsyMysqlCallBack<ASYC_MYSQL_QUERY_MORE_CALLBACK_FUNCTOR>> m_queryMoreCallBackMap;
+	std::unordered_map<uint32_t, NFAsyMysqlCallBack<ASYC_MYSQL_QUERY_MORE_WITH_COND_CALLBACK_FUNCTOR>>
+	m_queryMoreWithCondCallBackMap;
+	std::unordered_map<uint32_t, NFAsyMysqlCallBack<ASYC_MYSQL_QUERY_MORE_WITH_LIMIT_CALLBACK_FUNCTOR>>
+	m_queryMoreWithLimitCallBackMap;
+	std::unordered_map<uint32_t, NFAsyMysqlCallBack<ASYC_MYSQL_QUERY_MORE_BY_LIKE_CALLBACK_FUNCTOR>>
+	m_queryMoreByLikeCallBackMap;
+	std::unordered_map<uint32_t, NFAsyMysqlCallBack<ASYC_MYSQL_QUERY_ONE_MESSAGE_CALLBACK_FUNCTOR>>
+	m_queryOneMessageCallBackMap;
+	std::unordered_map<uint32_t, NFAsyMysqlCallBack<ASYC_MYSQL_QUERY_MORE_MESSAGE_CALLBACK_FUNCTOR>>
+	m_queryMoreMessageCallBackMap;
+	std::unordered_map<uint32_t, NFAsyMysqlCallBack<ASYC_MYSQL_EXECUTE_MORE_CALLBACK_FUNCTOR>> m_executeMoreCallBackMap;
+	std::unordered_map<uint32_t, NFAsyMysqlCallBack<ASYC_MYSQL_EXECUTE_ONE_CALLBACK_FUNCTOR>> m_executeOneCallBackMap;
 };

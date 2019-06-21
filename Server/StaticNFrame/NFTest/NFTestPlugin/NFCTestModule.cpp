@@ -32,10 +32,13 @@ bool NFCTestModule::AfterInit()
 	return true;
 }
 
-void foo()
+void NFCTestModule::test(bool result)
 {
-	NFLogInfo(NF_LOG_SYSTEMLOG, 0, "foo.........");
+	NFLogError(NF_LOG_SYSTEMLOG, 0, "result:{}, xxxxxxxxxxxx", result);
 }
+
+
+
 
 bool NFCTestModule::Execute()
 {
@@ -43,16 +46,7 @@ bool NFCTestModule::Execute()
 	if (flag)
 	{
 		flag = false;
-		go []
-		{
-			NFLogInfo(NF_LOG_SYSTEMLOG, 0, "{}", co::CoDebugger::getInstance().GetAllInfo().c_str());
-		};
 
-		std::thread([] {co_sleep(200); co_sched.Stop(); }).detach();
-
-		co_sched.Start();
-
-		NFLogInfo(NF_LOG_SYSTEMLOG, 0, "go.........");
 	}
 	return true;
 }

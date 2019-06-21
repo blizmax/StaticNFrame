@@ -817,7 +817,8 @@ void NFCAsyMysqlModule::QueryMoreWithLimitCallBack(bool result,
 }
 
 
-void NFCAsyMysqlModule::ExecuteMoreCallBack(bool result, const std::vector<std::map<std::string, std::string>>& fieldValueMap)
+void NFCAsyMysqlModule::ExecuteMoreCallBack(bool result,
+                                            const std::vector<std::map<std::string, std::string>>& fieldValueMap)
 {
 	NFLogInfo(NF_LOG_MYSQL_PLUGIN, 0, "result:{}, data:{}", result, NFCommon::tostr(fieldValueMap));
 }
@@ -826,4 +827,78 @@ void NFCAsyMysqlModule::ExecuteMoreCallBack(bool result, const std::vector<std::
 void NFCAsyMysqlModule::ExecuteOneCallBack(bool result, const std::map<std::string, std::string>& fieldValueMap)
 {
 	NFLogInfo(NF_LOG_MYSQL_PLUGIN, 0, "result:{}, data:{}", result, NFCommon::tostr(fieldValueMap));
+}
+
+void NFCAsyMysqlModule::AddUpdateCallBack(const uint32_t nMsgID,
+                                          const NFAsyMysqlCallBack<ASYC_MYSQL_UPDATE_CALLBACK_FUNCTOR>& callBack)
+{
+	m_updateCallBackMap.emplace(nMsgID, callBack);
+}
+
+void NFCAsyMysqlModule::AddUpdateMessageCallBack(const uint32_t nMsgID,
+                                                 const NFAsyMysqlCallBack<ASYC_MYSQL_UPDATE_MESSAGE_CALLBACK_FUNCTOR>&
+                                                 callBack)
+{
+	m_updateMessageCallBackMap.emplace(nMsgID, callBack);
+}
+
+void NFCAsyMysqlModule::AddQueryOneCallBack(const uint32_t nMsgID,
+                                            const NFAsyMysqlCallBack<ASYC_MYSQL_QUERY_ONE_CALLBACK_FUNCTOR>& callBack)
+{
+	m_queryOneCallBackMap.emplace(nMsgID, callBack);
+}
+
+void NFCAsyMysqlModule::AddQueryMoreCallBack(const uint32_t nMsgID,
+                                             const NFAsyMysqlCallBack<ASYC_MYSQL_QUERY_MORE_CALLBACK_FUNCTOR>& callBack)
+{
+	m_queryMoreCallBackMap.emplace(nMsgID, callBack);
+}
+
+void NFCAsyMysqlModule::AddQueryMoreWithCondCallBack(const uint32_t nMsgID,
+                                                     const NFAsyMysqlCallBack<
+	                                                     ASYC_MYSQL_QUERY_MORE_WITH_COND_CALLBACK_FUNCTOR>& callBack)
+{
+	m_queryMoreWithCondCallBackMap.emplace(nMsgID, callBack);
+}
+
+void NFCAsyMysqlModule::AddQueryMoreWithLimitCallBack(const uint32_t nMsgID,
+                                                      const NFAsyMysqlCallBack<
+	                                                      ASYC_MYSQL_QUERY_MORE_WITH_LIMIT_CALLBACK_FUNCTOR>& callBack)
+{
+	m_queryMoreWithLimitCallBackMap.emplace(nMsgID, callBack);
+}
+
+void NFCAsyMysqlModule::AddQueryMoreByLikeCallBack(const uint32_t nMsgID,
+                                                   const NFAsyMysqlCallBack<
+	                                                   ASYC_MYSQL_QUERY_MORE_BY_LIKE_CALLBACK_FUNCTOR>& callBack)
+{
+	m_queryMoreByLikeCallBackMap.emplace(nMsgID, callBack);
+}
+
+void NFCAsyMysqlModule::AddQueryOneMessageCallBack(const uint32_t nMsgID,
+                                                   const NFAsyMysqlCallBack<
+	                                                   ASYC_MYSQL_QUERY_ONE_MESSAGE_CALLBACK_FUNCTOR>& callBack)
+{
+	m_queryOneMessageCallBackMap.emplace(nMsgID, callBack);
+}
+
+void NFCAsyMysqlModule::AddQueryMoreMessageCallBack(const uint32_t nMsgID,
+                                                    const NFAsyMysqlCallBack<
+	                                                    ASYC_MYSQL_QUERY_MORE_MESSAGE_CALLBACK_FUNCTOR>& callBack)
+{
+	m_queryMoreMessageCallBackMap.emplace(nMsgID, callBack);
+}
+
+void NFCAsyMysqlModule::AddExecuteOneCallBack(const uint32_t nMsgID,
+                                              const NFAsyMysqlCallBack<ASYC_MYSQL_EXECUTE_ONE_CALLBACK_FUNCTOR>&
+                                              callBack)
+{
+	m_executeOneCallBackMap.emplace(nMsgID, callBack);
+}
+
+void NFCAsyMysqlModule::AddExecuteMoreCallBack(const uint32_t nMsgID,
+                                               const NFAsyMysqlCallBack<ASYC_MYSQL_EXECUTE_MORE_CALLBACK_FUNCTOR>&
+                                               callBack)
+{
+	m_executeMoreCallBackMap.emplace(nMsgID, callBack);
 }

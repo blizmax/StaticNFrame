@@ -424,7 +424,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="my_date_and_hour_file_sink.h" />
-    <ClInclude Include="NFCallBackModule.h" />
     <ClInclude Include="NFCConfigModule.h" />
     <ClInclude Include="NFCEventModule.h" />
     <ClInclude Include="NFCKernelModule.h" />
@@ -434,7 +433,6 @@
     <ClInclude Include="termcolor.hpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="NFCallBackModule.cpp" />
     <ClCompile Include="NFCConfigModule.cpp" />
     <ClCompile Include="NFCEventModule.cpp" />
     <ClCompile Include="NFCKernelModule.cpp" />

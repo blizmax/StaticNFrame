@@ -30,4 +30,6 @@ public:
 	virtual bool BeforeShut() override;
 
 	virtual bool Shut() override;
+
+	void test(bool result);
 };
