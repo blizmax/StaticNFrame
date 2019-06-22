@@ -477,13 +477,15 @@ function RpmjService.CheckMoving(tItem)
 	end
 	local currPos = currPosList[1] --取第一个就行了。
 	local gcUpdate = msg_gdmj_pb.gcgdmjupdate()
+
+	local checkHu = 0
 	
 	if tItem.m_tInfo.beingpoker == 1 then
 		--这个是需要发牌的
 		--local pokerID = GdmjWork.GetRandPoker(tItem.m_tInfo)
 		local pokerID = GdmjWork.HandPokerInsert(tItem, currPos)
 		
-		local checkHu = GdmjWork.CheckIsHu(tItem, currPos, pokerID) --为什么是humark呢
+		checkHu = GdmjWork.CheckIsHu(tItem, currPos, pokerID) --为什么是humark呢
 		local checkGang = RpmjService.CheckIsGang(tItem.m_userList[currPos], pokerID)
 		tItem.m_tInfo.nextinfo.actpokerid = pokerID
 		tItem.m_tInfo.nextinfo.actchairid[currPos] = 1
@@ -504,13 +506,17 @@ function RpmjService.CheckMoving(tItem)
 						end
 					end
 
-					tItem.m_tInfo.nextinfo.actiontype:append(g_gdmjAction.type_guo)
-					tItem.m_tInfo.nextinfo.actiontype:append(g_gdmjAction.type_hu)
+					if #tItem.m_tInfo.publicpoker >= tItem.m_vipRoomInfo.manum + tItem.m_maxUser then
+						tItem.m_tInfo.nextinfo.actiontype:append(g_gdmjAction.type_guo)
+						tItem.m_tInfo.nextinfo.actiontype:append(g_gdmjAction.type_hu)
+					else
+						tItem.m_tInfo.nextinfo.actiontype:append(g_gdmjAction.type_hu)
+					end
 				end
 			end
 			
 			if checkGang > 0 then
-				if #tItem.m_tInfo.publicpoker > tItem.m_vipRoomInfo.manum + 4 then
+				if #tItem.m_tInfo.publicpoker >= tItem.m_vipRoomInfo.manum + tItem.m_maxUser then
 					tItem.m_tInfo.nextinfo.actiontype:append(g_gdmjAction.type_guo)
 					tItem.m_tInfo.nextinfo.actiontype:append(g_gdmjAction.type_gang)
 				else
@@ -518,13 +524,20 @@ function RpmjService.CheckMoving(tItem)
 				end
 			end
 		else
-			tItem.m_tInfo.nextinfo.actiontype:append(g_gdmjAction.type_play)
+			if #tItem.m_tInfo.publicpoker >= tItem.m_vipRoomInfo.manum + tItem.m_maxUser then
+				tItem.m_tInfo.nextinfo.actiontype:append(g_gdmjAction.type_play)
+			end
 		end
 		
 		for k,v in ipairs(tItem.m_tInfo.nextinfo.actiontype) do
 			gcUpdate.actiontype:append(v)
 		end
-		tItem.m_tInfo.nextinfo.canplay = 1
+		if checkHu > 0 or #tItem.m_tInfo.publicpoker >= tItem.m_vipRoomInfo.manum + tItem.m_maxUser then
+			tItem.m_tInfo.nextinfo.canplay = 1
+		else
+			tItem.m_tInfo.nextinfo.canplay = 0
+		end
+		
 		gcUpdate.pokerid = pokerID
 		gcUpdate.actpokerid = checkGang == 0 and pokerID or checkGang --pokerID
 	else
@@ -556,17 +569,40 @@ function RpmjService.CheckMoving(tItem)
 	gcUpdate.canplay = tItem.m_tInfo.nextinfo.canplay
 	gcUpdate.result = 0
 	gcUpdate.tarchairid = tItem.m_tInfo.nextinfo.tarchairid
-	tItem.m_tInfo.userstate = g_gdmjUserState.state_playing  --轮到玩家开始打牌了
+
+	if checkHu > 0 or #tItem.m_tInfo.publicpoker >= tItem.m_vipRoomInfo.manum + tItem.m_maxUser then
+		tItem.m_tInfo.userstate = g_gdmjUserState.state_playing  --轮到玩家开始打牌了
+		GdmjWork.SendUpdate(tItem,gcUpdate, currPos)
 	
-	GdmjWork.SendUpdate(tItem,gcUpdate, currPos)
-	
-	
-	tItem.m_isModify = true
-	for k,v in ipairs(currPosList) do
-		tItem.m_userModify[v] = 1
+		tItem.m_isModify = true
+		for k,v in ipairs(currPosList) do
+			tItem.m_userModify[v] = 1
+		end
+	else
+		GdmjWork.SendUpdate(tItem,gcUpdate, currPos)
+
+		GdmjWork.NextInfoInit(tItem.m_nextInfo)
+
+		local nextPos = currPos == tItem.m_maxUser and 1 or currPos + 1
+		tItem.m_nextInfo.actchairid[nextPos] = 1
+		tItem.m_tInfo.nextinfo.actchairid[nextPos] = 1
+		tItem.m_tInfo.nextinfo.actchairid[currPos] = 0
+		tItem.m_tInfo.beingpoker = 1
+		tItem.m_nextInfo.canplay = 0
+
+		tItem.m_tInfo.userstate = g_gdmjUserState.state_waiting  --轮到玩家开始打牌了
+		tItem.m_userList[currPos].playstate = g_gdmjPlayerState.play_waiting
+		tItem.m_tInfo.status = g_gdmjStatus.status_waiting     --设置状态
+		tItem.m_tInfo.timemark = g_gdmjTime.waiting_time       --设置前端发牌的时间
+		if tItem.m_tInfo.beingpoker == 1 then
+			--只有发牌的情况下会去检查流局
+			local isEnd = RpmjService.CheckLiuJu(tItem)
+			if isEnd == true then
+				tItem.m_tInfo.timemark = 1
+				tItem.m_tInfo.status = g_gdmjStatus.status_dissolve
+			end
+		end
 	end
-	
-	
 end
 
 

@@ -39,8 +39,6 @@ void NFCTestModule::test(bool result)
 }
 
 
-
-
 bool NFCTestModule::Execute()
 {
 	static bool flag = true;
