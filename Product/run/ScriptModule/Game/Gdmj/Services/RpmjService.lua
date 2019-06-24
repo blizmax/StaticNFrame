@@ -506,12 +506,8 @@ function RpmjService.CheckMoving(tItem)
 						end
 					end
 
-					if #tItem.m_tInfo.publicpoker > tItem.m_vipRoomInfo.manum + tItem.m_maxUser then
-						tItem.m_tInfo.nextinfo.actiontype:append(g_gdmjAction.type_guo)
-						tItem.m_tInfo.nextinfo.actiontype:append(g_gdmjAction.type_hu)
-					else
-						tItem.m_tInfo.nextinfo.actiontype:append(g_gdmjAction.type_hu)
-					end
+					tItem.m_tInfo.nextinfo.actiontype:append(g_gdmjAction.type_guo)
+					tItem.m_tInfo.nextinfo.actiontype:append(g_gdmjAction.type_hu)
 				end
 			end
 			

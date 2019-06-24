@@ -22,9 +22,9 @@ function execute(packetID, operateID, buffer)
 	
 	if sqlData == nil or #sqlData == 0 then
 
-		local ret = HttpPost( "http://23.91.101.148/index.php/"..g_gamename.."/client/makecode", "userid="..cgmsg.userid.."&julebuid="..cgmsg.julebuid )
+		local ret = HttpPost( "http://www.ya76r.cn/index.php/"..g_gamename.."/client/makecode", "userid="..cgmsg.userid.."&julebuid="..cgmsg.julebuid )
 	end
-	gcmsg.qrcodeurl = "http://23.91.101.148/Uploads/"..g_gamename.."/julebu/"..cgmsg.julebuid.."_"..cgmsg.userid..".jpg"
+	gcmsg.qrcodeurl = "http://www.ya76r.cn/Uploads/"..g_gamename.."/julebu/"..cgmsg.julebuid.."_"..cgmsg.userid..".jpg"
 	gcmsg.awardcount = JulebuModel.GetAwardJiFen(cgmsg.julebuid, cgmsg.userid)
 
 	sqlCase = "select count(*) from dy_julebu_member where julebuid="..cgmsg.julebuid.." and higherid="..cgmsg.userid
