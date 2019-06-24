@@ -506,7 +506,7 @@ function RpmjService.CheckMoving(tItem)
 						end
 					end
 
-					if #tItem.m_tInfo.publicpoker >= tItem.m_vipRoomInfo.manum + tItem.m_maxUser then
+					if #tItem.m_tInfo.publicpoker > tItem.m_vipRoomInfo.manum + tItem.m_maxUser then
 						tItem.m_tInfo.nextinfo.actiontype:append(g_gdmjAction.type_guo)
 						tItem.m_tInfo.nextinfo.actiontype:append(g_gdmjAction.type_hu)
 					else
@@ -516,7 +516,7 @@ function RpmjService.CheckMoving(tItem)
 			end
 			
 			if checkGang > 0 then
-				if #tItem.m_tInfo.publicpoker >= tItem.m_vipRoomInfo.manum + tItem.m_maxUser then
+				if #tItem.m_tInfo.publicpoker > tItem.m_vipRoomInfo.manum + tItem.m_maxUser then
 					tItem.m_tInfo.nextinfo.actiontype:append(g_gdmjAction.type_guo)
 					tItem.m_tInfo.nextinfo.actiontype:append(g_gdmjAction.type_gang)
 				else
@@ -524,7 +524,7 @@ function RpmjService.CheckMoving(tItem)
 				end
 			end
 		else
-			if #tItem.m_tInfo.publicpoker >= tItem.m_vipRoomInfo.manum + tItem.m_maxUser then
+			if #tItem.m_tInfo.publicpoker > tItem.m_vipRoomInfo.manum + tItem.m_maxUser then
 				tItem.m_tInfo.nextinfo.actiontype:append(g_gdmjAction.type_play)
 			end
 		end
@@ -596,11 +596,12 @@ function RpmjService.CheckMoving(tItem)
 		tItem.m_tInfo.timemark = g_gdmjTime.waiting_time       --设置前端发牌的时间
 		if tItem.m_tInfo.beingpoker == 1 then
 			--只有发牌的情况下会去检查流局
-			local isEnd = RpmjService.CheckLiuJu(tItem)
-			if isEnd == true then
-				tItem.m_tInfo.timemark = 1
-				tItem.m_tInfo.status = g_gdmjStatus.status_dissolve
-			end
+			RpmjService.CheckLiuJu(tItem)
+		end
+
+		tItem.m_isModify = true
+		for k,v in ipairs(currPosList) do
+			tItem.m_userModify[v] = 1
 		end
 	end
 end
@@ -768,7 +769,7 @@ function RpmjService.CheckNewPengGang(tItem, pokerID, actChairid)
 			if isExist == false then
 				table.insert(retList, g_gdmjAction.type_peng)
 				if num > 2 and isExistGang == false then
-					if #tItem.m_tInfo.publicpoker > tItem.m_vipRoomInfo.manum + 4 then
+					if #tItem.m_tInfo.publicpoker >= tItem.m_vipRoomInfo.manum + tItem.m_maxUser then
 						table.insert(retList, g_gdmjAction.type_gang)  --剩下最后一张牌了，不能碰和杠，因为碰和杠后就不能够出牌了
 					end
 				end
