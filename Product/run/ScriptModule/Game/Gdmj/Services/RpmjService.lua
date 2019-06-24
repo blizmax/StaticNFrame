@@ -728,7 +728,7 @@ end
 function RpmjService.CheckNewPengGang(tItem, pokerID, actChairid)
 	--该函数是检查新型的碰和杠的，碰的时候需要检查是否存在过碰不碰的情况
 	--返回的时候，是返回财政的列表
-	if #tItem.m_tInfo.publicpoker <= tItem.m_vipRoomInfo.manum then
+	if #tItem.m_tInfo.publicpoker < tItem.m_vipRoomInfo.manum + tItem.m_maxUser then
 		return 0,0  --剩下最后一张牌了，不能碰和杠，因为碰和杠后就不能够出牌了
 	end
 
@@ -792,7 +792,7 @@ function RpmjService.NewCheckChiHu(tItem,actPokerID,actChairID,isQiangGang)
 	for i = 1,#userIDList do
 		--在这里必须要判断鸡胡，鸡胡是不允许吃胡的
 		for k,v in ipairs(tItem.m_userList[ userIDList[i] ].tinglist) do
-			if tItem.m_userList[ userIDList[i] ].guohu == 0 and tItem.m_userList[ userIDList[i] ].jinhu == 0 and v == actPokerID then
+			if #tItem.m_tInfo.publicpoker >= tItem.m_vipRoomInfo.manum + tItem.m_maxUser and tItem.m_userList[ userIDList[i] ].guohu == 0 and tItem.m_userList[ userIDList[i] ].jinhu == 0 and v == actPokerID then
 				--同时必须要满足不是鸡胡才可以,过胡不胡
 				--抢杠胡是可以鸡胡的
 				--这里再加一个，惠东庄也是允许吃鸡胡的,但是惠州庄，是不允许吃鸡胡的,所以最后一个是判断惠州庄吃胡的
@@ -929,7 +929,7 @@ function RpmjService.DoPlay(tItem, cgmsg, gcmsg)
 		end
 		tItem.m_nextInfo.actiontype:append(g_gdmjAction.type_chihu)
 	else
-		local nextPos,actList = GdmjWork.CheckNewPengGang(tItem,cgmsg.actpokerid, cgmsg.actchairid)
+		local nextPos,actList = RpmjService.CheckNewPengGang(tItem,cgmsg.actpokerid, cgmsg.actchairid)
 
 		if nextPos ~= 0 then
 			--表示是可以碰和或者杠的
@@ -959,6 +959,21 @@ end
 function RpmjService.DoGuo(tItem,cgmsg,gcmsg)
 	--这里是过牌的操作，过牌的操作，可能存在几个人同时操作，必须等到最后的人操作完成了，才发送行动的类型
 	--如果是抢杠胡，而且是同时抢杠胡，或者同时吃胡
+
+	if #tItem.m_tInfo.publicpoker < tItem.m_vipRoomInfo.manum + tItem.m_maxUser then
+		local nextPos = cgmsg.actchairid == tItem.m_maxUser and 1 or cgmsg.actchairid + 1
+		tItem.m_nextInfo.actchairid[nextPos] = 1
+		tItem.m_tInfo.nextinfo.actchairid[nextPos] = 1
+		tItem.m_tInfo.nextinfo.actchairid[cgmsg.actchairid] = 0
+		tItem.m_tInfo.beingpoker = 1
+		tItem.m_nextInfo.canplay = 0
+
+		tItem.m_tInfo.userstate = g_gdmjUserState.state_waiting  --轮到玩家开始打牌了
+		tItem.m_userList[cgmsg.actchairid].playstate = g_gdmjPlayerState.play_waiting
+		tItem.m_tInfo.status = g_gdmjStatus.status_waiting     --设置状态
+		tItem.m_tInfo.timemark = g_gdmjTime.waiting_time       --设置前端发牌的时间
+		return false
+	end
 	--
 	--tItem.m_nextInfo:ParseFromString(tItem.m_tInfo.nextinfo:SerializeToString())
 	tItem.m_tInfo.prevpos = 0   --在这里也要对这个设置
