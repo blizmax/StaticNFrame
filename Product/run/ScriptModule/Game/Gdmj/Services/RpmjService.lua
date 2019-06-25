@@ -575,6 +575,7 @@ function RpmjService.CheckMoving(tItem)
 			tItem.m_userModify[v] = 1
 		end
 	else
+		gcUpdate.actiontime = 1  --先定为5吧
 		GdmjWork.SendUpdate(tItem,gcUpdate, currPos)
 
 		GdmjWork.NextInfoInit(tItem.m_nextInfo)
@@ -589,7 +590,7 @@ function RpmjService.CheckMoving(tItem)
 		tItem.m_tInfo.userstate = g_gdmjUserState.state_waiting  --轮到玩家开始打牌了
 		tItem.m_userList[currPos].playstate = g_gdmjPlayerState.play_waiting
 		tItem.m_tInfo.status = g_gdmjStatus.status_waiting     --设置状态
-		tItem.m_tInfo.timemark = g_gdmjTime.waiting_time       --设置前端发牌的时间
+		tItem.m_tInfo.timemark = 1       --设置前端发牌的时间
 		if tItem.m_tInfo.beingpoker == 1 then
 			--只有发牌的情况下会去检查流局
 			RpmjService.CheckLiuJu(tItem)
@@ -971,7 +972,7 @@ function RpmjService.DoGuo(tItem,cgmsg,gcmsg)
 		tItem.m_tInfo.userstate = g_gdmjUserState.state_waiting  --轮到玩家开始打牌了
 		tItem.m_userList[cgmsg.actchairid].playstate = g_gdmjPlayerState.play_waiting
 		tItem.m_tInfo.status = g_gdmjStatus.status_waiting     --设置状态
-		tItem.m_tInfo.timemark = g_gdmjTime.waiting_time       --设置前端发牌的时间
+		tItem.m_tInfo.timemark = 1       --设置前端发牌的时间
 		return false
 	end
 	--
