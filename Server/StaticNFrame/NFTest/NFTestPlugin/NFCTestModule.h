@@ -14,8 +14,9 @@
 #include "NFComm/NFPluginModule/NFIModule.h"
 #include "libgo/libgo/coroutine.h"
 #include "libgo/libgo/libgo.h"
+#include "NFComm/NFPluginModule/NFTimerMgr.h"
 
-class NFCTestModule : public NFIModule
+class NFCTestModule : public NFIModule, NFTimerObj
 {
 public:
 	explicit NFCTestModule(NFIPluginManager* p);
@@ -30,6 +31,8 @@ public:
 	virtual bool BeforeShut() override;
 
 	virtual bool Shut() override;
+
+	virtual void OnTimer(uint32_t nTimerID) override;
 
 	void test(bool result);
 };

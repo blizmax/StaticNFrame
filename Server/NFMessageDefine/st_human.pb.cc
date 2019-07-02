@@ -20,7 +20,6 @@
 // @@protoc_insertion_point(includes)
 
 namespace protobuf_st_5fhuman_2eproto {
-extern PROTOBUF_INTERNAL_EXPORT_protobuf_st_5fhuman_2eproto ::google::protobuf::internal::SCCInfo<0> scc_info_givemoneyrecord;
 extern PROTOBUF_INTERNAL_EXPORT_protobuf_st_5fhuman_2eproto ::google::protobuf::internal::SCCInfo<0> scc_info_goodsinfo;
 extern PROTOBUF_INTERNAL_EXPORT_protobuf_st_5fhuman_2eproto ::google::protobuf::internal::SCCInfo<0> scc_info_inviteinfo;
 extern PROTOBUF_INTERNAL_EXPORT_protobuf_st_5fhuman_2eproto ::google::protobuf::internal::SCCInfo<0> scc_info_mailinfo;
@@ -81,11 +80,6 @@ class inviteinfoDefaultTypeInternal {
   ::google::protobuf::internal::ExplicitlyConstructed<inviteinfo>
       _instance;
 } _inviteinfo_default_instance_;
-class givemoneyrecordDefaultTypeInternal {
- public:
-  ::google::protobuf::internal::ExplicitlyConstructed<givemoneyrecord>
-      _instance;
-} _givemoneyrecord_default_instance_;
 class agencyinfoDefaultTypeInternal {
  public:
   ::google::protobuf::internal::ExplicitlyConstructed<agencyinfo>
@@ -101,11 +95,16 @@ class stringlistDefaultTypeInternal {
   ::google::protobuf::internal::ExplicitlyConstructed<stringlist>
       _instance;
 } _stringlist_default_instance_;
-class specialinfoDefaultTypeInternal {
+class userawardDefaultTypeInternal {
  public:
-  ::google::protobuf::internal::ExplicitlyConstructed<specialinfo>
+  ::google::protobuf::internal::ExplicitlyConstructed<useraward>
       _instance;
-} _specialinfo_default_instance_;
+} _useraward_default_instance_;
+class banktransferrecordDefaultTypeInternal {
+ public:
+  ::google::protobuf::internal::ExplicitlyConstructed<banktransferrecord>
+      _instance;
+} _banktransferrecord_default_instance_;
 }  // namespace NFMsg
 namespace protobuf_st_5fhuman_2eproto {
 static void InitDefaultsaccountinfo() {
@@ -264,20 +263,6 @@ static void InitDefaultsinviteinfo() {
 ::google::protobuf::internal::SCCInfo<0> scc_info_inviteinfo =
     {{ATOMIC_VAR_INIT(::google::protobuf::internal::SCCInfoBase::kUninitialized), 0, InitDefaultsinviteinfo}, {}};
 
-static void InitDefaultsgivemoneyrecord() {
-  GOOGLE_PROTOBUF_VERIFY_VERSION;
-
-  {
-    void* ptr = &::NFMsg::_givemoneyrecord_default_instance_;
-    new (ptr) ::NFMsg::givemoneyrecord();
-    ::google::protobuf::internal::OnShutdownDestroyMessage(ptr);
-  }
-  ::NFMsg::givemoneyrecord::InitAsDefaultInstance();
-}
-
-::google::protobuf::internal::SCCInfo<0> scc_info_givemoneyrecord =
-    {{ATOMIC_VAR_INIT(::google::protobuf::internal::SCCInfoBase::kUninitialized), 0, InitDefaultsgivemoneyrecord}, {}};
-
 static void InitDefaultsagencyinfo() {
   GOOGLE_PROTOBUF_VERIFY_VERSION;
 
@@ -289,10 +274,9 @@ static void InitDefaultsagencyinfo() {
   ::NFMsg::agencyinfo::InitAsDefaultInstance();
 }
 
-::google::protobuf::internal::SCCInfo<2> scc_info_agencyinfo =
-    {{ATOMIC_VAR_INIT(::google::protobuf::internal::SCCInfoBase::kUninitialized), 2, InitDefaultsagencyinfo}, {
-      &protobuf_st_5fhuman_2eproto::scc_info_inviteinfo.base,
-      &protobuf_st_5fhuman_2eproto::scc_info_givemoneyrecord.base,}};
+::google::protobuf::internal::SCCInfo<1> scc_info_agencyinfo =
+    {{ATOMIC_VAR_INIT(::google::protobuf::internal::SCCInfoBase::kUninitialized), 1, InitDefaultsagencyinfo}, {
+      &protobuf_st_5fhuman_2eproto::scc_info_inviteinfo.base,}};
 
 static void InitDefaultsintlist() {
   GOOGLE_PROTOBUF_VERIFY_VERSION;
@@ -322,19 +306,33 @@ static void InitDefaultsstringlist() {
 ::google::protobuf::internal::SCCInfo<0> scc_info_stringlist =
     {{ATOMIC_VAR_INIT(::google::protobuf::internal::SCCInfoBase::kUninitialized), 0, InitDefaultsstringlist}, {}};
 
-static void InitDefaultsspecialinfo() {
+static void InitDefaultsuseraward() {
   GOOGLE_PROTOBUF_VERIFY_VERSION;
 
   {
-    void* ptr = &::NFMsg::_specialinfo_default_instance_;
-    new (ptr) ::NFMsg::specialinfo();
+    void* ptr = &::NFMsg::_useraward_default_instance_;
+    new (ptr) ::NFMsg::useraward();
     ::google::protobuf::internal::OnShutdownDestroyMessage(ptr);
   }
-  ::NFMsg::specialinfo::InitAsDefaultInstance();
+  ::NFMsg::useraward::InitAsDefaultInstance();
 }
 
-::google::protobuf::internal::SCCInfo<0> scc_info_specialinfo =
-    {{ATOMIC_VAR_INIT(::google::protobuf::internal::SCCInfoBase::kUninitialized), 0, InitDefaultsspecialinfo}, {}};
+::google::protobuf::internal::SCCInfo<0> scc_info_useraward =
+    {{ATOMIC_VAR_INIT(::google::protobuf::internal::SCCInfoBase::kUninitialized), 0, InitDefaultsuseraward}, {}};
+
+static void InitDefaultsbanktransferrecord() {
+  GOOGLE_PROTOBUF_VERIFY_VERSION;
+
+  {
+    void* ptr = &::NFMsg::_banktransferrecord_default_instance_;
+    new (ptr) ::NFMsg::banktransferrecord();
+    ::google::protobuf::internal::OnShutdownDestroyMessage(ptr);
+  }
+  ::NFMsg::banktransferrecord::InitAsDefaultInstance();
+}
+
+::google::protobuf::internal::SCCInfo<0> scc_info_banktransferrecord =
+    {{ATOMIC_VAR_INIT(::google::protobuf::internal::SCCInfoBase::kUninitialized), 0, InitDefaultsbanktransferrecord}, {}};
 
 void InitDefaults() {
   ::google::protobuf::internal::InitSCC(&scc_info_accountinfo.base);
@@ -348,11 +346,11 @@ void InitDefaults() {
   ::google::protobuf::internal::InitSCC(&scc_info_mailinfo.base);
   ::google::protobuf::internal::InitSCC(&scc_info_maillist.base);
   ::google::protobuf::internal::InitSCC(&scc_info_inviteinfo.base);
-  ::google::protobuf::internal::InitSCC(&scc_info_givemoneyrecord.base);
   ::google::protobuf::internal::InitSCC(&scc_info_agencyinfo.base);
   ::google::protobuf::internal::InitSCC(&scc_info_intlist.base);
   ::google::protobuf::internal::InitSCC(&scc_info_stringlist.base);
-  ::google::protobuf::internal::InitSCC(&scc_info_specialinfo.base);
+  ::google::protobuf::internal::InitSCC(&scc_info_useraward.base);
+  ::google::protobuf::internal::InitSCC(&scc_info_banktransferrecord.base);
 }
 
 ::google::protobuf::Metadata file_level_metadata[16];
@@ -418,76 +416,60 @@ const ::google::protobuf::uint32 TableStruct::offsets[] GOOGLE_PROTOBUF_ATTRIBUT
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::NFMsg::playerinfo, title_),
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::NFMsg::playerinfo, blacklist_),
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::NFMsg::playerinfo, propertyid_),
-  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::NFMsg::playerinfo, agencystatus_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::NFMsg::playerinfo, ticket_),
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::NFMsg::playerinfo, location_x_),
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::NFMsg::playerinfo, location_y_),
-  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::NFMsg::playerinfo, registration1_),
-  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::NFMsg::playerinfo, registration2_),
-  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::NFMsg::playerinfo, registration3_),
-  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::NFMsg::playerinfo, signinmonth_),
-  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::NFMsg::playerinfo, bsignin_),
-  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::NFMsg::playerinfo, turntablenum_),
-  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::NFMsg::playerinfo, tengames_),
-  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::NFMsg::playerinfo, todayshare_),
-  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::NFMsg::playerinfo, caninvite_),
-  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::NFMsg::playerinfo, totalgames_),
-  27,
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::NFMsg::playerinfo, bank_password_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::NFMsg::playerinfo, bank_jetton_),
+  28,
   0,
   1,
   2,
   3,
   4,
-  28,
   29,
+  30,
   5,
   6,
-  30,
   31,
   32,
   33,
+  7,
   34,
   35,
-  7,
   8,
   9,
+  10,
   36,
   37,
   38,
-  10,
   11,
   12,
   13,
   14,
+  15,
   39,
   40,
   41,
   42,
   43,
-  15,
   16,
   17,
   18,
+  19,
   44,
   45,
-  19,
   20,
-  46,
   21,
-  47,
-  48,
-  49,
   22,
   23,
+  46,
+  47,
+  48,
   24,
   25,
   26,
-  50,
-  51,
-  52,
-  53,
-  54,
-  55,
-  56,
+  27,
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::NFMsg::playerstats, _has_bits_),
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::NFMsg::playerstats, _internal_metadata_),
   ~0u,  // no _extensions_
@@ -508,7 +490,6 @@ const ::google::protobuf::uint32 TableStruct::offsets[] GOOGLE_PROTOBUF_ATTRIBUT
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::NFMsg::playerstats, maxmoney_),
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::NFMsg::playerstats, dayrmb_),
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::NFMsg::playerstats, daypaytime_),
-  0,
   1,
   2,
   3,
@@ -516,6 +497,7 @@ const ::google::protobuf::uint32 TableStruct::offsets[] GOOGLE_PROTOBUF_ATTRIBUT
   5,
   6,
   7,
+  0,
   8,
   9,
   10,
@@ -578,21 +560,21 @@ const ::google::protobuf::uint32 TableStruct::offsets[] GOOGLE_PROTOBUF_ATTRIBUT
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::NFMsg::playersimpleinfo, jifen_),
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::NFMsg::playersimpleinfo, location_x_),
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::NFMsg::playersimpleinfo, location_y_),
-  6,
-  0,
-  7,
   8,
+  0,
   9,
   10,
   11,
-  12,
   1,
-  2,
-  3,
   13,
   14,
+  2,
+  3,
   4,
+  12,
+  7,
   5,
+  6,
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::NFMsg::broadcastinfo, _has_bits_),
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::NFMsg::broadcastinfo, _internal_metadata_),
   ~0u,  // no _extensions_
@@ -671,19 +653,6 @@ const ::google::protobuf::uint32 TableStruct::offsets[] GOOGLE_PROTOBUF_ATTRIBUT
   0,
   1,
   2,
-  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::NFMsg::givemoneyrecord, _has_bits_),
-  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::NFMsg::givemoneyrecord, _internal_metadata_),
-  ~0u,  // no _extensions_
-  ~0u,  // no _oneof_case_
-  ~0u,  // no _weak_field_map_
-  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::NFMsg::givemoneyrecord, userid_),
-  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::NFMsg::givemoneyrecord, nickname_),
-  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::NFMsg::givemoneyrecord, amount_),
-  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::NFMsg::givemoneyrecord, timemark_),
-  2,
-  0,
-  3,
-  1,
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::NFMsg::agencyinfo, _has_bits_),
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::NFMsg::agencyinfo, _internal_metadata_),
   ~0u,  // no _extensions_
@@ -702,21 +671,25 @@ const ::google::protobuf::uint32 TableStruct::offsets[] GOOGLE_PROTOBUF_ATTRIBUT
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::NFMsg::agencyinfo, datemark_),
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::NFMsg::agencyinfo, moneymark_),
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::NFMsg::agencyinfo, weekmoney_),
-  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::NFMsg::agencyinfo, givemoneylist_),
-  3,
-  0,
-  4,
-  5,
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::NFMsg::agencyinfo, exclusiveurl_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::NFMsg::agencyinfo, alipay_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::NFMsg::agencyinfo, bankaccount_),
   6,
+  0,
   7,
   8,
   9,
+  10,
+  11,
+  12,
   ~0u,
   1,
   2,
-  10,
-  11,
-  ~0u,
+  13,
+  14,
+  3,
+  4,
+  5,
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::NFMsg::intlist, _has_bits_),
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::NFMsg::intlist, _internal_metadata_),
   ~0u,  // no _extensions_
@@ -731,51 +704,52 @@ const ::google::protobuf::uint32 TableStruct::offsets[] GOOGLE_PROTOBUF_ATTRIBUT
   ~0u,  // no _weak_field_map_
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::NFMsg::stringlist, slist_),
   ~0u,
-  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::NFMsg::specialinfo, _has_bits_),
-  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::NFMsg::specialinfo, _internal_metadata_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::NFMsg::useraward, _has_bits_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::NFMsg::useraward, _internal_metadata_),
   ~0u,  // no _extensions_
   ~0u,  // no _oneof_case_
   ~0u,  // no _weak_field_map_
-  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::NFMsg::specialinfo, userid_),
-  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::NFMsg::specialinfo, starttime_),
-  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::NFMsg::specialinfo, endtime_),
-  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::NFMsg::specialinfo, state_),
-  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::NFMsg::specialinfo, rate_),
-  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::NFMsg::specialinfo, winall_),
-  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::NFMsg::specialinfo, peinum_),
-  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::NFMsg::specialinfo, marknum_),
-  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::NFMsg::specialinfo, gametype_),
-  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::NFMsg::specialinfo, cardtype_),
-  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::NFMsg::specialinfo, iszhuang_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::NFMsg::useraward, id_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::NFMsg::useraward, awardtype_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::NFMsg::useraward, count_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::NFMsg::useraward, timemark_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::NFMsg::useraward, state_),
   0,
   1,
   2,
   3,
   4,
-  5,
-  6,
-  7,
-  ~0u,
-  8,
-  9,
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::NFMsg::banktransferrecord, _has_bits_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::NFMsg::banktransferrecord, _internal_metadata_),
+  ~0u,  // no _extensions_
+  ~0u,  // no _oneof_case_
+  ~0u,  // no _weak_field_map_
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::NFMsg::banktransferrecord, userid_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::NFMsg::banktransferrecord, nickname_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::NFMsg::banktransferrecord, amount_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::NFMsg::banktransferrecord, timemark_),
+  3,
+  0,
+  1,
+  2,
 };
 static const ::google::protobuf::internal::MigrationSchema schemas[] GOOGLE_PROTOBUF_ATTRIBUTE_SECTION_VARIABLE(protodesc_cold) = {
   { 0, 8, sizeof(::NFMsg::accountinfo)},
-  { 11, 73, sizeof(::NFMsg::playerinfo)},
-  { 130, 150, sizeof(::NFMsg::playerstats)},
-  { 165, 177, sizeof(::NFMsg::goodsinfo)},
-  { 184, 190, sizeof(::NFMsg::goodslist)},
-  { 191, 198, sizeof(::NFMsg::noticeinfo)},
-  { 200, 220, sizeof(::NFMsg::playersimpleinfo)},
-  { 235, 249, sizeof(::NFMsg::broadcastinfo)},
-  { 258, 277, sizeof(::NFMsg::mailinfo)},
-  { 291, 297, sizeof(::NFMsg::maillist)},
-  { 298, 308, sizeof(::NFMsg::inviteinfo)},
-  { 313, 322, sizeof(::NFMsg::givemoneyrecord)},
-  { 326, 345, sizeof(::NFMsg::agencyinfo)},
-  { 359, 365, sizeof(::NFMsg::intlist)},
-  { 366, 372, sizeof(::NFMsg::stringlist)},
-  { 373, 389, sizeof(::NFMsg::specialinfo)},
+  { 11, 65, sizeof(::NFMsg::playerinfo)},
+  { 114, 134, sizeof(::NFMsg::playerstats)},
+  { 149, 161, sizeof(::NFMsg::goodsinfo)},
+  { 168, 174, sizeof(::NFMsg::goodslist)},
+  { 175, 182, sizeof(::NFMsg::noticeinfo)},
+  { 184, 204, sizeof(::NFMsg::playersimpleinfo)},
+  { 219, 233, sizeof(::NFMsg::broadcastinfo)},
+  { 242, 261, sizeof(::NFMsg::mailinfo)},
+  { 275, 281, sizeof(::NFMsg::maillist)},
+  { 282, 292, sizeof(::NFMsg::inviteinfo)},
+  { 297, 318, sizeof(::NFMsg::agencyinfo)},
+  { 334, 340, sizeof(::NFMsg::intlist)},
+  { 341, 347, sizeof(::NFMsg::stringlist)},
+  { 348, 358, sizeof(::NFMsg::useraward)},
+  { 363, 372, sizeof(::NFMsg::banktransferrecord)},
 };
 
 static ::google::protobuf::Message const * const file_default_instances[] = {
@@ -790,11 +764,11 @@ static ::google::protobuf::Message const * const file_default_instances[] = {
   reinterpret_cast<const ::google::protobuf::Message*>(&::NFMsg::_mailinfo_default_instance_),
   reinterpret_cast<const ::google::protobuf::Message*>(&::NFMsg::_maillist_default_instance_),
   reinterpret_cast<const ::google::protobuf::Message*>(&::NFMsg::_inviteinfo_default_instance_),
-  reinterpret_cast<const ::google::protobuf::Message*>(&::NFMsg::_givemoneyrecord_default_instance_),
   reinterpret_cast<const ::google::protobuf::Message*>(&::NFMsg::_agencyinfo_default_instance_),
   reinterpret_cast<const ::google::protobuf::Message*>(&::NFMsg::_intlist_default_instance_),
   reinterpret_cast<const ::google::protobuf::Message*>(&::NFMsg::_stringlist_default_instance_),
-  reinterpret_cast<const ::google::protobuf::Message*>(&::NFMsg::_specialinfo_default_instance_),
+  reinterpret_cast<const ::google::protobuf::Message*>(&::NFMsg::_useraward_default_instance_),
+  reinterpret_cast<const ::google::protobuf::Message*>(&::NFMsg::_banktransferrecord_default_instance_),
 };
 
 void protobuf_AssignDescriptors() {
@@ -820,13 +794,13 @@ void AddDescriptorsImpl() {
   static const char descriptor[] GOOGLE_PROTOBUF_ATTRIBUTE_SECTION_VARIABLE(protodesc_cold) = {
       "\n\016st_human.proto\022\005NFMsg\"@\n\013accountinfo\022\017"
       "\n\007account\030\001 \001(\t\022\020\n\010password\030\002 \001(\t\022\016\n\006use"
-      "rid\030\003 \001(\004\"\372\007\n\nplayerinfo\022\016\n\006userid\030\001 \001(\005"
+      "rid\030\003 \001(\004\"\322\006\n\nplayerinfo\022\016\n\006userid\030\001 \001(\005"
       "\022\013\n\003cid\030\002 \001(\t\022\017\n\007account\030\003 \001(\t\022\020\n\010passwo"
       "rd\030\004 \001(\t\022\020\n\010nickname\030\005 \001(\t\022\017\n\007regdate\030\007 "
       "\001(\t\022\013\n\003sex\030\010 \001(\005\022\013\n\003age\030\t \001(\005\022\r\n\005email\030\n"
       " \001(\t\022\020\n\010phonenum\030\013 \001(\t\022\013\n\003exp\030\014 \001(\005\022\r\n\005l"
       "evel\030\r \001(\005\022\020\n\010viplevel\030\016 \001(\005\022\016\n\006jetton\030\017"
-      " \001(\003\022\014\n\004gold\030\020 \001(\005\022\r\n\005money\030\021 \001(\005\022\017\n\007cha"
+      " \001(\t\022\014\n\004gold\030\020 \001(\005\022\r\n\005money\030\021 \001(\005\022\017\n\007cha"
       "nnel\030\022 \001(\t\022\020\n\010province\030\023 \001(\t\022\014\n\004city\030\024 \001"
       "(\t\022\022\n\npopularity\030\025 \001(\005\022\022\n\nidenstatus\030\026 \001"
       "(\005\022\020\n\010bindtype\030\027 \001(\005\022\020\n\010bindnick\030\030 \001(\t\022\022"
@@ -837,69 +811,63 @@ void AddDescriptorsImpl() {
       "\030\" \001(\t\022\016\n\006face_2\030# \001(\t\022\016\n\006face_3\030$ \001(\t\022\016"
       "\n\006face_4\030% \001(\t\022\017\n\007isrobot\030& \001(\005\022\020\n\010playt"
       "ype\030\' \001(\005\022\023\n\013description\030( \001(\t\022\020\n\010locati"
-      "on\030) \001(\t\022\022\n\nbankjetton\030* \001(\003\022\r\n\005title\030+ "
+      "on\030) \001(\t\022\022\n\nbankjetton\030* \001(\t\022\r\n\005title\030+ "
       "\001(\t\022\021\n\tblacklist\030, \001(\005\022\022\n\npropertyid\030- \001"
-      "(\005\022\024\n\014agencystatus\030. \001(\005\022\022\n\nlocation_x\030/"
-      " \001(\t\022\022\n\nlocation_y\0300 \001(\t\022\025\n\rregistration"
-      "1\0301 \001(\t\022\025\n\rregistration2\0302 \001(\t\022\025\n\rregist"
-      "ration3\0303 \001(\t\022\023\n\013signinmonth\0304 \001(\005\022\017\n\007bs"
-      "ignin\0305 \001(\005\022\024\n\014turntablenum\0306 \001(\005\022\020\n\010ten"
-      "games\0307 \001(\005\022\022\n\ntodayshare\0308 \001(\005\022\021\n\tcanin"
-      "vite\0309 \001(\005\022\022\n\ntotalgames\030: \001(\005\"\257\002\n\013playe"
-      "rstats\022\016\n\006userid\030\001 \001(\005\022\025\n\rmdynickamount\030"
-      "\002 \001(\005\022\020\n\010loginday\030\003 \001(\005\022\023\n\013loginconday\030\004"
-      " \001(\005\022\026\n\016maxloginconday\030\005 \001(\005\022\023\n\013loginamo"
-      "unt\030\006 \001(\005\022\022\n\nonlinetime\030\007 \001(\005\022\021\n\tmaxjett"
-      "on\030\010 \001(\005\022\016\n\006payrmb\030\t \001(\005\022\022\n\ncallpayrmb\030\n"
-      " \001(\005\022\017\n\007paytime\030\013 \001(\005\022\023\n\013callpaytime\030\014 \001"
-      "(\005\022\020\n\010maxmoney\030\r \001(\005\022\016\n\006dayrmb\030\016 \001(\005\022\022\n\n"
-      "daypaytime\030\017 \001(\005\"\202\001\n\tgoodsinfo\022\016\n\006itemid"
-      "\030\001 \001(\005\022\016\n\006userid\030\002 \001(\005\022\017\n\007goodsid\030\003 \001(\005\022"
-      "\016\n\006amount\030\004 \001(\005\022\020\n\010validity\030\005 \001(\005\022\022\n\ncre"
-      "atedate\030\006 \001(\t\022\016\n\006iswear\030\007 \001(\005\",\n\tgoodsli"
-      "st\022\037\n\005glist\030\001 \003(\0132\020.NFMsg.goodsinfo\"0\n\nn"
-      "oticeinfo\022\022\n\nnoticetype\030\001 \001(\005\022\016\n\006amount\030"
-      "\002 \001(\005\"\215\002\n\020playersimpleinfo\022\016\n\006userid\030\001 \001"
-      "(\005\022\020\n\010nickname\030\005 \001(\t\022\013\n\003sex\030\010 \001(\005\022\r\n\005lev"
-      "el\030\r \001(\005\022\020\n\010viplevel\030\016 \001(\005\022\016\n\006jetton\030\017 \001"
-      "(\003\022\014\n\004gold\030\020 \001(\005\022\022\n\npopularity\030\025 \001(\005\022\n\n\002"
-      "ip\030\037 \001(\t\022\016\n\006face_1\030\" \001(\t\022\020\n\010location\030) \001"
-      "(\t\022\022\n\npropertyid\030- \001(\005\022\r\n\005jifen\030c \001(\005\022\022\n"
-      "\nlocation_x\030/ \001(\t\022\022\n\nlocation_y\0300 \001(\t\"\252\001"
-      "\n\rbroadcastinfo\022\n\n\002id\030\001 \001(\005\022\021\n\tbroadtype"
-      "\030\002 \001(\005\022\020\n\010senderid\030\003 \001(\005\022\016\n\006sender\030\004 \001(\t"
-      "\022\013\n\003msg\030\005 \001(\t\022\022\n\nbroadtimes\030\006 \001(\005\022\020\n\010val"
-      "idday\030\007 \001(\005\022\022\n\ncreatetime\030\010 \001(\t\022\021\n\tcycle"
-      "type\030\t \001(\005\"\201\002\n\010mailinfo\022\016\n\006mailid\030\001 \001(\005\022"
-      "\020\n\010senderid\030\002 \001(\005\022\016\n\006sender\030\003 \001(\t\022\022\n\nrec"
-      "eiverid\030\004 \001(\005\022\020\n\010receiver\030\005 \001(\t\022\020\n\010mailt"
-      "ype\030\006 \001(\005\022\r\n\005title\030\007 \001(\t\022\017\n\007content\030\010 \001("
-      "\t\022\020\n\010senddate\030\t \001(\t\022\020\n\010markdate\030\n \001(\t\022\021\n"
-      "\tmailstate\030\013 \001(\005\022\022\n\nexterndata\030\014 \001(\t\022\016\n\006"
-      "remark\030\r \001(\t\022\020\n\010validity\030\016 \001(\005\"*\n\010mailli"
-      "st\022\036\n\005mlist\030\001 \003(\0132\017.NFMsg.mailinfo\"l\n\nin"
-      "viteinfo\022\016\n\006userid\030\001 \001(\005\022\022\n\nbinduserid\030\002"
-      " \001(\005\022\024\n\014bindnickname\030\003 \001(\t\022\022\n\nbindfaceid"
-      "\030\004 \001(\t\022\020\n\010binddate\030\005 \001(\t\"U\n\017givemoneyrec"
-      "ord\022\016\n\006userid\030\001 \001(\005\022\020\n\010nickname\030\002 \001(\t\022\016\n"
-      "\006amount\030\003 \001(\005\022\020\n\010timemark\030\004 \001(\t\"\262\002\n\nagen"
-      "cyinfo\022\016\n\006userid\030\001 \001(\005\022\021\n\tinvitestr\030\002 \001("
-      "\t\022\r\n\005level\030\003 \001(\005\022\021\n\tsoleagent\030\004 \001(\005\022\016\n\006a"
-      "gent1\030\005 \001(\005\022\016\n\006agent2\030\006 \001(\005\022\016\n\006agent3\030\007 "
-      "\001(\005\022\016\n\006agent4\030\010 \001(\005\022%\n\ninvitelist\030\t \003(\0132"
-      "\021.NFMsg.inviteinfo\022\021\n\tqrcodeurl\030\n \001(\t\022\020\n"
-      "\010datemark\030\013 \001(\t\022\021\n\tmoneymark\030\014 \001(\005\022\021\n\twe"
-      "ekmoney\030\r \001(\005\022-\n\rgivemoneylist\030\016 \003(\0132\026.N"
-      "FMsg.givemoneyrecord\"\030\n\007intlist\022\r\n\005ilist"
-      "\030\001 \003(\005\"\033\n\nstringlist\022\r\n\005slist\030\001 \003(\t\"\305\001\n\013"
-      "specialinfo\022\016\n\006userid\030\001 \001(\005\022\021\n\tstarttime"
-      "\030\002 \001(\005\022\017\n\007endtime\030\003 \001(\005\022\r\n\005state\030\004 \001(\005\022\014"
-      "\n\004rate\030\005 \001(\005\022\016\n\006winall\030\006 \001(\005\022\016\n\006peinum\030\007"
-      " \001(\005\022\017\n\007marknum\030\010 \001(\005\022\020\n\010gametype\030\t \003(\005\022"
-      "\020\n\010cardtype\030\n \001(\005\022\020\n\010iszhuang\030\013 \001(\005"
+      "(\005\022\016\n\006ticket\030. \001(\005\022\022\n\nlocation_x\030/ \001(\t\022\022"
+      "\n\nlocation_y\0300 \001(\t\022\025\n\rbank_password\0301 \001("
+      "\t\022\023\n\013bank_jetton\0302 \001(\t\"\257\002\n\013playerstats\022\016"
+      "\n\006userid\030\001 \001(\005\022\025\n\rmdynickamount\030\002 \001(\005\022\020\n"
+      "\010loginday\030\003 \001(\005\022\023\n\013loginconday\030\004 \001(\005\022\026\n\016"
+      "maxloginconday\030\005 \001(\005\022\023\n\013loginamount\030\006 \001("
+      "\005\022\022\n\nonlinetime\030\007 \001(\005\022\021\n\tmaxjetton\030\010 \001(\t"
+      "\022\016\n\006payrmb\030\t \001(\005\022\022\n\ncallpayrmb\030\n \001(\005\022\017\n\007"
+      "paytime\030\013 \001(\005\022\023\n\013callpaytime\030\014 \001(\005\022\020\n\010ma"
+      "xmoney\030\r \001(\005\022\016\n\006dayrmb\030\016 \001(\005\022\022\n\ndaypayti"
+      "me\030\017 \001(\005\"\202\001\n\tgoodsinfo\022\016\n\006itemid\030\001 \001(\005\022\016"
+      "\n\006userid\030\002 \001(\005\022\017\n\007goodsid\030\003 \001(\005\022\016\n\006amoun"
+      "t\030\004 \001(\005\022\020\n\010validity\030\005 \001(\005\022\022\n\ncreatedate\030"
+      "\006 \001(\t\022\016\n\006iswear\030\007 \001(\005\",\n\tgoodslist\022\037\n\005gl"
+      "ist\030\001 \003(\0132\020.NFMsg.goodsinfo\"0\n\nnoticeinf"
+      "o\022\022\n\nnoticetype\030\001 \001(\005\022\016\n\006amount\030\002 \001(\005\"\215\002"
+      "\n\020playersimpleinfo\022\016\n\006userid\030\001 \001(\005\022\020\n\010ni"
+      "ckname\030\005 \001(\t\022\013\n\003sex\030\010 \001(\005\022\r\n\005level\030\r \001(\005"
+      "\022\020\n\010viplevel\030\016 \001(\005\022\016\n\006jetton\030\017 \001(\t\022\014\n\004go"
+      "ld\030\020 \001(\005\022\022\n\npopularity\030\025 \001(\005\022\n\n\002ip\030\037 \001(\t"
+      "\022\016\n\006face_1\030\" \001(\t\022\020\n\010location\030) \001(\t\022\022\n\npr"
+      "opertyid\030- \001(\005\022\r\n\005jifen\030c \001(\t\022\022\n\nlocatio"
+      "n_x\030/ \001(\t\022\022\n\nlocation_y\0300 \001(\t\"\252\001\n\rbroadc"
+      "astinfo\022\n\n\002id\030\001 \001(\005\022\021\n\tbroadtype\030\002 \001(\005\022\020"
+      "\n\010senderid\030\003 \001(\005\022\016\n\006sender\030\004 \001(\t\022\013\n\003msg\030"
+      "\005 \001(\t\022\022\n\nbroadtimes\030\006 \001(\005\022\020\n\010validday\030\007 "
+      "\001(\005\022\022\n\ncreatetime\030\010 \001(\t\022\021\n\tcycletype\030\t \001"
+      "(\005\"\201\002\n\010mailinfo\022\016\n\006mailid\030\001 \001(\005\022\020\n\010sende"
+      "rid\030\002 \001(\005\022\016\n\006sender\030\003 \001(\t\022\022\n\nreceiverid\030"
+      "\004 \001(\005\022\020\n\010receiver\030\005 \001(\t\022\020\n\010mailtype\030\006 \001("
+      "\005\022\r\n\005title\030\007 \001(\t\022\017\n\007content\030\010 \001(\t\022\020\n\010sen"
+      "ddate\030\t \001(\t\022\020\n\010markdate\030\n \001(\t\022\021\n\tmailsta"
+      "te\030\013 \001(\005\022\022\n\nexterndata\030\014 \001(\t\022\016\n\006remark\030\r"
+      " \001(\t\022\020\n\010validity\030\016 \001(\005\"*\n\010maillist\022\036\n\005ml"
+      "ist\030\001 \003(\0132\017.NFMsg.mailinfo\"l\n\ninviteinfo"
+      "\022\016\n\006userid\030\001 \001(\005\022\022\n\nbinduserid\030\002 \001(\005\022\024\n\014"
+      "bindnickname\030\003 \001(\t\022\022\n\nbindfaceid\030\004 \001(\t\022\020"
+      "\n\010binddate\030\005 \001(\t\"\276\002\n\nagencyinfo\022\016\n\006useri"
+      "d\030\001 \001(\005\022\021\n\tinvitestr\030\002 \001(\t\022\r\n\005level\030\003 \001("
+      "\005\022\021\n\tsoleagent\030\004 \001(\005\022\016\n\006agent1\030\005 \001(\005\022\016\n\006"
+      "agent2\030\006 \001(\005\022\016\n\006agent3\030\007 \001(\005\022\016\n\006agent4\030\010"
+      " \001(\005\022%\n\ninvitelist\030\t \003(\0132\021.NFMsg.invitei"
+      "nfo\022\021\n\tqrcodeurl\030\n \001(\t\022\020\n\010datemark\030\013 \001(\t"
+      "\022\021\n\tmoneymark\030\014 \001(\005\022\021\n\tweekmoney\030\r \001(\005\022\024"
+      "\n\014exclusiveurl\030\016 \001(\t\022\016\n\006alipay\030\017 \001(\t\022\023\n\013"
+      "bankaccount\030\020 \001(\t\"\030\n\007intlist\022\r\n\005ilist\030\001 "
+      "\003(\005\"\033\n\nstringlist\022\r\n\005slist\030\001 \003(\t\"Z\n\tuser"
+      "award\022\n\n\002id\030\001 \001(\005\022\021\n\tawardtype\030\002 \001(\005\022\r\n\005"
+      "count\030\003 \001(\005\022\020\n\010timemark\030\004 \001(\005\022\r\n\005state\030\005"
+      " \001(\005\"X\n\022banktransferrecord\022\016\n\006userid\030\001 \001"
+      "(\005\022\020\n\010nickname\030\002 \001(\t\022\016\n\006amount\030\003 \001(\t\022\020\n\010"
+      "timemark\030\004 \001(\t"
   };
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
-      descriptor, 3155);
+      descriptor, 2894);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "st_human.proto", &protobuf_RegisterTypes);
 }
@@ -1323,19 +1291,11 @@ const int playerinfo::kBankjettonFieldNumber;
 const int playerinfo::kTitleFieldNumber;
 const int playerinfo::kBlacklistFieldNumber;
 const int playerinfo::kPropertyidFieldNumber;
-const int playerinfo::kAgencystatusFieldNumber;
+const int playerinfo::kTicketFieldNumber;
 const int playerinfo::kLocationXFieldNumber;
 const int playerinfo::kLocationYFieldNumber;
-const int playerinfo::kRegistration1FieldNumber;
-const int playerinfo::kRegistration2FieldNumber;
-const int playerinfo::kRegistration3FieldNumber;
-const int playerinfo::kSigninmonthFieldNumber;
-const int playerinfo::kBsigninFieldNumber;
-const int playerinfo::kTurntablenumFieldNumber;
-const int playerinfo::kTengamesFieldNumber;
-const int playerinfo::kTodayshareFieldNumber;
-const int playerinfo::kCaninviteFieldNumber;
-const int playerinfo::kTotalgamesFieldNumber;
+const int playerinfo::kBankPasswordFieldNumber;
+const int playerinfo::kBankJettonFieldNumber;
 #endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
 
 playerinfo::playerinfo()
@@ -1377,6 +1337,10 @@ playerinfo::playerinfo(const playerinfo& from)
   phonenum_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   if (from.has_phonenum()) {
     phonenum_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.phonenum_);
+  }
+  jetton_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  if (from.has_jetton()) {
+    jetton_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.jetton_);
   }
   channel_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   if (from.has_channel()) {
@@ -1434,6 +1398,10 @@ playerinfo::playerinfo(const playerinfo& from)
   if (from.has_location()) {
     location_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.location_);
   }
+  bankjetton_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  if (from.has_bankjetton()) {
+    bankjetton_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.bankjetton_);
+  }
   title_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   if (from.has_title()) {
     title_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.title_);
@@ -1446,21 +1414,17 @@ playerinfo::playerinfo(const playerinfo& from)
   if (from.has_location_y()) {
     location_y_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.location_y_);
   }
-  registration1_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-  if (from.has_registration1()) {
-    registration1_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.registration1_);
+  bank_password_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  if (from.has_bank_password()) {
+    bank_password_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.bank_password_);
   }
-  registration2_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-  if (from.has_registration2()) {
-    registration2_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.registration2_);
-  }
-  registration3_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-  if (from.has_registration3()) {
-    registration3_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.registration3_);
+  bank_jetton_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  if (from.has_bank_jetton()) {
+    bank_jetton_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.bank_jetton_);
   }
   ::memcpy(&userid_, &from.userid_,
-    static_cast<size_t>(reinterpret_cast<char*>(&totalgames_) -
-    reinterpret_cast<char*>(&userid_)) + sizeof(totalgames_));
+    static_cast<size_t>(reinterpret_cast<char*>(&ticket_) -
+    reinterpret_cast<char*>(&userid_)) + sizeof(ticket_));
   // @@protoc_insertion_point(copy_constructor:NFMsg.playerinfo)
 }
 
@@ -1472,6 +1436,7 @@ void playerinfo::SharedCtor() {
   regdate_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   email_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   phonenum_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  jetton_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   channel_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   province_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   city_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
@@ -1486,15 +1451,15 @@ void playerinfo::SharedCtor() {
   face_4_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   description_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   location_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  bankjetton_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   title_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   location_x_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   location_y_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-  registration1_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-  registration2_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-  registration3_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  bank_password_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  bank_jetton_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   ::memset(&userid_, 0, static_cast<size_t>(
-      reinterpret_cast<char*>(&totalgames_) -
-      reinterpret_cast<char*>(&userid_)) + sizeof(totalgames_));
+      reinterpret_cast<char*>(&ticket_) -
+      reinterpret_cast<char*>(&userid_)) + sizeof(ticket_));
 }
 
 playerinfo::~playerinfo() {
@@ -1510,6 +1475,7 @@ void playerinfo::SharedDtor() {
   regdate_.DestroyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   email_.DestroyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   phonenum_.DestroyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  jetton_.DestroyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   channel_.DestroyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   province_.DestroyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   city_.DestroyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
@@ -1524,12 +1490,12 @@ void playerinfo::SharedDtor() {
   face_4_.DestroyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   description_.DestroyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   location_.DestroyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  bankjetton_.DestroyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   title_.DestroyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   location_x_.DestroyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   location_y_.DestroyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-  registration1_.DestroyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-  registration2_.DestroyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-  registration3_.DestroyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  bank_password_.DestroyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  bank_jetton_.DestroyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
 
 void playerinfo::SetCachedSize(int size) const {
@@ -1576,94 +1542,92 @@ void playerinfo::Clear() {
       phonenum_.ClearNonDefaultToEmptyNoArena();
     }
     if (cached_has_bits & 0x00000080u) {
-      channel_.ClearNonDefaultToEmptyNoArena();
+      jetton_.ClearNonDefaultToEmptyNoArena();
     }
   }
   if (cached_has_bits & 65280u) {
     if (cached_has_bits & 0x00000100u) {
-      province_.ClearNonDefaultToEmptyNoArena();
+      channel_.ClearNonDefaultToEmptyNoArena();
     }
     if (cached_has_bits & 0x00000200u) {
-      city_.ClearNonDefaultToEmptyNoArena();
+      province_.ClearNonDefaultToEmptyNoArena();
     }
     if (cached_has_bits & 0x00000400u) {
-      bindnick_.ClearNonDefaultToEmptyNoArena();
+      city_.ClearNonDefaultToEmptyNoArena();
     }
     if (cached_has_bits & 0x00000800u) {
-      platformid_.ClearNonDefaultToEmptyNoArena();
+      bindnick_.ClearNonDefaultToEmptyNoArena();
     }
     if (cached_has_bits & 0x00001000u) {
-      imei_.ClearNonDefaultToEmptyNoArena();
+      platformid_.ClearNonDefaultToEmptyNoArena();
     }
     if (cached_has_bits & 0x00002000u) {
-      devname_.ClearNonDefaultToEmptyNoArena();
+      imei_.ClearNonDefaultToEmptyNoArena();
     }
     if (cached_has_bits & 0x00004000u) {
-      ip_.ClearNonDefaultToEmptyNoArena();
+      devname_.ClearNonDefaultToEmptyNoArena();
     }
     if (cached_has_bits & 0x00008000u) {
-      face_1_.ClearNonDefaultToEmptyNoArena();
+      ip_.ClearNonDefaultToEmptyNoArena();
     }
   }
   if (cached_has_bits & 16711680u) {
     if (cached_has_bits & 0x00010000u) {
-      face_2_.ClearNonDefaultToEmptyNoArena();
+      face_1_.ClearNonDefaultToEmptyNoArena();
     }
     if (cached_has_bits & 0x00020000u) {
-      face_3_.ClearNonDefaultToEmptyNoArena();
+      face_2_.ClearNonDefaultToEmptyNoArena();
     }
     if (cached_has_bits & 0x00040000u) {
-      face_4_.ClearNonDefaultToEmptyNoArena();
+      face_3_.ClearNonDefaultToEmptyNoArena();
     }
     if (cached_has_bits & 0x00080000u) {
-      description_.ClearNonDefaultToEmptyNoArena();
+      face_4_.ClearNonDefaultToEmptyNoArena();
     }
     if (cached_has_bits & 0x00100000u) {
-      location_.ClearNonDefaultToEmptyNoArena();
+      description_.ClearNonDefaultToEmptyNoArena();
     }
     if (cached_has_bits & 0x00200000u) {
-      title_.ClearNonDefaultToEmptyNoArena();
+      location_.ClearNonDefaultToEmptyNoArena();
     }
     if (cached_has_bits & 0x00400000u) {
-      location_x_.ClearNonDefaultToEmptyNoArena();
+      bankjetton_.ClearNonDefaultToEmptyNoArena();
     }
     if (cached_has_bits & 0x00800000u) {
-      location_y_.ClearNonDefaultToEmptyNoArena();
+      title_.ClearNonDefaultToEmptyNoArena();
     }
   }
-  if (cached_has_bits & 117440512u) {
+  if (cached_has_bits & 251658240u) {
     if (cached_has_bits & 0x01000000u) {
-      registration1_.ClearNonDefaultToEmptyNoArena();
+      location_x_.ClearNonDefaultToEmptyNoArena();
     }
     if (cached_has_bits & 0x02000000u) {
-      registration2_.ClearNonDefaultToEmptyNoArena();
+      location_y_.ClearNonDefaultToEmptyNoArena();
     }
     if (cached_has_bits & 0x04000000u) {
-      registration3_.ClearNonDefaultToEmptyNoArena();
+      bank_password_.ClearNonDefaultToEmptyNoArena();
+    }
+    if (cached_has_bits & 0x08000000u) {
+      bank_jetton_.ClearNonDefaultToEmptyNoArena();
     }
   }
-  if (cached_has_bits & 4160749568u) {
+  if (cached_has_bits & 4026531840u) {
     ::memset(&userid_, 0, static_cast<size_t>(
-        reinterpret_cast<char*>(&level_) -
-        reinterpret_cast<char*>(&userid_)) + sizeof(level_));
+        reinterpret_cast<char*>(&exp_) -
+        reinterpret_cast<char*>(&userid_)) + sizeof(exp_));
   }
   cached_has_bits = _has_bits_[1];
   if (cached_has_bits & 255u) {
-    ::memset(&viplevel_, 0, static_cast<size_t>(
+    ::memset(&level_, 0, static_cast<size_t>(
         reinterpret_cast<char*>(&mobiletype_) -
-        reinterpret_cast<char*>(&viplevel_)) + sizeof(mobiletype_));
+        reinterpret_cast<char*>(&level_)) + sizeof(mobiletype_));
   }
   if (cached_has_bits & 65280u) {
     ::memset(&lasttime_, 0, static_cast<size_t>(
-        reinterpret_cast<char*>(&blacklist_) -
-        reinterpret_cast<char*>(&lasttime_)) + sizeof(blacklist_));
+        reinterpret_cast<char*>(&propertyid_) -
+        reinterpret_cast<char*>(&lasttime_)) + sizeof(propertyid_));
   }
-  if (cached_has_bits & 16711680u) {
-    ::memset(&propertyid_, 0, static_cast<size_t>(
-        reinterpret_cast<char*>(&caninvite_) -
-        reinterpret_cast<char*>(&propertyid_)) + sizeof(caninvite_));
-  }
-  totalgames_ = 0;
+  ticket_ = 0;
   _has_bits_.Clear();
   _internal_metadata_.Clear();
 }
@@ -1874,14 +1838,16 @@ bool playerinfo::MergePartialFromCodedStream(
         break;
       }
 
-      // optional int64 jetton = 15;
+      // optional string jetton = 15;
       case 15: {
         if (static_cast< ::google::protobuf::uint8>(tag) ==
-            static_cast< ::google::protobuf::uint8>(120u /* 120 & 0xFF */)) {
-          set_has_jetton();
-          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::int64, ::google::protobuf::internal::WireFormatLite::TYPE_INT64>(
-                 input, &jetton_)));
+            static_cast< ::google::protobuf::uint8>(122u /* 122 & 0xFF */)) {
+          DO_(::google::protobuf::internal::WireFormatLite::ReadString(
+                input, this->mutable_jetton()));
+          ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
+            this->jetton().data(), static_cast<int>(this->jetton().length()),
+            ::google::protobuf::internal::WireFormat::PARSE,
+            "NFMsg.playerinfo.jetton");
         } else {
           goto handle_unusual;
         }
@@ -2280,14 +2246,16 @@ bool playerinfo::MergePartialFromCodedStream(
         break;
       }
 
-      // optional int64 bankjetton = 42;
+      // optional string bankjetton = 42;
       case 42: {
         if (static_cast< ::google::protobuf::uint8>(tag) ==
-            static_cast< ::google::protobuf::uint8>(80u /* 336 & 0xFF */)) {
-          set_has_bankjetton();
-          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::int64, ::google::protobuf::internal::WireFormatLite::TYPE_INT64>(
-                 input, &bankjetton_)));
+            static_cast< ::google::protobuf::uint8>(82u /* 338 & 0xFF */)) {
+          DO_(::google::protobuf::internal::WireFormatLite::ReadString(
+                input, this->mutable_bankjetton()));
+          ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
+            this->bankjetton().data(), static_cast<int>(this->bankjetton().length()),
+            ::google::protobuf::internal::WireFormat::PARSE,
+            "NFMsg.playerinfo.bankjetton");
         } else {
           goto handle_unusual;
         }
@@ -2338,14 +2306,14 @@ bool playerinfo::MergePartialFromCodedStream(
         break;
       }
 
-      // optional int32 agencystatus = 46;
+      // optional int32 ticket = 46;
       case 46: {
         if (static_cast< ::google::protobuf::uint8>(tag) ==
             static_cast< ::google::protobuf::uint8>(112u /* 368 & 0xFF */)) {
-          set_has_agencystatus();
+          set_has_ticket();
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
-                 input, &agencystatus_)));
+                 input, &ticket_)));
         } else {
           goto handle_unusual;
         }
@@ -2384,146 +2352,32 @@ bool playerinfo::MergePartialFromCodedStream(
         break;
       }
 
-      // optional string registration1 = 49;
+      // optional string bank_password = 49;
       case 49: {
         if (static_cast< ::google::protobuf::uint8>(tag) ==
             static_cast< ::google::protobuf::uint8>(138u /* 394 & 0xFF */)) {
           DO_(::google::protobuf::internal::WireFormatLite::ReadString(
-                input, this->mutable_registration1()));
+                input, this->mutable_bank_password()));
           ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
-            this->registration1().data(), static_cast<int>(this->registration1().length()),
+            this->bank_password().data(), static_cast<int>(this->bank_password().length()),
             ::google::protobuf::internal::WireFormat::PARSE,
-            "NFMsg.playerinfo.registration1");
+            "NFMsg.playerinfo.bank_password");
         } else {
           goto handle_unusual;
         }
         break;
       }
 
-      // optional string registration2 = 50;
+      // optional string bank_jetton = 50;
       case 50: {
         if (static_cast< ::google::protobuf::uint8>(tag) ==
             static_cast< ::google::protobuf::uint8>(146u /* 402 & 0xFF */)) {
           DO_(::google::protobuf::internal::WireFormatLite::ReadString(
-                input, this->mutable_registration2()));
+                input, this->mutable_bank_jetton()));
           ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
-            this->registration2().data(), static_cast<int>(this->registration2().length()),
+            this->bank_jetton().data(), static_cast<int>(this->bank_jetton().length()),
             ::google::protobuf::internal::WireFormat::PARSE,
-            "NFMsg.playerinfo.registration2");
-        } else {
-          goto handle_unusual;
-        }
-        break;
-      }
-
-      // optional string registration3 = 51;
-      case 51: {
-        if (static_cast< ::google::protobuf::uint8>(tag) ==
-            static_cast< ::google::protobuf::uint8>(154u /* 410 & 0xFF */)) {
-          DO_(::google::protobuf::internal::WireFormatLite::ReadString(
-                input, this->mutable_registration3()));
-          ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
-            this->registration3().data(), static_cast<int>(this->registration3().length()),
-            ::google::protobuf::internal::WireFormat::PARSE,
-            "NFMsg.playerinfo.registration3");
-        } else {
-          goto handle_unusual;
-        }
-        break;
-      }
-
-      // optional int32 signinmonth = 52;
-      case 52: {
-        if (static_cast< ::google::protobuf::uint8>(tag) ==
-            static_cast< ::google::protobuf::uint8>(160u /* 416 & 0xFF */)) {
-          set_has_signinmonth();
-          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
-                 input, &signinmonth_)));
-        } else {
-          goto handle_unusual;
-        }
-        break;
-      }
-
-      // optional int32 bsignin = 53;
-      case 53: {
-        if (static_cast< ::google::protobuf::uint8>(tag) ==
-            static_cast< ::google::protobuf::uint8>(168u /* 424 & 0xFF */)) {
-          set_has_bsignin();
-          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
-                 input, &bsignin_)));
-        } else {
-          goto handle_unusual;
-        }
-        break;
-      }
-
-      // optional int32 turntablenum = 54;
-      case 54: {
-        if (static_cast< ::google::protobuf::uint8>(tag) ==
-            static_cast< ::google::protobuf::uint8>(176u /* 432 & 0xFF */)) {
-          set_has_turntablenum();
-          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
-                 input, &turntablenum_)));
-        } else {
-          goto handle_unusual;
-        }
-        break;
-      }
-
-      // optional int32 tengames = 55;
-      case 55: {
-        if (static_cast< ::google::protobuf::uint8>(tag) ==
-            static_cast< ::google::protobuf::uint8>(184u /* 440 & 0xFF */)) {
-          set_has_tengames();
-          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
-                 input, &tengames_)));
-        } else {
-          goto handle_unusual;
-        }
-        break;
-      }
-
-      // optional int32 todayshare = 56;
-      case 56: {
-        if (static_cast< ::google::protobuf::uint8>(tag) ==
-            static_cast< ::google::protobuf::uint8>(192u /* 448 & 0xFF */)) {
-          set_has_todayshare();
-          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
-                 input, &todayshare_)));
-        } else {
-          goto handle_unusual;
-        }
-        break;
-      }
-
-      // optional int32 caninvite = 57;
-      case 57: {
-        if (static_cast< ::google::protobuf::uint8>(tag) ==
-            static_cast< ::google::protobuf::uint8>(200u /* 456 & 0xFF */)) {
-          set_has_caninvite();
-          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
-                 input, &caninvite_)));
-        } else {
-          goto handle_unusual;
-        }
-        break;
-      }
-
-      // optional int32 totalgames = 58;
-      case 58: {
-        if (static_cast< ::google::protobuf::uint8>(tag) ==
-            static_cast< ::google::protobuf::uint8>(208u /* 464 & 0xFF */)) {
-          set_has_totalgames();
-          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
-                 input, &totalgames_)));
+            "NFMsg.playerinfo.bank_jetton");
         } else {
           goto handle_unusual;
         }
@@ -2558,7 +2412,7 @@ void playerinfo::SerializeWithCachedSizes(
 
   cached_has_bits = _has_bits_[0];
   // optional int32 userid = 1;
-  if (cached_has_bits & 0x08000000u) {
+  if (cached_has_bits & 0x10000000u) {
     ::google::protobuf::internal::WireFormatLite::WriteInt32(1, this->userid(), output);
   }
 
@@ -2613,12 +2467,12 @@ void playerinfo::SerializeWithCachedSizes(
   }
 
   // optional int32 sex = 8;
-  if (cached_has_bits & 0x10000000u) {
+  if (cached_has_bits & 0x20000000u) {
     ::google::protobuf::internal::WireFormatLite::WriteInt32(8, this->sex(), output);
   }
 
   // optional int32 age = 9;
-  if (cached_has_bits & 0x20000000u) {
+  if (cached_has_bits & 0x40000000u) {
     ::google::protobuf::internal::WireFormatLite::WriteInt32(9, this->age(), output);
   }
 
@@ -2643,26 +2497,33 @@ void playerinfo::SerializeWithCachedSizes(
   }
 
   // optional int32 exp = 12;
-  if (cached_has_bits & 0x40000000u) {
+  if (cached_has_bits & 0x80000000u) {
     ::google::protobuf::internal::WireFormatLite::WriteInt32(12, this->exp(), output);
   }
 
+  cached_has_bits = _has_bits_[1];
   // optional int32 level = 13;
-  if (cached_has_bits & 0x80000000u) {
+  if (cached_has_bits & 0x00000001u) {
     ::google::protobuf::internal::WireFormatLite::WriteInt32(13, this->level(), output);
   }
 
-  cached_has_bits = _has_bits_[1];
   // optional int32 viplevel = 14;
-  if (cached_has_bits & 0x00000001u) {
+  if (cached_has_bits & 0x00000002u) {
     ::google::protobuf::internal::WireFormatLite::WriteInt32(14, this->viplevel(), output);
   }
 
-  // optional int64 jetton = 15;
-  if (cached_has_bits & 0x00000002u) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt64(15, this->jetton(), output);
+  cached_has_bits = _has_bits_[0];
+  // optional string jetton = 15;
+  if (cached_has_bits & 0x00000080u) {
+    ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
+      this->jetton().data(), static_cast<int>(this->jetton().length()),
+      ::google::protobuf::internal::WireFormat::SERIALIZE,
+      "NFMsg.playerinfo.jetton");
+    ::google::protobuf::internal::WireFormatLite::WriteStringMaybeAliased(
+      15, this->jetton(), output);
   }
 
+  cached_has_bits = _has_bits_[1];
   // optional int32 gold = 16;
   if (cached_has_bits & 0x00000004u) {
     ::google::protobuf::internal::WireFormatLite::WriteInt32(16, this->gold(), output);
@@ -2675,7 +2536,7 @@ void playerinfo::SerializeWithCachedSizes(
 
   cached_has_bits = _has_bits_[0];
   // optional string channel = 18;
-  if (cached_has_bits & 0x00000080u) {
+  if (cached_has_bits & 0x00000100u) {
     ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
       this->channel().data(), static_cast<int>(this->channel().length()),
       ::google::protobuf::internal::WireFormat::SERIALIZE,
@@ -2685,7 +2546,7 @@ void playerinfo::SerializeWithCachedSizes(
   }
 
   // optional string province = 19;
-  if (cached_has_bits & 0x00000100u) {
+  if (cached_has_bits & 0x00000200u) {
     ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
       this->province().data(), static_cast<int>(this->province().length()),
       ::google::protobuf::internal::WireFormat::SERIALIZE,
@@ -2695,7 +2556,7 @@ void playerinfo::SerializeWithCachedSizes(
   }
 
   // optional string city = 20;
-  if (cached_has_bits & 0x00000200u) {
+  if (cached_has_bits & 0x00000400u) {
     ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
       this->city().data(), static_cast<int>(this->city().length()),
       ::google::protobuf::internal::WireFormat::SERIALIZE,
@@ -2722,7 +2583,7 @@ void playerinfo::SerializeWithCachedSizes(
 
   cached_has_bits = _has_bits_[0];
   // optional string bindnick = 24;
-  if (cached_has_bits & 0x00000400u) {
+  if (cached_has_bits & 0x00000800u) {
     ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
       this->bindnick().data(), static_cast<int>(this->bindnick().length()),
       ::google::protobuf::internal::WireFormat::SERIALIZE,
@@ -2732,7 +2593,7 @@ void playerinfo::SerializeWithCachedSizes(
   }
 
   // optional string platformid = 25;
-  if (cached_has_bits & 0x00000800u) {
+  if (cached_has_bits & 0x00001000u) {
     ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
       this->platformid().data(), static_cast<int>(this->platformid().length()),
       ::google::protobuf::internal::WireFormat::SERIALIZE,
@@ -2742,7 +2603,7 @@ void playerinfo::SerializeWithCachedSizes(
   }
 
   // optional string imei = 26;
-  if (cached_has_bits & 0x00001000u) {
+  if (cached_has_bits & 0x00002000u) {
     ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
       this->imei().data(), static_cast<int>(this->imei().length()),
       ::google::protobuf::internal::WireFormat::SERIALIZE,
@@ -2752,7 +2613,7 @@ void playerinfo::SerializeWithCachedSizes(
   }
 
   // optional string devname = 27;
-  if (cached_has_bits & 0x00002000u) {
+  if (cached_has_bits & 0x00004000u) {
     ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
       this->devname().data(), static_cast<int>(this->devname().length()),
       ::google::protobuf::internal::WireFormat::SERIALIZE,
@@ -2762,7 +2623,7 @@ void playerinfo::SerializeWithCachedSizes(
   }
 
   // optional string ip = 28;
-  if (cached_has_bits & 0x00004000u) {
+  if (cached_has_bits & 0x00008000u) {
     ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
       this->ip().data(), static_cast<int>(this->ip().length()),
       ::google::protobuf::internal::WireFormat::SERIALIZE,
@@ -2799,7 +2660,7 @@ void playerinfo::SerializeWithCachedSizes(
 
   cached_has_bits = _has_bits_[0];
   // optional string face_1 = 34;
-  if (cached_has_bits & 0x00008000u) {
+  if (cached_has_bits & 0x00010000u) {
     ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
       this->face_1().data(), static_cast<int>(this->face_1().length()),
       ::google::protobuf::internal::WireFormat::SERIALIZE,
@@ -2809,7 +2670,7 @@ void playerinfo::SerializeWithCachedSizes(
   }
 
   // optional string face_2 = 35;
-  if (cached_has_bits & 0x00010000u) {
+  if (cached_has_bits & 0x00020000u) {
     ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
       this->face_2().data(), static_cast<int>(this->face_2().length()),
       ::google::protobuf::internal::WireFormat::SERIALIZE,
@@ -2819,7 +2680,7 @@ void playerinfo::SerializeWithCachedSizes(
   }
 
   // optional string face_3 = 36;
-  if (cached_has_bits & 0x00020000u) {
+  if (cached_has_bits & 0x00040000u) {
     ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
       this->face_3().data(), static_cast<int>(this->face_3().length()),
       ::google::protobuf::internal::WireFormat::SERIALIZE,
@@ -2829,7 +2690,7 @@ void playerinfo::SerializeWithCachedSizes(
   }
 
   // optional string face_4 = 37;
-  if (cached_has_bits & 0x00040000u) {
+  if (cached_has_bits & 0x00080000u) {
     ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
       this->face_4().data(), static_cast<int>(this->face_4().length()),
       ::google::protobuf::internal::WireFormat::SERIALIZE,
@@ -2851,7 +2712,7 @@ void playerinfo::SerializeWithCachedSizes(
 
   cached_has_bits = _has_bits_[0];
   // optional string description = 40;
-  if (cached_has_bits & 0x00080000u) {
+  if (cached_has_bits & 0x00100000u) {
     ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
       this->description().data(), static_cast<int>(this->description().length()),
       ::google::protobuf::internal::WireFormat::SERIALIZE,
@@ -2861,7 +2722,7 @@ void playerinfo::SerializeWithCachedSizes(
   }
 
   // optional string location = 41;
-  if (cached_has_bits & 0x00100000u) {
+  if (cached_has_bits & 0x00200000u) {
     ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
       this->location().data(), static_cast<int>(this->location().length()),
       ::google::protobuf::internal::WireFormat::SERIALIZE,
@@ -2870,15 +2731,18 @@ void playerinfo::SerializeWithCachedSizes(
       41, this->location(), output);
   }
 
-  cached_has_bits = _has_bits_[1];
-  // optional int64 bankjetton = 42;
-  if (cached_has_bits & 0x00004000u) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt64(42, this->bankjetton(), output);
+  // optional string bankjetton = 42;
+  if (cached_has_bits & 0x00400000u) {
+    ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
+      this->bankjetton().data(), static_cast<int>(this->bankjetton().length()),
+      ::google::protobuf::internal::WireFormat::SERIALIZE,
+      "NFMsg.playerinfo.bankjetton");
+    ::google::protobuf::internal::WireFormatLite::WriteStringMaybeAliased(
+      42, this->bankjetton(), output);
   }
 
-  cached_has_bits = _has_bits_[0];
   // optional string title = 43;
-  if (cached_has_bits & 0x00200000u) {
+  if (cached_has_bits & 0x00800000u) {
     ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
       this->title().data(), static_cast<int>(this->title().length()),
       ::google::protobuf::internal::WireFormat::SERIALIZE,
@@ -2889,23 +2753,23 @@ void playerinfo::SerializeWithCachedSizes(
 
   cached_has_bits = _has_bits_[1];
   // optional int32 blacklist = 44;
-  if (cached_has_bits & 0x00008000u) {
+  if (cached_has_bits & 0x00004000u) {
     ::google::protobuf::internal::WireFormatLite::WriteInt32(44, this->blacklist(), output);
   }
 
   // optional int32 propertyid = 45;
-  if (cached_has_bits & 0x00010000u) {
+  if (cached_has_bits & 0x00008000u) {
     ::google::protobuf::internal::WireFormatLite::WriteInt32(45, this->propertyid(), output);
   }
 
-  // optional int32 agencystatus = 46;
-  if (cached_has_bits & 0x00020000u) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt32(46, this->agencystatus(), output);
+  // optional int32 ticket = 46;
+  if (cached_has_bits & 0x00010000u) {
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(46, this->ticket(), output);
   }
 
   cached_has_bits = _has_bits_[0];
   // optional string location_x = 47;
-  if (cached_has_bits & 0x00400000u) {
+  if (cached_has_bits & 0x01000000u) {
     ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
       this->location_x().data(), static_cast<int>(this->location_x().length()),
       ::google::protobuf::internal::WireFormat::SERIALIZE,
@@ -2915,7 +2779,7 @@ void playerinfo::SerializeWithCachedSizes(
   }
 
   // optional string location_y = 48;
-  if (cached_has_bits & 0x00800000u) {
+  if (cached_has_bits & 0x02000000u) {
     ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
       this->location_y().data(), static_cast<int>(this->location_y().length()),
       ::google::protobuf::internal::WireFormat::SERIALIZE,
@@ -2924,70 +2788,24 @@ void playerinfo::SerializeWithCachedSizes(
       48, this->location_y(), output);
   }
 
-  // optional string registration1 = 49;
-  if (cached_has_bits & 0x01000000u) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
-      this->registration1().data(), static_cast<int>(this->registration1().length()),
-      ::google::protobuf::internal::WireFormat::SERIALIZE,
-      "NFMsg.playerinfo.registration1");
-    ::google::protobuf::internal::WireFormatLite::WriteStringMaybeAliased(
-      49, this->registration1(), output);
-  }
-
-  // optional string registration2 = 50;
-  if (cached_has_bits & 0x02000000u) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
-      this->registration2().data(), static_cast<int>(this->registration2().length()),
-      ::google::protobuf::internal::WireFormat::SERIALIZE,
-      "NFMsg.playerinfo.registration2");
-    ::google::protobuf::internal::WireFormatLite::WriteStringMaybeAliased(
-      50, this->registration2(), output);
-  }
-
-  // optional string registration3 = 51;
+  // optional string bank_password = 49;
   if (cached_has_bits & 0x04000000u) {
     ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
-      this->registration3().data(), static_cast<int>(this->registration3().length()),
+      this->bank_password().data(), static_cast<int>(this->bank_password().length()),
       ::google::protobuf::internal::WireFormat::SERIALIZE,
-      "NFMsg.playerinfo.registration3");
+      "NFMsg.playerinfo.bank_password");
     ::google::protobuf::internal::WireFormatLite::WriteStringMaybeAliased(
-      51, this->registration3(), output);
+      49, this->bank_password(), output);
   }
 
-  cached_has_bits = _has_bits_[1];
-  // optional int32 signinmonth = 52;
-  if (cached_has_bits & 0x00040000u) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt32(52, this->signinmonth(), output);
-  }
-
-  // optional int32 bsignin = 53;
-  if (cached_has_bits & 0x00080000u) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt32(53, this->bsignin(), output);
-  }
-
-  // optional int32 turntablenum = 54;
-  if (cached_has_bits & 0x00100000u) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt32(54, this->turntablenum(), output);
-  }
-
-  // optional int32 tengames = 55;
-  if (cached_has_bits & 0x00200000u) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt32(55, this->tengames(), output);
-  }
-
-  // optional int32 todayshare = 56;
-  if (cached_has_bits & 0x00400000u) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt32(56, this->todayshare(), output);
-  }
-
-  // optional int32 caninvite = 57;
-  if (cached_has_bits & 0x00800000u) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt32(57, this->caninvite(), output);
-  }
-
-  // optional int32 totalgames = 58;
-  if (cached_has_bits & 0x01000000u) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt32(58, this->totalgames(), output);
+  // optional string bank_jetton = 50;
+  if (cached_has_bits & 0x08000000u) {
+    ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
+      this->bank_jetton().data(), static_cast<int>(this->bank_jetton().length()),
+      ::google::protobuf::internal::WireFormat::SERIALIZE,
+      "NFMsg.playerinfo.bank_jetton");
+    ::google::protobuf::internal::WireFormatLite::WriteStringMaybeAliased(
+      50, this->bank_jetton(), output);
   }
 
   if (_internal_metadata_.have_unknown_fields()) {
@@ -3006,7 +2824,7 @@ void playerinfo::SerializeWithCachedSizes(
 
   cached_has_bits = _has_bits_[0];
   // optional int32 userid = 1;
-  if (cached_has_bits & 0x08000000u) {
+  if (cached_has_bits & 0x10000000u) {
     target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(1, this->userid(), target);
   }
 
@@ -3066,12 +2884,12 @@ void playerinfo::SerializeWithCachedSizes(
   }
 
   // optional int32 sex = 8;
-  if (cached_has_bits & 0x10000000u) {
+  if (cached_has_bits & 0x20000000u) {
     target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(8, this->sex(), target);
   }
 
   // optional int32 age = 9;
-  if (cached_has_bits & 0x20000000u) {
+  if (cached_has_bits & 0x40000000u) {
     target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(9, this->age(), target);
   }
 
@@ -3098,26 +2916,34 @@ void playerinfo::SerializeWithCachedSizes(
   }
 
   // optional int32 exp = 12;
-  if (cached_has_bits & 0x40000000u) {
+  if (cached_has_bits & 0x80000000u) {
     target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(12, this->exp(), target);
   }
 
+  cached_has_bits = _has_bits_[1];
   // optional int32 level = 13;
-  if (cached_has_bits & 0x80000000u) {
+  if (cached_has_bits & 0x00000001u) {
     target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(13, this->level(), target);
   }
 
-  cached_has_bits = _has_bits_[1];
   // optional int32 viplevel = 14;
-  if (cached_has_bits & 0x00000001u) {
+  if (cached_has_bits & 0x00000002u) {
     target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(14, this->viplevel(), target);
   }
 
-  // optional int64 jetton = 15;
-  if (cached_has_bits & 0x00000002u) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt64ToArray(15, this->jetton(), target);
+  cached_has_bits = _has_bits_[0];
+  // optional string jetton = 15;
+  if (cached_has_bits & 0x00000080u) {
+    ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
+      this->jetton().data(), static_cast<int>(this->jetton().length()),
+      ::google::protobuf::internal::WireFormat::SERIALIZE,
+      "NFMsg.playerinfo.jetton");
+    target =
+      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
+        15, this->jetton(), target);
   }
 
+  cached_has_bits = _has_bits_[1];
   // optional int32 gold = 16;
   if (cached_has_bits & 0x00000004u) {
     target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(16, this->gold(), target);
@@ -3130,7 +2956,7 @@ void playerinfo::SerializeWithCachedSizes(
 
   cached_has_bits = _has_bits_[0];
   // optional string channel = 18;
-  if (cached_has_bits & 0x00000080u) {
+  if (cached_has_bits & 0x00000100u) {
     ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
       this->channel().data(), static_cast<int>(this->channel().length()),
       ::google::protobuf::internal::WireFormat::SERIALIZE,
@@ -3141,7 +2967,7 @@ void playerinfo::SerializeWithCachedSizes(
   }
 
   // optional string province = 19;
-  if (cached_has_bits & 0x00000100u) {
+  if (cached_has_bits & 0x00000200u) {
     ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
       this->province().data(), static_cast<int>(this->province().length()),
       ::google::protobuf::internal::WireFormat::SERIALIZE,
@@ -3152,7 +2978,7 @@ void playerinfo::SerializeWithCachedSizes(
   }
 
   // optional string city = 20;
-  if (cached_has_bits & 0x00000200u) {
+  if (cached_has_bits & 0x00000400u) {
     ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
       this->city().data(), static_cast<int>(this->city().length()),
       ::google::protobuf::internal::WireFormat::SERIALIZE,
@@ -3180,7 +3006,7 @@ void playerinfo::SerializeWithCachedSizes(
 
   cached_has_bits = _has_bits_[0];
   // optional string bindnick = 24;
-  if (cached_has_bits & 0x00000400u) {
+  if (cached_has_bits & 0x00000800u) {
     ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
       this->bindnick().data(), static_cast<int>(this->bindnick().length()),
       ::google::protobuf::internal::WireFormat::SERIALIZE,
@@ -3191,7 +3017,7 @@ void playerinfo::SerializeWithCachedSizes(
   }
 
   // optional string platformid = 25;
-  if (cached_has_bits & 0x00000800u) {
+  if (cached_has_bits & 0x00001000u) {
     ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
       this->platformid().data(), static_cast<int>(this->platformid().length()),
       ::google::protobuf::internal::WireFormat::SERIALIZE,
@@ -3202,7 +3028,7 @@ void playerinfo::SerializeWithCachedSizes(
   }
 
   // optional string imei = 26;
-  if (cached_has_bits & 0x00001000u) {
+  if (cached_has_bits & 0x00002000u) {
     ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
       this->imei().data(), static_cast<int>(this->imei().length()),
       ::google::protobuf::internal::WireFormat::SERIALIZE,
@@ -3213,7 +3039,7 @@ void playerinfo::SerializeWithCachedSizes(
   }
 
   // optional string devname = 27;
-  if (cached_has_bits & 0x00002000u) {
+  if (cached_has_bits & 0x00004000u) {
     ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
       this->devname().data(), static_cast<int>(this->devname().length()),
       ::google::protobuf::internal::WireFormat::SERIALIZE,
@@ -3224,7 +3050,7 @@ void playerinfo::SerializeWithCachedSizes(
   }
 
   // optional string ip = 28;
-  if (cached_has_bits & 0x00004000u) {
+  if (cached_has_bits & 0x00008000u) {
     ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
       this->ip().data(), static_cast<int>(this->ip().length()),
       ::google::protobuf::internal::WireFormat::SERIALIZE,
@@ -3262,7 +3088,7 @@ void playerinfo::SerializeWithCachedSizes(
 
   cached_has_bits = _has_bits_[0];
   // optional string face_1 = 34;
-  if (cached_has_bits & 0x00008000u) {
+  if (cached_has_bits & 0x00010000u) {
     ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
       this->face_1().data(), static_cast<int>(this->face_1().length()),
       ::google::protobuf::internal::WireFormat::SERIALIZE,
@@ -3273,7 +3099,7 @@ void playerinfo::SerializeWithCachedSizes(
   }
 
   // optional string face_2 = 35;
-  if (cached_has_bits & 0x00010000u) {
+  if (cached_has_bits & 0x00020000u) {
     ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
       this->face_2().data(), static_cast<int>(this->face_2().length()),
       ::google::protobuf::internal::WireFormat::SERIALIZE,
@@ -3284,7 +3110,7 @@ void playerinfo::SerializeWithCachedSizes(
   }
 
   // optional string face_3 = 36;
-  if (cached_has_bits & 0x00020000u) {
+  if (cached_has_bits & 0x00040000u) {
     ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
       this->face_3().data(), static_cast<int>(this->face_3().length()),
       ::google::protobuf::internal::WireFormat::SERIALIZE,
@@ -3295,7 +3121,7 @@ void playerinfo::SerializeWithCachedSizes(
   }
 
   // optional string face_4 = 37;
-  if (cached_has_bits & 0x00040000u) {
+  if (cached_has_bits & 0x00080000u) {
     ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
       this->face_4().data(), static_cast<int>(this->face_4().length()),
       ::google::protobuf::internal::WireFormat::SERIALIZE,
@@ -3318,7 +3144,7 @@ void playerinfo::SerializeWithCachedSizes(
 
   cached_has_bits = _has_bits_[0];
   // optional string description = 40;
-  if (cached_has_bits & 0x00080000u) {
+  if (cached_has_bits & 0x00100000u) {
     ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
       this->description().data(), static_cast<int>(this->description().length()),
       ::google::protobuf::internal::WireFormat::SERIALIZE,
@@ -3329,7 +3155,7 @@ void playerinfo::SerializeWithCachedSizes(
   }
 
   // optional string location = 41;
-  if (cached_has_bits & 0x00100000u) {
+  if (cached_has_bits & 0x00200000u) {
     ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
       this->location().data(), static_cast<int>(this->location().length()),
       ::google::protobuf::internal::WireFormat::SERIALIZE,
@@ -3339,15 +3165,19 @@ void playerinfo::SerializeWithCachedSizes(
         41, this->location(), target);
   }
 
-  cached_has_bits = _has_bits_[1];
-  // optional int64 bankjetton = 42;
-  if (cached_has_bits & 0x00004000u) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt64ToArray(42, this->bankjetton(), target);
+  // optional string bankjetton = 42;
+  if (cached_has_bits & 0x00400000u) {
+    ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
+      this->bankjetton().data(), static_cast<int>(this->bankjetton().length()),
+      ::google::protobuf::internal::WireFormat::SERIALIZE,
+      "NFMsg.playerinfo.bankjetton");
+    target =
+      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
+        42, this->bankjetton(), target);
   }
 
-  cached_has_bits = _has_bits_[0];
   // optional string title = 43;
-  if (cached_has_bits & 0x00200000u) {
+  if (cached_has_bits & 0x00800000u) {
     ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
       this->title().data(), static_cast<int>(this->title().length()),
       ::google::protobuf::internal::WireFormat::SERIALIZE,
@@ -3359,23 +3189,23 @@ void playerinfo::SerializeWithCachedSizes(
 
   cached_has_bits = _has_bits_[1];
   // optional int32 blacklist = 44;
-  if (cached_has_bits & 0x00008000u) {
+  if (cached_has_bits & 0x00004000u) {
     target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(44, this->blacklist(), target);
   }
 
   // optional int32 propertyid = 45;
-  if (cached_has_bits & 0x00010000u) {
+  if (cached_has_bits & 0x00008000u) {
     target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(45, this->propertyid(), target);
   }
 
-  // optional int32 agencystatus = 46;
-  if (cached_has_bits & 0x00020000u) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(46, this->agencystatus(), target);
+  // optional int32 ticket = 46;
+  if (cached_has_bits & 0x00010000u) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(46, this->ticket(), target);
   }
 
   cached_has_bits = _has_bits_[0];
   // optional string location_x = 47;
-  if (cached_has_bits & 0x00400000u) {
+  if (cached_has_bits & 0x01000000u) {
     ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
       this->location_x().data(), static_cast<int>(this->location_x().length()),
       ::google::protobuf::internal::WireFormat::SERIALIZE,
@@ -3386,7 +3216,7 @@ void playerinfo::SerializeWithCachedSizes(
   }
 
   // optional string location_y = 48;
-  if (cached_has_bits & 0x00800000u) {
+  if (cached_has_bits & 0x02000000u) {
     ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
       this->location_y().data(), static_cast<int>(this->location_y().length()),
       ::google::protobuf::internal::WireFormat::SERIALIZE,
@@ -3396,73 +3226,26 @@ void playerinfo::SerializeWithCachedSizes(
         48, this->location_y(), target);
   }
 
-  // optional string registration1 = 49;
-  if (cached_has_bits & 0x01000000u) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
-      this->registration1().data(), static_cast<int>(this->registration1().length()),
-      ::google::protobuf::internal::WireFormat::SERIALIZE,
-      "NFMsg.playerinfo.registration1");
-    target =
-      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
-        49, this->registration1(), target);
-  }
-
-  // optional string registration2 = 50;
-  if (cached_has_bits & 0x02000000u) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
-      this->registration2().data(), static_cast<int>(this->registration2().length()),
-      ::google::protobuf::internal::WireFormat::SERIALIZE,
-      "NFMsg.playerinfo.registration2");
-    target =
-      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
-        50, this->registration2(), target);
-  }
-
-  // optional string registration3 = 51;
+  // optional string bank_password = 49;
   if (cached_has_bits & 0x04000000u) {
     ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
-      this->registration3().data(), static_cast<int>(this->registration3().length()),
+      this->bank_password().data(), static_cast<int>(this->bank_password().length()),
       ::google::protobuf::internal::WireFormat::SERIALIZE,
-      "NFMsg.playerinfo.registration3");
+      "NFMsg.playerinfo.bank_password");
     target =
       ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
-        51, this->registration3(), target);
+        49, this->bank_password(), target);
   }
 
-  cached_has_bits = _has_bits_[1];
-  // optional int32 signinmonth = 52;
-  if (cached_has_bits & 0x00040000u) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(52, this->signinmonth(), target);
-  }
-
-  // optional int32 bsignin = 53;
-  if (cached_has_bits & 0x00080000u) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(53, this->bsignin(), target);
-  }
-
-  // optional int32 turntablenum = 54;
-  if (cached_has_bits & 0x00100000u) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(54, this->turntablenum(), target);
-  }
-
-  // optional int32 tengames = 55;
-  if (cached_has_bits & 0x00200000u) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(55, this->tengames(), target);
-  }
-
-  // optional int32 todayshare = 56;
-  if (cached_has_bits & 0x00400000u) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(56, this->todayshare(), target);
-  }
-
-  // optional int32 caninvite = 57;
-  if (cached_has_bits & 0x00800000u) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(57, this->caninvite(), target);
-  }
-
-  // optional int32 totalgames = 58;
-  if (cached_has_bits & 0x01000000u) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(58, this->totalgames(), target);
+  // optional string bank_jetton = 50;
+  if (cached_has_bits & 0x08000000u) {
+    ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
+      this->bank_jetton().data(), static_cast<int>(this->bank_jetton().length()),
+      ::google::protobuf::internal::WireFormat::SERIALIZE,
+      "NFMsg.playerinfo.bank_jetton");
+    target =
+      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
+        50, this->bank_jetton(), target);
   }
 
   if (_internal_metadata_.have_unknown_fields()) {
@@ -3532,6 +3315,15 @@ size_t playerinfo::ByteSizeLong() const {
           this->phonenum());
     }
 
+    // optional string jetton = 15;
+    if (has_jetton()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::StringSize(
+          this->jetton());
+    }
+
+  }
+  if (_has_bits_[8 / 32] & 65280u) {
     // optional string channel = 18;
     if (has_channel()) {
       total_size += 2 +
@@ -3539,8 +3331,6 @@ size_t playerinfo::ByteSizeLong() const {
           this->channel());
     }
 
-  }
-  if (_has_bits_[8 / 32] & 65280u) {
     // optional string province = 19;
     if (has_province()) {
       total_size += 2 +
@@ -3590,6 +3380,8 @@ size_t playerinfo::ByteSizeLong() const {
           this->ip());
     }
 
+  }
+  if (_has_bits_[16 / 32] & 16711680u) {
     // optional string face_1 = 34;
     if (has_face_1()) {
       total_size += 2 +
@@ -3597,8 +3389,6 @@ size_t playerinfo::ByteSizeLong() const {
           this->face_1());
     }
 
-  }
-  if (_has_bits_[16 / 32] & 16711680u) {
     // optional string face_2 = 35;
     if (has_face_2()) {
       total_size += 2 +
@@ -3634,6 +3424,13 @@ size_t playerinfo::ByteSizeLong() const {
           this->location());
     }
 
+    // optional string bankjetton = 42;
+    if (has_bankjetton()) {
+      total_size += 2 +
+        ::google::protobuf::internal::WireFormatLite::StringSize(
+          this->bankjetton());
+    }
+
     // optional string title = 43;
     if (has_title()) {
       total_size += 2 +
@@ -3641,6 +3438,8 @@ size_t playerinfo::ByteSizeLong() const {
           this->title());
     }
 
+  }
+  if (_has_bits_[24 / 32] & 4278190080u) {
     // optional string location_x = 47;
     if (has_location_x()) {
       total_size += 2 +
@@ -3655,27 +3454,18 @@ size_t playerinfo::ByteSizeLong() const {
           this->location_y());
     }
 
-  }
-  if (_has_bits_[24 / 32] & 4278190080u) {
-    // optional string registration1 = 49;
-    if (has_registration1()) {
+    // optional string bank_password = 49;
+    if (has_bank_password()) {
       total_size += 2 +
         ::google::protobuf::internal::WireFormatLite::StringSize(
-          this->registration1());
+          this->bank_password());
     }
 
-    // optional string registration2 = 50;
-    if (has_registration2()) {
+    // optional string bank_jetton = 50;
+    if (has_bank_jetton()) {
       total_size += 2 +
         ::google::protobuf::internal::WireFormatLite::StringSize(
-          this->registration2());
-    }
-
-    // optional string registration3 = 51;
-    if (has_registration3()) {
-      total_size += 2 +
-        ::google::protobuf::internal::WireFormatLite::StringSize(
-          this->registration3());
+          this->bank_jetton());
     }
 
     // optional int32 userid = 1;
@@ -3706,6 +3496,8 @@ size_t playerinfo::ByteSizeLong() const {
           this->exp());
     }
 
+  }
+  if (_has_bits_[32 / 32] & 255u) {
     // optional int32 level = 13;
     if (has_level()) {
       total_size += 1 +
@@ -3713,20 +3505,11 @@ size_t playerinfo::ByteSizeLong() const {
           this->level());
     }
 
-  }
-  if (_has_bits_[32 / 32] & 255u) {
     // optional int32 viplevel = 14;
     if (has_viplevel()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::Int32Size(
           this->viplevel());
-    }
-
-    // optional int64 jetton = 15;
-    if (has_jetton()) {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::Int64Size(
-          this->jetton());
     }
 
     // optional int32 gold = 16;
@@ -3815,13 +3598,6 @@ size_t playerinfo::ByteSizeLong() const {
           this->playtype());
     }
 
-    // optional int64 bankjetton = 42;
-    if (has_bankjetton()) {
-      total_size += 2 +
-        ::google::protobuf::internal::WireFormatLite::Int64Size(
-          this->bankjetton());
-    }
-
     // optional int32 blacklist = 44;
     if (has_blacklist()) {
       total_size += 2 +
@@ -3829,8 +3605,6 @@ size_t playerinfo::ByteSizeLong() const {
           this->blacklist());
     }
 
-  }
-  if (_has_bits_[48 / 32] & 16711680u) {
     // optional int32 propertyid = 45;
     if (has_propertyid()) {
       total_size += 2 +
@@ -3838,61 +3612,12 @@ size_t playerinfo::ByteSizeLong() const {
           this->propertyid());
     }
 
-    // optional int32 agencystatus = 46;
-    if (has_agencystatus()) {
-      total_size += 2 +
-        ::google::protobuf::internal::WireFormatLite::Int32Size(
-          this->agencystatus());
-    }
-
-    // optional int32 signinmonth = 52;
-    if (has_signinmonth()) {
-      total_size += 2 +
-        ::google::protobuf::internal::WireFormatLite::Int32Size(
-          this->signinmonth());
-    }
-
-    // optional int32 bsignin = 53;
-    if (has_bsignin()) {
-      total_size += 2 +
-        ::google::protobuf::internal::WireFormatLite::Int32Size(
-          this->bsignin());
-    }
-
-    // optional int32 turntablenum = 54;
-    if (has_turntablenum()) {
-      total_size += 2 +
-        ::google::protobuf::internal::WireFormatLite::Int32Size(
-          this->turntablenum());
-    }
-
-    // optional int32 tengames = 55;
-    if (has_tengames()) {
-      total_size += 2 +
-        ::google::protobuf::internal::WireFormatLite::Int32Size(
-          this->tengames());
-    }
-
-    // optional int32 todayshare = 56;
-    if (has_todayshare()) {
-      total_size += 2 +
-        ::google::protobuf::internal::WireFormatLite::Int32Size(
-          this->todayshare());
-    }
-
-    // optional int32 caninvite = 57;
-    if (has_caninvite()) {
-      total_size += 2 +
-        ::google::protobuf::internal::WireFormatLite::Int32Size(
-          this->caninvite());
-    }
-
   }
-  // optional int32 totalgames = 58;
-  if (has_totalgames()) {
+  // optional int32 ticket = 46;
+  if (has_ticket()) {
     total_size += 2 +
       ::google::protobuf::internal::WireFormatLite::Int32Size(
-        this->totalgames());
+        this->ticket());
   }
 
   int cached_size = ::google::protobuf::internal::ToCachedSize(total_size);
@@ -3953,115 +3678,116 @@ void playerinfo::MergeFrom(const playerinfo& from) {
       phonenum_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.phonenum_);
     }
     if (cached_has_bits & 0x00000080u) {
-      set_has_channel();
-      channel_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.channel_);
+      set_has_jetton();
+      jetton_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.jetton_);
     }
   }
   if (cached_has_bits & 65280u) {
     if (cached_has_bits & 0x00000100u) {
+      set_has_channel();
+      channel_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.channel_);
+    }
+    if (cached_has_bits & 0x00000200u) {
       set_has_province();
       province_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.province_);
     }
-    if (cached_has_bits & 0x00000200u) {
+    if (cached_has_bits & 0x00000400u) {
       set_has_city();
       city_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.city_);
     }
-    if (cached_has_bits & 0x00000400u) {
+    if (cached_has_bits & 0x00000800u) {
       set_has_bindnick();
       bindnick_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.bindnick_);
     }
-    if (cached_has_bits & 0x00000800u) {
+    if (cached_has_bits & 0x00001000u) {
       set_has_platformid();
       platformid_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.platformid_);
     }
-    if (cached_has_bits & 0x00001000u) {
+    if (cached_has_bits & 0x00002000u) {
       set_has_imei();
       imei_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.imei_);
     }
-    if (cached_has_bits & 0x00002000u) {
+    if (cached_has_bits & 0x00004000u) {
       set_has_devname();
       devname_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.devname_);
     }
-    if (cached_has_bits & 0x00004000u) {
+    if (cached_has_bits & 0x00008000u) {
       set_has_ip();
       ip_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.ip_);
-    }
-    if (cached_has_bits & 0x00008000u) {
-      set_has_face_1();
-      face_1_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.face_1_);
     }
   }
   if (cached_has_bits & 16711680u) {
     if (cached_has_bits & 0x00010000u) {
+      set_has_face_1();
+      face_1_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.face_1_);
+    }
+    if (cached_has_bits & 0x00020000u) {
       set_has_face_2();
       face_2_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.face_2_);
     }
-    if (cached_has_bits & 0x00020000u) {
+    if (cached_has_bits & 0x00040000u) {
       set_has_face_3();
       face_3_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.face_3_);
     }
-    if (cached_has_bits & 0x00040000u) {
+    if (cached_has_bits & 0x00080000u) {
       set_has_face_4();
       face_4_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.face_4_);
     }
-    if (cached_has_bits & 0x00080000u) {
+    if (cached_has_bits & 0x00100000u) {
       set_has_description();
       description_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.description_);
     }
-    if (cached_has_bits & 0x00100000u) {
+    if (cached_has_bits & 0x00200000u) {
       set_has_location();
       location_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.location_);
     }
-    if (cached_has_bits & 0x00200000u) {
-      set_has_title();
-      title_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.title_);
-    }
     if (cached_has_bits & 0x00400000u) {
-      set_has_location_x();
-      location_x_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.location_x_);
+      set_has_bankjetton();
+      bankjetton_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.bankjetton_);
     }
     if (cached_has_bits & 0x00800000u) {
-      set_has_location_y();
-      location_y_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.location_y_);
+      set_has_title();
+      title_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.title_);
     }
   }
   if (cached_has_bits & 4278190080u) {
     if (cached_has_bits & 0x01000000u) {
-      set_has_registration1();
-      registration1_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.registration1_);
+      set_has_location_x();
+      location_x_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.location_x_);
     }
     if (cached_has_bits & 0x02000000u) {
-      set_has_registration2();
-      registration2_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.registration2_);
+      set_has_location_y();
+      location_y_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.location_y_);
     }
     if (cached_has_bits & 0x04000000u) {
-      set_has_registration3();
-      registration3_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.registration3_);
+      set_has_bank_password();
+      bank_password_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.bank_password_);
     }
     if (cached_has_bits & 0x08000000u) {
-      userid_ = from.userid_;
+      set_has_bank_jetton();
+      bank_jetton_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.bank_jetton_);
     }
     if (cached_has_bits & 0x10000000u) {
-      sex_ = from.sex_;
+      userid_ = from.userid_;
     }
     if (cached_has_bits & 0x20000000u) {
-      age_ = from.age_;
+      sex_ = from.sex_;
     }
     if (cached_has_bits & 0x40000000u) {
-      exp_ = from.exp_;
+      age_ = from.age_;
     }
     if (cached_has_bits & 0x80000000u) {
-      level_ = from.level_;
+      exp_ = from.exp_;
     }
     _has_bits_[0] |= cached_has_bits;
   }
   cached_has_bits = from._has_bits_[1];
   if (cached_has_bits & 255u) {
     if (cached_has_bits & 0x00000001u) {
-      viplevel_ = from.viplevel_;
+      level_ = from.level_;
     }
     if (cached_has_bits & 0x00000002u) {
-      jetton_ = from.jetton_;
+      viplevel_ = from.viplevel_;
     }
     if (cached_has_bits & 0x00000004u) {
       gold_ = from.gold_;
@@ -4103,42 +3829,15 @@ void playerinfo::MergeFrom(const playerinfo& from) {
       playtype_ = from.playtype_;
     }
     if (cached_has_bits & 0x00004000u) {
-      bankjetton_ = from.bankjetton_;
-    }
-    if (cached_has_bits & 0x00008000u) {
       blacklist_ = from.blacklist_;
     }
-    _has_bits_[1] |= cached_has_bits;
-  }
-  if (cached_has_bits & 16711680u) {
-    if (cached_has_bits & 0x00010000u) {
+    if (cached_has_bits & 0x00008000u) {
       propertyid_ = from.propertyid_;
     }
-    if (cached_has_bits & 0x00020000u) {
-      agencystatus_ = from.agencystatus_;
-    }
-    if (cached_has_bits & 0x00040000u) {
-      signinmonth_ = from.signinmonth_;
-    }
-    if (cached_has_bits & 0x00080000u) {
-      bsignin_ = from.bsignin_;
-    }
-    if (cached_has_bits & 0x00100000u) {
-      turntablenum_ = from.turntablenum_;
-    }
-    if (cached_has_bits & 0x00200000u) {
-      tengames_ = from.tengames_;
-    }
-    if (cached_has_bits & 0x00400000u) {
-      todayshare_ = from.todayshare_;
-    }
-    if (cached_has_bits & 0x00800000u) {
-      caninvite_ = from.caninvite_;
-    }
     _has_bits_[1] |= cached_has_bits;
   }
-  if (cached_has_bits & 0x01000000u) {
-    set_totalgames(from.totalgames());
+  if (cached_has_bits & 0x00010000u) {
+    set_ticket(from.ticket());
   }
 }
 
@@ -4180,6 +3879,8 @@ void playerinfo::InternalSwap(playerinfo* other) {
     GetArenaNoVirtual());
   phonenum_.Swap(&other->phonenum_, &::google::protobuf::internal::GetEmptyStringAlreadyInited(),
     GetArenaNoVirtual());
+  jetton_.Swap(&other->jetton_, &::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+    GetArenaNoVirtual());
   channel_.Swap(&other->channel_, &::google::protobuf::internal::GetEmptyStringAlreadyInited(),
     GetArenaNoVirtual());
   province_.Swap(&other->province_, &::google::protobuf::internal::GetEmptyStringAlreadyInited(),
@@ -4208,17 +3909,17 @@ void playerinfo::InternalSwap(playerinfo* other) {
     GetArenaNoVirtual());
   location_.Swap(&other->location_, &::google::protobuf::internal::GetEmptyStringAlreadyInited(),
     GetArenaNoVirtual());
+  bankjetton_.Swap(&other->bankjetton_, &::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+    GetArenaNoVirtual());
   title_.Swap(&other->title_, &::google::protobuf::internal::GetEmptyStringAlreadyInited(),
     GetArenaNoVirtual());
   location_x_.Swap(&other->location_x_, &::google::protobuf::internal::GetEmptyStringAlreadyInited(),
     GetArenaNoVirtual());
   location_y_.Swap(&other->location_y_, &::google::protobuf::internal::GetEmptyStringAlreadyInited(),
     GetArenaNoVirtual());
-  registration1_.Swap(&other->registration1_, &::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+  bank_password_.Swap(&other->bank_password_, &::google::protobuf::internal::GetEmptyStringAlreadyInited(),
     GetArenaNoVirtual());
-  registration2_.Swap(&other->registration2_, &::google::protobuf::internal::GetEmptyStringAlreadyInited(),
-    GetArenaNoVirtual());
-  registration3_.Swap(&other->registration3_, &::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+  bank_jetton_.Swap(&other->bank_jetton_, &::google::protobuf::internal::GetEmptyStringAlreadyInited(),
     GetArenaNoVirtual());
   swap(userid_, other->userid_);
   swap(sex_, other->sex_);
@@ -4226,7 +3927,6 @@ void playerinfo::InternalSwap(playerinfo* other) {
   swap(exp_, other->exp_);
   swap(level_, other->level_);
   swap(viplevel_, other->viplevel_);
-  swap(jetton_, other->jetton_);
   swap(gold_, other->gold_);
   swap(money_, other->money_);
   swap(popularity_, other->popularity_);
@@ -4239,17 +3939,9 @@ void playerinfo::InternalSwap(playerinfo* other) {
   swap(isban_, other->isban_);
   swap(isrobot_, other->isrobot_);
   swap(playtype_, other->playtype_);
-  swap(bankjetton_, other->bankjetton_);
   swap(blacklist_, other->blacklist_);
   swap(propertyid_, other->propertyid_);
-  swap(agencystatus_, other->agencystatus_);
-  swap(signinmonth_, other->signinmonth_);
-  swap(bsignin_, other->bsignin_);
-  swap(turntablenum_, other->turntablenum_);
-  swap(tengames_, other->tengames_);
-  swap(todayshare_, other->todayshare_);
-  swap(caninvite_, other->caninvite_);
-  swap(totalgames_, other->totalgames_);
+  swap(ticket_, other->ticket_);
   swap(_has_bits_[0], other->_has_bits_[0]);
   swap(_has_bits_[1], other->_has_bits_[1]);
   _internal_metadata_.Swap(&other->_internal_metadata_);
@@ -4295,6 +3987,10 @@ playerstats::playerstats(const playerstats& from)
       _internal_metadata_(NULL),
       _has_bits_(from._has_bits_) {
   _internal_metadata_.MergeFrom(from._internal_metadata_);
+  maxjetton_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  if (from.has_maxjetton()) {
+    maxjetton_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.maxjetton_);
+  }
   ::memcpy(&userid_, &from.userid_,
     static_cast<size_t>(reinterpret_cast<char*>(&daypaytime_) -
     reinterpret_cast<char*>(&userid_)) + sizeof(daypaytime_));
@@ -4302,6 +3998,7 @@ playerstats::playerstats(const playerstats& from)
 }
 
 void playerstats::SharedCtor() {
+  maxjetton_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   ::memset(&userid_, 0, static_cast<size_t>(
       reinterpret_cast<char*>(&daypaytime_) -
       reinterpret_cast<char*>(&userid_)) + sizeof(daypaytime_));
@@ -4313,6 +4010,7 @@ playerstats::~playerstats() {
 }
 
 void playerstats::SharedDtor() {
+  maxjetton_.DestroyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
 
 void playerstats::SetCachedSize(int size) const {
@@ -4336,10 +4034,13 @@ void playerstats::Clear() {
   (void) cached_has_bits;
 
   cached_has_bits = _has_bits_[0];
-  if (cached_has_bits & 255u) {
+  if (cached_has_bits & 0x00000001u) {
+    maxjetton_.ClearNonDefaultToEmptyNoArena();
+  }
+  if (cached_has_bits & 254u) {
     ::memset(&userid_, 0, static_cast<size_t>(
-        reinterpret_cast<char*>(&maxjetton_) -
-        reinterpret_cast<char*>(&userid_)) + sizeof(maxjetton_));
+        reinterpret_cast<char*>(&onlinetime_) -
+        reinterpret_cast<char*>(&userid_)) + sizeof(onlinetime_));
   }
   if (cached_has_bits & 32512u) {
     ::memset(&payrmb_, 0, static_cast<size_t>(
@@ -4458,14 +4159,16 @@ bool playerstats::MergePartialFromCodedStream(
         break;
       }
 
-      // optional int32 maxjetton = 8;
+      // optional string maxjetton = 8;
       case 8: {
         if (static_cast< ::google::protobuf::uint8>(tag) ==
-            static_cast< ::google::protobuf::uint8>(64u /* 64 & 0xFF */)) {
-          set_has_maxjetton();
-          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
-                 input, &maxjetton_)));
+            static_cast< ::google::protobuf::uint8>(66u /* 66 & 0xFF */)) {
+          DO_(::google::protobuf::internal::WireFormatLite::ReadString(
+                input, this->mutable_maxjetton()));
+          ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
+            this->maxjetton().data(), static_cast<int>(this->maxjetton().length()),
+            ::google::protobuf::internal::WireFormat::PARSE,
+            "NFMsg.playerstats.maxjetton");
         } else {
           goto handle_unusual;
         }
@@ -4598,43 +4301,48 @@ void playerstats::SerializeWithCachedSizes(
 
   cached_has_bits = _has_bits_[0];
   // optional int32 userid = 1;
-  if (cached_has_bits & 0x00000001u) {
+  if (cached_has_bits & 0x00000002u) {
     ::google::protobuf::internal::WireFormatLite::WriteInt32(1, this->userid(), output);
   }
 
   // optional int32 mdynickamount = 2;
-  if (cached_has_bits & 0x00000002u) {
+  if (cached_has_bits & 0x00000004u) {
     ::google::protobuf::internal::WireFormatLite::WriteInt32(2, this->mdynickamount(), output);
   }
 
   // optional int32 loginday = 3;
-  if (cached_has_bits & 0x00000004u) {
+  if (cached_has_bits & 0x00000008u) {
     ::google::protobuf::internal::WireFormatLite::WriteInt32(3, this->loginday(), output);
   }
 
   // optional int32 loginconday = 4;
-  if (cached_has_bits & 0x00000008u) {
+  if (cached_has_bits & 0x00000010u) {
     ::google::protobuf::internal::WireFormatLite::WriteInt32(4, this->loginconday(), output);
   }
 
   // optional int32 maxloginconday = 5;
-  if (cached_has_bits & 0x00000010u) {
+  if (cached_has_bits & 0x00000020u) {
     ::google::protobuf::internal::WireFormatLite::WriteInt32(5, this->maxloginconday(), output);
   }
 
   // optional int32 loginamount = 6;
-  if (cached_has_bits & 0x00000020u) {
+  if (cached_has_bits & 0x00000040u) {
     ::google::protobuf::internal::WireFormatLite::WriteInt32(6, this->loginamount(), output);
   }
 
   // optional int32 onlinetime = 7;
-  if (cached_has_bits & 0x00000040u) {
+  if (cached_has_bits & 0x00000080u) {
     ::google::protobuf::internal::WireFormatLite::WriteInt32(7, this->onlinetime(), output);
   }
 
-  // optional int32 maxjetton = 8;
-  if (cached_has_bits & 0x00000080u) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt32(8, this->maxjetton(), output);
+  // optional string maxjetton = 8;
+  if (cached_has_bits & 0x00000001u) {
+    ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
+      this->maxjetton().data(), static_cast<int>(this->maxjetton().length()),
+      ::google::protobuf::internal::WireFormat::SERIALIZE,
+      "NFMsg.playerstats.maxjetton");
+    ::google::protobuf::internal::WireFormatLite::WriteStringMaybeAliased(
+      8, this->maxjetton(), output);
   }
 
   // optional int32 payrmb = 9;
@@ -4688,43 +4396,49 @@ void playerstats::SerializeWithCachedSizes(
 
   cached_has_bits = _has_bits_[0];
   // optional int32 userid = 1;
-  if (cached_has_bits & 0x00000001u) {
+  if (cached_has_bits & 0x00000002u) {
     target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(1, this->userid(), target);
   }
 
   // optional int32 mdynickamount = 2;
-  if (cached_has_bits & 0x00000002u) {
+  if (cached_has_bits & 0x00000004u) {
     target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(2, this->mdynickamount(), target);
   }
 
   // optional int32 loginday = 3;
-  if (cached_has_bits & 0x00000004u) {
+  if (cached_has_bits & 0x00000008u) {
     target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(3, this->loginday(), target);
   }
 
   // optional int32 loginconday = 4;
-  if (cached_has_bits & 0x00000008u) {
+  if (cached_has_bits & 0x00000010u) {
     target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(4, this->loginconday(), target);
   }
 
   // optional int32 maxloginconday = 5;
-  if (cached_has_bits & 0x00000010u) {
+  if (cached_has_bits & 0x00000020u) {
     target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(5, this->maxloginconday(), target);
   }
 
   // optional int32 loginamount = 6;
-  if (cached_has_bits & 0x00000020u) {
+  if (cached_has_bits & 0x00000040u) {
     target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(6, this->loginamount(), target);
   }
 
   // optional int32 onlinetime = 7;
-  if (cached_has_bits & 0x00000040u) {
+  if (cached_has_bits & 0x00000080u) {
     target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(7, this->onlinetime(), target);
   }
 
-  // optional int32 maxjetton = 8;
-  if (cached_has_bits & 0x00000080u) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(8, this->maxjetton(), target);
+  // optional string maxjetton = 8;
+  if (cached_has_bits & 0x00000001u) {
+    ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
+      this->maxjetton().data(), static_cast<int>(this->maxjetton().length()),
+      ::google::protobuf::internal::WireFormat::SERIALIZE,
+      "NFMsg.playerstats.maxjetton");
+    target =
+      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
+        8, this->maxjetton(), target);
   }
 
   // optional int32 payrmb = 9;
@@ -4780,6 +4494,13 @@ size_t playerstats::ByteSizeLong() const {
         _internal_metadata_.unknown_fields());
   }
   if (_has_bits_[0 / 32] & 255u) {
+    // optional string maxjetton = 8;
+    if (has_maxjetton()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::StringSize(
+          this->maxjetton());
+    }
+
     // optional int32 userid = 1;
     if (has_userid()) {
       total_size += 1 +
@@ -4827,13 +4548,6 @@ size_t playerstats::ByteSizeLong() const {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::Int32Size(
           this->onlinetime());
-    }
-
-    // optional int32 maxjetton = 8;
-    if (has_maxjetton()) {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::Int32Size(
-          this->maxjetton());
     }
 
   }
@@ -4918,28 +4632,29 @@ void playerstats::MergeFrom(const playerstats& from) {
   cached_has_bits = from._has_bits_[0];
   if (cached_has_bits & 255u) {
     if (cached_has_bits & 0x00000001u) {
-      userid_ = from.userid_;
+      set_has_maxjetton();
+      maxjetton_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.maxjetton_);
     }
     if (cached_has_bits & 0x00000002u) {
-      mdynickamount_ = from.mdynickamount_;
+      userid_ = from.userid_;
     }
     if (cached_has_bits & 0x00000004u) {
-      loginday_ = from.loginday_;
+      mdynickamount_ = from.mdynickamount_;
     }
     if (cached_has_bits & 0x00000008u) {
-      loginconday_ = from.loginconday_;
+      loginday_ = from.loginday_;
     }
     if (cached_has_bits & 0x00000010u) {
-      maxloginconday_ = from.maxloginconday_;
+      loginconday_ = from.loginconday_;
     }
     if (cached_has_bits & 0x00000020u) {
-      loginamount_ = from.loginamount_;
+      maxloginconday_ = from.maxloginconday_;
     }
     if (cached_has_bits & 0x00000040u) {
-      onlinetime_ = from.onlinetime_;
+      loginamount_ = from.loginamount_;
     }
     if (cached_has_bits & 0x00000080u) {
-      maxjetton_ = from.maxjetton_;
+      onlinetime_ = from.onlinetime_;
     }
     _has_bits_[0] |= cached_has_bits;
   }
@@ -4993,6 +4708,8 @@ void playerstats::Swap(playerstats* other) {
 }
 void playerstats::InternalSwap(playerstats* other) {
   using std::swap;
+  maxjetton_.Swap(&other->maxjetton_, &::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+    GetArenaNoVirtual());
   swap(userid_, other->userid_);
   swap(mdynickamount_, other->mdynickamount_);
   swap(loginday_, other->loginday_);
@@ -5000,7 +4717,6 @@ void playerstats::InternalSwap(playerstats* other) {
   swap(maxloginconday_, other->maxloginconday_);
   swap(loginamount_, other->loginamount_);
   swap(onlinetime_, other->onlinetime_);
-  swap(maxjetton_, other->maxjetton_);
   swap(payrmb_, other->payrmb_);
   swap(callpayrmb_, other->callpayrmb_);
   swap(paytime_, other->paytime_);
@@ -6050,6 +5766,10 @@ playersimpleinfo::playersimpleinfo(const playersimpleinfo& from)
   if (from.has_nickname()) {
     nickname_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.nickname_);
   }
+  jetton_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  if (from.has_jetton()) {
+    jetton_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.jetton_);
+  }
   ip_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   if (from.has_ip()) {
     ip_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.ip_);
@@ -6070,22 +5790,28 @@ playersimpleinfo::playersimpleinfo(const playersimpleinfo& from)
   if (from.has_location_y()) {
     location_y_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.location_y_);
   }
+  jifen_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  if (from.has_jifen()) {
+    jifen_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.jifen_);
+  }
   ::memcpy(&userid_, &from.userid_,
-    static_cast<size_t>(reinterpret_cast<char*>(&jifen_) -
-    reinterpret_cast<char*>(&userid_)) + sizeof(jifen_));
+    static_cast<size_t>(reinterpret_cast<char*>(&popularity_) -
+    reinterpret_cast<char*>(&userid_)) + sizeof(popularity_));
   // @@protoc_insertion_point(copy_constructor:NFMsg.playersimpleinfo)
 }
 
 void playersimpleinfo::SharedCtor() {
   nickname_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  jetton_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   ip_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   face_1_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   location_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   location_x_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   location_y_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  jifen_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   ::memset(&userid_, 0, static_cast<size_t>(
-      reinterpret_cast<char*>(&jifen_) -
-      reinterpret_cast<char*>(&userid_)) + sizeof(jifen_));
+      reinterpret_cast<char*>(&popularity_) -
+      reinterpret_cast<char*>(&userid_)) + sizeof(popularity_));
 }
 
 playersimpleinfo::~playersimpleinfo() {
@@ -6095,11 +5821,13 @@ playersimpleinfo::~playersimpleinfo() {
 
 void playersimpleinfo::SharedDtor() {
   nickname_.DestroyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  jetton_.DestroyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   ip_.DestroyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   face_1_.DestroyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   location_.DestroyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   location_x_.DestroyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   location_y_.DestroyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  jifen_.DestroyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
 
 void playersimpleinfo::SetCachedSize(int size) const {
@@ -6123,35 +5851,36 @@ void playersimpleinfo::Clear() {
   (void) cached_has_bits;
 
   cached_has_bits = _has_bits_[0];
-  if (cached_has_bits & 63u) {
+  if (cached_has_bits & 255u) {
     if (cached_has_bits & 0x00000001u) {
       nickname_.ClearNonDefaultToEmptyNoArena();
     }
     if (cached_has_bits & 0x00000002u) {
-      ip_.ClearNonDefaultToEmptyNoArena();
+      jetton_.ClearNonDefaultToEmptyNoArena();
     }
     if (cached_has_bits & 0x00000004u) {
-      face_1_.ClearNonDefaultToEmptyNoArena();
+      ip_.ClearNonDefaultToEmptyNoArena();
     }
     if (cached_has_bits & 0x00000008u) {
-      location_.ClearNonDefaultToEmptyNoArena();
+      face_1_.ClearNonDefaultToEmptyNoArena();
     }
     if (cached_has_bits & 0x00000010u) {
-      location_x_.ClearNonDefaultToEmptyNoArena();
+      location_.ClearNonDefaultToEmptyNoArena();
     }
     if (cached_has_bits & 0x00000020u) {
+      location_x_.ClearNonDefaultToEmptyNoArena();
+    }
+    if (cached_has_bits & 0x00000040u) {
       location_y_.ClearNonDefaultToEmptyNoArena();
     }
-  }
-  if (cached_has_bits & 192u) {
-    ::memset(&userid_, 0, static_cast<size_t>(
-        reinterpret_cast<char*>(&sex_) -
-        reinterpret_cast<char*>(&userid_)) + sizeof(sex_));
+    if (cached_has_bits & 0x00000080u) {
+      jifen_.ClearNonDefaultToEmptyNoArena();
+    }
   }
   if (cached_has_bits & 32512u) {
-    ::memset(&level_, 0, static_cast<size_t>(
-        reinterpret_cast<char*>(&jifen_) -
-        reinterpret_cast<char*>(&level_)) + sizeof(jifen_));
+    ::memset(&userid_, 0, static_cast<size_t>(
+        reinterpret_cast<char*>(&popularity_) -
+        reinterpret_cast<char*>(&userid_)) + sizeof(popularity_));
   }
   _has_bits_.Clear();
   _internal_metadata_.Clear();
@@ -6239,14 +5968,16 @@ bool playersimpleinfo::MergePartialFromCodedStream(
         break;
       }
 
-      // optional int64 jetton = 15;
+      // optional string jetton = 15;
       case 15: {
         if (static_cast< ::google::protobuf::uint8>(tag) ==
-            static_cast< ::google::protobuf::uint8>(120u /* 120 & 0xFF */)) {
-          set_has_jetton();
-          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::int64, ::google::protobuf::internal::WireFormatLite::TYPE_INT64>(
-                 input, &jetton_)));
+            static_cast< ::google::protobuf::uint8>(122u /* 122 & 0xFF */)) {
+          DO_(::google::protobuf::internal::WireFormatLite::ReadString(
+                input, this->mutable_jetton()));
+          ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
+            this->jetton().data(), static_cast<int>(this->jetton().length()),
+            ::google::protobuf::internal::WireFormat::PARSE,
+            "NFMsg.playersimpleinfo.jetton");
         } else {
           goto handle_unusual;
         }
@@ -6375,14 +6106,16 @@ bool playersimpleinfo::MergePartialFromCodedStream(
         break;
       }
 
-      // optional int32 jifen = 99;
+      // optional string jifen = 99;
       case 99: {
         if (static_cast< ::google::protobuf::uint8>(tag) ==
-            static_cast< ::google::protobuf::uint8>(24u /* 792 & 0xFF */)) {
-          set_has_jifen();
-          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
-                 input, &jifen_)));
+            static_cast< ::google::protobuf::uint8>(26u /* 794 & 0xFF */)) {
+          DO_(::google::protobuf::internal::WireFormatLite::ReadString(
+                input, this->mutable_jifen()));
+          ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
+            this->jifen().data(), static_cast<int>(this->jifen().length()),
+            ::google::protobuf::internal::WireFormat::PARSE,
+            "NFMsg.playersimpleinfo.jifen");
         } else {
           goto handle_unusual;
         }
@@ -6417,7 +6150,7 @@ void playersimpleinfo::SerializeWithCachedSizes(
 
   cached_has_bits = _has_bits_[0];
   // optional int32 userid = 1;
-  if (cached_has_bits & 0x00000040u) {
+  if (cached_has_bits & 0x00000100u) {
     ::google::protobuf::internal::WireFormatLite::WriteInt32(1, this->userid(), output);
   }
 
@@ -6432,37 +6165,42 @@ void playersimpleinfo::SerializeWithCachedSizes(
   }
 
   // optional int32 sex = 8;
-  if (cached_has_bits & 0x00000080u) {
+  if (cached_has_bits & 0x00000200u) {
     ::google::protobuf::internal::WireFormatLite::WriteInt32(8, this->sex(), output);
   }
 
   // optional int32 level = 13;
-  if (cached_has_bits & 0x00000100u) {
+  if (cached_has_bits & 0x00000400u) {
     ::google::protobuf::internal::WireFormatLite::WriteInt32(13, this->level(), output);
   }
 
   // optional int32 viplevel = 14;
-  if (cached_has_bits & 0x00000200u) {
+  if (cached_has_bits & 0x00000800u) {
     ::google::protobuf::internal::WireFormatLite::WriteInt32(14, this->viplevel(), output);
   }
 
-  // optional int64 jetton = 15;
-  if (cached_has_bits & 0x00000400u) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt64(15, this->jetton(), output);
+  // optional string jetton = 15;
+  if (cached_has_bits & 0x00000002u) {
+    ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
+      this->jetton().data(), static_cast<int>(this->jetton().length()),
+      ::google::protobuf::internal::WireFormat::SERIALIZE,
+      "NFMsg.playersimpleinfo.jetton");
+    ::google::protobuf::internal::WireFormatLite::WriteStringMaybeAliased(
+      15, this->jetton(), output);
   }
 
   // optional int32 gold = 16;
-  if (cached_has_bits & 0x00000800u) {
+  if (cached_has_bits & 0x00002000u) {
     ::google::protobuf::internal::WireFormatLite::WriteInt32(16, this->gold(), output);
   }
 
   // optional int32 popularity = 21;
-  if (cached_has_bits & 0x00001000u) {
+  if (cached_has_bits & 0x00004000u) {
     ::google::protobuf::internal::WireFormatLite::WriteInt32(21, this->popularity(), output);
   }
 
   // optional string ip = 31;
-  if (cached_has_bits & 0x00000002u) {
+  if (cached_has_bits & 0x00000004u) {
     ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
       this->ip().data(), static_cast<int>(this->ip().length()),
       ::google::protobuf::internal::WireFormat::SERIALIZE,
@@ -6472,7 +6210,7 @@ void playersimpleinfo::SerializeWithCachedSizes(
   }
 
   // optional string face_1 = 34;
-  if (cached_has_bits & 0x00000004u) {
+  if (cached_has_bits & 0x00000008u) {
     ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
       this->face_1().data(), static_cast<int>(this->face_1().length()),
       ::google::protobuf::internal::WireFormat::SERIALIZE,
@@ -6482,7 +6220,7 @@ void playersimpleinfo::SerializeWithCachedSizes(
   }
 
   // optional string location = 41;
-  if (cached_has_bits & 0x00000008u) {
+  if (cached_has_bits & 0x00000010u) {
     ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
       this->location().data(), static_cast<int>(this->location().length()),
       ::google::protobuf::internal::WireFormat::SERIALIZE,
@@ -6492,12 +6230,12 @@ void playersimpleinfo::SerializeWithCachedSizes(
   }
 
   // optional int32 propertyid = 45;
-  if (cached_has_bits & 0x00002000u) {
+  if (cached_has_bits & 0x00001000u) {
     ::google::protobuf::internal::WireFormatLite::WriteInt32(45, this->propertyid(), output);
   }
 
   // optional string location_x = 47;
-  if (cached_has_bits & 0x00000010u) {
+  if (cached_has_bits & 0x00000020u) {
     ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
       this->location_x().data(), static_cast<int>(this->location_x().length()),
       ::google::protobuf::internal::WireFormat::SERIALIZE,
@@ -6507,7 +6245,7 @@ void playersimpleinfo::SerializeWithCachedSizes(
   }
 
   // optional string location_y = 48;
-  if (cached_has_bits & 0x00000020u) {
+  if (cached_has_bits & 0x00000040u) {
     ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
       this->location_y().data(), static_cast<int>(this->location_y().length()),
       ::google::protobuf::internal::WireFormat::SERIALIZE,
@@ -6516,9 +6254,14 @@ void playersimpleinfo::SerializeWithCachedSizes(
       48, this->location_y(), output);
   }
 
-  // optional int32 jifen = 99;
-  if (cached_has_bits & 0x00004000u) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt32(99, this->jifen(), output);
+  // optional string jifen = 99;
+  if (cached_has_bits & 0x00000080u) {
+    ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
+      this->jifen().data(), static_cast<int>(this->jifen().length()),
+      ::google::protobuf::internal::WireFormat::SERIALIZE,
+      "NFMsg.playersimpleinfo.jifen");
+    ::google::protobuf::internal::WireFormatLite::WriteStringMaybeAliased(
+      99, this->jifen(), output);
   }
 
   if (_internal_metadata_.have_unknown_fields()) {
@@ -6537,7 +6280,7 @@ void playersimpleinfo::SerializeWithCachedSizes(
 
   cached_has_bits = _has_bits_[0];
   // optional int32 userid = 1;
-  if (cached_has_bits & 0x00000040u) {
+  if (cached_has_bits & 0x00000100u) {
     target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(1, this->userid(), target);
   }
 
@@ -6553,37 +6296,43 @@ void playersimpleinfo::SerializeWithCachedSizes(
   }
 
   // optional int32 sex = 8;
-  if (cached_has_bits & 0x00000080u) {
+  if (cached_has_bits & 0x00000200u) {
     target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(8, this->sex(), target);
   }
 
   // optional int32 level = 13;
-  if (cached_has_bits & 0x00000100u) {
+  if (cached_has_bits & 0x00000400u) {
     target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(13, this->level(), target);
   }
 
   // optional int32 viplevel = 14;
-  if (cached_has_bits & 0x00000200u) {
+  if (cached_has_bits & 0x00000800u) {
     target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(14, this->viplevel(), target);
   }
 
-  // optional int64 jetton = 15;
-  if (cached_has_bits & 0x00000400u) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt64ToArray(15, this->jetton(), target);
+  // optional string jetton = 15;
+  if (cached_has_bits & 0x00000002u) {
+    ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
+      this->jetton().data(), static_cast<int>(this->jetton().length()),
+      ::google::protobuf::internal::WireFormat::SERIALIZE,
+      "NFMsg.playersimpleinfo.jetton");
+    target =
+      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
+        15, this->jetton(), target);
   }
 
   // optional int32 gold = 16;
-  if (cached_has_bits & 0x00000800u) {
+  if (cached_has_bits & 0x00002000u) {
     target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(16, this->gold(), target);
   }
 
   // optional int32 popularity = 21;
-  if (cached_has_bits & 0x00001000u) {
+  if (cached_has_bits & 0x00004000u) {
     target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(21, this->popularity(), target);
   }
 
   // optional string ip = 31;
-  if (cached_has_bits & 0x00000002u) {
+  if (cached_has_bits & 0x00000004u) {
     ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
       this->ip().data(), static_cast<int>(this->ip().length()),
       ::google::protobuf::internal::WireFormat::SERIALIZE,
@@ -6594,7 +6343,7 @@ void playersimpleinfo::SerializeWithCachedSizes(
   }
 
   // optional string face_1 = 34;
-  if (cached_has_bits & 0x00000004u) {
+  if (cached_has_bits & 0x00000008u) {
     ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
       this->face_1().data(), static_cast<int>(this->face_1().length()),
       ::google::protobuf::internal::WireFormat::SERIALIZE,
@@ -6605,7 +6354,7 @@ void playersimpleinfo::SerializeWithCachedSizes(
   }
 
   // optional string location = 41;
-  if (cached_has_bits & 0x00000008u) {
+  if (cached_has_bits & 0x00000010u) {
     ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
       this->location().data(), static_cast<int>(this->location().length()),
       ::google::protobuf::internal::WireFormat::SERIALIZE,
@@ -6616,12 +6365,12 @@ void playersimpleinfo::SerializeWithCachedSizes(
   }
 
   // optional int32 propertyid = 45;
-  if (cached_has_bits & 0x00002000u) {
+  if (cached_has_bits & 0x00001000u) {
     target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(45, this->propertyid(), target);
   }
 
   // optional string location_x = 47;
-  if (cached_has_bits & 0x00000010u) {
+  if (cached_has_bits & 0x00000020u) {
     ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
       this->location_x().data(), static_cast<int>(this->location_x().length()),
       ::google::protobuf::internal::WireFormat::SERIALIZE,
@@ -6632,7 +6381,7 @@ void playersimpleinfo::SerializeWithCachedSizes(
   }
 
   // optional string location_y = 48;
-  if (cached_has_bits & 0x00000020u) {
+  if (cached_has_bits & 0x00000040u) {
     ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
       this->location_y().data(), static_cast<int>(this->location_y().length()),
       ::google::protobuf::internal::WireFormat::SERIALIZE,
@@ -6642,9 +6391,15 @@ void playersimpleinfo::SerializeWithCachedSizes(
         48, this->location_y(), target);
   }
 
-  // optional int32 jifen = 99;
-  if (cached_has_bits & 0x00004000u) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(99, this->jifen(), target);
+  // optional string jifen = 99;
+  if (cached_has_bits & 0x00000080u) {
+    ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
+      this->jifen().data(), static_cast<int>(this->jifen().length()),
+      ::google::protobuf::internal::WireFormat::SERIALIZE,
+      "NFMsg.playersimpleinfo.jifen");
+    target =
+      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
+        99, this->jifen(), target);
   }
 
   if (_internal_metadata_.have_unknown_fields()) {
@@ -6670,6 +6425,13 @@ size_t playersimpleinfo::ByteSizeLong() const {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::StringSize(
           this->nickname());
+    }
+
+    // optional string jetton = 15;
+    if (has_jetton()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::StringSize(
+          this->jetton());
     }
 
     // optional string ip = 31;
@@ -6707,6 +6469,15 @@ size_t playersimpleinfo::ByteSizeLong() const {
           this->location_y());
     }
 
+    // optional string jifen = 99;
+    if (has_jifen()) {
+      total_size += 2 +
+        ::google::protobuf::internal::WireFormatLite::StringSize(
+          this->jifen());
+    }
+
+  }
+  if (_has_bits_[8 / 32] & 32512u) {
     // optional int32 userid = 1;
     if (has_userid()) {
       total_size += 1 +
@@ -6721,8 +6492,6 @@ size_t playersimpleinfo::ByteSizeLong() const {
           this->sex());
     }
 
-  }
-  if (_has_bits_[8 / 32] & 32512u) {
     // optional int32 level = 13;
     if (has_level()) {
       total_size += 1 +
@@ -6737,11 +6506,11 @@ size_t playersimpleinfo::ByteSizeLong() const {
           this->viplevel());
     }
 
-    // optional int64 jetton = 15;
-    if (has_jetton()) {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::Int64Size(
-          this->jetton());
+    // optional int32 propertyid = 45;
+    if (has_propertyid()) {
+      total_size += 2 +
+        ::google::protobuf::internal::WireFormatLite::Int32Size(
+          this->propertyid());
     }
 
     // optional int32 gold = 16;
@@ -6756,20 +6525,6 @@ size_t playersimpleinfo::ByteSizeLong() const {
       total_size += 2 +
         ::google::protobuf::internal::WireFormatLite::Int32Size(
           this->popularity());
-    }
-
-    // optional int32 propertyid = 45;
-    if (has_propertyid()) {
-      total_size += 2 +
-        ::google::protobuf::internal::WireFormatLite::Int32Size(
-          this->propertyid());
-    }
-
-    // optional int32 jifen = 99;
-    if (has_jifen()) {
-      total_size += 2 +
-        ::google::protobuf::internal::WireFormatLite::Int32Size(
-          this->jifen());
     }
 
   }
@@ -6807,54 +6562,55 @@ void playersimpleinfo::MergeFrom(const playersimpleinfo& from) {
       nickname_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.nickname_);
     }
     if (cached_has_bits & 0x00000002u) {
+      set_has_jetton();
+      jetton_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.jetton_);
+    }
+    if (cached_has_bits & 0x00000004u) {
       set_has_ip();
       ip_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.ip_);
     }
-    if (cached_has_bits & 0x00000004u) {
+    if (cached_has_bits & 0x00000008u) {
       set_has_face_1();
       face_1_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.face_1_);
     }
-    if (cached_has_bits & 0x00000008u) {
+    if (cached_has_bits & 0x00000010u) {
       set_has_location();
       location_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.location_);
     }
-    if (cached_has_bits & 0x00000010u) {
+    if (cached_has_bits & 0x00000020u) {
       set_has_location_x();
       location_x_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.location_x_);
     }
-    if (cached_has_bits & 0x00000020u) {
+    if (cached_has_bits & 0x00000040u) {
       set_has_location_y();
       location_y_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.location_y_);
     }
-    if (cached_has_bits & 0x00000040u) {
-      userid_ = from.userid_;
-    }
     if (cached_has_bits & 0x00000080u) {
-      sex_ = from.sex_;
+      set_has_jifen();
+      jifen_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.jifen_);
     }
-    _has_bits_[0] |= cached_has_bits;
   }
   if (cached_has_bits & 32512u) {
     if (cached_has_bits & 0x00000100u) {
-      level_ = from.level_;
+      userid_ = from.userid_;
     }
     if (cached_has_bits & 0x00000200u) {
-      viplevel_ = from.viplevel_;
+      sex_ = from.sex_;
     }
     if (cached_has_bits & 0x00000400u) {
-      jetton_ = from.jetton_;
+      level_ = from.level_;
     }
     if (cached_has_bits & 0x00000800u) {
-      gold_ = from.gold_;
+      viplevel_ = from.viplevel_;
     }
     if (cached_has_bits & 0x00001000u) {
-      popularity_ = from.popularity_;
-    }
-    if (cached_has_bits & 0x00002000u) {
       propertyid_ = from.propertyid_;
     }
+    if (cached_has_bits & 0x00002000u) {
+      gold_ = from.gold_;
+    }
     if (cached_has_bits & 0x00004000u) {
-      jifen_ = from.jifen_;
+      popularity_ = from.popularity_;
     }
     _has_bits_[0] |= cached_has_bits;
   }
@@ -6886,6 +6642,8 @@ void playersimpleinfo::InternalSwap(playersimpleinfo* other) {
   using std::swap;
   nickname_.Swap(&other->nickname_, &::google::protobuf::internal::GetEmptyStringAlreadyInited(),
     GetArenaNoVirtual());
+  jetton_.Swap(&other->jetton_, &::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+    GetArenaNoVirtual());
   ip_.Swap(&other->ip_, &::google::protobuf::internal::GetEmptyStringAlreadyInited(),
     GetArenaNoVirtual());
   face_1_.Swap(&other->face_1_, &::google::protobuf::internal::GetEmptyStringAlreadyInited(),
@@ -6896,15 +6654,15 @@ void playersimpleinfo::InternalSwap(playersimpleinfo* other) {
     GetArenaNoVirtual());
   location_y_.Swap(&other->location_y_, &::google::protobuf::internal::GetEmptyStringAlreadyInited(),
     GetArenaNoVirtual());
+  jifen_.Swap(&other->jifen_, &::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+    GetArenaNoVirtual());
   swap(userid_, other->userid_);
   swap(sex_, other->sex_);
   swap(level_, other->level_);
   swap(viplevel_, other->viplevel_);
-  swap(jetton_, other->jetton_);
+  swap(propertyid_, other->propertyid_);
   swap(gold_, other->gold_);
   swap(popularity_, other->popularity_);
-  swap(propertyid_, other->propertyid_);
-  swap(jifen_, other->jifen_);
   swap(_has_bits_[0], other->_has_bits_[0]);
   _internal_metadata_.Swap(&other->_internal_metadata_);
 }
@@ -9125,407 +8883,6 @@ void inviteinfo::InternalSwap(inviteinfo* other) {
 
 // ===================================================================
 
-void givemoneyrecord::InitAsDefaultInstance() {
-}
-#if !defined(_MSC_VER) || _MSC_VER >= 1900
-const int givemoneyrecord::kUseridFieldNumber;
-const int givemoneyrecord::kNicknameFieldNumber;
-const int givemoneyrecord::kAmountFieldNumber;
-const int givemoneyrecord::kTimemarkFieldNumber;
-#endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
-
-givemoneyrecord::givemoneyrecord()
-  : ::google::protobuf::Message(), _internal_metadata_(NULL) {
-  ::google::protobuf::internal::InitSCC(
-      &protobuf_st_5fhuman_2eproto::scc_info_givemoneyrecord.base);
-  SharedCtor();
-  // @@protoc_insertion_point(constructor:NFMsg.givemoneyrecord)
-}
-givemoneyrecord::givemoneyrecord(const givemoneyrecord& from)
-  : ::google::protobuf::Message(),
-      _internal_metadata_(NULL),
-      _has_bits_(from._has_bits_) {
-  _internal_metadata_.MergeFrom(from._internal_metadata_);
-  nickname_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-  if (from.has_nickname()) {
-    nickname_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.nickname_);
-  }
-  timemark_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-  if (from.has_timemark()) {
-    timemark_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.timemark_);
-  }
-  ::memcpy(&userid_, &from.userid_,
-    static_cast<size_t>(reinterpret_cast<char*>(&amount_) -
-    reinterpret_cast<char*>(&userid_)) + sizeof(amount_));
-  // @@protoc_insertion_point(copy_constructor:NFMsg.givemoneyrecord)
-}
-
-void givemoneyrecord::SharedCtor() {
-  nickname_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-  timemark_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-  ::memset(&userid_, 0, static_cast<size_t>(
-      reinterpret_cast<char*>(&amount_) -
-      reinterpret_cast<char*>(&userid_)) + sizeof(amount_));
-}
-
-givemoneyrecord::~givemoneyrecord() {
-  // @@protoc_insertion_point(destructor:NFMsg.givemoneyrecord)
-  SharedDtor();
-}
-
-void givemoneyrecord::SharedDtor() {
-  nickname_.DestroyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-  timemark_.DestroyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-}
-
-void givemoneyrecord::SetCachedSize(int size) const {
-  _cached_size_.Set(size);
-}
-const ::google::protobuf::Descriptor* givemoneyrecord::descriptor() {
-  ::protobuf_st_5fhuman_2eproto::protobuf_AssignDescriptorsOnce();
-  return ::protobuf_st_5fhuman_2eproto::file_level_metadata[kIndexInFileMessages].descriptor;
-}
-
-const givemoneyrecord& givemoneyrecord::default_instance() {
-  ::google::protobuf::internal::InitSCC(&protobuf_st_5fhuman_2eproto::scc_info_givemoneyrecord.base);
-  return *internal_default_instance();
-}
-
-
-void givemoneyrecord::Clear() {
-// @@protoc_insertion_point(message_clear_start:NFMsg.givemoneyrecord)
-  ::google::protobuf::uint32 cached_has_bits = 0;
-  // Prevent compiler warnings about cached_has_bits being unused
-  (void) cached_has_bits;
-
-  cached_has_bits = _has_bits_[0];
-  if (cached_has_bits & 3u) {
-    if (cached_has_bits & 0x00000001u) {
-      nickname_.ClearNonDefaultToEmptyNoArena();
-    }
-    if (cached_has_bits & 0x00000002u) {
-      timemark_.ClearNonDefaultToEmptyNoArena();
-    }
-  }
-  if (cached_has_bits & 12u) {
-    ::memset(&userid_, 0, static_cast<size_t>(
-        reinterpret_cast<char*>(&amount_) -
-        reinterpret_cast<char*>(&userid_)) + sizeof(amount_));
-  }
-  _has_bits_.Clear();
-  _internal_metadata_.Clear();
-}
-
-bool givemoneyrecord::MergePartialFromCodedStream(
-    ::google::protobuf::io::CodedInputStream* input) {
-#define DO_(EXPRESSION) if (!GOOGLE_PREDICT_TRUE(EXPRESSION)) goto failure
-  ::google::protobuf::uint32 tag;
-  // @@protoc_insertion_point(parse_start:NFMsg.givemoneyrecord)
-  for (;;) {
-    ::std::pair<::google::protobuf::uint32, bool> p = input->ReadTagWithCutoffNoLastTag(127u);
-    tag = p.first;
-    if (!p.second) goto handle_unusual;
-    switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // optional int32 userid = 1;
-      case 1: {
-        if (static_cast< ::google::protobuf::uint8>(tag) ==
-            static_cast< ::google::protobuf::uint8>(8u /* 8 & 0xFF */)) {
-          set_has_userid();
-          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
-                 input, &userid_)));
-        } else {
-          goto handle_unusual;
-        }
-        break;
-      }
-
-      // optional string nickname = 2;
-      case 2: {
-        if (static_cast< ::google::protobuf::uint8>(tag) ==
-            static_cast< ::google::protobuf::uint8>(18u /* 18 & 0xFF */)) {
-          DO_(::google::protobuf::internal::WireFormatLite::ReadString(
-                input, this->mutable_nickname()));
-          ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
-            this->nickname().data(), static_cast<int>(this->nickname().length()),
-            ::google::protobuf::internal::WireFormat::PARSE,
-            "NFMsg.givemoneyrecord.nickname");
-        } else {
-          goto handle_unusual;
-        }
-        break;
-      }
-
-      // optional int32 amount = 3;
-      case 3: {
-        if (static_cast< ::google::protobuf::uint8>(tag) ==
-            static_cast< ::google::protobuf::uint8>(24u /* 24 & 0xFF */)) {
-          set_has_amount();
-          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
-                 input, &amount_)));
-        } else {
-          goto handle_unusual;
-        }
-        break;
-      }
-
-      // optional string timemark = 4;
-      case 4: {
-        if (static_cast< ::google::protobuf::uint8>(tag) ==
-            static_cast< ::google::protobuf::uint8>(34u /* 34 & 0xFF */)) {
-          DO_(::google::protobuf::internal::WireFormatLite::ReadString(
-                input, this->mutable_timemark()));
-          ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
-            this->timemark().data(), static_cast<int>(this->timemark().length()),
-            ::google::protobuf::internal::WireFormat::PARSE,
-            "NFMsg.givemoneyrecord.timemark");
-        } else {
-          goto handle_unusual;
-        }
-        break;
-      }
-
-      default: {
-      handle_unusual:
-        if (tag == 0) {
-          goto success;
-        }
-        DO_(::google::protobuf::internal::WireFormat::SkipField(
-              input, tag, _internal_metadata_.mutable_unknown_fields()));
-        break;
-      }
-    }
-  }
-success:
-  // @@protoc_insertion_point(parse_success:NFMsg.givemoneyrecord)
-  return true;
-failure:
-  // @@protoc_insertion_point(parse_failure:NFMsg.givemoneyrecord)
-  return false;
-#undef DO_
-}
-
-void givemoneyrecord::SerializeWithCachedSizes(
-    ::google::protobuf::io::CodedOutputStream* output) const {
-  // @@protoc_insertion_point(serialize_start:NFMsg.givemoneyrecord)
-  ::google::protobuf::uint32 cached_has_bits = 0;
-  (void) cached_has_bits;
-
-  cached_has_bits = _has_bits_[0];
-  // optional int32 userid = 1;
-  if (cached_has_bits & 0x00000004u) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt32(1, this->userid(), output);
-  }
-
-  // optional string nickname = 2;
-  if (cached_has_bits & 0x00000001u) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
-      this->nickname().data(), static_cast<int>(this->nickname().length()),
-      ::google::protobuf::internal::WireFormat::SERIALIZE,
-      "NFMsg.givemoneyrecord.nickname");
-    ::google::protobuf::internal::WireFormatLite::WriteStringMaybeAliased(
-      2, this->nickname(), output);
-  }
-
-  // optional int32 amount = 3;
-  if (cached_has_bits & 0x00000008u) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt32(3, this->amount(), output);
-  }
-
-  // optional string timemark = 4;
-  if (cached_has_bits & 0x00000002u) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
-      this->timemark().data(), static_cast<int>(this->timemark().length()),
-      ::google::protobuf::internal::WireFormat::SERIALIZE,
-      "NFMsg.givemoneyrecord.timemark");
-    ::google::protobuf::internal::WireFormatLite::WriteStringMaybeAliased(
-      4, this->timemark(), output);
-  }
-
-  if (_internal_metadata_.have_unknown_fields()) {
-    ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
-        _internal_metadata_.unknown_fields(), output);
-  }
-  // @@protoc_insertion_point(serialize_end:NFMsg.givemoneyrecord)
-}
-
-::google::protobuf::uint8* givemoneyrecord::InternalSerializeWithCachedSizesToArray(
-    bool deterministic, ::google::protobuf::uint8* target) const {
-  (void)deterministic; // Unused
-  // @@protoc_insertion_point(serialize_to_array_start:NFMsg.givemoneyrecord)
-  ::google::protobuf::uint32 cached_has_bits = 0;
-  (void) cached_has_bits;
-
-  cached_has_bits = _has_bits_[0];
-  // optional int32 userid = 1;
-  if (cached_has_bits & 0x00000004u) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(1, this->userid(), target);
-  }
-
-  // optional string nickname = 2;
-  if (cached_has_bits & 0x00000001u) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
-      this->nickname().data(), static_cast<int>(this->nickname().length()),
-      ::google::protobuf::internal::WireFormat::SERIALIZE,
-      "NFMsg.givemoneyrecord.nickname");
-    target =
-      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
-        2, this->nickname(), target);
-  }
-
-  // optional int32 amount = 3;
-  if (cached_has_bits & 0x00000008u) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(3, this->amount(), target);
-  }
-
-  // optional string timemark = 4;
-  if (cached_has_bits & 0x00000002u) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
-      this->timemark().data(), static_cast<int>(this->timemark().length()),
-      ::google::protobuf::internal::WireFormat::SERIALIZE,
-      "NFMsg.givemoneyrecord.timemark");
-    target =
-      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
-        4, this->timemark(), target);
-  }
-
-  if (_internal_metadata_.have_unknown_fields()) {
-    target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
-        _internal_metadata_.unknown_fields(), target);
-  }
-  // @@protoc_insertion_point(serialize_to_array_end:NFMsg.givemoneyrecord)
-  return target;
-}
-
-size_t givemoneyrecord::ByteSizeLong() const {
-// @@protoc_insertion_point(message_byte_size_start:NFMsg.givemoneyrecord)
-  size_t total_size = 0;
-
-  if (_internal_metadata_.have_unknown_fields()) {
-    total_size +=
-      ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
-        _internal_metadata_.unknown_fields());
-  }
-  if (_has_bits_[0 / 32] & 15u) {
-    // optional string nickname = 2;
-    if (has_nickname()) {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::StringSize(
-          this->nickname());
-    }
-
-    // optional string timemark = 4;
-    if (has_timemark()) {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::StringSize(
-          this->timemark());
-    }
-
-    // optional int32 userid = 1;
-    if (has_userid()) {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::Int32Size(
-          this->userid());
-    }
-
-    // optional int32 amount = 3;
-    if (has_amount()) {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::Int32Size(
-          this->amount());
-    }
-
-  }
-  int cached_size = ::google::protobuf::internal::ToCachedSize(total_size);
-  SetCachedSize(cached_size);
-  return total_size;
-}
-
-void givemoneyrecord::MergeFrom(const ::google::protobuf::Message& from) {
-// @@protoc_insertion_point(generalized_merge_from_start:NFMsg.givemoneyrecord)
-  GOOGLE_DCHECK_NE(&from, this);
-  const givemoneyrecord* source =
-      ::google::protobuf::internal::DynamicCastToGenerated<const givemoneyrecord>(
-          &from);
-  if (source == NULL) {
-  // @@protoc_insertion_point(generalized_merge_from_cast_fail:NFMsg.givemoneyrecord)
-    ::google::protobuf::internal::ReflectionOps::Merge(from, this);
-  } else {
-  // @@protoc_insertion_point(generalized_merge_from_cast_success:NFMsg.givemoneyrecord)
-    MergeFrom(*source);
-  }
-}
-
-void givemoneyrecord::MergeFrom(const givemoneyrecord& from) {
-// @@protoc_insertion_point(class_specific_merge_from_start:NFMsg.givemoneyrecord)
-  GOOGLE_DCHECK_NE(&from, this);
-  _internal_metadata_.MergeFrom(from._internal_metadata_);
-  ::google::protobuf::uint32 cached_has_bits = 0;
-  (void) cached_has_bits;
-
-  cached_has_bits = from._has_bits_[0];
-  if (cached_has_bits & 15u) {
-    if (cached_has_bits & 0x00000001u) {
-      set_has_nickname();
-      nickname_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.nickname_);
-    }
-    if (cached_has_bits & 0x00000002u) {
-      set_has_timemark();
-      timemark_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.timemark_);
-    }
-    if (cached_has_bits & 0x00000004u) {
-      userid_ = from.userid_;
-    }
-    if (cached_has_bits & 0x00000008u) {
-      amount_ = from.amount_;
-    }
-    _has_bits_[0] |= cached_has_bits;
-  }
-}
-
-void givemoneyrecord::CopyFrom(const ::google::protobuf::Message& from) {
-// @@protoc_insertion_point(generalized_copy_from_start:NFMsg.givemoneyrecord)
-  if (&from == this) return;
-  Clear();
-  MergeFrom(from);
-}
-
-void givemoneyrecord::CopyFrom(const givemoneyrecord& from) {
-// @@protoc_insertion_point(class_specific_copy_from_start:NFMsg.givemoneyrecord)
-  if (&from == this) return;
-  Clear();
-  MergeFrom(from);
-}
-
-bool givemoneyrecord::IsInitialized() const {
-  return true;
-}
-
-void givemoneyrecord::Swap(givemoneyrecord* other) {
-  if (other == this) return;
-  InternalSwap(other);
-}
-void givemoneyrecord::InternalSwap(givemoneyrecord* other) {
-  using std::swap;
-  nickname_.Swap(&other->nickname_, &::google::protobuf::internal::GetEmptyStringAlreadyInited(),
-    GetArenaNoVirtual());
-  timemark_.Swap(&other->timemark_, &::google::protobuf::internal::GetEmptyStringAlreadyInited(),
-    GetArenaNoVirtual());
-  swap(userid_, other->userid_);
-  swap(amount_, other->amount_);
-  swap(_has_bits_[0], other->_has_bits_[0]);
-  _internal_metadata_.Swap(&other->_internal_metadata_);
-}
-
-::google::protobuf::Metadata givemoneyrecord::GetMetadata() const {
-  protobuf_st_5fhuman_2eproto::protobuf_AssignDescriptorsOnce();
-  return ::protobuf_st_5fhuman_2eproto::file_level_metadata[kIndexInFileMessages];
-}
-
-
-// ===================================================================
-
 void agencyinfo::InitAsDefaultInstance() {
 }
 #if !defined(_MSC_VER) || _MSC_VER >= 1900
@@ -9542,7 +8899,9 @@ const int agencyinfo::kQrcodeurlFieldNumber;
 const int agencyinfo::kDatemarkFieldNumber;
 const int agencyinfo::kMoneymarkFieldNumber;
 const int agencyinfo::kWeekmoneyFieldNumber;
-const int agencyinfo::kGivemoneylistFieldNumber;
+const int agencyinfo::kExclusiveurlFieldNumber;
+const int agencyinfo::kAlipayFieldNumber;
+const int agencyinfo::kBankaccountFieldNumber;
 #endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
 
 agencyinfo::agencyinfo()
@@ -9556,8 +8915,7 @@ agencyinfo::agencyinfo(const agencyinfo& from)
   : ::google::protobuf::Message(),
       _internal_metadata_(NULL),
       _has_bits_(from._has_bits_),
-      invitelist_(from.invitelist_),
-      givemoneylist_(from.givemoneylist_) {
+      invitelist_(from.invitelist_) {
   _internal_metadata_.MergeFrom(from._internal_metadata_);
   invitestr_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   if (from.has_invitestr()) {
@@ -9571,6 +8929,18 @@ agencyinfo::agencyinfo(const agencyinfo& from)
   if (from.has_datemark()) {
     datemark_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.datemark_);
   }
+  exclusiveurl_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  if (from.has_exclusiveurl()) {
+    exclusiveurl_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.exclusiveurl_);
+  }
+  alipay_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  if (from.has_alipay()) {
+    alipay_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.alipay_);
+  }
+  bankaccount_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  if (from.has_bankaccount()) {
+    bankaccount_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.bankaccount_);
+  }
   ::memcpy(&userid_, &from.userid_,
     static_cast<size_t>(reinterpret_cast<char*>(&weekmoney_) -
     reinterpret_cast<char*>(&userid_)) + sizeof(weekmoney_));
@@ -9581,6 +8951,9 @@ void agencyinfo::SharedCtor() {
   invitestr_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   qrcodeurl_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   datemark_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  exclusiveurl_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  alipay_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  bankaccount_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   ::memset(&userid_, 0, static_cast<size_t>(
       reinterpret_cast<char*>(&weekmoney_) -
       reinterpret_cast<char*>(&userid_)) + sizeof(weekmoney_));
@@ -9595,6 +8968,9 @@ void agencyinfo::SharedDtor() {
   invitestr_.DestroyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   qrcodeurl_.DestroyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   datemark_.DestroyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  exclusiveurl_.DestroyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  alipay_.DestroyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  bankaccount_.DestroyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
 
 void agencyinfo::SetCachedSize(int size) const {
@@ -9618,9 +8994,8 @@ void agencyinfo::Clear() {
   (void) cached_has_bits;
 
   invitelist_.Clear();
-  givemoneylist_.Clear();
   cached_has_bits = _has_bits_[0];
-  if (cached_has_bits & 7u) {
+  if (cached_has_bits & 63u) {
     if (cached_has_bits & 0x00000001u) {
       invitestr_.ClearNonDefaultToEmptyNoArena();
     }
@@ -9630,16 +9005,25 @@ void agencyinfo::Clear() {
     if (cached_has_bits & 0x00000004u) {
       datemark_.ClearNonDefaultToEmptyNoArena();
     }
+    if (cached_has_bits & 0x00000008u) {
+      exclusiveurl_.ClearNonDefaultToEmptyNoArena();
+    }
+    if (cached_has_bits & 0x00000010u) {
+      alipay_.ClearNonDefaultToEmptyNoArena();
+    }
+    if (cached_has_bits & 0x00000020u) {
+      bankaccount_.ClearNonDefaultToEmptyNoArena();
+    }
   }
-  if (cached_has_bits & 248u) {
+  if (cached_has_bits & 192u) {
     ::memset(&userid_, 0, static_cast<size_t>(
-        reinterpret_cast<char*>(&agent2_) -
-        reinterpret_cast<char*>(&userid_)) + sizeof(agent2_));
+        reinterpret_cast<char*>(&level_) -
+        reinterpret_cast<char*>(&userid_)) + sizeof(level_));
   }
-  if (cached_has_bits & 3840u) {
-    ::memset(&agent3_, 0, static_cast<size_t>(
+  if (cached_has_bits & 32512u) {
+    ::memset(&soleagent_, 0, static_cast<size_t>(
         reinterpret_cast<char*>(&weekmoney_) -
-        reinterpret_cast<char*>(&agent3_)) + sizeof(weekmoney_));
+        reinterpret_cast<char*>(&soleagent_)) + sizeof(weekmoney_));
   }
   _has_bits_.Clear();
   _internal_metadata_.Clear();
@@ -9651,7 +9035,7 @@ bool agencyinfo::MergePartialFromCodedStream(
   ::google::protobuf::uint32 tag;
   // @@protoc_insertion_point(parse_start:NFMsg.agencyinfo)
   for (;;) {
-    ::std::pair<::google::protobuf::uint32, bool> p = input->ReadTagWithCutoffNoLastTag(127u);
+    ::std::pair<::google::protobuf::uint32, bool> p = input->ReadTagWithCutoffNoLastTag(16383u);
     tag = p.first;
     if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
@@ -9841,12 +9225,48 @@ bool agencyinfo::MergePartialFromCodedStream(
         break;
       }
 
-      // repeated .NFMsg.givemoneyrecord givemoneylist = 14;
+      // optional string exclusiveurl = 14;
       case 14: {
         if (static_cast< ::google::protobuf::uint8>(tag) ==
             static_cast< ::google::protobuf::uint8>(114u /* 114 & 0xFF */)) {
-          DO_(::google::protobuf::internal::WireFormatLite::ReadMessage(
-                input, add_givemoneylist()));
+          DO_(::google::protobuf::internal::WireFormatLite::ReadString(
+                input, this->mutable_exclusiveurl()));
+          ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
+            this->exclusiveurl().data(), static_cast<int>(this->exclusiveurl().length()),
+            ::google::protobuf::internal::WireFormat::PARSE,
+            "NFMsg.agencyinfo.exclusiveurl");
+        } else {
+          goto handle_unusual;
+        }
+        break;
+      }
+
+      // optional string alipay = 15;
+      case 15: {
+        if (static_cast< ::google::protobuf::uint8>(tag) ==
+            static_cast< ::google::protobuf::uint8>(122u /* 122 & 0xFF */)) {
+          DO_(::google::protobuf::internal::WireFormatLite::ReadString(
+                input, this->mutable_alipay()));
+          ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
+            this->alipay().data(), static_cast<int>(this->alipay().length()),
+            ::google::protobuf::internal::WireFormat::PARSE,
+            "NFMsg.agencyinfo.alipay");
+        } else {
+          goto handle_unusual;
+        }
+        break;
+      }
+
+      // optional string bankaccount = 16;
+      case 16: {
+        if (static_cast< ::google::protobuf::uint8>(tag) ==
+            static_cast< ::google::protobuf::uint8>(130u /* 130 & 0xFF */)) {
+          DO_(::google::protobuf::internal::WireFormatLite::ReadString(
+                input, this->mutable_bankaccount()));
+          ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
+            this->bankaccount().data(), static_cast<int>(this->bankaccount().length()),
+            ::google::protobuf::internal::WireFormat::PARSE,
+            "NFMsg.agencyinfo.bankaccount");
         } else {
           goto handle_unusual;
         }
@@ -9881,7 +9301,7 @@ void agencyinfo::SerializeWithCachedSizes(
 
   cached_has_bits = _has_bits_[0];
   // optional int32 userid = 1;
-  if (cached_has_bits & 0x00000008u) {
+  if (cached_has_bits & 0x00000040u) {
     ::google::protobuf::internal::WireFormatLite::WriteInt32(1, this->userid(), output);
   }
 
@@ -9896,32 +9316,32 @@ void agencyinfo::SerializeWithCachedSizes(
   }
 
   // optional int32 level = 3;
-  if (cached_has_bits & 0x00000010u) {
+  if (cached_has_bits & 0x00000080u) {
     ::google::protobuf::internal::WireFormatLite::WriteInt32(3, this->level(), output);
   }
 
   // optional int32 soleagent = 4;
-  if (cached_has_bits & 0x00000020u) {
+  if (cached_has_bits & 0x00000100u) {
     ::google::protobuf::internal::WireFormatLite::WriteInt32(4, this->soleagent(), output);
   }
 
   // optional int32 agent1 = 5;
-  if (cached_has_bits & 0x00000040u) {
+  if (cached_has_bits & 0x00000200u) {
     ::google::protobuf::internal::WireFormatLite::WriteInt32(5, this->agent1(), output);
   }
 
   // optional int32 agent2 = 6;
-  if (cached_has_bits & 0x00000080u) {
+  if (cached_has_bits & 0x00000400u) {
     ::google::protobuf::internal::WireFormatLite::WriteInt32(6, this->agent2(), output);
   }
 
   // optional int32 agent3 = 7;
-  if (cached_has_bits & 0x00000100u) {
+  if (cached_has_bits & 0x00000800u) {
     ::google::protobuf::internal::WireFormatLite::WriteInt32(7, this->agent3(), output);
   }
 
   // optional int32 agent4 = 8;
-  if (cached_has_bits & 0x00000200u) {
+  if (cached_has_bits & 0x00001000u) {
     ::google::protobuf::internal::WireFormatLite::WriteInt32(8, this->agent4(), output);
   }
 
@@ -9955,22 +9375,43 @@ void agencyinfo::SerializeWithCachedSizes(
   }
 
   // optional int32 moneymark = 12;
-  if (cached_has_bits & 0x00000400u) {
+  if (cached_has_bits & 0x00002000u) {
     ::google::protobuf::internal::WireFormatLite::WriteInt32(12, this->moneymark(), output);
   }
 
   // optional int32 weekmoney = 13;
-  if (cached_has_bits & 0x00000800u) {
+  if (cached_has_bits & 0x00004000u) {
     ::google::protobuf::internal::WireFormatLite::WriteInt32(13, this->weekmoney(), output);
   }
 
-  // repeated .NFMsg.givemoneyrecord givemoneylist = 14;
-  for (unsigned int i = 0,
-      n = static_cast<unsigned int>(this->givemoneylist_size()); i < n; i++) {
-    ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
-      14,
-      this->givemoneylist(static_cast<int>(i)),
-      output);
+  // optional string exclusiveurl = 14;
+  if (cached_has_bits & 0x00000008u) {
+    ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
+      this->exclusiveurl().data(), static_cast<int>(this->exclusiveurl().length()),
+      ::google::protobuf::internal::WireFormat::SERIALIZE,
+      "NFMsg.agencyinfo.exclusiveurl");
+    ::google::protobuf::internal::WireFormatLite::WriteStringMaybeAliased(
+      14, this->exclusiveurl(), output);
+  }
+
+  // optional string alipay = 15;
+  if (cached_has_bits & 0x00000010u) {
+    ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
+      this->alipay().data(), static_cast<int>(this->alipay().length()),
+      ::google::protobuf::internal::WireFormat::SERIALIZE,
+      "NFMsg.agencyinfo.alipay");
+    ::google::protobuf::internal::WireFormatLite::WriteStringMaybeAliased(
+      15, this->alipay(), output);
+  }
+
+  // optional string bankaccount = 16;
+  if (cached_has_bits & 0x00000020u) {
+    ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
+      this->bankaccount().data(), static_cast<int>(this->bankaccount().length()),
+      ::google::protobuf::internal::WireFormat::SERIALIZE,
+      "NFMsg.agencyinfo.bankaccount");
+    ::google::protobuf::internal::WireFormatLite::WriteStringMaybeAliased(
+      16, this->bankaccount(), output);
   }
 
   if (_internal_metadata_.have_unknown_fields()) {
@@ -9989,7 +9430,7 @@ void agencyinfo::SerializeWithCachedSizes(
 
   cached_has_bits = _has_bits_[0];
   // optional int32 userid = 1;
-  if (cached_has_bits & 0x00000008u) {
+  if (cached_has_bits & 0x00000040u) {
     target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(1, this->userid(), target);
   }
 
@@ -10005,32 +9446,32 @@ void agencyinfo::SerializeWithCachedSizes(
   }
 
   // optional int32 level = 3;
-  if (cached_has_bits & 0x00000010u) {
+  if (cached_has_bits & 0x00000080u) {
     target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(3, this->level(), target);
   }
 
   // optional int32 soleagent = 4;
-  if (cached_has_bits & 0x00000020u) {
+  if (cached_has_bits & 0x00000100u) {
     target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(4, this->soleagent(), target);
   }
 
   // optional int32 agent1 = 5;
-  if (cached_has_bits & 0x00000040u) {
+  if (cached_has_bits & 0x00000200u) {
     target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(5, this->agent1(), target);
   }
 
   // optional int32 agent2 = 6;
-  if (cached_has_bits & 0x00000080u) {
+  if (cached_has_bits & 0x00000400u) {
     target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(6, this->agent2(), target);
   }
 
   // optional int32 agent3 = 7;
-  if (cached_has_bits & 0x00000100u) {
+  if (cached_has_bits & 0x00000800u) {
     target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(7, this->agent3(), target);
   }
 
   // optional int32 agent4 = 8;
-  if (cached_has_bits & 0x00000200u) {
+  if (cached_has_bits & 0x00001000u) {
     target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(8, this->agent4(), target);
   }
 
@@ -10065,21 +9506,46 @@ void agencyinfo::SerializeWithCachedSizes(
   }
 
   // optional int32 moneymark = 12;
-  if (cached_has_bits & 0x00000400u) {
+  if (cached_has_bits & 0x00002000u) {
     target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(12, this->moneymark(), target);
   }
 
   // optional int32 weekmoney = 13;
-  if (cached_has_bits & 0x00000800u) {
+  if (cached_has_bits & 0x00004000u) {
     target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(13, this->weekmoney(), target);
   }
 
-  // repeated .NFMsg.givemoneyrecord givemoneylist = 14;
-  for (unsigned int i = 0,
-      n = static_cast<unsigned int>(this->givemoneylist_size()); i < n; i++) {
-    target = ::google::protobuf::internal::WireFormatLite::
-      InternalWriteMessageToArray(
-        14, this->givemoneylist(static_cast<int>(i)), deterministic, target);
+  // optional string exclusiveurl = 14;
+  if (cached_has_bits & 0x00000008u) {
+    ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
+      this->exclusiveurl().data(), static_cast<int>(this->exclusiveurl().length()),
+      ::google::protobuf::internal::WireFormat::SERIALIZE,
+      "NFMsg.agencyinfo.exclusiveurl");
+    target =
+      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
+        14, this->exclusiveurl(), target);
+  }
+
+  // optional string alipay = 15;
+  if (cached_has_bits & 0x00000010u) {
+    ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
+      this->alipay().data(), static_cast<int>(this->alipay().length()),
+      ::google::protobuf::internal::WireFormat::SERIALIZE,
+      "NFMsg.agencyinfo.alipay");
+    target =
+      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
+        15, this->alipay(), target);
+  }
+
+  // optional string bankaccount = 16;
+  if (cached_has_bits & 0x00000020u) {
+    ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
+      this->bankaccount().data(), static_cast<int>(this->bankaccount().length()),
+      ::google::protobuf::internal::WireFormat::SERIALIZE,
+      "NFMsg.agencyinfo.bankaccount");
+    target =
+      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
+        16, this->bankaccount(), target);
   }
 
   if (_internal_metadata_.have_unknown_fields()) {
@@ -10110,17 +9576,6 @@ size_t agencyinfo::ByteSizeLong() const {
     }
   }
 
-  // repeated .NFMsg.givemoneyrecord givemoneylist = 14;
-  {
-    unsigned int count = static_cast<unsigned int>(this->givemoneylist_size());
-    total_size += 1UL * count;
-    for (unsigned int i = 0; i < count; i++) {
-      total_size +=
-        ::google::protobuf::internal::WireFormatLite::MessageSize(
-          this->givemoneylist(static_cast<int>(i)));
-    }
-  }
-
   if (_has_bits_[0 / 32] & 255u) {
     // optional string invitestr = 2;
     if (has_invitestr()) {
@@ -10143,6 +9598,27 @@ size_t agencyinfo::ByteSizeLong() const {
           this->datemark());
     }
 
+    // optional string exclusiveurl = 14;
+    if (has_exclusiveurl()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::StringSize(
+          this->exclusiveurl());
+    }
+
+    // optional string alipay = 15;
+    if (has_alipay()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::StringSize(
+          this->alipay());
+    }
+
+    // optional string bankaccount = 16;
+    if (has_bankaccount()) {
+      total_size += 2 +
+        ::google::protobuf::internal::WireFormatLite::StringSize(
+          this->bankaccount());
+    }
+
     // optional int32 userid = 1;
     if (has_userid()) {
       total_size += 1 +
@@ -10157,6 +9633,8 @@ size_t agencyinfo::ByteSizeLong() const {
           this->level());
     }
 
+  }
+  if (_has_bits_[8 / 32] & 32512u) {
     // optional int32 soleagent = 4;
     if (has_soleagent()) {
       total_size += 1 +
@@ -10178,8 +9656,6 @@ size_t agencyinfo::ByteSizeLong() const {
           this->agent2());
     }
 
-  }
-  if (_has_bits_[8 / 32] & 3840u) {
     // optional int32 agent3 = 7;
     if (has_agent3()) {
       total_size += 1 +
@@ -10237,7 +9713,6 @@ void agencyinfo::MergeFrom(const agencyinfo& from) {
   (void) cached_has_bits;
 
   invitelist_.MergeFrom(from.invitelist_);
-  givemoneylist_.MergeFrom(from.givemoneylist_);
   cached_has_bits = from._has_bits_[0];
   if (cached_has_bits & 255u) {
     if (cached_has_bits & 0x00000001u) {
@@ -10253,33 +9728,45 @@ void agencyinfo::MergeFrom(const agencyinfo& from) {
       datemark_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.datemark_);
     }
     if (cached_has_bits & 0x00000008u) {
-      userid_ = from.userid_;
+      set_has_exclusiveurl();
+      exclusiveurl_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.exclusiveurl_);
     }
     if (cached_has_bits & 0x00000010u) {
-      level_ = from.level_;
+      set_has_alipay();
+      alipay_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.alipay_);
     }
     if (cached_has_bits & 0x00000020u) {
-      soleagent_ = from.soleagent_;
+      set_has_bankaccount();
+      bankaccount_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.bankaccount_);
     }
     if (cached_has_bits & 0x00000040u) {
-      agent1_ = from.agent1_;
+      userid_ = from.userid_;
     }
     if (cached_has_bits & 0x00000080u) {
-      agent2_ = from.agent2_;
+      level_ = from.level_;
     }
     _has_bits_[0] |= cached_has_bits;
   }
-  if (cached_has_bits & 3840u) {
+  if (cached_has_bits & 32512u) {
     if (cached_has_bits & 0x00000100u) {
-      agent3_ = from.agent3_;
+      soleagent_ = from.soleagent_;
     }
     if (cached_has_bits & 0x00000200u) {
-      agent4_ = from.agent4_;
+      agent1_ = from.agent1_;
     }
     if (cached_has_bits & 0x00000400u) {
-      moneymark_ = from.moneymark_;
+      agent2_ = from.agent2_;
     }
     if (cached_has_bits & 0x00000800u) {
+      agent3_ = from.agent3_;
+    }
+    if (cached_has_bits & 0x00001000u) {
+      agent4_ = from.agent4_;
+    }
+    if (cached_has_bits & 0x00002000u) {
+      moneymark_ = from.moneymark_;
+    }
+    if (cached_has_bits & 0x00004000u) {
       weekmoney_ = from.weekmoney_;
     }
     _has_bits_[0] |= cached_has_bits;
@@ -10311,12 +9798,17 @@ void agencyinfo::Swap(agencyinfo* other) {
 void agencyinfo::InternalSwap(agencyinfo* other) {
   using std::swap;
   CastToBase(&invitelist_)->InternalSwap(CastToBase(&other->invitelist_));
-  CastToBase(&givemoneylist_)->InternalSwap(CastToBase(&other->givemoneylist_));
   invitestr_.Swap(&other->invitestr_, &::google::protobuf::internal::GetEmptyStringAlreadyInited(),
     GetArenaNoVirtual());
   qrcodeurl_.Swap(&other->qrcodeurl_, &::google::protobuf::internal::GetEmptyStringAlreadyInited(),
     GetArenaNoVirtual());
   datemark_.Swap(&other->datemark_, &::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+    GetArenaNoVirtual());
+  exclusiveurl_.Swap(&other->exclusiveurl_, &::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+    GetArenaNoVirtual());
+  alipay_.Swap(&other->alipay_, &::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+    GetArenaNoVirtual());
+  bankaccount_.Swap(&other->bankaccount_, &::google::protobuf::internal::GetEmptyStringAlreadyInited(),
     GetArenaNoVirtual());
   swap(userid_, other->userid_);
   swap(level_, other->level_);
@@ -10806,96 +10298,490 @@ void stringlist::InternalSwap(stringlist* other) {
 
 // ===================================================================
 
-void specialinfo::InitAsDefaultInstance() {
+void useraward::InitAsDefaultInstance() {
 }
 #if !defined(_MSC_VER) || _MSC_VER >= 1900
-const int specialinfo::kUseridFieldNumber;
-const int specialinfo::kStarttimeFieldNumber;
-const int specialinfo::kEndtimeFieldNumber;
-const int specialinfo::kStateFieldNumber;
-const int specialinfo::kRateFieldNumber;
-const int specialinfo::kWinallFieldNumber;
-const int specialinfo::kPeinumFieldNumber;
-const int specialinfo::kMarknumFieldNumber;
-const int specialinfo::kGametypeFieldNumber;
-const int specialinfo::kCardtypeFieldNumber;
-const int specialinfo::kIszhuangFieldNumber;
+const int useraward::kIdFieldNumber;
+const int useraward::kAwardtypeFieldNumber;
+const int useraward::kCountFieldNumber;
+const int useraward::kTimemarkFieldNumber;
+const int useraward::kStateFieldNumber;
 #endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
 
-specialinfo::specialinfo()
+useraward::useraward()
   : ::google::protobuf::Message(), _internal_metadata_(NULL) {
   ::google::protobuf::internal::InitSCC(
-      &protobuf_st_5fhuman_2eproto::scc_info_specialinfo.base);
+      &protobuf_st_5fhuman_2eproto::scc_info_useraward.base);
   SharedCtor();
-  // @@protoc_insertion_point(constructor:NFMsg.specialinfo)
+  // @@protoc_insertion_point(constructor:NFMsg.useraward)
 }
-specialinfo::specialinfo(const specialinfo& from)
+useraward::useraward(const useraward& from)
   : ::google::protobuf::Message(),
       _internal_metadata_(NULL),
-      _has_bits_(from._has_bits_),
-      gametype_(from.gametype_) {
+      _has_bits_(from._has_bits_) {
   _internal_metadata_.MergeFrom(from._internal_metadata_);
-  ::memcpy(&userid_, &from.userid_,
-    static_cast<size_t>(reinterpret_cast<char*>(&iszhuang_) -
-    reinterpret_cast<char*>(&userid_)) + sizeof(iszhuang_));
-  // @@protoc_insertion_point(copy_constructor:NFMsg.specialinfo)
+  ::memcpy(&id_, &from.id_,
+    static_cast<size_t>(reinterpret_cast<char*>(&state_) -
+    reinterpret_cast<char*>(&id_)) + sizeof(state_));
+  // @@protoc_insertion_point(copy_constructor:NFMsg.useraward)
 }
 
-void specialinfo::SharedCtor() {
-  ::memset(&userid_, 0, static_cast<size_t>(
-      reinterpret_cast<char*>(&iszhuang_) -
-      reinterpret_cast<char*>(&userid_)) + sizeof(iszhuang_));
+void useraward::SharedCtor() {
+  ::memset(&id_, 0, static_cast<size_t>(
+      reinterpret_cast<char*>(&state_) -
+      reinterpret_cast<char*>(&id_)) + sizeof(state_));
 }
 
-specialinfo::~specialinfo() {
-  // @@protoc_insertion_point(destructor:NFMsg.specialinfo)
+useraward::~useraward() {
+  // @@protoc_insertion_point(destructor:NFMsg.useraward)
   SharedDtor();
 }
 
-void specialinfo::SharedDtor() {
+void useraward::SharedDtor() {
 }
 
-void specialinfo::SetCachedSize(int size) const {
+void useraward::SetCachedSize(int size) const {
   _cached_size_.Set(size);
 }
-const ::google::protobuf::Descriptor* specialinfo::descriptor() {
+const ::google::protobuf::Descriptor* useraward::descriptor() {
   ::protobuf_st_5fhuman_2eproto::protobuf_AssignDescriptorsOnce();
   return ::protobuf_st_5fhuman_2eproto::file_level_metadata[kIndexInFileMessages].descriptor;
 }
 
-const specialinfo& specialinfo::default_instance() {
-  ::google::protobuf::internal::InitSCC(&protobuf_st_5fhuman_2eproto::scc_info_specialinfo.base);
+const useraward& useraward::default_instance() {
+  ::google::protobuf::internal::InitSCC(&protobuf_st_5fhuman_2eproto::scc_info_useraward.base);
   return *internal_default_instance();
 }
 
 
-void specialinfo::Clear() {
-// @@protoc_insertion_point(message_clear_start:NFMsg.specialinfo)
+void useraward::Clear() {
+// @@protoc_insertion_point(message_clear_start:NFMsg.useraward)
   ::google::protobuf::uint32 cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
-  gametype_.Clear();
   cached_has_bits = _has_bits_[0];
-  if (cached_has_bits & 255u) {
-    ::memset(&userid_, 0, static_cast<size_t>(
-        reinterpret_cast<char*>(&marknum_) -
-        reinterpret_cast<char*>(&userid_)) + sizeof(marknum_));
-  }
-  if (cached_has_bits & 768u) {
-    ::memset(&cardtype_, 0, static_cast<size_t>(
-        reinterpret_cast<char*>(&iszhuang_) -
-        reinterpret_cast<char*>(&cardtype_)) + sizeof(iszhuang_));
+  if (cached_has_bits & 31u) {
+    ::memset(&id_, 0, static_cast<size_t>(
+        reinterpret_cast<char*>(&state_) -
+        reinterpret_cast<char*>(&id_)) + sizeof(state_));
   }
   _has_bits_.Clear();
   _internal_metadata_.Clear();
 }
 
-bool specialinfo::MergePartialFromCodedStream(
+bool useraward::MergePartialFromCodedStream(
     ::google::protobuf::io::CodedInputStream* input) {
 #define DO_(EXPRESSION) if (!GOOGLE_PREDICT_TRUE(EXPRESSION)) goto failure
   ::google::protobuf::uint32 tag;
-  // @@protoc_insertion_point(parse_start:NFMsg.specialinfo)
+  // @@protoc_insertion_point(parse_start:NFMsg.useraward)
+  for (;;) {
+    ::std::pair<::google::protobuf::uint32, bool> p = input->ReadTagWithCutoffNoLastTag(127u);
+    tag = p.first;
+    if (!p.second) goto handle_unusual;
+    switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
+      // optional int32 id = 1;
+      case 1: {
+        if (static_cast< ::google::protobuf::uint8>(tag) ==
+            static_cast< ::google::protobuf::uint8>(8u /* 8 & 0xFF */)) {
+          set_has_id();
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+                 input, &id_)));
+        } else {
+          goto handle_unusual;
+        }
+        break;
+      }
+
+      // optional int32 awardtype = 2;
+      case 2: {
+        if (static_cast< ::google::protobuf::uint8>(tag) ==
+            static_cast< ::google::protobuf::uint8>(16u /* 16 & 0xFF */)) {
+          set_has_awardtype();
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+                 input, &awardtype_)));
+        } else {
+          goto handle_unusual;
+        }
+        break;
+      }
+
+      // optional int32 count = 3;
+      case 3: {
+        if (static_cast< ::google::protobuf::uint8>(tag) ==
+            static_cast< ::google::protobuf::uint8>(24u /* 24 & 0xFF */)) {
+          set_has_count();
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+                 input, &count_)));
+        } else {
+          goto handle_unusual;
+        }
+        break;
+      }
+
+      // optional int32 timemark = 4;
+      case 4: {
+        if (static_cast< ::google::protobuf::uint8>(tag) ==
+            static_cast< ::google::protobuf::uint8>(32u /* 32 & 0xFF */)) {
+          set_has_timemark();
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+                 input, &timemark_)));
+        } else {
+          goto handle_unusual;
+        }
+        break;
+      }
+
+      // optional int32 state = 5;
+      case 5: {
+        if (static_cast< ::google::protobuf::uint8>(tag) ==
+            static_cast< ::google::protobuf::uint8>(40u /* 40 & 0xFF */)) {
+          set_has_state();
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+                 input, &state_)));
+        } else {
+          goto handle_unusual;
+        }
+        break;
+      }
+
+      default: {
+      handle_unusual:
+        if (tag == 0) {
+          goto success;
+        }
+        DO_(::google::protobuf::internal::WireFormat::SkipField(
+              input, tag, _internal_metadata_.mutable_unknown_fields()));
+        break;
+      }
+    }
+  }
+success:
+  // @@protoc_insertion_point(parse_success:NFMsg.useraward)
+  return true;
+failure:
+  // @@protoc_insertion_point(parse_failure:NFMsg.useraward)
+  return false;
+#undef DO_
+}
+
+void useraward::SerializeWithCachedSizes(
+    ::google::protobuf::io::CodedOutputStream* output) const {
+  // @@protoc_insertion_point(serialize_start:NFMsg.useraward)
+  ::google::protobuf::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  cached_has_bits = _has_bits_[0];
+  // optional int32 id = 1;
+  if (cached_has_bits & 0x00000001u) {
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(1, this->id(), output);
+  }
+
+  // optional int32 awardtype = 2;
+  if (cached_has_bits & 0x00000002u) {
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(2, this->awardtype(), output);
+  }
+
+  // optional int32 count = 3;
+  if (cached_has_bits & 0x00000004u) {
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(3, this->count(), output);
+  }
+
+  // optional int32 timemark = 4;
+  if (cached_has_bits & 0x00000008u) {
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(4, this->timemark(), output);
+  }
+
+  // optional int32 state = 5;
+  if (cached_has_bits & 0x00000010u) {
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(5, this->state(), output);
+  }
+
+  if (_internal_metadata_.have_unknown_fields()) {
+    ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
+        _internal_metadata_.unknown_fields(), output);
+  }
+  // @@protoc_insertion_point(serialize_end:NFMsg.useraward)
+}
+
+::google::protobuf::uint8* useraward::InternalSerializeWithCachedSizesToArray(
+    bool deterministic, ::google::protobuf::uint8* target) const {
+  (void)deterministic; // Unused
+  // @@protoc_insertion_point(serialize_to_array_start:NFMsg.useraward)
+  ::google::protobuf::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  cached_has_bits = _has_bits_[0];
+  // optional int32 id = 1;
+  if (cached_has_bits & 0x00000001u) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(1, this->id(), target);
+  }
+
+  // optional int32 awardtype = 2;
+  if (cached_has_bits & 0x00000002u) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(2, this->awardtype(), target);
+  }
+
+  // optional int32 count = 3;
+  if (cached_has_bits & 0x00000004u) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(3, this->count(), target);
+  }
+
+  // optional int32 timemark = 4;
+  if (cached_has_bits & 0x00000008u) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(4, this->timemark(), target);
+  }
+
+  // optional int32 state = 5;
+  if (cached_has_bits & 0x00000010u) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(5, this->state(), target);
+  }
+
+  if (_internal_metadata_.have_unknown_fields()) {
+    target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
+        _internal_metadata_.unknown_fields(), target);
+  }
+  // @@protoc_insertion_point(serialize_to_array_end:NFMsg.useraward)
+  return target;
+}
+
+size_t useraward::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:NFMsg.useraward)
+  size_t total_size = 0;
+
+  if (_internal_metadata_.have_unknown_fields()) {
+    total_size +=
+      ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
+        _internal_metadata_.unknown_fields());
+  }
+  if (_has_bits_[0 / 32] & 31u) {
+    // optional int32 id = 1;
+    if (has_id()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::Int32Size(
+          this->id());
+    }
+
+    // optional int32 awardtype = 2;
+    if (has_awardtype()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::Int32Size(
+          this->awardtype());
+    }
+
+    // optional int32 count = 3;
+    if (has_count()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::Int32Size(
+          this->count());
+    }
+
+    // optional int32 timemark = 4;
+    if (has_timemark()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::Int32Size(
+          this->timemark());
+    }
+
+    // optional int32 state = 5;
+    if (has_state()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::Int32Size(
+          this->state());
+    }
+
+  }
+  int cached_size = ::google::protobuf::internal::ToCachedSize(total_size);
+  SetCachedSize(cached_size);
+  return total_size;
+}
+
+void useraward::MergeFrom(const ::google::protobuf::Message& from) {
+// @@protoc_insertion_point(generalized_merge_from_start:NFMsg.useraward)
+  GOOGLE_DCHECK_NE(&from, this);
+  const useraward* source =
+      ::google::protobuf::internal::DynamicCastToGenerated<const useraward>(
+          &from);
+  if (source == NULL) {
+  // @@protoc_insertion_point(generalized_merge_from_cast_fail:NFMsg.useraward)
+    ::google::protobuf::internal::ReflectionOps::Merge(from, this);
+  } else {
+  // @@protoc_insertion_point(generalized_merge_from_cast_success:NFMsg.useraward)
+    MergeFrom(*source);
+  }
+}
+
+void useraward::MergeFrom(const useraward& from) {
+// @@protoc_insertion_point(class_specific_merge_from_start:NFMsg.useraward)
+  GOOGLE_DCHECK_NE(&from, this);
+  _internal_metadata_.MergeFrom(from._internal_metadata_);
+  ::google::protobuf::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  cached_has_bits = from._has_bits_[0];
+  if (cached_has_bits & 31u) {
+    if (cached_has_bits & 0x00000001u) {
+      id_ = from.id_;
+    }
+    if (cached_has_bits & 0x00000002u) {
+      awardtype_ = from.awardtype_;
+    }
+    if (cached_has_bits & 0x00000004u) {
+      count_ = from.count_;
+    }
+    if (cached_has_bits & 0x00000008u) {
+      timemark_ = from.timemark_;
+    }
+    if (cached_has_bits & 0x00000010u) {
+      state_ = from.state_;
+    }
+    _has_bits_[0] |= cached_has_bits;
+  }
+}
+
+void useraward::CopyFrom(const ::google::protobuf::Message& from) {
+// @@protoc_insertion_point(generalized_copy_from_start:NFMsg.useraward)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+void useraward::CopyFrom(const useraward& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:NFMsg.useraward)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool useraward::IsInitialized() const {
+  return true;
+}
+
+void useraward::Swap(useraward* other) {
+  if (other == this) return;
+  InternalSwap(other);
+}
+void useraward::InternalSwap(useraward* other) {
+  using std::swap;
+  swap(id_, other->id_);
+  swap(awardtype_, other->awardtype_);
+  swap(count_, other->count_);
+  swap(timemark_, other->timemark_);
+  swap(state_, other->state_);
+  swap(_has_bits_[0], other->_has_bits_[0]);
+  _internal_metadata_.Swap(&other->_internal_metadata_);
+}
+
+::google::protobuf::Metadata useraward::GetMetadata() const {
+  protobuf_st_5fhuman_2eproto::protobuf_AssignDescriptorsOnce();
+  return ::protobuf_st_5fhuman_2eproto::file_level_metadata[kIndexInFileMessages];
+}
+
+
+// ===================================================================
+
+void banktransferrecord::InitAsDefaultInstance() {
+}
+#if !defined(_MSC_VER) || _MSC_VER >= 1900
+const int banktransferrecord::kUseridFieldNumber;
+const int banktransferrecord::kNicknameFieldNumber;
+const int banktransferrecord::kAmountFieldNumber;
+const int banktransferrecord::kTimemarkFieldNumber;
+#endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
+
+banktransferrecord::banktransferrecord()
+  : ::google::protobuf::Message(), _internal_metadata_(NULL) {
+  ::google::protobuf::internal::InitSCC(
+      &protobuf_st_5fhuman_2eproto::scc_info_banktransferrecord.base);
+  SharedCtor();
+  // @@protoc_insertion_point(constructor:NFMsg.banktransferrecord)
+}
+banktransferrecord::banktransferrecord(const banktransferrecord& from)
+  : ::google::protobuf::Message(),
+      _internal_metadata_(NULL),
+      _has_bits_(from._has_bits_) {
+  _internal_metadata_.MergeFrom(from._internal_metadata_);
+  nickname_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  if (from.has_nickname()) {
+    nickname_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.nickname_);
+  }
+  amount_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  if (from.has_amount()) {
+    amount_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.amount_);
+  }
+  timemark_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  if (from.has_timemark()) {
+    timemark_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.timemark_);
+  }
+  userid_ = from.userid_;
+  // @@protoc_insertion_point(copy_constructor:NFMsg.banktransferrecord)
+}
+
+void banktransferrecord::SharedCtor() {
+  nickname_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  amount_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  timemark_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  userid_ = 0;
+}
+
+banktransferrecord::~banktransferrecord() {
+  // @@protoc_insertion_point(destructor:NFMsg.banktransferrecord)
+  SharedDtor();
+}
+
+void banktransferrecord::SharedDtor() {
+  nickname_.DestroyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  amount_.DestroyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  timemark_.DestroyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+
+void banktransferrecord::SetCachedSize(int size) const {
+  _cached_size_.Set(size);
+}
+const ::google::protobuf::Descriptor* banktransferrecord::descriptor() {
+  ::protobuf_st_5fhuman_2eproto::protobuf_AssignDescriptorsOnce();
+  return ::protobuf_st_5fhuman_2eproto::file_level_metadata[kIndexInFileMessages].descriptor;
+}
+
+const banktransferrecord& banktransferrecord::default_instance() {
+  ::google::protobuf::internal::InitSCC(&protobuf_st_5fhuman_2eproto::scc_info_banktransferrecord.base);
+  return *internal_default_instance();
+}
+
+
+void banktransferrecord::Clear() {
+// @@protoc_insertion_point(message_clear_start:NFMsg.banktransferrecord)
+  ::google::protobuf::uint32 cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  cached_has_bits = _has_bits_[0];
+  if (cached_has_bits & 7u) {
+    if (cached_has_bits & 0x00000001u) {
+      nickname_.ClearNonDefaultToEmptyNoArena();
+    }
+    if (cached_has_bits & 0x00000002u) {
+      amount_.ClearNonDefaultToEmptyNoArena();
+    }
+    if (cached_has_bits & 0x00000004u) {
+      timemark_.ClearNonDefaultToEmptyNoArena();
+    }
+  }
+  userid_ = 0;
+  _has_bits_.Clear();
+  _internal_metadata_.Clear();
+}
+
+bool banktransferrecord::MergePartialFromCodedStream(
+    ::google::protobuf::io::CodedInputStream* input) {
+#define DO_(EXPRESSION) if (!GOOGLE_PREDICT_TRUE(EXPRESSION)) goto failure
+  ::google::protobuf::uint32 tag;
+  // @@protoc_insertion_point(parse_start:NFMsg.banktransferrecord)
   for (;;) {
     ::std::pair<::google::protobuf::uint32, bool> p = input->ReadTagWithCutoffNoLastTag(127u);
     tag = p.first;
@@ -10915,145 +10801,48 @@ bool specialinfo::MergePartialFromCodedStream(
         break;
       }
 
-      // optional int32 starttime = 2;
+      // optional string nickname = 2;
       case 2: {
         if (static_cast< ::google::protobuf::uint8>(tag) ==
-            static_cast< ::google::protobuf::uint8>(16u /* 16 & 0xFF */)) {
-          set_has_starttime();
-          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
-                 input, &starttime_)));
+            static_cast< ::google::protobuf::uint8>(18u /* 18 & 0xFF */)) {
+          DO_(::google::protobuf::internal::WireFormatLite::ReadString(
+                input, this->mutable_nickname()));
+          ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
+            this->nickname().data(), static_cast<int>(this->nickname().length()),
+            ::google::protobuf::internal::WireFormat::PARSE,
+            "NFMsg.banktransferrecord.nickname");
         } else {
           goto handle_unusual;
         }
         break;
       }
 
-      // optional int32 endtime = 3;
+      // optional string amount = 3;
       case 3: {
         if (static_cast< ::google::protobuf::uint8>(tag) ==
-            static_cast< ::google::protobuf::uint8>(24u /* 24 & 0xFF */)) {
-          set_has_endtime();
-          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
-                 input, &endtime_)));
+            static_cast< ::google::protobuf::uint8>(26u /* 26 & 0xFF */)) {
+          DO_(::google::protobuf::internal::WireFormatLite::ReadString(
+                input, this->mutable_amount()));
+          ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
+            this->amount().data(), static_cast<int>(this->amount().length()),
+            ::google::protobuf::internal::WireFormat::PARSE,
+            "NFMsg.banktransferrecord.amount");
         } else {
           goto handle_unusual;
         }
         break;
       }
 
-      // optional int32 state = 4;
+      // optional string timemark = 4;
       case 4: {
         if (static_cast< ::google::protobuf::uint8>(tag) ==
-            static_cast< ::google::protobuf::uint8>(32u /* 32 & 0xFF */)) {
-          set_has_state();
-          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
-                 input, &state_)));
-        } else {
-          goto handle_unusual;
-        }
-        break;
-      }
-
-      // optional int32 rate = 5;
-      case 5: {
-        if (static_cast< ::google::protobuf::uint8>(tag) ==
-            static_cast< ::google::protobuf::uint8>(40u /* 40 & 0xFF */)) {
-          set_has_rate();
-          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
-                 input, &rate_)));
-        } else {
-          goto handle_unusual;
-        }
-        break;
-      }
-
-      // optional int32 winall = 6;
-      case 6: {
-        if (static_cast< ::google::protobuf::uint8>(tag) ==
-            static_cast< ::google::protobuf::uint8>(48u /* 48 & 0xFF */)) {
-          set_has_winall();
-          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
-                 input, &winall_)));
-        } else {
-          goto handle_unusual;
-        }
-        break;
-      }
-
-      // optional int32 peinum = 7;
-      case 7: {
-        if (static_cast< ::google::protobuf::uint8>(tag) ==
-            static_cast< ::google::protobuf::uint8>(56u /* 56 & 0xFF */)) {
-          set_has_peinum();
-          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
-                 input, &peinum_)));
-        } else {
-          goto handle_unusual;
-        }
-        break;
-      }
-
-      // optional int32 marknum = 8;
-      case 8: {
-        if (static_cast< ::google::protobuf::uint8>(tag) ==
-            static_cast< ::google::protobuf::uint8>(64u /* 64 & 0xFF */)) {
-          set_has_marknum();
-          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
-                 input, &marknum_)));
-        } else {
-          goto handle_unusual;
-        }
-        break;
-      }
-
-      // repeated int32 gametype = 9;
-      case 9: {
-        if (static_cast< ::google::protobuf::uint8>(tag) ==
-            static_cast< ::google::protobuf::uint8>(72u /* 72 & 0xFF */)) {
-          DO_((::google::protobuf::internal::WireFormatLite::ReadRepeatedPrimitive<
-                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
-                 1, 72u, input, this->mutable_gametype())));
-        } else if (
-            static_cast< ::google::protobuf::uint8>(tag) ==
-            static_cast< ::google::protobuf::uint8>(74u /* 74 & 0xFF */)) {
-          DO_((::google::protobuf::internal::WireFormatLite::ReadPackedPrimitiveNoInline<
-                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
-                 input, this->mutable_gametype())));
-        } else {
-          goto handle_unusual;
-        }
-        break;
-      }
-
-      // optional int32 cardtype = 10;
-      case 10: {
-        if (static_cast< ::google::protobuf::uint8>(tag) ==
-            static_cast< ::google::protobuf::uint8>(80u /* 80 & 0xFF */)) {
-          set_has_cardtype();
-          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
-                 input, &cardtype_)));
-        } else {
-          goto handle_unusual;
-        }
-        break;
-      }
-
-      // optional int32 iszhuang = 11;
-      case 11: {
-        if (static_cast< ::google::protobuf::uint8>(tag) ==
-            static_cast< ::google::protobuf::uint8>(88u /* 88 & 0xFF */)) {
-          set_has_iszhuang();
-          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
-                 input, &iszhuang_)));
+            static_cast< ::google::protobuf::uint8>(34u /* 34 & 0xFF */)) {
+          DO_(::google::protobuf::internal::WireFormatLite::ReadString(
+                input, this->mutable_timemark()));
+          ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
+            this->timemark().data(), static_cast<int>(this->timemark().length()),
+            ::google::protobuf::internal::WireFormat::PARSE,
+            "NFMsg.banktransferrecord.timemark");
         } else {
           goto handle_unusual;
         }
@@ -11072,156 +10861,119 @@ bool specialinfo::MergePartialFromCodedStream(
     }
   }
 success:
-  // @@protoc_insertion_point(parse_success:NFMsg.specialinfo)
+  // @@protoc_insertion_point(parse_success:NFMsg.banktransferrecord)
   return true;
 failure:
-  // @@protoc_insertion_point(parse_failure:NFMsg.specialinfo)
+  // @@protoc_insertion_point(parse_failure:NFMsg.banktransferrecord)
   return false;
 #undef DO_
 }
 
-void specialinfo::SerializeWithCachedSizes(
+void banktransferrecord::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
-  // @@protoc_insertion_point(serialize_start:NFMsg.specialinfo)
+  // @@protoc_insertion_point(serialize_start:NFMsg.banktransferrecord)
   ::google::protobuf::uint32 cached_has_bits = 0;
   (void) cached_has_bits;
 
   cached_has_bits = _has_bits_[0];
   // optional int32 userid = 1;
-  if (cached_has_bits & 0x00000001u) {
+  if (cached_has_bits & 0x00000008u) {
     ::google::protobuf::internal::WireFormatLite::WriteInt32(1, this->userid(), output);
   }
 
-  // optional int32 starttime = 2;
+  // optional string nickname = 2;
+  if (cached_has_bits & 0x00000001u) {
+    ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
+      this->nickname().data(), static_cast<int>(this->nickname().length()),
+      ::google::protobuf::internal::WireFormat::SERIALIZE,
+      "NFMsg.banktransferrecord.nickname");
+    ::google::protobuf::internal::WireFormatLite::WriteStringMaybeAliased(
+      2, this->nickname(), output);
+  }
+
+  // optional string amount = 3;
   if (cached_has_bits & 0x00000002u) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt32(2, this->starttime(), output);
+    ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
+      this->amount().data(), static_cast<int>(this->amount().length()),
+      ::google::protobuf::internal::WireFormat::SERIALIZE,
+      "NFMsg.banktransferrecord.amount");
+    ::google::protobuf::internal::WireFormatLite::WriteStringMaybeAliased(
+      3, this->amount(), output);
   }
 
-  // optional int32 endtime = 3;
+  // optional string timemark = 4;
   if (cached_has_bits & 0x00000004u) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt32(3, this->endtime(), output);
-  }
-
-  // optional int32 state = 4;
-  if (cached_has_bits & 0x00000008u) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt32(4, this->state(), output);
-  }
-
-  // optional int32 rate = 5;
-  if (cached_has_bits & 0x00000010u) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt32(5, this->rate(), output);
-  }
-
-  // optional int32 winall = 6;
-  if (cached_has_bits & 0x00000020u) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt32(6, this->winall(), output);
-  }
-
-  // optional int32 peinum = 7;
-  if (cached_has_bits & 0x00000040u) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt32(7, this->peinum(), output);
-  }
-
-  // optional int32 marknum = 8;
-  if (cached_has_bits & 0x00000080u) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt32(8, this->marknum(), output);
-  }
-
-  // repeated int32 gametype = 9;
-  for (int i = 0, n = this->gametype_size(); i < n; i++) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt32(
-      9, this->gametype(i), output);
-  }
-
-  // optional int32 cardtype = 10;
-  if (cached_has_bits & 0x00000100u) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt32(10, this->cardtype(), output);
-  }
-
-  // optional int32 iszhuang = 11;
-  if (cached_has_bits & 0x00000200u) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt32(11, this->iszhuang(), output);
+    ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
+      this->timemark().data(), static_cast<int>(this->timemark().length()),
+      ::google::protobuf::internal::WireFormat::SERIALIZE,
+      "NFMsg.banktransferrecord.timemark");
+    ::google::protobuf::internal::WireFormatLite::WriteStringMaybeAliased(
+      4, this->timemark(), output);
   }
 
   if (_internal_metadata_.have_unknown_fields()) {
     ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
         _internal_metadata_.unknown_fields(), output);
   }
-  // @@protoc_insertion_point(serialize_end:NFMsg.specialinfo)
+  // @@protoc_insertion_point(serialize_end:NFMsg.banktransferrecord)
 }
 
-::google::protobuf::uint8* specialinfo::InternalSerializeWithCachedSizesToArray(
+::google::protobuf::uint8* banktransferrecord::InternalSerializeWithCachedSizesToArray(
     bool deterministic, ::google::protobuf::uint8* target) const {
   (void)deterministic; // Unused
-  // @@protoc_insertion_point(serialize_to_array_start:NFMsg.specialinfo)
+  // @@protoc_insertion_point(serialize_to_array_start:NFMsg.banktransferrecord)
   ::google::protobuf::uint32 cached_has_bits = 0;
   (void) cached_has_bits;
 
   cached_has_bits = _has_bits_[0];
   // optional int32 userid = 1;
-  if (cached_has_bits & 0x00000001u) {
+  if (cached_has_bits & 0x00000008u) {
     target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(1, this->userid(), target);
   }
 
-  // optional int32 starttime = 2;
+  // optional string nickname = 2;
+  if (cached_has_bits & 0x00000001u) {
+    ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
+      this->nickname().data(), static_cast<int>(this->nickname().length()),
+      ::google::protobuf::internal::WireFormat::SERIALIZE,
+      "NFMsg.banktransferrecord.nickname");
+    target =
+      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
+        2, this->nickname(), target);
+  }
+
+  // optional string amount = 3;
   if (cached_has_bits & 0x00000002u) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(2, this->starttime(), target);
+    ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
+      this->amount().data(), static_cast<int>(this->amount().length()),
+      ::google::protobuf::internal::WireFormat::SERIALIZE,
+      "NFMsg.banktransferrecord.amount");
+    target =
+      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
+        3, this->amount(), target);
   }
 
-  // optional int32 endtime = 3;
+  // optional string timemark = 4;
   if (cached_has_bits & 0x00000004u) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(3, this->endtime(), target);
-  }
-
-  // optional int32 state = 4;
-  if (cached_has_bits & 0x00000008u) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(4, this->state(), target);
-  }
-
-  // optional int32 rate = 5;
-  if (cached_has_bits & 0x00000010u) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(5, this->rate(), target);
-  }
-
-  // optional int32 winall = 6;
-  if (cached_has_bits & 0x00000020u) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(6, this->winall(), target);
-  }
-
-  // optional int32 peinum = 7;
-  if (cached_has_bits & 0x00000040u) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(7, this->peinum(), target);
-  }
-
-  // optional int32 marknum = 8;
-  if (cached_has_bits & 0x00000080u) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(8, this->marknum(), target);
-  }
-
-  // repeated int32 gametype = 9;
-  target = ::google::protobuf::internal::WireFormatLite::
-    WriteInt32ToArray(9, this->gametype_, target);
-
-  // optional int32 cardtype = 10;
-  if (cached_has_bits & 0x00000100u) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(10, this->cardtype(), target);
-  }
-
-  // optional int32 iszhuang = 11;
-  if (cached_has_bits & 0x00000200u) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(11, this->iszhuang(), target);
+    ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
+      this->timemark().data(), static_cast<int>(this->timemark().length()),
+      ::google::protobuf::internal::WireFormat::SERIALIZE,
+      "NFMsg.banktransferrecord.timemark");
+    target =
+      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
+        4, this->timemark(), target);
   }
 
   if (_internal_metadata_.have_unknown_fields()) {
     target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
         _internal_metadata_.unknown_fields(), target);
   }
-  // @@protoc_insertion_point(serialize_to_array_end:NFMsg.specialinfo)
+  // @@protoc_insertion_point(serialize_to_array_end:NFMsg.banktransferrecord)
   return target;
 }
 
-size_t specialinfo::ByteSizeLong() const {
-// @@protoc_insertion_point(message_byte_size_start:NFMsg.specialinfo)
+size_t banktransferrecord::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:NFMsg.banktransferrecord)
   size_t total_size = 0;
 
   if (_internal_metadata_.have_unknown_fields()) {
@@ -11229,86 +10981,33 @@ size_t specialinfo::ByteSizeLong() const {
       ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
         _internal_metadata_.unknown_fields());
   }
-  // repeated int32 gametype = 9;
-  {
-    size_t data_size = ::google::protobuf::internal::WireFormatLite::
-      Int32Size(this->gametype_);
-    total_size += 1 *
-                  ::google::protobuf::internal::FromIntSize(this->gametype_size());
-    total_size += data_size;
-  }
+  if (_has_bits_[0 / 32] & 15u) {
+    // optional string nickname = 2;
+    if (has_nickname()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::StringSize(
+          this->nickname());
+    }
 
-  if (_has_bits_[0 / 32] & 255u) {
+    // optional string amount = 3;
+    if (has_amount()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::StringSize(
+          this->amount());
+    }
+
+    // optional string timemark = 4;
+    if (has_timemark()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::StringSize(
+          this->timemark());
+    }
+
     // optional int32 userid = 1;
     if (has_userid()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::Int32Size(
           this->userid());
-    }
-
-    // optional int32 starttime = 2;
-    if (has_starttime()) {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::Int32Size(
-          this->starttime());
-    }
-
-    // optional int32 endtime = 3;
-    if (has_endtime()) {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::Int32Size(
-          this->endtime());
-    }
-
-    // optional int32 state = 4;
-    if (has_state()) {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::Int32Size(
-          this->state());
-    }
-
-    // optional int32 rate = 5;
-    if (has_rate()) {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::Int32Size(
-          this->rate());
-    }
-
-    // optional int32 winall = 6;
-    if (has_winall()) {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::Int32Size(
-          this->winall());
-    }
-
-    // optional int32 peinum = 7;
-    if (has_peinum()) {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::Int32Size(
-          this->peinum());
-    }
-
-    // optional int32 marknum = 8;
-    if (has_marknum()) {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::Int32Size(
-          this->marknum());
-    }
-
-  }
-  if (_has_bits_[8 / 32] & 768u) {
-    // optional int32 cardtype = 10;
-    if (has_cardtype()) {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::Int32Size(
-          this->cardtype());
-    }
-
-    // optional int32 iszhuang = 11;
-    if (has_iszhuang()) {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::Int32Size(
-          this->iszhuang());
     }
 
   }
@@ -11317,108 +11016,85 @@ size_t specialinfo::ByteSizeLong() const {
   return total_size;
 }
 
-void specialinfo::MergeFrom(const ::google::protobuf::Message& from) {
-// @@protoc_insertion_point(generalized_merge_from_start:NFMsg.specialinfo)
+void banktransferrecord::MergeFrom(const ::google::protobuf::Message& from) {
+// @@protoc_insertion_point(generalized_merge_from_start:NFMsg.banktransferrecord)
   GOOGLE_DCHECK_NE(&from, this);
-  const specialinfo* source =
-      ::google::protobuf::internal::DynamicCastToGenerated<const specialinfo>(
+  const banktransferrecord* source =
+      ::google::protobuf::internal::DynamicCastToGenerated<const banktransferrecord>(
           &from);
   if (source == NULL) {
-  // @@protoc_insertion_point(generalized_merge_from_cast_fail:NFMsg.specialinfo)
+  // @@protoc_insertion_point(generalized_merge_from_cast_fail:NFMsg.banktransferrecord)
     ::google::protobuf::internal::ReflectionOps::Merge(from, this);
   } else {
-  // @@protoc_insertion_point(generalized_merge_from_cast_success:NFMsg.specialinfo)
+  // @@protoc_insertion_point(generalized_merge_from_cast_success:NFMsg.banktransferrecord)
     MergeFrom(*source);
   }
 }
 
-void specialinfo::MergeFrom(const specialinfo& from) {
-// @@protoc_insertion_point(class_specific_merge_from_start:NFMsg.specialinfo)
+void banktransferrecord::MergeFrom(const banktransferrecord& from) {
+// @@protoc_insertion_point(class_specific_merge_from_start:NFMsg.banktransferrecord)
   GOOGLE_DCHECK_NE(&from, this);
   _internal_metadata_.MergeFrom(from._internal_metadata_);
   ::google::protobuf::uint32 cached_has_bits = 0;
   (void) cached_has_bits;
 
-  gametype_.MergeFrom(from.gametype_);
   cached_has_bits = from._has_bits_[0];
-  if (cached_has_bits & 255u) {
+  if (cached_has_bits & 15u) {
     if (cached_has_bits & 0x00000001u) {
-      userid_ = from.userid_;
+      set_has_nickname();
+      nickname_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.nickname_);
     }
     if (cached_has_bits & 0x00000002u) {
-      starttime_ = from.starttime_;
+      set_has_amount();
+      amount_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.amount_);
     }
     if (cached_has_bits & 0x00000004u) {
-      endtime_ = from.endtime_;
+      set_has_timemark();
+      timemark_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.timemark_);
     }
     if (cached_has_bits & 0x00000008u) {
-      state_ = from.state_;
-    }
-    if (cached_has_bits & 0x00000010u) {
-      rate_ = from.rate_;
-    }
-    if (cached_has_bits & 0x00000020u) {
-      winall_ = from.winall_;
-    }
-    if (cached_has_bits & 0x00000040u) {
-      peinum_ = from.peinum_;
-    }
-    if (cached_has_bits & 0x00000080u) {
-      marknum_ = from.marknum_;
-    }
-    _has_bits_[0] |= cached_has_bits;
-  }
-  if (cached_has_bits & 768u) {
-    if (cached_has_bits & 0x00000100u) {
-      cardtype_ = from.cardtype_;
-    }
-    if (cached_has_bits & 0x00000200u) {
-      iszhuang_ = from.iszhuang_;
+      userid_ = from.userid_;
     }
     _has_bits_[0] |= cached_has_bits;
   }
 }
 
-void specialinfo::CopyFrom(const ::google::protobuf::Message& from) {
-// @@protoc_insertion_point(generalized_copy_from_start:NFMsg.specialinfo)
+void banktransferrecord::CopyFrom(const ::google::protobuf::Message& from) {
+// @@protoc_insertion_point(generalized_copy_from_start:NFMsg.banktransferrecord)
   if (&from == this) return;
   Clear();
   MergeFrom(from);
 }
 
-void specialinfo::CopyFrom(const specialinfo& from) {
-// @@protoc_insertion_point(class_specific_copy_from_start:NFMsg.specialinfo)
+void banktransferrecord::CopyFrom(const banktransferrecord& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:NFMsg.banktransferrecord)
   if (&from == this) return;
   Clear();
   MergeFrom(from);
 }
 
-bool specialinfo::IsInitialized() const {
+bool banktransferrecord::IsInitialized() const {
   return true;
 }
 
-void specialinfo::Swap(specialinfo* other) {
+void banktransferrecord::Swap(banktransferrecord* other) {
   if (other == this) return;
   InternalSwap(other);
 }
-void specialinfo::InternalSwap(specialinfo* other) {
+void banktransferrecord::InternalSwap(banktransferrecord* other) {
   using std::swap;
-  gametype_.InternalSwap(&other->gametype_);
+  nickname_.Swap(&other->nickname_, &::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+    GetArenaNoVirtual());
+  amount_.Swap(&other->amount_, &::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+    GetArenaNoVirtual());
+  timemark_.Swap(&other->timemark_, &::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+    GetArenaNoVirtual());
   swap(userid_, other->userid_);
-  swap(starttime_, other->starttime_);
-  swap(endtime_, other->endtime_);
-  swap(state_, other->state_);
-  swap(rate_, other->rate_);
-  swap(winall_, other->winall_);
-  swap(peinum_, other->peinum_);
-  swap(marknum_, other->marknum_);
-  swap(cardtype_, other->cardtype_);
-  swap(iszhuang_, other->iszhuang_);
   swap(_has_bits_[0], other->_has_bits_[0]);
   _internal_metadata_.Swap(&other->_internal_metadata_);
 }
 
-::google::protobuf::Metadata specialinfo::GetMetadata() const {
+::google::protobuf::Metadata banktransferrecord::GetMetadata() const {
   protobuf_st_5fhuman_2eproto::protobuf_AssignDescriptorsOnce();
   return ::protobuf_st_5fhuman_2eproto::file_level_metadata[kIndexInFileMessages];
 }
@@ -11461,9 +11137,6 @@ template<> GOOGLE_PROTOBUF_ATTRIBUTE_NOINLINE ::NFMsg::maillist* Arena::CreateMa
 template<> GOOGLE_PROTOBUF_ATTRIBUTE_NOINLINE ::NFMsg::inviteinfo* Arena::CreateMaybeMessage< ::NFMsg::inviteinfo >(Arena* arena) {
   return Arena::CreateInternal< ::NFMsg::inviteinfo >(arena);
 }
-template<> GOOGLE_PROTOBUF_ATTRIBUTE_NOINLINE ::NFMsg::givemoneyrecord* Arena::CreateMaybeMessage< ::NFMsg::givemoneyrecord >(Arena* arena) {
-  return Arena::CreateInternal< ::NFMsg::givemoneyrecord >(arena);
-}
 template<> GOOGLE_PROTOBUF_ATTRIBUTE_NOINLINE ::NFMsg::agencyinfo* Arena::CreateMaybeMessage< ::NFMsg::agencyinfo >(Arena* arena) {
   return Arena::CreateInternal< ::NFMsg::agencyinfo >(arena);
 }
@@ -11473,8 +11146,11 @@ template<> GOOGLE_PROTOBUF_ATTRIBUTE_NOINLINE ::NFMsg::intlist* Arena::CreateMay
 template<> GOOGLE_PROTOBUF_ATTRIBUTE_NOINLINE ::NFMsg::stringlist* Arena::CreateMaybeMessage< ::NFMsg::stringlist >(Arena* arena) {
   return Arena::CreateInternal< ::NFMsg::stringlist >(arena);
 }
-template<> GOOGLE_PROTOBUF_ATTRIBUTE_NOINLINE ::NFMsg::specialinfo* Arena::CreateMaybeMessage< ::NFMsg::specialinfo >(Arena* arena) {
-  return Arena::CreateInternal< ::NFMsg::specialinfo >(arena);
+template<> GOOGLE_PROTOBUF_ATTRIBUTE_NOINLINE ::NFMsg::useraward* Arena::CreateMaybeMessage< ::NFMsg::useraward >(Arena* arena) {
+  return Arena::CreateInternal< ::NFMsg::useraward >(arena);
+}
+template<> GOOGLE_PROTOBUF_ATTRIBUTE_NOINLINE ::NFMsg::banktransferrecord* Arena::CreateMaybeMessage< ::NFMsg::banktransferrecord >(Arena* arena) {
+  return Arena::CreateInternal< ::NFMsg::banktransferrecord >(arena);
 }
 }  // namespace protobuf
 }  // namespace google

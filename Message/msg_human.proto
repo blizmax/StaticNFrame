@@ -26,6 +26,8 @@ message cgaccountlogin
 	optional string bindnick = 18;
 	optional int32 mobiletype = 19;         //运营商: 1：移动；2：电信；3：联通
 	optional int32 sex = 20;
+	optional string authcode = 21;        //如果是验证码登录，需要填入验证
+	optional string email = 22;           //用这个来当绑定码
 }
 
 message gcaccountlogin
@@ -35,6 +37,16 @@ message gcaccountlogin
 	optional int32 tableid = 3;
 	optional int32 systime = 4;   //服务器时间戳，用于客户端校准
 	optional int32 tabletype = 5;   //1是德州扑克，2是麻将
+}
+
+message cggetauthcode   //获取验证码,
+{
+	optional string phonenum = 1;
+}
+
+message gcgetauthcode
+{
+	optional int32 result = 2;  //这里会返回获取的信息
 }
 
 message cggetplayerinfo
@@ -101,6 +113,7 @@ message gcgetinitinfo
 	repeated int32 paylist = 5;   //dy_pay表中对应的ID
 	repeated int32 shoplist = 6;  //dy_shop表中对应的ID
 	repeated string wechatlist = 7;   //默认代理的列表
+	repeated int32 modelstatelist = 8;   //模块状态：1.正常，2.维护中(游戏运行)，3.维护中(游戏不允许)，4.敬请期待，5.不可见
 }
 
 message gcbroadcast
@@ -246,99 +259,78 @@ message gcinvitebind                //返回我自己绑定的信息
 	optional agencyinfo agyinfo = 2;	
 }
 
-message cggivemoney // wyh 2018-3-13 21:10:01
-{	// give money
-	optional int32 userid = 1;
-	optional int32 touserid = 2;	// 目标玩家id
-	optional int32 amount = 3;
-}
 
-message gcgivemoney
+message cgbankdepositwithdraw		// 银行-存取款
 {
-	optional int32 result = 1;
-	optional givemoneyrecord record = 2;
-}
-
-message cgapplygroupmaster	// wyh 2018年3月20日 17:56:48
-{ // apply group master
 	optional int32 userid = 1;
+	optional string amount = 2;
+	optional int32 opt = 3;			// 0:存款,1:取款
 }
 
-message gcapplygroupmaster
+message gcbankdepositwithdraw
 {
 	optional int32 result = 1;
 }
 
-//获得历史战绩
-message cggivemoneyrecord
+message cgbanksetpassword
 {
 	optional int32 userid = 1;
-	optional int32 page = 2;
+	optional string pwd = 2;
 }
 
-message gcgivemoneyrecord
+message gcbanksetpassword
 {
 	optional int32 result = 1;
-	repeated givemoneyrecord list = 2;
 }
 
-//签到
-message cgregistration
+message cgbanklogin				// 银行登陆
+{
+    optional int32 userid = 1;
+    optional string password = 2;	// 密码MD5
+}
+
+message gcbanklogin
+{
+    optional int32 result = 1;
+    optional string jetton = 2;
+}
+
+message cgbanktransfer  // 转账
+{
+    optional int32 userid = 1;
+    optional int32 touserid = 2;    // 目标玩家id
+    optional string amount = 3;      // 数量
+}
+
+message gcbanktransfer
+{
+    optional int32 result = 1;
+    optional banktransferrecord record = 2;
+}
+
+message cgbanktransferhistory
 {
 	optional int32 userid = 1;
-	optional int32 optype = 2;		//查询:1 签到:2
+	optional int32 pagenum = 2;
 }
 
-message gcregistration
+message gcbanktransferhistory
 {
 	optional int32 result = 1;
-	optional int32 userid = 2;
-	optional string registration1 = 3;
-	optional string registration2 = 4;
-	optional string registration3 = 5;
+	repeated banktransferrecord list = 2;
 }
 
-//转盘
-message cgluckturntable
+message cgbankruptsubsidy
 {
 	optional int32 userid = 1;
-	optional int32 optype = 2;		//查询:1 转:2
+	optional int32 requesttype = 2;   //1 获得次数， 2 申请补助  
 }
 
-message gcluckturntable
-{
-	optional int32 result = 1;
-	optional int32 userid = 2;
-	optional int32 turnresult = 3;		//转盘结果
-	optional int32 turntablenum = 4;	//剩余转盘次数
-	optional int32  bsignin	= 5;			//今天是否已签到   //未签到:0  已签到:签到时间
-	optional int32  tengames = 6;			// 十局是否完成
-	optional int32  todayshare = 7;		//今天是否分享
-}
-
-//更新玩家钻石
-message cgupdateplayermoney
-{
-	optional int32 userid = 1;
-}
-
-message gcupdateplayermoney
+message gcbankruptsubsidy
 {
 	optional int32 result = 1;
 	optional int32 userid = 2;
-	optional int32 money = 3;
-}
-
-//设置玩家的个人信息
-message cgaltersomeplayerinfo
-{
-	optional int32 userid = 1;
-	optional int32 optype = 2;			//optype 这里暂时只修改玩家的canivite, 所以optype传3,以后字段增加要改什么就传字段的序列号
-	optional int32 caninvite = 3;
-}
-
-message gcaltersomeplayerinfo
-{
-	optional int32 result = 1;
-	optional int32 userid = 2;
+	optional int32 requesttype = 3;
+	optional int32 residuenum = 4;
+	optional int32 subsidycount = 5;
 }

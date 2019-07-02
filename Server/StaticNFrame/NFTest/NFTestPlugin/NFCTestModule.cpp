@@ -14,6 +14,7 @@
 #include "libgo/libgo/libgo.h"
 #include "NFComm/NFCore/NFTime.h"
 
+
 NFCTestModule::NFCTestModule(NFIPluginManager* p)
 {
 	m_pPluginManager = p;
@@ -25,7 +26,23 @@ NFCTestModule::~NFCTestModule()
 
 bool NFCTestModule::Init()
 {
+	//this->SetTimer(0, 1000, 0);
 	return true;
+}
+
+void NFCTestModule::OnTimer(uint32_t nTimerID)
+{
+	static uint64_t startTime = 0;
+	if (startTime == 0)
+	{
+		startTime = NFTime::Now().UnixMSec();
+	}
+	else
+	{
+		NFLogError(NF_LOG_SYSTEMLOG, 0, "test {} msec", NFTime::Now().UnixMSec() - startTime);
+		startTime = NFTime::Now().UnixMSec();
+	}
+	
 }
 
 bool NFCTestModule::AfterInit()

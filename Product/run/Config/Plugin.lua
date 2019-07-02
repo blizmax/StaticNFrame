@@ -32,7 +32,7 @@ LoadPlugin =
 			"NFSqlitePlugin",
 			"NFNoSqlPlugin",
 			"NFMysqlPlugin",
-			--"NFMongoPlugin",
+			"NFMongoPlugin",
 			------------------------------------------
 			"NFTestPlugin",
 			
