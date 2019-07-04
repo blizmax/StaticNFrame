@@ -263,8 +263,6 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "NFGamePlayerPlugin", "NFSer
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "NFGamePlayerPlugin", "NFGamePlayerPlugin", "{D7481004-A209-41AA-99E0-41CE5CC2F49E}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libgo_static", "Dependencies\libgo\vs_proj\vs2017\x64\libgo_static.vcxproj", "{150C1981-7230-3B18-B070-A2E14D885DE8}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -1191,26 +1189,6 @@ Global
 		{76AEA86D-9BB1-4DFD-BFA6-CA9AF8B6C558}.RelWithDebInfo|x64.Build.0 = Release|x64
 		{76AEA86D-9BB1-4DFD-BFA6-CA9AF8B6C558}.RelWithDebInfo|x86.ActiveCfg = Release|Win32
 		{76AEA86D-9BB1-4DFD-BFA6-CA9AF8B6C558}.RelWithDebInfo|x86.Build.0 = Release|Win32
-		{150C1981-7230-3B18-B070-A2E14D885DE8}.Debug|x64.ActiveCfg = Debug|x64
-		{150C1981-7230-3B18-B070-A2E14D885DE8}.Debug|x64.Build.0 = Debug|x64
-		{150C1981-7230-3B18-B070-A2E14D885DE8}.Debug|x86.ActiveCfg = Debug|x64
-		{150C1981-7230-3B18-B070-A2E14D885DE8}.Dynamic_Debug|x64.ActiveCfg = Debug|x64
-		{150C1981-7230-3B18-B070-A2E14D885DE8}.Dynamic_Debug|x64.Build.0 = Debug|x64
-		{150C1981-7230-3B18-B070-A2E14D885DE8}.Dynamic_Debug|x86.ActiveCfg = MinSizeRel|x64
-		{150C1981-7230-3B18-B070-A2E14D885DE8}.Dynamic_Debug|x86.Build.0 = MinSizeRel|x64
-		{150C1981-7230-3B18-B070-A2E14D885DE8}.Dynamic_Release|x64.ActiveCfg = Release|x64
-		{150C1981-7230-3B18-B070-A2E14D885DE8}.Dynamic_Release|x64.Build.0 = Release|x64
-		{150C1981-7230-3B18-B070-A2E14D885DE8}.Dynamic_Release|x86.ActiveCfg = MinSizeRel|x64
-		{150C1981-7230-3B18-B070-A2E14D885DE8}.Dynamic_Release|x86.Build.0 = MinSizeRel|x64
-		{150C1981-7230-3B18-B070-A2E14D885DE8}.MinSizeRel|x64.ActiveCfg = MinSizeRel|x64
-		{150C1981-7230-3B18-B070-A2E14D885DE8}.MinSizeRel|x64.Build.0 = MinSizeRel|x64
-		{150C1981-7230-3B18-B070-A2E14D885DE8}.MinSizeRel|x86.ActiveCfg = MinSizeRel|x64
-		{150C1981-7230-3B18-B070-A2E14D885DE8}.Release|x64.ActiveCfg = Release|x64
-		{150C1981-7230-3B18-B070-A2E14D885DE8}.Release|x64.Build.0 = Release|x64
-		{150C1981-7230-3B18-B070-A2E14D885DE8}.Release|x86.ActiveCfg = Release|x64
-		{150C1981-7230-3B18-B070-A2E14D885DE8}.RelWithDebInfo|x64.ActiveCfg = RelWithDebInfo|x64
-		{150C1981-7230-3B18-B070-A2E14D885DE8}.RelWithDebInfo|x64.Build.0 = RelWithDebInfo|x64
-		{150C1981-7230-3B18-B070-A2E14D885DE8}.RelWithDebInfo|x86.ActiveCfg = RelWithDebInfo|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -1269,7 +1247,6 @@ Global
 		{71E6D191-4A91-45EE-BA39-63B00FD8F07B} = {63AF1E54-631F-410F-B8D2-499ED118CA96}
 		{76AEA86D-9BB1-4DFD-BFA6-CA9AF8B6C558} = {D7481004-A209-41AA-99E0-41CE5CC2F49E}
 		{D7481004-A209-41AA-99E0-41CE5CC2F49E} = {334E0F88-EC87-4A7A-B0EB-C5AD6EE67301}
-		{150C1981-7230-3B18-B070-A2E14D885DE8} = {EEC41D2A-C5CC-4C4F-A37D-615CBA15C932}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {D1502A87-08D0-42D0-A504-0AF74AADDA40}

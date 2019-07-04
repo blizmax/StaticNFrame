@@ -39,7 +39,7 @@
 #pragma comment( lib, "mysqlclient.lib" )
 #pragma comment( lib, "mysqlpp.lib" )
 #pragma comment( lib, "sqlite3.lib" )
-#pragma comment( lib, "libgo.lib" )
+//#pragma comment( lib, "libgo.lib" )
 
 /////////////////////////////////////////////////////////////////
 #pragma comment( lib, "NFCore.lib" )
