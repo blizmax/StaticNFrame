@@ -41,7 +41,7 @@ public:
 	uint64_t mInterVal;
 	uint32_t mCallCount;
 	uint32_t mCurCallCount;
-	std::string mDataStr;
+	NFLuaRef mDataStr;
 	NFCLuaScriptModule* m_pLuaScriptModule;
 
 	virtual void OnTimer(uint32_t nTimerID) override;
@@ -76,8 +76,8 @@ public:
 	virtual void RunAccountNetEventLuaFunc(const std::string& luaFunc, uint32_t nEvent, uint32_t unLinkId, NF_SHARE_PTR<PlayerGameServerInfo> pServerData) override;
 	virtual void RunHttpRecvLuaFunc(const std::string& luaFunc, const uint32_t unLinkId, const uint32_t requestId, const std::string& firstPath, const std::string& secondPath, const std::string& strMsg) override;
 public:
-	virtual uint32_t AddTimer(const std::string& luaFunc, uint64_t nInterVal, uint32_t nCallCount, const std::string& dataStr);
-	virtual uint32_t AddClocker(const std::string& luaFunc, uint64_t nStartTime, uint32_t nInterDays, uint32_t nCallCount, const std::string& dataStr);
+	virtual uint32_t AddTimer(const std::string& luaFunc, uint64_t nInterVal, uint32_t nCallCount, const NFLuaRef& dataStr);
+	virtual uint32_t AddClocker(const std::string& luaFunc, uint64_t nStartTime, uint32_t nInterDays, uint32_t nCallCount, const NFLuaRef& dataStr);
 	virtual void StopTimer(uint32_t nTimerID);
 	virtual void StopClocker(uint32_t nTimerID);
 public:

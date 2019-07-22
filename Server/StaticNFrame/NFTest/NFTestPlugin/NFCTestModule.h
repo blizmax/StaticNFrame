@@ -12,8 +12,6 @@
 #include <string>
 
 #include "NFComm/NFPluginModule/NFIModule.h"
-#include "libgo/libgo/coroutine.h"
-#include "libgo/libgo/libgo.h"
 #include "NFComm/NFPluginModule/NFTimerMgr.h"
 
 class NFCTestModule : public NFIModule, NFTimerObj

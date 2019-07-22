@@ -77,10 +77,10 @@ NFCHttpEvppServer::~NFCHttpEvppServer()
 bool NFCHttpEvppServer::Execute()
 {
 	ProcessMsgLogicThread();
-	std::vector<NFHttpHandle*> vec;
+	std::vector<NFEvppHttpHandle*> vec;
 	for (auto iter = mHttpRequestMap.begin(); iter != mHttpRequestMap.end(); iter++)
 	{
-		NFHttpHandle* pRequest = dynamic_cast<NFHttpHandle*>(iter->second);
+		auto pRequest = iter->second;
 		if (pRequest->timeOut + 10 <= (uint64_t)NFGetSecondTime())
 		{
 			vec.push_back(pRequest);
@@ -89,7 +89,7 @@ bool NFCHttpEvppServer::Execute()
 
 	for (int i = 0; i < (int)vec.size(); i++)
 	{
-		NFHttpHandle* pRequest = vec[i];
+		NFEvppHttpHandle* pRequest = vec[i];
 		ResponseMsg(*pRequest, "TimeOut Error", NFWebStatus::WEB_TIMEOUT);
 	}
 

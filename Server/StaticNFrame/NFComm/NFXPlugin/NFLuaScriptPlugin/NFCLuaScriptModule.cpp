@@ -236,7 +236,7 @@ void NFCLuaScriptModule::StopClocker(uint32_t nTimerID)
 	StopTimer(nTimerID);
 }
 
-uint32_t NFCLuaScriptModule::AddTimer(const std::string& luaFunc, uint64_t nInterVal, uint32_t nCallCount, const std::string& dataStr)
+uint32_t NFCLuaScriptModule::AddTimer(const std::string& luaFunc, uint64_t nInterVal, uint32_t nCallCount, const NFLuaRef& dataStr)
 {
 	NFLuaTimer* luaTimer = nullptr;
 	if (m_luaTimerList.empty())
@@ -272,7 +272,7 @@ uint32_t NFCLuaScriptModule::AddTimer(const std::string& luaFunc, uint64_t nInte
 	return luaTimer->mTimerId;
 }
 
-uint32_t NFCLuaScriptModule::AddClocker(const std::string& luaFunc, uint64_t nStartTime, uint32_t nInterDays, uint32_t nCallCount, const std::string& dataStr)
+uint32_t NFCLuaScriptModule::AddClocker(const std::string& luaFunc, uint64_t nStartTime, uint32_t nInterDays, uint32_t nCallCount, const NFLuaRef& dataStr)
 {
 	NFLuaTimer* luaTimer = nullptr;
 	if (m_luaTimerList.empty())

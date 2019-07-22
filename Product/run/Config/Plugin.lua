@@ -11,12 +11,12 @@ NF_ST_MAX = 9;    		--
 
 LoadPlugin = 
 {
-	KernelServer = {
+	TestServer = {
 		ServerPlugins = {
 			-------------------------
 			-----基础框架引擎-------------
 			"NFKernelPlugin",
-			"NFMonitorPlugin",
+			"NFTestPlugin",
 		};
 		ServerType = NF_ST_NONE;
 	},

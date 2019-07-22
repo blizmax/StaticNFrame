@@ -41,6 +41,7 @@
   <ItemGroup>
     <ClInclude Include="NFCTestModule.h" />
     <ClInclude Include="NFTestPlugin.h" />
+    <ClInclude Include="NFThreadPool.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{F095233B-8C5F-4CB7-8BFA-A273D76CD238}</ProjectGuid>
