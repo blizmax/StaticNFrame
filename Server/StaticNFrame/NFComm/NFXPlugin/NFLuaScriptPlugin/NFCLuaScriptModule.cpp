@@ -9,22 +9,35 @@
 #include <assert.h>
 #include <set>
 #include "NFCLuaScriptModule.h"
-#include "NFLuaScriptPlugin.h"
-#include "NFComm/NFPluginModule/NFIKernelModule.h"
-#include "NFComm/NFPluginModule/NFINetServerModule.h"
-#include "NFComm/NFPluginModule/NFINetClientModule.h"
-#include "NFComm/NFCore/NFFileUtility.h"
-#include "NFComm/NFCore/NFStringUtility.h"
-#include "NFComm/NFCore/NFCommon.h"
-#include "NFComm/NFPluginModule/NFLogMgr.h"
-#include "NFComm/NFPluginModule/NFIHttpClientModule.h"
-#include "NFComm/NFPluginModule/NFIHttpServerModule.h"
-#include "NFComm/NFPluginModule/NFIServerNetEventModule.h"
-#include "NFComm/NFPluginModule/NFIMysqlModule.h"
+
+#include "NFComm/NFCore/NFMMOMD5.h"
+#include "NFComm/NFCore/NFCRC32.h"
+#include "NFComm/NFCore/NFCRC16.h"
+#include "NFComm/NFCore/NFBase64.h"
+
+enum EnumLuaScriptTimer
+{
+	EnumLuaScriptTimer_ServerLoop = 0,
+};
 
 void NFLuaTimer::OnTimer(uint32_t nTimerID)
 {
-	m_pLuaScriptModule->TryRunGlobalScriptFunc("LuaNFrame.DispatchTimer", mLuaFunc, mDataStr, nTimerID);
+	if (mGlobalLuaFunc == "LuaNFrame.DispatchTimerLoop")
+	{
+		m_pLuaScriptModule->TryRunGlobalScriptFunc("LuaNFrame.DispatchTimerLoop", mTmpStr);
+	}
+	else if (mGlobalLuaFunc == "LuaNFrame.DispatchTimerOnce")
+	{
+		m_pLuaScriptModule->TryRunGlobalScriptFunc("LuaNFrame.DispatchTimerOnce", mLuaFunc, mDataStr);
+	}
+	else if (mGlobalLuaFunc == "LuaNFrame.DispatchWorker")
+	{
+		m_pLuaScriptModule->TryRunGlobalScriptFunc("LuaNFrame.DispatchWorker", mLuaFunc, mDataStr);
+	}
+	else
+	{
+		m_pLuaScriptModule->TryRunGlobalScriptFunc("LuaNFrame.DispatchTimer", mLuaFunc, mDataStr);
+	}
 }
 
 bool NFCLuaScriptModule::Init()
@@ -32,6 +45,12 @@ bool NFCLuaScriptModule::Init()
 //#if NF_PLATFORM == NF_PLATFORM_WIN
 //	SetConsoleOutputCP(CP_UTF8);
 //#endif
+	m_pNetServerModule = m_pPluginManager->FindModule<NFINetServerModule>();
+	m_pNetClientModule = m_pPluginManager->FindModule<NFINetClientModule>();
+	m_pLogModule = m_pPluginManager->FindModule<NFILogModule>();
+
+	m_pPluginManager->FindModule<NFIServerNetEventModule>()->AddAccountEventCallBack(NF_ST_GAME, this, &NFCLuaScriptModule::OnAccountEventCallBack);
+
     Register();
 	LoadScript();
     return true;
@@ -71,7 +90,6 @@ bool NFCLuaScriptModule::Finalize()
 
 bool NFCLuaScriptModule::Execute()
 {
-    //10秒钟reload一次
     return true;
 }
 
@@ -84,111 +102,317 @@ void NFCLuaScriptModule::LoadScript()
 {
 	TryAddPackagePath(m_pPluginManager->GetLuaScriptPath());
 	TryLoadScriptFile("init.lua");
+	TryRunGlobalScriptFunc("init_script_system", this);
+	//TryLoadScriptFile("LoadHelper.lua");
 
-	TryRunGlobalScriptFunc("init_script_system", m_pPluginManager, this);
+	//TryRunGlobalScriptFunc("LuaNFrame.TimerInit", 0, "logtimer");
+	//TryRunGlobalScriptFunc("LuaNFrame.TimerInit", 0, "pokertimer");
+	TryRunGlobalScriptFunc("LuaNFrame.TimerInit", 0, "gametimer");
+	//TryRunGlobalScriptFunc("LuaNFrame.TimerInit", 0, "utilstimer");
+
+	//ProcessLoop("logtimer");
+	ProcessLoop("gametimer");
+	ProcessLoop("utilstimer");
+}
+
+const std::string& NFCLuaScriptModule::GetAppName() const
+{
+	return m_pPluginManager->GetAppName();
+}
+
+int NFCLuaScriptModule::GetAppID() const
+{
+	return m_pPluginManager->GetAppID();
+}
+
+uint64_t NFCLuaScriptModule::GetInitTime() const
+{
+	return m_pPluginManager->GetInitTime();
+}
+
+uint64_t NFCLuaScriptModule::GetNowTime() const
+{
+	return m_pPluginManager->GetNowTime();
+}
+
+std::string NFCLuaScriptModule::GetMD5(const std::string& str)
+{
+	return NFMMOMD5(str).toStr();
+}
+
+uint32_t NFCLuaScriptModule::GetCRC32(const std::string& s)
+{
+	return NFCRC32::Sum(s);
+}
+
+uint16_t NFCLuaScriptModule::GetCRC16(const std::string& s)
+{
+	return NFCRC16::Sum(s);
+}
+
+std::string NFCLuaScriptModule::Base64Encode(const std::string& s)
+{
+	return NFBase64::Encode(s);
+}
+
+std::string NFCLuaScriptModule::Base64Decode(const std::string& s)
+{
+	return NFBase64::Decode(s);
+}
+
+void NFCLuaScriptModule::SendMsgToPlayer(uint32_t usLinkId, const uint64_t nPlayerID, const uint32_t nMsgID, const uint32_t nLen, const std::string& strData)
+{
+	if (m_pNetServerModule)
+	{
+		if (usLinkId != 0)
+		{
+			m_pNetServerModule->SendByServerID(usLinkId, nMsgID, strData, nPlayerID);
+		}
+		else
+		{
+			if (nPlayerID != 0)
+			{
+				auto pPlayerInfo = GetPlayerInfo(nPlayerID);
+				if (pPlayerInfo)
+				{
+					m_pNetServerModule->SendByServerID(pPlayerInfo->GetProxyUnlinkId(), nMsgID, strData, nPlayerID);
+				}
+			}
+		}
+	}
+}
+
+void NFCLuaScriptModule::SendMsgToManyPlayer(const std::vector<uint64_t>& nVecPlayerID, const uint32_t nMsgID, const uint32_t nLen, const std::string& strData)
+{
+	if (m_pNetServerModule)
+	{
+		for (size_t i = 0; i < nVecPlayerID.size(); i++)
+		{
+			uint64_t nPlayerID = nVecPlayerID[i];
+			auto pPlayerInfo = GetPlayerInfo(nPlayerID);
+			if (pPlayerInfo)
+			{
+				m_pNetServerModule->SendByServerID(pPlayerInfo->GetProxyUnlinkId(), nMsgID, strData, nPlayerID);
+			}
+		}
+	}
+}
+
+void NFCLuaScriptModule::SendMsgToAllPlayer(const uint32_t nMsgID, const uint32_t nLen, const std::string& strData)
+{
+	if (m_pNetServerModule)
+	{
+		auto pPlayerInfo = mPlayerProxyInfoMap.First();
+		while (pPlayerInfo)
+		{
+			m_pNetServerModule->SendByServerID(pPlayerInfo->GetProxyUnlinkId(), nMsgID, strData, pPlayerInfo->GetPlayerId());
+			pPlayerInfo = mPlayerProxyInfoMap.Next();
+		}
+	}
+}
+
+void NFCLuaScriptModule::SendMsgToWorld(uint32_t usLinkId, const uint64_t nPlayerID, const uint32_t nMsgID, const uint32_t nLen, const std::string& strData)
+{
+	if (m_pNetClientModule)
+	{
+		if (usLinkId != 0)
+		{
+			m_pNetClientModule->SendByServerID(usLinkId, nMsgID, strData, nPlayerID);
+		}
+		else
+		{
+			if (nPlayerID != 0)
+			{
+				auto pPlayerInfo = GetPlayerInfo(nPlayerID);
+				if (pPlayerInfo)
+				{
+					m_pNetClientModule->SendByServerID(pPlayerInfo->GetWorldUnlinkId(), nMsgID, strData, nPlayerID);
+				}
+			}
+		}
+	}
+}
+
+void NFCLuaScriptModule::SendMsgToMaster(uint32_t usLinkId, const uint64_t nPlayerID, const uint32_t nMsgID, const uint32_t nLen, const std::string& strData)
+{
+	if (m_pNetClientModule)
+	{
+		if (usLinkId != 0)
+		{
+			m_pNetClientModule->SendByServerID(usLinkId, nMsgID, strData, nPlayerID);
+		}
+	}
+}
+
+void NFCLuaScriptModule::SetDefaultLevel(uint32_t log_level)
+{
+	if (m_pLogModule)
+	{
+		m_pLogModule->SetDefaultLevel((NF_LOG_LEVEL)log_level);
+	}
+}
+
+void NFCLuaScriptModule::SetDefaultFlush(uint32_t log_level)
+{
+	if (m_pLogModule)
+	{
+		m_pLogModule->SetDefaultFlush((NF_LOG_LEVEL)log_level);
+	}
+}
+
+void NFCLuaScriptModule::LuaDebug(uint32_t logId, uint64_t guid, const std::string& str)
+{
+	if (m_pLogModule)
+	{
+		m_pLogModule->LuaDebug(logId, guid, str);
+	}
+}
+
+void NFCLuaScriptModule::LuaInfo(uint32_t logId, uint64_t guid, const std::string& str)
+{
+	if (m_pLogModule)
+	{
+		m_pLogModule->LuaInfo(logId, guid, str);
+	}
+}
+
+void NFCLuaScriptModule::LuaWarn(uint32_t logId, uint64_t guid, const std::string& str)
+{
+	if (m_pLogModule)
+	{
+		m_pLogModule->LuaWarn(logId, guid, str);
+	}
+}
+
+void NFCLuaScriptModule::LuaError(uint32_t logId, uint64_t guid, const std::string& str)
+{
+	if (m_pLogModule)
+	{
+		m_pLogModule->LuaError(logId, guid, str);
+	}
+}
+
+void NFCLuaScriptModule::ProcessLoop(const std::string& dataStr)
+{
+	NFLuaTimer* luaTimer = nullptr;
+	if (m_luaTimerList.empty())
+	{
+		luaTimer = NF_NEW NFLuaTimer(this);
+	}
+	else
+	{
+		luaTimer = m_luaTimerList.front();
+		m_luaTimerList.pop_front();
+		luaTimer->m_pLuaScriptModule = this;
+	}
+
+	luaTimer->mGlobalLuaFunc = "LuaNFrame.DispatchTimerLoop";
+	luaTimer->mInterVal = 1000;
+	luaTimer->mTmpStr = dataStr;
+	luaTimer->mCallCount = INFINITY_CALL;
+
+	luaTimer->mCurCallCount = 0;
+	luaTimer->mTimerId = ++m_luaTimerIndex;
+
+	luaTimer->SetTimer(luaTimer->mTimerId, luaTimer->mInterVal, luaTimer->mCallCount);
+	m_luaTimerMap.emplace(luaTimer->mTimerId, luaTimer);
+}
+
+
+void NFCLuaScriptModule::ProcessWork(const std::string& luaFunc, const NFLuaRef& dataStr)
+{
+	NFLuaTimer* luaTimer = nullptr;
+	if (m_luaTimerList.empty())
+	{
+		luaTimer = NF_NEW NFLuaTimer(this);
+	}
+	else
+	{
+		luaTimer = m_luaTimerList.front();
+		m_luaTimerList.pop_front();
+		luaTimer->m_pLuaScriptModule = this;
+	}
+
+	luaTimer->mGlobalLuaFunc = "LuaNFrame.DispatchWorker";
+	luaTimer->mInterVal = 1;
+	luaTimer->mLuaFunc = luaFunc;
+	luaTimer->mDataStr = dataStr;
+	luaTimer->mCallCount = 1;
+
+	luaTimer->mCurCallCount = 0;
+	luaTimer->mTimerId = ++m_luaTimerIndex;
+
+	luaTimer->SetTimer(luaTimer->mTimerId, luaTimer->mInterVal, luaTimer->mCallCount);
+	m_luaTimerMap.emplace(luaTimer->mTimerId, luaTimer);
+}
+
+void NFCLuaScriptModule::ProcessTimer(uint32_t timeSec, const std::string& luaFunc, const NFLuaRef& dataStr)
+{
+	if (timeSec <= 0)
+	{
+		timeSec = 1;
+	}
+
+	NFLuaTimer* luaTimer = nullptr;
+	if (m_luaTimerList.empty())
+	{
+		luaTimer = NF_NEW NFLuaTimer(this);
+	}
+	else
+	{
+		luaTimer = m_luaTimerList.front();
+		m_luaTimerList.pop_front();
+		luaTimer->m_pLuaScriptModule = this;
+	}
+
+	luaTimer->mGlobalLuaFunc = "LuaNFrame.DispatchTimerOnce";
+	luaTimer->mLuaFunc = luaFunc;
+	luaTimer->mInterVal = timeSec;
+	luaTimer->mDataStr = dataStr;
+	luaTimer->mCallCount = 1;
+
+
+	luaTimer->mCurCallCount = 0;
+	luaTimer->mTimerId = ++m_luaTimerIndex;
+
+	luaTimer->SetTimer(luaTimer->mTimerId, luaTimer->mInterVal, luaTimer->mCallCount);
+	m_luaTimerMap.emplace(luaTimer->mTimerId, luaTimer);
+}
+
+void NFCLuaScriptModule::ProcessLoopTimer(uint32_t timeSec, const std::string& luaFunc, const NFLuaRef& dataStr)
+{
+	ProcessTimer(timeSec, luaFunc, dataStr);
 }
 
 bool NFCLuaScriptModule::Register()
 {
-	LuaIntf::LuaBinding(l).beginClass<NFIPluginManager>("NFIPluginManager")
-		.addFunction("GetAppName", &NFIPluginManager::GetAppName)
-		.addFunction("GetAppID", (int (NFIPluginManager::*)() const)&NFIPluginManager::GetAppID)
-		.addFunction("GetInitTime", &NFIPluginManager::GetInitTime)
-		.addFunction("GetNowTime", &NFIPluginManager::GetNowTime)
-		.addFunction("BeginProfiler", &NFIPluginManager::BeginProfiler)
-		.addFunction("EndProfiler", &NFIPluginManager::EndProfiler)
-		.addFunction("IsLoadAllServer", &NFIPluginManager::IsLoadAllServer)
-		.addFunction("GetConfigPath", &NFIPluginManager::GetConfigPath)
-		.addFunction("GetKernelModule", &NFIPluginManager::FindModule<NFIKernelModule>)
-		.addFunction("GetLogModule", &NFIPluginManager::FindModule<NFILogModule>)
-		.addFunction("GetLuaModule", &NFIPluginManager::FindModule<NFILuaScriptModule>)
-		.addFunction("GetServerModule", &NFIPluginManager::FindModule<NFINetServerModule>)
-		.addFunction("GetClientModule", &NFIPluginManager::FindModule<NFINetClientModule>)
-		.addFunction("GetServerNetEventModule", &NFIPluginManager::FindModule<NFIServerNetEventModule>)
-		.addFunction("GetMysqlModule", &NFIPluginManager::FindModule<NFIMysqlModule>)
-		.endClass();
-
-	LuaIntf::LuaBinding(l).beginClass<NFIKernelModule>("NFIKernelModule")
-		.addFunction("GetUUID", &NFIKernelModule::GetUUID)
-		.addFunction("GetMD5", &NFIKernelModule::GetMD5)
-		.addFunction("GetCRC32", &NFIKernelModule::GetCRC32)
-		.addFunction("GetCRC16", &NFIKernelModule::GetCRC16)
-		.addFunction("Base64Encode", &NFIKernelModule::Base64Encode)
-		.addFunction("Base64Decode", &NFIKernelModule::Base64Decode)
-		.endClass();
-
-	LuaIntf::LuaBinding(l).beginClass<NFCLuaScriptModule>("NFILuaScriptModule")
+	LuaIntf::LuaBinding(l).beginClass<NFCLuaScriptModule>("NFCLuaScriptModule")
+		.addFunction("GetAppName", &NFCLuaScriptModule::GetAppName)
+		.addFunction("GetAppID", &NFCLuaScriptModule::GetAppID)
+		.addFunction("GetMD5", &NFCLuaScriptModule::GetMD5)
+		.addFunction("GetCRC32", &NFCLuaScriptModule::GetCRC32)
+		.addFunction("GetCRC16", &NFCLuaScriptModule::GetCRC16)
+		.addFunction("Base64Encode", &NFCLuaScriptModule::Base64Encode)
+		.addFunction("Base64Decode", &NFCLuaScriptModule::Base64Decode)
 		.addFunction("AddTimer", &NFCLuaScriptModule::AddTimer)
 		.addFunction("StopTimer", &NFCLuaScriptModule::StopTimer)
 		.addFunction("AddClocker", &NFCLuaScriptModule::AddClocker)
 		.addFunction("StopClocker", &NFCLuaScriptModule::StopClocker)
+		.addFunction("SetDefaultLevel", &NFCLuaScriptModule::SetDefaultLevel)
+		.addFunction("SetDefaultFlush", &NFCLuaScriptModule::SetDefaultFlush)
+		.addFunction("LuaDebug", &NFCLuaScriptModule::LuaDebug)
+		.addFunction("LuaInfo", &NFCLuaScriptModule::LuaInfo)
+		.addFunction("LuaWarn", &NFCLuaScriptModule::LuaWarn)
+		.addFunction("LuaError", &NFCLuaScriptModule::LuaError)
+		.addFunction("SendMsgToPlayer", &NFCLuaScriptModule::SendMsgToPlayer)
+		.addFunction("SendMsgToManyPlayer", &NFCLuaScriptModule::SendMsgToManyPlayer)
+		.addFunction("SendMsgToAllPlayer", &NFCLuaScriptModule::SendMsgToAllPlayer)
+		.addFunction("SendMsgToWorld", &NFCLuaScriptModule::SendMsgToWorld)
+		.addFunction("SendMsgToMaster", &NFCLuaScriptModule::SendMsgToMaster)
+		.addFunction("ProcessWork", &NFCLuaScriptModule::ProcessWork)
+		.addFunction("ProcessTimer", &NFCLuaScriptModule::ProcessTimer)
+		.addFunction("ProcessLoopTimer", &NFCLuaScriptModule::ProcessLoopTimer)
 		.endClass();
-
-	LuaIntf::LuaBinding(l).beginClass<NFINetServerModule>("NFINetServerModule")
-		.addFunction("AddServer", &NFINetServerModule::AddServer)
-		.addFunction("GetLinkIp", &NFINetServerModule::GetLinkIp)
-		.addFunction("AddReceiveLuaCallBackByMsgId", &NFINetServerModule::AddReceiveLuaCallBackByMsgId)
-		.addFunction("AddReceiveLuaCallBackToOthers", &NFINetServerModule::AddReceiveLuaCallBackToOthers)
-		.addFunction("AddEventLuaCallBack", &NFINetServerModule::AddEventLuaCallBack)
-		.addFunction("SendByServerID", (void (NFINetServerModule::*)(uint32_t usLinkId, const uint32_t nMsgID, const std::string& strData, const uint64_t nPlayerID))(&NFINetServerModule::SendByServerID))
-		.addFunction("SendToAllServer", (void (NFINetServerModule::*)(const uint32_t nMsgID, const std::string& strData, const uint64_t nPlayerID))(&NFINetServerModule::SendToAllServer))
-		.addFunction("SendToAllServerByServerType", (void (NFINetServerModule::*)(NF_SERVER_TYPES eServerType, uint32_t nMsgID, const std::string& strData, const uint64_t nPlayerID))(&NFINetServerModule::SendToAllServer))
-		.endClass();
-
-	LuaIntf::LuaBinding(l).beginClass<NFINetClientModule>("NFINetClientModule")
-		.addFunction("AddServer", &NFINetClientModule::AddServer)
-		.addFunction("AddWebServer", &NFINetClientModule::AddWebServer)
-		.addFunction("CloseServer", &NFINetClientModule::CloseServer)
-		.addFunction("AddReceiveLuaCallBackByMsgId", &NFINetClientModule::AddReceiveLuaCallBackByMsgId)
-		.addFunction("AddReceiveLuaCallBackToOthers", &NFINetClientModule::AddReceiveLuaCallBackToOthers)
-		.addFunction("AddEventLuaCallBack", &NFINetClientModule::AddEventLuaCallBack)
-		.addFunction("SendByServerID", (void (NFINetClientModule::*)(const uint32_t unLinkId, const uint32_t nMsgID, const std::string& strData, const uint64_t nPlayerID))(&NFINetClientModule::SendByServerID))
-		.addFunction("SendToAllServer", (void (NFINetClientModule::*)(const uint32_t nMsgID, const std::string& strData, const uint64_t nPlayerID))(&NFINetClientModule::SendToAllServer))
-		.addFunction("SendToAllServerByServerType", (void (NFINetClientModule::*)(NF_SERVER_TYPES eServerType, uint32_t nMsgID, const std::string& strData, const uint64_t nPlayerID))(&NFINetClientModule::SendToAllServer))
-		.endClass();
-
-	LuaIntf::LuaBinding(l).beginClass<NFIMysqlModule>("NFIMysqlModule")
-		.addFunction("AddMysqlServer", &NFIMysqlModule::AddMysqlServer)
-		.addFunction("Execute", &NFIMysqlModule::Execute)
-		.addFunction("Delete", &NFIMysqlModule::Delete)
-		.addFunction("Exists", &NFIMysqlModule::LuaExists)
-		.addFunction("QueryMoreByLike", &NFIMysqlModule::LuaQueryMoreByLike)
-		.addFunction("QueryOne", &NFIMysqlModule::LuaQueryOne)
-		.addFunction("QueryMore", &NFIMysqlModule::LuaQueryMore)
-		.addFunction("QueryMoreWithLimit",&NFIMysqlModule::LuaQueryMoreWithLimit)
-		.addFunction("QueryMoreWithCond", &NFIMysqlModule::LuaQueryMoreWithCond)
-		.addFunction("UpdateOne", &NFIMysqlModule::LuaUpdateOne)
-		.endClass();
-
-	LuaIntf::LuaBinding(l).beginClass<NFILogModule>("NFILogModule")
-		.addFunction("SetDefaultLevel", &NFILogModule::SetDefaultLevel)
-		.addFunction("SetDefaultFlush", &NFILogModule::SetDefaultFlush)
-		.addFunction("LuaDebug", &NFILogModule::LuaDebug)
-		.addFunction("LuaInfo", &NFILogModule::LuaInfo)
-		.addFunction("LuaWarn", &NFILogModule::LuaWarn)
-		.addFunction("LuaError", &NFILogModule::LuaError)
-		.endClass();
-	
-	LuaIntf::LuaBinding(l).beginClass<NFIServerNetEventModule>("NFIServerNetEventModule")
-	.addFunction("AddEventCallBack", &NFIServerNetEventModule::AddEventLuaCallBack)
-	.addFunction("AddAccountEventCallBack", &NFIServerNetEventModule::AddAccountEventLuaCallBack)
-	.endClass();
-
-	LuaIntf::LuaBinding(l).beginClass<NFServerData>("NFServerData")
-		.addProperty("UnlinkId", &NFServerData::GetUnlinkId)
-		.addProperty("ServerId", &NFServerData::GetServerId)
-		.endClass();
-
-	LuaIntf::LuaBinding(l).beginClass<PlayerGameServerInfo>("PlayerGameServerInfo")
-		.addProperty("ProxyUnlinkId", &PlayerGameServerInfo::GetProxyUnlinkId)
-		.addProperty("ProxyId", &PlayerGameServerInfo::GetProxyId)
-		.addProperty("WorldId", &PlayerGameServerInfo::GetWorldId)
-		.addProperty("WorldUnlinkId", &PlayerGameServerInfo::GetWorldUnlinkId)
-		.addProperty("PlayerId", &PlayerGameServerInfo::GetPlayerId)
-		.addProperty("Ip", &PlayerGameServerInfo::GetIp)
-		.addProperty("Account", &PlayerGameServerInfo::GetAccount)
-		.endClass();
-
 	return true;
 }
 
@@ -317,4 +541,36 @@ void NFCLuaScriptModule::RunAccountNetEventLuaFunc(const std::string& luaFunc, u
 	m_pPluginManager->BeginProfiler(luaFunc);
 	TryRunGlobalScriptFunc("LuaNFrame.DispatchAccountNetEvent", luaFunc, nEvent, unLinkId, pServerData);
 	m_pPluginManager->EndProfiler();
+}
+
+void NFCLuaScriptModule::OnAccountEventCallBack(uint32_t nEvent, uint32_t unLinkId, NF_SHARE_PTR<PlayerGameServerInfo> pServerData)
+{
+	if(nEvent == eAccountEventType_CONNECTED)
+	{
+		if (mPlayerProxyInfoMap.ExistElement(pServerData->GetPlayerId()))
+		{
+			mPlayerProxyInfoMap.RemoveElement(pServerData->GetPlayerId());
+		}
+		mPlayerProxyInfoMap.AddElement(pServerData->GetPlayerId(), pServerData);
+	}
+	else if (nEvent == eAccountEventType_DISCONNECTED)
+	{
+		if (mPlayerProxyInfoMap.ExistElement(pServerData->GetPlayerId()))
+		{
+			mPlayerProxyInfoMap.RemoveElement(pServerData->GetPlayerId());
+		}
+	}
+	else if (nEvent == eAccountEventType_RECONNECTED)
+	{
+		if (mPlayerProxyInfoMap.ExistElement(pServerData->GetPlayerId()))
+		{
+			mPlayerProxyInfoMap.RemoveElement(pServerData->GetPlayerId());
+		}
+		mPlayerProxyInfoMap.AddElement(pServerData->GetPlayerId(), pServerData);
+	}
+}
+
+NF_SHARE_PTR<PlayerGameServerInfo> NFCLuaScriptModule::GetPlayerInfo(uint64_t playerId)
+{
+	return mPlayerProxyInfoMap.GetElement(playerId);
 }

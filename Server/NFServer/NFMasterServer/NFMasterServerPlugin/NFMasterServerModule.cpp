@@ -87,12 +87,12 @@ bool NFCMasterServerModule::Init()
 			NFLogInfo(NF_LOG_SERVER_CONNECT_SERVER, 0, "Master Server Open Http Port:{} Success!", pConfig->mHttpPort);
 		}
 
-		bool ret = FindModule<NFIAsyMysqlModule>()->AddMysqlServer(NF_ST_MASTER, pConfig->mMysqlIp, pConfig->mMysqlPort, pConfig->mMysqlDbName, pConfig->mMysqlUser, pConfig->mMysqlPassword);
-		if (ret == false)
-		{
-			NFLogError(NF_LOG_SYSTEMLOG, 0, "NFIAsyMysqlModule AddMysqlServer failed!");
-			return false;
-		}
+		//bool ret = FindModule<NFIAsyMysqlModule>()->AddMysqlServer(NF_ST_MASTER, pConfig->mMysqlIp, pConfig->mMysqlPort, pConfig->mMysqlDbName, pConfig->mMysqlUser, pConfig->mMysqlPassword);
+		//if (ret == false)
+		//{
+		//	NFLogError(NF_LOG_SYSTEMLOG, 0, "NFIAsyMysqlModule AddMysqlServer failed!");
+		//	return false;
+		//}
 	}
 	else
 	{
@@ -127,7 +127,7 @@ void NFCMasterServerModule::OnTimer(uint32_t nTimerID)
 {
 	if (nTimerID == NF_MASTER_TIMER_SAVE_SERVER_DATA)
 	{
-		SaveServerDataToDB();
+		//SaveServerDataToDB();
 	}
 }
 

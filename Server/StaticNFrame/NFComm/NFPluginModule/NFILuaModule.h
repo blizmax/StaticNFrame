@@ -13,6 +13,8 @@
 #include "NFIModule.h"
 
 #include <iostream>
+#include <vector>
+#include <map>
 
 namespace LuaIntf
 {

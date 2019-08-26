@@ -3,9 +3,13 @@
   <ItemGroup>
     <ClCompile Include="NFCLuaScriptModule.cpp" />
     <ClCompile Include="NFLuaScriptPlugin.cpp" />
+    <ClCompile Include="NFCLuaThreadModule.cpp" />
+    <ClCompile Include="NFCLuaScriptComponent.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="NFCLuaScriptModule.h" />
     <ClInclude Include="NFLuaScriptPlugin.h" />
+    <ClInclude Include="NFCLuaThreadModule.h" />
+    <ClInclude Include="NFCLuaScriptComponent.h" />
   </ItemGroup>
 </Project>

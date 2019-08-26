@@ -49,7 +49,6 @@
 #include <NFServerLogic/NFProxyServerLogic/NFProxyLogicPlugin/NFProxyLogicPlugin.h>
 #include <NFServerLogic/NFWorldLogicPlugin/NFWorldLogicPlugin.h>
 #include <NFServerLogic/NFGameServerLogic/NFGamePlayerPlugin/NFGamePlayerPlugin.h>
-#include <NFServerLogic/NFGameServerLogic/NFGameLhdPlugin/NFGameLhdPlugin.h>
 #endif
 
 bool NFCPluginManager::LoadKernelPlugin()
@@ -102,7 +101,6 @@ bool NFCPluginManager::RegisterStaticPlugin()
 	/////////////////////////////////////////////////////////////////////////
 
 	REGISTER_STATIC_PLUGIN(this, NFGamePlayerPlugin);
-	REGISTER_STATIC_PLUGIN(this, NFGameLhdPlugin);
 
 	////////////////////////////////////////////////////////////////////////
 	///////////////////////////////////////////////////////////////////////

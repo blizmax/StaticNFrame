@@ -349,6 +349,7 @@
     <ClInclude Include="NFIHttpServer.h" />
     <ClInclude Include="NFIHttpServerModule.h" />
     <ClInclude Include="NFILuaModule.h" />
+    <ClInclude Include="NFILuaThreadModule.h" />
     <ClInclude Include="NFIMongoModule.h" />
     <ClInclude Include="NFIMonitorModule.h" />
     <ClInclude Include="NFINoSqlDriver.h" />

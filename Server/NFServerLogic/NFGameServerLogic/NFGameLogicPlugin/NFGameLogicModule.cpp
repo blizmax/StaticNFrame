@@ -31,26 +31,26 @@ bool NFCGameLogicModule::Awake()
 		return false;
 	}
 
-	ret = FindModule<NFIMysqlModule>()->AddMysqlServer(NF_ST_GAME, pConfig->mMysqlIp, pConfig->mMysqlPort, pConfig->mMysqlDbName, pConfig->mMysqlUser, pConfig->mMysqlPassword);
-	if (ret == false)
-	{
-		NFLogError(NF_LOG_SYSTEMLOG, 0, "NFIMysqlModule AddMysqlServer failed!");
-		return false;
-	}
+	//ret = FindModule<NFIMysqlModule>()->AddMysqlServer(NF_ST_GAME, pConfig->mMysqlIp, pConfig->mMysqlPort, pConfig->mMysqlDbName, pConfig->mMysqlUser, pConfig->mMysqlPassword);
+	//if (ret == false)
+	//{
+	//	NFLogError(NF_LOG_SYSTEMLOG, 0, "NFIMysqlModule AddMysqlServer failed!");
+	//	return false;
+	//}
 
-	ret = FindModule<NFIAsyMysqlModule>()->AddMysqlServer(NF_ST_GAME, pConfig->mMysqlIp, pConfig->mMysqlPort, pConfig->mMysqlDbName, pConfig->mMysqlUser, pConfig->mMysqlPassword);
-	if (ret == false)
-	{
-		NFLogError(NF_LOG_SYSTEMLOG, 0, "NFIAsyMysqlModule AddMysqlServer failed!");
-		return false;
-	}
+	//ret = FindModule<NFIAsyMysqlModule>()->AddMysqlServer(NF_ST_GAME, pConfig->mMysqlIp, pConfig->mMysqlPort, pConfig->mMysqlDbName, pConfig->mMysqlUser, pConfig->mMysqlPassword);
+	//if (ret == false)
+	//{
+	//	NFLogError(NF_LOG_SYSTEMLOG, 0, "NFIAsyMysqlModule AddMysqlServer failed!");
+	//	return false;
+	//}
 
-	ret = FindModule<NFINoSqlModule>()->AddConnectSql("nosql", pConfig->mNosqlIp, pConfig->mNosqlPort);
-	if (ret == false)
-	{
-		NFLogError(NF_LOG_SYSTEMLOG, 0, "redis connect server failed, ip:{}, port:{}", pConfig->mNosqlIp, pConfig->mNosqlPort);
-		return false;
-	}
+	//ret = FindModule<NFINoSqlModule>()->AddConnectSql("nosql", pConfig->mNosqlIp, pConfig->mNosqlPort);
+	//if (ret == false)
+	//{
+	//	NFLogError(NF_LOG_SYSTEMLOG, 0, "redis connect server failed, ip:{}, port:{}", pConfig->mNosqlIp, pConfig->mNosqlPort);
+	//	return false;
+	//}
 
 	FindModule<NFIServerNetEventModule>()->AddEventCallBack(NF_ST_GAME, NF_ST_PROXY, this, &NFCGameLogicModule::OnHandleProxyEventCallBack);
 	FindModule<NFIServerNetEventModule>()->AddEventCallBack(NF_ST_GAME, NF_ST_WORLD, this, &NFCGameLogicModule::OnHandleWorldEventCallBack);
