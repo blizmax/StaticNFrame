@@ -11,36 +11,15 @@ function __G__TRACKBACK__(msg)
 	return logData
 end
 
-function CPPNFrame:init(pluginManager, luaModule)
+function CPPNFrame:init(luaModule)
 
-    self.pluginManager = pluginManager
-    if self.pluginManager == nil or luaModule == nil then
+    if luaModule == nil then
         self:error("初始化失败。。。。。。。。。")
     end
-
-    self.kernelModule = self.pluginManager:GetKernelModule()
-    self.logModule = self.pluginManager:GetLogModule()
     self.luaModule = luaModule
-    self.serverModule = self.pluginManager:GetServerModule()
-    self.clientModule = self.pluginManager:GetClientModule()
-    self.serverNetEventModule = self.pluginManager:GetServerNetEventModule()
-    self.mysqlModule = self.pluginManager:GetMysqlModule()
-    self.app_name = pluginManager:GetAppName()
-    self.app_id = pluginManager:GetAppID()
+    self.app_name = luaModule:GetAppName()
+    self.app_id = luaModule:GetAppID()
     self.app_dir = self.app_name .. tostring(self.app_id)
-end
-
-function CPPNFrame:GetPluginManager()
-    return self.pluginManager
-end
-
---使用方法，BeginProfiler -- EndProfiler必须成对出现
-function CPPNFrame:BeginProfiler(funname)
-    self.pluginManager:BeginProfiler(funname)
-end
-
-function CPPNFrame:EndProfiler()
-    return self.pluginManager:EndProfiler()
 end
 
 --添加服务器定时器, 返回定时器ID
@@ -63,299 +42,100 @@ end
 
 --创建全局唯一的UUID
 function CPPNFrame:GetUUID()
-    return self.kernelModule:GetUUID()
+    return self.luaModule:GetUUID()
 end
 
 --通过字符串获得MD5, 返回MD5字符串
 function CPPNFrame:GetMD5(str)
-    return self.kernelModule:GetMD5(str)
+    return self.luaModule:GetMD5(str)
 end
 
 --通过字符串获得对应的CRC32, 返回数字
 function CPPNFrame:GetCRC32(str)
-    return self.kernelModule:GetCRC32(str)
+    return self.luaModule:GetCRC32(str)
 end
 
 --通过字符串获得对应的CRC16, 返回数字
 function CPPNFrame:GetCRC16(str)
-    return self.kernelModule:GetCRC16(str)
+    return self.luaModule:GetCRC16(str)
 end
 
 --通过字符串获得对应的Base64Encode, 返回字符串
 function CPPNFrame:Base64Encode(str)
-    return self.kernelModule:Base64Encode(str)
+    return self.luaModule:Base64Encode(str)
 end
 
 --通过字符串获得对应的Base64Decode, 返回字符串
 function CPPNFrame:Base64Decode(str)
-    return self.kernelModule:Base64Decode(str)
+    return self.luaModule:Base64Decode(str)
 end
 
 --获得服务器开启时间，单位s
 function CPPNFrame:GetInitTime()
-    return self.pluginManager:GetInitTime()
+    return self.luaModule:GetInitTime()
 end
 
 --获得服务器当前时间，单位s
 function CPPNFrame:GetNowTime()
-    return self.pluginManager:GetNowTime()
+    return self.luaModule:GetNowTime()
 end
 
---添加网络服务器
-function CPPNFrame:AddServer(server_type, server_id, max_client, port, websocket)
-    return self.serverModule:AddServer(server_type, server_id, max_client, port, websocket)
+function CPPNFrame:SendMsgToPlayer(unLinkId, nPlayerId, nMsgId, nLen, strData)
+    self.luaModule:SendMsgToPlayer(unLinkId, nPlayerId, nMsgId, nLen, strData)
 end
 
---添加网络协议回调函数
-function CPPNFrame:AddRecvCallBack(serverType, nMsgId, luaFunc)
-    self.serverModule:AddReceiveLuaCallBackByMsgId(serverType, nMsgId, luaFunc)
+function CPPNFrame:SendMsgToManyPlayer(nPlayerIdList, nMsgId, nLen, strData)
+    self.luaModule:SendMsgToManyPlayer(nPlayerIdList, nMsgId, nLen, strData)
 end
 
---添加网络协议回调函数
-function CPPNFrame:AddRecvCallBackToOthers(serverType, luaFunc)
-    self.serverModule:AddReceiveLuaCallBackToOthers(serverType, luaFunc)
+function CPPNFrame:SendMsgToAllPlayer(nMsgId, nLen, strData)
+    self.luaModule:SendMsgToAllPlayer(nMsgId, nLen, strData)
 end
 
-function CPPNFrame:AddEventCallBack(serverType, luaFunc)
-    self.serverModule:AddEventLuaCallBack(serverType, luaFunc)
+function CPPNFrame:SendMsgToWorld(unLinkId, nPlayerId, nMsgId, nLen, strData)
+    self.luaModule:SendMsgToWorld(unLinkId, nPlayerId, nMsgId, nLen, strData)
 end
 
-function CPPNFrame:SendByServerID(unLinkId, nMsgId, strData, nPlayerId)
-    self.serverModule:SendByServerID(unLinkId, nMsgId, strData, nPlayerId)
+function CPPNFrame:SendMsgToMaster(unLinkId, nPlayerId, nMsgId, nLen, strData)
+    self.luaModule:SendMsgToMaster(unLinkId, nPlayerId, nMsgId, nLen, strData)
 end
-
-function CPPNFrame:SendToAllServer(nMsgId, strData, nPlayerId)
-    self.serverModule:SendToAllServer(nMsgId, strData, nPlayerId)
-end
-
-function CPPNFrame:SendToAllServerByServerType(serverType, nMsgId, strData, nPlayerId)
-    self.serverModule:SendToAllServerByServerType(serverType, nMsgId, strData, nPlayerId)
-end
-
-function CPPNFrame:SendByServerIDForClient(unLinkId, nMsgId, strData, nPlayerId)
-    self.clientModule:SendByServerID(unLinkId, nMsgId, strData, nPlayerId)
-end
-
-function CPPNFrame:SendToAllServerForClient(nMsgId, strData, nPlayerId)
-    self.clientModule:SendToAllServer(nMsgId, strData, nPlayerId)
-end
-
-function CPPNFrame:SendToAllServerByServerTypeForClient(serverType, nMsgId, strData, nPlayerId)
-    self.clientModule:SendToAllServerByServerType(serverType, nMsgId, strData, nPlayerId)
-end
-
-function CPPNFrame:AddServerForClient(serverType, ip, port, websocket)
-    websocket = websocket or false
-    return self.clientModule:AddServer(serverType, ip, port, websocket)
-end
-
-function CPPNFrame:AddWebServerForClient(serverType, url)
-    return self.clientModule:AddWebServer(serverType, url)
-end
-
---添加网络协议回调函数
-function CPPNFrame:AddRecvCallBackForClient(serverType, nMsgId, luaFunc)
-    self.clientModule:AddReceiveLuaCallBackByMsgId(serverType, nMsgId, luaFunc)
-end
-
---添加网络协议回调函数
-function CPPNFrame:AddRecvCallBackToOthersForClient(serverType, luaFunc)
-    self.clientModule:AddReceiveLuaCallBackToOthers(serverType, luaFunc)
-end
-
-function CPPNFrame:AddEventCallBackForClient(serverType, luaFunc)
-    self.clientModule:AddEventLuaCallBack(serverType, luaFunc)
-end
-
--- log --
 
 --设置LOG等级
 function CPPNFrame:SetLogLevel(level)
-    self.logModule:SetLogLevel(level)
+    self.luaModule:SetLogLevel(level)
 end
 
 --设置LOG立马刷新等级
 function CPPNFrame:SetFlushOn(level)
-    self.logModule:SetFlushOn(level)
+    self.luaModule:SetFlushOn(level)
 end
 
 function CPPNFrame:Debug(logId, guid, str)
-	self.logModule:LuaDebug(logId, guid, str)
+	self.luaModule:LuaDebug(logId, guid, str)
 end
 
 function CPPNFrame:Info(logId, guid, str)
-	self.logModule:LuaInfo(logId, guid, str)
+	self.luaModule:LuaInfo(logId, guid, str)
 end
 
 function CPPNFrame:Warn(logId, guid, str)
-	self.logModule:LuaWarn(logId, guid, str)
+	self.luaModule:LuaWarn(logId, guid, str)
 end
 
 function CPPNFrame:Error(logId, guid, str)
-    self.logModule:LuaError(logId, guid, str)
+    self.luaModule:LuaError(logId, guid, str)
 end
 
---http client接口
-
---[[
-	向指定url请求GET http服务
-	resFunc:http请求回调函数
-	url:请求http服务器的url
-	para:请求的数据,这时里是一个lua的table
-    heads 在这里是一个 map[string]string 选定对应参考与值
-    
-    return bool
-]]
-
-function CPPNFrame:HttpClientRequestGet(url, resFunc, heads, para)
-    heads = heads or {}
-    para = para or {}
-	if type(resFunc) ~= "string" or type(url) ~= "string" or type(heads) ~= "table" then
-		LuaNFrame.Error(NFLogId.NF_LOG_SYSTEMLOG, 0, "unilight.HttpRequestGet params error" .. resFunc .. url)
-		return
-    end
-
-    local jsonHeaders = table2json(heads)
-	local callbackpara = table2json(para)
-    self.httpClientModule:HttpRequestGet(url, resFunc, jsonHeaders, callbackpara)
+--入参是两个参数，第一个是索引，第一个是参数信息
+function CPPNFrame:ProcessWork(luaFunc, dataStr)
+	self.luaModule:ProcessWork(luaFunc, dataStr)
 end
 
---[[
-	向指定url请求POS http服务
-	resFunc:http请求回调函数
-	url:请求http服务器的url
-	msg:请求的数据,这时里是一个lua的table
-	heads 在这里是一个 map[string]string 选定对应参考与值
-]]
-function CPPNFrame:HttpClientRequestPost(url, resFunc, body, heads, para)
-    para = para or {}
-	heads = heads or {}
-	if type(resFunc) ~= "string" or type(url) ~= "string" or type(heads) ~= "table" or type(body) ~= "table" then
-		LuaNFrame.Error(NFLogId.NF_LOG_SYSTEMLOG, 0, "unilight.HttpClientRequestPost params error" .. resFunc .. url)
-		return
-	end
-    local jsonHeaders = table2json(heads)
-    local callbackpara = table2json(para)
-    local jsonbody = table2json(body)
-    self.httpClientModule:HttpRequestPost(url, jsonbody, resFunc, jsonHeaders, callbackpara)
+function CPPNFrame:ProcessTimer(timeSec, luaFunc, dataStr)
+    self.luaModule:ProcessTimer(timeSec, luaFunc, dataStr)
 end
 
-function CPPNFrame:HttpServerAddRequestHandler(serverType, urlPath, requestType, resFunc)
-	if type(serverType) ~= "number" or type(resFunc) ~= "string" or type(urlPath) ~= "string" or type(requestType) ~= "number"then
-		LuaNFrame.Error(NFLogId.NF_LOG_SYSTEMLOG, 0, "HttpServerAddRequestHandler params error" .. resFunc .. urlPath)
-		return
-    end
-    self.httpServerModule:AddRequestHandler(serverType, urlPath, requestType, resFunc)
+function CPPNFrame:ProcessLoopTimer(timeSec, luaFunc, dataStr)
+	--该函数设置的定时器，是在主线程serverloop的线程中执行
+    self.luaModule:ProcessLoopTimer(timeSec, luaFunc, dataStr)
 end
-
-function CPPNFrame:HttpServerInitServer(serverType, port)
-    if type(serverType) ~= "number" or type(port) ~= "number" then
-        LuaNFrame.Error(NFLogId.NF_LOG_SYSTEMLOG, 0, "HttpServerInitServer failed, port is not number:"..port)
-    end
-
-    self.httpServerModule:InitServer(port)
-end
-
-function CPPNFrame:HttpServerResponseMsg(serverType, req, strMsg, code, reason)
-    if type(serverType) ~= "number" or type(strMsg) ~= "string" or type(code) ~= "number" or type(reason) ~= "string" then
-        LuaNFrame.Error(NFLogId.NF_LOG_SYSTEMLOG, 0, "HttpServerResponseMsg failed")
-    end
-
-    self.httpServerModule:ResponseMsg(req, strMsg, code, reason)
-end
-
---serverNetEventModule 注册服务器与服务器之间的网络回调，主要有连接回调，断线回调
---比如说，luaFuncStr格式：luaFuncStr（eMsgType nEvent, uint32_t unLinkId, NF_SHARE_PTR<NFServerData> pServerData）
---
-function CPPNFrame:AddServerEventCallBack(eSourceType, eTargetType, luaFuncStr)
-    self.serverNetEventModule:AddEventCallBack(eSourceType, eTargetType, luaFuncStr)
-end
-
---serverNetEventModule 注册账号网络回调，主要有玩家连接回调，断线回调，重连回调
---比如说，luaFuncStr格式：luaFuncStr（uint32_t nEvent, uint32_t unLinkId, NF_SHARE_PTR<AccountInfo> pServerData）
---
-function CPPNFrame:AddAccountEventCallBack(eServerType, luaFuncStr)
-    self.serverNetEventModule:AddAccountEventCallBack(eServerType, luaFuncStr)
-end
-
-function CPPNFrame:AddMysqlServer(nServerID, strIP, nPort, strDBName, strDBUser, strDBPwd)
-    return self.mysqlModule:AddMysqlServer(nServerID, strIP, nPort, strDBName, strDBUser, strDBPwd)
-end
-
-function CPPNFrame:MysqlExecute(str)
-    return self.mysqlModule:Execute(str)
-end
-
-function CPPNFrame:MysqlUpdateOne(strTableName, strKeyColName, strKey, keyvalueMap)
-    return self.mysqlModule:UpdateOne(strTableName, strKeyColName, strKey, keyvalueMap)
-end
-
-function CPPNFrame:MysqlQueryOne(strTableName, strKeyColName, strKey, fieldVec)
-    return self.mysqlModule:QueryOne(strTableName, strKeyColName, strKey, fieldVec)
-end
-
-function CPPNFrame:MysqlQueryMore(strTableName, strKeyColName, strKey, fieldVec)
-    return self.mysqlModule:QueryMore(strTableName, strKeyColName, strKey, fieldVec)
-end
-
-function CPPNFrame:MysqlQueryMoreWithLimit(strTableName,strKeyColName, nOffset, nRows, fieldVec)
-    return self.mysqlModule:QueryMoreWithLimit(strTableName,strKeyColName, nOffset, nRows, fieldVec)
-end
-
-function CPPNFrame:MysqlQueryMoreWithCond(strTableName, strWhereSql, fieldVec)
-    return self.mysqlModule:QueryMoreWithCond(strTableName, strWhereSql, fieldVec)
-end
-
-function CPPNFrame:MysqlDelete(strTableName, strKeyColName, strKey)
-    return self.mysqlModule:Delete(strTableName, strKeyColName, strKey)
-end
-
-function CPPNFrame:MysqlExists(strTableName, strKeyColName, strKey)
-    return self.mysqlModule:Exists(strTableName, strKeyColName, strKey)
-end
-
-function CPPNFrame:MysqlQueryMoreByLike(strTableName, strKeyColName, strKey, fieldVec)
-    return self.mysqlModule:QueryMoreByLike(strTableName, strKeyColName, strKey, fieldVec)
-end
-
---执行函数, 函数被字符串表达出来
---比如说，要执行LoginModule.Init函数，
---CPPNFrame.RunStringFunction("LoginModule.Init")
-function CPPNFrame.RunStringFunction(strFunction,...)
-    local v = _G;
-    for w in string.gmatch(strFunction,"[%[%]%w_\"]+") do
-      local index = string.find(w, "%[");
-      if index == nil then
-          v = v[w]
-          if v == nil then
-            break
-          end
-      else
-          local key = string.match(w, "([%w_]+)%[")
-          if key == nil then
-              return;
-          else
-              v = v[key]
-              for val in string.gmatch(w, "%[[\"%w_]+%]") do
-                  local value = string.match(val, "%[([\"%w_]+)%]")
-                  local value_str = string.match(value,"\"([%w_]+)\"");
-                  if value_str ~= nil then
-                      v = v[value_str];
-                  else
-                      local value_num = tonumber(value);
-                      if value_num ~= nil then
-                          v = v[value_num];
-                      else
-                        LuaNFrame.Error(NFLogId.NF_LOG_SYSTEMLOG, 0, "strFunction:", strFunction, " is not a function");
-                      end
-                  end
-              end
-          end
-      end
-    end
-    if type(v) == "function" then
-      return v(...);
-    else
-        LuaNFrame.Error(NFLogId.NF_LOG_SYSTEMLOG, 0, strFunction .. " is not function");
-    end
-  end

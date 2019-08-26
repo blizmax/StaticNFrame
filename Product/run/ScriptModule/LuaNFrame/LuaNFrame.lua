@@ -1,8 +1,8 @@
 
 LuaNFrame = LuaNFrame or {}
 
-function LuaNFrame.init(pluginManager, luaModule)
-	CPPNFrame:init(pluginManager, luaModule)
+function LuaNFrame.init(luaModule)
+	CPPNFrame:init(luaModule)
 end
 
 --添加服务器秒定时器
@@ -10,10 +10,6 @@ function LuaNFrame.AddTimer(luaFunc, nInterValSec, nCallCount, dataStr)
     if nInterValSec == nil or type(luaFunc) ~= "string" then
 		LuaNFrame.Error(NFLogId.NF_LOG_SYSTEMLOG, 0, __G__TRACKBACK__("AddTimer Para Error"))
 		return
-	end
-	
-	if type(dataStr) ~= "string" then
-		dataStr = ""
 	end
 
     if nCallCount == nil then
@@ -37,10 +33,6 @@ function LuaNFrame.AddTimerMsec(luaFunc, nInterValMSec, nCallCount, dataStr)
     if nCallCount == nil then
         nCallCount = 0;
 	end
-
-	if type(dataStr) ~= "string" then
-		dataStr = ""
-	end
 	
 	if nCallCount == nil then
 		nCallCount = 0;
@@ -51,6 +43,56 @@ function LuaNFrame.AddTimerMsec(luaFunc, nInterValMSec, nCallCount, dataStr)
 
 	return CPPNFrame:AddTimer(luaFunc, nInterValMSec, nCallCount, dataStr)
 end
+
+--入参是两个参数，第一个是索引，第一个是参数信息
+function LuaNFrame.ProcessWork(luaFunc, dataStr)
+	if type(luaFunc) ~= "string" then
+		LuaNFrame.Error(NFLogId.NF_LOG_SYSTEMLOG, 0, __G__TRACKBACK__("ProcessWork Para Error"))
+		return
+    end
+
+	CPPNFrame:ProcessWork(luaFunc, dataStr)
+end
+
+function LuaNFrame.ProcessTimer(timeSec, luaFunc, dataStr)
+	if type(luaFunc) ~= "string" then
+		LuaNFrame.Error(NFLogId.NF_LOG_SYSTEMLOG, 0, __G__TRACKBACK__("ProcessTimer Para Error"))
+		return
+	end
+	
+	if timeSec == nil then
+		timeSec = 0;
+	elseif type(timeSec) ~= "number" then
+		timeSec = tonumber(timeSec)
+		if timeSec == nil then
+			LuaNFrame.Error(NFLogId.NF_LOG_SYSTEMLOG, 0, __G__TRACKBACK__("ProcessTimer Para Error:timeSec is not number"))
+		end
+		return
+	end
+
+    CPPNFrame:ProcessTimer(timeSec, luaFunc, dataStr)
+end
+
+function LuaNFrame.ProcessLoopTimer(timeSec, luaFunc, dataStr)
+	--该函数设置的定时器，是在主线程serverloop的线程中执行
+	if type(luaFunc) ~= "string" then
+		LuaNFrame.Error(NFLogId.NF_LOG_SYSTEMLOG, 0, __G__TRACKBACK__("ProcessTimer Para Error"))
+		return
+	end
+	
+	if timeSec == nil then
+		timeSec = 0;
+	elseif type(timeSec) ~= "number" then
+		timeSec = tonumber(timeSec)
+		if timeSec == nil then
+			LuaNFrame.Error(NFLogId.NF_LOG_SYSTEMLOG, 0, __G__TRACKBACK__("ProcessTimer Para Error:timeSec is not number"))
+		end
+		return
+	end
+
+    CPPNFrame:ProcessLoopTimer(timeSec, luaFunc, dataStr)
+end
+
 
 --停止服务器定时器
 function LuaNFrame.StopTimer(timer)
@@ -87,10 +129,6 @@ function LuaNFrame.AddClocker(luaFunc, sec, intervalSec, nCallCount, dataStr)
 
     if nCallCount == nil then
         nCallCount = 0;
-	end
-
-	if type(dataStr) ~= "string" then
-		dataStr = ""
 	end
 	
 	if nCallCount == nil then
@@ -177,33 +215,6 @@ function LuaNFrame.SetFlushOn(level)
     CPPNFrame:SetFlushOn(level)
 end
 
---使用方法，BeginProfiler -- EndProfiler必须成对出现
-function LuaNFrame.BeginProfiler(funname)
-	if type(funname) ~= "string" then
-		LuaNFrame.Error(NFLogId.NF_LOG_SYSTEMLOG, 0, __G__TRACKBACK__("BeginProfiler Para Error"))
-		return
-    end
-    CPPNFrame:BeginProfiler(funname)
-end
-
-function LuaNFrame.EndProfiler()
-    return CPPNFrame:EndProfiler()
-end
-
---serverNetEventModule 注册服务器与服务器之间的网络回调，主要有连接回调，断线回调
---比如说，luaFuncStr格式：luaFuncStr（eMsgType nEvent, uint32_t unLinkId, NF_SHARE_PTR<NFServerData> pServerData）
---
-function LuaNFrame.AddServerEventCallBack(eSourceType, eTargetType, luaFuncStr)
-    CPPNFrame:AddServerEventCallBack(eSourceType, eTargetType, luaFuncStr)
-end
-
---serverNetEventModule 注册账号网络回调，主要有玩家连接回调，断线回调，重连回调
---比如说，luaFuncStr格式：luaFuncStr（uint32_t nEvent, uint32_t unLinkId, NF_SHARE_PTR<AccountInfo> pServerData）
---
-function LuaNFrame.AddAccountEventCallBack(eServerType, luaFuncStr)
-    CPPNFrame:AddAccountEventCallBack(eServerType, luaFuncStr)
-end
-
 function LuaNFrame.Debug(logId, guid, ...)
 	local cStackInfo = debug.getinfo(2, "Sl")
 	if cStackInfo then
@@ -248,125 +259,28 @@ function LuaNFrame.ExeFunc(func)
     end
 end
 
-function LuaNFrame.AddMysqlServer(nServerID, strIP, nPort, strDBName, strDBUser, strDBPwd)
-    return CPPNFrame:AddMysqlServer(nServerID, strIP, nPort, strDBName, strDBUser, strDBPwd)
+function LuaNFrame.SendMsgToPlayer(unLinkId, nPlayerId, nMsgId, nLen, strData)
+	if type(unLinkId) == "number" and type(nMsgId) == "number" and type(strData) == "string" and type(nPlayerId) == "number" and type(nLen) == "number" then
+		CPPNFrame:SendMsgToPlayer(unLinkId, nPlayerId, nMsgId, nLen, strData)
+	else
+		LuaNFrame.Error(NFLogId.NF_LOG_SYSTEMLOG, 0, __G__TRACKBACK__("LuaNFrame.SendMsgToPlayer Para Error"))
+	end
 end
 
-function LuaNFrame.MysqlExecute(str)
-    return CPPNFrame:MysqlExecute(str)
+function LuaNFrame.SendMsgToWorld(unLinkId, nPlayerId, nMsgId, nLen, strData)
+	if type(unLinkId) == "number" and type(nMsgId) == "number" and type(strData) == "string" and type(nPlayerId) == "number" and type(nLen) == "number" then
+		CPPNFrame:SendMsgToWorld(unLinkId, nPlayerId, nMsgId, nLen, strData)
+	else
+		LuaNFrame.Error(NFLogId.NF_LOG_SYSTEMLOG, 0, __G__TRACKBACK__("LuaNFrame.SendMsgToWorld Para Error"))
+	end
 end
 
--- values = {
---     "123"      = "123"
---     "account"  = "name115"
---     "cid"      = "cid115"
---     "nickname" = "nick115"
---     "password" = "pwd115"
---     "userid"   = "101200"
--- }
---LuaNFrame.MysqlUpdate("dy_player", "userid", 101200, values)
-function LuaNFrame.MysqlUpdateOne(strTableName, strKeyColName, strKey, keyvalueMap)
-    return CPPNFrame:MysqlUpdateOne(strTableName, strKeyColName, strKey, keyvalueMap)
-end
-
---local fields = {"userid", "cid", "account", "password", "nickname", 123}
---local values = LuaNFrame.MysqlQueryOne("dy_player", "age", 1, fields)
--- "<var>" = {
---     "123"      = "123"
---     "account"  = "name115"
---     "cid"      = "cid115"
---     "nickname" = "nick115"
---     "password" = "pwd115"
---     "userid"   = "101200"
--- }
-function LuaNFrame.MysqlQueryOne(strTableName, strKeyColName, strKey, fieldVec)
-	return CPPNFrame:MysqlQueryOne(strTableName, strKeyColName, strKey, fieldVec)
-end
-
---local fields = {"userid", "cid", "account", "password", "nickname", 123}
---local values = LuaNFrame.MysqlQueryMore("dy_player", "age", 1, fields)
--- "<var>" = {
---     1 = {
---         "123"      = "123"
---         "account"  = "name115"
---         "cid"      = "cid115"
---         "nickname" = "nick115"
---         "password" = "pwd115"
---         "userid"   = "101200"
---     }
---     2 = {
---         "123"      = "123"
---         "account"  = "name117"
---         "cid"      = "cid117"
---         "nickname" = "nick117"
---         "password" = "pwd117"
---         "userid"   = "101201"
---     }
--- }
-function LuaNFrame.MysqlQueryMore(strTableName, strKeyColName, strKey, fieldVec)
-	return CPPNFrame:MysqlQueryMore(strTableName, strKeyColName, strKey, fieldVec)
-end
-
---local fields = {"userid", "cid", "account", "password", "nickname", 123}
---local values = LuaNFrame.MysqlQueryMoreWithLimit("dy_player", "userid", 0, 2, fields)
--- "<var>" = {
---     1 = {
---         "123"      = "123"
---         "account"  = "name115"
---         "cid"      = "cid115"
---         "nickname" = "nick115"
---         "password" = "pwd115"
---         "userid"   = "101200"
---     }
---     2 = {
---         "123"      = "123"
---         "account"  = "name117"
---         "cid"      = "cid117"
---         "nickname" = "nick117"
---         "password" = "pwd117"
---         "userid"   = "101201"
---     }
--- }
---返回一个table数组, 字段与值对应
-function LuaNFrame.MysqlQueryMoreWithLimit(strTableName,strKeyColName, nOffset, nRows, fieldVec)
-    return CPPNFrame:MysqlQueryMoreWithLimit(strTableName,strKeyColName, nOffset, nRows, fieldVec)
-end
-
---local fields = {"userid", "cid", "account", "password", "nickname", 123}
---local values = LuaNFrame.MysqlQueryMoreWithCond("dy_player", "userid > 0", fields)
--- "<var>" = {
---     1 = {
---         "123"      = "123"
---         "account"  = "name115"
---         "cid"      = "cid115"
---         "nickname" = "nick115"
---         "password" = "pwd115"
---         "userid"   = "101200"
---     }
---     2 = {
---         "123"      = "123"
---         "account"  = "name117"
---         "cid"      = "cid117"
---         "nickname" = "nick117"
---         "password" = "pwd117"
---         "userid"   = "101201"
---     }
--- }
---返回一个table数组, 字段与值对应
-function LuaNFrame.MysqlQueryMoreWithCond(strTableName, strWhereSql, fieldVec)
-    return CPPNFrame:MysqlQueryMoreWithCond(strTableName, strWhereSql, fieldVec)
-end
-
-function LuaNFrame.MysqlDelete(strTableName, strKeyColName, strKey)
-    return CPPNFrame:MysqlDelete(strTableName, strKeyColName, strKey)
-end
-
-function LuaNFrame.MysqlExists(strTableName, strKeyColName, strKey)
-    return CPPNFrame:MysqlExists(strTableName, strKeyColName, strKey)
-end
-
-function LuaNFrame.MysqlQueryMoreByLike(strTableName, strKeyColName, strKey, fieldVec)
-    return CPPNFrame:MysqlQueryMoreByLike(strTableName, strKeyColName, strKey, fieldVec)
+function LuaNFrame.SendMsgToMaster(unLinkId, nPlayerId, nMsgId, nLen, strData)
+	if type(unLinkId) == "number" and type(nMsgId) == "number" and type(strData) == "string" and type(nPlayerId) == "number" and type(nLen) == "number" then
+		CPPNFrame:SendMsgToMaster(unLinkId, nPlayerId, nMsgId, nLen, strData)
+	else
+		LuaNFrame.Error(NFLogId.NF_LOG_SYSTEMLOG, 0, __G__TRACKBACK__("LuaNFrame.SendMsgToMaster Para Error"))
+	end
 end
 
 g_operateID = g_operateID or 0
@@ -384,7 +298,7 @@ function LuaNFrame.DispatchTcp(unLinkId, valueId, nMsgId, strMsg)
 			if type(playerID) == "number" and playerID == 0 then
 				playerID = valueId
 			end
-			TcpServer.SendMsgByServerId(unLinkId, retMsgID, retString, playerID)
+			LuaNFrame.SendMsgToPlayer(unLinkId, playerID, retMsgID, retBufferLen, retString)
 		end
 	end
 	
@@ -399,14 +313,14 @@ end
 --处理世界服务器消息
 function LuaNFrame.DispatchWorldTcp(unLinkId, valueId, nMsgId, strMsg)
 	local function TcpExecute()
-		local retMsgID,controller = TcpManager.CreateController(nMsgId)
+		local retMsgID,controller = tcpManager:createController(nMsgId)
 	
 		if controller == nil then
 			LuaNFrame.Error(NFLogId.NF_LOG_SYSTEMLOG, valueId, "nMsgId:"..nMsgId.." not handled!")
 		else
 			g_operateID = g_operateID + 1
 			local playerID, retCode, retBufferLen, retString, otString = controller.execute(nMsgId, g_operateID, strMsg)
-			TcpClient.SendMsgByServerId(unLinkId, retMsgID, retString, playerID)
+			LuaNFrame.SendMsgToWorld(unLinkId, playerID, retMsgID, retBufferLen, retString)
 		end
 	end
 	
@@ -420,14 +334,14 @@ end
 --处理Master服务器消息
 function LuaNFrame.DispatchMasterTcp(unLinkId, valueId, nMsgId, strMsg)
 	local function TcpExecute()
-		retMsgID,controller = TcpManager.CreateController(nMsgId)
+		local retMsgID,controller = tcpManager:createController(nMsgId)
 	
 		if controller == nil then
 			LuaNFrame.Error(NFLogId.NF_LOG_SYSTEMLOG, valueId, "nMsgId:"..nMsgId.." not handled!")
 		else
 			g_operateID = g_operateID + 1
-			playerID, retCode, retBufferLen, retString, otString = controller.execute(nMsgId, g_operateID, strMsg)
-			TcpClient.SendMsgByServerId(unLinkId, retMsgID, retString, playerID)
+			local playerID, retCode, retBufferLen, retString, otString = controller.execute(nMsgId, g_operateID, strMsg)
+			LuaNFrame.SendMsgToMaster(unLinkId, playerID, retMsgID, retBufferLen, retString)
 		end
 	end
 	
@@ -447,7 +361,7 @@ function LuaNFrame.DispatchMasterHttp(unLinkId, requestId, firstPath, secondPath
 			LuaNFrame.Error(NFLogId.NF_LOG_SYSTEMLOG, 0, "http msg:/"..firstPath.."/"..secondPath.." not handled!")
 		else
 			retString,retSize = controller[secondPath](strMsg) 
-			TcpClient.SendMsgByServerId(unLinkId, 5, retString, requestId)
+			LuaNFrame.SendMsgTMaster(unLinkId, requestId, 5, retSize, retString)
 		end
 	end
 	
@@ -459,9 +373,9 @@ function LuaNFrame.DispatchMasterHttp(unLinkId, requestId, firstPath, secondPath
 end
 
 --执行定时函数
-function LuaNFrame.DispatchTimer(luaFunc, dataStr, timerId)
+function LuaNFrame.DispatchTimer(luaFunc, dataStr)
 	local function timerExecute()
-		TimerManager.execute(luaFunc, dataStr, timerId)
+		_G[luaFunc].execute(dataStr)
 	end
 	
 	local status, msg = xpcall (timerExecute, __G__TRACKBACK__)
@@ -471,25 +385,80 @@ function LuaNFrame.DispatchTimer(luaFunc, dataStr, timerId)
     end
 end
 
-function LuaNFrame.DispatchAccountNetEvent(luaFunc, nEvent, unLinkId, pServerData)
-	local function accountExecute()
-		AccountNetManager.execute(luaFunc, nEvent, unLinkId, pServerData)
+--执行定时函数
+function LuaNFrame.DispatchTimerLoop(dataStr)
+	local function timerExecute()
+		timerManager:execute(0, dataStr)
 	end
 	
-	local status, msg = xpcall (accountExecute, __G__TRACKBACK__)
+	local status, msg = xpcall (timerExecute, __G__TRACKBACK__)
 
     if not status then
         LuaNFrame.Error(NFLogId.NF_LOG_SYSTEMLOG, 0, msg)
-    end	
+    end
+end
+
+function LuaNFrame.DispatchTimerOnce( luaFunc, dataStr)
+	local function timerExecute()
+		local timer = timerManager:createOnceTimer(luaFunc)
+		
+		if timer == nil then
+			LuaNFrame.Error(NFLogId.NF_LOG_SYSTEMLOG, 0, "DispatchTimerOnce luaFunc:"..luaFunc.." not handled!")
+		else
+			timer.execute(dataStr)
+		end
+	end
+	
+	local status, msg = xpcall (timerExecute, __G__TRACKBACK__)
+
+    if not status then
+        LuaNFrame.Error(NFLogId.NF_LOG_SYSTEMLOG, 0, msg)
+    end
+end
+
+function LuaNFrame.TimerInit(currTime, timeType)
+	local function timerInitData()
+		timerManager.Init(currTime, timeType)
+	end
+	
+	local status, msg = xpcall (timerInitData, __G__TRACKBACK__)
+
+    if not status then
+        LuaNFrame.Error(NFLogId.NF_LOG_SYSTEMLOG, 0, msg)
+    end
+end
+
+function LuaNFrame.DispatchWorker(indexStr, dataStr)
+	--传入的参数中，第一个是index索引，字符串类型的，第二个是参数
+	local function workExecute()
+		local worker = workManager:createWork(indexStr)
+		
+		if worker == nil then
+			LuaNFrame.Error(NFLogId.NF_LOG_SYSTEMLOG, 0, "DispatchWorker luaFunc:"..indexStr.." not handled!")
+		else
+			worker.work(dataStr)
+		end
+	end
+	
+	local status, msg = xpcall (timerInitData, __G__TRACKBACK__)
+
+    if not status then
+        LuaNFrame.Error(NFLogId.NF_LOG_SYSTEMLOG, 0, msg)
+    end
 end
 
 g_randomsee = 0
 function math.myrandom(...)
+	local arg = {...}
 	if g_randomsee == 0 then
 		math.newrandomseed()
 		g_randomsee = 1
 	end
-	return math.random(...)
+	for i = 1, #arg do
+		arg[i] = math.floor(arg[i])
+	end
+
+	return math.random(table.unpack(arg))
 end
 
 function LogFile(file, msg)
@@ -499,4 +468,51 @@ function LogFile(file, msg)
 	else
 		CPPNFrame:Info(NFLogId.NF_LOG_SYSTEMLOG, 0, tostring(msg))
 	end
+end
+
+function SendMessage(useridList, retMsgID, buffLen, retString)
+
+	if useridList == nil or buffLen == 0  then
+		return 
+	end
+
+	local userIDStr = ""
+	if type(useridList) == "table" then
+		if #useridList == 0 then
+			return
+		end
+		
+		for key,values in pairs(useridList) do
+			LuaNFrame.SendMsgToPlayer(0,  tonumber(values), retMsgID, buffLen, retString)	
+		end
+	else
+		LuaNFrame.SendMsgToPlayer(0, tonumber(useridList), retMsgID, buffLen, retString)
+	end
+end
+
+--入参是两个参数，第一个是索引，第一个是参数信息
+function processWork(luaFunc, dataStr)
+	LuaNFrame.ProcessWork(luaFunc, dataStr)
+end
+
+function processTimer(timeSec, indexStr, dataStr)
+	LuaNFrame.ProcessTimer(timeSec, indexStr, dataStr)
+end
+
+function processLoopTimer(timeSec, indexStr, dataStr)
+	--该函数设置的定时器，是在主线程serverloop的线程中执行
+	LuaNFrame.ProcessLoopTimer(timeSec, indexStr, dataStr)
+end
+
+function TcpSessionClose(playerID)
+	if tonumber(playerID) == 0 then
+		return
+	end
+	luaPrint(playerID.." Exit")
+	OnlineModel.PlayerExit(playerID)
+end
+
+function TcpSessionReport(userID, IP)
+	--上报玩家的IP，目前主要是IP	
+	PlayerModel.PlayerReport(userID, IP)
 end

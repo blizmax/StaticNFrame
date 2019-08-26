@@ -22,30 +22,34 @@ function LoadLuaFile(path, subdir)
 	end
 end
 
-function init_script_system(pluginManager, luaModule)
+function init_script_system(luaModule)
 	package.path = package.path .. ";../ScriptModule/?.lua;"
 	package.path = package.path .. ";../ScriptModule/LuaNFrame/?.lua;"
-	package.path = package.path..";../ScriptModule/trdlib/libprotobuf/?.lua"   --由于这里protobuf的特殊性，必须把包含protobuf的目录加到环境变量中
-	package.path = package.path..";../ScriptModule/trdlib/lua/?.lua"
+	package.path = package.path .. ";../ScriptModule/wuxiandai/?.lua;"
+	package.path = package.path..";../ScriptModule/wuxiandai/trdlib/libprotobuf/?.lua"   --由于这里protobuf的特殊性，必须把包含protobuf的目录加到环境变量中
+	package.path = package.path..";../ScriptModule/wuxiandai/trdlib/lua/?.lua"
 
-	LoadLuaFile("../ScriptModule/trdlib")
+	breakSocketHandle,debugXpCall = require("LuaDebug")("localhost",7003)
+
 	LoadLuaFile("../ScriptModule")
 	LoadLuaFile("../ScriptModule/LuaNFrame")
-	LoadLuaFile("../ScriptModule/LuaNFrame/Public")
-	LoadLuaFile("../ScriptModule/conf", true)
 
 	--初始化LuaNFrame
-	LuaNFrame.init(pluginManager, luaModule)
-
+	LuaNFrame.init(luaModule)
 	LuaNFrame.AddTimer("update_debugsocket", 1)
-	LuaNFrame.AddAccountEventCallBack(NF_SERVER_TYPES.NF_ST_GAME, "AccountNet")	
 
-	--饶平麻将
-	GameRpmj.Init()
-	--无线代
-	--GameWuxiandai.Init()
+	local function timerExecute()
+		require("LoadHelper")
+		mysqlItem = mysqlConnect.new(g_dbtype, g_dbUser, g_dbPassword, g_dbHost, g_dbPort, g_dbDatabase)
+		redisItem = redisConnect.new()
+		mysqlLog = mysqlConnect.new(g_dbtype, g_dbUser, g_dbPassword, g_dbHost, g_dbPort, g_dbDatabase)
+	end
+	
+	local status, msg = xpcall (timerExecute, __G__TRACKBACK__)
 
-	--breakSocketHandle,debugXpCall = require("LuaDebug")("localhost",7003)
+    if not status then
+        LuaNFrame.Error(NFLogId.NF_LOG_SYSTEMLOG, 0, msg)
+    end
 end
 
 update_debugsocket = update_debugsocket or {}
