@@ -6,6 +6,14 @@ function math.mod(a, b)
 	return math.fmod(a,b)
 end
 
+function LuaNFrame.GetAppName()
+    return CPPNFrame:GetAppName()
+end
+
+function LuaNFrame.GetAppID()
+    return CPPNFrame:GetAppID()
+end
+
 function LuaNFrame.init(luaModule)
 	CPPNFrame:init(luaModule)
 end

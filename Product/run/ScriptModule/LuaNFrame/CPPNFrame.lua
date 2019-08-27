@@ -22,6 +22,14 @@ function CPPNFrame:init(luaModule)
     self.app_dir = self.app_name .. tostring(self.app_id)
 end
 
+function CPPNFrame:GetAppName()
+    return self.app_name
+end
+
+function CPPNFrame:GetAppID()
+    return self.app_id
+end
+
 --添加服务器定时器, 返回定时器ID
 function CPPNFrame:AddTimer(luaFunc, nInterVal, nCallCount, dataStr)
     return self.luaModule:AddTimer(luaFunc, nInterVal, nCallCount, dataStr)

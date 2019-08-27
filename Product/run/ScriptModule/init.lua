@@ -22,21 +22,36 @@ function LoadLuaFile(path, subdir)
 	end
 end
 
+function initLoad()
+	require("LuaDebug")
+	require("LuaNFrame/CPPNFrame")
+	require("LuaNFrame/LuaNFrame")
+	require("LuaNFrame/NFExtrend")
+	require("LuaNFrame/NFLogDefine")
+	require("LuaNFrame/ServerDefine")
+end
+
 function init_script_system(luaModule)
 	package.path = package.path .. ";../ScriptModule/?.lua;"
 	package.path = package.path .. ";../ScriptModule/LuaNFrame/?.lua;"
-	package.path = package.path .. ";../ScriptModule/wuxiandai/?.lua;"
-	package.path = package.path..";../ScriptModule/wuxiandai/trdlib/libprotobuf/?.lua"   --由于这里protobuf的特殊性，必须把包含protobuf的目录加到环境变量中
-	package.path = package.path..";../ScriptModule/wuxiandai/trdlib/lua/?.lua"
 
 	breakSocketHandle,debugXpCall = require("LuaDebug")("localhost",7003)
 
-	LoadLuaFile("../ScriptModule")
-	LoadLuaFile("../ScriptModule/LuaNFrame")
+	initLoad()
 
 	--初始化LuaNFrame
 	LuaNFrame.init(luaModule)
 	LuaNFrame.AddTimer("update_debugsocket", 1)
+
+	if LuaNFrame.GetAppName() == "AllServer" then
+		package.path = package.path .. ";../ScriptModule/GameServer/?.lua;"
+		package.path = package.path..";../ScriptModule/GameServer/trdlib/libprotobuf/?.lua"   --由于这里protobuf的特殊性，必须把包含protobuf的目录加到环境变量中
+		package.path = package.path..";../ScriptModule/GameServer/trdlib/lua/?.lua"
+	elseif LuaNFrame.GetAppName() == "GameServer" then
+		package.path = package.path .. ";../ScriptModule/GameServer/?.lua;"
+		package.path = package.path..";../ScriptModule/GameServer/trdlib/libprotobuf/?.lua"   --由于这里protobuf的特殊性，必须把包含protobuf的目录加到环境变量中
+		package.path = package.path..";../ScriptModule/GameServer/trdlib/lua/?.lua"
+	end
 
 	local function timerExecute()
 		require("LoadHelper")
