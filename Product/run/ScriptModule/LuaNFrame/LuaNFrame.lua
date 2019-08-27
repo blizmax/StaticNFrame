@@ -1,6 +1,11 @@
 
 LuaNFrame = LuaNFrame or {}
 
+--lua5.3 没有math.mod函数
+function math.mod(a, b)
+	return math.fmod(a,b)
+end
+
 function LuaNFrame.init(luaModule)
 	CPPNFrame:init(luaModule)
 end
@@ -440,7 +445,7 @@ function LuaNFrame.DispatchWorker(indexStr, dataStr)
 		end
 	end
 	
-	local status, msg = xpcall (timerInitData, __G__TRACKBACK__)
+	local status, msg = xpcall (workExecute, __G__TRACKBACK__)
 
     if not status then
         LuaNFrame.Error(NFLogId.NF_LOG_SYSTEMLOG, 0, msg)

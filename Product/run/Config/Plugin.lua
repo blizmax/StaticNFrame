@@ -29,12 +29,8 @@ LoadPlugin =
 			"NFActorPlugin",
 			"NFNetPlugin",
 			"NFMonitorPlugin",
-			"NFSqlitePlugin",
-			"NFNoSqlPlugin",
 			"NFMysqlPlugin",
-			"NFMongoPlugin",
 			------------------------------------------
-			"NFTestPlugin",
 			
 			--------------------------------------------
 			-----服务器架构引擎-------------------------
@@ -127,16 +123,11 @@ LoadPlugin =
 			"NFActorPlugin",
 			"NFNetPlugin",
 			"NFMonitorPlugin",
-			"NFSqlitePlugin",
-			"NFNoSqlPlugin",
-			"NFMysqlPlugin",
 			
 			"NFGameClientPlugin",
 			"NFGameServerPlugin",
 			
 			"NFGameLogicPlugin",
-			"NFGamePlayerPlugin",
-			"NFGameLhdPlugin",
 			
 			"NFLuaScriptPlugin",
 		};
@@ -148,7 +139,6 @@ LoadPlugin =
 			"NFNetPlugin",
 			"NFActorPlugin",
 			"NFMonitorPlugin",
-			"NFMysqlPlugin",
 			
 			"NFLuaScriptPlugin",
 		};
