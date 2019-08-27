@@ -292,7 +292,7 @@ g_operateID = g_operateID or 0
 --执行游戏服务器信息
 function LuaNFrame.DispatchTcp(unLinkId, valueId, nMsgId, strMsg)
 	local function TcpExecute()
-		local retMsgID,controller = TcpManager.CreateController(nMsgId)
+		local retMsgID,controller = tcpManager:createController(nMsgId)
 	
 		if controller == nil then
 			LuaNFrame.Error(NFLogId.NF_LOG_SYSTEMLOG, valueId, "nMsgId:"..nMsgId.." not handled!")

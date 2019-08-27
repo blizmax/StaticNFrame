@@ -78,5 +78,3 @@ function SendMessage(useridList, retMsgID, buffLen, retString)
 		LuaNFrame.SendMsgToPlayer(0, tonumber(useridList), retMsgID, buffLen, retString)
 	end
 end
-
-math.newrandomseed()

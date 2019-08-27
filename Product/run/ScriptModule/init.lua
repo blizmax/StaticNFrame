@@ -29,6 +29,8 @@ function initLoad()
 	require("LuaNFrame/NFExtrend")
 	require("LuaNFrame/NFLogDefine")
 	require("LuaNFrame/ServerDefine")
+	require("LuaNFrame/NFExecutor")
+	--require("LuaNFrame/NFTimeUtils")
 end
 
 function init_script_system(luaModule)
@@ -55,6 +57,9 @@ function init_script_system(luaModule)
 
 	local function timerExecute()
 		require("LoadHelper")
+		require("LuaNFrame/NFTimeUtils")
+
+		math.newrandomseed()
 		mysqlItem = mysqlConnect.new(g_dbtype, g_dbUser, g_dbPassword, g_dbHost, g_dbPort, g_dbDatabase)
 		redisItem = redisConnect.new()
 		mysqlLog = mysqlConnect.new(g_dbtype, g_dbUser, g_dbPassword, g_dbHost, g_dbPort, g_dbDatabase)
