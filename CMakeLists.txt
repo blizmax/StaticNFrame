@@ -41,7 +41,7 @@ message("CMAKE_SOURCE_DIR = ${CMAKE_SOURCE_DIR}")
 
 SET(INCLUDE_DIR "./" "/usr/local/include"
 	"${CMAKE_SOURCE_DIR}/Server"
-	"${CMAKE_SOURCE_DIR}/Server/Dependencies/LuaBind/LuaJIT/src"
+	"${CMAKE_SOURCE_DIR}/Server/Dependencies/LuaBind/lua"
 	"${CMAKE_SOURCE_DIR}/Server/Dependencies/LuaBind/"
 	"${CMAKE_SOURCE_DIR}/Server/Dependencies/g3dlite"
 	"${CMAKE_SOURCE_DIR}/Server/Dependencies/libevent/include/"

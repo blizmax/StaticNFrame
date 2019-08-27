@@ -28,9 +28,6 @@
     <Filter Include="3rd\protoc-gen-lua">
       <UniqueIdentifier>{00d7c538-ddc4-45ee-b8db-66295d9501ac}</UniqueIdentifier>
     </Filter>
-    <Filter Include="3rd\luajit">
-      <UniqueIdentifier>{c8a93338-b5e8-49d1-a6c3-7f3663fc0f39}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="lpeg\lpcap.c">
@@ -117,9 +114,6 @@
     <ClCompile Include="protoc-gen-lua\pb.c">
       <Filter>3rd\protoc-gen-lua</Filter>
     </ClCompile>
-    <ClCompile Include="lua_openlibs.cpp">
-      <Filter>3rd</Filter>
-    </ClCompile>
     <ClCompile Include="lua\lapi.c">
       <Filter>3rd\lua</Filter>
     </ClCompile>
@@ -129,7 +123,16 @@
     <ClCompile Include="lua\lbaselib.c">
       <Filter>3rd\lua</Filter>
     </ClCompile>
+    <ClCompile Include="lua\lbitlib.c">
+      <Filter>3rd\lua</Filter>
+    </ClCompile>
     <ClCompile Include="lua\lcode.c">
+      <Filter>3rd\lua</Filter>
+    </ClCompile>
+    <ClCompile Include="lua\lcorolib.c">
+      <Filter>3rd\lua</Filter>
+    </ClCompile>
+    <ClCompile Include="lua\lctype.c">
       <Filter>3rd\lua</Filter>
     </ClCompile>
     <ClCompile Include="lua\ldblib.c">
@@ -198,22 +201,16 @@
     <ClCompile Include="lua\ltm.c">
       <Filter>3rd\lua</Filter>
     </ClCompile>
-    <ClCompile Include="lua\lua.c">
-      <Filter>3rd\lua</Filter>
-    </ClCompile>
-    <ClCompile Include="lua\luac.c">
-      <Filter>3rd\lua</Filter>
-    </ClCompile>
     <ClCompile Include="lua\lundump.c">
+      <Filter>3rd\lua</Filter>
+    </ClCompile>
+    <ClCompile Include="lua\lutf8lib.c">
       <Filter>3rd\lua</Filter>
     </ClCompile>
     <ClCompile Include="lua\lvm.c">
       <Filter>3rd\lua</Filter>
     </ClCompile>
     <ClCompile Include="lua\lzio.c">
-      <Filter>3rd\lua</Filter>
-    </ClCompile>
-    <ClCompile Include="lua\print.c">
       <Filter>3rd\lua</Filter>
     </ClCompile>
   </ItemGroup>
@@ -344,12 +341,6 @@
     <ClInclude Include="luafilesystem\lfs.h">
       <Filter>3rd\luafilesystem</Filter>
     </ClInclude>
-    <ClInclude Include="protoc-gen-lua\pb.h">
-      <Filter>3rd\protoc-gen-lua</Filter>
-    </ClInclude>
-    <ClInclude Include="lua_openlibs.h">
-      <Filter>3rd</Filter>
-    </ClInclude>
     <ClInclude Include="lua\lapi.h">
       <Filter>3rd\lua</Filter>
     </ClInclude>
@@ -357,6 +348,9 @@
       <Filter>3rd\lua</Filter>
     </ClInclude>
     <ClInclude Include="lua\lcode.h">
+      <Filter>3rd\lua</Filter>
+    </ClInclude>
+    <ClInclude Include="lua\lctype.h">
       <Filter>3rd\lua</Filter>
     </ClInclude>
     <ClInclude Include="lua\ldebug.h">
@@ -389,6 +383,9 @@
     <ClInclude Include="lua\lparser.h">
       <Filter>3rd\lua</Filter>
     </ClInclude>
+    <ClInclude Include="lua\lprefix.h">
+      <Filter>3rd\lua</Filter>
+    </ClInclude>
     <ClInclude Include="lua\lstate.h">
       <Filter>3rd\lua</Filter>
     </ClInclude>
@@ -402,6 +399,9 @@
       <Filter>3rd\lua</Filter>
     </ClInclude>
     <ClInclude Include="lua\lua.h">
+      <Filter>3rd\lua</Filter>
+    </ClInclude>
+    <ClInclude Include="lua\lua.hpp">
       <Filter>3rd\lua</Filter>
     </ClInclude>
     <ClInclude Include="lua\luaconf.h">
@@ -419,13 +419,8 @@
     <ClInclude Include="lua\lzio.h">
       <Filter>3rd\lua</Filter>
     </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="lua\lua-5.1.5.tar.gz">
-      <Filter>3rd\lua</Filter>
-    </None>
-    <None Include="lua\Makefile">
-      <Filter>3rd\lua</Filter>
-    </None>
+    <ClInclude Include="protoc-gen-lua\pb.h">
+      <Filter>3rd\protoc-gen-lua</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
