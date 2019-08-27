@@ -10,9 +10,6 @@
     <Filter Include="3rd\luacjson">
       <UniqueIdentifier>{b14187ca-268c-4e01-9263-1a0b811084e5}</UniqueIdentifier>
     </Filter>
-    <Filter Include="3rd\luasocket">
-      <UniqueIdentifier>{e04817d0-cf9e-41ad-bd2d-2936feafe392}</UniqueIdentifier>
-    </Filter>
     <Filter Include="3rd\luasql">
       <UniqueIdentifier>{bad8d4c8-2e15-4b9d-8917-02ce30588767}</UniqueIdentifier>
     </Filter>
@@ -27,6 +24,9 @@
     </Filter>
     <Filter Include="3rd\protoc-gen-lua">
       <UniqueIdentifier>{00d7c538-ddc4-45ee-b8db-66295d9501ac}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="3rd\lua_socket">
+      <UniqueIdentifier>{4b9e781d-d4fc-4f26-89d8-f7f5761df5ed}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -56,51 +56,6 @@
     </ClCompile>
     <ClCompile Include="luacjson\strbuf.c">
       <Filter>3rd\luacjson</Filter>
-    </ClCompile>
-    <ClCompile Include="luasocket\auxiliar.c">
-      <Filter>3rd\luasocket</Filter>
-    </ClCompile>
-    <ClCompile Include="luasocket\buffer.c">
-      <Filter>3rd\luasocket</Filter>
-    </ClCompile>
-    <ClCompile Include="luasocket\compat.c">
-      <Filter>3rd\luasocket</Filter>
-    </ClCompile>
-    <ClCompile Include="luasocket\except.c">
-      <Filter>3rd\luasocket</Filter>
-    </ClCompile>
-    <ClCompile Include="luasocket\inet.c">
-      <Filter>3rd\luasocket</Filter>
-    </ClCompile>
-    <ClCompile Include="luasocket\luasocket.c">
-      <Filter>3rd\luasocket</Filter>
-    </ClCompile>
-    <ClCompile Include="luasocket\luasocketio.c">
-      <Filter>3rd\luasocket</Filter>
-    </ClCompile>
-    <ClCompile Include="luasocket\options.c">
-      <Filter>3rd\luasocket</Filter>
-    </ClCompile>
-    <ClCompile Include="luasocket\select.c">
-      <Filter>3rd\luasocket</Filter>
-    </ClCompile>
-    <ClCompile Include="luasocket\tcp.c">
-      <Filter>3rd\luasocket</Filter>
-    </ClCompile>
-    <ClCompile Include="luasocket\timeout.c">
-      <Filter>3rd\luasocket</Filter>
-    </ClCompile>
-    <ClCompile Include="luasocket\unix.c">
-      <Filter>3rd\luasocket</Filter>
-    </ClCompile>
-    <ClCompile Include="luasocket\unixtcp.c">
-      <Filter>3rd\luasocket</Filter>
-    </ClCompile>
-    <ClCompile Include="luasocket\usocket.c">
-      <Filter>3rd\luasocket</Filter>
-    </ClCompile>
-    <ClCompile Include="luasocket\wsocket.c">
-      <Filter>3rd\luasocket</Filter>
     </ClCompile>
     <ClCompile Include="luasql\ls_mysql.c">
       <Filter>3rd\luasql</Filter>
@@ -213,6 +168,57 @@
     <ClCompile Include="lua\lzio.c">
       <Filter>3rd\lua</Filter>
     </ClCompile>
+    <ClCompile Include="lua_socket\auxiliar.c">
+      <Filter>3rd\lua_socket</Filter>
+    </ClCompile>
+    <ClCompile Include="lua_socket\buffer.c">
+      <Filter>3rd\lua_socket</Filter>
+    </ClCompile>
+    <ClCompile Include="lua_socket\compat.c">
+      <Filter>3rd\lua_socket</Filter>
+    </ClCompile>
+    <ClCompile Include="lua_socket\except.c">
+      <Filter>3rd\lua_socket</Filter>
+    </ClCompile>
+    <ClCompile Include="lua_socket\inet.c">
+      <Filter>3rd\lua_socket</Filter>
+    </ClCompile>
+    <ClCompile Include="lua_socket\io.c">
+      <Filter>3rd\lua_socket</Filter>
+    </ClCompile>
+    <ClCompile Include="lua_socket\luasocket.c">
+      <Filter>3rd\lua_socket</Filter>
+    </ClCompile>
+    <ClCompile Include="lua_socket\luasocket_scripts.c">
+      <Filter>3rd\lua_socket</Filter>
+    </ClCompile>
+    <ClCompile Include="lua_socket\luasocketio.c">
+      <Filter>3rd\lua_socket</Filter>
+    </ClCompile>
+    <ClCompile Include="lua_socket\mime.c">
+      <Filter>3rd\lua_socket</Filter>
+    </ClCompile>
+    <ClCompile Include="lua_socket\options.c">
+      <Filter>3rd\lua_socket</Filter>
+    </ClCompile>
+    <ClCompile Include="lua_socket\select.c">
+      <Filter>3rd\lua_socket</Filter>
+    </ClCompile>
+    <ClCompile Include="lua_socket\tcp.c">
+      <Filter>3rd\lua_socket</Filter>
+    </ClCompile>
+    <ClCompile Include="lua_socket\timeout.c">
+      <Filter>3rd\lua_socket</Filter>
+    </ClCompile>
+    <ClCompile Include="lua_socket\udp.c">
+      <Filter>3rd\lua_socket</Filter>
+    </ClCompile>
+    <ClCompile Include="lua_socket\unixtcp.c">
+      <Filter>3rd\lua_socket</Filter>
+    </ClCompile>
+    <ClCompile Include="lua_socket\wsocket.c">
+      <Filter>3rd\lua_socket</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="lpeg\lpcap.h">
@@ -241,57 +247,6 @@
     </ClInclude>
     <ClInclude Include="luacjson\strbuf.h">
       <Filter>3rd\luacjson</Filter>
-    </ClInclude>
-    <ClInclude Include="luasocket\auxiliar.h">
-      <Filter>3rd\luasocket</Filter>
-    </ClInclude>
-    <ClInclude Include="luasocket\buffer.h">
-      <Filter>3rd\luasocket</Filter>
-    </ClInclude>
-    <ClInclude Include="luasocket\compat.h">
-      <Filter>3rd\luasocket</Filter>
-    </ClInclude>
-    <ClInclude Include="luasocket\except.h">
-      <Filter>3rd\luasocket</Filter>
-    </ClInclude>
-    <ClInclude Include="luasocket\inet.h">
-      <Filter>3rd\luasocket</Filter>
-    </ClInclude>
-    <ClInclude Include="luasocket\luasocket.h">
-      <Filter>3rd\luasocket</Filter>
-    </ClInclude>
-    <ClInclude Include="luasocket\luasocketio.h">
-      <Filter>3rd\luasocket</Filter>
-    </ClInclude>
-    <ClInclude Include="luasocket\options.h">
-      <Filter>3rd\luasocket</Filter>
-    </ClInclude>
-    <ClInclude Include="luasocket\pierror.h">
-      <Filter>3rd\luasocket</Filter>
-    </ClInclude>
-    <ClInclude Include="luasocket\select.h">
-      <Filter>3rd\luasocket</Filter>
-    </ClInclude>
-    <ClInclude Include="luasocket\socket.h">
-      <Filter>3rd\luasocket</Filter>
-    </ClInclude>
-    <ClInclude Include="luasocket\tcp.h">
-      <Filter>3rd\luasocket</Filter>
-    </ClInclude>
-    <ClInclude Include="luasocket\timeout.h">
-      <Filter>3rd\luasocket</Filter>
-    </ClInclude>
-    <ClInclude Include="luasocket\unix.h">
-      <Filter>3rd\luasocket</Filter>
-    </ClInclude>
-    <ClInclude Include="luasocket\unixtcp.h">
-      <Filter>3rd\luasocket</Filter>
-    </ClInclude>
-    <ClInclude Include="luasocket\usocket.h">
-      <Filter>3rd\luasocket</Filter>
-    </ClInclude>
-    <ClInclude Include="luasocket\wsocket.h">
-      <Filter>3rd\luasocket</Filter>
     </ClInclude>
     <ClInclude Include="luasql\luasql.h">
       <Filter>3rd\luasql</Filter>
@@ -422,5 +377,67 @@
     <ClInclude Include="protoc-gen-lua\pb.h">
       <Filter>3rd\protoc-gen-lua</Filter>
     </ClInclude>
+    <ClInclude Include="lua_socket\auxiliar.h">
+      <Filter>3rd\lua_socket</Filter>
+    </ClInclude>
+    <ClInclude Include="lua_socket\buffer.h">
+      <Filter>3rd\lua_socket</Filter>
+    </ClInclude>
+    <ClInclude Include="lua_socket\compat.h">
+      <Filter>3rd\lua_socket</Filter>
+    </ClInclude>
+    <ClInclude Include="lua_socket\except.h">
+      <Filter>3rd\lua_socket</Filter>
+    </ClInclude>
+    <ClInclude Include="lua_socket\inet.h">
+      <Filter>3rd\lua_socket</Filter>
+    </ClInclude>
+    <ClInclude Include="lua_socket\io.h">
+      <Filter>3rd\lua_socket</Filter>
+    </ClInclude>
+    <ClInclude Include="lua_socket\luasocket.h">
+      <Filter>3rd\lua_socket</Filter>
+    </ClInclude>
+    <ClInclude Include="lua_socket\luasocket_scripts.h">
+      <Filter>3rd\lua_socket</Filter>
+    </ClInclude>
+    <ClInclude Include="lua_socket\luasocketio.h">
+      <Filter>3rd\lua_socket</Filter>
+    </ClInclude>
+    <ClInclude Include="lua_socket\mime.h">
+      <Filter>3rd\lua_socket</Filter>
+    </ClInclude>
+    <ClInclude Include="lua_socket\options.h">
+      <Filter>3rd\lua_socket</Filter>
+    </ClInclude>
+    <ClInclude Include="lua_socket\pierror.h">
+      <Filter>3rd\lua_socket</Filter>
+    </ClInclude>
+    <ClInclude Include="lua_socket\select.h">
+      <Filter>3rd\lua_socket</Filter>
+    </ClInclude>
+    <ClInclude Include="lua_socket\socket.h">
+      <Filter>3rd\lua_socket</Filter>
+    </ClInclude>
+    <ClInclude Include="lua_socket\tcp.h">
+      <Filter>3rd\lua_socket</Filter>
+    </ClInclude>
+    <ClInclude Include="lua_socket\timeout.h">
+      <Filter>3rd\lua_socket</Filter>
+    </ClInclude>
+    <ClInclude Include="lua_socket\udp.h">
+      <Filter>3rd\lua_socket</Filter>
+    </ClInclude>
+    <ClInclude Include="lua_socket\unixtcp.h">
+      <Filter>3rd\lua_socket</Filter>
+    </ClInclude>
+    <ClInclude Include="lua_socket\wsocket.h">
+      <Filter>3rd\lua_socket</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="lua_socket\CMakeLists.txt">
+      <Filter>3rd\lua_socket</Filter>
+    </Text>
   </ItemGroup>
 </Project>

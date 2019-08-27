@@ -8,9 +8,6 @@
 /*=========================================================================*\
 * WinSock include files
 \*=========================================================================*/
-
-#ifdef _WIN32 
-
 #include <winsock2.h>
 #include <ws2tcpip.h>
 
@@ -31,8 +28,6 @@ typedef t_socket *p_socket;
 
 #ifndef AI_NUMERICSERV
 #define AI_NUMERICSERV (0)
-#endif
-
 #endif
 
 #endif /* WSOCKET_H */
