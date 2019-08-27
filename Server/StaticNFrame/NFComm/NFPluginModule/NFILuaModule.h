@@ -10,9 +10,6 @@
 
 #define LUAINTF_LINK_LUA_COMPILED_IN_CXX 0
 #include "Dependencies/LuaBind/luaintf/LuaIntf.h"
-
-//#include "Dependencies/LuaBind/lua_openlibs.h"
-
 #include "NFIModule.h"
 
 #include <iostream>
@@ -34,7 +31,7 @@ class NFILuaModule
 public:
 	NFILuaModule()
 	{
-		//luaL_openlibs2(l.state());
+
 	}
 
 	virtual ~NFILuaModule()

@@ -17,6 +17,8 @@
 #define UNIX_API extern
 #endif
 
+#ifndef _WIN32
+
 typedef struct t_unix_ {
     t_socket sock;
     t_io io;
@@ -26,5 +28,7 @@ typedef struct t_unix_ {
 typedef t_unix *p_unix;
 
 UNIX_API int luaopen_socket_unix(lua_State *L);
+
+#endif
 
 #endif /* UNIX_H */

@@ -8,6 +8,8 @@
 /*=========================================================================*\
 * BSD include files
 \*=========================================================================*/
+
+#ifndef _WIN32
 /* error codes */
 #include <errno.h>
 /* close function */
@@ -55,5 +57,7 @@ typedef t_socket *p_socket;
 typedef struct sockaddr_storage t_sockaddr_storage;
 
 #define SOCKET_INVALID (-1)
+
+#endif
 
 #endif /* USOCKET_H */
