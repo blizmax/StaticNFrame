@@ -19,9 +19,6 @@
     <Filter Include="3rd\luaintf">
       <UniqueIdentifier>{5af3fec1-130c-4deb-94e3-fc4f158a861f}</UniqueIdentifier>
     </Filter>
-    <Filter Include="3rd\luafilesystem">
-      <UniqueIdentifier>{2309f5d5-e667-4346-8f7b-5b01ade0ba7a}</UniqueIdentifier>
-    </Filter>
     <Filter Include="3rd\lua">
       <UniqueIdentifier>{52104c38-023e-4805-ab1f-bdb0dcca8ca0}</UniqueIdentifier>
     </Filter>
@@ -62,9 +59,6 @@
     </ClCompile>
     <ClCompile Include="luasql\luasql.c">
       <Filter>3rd\luasql</Filter>
-    </ClCompile>
-    <ClCompile Include="luafilesystem\lfs.c">
-      <Filter>3rd\luafilesystem</Filter>
     </ClCompile>
     <ClCompile Include="protoc-gen-lua\pb.c">
       <Filter>3rd\protoc-gen-lua</Filter>
@@ -174,6 +168,9 @@
     <ClCompile Include="luasocket\buffer.c">
       <Filter>3rd\luasocket</Filter>
     </ClCompile>
+    <ClCompile Include="luasocket\compat.c">
+      <Filter>3rd\luasocket</Filter>
+    </ClCompile>
     <ClCompile Include="luasocket\except.c">
       <Filter>3rd\luasocket</Filter>
     </ClCompile>
@@ -187,6 +184,9 @@
       <Filter>3rd\luasocket</Filter>
     </ClCompile>
     <ClCompile Include="luasocket\luasocket_scripts.c">
+      <Filter>3rd\luasocket</Filter>
+    </ClCompile>
+    <ClCompile Include="luasocket\luasocketio.c">
       <Filter>3rd\luasocket</Filter>
     </ClCompile>
     <ClCompile Include="luasocket\mime.c">
@@ -205,6 +205,9 @@
       <Filter>3rd\luasocket</Filter>
     </ClCompile>
     <ClCompile Include="luasocket\udp.c">
+      <Filter>3rd\luasocket</Filter>
+    </ClCompile>
+    <ClCompile Include="luasocket\unixtcp.c">
       <Filter>3rd\luasocket</Filter>
     </ClCompile>
     <ClCompile Include="luasocket\wsocket.c">
@@ -283,9 +286,6 @@
     </ClInclude>
     <ClInclude Include="luaintf\impl\LuaType.h">
       <Filter>3rd\luaintf</Filter>
-    </ClInclude>
-    <ClInclude Include="luafilesystem\lfs.h">
-      <Filter>3rd\luafilesystem</Filter>
     </ClInclude>
     <ClInclude Include="lua\lapi.h">
       <Filter>3rd\lua</Filter>
@@ -374,6 +374,9 @@
     <ClInclude Include="luasocket\buffer.h">
       <Filter>3rd\luasocket</Filter>
     </ClInclude>
+    <ClInclude Include="luasocket\compat.h">
+      <Filter>3rd\luasocket</Filter>
+    </ClInclude>
     <ClInclude Include="luasocket\except.h">
       <Filter>3rd\luasocket</Filter>
     </ClInclude>
@@ -389,10 +392,16 @@
     <ClInclude Include="luasocket\luasocket_scripts.h">
       <Filter>3rd\luasocket</Filter>
     </ClInclude>
+    <ClInclude Include="luasocket\luasocketio.h">
+      <Filter>3rd\luasocket</Filter>
+    </ClInclude>
     <ClInclude Include="luasocket\mime.h">
       <Filter>3rd\luasocket</Filter>
     </ClInclude>
     <ClInclude Include="luasocket\options.h">
+      <Filter>3rd\luasocket</Filter>
+    </ClInclude>
+    <ClInclude Include="luasocket\pierror.h">
       <Filter>3rd\luasocket</Filter>
     </ClInclude>
     <ClInclude Include="luasocket\select.h">
@@ -408,6 +417,9 @@
       <Filter>3rd\luasocket</Filter>
     </ClInclude>
     <ClInclude Include="luasocket\udp.h">
+      <Filter>3rd\luasocket</Filter>
+    </ClInclude>
+    <ClInclude Include="luasocket\unixtcp.h">
       <Filter>3rd\luasocket</Filter>
     </ClInclude>
     <ClInclude Include="luasocket\wsocket.h">
