@@ -47,30 +47,10 @@ bool NFCLuaScriptComponent::Finalize()
 
 bool NFCLuaScriptComponent::Register()
 {
-	LuaIntf::LuaBinding(l).beginClass<NFIPluginManager>("NFIPluginManager")
-		.addFunction("GetAppName", &NFIPluginManager::GetAppName)
-		.addFunction("GetAppID", (int (NFIPluginManager::*)() const)&NFIPluginManager::GetAppID)
-		.addFunction("GetInitTime", &NFIPluginManager::GetInitTime)
-		.addFunction("GetNowTime", &NFIPluginManager::GetNowTime)
-		.addFunction("IsLoadAllServer", &NFIPluginManager::IsLoadAllServer)
-		.addFunction("GetConfigPath", &NFIPluginManager::GetConfigPath)
-		.endClass();
-
-	LuaIntf::LuaBinding(l).beginClass<NFILogModule>("NFILogModule")
-		.addFunction("SetDefaultLevel", &NFILogModule::SetDefaultLevel)
-		.addFunction("SetDefaultFlush", &NFILogModule::SetDefaultFlush)
-		.addFunction("LuaDebug", &NFILogModule::LuaDebug)
-		.addFunction("LuaInfo", &NFILogModule::LuaInfo)
-		.addFunction("LuaWarn", &NFILogModule::LuaWarn)
-		.addFunction("LuaError", &NFILogModule::LuaError)
-		.endClass();
 	return true;
 }
 
 void NFCLuaScriptComponent::LoadScript()
 {
-	TryAddPackagePath(m_pPluginManager->GetLuaScriptPath());
-	TryLoadScriptFile("init.lua");
 
-	TryRunGlobalScriptFunc("init_script_system", m_pPluginManager, this);
 }
