@@ -24,19 +24,27 @@ void NFLuaTimer::OnTimer(uint32_t nTimerID)
 {
 	if (mGlobalLuaFunc == "LuaNFrame.DispatchTimerLoop")
 	{
+		m_pLuaScriptModule->BeginProfiler("LuaNFrame.DispatchTimerLoop--"+ mTmpStr);
 		m_pLuaScriptModule->TryRunGlobalScriptFunc("LuaNFrame.DispatchTimerLoop", mTmpStr);
+		m_pLuaScriptModule->EndProfiler();
 	}
 	else if (mGlobalLuaFunc == "LuaNFrame.DispatchTimerOnce")
 	{
+		m_pLuaScriptModule->BeginProfiler("LuaNFrame.DispatchTimerOnce--"+mLuaFunc);
 		m_pLuaScriptModule->TryRunGlobalScriptFunc("LuaNFrame.DispatchTimerOnce", mLuaFunc, mDataStr);
+		m_pLuaScriptModule->EndProfiler();
 	}
 	else if (mGlobalLuaFunc == "LuaNFrame.DispatchWorker")
 	{
+		m_pLuaScriptModule->BeginProfiler("LuaNFrame.DispatchWorker--"+ mLuaFunc);
 		m_pLuaScriptModule->TryRunGlobalScriptFunc("LuaNFrame.DispatchWorker", mLuaFunc, mDataStr);
+		m_pLuaScriptModule->EndProfiler();
 	}
 	else
 	{
+		m_pLuaScriptModule->BeginProfiler("LuaNFrame.DispatchTimer--"+ mLuaFunc);
 		m_pLuaScriptModule->TryRunGlobalScriptFunc("LuaNFrame.DispatchTimer", mLuaFunc, mDataStr);
+		m_pLuaScriptModule->EndProfiler();
 	}
 }
 
@@ -384,6 +392,16 @@ void NFCLuaScriptModule::ProcessLoopTimer(uint32_t timeSec, const std::string& l
 	ProcessTimer(timeSec, luaFunc, dataStr);
 }
 
+void NFCLuaScriptModule::BeginProfiler(const std::string& funcName)
+{
+	m_pPluginManager->BeginProfiler(funcName);
+}
+
+uint64_t NFCLuaScriptModule::EndProfiler()
+{
+	return m_pPluginManager->EndProfiler();
+}
+
 bool NFCLuaScriptModule::Register()
 {
 	LuaIntf::LuaBinding(l).beginClass<NFCLuaScriptModule>("NFCLuaScriptModule")
@@ -412,6 +430,8 @@ bool NFCLuaScriptModule::Register()
 		.addFunction("ProcessWork", &NFCLuaScriptModule::ProcessWork)
 		.addFunction("ProcessTimer", &NFCLuaScriptModule::ProcessTimer)
 		.addFunction("ProcessLoopTimer", &NFCLuaScriptModule::ProcessLoopTimer)
+		.addFunction("BeginProfiler", &NFCLuaScriptModule::BeginProfiler)
+		.addFunction("EndProfiler", &NFCLuaScriptModule::EndProfiler)
 		.endClass();
 	return true;
 }
@@ -424,21 +444,6 @@ void NFCLuaScriptModule::RunHttpRecvLuaFunc(const std::string& luaFunc, const ui
 void NFCLuaScriptModule::RunNetRecvLuaFunc(const std::string& luaFunc, const uint32_t unLinkId, const uint64_t valueId, const uint32_t nMsgId, const std::string& strMsg)
 {
 	TryRunGlobalScriptFunc(luaFunc, unLinkId, valueId, nMsgId, strMsg);
-}
-
-void NFCLuaScriptModule::RunNetEventLuaFunc(const std::string& luaFunc, const eMsgType nEvent, const uint32_t unLinkId)
-{
-	TryRunGlobalScriptFunc(luaFunc, nEvent, unLinkId);
-}
-
-void NFCLuaScriptModule::RunHtttpClientLuaFunc(const std::string& luaFunc, const int state_code, const std::string& strRespData, const std::string& strUserData)
-{
-	//TryRunGlobalScriptFunc("unilight.HttpClientRequestCallBack", luaFunc, state_code, strRespData, strUserData);
-}
-
-void NFCLuaScriptModule::RunHttpServerLuaFunc(const std::string& luaFunc, uint32_t serverType, const NFIHttpHandle & req)
-{
-	//TryRunGlobalScriptFunc("unilight.HttpServerRequestCallBack", luaFunc, serverType, req);
 }
 
 void NFCLuaScriptModule::StopTimer(uint32_t nTimerID)
@@ -527,20 +532,6 @@ uint32_t NFCLuaScriptModule::AddClocker(const std::string& luaFunc, uint64_t nSt
 	luaTimer->SetFixTimer(luaTimer->mTimerId, nStartTime, nInterDays, luaTimer->mCallCount);
 	m_luaTimerMap.emplace(luaTimer->mTimerId, luaTimer);
 	return luaTimer->mTimerId;
-}
-
-void NFCLuaScriptModule::RunServerNetEventLuaFunc(const std::string& luaFunc, eMsgType nEvent, uint32_t unLinkId, NF_SHARE_PTR<NFServerData> pServerData)
-{
-	m_pPluginManager->BeginProfiler(luaFunc);
-	TryRunGlobalScriptFunc(luaFunc, nEvent, unLinkId, pServerData);
-	m_pPluginManager->EndProfiler();
-}
-
-void NFCLuaScriptModule::RunAccountNetEventLuaFunc(const std::string& luaFunc, uint32_t nEvent, uint32_t unLinkId, NF_SHARE_PTR<PlayerGameServerInfo> pServerData)
-{
-	m_pPluginManager->BeginProfiler(luaFunc);
-	TryRunGlobalScriptFunc("LuaNFrame.DispatchAccountNetEvent", luaFunc, nEvent, unLinkId, pServerData);
-	m_pPluginManager->EndProfiler();
 }
 
 void NFCLuaScriptModule::OnAccountEventCallBack(uint32_t nEvent, uint32_t unLinkId, NF_SHARE_PTR<PlayerGameServerInfo> pServerData)

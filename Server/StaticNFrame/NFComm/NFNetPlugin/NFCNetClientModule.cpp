@@ -23,7 +23,6 @@ NFCNetClientModule::NFCNetClientModule(NFIPluginManager* p)
 		AddEventCallBack((NF_SERVER_TYPES)serverType, this, &NFCNetClientModule::OnHandleNetEvent);
 	}
 	mxSendBuffer.AssureSpace(MAX_SEND_BUFFER_SIZE);
-	m_pLuaScriptModule = nullptr;
 	m_eventLoop = NF_NEW evpp::EventLoopThread();
 	m_eventLoop->set_name("NFEvppClientThread");
 	m_eventLoop->Start();
@@ -35,8 +34,6 @@ NFCNetClientModule::~NFCNetClientModule()
 
 bool NFCNetClientModule::Awake()
 {
-	//可以允许Lua Module不存在
-	m_pLuaScriptModule = FindModule<NFILuaScriptModule>();
 	return true;
 }
 
@@ -553,22 +550,6 @@ void NFCNetClientModule::OnDisConnected(NFIClient* pClient)
 			pClient->SetStatus(eConnectStatus_Disconnect);
 			pClient->SetLastActionTime(NFTime::Tick());
 		}
-	}
-}
-
-void NFCNetClientModule::RunNetRecvLuaFunc(const std::string& luaFunc, const uint32_t unLinkId, const uint64_t valueId, const uint32_t nMsgId, const std::string& strMsg)
-{
-	if (m_pLuaScriptModule)
-	{
-		m_pLuaScriptModule->RunNetRecvLuaFunc(luaFunc, unLinkId, valueId, nMsgId, strMsg);
-	}
-}
-
-void NFCNetClientModule::RunNetEventLuaFunc(const std::string& luaFunc, const eMsgType nEvent, const uint32_t unLinkId)
-{
-	if (m_pLuaScriptModule)
-	{
-		m_pLuaScriptModule->RunNetEventLuaFunc(luaFunc, nEvent, unLinkId);
 	}
 }
 

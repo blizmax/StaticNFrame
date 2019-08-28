@@ -40,19 +40,7 @@ protected:
 		const std::string& strPostData,
 		const HTTP_RESP_FUNCTOR& pCB,
 		const std::string& strUserData);
-
-	virtual bool LuaPerformGet(const std::string& strUri,
-		const std::map<std::string, std::string>& xHeaders,
-		const std::string& luaFunc,
-		const std::string& strUserData);
-
-	virtual bool LuaPerformPost(const std::string& strUri,
-		const std::map<std::string, std::string>& xHeaders,
-		const std::string& strPostData,
-		const std::string& luaFunc,
-		const std::string& strUserData);
 private:
 	NFIHttpClient* m_pHttpClient;
 	std::map<std::string, std::string> m_xDefaultHttpHeaders;
-	NFILuaScriptModule* m_pLuaScriptModule;
 };

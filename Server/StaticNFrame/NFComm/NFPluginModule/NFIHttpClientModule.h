@@ -78,64 +78,6 @@ public:
 		HTTP_RESP_FUNCTOR pd = HTTP_RESP_FUNCTOR(std::bind(handleRecieve, pBase, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3));
 		return PerformPost(strUri, xHeaders, strPostData, pd, strUserData);
 	}
-
-	bool LuaHttpGet(const std::string& strUri, const std::string& luaFunc, const std::string& jsonHeaders = std::string(), const std::string& strUserData = std::string())
-	{
-		std::map<std::string, std::string> headers;
-
-		if (jsonHeaders.empty() == false)
-		{
-			NFLogDebug(NF_LOG_LUA_PLUGIN, 0, "[HttpGet | {}]", jsonHeaders);
-			rapidjson::Document jsonDoc;
-			jsonDoc.Parse(jsonHeaders.c_str());
-			if (jsonDoc.IsObject() == false)
-			{
-				NFLogError(NF_LOG_LUA_PLUGIN, 0, "[HttpGet Error");
-				return false;
-			}
-
-			for (auto it = jsonDoc.MemberBegin(); it != jsonDoc.MemberEnd(); it++)
-			{
-				if (it->name.IsString() && it->value.IsString())
-				{
-					std::string name = it->name.GetString();
-					std::string value = it->value.GetString();
-					headers.emplace(name, value);
-				}
-			}
-		}
-
-		return LuaPerformGet(strUri, headers, luaFunc, strUserData);
-	}
-
-	bool LuaHttpPost(const std::string& strUri, const std::string& strPostData, const std::string& luaFunc, const std::string& jsonHeaders = std::string(), const std::string& strUserData = std::string())
-	{
-		std::map<std::string, std::string> headers;
-
-		if (jsonHeaders.empty() == false)
-		{
-			NFLogDebug(NF_LOG_LUA_PLUGIN, 0, "[HttpPos | {}]", jsonHeaders);
-			rapidjson::Document jsonDoc;
-			jsonDoc.Parse(jsonHeaders.c_str());
-			if (jsonDoc.IsObject() == false)
-			{
-				NFLogError(NF_LOG_LUA_PLUGIN, 0, "[HttpPos Error");
-				return false;
-			}
-
-			for (auto it = jsonDoc.MemberBegin(); it != jsonDoc.MemberEnd(); it++)
-			{
-				if (it->value.IsString())
-				{
-					std::string name = it->name.GetString();
-					std::string value = it->value.GetString();
-					headers.emplace(name, value);
-				}
-			}
-		}
-
-		return LuaPerformPost(strUri, headers, strPostData, luaFunc, strUserData);
-	}
 protected:
 	virtual bool PerformGet(const std::string& strUrl,
 		const std::map<std::string, std::string>& xHeaders,
@@ -146,16 +88,5 @@ protected:
 		const std::map<std::string, std::string>& xHeaders,
 		const std::string& strPostData,
 		const HTTP_RESP_FUNCTOR& pCB,
-		const std::string& strUserData) = 0;
-
-	virtual bool LuaPerformGet(const std::string& strUrl,
-		const std::map<std::string, std::string>& xHeaders,
-		const std::string& luaFunc,
-		const std::string& strUserData) = 0;
-
-	virtual bool LuaPerformPost(const std::string& strUrl,
-		const std::map<std::string, std::string>& xHeaders,
-		const std::string& strPostData,
-		const std::string& luaFunc,
 		const std::string& strUserData) = 0;
 };

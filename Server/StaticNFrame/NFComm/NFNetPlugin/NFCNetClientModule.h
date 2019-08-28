@@ -288,15 +288,9 @@ protected:
 	 * @return void
 	 */
 	void OnDisConnected(NFIClient* pClient);
-
-public:
-	virtual void RunNetRecvLuaFunc(const std::string& luaFunc, const uint32_t unLinkId, const uint64_t valueId, const uint32_t nMsgId, const std::string& strMsg);
-
-	virtual void RunNetEventLuaFunc(const std::string& luaFunc, const eMsgType nEvent, const uint32_t unLinkId);
 private:
 	std::vector<std::vector<NFIClient*>> mxServerMap;
 	NFBuffer mxSendBuffer;
-	NFILuaScriptModule* m_pLuaScriptModule;
 	evpp::EventLoopThread* m_eventLoop;
 };
 

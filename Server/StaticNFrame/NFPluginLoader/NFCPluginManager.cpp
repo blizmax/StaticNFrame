@@ -54,7 +54,7 @@ NFCPluginManager::NFCPluginManager() : NFIPluginManager()
 	}
 
 	NFRandomSeed();
-	SetOpenProfiler(false);
+	SetOpenProfiler(true);
 }
 
 NFCPluginManager::~NFCPluginManager()
@@ -290,6 +290,7 @@ bool NFCPluginManager::Execute()
 		else if (cost > 200)
 		{
 			NFLogError(NF_LOG_PLUGIN_MANAGER, 0, "frame timeout:{}, something wrong", cost);
+			PrintProfiler();
 		}
 		std::this_thread::sleep_for(std::chrono::milliseconds(1));
 	}

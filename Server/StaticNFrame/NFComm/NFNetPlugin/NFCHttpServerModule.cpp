@@ -25,7 +25,7 @@ NFCHttpServerModule::NFCHttpServerModule(NFIPluginManager* p)
 	{
 		mServerArray[i] = nullptr;
 	}
-	m_pLuaScriptModule = NULL;
+
 	mxCallBack.resize(NF_ST_MAX);
 }
 
@@ -43,8 +43,6 @@ NFCHttpServerModule::~NFCHttpServerModule()
 
 bool NFCHttpServerModule::Awake()
 {
-	//可以允许Lua Module不存在
-	m_pLuaScriptModule = dynamic_cast<NFILuaScriptModule*>(m_pPluginManager->FindModule(typeid(NFILuaScriptModule).name()));
 	return true;
 }
 
@@ -228,47 +226,6 @@ bool NFCHttpServerModule::OnReceiveNetPack(uint32_t unlinkId, const NFIHttpHandl
 		}
 	}
 
-	auto luaiter = mxCallBack[serverType].mMsgLuaCBMap.find((NFHttpType)req.GetType());
-	if (luaiter != mxCallBack[serverType].mMsgLuaCBMap.end())
-	{
-		std::string lowerPath = NFStringUtility::ToLower(req.GetPath());
-		auto luaitPath = luaiter->second.find(lowerPath);
-		if (luaitPath != luaiter->second.end())
-		{
-			std::string& luaFunc = luaitPath->second;
-			try
-			{
-				if (m_pLuaScriptModule)
-				{
-					m_pLuaScriptModule->RunHttpServerLuaFunc(luaFunc, serverType, req);
-				}
-			}
-			catch (const std::exception&)
-			{
-				ResponseMsg((NF_SERVER_TYPES)serverType, req, "unknow error", NFWebStatus::WEB_INTER_ERROR);
-			}
-			return true;
-		}
-		else
-		{
-			for (int i = 0; i < mxCallBack[serverType].mOtherMsgLuaCBMap[(NFHttpType)req.GetType()].size(); ++i)
-			{
-				std::string& luaFunc = mxCallBack[serverType].mOtherMsgLuaCBMap[(NFHttpType)req.GetType()][i];
-				try
-				{
-					if (m_pLuaScriptModule)
-					{
-						m_pLuaScriptModule->RunHttpServerLuaFunc(luaFunc, serverType, req);
-					}
-				}
-				catch (const std::exception&)
-				{
-					ResponseMsg((NF_SERVER_TYPES)serverType, req, "unknow error", NFWebStatus::WEB_INTER_ERROR);
-				}
-			}
-		}
-	}
-
 	return ResponseMsg((NF_SERVER_TYPES)serverType, req, "", NFWebStatus::WEB_ERROR);
 }
 
@@ -286,27 +243,6 @@ NFWebStatus NFCHttpServerModule::OnFilterPack(uint32_t unlinkId, const NFIHttpHa
 	}
 
 	return NFWebStatus::WEB_OK;
-}
-
-bool NFCHttpServerModule::LuaAddMsgCB(NF_SERVER_TYPES serverType, const std::string& strCommand, const NFHttpType eRequestType, const std::string& luaFunc)
-{
-	if (serverType > NF_ST_NONE && serverType < NF_ST_MAX)
-	{
-		std::string lowerCmd = NFStringUtility::ToLower(strCommand);
-		mxCallBack[serverType].mMsgLuaCBMap[eRequestType].emplace(lowerCmd, luaFunc);
-	}
-
-	return false;
-}
-
-bool NFCHttpServerModule::LuaAddOtherMsgCB(NF_SERVER_TYPES serverType, const NFHttpType eRequestType, const std::string& luaFunc)
-{
-	if (serverType > NF_ST_NONE && serverType < NF_ST_MAX)
-	{
-		mxCallBack[serverType].mOtherMsgLuaCBMap[eRequestType].push_back(luaFunc);
-	}
-
-	return false;
 }
 
 bool NFCHttpServerModule::AddMsgCB(NF_SERVER_TYPES serverType, const std::string& strCommand, const NFHttpType eRequestType, const HTTP_RECEIVE_FUNCTOR& cb)

@@ -40,6 +40,7 @@ public:
 	NFTask()
 	{
 		m_balanceId = 0;
+		m_useTime = 0;
 	}
 
 	virtual ~NFTask()
@@ -81,7 +82,9 @@ public:
 	{
 		return TPTASK_STATE_COMPLETED;
 	}
-protected:
+public:
 	uint64_t m_balanceId; //动态均衡ID, 如果是玩家就是玩家CharId, 如果不是一般填0
+	uint32_t m_useTime; //处理过程使用时间
+	std::string m_taskName; //异步任务名字
 };
 

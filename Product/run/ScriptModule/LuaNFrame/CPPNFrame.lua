@@ -147,3 +147,11 @@ function CPPNFrame:ProcessLoopTimer(timeSec, luaFunc, dataStr)
 	--该函数设置的定时器，是在主线程serverloop的线程中执行
     self.luaModule:ProcessLoopTimer(timeSec, luaFunc, dataStr)
 end
+
+function CPPNFrame:BeginProfiler(name)
+    self.luaModule:BeginProfiler(name)
+end
+
+function CPPNFrame:EndProfiler()
+    self.luaModule:EndProfiler()
+end

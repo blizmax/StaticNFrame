@@ -38,16 +38,6 @@ public:
 		return false;
 	}
 
-	virtual bool AddEventLuaCallBack(NF_SERVER_TYPES eSourceType, NF_SERVER_TYPES eTargetType, const std::string& luaFunc)
-	{
-		if (eSourceType  < NF_ST_MAX && eTargetType < NF_ST_MAX)
-		{
-			mxCallBack[eSourceType].mxEventLuaCallBack[eTargetType].push_back(luaFunc);
-			return true;
-		}
-		return false;
-	}
-
 	template <typename BaseType>
 	bool AddAccountEventCallBack(NF_SERVER_TYPES eServerType, BaseType* pBase, void (BaseType::*handleRecieve)(uint32_t nEvent, uint32_t unLinkId, NF_SHARE_PTR<PlayerGameServerInfo> pServerData))
 	{
@@ -66,16 +56,6 @@ public:
 		return false;
 	}
 
-	virtual bool AddAccountEventLuaCallBack(NF_SERVER_TYPES eServerType, const std::string& luaFunc)
-	{
-		if (eServerType < NF_ST_MAX)
-		{
-			mxAccountCallBack[eServerType].mxEventLuaCallBack.push_back(luaFunc);
-			return true;
-		}
-		return false;
-	}
-
 	void OnServerNetEvent(eMsgType nEvent, NF_SERVER_TYPES eSourceType, NF_SERVER_TYPES eTargetType, uint32_t unLinkId, NF_SHARE_PTR<NFServerData> pServerData)
 	{
 		if (eSourceType  < NF_ST_MAX && eTargetType < NF_ST_MAX)
@@ -87,11 +67,6 @@ public:
 				{
 					pFun(nEvent, unLinkId, pServerData);
 				}
-			}
-
-			for (auto it = mxCallBack[eSourceType].mxEventLuaCallBack[eTargetType].begin(); it != mxCallBack[eSourceType].mxEventLuaCallBack[eTargetType].end(); ++it)
-			{
-				RunServerNetEventLuaFunc(*it, nEvent, unLinkId, pServerData);
 			}
 		}
 	}
@@ -108,22 +83,7 @@ public:
 					pFun(nEvent, unLinkId, pServerData);
 				}
 			}
-
-			for (auto it = mxAccountCallBack[eServerType].mxEventLuaCallBack.begin(); it != mxAccountCallBack[eServerType].mxEventLuaCallBack.end(); ++it)
-			{
-				RunAccountNetEventLuaFunc(*it, nEvent, unLinkId, pServerData);
-			}
 		}
-	}
-
-	virtual void RunServerNetEventLuaFunc(const std::string& luaFunc, eMsgType nEvent, uint32_t unLinkId, NF_SHARE_PTR<NFServerData> pServerData)
-	{
-
-	}
-
-	virtual void RunAccountNetEventLuaFunc(const std::string& luaFunc, uint32_t nEvent, uint32_t unLinkId, NF_SHARE_PTR<PlayerGameServerInfo> pServerData)
-	{
-
 	}
 protected:
 	NFIServerNetEventModule()
@@ -140,14 +100,12 @@ protected:
 	{
 		//call back
 		std::map<uint32_t, std::vector<SERVER_NET_EVENT_FUNCTOR>> mxEventCallBack; //key -- servertype
-		std::map<uint32_t, std::vector<std::string>> mxEventLuaCallBack; //key -- servertype
 	};
 
 	struct AccountCallBack
 	{
 		//call back
 		std::vector<ACCOUNT_NET_EVENT_FUNCTOR> mxEventCallBack; //key -- servertype
-		std::vector<std::string> mxEventLuaCallBack; //key -- servertype
 	};
 
 	std::vector<CallBack> mxCallBack;

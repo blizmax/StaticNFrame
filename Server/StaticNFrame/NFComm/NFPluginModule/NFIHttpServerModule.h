@@ -40,16 +40,6 @@ public:
 
 		return AddFilterCB(serverType, strPath, functor);
 	}
-
-	bool LuaAddRequestHandler(NF_SERVER_TYPES serverType, const std::string& strPath, const NFHttpType eRequestType, const std::string& luaFunc)
-	{
-		return LuaAddMsgCB(serverType, strPath, eRequestType, luaFunc);
-	}
-
-	bool LuaAddOtherRequestHandler(NF_SERVER_TYPES serverType, const NFHttpType eRequestType, const std::string& luaFunc)
-	{
-		return LuaAddOtherMsgCB(serverType, eRequestType, luaFunc);
-	}
 public:
 	virtual int InitServer(NF_SERVER_TYPES serverType, uint32_t nPort) = 0;
 	virtual int InitServer(NF_SERVER_TYPES serverType, const std::vector<uint32_t>& nPorts) = 0;
@@ -63,7 +53,4 @@ protected:
 	virtual bool AddMsgCB(NF_SERVER_TYPES serverType, const std::string& strCommand, const NFHttpType eRequestType, const HTTP_RECEIVE_FUNCTOR& cb) = 0;
 	virtual bool AddOtherMsgCB(NF_SERVER_TYPES serverType, const NFHttpType eRequestType, const HTTP_RECEIVE_FUNCTOR& cb) = 0;
 	virtual bool AddFilterCB(NF_SERVER_TYPES serverType, const std::string& strCommand, const HTTP_FILTER_FUNCTOR& cb) = 0;
-
-	virtual bool LuaAddMsgCB(NF_SERVER_TYPES serverType, const std::string& strCommand, const NFHttpType eRequestType, const std::string& luaFunc) = 0;
-	virtual bool LuaAddOtherMsgCB(NF_SERVER_TYPES serverType, const NFHttpType eRequestType, const std::string& luaFunc) = 0;
 };

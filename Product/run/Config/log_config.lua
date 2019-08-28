@@ -67,9 +67,9 @@ LogInfo = {
 	--基础框架层LOG
 	{logid = NFLogId.NF_LOG_DEFAULT, display=true, level=0, logname = "DefaultLog", guid = 0, desc = "默认LOG"},
 	{logid = NFLogId.NF_LOG_SYSTEMLOG, display=true, level=0, logname = "SystemLog", guid = 0, desc = "系统LOG"},
-	{logid = NFLogId.NF_LOG_ACTOR_PLUGIN, display=false, level=0, logname = "ActorLog", guid = 0, desc = "Actor引擎LOG"},
-	{logid = NFLogId.NF_LOG_KERNEL_PLUGIN, display=false, level=0, logname = "KernelLog", guid = 0, desc = "Kernel引擎LOG"},
-	{logid = NFLogId.NF_LOG_LUA_PLUGIN, display=false, level=0, logname = "LuaLog", guid = 0, desc = "Lua引擎LOG"},
+	{logid = NFLogId.NF_LOG_ACTOR_PLUGIN, display=true, level=0, logname = "ActorLog", guid = 0, desc = "Actor引擎LOG"},
+	{logid = NFLogId.NF_LOG_KERNEL_PLUGIN, display=true, level=0, logname = "KernelLog", guid = 0, desc = "Kernel引擎LOG"},
+	{logid = NFLogId.NF_LOG_LUA_PLUGIN, display=true, level=0, logname = "LuaLog", guid = 0, desc = "Lua引擎LOG"},
 	{logid = NFLogId.NF_LOG_MONGO_PLUGIN, display=false, level=0, logname = "MongoLog", guid = 0, desc = "Mongo引擎LOG"},
 	{logid = NFLogId.NF_LOG_MONITOR_PLUGIN, display=true, level=0, logname = "MonitorLog", guid = 0, desc = "Monitor引擎LOG"},
 	{logid = NFLogId.NF_LOG_MYSQL_PLUGIN, display=true, level=0, logname = "MysqlLog", guid = 0, desc = "Mysql引擎LOG"},
@@ -82,7 +82,7 @@ LogInfo = {
 	{logid = NFLogId.NF_LOG_PROTOBUF_PARSE, display=true, level=0, logname = "ProtobufParse", guid = 0, desc = "protobuf解析出错LOG"},
 	{logid = NFLogId.NF_LOG_RECV_MSG, display=false, level=0, logname = "RecvMsg", guid = 0, desc = "接受消息LOG"},
 	{logid = NFLogId.NF_LOG_RECV_MSG_JSON_PRINTF, display=false, level=0, logname = "RecvMsgJson", guid = 0, desc = "接受消息Json输出LOG"},
-	{logid = NFLogId.NF_LOG_PLUGIN_MANAGER, display=false, level=0, logname = "PluginLog", guid = 0, desc = "引擎管理LOG"},
+	{logid = NFLogId.NF_LOG_PLUGIN_MANAGER, display=true, level=0, logname = "PluginLog", guid = 0, desc = "引擎管理LOG"},
 	--服务器层架构LOG
 	
 	{logid = NFLogId.NF_LOG_SERVER_CONNECT_SERVER, display=true, level=0, logname = "ServerConnectServerLog", guid = 0, desc = "服务器与服务器连接LOG"},

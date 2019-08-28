@@ -115,6 +115,14 @@ public:
 	* @return
 	*/
 	virtual bool AddComponnet(NFITaskComponent* pComponnet);
+
+	/**
+	* @brief 获得所有component
+	*
+	* @param
+	* @return
+	*/
+	const std::vector<NFITaskComponent*>& GetTaskComponent() const { return m_taskComponents; }
 protected:
 	/**
 	* @brief 处理已经被处理过的消息

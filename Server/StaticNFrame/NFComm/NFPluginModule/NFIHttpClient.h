@@ -36,14 +36,4 @@ public:
 	virtual bool PerformPost(const std::string& strUri, const std::string& strPostData, const HTTP_RESP_FUNCTOR& pCB,
 		const std::string& strUserData,
 		const std::map<std::string, std::string>& xHeaders) = 0;
-
-	virtual bool LuaPerformGet(const std::string& strUri, const std::string& luaFunc,
-		const std::string& strUserData,
-		const std::map<std::string, std::string>& xHeaders) = 0;
-
-	virtual bool LuaPerformPost(const std::string& strUri, const std::string& strPostData, const std::string& luaFunc,
-		const std::string& strUserData,
-		const std::map<std::string, std::string>& xHeaders) = 0;
-
-	virtual void SetLuaScriptModule(NFILuaScriptModule* pLuaScriptModule) = 0;
 };

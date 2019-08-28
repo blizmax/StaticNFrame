@@ -63,10 +63,7 @@ public:
 
 	virtual void RunLuaFunc(const int state_code, const std::string& strRespData, const std::string& strUserData)
 	{
-		if (m_pLuaScriptModule)
-		{
-			m_pLuaScriptModule->RunHtttpClientLuaFunc(m_luaFunc, state_code, strRespData, strUserData);
-		}
+
 	}
 
 	void Clear()
@@ -89,7 +86,7 @@ class NFCHttpClient : public NFIHttpClient
 {
 public:
 	NFCHttpClient(int nRetry = 2, int nTimeoutSec = 30)
-		: m_nRetry(nRetry), m_nTimeOut(nTimeoutSec), m_pLuaScriptModule(nullptr)
+		: m_nRetry(nRetry), m_nTimeOut(nTimeoutSec)
 	{
 	}
 
@@ -110,29 +107,11 @@ public:
 	virtual bool PerformPost(const std::string& strUri, const std::string& strPostData, const HTTP_RESP_FUNCTOR& pCB,
 		const std::string& strUserData,
 		const std::map<std::string, std::string>& xHeaders);
-
-	virtual bool LuaPerformGet(const std::string& strUri, const std::string& luaFunc,
-		const std::string& strUserData,
-		const std::map<std::string, std::string>& xHeaders);
-
-	virtual bool LuaPerformPost(const std::string& strUri, const std::string& strPostData, const std::string& luaFunc,
-		const std::string& strUserData,
-		const std::map<std::string, std::string>& xHeaders);
-
-	virtual void SetLuaScriptModule(NFILuaScriptModule* pLuaScriptModule) { m_pLuaScriptModule = pLuaScriptModule; }
 private:
 	static void OnHttpReqDone(struct evhttp_request* req, void* ctx);
-	static void LuaOnHttpReqDone(struct evhttp_request* req, void* ctx);
 
 	bool MakeRequest(const std::string& strUri,
 		const HTTP_RESP_FUNCTOR& pCB,
-		const std::string& strUserData,
-		const std::string& strPostData,
-		const std::map<std::string, std::string>& xHeaders,
-		const NFHttpType eHttpType);
-
-	bool LuaMakeRequest(const std::string& strUri,
-		const std::string& luaFunc,
 		const std::string& strUserData,
 		const std::string& strPostData,
 		const std::map<std::string, std::string>& xHeaders,
@@ -144,12 +123,9 @@ private:
 	int m_nRetry = 2;
 	int m_nTimeOut = 30;
 
-	NFILuaScriptModule* m_pLuaScriptModule;
-
 #if NF_ENABLE_SSL
 	SSL_CTX*            m_pSslCtx = nullptr;
 #endif
 
 	std::list<HttpObject*> mListHttpObject;
-	std::list<LuaHttpObject*> mListLuaHttpObject;
 };

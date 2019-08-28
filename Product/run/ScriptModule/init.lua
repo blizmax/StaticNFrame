@@ -45,18 +45,21 @@ function init_script_system(luaModule)
 	LuaNFrame.init(luaModule)
 	LuaNFrame.AddTimer("update_debugsocket", 1)
 
-	if LuaNFrame.GetAppName() == "AllServer" then
-		package.path = package.path .. ";../ScriptModule/GameServer/?.lua;"
-		package.path = package.path..";../ScriptModule/GameServer/trdlib/libprotobuf/?.lua"   --由于这里protobuf的特殊性，必须把包含protobuf的目录加到环境变量中
-		package.path = package.path..";../ScriptModule/GameServer/trdlib/lua/?.lua"
-	elseif LuaNFrame.GetAppName() == "GameServer" then
-		package.path = package.path .. ";../ScriptModule/GameServer/?.lua;"
-		package.path = package.path..";../ScriptModule/GameServer/trdlib/libprotobuf/?.lua"   --由于这里protobuf的特殊性，必须把包含protobuf的目录加到环境变量中
-		package.path = package.path..";../ScriptModule/GameServer/trdlib/lua/?.lua"
-	end
-
 	local function timerExecute()
-		require("LoadHelper")
+		if LuaNFrame.GetAppName() == "AllServer" then
+			package.path = package.path .. ";../ScriptModule/GameServer/?.lua;"
+			package.path = package.path..";../ScriptModule/GameServer/trdlib/libprotobuf/?.lua"   --由于这里protobuf的特殊性，必须把包含protobuf的目录加到环境变量中
+			package.path = package.path..";../ScriptModule/GameServer/trdlib/lua/?.lua"
+
+			require("GameServer/LoadHelper")
+		elseif LuaNFrame.GetAppName() == "GameServer" then
+			package.path = package.path .. ";../ScriptModule/GameServer/?.lua;"
+			package.path = package.path..";../ScriptModule/GameServer/trdlib/libprotobuf/?.lua"   --由于这里protobuf的特殊性，必须把包含protobuf的目录加到环境变量中
+			package.path = package.path..";../ScriptModule/GameServer/trdlib/lua/?.lua"
+
+			require("GameServer/LoadHelper")
+		end
+
 		require("LuaNFrame/NFTimeUtils")
 
 		math.newrandomseed()

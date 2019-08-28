@@ -25,7 +25,6 @@ NFCHttpClientModule::NFCHttpClientModule(NFIPluginManager* p)
 		{ "User-Agent", DEFAULT_USER_AGENT },
 		{ "Cache-Control", "no-cache" }
 	};
-	m_pLuaScriptModule = nullptr;
 }
 
 NFCHttpClientModule::~NFCHttpClientModule()
@@ -36,10 +35,7 @@ NFCHttpClientModule::~NFCHttpClientModule()
 
 bool NFCHttpClientModule::Awake()
 {
-	//可以允许Lua Module不存在
-	m_pLuaScriptModule = dynamic_cast<NFILuaScriptModule*>(m_pPluginManager->FindModule(typeid(NFILuaScriptModule).name()));
 	m_pHttpClient->Init();
-	m_pHttpClient->SetLuaScriptModule(m_pLuaScriptModule);
 	return true;
 }
 
@@ -76,23 +72,5 @@ bool NFCHttpClientModule::PerformPost(const std::string& strUri,
 	const std::string& strUserData)
 {
 	return m_pHttpClient->PerformPost(strUri, strPostData, pCB, strUserData,
-		xHeaders.size() == 0 ? m_xDefaultHttpHeaders : xHeaders);
-}
-
-bool NFCHttpClientModule::LuaPerformGet(const std::string& strUri,
-	const std::map<std::string, std::string>& xHeaders,
-	const std::string& pCB,
-	const std::string& strUserData)
-{
-	return m_pHttpClient->LuaPerformGet(strUri, pCB, strUserData, xHeaders.size() == 0 ? m_xDefaultHttpHeaders : xHeaders);
-}
-
-bool NFCHttpClientModule::LuaPerformPost(const std::string& strUri,
-	const std::map<std::string, std::string>& xHeaders,
-	const std::string& strPostData,
-	const std::string& pCB,
-	const std::string& strUserData)
-{
-	return m_pHttpClient->LuaPerformPost(strUri, strPostData, pCB, strUserData,
 		xHeaders.size() == 0 ? m_xDefaultHttpHeaders : xHeaders);
 }

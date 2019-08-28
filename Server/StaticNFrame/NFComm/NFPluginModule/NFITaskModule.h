@@ -2,6 +2,8 @@
 
 #include "NFIModule.h"
 
+#include <vector>
+
 class NFTaskActorMessage;
 class NFTask;
 class NFITaskComponent;
@@ -55,4 +57,12 @@ public:
 	* @return
 	*/
 	virtual bool AddActorComponent(int nActorIndex, NFITaskComponent* pComonnet) = 0;
+
+	/**
+	* @brief 获得所有component
+	*
+	* @param
+	* @return
+	*/
+	virtual const std::vector<NFITaskComponent*>& GetTaskComponent(int nActorIndex) = 0;
 };

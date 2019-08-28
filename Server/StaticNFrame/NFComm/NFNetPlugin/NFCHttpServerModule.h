@@ -46,20 +46,14 @@ private:
 	virtual bool AddMsgCB(NF_SERVER_TYPES serverType, const std::string& strCommand, const NFHttpType eRequestType, const HTTP_RECEIVE_FUNCTOR& cb);
 	virtual bool AddOtherMsgCB(NF_SERVER_TYPES serverType, const NFHttpType eRequestType, const HTTP_RECEIVE_FUNCTOR& cb);
 	virtual bool AddFilterCB(NF_SERVER_TYPES serverType, const std::string& strCommand, const HTTP_FILTER_FUNCTOR& cb);
-
-	virtual bool LuaAddMsgCB(NF_SERVER_TYPES serverType, const std::string& strCommand, const NFHttpType eRequestType, const std::string& luaFunc);
-	virtual bool LuaAddOtherMsgCB(NF_SERVER_TYPES serverType, const NFHttpType eRequestType, const std::string& luaFunc);
 private:
 	struct CallBack
 	{
 		std::map<NFHttpType, map<std::string, HTTP_RECEIVE_FUNCTOR>> mMsgCBMap;
 		std::map<NFHttpType, std::vector<HTTP_RECEIVE_FUNCTOR>> mOtherMsgCBMap;
-		std::map<NFHttpType, map<std::string, std::string>> mMsgLuaCBMap;
-		std::map<NFHttpType, std::vector<std::string>> mOtherMsgLuaCBMap;
 		std::map<std::string, HTTP_FILTER_FUNCTOR> mMsgFliterMap;
 	};
 
 	std::vector<CallBack> mxCallBack;
 	std::vector<NFIHttpServer*> mServerArray;
-	NFILuaScriptModule* m_pLuaScriptModule;
 };

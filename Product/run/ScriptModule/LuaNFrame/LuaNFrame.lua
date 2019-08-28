@@ -263,6 +263,14 @@ function LuaNFrame.ExeFunc(func)
     end
 end
 
+function LuaNFrame.BeginProfiler(name)
+    CPPNFrame:BeginProfiler(name)
+end
+
+function LuaNFrame.EndProfiler()
+    CPPNFrame:EndProfiler()
+end
+
 function LuaNFrame.SendMsgToPlayer(unLinkId, nPlayerId, nMsgId, nLen, strData)
 	if type(unLinkId) == "number" and type(nMsgId) == "number" and type(strData) == "string" and type(nPlayerId) == "number" and type(nLen) == "number" then
 		CPPNFrame:SendMsgToPlayer(unLinkId, nPlayerId, nMsgId, nLen, strData)

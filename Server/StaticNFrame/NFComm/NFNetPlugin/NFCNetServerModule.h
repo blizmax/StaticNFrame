@@ -222,11 +222,6 @@ public:
 	 * @return void
 	 */
 	virtual void SendToAllServerByPB(NF_SERVER_TYPES eServerType, const uint32_t nMsgID, const google::protobuf::Message& xData, const uint64_t nPlayerID) override;
-
-	virtual void RunNetRecvLuaFunc(const std::string& luaFunc, const uint32_t unLinkId, const uint64_t valueId, const uint32_t nMsgId, const std::string& strMsg) override;
-
-	virtual void RunNetEventLuaFunc(const std::string& luaFunc, const eMsgType nEvent, const uint32_t unLinkId) override;
-
 protected:
 	/**
 	 * @brief 将消息编码后通过pServer发送出去
@@ -255,6 +250,5 @@ protected:
 private:
 	std::vector<NFIServer*> mServerArray;
 	NFBuffer mxSendBuffer;
-	NFILuaScriptModule* m_pLuaScriptModule;
 };
 

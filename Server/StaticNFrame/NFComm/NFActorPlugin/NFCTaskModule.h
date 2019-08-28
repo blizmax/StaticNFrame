@@ -55,6 +55,14 @@ public:
 	virtual bool AddActorComponent(int nActorIndex, NFITaskComponent* pComonnet) override;
 
 	/**
+	* @brief 获得所有component
+	*
+	* @param
+	* @return
+	*/
+	virtual const std::vector<NFITaskComponent*>& GetTaskComponent(int nActorIndex) override;
+
+	/**
 	* @brief 主线程通过自己保存的actorIndex将发送数据给actor线程
 	*
 	* @param nActorIndex	actor唯一索引
@@ -141,10 +149,9 @@ public:
 	*/
 	void OnMainThreadTick();
 protected:
-	Theron::Framework* m_pFramework{};
-	NFTaskActor* m_pMainActor{};
+	Theron::Framework* m_pFramework;
+	NFTaskActor* m_pMainActor;
 	std::map<int, NFTaskActor*> m_mActorMap;
-
 protected:
 	/**
 	* @brief actor索引数组
@@ -173,4 +180,20 @@ protected:
 	* actor线程将数据放入队列， 主线程从队列里取数据处理
 	*/
 	NFQueueVector<NFTaskActorMessage> m_mQueue;
+
+	class TaskMonitorData
+	{
+	public:
+		TaskMonitorData()
+		{
+			mAllUseTime = 0;
+			mPerUseTime = 0;
+			mCount = 0;
+		}
+		uint64_t mAllUseTime;
+		uint64_t mPerUseTime;
+		uint64_t mCount;
+	};
+	std::map<std::string, TaskMonitorData> m_taskMonitorMap;
+	uint32_t m_loopCount;
 };

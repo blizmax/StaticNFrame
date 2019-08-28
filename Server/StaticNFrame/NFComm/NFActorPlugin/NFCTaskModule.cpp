@@ -17,6 +17,7 @@
 
 NFCTaskModule::NFCTaskModule(NFIPluginManager* p)
 {
+	m_loopCount = 0;
 	m_pPluginManager = p;
 	mnSuitIndex = 0;
 	nRecvTaskCount = 0;
@@ -62,7 +63,15 @@ bool NFCTaskModule::Finalize()
 
 bool NFCTaskModule::Execute()
 {
+	m_loopCount++;
 	OnMainThreadTick();
+	if (m_loopCount % 1000 == 0)
+	{
+		for (auto iter = m_taskMonitorMap.begin(); iter != m_taskMonitorMap.end(); iter++)
+		{
+			NFLogDebug(NF_LOG_ACTOR_PLUGIN, 0, "task:{} use all time:{}, count:{}, per use time:{}", iter->first, iter->second.mAllUseTime, iter->second.mCount, iter->second.mPerUseTime);
+		}
+	}
 	return true;
 }
 
@@ -183,6 +192,24 @@ bool NFCTaskModule::AddActorComponent(const int nActorIndex, NFITaskComponent* p
 	return true;
 }
 
+/**
+* @brief 获得所有component
+*
+* @param
+* @return
+*/
+const std::vector<NFITaskComponent*>& NFCTaskModule::GetTaskComponent(int nActorIndex)
+{
+	static std::vector<NFITaskComponent*> emptyVec;
+	NFTaskActor* pActor = GetActor(nActorIndex);
+	if (pActor == nullptr)
+	{
+		return emptyVec;
+	}
+	
+	return pActor->GetTaskComponent();
+}
+
 int NFCTaskModule::GetNumQueuedMessages()
 {
 	int count = 0;
@@ -291,6 +318,14 @@ void NFCTaskModule::OnMainThreadTick()
 				auto pTask = static_cast<NFTask*>(xMsg.pData);
 				if (pTask)
 				{
+					if (pTask->m_taskName.empty() == false && pTask->m_useTime > 1)
+					{
+						TaskMonitorData& data = m_taskMonitorMap[pTask->m_taskName];
+						data.mAllUseTime = data.mAllUseTime + pTask->m_useTime;
+						data.mCount++;
+						data.mPerUseTime = data.mAllUseTime / data.mCount;
+					}
+
 					const NFTask::TPTaskState state = pTask->MainThreadProcess();
 					switch (state)
 					{
@@ -337,8 +372,8 @@ void NFCTaskModule::OnMainThreadTick()
 
 		if (!listTask.empty())
 		{
-			NFLogDebug(NF_LOG_ACTOR_PLUGIN, 0, "handle main thread tick task num:{}, use time:{}", listTask.size(),
-			           NFTime::Tick() - start);
+			//NFLogDebug(NF_LOG_ACTOR_PLUGIN, 0, "handle main thread tick task num:{}, use time:{}", listTask.size(),
+			//           NFTime::Tick() - start);
 		}
 	}
 

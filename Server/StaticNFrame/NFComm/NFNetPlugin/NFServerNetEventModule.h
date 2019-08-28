@@ -73,10 +73,4 @@ public:
 	* @return bool
 	*/
 	virtual bool Execute() override;
-
-	virtual void RunServerNetEventLuaFunc(const std::string& luaFunc, eMsgType nEvent, uint32_t unLinkId, NF_SHARE_PTR<NFServerData> pServerData);
-
-	virtual void RunAccountNetEventLuaFunc(const std::string& luaFunc, uint32_t nEvent, uint32_t unLinkId, NF_SHARE_PTR<PlayerGameServerInfo> pServerData);
-private:
-	NFILuaScriptModule* m_pLuaScriptModule;
 };

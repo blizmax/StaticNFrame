@@ -29,7 +29,7 @@ LoadPlugin =
 			"NFActorPlugin",
 			"NFNetPlugin",
 			"NFMonitorPlugin",
-			"NFMysqlPlugin",
+			--"NFMysqlPlugin",
 			------------------------------------------
 			
 			--------------------------------------------
@@ -70,7 +70,7 @@ LoadPlugin =
 			"NFActorPlugin",
 			"NFNetPlugin",
 			"NFMonitorPlugin",
-			"NFMysqlPlugin",
+			--"NFMysqlPlugin",
 			
 			"NFMasterServerPlugin",
 		};
