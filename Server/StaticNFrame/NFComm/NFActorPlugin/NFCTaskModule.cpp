@@ -24,8 +24,8 @@ NFCTaskModule::NFCTaskModule(NFIPluginManager* p)
 	nHandleTaskCount = 0;
 	srand(static_cast<unsigned>(time(nullptr)));
 	//首先初始化
-	//NFCTaskModule::InitActorThread(std::thread::hardware_concurrency());
-	NFCTaskModule::InitActorThread(10);
+	NFCTaskModule::InitActorThread(std::thread::hardware_concurrency());
+	//NFCTaskModule::InitActorThread(10);
 }
 
 NFCTaskModule::~NFCTaskModule() = default;
@@ -68,6 +68,7 @@ bool NFCTaskModule::Execute()
 	OnMainThreadTick();
 	if (m_loopCount % 1000 == 0)
 	{
+		NFLogDebug(NF_LOG_ACTOR_PLUGIN, 0, "task actor module, work thread num:{} peak work thread num:{}, max work thread num:{}, min work thread num:{}", m_pFramework->GetNumThreads(), m_pFramework->GetPeakThreads(), m_pFramework->GetMaxThreads(), m_pFramework->GetMinThreads());
 		for (auto iter = m_taskMonitorMap.begin(); iter != m_taskMonitorMap.end(); iter++)
 		{
 			NFLogDebug(NF_LOG_ACTOR_PLUGIN, 0, "task:{} use all time:{}, count:{}, per use time:{}", iter->first, iter->second.mAllUseTime, iter->second.mCount, iter->second.mPerUseTime);
@@ -88,6 +89,9 @@ int NFCTaskModule::InitActorThread(int thread_num)
 	if (thread_num <= 0) thread_num = 1;
 
 	m_pFramework = new Theron::Framework(thread_num);
+
+	m_pFramework->SetMinThreads(thread_num);
+	m_pFramework->SetMaxThreads(thread_num*10);
 
 	m_pMainActor = new NFTaskActor(*m_pFramework, this);
 
