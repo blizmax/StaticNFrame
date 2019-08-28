@@ -231,27 +231,27 @@ std::string NFCLuaScriptComponent::Base64Decode(const std::string& s)
 
 void NFCLuaScriptComponent::SendMsgToPlayer(uint32_t usLinkId, const uint64_t nPlayerID, const uint32_t nMsgID, const uint32_t nLen, const std::string& strData)
 {
-
+	m_pLuaThreadModule->AddMsgToPlayer(usLinkId, nPlayerID, nMsgID, nLen, strData);
 }
 
 void NFCLuaScriptComponent::SendMsgToManyPlayer(const std::vector<uint64_t>& nVecPlayerID, const uint32_t nMsgID, const uint32_t nLen, const std::string& strData)
 {
-
+	m_pLuaThreadModule->AddMsgToManyPlayer(nVecPlayerID, nMsgID, nLen, strData);
 }
 
 void NFCLuaScriptComponent::SendMsgToAllPlayer(const uint32_t nMsgID, const uint32_t nLen, const std::string& strData)
 {
-
+	m_pLuaThreadModule->AddMsgToAllPlayer(nMsgID, nLen, strData);
 }
 
 void NFCLuaScriptComponent::SendMsgToWorld(uint32_t usLinkId, const uint64_t nPlayerID, const uint32_t nMsgID, const uint32_t nLen, const std::string& strData)
 {
-
+	m_pLuaThreadModule->AddMsgToWorld(usLinkId, nPlayerID, nMsgID, nLen, strData);
 }
 
 void NFCLuaScriptComponent::SendMsgToMaster(uint32_t usLinkId, const uint64_t nPlayerID, const uint32_t nMsgID, const uint32_t nLen, const std::string& strData)
 {
-
+	m_pLuaThreadModule->AddMsgToMaster(usLinkId, nPlayerID, nMsgID, nLen, strData);
 }
 
 void NFCLuaScriptComponent::SetDefaultLevel(uint32_t log_level)

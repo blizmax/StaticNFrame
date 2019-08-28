@@ -22,6 +22,11 @@
 #include "NFComm/NFPluginModule/NFTimerMgr.h"
 #include "NFComm/NFPluginModule/NFLogMgr.h"
 
+#include "NFComm/NFPluginModule/NFINetServerModule.h"
+#include "NFComm/NFPluginModule/NFINetClientModule.h"
+
+#include "NFComm/NFCore/NFMapEx.hpp"
+
 class NFCLuaThreadModule;
 
 /**
@@ -81,6 +86,41 @@ public:
 	*
 	*/
 	std::string m_tmpParam;
+};
+
+class NFTcpMessage
+{
+public:
+	/**
+	* @brief 消息类型
+	*
+	*/
+	enum MessageType
+	{
+		ACTOR_TCP_MESSAGE_TYPE_NULL = 0,
+		ACTOR_TCP_MESSAGE_TYPE_ONE_PLAYER_PROXY_MSG = 1,
+		ACTOR_TCP_MESSAGE_TYPE_MANY_PLAYER_PROXY_MSG = 2,
+		ACTOR_TCP_MESSAGE_TYPE_ALL_PLAYER_PROXY_MSG = 3,
+		ACTOR_TCP_MESSAGE_TYPE_ONE_PLAYER_WORLD_MSG = 4,
+		ACTOR_TCP_MESSAGE_TYPE_ONE_PLAYER_MASTER_MSG = 5,
+	};
+
+	NFTcpMessage()
+	{
+		m_nMsgType = ACTOR_TCP_MESSAGE_TYPE_NULL;
+		m_usLinkId = 0;
+		m_nPlayerID = 0;
+		m_nMsgID = 0;
+		m_nLen = 0;
+	}
+
+	uint32_t m_nMsgType;
+	uint32_t m_usLinkId;
+	uint64_t m_nPlayerID;
+	std::vector<uint64_t> m_nVecPlayerID;
+	uint32_t m_nMsgID;
+	uint32_t m_nLen;
+	std::string m_strData;
 };
 
 class NFLuaThreadTimer : public NFTimerObj
@@ -147,25 +187,25 @@ public:
 public:
 	virtual void RunNetRecvLuaFunc(const std::string& luaFunc, const uint32_t unLinkId, const uint64_t valueId, const uint32_t nMsgId, const std::string& strMsg) override;
 	virtual void RunHttpRecvLuaFunc(const std::string& luaFunc, const uint32_t unLinkId, const uint32_t requestId, const std::string& firstPath, const std::string& secondPath, const std::string& strMsg) override;
+
+	virtual void SendMsgToPlayer(uint32_t usLinkId, const uint64_t nPlayerID, const uint32_t nMsgID, const uint32_t nLen, const std::string& strData);
+	virtual void SendMsgToManyPlayer(const std::vector<uint64_t>& nPlayerID, const uint32_t nMsgID, const uint32_t nLen, const std::string& strData);
+	virtual void SendMsgToAllPlayer(const uint32_t nMsgID, const uint32_t nLen, const std::string& strData);
+	virtual void SendMsgToWorld(uint32_t usLinkId, const uint64_t nPlayerID, const uint32_t nMsgID, const uint32_t nLen, const std::string& strData);
+	virtual void SendMsgToMaster(uint32_t usLinkId, const uint64_t nPlayerID, const uint32_t nMsgID, const uint32_t nLen, const std::string& strData);
+
+	virtual void AddMsgToPlayer(uint32_t usLinkId, const uint64_t nPlayerID, const uint32_t nMsgID, const uint32_t nLen, const std::string& strData);
+	virtual void AddMsgToManyPlayer(const std::vector<uint64_t>& nPlayerID, const uint32_t nMsgID, const uint32_t nLen, const std::string& strData);
+	virtual void AddMsgToAllPlayer(const uint32_t nMsgID, const uint32_t nLen, const std::string& strData);
+	virtual void AddMsgToWorld(uint32_t usLinkId, const uint64_t nPlayerID, const uint32_t nMsgID, const uint32_t nLen, const std::string& strData);
+	virtual void AddMsgToMaster(uint32_t usLinkId, const uint64_t nPlayerID, const uint32_t nMsgID, const uint32_t nLen, const std::string& strData);
 public:
 	/**
 	* @brief 添加一个Actor组件
 	*
 	* @return
 	*/
-	virtual bool AddWorkActorComponent(NFITaskComponent* pComonnet)
-	{
-		int actorId = FindModule<NFITaskModule>()->RequireActor();
-		if (actorId <= 0)
-		{
-			return false;
-		}
-
-		FindModule<NFITaskModule>()->AddActorComponent(actorId, pComonnet);
-
-		m_vecWorkActorPool.push_back(actorId);
-		return true;
-	}
+	virtual bool AddWorkActorComponent(NFITaskComponent* pComonnet);
 
 	/**
 	* @brief 通过任务的动态均衡id，获得actor
@@ -174,40 +214,14 @@ public:
 	* @param balanceId 动态均衡id
 	* @return	一个actor索引
 	*/
-	int GetBalanceWorkActor(uint64_t balanceId)
-	{
-		if (balanceId == 0)
-		{
-			return GetRandWorkActor();
-		}
-		else
-		{
-			if (m_vecWorkActorPool.size() <= 0)
-			{
-				return -1;
-			}
-			mnSuitIndex = balanceId % m_vecWorkActorPool.size();
-			return m_vecWorkActorPool[mnSuitIndex];
-		}
-	}
+	int GetBalanceWorkActor(uint64_t balanceId);
 
 	/**
 	* @brief 随机获得一个actor
 	*
 	* @return actor索引
 	*/
-	int GetRandWorkActor()
-	{
-		if (m_vecWorkActorPool.size() <= 0)
-		{
-			return -1;
-		}
-
-		mnSuitIndex++;
-		mnSuitIndex = mnSuitIndex % m_vecWorkActorPool.size();
-
-		return m_vecWorkActorPool[mnSuitIndex];
-	}
+	int GetRandWorkActor();
 
 	/**
 	* @brief 通过平衡ID添加要异步处理的task
@@ -215,19 +229,7 @@ public:
 	* @param pTask 要异步处理的task
 	* @return
 	*/
-	bool AddWorkTask(NFTask* pTask)
-	{
-		if (pTask)
-		{
-			int actorId = GetBalanceWorkActor(pTask->GetBalanceId());
-			if (actorId > 0)
-			{
-				return FindModule<NFITaskModule>()->AddTask(actorId, pTask);
-			}
-		}
-
-		return false;
-	}
+	bool AddWorkTask(NFTask* pTask);
 
 	/**
 	* @brief 循环异步处理的task
@@ -235,35 +237,7 @@ public:
 	* @param pTask 要异步处理的task
 	* @return
 	*/
-	bool AddProcessLoopTask(NFTask* pTask)
-	{
-		if (pTask)
-		{
-			return FindModule<NFITaskModule>()->AddTask(m_processLoopActorId, pTask);
-		}
-
-		return false;
-	}
-
-	/**
-* @brief 循环异步处理的task
-*
-* @param pTask 要异步处理的task
-* @return
-*/
-	bool AddProcessTimerTask(NFTask* pTask)
-	{
-		if (pTask)
-		{
-			int actorId = GetBalanceWorkActor(pTask->GetBalanceId());
-			if (actorId > 0)
-			{
-				return FindModule<NFITaskModule>()->AddTask(actorId, pTask);
-			}
-		}
-
-		return false;
-	}
+	bool AddProcessLoopTask(NFTask* pTask);
 
 	/**
 	* @brief 循环异步处理的task
@@ -271,46 +245,32 @@ public:
 	* @param pTask 要异步处理的task
 	* @return
 	*/
-	bool AddProcessWorkTask(NFTask* pTask)
-	{
-		if (pTask)
-		{
-			int actorId = GetBalanceWorkActor(pTask->GetBalanceId());
-			if (actorId > 0)
-			{
-				return FindModule<NFITaskModule>()->AddTask(actorId, pTask);
-			}
-		}
+	bool AddProcessTimerTask(NFTask* pTask);
 
-		return false;
-	}
+	/**
+	* @brief 循环异步处理的task
+	*
+	* @param pTask 要异步处理的task
+	* @return
+	*/
+	bool AddProcessWorkTask(NFTask* pTask);
 
-	void AddProcessTimer(uint32_t delayTimer, const std::string& luaFunc, const std::string& tmpParam)
-	{
-		NFTimerMessage msg;
-		msg.nMsgType = NFTimerMessage::ACTOR_TIMER_MSG_PROCESS_TIMER;
-		msg.m_delayTime = delayTimer;
-		msg.m_luaFunc = luaFunc;
-		msg.m_tmpParam = tmpParam;
+	void AddProcessTimer(uint32_t delayTimer, const std::string& luaFunc, const std::string& tmpParam);
 
-		m_mQueue.Push(msg);
-	}
-
-	void AddProcessLoopTimer(uint32_t delayTimer, const std::string& luaFunc, const std::string& tmpParam)
-	{
-		NFTimerMessage msg;
-		msg.nMsgType = NFTimerMessage::ACTOR_TIMER_MSG_PROCESS_LOOP_TIMER;
-		msg.m_delayTime = delayTimer;
-		msg.m_luaFunc = luaFunc;
-		msg.m_tmpParam = tmpParam;
-
-		m_mQueue.Push(msg);
-	}
+	void AddProcessLoopTimer(uint32_t delayTimer, const std::string& luaFunc, const std::string& tmpParam);
 
 	/*
 	处理多线程LUA发过来的定时器
 	*/
 	void HandleLuaTimer();
+
+	/*
+	处理多线程LUA发过来的消息
+	*/
+	void HandleLuaTcpMsg();
+public:
+	void OnAccountEventCallBack(uint32_t nEvent, uint32_t unLinkId, NF_SHARE_PTR<PlayerGameServerInfo> pServerData);
+	NF_SHARE_PTR<PlayerGameServerInfo> GetPlayerInfo(uint64_t playerId);
 protected:
 	/**
 	* @brief actor索引数组
@@ -339,4 +299,15 @@ protected:
 	std::map<uint64_t, NFLuaThreadTimer*> m_luaTimerMap;
 	std::list<NFLuaThreadTimer*> m_luaTimerList;
 	uint32_t m_luaTimerIndex;
+
+	NFMapEx<uint64_t, PlayerGameServerInfo> mPlayerProxyInfoMap;
+protected:
+	NFINetServerModule* m_pNetServerModule;
+	NFINetClientModule* m_pNetClientModule;
+protected:
+	/**
+	* @brief 返回的定时器消息队,
+	* actor线程将数据放入队列， 主线程从队列里取数据处理
+	*/
+	NFQueueVector<NFTcpMessage> m_mTcpMsgQueue;
 };

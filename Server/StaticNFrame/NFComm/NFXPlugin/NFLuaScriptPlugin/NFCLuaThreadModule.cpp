@@ -26,6 +26,11 @@ void NFLuaThreadTimer::OnTimer(uint32_t nTimerID)
 
 bool NFCLuaThreadModule::Init()
 {
+	m_pNetServerModule = m_pPluginManager->FindModule<NFINetServerModule>();
+	m_pNetClientModule = m_pPluginManager->FindModule<NFINetClientModule>();
+
+	m_pPluginManager->FindModule<NFIServerNetEventModule>()->AddAccountEventCallBack(NF_ST_GAME, this, &NFCLuaThreadModule::OnAccountEventCallBack);
+
 	StartActorPool(10);
 	SetTimer(EnumLuaThreadModule_LOAD, 1, 1);
 	return true;
@@ -44,6 +49,7 @@ bool NFCLuaThreadModule::ReadyExecute()
 bool NFCLuaThreadModule::Execute()
 {
 	HandleLuaTimer();
+	HandleLuaTcpMsg();
 	return true;
 }
 
@@ -189,6 +195,45 @@ uint32_t NFCLuaThreadModule::AddTimer(uint32_t msgType, const std::string& luaFu
 	return luaTimer->mTimerId;
 }
 
+/*
+处理多线程LUA发过来的消息
+*/
+void NFCLuaThreadModule::HandleLuaTcpMsg()
+{
+	std::vector<NFTcpMessage> listTask;
+	const bool ret = m_mTcpMsgQueue.Pop(listTask);
+	if (ret)
+	{
+		const uint64_t start = NFTime::Tick();
+		for (auto it = listTask.begin(); it != listTask.end(); ++it)
+		{
+			NFTcpMessage& xMsg = *it;
+			if (xMsg.m_nMsgType == NFTcpMessage::ACTOR_TCP_MESSAGE_TYPE_ONE_PLAYER_PROXY_MSG)
+			{
+				SendMsgToPlayer(xMsg.m_usLinkId, xMsg.m_nPlayerID, xMsg.m_nMsgID, xMsg.m_nLen, xMsg.m_strData);
+			}
+			else if (xMsg.m_nMsgType == NFTcpMessage::ACTOR_TCP_MESSAGE_TYPE_ONE_PLAYER_WORLD_MSG)
+			{
+				SendMsgToWorld(xMsg.m_usLinkId, xMsg.m_nPlayerID, xMsg.m_nMsgID, xMsg.m_nLen, xMsg.m_strData);
+			}
+			else if (xMsg.m_nMsgType == NFTcpMessage::ACTOR_TCP_MESSAGE_TYPE_ONE_PLAYER_MASTER_MSG)
+			{
+				SendMsgToMaster(xMsg.m_usLinkId, xMsg.m_nPlayerID, xMsg.m_nMsgID, xMsg.m_nLen, xMsg.m_strData);
+			}
+			if (xMsg.m_nMsgType == NFTcpMessage::ACTOR_TCP_MESSAGE_TYPE_MANY_PLAYER_PROXY_MSG)
+			{
+				SendMsgToManyPlayer(xMsg.m_nVecPlayerID, xMsg.m_nMsgID, xMsg.m_nLen, xMsg.m_strData);
+			}
+			if (xMsg.m_nMsgType == NFTcpMessage::ACTOR_TCP_MESSAGE_TYPE_ALL_PLAYER_PROXY_MSG)
+			{
+				SendMsgToAllPlayer(xMsg.m_nMsgID, xMsg.m_nLen, xMsg.m_strData);
+			}
+		}
+	}
+
+	listTask.clear();
+}
+
 void NFCLuaThreadModule::HandleLuaTimer()
 {
 	std::vector<NFTimerMessage> listTask;
@@ -204,4 +249,347 @@ void NFCLuaThreadModule::HandleLuaTimer()
 	}
 
 	listTask.clear();
+}
+
+void NFCLuaThreadModule::SendMsgToPlayer(uint32_t usLinkId, const uint64_t nPlayerID, const uint32_t nMsgID, const uint32_t nLen, const std::string& strData)
+{
+	if (m_pNetServerModule)
+	{
+		if (usLinkId != 0)
+		{
+			m_pNetServerModule->SendByServerID(usLinkId, nMsgID, strData, nPlayerID);
+		}
+		else
+		{
+			if (nPlayerID != 0)
+			{
+				auto pPlayerInfo = GetPlayerInfo(nPlayerID);
+				if (pPlayerInfo)
+				{
+					m_pNetServerModule->SendByServerID(pPlayerInfo->GetProxyUnlinkId(), nMsgID, strData, nPlayerID);
+				}
+			}
+		}
+	}
+}
+
+void NFCLuaThreadModule::SendMsgToManyPlayer(const std::vector<uint64_t>& nVecPlayerID, const uint32_t nMsgID, const uint32_t nLen, const std::string& strData)
+{
+	if (m_pNetServerModule)
+	{
+		for (size_t i = 0; i < nVecPlayerID.size(); i++)
+		{
+			uint64_t nPlayerID = nVecPlayerID[i];
+			auto pPlayerInfo = GetPlayerInfo(nPlayerID);
+			if (pPlayerInfo)
+			{
+				m_pNetServerModule->SendByServerID(pPlayerInfo->GetProxyUnlinkId(), nMsgID, strData, nPlayerID);
+			}
+		}
+	}
+}
+
+void NFCLuaThreadModule::SendMsgToAllPlayer(const uint32_t nMsgID, const uint32_t nLen, const std::string& strData)
+{
+	if (m_pNetServerModule)
+	{
+		auto pPlayerInfo = mPlayerProxyInfoMap.First();
+		while (pPlayerInfo)
+		{
+			m_pNetServerModule->SendByServerID(pPlayerInfo->GetProxyUnlinkId(), nMsgID, strData, pPlayerInfo->GetPlayerId());
+			pPlayerInfo = mPlayerProxyInfoMap.Next();
+		}
+	}
+}
+
+void NFCLuaThreadModule::SendMsgToWorld(uint32_t usLinkId, const uint64_t nPlayerID, const uint32_t nMsgID, const uint32_t nLen, const std::string& strData)
+{
+	if (m_pNetClientModule)
+	{
+		if (usLinkId != 0)
+		{
+			m_pNetClientModule->SendByServerID(usLinkId, nMsgID, strData, nPlayerID);
+		}
+		else
+		{
+			if (nPlayerID != 0)
+			{
+				auto pPlayerInfo = GetPlayerInfo(nPlayerID);
+				if (pPlayerInfo)
+				{
+					m_pNetClientModule->SendByServerID(pPlayerInfo->GetWorldUnlinkId(), nMsgID, strData, nPlayerID);
+				}
+			}
+		}
+	}
+}
+
+void NFCLuaThreadModule::SendMsgToMaster(uint32_t usLinkId, const uint64_t nPlayerID, const uint32_t nMsgID, const uint32_t nLen, const std::string& strData)
+{
+	if (m_pNetClientModule)
+	{
+		if (usLinkId != 0)
+		{
+			m_pNetClientModule->SendByServerID(usLinkId, nMsgID, strData, nPlayerID);
+		}
+	}
+}
+
+void NFCLuaThreadModule::OnAccountEventCallBack(uint32_t nEvent, uint32_t unLinkId, NF_SHARE_PTR<PlayerGameServerInfo> pServerData)
+{
+	if (nEvent == eAccountEventType_CONNECTED)
+	{
+		if (mPlayerProxyInfoMap.ExistElement(pServerData->GetPlayerId()))
+		{
+			mPlayerProxyInfoMap.RemoveElement(pServerData->GetPlayerId());
+		}
+		mPlayerProxyInfoMap.AddElement(pServerData->GetPlayerId(), pServerData);
+	}
+	else if (nEvent == eAccountEventType_DISCONNECTED)
+	{
+		if (mPlayerProxyInfoMap.ExistElement(pServerData->GetPlayerId()))
+		{
+			mPlayerProxyInfoMap.RemoveElement(pServerData->GetPlayerId());
+			//TryRunGlobalScriptFunc("TcpSessionClose", pServerData->GetPlayerId());
+		}
+	}
+	else if (nEvent == eAccountEventType_RECONNECTED)
+	{
+		if (mPlayerProxyInfoMap.ExistElement(pServerData->GetPlayerId()))
+		{
+			mPlayerProxyInfoMap.RemoveElement(pServerData->GetPlayerId());
+		}
+		mPlayerProxyInfoMap.AddElement(pServerData->GetPlayerId(), pServerData);
+	}
+}
+
+NF_SHARE_PTR<PlayerGameServerInfo> NFCLuaThreadModule::GetPlayerInfo(uint64_t playerId)
+{
+	return mPlayerProxyInfoMap.GetElement(playerId);
+}
+
+void NFCLuaThreadModule::AddMsgToPlayer(uint32_t usLinkId, const uint64_t nPlayerID, const uint32_t nMsgID, const uint32_t nLen, const std::string& strData)
+{
+	NFTcpMessage msg;
+	msg.m_nMsgType = NFTcpMessage::ACTOR_TCP_MESSAGE_TYPE_ONE_PLAYER_PROXY_MSG;
+	msg.m_usLinkId = usLinkId;
+	msg.m_nPlayerID = nPlayerID;
+	msg.m_nMsgID = nMsgID;
+	msg.m_nLen = nLen;
+	msg.m_strData = strData;
+
+	m_mTcpMsgQueue.Push(msg);
+}
+
+void NFCLuaThreadModule::AddMsgToManyPlayer(const std::vector<uint64_t>& nPlayerID, const uint32_t nMsgID, const uint32_t nLen, const std::string& strData)
+{
+	NFTcpMessage msg;
+	msg.m_nMsgType = NFTcpMessage::ACTOR_TCP_MESSAGE_TYPE_MANY_PLAYER_PROXY_MSG;
+	msg.m_usLinkId = 0;
+	msg.m_nPlayerID = 0;
+	msg.m_nVecPlayerID = nPlayerID;
+	msg.m_nMsgID = nMsgID;
+	msg.m_nLen = nLen;
+	msg.m_strData = strData;
+
+	m_mTcpMsgQueue.Push(msg);
+}
+
+void NFCLuaThreadModule::AddMsgToAllPlayer(const uint32_t nMsgID, const uint32_t nLen, const std::string& strData)
+{
+
+	NFTcpMessage msg;
+	msg.m_nMsgType = NFTcpMessage::ACTOR_TCP_MESSAGE_TYPE_ALL_PLAYER_PROXY_MSG;
+	msg.m_usLinkId = 0;
+	msg.m_nPlayerID = 0;
+	msg.m_nMsgID = nMsgID;
+	msg.m_nLen = nLen;
+	msg.m_strData = strData;
+
+	m_mTcpMsgQueue.Push(msg);
+}
+
+void NFCLuaThreadModule::AddMsgToWorld(uint32_t usLinkId, const uint64_t nPlayerID, const uint32_t nMsgID, const uint32_t nLen, const std::string& strData)
+{
+	NFTcpMessage msg;
+	msg.m_nMsgType = NFTcpMessage::ACTOR_TCP_MESSAGE_TYPE_ONE_PLAYER_WORLD_MSG;
+	msg.m_usLinkId = usLinkId;
+	msg.m_nPlayerID = nPlayerID;
+	msg.m_nMsgID = nMsgID;
+	msg.m_nLen = nLen;
+	msg.m_strData = strData;
+
+	m_mTcpMsgQueue.Push(msg);
+}
+
+void NFCLuaThreadModule::AddMsgToMaster(uint32_t usLinkId, const uint64_t nPlayerID, const uint32_t nMsgID, const uint32_t nLen, const std::string& strData)
+{
+	NFTcpMessage msg;
+	msg.m_nMsgType = NFTcpMessage::ACTOR_TCP_MESSAGE_TYPE_ONE_PLAYER_MASTER_MSG;
+	msg.m_usLinkId = usLinkId;
+	msg.m_nPlayerID = nPlayerID;
+	msg.m_nMsgID = nMsgID;
+	msg.m_nLen = nLen;
+	msg.m_strData = strData;
+
+	m_mTcpMsgQueue.Push(msg);
+}
+
+/**
+* @brief 添加一个Actor组件
+*
+* @return
+*/
+bool NFCLuaThreadModule::AddWorkActorComponent(NFITaskComponent* pComonnet)
+{
+	int actorId = FindModule<NFITaskModule>()->RequireActor();
+	if (actorId <= 0)
+	{
+		return false;
+	}
+
+	FindModule<NFITaskModule>()->AddActorComponent(actorId, pComonnet);
+
+	m_vecWorkActorPool.push_back(actorId);
+	return true;
+}
+
+/**
+* @brief 通过任务的动态均衡id，获得actor
+*		 为了防止数据库错乱，防止同时对数据库表中的一条数据，读取写入，
+*		 使用动态均衡id, 使得在某个时候只有一条线程对表中的一条数据，读取或写入
+* @param balanceId 动态均衡id
+* @return	一个actor索引
+*/
+int NFCLuaThreadModule::GetBalanceWorkActor(uint64_t balanceId)
+{
+	if (balanceId == 0)
+	{
+		return GetRandWorkActor();
+	}
+	else
+	{
+		if (m_vecWorkActorPool.size() <= 0)
+		{
+			return -1;
+		}
+		mnSuitIndex = balanceId % m_vecWorkActorPool.size();
+		return m_vecWorkActorPool[mnSuitIndex];
+	}
+}
+
+/**
+* @brief 随机获得一个actor
+*
+* @return actor索引
+*/
+int NFCLuaThreadModule::GetRandWorkActor()
+{
+	if (m_vecWorkActorPool.size() <= 0)
+	{
+		return -1;
+	}
+
+	mnSuitIndex++;
+	mnSuitIndex = mnSuitIndex % m_vecWorkActorPool.size();
+
+	return m_vecWorkActorPool[mnSuitIndex];
+}
+
+/**
+* @brief 通过平衡ID添加要异步处理的task
+*
+* @param pTask 要异步处理的task
+* @return
+*/
+bool NFCLuaThreadModule::AddWorkTask(NFTask* pTask)
+{
+	if (pTask)
+	{
+		int actorId = GetBalanceWorkActor(pTask->GetBalanceId());
+		if (actorId > 0)
+		{
+			return FindModule<NFITaskModule>()->AddTask(actorId, pTask);
+		}
+	}
+
+	return false;
+}
+
+/**
+* @brief 循环异步处理的task
+*
+* @param pTask 要异步处理的task
+* @return
+*/
+bool NFCLuaThreadModule::AddProcessLoopTask(NFTask* pTask)
+{
+	if (pTask)
+	{
+		return FindModule<NFITaskModule>()->AddTask(m_processLoopActorId, pTask);
+	}
+
+	return false;
+}
+
+/**
+* @brief 循环异步处理的task
+*
+* @param pTask 要异步处理的task
+* @return
+*/
+bool NFCLuaThreadModule::AddProcessTimerTask(NFTask* pTask)
+{
+	if (pTask)
+	{
+		int actorId = GetBalanceWorkActor(pTask->GetBalanceId());
+		if (actorId > 0)
+		{
+			return FindModule<NFITaskModule>()->AddTask(actorId, pTask);
+		}
+	}
+
+	return false;
+}
+
+/**
+* @brief 循环异步处理的task
+*
+* @param pTask 要异步处理的task
+* @return
+*/
+bool NFCLuaThreadModule::AddProcessWorkTask(NFTask* pTask)
+{
+	if (pTask)
+	{
+		int actorId = GetBalanceWorkActor(pTask->GetBalanceId());
+		if (actorId > 0)
+		{
+			return FindModule<NFITaskModule>()->AddTask(actorId, pTask);
+		}
+	}
+
+	return false;
+}
+
+void NFCLuaThreadModule::AddProcessTimer(uint32_t delayTimer, const std::string& luaFunc, const std::string& tmpParam)
+{
+	NFTimerMessage msg;
+	msg.nMsgType = NFTimerMessage::ACTOR_TIMER_MSG_PROCESS_TIMER;
+	msg.m_delayTime = delayTimer;
+	msg.m_luaFunc = luaFunc;
+	msg.m_tmpParam = tmpParam;
+
+	m_mQueue.Push(msg);
+}
+
+void NFCLuaThreadModule::AddProcessLoopTimer(uint32_t delayTimer, const std::string& luaFunc, const std::string& tmpParam)
+{
+	NFTimerMessage msg;
+	msg.nMsgType = NFTimerMessage::ACTOR_TIMER_MSG_PROCESS_LOOP_TIMER;
+	msg.m_delayTime = delayTimer;
+	msg.m_luaFunc = luaFunc;
+	msg.m_tmpParam = tmpParam;
+
+	m_mQueue.Push(msg);
 }

@@ -72,9 +72,13 @@ function SendMessage(useridList, retMsgID, buffLen, retString)
 		end
 		
 		for key,values in pairs(useridList) do
-			LuaNFrame.SendMsgToPlayer(0,  tonumber(values), retMsgID, buffLen, retString)	
+			if RobotService.IsRobot(values) ~= true and tonumber(values) > 1000 then
+				LuaNFrame.SendMsgToPlayer(0,  tonumber(values), retMsgID, buffLen, retString)	
+			end
 		end
 	else
-		LuaNFrame.SendMsgToPlayer(0, tonumber(useridList), retMsgID, buffLen, retString)
+		if RobotService.IsRobot(useridList) ~= true and tonumber(useridList) > 1000 then
+			LuaNFrame.SendMsgToPlayer(0, tonumber(useridList), retMsgID, buffLen, retString)
+		end
 	end
 end
