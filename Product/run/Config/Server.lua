@@ -1,5 +1,5 @@
 MasterIP = "127.0.0.1"
-MasterPort = 6010
+MasterPort = 6110
 
 --服务器配置列表， ServerId, ServerType 必须配置
 ServerList = {}
