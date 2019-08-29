@@ -15,7 +15,6 @@
 #include "NFComm/NFPluginModule/NFILuaScriptModule.h"
 #include "NFComm/NFCore/NFQueue.hpp"
 
-#include <vector>
 #include "NFComm/NFPluginModule/NFITaskModule.h"
 #include "NFComm/NFPluginModule/NFTask.h"
 
@@ -26,6 +25,9 @@
 #include "NFComm/NFPluginModule/NFINetClientModule.h"
 
 #include "NFComm/NFCore/NFMapEx.hpp"
+
+#include <vector>
+#include <atomic>
 
 class NFCLuaThreadModule;
 
