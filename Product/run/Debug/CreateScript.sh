@@ -34,8 +34,8 @@ do_work()
 do_work MasterServer 1
 do_work LoginServer 2
 do_work WorldServer 3
-do_work ProxyServer 4
-do_work GameServer 6
+do_work GameServer 4
+do_work ProxyServer 6
 
 echo "rm Stop.sh -rf" >> Clear.sh
 echo "rm Start.sh -rf" >> Clear.sh

@@ -43,16 +43,16 @@ bool NFCLoginServerModule::Init()
 			NFLogInfo(NF_LOG_SERVER_CONNECT_SERVER, 0, "login server listen failed!, serverId:{}, maxConnectNum:{}, port:{}", pConfig->mServerId, pConfig->mMaxConnectNum, pConfig->mServerPort);
 		}
 
-		if (pConfig->mHttpPort > 0)
-		{
-			int ret = FindModule<NFIHttpServerModule>()->InitServer(NF_ST_LOGIN, pConfig->mHttpPort);
-			if (ret == 0)
-			{
-				NFLogError(NF_LOG_SERVER_CONNECT_SERVER, 0, "Login Server Open Http Port:{} Failed!", pConfig->mHttpPort);
-				return false;
-			}
-			NFLogInfo(NF_LOG_SERVER_CONNECT_SERVER, 0, "Login Server Open Http Port:{} Success!", pConfig->mHttpPort);
-		}
+		//if (pConfig->mHttpPort > 0)
+		//{
+		//	int ret = FindModule<NFIHttpServerModule>()->InitServer(NF_ST_LOGIN, pConfig->mHttpPort);
+		//	if (ret == 0)
+		//	{
+		//		NFLogError(NF_LOG_SERVER_CONNECT_SERVER, 0, "Login Server Open Http Port:{} Failed!", pConfig->mHttpPort);
+		//		return false;
+		//	}
+		//	NFLogInfo(NF_LOG_SERVER_CONNECT_SERVER, 0, "Login Server Open Http Port:{} Success!", pConfig->mHttpPort);
+		//}
 	}
 	else
 	{
