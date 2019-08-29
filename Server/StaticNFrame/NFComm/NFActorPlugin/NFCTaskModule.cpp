@@ -48,11 +48,11 @@ bool NFCTaskModule::BeforeShut()
 bool NFCTaskModule::Shut()
 {
 	//等待异步处理完毕，然后再退出系统
-	while (GetNumQueuedMessages() > 0 || m_mQueue.Count() > 0)
-	{
-		OnMainThreadTick();
-		NFSLEEP(1);
-	}
+	//while (GetNumQueuedMessages() > 0 || m_mQueue.Count() > 0)
+	//{
+	//	OnMainThreadTick();
+	//	NFSLEEP(1);
+	//}
 	return true;
 }
 
