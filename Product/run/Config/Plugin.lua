@@ -57,8 +57,6 @@ LoadPlugin =
 			--------------------------------------------------------
 			-----服务器游戏具体内容逻辑引擎-------------------------
 			-----可以动态加载的引擎---------------------------------
-			--"NFGamePlayerPlugin",
-			--"NFGameLhdPlugin",
 			--"NFLuaScriptPlugin",
 			"NFLuaThreadScriptPlugin",
 
@@ -68,7 +66,6 @@ LoadPlugin =
 	MasterServer = {
 		ServerPlugins = {
 			"NFKernelPlugin",
-			"NFActorPlugin",
 			"NFNetPlugin",
 			"NFMonitorPlugin",
 			--"NFMysqlPlugin",
@@ -80,7 +77,6 @@ LoadPlugin =
 	LoginServer = {
 		ServerPlugins = {
 			"NFKernelPlugin",
-			"NFActorPlugin",
 			"NFNetPlugin",
 			"NFMonitorPlugin",
 			
@@ -94,7 +90,6 @@ LoadPlugin =
 	WorldServer = {
 		ServerPlugins = {
 			"NFKernelPlugin",
-			"NFActorPlugin",
 			"NFNetPlugin",
 			"NFMonitorPlugin",
 			
@@ -130,7 +125,8 @@ LoadPlugin =
 			
 			"NFGameLogicPlugin",
 			
-			"NFLuaScriptPlugin",
+			--"NFLuaScriptPlugin",
+			"NFLuaThreadScriptPlugin",
 		};
 		ServerType = NF_ST_GAME;
 	},
