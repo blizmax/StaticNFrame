@@ -96,12 +96,12 @@ elseif(CMAKE_BUILD_TYPE STREQUAL "DynamicDebug")
 		"${CMAKE_SOURCE_DIR}/Product/Lib/Dynamic_Debug")
 endif()
 
-SET(LIB_LINK_DEP resolv dl rt libprotobuf.a  libssl.a libcrypto.a pthread libbson-static-1.0.a libmysqlpp.a libmysqlclient.a libevent_core.a libevent_extra.a libtheron.a
-		libevent.a libLuaBind.a libtheron.a libmongoc-static-1.0.a libbson-static-1.0.a libCommon.a libSqlite3.a libNFMessageDefine.a)
+SET(LIB_LINK_DEP resolv dl rt libprotobuf.a  libssl.a libcrypto.a pthread libmysqlpp.a libmysqlclient.a libevent_core.a libevent_extra.a libtheron.a
+		libevent.a libLuaBind.a libtheron.a  libCommon.a libNFMessageDefine.a)
 		
 SET(LIB_LINK_NF  libNFCore.a libNFPluginModule.a libprotobuf.a libNFActorPlugin.a libNFKernelPlugin.a libNFLuaScriptPlugin.a
-				libNFMath.a  libNFNetPlugin.a libNFMongoPlugin.a libNFSqlitePlugin.a libNFMonitorPlugin.a libNFNoSqlPlugin.a
-				libNFTestPlugin.a libNFMysqlPlugin.a libNFGameClientPlugin.a libNFGameServerPlugin.a 
+				libNFMath.a  libNFNetPlugin.a libNFMonitorPlugin.a libNFNoSqlPlugin.a
+			    libNFMysqlPlugin.a libNFGameClientPlugin.a libNFGameServerPlugin.a 
 				libNFLoginClientPlugin.a libNFLoginServerPlugin.a libNFMasterServerPlugin.a 
 				libNFProxyClientPlugin.a libNFProxyServerPlugin.a 
 				libNFServerCommon.a libNFWorldClientPlugin.a libNFWorldServerPlugin.a
