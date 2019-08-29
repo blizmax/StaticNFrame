@@ -26,9 +26,9 @@
 #include "NFComm/NFNetPlugin/NFNetPlugin.h"
 #include "NFTest/NFTestPlugin/NFTestPlugin.h"
 #include "NFComm/NFMysqlPlugin/NFMysqlPlugin.h"
-##include "NFComm/NFMongoPlugin/NFMongoPlugin.h"
+//#include "NFComm/NFMongoPlugin/NFMongoPlugin.h"
 #include "NFComm/NFMonitorPlugin/NFMonitorPlugin.h"
-##include "NFComm/NFSqlitePlugin/NFSqlitePlugin.h"
+//#include "NFComm/NFSqlitePlugin/NFSqlitePlugin.h"
 #include "NFComm/NFNoSqlPlugin/NFNoSqlPlugin.h"
 
 #include <NFComm/NFXPlugin/NFLuaScriptPlugin/NFLuaScriptPlugin.h>
@@ -71,9 +71,9 @@ bool NFCPluginManager::RegisterStaticPlugin()
 	REGISTER_STATIC_PLUGIN(this, NFMysqlPlugin);
 	REGISTER_STATIC_PLUGIN(this, NFLuaScriptPlugin);
 	REGISTER_STATIC_PLUGIN(this, NFTestPlugin);
-	#REGISTER_STATIC_PLUGIN(this, NFMongoPlugin);
+	//REGISTER_STATIC_PLUGIN(this, NFMongoPlugin);
 	REGISTER_STATIC_PLUGIN(this, NFMonitorPlugin);
-	#REGISTER_STATIC_PLUGIN(this, NFSqlitePlugin);
+	//REGISTER_STATIC_PLUGIN(this, NFSqlitePlugin);
 	REGISTER_STATIC_PLUGIN(this, NFNoSqlPlugin);
 	/////////////////////////////////////////////////////////
 	REGISTER_STATIC_PLUGIN(this, NFMasterServerPlugin);
