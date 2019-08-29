@@ -160,6 +160,11 @@ public:
 	NFCLuaThreadModule(NFIPluginManager* p)
 	{
 		m_pPluginManager = p;
+		mnSuitIndex = 0;
+		m_processLoopActorId = 0;
+		m_luaTimerIndex = 1000;
+		m_pNetServerModule = nullptr;
+		m_pNetClientModule = nullptr;
 	}
 
 	virtual ~NFCLuaThreadModule()
@@ -282,7 +287,7 @@ protected:
 	/**
 	* @brief 用来平衡随机获得actor
 	*/
-	atomic<uint32_t> mnSuitIndex = 0;
+	atomic<uint32_t> mnSuitIndex;
 
 	/**
 	* @brief server loop actor
