@@ -282,7 +282,7 @@ protected:
 	/**
 	* @brief 用来平衡随机获得actor
 	*/
-	atomic_uint32_t mnSuitIndex = 0;
+	atomic<uint32_t> mnSuitIndex = 0;
 
 	/**
 	* @brief server loop actor
