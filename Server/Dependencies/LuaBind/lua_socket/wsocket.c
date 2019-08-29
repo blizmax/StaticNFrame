@@ -6,7 +6,7 @@
 * the I/O call fail in the first place. 
 \*=========================================================================*/
 #include <string.h>
-
+#ifdef WIN32
 #include "socket.h"
 
 /* WinSock doesn't have a strerror... */
@@ -431,4 +431,5 @@ const char *socket_gaistrerror(int err) {
         default: return gai_strerror(err);
     }
 }
+#endif
 

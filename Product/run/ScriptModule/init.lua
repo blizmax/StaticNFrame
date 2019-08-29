@@ -71,7 +71,7 @@ function init_script_system(luaModule)
 	local status, msg = xpcall (timerExecute, __G__TRACKBACK__)
 
     if not status then
-        LuaNFrame.Error(NFLogId.NF_LOG_SYSTEMLOG, 0, msg)
+		LuaNFrame.Error(NFLogId.NF_LOG_SYSTEMLOG, 0, msg)
     end
 end
 
