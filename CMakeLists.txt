@@ -9,6 +9,7 @@ if( CMAKE_BUILD_TYPE STREQUAL "Release" )
 	add_definitions(
         -DNDEBUG
         -DNF_STATIC_PLUGIN
+		-DLUA_COMPAT_5_1
         -fPIC
     )
 elseif(CMAKE_BUILD_TYPE STREQUAL "Debug")
@@ -17,6 +18,7 @@ elseif(CMAKE_BUILD_TYPE STREQUAL "Debug")
 	add_definitions(
         -D_DEBUG
         -DNF_STATIC_PLUGIN
+		-DLUA_COMPAT_5_1
         -fPIC
     )
 elseif(CMAKE_BUILD_TYPE STREQUAL "DynamicDebug")
@@ -24,6 +26,7 @@ elseif(CMAKE_BUILD_TYPE STREQUAL "DynamicDebug")
 	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -O0 -Wall -g -ggdb -fPIC")
 	add_definitions(
         -D_DEBUG
+		-DLUA_COMPAT_5_1
         -fPIC
     )
 elseif(CMAKE_BUILD_TYPE STREQUAL "DynimicRelease")
@@ -32,6 +35,7 @@ elseif(CMAKE_BUILD_TYPE STREQUAL "DynimicRelease")
 	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}  -fPIC -std=c++11 -O3 -Wall")
 	add_definitions(
         -DNDEBUG
+		-DLUA_COMPAT_5_1
         -fPIC
     )
 endif()
