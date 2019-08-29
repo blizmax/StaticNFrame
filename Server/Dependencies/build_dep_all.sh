@@ -47,7 +47,8 @@ cd protobuf
 cd cmake
 mkdir build
 cd build
-cmake .. -DBUILD_SHARED_LIBS=On
+#cmake .. -DBUILD_SHARED_LIBS=On
+cmake ..
 make
 
 cd ../../
