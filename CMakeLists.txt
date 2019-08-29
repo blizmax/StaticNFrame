@@ -95,17 +95,6 @@ elseif(CMAKE_BUILD_TYPE STREQUAL "DynamicDebug")
 		"${CMAKE_SOURCE_DIR}/Product/run/Dynamic_Debug"
 		"${CMAKE_SOURCE_DIR}/Product/Lib/Dynamic_Debug")
 endif()
-
-SET(LIB_LINK_DEP resolv dl rt libprotobuf.a  libssl.a libcrypto.a pthread libmysqlpp.a libmysqlclient.a libevent_core.a libevent_extra.a libtheron.a
-		libevent.a libLuaBind.a libtheron.a  libCommon.a libNFMessageDefine.a)
-		
-SET(LIB_LINK_NF  libNFCore.a libNFPluginModule.a libprotobuf.a libNFActorPlugin.a libNFKernelPlugin.a libNFLuaScriptPlugin.a
-				libNFMath.a  libNFNetPlugin.a libNFMonitorPlugin.a libNFNoSqlPlugin.a
-			    libNFMysqlPlugin.a libNFGameClientPlugin.a libNFGameServerPlugin.a 
-				libNFLoginClientPlugin.a libNFLoginServerPlugin.a libNFMasterServerPlugin.a 
-				libNFProxyClientPlugin.a libNFProxyServerPlugin.a 
-				libNFServerCommon.a libNFWorldClientPlugin.a libNFWorldServerPlugin.a
-				libNFGameLogicPlugin.a libNFLoginLogicPlugin.a libNFProxyLogicPlugin.a libNFServerLogicCommon.a)
 	
 include_directories( ${INCLUDE_DIR} )
 	
