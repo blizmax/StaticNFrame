@@ -96,7 +96,7 @@ bool NFServer::AddNetObject(SOCKET fd, sockaddr* sa)
 	if (mNetObjectArray.find(usLinkId) != mNetObjectArray.end())
 	{
 		NFLogError(NF_LOG_NET_PLUGIN, 0, "GetServerIndexFromUnLinkId Failed!");
-		return nullptr;
+		return false;
 	}
 
 	struct bufferevent* bev = bufferevent_socket_new(mBase, fd, BEV_OPT_CLOSE_ON_FREE);
