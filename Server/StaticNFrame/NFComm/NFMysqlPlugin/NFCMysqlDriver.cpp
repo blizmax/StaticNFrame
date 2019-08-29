@@ -83,7 +83,7 @@ bool NFCMysqlDriver::ExecuteOne(const std::string& qstr, std::map<std::string, s
 		{
 			for (size_t j = 0; j < queryResult[i].size(); j++)
 			{
-				valueVec.emplace(queryResult.field_name(j), queryResult[i][j]);
+				valueVec.emplace(queryResult.field_name(j), queryResult[i][j].c_str());
 			}
 			break;
 		}
@@ -103,7 +103,7 @@ bool NFCMysqlDriver::ExecuteMore(const std::string& qstr, std::vector<std::map<s
 			std::map<std::string, std::string>& tmpVec = valueVec.back();
 			for (size_t j = 0; j < queryResult[i].size(); j++)
 			{
-				tmpVec.emplace(queryResult.field_name(j), queryResult[i][j]);
+				tmpVec.emplace(queryResult.field_name(j), queryResult[i][j].c_str());
 			}
 		}
 		return true;
@@ -742,7 +742,7 @@ bool NFCMysqlDriver::QueryMoreWithCond(const std::string& strTableName, const st
 			std::map<std::string, std::string>& tmpVec = valueVec.back();
 			for (size_t j = 0; j < xResult[i].size(); j++)
 			{
-				tmpVec.emplace(xResult.field_name(j), xResult[i][j]);
+				tmpVec.emplace(xResult.field_name(j), xResult[i][j].c_str());
 			}
 		}
 	NFMYSQLTRYEND("query error")
@@ -794,7 +794,7 @@ bool NFCMysqlDriver::QueryMoreWithLimit(const std::string& strTableName, const s
 			std::map<std::string, std::string>& tmpVec = valueVec.back();
 			for (size_t j = 0; j < xResult[i].size(); j++)
 			{
-				tmpVec.emplace(xResult.field_name(j), xResult[i][j]);
+				tmpVec.emplace(xResult.field_name(j), xResult[i][j].c_str());
 			}
 		}
 	NFMYSQLTRYEND("query error")
@@ -844,7 +844,7 @@ bool NFCMysqlDriver::QueryOne(const std::string& strTableName, const std::string
 		{
 			for (size_t j = 0; j < xResult[i].size(); j++)
 			{
-				valueVec.emplace(xResult.field_name(j), xResult[i][j]);
+				valueVec.emplace(xResult.field_name(j), xResult[i][j].c_str());
 			}
 		}
 	NFMYSQLTRYEND("query error")
@@ -896,7 +896,7 @@ bool NFCMysqlDriver::QueryMore(const std::string& strTableName, const std::strin
 			std::map<std::string, std::string>& tmpVec = valueVec.back();
 			for (size_t j = 0; j < xResult[i].size(); j++)
 			{
-				tmpVec.emplace(xResult.field_name(j), xResult[i][j]);
+				tmpVec.emplace(xResult.field_name(j), xResult[i][j].c_str());
 			}
 		}
 	NFMYSQLTRYEND("query error")
@@ -1001,7 +1001,7 @@ bool NFCMysqlDriver::QueryMoreByLike(const std::string& strTableName, const std:
 			std::map<std::string, std::string>& tmpVec = valueVec.back();
 			for (size_t j = 0; j < xResult[i].size(); j++)
 			{
-				tmpVec.emplace(xResult.field_name(j), xResult[i][j]);
+				tmpVec.emplace(xResult.field_name(j), xResult[i][j].c_str());
 			}
 		}
 	NFMYSQLTRYEND("query error")
