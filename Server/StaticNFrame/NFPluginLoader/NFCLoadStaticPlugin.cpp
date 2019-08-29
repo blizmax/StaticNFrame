@@ -32,6 +32,7 @@
 #include "NFComm/NFNoSqlPlugin/NFNoSqlPlugin.h"
 
 #include <NFComm/NFXPlugin/NFLuaScriptPlugin/NFLuaScriptPlugin.h>
+#include <NFComm/NFXPlugin/NFLuaThreadScriptPlugin/NFLuaThreadScriptPlugin.h>
 
 #include <NFServer/NFMasterServer/NFMasterServerPlugin/NFMasterServerPlugin.h>
 #include <NFServer/NFLoginServer/NFLoginClientPlugin/NFLoginClientPlugin.h>
@@ -70,6 +71,7 @@ bool NFCPluginManager::RegisterStaticPlugin()
 	REGISTER_STATIC_PLUGIN(this, NFNetPlugin);
 	REGISTER_STATIC_PLUGIN(this, NFMysqlPlugin);
 	REGISTER_STATIC_PLUGIN(this, NFLuaScriptPlugin);
+	REGISTER_STATIC_PLUGIN(this, NFLuaThreadScriptPlugin);
 	REGISTER_STATIC_PLUGIN(this, NFTestPlugin);
 	//REGISTER_STATIC_PLUGIN(this, NFMongoPlugin);
 	REGISTER_STATIC_PLUGIN(this, NFMonitorPlugin);

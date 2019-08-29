@@ -35,7 +35,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{0D7E27F4-11C2-4F1D-8900-CC24297E4397}</ProjectGuid>
+    <ProjectGuid>{8BB7EC86-DF1A-4172-9173-E2604F64F8A8}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>NFGameServerNet_ServerPlugin</RootNamespace>
     <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
@@ -373,12 +373,14 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="NFCLuaScriptModule.cpp" />
-    <ClCompile Include="NFLuaScriptPlugin.cpp" />
+    <ClCompile Include="NFCLuaScriptComponent.cpp" />
+    <ClCompile Include="NFCLuaThreadModule.cpp" />
+    <ClCompile Include="NFLuaThreadScriptPlugin.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="NFCLuaScriptModule.h" />
-    <ClInclude Include="NFLuaScriptPlugin.h" />
+    <ClInclude Include="NFCLuaScriptComponent.h" />
+    <ClInclude Include="NFCLuaThreadModule.h" />
+    <ClInclude Include="NFLuaThreadScriptPlugin.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

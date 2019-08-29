@@ -255,6 +255,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "NFWorldServerLogic", "NFWor
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "NFWorldLogicPlugin", "NFServerLogic\NFWorldLogicPlugin\NFWorldLogicPlugin.vcxproj", "{73F338DA-1687-4C98-9252-9AF6FD2768FE}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "NFLuaThreadScriptPlugin", "StaticNFrame\NFComm\NFXPlugin\NFLuaThreadScriptPlugin\NFLuaThreadScriptPlugin.vcxproj", "{8BB7EC86-DF1A-4172-9173-E2604F64F8A8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -1133,6 +1135,30 @@ Global
 		{73F338DA-1687-4C98-9252-9AF6FD2768FE}.RelWithDebInfo|x64.Build.0 = Release|x64
 		{73F338DA-1687-4C98-9252-9AF6FD2768FE}.RelWithDebInfo|x86.ActiveCfg = Release|Win32
 		{73F338DA-1687-4C98-9252-9AF6FD2768FE}.RelWithDebInfo|x86.Build.0 = Release|Win32
+		{8BB7EC86-DF1A-4172-9173-E2604F64F8A8}.Debug|x64.ActiveCfg = Debug|x64
+		{8BB7EC86-DF1A-4172-9173-E2604F64F8A8}.Debug|x64.Build.0 = Debug|x64
+		{8BB7EC86-DF1A-4172-9173-E2604F64F8A8}.Debug|x86.ActiveCfg = Debug|Win32
+		{8BB7EC86-DF1A-4172-9173-E2604F64F8A8}.Debug|x86.Build.0 = Debug|Win32
+		{8BB7EC86-DF1A-4172-9173-E2604F64F8A8}.Dynamic_Debug|x64.ActiveCfg = Dynamic_Debug|x64
+		{8BB7EC86-DF1A-4172-9173-E2604F64F8A8}.Dynamic_Debug|x64.Build.0 = Dynamic_Debug|x64
+		{8BB7EC86-DF1A-4172-9173-E2604F64F8A8}.Dynamic_Debug|x86.ActiveCfg = Dynamic_Debug|Win32
+		{8BB7EC86-DF1A-4172-9173-E2604F64F8A8}.Dynamic_Debug|x86.Build.0 = Dynamic_Debug|Win32
+		{8BB7EC86-DF1A-4172-9173-E2604F64F8A8}.Dynamic_Release|x64.ActiveCfg = Dynamic_Release|x64
+		{8BB7EC86-DF1A-4172-9173-E2604F64F8A8}.Dynamic_Release|x64.Build.0 = Dynamic_Release|x64
+		{8BB7EC86-DF1A-4172-9173-E2604F64F8A8}.Dynamic_Release|x86.ActiveCfg = Dynamic_Release|Win32
+		{8BB7EC86-DF1A-4172-9173-E2604F64F8A8}.Dynamic_Release|x86.Build.0 = Dynamic_Release|Win32
+		{8BB7EC86-DF1A-4172-9173-E2604F64F8A8}.MinSizeRel|x64.ActiveCfg = Debug|x64
+		{8BB7EC86-DF1A-4172-9173-E2604F64F8A8}.MinSizeRel|x64.Build.0 = Debug|x64
+		{8BB7EC86-DF1A-4172-9173-E2604F64F8A8}.MinSizeRel|x86.ActiveCfg = Release|Win32
+		{8BB7EC86-DF1A-4172-9173-E2604F64F8A8}.MinSizeRel|x86.Build.0 = Release|Win32
+		{8BB7EC86-DF1A-4172-9173-E2604F64F8A8}.Release|x64.ActiveCfg = Release|x64
+		{8BB7EC86-DF1A-4172-9173-E2604F64F8A8}.Release|x64.Build.0 = Release|x64
+		{8BB7EC86-DF1A-4172-9173-E2604F64F8A8}.Release|x86.ActiveCfg = Release|Win32
+		{8BB7EC86-DF1A-4172-9173-E2604F64F8A8}.Release|x86.Build.0 = Release|Win32
+		{8BB7EC86-DF1A-4172-9173-E2604F64F8A8}.RelWithDebInfo|x64.ActiveCfg = Release|x64
+		{8BB7EC86-DF1A-4172-9173-E2604F64F8A8}.RelWithDebInfo|x64.Build.0 = Release|x64
+		{8BB7EC86-DF1A-4172-9173-E2604F64F8A8}.RelWithDebInfo|x86.ActiveCfg = Release|Win32
+		{8BB7EC86-DF1A-4172-9173-E2604F64F8A8}.RelWithDebInfo|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -1187,6 +1213,7 @@ Global
 		{3F68CD92-8AA1-48C4-84EF-CD63690C8DCB} = {FD763E2E-5AF1-46BE-B218-DE34F9C4D1A9}
 		{54DA3102-9438-442B-A8C2-EB01F08FA222} = {1A0B356A-90E1-4510-BEB2-083D067A248D}
 		{73F338DA-1687-4C98-9252-9AF6FD2768FE} = {54DA3102-9438-442B-A8C2-EB01F08FA222}
+		{8BB7EC86-DF1A-4172-9173-E2604F64F8A8} = {FD763E2E-5AF1-46BE-B218-DE34F9C4D1A9}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {D1502A87-08D0-42D0-A504-0AF74AADDA40}

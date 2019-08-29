@@ -9,7 +9,6 @@
 
 #include "NFCLuaScriptModule.h"
 #include "NFLuaScriptPlugin.h"
-#include "NFCLuaThreadModule.h"
 
 #ifdef NF_DYNAMIC_PLUGIN
 
@@ -40,11 +39,9 @@ std::string NFLuaScriptPlugin::GetPluginName()
 void NFLuaScriptPlugin::Install()
 {
     REGISTER_MODULE(m_pPluginManager, NFILuaScriptModule, NFCLuaScriptModule);
-	//REGISTER_MODULE(m_pPluginManager, NFILuaScriptModule, NFCLuaThreadModule);
 }
 
 void NFLuaScriptPlugin::Uninstall()
 {
     UNREGISTER_MODULE(m_pPluginManager, NFILuaScriptModule, NFCLuaScriptModule);
-	//UNREGISTER_MODULE(m_pPluginManager, NFILuaScriptModule, NFCLuaThreadModule);
 }
