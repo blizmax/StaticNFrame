@@ -103,7 +103,7 @@ endif()
 SET(LIB_LINK_DEP resolv dl rt libprotobuf.a  libssl.a libcrypto.a pthread libmysqlpp.a libmysqlclient.a libevent_core.a libevent_extra.a libtheron.a
 		libevent.a libLuaBind.a libtheron.a  libCommon.a libNFMessageDefine.a)
 		
-SET(LIB_LINK_NF  libNFCore.a libNFPluginModule.a libprotobuf.a libNFActorPlugin.a libNFKernelPlugin.a libNFLuaScriptPlugin.a
+SET(LIB_LINK_NF  libNFCore.a libNFPluginModule.a libprotobuf.a libNFActorPlugin.a libNFKernelPlugin.a libNFLuaScriptPlugin.a libNFLuaThreadScriptPlugin.a
 				libNFMath.a  libNFNetPlugin.a libNFMonitorPlugin.a libNFNoSqlPlugin.a
 			    libNFMysqlPlugin.a libNFGameClientPlugin.a libNFGameServerPlugin.a 
 				libNFLoginClientPlugin.a libNFLoginServerPlugin.a libNFMasterServerPlugin.a 

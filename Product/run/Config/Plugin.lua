@@ -59,8 +59,8 @@ LoadPlugin =
 			-----可以动态加载的引擎---------------------------------
 			--"NFGamePlayerPlugin",
 			--"NFGameLhdPlugin",
-			--"NFLuaScriptPlugin",
-			"NFLuaThreadScriptPlugin",
+			"NFLuaScriptPlugin",
+			--"NFLuaThreadScriptPlugin",
 
 		};
 		ServerType = NF_ST_NONE;
