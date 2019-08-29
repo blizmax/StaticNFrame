@@ -438,6 +438,7 @@ public:
 		str2 = NULL;
 		return strOutUTF8;
 #else
+/*
 		if (strGBK.empty())
 		{
 			return "";
@@ -484,6 +485,7 @@ public:
 			iconv_close(cd);
 			return strOutUTF8;
 		}
+		*/
 #endif
 	}
 
@@ -505,6 +507,7 @@ public:
 		delete[]wszGBK;
 		return strTemp;
 #else
+		/*
 		iconv_t cd = iconv_open("gb18030", "utf-8");
 		size_t inlen = strUTF8.length();
 		char *outbuf = (char *)malloc(inlen * 4);
@@ -547,7 +550,7 @@ public:
 			iconv_close(cd);
 			return strOutGBK;
 		}
-
+		*/
 #endif
 	}
 
