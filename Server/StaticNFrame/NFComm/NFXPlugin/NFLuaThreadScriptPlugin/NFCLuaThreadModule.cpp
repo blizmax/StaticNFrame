@@ -31,7 +31,7 @@ bool NFCLuaThreadModule::Init()
 
 	m_pPluginManager->FindModule<NFIServerNetEventModule>()->AddAccountEventCallBack(NF_ST_GAME, this, &NFCLuaThreadModule::OnAccountEventCallBack);
 
-	StartActorPool(10);
+	StartActorPool(m_pPluginManager->FindModule<NFITaskModule>()->GetMaxThreads());
 	SetTimer(EnumLuaThreadModule_LOAD, 1, 1);
 	return true;
 }

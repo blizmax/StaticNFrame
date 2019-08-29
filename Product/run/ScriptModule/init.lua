@@ -50,6 +50,9 @@ function init_script_system(luaModule)
 			package.path = package.path .. ";../ScriptModule/GameServer/?.lua;"
 			package.path = package.path..";../ScriptModule/GameServer/trdlib/libprotobuf/?.lua"   --由于这里protobuf的特殊性，必须把包含protobuf的目录加到环境变量中
 			package.path = package.path..";../ScriptModule/GameServer/trdlib/lua/?.lua"
+			require("trdlib.libprotobuf.protobuf")
+			print(_EncodeSignedVarint)
+			require("GameServer.common.st_human_pb")
 
 			require("GameServer/LoadHelper")
 		elseif LuaNFrame.GetAppName() == "GameServer" then

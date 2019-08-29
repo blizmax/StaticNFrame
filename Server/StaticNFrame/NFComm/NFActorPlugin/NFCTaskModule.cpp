@@ -11,6 +11,7 @@
 #include "NFComm/NFCore/NFPlatform.h"
 #include "NFComm/NFPluginModule/NFTask.h"
 #include "NFComm/NFPluginModule/NFLogMgr.h"
+#include "NFComm/NFPluginModule/NFConfigMgr.h"
 
 #include "NFComm/NFPluginModule/NFITaskComponent.h"
 #include "NFComm/NFCore/NFTime.h"
@@ -24,8 +25,31 @@ NFCTaskModule::NFCTaskModule(NFIPluginManager* p)
 	nHandleTaskCount = 0;
 	srand(static_cast<unsigned>(time(nullptr)));
 	//首先初始化
-	NFCTaskModule::InitActorThread(std::thread::hardware_concurrency()*2);
-	//NFCTaskModule::InitActorThread(10);
+	uint32_t threadNum = std::thread::hardware_concurrency() * 2;
+	if (threadNum < 10)
+	{
+		threadNum = 10;
+	}
+
+	if (m_pPluginManager->IsLoadAllServer())
+	{
+		NFCTaskModule::InitActorThread(threadNum);
+	}
+	else
+	{
+		auto pServerConfig = NFConfigMgr::Instance()->GetServerConfig(m_pPluginManager->GetAppID());
+		if (pServerConfig)
+		{
+			if (pServerConfig->mActorThreadNum > 0)
+			{
+				NFCTaskModule::InitActorThread(pServerConfig->mActorThreadNum);
+			}
+			else
+			{
+				NFCTaskModule::InitActorThread(threadNum);
+			}
+		}
+	}
 }
 
 NFCTaskModule::~NFCTaskModule() = default;
@@ -279,6 +303,16 @@ bool NFCTaskModule::AddTask(int actorId, NFTask* pTask)
 
 	nRecvTaskCount++;
 	return true;
+}
+
+/**
+* @brief 获得最大Actor Thread Num
+*
+* @return
+*/
+int NFCTaskModule::GetMaxThreads()
+{
+	return m_pFramework->GetMaxThreads();
 }
 
 int NFCTaskModule::GetBalanceActor(uint64_t balanceId)

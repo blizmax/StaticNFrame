@@ -148,6 +148,13 @@ public:
 	* @return
 	*/
 	void OnMainThreadTick();
+
+	/**
+	* @brief 获得最大Actor Thread Num
+	*
+	* @return
+	*/
+	virtual int GetMaxThreads() override;
 protected:
 	Theron::Framework* m_pFramework;
 	NFTaskActor* m_pMainActor;

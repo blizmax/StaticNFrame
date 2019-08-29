@@ -22,6 +22,7 @@ function InitGameServer()
 			ServerIp = ZoneIP,
 			ServerPort = GetNewPort(),
 			MaxConnectNum = 100,
+			ActorThreadNum = 10,
 			WorkThreadNum = 1,
 			Security = false,
 			WebSocket = false,
@@ -46,7 +47,7 @@ function InitGameServer()
 			ServerType = NF_ST_PROXY,
 			ServerId = 6,			--对每一个服务器来说都是唯一的， 应用程序需要通过这个ServerId才能知道需要加载的配置是他
 			ServerIp = MasterIP,
-			ServerPort = 6101,
+			ServerPort = 6103,
 			MaxConnectNum = 100,
 			WorkThreadNum = 5,
 			Security = false,
@@ -68,8 +69,8 @@ function InitGameServer()
 	
 	RegisterServer(WorldServer3)
 	RegisterServer(GameServer4)
-	RegisterServer(GameServer5)
+	--RegisterServer(GameServer5)
 	RegisterServer(ProxyServer6)
-	RegisterServer(ProxyServer7)
+	--RegisterServer(ProxyServer7)
 end
 	
