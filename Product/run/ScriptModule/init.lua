@@ -30,6 +30,7 @@ function initLoad()
 	require("LuaNFrame/NFLogDefine")
 	require("LuaNFrame/ServerDefine")
 	require("LuaNFrame/NFExecutor")
+	require("LuaNFrame/NFReload")
 	--require("LuaNFrame/NFTimeUtils")
 end
 
@@ -50,9 +51,6 @@ function init_script_system(luaModule)
 			package.path = package.path .. ";../ScriptModule/GameServer/?.lua;"
 			package.path = package.path..";../ScriptModule/GameServer/trdlib/libprotobuf/?.lua"   --由于这里protobuf的特殊性，必须把包含protobuf的目录加到环境变量中
 			package.path = package.path..";../ScriptModule/GameServer/trdlib/lua/?.lua"
-			require("trdlib.libprotobuf.protobuf")
-			print(_EncodeSignedVarint)
-			require("GameServer.common.st_human_pb")
 
 			require("GameServer/LoadHelper")
 		elseif LuaNFrame.GetAppName() == "GameServer" then
@@ -75,7 +73,7 @@ function init_script_system(luaModule)
 
     if not status then
 		LuaNFrame.Error(NFLogId.NF_LOG_SYSTEMLOG, 0, msg)
-    end
+	end
 end
 
 update_debugsocket = update_debugsocket or {}

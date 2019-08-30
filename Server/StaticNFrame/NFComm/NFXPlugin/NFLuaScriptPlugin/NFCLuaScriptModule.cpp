@@ -566,3 +566,13 @@ NF_SHARE_PTR<PlayerGameServerInfo> NFCLuaScriptModule::GetPlayerInfo(uint64_t pl
 {
 	return mPlayerProxyInfoMap.GetElement(playerId);
 }
+
+void NFCLuaScriptModule::ReloadAllLuaFiles()
+{
+	TryRunGlobalScriptFunc("LuaNFrame.ReloadAll");
+}
+
+void NFCLuaScriptModule::ReloadLuaFiles()
+{
+	TryRunGlobalScriptFunc("LuaNFrame.ReloadFile");
+}

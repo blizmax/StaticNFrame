@@ -24,6 +24,8 @@ enum NFConsoleMsgEnum
 	NFConsoleMsg_Reload = 3,	//重载引擎配置
 	NFConsoleMsg_Dynamic = 4,	//动态加载引擎
 	NFConsoleMsg_ProductFile = 5, //类节点头文件
+	NFConsoleMsg_ReloadAllLuaFiles = 6,	//重载所有的Lua文件
+	NFConsoleMsg_ReloadLuaFiles = 7,	//重载不符Lua文件
 };
 
 struct NFConsoleMsg

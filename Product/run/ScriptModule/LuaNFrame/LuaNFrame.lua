@@ -459,4 +459,3 @@ function LuaNFrame.DispatchWorker(indexStr, dataStr)
     end
 end
 
-

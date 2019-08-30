@@ -127,6 +127,9 @@ public:
 
 	virtual void BeginProfiler(const std::string& luaFunc);
 	virtual uint64_t EndProfiler();//return this time cost time(us) ОўГо
+
+	virtual void ReloadAllLuaFiles() override;
+	virtual void ReloadLuaFiles() override;
 public:
 	void OnAccountEventCallBack(uint32_t nEvent, uint32_t unLinkId, NF_SHARE_PTR<PlayerGameServerInfo> pServerData);
 	NF_SHARE_PTR<PlayerGameServerInfo> GetPlayerInfo(uint64_t playerId);

@@ -593,3 +593,13 @@ void NFCLuaThreadModule::AddProcessLoopTimer(uint32_t delayTimer, const std::str
 
 	m_mQueue.Push(msg);
 }
+
+void NFCLuaThreadModule::ReloadAllLuaFiles()
+{
+
+}
+
+void NFCLuaThreadModule::ReloadLuaFiles()
+{
+
+}

@@ -206,6 +206,9 @@ public:
 	virtual void AddMsgToAllPlayer(const uint32_t nMsgID, const uint32_t nLen, const std::string& strData);
 	virtual void AddMsgToWorld(uint32_t usLinkId, const uint64_t nPlayerID, const uint32_t nMsgID, const uint32_t nLen, const std::string& strData);
 	virtual void AddMsgToMaster(uint32_t usLinkId, const uint64_t nPlayerID, const uint32_t nMsgID, const uint32_t nLen, const std::string& strData);
+
+	virtual void ReloadAllLuaFiles() override;
+	virtual void ReloadLuaFiles() override;
 public:
 	/**
 	* @brief 添加一个Actor组件

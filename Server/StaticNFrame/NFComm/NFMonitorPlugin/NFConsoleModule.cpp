@@ -15,6 +15,7 @@
 #include "NFComm/NFPluginModule/NFTimerMgr.h"
 #include "NFComm/NFPluginModule/NFIPlugin.h"
 #include "NFComm/NFPluginModule/NFIClassModule.h"
+#include "NFComm/NFPluginModule/NFILuaScriptModule.h"
 
 NFCConsoleModule::NFCConsoleModule(NFIPluginManager* p)
 {
@@ -43,6 +44,8 @@ bool NFCConsoleModule::Awake()
 		{
 			mCmdParser.Add("Exit", 0, "Exit App");
 			mCmdParser.Add("Reload", 0, "Reload Plugin Config");
+			mCmdParser.Add("ReloadAllLuaFiles", 0, "Reload All lua files");
+			mCmdParser.Add("ReloadLuaFiles", 0, "Reload lua files");
 			mCmdParser.Add("Profiler", 0, "Open Profiler");
 			mCmdParser.Add("ProductFile", 0, "Product File, node header file, sql file, prrotobuf file");
 
@@ -123,6 +126,20 @@ void NFCConsoleModule::BackThreadLoop()
 				mQueueMsg.Push(msg);
 			}
 
+			if (mCmdParser.Exist("ReloadAllLuaFiles"))
+			{
+				NFConsoleMsg msg;
+				msg.mMsgType = NFConsoleMsg_ReloadAllLuaFiles;
+				mQueueMsg.Push(msg);
+			}
+
+			if (mCmdParser.Exist("ReloadLuaFiles"))
+			{
+				NFConsoleMsg msg;
+				msg.mMsgType = NFConsoleMsg_ReloadLuaFiles;
+				mQueueMsg.Push(msg);
+			}
+
 			if (mCmdParser.Exist("Profiler"))
 			{
 				NFConsoleMsg msg;
@@ -184,6 +201,22 @@ void NFCConsoleModule::OnTimer(uint32_t nTimerID)
 		else if (msg.mMsgType == NFConsoleMsg_ProductFile)
 		{
 			FindModule<NFIConfigModule>()->ProductFile();
+		}
+		else if (msg.mMsgType == NFConsoleMsg_ReloadAllLuaFiles)
+		{
+			NFILuaScriptModule* pLuaModule = FindModule<NFILuaScriptModule>();
+			if (pLuaModule)
+			{
+				pLuaModule->ReloadAllLuaFiles();
+			}
+		}
+		else if (msg.mMsgType == NFConsoleMsg_ReloadLuaFiles)
+		{
+			NFILuaScriptModule* pLuaModule = FindModule<NFILuaScriptModule>();
+			if (pLuaModule)
+			{
+				pLuaModule->ReloadLuaFiles();
+			}
 		}
 	}
 }

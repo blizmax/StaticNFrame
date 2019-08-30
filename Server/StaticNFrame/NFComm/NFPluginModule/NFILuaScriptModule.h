@@ -27,5 +27,8 @@ public:
 	virtual void RunNetRecvLuaFunc(const std::string& luaFunc, const uint32_t unLinkId, const uint64_t valueId, const uint32_t nMsgId, const std::string& strMsg) = 0;
 
 	virtual void RunHttpRecvLuaFunc(const std::string& luaFunc, const uint32_t unLinkId, const uint32_t requestId, const std::string& firstPath, const std::string& secondPath, const std::string& strMsg) = 0;
+
+	virtual void ReloadAllLuaFiles() = 0;
+	virtual void ReloadLuaFiles() = 0;
 };
 
