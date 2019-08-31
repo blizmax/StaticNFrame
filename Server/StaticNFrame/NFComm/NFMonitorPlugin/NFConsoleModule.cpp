@@ -43,13 +43,11 @@ bool NFCConsoleModule::Awake()
 		try
 		{
 			mCmdParser.Add("Exit", 0, "Exit App");
-			mCmdParser.Add("Reload", 0, "Reload Plugin Config");
-			mCmdParser.Add("ReloadAllLuaFiles", 0, "Reload All lua files");
-			mCmdParser.Add("ReloadLuaFiles", 0, "Reload lua files");
 			mCmdParser.Add("Profiler", 0, "Open Profiler");
 			mCmdParser.Add("ProductFile", 0, "Product File, node header file, sql file, prrotobuf file");
 
 			mCmdParser.Add<std::string>("Dynamic", 0, "Dynamic Load Plugin", false, "xxPlugin");
+			mCmdParser.Add<std::string>("Reload", 0, "Reload plugin/alllua/luafiles", false, "");
 		}
 		catch (NFCmdLine::NFCmdLine_Error& e)
 		{
@@ -119,27 +117,6 @@ void NFCConsoleModule::BackThreadLoop()
 				return;
 			}
 
-			if (mCmdParser.Exist("Reload"))
-			{
-				NFConsoleMsg msg;
-				msg.mMsgType = NFConsoleMsg_Reload;
-				mQueueMsg.Push(msg);
-			}
-
-			if (mCmdParser.Exist("ReloadAllLuaFiles"))
-			{
-				NFConsoleMsg msg;
-				msg.mMsgType = NFConsoleMsg_ReloadAllLuaFiles;
-				mQueueMsg.Push(msg);
-			}
-
-			if (mCmdParser.Exist("ReloadLuaFiles"))
-			{
-				NFConsoleMsg msg;
-				msg.mMsgType = NFConsoleMsg_ReloadLuaFiles;
-				mQueueMsg.Push(msg);
-			}
-
 			if (mCmdParser.Exist("Profiler"))
 			{
 				NFConsoleMsg msg;
@@ -155,6 +132,18 @@ void NFCConsoleModule::BackThreadLoop()
 					NFConsoleMsg msg;
 					msg.mMsgType = NFConsoleMsg_Dynamic;
 					msg.mParam1 = strPluginName;
+					mQueueMsg.Push(msg);
+				}
+			}
+
+			if (mCmdParser.Exist("Reload"))
+			{
+				std::string strConfigName = mCmdParser.Get<std::string>("Reload");
+				if (!strConfigName.empty())
+				{
+					NFConsoleMsg msg;
+					msg.mMsgType = NFConsoleMsg_Reload;
+					msg.mParam1 = strConfigName;
 					mQueueMsg.Push(msg);
 				}
 			}
@@ -192,7 +181,26 @@ void NFCConsoleModule::OnTimer(uint32_t nTimerID)
 		}
 		else if (msg.mMsgType == NFConsoleMsg_Reload)
 		{
-			m_pPluginManager->OnReloadPlugin();
+			if (NFStringUtility::ToLower(msg.mParam1) == "plugin")
+			{
+				m_pPluginManager->OnReloadPlugin();
+			}
+			else if (NFStringUtility::ToLower(msg.mParam1) == "alllua")
+			{
+				NFILuaScriptModule* pLuaModule = FindModule<NFILuaScriptModule>();
+				if (pLuaModule)
+				{
+					pLuaModule->ReloadAllLuaFiles();
+				}
+			}
+			else if (NFStringUtility::ToLower(msg.mParam1) == "luafiles")
+			{
+				NFILuaScriptModule* pLuaModule = FindModule<NFILuaScriptModule>();
+				if (pLuaModule)
+				{
+					pLuaModule->ReloadLuaFiles();
+				}
+			}
 		}
 		else if (msg.mMsgType == NFConsoleMsg_Dynamic)
 		{
@@ -201,22 +209,6 @@ void NFCConsoleModule::OnTimer(uint32_t nTimerID)
 		else if (msg.mMsgType == NFConsoleMsg_ProductFile)
 		{
 			FindModule<NFIConfigModule>()->ProductFile();
-		}
-		else if (msg.mMsgType == NFConsoleMsg_ReloadAllLuaFiles)
-		{
-			NFILuaScriptModule* pLuaModule = FindModule<NFILuaScriptModule>();
-			if (pLuaModule)
-			{
-				pLuaModule->ReloadAllLuaFiles();
-			}
-		}
-		else if (msg.mMsgType == NFConsoleMsg_ReloadLuaFiles)
-		{
-			NFILuaScriptModule* pLuaModule = FindModule<NFILuaScriptModule>();
-			if (pLuaModule)
-			{
-				pLuaModule->ReloadLuaFiles();
-			}
 		}
 	}
 }
