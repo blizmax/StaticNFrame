@@ -110,7 +110,7 @@ void NFCLuaScriptModule::LoadScript()
 {
 	TryAddPackagePath(m_pPluginManager->GetLuaScriptPath());
 	TryLoadScriptFile("init.lua");
-	TryRunGlobalScriptFunc("init_script_system", this);
+	TryRunGlobalScriptFunc("LuaNFrame.InitScript", this);
 	//TryLoadScriptFile("LoadHelper.lua");
 
 	//TryRunGlobalScriptFunc("LuaNFrame.TimerInit", 0, "logtimer");
@@ -569,10 +569,10 @@ NF_SHARE_PTR<PlayerGameServerInfo> NFCLuaScriptModule::GetPlayerInfo(uint64_t pl
 
 void NFCLuaScriptModule::ReloadAllLuaFiles()
 {
-	TryRunGlobalScriptFunc("LuaNFrame.ReloadAll");
+	TryRunGlobalScriptFunc("NFLuaReload.ReloadAll");
 }
 
 void NFCLuaScriptModule::ReloadLuaFiles()
 {
-	TryRunGlobalScriptFunc("LuaNFrame.ReloadFile");
+	TryRunGlobalScriptFunc("NFLuaReload.ReloadFile");
 }

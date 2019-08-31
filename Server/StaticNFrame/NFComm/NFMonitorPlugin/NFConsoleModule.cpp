@@ -44,10 +44,12 @@ bool NFCConsoleModule::Awake()
 		{
 			mCmdParser.Add("Exit", 0, "Exit App");
 			mCmdParser.Add("Profiler", 0, "Open Profiler");
+			mCmdParser.Add("Reload", 0, "Reload plugin config");
+			mCmdParser.Add("HotfixLua", 0, "Hotfix lua");
+			mCmdParser.Add("HotfixAllLua", 0, "Hotfix all lua");
 			mCmdParser.Add("ProductFile", 0, "Product File, node header file, sql file, prrotobuf file");
 
 			mCmdParser.Add<std::string>("Dynamic", 0, "Dynamic Load Plugin", false, "xxPlugin");
-			mCmdParser.Add<std::string>("Reload", 0, "Reload plugin/alllua/luafiles", false, "");
 		}
 		catch (NFCmdLine::NFCmdLine_Error& e)
 		{
@@ -136,16 +138,25 @@ void NFCConsoleModule::BackThreadLoop()
 				}
 			}
 
+			if (mCmdParser.Exist("HotfixLua"))
+			{
+				NFConsoleMsg msg;
+				msg.mMsgType = NFConsoleMsg_HotfixLua;
+				mQueueMsg.Push(msg);
+			}
+
+			if (mCmdParser.Exist("HotfixAllLua"))
+			{
+				NFConsoleMsg msg;
+				msg.mMsgType = NFConsoleMsg_HotfixAllLua;
+				mQueueMsg.Push(msg);
+			}
+
 			if (mCmdParser.Exist("Reload"))
 			{
-				std::string strConfigName = mCmdParser.Get<std::string>("Reload");
-				if (!strConfigName.empty())
-				{
-					NFConsoleMsg msg;
-					msg.mMsgType = NFConsoleMsg_Reload;
-					msg.mParam1 = strConfigName;
-					mQueueMsg.Push(msg);
-				}
+				NFConsoleMsg msg;
+				msg.mMsgType = NFConsoleMsg_Reload;
+				mQueueMsg.Push(msg);
 			}
 
 			if (mCmdParser.Exist("ProductFile"))
@@ -181,25 +192,22 @@ void NFCConsoleModule::OnTimer(uint32_t nTimerID)
 		}
 		else if (msg.mMsgType == NFConsoleMsg_Reload)
 		{
-			if (NFStringUtility::ToLower(msg.mParam1) == "plugin")
+			m_pPluginManager->OnReloadPlugin();
+		}
+		else if (msg.mMsgType == NFConsoleMsg_HotfixAllLua)
+		{
+			NFILuaScriptModule* pLuaModule = FindModule<NFILuaScriptModule>();
+			if (pLuaModule)
 			{
-				m_pPluginManager->OnReloadPlugin();
+				pLuaModule->ReloadAllLuaFiles();
 			}
-			else if (NFStringUtility::ToLower(msg.mParam1) == "alllua")
+		}
+		else if (msg.mMsgType == NFConsoleMsg_HotfixLua)
+		{
+			NFILuaScriptModule* pLuaModule = FindModule<NFILuaScriptModule>();
+			if (pLuaModule)
 			{
-				NFILuaScriptModule* pLuaModule = FindModule<NFILuaScriptModule>();
-				if (pLuaModule)
-				{
-					pLuaModule->ReloadAllLuaFiles();
-				}
-			}
-			else if (NFStringUtility::ToLower(msg.mParam1) == "luafiles")
-			{
-				NFILuaScriptModule* pLuaModule = FindModule<NFILuaScriptModule>();
-				if (pLuaModule)
-				{
-					pLuaModule->ReloadLuaFiles();
-				}
+				pLuaModule->ReloadLuaFiles();
 			}
 		}
 		else if (msg.mMsgType == NFConsoleMsg_Dynamic)

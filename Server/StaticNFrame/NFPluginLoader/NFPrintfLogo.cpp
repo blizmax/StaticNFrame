@@ -43,7 +43,8 @@ std::string PrintfLogo()
 	ios << "--LuaScript=../ScriptModule Load the Config Path when programs be launched" << std::endl;
 	ios << "--LogPath=./spdlog Load the Config Path when programs be launched" << std::endl;
 	ios << "Input '--Exit' Programs will exit when it runs" << std::endl;
-	ios << "Input '--Reload=plugin/alllua/luafiles' Programs will reload config when it runs" << std::endl;
+	ios << "Input '--Reload' Programs will reload plugin config when it runs" << std::endl;
+	ios << "Input '--HotfixLua' Programs will hotfix lua when it runs" << std::endl;
 	ios << "Input '--Profiler' Programs will open/close profiler when it runs" << std::endl;
 	ios << "Input '--Dynamic=xxplugin' Programs will dynamic load plugin when it runs" << std::endl;
 	ios << "Input '--ProductFile' Programs will product file,  class node header file and sql file, proto file when it runs" << std::endl;

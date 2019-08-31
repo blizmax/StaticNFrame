@@ -1,5 +1,5 @@
 
-
+LuaNFrame = LuaNFrame or {}
 
 --加载LUA文件， path为路径，subdir加载子目录，会一直递归
 function LoadLuaFile(path, subdir)
@@ -22,7 +22,7 @@ function LoadLuaFile(path, subdir)
 	end
 end
 
-function initLoad()
+function LuaNFrame.InitLoad()
 	require("LuaDebug")
 	require("LuaNFrame/CPPNFrame")
 	require("LuaNFrame/LuaNFrame")
@@ -34,16 +34,19 @@ function initLoad()
 	--require("LuaNFrame/NFTimeUtils")
 end
 
-function init_script_system(luaModule)
+function LuaNFrame.InitScript(luaModule)
 	package.path = package.path .. ";../ScriptModule/?.lua;"
 	package.path = package.path .. ";../ScriptModule/LuaNFrame/?.lua;"
 
 	breakSocketHandle,debugXpCall = require("LuaDebug")("localhost",7003)
 
-	initLoad()
+	LuaNFrame.InitLoad()
 
 	--初始化LuaNFrame
 	LuaNFrame.init(luaModule)
+	--初始化热更
+	NFLuaReload.Init()
+
 	LuaNFrame.AddTimer("update_debugsocket", 1)
 
 	local function timerExecute()

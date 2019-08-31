@@ -858,3 +858,121 @@ void NFFileUtility::GetFiles(const std::string& strDirName, std::list<std::strin
 #endif
 }
 
+#if NF_PLATFORM == NF_PLATFORM_WIN
+/** Return the offset in 10th of micro sec between the windows base time (
+ *	01-01-1601 0:0:0 UTC) and the unix base time (01-01-1970 0:0:0 UTC).
+ *	This value is used to convert windows system and file time back and
+ *	forth to unix time (aka epoch)
+ */
+uint64_t NFFileUtility::GetWindowsToUnixBaseTimeOffset()
+{
+	static bool init = false;
+
+	static uint64_t offset = 0;
+
+	if (!init)
+	{
+		// compute the offset to convert windows base time into unix time (aka epoch)
+		// build a WIN32 system time for jan 1, 1970
+		SYSTEMTIME baseTime;
+		baseTime.wYear = 1970;
+		baseTime.wMonth = 1;
+		baseTime.wDayOfWeek = 0;
+		baseTime.wDay = 1;
+		baseTime.wHour = 0;
+		baseTime.wMinute = 0;
+		baseTime.wSecond = 0;
+		baseTime.wMilliseconds = 0;
+
+		FILETIME baseFileTime = { 0,0 };
+		// convert it into a FILETIME value
+		SystemTimeToFileTime(&baseTime, &baseFileTime);
+		offset = baseFileTime.dwLowDateTime | (uint64_t(baseFileTime.dwHighDateTime) << 32);
+
+		init = true;
+	}
+
+	return offset;
+}
+#endif
+
+uint32_t NFFileUtility::GetFileModificationDate(const std::string &filename)
+{
+	std::string::size_type pos;
+	std::wstring fn;
+	if ((pos = filename.find("@@")) != std::string::npos)
+	{
+		fn = NFStringUtility::s2ws(filename.substr(0, pos));
+	}
+	else if ((pos = filename.find('@')) != std::string::npos)
+	{
+		//fn = CPath::lookup(filename.substr(0, pos));
+	}
+	else
+	{
+		fn = NFStringUtility::s2ws(filename);
+	}
+
+#if NF_PLATFORM == NF_PLATFORM_WIN
+	//	struct _stat buf;
+	//	int result = _stat (fn.c_str (), &buf);
+		// Changed 06-06-2007 : boris : _stat have an incoherent and hard to reproduce
+		// on windows : if the system clock is adjusted according to daylight saving
+		// time, the file date reported by _stat may (not always!) be adjusted by 3600s
+		// This is a bad behavior because file time should always be reported as UTC time value
+
+		// Use the WIN32 API to read the file times in UTC
+
+		// create a file handle (this does not open the file)
+	HANDLE h = CreateFile(fn.c_str(), 0, 0, NULL, OPEN_EXISTING, 0, 0);
+	if (h == INVALID_HANDLE_VALUE)
+	{
+		//std::cout << "Can't get modification date on file :" << fn << std::endl;
+		return 0;
+	}
+	FILETIME creationTime;
+	FILETIME accesstime;
+	FILETIME modTime;
+
+	// get the files times
+	BOOL res = GetFileTime(h, &creationTime, &accesstime, &modTime);
+	if (res == 0)
+	{
+		//std::cout << "Can't get modification date on file :" << fn << std::endl;
+		CloseHandle(h);
+		return 0;
+	}
+	// close the handle
+	CloseHandle(h);
+
+	// win32 file times are in 10th of micro sec (100ns resolution), starting at jan 1, 1601
+	// hey Mr Gates, why 1601 ?
+
+	// first, convert it into second since jan1, 1601
+	uint64_t t = modTime.dwLowDateTime | (uint64_t(modTime.dwHighDateTime) << 32);
+
+	// adjust time base to unix epoch base
+	t -= GetWindowsToUnixBaseTimeOffset();
+
+	// convert the resulting time into seconds
+	t /= 10;	// microsec
+	t /= 1000;	// millisec
+	t /= 1000;	// sec
+
+	// return the resulting time
+	return uint32_t(t);
+
+#else
+	struct stat buf;
+	int result = stat(fn.c_str(), &buf);
+	if (result != 0)
+	{
+		//std::cout << "Can't get modification date on file :" << fn << std::endl;
+		return 0;
+	}
+	else
+		return (uint32_t)buf.st_mtime;
+#endif
+
+}
+

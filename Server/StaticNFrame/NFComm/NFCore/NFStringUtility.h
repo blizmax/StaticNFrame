@@ -382,7 +382,7 @@ public:
 	}
 #endif
 
-	char* wchar2char(const wchar_t* ts, size_t* outlen)
+	static char* wchar2char(const wchar_t* ts, size_t* outlen)
 	{
 		int len = (int)((wcslen(ts) + 1) * sizeof(wchar_t));
 		char* ccattr = (char *)malloc(len);
@@ -401,7 +401,7 @@ public:
 		return ccattr;
 	};
 
-	wchar_t* char2wchar(const char* cs, size_t* outlen)
+	static wchar_t* char2wchar(const char* cs, size_t* outlen)
 	{
 		int len = (int)((strlen(cs) + 1) * sizeof(wchar_t));
 		wchar_t* ccattr = (wchar_t *)malloc(len);
@@ -421,7 +421,7 @@ public:
 	};
 
 	//字符集转换
-	inline string GBKToUTF8(const std::string& strGBK)
+	static string GBKToUTF8(const std::string& strGBK)
 	{
 #ifdef _WIN32
 		wchar_t* str1;
@@ -490,7 +490,7 @@ public:
 	}
 
 	//utf-8 转 gbk
-	inline string UTF8ToGBK(const std::string& strUTF8)
+	static string UTF8ToGBK(const std::string& strUTF8)
 	{
 #ifdef _WIN32
 		int len = MultiByteToWideChar(CP_UTF8, 0, strUTF8.c_str(), -1, NULL, 0);
@@ -554,7 +554,7 @@ public:
 #endif
 	}
 
-	inline bool IsDigital(const std::string &s)
+	static bool IsDigital(const std::string &s)
 	{
 		size_t len = s.length();
 		size_t i = 0;
@@ -569,7 +569,7 @@ public:
 		return i ? true : false;
 	}
 
-	inline bool IsDigital_2(const std::string &s)
+	static bool IsDigital_2(const std::string &s)
 	{
 		size_t len = s.length();
 		size_t i = 0;
@@ -588,7 +588,7 @@ public:
 		return i ? true : false;
 	}
 
-	inline time_t StringToUnixTime(const char *str)
+	static time_t StringToUnixTime(const char *str)
 	{
 		tm tm_;
 		int year = 1900, month = 1, day = 0, hour = 0, minute = 0, second = 0;
@@ -604,7 +604,7 @@ public:
 		return mktime(&tm_); //已经减了8个时区  
 	}
 
-	inline bool CheckIsDigit(const std::string& str)
+	static bool CheckIsDigit(const std::string& str)
 	{
 		size_t nCount = str.length(); // 获得字符个数
 		for (size_t i = 0; i < nCount; i++)
@@ -617,7 +617,7 @@ public:
 		return true;
 	}
 
-	inline std::string RemoveSpace(const std::string & str)
+	static std::string RemoveSpace(const std::string & str)
 	{
 		std::string sNew;
 
@@ -634,7 +634,7 @@ public:
 		return sNew;
 	}
 
-	inline time_t GetTimeStamp(uint32_t uiYear, uint32_t uiMon, uint32_t uiDay, uint32_t uiHour = 0, uint32_t uiMin = 0, uint32_t uiSec = 0)
+	static time_t GetTimeStamp(uint32_t uiYear, uint32_t uiMon, uint32_t uiDay, uint32_t uiHour = 0, uint32_t uiMin = 0, uint32_t uiSec = 0)
 	{
 		tm tm_;
 		tm_.tm_year = uiYear - 1900;
@@ -648,7 +648,7 @@ public:
 	}
 
 	//获得今天或明天几点几分钟的时间
-	inline time_t GetDesignatedTime(uint32_t hour, uint32_t min, time_t Destime, bool isCurrDay)
+	static time_t GetDesignatedTime(uint32_t hour, uint32_t min, time_t Destime, bool isCurrDay)
 	{
 		hour = hour > 0 ? hour : 0;
 		min = min > 0 ? min : 0;
@@ -676,7 +676,7 @@ public:
 
 	//获得今天或明天几点几分钟的时间
 	//参数 intraday 判断是不是只计算当天的 某时刻
-	inline time_t GetNextTime(int32_t hour, int32_t min, int32_t sec, time_t Destime = 0)
+	static time_t GetNextTime(int32_t hour, int32_t min, int32_t sec, time_t Destime = 0)
 	{
 		hour = hour > 0 ? hour : 0;
 		min = min > 0 ? min : 0;
@@ -701,7 +701,7 @@ public:
 	}
 
 	// 获取整点
-	inline time_t GetIntPoint()
+	static time_t GetIntPoint()
 	{
 		time_t tmpTime = time(NULL);
 		tm* tmp_tm = localtime(&tmpTime);
@@ -713,7 +713,7 @@ public:
 	}
 
 	// 获取0点
-	inline time_t GetZeroPoint()
+	static time_t GetZeroPoint()
 	{
 		time_t tmpTime = time(NULL);
 		tm* tmp_tm = localtime(&tmpTime);
@@ -725,7 +725,7 @@ public:
 	}
 
 	// 获取某个时间戳的当日零点
-	inline time_t GetOneDayZero(time_t stamp)
+	static time_t GetOneDayZero(time_t stamp)
 	{
 		time_t tmpTime = stamp;
 		tm* tmp_tm = localtime(&tmpTime);
@@ -738,7 +738,7 @@ public:
 	}
 
 	// 获取今日0点
-	inline time_t GetTodayZero()
+	static time_t GetTodayZero()
 	{
 		time_t tmpTime = time(NULL);
 		tm* tmp_tm = localtime(&tmpTime);
@@ -753,7 +753,7 @@ public:
 	// 获取下一个间隔时间距当前时间 还剩多少秒 参数 秒
 	// 从0点开始算，除不尽 算0点  比如参数是 600秒 当前是0点59分， 就会返回60秒
 	// 参数必须大于0 小于86400否则致命错误
-	inline time_t GetNextCheckPointTime(uint32_t checkSec)
+	static time_t GetNextCheckPointTime(uint32_t checkSec)
 	{
 		if (checkSec <= 0 || checkSec >= 86400) {
 			std::cout << "dead error int CommFun.h:429 ";
@@ -775,7 +775,7 @@ public:
 	}
 
 	// 获取下一个时间点到当前还剩多少秒， 参数 星期 时分秒
-	inline time_t GetNextPointGapTick(int weekday, int hour, int min, int sec, time_t basetime = 0)
+	static time_t GetNextPointGapTick(int weekday, int hour, int min, int sec, time_t basetime = 0)
 	{
 		weekday -= 1;
 		weekday = weekday > 0 ? weekday : 0;
@@ -822,7 +822,7 @@ public:
 	}
 
 	// 获取明日凌晨的时间(今晚24点)
-	inline time_t GetNextDateTime()
+	static time_t GetNextDateTime()
 	{
 		static time_t nextTime = 0;
 
@@ -834,7 +834,7 @@ public:
 		return nextTime;
 	}
 
-	inline bool IsDiffDay(int32_t nTime, int32_t base = 0)
+	static bool IsDiffDay(int32_t nTime, int32_t base = 0)
 	{
 		if (nTime == 0) return true;
 		time_t todayTime = base == 0 ? time(NULL) : base;
@@ -857,7 +857,7 @@ public:
 	}
 
 	// 获取星期
-	inline int32_t GetWeek()
+	static int32_t GetWeek()
 	{
 		time_t tmpTime = time(NULL);
 		tm* tmp_tm = localtime(&tmpTime);
@@ -869,7 +869,7 @@ public:
 	}
 
 	// 获取这周一0点
-	inline time_t GetWeekZero()
+	static time_t GetWeekZero()
 	{
 		time_t tmpTime = time(NULL);
 		tm* tmp_tm = localtime(&tmpTime);
@@ -885,13 +885,13 @@ public:
 		return tmpTime - (tmp_tm->tm_wday - 1) * 24 * 3600;
 	}
 
-	inline time_t GetWeekendZero()
+	static time_t GetWeekendZero()
 	{
 		return GetWeekZero() + 7 * 24 * 3600;
 	}
 
 	// 根据对应时间戳获取周一0点
-	inline time_t GetWeekZeroByTimeStamp(time_t tmpTime)
+	static time_t GetWeekZeroByTimeStamp(time_t tmpTime)
 	{
 		tm* tmp_tm = localtime(&tmpTime);
 		if (tmp_tm == NULL)
@@ -903,7 +903,7 @@ public:
 	}
 
 	// 获取本月0点
-	inline time_t GetMonthZero()
+	static time_t GetMonthZero()
 	{
 		tm tm_;
 		time_t tmpTime = time(NULL);
@@ -924,7 +924,7 @@ public:
 
 	}
 
-	inline bool IsDiffWeek(time_t nTime)
+	static bool IsDiffWeek(time_t nTime)
 	{
 		time_t monday = GetWeekZero();
 		time_t  nextmonday = monday + 7 * 24 * 3600;
@@ -936,7 +936,7 @@ public:
 	}
 
 	//检测字符串中是否含有标点或者特殊字符（不包含中文标点）
-	inline bool CheckContextHasPunct(const string str)
+	static bool CheckContextHasPunct(const string str)
 	{
 		size_t size = str.length();
 		//if (size < 0) return false;
@@ -958,13 +958,13 @@ public:
 	}
 
 	//字符串分割
-	void SplitString(const std::string& sSrc, std::string sDelimit, std::vector<std::string>& vResult, std::string sNull_subst = "");
-	void SplitStringToUint32(const std::string& strSrc, const std::string& strToken, std::vector<uint32_t>& vecResult, int nBase = 10);
-	bool SplitStringToUint32Ex(const std::string& strSrc, std::vector<std::pair<uint32_t, uint32_t> >& vecResult);
-	bool SplitStringToInt32(const std::string& strSrc, std::vector<std::pair<int32_t, int32_t> >& vecResult);
+	static void SplitString(const std::string& sSrc, std::string sDelimit, std::vector<std::string>& vResult, std::string sNull_subst = "");
+	static void SplitStringToUint32(const std::string& strSrc, const std::string& strToken, std::vector<uint32_t>& vecResult, int nBase = 10);
+	static bool SplitStringToUint32Ex(const std::string& strSrc, std::vector<std::pair<uint32_t, uint32_t> >& vecResult);
+	static bool SplitStringToInt32(const std::string& strSrc, std::vector<std::pair<int32_t, int32_t> >& vecResult);
 
 	template<typename T1>
-	void SplitStringToVector(const std::string& strSrc, const std::string& strToken, std::vector<T1>& vecResult)
+	static void SplitStringToVector(const std::string& strSrc, const std::string& strToken, std::vector<T1>& vecResult)
 	{
 		vecResult.clear();
 		std::string::size_type nBegin = 0;
@@ -982,7 +982,7 @@ public:
 	}
 
 	template<typename T1>
-	bool SplitStringToVectorVec(const std::string& strSrc, vector<vector<T1> >& vecResult)
+	static bool SplitStringToVectorVec(const std::string& strSrc, vector<vector<T1> >& vecResult)
 	{
 		vector<string> vStrData;
 		SplitString(strSrc, "$", vStrData);
@@ -1004,7 +1004,7 @@ public:
 
 	// 支持0或多个$字段(1005~3或1002~3$1003~3.0)，支持单字段(1005)，T1、T2不支持字符类型
 	template<typename T1, typename T2>
-	bool SplitStringToVectorPair(const std::string& strSrc, vector<pair<T1, T2> >& vecResult, const string  subdelimiter = "~")
+	static bool SplitStringToVectorPair(const std::string& strSrc, vector<pair<T1, T2> >& vecResult, const string  subdelimiter = "~")
 	{
 		std::string strTemp = strSrc;
 		vecResult.clear();
@@ -1082,7 +1082,7 @@ public:
 
 	//支持单字段(1005)，T1、T2不支持字符类型
 	template<typename T1, typename T2>
-	bool SplitStringToPair(const std::string& strSrc, pair<T1, T2>& pairResult)
+	static bool SplitStringToPair(const std::string& strSrc, pair<T1, T2>& pairResult)
 	{
 		std::string strSubSrc = strSrc;
 		std::string::size_type nSubBegin = 0;

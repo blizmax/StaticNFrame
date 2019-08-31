@@ -181,7 +181,7 @@ void NFCLuaScriptComponent::LoadScript()
 {
 	TryAddPackagePath(m_pPluginManager->GetLuaScriptPath());
 	TryLoadScriptFile("init.lua");
-	TryRunGlobalScriptFunc("init_script_system", this);
+	TryRunGlobalScriptFunc("LuaNFrame.InitScript", this);
 }
 
 const std::string& NFCLuaScriptComponent::GetAppName() const

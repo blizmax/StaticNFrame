@@ -205,5 +205,10 @@ public:
 	// @return true if successfully
 	static bool WriteFile(const char* filepath, const void* content, const size_t len);
 	static bool WriteFile(const std::string& filepath, const void* content, const size_t len);
+
+#if NF_PLATFORM == NF_PLATFORM_WIN
+	static uint64_t NFFileUtility::GetWindowsToUnixBaseTimeOffset();
+#endif
+	static uint32_t GetFileModificationDate(const std::string &filename);
 };
 
