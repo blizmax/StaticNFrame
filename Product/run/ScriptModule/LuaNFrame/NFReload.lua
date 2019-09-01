@@ -107,7 +107,7 @@ function NFLuaReload.ReloadAll()
         return modifyFiles
     end
 
-    LuaNFrame.Info(NFLogId.NF_LOG_SYSTEMLOG, 0, "Reload All Lua File Success")
+    LuaNFrame.Warn(NFLogId.NF_LOG_SYSTEMLOG, 0, "Reload All Modified Lua File Success")
     return modifyFiles
 end
 
@@ -147,14 +147,14 @@ function NFLuaReload.ReloadNewFile(file_path)
                     NFLuaReload.hotfix.hotfix_module(file_path)
                 end
                 
-                LuaNFrame.Info(NFLogId.NF_LOG_SYSTEMLOG, 0, "Hotfix Lua File: "..file_path.." Success")
+                LuaNFrame.Warn(NFLogId.NF_LOG_SYSTEMLOG, 0, "Hotfix Lua File: "..file_path.." Success")
                 return true
             end
         else
             if type(err) ~= nil then
-                LuaNFrame.Info(NFLogId.NF_LOG_SYSTEMLOG, 0, "Hotfix Lua File: "..file_path.." Failed, err:"..err)
+                LuaNFrame.Error(NFLogId.NF_LOG_SYSTEMLOG, 0, "Hotfix Lua File: "..file_path.." Failed, err:"..err)
             else
-                LuaNFrame.Info(NFLogId.NF_LOG_SYSTEMLOG, 0, "Hotfix Lua File: "..file_path.." Failed")
+                LuaNFrame.Error(NFLogId.NF_LOG_SYSTEMLOG, 0, "Hotfix Lua File: "..file_path.." Failed")
             end
         end
     end
@@ -163,7 +163,7 @@ function NFLuaReload.ReloadNewFile(file_path)
 end
 
 function NFLuaReload.ReloadFile(modifyfiles)
-    local function ReloadExecute(modifyfiles)
+    local function ReloadExecute()
         if modifyfiles == nil then
             local MOD_NAME = "hotfix_module_names"
             if not package.searchpath(MOD_NAME, package.path) then return end
