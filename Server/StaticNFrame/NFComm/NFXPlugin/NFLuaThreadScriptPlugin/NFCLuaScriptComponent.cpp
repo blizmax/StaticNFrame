@@ -113,8 +113,42 @@ bool NFHttpMsgActorTask::ThreadProcess()
 */
 bool NFHotfixAllLuaActorTask::ThreadProcess()
 {
-	m_pComponent->TryRunGlobalScriptFunc("NFLuaReload.ReloadAll");
-	return true;
+	try
+	{
+		LuaIntf::LuaRef func(m_pComponent->GetLuaContext(), "NFLuaReload.ReloadAll");
+		LuaIntf::LuaRef retRef = func.call<LuaIntf::LuaRef>();
+		if (retRef.isTable())
+		{
+			int len = retRef.len();
+			for (int i = 1; i <= len; i++)
+			{
+				LuaIntf::LuaTableRef ref = retRef[i];
+				std::string luapath = ref.value<std::string>();
+				m_vecLuaFile.push_back(luapath);
+			}
+		}
+		
+		return true;
+	}
+	catch (LuaIntf::LuaException& e)
+	{
+		std::cout << e.what() << std::endl;
+	}
+	return false;
+}
+
+/**
+** 主线程处理函数，将在线程处理完后，提交给主先来处理，根据返回函数是否继续处理
+	返回值： thread::TPTask::TPTaskState， 请参看TPTaskState
+*/
+NFHotfixAllLuaActorTask::TPTaskState NFHotfixAllLuaActorTask::MainThreadProcess()
+{
+	if (m_vecLuaFile.empty() == false)
+	{
+		m_pLuaThreadModule->ReloadLuaFiles(m_vecLuaFile);
+	}
+
+	return TPTASK_STATE_COMPLETED;
 }
 
 /**
@@ -122,7 +156,14 @@ bool NFHotfixAllLuaActorTask::ThreadProcess()
 */
 bool NFHotfixLuaFilesActorTask::ThreadProcess()
 {
-	m_pComponent->TryRunGlobalScriptFunc("NFLuaReload.ReloadFile");
+	if (m_vecLuaFile.empty())
+	{
+		m_pComponent->TryRunGlobalScriptFunc("NFLuaReload.ReloadFile");
+	}
+	else
+	{
+		m_pComponent->TryRunGlobalScriptFunc("NFLuaReload.ReloadFile", m_vecLuaFile);
+	}
 	return true;
 }
 

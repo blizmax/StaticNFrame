@@ -43,6 +43,11 @@ public:
 	{
 		return l.state();
 	}
+
+	LuaIntf::LuaContext& GetLuaContext()
+	{
+		return l;
+	}
 public:
 	template <typename V = LuaIntf::LuaRef>
 	V GetGlobal(const std::string& keyName) const

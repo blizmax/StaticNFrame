@@ -899,10 +899,10 @@ uint64_t NFFileUtility::GetWindowsToUnixBaseTimeOffset()
 uint32_t NFFileUtility::GetFileModificationDate(const std::string &filename)
 {
 	std::string::size_type pos;
-	std::wstring fn;
+	std::string fn;
 	if ((pos = filename.find("@@")) != std::string::npos)
 	{
-		fn = NFStringUtility::s2ws(filename.substr(0, pos));
+		fn = filename.substr(0, pos);
 	}
 	else if ((pos = filename.find('@')) != std::string::npos)
 	{
@@ -910,10 +910,11 @@ uint32_t NFFileUtility::GetFileModificationDate(const std::string &filename)
 	}
 	else
 	{
-		fn = NFStringUtility::s2ws(filename);
+		fn = filename;
 	}
 
 #if NF_PLATFORM == NF_PLATFORM_WIN
+	std::wstring wfn = NFStringUtility::s2ws(fn);
 	//	struct _stat buf;
 	//	int result = _stat (fn.c_str (), &buf);
 		// Changed 06-06-2007 : boris : _stat have an incoherent and hard to reproduce
@@ -924,7 +925,7 @@ uint32_t NFFileUtility::GetFileModificationDate(const std::string &filename)
 		// Use the WIN32 API to read the file times in UTC
 
 		// create a file handle (this does not open the file)
-	HANDLE h = CreateFile(fn.c_str(), 0, 0, NULL, OPEN_EXISTING, 0, 0);
+	HANDLE h = CreateFile(wfn.c_str(), 0, 0, NULL, OPEN_EXISTING, 0, 0);
 	if (h == INVALID_HANDLE_VALUE)
 	{
 		//std::cout << "Can't get modification date on file :" << fn << std::endl;

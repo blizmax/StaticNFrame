@@ -277,10 +277,7 @@ public:
 	** 主线程处理函数，将在线程处理完后，提交给主先来处理，根据返回函数是否继续处理
 		返回值： thread::TPTask::TPTaskState， 请参看TPTaskState
 	*/
-	virtual TPTaskState MainThreadProcess()
-	{
-		return TPTASK_STATE_COMPLETED;
-	}
+	virtual TPTaskState MainThreadProcess();
 public:
 	std::vector<std::string> m_vecLuaFile;
 };

@@ -596,13 +596,14 @@ void NFCLuaThreadModule::AddProcessLoopTimer(uint32_t delayTimer, const std::str
 
 void NFCLuaThreadModule::ReloadAllLuaFiles()
 {
-	for (size_t index = 0; index < m_vecWorkActorPool.size(); index++)
-	{
-		int actorId = m_vecWorkActorPool[index];
-		FindModule<NFITaskModule>()->AddTask(actorId, new NFHotfixAllLuaActorTask(this));
-	}
+	AddWorkTask(new NFHotfixAllLuaActorTask(this));
+	//for (size_t index = 0; index < m_vecWorkActorPool.size(); index++)
+	//{
+	//	int actorId = m_vecWorkActorPool[index];
+	//	FindModule<NFITaskModule>()->AddTask(actorId, new NFHotfixAllLuaActorTask(this));
+	//}
 
-	FindModule<NFITaskModule>()->AddTask(m_processLoopActorId, new NFHotfixAllLuaActorTask(this));
+	//FindModule<NFITaskModule>()->AddTask(m_processLoopActorId, new NFHotfixAllLuaActorTask(this));
 }
 
 void NFCLuaThreadModule::ReloadLuaFiles()
@@ -614,4 +615,15 @@ void NFCLuaThreadModule::ReloadLuaFiles()
 	}
 
 	FindModule<NFITaskModule>()->AddTask(m_processLoopActorId, new NFHotfixLuaFilesActorTask(this));
+}
+
+void NFCLuaThreadModule::ReloadLuaFiles(const std::vector<std::string>& vecStr)
+{
+	for (size_t index = 0; index < m_vecWorkActorPool.size(); index++)
+	{
+		int actorId = m_vecWorkActorPool[index];
+		FindModule<NFITaskModule>()->AddTask(actorId, new NFHotfixLuaFilesActorTask(this, vecStr));
+	}
+
+	FindModule<NFITaskModule>()->AddTask(m_processLoopActorId, new NFHotfixLuaFilesActorTask(this, vecStr));
 }
