@@ -142,10 +142,23 @@ void NFCLuaScriptComponent::StopClocker(uint32_t nTimerID)
 
 }
 
+uint64_t NFCLuaScriptComponent::GetMsecTime() const
+{
+	return NFTime::Now().UnixMSec();
+}
+
+uint64_t NFCLuaScriptComponent::GetSecTime() const
+{
+	return NFTime::Now().UnixSec();
+}
 
 bool NFCLuaScriptComponent::Register()
 {
 	LuaIntf::LuaBinding(l).beginClass<NFCLuaScriptComponent>("NFCLuaScriptComponent")
+		.addFunction("GetInitTime", &NFCLuaScriptComponent::GetInitTime)
+		.addFunction("GetNowTime", &NFCLuaScriptComponent::GetNowTime)
+		.addFunction("GetMsecTime", &NFCLuaScriptComponent::GetMsecTime)
+		.addFunction("GetSecTime", &NFCLuaScriptComponent::GetSecTime)
 		.addFunction("AddTimer", &NFCLuaScriptComponent::AddTimer)
 		.addFunction("StopTimer", &NFCLuaScriptComponent::StopTimer)
 		.addFunction("AddClocker", &NFCLuaScriptComponent::AddClocker)

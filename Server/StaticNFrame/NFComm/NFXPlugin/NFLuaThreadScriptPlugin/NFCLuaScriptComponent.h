@@ -301,6 +301,8 @@ public:
 	virtual int GetAppID() const;
 	virtual uint64_t GetInitTime() const;
 	virtual uint64_t GetNowTime() const;
+	virtual uint64_t GetMsecTime() const;
+	virtual uint64_t GetSecTime() const;
 	virtual std::string GetMD5(const std::string& str);
 	virtual uint32_t GetCRC32(const std::string& s);
 	virtual uint16_t GetCRC16(const std::string& s);

@@ -168,6 +168,16 @@ std::string NFCLuaScriptModule::Base64Decode(const std::string& s)
 	return NFBase64::Decode(s);
 }
 
+uint64_t NFCLuaScriptModule::GetMsecTime() const
+{
+	return NFTime::Now().UnixMSec();
+}
+
+uint64_t NFCLuaScriptModule::GetSecTime() const
+{
+	return NFTime::Now().UnixSec();
+}
+
 void NFCLuaScriptModule::SendMsgToPlayer(uint32_t usLinkId, const uint64_t nPlayerID, const uint32_t nMsgID, const uint32_t nLen, const std::string& strData)
 {
 	if (m_pNetServerModule)
@@ -407,6 +417,10 @@ bool NFCLuaScriptModule::Register()
 	LuaIntf::LuaBinding(l).beginClass<NFCLuaScriptModule>("NFCLuaScriptModule")
 		.addFunction("GetAppName", &NFCLuaScriptModule::GetAppName)
 		.addFunction("GetAppID", &NFCLuaScriptModule::GetAppID)
+		.addFunction("GetInitTime", &NFCLuaScriptModule::GetInitTime)
+		.addFunction("GetNowTime", &NFCLuaScriptModule::GetNowTime)
+		.addFunction("GetMsecTime", &NFCLuaScriptModule::GetMsecTime)
+		.addFunction("GetSecTime", &NFCLuaScriptModule::GetSecTime)
 		.addFunction("GetMD5", &NFCLuaScriptModule::GetMD5)
 		.addFunction("GetCRC32", &NFCLuaScriptModule::GetCRC32)
 		.addFunction("GetCRC16", &NFCLuaScriptModule::GetCRC16)

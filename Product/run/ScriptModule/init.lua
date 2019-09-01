@@ -66,6 +66,9 @@ function LuaNFrame.InitScript(luaModule)
 
 		require("LuaNFrame/NFTimeUtils")
 
+		--记录所有文件的当前修改时间，为以后热更新做准备, 时间大概300ms
+		NFLuaReload.RecordAllFilesTimes()
+
 		math.newrandomseed()
 		mysqlItem = mysqlConnect.new(g_dbtype, g_dbUser, g_dbPassword, g_dbHost, g_dbPort, g_dbDatabase)
 		redisItem = redisConnect.new()

@@ -98,6 +98,8 @@ public:
 	virtual uint16_t GetCRC16(const std::string& s);
 	virtual std::string Base64Encode(const std::string& s);
 	virtual std::string Base64Decode(const std::string& s);
+	virtual uint64_t GetMsecTime() const;
+	virtual uint64_t GetSecTime() const;
 
 	virtual void SendMsgToPlayer(uint32_t usLinkId, const uint64_t nPlayerID, const uint32_t nMsgID, const uint32_t nLen, const std::string& strData);
 	virtual void SendMsgToManyPlayer(const std::vector<uint64_t>& nPlayerID, const uint32_t nMsgID, const uint32_t nLen, const std::string& strData);

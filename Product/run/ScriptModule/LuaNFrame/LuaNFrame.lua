@@ -164,6 +164,16 @@ function LuaNFrame.GetNowTime()
     return CPPNFrame:GetNowTime()
 end
 
+--获得服务器当前时间，单位ms
+function LuaNFrame.GetMsecTime()
+    return CPPNFrame:GetMsecTime()
+end
+
+--获得服务器当前时间，单位s
+function LuaNFrame.GetSecTime()
+    return CPPNFrame:GetSecTime()
+end
+
 --通过字符串获得MD5, 返回MD5字符串
 function LuaNFrame.GetMD5(str)
 	if type(str) ~= "string" then

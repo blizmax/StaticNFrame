@@ -108,7 +108,47 @@ function NFLuaReload.ReloadAll()
     local function ReloadExecute()
         for file_path, value in pairs(package.loaded) do
             if type(file_path) == "string" and type(value) == "boolean" and  value == true then
-                NFLuaReload.ReloadNewFile(file_path)
+                local path, err = package.searchpath(file_path, package.path)
+                -- Skip non-exist module.
+                if path and string.find(path, "ScriptModule") then
+                    local file_time = lfs.attributes (path, "modification")
+                    --local file_time = Misc.GetFileModificationDate(path)
+                    if file_time ~= NFLuaReload.path_to_time[path] then
+                        LuaNFrame.Info(NFLogId.NF_LOG_SYSTEMLOG, 0, string.format("Hot fix module %s (%s)", file_path, path))
+                    
+                        NFLuaReload.path_to_time[path] = file_time
+                        NFLuaReload.hotfix.hotfix_module(file_path)
+                        LuaNFrame.Info(NFLogId.NF_LOG_SYSTEMLOG, 0, "Reload Lua File: "..file_path.." Success")
+                    end
+                end
+            end
+        end
+	end
+    
+    local startTime = LuaNFrame.GetMsecTime()
+    local status, msg = xpcall (ReloadExecute, __G__TRACKBACK__)
+    local useTime = LuaNFrame.GetMsecTime() - startTime
+    LuaNFrame.Error(NFLogId.NF_LOG_SYSTEMLOG, 0, "NFLuaReload.ReloadAll use time:"..useTime)
+
+    if not status then
+        LuaNFrame.Error(NFLogId.NF_LOG_SYSTEMLOG, 0, msg)
+        LuaNFrame.Info(NFLogId.NF_LOG_SYSTEMLOG, 0, "Reload All Lua File Failed")
+        return
+    end
+
+    LuaNFrame.Info(NFLogId.NF_LOG_SYSTEMLOG, 0, "Reload All Lua File Success")
+end
+
+function NFLuaReload.RecordAllFilesTimes()
+    local function ReloadExecute()
+        for file_path, value in pairs(package.loaded) do
+            if type(file_path) == "string" and type(value) == "boolean" and  value == true then
+                local path, err = package.searchpath(file_path, package.path)
+                -- Skip non-exist module.
+                if path and string.find(path, "ScriptModule") then
+                    local file_time = lfs.attributes (path, "modification")
+                    NFLuaReload.path_to_time[path] = file_time
+                end
             end
         end
 	end

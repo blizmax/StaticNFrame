@@ -78,14 +78,24 @@ function CPPNFrame:Base64Decode(str)
     return self.luaModule:Base64Decode(str)
 end
 
---获得服务器开启时间，单位s
+--获得服务器开启时间，单位ms
 function CPPNFrame:GetInitTime()
     return self.luaModule:GetInitTime()
 end
 
---获得服务器当前时间，单位s
+--获得服务器当前时间，单位ms, 服务器主循环loop里更新， 在同一个循环里时间是一样的
 function CPPNFrame:GetNowTime()
     return self.luaModule:GetNowTime()
+end
+
+--获得服务器当前时间，单位ms
+function CPPNFrame:GetMsecTime()
+    return self.luaModule:GetMsecTime()
+end
+
+--获得服务器当前时间，单位s
+function CPPNFrame:GetSecTime()
+    return self.luaModule:GetSecTime()
 end
 
 function CPPNFrame:SendMsgToPlayer(unLinkId, nPlayerId, nMsgId, nLen, strData)
