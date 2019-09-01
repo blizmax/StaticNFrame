@@ -253,6 +253,70 @@ public:
 	std::string m_secondPath;
 };
 
+class NFHotfixAllLuaActorTask : public NFLuaThreadTask
+{
+public:
+	NFHotfixAllLuaActorTask(NFCLuaThreadModule* pLuaThreadModule, const std::vector<std::string>& vecStr)
+	{
+		m_pLuaThreadModule = pLuaThreadModule;
+		m_vecLuaFile = vecStr;
+		m_taskName = "HotfixAllLua";
+	}
+
+	NFHotfixAllLuaActorTask(NFCLuaThreadModule* pLuaThreadModule)
+	{
+		m_pLuaThreadModule = pLuaThreadModule;
+		m_taskName = "HotfixAllLua";
+	}
+	/**
+	**  异步线程处理函数，将在另一个线程里运行
+	*/
+	virtual bool ThreadProcess();
+
+	/**
+	** 主线程处理函数，将在线程处理完后，提交给主先来处理，根据返回函数是否继续处理
+		返回值： thread::TPTask::TPTaskState， 请参看TPTaskState
+	*/
+	virtual TPTaskState MainThreadProcess()
+	{
+		return TPTASK_STATE_COMPLETED;
+	}
+public:
+	std::vector<std::string> m_vecLuaFile;
+};
+
+class NFHotfixLuaFilesActorTask : public NFLuaThreadTask
+{
+public:
+	NFHotfixLuaFilesActorTask(NFCLuaThreadModule* pLuaThreadModule, const std::vector<std::string>& vecStr)
+	{
+		m_pLuaThreadModule = pLuaThreadModule;
+		m_vecLuaFile = vecStr;
+		m_taskName = "HotfixLuaFiles";
+	}
+
+	NFHotfixLuaFilesActorTask(NFCLuaThreadModule* pLuaThreadModule)
+	{
+		m_pLuaThreadModule = pLuaThreadModule;
+		m_taskName = "HotfixLuaFiles";
+	}
+	/**
+	**  异步线程处理函数，将在另一个线程里运行
+	*/
+	virtual bool ThreadProcess();
+
+	/**
+	** 主线程处理函数，将在线程处理完后，提交给主先来处理，根据返回函数是否继续处理
+		返回值： thread::TPTask::TPTaskState， 请参看TPTaskState
+	*/
+	virtual TPTaskState MainThreadProcess()
+	{
+		return TPTASK_STATE_COMPLETED;
+	}
+public:
+	std::vector<std::string> m_vecLuaFile;
+};
+
 class NFCLuaScriptComponent : public NFITaskComponent, public NFILuaModule, public NFIModule
 {
 public:

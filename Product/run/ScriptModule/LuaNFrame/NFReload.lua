@@ -157,11 +157,7 @@ function NFLuaReload.RecordAllFilesTimes()
 
     if not status then
         LuaNFrame.Error(NFLogId.NF_LOG_SYSTEMLOG, 0, msg)
-        LuaNFrame.Info(NFLogId.NF_LOG_SYSTEMLOG, 0, "Reload All Lua File Failed")
-        return
     end
-
-    LuaNFrame.Info(NFLogId.NF_LOG_SYSTEMLOG, 0, "Reload All Lua File Success")
 end
 
 function NFLuaReload.ReloadNewFile(module_name)

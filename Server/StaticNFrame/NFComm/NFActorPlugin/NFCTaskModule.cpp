@@ -25,11 +25,15 @@ NFCTaskModule::NFCTaskModule(NFIPluginManager* p)
 	nHandleTaskCount = 0;
 	srand(static_cast<unsigned>(time(nullptr)));
 	//首先初始化
+#if NF_PLATFORM == NF_PLATFORM_WIN
+	uint32_t threadNum = std::thread::hardware_concurrency();
+#else
 	uint32_t threadNum = std::thread::hardware_concurrency() * 2;
 	if (threadNum < 10)
 	{
 		threadNum = 10;
 	}
+#endif
 
 	if (m_pPluginManager->IsLoadAllServer())
 	{

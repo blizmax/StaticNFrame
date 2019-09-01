@@ -596,10 +596,22 @@ void NFCLuaThreadModule::AddProcessLoopTimer(uint32_t delayTimer, const std::str
 
 void NFCLuaThreadModule::ReloadAllLuaFiles()
 {
+	for (size_t index = 0; index < m_vecWorkActorPool.size(); index++)
+	{
+		int actorId = m_vecWorkActorPool[index];
+		FindModule<NFITaskModule>()->AddTask(actorId, new NFHotfixAllLuaActorTask(this));
+	}
 
+	FindModule<NFITaskModule>()->AddTask(m_processLoopActorId, new NFHotfixAllLuaActorTask(this));
 }
 
 void NFCLuaThreadModule::ReloadLuaFiles()
 {
+	for (size_t index = 0; index < m_vecWorkActorPool.size(); index++)
+	{
+		int actorId = m_vecWorkActorPool[index];
+		FindModule<NFITaskModule>()->AddTask(actorId, new NFHotfixLuaFilesActorTask(this));
+	}
 
+	FindModule<NFITaskModule>()->AddTask(m_processLoopActorId, new NFHotfixLuaFilesActorTask(this));
 }

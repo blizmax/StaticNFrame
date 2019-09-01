@@ -108,6 +108,24 @@ bool NFHttpMsgActorTask::ThreadProcess()
 	return true;
 }
 
+/**
+**  异步线程处理函数，将在另一个线程里运行
+*/
+bool NFHotfixAllLuaActorTask::ThreadProcess()
+{
+	m_pComponent->TryRunGlobalScriptFunc("NFLuaReload.ReloadAll");
+	return true;
+}
+
+/**
+**  异步线程处理函数，将在另一个线程里运行
+*/
+bool NFHotfixLuaFilesActorTask::ThreadProcess()
+{
+	m_pComponent->TryRunGlobalScriptFunc("NFLuaReload.ReloadFile");
+	return true;
+}
+
 
 NFCLuaScriptComponent::NFCLuaScriptComponent(NFCLuaThreadModule* pLuaThreadModule, NFIPluginManager* p)
 {
