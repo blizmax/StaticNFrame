@@ -90,8 +90,8 @@ LogInfo = {
 	{logid = NFLogId.NF_LOG_BEHAVIOR_LOGIC_LOG, display=true, level=0, logname = "BehaviorLog", guid = 0, desc = "行为LOG日志"},
 	--逻辑代码LOG
 	--------------------网关服务器LOG信息
-	{logid = NFLogId.NF_LOG_PROXY_RECV_MSG_LOG, display=true, level=0, logname = "ProxyRecvMsg", guid = 0, desc = "网关接受消息LOG"},
-	{logid = NFLogId.NF_LOG_PROXY_SEND_MSG_LOG, display=true, level=0, logname = "ProxySendMsg", guid = 0, desc = "网关发送消息LOG"},
+	{logid = NFLogId.NF_LOG_PROXY_RECV_MSG_LOG, display=false, level=0, logname = "ProxyRecvMsg", guid = 0, desc = "网关接受消息LOG"},
+	{logid = NFLogId.NF_LOG_PROXY_SEND_MSG_LOG, display=false, level=0, logname = "ProxySendMsg", guid = 0, desc = "网关发送消息LOG"},
 	{logid = NFLogId.NF_LOG_WORLD_RECV_MSG_LOG, display=true, level=0, logname = "WorldRecvMsg", guid = 0, desc = "WORLD接受消息LOG"},
 	{logid = NFLogId.NF_LOG_WORLD_SEND_MSG_LOG, display=true, level=0, logname = "WorldSendMsg", guid = 0, desc = "WORLD发送消息LOG"},
 	{logid = NFLogId.NF_LOG_GAME_RECV_MSG_LOG, display=true, level=0, logname = "GameRecvMsg", guid = 0, desc = "GAME接受消息LOG"},
