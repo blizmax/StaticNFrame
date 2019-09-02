@@ -9,6 +9,7 @@
 #include "NFSignalHandleModule.h"
 #include "NFComm/NFPluginModule/NFLogMgr.h"
 #include "NFComm/NFPluginModule/NFIPluginManager.h"
+#include "NFComm/NFPluginModule/NFILuaScriptModule.h"
 
 #include <signal.h>
 #include <time.h>
@@ -1150,7 +1151,6 @@ void  NFCSignalHandleModule::HandleSignal(int signo)
 	switch (signo)
 	{
 	case SIGUSR1:
-	case SIGUSR2:
 	case SIGKILL:
 	case SIGINT:
 	case SIGQUIT:
@@ -1158,6 +1158,15 @@ void  NFCSignalHandleModule::HandleSignal(int signo)
 	case SIGTERM:
 	{
 		m_pPluginManager->End();
+	}
+	break;
+	case SIGUSR2: //用来做热更新
+	{
+		NFILuaScriptModule* pLuaModule = FindModule<NFILuaScriptModule>();
+		if (pLuaModule)
+		{
+			pLuaModule->ReloadAllLuaFiles();
+		}
 	}
 	break;
 	default:
