@@ -14,6 +14,7 @@
 #include <NFComm/NFPluginModule/NFEventDefine.h>
 #include "NFServer/NFServerCommon/NFServerCommon.h"
 #include "NFMessageDefine/NFMsgDefine.h"
+#include "NFMessageDefine/msg_gm.pb.h"
 #include "NFComm/NFPluginModule/NFIMonitorModule.h"
 
 NFCProxyClient_MasterModule::NFCProxyClient_MasterModule(NFIPluginManager* p)
@@ -37,7 +38,7 @@ bool NFCProxyClient_MasterModule::AfterInit()
 	FindModule<NFINetClientModule>()->AddReceiveCallBack(NF_ST_MASTER, this, &NFCProxyClient_MasterModule::OnHandleOtherMessage);
 
 	FindModule<NFINetClientModule>()->AddReceiveCallBack(NF_ST_MASTER, EGMI_NET_MASTER_SEND_OTHERS_TO_PROXY, this, &NFCProxyClient_MasterModule::OnHandleServerReport);
-
+	FindModule<NFINetClientModule>()->AddReceiveCallBack(NF_ST_MASTER, EGMI_STS_GM_MSG, this, &NFCProxyClient_MasterModule::OnHandleGmMsg);
 	NFServerConfig* pConfig = NFServerCommon::GetServerConfig(m_pPluginManager, NF_ST_MASTER);
 	if (pConfig)
 	{
@@ -194,6 +195,16 @@ void NFCProxyClient_MasterModule::OnHandleServerReport(const uint32_t unLinkId, 
 		break;
 		}
 	}
+}
+
+void NFCProxyClient_MasterModule::OnHandleGmMsg(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen)
+{
+	if (unLinkId != m_pMasterServerData->mUnlinkId) return;
+
+	NFMsg::http_msg_gm xMsg;
+	CLIENT_MSG_PROCESS_NO_OBJECT(nMsgId, playerId, msg, nLen, xMsg);
+
+	NFEventMgr::Instance()->FireExecute(NFEVENT_GM, 0, 0, xMsg);
 }
 
 

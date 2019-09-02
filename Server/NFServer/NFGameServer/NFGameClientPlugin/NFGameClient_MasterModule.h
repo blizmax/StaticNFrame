@@ -43,6 +43,8 @@ protected:
 	void OnHandleServerReport(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen);
 
 	void OnHandleHttpMsg(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen);
+
+	void OnHandleGmMsg(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen);
 private:
 	NF_SHARE_PTR<NFServerData> m_pMasterServerData;
 	uint32_t m_onlineNum;

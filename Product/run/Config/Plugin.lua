@@ -68,6 +68,7 @@ LoadPlugin =
 			"NFKernelPlugin",
 			"NFNetPlugin",
 			"NFMonitorPlugin",
+			"NFActorPlugin",
 			"NFMysqlPlugin",
 			
 			"NFMasterServerPlugin",

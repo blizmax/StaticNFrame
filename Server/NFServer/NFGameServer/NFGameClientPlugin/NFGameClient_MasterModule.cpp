@@ -45,6 +45,7 @@ bool NFCGameClient_MasterModule::AfterInit()
 	FindModule<NFINetClientModule>()->AddReceiveCallBack(NF_ST_MASTER, EGMI_NET_MASTER_SEND_OTHERS_TO_GAME, this, &NFCGameClient_MasterModule::OnHandleServerReport);
 
 	FindModule<NFINetClientModule>()->AddReceiveCallBack(NF_ST_MASTER, EGMI_STS_HTTP_MSG, this, &NFCGameClient_MasterModule::OnHandleHttpMsg);
+	FindModule<NFINetClientModule>()->AddReceiveCallBack(NF_ST_MASTER, EGMI_STS_GM_MSG, this, &NFCGameClient_MasterModule::OnHandleGmMsg);
 
 	NFServerConfig* pConfig = NFServerCommon::GetServerConfig(m_pPluginManager, NF_ST_MASTER);
 	if (pConfig)
@@ -225,5 +226,15 @@ void NFCGameClient_MasterModule::OnHandleHttpMsg(const uint32_t unLinkId, const 
 	{
 		NFLogWarning(NF_LOG_SERVER_NOT_HANDLE_MESSAGE, 0, "msg:{} not handled!", nMsgId);
 	}
+}
+
+void NFCGameClient_MasterModule::OnHandleGmMsg(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen)
+{
+	if (unLinkId != m_pMasterServerData->mUnlinkId) return;
+
+	NFMsg::http_msg_gm xMsg;
+	CLIENT_MSG_PROCESS_NO_OBJECT(nMsgId, playerId, msg, nLen, xMsg);
+
+	NFEventMgr::Instance()->FireExecute(NFEVENT_GM, 0, 0, xMsg);
 }
 

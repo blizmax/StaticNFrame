@@ -107,20 +107,22 @@ void NFCMonitorModule::OnExecute(uint16_t nEventID, uint64_t nSrcID, uint8_t byS
 					std::string data = msg_gm->data();
 					NFStringUtility::Trim(data);
 					std::vector<std::string> vecStr;
-					if (data.find(';') != std::string::npos)
+					if (!data.empty())
 					{
-						NFStringUtility::Split(vecStr, data, ";");
-					}
-					else
-					{
-						NFStringUtility::Split(vecStr, data, "|");
-					}
+						if (data.find(';') != std::string::npos)
+						{
+							NFStringUtility::Split(vecStr, data, ";");
+						}
+						else
+						{
+							NFStringUtility::Split(vecStr, data, "|");
+						}
 
-					for (size_t i = 0; i < vecStr.size(); i++)
-					{
-						NFStringUtility::Trim(vecStr[i]);
-					}
-					
+						for (size_t i = 0; i < vecStr.size(); i++)
+						{
+							NFStringUtility::Trim(vecStr[i]);
+						}
+					}	
 					pLuaModule->ReloadLuaFiles(vecStr);
 				}
 			}
