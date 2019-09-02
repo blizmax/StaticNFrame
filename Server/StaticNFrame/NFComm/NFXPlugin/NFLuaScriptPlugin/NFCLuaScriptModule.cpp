@@ -98,6 +98,7 @@ bool NFCLuaScriptModule::Finalize()
 
 bool NFCLuaScriptModule::Execute()
 {
+	GcStep();
     return true;
 }
 
@@ -602,4 +603,11 @@ void NFCLuaScriptModule::ReloadLuaFiles(const std::vector<std::string>& vecStr)
 		TryRunGlobalScriptFunc("NFLuaReload.ReloadFile", vecStr);
 	}
 	
+}
+
+void NFCLuaScriptModule::GcStep()
+{
+	m_pPluginManager->BeginProfiler("GcStep");
+	lua_gc(GetLuaState(), LUA_GCSTEP, 0);
+	m_pPluginManager->EndProfiler();
 }

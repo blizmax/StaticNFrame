@@ -126,6 +126,7 @@ void NFCLuaThreadModule::OnTimer(uint32_t nTimerID)
 	}
 	if (nTimerID == EnumLuaThreadModule_Loop)
 	{
+		GcStep();
 		AddProcessLoopTask(new NFServerLoopTask(this, EnumLuaThreadModule_Loop, "gametimer"));
 		AddProcessLoopTask(new NFServerLoopTask(this, EnumLuaThreadModule_Loop, "utilstimer"));
 	}
@@ -626,4 +627,15 @@ void NFCLuaThreadModule::ReloadLuaFiles(const std::vector<std::string>& vecStr)
 	}
 
 	FindModule<NFITaskModule>()->AddTask(m_processLoopActorId, new NFHotfixLuaFilesActorTask(this, vecStr));
+}
+
+void NFCLuaThreadModule::GcStep()
+{
+	for (size_t index = 0; index < m_vecWorkActorPool.size(); index++)
+	{
+		int actorId = m_vecWorkActorPool[index];
+		FindModule<NFITaskModule>()->AddTask(actorId, new NFLuaGcActorTask(this));
+	}
+
+	FindModule<NFITaskModule>()->AddTask(m_processLoopActorId, new NFLuaGcActorTask(this));
 }

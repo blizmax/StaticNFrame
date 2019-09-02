@@ -314,6 +314,29 @@ public:
 	std::vector<std::string> m_vecLuaFile;
 };
 
+class NFLuaGcActorTask : public NFLuaThreadTask
+{
+public:
+	NFLuaGcActorTask(NFCLuaThreadModule* pLuaThreadModule)
+	{
+		m_pLuaThreadModule = pLuaThreadModule;
+		m_taskName = "LuaGC";
+	}
+	/**
+	**  异步线程处理函数，将在另一个线程里运行
+	*/
+	virtual bool ThreadProcess();
+
+	/**
+	** 主线程处理函数，将在线程处理完后，提交给主先来处理，根据返回函数是否继续处理
+		返回值： thread::TPTask::TPTaskState， 请参看TPTaskState
+	*/
+	virtual TPTaskState MainThreadProcess()
+	{
+		return TPTASK_STATE_COMPLETED;
+	}
+};
+
 class NFCLuaScriptComponent : public NFITaskComponent, public NFILuaModule, public NFIModule
 {
 public:
@@ -413,6 +436,8 @@ public:
 
 	virtual void SetInitLua(bool b) { m_initLua = b; }
 	virtual bool IsInitLua() const { return m_initLua; }
+
+	virtual void GcStep();
 public:
 	bool Register();
 	void LoadScript();

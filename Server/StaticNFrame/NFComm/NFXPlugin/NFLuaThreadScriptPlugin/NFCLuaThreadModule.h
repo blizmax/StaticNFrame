@@ -210,6 +210,7 @@ public:
 	virtual void ReloadAllLuaFiles() override;
 	virtual void ReloadLuaFiles() override;
 	virtual void ReloadLuaFiles(const std::vector<std::string>& vecStr) override;
+	virtual void GcStep();
 public:
 	/**
 	* @brief 添加一个Actor组件

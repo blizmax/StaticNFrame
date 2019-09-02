@@ -167,6 +167,15 @@ bool NFHotfixLuaFilesActorTask::ThreadProcess()
 	return true;
 }
 
+bool NFLuaGcActorTask::ThreadProcess()
+{
+	if (m_pComponent)
+	{
+		m_pComponent->GcStep();
+	}
+	return true;
+}
+
 
 NFCLuaScriptComponent::NFCLuaScriptComponent(NFCLuaThreadModule* pLuaThreadModule, NFIPluginManager* p)
 {
@@ -460,4 +469,9 @@ void NFCLuaScriptComponent::RunHttpRecvLuaFunc(const std::string& luaFunc, const
 void NFCLuaScriptComponent::RunNetRecvLuaFunc(const std::string& luaFunc, const uint32_t unLinkId, const uint64_t valueId, const uint32_t nMsgId, const std::string& strMsg)
 {
 	TryRunGlobalScriptFunc(luaFunc, unLinkId, valueId, nMsgId, strMsg);
+}
+
+void NFCLuaScriptComponent::GcStep()
+{
+	lua_gc(GetLuaState(), LUA_GCSTEP, 0);
 }
