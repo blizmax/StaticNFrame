@@ -1121,6 +1121,19 @@ void CloseServerSignalHandler(int signal_number,
 	// Kill ourself by the default signal handler.
 	InvokeDefaultSignalHandler(signal_number);
 }
+
+void HotfixAllLuaSignalHandler(int signal_number,
+	siginfo_t *signal_info,
+	void *ucontext)
+{
+	if (g_signalHandleModule)
+	{
+		g_signalHandleModule->HandleSignal(signal_number);
+	}
+
+	// Kill ourself by the default signal handler.
+	//InvokeDefaultSignalHandler(signal_number);
+}
 #endif
 
 NFCSignalHandleModule::NFCSignalHandleModule(NFIPluginManager* p)
@@ -1190,10 +1203,15 @@ void NFCSignalHandleModule::InitSignal()
 	sig_action.sa_flags |= SA_SIGINFO;
 
 	for (size_t i = 0; i < NF_ARRAYSIZE(kFailureSignals); ++i) {
-		if (i == SIGUSR1 || i == SIGUSR2)
+		if (i == SIGUSR1)
 		{
 			//需要特殊处理
 			sig_action.sa_sigaction = &CloseServerSignalHandler;
+		}
+		else if (i == SIGUSR2)
+		{
+			//需要特殊处理
+			sig_action.sa_sigaction = &HotfixAllLuaSignalHandler;
 		}
 		else
 		{
