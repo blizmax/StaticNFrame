@@ -1122,18 +1122,6 @@ void CloseServerSignalHandler(int signal_number,
 	InvokeDefaultSignalHandler(signal_number);
 }
 
-void HotfixAllLuaSignalHandler(int signal_number,
-	siginfo_t *signal_info,
-	void *ucontext)
-{
-	if (g_signalHandleModule)
-	{
-		g_signalHandleModule->HandleSignal(signal_number);
-	}
-
-	// Kill ourself by the default signal handler.
-	//InvokeDefaultSignalHandler(signal_number);
-}
 #endif
 
 NFCSignalHandleModule::NFCSignalHandleModule(NFIPluginManager* p)
@@ -1164,6 +1152,7 @@ void  NFCSignalHandleModule::HandleSignal(int signo)
 	switch (signo)
 	{
 	case SIGUSR1:
+	case SIGUSR2:
 	case SIGKILL:
 	case SIGINT:
 	case SIGQUIT:
@@ -1171,22 +1160,13 @@ void  NFCSignalHandleModule::HandleSignal(int signo)
 	case SIGTERM:
 	{
 		m_pPluginManager->End();
-		exit(0);
-	}
-	break;
-	case SIGUSR2: //用来做热更新
-	{
-		NFILuaScriptModule* pLuaModule = FindModule<NFILuaScriptModule>();
-		if (pLuaModule)
-		{
-			pLuaModule->ReloadAllLuaFiles();
-		}
 	}
 	break;
 	default:
 		break;
 	}
 #endif
+	exit(0);
 }
 
 void NFCSignalHandleModule::InitSignal()
@@ -1203,15 +1183,10 @@ void NFCSignalHandleModule::InitSignal()
 	sig_action.sa_flags |= SA_SIGINFO;
 
 	for (size_t i = 0; i < NF_ARRAYSIZE(kFailureSignals); ++i) {
-		if (i == SIGUSR1)
+		if (i == SIGUSR1 || i == SIGUSR2)
 		{
 			//需要特殊处理
 			sig_action.sa_sigaction = &CloseServerSignalHandler;
-		}
-		else if (i == SIGUSR2)
-		{
-			//需要特殊处理
-			sig_action.sa_sigaction = &HotfixAllLuaSignalHandler;
 		}
 		else
 		{
