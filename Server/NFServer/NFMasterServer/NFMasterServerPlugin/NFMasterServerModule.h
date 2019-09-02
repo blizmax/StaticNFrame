@@ -74,6 +74,7 @@ protected:
 	virtual bool HttpHandleHttpMsg(uint32_t linkId, const NFIHttpHandle& req);
 
 	void SaveServerDataToDB();
+	void ClearServerDataToDB();
 
 	NF_SHARE_PTR<NFServerData> GetServerByServerId(uint32_t serverId);
 	void SendMsgToAllServer(const uint32_t nMsgID, const google::protobuf::Message& xData, const uint64_t nPlayerID);

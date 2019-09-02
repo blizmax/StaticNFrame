@@ -209,7 +209,7 @@ public:
 
 	virtual void ReloadAllLuaFiles() override;
 	virtual void ReloadLuaFiles() override;
-	virtual void ReloadLuaFiles(const std::vector<std::string>& vecStr);
+	virtual void ReloadLuaFiles(const std::vector<std::string>& vecStr) override;
 public:
 	/**
 	* @brief 添加一个Actor组件

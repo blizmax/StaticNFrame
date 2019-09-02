@@ -24,6 +24,7 @@
 
 #define NF_MASTER_TIMER_SAVE_SERVER_DATA 0
 #define NF_MASTER_TIMER_SAVE_SERVER_DATA_TIME 60000
+#define NF_MASTER_TIMER_CLEAR_SERVER_DATA 1
 
 NFCMasterServerModule::NFCMasterServerModule(NFIPluginManager* p)
 {
@@ -37,6 +38,7 @@ NFCMasterServerModule::~NFCMasterServerModule()
 bool NFCMasterServerModule::Init()
 {
 	this->SetTimer(NF_MASTER_TIMER_SAVE_SERVER_DATA, NF_MASTER_TIMER_SAVE_SERVER_DATA_TIME, INFINITY_CALL);
+	this->SetFixTimer(NF_MASTER_TIMER_CLEAR_SERVER_DATA, 0, 8 * 60 * 60, INFINITY_CALL);
 
 	FindModule<NFIHttpServerModule>()->AddRequestHandler(NF_ST_MASTER, "/GM", NFHttpType::NF_HTTP_REQ_POST, this, &NFCMasterServerModule::HttpHandleHttpGm);
 	FindModule<NFIHttpServerModule>()->AddRequestHandler(NF_ST_MASTER, NFHttpType::NF_HTTP_REQ_POST, this, &NFCMasterServerModule::HttpHandleHttpMsg);
@@ -87,12 +89,12 @@ bool NFCMasterServerModule::Init()
 			NFLogInfo(NF_LOG_SERVER_CONNECT_SERVER, 0, "Master Server Open Http Port:{} Success!", pConfig->mHttpPort);
 		}
 
-		//bool ret = FindModule<NFIAsyMysqlModule>()->AddMysqlServer(NF_ST_MASTER, pConfig->mMysqlIp, pConfig->mMysqlPort, pConfig->mMysqlDbName, pConfig->mMysqlUser, pConfig->mMysqlPassword);
-		//if (ret == false)
-		//{
-		//	NFLogError(NF_LOG_SYSTEMLOG, 0, "NFIAsyMysqlModule AddMysqlServer failed!");
-		//	return false;
-		//}
+		bool ret = FindModule<NFIAsyMysqlModule>()->AddMysqlServer(NF_ST_MASTER, pConfig->mMysqlIp, pConfig->mMysqlPort, pConfig->mMysqlDbName, pConfig->mMysqlUser, pConfig->mMysqlPassword);
+		if (ret == false)
+		{
+			NFLogError(NF_LOG_SYSTEMLOG, 0, "NFIAsyMysqlModule AddMysqlServer failed!");
+			return false;
+		}
 	}
 	else
 	{
@@ -127,7 +129,11 @@ void NFCMasterServerModule::OnTimer(uint32_t nTimerID)
 {
 	if (nTimerID == NF_MASTER_TIMER_SAVE_SERVER_DATA)
 	{
-		//SaveServerDataToDB();
+		SaveServerDataToDB();
+	}
+	else if (nTimerID == NF_MASTER_TIMER_CLEAR_SERVER_DATA)
+	{
+		ClearServerDataToDB();
 	}
 }
 
@@ -215,6 +221,12 @@ NF_SHARE_PTR<NFServerData> NFCMasterServerModule::GetServerByServerId(uint32_t s
 	}
 
 	return nullptr;
+}
+
+void NFCMasterServerModule::ClearServerDataToDB()
+{
+	uint64_t now = NFGetSecondTime() - 24 * 60 * 60;
+	FindModule<NFIAsyMysqlModule>()->ExecuteOne("delete from dy_server_detail where last_time < " + now);
 }
 
 void NFCMasterServerModule::SaveServerDataToDB()

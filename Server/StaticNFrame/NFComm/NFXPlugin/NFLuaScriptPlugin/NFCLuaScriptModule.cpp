@@ -590,3 +590,16 @@ void NFCLuaScriptModule::ReloadLuaFiles()
 {
 	TryRunGlobalScriptFunc("NFLuaReload.ReloadFile");
 }
+
+void NFCLuaScriptModule::ReloadLuaFiles(const std::vector<std::string>& vecStr)
+{
+	if (vecStr.empty())
+	{
+		TryRunGlobalScriptFunc("NFLuaReload.ReloadFile");
+	}
+	else
+	{
+		TryRunGlobalScriptFunc("NFLuaReload.ReloadFile", vecStr);
+	}
+	
+}

@@ -132,6 +132,8 @@ public:
 
 	virtual void ReloadAllLuaFiles() override;
 	virtual void ReloadLuaFiles() override;
+	virtual void ReloadLuaFiles(const std::vector<std::string>& vecStr) override;
+
 public:
 	void OnAccountEventCallBack(uint32_t nEvent, uint32_t unLinkId, NF_SHARE_PTR<PlayerGameServerInfo> pServerData);
 	NF_SHARE_PTR<PlayerGameServerInfo> GetPlayerInfo(uint64_t playerId);

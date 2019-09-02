@@ -30,5 +30,7 @@ public:
 
 	virtual void ReloadAllLuaFiles() = 0;
 	virtual void ReloadLuaFiles() = 0;
+
+	virtual void ReloadLuaFiles(const std::vector<std::string>& vecStr) = 0;
 };
 

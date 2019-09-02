@@ -11,6 +11,8 @@
 #include "NFComm/NFPluginModule/NFEventDefine.h"
 #include "NFMessageDefine/msg_gm.pb.h"
 #include "NFComm/NFPluginModule/NFIPluginManager.h"
+#include "NFComm/NFPluginModule/NFILuaScriptModule.h"
+#include "NFComm/NFCore/NFStringUtility.h"
 
 enum MonitorTimerEnum
 {
@@ -88,6 +90,39 @@ void NFCMonitorModule::OnExecute(uint16_t nEventID, uint64_t nSrcID, uint8_t byS
 			else if (msg_gm->cmd() == "dynamic")
 			{
 				m_pPluginManager->DynamicLoadPluginLibrary(msg_gm->data());
+			}
+			else if (msg_gm->cmd() == "hotfixalllua")
+			{
+				NFILuaScriptModule* pLuaModule = FindModule<NFILuaScriptModule>();
+				if (pLuaModule)
+				{
+					pLuaModule->ReloadAllLuaFiles();
+				}
+			}
+			else if (msg_gm->cmd() == "hotfixlua")
+			{
+				NFILuaScriptModule* pLuaModule = FindModule<NFILuaScriptModule>();
+				if (pLuaModule)
+				{
+					std::string data = msg_gm->data();
+					NFStringUtility::Trim(data);
+					std::vector<std::string> vecStr;
+					if (data.find(';') != std::string::npos)
+					{
+						NFStringUtility::Split(vecStr, data, ";");
+					}
+					else
+					{
+						NFStringUtility::Split(vecStr, data, "|");
+					}
+
+					for (size_t i = 0; i < vecStr.size(); i++)
+					{
+						NFStringUtility::Trim(vecStr[i]);
+					}
+					
+					pLuaModule->ReloadLuaFiles(vecStr);
+				}
 			}
 		}
 	}
