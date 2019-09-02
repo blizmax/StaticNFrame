@@ -1158,6 +1158,7 @@ void  NFCSignalHandleModule::HandleSignal(int signo)
 	case SIGTERM:
 	{
 		m_pPluginManager->End();
+		exit(0);
 	}
 	break;
 	case SIGUSR2: //用来做热更新
@@ -1173,7 +1174,6 @@ void  NFCSignalHandleModule::HandleSignal(int signo)
 		break;
 	}
 #endif
-	exit(0);
 }
 
 void NFCSignalHandleModule::InitSignal()
