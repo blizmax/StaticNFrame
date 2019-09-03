@@ -57,7 +57,8 @@ public:
 	 */
 	NFIClient(uint32_t nId, const NFClientFlag& flag):m_usLinkId(nId), m_flag(flag)
 	{
-		
+		mStatus = eConnectStatus_Disconnect;
+		mLastActionTime = 0;
 	}
 
 	/**
