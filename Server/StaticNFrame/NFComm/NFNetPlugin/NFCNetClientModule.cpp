@@ -66,12 +66,13 @@ bool NFCNetClientModule::Shut()
 			}
 		}
 	}
-	m_eventLoop->Stop(true);
+	
 	return true;
 }
 
 bool NFCNetClientModule::Finalize()
 {
+	//删除的顺序不能乱，必选先finalize, 然后关掉线程， 再删除
 	for (size_t i = 0; i < mxServerMap.size(); i++)
 	{
 		for (size_t j = 0; j < mxServerMap[i].size(); j++)
@@ -79,16 +80,28 @@ bool NFCNetClientModule::Finalize()
 			if (mxServerMap[i][j])
 			{
 				mxServerMap[i][j]->Finalize();
+			}
+		}
+	}
+
+	m_eventLoop->Stop(true);
+	if (m_eventLoop)
+	{
+		NF_SAFE_DELETE(m_eventLoop);
+	}
+
+	for (size_t i = 0; i < mxServerMap.size(); i++)
+	{
+		for (size_t j = 0; j < mxServerMap[i].size(); j++)
+		{
+			if (mxServerMap[i][j])
+			{
 				NF_SAFE_DELETE(mxServerMap[i][j]);
 			}
 		}
 	}
 	mxServerMap.clear();
-	
-	if (m_eventLoop)
-	{
-		NF_SAFE_DELETE(m_eventLoop);
-	}
+
 	return true;
 }
 
@@ -461,6 +474,8 @@ void NFCNetClientModule::ProcessExecute()
 					break;
 				case eConnectStatus_REMOVE:
 					{
+						pClient->Shut();
+						pClient->Finalize();
 						NF_SAFE_DELETE(pClient);
 						mxServerMap[i][j] = nullptr;
 					}
@@ -481,6 +496,8 @@ void NFCNetClientModule::ExecuteClose()
 		{
 			if (mxServerMap[i][j] && mxServerMap[i][j]->IsNeedRemve())
 			{
+				mxServerMap[i][j]->Shut();
+				mxServerMap[i][j]->Finalize();
 				NF_SAFE_DELETE(mxServerMap[i][j]);
 				mxServerMap[i][j] = nullptr;
 			}

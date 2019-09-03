@@ -129,6 +129,8 @@ public:
 	virtual bool Send(const void* pData, uint32_t unSize);
 
 	void ProcessMsgLogicThread();
+
+	void Quit();
 private:
 	evpp::TCPClient* m_tcpClient;
 protected:

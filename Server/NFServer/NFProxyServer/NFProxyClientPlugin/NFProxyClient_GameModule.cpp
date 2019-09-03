@@ -95,7 +95,7 @@ void NFCProxyClient_GameModule::OnClientDisconnect(uint32_t unLinkId)
 void NFCProxyClient_GameModule::OnHandleServerReport(const NFMsg::ServerInfoReport& xData)
 {
 	if (xData.server_type() != NF_ST_GAME) return;
-	NFLogInfo(NF_LOG_SERVER_CONNECT_SERVER, 0, "proxy will connect game server");
+	//NFLogInfo(NF_LOG_SERVER_CONNECT_SERVER, 0, "proxy will connect game server");
 	NF_SHARE_PTR<NFServerData> pServerData = GetServerByServerId(xData.server_id());
 	if (pServerData == nullptr)
 	{

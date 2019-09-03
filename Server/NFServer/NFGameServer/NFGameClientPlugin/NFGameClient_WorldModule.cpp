@@ -96,7 +96,7 @@ void NFCGameClient_WorldModule::OnClientDisconnect(uint32_t unLinkId)
 void NFCGameClient_WorldModule::OnHandleWorldReport(const NFMsg::ServerInfoReport& xData)
 {
 	if (xData.server_type() != NF_ST_WORLD) return;
-	NFLogInfo(NF_LOG_SERVER_CONNECT_SERVER, 0, "game will connect world server");
+	//NFLogInfo(NF_LOG_SERVER_CONNECT_SERVER, 0, "game will connect world server");
 	NF_SHARE_PTR<NFServerData> pServerData = GetServerByServerId(xData.server_id());
 	if (pServerData == nullptr)
 	{

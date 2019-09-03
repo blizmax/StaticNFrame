@@ -64,22 +64,29 @@ bool NFEvppClient::Init()
 
 bool NFEvppClient::Shut()
 {
-	m_tcpClient->Disconnect();
+	if (m_tcpClient && m_tcpClient->conn())
+	{
+		m_tcpClient->Disconnect();
+	}
 	return true;
+}
+
+void NFEvppClient::Quit()
+{
+	if (m_tcpClient)
+	{
+		NF_SAFE_DELETE(m_tcpClient);
+	}
 }
 
 bool NFEvppClient::Finalize()
 {
-	
 	if (m_pObject)
 	{
 		NF_SAFE_DELETE(m_pObject);
 	}
 
-	if (m_tcpClient)
-	{
-		NF_SAFE_DELETE(m_tcpClient);
-	}
+	m_tcpClient->loop()->QueueInLoop(std::bind(&NFEvppClient::Quit, this));
 
 	m_tcpClient = nullptr;
 	return true;
@@ -154,9 +161,12 @@ bool NFEvppClient::Connect()
 			mMsgQueue.Push(pMsg);
 		}
 	});
-	m_tcpClient->set_auto_reconnect(m_flag.bAutoConnect);
+	m_tcpClient->set_auto_reconnect(false);
 
-	m_pObject = new NetEvppObject(nullptr);
+	if (!m_pObject)
+	{
+		m_pObject = new NetEvppObject(nullptr);
+	}
 
 	m_pObject->SetIsServer(false);
 	m_pObject->SetLinkId(m_usLinkId);

@@ -95,7 +95,7 @@ void NFCProxyClient_WorldModule::OnClientDisconnect(uint32_t unLinkId)
 void NFCProxyClient_WorldModule::OnHandleServerReport(const NFMsg::ServerInfoReport& xData)
 {
 	if (xData.server_type() != NF_ST_WORLD) return;
-	NFLogInfo(NF_LOG_SERVER_CONNECT_SERVER, 0, "proxy will connect world server");
+	//NFLogInfo(NF_LOG_SERVER_CONNECT_SERVER, 0, "proxy will connect world server");
 	NF_SHARE_PTR<NFServerData> pServerData = GetServerByServerId(xData.server_id());
 	if (pServerData == nullptr)
 	{
