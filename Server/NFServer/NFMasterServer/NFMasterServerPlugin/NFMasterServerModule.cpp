@@ -1034,6 +1034,7 @@ void NFCMasterServerModule::SynServerToOthers(NF_SHARE_PTR<NFServerData> pServer
 				NFMsg::ServerInfoReport* pData = xData.add_server_list();
 				*pData = pLoginServer->mServerInfo;
 
+				NFLogInfo(NF_LOG_SERVER_CONNECT_SERVER, 0, "Master Server Send Server To LoginServer, serverName:{}, serverId:{}, ip:{}, port:{}", pServerData->mServerInfo.server_name(), pServerData->mServerInfo.server_id(), pServerData->mServerInfo.server_ip(), pServerData->mServerInfo.server_port());
 				FindModule<NFINetServerModule>()->SendToServerByPB(pLoginServer->mUnlinkId, EGMI_NET_MASTER_SEND_OTHERS_TO_LOGIN, xSelfData, 0);
 			}
 
@@ -1051,6 +1052,7 @@ void NFCMasterServerModule::SynServerToOthers(NF_SHARE_PTR<NFServerData> pServer
 				NFMsg::ServerInfoReport* pData = xData.add_server_list();
 				*pData = pWorldServer->mServerInfo;
 
+				NFLogInfo(NF_LOG_SERVER_CONNECT_SERVER, 0, "Master Server Send Server To WorldServer, serverName:{}, serverId:{}, ip:{}, port:{}", pServerData->mServerInfo.server_name(), pServerData->mServerInfo.server_id(), pServerData->mServerInfo.server_ip(), pServerData->mServerInfo.server_port());
 				FindModule<NFINetServerModule>()->SendToServerByPB(pWorldServer->mUnlinkId, EGMI_NET_MASTER_SEND_OTHERS_TO_WORLD, xSelfData, 0);
 			}
 
@@ -1068,6 +1070,7 @@ void NFCMasterServerModule::SynServerToOthers(NF_SHARE_PTR<NFServerData> pServer
 				NFMsg::ServerInfoReport* pData = xData.add_server_list();
 				*pData = pGameServer->mServerInfo;
 
+				NFLogInfo(NF_LOG_SERVER_CONNECT_SERVER, 0, "Master Server Send Server To GameServer, serverName:{}, serverId:{}, ip:{}, port:{}", pServerData->mServerInfo.server_name(), pServerData->mServerInfo.server_id(), pServerData->mServerInfo.server_ip(), pServerData->mServerInfo.server_port());
 				FindModule<NFINetServerModule>()->SendToServerByPB(pGameServer->mUnlinkId, EGMI_NET_MASTER_SEND_OTHERS_TO_GAME, xSelfData, 0);
 			}
 
@@ -1085,6 +1088,7 @@ void NFCMasterServerModule::SynServerToOthers(NF_SHARE_PTR<NFServerData> pServer
 				NFMsg::ServerInfoReport* pData = xData.add_server_list();
 				*pData = pProxyServer->mServerInfo;
 
+				NFLogInfo(NF_LOG_SERVER_CONNECT_SERVER, 0, "Master Server Send Server To ProxyServer, serverName:{}, serverId:{}, ip:{}, port:{}", pServerData->mServerInfo.server_name(), pServerData->mServerInfo.server_id(), pServerData->mServerInfo.server_ip(), pServerData->mServerInfo.server_port());
 				FindModule<NFINetServerModule>()->SendToServerByPB(pProxyServer->mUnlinkId, EGMI_NET_MASTER_SEND_OTHERS_TO_PROXY, xSelfData, 0);
 			}
 
@@ -1092,22 +1096,24 @@ void NFCMasterServerModule::SynServerToOthers(NF_SHARE_PTR<NFServerData> pServer
 		}
 	} while(0);
 
-
-
 	if (pServerData->mServerInfo.server_type() == NF_ST_GAME)
 	{
+		NFLogInfo(NF_LOG_SERVER_CONNECT_SERVER, 0, "Master Server Send others to GameServer, serverName:{}, serverId:{}, ip:{}, port:{}", pServerData->mServerInfo.server_name(), pServerData->mServerInfo.server_id(), pServerData->mServerInfo.server_ip(), pServerData->mServerInfo.server_port());
 		FindModule<NFINetServerModule>()->SendToServerByPB(pServerData->mUnlinkId, EGMI_NET_MASTER_SEND_OTHERS_TO_GAME, xData, 0);
 	}
 	else if (pServerData->mServerInfo.server_type() == NF_ST_WORLD)
 	{
+		NFLogInfo(NF_LOG_SERVER_CONNECT_SERVER, 0, "Master Server Send others to WorldServer, serverName:{}, serverId:{}, ip:{}, port:{}", pServerData->mServerInfo.server_name(), pServerData->mServerInfo.server_id(), pServerData->mServerInfo.server_ip(), pServerData->mServerInfo.server_port());
 		FindModule<NFINetServerModule>()->SendToServerByPB(pServerData->mUnlinkId, EGMI_NET_MASTER_SEND_OTHERS_TO_WORLD, xData, 0);
 	}
 	else if (pServerData->mServerInfo.server_type() == NF_ST_PROXY)
 	{
+		NFLogInfo(NF_LOG_SERVER_CONNECT_SERVER, 0, "Master Server Send others to ProxyServer, serverName:{}, serverId:{}, ip:{}, port:{}", pServerData->mServerInfo.server_name(), pServerData->mServerInfo.server_id(), pServerData->mServerInfo.server_ip(), pServerData->mServerInfo.server_port());
 		FindModule<NFINetServerModule>()->SendToServerByPB(pServerData->mUnlinkId, EGMI_NET_MASTER_SEND_OTHERS_TO_PROXY, xData, 0);
 	}
 	else if (pServerData->mServerInfo.server_type() == NF_ST_LOGIN)
 	{
+		NFLogInfo(NF_LOG_SERVER_CONNECT_SERVER, 0, "Master Server Send others to LoginServer, serverName:{}, serverId:{}, ip:{}, port:{}", pServerData->mServerInfo.server_name(), pServerData->mServerInfo.server_id(), pServerData->mServerInfo.server_ip(), pServerData->mServerInfo.server_port());
 		FindModule<NFINetServerModule>()->SendToServerByPB(pServerData->mUnlinkId, EGMI_NET_MASTER_SEND_OTHERS_TO_LOGIN, xData, 0);
 	}
 }
