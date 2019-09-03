@@ -226,7 +226,7 @@ NF_SHARE_PTR<NFServerData> NFCMasterServerModule::GetServerByServerId(uint32_t s
 void NFCMasterServerModule::ClearServerDataToDB()
 {
 	uint64_t now = NFGetSecondTime() - 24 * 60 * 60;
-	FindModule<NFIAsyMysqlModule>()->ExecuteOne("delete from dy_server_detail where last_time < " + now);
+	FindModule<NFIAsyMysqlModule>()->ExecuteOne("delete from dy_server_detail where last_time < " + NFCommon::tostr(now));
 }
 
 void NFCMasterServerModule::SaveServerDataToDB()
