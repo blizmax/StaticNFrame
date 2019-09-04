@@ -56,14 +56,14 @@ public:
 	*/
 	NFTimerMessage()
 	{
-
+		m_delayTime = 0;
+		nMsgType = ACTOR_TIMER_MSG_PROCESS_NULL;
+		m_callCount = 1;
 	}
 
 	virtual ~NFTimerMessage()
 	{
-		m_delayTime = 0;
-		nMsgType = ACTOR_TIMER_MSG_PROCESS_NULL;
-		m_callCount = 1;
+
 	}
 
 public:
