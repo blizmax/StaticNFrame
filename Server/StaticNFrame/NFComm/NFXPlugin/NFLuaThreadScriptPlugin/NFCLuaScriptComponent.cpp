@@ -16,6 +16,18 @@
 #include "NFComm/NFCore/NFBase64.h"
 #include "NFComm/NFCore/NFSha256.h"
 
+bool NFProcessRealTimerActorTask::ThreadProcess()
+{
+	if (m_pComponent)
+	{
+		if (m_taskType == EnumLuaThreadModule_Work)
+		{
+			m_pComponent->Do_ProcessRealTimer(m_luaFunc, m_param);
+		}
+	}
+	return true;
+}
+
 bool NFProcessTimerActorTask::ThreadProcess()
 {
 	if (m_pComponent)
@@ -177,6 +189,30 @@ bool NFLuaGcActorTask::ThreadProcess()
 	return true;
 }
 
+/**
+**  异步线程处理函数，将在另一个线程里运行
+*/
+bool NFTcpSessionCloseActorTask::ThreadProcess()
+{
+	if (m_pComponent)
+	{
+		m_pComponent->TcpSessionClose(m_playerId);
+	}
+	return true;
+}
+
+/**
+**  异步线程处理函数，将在另一个线程里运行
+*/
+bool NFTcpSessionReportActorTask::ThreadProcess()
+{
+	if (m_pComponent)
+	{
+		m_pComponent->TcpSessionReport(m_playerId, m_ip);
+	}
+	return true;
+}
+
 
 NFCLuaScriptComponent::NFCLuaScriptComponent(NFCLuaThreadModule* pLuaThreadModule, NFIPluginManager* p)
 {
@@ -193,6 +229,22 @@ NFCLuaScriptComponent::~NFCLuaScriptComponent()
 
 uint32_t NFCLuaScriptComponent::AddTimer(const std::string& luaFunc, uint64_t nInterVal, uint32_t nCallCount, const NFLuaRef& dataStr)
 {
+	std::string tmpStr;
+	if (dataStr != nullptr)
+	{
+		try
+		{
+			tmpStr = dataStr.toValue<std::string>();
+		}
+		catch (LuaIntf::LuaException& e)
+		{
+			if (m_pLogModule)
+			{
+				m_pLogModule->LuaError(0, 0, "AddTimer, luaFunc:" + luaFunc + " err:" + std::string(e.what()));
+			}
+		}
+	}
+	m_pLuaThreadModule->AddRealTimer(nInterVal, nCallCount, luaFunc, tmpStr);
 	return 0;
 }
 
@@ -256,6 +308,8 @@ bool NFCLuaScriptComponent::Register()
 		.addFunction("BeginProfiler", &NFCLuaScriptComponent::BeginProfiler)
 		.addFunction("EndProfiler", &NFCLuaScriptComponent::EndProfiler)
 		.addFunction("Sha256", &NFCLuaScriptComponent::Sha256)
+		.addFunction("Platfrom", &NFCLuaScriptComponent::Platfrom)
+		.addFunction("IsThreadModule", &NFCLuaScriptComponent::IsThreadModule)
 		.endClass();
 	return true;
 }
@@ -317,6 +371,20 @@ std::string NFCLuaScriptComponent::Sha256(const std::string& s)
 	std::string ret;
 	NFSha256::hash256_hex_string(s, ret);
 	return ret;
+}
+
+std::string NFCLuaScriptComponent::Platfrom()
+{
+#if NF_PLATFORM == NF_PLATFORM_WIN
+	return "win32";
+#else
+	return "linux";
+#endif
+}
+
+bool NFCLuaScriptComponent::IsThreadModule()
+{
+	return true;
 }
 
 void NFCLuaScriptComponent::SendMsgToPlayer(uint32_t usLinkId, const uint64_t nPlayerID, const uint32_t nMsgID, const uint32_t nLen, const std::string& strData)
@@ -467,6 +535,11 @@ void NFCLuaScriptComponent::ProcessLoopTimer(uint32_t timeSec, const std::string
 	m_pLuaThreadModule->AddProcessLoopTimer(timeSec, luaFunc, tmpStr);
 }
 
+void NFCLuaScriptComponent::Do_ProcessRealTimer(const std::string& luaFunc, const std::string& dataStr)
+{
+	TryRunGlobalScriptFunc("LuaNFrame.DispatchTimer", luaFunc, dataStr);
+}
+
 void NFCLuaScriptComponent::Do_ProcessTimer(const std::string& luaFunc, const std::string& dataStr)
 {
 	TryRunGlobalScriptFunc("LuaNFrame.DispatchTimerOnce", luaFunc, dataStr);
@@ -500,4 +573,14 @@ void NFCLuaScriptComponent::RunNetRecvLuaFunc(const std::string& luaFunc, const 
 void NFCLuaScriptComponent::GcStep()
 {
 	lua_gc(GetLuaState(), LUA_GCSTEP, 0);
+}
+
+void NFCLuaScriptComponent::TcpSessionClose(uint64_t playerId)
+{
+	TryRunGlobalScriptFunc("TcpSessionClose", playerId);
+}
+
+void NFCLuaScriptComponent::TcpSessionReport(uint64_t playerId, const std::string& ip)
+{
+	TryRunGlobalScriptFunc("TcpSessionReport", playerId, ip);
 }

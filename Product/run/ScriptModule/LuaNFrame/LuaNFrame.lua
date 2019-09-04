@@ -223,6 +223,14 @@ function LuaNFrame.Sha256(str)
     return CPPNFrame:Sha256(str)
 end
 
+function LuaNFrame.Platfrom()
+    return CPPNFrame:Platfrom()
+end
+
+function LuaNFrame.IsThreadModule()
+    return CPPNFrame:IsThreadModule()
+end
+
 --设置LOG等级
 function LuaNFrame.SetLogLevel(level)
     CPPNFrame:SetLogLevel(level)
@@ -405,7 +413,13 @@ end
 --执行定时函数
 function LuaNFrame.DispatchTimer(luaFunc, dataStr)
 	local function timerExecute()
-		_G[luaFunc].execute(dataStr)
+		local timer = timerManager:createOnceTimer(luaFunc)
+		
+		if timer == nil then
+			LuaNFrame.Error(NFLogId.NF_LOG_SYSTEMLOG, 0, "DispatchTimer luaFunc:"..luaFunc.." not handled!")
+		else
+			timer.execute(dataStr)
+		end
 	end
 	
 	local status, msg = xpcall (timerExecute, __G__TRACKBACK__)

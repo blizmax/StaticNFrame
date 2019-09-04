@@ -23,6 +23,10 @@ void NFLuaThreadTimer::OnTimer(uint32_t nTimerID)
 	{
 		m_pLuaScriptModule->AddProcessLoopTask(new NFProcessLoopTimerActorTask(m_pLuaScriptModule, EnumLuaThreadModule_Work, mLuaFunc, mDataStr));
 	}
+	else if (mMsgType == NFTimerMessage::ACTOR_TIMER_MSG_PROCESS_REAL_TIMER)
+	{
+		m_pLuaScriptModule->AddWorkTask(new NFProcessRealTimerActorTask(m_pLuaScriptModule, EnumLuaThreadModule_Work, mLuaFunc, mDataStr));
+	}
 }
 
 bool NFCLuaThreadModule::Init()
@@ -254,7 +258,7 @@ void NFCLuaThreadModule::HandleLuaTimer()
 		for (auto it = listTask.begin(); it != listTask.end(); ++it)
 		{
 			NFTimerMessage* xMsg = *it;
-			AddTimer(xMsg->nMsgType, xMsg->m_luaFunc, xMsg->m_delayTime, xMsg->m_tmpParam);
+			AddTimer(xMsg->nMsgType, xMsg->m_luaFunc, xMsg->m_delayTime, xMsg->m_tmpParam, xMsg->m_callCount);
 			NF_SAFE_DELETE(xMsg);
 		}
 	}
@@ -381,6 +385,7 @@ void NFCLuaThreadModule::OnAccountEventCallBack(uint32_t nEvent, uint32_t unLink
 		{
 			mPlayerProxyInfoMap.RemoveElement(pServerData->GetPlayerId());
 			//TryRunGlobalScriptFunc("TcpSessionClose", pServerData->GetPlayerId());
+			AddWorkTask(new NFTcpSessionCloseActorTask(this, pServerData->GetPlayerId()));
 		}
 	}
 	else if (nEvent == eAccountEventType_RECONNECTED)
@@ -600,6 +605,18 @@ bool NFCLuaThreadModule::AddProcessWorkTask(NFTask* pTask)
 	}
 
 	return false;
+}
+
+void NFCLuaThreadModule::AddRealTimer(uint32_t internal, uint32_t callcount, const std::string& luaFunc, const std::string& tmpParam)
+{
+	auto pMsg = new NFTimerMessage();
+	pMsg->nMsgType = NFTimerMessage::ACTOR_TIMER_MSG_PROCESS_REAL_TIMER;
+	pMsg->m_delayTime = internal;
+	pMsg->m_luaFunc = luaFunc;
+	pMsg->m_tmpParam = tmpParam;
+	pMsg->m_callCount = callcount;
+
+	m_mQueue.Push(pMsg);
 }
 
 void NFCLuaThreadModule::AddProcessTimer(uint32_t delayTimer, const std::string& luaFunc, const std::string& tmpParam)

@@ -475,6 +475,8 @@ bool NFCLuaScriptModule::Register()
 		.addFunction("BeginProfiler", &NFCLuaScriptModule::BeginProfiler)
 		.addFunction("EndProfiler", &NFCLuaScriptModule::EndProfiler)
 		.addFunction("Sha256", &NFCLuaScriptModule::Sha256)
+		.addFunction("Platfrom", &NFCLuaScriptModule::Platfrom)
+		.addFunction("IsThreadModule", &NFCLuaScriptModule::IsThreadModule)
 		.endClass();
 	return true;
 }
@@ -638,4 +640,18 @@ void NFCLuaScriptModule::GcStep()
 	m_pPluginManager->BeginProfiler("GcStep");
 	lua_gc(GetLuaState(), LUA_GCSTEP, 0);
 	m_pPluginManager->EndProfiler();
+}
+
+std::string NFCLuaScriptModule::Platfrom()
+{
+#if NF_PLATFORM == NF_PLATFORM_WIN
+	return "win32";
+#else
+	return "linux";
+#endif
+}
+
+bool NFCLuaScriptModule::IsThreadModule()
+{
+	return false;
 }

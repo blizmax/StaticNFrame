@@ -38,8 +38,6 @@ function LuaNFrame.InitScript(luaModule)
 	package.path = package.path .. ";../ScriptModule/?.lua;"
 	package.path = package.path .. ";../ScriptModule/LuaNFrame/?.lua;"
 
-	breakSocketHandle,debugXpCall = require("LuaDebug")("localhost",7003)
-
 	LuaNFrame.InitLoad()
 
 	--初始化LuaNFrame
@@ -47,7 +45,14 @@ function LuaNFrame.InitScript(luaModule)
 	--初始化热更
 	NFLuaReload.Init()
 
-	LuaNFrame.AddTimer("update_debugsocket", 1)
+	if type(LuaNFrame.Platfrom) == 'function' then
+		g_platfrom = LuaNFrame.Platfrom()    --from C++ always is 'win32' or 'linux'
+	end
+
+	if g_platfrom == "win32" and LuaNFrame.IsThreadModule() == false then
+		breakSocketHandle,debugXpCall = require("LuaDebug")("localhost",7003)
+		LuaNFrame.AddTimer("update_debugsocket", 1)
+	end
 
 	local function timerExecute()
 		if LuaNFrame.GetAppName() == "AllServer" then

@@ -124,6 +124,35 @@ public:
 	std::string m_param;
 };
 
+class NFProcessRealTimerActorTask : public NFLuaThreadTask
+{
+public:
+	NFProcessRealTimerActorTask(NFCLuaThreadModule* pLuaThreadModule, uint32_t taskType, const std::string& luaFunc = "", const std::string& param = "")
+	{
+		m_pLuaThreadModule = pLuaThreadModule;
+		m_taskType = taskType;
+		m_luaFunc = luaFunc;
+		m_param = param;
+		m_taskName = "NFProcessRealTimer_" + luaFunc;
+	}
+	/**
+	**  异步线程处理函数，将在另一个线程里运行
+	*/
+	virtual bool ThreadProcess();
+
+	/**
+	** 主线程处理函数，将在线程处理完后，提交给主先来处理，根据返回函数是否继续处理
+		返回值： thread::TPTask::TPTaskState， 请参看TPTaskState
+	*/
+	virtual TPTaskState MainThreadProcess()
+	{
+		return TPTASK_STATE_COMPLETED;
+	}
+public:
+	std::string m_param;
+	std::string m_luaFunc;
+};
+
 class NFProcessTimerActorTask : public NFLuaThreadTask
 {
 public:
@@ -337,6 +366,59 @@ public:
 	}
 };
 
+class NFTcpSessionCloseActorTask : public NFLuaThreadTask
+{
+public:
+	NFTcpSessionCloseActorTask(NFCLuaThreadModule* pLuaThreadModule, uint64_t playerId)
+	{
+		m_pLuaThreadModule = pLuaThreadModule;
+		m_taskName = "TcpSessionClose";
+		m_playerId = playerId;
+	}
+	/**
+	**  异步线程处理函数，将在另一个线程里运行
+	*/
+	virtual bool ThreadProcess();
+
+	/**
+	** 主线程处理函数，将在线程处理完后，提交给主先来处理，根据返回函数是否继续处理
+		返回值： thread::TPTask::TPTaskState， 请参看TPTaskState
+	*/
+	virtual TPTaskState MainThreadProcess()
+	{
+		return TPTASK_STATE_COMPLETED;
+	}
+
+	uint64_t m_playerId;
+};
+
+class NFTcpSessionReportActorTask : public NFLuaThreadTask
+{
+public:
+	NFTcpSessionReportActorTask(NFCLuaThreadModule* pLuaThreadModule, uint64_t playerId, const std::string& ip)
+	{
+		m_pLuaThreadModule = pLuaThreadModule;
+		m_taskName = "TcpSessionReport";
+		m_playerId = playerId;
+		m_ip = ip;
+	}
+	/**
+	**  异步线程处理函数，将在另一个线程里运行
+	*/
+	virtual bool ThreadProcess();
+
+	/**
+	** 主线程处理函数，将在线程处理完后，提交给主先来处理，根据返回函数是否继续处理
+		返回值： thread::TPTask::TPTaskState， 请参看TPTaskState
+	*/
+	virtual TPTaskState MainThreadProcess()
+	{
+		return TPTASK_STATE_COMPLETED;
+	}
+	uint64_t m_playerId;
+	std::string m_ip;
+};
+
 class NFCLuaScriptComponent : public NFITaskComponent, public NFILuaModule, public NFIModule
 {
 public:
@@ -393,6 +475,8 @@ public:
 	virtual std::string Base64Encode(const std::string& s);
 	virtual std::string Base64Decode(const std::string& s);
 	virtual std::string Sha256(const std::string& s);
+	virtual std::string Platfrom();
+	virtual bool IsThreadModule();
 
 	virtual void SendMsgToPlayer(uint32_t usLinkId, const uint64_t nPlayerID, const uint32_t nMsgID, const uint32_t nLen, const std::string& strData);
 	virtual void SendMsgToManyPlayer(const std::vector<uint64_t>& nPlayerID, const uint32_t nMsgID, const uint32_t nLen, const std::string& strData);
@@ -431,6 +515,7 @@ public:
 	virtual void Do_ProcessWork(const std::string& luaFunc, const std::string& dataStr);
 
 	virtual void Do_ProcessTimer(const std::string& luaFunc, const std::string& dataStr);
+	virtual void Do_ProcessRealTimer(const std::string& luaFunc, const std::string& dataStr);
 
 	virtual void Do_ProcessLoopTimer(const std::string& luaFunc, const std::string& dataStr);
 
@@ -441,6 +526,9 @@ public:
 	virtual bool IsInitLua() const { return m_initLua; }
 
 	virtual void GcStep();
+
+	virtual void TcpSessionClose(uint64_t playerId);
+	virtual void TcpSessionReport(uint64_t playerId, const std::string& ip);
 public:
 	bool Register();
 	void LoadScript();

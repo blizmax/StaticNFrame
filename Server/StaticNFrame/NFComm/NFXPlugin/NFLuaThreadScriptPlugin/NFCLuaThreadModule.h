@@ -47,6 +47,7 @@ public:
 		ACTOR_TIMER_MSG_PROCESS_NULL = 0,
 		ACTOR_TIMER_MSG_PROCESS_TIMER = 1,
 		ACTOR_TIMER_MSG_PROCESS_LOOP_TIMER = 2,
+		ACTOR_TIMER_MSG_PROCESS_REAL_TIMER = 3,
 	};
 
 	/**
@@ -62,6 +63,7 @@ public:
 	{
 		m_delayTime = 0;
 		nMsgType = ACTOR_TIMER_MSG_PROCESS_NULL;
+		m_callCount = 1;
 	}
 
 public:
@@ -88,6 +90,12 @@ public:
 	*
 	*/
 	std::string m_tmpParam;
+
+	/**
+	* @brief 调用次数
+	*
+	*/
+	uint32_t m_callCount;
 };
 
 class NFTcpMessage
@@ -270,6 +278,8 @@ public:
 	void AddProcessTimer(uint32_t delayTimer, const std::string& luaFunc, const std::string& tmpParam);
 
 	void AddProcessLoopTimer(uint32_t delayTimer, const std::string& luaFunc, const std::string& tmpParam);
+
+	void AddRealTimer(uint32_t internal, uint32_t callount, const std::string& luaFunc, const std::string& tmpParam);
 
 	/*
 	处理多线程LUA发过来的定时器

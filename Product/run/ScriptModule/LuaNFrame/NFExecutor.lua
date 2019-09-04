@@ -3,7 +3,7 @@ function math.mod(a, b)
 	return math.fmod(a,b)
 end
 
-g_platfrom = 'win32'           --g_platfrom init for luaself
+g_platfrom = 'luaself'           --g_platfrom init for luaself
 
 function md5(md5Str)
 	return LuaNFrame.GetMD5(md5Str)
