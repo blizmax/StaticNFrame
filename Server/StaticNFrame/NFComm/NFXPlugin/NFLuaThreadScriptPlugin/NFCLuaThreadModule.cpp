@@ -626,6 +626,7 @@ void NFCLuaThreadModule::AddProcessTimer(uint32_t delayTimer, const std::string&
 	pMsg->m_delayTime = delayTimer;
 	pMsg->m_luaFunc = luaFunc;
 	pMsg->m_tmpParam = tmpParam;
+	pMsg->m_callCount = 1;
 
 	m_mQueue.Push(pMsg);
 }
@@ -637,6 +638,7 @@ void NFCLuaThreadModule::AddProcessLoopTimer(uint32_t delayTimer, const std::str
 	pMsg->m_delayTime = delayTimer;
 	pMsg->m_luaFunc = luaFunc;
 	pMsg->m_tmpParam = tmpParam;
+	pMsg->m_callCount = 1;
 
 	m_mQueue.Push(pMsg);
 }
