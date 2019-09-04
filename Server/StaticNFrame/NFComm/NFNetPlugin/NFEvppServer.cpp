@@ -182,7 +182,7 @@ std::string NFEvppServer::GetLinkIp(uint32_t usLinkId)
 	return std::string("");
 }
 
-NetEvppObject* NFEvppServer::AddNetObject(const evpp::TCPConnPtr& conn)
+NetEvppObject* NFEvppServer::AddNetObject(const evpp::TCPConnPtr conn)
 {
 	if (mNetObjectCount >= GetMaxConnectNum())
 	{
@@ -203,7 +203,7 @@ NetEvppObject* NFEvppServer::AddNetObject(const evpp::TCPConnPtr& conn)
 		return nullptr;
 	}
 
-	NetEvppObject* pObject = NF_NEW NetEvppObject(conn);
+	auto pObject = NF_NEW NetEvppObject(conn);
 	mNetObjectArray.emplace(usLinkId, pObject);
 	mNetObjectCount++;
 

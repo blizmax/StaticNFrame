@@ -392,6 +392,7 @@ public:
 	virtual uint16_t GetCRC16(const std::string& s);
 	virtual std::string Base64Encode(const std::string& s);
 	virtual std::string Base64Decode(const std::string& s);
+	virtual std::string Sha256(const std::string& s);
 
 	virtual void SendMsgToPlayer(uint32_t usLinkId, const uint64_t nPlayerID, const uint32_t nMsgID, const uint32_t nLen, const std::string& strData);
 	virtual void SendMsgToManyPlayer(const std::vector<uint64_t>& nPlayerID, const uint32_t nMsgID, const uint32_t nLen, const std::string& strData);
@@ -412,6 +413,8 @@ public:
 	virtual void LuaError(uint32_t logId, uint64_t guid, const std::string& str);
 
 	virtual void ProcessLoop(const std::string& dataStr);
+
+	virtual void ProcessInit(const std::string& dataStr);
 
 	/*
 		这个函数是给LUA使用的， 发送一个work给actor处理，处理可能在别的线程里

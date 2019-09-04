@@ -76,11 +76,11 @@ bool NFCTaskModule::BeforeShut()
 bool NFCTaskModule::Shut()
 {
 	//等待异步处理完毕，然后再退出系统
-	//while (GetNumQueuedMessages() > 0 || m_mQueue.Count() > 0)
-	//{
-	//	OnMainThreadTick();
-	//	NFSLEEP(1);
-	//}
+	while (GetNumQueuedMessages() > 0 || m_mQueue.Count() > 0)
+	{
+		OnMainThreadTick();
+		NFSLEEP(1);
+	}
 	return true;
 }
 
@@ -94,7 +94,7 @@ bool NFCTaskModule::Execute()
 {
 	m_loopCount++;
 	OnMainThreadTick();
-	if (m_loopCount % 1000 == 0)
+	if (m_loopCount % 10000 == 0)
 	{
 		NFLogDebug(NF_LOG_ACTOR_PLUGIN, 0, "task actor module, work thread num:{} peak work thread num:{}, max work thread num:{}, min work thread num:{}", m_pFramework->GetNumThreads(), m_pFramework->GetPeakThreads(), m_pFramework->GetMaxThreads(), m_pFramework->GetMinThreads());
 		for (auto iter = m_taskMonitorMap.begin(); iter != m_taskMonitorMap.end(); iter++)
@@ -152,16 +152,19 @@ int NFCTaskModule::RequireActor()
 */
 bool NFCTaskModule::SendMsgToActor(const int nActorIndex, NFTask* pData)
 {
-	NFTaskActor* pActor = GetActor(nActorIndex);
-	if (pActor != nullptr && m_pMainActor != nullptr && m_pFramework != nullptr)
+	if (!m_pPluginManager->GetExitApp())
 	{
-		NFTaskActorMessage xMessage;
+		NFTaskActor* pActor = GetActor(nActorIndex);
+		if (pActor != nullptr && m_pMainActor != nullptr && m_pFramework != nullptr)
+		{
+			NFTaskActorMessage xMessage;
 
-		xMessage.nMsgType = NFTaskActorMessage::ACTOR_MSG_TYPE_COMPONENT;
-		xMessage.pData = pData;
-		xMessage.nFromActor = m_pMainActor->GetAddress().AsInteger();
+			xMessage.nMsgType = NFTaskActorMessage::ACTOR_MSG_TYPE_COMPONENT;
+			xMessage.pData = pData;
+			xMessage.nFromActor = m_pMainActor->GetAddress().AsInteger();
 
-		return m_pFramework->Send(xMessage, m_pMainActor->GetAddress(), pActor->GetAddress());
+			return m_pFramework->Send(xMessage, m_pMainActor->GetAddress(), pActor->GetAddress());
+		}
 	}
 
 	return false;

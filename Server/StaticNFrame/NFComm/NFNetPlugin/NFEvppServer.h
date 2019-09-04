@@ -74,7 +74,7 @@ public:
 	 * @param  sa
 	 * @return bool
 	 */
-	NetEvppObject* AddNetObject(const evpp::TCPConnPtr& conn);
+	NetEvppObject* AddNetObject(const evpp::TCPConnPtr conn);
 
 	/**
 	* @brief	≥ı ºªØ

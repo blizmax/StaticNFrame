@@ -416,6 +416,7 @@
     <ClInclude Include="NFServerTime.h" />
     <ClInclude Include="NFSHA1.h" />
     <ClInclude Include="NFSHA2.h" />
+    <ClInclude Include="NFSha256.h" />
     <ClInclude Include="NFShm.h" />
     <ClInclude Include="NFSingleton.hpp" />
     <ClInclude Include="NFSlice.hpp" />

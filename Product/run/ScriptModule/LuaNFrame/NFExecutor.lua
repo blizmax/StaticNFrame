@@ -82,3 +82,7 @@ function SendMessage(useridList, retMsgID, buffLen, retString)
 		end
 	end
 end
+
+function Sha256(content)
+	return LuaNFrame.Sha256(content)
+end

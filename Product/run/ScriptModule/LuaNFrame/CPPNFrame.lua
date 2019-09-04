@@ -165,3 +165,7 @@ end
 function CPPNFrame:EndProfiler()
     self.luaModule:EndProfiler()
 end
+
+function CPPNFrame:Sha256(str)
+    return self.luaModule:Sha256(str)
+end

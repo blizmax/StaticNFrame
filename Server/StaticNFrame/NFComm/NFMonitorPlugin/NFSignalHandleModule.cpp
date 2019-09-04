@@ -1148,6 +1148,7 @@ bool NFCSignalHandleModule::ReadyExecute()
 
 void  NFCSignalHandleModule::HandleSignal(int signo)
 {
+	m_pPluginManager->SetExitApp(true);
 #if NF_PLATFORM != NF_PLATFORM_WIN
 	switch (signo)
 	{

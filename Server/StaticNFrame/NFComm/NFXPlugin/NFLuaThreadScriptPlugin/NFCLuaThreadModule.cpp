@@ -14,6 +14,7 @@
 
 void NFLuaThreadTimer::OnTimer(uint32_t nTimerID)
 {
+	mCurCallCount++;
 	if (mMsgType == NFTimerMessage::ACTOR_TIMER_MSG_PROCESS_TIMER)
 	{
 		m_pLuaScriptModule->AddProcessTimerTask(new NFProcessTimerActorTask(m_pLuaScriptModule, EnumLuaThreadModule_Work, mLuaFunc, mDataStr));
@@ -167,7 +168,7 @@ bool NFCLuaThreadModule::CloseActorPool()
 	return true;
 }
 
-uint32_t NFCLuaThreadModule::AddTimer(uint32_t msgType, const std::string& luaFunc, uint64_t nInterVal, const std::string& dataStr)
+uint32_t NFCLuaThreadModule::AddTimer(uint32_t msgType, const std::string& luaFunc, uint64_t nInterVal, const std::string& dataStr, uint32_t callCount)
 {
 	NFLuaThreadTimer* luaTimer = nullptr;
 	if (m_luaTimerList.empty())
@@ -185,7 +186,14 @@ uint32_t NFCLuaThreadModule::AddTimer(uint32_t msgType, const std::string& luaFu
 	luaTimer->mLuaFunc = luaFunc;
 	luaTimer->mInterVal = nInterVal;
 	luaTimer->mDataStr = dataStr;
-	luaTimer->mCallCount = 1;
+	if (callCount == 0)
+	{
+		luaTimer->mCallCount = INFINITY_CALL;
+	}
+	else
+	{
+		luaTimer->mCallCount = callCount;
+	}
 
 	luaTimer->mCurCallCount = 0;
 	luaTimer->mTimerId = ++m_luaTimerIndex;
@@ -201,34 +209,35 @@ uint32_t NFCLuaThreadModule::AddTimer(uint32_t msgType, const std::string& luaFu
 */
 void NFCLuaThreadModule::HandleLuaTcpMsg()
 {
-	std::vector<NFTcpMessage> listTask;
+	std::vector<NFTcpMessage*> listTask;
 	const bool ret = m_mTcpMsgQueue.Pop(listTask);
 	if (ret)
 	{
 		const uint64_t start = NFTime::Tick();
 		for (auto it = listTask.begin(); it != listTask.end(); ++it)
 		{
-			NFTcpMessage& xMsg = *it;
-			if (xMsg.m_nMsgType == NFTcpMessage::ACTOR_TCP_MESSAGE_TYPE_ONE_PLAYER_PROXY_MSG)
+			NFTcpMessage* pMsg = *it;
+			if (pMsg->m_nMsgType == NFTcpMessage::ACTOR_TCP_MESSAGE_TYPE_ONE_PLAYER_PROXY_MSG)
 			{
-				SendMsgToPlayer(xMsg.m_usLinkId, xMsg.m_nPlayerID, xMsg.m_nMsgID, xMsg.m_nLen, xMsg.m_strData);
+				SendMsgToPlayer(pMsg->m_usLinkId, pMsg->m_nPlayerID, pMsg->m_nMsgID, pMsg->m_nLen, pMsg->m_strData);
 			}
-			else if (xMsg.m_nMsgType == NFTcpMessage::ACTOR_TCP_MESSAGE_TYPE_ONE_PLAYER_WORLD_MSG)
+			else if (pMsg->m_nMsgType == NFTcpMessage::ACTOR_TCP_MESSAGE_TYPE_ONE_PLAYER_WORLD_MSG)
 			{
-				SendMsgToWorld(xMsg.m_usLinkId, xMsg.m_nPlayerID, xMsg.m_nMsgID, xMsg.m_nLen, xMsg.m_strData);
+				SendMsgToWorld(pMsg->m_usLinkId, pMsg->m_nPlayerID, pMsg->m_nMsgID, pMsg->m_nLen, pMsg->m_strData);
 			}
-			else if (xMsg.m_nMsgType == NFTcpMessage::ACTOR_TCP_MESSAGE_TYPE_ONE_PLAYER_MASTER_MSG)
+			else if (pMsg->m_nMsgType == NFTcpMessage::ACTOR_TCP_MESSAGE_TYPE_ONE_PLAYER_MASTER_MSG)
 			{
-				SendMsgToMaster(xMsg.m_usLinkId, xMsg.m_nPlayerID, xMsg.m_nMsgID, xMsg.m_nLen, xMsg.m_strData);
+				SendMsgToMaster(pMsg->m_usLinkId, pMsg->m_nPlayerID, pMsg->m_nMsgID, pMsg->m_nLen, pMsg->m_strData);
 			}
-			if (xMsg.m_nMsgType == NFTcpMessage::ACTOR_TCP_MESSAGE_TYPE_MANY_PLAYER_PROXY_MSG)
+			if (pMsg->m_nMsgType == NFTcpMessage::ACTOR_TCP_MESSAGE_TYPE_MANY_PLAYER_PROXY_MSG)
 			{
-				SendMsgToManyPlayer(xMsg.m_nVecPlayerID, xMsg.m_nMsgID, xMsg.m_nLen, xMsg.m_strData);
+				SendMsgToManyPlayer(pMsg->m_nVecPlayerID, pMsg->m_nMsgID, pMsg->m_nLen, pMsg->m_strData);
 			}
-			if (xMsg.m_nMsgType == NFTcpMessage::ACTOR_TCP_MESSAGE_TYPE_ALL_PLAYER_PROXY_MSG)
+			if (pMsg->m_nMsgType == NFTcpMessage::ACTOR_TCP_MESSAGE_TYPE_ALL_PLAYER_PROXY_MSG)
 			{
-				SendMsgToAllPlayer(xMsg.m_nMsgID, xMsg.m_nLen, xMsg.m_strData);
+				SendMsgToAllPlayer(pMsg->m_nMsgID, pMsg->m_nLen, pMsg->m_strData);
 			}
+			NF_SAFE_DELETE(pMsg);
 		}
 	}
 
@@ -237,19 +246,39 @@ void NFCLuaThreadModule::HandleLuaTcpMsg()
 
 void NFCLuaThreadModule::HandleLuaTimer()
 {
-	std::vector<NFTimerMessage> listTask;
+	std::vector<NFTimerMessage*> listTask;
 	const bool ret = m_mQueue.Pop(listTask);
 	if (ret)
 	{
 		const uint64_t start = NFTime::Tick();
 		for (auto it = listTask.begin(); it != listTask.end(); ++it)
 		{
-			NFTimerMessage& xMsg = *it;
-			AddTimer(xMsg.nMsgType, xMsg.m_luaFunc, xMsg.m_delayTime, xMsg.m_tmpParam);
+			NFTimerMessage* xMsg = *it;
+			AddTimer(xMsg->nMsgType, xMsg->m_luaFunc, xMsg->m_delayTime, xMsg->m_tmpParam);
+			NF_SAFE_DELETE(xMsg);
 		}
 	}
 
 	listTask.clear();
+
+	for (auto iter = m_luaTimerMap.begin(); iter != m_luaTimerMap.end();)
+	{
+		NFLuaThreadTimer* pTimer = iter->second;
+		if (pTimer)
+		{
+			if (pTimer->mCallCount != INFINITY_CALL)
+			{
+				if (pTimer->mCurCallCount >= pTimer->mCallCount)
+				{
+					iter = m_luaTimerMap.erase(iter);
+					pTimer->Clear();
+					m_luaTimerList.push_back(pTimer);
+					continue;
+				}
+			}
+		}
+		iter++;
+	}
 }
 
 void NFCLuaThreadModule::SendMsgToPlayer(uint32_t usLinkId, const uint64_t nPlayerID, const uint32_t nMsgID, const uint32_t nLen, const std::string& strData)
@@ -371,69 +400,69 @@ NF_SHARE_PTR<PlayerGameServerInfo> NFCLuaThreadModule::GetPlayerInfo(uint64_t pl
 
 void NFCLuaThreadModule::AddMsgToPlayer(uint32_t usLinkId, const uint64_t nPlayerID, const uint32_t nMsgID, const uint32_t nLen, const std::string& strData)
 {
-	NFTcpMessage msg;
-	msg.m_nMsgType = NFTcpMessage::ACTOR_TCP_MESSAGE_TYPE_ONE_PLAYER_PROXY_MSG;
-	msg.m_usLinkId = usLinkId;
-	msg.m_nPlayerID = nPlayerID;
-	msg.m_nMsgID = nMsgID;
-	msg.m_nLen = nLen;
-	msg.m_strData = strData;
+	auto pMsg = new NFTcpMessage();
+	pMsg->m_nMsgType = NFTcpMessage::ACTOR_TCP_MESSAGE_TYPE_ONE_PLAYER_PROXY_MSG;
+	pMsg->m_usLinkId = usLinkId;
+	pMsg->m_nPlayerID = nPlayerID;
+	pMsg->m_nMsgID = nMsgID;
+	pMsg->m_nLen = nLen;
+	pMsg->m_strData = strData;
 
-	m_mTcpMsgQueue.Push(msg);
+	m_mTcpMsgQueue.Push(pMsg);
 }
 
 void NFCLuaThreadModule::AddMsgToManyPlayer(const std::vector<uint64_t>& nPlayerID, const uint32_t nMsgID, const uint32_t nLen, const std::string& strData)
 {
-	NFTcpMessage msg;
-	msg.m_nMsgType = NFTcpMessage::ACTOR_TCP_MESSAGE_TYPE_MANY_PLAYER_PROXY_MSG;
-	msg.m_usLinkId = 0;
-	msg.m_nPlayerID = 0;
-	msg.m_nVecPlayerID = nPlayerID;
-	msg.m_nMsgID = nMsgID;
-	msg.m_nLen = nLen;
-	msg.m_strData = strData;
+	auto pMsg = new NFTcpMessage();
+	pMsg->m_nMsgType = NFTcpMessage::ACTOR_TCP_MESSAGE_TYPE_MANY_PLAYER_PROXY_MSG;
+	pMsg->m_usLinkId = 0;
+	pMsg->m_nPlayerID = 0;
+	pMsg->m_nVecPlayerID = nPlayerID;
+	pMsg->m_nMsgID = nMsgID;
+	pMsg->m_nLen = nLen;
+	pMsg->m_strData = strData;
 
-	m_mTcpMsgQueue.Push(msg);
+	m_mTcpMsgQueue.Push(pMsg);
 }
 
 void NFCLuaThreadModule::AddMsgToAllPlayer(const uint32_t nMsgID, const uint32_t nLen, const std::string& strData)
 {
 
-	NFTcpMessage msg;
-	msg.m_nMsgType = NFTcpMessage::ACTOR_TCP_MESSAGE_TYPE_ALL_PLAYER_PROXY_MSG;
-	msg.m_usLinkId = 0;
-	msg.m_nPlayerID = 0;
-	msg.m_nMsgID = nMsgID;
-	msg.m_nLen = nLen;
-	msg.m_strData = strData;
+	auto pMsg = new NFTcpMessage();
+	pMsg->m_nMsgType = NFTcpMessage::ACTOR_TCP_MESSAGE_TYPE_ALL_PLAYER_PROXY_MSG;
+	pMsg->m_usLinkId = 0;
+	pMsg->m_nPlayerID = 0;
+	pMsg->m_nMsgID = nMsgID;
+	pMsg->m_nLen = nLen;
+	pMsg->m_strData = strData;
 
-	m_mTcpMsgQueue.Push(msg);
+	m_mTcpMsgQueue.Push(pMsg);
 }
 
 void NFCLuaThreadModule::AddMsgToWorld(uint32_t usLinkId, const uint64_t nPlayerID, const uint32_t nMsgID, const uint32_t nLen, const std::string& strData)
 {
-	NFTcpMessage msg;
-	msg.m_nMsgType = NFTcpMessage::ACTOR_TCP_MESSAGE_TYPE_ONE_PLAYER_WORLD_MSG;
-	msg.m_usLinkId = usLinkId;
-	msg.m_nPlayerID = nPlayerID;
-	msg.m_nMsgID = nMsgID;
-	msg.m_nLen = nLen;
-	msg.m_strData = strData;
+	auto pMsg = new NFTcpMessage();
+	pMsg->m_nMsgType = NFTcpMessage::ACTOR_TCP_MESSAGE_TYPE_ONE_PLAYER_WORLD_MSG;
+	pMsg->m_usLinkId = usLinkId;
+	pMsg->m_nPlayerID = nPlayerID;
+	pMsg->m_nMsgID = nMsgID;
+	pMsg->m_nLen = nLen;
+	pMsg->m_strData = strData;
 
-	m_mTcpMsgQueue.Push(msg);
+	m_mTcpMsgQueue.Push(pMsg);
 }
 
 void NFCLuaThreadModule::AddMsgToMaster(uint32_t usLinkId, const uint64_t nPlayerID, const uint32_t nMsgID, const uint32_t nLen, const std::string& strData)
 {
-	NFTcpMessage msg;
-	msg.m_nMsgType = NFTcpMessage::ACTOR_TCP_MESSAGE_TYPE_ONE_PLAYER_MASTER_MSG;
-	msg.m_usLinkId = usLinkId;
-	msg.m_nPlayerID = nPlayerID;
-	msg.m_nMsgID = nMsgID;
-	msg.m_nLen = nLen;
-	msg.m_strData = strData;
+	auto pMsg = new NFTcpMessage();
+	pMsg->m_nMsgType = NFTcpMessage::ACTOR_TCP_MESSAGE_TYPE_ONE_PLAYER_MASTER_MSG;
+	pMsg->m_usLinkId = usLinkId;
+	pMsg->m_nPlayerID = nPlayerID;
+	pMsg->m_nMsgID = nMsgID;
+	pMsg->m_nLen = nLen;
+	pMsg->m_strData = strData;
 
-	m_mTcpMsgQueue.Push(msg);
+	m_mTcpMsgQueue.Push(pMsg);
 }
 
 /**
@@ -575,24 +604,24 @@ bool NFCLuaThreadModule::AddProcessWorkTask(NFTask* pTask)
 
 void NFCLuaThreadModule::AddProcessTimer(uint32_t delayTimer, const std::string& luaFunc, const std::string& tmpParam)
 {
-	NFTimerMessage msg;
-	msg.nMsgType = NFTimerMessage::ACTOR_TIMER_MSG_PROCESS_TIMER;
-	msg.m_delayTime = delayTimer;
-	msg.m_luaFunc = luaFunc;
-	msg.m_tmpParam = tmpParam;
+	auto pMsg = new NFTimerMessage();
+	pMsg->nMsgType = NFTimerMessage::ACTOR_TIMER_MSG_PROCESS_TIMER;
+	pMsg->m_delayTime = delayTimer;
+	pMsg->m_luaFunc = luaFunc;
+	pMsg->m_tmpParam = tmpParam;
 
-	m_mQueue.Push(msg);
+	m_mQueue.Push(pMsg);
 }
 
 void NFCLuaThreadModule::AddProcessLoopTimer(uint32_t delayTimer, const std::string& luaFunc, const std::string& tmpParam)
 {
-	NFTimerMessage msg;
-	msg.nMsgType = NFTimerMessage::ACTOR_TIMER_MSG_PROCESS_LOOP_TIMER;
-	msg.m_delayTime = delayTimer;
-	msg.m_luaFunc = luaFunc;
-	msg.m_tmpParam = tmpParam;
+	auto pMsg = new NFTimerMessage();
+	pMsg->nMsgType = NFTimerMessage::ACTOR_TIMER_MSG_PROCESS_LOOP_TIMER;
+	pMsg->m_delayTime = delayTimer;
+	pMsg->m_luaFunc = luaFunc;
+	pMsg->m_tmpParam = tmpParam;
 
-	m_mQueue.Push(msg);
+	m_mQueue.Push(pMsg);
 }
 
 void NFCLuaThreadModule::ReloadAllLuaFiles()

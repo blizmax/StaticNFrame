@@ -14,6 +14,7 @@
 #include "NFComm/NFCore/NFCRC32.h"
 #include "NFComm/NFCore/NFCRC16.h"
 #include "NFComm/NFCore/NFBase64.h"
+#include "NFComm/NFCore/NFSha256.h"
 
 enum EnumLuaScriptTimer
 {
@@ -22,6 +23,7 @@ enum EnumLuaScriptTimer
 
 void NFLuaTimer::OnTimer(uint32_t nTimerID)
 {
+	mCurCallCount++;
 	if (mGlobalLuaFunc == "LuaNFrame.DispatchTimerLoop")
 	{
 		m_pLuaScriptModule->BeginProfiler("LuaNFrame.DispatchTimerLoop--"+ mTmpStr);
@@ -99,6 +101,24 @@ bool NFCLuaScriptModule::Finalize()
 bool NFCLuaScriptModule::Execute()
 {
 	GcStep();
+	for (auto iter = m_luaTimerMap.begin(); iter != m_luaTimerMap.end();)
+	{
+		auto pTimer = iter->second;
+		if (pTimer)
+		{
+			if (pTimer->mCallCount != INFINITY_CALL)
+			{
+				if (pTimer->mCurCallCount >= pTimer->mCallCount)
+				{
+					iter = m_luaTimerMap.erase(iter);
+					pTimer->Clear();
+					m_luaTimerList.push_back(pTimer);
+					continue;
+				}
+			}
+		}
+		iter++;
+	}
     return true;
 }
 
@@ -413,6 +433,13 @@ uint64_t NFCLuaScriptModule::EndProfiler()
 	return m_pPluginManager->EndProfiler();
 }
 
+std::string NFCLuaScriptModule::Sha256(const std::string& s)
+{
+	std::string ret;
+	NFSha256::hash256_hex_string(s, ret);
+	return ret;
+}
+
 bool NFCLuaScriptModule::Register()
 {
 	LuaIntf::LuaBinding(l).beginClass<NFCLuaScriptModule>("NFCLuaScriptModule")
@@ -447,6 +474,7 @@ bool NFCLuaScriptModule::Register()
 		.addFunction("ProcessLoopTimer", &NFCLuaScriptModule::ProcessLoopTimer)
 		.addFunction("BeginProfiler", &NFCLuaScriptModule::BeginProfiler)
 		.addFunction("EndProfiler", &NFCLuaScriptModule::EndProfiler)
+		.addFunction("Sha256", &NFCLuaScriptModule::Sha256)
 		.endClass();
 	return true;
 }

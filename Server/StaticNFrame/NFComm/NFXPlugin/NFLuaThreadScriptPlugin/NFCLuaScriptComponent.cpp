@@ -14,6 +14,7 @@
 #include "NFComm/NFCore/NFCRC32.h"
 #include "NFComm/NFCore/NFCRC16.h"
 #include "NFComm/NFCore/NFBase64.h"
+#include "NFComm/NFCore/NFSha256.h"
 
 bool NFProcessTimerActorTask::ThreadProcess()
 {
@@ -69,7 +70,7 @@ bool NFServerLoopTask::ThreadProcess()
 		}
 		else if (m_taskType == EnumLuaThreadModule_Init)
 		{
-			m_pComponent->TryRunGlobalScriptFunc("LuaNFrame.TimerInit", 0, m_param);
+			m_pComponent->ProcessInit(m_param);
 		}
 		else if (m_taskType == EnumLuaThreadModule_Loop)
 		{
@@ -254,6 +255,7 @@ bool NFCLuaScriptComponent::Register()
 		.addFunction("ProcessLoopTimer", &NFCLuaScriptComponent::ProcessLoopTimer)
 		.addFunction("BeginProfiler", &NFCLuaScriptComponent::BeginProfiler)
 		.addFunction("EndProfiler", &NFCLuaScriptComponent::EndProfiler)
+		.addFunction("Sha256", &NFCLuaScriptComponent::Sha256)
 		.endClass();
 	return true;
 }
@@ -308,6 +310,13 @@ std::string NFCLuaScriptComponent::Base64Encode(const std::string& s)
 std::string NFCLuaScriptComponent::Base64Decode(const std::string& s)
 {
 	return NFBase64::Decode(s);
+}
+
+std::string NFCLuaScriptComponent::Sha256(const std::string& s)
+{
+	std::string ret;
+	NFSha256::hash256_hex_string(s, ret);
+	return ret;
 }
 
 void NFCLuaScriptComponent::SendMsgToPlayer(uint32_t usLinkId, const uint64_t nPlayerID, const uint32_t nMsgID, const uint32_t nLen, const std::string& strData)
@@ -388,6 +397,11 @@ void NFCLuaScriptComponent::ProcessLoop(const std::string& dataStr)
 	TryRunGlobalScriptFunc("LuaNFrame.DispatchTimerLoop", dataStr);
 }
 
+void NFCLuaScriptComponent::ProcessInit(const std::string& dataStr)
+{
+	TryRunGlobalScriptFunc("LuaNFrame.TimerInit", dataStr);
+}
+
 void NFCLuaScriptComponent::ProcessWork(const std::string& luaFunc, const NFLuaRef& dataStr)
 {
 	std::string tmpStr;
@@ -399,6 +413,10 @@ void NFCLuaScriptComponent::ProcessWork(const std::string& luaFunc, const NFLuaR
 		}
 		catch (LuaIntf::LuaException& e)
 		{
+			if (m_pLogModule)
+			{
+				m_pLogModule->LuaError(0, 0, "ProcessWork, luaFunc:"+luaFunc+" err:"+std::string(e.what()));
+			}
 		}
 	}
 	m_pLuaThreadModule->AddProcessWorkTask(new NFWorkActorTask(m_pLuaThreadModule, EnumLuaThreadModule_Work, luaFunc, tmpStr));
@@ -420,6 +438,10 @@ void NFCLuaScriptComponent::ProcessTimer(uint32_t timeSec, const std::string& lu
 		}
 		catch (LuaIntf::LuaException& e)
 		{
+			if (m_pLogModule)
+			{
+				m_pLogModule->LuaError(0, 0, "ProcessTimer, luaFunc:" + luaFunc + " err:" + std::string(e.what()));
+			}
 		}
 	}
 	m_pLuaThreadModule->AddProcessTimer(timeSec, luaFunc, tmpStr);
@@ -436,6 +458,10 @@ void NFCLuaScriptComponent::ProcessLoopTimer(uint32_t timeSec, const std::string
 		}
 		catch (LuaIntf::LuaException& e)
 		{
+			if (m_pLogModule)
+			{
+				m_pLogModule->LuaError(0, 0, "ProcessLoopTimer, luaFunc:" + luaFunc + " err:" + std::string(e.what()));
+			}
 		}
 	}
 	m_pLuaThreadModule->AddProcessLoopTimer(timeSec, luaFunc, tmpStr);

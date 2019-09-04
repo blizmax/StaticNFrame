@@ -190,7 +190,7 @@ public:
 	virtual bool StartActorPool(const int nCount);
 	virtual bool CloseActorPool();
 
-	virtual uint32_t AddTimer(uint32_t mMsgType, const std::string& luaFunc, uint64_t nInterVal, const std::string& dataStr);
+	virtual uint32_t AddTimer(uint32_t mMsgType, const std::string& luaFunc, uint64_t nInterVal, const std::string& dataStr, uint32_t callCount = 1);
 public:
 	virtual void RunNetRecvLuaFunc(const std::string& luaFunc, const uint32_t unLinkId, const uint64_t valueId, const uint32_t nMsgId, const std::string& strMsg) override;
 	virtual void RunHttpRecvLuaFunc(const std::string& luaFunc, const uint32_t unLinkId, const uint32_t requestId, const std::string& firstPath, const std::string& secondPath, const std::string& strMsg) override;
@@ -303,7 +303,7 @@ protected:
 	* @brief 返回的定时器消息队,
 	* actor线程将数据放入队列， 主线程从队列里取数据处理
 	*/
-	NFQueueVector<NFTimerMessage> m_mQueue;
+	NFQueueVector<NFTimerMessage*> m_mQueue;
 
 	/*
 		定时器
@@ -321,5 +321,5 @@ protected:
 	* @brief 返回的定时器消息队,
 	* actor线程将数据放入队列， 主线程从队列里取数据处理
 	*/
-	NFQueueVector<NFTcpMessage> m_mTcpMsgQueue;
+	NFQueueVector<NFTcpMessage*> m_mTcpMsgQueue;
 };

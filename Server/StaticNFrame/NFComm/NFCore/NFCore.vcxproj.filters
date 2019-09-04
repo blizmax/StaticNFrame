@@ -299,5 +299,8 @@
     <ClInclude Include="NFTime.h">
       <Filter>Common</Filter>
     </ClInclude>
+    <ClInclude Include="NFSha256.h">
+      <Filter>Common</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
