@@ -370,7 +370,7 @@ function LuaNFrame.DispatchTcp(unLinkId, valueId, nMsgId, strMsg)
 			end
 			--登录协议特殊处理一下
 			if nMsgId == 1001 then
-				xLuaNFrame.SendMsgToPlayer(unLinkId, valueId, retMsgID, retBufferLen, retString)
+				LuaNFrame.SendMsgToPlayer(unLinkId, valueId, retMsgID, retBufferLen, retString)
 			else
 				LuaNFrame.SendMsgToPlayer(unLinkId, playerID, retMsgID, retBufferLen, retString)
 			end
