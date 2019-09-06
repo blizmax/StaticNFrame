@@ -390,6 +390,13 @@ void NFCProxyLogicModule::OnHandleAccountLoginFromGameServer(const uint32_t unLi
 				return;
 			}
 
+			auto pGameServer = mGameMap.GetElement(unLinkId);
+			if (pGameServer)
+			{
+				pPlayerInfo->mGameServerId = pGameServer->GetServerId();
+				pLinkInfo->mGameServerId = pGameServer->GetServerId();
+			}
+
 			FindModule<NFINetServerModule>()->SendByServerID(pLinkInfo->mUnlinkId, ::NFMsg::Server_Msg_AccountLogin, msg, nLen, pLinkInfo->mSendMsgCount);
 		}
 		return;
