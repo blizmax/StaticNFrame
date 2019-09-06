@@ -1,5 +1,7 @@
 --lua5.3 没有math.mod函数
 function math.mod(a, b)
+	a = tonumber(a)
+	b = tonumber(b)
 	return math.fmod(a,b)
 end
 
