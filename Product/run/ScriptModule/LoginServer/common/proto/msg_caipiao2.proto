@@ -1,0 +1,34 @@
+package progame;
+import "st_human.proto";
+import "st_caipiao.proto";
+
+
+//更新不知道什么
+message gccaipiaoupdate
+{
+	optional int32 result = 1;
+	optional int32 state = 2;
+	optional int32 timemark = 3;
+	optional string gid = 4;		  //期号
+	optional int32 remainfptimes = 5; //封盘剩余时间
+	optional int32 remainkjtimes = 6; //开奖剩余时间
+	optional int32 gamekey = 7; 
+}
+
+
+message cgcaipiaostandlist //获取站立的列表信息
+{
+	optional int32 userid = 1;
+	optional int32 tableid = 2;
+	optional int32 pagenum = 3;   //每一次获取10个
+}
+
+
+message gccaipiaostats
+{
+	optional int32 result = 1;
+	optional int32 allnum = 2;    //总局数
+	optional string weekwin = 3;  //每周盈利,用string表示int64的数据类型
+	optional string maxjetton = 4;   //最高资产,用string表示int64的数据类型
+}
+

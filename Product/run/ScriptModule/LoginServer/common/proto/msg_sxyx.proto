@@ -1,0 +1,271 @@
+package progame;
+import "st_human.proto";
+import "st_sxyx.proto";
+
+//进入
+message cgsxyxenter
+{
+	optional int32 userid = 1;  
+	optional int32 tableid = 2;    //如果是0，则随机分配
+	optional string password = 3;   //如果该牌桌是需要密码的
+	optional int32 tabletype = 4;   //加一个对应的类型
+	optional int32 julebuid = 5;	//
+}
+
+message gcsxyxenter
+{
+	optional int32 result = 1;
+	optional playersimpleinfo bankerinfo = 2;
+	repeated playersimpleinfo pslist = 3;     //坐在8个位置上的人物信息
+	optional int32 tableid = 4;
+	optional int32 pour1 = 5;     //第一个下注额
+	optional int32 pour2 = 6;     //第二个下注额
+	optional int32 pour3 = 7;     //第三个下注额
+	optional int32 state = 8;     //状态
+	optional int32 timemark = 9;        //时间标签
+	repeated int32 situser = 10;         //对应位置的userID，总共8个长度，在第几个非0就表示该座位有玩家	
+	optional int32 popularity = 11;     //这个是显示在庄家傍边的人气值
+	optional int32 pilecardcont = 12;
+	repeated int32 historylist = 13; 	//记录10就得牌局赢输 1 庄 2 闲 3 和
+	optional string bankerlimit = 14; 	//上庄限制
+	optional int32 bankerlistcount = 15; //上庄列表人数
+	optional int32 tabletype = 16; 		//牌桌类型
+	optional int32 julebuid = 17;		//
+	optional int32 bankercount = 18;    //当庄后的游戏局数
+	repeated sxyxpouerjetton pouerlist = 19;
+	repeated int32 zpokerlist = 20;
+	repeated int32 xpokerlist = 21;
+	optional string keycode = 22; //游戏金钥
+	
+}
+
+//离开
+message cgsxyxleave
+{
+	optional int32 userid = 1;
+	optional int32 tableid = 2;
+	optional int32 chairid = 3;      //如果玩家坐下8个列表中，则需要携带
+}
+
+message gcsxyxleave    //当坐下来的玩家离开的时候，需要广播给全部玩家
+{
+	optional int32 result = 1;
+	optional int32 chairid = 2;
+	optional int32 userid = 3;
+	optional int32 leavetype = 4;
+	optional string msg = 5;
+}
+
+//坐下
+message cgsxyxsitdown  //坐下牌桌
+{
+	optional int32 userid = 1;
+	optional int32 tableid = 2;
+	optional int32 chairid = 3;    //坐下来的位置
+}
+
+message gcsxyxsitdown      //当有玩家坐下来时，把该协议同时广播给牌桌里面所有的其他的玩家
+{
+	optional int32 result = 1;
+	optional int32 chairid = 2;
+	optional int32 situser = 3;
+	optional playersimpleinfo psinfo = 4;     //
+	
+}
+
+//站起
+message cgsxyxstandup    //当玩家上庄的时候,要把坐下的座位让出来
+{
+	optional int32 userid = 1;
+	optional int32 tableid = 2;
+	optional int32 chairid = 3;
+}
+message gcsxyxstandup    //当玩家上庄的时候,要把坐下的座位让出来
+{
+	optional int32 result = 1;
+	optional int32 userid = 2;
+	optional int32 chairid = 3;
+}
+
+//开始游戏
+message gcsxyxstart
+{
+	optional int32 result = 1;
+	optional int32 state = 2;
+	optional int32 timemark = 3;
+	optional playersimpleinfo bankerinfo = 4;
+	optional int32 bankerlistcount = 5; //上庄列表人数
+	optional int32 bankercount = 6;    //当庄后的游戏局数
+	repeated playersimpleinfo pslist = 7;     //坐在8个位置上的人物信息
+	optional string legalkey = 8;       //合法性验证的key,在牌局开始的时候生成。
+}
+
+//玩家的下注
+message cgsxyxpourjetton
+{
+	optional int32 userid = 1;
+	optional int32 tableid = 2;
+	optional int32 jetton = 3;   //下注的额度
+	optional int32 pourtype = 4;  //下注的类型
+	
+}
+
+message gcsxyxpourjetton
+{
+	optional int32 result = 1;
+	optional int32 userid = 2;    //如果检查到是坐在座位的玩家，需要客户端自己同步这里的数值
+	optional string jetton = 3;   //用string表示int64的数据类型
+	optional int32 pourtype = 4;   //下注的类型
+	optional int32 chairid = 5;    //
+	optional string alljetton = 6;  //玩家身上的总数,用string表示int64的数据类型
+}
+
+//无座玩家的下注
+message gcsxyxgroupjetton
+{
+	optional int32 result = 1;
+	repeated int32 pourtype = 2;
+	repeated int32 jetton = 3;
+	optional string remainpourjetton = 4;	// 剩余下注额度
+}
+
+//撤回押注
+message cgsxyxrevocation
+{
+	optional int32 userid = 1;
+	optional int32 tableid = 2;
+}
+
+message gcsxyxrevocation
+{
+	optional int32 result = 1;
+	repeated int32 pourtype = 2;
+	repeated int32 jetton = 3;
+}
+
+//发牌
+message gcsxyxsendcard
+{
+	optional int32 result = 1;			
+	repeated int32 xcardlist = 2; 	//闲的牌
+	repeated int32 zcardlist = 3; 	//庄的牌
+	optional int32 pilecardcont = 4; //剩下牌的数量
+	optional int32 state = 5;
+	optional int32 timemark = 6;
+}
+
+//结算
+message gcsxyxcount   //结算是服务器主动发送给玩家的
+{
+	optional int32 result = 1;
+	optional string selfwin = 2;        //自己赢的钱
+	optional string selfall = 3;        //自己所有的钱
+	optional string bankerwin = 5;      //庄家赢的数量,庄家是有正和负
+	optional string bankerall = 6;      //庄家所有的钱
+	optional string standwin = 7;       //站立的玩家赢的钱的总和
+	repeated int32 tuseridlist = 9;    //赢钱列表中有座玩家的UID
+	repeated string twinlist = 10;      //赢钱列表中有座玩家赢钱的数量
+	repeated string talllist = 11;      //赢钱列表中有座玩家的钱的总数
+	repeated int32 tpourtypelist = 12; //赢钱列表中有座玩家的赢钱的区域
+	optional int32 state = 13;         //状态
+	optional int32 timemark = 14;      //
+	optional int32 popularity = 15;     //显示在庄家旁边的人气值
+	optional int32 bankerid = 16;       //需要加上bankerid，如果庄家在结算的时候，有切换，不需要更新前端的数据
+	repeated int32 winpourtype = 17; 	//赢钱的区域
+	repeated int32 historylist = 18;	//历史列表
+	repeated string nicklist = 19;		//玩家收益的昵称列表
+	repeated string winjettonlist = 20;	//玩家收益的列表
+	optional int32 xpoint = 21; 		//闲点
+	optional int32 zpoint = 22; 		//庄点
+}
+
+//下一局
+message gcsxyxnext
+{
+	optional int32 result = 1;
+	optional int32 state = 2;
+	optional int32 timemark = 3;
+	optional int32 isshuffle = 4;	//是否洗牌， 0 不洗 1 洗牌
+	optional int32 iRemainCard = 5;  //洗完牌后的值
+	optional int32 iTotalCard = 6;  //洗牌之前
+	optional int32 iWipeoffCard = 7;  //去掉多少张牌
+	
+}
+
+//获得记录
+message cgsxyxhistory
+{
+	optional int32 userid = 1;
+	optional int32 pagenum = 2;  //一百条一次全部给完
+	optional int32 tableid = 3;
+}
+
+message gcsxyxhistory
+{
+	optional int32 result = 1;
+	repeated sxyxhistory historycount = 2;     
+}
+
+
+//获得房间列表
+message cgsxyxtablelist  //获取房间列表，每页显示8个
+{
+	optional int32 userid = 1;
+	optional int32 pagenum = 2;    //第几页
+}
+
+message gcsxyxtablelist
+{
+	optional int32 result = 1;
+	repeated int32 tableidlist = 2;
+	repeated int32 usernumlist = 3;
+	repeated string nicklist = 4;
+	repeated string facelist = 5;
+}
+
+//创建房间
+message cgsxyxcreatetable
+{
+	optional int32 userid = 1;
+	optional int32 maxuser = 2;  //最大人数
+	optional int32 minpour = 3;  //最小下注
+	optional string jetton = 4;   //上庄金币
+}
+
+message gcsxyxcreatetable
+{
+	optional int32 result = 1;
+	optional sxyxinfo hinfo = 2;
+}
+
+//上庄
+message cgsxyxbeingbanker
+{
+	optional int32 userid = 1;
+	optional string jetton = 2; 
+	optional int32 tableid = 3;
+	optional int32 actiontype = 4;	//1是上庄， 2是下庄
+	
+}
+
+message gcsxyxbeingbanker
+{
+	optional int32 result = 1;
+	optional playersimpleinfo bankerinfo = 2;   //庄家的信息	
+	optional int32 popularity = 3;              //如果上庄成功了，就必定是0，如果不成功，则不用处理
+}
+
+//下庄
+message cgsxyxdropbanker
+{
+	optional int32 userid = 1;   
+	optional int32 tableid = 3;
+}
+
+message gcsxyxdropbanker            
+{
+	optional int32 result = 1;
+	optional int32 userid = 2;
+}
+
+

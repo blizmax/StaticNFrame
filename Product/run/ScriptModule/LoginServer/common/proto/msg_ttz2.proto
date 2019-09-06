@@ -1,0 +1,67 @@
+package progame;
+import "st_human.proto";
+import "st_ttz.proto";
+
+message cgttzenter
+{
+	optional int32 userid = 1;  
+	optional int32 tableid = 2;    //如果是0，则随机分配
+	optional string password = 3;   //如果该牌桌是需要密码的
+	optional int32 tabletype = 4;   //加一个对应的类型
+}
+
+message gcttzenter
+{
+	optional int32            result = 1;
+	optional playersimpleinfo bankerinfo = 2;
+	repeated playersimpleinfo pslist = 3;     //坐在6个位置上的人物信息
+	optional int32            tableid = 4;
+	optional areaspour        pourtotal = 5;         //下注总额
+	optional areaspour        pourself  = 6;         //自己下注额      
+	optional areaspour        starpour  = 7;         //下注区域是否标星星   0不标记   1 标记
+	optional int32            state = 8;          //状态
+	optional int32            timemark = 9;       //时间标签
+	repeated int32            situser = 10;        //对应位置的userID，总共6个长度，在第几个非0就表示该座位有玩家	
+	optional int32            popularity = 11;     //这个是显示在庄家傍边的人气值
+	optional int32 			  tabletype = 12;
+	optional string 		  bankerlimit = 13;	   // 上庄限制
+	optional int32 			  bankerlistcount = 14;//上庄列表人数
+	optional int32 			  bankercount = 15;    //当庄后的游戏局数
+	repeated ttzpouerjetton   pouerlist = 16;
+	optional ttzplay 		  banker = 17;         //庄家牌型的信息
+	repeated ttzplay 		  playerlist = 18;     //闲家的牌型列表
+	optional dices 			  dice = 19;           //第骰子点数
+	optional int32 residuecardcount = 20;      	   //剩余牌数
+	optional string bankerjetton = 21; 		   //庄家全部筹码
+}
+
+message ccttreconnect
+{
+	optional int32            userid  = 1;
+	optional int32            tableid = 2;
+}
+
+message gcttreconnect
+{
+	optional int32            result = 1;
+	optional playersimpleinfo bankerinfo = 2;
+	repeated playersimpleinfo pslist = 3;     //坐在6个位置上的人物信息
+	optional int32            tableid = 4;
+	optional areaspour        pourtotal = 5;         //下注总额
+	optional areaspour        pourself  = 6;         //自己下注额      
+	optional areaspour        starpour  = 7;         //下注区域是否标星星   0不标记   1 标记
+	optional int32            state = 8;          //状态
+	optional int32            timemark = 9;       //时间标签
+	repeated int32            situser = 10;        //对应位置的userID，总共6个长度，在第几个非0就表示该座位有玩家	
+	optional int32            popularity = 11;     //这个是显示在庄家傍边的人气值
+	optional int32 			  tabletype = 12;
+	optional string 		  bankerlimit = 13;	   // 上庄限制
+	optional int32 			  bankerlistcount = 14;//上庄列表人数
+	optional int32 			  bankercount = 15;    //当庄后的游戏局数
+	repeated ttzpouerjetton   pouerlist = 16;
+	optional ttzplay 		  banker = 17;         //庄家牌型的信息
+	repeated ttzplay 		  playerlist = 18;     //闲家的牌型列表
+	optional dices 			  dice = 19;           //第骰子点数
+	optional int32 residuecardcount = 20;      	   //剩余牌数
+	optional string bankerjetton = 21; 		   //庄家全部筹码
+}

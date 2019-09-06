@@ -1,0 +1,53 @@
+package progame;
+import "st_human.proto";
+import "st_cjmp.proto";
+
+message gccjmphistory
+{
+	optional int32 result = 1;
+	repeated int32 allnum1 = 2;         //0是输，1是胜  allnum1: 1 黑赢 allnum1：2 红赢
+	repeated int32 allnum2 = 3;         //0是输，1是胜	allnum2 对应 赢的牌型
+	repeated int32 allnum3 = 4;         //0是输，1是胜
+	repeated int32 allnum4 = 5;         //0是输，1是胜
+	repeated int32 gamenum =6; //总局数
+	repeated int32 longnum =7;	//龙赢局数
+	repeated int32 hunum =8; //虎赢局数
+	repeated int32 henum =9; //和局数
+	optional int32 round = 10;	//轮数
+	optional int32 innings = 11; //局数
+}
+
+message gccjmpgamehistoryupdata
+{
+	optional int32 result = 1;
+	repeated int32 tableid = 2;
+	repeated int32 state = 3;
+	repeated int32 timemark = 4;
+	repeated string recordidentification = 5;	//记录的标识
+	repeated int32 allnum1 = 6;
+	repeated int32 allnum2 = 7;
+	repeated int32 allnum3  = 8;
+	repeated int32 allnum4  = 9;
+	repeated int32 wintype  = 10;
+	repeated int32 gamenum =11; //总局数
+	repeated int32 longnum =12;	//龙赢局数
+	repeated int32 hunum =13; //虎赢局数
+	repeated int32 henum =14; //和局数
+}
+
+message gccjmpstart
+{
+	optional int32 result = 1;
+	optional int32 state = 2;
+	optional int32 timemark = 3;
+	optional cjmpinfo hinfo = 4;  //带上对应的结构体
+	repeated playersimpleinfo pslist = 5;     //坐在8个位置上的人物信息
+	optional int32 round = 6;//轮数
+	optional int32 innings = 7;//局数
+	optional int32 playtype = 8; //玩法 1：正常 2：半明牌 3：明牌
+	optional int32 dianshu = 9; //点数
+	optional int32 huase = 10; //花色
+	optional string canjetton = 11;   //明牌时 可以下注的最大值
+	optional string legalkey = 12;       //合法性验证的key,在牌局开始的时候生成。
+}
+

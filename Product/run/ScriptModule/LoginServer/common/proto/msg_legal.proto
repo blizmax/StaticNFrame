@@ -1,0 +1,32 @@
+package progame;
+
+
+message cglegalcheck
+{
+	optional string legalkey = 1;    //下发查询的key
+	optional int32 userid = 2;
+	optional int32 checktype = 3;	//1 公平性验证 2 三方验证
+}
+
+message gclegalcheck
+{
+	optional int32 result = 1;     //
+	optional string cardarr = 2;   //查询的结果
+	optional string checkurl = 3;  //跳转到浏览器的链接
+	optional int32 checktype = 4;	//1 公平性验证 2 三方验证
+	optional int32 tableid = 5;		//牌桌id
+}
+
+message cglegallist    //查询公平性验证的列表。目前只返回最新的10个
+{
+	optional int32 pagenum = 1;
+	optional int32 tableid = 2;
+	optional int32 userid = 3;
+}
+
+message gclegallist
+{
+	optional int32 result = 1;
+	repeated string legalkeylist = 2;
+	repeated string cardarrlist = 3;
+}

@@ -1,0 +1,157 @@
+package progame;
+import "st_forest.proto";
+import "st_human.proto";
+message cgforestenter
+{
+	//进入森林舞会
+	optional int32 userid = 1;
+	optional int32 tabletype = 2;    //牌桌类型，如果是0，表示快速进入,g_forestDefine.table_type
+}
+
+message gcforestenter
+{
+	optional int32 result = 1;
+	optional forestinfo finfo = 2;      //进入森林舞会
+	repeated forestpour pourlist = 3;   //已经下注的列表
+	repeated forestpour mypour = 4;     //我自己下注的信息
+}
+ 
+message cgforestleave
+{
+	optional int32 userid = 1;
+	optional int32 tableid = 2;  //离开森林舞会
+}
+
+message gcforestleave
+{
+	optional int32 result = 1;
+	optional int32 userid = 2;
+	optional int32 leavetype = 4;
+	optional string msg = 5;
+}
+
+message cgforestpour
+{
+	optional int32 userid = 1;
+	optional int32 tableid = 2;
+	optional int32 pourid = 3;       //下注的ID
+	optional int32 pourjetton = 4;   //下注的筹码
+}
+
+message gcforestpour   //下注的信息，在这个时候，客户端自己更新面板的数据
+{
+	optional int32 result = 1;
+	optional int32 userid = 2;
+	optional int32 pourid = 3;
+	optional int32 pourjetton = 4;
+}
+
+message cgforestupdatepour
+{
+	optional int32 userid = 1;
+	optional int32 tableid = 2;
+}
+
+message gcforestupdatepour    //更新每个列表的数据，每一秒都需要更新
+{
+	optional int32 result = 1;
+	repeated int32 pourid= 2;   //下注的ID
+	repeated int32 pourjetton = 3; //下注的金额
+}
+
+message gcforestcount    //结算
+{
+	optional int32 result = 1;
+	repeated int32 winid = 2;    //开的那个奖项
+	optional string bankerwin = 3;   //用string表示int64
+	optional int32 userid = 4;
+	optional int32 mywin = 5;   //胜利的得分
+	optional int32 timemark = 6;   //结算时间
+	repeated int32 indexlist = 7;    //winid的位置索引
+	optional int32 specialtype = 8;   //特殊类型
+	optional int32 specialnum = 9;    //某些特殊的牌型，例如加倍，送彩金，就需要额外的数字来表示
+	repeated int32 colourlist = 10;   //颜色列表
+}
+
+message cgforestplayerlist    //获取玩家类别
+{
+	optional int32 userid = 1;
+	optional int32 tableid = 2;
+	optional int32 pagenum = 3;   //按照分页来显示，每页显示10个
+	optional int32 gettype = 4;   //1是获取玩家列表，2是获取上庄列表
+}
+
+message gcforestplayerlist
+{
+	optional int32 result = 1;
+	repeated playersimpleinfo plist = 2;  //玩家列表
+	optional int32 gettype = 3;     //1是获取玩家列表，2是获取上庄列表
+}
+
+
+
+message cgforestbebanker
+{
+	//申请上庄
+	optional int32 userid = 1;
+	optional int32 tableid = 2;
+}
+
+message gcforestbebanker   //上庄，这个需要同时广播给牌桌的所有人
+{
+	optional int32 result = 1;
+	optional int32 userid = 2;
+	optional string msg = 3;   //上庄的消息返回
+}
+
+message cgforestdropbanker
+{
+	optional int32 userid = 1;
+	optional int32 tableid = 2;
+}
+
+message gcforestdropbanker
+{
+	optional int32 result = 1;
+	optional int32 userid = 2;
+}
+
+message cgforestbankerlist   //系统选定，等候上庄的玩家不能超过10个，超过十个，就提示到别的场次
+{
+	optional int32 userid = 1;
+	optional int32 tableid = 2;
+}
+message gcforestbankerlist   //系统选定，等候上庄的玩家不能超过10个，超过十个，就提示到别的场次
+{
+	optional int32 result = 1;
+	repeated playersimpleinfo plist = 2;  //庄家列表，里面的jetton表示庄家上庄的金币
+}
+
+message gcforeststart  //发消息通知前端开始
+{
+	optional int32 result = 1;
+	optional forestinfo finfo = 2;
+}
+
+message gcforestupdate
+{
+	optional int32 result = 1;
+	optional forestinfo finfo = 2;
+}
+
+message cgforestchat
+{
+	optional int32 senderid = 1;
+	optional string sender = 2;
+	optional int32 chattype = 3;   //对应g_brnnDefine.chat 中的类型
+	optional string msg = 4;
+	optional int32 tableid = 5;    //牌桌的ID	
+}
+message gcforestchat{
+	optional int32 result = 1;
+	optional int32 chatdate = 2;   //聊天时间
+	optional int32 senderid = 3;
+	optional string sender = 4;
+	optional int32 chattype = 5;
+	optional string msg = 6;
+}

@@ -1,0 +1,194 @@
+
+package progame;
+import "st_human.proto";
+import "st_shop.proto";
+
+message cgcommissionget
+{
+	optional int32 userid = 1;
+	optional int32 requesttype = 2; //1 获取佣金信息 2 领取佣金
+}
+
+message gccommissionget
+{
+	optional int32 result = 1;
+	optional int32 userid = 2;
+	optional int32 requesttype = 3; 
+	optional int32 subordinatecount_1 = 4;		//一级下属佣金
+	optional int32 subordinatecount_2 = 5;		//二级下属佣金
+	optional int32 subordinatecount_3 = 6;		//三级下属佣金
+	optional int32 subordinatenum_1 = 7;		//一下下属人人数
+	optional int32 subordinatenum_2 = 8;		//一下下属人人数
+	optional int32 subordinatenum_3 = 9;		//一下下属人人数
+	optional int32 commissioncount = 10; 		//累计佣金
+	optional int32 getcommission = 11;			//领取到的佣金
+}
+
+message cgtxinfogetorbind   //获得与绑定
+{
+	optional int32 userid = 1;
+	optional int32 infotype = 2;		// 1 支付宝 2银行卡
+	optional int32 requesttype = 3;		// 1获取信息 2 绑定
+	optional string aliaccount = 4;		//支付宝账号
+	optional string alipayee = 5;		//支付宝收款人
+	optional string bankaccount = 6;		//银行卡账号
+	optional string bankpayee = 7;		//银行卡收款人
+	optional string bankname = 8;		//开户银行
+	optional string bankaddress = 9;		//开户行支行
+}
+
+message gctxinfogetorbind
+{
+	optional int32 result = 1;
+	optional int32 userid = 2;
+	optional int32 infotype = 3;       // 1 支付宝 2银行卡
+	optional int32 requesttype = 4;    // 1获取信息 2 绑定
+	optional string aliaccount = 5;	   //支付宝账号
+	optional string bankaccount = 6;    //银行卡账号
+}
+
+message cgwithdrawdeposit   // 提现
+{
+	optional int32 userid = 1;
+	optional int32 infotype = 2;	   // 1 支付宝 2银行卡
+	optional int32 txcount = 3;	   	   // 提现金额
+
+}
+ 
+message gcwithdrawdeposit
+{
+	optional int32 result = 1;
+	optional int32 userid = 2;
+	optional int32 infotype = 3;	  // 1 支付宝 2银行卡
+	optional int32 txcount = 4;		  // 提现金额
+	optional int32 nowjetton = 5;	  // 当前金额
+}
+
+message cgcounthistory   //结算记录
+{
+	optional int32 userid = 1;
+	optional int32 pagenum = 2;	   
+
+}
+ 
+message gccounthistory
+{
+	optional int32 result = 1;
+	optional int32 userid = 2;
+	optional int32 pagenum = 3;	  
+	repeated int32 counttype = 4;	//结算方式: 1 支付宝 2银行卡
+	repeated string countcode = 5;	//结算订单
+	repeated int32 txcount = 6;		//结算金额
+	repeated string counttime = 7;	//结算日期
+	repeated int32 countstate = 8;	//结算状态
+	repeated string nikename = 9;	//账户名
+	repeated string account = 10;	//账号
+	repeated int32 servicecharge = 11;	//手续费
+	repeated int32 actualcount = 12;	//实际到账金额
+	repeated string applytime = 13;	//申请时间
+	repeated string msg = 14;		//驳回原因
+}
+
+message cgbindphone   //结算记录
+{
+	optional int32 userid = 1;
+	optional string phonenumber = 2;	   
+	optional string authcode = 3;
+	optional string password = 4;     //有部分需要输入密码，如果输入密码了，那么就说明用改手机也可以登入。	   
+}
+ 
+message gcbindphone
+{
+	optional int32 result = 1;
+	optional int32 userid = 2;
+	optional string phonenumber = 3;	   
+}
+
+message cgluckwheel
+{
+	optional int32 userid = 1;
+} 
+
+message gcluckwheel
+{
+	optional int32 result = 1;
+	optional int32 userid = 2;
+	optional int32 reState = 3;			//1是可以抽奖 2是已经抽过了 3是没有抽奖资格
+	repeated int32 jettonlist = 4; 		//开奖列表
+	optional int32 rejetton = 5;		//如果已经抽奖了， 抽到的结果
+	optional string achievement = 6;  	//业绩流水
+}
+
+message cgluckwheelstart 
+{
+	optional int32 userid = 1;
+}
+
+message gcluckwheelstart
+{
+	optional int32 result = 1;
+	optional int32 userid = 2;
+	optional int32 rejetton = 3;		//抽到的结果
+}
+
+message cgmodifypassword
+{
+	optional int32 userid = 1;      //用户ID，如果是在游戏里面，那么就需要提供userid。
+	optional string phonenumber = 2;  //手机号码
+	optional string vericode = 3;    //验证码
+	optional string password = 4;    //密码
+}
+
+
+message gcmodyfipassword
+{
+	optional int32 result = 1;
+	optional string msg = 2;
+}
+
+
+//人脉
+message cgactivityconnections
+{
+	optional int32 userid =1;
+	optional int32 ctype = 2;	//请求类型：1今日排行  2昨日排行
+}
+
+message gcactivityconnections
+{
+	optional int32 result = 1; 
+	optional int32 ctype = 2;			//请求类型：1今日排行  2昨日排行
+	optional int32 selfranking = 3;		//我的排名
+	optional string selfjifen = 4;		//我的积分
+	
+	repeated int32 ranking = 5;			//排名
+	repeated int32 useridlist = 6;		//ID
+	repeated string nicknamelist = 7;	//昵称
+	repeated string jifenlist = 8; 		//积分
+}
+
+//英雄
+message cgactivityhero
+{
+	optional int32 userid =1;
+	optional int32 ctype = 2;	//请求类型：1今日排行  2昨日排行
+}
+
+message gcactivityhero
+{
+	optional int32 result = 1; 
+	optional int32 ctype = 2;			//请求类型：1今日排行  2昨日排行
+	optional int32 selfranking = 3;		//我的排名
+	optional string selfjifen = 4;		//我的积分
+	
+	repeated int32 ranking = 5;			//排名
+	repeated int32 useridlist = 6;		//ID
+	repeated string nicknamelist = 7;	//昵称
+	repeated string jifenlist = 8; 		//积分
+	
+	repeated int32 prizeuseridlist = 9;			//中奖ID
+	repeated string prizenicknamelist = 10;		//中奖昵称
+}
+
+
+

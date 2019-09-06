@@ -1,0 +1,57 @@
+
+package progame;
+import "st_human.proto";
+import "st_shop.proto";
+
+message cguserawardinfo     //领奖的信息的,哪一天领过了，哪一天没有领取
+{
+	optional int32 userid = 1;
+	optional int32 awardtype = 2;   //奖励的类型，对应：g_userAward 的枚举
+}
+
+message gcuserawardinfo
+{
+	optional int32 result = 1;
+	optional int32 awardtype = 2;     //对应奖励项的ID
+	repeated useraward alist = 4;    //回应获取了奖励项后的状态	
+}
+
+message cggetuseraward    //这里是领奖
+{
+	optional int32 userid = 1;
+	optional int32 awardtype = 2;   //奖励的类型，对应：g_userAward 的枚举
+	optional int32 timemark = 3;   //对应的时间，或者天数的标签
+}
+
+message gcgetuseraward
+{
+	optional int32 result = 1;
+	optional int32 awardtype = 2;     //对应奖励项的ID
+	optional playerinfo pinfo = 3;    //
+	optional useraward ainfo = 4;    //回应获取了奖励项后的状态	
+}
+
+message cgexchangegifts
+{
+	optional int32 userid = 1;
+	optional string excode = 2;      //兑换码
+}
+
+message gcexchangegifts
+{
+	optional int32 result = 1;       //只是返回对应
+	optional int32 awardtype = 2;    //对应奖励项的ID
+	repeated useraward alist = 4;    //回应获取了奖励项后的状态		
+}
+
+
+message cgcheckbindcode
+{
+	optional string bindcode = 1;
+}
+
+message gccheckbindcode
+{
+	optional int32 result = 1;
+	optional string msg = 2;
+}

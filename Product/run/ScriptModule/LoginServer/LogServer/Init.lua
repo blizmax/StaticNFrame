@@ -1,0 +1,3 @@
+
+
+require("LogServer.Model.LogBehavior")
