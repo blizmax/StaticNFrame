@@ -39,7 +39,7 @@ namespace protobuf_server_5fmsg_2eproto {
 struct TableStruct {
   static const ::google::protobuf::internal::ParseTableField entries[];
   static const ::google::protobuf::internal::AuxillaryParseTableField aux[];
-  static const ::google::protobuf::internal::ParseTable schema[2];
+  static const ::google::protobuf::internal::ParseTable schema[3];
   static const ::google::protobuf::internal::FieldMetadata field_metadata[];
   static const ::google::protobuf::internal::SerializationTable serialization_table[];
   static const ::google::protobuf::uint32 offsets[];
@@ -47,6 +47,9 @@ struct TableStruct {
 void AddDescriptors();
 }  // namespace protobuf_server_5fmsg_2eproto
 namespace NFMsg {
+class ServerErrorLogMsg;
+class ServerErrorLogMsgDefaultTypeInternal;
+extern ServerErrorLogMsgDefaultTypeInternal _ServerErrorLogMsg_default_instance_;
 class ServerInfoReport;
 class ServerInfoReportDefaultTypeInternal;
 extern ServerInfoReportDefaultTypeInternal _ServerInfoReport_default_instance_;
@@ -56,6 +59,7 @@ extern ServerInfoReportListDefaultTypeInternal _ServerInfoReportList_default_ins
 }  // namespace NFMsg
 namespace google {
 namespace protobuf {
+template<> ::NFMsg::ServerErrorLogMsg* Arena::CreateMaybeMessage<::NFMsg::ServerErrorLogMsg>(Arena*);
 template<> ::NFMsg::ServerInfoReport* Arena::CreateMaybeMessage<::NFMsg::ServerInfoReport>(Arena*);
 template<> ::NFMsg::ServerInfoReportList* Arena::CreateMaybeMessage<::NFMsg::ServerInfoReportList>(Arena*);
 }  // namespace protobuf
@@ -483,6 +487,154 @@ class ServerInfoReportList : public ::google::protobuf::Message /* @@protoc_inse
 
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
   ::google::protobuf::RepeatedPtrField< ::NFMsg::ServerInfoReport > server_list_;
+  mutable ::google::protobuf::internal::CachedSize _cached_size_;
+  friend struct ::protobuf_server_5fmsg_2eproto::TableStruct;
+};
+// -------------------------------------------------------------------
+
+class ServerErrorLogMsg : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:NFMsg.ServerErrorLogMsg) */ {
+ public:
+  ServerErrorLogMsg();
+  virtual ~ServerErrorLogMsg();
+
+  ServerErrorLogMsg(const ServerErrorLogMsg& from);
+
+  inline ServerErrorLogMsg& operator=(const ServerErrorLogMsg& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  #if LANG_CXX11
+  ServerErrorLogMsg(ServerErrorLogMsg&& from) noexcept
+    : ServerErrorLogMsg() {
+    *this = ::std::move(from);
+  }
+
+  inline ServerErrorLogMsg& operator=(ServerErrorLogMsg&& from) noexcept {
+    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
+      if (this != &from) InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+  #endif
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const ServerErrorLogMsg& default_instance();
+
+  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
+  static inline const ServerErrorLogMsg* internal_default_instance() {
+    return reinterpret_cast<const ServerErrorLogMsg*>(
+               &_ServerErrorLogMsg_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    2;
+
+  void Swap(ServerErrorLogMsg* other);
+  friend void swap(ServerErrorLogMsg& a, ServerErrorLogMsg& b) {
+    a.Swap(&b);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline ServerErrorLogMsg* New() const final {
+    return CreateMaybeMessage<ServerErrorLogMsg>(NULL);
+  }
+
+  ServerErrorLogMsg* New(::google::protobuf::Arena* arena) const final {
+    return CreateMaybeMessage<ServerErrorLogMsg>(arena);
+  }
+  void CopyFrom(const ::google::protobuf::Message& from) final;
+  void MergeFrom(const ::google::protobuf::Message& from) final;
+  void CopyFrom(const ServerErrorLogMsg& from);
+  void MergeFrom(const ServerErrorLogMsg& from);
+  void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input) final;
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const final;
+  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
+      bool deterministic, ::google::protobuf::uint8* target) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(ServerErrorLogMsg* other);
+  private:
+  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
+    return NULL;
+  }
+  inline void* MaybeArenaPtr() const {
+    return NULL;
+  }
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // string error_log = 1;
+  void clear_error_log();
+  static const int kErrorLogFieldNumber = 1;
+  const ::std::string& error_log() const;
+  void set_error_log(const ::std::string& value);
+  #if LANG_CXX11
+  void set_error_log(::std::string&& value);
+  #endif
+  void set_error_log(const char* value);
+  void set_error_log(const char* value, size_t size);
+  ::std::string* mutable_error_log();
+  ::std::string* release_error_log();
+  void set_allocated_error_log(::std::string* error_log);
+
+  // string func_log = 2;
+  void clear_func_log();
+  static const int kFuncLogFieldNumber = 2;
+  const ::std::string& func_log() const;
+  void set_func_log(const ::std::string& value);
+  #if LANG_CXX11
+  void set_func_log(::std::string&& value);
+  #endif
+  void set_func_log(const char* value);
+  void set_func_log(const char* value, size_t size);
+  ::std::string* mutable_func_log();
+  ::std::string* release_func_log();
+  void set_allocated_func_log(::std::string* func_log);
+
+  // string server_name = 4;
+  void clear_server_name();
+  static const int kServerNameFieldNumber = 4;
+  const ::std::string& server_name() const;
+  void set_server_name(const ::std::string& value);
+  #if LANG_CXX11
+  void set_server_name(::std::string&& value);
+  #endif
+  void set_server_name(const char* value);
+  void set_server_name(const char* value, size_t size);
+  ::std::string* mutable_server_name();
+  ::std::string* release_server_name();
+  void set_allocated_server_name(::std::string* server_name);
+
+  // uint64 player_id = 3;
+  void clear_player_id();
+  static const int kPlayerIdFieldNumber = 3;
+  ::google::protobuf::uint64 player_id() const;
+  void set_player_id(::google::protobuf::uint64 value);
+
+  // @@protoc_insertion_point(class_scope:NFMsg.ServerErrorLogMsg)
+ private:
+
+  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+  ::google::protobuf::internal::ArenaStringPtr error_log_;
+  ::google::protobuf::internal::ArenaStringPtr func_log_;
+  ::google::protobuf::internal::ArenaStringPtr server_name_;
+  ::google::protobuf::uint64 player_id_;
   mutable ::google::protobuf::internal::CachedSize _cached_size_;
   friend struct ::protobuf_server_5fmsg_2eproto::TableStruct;
 };
@@ -1059,9 +1211,188 @@ ServerInfoReportList::server_list() const {
   return server_list_;
 }
 
+// -------------------------------------------------------------------
+
+// ServerErrorLogMsg
+
+// string error_log = 1;
+inline void ServerErrorLogMsg::clear_error_log() {
+  error_log_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline const ::std::string& ServerErrorLogMsg::error_log() const {
+  // @@protoc_insertion_point(field_get:NFMsg.ServerErrorLogMsg.error_log)
+  return error_log_.GetNoArena();
+}
+inline void ServerErrorLogMsg::set_error_log(const ::std::string& value) {
+  
+  error_log_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:NFMsg.ServerErrorLogMsg.error_log)
+}
+#if LANG_CXX11
+inline void ServerErrorLogMsg::set_error_log(::std::string&& value) {
+  
+  error_log_.SetNoArena(
+    &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+  // @@protoc_insertion_point(field_set_rvalue:NFMsg.ServerErrorLogMsg.error_log)
+}
+#endif
+inline void ServerErrorLogMsg::set_error_log(const char* value) {
+  GOOGLE_DCHECK(value != NULL);
+  
+  error_log_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:NFMsg.ServerErrorLogMsg.error_log)
+}
+inline void ServerErrorLogMsg::set_error_log(const char* value, size_t size) {
+  
+  error_log_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:NFMsg.ServerErrorLogMsg.error_log)
+}
+inline ::std::string* ServerErrorLogMsg::mutable_error_log() {
+  
+  // @@protoc_insertion_point(field_mutable:NFMsg.ServerErrorLogMsg.error_log)
+  return error_log_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline ::std::string* ServerErrorLogMsg::release_error_log() {
+  // @@protoc_insertion_point(field_release:NFMsg.ServerErrorLogMsg.error_log)
+  
+  return error_log_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline void ServerErrorLogMsg::set_allocated_error_log(::std::string* error_log) {
+  if (error_log != NULL) {
+    
+  } else {
+    
+  }
+  error_log_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), error_log);
+  // @@protoc_insertion_point(field_set_allocated:NFMsg.ServerErrorLogMsg.error_log)
+}
+
+// string func_log = 2;
+inline void ServerErrorLogMsg::clear_func_log() {
+  func_log_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline const ::std::string& ServerErrorLogMsg::func_log() const {
+  // @@protoc_insertion_point(field_get:NFMsg.ServerErrorLogMsg.func_log)
+  return func_log_.GetNoArena();
+}
+inline void ServerErrorLogMsg::set_func_log(const ::std::string& value) {
+  
+  func_log_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:NFMsg.ServerErrorLogMsg.func_log)
+}
+#if LANG_CXX11
+inline void ServerErrorLogMsg::set_func_log(::std::string&& value) {
+  
+  func_log_.SetNoArena(
+    &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+  // @@protoc_insertion_point(field_set_rvalue:NFMsg.ServerErrorLogMsg.func_log)
+}
+#endif
+inline void ServerErrorLogMsg::set_func_log(const char* value) {
+  GOOGLE_DCHECK(value != NULL);
+  
+  func_log_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:NFMsg.ServerErrorLogMsg.func_log)
+}
+inline void ServerErrorLogMsg::set_func_log(const char* value, size_t size) {
+  
+  func_log_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:NFMsg.ServerErrorLogMsg.func_log)
+}
+inline ::std::string* ServerErrorLogMsg::mutable_func_log() {
+  
+  // @@protoc_insertion_point(field_mutable:NFMsg.ServerErrorLogMsg.func_log)
+  return func_log_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline ::std::string* ServerErrorLogMsg::release_func_log() {
+  // @@protoc_insertion_point(field_release:NFMsg.ServerErrorLogMsg.func_log)
+  
+  return func_log_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline void ServerErrorLogMsg::set_allocated_func_log(::std::string* func_log) {
+  if (func_log != NULL) {
+    
+  } else {
+    
+  }
+  func_log_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), func_log);
+  // @@protoc_insertion_point(field_set_allocated:NFMsg.ServerErrorLogMsg.func_log)
+}
+
+// uint64 player_id = 3;
+inline void ServerErrorLogMsg::clear_player_id() {
+  player_id_ = GOOGLE_ULONGLONG(0);
+}
+inline ::google::protobuf::uint64 ServerErrorLogMsg::player_id() const {
+  // @@protoc_insertion_point(field_get:NFMsg.ServerErrorLogMsg.player_id)
+  return player_id_;
+}
+inline void ServerErrorLogMsg::set_player_id(::google::protobuf::uint64 value) {
+  
+  player_id_ = value;
+  // @@protoc_insertion_point(field_set:NFMsg.ServerErrorLogMsg.player_id)
+}
+
+// string server_name = 4;
+inline void ServerErrorLogMsg::clear_server_name() {
+  server_name_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline const ::std::string& ServerErrorLogMsg::server_name() const {
+  // @@protoc_insertion_point(field_get:NFMsg.ServerErrorLogMsg.server_name)
+  return server_name_.GetNoArena();
+}
+inline void ServerErrorLogMsg::set_server_name(const ::std::string& value) {
+  
+  server_name_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:NFMsg.ServerErrorLogMsg.server_name)
+}
+#if LANG_CXX11
+inline void ServerErrorLogMsg::set_server_name(::std::string&& value) {
+  
+  server_name_.SetNoArena(
+    &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+  // @@protoc_insertion_point(field_set_rvalue:NFMsg.ServerErrorLogMsg.server_name)
+}
+#endif
+inline void ServerErrorLogMsg::set_server_name(const char* value) {
+  GOOGLE_DCHECK(value != NULL);
+  
+  server_name_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:NFMsg.ServerErrorLogMsg.server_name)
+}
+inline void ServerErrorLogMsg::set_server_name(const char* value, size_t size) {
+  
+  server_name_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:NFMsg.ServerErrorLogMsg.server_name)
+}
+inline ::std::string* ServerErrorLogMsg::mutable_server_name() {
+  
+  // @@protoc_insertion_point(field_mutable:NFMsg.ServerErrorLogMsg.server_name)
+  return server_name_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline ::std::string* ServerErrorLogMsg::release_server_name() {
+  // @@protoc_insertion_point(field_release:NFMsg.ServerErrorLogMsg.server_name)
+  
+  return server_name_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline void ServerErrorLogMsg::set_allocated_server_name(::std::string* server_name) {
+  if (server_name != NULL) {
+    
+  } else {
+    
+  }
+  server_name_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), server_name);
+  // @@protoc_insertion_point(field_set_allocated:NFMsg.ServerErrorLogMsg.server_name)
+}
+
 #ifdef __GNUC__
   #pragma GCC diagnostic pop
 #endif  // __GNUC__
+// -------------------------------------------------------------------
+
 // -------------------------------------------------------------------
 
 

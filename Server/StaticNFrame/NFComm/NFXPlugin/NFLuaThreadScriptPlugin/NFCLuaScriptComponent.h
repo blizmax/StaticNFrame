@@ -529,6 +529,8 @@ public:
 
 	virtual void TcpSessionClose(uint64_t playerId);
 	virtual void TcpSessionReport(uint64_t playerId, const std::string& ip);
+
+	virtual void SendErrorLog(uint64_t playerId, const std::string& func_log, const std::string& errorLog);
 public:
 	bool Register();
 	void LoadScript();

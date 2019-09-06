@@ -273,6 +273,11 @@ uint64_t NFCLuaScriptComponent::GetSecTime() const
 	return NFTime::Now().UnixSec();
 }
 
+void NFCLuaScriptComponent::SendErrorLog(uint64_t playerId, const std::string& func_log, const std::string& errorLog)
+{
+	m_pLuaThreadModule->AddErrorLog(playerId, func_log, errorLog);
+}
+
 bool NFCLuaScriptComponent::Register()
 {
 	LuaIntf::LuaBinding(l).beginClass<NFCLuaScriptComponent>("NFCLuaScriptComponent")
@@ -310,6 +315,7 @@ bool NFCLuaScriptComponent::Register()
 		.addFunction("Sha256", &NFCLuaScriptComponent::Sha256)
 		.addFunction("Platfrom", &NFCLuaScriptComponent::Platfrom)
 		.addFunction("IsThreadModule", &NFCLuaScriptComponent::IsThreadModule)
+		.addFunction("SendErrorLog", &NFCLuaScriptComponent::SendErrorLog)
 		.endClass();
 	return true;
 }

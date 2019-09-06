@@ -241,6 +241,18 @@ function LuaNFrame.SetFlushOn(level)
     CPPNFrame:SetFlushOn(level)
 end
 
+LuaNFrame.ErrorLogMsg = LuaNFrame.ErrorLogMsg or {}
+function LuaNFrame.SendErrorLog(playerId, func_log, errorLog)
+	LuaNFrame.Error(NFLogId.NF_LOG_SYSTEMLOG, playerId,  func_log)
+	LuaNFrame.Error(NFLogId.NF_LOG_SYSTEMLOG, playerId, errorLog)
+
+	local error_md5 = LuaNFrame.GetMD5(errorLog)
+	if LuaNFrame.ErrorLogMsg[error_md5] == nil then
+		LuaNFrame.ErrorLogMsg[error_md5] = errorLog
+		CPPNFrame:SendErrorLog(playerId, func_log, errorLog)
+	end
+end
+
 function LuaNFrame.Debug(logId, guid, ...)
 	local cStackInfo = debug.getinfo(2, "Sl")
 	if cStackInfo then
@@ -339,8 +351,7 @@ function LuaNFrame.LoginServer_DispatchTcp(unLinkId, valueId, nMsgId, strMsg)
 	local status, msg = xpcall (TcpExecute, __G__TRACKBACK__)
 
 	if not status then
-		LuaNFrame.Error(NFLogId.NF_LOG_SYSTEMLOG, 0,  "LuaNFrame.LoginServer_DispatchTcp error, unLinkId:"..tostring(unLinkId).." valueId:"..tostring(valueId).." nMsgId:"..nMsgId)
-        LuaNFrame.Error(NFLogId.NF_LOG_SYSTEMLOG, 0, msg)
+		LuaNFrame.SendErrorLog(valueId, "LuaNFrame.LoginServer_DispatchTcp error, unLinkId:"..tostring(unLinkId).." valueId:"..tostring(valueId).." nMsgId:"..nMsgId, msg)
     end
 end
 
@@ -359,7 +370,7 @@ function LuaNFrame.DispatchTcp(unLinkId, valueId, nMsgId, strMsg)
 			end
 			--登录协议特殊处理一下
 			if nMsgId == 1001 then
-				LuaNFrame.SendMsgToPlayer(unLinkId, valueId, retMsgID, retBufferLen, retString)
+				xLuaNFrame.SendMsgToPlayer(unLinkId, valueId, retMsgID, retBufferLen, retString)
 			else
 				LuaNFrame.SendMsgToPlayer(unLinkId, playerID, retMsgID, retBufferLen, retString)
 			end
@@ -369,8 +380,7 @@ function LuaNFrame.DispatchTcp(unLinkId, valueId, nMsgId, strMsg)
 	local status, msg = xpcall (TcpExecute, __G__TRACKBACK__)
 
 	if not status then
-		LuaNFrame.Error(NFLogId.NF_LOG_SYSTEMLOG, 0,  "LuaNFrame.DispatchTcp error, unLinkId:"..tostring(unLinkId).." valueId:"..tostring(valueId).." nMsgId:"..nMsgId)
-        LuaNFrame.Error(NFLogId.NF_LOG_SYSTEMLOG, 0, msg)
+		LuaNFrame.SendErrorLog(valueId, "LuaNFrame.DispatchTcp error, unLinkId:"..tostring(unLinkId).." valueId:"..tostring(valueId).." nMsgId:"..nMsgId, msg)
     end
 end
 
@@ -392,8 +402,7 @@ function LuaNFrame.DispatchWorldTcp(unLinkId, valueId, nMsgId, strMsg)
 	local status, msg = xpcall (TcpExecute, __G__TRACKBACK__)
 
 	if not status then
-		LuaNFrame.Error(NFLogId.NF_LOG_SYSTEMLOG, 0,  "LuaNFrame.DispatchWorldTcp error, unLinkId:"..tostring(unLinkId).." valueId:"..tostring(valueId).." nMsgId:"..nMsgId)
-        LuaNFrame.Error(NFLogId.NF_LOG_SYSTEMLOG, 0, msg)
+		LuaNFrame.SendErrorLog(valueId, "LuaNFrame.DispatchWorldTcp error, unLinkId:"..tostring(unLinkId).." valueId:"..tostring(valueId).." nMsgId:"..nMsgId, msg)
     end
 end
 
@@ -414,8 +423,7 @@ function LuaNFrame.DispatchMasterTcp(unLinkId, valueId, nMsgId, strMsg)
 	local status, msg = xpcall (TcpExecute, __G__TRACKBACK__)
 
 	if not status then
-		LuaNFrame.Error(NFLogId.NF_LOG_SYSTEMLOG, 0,  "LuaNFrame.DispatchMasterTcp error, unLinkId:"..tostring(unLinkId).." valueId:"..tostring(valueId).." nMsgId:"..nMsgId)
-        LuaNFrame.Error(NFLogId.NF_LOG_SYSTEMLOG, 0, msg)
+		LuaNFrame.SendErrorLog(valueId, "LuaNFrame.DispatchMasterTcp error, unLinkId:"..tostring(unLinkId).." valueId:"..tostring(valueId).." nMsgId:"..nMsgId, msg)
     end
 end
 
@@ -435,8 +443,7 @@ function LuaNFrame.DispatchMasterHttp(unLinkId, requestId, firstPath, secondPath
 	local status, msg = xpcall (HttpExecute, __G__TRACKBACK__)
 
 	if not status then
-		LuaNFrame.Error(NFLogId.NF_LOG_SYSTEMLOG, 0,  "LuaNFrame.DispatchMasterHttp error, unLinkId:"..tostring(unLinkId)..", requestId:"..tostring(requestId)..", firstPath:"..firstPath..", secondPath:"..secondPath)
-        LuaNFrame.Error(NFLogId.NF_LOG_SYSTEMLOG, 0, msg)
+		LuaNFrame.SendErrorLog(valueId, "LuaNFrame.DispatchMasterHttp error, unLinkId:"..tostring(unLinkId)..", requestId:"..tostring(requestId)..", firstPath:"..firstPath..", secondPath:"..secondPath, msg)
     end
 end
 
@@ -455,8 +462,7 @@ function LuaNFrame.DispatchTimer(luaFunc, dataStr)
 	local status, msg = xpcall (timerExecute, __G__TRACKBACK__)
 
 	if not status then
-		LuaNFrame.Error(NFLogId.NF_LOG_SYSTEMLOG, 0,  "LuaNFrame.DispatchTimer error, func:"..luaFunc.." param:"..tostring(dataStr))
-        LuaNFrame.Error(NFLogId.NF_LOG_SYSTEMLOG, 0, msg)
+		LuaNFrame.SendErrorLog(valueId, "LuaNFrame.DispatchTimer error, func:"..luaFunc.." param:"..tostring(dataStr), msg)
     end
 end
 
@@ -469,8 +475,7 @@ function LuaNFrame.DispatchTimerLoop(dataStr)
 	local status, msg = xpcall (timerExecute, __G__TRACKBACK__)
 
 	if not status then
-		LuaNFrame.Error(NFLogId.NF_LOG_SYSTEMLOG, 0,  "LuaNFrame.DispatchTimerLoop error, param:"..tostring(dataStr))
-        LuaNFrame.Error(NFLogId.NF_LOG_SYSTEMLOG, 0, msg)
+		LuaNFrame.SendErrorLog(valueId, "LuaNFrame.DispatchTimerLoop error, param:"..tostring(dataStr), msg)
     end
 end
 
@@ -488,8 +493,7 @@ function LuaNFrame.DispatchTimerOnce( luaFunc, dataStr)
 	local status, msg = xpcall (timerExecute, __G__TRACKBACK__)
 
 	if not status then
-		LuaNFrame.Error(NFLogId.NF_LOG_SYSTEMLOG, 0,  "LuaNFrame.DispatchTimerOnce error, func:"..luaFunc.." param:"..tostring(dataStr))
-        LuaNFrame.Error(NFLogId.NF_LOG_SYSTEMLOG, 0, msg)
+		LuaNFrame.SendErrorLog(valueId, "LuaNFrame.DispatchTimerOnce error, func:"..luaFunc.." param:"..tostring(dataStr), msg)
     end
 end
 
@@ -501,8 +505,7 @@ function LuaNFrame.TimerInit(timeType)
 	local status, msg = xpcall (timerInitData, __G__TRACKBACK__)
 
 	if not status then
-		LuaNFrame.Error(NFLogId.NF_LOG_SYSTEMLOG, 0,  "LuaNFrame.TimerInit error, param:"..tostring(timeType))
-        LuaNFrame.Error(NFLogId.NF_LOG_SYSTEMLOG, 0, msg)
+		LuaNFrame.SendErrorLog(valueId,  "LuaNFrame.TimerInit error, param:"..tostring(timeType), msg)
     end
 end
 
@@ -521,8 +524,7 @@ function LuaNFrame.DispatchWorker(indexStr, dataStr)
 	local status, msg = xpcall (workExecute, __G__TRACKBACK__)
 
 	if not status then
-		LuaNFrame.Error(NFLogId.NF_LOG_SYSTEMLOG, 0,  "LuaNFrame.DispatchWorker "..tostring(indexStr).." error, param:"..tostring(dataStr))
-        LuaNFrame.Error(NFLogId.NF_LOG_SYSTEMLOG, 0, msg)
+		LuaNFrame.SendErrorLog(valueId,  "LuaNFrame.DispatchWorker "..tostring(indexStr).." error, param:"..tostring(dataStr), msg)
     end
 end
 

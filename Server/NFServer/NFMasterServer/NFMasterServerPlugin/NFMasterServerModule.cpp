@@ -23,8 +23,9 @@
 #include "NFComm/NFPluginModule/NFEventDefine.h"
 
 #define NF_MASTER_TIMER_SAVE_SERVER_DATA 0
-#define NF_MASTER_TIMER_SAVE_SERVER_DATA_TIME 60000
+#define NF_MASTER_TIMER_SAVE_SERVER_DATA_TIME 10000
 #define NF_MASTER_TIMER_CLEAR_SERVER_DATA 1
+#define NF_MASTER_TIMER_CLEAR_SERVER_DATA_TIME 600000
 
 NFCMasterServerModule::NFCMasterServerModule(NFIPluginManager* p)
 {
@@ -39,6 +40,7 @@ bool NFCMasterServerModule::Init()
 {
 	this->SetTimer(NF_MASTER_TIMER_SAVE_SERVER_DATA, NF_MASTER_TIMER_SAVE_SERVER_DATA_TIME, INFINITY_CALL);
 	this->SetFixTimer(NF_MASTER_TIMER_CLEAR_SERVER_DATA, 0, 8 * 60 * 60, INFINITY_CALL);
+	//this->SetTimer(NF_MASTER_TIMER_CLEAR_SERVER_DATA, NF_MASTER_TIMER_CLEAR_SERVER_DATA_TIME, INFINITY_CALL);
 
 	FindModule<NFIHttpServerModule>()->AddRequestHandler(NF_ST_MASTER, "/GM", NFHttpType::NF_HTTP_REQ_POST, this, &NFCMasterServerModule::HttpHandleHttpGm);
 	FindModule<NFIHttpServerModule>()->AddRequestHandler(NF_ST_MASTER, NFHttpType::NF_HTTP_REQ_POST, this, &NFCMasterServerModule::HttpHandleHttpMsg);
@@ -64,6 +66,7 @@ bool NFCMasterServerModule::Init()
 	FindModule<NFINetServerModule>()->AddReceiveCallBack(NF_ST_MASTER, EGMI_STS_SERVER_REPORT, this, &NFCMasterServerModule::OnServerReport);
 	FindModule<NFINetServerModule>()->AddReceiveCallBack(NF_ST_MASTER, EGMI_STS_HTTP_MSG_RET, this, &NFCMasterServerModule::OnServerHttpMsgRet);
 
+	FindModule<NFINetServerModule>()->AddReceiveCallBack(NF_ST_MASTER, EGMI_STS_ERROR_MSG, this, &NFCMasterServerModule::OnServerErrorMsg);
 	NFServerConfig* pConfig = NFServerCommon::GetAppConfig(m_pPluginManager, NF_ST_MASTER);
 	if (pConfig)
 	{
@@ -1116,4 +1119,20 @@ void NFCMasterServerModule::SynServerToOthers(NF_SHARE_PTR<NFServerData> pServer
 		//NFLogInfo(NF_LOG_SERVER_CONNECT_SERVER, 0, "Master Server Send others to LoginServer, serverName:{}, serverId:{}, ip:{}, port:{}", pServerData->mServerInfo.server_name(), pServerData->mServerInfo.server_id(), pServerData->mServerInfo.server_ip(), pServerData->mServerInfo.server_port());
 		FindModule<NFINetServerModule>()->SendToServerByPB(pServerData->mUnlinkId, EGMI_NET_MASTER_SEND_OTHERS_TO_LOGIN, xData, 0);
 	}
+}
+
+void NFCMasterServerModule::OnServerErrorMsg(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen)
+{
+	NFMsg::ServerErrorLogMsg xMsg;
+	CLIENT_MSG_PROCESS_NO_OBJECT(nMsgId, playerId, msg, nLen, xMsg);
+
+	static uint32_t error_log_id = 0;
+	error_log_id++;
+	//std::string sqlcase = "insert into dy_error_msg (playerid, funclog, errorlog) values (" + NFCommon::tostr(xMsg.player_id()) + ",'" + xMsg.func_log() + "','" + xMsg.error_log() + "');";
+	
+	std::map<std::string, std::string> data;
+	data.emplace("playerid", NFCommon::tostr(xMsg.player_id()));
+	data.emplace("funclog", xMsg.func_log());
+	data.emplace("errorlog", xMsg.error_log());
+	FindModule<NFIAsyMysqlModule>()->UpdateOne("dy_error_msg", "id", NFCommon::tostr(error_log_id), data);
 }

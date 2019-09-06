@@ -17,6 +17,7 @@
 #include "NFComm/NFPluginModule/NFIMonitorModule.h"
 #include "NFComm/NFPluginModule/NFILuaScriptModule.h"
 #include "NFMessageDefine/msg_gm.pb.h"
+#include "NFMessageDefine/server_msg.pb.h"
 #include "NFComm/NFCore/NFStringUtility.h"
 
 NFCGameClient_MasterModule::NFCGameClient_MasterModule(NFIPluginManager* p)
@@ -31,6 +32,7 @@ NFCGameClient_MasterModule::~NFCGameClient_MasterModule()
 
 bool NFCGameClient_MasterModule::Init()
 {
+	this->Subscribe(NFEVENT_LUA_ERROR_LOG, 0, 0, __FUNCTION__);
 	m_pMasterServerData = NF_SHARE_PTR<NFServerData>(NF_NEW NFServerData());
 	return true;
 }
@@ -236,5 +238,17 @@ void NFCGameClient_MasterModule::OnHandleGmMsg(const uint32_t unLinkId, const ui
 	CLIENT_MSG_PROCESS_NO_OBJECT(nMsgId, playerId, msg, nLen, xMsg);
 
 	NFEventMgr::Instance()->FireExecute(NFEVENT_GM, 0, 0, xMsg);
+}
+
+void NFCGameClient_MasterModule::OnExecute(uint16_t nEventID, uint64_t nSrcID, uint8_t bySrcType, const google::protobuf::Message& message)
+{
+	if (nEventID == NFEVENT_LUA_ERROR_LOG)
+	{
+		const NFMsg::ServerErrorLogMsg* msg_gm = dynamic_cast<const NFMsg::ServerErrorLogMsg*>(&message);
+		if (msg_gm)
+		{
+			FindModule<NFINetClientModule>()->SendToServerByPB(m_pMasterServerData->mUnlinkId, EGMI_STS_ERROR_MSG, message, 0);
+		}
+	}
 }
 

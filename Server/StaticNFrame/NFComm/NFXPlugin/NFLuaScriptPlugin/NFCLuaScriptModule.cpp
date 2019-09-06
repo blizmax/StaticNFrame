@@ -15,6 +15,8 @@
 #include "NFComm/NFCore/NFCRC16.h"
 #include "NFComm/NFCore/NFBase64.h"
 #include "NFComm/NFCore/NFSha256.h"
+#include "NFComm/NFPluginModule/NFEventMgr.h"
+#include "NFComm/NFPluginModule/NFEventDefine.h"
 
 enum EnumLuaScriptTimer
 {
@@ -476,6 +478,7 @@ bool NFCLuaScriptModule::Register()
 		.addFunction("Sha256", &NFCLuaScriptModule::Sha256)
 		.addFunction("Platfrom", &NFCLuaScriptModule::Platfrom)
 		.addFunction("IsThreadModule", &NFCLuaScriptModule::IsThreadModule)
+		.addFunction("SendErrorLog", &NFCLuaScriptModule::SendErrorLog)
 		.endClass();
 	return true;
 }
@@ -653,4 +656,21 @@ std::string NFCLuaScriptModule::Platfrom()
 bool NFCLuaScriptModule::IsThreadModule()
 {
 	return false;
+}
+
+void NFCLuaScriptModule::SendErrorLog(uint64_t playerId, const std::string& func_log, const std::string& errorLog)
+{
+	NFMsg::ServerErrorLogMsg msg;
+	msg.set_error_log(errorLog);
+	msg.set_func_log(func_log);
+	msg.set_player_id(playerId);
+	msg.set_server_name(m_pPluginManager->GetAppName());
+
+	std::string md5 = NFMMOMD5(errorLog).toStr();
+	auto iter = m_errorLog.find(md5);
+	if (iter == m_errorLog.end())
+	{
+		m_errorLog[md5] = errorLog;
+		NFEventMgr::Instance()->FireExecute(NFEVENT_LUA_ERROR_LOG, playerId, 0, msg);
+	}
 }

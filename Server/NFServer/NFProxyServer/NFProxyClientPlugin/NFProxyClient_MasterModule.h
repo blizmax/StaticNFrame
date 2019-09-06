@@ -17,6 +17,7 @@
 #include "NFServer/NFServerCommon/NFIProxyClient_LoginModule.h"
 #include "NFServer/NFServerCommon/NFIProxyClient_WorldModule.h"
 
+
 class NFCProxyClient_MasterModule : public NFIProxyClient_MasterModule
 {
 public:

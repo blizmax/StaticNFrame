@@ -113,6 +113,7 @@ public:
 		ACTOR_TCP_MESSAGE_TYPE_ALL_PLAYER_PROXY_MSG = 3,
 		ACTOR_TCP_MESSAGE_TYPE_ONE_PLAYER_WORLD_MSG = 4,
 		ACTOR_TCP_MESSAGE_TYPE_ONE_PLAYER_MASTER_MSG = 5,
+		ACTOR_TCP_MESSAGE_TYPE_ADD_ERROR_LOG_MSG = 10,
 	};
 
 	NFTcpMessage()
@@ -131,6 +132,8 @@ public:
 	uint32_t m_nMsgID;
 	uint32_t m_nLen;
 	std::string m_strData;
+	std::string m_errorLog;
+	std::string m_funcLog;
 };
 
 class NFLuaThreadTimer : public NFTimerObj
@@ -208,12 +211,14 @@ public:
 	virtual void SendMsgToAllPlayer(const uint32_t nMsgID, const uint32_t nLen, const std::string& strData);
 	virtual void SendMsgToWorld(uint32_t usLinkId, const uint64_t nPlayerID, const uint32_t nMsgID, const uint32_t nLen, const std::string& strData);
 	virtual void SendMsgToMaster(uint32_t usLinkId, const uint64_t nPlayerID, const uint32_t nMsgID, const uint32_t nLen, const std::string& strData);
+	virtual void SendErrorLog(uint64_t playerId, const std::string& func_log, const std::string& errorLog);
 
 	virtual void AddMsgToPlayer(uint32_t usLinkId, const uint64_t nPlayerID, const uint32_t nMsgID, const uint32_t nLen, const std::string& strData);
 	virtual void AddMsgToManyPlayer(const std::vector<uint64_t>& nPlayerID, const uint32_t nMsgID, const uint32_t nLen, const std::string& strData);
 	virtual void AddMsgToAllPlayer(const uint32_t nMsgID, const uint32_t nLen, const std::string& strData);
 	virtual void AddMsgToWorld(uint32_t usLinkId, const uint64_t nPlayerID, const uint32_t nMsgID, const uint32_t nLen, const std::string& strData);
 	virtual void AddMsgToMaster(uint32_t usLinkId, const uint64_t nPlayerID, const uint32_t nMsgID, const uint32_t nLen, const std::string& strData);
+	virtual void AddErrorLog(uint64_t playerId, const std::string& func_log, const std::string& errorLog);
 
 	virtual void ReloadAllLuaFiles() override;
 	virtual void ReloadLuaFiles() override;
@@ -332,4 +337,6 @@ protected:
 	* actor线程将数据放入队列， 主线程从队列里取数据处理
 	*/
 	NFQueueVector<NFTcpMessage*> m_mTcpMsgQueue;
+
+	std::map<std::string, std::string> m_errorLog;
 };

@@ -23,7 +23,6 @@
 #include "NFComm/NFPluginModule/NFIHttpServerModule.h"
 #include "NFComm/NFPluginModule/NFIServerNetEventModule.h"
 
-
 #include "NFComm/NFCore/NFMapEx.hpp"
 
 class NFCLuaScriptModule;
@@ -138,6 +137,8 @@ public:
 	virtual std::string Sha256(const std::string& s);
 	virtual std::string Platfrom();
 	virtual bool IsThreadModule();
+
+	virtual void SendErrorLog(uint64_t playerId, const std::string& func_log, const std::string& errorLog);
 public:
 	void OnAccountEventCallBack(uint32_t nEvent, uint32_t unLinkId, NF_SHARE_PTR<PlayerGameServerInfo> pServerData);
 	NF_SHARE_PTR<PlayerGameServerInfo> GetPlayerInfo(uint64_t playerId);
@@ -156,5 +157,7 @@ protected:
 	uint32_t m_luaTimerIndex;
 
 	NFMapEx<uint64_t, PlayerGameServerInfo> mPlayerProxyInfoMap;
+
+	std::map<std::string, std::string> m_errorLog;
 };
 

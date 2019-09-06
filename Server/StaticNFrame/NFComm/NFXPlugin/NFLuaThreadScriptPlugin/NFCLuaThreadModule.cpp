@@ -11,6 +11,10 @@
 
 #include "NFCLuaThreadModule.h"
 #include "NFCLuaScriptComponent.h"
+#include "NFMessageDefine/server_msg.pb.h"
+#include "NFComm/NFPluginModule/NFEventMgr.h"
+#include "NFComm/NFPluginModule/NFEventDefine.h"
+#include "NFComm/NFCore/NFMMOMD5.h"
 
 void NFLuaThreadTimer::OnTimer(uint32_t nTimerID)
 {
@@ -234,13 +238,17 @@ void NFCLuaThreadModule::HandleLuaTcpMsg()
 			{
 				SendMsgToMaster(pMsg->m_usLinkId, pMsg->m_nPlayerID, pMsg->m_nMsgID, pMsg->m_nLen, pMsg->m_strData);
 			}
-			if (pMsg->m_nMsgType == NFTcpMessage::ACTOR_TCP_MESSAGE_TYPE_MANY_PLAYER_PROXY_MSG)
+			else if (pMsg->m_nMsgType == NFTcpMessage::ACTOR_TCP_MESSAGE_TYPE_MANY_PLAYER_PROXY_MSG)
 			{
 				SendMsgToManyPlayer(pMsg->m_nVecPlayerID, pMsg->m_nMsgID, pMsg->m_nLen, pMsg->m_strData);
 			}
-			if (pMsg->m_nMsgType == NFTcpMessage::ACTOR_TCP_MESSAGE_TYPE_ALL_PLAYER_PROXY_MSG)
+			else if (pMsg->m_nMsgType == NFTcpMessage::ACTOR_TCP_MESSAGE_TYPE_ALL_PLAYER_PROXY_MSG)
 			{
 				SendMsgToAllPlayer(pMsg->m_nMsgID, pMsg->m_nLen, pMsg->m_strData);
+			}
+			else if (pMsg->m_nMsgType == NFTcpMessage::ACTOR_TCP_MESSAGE_TYPE_ADD_ERROR_LOG_MSG)
+			{
+				SendErrorLog(pMsg->m_nPlayerID, pMsg->m_funcLog, pMsg->m_errorLog);
 			}
 			NF_SAFE_DELETE(pMsg);
 		}
@@ -370,6 +378,23 @@ void NFCLuaThreadModule::SendMsgToMaster(uint32_t usLinkId, const uint64_t nPlay
 	}
 }
 
+void NFCLuaThreadModule::SendErrorLog(uint64_t playerId, const std::string& func_log, const std::string& errorLog)
+{
+	NFMsg::ServerErrorLogMsg msg;
+	msg.set_error_log(errorLog);
+	msg.set_func_log(func_log);
+	msg.set_player_id(playerId);
+	msg.set_server_name(m_pPluginManager->GetAppName());
+
+	std::string md5 = NFMMOMD5(errorLog).toStr();
+	auto iter = m_errorLog.find(md5);
+	if (iter == m_errorLog.end())
+	{
+		m_errorLog[md5] = errorLog;
+		NFEventMgr::Instance()->FireExecute(NFEVENT_LUA_ERROR_LOG, playerId, 0, msg);
+	}
+}
+
 void NFCLuaThreadModule::OnAccountEventCallBack(uint32_t nEvent, uint32_t unLinkId, NF_SHARE_PTR<PlayerGameServerInfo> pServerData)
 {
 	if (nEvent == eAccountEventType_CONNECTED)
@@ -467,6 +492,17 @@ void NFCLuaThreadModule::AddMsgToMaster(uint32_t usLinkId, const uint64_t nPlaye
 	pMsg->m_nMsgID = nMsgID;
 	pMsg->m_nLen = nLen;
 	pMsg->m_strData = strData;
+
+	m_mTcpMsgQueue.Push(pMsg);
+}
+
+void NFCLuaThreadModule::AddErrorLog(uint64_t playerId, const std::string& func_log, const std::string& errorLog)
+{
+	auto pMsg = new NFTcpMessage();
+	pMsg->m_nMsgType = NFTcpMessage::ACTOR_TCP_MESSAGE_TYPE_ADD_ERROR_LOG_MSG;
+	pMsg->m_nPlayerID = playerId;
+	pMsg->m_errorLog = errorLog;
+	pMsg->m_funcLog = func_log;
 
 	m_mTcpMsgQueue.Push(pMsg);
 }

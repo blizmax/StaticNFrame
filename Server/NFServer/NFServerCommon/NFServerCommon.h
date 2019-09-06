@@ -59,6 +59,8 @@ enum NF_EGMI_MsgId
 	EGMI_STS_GM_MSG = 3,
 	EGMI_STS_HTTP_MSG = 4,
 	EGMI_STS_HTTP_MSG_RET = 5,
+
+	EGMI_STS_ERROR_MSG = 6,
 	////////////////////////////////////////////
 	
 	EGMI_NET_PROXY_TO_MASTER_REGISTER = 11,	//网关服务器	注册	MASTER服务器协议
@@ -68,7 +70,7 @@ enum NF_EGMI_MsgId
 	EGMI_NET_PROXY_TO_GAME_REGISTER = 15,	//网关服务器	注册	游戏服务器协议
 	EGMI_NET_GAME_TO_WORLD_REGISTER = 16,	//游戏服务器	注册	世界服务器协议
 	EGMI_NET_PROXY_TO_WORLD_REGISTER = 17,	//网关服务器	注册	WORLD服务器协议
-	EGMI_NET_PROXY_TO_LOGIN_REGISTER = 17,	//网关服务器	注册	Login服务器协议
+	EGMI_NET_PROXY_TO_LOGIN_REGISTER = 18,	//网关服务器	注册	Login服务器协议
 
 	EGMI_NET_PROXY_TO_MASTER_UNREGISTER = 21,	//网关服务器 注销  MASTER服务器协议
 	EGMI_NET_GAME_TO_MASTER_UNREGISTER = 22,	//网关服务器 注销  MASTER服务器协议

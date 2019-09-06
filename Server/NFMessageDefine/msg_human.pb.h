@@ -38,7 +38,7 @@ namespace protobuf_msg_5fhuman_2eproto {
 struct TableStruct {
   static const ::google::protobuf::internal::ParseTableField entries[];
   static const ::google::protobuf::internal::AuxillaryParseTableField aux[];
-  static const ::google::protobuf::internal::ParseTable schema[10];
+  static const ::google::protobuf::internal::ParseTable schema[9];
   static const ::google::protobuf::internal::FieldMetadata field_metadata[];
   static const ::google::protobuf::internal::SerializationTable serialization_table[];
   static const ::google::protobuf::uint32 offsets[];
@@ -46,9 +46,6 @@ struct TableStruct {
 void AddDescriptors();
 }  // namespace protobuf_msg_5fhuman_2eproto
 namespace NFMsg {
-class NFAccountLogin;
-class NFAccountLoginDefaultTypeInternal;
-extern NFAccountLoginDefaultTypeInternal _NFAccountLogin_default_instance_;
 class accountinfo;
 class accountinfoDefaultTypeInternal;
 extern accountinfoDefaultTypeInternal _accountinfo_default_instance_;
@@ -79,7 +76,6 @@ extern playerinfoDefaultTypeInternal _playerinfo_default_instance_;
 }  // namespace NFMsg
 namespace google {
 namespace protobuf {
-template<> ::NFMsg::NFAccountLogin* Arena::CreateMaybeMessage<::NFMsg::NFAccountLogin>(Arena*);
 template<> ::NFMsg::accountinfo* Arena::CreateMaybeMessage<::NFMsg::accountinfo>(Arena*);
 template<> ::NFMsg::cgaccountlogin* Arena::CreateMaybeMessage<::NFMsg::cgaccountlogin>(Arena*);
 template<> ::NFMsg::cgheartbeat* Arena::CreateMaybeMessage<::NFMsg::cgheartbeat>(Arena*);
@@ -1507,135 +1503,6 @@ class cgaccountlogin : public ::google::protobuf::Message /* @@protoc_insertion_
 };
 // -------------------------------------------------------------------
 
-class NFAccountLogin : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:NFMsg.NFAccountLogin) */ {
- public:
-  NFAccountLogin();
-  virtual ~NFAccountLogin();
-
-  NFAccountLogin(const NFAccountLogin& from);
-
-  inline NFAccountLogin& operator=(const NFAccountLogin& from) {
-    CopyFrom(from);
-    return *this;
-  }
-  #if LANG_CXX11
-  NFAccountLogin(NFAccountLogin&& from) noexcept
-    : NFAccountLogin() {
-    *this = ::std::move(from);
-  }
-
-  inline NFAccountLogin& operator=(NFAccountLogin&& from) noexcept {
-    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
-      if (this != &from) InternalSwap(&from);
-    } else {
-      CopyFrom(from);
-    }
-    return *this;
-  }
-  #endif
-  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
-    return _internal_metadata_.unknown_fields();
-  }
-  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
-    return _internal_metadata_.mutable_unknown_fields();
-  }
-
-  static const ::google::protobuf::Descriptor* descriptor();
-  static const NFAccountLogin& default_instance();
-
-  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
-  static inline const NFAccountLogin* internal_default_instance() {
-    return reinterpret_cast<const NFAccountLogin*>(
-               &_NFAccountLogin_default_instance_);
-  }
-  static constexpr int kIndexInFileMessages =
-    3;
-
-  void Swap(NFAccountLogin* other);
-  friend void swap(NFAccountLogin& a, NFAccountLogin& b) {
-    a.Swap(&b);
-  }
-
-  // implements Message ----------------------------------------------
-
-  inline NFAccountLogin* New() const final {
-    return CreateMaybeMessage<NFAccountLogin>(NULL);
-  }
-
-  NFAccountLogin* New(::google::protobuf::Arena* arena) const final {
-    return CreateMaybeMessage<NFAccountLogin>(arena);
-  }
-  void CopyFrom(const ::google::protobuf::Message& from) final;
-  void MergeFrom(const ::google::protobuf::Message& from) final;
-  void CopyFrom(const NFAccountLogin& from);
-  void MergeFrom(const NFAccountLogin& from);
-  void Clear() final;
-  bool IsInitialized() const final;
-
-  size_t ByteSizeLong() const final;
-  bool MergePartialFromCodedStream(
-      ::google::protobuf::io::CodedInputStream* input) final;
-  void SerializeWithCachedSizes(
-      ::google::protobuf::io::CodedOutputStream* output) const final;
-  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
-      bool deterministic, ::google::protobuf::uint8* target) const final;
-  int GetCachedSize() const final { return _cached_size_.Get(); }
-
-  private:
-  void SharedCtor();
-  void SharedDtor();
-  void SetCachedSize(int size) const final;
-  void InternalSwap(NFAccountLogin* other);
-  private:
-  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
-    return NULL;
-  }
-  inline void* MaybeArenaPtr() const {
-    return NULL;
-  }
-  public:
-
-  ::google::protobuf::Metadata GetMetadata() const final;
-
-  // nested types ----------------------------------------------------
-
-  // accessors -------------------------------------------------------
-
-  // optional .NFMsg.cgaccountlogin login = 1;
-  bool has_login() const;
-  void clear_login();
-  static const int kLoginFieldNumber = 1;
-  private:
-  const ::NFMsg::cgaccountlogin& _internal_login() const;
-  public:
-  const ::NFMsg::cgaccountlogin& login() const;
-  ::NFMsg::cgaccountlogin* release_login();
-  ::NFMsg::cgaccountlogin* mutable_login();
-  void set_allocated_login(::NFMsg::cgaccountlogin* login);
-
-  // optional int32 proxy_server_id = 2;
-  bool has_proxy_server_id() const;
-  void clear_proxy_server_id();
-  static const int kProxyServerIdFieldNumber = 2;
-  ::google::protobuf::int32 proxy_server_id() const;
-  void set_proxy_server_id(::google::protobuf::int32 value);
-
-  // @@protoc_insertion_point(class_scope:NFMsg.NFAccountLogin)
- private:
-  void set_has_login();
-  void clear_has_login();
-  void set_has_proxy_server_id();
-  void clear_has_proxy_server_id();
-
-  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
-  ::google::protobuf::internal::HasBits<1> _has_bits_;
-  mutable ::google::protobuf::internal::CachedSize _cached_size_;
-  ::NFMsg::cgaccountlogin* login_;
-  ::google::protobuf::int32 proxy_server_id_;
-  friend struct ::protobuf_msg_5fhuman_2eproto::TableStruct;
-};
-// -------------------------------------------------------------------
-
 class gcaccountlogin : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:NFMsg.gcaccountlogin) */ {
  public:
   gcaccountlogin();
@@ -1678,7 +1545,7 @@ class gcaccountlogin : public ::google::protobuf::Message /* @@protoc_insertion_
                &_gcaccountlogin_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    4;
+    3;
 
   void Swap(gcaccountlogin* other);
   friend void swap(gcaccountlogin& a, gcaccountlogin& b) {
@@ -1837,7 +1704,7 @@ class cgreconnect : public ::google::protobuf::Message /* @@protoc_insertion_poi
                &_cgreconnect_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    5;
+    4;
 
   void Swap(cgreconnect* other);
   friend void swap(cgreconnect& a, cgreconnect& b) {
@@ -1951,7 +1818,7 @@ class gcreconnect : public ::google::protobuf::Message /* @@protoc_insertion_poi
                &_gcreconnect_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    6;
+    5;
 
   void Swap(gcreconnect* other);
   friend void swap(gcreconnect& a, gcreconnect& b) {
@@ -2093,7 +1960,7 @@ class cgheartbeat : public ::google::protobuf::Message /* @@protoc_insertion_poi
                &_cgheartbeat_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    7;
+    6;
 
   void Swap(cgheartbeat* other);
   friend void swap(cgheartbeat& a, cgheartbeat& b) {
@@ -2207,7 +2074,7 @@ class gcheartbeat : public ::google::protobuf::Message /* @@protoc_insertion_poi
                &_gcheartbeat_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    8;
+    7;
 
   void Swap(gcheartbeat* other);
   friend void swap(gcheartbeat& a, gcheartbeat& b) {
@@ -2321,7 +2188,7 @@ class gckitplayer : public ::google::protobuf::Message /* @@protoc_insertion_poi
                &_gckitplayer_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    9;
+    8;
 
   void Swap(gckitplayer* other);
   friend void swap(gckitplayer& a, gckitplayer& b) {
@@ -6106,92 +5973,6 @@ inline void cgaccountlogin::set_allocated_email(::std::string* email) {
 
 // -------------------------------------------------------------------
 
-// NFAccountLogin
-
-// optional .NFMsg.cgaccountlogin login = 1;
-inline bool NFAccountLogin::has_login() const {
-  return (_has_bits_[0] & 0x00000001u) != 0;
-}
-inline void NFAccountLogin::set_has_login() {
-  _has_bits_[0] |= 0x00000001u;
-}
-inline void NFAccountLogin::clear_has_login() {
-  _has_bits_[0] &= ~0x00000001u;
-}
-inline void NFAccountLogin::clear_login() {
-  if (login_ != NULL) login_->Clear();
-  clear_has_login();
-}
-inline const ::NFMsg::cgaccountlogin& NFAccountLogin::_internal_login() const {
-  return *login_;
-}
-inline const ::NFMsg::cgaccountlogin& NFAccountLogin::login() const {
-  const ::NFMsg::cgaccountlogin* p = login_;
-  // @@protoc_insertion_point(field_get:NFMsg.NFAccountLogin.login)
-  return p != NULL ? *p : *reinterpret_cast<const ::NFMsg::cgaccountlogin*>(
-      &::NFMsg::_cgaccountlogin_default_instance_);
-}
-inline ::NFMsg::cgaccountlogin* NFAccountLogin::release_login() {
-  // @@protoc_insertion_point(field_release:NFMsg.NFAccountLogin.login)
-  clear_has_login();
-  ::NFMsg::cgaccountlogin* temp = login_;
-  login_ = NULL;
-  return temp;
-}
-inline ::NFMsg::cgaccountlogin* NFAccountLogin::mutable_login() {
-  set_has_login();
-  if (login_ == NULL) {
-    auto* p = CreateMaybeMessage<::NFMsg::cgaccountlogin>(GetArenaNoVirtual());
-    login_ = p;
-  }
-  // @@protoc_insertion_point(field_mutable:NFMsg.NFAccountLogin.login)
-  return login_;
-}
-inline void NFAccountLogin::set_allocated_login(::NFMsg::cgaccountlogin* login) {
-  ::google::protobuf::Arena* message_arena = GetArenaNoVirtual();
-  if (message_arena == NULL) {
-    delete login_;
-  }
-  if (login) {
-    ::google::protobuf::Arena* submessage_arena = NULL;
-    if (message_arena != submessage_arena) {
-      login = ::google::protobuf::internal::GetOwnedMessage(
-          message_arena, login, submessage_arena);
-    }
-    set_has_login();
-  } else {
-    clear_has_login();
-  }
-  login_ = login;
-  // @@protoc_insertion_point(field_set_allocated:NFMsg.NFAccountLogin.login)
-}
-
-// optional int32 proxy_server_id = 2;
-inline bool NFAccountLogin::has_proxy_server_id() const {
-  return (_has_bits_[0] & 0x00000002u) != 0;
-}
-inline void NFAccountLogin::set_has_proxy_server_id() {
-  _has_bits_[0] |= 0x00000002u;
-}
-inline void NFAccountLogin::clear_has_proxy_server_id() {
-  _has_bits_[0] &= ~0x00000002u;
-}
-inline void NFAccountLogin::clear_proxy_server_id() {
-  proxy_server_id_ = 0;
-  clear_has_proxy_server_id();
-}
-inline ::google::protobuf::int32 NFAccountLogin::proxy_server_id() const {
-  // @@protoc_insertion_point(field_get:NFMsg.NFAccountLogin.proxy_server_id)
-  return proxy_server_id_;
-}
-inline void NFAccountLogin::set_proxy_server_id(::google::protobuf::int32 value) {
-  set_has_proxy_server_id();
-  proxy_server_id_ = value;
-  // @@protoc_insertion_point(field_set:NFMsg.NFAccountLogin.proxy_server_id)
-}
-
-// -------------------------------------------------------------------
-
 // gcaccountlogin
 
 // optional int32 result = 1;
@@ -6671,8 +6452,6 @@ inline void gckitplayer::set_allocated_msg(::std::string* msg) {
 #ifdef __GNUC__
   #pragma GCC diagnostic pop
 #endif  // __GNUC__
-// -------------------------------------------------------------------
-
 // -------------------------------------------------------------------
 
 // -------------------------------------------------------------------
