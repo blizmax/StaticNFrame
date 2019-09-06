@@ -231,7 +231,10 @@ void NetEvppObject::CloseObject()
 {
 	if (mConnPtr)
 	{
-		mConnPtr->Close();
+		if (mConnPtr->IsConnected() || mConnPtr->IsConnecting())
+		{
+			mConnPtr->Close();
+		}
 	}
 }
 

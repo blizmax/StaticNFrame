@@ -15,6 +15,7 @@
 #include "NFComm/NFPluginModule/NFIHttpClientModule.h"
 #include "NFComm/NFPluginModule/NFIHttpServerModule.h"
 #include "NFServer/NFServerCommon/NFServerCommon.h"
+#include "NFComm/NFPluginModule/NFILuaScriptModule.h"
 
 NFCLoginServerModule::NFCLoginServerModule(NFIPluginManager* p)
 {
@@ -42,17 +43,6 @@ bool NFCLoginServerModule::Init()
 		{
 			NFLogInfo(NF_LOG_SERVER_CONNECT_SERVER, 0, "login server listen failed!, serverId:{}, maxConnectNum:{}, port:{}", pConfig->mServerId, pConfig->mMaxConnectNum, pConfig->mServerPort);
 		}
-
-		//if (pConfig->mHttpPort > 0)
-		//{
-		//	int ret = FindModule<NFIHttpServerModule>()->InitServer(NF_ST_LOGIN, pConfig->mHttpPort);
-		//	if (ret == 0)
-		//	{
-		//		NFLogError(NF_LOG_SERVER_CONNECT_SERVER, 0, "Login Server Open Http Port:{} Failed!", pConfig->mHttpPort);
-		//		return false;
-		//	}
-		//	NFLogInfo(NF_LOG_SERVER_CONNECT_SERVER, 0, "Login Server Open Http Port:{} Success!", pConfig->mHttpPort);
-		//}
 	}
 	else
 	{
@@ -99,4 +89,14 @@ void NFCLoginServerModule::OnProxySocketEvent(const eMsgType nEvent, const uint3
 
 void NFCLoginServerModule::OnHandleOtherMessage(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen)
 {
+	NFILuaScriptModule* pLuaScriptModule = FindModule<NFILuaScriptModule>();
+	if (pLuaScriptModule)
+	{
+		std::string strMsg(msg, nLen);
+		pLuaScriptModule->RunNetRecvLuaFunc("LuaNFrame.LoginServer_DispatchTcp", unLinkId, playerId, nMsgId, strMsg);
+	}
+	else
+	{
+		NFLogWarning(NF_LOG_SERVER_NOT_HANDLE_MESSAGE, playerId, "msg:{} not handled!", nMsgId);
+	}
 }

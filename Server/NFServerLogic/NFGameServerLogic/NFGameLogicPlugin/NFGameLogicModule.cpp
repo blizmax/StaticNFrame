@@ -10,6 +10,8 @@
 #include "NFComm/NFPluginModule/NFIMysqlModule.h"
 #include "NFComm/NFPluginModule/NFIAsyMysqlModule.h"
 #include "NFMessageDefine/server_to_server_msg.pb.h"
+#include "NFMessageDefine/st_human_packet_code.pb.h"
+#include "NFMessageDefine/msg_human.pb.h"
 
 NFCGameLogicModule::NFCGameLogicModule(NFIPluginManager* p)
 {
@@ -55,7 +57,7 @@ bool NFCGameLogicModule::Awake()
 	FindModule<NFIServerNetEventModule>()->AddEventCallBack(NF_ST_GAME, NF_ST_PROXY, this, &NFCGameLogicModule::OnHandleProxyEventCallBack);
 	FindModule<NFIServerNetEventModule>()->AddEventCallBack(NF_ST_GAME, NF_ST_WORLD, this, &NFCGameLogicModule::OnHandleWorldEventCallBack);
 
-	FindModule<NFINetClientModule>()->AddReceiveCallBack(NF_ST_WORLD, EGMI_NET_WORLD_NOTIFY_GAME_CHANGE_PROXY, this, &NFCGameLogicModule::OnHandleChangeProxy);
+	FindModule<NFINetClientModule>()->AddReceiveCallBack(NF_ST_WORLD, EGMI_NET_WORLD_NOTIFY_GAME_PLAYER_LOGIN, this, &NFCGameLogicModule::OnHandleWorldServerLogin);
 	FindModule<NFINetClientModule>()->AddReceiveCallBack(NF_ST_WORLD, EGMI_NET_PROXY_NOTIFY_GAME_PLAYER_DISCONNECT, this, &NFCGameLogicModule::OnHandlePlayerDisconnect);
 	
 	FindModule<NFINetClientModule>()->AddReceiveCallBack(NF_ST_WORLD, EGMI_NET_PROXY_NOTIFY_GAME_PLAYER_RECONNECT, this, &NFCGameLogicModule::OnHandlePlayerReconnect);
@@ -85,12 +87,15 @@ bool NFCGameLogicModule::Shut()
 	return true;
 }
 
-void NFCGameLogicModule::OnHandleChangeProxy(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen)
+void NFCGameLogicModule::OnHandleWorldServerLogin(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen)
 {
-	NFMsg::NotifyGameChangeProxy cgMsg;
-	CLIENT_MSG_PROCESS_NO_OBJECT(nMsgId, playerId, msg, nLen, cgMsg);
+	NFMsg::gcaccountlogin gcMsg;
+	CLIENT_MSG_PROCESS_NO_OBJECT(nMsgId, playerId, msg, nLen, gcMsg);
 
-	ChangePlayerGameInfo(cgMsg.user_id(), cgMsg.proxy_id());
+	uint32_t proxy_server_id = (uint32_t)playerId;
+	ChangePlayerGameInfo(gcMsg.pinfo().userid(), proxy_server_id);
+
+	SendMsgToClientByPlayerId(gcMsg.pinfo().userid(), EGMI_NET_GAME_NOTIFY_PROXY_PLAYER_LOGIN, gcMsg);
 }
 
 void NFCGameLogicModule::OnHandlePlayerDisconnect(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen)

@@ -5,38 +5,20 @@
     <ClInclude Include="mysql_db.pb.h" />
     <ClInclude Include="server_msg.pb.h" />
     <ClInclude Include="db_base.pb.h" />
-    <ClInclude Include="sqlite_db.pb.h" />
-    <ClInclude Include="st_human.pb.h" />
-    <ClInclude Include="st_human_packet_code.pb.h" />
-    <ClInclude Include="msg_human.pb.h" />
-    <ClInclude Include="st_shop.pb.h" />
-    <ClInclude Include="db_behavior_log.pb.h" />
-    <ClInclude Include="db_human.pb.h" />
     <ClInclude Include="server_to_server_msg.pb.h" />
     <ClInclude Include="NFNodeClass.h" />
     <ClInclude Include="NFNodeClassName.h" />
     <ClInclude Include="db_server.pb.h" />
     <ClInclude Include="msg_gm.pb.h" />
-    <ClInclude Include="st_lhd.pb.h" />
-    <ClInclude Include="st_lhd_packet_code.pb.h" />
-    <ClInclude Include="msg_lhd.pb.h" />
+    <ClInclude Include="msg_human.pb.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="mysql_db.pb.cc" />
     <ClCompile Include="server_msg.pb.cc" />
     <ClCompile Include="db_base.pb.cc" />
-    <ClCompile Include="sqlite_db.pb.cc" />
-    <ClCompile Include="st_human.pb.cc" />
-    <ClCompile Include="st_human_packet_code.pb.cc" />
-    <ClCompile Include="msg_human.pb.cc" />
-    <ClCompile Include="st_shop.pb.cc" />
-    <ClCompile Include="db_behavior_log.pb.cc" />
-    <ClCompile Include="db_human.pb.cc" />
     <ClCompile Include="server_to_server_msg.pb.cc" />
     <ClCompile Include="db_server.pb.cc" />
     <ClCompile Include="msg_gm.pb.cc" />
-    <ClCompile Include="st_lhd.pb.cc" />
-    <ClCompile Include="st_lhd_packet_code.pb.cc" />
-    <ClCompile Include="msg_lhd.pb.cc" />
+    <ClCompile Include="msg_human.pb.cc" />
   </ItemGroup>
 </Project>

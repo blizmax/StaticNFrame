@@ -67,6 +67,12 @@ function LuaNFrame.InitScript(luaModule)
 			package.path = package.path..";../ScriptModule/GameServer/trdlib/lua/?.lua"
 
 			require("GameServer/LoadHelper")
+		elseif LuaNFrame.GetAppName() == "LoginServer" then
+			package.path = package.path .. ";../ScriptModule/LoginServer/?.lua;"
+			package.path = package.path..";../ScriptModule/LoginServer/trdlib/libprotobuf/?.lua"   --由于这里protobuf的特殊性，必须把包含protobuf的目录加到环境变量中
+			package.path = package.path..";../ScriptModule/LoginServer/trdlib/lua/?.lua"
+
+			require("LoginServer/LoadHelper")
 		end
 
 		require("LuaNFrame/NFTimeUtils")

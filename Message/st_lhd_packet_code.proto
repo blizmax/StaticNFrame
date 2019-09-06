@@ -1,8 +1,0 @@
-syntax = "proto2";
-package NFMsg;
-
-enum st_lhd_packet_code
-{
-	Client_Msg_Lhd_CreateTable = 5301;			//创建龙虎斗游戏
-	Server_Msg_Lhd_CreateTable = 5302;		
-};

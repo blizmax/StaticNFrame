@@ -1,8 +1,67 @@
 syntax = "proto2";
 package NFMsg;
 
-import "st_human.proto";
-import "st_shop.proto";
+message accountinfo
+{
+	optional string account = 1;
+	optional string password = 2;
+	optional uint64 userid = 3; 
+}
+
+message playerinfo
+{
+	optional int32 userid = 1;   //用户标识ID
+	optional string cid = 2;                 //用作判断手机标识的唯一字符串
+	optional string account = 3;
+	optional string password = 4;
+	optional string nickname = 5;
+	optional string regdate = 7;   //注册日期
+	optional int32 sex = 8;
+	optional int32 age = 9;
+	optional string email = 10;
+	optional string phonenum = 11;
+	optional int32 exp = 12;      //经验
+	optional int32 level = 13;    //等级
+	optional int32 viplevel = 14;   //vip等级
+	optional string jetton = 15;     //这是一个int64长度的数字，由于pbc不支持int64, 所以用string来代替
+	optional int32 gold = 16;       //金币，暂时先不用这个
+	optional int32 money = 17;      //钻石
+	optional string channel = 18;   //平台标识
+	optional string province = 19;       //省份
+	optional string city = 20;           //城市
+	optional int32 popularity = 21;      //魅力值
+	optional int32 idenstatus = 22;      //头像认证状态
+	optional int32 bindtype = 23;            //绑定类型
+	optional string bindnick = 24;            //实名认证消息
+	optional string platformid = 25;          //平台返回的标识ID
+	optional string imei = 26;
+	optional string devname = 27;             //设备号
+	optional string ip = 28;             //这个是IP
+	optional int32 mobiletype = 29;           //运营商
+	optional int32 lasttime = 30;             //上次登录时间
+	optional int32 penulttime = 31;           //倒数第二次登录
+	optional int32 silent = 32;               //是否禁言
+	optional int32 isban = 33;                //是否禁号，列入黑名单
+	optional string face_1 = 34;
+	optional string face_2 = 35;
+	optional string face_3 = 36;
+	optional string face_4 = 37;
+	optional int32 isrobot = 38;
+	optional int32 playtype = 39;           //玩家玩牌的类型：1:一般型，没有特点；2：小白型：全凭喜好。3：保守型，一定要拿到好牌才跟或者加注；4：激进型：一般有好牌就加注或者跟了。5：冒险型：非常喜欢诈唬，有好牌一定allin或者跟
+	optional string description = 40;       //个性签名
+	optional string location = 41;          //位置信息
+	optional string bankjetton = 42;        //这是一个int64长度的数字，由于pbc不支持int64, 所以用string来代替
+	optional string title = 43;             //称号
+	optional int32 blacklist = 44;
+	optional int32 propertyid = 45;         //玩家佩戴的物品ID
+	optional int32 ticket = 46;             //兑换券
+	optional string location_x = 47;        //经度
+	optional string location_y = 48;        //维度
+	optional string bank_password = 49;        // 银行密码 MD5
+	optional string bank_jetton = 50;     	 // 银行存款
+	optional int32 agent1 = 51;     //我的上级代理
+}
+
 
 message cgaccountlogin
 {
@@ -39,27 +98,6 @@ message gcaccountlogin
 	optional int32 tabletype = 5;   //1是德州扑克，2是麻将
 }
 
-message cggetauthcode   //获取验证码,
-{
-	optional string phonenum = 1;
-}
-
-message gcgetauthcode
-{
-	optional int32 result = 2;  //这里会返回获取的信息
-}
-
-message cggetplayerinfo
-{
-	optional int32 userid = 1;
-}
-
-message gcgetplayerinfo
-{
-	optional int32 result = 1;
-	optional playerinfo pinfo = 2;
-}
-
 message cgreconnect
 {
 	optional int32 userid = 1;
@@ -72,21 +110,6 @@ message gcreconnect
 	optional int32 tableid = 3;     //重连的时候，需要检查tableID，如果存在牌桌中，需要做牌桌的恢复
 }
 
-message gckitplayer  //踢出玩家
-{
-	optional int32 result = 1;
-	optional int32 kittype = 2;   //1是账号在别处登录了。
-	optional string msg = 3;
-}
-
-//登录需要发送的协议
-message gcnoticeinfo    //游戏登录的时候需要发送的，这是服务器主动发送，会有延迟
-{
-	optional int32 result = 1;
-	repeated noticeinfo noticelist = 2;     //红点
-	repeated int32 friendslist = 3;         //登录时候发送好友列表
-}
-
 message cgheartbeat
 {
 	optional int32 userid = 1;
@@ -97,240 +120,9 @@ message gcheartbeat
 	optional int32 result = 1;
 }
 
-
-message cggetinitinfo     //这个协议是用户刚刚登录进来的时候需要获取游戏初始化的信息，
-{                      //包括支付信息，允许开放的模块列表
-	optional int32 userid = 1;
-	optional string channel = 2;
-}
-
-message gcgetinitinfo
+message gckitplayer  //踢出玩家
 {
 	optional int32 result = 1;
-	repeated int32 paytype = 2;    //1:只有微信，2：自有支付宝，3：苹果支付，4：第三方支付
-	
-	repeated int32 mdelist = 4;   //允许开放的模块列表
-	repeated int32 paylist = 5;   //dy_pay表中对应的ID
-	repeated int32 shoplist = 6;  //dy_shop表中对应的ID
-	repeated string wechatlist = 7;   //默认代理的列表
-	repeated int32 modelstatelist = 8;   //模块状态：1.正常，2.维护中(游戏运行)，3.维护中(游戏不允许)，4.敬请期待，5.不可见
-}
-
-message gcbroadcast
-{
-	optional int32 result = 1;
-	repeated int32 broadtypelist = 2;
-	repeated int32 senderidlist = 3;
-	repeated string senderlist = 4;
-	repeated string msglist = 5;
-}
-
-message cggetmaillist
-{
-	optional int32 userid = 1;
-	optional int32 pagenum = 2;   //每页返回10个
-}
-
-message gcgetmaillist
-{
-	optional int32 result = 1;
-	//optional maillist mlist = 2;
-	repeated mailinfo mlist = 3;
-}
-
-message cgreadmail
-{
-	optional int32 userid = 1;
-	optional int32 mailid = 2;
-}
-
-message gcreadmail
-{
-	optional int32 result = 1;
-	optional int32 mailid = 2;
-	optional int32 mailstate = 3;
-}
-
-message cggetmailgoods
-{
-	optional int32 userid = 1;
-	optional int32 mailid = 2;
-}
-
-message gcgetmailgoods
-{
-	optional int32 result = 1;
-	optional int32 mailid = 2;
-	optional int32 mailstate = 3;
-	repeated goodsinfo getlist = 4;
-}
-
-message cgdeletemail
-{
-	optional int32 userid = 1;
-	optional int32 mailid = 2;
-}
-
-message gcdeletemail
-{
-	optional int32 result = 1;
-	optional int32 mailid = 2;
-}
-
-message cgplayerstatus  //玩家在切换后台的时候，以及从后台切换回来的时候
-{
-	optional int32 userid = 1;
-	optional int32 status = 2;     //1：切换到后台，2：从后台切换回来
-}
-
-message gcplayerstatus //玩家在掉线后，重新进来的时候发送这个协议
-{
-	optional int32 result = 1;   
-	optional int32 userid = 2;    
-	optional int32 status = 3;   
-	optional int32 timemark = 4;    //时间的标签，有时候需要对倒计时做统计
-}
-
-message cgupdateplayerinfo
-{
-	optional int32 userid = 1;
-	repeated string typelist = 2;      //要修改的pInfo的关键字
-	repeated string valuelist = 3;    //要修改的pInfo的值
-}
-
-message gcupdateplayerinfo
-{
-	optional int32 result = 1;
-	repeated string typelist = 2;
-	repeated string valuelist = 3;
-}
-
-message gcupdategoodslist
-{
-	optional int32 result = 1;
-	repeated int32 idlist = 2;
-	repeated int32 numlist = 3;
-}
-
-message cgagencyopt
-{
-	optional int32 userid = 1;
-	optional int32 opttype = 2;   //1：是绑定代理，2：是申请代理
-	optional string optstr = 3;   //如果是绑定代理，则是对方的推广码，如果是申请代理，则是申请者的手机号或者微信号
-}
-
-message gcagencyopt
-{
-	optional int32 result = 1;
-	optional string str = 2;     //看情况是否需要显示，在这里需要下发玩家的数据，同时，需要发送打折后的物品列表,在另外的协议发送
-}
-
-message cgentertable    //这就增加一个进入牌桌的协议，全部的入口都放到中
-{						//然后每个协议按照断号分开
-	optional int32 userid = 1;
-	optional int32 tableid = 2;     //
-	optional string password = 3;   //如果该牌桌是需要密码的,则把代码也加进来
-}
-message gcentertable   //如果都找不到对应的牌桌号
-{
-	optional int32 result = 1;
-}
-
-message cggetagencyinfo   //获取我自己的邀请码以及邀请的列表的信息
-{
-	optional int32 userid = 1;
-}
-
-message gcgetagencyinfo
-{
-	optional int32 result = 1;
-	optional agencyinfo agyinfo = 2;
-}
-
-message cginvitebind
-{
-	optional int32 userid = 1;
-	optional string invitestr = 2;    //邀请码
-}
-
-message gcinvitebind                //返回我自己绑定的信息
-{
-	optional int32 result = 1;
-	optional agencyinfo agyinfo = 2;	
-}
-
-
-message cgbankdepositwithdraw		// 银行-存取款
-{
-	optional int32 userid = 1;
-	optional string amount = 2;
-	optional int32 opt = 3;			// 0:存款,1:取款
-}
-
-message gcbankdepositwithdraw
-{
-	optional int32 result = 1;
-}
-
-message cgbanksetpassword
-{
-	optional int32 userid = 1;
-	optional string pwd = 2;
-}
-
-message gcbanksetpassword
-{
-	optional int32 result = 1;
-}
-
-message cgbanklogin				// 银行登陆
-{
-    optional int32 userid = 1;
-    optional string password = 2;	// 密码MD5
-}
-
-message gcbanklogin
-{
-    optional int32 result = 1;
-    optional string jetton = 2;
-}
-
-message cgbanktransfer  // 转账
-{
-    optional int32 userid = 1;
-    optional int32 touserid = 2;    // 目标玩家id
-    optional string amount = 3;      // 数量
-}
-
-message gcbanktransfer
-{
-    optional int32 result = 1;
-    optional banktransferrecord record = 2;
-}
-
-message cgbanktransferhistory
-{
-	optional int32 userid = 1;
-	optional int32 pagenum = 2;
-}
-
-message gcbanktransferhistory
-{
-	optional int32 result = 1;
-	repeated banktransferrecord list = 2;
-}
-
-message cgbankruptsubsidy
-{
-	optional int32 userid = 1;
-	optional int32 requesttype = 2;   //1 获得次数， 2 申请补助  
-}
-
-message gcbankruptsubsidy
-{
-	optional int32 result = 1;
-	optional int32 userid = 2;
-	optional int32 requesttype = 3;
-	optional int32 residuenum = 4;
-	optional int32 subsidycount = 5;
+	optional int32 kittype = 2;   //1是账号在别处登录了。
+	optional string msg = 3;
 }

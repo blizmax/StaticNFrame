@@ -127,7 +127,6 @@ public:
 		mPlayerId = 0;
 		mIsLogin = false;
 		mGameServerId = 0;
-		mGameServerUnlinkId = 0;
 		mSendMsgCount = 0;
 		mRecvMsgCount = 0;
 		mRecvHeartBeatTime = 0;
@@ -138,7 +137,6 @@ public:
 	std::string mIPAddr;
 	std::string mAccount;
 	bool mIsLogin;
-	uint32_t mGameServerUnlinkId;
 	uint32_t mGameServerId;
 	uint32_t mSendMsgCount;
 	uint32_t mRecvMsgCount;
@@ -148,25 +146,27 @@ public:
 class PlayerWorldServerInfo
 {
 public:
+	enum LoginStatusEnum
+	{
+		ENUM_LOGIN_STATUS_NOT_LOGIN = 0, //Ã»ÓÐµÇÂ¼
+		ENUM_LOGIN_STATUS_START_LOGIN = 1, //·¢ÆðµÇÂ¼
+		ENUM_LOGIN_STATUS_LOGIN_TIME_OUT = 2, //µÇÂ¼³¬Ê±
+		ENUM_LOGIN_STATUS_LOGIN_FAILED = 3, //µÇÂ¼Ê§°Ü
+		ENUM_LOGIN_STATUS_LOGIN_SUCCESS = 4, //µÇÂ¼³É¹¦
+	};
+
 	PlayerWorldServerInfo()
 	{
-		mClientUnlinkId = 0;
 		mPlayerId = 0;
-		mIsLogin = false;
 		mGameServerId = 0;
-		mGameServerUnlinkId = 0;
-		mProxyServerUnlinkId = 0;
 		mProxyServerId = 0;
 	}
 
-	uint32_t mClientUnlinkId;
 	uint64_t mPlayerId;
 	std::string mIPAddr;
 	std::string mAccount;
-	bool mIsLogin;
-	uint32_t mGameServerUnlinkId;
+	std::string mPhonenum;
 	uint32_t mGameServerId;
-	uint32_t mProxyServerUnlinkId;
 	uint32_t mProxyServerId;
 };
 

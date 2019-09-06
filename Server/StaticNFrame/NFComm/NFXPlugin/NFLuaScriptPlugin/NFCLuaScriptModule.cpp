@@ -132,14 +132,13 @@ void NFCLuaScriptModule::LoadScript()
 	TryAddPackagePath(m_pPluginManager->GetLuaScriptPath());
 	TryLoadScriptFile("init.lua");
 	TryRunGlobalScriptFunc("LuaNFrame.InitScript", this);
-	//TryLoadScriptFile("LoadHelper.lua");
 
-	//TryRunGlobalScriptFunc("LuaNFrame.TimerInit", 0, "logtimer");
-	//TryRunGlobalScriptFunc("LuaNFrame.TimerInit", 0, "pokertimer");
-	TryRunGlobalScriptFunc("LuaNFrame.TimerInit", 0, "gametimer");
-	//TryRunGlobalScriptFunc("LuaNFrame.TimerInit", 0, "utilstimer");
+	TryRunGlobalScriptFunc("LuaNFrame.TimerInit", "logtimer");
+	TryRunGlobalScriptFunc("LuaNFrame.TimerInit", "pokertimer");
+	TryRunGlobalScriptFunc("LuaNFrame.TimerInit", "gametimer");
+	TryRunGlobalScriptFunc("LuaNFrame.TimerInit", "utilstimer");
 
-	//ProcessLoop("logtimer");
+	ProcessLoop("logtimer");
 	ProcessLoop("gametimer");
 	ProcessLoop("utilstimer");
 }

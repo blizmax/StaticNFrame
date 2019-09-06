@@ -124,14 +124,15 @@ void NFCLuaThreadModule::OnTimer(uint32_t nTimerID)
 		{
 			KillTimer(EnumLuaThreadModule_Init);
 			AddProcessLoopTask(new NFServerLoopTask(this, EnumLuaThreadModule_Init, "gametimer"));
-			//AddProcessLoopTask(new NFServerLoopTask(this, EnumLuaThreadModule_Init, "utilstimer"));
-			//AddProcessLoopTask(new NFServerLoopTask(this, EnumLuaThreadModule_Init, "logtimer"));
-			//AddProcessLoopTask(new NFServerLoopTask(this, EnumLuaThreadModule_Init, "pokertimer"));
+			AddProcessLoopTask(new NFServerLoopTask(this, EnumLuaThreadModule_Init, "utilstimer"));
+			AddProcessLoopTask(new NFServerLoopTask(this, EnumLuaThreadModule_Init, "logtimer"));
+			AddProcessLoopTask(new NFServerLoopTask(this, EnumLuaThreadModule_Init, "pokertimer"));
 		}
 	}
 	if (nTimerID == EnumLuaThreadModule_Loop)
 	{
 		GcStep();
+		AddProcessLoopTask(new NFServerLoopTask(this, EnumLuaThreadModule_Loop, "logtimer"));
 		AddProcessLoopTask(new NFServerLoopTask(this, EnumLuaThreadModule_Loop, "gametimer"));
 		AddProcessLoopTask(new NFServerLoopTask(this, EnumLuaThreadModule_Loop, "utilstimer"));
 	}
