@@ -179,5 +179,6 @@ function CPPNFrame:IsThreadModule()
 end
 
 function CPPNFrame:SendErrorLog(playerId, func_log, errorLog)
+
     return self.luaModule:SendErrorLog(playerId, func_log, errorLog)
 end
