@@ -132,11 +132,15 @@ void NFCMasterServerModule::OnTimer(uint32_t nTimerID)
 {
 	if (nTimerID == NF_MASTER_TIMER_SAVE_SERVER_DATA)
 	{
+#if NF_PLATFORM == NF_PLATFORM_LINUX
 		SaveServerDataToDB();
+#endif
 	}
 	else if (nTimerID == NF_MASTER_TIMER_CLEAR_SERVER_DATA)
 	{
+#if NF_PLATFORM == NF_PLATFORM_LINUX
 		ClearServerDataToDB();
+#endif
 	}
 }
 
@@ -1126,6 +1130,7 @@ void NFCMasterServerModule::OnServerErrorMsg(const uint32_t unLinkId, const uint
 	NFMsg::ServerErrorLogMsg xMsg;
 	CLIENT_MSG_PROCESS_NO_OBJECT(nMsgId, playerId, msg, nLen, xMsg);
 
+#if NF_PLATFORM == NF_PLATFORM_LINUX
 	static uint32_t error_log_id = 0;
 	error_log_id++;
 	//std::string sqlcase = "insert into dy_error_msg (playerid, funclog, errorlog) values (" + NFCommon::tostr(xMsg.player_id()) + ",'" + xMsg.func_log() + "','" + xMsg.error_log() + "');";
@@ -1135,4 +1140,5 @@ void NFCMasterServerModule::OnServerErrorMsg(const uint32_t unLinkId, const uint
 	data.emplace("funclog", xMsg.func_log());
 	data.emplace("errorlog", xMsg.error_log());
 	FindModule<NFIAsyMysqlModule>()->UpdateOne("dy_error_msg", "id", NFCommon::tostr(error_log_id), data);
+#endif
 }

@@ -281,6 +281,11 @@ function LuaNFrame.Warn(logId, guid, ...)
 end
 
 function LuaNFrame.Error(logId, guid, ...)
+	if type(guid) == nil then
+		guid = 0
+	elseif type(guid) == "number" then
+		guid = tonumber(guid)
+	end
 	local cStackInfo = debug.getinfo(2, "Sl")
 	if cStackInfo then
 		CPPNFrame:Error(logId, guid, "["..tostring(cStackInfo.short_src)..":"..tostring(cStackInfo.currentline).."] | "..tostring(...))
@@ -443,7 +448,7 @@ function LuaNFrame.DispatchMasterHttp(unLinkId, requestId, firstPath, secondPath
 	local status, msg = xpcall (HttpExecute, __G__TRACKBACK__)
 
 	if not status then
-		LuaNFrame.SendErrorLog(valueId, "LuaNFrame.DispatchMasterHttp error, unLinkId:"..tostring(unLinkId)..", requestId:"..tostring(requestId)..", firstPath:"..firstPath..", secondPath:"..secondPath, msg)
+		LuaNFrame.SendErrorLog(0, "LuaNFrame.DispatchMasterHttp error, unLinkId:"..tostring(unLinkId)..", requestId:"..tostring(requestId)..", firstPath:"..firstPath..", secondPath:"..secondPath, msg)
     end
 end
 
@@ -462,7 +467,7 @@ function LuaNFrame.DispatchTimer(luaFunc, dataStr)
 	local status, msg = xpcall (timerExecute, __G__TRACKBACK__)
 
 	if not status then
-		LuaNFrame.SendErrorLog(valueId, "LuaNFrame.DispatchTimer error, func:"..luaFunc.." param:"..tostring(dataStr), msg)
+		LuaNFrame.SendErrorLog(0, "LuaNFrame.DispatchTimer error, func:"..luaFunc.." param:"..tostring(dataStr), msg)
     end
 end
 
@@ -475,7 +480,7 @@ function LuaNFrame.DispatchTimerLoop(dataStr)
 	local status, msg = xpcall (timerExecute, __G__TRACKBACK__)
 
 	if not status then
-		LuaNFrame.SendErrorLog(valueId, "LuaNFrame.DispatchTimerLoop error, param:"..tostring(dataStr), msg)
+		LuaNFrame.SendErrorLog(0, "LuaNFrame.DispatchTimerLoop error, param:"..tostring(dataStr), msg)
     end
 end
 
@@ -493,7 +498,7 @@ function LuaNFrame.DispatchTimerOnce( luaFunc, dataStr)
 	local status, msg = xpcall (timerExecute, __G__TRACKBACK__)
 
 	if not status then
-		LuaNFrame.SendErrorLog(valueId, "LuaNFrame.DispatchTimerOnce error, func:"..luaFunc.." param:"..tostring(dataStr), msg)
+		LuaNFrame.SendErrorLog(0, "LuaNFrame.DispatchTimerOnce error, func:"..luaFunc.." param:"..tostring(dataStr), msg)
     end
 end
 
@@ -505,7 +510,7 @@ function LuaNFrame.TimerInit(timeType)
 	local status, msg = xpcall (timerInitData, __G__TRACKBACK__)
 
 	if not status then
-		LuaNFrame.SendErrorLog(valueId,  "LuaNFrame.TimerInit error, param:"..tostring(timeType), msg)
+		LuaNFrame.SendErrorLog(0,  "LuaNFrame.TimerInit error, param:"..tostring(timeType), msg)
     end
 end
 
@@ -524,7 +529,7 @@ function LuaNFrame.DispatchWorker(indexStr, dataStr)
 	local status, msg = xpcall (workExecute, __G__TRACKBACK__)
 
 	if not status then
-		LuaNFrame.SendErrorLog(valueId,  "LuaNFrame.DispatchWorker "..tostring(indexStr).." error, param:"..tostring(dataStr), msg)
+		LuaNFrame.SendErrorLog(0,  "LuaNFrame.DispatchWorker "..tostring(indexStr).." error, param:"..tostring(dataStr), msg)
     end
 end
 
