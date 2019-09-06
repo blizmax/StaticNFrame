@@ -280,18 +280,20 @@ void NFCProxyLogicModule::OnHandleReconnectFromClient(const uint32_t unLinkId, c
 		{
 			NFLogInfo(NF_LOG_PROXY_RECV_MSG_LOG, 0, "Player:{} reconnect proxy server, but unlink not change! some wrong!", cgMsg.userid());
 		}
-
-		if (mClientLinkInfo.GetElement(pPlayerLinkInfo->mUnlinkId))
+		else
 		{
-			//NFMsg::gckitplayer kitMsg;
-			//kitMsg.set_result(0);
-			//kitMsg.set_kittype(1);
-			//kitMsg.set_msg("您的账号已在别处登入，若非本人操作，请联系系统管理员！");
-			//FindModule<NFINetServerModule>()->SendToServerByPB(pPlayerLinkInfo->mUnlinkId, NFMsg::Server_Msg_KitPlayer, kitMsg, 0);
-			FindModule<NFINetServerModule>()->CloseLinkId(pPlayerLinkInfo->mUnlinkId);
-		}
+			if (mClientLinkInfo.GetElement(pPlayerLinkInfo->mUnlinkId))
+			{
+				//NFMsg::gckitplayer kitMsg;
+				//kitMsg.set_result(0);
+				//kitMsg.set_kittype(1);
+				//kitMsg.set_msg("您的账号已在别处登入，若非本人操作，请联系系统管理员！");
+				//FindModule<NFINetServerModule>()->SendToServerByPB(pPlayerLinkInfo->mUnlinkId, NFMsg::Server_Msg_KitPlayer, kitMsg, 0);
+				FindModule<NFINetServerModule>()->CloseLinkId(pPlayerLinkInfo->mUnlinkId);
+			}
 
-		mClientLinkInfo.RemoveElement(pPlayerLinkInfo->mUnlinkId);
+			mClientLinkInfo.RemoveElement(pPlayerLinkInfo->mUnlinkId);
+		}
 	}
 
 	pPlayerLinkInfo->mUnlinkId = unLinkId;
