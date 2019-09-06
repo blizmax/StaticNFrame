@@ -164,7 +164,11 @@ void NFCProxyClient_MasterModule::ServerReport()
 			pData->set_proc_pid(systemInfo.GetProcessInfo().mPid);
 		}
 
-		FindModule<NFINetClientModule>()->SendToServerByPB(m_pMasterServerData->mUnlinkId, EGMI_STS_SERVER_REPORT, xMsg, 0);
+		if (pData->proc_cpu() > 0 && pData->proc_mem() > 0)
+		{
+			FindModule<NFINetClientModule>()->SendToServerByPB(m_pMasterServerData->mUnlinkId, EGMI_STS_SERVER_REPORT, xMsg, 0);
+		}
+		
 	}
 }
 
