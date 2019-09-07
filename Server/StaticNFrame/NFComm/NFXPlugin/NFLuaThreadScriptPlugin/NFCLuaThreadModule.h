@@ -48,6 +48,7 @@ public:
 		ACTOR_TIMER_MSG_PROCESS_TIMER = 1,
 		ACTOR_TIMER_MSG_PROCESS_LOOP_TIMER = 2,
 		ACTOR_TIMER_MSG_PROCESS_REAL_TIMER = 3,
+		ACTOR_MSG_PROCESS_WORK = 4,
 	};
 
 	/**
@@ -286,6 +287,7 @@ public:
 
 	void AddRealTimer(uint32_t internal, uint32_t callount, const std::string& luaFunc, const std::string& tmpParam);
 
+	void AddProcessWork(const std::string& luaFunc, const std::string& tmpParam);
 	/*
 	处理多线程LUA发过来的定时器
 	*/

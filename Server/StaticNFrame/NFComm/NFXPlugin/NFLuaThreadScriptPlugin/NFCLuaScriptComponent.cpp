@@ -493,7 +493,7 @@ void NFCLuaScriptComponent::ProcessWork(const std::string& luaFunc, const NFLuaR
 			}
 		}
 	}
-	m_pLuaThreadModule->AddProcessWorkTask(new NFWorkActorTask(m_pLuaThreadModule, EnumLuaThreadModule_Work, luaFunc, tmpStr));
+	m_pLuaThreadModule->AddProcessWork(luaFunc, tmpStr);
 }
 
 void NFCLuaScriptComponent::Do_ProcessWork(const std::string& luaFunc, const std::string& dataStr)
