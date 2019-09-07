@@ -20,6 +20,8 @@ public:
 	explicit NFCTaskModule(NFIPluginManager* p);
 	virtual ~NFCTaskModule();
 
+	bool Awake() override;
+
 	bool Init() override;
 
 	bool AfterInit() override;
@@ -201,6 +203,8 @@ protected:
 		uint64_t mPerUseTime;
 		uint64_t mCount;
 	};
-	std::map<std::string, TaskMonitorData> m_taskMonitorMap;
+	
 	uint32_t m_loopCount;
+	//task 监控 static里， 因为 taskmodule 可能有很多个
+	std::map<std::string, TaskMonitorData> m_taskMonitorMap;
 };

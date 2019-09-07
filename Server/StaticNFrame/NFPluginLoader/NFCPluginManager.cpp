@@ -255,7 +255,7 @@ bool NFCPluginManager::Execute()
 		uint64_t useTime = EndProfiler();
 		if (useTime >= 10000) //>= 10ºÁÃë
 		{
-			//NFLogError(NF_LOG_PLUGIN_MANAGER, 0, "{} use time:{} ms", it->first + "--Loop", useTime / 1000);
+			NFLogError(NF_LOG_PLUGIN_MANAGER, 0, "{} use time:{} ms", it->first + "--Loop", useTime / 1000);
 		}
 	}
 
@@ -285,17 +285,17 @@ bool NFCPluginManager::Execute()
 	{
 		if (cost >= 80 && cost <= 200)
 		{
-			//NFLogWarning(NF_LOG_PLUGIN_MANAGER, 0, "frame timeout:{}", cost);
+			NFLogWarning(NF_LOG_PLUGIN_MANAGER, 0, "frame timeout:{}", cost);
 		}
 		else if (cost > 200)
 		{
-			//NFLogError(NF_LOG_PLUGIN_MANAGER, 0, "frame timeout:{}, something wrong", cost);
+			NFLogError(NF_LOG_PLUGIN_MANAGER, 0, "frame timeout:{}, something wrong", cost);
 			//PrintProfiler();
 		}
 		std::this_thread::sleep_for(std::chrono::milliseconds(1));
 	}
 
-	if (mCurFrameCount % 1000 == 0)
+	if (mCurFrameCount % 10000 == 0)
 	{
 		PrintProfiler();
 	}
@@ -459,13 +459,6 @@ bool NFCPluginManager::CheckConfig()
 	{
 		itCheckInstance->second->CheckConfig();
 	}
-
-	for (auto it = mModuleAloneMultiMap.begin(); it != mModuleAloneMultiMap.end(); it++)
-	{
-		it->second->CheckConfig();
-	}
-	return true;
-
 	return true;
 }
 
@@ -478,10 +471,6 @@ bool NFCPluginManager::ReadyExecute()
 		itCheckInstance->second->ReadyExecute();
 	}
 
-	for (auto it = mModuleAloneMultiMap.begin(); it != mModuleAloneMultiMap.end(); it++)
-	{
-		it->second->ReadyExecute();
-	}
 	return true;
 }
 

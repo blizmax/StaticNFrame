@@ -177,6 +177,8 @@ public:
 		m_luaTimerIndex = 1000;
 		m_pNetServerModule = nullptr;
 		m_pNetClientModule = nullptr;
+		m_pServerLoopTaskModule = nullptr;
+		m_pWorkTaskModule = nullptr;
 	}
 
 	virtual ~NFCLuaThreadModule()
@@ -199,7 +201,7 @@ public:
 
 	virtual void OnTimer(uint32_t nTimerID);
 
-	virtual bool StartActorPool(const int nCount);
+	virtual bool StartActorPool();
 	virtual bool CloseActorPool();
 
 	virtual uint32_t AddTimer(uint32_t mMsgType, const std::string& luaFunc, uint64_t nInterVal, const std::string& dataStr, uint32_t callCount = 1);
@@ -227,11 +229,18 @@ public:
 	virtual void GcStep();
 public:
 	/**
-	* @brief 添加一个Actor组件
+	* @brief 添加一个work Actor组件
 	*
 	* @return
 	*/
 	virtual bool AddWorkActorComponent(NFITaskComponent* pComonnet);
+
+	/**
+	* @brief 添加一个server loop Actor组件
+	*
+	* @return
+	*/
+	virtual bool AddServerLoopActorComponent(NFITaskComponent* pComonnet);
 
 	/**
 	* @brief 通过任务的动态均衡id，获得actor
@@ -302,21 +311,6 @@ public:
 	NF_SHARE_PTR<PlayerGameServerInfo> GetPlayerInfo(uint64_t playerId);
 protected:
 	/**
-	* @brief actor索引数组
-	*/
-	std::vector<int> m_vecWorkActorPool;
-
-	/**
-	* @brief 用来平衡随机获得actor
-	*/
-	atomic<uint32_t> mnSuitIndex;
-
-	/**
-	* @brief server loop actor
-	*/
-	int m_processLoopActorId;
-
-	/**
 	* @brief 返回的定时器消息队,
 	* actor线程将数据放入队列， 主线程从队列里取数据处理
 	*/
@@ -341,4 +335,29 @@ protected:
 	NFQueueVector<NFTcpMessage*> m_mTcpMsgQueue;
 
 	std::map<std::string, std::string> m_errorLog;
+
+	/**
+	* @brief server loop actor module 主循环多线程系统
+	*/
+	NFITaskModule* m_pServerLoopTaskModule;
+
+	/**
+	* @brief server loop actor  主循环多线程Actor
+	*/
+	int m_processLoopActorId;
+
+	/**
+	* @brief server loop actor module work多线程系统
+	*/
+	NFITaskModule* m_pWorkTaskModule;
+
+	/**
+	* @brief actor索引数组
+	*/
+	std::vector<int> m_vecWorkActorPool;
+
+	/**
+	* @brief 用来平衡随机获得actor
+	*/
+	atomic<uint32_t> mnSuitIndex;
 };

@@ -24,39 +24,22 @@ NFCTaskModule::NFCTaskModule(NFIPluginManager* p)
 	nRecvTaskCount = 0;
 	nHandleTaskCount = 0;
 	srand(static_cast<unsigned>(time(nullptr)));
+
+}
+
+NFCTaskModule::~NFCTaskModule() = default;
+
+bool NFCTaskModule::Awake()
+{
 	//首先初始化
 #if NF_PLATFORM == NF_PLATFORM_WIN
 	uint32_t threadNum = std::thread::hardware_concurrency();
 #else
 	uint32_t threadNum = std::thread::hardware_concurrency() * 2;
-	if (threadNum < 10)
-	{
-		threadNum = 10;
-	}
 #endif
-
-	if (m_pPluginManager->IsLoadAllServer())
-	{
-		NFCTaskModule::InitActorThread(threadNum);
-	}
-	else
-	{
-		auto pServerConfig = NFConfigMgr::Instance()->GetServerConfig(m_pPluginManager->GetAppID());
-		if (pServerConfig)
-		{
-			if (pServerConfig->mActorThreadNum > 0)
-			{
-				NFCTaskModule::InitActorThread(pServerConfig->mActorThreadNum);
-			}
-			else
-			{
-				NFCTaskModule::InitActorThread(threadNum);
-			}
-		}
-	}
+	InitActorThread(threadNum);
+	return true;
 }
-
-NFCTaskModule::~NFCTaskModule() = default;
 
 bool NFCTaskModule::Init()
 {
@@ -117,9 +100,6 @@ int NFCTaskModule::InitActorThread(int thread_num)
 	if (thread_num <= 0) thread_num = 1;
 
 	m_pFramework = new Theron::Framework(thread_num);
-
-	m_pFramework->SetMinThreads(thread_num);
-	m_pFramework->SetMaxThreads(thread_num*10);
 
 	m_pMainActor = new NFTaskActor(*m_pFramework, this);
 
@@ -364,7 +344,7 @@ void NFCTaskModule::OnMainThreadTick()
 				auto pTask = static_cast<NFTask*>(xMsg.pData);
 				if (pTask)
 				{
-					if (pTask->m_taskName.empty() == false && pTask->m_useTime > 1)
+					if (pTask->m_taskName.empty() == false)
 					{
 						TaskMonitorData& data = m_taskMonitorMap[pTask->m_taskName];
 						data.mAllUseTime = data.mAllUseTime + pTask->m_useTime;

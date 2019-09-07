@@ -12,6 +12,14 @@ class NFITaskModule : public NFIModule
 {
 public:
 	/**
+	* @brief 初始化actor系统, 配置线程个数
+	*
+	* @param thread_num	线程数目，至少为1
+	* @return < 0 : Failed
+	*/
+	virtual int InitActorThread(int thread_num) = 0;
+
+	/**
 	* @brief 消息数据处理完后，如果有必要将数据返回给主线程，
 	*		 在这个函数里，将消息数据推送给主线程，这个函数在actor线程中执行
 	*
