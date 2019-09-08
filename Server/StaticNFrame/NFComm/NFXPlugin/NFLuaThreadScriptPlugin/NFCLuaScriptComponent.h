@@ -24,6 +24,7 @@
 #include "NFComm/NFPluginModule/NFIHttpClientModule.h"
 #include "NFComm/NFPluginModule/NFIHttpServerModule.h"
 #include "NFComm/NFPluginModule/NFIServerNetEventModule.h"
+#include "NFComm/NFPluginModule/NFLogMgr.h"
 #include "NFCLuaThreadModule.h"
 
 class NFCLuaThreadModule;
@@ -440,6 +441,7 @@ public:
 		if (pTask)
 		{
 			uint64_t startTime = NFGetTime();
+			//NFLogError(NF_LOG_LUA_PLUGIN, 0, "taskname:{} threadId:{}", pTask->m_taskName, ThreadId());
 			pTask->ThreadProcess();
 			pTask->m_useTime = NFGetTime() - startTime;
 		}
