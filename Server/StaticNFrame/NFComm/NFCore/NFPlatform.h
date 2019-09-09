@@ -126,7 +126,7 @@ inline struct tm* localtime_r(const time_t* timep, struct tm* result)
 #define NFSTRICMP strcasecmp
 #define NFSLEEP(s) usleep((s)*1000)
 #define NFGetPID() lexical_cast<std::string>(getpid())
-typedef pid_t NF_THREAD_ID;
+typedef unsigned long int NF_THREAD_ID;
 inline NF_THREAD_ID ThreadId()
 {
 	return pthread_self();
