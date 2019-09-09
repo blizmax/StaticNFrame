@@ -607,8 +607,8 @@ int NFCLuaThreadModule::GetBalanceWorkActor(uint64_t balanceId)
 		{
 			return -1;
 		}
-		mnSuitIndex = balanceId % m_vecWorkActorPool.size();
-		return m_vecWorkActorPool[mnSuitIndex];
+		uint32_t index = balanceId % m_vecWorkActorPool.size();
+		return m_vecWorkActorPool[index];
 	}
 }
 

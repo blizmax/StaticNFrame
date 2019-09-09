@@ -17,7 +17,14 @@ NFTaskActor::NFTaskActor(Theron::Framework& framework, NFITaskModule* pTaskModul
 * @brief 析构函数
 *
 */
-NFTaskActor::~NFTaskActor() = default;
+NFTaskActor::~NFTaskActor()
+{
+	for (size_t i = 0; i < m_taskComponents.size(); i++)
+	{
+		NF_SAFE_DELETE(m_taskComponents[i]);
+	}
+	m_taskComponents.clear();
+}
 
 /**
 * @brief 初始化
@@ -126,4 +133,26 @@ void NFTaskActor::ProcessTaskEnd(NFTask* pTask)
 			pComponent->ProcessTaskEnd(pTask);
 		}
 	}
+}
+
+/**
+* @brief 获得所有component
+*
+* @param
+* @return
+*/
+const std::vector<NFITaskComponent*>& NFTaskActor::GetTaskComponent() const
+{ 
+	return m_taskComponents; 
+}
+
+/**
+* @brief 获得ActorId
+*
+* @param
+* @return
+*/
+int NFTaskActor::GetActorId() const
+{ 
+	return this->GetAddress().AsInteger(); 
 }

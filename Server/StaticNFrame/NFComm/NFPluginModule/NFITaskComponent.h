@@ -38,23 +38,12 @@ class NFITaskComponent
 public:
 	NFITaskComponent()
 	{
-		mTaskActor = nullptr;
+		mActorId = -1;
 	}
 
 	virtual ~NFITaskComponent()
 	{
 	}
-
-	virtual void SetTaskActor(NFTaskActor* taskActor)
-	{
-		mTaskActor = taskActor;
-	}
-
-	virtual NFTaskActor* GetActor()
-	{
-		return mTaskActor;
-	}
-
 
 	virtual void ProcessTaskStart(NFTask* pTask)
 	{
@@ -73,8 +62,18 @@ public:
 	{
 
 	}
+
+	virtual int GetActorId() const
+	{
+		return mActorId;
+	}
+
+	virtual void SetActorId(int actorId)
+	{
+		mActorId = actorId;
+	}
 private:
-	NFTaskActor* mTaskActor;
+	int mActorId;
 };
 
 

@@ -122,7 +122,15 @@ public:
 	* @param
 	* @return
 	*/
-	const std::vector<NFITaskComponent*>& GetTaskComponent() const { return m_taskComponents; }
+	virtual const std::vector<NFITaskComponent*>& GetTaskComponent() const;
+
+	/**
+	* @brief 获得ActorId
+	*
+	* @param
+	* @return
+	*/
+	virtual int GetActorId() const;
 protected:
 	/**
 	* @brief 处理已经被处理过的消息

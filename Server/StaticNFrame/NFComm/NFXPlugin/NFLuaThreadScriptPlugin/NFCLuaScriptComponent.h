@@ -19,6 +19,7 @@
 
 #include "NFComm/NFPluginModule/NFILuaModule.h"
 #include "NFComm/NFCore/NFFileUtility.h"
+#include "NFComm/NFCore/NFHash.hpp"
 #include "NFComm/NFCore/NFStringUtility.h"
 #include "NFComm/NFCore/NFCommon.h"
 #include "NFComm/NFPluginModule/NFIHttpClientModule.h"
@@ -69,6 +70,10 @@ public:
 		else if (m_taskType == EnumLuaThreadModule_Work)
 		{
 			m_taskName = "WorkTask_" + luaFunc;
+			if (!param.empty())
+			{
+				m_balanceId = (uint64_t)NFHash::hash_string(param.c_str());
+			}
 		}
 	}
 	/**
@@ -135,6 +140,10 @@ public:
 		m_luaFunc = luaFunc;
 		m_param = param;
 		m_taskName = "NFProcessRealTimer_" + luaFunc;
+		if (!param.empty())
+		{
+			m_balanceId = (uint64_t)NFHash::hash_string(param.c_str());
+		}
 	}
 	/**
 	**  异步线程处理函数，将在另一个线程里运行
@@ -164,6 +173,10 @@ public:
 		m_luaFunc = luaFunc;
 		m_param = param;
 		m_taskName = "ProcessTimerTask_" + luaFunc;
+		if (!param.empty())
+		{
+			m_balanceId = (uint64_t)NFHash::hash_string(param.c_str());
+		}
 	}
 	/**
 	**  异步线程处理函数，将在另一个线程里运行
@@ -441,7 +454,7 @@ public:
 		if (pTask)
 		{
 			uint64_t startTime = NFGetTime();
-			//NFLogError(NF_LOG_LUA_PLUGIN, 0, "taskname:{} threadId:{}", pTask->m_taskName, ThreadId());
+			NFLogError(NF_LOG_LUA_PLUGIN, 0, "taskname:{} actorId:{} threadId:{} balanceId:{}", pTask->m_taskName, GetActorId(),ThreadId(), pTask->m_balanceId);
 			pTask->ThreadProcess();
 			pTask->m_useTime = NFGetTime() - startTime;
 		}

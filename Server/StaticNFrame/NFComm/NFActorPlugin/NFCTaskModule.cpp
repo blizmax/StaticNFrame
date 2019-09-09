@@ -203,7 +203,7 @@ bool NFCTaskModule::AddActorComponent(const int nActorIndex, NFITaskComponent* p
 		return false;
 	}
 
-	pComonnet->SetTaskActor(pActor);
+	pComonnet->SetActorId(pActor->GetActorId());
 	pActor->AddComponnet(pComonnet);
 	return true;
 }
