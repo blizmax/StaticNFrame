@@ -72,8 +72,19 @@ public:
 	{
 		mActorId = actorId;
 	}
+
+	virtual const std::string GetComponentName() const
+	{
+		return m_componentName;
+	}
+
+	virtual void SetComponentName(const std::string& name)
+	{
+		m_componentName = name;
+	}
 private:
 	int mActorId;
+	std::string m_componentName;
 };
 
 

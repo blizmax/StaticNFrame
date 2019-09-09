@@ -43,6 +43,7 @@ bool NFCLuaThreadModule::Init()
 	m_pServerLoopTaskModule->AfterInit();
 
 	m_pWorkTaskModule = m_pPluginManager->CreateAloneModule<NFITaskModule>();
+	m_pTcpMsgTaskModule = m_pPluginManager->CreateAloneModule<NFITaskModule>();
 
 	//初始化work Actor系统
 #if NF_PLATFORM == NF_PLATFORM_WIN
@@ -57,7 +58,8 @@ bool NFCLuaThreadModule::Init()
 
 	if (m_pPluginManager->IsLoadAllServer())
 	{
-		m_pWorkTaskModule->InitActorThread(threadNum);
+		m_pWorkTaskModule->InitActorThread(2);
+		m_pTcpMsgTaskModule->InitActorThread(threadNum);
 	}
 	else
 	{
@@ -66,14 +68,19 @@ bool NFCLuaThreadModule::Init()
 		{
 			if (pServerConfig->mActorThreadNum > 0)
 			{
-				m_pWorkTaskModule->InitActorThread(pServerConfig->mActorThreadNum);
+				m_pTcpMsgTaskModule->InitActorThread(pServerConfig->mActorThreadNum);
 			}
 			else
 			{
-				m_pWorkTaskModule->InitActorThread(threadNum);
+				m_pTcpMsgTaskModule->InitActorThread(threadNum);
 			}
+
+			m_pWorkTaskModule->InitActorThread(10);
 		}
 	}
+
+	m_pTcpMsgTaskModule->Init();
+	m_pTcpMsgTaskModule->AfterInit();
 
 	m_pWorkTaskModule->Init();
 	m_pWorkTaskModule->AfterInit();
@@ -140,6 +147,23 @@ bool  NFCLuaThreadModule::IsInitLua()
 		}
 	}
 
+	for (size_t i = 0; i < m_vecTcpMsgActorPool.size(); i++)
+	{
+		int actorId = m_vecTcpMsgActorPool[i];
+		const std::vector<NFITaskComponent*> vecComponent = m_pTcpMsgTaskModule->GetTaskComponent(actorId);
+		for (size_t i = 0; i < vecComponent.size(); i++)
+		{
+			NFCLuaScriptComponent* pComponent = dynamic_cast<NFCLuaScriptComponent*>(vecComponent[i]);
+			if (pComponent)
+			{
+				if (pComponent->IsInitLua() == false)
+				{
+					return false;
+				}
+			}
+		}
+	}
+
 	const std::vector<NFITaskComponent*> vecComponent = m_pServerLoopTaskModule->GetTaskComponent(m_processLoopActorId);
 	for (size_t i = 0; i < vecComponent.size(); i++)
 	{
@@ -165,6 +189,11 @@ void NFCLuaThreadModule::OnTimer(uint32_t nTimerID)
 			int actorId = m_vecWorkActorPool[i];
 			m_pWorkTaskModule->AddTask(actorId, new NFWorkActorTask(this, EnumLuaThreadModule_LOAD));
 		}
+		for (size_t i = 0; i < m_vecTcpMsgActorPool.size(); i++)
+		{
+			int actorId = m_vecTcpMsgActorPool[i];
+			m_pTcpMsgTaskModule->AddTask(actorId, new NFWorkActorTask(this, EnumLuaThreadModule_LOAD));
+		}
 	}
 	if (nTimerID == EnumLuaThreadModule_Init)
 	{
@@ -188,16 +217,22 @@ void NFCLuaThreadModule::OnTimer(uint32_t nTimerID)
 
 void NFCLuaThreadModule::RunHttpRecvLuaFunc(const std::string& luaFunc, const uint32_t unLinkId, const uint32_t requestId, const std::string& firstPath, const std::string& secondPath, const std::string& strMsg)
 {
-	AddWorkTask(new NFHttpMsgActorTask(this, luaFunc, unLinkId, requestId, firstPath, secondPath, strMsg));
+	AddTcpMsgTask(new NFHttpMsgActorTask(this, luaFunc, unLinkId, requestId, firstPath, secondPath, strMsg));
 }
 
 void NFCLuaThreadModule::RunNetRecvLuaFunc(const std::string& luaFunc, const uint32_t unLinkId, const uint64_t valueId, const uint32_t nMsgId, const std::string& strMsg)
 {
-	AddWorkTask(new NFTcpMsgActorTask(this, luaFunc, unLinkId, valueId, nMsgId, strMsg));
+	AddTcpMsgTask(new NFTcpMsgActorTask(this, luaFunc, unLinkId, valueId, nMsgId, strMsg));
 }
 
 bool NFCLuaThreadModule::StartActorPool()
 {
+	for (int i = 0; i < m_pTcpMsgTaskModule->GetMaxThreads(); i++)
+	{
+		NFCLuaScriptComponent* pComonnet = NF_NEW NFCLuaScriptComponent(this, m_pPluginManager);
+		AddTcpMsgActorComponent(pComonnet);
+	}
+	
 	for (int i = 0; i < m_pWorkTaskModule->GetMaxThreads(); i++)
 	{
 		NFCLuaScriptComponent* pComonnet = NF_NEW NFCLuaScriptComponent(this, m_pPluginManager);
@@ -456,7 +491,7 @@ void NFCLuaThreadModule::OnAccountEventCallBack(uint32_t nEvent, uint32_t unLink
 		{
 			mPlayerProxyInfoMap.RemoveElement(pServerData->GetPlayerId());
 			//TryRunGlobalScriptFunc("TcpSessionClose", pServerData->GetPlayerId());
-			AddWorkTask(new NFTcpSessionCloseActorTask(this, pServerData->GetPlayerId()));
+			AddTcpMsgTask(new NFTcpSessionCloseActorTask(this, pServerData->GetPlayerId()));
 		}
 	}
 	else if (nEvent == eAccountEventType_RECONNECTED)
@@ -565,9 +600,30 @@ bool NFCLuaThreadModule::AddWorkActorComponent(NFITaskComponent* pComonnet)
 		return false;
 	}
 
+	pComonnet->SetComponentName(std::string("WorkActor_") + NFCommon::tostr(actorId));
 	m_pWorkTaskModule->AddActorComponent(actorId, pComonnet);
 
 	m_vecWorkActorPool.push_back(actorId);
+	return true;
+}
+
+/**
+* @brief 添加一个tcp msg Actor组件
+*
+* @return
+*/
+bool NFCLuaThreadModule::AddTcpMsgActorComponent(NFITaskComponent* pComonnet)
+{
+	int actorId = m_pTcpMsgTaskModule->RequireActor();
+	if (actorId <= 0)
+	{
+		return false;
+	}
+
+	pComonnet->SetComponentName(std::string("TcpMsgActor_") + NFCommon::tostr(actorId));
+	m_pTcpMsgTaskModule->AddActorComponent(actorId, pComonnet);
+
+	m_vecTcpMsgActorPool.push_back(actorId);
 	return true;
 }
 
@@ -584,6 +640,7 @@ bool NFCLuaThreadModule::AddServerLoopActorComponent(NFITaskComponent* pComonnet
 		return false;
 	}
 
+	pComonnet->SetComponentName(std::string("ServerLoopActor_") + NFCommon::tostr(m_processLoopActorId));
 	m_pServerLoopTaskModule->AddActorComponent(m_processLoopActorId, pComonnet);
 	return true;
 }
@@ -624,10 +681,10 @@ int NFCLuaThreadModule::GetRandWorkActor()
 		return -1;
 	}
 
-	mnSuitIndex++;
-	mnSuitIndex = mnSuitIndex % m_vecWorkActorPool.size();
+	mnWorkSuitIndex++;
+	mnWorkSuitIndex = mnWorkSuitIndex % m_vecWorkActorPool.size();
 
-	return m_vecWorkActorPool[mnSuitIndex];
+	return m_vecWorkActorPool[mnWorkSuitIndex];
 }
 
 /**
@@ -644,6 +701,68 @@ bool NFCLuaThreadModule::AddWorkTask(NFTask* pTask)
 		if (actorId > 0)
 		{
 			return m_pWorkTaskModule->AddTask(actorId, pTask);
+		}
+	}
+
+	return false;
+}
+
+/**
+* @brief 通过任务的动态均衡id，获得actor
+*		 为了防止数据库错乱，防止同时对数据库表中的一条数据，读取写入，
+*		 使用动态均衡id, 使得在某个时候只有一条线程对表中的一条数据，读取或写入
+* @param balanceId 动态均衡id
+* @return	一个actor索引
+*/
+int NFCLuaThreadModule::GetBalanceTcpMsgActor(uint64_t balanceId)
+{
+	if (balanceId == 0)
+	{
+		return GetRandTcpMsgActor();
+	}
+	else
+	{
+		if (m_vecTcpMsgActorPool.size() <= 0)
+		{
+			return -1;
+		}
+		uint32_t index = balanceId % m_vecTcpMsgActorPool.size();
+		return m_vecTcpMsgActorPool[index];
+	}
+}
+
+/**
+* @brief 随机获得一个actor
+*
+* @return actor索引
+*/
+int NFCLuaThreadModule::GetRandTcpMsgActor()
+{
+	if (m_vecTcpMsgActorPool.size() <= 0)
+	{
+		return -1;
+	}
+
+	mnTcpMsgSuitIndex++;
+	mnTcpMsgSuitIndex = mnTcpMsgSuitIndex % m_vecTcpMsgActorPool.size();
+
+	return m_vecTcpMsgActorPool[mnTcpMsgSuitIndex];
+}
+
+/**
+* @brief 通过平衡ID添加要异步处理的task
+*
+* @param pTask 要异步处理的task
+* @return
+*/
+bool NFCLuaThreadModule::AddTcpMsgTask(NFTask* pTask)
+{
+	if (pTask)
+	{
+		int actorId = GetBalanceTcpMsgActor(pTask->GetBalanceId());
+		if (actorId > 0)
+		{
+			return m_pTcpMsgTaskModule->AddTask(actorId, pTask);
 		}
 	}
 
@@ -756,7 +875,7 @@ void NFCLuaThreadModule::AddProcessLoopTimer(uint32_t delayTimer, const std::str
 
 void NFCLuaThreadModule::ReloadAllLuaFiles()
 {
-	AddWorkTask(new NFHotfixAllLuaActorTask(this));
+	AddTcpMsgTask(new NFHotfixAllLuaActorTask(this));
 }
 
 void NFCLuaThreadModule::ReloadLuaFiles()
@@ -765,6 +884,12 @@ void NFCLuaThreadModule::ReloadLuaFiles()
 	{
 		int actorId = m_vecWorkActorPool[index];
 		m_pWorkTaskModule->AddTask(actorId, new NFHotfixLuaFilesActorTask(this));
+	}
+
+	for (size_t index = 0; index < m_vecTcpMsgActorPool.size(); index++)
+	{
+		int actorId = m_vecTcpMsgActorPool[index];
+		m_pTcpMsgTaskModule->AddTask(actorId, new NFHotfixLuaFilesActorTask(this));
 	}
 
 	m_pServerLoopTaskModule->AddTask(m_processLoopActorId, new NFHotfixLuaFilesActorTask(this));
@@ -778,6 +903,12 @@ void NFCLuaThreadModule::ReloadLuaFiles(const std::vector<std::string>& vecStr)
 		m_pWorkTaskModule->AddTask(actorId, new NFHotfixLuaFilesActorTask(this, vecStr));
 	}
 
+	for (size_t index = 0; index < m_vecTcpMsgActorPool.size(); index++)
+	{
+		int actorId = m_vecTcpMsgActorPool[index];
+		m_pTcpMsgTaskModule->AddTask(actorId, new NFHotfixLuaFilesActorTask(this, vecStr));
+	}
+
 	m_pServerLoopTaskModule->AddTask(m_processLoopActorId, new NFHotfixLuaFilesActorTask(this, vecStr));
 }
 
@@ -787,6 +918,12 @@ void NFCLuaThreadModule::GcStep()
 	{
 		int actorId = m_vecWorkActorPool[index];
 		m_pWorkTaskModule->AddTask(actorId, new NFLuaGcActorTask(this));
+	}
+
+	for (size_t index = 0; index < m_vecTcpMsgActorPool.size(); index++)
+	{
+		int actorId = m_vecTcpMsgActorPool[index];
+		m_pTcpMsgTaskModule->AddTask(actorId, new NFLuaGcActorTask(this));
 	}
 
 	m_pServerLoopTaskModule->AddTask(m_processLoopActorId, new NFLuaGcActorTask(this));

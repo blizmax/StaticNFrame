@@ -172,13 +172,14 @@ public:
 	NFCLuaThreadModule(NFIPluginManager* p)
 	{
 		m_pPluginManager = p;
-		mnSuitIndex = 0;
+		mnWorkSuitIndex = 0;
 		m_processLoopActorId = 0;
 		m_luaTimerIndex = 1000;
 		m_pNetServerModule = nullptr;
 		m_pNetClientModule = nullptr;
 		m_pServerLoopTaskModule = nullptr;
 		m_pWorkTaskModule = nullptr;
+		mnTcpMsgSuitIndex = 0;
 	}
 
 	virtual ~NFCLuaThreadModule()
@@ -236,6 +237,13 @@ public:
 	virtual bool AddWorkActorComponent(NFITaskComponent* pComonnet);
 
 	/**
+	* @brief 添加一个tcp msg Actor组件
+	*
+	* @return
+	*/
+	virtual bool AddTcpMsgActorComponent(NFITaskComponent* pComonnet);
+
+	/**
 	* @brief 添加一个server loop Actor组件
 	*
 	* @return
@@ -265,6 +273,30 @@ public:
 	* @return
 	*/
 	bool AddWorkTask(NFTask* pTask);
+
+	/**
+	* @brief 通过任务的动态均衡id，获得actor
+	*		 为了防止数据库错乱，防止同时对数据库表中的一条数据，读取写入，
+	*		 使用动态均衡id, 使得在某个时候只有一条线程对表中的一条数据，读取或写入
+	* @param balanceId 动态均衡id
+	* @return	一个actor索引
+	*/
+	int GetBalanceTcpMsgActor(uint64_t balanceId);
+
+	/**
+	* @brief 随机获得一个actor
+	*
+	* @return actor索引
+	*/
+	int GetRandTcpMsgActor();
+
+	/**
+	* @brief 通过平衡ID添加要异步处理的task
+	*
+	* @param pTask 要异步处理的task
+	* @return
+	*/
+	bool AddTcpMsgTask(NFTask* pTask);
 
 	/**
 	* @brief 循环异步处理的task
@@ -347,7 +379,7 @@ protected:
 	int m_processLoopActorId;
 
 	/**
-	* @brief server loop actor module work多线程系统
+	* @brief process work/timer actor module 多线程系统
 	*/
 	NFITaskModule* m_pWorkTaskModule;
 
@@ -359,5 +391,20 @@ protected:
 	/**
 	* @brief 用来平衡随机获得actor
 	*/
-	atomic<uint32_t> mnSuitIndex;
+	atomic<uint32_t> mnWorkSuitIndex;
+
+	/**
+	* @brief tcp msg actor module 多线程系统
+	*/
+	NFITaskModule* m_pTcpMsgTaskModule;
+
+	/**
+	* @brief tcp actor索引数组
+	*/
+	std::vector<int> m_vecTcpMsgActorPool;
+
+	/**
+	* @brief 用来平衡随机获得actor
+	*/
+	atomic<uint32_t> mnTcpMsgSuitIndex;
 };
