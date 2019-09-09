@@ -454,7 +454,7 @@ public:
 		if (pTask)
 		{
 			uint64_t startTime = NFGetTime();
-			NFLogError(NF_LOG_LUA_PLUGIN, 0, "taskname:{} actorId:{} threadId:{} balanceId:{}", pTask->m_taskName, GetActorId(),ThreadId(), pTask->m_balanceId);
+			//NFLogError(NF_LOG_LUA_PLUGIN, 0, "taskname:{} actorId:{} threadId:{} balanceId:{}", pTask->m_taskName, GetActorId(),ThreadId(), pTask->m_balanceId);
 			pTask->ThreadProcess();
 			pTask->m_useTime = NFGetTime() - startTime;
 		}
