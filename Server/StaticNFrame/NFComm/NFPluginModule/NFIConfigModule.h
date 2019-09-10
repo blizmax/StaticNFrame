@@ -39,7 +39,8 @@
 #define DEFINE_LUA_STRING_LOG_FLUSH_LEVEL		"LogFlushLevel"				//log刷新等级配置
 #define DEFINE_LUA_STRING_WebSocket				"WebSocket"
 #define DEFINE_LUA_STRING_HttpPort				"HttpPort"
-#define DEFINE_LUA_STRING_ACTOR_THREAD_NUM		"ActorThreadNum"
+#define DEFINE_LUA_STRING_LUA_WORK_THREAD_NUM		"LuaWorkThreadNum"
+#define DEFINE_LUA_STRING_LUA_TCP_THREAD_NUM		"LuaTcpThreadNum"
 
 #define DEFINE_LUA_STRING_LOG_INFO				"LogInfo"			//log配置
 
@@ -80,7 +81,8 @@ public:
 		mHttpPort = 0;
 		mMysqlPort = 0;
 		mNosqlPort = 0;
-		mActorThreadNum = 0;
+		mLuaWorkThreadNum = 5;
+		mLuaTcpThreadNum = 5;
 	}
 
 public:
@@ -102,7 +104,8 @@ public:
 	uint32_t mHttpPort;		//服务器http监听ip
 	uint32_t mMaxConnectNum;	//最大连接数目
 	uint32_t mWorkThreadNum;	//线程数目
-	uint32_t mActorThreadNum;	//Actor线程数目
+	uint32_t mLuaWorkThreadNum;	//Lua Work Actor线程数目
+	uint32_t mLuaTcpThreadNum;	//Lua Tcp Actor线程数目
 	bool mSecurity;				//是否加密
 	bool mWebSocket;			//是否开启websocket功能
 };

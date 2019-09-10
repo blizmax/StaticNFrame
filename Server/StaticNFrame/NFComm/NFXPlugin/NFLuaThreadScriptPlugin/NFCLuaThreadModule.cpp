@@ -66,16 +66,23 @@ bool NFCLuaThreadModule::Init()
 		auto pServerConfig = NFConfigMgr::Instance()->GetServerConfig(m_pPluginManager->GetAppID());
 		if (pServerConfig)
 		{
-			if (pServerConfig->mActorThreadNum > 0)
+			if (pServerConfig->mLuaTcpThreadNum > 0)
 			{
-				m_pTcpMsgTaskModule->InitActorThread(pServerConfig->mActorThreadNum);
+				m_pTcpMsgTaskModule->InitActorThread(pServerConfig->mLuaTcpThreadNum);
 			}
 			else
 			{
 				m_pTcpMsgTaskModule->InitActorThread(threadNum);
 			}
 
-			m_pWorkTaskModule->InitActorThread(10);
+			if (pServerConfig->mLuaWorkThreadNum > 0)
+			{
+				m_pWorkTaskModule->InitActorThread(pServerConfig->mLuaWorkThreadNum);
+			}
+			else
+			{
+				m_pWorkTaskModule->InitActorThread(threadNum);
+			}
 		}
 	}
 

@@ -22,7 +22,8 @@ function InitGameServer()
 			ServerIp = ZoneIP,
 			ServerPort = GetNewPort(),
 			MaxConnectNum = 100,
-			ActorThreadNum = 10,
+			LuaWorkThreadNum = 2,
+			LuaTcpThreadNum = 4,
 			WorkThreadNum = 1,
 			Security = false,
 			WebSocket = false,
@@ -48,7 +49,7 @@ function InitGameServer()
 			ServerId = 6,			--对每一个服务器来说都是唯一的， 应用程序需要通过这个ServerId才能知道需要加载的配置是他
 			ServerIp = MasterIP,
 			ServerPort = 6003,
-			MaxConnectNum = 100,
+			MaxConnectNum = 10000,
 			WorkThreadNum = 5,
 			Security = false,
 			WebSocket = false,

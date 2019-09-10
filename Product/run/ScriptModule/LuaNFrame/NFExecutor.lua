@@ -58,6 +58,7 @@ end
 
 function TcpSessionReport(userID, IP)
 	--上报玩家的IP，目前主要是IP	
+	luaPrint(userID.." Report:"..IP)
 	PlayerModel.PlayerReport(userID, IP)
 end
 
