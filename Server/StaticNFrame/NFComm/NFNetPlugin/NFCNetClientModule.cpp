@@ -23,9 +23,8 @@ NFCNetClientModule::NFCNetClientModule(NFIPluginManager* p)
 		AddEventCallBack((NF_SERVER_TYPES)serverType, this, &NFCNetClientModule::OnHandleNetEvent);
 	}
 	mxSendBuffer.AssureSpace(MAX_SEND_BUFFER_SIZE);
-	m_eventLoop = NF_NEW evpp::EventLoopThread();
-	m_eventLoop->set_name("NFEvppClientThread");
-	m_eventLoop->Start();
+	m_eventLoop = nullptr;
+	m_eventLoopThreadPool = nullptr;
 }
 
 NFCNetClientModule::~NFCNetClientModule()
@@ -34,6 +33,7 @@ NFCNetClientModule::~NFCNetClientModule()
 
 bool NFCNetClientModule::Awake()
 {
+	InitThreadPool(1);
 	return true;
 }
 
@@ -41,6 +41,16 @@ bool NFCNetClientModule::Awake()
 bool NFCNetClientModule::Init()
 {
 	return true;
+}
+
+/**
+ * @brief 初始化线程池
+ */
+void NFCNetClientModule::InitThreadPool(uint32_t threadCount)
+{
+	m_eventLoop = NF_NEW evpp::EventLoop();
+	m_eventLoopThreadPool = NF_NEW evpp::EventLoopThreadPool(m_eventLoop, threadCount);
+	m_eventLoopThreadPool->Start(true);
 }
 
 bool NFCNetClientModule::AfterInit()
@@ -84,7 +94,13 @@ bool NFCNetClientModule::Finalize()
 		}
 	}
 
-	m_eventLoop->Stop(true);
+	m_eventLoopThreadPool->Stop(true);
+
+	if (m_eventLoopThreadPool)
+	{
+		NF_SAFE_DELETE(m_eventLoopThreadPool);
+	}
+
 	if (m_eventLoop)
 	{
 		NF_SAFE_DELETE(m_eventLoop);
@@ -236,7 +252,7 @@ uint32_t NFCNetClientModule::AddServer(NF_SERVER_TYPES eServerType, const std::s
 		flag.bWebSocket = bWebSocket;
 		
 #ifdef USE_NET_EVPP
-		NFEvppClient* pClient = NF_NEW NFEvppClient(m_eventLoop, usId, flag);
+		NFEvppClient* pClient = NF_NEW NFEvppClient(m_eventLoopThreadPool->GetNextLoop(), usId, flag);
 #else
 		NFIClient* pClient = NF_NEW NFClient(usId, flag);
 #endif

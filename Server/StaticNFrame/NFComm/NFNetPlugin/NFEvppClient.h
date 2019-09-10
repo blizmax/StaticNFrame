@@ -55,7 +55,7 @@ public:
 	/**
 	 *@brief  构造函数.
 	 */
-	NFEvppClient(evpp::EventLoopThread* eventLoop, uint32_t nId, const NFClientFlag& flag);
+	NFEvppClient(evpp::EventLoop* eventLoop, uint32_t nId, const NFClientFlag& flag);
 
 	/**
 	 *@brief  析构函数.

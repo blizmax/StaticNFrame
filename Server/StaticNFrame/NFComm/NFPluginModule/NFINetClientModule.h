@@ -14,6 +14,10 @@ class NFINetClientModule : public NFINetModule
 {
 public:
 	/**
+	 * @brief 初始化线程池
+	 */
+	virtual void InitThreadPool(uint32_t threadCount) = 0;
+	/**
 	 * @brief 连接服务器ip和port，返回代表这里连接的唯一ID，可以连接同种服务器类型多次
 	 * 内部通过数组来实现快速访问
 	 *

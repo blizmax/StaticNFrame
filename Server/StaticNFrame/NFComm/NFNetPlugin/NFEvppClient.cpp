@@ -34,7 +34,7 @@
 #include "NFComm/NFCore/NFCommon.h"
 #include "NFEvppServer.h"
 
-NFEvppClient::NFEvppClient(evpp::EventLoopThread* eventLoop, uint32_t nId, const NFClientFlag& flag):NFIClient(nId, flag)
+NFEvppClient::NFEvppClient(evpp::EventLoop* eventLoop, uint32_t nId, const NFClientFlag& flag):NFIClient(nId, flag)
 {
 	m_pObject = nullptr;
 	m_tcpClient = nullptr;
@@ -43,7 +43,7 @@ NFEvppClient::NFEvppClient(evpp::EventLoopThread* eventLoop, uint32_t nId, const
 
 	if (eventLoop)
 	{
-		m_tcpClient = NF_NEW evpp::TCPClient(eventLoop->loop(), strIpPort, "NFEvppClient");
+		m_tcpClient = NF_NEW evpp::TCPClient(eventLoop, strIpPort, "NFEvppClient");
 	}
 }
 
