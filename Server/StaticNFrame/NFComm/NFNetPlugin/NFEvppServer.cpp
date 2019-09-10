@@ -32,6 +32,8 @@
 #include "NFEvppServer.h"
 #include "NFComm/NFPluginModule/NFLogMgr.h"
 #include "NFComm/NFPluginModule/NFINetModule.h"
+#include "NFComm/NFCore/NFStringUtility.h"
+#include "NFComm/NFCore/NFCommon.h"
 
 
 NFEvppServer::NFEvppServer(NF_SERVER_TYPES serverType, uint32_t serverId, const NFServerFlag& flag) : NFIServer(serverType, serverId, flag)
@@ -208,8 +210,17 @@ NetEvppObject* NFEvppServer::AddNetObject(const evpp::TCPConnPtr conn)
 	mNetObjectCount++;
 
 	pObject->SetLinkId(usLinkId);
-	pObject->SetStrIp(conn->remote_addr());
-	pObject->SetPort(0);
+
+	std::string ip_port = conn->remote_addr();
+	std::vector<std::string> vecIpPort;
+	NFStringUtility::Split(ip_port, ":", &vecIpPort);
+
+	if (vecIpPort.size() >= 2)
+	{
+		pObject->SetStrIp(vecIpPort[0]);
+		pObject->SetPort(NFCommon::strto<uint32_t>(vecIpPort[1]));
+	}
+
 	pObject->SetPacketParseType(mPacketParseType);
 	
 

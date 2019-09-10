@@ -38,6 +38,7 @@ enum EnumLuaThreadModule
 	EnumLuaThreadModule_Init = 2,
 	EnumLuaThreadModule_Loop = 3,
 	EnumLuaThreadModule_Work = 4,
+	EnumLuaThreadModule_GC = 5,
 };
 
 class NFLuaThreadTask : public NFTask
@@ -228,7 +229,7 @@ public:
 class NFTcpMsgActorTask : public NFLuaThreadTask
 {
 public:
-	NFTcpMsgActorTask(NFCLuaThreadModule* pLuaThreadModule, const std::string& luaFunc, const uint32_t unLinkId, const uint64_t valueId, const uint32_t nMsgId, const std::string& strMsg)
+	NFTcpMsgActorTask(NFCLuaThreadModule* pLuaThreadModule, uint32_t taskType, const std::string& luaFunc = "", const uint32_t unLinkId = 0, const uint64_t valueId = 0, const uint32_t nMsgId = 0, const std::string& strMsg = "")
 	{
 		m_balanceId = valueId;
 		m_pLuaThreadModule = pLuaThreadModule;
@@ -237,8 +238,18 @@ public:
 		m_valueId = valueId;
 		m_msgId = nMsgId;
 		m_strMsg = strMsg;
-		m_taskName = "TcpMsgTask_" + luaFunc + NFCommon::tostr(nMsgId);
+		m_taskType = taskType;
+
+		if (m_taskType == EnumLuaThreadModule_LOAD)
+		{
+			m_taskName = "TcpMsgTask_Load";
+		}
+		else if (m_taskType == EnumLuaThreadModule_Work)
+		{
+			m_taskName = "TcpMsgTask_" + luaFunc + "_" + NFCommon::tostr(nMsgId);
+		}
 	}
+
 	/**
 	**  异步线程处理函数，将在另一个线程里运行
 	*/
@@ -446,6 +457,69 @@ public:
 		if (pLuaTask)
 		{
 			pLuaTask->m_pComponent = this;
+			
+			//暂时用来测试，防止出错
+			if (dynamic_cast<NFTcpSessionCloseActorTask*>(pTask))
+			{
+				//NFLogError(NF_LOG_LUA_PLUGIN, 0, "taskname:{} component:{} actorId:{} threadId:{} balanceId:{}", pTask->m_taskName, GetComponentName(), GetActorId(), ThreadId(), pTask->m_balanceId);
+				assert(GetComponentName() == "TcpMsgActor");
+			}
+			else if (dynamic_cast<NFTcpSessionReportActorTask*>(pTask))
+			{
+				//NFLogError(NF_LOG_LUA_PLUGIN, 0, "taskname:{} component:{} actorId:{} threadId:{} balanceId:{}", pTask->m_taskName, GetComponentName(), GetActorId(), ThreadId(), pTask->m_balanceId);
+				assert(GetComponentName() == "TcpMsgActor");
+			}
+			else if (dynamic_cast<NFTcpMsgActorTask*>(pTask))
+			{
+				//NFLogError(NF_LOG_LUA_PLUGIN, 0, "taskname:{} component:{} actorId:{} threadId:{} balanceId:{}", pTask->m_taskName, GetComponentName(), GetActorId(), ThreadId(), pTask->m_balanceId);
+				assert(GetComponentName() == "TcpMsgActor");
+			}
+			else if (dynamic_cast<NFHttpMsgActorTask*>(pTask))
+			{
+				//NFLogError(NF_LOG_LUA_PLUGIN, 0, "taskname:{} component:{} actorId:{} threadId:{} balanceId:{}", pTask->m_taskName, GetComponentName(), GetActorId(), ThreadId(), pTask->m_balanceId);
+				assert(GetComponentName() == "TcpMsgActor");
+			}
+			else if (dynamic_cast<NFProcessLoopTimerActorTask*>(pTask))
+			{
+				//NFLogError(NF_LOG_LUA_PLUGIN, 0, "taskname:{} component:{} actorId:{} threadId:{} balanceId:{}", pTask->m_taskName, GetComponentName(), GetActorId(), ThreadId(), pTask->m_balanceId);
+				assert(GetComponentName() == "ServerLoopActor");
+			}
+			else if (dynamic_cast<NFServerLoopTask*>(pTask))
+			{
+				//NFLogError(NF_LOG_LUA_PLUGIN, 0, "taskname:{} component:{} actorId:{} threadId:{} balanceId:{}", pTask->m_taskName, GetComponentName(), GetActorId(), ThreadId(), pTask->m_balanceId);
+				assert(GetComponentName() == "ServerLoopActor");
+			}
+			else if (dynamic_cast<NFWorkActorTask*>(pTask))
+			{
+				//NFLogError(NF_LOG_LUA_PLUGIN, 0, "taskname:{} component:{} actorId:{} threadId:{} balanceId:{}", pTask->m_taskName, GetComponentName(), GetActorId(), ThreadId(), pTask->m_balanceId);
+				assert(GetComponentName() == "WorkActor");
+			}
+			else if (dynamic_cast<NFProcessTimerActorTask*>(pTask))
+			{
+				//NFLogError(NF_LOG_LUA_PLUGIN, 0, "taskname:{} component:{} actorId:{} threadId:{} balanceId:{}", pTask->m_taskName, GetComponentName(), GetActorId(), ThreadId(), pTask->m_balanceId);
+				assert(GetComponentName() == "WorkActor");
+			}
+			else if (dynamic_cast<NFProcessRealTimerActorTask*>(pTask))
+			{
+				//NFLogError(NF_LOG_LUA_PLUGIN, 0, "taskname:{} component:{} actorId:{} threadId:{} balanceId:{}", pTask->m_taskName, GetComponentName(), GetActorId(), ThreadId(), pTask->m_balanceId);
+				assert(GetComponentName() == "WorkActor");
+			}
+			else if (dynamic_cast<NFLuaGcActorTask*>(pTask))
+			{
+				//NFLogError(NF_LOG_LUA_PLUGIN, 0, "taskname:{} component:{} actorId:{} threadId:{} balanceId:{}", pTask->m_taskName, GetComponentName(), GetActorId(), ThreadId(), pTask->m_balanceId);
+			}
+			else if (dynamic_cast<NFHotfixAllLuaActorTask*>(pTask))
+			{
+				//NFLogError(NF_LOG_LUA_PLUGIN, 0, "taskname:{} component:{} actorId:{} threadId:{} balanceId:{}", pTask->m_taskName, GetComponentName(), GetActorId(), ThreadId(), pTask->m_balanceId);
+			}
+			else if (dynamic_cast<NFHotfixLuaFilesActorTask*>(pTask))
+			{
+				//NFLogError(NF_LOG_LUA_PLUGIN, 0, "taskname:{} component:{} actorId:{} threadId:{} balanceId:{}", pTask->m_taskName, GetComponentName(), GetActorId(), ThreadId(), pTask->m_balanceId);
+			}
+		}
+		else
+		{
+			assert(false);
 		}
 	}
 
@@ -454,7 +528,6 @@ public:
 		if (pTask)
 		{
 			uint64_t startTime = NFGetTime();
-			NFLogError(NF_LOG_LUA_PLUGIN, 0, "taskname:{} actorId:{} threadId:{} balanceId:{}", pTask->m_taskName, GetComponentName(), ThreadId(), pTask->m_balanceId);
 			pTask->ThreadProcess();
 			pTask->m_useTime = NFGetTime() - startTime;
 		}

@@ -32,3 +32,9 @@ message NotifyGamePlayerReconnect
 	uint64 user_id = 1;
 	uint32 proxy_id = 2;
 }
+
+message NotifyGamePlayerReport
+{
+	uint64 user_id = 1;
+	string ip = 2;
+}

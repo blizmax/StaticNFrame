@@ -101,6 +101,7 @@ NFServerLoopTask::TPTaskState NFServerLoopTask::MainThreadProcess()
 	else if (m_taskType == EnumLuaThreadModule_Init)
 	{
 		m_pLuaThreadModule->SetTimer(EnumLuaThreadModule_Loop, 1000, INFINITY_CALL);
+		m_pLuaThreadModule->SetTimer(EnumLuaThreadModule_GC, 60000, INFINITY_CALL);
 	}
 	else if (m_taskType == EnumLuaThreadModule_Loop)
 	{
@@ -111,7 +112,19 @@ NFServerLoopTask::TPTaskState NFServerLoopTask::MainThreadProcess()
 
 bool NFTcpMsgActorTask::ThreadProcess()
 {
-	m_pComponent->TryRunGlobalScriptFunc(m_luaFunc, m_unLinkId, m_valueId, m_msgId, m_strMsg);
+	if (m_pComponent)
+	{
+		if (m_taskType == EnumLuaThreadModule_LOAD)
+		{
+			m_pComponent->Register();
+			m_pComponent->LoadScript();
+			m_pComponent->SetInitLua(true);
+		}
+		else if (m_taskType == EnumLuaThreadModule_Work)
+		{
+			m_pComponent->TryRunGlobalScriptFunc(m_luaFunc, m_unLinkId, m_valueId, m_msgId, m_strMsg);
+		}
+	}
 	return true;
 }
 

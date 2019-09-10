@@ -12,6 +12,7 @@
 #include "NFMessageDefine/server_to_server_msg.pb.h"
 #include "NFMessageDefine/st_human_packet_code.pb.h"
 #include "NFMessageDefine/msg_human.pb.h"
+#include "NFComm/NFPluginModule/NFILuaScriptModule.h"
 
 NFCGameLogicModule::NFCGameLogicModule(NFIPluginManager* p)
 {
@@ -61,6 +62,8 @@ bool NFCGameLogicModule::Awake()
 	FindModule<NFINetClientModule>()->AddReceiveCallBack(NF_ST_WORLD, EGMI_NET_PROXY_NOTIFY_GAME_PLAYER_DISCONNECT, this, &NFCGameLogicModule::OnHandlePlayerDisconnect);
 	
 	FindModule<NFINetClientModule>()->AddReceiveCallBack(NF_ST_WORLD, EGMI_NET_PROXY_NOTIFY_GAME_PLAYER_RECONNECT, this, &NFCGameLogicModule::OnHandlePlayerReconnect);
+	FindModule<NFINetServerModule>()->AddReceiveCallBack(NF_ST_GAME, EGMI_NET_PROXY_NOTIFY_GAME_PLAYER_REPORT, this, &NFCGameLogicModule::OnHandlePlayerReport);
+	
 	return true;
 }
 
@@ -141,6 +144,24 @@ void NFCGameLogicModule::OnHandlePlayerReconnect(const uint32_t unLinkId, const 
 	FindModule<NFIServerNetEventModule>()->OnAccountNetEvent(eAccountEventType_RECONNECTED, NF_ST_GAME, 0, pInfo);
 
 	NFLogInfo(NF_LOG_SYSTEMLOG, pInfo->mPlayerId, "Player:{} reconnect game server!", pInfo->mPlayerId);
+}
+
+void NFCGameLogicModule::OnHandlePlayerReport(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen)
+{
+	NFMsg::NotifyGamePlayerReport cgMsg;
+	CLIENT_MSG_PROCESS_NO_OBJECT(nMsgId, playerId, msg, nLen, cgMsg);
+
+	auto pInfo = mPlayerProxyInfoMap.GetElement(cgMsg.user_id());
+	if (pInfo == nullptr)
+	{
+		return;
+	}
+
+	NFILuaScriptModule* pLuaScriptModule = FindModule<NFILuaScriptModule>();
+	if (pLuaScriptModule)
+	{
+		pLuaScriptModule->SessionReport(cgMsg.user_id(), cgMsg.ip());
+	}
 }
 
 void NFCGameLogicModule::ChangePlayerGameInfo(uint64_t playerId, uint32_t proxyId)

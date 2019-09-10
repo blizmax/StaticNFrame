@@ -493,6 +493,11 @@ void NFCLuaScriptModule::RunNetRecvLuaFunc(const std::string& luaFunc, const uin
 	TryRunGlobalScriptFunc(luaFunc, unLinkId, valueId, nMsgId, strMsg);
 }
 
+void NFCLuaScriptModule::SessionReport(uint64_t playerId, const std::string& report)
+{
+	TryRunGlobalScriptFunc("TcpSessionReport", playerId, report);
+}
+
 void NFCLuaScriptModule::StopTimer(uint32_t nTimerID)
 {
 	auto iter = m_luaTimerMap.find(nTimerID);

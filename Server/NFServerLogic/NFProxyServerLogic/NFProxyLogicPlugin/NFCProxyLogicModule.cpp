@@ -397,6 +397,12 @@ void NFCProxyLogicModule::OnHandleAccountLoginFromGameServer(const uint32_t unLi
 			{
 				pPlayerInfo->mGameServerId = pGameServer->GetServerId();
 				pLinkInfo->mGameServerId = pGameServer->GetServerId();
+
+				NFMsg::NotifyGamePlayerReport reportMsg;
+				reportMsg.set_user_id(pPlayerInfo->mPlayerId);
+				reportMsg.set_ip(pPlayerInfo->mIPAddr);
+
+				FindModule<NFINetClientModule>()->SendToServerByPB(pGameServer->GetUnlinkId(), ::EGMI_NET_PROXY_NOTIFY_GAME_PLAYER_REPORT, reportMsg, pPlayerInfo->mPlayerId);
 			}
 
 			FindModule<NFINetServerModule>()->SendByServerID(pLinkInfo->mUnlinkId, ::NFMsg::Server_Msg_AccountLogin, msg, nLen, pLinkInfo->mSendMsgCount);
@@ -472,7 +478,7 @@ void NFCProxyLogicModule::OnHandleAccountLoginFromGameServer(const uint32_t unLi
 			if (pGameServer)
 			{
 				pLinkInfo->mGameServerId = pGameServer->GetServerId();
-				FindModule<NFINetServerModule>()->SendByServerID(clientLinkId, nMsgId, msg, nLen, pLinkInfo->mSendMsgCount);
+				FindModule<NFINetClientModule>()->SendByServerID(clientLinkId, nMsgId, msg, nLen, pLinkInfo->mSendMsgCount);
 			}
 			else
 			{

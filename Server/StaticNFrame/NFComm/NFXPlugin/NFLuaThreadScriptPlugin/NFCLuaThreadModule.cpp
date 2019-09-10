@@ -192,7 +192,7 @@ void NFCLuaThreadModule::OnTimer(uint32_t nTimerID)
 		for (size_t i = 0; i < m_vecTcpMsgActorPool.size(); i++)
 		{
 			int actorId = m_vecTcpMsgActorPool[i];
-			m_pTcpMsgTaskModule->AddTask(actorId, new NFWorkActorTask(this, EnumLuaThreadModule_LOAD));
+			m_pTcpMsgTaskModule->AddTask(actorId, new NFTcpMsgActorTask(this, EnumLuaThreadModule_LOAD));
 		}
 	}
 	if (nTimerID == EnumLuaThreadModule_Init)
@@ -208,10 +208,13 @@ void NFCLuaThreadModule::OnTimer(uint32_t nTimerID)
 	}
 	if (nTimerID == EnumLuaThreadModule_Loop)
 	{
-		GcStep();
 		AddProcessLoopTask(new NFServerLoopTask(this, EnumLuaThreadModule_Loop, "logtimer"));
 		AddProcessLoopTask(new NFServerLoopTask(this, EnumLuaThreadModule_Loop, "gametimer"));
 		AddProcessLoopTask(new NFServerLoopTask(this, EnumLuaThreadModule_Loop, "utilstimer"));
+	}
+	if (nTimerID == EnumLuaThreadModule_GC)
+	{
+		GcStep();
 	}
 }
 
@@ -222,7 +225,12 @@ void NFCLuaThreadModule::RunHttpRecvLuaFunc(const std::string& luaFunc, const ui
 
 void NFCLuaThreadModule::RunNetRecvLuaFunc(const std::string& luaFunc, const uint32_t unLinkId, const uint64_t valueId, const uint32_t nMsgId, const std::string& strMsg)
 {
-	AddTcpMsgTask(new NFTcpMsgActorTask(this, luaFunc, unLinkId, valueId, nMsgId, strMsg));
+	AddTcpMsgTask(new NFTcpMsgActorTask(this, EnumLuaThreadModule_Work, luaFunc, unLinkId, valueId, nMsgId, strMsg));
+}
+
+void NFCLuaThreadModule::SessionReport(uint64_t playerId, const std::string& report)
+{
+	AddTcpMsgTask(new NFTcpSessionReportActorTask(this, playerId, report));
 }
 
 bool NFCLuaThreadModule::StartActorPool()
@@ -600,7 +608,7 @@ bool NFCLuaThreadModule::AddWorkActorComponent(NFITaskComponent* pComonnet)
 		return false;
 	}
 
-	pComonnet->SetComponentName(std::string("WorkActor_") + NFCommon::tostr(actorId));
+	pComonnet->SetComponentName(std::string("WorkActor"));
 	m_pWorkTaskModule->AddActorComponent(actorId, pComonnet);
 
 	m_vecWorkActorPool.push_back(actorId);
@@ -620,7 +628,7 @@ bool NFCLuaThreadModule::AddTcpMsgActorComponent(NFITaskComponent* pComonnet)
 		return false;
 	}
 
-	pComonnet->SetComponentName(std::string("TcpMsgActor_") + NFCommon::tostr(actorId));
+	pComonnet->SetComponentName(std::string("TcpMsgActor"));
 	m_pTcpMsgTaskModule->AddActorComponent(actorId, pComonnet);
 
 	m_vecTcpMsgActorPool.push_back(actorId);
@@ -640,7 +648,7 @@ bool NFCLuaThreadModule::AddServerLoopActorComponent(NFITaskComponent* pComonnet
 		return false;
 	}
 
-	pComonnet->SetComponentName(std::string("ServerLoopActor_") + NFCommon::tostr(m_processLoopActorId));
+	pComonnet->SetComponentName(std::string("ServerLoopActor"));
 	m_pServerLoopTaskModule->AddActorComponent(m_processLoopActorId, pComonnet);
 	return true;
 }
