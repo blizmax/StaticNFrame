@@ -1,3 +1,0 @@
-
-
-require("LogServer.Model.LogBehavior")

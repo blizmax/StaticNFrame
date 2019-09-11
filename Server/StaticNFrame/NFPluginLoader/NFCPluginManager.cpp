@@ -255,7 +255,7 @@ bool NFCPluginManager::Execute()
 		uint64_t useTime = EndProfiler();
 		if (useTime >= 10000) //>= 10ºÁÃë
 		{
-			NFLogError(NF_LOG_PLUGIN_MANAGER, 0, "{} use time:{} ms", it->first + "--Loop", useTime / 1000);
+			NFLogError(NF_LOG_PLUGIN_MANAGER, 0, "mainthread:{} {} use time:{} ms", NFCommon::tostr(std::this_thread::get_id()), it->first + "--Loop", useTime / 1000);
 		}
 	}
 
@@ -267,7 +267,7 @@ bool NFCPluginManager::Execute()
 		uint64_t useTime = EndProfiler();
 		if (useTime >= 10000) //>= 10ºÁÃë
 		{
-			NFLogError(NF_LOG_PLUGIN_MANAGER, 0, "{} use time:{} ms", iter->first + "--Alone--Loop", useTime / 1000);
+			NFLogError(NF_LOG_PLUGIN_MANAGER, 0, "mainthread:{} {} use time:{} ms", NFCommon::tostr(std::this_thread::get_id()), iter->first + "--Alone--Loop", useTime / 1000);
 		}
 	}
 
@@ -285,11 +285,11 @@ bool NFCPluginManager::Execute()
 	{
 		if (cost >= 80 && cost <= 200)
 		{
-			NFLogWarning(NF_LOG_PLUGIN_MANAGER, 0, "frame timeout:{}", cost);
+			NFLogWarning(NF_LOG_PLUGIN_MANAGER, 0, "mainthread:{} frame timeout:{}", NFCommon::tostr(std::this_thread::get_id()), cost);
 		}
 		else if (cost > 200)
 		{
-			NFLogError(NF_LOG_PLUGIN_MANAGER, 0, "frame timeout:{}, something wrong", cost);
+			NFLogError(NF_LOG_PLUGIN_MANAGER, 0, "mainthread:{} frame timeout:{}, something wrong", NFCommon::tostr(std::this_thread::get_id()), cost);
 			//PrintProfiler();
 		}
 		std::this_thread::sleep_for(std::chrono::milliseconds(1));

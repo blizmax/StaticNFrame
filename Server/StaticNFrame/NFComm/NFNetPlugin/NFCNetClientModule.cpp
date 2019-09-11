@@ -33,7 +33,15 @@ NFCNetClientModule::~NFCNetClientModule()
 
 bool NFCNetClientModule::Awake()
 {
-	InitThreadPool(1);
+	if (m_pPluginManager->GetAppName() == "RebotServer")
+	{
+		InitThreadPool(10);
+	}
+	else
+	{
+		InitThreadPool(1);
+	}
+	
 	return true;
 }
 
@@ -233,7 +241,7 @@ uint32_t NFCNetClientModule::AddWebServer(NF_SERVER_TYPES eServerType, const std
 	return 0;
 }
 
-uint32_t NFCNetClientModule::AddServer(NF_SERVER_TYPES eServerType, const std::string& strIp, uint32_t nPort, bool bWebSocket)
+uint32_t NFCNetClientModule::AddServer(NF_SERVER_TYPES eServerType, const std::string& strIp, uint32_t nPort, uint32_t packetParsetype, bool bWebSocket)
 {
 	if (eServerType > NF_ST_NONE && eServerType < NF_ST_MAX)
 	{
@@ -256,6 +264,8 @@ uint32_t NFCNetClientModule::AddServer(NF_SERVER_TYPES eServerType, const std::s
 #else
 		NFIClient* pClient = NF_NEW NFClient(usId, flag);
 #endif
+
+		pClient->SetPacketParseType(packetParsetype);
 		pClient->SetRecvCB((NFINetModule*)this, &NFINetModule::OnReceiveNetPack);
 		pClient->SetEventCB((NFINetModule*)this, &NFINetModule::OnSocketNetEvent);
 		if (index < mxServerMap[eServerType].size() && mxServerMap[eServerType][index] == nullptr)
@@ -379,7 +389,7 @@ void NFCNetClientModule::SendMsg(NFIClient* pClient, const uint32_t nMsgID, cons
 	}
 	else
 	{
-		NFIPacketParse::EnCode(0, nMsgID, nPlayerID, msg, nLen, mxSendBuffer);
+		NFIPacketParse::EnCode(pClient->GetPacketParseType(), nMsgID, nPlayerID, msg, nLen, mxSendBuffer);
 	}
 	
 	if (pClient)

@@ -67,23 +67,27 @@ function LuaNFrame.InitScript(luaModule)
 			package.path = package.path..";../ScriptModule/GameServer/trdlib/lua/?.lua"
 
 			require("GameServer/LoadHelper")
-		elseif LuaNFrame.GetAppName() == "LoginServer" then
-			package.path = package.path .. ";../ScriptModule/LoginServer/?.lua;"
-			package.path = package.path..";../ScriptModule/LoginServer/trdlib/libprotobuf/?.lua"   --由于这里protobuf的特殊性，必须把包含protobuf的目录加到环境变量中
-			package.path = package.path..";../ScriptModule/LoginServer/trdlib/lua/?.lua"
 
+			math.newrandomseed()
+			mysqlItem = mysqlConnect.new(g_dbtype, g_dbUser, g_dbPassword, g_dbHost, g_dbPort, g_dbDatabase)
+			redisItem = redisConnect.new()
+			mysqlLog = mysqlConnect.new(g_dbtype, g_dbUser, g_dbPassword, g_dbHost, g_dbPort, g_dbDatabase)
+		elseif LuaNFrame.GetAppName() == "LoginServer" then
 			require("LoginServer/LoadHelper")
+		elseif LuaNFrame.GetAppName() == "RebotServer" then
+			package.path = package.path .. ";../ScriptModule/RebotServer/?.lua;"
+			package.path = package.path..";../ScriptModule/RebotServer/trdlib/libprotobuf/?.lua"   --由于这里protobuf的特殊性，必须把包含protobuf的目录加到环境变量中
+			package.path = package.path..";../ScriptModule/RebotServer/trdlib/lua/?.lua"
+
+			require("RebotServer/RebotLoadHelper")
+
+			redisItem = redisConnect.new()
 		end
 
 		require("LuaNFrame/NFTimeUtils")
 
 		--记录所有文件的当前修改时间，为以后热更新做准备, 时间大概300ms
 		NFLuaReload.RecordAllFilesTimes()
-
-		math.newrandomseed()
-		mysqlItem = mysqlConnect.new(g_dbtype, g_dbUser, g_dbPassword, g_dbHost, g_dbPort, g_dbDatabase)
-		redisItem = redisConnect.new()
-		mysqlLog = mysqlConnect.new(g_dbtype, g_dbUser, g_dbPassword, g_dbHost, g_dbPort, g_dbDatabase)
 	end
 	
 	local status, msg = xpcall (timerExecute, __G__TRACKBACK__)

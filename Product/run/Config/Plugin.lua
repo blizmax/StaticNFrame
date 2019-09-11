@@ -5,9 +5,11 @@ NF_ST_LOGIN = 2;    	--
 NF_ST_WORLD = 3;    	--
 NF_ST_GAME = 4;    		--
 NF_ST_PROXY = 5;    	--
-NF_ST_PROXY_INNER = 6;    	--
-NF_ST_REBOT = 7;		--
-NF_ST_MAX = 9;    		--
+NF_ST_HTTP = 6;			-- WEB SERVER
+NF_ST_LOCATION = 7; 	--LOCATION SERVER
+NF_ST_LOG = 8; 			--日志采集服务器 
+NF_ST_REBOT = 15; 		--机器人模拟客户端
+NF_ST_MAX = 20;    		--
 
 LoadPlugin = 
 {
@@ -58,7 +60,7 @@ LoadPlugin =
 			-----服务器游戏具体内容逻辑引擎-------------------------
 			-----可以动态加载的引擎---------------------------------
 			--"NFLuaScriptPlugin",
-			--"NFLuaThreadScriptPlugin",
+			"NFLuaThreadScriptPlugin",
 
 		};
 		ServerType = NF_ST_NONE;
@@ -135,11 +137,12 @@ LoadPlugin =
 	RebotServer = {
 		ServerPlugins = {
 			"NFKernelPlugin",
-			"NFNetPlugin",
 			"NFActorPlugin",
-			"NFMonitorPlugin",
+			"NFNetPlugin",
 			
+			"NFTestPlugin",
 			"NFLuaScriptPlugin",
+			--"NFLuaThreadScriptPlugin",
 		};
 		ServerType = NF_ST_REBOT;
 	},

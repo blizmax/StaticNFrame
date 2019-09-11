@@ -59,6 +59,7 @@ public:
 	{
 		mStatus = eConnectStatus_Disconnect;
 		mLastActionTime = 0;
+		mPacketParseType = 0;
 	}
 
 	/**
@@ -169,6 +170,9 @@ public:
 	void SetLastActionTime(uint64_t time) { mLastActionTime = time; }
 
 	virtual bool IsWebSocket() const { return m_flag.bWebSocket; }
+
+	void SetPacketParseType(uint32_t type) { mPacketParseType = type; }
+	uint32_t GetPacketParseType() const { return mPacketParseType; }
 protected:
 	/**
 	 * @brief	连接配置数据
@@ -204,4 +208,9 @@ protected:
 	 * @brief 上一次活动时间
 	 */
 	uint64_t mLastActionTime;
+
+	/**
+	* @brief 解码消息类型
+	*/
+	uint32_t mPacketParseType;
 };

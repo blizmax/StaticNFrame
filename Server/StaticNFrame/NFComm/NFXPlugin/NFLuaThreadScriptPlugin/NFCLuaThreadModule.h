@@ -202,7 +202,7 @@ public:
 
 	virtual void OnTimer(uint32_t nTimerID);
 
-	virtual bool StartActorPool();
+	virtual bool StartActorPool(uint32_t workThreadNum, uint32_t tcpThreadNum);
 	virtual bool CloseActorPool();
 
 	virtual uint32_t AddTimer(uint32_t mMsgType, const std::string& luaFunc, uint64_t nInterVal, const std::string& dataStr, uint32_t callCount = 1);

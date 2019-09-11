@@ -168,6 +168,7 @@ bool NFEvppClient::Connect()
 		m_pObject = new NetEvppObject(nullptr);
 	}
 
+	m_pObject->SetPacketParseType(GetPacketParseType());
 	m_pObject->SetIsServer(false);
 	m_pObject->SetLinkId(m_usLinkId);
 	m_pObject->SetStrIp(m_flag.strIP);

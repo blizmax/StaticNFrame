@@ -56,10 +56,13 @@ bool NFCLuaThreadModule::Init()
 	}
 #endif
 
+	uint32_t workThreadNum = 1;
+	uint32_t tcpThreadNum = 1;
+
 	if (m_pPluginManager->IsLoadAllServer())
 	{
-		m_pWorkTaskModule->InitActorThread(2);
-		m_pTcpMsgTaskModule->InitActorThread(threadNum);
+		workThreadNum = 2;
+		tcpThreadNum = threadNum;
 	}
 	else
 	{
@@ -68,23 +71,26 @@ bool NFCLuaThreadModule::Init()
 		{
 			if (pServerConfig->mLuaTcpThreadNum > 0)
 			{
-				m_pTcpMsgTaskModule->InitActorThread(pServerConfig->mLuaTcpThreadNum);
+				tcpThreadNum = pServerConfig->mLuaTcpThreadNum;
 			}
 			else
 			{
-				m_pTcpMsgTaskModule->InitActorThread(threadNum);
+				tcpThreadNum = threadNum;
 			}
 
 			if (pServerConfig->mLuaWorkThreadNum > 0)
 			{
-				m_pWorkTaskModule->InitActorThread(pServerConfig->mLuaWorkThreadNum);
+				workThreadNum = pServerConfig->mLuaWorkThreadNum;
 			}
 			else
 			{
-				m_pWorkTaskModule->InitActorThread(threadNum);
+				workThreadNum = threadNum;
 			}
 		}
 	}
+
+	m_pWorkTaskModule->InitActorThread(workThreadNum);
+	m_pTcpMsgTaskModule->InitActorThread(tcpThreadNum);
 
 	m_pTcpMsgTaskModule->Init();
 	m_pTcpMsgTaskModule->AfterInit();
@@ -98,7 +104,7 @@ bool NFCLuaThreadModule::Init()
 
 	FindModule<NFIServerNetEventModule>()->AddAccountEventCallBack(NF_ST_GAME, this, &NFCLuaThreadModule::OnAccountEventCallBack);
 
-	StartActorPool();
+	StartActorPool(workThreadNum, tcpThreadNum);
 	SetTimer(EnumLuaThreadModule_LOAD, 1, 1);
 	return true;
 }
@@ -240,15 +246,15 @@ void NFCLuaThreadModule::SessionReport(uint64_t playerId, const std::string& rep
 	AddTcpMsgTask(new NFTcpSessionReportActorTask(this, playerId, report));
 }
 
-bool NFCLuaThreadModule::StartActorPool()
+bool NFCLuaThreadModule::StartActorPool(uint32_t workThreadNum, uint32_t tcpThreadNum)
 {
-	for (int i = 0; i < m_pTcpMsgTaskModule->GetMaxThreads(); i++)
+	for (uint32_t i = 0; i < tcpThreadNum; i++)
 	{
 		NFCLuaScriptComponent* pComonnet = NF_NEW NFCLuaScriptComponent(this, m_pPluginManager);
 		AddTcpMsgActorComponent(pComonnet);
 	}
 	
-	for (int i = 0; i < m_pWorkTaskModule->GetMaxThreads(); i++)
+	for (uint32_t i = 0; i < workThreadNum; i++)
 	{
 		NFCLuaScriptComponent* pComonnet = NF_NEW NFCLuaScriptComponent(this, m_pPluginManager);
 		AddWorkActorComponent(pComonnet);
