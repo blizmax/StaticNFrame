@@ -61,6 +61,11 @@ function LuaNFrame.InitScript(luaModule)
 			package.path = package.path..";../ScriptModule/GameServer/trdlib/lua/?.lua"
 
 			require("GameServer/LoadHelper")
+
+			math.newrandomseed()
+			mysqlItem = mysqlConnect.new(g_dbtype, g_dbUser, g_dbPassword, g_dbHost, g_dbPort, g_dbDatabase)
+			redisItem = redisConnect.new()
+			mysqlLog = mysqlConnect.new(g_dbtype, g_dbUser, g_dbPassword, g_dbHost, g_dbPort, g_dbDatabase)
 		elseif LuaNFrame.GetAppName() == "GameServer" then
 			package.path = package.path .. ";../ScriptModule/GameServer/?.lua;"
 			package.path = package.path..";../ScriptModule/GameServer/trdlib/libprotobuf/?.lua"   --由于这里protobuf的特殊性，必须把包含protobuf的目录加到环境变量中
