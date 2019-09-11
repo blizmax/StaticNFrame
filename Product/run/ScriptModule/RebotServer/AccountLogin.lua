@@ -14,11 +14,11 @@ function AccountLogin.execute(nMsgId, clientId, strMsg)
         local cgmsg = msg_human_pb.cggetplayerinfo()
         cgmsg.userid = playerId
 
-        LuaNFrame.SendMsgToWorld(clientId, 0, 1003, cgmsg:ByteSize(), cgmsg:SerializeToString())
+        LuaNFrame.SendMsgToRebot(clientId, 0, 1003, cgmsg:ByteSize(), cgmsg:SerializeToString())
 
         local cgmsg = msg_human_pb.cggetinitinfo()
         cgmsg.userid = playerId
-        LuaNFrame.SendMsgToWorld(clientId, 0, 1011, cgmsg:ByteSize(), cgmsg:SerializeToString())
+        LuaNFrame.SendMsgToRebot(clientId, 0, 1011, cgmsg:ByteSize(), cgmsg:SerializeToString())
     else
         LogFile("error", "rebot login failed!")
     end
@@ -64,7 +64,7 @@ function GetPlayerInfo.work(buffer)
         local cgmsg = msg_human_pb.cggetplayerinfo()
         cgmsg.userid = tonumber(playerId)
 
-        LuaNFrame.SendMsgToWorld(tonumber(clientId), 0, 1003, cgmsg:ByteSize(), cgmsg:SerializeToString())
+        LuaNFrame.SendMsgToRebot(tonumber(clientId), 0, 1003, cgmsg:ByteSize(), cgmsg:SerializeToString())
     end
 end
 
@@ -113,7 +113,7 @@ function SendHeartBeat.work(buffer)
     local allclient = RebotModel.GetAllRebotPlayerIdByClient()
     for clientId, playerId in pairs(allclient) do
         local cgmsg = msg_human_pb.cgheartbeat()
-        LuaNFrame.SendMsgToWorld(tonumber(clientId), 0, 1009, cgmsg:ByteSize(), cgmsg:SerializeToString())
+        LuaNFrame.SendMsgToRebot(tonumber(clientId), 0, 1009, cgmsg:ByteSize(), cgmsg:SerializeToString())
     end
 end
 

@@ -12,7 +12,7 @@ function RebotAccount.LoginServer(clientId)
     loginmsg.password = rebotname
     loginmsg.bindtype = BindType.bindType_TianYu
 
-    LuaNFrame.SendMsgToWorld(clientId, 0, 1001, loginmsg:ByteSize(), loginmsg:SerializeToString())
+    LuaNFrame.SendMsgToRebot(clientId, 0, 1001, loginmsg:ByteSize(), loginmsg:SerializeToString())
 end
 
 function RebotAccount.DisConnect(clientId)

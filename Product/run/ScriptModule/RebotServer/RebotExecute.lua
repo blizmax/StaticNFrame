@@ -1,5 +1,10 @@
 --执行游戏服务器信息
 
+function LuaNFrame.SendMsgToRebot(unLinkId, nPlayerId, nMsgId, nLen, strData)
+		local operateId = RebotModel.GetRebotOperateId()
+		LuaNFrame.SendMsgToWorld(unLinkId, operateId, nMsgId, nLen, strData)
+end
+
 function LuaNFrame.DispatchRebotTcp(unLinkId, valueId, nMsgId, strMsg)
 	local function TcpExecute()
 		local retMsgID,controller = tcpManager:createController(nMsgId)

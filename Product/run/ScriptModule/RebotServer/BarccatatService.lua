@@ -10,7 +10,7 @@ function BarccatatService.EnterGame(clientId, tableid)
     end
     cgmsg.userid = tonumber(userid)
 
-    LuaNFrame.SendMsgToWorld(tonumber(clientId), 0, 1033, cgmsg:ByteSize(), cgmsg:SerializeToString())
+    LuaNFrame.SendMsgToRebot(tonumber(clientId), 0, 1033, cgmsg:ByteSize(), cgmsg:SerializeToString())
 end
 
 function BarccatatService.SendPourJetton(clientId, userid, tableid)
@@ -22,7 +22,7 @@ function BarccatatService.SendPourJetton(clientId, userid, tableid)
     local index = math.myrandom(1,#pourType)
     cgmsg.pourtype = pourType[index]
 
-    LuaNFrame.SendMsgToWorld(tonumber(clientId), 0, 4411, cgmsg:ByteSize(), cgmsg:SerializeToString())
+    LuaNFrame.SendMsgToRebot(tonumber(clientId), 0, 4411, cgmsg:ByteSize(), cgmsg:SerializeToString())
 
     LogFile("error", "player:"..userid.." send pour:"..cgmsg.jetton)
 end

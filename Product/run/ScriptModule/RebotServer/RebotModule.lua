@@ -7,6 +7,12 @@ RebotModel.rebot_max_id = "rebot_max_id"
 RebotModel.rebot_player_id = "rebot_player_id"
 RebotModel.rebot_player_info = "rebot_player_info"
 
+RebotModel.rebot_operate_id = "rebot_operate_id"
+
+function RebotModel.GetRebotOperateId()
+    return redisItem:incrby(RebotModel.rebot_operate_id, 1, RebotModel.redis_index)
+end
+
 function RebotModel.GetRebotMaxId()
     return redisItem:incrby(RebotModel.rebot_max_id, 1, RebotModel.redis_index)
 end
