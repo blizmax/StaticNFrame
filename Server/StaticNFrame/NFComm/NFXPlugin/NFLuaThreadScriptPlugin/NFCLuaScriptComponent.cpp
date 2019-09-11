@@ -101,7 +101,7 @@ NFServerLoopTask::TPTaskState NFServerLoopTask::MainThreadProcess()
 	else if (m_taskType == EnumLuaThreadModule_Init)
 	{
 		m_pLuaThreadModule->SetTimer(EnumLuaThreadModule_Loop, 1000, INFINITY_CALL);
-		m_pLuaThreadModule->SetTimer(EnumLuaThreadModule_GC, 60000, INFINITY_CALL);
+		m_pLuaThreadModule->SetTimer(EnumLuaThreadModule_GC, 1000, INFINITY_CALL);
 	}
 	else if (m_taskType == EnumLuaThreadModule_Loop)
 	{
