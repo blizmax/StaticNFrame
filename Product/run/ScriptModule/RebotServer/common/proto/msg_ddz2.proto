@@ -1,0 +1,83 @@
+package progame;
+
+import "st_ddz.proto";
+
+message cgddzdouble
+{
+	optional int32 userid = 1;
+	optional int32 tableid = 2;
+	optional int32 doubletype = 3; 	//1 加倍 2 不加倍
+}
+
+message gcddzdouble
+{
+	optional int32 result = 1; 		
+	optional int32 userid = 2;
+	optional int32 tableid = 3;
+	optional int32 doubletype = 4; 	//1 加倍 2 不加倍
+	repeated int32 multiple = 5; //自己的倍数
+	repeated int32 userlist = 6; 
+}
+
+//回放
+message cgddzhistorystep
+{
+	optional int32 tablepalyid = 1;
+	optional int32 stepid = 2;
+	
+}
+
+message gcddzhistorystep
+{
+	optional int32 result = 1;
+	optional ddzhistorypair htypair = 2;
+	optional int32 steplen = 3;
+}
+
+//托管
+message cgddzautoplayer
+{
+	optional int32 userid = 1;
+	optional int32 tableid = 2;
+	optional int32 autoplayer = 3; 	//取消托管:g_DdzDefine.autoplayer_No = 0	托管:g_DdzDefine.autoplayer_Yes = 1			
+}
+
+message gcddzautoplayer
+{
+	optional int32 result = 1;
+	optional int32 userid = 2;
+	optional int32 autoplayer = 3;	//取消托管:g_DdzDefine.autoplayer_No = 0	托管:g_DdzDefine.autoplayer_Yes = 1		
+}
+
+//出牌检测结果
+message gcddzplaycheckoutresult
+{
+	optional int32 result = 1; 			
+	optional int32 checkoutResult = 2; 			//结果： 1牌型错误, 2，没有上家大 3 有多种牌型
+	repeated ddzpokerlist pokerlist = 3	;		//返回的牌的列表
+
+}
+
+
+//等待下一局游戏开始
+message gcddznext
+{
+	optional int32 result = 1;
+}
+
+
+//换桌
+message cgddzvarytable 
+{
+	optional int32 userid = 1;
+	optional int32 tableid = 2;
+	optional int32 tabletype = 3;
+}
+
+message gcddzvarytable 
+{
+	optional int32 result = 1;
+	optional int32 userid = 2;
+	optional int32 entertable = 3;		//成功进人了下一个房间
+	optional ddzinfo hinfo = 4;
+}

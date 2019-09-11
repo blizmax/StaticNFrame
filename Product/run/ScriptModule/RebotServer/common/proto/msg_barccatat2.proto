@@ -1,0 +1,130 @@
+package progame;
+import "st_human.proto";
+import "st_barccatat.proto";
+
+
+//更新不知道什么
+message gcbarccatatupdate
+{
+	optional int32 result = 1;
+	optional int32 state = 2;
+	optional int32 timemark = 3;
+}
+
+
+message cgbarccatatchat   //欢乐赢都里面的聊天
+{
+	optional int32 senderid = 1;
+	optional string sender = 2;
+	optional int32 chattype = 3;   //对应g_barccatatDefine.chat 中的类型
+	optional string msg = 4;
+	optional int32 tableid = 5;    //牌桌的ID
+}
+
+message gcbarccatatchat
+{
+	optional int32 result = 1;
+	optional int32 chatdate = 2;   //聊天时间
+	optional int32 senderid = 3;   
+	optional string sender = 4;
+	optional int32 chattype = 5;
+	optional string msg = 6;
+}
+
+message cgbarccatatstandlist //获取站立的列表信息
+{
+	optional int32 userid = 1;
+	optional int32 tableid = 2;
+	optional int32 pagenum = 3;   //每一次获取10个
+}
+
+message gcbarccatatstandlist
+{
+	optional int32 result = 1;
+	repeated barccatatjettonrecorinfo pslist = 2;
+}
+
+message cgbarccatatbankerlist  //获取庄家列表
+{
+	optional int32 userid = 1;
+	optional int32 pagenum = 2;
+	optional int32 tableid = 3;
+}
+
+message gcbarccatatbankerlist   //获取上庄列表
+{
+	optional int32 result = 1;
+	repeated int32 useridlist = 2;
+	repeated string jettonlist = 3;
+	repeated string nicklist = 4;
+	repeated string faceidlist = 5;
+}
+
+message cgbarccatatstats   //这个是欢乐赢豆的统计
+{
+	optional int32 userid = 1;
+}
+
+message gcbarccatatstats
+{
+	optional int32 result = 1;
+	optional int32 allnum = 2;    //总局数
+	optional string weekwin = 3;  //每周盈利,用string表示int64的数据类型
+	optional string maxjetton = 4;   //最高资产,用string表示int64的数据类型
+}
+
+message cgbarccatatallgamehistory
+{
+	optional int32 userid = 1;
+}
+
+message gcbarccatatallgamehistory
+{
+	optional int32 result = 1;
+	repeated barccatatgamehistoryinfo historyinfo = 2;	//每个房间的记录 
+	
+}
+
+message cgbarccatatgamehistoryupdata
+{
+	optional int32 userid = 1;
+}
+
+message gcbarccatatgamehistoryupdata
+{
+	optional int32 result = 1;
+	repeated int32 tableid = 2;
+	repeated int32 state = 3;
+	repeated int32 timemark = 4;
+	repeated string recordidentification = 6;	//记录的标识
+	repeated int32 Xpoint = 7;	
+	repeated int32 ZPoint = 8;
+	repeated int32 WinResult = 9;	//0 闲  1 庄 2 和
+	repeated int32 Duizi = 10;		//0 闲对 1 庄对 2 都是对 255 都不是对
+	
+}
+
+message cgbarccatatlegalcheck
+{
+	optional string legalkey = 1;    //下发查询的key
+}
+
+message gcbarccatatlegalcheck
+{
+	optional int32 result = 1;     //
+	optional string cardarr = 2;   //查询的结果
+	optional string checkurl = 3;  //跳转到浏览器的链接
+}
+
+message cgbarccatatlegallist    //查询公平性验证的列表。目前只返回最新的10个
+{
+	optional int32 pagenum = 1;
+	optional int32 tableid = 2;
+}
+
+message gcbarccatatlegallist
+{
+	optional int32 result = 1;
+	repeated string legalkeylist = 2;
+	repeated string cardarrlist = 3;
+}

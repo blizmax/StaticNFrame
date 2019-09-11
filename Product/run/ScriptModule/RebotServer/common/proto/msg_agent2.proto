@@ -1,0 +1,150 @@
+package progame;
+import "st_agent.proto";
+
+message cgyestdayachievement                //昨日业绩
+{
+	optional int32 userid = 1;
+	optional int32 daypagenum = 2;
+	optional int32 page_count = 3; //每页显示数目
+}
+
+message userachievementdata   //玩家业绩数据
+{
+	optional int32 userid = 1;
+	optional string nickname = 2;
+	optional string datestr = 3;
+	optional string allach = 4;  //总业绩
+	optional int32  level = 5;
+}
+
+message gcyestdayachievement     //昨日业绩
+{
+	optional int32 result = 1;
+	repeated userachievementdata wlist = 2;   //下属业绩
+	optional int32 pagenum = 3;
+	optional int32 allnum = 4;
+}
+
+message cglastweekachievement                //上一周业绩
+{
+	optional int32 userid = 1;
+	optional int32 daypagenum = 2;
+	optional int32 page_count = 3; //每页显示数目
+}
+
+message gclastweekachievement                //上一周业绩
+{
+	optional int32 result = 1;
+	repeated userachievementdata wlist = 2;   //下属业绩
+	optional int32 pagenum = 3;
+	optional int32 allnum = 4;
+}
+
+message cgtodaybonus
+{
+	optional int32 userid = 1;
+	optional int32 daypagenum = 2;
+	optional int32 page_count = 3; //每页显示数目
+}
+
+message gctodaybonus
+{
+	optional int32 result = 1;
+	repeated userachievementdata wlist = 2;   //下属业绩
+	optional int32 pagenum = 3;
+	optional int32 allnum = 4;		//数目
+	optional string allach = 5;		//业绩
+	optional int32 bonus= 6;		//分红
+}
+
+message cgyesterdaybonus
+{
+	optional int32 userid = 1;
+	optional int32 daypagenum = 2;
+	optional int32 page_count = 3; //每页显示数目
+}
+
+message gcyesterdaybonus
+{
+	optional int32 result = 1;
+	repeated userachievementdata wlist = 2;   //下属业绩
+	optional int32 pagenum = 3;
+	optional int32 allnum = 4;		//数目
+	optional string allach = 5;		//业绩
+	optional int32 bonus= 6;		//分红
+}
+
+message cguserbonus
+{
+	optional int32 userid = 1;
+	optional int32 daypagenum = 2;
+	optional int32 page_count = 3; //每页显示数目
+}
+
+message gcuserbonus
+{
+	optional int32 result = 1;
+	repeated wiringdaybonus wlist = 2;   //下属业绩
+	optional int32 pagenum = 3;
+	optional int32 allnum = 4;		//数目
+	optional int32 allbonus = 5;		//总分红
+	optional int32 takebonus= 6;		//可提现分红
+	optional int32 extractedbonus= 7;	//已经提现分红
+}
+
+//提现分红
+message cgusertakebonus
+{
+	optional int32 userid = 1;
+	optional string drawnum = 3;   //提现的额度
+}
+
+message gcusertakebonus    //申请提现
+{
+	optional int32 result = 1;
+	optional int32 userid = 2;
+	optional int32 allbonus = 4;		//总分红
+	optional int32 takebonus= 5;		//可提现分红
+	optional int32 extractedbonus= 6;	//已经提现分红
+}
+
+//查询今天玩家分红
+message cgquerytodaybonus
+{
+	optional int32 userid = 1;
+	optional int32 query_userid = 2;
+}
+
+message gcquerytodaybonus
+{
+	optional int32 result = 1;
+	optional userachievementdata wlist = 2;   //下属业绩
+}
+
+//查询昨日玩家分红
+message cgqueryyesterdaybonus
+{
+	optional int32 userid = 1;
+	optional int32 query_userid = 2;
+}
+
+message gcqueryyesterdaybonus
+{
+	optional int32 result = 1;
+	optional userachievementdata wlist = 2;   //下属业绩
+}
+
+message cgbonuswithdraw   //
+{
+	optional int32 userid = 1;
+	optional int32 pagenum = 2;
+}
+
+message gcbonuswithdraw
+{
+	optional int32 result = 1;
+	optional int32 userid = 2;
+	repeated wiringwithdrawinfo wlist = 6; //提现记录
+	optional int32 alllistcount = 7; 	//总记录数
+	optional int32 pagenum = 8; 
+}

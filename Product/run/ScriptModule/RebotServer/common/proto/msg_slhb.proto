@@ -1,0 +1,147 @@
+package progame;
+import "st_human.proto";
+import "st_slhb.proto";
+
+message cgslhbenter		//进入
+{
+	optional int32 userid = 1;  
+	optional int32 tableid = 2;    //如果是0，则随机分配
+	optional int32 tabletype = 3;   //加一个对应的类型
+}
+
+
+message gcslhbenter		//进入
+{
+	optional int32 result = 1;
+	optional slhbinfo hinfo = 2;
+}
+
+message cgslhbleave		//离开
+{
+	optional int32 userid = 1;
+	optional int32 tableid = 2;
+}
+
+message gcslhbleave    //离开
+{
+	optional int32 result = 1;
+	optional int32 userid = 2;
+	optional int32 leavetype = 3;
+	optional string msg = 4;
+}
+
+message cgslhbgethblist	//获得红包列表
+{
+	optional int32 userid = 1;   
+	optional int32 tableid = 2;
+}
+
+message gcslhbgethblist	//获得红包列表
+{
+	optional int32 result = 1;
+	optional int32 userid = 2;
+	optional int32 minjetton = 3;	//最小的红包额度
+	optional int32 maxjetton = 4;	//最大的红包额度
+	repeated hongbao hblist = 5;	//红包列队
+}
+
+message cgslhbburiedmine	//埋雷
+{
+	optional int32 userid = 1;
+	optional int32 tableid = 2;
+	optional int32 hbjetton = 3;   //红包金额
+	optional int32 hbbomb = 4;   //雷号
+	
+}
+
+message gcslhbburiedmine	//埋雷
+{
+	optional int32 result = 1;
+	optional int32 userid = 2;
+	optional int32 minjetton = 3;	//最小的红包额度
+	optional int32 maxjetton = 4;	//最大的红包额度
+	repeated hongbao hblist = 5;	//红包列队
+}
+
+message cgslhbcancelmine	//取消雷
+{
+	optional int32 userid = 1;
+	optional int32 tableid = 2;
+}
+
+message gcslhbcancelmine   //取消雷
+{
+	optional int32 result = 1;
+	optional int32 userid = 2;
+	optional int32 minjetton = 3;	//最小的红包额度
+	optional int32 maxjetton = 4;	//最大的红包额度
+	repeated hongbao hblist = 5;	//红包列队
+}
+
+message gcslhbstart			//开始
+{
+	optional int32 result = 1;
+	optional int32 state = 2;
+	optional int32 timemark = 3;
+	optional int32 hbuserid = 4;		//发红包的玩家ID
+	optional string hbnickname = 5;		//发红包的玩家昵称
+	optional string hbfaceid = 6;		//发红包的玩家头像
+	optional int32 hbjetton = 7;		//红包金额
+	optional int32 hbnum = 8;			//包数
+	optional int32 hbbomb = 9;			//炸弹
+}
+
+message cgslhbrobhb	//抢红包
+{
+	optional int32 userid = 1;
+	optional int32 tableid = 2;
+}
+
+message gcslhbrobhb //抢红包
+{
+	optional int32 result = 1;
+	optional robhb urobhb = 2;
+}
+
+message gcslhbcount   //结算
+{
+	optional int32 result = 1;
+	optional int32 selfwin = 2;        //自己赢的钱
+	optional string selfall = 3;       //自己身上的钱,用string表示int64的数据类型
+	optional string hbplayerwin = 4;   //发红包的玩家赢的钱
+	repeated robhb wintypelist = 5;    //所有抢红包的情况
+	
+}
+
+message cgslhbstandlist //玩家列表
+{
+	optional int32 userid = 1;
+	optional int32 tableid = 2;
+	optional int32 pagenum = 3;   //每一次获取10个
+}
+
+message gcslhbstandlist //玩家列表
+{
+	optional int32 result = 1;
+	repeated slhbjettonrecorinfo pslist = 2;
+}
+
+message cgslhbchat   //聊天
+{
+	optional int32 senderid = 1;
+	optional string sender = 2;
+	optional int32 chattype = 3;   //对应g_slhbDefine.chat 中的类型
+	optional string msg = 4;
+	optional int32 tableid = 5;    //牌桌的ID
+}
+
+message gcslhbchat 	//聊天
+{
+	optional int32 result = 1;
+	optional int32 chatdate = 2;   //聊天时间
+	optional int32 senderid = 3;   
+	optional string sender = 4;
+	optional int32 chattype = 5;
+	optional string msg = 6;
+}
+

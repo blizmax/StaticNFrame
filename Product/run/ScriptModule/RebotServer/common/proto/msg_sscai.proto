@@ -1,0 +1,162 @@
+package progame;
+import "st_human.proto";
+import "st_sscai.proto";
+
+message cgsscaienter
+{
+	optional int32 userid = 1;  
+	optional int32 tableid = 2;    //如果是0，则随机分配
+	optional string password = 3;   //如果该牌桌是需要密码的
+}
+
+
+message gcsscaienter
+{
+	optional int32 result = 1;
+	optional sscaiinfo finfo = 2;      //进入森林舞会
+	repeated sscaijetton pourlist = 3;   //已经下注的列表
+	repeated sscaijetton mypour = 4;     //我自己下注的信息
+}
+
+message cgsscaileave
+{
+	optional int32 userid = 1;
+	optional int32 tableid = 2;
+}
+
+message gcsscaileave    //当坐下来的玩家离开的时候，需要广播给全部玩家
+{
+	optional int32 result = 1;
+	optional int32 userid = 2;
+}
+
+message cgsscaipourjetton
+{
+	optional int32 userid = 1;
+	optional int32 tableid = 2;
+	optional int32 pourid = 3;    //下注的ID
+	optional int32 pourjetton = 4;   //下注的筹码
+	
+}
+
+message gcsscaipourjetton
+{
+	optional int32 result = 1;
+	optional int32 userid = 2;
+	optional int32 pourid = 3;
+	optional int32 pourjetton = 4;
+}
+
+message gcsscaicount   //结算是服务器主动发送给玩家的
+{
+	optional int32 result = 1;
+	optional int32 winid = 2;    //开的那个奖项
+	optional int32 bankerwin = 3;
+	optional int32 userid = 4;
+	optional int32 mywin = 5;   //胜利的得分
+	optional int32 timemark = 6;   //结算时间
+	repeated int32 pokerlist = 7;   //开奖是牌的顺序
+	optional int32 lastwinid = 8;  //上次大赢家ID
+	optional string lastwinnick = 9;   //上次大赢家的昵称
+	optional string lastwinfaceid = 10;    //上次大赢家的头像
+	optional int32 lastwinnum = 11;   //上轮赢的钱	
+}
+
+message cgsscaibeingbanker
+{
+	optional int32 userid = 1;
+	optional int32 jetton = 2; 
+	optional int32 tableid = 3;
+	
+}
+
+message gcsscaibeingbanker
+{
+	optional int32 result = 1;
+	optional int32 userid = 2;
+	optional string msg = 3;   //上庄的消息返回
+}
+
+message cgsscaidropbanker
+{
+	optional int32 userid = 1;   //下庄
+	optional int32 tableid = 3;
+}
+
+message gcsscaidropbanker            //
+{
+	optional int32 result = 1;
+	optional int32 userid = 2;
+}
+
+message gcsscaistart
+{
+	optional int32 result = 1;
+	optional sscaiinfo sinfo = 2;
+}
+
+message gcsscaiupdate
+{
+	optional int32 result = 1;
+	optional int32 state = 2;
+	optional int32 timemark = 3;
+}
+
+message gcsscaiupdatepour    //更新每个列表的数据，每一秒都需要更新
+{
+	optional int32 result = 1;
+	optional int32 tableid = 2;
+	repeated int32 pourid= 3;   //下注的ID
+	repeated int32 pourjetton = 4; //下注的金额
+}
+
+
+message cgsscaichat   //欢乐赢都里面的聊天
+{
+	optional int32 senderid = 1;
+	optional string sender = 2;
+	optional int32 chattype = 3;   //对应g_sscaiDefine.chat 中的类型
+	optional string msg = 4;
+	optional int32 tableid = 5;    //牌桌的ID
+}
+
+message gcsscaichat
+{
+	optional int32 result = 1;
+	optional int32 chatdate = 2;   //聊天时间
+	optional int32 senderid = 3;   
+	optional string sender = 4;
+	optional int32 chattype = 5;
+	optional string msg = 6;
+}
+
+message cgsscaiplayerlist    //获取玩家类别
+{
+	optional int32 userid = 1;
+	optional int32 tableid = 2;
+	optional int32 pagenum = 3;   //按照分页来显示，每页显示10个
+	optional int32 gettype = 4;   //1是获取玩家列表，2是获取上庄列表,3是获取大奖记录的列表
+}
+
+message gcsscaiplayerlist
+{
+	optional int32 result = 1;
+	repeated playersimpleinfo plist = 2;  //玩家列表
+	optional int32 gettype = 3;     //1是获取玩家列表，2是获取上庄列表
+}
+
+message cgsscaibiglist  //大奖记录列表
+{
+	optional int32 userid = 1;
+	optional int32 tableid = 2;
+	optional int32 pagenum = 3;  //页数
+}
+
+message gcsscaibiglist
+{
+	optional int32 result = 1;
+	repeated sscaibiginfo blist = 2;
+}
+
+
+
