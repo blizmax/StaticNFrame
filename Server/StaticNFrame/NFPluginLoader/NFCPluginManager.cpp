@@ -255,7 +255,7 @@ bool NFCPluginManager::Execute()
 		uint64_t useTime = EndProfiler();
 		if (useTime >= 10000) //>= 10ºÁÃë
 		{
-			NFLogError(NF_LOG_PLUGIN_MANAGER, 0, "mainthread:{} {} use time:{} ms", NFCommon::tostr(std::this_thread::get_id()), it->first + "--Loop", useTime / 1000);
+			//NFLogError(NF_LOG_PLUGIN_MANAGER, 0, "mainthread:{} {} use time:{} ms", NFCommon::tostr(std::this_thread::get_id()), it->first + "--Loop", useTime / 1000);
 		}
 	}
 
@@ -267,7 +267,7 @@ bool NFCPluginManager::Execute()
 		uint64_t useTime = EndProfiler();
 		if (useTime >= 10000) //>= 10ºÁÃë
 		{
-			NFLogError(NF_LOG_PLUGIN_MANAGER, 0, "mainthread:{} {} use time:{} ms", NFCommon::tostr(std::this_thread::get_id()), iter->first + "--Alone--Loop", useTime / 1000);
+			//NFLogError(NF_LOG_PLUGIN_MANAGER, 0, "mainthread:{} {} use time:{} ms", NFCommon::tostr(std::this_thread::get_id()), iter->first + "--Alone--Loop", useTime / 1000);
 		}
 	}
 

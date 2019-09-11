@@ -40,6 +40,7 @@
 
 
 class NFEvppServer;
+class NFEvppClient;
 
 /**
 * @brief 网络对象，代表一个连接
@@ -47,6 +48,8 @@ class NFEvppServer;
 class NetEvppObject
 {
 public:
+	friend NFEvppServer;
+	friend NFEvppClient;
 	/**
 	 * @brief	构造函数
 	 */

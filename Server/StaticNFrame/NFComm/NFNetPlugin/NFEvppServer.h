@@ -44,11 +44,15 @@ struct MsgFromNetInfo
 	MsgFromNetInfo(const evpp::TCPConnPtr TCPConPtr) : mTCPConPtr(TCPConPtr)
 	{
 		nType = eMsgType_Num;
+		nMsgId = 0;
+		nValue = 0;
 	}
 
 	eMsgType nType;
 	evpp::TCPConnPtr mTCPConPtr;
 	std::string strMsg;
+	uint32_t nMsgId;
+	uint64_t nValue;
 };
 
 class NFCNetServerModule;

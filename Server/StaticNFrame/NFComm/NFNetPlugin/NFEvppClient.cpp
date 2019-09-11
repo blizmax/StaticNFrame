@@ -154,11 +154,48 @@ bool NFEvppClient::Connect()
 		evpp::Slice xMsgBuff;
 		if (msg)
 		{
-			xMsgBuff = msg->NextAll();
-			MsgFromNetInfo* pMsg = new MsgFromNetInfo(conn);
-			pMsg->nType = eMsgType_RECIVEDATA;
-			pMsg->strMsg = std::string(xMsgBuff.data(), xMsgBuff.size());
-			mMsgQueue.Push(pMsg);
+			if (!conn->context().IsEmpty())
+			{
+				xMsgBuff = msg->NextAll();
+
+				NetEvppObject* pObject = evpp::any_cast<NetEvppObject*>(conn->context());
+				if (pObject)
+				{
+					pObject->m_buffer.PushData(xMsgBuff.data(), xMsgBuff.size());
+
+					while (true)
+					{
+						char* outData = nullptr;
+						uint32_t outLen = 0;
+						uint32_t allLen = 0;
+						uint32_t nMsgId = 0;
+						uint64_t nValue = 0;
+						int ret = NFIPacketParse::DeCode(pObject->mPacketParseType, pObject->m_buffer.ReadAddr(), pObject->m_buffer.ReadableSize(), outData, outLen, allLen, nMsgId, nValue);
+						if (ret < 0)
+						{
+							pObject->m_buffer.Consume(pObject->m_buffer.ReadableSize());
+							break;
+						}
+						else if (ret > 0)
+						{
+							break;
+						}
+						else
+						{
+							//OnHandleMsgPeer(eMsgType_RECIVEDATA, m_usLinkId, outData, outLen, nMsgId, nValue);
+							MsgFromNetInfo* pMsg = new MsgFromNetInfo(conn);
+							pMsg->nType = eMsgType_RECIVEDATA;
+							pMsg->strMsg = std::string(outData, outLen);
+							pMsg->nMsgId = nMsgId;
+							pMsg->nValue = nValue;
+							mMsgQueue.Push(pMsg);
+
+							pObject->m_buffer.Consume(allLen);
+							continue;
+						}
+					}
+				}
+			}
 		}
 	});
 	m_tcpClient->set_auto_reconnect(false);
@@ -228,9 +265,9 @@ void NFEvppClient::ProcessMsgLogicThread()
 			if (!pMsg->mTCPConPtr->context().IsEmpty())
 			{
 				NetEvppObject* pObject = evpp::any_cast<NetEvppObject*>(pMsg->mTCPConPtr->context());
-				if (pObject && pObject == m_pObject)
+				if (pObject)
 				{
-					pObject->OnRecvData(pMsg->strMsg.data(), pMsg->strMsg.length());
+					pObject->OnHandleMsgPeer(eMsgType_RECIVEDATA, pObject->m_usLinkId, (char*)pMsg->strMsg.data(), pMsg->strMsg.length(), pMsg->nMsgId, pMsg->nValue);
 				}
 				else
 				{
