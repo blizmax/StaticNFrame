@@ -675,19 +675,20 @@ bool NFCLuaThreadModule::AddServerLoopActorComponent(NFITaskComponent* pComonnet
 */
 int NFCLuaThreadModule::GetBalanceWorkActor(uint64_t balanceId)
 {
-	if (balanceId == 0)
-	{
-		return GetRandWorkActor();
-	}
-	else
-	{
-		if (m_vecWorkActorPool.size() <= 0)
-		{
-			return -1;
-		}
-		uint32_t index = balanceId % m_vecWorkActorPool.size();
-		return m_vecWorkActorPool[index];
-	}
+	return GetRandWorkActor();
+	//if (balanceId == 0)
+	//{
+	//	return GetRandWorkActor();
+	//}
+	//else
+	//{
+	//	if (m_vecWorkActorPool.size() <= 0)
+	//	{
+	//		return -1;
+	//	}
+	//	uint32_t index = balanceId % m_vecWorkActorPool.size();
+	//	return m_vecWorkActorPool[index];
+	//}
 }
 
 /**
@@ -737,19 +738,21 @@ bool NFCLuaThreadModule::AddWorkTask(NFTask* pTask)
 */
 int NFCLuaThreadModule::GetBalanceTcpMsgActor(uint64_t balanceId)
 {
-	if (balanceId == 0)
-	{
-		return GetRandTcpMsgActor();
-	}
-	else
-	{
-		if (m_vecTcpMsgActorPool.size() <= 0)
-		{
-			return -1;
-		}
-		uint32_t index = balanceId % m_vecTcpMsgActorPool.size();
-		return m_vecTcpMsgActorPool[index];
-	}
+	return GetRandTcpMsgActor();
+
+	//if (balanceId == 0)
+	//{
+	//	return GetRandTcpMsgActor();
+	//}
+	//else
+	//{
+	//	if (m_vecTcpMsgActorPool.size() <= 0)
+	//	{
+	//		return -1;
+	//	}
+	//	uint32_t index = balanceId % m_vecTcpMsgActorPool.size();
+	//	return m_vecTcpMsgActorPool[index];
+	//}
 }
 
 /**
