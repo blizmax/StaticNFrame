@@ -124,9 +124,8 @@ bool NFCLuaThreadModule::Execute()
 	m_pPluginManager->BeginProfiler("HandleLuaTimer");
 	HandleLuaTimer();
 	m_pPluginManager->EndProfiler();
-	m_pPluginManager->BeginProfiler("HandleLuaTcpMsg");
+
 	HandleLuaTcpMsg();
-	m_pPluginManager->EndProfiler();
 	return true;
 }
 
@@ -315,6 +314,7 @@ uint32_t NFCLuaThreadModule::AddTimer(uint32_t msgType, const std::string& luaFu
 */
 void NFCLuaThreadModule::HandleLuaTcpMsg()
 {
+	m_pPluginManager->BeginProfiler("HandleLuaTcpMsg");
 	std::vector<NFTcpMessage*> listTask;
 	const bool ret = m_mTcpMsgQueue.Pop(listTask);
 	if (ret)
@@ -351,7 +351,13 @@ void NFCLuaThreadModule::HandleLuaTcpMsg()
 		}
 	}
 
+	uint64_t useTime = m_pPluginManager->EndProfiler();
+	if (useTime >= 30000) //>= 10∫¡√Î
+	{
+		NFLogError(NF_LOG_PLUGIN_MANAGER, 0, "HandleLuaTcpMsg: send tcp msg:{} use time:{} ms", listTask.size(), useTime/1000);
+	}
 	listTask.clear();
+
 }
 
 void NFCLuaThreadModule::HandleLuaTimer()

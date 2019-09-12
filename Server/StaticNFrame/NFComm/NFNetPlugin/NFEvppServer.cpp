@@ -480,3 +480,34 @@ bool NFEvppServer::Send(uint32_t usLinkId, const void* pData, uint32_t unSize)
 	}
 	return false;
 }
+
+/**
+ * @brief	发送数据 包含数据头
+ *
+ * @param pData		发送的数据,
+ * @param unSize	数据的大小
+ * @return
+ */
+bool NFEvppServer::Send(uint32_t usLinkId, const uint32_t nMsgID, const char* msg, const uint32_t nLen, const uint64_t nPlayerID)
+{
+	NetEvppObject* pObject = GetNetObject(usLinkId);
+	if (pObject)
+	{
+		return pObject->Send(nMsgID, msg, nLen, nPlayerID);
+	}
+	return false;
+}
+
+bool NFEvppServer::SendAll(const uint32_t nMsgID, const char* msg, const uint32_t nLen, const uint64_t nPlayerID)
+{
+	for (auto iter = mNetObjectArray.begin(); iter != mNetObjectArray.end(); ++iter)
+	{
+		auto pObject = iter->second;
+		if (pObject)
+		{
+			return pObject->Send(nMsgID, msg, nLen, nPlayerID);
+		}
+	}
+
+	return true;
+}

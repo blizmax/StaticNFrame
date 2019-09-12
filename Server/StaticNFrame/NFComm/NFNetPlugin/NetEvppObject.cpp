@@ -249,4 +249,21 @@ bool NetEvppObject::Send(const void* pData, uint32_t unSize)
 	return false;
 }
 
+void SendToThread(evpp::TCPConnPtr connPtr, uint32_t nPacketParseType, const uint32_t nMsgID, const std::string& message, const uint64_t nPlayerID)
+{
+	NFBuffer mxSendBuffer;
+	NFIPacketParse::EnCode(nPacketParseType, nMsgID, nPlayerID, message.data(), message.length(), mxSendBuffer);
+	connPtr->Send((const void*)mxSendBuffer.ReadAddr(), mxSendBuffer.ReadableSize());
+}
+
+bool NetEvppObject::Send(const uint32_t nMsgID, const char* msg, const uint32_t nLen, const uint64_t nPlayerID)
+{
+	if (!GetNeedRemove() && mConnPtr && mConnPtr->IsConnected())
+	{
+		mConnPtr->loop()->RunInLoop(std::bind(&SendToThread, mConnPtr, mPacketParseType, nMsgID, evpp::Slice(msg, nLen).ToString(), nPlayerID));
+		return true;
+	}
+	return false;
+}
+
 

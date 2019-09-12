@@ -44,7 +44,6 @@ NFCNetServerModule::NFCNetServerModule(NFIPluginManager* p)
 	{
 		mServerArray[i] = nullptr;
 	}
-	mxSendBuffer.AssureSpace(MAX_SEND_BUFFER_SIZE);
 }
 
 NFCNetServerModule::~NFCNetServerModule()
@@ -290,43 +289,17 @@ void NFCNetServerModule::SendToAllServerByPB(NF_SERVER_TYPES eServerType, const 
 
 void NFCNetServerModule::SendMsg(NFIServer* pServer, uint32_t usLinkId, const uint32_t nMsgID, const char* msg, const uint32_t nLen, const uint64_t nPlayerID)
 {
-	mxSendBuffer.Clear();
-	if (pServer->IsWebSocket())
-	{
-		std::string frame;
-		NFIPacketParse::EnCodeWeb(msg, nLen, frame);
-		mxSendBuffer.PushData((const void*)frame.data(), frame.length());
-	}
-	else
-	{
-		NFIPacketParse::EnCode(pServer->mPacketParseType, nMsgID, nPlayerID, msg, nLen, mxSendBuffer);
-	}
-	
 	if (pServer)
 	{
-		pServer->Send(usLinkId, mxSendBuffer.ReadAddr(), mxSendBuffer.ReadableSize());
+		pServer->Send(usLinkId, nMsgID, msg, nLen, nPlayerID);
 	}
-	mxSendBuffer.Clear();
 }
 
 void NFCNetServerModule::SendAllMsg(NFIServer* pServer, const uint32_t nMsgID, const char* msg, const uint32_t nLen, const uint64_t nPlayerID)
 {
-	mxSendBuffer.Clear();
-	if (pServer->IsWebSocket())
-	{
-		std::string frame;
-		NFIPacketParse::EnCodeWeb(msg, nLen, frame);
-		mxSendBuffer.PushData((const void*)frame.data(), frame.length());
-	}
-	else
-	{
-		NFIPacketParse::EnCode(pServer->mPacketParseType, nMsgID, nPlayerID, msg, nLen, mxSendBuffer);
-	}
-	
 	if (pServer)
 	{
-		pServer->SendAll(mxSendBuffer.ReadAddr(), mxSendBuffer.ReadableSize());
+		pServer->SendAll(nMsgID, msg, nLen, nPlayerID);
 	}
-	mxSendBuffer.Clear();
 }
 

@@ -37,6 +37,7 @@
 #include "NFNetDefine.h"
 #include "NFComm/NFCore/NFBuffer.h"
 #include "evpp/tcp_conn.h"
+#include "evpp/event_loop.h"
 
 
 class NFEvppServer;
@@ -139,6 +140,15 @@ public:
 	 * @return
 	 */
 	virtual bool Send(const void* pData, uint32_t unSize);
+
+	/**
+	 * @brief	发送数据 不包含数据头
+	 *
+	 * @param pData		发送的数据,
+	 * @param unSize	数据的大小
+	 * @return
+	 */
+	virtual bool Send(const uint32_t nMsgID, const char* msg, const uint32_t nLen, const uint64_t nPlayerID);
 
 	/**
 	 * @brief	获得唯一ID
@@ -286,5 +296,7 @@ protected:
 	* @brief 来自EVPP的链接代理
 	*/
 	evpp::TCPConnPtr mConnPtr;
+
+	NFBuffer mxSendBuffer;
 };
 

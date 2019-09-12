@@ -249,6 +249,5 @@ protected:
 	void SendAllMsg(NFIServer* pServer, const uint32_t nMsgID, const char* msg, const uint32_t nLen, const uint64_t nPlayerID);
 private:
 	std::vector<NFIServer*> mServerArray;
-	NFBuffer mxSendBuffer;
 };
 

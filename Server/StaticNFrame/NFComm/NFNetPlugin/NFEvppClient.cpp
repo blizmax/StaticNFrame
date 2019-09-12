@@ -307,3 +307,19 @@ bool NFEvppClient::Send(const void* pData, uint32_t unSize)
 	return false;
 }
 
+/**
+ * @brief	发送数据 不包含数据头
+ *
+ * @param pData		发送的数据,
+ * @param unSize	数据的大小
+ * @return
+ */
+bool NFEvppClient::Send(const uint32_t nMsgID, const char* msg, const uint32_t nLen, const uint64_t nPlayerID)
+{
+	if (m_pObject)
+	{
+		return m_pObject->Send(nMsgID, msg, nLen, nPlayerID);
+	}
+	return false;
+}
+

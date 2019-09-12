@@ -147,7 +147,25 @@ public:
 	 * @param unSize	数据的大小
 	 * @return
 	 */
+	virtual bool SendAll(const uint32_t nMsgID, const char* msg, const uint32_t nLen, const uint64_t nPlayerID) override;
+
+	/**
+	 * @brief	发送数据
+	 *
+	 * @param pData		发送的数据, 这里的数据已经包含了数据头
+	 * @param unSize	数据的大小
+	 * @return
+	 */
 	virtual bool Send(uint32_t usLinkId, const void* pData, uint32_t unSize) override;
+
+	/**
+	 * @brief	发送数据 不包含数据头
+	 *
+	 * @param pData		发送的数据, 
+	 * @param unSize	数据的大小
+	 * @return
+	 */
+	virtual bool Send(uint32_t usLinkId, const uint32_t nMsgID, const char* msg, const uint32_t nLen, const uint64_t nPlayerID) override;
 
 	NetEvppObject* GetNetObject(uint32_t uslinkId);
 protected:
