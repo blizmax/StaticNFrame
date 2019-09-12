@@ -385,9 +385,9 @@ void NFCLuaThreadModule::HandleLuaTcpMsg()
 					NFLogError(NF_LOG_PLUGIN_MANAGER, 0, "SendErrorLog: use time:{} ms", useTime / 1000);
 				}
 			}
-			m_pPluginManager->BeginProfiler("DeleteMsg");
-			NF_SAFE_DELETE(pMsg);
-			m_pPluginManager->EndProfiler();
+			//m_pPluginManager->BeginProfiler("DeleteMsg");
+			//NF_SAFE_DELETE(pMsg);
+			//m_pPluginManager->EndProfiler();
 		}
 	}
 	uint32_t count = listTask.size();
