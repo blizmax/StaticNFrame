@@ -365,7 +365,7 @@ protected:
 	* @brief 返回的定时器消息队,
 	* actor线程将数据放入队列， 主线程从队列里取数据处理
 	*/
-	NFQueueVector<NFTcpMessage*> m_mTcpMsgQueue;
+	NFQueueVector<NFTcpMessage> m_mTcpMsgQueue;
 
 	std::map<std::string, std::string> m_errorLog;
 

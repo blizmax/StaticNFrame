@@ -7,8 +7,6 @@
 //
 // -------------------------------------------------------------------------
 
-#pragma once
-
 #include "NFCLuaThreadModule.h"
 #include "NFCLuaScriptComponent.h"
 #include "NFMessageDefine/server_msg.pb.h"
@@ -315,7 +313,7 @@ uint32_t NFCLuaThreadModule::AddTimer(uint32_t msgType, const std::string& luaFu
 void NFCLuaThreadModule::HandleLuaTcpMsg()
 {
 	m_pPluginManager->BeginProfiler("HandleLuaTcpMsg");
-	std::vector<NFTcpMessage*> listTask;
+	std::vector<NFTcpMessage> listTask;
 	m_pPluginManager->BeginProfiler("TcpMsgQueue.Pop");
 	const bool ret = m_mTcpMsgQueue.Pop(listTask);
 	m_pPluginManager->EndProfiler();
@@ -325,7 +323,7 @@ void NFCLuaThreadModule::HandleLuaTcpMsg()
 		const uint64_t start = NFTime::Tick();
 		for (size_t i = 0; i < listTask.size(); ++i)
 		{
-			NFTcpMessage* pMsg = listTask[i];
+			NFTcpMessage* pMsg = &listTask[i];
 			if (pMsg->m_nMsgType == NFTcpMessage::ACTOR_TCP_MESSAGE_TYPE_ONE_PLAYER_PROXY_MSG)
 			{
 				m_pPluginManager->BeginProfiler("SendMsgToPlayer");
@@ -456,16 +454,28 @@ void NFCLuaThreadModule::SendMsgToPlayer(uint32_t usLinkId, const uint64_t nPlay
 	{
 		if (usLinkId != 0)
 		{
+			m_pPluginManager->BeginProfiler("SendByServerID");
 			m_pNetServerModule->SendByServerID(usLinkId, nMsgID, strData, nPlayerID);
+			uint64_t useTime = m_pPluginManager->EndProfiler();
+			if (useTime >= 1000) //>= 10∫¡√Î
+			{
+				NFLogError(NF_LOG_PLUGIN_MANAGER, 0, "SendByServerID: use time:{} ms", useTime / 1000);
+			}
 		}
 		else
 		{
 			if (nPlayerID != 0)
 			{
+				m_pPluginManager->BeginProfiler("SendByServerID2");
 				auto pPlayerInfo = GetPlayerInfo(nPlayerID);
 				if (pPlayerInfo)
 				{
 					m_pNetServerModule->SendByServerID(pPlayerInfo->GetProxyUnlinkId(), nMsgID, strData, nPlayerID);
+				}
+				uint64_t useTime = m_pPluginManager->EndProfiler();
+				if (useTime >= 1000) //>= 10∫¡√Î
+				{
+					NFLogError(NF_LOG_PLUGIN_MANAGER, 0, "SendByServerID2: use time:{} ms", useTime / 1000);
 				}
 			}
 		}
@@ -587,80 +597,80 @@ NF_SHARE_PTR<PlayerGameServerInfo> NFCLuaThreadModule::GetPlayerInfo(uint64_t pl
 
 void NFCLuaThreadModule::AddMsgToPlayer(uint32_t usLinkId, const uint64_t nPlayerID, const uint32_t nMsgID, const uint32_t nLen, const std::string& strData)
 {
-	auto pMsg = new NFTcpMessage();
-	pMsg->m_nMsgType = NFTcpMessage::ACTOR_TCP_MESSAGE_TYPE_ONE_PLAYER_PROXY_MSG;
-	pMsg->m_usLinkId = usLinkId;
-	pMsg->m_nPlayerID = nPlayerID;
-	pMsg->m_nMsgID = nMsgID;
-	pMsg->m_nLen = nLen;
-	pMsg->m_strData = strData;
+	NFTcpMessage msg;
+	msg.m_nMsgType = NFTcpMessage::ACTOR_TCP_MESSAGE_TYPE_ONE_PLAYER_PROXY_MSG;
+	msg.m_usLinkId = usLinkId;
+	msg.m_nPlayerID = nPlayerID;
+	msg.m_nMsgID = nMsgID;
+	msg.m_nLen = nLen;
+	msg.m_strData = strData;
 
-	m_mTcpMsgQueue.Push(pMsg);
+	m_mTcpMsgQueue.Push(msg);
 }
 
 void NFCLuaThreadModule::AddMsgToManyPlayer(const std::vector<uint64_t>& nPlayerID, const uint32_t nMsgID, const uint32_t nLen, const std::string& strData)
 {
-	auto pMsg = new NFTcpMessage();
-	pMsg->m_nMsgType = NFTcpMessage::ACTOR_TCP_MESSAGE_TYPE_MANY_PLAYER_PROXY_MSG;
-	pMsg->m_usLinkId = 0;
-	pMsg->m_nPlayerID = 0;
-	pMsg->m_nVecPlayerID = nPlayerID;
-	pMsg->m_nMsgID = nMsgID;
-	pMsg->m_nLen = nLen;
-	pMsg->m_strData = strData;
+	NFTcpMessage msg;
+	msg.m_nMsgType = NFTcpMessage::ACTOR_TCP_MESSAGE_TYPE_MANY_PLAYER_PROXY_MSG;
+	msg.m_usLinkId = 0;
+	msg.m_nPlayerID = 0;
+	msg.m_nVecPlayerID = nPlayerID;
+	msg.m_nMsgID = nMsgID;
+	msg.m_nLen = nLen;
+	msg.m_strData = strData;
 
-	m_mTcpMsgQueue.Push(pMsg);
+	m_mTcpMsgQueue.Push(msg);
 }
 
 void NFCLuaThreadModule::AddMsgToAllPlayer(const uint32_t nMsgID, const uint32_t nLen, const std::string& strData)
 {
 
-	auto pMsg = new NFTcpMessage();
-	pMsg->m_nMsgType = NFTcpMessage::ACTOR_TCP_MESSAGE_TYPE_ALL_PLAYER_PROXY_MSG;
-	pMsg->m_usLinkId = 0;
-	pMsg->m_nPlayerID = 0;
-	pMsg->m_nMsgID = nMsgID;
-	pMsg->m_nLen = nLen;
-	pMsg->m_strData = strData;
+	NFTcpMessage msg;
+	msg.m_nMsgType = NFTcpMessage::ACTOR_TCP_MESSAGE_TYPE_ALL_PLAYER_PROXY_MSG;
+	msg.m_usLinkId = 0;
+	msg.m_nPlayerID = 0;
+	msg.m_nMsgID = nMsgID;
+	msg.m_nLen = nLen;
+	msg.m_strData = strData;
 
-	m_mTcpMsgQueue.Push(pMsg);
+	m_mTcpMsgQueue.Push(msg);
 }
 
 void NFCLuaThreadModule::AddMsgToWorld(uint32_t usLinkId, const uint64_t nPlayerID, const uint32_t nMsgID, const uint32_t nLen, const std::string& strData)
 {
-	auto pMsg = new NFTcpMessage();
-	pMsg->m_nMsgType = NFTcpMessage::ACTOR_TCP_MESSAGE_TYPE_ONE_PLAYER_WORLD_MSG;
-	pMsg->m_usLinkId = usLinkId;
-	pMsg->m_nPlayerID = nPlayerID;
-	pMsg->m_nMsgID = nMsgID;
-	pMsg->m_nLen = nLen;
-	pMsg->m_strData = strData;
+	NFTcpMessage msg;
+	msg.m_nMsgType = NFTcpMessage::ACTOR_TCP_MESSAGE_TYPE_ONE_PLAYER_WORLD_MSG;
+	msg.m_usLinkId = usLinkId;
+	msg.m_nPlayerID = nPlayerID;
+	msg.m_nMsgID = nMsgID;
+	msg.m_nLen = nLen;
+	msg.m_strData = strData;
 
-	m_mTcpMsgQueue.Push(pMsg);
+	m_mTcpMsgQueue.Push(msg);
 }
 
 void NFCLuaThreadModule::AddMsgToMaster(uint32_t usLinkId, const uint64_t nPlayerID, const uint32_t nMsgID, const uint32_t nLen, const std::string& strData)
 {
-	auto pMsg = new NFTcpMessage();
-	pMsg->m_nMsgType = NFTcpMessage::ACTOR_TCP_MESSAGE_TYPE_ONE_PLAYER_MASTER_MSG;
-	pMsg->m_usLinkId = usLinkId;
-	pMsg->m_nPlayerID = nPlayerID;
-	pMsg->m_nMsgID = nMsgID;
-	pMsg->m_nLen = nLen;
-	pMsg->m_strData = strData;
+	NFTcpMessage msg;
+	msg.m_nMsgType = NFTcpMessage::ACTOR_TCP_MESSAGE_TYPE_ONE_PLAYER_MASTER_MSG;
+	msg.m_usLinkId = usLinkId;
+	msg.m_nPlayerID = nPlayerID;
+	msg.m_nMsgID = nMsgID;
+	msg.m_nLen = nLen;
+	msg.m_strData = strData;
 
-	m_mTcpMsgQueue.Push(pMsg);
+	m_mTcpMsgQueue.Push(msg);
 }
 
 void NFCLuaThreadModule::AddErrorLog(uint64_t playerId, const std::string& func_log, const std::string& errorLog)
 {
-	auto pMsg = new NFTcpMessage();
-	pMsg->m_nMsgType = NFTcpMessage::ACTOR_TCP_MESSAGE_TYPE_ADD_ERROR_LOG_MSG;
-	pMsg->m_nPlayerID = playerId;
-	pMsg->m_errorLog = errorLog;
-	pMsg->m_funcLog = func_log;
+	NFTcpMessage msg;
+	msg.m_nMsgType = NFTcpMessage::ACTOR_TCP_MESSAGE_TYPE_ADD_ERROR_LOG_MSG;
+	msg.m_nPlayerID = playerId;
+	msg.m_errorLog = errorLog;
+	msg.m_funcLog = func_log;
 
-	m_mTcpMsgQueue.Push(pMsg);
+	m_mTcpMsgQueue.Push(msg);
 }
 
 /**
