@@ -317,7 +317,6 @@ void NFCLuaThreadModule::HandleLuaTcpMsg()
 	const bool ret = m_mTcpMsgQueue.Pop(listTask);
 	if (ret)
 	{
-		const uint64_t start = NFTime::Tick();
 		for (size_t i = 0; i < listTask.size(); ++i)
 		{
 			NFTcpMessage* pMsg = &listTask[i];

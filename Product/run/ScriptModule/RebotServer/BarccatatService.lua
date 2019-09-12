@@ -24,6 +24,7 @@ function BarccatatService.SendPourJetton(clientId, userid, tableid)
 
     LuaNFrame.SendMsgToRebot(tonumber(clientId), 0, 4411, cgmsg:ByteSize(), cgmsg:SerializeToString())
 
+
     --LogFile("error", "player:"..userid.." send pour:"..cgmsg.jetton)
 end
 
@@ -86,6 +87,8 @@ function BarccatatTimer.execute(buffer)
     local jsonData = luajson.decode(buffer)   --这里只是做业务的分发就行
 
     BarccatatService.SendPourJetton(jsonData['clientId'], jsonData['userid'], jsonData['tableid'])
+
+    RebotModel.RecordPlayerSendPour(jsonData['userid'])
 end
 
 BarccatatPourJetton = BarccatatPourJetton or {}

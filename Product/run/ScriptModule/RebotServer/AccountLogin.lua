@@ -120,23 +120,32 @@ end
 GetGameStateInfo = GetGameStateInfo or {}
 
 function GetGameStateInfo.work(buffer)
+    local allconnect = RebotModel.GetAccountConnnect()
+    for k, clientId in ipairs(allconnect) do
+        RebotModel.DelAccountConnnect(clientId)
+        RebotAccount.LoginServer(clientId)
+    end
+
     local allclient = RebotModel.GetAllRebotPlayerIdByClient()
+    local count = 0
     for clientId, playerId in pairs(allclient) do
-        
+        count = count + 1
         local tableid = RebotModel.GetPlayerTableId(playerId)
         if tableid == nil or tonumber(tableid) == 0 then
             BarccatatService.EnterGame(clientId, tableid)
         end
     end
-
+    LogFile("error", "rebot online num:"..count)
+    count = 0
+    local sendPour = 0
     local allPlayer = RebotModel.GetAllPlayerTableId()
     for playerId, tableId in pairs(allPlayer) do
-        local tableid = RebotModel.GetPlayerTableId(playerId)
-        if tableid == nil or tonumber(tableid) == 0 then
-            BarccatatService.EnterGame(clientId, tableid)
+        count = count + 1
+        if RebotModel.GetPlayerSendPour(playerId) ~= nil then
+            sendPour = sendPour +1
         end
     end
 
-    LogFile("error", "rebot online num:"..#allclient)
-    LogFile("error", "rebot play game:"..#allPlayer)
+    LogFile("error", "rebot play game:"..count)
+    LogFile("error", "rebot send pour:"..sendPour)
 end

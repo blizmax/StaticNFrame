@@ -25,8 +25,9 @@ end
 
 function LuaNFrame.DispatchRebotEvent(unLinkId, valueId, nMsgId, strMsg)
 	local function TcpExecute()
-        if nMsgId == NF_ACCOUNT_EVENT_TYPE.eAccountEventType_CONNECTED then
-            RebotAccount.LoginServer(unLinkId)
+		if nMsgId == NF_ACCOUNT_EVENT_TYPE.eAccountEventType_CONNECTED then
+			RebotModel.AccountConnnect(unLinkId)
+            --RebotAccount.LoginServer(unLinkId)
         elseif nMsgId == NF_ACCOUNT_EVENT_TYPE.eAccountEventType_DISCONNECTED then
             RebotAccount.DisConnect(unLinkId)
         end

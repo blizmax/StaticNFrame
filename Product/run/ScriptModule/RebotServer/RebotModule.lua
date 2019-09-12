@@ -66,3 +66,25 @@ end
 function RebotModel.GetAllPlayerTableId()
     return redisItem:hgetall(RebotModel.rebot_table_id, RebotModel.redis_index)
 end
+
+function RebotModel.RecordPlayerSendPour(userid)
+    redisItem:set("rebot_send_pour_"..userid, "1", RebotModel.redis_index)
+    redisItem:expire("rebot_send_pour_"..userid, 300, RebotModel.redis_index)
+end
+
+function RebotModel.GetPlayerSendPour(userid)
+    local value = redisItem:get("rebot_send_pour_"..userid, RebotModel.redis_index)
+    return value
+end
+
+function RebotModel.AccountConnnect(clientId)
+    redisItem:rpush("rebot_connect", clientId, RebotModel.redis_index)
+end
+
+function RebotModel.GetAccountConnnect()
+    return redisItem:lrange("rebot_connect", 0, -1, RebotModel.redis_index)
+end
+
+function RebotModel.DelAccountConnnect(clientId)
+    return redisItem:lrem("rebot_connect", 0, clientId, RebotModel.redis_index)
+end

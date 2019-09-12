@@ -28,7 +28,7 @@ bool NFCTestModule::Init()
 	NFINetClientModule* pClientModule = FindModule<NFINetClientModule>();
 	pClientModule->AddEventCallBack(NF_ST_REBOT, this, &NFCTestModule::OnProxySocketEvent);
 	pClientModule->AddReceiveCallBack(NF_ST_REBOT, this, &NFCTestModule::OnHandleOtherMessage);
-	for (int i = 0; i < 200; i++)
+	for (int i = 0; i < 1; i++)
 	{
 		pClientModule->AddServer(NF_ST_REBOT, "45.249.246.175", 6003, 1);
 	}
