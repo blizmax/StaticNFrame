@@ -485,7 +485,7 @@ bool NFCPluginManager::BeforeShut()
 
 	for (auto it = mModuleAloneMultiMap.begin(); it != mModuleAloneMultiMap.end(); it++)
 	{
-		NFLogInfo(NF_LOG_PLUGIN_MANAGER, 0, "--alone-- {} BeforeShut................", it->second->strName);
+		NFLogInfo(NF_LOG_PLUGIN_MANAGER, 0, "--alone-- {} BeforeShut................", it->first);
 		it->second->BeforeShut();
 	}
 
@@ -503,7 +503,7 @@ bool NFCPluginManager::Shut()
 
 	for (auto it = mModuleAloneMultiMap.begin(); it != mModuleAloneMultiMap.end(); it++)
 	{
-		NFLogInfo(NF_LOG_PLUGIN_MANAGER, 0, "--alone-- {} Shut................", it->second->strName);
+		NFLogInfo(NF_LOG_PLUGIN_MANAGER, 0, "--alone-- {} Shut................", it->first);
 		it->second->Shut();
 	}
 
@@ -549,7 +549,7 @@ bool NFCPluginManager::Finalize()
 
 	for (auto it = mModuleAloneMultiMap.begin(); it != mModuleAloneMultiMap.end(); it++)
 	{
-		NFLogInfo(NF_LOG_PLUGIN_MANAGER, 0, "--alone-- {} Finalize................", it->second->strName);
+		NFLogInfo(NF_LOG_PLUGIN_MANAGER, 0, "--alone-- {} Finalize................", it->first);
 		it->second->Finalize();
 	}
 

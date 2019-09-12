@@ -316,61 +316,92 @@ void NFCLuaThreadModule::HandleLuaTcpMsg()
 {
 	m_pPluginManager->BeginProfiler("HandleLuaTcpMsg");
 	std::vector<NFTcpMessage*> listTask;
+	m_pPluginManager->BeginProfiler("TcpMsgQueue.Pop");
 	const bool ret = m_mTcpMsgQueue.Pop(listTask);
+	m_pPluginManager->EndProfiler();
+
 	if (ret)
 	{
 		const uint64_t start = NFTime::Tick();
-		for (auto it = listTask.begin(); it != listTask.end(); ++it)
+		for (size_t i = 0; i < listTask.size(); ++i)
 		{
-			NFTcpMessage* pMsg = *it;
+			NFTcpMessage* pMsg = listTask[i];
 			if (pMsg->m_nMsgType == NFTcpMessage::ACTOR_TCP_MESSAGE_TYPE_ONE_PLAYER_PROXY_MSG)
 			{
 				m_pPluginManager->BeginProfiler("SendMsgToPlayer");
 				SendMsgToPlayer(pMsg->m_usLinkId, pMsg->m_nPlayerID, pMsg->m_nMsgID, pMsg->m_nLen, pMsg->m_strData);
-				m_pPluginManager->EndProfiler();
+				uint64_t useTime = m_pPluginManager->EndProfiler();
+				if (useTime >= 1000) //>= 10∫¡√Î
+				{
+					NFLogError(NF_LOG_PLUGIN_MANAGER, 0, "SendMsgToPlayer: use time:{} ms", useTime / 1000);
+				}
 			}
 			else if (pMsg->m_nMsgType == NFTcpMessage::ACTOR_TCP_MESSAGE_TYPE_ONE_PLAYER_WORLD_MSG)
 			{
 				m_pPluginManager->BeginProfiler("SendMsgToWorld");
 				SendMsgToWorld(pMsg->m_usLinkId, pMsg->m_nPlayerID, pMsg->m_nMsgID, pMsg->m_nLen, pMsg->m_strData);
-				m_pPluginManager->EndProfiler();
+				uint64_t useTime = m_pPluginManager->EndProfiler();
+				if (useTime >= 1000) //>= 10∫¡√Î
+				{
+					NFLogError(NF_LOG_PLUGIN_MANAGER, 0, "SendMsgToWorld: use time:{} ms", useTime / 1000);
+				}
 			}
 			else if (pMsg->m_nMsgType == NFTcpMessage::ACTOR_TCP_MESSAGE_TYPE_ONE_PLAYER_MASTER_MSG)
 			{
 				m_pPluginManager->BeginProfiler("SendMsgToMaster");
 				SendMsgToMaster(pMsg->m_usLinkId, pMsg->m_nPlayerID, pMsg->m_nMsgID, pMsg->m_nLen, pMsg->m_strData);
-				m_pPluginManager->EndProfiler();
+				uint64_t useTime = m_pPluginManager->EndProfiler();
+				if (useTime >= 1000) //>= 10∫¡√Î
+				{
+					NFLogError(NF_LOG_PLUGIN_MANAGER, 0, "SendMsgToMaster: use time:{} ms", useTime / 1000);
+				}
 			}
 			else if (pMsg->m_nMsgType == NFTcpMessage::ACTOR_TCP_MESSAGE_TYPE_MANY_PLAYER_PROXY_MSG)
 			{
 				m_pPluginManager->BeginProfiler("SendMsgToManyPlayer");
 				SendMsgToManyPlayer(pMsg->m_nVecPlayerID, pMsg->m_nMsgID, pMsg->m_nLen, pMsg->m_strData);
-				m_pPluginManager->EndProfiler();
+				uint64_t useTime = m_pPluginManager->EndProfiler();
+				if (useTime >= 1000) //>= 10∫¡√Î
+				{
+					NFLogError(NF_LOG_PLUGIN_MANAGER, 0, "SendMsgToManyPlayer: use time:{} ms", useTime / 1000);
+				}
 			}
 			else if (pMsg->m_nMsgType == NFTcpMessage::ACTOR_TCP_MESSAGE_TYPE_ALL_PLAYER_PROXY_MSG)
 			{
 				m_pPluginManager->BeginProfiler("SendMsgToAllPlayer");
 				SendMsgToAllPlayer(pMsg->m_nMsgID, pMsg->m_nLen, pMsg->m_strData);
 				m_pPluginManager->EndProfiler();
+				uint64_t useTime = m_pPluginManager->EndProfiler();
+				if (useTime >= 1000) //>= 10∫¡√Î
+				{
+					NFLogError(NF_LOG_PLUGIN_MANAGER, 0, "SendMsgToAllPlayer: use time:{} ms", useTime / 1000);
+				}
 			}
 			else if (pMsg->m_nMsgType == NFTcpMessage::ACTOR_TCP_MESSAGE_TYPE_ADD_ERROR_LOG_MSG)
 			{
 				m_pPluginManager->BeginProfiler("SendErrorLog");
 				SendErrorLog(pMsg->m_nPlayerID, pMsg->m_funcLog, pMsg->m_errorLog);
-				m_pPluginManager->EndProfiler();
+				uint64_t useTime = m_pPluginManager->EndProfiler();
+				if (useTime >= 1000) //>= 10∫¡√Î
+				{
+					NFLogError(NF_LOG_PLUGIN_MANAGER, 0, "SendErrorLog: use time:{} ms", useTime / 1000);
+				}
 			}
 			m_pPluginManager->BeginProfiler("DeleteMsg");
 			NF_SAFE_DELETE(pMsg);
 			m_pPluginManager->EndProfiler();
 		}
 	}
-
+	uint32_t count = listTask.size();
+	m_pPluginManager->BeginProfiler("listTask.clear");
+	listTask.clear();
+	m_pPluginManager->EndProfiler();
 	uint64_t useTime = m_pPluginManager->EndProfiler();
 	if (useTime >= 30000) //>= 10∫¡√Î
 	{
-		NFLogError(NF_LOG_PLUGIN_MANAGER, 0, "HandleLuaTcpMsg: send tcp msg:{} use time:{} ms", listTask.size(), useTime/1000);
+		NFLogError(NF_LOG_PLUGIN_MANAGER, 0, "HandleLuaTcpMsg: send tcp msg:{} use time:{} ms", count, useTime/1000);
 	}
-	listTask.clear();
+	
 
 }
 
