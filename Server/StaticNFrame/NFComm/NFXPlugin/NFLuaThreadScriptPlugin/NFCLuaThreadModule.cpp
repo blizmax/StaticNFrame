@@ -325,7 +325,9 @@ void NFCLuaThreadModule::HandleLuaTcpMsg()
 			NFTcpMessage* pMsg = *it;
 			if (pMsg->m_nMsgType == NFTcpMessage::ACTOR_TCP_MESSAGE_TYPE_ONE_PLAYER_PROXY_MSG)
 			{
+				m_pPluginManager->BeginProfiler("SendMsgToPlayer");
 				SendMsgToPlayer(pMsg->m_usLinkId, pMsg->m_nPlayerID, pMsg->m_nMsgID, pMsg->m_nLen, pMsg->m_strData);
+				m_pPluginManager->EndProfiler();
 			}
 			else if (pMsg->m_nMsgType == NFTcpMessage::ACTOR_TCP_MESSAGE_TYPE_ONE_PLAYER_WORLD_MSG)
 			{
@@ -337,11 +339,15 @@ void NFCLuaThreadModule::HandleLuaTcpMsg()
 			}
 			else if (pMsg->m_nMsgType == NFTcpMessage::ACTOR_TCP_MESSAGE_TYPE_MANY_PLAYER_PROXY_MSG)
 			{
+				m_pPluginManager->BeginProfiler("SendMsgToManyPlayer");
 				SendMsgToManyPlayer(pMsg->m_nVecPlayerID, pMsg->m_nMsgID, pMsg->m_nLen, pMsg->m_strData);
+				m_pPluginManager->EndProfiler();
 			}
 			else if (pMsg->m_nMsgType == NFTcpMessage::ACTOR_TCP_MESSAGE_TYPE_ALL_PLAYER_PROXY_MSG)
 			{
+				m_pPluginManager->BeginProfiler("SendMsgToAllPlayer");
 				SendMsgToAllPlayer(pMsg->m_nMsgID, pMsg->m_nLen, pMsg->m_strData);
+				m_pPluginManager->EndProfiler();
 			}
 			else if (pMsg->m_nMsgType == NFTcpMessage::ACTOR_TCP_MESSAGE_TYPE_ADD_ERROR_LOG_MSG)
 			{
