@@ -212,6 +212,7 @@ inline bool NFIPlugin::BeforeShut()
 		NFIModule* pModule = m_vecModule[i];
 		if (pModule)
 		{
+			NFLogInfo(NF_LOG_PLUGIN_MANAGER, 0, "{} BeforeShut................", pModule->strName);
 			bool bRet = pModule->BeforeShut();
 			if (!bRet)
 			{
@@ -229,6 +230,7 @@ inline bool NFIPlugin::Shut()
 		NFIModule* pModule = m_vecModule[i];
 		if (pModule)
 		{
+			NFLogInfo(NF_LOG_PLUGIN_MANAGER, 0, "{} Shut................", pModule->strName);
 			bool bRet = pModule->Shut();
 			if (!bRet)
 			{
@@ -247,6 +249,7 @@ inline bool NFIPlugin::Finalize()
 		NFIModule* pModule = m_vecModule[i];
 		if (pModule)
 		{
+			NFLogInfo(NF_LOG_PLUGIN_MANAGER, 0, "{} Finalize................", pModule->strName);
 			bool bRet = pModule->Finalize();
 			if (!bRet)
 			{
