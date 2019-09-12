@@ -121,8 +121,12 @@ bool NFCLuaThreadModule::ReadyExecute()
 
 bool NFCLuaThreadModule::Execute()
 {
+	m_pPluginManager->BeginProfiler("HandleLuaTimer");
 	HandleLuaTimer();
+	m_pPluginManager->EndProfiler();
+	m_pPluginManager->BeginProfiler("HandleLuaTcpMsg");
 	HandleLuaTcpMsg();
+	m_pPluginManager->EndProfiler();
 	return true;
 }
 
