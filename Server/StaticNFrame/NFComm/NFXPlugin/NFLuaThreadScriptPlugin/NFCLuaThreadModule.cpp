@@ -314,10 +314,7 @@ void NFCLuaThreadModule::HandleLuaTcpMsg()
 {
 	m_pPluginManager->BeginProfiler("HandleLuaTcpMsg");
 	std::vector<NFTcpMessage> listTask;
-	m_pPluginManager->BeginProfiler("TcpMsgQueue.Pop");
 	const bool ret = m_mTcpMsgQueue.Pop(listTask);
-	m_pPluginManager->EndProfiler();
-
 	if (ret)
 	{
 		const uint64_t start = NFTime::Tick();
@@ -326,68 +323,28 @@ void NFCLuaThreadModule::HandleLuaTcpMsg()
 			NFTcpMessage* pMsg = &listTask[i];
 			if (pMsg->m_nMsgType == NFTcpMessage::ACTOR_TCP_MESSAGE_TYPE_ONE_PLAYER_PROXY_MSG)
 			{
-				m_pPluginManager->BeginProfiler("SendMsgToPlayer");
 				SendMsgToPlayer(pMsg->m_usLinkId, pMsg->m_nPlayerID, pMsg->m_nMsgID, pMsg->m_nLen, pMsg->m_strData);
-				uint64_t useTime = m_pPluginManager->EndProfiler();
-				if (useTime >= 1000) //>= 10∫¡√Î
-				{
-					NFLogError(NF_LOG_PLUGIN_MANAGER, 0, "SendMsgToPlayer: use time:{} ms", useTime / 1000);
-				}
 			}
 			else if (pMsg->m_nMsgType == NFTcpMessage::ACTOR_TCP_MESSAGE_TYPE_ONE_PLAYER_WORLD_MSG)
 			{
-				m_pPluginManager->BeginProfiler("SendMsgToWorld");
 				SendMsgToWorld(pMsg->m_usLinkId, pMsg->m_nPlayerID, pMsg->m_nMsgID, pMsg->m_nLen, pMsg->m_strData);
-				uint64_t useTime = m_pPluginManager->EndProfiler();
-				if (useTime >= 1000) //>= 10∫¡√Î
-				{
-					NFLogError(NF_LOG_PLUGIN_MANAGER, 0, "SendMsgToWorld: use time:{} ms", useTime / 1000);
-				}
 			}
 			else if (pMsg->m_nMsgType == NFTcpMessage::ACTOR_TCP_MESSAGE_TYPE_ONE_PLAYER_MASTER_MSG)
 			{
-				m_pPluginManager->BeginProfiler("SendMsgToMaster");
 				SendMsgToMaster(pMsg->m_usLinkId, pMsg->m_nPlayerID, pMsg->m_nMsgID, pMsg->m_nLen, pMsg->m_strData);
-				uint64_t useTime = m_pPluginManager->EndProfiler();
-				if (useTime >= 1000) //>= 10∫¡√Î
-				{
-					NFLogError(NF_LOG_PLUGIN_MANAGER, 0, "SendMsgToMaster: use time:{} ms", useTime / 1000);
-				}
 			}
 			else if (pMsg->m_nMsgType == NFTcpMessage::ACTOR_TCP_MESSAGE_TYPE_MANY_PLAYER_PROXY_MSG)
 			{
-				m_pPluginManager->BeginProfiler("SendMsgToManyPlayer");
 				SendMsgToManyPlayer(pMsg->m_nVecPlayerID, pMsg->m_nMsgID, pMsg->m_nLen, pMsg->m_strData);
-				uint64_t useTime = m_pPluginManager->EndProfiler();
-				if (useTime >= 1000) //>= 10∫¡√Î
-				{
-					NFLogError(NF_LOG_PLUGIN_MANAGER, 0, "SendMsgToManyPlayer: use time:{} ms", useTime / 1000);
-				}
 			}
 			else if (pMsg->m_nMsgType == NFTcpMessage::ACTOR_TCP_MESSAGE_TYPE_ALL_PLAYER_PROXY_MSG)
 			{
-				m_pPluginManager->BeginProfiler("SendMsgToAllPlayer");
 				SendMsgToAllPlayer(pMsg->m_nMsgID, pMsg->m_nLen, pMsg->m_strData);
-				m_pPluginManager->EndProfiler();
-				uint64_t useTime = m_pPluginManager->EndProfiler();
-				if (useTime >= 1000) //>= 10∫¡√Î
-				{
-					NFLogError(NF_LOG_PLUGIN_MANAGER, 0, "SendMsgToAllPlayer: use time:{} ms", useTime / 1000);
-				}
 			}
 			else if (pMsg->m_nMsgType == NFTcpMessage::ACTOR_TCP_MESSAGE_TYPE_ADD_ERROR_LOG_MSG)
 			{
-				m_pPluginManager->BeginProfiler("SendErrorLog");
 				SendErrorLog(pMsg->m_nPlayerID, pMsg->m_funcLog, pMsg->m_errorLog);
-				uint64_t useTime = m_pPluginManager->EndProfiler();
-				if (useTime >= 1000) //>= 10∫¡√Î
-				{
-					NFLogError(NF_LOG_PLUGIN_MANAGER, 0, "SendErrorLog: use time:{} ms", useTime / 1000);
-				}
 			}
-			//m_pPluginManager->BeginProfiler("DeleteMsg");
-			//NF_SAFE_DELETE(pMsg);
-			//m_pPluginManager->EndProfiler();
 		}
 	}
 	uint32_t count = listTask.size();
@@ -445,28 +402,16 @@ void NFCLuaThreadModule::SendMsgToPlayer(uint32_t usLinkId, const uint64_t nPlay
 	{
 		if (usLinkId != 0)
 		{
-			m_pPluginManager->BeginProfiler("SendByServerID");
 			m_pNetServerModule->SendByServerID(usLinkId, nMsgID, strData, nPlayerID);
-			uint64_t useTime = m_pPluginManager->EndProfiler();
-			if (useTime >= 1000) //>= 10∫¡√Î
-			{
-				NFLogError(NF_LOG_PLUGIN_MANAGER, 0, "SendByServerID: use time:{} ms", useTime / 1000);
-			}
 		}
 		else
 		{
 			if (nPlayerID != 0)
 			{
-				m_pPluginManager->BeginProfiler("SendByServerID2");
 				auto pPlayerInfo = GetPlayerInfo(nPlayerID);
 				if (pPlayerInfo)
 				{
 					m_pNetServerModule->SendByServerID(pPlayerInfo->GetProxyUnlinkId(), nMsgID, strData, nPlayerID);
-				}
-				uint64_t useTime = m_pPluginManager->EndProfiler();
-				if (useTime >= 1000) //>= 10∫¡√Î
-				{
-					NFLogError(NF_LOG_PLUGIN_MANAGER, 0, "SendByServerID2: use time:{} ms", useTime / 1000);
 				}
 			}
 		}

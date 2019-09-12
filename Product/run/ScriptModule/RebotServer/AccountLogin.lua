@@ -124,7 +124,8 @@ function GetGameStateInfo.work(buffer)
     for clientId, playerId in pairs(allclient) do
         
         local tableid = RebotModel.GetPlayerTableId(playerId)
-
-        BarccatatService.EnterGame(clientId, tableid)
+        if tableid == nil then
+            BarccatatService.EnterGame(clientId, tableid)
+        end
     end
 end

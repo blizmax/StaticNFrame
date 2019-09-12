@@ -18,7 +18,7 @@ function BarccatatService.SendPourJetton(clientId, userid, tableid)
     cgmsg.userid = tonumber(userid)
     cgmsg.tableid = tonumber(tableid)
     cgmsg.jetton = 100
-    local pourType = {1,2,3}
+    local pourType = {1,2,3,4,5}
     local index = math.myrandom(1,#pourType)
     cgmsg.pourtype = pourType[index]
 
@@ -40,10 +40,6 @@ function BarccatatEnter.execute(nMsgId, clientId, strMsg)
         local timemark = gcmsg.timemark
     
         RebotModel.SetPlayerTableId(userid, tableid)
-
-        if state == g_barccatatDefine.state_pour then
-            BarccatatService.SendPourJetton(clientId, userid, tableid)
-        end
     end
 end
 
@@ -64,7 +60,30 @@ end
 
 BarccatatStart = BarccatatStart or {}
 function BarccatatStart.execute(nMsgId, clientId, strMsg)
+    local gcmsg = msg_barccatat_pb.gcbarccatatstart()
+    gcmsg:ParseFromString(strMsg)
 
+    local userid = RebotModel.GetRebotPlayerIdByClient(clientId)
+    local tableid = RebotModel.GetPlayerTableId(userid)
+
+    local timeData= {}
+    timeData['tableid'] = tostring(tableid)
+    timeData['userid'] = tostring(userid)
+    timeData['clientId'] = tostring(clientId)
+
+    for i = 1, tonumber(gcmsg.timemark) -1 do
+        local rand = math.myrandom(1, 1000)
+        processTimer(i*1000+rand, "BarccatatTimer", luajson.encode(timeData))
+    end
+end
+
+BarccatatTimer = BarccatatTimer or {}
+function BarccatatTimer.execute(buffer)
+	--通知下注的这里，不需要加入锁，这里只是一个通知的过程
+	
+    local jsonData = luajson.decode(buffer)   --这里只是做业务的分发就行
+
+    BarccatatService.SendPourJetton(jsonData['clientId'], jsonData['userid'], jsonData['tableid'])
 end
 
 BarccatatPourJetton = BarccatatPourJetton or {}
