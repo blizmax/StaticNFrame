@@ -347,7 +347,7 @@ protected:
 	* @brief 返回的定时器消息队,
 	* actor线程将数据放入队列， 主线程从队列里取数据处理
 	*/
-	NFQueueVector<NFTimerMessage*> m_mQueue;
+	NFQueueVector<NFTimerMessage> m_mQueue;
 
 	/*
 		定时器

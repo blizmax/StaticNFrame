@@ -295,7 +295,7 @@ bool NFCPluginManager::Execute()
 		std::this_thread::sleep_for(std::chrono::milliseconds(1));
 	}
 
-	if (mCurFrameCount % 10000 == 0)
+	if (mCurFrameCount % 1000 == 0)
 	{
 		PrintProfiler();
 	}

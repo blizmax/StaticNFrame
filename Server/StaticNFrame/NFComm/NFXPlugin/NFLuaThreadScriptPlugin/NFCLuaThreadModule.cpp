@@ -391,28 +391,23 @@ void NFCLuaThreadModule::HandleLuaTcpMsg()
 		}
 	}
 	uint32_t count = listTask.size();
-	m_pPluginManager->BeginProfiler("listTask.clear");
-	listTask.clear();
-	m_pPluginManager->EndProfiler();
 	uint64_t useTime = m_pPluginManager->EndProfiler();
 	if (useTime >= 30000) //>= 10∫¡√Î
 	{
-		NFLogError(NF_LOG_PLUGIN_MANAGER, 0, "HandleLuaTcpMsg: send tcp msg:{} use time:{} ms", count, useTime/1000);
+		NFLogError(NF_LOG_PLUGIN_MANAGER, 0, "HandleLuaTcpMsg: send tcp msg:{} use time:{} ms", listTask.size(), useTime/1000);
 	}
-	
-
 }
 
 void NFCLuaThreadModule::HandleLuaTimer()
 {
-	std::vector<NFTimerMessage*> listTask;
+	std::vector<NFTimerMessage> listTask;
 	const bool ret = m_mQueue.Pop(listTask);
 	if (ret)
 	{
 		const uint64_t start = NFTime::Tick();
-		for (auto it = listTask.begin(); it != listTask.end(); ++it)
+		for (size_t i = 0; i < listTask.size(); i++)
 		{
-			NFTimerMessage* xMsg = *it;
+			NFTimerMessage* xMsg = &listTask[i];
 			if (xMsg->nMsgType == NFTimerMessage::ACTOR_MSG_PROCESS_WORK)
 			{
 				AddProcessWorkTask(new NFWorkActorTask(this, EnumLuaThreadModule_Work, xMsg->m_luaFunc, xMsg->m_tmpParam));
@@ -421,12 +416,8 @@ void NFCLuaThreadModule::HandleLuaTimer()
 			{
 				AddTimer(xMsg->nMsgType, xMsg->m_luaFunc, xMsg->m_delayTime, xMsg->m_tmpParam, xMsg->m_callCount);
 			}
-			
-			NF_SAFE_DELETE(xMsg);
 		}
 	}
-
-	listTask.clear();
 
 	for (auto iter = m_luaTimerMap.begin(); iter != m_luaTimerMap.end();)
 	{
@@ -916,50 +907,50 @@ bool NFCLuaThreadModule::AddProcessWorkTask(NFTask* pTask)
 
 void NFCLuaThreadModule::AddProcessWork(const std::string& luaFunc, const std::string& tmpParam)
 {
-	auto pMsg = new NFTimerMessage();
-	pMsg->nMsgType = NFTimerMessage::ACTOR_MSG_PROCESS_WORK;
-	pMsg->m_delayTime = 1;
-	pMsg->m_luaFunc = luaFunc;
-	pMsg->m_tmpParam = tmpParam;
-	pMsg->m_callCount = 1;
+	NFTimerMessage msg;
+	msg.nMsgType = NFTimerMessage::ACTOR_MSG_PROCESS_WORK;
+	msg.m_delayTime = 1;
+	msg.m_luaFunc = luaFunc;
+	msg.m_tmpParam = tmpParam;
+	msg.m_callCount = 1;
 
-	m_mQueue.Push(pMsg);
+	m_mQueue.Push(msg);
 }
 
 void NFCLuaThreadModule::AddRealTimer(uint32_t internal, uint32_t callcount, const std::string& luaFunc, const std::string& tmpParam)
 {
-	auto pMsg = new NFTimerMessage();
-	pMsg->nMsgType = NFTimerMessage::ACTOR_TIMER_MSG_PROCESS_REAL_TIMER;
-	pMsg->m_delayTime = internal;
-	pMsg->m_luaFunc = luaFunc;
-	pMsg->m_tmpParam = tmpParam;
-	pMsg->m_callCount = callcount;
+	NFTimerMessage msg;
+	msg.nMsgType = NFTimerMessage::ACTOR_TIMER_MSG_PROCESS_REAL_TIMER;
+	msg.m_delayTime = internal;
+	msg.m_luaFunc = luaFunc;
+	msg.m_tmpParam = tmpParam;
+	msg.m_callCount = callcount;
 
-	m_mQueue.Push(pMsg);
+	m_mQueue.Push(msg);
 }
 
 void NFCLuaThreadModule::AddProcessTimer(uint32_t delayTimer, const std::string& luaFunc, const std::string& tmpParam)
 {
-	auto pMsg = new NFTimerMessage();
-	pMsg->nMsgType = NFTimerMessage::ACTOR_TIMER_MSG_PROCESS_TIMER;
-	pMsg->m_delayTime = delayTimer;
-	pMsg->m_luaFunc = luaFunc;
-	pMsg->m_tmpParam = tmpParam;
-	pMsg->m_callCount = 1;
+	NFTimerMessage msg;
+	msg.nMsgType = NFTimerMessage::ACTOR_TIMER_MSG_PROCESS_TIMER;
+	msg.m_delayTime = delayTimer;
+	msg.m_luaFunc = luaFunc;
+	msg.m_tmpParam = tmpParam;
+	msg.m_callCount = 1;
 
-	m_mQueue.Push(pMsg);
+	m_mQueue.Push(msg);
 }
 
 void NFCLuaThreadModule::AddProcessLoopTimer(uint32_t delayTimer, const std::string& luaFunc, const std::string& tmpParam)
 {
-	auto pMsg = new NFTimerMessage();
-	pMsg->nMsgType = NFTimerMessage::ACTOR_TIMER_MSG_PROCESS_LOOP_TIMER;
-	pMsg->m_delayTime = delayTimer;
-	pMsg->m_luaFunc = luaFunc;
-	pMsg->m_tmpParam = tmpParam;
-	pMsg->m_callCount = 1;
+	NFTimerMessage msg;
+	msg.nMsgType = NFTimerMessage::ACTOR_TIMER_MSG_PROCESS_LOOP_TIMER;
+	msg.m_delayTime = delayTimer;
+	msg.m_luaFunc = luaFunc;
+	msg.m_tmpParam = tmpParam;
+	msg.m_callCount = 1;
 
-	m_mQueue.Push(pMsg);
+	m_mQueue.Push(msg);
 }
 
 void NFCLuaThreadModule::ReloadAllLuaFiles()
