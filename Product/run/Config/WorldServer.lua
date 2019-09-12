@@ -67,11 +67,26 @@ function InitGameServer()
 			Security = false,
 			WebSocket = false,
 		};
+
+	RebotServer20 = {
+			ServerName = "RebotServer_20",
+			ServerType = NF_ST_PROXY,
+			ServerId = 20,			--对每一个服务器来说都是唯一的， 应用程序需要通过这个ServerId才能知道需要加载的配置是他
+			ServerIp = MasterIP,
+			ServerPort = GetNewPort(),
+			MaxConnectNum = 100000,
+			WorkThreadNum = 5,
+			LuaWorkThreadNum = 20,
+			LuaTcpThreadNum = 40,
+			Security = false,
+			WebSocket = false,
+		};
 	
 	RegisterServer(WorldServer3)
 	RegisterServer(GameServer4)
 	--RegisterServer(GameServer5)
 	RegisterServer(ProxyServer6)
 	--RegisterServer(ProxyServer7)
+	RegisterServer(RebotServer20)
 end
 	

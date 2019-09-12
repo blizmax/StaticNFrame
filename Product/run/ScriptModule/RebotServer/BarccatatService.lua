@@ -24,7 +24,7 @@ function BarccatatService.SendPourJetton(clientId, userid, tableid)
 
     LuaNFrame.SendMsgToRebot(tonumber(clientId), 0, 4411, cgmsg:ByteSize(), cgmsg:SerializeToString())
 
-    LogFile("error", "player:"..userid.." send pour:"..cgmsg.jetton)
+    --LogFile("error", "player:"..userid.." send pour:"..cgmsg.jetton)
 end
 
 BarccatatEnter = BarccatatEnter or {}
@@ -45,7 +45,9 @@ end
 
 BarccatatLeave = BarccatatLeave or {}
 function BarccatatLeave.execute(nMsgId, clientId, strMsg)
-
+    local userid = RebotModel.GetRebotPlayerIdByClient(clientId)
+    RebotModel.DelPlayerTableId(userid)
+    LogFile("error", "userid:"..userid.." leave game")
 end
 
 BarccatatSitDown= BarccatatSitDown or {}

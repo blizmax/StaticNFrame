@@ -16,9 +16,5 @@ function RebotAccount.LoginServer(clientId)
 end
 
 function RebotAccount.DisConnect(clientId)
-    local playerId = RebotModel.GetRebotPlayerIdByClient(clientId)
     RebotModel.DelRebotPlayerIdByClient(clientId)
-    if playerId ~= nil then
-
-    end
 end

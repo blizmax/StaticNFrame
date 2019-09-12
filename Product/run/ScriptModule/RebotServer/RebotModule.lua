@@ -7,6 +7,8 @@ RebotModel.rebot_max_id = "rebot_max_id"
 RebotModel.rebot_player_id = "rebot_player_id"
 RebotModel.rebot_player_info = "rebot_player_info"
 
+RebotModel.rebot_table_id = "rebot_table_id"
+
 RebotModel.rebot_operate_id = "rebot_operate_id"
 
 function RebotModel.GetRebotOperateId()
@@ -49,34 +51,18 @@ function RebotModel.SetPlayerGameType(userid, gametype)
     return redisItem:hset(RebotModel.rebot_player_info..userid, "gametype", gametype, RebotModel.redis_index)
 end
 
-function RebotModel.GetPlayerTableType(userid)
-    return redisItem:hget(RebotModel.rebot_player_info..userid, "tabletype", RebotModel.redis_index)
-end
-
-function RebotModel.SetPlayerTableType(userid, tabletype)
-    return redisItem:hset(RebotModel.rebot_player_info..userid, "tabletype", tabletype, RebotModel.redis_index)
-end
-
 function RebotModel.GetPlayerTableId(userid)
-    return redisItem:hget(RebotModel.rebot_player_info..userid, "tableId", RebotModel.redis_index)
+    return redisItem:hget(RebotModel.rebot_table_id, userid, RebotModel.redis_index)
 end
 
 function RebotModel.SetPlayerTableId(userid, tableId)
-    return redisItem:hset(RebotModel.rebot_player_info..userid, "tableId", tableId, RebotModel.redis_index)
+    return redisItem:hset(RebotModel.rebot_table_id, userid, tableId, RebotModel.redis_index)
 end
 
-function RebotModel.GetPlayerTableState(userid, tableId)
-    return redisItem:hget(RebotModel.rebot_player_info..userid..tableId, "table_state", RebotModel.redis_index)
+function RebotModel.DelPlayerTableId(userid)
+    return redisItem:hdel(RebotModel.rebot_table_id, userid, RebotModel.redis_index)
 end
 
-function RebotModel.SetPlayerTableState(userid, tableId, state)
-    return redisItem:hset(RebotModel.rebot_player_info..userid..tableId, "table_state", state, RebotModel.redis_index)
-end
-
-function RebotModel.GetPlayerTableTime(userid, tableId)
-    return redisItem:hget(RebotModel.rebot_player_info..userid..tableId, "table_time", RebotModel.redis_index)
-end
-
-function RebotModel.SetPlayerTableState(userid, tableId, time)
-    return redisItem:hset(RebotModel.rebot_player_info..userid..tableId, "table_time", time, RebotModel.redis_index)
+function RebotModel.GetAllPlayerTableId()
+    return redisItem:hgetall(RebotModel.rebot_table_id, RebotModel.redis_index)
 end

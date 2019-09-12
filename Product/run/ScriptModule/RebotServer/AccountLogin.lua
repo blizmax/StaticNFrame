@@ -124,8 +124,19 @@ function GetGameStateInfo.work(buffer)
     for clientId, playerId in pairs(allclient) do
         
         local tableid = RebotModel.GetPlayerTableId(playerId)
-        if tableid == nil then
+        if tableid == nil or tonumber(tableid) == 0 then
             BarccatatService.EnterGame(clientId, tableid)
         end
     end
+
+    local allPlayer = RebotModel.GetAllPlayerTableId()
+    for playerId, tableId in pairs(allPlayer) do
+        local tableid = RebotModel.GetPlayerTableId(playerId)
+        if tableid == nil or tonumber(tableid) == 0 then
+            BarccatatService.EnterGame(clientId, tableid)
+        end
+    end
+
+    LogFile("error", "rebot online num:"..#allclient)
+    LogFile("error", "rebot play game:"..#allPlayer)
 end
