@@ -98,12 +98,16 @@ bool NFCTaskModule::Execute()
 * @param thread_num	线程数目，至少为1
 * @return < 0 : Failed
 */
-int NFCTaskModule::InitActorThread(int thread_num)
+int NFCTaskModule::InitActorThread(int thread_num, int yieldstrategy)
 {
 	//根据物理硬件， 确定需要的线程数目
 	if (thread_num <= 0) thread_num = 1;
 
-	m_pFramework = new Theron::Framework(thread_num);
+	Theron::Framework::Parameters params;
+	params.mThreadCount = thread_num;
+	params.mYieldStrategy = (Theron::YieldStrategy)yieldstrategy;
+
+	m_pFramework = new Theron::Framework(params);
 
 	m_pMainActor = new NFTaskActor(*m_pFramework, this);
 

@@ -8,6 +8,19 @@ class NFTaskActorMessage;
 class NFTask;
 class NFITaskComponent;
 
+enum TaskModule_YieldStrategy
+{
+	TaskModule_YIELD_STRATEGY_CONDITION = 0,       ///< Threads wait on condition variables when no work is available.
+	TaskModule_YIELD_STRATEGY_HYBRID,              ///< Threads spin for a while, then yield to other threads, when no work is available.
+	TaskModule_YIELD_STRATEGY_SPIN,                ///< Threads busy-wait, without yielding, when no work is available.
+
+	// Legacy section
+	TaskModule_YIELD_STRATEGY_BLOCKING = 0,        ///< Deprecated - use YIELD_STRATEGY_CONDITION.
+	TaskModule_YIELD_STRATEGY_POLITE = 0,          ///< Deprecated - use YIELD_STRATEGY_CONDITION.
+	TaskModule_YIELD_STRATEGY_STRONG = 1,          ///< Deprecated - use YIELD_STRATEGY_HYBRID.
+	TaskModule_YIELD_STRATEGY_AGGRESSIVE = 2       ///< Deprecated - use YIELD_STRATEGY_SPIN.
+};
+
 class NFITaskModule : public NFIModule
 {
 public:
@@ -17,7 +30,7 @@ public:
 	* @param thread_num	线程数目，至少为1
 	* @return < 0 : Failed
 	*/
-	virtual int InitActorThread(int thread_num) = 0;
+	virtual int InitActorThread(int thread_num, int yieldstrategy = 0) = 0;
 
 	/**
 	* @brief 消息数据处理完后，如果有必要将数据返回给主线程，

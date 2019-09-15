@@ -40,7 +40,7 @@ public:
 	* @param thread_num	线程数目，至少为1
 	* @return < 0 : Failed
 	*/
-	virtual int InitActorThread(int thread_num);
+	virtual int InitActorThread(int thread_num, int yieldstrategy = 0);
 
 	/**
 	* @brief 向系统请求请求一个actor
