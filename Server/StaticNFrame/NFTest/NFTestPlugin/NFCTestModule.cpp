@@ -25,51 +25,16 @@ NFCTestModule::~NFCTestModule()
 
 bool NFCTestModule::Init()
 {
-	NFINetClientModule* pClientModule = FindModule<NFINetClientModule>();
-	pClientModule->AddEventCallBack(NF_ST_REBOT, this, &NFCTestModule::OnProxySocketEvent);
-	pClientModule->AddReceiveCallBack(NF_ST_REBOT, this, &NFCTestModule::OnHandleOtherMessage);
-	for (int i = 0; i < 1; i++)
-	{
-		pClientModule->AddServer(NF_ST_REBOT, "45.249.246.175", 6003, 1);
-	}
-	
 	return true;
 }
 
 void NFCTestModule::OnHandleOtherMessage(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen)
 {
-	NFILuaScriptModule* pLuaScriptModule = FindModule<NFILuaScriptModule>();
-	if (pLuaScriptModule)
-	{
-		std::string strMsg(msg, nLen);
-		pLuaScriptModule->RunNetRecvLuaFunc("LuaNFrame.DispatchRebotTcp", unLinkId, playerId, nMsgId, strMsg);
-	}
-	else
-	{
-		NFLogWarning(NF_LOG_SYSTEMLOG, 0, "msg:{} not handled!", nMsgId);
-	}
+
 }
 
 void NFCTestModule::OnProxySocketEvent(const eMsgType nEvent, const uint32_t unLinkId)
 {
-	if (nEvent == eMsgType_CONNECTED)
-	{
-		//NFLogDebug(NF_LOG_SYSTEMLOG, 0, "Rebot Player Connect Game Server Success!");
-		NFILuaScriptModule* pLuaScriptModule = FindModule<NFILuaScriptModule>();
-		if (pLuaScriptModule)
-		{
-			pLuaScriptModule->RunNetRecvLuaFunc("LuaNFrame.DispatchRebotEvent", unLinkId, 0, eMsgType_CONNECTED, "");
-		}
-	}
-	else if (nEvent == eMsgType_DISCONNECTED)
-	{
-		//NFLogDebug(NF_LOG_SYSTEMLOG, 0, "Rebot Player DisConnect Game Server!");
-		NFILuaScriptModule* pLuaScriptModule = FindModule<NFILuaScriptModule>();
-		if (pLuaScriptModule)
-		{
-			pLuaScriptModule->RunNetRecvLuaFunc("LuaNFrame.DispatchRebotEvent", unLinkId, 0, eMsgType_DISCONNECTED, "");
-		}
-	}
 }
 
 void NFCTestModule::OnTimer(uint32_t nTimerID)

@@ -25,6 +25,7 @@
 
 #include "NFComm/NFNetPlugin/NFNetPlugin.h"
 #include "NFTest/NFTestPlugin/NFTestPlugin.h"
+#include "NFRebot/NFRebotPlugin/NFRebotPlugin.h"
 #include "NFComm/NFMysqlPlugin/NFMysqlPlugin.h"
 //#include "NFComm/NFMongoPlugin/NFMongoPlugin.h"
 #include "NFComm/NFMonitorPlugin/NFMonitorPlugin.h"
@@ -73,6 +74,7 @@ bool NFCPluginManager::RegisterStaticPlugin()
 	REGISTER_STATIC_PLUGIN(this, NFLuaScriptPlugin);
 	REGISTER_STATIC_PLUGIN(this, NFLuaThreadScriptPlugin);
 	REGISTER_STATIC_PLUGIN(this, NFTestPlugin);
+	REGISTER_STATIC_PLUGIN(this, NFRebotPlugin);
 	//REGISTER_STATIC_PLUGIN(this, NFMongoPlugin);
 	REGISTER_STATIC_PLUGIN(this, NFMonitorPlugin);
 	//REGISTER_STATIC_PLUGIN(this, NFSqlitePlugin);

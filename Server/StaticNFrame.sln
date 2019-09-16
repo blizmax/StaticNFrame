@@ -257,6 +257,10 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "NFWorldLogicPlugin", "NFSer
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "NFLuaThreadScriptPlugin", "StaticNFrame\NFComm\NFXPlugin\NFLuaThreadScriptPlugin\NFLuaThreadScriptPlugin.vcxproj", "{8BB7EC86-DF1A-4172-9173-E2604F64F8A8}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "NFRebot", "NFRebot", "{1C75E228-8ECC-473B-93C9-B6FF883D0AB2}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "NFRebotPlugin", "StaticNFrame\NFRebot\NFRebotPlugin\NFRebotPlugin.vcxproj", "{9C43C0E1-FC9C-447A-86E5-FEF665292779}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -1159,6 +1163,30 @@ Global
 		{8BB7EC86-DF1A-4172-9173-E2604F64F8A8}.RelWithDebInfo|x64.Build.0 = Release|x64
 		{8BB7EC86-DF1A-4172-9173-E2604F64F8A8}.RelWithDebInfo|x86.ActiveCfg = Release|Win32
 		{8BB7EC86-DF1A-4172-9173-E2604F64F8A8}.RelWithDebInfo|x86.Build.0 = Release|Win32
+		{9C43C0E1-FC9C-447A-86E5-FEF665292779}.Debug|x64.ActiveCfg = Debug|x64
+		{9C43C0E1-FC9C-447A-86E5-FEF665292779}.Debug|x64.Build.0 = Debug|x64
+		{9C43C0E1-FC9C-447A-86E5-FEF665292779}.Debug|x86.ActiveCfg = Debug|Win32
+		{9C43C0E1-FC9C-447A-86E5-FEF665292779}.Debug|x86.Build.0 = Debug|Win32
+		{9C43C0E1-FC9C-447A-86E5-FEF665292779}.Dynamic_Debug|x64.ActiveCfg = Dynamic_Debug|x64
+		{9C43C0E1-FC9C-447A-86E5-FEF665292779}.Dynamic_Debug|x64.Build.0 = Dynamic_Debug|x64
+		{9C43C0E1-FC9C-447A-86E5-FEF665292779}.Dynamic_Debug|x86.ActiveCfg = Dynamic_Debug|Win32
+		{9C43C0E1-FC9C-447A-86E5-FEF665292779}.Dynamic_Debug|x86.Build.0 = Dynamic_Debug|Win32
+		{9C43C0E1-FC9C-447A-86E5-FEF665292779}.Dynamic_Release|x64.ActiveCfg = Dynamic_Release|x64
+		{9C43C0E1-FC9C-447A-86E5-FEF665292779}.Dynamic_Release|x64.Build.0 = Dynamic_Release|x64
+		{9C43C0E1-FC9C-447A-86E5-FEF665292779}.Dynamic_Release|x86.ActiveCfg = Dynamic_Release|Win32
+		{9C43C0E1-FC9C-447A-86E5-FEF665292779}.Dynamic_Release|x86.Build.0 = Dynamic_Release|Win32
+		{9C43C0E1-FC9C-447A-86E5-FEF665292779}.MinSizeRel|x64.ActiveCfg = Release|x64
+		{9C43C0E1-FC9C-447A-86E5-FEF665292779}.MinSizeRel|x64.Build.0 = Release|x64
+		{9C43C0E1-FC9C-447A-86E5-FEF665292779}.MinSizeRel|x86.ActiveCfg = Release|Win32
+		{9C43C0E1-FC9C-447A-86E5-FEF665292779}.MinSizeRel|x86.Build.0 = Release|Win32
+		{9C43C0E1-FC9C-447A-86E5-FEF665292779}.Release|x64.ActiveCfg = Release|x64
+		{9C43C0E1-FC9C-447A-86E5-FEF665292779}.Release|x64.Build.0 = Release|x64
+		{9C43C0E1-FC9C-447A-86E5-FEF665292779}.Release|x86.ActiveCfg = Release|Win32
+		{9C43C0E1-FC9C-447A-86E5-FEF665292779}.Release|x86.Build.0 = Release|Win32
+		{9C43C0E1-FC9C-447A-86E5-FEF665292779}.RelWithDebInfo|x64.ActiveCfg = Release|x64
+		{9C43C0E1-FC9C-447A-86E5-FEF665292779}.RelWithDebInfo|x64.Build.0 = Release|x64
+		{9C43C0E1-FC9C-447A-86E5-FEF665292779}.RelWithDebInfo|x86.ActiveCfg = Release|Win32
+		{9C43C0E1-FC9C-447A-86E5-FEF665292779}.RelWithDebInfo|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -1214,6 +1242,7 @@ Global
 		{54DA3102-9438-442B-A8C2-EB01F08FA222} = {1A0B356A-90E1-4510-BEB2-083D067A248D}
 		{73F338DA-1687-4C98-9252-9AF6FD2768FE} = {54DA3102-9438-442B-A8C2-EB01F08FA222}
 		{8BB7EC86-DF1A-4172-9173-E2604F64F8A8} = {FD763E2E-5AF1-46BE-B218-DE34F9C4D1A9}
+		{9C43C0E1-FC9C-447A-86E5-FEF665292779} = {1C75E228-8ECC-473B-93C9-B6FF883D0AB2}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {D1502A87-08D0-42D0-A504-0AF74AADDA40}

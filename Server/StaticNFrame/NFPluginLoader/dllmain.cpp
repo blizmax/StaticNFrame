@@ -57,6 +57,7 @@
 #pragma comment( lib, "NFLuaScriptPlugin.lib" )
 #pragma comment( lib, "NFLuaThreadScriptPlugin.lib" )
 #pragma comment( lib, "NFTestPlugin.lib" )
+#pragma comment( lib, "NFRebotPlugin.lib" )
 #pragma comment( lib, "NFMongoPlugin.lib" )
 #pragma comment( lib, "NFMonitorPlugin.lib" )
 #pragma comment( lib, "NFSqlitePlugin.lib" )

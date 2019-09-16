@@ -9,7 +9,10 @@ TARGET_LINK_LIBRARIES(${PROJECT_NAME} rt dl ${LIB_LINK_DEP} ${LIB_LINK_NF})
 
 #TARGET_LINK_LIBRARIES(${PROJECT_NAME} -static-libstdc++)
 
-ADD_DEPENDENCIES(${PROJECT_NAME} NFServerLogicCommon NFServerCommon NFPluginModule  LuaBind NFCore  NFMessageDefine  Common)
+ADD_DEPENDENCIES(${PROJECT_NAME} NFServerLogicCommon NFServerCommon NFPluginModule  LuaBind NFCore  NFMessageDefine  Common NFActorPlugin NFKernelPlugin
+				NFLuaScriptPlugin NFLuaThreadScriptPlugin NFNetPlugin NFMonitorPlugin NFNoSqlPlugin NFMysqlPlugin
+				NFGameClientPlugin NFGameServerPlugin NFLoginClientPlugin NFLoginServerPlugin NFMasterServerPlugin NFProxyClientPlugin NFProxyServerPlugin
+				NFWorldClientPlugin NFWorldServerPlugin NFGameLogicPlugin NFLoginLogicPlugin NFProxyLogicPlugin NFTestPlugin NFWorldLogicPlugin NFRebotPlugin)
 
 if (CMAKE_BUILD_TYPE STREQUAL "Release")
 	SET_TARGET_PROPERTIES(${PROJECT_NAME} 
