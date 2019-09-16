@@ -87,8 +87,8 @@ bool NFCLuaThreadModule::Init()
 		}
 	}
 
-	m_pWorkTaskModule->InitActorThread(workThreadNum, TaskModule_YIELD_STRATEGY_SPIN);
-	m_pTcpMsgTaskModule->InitActorThread(tcpThreadNum, TaskModule_YIELD_STRATEGY_SPIN);
+	m_pWorkTaskModule->InitActorThread(workThreadNum);
+	m_pTcpMsgTaskModule->InitActorThread(tcpThreadNum);
 
 	m_pTcpMsgTaskModule->Init();
 	m_pTcpMsgTaskModule->AfterInit();

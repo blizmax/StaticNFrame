@@ -318,6 +318,14 @@ function LuaNFrame.SendMsgToPlayer(unLinkId, nPlayerId, nMsgId, nLen, strData)
 	end
 end
 
+function LuaNFrame.SendMsgToManyPlayer(nPlayerIdList, nMsgId, nLen, strData)
+	if type(nPlayerIdList) == "table" and type(nMsgId) == "number" and type(strData) == "string" and type(nLen) == "number" then
+		CPPNFrame:SendMsgToManyPlayer(nPlayerIdList, nMsgId, nLen, strData)
+	else
+		LuaNFrame.Error(NFLogId.NF_LOG_SYSTEMLOG, 0, __G__TRACKBACK__("LuaNFrame.SendMsgToManyPlayer Para Error"))
+	end
+end
+
 function LuaNFrame.SendMsgToWorld(unLinkId, nPlayerId, nMsgId, nLen, strData)
 	if type(unLinkId) == "number" and type(nMsgId) == "number" and type(strData) == "string" and type(nPlayerId) == "number" and type(nLen) == "number" then
 		CPPNFrame:SendMsgToWorld(unLinkId, nPlayerId, nMsgId, nLen, strData)

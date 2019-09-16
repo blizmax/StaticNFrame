@@ -68,7 +68,7 @@ function SendMessage(useridList, retMsgID, buffLen, retString)
 		return 
 	end
 
-	local userIDStr = ""
+	local userIDStr = {}
 	if type(useridList) == "table" then
 		if #useridList == 0 then
 			return
@@ -76,9 +76,10 @@ function SendMessage(useridList, retMsgID, buffLen, retString)
 		
 		for key,values in pairs(useridList) do
 			if RobotService.IsRobot(values) ~= true and tonumber(values) > 1000 then
-				LuaNFrame.SendMsgToPlayer(0,  tonumber(values), retMsgID, buffLen, retString)	
+				table.insert(userIDStr, tonumber(values))
 			end
 		end
+		LuaNFrame.SendMsgToManyPlayer(userIDStr, retMsgID, buffLen, retString)
 	else
 		if RobotService.IsRobot(useridList) ~= true and tonumber(useridList) > 1000 then
 			LuaNFrame.SendMsgToPlayer(0, tonumber(useridList), retMsgID, buffLen, retString)

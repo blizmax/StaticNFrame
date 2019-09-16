@@ -70,7 +70,7 @@ function InitGameServer()
 
 	RebotServer20 = {
 			ServerName = "RebotServer_20",
-			ServerType = NF_ST_PROXY,
+			ServerType = NF_ST_REBOT,
 			ServerId = 20,			--对每一个服务器来说都是唯一的， 应用程序需要通过这个ServerId才能知道需要加载的配置是他
 			ServerIp = "45.249.246.175",
 			ServerPort = 6003,
