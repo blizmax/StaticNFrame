@@ -1,47 +1,40 @@
-syntax = "proto3";
+syntax = "proto2";
 
 package NFMsg; 
 
 message NotifyGameChangeProxy
 {
-	uint64 user_id = 1;
-	uint32 proxy_id = 2;
+	optional uint64 user_id = 1;
+	optional uint32 proxy_id = 2;
 }
 
 message NotifyProxyChangeGame
 {
-	uint64 user_id = 1;
-	uint32 game_id = 2;
-	uint32 client_link_id = 3;
+	optional uint64 user_id = 1;
+	optional uint32 game_id = 2;
+	optional uint32 client_link_id = 3;
 }
 
 message NotifyWorldPlayerDisconnect
 {
-	uint64 user_id = 1;
-	string account = 2;
+	optional uint64 user_id = 1;
+	optional string account = 2;
 }
 
 message NotifyGamePlayerDisconnect
 {
-	uint64 user_id = 1;
-	string account = 2;
+	optional uint64 user_id = 1;
+	optional string account = 2;
 }
 
 message NotifyGamePlayerReconnect
 {
-	uint64 user_id = 1;
-	uint32 proxy_id = 2;
+	optional uint64 user_id = 1;
+	optional uint32 proxy_id = 2;
 }
 
 message NotifyGamePlayerReport
 {
-	uint64 user_id = 1;
-	string ip = 2;
-}
-
-message NotifyProxyPacketMsg
-{
-	repeated uint64 user_id = 1; //合包
-	uint32 msg_id = 2;
-	string msg = 3;
+	optional uint64 user_id = 1;
+	optional string ip = 2;
 }
