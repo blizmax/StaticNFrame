@@ -129,12 +129,28 @@ void NFEvppClient::CloseServer()
 
 bool NFEvppClient::Connect()
 {
+	if (!m_pObject)
+	{
+		m_pObject = new NetEvppObject(nullptr);
+	}
+
+	m_pObject->SetPacketParseType(GetPacketParseType());
+	m_pObject->SetIsServer(false);
+	m_pObject->SetLinkId(m_usLinkId);
+	m_pObject->SetStrIp(m_flag.strIP);
+	m_pObject->SetPort(m_flag.nPort);
+
+	m_pObject->SetRecvCB(mRecvCB);
+	m_pObject->SetEventCB(mEventCB);
+
 	//消息回调是在别的线程里运行的
 	m_tcpClient->SetConnectionCallback([this](const evpp::TCPConnPtr& conn)
 	{
 		if (conn->IsConnected())
 		{
 			conn->SetTCPNoDelay(true);
+			m_pObject->SetConnPtr(conn);
+			conn->set_context(evpp::Any(m_pObject));
 			MsgFromNetInfo* pMsg = new MsgFromNetInfo(conn);
 			pMsg->nType = eMsgType_CONNECTED;
 			mMsgQueue.Push(pMsg);
@@ -199,20 +215,6 @@ bool NFEvppClient::Connect()
 		}
 	});
 	m_tcpClient->set_auto_reconnect(false);
-
-	if (!m_pObject)
-	{
-		m_pObject = new NetEvppObject(nullptr);
-	}
-
-	m_pObject->SetPacketParseType(GetPacketParseType());
-	m_pObject->SetIsServer(false);
-	m_pObject->SetLinkId(m_usLinkId);
-	m_pObject->SetStrIp(m_flag.strIP);
-	m_pObject->SetPort(m_flag.nPort);
-
-	m_pObject->SetRecvCB(mRecvCB);
-	m_pObject->SetEventCB(mEventCB);
 
 	m_tcpClient->Connect();
 

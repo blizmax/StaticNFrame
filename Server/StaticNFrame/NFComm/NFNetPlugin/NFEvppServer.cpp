@@ -139,6 +139,7 @@ bool NFEvppServer::Init()
 		if (conn->IsConnected())
 		{
 			conn->SetTCPNoDelay(true);
+			conn->set_context(evpp::Any(mPacketParseType));
 			MsgFromNetInfo* pMsg = new MsgFromNetInfo(conn);
 			pMsg->nType = eMsgType_CONNECTED;
 			mMsgQueue.Push(pMsg);
@@ -161,45 +162,55 @@ bool NFEvppServer::Init()
 			if (!conn->context().IsEmpty())
 			{
 				xMsgBuff = msg->NextAll();
-
-				NetEvppObject* pObject = evpp::any_cast<NetEvppObject*>(conn->context());
-				if (pObject)
+				uint32_t parseType = 0;
+				if (conn->context().GetType() == typeid(uint32_t))
 				{
-					//pObject->OnRecvData(xMsgBuff.data(), xMsgBuff.size());
-					pObject->m_buffer.PushData(xMsgBuff.data(), xMsgBuff.size());
+					parseType = evpp::any_cast<uint32_t>(conn->context());
+				}
+				else
+				{
+					NetEvppObject* pObject = evpp::any_cast<NetEvppObject*>(conn->context());
+					parseType = pObject->mPacketParseType;
+				}
 
-					while (true)
+				NFBuffer mBuffer;
+				mBuffer.PushData(xMsgBuff.data(), xMsgBuff.size());
+
+				while (true)
+				{
+					char* outData = nullptr;
+					uint32_t outLen = 0;
+					uint32_t allLen = 0;
+					uint32_t nMsgId = 0;
+					uint64_t nValue = 0;
+					int ret = NFIPacketParse::DeCode(parseType, mBuffer.ReadAddr(), mBuffer.ReadableSize(), outData, outLen, allLen, nMsgId, nValue);
+					if (ret < 0)
 					{
-						char* outData = nullptr;
-						uint32_t outLen = 0;
-						uint32_t allLen = 0;
-						uint32_t nMsgId = 0;
-						uint64_t nValue = 0;
-						int ret = NFIPacketParse::DeCode(pObject->mPacketParseType, pObject->m_buffer.ReadAddr(), pObject->m_buffer.ReadableSize(), outData, outLen, allLen, nMsgId, nValue);
-						if (ret < 0)
-						{
-							pObject->m_buffer.Consume(pObject->m_buffer.ReadableSize());
-							break;
-						}
-						else if (ret > 0)
-						{
-							break;
-						}
-						else
-						{
-							//OnHandleMsgPeer(eMsgType_RECIVEDATA, m_usLinkId, outData, outLen, nMsgId, nValue);
-							MsgFromNetInfo* pMsg = new MsgFromNetInfo(conn);
-							pMsg->nType = eMsgType_RECIVEDATA;
-							pMsg->strMsg = std::string(outData, outLen);
-							pMsg->nMsgId = nMsgId;
-							pMsg->nValue = nValue;
-							mMsgQueue.Push(pMsg);
+						mBuffer.Consume(mBuffer.ReadableSize());
+						break;
+					}
+					else if (ret > 0)
+					{
+						break;
+					}
+					else
+					{
 
-							pObject->m_buffer.Consume(allLen);
-							continue;
-						}
+						MsgFromNetInfo* pMsg = new MsgFromNetInfo(conn);
+						pMsg->nType = eMsgType_RECIVEDATA;
+						pMsg->strMsg = std::string(outData, outLen);
+						pMsg->nMsgId = nMsgId;
+						pMsg->nValue = nValue;
+						mMsgQueue.Push(pMsg);
+
+						mBuffer.Consume(allLen);
+						continue;
 					}
 				}
+			}
+			else
+			{
+
 			}
 		}
 	});

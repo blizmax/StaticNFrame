@@ -60,7 +60,7 @@ LoadPlugin =
 			-----服务器游戏具体内容逻辑引擎-------------------------
 			-----可以动态加载的引擎---------------------------------
 			--"NFLuaScriptPlugin",
-			"NFLuaThreadScriptPlugin",
+			--"NFLuaThreadScriptPlugin",
 
 		};
 		ServerType = NF_ST_NONE;
