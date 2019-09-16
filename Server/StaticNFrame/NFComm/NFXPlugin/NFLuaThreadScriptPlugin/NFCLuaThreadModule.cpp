@@ -14,6 +14,8 @@
 #include "NFComm/NFPluginModule/NFEventDefine.h"
 #include "NFComm/NFCore/NFMMOMD5.h"
 #include "NFComm/NFPluginModule/NFConfigMgr.h"
+#include "NFMessageDefine/server_to_server_msg.pb.h"
+#include "NFServerLogic/NFServerLogicCommon/NFServerLogicCommon.h"
 
 void NFLuaThreadTimer::OnTimer(uint32_t nTimerID)
 {
@@ -421,15 +423,16 @@ void NFCLuaThreadModule::SendMsgToManyPlayer(const std::vector<uint64_t>& nVecPl
 {
 	if (m_pNetServerModule)
 	{
+		NFMsg::NotifyProxyPacketMsg packetMsg;
+
 		for (size_t i = 0; i < nVecPlayerID.size(); i++)
 		{
 			uint64_t nPlayerID = nVecPlayerID[i];
-			auto pPlayerInfo = GetPlayerInfo(nPlayerID);
-			if (pPlayerInfo)
-			{
-				m_pNetServerModule->SendByServerID(pPlayerInfo->GetProxyUnlinkId(), nMsgID, strData, nPlayerID);
-			}
+			packetMsg.add_user_id(nPlayerID);
 		}
+		packetMsg.set_msg_id(nMsgID);
+		packetMsg.set_msg(strData);
+		m_pNetServerModule->SendToAllServerByPB(NF_ST_GAME, EGMI_NET_GAME_SEND_PACKET_TO_PROXY, packetMsg, 0);
 	}
 }
 
@@ -437,12 +440,17 @@ void NFCLuaThreadModule::SendMsgToAllPlayer(const uint32_t nMsgID, const uint32_
 {
 	if (m_pNetServerModule)
 	{
+		NFMsg::NotifyProxyPacketMsg packetMsg;
 		auto pPlayerInfo = mPlayerProxyInfoMap.First();
 		while (pPlayerInfo)
 		{
-			m_pNetServerModule->SendByServerID(pPlayerInfo->GetProxyUnlinkId(), nMsgID, strData, pPlayerInfo->GetPlayerId());
+			packetMsg.add_user_id(pPlayerInfo->mPlayerId);
 			pPlayerInfo = mPlayerProxyInfoMap.Next();
 		}
+
+		packetMsg.set_msg_id(nMsgID);
+		packetMsg.set_msg(strData);
+		m_pNetServerModule->SendToAllServerByPB(NF_ST_GAME, EGMI_NET_GAME_SEND_PACKET_TO_PROXY, packetMsg, 0);
 	}
 }
 

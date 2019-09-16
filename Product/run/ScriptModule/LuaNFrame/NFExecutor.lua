@@ -79,7 +79,9 @@ function SendMessage(useridList, retMsgID, buffLen, retString)
 				table.insert(userIDStr, tonumber(values))
 			end
 		end
-		LuaNFrame.SendMsgToManyPlayer(userIDStr, retMsgID, buffLen, retString)
+		if #userIDStr > 0 then
+			LuaNFrame.SendMsgToManyPlayer(userIDStr, retMsgID, buffLen, retString)
+		end
 	else
 		if RobotService.IsRobot(useridList) ~= true and tonumber(useridList) > 1000 then
 			LuaNFrame.SendMsgToPlayer(0, tonumber(useridList), retMsgID, buffLen, retString)

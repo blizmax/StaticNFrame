@@ -45,6 +45,7 @@ bool NFCProxyLogicModule::Init()
 	FindModule<NFINetClientModule>()->AddReceiveCallBack(NF_ST_WORLD, EGMI_NET_WORLD_NOTIFY_PROXY_CHANGE_GAME, this, &NFCProxyLogicModule::OnHandleNotifyChangeGameFromWorldServer);
 	FindModule<NFINetClientModule>()->AddReceiveCallBack(NF_ST_WORLD, NFMsg::Server_Msg_ReConnect, this, &NFCProxyLogicModule::OnHandleReconnectFromWorldServer);
 	FindModule<NFINetClientModule>()->AddReceiveCallBack(NF_ST_GAME, EGMI_NET_GAME_NOTIFY_PROXY_PLAYER_LOGIN, this, &NFCProxyLogicModule::OnHandleAccountLoginFromGameServer);
+	FindModule<NFINetClientModule>()->AddReceiveCallBack(NF_ST_GAME, EGMI_NET_GAME_SEND_PACKET_TO_PROXY, this, &NFCProxyLogicModule::OnHandlePacketMsgFromGameServer);
 	
 	FindModule<NFIServerNetEventModule>()->AddEventCallBack(NF_ST_PROXY, NF_ST_GAME, this, &NFCProxyLogicModule::OnHandleGameEventCallBack);
 	FindModule<NFIServerNetEventModule>()->AddEventCallBack(NF_ST_PROXY, NF_ST_WORLD, this, &NFCProxyLogicModule::OnHandleWorldEventCallBack);
@@ -372,6 +373,28 @@ void NFCProxyLogicModule::OnHandleNotifyChangeGameFromWorldServer(const uint32_t
 	else
 	{
 		NFLogError(NF_LOG_PROXY_LOGIC_PLUGIN, 0, "notify change game, but proxy disconnect the game server id:{}", pLinkInfo->mGameServerId);
+	}
+}
+
+void NFCProxyLogicModule::OnHandlePacketMsgFromGameServer(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen)
+{
+	NFMsg::NotifyProxyPacketMsg gcMsg;
+	CLIENT_MSG_PROCESS_NO_OBJECT(nMsgId, playerId, msg, nLen, gcMsg);
+
+	for (int i = 0; i < gcMsg.user_id_size(); i++)
+	{
+		uint64_t playerId = gcMsg.user_id(i);
+		auto pPlayerInfo = mPlayerLinkInfo.GetElement(playerId);
+		if (pPlayerInfo)
+		{
+			NF_SHARE_PTR<ProxyLinkInfo> pLinkInfo = mClientLinkInfo.GetElement(pPlayerInfo->mUnlinkId);
+			if (pLinkInfo == nullptr)
+			{
+				return;
+			}
+
+			FindModule<NFINetServerModule>()->SendByServerID(pLinkInfo->mUnlinkId, gcMsg.msg_id(), gcMsg.msg().data(), gcMsg.msg().length(), pLinkInfo->mSendMsgCount);
+		}
 	}
 }
 
