@@ -38,3 +38,10 @@ message NotifyGamePlayerReport
 	optional uint64 user_id = 1;
 	optional string ip = 2;
 }
+
+message NotifyProxyPacketMsg
+{
+	repeated uint64 user_id = 1; //合包
+	optional uint32 msg_id = 2;
+	optional bytes msg = 3;
+}

@@ -126,3 +126,4 @@ message gckitplayer  //踢出玩家
 	optional int32 kittype = 2;   //1是账号在别处登录了。
 	optional string msg = 3;
 }
+

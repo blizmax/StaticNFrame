@@ -38,7 +38,7 @@ namespace protobuf_server_5fto_5fserver_5fmsg_2eproto {
 struct TableStruct {
   static const ::google::protobuf::internal::ParseTableField entries[];
   static const ::google::protobuf::internal::AuxillaryParseTableField aux[];
-  static const ::google::protobuf::internal::ParseTable schema[6];
+  static const ::google::protobuf::internal::ParseTable schema[7];
   static const ::google::protobuf::internal::FieldMetadata field_metadata[];
   static const ::google::protobuf::internal::SerializationTable serialization_table[];
   static const ::google::protobuf::uint32 offsets[];
@@ -61,6 +61,9 @@ extern NotifyGamePlayerReportDefaultTypeInternal _NotifyGamePlayerReport_default
 class NotifyProxyChangeGame;
 class NotifyProxyChangeGameDefaultTypeInternal;
 extern NotifyProxyChangeGameDefaultTypeInternal _NotifyProxyChangeGame_default_instance_;
+class NotifyProxyPacketMsg;
+class NotifyProxyPacketMsgDefaultTypeInternal;
+extern NotifyProxyPacketMsgDefaultTypeInternal _NotifyProxyPacketMsg_default_instance_;
 class NotifyWorldPlayerDisconnect;
 class NotifyWorldPlayerDisconnectDefaultTypeInternal;
 extern NotifyWorldPlayerDisconnectDefaultTypeInternal _NotifyWorldPlayerDisconnect_default_instance_;
@@ -72,6 +75,7 @@ template<> ::NFMsg::NotifyGamePlayerDisconnect* Arena::CreateMaybeMessage<::NFMs
 template<> ::NFMsg::NotifyGamePlayerReconnect* Arena::CreateMaybeMessage<::NFMsg::NotifyGamePlayerReconnect>(Arena*);
 template<> ::NFMsg::NotifyGamePlayerReport* Arena::CreateMaybeMessage<::NFMsg::NotifyGamePlayerReport>(Arena*);
 template<> ::NFMsg::NotifyProxyChangeGame* Arena::CreateMaybeMessage<::NFMsg::NotifyProxyChangeGame>(Arena*);
+template<> ::NFMsg::NotifyProxyPacketMsg* Arena::CreateMaybeMessage<::NFMsg::NotifyProxyPacketMsg>(Arena*);
 template<> ::NFMsg::NotifyWorldPlayerDisconnect* Arena::CreateMaybeMessage<::NFMsg::NotifyWorldPlayerDisconnect>(Arena*);
 }  // namespace protobuf
 }  // namespace google
@@ -855,6 +859,151 @@ class NotifyGamePlayerReport : public ::google::protobuf::Message /* @@protoc_in
   ::google::protobuf::uint64 user_id_;
   friend struct ::protobuf_server_5fto_5fserver_5fmsg_2eproto::TableStruct;
 };
+// -------------------------------------------------------------------
+
+class NotifyProxyPacketMsg : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:NFMsg.NotifyProxyPacketMsg) */ {
+ public:
+  NotifyProxyPacketMsg();
+  virtual ~NotifyProxyPacketMsg();
+
+  NotifyProxyPacketMsg(const NotifyProxyPacketMsg& from);
+
+  inline NotifyProxyPacketMsg& operator=(const NotifyProxyPacketMsg& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  #if LANG_CXX11
+  NotifyProxyPacketMsg(NotifyProxyPacketMsg&& from) noexcept
+    : NotifyProxyPacketMsg() {
+    *this = ::std::move(from);
+  }
+
+  inline NotifyProxyPacketMsg& operator=(NotifyProxyPacketMsg&& from) noexcept {
+    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
+      if (this != &from) InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+  #endif
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _internal_metadata_.unknown_fields();
+  }
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return _internal_metadata_.mutable_unknown_fields();
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const NotifyProxyPacketMsg& default_instance();
+
+  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
+  static inline const NotifyProxyPacketMsg* internal_default_instance() {
+    return reinterpret_cast<const NotifyProxyPacketMsg*>(
+               &_NotifyProxyPacketMsg_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    6;
+
+  void Swap(NotifyProxyPacketMsg* other);
+  friend void swap(NotifyProxyPacketMsg& a, NotifyProxyPacketMsg& b) {
+    a.Swap(&b);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline NotifyProxyPacketMsg* New() const final {
+    return CreateMaybeMessage<NotifyProxyPacketMsg>(NULL);
+  }
+
+  NotifyProxyPacketMsg* New(::google::protobuf::Arena* arena) const final {
+    return CreateMaybeMessage<NotifyProxyPacketMsg>(arena);
+  }
+  void CopyFrom(const ::google::protobuf::Message& from) final;
+  void MergeFrom(const ::google::protobuf::Message& from) final;
+  void CopyFrom(const NotifyProxyPacketMsg& from);
+  void MergeFrom(const NotifyProxyPacketMsg& from);
+  void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input) final;
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const final;
+  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
+      bool deterministic, ::google::protobuf::uint8* target) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(NotifyProxyPacketMsg* other);
+  private:
+  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
+    return NULL;
+  }
+  inline void* MaybeArenaPtr() const {
+    return NULL;
+  }
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // repeated uint64 user_id = 1;
+  int user_id_size() const;
+  void clear_user_id();
+  static const int kUserIdFieldNumber = 1;
+  ::google::protobuf::uint64 user_id(int index) const;
+  void set_user_id(int index, ::google::protobuf::uint64 value);
+  void add_user_id(::google::protobuf::uint64 value);
+  const ::google::protobuf::RepeatedField< ::google::protobuf::uint64 >&
+      user_id() const;
+  ::google::protobuf::RepeatedField< ::google::protobuf::uint64 >*
+      mutable_user_id();
+
+  // optional bytes msg = 3;
+  bool has_msg() const;
+  void clear_msg();
+  static const int kMsgFieldNumber = 3;
+  const ::std::string& msg() const;
+  void set_msg(const ::std::string& value);
+  #if LANG_CXX11
+  void set_msg(::std::string&& value);
+  #endif
+  void set_msg(const char* value);
+  void set_msg(const void* value, size_t size);
+  ::std::string* mutable_msg();
+  ::std::string* release_msg();
+  void set_allocated_msg(::std::string* msg);
+
+  // optional uint32 msg_id = 2;
+  bool has_msg_id() const;
+  void clear_msg_id();
+  static const int kMsgIdFieldNumber = 2;
+  ::google::protobuf::uint32 msg_id() const;
+  void set_msg_id(::google::protobuf::uint32 value);
+
+  // @@protoc_insertion_point(class_scope:NFMsg.NotifyProxyPacketMsg)
+ private:
+  void set_has_msg_id();
+  void clear_has_msg_id();
+  void set_has_msg();
+  void clear_has_msg();
+
+  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+  ::google::protobuf::internal::HasBits<1> _has_bits_;
+  mutable ::google::protobuf::internal::CachedSize _cached_size_;
+  ::google::protobuf::RepeatedField< ::google::protobuf::uint64 > user_id_;
+  ::google::protobuf::internal::ArenaStringPtr msg_;
+  ::google::protobuf::uint32 msg_id_;
+  friend struct ::protobuf_server_5fto_5fserver_5fmsg_2eproto::TableStruct;
+};
 // ===================================================================
 
 
@@ -1324,9 +1473,135 @@ inline void NotifyGamePlayerReport::set_allocated_ip(::std::string* ip) {
   // @@protoc_insertion_point(field_set_allocated:NFMsg.NotifyGamePlayerReport.ip)
 }
 
+// -------------------------------------------------------------------
+
+// NotifyProxyPacketMsg
+
+// repeated uint64 user_id = 1;
+inline int NotifyProxyPacketMsg::user_id_size() const {
+  return user_id_.size();
+}
+inline void NotifyProxyPacketMsg::clear_user_id() {
+  user_id_.Clear();
+}
+inline ::google::protobuf::uint64 NotifyProxyPacketMsg::user_id(int index) const {
+  // @@protoc_insertion_point(field_get:NFMsg.NotifyProxyPacketMsg.user_id)
+  return user_id_.Get(index);
+}
+inline void NotifyProxyPacketMsg::set_user_id(int index, ::google::protobuf::uint64 value) {
+  user_id_.Set(index, value);
+  // @@protoc_insertion_point(field_set:NFMsg.NotifyProxyPacketMsg.user_id)
+}
+inline void NotifyProxyPacketMsg::add_user_id(::google::protobuf::uint64 value) {
+  user_id_.Add(value);
+  // @@protoc_insertion_point(field_add:NFMsg.NotifyProxyPacketMsg.user_id)
+}
+inline const ::google::protobuf::RepeatedField< ::google::protobuf::uint64 >&
+NotifyProxyPacketMsg::user_id() const {
+  // @@protoc_insertion_point(field_list:NFMsg.NotifyProxyPacketMsg.user_id)
+  return user_id_;
+}
+inline ::google::protobuf::RepeatedField< ::google::protobuf::uint64 >*
+NotifyProxyPacketMsg::mutable_user_id() {
+  // @@protoc_insertion_point(field_mutable_list:NFMsg.NotifyProxyPacketMsg.user_id)
+  return &user_id_;
+}
+
+// optional uint32 msg_id = 2;
+inline bool NotifyProxyPacketMsg::has_msg_id() const {
+  return (_has_bits_[0] & 0x00000002u) != 0;
+}
+inline void NotifyProxyPacketMsg::set_has_msg_id() {
+  _has_bits_[0] |= 0x00000002u;
+}
+inline void NotifyProxyPacketMsg::clear_has_msg_id() {
+  _has_bits_[0] &= ~0x00000002u;
+}
+inline void NotifyProxyPacketMsg::clear_msg_id() {
+  msg_id_ = 0u;
+  clear_has_msg_id();
+}
+inline ::google::protobuf::uint32 NotifyProxyPacketMsg::msg_id() const {
+  // @@protoc_insertion_point(field_get:NFMsg.NotifyProxyPacketMsg.msg_id)
+  return msg_id_;
+}
+inline void NotifyProxyPacketMsg::set_msg_id(::google::protobuf::uint32 value) {
+  set_has_msg_id();
+  msg_id_ = value;
+  // @@protoc_insertion_point(field_set:NFMsg.NotifyProxyPacketMsg.msg_id)
+}
+
+// optional bytes msg = 3;
+inline bool NotifyProxyPacketMsg::has_msg() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void NotifyProxyPacketMsg::set_has_msg() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void NotifyProxyPacketMsg::clear_has_msg() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void NotifyProxyPacketMsg::clear_msg() {
+  msg_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  clear_has_msg();
+}
+inline const ::std::string& NotifyProxyPacketMsg::msg() const {
+  // @@protoc_insertion_point(field_get:NFMsg.NotifyProxyPacketMsg.msg)
+  return msg_.GetNoArena();
+}
+inline void NotifyProxyPacketMsg::set_msg(const ::std::string& value) {
+  set_has_msg();
+  msg_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:NFMsg.NotifyProxyPacketMsg.msg)
+}
+#if LANG_CXX11
+inline void NotifyProxyPacketMsg::set_msg(::std::string&& value) {
+  set_has_msg();
+  msg_.SetNoArena(
+    &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+  // @@protoc_insertion_point(field_set_rvalue:NFMsg.NotifyProxyPacketMsg.msg)
+}
+#endif
+inline void NotifyProxyPacketMsg::set_msg(const char* value) {
+  GOOGLE_DCHECK(value != NULL);
+  set_has_msg();
+  msg_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:NFMsg.NotifyProxyPacketMsg.msg)
+}
+inline void NotifyProxyPacketMsg::set_msg(const void* value, size_t size) {
+  set_has_msg();
+  msg_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:NFMsg.NotifyProxyPacketMsg.msg)
+}
+inline ::std::string* NotifyProxyPacketMsg::mutable_msg() {
+  set_has_msg();
+  // @@protoc_insertion_point(field_mutable:NFMsg.NotifyProxyPacketMsg.msg)
+  return msg_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline ::std::string* NotifyProxyPacketMsg::release_msg() {
+  // @@protoc_insertion_point(field_release:NFMsg.NotifyProxyPacketMsg.msg)
+  if (!has_msg()) {
+    return NULL;
+  }
+  clear_has_msg();
+  return msg_.ReleaseNonDefaultNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline void NotifyProxyPacketMsg::set_allocated_msg(::std::string* msg) {
+  if (msg != NULL) {
+    set_has_msg();
+  } else {
+    clear_has_msg();
+  }
+  msg_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), msg);
+  // @@protoc_insertion_point(field_set_allocated:NFMsg.NotifyProxyPacketMsg.msg)
+}
+
 #ifdef __GNUC__
   #pragma GCC diagnostic pop
 #endif  // __GNUC__
+// -------------------------------------------------------------------
+
 // -------------------------------------------------------------------
 
 // -------------------------------------------------------------------
