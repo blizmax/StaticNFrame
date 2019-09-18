@@ -131,8 +131,19 @@ function GetGameStateInfo.work(buffer)
     for clientId, playerId in pairs(allclient) do
         count = count + 1
         local tableid = RebotModel.GetPlayerTableId(playerId)
-        if tableid == nil or tonumber(tableid) == 0 then
-            BarccatatService.EnterGame(clientId, tableid)
+        --if tableid == nil or tonumber(tableid) == 0 then
+        --    BarccatatService.EnterGame(clientId, tableid)
+        --end
+        local rand = math.myrandom(1, 10)
+        if rand > 5 then
+            local timeData= {}
+            if tableid ~= nil then
+                timeData['tableid'] = tostring(tableid)
+            end
+            timeData['userid'] = tostring(playerId)
+            timeData['clientId'] = tostring(clientId)
+            local rand = math.myrandom(1, 1000)
+            processTimer(rand, "BarccatatTimer", luajson.encode(timeData))
         end
     end
     LogFile("error", "rebot online num:"..count)
