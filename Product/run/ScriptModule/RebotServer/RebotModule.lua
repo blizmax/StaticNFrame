@@ -11,8 +11,8 @@ RebotModel.rebot_table_id = "rebot_table_id"
 
 RebotModel.rebot_operate_id = "rebot_operate_id"
 
-function RebotModel.GetRebotOperateId()
-    return redisItem:incrby(RebotModel.rebot_operate_id, 1, RebotModel.redis_index)
+function RebotModel.GetRebotOperateId(unLinkId)
+    return redisItem:incrby(RebotModel.rebot_operate_id..unLinkId, 1, RebotModel.redis_index)
 end
 
 function RebotModel.GetRebotMaxId()

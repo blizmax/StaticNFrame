@@ -1,7 +1,7 @@
 --执行游戏服务器信息
 
 function LuaNFrame.SendMsgToRebot(unLinkId, nPlayerId, nMsgId, nLen, strData)
-		local operateId = RebotModel.GetRebotOperateId()
+		local operateId = RebotModel.GetRebotOperateId(unLinkId)
 		LuaNFrame.SendMsgToWorld(unLinkId, operateId, nMsgId, nLen, strData)
 end
 
