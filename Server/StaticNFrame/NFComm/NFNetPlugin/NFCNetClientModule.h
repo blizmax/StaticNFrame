@@ -284,7 +284,6 @@ protected:
 	void OnDisConnected(NFIClient* pClient);
 private:
 	std::vector<std::vector<NFIClient*>> mxServerMap;
-	NFBuffer mxSendBuffer;
 	evpp::EventLoop* m_eventLoop;
 	evpp::EventLoopThreadPool* m_eventLoopThreadPool;
 };

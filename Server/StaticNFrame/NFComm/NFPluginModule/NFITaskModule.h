@@ -85,7 +85,7 @@ public:
 	* @param
 	* @return
 	*/
-	virtual const std::vector<NFITaskComponent*>& GetTaskComponent(int nActorIndex) = 0;
+	virtual NFITaskComponent* GetTaskComponent(int nActorIndex) = 0;
 
 	/**
 	* @brief 获得最大Actor Thread Num
@@ -93,4 +93,11 @@ public:
 	* @return
 	*/
 	virtual int GetMaxThreads() = 0;
+
+	/**
+	* @brief 记录监控Task
+	*
+	* @return
+	*/
+	virtual void MonitorTask(NFTask* pTask) = 0;
 };

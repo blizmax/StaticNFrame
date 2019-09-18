@@ -35,19 +35,6 @@
 #   pragma error "No known compiler. Abort! Abort!"
 #endif
 
-/* See if we can use __forceinline or if we need to use __inline instead */
-#if NF_COMPILER == NF_COMPILER_MSVC
-#   if NF_COMP_VER >= 1200
-#       define FORCEINLINE __forceinline
-#   endif
-#elif defined(__MINGW32__)
-#   if !defined(FORCEINLINE)
-#       define FORCEINLINE __inline
-#   endif
-#else
-#   define FORCEINLINE __inline
-#endif
-
 /* Finds the current platform */
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 #if defined( __WIN32__ ) || defined( _WIN32 ) || defined(_WINDOWS) || defined(WIN) || defined(_WIN64) || defined( __WIN64__ )
@@ -151,6 +138,14 @@
 // Linux/Apple/iOs/Android/Symbian/Tegra2/NaCl Settings
 #if NF_PLATFORM == NF_PLATFORM_LINUX
 
+#if !defined(NF_GCC)
+#if defined(__GNUC__)
+#define NF_GCC 1
+#else
+#define NF_GCC 0
+#endif
+#endif // THERON_GCC
+
 //#include <syswait.h>
 
 //#define NF_STATIC_PLUGIN 1
@@ -187,6 +182,28 @@
 #define NF_EXPORT extern "C" __attribute ((visibility("default")))
 
 #endif
+
+/* See if we can use __forceinline or if we need to use __inline instead */
+
+#if !defined(NF_FORCEINLINE)
+#if NF_DEBUG_MODE
+#define NF_FORCEINLINE inline
+#else // NF_DEBUG_MODE
+#if NF_COMPILER == NF_COMPILER_MSVC
+#   if NF_COMP_VER >= 1200
+#       define NF_FORCEINLINE __forceinline
+#   endif
+#elif defined(__MINGW32__)
+#   if !defined(NF_FORCEINLINE)
+#       define NF_FORCEINLINE __inline
+#   endif
+#elif NF_GCC
+#define NF_FORCEINLINE inline __attribute__((always_inline))
+#else
+#define NF_FORCEINLINE inline
+#endif
+#endif // THERON_DEBUG
+#endif // THERON_FORCEINLINE
 
 //----------------------------------------------------------------------------
 // Endian Settings

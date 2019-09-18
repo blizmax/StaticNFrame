@@ -60,9 +60,6 @@
     <ClCompile Include="NFJson.cpp">
       <Filter>Common</Filter>
     </ClCompile>
-    <ClCompile Include="NFMutex.cpp">
-      <Filter>Thread</Filter>
-    </ClCompile>
     <ClCompile Include="NFPHPMD5Impl.cpp">
       <Filter>Common</Filter>
     </ClCompile>
@@ -94,12 +91,6 @@
       <Filter>Common</Filter>
     </ClCompile>
     <ClCompile Include="NFSHA2.cpp">
-      <Filter>Common</Filter>
-    </ClCompile>
-    <ClCompile Include="NFTarsElement.cpp">
-      <Filter>Common</Filter>
-    </ClCompile>
-    <ClCompile Include="NFTarsParse.cpp">
       <Filter>Common</Filter>
     </ClCompile>
     <ClCompile Include="NFTCPack.cpp">
@@ -242,12 +233,6 @@
     <ClInclude Include="NFMD5.h">
       <Filter>Common</Filter>
     </ClInclude>
-    <ClInclude Include="NFAtomic.h">
-      <Filter>Common</Filter>
-    </ClInclude>
-    <ClInclude Include="NFAutoPtr.h">
-      <Filter>Common</Filter>
-    </ClInclude>
     <ClInclude Include="NFConsistentHashNew.h">
       <Filter>Common</Filter>
     </ClInclude>
@@ -275,12 +260,6 @@
     <ClInclude Include="NFSHA2.h">
       <Filter>Common</Filter>
     </ClInclude>
-    <ClInclude Include="NFTarsElement.h">
-      <Filter>Common</Filter>
-    </ClInclude>
-    <ClInclude Include="NFTarsParse.h">
-      <Filter>Common</Filter>
-    </ClInclude>
     <ClInclude Include="NFTCPack.h">
       <Filter>Common</Filter>
     </ClInclude>
@@ -301,6 +280,21 @@
     </ClInclude>
     <ClInclude Include="NFSha256.h">
       <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="NFAtomic.h">
+      <Filter>Thread</Filter>
+    </ClInclude>
+    <ClInclude Include="NFLock.h">
+      <Filter>Thread</Filter>
+    </ClInclude>
+    <ClInclude Include="NFSpinLock.h">
+      <Filter>Thread</Filter>
+    </ClInclude>
+    <ClInclude Include="NFThreadUtils.h">
+      <Filter>Thread</Filter>
+    </ClInclude>
+    <ClInclude Include="NFCondition.h">
+      <Filter>Thread</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

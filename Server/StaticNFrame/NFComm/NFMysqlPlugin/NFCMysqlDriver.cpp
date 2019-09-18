@@ -203,7 +203,7 @@ bool NFCMysqlDriver::Connect()
 
 		{
 			//m_pMysqlConnect在调用Connect会引发多线程的崩溃，必须枷锁
-			NFMutexLock lock(&ConnectLock);
+			NFLock lock(ConnectLock);
 			if (!m_pMysqlConnect->connect(mstrDBName.c_str(), mstrDBHost.c_str(), mstrDBUser.c_str(), mstrDBPwd.c_str(),
 			                              mnDBPort))
 			{

@@ -22,7 +22,6 @@ NFCNetClientModule::NFCNetClientModule(NFIPluginManager* p)
 	{
 		AddEventCallBack((NF_SERVER_TYPES)serverType, this, &NFCNetClientModule::OnHandleNetEvent);
 	}
-	mxSendBuffer.AssureSpace(MAX_SEND_BUFFER_SIZE);
 	m_eventLoop = nullptr;
 	m_eventLoopThreadPool = nullptr;
 }

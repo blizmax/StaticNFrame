@@ -48,7 +48,6 @@ public:
 		ACTOR_TIMER_MSG_PROCESS_TIMER = 1,
 		ACTOR_TIMER_MSG_PROCESS_LOOP_TIMER = 2,
 		ACTOR_TIMER_MSG_PROCESS_REAL_TIMER = 3,
-		ACTOR_MSG_PROCESS_WORK = 4,
 	};
 
 	/**
@@ -252,44 +251,12 @@ public:
 	virtual bool AddServerLoopActorComponent(NFITaskComponent* pComonnet);
 
 	/**
-	* @brief 通过任务的动态均衡id，获得actor
-	*		 为了防止数据库错乱，防止同时对数据库表中的一条数据，读取写入，
-	*		 使用动态均衡id, 使得在某个时候只有一条线程对表中的一条数据，读取或写入
-	* @param balanceId 动态均衡id
-	* @return	一个actor索引
-	*/
-	int GetBalanceWorkActor(uint64_t balanceId);
-
-	/**
-	* @brief 随机获得一个actor
-	*
-	* @return actor索引
-	*/
-	int GetRandWorkActor();
-
-	/**
 	* @brief 通过平衡ID添加要异步处理的task
 	*
 	* @param pTask 要异步处理的task
 	* @return
 	*/
 	bool AddWorkTask(NFTask* pTask);
-
-	/**
-	* @brief 通过任务的动态均衡id，获得actor
-	*		 为了防止数据库错乱，防止同时对数据库表中的一条数据，读取写入，
-	*		 使用动态均衡id, 使得在某个时候只有一条线程对表中的一条数据，读取或写入
-	* @param balanceId 动态均衡id
-	* @return	一个actor索引
-	*/
-	int GetBalanceTcpMsgActor(uint64_t balanceId);
-
-	/**
-	* @brief 随机获得一个actor
-	*
-	* @return actor索引
-	*/
-	int GetRandTcpMsgActor();
 
 	/**
 	* @brief 通过平衡ID添加要异步处理的task

@@ -78,7 +78,7 @@ function LuaNFrame.InitScript(luaModule)
 			redisItem = redisConnect.new()
 			mysqlLog = mysqlConnect.new(g_dbtype, g_dbUser, g_dbPassword, g_dbHost, g_dbPort, g_dbDatabase)
 		elseif LuaNFrame.GetAppName() == "LoginServer" then
-			require("LoginServer/LoadHelper")
+			require("LoginServer/LoginLoadHelper")
 		elseif LuaNFrame.GetAppName() == "RebotServer" then
 			package.path = package.path .. ";../ScriptModule/RebotServer/?.lua;"
 			package.path = package.path..";../ScriptModule/RebotServer/trdlib/libprotobuf/?.lua"   --由于这里protobuf的特殊性，必须把包含protobuf的目录加到环境变量中

@@ -14,8 +14,9 @@
 #include <thread>
 #include <mutex>
 #include <atomic>
-#include "NFComm/NFCore/NFPlatform.h"
-#include "NFComm/NFCore/NFMutex.h"
+#include "NFPlatform.h"
+#include "NFMutex.h"
+#include "NFLock.h"
 
 template <typename T>
 class NFQueueVector
@@ -31,21 +32,21 @@ public:
 
 	bool Push(const T& object)
 	{
-		NFMutexLock lock(&mMutex);
+		NFLock lock(mMutex);
 		mList.push_back(object);
 		return true;
 	}
 
 	bool Pop(std::vector<T>& vecObj)
 	{
-		NFMutexLock lock(&mMutex);
+		NFLock lock(mMutex);
 		mList.swap(vecObj);
 		return true;
 	}
 
 	bool Pop(T& object)
 	{
-		NFMutexLock lock(&mMutex);
+		NFLock lock(mMutex);
 		if (mList.empty())
 		{
 			return false;
@@ -58,7 +59,7 @@ public:
 
 	uint32_t Count()
 	{
-		NFMutexLock lock(&mMutex);
+		NFLock lock(mMutex);
 		return (uint32_t)mList.size();
 	}
 private:
@@ -80,21 +81,21 @@ public:
 
 	bool Push(const T& object)
 	{
-		NFMutexLock lock(&mMutex);
+		NFLock lock(mMutex);
 		mList.push_back(object);
 		return true;
 	}
 
 	bool Pop(std::list<T>& vecObj)
 	{
-		NFMutexLock lock(&mMutex);
+		NFLock lock(mMutex);
 		mList.swap(vecObj);
 		return true;
 	}
 
 	bool Pop(T& object)
 	{
-		NFMutexLock lock(&mMutex);
+		NFLock lock(mMutex);
 		if (mList.empty())
 		{
 			return false;
@@ -108,7 +109,7 @@ public:
 
 	uint32_t Count()
 	{
-		NFMutexLock lock(&mMutex);
+		NFLock lock(mMutex);
 		return (uint32_t)mList.size();
 	}
 private:

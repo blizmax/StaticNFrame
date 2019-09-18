@@ -55,27 +55,16 @@ public:
 	NFCLuaScriptComponent* m_pComponent;
 };
 
-class NFWorkActorTask : public NFLuaThreadTask
+class NFWorkActorLoadTask : public NFLuaThreadTask
 {
 public:
-	NFWorkActorTask(NFCLuaThreadModule* pLuaThreadModule, uint32_t taskType, const std::string& luaFunc = "", const std::string& param = "")
+	NFWorkActorLoadTask(NFCLuaThreadModule* pLuaThreadModule, const std::string& luaFunc = "", const std::string& param = "")
 	{
 		m_pLuaThreadModule = pLuaThreadModule;
-		m_taskType = taskType;
 		m_luaFunc = luaFunc;
 		m_param = param;
-		if (m_taskType == EnumLuaThreadModule_LOAD)
-		{
-			m_taskName = "WorkTask_Load";
-		}
-		else if (m_taskType == EnumLuaThreadModule_Work)
-		{
-			m_taskName = "WorkTask_" + luaFunc;
-			if (!param.empty())
-			{
-				m_balanceId = (uint64_t)NFHash::hash_string(param.c_str());
-			}
-		}
+		m_taskName = "WorkTask_Load";
+		m_needManThreadProcess = false;
 	}
 	/**
 	**  异步线程处理函数，将在另一个线程里运行
@@ -95,27 +84,95 @@ public:
 	std::string m_luaFunc;
 };
 
+class NFWorkActorTask : public NFLuaThreadTask
+{
+public:
+	NFWorkActorTask(NFCLuaThreadModule* pLuaThreadModule, const std::string& luaFunc = "", const std::string& param = "")
+	{
+		m_pLuaThreadModule = pLuaThreadModule;
+		m_luaFunc = luaFunc;
+		m_param = param;
+		m_taskName = "WorkTask_" + luaFunc;
+		if (!param.empty())
+		{
+			m_balanceId = (uint64_t)NFHash::hash_string(param.c_str());
+		}
+		m_needManThreadProcess = false;
+	}
+	/**
+	**  异步线程处理函数，将在另一个线程里运行
+	*/
+	virtual bool ThreadProcess();
+
+	/**
+	** 主线程处理函数，将在线程处理完后，提交给主先来处理，根据返回函数是否继续处理
+		返回值： thread::TPTask::TPTaskState， 请参看TPTaskState
+	*/
+	virtual TPTaskState MainThreadProcess()
+	{
+		return TPTASK_STATE_COMPLETED;
+	}
+public:
+	std::string m_param;
+	std::string m_luaFunc;
+};
+
+class NFServerLoopLoadTask : public NFLuaThreadTask
+{
+public:
+	NFServerLoopLoadTask(NFCLuaThreadModule* pLuaThreadModule, const std::string& param = "")
+	{
+		m_pLuaThreadModule = pLuaThreadModule;
+		m_param = param;
+
+		m_taskName = "ServerLoopTask_Load";
+	}
+	/**
+	**  异步线程处理函数，将在另一个线程里运行
+	*/
+	virtual bool ThreadProcess();
+
+	/**
+	** 主线程处理函数，将在线程处理完后，提交给主先来处理，根据返回函数是否继续处理
+		返回值： thread::TPTask::TPTaskState， 请参看TPTaskState
+	*/
+	virtual TPTaskState MainThreadProcess();
+public:
+	std::string m_param;
+};
+
+class NFServerLoopInitTask : public NFLuaThreadTask
+{
+public:
+	NFServerLoopInitTask(NFCLuaThreadModule* pLuaThreadModule, const std::string& param = "")
+	{
+		m_pLuaThreadModule = pLuaThreadModule;
+		m_param = param;
+		m_taskName = "ServerLoopTask_init";
+	}
+	/**
+	**  异步线程处理函数，将在另一个线程里运行
+	*/
+	virtual bool ThreadProcess();
+
+	/**
+	** 主线程处理函数，将在线程处理完后，提交给主先来处理，根据返回函数是否继续处理
+		返回值： thread::TPTask::TPTaskState， 请参看TPTaskState
+	*/
+	virtual TPTaskState MainThreadProcess();
+public:
+	std::string m_param;
+};
+
 class NFServerLoopTask : public NFLuaThreadTask
 {
 public:
-	NFServerLoopTask(NFCLuaThreadModule* pLuaThreadModule, uint32_t taskType, const std::string& param = "")
+	NFServerLoopTask(NFCLuaThreadModule* pLuaThreadModule, const std::string& param = "")
 	{
 		m_pLuaThreadModule = pLuaThreadModule;
-		m_taskType = taskType;
 		m_param = param;
-		
-		if (m_taskType == EnumLuaThreadModule_LOAD)
-		{
-			m_taskName = "ServerLoopTask_Load";
-		}
-		else if (m_taskType == EnumLuaThreadModule_Init)
-		{
-			m_taskName = "ServerLoopTask_init";
-		}
-		else if (m_taskType == EnumLuaThreadModule_Loop)
-		{
-			m_taskName = "ServerLoopTask_" + param;
-		}
+		m_taskName = "ServerLoopTask_" + param;
+		m_needManThreadProcess = false;
 	}
 	/**
 	**  异步线程处理函数，将在另一个线程里运行
@@ -145,6 +202,7 @@ public:
 		{
 			m_balanceId = (uint64_t)NFHash::hash_string(param.c_str());
 		}
+		m_needManThreadProcess = false;
 	}
 	/**
 	**  异步线程处理函数，将在另一个线程里运行
@@ -178,6 +236,7 @@ public:
 		{
 			m_balanceId = (uint64_t)NFHash::hash_string(param.c_str());
 		}
+		m_needManThreadProcess = false;
 	}
 	/**
 	**  异步线程处理函数，将在另一个线程里运行
@@ -207,6 +266,7 @@ public:
 		m_luaFunc = luaFunc;
 		m_param = param;
 		m_taskName = "ProcessLoopTimerTask_" + luaFunc;
+		m_needManThreadProcess = false;
 	}
 	/**
 	**  异步线程处理函数，将在另一个线程里运行
@@ -226,10 +286,10 @@ public:
 	std::string m_luaFunc;
 };
 
-class NFTcpMsgActorTask : public NFLuaThreadTask
+class NFTcpMsgActorLoadTask : public NFLuaThreadTask
 {
 public:
-	NFTcpMsgActorTask(NFCLuaThreadModule* pLuaThreadModule, uint32_t taskType, const std::string& luaFunc = "", const uint32_t unLinkId = 0, const uint64_t valueId = 0, const uint32_t nMsgId = 0, const std::string& strMsg = "")
+	NFTcpMsgActorLoadTask(NFCLuaThreadModule* pLuaThreadModule, const std::string& luaFunc = "", const uint32_t unLinkId = 0, const uint64_t valueId = 0, const uint32_t nMsgId = 0, const std::string& strMsg = "")
 	{
 		m_balanceId = valueId;
 		m_pLuaThreadModule = pLuaThreadModule;
@@ -238,16 +298,47 @@ public:
 		m_valueId = valueId;
 		m_msgId = nMsgId;
 		m_strMsg = strMsg;
-		m_taskType = taskType;
 
-		if (m_taskType == EnumLuaThreadModule_LOAD)
-		{
-			m_taskName = "TcpMsgTask_Load";
-		}
-		else if (m_taskType == EnumLuaThreadModule_Work)
-		{
-			m_taskName = "TcpMsgTask_" + luaFunc + "_" + NFCommon::tostr(nMsgId);
-		}
+		m_taskName = "TcpMsgTask_Load";
+		m_needManThreadProcess = false;
+	}
+
+	/**
+	**  异步线程处理函数，将在另一个线程里运行
+	*/
+	virtual bool ThreadProcess();
+
+	/**
+	** 主线程处理函数，将在线程处理完后，提交给主先来处理，根据返回函数是否继续处理
+		返回值： thread::TPTask::TPTaskState， 请参看TPTaskState
+	*/
+	virtual TPTaskState MainThreadProcess()
+	{
+		return TPTASK_STATE_COMPLETED;
+	}
+public:
+	std::string m_luaFunc;
+	uint32_t m_unLinkId;
+	uint64_t m_valueId;
+	uint32_t m_msgId;
+	std::string m_strMsg;
+};
+
+class NFTcpMsgActorTask : public NFLuaThreadTask
+{
+public:
+	NFTcpMsgActorTask(NFCLuaThreadModule* pLuaThreadModule, const std::string& luaFunc = "", const uint32_t unLinkId = 0, const uint64_t valueId = 0, const uint32_t nMsgId = 0, const std::string& strMsg = "")
+	{
+		m_balanceId = valueId;
+		m_pLuaThreadModule = pLuaThreadModule;
+		m_luaFunc = luaFunc;
+		m_unLinkId = unLinkId;
+		m_valueId = valueId;
+		m_msgId = nMsgId;
+		m_strMsg = strMsg;
+
+		m_taskName = "TcpMsgTask_" + luaFunc + "_" + NFCommon::tostr(nMsgId);
+		m_needManThreadProcess = false;
 	}
 
 	/**
@@ -284,6 +375,7 @@ public:
 		m_secondPath = secondPath;
 		m_strMsg = strMsg;
 		m_taskName = "HttpMsgTask_" + luaFunc + "_" + firstPath + "_" + secondPath;
+		m_needManThreadProcess = false;
 	}
 	/**
 	**  异步线程处理函数，将在另一个线程里运行
@@ -344,12 +436,14 @@ public:
 		m_pLuaThreadModule = pLuaThreadModule;
 		m_vecLuaFile = vecStr;
 		m_taskName = "HotfixLuaFiles";
+		m_needManThreadProcess = false;
 	}
 
 	NFHotfixLuaFilesActorTask(NFCLuaThreadModule* pLuaThreadModule)
 	{
 		m_pLuaThreadModule = pLuaThreadModule;
 		m_taskName = "HotfixLuaFiles";
+		m_needManThreadProcess = false;
 	}
 	/**
 	**  异步线程处理函数，将在另一个线程里运行
@@ -375,6 +469,7 @@ public:
 	{
 		m_pLuaThreadModule = pLuaThreadModule;
 		m_taskName = "LuaGC";
+		m_needManThreadProcess = false;
 	}
 	/**
 	**  异步线程处理函数，将在另一个线程里运行
@@ -399,6 +494,7 @@ public:
 		m_pLuaThreadModule = pLuaThreadModule;
 		m_taskName = "TcpSessionClose";
 		m_playerId = playerId;
+		m_needManThreadProcess = false;
 	}
 	/**
 	**  异步线程处理函数，将在另一个线程里运行
@@ -426,6 +522,7 @@ public:
 		m_taskName = "TcpSessionReport";
 		m_playerId = playerId;
 		m_ip = ip;
+		m_needManThreadProcess = false;
 	}
 	/**
 	**  异步线程处理函数，将在另一个线程里运行

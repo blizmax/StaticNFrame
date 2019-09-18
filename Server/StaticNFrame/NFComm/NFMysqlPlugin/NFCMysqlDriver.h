@@ -10,6 +10,8 @@
 
 #include "NFComm/NFPluginModule/NFIMysqlDriver.h"
 #include "NFComm/NFCore/NFQueue.hpp"
+#include "NFComm/NFCore/NFMutex.h"
+#include "NFComm/NFCore/NFLock.h"
 #include <string>
 #include <mysqlpp/lib/connection.h>
 #include "NFMessageDefine/NFMsgDefine.h"

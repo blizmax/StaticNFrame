@@ -27,6 +27,7 @@ public:
 		*
 		*/
 		ACTOR_MSG_TYPE_COMPONENT,
+
 		/**
 		* @brief 已经被处理的消息，等待返回主线程处理
 		*
@@ -122,7 +123,7 @@ public:
 	* @param
 	* @return
 	*/
-	virtual const std::vector<NFITaskComponent*>& GetTaskComponent() const;
+	virtual NFITaskComponent* GetTaskComponent();
 
 	/**
 	* @brief 获得ActorId
@@ -191,5 +192,5 @@ protected:
 	/**
 	* @brief component管理
 	*/
-	std::vector<NFITaskComponent*> m_taskComponents;
+	NFITaskComponent* m_pComponent;
 };

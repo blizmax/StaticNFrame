@@ -149,41 +149,7 @@ bool  NFCLuaThreadModule::IsInitLua()
 	for (size_t i = 0; i < m_vecWorkActorPool.size(); i++)
 	{
 		int actorId = m_vecWorkActorPool[i];
-		const std::vector<NFITaskComponent*> vecComponent = m_pWorkTaskModule->GetTaskComponent(actorId);
-		for (size_t i = 0; i < vecComponent.size(); i++)
-		{
-			NFCLuaScriptComponent* pComponent = dynamic_cast<NFCLuaScriptComponent*>(vecComponent[i]);
-			if (pComponent)
-			{
-				if (pComponent->IsInitLua() == false)
-				{
-					return false;
-				}
-			}
-		}
-	}
-
-	for (size_t i = 0; i < m_vecTcpMsgActorPool.size(); i++)
-	{
-		int actorId = m_vecTcpMsgActorPool[i];
-		const std::vector<NFITaskComponent*> vecComponent = m_pTcpMsgTaskModule->GetTaskComponent(actorId);
-		for (size_t i = 0; i < vecComponent.size(); i++)
-		{
-			NFCLuaScriptComponent* pComponent = dynamic_cast<NFCLuaScriptComponent*>(vecComponent[i]);
-			if (pComponent)
-			{
-				if (pComponent->IsInitLua() == false)
-				{
-					return false;
-				}
-			}
-		}
-	}
-
-	const std::vector<NFITaskComponent*> vecComponent = m_pServerLoopTaskModule->GetTaskComponent(m_processLoopActorId);
-	for (size_t i = 0; i < vecComponent.size(); i++)
-	{
-		NFCLuaScriptComponent* pComponent = dynamic_cast<NFCLuaScriptComponent*>(vecComponent[i]);
+		NFCLuaScriptComponent* pComponent = dynamic_cast<NFCLuaScriptComponent*>(m_pWorkTaskModule->GetTaskComponent(actorId));
 		if (pComponent)
 		{
 			if (pComponent->IsInitLua() == false)
@@ -192,6 +158,29 @@ bool  NFCLuaThreadModule::IsInitLua()
 			}
 		}
 	}
+
+	for (size_t i = 0; i < m_vecTcpMsgActorPool.size(); i++)
+	{
+		int actorId = m_vecTcpMsgActorPool[i];
+		NFCLuaScriptComponent* pComponent = dynamic_cast<NFCLuaScriptComponent*>(m_pTcpMsgTaskModule->GetTaskComponent(actorId));
+		if (pComponent)
+		{
+			if (pComponent->IsInitLua() == false)
+			{
+				return false;
+			}
+		}
+	}
+
+	NFCLuaScriptComponent* pComponent = dynamic_cast<NFCLuaScriptComponent*>(m_pServerLoopTaskModule->GetTaskComponent(m_processLoopActorId));
+	if (pComponent)
+	{
+		if (pComponent->IsInitLua() == false)
+		{
+			return false;
+		}
+	}
+
 	return true;
 }
 
@@ -199,16 +188,16 @@ void NFCLuaThreadModule::OnTimer(uint32_t nTimerID)
 {
 	if (nTimerID == EnumLuaThreadModule_LOAD)
 	{
-		AddProcessLoopTask(new NFServerLoopTask(this, EnumLuaThreadModule_LOAD));
+		AddProcessLoopTask(new NFServerLoopLoadTask(this));
 		for (size_t i = 0; i < m_vecWorkActorPool.size(); i++)
 		{
 			int actorId = m_vecWorkActorPool[i];
-			m_pWorkTaskModule->AddTask(actorId, new NFWorkActorTask(this, EnumLuaThreadModule_LOAD));
+			m_pWorkTaskModule->AddTask(actorId, new NFWorkActorLoadTask(this));
 		}
 		for (size_t i = 0; i < m_vecTcpMsgActorPool.size(); i++)
 		{
 			int actorId = m_vecTcpMsgActorPool[i];
-			m_pTcpMsgTaskModule->AddTask(actorId, new NFTcpMsgActorTask(this, EnumLuaThreadModule_LOAD));
+			m_pTcpMsgTaskModule->AddTask(actorId, new NFTcpMsgActorLoadTask(this));
 		}
 	}
 	if (nTimerID == EnumLuaThreadModule_Init)
@@ -216,17 +205,17 @@ void NFCLuaThreadModule::OnTimer(uint32_t nTimerID)
 		if (IsInitLua())
 		{
 			KillTimer(EnumLuaThreadModule_Init);
-			AddProcessLoopTask(new NFServerLoopTask(this, EnumLuaThreadModule_Init, "gametimer"));
-			AddProcessLoopTask(new NFServerLoopTask(this, EnumLuaThreadModule_Init, "utilstimer"));
-			AddProcessLoopTask(new NFServerLoopTask(this, EnumLuaThreadModule_Init, "logtimer"));
-			AddProcessLoopTask(new NFServerLoopTask(this, EnumLuaThreadModule_Init, "pokertimer"));
+			AddProcessLoopTask(new NFServerLoopInitTask(this, "gametimer"));
+			AddProcessLoopTask(new NFServerLoopInitTask(this, "utilstimer"));
+			AddProcessLoopTask(new NFServerLoopInitTask(this, "logtimer"));
+			AddProcessLoopTask(new NFServerLoopInitTask(this, "pokertimer"));
 		}
 	}
 	if (nTimerID == EnumLuaThreadModule_Loop)
 	{
-		AddProcessLoopTask(new NFServerLoopTask(this, EnumLuaThreadModule_Loop, "logtimer"));
-		AddProcessLoopTask(new NFServerLoopTask(this, EnumLuaThreadModule_Loop, "gametimer"));
-		AddProcessLoopTask(new NFServerLoopTask(this, EnumLuaThreadModule_Loop, "utilstimer"));
+		AddProcessLoopTask(new NFServerLoopTask(this, "logtimer"));
+		AddProcessLoopTask(new NFServerLoopTask(this, "gametimer"));
+		AddProcessLoopTask(new NFServerLoopTask(this, "utilstimer"));
 	}
 	if (nTimerID == EnumLuaThreadModule_GC)
 	{
@@ -241,7 +230,7 @@ void NFCLuaThreadModule::RunHttpRecvLuaFunc(const std::string& luaFunc, const ui
 
 void NFCLuaThreadModule::RunNetRecvLuaFunc(const std::string& luaFunc, const uint32_t unLinkId, const uint64_t valueId, const uint32_t nMsgId, const std::string& strMsg)
 {
-	AddTcpMsgTask(new NFTcpMsgActorTask(this, EnumLuaThreadModule_Work, luaFunc, unLinkId, valueId, nMsgId, strMsg));
+	AddTcpMsgTask(new NFTcpMsgActorTask(this, luaFunc, unLinkId, valueId, nMsgId, strMsg));
 }
 
 void NFCLuaThreadModule::SessionReport(uint64_t playerId, const std::string& report)
@@ -366,14 +355,7 @@ void NFCLuaThreadModule::HandleLuaTimer()
 		for (size_t i = 0; i < listTask.size(); i++)
 		{
 			NFTimerMessage* xMsg = &listTask[i];
-			if (xMsg->nMsgType == NFTimerMessage::ACTOR_MSG_PROCESS_WORK)
-			{
-				AddProcessWorkTask(new NFWorkActorTask(this, EnumLuaThreadModule_Work, xMsg->m_luaFunc, xMsg->m_tmpParam));
-			}
-			else
-			{
-				AddTimer(xMsg->nMsgType, xMsg->m_luaFunc, xMsg->m_delayTime, xMsg->m_tmpParam, xMsg->m_callCount);
-			}
+			AddTimer(xMsg->nMsgType, xMsg->m_luaFunc, xMsg->m_delayTime, xMsg->m_tmpParam, xMsg->m_callCount);
 		}
 	}
 
@@ -675,49 +657,6 @@ bool NFCLuaThreadModule::AddServerLoopActorComponent(NFITaskComponent* pComonnet
 }
 
 /**
-* @brief 通过任务的动态均衡id，获得actor
-*		 为了防止数据库错乱，防止同时对数据库表中的一条数据，读取写入，
-*		 使用动态均衡id, 使得在某个时候只有一条线程对表中的一条数据，读取或写入
-* @param balanceId 动态均衡id
-* @return	一个actor索引
-*/
-int NFCLuaThreadModule::GetBalanceWorkActor(uint64_t balanceId)
-{
-	return GetRandWorkActor();
-	//if (balanceId == 0)
-	//{
-	//	return GetRandWorkActor();
-	//}
-	//else
-	//{
-	//	if (m_vecWorkActorPool.size() <= 0)
-	//	{
-	//		return -1;
-	//	}
-	//	uint32_t index = balanceId % m_vecWorkActorPool.size();
-	//	return m_vecWorkActorPool[index];
-	//}
-}
-
-/**
-* @brief 随机获得一个actor
-*
-* @return actor索引
-*/
-int NFCLuaThreadModule::GetRandWorkActor()
-{
-	if (m_vecWorkActorPool.size() <= 0)
-	{
-		return -1;
-	}
-
-	mnWorkSuitIndex++;
-	mnWorkSuitIndex = mnWorkSuitIndex % m_vecWorkActorPool.size();
-
-	return m_vecWorkActorPool[mnWorkSuitIndex];
-}
-
-/**
 * @brief 通过平衡ID添加要异步处理的task
 *
 * @param pTask 要异步处理的task
@@ -727,58 +666,10 @@ bool NFCLuaThreadModule::AddWorkTask(NFTask* pTask)
 {
 	if (pTask)
 	{
-		int actorId = GetBalanceWorkActor(pTask->GetBalanceId());
-		if (actorId > 0)
-		{
-			return m_pWorkTaskModule->AddTask(actorId, pTask);
-		}
+		return m_pWorkTaskModule->AddTask(pTask);
 	}
 
 	return false;
-}
-
-/**
-* @brief 通过任务的动态均衡id，获得actor
-*		 为了防止数据库错乱，防止同时对数据库表中的一条数据，读取写入，
-*		 使用动态均衡id, 使得在某个时候只有一条线程对表中的一条数据，读取或写入
-* @param balanceId 动态均衡id
-* @return	一个actor索引
-*/
-int NFCLuaThreadModule::GetBalanceTcpMsgActor(uint64_t balanceId)
-{
-	return GetRandTcpMsgActor();
-
-	//if (balanceId == 0)
-	//{
-	//	return GetRandTcpMsgActor();
-	//}
-	//else
-	//{
-	//	if (m_vecTcpMsgActorPool.size() <= 0)
-	//	{
-	//		return -1;
-	//	}
-	//	uint32_t index = balanceId % m_vecTcpMsgActorPool.size();
-	//	return m_vecTcpMsgActorPool[index];
-	//}
-}
-
-/**
-* @brief 随机获得一个actor
-*
-* @return actor索引
-*/
-int NFCLuaThreadModule::GetRandTcpMsgActor()
-{
-	if (m_vecTcpMsgActorPool.size() <= 0)
-	{
-		return -1;
-	}
-
-	mnTcpMsgSuitIndex++;
-	mnTcpMsgSuitIndex = mnTcpMsgSuitIndex % m_vecTcpMsgActorPool.size();
-
-	return m_vecTcpMsgActorPool[mnTcpMsgSuitIndex];
 }
 
 /**
@@ -791,11 +682,7 @@ bool NFCLuaThreadModule::AddTcpMsgTask(NFTask* pTask)
 {
 	if (pTask)
 	{
-		int actorId = GetBalanceTcpMsgActor(pTask->GetBalanceId());
-		if (actorId > 0)
-		{
-			return m_pTcpMsgTaskModule->AddTask(actorId, pTask);
-		}
+		return m_pTcpMsgTaskModule->AddTask(pTask);
 	}
 
 	return false;
@@ -827,11 +714,7 @@ bool NFCLuaThreadModule::AddProcessTimerTask(NFTask* pTask)
 {
 	if (pTask)
 	{
-		int actorId = GetBalanceWorkActor(pTask->GetBalanceId());
-		if (actorId > 0)
-		{
-			return m_pWorkTaskModule->AddTask(actorId, pTask);
-		}
+		return m_pWorkTaskModule->AddTask(pTask);
 	}
 
 	return false;
@@ -847,11 +730,7 @@ bool NFCLuaThreadModule::AddProcessWorkTask(NFTask* pTask)
 {
 	if (pTask)
 	{
-		int actorId = GetBalanceWorkActor(pTask->GetBalanceId());
-		if (actorId > 0)
-		{
-			return m_pWorkTaskModule->AddTask(actorId, pTask);
-		}
+		return m_pWorkTaskModule->AddTask(pTask);
 	}
 
 	return false;
@@ -859,7 +738,7 @@ bool NFCLuaThreadModule::AddProcessWorkTask(NFTask* pTask)
 
 void NFCLuaThreadModule::AddProcessWork(const std::string& luaFunc, const std::string& tmpParam)
 {
-	NFTimerMessage msg;
+	/*NFTimerMessage msg;
 	msg.nMsgType = NFTimerMessage::ACTOR_MSG_PROCESS_WORK;
 	msg.m_delayTime = 1;
 	msg.m_luaFunc = luaFunc;
@@ -867,6 +746,8 @@ void NFCLuaThreadModule::AddProcessWork(const std::string& luaFunc, const std::s
 	msg.m_callCount = 1;
 
 	m_mQueue.Push(msg);
+	*/
+	AddProcessWorkTask(new NFWorkActorTask(this, luaFunc, tmpParam));
 }
 
 void NFCLuaThreadModule::AddRealTimer(uint32_t internal, uint32_t callcount, const std::string& luaFunc, const std::string& tmpParam)

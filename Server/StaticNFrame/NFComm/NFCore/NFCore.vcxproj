@@ -342,7 +342,6 @@
     <ClCompile Include="NFMemQueu.cpp" />
     <ClCompile Include="NFMemVector.h" />
     <ClCompile Include="NFMemMultiHashMap.cpp" />
-    <ClCompile Include="NFMutex.cpp" />
     <ClCompile Include="NFNetBuffer.cpp" />
     <ClCompile Include="NFCpu.cpp" />
     <ClCompile Include="NFCRC16.cpp" />
@@ -362,21 +361,20 @@
     <ClCompile Include="NFStat.cpp" />
     <ClCompile Include="NFStringUtility.cpp" />
     <ClCompile Include="NFBuffer.cpp" />
-    <ClCompile Include="NFTarsElement.cpp" />
-    <ClCompile Include="NFTarsParse.cpp" />
     <ClCompile Include="NFTCPack.cpp" />
     <ClCompile Include="NFTime.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="NFAtomic.h" />
-    <ClInclude Include="NFAutoPtr.h" />
     <ClInclude Include="NFCmdLine.h" />
     <ClInclude Include="NFCommon.h" />
+    <ClInclude Include="NFCondition.h" />
     <ClInclude Include="NFConsistentHash.h" />
     <ClInclude Include="NFConsistentHash.hpp" />
     <ClInclude Include="NFConsistentHashNew.h" />
     <ClInclude Include="NFError.h" />
     <ClInclude Include="NFHash.hpp" />
+    <ClInclude Include="NFLock.h" />
     <ClInclude Include="NFMemHashMap2.h" />
     <ClInclude Include="NFMemHashMapCompact.h" />
     <ClInclude Include="NFJson.h" />
@@ -422,13 +420,13 @@
     <ClInclude Include="NFSlice.hpp" />
     <ClInclude Include="NFSimpleBuffer.h" />
     <ClInclude Include="NFSnprintf.h" />
+    <ClInclude Include="NFSpinLock.h" />
     <ClInclude Include="NFStat.h" />
     <ClInclude Include="NFStringUtility.h" />
-    <ClInclude Include="NFTarsElement.h" />
-    <ClInclude Include="NFTarsParse.h" />
     <ClInclude Include="NFTCPack.h" />
     <ClInclude Include="NFThread.hpp" />
     <ClInclude Include="NFBuffer.h" />
+    <ClInclude Include="NFThreadUtils.h" />
     <ClInclude Include="NFTime.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

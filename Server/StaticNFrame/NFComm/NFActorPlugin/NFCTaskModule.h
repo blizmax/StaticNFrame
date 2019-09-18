@@ -12,6 +12,9 @@
 #include "NFComm/NFPluginModule/NFITaskModule.h"
 #include "NFComm/NFCore/NFQueue.hpp"
 #include "NFTaskActor.h"
+#include "NFComm/NFCore/NFMutex.h"
+#include "NFComm/NFCore/NFLock.h"
+#include "NFComm/NFCore/NFAtomic.h"
 #include <map>
 
 class NFCTaskModule final : public NFITaskModule
@@ -62,7 +65,7 @@ public:
 	* @param
 	* @return
 	*/
-	virtual const std::vector<NFITaskComponent*>& GetTaskComponent(int nActorIndex) override;
+	virtual NFITaskComponent* GetTaskComponent(int nActorIndex) override;
 
 	/**
 	* @brief 主线程通过自己保存的actorIndex将发送数据给actor线程
@@ -157,32 +160,26 @@ public:
 	* @return
 	*/
 	virtual int GetMaxThreads() override;
+
+	/**
+	* @brief 记录监控Task
+	*
+	* @return
+	*/
+	virtual void MonitorTask(NFTask* pTask);
 protected:
 	Theron::Framework* m_pFramework;
 	NFTaskActor* m_pMainActor;
-	std::map<int, NFTaskActor*> m_mActorMap;
 protected:
 	/**
 	* @brief actor索引数组
 	*/
-	std::vector<int> m_vecActorPool;
+	std::vector<NFTaskActor*> m_vecActorPool;
 
 	/**
 	* @brief 用来平衡随机获得actor
 	*/
-	uint64_t mnSuitIndex;
-
-	/**
-	* @brief 接收的任务数目
-	*
-	*/
-	uint64_t nRecvTaskCount;
-
-	/**
-	* @brief 处理的任务数目
-	* @return
-	*/
-	uint64_t nHandleTaskCount;
+	std::atomic<uint32_t> mnSuitIndex;
 
 	/**
 	* @brief 返回的消息队列，线程安全,
@@ -205,6 +202,13 @@ protected:
 	};
 	
 	uint32_t m_loopCount;
+
 	//task 监控 static里， 因为 taskmodule 可能有很多个
 	std::map<std::string, TaskMonitorData> m_taskMonitorMap;
+
+	/**
+	* @brief actor索引数组锁
+	*/
+	mutable NFMutex mMonitorMutex;
+
 };

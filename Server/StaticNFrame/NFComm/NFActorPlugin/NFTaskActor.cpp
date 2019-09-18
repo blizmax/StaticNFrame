@@ -19,11 +19,10 @@ NFTaskActor::NFTaskActor(Theron::Framework& framework, NFITaskModule* pTaskModul
 */
 NFTaskActor::~NFTaskActor()
 {
-	for (size_t i = 0; i < m_taskComponents.size(); i++)
+	if (m_pComponent)
 	{
-		NF_SAFE_DELETE(m_taskComponents[i]);
+		NF_SAFE_DELETE(m_pComponent);
 	}
-	m_taskComponents.clear();
 }
 
 /**
@@ -57,7 +56,7 @@ bool NFTaskActor::SendMsg(const Theron::Address& address, const NFTaskActorMessa
 */
 bool NFTaskActor::AddComponnet(NFITaskComponent* pComponnet)
 {
-	m_taskComponents.push_back(pComponnet);
+	m_pComponent = pComponnet;
 	return true;
 }
 
@@ -69,6 +68,13 @@ void NFTaskActor::Handler(const NFTaskActorMessage& message, const Theron::Addre
 		ProcessTaskStart(pTask);
 		ProcessTask(pTask);
 		ProcessTaskEnd(pTask);
+
+		m_pTaskModule->MonitorTask(pTask);
+		if (pTask->IsNeedMainThreadProcess() == false)
+		{
+			NF_SAFE_DELETE(pTask);
+			return;
+		}
 	}
 
 	////////////////////////////////////////////////////////
@@ -101,37 +107,25 @@ void NFTaskActor::DefaultHandler(const NFTaskActorMessage& message, const Theron
 
 void NFTaskActor::ProcessTaskStart(NFTask* pTask)
 {
-	for (size_t i = 0; i < m_taskComponents.size(); i++)
+	if (m_pComponent)
 	{
-		NFITaskComponent* pComponent = m_taskComponents[i];
-		if (pComponent)
-		{
-			pComponent->ProcessTaskStart(pTask);
-		}
+		m_pComponent->ProcessTaskStart(pTask);
 	}
 }
 
 void NFTaskActor::ProcessTask(NFTask* pTask)
 {
-	for (size_t i = 0; i < m_taskComponents.size(); i++)
+	if (m_pComponent)
 	{
-		NFITaskComponent* pComponent = m_taskComponents[i];
-		if (pComponent)
-		{
-			pComponent->ProcessTask(pTask);
-		}
+		m_pComponent->ProcessTask(pTask);
 	}
 }
 
 void NFTaskActor::ProcessTaskEnd(NFTask* pTask)
 {
-	for (size_t i = 0; i < m_taskComponents.size(); i++)
+	if (m_pComponent)
 	{
-		NFITaskComponent* pComponent = m_taskComponents[i];
-		if (pComponent)
-		{
-			pComponent->ProcessTaskEnd(pTask);
-		}
+		m_pComponent->ProcessTaskEnd(pTask);
 	}
 }
 
@@ -141,9 +135,9 @@ void NFTaskActor::ProcessTaskEnd(NFTask* pTask)
 * @param
 * @return
 */
-const std::vector<NFITaskComponent*>& NFTaskActor::GetTaskComponent() const
+NFITaskComponent* NFTaskActor::GetTaskComponent()
 { 
-	return m_taskComponents; 
+	return m_pComponent;
 }
 
 /**

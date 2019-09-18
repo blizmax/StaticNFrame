@@ -41,6 +41,7 @@ public:
 	{
 		m_balanceId = 0;
 		m_useTime = 0;
+		m_needManThreadProcess = true;
 	}
 
 	virtual ~NFTask()
@@ -59,12 +60,17 @@ public:
 		TPTASK_STATE_CONTINUE_CHILDTHREAD = 2,
 	};
 
-	uint64_t GetBalanceId() const
+	virtual uint64_t GetBalanceId() const
 	{
 		return m_balanceId;
 	}
 
-	void SetBalanceId(uint64_t balanceId)
+	virtual bool IsNeedMainThreadProcess() const
+	{
+		return m_needManThreadProcess;
+	}
+
+	virtual void SetBalanceId(uint64_t balanceId)
 	{
 		m_balanceId = balanceId;
 	}
@@ -83,6 +89,7 @@ public:
 		return TPTASK_STATE_COMPLETED;
 	}
 public:
+	bool m_needManThreadProcess; //是否需要主线程处理
 	uint64_t m_balanceId; //动态均衡ID, 如果是玩家就是玩家CharId, 如果不是一般填0
 	uint32_t m_useTime; //处理过程使用时间
 	std::string m_taskName; //异步任务名字
