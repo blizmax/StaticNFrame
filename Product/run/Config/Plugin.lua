@@ -141,8 +141,8 @@ LoadPlugin =
 			"NFNetPlugin",
 			
 			"NFRebotPlugin",
-			"NFLuaScriptPlugin",
-			--"NFLuaThreadScriptPlugin",
+			--"NFLuaScriptPlugin",
+			"NFLuaThreadScriptPlugin",
 		};
 		ServerType = NF_ST_REBOT;
 	},
