@@ -290,24 +290,16 @@ bool NFCTaskModule::HandlerEx(const NFTaskActorMessage& message, const int from)
 
 bool NFCTaskModule::AddTask(NFTask* pTask)
 {
-	if (pTask->GetBalanceId() == 0)
-	{
-		return GetRandActor();
-	}
-
-	if (m_vecActorPool.empty())
-	{
-		return false;
-	}
-
 	const int nActorId = GetBalanceActor(pTask->GetBalanceId());
 	if (nActorId <= 0)
 	{
+		NFLogError(NF_LOG_ACTOR_PLUGIN, 0, "error");
 		return false;
 	}
 
 	if (!SendMsgToActor(nActorId, pTask))
 	{
+		NFLogError(NF_LOG_ACTOR_PLUGIN, 0, "error");
 		return false;
 	}
 
@@ -323,6 +315,7 @@ bool NFCTaskModule::AddTask(int actorId, NFTask* pTask)
 
 	if (!SendMsgToActor(actorId, pTask))
 	{
+		NFLogError(NF_LOG_ACTOR_PLUGIN, 0, "error");
 		return false;
 	}
 
@@ -348,6 +341,7 @@ int NFCTaskModule::GetBalanceActor(uint64_t balanceId)
 
 	if (m_vecActorPool.empty())
 	{
+		NFLogError(NF_LOG_ACTOR_PLUGIN, 0, "error");
 		return -1;
 	}
 
@@ -359,6 +353,7 @@ int NFCTaskModule::GetBalanceActor(uint64_t balanceId)
 	}
 	else
 	{
+		NFLogError(NF_LOG_ACTOR_PLUGIN, 0, "error");
 		return -1;
 	}
 }
@@ -367,6 +362,7 @@ int NFCTaskModule::GetRandActor()
 {
 	if (m_vecActorPool.empty())
 	{
+		NFLogError(NF_LOG_ACTOR_PLUGIN, 0, "error");
 		return -1;
 	}
 
@@ -378,6 +374,7 @@ int NFCTaskModule::GetRandActor()
 	}
 	else
 	{
+		NFLogError(NF_LOG_ACTOR_PLUGIN, 0, "error");
 		return -1;
 	}
 }
