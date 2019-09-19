@@ -65,9 +65,11 @@ void NFTaskActor::Handler(const NFTaskActorMessage& message, const Theron::Addre
 	NFTask* pTask = message.pData;
 	if (pTask)
 	{
+		m_pTaskModule->MonitorStartTask(pTask);
 		ProcessTaskStart(pTask);
 		ProcessTask(pTask);
 		ProcessTaskEnd(pTask);
+		m_pTaskModule->MonitorEndTask(pTask);
 
 		m_pTaskModule->MonitorTask(pTask);
 		if (pTask->IsNeedMainThreadProcess() == false)

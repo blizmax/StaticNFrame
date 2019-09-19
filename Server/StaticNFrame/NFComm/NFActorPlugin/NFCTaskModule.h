@@ -178,6 +178,20 @@ public:
 	virtual void MonitorTask(NFTask* pTask);
 
 	/**
+	* @brief 监控Task执行时间
+	*
+	* @return
+	*/
+	virtual void MonitorStartTask(NFTask* pTask);
+
+	/**
+	* @brief 监控Task执行时间
+	*
+	* @return
+	*/
+	virtual void MonitorEndTask(NFTask* pTask);
+
+	/**
 	* @brief 获取所有ActorId
 	*
 	* @return
@@ -227,4 +241,11 @@ protected:
 	*/
 	mutable NFMutex mMonitorMutex;
 
+	//task 监控 执行时间
+	std::map<std::string, uint64_t> m_taskMonitorTimeMap;
+
+	/**
+	* @brief actor 监控task执行时间数组锁
+	*/
+	mutable NFMutex mMonitorTimeMutex;
 };

@@ -15,6 +15,7 @@
 
 #include "NFComm/NFPluginModule/NFITaskComponent.h"
 #include "NFComm/NFCore/NFTime.h"
+#include "NFComm/NFCore/NFCommon.h"
 
 NFCTaskModule::NFCTaskModule(NFIPluginManager* p)
 {
@@ -83,7 +84,7 @@ bool NFCTaskModule::Execute()
 {
 	m_loopCount++;
 	OnMainThreadTick();
-	if (m_loopCount % 10000 == 0)
+	if (m_loopCount % 1000 == 0)
 	{
 		NFLogDebug(NF_LOG_ACTOR_PLUGIN, 0, "task actor module, work thread num:{} peak work thread num:{}, max work thread num:{}, min work thread num:{}", m_pFramework->GetNumThreads(), m_pFramework->GetPeakThreads(), m_pFramework->GetMaxThreads(), m_pFramework->GetMinThreads());
 		mMonitorMutex.Lock();
@@ -93,6 +94,21 @@ bool NFCTaskModule::Execute()
 		}
 		mMonitorMutex.Unlock();
 	}
+
+	if (m_loopCount % 100 == 0)
+	{
+		mMonitorTimeMutex.Lock();
+		for (auto iter = m_taskMonitorTimeMap.begin(); iter != m_taskMonitorTimeMap.end(); iter++)
+		{
+			uint64_t useTime = NFGetTime() - iter->second;
+			if (useTime > 1000)
+			{
+				NFLogError(NF_LOG_ACTOR_PLUGIN, 0, "asyc task:{} use time:{}, may be dead cycle", iter->first, useTime);
+			}
+		}
+		mMonitorTimeMutex.Unlock();
+	}
+
 	return true;
 }
 
@@ -427,6 +443,32 @@ void NFCTaskModule::MonitorTask(NFTask* pTask)
 		data.mPerUseTime = data.mAllUseTime / data.mCount;
 	}
 	mMonitorMutex.Unlock();
+}
+
+/**
+* @brief 监控Task执行时间
+*
+* @return
+*/
+void NFCTaskModule::MonitorStartTask(NFTask* pTask)
+{
+	mMonitorTimeMutex.Lock();
+	std::string name = "thread:" + NFCommon::tostr(ThreadId()) + "--task:" + pTask->m_taskName;
+	m_taskMonitorTimeMap[name] = NFGetTime();
+	mMonitorTimeMutex.Unlock();
+}
+
+/**
+* @brief 监控Task执行时间
+*
+* @return
+*/
+void NFCTaskModule::MonitorEndTask(NFTask* pTask)
+{
+	mMonitorTimeMutex.Lock();
+	std::string name = "thread:" + NFCommon::tostr(ThreadId()) + "--task:" + pTask->m_taskName;
+	m_taskMonitorTimeMap.erase(name);
+	mMonitorTimeMutex.Unlock();
 }
 
 void NFCTaskModule::OnMainThreadTick()
