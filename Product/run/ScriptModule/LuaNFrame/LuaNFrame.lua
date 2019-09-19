@@ -312,7 +312,9 @@ end
 
 function LuaNFrame.SendMsgToPlayer(unLinkId, nPlayerId, nMsgId, nLen, strData)
 	if type(unLinkId) == "number" and type(nMsgId) == "number" and type(strData) == "string" and type(nPlayerId) == "number" and type(nLen) == "number" then
-		CPPNFrame:SendMsgToPlayer(unLinkId, nPlayerId, nMsgId, nLen, strData)
+		if tonumber(nLen) == string.len(strData) then
+			CPPNFrame:SendMsgToPlayer(unLinkId, nPlayerId, nMsgId, nLen, strData)
+		end
 	else
 		LuaNFrame.Error(NFLogId.NF_LOG_SYSTEMLOG, 0, __G__TRACKBACK__("LuaNFrame.SendMsgToPlayer Para Error"))
 	end
@@ -320,7 +322,9 @@ end
 
 function LuaNFrame.SendMsgToManyPlayer(nPlayerIdList, nMsgId, nLen, strData)
 	if type(nPlayerIdList) == "table" and type(nMsgId) == "number" and type(strData) == "string" and type(nLen) == "number" then
-		CPPNFrame:SendMsgToManyPlayer(nPlayerIdList, nMsgId, nLen, strData)
+		if tonumber(nLen) == string.len(strData) then
+			CPPNFrame:SendMsgToManyPlayer(nPlayerIdList, nMsgId, nLen, strData)
+		end
 	else
 		LuaNFrame.Error(NFLogId.NF_LOG_SYSTEMLOG, 0, __G__TRACKBACK__("LuaNFrame.SendMsgToManyPlayer Para Error"))
 	end
@@ -328,7 +332,9 @@ end
 
 function LuaNFrame.SendMsgToWorld(unLinkId, nPlayerId, nMsgId, nLen, strData)
 	if type(unLinkId) == "number" and type(nMsgId) == "number" and type(strData) == "string" and type(nPlayerId) == "number" and type(nLen) == "number" then
-		CPPNFrame:SendMsgToWorld(unLinkId, nPlayerId, nMsgId, nLen, strData)
+		if tonumber(nLen) == string.len(strData) then
+			CPPNFrame:SendMsgToWorld(unLinkId, nPlayerId, nMsgId, nLen, strData)
+		end
 	else
 		LuaNFrame.Error(NFLogId.NF_LOG_SYSTEMLOG, 0, __G__TRACKBACK__("LuaNFrame.SendMsgToWorld Para Error"))
 	end
@@ -336,7 +342,9 @@ end
 
 function LuaNFrame.SendMsgToMaster(unLinkId, nPlayerId, nMsgId, nLen, strData)
 	if type(unLinkId) == "number" and type(nMsgId) == "number" and type(strData) == "string" and type(nPlayerId) == "number" and type(nLen) == "number" then
-		CPPNFrame:SendMsgToMaster(unLinkId, nPlayerId, nMsgId, nLen, strData)
+		if tonumber(nLen) == string.len(strData) then
+			CPPNFrame:SendMsgToMaster(unLinkId, nPlayerId, nMsgId, nLen, strData)
+		end
 	else
 		LuaNFrame.Error(NFLogId.NF_LOG_SYSTEMLOG, 0, __G__TRACKBACK__("LuaNFrame.SendMsgToMaster Para Error"))
 	end
@@ -381,6 +389,7 @@ function LuaNFrame.DispatchTcp(unLinkId, valueId, nMsgId, strMsg)
 			if type(playerID) == "number" and playerID == 0 then
 				playerID = valueId
 			end
+
 			--登录协议特殊处理一下
 			if nMsgId == 1001 then
 				LuaNFrame.SendMsgToPlayer(unLinkId, valueId, retMsgID, retBufferLen, retString)
