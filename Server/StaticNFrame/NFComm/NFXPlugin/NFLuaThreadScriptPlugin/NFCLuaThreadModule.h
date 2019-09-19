@@ -171,14 +171,12 @@ public:
 	NFCLuaThreadModule(NFIPluginManager* p)
 	{
 		m_pPluginManager = p;
-		mnWorkSuitIndex = 0;
 		m_processLoopActorId = 0;
 		m_luaTimerIndex = 1000;
 		m_pNetServerModule = nullptr;
 		m_pNetClientModule = nullptr;
 		m_pServerLoopTaskModule = nullptr;
 		m_pWorkTaskModule = nullptr;
-		mnTcpMsgSuitIndex = 0;
 	}
 
 	virtual ~NFCLuaThreadModule()
@@ -357,11 +355,6 @@ protected:
 	std::vector<int> m_vecWorkActorPool;
 
 	/**
-	* @brief 用来平衡随机获得actor
-	*/
-	atomic<uint32_t> mnWorkSuitIndex;
-
-	/**
 	* @brief tcp msg actor module 多线程系统
 	*/
 	NFITaskModule* m_pTcpMsgTaskModule;
@@ -370,9 +363,4 @@ protected:
 	* @brief tcp actor索引数组
 	*/
 	std::vector<int> m_vecTcpMsgActorPool;
-
-	/**
-	* @brief 用来平衡随机获得actor
-	*/
-	atomic<uint32_t> mnTcpMsgSuitIndex;
 };
