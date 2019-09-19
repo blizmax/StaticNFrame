@@ -56,6 +56,34 @@ public:
 	* @param pTask 要异步处理的task
 	* @return
 	*/
+	template<typename NFTaskType>
+	bool AddTaskToEveryActor(const NFTaskType& task)
+	{
+		std::vector<int> vecActorId = GetAllActorId();
+		for (size_t i = 0; i < vecActorId.size(); i++)
+		{
+			auto pTask = new NFTaskType();
+			*pTask = task;
+			SendMsgToActor(vecActorId[i], pTask);
+		}
+		return true;
+	}
+
+	/**
+	* @brief 主线程通过自己保存的actorIndex将发送数据给actor线程
+	*
+	* @param nActorIndex	actor唯一索引
+	* @param pData			要发送的数据
+	* @return 是否成功
+	*/
+	virtual bool SendMsgToActor(int nActorIndex, NFTask* pData) = 0;
+
+	/**
+	* @brief 添加要异步处理的task
+	*
+	* @param pTask 要异步处理的task
+	* @return
+	*/
 	virtual bool AddTask(int actorId, NFTask* pTask) = 0;
 
 	/**
@@ -100,4 +128,11 @@ public:
 	* @return
 	*/
 	virtual void MonitorTask(NFTask* pTask) = 0;
+
+	/**
+	* @brief 获取所有ActorId
+	*
+	* @return
+	*/
+	virtual std::vector<int> GetAllActorId() const = 0;
 };

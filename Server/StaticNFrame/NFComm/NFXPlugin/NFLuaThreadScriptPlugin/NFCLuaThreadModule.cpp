@@ -22,15 +22,15 @@ void NFLuaThreadTimer::OnTimer(uint32_t nTimerID)
 	mCurCallCount++;
 	if (mMsgType == NFTimerMessage::ACTOR_TIMER_MSG_PROCESS_TIMER)
 	{
-		m_pLuaScriptModule->AddProcessTimerTask(new NFProcessTimerActorTask(m_pLuaScriptModule, EnumLuaThreadModule_Work, mLuaFunc, mDataStr));
+		m_pLuaScriptModule->AddProcessTimerTask(new NFProcessTimerActorTask(m_pLuaScriptModule, mLuaFunc, mDataStr));
 	}
 	else if (mMsgType == NFTimerMessage::ACTOR_TIMER_MSG_PROCESS_LOOP_TIMER)
 	{
-		m_pLuaScriptModule->AddProcessLoopTask(new NFProcessLoopTimerActorTask(m_pLuaScriptModule, EnumLuaThreadModule_Work, mLuaFunc, mDataStr));
+		m_pLuaScriptModule->AddProcessLoopTask(new NFProcessLoopTimerActorTask(m_pLuaScriptModule, mLuaFunc, mDataStr));
 	}
 	else if (mMsgType == NFTimerMessage::ACTOR_TIMER_MSG_PROCESS_REAL_TIMER)
 	{
-		m_pLuaScriptModule->AddWorkTask(new NFProcessRealTimerActorTask(m_pLuaScriptModule, EnumLuaThreadModule_Work, mLuaFunc, mDataStr));
+		m_pLuaScriptModule->AddWorkTask(new NFProcessRealTimerActorTask(m_pLuaScriptModule, mLuaFunc, mDataStr));
 	}
 }
 
@@ -188,17 +188,9 @@ void NFCLuaThreadModule::OnTimer(uint32_t nTimerID)
 {
 	if (nTimerID == EnumLuaThreadModule_LOAD)
 	{
-		AddProcessLoopTask(new NFServerLoopLoadTask(this));
-		for (size_t i = 0; i < m_vecWorkActorPool.size(); i++)
-		{
-			int actorId = m_vecWorkActorPool[i];
-			m_pWorkTaskModule->AddTask(actorId, new NFWorkActorLoadTask(this));
-		}
-		for (size_t i = 0; i < m_vecTcpMsgActorPool.size(); i++)
-		{
-			int actorId = m_vecTcpMsgActorPool[i];
-			m_pTcpMsgTaskModule->AddTask(actorId, new NFTcpMsgActorLoadTask(this));
-		}
+		m_pServerLoopTaskModule->AddTaskToEveryActor(NFServerLoopLoadTask(this));
+		m_pWorkTaskModule->AddTaskToEveryActor(NFWorkActorLoadTask(this));
+		m_pTcpMsgTaskModule->AddTaskToEveryActor(NFTcpMsgActorLoadTask(this));
 	}
 	if (nTimerID == EnumLuaThreadModule_Init)
 	{
@@ -738,15 +730,6 @@ bool NFCLuaThreadModule::AddProcessWorkTask(NFTask* pTask)
 
 void NFCLuaThreadModule::AddProcessWork(const std::string& luaFunc, const std::string& tmpParam)
 {
-	/*NFTimerMessage msg;
-	msg.nMsgType = NFTimerMessage::ACTOR_MSG_PROCESS_WORK;
-	msg.m_delayTime = 1;
-	msg.m_luaFunc = luaFunc;
-	msg.m_tmpParam = tmpParam;
-	msg.m_callCount = 1;
-
-	m_mQueue.Push(msg);
-	*/
 	AddProcessWorkTask(new NFWorkActorTask(this, luaFunc, tmpParam));
 }
 
@@ -793,51 +776,21 @@ void NFCLuaThreadModule::ReloadAllLuaFiles()
 
 void NFCLuaThreadModule::ReloadLuaFiles()
 {
-	for (size_t index = 0; index < m_vecWorkActorPool.size(); index++)
-	{
-		int actorId = m_vecWorkActorPool[index];
-		m_pWorkTaskModule->AddTask(actorId, new NFHotfixLuaFilesActorTask(this));
-	}
-
-	for (size_t index = 0; index < m_vecTcpMsgActorPool.size(); index++)
-	{
-		int actorId = m_vecTcpMsgActorPool[index];
-		m_pTcpMsgTaskModule->AddTask(actorId, new NFHotfixLuaFilesActorTask(this));
-	}
-
-	m_pServerLoopTaskModule->AddTask(m_processLoopActorId, new NFHotfixLuaFilesActorTask(this));
+	m_pServerLoopTaskModule->AddTaskToEveryActor(NFHotfixLuaFilesActorTask(this));
+	m_pWorkTaskModule->AddTaskToEveryActor(NFHotfixLuaFilesActorTask(this));
+	m_pTcpMsgTaskModule->AddTaskToEveryActor(NFHotfixLuaFilesActorTask(this));
 }
 
 void NFCLuaThreadModule::ReloadLuaFiles(const std::vector<std::string>& vecStr)
 {
-	for (size_t index = 0; index < m_vecWorkActorPool.size(); index++)
-	{
-		int actorId = m_vecWorkActorPool[index];
-		m_pWorkTaskModule->AddTask(actorId, new NFHotfixLuaFilesActorTask(this, vecStr));
-	}
-
-	for (size_t index = 0; index < m_vecTcpMsgActorPool.size(); index++)
-	{
-		int actorId = m_vecTcpMsgActorPool[index];
-		m_pTcpMsgTaskModule->AddTask(actorId, new NFHotfixLuaFilesActorTask(this, vecStr));
-	}
-
-	m_pServerLoopTaskModule->AddTask(m_processLoopActorId, new NFHotfixLuaFilesActorTask(this, vecStr));
+	m_pServerLoopTaskModule->AddTaskToEveryActor(NFHotfixLuaFilesActorTask(this, vecStr));
+	m_pWorkTaskModule->AddTaskToEveryActor(NFHotfixLuaFilesActorTask(this, vecStr));
+	m_pTcpMsgTaskModule->AddTaskToEveryActor(NFHotfixLuaFilesActorTask(this, vecStr));
 }
 
 void NFCLuaThreadModule::GcStep()
 {
-	for (size_t index = 0; index < m_vecWorkActorPool.size(); index++)
-	{
-		int actorId = m_vecWorkActorPool[index];
-		m_pWorkTaskModule->AddTask(actorId, new NFLuaGcActorTask(this));
-	}
-
-	for (size_t index = 0; index < m_vecTcpMsgActorPool.size(); index++)
-	{
-		int actorId = m_vecTcpMsgActorPool[index];
-		m_pTcpMsgTaskModule->AddTask(actorId, new NFLuaGcActorTask(this));
-	}
-
-	m_pServerLoopTaskModule->AddTask(m_processLoopActorId, new NFLuaGcActorTask(this));
+	m_pServerLoopTaskModule->AddTaskToEveryActor(NFLuaGcActorTask(this));
+	m_pWorkTaskModule->AddTaskToEveryActor(NFLuaGcActorTask(this));
+	m_pTcpMsgTaskModule->AddTaskToEveryActor(NFLuaGcActorTask(this));
 }

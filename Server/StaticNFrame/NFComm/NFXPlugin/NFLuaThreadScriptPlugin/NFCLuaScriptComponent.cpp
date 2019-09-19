@@ -20,10 +20,7 @@ bool NFProcessRealTimerActorTask::ThreadProcess()
 {
 	if (m_pComponent)
 	{
-		if (m_taskType == EnumLuaThreadModule_Work)
-		{
-			m_pComponent->Do_ProcessRealTimer(m_luaFunc, m_param);
-		}
+		m_pComponent->Do_ProcessRealTimer(m_luaFunc, m_param);
 	}
 	return true;
 }
@@ -32,10 +29,7 @@ bool NFProcessTimerActorTask::ThreadProcess()
 {
 	if (m_pComponent)
 	{
-		if (m_taskType == EnumLuaThreadModule_Work)
-		{
-			m_pComponent->Do_ProcessTimer(m_luaFunc, m_param);
-		}
+		m_pComponent->Do_ProcessTimer(m_luaFunc, m_param);
 	}
 	return true;
 }
@@ -44,10 +38,7 @@ bool NFProcessLoopTimerActorTask::ThreadProcess()
 {
 	if (m_pComponent)
 	{
-		if (m_taskType == EnumLuaThreadModule_Work)
-		{
-			m_pComponent->Do_ProcessLoopTimer(m_luaFunc, m_param);
-		}
+		m_pComponent->Do_ProcessLoopTimer(m_luaFunc, m_param);
 	}
 	return true;
 }

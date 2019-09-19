@@ -65,9 +65,11 @@ bool NFCTaskModule::Shut()
 		NFSLEEP(1);
 		if (NFGetSecondTime() - startTime >= 30)
 		{
+			NFLogError(NF_LOG_SYSTEMLOG, 0, "task module shut, but has task not finish after wait 30 second!");
 			break;
 		}
 	}
+
 	return true;
 }
 
@@ -155,9 +157,21 @@ int NFCTaskModule::RequireActor()
 */
 bool NFCTaskModule::SendMsgToActor(const int nActorIndex, NFTask* pData)
 {
+	NFTaskActor* pActor = GetActor(nActorIndex);
+	return SendMsgToActor(pActor, pData);
+}
+
+/**
+* @brief 主线程通过自己保存的actorIndex将发送数据给actor线程
+*
+* @param nActorIndex	actor唯一索引
+* @param pData			要发送的数据
+* @return 是否成功
+*/
+bool NFCTaskModule::SendMsgToActor(NFTaskActor* pActor, NFTask* pData)
+{
 	if (!m_pPluginManager->GetExitApp())
 	{
-		NFTaskActor* pActor = GetActor(nActorIndex);
 		if (pActor != nullptr && m_pMainActor != nullptr && m_pFramework != nullptr)
 		{
 			NFTaskActorMessage xMessage;
@@ -377,6 +391,24 @@ int NFCTaskModule::GetRandActor()
 		NFLogError(NF_LOG_ACTOR_PLUGIN, 0, "error");
 		return -1;
 	}
+}
+
+/**
+* @brief 获取所有ActorId
+*
+* @return
+*/
+std::vector<int> NFCTaskModule::GetAllActorId() const
+{
+	std::vector<int> vecActorId;
+	for (size_t index = 0; index < m_vecActorPool.size(); index++)
+	{
+		if (m_vecActorPool[index])
+		{
+			vecActorId.push_back(m_vecActorPool[index]->GetAddress().AsInteger());
+		}
+	}
+	return vecActorId;
 }
 
 /**

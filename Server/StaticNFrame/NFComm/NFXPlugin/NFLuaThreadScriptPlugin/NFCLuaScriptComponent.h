@@ -50,6 +50,7 @@ public:
 		m_pLuaThreadModule = nullptr;
 		m_pComponent = nullptr;
 	}
+
 	uint32_t m_taskType;
 	NFCLuaThreadModule* m_pLuaThreadModule;
 	NFCLuaScriptComponent* m_pComponent;
@@ -58,7 +59,7 @@ public:
 class NFWorkActorLoadTask : public NFLuaThreadTask
 {
 public:
-	NFWorkActorLoadTask(NFCLuaThreadModule* pLuaThreadModule, const std::string& luaFunc = "", const std::string& param = "")
+	NFWorkActorLoadTask(NFCLuaThreadModule* pLuaThreadModule = nullptr, const std::string& luaFunc = "", const std::string& param = "")
 	{
 		m_pLuaThreadModule = pLuaThreadModule;
 		m_luaFunc = luaFunc;
@@ -87,7 +88,7 @@ public:
 class NFWorkActorTask : public NFLuaThreadTask
 {
 public:
-	NFWorkActorTask(NFCLuaThreadModule* pLuaThreadModule, const std::string& luaFunc = "", const std::string& param = "")
+	NFWorkActorTask(NFCLuaThreadModule* pLuaThreadModule = nullptr, const std::string& luaFunc = "", const std::string& param = "")
 	{
 		m_pLuaThreadModule = pLuaThreadModule;
 		m_luaFunc = luaFunc;
@@ -120,7 +121,7 @@ public:
 class NFServerLoopLoadTask : public NFLuaThreadTask
 {
 public:
-	NFServerLoopLoadTask(NFCLuaThreadModule* pLuaThreadModule, const std::string& param = "")
+	NFServerLoopLoadTask(NFCLuaThreadModule* pLuaThreadModule = nullptr, const std::string& param = "")
 	{
 		m_pLuaThreadModule = pLuaThreadModule;
 		m_param = param;
@@ -144,7 +145,7 @@ public:
 class NFServerLoopInitTask : public NFLuaThreadTask
 {
 public:
-	NFServerLoopInitTask(NFCLuaThreadModule* pLuaThreadModule, const std::string& param = "")
+	NFServerLoopInitTask(NFCLuaThreadModule* pLuaThreadModule = nullptr, const std::string& param = "")
 	{
 		m_pLuaThreadModule = pLuaThreadModule;
 		m_param = param;
@@ -167,7 +168,7 @@ public:
 class NFServerLoopTask : public NFLuaThreadTask
 {
 public:
-	NFServerLoopTask(NFCLuaThreadModule* pLuaThreadModule, const std::string& param = "")
+	NFServerLoopTask(NFCLuaThreadModule* pLuaThreadModule = nullptr, const std::string& param = "")
 	{
 		m_pLuaThreadModule = pLuaThreadModule;
 		m_param = param;
@@ -191,10 +192,9 @@ public:
 class NFProcessRealTimerActorTask : public NFLuaThreadTask
 {
 public:
-	NFProcessRealTimerActorTask(NFCLuaThreadModule* pLuaThreadModule, uint32_t taskType, const std::string& luaFunc = "", const std::string& param = "")
+	NFProcessRealTimerActorTask(NFCLuaThreadModule* pLuaThreadModule = nullptr, const std::string& luaFunc = "", const std::string& param = "")
 	{
 		m_pLuaThreadModule = pLuaThreadModule;
-		m_taskType = taskType;
 		m_luaFunc = luaFunc;
 		m_param = param;
 		m_taskName = "NFProcessRealTimer_" + luaFunc;
@@ -225,10 +225,9 @@ public:
 class NFProcessTimerActorTask : public NFLuaThreadTask
 {
 public:
-	NFProcessTimerActorTask(NFCLuaThreadModule* pLuaThreadModule, uint32_t taskType, const std::string& luaFunc = "", const std::string& param = "")
+	NFProcessTimerActorTask(NFCLuaThreadModule* pLuaThreadModule = nullptr, const std::string& luaFunc = "", const std::string& param = "")
 	{
 		m_pLuaThreadModule = pLuaThreadModule;
-		m_taskType = taskType;
 		m_luaFunc = luaFunc;
 		m_param = param;
 		m_taskName = "ProcessTimerTask_" + luaFunc;
@@ -259,10 +258,9 @@ public:
 class NFProcessLoopTimerActorTask : public NFLuaThreadTask
 {
 public:
-	NFProcessLoopTimerActorTask(NFCLuaThreadModule* pLuaThreadModule, uint32_t taskType, const std::string& luaFunc = "", const std::string& param = "")
+	NFProcessLoopTimerActorTask(NFCLuaThreadModule* pLuaThreadModule = nullptr, const std::string& luaFunc = "", const std::string& param = "")
 	{
 		m_pLuaThreadModule = pLuaThreadModule;
-		m_taskType = taskType;
 		m_luaFunc = luaFunc;
 		m_param = param;
 		m_taskName = "ProcessLoopTimerTask_" + luaFunc;
@@ -289,7 +287,7 @@ public:
 class NFTcpMsgActorLoadTask : public NFLuaThreadTask
 {
 public:
-	NFTcpMsgActorLoadTask(NFCLuaThreadModule* pLuaThreadModule, const std::string& luaFunc = "", const uint32_t unLinkId = 0, const uint64_t valueId = 0, const uint32_t nMsgId = 0, const std::string& strMsg = "")
+	NFTcpMsgActorLoadTask(NFCLuaThreadModule* pLuaThreadModule = nullptr, const std::string& luaFunc = "", const uint32_t unLinkId = 0, const uint64_t valueId = 0, const uint32_t nMsgId = 0, const std::string& strMsg = "")
 	{
 		m_balanceId = valueId;
 		m_pLuaThreadModule = pLuaThreadModule;
@@ -327,7 +325,7 @@ public:
 class NFTcpMsgActorTask : public NFLuaThreadTask
 {
 public:
-	NFTcpMsgActorTask(NFCLuaThreadModule* pLuaThreadModule, const std::string& luaFunc = "", const uint32_t unLinkId = 0, const uint64_t valueId = 0, const uint32_t nMsgId = 0, const std::string& strMsg = "")
+	NFTcpMsgActorTask(NFCLuaThreadModule* pLuaThreadModule = nullptr, const std::string& luaFunc = "", const uint32_t unLinkId = 0, const uint64_t valueId = 0, const uint32_t nMsgId = 0, const std::string& strMsg = "")
 	{
 		m_balanceId = valueId;
 		m_pLuaThreadModule = pLuaThreadModule;
@@ -365,7 +363,7 @@ public:
 class NFHttpMsgActorTask : public NFLuaThreadTask
 {
 public:
-	NFHttpMsgActorTask(NFCLuaThreadModule* pLuaThreadModule, const std::string& luaFunc, const uint32_t unLinkId, const uint32_t requestId, const std::string& firstPath, const std::string& secondPath, const std::string& strMsg)
+	NFHttpMsgActorTask(NFCLuaThreadModule* pLuaThreadModule = nullptr, const std::string& luaFunc = "", const uint32_t unLinkId = 0, const uint32_t requestId = 0, const std::string& firstPath = "", const std::string& secondPath = "", const std::string& strMsg = "")
 	{
 		m_pLuaThreadModule = pLuaThreadModule;
 		m_luaFunc = luaFunc;
@@ -402,18 +400,13 @@ public:
 class NFHotfixAllLuaActorTask : public NFLuaThreadTask
 {
 public:
-	NFHotfixAllLuaActorTask(NFCLuaThreadModule* pLuaThreadModule, const std::vector<std::string>& vecStr)
+	NFHotfixAllLuaActorTask(NFCLuaThreadModule* pLuaThreadModule = nullptr, const std::vector<std::string>& vecStr = std::vector<std::string>())
 	{
 		m_pLuaThreadModule = pLuaThreadModule;
 		m_vecLuaFile = vecStr;
 		m_taskName = "HotfixAllLua";
 	}
 
-	NFHotfixAllLuaActorTask(NFCLuaThreadModule* pLuaThreadModule)
-	{
-		m_pLuaThreadModule = pLuaThreadModule;
-		m_taskName = "HotfixAllLua";
-	}
 	/**
 	**  异步线程处理函数，将在另一个线程里运行
 	*/
@@ -431,7 +424,7 @@ public:
 class NFHotfixLuaFilesActorTask : public NFLuaThreadTask
 {
 public:
-	NFHotfixLuaFilesActorTask(NFCLuaThreadModule* pLuaThreadModule, const std::vector<std::string>& vecStr)
+	NFHotfixLuaFilesActorTask(NFCLuaThreadModule* pLuaThreadModule = nullptr, const std::vector<std::string>& vecStr = std::vector<std::string>())
 	{
 		m_pLuaThreadModule = pLuaThreadModule;
 		m_vecLuaFile = vecStr;
@@ -439,12 +432,6 @@ public:
 		m_needManThreadProcess = false;
 	}
 
-	NFHotfixLuaFilesActorTask(NFCLuaThreadModule* pLuaThreadModule)
-	{
-		m_pLuaThreadModule = pLuaThreadModule;
-		m_taskName = "HotfixLuaFiles";
-		m_needManThreadProcess = false;
-	}
 	/**
 	**  异步线程处理函数，将在另一个线程里运行
 	*/
@@ -465,7 +452,7 @@ public:
 class NFLuaGcActorTask : public NFLuaThreadTask
 {
 public:
-	NFLuaGcActorTask(NFCLuaThreadModule* pLuaThreadModule)
+	NFLuaGcActorTask(NFCLuaThreadModule* pLuaThreadModule = nullptr)
 	{
 		m_pLuaThreadModule = pLuaThreadModule;
 		m_taskName = "LuaGC";
@@ -489,7 +476,7 @@ public:
 class NFTcpSessionCloseActorTask : public NFLuaThreadTask
 {
 public:
-	NFTcpSessionCloseActorTask(NFCLuaThreadModule* pLuaThreadModule, uint64_t playerId)
+	NFTcpSessionCloseActorTask(NFCLuaThreadModule* pLuaThreadModule = nullptr, uint64_t playerId = 0)
 	{
 		m_pLuaThreadModule = pLuaThreadModule;
 		m_taskName = "TcpSessionClose";
@@ -516,7 +503,7 @@ public:
 class NFTcpSessionReportActorTask : public NFLuaThreadTask
 {
 public:
-	NFTcpSessionReportActorTask(NFCLuaThreadModule* pLuaThreadModule, uint64_t playerId, const std::string& ip)
+	NFTcpSessionReportActorTask(NFCLuaThreadModule* pLuaThreadModule = nullptr, uint64_t playerId = 0, const std::string& ip = "")
 	{
 		m_pLuaThreadModule = pLuaThreadModule;
 		m_taskName = "TcpSessionReport";

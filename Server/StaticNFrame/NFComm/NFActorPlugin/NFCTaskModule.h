@@ -77,6 +77,15 @@ public:
 	virtual bool SendMsgToActor(int nActorIndex, NFTask* pData);
 
 	/**
+	* @brief 主线程通过自己保存的actorIndex将发送数据给actor线程
+	*
+	* @param nActorIndex	actor唯一索引
+	* @param pData			要发送的数据
+	* @return 是否成功
+	*/
+	virtual bool SendMsgToActor(NFTaskActor* pActor, NFTask* pData);
+
+	/**
 	* @brief 释放actor资源
 	*
 	* @return
@@ -167,6 +176,13 @@ public:
 	* @return
 	*/
 	virtual void MonitorTask(NFTask* pTask);
+
+	/**
+	* @brief 获取所有ActorId
+	*
+	* @return
+	*/
+	virtual std::vector<int> GetAllActorId() const override;
 protected:
 	Theron::Framework* m_pFramework;
 	NFTaskActor* m_pMainActor;
