@@ -295,45 +295,48 @@ uint32_t NFCLuaThreadModule::AddTimer(uint32_t msgType, const std::string& luaFu
 */
 void NFCLuaThreadModule::HandleLuaTcpMsg()
 {
-	m_pPluginManager->BeginProfiler("HandleLuaTcpMsg");
 	std::vector<NFTcpMessage> listTask;
 	const bool ret = m_mTcpMsgQueue.Pop(listTask);
 	if (ret)
 	{
-		for (size_t i = 0; i < listTask.size(); ++i)
+		if (!listTask.empty())
 		{
-			NFTcpMessage* pMsg = &listTask[i];
-			if (pMsg->m_nMsgType == NFTcpMessage::ACTOR_TCP_MESSAGE_TYPE_ONE_PLAYER_PROXY_MSG)
+			m_pPluginManager->BeginProfiler("HandleLuaTcpMsg");
+			for (size_t i = 0; i < listTask.size(); ++i)
 			{
-				SendMsgToPlayer(pMsg->m_usLinkId, pMsg->m_nPlayerID, pMsg->m_nMsgID, pMsg->m_nLen, pMsg->m_strData);
+				NFTcpMessage* pMsg = &listTask[i];
+				if (pMsg->m_nMsgType == NFTcpMessage::ACTOR_TCP_MESSAGE_TYPE_ONE_PLAYER_PROXY_MSG)
+				{
+					SendMsgToPlayer(pMsg->m_usLinkId, pMsg->m_nPlayerID, pMsg->m_nMsgID, pMsg->m_nLen, pMsg->m_strData);
+				}
+				else if (pMsg->m_nMsgType == NFTcpMessage::ACTOR_TCP_MESSAGE_TYPE_ONE_PLAYER_WORLD_MSG)
+				{
+					SendMsgToWorld(pMsg->m_usLinkId, pMsg->m_nPlayerID, pMsg->m_nMsgID, pMsg->m_nLen, pMsg->m_strData);
+				}
+				else if (pMsg->m_nMsgType == NFTcpMessage::ACTOR_TCP_MESSAGE_TYPE_ONE_PLAYER_MASTER_MSG)
+				{
+					SendMsgToMaster(pMsg->m_usLinkId, pMsg->m_nPlayerID, pMsg->m_nMsgID, pMsg->m_nLen, pMsg->m_strData);
+				}
+				else if (pMsg->m_nMsgType == NFTcpMessage::ACTOR_TCP_MESSAGE_TYPE_MANY_PLAYER_PROXY_MSG)
+				{
+					SendMsgToManyPlayer(pMsg->m_nVecPlayerID, pMsg->m_nMsgID, pMsg->m_nLen, pMsg->m_strData);
+				}
+				else if (pMsg->m_nMsgType == NFTcpMessage::ACTOR_TCP_MESSAGE_TYPE_ALL_PLAYER_PROXY_MSG)
+				{
+					SendMsgToAllPlayer(pMsg->m_nMsgID, pMsg->m_nLen, pMsg->m_strData);
+				}
+				else if (pMsg->m_nMsgType == NFTcpMessage::ACTOR_TCP_MESSAGE_TYPE_ADD_ERROR_LOG_MSG)
+				{
+					SendErrorLog(pMsg->m_nPlayerID, pMsg->m_funcLog, pMsg->m_errorLog);
+				}
 			}
-			else if (pMsg->m_nMsgType == NFTcpMessage::ACTOR_TCP_MESSAGE_TYPE_ONE_PLAYER_WORLD_MSG)
+			uint32_t count = listTask.size();
+			uint64_t useTime = m_pPluginManager->EndProfiler();
+			if (useTime >= 30000) //>= 10∫¡√Î
 			{
-				SendMsgToWorld(pMsg->m_usLinkId, pMsg->m_nPlayerID, pMsg->m_nMsgID, pMsg->m_nLen, pMsg->m_strData);
-			}
-			else if (pMsg->m_nMsgType == NFTcpMessage::ACTOR_TCP_MESSAGE_TYPE_ONE_PLAYER_MASTER_MSG)
-			{
-				SendMsgToMaster(pMsg->m_usLinkId, pMsg->m_nPlayerID, pMsg->m_nMsgID, pMsg->m_nLen, pMsg->m_strData);
-			}
-			else if (pMsg->m_nMsgType == NFTcpMessage::ACTOR_TCP_MESSAGE_TYPE_MANY_PLAYER_PROXY_MSG)
-			{
-				SendMsgToManyPlayer(pMsg->m_nVecPlayerID, pMsg->m_nMsgID, pMsg->m_nLen, pMsg->m_strData);
-			}
-			else if (pMsg->m_nMsgType == NFTcpMessage::ACTOR_TCP_MESSAGE_TYPE_ALL_PLAYER_PROXY_MSG)
-			{
-				SendMsgToAllPlayer(pMsg->m_nMsgID, pMsg->m_nLen, pMsg->m_strData);
-			}
-			else if (pMsg->m_nMsgType == NFTcpMessage::ACTOR_TCP_MESSAGE_TYPE_ADD_ERROR_LOG_MSG)
-			{
-				SendErrorLog(pMsg->m_nPlayerID, pMsg->m_funcLog, pMsg->m_errorLog);
+				NFLogError(NF_LOG_PLUGIN_MANAGER, 0, "HandleLuaTcpMsg: send tcp msg:{} use time:{} ms", listTask.size(), useTime / 1000);
 			}
 		}
-	}
-	uint32_t count = listTask.size();
-	uint64_t useTime = m_pPluginManager->EndProfiler();
-	if (useTime >= 30000) //>= 10∫¡√Î
-	{
-		NFLogError(NF_LOG_PLUGIN_MANAGER, 0, "HandleLuaTcpMsg: send tcp msg:{} use time:{} ms", listTask.size(), useTime/1000);
 	}
 }
 
