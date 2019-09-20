@@ -1153,6 +1153,7 @@ void NFCMasterServerModule::OnServerErrorMsg(const uint32_t unLinkId, const uint
 	data.emplace("playerid", NFCommon::tostr(xMsg.player_id()));
 	data.emplace("funclog", xMsg.func_log());
 	data.emplace("errorlog", xMsg.error_log());
+	data.emplace("count", NFCommon::tostr(xMsg.count()));
 	FindModule<NFIAsyMysqlModule>()->UpdateOne("dy_error_msg", "id", NFCommon::tostr(error_log_id), data);
 #endif
 }

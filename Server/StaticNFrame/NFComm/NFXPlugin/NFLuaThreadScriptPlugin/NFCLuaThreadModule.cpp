@@ -327,7 +327,7 @@ void NFCLuaThreadModule::HandleLuaTcpMsg()
 				}
 				else if (pMsg->m_nMsgType == NFTcpMessage::ACTOR_TCP_MESSAGE_TYPE_ADD_ERROR_LOG_MSG)
 				{
-					SendErrorLog(pMsg->m_nPlayerID, pMsg->m_funcLog, pMsg->m_errorLog);
+					SendErrorLog(pMsg->m_nPlayerID, pMsg->m_funcLog, pMsg->m_errorLog, pMsg->m_nLen);
 				}
 			}
 			uint32_t count = listTask.size();
@@ -464,21 +464,16 @@ void NFCLuaThreadModule::SendMsgToMaster(uint32_t usLinkId, const uint64_t nPlay
 	}
 }
 
-void NFCLuaThreadModule::SendErrorLog(uint64_t playerId, const std::string& func_log, const std::string& errorLog)
+void NFCLuaThreadModule::SendErrorLog(uint64_t playerId, const std::string& func_log, const std::string& errorLog, uint32_t count)
 {
 	NFMsg::ServerErrorLogMsg msg;
 	msg.set_error_log(errorLog);
 	msg.set_func_log(func_log);
 	msg.set_player_id(playerId);
 	msg.set_server_name(m_pPluginManager->GetAppName());
+	msg.set_count(count);
 
-	std::string md5 = NFMMOMD5(errorLog).toStr();
-	auto iter = m_errorLog.find(md5);
-	if (iter == m_errorLog.end())
-	{
-		m_errorLog[md5] = errorLog;
-		NFEventMgr::Instance()->FireExecute(NFEVENT_LUA_ERROR_LOG, playerId, 0, msg);
-	}
+	NFEventMgr::Instance()->FireExecute(NFEVENT_LUA_ERROR_LOG, playerId, 0, msg);
 }
 
 void NFCLuaThreadModule::OnAccountEventCallBack(uint32_t nEvent, uint32_t unLinkId, NF_SHARE_PTR<PlayerGameServerInfo> pServerData)
@@ -582,13 +577,14 @@ void NFCLuaThreadModule::AddMsgToMaster(uint32_t usLinkId, const uint64_t nPlaye
 	m_mTcpMsgQueue.Push(msg);
 }
 
-void NFCLuaThreadModule::AddErrorLog(uint64_t playerId, const std::string& func_log, const std::string& errorLog)
+void NFCLuaThreadModule::AddErrorLog(uint64_t playerId, const std::string& func_log, const std::string& errorLog, uint32_t count)
 {
 	NFTcpMessage msg;
 	msg.m_nMsgType = NFTcpMessage::ACTOR_TCP_MESSAGE_TYPE_ADD_ERROR_LOG_MSG;
 	msg.m_nPlayerID = playerId;
 	msg.m_errorLog = errorLog;
 	msg.m_funcLog = func_log;
+	msg.m_nLen = count;
 
 	m_mTcpMsgQueue.Push(msg);
 }

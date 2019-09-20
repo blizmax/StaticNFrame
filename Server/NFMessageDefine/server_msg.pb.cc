@@ -134,6 +134,7 @@ const ::google::protobuf::uint32 TableStruct::offsets[] GOOGLE_PROTOBUF_ATTRIBUT
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::NFMsg::ServerErrorLogMsg, func_log_),
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::NFMsg::ServerErrorLogMsg, player_id_),
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::NFMsg::ServerErrorLogMsg, server_name_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::NFMsg::ServerErrorLogMsg, count_),
 };
 static const ::google::protobuf::internal::MigrationSchema schemas[] GOOGLE_PROTOBUF_ATTRIBUTE_SECTION_VARIABLE(protodesc_cold) = {
   { 0, -1, sizeof(::NFMsg::ServerInfoReport)},
@@ -181,15 +182,15 @@ void AddDescriptorsImpl() {
       "\t\022\020\n\010proc_cwd\030\022 \001(\t\022\020\n\010proc_pid\030\023 \001(\r\022\021\n"
       "\tlast_date\030\024 \001(\t\022\021\n\tlast_time\030\025 \001(\004\"D\n\024S"
       "erverInfoReportList\022,\n\013server_list\030\001 \003(\013"
-      "2\027.NFMsg.ServerInfoReport\"`\n\021ServerError"
+      "2\027.NFMsg.ServerInfoReport\"o\n\021ServerError"
       "LogMsg\022\021\n\terror_log\030\001 \001(\t\022\020\n\010func_log\030\002 "
       "\001(\t\022\021\n\tplayer_id\030\003 \001(\004\022\023\n\013server_name\030\004 "
-      "\001(\t*Z\n\014EServerState\022\r\n\tEST_CRASH\020\000\022\016\n\nES"
-      "T_NARMAL\020\001\022\014\n\010EST_BUSY\020\002\022\014\n\010EST_FIRE\020\003\022\017"
-      "\n\013EST_MAINTEN\020\004b\006proto3"
+      "\001(\t\022\r\n\005count\030\005 \001(\r*Z\n\014EServerState\022\r\n\tES"
+      "T_CRASH\020\000\022\016\n\nEST_NARMAL\020\001\022\014\n\010EST_BUSY\020\002\022"
+      "\014\n\010EST_FIRE\020\003\022\017\n\013EST_MAINTEN\020\004b\006proto3"
   };
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
-      descriptor, 743);
+      descriptor, 758);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "server_msg.proto", &protobuf_RegisterTypes);
 }
@@ -1541,6 +1542,7 @@ const int ServerErrorLogMsg::kErrorLogFieldNumber;
 const int ServerErrorLogMsg::kFuncLogFieldNumber;
 const int ServerErrorLogMsg::kPlayerIdFieldNumber;
 const int ServerErrorLogMsg::kServerNameFieldNumber;
+const int ServerErrorLogMsg::kCountFieldNumber;
 #endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
 
 ServerErrorLogMsg::ServerErrorLogMsg()
@@ -1566,7 +1568,9 @@ ServerErrorLogMsg::ServerErrorLogMsg(const ServerErrorLogMsg& from)
   if (from.server_name().size() > 0) {
     server_name_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.server_name_);
   }
-  player_id_ = from.player_id_;
+  ::memcpy(&player_id_, &from.player_id_,
+    static_cast<size_t>(reinterpret_cast<char*>(&count_) -
+    reinterpret_cast<char*>(&player_id_)) + sizeof(count_));
   // @@protoc_insertion_point(copy_constructor:NFMsg.ServerErrorLogMsg)
 }
 
@@ -1574,7 +1578,9 @@ void ServerErrorLogMsg::SharedCtor() {
   error_log_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   func_log_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   server_name_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-  player_id_ = GOOGLE_ULONGLONG(0);
+  ::memset(&player_id_, 0, static_cast<size_t>(
+      reinterpret_cast<char*>(&count_) -
+      reinterpret_cast<char*>(&player_id_)) + sizeof(count_));
 }
 
 ServerErrorLogMsg::~ServerErrorLogMsg() {
@@ -1611,7 +1617,9 @@ void ServerErrorLogMsg::Clear() {
   error_log_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   func_log_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   server_name_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-  player_id_ = GOOGLE_ULONGLONG(0);
+  ::memset(&player_id_, 0, static_cast<size_t>(
+      reinterpret_cast<char*>(&count_) -
+      reinterpret_cast<char*>(&player_id_)) + sizeof(count_));
   _internal_metadata_.Clear();
 }
 
@@ -1687,6 +1695,20 @@ bool ServerErrorLogMsg::MergePartialFromCodedStream(
         break;
       }
 
+      // uint32 count = 5;
+      case 5: {
+        if (static_cast< ::google::protobuf::uint8>(tag) ==
+            static_cast< ::google::protobuf::uint8>(40u /* 40 & 0xFF */)) {
+
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                 input, &count_)));
+        } else {
+          goto handle_unusual;
+        }
+        break;
+      }
+
       default: {
       handle_unusual:
         if (tag == 0) {
@@ -1748,6 +1770,11 @@ void ServerErrorLogMsg::SerializeWithCachedSizes(
       4, this->server_name(), output);
   }
 
+  // uint32 count = 5;
+  if (this->count() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(5, this->count(), output);
+  }
+
   if ((_internal_metadata_.have_unknown_fields() &&  ::google::protobuf::internal::GetProto3PreserveUnknownsDefault())) {
     ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
         (::google::protobuf::internal::GetProto3PreserveUnknownsDefault()   ? _internal_metadata_.unknown_fields()   : _internal_metadata_.default_instance()), output);
@@ -1800,6 +1827,11 @@ void ServerErrorLogMsg::SerializeWithCachedSizes(
         4, this->server_name(), target);
   }
 
+  // uint32 count = 5;
+  if (this->count() != 0) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(5, this->count(), target);
+  }
+
   if ((_internal_metadata_.have_unknown_fields() &&  ::google::protobuf::internal::GetProto3PreserveUnknownsDefault())) {
     target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
         (::google::protobuf::internal::GetProto3PreserveUnknownsDefault()   ? _internal_metadata_.unknown_fields()   : _internal_metadata_.default_instance()), target);
@@ -1845,6 +1877,13 @@ size_t ServerErrorLogMsg::ByteSizeLong() const {
         this->player_id());
   }
 
+  // uint32 count = 5;
+  if (this->count() != 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::UInt32Size(
+        this->count());
+  }
+
   int cached_size = ::google::protobuf::internal::ToCachedSize(total_size);
   SetCachedSize(cached_size);
   return total_size;
@@ -1887,6 +1926,9 @@ void ServerErrorLogMsg::MergeFrom(const ServerErrorLogMsg& from) {
   if (from.player_id() != 0) {
     set_player_id(from.player_id());
   }
+  if (from.count() != 0) {
+    set_count(from.count());
+  }
 }
 
 void ServerErrorLogMsg::CopyFrom(const ::google::protobuf::Message& from) {
@@ -1920,6 +1962,7 @@ void ServerErrorLogMsg::InternalSwap(ServerErrorLogMsg* other) {
   server_name_.Swap(&other->server_name_, &::google::protobuf::internal::GetEmptyStringAlreadyInited(),
     GetArenaNoVirtual());
   swap(player_id_, other->player_id_);
+  swap(count_, other->count_);
   _internal_metadata_.Swap(&other->_internal_metadata_);
 }
 

@@ -47,4 +47,5 @@ message ServerErrorLogMsg
 	string func_log = 2;
 	uint64 player_id = 3;
 	string server_name = 4;
+	uint32 count = 5;
 }

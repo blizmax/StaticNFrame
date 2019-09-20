@@ -627,6 +627,12 @@ class ServerErrorLogMsg : public ::google::protobuf::Message /* @@protoc_inserti
   ::google::protobuf::uint64 player_id() const;
   void set_player_id(::google::protobuf::uint64 value);
 
+  // uint32 count = 5;
+  void clear_count();
+  static const int kCountFieldNumber = 5;
+  ::google::protobuf::uint32 count() const;
+  void set_count(::google::protobuf::uint32 value);
+
   // @@protoc_insertion_point(class_scope:NFMsg.ServerErrorLogMsg)
  private:
 
@@ -635,6 +641,7 @@ class ServerErrorLogMsg : public ::google::protobuf::Message /* @@protoc_inserti
   ::google::protobuf::internal::ArenaStringPtr func_log_;
   ::google::protobuf::internal::ArenaStringPtr server_name_;
   ::google::protobuf::uint64 player_id_;
+  ::google::protobuf::uint32 count_;
   mutable ::google::protobuf::internal::CachedSize _cached_size_;
   friend struct ::protobuf_server_5fmsg_2eproto::TableStruct;
 };
@@ -1386,6 +1393,20 @@ inline void ServerErrorLogMsg::set_allocated_server_name(::std::string* server_n
   }
   server_name_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), server_name);
   // @@protoc_insertion_point(field_set_allocated:NFMsg.ServerErrorLogMsg.server_name)
+}
+
+// uint32 count = 5;
+inline void ServerErrorLogMsg::clear_count() {
+  count_ = 0u;
+}
+inline ::google::protobuf::uint32 ServerErrorLogMsg::count() const {
+  // @@protoc_insertion_point(field_get:NFMsg.ServerErrorLogMsg.count)
+  return count_;
+}
+inline void ServerErrorLogMsg::set_count(::google::protobuf::uint32 value) {
+  
+  count_ = value;
+  // @@protoc_insertion_point(field_set:NFMsg.ServerErrorLogMsg.count)
 }
 
 #ifdef __GNUC__

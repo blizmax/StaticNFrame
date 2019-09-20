@@ -288,9 +288,9 @@ uint64_t NFCLuaScriptComponent::GetSecTime() const
 	return NFTime::Now().UnixSec();
 }
 
-void NFCLuaScriptComponent::SendErrorLog(uint64_t playerId, const std::string& func_log, const std::string& errorLog)
+void NFCLuaScriptComponent::SendErrorLog(uint64_t playerId, const std::string& func_log, const std::string& errorLog, uint32_t count)
 {
-	m_pLuaThreadModule->AddErrorLog(playerId, func_log, errorLog);
+	m_pLuaThreadModule->AddErrorLog(playerId, func_log, errorLog, count);
 }
 
 bool NFCLuaScriptComponent::Register()
