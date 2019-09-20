@@ -612,6 +612,7 @@ public:
 		if (pTask)
 		{
 			pTask->ThreadProcess();
+			//lua_gc(GetLuaState(), LUA_GCCOLLECT, 0);
 		}
 	}
 
