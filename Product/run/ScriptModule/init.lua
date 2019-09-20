@@ -93,6 +93,10 @@ function LuaNFrame.InitScript(luaModule)
 
 		--记录所有文件的当前修改时间，为以后热更新做准备, 时间大概300ms
 		NFLuaReload.RecordAllFilesTimes()
+
+		--启动垃圾回收
+		collectgarbage("setpause",100)
+		collectgarbage("setstepmul",5000)
 	end
 	
 	local status, msg = xpcall (timerExecute, __G__TRACKBACK__)

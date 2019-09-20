@@ -211,7 +211,7 @@ void NFCLuaThreadModule::OnTimer(uint32_t nTimerID)
 	}
 	if (nTimerID == EnumLuaThreadModule_GC)
 	{
-		GcStep();
+		//GcStep();
 	}
 }
 

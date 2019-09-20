@@ -594,7 +594,7 @@ void NFCLuaScriptComponent::RunNetRecvLuaFunc(const std::string& luaFunc, const 
 void NFCLuaScriptComponent::GcStep()
 {
 	//lua_gc(GetLuaState(), LUA_GCSTEP, 0);
-	lua_gc(GetLuaState(), LUA_GCCOLLECT, 0);
+	//lua_gc(GetLuaState(), LUA_GCCOLLECT, 0);
 }
 
 void NFCLuaScriptComponent::TcpSessionClose(uint64_t playerId)
