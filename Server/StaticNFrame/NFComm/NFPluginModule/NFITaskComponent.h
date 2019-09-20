@@ -82,6 +82,16 @@ public:
 	{
 		m_componentName = name;
 	}
+
+	virtual void HandleTaskDeadCycle(const std::string& taskName, uint64_t useTime)
+	{
+
+	}
+
+	virtual void HandleTaskTimeOut(const std::string& taskName, uint64_t useTime)
+	{
+
+	}
 private:
 	int mActorId;
 	std::string m_componentName;

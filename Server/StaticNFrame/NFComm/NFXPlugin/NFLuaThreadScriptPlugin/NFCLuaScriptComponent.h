@@ -611,9 +611,7 @@ public:
 	{
 		if (pTask)
 		{
-			uint64_t startTime = NFGetTime();
 			pTask->ThreadProcess();
-			pTask->m_useTime = NFGetTime() - startTime;
 		}
 	}
 
@@ -626,6 +624,29 @@ public:
 		}
 	}
 
+	static void TimeOutBreak(lua_State* L, lua_Debug* ar)
+	{
+		lua_sethook(L, NULL, 0, 0);
+		luaL_error(L, "script timeout.");
+	}
+
+	virtual void HandleTaskDeadCycle(const std::string& taskName, uint64_t useTime)
+	{
+		if (useTime > 20000)
+		{
+			NFLogError(NF_LOG_SYSTEMLOG, 0, "asyc task:{} use time:{}, DEAD CYCLE in the actor:{} actorId:{}, the system will kill the lua func", taskName, useTime, GetComponentName(), GetActorId());
+			int mask = LUA_MASKCALL | LUA_MASKRET | LUA_MASKLINE | LUA_MASKCOUNT;
+			lua_sethook(GetLuaState(), TimeOutBreak, mask, 1);
+		}
+	}
+
+	virtual void HandleTaskTimeOut(const std::string& taskName, uint64_t useTime)
+	{
+		if (useTime > 1000)
+		{
+			NFLogWarning(NF_LOG_SYSTEMLOG, 0, "asyc task:{} use time:{}, may be dead cycle in the actor:{} actorId:{}", taskName, useTime, GetComponentName(), GetActorId());
+		}
+	}
 public:
 	virtual uint32_t AddTimer(const std::string& luaFunc, uint64_t nInterVal, uint32_t nCallCount, const NFLuaRef& dataStr);
 	virtual uint32_t AddClocker(const std::string& luaFunc, uint64_t nStartTime, uint32_t nInterDays, uint32_t nCallCount, const NFLuaRef& dataStr);

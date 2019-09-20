@@ -130,20 +130,6 @@ public:
 	virtual void MonitorTask(NFTask* pTask) = 0;
 
 	/**
-	* @brief 监控Task执行时间
-	*
-	* @return
-	*/
-	virtual void MonitorStartTask(NFTask* pTask) = 0;
-
-	/**
-	* @brief 监控Task执行时间
-	*
-	* @return
-	*/
-	virtual void MonitorEndTask(NFTask* pTask) = 0;
-
-	/**
 	* @brief 获取所有ActorId
 	*
 	* @return

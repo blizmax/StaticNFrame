@@ -97,16 +97,7 @@ bool NFCTaskModule::Execute()
 
 	if (m_loopCount % 30 == 0)
 	{
-		mMonitorTimeMutex.Lock();
-		for (auto iter = m_taskMonitorTimeMap.begin(); iter != m_taskMonitorTimeMap.end(); iter++)
-		{
-			uint64_t useTime = NFGetTime() - iter->second;
-			if (useTime > 5000)
-			{
-				NFLogError(NF_LOG_ACTOR_PLUGIN, 0, "asyc task:{} use time:{}, may be dead cycle", iter->first, useTime);
-			}
-		}
-		mMonitorTimeMutex.Unlock();
+		CheckTimeOutTask();
 	}
 
 	return true;
@@ -446,29 +437,19 @@ void NFCTaskModule::MonitorTask(NFTask* pTask)
 }
 
 /**
-* @brief 监控Task执行时间
+* @brief 检查超时
 *
 * @return
 */
-void NFCTaskModule::MonitorStartTask(NFTask* pTask)
+void NFCTaskModule::CheckTimeOutTask()
 {
-	mMonitorTimeMutex.Lock();
-	std::string name = "thread:" + NFCommon::tostr(ThreadId()) + "--task:" + pTask->m_taskName;
-	m_taskMonitorTimeMap[name] = NFGetTime();
-	mMonitorTimeMutex.Unlock();
-}
-
-/**
-* @brief 监控Task执行时间
-*
-* @return
-*/
-void NFCTaskModule::MonitorEndTask(NFTask* pTask)
-{
-	mMonitorTimeMutex.Lock();
-	std::string name = "thread:" + NFCommon::tostr(ThreadId()) + "--task:" + pTask->m_taskName;
-	m_taskMonitorTimeMap.erase(name);
-	mMonitorTimeMutex.Unlock();
+	for (size_t i = 0; i < m_vecActorPool.size(); i++)
+	{
+		if (m_vecActorPool[i])
+		{
+			m_vecActorPool[i]->CheckTimeoutTask();
+		}
+	}
 }
 
 void NFCTaskModule::OnMainThreadTick()

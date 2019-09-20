@@ -4,7 +4,8 @@
 
 #include <vector>
 #include <Theron/Theron.h>
-
+#include <atomic>
+#include "NFComm/NFCore/NFMutex.h"
 class NFTask;
 class NFITaskModule;
 class NFITaskComponent;
@@ -174,6 +175,14 @@ public:
 	* @return
 	*/
 	virtual void ProcessTask(NFTask* pTask);
+
+	/**
+	* @brief 检查超时task, 在主线程处理
+	*
+	* @param 
+	* @return
+	*/
+	virtual void CheckTimeoutTask();
 protected:
 	/**
 	* @brief 异步处理的过程
@@ -193,4 +202,16 @@ protected:
 	* @brief component管理
 	*/
 	NFITaskComponent* m_pComponent;
+
+	/**
+	* @brief 当前task执行开始时间
+	*/
+	std::atomic<uint64_t> m_curTaskStartTime;
+
+	/**
+	* @brief component管理, 当前正在处理的task
+	*/
+	NFTask* m_pCurProcessTask;
+
+	NFMutex m_curCheckMutex;
 };

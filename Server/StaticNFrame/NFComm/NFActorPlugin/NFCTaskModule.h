@@ -177,19 +177,13 @@ public:
 	*/
 	virtual void MonitorTask(NFTask* pTask);
 
-	/**
-	* @brief 监控Task执行时间
-	*
-	* @return
-	*/
-	virtual void MonitorStartTask(NFTask* pTask);
 
 	/**
-	* @brief 监控Task执行时间
+	* @brief 检查超时
 	*
 	* @return
 	*/
-	virtual void MonitorEndTask(NFTask* pTask);
+	virtual void CheckTimeOutTask();
 
 	/**
 	* @brief 获取所有ActorId

@@ -2,6 +2,7 @@
 #include "NFComm/NFPluginModule/NFTask.h"
 #include "NFComm/NFPluginModule/NFITaskModule.h"
 #include "NFComm/NFPluginModule/NFITaskComponent.h"
+#include "NFComm/NFPluginModule/NFLogMgr.h"
 
 /**
 * @brief 构造函数
@@ -11,6 +12,9 @@ NFTaskActor::NFTaskActor(Theron::Framework& framework, NFITaskModule* pTaskModul
 {
 	RegisterHandler(this, &NFTaskActor::DefaultHandler);
 	m_pTaskModule = pTaskModule;
+	m_curTaskStartTime = 0;
+	m_pCurProcessTask = nullptr;
+	m_pComponent = nullptr;
 }
 
 /**
@@ -65,13 +69,10 @@ void NFTaskActor::Handler(const NFTaskActorMessage& message, const Theron::Addre
 	NFTask* pTask = message.pData;
 	if (pTask)
 	{
-		m_pTaskModule->MonitorStartTask(pTask);
 		ProcessTaskStart(pTask);
 		ProcessTask(pTask);
 		ProcessTaskEnd(pTask);
-		m_pTaskModule->MonitorEndTask(pTask);
 
-		m_pTaskModule->MonitorTask(pTask);
 		if (pTask->IsNeedMainThreadProcess() == false)
 		{
 			NF_SAFE_DELETE(pTask);
@@ -119,7 +120,65 @@ void NFTaskActor::ProcessTask(NFTask* pTask)
 {
 	if (m_pComponent)
 	{
+		m_curCheckMutex.Lock();
+		m_pCurProcessTask = pTask;
+		m_curTaskStartTime = NFGetTime();
+		m_curCheckMutex.Unlock();
+
 		m_pComponent->ProcessTask(pTask);
+
+		m_curCheckMutex.Lock();
+		pTask->m_useTime = NFGetTime() - m_curTaskStartTime;
+		m_curTaskStartTime = 0;
+		m_pCurProcessTask = nullptr;
+		m_curCheckMutex.Unlock();
+
+		m_pTaskModule->MonitorTask(pTask);
+	}
+}
+
+/**
+* @brief 检查超时task, 在主线程处理
+*
+* @param
+* @return
+*/
+void NFTaskActor::CheckTimeoutTask()
+{
+	if (m_pComponent == nullptr)
+	{
+		return;
+	}
+
+	bool checktimeout = false;
+	bool checkdeadcycle = false;
+	uint64_t useTime = 0;
+	std::string taskName;
+	m_curCheckMutex.Lock();
+	if (m_pCurProcessTask && m_curTaskStartTime > 0)
+	{
+		useTime = NFGetTime() - m_curTaskStartTime;
+		taskName = m_pCurProcessTask->m_taskName;
+		if (m_curTaskStartTime > 0 && useTime > 1000)
+		{
+			checktimeout = true;
+		}
+
+		if (m_curTaskStartTime > 0 && useTime > 1000)
+		{
+			checkdeadcycle = true;
+		}
+	}
+	m_curCheckMutex.Unlock();
+
+	if (checktimeout)
+	{
+		m_pComponent->HandleTaskTimeOut(taskName, useTime);
+	}
+
+	if (checkdeadcycle)
+	{
+		m_pComponent->HandleTaskDeadCycle(taskName, useTime);
 	}
 }
 
