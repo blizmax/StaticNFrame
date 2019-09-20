@@ -178,6 +178,6 @@ function CPPNFrame:IsThreadModule()
     return self.luaModule:IsThreadModule()
 end
 
-function CPPNFrame:SendErrorLog(playerId, func_log, errorLog)
-    return self.luaModule:SendErrorLog(playerId, func_log, errorLog)
+function CPPNFrame:SendErrorLog(playerId, func_log, errorLog, count)
+    return self.luaModule:SendErrorLog(playerId, func_log, errorLog, count)
 end

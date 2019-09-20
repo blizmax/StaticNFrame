@@ -247,9 +247,17 @@ function LuaNFrame.SendErrorLog(playerId, func_log, errorLog)
 	LuaNFrame.Error(NFLogId.NF_LOG_SYSTEMLOG, playerId, errorLog)
 
 	local error_md5 = LuaNFrame.GetMD5(errorLog)
-	if LuaNFrame.ErrorLogMsg[error_md5] == nil then
-		LuaNFrame.ErrorLogMsg[error_md5] = errorLog
-		CPPNFrame:SendErrorLog(playerId, func_log, errorLog)
+	if LuaNFrame.ErrorLogMsg[error_md5] == nil or type(LuaNFrame.ErrorLogMsg[error_md5]) ~= "number" then
+		LuaNFrame.ErrorLogMsg[error_md5] = 1
+		CPPNFrame:SendErrorLog(playerId, func_log, errorLog, 1)
+	else
+		LuaNFrame.ErrorLogMsg[error_md5] = LuaNFrame.ErrorLogMsg[error_md5] + 1
+		local count = LuaNFrame.ErrorLogMsg[error_md5]
+		if count == 10 or count == 30 or count == 50 then
+			CPPNFrame:SendErrorLog(playerId, func_log, errorLog, count)
+		elseif count % 50 == 0 then
+			CPPNFrame:SendErrorLog(playerId, func_log, errorLog, count)
+		end
 	end
 end
 
