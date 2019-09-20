@@ -624,26 +624,43 @@ public:
 		}
 	}
 
+	/*
+	actor线程执行
+	*/
 	static void TimeOutBreak(lua_State* L, lua_Debug* ar)
 	{
 		lua_sethook(L, NULL, 0, 0);
 		luaL_error(L, "script timeout.");
 	}
 
+	/*
+	主线程执行
+	*/
 	virtual void HandleTaskDeadCycle(const std::string& taskName, uint64_t useTime)
 	{
 		if (useTime > 20000)
 		{
+			if (taskName == "WorkTask_Load" || taskName == "ServerLoopTask_Load" || taskName == "ServerLoopTask_init" || taskName == "TcpMsgTask_Load")
+			{
+				return;
+			}
 			NFLogError(NF_LOG_SYSTEMLOG, 0, "asyc task:{} use time:{}, DEAD CYCLE in the actor:{} actorId:{}, the system will kill the lua func", taskName, useTime, GetComponentName(), GetActorId());
 			int mask = LUA_MASKCALL | LUA_MASKRET | LUA_MASKLINE | LUA_MASKCOUNT;
 			lua_sethook(GetLuaState(), TimeOutBreak, mask, 1);
 		}
 	}
 
+	/*
+		主线程执行
+	*/
 	virtual void HandleTaskTimeOut(const std::string& taskName, uint64_t useTime)
 	{
 		if (useTime > 1000)
 		{
+			if (taskName == "WorkTask_Load" || taskName == "ServerLoopTask_Load" || taskName == "ServerLoopTask_init" || taskName == "TcpMsgTask_Load")
+			{
+				return;
+			}
 			NFLogWarning(NF_LOG_SYSTEMLOG, 0, "asyc task:{} use time:{}, may be dead cycle in the actor:{} actorId:{}", taskName, useTime, GetComponentName(), GetActorId());
 		}
 	}
