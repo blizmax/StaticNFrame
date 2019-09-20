@@ -1138,7 +1138,7 @@ void NFCMasterServerModule::OnServerErrorMsg(const uint32_t unLinkId, const uint
 	NFMsg::ServerErrorLogMsg xMsg;
 	CLIENT_MSG_PROCESS_NO_OBJECT(nMsgId, playerId, msg, nLen, xMsg);
 
-//#if NF_PLATFORM == NF_PLATFORM_LINUX
+#if NF_PLATFORM == NF_PLATFORM_LINUX
 	static uint32_t error_log_id = 0;
 	if (error_log_id == 0)
 	{
@@ -1154,5 +1154,5 @@ void NFCMasterServerModule::OnServerErrorMsg(const uint32_t unLinkId, const uint
 	data.emplace("funclog", xMsg.func_log());
 	data.emplace("errorlog", xMsg.error_log());
 	FindModule<NFIAsyMysqlModule>()->UpdateOne("dy_error_msg", "id", NFCommon::tostr(error_log_id), data);
-//#endif
+#endif
 }
