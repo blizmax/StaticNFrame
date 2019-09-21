@@ -95,8 +95,8 @@ function LuaNFrame.InitScript(luaModule)
 		NFLuaReload.RecordAllFilesTimes()
 
 		--启动垃圾回收
-		collectgarbage("setpause",100)
-		collectgarbage("setstepmul",5000)
+		--collectgarbage("setpause",100)
+		--collectgarbage("setstepmul",5000)
 	end
 	
 	local status, msg = xpcall (timerExecute, __G__TRACKBACK__)

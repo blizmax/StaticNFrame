@@ -177,6 +177,8 @@ public:
 		m_pNetClientModule = nullptr;
 		m_pServerLoopTaskModule = nullptr;
 		m_pWorkTaskModule = nullptr;
+		m_finishLuaLoad = 0;
+		m_finishInitServerLoop = 0;
 	}
 
 	virtual ~NFCLuaThreadModule()
@@ -194,8 +196,6 @@ public:
 	virtual bool BeforeShut();
 	virtual bool Shut();
 	virtual bool Finalize();
-
-	virtual bool IsInitLua();
 
 	virtual void OnTimer(uint32_t nTimerID);
 
@@ -226,6 +226,9 @@ public:
 	virtual void ReloadLuaFiles() override;
 	virtual void ReloadLuaFiles(const std::vector<std::string>& vecStr) override;
 	virtual void GcStep();
+	virtual void UpdateMin();
+	virtual void UpdateHour();
+	virtual void UpdateDay();
 public:
 	/**
 	* @brief 添加一个work Actor组件
@@ -304,6 +307,11 @@ public:
 	处理多线程LUA发过来的消息
 	*/
 	void HandleLuaTcpMsg();
+
+	void AddFinishLoad();
+	void AddFinishInitServerLoop();
+	bool IsFinishAllLoad();
+	bool IsFinishAllInitServerLoop();
 public:
 	void OnAccountEventCallBack(uint32_t nEvent, uint32_t unLinkId, NF_SHARE_PTR<PlayerGameServerInfo> pServerData);
 	NF_SHARE_PTR<PlayerGameServerInfo> GetPlayerInfo(uint64_t playerId);
@@ -361,4 +369,14 @@ protected:
 	* @brief tcp actor索引数组
 	*/
 	std::vector<int> m_vecTcpMsgActorPool;
+
+	/**
+	* @brief actor 完成加载次数
+	*/
+	uint32_t m_finishLuaLoad;
+
+	/**
+	* @brief actor 完成初始化循环次数
+	*/
+	uint32_t m_finishInitServerLoop;
 };

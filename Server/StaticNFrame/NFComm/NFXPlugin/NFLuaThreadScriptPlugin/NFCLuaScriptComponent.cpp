@@ -49,7 +49,6 @@ bool NFWorkActorLoadTask::ThreadProcess()
 	{
 		m_pComponent->Register();
 		m_pComponent->LoadScript();
-		m_pComponent->SetInitLua(true);
 	}
 	return true;
 }
@@ -69,14 +68,13 @@ bool NFServerLoopLoadTask::ThreadProcess()
 	{
 		m_pComponent->Register();
 		m_pComponent->LoadScript();
-		m_pComponent->SetInitLua(true);
 	}
 	return true;
 }
 
 NFServerLoopLoadTask::TPTaskState NFServerLoopLoadTask::MainThreadProcess()
 {
-	m_pLuaThreadModule->SetTimer(EnumLuaThreadModule_Init, 1, INFINITY_CALL);
+	m_pLuaThreadModule->AddFinishLoad();
 	return TPTASK_STATE_COMPLETED;
 }
 
@@ -91,8 +89,7 @@ bool NFServerLoopInitTask::ThreadProcess()
 
 NFServerLoopTask::TPTaskState NFServerLoopInitTask::MainThreadProcess()
 {
-	m_pLuaThreadModule->SetTimer(EnumLuaThreadModule_Loop, 1000, INFINITY_CALL);
-	m_pLuaThreadModule->SetTimer(EnumLuaThreadModule_GC, 1000, INFINITY_CALL);
+	m_pLuaThreadModule->AddFinishInitServerLoop();
 	return TPTASK_STATE_COMPLETED;
 }
 
@@ -116,7 +113,6 @@ bool NFTcpMsgActorLoadTask::ThreadProcess()
 	{
 		m_pComponent->Register();
 		m_pComponent->LoadScript();
-		m_pComponent->SetInitLua(true);
 	}
 	return true;
 }
@@ -204,6 +200,33 @@ bool NFLuaGcActorTask::ThreadProcess()
 	return true;
 }
 
+bool NFLuaMinActorTask::ThreadProcess()
+{
+	if (m_pComponent)
+	{
+		m_pComponent->TryRunGlobalScriptFunc("LuaNFrame.UpdateMin");
+	}
+	return true;
+}
+
+bool NFLuaHourActorTask::ThreadProcess()
+{
+	if (m_pComponent)
+	{
+		m_pComponent->TryRunGlobalScriptFunc("LuaNFrame.UpdateHour");
+	}
+	return true;
+}
+
+bool NFLuaDayActorTask::ThreadProcess()
+{
+	if (m_pComponent)
+	{
+		m_pComponent->TryRunGlobalScriptFunc("LuaNFrame.UpdateDay");
+	}
+	return true;
+}
+
 /**
 **  异步线程处理函数，将在另一个线程里运行
 */
@@ -231,7 +254,6 @@ bool NFTcpSessionReportActorTask::ThreadProcess()
 
 NFCLuaScriptComponent::NFCLuaScriptComponent(NFCLuaThreadModule* pLuaThreadModule, NFIPluginManager* p)
 {
-	m_initLua = false;
 	m_pLuaThreadModule = pLuaThreadModule;
 	m_pPluginManager = p;
 	m_pLogModule = m_pPluginManager->FindModule<NFILogModule>();

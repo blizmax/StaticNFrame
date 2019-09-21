@@ -241,6 +241,21 @@ function LuaNFrame.SetFlushOn(level)
     CPPNFrame:SetFlushOn(level)
 end
 
+--对于每一个actor,每一份lua， 每一分钟的0秒执行这个函数
+function LuaNFrame.UpdateMin()
+	LuaNFrame.Error(NFLogId.NF_LOG_SYSTEMLOG, 0,  "LuaNFrame.UpdateMin")
+end
+
+--对于每一个actor,每一份lua， 每一小时的0秒执行这个函数
+function LuaNFrame.UpdateHour()
+	LuaNFrame.Error(NFLogId.NF_LOG_SYSTEMLOG, 0,  "LuaNFrame.UpdateHour")
+end
+
+--对于每一个actor,每一份lua， 每一天的0秒执行这个函数
+function LuaNFrame.UpdateDay()
+	LuaNFrame.Error(NFLogId.NF_LOG_SYSTEMLOG, 0,  "LuaNFrame.UpdateDay")
+end
+
 LuaNFrame.ErrorLogMsg = LuaNFrame.ErrorLogMsg or {}
 function LuaNFrame.SendErrorLog(playerId, func_log, errorLog)
 	LuaNFrame.Error(NFLogId.NF_LOG_SYSTEMLOG, playerId,  func_log)

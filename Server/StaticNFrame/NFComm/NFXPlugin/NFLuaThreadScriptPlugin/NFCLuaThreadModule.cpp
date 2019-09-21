@@ -144,46 +144,6 @@ bool NFCLuaThreadModule::Finalize()
 	return true;
 }
 
-bool  NFCLuaThreadModule::IsInitLua()
-{
-	for (size_t i = 0; i < m_vecWorkActorPool.size(); i++)
-	{
-		int actorId = m_vecWorkActorPool[i];
-		NFCLuaScriptComponent* pComponent = dynamic_cast<NFCLuaScriptComponent*>(m_pWorkTaskModule->GetTaskComponent(actorId));
-		if (pComponent)
-		{
-			if (pComponent->IsInitLua() == false)
-			{
-				return false;
-			}
-		}
-	}
-
-	for (size_t i = 0; i < m_vecTcpMsgActorPool.size(); i++)
-	{
-		int actorId = m_vecTcpMsgActorPool[i];
-		NFCLuaScriptComponent* pComponent = dynamic_cast<NFCLuaScriptComponent*>(m_pTcpMsgTaskModule->GetTaskComponent(actorId));
-		if (pComponent)
-		{
-			if (pComponent->IsInitLua() == false)
-			{
-				return false;
-			}
-		}
-	}
-
-	NFCLuaScriptComponent* pComponent = dynamic_cast<NFCLuaScriptComponent*>(m_pServerLoopTaskModule->GetTaskComponent(m_processLoopActorId));
-	if (pComponent)
-	{
-		if (pComponent->IsInitLua() == false)
-		{
-			return false;
-		}
-	}
-
-	return true;
-}
-
 void NFCLuaThreadModule::OnTimer(uint32_t nTimerID)
 {
 	if (nTimerID == EnumLuaThreadModule_LOAD)
@@ -191,27 +151,53 @@ void NFCLuaThreadModule::OnTimer(uint32_t nTimerID)
 		m_pServerLoopTaskModule->AddTaskToEveryActor(NFServerLoopLoadTask(this));
 		m_pWorkTaskModule->AddTaskToEveryActor(NFWorkActorLoadTask(this));
 		m_pTcpMsgTaskModule->AddTaskToEveryActor(NFTcpMsgActorLoadTask(this));
+		SetTimer(EnumLuaThreadModule_Init, 100, INFINITY_CALL);
 	}
-	if (nTimerID == EnumLuaThreadModule_Init)
+	else if (nTimerID == EnumLuaThreadModule_Init)
 	{
-		if (IsInitLua())
+		if (IsFinishAllLoad())
 		{
 			KillTimer(EnumLuaThreadModule_Init);
 			AddProcessLoopTask(new NFServerLoopInitTask(this, "gametimer"));
 			AddProcessLoopTask(new NFServerLoopInitTask(this, "utilstimer"));
 			AddProcessLoopTask(new NFServerLoopInitTask(this, "logtimer"));
 			AddProcessLoopTask(new NFServerLoopInitTask(this, "pokertimer"));
+			SetTimer(EnumLuaThreadModule_WaitFinishInit, 100, INFINITY_CALL);
 		}
 	}
-	if (nTimerID == EnumLuaThreadModule_Loop)
+	else if (nTimerID == EnumLuaThreadModule_WaitFinishInit)
+	{
+		if (IsFinishAllInitServerLoop())
+		{
+			KillTimer(EnumLuaThreadModule_WaitFinishInit);
+			SetTimer(EnumLuaThreadModule_Loop, 1000, INFINITY_CALL);
+			//SetTimer(EnumLuaThreadModule_GC, 1000, INFINITY_CALL);
+			SetFixTimer(EnumLuaThreadModule_MIN, 0, 60, INFINITY_CALL);
+			SetFixTimer(EnumLuaThreadModule_HOUR, 0, 3600, INFINITY_CALL);
+			SetFixTimer(EnumLuaThreadModule_DAY, 0, 24*3600, INFINITY_CALL);
+		}
+	}
+	else if (nTimerID == EnumLuaThreadModule_Loop)
 	{
 		AddProcessLoopTask(new NFServerLoopTask(this, "logtimer"));
 		AddProcessLoopTask(new NFServerLoopTask(this, "gametimer"));
 		AddProcessLoopTask(new NFServerLoopTask(this, "utilstimer"));
 	}
-	if (nTimerID == EnumLuaThreadModule_GC)
+	else if (nTimerID == EnumLuaThreadModule_GC)
 	{
-		//GcStep();
+		GcStep();
+	}
+	else if (nTimerID == EnumLuaThreadModule_MIN)
+	{
+		UpdateMin();
+	}
+	else if (nTimerID == EnumLuaThreadModule_HOUR)
+	{
+		UpdateHour();
+	}
+	else if (nTimerID == EnumLuaThreadModule_DAY)
+	{
+		UpdateDay();
 	}
 }
 
@@ -792,4 +778,45 @@ void NFCLuaThreadModule::GcStep()
 	m_pServerLoopTaskModule->AddTaskToEveryActor(NFLuaGcActorTask(this));
 	m_pWorkTaskModule->AddTaskToEveryActor(NFLuaGcActorTask(this));
 	m_pTcpMsgTaskModule->AddTaskToEveryActor(NFLuaGcActorTask(this));
+}
+
+void NFCLuaThreadModule::UpdateMin()
+{
+	m_pServerLoopTaskModule->AddTaskToEveryActor(NFLuaMinActorTask(this));
+	m_pWorkTaskModule->AddTaskToEveryActor(NFLuaMinActorTask(this));
+	m_pTcpMsgTaskModule->AddTaskToEveryActor(NFLuaMinActorTask(this));
+}
+
+void NFCLuaThreadModule::UpdateHour()
+{
+	m_pServerLoopTaskModule->AddTaskToEveryActor(NFLuaHourActorTask(this));
+	m_pWorkTaskModule->AddTaskToEveryActor(NFLuaHourActorTask(this));
+	m_pTcpMsgTaskModule->AddTaskToEveryActor(NFLuaHourActorTask(this));
+}
+
+void NFCLuaThreadModule::UpdateDay()
+{
+	m_pServerLoopTaskModule->AddTaskToEveryActor(NFLuaDayActorTask(this));
+	m_pWorkTaskModule->AddTaskToEveryActor(NFLuaDayActorTask(this));
+	m_pTcpMsgTaskModule->AddTaskToEveryActor(NFLuaDayActorTask(this));
+}
+
+void  NFCLuaThreadModule::AddFinishLoad() 
+{ 
+	m_finishLuaLoad++; 
+}
+
+void  NFCLuaThreadModule::AddFinishInitServerLoop() 
+{ 
+	m_finishInitServerLoop++; 
+}
+
+bool  NFCLuaThreadModule::IsFinishAllLoad() 
+{ 
+	return m_finishLuaLoad == 1 + m_vecWorkActorPool.size() + m_vecTcpMsgActorPool.size(); 
+}
+
+bool  NFCLuaThreadModule::IsFinishAllInitServerLoop() 
+{ 
+	return m_finishInitServerLoop == 4; 
 }

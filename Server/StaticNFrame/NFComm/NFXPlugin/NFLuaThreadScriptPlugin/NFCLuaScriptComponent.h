@@ -36,9 +36,13 @@ enum EnumLuaThreadModule
 	EnumLuaThreadModule_NULL = 0,
 	EnumLuaThreadModule_LOAD = 1,
 	EnumLuaThreadModule_Init = 2,
-	EnumLuaThreadModule_Loop = 3,
-	EnumLuaThreadModule_Work = 4,
-	EnumLuaThreadModule_GC = 5,
+	EnumLuaThreadModule_WaitFinishInit = 3,
+	EnumLuaThreadModule_Loop = 4,
+	EnumLuaThreadModule_Work = 5,
+	EnumLuaThreadModule_GC = 6,
+	EnumLuaThreadModule_MIN = 7,
+	EnumLuaThreadModule_HOUR = 8,
+	EnumLuaThreadModule_DAY = 9,
 };
 
 class NFLuaThreadTask : public NFTask
@@ -65,7 +69,6 @@ public:
 		m_luaFunc = luaFunc;
 		m_param = param;
 		m_taskName = "WorkTask_Load";
-		m_needManThreadProcess = false;
 	}
 	/**
 	**  异步线程处理函数，将在另一个线程里运行
@@ -78,6 +81,7 @@ public:
 	*/
 	virtual TPTaskState MainThreadProcess()
 	{
+		m_pLuaThreadModule->AddFinishLoad();
 		return TPTASK_STATE_COMPLETED;
 	}
 public:
@@ -298,7 +302,6 @@ public:
 		m_strMsg = strMsg;
 
 		m_taskName = "TcpMsgTask_Load";
-		m_needManThreadProcess = false;
 	}
 
 	/**
@@ -312,6 +315,7 @@ public:
 	*/
 	virtual TPTaskState MainThreadProcess()
 	{
+		m_pLuaThreadModule->AddFinishLoad();
 		return TPTASK_STATE_COMPLETED;
 	}
 public:
@@ -456,6 +460,87 @@ public:
 	{
 		m_pLuaThreadModule = pLuaThreadModule;
 		m_taskName = "LuaGC";
+		m_needManThreadProcess = false;
+	}
+	/**
+	**  异步线程处理函数，将在另一个线程里运行
+	*/
+	virtual bool ThreadProcess();
+
+	/**
+	** 主线程处理函数，将在线程处理完后，提交给主先来处理，根据返回函数是否继续处理
+		返回值： thread::TPTask::TPTaskState， 请参看TPTaskState
+	*/
+	virtual TPTaskState MainThreadProcess()
+	{
+		return TPTASK_STATE_COMPLETED;
+	}
+};
+
+/**
+**  每一分钟每一个Actor执行一次这个任务
+*/
+class NFLuaMinActorTask : public NFLuaThreadTask
+{
+public:
+	NFLuaMinActorTask(NFCLuaThreadModule* pLuaThreadModule = nullptr)
+	{
+		m_pLuaThreadModule = pLuaThreadModule;
+		m_taskName = "LuaMinTask";
+		m_needManThreadProcess = false;
+	}
+	/**
+	**  异步线程处理函数，将在另一个线程里运行
+	*/
+	virtual bool ThreadProcess();
+
+	/**
+	** 主线程处理函数，将在线程处理完后，提交给主先来处理，根据返回函数是否继续处理
+		返回值： thread::TPTask::TPTaskState， 请参看TPTaskState
+	*/
+	virtual TPTaskState MainThreadProcess()
+	{
+		return TPTASK_STATE_COMPLETED;
+	}
+};
+
+/**
+**  每一小时每一个Actor执行一次这个任务
+*/
+class NFLuaHourActorTask : public NFLuaThreadTask
+{
+public:
+	NFLuaHourActorTask(NFCLuaThreadModule* pLuaThreadModule = nullptr)
+	{
+		m_pLuaThreadModule = pLuaThreadModule;
+		m_taskName = "LuaHourTask";
+		m_needManThreadProcess = false;
+	}
+	/**
+	**  异步线程处理函数，将在另一个线程里运行
+	*/
+	virtual bool ThreadProcess();
+
+	/**
+	** 主线程处理函数，将在线程处理完后，提交给主先来处理，根据返回函数是否继续处理
+		返回值： thread::TPTask::TPTaskState， 请参看TPTaskState
+	*/
+	virtual TPTaskState MainThreadProcess()
+	{
+		return TPTASK_STATE_COMPLETED;
+	}
+};
+
+/**
+**  每一天每一个Actor执行一次这个任务
+*/
+class NFLuaDayActorTask : public NFLuaThreadTask
+{
+public:
+	NFLuaDayActorTask(NFCLuaThreadModule* pLuaThreadModule = nullptr)
+	{
+		m_pLuaThreadModule = pLuaThreadModule;
+		m_taskName = "LuaDayTask";
 		m_needManThreadProcess = false;
 	}
 	/**
@@ -733,9 +818,6 @@ public:
 	virtual void BeginProfiler(const std::string& luaFunc);
 	virtual uint64_t EndProfiler();//return this time cost time(us) 微妙
 
-	virtual void SetInitLua(bool b) { m_initLua = b; }
-	virtual bool IsInitLua() const { return m_initLua; }
-
 	virtual void GcStep();
 
 	virtual void TcpSessionClose(uint64_t playerId);
@@ -748,5 +830,4 @@ public:
 protected:
 	NFILogModule* m_pLogModule;
 	NFCLuaThreadModule* m_pLuaThreadModule;
-	atomic_bool m_initLua;
 };
