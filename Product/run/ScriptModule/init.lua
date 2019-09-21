@@ -35,9 +35,6 @@ end
 
 --对于每一个actor,每一份lua， 每一分钟的0秒执行这个函数
 function LuaNFrame.UpdateMin()
-		--启动垃圾回收
-	collectgarbage("setpause",100)
-	collectgarbage("setstepmul",5000)
 	--LuaNFrame.Error(NFLogId.NF_LOG_SYSTEMLOG, 0,  "LuaNFrame.UpdateMin")
 end
 
@@ -113,8 +110,8 @@ function LuaNFrame.InitScript(luaModule)
 		NFLuaReload.RecordAllFilesTimes()
 
 		--启动垃圾回收
-		--collectgarbage("setpause",100)
-		--collectgarbage("setstepmul",5000)
+		collectgarbage("setpause",100)
+		collectgarbage("setstepmul",200)
 	end
 	
 	local status, msg = xpcall (timerExecute, __G__TRACKBACK__)
