@@ -82,11 +82,15 @@ LoadPlugin =
 			"NFKernelPlugin",
 			"NFNetPlugin",
 			"NFMonitorPlugin",
-			
+			"NFActorPlugin",
+
 			"NFLoginClientPlugin",
 			"NFLoginServerPlugin",
 			
 			"NFLoginLogicPlugin",
+
+			"NFLuaScriptPlugin",
+			--"NFLuaThreadScriptPlugin",
 		};
 		ServerType = NF_ST_LOGIN;
 	},

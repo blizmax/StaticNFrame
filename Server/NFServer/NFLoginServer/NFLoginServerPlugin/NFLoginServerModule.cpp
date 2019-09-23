@@ -30,7 +30,10 @@ bool NFCLoginServerModule::Init()
 {
 	FindModule<NFINetServerModule>()->AddEventCallBack(NF_ST_LOGIN, this, &NFCLoginServerModule::OnProxySocketEvent);
 	FindModule<NFINetServerModule>()->AddReceiveCallBack(NF_ST_LOGIN, this, &NFCLoginServerModule::OnHandleOtherMessage);
-
+	
+	FindModule<NFINetServerModule>()->AddReceiveCallBack(NF_ST_MASTER, EGMI_NET_PROXY_TO_LOGIN_REGISTER, this, &NFCLoginServerModule::OnProxyServerRegisterProcess);
+	FindModule<NFINetServerModule>()->AddReceiveCallBack(NF_ST_MASTER, EGMI_NET_PROXY_TO_LOGIN_UNREGISTER, this, &NFCLoginServerModule::OnProxyServerUnRegisterProcess);
+	FindModule<NFINetServerModule>()->AddReceiveCallBack(NF_ST_MASTER, EGMI_NET_PROXY_TO_LOGIN_REFRESH, this, &NFCLoginServerModule::OnProxyServerRefreshProcess);
 	NFServerConfig* pConfig = NFServerCommon::GetAppConfig(m_pPluginManager, NF_ST_LOGIN);
 	if (pConfig)
 	{
@@ -98,5 +101,79 @@ void NFCLoginServerModule::OnHandleOtherMessage(const uint32_t unLinkId, const u
 	else
 	{
 		NFLogWarning(NF_LOG_SERVER_NOT_HANDLE_MESSAGE, playerId, "msg:{} not handled!", nMsgId);
+	}
+}
+
+void NFCLoginServerModule::OnProxyServerRegisterProcess(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen)
+{
+	NFMsg::ServerInfoReportList xMsg;
+	CLIENT_MSG_PROCESS_NO_OBJECT(nMsgId, playerId, msg, nLen, xMsg);
+
+	for (int i = 0; i < xMsg.server_list_size(); ++i)
+	{
+		const NFMsg::ServerInfoReport& xData = xMsg.server_list(i);
+		NF_SHARE_PTR<NFServerData> pServerData = mProxyMap.GetElement(xData.server_id());
+		if (!pServerData)
+		{
+			pServerData = NF_SHARE_PTR<NFServerData>(NF_NEW NFServerData());
+			mProxyMap.AddElement(xData.server_id(), pServerData);
+		}
+
+		pServerData->mUnlinkId = unLinkId;
+		pServerData->mServerInfo = xData;
+
+		if (xData.server_ip().empty())
+		{
+			std::string ip = FindModule<NFINetServerModule>()->GetLinkIp(unLinkId);
+			pServerData->mServerInfo.set_server_ip(ip);
+		}
+
+
+		NFLogInfo(NF_LOG_SERVER_CONNECT_SERVER, 0, "Proxy Server Register Login Server Success, serverName:{}, serverId:{}, ip:{}, port:{}", pServerData->mServerInfo.server_name(), pServerData->mServerInfo.server_id(), pServerData->mServerInfo.server_ip(), pServerData->mServerInfo.server_port());
+
+		FindModule<NFIServerNetEventModule>()->OnServerNetEvent(eMsgType_CONNECTED, NF_ST_LOGIN, NF_ST_PROXY, unLinkId, pServerData);
+	}
+}
+
+void NFCLoginServerModule::OnProxyServerUnRegisterProcess(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen)
+{
+	NFMsg::ServerInfoReportList xMsg;
+	CLIENT_MSG_PROCESS_NO_OBJECT(nMsgId, playerId, msg, nLen, xMsg);
+
+	for (int i = 0; i < xMsg.server_list_size(); ++i)
+	{
+		const NFMsg::ServerInfoReport& xData = xMsg.server_list(i);
+		mProxyMap.RemoveElement(xData.server_id());
+
+		NFLogInfo(NF_LOG_SERVER_CONNECT_SERVER, 0, "Login Server UnRegister Proxy Server Success, serverName:{}, serverId:{}, ip:{}, port:{}", xData.server_name(), xData.server_id(), xData.server_ip(), xData.server_port());
+	}
+}
+
+void NFCLoginServerModule::OnProxyServerRefreshProcess(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen)
+{
+	NFMsg::ServerInfoReportList xMsg;
+	CLIENT_MSG_PROCESS_NO_OBJECT(nMsgId, playerId, msg, nLen, xMsg);
+
+	for (int i = 0; i < xMsg.server_list_size(); ++i)
+	{
+		const NFMsg::ServerInfoReport& xData = xMsg.server_list(i);
+		NF_SHARE_PTR<NFServerData> pServerData = mProxyMap.GetElement(xData.server_id());
+		if (!pServerData)
+		{
+			pServerData = NF_SHARE_PTR<NFServerData>(NF_NEW NFServerData());
+			mProxyMap.AddElement(xData.server_id(), pServerData);
+		}
+
+		pServerData->mUnlinkId = unLinkId;
+		pServerData->mServerInfo = xData;
+
+		if (xData.server_ip().empty())
+		{
+			std::string ip = FindModule<NFINetServerModule>()->GetLinkIp(unLinkId);
+			pServerData->mServerInfo.set_server_ip(ip);
+		}
+
+
+		//NFLogInfo("Proxy Server Refresh Login Server Success, serverName:{}, serverId:{}, ip:{}, port:{}", xData.server_name(), xData.server_id(), xData.server_ip(), xData.server_port());
 	}
 }

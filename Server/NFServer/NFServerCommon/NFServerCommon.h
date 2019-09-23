@@ -79,6 +79,7 @@ enum NF_EGMI_MsgId
 	EGMI_NET_PROXY_TO_GAME_UNREGISTER = 25,		//网关服务器	注销	游戏服务器协议
 	EGMI_NET_GAME_TO_WORLD_UNREGISTER = 26,		//游戏服务器	注销	世界服务器协议
 	EGMI_NET_PROXY_TO_WORLD_UNREGISTER = 27,	//网关服务器	注销	WORLD服务器协议
+	EGMI_NET_PROXY_TO_LOGIN_UNREGISTER = 28,	//网关服务器	注册	Login服务器协议
 
 	EGMI_NET_PROXY_TO_MASTER_REFRESH = 31,	//网关服务器 刷新		MASTER服务器协议
 	EGMI_NET_GAME_TO_MASTER_REFRESH = 32,	//游戏服务器	刷新	MASTER服务器协议
@@ -87,6 +88,7 @@ enum NF_EGMI_MsgId
 	EGMI_NET_PROXY_TO_GAME_REFRESH = 35,	//网关服务器	刷新	游戏服务器协议
 	EGMI_NET_GAME_TO_WORLD_REFRESH = 36,	//游戏服务器	刷新	世界服务器协议
 	EGMI_NET_PROXY_TO_WORLD_REFRESH = 37,	//网关服务器	刷新	WORLD服务器协议
+	EGMI_NET_PROXY_TO_LOGIN_REFRESH = 38,	//网关服务器	注册	Login服务器协议
 
 	EGMI_NET_MASTER_SEND_OTHERS_TO_GAME = 40, //master send server to game
 	EGMI_NET_MASTER_SEND_OTHERS_TO_WORLD = 41, //master send server to world

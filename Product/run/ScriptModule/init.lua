@@ -77,7 +77,6 @@ function LuaNFrame.InitScript(luaModule)
 
 			require("GameServer/LoadHelper")
 
-			math.newrandomseed()
 			mysqlItem = mysqlConnect.new(g_dbtype, g_dbUser, g_dbPassword, g_dbHost, g_dbPort, g_dbDatabase)
 			redisItem = redisConnect.new()
 			mysqlLog = mysqlConnect.new(g_dbtype, g_dbUser, g_dbPassword, g_dbHost, g_dbPort, g_dbDatabase)
@@ -88,12 +87,29 @@ function LuaNFrame.InitScript(luaModule)
 
 			require("GameServer/LoadHelper")
 
-			math.newrandomseed()
 			mysqlItem = mysqlConnect.new(g_dbtype, g_dbUser, g_dbPassword, g_dbHost, g_dbPort, g_dbDatabase)
 			redisItem = redisConnect.new()
 			mysqlLog = mysqlConnect.new(g_dbtype, g_dbUser, g_dbPassword, g_dbHost, g_dbPort, g_dbDatabase)
 		elseif LuaNFrame.GetAppName() == "LoginServer" then
+			package.path = package.path .. ";../ScriptModule/GameServer/?.lua;"
+			package.path = package.path..";../ScriptModule/GameServer/trdlib/libprotobuf/?.lua"   --由于这里protobuf的特殊性，必须把包含protobuf的目录加到环境变量中
+			package.path = package.path..";../ScriptModule/GameServer/trdlib/lua/?.lua"
+
 			require("LoginServer/LoginLoadHelper")
+			require("LoginServer/LoginTimerManager")
+			mysqlItem = mysqlConnect.new(g_dbtype, g_dbUser, g_dbPassword, g_dbHost, g_dbPort, g_dbDatabase)
+			redisItem = redisConnect.new()
+			mysqlLog = mysqlConnect.new(g_dbtype, g_dbUser, g_dbPassword, g_dbHost, g_dbPort, g_dbDatabase)
+		elseif LuaNFrame.GetAppName() == "WebServer" then
+			package.path = package.path .. ";../ScriptModule/GameServer/?.lua;"
+			package.path = package.path..";../ScriptModule/GameServer/trdlib/libprotobuf/?.lua"   --由于这里protobuf的特殊性，必须把包含protobuf的目录加到环境变量中
+			package.path = package.path..";../ScriptModule/GameServer/trdlib/lua/?.lua"
+			
+			require("WebServer/WebLoadHelper")
+
+			mysqlItem = mysqlConnect.new(g_dbtype, g_dbUser, g_dbPassword, g_dbHost, g_dbPort, g_dbDatabase)
+			redisItem = redisConnect.new()
+			mysqlLog = mysqlConnect.new(g_dbtype, g_dbUser, g_dbPassword, g_dbHost, g_dbPort, g_dbDatabase)
 		elseif LuaNFrame.GetAppName() == "RebotServer" then
 			package.path = package.path .. ";../ScriptModule/RebotServer/?.lua;"
 			package.path = package.path..";../ScriptModule/RebotServer/trdlib/libprotobuf/?.lua"   --由于这里protobuf的特殊性，必须把包含protobuf的目录加到环境变量中
@@ -104,6 +120,7 @@ function LuaNFrame.InitScript(luaModule)
 			redisItem = redisConnect.new()
 		end
 
+		math.newrandomseed()
 		require("LuaNFrame/NFTimeUtils")
 
 		--记录所有文件的当前修改时间，为以后热更新做准备, 时间大概300ms
@@ -111,6 +128,7 @@ function LuaNFrame.InitScript(luaModule)
 
 		--启动垃圾回收
 		collectgarbage("setpause",100)
+		--200 到 500 均可
 		collectgarbage("setstepmul",200)
 	end
 	
