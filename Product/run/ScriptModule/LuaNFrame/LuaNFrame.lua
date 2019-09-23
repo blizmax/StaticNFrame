@@ -460,13 +460,13 @@ end
 --处理Master服务器消息
 function LuaNFrame.DispatchMasterHttp(unLinkId, requestId, firstPath, secondPath, strMsg)
 	local function HttpExecute()
-		controller = HttpManager.CreateController(firstPath)
+		controller = httpManager:createController(firstPath)
 	
 		if controller == nil then
 			LuaNFrame.Error(NFLogId.NF_LOG_SYSTEMLOG, 0, "http msg:/"..firstPath.."/"..secondPath.." not handled!")
 		else
 			retString,retSize = controller[secondPath](strMsg) 
-			LuaNFrame.SendMsgTMaster(unLinkId, requestId, 5, retSize, retString)
+			LuaNFrame.SendMsgToMaster(unLinkId, requestId, 5, string.len(retString), retString)
 		end
 	end
 	

@@ -876,15 +876,7 @@ void NFCMasterServerModule::OnServerHttpMsgRet(const uint32_t unLinkId, const ui
 	std::string strMsg(msg, nLen);
 	uint32_t requestId = (uint32_t)playerId;
 
-	NFMsg::http_msg_gm_ret msg_gm_ret;
-	msg_gm_ret.set_code("success");
-	msg_gm_ret.set_msg("success");
-	msg_gm_ret.set_data(strMsg);
-
-	std::string retMsg;
-	NFProtobufCommon::MessageToJsonString(msg_gm_ret, retMsg);
-
-	FindModule<NFIHttpServerModule>()->ResponseMsg(NF_ST_MASTER, requestId, retMsg, NFWebStatus::WEB_OK, "OK");
+	FindModule<NFIHttpServerModule>()->ResponseMsg(NF_ST_MASTER, requestId, strMsg, NFWebStatus::WEB_OK, "OK");
 }
 
 void NFCMasterServerModule::OnServerReport(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen)
