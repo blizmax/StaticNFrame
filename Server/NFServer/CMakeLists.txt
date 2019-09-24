@@ -20,4 +20,13 @@ ADD_SUBDIRECTORY("NFServerCommon")
 ADD_SUBDIRECTORY("NFWorldServer/NFWorldClientPlugin")
 ADD_SUBDIRECTORY("NFWorldServer/NFWorldServerPlugin")
 
+ADD_SUBDIRECTORY("NFLocationServer/NFLocationClientPlugin")
+ADD_SUBDIRECTORY("NFLocationServer/NFLocationServerPlugin")
+
+ADD_SUBDIRECTORY("NFLogServer/NFLogClientPlugin")
+ADD_SUBDIRECTORY("NFLogServer/NFLogServerPlugin")
+
+ADD_SUBDIRECTORY("NFWebServer/NFWebClientPlugin")
+ADD_SUBDIRECTORY("NFWebServer/NFWebServerPlugin")
+
 

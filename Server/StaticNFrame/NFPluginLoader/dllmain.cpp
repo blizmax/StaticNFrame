@@ -79,6 +79,15 @@
 #pragma comment( lib, "NFProxyServerPlugin.lib" )
 #pragma comment( lib, "NFProxyClientPlugin.lib" )
 
+#pragma comment( lib, "NFLocationClientPlugin.lib" )
+#pragma comment( lib, "NFLocationServerPlugin.lib" )
+
+#pragma comment( lib, "NFLogClientPlugin.lib" )
+#pragma comment( lib, "NFLogServerPlugin.lib" )
+
+#pragma comment( lib, "NFWebClientPlugin.lib" )
+#pragma comment( lib, "NFWebServerPlugin.lib" )
+
 ///////////////////////////////////////////////////////////////
 #pragma comment( lib, "NFServerLogicCommon.lib" )
 

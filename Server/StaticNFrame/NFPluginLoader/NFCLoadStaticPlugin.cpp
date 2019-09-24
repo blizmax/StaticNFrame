@@ -46,6 +46,15 @@
 #include <NFServer/NFProxyServer/NFProxyServerPlugin/NFProxyServerPlugin.h>
 #include <NFServer/NFProxyServer/NFProxyClientPlugin/NFProxyClientPlugin.h>
 
+#include <NFServer/NFLocationServer/NFLocationClientPlugin/NFLocationClientPlugin.h>
+#include <NFServer/NFLocationServer/NFLocationServerPlugin/NFLocationServerPlugin.h>
+
+#include <NFServer/NFLogServer/NFLogClientPlugin/NFLogClientPlugin.h>
+#include <NFServer/NFLogServer/NFLogServerPlugin/NFLogServerPlugin.h>
+
+#include <NFServer/NFWebServer/NFWebClientPlugin/NFWebClientPlugin.h>
+#include <NFServer/NFWebServer/NFWebServerPlugin/NFWebServerPlugin.h>
+
 #include <NFServerLogic/NFLoginServerLogic/NFLoginLogicPlugin/NFLoginLogicPlugin.h>
 #include <NFServerLogic/NFGameServerLogic/NFGameLogicPlugin/NFGameLogicPlugin.h>
 #include <NFServerLogic/NFProxyServerLogic/NFProxyLogicPlugin/NFProxyLogicPlugin.h>
@@ -93,6 +102,15 @@ bool NFCPluginManager::RegisterStaticPlugin()
 
 	REGISTER_STATIC_PLUGIN(this, NFProxyServerPlugin);
 	REGISTER_STATIC_PLUGIN(this, NFProxyClientPlugin);
+
+	REGISTER_STATIC_PLUGIN(this, NFLocationServerPlugin);
+	REGISTER_STATIC_PLUGIN(this, NFLocationClientPlugin);
+
+	REGISTER_STATIC_PLUGIN(this, NFLogServerPlugin);
+	REGISTER_STATIC_PLUGIN(this, NFLogClientPlugin);
+
+	REGISTER_STATIC_PLUGIN(this, NFWebServerPlugin);
+	REGISTER_STATIC_PLUGIN(this, NFWebClientPlugin);
 	///////////////////////////////////////////////////
 
 	REGISTER_STATIC_PLUGIN(this, NFLoginLogicPlugin);
