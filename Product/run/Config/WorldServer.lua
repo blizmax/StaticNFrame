@@ -55,15 +55,48 @@ function InitGameServer()
 			WebSocket = false,
 		};
 		
-	--ProxyServer 网管服务器， 负责与外部的客户端连接, 转发数据
-	ProxyServer7 = {
-			ServerName = "ProxyServer_7",
-			ServerType = NF_ST_PROXY,
+	--Location 服务器
+	LocationServer7 = {
+			ServerName = "LocationServer_7",
+			ServerType = NF_ST_LOCATION,
 			ServerId = 7,			--对每一个服务器来说都是唯一的， 应用程序需要通过这个ServerId才能知道需要加载的配置是他
 			ServerIp = MasterIP,
 			ServerPort = GetNewPort(),
-			MaxConnectNum = 100000,
+			MaxConnectNum = 100,
 			WorkThreadNum = 5,
+			LuaWorkThreadNum = 2,
+			LuaTcpThreadNum = 4,
+			Security = false,
+			WebSocket = false,
+		};
+
+	--LogServer Log服务器
+	LogServer8 = {
+			ServerName = "LogServer_8",
+			ServerType = NF_ST_LOG,
+			ServerId = 8,			--对每一个服务器来说都是唯一的， 应用程序需要通过这个ServerId才能知道需要加载的配置是他
+			ServerIp = MasterIP,
+			ServerPort = GetNewPort(),
+			MaxConnectNum = 100,
+			WorkThreadNum = 5,
+			LuaWorkThreadNum = 2,
+			LuaTcpThreadNum = 4,
+			Security = false,
+			WebSocket = false,
+		};
+
+
+		--WebServer Web服务器， 负责Web网站的数据处理
+	WebServer9 = {
+			ServerName = "WebServer_9",
+			ServerType = NF_ST_WEB,
+			ServerId = 9,			--对每一个服务器来说都是唯一的， 应用程序需要通过这个ServerId才能知道需要加载的配置是他
+			ServerIp = MasterIP,
+			ServerPort = GetNewPort(),
+			MaxConnectNum = 100,
+			WorkThreadNum = 5,
+			LuaWorkThreadNum = 2,
+			LuaTcpThreadNum = 4,
 			Security = false,
 			WebSocket = false,
 		};
@@ -84,9 +117,10 @@ function InitGameServer()
 	
 	RegisterServer(WorldServer3)
 	RegisterServer(GameServer4)
-	--RegisterServer(GameServer5)
 	RegisterServer(ProxyServer6)
-	--RegisterServer(ProxyServer7)
+	RegisterServer(LocationServer7)
+	RegisterServer(LogServer8)
+	RegisterServer(WebServer9)
 	RegisterServer(RebotServer20)
 end
 	
