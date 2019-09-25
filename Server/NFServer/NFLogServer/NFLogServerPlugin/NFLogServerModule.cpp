@@ -14,6 +14,7 @@
 #include "NFComm/NFPluginModule/NFLogMgr.h"
 #include "NFServer/NFServerCommon/NFServerCommon.h"
 #include "NFComm/NFPluginModule/NFILuaScriptModule.h"
+#include "NFComm/NFPluginModule/NFIHttpClientModule.h"
 
 NFCLogServerModule::NFCLogServerModule(NFIPluginManager* p)
 {
@@ -35,6 +36,11 @@ bool NFCLogServerModule::Init()
 			exit(0);
 		}
 	}
+
+	std::map<std::string, std::string> xHeaders;
+	int resp = 0;
+	std::string strResp;
+	FindModule<NFIHttpClientModule>()->PerformGet("http://ip.360.cn/IPQuery/ipquery?ip=127.0.0.1", xHeaders, resp, strResp);
 	return true;
 }
 

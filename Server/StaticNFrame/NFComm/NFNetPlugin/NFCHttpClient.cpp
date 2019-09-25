@@ -14,11 +14,6 @@
 
 bool NFCHttpClient::Execute()
 {
-	if (m_pBase)
-	{
-		event_base_loop(m_pBase, EVLOOP_ONCE | EVLOOP_NONBLOCK);
-	}
-
 	return true;
 }
 
@@ -51,7 +46,6 @@ bool NFCHttpClient::Init()
 		NFLogError(NF_LOG_NET_PLUGIN, 0, "X509_STORE_set_default_paths failed");
 		return false;
 	}
-	return true;
 #endif
 
 	m_pBase = event_base_new();
@@ -91,6 +85,8 @@ bool NFCHttpClient::MakeRequest(const std::string& strUri,
 	const std::map<std::string, std::string>& xHeaders,
 	const NFHttpType eHttpType, int& respCode, std::string& strResp)
 {
+	m_respCode = 0;
+	m_strResp = "";
 	struct evhttp_uri* http_uri = evhttp_uri_parse(strUri.c_str());
 	if (http_uri == NULL)
 	{
@@ -309,13 +305,24 @@ bool NFCHttpClient::MakeRequest(const std::string& strUri,
 		return false;
 	}
 
+	if (m_pBase)
+	{
+		event_base_dispatch(m_pBase);
+	}
+
+	respCode = m_respCode;
+	strResp = m_strResp;
+
+	if (evcon)
+	{
+		evhttp_connection_free(evcon);
+	}
+
 	if (http_uri)
 	{
 		evhttp_uri_free(http_uri);
 	}
 
-	respCode = m_respCode;
-	strResp = m_strResp;
 	return true;
 }
 
@@ -388,15 +395,5 @@ void NFCHttpClient::OnHttpReqDone(struct evhttp_request* req, void* ctx)
 	size_t buffer_size = evbuffer_get_length(evbuf);
 	if (buffer_size > 0) {
 		pHttpClient->m_strResp = NFSlice((char*)evbuffer_pullup(evbuf, -1), buffer_size).ToString();
-	}
-	
-	if (req->evcon)
-	{
-		evhttp_connection_free(req->evcon);
-	}
-
-	if (req->output_headers)
-	{
-		evhttp_clear_headers(req->output_headers);
 	}
 }
