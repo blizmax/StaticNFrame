@@ -31,15 +31,10 @@ public:
 	virtual bool Shut();
 protected:
 	virtual bool PerformGet(const std::string& strUri,
-		const std::map<std::string, std::string>& xHeaders,
-		const HTTP_RESP_FUNCTOR& pCB,
-		const std::string& strUserData);
+		const std::map<std::string, std::string>& xHeaders, int& respCode, std::string& strResp);
 
-	virtual bool PerformPost(const std::string& strUri,
-		const std::map<std::string, std::string>& xHeaders,
-		const std::string& strPostData,
-		const HTTP_RESP_FUNCTOR& pCB,
-		const std::string& strUserData);
+	virtual bool PerformPost(const std::string& strUri, const std::string& strPostData,
+		const std::map<std::string, std::string>& xHeaders, int& respCode, std::string& strResp);
 private:
 	NFIHttpClient* m_pHttpClient;
 	std::map<std::string, std::string> m_xDefaultHttpHeaders;
