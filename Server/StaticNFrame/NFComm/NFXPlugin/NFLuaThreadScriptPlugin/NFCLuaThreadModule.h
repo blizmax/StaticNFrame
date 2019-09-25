@@ -23,7 +23,7 @@
 
 #include "NFComm/NFPluginModule/NFINetServerModule.h"
 #include "NFComm/NFPluginModule/NFINetClientModule.h"
-
+#include "NFComm/NFPluginModule/NFIHttpServerModule.h"
 #include "NFComm/NFCore/NFMapEx.hpp"
 
 #include <vector>
@@ -114,6 +114,7 @@ public:
 		ACTOR_TCP_MESSAGE_TYPE_ONE_PLAYER_WORLD_MSG = 4,
 		ACTOR_TCP_MESSAGE_TYPE_ONE_PLAYER_MASTER_MSG = 5,
 		ACTOR_TCP_MESSAGE_TYPE_ADD_ERROR_LOG_MSG = 10,
+		ACTOR_TCP_MESSAGE_TYPE_ADD_HTTP_LOG_MSG = 11,
 	};
 
 	NFTcpMessage()
@@ -214,6 +215,7 @@ public:
 	virtual void SendMsgToWorld(uint32_t usLinkId, const uint64_t nPlayerID, const uint32_t nMsgID, const uint32_t nLen, const std::string& strData);
 	virtual void SendMsgToMaster(uint32_t usLinkId, const uint64_t nPlayerID, const uint32_t nMsgID, const uint32_t nLen, const std::string& strData);
 	virtual void SendErrorLog(uint64_t playerId, const std::string& func_log, const std::string& errorLog, uint32_t count);
+	virtual void SendHttpServerMsg(uint32_t servertype, const uint32_t requestId, const std::string& strMsg);
 
 	virtual void AddMsgToPlayer(uint32_t usLinkId, const uint64_t nPlayerID, const uint32_t nMsgID, const uint32_t nLen, const std::string& strData);
 	virtual void AddMsgToManyPlayer(const std::vector<uint64_t>& nPlayerID, const uint32_t nMsgID, const uint32_t nLen, const std::string& strData);
@@ -221,6 +223,7 @@ public:
 	virtual void AddMsgToWorld(uint32_t usLinkId, const uint64_t nPlayerID, const uint32_t nMsgID, const uint32_t nLen, const std::string& strData);
 	virtual void AddMsgToMaster(uint32_t usLinkId, const uint64_t nPlayerID, const uint32_t nMsgID, const uint32_t nLen, const std::string& strData);
 	virtual void AddErrorLog(uint64_t playerId, const std::string& func_log, const std::string& errorLog, uint32_t count);
+	virtual void AddHttpServerMsg(uint32_t servertype, const uint32_t requestId, const std::string& strMsg);
 
 	virtual void ReloadAllLuaFiles() override;
 	virtual void ReloadLuaFiles() override;
@@ -333,6 +336,7 @@ protected:
 protected:
 	NFINetServerModule* m_pNetServerModule;
 	NFINetClientModule* m_pNetClientModule;
+	NFIHttpServerModule* m_pHttpServerModule;
 protected:
 	/**
 	* @brief 返回的定时器消息队,

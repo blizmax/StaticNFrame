@@ -101,6 +101,7 @@ bool NFCLuaThreadModule::Init()
 
 	m_pNetServerModule = FindModule<NFINetServerModule>();
 	m_pNetClientModule = FindModule<NFINetClientModule>();
+	m_pHttpServerModule = FindModule<NFIHttpServerModule>();
 
 	FindModule<NFIServerNetEventModule>()->AddAccountEventCallBack(NF_ST_GAME, this, &NFCLuaThreadModule::OnAccountEventCallBack);
 
@@ -315,6 +316,10 @@ void NFCLuaThreadModule::HandleLuaTcpMsg()
 				{
 					SendErrorLog(pMsg->m_nPlayerID, pMsg->m_funcLog, pMsg->m_errorLog, pMsg->m_nLen);
 				}
+				else if (pMsg->m_nMsgType == NFTcpMessage::ACTOR_TCP_MESSAGE_TYPE_ADD_HTTP_LOG_MSG)
+				{
+					SendHttpServerMsg(pMsg->m_usLinkId, pMsg->m_nPlayerID, pMsg->m_strData);
+				}
 			}
 			uint32_t count = listTask.size();
 			uint64_t useTime = m_pPluginManager->EndProfiler();
@@ -462,6 +467,14 @@ void NFCLuaThreadModule::SendErrorLog(uint64_t playerId, const std::string& func
 	NFEventMgr::Instance()->FireExecute(NFEVENT_LUA_ERROR_LOG, playerId, 0, msg);
 }
 
+void NFCLuaThreadModule::SendHttpServerMsg(uint32_t servertype, const uint32_t requestId, const std::string& strMsg)
+{
+	if (m_pHttpServerModule)
+	{
+		m_pHttpServerModule->ResponseMsg((NF_SERVER_TYPES)servertype, requestId, strMsg, NFWebStatus::WEB_OK, "OK");
+	}
+}
+
 void NFCLuaThreadModule::OnAccountEventCallBack(uint32_t nEvent, uint32_t unLinkId, NF_SHARE_PTR<PlayerGameServerInfo> pServerData)
 {
 	if (nEvent == eAccountEventType_CONNECTED)
@@ -571,6 +584,17 @@ void NFCLuaThreadModule::AddErrorLog(uint64_t playerId, const std::string& func_
 	msg.m_errorLog = errorLog;
 	msg.m_funcLog = func_log;
 	msg.m_nLen = count;
+
+	m_mTcpMsgQueue.Push(msg);
+}
+
+void NFCLuaThreadModule::AddHttpServerMsg(uint32_t servertype, const uint32_t requestId, const std::string& strMsg)
+{
+	NFTcpMessage msg;
+	msg.m_nMsgType = NFTcpMessage::ACTOR_TCP_MESSAGE_TYPE_ADD_HTTP_LOG_MSG;
+	msg.m_usLinkId = servertype,
+	msg.m_nPlayerID = requestId;
+	msg.m_strData = strMsg;
 
 	m_mTcpMsgQueue.Push(msg);
 }

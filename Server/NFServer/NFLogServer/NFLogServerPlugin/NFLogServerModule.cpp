@@ -26,6 +26,15 @@ NFCLogServerModule::~NFCLogServerModule()
 
 bool NFCLogServerModule::Init()
 {
+	NFServerConfig* pServerConfig = NFServerCommon::GetAppConfig(m_pPluginManager, NF_ST_LOG);
+	if (!m_pPluginManager->IsLoadAllServer())
+	{
+		if (pServerConfig && pServerConfig->mServerType != NF_ST_LOG)
+		{
+			NFLogError(NF_LOG_SYSTEMLOG, 0, "server config error, server id not match the server type!");
+			exit(0);
+		}
+	}
 	return true;
 }
 

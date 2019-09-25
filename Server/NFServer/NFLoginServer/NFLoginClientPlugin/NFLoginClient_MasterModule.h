@@ -47,22 +47,7 @@ protected:
 
 	void OnServerReport(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen);
 
-	virtual NF_SHARE_PTR<NFServerData> GetSuitProxyServer(const std::string& name) override;
-	virtual NF_SHARE_PTR<NFServerData> GetSuitGameServer(const std::string& name) override;
-	virtual NF_SHARE_PTR<NFServerData> GetSuitWorldServer() override;
-	virtual NF_SHARE_PTR<NFServerData> GetRandProxyServer() override;
-	virtual NF_SHARE_PTR<NFServerData> GetRandGameServer() override;
-	virtual NF_SHARE_PTR<NFServerData> GetProxyServerByServerId(uint32_t serverId) override;
-	virtual NF_SHARE_PTR<NFServerData> GetGameServerByServerId(uint32_t serverId) override;
-
 	virtual uint32_t GetMasterLinkId() const { return m_pMasterServerData->mUnlinkId; }
 private:
 	NF_SHARE_PTR<NFServerData> m_pMasterServerData;
-	NFMapEx<int, NFServerData> mWorldMap;
-	NFConsistentHashMapEx<int, NFServerData> mProxyMap;
-	NFConsistentHashMapEx<int, NFServerData> mGameMap;
-	/**
-	* hash值计算公式
-	*/
-	hash_functor                mhashf;
 };

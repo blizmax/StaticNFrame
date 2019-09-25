@@ -37,6 +37,15 @@ bool NFCGameServerModule::Init()
 	NFServerConfig* pConfig = NFServerCommon::GetAppConfig(m_pPluginManager, NF_ST_GAME);
 	if (pConfig)
 	{
+		if (!m_pPluginManager->IsLoadAllServer())
+		{
+			if (pConfig->mServerType != NF_ST_GAME)
+			{
+				NFLogError(NF_LOG_SYSTEMLOG, 0, "server config error, server id not match the server type!");
+				exit(0);
+			}
+		}
+
 		uint32_t unlinkId = FindModule<NFINetServerModule>()->AddServer(NF_ST_GAME, pConfig->mServerId, pConfig->mMaxConnectNum, pConfig->mServerPort);
 		if (unlinkId != 0)
 		{

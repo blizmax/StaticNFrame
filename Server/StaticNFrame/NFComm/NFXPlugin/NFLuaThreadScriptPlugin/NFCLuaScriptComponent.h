@@ -626,65 +626,6 @@ public:
 		if (pLuaTask)
 		{
 			pLuaTask->m_pComponent = this;
-			
-			//暂时用来测试，防止出错
-			if (dynamic_cast<NFTcpSessionCloseActorTask*>(pTask))
-			{
-				//NFLogError(NF_LOG_LUA_PLUGIN, 0, "taskname:{} component:{} actorId:{} threadId:{} balanceId:{}", pTask->m_taskName, GetComponentName(), GetActorId(), ThreadId(), pTask->m_balanceId);
-				assert(GetComponentName() == "TcpMsgActor");
-			}
-			else if (dynamic_cast<NFTcpSessionReportActorTask*>(pTask))
-			{
-				//NFLogError(NF_LOG_LUA_PLUGIN, 0, "taskname:{} component:{} actorId:{} threadId:{} balanceId:{}", pTask->m_taskName, GetComponentName(), GetActorId(), ThreadId(), pTask->m_balanceId);
-				assert(GetComponentName() == "TcpMsgActor");
-			}
-			else if (dynamic_cast<NFTcpMsgActorTask*>(pTask))
-			{
-				//NFLogError(NF_LOG_LUA_PLUGIN, 0, "taskname:{} component:{} actorId:{} threadId:{} balanceId:{}", pTask->m_taskName, GetComponentName(), GetActorId(), ThreadId(), pTask->m_balanceId);
-				assert(GetComponentName() == "TcpMsgActor");
-			}
-			else if (dynamic_cast<NFHttpMsgActorTask*>(pTask))
-			{
-				//NFLogError(NF_LOG_LUA_PLUGIN, 0, "taskname:{} component:{} actorId:{} threadId:{} balanceId:{}", pTask->m_taskName, GetComponentName(), GetActorId(), ThreadId(), pTask->m_balanceId);
-				assert(GetComponentName() == "TcpMsgActor");
-			}
-			else if (dynamic_cast<NFProcessLoopTimerActorTask*>(pTask))
-			{
-				//NFLogError(NF_LOG_LUA_PLUGIN, 0, "taskname:{} component:{} actorId:{} threadId:{} balanceId:{}", pTask->m_taskName, GetComponentName(), GetActorId(), ThreadId(), pTask->m_balanceId);
-				assert(GetComponentName() == "ServerLoopActor");
-			}
-			else if (dynamic_cast<NFServerLoopTask*>(pTask))
-			{
-				//NFLogError(NF_LOG_LUA_PLUGIN, 0, "taskname:{} component:{} actorId:{} threadId:{} balanceId:{}", pTask->m_taskName, GetComponentName(), GetActorId(), ThreadId(), pTask->m_balanceId);
-				assert(GetComponentName() == "ServerLoopActor");
-			}
-			else if (dynamic_cast<NFWorkActorTask*>(pTask))
-			{
-				//NFLogError(NF_LOG_LUA_PLUGIN, 0, "taskname:{} component:{} actorId:{} threadId:{} balanceId:{}", pTask->m_taskName, GetComponentName(), GetActorId(), ThreadId(), pTask->m_balanceId);
-				assert(GetComponentName() == "WorkActor");
-			}
-			else if (dynamic_cast<NFProcessTimerActorTask*>(pTask))
-			{
-				//NFLogError(NF_LOG_LUA_PLUGIN, 0, "taskname:{} component:{} actorId:{} threadId:{} balanceId:{}", pTask->m_taskName, GetComponentName(), GetActorId(), ThreadId(), pTask->m_balanceId);
-				assert(GetComponentName() == "WorkActor");
-			}
-			else if (dynamic_cast<NFProcessRealTimerActorTask*>(pTask))
-			{
-				//NFLogError(NF_LOG_LUA_PLUGIN, 0, "taskname:{} component:{} actorId:{} threadId:{} balanceId:{}", pTask->m_taskName, GetComponentName(), GetActorId(), ThreadId(), pTask->m_balanceId);
-				assert(GetComponentName() == "WorkActor");
-			}
-			else if (dynamic_cast<NFLuaGcActorTask*>(pTask))
-			{
-				//NFLogError(NF_LOG_LUA_PLUGIN, 0, "taskname:{} component:{} actorId:{} threadId:{} balanceId:{}", pTask->m_taskName, GetComponentName(), GetActorId(), ThreadId(), pTask->m_balanceId);
-			}
-			else if (dynamic_cast<NFHotfixAllLuaActorTask*>(pTask))
-			{
-				//NFLogError(NF_LOG_LUA_PLUGIN, 0, "taskname:{} component:{} actorId:{} threadId:{} balanceId:{}", pTask->m_taskName, GetComponentName(), GetActorId(), ThreadId(), pTask->m_balanceId);
-			}
-			else if (dynamic_cast<NFHotfixLuaFilesActorTask*>(pTask))
-			{
-				//NFLogError(NF_LOG_LUA_PLUGIN, 0, "taskname:{} component:{} actorId:{} threadId:{} balanceId:{}", pTask->m_taskName, GetComponentName(), GetActorId(), ThreadId(), pTask->m_balanceId);
-			}
 		}
 		else
 		{
@@ -779,6 +720,7 @@ public:
 	virtual void SendMsgToAllPlayer(const uint32_t nMsgID, const uint32_t nLen, const std::string& strData);
 	virtual void SendMsgToWorld(uint32_t usLinkId, const uint64_t nPlayerID, const uint32_t nMsgID, const uint32_t nLen, const std::string& strData);
 	virtual void SendMsgToMaster(uint32_t usLinkId, const uint64_t nPlayerID, const uint32_t nMsgID, const uint32_t nLen, const std::string& strData);
+	virtual void SendMsgToHttpServer(uint32_t servertype, const uint32_t requestId, const std::string& strMsg);
 
 	virtual void SetDefaultLevel(uint32_t log_level);
 

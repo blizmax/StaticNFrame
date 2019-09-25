@@ -225,6 +225,22 @@ bool NFCHttpServerModule::OnReceiveNetPack(uint32_t unlinkId, const NFIHttpHandl
 			}
 		}
 	}
+	else
+	{
+		for (int i = 0; i < mxCallBack[serverType].mOtherMsgCBMap[(NFHttpType)req.GetType()].size(); ++i)
+		{
+			HTTP_RECEIVE_FUNCTOR& pFunPtr = mxCallBack[serverType].mOtherMsgCBMap[(NFHttpType)req.GetType()][i];
+			try
+			{
+				pFunPtr(serverType, req);
+			}
+			catch (const std::exception&)
+			{
+				ResponseMsg((NF_SERVER_TYPES)serverType, req, "unknow error", NFWebStatus::WEB_INTER_ERROR);
+			}
+			return true;
+		}
+	}
 
 	return ResponseMsg((NF_SERVER_TYPES)serverType, req, "", NFWebStatus::WEB_ERROR);
 }

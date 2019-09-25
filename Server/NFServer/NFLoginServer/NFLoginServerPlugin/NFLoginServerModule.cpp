@@ -37,6 +37,15 @@ bool NFCLoginServerModule::Init()
 	NFServerConfig* pConfig = NFServerCommon::GetAppConfig(m_pPluginManager, NF_ST_LOGIN);
 	if (pConfig)
 	{
+		if (!m_pPluginManager->IsLoadAllServer())
+		{
+			if (pConfig->mServerType != NF_ST_LOGIN)
+			{
+				NFLogError(NF_LOG_SYSTEMLOG, 0, "server config error, server id not match the server type!");
+				exit(0);
+			}
+		}
+
 		uint32_t unlinkId = FindModule<NFINetServerModule>()->AddServer(NF_ST_LOGIN, pConfig->mServerId, pConfig->mMaxConnectNum, pConfig->mServerPort);
 		if (unlinkId != 0)
 		{
@@ -81,12 +90,12 @@ void NFCLoginServerModule::OnProxySocketEvent(const eMsgType nEvent, const uint3
 	if (nEvent == eMsgType_CONNECTED)
 	{
 		std::string ip = FindModule<NFINetServerModule>()->GetLinkIp(unLinkId);
-		NFLogDebug(NF_LOG_SERVER_CONNECT_SERVER, 0, "Client Connect Login Server Success, Ip:{}", ip);
+		NFLogDebug(NF_LOG_SERVER_CONNECT_SERVER, 0, "Proxy Connect Login Server Success, Ip:{}", ip);
 	}
 	else if (nEvent == eMsgType_DISCONNECTED)
 	{
 		std::string ip = FindModule<NFINetServerModule>()->GetLinkIp(unLinkId);
-		NFLogDebug(NF_LOG_SERVER_CONNECT_SERVER, 0, "Client DisConnect From Login Server, Ip:{}", ip);
+		NFLogDebug(NF_LOG_SERVER_CONNECT_SERVER, 0, "Proxy DisConnect From Login Server, Ip:{}", ip);
 	}
 }
 

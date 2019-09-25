@@ -44,6 +44,15 @@ bool NFCWorldServerModule::Init()
 	NFServerConfig* pConfig = NFServerCommon::GetAppConfig(m_pPluginManager, NF_ST_WORLD);
 	if (pConfig)
 	{
+		if (!m_pPluginManager->IsLoadAllServer())
+		{
+			if (pConfig->mServerType != NF_ST_WORLD)
+			{
+				NFLogError(NF_LOG_SYSTEMLOG, 0, "server config error, server id not match the server type!");
+				exit(0);
+			}
+		}
+
 		mServerId = pConfig->mServerId;
 		uint32_t unlinkId = FindModule<NFINetServerModule>()->AddServer(NF_ST_WORLD, pConfig->mServerId, pConfig->mMaxConnectNum, pConfig->mServerPort);
 		if (unlinkId != 0)

@@ -353,6 +353,7 @@ bool NFCLuaScriptComponent::Register()
 		.addFunction("Platfrom", &NFCLuaScriptComponent::Platfrom)
 		.addFunction("IsThreadModule", &NFCLuaScriptComponent::IsThreadModule)
 		.addFunction("SendErrorLog", &NFCLuaScriptComponent::SendErrorLog)
+		.addFunction("SendMsgToHttpServer", &NFCLuaScriptComponent::SendMsgToHttpServer)
 		.endClass();
 	return true;
 }
@@ -453,6 +454,11 @@ void NFCLuaScriptComponent::SendMsgToWorld(uint32_t usLinkId, const uint64_t nPl
 void NFCLuaScriptComponent::SendMsgToMaster(uint32_t usLinkId, const uint64_t nPlayerID, const uint32_t nMsgID, const uint32_t nLen, const std::string& strData)
 {
 	m_pLuaThreadModule->AddMsgToMaster(usLinkId, nPlayerID, nMsgID, nLen, strData);
+}
+
+void NFCLuaScriptComponent::SendMsgToHttpServer(uint32_t servertype, const uint32_t requestId, const std::string& strMsg)
+{
+	m_pLuaThreadModule->AddHttpServerMsg(servertype, requestId, strMsg);
 }
 
 void NFCLuaScriptComponent::SetDefaultLevel(uint32_t log_level)

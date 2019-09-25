@@ -22,6 +22,7 @@
 #include "NFComm/NFPluginModule/NFIHttpClientModule.h"
 #include "NFComm/NFPluginModule/NFIHttpServerModule.h"
 #include "NFComm/NFPluginModule/NFIServerNetEventModule.h"
+#include "NFComm/NFPluginModule/NFIHttpServerModule.h"
 
 #include "NFComm/NFCore/NFMapEx.hpp"
 
@@ -106,6 +107,7 @@ public:
 	virtual void SendMsgToAllPlayer(const uint32_t nMsgID, const uint32_t nLen, const std::string& strData);
 	virtual void SendMsgToWorld(uint32_t usLinkId, const uint64_t nPlayerID, const uint32_t nMsgID, const uint32_t nLen, const std::string& strData);
 	virtual void SendMsgToMaster(uint32_t usLinkId, const uint64_t nPlayerID, const uint32_t nMsgID, const uint32_t nLen, const std::string& strData);
+	virtual void SendMsgToHttpServer(uint32_t servertype, const uint32_t requestId, const std::string& strMsg);
 
 	virtual void SetDefaultLevel(uint32_t log_level);
 
@@ -149,6 +151,7 @@ public:
 protected:
 	NFINetServerModule* m_pNetServerModule;
 	NFINetClientModule* m_pNetClientModule;
+	NFIHttpServerModule* m_pHttpServerModule;
 	NFILogModule* m_pLogModule;
 protected:
     int64_t mnTime;

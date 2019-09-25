@@ -62,6 +62,7 @@ bool NFCLuaScriptModule::Init()
 	m_pNetServerModule = m_pPluginManager->FindModule<NFINetServerModule>();
 	m_pNetClientModule = m_pPluginManager->FindModule<NFINetClientModule>();
 	m_pLogModule = m_pPluginManager->FindModule<NFILogModule>();
+	m_pHttpServerModule = m_pPluginManager->FindModule<NFIHttpServerModule>();
 
 	m_pPluginManager->FindModule<NFIServerNetEventModule>()->AddAccountEventCallBack(NF_ST_GAME, this, &NFCLuaScriptModule::OnAccountEventCallBack);
 
@@ -294,6 +295,14 @@ void NFCLuaScriptModule::SendMsgToMaster(uint32_t usLinkId, const uint64_t nPlay
 	}
 }
 
+void NFCLuaScriptModule::SendMsgToHttpServer(uint32_t servertype, const uint32_t requestId, const std::string& strMsg)
+{
+	if (m_pHttpServerModule)
+	{
+		m_pHttpServerModule->ResponseMsg((NF_SERVER_TYPES)servertype, requestId, strMsg, NFWebStatus::WEB_OK, "OK");
+	}
+}
+
 void NFCLuaScriptModule::SetDefaultLevel(uint32_t log_level)
 {
 	if (m_pLogModule)
@@ -489,6 +498,7 @@ bool NFCLuaScriptModule::Register()
 		.addFunction("Platfrom", &NFCLuaScriptModule::Platfrom)
 		.addFunction("IsThreadModule", &NFCLuaScriptModule::IsThreadModule)
 		.addFunction("SendErrorLog", &NFCLuaScriptModule::SendErrorLog)
+		.addFunction("SendMsgToHttpServer", &NFCLuaScriptModule::SendMsgToHttpServer)
 		.endClass();
 	return true;
 }

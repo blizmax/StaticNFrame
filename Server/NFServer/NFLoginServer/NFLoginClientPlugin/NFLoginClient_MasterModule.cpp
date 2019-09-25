@@ -19,7 +19,6 @@
 NFCLoginClient_MasterModule::NFCLoginClient_MasterModule(NFIPluginManager* p)
 {
 	m_pPluginManager = p;
-	mhashf = NFHash::hash_new<std::string>();
 }
 
 NFCLoginClient_MasterModule::~NFCLoginClient_MasterModule()
@@ -65,50 +64,6 @@ void NFCLoginClient_MasterModule::OnServerReport(const uint32_t unLinkId, const 
 {
 	NFMsg::ServerInfoReportList xMsg;
 	CLIENT_MSG_PROCESS_NO_OBJECT(nMsgId, playerId, msg, nLen, xMsg);
-
-	for (int i = 0; i < xMsg.server_list_size(); ++i)
-	{
-		const NFMsg::ServerInfoReport& xData = xMsg.server_list(i);
-		NF_SHARE_PTR<NFServerData> pServerData;
-		switch (xData.server_type())
-		{
-		case NF_SERVER_TYPES::NF_ST_WORLD:
-		{
-			pServerData = mWorldMap.GetElement(xData.server_id());
-			if (!pServerData)
-			{
-				pServerData = std::shared_ptr<NFServerData>(new NFServerData());
-				mWorldMap.AddElement(xData.server_id(), pServerData);
-			}
-		}
-		break;
-		case NF_SERVER_TYPES::NF_ST_PROXY:
-		{
-			pServerData = mProxyMap.GetElement(xData.server_id());
-			if (!pServerData)
-			{
-				pServerData = std::shared_ptr<NFServerData>(new NFServerData());
-				mProxyMap.AddElement(xData.server_id(), pServerData);
-			}
-		}
-		break;
-		case NF_SERVER_TYPES::NF_ST_GAME:
-		{
-			pServerData = mGameMap.GetElement(xData.server_id());
-			if (!pServerData)
-			{
-				pServerData = std::shared_ptr<NFServerData>(new NFServerData());
-				mGameMap.AddElement(xData.server_id(), pServerData);
-			}
-		}
-		break;
-		}
-		if (pServerData)
-		{
-			pServerData->mUnlinkId = unLinkId;
-			pServerData->mServerInfo = xData;
-		}
-	}
 }
 
 bool NFCLoginClient_MasterModule::Execute()
@@ -215,43 +170,6 @@ void NFCLoginClient_MasterModule::ServerReport()
 			FindModule<NFINetClientModule>()->SendToServerByPB(m_pMasterServerData->mUnlinkId, EGMI_STS_SERVER_REPORT, xMsg, 0);
 		}
 	}
-}
-
-NF_SHARE_PTR<NFServerData> NFCLoginClient_MasterModule::GetSuitProxyServer(const std::string& name)
-{
-	int index = (int)mhashf(name);
-	return mProxyMap.GetElementBySuit(index);
-}
-
-NF_SHARE_PTR<NFServerData> NFCLoginClient_MasterModule::GetSuitGameServer(const std::string& name)
-{
-	int index = (int)mhashf(name);
-	return mGameMap.GetElementBySuit(index);
-}
-
-NF_SHARE_PTR<NFServerData> NFCLoginClient_MasterModule::GetSuitWorldServer()
-{
-	return mWorldMap.First();
-}
-
-NF_SHARE_PTR<NFServerData> NFCLoginClient_MasterModule::GetRandProxyServer()
-{
-	return mProxyMap.GetElementBySuitRandom();
-}
-
-NF_SHARE_PTR<NFServerData> NFCLoginClient_MasterModule::GetRandGameServer()
-{
-	return mGameMap.GetElementBySuitRandom();
-}
-
-NF_SHARE_PTR<NFServerData> NFCLoginClient_MasterModule::GetProxyServerByServerId(uint32_t serverId)
-{
-	return mProxyMap.GetElement(serverId);
-}
-
-NF_SHARE_PTR<NFServerData> NFCLoginClient_MasterModule::GetGameServerByServerId(uint32_t serverId)
-{
-	return mGameMap.GetElement(serverId);
 }
 
 void NFCLoginClient_MasterModule::OnHandleGmMsg(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen)

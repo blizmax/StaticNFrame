@@ -22,7 +22,7 @@
     <LocalDebuggerWorkingDirectory>$(SolutionDir)../Product/run/$(Configuration)/</LocalDebuggerWorkingDirectory>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <LocalDebuggerCommandArguments>--Server=LoginServer --ID=2 --Path=../Config --LuaScript=../ScriptModule</LocalDebuggerCommandArguments>
+    <LocalDebuggerCommandArguments>--Server=LogServer --ID=8 --Path=../Config --LuaScript=../ScriptModule</LocalDebuggerCommandArguments>
     <LocalDebuggerWorkingDirectory>$(SolutionDir)../Product/run/$(Configuration)/</LocalDebuggerWorkingDirectory>
     <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
   </PropertyGroup>

@@ -73,6 +73,10 @@ NFServerConfig* NFServerCommon::GetAppConfig(NFIPluginManager* pPluginManager, N
 	else
 	{
 		pServerConfig = NFConfigMgr::Instance()->GetServerConfig(pPluginManager->GetAppID());
+		if (pServerConfig && pServerConfig->mServerType != eServerType)
+		{
+			NFLogError(NF_LOG_SYSTEMLOG, 0, "GetAppConfig Failed, server id not match the server type!");
+		}
 	}
 	return pServerConfig;
 }

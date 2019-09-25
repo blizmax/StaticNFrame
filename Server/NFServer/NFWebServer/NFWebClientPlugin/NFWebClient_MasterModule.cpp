@@ -27,8 +27,21 @@ NFCWebClient_MasterModule::~NFCWebClient_MasterModule()
 
 bool NFCWebClient_MasterModule::Init()
 {
+	this->Subscribe(NFEVENT_LUA_ERROR_LOG, 0, 0, __FUNCTION__);
 	m_pMasterServerData = NF_SHARE_PTR<NFServerData>(NF_NEW NFServerData());
 	return true;
+}
+
+void NFCWebClient_MasterModule::OnExecute(uint16_t nEventID, uint64_t nSrcID, uint8_t bySrcType, const google::protobuf::Message& message)
+{
+	if (nEventID == NFEVENT_LUA_ERROR_LOG)
+	{
+		const NFMsg::ServerErrorLogMsg* msg_gm = dynamic_cast<const NFMsg::ServerErrorLogMsg*>(&message);
+		if (msg_gm)
+		{
+			FindModule<NFINetClientModule>()->SendToServerByPB(m_pMasterServerData->mUnlinkId, EGMI_STS_ERROR_MSG, message, 0);
+		}
+	}
 }
 
 bool NFCWebClient_MasterModule::AfterInit()
