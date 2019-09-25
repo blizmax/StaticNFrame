@@ -8,9 +8,9 @@ function timerManager.Init(currTime, timerType)
 	elseif timerType == "pokertimer" then
 		--把这个线程空余出来，作为事件的触发器。
 	elseif timerType == "gametimer" then
-
-	elseif timerType == "utilstimer" then
 		
+	elseif timerType == "utilstimer" then
+		LocationService.Init()
 	end
 	g_markTime.last = g_markTime.curr
 	print(timerType.." init end")
@@ -31,7 +31,7 @@ function timerManager:execute(currTime, timerType)
 	elseif timerType == "gametimer" then
 		--其他模块循环的线程，包括小马快跑，快乐牛牛，消息通知
 	elseif timerType == "utilstimer" then
-
+		LocationService.ServerLoop()
 	end
 	g_markTime.last = g_markTime.curr
 end

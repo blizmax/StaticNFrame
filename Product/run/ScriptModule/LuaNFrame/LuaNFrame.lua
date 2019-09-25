@@ -358,6 +358,16 @@ function LuaNFrame.SendMsgToMaster(unLinkId, nPlayerId, nMsgId, nLen, strData)
 	end
 end
 
+function LuaNFrame.SendMsgToHttpServer(servertype, requestId, nLen, strData)
+	if type(servertype) == "number" and type(requestId) == "number" and type(strData) == "string" and type(nLen) == "number" then
+		if tonumber(nLen) == string.len(strData) then
+			CPPNFrame:SendMsgToHttpServer(servertype, requestId, strData)
+		end
+	else
+		LuaNFrame.Error(NFLogId.NF_LOG_SYSTEMLOG, 0, __G__TRACKBACK__("LuaNFrame.SendMsgToHttpServer Para Error"))
+	end
+end
+
 g_operateID = g_operateID or 0
 
 --处理登录服务器协议数据
@@ -474,6 +484,26 @@ function LuaNFrame.DispatchMasterHttp(unLinkId, requestId, firstPath, secondPath
 
 	if not status then
 		LuaNFrame.SendErrorLog(0, "LuaNFrame.DispatchMasterHttp error, unLinkId:"..tostring(unLinkId)..", requestId:"..tostring(requestId)..", firstPath:"..firstPath..", secondPath:"..secondPath, msg)
+    end
+end
+
+--处理Master服务器消息
+function LuaNFrame.DispatchWebHttp(unLinkId, requestId, firstPath, secondPath, strMsg)
+	local function HttpExecute()
+		controller = httpManager:createController(firstPath)
+	
+		if controller == nil then
+			LuaNFrame.Error(NFLogId.NF_LOG_SYSTEMLOG, 0, "http msg:/"..firstPath.."/"..secondPath.." not handled!")
+		else
+			retString,retSize = controller[secondPath](strMsg) 
+			LuaNFrame.SendMsgToHttpServer(NF_SERVER_TYPES.NF_ST_WEB, requestId, string.len(retString), retString)
+		end
+	end
+	
+	local status, msg = xpcall (HttpExecute, __G__TRACKBACK__)
+
+	if not status then
+		LuaNFrame.SendErrorLog(0, "LuaNFrame.DispatchWebHttp error, unLinkId:"..tostring(unLinkId)..", requestId:"..tostring(requestId)..", firstPath:"..firstPath..", secondPath:"..secondPath, msg)
     end
 end
 

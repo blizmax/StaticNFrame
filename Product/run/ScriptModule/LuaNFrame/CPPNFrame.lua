@@ -118,6 +118,10 @@ function CPPNFrame:SendMsgToMaster(unLinkId, nPlayerId, nMsgId, nLen, strData)
     self.luaModule:SendMsgToMaster(unLinkId, nPlayerId, nMsgId, nLen, strData)
 end
 
+function CPPNFrame:SendMsgToHttpServer(servertype, requestId, strData)
+    self.luaModule:SendMsgToHttpServer(servertype, requestId, strData)
+end
+
 --设置LOG等级
 function CPPNFrame:SetLogLevel(level)
     self.luaModule:SetLogLevel(level)

@@ -49,6 +49,9 @@ LoadPlugin =
 			
 			"NFProxyServerPlugin",
 			"NFProxyClientPlugin",
+
+			"NFWebClientPlugin",
+			"NFWebServerPlugin",
 			
 			------------------------------------------------
 			-----服务器基础逻辑引擎-------------------------
@@ -148,8 +151,8 @@ LoadPlugin =
 			"NFLocationClientPlugin",
 			"NFLocationServerPlugin",
 			
-			"NFLuaScriptPlugin",
-			--"NFLuaThreadScriptPlugin",
+			--"NFLuaScriptPlugin",
+			"NFLuaThreadScriptPlugin",
 		};
 		ServerType = NF_ST_LOCATION;
 	},
@@ -163,8 +166,8 @@ LoadPlugin =
 			"NFLogClientPlugin",
 			"NFLogServerPlugin",
 			
-			"NFLuaScriptPlugin",
-			--"NFLuaThreadScriptPlugin",
+			--"NFLuaScriptPlugin",
+			"NFLuaThreadScriptPlugin",
 		};
 		ServerType = NF_ST_LOG;
 	},
@@ -178,8 +181,8 @@ LoadPlugin =
 			"NFWebClientPlugin",
 			"NFWebServerPlugin",
 			
-			"NFLuaScriptPlugin",
-			--"NFLuaThreadScriptPlugin",
+			--"NFLuaScriptPlugin",
+			"NFLuaThreadScriptPlugin",
 		};
 		ServerType = NF_ST_WEB;
 	},

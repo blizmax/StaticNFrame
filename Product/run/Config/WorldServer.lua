@@ -65,7 +65,7 @@ function InitGameServer()
 			MaxConnectNum = 100,
 			WorkThreadNum = 5,
 			LuaWorkThreadNum = 2,
-			LuaTcpThreadNum = 4,
+			LuaTcpThreadNum = 1,
 			Security = false,
 			WebSocket = false,
 		};
@@ -79,8 +79,8 @@ function InitGameServer()
 			ServerPort = GetNewPort(),
 			MaxConnectNum = 100,
 			WorkThreadNum = 5,
-			LuaWorkThreadNum = 2,
-			LuaTcpThreadNum = 4,
+			LuaWorkThreadNum = 4,
+			LuaTcpThreadNum = 1,
 			Security = false,
 			WebSocket = false,
 		};
@@ -95,8 +95,9 @@ function InitGameServer()
 			ServerPort = GetNewPort(),
 			MaxConnectNum = 100,
 			WorkThreadNum = 5,
-			LuaWorkThreadNum = 2,
-			LuaTcpThreadNum = 4,
+			LuaWorkThreadNum = 4,
+			LuaTcpThreadNum = 1,
+			HttpPort = 6045,
 			Security = false,
 			WebSocket = false,
 		};

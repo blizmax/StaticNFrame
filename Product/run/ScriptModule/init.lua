@@ -86,6 +86,7 @@ function LuaNFrame.InitScript(luaModule)
 			package.path = package.path..";../ScriptModule/GameServer/trdlib/lua/?.lua"
 
 			require("GameServer/LoadHelper")
+			require("GameServer/GameTimerManager")
 
 			mysqlItem = mysqlConnect.new(g_dbtype, g_dbUser, g_dbPassword, g_dbHost, g_dbPort, g_dbDatabase)
 			redisItem = redisConnect.new()
@@ -106,6 +107,29 @@ function LuaNFrame.InitScript(luaModule)
 			package.path = package.path..";../ScriptModule/GameServer/trdlib/lua/?.lua"
 			
 			require("WebServer/WebLoadHelper")
+			require("WebServer/WebTimerManager")
+
+			mysqlItem = mysqlConnect.new(g_dbtype, g_dbUser, g_dbPassword, g_dbHost, g_dbPort, g_dbDatabase)
+			redisItem = redisConnect.new()
+			mysqlLog = mysqlConnect.new(g_dbtype, g_dbUser, g_dbPassword, g_dbHost, g_dbPort, g_dbDatabase)
+		elseif LuaNFrame.GetAppName() == "LocationServer" then
+			package.path = package.path .. ";../ScriptModule/GameServer/?.lua;"
+			package.path = package.path..";../ScriptModule/GameServer/trdlib/libprotobuf/?.lua"   --由于这里protobuf的特殊性，必须把包含protobuf的目录加到环境变量中
+			package.path = package.path..";../ScriptModule/GameServer/trdlib/lua/?.lua"
+			
+			require("LocationServer/LocationLoadHelper")
+			require("LocationServer/LocationTimerManager")
+
+			mysqlItem = mysqlConnect.new(g_dbtype, g_dbUser, g_dbPassword, g_dbHost, g_dbPort, g_dbDatabase)
+			redisItem = redisConnect.new()
+			mysqlLog = mysqlConnect.new(g_dbtype, g_dbUser, g_dbPassword, g_dbHost, g_dbPort, g_dbDatabase)
+		elseif LuaNFrame.GetAppName() == "LogServer" then
+			package.path = package.path .. ";../ScriptModule/GameServer/?.lua;"
+			package.path = package.path..";../ScriptModule/GameServer/trdlib/libprotobuf/?.lua"   --由于这里protobuf的特殊性，必须把包含protobuf的目录加到环境变量中
+			package.path = package.path..";../ScriptModule/GameServer/trdlib/lua/?.lua"
+			
+			require("LogServer/LogLoadHelper")
+			require("LogServer/LogTimerManager")
 
 			mysqlItem = mysqlConnect.new(g_dbtype, g_dbUser, g_dbPassword, g_dbHost, g_dbPort, g_dbDatabase)
 			redisItem = redisConnect.new()

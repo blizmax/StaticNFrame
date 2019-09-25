@@ -1,15 +1,16 @@
 NF_SERVER_TYPES = {
-	NF_ST_NONE = 0, -- NONE
-	NF_ST_MASTER = 1, --
-	NF_ST_LOGIN = 2, --
-	NF_ST_WORLD = 3, --
-	NF_ST_GAME = 4, --
-	NF_ST_PROXY = 5, --
-	NF_ST_MATCH = 6,
-	NF_ST_BATTLE = 7,
-	NF_ST_UNION_MATCH = 8,
-	NF_ST_PUBLIC_MATCH = 9,
-	NF_ST_MAX = 10, --
+	-- server type
+	NF_ST_NONE = 0,    		-- NONE
+	NF_ST_MASTER = 1,    	--
+	NF_ST_LOGIN = 2,    	--
+	NF_ST_WORLD = 3,    	--
+	NF_ST_GAME = 4,    		--
+	NF_ST_PROXY = 5,    	--
+	NF_ST_WEB = 6,			-- WEB SERVER
+	NF_ST_LOCATION = 7, 	--LOCATION SERVER
+	NF_ST_LOG = 8, 			--日志采集服务器 
+	NF_ST_REBOT = 15,		--机器人模拟客户端
+	NF_ST_MAX = 20,    		--
 };
 
 NF_MSG_TYPE = {
