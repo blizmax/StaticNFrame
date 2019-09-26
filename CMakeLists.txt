@@ -109,7 +109,9 @@ SET(LIB_LINK_NF  libNFCore.a libNFPluginModule.a libprotobuf.a libNFActorPlugin.
 				libNFLoginClientPlugin.a libNFLoginServerPlugin.a libNFMasterServerPlugin.a 
 				libNFProxyClientPlugin.a libNFProxyServerPlugin.a 
 				libNFServerCommon.a libNFWorldClientPlugin.a libNFWorldServerPlugin.a
-				libNFGameLogicPlugin.a libNFLoginLogicPlugin.a libNFProxyLogicPlugin.a libNFServerLogicCommon.a libNFTestPlugin.a libNFWorldLogicPlugin.a libNFRebotPlugin.a)
+				libNFGameLogicPlugin.a libNFLoginLogicPlugin.a libNFProxyLogicPlugin.a 
+				libNFServerLogicCommon.a libNFTestPlugin.a libNFWorldLogicPlugin.a libNFRebotPlugin.a
+				libNFLocationClientPlugin.a libNFLocationServerPlugin.a libNFLogClientPlugin.a libNFLogServerPlugin.a libNFWebClientPlugin.a libNFWebServerPlugin.a)
 	
 include_directories( ${INCLUDE_DIR} )
 	
