@@ -52,13 +52,14 @@ function TcpSessionClose(playerID)
 	if tonumber(playerID) == 0 then
 		return
 	end
-	luaPrint(playerID.." Exit")
+
+	LogFile("error", playerID.." Exit")
 	OnlineModel.PlayerExit(playerID)
 end
 
 function TcpSessionReport(userID, IP)
 	--上报玩家的IP，目前主要是IP	
-	luaPrint(userID.." Report:"..IP)
+	LogFile("error", userID.." Report:"..IP)
 	PlayerModel.PlayerReport(userID, IP)
 end
 

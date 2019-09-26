@@ -33,25 +33,12 @@ do_work()
 
 do_work MasterServer 1
 do_work LoginServer 2
-do_work ProxyServer 3
-
-do_work WorldServer 10
-do_work GameServer 11
-
-do_work RebotServer 20
-do_work RebotServer 21
-do_work RebotServer 22
-do_work RebotServer 23
-do_work RebotServer 24
-do_work RebotServer 25
-do_work RebotServer 26
-do_work RebotServer 27
-do_work RebotServer 28
-do_work RebotServer 29
-do_work RebotServer 30
-do_work RebotServer 31
-do_work RebotServer 32
-do_work RebotServer 33
+do_work WorldServer 3
+do_work GameServer 4
+do_work ProxyServer 6
+do_work LocationServer 7
+do_work LogServer 8
+do_work WebServer 9
 
 echo "rm Stop.sh -rf" >> Clear.sh
 echo "rm Start.sh -rf" >> Clear.sh

@@ -36,6 +36,9 @@ do_work LoginServer 2
 do_work WorldServer 3
 do_work GameServer 4
 do_work ProxyServer 6
+do_work LocationServer 7
+do_work LogServer 8
+do_work WebServer 9
 
 echo "rm Stop.sh -rf" >> Clear.sh
 echo "rm Start.sh -rf" >> Clear.sh
