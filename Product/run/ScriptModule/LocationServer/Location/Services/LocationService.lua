@@ -11,13 +11,9 @@ end
 
 
 function LocationService.ServerLoop()
-
-	
 	if false == ThreadManager.IsLock(LocationModel.location_lock) and LocationModel.GetListLen() > 0 then
-		--print("aaaaaaaaaaaaaaaaaaaaaaaaaa")
-		--processWork( "CheckIPLocation", "location" )
+		processWork( "CheckIPLocation", "location" )
 	end	
-	
 end
 
 

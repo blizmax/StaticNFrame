@@ -766,10 +766,19 @@ public:
 	virtual void TcpSessionReport(uint64_t playerId, const std::string& ip);
 
 	virtual void SendErrorLog(uint64_t playerId, const std::string& func_log, const std::string& errorLog, uint32_t count);
+
+	virtual std::string HttpGet(const std::string& url);
+
+	virtual std::string HttpGetWithHead(const std::string& url, const std::map<std::string, std::string>& xHeaders);
+
+	virtual std::string HttpPost(const std::string& url, const std::string& postContent);
+
+	virtual std::string HttpPostWithHead(const std::string& url, const std::string& postContent, const std::map<std::string, std::string>& xHeaders);
 public:
 	bool Register();
 	void LoadScript();
 protected:
 	NFILogModule* m_pLogModule;
 	NFCLuaThreadModule* m_pLuaThreadModule;
+	NFIHttpClientModule* m_pHttpClientModule;
 };

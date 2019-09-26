@@ -185,3 +185,19 @@ end
 function CPPNFrame:SendErrorLog(playerId, func_log, errorLog, count)
     return self.luaModule:SendErrorLog(playerId, func_log, errorLog, count)
 end
+
+function  CPPNFrame:HttpPost(url,content)
+	return self.luaModule:HttpPost(url,content)
+end
+
+function  CPPNFrame:HttpPostWithHead(url,content,head)
+	return self.luaModule:HttpPostWithHead(url,content,head)
+end
+
+function  CPPNFrame:HttpGet(url)
+	return self.luaModule:HttpGet(url)
+end
+
+function  CPPNFrame:HttpGetWithHead(url,head)
+	return self.luaModule:HttpGetWithHead(url,head)
+end

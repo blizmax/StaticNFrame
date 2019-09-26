@@ -23,6 +23,7 @@
 #include "NFComm/NFPluginModule/NFIHttpServerModule.h"
 #include "NFComm/NFPluginModule/NFIServerNetEventModule.h"
 #include "NFComm/NFPluginModule/NFIHttpServerModule.h"
+#include "NFComm/NFPluginModule/NFIHttpClientModule.h"
 
 #include "NFComm/NFCore/NFMapEx.hpp"
 
@@ -142,6 +143,14 @@ public:
 	virtual bool IsThreadModule();
 
 	virtual void SendErrorLog(uint64_t playerId, const std::string& func_log, const std::string& errorLog);
+
+	virtual std::string HttpGet(const std::string& url);
+
+	virtual std::string HttpGetWithHead(const std::string& url, const std::map<std::string, std::string>& xHeaders);
+
+	virtual std::string HttpPost(const std::string& url, const std::string& postContent);
+
+	virtual std::string HttpPostWithHead(const std::string& url, const std::string& postContent, const std::map<std::string, std::string>& xHeaders);
 public:
 	void OnAccountEventCallBack(uint32_t nEvent, uint32_t unLinkId, NF_SHARE_PTR<PlayerGameServerInfo> pServerData);
 	NF_SHARE_PTR<PlayerGameServerInfo> GetPlayerInfo(uint64_t playerId);
@@ -152,6 +161,7 @@ protected:
 	NFINetServerModule* m_pNetServerModule;
 	NFINetClientModule* m_pNetClientModule;
 	NFIHttpServerModule* m_pHttpServerModule;
+	NFIHttpClientModule* m_pHttpClientModule;
 	NFILogModule* m_pLogModule;
 protected:
     int64_t mnTime;
@@ -161,7 +171,5 @@ protected:
 	uint32_t m_luaTimerIndex;
 
 	NFMapEx<uint64_t, PlayerGameServerInfo> mPlayerProxyInfoMap;
-
-	std::map<std::string, std::string> m_errorLog;
 };
 

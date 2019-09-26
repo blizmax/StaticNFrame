@@ -37,10 +37,6 @@ bool NFCLogServerModule::Init()
 		}
 	}
 
-	std::map<std::string, std::string> xHeaders;
-	int resp = 0;
-	std::string strResp;
-	FindModule<NFIHttpClientModule>()->PerformGet("http://ip.360.cn/IPQuery/ipquery?ip=127.0.0.1", xHeaders, resp, strResp);
 	return true;
 }
 

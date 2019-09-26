@@ -85,6 +85,8 @@ bool NFCHttpClient::MakeRequest(const std::string& strUri,
 	const std::map<std::string, std::string>& xHeaders,
 	const NFHttpType eHttpType, int& respCode, std::string& strResp)
 {
+	respCode = 0;
+	strResp = "";
 	m_respCode = 0;
 	m_strResp = "";
 	struct evhttp_uri* http_uri = evhttp_uri_parse(strUri.c_str());
@@ -97,6 +99,11 @@ bool NFCHttpClient::MakeRequest(const std::string& strUri,
 	const char*  scheme = evhttp_uri_get_scheme(http_uri);
 	if (scheme == NULL)
 	{
+		if (http_uri)
+		{
+			evhttp_uri_free(http_uri);
+		}
+
 		NFLogError(NF_LOG_NET_PLUGIN, 0, "scheme == NULL err. ");
 		return false;
 	}
@@ -141,6 +148,11 @@ bool NFCHttpClient::MakeRequest(const std::string& strUri,
 	const char* path = evhttp_uri_get_path(http_uri);
 	if (path == NULL)
 	{
+		if (http_uri)
+		{
+			evhttp_uri_free(http_uri);
+		}
+
 		NFLogError(NF_LOG_NET_PLUGIN, 0, "path == NUL err. ");
 		return false;
 	}
@@ -170,10 +182,6 @@ bool NFCHttpClient::MakeRequest(const std::string& strUri,
 		SSL* pSSL = SSL_new(m_pSslCtx);
 		if (pSSL == NULL)
 		{
-			if (http_uri)
-			{
-				evhttp_uri_free(http_uri);
-			}
 			NFLogError(NF_LOG_NET_PLUGIN, 0, "SSL_new err.");
 			return false;
 		}
@@ -195,7 +203,6 @@ bool NFCHttpClient::MakeRequest(const std::string& strUri,
 		{
 			evhttp_uri_free(http_uri);
 		}
-
 		NFLogError(NF_LOG_NET_PLUGIN, 0, " bev == NUL err. ");
 		return false;
 	}
@@ -214,7 +221,6 @@ bool NFCHttpClient::MakeRequest(const std::string& strUri,
 		{
 			evhttp_uri_free(http_uri);
 		}
-
 		NFLogError(NF_LOG_NET_PLUGIN, 0, " evcon == NUL err. ");
 		return false;
 	}
@@ -244,12 +250,21 @@ bool NFCHttpClient::MakeRequest(const std::string& strUri,
 	struct evkeyvalq* output_headers = evhttp_request_get_output_headers(req);
 	if (output_headers == NULL)
 	{
+		if (http_uri)
+		{
+			evhttp_uri_free(http_uri);
+		}
+		evhttp_request_free(req);
 		NFLogError(NF_LOG_NET_PLUGIN, 0, "output_headers == NULL err. ");
 		return false;
 	}
 
 	if (evhttp_add_header(output_headers, "Host", host))
 	{
+		if (http_uri)
+		{
+			evhttp_uri_free(http_uri);
+		}
 		evhttp_request_free(req);
 		NFLogError(NF_LOG_NET_PLUGIN, 0, "evhttp_add_header host failed. ");
 		return false;
@@ -257,6 +272,10 @@ bool NFCHttpClient::MakeRequest(const std::string& strUri,
 
 	if (evhttp_add_header(output_headers, "Connection", "close"))
 	{
+		if (http_uri)
+		{
+			evhttp_uri_free(http_uri);
+		}
 		evhttp_request_free(req);
 		NFLogError(NF_LOG_NET_PLUGIN, 0, "evhttp_add_header Connection failed. ");
 		return false;
@@ -266,6 +285,10 @@ bool NFCHttpClient::MakeRequest(const std::string& strUri,
 	{
 		if (evhttp_add_header(output_headers, it->first.c_str(), it->second.c_str()))
 		{
+			if (http_uri)
+			{
+				evhttp_uri_free(http_uri);
+			}
 			evhttp_request_free(req);
 			NFLogError(NF_LOG_NET_PLUGIN, 0, "evhttp_add_header failed. ");
 			return false;
@@ -278,6 +301,10 @@ bool NFCHttpClient::MakeRequest(const std::string& strUri,
 		struct evbuffer* output_buffer = evhttp_request_get_output_buffer(req);
 		if (output_buffer == NULL)
 		{
+			if (http_uri)
+			{
+				evhttp_uri_free(http_uri);
+			}
 			evhttp_request_free(req);
 			NFLogError(NF_LOG_NET_PLUGIN, 0, "output_buffer == NUL err. ");
 			return false;
@@ -285,13 +312,26 @@ bool NFCHttpClient::MakeRequest(const std::string& strUri,
 
 		if (evbuffer_add(output_buffer, strPostData.c_str(), nLen)) 
 		{
+			if (http_uri)
+			{
+				evhttp_uri_free(http_uri);
+			}
 			evhttp_request_free(req);
 			NFLogError(NF_LOG_NET_PLUGIN, 0, "evbuffer_add failed. ");
 			return false;
 		}
-		//char buf[256] = { 0 };
-		//evutil_snprintf(buf, sizeof(buf) - 1, "%lu", (unsigned long)nLen);
-		//evhttp_add_header(output_headers, "Content-Length", buf);
+		char buf[256] = { 0 };
+		evutil_snprintf(buf, sizeof(buf) - 1, "%lu", (unsigned long)nLen);
+		if (evhttp_add_header(output_headers, "Content-Length", buf))
+		{
+			if (http_uri)
+			{
+				evhttp_uri_free(http_uri);
+			}
+			evhttp_request_free(req);
+			NFLogError(NF_LOG_NET_PLUGIN, 0, "evbuffer_add failed. ");
+			return false;
+		}
 	}
 
 	int r_ = evhttp_make_request(evcon, req, (evhttp_cmd_type)eHttpType, uri.c_str());
@@ -322,7 +362,6 @@ bool NFCHttpClient::MakeRequest(const std::string& strUri,
 	{
 		evhttp_uri_free(http_uri);
 	}
-
 	return true;
 }
 

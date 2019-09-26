@@ -92,3 +92,19 @@ end
 function Sha256(content)
 	return LuaNFrame.Sha256(content)
 end
+
+function HttpPost(url,content)
+	return LuaNFrame.HttpPost(url,content)
+end
+
+function HttpPostWithHead(url,content,head)
+	return LuaNFrame.HttpPostWithHead(url,content,head)
+end
+
+function HttpGet(url)
+	return LuaNFrame.HttpGet(url)
+end
+
+function HttpGetWithHead(url,head)
+	return LuaNFrame.HttpGetWithHead(url,head)
+end

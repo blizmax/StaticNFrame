@@ -241,6 +241,38 @@ function LuaNFrame.SetFlushOn(level)
     CPPNFrame:SetFlushOn(level)
 end
 
+function  LuaNFrame.HttpPost(url,content)
+	if type(url) ~= "string" or type(content) ~= "string" then
+		LuaNFrame.Error(NFLogId.NF_LOG_SYSTEMLOG, 0, __G__TRACKBACK__("LuaNFrame.HttpPost Para Error"))
+		return ""
+    end
+	return  CPPNFrame:HttpPost(url,content)
+end
+
+function  LuaNFrame.HttpPostWithHead(url,content,head)
+	if type(url) ~= "string" or type(content) ~= "string" or type(head) ~= "table" then
+		LuaNFrame.Error(NFLogId.NF_LOG_SYSTEMLOG, 0, __G__TRACKBACK__("LuaNFrame.HttpPostWithHead Para Error"))
+		return ""
+    end
+	return CPPNFrame:HttpPostWithHead(url,content,head)
+end
+
+function  LuaNFrame.HttpGet(url)
+	if type(url) ~= "string" then
+		LuaNFrame.Error(NFLogId.NF_LOG_SYSTEMLOG, 0, __G__TRACKBACK__("LuaNFrame.HttpGet Para Error"))
+		return ""
+    end
+	return CPPNFrame:HttpGet(url)
+end
+
+function LuaNFrame.HttpGetWithHead(url,head)
+	if type(url) ~= "string" or type(head) ~= "table" then
+		LuaNFrame.Error(NFLogId.NF_LOG_SYSTEMLOG, 0, __G__TRACKBACK__("LuaNFrame.HttpGetWithHead Para Error"))
+		return ""
+    end
+	return CPPNFrame:HttpGetWithHead(url,head)
+end
+
 LuaNFrame.ErrorLogMsg = LuaNFrame.ErrorLogMsg or {}
 function LuaNFrame.SendErrorLog(playerId, func_log, errorLog)
 	LuaNFrame.Error(NFLogId.NF_LOG_SYSTEMLOG, playerId,  func_log)

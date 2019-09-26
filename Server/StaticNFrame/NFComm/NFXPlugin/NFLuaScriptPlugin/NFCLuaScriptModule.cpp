@@ -63,7 +63,7 @@ bool NFCLuaScriptModule::Init()
 	m_pNetClientModule = m_pPluginManager->FindModule<NFINetClientModule>();
 	m_pLogModule = m_pPluginManager->FindModule<NFILogModule>();
 	m_pHttpServerModule = m_pPluginManager->FindModule<NFIHttpServerModule>();
-
+	m_pHttpClientModule = m_pPluginManager->FindModule<NFIHttpClientModule>();
 	m_pPluginManager->FindModule<NFIServerNetEventModule>()->AddAccountEventCallBack(NF_ST_GAME, this, &NFCLuaScriptModule::OnAccountEventCallBack);
 
     Register();
@@ -499,6 +499,10 @@ bool NFCLuaScriptModule::Register()
 		.addFunction("IsThreadModule", &NFCLuaScriptModule::IsThreadModule)
 		.addFunction("SendErrorLog", &NFCLuaScriptModule::SendErrorLog)
 		.addFunction("SendMsgToHttpServer", &NFCLuaScriptModule::SendMsgToHttpServer)
+		.addFunction("HttpGet", &NFCLuaScriptModule::HttpGet)
+		.addFunction("HttpGetWithHead", &NFCLuaScriptModule::HttpGetWithHead)
+		.addFunction("HttpPost", &NFCLuaScriptModule::HttpPost)
+		.addFunction("HttpPostWithHead", &NFCLuaScriptModule::HttpPostWithHead)
 		.endClass();
 	return true;
 }
@@ -691,11 +695,61 @@ void NFCLuaScriptModule::SendErrorLog(uint64_t playerId, const std::string& func
 	msg.set_player_id(playerId);
 	msg.set_server_name(m_pPluginManager->GetAppName());
 
-	std::string md5 = NFMMOMD5(errorLog).toStr();
-	auto iter = m_errorLog.find(md5);
-	if (iter == m_errorLog.end())
+	NFEventMgr::Instance()->FireExecute(NFEVENT_LUA_ERROR_LOG, playerId, 0, msg);
+}
+
+std::string NFCLuaScriptModule::HttpGet(const std::string& url)
+{
+	int respCode = 0;
+	std::string strResp;
+	if (m_pHttpClientModule)
 	{
-		m_errorLog[md5] = errorLog;
-		NFEventMgr::Instance()->FireExecute(NFEVENT_LUA_ERROR_LOG, playerId, 0, msg);
+		if (!m_pHttpClientModule->PerformGet(url, std::map<std::string, std::string>(), respCode, strResp))
+		{
+			NFLogError(NF_LOG_SYSTEMLOG, 0, "HttpGet Error..........");
+		}
 	}
+	return strResp;
+}
+
+std::string NFCLuaScriptModule::HttpGetWithHead(const std::string& url, const std::map<std::string, std::string>& xHeaders)
+{
+	int respCode = 0;
+	std::string strResp;
+	if (m_pHttpClientModule)
+	{
+		if (!m_pHttpClientModule->PerformGet(url, xHeaders, respCode, strResp))
+		{
+			NFLogError(NF_LOG_SYSTEMLOG, 0, "HttpGetWithHead Error..........");
+		}
+	}
+	return strResp;
+}
+
+std::string NFCLuaScriptModule::HttpPost(const std::string& url, const std::string& postContent)
+{
+	int respCode = 0;
+	std::string strResp;
+	if (m_pHttpClientModule)
+	{
+		if (!m_pHttpClientModule->PerformPost(url, postContent, std::map<std::string, std::string>(), respCode, strResp))
+		{
+			NFLogError(NF_LOG_SYSTEMLOG, 0, "HttpPost Error..........");
+		}
+	}
+	return strResp;
+}
+
+std::string NFCLuaScriptModule::HttpPostWithHead(const std::string& url, const std::string& postContent, const std::map<std::string, std::string>& xHeaders)
+{
+	int respCode = 0;
+	std::string strResp;
+	if (m_pHttpClientModule)
+	{
+		if (!m_pHttpClientModule->PerformPost(url, postContent, xHeaders, respCode, strResp))
+		{
+			NFLogError(NF_LOG_SYSTEMLOG, 0, "HttpPostWithHead Error..........");
+		}
+	}
+	return strResp;
 }
