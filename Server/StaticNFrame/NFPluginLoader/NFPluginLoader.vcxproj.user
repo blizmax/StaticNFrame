@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <LocalDebuggerCommandArguments>--Server=LoginServer --ID=2 --Path=../Config --LuaScript=../ScriptModule</LocalDebuggerCommandArguments>
+    <LocalDebuggerCommandArguments>--Server=AllServer --ID=1 --Path=../Config --LuaScript=../ScriptModule</LocalDebuggerCommandArguments>
     <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
     <LocalDebuggerWorkingDirectory>$(SolutionDir)../Product/run/$(Configuration)/</LocalDebuggerWorkingDirectory>
   </PropertyGroup>
@@ -22,7 +22,7 @@
     <LocalDebuggerWorkingDirectory>$(SolutionDir)../Product/run/$(Configuration)/</LocalDebuggerWorkingDirectory>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <LocalDebuggerCommandArguments>--Server=LocationServer --ID=7 --Path=../Config --LuaScript=../ScriptModule</LocalDebuggerCommandArguments>
+    <LocalDebuggerCommandArguments>--Server=AllServer --ID=1 --Path=../Config --LuaScript=../ScriptModule</LocalDebuggerCommandArguments>
     <LocalDebuggerWorkingDirectory>$(SolutionDir)../Product/run/$(Configuration)/</LocalDebuggerWorkingDirectory>
     <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
   </PropertyGroup>

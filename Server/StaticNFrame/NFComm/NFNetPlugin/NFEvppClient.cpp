@@ -77,6 +77,8 @@ void NFEvppClient::Quit()
 	{
 		NF_SAFE_DELETE(m_tcpClient);
 	}
+	m_tcpClient = nullptr;
+	delete this;
 }
 
 bool NFEvppClient::Finalize()
@@ -88,7 +90,6 @@ bool NFEvppClient::Finalize()
 
 	m_tcpClient->loop()->QueueInLoop(std::bind(&NFEvppClient::Quit, this));
 
-	m_tcpClient = nullptr;
 	return true;
 }
 

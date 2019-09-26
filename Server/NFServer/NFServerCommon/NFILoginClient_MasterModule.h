@@ -21,16 +21,6 @@ public:
 
 	}
 
-	virtual NF_SHARE_PTR<NFServerData> GetSuitProxyServer(const std::string& name) = 0;
-	virtual NF_SHARE_PTR<NFServerData> GetSuitGameServer(const std::string& name) = 0;
-	virtual NF_SHARE_PTR<NFServerData> GetSuitWorldServer() = 0;
-
-	virtual NF_SHARE_PTR<NFServerData> GetRandProxyServer() = 0;
-	virtual NF_SHARE_PTR<NFServerData> GetRandGameServer() = 0;
-
-	virtual NF_SHARE_PTR<NFServerData> GetProxyServerByServerId(uint32_t serverId) = 0;
-	virtual NF_SHARE_PTR<NFServerData> GetGameServerByServerId(uint32_t serverId) = 0;
-
 	virtual uint32_t GetMasterLinkId() const = 0;
 
 };

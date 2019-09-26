@@ -38,8 +38,8 @@ LoadPlugin =
 			-----服务器架构引擎-------------------------
 			"NFMasterServerPlugin",
 			
-			"NFLoginClientPlugin",
-			"NFLoginServerPlugin",
+			--"NFLoginClientPlugin",
+			--"NFLoginServerPlugin",
 			
 			"NFWorldClientPlugin",
 			"NFWorldServerPlugin",
@@ -53,10 +53,15 @@ LoadPlugin =
 			"NFWebClientPlugin",
 			"NFWebServerPlugin",
 			
+			"NFLocationClientPlugin",
+			"NFLocationServerPlugin",
+
+			"NFLogClientPlugin",
+			"NFLogServerPlugin",
 			------------------------------------------------
 			-----服务器基础逻辑引擎-------------------------
 			"NFGameLogicPlugin",
-			"NFLoginLogicPlugin",
+			--"NFLoginLogicPlugin",
 			"NFProxyLogicPlugin",
 			"NFWorldLogicPlugin",
 			--------------------------------------------------------
@@ -92,8 +97,8 @@ LoadPlugin =
 			
 			"NFLoginLogicPlugin",
 
-			"NFLuaScriptPlugin",
-			--"NFLuaThreadScriptPlugin",
+			--"NFLuaScriptPlugin",
+			"NFLuaThreadScriptPlugin",
 		};
 		ServerType = NF_ST_LOGIN;
 	},

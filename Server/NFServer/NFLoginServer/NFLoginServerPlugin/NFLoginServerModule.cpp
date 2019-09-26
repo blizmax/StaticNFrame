@@ -31,9 +31,9 @@ bool NFCLoginServerModule::Init()
 	FindModule<NFINetServerModule>()->AddEventCallBack(NF_ST_LOGIN, this, &NFCLoginServerModule::OnProxySocketEvent);
 	FindModule<NFINetServerModule>()->AddReceiveCallBack(NF_ST_LOGIN, this, &NFCLoginServerModule::OnHandleOtherMessage);
 	
-	FindModule<NFINetServerModule>()->AddReceiveCallBack(NF_ST_MASTER, EGMI_NET_PROXY_TO_LOGIN_REGISTER, this, &NFCLoginServerModule::OnProxyServerRegisterProcess);
-	FindModule<NFINetServerModule>()->AddReceiveCallBack(NF_ST_MASTER, EGMI_NET_PROXY_TO_LOGIN_UNREGISTER, this, &NFCLoginServerModule::OnProxyServerUnRegisterProcess);
-	FindModule<NFINetServerModule>()->AddReceiveCallBack(NF_ST_MASTER, EGMI_NET_PROXY_TO_LOGIN_REFRESH, this, &NFCLoginServerModule::OnProxyServerRefreshProcess);
+	FindModule<NFINetServerModule>()->AddReceiveCallBack(NF_ST_LOGIN, EGMI_NET_PROXY_TO_LOGIN_REGISTER, this, &NFCLoginServerModule::OnProxyServerRegisterProcess);
+	FindModule<NFINetServerModule>()->AddReceiveCallBack(NF_ST_LOGIN, EGMI_NET_PROXY_TO_LOGIN_UNREGISTER, this, &NFCLoginServerModule::OnProxyServerUnRegisterProcess);
+	FindModule<NFINetServerModule>()->AddReceiveCallBack(NF_ST_LOGIN, EGMI_NET_PROXY_TO_LOGIN_REFRESH, this, &NFCLoginServerModule::OnProxyServerRefreshProcess);
 	NFServerConfig* pConfig = NFServerCommon::GetAppConfig(m_pPluginManager, NF_ST_LOGIN);
 	if (pConfig)
 	{

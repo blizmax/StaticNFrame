@@ -415,7 +415,13 @@ function LuaNFrame.LoginServer_DispatchTcp(unLinkId, valueId, nMsgId, strMsg)
 			if type(playerID) == "number" and playerID == 0 then
 				playerID = valueId
 			end
-			LuaNFrame.SendMsgToPlayer(unLinkId, playerID, retMsgID, retBufferLen, retString)
+
+			--登录协议特殊处理一下
+			if nMsgId == 1001 then
+				LuaNFrame.SendMsgToPlayer(unLinkId, valueId, retMsgID, retBufferLen, retString)
+			else
+				LuaNFrame.SendMsgToPlayer(unLinkId, playerID, retMsgID, retBufferLen, retString)
+			end
 		end
 	end
 	

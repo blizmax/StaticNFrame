@@ -51,9 +51,10 @@ function InitGlobalServer()
 			ServerPort = GetNewPort(),
 			MaxConnectNum = 100000,
 			WorkThreadNum = 5,
+			LuaWorkThreadNum = 1,
+			LuaTcpThreadNum = 2,
 			Security = false,
 			WebSocket = false,
-			HttpPort = 7001,
 		};
 
 	RegisterServer(MasterServer)
