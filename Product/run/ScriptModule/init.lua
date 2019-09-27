@@ -91,6 +91,16 @@ function LuaNFrame.InitScript(luaModule)
 			mysqlItem = mysqlConnect.new(g_dbtype, g_dbUser, g_dbPassword, g_dbHost, g_dbPort, g_dbDatabase)
 			redisItem = redisConnect.new()
 			mysqlLog = mysqlConnect.new(g_dbtype, g_dbUser, g_dbPassword, g_dbHost, g_dbPort, g_dbDatabase)
+		elseif LuaNFrame.GetAppName() == "WorldServer" then
+			package.path = package.path .. ";../ScriptModule/GameServer/?.lua;"
+			package.path = package.path..";../ScriptModule/GameServer/trdlib/libprotobuf/?.lua"   --由于这里protobuf的特殊性，必须把包含protobuf的目录加到环境变量中
+			package.path = package.path..";../ScriptModule/GameServer/trdlib/lua/?.lua"
+
+			require("WorldServer/WorldLoadHelper")
+			require("WorldServer/WorldTimerManager")
+			mysqlItem = mysqlConnect.new(g_dbtype, g_dbUser, g_dbPassword, g_dbHost, g_dbPort, g_dbDatabase)
+			redisItem = redisConnect.new()
+			mysqlLog = mysqlConnect.new(g_dbtype, g_dbUser, g_dbPassword, g_dbHost, g_dbPort, g_dbDatabase)
 		elseif LuaNFrame.GetAppName() == "LoginServer" then
 			package.path = package.path .. ";../ScriptModule/GameServer/?.lua;"
 			package.path = package.path..";../ScriptModule/GameServer/trdlib/libprotobuf/?.lua"   --由于这里protobuf的特殊性，必须把包含protobuf的目录加到环境变量中

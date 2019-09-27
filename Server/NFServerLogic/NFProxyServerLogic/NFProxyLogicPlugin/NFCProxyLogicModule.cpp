@@ -251,15 +251,32 @@ void NFCProxyLogicModule::OnHandleMessageFromClient(const uint32_t unLinkId, con
 		return;
 	}
 
-	NF_SHARE_PTR<NFServerData> pServerData = GetGameServerByServerId(pLinkInfo->mGameServerId);
-	if (pServerData)
+	//human msg 1000-1100  //shop msg 1100-1200  //misson msg 1200-1300 //agent msg 1300-1400 //rank msg 400 - 1500
+	if (nMsgId >= 1000 && nMsgId < 1500)
 	{
-		FindModule<NFINetClientModule>()->SendByServerID(pServerData->mUnlinkId, nMsgId, msg, nLen, pLinkInfo->mPlayerId);
+		NF_SHARE_PTR<NFServerData> pServerData = GetWorldServerByServerId(pLinkInfo->mWorldServerId);
+		if (pServerData)
+		{
+			FindModule<NFINetClientModule>()->SendByServerID(pServerData->mUnlinkId, nMsgId, msg, nLen, pLinkInfo->mPlayerId);
+		}
+		else
+		{
+			NFLogWarning(NF_LOG_PROXY_LOGIC_PLUGIN, 0, "ip:{} ,send msg:{}, can not find world server link, some thing wrong", ip, nMsgId);
+			return;
+		}
 	}
 	else
 	{
-		NFLogWarning(NF_LOG_PROXY_LOGIC_PLUGIN, 0, "ip:{} ,send msg:{}, can not find game server link, some thing wrong", ip, nMsgId);
-		return;
+		NF_SHARE_PTR<NFServerData> pServerData = GetGameServerByServerId(pLinkInfo->mGameServerId);
+		if (pServerData)
+		{
+			FindModule<NFINetClientModule>()->SendByServerID(pServerData->mUnlinkId, nMsgId, msg, nLen, pLinkInfo->mPlayerId);
+		}
+		else
+		{
+			NFLogWarning(NF_LOG_PROXY_LOGIC_PLUGIN, 0, "ip:{} ,send msg:{}, can not find game server link, some thing wrong", ip, nMsgId);
+			return;
+		}
 	}
 }
 

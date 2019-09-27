@@ -51,8 +51,8 @@ function InitGlobalServer()
 			ServerPort = GetNewPort(),
 			MaxConnectNum = 100000,
 			WorkThreadNum = 5,
-			LuaWorkThreadNum = 1,
-			LuaTcpThreadNum = 10,
+			LuaWorkThreadNum = 2,
+			LuaTcpThreadNum = 2,
 			Security = false,
 			WebSocket = false,
 		};
