@@ -423,7 +423,7 @@ function LuaNFrame.LoginServer_DispatchTcp(unLinkId, valueId, nMsgId, strMsg)
 end
 
 --执行游戏服务器信息
-function LuaNFrame.DispatchTcp(unLinkId, valueId, nMsgId, strMsg)
+function LuaNFrame.DispatchGameTcp(unLinkId, valueId, nMsgId, strMsg)
 	local function TcpExecute()
 		local retMsgID,controller = tcpManager:createController(nMsgId)
 	
@@ -448,7 +448,37 @@ function LuaNFrame.DispatchTcp(unLinkId, valueId, nMsgId, strMsg)
 	local status, msg = xpcall (TcpExecute, __G__TRACKBACK__)
 
 	if not status then
-		LuaNFrame.SendErrorLog(valueId, "LuaNFrame.DispatchTcp error, unLinkId:"..tostring(unLinkId).." valueId:"..tostring(valueId).." nMsgId:"..nMsgId, msg)
+		LuaNFrame.SendErrorLog(valueId, "LuaNFrame.DispatchGameTcp error, unLinkId:"..tostring(unLinkId).." valueId:"..tostring(valueId).." nMsgId:"..nMsgId, msg)
+    end
+end
+
+--执行游戏服务器信息
+function LuaNFrame.DispatchWorldTcp(unLinkId, valueId, nMsgId, strMsg)
+	local function TcpExecute()
+		local retMsgID,controller = tcpManager:createController(nMsgId)
+	
+		if controller == nil then
+			LuaNFrame.Error(NFLogId.NF_LOG_SYSTEMLOG, valueId, "nMsgId:"..nMsgId.." not handled!")
+		else
+			g_operateID = g_operateID + 1
+			local playerID, retCode, retBufferLen, retString, otString = controller.execute(nMsgId, g_operateID, strMsg)
+			if type(playerID) == "number" and playerID == 0 then
+				playerID = valueId
+			end
+
+			--登录协议特殊处理一下
+			if nMsgId == 1001 then
+				LuaNFrame.SendMsgToPlayer(unLinkId, valueId, retMsgID, retBufferLen, retString)
+			else
+				LuaNFrame.SendMsgToPlayer(unLinkId, playerID, retMsgID, retBufferLen, retString)
+			end
+		end
+	end
+	
+	local status, msg = xpcall (TcpExecute, __G__TRACKBACK__)
+
+	if not status then
+		LuaNFrame.SendErrorLog(valueId, "LuaNFrame.DispatchWorldTcp error, unLinkId:"..tostring(unLinkId).." valueId:"..tostring(valueId).." nMsgId:"..nMsgId, msg)
     end
 end
 
