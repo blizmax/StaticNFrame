@@ -132,6 +132,19 @@ require("common.st_gdmj_pb")
 require("common.st_gdmj2_pb")
 require("common.st_yqs_pb")
 
+g_redisIndex[NoticeModel.redis_index] = {index = g_redisInfo.redis_one, des="notice"}     --系统唯一的邮件
+g_redisIndex[OnlineModel.redis_index] = {index = g_redisInfo.redis_one, key = MailModel.mail_list, link = 1}  --每个玩家自己的邮件
+g_redisIndex[GoodsModel.redis_index] = {index = g_redisInfo.redis_one, key = MailModel.mail_list, link = 1}  --每个玩家自己的邮件
+g_redisIndex[BroadCastModel.redis_index] = {index = g_redisInfo.redis_one, key = MailModel.mail_list, link = 1}  --每个玩家自己的邮件
+g_redisIndex[ChatModel.redis_index] = {index = g_redisInfo.redis_one, key = MailModel.mail_list, link = 1}  --每个玩家自己的邮件
+g_redisIndex[MailModel.redis_index] = {index = g_redisInfo.redis_one, key = MailModel.mail_list, link = 1}  --每个玩家自己的邮件
+g_redisIndex[PlayerModel.redis_index] = {index = g_redisInfo.redis_one, key = MailModel.mail_list, link = 1}  --每个玩家自己的邮件
+g_redisIndex[AgencyModel.redis_index] = {index = g_redisInfo.redis_one, key = MailModel.mail_list, link = 1}  --每个玩家自己的邮件
+g_redisIndex[RosterModel.redis_index] = {index = g_redisInfo.redis_three, key = MailModel.mail_list, link = 1}  --每个玩家自己的邮件
+g_redisIndex[LocationModel.redis_index] = {index = g_redisInfo.redis_one, key = LocationModel.redis_index, link = 1}  --
+g_redisIndex[HttpSendModel.redis_index] = {index = g_redisInfo.redis_one, key = HttpSendModel.redis_index, link = 1}  --
+g_redisIndex[ActivityModel.redis_index] = {index = g_redisInfo.redis_three, key = HttpSendModel.redis_index, link = 1}  --
+
 g_redisIndex[ShopModel.buy_money] = {index = g_redisInfo.redis_two, key = ShopModel.buy_money, link = 1}
 g_redisIndex[ShopModel.redis_index] = {index = g_redisInfo.redis_two, key = ShopModel.buy_money, link = 1}
 g_redisIndex[FruitModel.redis_index] = {index = g_redisInfo.redis_three, key = FruitModel.redis_index, link = 1}
