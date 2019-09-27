@@ -141,7 +141,7 @@ g_redisIndex[MailModel.redis_index] = {index = g_redisInfo.redis_one, key = Mail
 g_redisIndex[PlayerModel.redis_index] = {index = g_redisInfo.redis_one, key = MailModel.mail_list, link = 1}  --每个玩家自己的邮件
 g_redisIndex[AgencyModel.redis_index] = {index = g_redisInfo.redis_one, key = MailModel.mail_list, link = 1}  --每个玩家自己的邮件
 g_redisIndex[RosterModel.redis_index] = {index = g_redisInfo.redis_three, key = MailModel.mail_list, link = 1}  --每个玩家自己的邮件
-g_redisIndex[LocationModel.redis_index] = {index = g_redisInfo.redis_one, key = LocationModel.redis_index, link = 1}  --
+
 g_redisIndex[HttpSendModel.redis_index] = {index = g_redisInfo.redis_one, key = HttpSendModel.redis_index, link = 1}  --
 g_redisIndex[ActivityModel.redis_index] = {index = g_redisInfo.redis_three, key = HttpSendModel.redis_index, link = 1}  --
 
