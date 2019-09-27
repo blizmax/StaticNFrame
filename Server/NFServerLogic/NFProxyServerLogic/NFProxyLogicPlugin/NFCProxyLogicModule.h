@@ -43,13 +43,14 @@ public:
 	void OnHandleMessageFromGameServer(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen);
 	void OnHandleMessageFromWorldServer(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen);
 	void OnHandleMessageFromLoginServer(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen);
+	
 	void OnHandleAccountLoginFromLoginServer(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen);
-	void OnHandleAccountLoginFromGameServer(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen);
+	void OnHandleReconnectFromLoginServer(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen);
+
 	void OnHandlePacketMsgFromGameServer(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen);
+	
 	void OnHandleAccountLoginFromClient(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen);
-	void OnHandleNotifyChangeGameFromWorldServer(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen);
 	void OnHandleReconnectFromClient(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen);
-	void OnHandleReconnectFromWorldServer(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen);
 
 	/**
 	* @brief ´¦ÀíÐÄÌø
@@ -63,11 +64,11 @@ public:
 	void OnHandleLoginEventCallBack(eMsgType nEvent, uint32_t unLinkId, NF_SHARE_PTR<NFServerData> pServerData);
 
 	NF_SHARE_PTR<NFServerData> GetGameServerByServerId(uint32_t serverId);
+	NF_SHARE_PTR<NFServerData> GetWorldServerByServerId(uint32_t serverId);
 private:
-private:
-	NFMapEx<uint32_t, NFServerData> mGameMap;	//unlink -- serverdata
-	NFMapEx<uint32_t, NFServerData> mWorldMap;	//unlink -- serverdata
-	NFMapEx<uint32_t, NFServerData> mLoginMap;	//unlink -- serverdata
+	NFConsistentHashMapEx<uint64_t, NFServerData> mGameMap;	//unlink -- serverdata
+	NFConsistentHashMapEx<uint64_t, NFServerData> mWorldMap;	//unlink -- serverdata
+	NFConsistentHashMapEx<uint64_t, NFServerData> mLoginMap;	//unlink -- serverdata
 	NFMapEx<uint32_t, ProxyLinkInfo> mClientLinkInfo; //unlink -- proxyLinkInfo
 	NFMapEx<uint64_t, ProxyLinkInfo> mPlayerLinkInfo; //playerId -- proxyLinkInfo
 };

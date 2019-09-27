@@ -103,10 +103,19 @@ bool NFCLuaThreadModule::Init()
 	m_pNetClientModule = FindModule<NFINetClientModule>();
 	m_pHttpServerModule = FindModule<NFIHttpServerModule>();
 
-	FindModule<NFIServerNetEventModule>()->AddAccountEventCallBack(NF_ST_GAME, this, &NFCLuaThreadModule::OnAccountEventCallBack);
+	if (m_pPluginManager->IsLoadAllServer())
+	{
+		FindModule<NFIServerNetEventModule>()->AddAccountEventCallBack(NF_ST_GAME, this, &NFCLuaThreadModule::OnAccountEventCallBack);
+	}
+	else
+	{
+		FindModule<NFIServerNetEventModule>()->AddAccountEventCallBack(NF_ST_GAME, this, &NFCLuaThreadModule::OnAccountEventCallBack);
+		FindModule<NFIServerNetEventModule>()->AddAccountEventCallBack(NF_ST_WORLD, this, &NFCLuaThreadModule::OnAccountEventCallBack);
+		FindModule<NFIServerNetEventModule>()->AddAccountEventCallBack(NF_ST_LOGIN, this, &NFCLuaThreadModule::OnAccountEventCallBack);
+	}
 
 	StartActorPool(workThreadNum, tcpThreadNum);
-	SetTimer(EnumLuaThreadModule_LOAD, 1, 1);
+	SetTimer(EnumLuaThreadModule_LOAD, 1000, 1);
 	return true;
 }
 
@@ -217,6 +226,11 @@ void NFCLuaThreadModule::SessionReport(uint64_t playerId, const std::string& rep
 	AddTcpMsgTask(new NFTcpSessionReportActorTask(this, playerId, report));
 }
 
+void NFCLuaThreadModule::SessionClose(uint64_t playerId)
+{
+	AddTcpMsgTask(new NFTcpSessionCloseActorTask(this, playerId));
+}
+
 bool NFCLuaThreadModule::StartActorPool(uint32_t workThreadNum, uint32_t tcpThreadNum)
 {
 	for (uint32_t i = 0; i < tcpThreadNum; i++)
@@ -295,10 +309,6 @@ void NFCLuaThreadModule::HandleLuaTcpMsg()
 				if (pMsg->m_nMsgType == NFTcpMessage::ACTOR_TCP_MESSAGE_TYPE_ONE_PLAYER_PROXY_MSG)
 				{
 					SendMsgToPlayer(pMsg->m_usLinkId, pMsg->m_nPlayerID, pMsg->m_nMsgID, pMsg->m_nLen, pMsg->m_strData);
-				}
-				else if (pMsg->m_nMsgType == NFTcpMessage::ACTOR_TCP_MESSAGE_TYPE_ONE_PLAYER_WORLD_MSG)
-				{
-					SendMsgToWorld(pMsg->m_usLinkId, pMsg->m_nPlayerID, pMsg->m_nMsgID, pMsg->m_nLen, pMsg->m_strData);
 				}
 				else if (pMsg->m_nMsgType == NFTcpMessage::ACTOR_TCP_MESSAGE_TYPE_ONE_PLAYER_MASTER_MSG)
 				{
@@ -422,28 +432,6 @@ void NFCLuaThreadModule::SendMsgToAllPlayer(const uint32_t nMsgID, const uint32_
 	}
 }
 
-void NFCLuaThreadModule::SendMsgToWorld(uint32_t usLinkId, const uint64_t nPlayerID, const uint32_t nMsgID, const uint32_t nLen, const std::string& strData)
-{
-	if (m_pNetClientModule)
-	{
-		if (usLinkId != 0)
-		{
-			m_pNetClientModule->SendByServerID(usLinkId, nMsgID, strData, nPlayerID);
-		}
-		else
-		{
-			if (nPlayerID != 0)
-			{
-				auto pPlayerInfo = GetPlayerInfo(nPlayerID);
-				if (pPlayerInfo)
-				{
-					m_pNetClientModule->SendByServerID(pPlayerInfo->GetWorldUnlinkId(), nMsgID, strData, nPlayerID);
-				}
-			}
-		}
-	}
-}
-
 void NFCLuaThreadModule::SendMsgToMaster(uint32_t usLinkId, const uint64_t nPlayerID, const uint32_t nMsgID, const uint32_t nLen, const std::string& strData)
 {
 	if (m_pNetClientModule)
@@ -490,8 +478,6 @@ void NFCLuaThreadModule::OnAccountEventCallBack(uint32_t nEvent, uint32_t unLink
 		if (mPlayerProxyInfoMap.ExistElement(pServerData->GetPlayerId()))
 		{
 			mPlayerProxyInfoMap.RemoveElement(pServerData->GetPlayerId());
-			//TryRunGlobalScriptFunc("TcpSessionClose", pServerData->GetPlayerId());
-			AddTcpMsgTask(new NFTcpSessionCloseActorTask(this, pServerData->GetPlayerId()));
 		}
 	}
 	else if (nEvent == eAccountEventType_RECONNECTED)
@@ -543,19 +529,6 @@ void NFCLuaThreadModule::AddMsgToAllPlayer(const uint32_t nMsgID, const uint32_t
 	msg.m_nMsgType = NFTcpMessage::ACTOR_TCP_MESSAGE_TYPE_ALL_PLAYER_PROXY_MSG;
 	msg.m_usLinkId = 0;
 	msg.m_nPlayerID = 0;
-	msg.m_nMsgID = nMsgID;
-	msg.m_nLen = nLen;
-	msg.m_strData = strData;
-
-	m_mTcpMsgQueue.Push(msg);
-}
-
-void NFCLuaThreadModule::AddMsgToWorld(uint32_t usLinkId, const uint64_t nPlayerID, const uint32_t nMsgID, const uint32_t nLen, const std::string& strData)
-{
-	NFTcpMessage msg;
-	msg.m_nMsgType = NFTcpMessage::ACTOR_TCP_MESSAGE_TYPE_ONE_PLAYER_WORLD_MSG;
-	msg.m_usLinkId = usLinkId;
-	msg.m_nPlayerID = nPlayerID;
 	msg.m_nMsgID = nMsgID;
 	msg.m_nLen = nLen;
 	msg.m_strData = strData;

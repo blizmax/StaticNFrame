@@ -41,7 +41,6 @@ public:
 	void OnHandleAccountLoginFromProxyServer(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen);
 	void OnHandlePlayerDisconnectFromProxyServer(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen);
 	void OnHandlePlayerReconnectFromProxyServer(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen);
-	void OnHandlePlayerReconnectFromGameServer(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen);
 
 	void OnHandleGameEventCallBack(eMsgType nEvent, uint32_t unLinkId, NF_SHARE_PTR<NFServerData> pServerData);
 	void OnHandleProxyEventCallBack(eMsgType nEvent, uint32_t unLinkId, NF_SHARE_PTR<NFServerData> pServerData);
@@ -51,5 +50,5 @@ public:
 private:
 	NFMapEx<uint32_t, NFServerData> mGameMap;	//unlinkid -- serverdata
 	NFMapEx<uint32_t, NFServerData> mProxyMap;	//unlinkid -- serverdata
-	NFMapEx<uint64_t, PlayerWorldServerInfo> mPlayerInfoByPlayerId; //playerId -- PlayerWorldServerInfo
+	NFMapEx<uint64_t, PlayerGameServerInfo> mPlayerProxyInfoMap; //playerId -- PlayerWorldServerInfo
 };

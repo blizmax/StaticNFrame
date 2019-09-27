@@ -665,7 +665,7 @@ public:
 	*/
 	virtual void HandleTaskDeadCycle(const std::string& taskName, uint64_t useTime)
 	{
-		if (useTime > 20000)
+		if (!m_pPluginManager->IsLoadAllServer() && useTime > 20000)
 		{
 			if (taskName == "WorkTask_Load" || taskName == "ServerLoopTask_Load" || taskName == "ServerLoopTask_init" || taskName == "TcpMsgTask_Load")
 			{
@@ -682,7 +682,7 @@ public:
 	*/
 	virtual void HandleTaskTimeOut(const std::string& taskName, uint64_t useTime)
 	{
-		if (useTime > 1000)
+		if (!m_pPluginManager->IsLoadAllServer() && useTime > 1000)
 		{
 			if (taskName == "WorkTask_Load" || taskName == "ServerLoopTask_Load" || taskName == "ServerLoopTask_init" || taskName == "TcpMsgTask_Load")
 			{
@@ -718,7 +718,7 @@ public:
 	virtual void SendMsgToPlayer(uint32_t usLinkId, const uint64_t nPlayerID, const uint32_t nMsgID, const uint32_t nLen, const std::string& strData);
 	virtual void SendMsgToManyPlayer(const std::vector<uint64_t>& nPlayerID, const uint32_t nMsgID, const uint32_t nLen, const std::string& strData);
 	virtual void SendMsgToAllPlayer(const uint32_t nMsgID, const uint32_t nLen, const std::string& strData);
-	virtual void SendMsgToWorld(uint32_t usLinkId, const uint64_t nPlayerID, const uint32_t nMsgID, const uint32_t nLen, const std::string& strData);
+	
 	virtual void SendMsgToMaster(uint32_t usLinkId, const uint64_t nPlayerID, const uint32_t nMsgID, const uint32_t nLen, const std::string& strData);
 	virtual void SendMsgToHttpServer(uint32_t servertype, const uint32_t requestId, const std::string& strMsg);
 

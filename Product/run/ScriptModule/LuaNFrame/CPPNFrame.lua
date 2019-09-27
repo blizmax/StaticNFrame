@@ -110,10 +110,6 @@ function CPPNFrame:SendMsgToAllPlayer(nMsgId, nLen, strData)
     self.luaModule:SendMsgToAllPlayer(nMsgId, nLen, strData)
 end
 
-function CPPNFrame:SendMsgToWorld(unLinkId, nPlayerId, nMsgId, nLen, strData)
-    self.luaModule:SendMsgToWorld(unLinkId, nPlayerId, nMsgId, nLen, strData)
-end
-
 function CPPNFrame:SendMsgToMaster(unLinkId, nPlayerId, nMsgId, nLen, strData)
     self.luaModule:SendMsgToMaster(unLinkId, nPlayerId, nMsgId, nLen, strData)
 end

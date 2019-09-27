@@ -10,6 +10,8 @@ function InitGameServer()
 			ServerPort = GetNewPort(),
 			MaxConnectNum = 100,
 			WorkThreadNum = 1,
+			LuaWorkThreadNum = 2,
+			LuaTcpThreadNum = 10,
 			Security = false,
 			WebSocket = false,
 		};

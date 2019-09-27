@@ -8,7 +8,6 @@ function timerManager.Init(currTime, timerType)
 	elseif timerType == "pokertimer" then
 		--把这个线程空余出来，作为事件的触发器。
 	elseif timerType == "gametimer" then
-		UnlimitedAgentService.Init()
 	elseif timerType == "utilstimer" then
 		
 	end
@@ -30,9 +29,9 @@ function timerManager:execute(currTime, timerType)
 
 	elseif timerType == "gametimer" then
 		--其他模块循环的线程，包括小马快跑，快乐牛牛，消息通知
-		AgentService.ServiceLoop()
+		NoticeModel.SeverLoop()
+		TimeCheckService.HttpSendLoop()
 	elseif timerType == "utilstimer" then
-		AgentService.UtilsLoop()
 	end
 	g_markTime.last = g_markTime.curr
 end

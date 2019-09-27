@@ -2,38 +2,13 @@ syntax = "proto2";
 
 package NFMsg; 
 
-message NotifyGameChangeProxy
-{
-	optional uint64 user_id = 1;
-	optional uint32 proxy_id = 2;
-}
-
-message NotifyProxyChangeGame
-{
-	optional uint64 user_id = 1;
-	optional uint32 game_id = 2;
-	optional uint32 client_link_id = 3;
-}
-
-message NotifyWorldPlayerDisconnect
+message NotifyPlayerDisconnect
 {
 	optional uint64 user_id = 1;
 	optional string account = 2;
 }
 
-message NotifyGamePlayerDisconnect
-{
-	optional uint64 user_id = 1;
-	optional string account = 2;
-}
-
-message NotifyGamePlayerReconnect
-{
-	optional uint64 user_id = 1;
-	optional uint32 proxy_id = 2;
-}
-
-message NotifyGamePlayerReport
+message NotifyPlayerReport
 {
 	optional uint64 user_id = 1;
 	optional string ip = 2;

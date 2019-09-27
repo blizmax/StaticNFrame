@@ -29,14 +29,4 @@ public:
 	{
 		return true;
 	}
-
-	virtual void SendMsgToClientByPlayerId(uint64_t playerId, uint32_t nMsgId, const google::protobuf::Message& xData)
-	{
-		FindModule<NFIGameLogicModule>()->SendMsgToClientByPlayerId(playerId, nMsgId, xData);
-	}
-
-	virtual void SendMsgToWorldByPlayerId(uint64_t playerId, uint32_t nMsgId, const google::protobuf::Message& xData)
-	{
-		FindModule<NFIGameLogicModule>()->SendMsgToWorldByPlayerId(playerId, nMsgId, xData);
-	}
 };

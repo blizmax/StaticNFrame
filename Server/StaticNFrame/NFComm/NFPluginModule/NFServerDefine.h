@@ -102,21 +102,15 @@ public:
 		mProxyUnlinkId = 0;
 		mProxyId = 0;
 		mPlayerId = 0;
-		mWorldId = 0;
-		mWorldUnlinkId = 0;
 	}
 	uint32_t mProxyUnlinkId;
 	uint32_t mProxyId;
-	uint32_t mWorldId;
-	uint32_t mWorldUnlinkId;
+
 	uint64_t mPlayerId;
 	std::string ip;
 	std::string account;
-
 	uint32_t GetProxyUnlinkId() { return mProxyUnlinkId; }
 	uint32_t GetProxyId() { return mProxyId; }
-	uint32_t GetWorldId() { return mWorldId; }
-	uint32_t GetWorldUnlinkId() { return mWorldUnlinkId; }
 	uint64_t GetPlayerId() { return mPlayerId; }
 	std::string GetIp() { return ip; }
 	std::string GetAccount() { return account; }
@@ -134,6 +128,7 @@ public:
 		mSendMsgCount = 0;
 		mRecvMsgCount = 0;
 		mRecvHeartBeatTime = 0;
+		mWorldServerId = 0;
 	}
 
 	uint32_t mUnlinkId;
@@ -142,36 +137,10 @@ public:
 	std::string mAccount;
 	bool mIsLogin;
 	uint32_t mGameServerId;
+	uint32_t mWorldServerId;
 	uint32_t mSendMsgCount;
 	uint32_t mRecvMsgCount;
 	uint64_t mRecvHeartBeatTime;
-};
-
-class PlayerWorldServerInfo
-{
-public:
-	enum LoginStatusEnum
-	{
-		ENUM_LOGIN_STATUS_NOT_LOGIN = 0, //Ã»ÓÐµÇÂ¼
-		ENUM_LOGIN_STATUS_START_LOGIN = 1, //·¢ÆðµÇÂ¼
-		ENUM_LOGIN_STATUS_LOGIN_TIME_OUT = 2, //µÇÂ¼³¬Ê±
-		ENUM_LOGIN_STATUS_LOGIN_FAILED = 3, //µÇÂ¼Ê§°Ü
-		ENUM_LOGIN_STATUS_LOGIN_SUCCESS = 4, //µÇÂ¼³É¹¦
-	};
-
-	PlayerWorldServerInfo()
-	{
-		mPlayerId = 0;
-		mGameServerId = 0;
-		mProxyServerId = 0;
-	}
-
-	uint64_t mPlayerId;
-	std::string mIPAddr;
-	std::string mAccount;
-	std::string mPhonenum;
-	uint32_t mGameServerId;
-	uint32_t mProxyServerId;
 };
 
 /**

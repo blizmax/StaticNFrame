@@ -60,7 +60,7 @@ public:
 };
 
 class NFCLuaScriptModule
-	: public NFILuaScriptModule, public NFILuaModule
+	: public NFILuaScriptModule, public NFILuaModule, public NFTimerObj
 {
 public:
     NFCLuaScriptModule(NFIPluginManager* p)
@@ -81,10 +81,13 @@ public:
     virtual bool BeforeShut();
     virtual bool Shut();
     virtual bool Finalize();
+
+	virtual void OnTimer(uint32_t nTimerID);
 public:
 	virtual void RunNetRecvLuaFunc(const std::string& luaFunc, const uint32_t unLinkId, const uint64_t valueId, const uint32_t nMsgId, const std::string& strMsg) override;
 	virtual void RunHttpRecvLuaFunc(const std::string& luaFunc, const uint32_t unLinkId, const uint32_t requestId, const std::string& firstPath, const std::string& secondPath, const std::string& strMsg) override;
 	virtual void SessionReport(uint64_t playerId, const std::string& report) override;
+	virtual void SessionClose(uint64_t playerId) override;
 public:
 	virtual uint32_t AddTimer(const std::string& luaFunc, uint64_t nInterVal, uint32_t nCallCount, const NFLuaRef& dataStr);
 	virtual uint32_t AddClocker(const std::string& luaFunc, uint64_t nStartTime, uint32_t nInterDays, uint32_t nCallCount, const NFLuaRef& dataStr);
@@ -106,7 +109,7 @@ public:
 	virtual void SendMsgToPlayer(uint32_t usLinkId, const uint64_t nPlayerID, const uint32_t nMsgID, const uint32_t nLen, const std::string& strData);
 	virtual void SendMsgToManyPlayer(const std::vector<uint64_t>& nPlayerID, const uint32_t nMsgID, const uint32_t nLen, const std::string& strData);
 	virtual void SendMsgToAllPlayer(const uint32_t nMsgID, const uint32_t nLen, const std::string& strData);
-	virtual void SendMsgToWorld(uint32_t usLinkId, const uint64_t nPlayerID, const uint32_t nMsgID, const uint32_t nLen, const std::string& strData);
+	
 	virtual void SendMsgToMaster(uint32_t usLinkId, const uint64_t nPlayerID, const uint32_t nMsgID, const uint32_t nLen, const std::string& strData);
 	virtual void SendMsgToHttpServer(uint32_t servertype, const uint32_t requestId, const std::string& strMsg);
 

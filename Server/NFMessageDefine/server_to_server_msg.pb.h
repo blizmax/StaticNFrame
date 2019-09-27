@@ -38,7 +38,7 @@ namespace protobuf_server_5fto_5fserver_5fmsg_2eproto {
 struct TableStruct {
   static const ::google::protobuf::internal::ParseTableField entries[];
   static const ::google::protobuf::internal::AuxillaryParseTableField aux[];
-  static const ::google::protobuf::internal::ParseTable schema[7];
+  static const ::google::protobuf::internal::ParseTable schema[3];
   static const ::google::protobuf::internal::FieldMetadata field_metadata[];
   static const ::google::protobuf::internal::SerializationTable serialization_table[];
   static const ::google::protobuf::uint32 offsets[];
@@ -46,61 +46,45 @@ struct TableStruct {
 void AddDescriptors();
 }  // namespace protobuf_server_5fto_5fserver_5fmsg_2eproto
 namespace NFMsg {
-class NotifyGameChangeProxy;
-class NotifyGameChangeProxyDefaultTypeInternal;
-extern NotifyGameChangeProxyDefaultTypeInternal _NotifyGameChangeProxy_default_instance_;
-class NotifyGamePlayerDisconnect;
-class NotifyGamePlayerDisconnectDefaultTypeInternal;
-extern NotifyGamePlayerDisconnectDefaultTypeInternal _NotifyGamePlayerDisconnect_default_instance_;
-class NotifyGamePlayerReconnect;
-class NotifyGamePlayerReconnectDefaultTypeInternal;
-extern NotifyGamePlayerReconnectDefaultTypeInternal _NotifyGamePlayerReconnect_default_instance_;
-class NotifyGamePlayerReport;
-class NotifyGamePlayerReportDefaultTypeInternal;
-extern NotifyGamePlayerReportDefaultTypeInternal _NotifyGamePlayerReport_default_instance_;
-class NotifyProxyChangeGame;
-class NotifyProxyChangeGameDefaultTypeInternal;
-extern NotifyProxyChangeGameDefaultTypeInternal _NotifyProxyChangeGame_default_instance_;
+class NotifyPlayerDisconnect;
+class NotifyPlayerDisconnectDefaultTypeInternal;
+extern NotifyPlayerDisconnectDefaultTypeInternal _NotifyPlayerDisconnect_default_instance_;
+class NotifyPlayerReport;
+class NotifyPlayerReportDefaultTypeInternal;
+extern NotifyPlayerReportDefaultTypeInternal _NotifyPlayerReport_default_instance_;
 class NotifyProxyPacketMsg;
 class NotifyProxyPacketMsgDefaultTypeInternal;
 extern NotifyProxyPacketMsgDefaultTypeInternal _NotifyProxyPacketMsg_default_instance_;
-class NotifyWorldPlayerDisconnect;
-class NotifyWorldPlayerDisconnectDefaultTypeInternal;
-extern NotifyWorldPlayerDisconnectDefaultTypeInternal _NotifyWorldPlayerDisconnect_default_instance_;
 }  // namespace NFMsg
 namespace google {
 namespace protobuf {
-template<> ::NFMsg::NotifyGameChangeProxy* Arena::CreateMaybeMessage<::NFMsg::NotifyGameChangeProxy>(Arena*);
-template<> ::NFMsg::NotifyGamePlayerDisconnect* Arena::CreateMaybeMessage<::NFMsg::NotifyGamePlayerDisconnect>(Arena*);
-template<> ::NFMsg::NotifyGamePlayerReconnect* Arena::CreateMaybeMessage<::NFMsg::NotifyGamePlayerReconnect>(Arena*);
-template<> ::NFMsg::NotifyGamePlayerReport* Arena::CreateMaybeMessage<::NFMsg::NotifyGamePlayerReport>(Arena*);
-template<> ::NFMsg::NotifyProxyChangeGame* Arena::CreateMaybeMessage<::NFMsg::NotifyProxyChangeGame>(Arena*);
+template<> ::NFMsg::NotifyPlayerDisconnect* Arena::CreateMaybeMessage<::NFMsg::NotifyPlayerDisconnect>(Arena*);
+template<> ::NFMsg::NotifyPlayerReport* Arena::CreateMaybeMessage<::NFMsg::NotifyPlayerReport>(Arena*);
 template<> ::NFMsg::NotifyProxyPacketMsg* Arena::CreateMaybeMessage<::NFMsg::NotifyProxyPacketMsg>(Arena*);
-template<> ::NFMsg::NotifyWorldPlayerDisconnect* Arena::CreateMaybeMessage<::NFMsg::NotifyWorldPlayerDisconnect>(Arena*);
 }  // namespace protobuf
 }  // namespace google
 namespace NFMsg {
 
 // ===================================================================
 
-class NotifyGameChangeProxy : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:NFMsg.NotifyGameChangeProxy) */ {
+class NotifyPlayerDisconnect : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:NFMsg.NotifyPlayerDisconnect) */ {
  public:
-  NotifyGameChangeProxy();
-  virtual ~NotifyGameChangeProxy();
+  NotifyPlayerDisconnect();
+  virtual ~NotifyPlayerDisconnect();
 
-  NotifyGameChangeProxy(const NotifyGameChangeProxy& from);
+  NotifyPlayerDisconnect(const NotifyPlayerDisconnect& from);
 
-  inline NotifyGameChangeProxy& operator=(const NotifyGameChangeProxy& from) {
+  inline NotifyPlayerDisconnect& operator=(const NotifyPlayerDisconnect& from) {
     CopyFrom(from);
     return *this;
   }
   #if LANG_CXX11
-  NotifyGameChangeProxy(NotifyGameChangeProxy&& from) noexcept
-    : NotifyGameChangeProxy() {
+  NotifyPlayerDisconnect(NotifyPlayerDisconnect&& from) noexcept
+    : NotifyPlayerDisconnect() {
     *this = ::std::move(from);
   }
 
-  inline NotifyGameChangeProxy& operator=(NotifyGameChangeProxy&& from) noexcept {
+  inline NotifyPlayerDisconnect& operator=(NotifyPlayerDisconnect&& from) noexcept {
     if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
       if (this != &from) InternalSwap(&from);
     } else {
@@ -117,34 +101,34 @@ class NotifyGameChangeProxy : public ::google::protobuf::Message /* @@protoc_ins
   }
 
   static const ::google::protobuf::Descriptor* descriptor();
-  static const NotifyGameChangeProxy& default_instance();
+  static const NotifyPlayerDisconnect& default_instance();
 
   static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
-  static inline const NotifyGameChangeProxy* internal_default_instance() {
-    return reinterpret_cast<const NotifyGameChangeProxy*>(
-               &_NotifyGameChangeProxy_default_instance_);
+  static inline const NotifyPlayerDisconnect* internal_default_instance() {
+    return reinterpret_cast<const NotifyPlayerDisconnect*>(
+               &_NotifyPlayerDisconnect_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
     0;
 
-  void Swap(NotifyGameChangeProxy* other);
-  friend void swap(NotifyGameChangeProxy& a, NotifyGameChangeProxy& b) {
+  void Swap(NotifyPlayerDisconnect* other);
+  friend void swap(NotifyPlayerDisconnect& a, NotifyPlayerDisconnect& b) {
     a.Swap(&b);
   }
 
   // implements Message ----------------------------------------------
 
-  inline NotifyGameChangeProxy* New() const final {
-    return CreateMaybeMessage<NotifyGameChangeProxy>(NULL);
+  inline NotifyPlayerDisconnect* New() const final {
+    return CreateMaybeMessage<NotifyPlayerDisconnect>(NULL);
   }
 
-  NotifyGameChangeProxy* New(::google::protobuf::Arena* arena) const final {
-    return CreateMaybeMessage<NotifyGameChangeProxy>(arena);
+  NotifyPlayerDisconnect* New(::google::protobuf::Arena* arena) const final {
+    return CreateMaybeMessage<NotifyPlayerDisconnect>(arena);
   }
   void CopyFrom(const ::google::protobuf::Message& from) final;
   void MergeFrom(const ::google::protobuf::Message& from) final;
-  void CopyFrom(const NotifyGameChangeProxy& from);
-  void MergeFrom(const NotifyGameChangeProxy& from);
+  void CopyFrom(const NotifyPlayerDisconnect& from);
+  void MergeFrom(const NotifyPlayerDisconnect& from);
   void Clear() final;
   bool IsInitialized() const final;
 
@@ -161,7 +145,7 @@ class NotifyGameChangeProxy : public ::google::protobuf::Message /* @@protoc_ins
   void SharedCtor();
   void SharedDtor();
   void SetCachedSize(int size) const final;
-  void InternalSwap(NotifyGameChangeProxy* other);
+  void InternalSwap(NotifyPlayerDisconnect* other);
   private:
   inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
     return NULL;
@@ -177,6 +161,21 @@ class NotifyGameChangeProxy : public ::google::protobuf::Message /* @@protoc_ins
 
   // accessors -------------------------------------------------------
 
+  // optional string account = 2;
+  bool has_account() const;
+  void clear_account();
+  static const int kAccountFieldNumber = 2;
+  const ::std::string& account() const;
+  void set_account(const ::std::string& value);
+  #if LANG_CXX11
+  void set_account(::std::string&& value);
+  #endif
+  void set_account(const char* value);
+  void set_account(const char* value, size_t size);
+  ::std::string* mutable_account();
+  ::std::string* release_account();
+  void set_allocated_account(::std::string* account);
+
   // optional uint64 user_id = 1;
   bool has_user_id() const;
   void clear_user_id();
@@ -184,47 +183,40 @@ class NotifyGameChangeProxy : public ::google::protobuf::Message /* @@protoc_ins
   ::google::protobuf::uint64 user_id() const;
   void set_user_id(::google::protobuf::uint64 value);
 
-  // optional uint32 proxy_id = 2;
-  bool has_proxy_id() const;
-  void clear_proxy_id();
-  static const int kProxyIdFieldNumber = 2;
-  ::google::protobuf::uint32 proxy_id() const;
-  void set_proxy_id(::google::protobuf::uint32 value);
-
-  // @@protoc_insertion_point(class_scope:NFMsg.NotifyGameChangeProxy)
+  // @@protoc_insertion_point(class_scope:NFMsg.NotifyPlayerDisconnect)
  private:
   void set_has_user_id();
   void clear_has_user_id();
-  void set_has_proxy_id();
-  void clear_has_proxy_id();
+  void set_has_account();
+  void clear_has_account();
 
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
   ::google::protobuf::internal::HasBits<1> _has_bits_;
   mutable ::google::protobuf::internal::CachedSize _cached_size_;
+  ::google::protobuf::internal::ArenaStringPtr account_;
   ::google::protobuf::uint64 user_id_;
-  ::google::protobuf::uint32 proxy_id_;
   friend struct ::protobuf_server_5fto_5fserver_5fmsg_2eproto::TableStruct;
 };
 // -------------------------------------------------------------------
 
-class NotifyProxyChangeGame : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:NFMsg.NotifyProxyChangeGame) */ {
+class NotifyPlayerReport : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:NFMsg.NotifyPlayerReport) */ {
  public:
-  NotifyProxyChangeGame();
-  virtual ~NotifyProxyChangeGame();
+  NotifyPlayerReport();
+  virtual ~NotifyPlayerReport();
 
-  NotifyProxyChangeGame(const NotifyProxyChangeGame& from);
+  NotifyPlayerReport(const NotifyPlayerReport& from);
 
-  inline NotifyProxyChangeGame& operator=(const NotifyProxyChangeGame& from) {
+  inline NotifyPlayerReport& operator=(const NotifyPlayerReport& from) {
     CopyFrom(from);
     return *this;
   }
   #if LANG_CXX11
-  NotifyProxyChangeGame(NotifyProxyChangeGame&& from) noexcept
-    : NotifyProxyChangeGame() {
+  NotifyPlayerReport(NotifyPlayerReport&& from) noexcept
+    : NotifyPlayerReport() {
     *this = ::std::move(from);
   }
 
-  inline NotifyProxyChangeGame& operator=(NotifyProxyChangeGame&& from) noexcept {
+  inline NotifyPlayerReport& operator=(NotifyPlayerReport&& from) noexcept {
     if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
       if (this != &from) InternalSwap(&from);
     } else {
@@ -241,34 +233,34 @@ class NotifyProxyChangeGame : public ::google::protobuf::Message /* @@protoc_ins
   }
 
   static const ::google::protobuf::Descriptor* descriptor();
-  static const NotifyProxyChangeGame& default_instance();
+  static const NotifyPlayerReport& default_instance();
 
   static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
-  static inline const NotifyProxyChangeGame* internal_default_instance() {
-    return reinterpret_cast<const NotifyProxyChangeGame*>(
-               &_NotifyProxyChangeGame_default_instance_);
+  static inline const NotifyPlayerReport* internal_default_instance() {
+    return reinterpret_cast<const NotifyPlayerReport*>(
+               &_NotifyPlayerReport_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
     1;
 
-  void Swap(NotifyProxyChangeGame* other);
-  friend void swap(NotifyProxyChangeGame& a, NotifyProxyChangeGame& b) {
+  void Swap(NotifyPlayerReport* other);
+  friend void swap(NotifyPlayerReport& a, NotifyPlayerReport& b) {
     a.Swap(&b);
   }
 
   // implements Message ----------------------------------------------
 
-  inline NotifyProxyChangeGame* New() const final {
-    return CreateMaybeMessage<NotifyProxyChangeGame>(NULL);
+  inline NotifyPlayerReport* New() const final {
+    return CreateMaybeMessage<NotifyPlayerReport>(NULL);
   }
 
-  NotifyProxyChangeGame* New(::google::protobuf::Arena* arena) const final {
-    return CreateMaybeMessage<NotifyProxyChangeGame>(arena);
+  NotifyPlayerReport* New(::google::protobuf::Arena* arena) const final {
+    return CreateMaybeMessage<NotifyPlayerReport>(arena);
   }
   void CopyFrom(const ::google::protobuf::Message& from) final;
   void MergeFrom(const ::google::protobuf::Message& from) final;
-  void CopyFrom(const NotifyProxyChangeGame& from);
-  void MergeFrom(const NotifyProxyChangeGame& from);
+  void CopyFrom(const NotifyPlayerReport& from);
+  void MergeFrom(const NotifyPlayerReport& from);
   void Clear() final;
   bool IsInitialized() const final;
 
@@ -285,529 +277,7 @@ class NotifyProxyChangeGame : public ::google::protobuf::Message /* @@protoc_ins
   void SharedCtor();
   void SharedDtor();
   void SetCachedSize(int size) const final;
-  void InternalSwap(NotifyProxyChangeGame* other);
-  private:
-  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
-    return NULL;
-  }
-  inline void* MaybeArenaPtr() const {
-    return NULL;
-  }
-  public:
-
-  ::google::protobuf::Metadata GetMetadata() const final;
-
-  // nested types ----------------------------------------------------
-
-  // accessors -------------------------------------------------------
-
-  // optional uint64 user_id = 1;
-  bool has_user_id() const;
-  void clear_user_id();
-  static const int kUserIdFieldNumber = 1;
-  ::google::protobuf::uint64 user_id() const;
-  void set_user_id(::google::protobuf::uint64 value);
-
-  // optional uint32 game_id = 2;
-  bool has_game_id() const;
-  void clear_game_id();
-  static const int kGameIdFieldNumber = 2;
-  ::google::protobuf::uint32 game_id() const;
-  void set_game_id(::google::protobuf::uint32 value);
-
-  // optional uint32 client_link_id = 3;
-  bool has_client_link_id() const;
-  void clear_client_link_id();
-  static const int kClientLinkIdFieldNumber = 3;
-  ::google::protobuf::uint32 client_link_id() const;
-  void set_client_link_id(::google::protobuf::uint32 value);
-
-  // @@protoc_insertion_point(class_scope:NFMsg.NotifyProxyChangeGame)
- private:
-  void set_has_user_id();
-  void clear_has_user_id();
-  void set_has_game_id();
-  void clear_has_game_id();
-  void set_has_client_link_id();
-  void clear_has_client_link_id();
-
-  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
-  ::google::protobuf::internal::HasBits<1> _has_bits_;
-  mutable ::google::protobuf::internal::CachedSize _cached_size_;
-  ::google::protobuf::uint64 user_id_;
-  ::google::protobuf::uint32 game_id_;
-  ::google::protobuf::uint32 client_link_id_;
-  friend struct ::protobuf_server_5fto_5fserver_5fmsg_2eproto::TableStruct;
-};
-// -------------------------------------------------------------------
-
-class NotifyWorldPlayerDisconnect : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:NFMsg.NotifyWorldPlayerDisconnect) */ {
- public:
-  NotifyWorldPlayerDisconnect();
-  virtual ~NotifyWorldPlayerDisconnect();
-
-  NotifyWorldPlayerDisconnect(const NotifyWorldPlayerDisconnect& from);
-
-  inline NotifyWorldPlayerDisconnect& operator=(const NotifyWorldPlayerDisconnect& from) {
-    CopyFrom(from);
-    return *this;
-  }
-  #if LANG_CXX11
-  NotifyWorldPlayerDisconnect(NotifyWorldPlayerDisconnect&& from) noexcept
-    : NotifyWorldPlayerDisconnect() {
-    *this = ::std::move(from);
-  }
-
-  inline NotifyWorldPlayerDisconnect& operator=(NotifyWorldPlayerDisconnect&& from) noexcept {
-    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
-      if (this != &from) InternalSwap(&from);
-    } else {
-      CopyFrom(from);
-    }
-    return *this;
-  }
-  #endif
-  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
-    return _internal_metadata_.unknown_fields();
-  }
-  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
-    return _internal_metadata_.mutable_unknown_fields();
-  }
-
-  static const ::google::protobuf::Descriptor* descriptor();
-  static const NotifyWorldPlayerDisconnect& default_instance();
-
-  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
-  static inline const NotifyWorldPlayerDisconnect* internal_default_instance() {
-    return reinterpret_cast<const NotifyWorldPlayerDisconnect*>(
-               &_NotifyWorldPlayerDisconnect_default_instance_);
-  }
-  static constexpr int kIndexInFileMessages =
-    2;
-
-  void Swap(NotifyWorldPlayerDisconnect* other);
-  friend void swap(NotifyWorldPlayerDisconnect& a, NotifyWorldPlayerDisconnect& b) {
-    a.Swap(&b);
-  }
-
-  // implements Message ----------------------------------------------
-
-  inline NotifyWorldPlayerDisconnect* New() const final {
-    return CreateMaybeMessage<NotifyWorldPlayerDisconnect>(NULL);
-  }
-
-  NotifyWorldPlayerDisconnect* New(::google::protobuf::Arena* arena) const final {
-    return CreateMaybeMessage<NotifyWorldPlayerDisconnect>(arena);
-  }
-  void CopyFrom(const ::google::protobuf::Message& from) final;
-  void MergeFrom(const ::google::protobuf::Message& from) final;
-  void CopyFrom(const NotifyWorldPlayerDisconnect& from);
-  void MergeFrom(const NotifyWorldPlayerDisconnect& from);
-  void Clear() final;
-  bool IsInitialized() const final;
-
-  size_t ByteSizeLong() const final;
-  bool MergePartialFromCodedStream(
-      ::google::protobuf::io::CodedInputStream* input) final;
-  void SerializeWithCachedSizes(
-      ::google::protobuf::io::CodedOutputStream* output) const final;
-  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
-      bool deterministic, ::google::protobuf::uint8* target) const final;
-  int GetCachedSize() const final { return _cached_size_.Get(); }
-
-  private:
-  void SharedCtor();
-  void SharedDtor();
-  void SetCachedSize(int size) const final;
-  void InternalSwap(NotifyWorldPlayerDisconnect* other);
-  private:
-  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
-    return NULL;
-  }
-  inline void* MaybeArenaPtr() const {
-    return NULL;
-  }
-  public:
-
-  ::google::protobuf::Metadata GetMetadata() const final;
-
-  // nested types ----------------------------------------------------
-
-  // accessors -------------------------------------------------------
-
-  // optional string account = 2;
-  bool has_account() const;
-  void clear_account();
-  static const int kAccountFieldNumber = 2;
-  const ::std::string& account() const;
-  void set_account(const ::std::string& value);
-  #if LANG_CXX11
-  void set_account(::std::string&& value);
-  #endif
-  void set_account(const char* value);
-  void set_account(const char* value, size_t size);
-  ::std::string* mutable_account();
-  ::std::string* release_account();
-  void set_allocated_account(::std::string* account);
-
-  // optional uint64 user_id = 1;
-  bool has_user_id() const;
-  void clear_user_id();
-  static const int kUserIdFieldNumber = 1;
-  ::google::protobuf::uint64 user_id() const;
-  void set_user_id(::google::protobuf::uint64 value);
-
-  // @@protoc_insertion_point(class_scope:NFMsg.NotifyWorldPlayerDisconnect)
- private:
-  void set_has_user_id();
-  void clear_has_user_id();
-  void set_has_account();
-  void clear_has_account();
-
-  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
-  ::google::protobuf::internal::HasBits<1> _has_bits_;
-  mutable ::google::protobuf::internal::CachedSize _cached_size_;
-  ::google::protobuf::internal::ArenaStringPtr account_;
-  ::google::protobuf::uint64 user_id_;
-  friend struct ::protobuf_server_5fto_5fserver_5fmsg_2eproto::TableStruct;
-};
-// -------------------------------------------------------------------
-
-class NotifyGamePlayerDisconnect : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:NFMsg.NotifyGamePlayerDisconnect) */ {
- public:
-  NotifyGamePlayerDisconnect();
-  virtual ~NotifyGamePlayerDisconnect();
-
-  NotifyGamePlayerDisconnect(const NotifyGamePlayerDisconnect& from);
-
-  inline NotifyGamePlayerDisconnect& operator=(const NotifyGamePlayerDisconnect& from) {
-    CopyFrom(from);
-    return *this;
-  }
-  #if LANG_CXX11
-  NotifyGamePlayerDisconnect(NotifyGamePlayerDisconnect&& from) noexcept
-    : NotifyGamePlayerDisconnect() {
-    *this = ::std::move(from);
-  }
-
-  inline NotifyGamePlayerDisconnect& operator=(NotifyGamePlayerDisconnect&& from) noexcept {
-    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
-      if (this != &from) InternalSwap(&from);
-    } else {
-      CopyFrom(from);
-    }
-    return *this;
-  }
-  #endif
-  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
-    return _internal_metadata_.unknown_fields();
-  }
-  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
-    return _internal_metadata_.mutable_unknown_fields();
-  }
-
-  static const ::google::protobuf::Descriptor* descriptor();
-  static const NotifyGamePlayerDisconnect& default_instance();
-
-  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
-  static inline const NotifyGamePlayerDisconnect* internal_default_instance() {
-    return reinterpret_cast<const NotifyGamePlayerDisconnect*>(
-               &_NotifyGamePlayerDisconnect_default_instance_);
-  }
-  static constexpr int kIndexInFileMessages =
-    3;
-
-  void Swap(NotifyGamePlayerDisconnect* other);
-  friend void swap(NotifyGamePlayerDisconnect& a, NotifyGamePlayerDisconnect& b) {
-    a.Swap(&b);
-  }
-
-  // implements Message ----------------------------------------------
-
-  inline NotifyGamePlayerDisconnect* New() const final {
-    return CreateMaybeMessage<NotifyGamePlayerDisconnect>(NULL);
-  }
-
-  NotifyGamePlayerDisconnect* New(::google::protobuf::Arena* arena) const final {
-    return CreateMaybeMessage<NotifyGamePlayerDisconnect>(arena);
-  }
-  void CopyFrom(const ::google::protobuf::Message& from) final;
-  void MergeFrom(const ::google::protobuf::Message& from) final;
-  void CopyFrom(const NotifyGamePlayerDisconnect& from);
-  void MergeFrom(const NotifyGamePlayerDisconnect& from);
-  void Clear() final;
-  bool IsInitialized() const final;
-
-  size_t ByteSizeLong() const final;
-  bool MergePartialFromCodedStream(
-      ::google::protobuf::io::CodedInputStream* input) final;
-  void SerializeWithCachedSizes(
-      ::google::protobuf::io::CodedOutputStream* output) const final;
-  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
-      bool deterministic, ::google::protobuf::uint8* target) const final;
-  int GetCachedSize() const final { return _cached_size_.Get(); }
-
-  private:
-  void SharedCtor();
-  void SharedDtor();
-  void SetCachedSize(int size) const final;
-  void InternalSwap(NotifyGamePlayerDisconnect* other);
-  private:
-  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
-    return NULL;
-  }
-  inline void* MaybeArenaPtr() const {
-    return NULL;
-  }
-  public:
-
-  ::google::protobuf::Metadata GetMetadata() const final;
-
-  // nested types ----------------------------------------------------
-
-  // accessors -------------------------------------------------------
-
-  // optional string account = 2;
-  bool has_account() const;
-  void clear_account();
-  static const int kAccountFieldNumber = 2;
-  const ::std::string& account() const;
-  void set_account(const ::std::string& value);
-  #if LANG_CXX11
-  void set_account(::std::string&& value);
-  #endif
-  void set_account(const char* value);
-  void set_account(const char* value, size_t size);
-  ::std::string* mutable_account();
-  ::std::string* release_account();
-  void set_allocated_account(::std::string* account);
-
-  // optional uint64 user_id = 1;
-  bool has_user_id() const;
-  void clear_user_id();
-  static const int kUserIdFieldNumber = 1;
-  ::google::protobuf::uint64 user_id() const;
-  void set_user_id(::google::protobuf::uint64 value);
-
-  // @@protoc_insertion_point(class_scope:NFMsg.NotifyGamePlayerDisconnect)
- private:
-  void set_has_user_id();
-  void clear_has_user_id();
-  void set_has_account();
-  void clear_has_account();
-
-  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
-  ::google::protobuf::internal::HasBits<1> _has_bits_;
-  mutable ::google::protobuf::internal::CachedSize _cached_size_;
-  ::google::protobuf::internal::ArenaStringPtr account_;
-  ::google::protobuf::uint64 user_id_;
-  friend struct ::protobuf_server_5fto_5fserver_5fmsg_2eproto::TableStruct;
-};
-// -------------------------------------------------------------------
-
-class NotifyGamePlayerReconnect : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:NFMsg.NotifyGamePlayerReconnect) */ {
- public:
-  NotifyGamePlayerReconnect();
-  virtual ~NotifyGamePlayerReconnect();
-
-  NotifyGamePlayerReconnect(const NotifyGamePlayerReconnect& from);
-
-  inline NotifyGamePlayerReconnect& operator=(const NotifyGamePlayerReconnect& from) {
-    CopyFrom(from);
-    return *this;
-  }
-  #if LANG_CXX11
-  NotifyGamePlayerReconnect(NotifyGamePlayerReconnect&& from) noexcept
-    : NotifyGamePlayerReconnect() {
-    *this = ::std::move(from);
-  }
-
-  inline NotifyGamePlayerReconnect& operator=(NotifyGamePlayerReconnect&& from) noexcept {
-    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
-      if (this != &from) InternalSwap(&from);
-    } else {
-      CopyFrom(from);
-    }
-    return *this;
-  }
-  #endif
-  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
-    return _internal_metadata_.unknown_fields();
-  }
-  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
-    return _internal_metadata_.mutable_unknown_fields();
-  }
-
-  static const ::google::protobuf::Descriptor* descriptor();
-  static const NotifyGamePlayerReconnect& default_instance();
-
-  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
-  static inline const NotifyGamePlayerReconnect* internal_default_instance() {
-    return reinterpret_cast<const NotifyGamePlayerReconnect*>(
-               &_NotifyGamePlayerReconnect_default_instance_);
-  }
-  static constexpr int kIndexInFileMessages =
-    4;
-
-  void Swap(NotifyGamePlayerReconnect* other);
-  friend void swap(NotifyGamePlayerReconnect& a, NotifyGamePlayerReconnect& b) {
-    a.Swap(&b);
-  }
-
-  // implements Message ----------------------------------------------
-
-  inline NotifyGamePlayerReconnect* New() const final {
-    return CreateMaybeMessage<NotifyGamePlayerReconnect>(NULL);
-  }
-
-  NotifyGamePlayerReconnect* New(::google::protobuf::Arena* arena) const final {
-    return CreateMaybeMessage<NotifyGamePlayerReconnect>(arena);
-  }
-  void CopyFrom(const ::google::protobuf::Message& from) final;
-  void MergeFrom(const ::google::protobuf::Message& from) final;
-  void CopyFrom(const NotifyGamePlayerReconnect& from);
-  void MergeFrom(const NotifyGamePlayerReconnect& from);
-  void Clear() final;
-  bool IsInitialized() const final;
-
-  size_t ByteSizeLong() const final;
-  bool MergePartialFromCodedStream(
-      ::google::protobuf::io::CodedInputStream* input) final;
-  void SerializeWithCachedSizes(
-      ::google::protobuf::io::CodedOutputStream* output) const final;
-  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
-      bool deterministic, ::google::protobuf::uint8* target) const final;
-  int GetCachedSize() const final { return _cached_size_.Get(); }
-
-  private:
-  void SharedCtor();
-  void SharedDtor();
-  void SetCachedSize(int size) const final;
-  void InternalSwap(NotifyGamePlayerReconnect* other);
-  private:
-  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
-    return NULL;
-  }
-  inline void* MaybeArenaPtr() const {
-    return NULL;
-  }
-  public:
-
-  ::google::protobuf::Metadata GetMetadata() const final;
-
-  // nested types ----------------------------------------------------
-
-  // accessors -------------------------------------------------------
-
-  // optional uint64 user_id = 1;
-  bool has_user_id() const;
-  void clear_user_id();
-  static const int kUserIdFieldNumber = 1;
-  ::google::protobuf::uint64 user_id() const;
-  void set_user_id(::google::protobuf::uint64 value);
-
-  // optional uint32 proxy_id = 2;
-  bool has_proxy_id() const;
-  void clear_proxy_id();
-  static const int kProxyIdFieldNumber = 2;
-  ::google::protobuf::uint32 proxy_id() const;
-  void set_proxy_id(::google::protobuf::uint32 value);
-
-  // @@protoc_insertion_point(class_scope:NFMsg.NotifyGamePlayerReconnect)
- private:
-  void set_has_user_id();
-  void clear_has_user_id();
-  void set_has_proxy_id();
-  void clear_has_proxy_id();
-
-  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
-  ::google::protobuf::internal::HasBits<1> _has_bits_;
-  mutable ::google::protobuf::internal::CachedSize _cached_size_;
-  ::google::protobuf::uint64 user_id_;
-  ::google::protobuf::uint32 proxy_id_;
-  friend struct ::protobuf_server_5fto_5fserver_5fmsg_2eproto::TableStruct;
-};
-// -------------------------------------------------------------------
-
-class NotifyGamePlayerReport : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:NFMsg.NotifyGamePlayerReport) */ {
- public:
-  NotifyGamePlayerReport();
-  virtual ~NotifyGamePlayerReport();
-
-  NotifyGamePlayerReport(const NotifyGamePlayerReport& from);
-
-  inline NotifyGamePlayerReport& operator=(const NotifyGamePlayerReport& from) {
-    CopyFrom(from);
-    return *this;
-  }
-  #if LANG_CXX11
-  NotifyGamePlayerReport(NotifyGamePlayerReport&& from) noexcept
-    : NotifyGamePlayerReport() {
-    *this = ::std::move(from);
-  }
-
-  inline NotifyGamePlayerReport& operator=(NotifyGamePlayerReport&& from) noexcept {
-    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
-      if (this != &from) InternalSwap(&from);
-    } else {
-      CopyFrom(from);
-    }
-    return *this;
-  }
-  #endif
-  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
-    return _internal_metadata_.unknown_fields();
-  }
-  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
-    return _internal_metadata_.mutable_unknown_fields();
-  }
-
-  static const ::google::protobuf::Descriptor* descriptor();
-  static const NotifyGamePlayerReport& default_instance();
-
-  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
-  static inline const NotifyGamePlayerReport* internal_default_instance() {
-    return reinterpret_cast<const NotifyGamePlayerReport*>(
-               &_NotifyGamePlayerReport_default_instance_);
-  }
-  static constexpr int kIndexInFileMessages =
-    5;
-
-  void Swap(NotifyGamePlayerReport* other);
-  friend void swap(NotifyGamePlayerReport& a, NotifyGamePlayerReport& b) {
-    a.Swap(&b);
-  }
-
-  // implements Message ----------------------------------------------
-
-  inline NotifyGamePlayerReport* New() const final {
-    return CreateMaybeMessage<NotifyGamePlayerReport>(NULL);
-  }
-
-  NotifyGamePlayerReport* New(::google::protobuf::Arena* arena) const final {
-    return CreateMaybeMessage<NotifyGamePlayerReport>(arena);
-  }
-  void CopyFrom(const ::google::protobuf::Message& from) final;
-  void MergeFrom(const ::google::protobuf::Message& from) final;
-  void CopyFrom(const NotifyGamePlayerReport& from);
-  void MergeFrom(const NotifyGamePlayerReport& from);
-  void Clear() final;
-  bool IsInitialized() const final;
-
-  size_t ByteSizeLong() const final;
-  bool MergePartialFromCodedStream(
-      ::google::protobuf::io::CodedInputStream* input) final;
-  void SerializeWithCachedSizes(
-      ::google::protobuf::io::CodedOutputStream* output) const final;
-  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
-      bool deterministic, ::google::protobuf::uint8* target) const final;
-  int GetCachedSize() const final { return _cached_size_.Get(); }
-
-  private:
-  void SharedCtor();
-  void SharedDtor();
-  void SetCachedSize(int size) const final;
-  void InternalSwap(NotifyGamePlayerReport* other);
+  void InternalSwap(NotifyPlayerReport* other);
   private:
   inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
     return NULL;
@@ -845,7 +315,7 @@ class NotifyGamePlayerReport : public ::google::protobuf::Message /* @@protoc_in
   ::google::protobuf::uint64 user_id() const;
   void set_user_id(::google::protobuf::uint64 value);
 
-  // @@protoc_insertion_point(class_scope:NFMsg.NotifyGamePlayerReport)
+  // @@protoc_insertion_point(class_scope:NFMsg.NotifyPlayerReport)
  private:
   void set_has_user_id();
   void clear_has_user_id();
@@ -903,7 +373,7 @@ class NotifyProxyPacketMsg : public ::google::protobuf::Message /* @@protoc_inse
                &_NotifyProxyPacketMsg_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    6;
+    2;
 
   void Swap(NotifyProxyPacketMsg* other);
   friend void swap(NotifyProxyPacketMsg& a, NotifyProxyPacketMsg& b) {
@@ -1013,464 +483,190 @@ class NotifyProxyPacketMsg : public ::google::protobuf::Message /* @@protoc_inse
   #pragma GCC diagnostic push
   #pragma GCC diagnostic ignored "-Wstrict-aliasing"
 #endif  // __GNUC__
-// NotifyGameChangeProxy
+// NotifyPlayerDisconnect
 
 // optional uint64 user_id = 1;
-inline bool NotifyGameChangeProxy::has_user_id() const {
-  return (_has_bits_[0] & 0x00000001u) != 0;
+inline bool NotifyPlayerDisconnect::has_user_id() const {
+  return (_has_bits_[0] & 0x00000002u) != 0;
 }
-inline void NotifyGameChangeProxy::set_has_user_id() {
-  _has_bits_[0] |= 0x00000001u;
+inline void NotifyPlayerDisconnect::set_has_user_id() {
+  _has_bits_[0] |= 0x00000002u;
 }
-inline void NotifyGameChangeProxy::clear_has_user_id() {
-  _has_bits_[0] &= ~0x00000001u;
+inline void NotifyPlayerDisconnect::clear_has_user_id() {
+  _has_bits_[0] &= ~0x00000002u;
 }
-inline void NotifyGameChangeProxy::clear_user_id() {
+inline void NotifyPlayerDisconnect::clear_user_id() {
   user_id_ = GOOGLE_ULONGLONG(0);
   clear_has_user_id();
 }
-inline ::google::protobuf::uint64 NotifyGameChangeProxy::user_id() const {
-  // @@protoc_insertion_point(field_get:NFMsg.NotifyGameChangeProxy.user_id)
+inline ::google::protobuf::uint64 NotifyPlayerDisconnect::user_id() const {
+  // @@protoc_insertion_point(field_get:NFMsg.NotifyPlayerDisconnect.user_id)
   return user_id_;
 }
-inline void NotifyGameChangeProxy::set_user_id(::google::protobuf::uint64 value) {
+inline void NotifyPlayerDisconnect::set_user_id(::google::protobuf::uint64 value) {
   set_has_user_id();
   user_id_ = value;
-  // @@protoc_insertion_point(field_set:NFMsg.NotifyGameChangeProxy.user_id)
-}
-
-// optional uint32 proxy_id = 2;
-inline bool NotifyGameChangeProxy::has_proxy_id() const {
-  return (_has_bits_[0] & 0x00000002u) != 0;
-}
-inline void NotifyGameChangeProxy::set_has_proxy_id() {
-  _has_bits_[0] |= 0x00000002u;
-}
-inline void NotifyGameChangeProxy::clear_has_proxy_id() {
-  _has_bits_[0] &= ~0x00000002u;
-}
-inline void NotifyGameChangeProxy::clear_proxy_id() {
-  proxy_id_ = 0u;
-  clear_has_proxy_id();
-}
-inline ::google::protobuf::uint32 NotifyGameChangeProxy::proxy_id() const {
-  // @@protoc_insertion_point(field_get:NFMsg.NotifyGameChangeProxy.proxy_id)
-  return proxy_id_;
-}
-inline void NotifyGameChangeProxy::set_proxy_id(::google::protobuf::uint32 value) {
-  set_has_proxy_id();
-  proxy_id_ = value;
-  // @@protoc_insertion_point(field_set:NFMsg.NotifyGameChangeProxy.proxy_id)
-}
-
-// -------------------------------------------------------------------
-
-// NotifyProxyChangeGame
-
-// optional uint64 user_id = 1;
-inline bool NotifyProxyChangeGame::has_user_id() const {
-  return (_has_bits_[0] & 0x00000001u) != 0;
-}
-inline void NotifyProxyChangeGame::set_has_user_id() {
-  _has_bits_[0] |= 0x00000001u;
-}
-inline void NotifyProxyChangeGame::clear_has_user_id() {
-  _has_bits_[0] &= ~0x00000001u;
-}
-inline void NotifyProxyChangeGame::clear_user_id() {
-  user_id_ = GOOGLE_ULONGLONG(0);
-  clear_has_user_id();
-}
-inline ::google::protobuf::uint64 NotifyProxyChangeGame::user_id() const {
-  // @@protoc_insertion_point(field_get:NFMsg.NotifyProxyChangeGame.user_id)
-  return user_id_;
-}
-inline void NotifyProxyChangeGame::set_user_id(::google::protobuf::uint64 value) {
-  set_has_user_id();
-  user_id_ = value;
-  // @@protoc_insertion_point(field_set:NFMsg.NotifyProxyChangeGame.user_id)
-}
-
-// optional uint32 game_id = 2;
-inline bool NotifyProxyChangeGame::has_game_id() const {
-  return (_has_bits_[0] & 0x00000002u) != 0;
-}
-inline void NotifyProxyChangeGame::set_has_game_id() {
-  _has_bits_[0] |= 0x00000002u;
-}
-inline void NotifyProxyChangeGame::clear_has_game_id() {
-  _has_bits_[0] &= ~0x00000002u;
-}
-inline void NotifyProxyChangeGame::clear_game_id() {
-  game_id_ = 0u;
-  clear_has_game_id();
-}
-inline ::google::protobuf::uint32 NotifyProxyChangeGame::game_id() const {
-  // @@protoc_insertion_point(field_get:NFMsg.NotifyProxyChangeGame.game_id)
-  return game_id_;
-}
-inline void NotifyProxyChangeGame::set_game_id(::google::protobuf::uint32 value) {
-  set_has_game_id();
-  game_id_ = value;
-  // @@protoc_insertion_point(field_set:NFMsg.NotifyProxyChangeGame.game_id)
-}
-
-// optional uint32 client_link_id = 3;
-inline bool NotifyProxyChangeGame::has_client_link_id() const {
-  return (_has_bits_[0] & 0x00000004u) != 0;
-}
-inline void NotifyProxyChangeGame::set_has_client_link_id() {
-  _has_bits_[0] |= 0x00000004u;
-}
-inline void NotifyProxyChangeGame::clear_has_client_link_id() {
-  _has_bits_[0] &= ~0x00000004u;
-}
-inline void NotifyProxyChangeGame::clear_client_link_id() {
-  client_link_id_ = 0u;
-  clear_has_client_link_id();
-}
-inline ::google::protobuf::uint32 NotifyProxyChangeGame::client_link_id() const {
-  // @@protoc_insertion_point(field_get:NFMsg.NotifyProxyChangeGame.client_link_id)
-  return client_link_id_;
-}
-inline void NotifyProxyChangeGame::set_client_link_id(::google::protobuf::uint32 value) {
-  set_has_client_link_id();
-  client_link_id_ = value;
-  // @@protoc_insertion_point(field_set:NFMsg.NotifyProxyChangeGame.client_link_id)
-}
-
-// -------------------------------------------------------------------
-
-// NotifyWorldPlayerDisconnect
-
-// optional uint64 user_id = 1;
-inline bool NotifyWorldPlayerDisconnect::has_user_id() const {
-  return (_has_bits_[0] & 0x00000002u) != 0;
-}
-inline void NotifyWorldPlayerDisconnect::set_has_user_id() {
-  _has_bits_[0] |= 0x00000002u;
-}
-inline void NotifyWorldPlayerDisconnect::clear_has_user_id() {
-  _has_bits_[0] &= ~0x00000002u;
-}
-inline void NotifyWorldPlayerDisconnect::clear_user_id() {
-  user_id_ = GOOGLE_ULONGLONG(0);
-  clear_has_user_id();
-}
-inline ::google::protobuf::uint64 NotifyWorldPlayerDisconnect::user_id() const {
-  // @@protoc_insertion_point(field_get:NFMsg.NotifyWorldPlayerDisconnect.user_id)
-  return user_id_;
-}
-inline void NotifyWorldPlayerDisconnect::set_user_id(::google::protobuf::uint64 value) {
-  set_has_user_id();
-  user_id_ = value;
-  // @@protoc_insertion_point(field_set:NFMsg.NotifyWorldPlayerDisconnect.user_id)
+  // @@protoc_insertion_point(field_set:NFMsg.NotifyPlayerDisconnect.user_id)
 }
 
 // optional string account = 2;
-inline bool NotifyWorldPlayerDisconnect::has_account() const {
+inline bool NotifyPlayerDisconnect::has_account() const {
   return (_has_bits_[0] & 0x00000001u) != 0;
 }
-inline void NotifyWorldPlayerDisconnect::set_has_account() {
+inline void NotifyPlayerDisconnect::set_has_account() {
   _has_bits_[0] |= 0x00000001u;
 }
-inline void NotifyWorldPlayerDisconnect::clear_has_account() {
+inline void NotifyPlayerDisconnect::clear_has_account() {
   _has_bits_[0] &= ~0x00000001u;
 }
-inline void NotifyWorldPlayerDisconnect::clear_account() {
+inline void NotifyPlayerDisconnect::clear_account() {
   account_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   clear_has_account();
 }
-inline const ::std::string& NotifyWorldPlayerDisconnect::account() const {
-  // @@protoc_insertion_point(field_get:NFMsg.NotifyWorldPlayerDisconnect.account)
+inline const ::std::string& NotifyPlayerDisconnect::account() const {
+  // @@protoc_insertion_point(field_get:NFMsg.NotifyPlayerDisconnect.account)
   return account_.GetNoArena();
 }
-inline void NotifyWorldPlayerDisconnect::set_account(const ::std::string& value) {
+inline void NotifyPlayerDisconnect::set_account(const ::std::string& value) {
   set_has_account();
   account_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
-  // @@protoc_insertion_point(field_set:NFMsg.NotifyWorldPlayerDisconnect.account)
+  // @@protoc_insertion_point(field_set:NFMsg.NotifyPlayerDisconnect.account)
 }
 #if LANG_CXX11
-inline void NotifyWorldPlayerDisconnect::set_account(::std::string&& value) {
+inline void NotifyPlayerDisconnect::set_account(::std::string&& value) {
   set_has_account();
   account_.SetNoArena(
     &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
-  // @@protoc_insertion_point(field_set_rvalue:NFMsg.NotifyWorldPlayerDisconnect.account)
+  // @@protoc_insertion_point(field_set_rvalue:NFMsg.NotifyPlayerDisconnect.account)
 }
 #endif
-inline void NotifyWorldPlayerDisconnect::set_account(const char* value) {
+inline void NotifyPlayerDisconnect::set_account(const char* value) {
   GOOGLE_DCHECK(value != NULL);
   set_has_account();
   account_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
-  // @@protoc_insertion_point(field_set_char:NFMsg.NotifyWorldPlayerDisconnect.account)
+  // @@protoc_insertion_point(field_set_char:NFMsg.NotifyPlayerDisconnect.account)
 }
-inline void NotifyWorldPlayerDisconnect::set_account(const char* value, size_t size) {
+inline void NotifyPlayerDisconnect::set_account(const char* value, size_t size) {
   set_has_account();
   account_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
       ::std::string(reinterpret_cast<const char*>(value), size));
-  // @@protoc_insertion_point(field_set_pointer:NFMsg.NotifyWorldPlayerDisconnect.account)
+  // @@protoc_insertion_point(field_set_pointer:NFMsg.NotifyPlayerDisconnect.account)
 }
-inline ::std::string* NotifyWorldPlayerDisconnect::mutable_account() {
+inline ::std::string* NotifyPlayerDisconnect::mutable_account() {
   set_has_account();
-  // @@protoc_insertion_point(field_mutable:NFMsg.NotifyWorldPlayerDisconnect.account)
+  // @@protoc_insertion_point(field_mutable:NFMsg.NotifyPlayerDisconnect.account)
   return account_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-inline ::std::string* NotifyWorldPlayerDisconnect::release_account() {
-  // @@protoc_insertion_point(field_release:NFMsg.NotifyWorldPlayerDisconnect.account)
+inline ::std::string* NotifyPlayerDisconnect::release_account() {
+  // @@protoc_insertion_point(field_release:NFMsg.NotifyPlayerDisconnect.account)
   if (!has_account()) {
     return NULL;
   }
   clear_has_account();
   return account_.ReleaseNonDefaultNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-inline void NotifyWorldPlayerDisconnect::set_allocated_account(::std::string* account) {
+inline void NotifyPlayerDisconnect::set_allocated_account(::std::string* account) {
   if (account != NULL) {
     set_has_account();
   } else {
     clear_has_account();
   }
   account_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), account);
-  // @@protoc_insertion_point(field_set_allocated:NFMsg.NotifyWorldPlayerDisconnect.account)
+  // @@protoc_insertion_point(field_set_allocated:NFMsg.NotifyPlayerDisconnect.account)
 }
 
 // -------------------------------------------------------------------
 
-// NotifyGamePlayerDisconnect
+// NotifyPlayerReport
 
 // optional uint64 user_id = 1;
-inline bool NotifyGamePlayerDisconnect::has_user_id() const {
+inline bool NotifyPlayerReport::has_user_id() const {
   return (_has_bits_[0] & 0x00000002u) != 0;
 }
-inline void NotifyGamePlayerDisconnect::set_has_user_id() {
+inline void NotifyPlayerReport::set_has_user_id() {
   _has_bits_[0] |= 0x00000002u;
 }
-inline void NotifyGamePlayerDisconnect::clear_has_user_id() {
+inline void NotifyPlayerReport::clear_has_user_id() {
   _has_bits_[0] &= ~0x00000002u;
 }
-inline void NotifyGamePlayerDisconnect::clear_user_id() {
+inline void NotifyPlayerReport::clear_user_id() {
   user_id_ = GOOGLE_ULONGLONG(0);
   clear_has_user_id();
 }
-inline ::google::protobuf::uint64 NotifyGamePlayerDisconnect::user_id() const {
-  // @@protoc_insertion_point(field_get:NFMsg.NotifyGamePlayerDisconnect.user_id)
+inline ::google::protobuf::uint64 NotifyPlayerReport::user_id() const {
+  // @@protoc_insertion_point(field_get:NFMsg.NotifyPlayerReport.user_id)
   return user_id_;
 }
-inline void NotifyGamePlayerDisconnect::set_user_id(::google::protobuf::uint64 value) {
+inline void NotifyPlayerReport::set_user_id(::google::protobuf::uint64 value) {
   set_has_user_id();
   user_id_ = value;
-  // @@protoc_insertion_point(field_set:NFMsg.NotifyGamePlayerDisconnect.user_id)
-}
-
-// optional string account = 2;
-inline bool NotifyGamePlayerDisconnect::has_account() const {
-  return (_has_bits_[0] & 0x00000001u) != 0;
-}
-inline void NotifyGamePlayerDisconnect::set_has_account() {
-  _has_bits_[0] |= 0x00000001u;
-}
-inline void NotifyGamePlayerDisconnect::clear_has_account() {
-  _has_bits_[0] &= ~0x00000001u;
-}
-inline void NotifyGamePlayerDisconnect::clear_account() {
-  account_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-  clear_has_account();
-}
-inline const ::std::string& NotifyGamePlayerDisconnect::account() const {
-  // @@protoc_insertion_point(field_get:NFMsg.NotifyGamePlayerDisconnect.account)
-  return account_.GetNoArena();
-}
-inline void NotifyGamePlayerDisconnect::set_account(const ::std::string& value) {
-  set_has_account();
-  account_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
-  // @@protoc_insertion_point(field_set:NFMsg.NotifyGamePlayerDisconnect.account)
-}
-#if LANG_CXX11
-inline void NotifyGamePlayerDisconnect::set_account(::std::string&& value) {
-  set_has_account();
-  account_.SetNoArena(
-    &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
-  // @@protoc_insertion_point(field_set_rvalue:NFMsg.NotifyGamePlayerDisconnect.account)
-}
-#endif
-inline void NotifyGamePlayerDisconnect::set_account(const char* value) {
-  GOOGLE_DCHECK(value != NULL);
-  set_has_account();
-  account_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
-  // @@protoc_insertion_point(field_set_char:NFMsg.NotifyGamePlayerDisconnect.account)
-}
-inline void NotifyGamePlayerDisconnect::set_account(const char* value, size_t size) {
-  set_has_account();
-  account_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
-      ::std::string(reinterpret_cast<const char*>(value), size));
-  // @@protoc_insertion_point(field_set_pointer:NFMsg.NotifyGamePlayerDisconnect.account)
-}
-inline ::std::string* NotifyGamePlayerDisconnect::mutable_account() {
-  set_has_account();
-  // @@protoc_insertion_point(field_mutable:NFMsg.NotifyGamePlayerDisconnect.account)
-  return account_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-}
-inline ::std::string* NotifyGamePlayerDisconnect::release_account() {
-  // @@protoc_insertion_point(field_release:NFMsg.NotifyGamePlayerDisconnect.account)
-  if (!has_account()) {
-    return NULL;
-  }
-  clear_has_account();
-  return account_.ReleaseNonDefaultNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-}
-inline void NotifyGamePlayerDisconnect::set_allocated_account(::std::string* account) {
-  if (account != NULL) {
-    set_has_account();
-  } else {
-    clear_has_account();
-  }
-  account_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), account);
-  // @@protoc_insertion_point(field_set_allocated:NFMsg.NotifyGamePlayerDisconnect.account)
-}
-
-// -------------------------------------------------------------------
-
-// NotifyGamePlayerReconnect
-
-// optional uint64 user_id = 1;
-inline bool NotifyGamePlayerReconnect::has_user_id() const {
-  return (_has_bits_[0] & 0x00000001u) != 0;
-}
-inline void NotifyGamePlayerReconnect::set_has_user_id() {
-  _has_bits_[0] |= 0x00000001u;
-}
-inline void NotifyGamePlayerReconnect::clear_has_user_id() {
-  _has_bits_[0] &= ~0x00000001u;
-}
-inline void NotifyGamePlayerReconnect::clear_user_id() {
-  user_id_ = GOOGLE_ULONGLONG(0);
-  clear_has_user_id();
-}
-inline ::google::protobuf::uint64 NotifyGamePlayerReconnect::user_id() const {
-  // @@protoc_insertion_point(field_get:NFMsg.NotifyGamePlayerReconnect.user_id)
-  return user_id_;
-}
-inline void NotifyGamePlayerReconnect::set_user_id(::google::protobuf::uint64 value) {
-  set_has_user_id();
-  user_id_ = value;
-  // @@protoc_insertion_point(field_set:NFMsg.NotifyGamePlayerReconnect.user_id)
-}
-
-// optional uint32 proxy_id = 2;
-inline bool NotifyGamePlayerReconnect::has_proxy_id() const {
-  return (_has_bits_[0] & 0x00000002u) != 0;
-}
-inline void NotifyGamePlayerReconnect::set_has_proxy_id() {
-  _has_bits_[0] |= 0x00000002u;
-}
-inline void NotifyGamePlayerReconnect::clear_has_proxy_id() {
-  _has_bits_[0] &= ~0x00000002u;
-}
-inline void NotifyGamePlayerReconnect::clear_proxy_id() {
-  proxy_id_ = 0u;
-  clear_has_proxy_id();
-}
-inline ::google::protobuf::uint32 NotifyGamePlayerReconnect::proxy_id() const {
-  // @@protoc_insertion_point(field_get:NFMsg.NotifyGamePlayerReconnect.proxy_id)
-  return proxy_id_;
-}
-inline void NotifyGamePlayerReconnect::set_proxy_id(::google::protobuf::uint32 value) {
-  set_has_proxy_id();
-  proxy_id_ = value;
-  // @@protoc_insertion_point(field_set:NFMsg.NotifyGamePlayerReconnect.proxy_id)
-}
-
-// -------------------------------------------------------------------
-
-// NotifyGamePlayerReport
-
-// optional uint64 user_id = 1;
-inline bool NotifyGamePlayerReport::has_user_id() const {
-  return (_has_bits_[0] & 0x00000002u) != 0;
-}
-inline void NotifyGamePlayerReport::set_has_user_id() {
-  _has_bits_[0] |= 0x00000002u;
-}
-inline void NotifyGamePlayerReport::clear_has_user_id() {
-  _has_bits_[0] &= ~0x00000002u;
-}
-inline void NotifyGamePlayerReport::clear_user_id() {
-  user_id_ = GOOGLE_ULONGLONG(0);
-  clear_has_user_id();
-}
-inline ::google::protobuf::uint64 NotifyGamePlayerReport::user_id() const {
-  // @@protoc_insertion_point(field_get:NFMsg.NotifyGamePlayerReport.user_id)
-  return user_id_;
-}
-inline void NotifyGamePlayerReport::set_user_id(::google::protobuf::uint64 value) {
-  set_has_user_id();
-  user_id_ = value;
-  // @@protoc_insertion_point(field_set:NFMsg.NotifyGamePlayerReport.user_id)
+  // @@protoc_insertion_point(field_set:NFMsg.NotifyPlayerReport.user_id)
 }
 
 // optional string ip = 2;
-inline bool NotifyGamePlayerReport::has_ip() const {
+inline bool NotifyPlayerReport::has_ip() const {
   return (_has_bits_[0] & 0x00000001u) != 0;
 }
-inline void NotifyGamePlayerReport::set_has_ip() {
+inline void NotifyPlayerReport::set_has_ip() {
   _has_bits_[0] |= 0x00000001u;
 }
-inline void NotifyGamePlayerReport::clear_has_ip() {
+inline void NotifyPlayerReport::clear_has_ip() {
   _has_bits_[0] &= ~0x00000001u;
 }
-inline void NotifyGamePlayerReport::clear_ip() {
+inline void NotifyPlayerReport::clear_ip() {
   ip_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   clear_has_ip();
 }
-inline const ::std::string& NotifyGamePlayerReport::ip() const {
-  // @@protoc_insertion_point(field_get:NFMsg.NotifyGamePlayerReport.ip)
+inline const ::std::string& NotifyPlayerReport::ip() const {
+  // @@protoc_insertion_point(field_get:NFMsg.NotifyPlayerReport.ip)
   return ip_.GetNoArena();
 }
-inline void NotifyGamePlayerReport::set_ip(const ::std::string& value) {
+inline void NotifyPlayerReport::set_ip(const ::std::string& value) {
   set_has_ip();
   ip_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
-  // @@protoc_insertion_point(field_set:NFMsg.NotifyGamePlayerReport.ip)
+  // @@protoc_insertion_point(field_set:NFMsg.NotifyPlayerReport.ip)
 }
 #if LANG_CXX11
-inline void NotifyGamePlayerReport::set_ip(::std::string&& value) {
+inline void NotifyPlayerReport::set_ip(::std::string&& value) {
   set_has_ip();
   ip_.SetNoArena(
     &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
-  // @@protoc_insertion_point(field_set_rvalue:NFMsg.NotifyGamePlayerReport.ip)
+  // @@protoc_insertion_point(field_set_rvalue:NFMsg.NotifyPlayerReport.ip)
 }
 #endif
-inline void NotifyGamePlayerReport::set_ip(const char* value) {
+inline void NotifyPlayerReport::set_ip(const char* value) {
   GOOGLE_DCHECK(value != NULL);
   set_has_ip();
   ip_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
-  // @@protoc_insertion_point(field_set_char:NFMsg.NotifyGamePlayerReport.ip)
+  // @@protoc_insertion_point(field_set_char:NFMsg.NotifyPlayerReport.ip)
 }
-inline void NotifyGamePlayerReport::set_ip(const char* value, size_t size) {
+inline void NotifyPlayerReport::set_ip(const char* value, size_t size) {
   set_has_ip();
   ip_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
       ::std::string(reinterpret_cast<const char*>(value), size));
-  // @@protoc_insertion_point(field_set_pointer:NFMsg.NotifyGamePlayerReport.ip)
+  // @@protoc_insertion_point(field_set_pointer:NFMsg.NotifyPlayerReport.ip)
 }
-inline ::std::string* NotifyGamePlayerReport::mutable_ip() {
+inline ::std::string* NotifyPlayerReport::mutable_ip() {
   set_has_ip();
-  // @@protoc_insertion_point(field_mutable:NFMsg.NotifyGamePlayerReport.ip)
+  // @@protoc_insertion_point(field_mutable:NFMsg.NotifyPlayerReport.ip)
   return ip_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-inline ::std::string* NotifyGamePlayerReport::release_ip() {
-  // @@protoc_insertion_point(field_release:NFMsg.NotifyGamePlayerReport.ip)
+inline ::std::string* NotifyPlayerReport::release_ip() {
+  // @@protoc_insertion_point(field_release:NFMsg.NotifyPlayerReport.ip)
   if (!has_ip()) {
     return NULL;
   }
   clear_has_ip();
   return ip_.ReleaseNonDefaultNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-inline void NotifyGamePlayerReport::set_allocated_ip(::std::string* ip) {
+inline void NotifyPlayerReport::set_allocated_ip(::std::string* ip) {
   if (ip != NULL) {
     set_has_ip();
   } else {
     clear_has_ip();
   }
   ip_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ip);
-  // @@protoc_insertion_point(field_set_allocated:NFMsg.NotifyGamePlayerReport.ip)
+  // @@protoc_insertion_point(field_set_allocated:NFMsg.NotifyPlayerReport.ip)
 }
 
 // -------------------------------------------------------------------
@@ -1600,14 +796,6 @@ inline void NotifyProxyPacketMsg::set_allocated_msg(::std::string* msg) {
 #ifdef __GNUC__
   #pragma GCC diagnostic pop
 #endif  // __GNUC__
-// -------------------------------------------------------------------
-
-// -------------------------------------------------------------------
-
-// -------------------------------------------------------------------
-
-// -------------------------------------------------------------------
-
 // -------------------------------------------------------------------
 
 // -------------------------------------------------------------------

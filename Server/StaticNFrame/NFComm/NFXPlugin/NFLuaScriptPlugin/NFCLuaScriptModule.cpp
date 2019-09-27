@@ -64,11 +64,28 @@ bool NFCLuaScriptModule::Init()
 	m_pLogModule = m_pPluginManager->FindModule<NFILogModule>();
 	m_pHttpServerModule = m_pPluginManager->FindModule<NFIHttpServerModule>();
 	m_pHttpClientModule = m_pPluginManager->FindModule<NFIHttpClientModule>();
-	m_pPluginManager->FindModule<NFIServerNetEventModule>()->AddAccountEventCallBack(NF_ST_GAME, this, &NFCLuaScriptModule::OnAccountEventCallBack);
 
-    Register();
-	LoadScript();
+	if (m_pPluginManager->IsLoadAllServer())
+	{
+		FindModule<NFIServerNetEventModule>()->AddAccountEventCallBack(NF_ST_GAME, this, &NFCLuaScriptModule::OnAccountEventCallBack);
+	}
+	else
+	{
+		FindModule<NFIServerNetEventModule>()->AddAccountEventCallBack(NF_ST_GAME, this, &NFCLuaScriptModule::OnAccountEventCallBack);
+		FindModule<NFIServerNetEventModule>()->AddAccountEventCallBack(NF_ST_WORLD, this, &NFCLuaScriptModule::OnAccountEventCallBack);
+		FindModule<NFIServerNetEventModule>()->AddAccountEventCallBack(NF_ST_LOGIN, this, &NFCLuaScriptModule::OnAccountEventCallBack);
+	}
+	SetTimer(1, 1000, 1);
     return true;
+}
+
+void NFCLuaScriptModule::OnTimer(uint32_t nTimerID)
+{
+	if (nTimerID == 1)
+	{
+		Register();
+		LoadScript();
+	}
 }
 
 bool NFCLuaScriptModule::AfterInit()
@@ -259,28 +276,6 @@ void NFCLuaScriptModule::SendMsgToAllPlayer(const uint32_t nMsgID, const uint32_
 		packetMsg.set_msg_id(nMsgID);
 		packetMsg.set_msg(strData);
 		m_pNetServerModule->SendToAllServerByPB(NF_ST_GAME, EGMI_NET_GAME_SEND_PACKET_TO_PROXY, packetMsg, 0);
-	}
-}
-
-void NFCLuaScriptModule::SendMsgToWorld(uint32_t usLinkId, const uint64_t nPlayerID, const uint32_t nMsgID, const uint32_t nLen, const std::string& strData)
-{
-	if (m_pNetClientModule)
-	{
-		if (usLinkId != 0)
-		{
-			m_pNetClientModule->SendByServerID(usLinkId, nMsgID, strData, nPlayerID);
-		}
-		else
-		{
-			if (nPlayerID != 0)
-			{
-				auto pPlayerInfo = GetPlayerInfo(nPlayerID);
-				if (pPlayerInfo)
-				{
-					m_pNetClientModule->SendByServerID(pPlayerInfo->GetWorldUnlinkId(), nMsgID, strData, nPlayerID);
-				}
-			}
-		}
 	}
 }
 
@@ -487,7 +482,6 @@ bool NFCLuaScriptModule::Register()
 		.addFunction("SendMsgToPlayer", &NFCLuaScriptModule::SendMsgToPlayer)
 		.addFunction("SendMsgToManyPlayer", &NFCLuaScriptModule::SendMsgToManyPlayer)
 		.addFunction("SendMsgToAllPlayer", &NFCLuaScriptModule::SendMsgToAllPlayer)
-		.addFunction("SendMsgToWorld", &NFCLuaScriptModule::SendMsgToWorld)
 		.addFunction("SendMsgToMaster", &NFCLuaScriptModule::SendMsgToMaster)
 		.addFunction("ProcessWork", &NFCLuaScriptModule::ProcessWork)
 		.addFunction("ProcessTimer", &NFCLuaScriptModule::ProcessTimer)
@@ -520,6 +514,11 @@ void NFCLuaScriptModule::RunNetRecvLuaFunc(const std::string& luaFunc, const uin
 void NFCLuaScriptModule::SessionReport(uint64_t playerId, const std::string& report)
 {
 	TryRunGlobalScriptFunc("TcpSessionReport", playerId, report);
+}
+
+void NFCLuaScriptModule::SessionClose(uint64_t playerId)
+{
+	TryRunGlobalScriptFunc("TcpSessionClose", playerId);
 }
 
 void NFCLuaScriptModule::StopTimer(uint32_t nTimerID)

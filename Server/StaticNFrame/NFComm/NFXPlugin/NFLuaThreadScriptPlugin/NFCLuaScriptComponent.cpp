@@ -346,7 +346,6 @@ bool NFCLuaScriptComponent::Register()
 		.addFunction("SendMsgToPlayer", &NFCLuaScriptComponent::SendMsgToPlayer)
 		.addFunction("SendMsgToManyPlayer", &NFCLuaScriptComponent::SendMsgToManyPlayer)
 		.addFunction("SendMsgToAllPlayer", &NFCLuaScriptComponent::SendMsgToAllPlayer)
-		.addFunction("SendMsgToWorld", &NFCLuaScriptComponent::SendMsgToWorld)
 		.addFunction("SendMsgToMaster", &NFCLuaScriptComponent::SendMsgToMaster)
 		.addFunction("ProcessWork", &NFCLuaScriptComponent::ProcessWork)
 		.addFunction("ProcessTimer", &NFCLuaScriptComponent::ProcessTimer)
@@ -452,11 +451,6 @@ void NFCLuaScriptComponent::SendMsgToManyPlayer(const std::vector<uint64_t>& nVe
 void NFCLuaScriptComponent::SendMsgToAllPlayer(const uint32_t nMsgID, const uint32_t nLen, const std::string& strData)
 {
 	m_pLuaThreadModule->AddMsgToAllPlayer(nMsgID, nLen, strData);
-}
-
-void NFCLuaScriptComponent::SendMsgToWorld(uint32_t usLinkId, const uint64_t nPlayerID, const uint32_t nMsgID, const uint32_t nLen, const std::string& strData)
-{
-	m_pLuaThreadModule->AddMsgToWorld(usLinkId, nPlayerID, nMsgID, nLen, strData);
 }
 
 void NFCLuaScriptComponent::SendMsgToMaster(uint32_t usLinkId, const uint64_t nPlayerID, const uint32_t nMsgID, const uint32_t nLen, const std::string& strData)

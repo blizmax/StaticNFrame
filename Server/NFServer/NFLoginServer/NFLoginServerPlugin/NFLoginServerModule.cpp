@@ -96,6 +96,8 @@ void NFCLoginServerModule::OnProxySocketEvent(const eMsgType nEvent, const uint3
 	{
 		std::string ip = FindModule<NFINetServerModule>()->GetLinkIp(unLinkId);
 		NFLogDebug(NF_LOG_SERVER_CONNECT_SERVER, 0, "Proxy DisConnect From Login Server, Ip:{}", ip);
+
+		OnHandleServerDisconnect(unLinkId);
 	}
 }
 
@@ -184,5 +186,29 @@ void NFCLoginServerModule::OnProxyServerRefreshProcess(const uint32_t unLinkId, 
 
 
 		//NFLogInfo("Proxy Server Refresh Login Server Success, serverName:{}, serverId:{}, ip:{}, port:{}", xData.server_name(), xData.server_id(), xData.server_ip(), xData.server_port());
+	}
+}
+
+void NFCLoginServerModule::OnHandleServerDisconnect(uint32_t unLinkId)
+{
+	NF_SHARE_PTR<NFServerData> pServerData = nullptr;
+
+	pServerData = mProxyMap.First();
+	while (pServerData)
+	{
+		if (unLinkId == pServerData->mUnlinkId)
+		{
+			pServerData->mServerInfo.set_server_state(NFMsg::EST_CRASH);
+			pServerData->mUnlinkId = 0;
+
+			NFLogError(NF_LOG_SERVER_CONNECT_SERVER, 0, "the login server disconnect from proxy server, serverName:{}, serverId:{}, serverIp:{}, serverPort:{}"
+				, pServerData->mServerInfo.server_name(), pServerData->mServerInfo.server_id(), pServerData->mServerInfo.server_ip(), pServerData->mServerInfo.server_port());
+
+
+			FindModule<NFIServerNetEventModule>()->OnServerNetEvent(eMsgType_DISCONNECTED, NF_ST_LOGIN, NF_ST_PROXY, unLinkId, pServerData);
+			return;
+		}
+
+		pServerData = mProxyMap.Next();
 	}
 }

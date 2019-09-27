@@ -29,6 +29,7 @@ public:
 	virtual void RunHttpRecvLuaFunc(const std::string& luaFunc, const uint32_t unLinkId, const uint32_t requestId, const std::string& firstPath, const std::string& secondPath, const std::string& strMsg) = 0;
 
 	virtual void SessionReport(uint64_t playerId, const std::string& report) = 0;
+	virtual void SessionClose(uint64_t playerId) = 0;
 
 	virtual void ReloadAllLuaFiles() = 0;
 	virtual void ReloadLuaFiles() = 0;

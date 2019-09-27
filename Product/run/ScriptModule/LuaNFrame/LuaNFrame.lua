@@ -370,16 +370,6 @@ function LuaNFrame.SendMsgToManyPlayer(nPlayerIdList, nMsgId, nLen, strData)
 	end
 end
 
-function LuaNFrame.SendMsgToWorld(unLinkId, nPlayerId, nMsgId, nLen, strData)
-	if type(unLinkId) == "number" and type(nMsgId) == "number" and type(strData) == "string" and type(nPlayerId) == "number" and type(nLen) == "number" then
-		if tonumber(nLen) == string.len(strData) then
-			CPPNFrame:SendMsgToWorld(unLinkId, nPlayerId, nMsgId, nLen, strData)
-		end
-	else
-		LuaNFrame.Error(NFLogId.NF_LOG_SYSTEMLOG, 0, __G__TRACKBACK__("LuaNFrame.SendMsgToWorld Para Error"))
-	end
-end
-
 function LuaNFrame.SendMsgToMaster(unLinkId, nPlayerId, nMsgId, nLen, strData)
 	if type(unLinkId) == "number" and type(nMsgId) == "number" and type(strData) == "string" and type(nPlayerId) == "number" and type(nLen) == "number" then
 		if tonumber(nLen) == string.len(strData) then
@@ -459,28 +449,6 @@ function LuaNFrame.DispatchTcp(unLinkId, valueId, nMsgId, strMsg)
 
 	if not status then
 		LuaNFrame.SendErrorLog(valueId, "LuaNFrame.DispatchTcp error, unLinkId:"..tostring(unLinkId).." valueId:"..tostring(valueId).." nMsgId:"..nMsgId, msg)
-    end
-end
-
-
---处理世界服务器消息
-function LuaNFrame.DispatchWorldTcp(unLinkId, valueId, nMsgId, strMsg)
-	local function TcpExecute()
-		local retMsgID,controller = tcpManager:createController(nMsgId)
-	
-		if controller == nil then
-			LuaNFrame.Error(NFLogId.NF_LOG_SYSTEMLOG, valueId, "nMsgId:"..nMsgId.." not handled!")
-		else
-			g_operateID = g_operateID + 1
-			local playerID, retCode, retBufferLen, retString, otString = controller.execute(nMsgId, g_operateID, strMsg)
-			LuaNFrame.SendMsgToWorld(unLinkId, playerID, retMsgID, retBufferLen, retString)
-		end
-	end
-	
-	local status, msg = xpcall (TcpExecute, __G__TRACKBACK__)
-
-	if not status then
-		LuaNFrame.SendErrorLog(valueId, "LuaNFrame.DispatchWorldTcp error, unLinkId:"..tostring(unLinkId).." valueId:"..tostring(valueId).." nMsgId:"..nMsgId, msg)
     end
 end
 

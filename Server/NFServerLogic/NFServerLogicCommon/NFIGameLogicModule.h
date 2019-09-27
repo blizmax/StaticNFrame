@@ -15,6 +15,5 @@ class NFIGameLogicModule : public NFIModule
 {
 public:
 	virtual void SendMsgToClientByPlayerId(uint64_t playerId, uint32_t nMsgId, const google::protobuf::Message& xData) = 0;
-	virtual void SendMsgToWorldByPlayerId(uint64_t playerId, uint32_t nMsgId, const google::protobuf::Message& xData) = 0;
 };
 
