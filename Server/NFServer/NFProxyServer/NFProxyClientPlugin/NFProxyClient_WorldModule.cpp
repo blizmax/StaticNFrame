@@ -31,7 +31,7 @@ bool NFCProxyClient_WorldModule::Init()
 bool NFCProxyClient_WorldModule::AfterInit()
 {
 	FindModule<NFINetClientModule>()->AddEventCallBack(NF_ST_WORLD, this, &NFCProxyClient_WorldModule::OnProxySocketEvent);
-	FindModule<NFINetClientModule>()->AddReceiveCallBack(NF_ST_WORLD, this, &NFCProxyClient_WorldModule::OnHandleOtherMessage);
+	//FindModule<NFINetClientModule>()->AddReceiveCallBack(NF_ST_WORLD, this, &NFCProxyClient_WorldModule::OnHandleOtherMessage);
 
 	return true;
 }
