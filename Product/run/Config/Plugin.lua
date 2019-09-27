@@ -107,11 +107,15 @@ LoadPlugin =
 			"NFKernelPlugin",
 			"NFNetPlugin",
 			"NFMonitorPlugin",
+			"NFActorPlugin",
 			
 			"NFWorldClientPlugin",
 			"NFWorldServerPlugin",
 			
 			"NFWorldLogicPlugin",
+
+			--"NFLuaScriptPlugin",
+			"NFLuaThreadScriptPlugin",
 		};
 		ServerType = NF_ST_WORLD;
 	},
