@@ -242,6 +242,10 @@ require("WebServer.Activity.Model.ActivityModel")
 require("WebServer.Activity.Services.ActivityServices")
 require("WebServer.Activity.Worker.ActivityPlayernum")
 -------------------------------------------------------------
+-------------------------------------------------------------
+require("Robot.Init")
+require("LogServer.Init")
+require("common.st_user_pb")
 ---
 require("Http.HttpDebug")
 require("Http.HttpGame")
