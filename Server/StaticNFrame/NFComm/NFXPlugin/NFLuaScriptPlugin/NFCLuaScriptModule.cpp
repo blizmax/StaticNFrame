@@ -624,7 +624,6 @@ void NFCLuaScriptModule::OnAccountEventCallBack(uint32_t nEvent, uint32_t unLink
 		if (mPlayerProxyInfoMap.ExistElement(pServerData->GetPlayerId()))
 		{
 			mPlayerProxyInfoMap.RemoveElement(pServerData->GetPlayerId());
-			TryRunGlobalScriptFunc("TcpSessionClose", pServerData->GetPlayerId());
 		}
 	}
 	else if (nEvent == eAccountEventType_RECONNECTED)

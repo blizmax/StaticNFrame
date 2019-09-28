@@ -1,9 +1,9 @@
 start NFPluginLoader --Server=MasterServer --ID=1 --Path=../Config --LuaScript=../ScriptModule
 start NFPluginLoader --Server=LoginServer --ID=2 --Path=../Config --LuaScript=../ScriptModule
 #start NFPluginLoader --Server=WorldServer --ID=3 --Path=../Config --LuaScript=../ScriptModule
-start NFPluginLoader --Server=GameServer --ID=4 --Path=../Config --LuaScript=../ScriptModule
+#start NFPluginLoader --Server=GameServer --ID=4 --Path=../Config --LuaScript=../ScriptModule
 #start NFPluginLoader --Server=GameServer --ID=5 --Path=../Config --LuaScript=../ScriptModule
 start NFPluginLoader --Server=ProxyServer --ID=6 --Path=../Config --LuaScript=../ScriptModule   
-start NFPluginLoader --Server=LocationServer --ID=7 --Path=../Config --LuaScript=../ScriptModule 
-start NFPluginLoader --Server=LogServer --ID=8 --Path=../Config --LuaScript=../ScriptModule 
+#start NFPluginLoader --Server=LocationServer --ID=7 --Path=../Config --LuaScript=../ScriptModule 
+#start NFPluginLoader --Server=LogServer --ID=8 --Path=../Config --LuaScript=../ScriptModule 
 start NFPluginLoader --Server=WebServer --ID=9 --Path=../Config --LuaScript=../ScriptModule                     
