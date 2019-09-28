@@ -120,6 +120,7 @@ function InitGameServer()
 	
 	RegisterServer(WorldServer3)
 	RegisterServer(GameServer4)
+	RegisterServer(GameServer5)
 	RegisterServer(ProxyServer6)
 	RegisterServer(LocationServer7)
 	RegisterServer(LogServer8)

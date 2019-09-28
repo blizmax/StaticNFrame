@@ -50,7 +50,7 @@ void protobuf_RegisterTypes(const ::std::string&) {
 void AddDescriptorsImpl() {
   InitDefaults();
   static const char descriptor[] GOOGLE_PROTOBUF_ATTRIBUTE_SECTION_VARIABLE(protodesc_cold) = {
-      "\n\032st_human_packet_code.proto\022\005NFMsg*\204\007\n\024"
+      "\n\032st_human_packet_code.proto\022\005NFMsg*\274\007\n\024"
       "st_human_packet_code\022\034\n\027Client_Msg_Accou"
       "ntLogin\020\351\007\022\034\n\027Server_Msg_AccountLogin\020\352\007"
       "\022\035\n\030Client_Msg_GetPlayerInfo\020\353\007\022\035\n\030Serve"
@@ -73,10 +73,11 @@ void AddDescriptorsImpl() {
       "atePlayerInfo\020\202\010\022\037\n\032Client_Msg_UpdateGoo"
       "dsList\020\203\010\022\037\n\032Server_Msg_UpdateGoodsList\020"
       "\204\010\022\032\n\025Client_Msg_NoticeInfo\020\205\010\022\032\n\025Server"
-      "_Msg_NoticeInfo\020\206\010"
+      "_Msg_NoticeInfo\020\206\010\022\032\n\025Client_Msg_EnterTa"
+      "ble\020\211\010\022\032\n\025Server_Msg_EnterTable\020\212\010"
   };
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
-      descriptor, 938);
+      descriptor, 994);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "st_human_packet_code.proto", &protobuf_RegisterTypes);
 }
@@ -129,6 +130,8 @@ bool st_human_packet_code_IsValid(int value) {
     case 1028:
     case 1029:
     case 1030:
+    case 1033:
+    case 1034:
       return true;
     default:
       return false;

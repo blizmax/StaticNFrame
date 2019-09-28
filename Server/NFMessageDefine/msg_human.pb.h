@@ -38,7 +38,7 @@ namespace protobuf_msg_5fhuman_2eproto {
 struct TableStruct {
   static const ::google::protobuf::internal::ParseTableField entries[];
   static const ::google::protobuf::internal::AuxillaryParseTableField aux[];
-  static const ::google::protobuf::internal::ParseTable schema[9];
+  static const ::google::protobuf::internal::ParseTable schema[11];
   static const ::google::protobuf::internal::FieldMetadata field_metadata[];
   static const ::google::protobuf::internal::SerializationTable serialization_table[];
   static const ::google::protobuf::uint32 offsets[];
@@ -52,6 +52,9 @@ extern accountinfoDefaultTypeInternal _accountinfo_default_instance_;
 class cgaccountlogin;
 class cgaccountloginDefaultTypeInternal;
 extern cgaccountloginDefaultTypeInternal _cgaccountlogin_default_instance_;
+class cgentertable;
+class cgentertableDefaultTypeInternal;
+extern cgentertableDefaultTypeInternal _cgentertable_default_instance_;
 class cgheartbeat;
 class cgheartbeatDefaultTypeInternal;
 extern cgheartbeatDefaultTypeInternal _cgheartbeat_default_instance_;
@@ -61,6 +64,9 @@ extern cgreconnectDefaultTypeInternal _cgreconnect_default_instance_;
 class gcaccountlogin;
 class gcaccountloginDefaultTypeInternal;
 extern gcaccountloginDefaultTypeInternal _gcaccountlogin_default_instance_;
+class gcentertable;
+class gcentertableDefaultTypeInternal;
+extern gcentertableDefaultTypeInternal _gcentertable_default_instance_;
 class gcheartbeat;
 class gcheartbeatDefaultTypeInternal;
 extern gcheartbeatDefaultTypeInternal _gcheartbeat_default_instance_;
@@ -78,9 +84,11 @@ namespace google {
 namespace protobuf {
 template<> ::NFMsg::accountinfo* Arena::CreateMaybeMessage<::NFMsg::accountinfo>(Arena*);
 template<> ::NFMsg::cgaccountlogin* Arena::CreateMaybeMessage<::NFMsg::cgaccountlogin>(Arena*);
+template<> ::NFMsg::cgentertable* Arena::CreateMaybeMessage<::NFMsg::cgentertable>(Arena*);
 template<> ::NFMsg::cgheartbeat* Arena::CreateMaybeMessage<::NFMsg::cgheartbeat>(Arena*);
 template<> ::NFMsg::cgreconnect* Arena::CreateMaybeMessage<::NFMsg::cgreconnect>(Arena*);
 template<> ::NFMsg::gcaccountlogin* Arena::CreateMaybeMessage<::NFMsg::gcaccountlogin>(Arena*);
+template<> ::NFMsg::gcentertable* Arena::CreateMaybeMessage<::NFMsg::gcentertable>(Arena*);
 template<> ::NFMsg::gcheartbeat* Arena::CreateMaybeMessage<::NFMsg::gcheartbeat>(Arena*);
 template<> ::NFMsg::gckitplayer* Arena::CreateMaybeMessage<::NFMsg::gckitplayer>(Arena*);
 template<> ::NFMsg::gcreconnect* Arena::CreateMaybeMessage<::NFMsg::gcreconnect>(Arena*);
@@ -2284,6 +2292,262 @@ class gckitplayer : public ::google::protobuf::Message /* @@protoc_insertion_poi
   ::google::protobuf::internal::ArenaStringPtr msg_;
   ::google::protobuf::int32 result_;
   ::google::protobuf::int32 kittype_;
+  friend struct ::protobuf_msg_5fhuman_2eproto::TableStruct;
+};
+// -------------------------------------------------------------------
+
+class cgentertable : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:NFMsg.cgentertable) */ {
+ public:
+  cgentertable();
+  virtual ~cgentertable();
+
+  cgentertable(const cgentertable& from);
+
+  inline cgentertable& operator=(const cgentertable& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  #if LANG_CXX11
+  cgentertable(cgentertable&& from) noexcept
+    : cgentertable() {
+    *this = ::std::move(from);
+  }
+
+  inline cgentertable& operator=(cgentertable&& from) noexcept {
+    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
+      if (this != &from) InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+  #endif
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _internal_metadata_.unknown_fields();
+  }
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return _internal_metadata_.mutable_unknown_fields();
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const cgentertable& default_instance();
+
+  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
+  static inline const cgentertable* internal_default_instance() {
+    return reinterpret_cast<const cgentertable*>(
+               &_cgentertable_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    9;
+
+  void Swap(cgentertable* other);
+  friend void swap(cgentertable& a, cgentertable& b) {
+    a.Swap(&b);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline cgentertable* New() const final {
+    return CreateMaybeMessage<cgentertable>(NULL);
+  }
+
+  cgentertable* New(::google::protobuf::Arena* arena) const final {
+    return CreateMaybeMessage<cgentertable>(arena);
+  }
+  void CopyFrom(const ::google::protobuf::Message& from) final;
+  void MergeFrom(const ::google::protobuf::Message& from) final;
+  void CopyFrom(const cgentertable& from);
+  void MergeFrom(const cgentertable& from);
+  void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input) final;
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const final;
+  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
+      bool deterministic, ::google::protobuf::uint8* target) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(cgentertable* other);
+  private:
+  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
+    return NULL;
+  }
+  inline void* MaybeArenaPtr() const {
+    return NULL;
+  }
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // optional string password = 3;
+  bool has_password() const;
+  void clear_password();
+  static const int kPasswordFieldNumber = 3;
+  const ::std::string& password() const;
+  void set_password(const ::std::string& value);
+  #if LANG_CXX11
+  void set_password(::std::string&& value);
+  #endif
+  void set_password(const char* value);
+  void set_password(const char* value, size_t size);
+  ::std::string* mutable_password();
+  ::std::string* release_password();
+  void set_allocated_password(::std::string* password);
+
+  // optional int32 userid = 1;
+  bool has_userid() const;
+  void clear_userid();
+  static const int kUseridFieldNumber = 1;
+  ::google::protobuf::int32 userid() const;
+  void set_userid(::google::protobuf::int32 value);
+
+  // optional int32 tableid = 2;
+  bool has_tableid() const;
+  void clear_tableid();
+  static const int kTableidFieldNumber = 2;
+  ::google::protobuf::int32 tableid() const;
+  void set_tableid(::google::protobuf::int32 value);
+
+  // @@protoc_insertion_point(class_scope:NFMsg.cgentertable)
+ private:
+  void set_has_userid();
+  void clear_has_userid();
+  void set_has_tableid();
+  void clear_has_tableid();
+  void set_has_password();
+  void clear_has_password();
+
+  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+  ::google::protobuf::internal::HasBits<1> _has_bits_;
+  mutable ::google::protobuf::internal::CachedSize _cached_size_;
+  ::google::protobuf::internal::ArenaStringPtr password_;
+  ::google::protobuf::int32 userid_;
+  ::google::protobuf::int32 tableid_;
+  friend struct ::protobuf_msg_5fhuman_2eproto::TableStruct;
+};
+// -------------------------------------------------------------------
+
+class gcentertable : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:NFMsg.gcentertable) */ {
+ public:
+  gcentertable();
+  virtual ~gcentertable();
+
+  gcentertable(const gcentertable& from);
+
+  inline gcentertable& operator=(const gcentertable& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  #if LANG_CXX11
+  gcentertable(gcentertable&& from) noexcept
+    : gcentertable() {
+    *this = ::std::move(from);
+  }
+
+  inline gcentertable& operator=(gcentertable&& from) noexcept {
+    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
+      if (this != &from) InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+  #endif
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _internal_metadata_.unknown_fields();
+  }
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return _internal_metadata_.mutable_unknown_fields();
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const gcentertable& default_instance();
+
+  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
+  static inline const gcentertable* internal_default_instance() {
+    return reinterpret_cast<const gcentertable*>(
+               &_gcentertable_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    10;
+
+  void Swap(gcentertable* other);
+  friend void swap(gcentertable& a, gcentertable& b) {
+    a.Swap(&b);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline gcentertable* New() const final {
+    return CreateMaybeMessage<gcentertable>(NULL);
+  }
+
+  gcentertable* New(::google::protobuf::Arena* arena) const final {
+    return CreateMaybeMessage<gcentertable>(arena);
+  }
+  void CopyFrom(const ::google::protobuf::Message& from) final;
+  void MergeFrom(const ::google::protobuf::Message& from) final;
+  void CopyFrom(const gcentertable& from);
+  void MergeFrom(const gcentertable& from);
+  void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input) final;
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const final;
+  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
+      bool deterministic, ::google::protobuf::uint8* target) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(gcentertable* other);
+  private:
+  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
+    return NULL;
+  }
+  inline void* MaybeArenaPtr() const {
+    return NULL;
+  }
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // optional int32 result = 1;
+  bool has_result() const;
+  void clear_result();
+  static const int kResultFieldNumber = 1;
+  ::google::protobuf::int32 result() const;
+  void set_result(::google::protobuf::int32 value);
+
+  // @@protoc_insertion_point(class_scope:NFMsg.gcentertable)
+ private:
+  void set_has_result();
+  void clear_has_result();
+
+  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+  ::google::protobuf::internal::HasBits<1> _has_bits_;
+  mutable ::google::protobuf::internal::CachedSize _cached_size_;
+  ::google::protobuf::int32 result_;
   friend struct ::protobuf_msg_5fhuman_2eproto::TableStruct;
 };
 // ===================================================================
@@ -6449,9 +6713,159 @@ inline void gckitplayer::set_allocated_msg(::std::string* msg) {
   // @@protoc_insertion_point(field_set_allocated:NFMsg.gckitplayer.msg)
 }
 
+// -------------------------------------------------------------------
+
+// cgentertable
+
+// optional int32 userid = 1;
+inline bool cgentertable::has_userid() const {
+  return (_has_bits_[0] & 0x00000002u) != 0;
+}
+inline void cgentertable::set_has_userid() {
+  _has_bits_[0] |= 0x00000002u;
+}
+inline void cgentertable::clear_has_userid() {
+  _has_bits_[0] &= ~0x00000002u;
+}
+inline void cgentertable::clear_userid() {
+  userid_ = 0;
+  clear_has_userid();
+}
+inline ::google::protobuf::int32 cgentertable::userid() const {
+  // @@protoc_insertion_point(field_get:NFMsg.cgentertable.userid)
+  return userid_;
+}
+inline void cgentertable::set_userid(::google::protobuf::int32 value) {
+  set_has_userid();
+  userid_ = value;
+  // @@protoc_insertion_point(field_set:NFMsg.cgentertable.userid)
+}
+
+// optional int32 tableid = 2;
+inline bool cgentertable::has_tableid() const {
+  return (_has_bits_[0] & 0x00000004u) != 0;
+}
+inline void cgentertable::set_has_tableid() {
+  _has_bits_[0] |= 0x00000004u;
+}
+inline void cgentertable::clear_has_tableid() {
+  _has_bits_[0] &= ~0x00000004u;
+}
+inline void cgentertable::clear_tableid() {
+  tableid_ = 0;
+  clear_has_tableid();
+}
+inline ::google::protobuf::int32 cgentertable::tableid() const {
+  // @@protoc_insertion_point(field_get:NFMsg.cgentertable.tableid)
+  return tableid_;
+}
+inline void cgentertable::set_tableid(::google::protobuf::int32 value) {
+  set_has_tableid();
+  tableid_ = value;
+  // @@protoc_insertion_point(field_set:NFMsg.cgentertable.tableid)
+}
+
+// optional string password = 3;
+inline bool cgentertable::has_password() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void cgentertable::set_has_password() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void cgentertable::clear_has_password() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void cgentertable::clear_password() {
+  password_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  clear_has_password();
+}
+inline const ::std::string& cgentertable::password() const {
+  // @@protoc_insertion_point(field_get:NFMsg.cgentertable.password)
+  return password_.GetNoArena();
+}
+inline void cgentertable::set_password(const ::std::string& value) {
+  set_has_password();
+  password_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:NFMsg.cgentertable.password)
+}
+#if LANG_CXX11
+inline void cgentertable::set_password(::std::string&& value) {
+  set_has_password();
+  password_.SetNoArena(
+    &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+  // @@protoc_insertion_point(field_set_rvalue:NFMsg.cgentertable.password)
+}
+#endif
+inline void cgentertable::set_password(const char* value) {
+  GOOGLE_DCHECK(value != NULL);
+  set_has_password();
+  password_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:NFMsg.cgentertable.password)
+}
+inline void cgentertable::set_password(const char* value, size_t size) {
+  set_has_password();
+  password_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:NFMsg.cgentertable.password)
+}
+inline ::std::string* cgentertable::mutable_password() {
+  set_has_password();
+  // @@protoc_insertion_point(field_mutable:NFMsg.cgentertable.password)
+  return password_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline ::std::string* cgentertable::release_password() {
+  // @@protoc_insertion_point(field_release:NFMsg.cgentertable.password)
+  if (!has_password()) {
+    return NULL;
+  }
+  clear_has_password();
+  return password_.ReleaseNonDefaultNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline void cgentertable::set_allocated_password(::std::string* password) {
+  if (password != NULL) {
+    set_has_password();
+  } else {
+    clear_has_password();
+  }
+  password_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), password);
+  // @@protoc_insertion_point(field_set_allocated:NFMsg.cgentertable.password)
+}
+
+// -------------------------------------------------------------------
+
+// gcentertable
+
+// optional int32 result = 1;
+inline bool gcentertable::has_result() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void gcentertable::set_has_result() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void gcentertable::clear_has_result() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void gcentertable::clear_result() {
+  result_ = 0;
+  clear_has_result();
+}
+inline ::google::protobuf::int32 gcentertable::result() const {
+  // @@protoc_insertion_point(field_get:NFMsg.gcentertable.result)
+  return result_;
+}
+inline void gcentertable::set_result(::google::protobuf::int32 value) {
+  set_has_result();
+  result_ = value;
+  // @@protoc_insertion_point(field_set:NFMsg.gcentertable.result)
+}
+
 #ifdef __GNUC__
   #pragma GCC diagnostic pop
 #endif  // __GNUC__
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
 // -------------------------------------------------------------------
 
 // -------------------------------------------------------------------

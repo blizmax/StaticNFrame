@@ -78,11 +78,13 @@ enum st_human_packet_code {
   Client_Msg_UpdateGoodsList = 1027,
   Server_Msg_UpdateGoodsList = 1028,
   Client_Msg_NoticeInfo = 1029,
-  Server_Msg_NoticeInfo = 1030
+  Server_Msg_NoticeInfo = 1030,
+  Client_Msg_EnterTable = 1033,
+  Server_Msg_EnterTable = 1034
 };
 bool st_human_packet_code_IsValid(int value);
 const st_human_packet_code st_human_packet_code_MIN = Client_Msg_AccountLogin;
-const st_human_packet_code st_human_packet_code_MAX = Server_Msg_NoticeInfo;
+const st_human_packet_code st_human_packet_code_MAX = Server_Msg_EnterTable;
 const int st_human_packet_code_ARRAYSIZE = st_human_packet_code_MAX + 1;
 
 const ::google::protobuf::EnumDescriptor* st_human_packet_code_descriptor();

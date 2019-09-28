@@ -34,6 +34,8 @@ bool NFCProxyLogicModule::Init()
 
 	FindModule<NFINetServerModule>()->AddReceiveCallBack(NF_ST_PROXY, ::NFMsg::Client_Msg_HeartBeat, this, &NFCProxyLogicModule::OnHandleHeartBeat);
 	FindModule<NFINetServerModule>()->AddReceiveCallBack(NF_ST_PROXY, ::NFMsg::Client_Msg_ReConnect, this, &NFCProxyLogicModule::OnHandleReconnectFromClient);
+	FindModule<NFINetServerModule>()->AddReceiveCallBack(NF_ST_PROXY, ::NFMsg::Client_Msg_EnterTable, this, &NFCProxyLogicModule::OnHandleEnterTableFromClient);
+	
 	/*
 	** 处理来自客户端的连接和消息
 	*/
@@ -399,6 +401,33 @@ void NFCProxyLogicModule::OnHandleReconnectFromLoginServer(const uint32_t unLink
 				FindModule<NFINetServerModule>()->SendByServerID(pLinkInfo->mUnlinkId, nMsgId, msg, nLen, playerId);
 			}
 		}
+	}
+}
+
+void NFCProxyLogicModule::OnHandleEnterTableFromClient(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen)
+{
+	NFMsg::cgentertable cgMsg;
+	CLIENT_MSG_PROCESS_NO_OBJECT(nMsgId, playerId, msg, nLen, cgMsg);
+
+	std::string ip = FindModule<NFINetServerModule>()->GetLinkIp(unLinkId);
+	NFLogInfo(NF_LOG_PROXY_RECV_MSG_LOG, 0, "recv msg -- ip:{}, operateId:{}, msgId:{}, msglen:{}", ip, playerId, nMsgId, nLen);
+
+	NF_SHARE_PTR<ProxyLinkInfo> pLinkInfo = mClientLinkInfo.GetElement(unLinkId);
+	if (pLinkInfo == nullptr || pLinkInfo->mIsLogin == false)
+	{
+		NFLogWarning(NF_LOG_PROXY_LOGIC_PLUGIN, 0, "ip:{} not login,send msg:{}, the msg will not send to gameserver", ip, nMsgId);
+		return;
+	}
+
+	NF_SHARE_PTR<NFServerData> pServerData = GetGameServerByServerId(pLinkInfo->mGameServerId);
+	if (pServerData)
+	{
+		FindModule<NFINetClientModule>()->SendByServerID(pServerData->mUnlinkId, nMsgId, msg, nLen, pLinkInfo->mPlayerId);
+	}
+	else
+	{
+		NFLogWarning(NF_LOG_PROXY_LOGIC_PLUGIN, 0, "ip:{} ,send msg:{}, can not find game server link, some thing wrong", ip, nMsgId);
+		return;
 	}
 }
 

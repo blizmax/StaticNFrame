@@ -47,4 +47,7 @@ enum st_human_packet_code
 	
 	Client_Msg_NoticeInfo = 1029;
 	Server_Msg_NoticeInfo = 1030;
+	
+	Client_Msg_EnterTable = 1033;
+	Server_Msg_EnterTable = 1034;
 };

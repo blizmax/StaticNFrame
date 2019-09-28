@@ -127,3 +127,13 @@ message gckitplayer  //踢出玩家
 	optional string msg = 3;
 }
 
+message cgentertable    //这就增加一个进入牌桌的协议，全部的入口都放到中
+{						//然后每个协议按照断号分开
+	optional int32 userid = 1;
+	optional int32 tableid = 2;     //
+	optional string password = 3;   //如果该牌桌是需要密码的,则把代码也加进来
+}
+message gcentertable   //如果都找不到对应的牌桌号
+{
+	optional int32 result = 1;
+}
