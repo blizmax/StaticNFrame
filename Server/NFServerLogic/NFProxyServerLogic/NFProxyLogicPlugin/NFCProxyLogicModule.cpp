@@ -47,7 +47,9 @@ bool NFCProxyLogicModule::Init()
 	FindModule<NFINetClientModule>()->AddReceiveCallBack(NF_ST_LOGIN, NFMsg::Server_Msg_ReConnect, this, &NFCProxyLogicModule::OnHandleReconnectFromLoginServer);
 	
 	FindModule<NFINetClientModule>()->AddReceiveCallBack(NF_ST_GAME, EGMI_NET_GAME_SEND_PACKET_TO_PROXY, this, &NFCProxyLogicModule::OnHandlePacketMsgFromGameServer);
-	
+	FindModule<NFINetClientModule>()->AddReceiveCallBack(NF_ST_WORLD, EGMI_NET_GAME_SEND_PACKET_TO_PROXY, this, &NFCProxyLogicModule::OnHandlePacketMsgFromGameServer);
+	FindModule<NFINetClientModule>()->AddReceiveCallBack(NF_ST_LOGIN, EGMI_NET_GAME_SEND_PACKET_TO_PROXY, this, &NFCProxyLogicModule::OnHandlePacketMsgFromGameServer);
+
 	FindModule<NFIServerNetEventModule>()->AddEventCallBack(NF_ST_PROXY, NF_ST_GAME, this, &NFCProxyLogicModule::OnHandleGameEventCallBack);
 	FindModule<NFIServerNetEventModule>()->AddEventCallBack(NF_ST_PROXY, NF_ST_WORLD, this, &NFCProxyLogicModule::OnHandleWorldEventCallBack);
 	FindModule<NFIServerNetEventModule>()->AddEventCallBack(NF_ST_PROXY, NF_ST_LOGIN, this, &NFCProxyLogicModule::OnHandleLoginEventCallBack);
@@ -336,6 +338,10 @@ void NFCProxyLogicModule::OnHandleReconnectFromLoginServer(const uint32_t unLink
 				return;
 			}
 
+			pLinkInfo->mAccount = pPlayerLinkInfo->mAccount;
+			pLinkInfo->mPlayerId = pPlayerLinkInfo->mPlayerId;
+			pLinkInfo->mGameServerId = pPlayerLinkInfo->mGameServerId;
+			pLinkInfo->mWorldServerId = pPlayerLinkInfo->mWorldServerId;
 			pPlayerLinkInfo->mIsLogin = true;
 			pLinkInfo->mIsLogin = true;
 			FindModule<NFINetServerModule>()->SendByServerID(pLinkInfo->mUnlinkId, nMsgId, msg, nLen, playerId);
@@ -479,6 +485,7 @@ void NFCProxyLogicModule::OnHandleReconnectFromClient(const uint32_t unLinkId, c
 		pLinkInfo->mPlayerId = pPlayerLinkInfo->mPlayerId;
 		pLinkInfo->mAccount = pPlayerLinkInfo->mAccount;
 		pLinkInfo->mGameServerId = pPlayerLinkInfo->mGameServerId;
+		pLinkInfo->mWorldServerId = pPlayerLinkInfo->mWorldServerId;
 	}
 	mClientLinkInfo.AddElement(unLinkId, pLinkInfo);
 

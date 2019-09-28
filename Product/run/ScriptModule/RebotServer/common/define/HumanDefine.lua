@@ -59,6 +59,7 @@ g_logintable.type_gdmj = 2201   --广东麻将
 g_logintable.type_brnn = 2501   --百人牛牛
 g_logintable.type_hubmj = 2801   --百人牛牛
 g_logintable.type_douniu = 3001 	--斗牛
+g_logintable.type_douniutz = 9000 	--斗牛
 g_logintable.type_ernn = 3010 	--三公
 g_logintable.type_barccatat = 4401 	--百家乐
 g_logintable.type_bcbm = 4201 	--奔驰宝马

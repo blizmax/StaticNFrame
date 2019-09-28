@@ -18,11 +18,11 @@ function TimeUtils.GetTime(t)
             tab.isdst = false
         else
             tab.year = tonumber(string.sub(t, 1, 4))
-            tab.month =  tonumber(string.sub(t, 1, 4))
-            tab.day = tonumber(string.sub(t, 1, 4))
-            tab.hour =  tonumber(string.sub(t, 1, 4))
-            tab.min = tonumber(string.sub(t, 1, 4))
-            tab.sec =  tonumber(string.sub(t, 1, 4))
+            tab.month =  tonumber(string.sub(t, 6, 7))
+            tab.day =  tonumber(string.sub(t, 9, 10))
+            tab.hour =   tonumber(string.sub(t, 12, 13))
+            tab.min =  tonumber(string.sub(t, 15, 16))
+            tab.sec =   tonumber(string.sub(t, 18, 19))
             tab.isdst = false
         end
 	elseif type(t) == "number" then
@@ -56,11 +56,11 @@ function TimeUtils.GetTimeDay(t)
             tab.isdst = false
         else
             tab.year = tonumber(string.sub(t, 1, 4))
-            tab.month =  tonumber(string.sub(t, 1, 4))
-            tab.day = tonumber(string.sub(t, 1, 4))
-            tab.hour =  tonumber(string.sub(t, 1, 4))
-            tab.min = tonumber(string.sub(t, 1, 4))
-            tab.sec =  tonumber(string.sub(t, 1, 4))
+            tab.month =  tonumber(string.sub(t, 6, 7))
+            tab.day =  tonumber(string.sub(t, 9, 10))
+            tab.hour =   tonumber(string.sub(t, 12, 13))
+            tab.min =  tonumber(string.sub(t, 15, 16))
+            tab.sec =   tonumber(string.sub(t, 18, 19))
             tab.isdst = false
         end
 	elseif type(t) == "table" then
@@ -93,11 +93,11 @@ function TimeUtils.GetDayCurrSec(t)
             tab.isdst = false
         else
             tab.year = tonumber(string.sub(t, 1, 4))
-            tab.month =  tonumber(string.sub(t, 1, 4))
-            tab.day = tonumber(string.sub(t, 1, 4))
-            tab.hour =  tonumber(string.sub(t, 1, 4))
-            tab.min = tonumber(string.sub(t, 1, 4))
-            tab.sec =  tonumber(string.sub(t, 1, 4))
+            tab.month =  tonumber(string.sub(t, 6, 7))
+            tab.day =  tonumber(string.sub(t, 9, 10))
+            tab.hour =   tonumber(string.sub(t, 12, 13))
+            tab.min =  tonumber(string.sub(t, 15, 16))
+            tab.sec =   tonumber(string.sub(t, 18, 19))
             tab.isdst = false
         end
 	elseif type(t) == "table" then
