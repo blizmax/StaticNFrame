@@ -175,8 +175,8 @@ LoadPlugin =
 			"NFLogClientPlugin",
 			"NFLogServerPlugin",
 			
-			"NFLuaScriptPlugin",
-			--"NFLuaThreadScriptPlugin",
+			--"NFLuaScriptPlugin",
+			"NFLuaThreadScriptPlugin",
 		};
 		ServerType = NF_ST_LOG;
 	},
@@ -190,8 +190,8 @@ LoadPlugin =
 			"NFWebClientPlugin",
 			"NFWebServerPlugin",
 			
-			"NFLuaScriptPlugin",
-			--"NFLuaThreadScriptPlugin",
+			--"NFLuaScriptPlugin",
+			"NFLuaThreadScriptPlugin",
 		};
 		ServerType = NF_ST_WEB;
 	},

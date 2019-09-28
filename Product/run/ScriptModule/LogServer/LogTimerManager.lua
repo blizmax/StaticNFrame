@@ -8,9 +8,11 @@ function timerManager.Init(currTime, timerType)
 	elseif timerType == "pokertimer" then
 		--把这个线程空余出来，作为事件的触发器。
 	elseif timerType == "gametimer" then
+		LogService.Init()
+		LogServer.Init()
 		UnlimitedAgentService.Init()
 	elseif timerType == "utilstimer" then
-		LogServer.Init()
+		
 	end
 	g_markTime.last = g_markTime.curr
 	print(timerType.." init end")
