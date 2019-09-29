@@ -28,6 +28,12 @@ end
 function LogFile(file, msg)
 	local cStackInfo = debug.getinfo(2, "Sl")
 	if cStackInfo then
+		if type(file) == "string" then
+			if file == "error" then
+				CPPNFrame:Error(NFLogId.NF_LOG_SYSTEMLOG, 0, "["..tostring(cStackInfo.short_src)..":"..tostring(cStackInfo.currentline).."] | "..tostring(msg))
+				return
+			end
+		end
 		CPPNFrame:Info(NFLogId.NF_LOG_SYSTEMLOG, 0, "["..tostring(cStackInfo.short_src)..":"..tostring(cStackInfo.currentline).."] | "..tostring(msg))
 	else
 		CPPNFrame:Info(NFLogId.NF_LOG_SYSTEMLOG, 0, tostring(msg))
