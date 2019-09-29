@@ -84,9 +84,9 @@ public:
 		mPort = 0;
 		mServerType = serverType;
 		mIndex = 10000;
+#if NF_ENABLE_SSL
 		certificate_chain_file_ = "server-certificate-chain.pem";
 		private_key_file_ = "server-private-key.pem";
-#if NF_ENABLE_SSL
 		mEnableSSL = false;
 		mSSLCtx = NULL;
 #endif
