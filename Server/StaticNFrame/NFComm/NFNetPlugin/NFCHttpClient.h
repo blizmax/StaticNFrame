@@ -52,7 +52,7 @@ private:
 	struct event_base* m_pBase = nullptr;
 
 	int m_nRetry = 1;
-	int m_nTimeOut = 100000; //ms
+	int m_nTimeOut = 1; //
 
 #if NF_ENABLE_SSL
 	SSL_CTX*            m_pSslCtx = nullptr;
