@@ -98,10 +98,10 @@ public:
 		m_luaFunc = luaFunc;
 		m_param = param;
 		m_taskName = "WorkTask_" + luaFunc;
-		if (!param.empty())
-		{
-			m_balanceId = (uint64_t)NFHash::hash_string(param.c_str());
-		}
+		//if (!param.empty())
+		//{
+		//	m_balanceId = (uint64_t)NFHash::hash_string(param.c_str());
+		//}
 		m_needManThreadProcess = false;
 	}
 	/**
@@ -202,10 +202,10 @@ public:
 		m_luaFunc = luaFunc;
 		m_param = param;
 		m_taskName = "NFProcessRealTimer_" + luaFunc;
-		if (!param.empty())
-		{
-			m_balanceId = (uint64_t)NFHash::hash_string(param.c_str());
-		}
+		//if (!param.empty())
+		//{
+		//	m_balanceId = (uint64_t)NFHash::hash_string(param.c_str());
+		//}
 		m_needManThreadProcess = false;
 	}
 	/**
@@ -235,10 +235,10 @@ public:
 		m_luaFunc = luaFunc;
 		m_param = param;
 		m_taskName = "ProcessTimerTask_" + luaFunc;
-		if (!param.empty())
-		{
-			m_balanceId = (uint64_t)NFHash::hash_string(param.c_str());
-		}
+		//if (!param.empty())
+		//{
+		//	m_balanceId = (uint64_t)NFHash::hash_string(param.c_str());
+		//}
 		m_needManThreadProcess = false;
 	}
 	/**
