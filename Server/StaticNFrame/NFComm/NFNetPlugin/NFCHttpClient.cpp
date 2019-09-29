@@ -232,7 +232,10 @@ bool NFCHttpClient::MakeRequest(const std::string& strUri,
 
 	if (m_nTimeOut >= 0)
 	{
-		evhttp_connection_set_timeout(evcon, m_nTimeOut);
+		struct timeval tv;
+		tv.tv_sec = 0;
+		tv.tv_usec = m_nTimeOut;
+		evhttp_connection_set_timeout_tv(evcon, &tv);
 	}
 
 	// Fire off the request
