@@ -170,6 +170,7 @@ bool NFCHttpClient::MakeRequest(const std::string& strUri,
 		uri += query;
 	}
 
+#if NF_ENABLE_SSL
 	struct bufferevent* bev = NULL;
 
 	if (!isHttps)
@@ -178,7 +179,6 @@ bool NFCHttpClient::MakeRequest(const std::string& strUri,
 	}
 	else
 	{
-#if NF_ENABLE_SSL
 		SSL* pSSL = SSL_new(m_pSslCtx);
 		if (pSSL == NULL)
 		{
@@ -194,7 +194,6 @@ bool NFCHttpClient::MakeRequest(const std::string& strUri,
 		bev = bufferevent_openssl_socket_new(m_pBase, -1, pSSL,
 			BUFFEREVENT_SSL_CONNECTING,
 			BEV_OPT_CLOSE_ON_FREE | BEV_OPT_DEFER_CALLBACKS);
-#endif
 	}
 
 	if (bev == NULL)
@@ -207,14 +206,15 @@ bool NFCHttpClient::MakeRequest(const std::string& strUri,
 		return false;
 	}
 
-#if NF_ENABLE_SSL
 	if (isHttps)
 	{
 		bufferevent_openssl_set_allow_dirty_shutdown(bev, 1);
 	}
-#endif
-
 	struct evhttp_connection* evcon = evhttp_connection_base_bufferevent_new(m_pBase, NULL, bev, host, port);
+#else
+	struct evhttp_connection* evcon = evhttp_connection_base_new(m_pBase, NULL, host, port);
+#endif
+	
 	if (evcon == NULL)
 	{
 		if (http_uri)
@@ -386,7 +386,6 @@ void NFCHttpClient::OnHttpReqDone(struct evhttp_request* req, void* ctx)
 		/* If req is NULL, it means an error occurred, but
 		* sadly we are mostly left guessing what the error
 		* might have been.  We'll do our best... */
-		struct bufferevent* bev = (struct bufferevent*) pHttpClient->m_pBase;
 		unsigned long oslerr = 0;
 		int printed_err = 0;
 		int errcode = EVUTIL_SOCKET_ERROR();
@@ -400,6 +399,7 @@ void NFCHttpClient::OnHttpReqDone(struct evhttp_request* req, void* ctx)
 		int nread = 0;
 
 #if NF_ENABLE_SSL
+		struct bufferevent* bev = (struct bufferevent*) pHttpClient->m_pBase;
 		while ((oslerr = bufferevent_get_openssl_error(bev))) {
 			ERR_error_string_n(oslerr, buffer, sizeof(buffer));
 			NFLogError(NF_LOG_NET_PLUGIN, 0, buffer);

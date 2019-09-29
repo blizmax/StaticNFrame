@@ -101,17 +101,49 @@ function Sha256(content)
 end
 
 function HttpPost(url,content)
-	return LuaNFrame.HttpPost(url,content)
+	local str = LuaNFrame.HttpPost(url,content)
+	if type(str) ~= "string" then
+		str = "{}"
+	else
+		if str == "" then
+			str = "{}"
+		end
+	end
+	return str
 end
 
 function HttpPostWithHead(url,content,head)
-	return LuaNFrame.HttpPostWithHead(url,content,head)
+	local str = LuaNFrame.HttpPostWithHead(url,content,head)
+	if type(str) ~= "string" then
+		str = "{}"
+	else
+		if str == "" then
+			str = "{}"
+		end
+	end
+	return str
 end
 
 function HttpGet(url)
-	return LuaNFrame.HttpGet(url)
+	local str = LuaNFrame.HttpGet(url)
+	if type(str) ~= "string" then
+		str = "{}"
+	else
+		if str == "" then
+			str = "{}"
+		end
+	end
+	return str
 end
 
 function HttpGetWithHead(url,head)
-	return LuaNFrame.HttpGetWithHead(url,head)
+	local str LuaNFrame.HttpGetWithHead(url,head)
+	if type(str) ~= "string" then
+		str = "{}"
+	else
+		if str == "" then
+			str = "{}"
+		end
+	end
+	return str
 end
