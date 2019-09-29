@@ -181,7 +181,7 @@ void NFCLuaThreadModule::OnTimer(uint32_t nTimerID)
 		{
 			KillTimer(EnumLuaThreadModule_WaitFinishInit);
 			SetTimer(EnumLuaThreadModule_Loop, 1000, INFINITY_CALL);
-			//SetTimer(EnumLuaThreadModule_GC, 1000, INFINITY_CALL);
+			SetTimer(EnumLuaThreadModule_GC, 1000, INFINITY_CALL);
 			SetFixTimer(EnumLuaThreadModule_MIN, 0, 60, INFINITY_CALL);
 			SetFixTimer(EnumLuaThreadModule_HOUR, 0, 3600, INFINITY_CALL);
 			SetFixTimer(EnumLuaThreadModule_DAY, 0, 24*3600, INFINITY_CALL);
