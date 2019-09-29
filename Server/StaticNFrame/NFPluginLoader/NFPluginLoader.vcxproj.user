@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <LocalDebuggerCommandArguments>--Server=RebotServer --ID=20 --Path=../Config --LuaScript=../ScriptModule</LocalDebuggerCommandArguments>
+    <LocalDebuggerCommandArguments>--Server=LocationServer --ID=7 --Path=../Config --LuaScript=../ScriptModule</LocalDebuggerCommandArguments>
     <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
     <LocalDebuggerWorkingDirectory>$(SolutionDir)../Product/run/$(Configuration)/</LocalDebuggerWorkingDirectory>
   </PropertyGroup>

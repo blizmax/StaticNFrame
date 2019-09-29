@@ -353,11 +353,6 @@ bool NFCHttpClient::MakeRequest(const std::string& strUri,
 	respCode = m_respCode;
 	strResp = m_strResp;
 
-	if (evcon)
-	{
-		evhttp_connection_free(evcon);
-	}
-
 	if (http_uri)
 	{
 		evhttp_uri_free(http_uri);
@@ -424,7 +419,8 @@ void NFCHttpClient::OnHttpReqDone(struct evhttp_request* req, void* ctx)
 			std::string errMsg = NF_FORMAT("socket error = {} ({})\n", evutil_socket_error_to_string(errcode), errcode);
 			strErrMsg += errMsg;
 		}
-
+		pHttpClient->m_respCode = errcode;
+		pHttpClient->m_strResp = "";
 		NFLogError(NF_LOG_NET_PLUGIN, 0, strErrMsg.c_str());
 		return;
 	}
@@ -434,5 +430,15 @@ void NFCHttpClient::OnHttpReqDone(struct evhttp_request* req, void* ctx)
 	size_t buffer_size = evbuffer_get_length(evbuf);
 	if (buffer_size > 0) {
 		pHttpClient->m_strResp = NFSlice((char*)evbuffer_pullup(evbuf, -1), buffer_size).ToString();
+	}
+
+	if (req->evcon)
+	{
+		evhttp_connection_free(req->evcon);
+	}
+
+	if (req->output_headers)
+	{
+		evhttp_clear_headers(req->output_headers);
 	}
 }

@@ -513,7 +513,10 @@ function LuaNFrame.DispatchMasterHttp(unLinkId, requestId, firstPath, secondPath
 		if controller == nil then
 			LuaNFrame.Error(NFLogId.NF_LOG_SYSTEMLOG, 0, "http msg:/"..firstPath.."/"..secondPath.." not handled!")
 		else
-			retString,retSize = controller[secondPath](strMsg) 
+			local retString,retSize = controller[secondPath](strMsg)
+			if  type(retString) ~= "string" then
+				retString = ""
+			end
 			LuaNFrame.SendMsgToMaster(unLinkId, requestId, 5, string.len(retString), retString)
 		end
 	end
@@ -534,7 +537,10 @@ function LuaNFrame.DispatchWebHttp(unLinkId, requestId, firstPath, secondPath, s
 		if controller == nil then
 			LuaNFrame.Error(NFLogId.NF_LOG_SYSTEMLOG, 0, "http msg:/"..firstPath.."/"..secondPath.." not handled!")
 		else
-			retString,retSize = controller[secondPath](strMsg) 
+			local retString,retSize = controller[secondPath](strMsg)
+			if  type(retString) ~= "string" then
+				retString = ""
+			end
 			LuaNFrame.SendMsgToHttpServer(NF_SERVER_TYPES.NF_ST_WEB, requestId, string.len(retString), retString)
 		end
 	end

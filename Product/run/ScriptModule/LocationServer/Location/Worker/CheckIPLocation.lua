@@ -42,14 +42,14 @@ function work(buffer)
 				local macname = string.sub( getArr['data'], pos + 1, string.len( getArr['data'] ) )
 				
 				local sqlCase = "update dy_player set province='"..pInfo.province.."',macname='"..macname.."',ip='"..pInfo.ip.."' where userid="..dataArr['userid']
-
+				LogFile("error", sqlCase)
 				mysqlItem:execute(sqlCase)
 			
 			else
 				pInfo.province =getArr['data']
 				pInfo.ip = dataArr['ip']
 				local sqlCase = "update dy_player set province='"..pInfo.province.."',ip='"..pInfo.ip.."' where userid="..dataArr['userid']
-
+				LogFile("error", sqlCase)
 				mysqlItem:execute(sqlCase)
 			end
 			
