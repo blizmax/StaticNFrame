@@ -506,6 +506,8 @@ end
 --处理Master服务器消息
 function LuaNFrame.DispatchMasterHttp(unLinkId, requestId, firstPath, secondPath, strMsg)
 	local function HttpExecute()
+		LuaNFrame.Info(NFLogId.NF_LOG_SYSTEMLOG, 0, "LuaNFrame.DispatchMasterHttp, unLinkId:"..tostring(unLinkId)..", requestId:"..tostring(requestId)..", firstPath:"..firstPath..", secondPath:"..secondPath..", msg:"..strMsg)
+		
 		controller = httpManager:createController(firstPath)
 	
 		if controller == nil then
@@ -526,6 +528,7 @@ end
 --处理Master服务器消息
 function LuaNFrame.DispatchWebHttp(unLinkId, requestId, firstPath, secondPath, strMsg)
 	local function HttpExecute()
+		LuaNFrame.Info(NFLogId.NF_LOG_SYSTEMLOG, 0, "LuaNFrame.DispatchWebHttp, unLinkId:"..tostring(unLinkId)..", requestId:"..tostring(requestId)..", firstPath:"..firstPath..", secondPath:"..secondPath..", msg:"..strMsg)
 		controller = httpManager:createController(firstPath)
 	
 		if controller == nil then
