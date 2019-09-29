@@ -2,7 +2,7 @@
 
 function LuaNFrame.SendMsgToRebot(unLinkId, nPlayerId, nMsgId, nLen, strData)
 		local operateId = RebotModel.GetRebotOperateId(unLinkId)
-		LuaNFrame.SendMsgToWorld(unLinkId, operateId, nMsgId, nLen, strData)
+		LuaNFrame.SendMsgToMaster(unLinkId, operateId, nMsgId, nLen, strData)
 end
 
 function LuaNFrame.DispatchRebotTcp(unLinkId, valueId, nMsgId, strMsg)

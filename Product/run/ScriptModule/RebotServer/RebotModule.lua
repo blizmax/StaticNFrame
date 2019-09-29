@@ -88,3 +88,5 @@ end
 function RebotModel.DelAccountConnnect(clientId)
     return redisItem:lrem("rebot_connect", 0, clientId, RebotModel.redis_index)
 end
+
+g_redisIndex[RebotModel.redis_index] = {index = g_redisInfo.redis_one, key = RebotModel.redis_index, link = 1}  --

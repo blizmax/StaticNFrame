@@ -6,9 +6,9 @@
         {
             "label": "run",
             "type": "shell",
-            "command": "cd Debug && NFPluginLoader.exe --Server=AllServer --ID=1 --Path=../Config --LuaScript=../ScriptModule",
+            //"command": "cd Debug && NFPluginLoader.exe --Server=AllServer --ID=1 --Path=../Config --LuaScript=../ScriptModule",
             //"command": "cd Release && NFPluginLoader.exe --Server=LoginServer --ID=2 --Path=../Config --LuaScript=../ScriptModule",
-            //"command": "cd Debug && NFPluginLoader.exe --Server=RebotServer --ID=20 --Path=../Config --LuaScript=../ScriptModule",
+            "command": "cd Debug && NFPluginLoader.exe --Server=RebotServer --ID=20 --Path=../Config --LuaScript=../ScriptModule",
             "problemMatcher": []
         }
     ]

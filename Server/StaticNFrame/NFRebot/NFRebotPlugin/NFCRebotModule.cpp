@@ -29,21 +29,8 @@ bool NFCRebotModule::Init()
 	NFINetClientModule* pClientModule = FindModule<NFINetClientModule>();
 	pClientModule->AddEventCallBack(NF_ST_REBOT, this, &NFCRebotModule::OnProxySocketEvent);
 	pClientModule->AddReceiveCallBack(NF_ST_REBOT, this, &NFCRebotModule::OnHandleOtherMessage);
-
-	NFServerConfig* pConfig = NFServerCommon::GetAppConfig(m_pPluginManager, NF_ST_REBOT);
-	if (pConfig)
-	{
-		for (uint32_t i = 0; i < pConfig->mMaxConnectNum; i++)
-		{
-			pClientModule->AddServer(NF_ST_REBOT, pConfig->mServerIp, pConfig->mServerPort, 1);
-		}
-	}
-	else
-	{
-		NFLogError(NF_LOG_SERVER_CONNECT_SERVER, 0, "I Can't get the Rebot Server config!");
-		return false;
-	}
 	
+	this->Subscribe(NFEVENT_LUA_FINISH_LOAD, 0, 0, "");
 	return true;
 }
 
@@ -83,8 +70,30 @@ void NFCRebotModule::OnProxySocketEvent(const eMsgType nEvent, const uint32_t un
 	}
 }
 
+void NFCRebotModule::OnExecute(uint16_t nEventID, uint64_t nSrcID, uint8_t bySrcType, const google::protobuf::Message& message)
+{
+	if (nEventID == NFEVENT_LUA_FINISH_LOAD)
+	{
+		NFINetClientModule* pClientModule = FindModule<NFINetClientModule>();
+		NFServerConfig* pConfig = NFServerCommon::GetAppConfig(m_pPluginManager, NF_ST_REBOT);
+		if (pConfig)
+		{
+			for (uint32_t i = 0; i < pConfig->mMaxConnectNum; i++)
+			{
+				pClientModule->AddServer(NF_ST_REBOT, pConfig->mServerIp, pConfig->mServerPort, 1);
+			}
+		}
+		else
+		{
+			NFLogError(NF_LOG_SERVER_CONNECT_SERVER, 0, "I Can't get the Rebot Server config!");
+			return;
+		}
+	}
+}
+
 void NFCRebotModule::OnTimer(uint32_t nTimerID)
 {
+
 }
 
 bool NFCRebotModule::AfterInit()

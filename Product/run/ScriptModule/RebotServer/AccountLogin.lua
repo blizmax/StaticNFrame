@@ -85,10 +85,7 @@ end
 
 AccountService = AccountService or {}
 function AccountService.Init()
-    local allclient = RebotModel.GetAllRebotPlayerIdByClient()
-    for clientId, playerId in pairs(allclient) do
-        RebotModel.DelRebotPlayerIdByClient(clientId)
-    end
+    redisItem:set(RebotModel.rebot_max_id, g_redisInfo.redis_one*1000, RebotModel.redis_index)
 end
 
 function AccountService.UtilsLoop()
@@ -131,19 +128,8 @@ function GetGameStateInfo.work(buffer)
     for clientId, playerId in pairs(allclient) do
         count = count + 1
         local tableid = RebotModel.GetPlayerTableId(playerId)
-        --if tableid == nil or tonumber(tableid) == 0 then
-        --    BarccatatService.EnterGame(clientId, tableid)
-        --end
-        local rand = math.myrandom(1, 10)
-        if rand > 5 then
-            local timeData= {}
-            if tableid ~= nil then
-                timeData['tableid'] = tostring(tableid)
-            end
-            timeData['userid'] = tostring(playerId)
-            timeData['clientId'] = tostring(clientId)
-            local rand = math.myrandom(1, 1000)
-            processTimer(rand, "BarccatatTimer", luajson.encode(timeData))
+        if tableid == nil or tonumber(tableid) == 0 then
+            BarccatatService.EnterGame(clientId, tableid)
         end
     end
     LogFile("error", "rebot online num:"..count)

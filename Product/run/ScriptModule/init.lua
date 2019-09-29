@@ -64,7 +64,6 @@ function LuaNFrame.InitScript(luaModule)
 	end
 
 	if g_platfrom == "win32" and LuaNFrame.IsThreadModule() == false then
-		require("LuaDebug")
 		breakSocketHandle,debugXpCall = require("LuaDebug")("localhost",7003)
 		LuaNFrame.AddTimer("update_debugsocket", 1)
 	end

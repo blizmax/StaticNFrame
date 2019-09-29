@@ -85,6 +85,9 @@ void NFCLuaScriptModule::OnTimer(uint32_t nTimerID)
 	{
 		Register();
 		LoadScript();
+
+		NFMsg::ServerErrorLogMsg msg;
+		NFEventMgr::GetSingletonPtr()->FireExecute(NFEVENT_LUA_FINISH_LOAD, 0, 0, msg);
 	}
 }
 

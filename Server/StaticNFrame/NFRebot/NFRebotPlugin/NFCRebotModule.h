@@ -14,8 +14,10 @@
 #include "NFComm/NFPluginModule/NFIModule.h"
 #include "NFComm/NFPluginModule/NFTimerMgr.h"
 #include "NFComm/NFPluginModule/NFServerDefine.h"
+#include "NFComm/NFPluginModule/NFEventObj.h"
+#include "NFComm/NFPluginModule/NFEventDefine.h"
 
-class NFCRebotModule : public NFIModule, NFTimerObj
+class NFCRebotModule : public NFIModule, NFTimerObj, NFEventObj
 {
 public:
 	explicit NFCRebotModule(NFIPluginManager* p);
@@ -32,6 +34,8 @@ public:
 	virtual bool Shut() override;
 
 	virtual void OnTimer(uint32_t nTimerID) override;
+
+	virtual void OnExecute(uint16_t nEventID, uint64_t nSrcID, uint8_t bySrcType, const google::protobuf::Message& message);
 
 	void OnProxySocketEvent(const eMsgType nEvent, const uint32_t unLinkId);
 

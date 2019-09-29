@@ -185,6 +185,9 @@ void NFCLuaThreadModule::OnTimer(uint32_t nTimerID)
 			SetFixTimer(EnumLuaThreadModule_MIN, 0, 60, INFINITY_CALL);
 			SetFixTimer(EnumLuaThreadModule_HOUR, 0, 3600, INFINITY_CALL);
 			SetFixTimer(EnumLuaThreadModule_DAY, 0, 24*3600, INFINITY_CALL);
+
+			NFMsg::ServerErrorLogMsg msg;
+			NFEventMgr::GetSingletonPtr()->FireExecute(NFEVENT_LUA_FINISH_LOAD, 0, 0, msg);
 		}
 	}
 	else if (nTimerID == EnumLuaThreadModule_Loop)

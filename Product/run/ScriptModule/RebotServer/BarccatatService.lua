@@ -41,10 +41,6 @@ function BarccatatEnter.execute(nMsgId, clientId, strMsg)
         local timemark = gcmsg.timemark
     
         RebotModel.SetPlayerTableId(userid, tableid)
-
-        if state == g_barccatatDefine.state_pour then
-            BarccatatService.SendPourJetton(clientId, userid, tableid)
-        end
     end
 end
 
@@ -80,7 +76,10 @@ function BarccatatStart.execute(nMsgId, clientId, strMsg)
 
     for i = 1, tonumber(gcmsg.timemark) -1 do
         local rand = math.myrandom(1, 1000)
-        --processTimer(i*1000+rand, "BarccatatTimer", luajson.encode(timeData))
+        local rand2 = math.myrandom(1, 100)
+        if rand2 < 30 then
+            processTimer(i*1000+rand, "BarccatatTimer", luajson.encode(timeData))
+        end
     end
 end
 
@@ -89,8 +88,7 @@ function BarccatatTimer.execute(buffer)
 	--通知下注的这里，不需要加入锁，这里只是一个通知的过程
 	
     local jsonData = luajson.decode(buffer)   --这里只是做业务的分发就行
-    BarccatatService.EnterGame(jsonData['clientId'], jsonData['tableid'])
-    --BarccatatService.SendPourJetton(jsonData['clientId'], jsonData['userid'], jsonData['tableid'])
+    BarccatatService.SendPourJetton(jsonData['clientId'], jsonData['userid'], jsonData['tableid'])
 end
 
 BarccatatPourJetton = BarccatatPourJetton or {}

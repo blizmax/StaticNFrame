@@ -110,7 +110,7 @@ function InitGameServer()
 			ServerId = 20,			--对每一个服务器来说都是唯一的， 应用程序需要通过这个ServerId才能知道需要加载的配置是他
 			ServerIp = "47.75.217.27",
 			ServerPort = 6003,
-			MaxConnectNum = 500,  --这里用作机器人数目
+			MaxConnectNum = 1,  --这里用作机器人数目
 			WorkThreadNum = 5,
 			LuaWorkThreadNum = 20,
 			LuaTcpThreadNum = 40,
