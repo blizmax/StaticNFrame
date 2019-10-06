@@ -14,6 +14,7 @@
 #include <NFComm/NFPluginModule/NFEventDefine.h>
 #include "NFServer/NFServerCommon/NFServerCommon.h"
 #include "NFComm/NFPluginModule/NFIMonitorModule.h"
+#include "NFComm/NFPluginModule/NFILuaScriptModule.h"
 #include "NFMessageDefine/msg_gm.pb.h"
 
 NFCLocationClient_MasterModule::NFCLocationClient_MasterModule(NFIPluginManager* p)
@@ -27,7 +28,6 @@ NFCLocationClient_MasterModule::~NFCLocationClient_MasterModule()
 
 bool NFCLocationClient_MasterModule::Init()
 {
-	this->Subscribe(NFEVENT_LUA_ERROR_LOG, 0, 0, __FUNCTION__);
 	m_pMasterServerData = NF_SHARE_PTR<NFServerData>(NF_NEW NFServerData());
 	return true;
 }
@@ -42,6 +42,26 @@ void NFCLocationClient_MasterModule::OnExecute(uint16_t nEventID, uint64_t nSrcI
 			FindModule<NFINetClientModule>()->SendToServerByPB(m_pMasterServerData->mUnlinkId, EGMI_STS_ERROR_MSG, message, 0);
 		}
 	}
+
+	if (nEventID == NFEVENT_LUA_FINISH_LOAD)
+	{
+		NFServerConfig* pConfig = NFServerCommon::GetServerConfig(m_pPluginManager, NF_ST_MASTER);
+		if (pConfig)
+		{
+			//AddServer会自动重连，断开连接时，m_pMasterServerData->mUnlinkId不用清理，不变
+			m_pMasterServerData->mUnlinkId = FindModule<NFINetClientModule>()->AddServer(NF_ST_MASTER, pConfig->mServerIp, pConfig->mServerPort);
+			m_pMasterServerData->mServerInfo.set_server_id(pConfig->mServerId);
+			m_pMasterServerData->mServerInfo.set_server_ip(pConfig->mServerIp);
+			m_pMasterServerData->mServerInfo.set_server_port(pConfig->mServerPort);
+			m_pMasterServerData->mServerInfo.set_server_name(pConfig->mServerName);
+			m_pMasterServerData->mServerInfo.set_server_type(pConfig->mServerType);
+			m_pMasterServerData->mServerInfo.set_server_state(NFMsg::EST_NARMAL);
+		}
+		else
+		{
+			NFLogError(NF_LOG_SERVER_NOT_HANDLE_MESSAGE, 0, "I Can't get the Master Server config!");
+		}
+	}
 }
 
 bool NFCLocationClient_MasterModule::AfterInit()
@@ -52,22 +72,30 @@ bool NFCLocationClient_MasterModule::AfterInit()
 	FindModule<NFINetClientModule>()->AddReceiveCallBack(NF_ST_MASTER, EGMI_NET_MASTER_SEND_OTHERS_TO_LOCATION, this, &NFCLocationClient_MasterModule::OnServerReport);
 	FindModule<NFINetClientModule>()->AddReceiveCallBack(NF_ST_MASTER, EGMI_STS_GM_MSG, this, &NFCLocationClient_MasterModule::OnHandleGmMsg);
 
-	NFServerConfig* pConfig = NFServerCommon::GetServerConfig(m_pPluginManager, NF_ST_MASTER);
-	if (pConfig)
+	if (FindModule<NFILuaScriptModule>())
 	{
-		//AddServer会自动重连，断开连接时，m_pMasterServerData->mUnlinkId不用清理，不变
-		m_pMasterServerData->mUnlinkId = FindModule<NFINetClientModule>()->AddServer(NF_ST_MASTER, pConfig->mServerIp, pConfig->mServerPort);
-		m_pMasterServerData->mServerInfo.set_server_id(pConfig->mServerId);
-		m_pMasterServerData->mServerInfo.set_server_ip(pConfig->mServerIp);
-		m_pMasterServerData->mServerInfo.set_server_port(pConfig->mServerPort);
-		m_pMasterServerData->mServerInfo.set_server_name(pConfig->mServerName);
-		m_pMasterServerData->mServerInfo.set_server_type(pConfig->mServerType);
-		m_pMasterServerData->mServerInfo.set_server_state(NFMsg::EST_NARMAL);
+		this->Subscribe(NFEVENT_LUA_ERROR_LOG, 0, 0, __FUNCTION__);
+		this->Subscribe(NFEVENT_LUA_FINISH_LOAD, 0, 0, __FUNCTION__);
 	}
 	else
 	{
-		NFLogError(NF_LOG_SERVER_NOT_HANDLE_MESSAGE, 0, "I Can't get the Master Server config!");
-		return false;
+		NFServerConfig* pConfig = NFServerCommon::GetServerConfig(m_pPluginManager, NF_ST_MASTER);
+		if (pConfig)
+		{
+			//AddServer会自动重连，断开连接时，m_pMasterServerData->mUnlinkId不用清理，不变
+			m_pMasterServerData->mUnlinkId = FindModule<NFINetClientModule>()->AddServer(NF_ST_MASTER, pConfig->mServerIp, pConfig->mServerPort);
+			m_pMasterServerData->mServerInfo.set_server_id(pConfig->mServerId);
+			m_pMasterServerData->mServerInfo.set_server_ip(pConfig->mServerIp);
+			m_pMasterServerData->mServerInfo.set_server_port(pConfig->mServerPort);
+			m_pMasterServerData->mServerInfo.set_server_name(pConfig->mServerName);
+			m_pMasterServerData->mServerInfo.set_server_type(pConfig->mServerType);
+			m_pMasterServerData->mServerInfo.set_server_state(NFMsg::EST_NARMAL);
+		}
+		else
+		{
+			NFLogError(NF_LOG_SERVER_NOT_HANDLE_MESSAGE, 0, "I Can't get the Master Server config!");
+			return false;
+		}
 	}
 
 	return true;

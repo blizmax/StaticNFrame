@@ -13,8 +13,10 @@
 #include <NFComm/NFPluginModule/NFINetClientModule.h>
 #include <NFComm/NFPluginModule/NFServerDefine.h>
 #include "NFComm/NFPluginModule/NFIServerNetEventModule.h"
+#include "NFComm/NFPluginModule/NFEventMgr.h"
+#include "NFComm/NFPluginModule/NFEventDefine.h"
 
-class NFCWorldClient_MasterModule : public NFIWorldClient_MasterModule
+class NFCWorldClient_MasterModule : public NFIWorldClient_MasterModule, public NFEventObj
 {
 public:
 	explicit NFCWorldClient_MasterModule(NFIPluginManager* p);
@@ -31,6 +33,7 @@ public:
 
 	virtual bool Shut() override;
 
+	virtual void OnExecute(uint16_t nEventID, uint64_t nSrcID, uint8_t bySrcType, const google::protobuf::Message& message);
 	void OnHandleGmMsg(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen);
 	void OnHandleServerReport(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen);
 protected:

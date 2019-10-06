@@ -12,11 +12,12 @@
 #include <NFServer/NFServerCommon/NFILoginClient_MasterModule.h>
 #include <NFComm/NFPluginModule/NFINetClientModule.h>
 #include <NFComm/NFPluginModule/NFServerDefine.h>
-
+#include "NFComm/NFPluginModule/NFEventMgr.h"
+#include "NFComm/NFPluginModule/NFEventDefine.h"
 #include "NFComm/NFCore/NFMapEx.hpp"
 #include "NFServer/NFServerCommon/NFServerCommon.h"
 
-class NFCLoginClient_MasterModule : public NFILoginClient_MasterModule
+class NFCLoginClient_MasterModule : public NFILoginClient_MasterModule, public NFEventObj
 {
 	/**
 	* @brief 定义hash处理器
@@ -38,6 +39,8 @@ public:
 	virtual bool Shut() override;
 
 	void OnHandleGmMsg(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen);
+
+	virtual void OnExecute(uint16_t nEventID, uint64_t nSrcID, uint8_t bySrcType, const google::protobuf::Message& message);
 protected:
 	void OnProxySocketEvent(const eMsgType nEvent, const uint32_t unLinkId);
 	void OnHandleOtherMessage(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen);

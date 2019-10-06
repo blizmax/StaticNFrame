@@ -14,6 +14,7 @@
 #include <NFComm/NFPluginModule/NFEventDefine.h>
 #include "NFServer/NFServerCommon/NFServerCommon.h"
 #include "NFComm/NFPluginModule/NFIMonitorModule.h"
+#include "NFComm/NFPluginModule/NFILuaScriptModule.h"
 #include "NFMessageDefine/msg_gm.pb.h"
 
 NFCLoginClient_MasterModule::NFCLoginClient_MasterModule(NFIPluginManager* p)
@@ -31,6 +32,38 @@ bool NFCLoginClient_MasterModule::Init()
 	return true;
 }
 
+void NFCLoginClient_MasterModule::OnExecute(uint16_t nEventID, uint64_t nSrcID, uint8_t bySrcType, const google::protobuf::Message& message)
+{
+	if (nEventID == NFEVENT_LUA_ERROR_LOG)
+	{
+		const NFMsg::ServerErrorLogMsg* msg_gm = dynamic_cast<const NFMsg::ServerErrorLogMsg*>(&message);
+		if (msg_gm)
+		{
+			FindModule<NFINetClientModule>()->SendToServerByPB(m_pMasterServerData->mUnlinkId, EGMI_STS_ERROR_MSG, message, 0);
+		}
+	}
+
+	if (nEventID == NFEVENT_LUA_FINISH_LOAD)
+	{
+		NFServerConfig* pConfig = NFServerCommon::GetServerConfig(m_pPluginManager, NF_ST_MASTER);
+		if (pConfig)
+		{
+			//AddServer会自动重连，断开连接时，m_pMasterServerData->mUnlinkId不用清理，不变
+			m_pMasterServerData->mUnlinkId = FindModule<NFINetClientModule>()->AddServer(NF_ST_MASTER, pConfig->mServerIp, pConfig->mServerPort);
+			m_pMasterServerData->mServerInfo.set_server_id(pConfig->mServerId);
+			m_pMasterServerData->mServerInfo.set_server_ip(pConfig->mServerIp);
+			m_pMasterServerData->mServerInfo.set_server_port(pConfig->mServerPort);
+			m_pMasterServerData->mServerInfo.set_server_name(pConfig->mServerName);
+			m_pMasterServerData->mServerInfo.set_server_type(pConfig->mServerType);
+			m_pMasterServerData->mServerInfo.set_server_state(NFMsg::EST_NARMAL);
+		}
+		else
+		{
+			NFLogError(NF_LOG_SERVER_NOT_HANDLE_MESSAGE, 0, "I Can't get the Master Server config!");
+		}
+	}
+}
+
 bool NFCLoginClient_MasterModule::AfterInit()
 {
 	FindModule<NFINetClientModule>()->AddEventCallBack(NF_ST_MASTER, this, &NFCLoginClient_MasterModule::OnProxySocketEvent);
@@ -39,22 +72,30 @@ bool NFCLoginClient_MasterModule::AfterInit()
 	FindModule<NFINetClientModule>()->AddReceiveCallBack(NF_ST_MASTER, EGMI_NET_MASTER_SEND_OTHERS_TO_LOGIN, this, &NFCLoginClient_MasterModule::OnServerReport);
 	FindModule<NFINetClientModule>()->AddReceiveCallBack(NF_ST_MASTER, EGMI_STS_GM_MSG, this, &NFCLoginClient_MasterModule::OnHandleGmMsg);
 
-	NFServerConfig* pConfig = NFServerCommon::GetServerConfig(m_pPluginManager, NF_ST_MASTER);
-	if (pConfig)
+	if (FindModule<NFILuaScriptModule>())
 	{
-		//AddServer会自动重连，断开连接时，m_pMasterServerData->mUnlinkId不用清理，不变
-		m_pMasterServerData->mUnlinkId = FindModule<NFINetClientModule>()->AddServer(NF_ST_MASTER, pConfig->mServerIp, pConfig->mServerPort);
-		m_pMasterServerData->mServerInfo.set_server_id(pConfig->mServerId);
-		m_pMasterServerData->mServerInfo.set_server_ip(pConfig->mServerIp);
-		m_pMasterServerData->mServerInfo.set_server_port(pConfig->mServerPort);
-		m_pMasterServerData->mServerInfo.set_server_name(pConfig->mServerName);
-		m_pMasterServerData->mServerInfo.set_server_type(pConfig->mServerType);
-		m_pMasterServerData->mServerInfo.set_server_state(NFMsg::EST_NARMAL);
+		this->Subscribe(NFEVENT_LUA_ERROR_LOG, 0, 0, __FUNCTION__);
+		this->Subscribe(NFEVENT_LUA_FINISH_LOAD, 0, 0, __FUNCTION__);
 	}
 	else
 	{
-		NFLogError(NF_LOG_SERVER_NOT_HANDLE_MESSAGE, 0, "I Can't get the Master Server config!");
-		return false;
+		NFServerConfig* pConfig = NFServerCommon::GetServerConfig(m_pPluginManager, NF_ST_MASTER);
+		if (pConfig)
+		{
+			//AddServer会自动重连，断开连接时，m_pMasterServerData->mUnlinkId不用清理，不变
+			m_pMasterServerData->mUnlinkId = FindModule<NFINetClientModule>()->AddServer(NF_ST_MASTER, pConfig->mServerIp, pConfig->mServerPort);
+			m_pMasterServerData->mServerInfo.set_server_id(pConfig->mServerId);
+			m_pMasterServerData->mServerInfo.set_server_ip(pConfig->mServerIp);
+			m_pMasterServerData->mServerInfo.set_server_port(pConfig->mServerPort);
+			m_pMasterServerData->mServerInfo.set_server_name(pConfig->mServerName);
+			m_pMasterServerData->mServerInfo.set_server_type(pConfig->mServerType);
+			m_pMasterServerData->mServerInfo.set_server_state(NFMsg::EST_NARMAL);
+		}
+		else
+		{
+			NFLogError(NF_LOG_SERVER_CONNECT_SERVER, 0, "I Can't get the Master Server config!");
+			return false;
+		}
 	}
 
 	return true;
