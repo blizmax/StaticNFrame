@@ -30,8 +30,6 @@
 ////////////////////////////////////////////////////////////////
 
 #pragma comment( lib, "luaBind.lib" )
-//#pragma comment( lib, "lua51.lib" )
-//#pragma comment( lib, "luajit.lib" )
 #pragma comment( lib, "event.lib" )
 #pragma comment( lib, "event_core.lib" )
 #pragma comment( lib, "libprotobuf.lib" )
@@ -41,7 +39,7 @@
 #pragma comment( lib, "mysqlclient.lib" )
 #pragma comment( lib, "mysqlpp.lib" )
 #pragma comment( lib, "sqlite3.lib" )
-//#pragma comment( lib, "libgo.lib" )
+#pragma comment( lib, "libcurl.lib" )
 
 /////////////////////////////////////////////////////////////////
 #pragma comment( lib, "NFCore.lib" )

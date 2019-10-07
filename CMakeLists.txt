@@ -66,6 +66,7 @@ SET(INCLUDE_DIR "./" "/usr/local/include"
 	"${CMAKE_SOURCE_DIR}/Server/Dependencies/openssl/linux/include"
 	"${CMAKE_SOURCE_DIR}/Server/Dependencies/common/sigar/linux"
 	"${CMAKE_SOURCE_DIR}/Server/Dependencies/common/"
+	"${CMAKE_SOURCE_DIR}/Server/Dependencies/curl/linux"
 	"${CMAKE_SOURCE_DIR}/Server/StaticNFrame/NFComm/NFNetPlugin/"
 	"${CMAKE_SOURCE_DIR}/Server/StaticNFrame/")
 
@@ -101,7 +102,7 @@ elseif(CMAKE_BUILD_TYPE STREQUAL "DynamicDebug")
 endif()
 
 SET(LIB_LINK_DEP resolv dl rt libprotobuf.a  libssl.a libcrypto.a pthread libmysqlpp.a libmysqlclient.a libevent_core.a libevent_extra.a libtheron.a
-		libevent.a libLuaBind.a libtheron.a  libCommon.a libNFMessageDefine.a libjemalloc.a)
+		libevent.a libLuaBind.a libtheron.a  libCommon.a libNFMessageDefine.a libjemalloc.a libcurl.a)
 		
 SET(LIB_LINK_NF  libNFCore.a libNFPluginModule.a libprotobuf.a libNFActorPlugin.a libNFKernelPlugin.a libNFLuaScriptPlugin.a libNFLuaThreadScriptPlugin.a
 				libNFMath.a  libNFNetPlugin.a libNFMonitorPlugin.a libNFNoSqlPlugin.a
