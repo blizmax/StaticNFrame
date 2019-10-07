@@ -210,7 +210,7 @@
       <PreprocessorDefinitions>NF_STATIC_PLUGIN;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
-      <AdditionalIncludeDirectories>$(SolutionDir)/Dependencies/mysqlpp/lib;$(SolutionDir)/Dependencies/mysql/include;$(SolutionDir)\Dependencies\g3dlite;$(SolutionDir)\Dependencies\lua;$(SolutionDir)/Dependencies/libevent/include;$(SolutionDir)/Dependencies/libevent/WIN32-Code/nmake;$(SolutionDir)/Dependencies/libevent/;$(SolutionDir)/Dependencies/libevent/compat;$(SolutionDir)/Dependencies/Theron\Include/;$(SolutionDir)/StaticNFrame;$(SolutionDir)/Dependencies/;$(SolutionDir)/;$(SolutionDir)/Dependencies/protobuf/src;$(SolutionDir)/Dependencies/navigation;$(SolutionDir)/Dependencies/LuaBind/luaintf;$(SolutionDir)/Dependencies/LuaBind/pbc;$(SolutionDir)/Dependencies/LuaBind/luasql;$(SolutionDir)/Dependencies/LuaBind/luasocket;$(SolutionDir)/Dependencies/LuaBind/luacjson;$(SolutionDir)/Dependencies/LuaBind/lua/;$(SolutionDir)/Dependencies/common/sigar/win32;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)/Dependencies/mysqlpp/lib;$(SolutionDir)/Dependencies/mysql/include;$(SolutionDir)\Dependencies\g3dlite;$(SolutionDir)\Dependencies\lua;$(SolutionDir)/Dependencies/libevent/include;$(SolutionDir)/Dependencies/libevent/WIN32-Code/nmake;$(SolutionDir)/Dependencies/libevent/;$(SolutionDir)/Dependencies/libevent/compat;$(SolutionDir)/Dependencies/Theron\Include/;$(SolutionDir)/StaticNFrame;$(SolutionDir)/Dependencies/;$(SolutionDir)/;$(SolutionDir)/Dependencies/protobuf/src;$(SolutionDir)/Dependencies/navigation;$(SolutionDir)/Dependencies/LuaBind/luaintf;$(SolutionDir)/Dependencies/LuaBind/pbc;$(SolutionDir)/Dependencies/LuaBind/luasql;$(SolutionDir)/Dependencies/LuaBind/luasocket;$(SolutionDir)/Dependencies/LuaBind/luacjson;$(SolutionDir)/Dependencies/LuaBind/lua/;$(SolutionDir)/Dependencies/common/sigar/win32;$(SolutionDir)/Dependencies/curl/win;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DisableSpecificWarnings>4091;4251;4996;4275;4316;4244;4267;4244;</DisableSpecificWarnings>
     </ClCompile>
     <Link>
@@ -326,10 +326,10 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="NFCDynLib.h" />
+    <ClInclude Include="NFCurlHttpClient.h" />
     <ClInclude Include="NFIAsycModule.h" />
     <ClInclude Include="NFIAsyncSqliteModule.h" />
     <ClInclude Include="NFIAsynMongoModule.h" />
-    <ClInclude Include="NFICallBackModule.h" />
     <ClInclude Include="NFIClassModule.h" />
     <ClInclude Include="NFCDataTableManager.h" />
     <ClInclude Include="NFIConfigModule.h" />
@@ -397,6 +397,7 @@
   <ItemGroup>
     <ClCompile Include="NFCDataTableManager.cpp" />
     <ClCompile Include="NFCDynLib.cpp" />
+    <ClCompile Include="NFCurlHttpClient.cpp" />
     <ClCompile Include="NFDataTable.cpp" />
     <ClCompile Include="NFCObject.cpp" />
     <ClCompile Include="NFCDataNodeManager.cpp" />

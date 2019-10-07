@@ -181,9 +181,6 @@
     <ClInclude Include="NFIConsoleModule.h">
       <Filter>Monitor</Filter>
     </ClInclude>
-    <ClInclude Include="NFICallBackModule.h">
-      <Filter>Net</Filter>
-    </ClInclude>
     <ClInclude Include="NFISignalHandleModule.h">
       <Filter>Monitor</Filter>
     </ClInclude>
@@ -204,6 +201,9 @@
     </ClInclude>
     <ClInclude Include="NFILuaThreadModule.h">
       <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="NFCurlHttpClient.h">
+      <Filter>Curl</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -257,6 +257,9 @@
     </Filter>
     <Filter Include="Nosql">
       <UniqueIdentifier>{b209c585-6875-432c-85be-cb96d85f0596}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Curl">
+      <UniqueIdentifier>{f0a294f6-0bca-4f4b-a8ac-a43ad4d57275}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -313,6 +316,9 @@
     </ClCompile>
     <ClCompile Include="NFServerDefine.cpp">
       <Filter>Common</Filter>
+    </ClCompile>
+    <ClCompile Include="NFCurlHttpClient.cpp">
+      <Filter>Curl</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
