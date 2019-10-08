@@ -9,14 +9,14 @@
 
 #pragma once
 
-#include <string>  
+#include <string> 
+#include "NFComm/NFCore/NFSingleton.hpp"
 
-class NFCurlHttpClient
+class NFCurlHttpClient : public NFSingleton<NFCurlHttpClient>
 {
 public:
 	NFCurlHttpClient(void);
 	~NFCurlHttpClient(void);
-
 public:
 	/**
 	* @brief HTTP POST请求
@@ -25,7 +25,7 @@ public:
 	* @param strResponse 输出参数,返回的内容
 	* @return 返回是否Post成功
 	*/
-	static int Post(const std::string & strUrl, const std::string & strPost, std::string & strResponse);
+	int Post(const std::string & strUrl, const std::string & strPost, std::string & strResponse);
 
 	/**
 	* @brief HTTP GET请求
@@ -33,7 +33,7 @@ public:
 	* @param strResponse 输出参数,返回的内容
 	* @return 返回是否Post成功
 	*/
-	static int Get(const std::string & strUrl, std::string & strResponse);
+	int Get(const std::string & strUrl, std::string & strResponse);
 
 	/**
 	* @brief HTTPS POST请求,无证书版本
@@ -43,7 +43,7 @@ public:
 	* @param pCaPath 输入参数,为CA证书的路径.如果输入为NULL,则不验证服务器端证书的有效性.
 	* @return 返回是否Post成功
 	*/
-	static int Posts(const std::string & strUrl, const std::string & strPost, std::string & strResponse, const char * pCaPath = NULL);
+	int Posts(const std::string & strUrl, const std::string & strPost, std::string & strResponse, const char * pCaPath = NULL);
 
 	/**
 	* @brief HTTPS GET请求,无证书版本
@@ -52,5 +52,5 @@ public:
 	* @param pCaPath 输入参数,为CA证书的路径.如果输入为NULL,则不验证服务器端证书的有效性.
 	* @return 返回是否Post成功
 	*/
-	static int Gets(const std::string & strUrl, std::string & strResponse, const char * pCaPath = NULL);
+	int Gets(const std::string & strUrl, std::string & strResponse, const char * pCaPath = NULL);
 };

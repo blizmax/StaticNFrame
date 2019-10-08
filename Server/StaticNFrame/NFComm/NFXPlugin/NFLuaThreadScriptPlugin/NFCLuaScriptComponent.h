@@ -780,5 +780,4 @@ public:
 protected:
 	NFILogModule* m_pLogModule;
 	NFCLuaThreadModule* m_pLuaThreadModule;
-	NFIHttpClientModule* m_pHttpClientModule;
 };

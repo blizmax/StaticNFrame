@@ -399,6 +399,7 @@ void NFCHttpClient::OnHttpReqDone(struct evhttp_request* req, void* ctx)
 		int nread = 0;
 
 #if NF_ENABLE_SSL
+		/*
 		struct bufferevent* bev = (struct bufferevent*) pHttpClient->m_pBase;
 		while ((oslerr = bufferevent_get_openssl_error(bev))) {
 			ERR_error_string_n(oslerr, buffer, sizeof(buffer));
@@ -407,6 +408,7 @@ void NFCHttpClient::OnHttpReqDone(struct evhttp_request* req, void* ctx)
 			strErrMsg += std::string(buffer);
 			printed_err = 1;
 		}
+		*/
 #endif
 		/* If the OpenSSL error queue was empty, maybe it was a
 		* socket error; let's try printing that. */

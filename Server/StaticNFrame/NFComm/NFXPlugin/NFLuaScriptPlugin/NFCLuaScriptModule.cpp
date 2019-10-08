@@ -19,6 +19,7 @@
 #include "NFComm/NFPluginModule/NFEventDefine.h"
 #include "NFMessageDefine/server_to_server_msg.pb.h"
 #include "NFServerLogic/NFServerLogicCommon/NFServerLogicCommon.h"
+#include "NFComm/NFPluginModule/NFCurlHttpClient.h"
 
 enum EnumLuaScriptTimer
 {
@@ -63,7 +64,6 @@ bool NFCLuaScriptModule::Init()
 	m_pNetClientModule = m_pPluginManager->FindModule<NFINetClientModule>();
 	m_pLogModule = m_pPluginManager->FindModule<NFILogModule>();
 	m_pHttpServerModule = m_pPluginManager->FindModule<NFIHttpServerModule>();
-	m_pHttpClientModule = m_pPluginManager->FindModule<NFIHttpClientModule>();
 
 	if (m_pPluginManager->IsLoadAllServer())
 	{
@@ -701,56 +701,28 @@ void NFCLuaScriptModule::SendErrorLog(uint64_t playerId, const std::string& func
 
 std::string NFCLuaScriptModule::HttpGet(const std::string& url)
 {
-	int respCode = 0;
 	std::string strResp;
-	if (m_pHttpClientModule)
-	{
-		if (!m_pHttpClientModule->PerformGet(url, std::map<std::string, std::string>(), respCode, strResp))
-		{
-			NFLogError(NF_LOG_SYSTEMLOG, 0, "HttpGet Error..........");
-		}
-	}
+	NFCurlHttpClient::GetSingletonPtr()->Get(url, strResp);
 	return strResp;
 }
 
 std::string NFCLuaScriptModule::HttpGetWithHead(const std::string& url, const std::map<std::string, std::string>& xHeaders)
 {
-	int respCode = 0;
 	std::string strResp;
-	if (m_pHttpClientModule)
-	{
-		if (!m_pHttpClientModule->PerformGet(url, xHeaders, respCode, strResp))
-		{
-			NFLogError(NF_LOG_SYSTEMLOG, 0, "HttpGetWithHead Error..........");
-		}
-	}
+	NFCurlHttpClient::GetSingletonPtr()->Get(url, strResp);
 	return strResp;
 }
 
 std::string NFCLuaScriptModule::HttpPost(const std::string& url, const std::string& postContent)
 {
-	int respCode = 0;
 	std::string strResp;
-	if (m_pHttpClientModule)
-	{
-		if (!m_pHttpClientModule->PerformPost(url, postContent, std::map<std::string, std::string>(), respCode, strResp))
-		{
-			NFLogError(NF_LOG_SYSTEMLOG, 0, "HttpPost Error..........");
-		}
-	}
+	NFCurlHttpClient::GetSingletonPtr()->Post(url, postContent, strResp);
 	return strResp;
 }
 
 std::string NFCLuaScriptModule::HttpPostWithHead(const std::string& url, const std::string& postContent, const std::map<std::string, std::string>& xHeaders)
 {
-	int respCode = 0;
 	std::string strResp;
-	if (m_pHttpClientModule)
-	{
-		if (!m_pHttpClientModule->PerformPost(url, postContent, xHeaders, respCode, strResp))
-		{
-			NFLogError(NF_LOG_SYSTEMLOG, 0, "HttpPostWithHead Error..........");
-		}
-	}
+	NFCurlHttpClient::GetSingletonPtr()->Post(url, postContent, strResp);
 	return strResp;
 }

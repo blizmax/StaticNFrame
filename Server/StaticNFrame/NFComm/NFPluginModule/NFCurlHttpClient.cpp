@@ -1,15 +1,24 @@
-#include "NFCurlHttpClient.h"  
 #include "curl/curl.h"  
-#include <string>  
+#include <string>
+
+#include "NFCurlHttpClient.h"    
+#include "NFLogMgr.h"
+
 
 NFCurlHttpClient::NFCurlHttpClient(void)
 {
-
+	CURLcode curlCode = curl_global_init(CURL_GLOBAL_ALL);
+	if (CURLE_OK != curlCode)
+	{
+		NFLogError(NF_LOG_SYSTEMLOG, 0, "Http::initialize: "
+			"curl_global_init error! curlCode={}\n", curlCode);
+		exit(0);
+	}
 }
 
 NFCurlHttpClient::~NFCurlHttpClient(void)
 {
-
+	curl_global_cleanup();
 }
 
 static size_t OnWriteData(void* buffer, size_t size, size_t nmemb, void* lpVoid)

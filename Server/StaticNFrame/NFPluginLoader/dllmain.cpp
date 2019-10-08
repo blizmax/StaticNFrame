@@ -27,6 +27,9 @@
 #pragma comment( lib, "Crypt32.lib" )
 #pragma comment( lib, "BCrypt.lib" )
 #pragma comment( lib, "Dnsapi.lib" )
+#pragma comment( lib, "Wldap32.lib" )
+#pragma comment( lib, "advapi32.lib" )
+
 ////////////////////////////////////////////////////////////////
 
 #pragma comment( lib, "luaBind.lib" )

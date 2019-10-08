@@ -164,7 +164,6 @@ protected:
 	NFINetServerModule* m_pNetServerModule;
 	NFINetClientModule* m_pNetClientModule;
 	NFIHttpServerModule* m_pHttpServerModule;
-	NFIHttpClientModule* m_pHttpClientModule;
 	NFILogModule* m_pLogModule;
 protected:
     int64_t mnTime;
