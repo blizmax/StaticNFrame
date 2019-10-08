@@ -66,7 +66,7 @@ SET(INCLUDE_DIR "./" "/usr/local/include"
 	"${CMAKE_SOURCE_DIR}/Server/Dependencies/openssl/linux/include"
 	"${CMAKE_SOURCE_DIR}/Server/Dependencies/common/sigar/linux"
 	"${CMAKE_SOURCE_DIR}/Server/Dependencies/common/"
-	"${CMAKE_SOURCE_DIR}/Server/Dependencies/curl/linux"
+	"${CMAKE_SOURCE_DIR}/Server/Dependencies/curl/include"
 	"${CMAKE_SOURCE_DIR}/Server/StaticNFrame/NFComm/NFNetPlugin/"
 	"${CMAKE_SOURCE_DIR}/Server/StaticNFrame/")
 
