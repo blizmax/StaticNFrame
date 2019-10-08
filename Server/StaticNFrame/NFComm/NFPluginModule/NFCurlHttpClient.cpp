@@ -50,8 +50,8 @@ int NFCurlHttpClient::Post(const std::string & strUrl, const std::string & strPo
 	curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, OnWriteData);
 	curl_easy_setopt(curl, CURLOPT_WRITEDATA, (void *)&strResponse);
 	curl_easy_setopt(curl, CURLOPT_NOSIGNAL, 1);
-	curl_easy_setopt(curl, CURLOPT_CONNECTTIMEOUT, 3);
-	curl_easy_setopt(curl, CURLOPT_TIMEOUT, 3);
+	curl_easy_setopt(curl, CURLOPT_CONNECTTIMEOUT, 1);
+	curl_easy_setopt(curl, CURLOPT_TIMEOUT, 1);
 	res = curl_easy_perform(curl);
 	curl_easy_cleanup(curl);
 	return res;
@@ -75,8 +75,8 @@ int NFCurlHttpClient::Get(const std::string & strUrl, std::string & strResponse)
 	* 如果不设置这个选项，libcurl将会发信号打断这个wait从而导致程序退出。
 	*/
 	curl_easy_setopt(curl, CURLOPT_NOSIGNAL, 1);
-	curl_easy_setopt(curl, CURLOPT_CONNECTTIMEOUT, 3);
-	curl_easy_setopt(curl, CURLOPT_TIMEOUT, 3);
+	curl_easy_setopt(curl, CURLOPT_CONNECTTIMEOUT, 1);
+	curl_easy_setopt(curl, CURLOPT_TIMEOUT, 1);
 	res = curl_easy_perform(curl);
 	curl_easy_cleanup(curl);
 	return res;
@@ -110,8 +110,8 @@ int NFCurlHttpClient::Posts(const std::string & strUrl, const std::string & strP
 		curl_easy_setopt(curl, CURLOPT_SSL_VERIFYPEER, true);
 		curl_easy_setopt(curl, CURLOPT_CAINFO, pCaPath);
 	}
-	curl_easy_setopt(curl, CURLOPT_CONNECTTIMEOUT, 3);
-	curl_easy_setopt(curl, CURLOPT_TIMEOUT, 3);
+	curl_easy_setopt(curl, CURLOPT_CONNECTTIMEOUT, 1);
+	curl_easy_setopt(curl, CURLOPT_TIMEOUT, 1);
 	res = curl_easy_perform(curl);
 	curl_easy_cleanup(curl);
 	return res;
@@ -141,8 +141,8 @@ int NFCurlHttpClient::Gets(const std::string & strUrl, std::string & strResponse
 		curl_easy_setopt(curl, CURLOPT_SSL_VERIFYPEER, true);
 		curl_easy_setopt(curl, CURLOPT_CAINFO, pCaPath);
 	}
-	curl_easy_setopt(curl, CURLOPT_CONNECTTIMEOUT, 3);
-	curl_easy_setopt(curl, CURLOPT_TIMEOUT, 3);
+	curl_easy_setopt(curl, CURLOPT_CONNECTTIMEOUT, 1);
+	curl_easy_setopt(curl, CURLOPT_TIMEOUT, 1);
 	res = curl_easy_perform(curl);
 	curl_easy_cleanup(curl);
 	return res;

@@ -32,7 +32,7 @@ function InitGlobalServer()
 			ServerPort = GetNewPort(),
 			MaxConnectNum = 100,
 			WorkThreadNum = 1,
-			MysqlIp = "47.75.217.27",
+			MysqlIp = "127.0.0.1",
 			MysqlPort = 6001,
 			MysqlDbName = "db_new_wuxiandai",
 			MysqlUser = "user_yj",
