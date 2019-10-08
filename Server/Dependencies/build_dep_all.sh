@@ -15,6 +15,10 @@ cp -rf libcrypto.so.1.1 ../../../Product/run/Dynamic_Release/
 cp -rf libssl.so.1.1 ../../../Product/run/Dynamic_Release/
 cd ..
 
+cd curl
+./buildconf
+./configure --prefix=/usr/local/curl --with-ssl=/usr/local/openssl --disable-shared
+
 #compiling mysql
 cd mysql
 cmake .

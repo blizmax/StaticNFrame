@@ -101,8 +101,8 @@ elseif(CMAKE_BUILD_TYPE STREQUAL "DynamicDebug")
 		"${CMAKE_SOURCE_DIR}/Product/Lib/Dynamic_Debug")
 endif()
 
-SET(LIB_LINK_DEP resolv dl rt libprotobuf.a  libssl.a libcrypto.a pthread libmysqlpp.a libmysqlclient.a libevent_core.a libevent_extra.a libtheron.a
-		libevent.a libLuaBind.a libtheron.a  libCommon.a libNFMessageDefine.a libjemalloc.a libcurl.a)
+SET(LIB_LINK_DEP resolv dl rt libprotobuf.a  libcurl.a libssl.a libcrypto.a pthread libmysqlpp.a libmysqlclient.a libevent_core.a libevent_extra.a libtheron.a
+		libevent.a libLuaBind.a libtheron.a  libCommon.a libNFMessageDefine.a libjemalloc.a)
 		
 SET(LIB_LINK_NF  libNFCore.a libNFPluginModule.a libprotobuf.a libNFActorPlugin.a libNFKernelPlugin.a libNFLuaScriptPlugin.a libNFLuaThreadScriptPlugin.a
 				libNFMath.a  libNFNetPlugin.a libNFMonitorPlugin.a libNFNoSqlPlugin.a
