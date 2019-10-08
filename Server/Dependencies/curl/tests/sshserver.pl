@@ -6,11 +6,11 @@
 #                            | (__| |_| |  _ <| |___
 #                             \___|\___/|_| \_\_____|
 #
-# Copyright (C) 1998 - 2014, Daniel Stenberg, <daniel@haxx.se>, et al.
+# Copyright (C) 1998 - 2019, Daniel Stenberg, <daniel@haxx.se>, et al.
 #
 # This software is licensed as described in the file COPYING, which
 # you should have received as part of this distribution. The terms
-# are also available at http://curl.haxx.se/docs/copyright.html.
+# are also available at https://curl.haxx.se/docs/copyright.html.
 #
 # You may opt to use, copy, modify, merge, publish, distribute and/or sell
 # copies of the Software, and permit persons to whom the Software is
@@ -21,7 +21,7 @@
 #
 #***************************************************************************
 
-# Starts sshd for use in the SCP, SFTP and SOCKS curl test harness tests.
+# Starts sshd for use in the SCP and SFTP curl test harness tests.
 # Also creates the ssh configuration files needed for these tests.
 
 use strict;
@@ -74,16 +74,16 @@ use serverhelp qw(
     server_logfilename
     );
 
+use pathhelp;
 
 #***************************************************************************
 
 my $verbose = 0;              # set to 1 for debugging
 my $debugprotocol = 0;        # set to 1 for protocol debugging
 my $port = 8999;              # our default SCP/SFTP server port
-my $socksport = $port + 1;    # our default SOCKS4/5 server port
 my $listenaddr = '127.0.0.1'; # default address on which to listen
 my $ipvnum = 4;               # default IP version of listener address
-my $idnum = 1;                # dafault ssh daemon instance number
+my $idnum = 1;                # default ssh daemon instance number
 my $proto = 'ssh';            # protocol the ssh daemon speaks
 my $path = getcwd();          # current working directory
 my $logdir = $path .'/log';   # directory for log files
@@ -156,14 +156,6 @@ while(@ARGV) {
             }
         }
     }
-    elsif($ARGV[0] eq '--socksport') {
-        if($ARGV[1]) {
-            if($ARGV[1] =~ /^(\d+)$/) {
-                $socksport = $1;
-                shift @ARGV;
-            }
-        }
-    }
     else {
         print STDERR "\nWarning: sshserver.pl unknown parameter: $ARGV[0]\n";
     }
@@ -180,11 +172,10 @@ if(!$pidfile) {
 
 
 #***************************************************************************
-# ssh, socks and sftp server log file names
+# ssh and sftp server log file names
 #
 $sshdlog = server_logfilename($logdir, 'ssh', $ipvnum, $idnum);
 $sftplog = server_logfilename($logdir, 'sftp', $ipvnum, $idnum);
-$sshlog  = server_logfilename($logdir, 'socks', $ipvnum, $idnum);
 
 
 #***************************************************************************
@@ -225,7 +216,7 @@ my ($sshdid, $sshdvernum, $sshdverstr, $sshderror) = sshversioninfo($sshd);
 if(!$sshdid) {
     # Not an OpenSSH or SunSSH ssh daemon
     logmsg $sshderror if($verbose);
-    logmsg 'SCP, SFTP and SOCKS tests require OpenSSH 2.9.9 or later';
+    logmsg 'SCP and SFTP tests require OpenSSH 2.9.9 or later';
     exit 1;
 }
 logmsg "ssh server found $sshd is $sshdverstr" if($verbose);
@@ -254,7 +245,7 @@ logmsg "ssh server found $sshd is $sshdverstr" if($verbose);
 #
 if((($sshdid =~ /OpenSSH/) && ($sshdvernum < 299)) ||
    (($sshdid =~ /SunSSH/)  && ($sshdvernum < 100))) {
-    logmsg 'SCP, SFTP and SOCKS tests require OpenSSH 2.9.9 or later';
+    logmsg 'SCP and SFTP tests require OpenSSH 2.9.9 or later';
     exit 1;
 }
 
@@ -309,7 +300,7 @@ my ($sshid, $sshvernum, $sshverstr, $ssherror) = sshversioninfo($ssh);
 if(!$sshid) {
     # Not an OpenSSH or SunSSH ssh client
     logmsg $ssherror if($verbose);
-    logmsg 'SCP, SFTP and SOCKS tests require OpenSSH 2.9.9 or later';
+    logmsg 'SCP and SFTP tests require OpenSSH 2.9.9 or later';
     exit 1;
 }
 logmsg "ssh client found $ssh is $sshverstr" if($verbose);
@@ -340,7 +331,7 @@ logmsg "ssh client found $ssh is $sshverstr" if($verbose);
 #
 if((($sshid =~ /OpenSSH/) && ($sshvernum < 299)) ||
    (($sshid =~ /SunSSH/)  && ($sshvernum < 100))) {
-    logmsg 'SCP, SFTP and SOCKS tests require OpenSSH 2.9.9 or later';
+    logmsg 'SCP and SFTP tests require OpenSSH 2.9.9 or later';
     exit 1;
 }
 
@@ -371,12 +362,12 @@ if((! -e $hstprvkeyf) || (! -s $hstprvkeyf) ||
     # Make sure all files are gone so ssh-keygen doesn't complain
     unlink($hstprvkeyf, $hstpubkeyf, $cliprvkeyf, $clipubkeyf);
     logmsg 'generating host keys...' if($verbose);
-    if(system "\"$sshkeygen\" -q -t dsa -f $hstprvkeyf -C 'curl test server' -N ''") {
+    if(system "\"$sshkeygen\" -q -t rsa -f $hstprvkeyf -C 'curl test server' -N ''") {
         logmsg 'Could not generate host key';
         exit 1;
     }
     logmsg 'generating client keys...' if($verbose);
-    if(system "\"$sshkeygen\" -q -t dsa -f $cliprvkeyf -C 'curl test client' -N ''") {
+    if(system "\"$sshkeygen\" -q -t rsa -f $cliprvkeyf -C 'curl test client' -N ''") {
         logmsg 'Could not generate client key';
         exit 1;
     }
@@ -384,7 +375,7 @@ if((! -e $hstprvkeyf) || (! -s $hstprvkeyf) ||
 
 
 #***************************************************************************
-# Convert paths for curl's tests running on Windows using Cygwin OpenSSH
+# Convert paths for curl's tests running on Windows with Cygwin/Msys OpenSSH
 #
 my $clipubkeyf_config = abs_path("$path/$clipubkeyf");
 my $hstprvkeyf_config = abs_path("$path/$hstprvkeyf");
@@ -392,11 +383,22 @@ my $pidfile_config = $pidfile;
 my $sftpsrv_config = $sftpsrv;
 
 if ($^O eq 'MSWin32' || $^O eq 'cygwin' || $^O eq 'msys') {
-    # convert MinGW drive paths to Cygwin drive paths
-    $clipubkeyf_config =~ s/^\/(\w)\//\/cygdrive\/$1\//;
-    $hstprvkeyf_config =~ s/^\/(\w)\//\/cygdrive\/$1\//;
-    $pidfile_config =~ s/^\/(\w)\//\/cygdrive\/$1\//;
+    # Ensure to use MinGW/Cygwin paths
+    $clipubkeyf_config = pathhelp::build_sys_abs_path($clipubkeyf_config);
+    $hstprvkeyf_config = pathhelp::build_sys_abs_path($hstprvkeyf_config);
+    $pidfile_config = pathhelp::build_sys_abs_path($pidfile_config);
     $sftpsrv_config = "internal-sftp";
+}
+if ($sshdid =~ /OpenSSH-Windows/) {
+    # Ensure to use native Windows paths with OpenSSH for Windows
+    $clipubkeyf_config = pathhelp::sys_native_abs_path($clipubkeyf);
+    $hstprvkeyf_config = pathhelp::sys_native_abs_path($hstprvkeyf);
+    $pidfile_config = pathhelp::sys_native_abs_path($pidfile);
+    $sftpsrv_config = pathhelp::sys_native_abs_path($sftpsrv);
+
+    $sshdconfig = pathhelp::sys_native_abs_path($sshdconfig);
+    $sshconfig = pathhelp::sys_native_abs_path($sshconfig);
+    $sftpconfig = pathhelp::sys_native_abs_path($sftpconfig);
 }
 
 #***************************************************************************
@@ -492,8 +494,18 @@ logmsg 'generating ssh server config file...' if($verbose);
 push @cfgarr, '# This is a generated file.  Do not edit.';
 push @cfgarr, "# $sshdverstr sshd configuration file for curl testing";
 push @cfgarr, '#';
-push @cfgarr, "DenyUsers !$username";
-push @cfgarr, "AllowUsers $username";
+
+# AllowUsers and DenyUsers options should use lowercase on Windows
+# and do not support quotes around values for some unknown reason.
+if ($sshdid =~ /OpenSSH-Windows/) {
+    my $username_lc = lc $username;
+    push @cfgarr, "DenyUsers !$username_lc";
+    push @cfgarr, "AllowUsers $username_lc";
+} else {
+    push @cfgarr, "DenyUsers !$username";
+    push @cfgarr, "AllowUsers $username";
+}
+
 push @cfgarr, 'DenyGroups';
 push @cfgarr, 'AllowGroups';
 push @cfgarr, '#';
@@ -558,7 +570,7 @@ sub sshd_supports_opt {
         ($sshdid =~ /SunSSH/)) {
         # ssh daemon supports command line options -t -f and -o
         $err = grep /((Unsupported)|(Bad configuration)|(Deprecated)) option.*$option/,
-                    qx("$sshd" -t -f $sshdconfig -o $option=$value 2>&1);
+                    qx("$sshd" -t -f $sshdconfig -o "$option=$value" 2>&1);
         return !$err;
     }
     if(($sshdid =~ /OpenSSH/) && ($sshdvernum >= 299)) {
@@ -729,11 +741,11 @@ if(system "\"$sshd\" -t -f $sshdconfig > $sshdlog 2>&1") {
 if((! -e $knownhosts) || (! -s $knownhosts)) {
     logmsg 'generating ssh client known hosts file...' if($verbose);
     unlink($knownhosts);
-    if(open(DSAKEYFILE, "<$hstpubkeyf")) {
-        my @dsahostkey = do { local $/ = ' '; <DSAKEYFILE> };
-        if(close(DSAKEYFILE)) {
+    if(open(RSAKEYFILE, "<$hstpubkeyf")) {
+        my @rsahostkey = do { local $/ = ' '; <RSAKEYFILE> };
+        if(close(RSAKEYFILE)) {
             if(open(KNOWNHOSTS, ">$knownhosts")) {
-                print KNOWNHOSTS "$listenaddr ssh-dss $dsahostkey[1]\n";
+                print KNOWNHOSTS "$listenaddr ssh-rsa $rsahostkey[1]\n";
                 if(!close(KNOWNHOSTS)) {
                     $error = "Error: cannot close file $knownhosts";
                 }
@@ -763,11 +775,15 @@ my $identity_config = abs_path("$path/$identity");
 my $knownhosts_config = abs_path("$path/$knownhosts");
 
 if ($^O eq 'MSWin32' || $^O eq 'cygwin' || $^O eq 'msys') {
-    # convert MinGW drive paths to Cygwin drive paths
-    $identity_config =~ s/^\/(\w)\//\/cygdrive\/$1\//;
-    $knownhosts_config =~ s/^\/(\w)\//\/cygdrive\/$1\//;
+    # Ensure to use MinGW/Cygwin paths
+    $identity_config = pathhelp::build_sys_abs_path($identity_config);
+    $knownhosts_config = pathhelp::build_sys_abs_path($knownhosts_config);
 }
-
+if ($sshdid =~ /OpenSSH-Windows/) {
+    # Ensure to use native Windows paths with OpenSSH for Windows
+    $identity_config = pathhelp::sys_native_abs_path($identity);
+    $knownhosts_config = pathhelp::sys_native_abs_path($knownhosts);
+}
 
 #***************************************************************************
 #  ssh client configuration file options we might use and version support
@@ -862,8 +878,12 @@ push @cfgarr, "HostName $listenaddr";
 push @cfgarr, "User $username";
 push @cfgarr, 'Protocol 2';
 push @cfgarr, '#';
-push @cfgarr, "BindAddress $listenaddr";
-push @cfgarr, "DynamicForward $socksport";
+
+# BindAddress option is not supported by OpenSSH for Windows
+if (!($sshdid =~ /OpenSSH-Windows/)) {
+    push @cfgarr, "BindAddress $listenaddr";
+}
+
 push @cfgarr, '#';
 push @cfgarr, "IdentityFile $identity_config";
 push @cfgarr, "UserKnownHostsFile $knownhosts_config";
@@ -885,8 +905,12 @@ push @cfgarr, 'NumberOfPasswordPrompts 0';
 push @cfgarr, 'PasswordAuthentication no';
 push @cfgarr, 'PreferredAuthentications publickey';
 push @cfgarr, 'PubkeyAuthentication yes';
-push @cfgarr, 'RhostsRSAAuthentication no';
-push @cfgarr, 'RSAAuthentication no';
+
+# RSA authentication options are not supported by OpenSSH for Windows
+if (!($sshdid =~ /OpenSSH-Windows/)) {
+    push @cfgarr, 'RhostsRSAAuthentication no';
+    push @cfgarr, 'RSAAuthentication no';
+}
 
 # Disabled StrictHostKeyChecking since it makes the tests fail on my
 # OpenSSH_6.0p1 on Debian Linux / Daniel

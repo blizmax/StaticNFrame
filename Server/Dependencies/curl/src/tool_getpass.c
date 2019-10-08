@@ -5,11 +5,11 @@
  *                            | (__| |_| |  _ <| |___
  *                             \___|\___/|_| \_\_____|
  *
- * Copyright (C) 1998 - 2015, Daniel Stenberg, <daniel@haxx.se>, et al.
+ * Copyright (C) 1998 - 2019, Daniel Stenberg, <daniel@haxx.se>, et al.
  *
  * This software is licensed as described in the file COPYING, which
  * you should have received as part of this distribution. The terms
- * are also available at http://curl.haxx.se/docs/copyright.html.
+ * are also available at https://curl.haxx.se/docs/copyright.html.
  *
  * You may opt to use, copy, modify, merge, publish, distribute and/or sell
  * copies of the Software, and permit persons to whom the Software is
@@ -20,6 +20,10 @@
  *
  ***************************************************************************/
 #include "tool_setup.h"
+
+#if defined(__AMIGA__) && !defined(__amigaos4__)
+#  undef HAVE_TERMIOS_H
+#endif
 
 #ifndef HAVE_GETPASS_R
 /* this file is only for systems without getpass_r() */
@@ -55,9 +59,6 @@
 #ifdef HAVE_UNISTD_H
 #include <unistd.h>
 #endif
-#define _MPRINTF_REPLACE
-#include <curl/mprintf.h>
-
 #include "tool_getpass.h"
 
 #include "memdebug.h" /* keep this as LAST include */
@@ -92,7 +93,7 @@ char *getpass_r(const char *prompt, char *buffer, size_t buflen)
     if((sts & 1) && (iosb.iosb$w_status & 1))
       buffer[iosb.iosb$w_bcnt] = '\0';
 
-    sts = sys$dassgn(chan);
+    sys$dassgn(chan);
   }
   return buffer; /* we always return success */
 }
@@ -210,18 +211,16 @@ static bool ttyecho(bool enable, int fd)
 #endif
     return TRUE; /* disabled */
   }
-  else {
-    /* re-enable echo, assumes we disabled it before (and set the structs we
-       now use to reset the terminal status) */
+  /* re-enable echo, assumes we disabled it before (and set the structs we
+     now use to reset the terminal status) */
 #ifdef HAVE_TERMIOS_H
-    tcsetattr(fd, TCSAFLUSH, &withecho);
+  tcsetattr(fd, TCSAFLUSH, &withecho);
 #elif defined(HAVE_TERMIO_H)
-    ioctl(fd, TCSETA, &withecho);
+  ioctl(fd, TCSETA, &withecho);
 #else
-    return FALSE; /* not enabled */
+  return FALSE; /* not enabled */
 #endif
-    return TRUE; /* enabled */
-  }
+  return TRUE; /* enabled */
 }
 
 char *getpass_r(const char *prompt, /* prompt to display */
