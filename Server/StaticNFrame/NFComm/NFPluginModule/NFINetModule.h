@@ -126,25 +126,6 @@ public:
 		return false;
 	}
 
-	static bool ReceivePB(const uint32_t unLinkId, const uint64_t valueId, const uint32_t nMsgId, const char* msg, const uint32_t nLen, std::string& strMsg, uint64_t& nPlayer)
-	{
-		strMsg.assign(msg, nLen);
-		nPlayer = valueId;
-		return true;
-	}
-
-	static bool ReceivePB(const uint32_t unLinkId, const uint64_t valueId, const uint32_t nMsgId, const char* msg, const uint32_t nLen, google::protobuf::Message& xData, uint64_t& nPlayer)
-	{
-		if (!xData.ParseFromString(std::string(msg, nLen)))
-		{
-			return false;
-		}
-
-		nPlayer = valueId;
-
-		return true;
-	}
-
 	void OnReceiveNetPack(const uint32_t unLinkId, const uint64_t valueId, const uint32_t nMsgId, const char* msg, const uint32_t nLen)
 	{
 		uint32_t eServerType = GetServerTypeFromUnlinkId(unLinkId);

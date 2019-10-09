@@ -126,13 +126,6 @@ public:
 	void SetPort(uint32_t val);
 
 	/**
-	 * @brief	取出数据，并进行处理
-	 *
-	 * @return	< 0, 表示网络数据有问题, = 0, 表示还有数据继续处理，> 0表示数据处理完毕
-	 */
-	virtual int Dismantle();
-
-	/**
 	 * @brief	发送数据
 	 *
 	 * @param pData		发送的数据, 这里的数据已经包含了数据头
@@ -178,16 +171,6 @@ public:
 	virtual void OnHandleMsgPeer(eMsgType type, uint32_t usLink, char* pBuf, uint32_t sz, uint32_t nMsgId, uint64_t nValue);
 
 	/**
-	* @brief	对解析出来的数据进行处理
-	*
-	* @param type    数据类型，主要是为了和多线程统一处理, 主要有接受数据处理，连接成功处理，断开连接处理
-	* @param usLink  本客户端的唯一id
-	* @param strMsg  websocket 字符串数据 这里的字符串不带0结尾，不要使用c_str函数
-	* @return
-	*/
-	virtual void OnHandleMsgPeer(eMsgType type, uint32_t usLink, const std::string& strMsg);
-
-	/**
 	 * @brief
 	 *
 	 * @return bool
@@ -201,13 +184,6 @@ public:
 	 * @return void
 	 */
 	void SetNeedRemove(bool val);
-
-	/**
-	 * @brief	接收数据
-	 *
-	 * @return	是否成功
-	 */
-	virtual bool OnRecvData(const char* data, size_t length);
 
 	/**
 	 * @brief	处理连接成功
@@ -261,11 +237,6 @@ protected:
 	 * @brief	代表客户端连接的唯一ID
 	 */
 	uint32_t m_usLinkId;
-
-	/**
-	 * @brief	用来保存网络发过来的临时数据
-	 */
-	NFBuffer m_buffer;
 
 	/**
 	 * @brief	连接代表的对方的IP

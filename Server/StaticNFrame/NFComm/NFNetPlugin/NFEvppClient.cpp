@@ -168,49 +168,37 @@ bool NFEvppClient::Connect()
 	m_tcpClient->SetMessageCallback([this](const evpp::TCPConnPtr& conn,
 		evpp::Buffer* msg)
 	{
-		evpp::Slice xMsgBuff;
 		if (msg)
 		{
-			if (!conn->context().IsEmpty())
+			while (true)
 			{
-				xMsgBuff = msg->NextAll();
-
-				NetEvppObject* pObject = evpp::any_cast<NetEvppObject*>(conn->context());
-				if (pObject)
+				char* outData = nullptr;
+				uint32_t outLen = 0;
+				uint32_t allLen = 0;
+				uint32_t nMsgId = 0;
+				uint64_t nValue = 0;
+				int ret = NFIPacketParse::DeCode(mPacketParseType, msg->data(), msg->size(), outData, outLen, allLen, nMsgId, nValue);
+				if (ret < 0)
 				{
-					pObject->m_buffer.PushData(xMsgBuff.data(), xMsgBuff.size());
+					NFLogError(NF_LOG_SYSTEMLOG, 0, "net client parse data failed!");
+					msg->Reset();
+					break;
+				}
+				else if (ret > 0)
+				{
+					break;
+				}
+				else
+				{
+					MsgFromNetInfo* pMsg = new MsgFromNetInfo(conn);
+					pMsg->nType = eMsgType_RECIVEDATA;
+					pMsg->strMsg = std::string(outData, outLen);
+					pMsg->nMsgId = nMsgId;
+					pMsg->nValue = nValue;
+					mMsgQueue.Push(pMsg);
 
-					while (true)
-					{
-						char* outData = nullptr;
-						uint32_t outLen = 0;
-						uint32_t allLen = 0;
-						uint32_t nMsgId = 0;
-						uint64_t nValue = 0;
-						int ret = NFIPacketParse::DeCode(pObject->mPacketParseType, pObject->m_buffer.ReadAddr(), pObject->m_buffer.ReadableSize(), outData, outLen, allLen, nMsgId, nValue);
-						if (ret < 0)
-						{
-							pObject->m_buffer.Consume(pObject->m_buffer.ReadableSize());
-							break;
-						}
-						else if (ret > 0)
-						{
-							break;
-						}
-						else
-						{
-							//OnHandleMsgPeer(eMsgType_RECIVEDATA, m_usLinkId, outData, outLen, nMsgId, nValue);
-							MsgFromNetInfo* pMsg = new MsgFromNetInfo(conn);
-							pMsg->nType = eMsgType_RECIVEDATA;
-							pMsg->strMsg = std::string(outData, outLen);
-							pMsg->nMsgId = nMsgId;
-							pMsg->nValue = nValue;
-							mMsgQueue.Push(pMsg);
-
-							pObject->m_buffer.Consume(allLen);
-							continue;
-						}
-					}
+					msg->Skip(allLen);
+					continue;
 				}
 			}
 		}
@@ -268,7 +256,7 @@ void NFEvppClient::ProcessMsgLogicThread()
 			if (!pMsg->mTCPConPtr->context().IsEmpty())
 			{
 				NetEvppObject* pObject = evpp::any_cast<NetEvppObject*>(pMsg->mTCPConPtr->context());
-				if (pObject)
+				if (pObject && pObject == m_pObject)
 				{
 					pObject->OnHandleMsgPeer(eMsgType_RECIVEDATA, pObject->m_usLinkId, (char*)pMsg->strMsg.data(), pMsg->strMsg.length(), pMsg->nMsgId, pMsg->nValue);
 				}

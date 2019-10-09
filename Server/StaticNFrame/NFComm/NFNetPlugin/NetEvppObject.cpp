@@ -45,14 +45,12 @@
 
 NetEvppObject::NetEvppObject(const evpp::TCPConnPtr& conn) : m_usLinkId(0), m_port(0), mNeedRemove(false), mConnPtr(conn)
 {
-	m_buffer.AssureSpace(MAX_RECV_BUFFER_SIZE);
 	mIsServer = true;
 	mPacketParseType = 0;
 }
 
 NetEvppObject::~NetEvppObject()
 {
-	m_buffer.Clear();
 }
 
 std::string NetEvppObject::GetStrIp() const
@@ -80,55 +78,6 @@ void NetEvppObject::SetIsServer(bool b)
 	mIsServer = b;
 }
 
-bool NetEvppObject::OnRecvData(const char* data, size_t length)
-{
-	m_buffer.PushData(data, length);
-
-	while (true)
-	{
-		int ret = Dismantle();
-		if (ret < 0)
-		{
-			return false;
-		}
-		else if (ret > 0)
-		{
-			break;
-		}
-		if (GetNeedRemove())
-		{
-			return false;
-		}
-	}
-
-	return true;
-}
-
-int NetEvppObject::Dismantle()
-{
-	char* outData = nullptr;
-	uint32_t outLen = 0;
-	uint32_t allLen = 0;
-	uint32_t nMsgId = 0;
-	uint64_t nValue = 0;
-	int ret = NFIPacketParse::DeCode(mPacketParseType, m_buffer.ReadAddr(), m_buffer.ReadableSize(), outData, outLen, allLen, nMsgId, nValue);
-	if (ret < 0)
-	{
-		m_buffer.Consume(m_buffer.ReadableSize());
-		return -1;
-	}
-	else if (ret > 0)
-	{
-		return 1;
-	}
-	else
-	{
-		OnHandleMsgPeer(eMsgType_RECIVEDATA, m_usLinkId, outData, outLen, nMsgId, nValue);
-		m_buffer.Consume(allLen);
-		return 0;
-	}
-}
-
 uint32_t NetEvppObject::GetLinkId() const
 {
 	return m_usLinkId;
@@ -137,39 +86,6 @@ uint32_t NetEvppObject::GetLinkId() const
 void NetEvppObject::SetLinkId(uint32_t linkId)
 {
 	m_usLinkId = linkId;
-}
-
-void NetEvppObject::OnHandleMsgPeer(eMsgType type, uint32_t usLink, const std::string& strMsg)
-{
-	switch (type)
-	{
-	case eMsgType_RECIVEDATA:
-	{
-		if (mRecvCB)
-		{
-			mRecvCB(usLink, 0, 0, strMsg.data(), strMsg.length());
-		}
-	}
-	break;
-	case eMsgType_CONNECTED:
-	{
-		if (mEventCB)
-		{
-			mEventCB(type, usLink);
-		}
-	}
-	break;
-	case eMsgType_DISCONNECTED:
-	{
-		if (mEventCB)
-		{
-			mEventCB(type, usLink);
-		}
-	}
-	break;
-	default:
-		break;
-	}
 }
 
 void NetEvppObject::OnHandleMsgPeer(eMsgType type, uint32_t usLink, char* pBuf, uint32_t sz, uint32_t nMsgId, uint64_t nValue)

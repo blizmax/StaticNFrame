@@ -104,6 +104,10 @@ void NFEvppServer::ProcessMsgLogicThread()
 				}
 				pMsg->mTCPConPtr->set_context(evpp::Any(nullptr));
 			}
+			else
+			{
+				NFLogError(NF_LOG_SYSTEMLOG, 0, "net server diconnect, tcp context error");
+			}
 		}
 		else if (pMsg->nType == eMsgType_RECIVEDATA)
 		{
@@ -114,11 +118,19 @@ void NFEvppServer::ProcessMsgLogicThread()
 				{
 					pObject->OnHandleMsgPeer(eMsgType_RECIVEDATA, pObject->m_usLinkId, (char*)pMsg->strMsg.data(), pMsg->strMsg.length(), pMsg->nMsgId, pMsg->nValue);
 				}
+				else
+				{
+					NFLogError(NF_LOG_SYSTEMLOG, 0, "net server recv data, tcp context error");
+				}
+			}
+			else
+			{
+				NFLogError(NF_LOG_SYSTEMLOG, 0, "net server recv data, tcp context error");
 			}
 		}
 		else
 		{
-			//
+			NFLogError(NF_LOG_SYSTEMLOG, 0, "net server  error");
 		}
 
 		NF_SAFE_DELETE(pMsg);
@@ -139,7 +151,6 @@ bool NFEvppServer::Init()
 		if (conn->IsConnected())
 		{
 			conn->SetTCPNoDelay(true);
-			conn->set_context(evpp::Any(mPacketParseType));
 			MsgFromNetInfo* pMsg = new MsgFromNetInfo(conn);
 			pMsg->nType = eMsgType_CONNECTED;
 			mMsgQueue.Push(pMsg);
@@ -155,62 +166,39 @@ bool NFEvppServer::Init()
 	//消息回调是在别的线程里运行的
 	m_tcpServer->SetMessageCallback([this](const evpp::TCPConnPtr& conn,
 		evpp::Buffer* msg) {
-
-		evpp::Slice xMsgBuff;
 		if (msg)
 		{
-			if (!conn->context().IsEmpty())
+			while (true)
 			{
-				xMsgBuff = msg->NextAll();
-				uint32_t parseType = 0;
-				if (conn->context().GetType() == typeid(uint32_t))
+				char* outData = nullptr;
+				uint32_t outLen = 0;
+				uint32_t allLen = 0;
+				uint32_t nMsgId = 0;
+				uint64_t nValue = 0;
+				int ret = NFIPacketParse::DeCode(mPacketParseType, msg->data(), msg->size(), outData, outLen, allLen, nMsgId, nValue);
+				if (ret < 0)
 				{
-					parseType = evpp::any_cast<uint32_t>(conn->context());
+					NFLogError(NF_LOG_SYSTEMLOG, 0, "net server parse data failed!");
+					msg->Reset();
+					break;
+				}
+				else if (ret > 0)
+				{
+					break;
 				}
 				else
 				{
-					NetEvppObject* pObject = evpp::any_cast<NetEvppObject*>(conn->context());
-					parseType = pObject->mPacketParseType;
+
+					MsgFromNetInfo* pMsg = new MsgFromNetInfo(conn);
+					pMsg->nType = eMsgType_RECIVEDATA;
+					pMsg->strMsg = std::string(outData, outLen);
+					pMsg->nMsgId = nMsgId;
+					pMsg->nValue = nValue;
+					mMsgQueue.Push(pMsg);
+
+					msg->Skip(allLen);
+					continue;
 				}
-
-				NFBuffer mBuffer;
-				mBuffer.PushData(xMsgBuff.data(), xMsgBuff.size());
-
-				while (true)
-				{
-					char* outData = nullptr;
-					uint32_t outLen = 0;
-					uint32_t allLen = 0;
-					uint32_t nMsgId = 0;
-					uint64_t nValue = 0;
-					int ret = NFIPacketParse::DeCode(parseType, mBuffer.ReadAddr(), mBuffer.ReadableSize(), outData, outLen, allLen, nMsgId, nValue);
-					if (ret < 0)
-					{
-						mBuffer.Consume(mBuffer.ReadableSize());
-						break;
-					}
-					else if (ret > 0)
-					{
-						break;
-					}
-					else
-					{
-
-						MsgFromNetInfo* pMsg = new MsgFromNetInfo(conn);
-						pMsg->nType = eMsgType_RECIVEDATA;
-						pMsg->strMsg = std::string(outData, outLen);
-						pMsg->nMsgId = nMsgId;
-						pMsg->nValue = nValue;
-						mMsgQueue.Push(pMsg);
-
-						mBuffer.Consume(allLen);
-						continue;
-					}
-				}
-			}
-			else
-			{
-
 			}
 		}
 	});
