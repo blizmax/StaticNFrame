@@ -46,9 +46,7 @@ end
 
 BarccatatLeave = BarccatatLeave or {}
 function BarccatatLeave.execute(nMsgId, clientId, strMsg)
-    local userid = RebotModel.GetRebotPlayerIdByClient(clientId)
-    RebotModel.DelPlayerTableId(userid)
-    LogFile("error", "userid:"..userid.." leave game")
+
 end
 
 BarccatatSitDown= BarccatatSitDown or {}

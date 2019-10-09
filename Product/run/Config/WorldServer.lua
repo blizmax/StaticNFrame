@@ -112,8 +112,8 @@ function InitGameServer()
 			ServerPort = 6003,
 			MaxConnectNum = 1,  --这里用作机器人数目
 			WorkThreadNum = 5,
-			LuaWorkThreadNum = 20,
-			LuaTcpThreadNum = 40,
+			LuaWorkThreadNum = 2,
+			LuaTcpThreadNum = 4,
 			Security = false,
 			WebSocket = false,
 		};
