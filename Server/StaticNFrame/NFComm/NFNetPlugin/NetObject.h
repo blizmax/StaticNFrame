@@ -132,20 +132,6 @@ public:
 	}
 
 	/**
-	* @brief 如果是websocket的话，判断是否handleshark
-	*
-	* @return bool
-	*/
-	bool IsHandleShark() const;
-
-	/**
-	* @brief 如果是websocket的话，需要设计handleshark
-	*
-	* @return
-	*/
-	void SetHandleShark(bool b);
-
-	/**
 	* @brief 如果是websocket的话
 	*
 	* @return bool
@@ -218,6 +204,15 @@ public:
 	 * @return
 	 */
 	virtual bool Send(const void* pData, uint32_t unSize);
+
+	/**
+	 * @brief	发送数据 不包含数据头
+	 *
+	 * @param pData		发送的数据,
+	 * @param unSize	数据的大小
+	 * @return
+	 */
+	virtual bool Send(const uint32_t nMsgID, const char* msg, const uint32_t nLen, const uint64_t nPlayerID);
 
 	/**
 	 * @brief	获得读写数据结构体
@@ -308,27 +303,11 @@ public:
 	virtual void CloseObject();
 
 	/**
-	* @brief 处理shark info
-	*
-	* @return void
-	*/
-	virtual int HandleSharkInfo();
-
-	/**
-	* @brief 处理shark info
-	*
-	* @return void
-	*/
-	virtual std::string HandleSharkReturn();
-
-	/**
 	* @brief 是否是服务器端
 	*
 	* @return void
 	*/
 	virtual void SetIsServer(bool b);
-
-	virtual void SendHandleShark();
 
 	virtual void SetOrigin(const std::string& str) { m_origin = str; }
 
@@ -364,6 +343,8 @@ protected:
 	 */
 	NFBuffer m_buffer;
 
+	NFBuffer m_sendBuffer;
+
 	/**
 	* @brief	websocket需要
 	*/
@@ -383,11 +364,6 @@ protected:
 	 * @brief 是否需要删除, 这个链接不在起作用，将在下一次循环中被删除
 	 */
 	bool mNeedRemove;
-
-	/**
-	* @brief 如果是websocket，需要先握手
-	*/
-	bool mHandleShark;
 
 	/**
 	* @brief websocket

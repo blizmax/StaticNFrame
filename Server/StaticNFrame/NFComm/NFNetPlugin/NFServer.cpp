@@ -443,3 +443,63 @@ void NFServer::OnSocketNetEvent(const eMsgType nEvent, const uint32_t unLinkId)
 	}
 }
 
+/**
+ * @brief	发送数据 不包含数据头
+ *
+ * @param pData		发送的数据,
+ * @param unSize	数据的大小
+ * @return
+ */
+bool NFServer::Send(uint32_t usLinkId, const uint32_t nMsgID, const char* msg, const uint32_t nLen, const uint64_t nPlayerID)
+{
+	uint32_t serverType = GetServerTypeFromUnlinkId(usLinkId);
+
+	if (serverType != mServerType)
+	{
+		NFLogError(NF_LOG_NET_PLUGIN, 0, "serverType != mServerType, this usLinkId:%s is not of the server:%s", usLinkId, GetServerName(mServerType).c_str());
+		return false;
+	}
+
+	uint32_t isServer = GetIsServerFromUnlinkId(usLinkId);
+	if (isServer != NF_IS_SERVER)
+	{
+		NFLogError(NF_LOG_NET_PLUGIN, 0, "usLinkId is not a server link, this usLinkId:%s is not of the server:%s", usLinkId, GetServerName(mServerType).c_str());
+		return false;
+	}
+
+	auto iter = mNetObjectArray.find(usLinkId);
+	if (iter != mNetObjectArray.end())
+	{
+		auto pObject = iter->second;
+		if (pObject)
+		{
+			return pObject->Send(nMsgID, msg, nLen, nPlayerID);
+		}
+		else
+		{
+			NFLogError(NF_LOG_NET_PLUGIN, 0, "the usLinkId:{} is nullptr", usLinkId);
+		}
+	}
+	return false;
+}
+
+/**
+ * @brief	发送数据
+ *
+ * @param pData		发送的数据, 这里的数据已经包含了数据头
+ * @param unSize	数据的大小
+ * @return
+ */
+bool NFServer::SendAll(const uint32_t nMsgID, const char* msg, const uint32_t nLen, const uint64_t nPlayerID)
+{
+	for (auto iter = mNetObjectArray.begin(); iter != mNetObjectArray.end(); ++iter)
+	{
+		auto pObject = iter->second;
+		if (pObject)
+		{
+			return pObject->Send(nMsgID, msg, nLen, nPlayerID);
+		}
+	}
+	return true;
+}
+

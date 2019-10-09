@@ -113,7 +113,6 @@ NetObject::NetObject() : m_pBev(nullptr), m_usLinkId(0), m_port(0), mNeedRemove(
 {
 	m_nSocketId = INVALID_SOCKET;
 	m_buffer.AssureSpace(MAX_RECV_BUFFER_SIZE);
-	mHandleShark = false;
 	mWebSocket = false;
 	mIsServer = true;
 	mPacketParseType = 0;
@@ -128,21 +127,6 @@ NetObject::~NetObject()
 	m_nSocketId = INVALID_SOCKET;
 	m_buffer.Clear();
 	m_pBev = nullptr;
-}
-
-bool NetObject::IsHandleShark() const
-{
-	return mHandleShark;
-}
-
-/**
-* @brief 如果是websocket的话，需要设计handleshark
-*
-* @return bool
-*/
-void NetObject::SetHandleShark(bool b)
-{
-	mHandleShark = b;
 }
 
 void NetObject::SetWebSocket(bool b)
@@ -180,263 +164,8 @@ void NetObject::SetIsServer(bool b)
 	mIsServer = b;
 }
 
-std::string NetObject::HandleSharkReturn()
-{
-	std::string request = "HTTP/1.1 101 Switching Protocols\r\n"
-		"Upgrade: websocket\r\n"
-		"Connection: Upgrade\r\n"
-		"Sec-WebSocket-Accept: ";
-
-	std::string server_key = mHeaderMap["Sec-WebSocket-Key"];
-	server_key += MAGIC_KEY;
-
-	server_key = NFSHA2::encode(server_key);
-
-	server_key = NFBase64::Encode(server_key);
-
-	server_key += "\r\n\r\n";
-	request += server_key;
-	return request;
-}
-
-void NetObject::SendHandleShark()
-{
-	HttpRequest request;
-	request.setMethod(HttpRequest::HTTP_METHOD::HTTP_METHOD_GET);
-	request.setUrl(m_origin);
-	request.addHeadValue("Host", m_strIp + ":" + lexical_cast<std::string>(m_port));
-	request.addHeadValue("Upgrade", "websocket");
-	request.addHeadValue("Pragma", "no-cache");
-	request.addHeadValue("Cache-Control", "no-cache");
-	request.addHeadValue("Connection", "Upgrade");
-	request.addHeadValue("Sec-WebSocket-Key", "dGhlIHNhbXBsZSBub25jZQ==");
-	request.addHeadValue("Sec-WebSocket-Version", "13");
-	request.addHeadValue("Content-Type", "text/plain;");
-
-	std::string requestStr = request.getResult();
-
-	Send(requestStr.data(), requestStr.length());
-}
-
-/**
-* @brief 处理shark info
-*
-* @return void
-*/
-int NetObject::HandleSharkInfo()
-{
-	std::istringstream s(std::string(m_buffer.ReadAddr(), m_buffer.ReadableSize()));
-	std::string request;
-
-	std::getline(s, request);
-	if (request[request.size() - 1] == '\r') {
-		request.erase(request.end() - 1);
-	}
-	else {
-		return -1;
-	}
-
-	std::string header;
-	std::string::size_type end;
-
-	while (std::getline(s, header) && header != "\r") {
-		if (header[header.size() - 1] != '\r') {
-			continue; //end
-		}
-		else {
-			header.erase(header.end() - 1);	//remove last char
-		}
-
-		end = header.find(": ", 0);
-		if (end != std::string::npos) {
-			std::string key = header.substr(0, end);
-			std::string value = header.substr(end + 2);
-			mHeaderMap[key] = value;
-		}
-	}
-
-	return 0;
-}
-
 int NetObject::Dismantle()
 {
-	if (mIsServer && mWebSocket)
-	{
-		if (!mHandleShark)
-		{
-			if (HandleSharkInfo() < 0)
-			{
-				m_buffer.Consume(m_buffer.ReadableSize());
-				return -1;
-			}
-			m_buffer.Consume(m_buffer.ReadableSize());
-			std::string request = HandleSharkReturn();
-			Send(request.c_str(), request.size());
-			mHandleShark = true;
-			return 1;
-		}
-		else
-		{
-			if (m_buffer.ReadableSize() <= 0)
-			{
-				return 1;
-			}
-
-			mParseString.clear();
-			uint32_t allLen = 0;
-			uint32_t opcode = eWebSocketFrameType::ERROR_FRAME;
-			bool isFinish = false;
-			if (NFIPacketParse::DeCodeWeb(m_buffer.ReadAddr(), m_buffer.ReadableSize(), mParseString, opcode, allLen, isFinish) == false)
-			{
-				m_buffer.Consume(m_buffer.ReadableSize());
-				return 1;
-			}
-
-			// 如果当前fram的fin为false或者opcode为延续包，则将当前frame的payload添加到cache
-			if (!isFinish || opcode == eWebSocketFrameType::CONTINUATION_FRAME)
-			{
-				mCacheFrame += mParseString;
-				mParseString.clear();
-			}
-			// 如果当前fram的fin为false，并且opcode不为延续包，则表示收到分段payload的第一个段(frame)，需要缓存当前frame的opcode
-			if (!isFinish && opcode != eWebSocketFrameType::CONTINUATION_FRAME)
-			{
-				mWSFrameType = opcode;
-			}
-
-			if (isFinish)
-			{
-				// 如果fin为true，并且opcode为延续包，则表示分段payload全部接受完毕，因此需要获取之前第一次收到分段frame的opcode作为整个payload的类型
-				if (opcode == eWebSocketFrameType::CONTINUATION_FRAME)
-				{
-					if (!mCacheFrame.empty())
-					{
-						mParseString = std::move(mCacheFrame);
-						mCacheFrame.clear();
-					}
-					opcode = mWSFrameType;
-				}
-				else if (opcode == eWebSocketFrameType::CLOSE_FRAME)
-				{
-					NFLogError(NF_LOG_NET_PLUGIN, 0, "recv close frame, close connection!");
-
-					m_buffer.Consume(allLen);
-					return 0;
-				}
-				else if (opcode == eWebSocketFrameType::PONG_FRAME)
-				{
-					NFLogError(NF_LOG_NET_PLUGIN, 0, "recv pong frame!");
-				}
-				else if (opcode == eWebSocketFrameType::PING_FRAME)
-				{
-					NFLogError(NF_LOG_NET_PLUGIN, 0, "recv ping frame!");
-				}
-
-				if (NFStringUtility::IsUTF8String(mParseString))
-				{
-					OnHandleMsgPeer(eMsgType_RECIVEDATA, m_usLinkId, mParseString);
-				}
-			}
-			
-			m_buffer.Consume(allLen);
-			return 0;
-		}
-	}
-	else if (mIsServer == false && mWebSocket)
-	{
-		if (m_buffer.ReadableSize() <= 0)
-		{
-			return 1;
-		}
-
-		if (mHandleShark == false)
-		{
-			if (HandleSharkInfo() < 0)
-			{
-				m_buffer.Consume(m_buffer.ReadableSize());
-				return -1;
-			}
-
-			mHandleShark = true;
-			OnHandleMsgPeer(eMsgType_CONNECTED, m_usLinkId, nullptr, 0, 0, 0);
-			m_buffer.Consume(m_buffer.ReadableSize());
-			return 0;
-		}
-		else
-		{
-			//OnHandleMsgPeer(eMsgType_RECIVEDATA, m_usLinkId, m_buffer.ReadAddr(), m_buffer.ReadableSize(), 0, 0);
-			//m_buffer.Consume(m_buffer.ReadableSize());
-			if (m_buffer.ReadableSize() <= 0)
-			{
-				return 1;
-			}
-
-			mParseString.clear();
-			uint32_t allLen = 0;
-			uint32_t opcode = eWebSocketFrameType::ERROR_FRAME;
-			bool isFinish = false;
-			if (NFIPacketParse::DeCodeWeb(m_buffer.ReadAddr(), m_buffer.ReadableSize(), mParseString, opcode, allLen, isFinish) == false)
-			{
-				m_buffer.Consume(m_buffer.ReadableSize());
-				return 1;
-			}
-
-			// 如果当前fram的fin为false或者opcode为延续包，则将当前frame的payload添加到cache
-			if (!isFinish || opcode == eWebSocketFrameType::CONTINUATION_FRAME)
-			{
-				mCacheFrame += mParseString;
-				//NFLogError("cacheFrame:{}", mCacheFrame);
-				//NFLogError("parseString:{}", mParseString);
-				mParseString.clear();
-			}
-			// 如果当前fram的fin为false，并且opcode不为延续包，则表示收到分段payload的第一个段(frame)，需要缓存当前frame的opcode
-			if (!isFinish && opcode != eWebSocketFrameType::CONTINUATION_FRAME)
-			{
-				mWSFrameType = opcode;
-			}
-
-			//NFLogError("parseString:{}", mParseString);
-			if (isFinish)
-			{
-				// 如果fin为true，并且opcode为延续包，则表示分段payload全部接受完毕，因此需要获取之前第一次收到分段frame的opcode作为整个payload的类型
-				if (opcode == eWebSocketFrameType::CONTINUATION_FRAME)
-				{
-					if (!mCacheFrame.empty())
-					{
-						mParseString = std::move(mCacheFrame);
-						mCacheFrame.clear();
-					}
-					opcode = mWSFrameType;
-				}
-				else if (opcode == eWebSocketFrameType::CLOSE_FRAME)
-				{
-					NFLogError(NF_LOG_NET_PLUGIN, 0, "recv close frame, close connection!");
-					m_buffer.Consume(allLen);
-					return 0;
-				}
-				else if (opcode == eWebSocketFrameType::PONG_FRAME)
-				{
-					NFLogError(NF_LOG_NET_PLUGIN, 0, "recv pong frame!");
-				}
-				else if (opcode == eWebSocketFrameType::PING_FRAME)
-				{
-					NFLogError(NF_LOG_NET_PLUGIN, 0, "recv ping frame!");
-				}
-
-				if (NFStringUtility::IsUTF8String(mParseString))
-				{
-					OnHandleMsgPeer(eMsgType_RECIVEDATA, m_usLinkId, mParseString);
-				}
-				else
-				{
-					//NFLogError("recv data not utf8:{}", mParseString);
-				}
-			}
-
-			m_buffer.Consume(allLen);
-			return 0;
-		}
-	}
 	char* outData = nullptr;
 	uint32_t outLen = 0;
 	uint32_t allLen = 0;
@@ -494,14 +223,6 @@ void NetObject::OnHandleMsgPeer(eMsgType type, uint32_t usLink, const std::strin
 	break;
 	case eMsgType_CONNECTED:
 	{
-		if (mIsServer == false && mWebSocket == true)
-		{
-			if (!mHandleShark)
-			{
-				SendHandleShark();
-				return;
-			}
-		}
 		if (mEventCB)
 		{
 			mEventCB(type, usLink);
@@ -510,10 +231,6 @@ void NetObject::OnHandleMsgPeer(eMsgType type, uint32_t usLink, const std::strin
 	break;
 	case eMsgType_DISCONNECTED:
 	{
-		if (mIsServer == false && mWebSocket == true)
-		{
-			mHandleShark = false;
-		}
 		if (mEventCB)
 		{
 			mEventCB(type, usLink);
@@ -539,14 +256,6 @@ void NetObject::OnHandleMsgPeer(eMsgType type, uint32_t usLink, char* pBuf, uint
 		break;
 	case eMsgType_CONNECTED:
 	{
-		if (mIsServer == false && mWebSocket == true)
-		{
-			if (!mHandleShark)
-			{
-				SendHandleShark();
-				return;
-			}
-		}
 		if (mEventCB)
 		{
 			mEventCB(type, usLink);
@@ -555,10 +264,6 @@ void NetObject::OnHandleMsgPeer(eMsgType type, uint32_t usLink, char* pBuf, uint
 	break;
 	case eMsgType_DISCONNECTED:
 		{
-			if (mIsServer == false && mWebSocket == true)
-			{
-				mHandleShark = false;
-			}
 			if (mEventCB)
 			{
 				mEventCB(type, usLink);
@@ -686,6 +391,30 @@ bool NetObject::Send(const void* pData, uint32_t unSize)
 	if (!GetNeedRemove() && bufferevent_get_enabled(m_pBev) != 0)
 	{
 		int nRet = bufferevent_write(m_pBev, pData, unSize);
+		if (nRet < 0)
+		{
+			NFLogError(NF_LOG_NET_PLUGIN, 0, "NetError | send msg error !");
+			return false;
+		}
+		return true;
+	}
+	return false;
+}
+
+/**
+ * @brief	发送数据 不包含数据头
+ *
+ * @param pData		发送的数据,
+ * @param unSize	数据的大小
+ * @return
+ */
+bool NetObject::Send(const uint32_t nMsgID, const char* msg, const uint32_t nLen, const uint64_t nPlayerID)
+{
+	if (!GetNeedRemove() && bufferevent_get_enabled(m_pBev) != 0)
+	{
+		m_sendBuffer.Clear();
+		NFIPacketParse::EnCode(mPacketParseType, nMsgID, nPlayerID, msg, nLen, m_sendBuffer);
+		int nRet = bufferevent_write(m_pBev, (const void*)m_sendBuffer.ReadAddr(), m_sendBuffer.ReadableSize());
 		if (nRet < 0)
 		{
 			NFLogError(NF_LOG_NET_PLUGIN, 0, "NetError | send msg error !");
