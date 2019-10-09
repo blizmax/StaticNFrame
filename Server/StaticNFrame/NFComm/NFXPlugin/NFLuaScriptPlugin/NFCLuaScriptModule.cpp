@@ -705,7 +705,7 @@ std::string NFCLuaScriptModule::HttpGet(const std::string& url)
 	int ret = NFCurlHttpClient::GetSingletonPtr()->Gets(url, strResp);
 	if (ret != 0)
 	{
-		NFLogError(NF_LOG_SYSTEMLOG, 0, "HttpPost url:{}, return error code:{}", url, ret);
+		NFLogError(NF_LOG_SYSTEMLOG, 0, "HttpPost url:{}, return error code:{}, strError:{}", url, ret, NFCurlHttpClient::GetSingletonPtr()->GetStrError(ret));
 	}
 	return strResp;
 }
@@ -716,7 +716,7 @@ std::string NFCLuaScriptModule::HttpGetWithHead(const std::string& url, const st
 	int ret = NFCurlHttpClient::GetSingletonPtr()->Gets(url, strResp);
 	if (ret != 0)
 	{
-		NFLogError(NF_LOG_SYSTEMLOG, 0, "HttpPost url:{}, return error code:{}", url, ret);
+		NFLogError(NF_LOG_SYSTEMLOG, 0, "HttpPost url:{}, return error code:{}, strError:{}", url, ret, NFCurlHttpClient::GetSingletonPtr()->GetStrError(ret));
 	}
 	return strResp;
 }
@@ -727,7 +727,7 @@ std::string NFCLuaScriptModule::HttpPost(const std::string& url, const std::stri
 	int ret = NFCurlHttpClient::GetSingletonPtr()->Posts(url, postContent, strResp);
 	if (ret != 0)
 	{
-		NFLogError(NF_LOG_SYSTEMLOG, 0, "HttpPost url:{}, return error code:{}", url, ret);
+		NFLogError(NF_LOG_SYSTEMLOG, 0, "HttpPost url:{}, return error code:{}, strError:{}, strError:{}", url, ret, NFCurlHttpClient::GetSingletonPtr()->GetStrError(ret));
 	}
 	return strResp;
 }
@@ -738,7 +738,7 @@ std::string NFCLuaScriptModule::HttpPostWithHead(const std::string& url, const s
 	int ret = NFCurlHttpClient::GetSingletonPtr()->Posts(url, postContent, strResp);
 	if (ret != 0)
 	{
-		NFLogError(NF_LOG_SYSTEMLOG, 0, "HttpPost url:{}, return error code:{}", url, ret);
+		NFLogError(NF_LOG_SYSTEMLOG, 0, "HttpPost url:{}, return error code:{}, strError:{}", url, ret, NFCurlHttpClient::GetSingletonPtr()->GetStrError(ret));
 	}
 	return strResp;
 }

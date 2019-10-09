@@ -21,6 +21,11 @@ NFCurlHttpClient::~NFCurlHttpClient(void)
 	curl_global_cleanup();
 }
 
+const char* NFCurlHttpClient::GetStrError(int errcode)
+{
+	return curl_easy_strerror((CURLcode)errcode);
+}
+
 static size_t OnWriteData(void* buffer, size_t size, size_t nmemb, void* lpVoid)
 {
 	std::string* str = dynamic_cast<std::string*>((std::string *)lpVoid);
