@@ -104,15 +104,10 @@ function BrnnService.SendPourJetton(clientId, userid, tableid)
     local index = math.myrandom(1,#pourType)
     cgmsg.pourtype = pourType[index]
 
-    LuaNFrame.SendMsgToRebot(tonumber(clientId), 0, 2519, cgmsg:ByteSize(), cgmsg:SerializeToString())
+    LuaNFrame.SendMsgToRebot(tonumber(clientId), 0, 2507, cgmsg:ByteSize(), cgmsg:SerializeToString())
 
     RebotModel.RecordPlayerSendPour(userid)
     --LogFile("error", "player:"..userid.." send pour:"..cgmsg.jetton)
-end
-
-HongHeiUpdate = HongHeiUpdate or {}
-function HongHeiUpdate.execute(nMsgId, clientId, strMsg)
-
 end
 
 BrnnUpdate = BrnnUpdate or {}
