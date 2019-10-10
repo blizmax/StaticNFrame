@@ -226,13 +226,6 @@ protected:
 	/**
 	 * @brief
 	 *
-	 * @return void
-	 */
-	void ExecuteClose();
-
-	/**
-	 * @brief
-	 *
 	 * @param  pClient
 	 * @return void
 	 */
@@ -284,7 +277,9 @@ protected:
 	void OnDisConnected(NFIClient* pClient);
 private:
 	std::vector<std::vector<NFIClient*>> mxServerMap;
+#ifdef USE_NET_EVPP
 	evpp::EventLoop* m_eventLoop;
 	evpp::EventLoopThreadPool* m_eventLoopThreadPool;
+#endif
 };
 

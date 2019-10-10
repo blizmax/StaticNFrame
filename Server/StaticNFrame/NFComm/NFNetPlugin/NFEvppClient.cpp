@@ -64,10 +64,7 @@ bool NFEvppClient::Init()
 
 bool NFEvppClient::Shut()
 {
-	if (m_tcpClient && m_tcpClient->conn())
-	{
-		m_tcpClient->Disconnect();
-	}
+	CloseServer();
 	return true;
 }
 
@@ -85,7 +82,8 @@ bool NFEvppClient::Finalize()
 	{
 		NF_SAFE_DELETE(m_pObject);
 	}
-
+	m_tcpClient->SetConnectionCallback(nullptr);
+	m_tcpClient->SetMessageCallback(nullptr);
 	m_tcpClient->loop()->QueueInLoop(std::bind(&EvppClientQuit, m_tcpClient));
 	m_tcpClient = nullptr;
 	return true;
@@ -93,45 +91,21 @@ bool NFEvppClient::Finalize()
 
 bool NFEvppClient::Execute()
 {
-	ExecuteClose();
 	ProcessMsgLogicThread();
 	return true;
-}
-
-void NFEvppClient::ExecuteClose()
-{
-	if (m_pObject)
-	{
-		if (m_pObject->GetNeedRemove())
-		{
-			Close();
-		}
-	}
 }
 
 void NFEvppClient::CloseServer()
 {
 	if (m_pObject)
 	{
-		if (m_pObject->GetNeedRemove() == false)
-		{
-			m_pObject->SetNeedRemove(true);
-			m_pObject->CloseObject();
-		}
-	}
-
-	if (m_tcpClient && m_tcpClient->conn())
-	{
-		m_tcpClient->Disconnect();
+		m_pObject->CloseObject();
 	}
 }
 
 bool NFEvppClient::Connect()
 {
-	if (!m_pObject)
-	{
-		m_pObject = new NetEvppObject(nullptr);
-	}
+	m_pObject = new NetEvppObject(nullptr);
 
 	m_pObject->SetPacketParseType(GetPacketParseType());
 	m_pObject->SetIsServer(false);
@@ -148,8 +122,6 @@ bool NFEvppClient::Connect()
 		if (conn->IsConnected())
 		{
 			conn->SetTCPNoDelay(true);
-			m_pObject->SetConnPtr(conn);
-			conn->set_context(evpp::Any(m_pObject));
 			MsgFromNetInfo* pMsg = new MsgFromNetInfo(conn);
 			pMsg->nType = eMsgType_CONNECTED;
 			mMsgQueue.Push(pMsg);
@@ -248,6 +220,12 @@ void NFEvppClient::ProcessMsgLogicThread()
 					m_pObject->OnHandleDisConnect();
 				}
 			}
+
+			if (m_pObject)
+			{
+				NF_SAFE_DELETE(m_pObject);
+				m_pObject = nullptr;
+			}
 		}
 		else if (pMsg->nType == eMsgType_RECIVEDATA)
 		{
@@ -271,20 +249,6 @@ void NFEvppClient::ProcessMsgLogicThread()
 
 		NF_SAFE_DELETE(pMsg);
 	}
-}
-
-void NFEvppClient::Close()
-{
-	if (m_tcpClient && m_tcpClient->conn())
-	{
-		m_tcpClient->Disconnect();
-	}
-	
-	if (m_pObject)
-	{
-		NF_SAFE_DELETE(m_pObject);
-	}
-	m_pObject = nullptr;
 }
 
 bool NFEvppClient::Send(const void* pData, uint32_t unSize)

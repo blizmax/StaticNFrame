@@ -22,8 +22,10 @@ NFCNetClientModule::NFCNetClientModule(NFIPluginManager* p)
 	{
 		AddEventCallBack((NF_SERVER_TYPES)serverType, this, &NFCNetClientModule::OnHandleNetEvent);
 	}
+#ifdef USE_NET_EVPP
 	m_eventLoop = nullptr;
 	m_eventLoopThreadPool = nullptr;
+#endif
 }
 
 NFCNetClientModule::~NFCNetClientModule()
@@ -32,6 +34,7 @@ NFCNetClientModule::~NFCNetClientModule()
 
 bool NFCNetClientModule::Awake()
 {
+#ifdef USE_NET_EVPP
 	if (m_pPluginManager->GetAppName() == "RebotServer")
 	{
 		InitThreadPool(10);
@@ -40,7 +43,7 @@ bool NFCNetClientModule::Awake()
 	{
 		InitThreadPool(1);
 	}
-	
+#endif
 	return true;
 }
 
@@ -55,9 +58,11 @@ bool NFCNetClientModule::Init()
  */
 void NFCNetClientModule::InitThreadPool(uint32_t threadCount)
 {
+#ifdef USE_NET_EVPP
 	m_eventLoop = NF_NEW evpp::EventLoop();
 	m_eventLoopThreadPool = NF_NEW evpp::EventLoopThreadPool(m_eventLoop, threadCount);
 	m_eventLoopThreadPool->Start(true);
+#endif
 }
 
 bool NFCNetClientModule::AfterInit()
@@ -96,15 +101,26 @@ bool NFCNetClientModule::Finalize()
 			if (mxServerMap[i][j])
 			{
 				mxServerMap[i][j]->Finalize();
+			}
+		}
+	}
+#ifdef USE_NET_EVPP
+	m_eventLoopThreadPool->Stop(true);
+#endif
+
+	for (size_t i = 0; i < mxServerMap.size(); i++)
+	{
+		for (size_t j = 0; j < mxServerMap[i].size(); j++)
+		{
+			if (mxServerMap[i][j])
+			{
 				NF_SAFE_DELETE(mxServerMap[i][j]);
 				mxServerMap[i][j] = nullptr;
 			}
 		}
 	}
 	mxServerMap.clear();
-
-	m_eventLoopThreadPool->Stop(true);
-
+#ifdef USE_NET_EVPP
 	if (m_eventLoopThreadPool)
 	{
 		NF_SAFE_DELETE(m_eventLoopThreadPool);
@@ -114,13 +130,12 @@ bool NFCNetClientModule::Finalize()
 	{
 		NF_SAFE_DELETE(m_eventLoop);
 	}
-
+#endif
 	return true;
 }
 
 bool NFCNetClientModule::Execute()
 {
-	ExecuteClose();
 	ProcessExecute();
 	return true;
 }
@@ -225,7 +240,7 @@ void NFCNetClientModule::CloseServerByServerType(NF_SERVER_TYPES eServerType)
 		{
 			if (mxServerMap[eServerType][j])
 			{
-				mxServerMap[eServerType][j]->Shut();
+				mxServerMap[eServerType][j]->CloseServer();
 				mxServerMap[eServerType][j]->SetStatus(eConnectStatus_REMOVE);
 			}
 		}
@@ -240,7 +255,7 @@ void NFCNetClientModule::CloseAllServer()
 		{
 			if (mxServerMap[i][j])
 			{
-				mxServerMap[i][j]->Shut();
+				mxServerMap[i][j]->CloseServer();
 				mxServerMap[i][j]->SetStatus(eConnectStatus_REMOVE);
 			}
 		}
@@ -389,7 +404,6 @@ void NFCNetClientModule::ProcessExecute()
 							break;
 						}
 
-						pClient->ExecuteClose();
 						pClient->SetStatus(eConnectStatus_Connecting);
 						pClient->Init();
 					}
@@ -405,23 +419,6 @@ void NFCNetClientModule::ProcessExecute()
 				default:
 					break;
 				}
-			}
-		}
-	}
-}
-
-void NFCNetClientModule::ExecuteClose()
-{
-	for (size_t i = 0; i < mxServerMap.size(); i++)
-	{
-		for (size_t j = 0; j < mxServerMap[i].size(); j++)
-		{
-			if (mxServerMap[i][j] && mxServerMap[i][j]->IsNeedRemve())
-			{
-				mxServerMap[i][j]->Shut();
-				mxServerMap[i][j]->Finalize();
-				NF_SAFE_DELETE(mxServerMap[i][j]);
-				mxServerMap[i][j] = nullptr;
 			}
 		}
 	}

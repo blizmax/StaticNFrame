@@ -91,13 +91,6 @@ public:
 	virtual bool Execute() override;
 
 	/**
-	 * @brief	删除关闭的连接
-	 *
-	 * @return	是否成功
-	 */
-	virtual void ExecuteClose();
-
-	/**
 	 * @brief	关闭连接
 	 *
 	 * @return	是否成功
@@ -110,14 +103,6 @@ public:
 	 * @return  连接成功与否
 	 */
 	virtual bool Connect();
-
-	/**
-	 * @brief	关闭客户端连接, 与Conenct对应
-	 * 程序运行时，只能在OnExectue里调用，
-	 * 退出时，在析构函数调用
-	 * @return
-	 */
-	virtual void Close();
 
 	/**
 	 * @brief	发送数据
