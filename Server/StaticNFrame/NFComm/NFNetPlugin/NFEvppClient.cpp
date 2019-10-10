@@ -71,14 +71,12 @@ bool NFEvppClient::Shut()
 	return true;
 }
 
-void NFEvppClient::Quit()
+void EvppClientQuit(evpp::TCPClient* pTcpClient)
 {
-	if (m_tcpClient)
+	if (pTcpClient)
 	{
-		NF_SAFE_DELETE(m_tcpClient);
+		NF_SAFE_DELETE(pTcpClient);
 	}
-	m_tcpClient = nullptr;
-	delete this;
 }
 
 bool NFEvppClient::Finalize()
@@ -88,8 +86,8 @@ bool NFEvppClient::Finalize()
 		NF_SAFE_DELETE(m_pObject);
 	}
 
-	m_tcpClient->loop()->QueueInLoop(std::bind(&NFEvppClient::Quit, this));
-
+	m_tcpClient->loop()->QueueInLoop(std::bind(&EvppClientQuit, m_tcpClient));
+	m_tcpClient = nullptr;
 	return true;
 }
 

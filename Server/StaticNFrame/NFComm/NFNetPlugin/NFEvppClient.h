@@ -139,7 +139,6 @@ public:
 
 	void ProcessMsgLogicThread();
 
-	void Quit();
 private:
 	evpp::TCPClient* m_tcpClient;
 protected:

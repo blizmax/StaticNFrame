@@ -96,6 +96,7 @@ bool NFCNetClientModule::Finalize()
 			if (mxServerMap[i][j])
 			{
 				mxServerMap[i][j]->Finalize();
+				NF_SAFE_DELETE(mxServerMap[i][j]);
 				mxServerMap[i][j] = nullptr;
 			}
 		}
@@ -397,6 +398,7 @@ void NFCNetClientModule::ProcessExecute()
 					{
 						pClient->Shut();
 						pClient->Finalize();
+						NF_SAFE_DELETE(mxServerMap[i][j]);
 						mxServerMap[i][j] = nullptr;
 					}
 					break;
@@ -418,6 +420,7 @@ void NFCNetClientModule::ExecuteClose()
 			{
 				mxServerMap[i][j]->Shut();
 				mxServerMap[i][j]->Finalize();
+				NF_SAFE_DELETE(mxServerMap[i][j]);
 				mxServerMap[i][j] = nullptr;
 			}
 		}
