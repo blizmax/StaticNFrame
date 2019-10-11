@@ -124,6 +124,7 @@ public:
 
 	void ProcessMsgLogicThread();
 
+	void SafeExit();
 private:
 	evpp::TCPClient* m_tcpClient;
 protected:
@@ -136,6 +137,11 @@ protected:
 	* @brief 需要消息队列
 	*/
 	NFQueueVector<MsgFromNetInfo*> mMsgQueue;
+
+	/**
+	 * @brief	多线程安全退出
+	 */
+	std::atomic_bool m_safeExit;
 };
 
 
