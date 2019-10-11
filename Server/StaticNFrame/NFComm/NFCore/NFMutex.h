@@ -13,9 +13,7 @@
 #include <thread>
 #include <mutex>
 
-/**
-Portable mutex synchronization primitive.
-*/
+
 class _NFExport NFMutex
 {
 public:
@@ -23,33 +21,20 @@ public:
 	friend class NFCondition;
 	friend class NFLock;
 
-	/**
-	Default constructor.
-	*/
 	NF_FORCEINLINE NFMutex()
 	{
 	}
 
-	/**
-	Destructor.
-	*/
 	NF_FORCEINLINE ~NFMutex()
 	{
 
 	}
 
-	/**
-	Locks the mutex, guaranteeing exclusive access to a protected resource associated with it.
-	\note This is a blocking call and should be used with care to avoid deadlocks.
-	*/
 	NF_FORCEINLINE void Lock()
 	{
 		mMutex.lock();
 	}
 
-	/**
-	Unlocks the mutex, releasing exclusive access to a protected resource associated with it.
-	*/
 	NF_FORCEINLINE void Unlock()
 	{
 		mMutex.unlock();
@@ -61,5 +46,30 @@ private:
 	NFMutex &operator=(const NFMutex &other);
 
 	std::mutex mMutex;
+};
+
+class _NFExport NFMutexGuard
+{
+public:
+
+	friend class NFCondition;
+	friend class NFLock;
+
+	NF_FORCEINLINE NFMutexGuard()
+	{
+		mMutex.Lock();
+	}
+
+	NF_FORCEINLINE ~NFMutexGuard()
+	{
+		mMutex.Unlock();
+	}
+
+private:
+
+	NFMutexGuard(const NFMutexGuard &other);
+	NFMutexGuard &operator=(const NFMutexGuard &other);
+
+	NFMutex mMutex;
 };
 

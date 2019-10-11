@@ -36,10 +36,15 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="NFCTestModule.cpp" />
+    <ClCompile Include="NFEventLoop.cpp" />
+    <ClCompile Include="NFEventLoopThread.cpp" />
     <ClCompile Include="NFTestPlugin.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="NFCTestModule.h" />
+    <ClInclude Include="NFEventLoop.h" />
+    <ClInclude Include="NFEventLoopThread.h" />
+    <ClInclude Include="NFServerStatus.h" />
     <ClInclude Include="NFTestPlugin.h" />
     <ClInclude Include="NFThreadPool.h" />
   </ItemGroup>

@@ -36,7 +36,7 @@
 
 NFEvppClient::NFEvppClient(evpp::EventLoop* eventLoop, uint32_t nId, const NFClientFlag& flag):NFIClient(nId, flag)
 {
-	m_safeExit = false;
+	m_safeExit.store(false);
 	m_pObject = nullptr;
 	m_tcpClient = nullptr;
 
@@ -75,14 +75,14 @@ void NFEvppClient::SafeExit()
 	{
 		NF_SAFE_DELETE(m_tcpClient);
 	}
-	m_safeExit = true;
+	m_safeExit.store(true);
 }
 
 bool NFEvppClient::Finalize()
 {
-	m_safeExit = false;
+	m_safeExit.store(false);
 	m_tcpClient->loop()->QueueInLoop(std::bind(&NFEvppClient::SafeExit, this));
-	while (!m_safeExit)
+	while (!m_safeExit.load())
 	{
 		NFSLEEP(1);
 	}

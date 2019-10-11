@@ -14,6 +14,8 @@
 #include "NFComm/NFPluginModule/NFLogMgr.h"
 #include "NFComm/NFPluginModule/NFILuaScriptModule.h"
 
+
+
 NFCTestModule::NFCTestModule(NFIPluginManager* p)
 {
 	m_pPluginManager = p;
@@ -23,22 +25,38 @@ NFCTestModule::~NFCTestModule()
 {
 }
 
+int testfunc()
+{
+	std::cout << "pre func" << std::endl;
+	return 0;
+}
+
+int testfunc2()
+{
+	std::cout << "post func" << std::endl;
+	return 0;
+}
+
+void testrun()
+{
+	std::cout << "run" << std::endl;
+	NFSLEEP(1);
+}
+
 bool NFCTestModule::Init()
 {
+	SetTimer(0, 30, INFINITY_CALL);
+	SetTimer(1, 10000, 1);
+	loopThread.Start(true, &testfunc, &testfunc2);
 	return true;
-}
-
-void NFCTestModule::OnHandleOtherMessage(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen)
-{
-
-}
-
-void NFCTestModule::OnProxySocketEvent(const eMsgType nEvent, const uint32_t unLinkId)
-{
 }
 
 void NFCTestModule::OnTimer(uint32_t nTimerID)
 {
+	if (nTimerID == 0)
+		loopThread.loop()->RunInLoop(&testrun);
+	else
+		loopThread.Stop(true);
 }
 
 bool NFCTestModule::AfterInit()

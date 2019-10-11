@@ -62,7 +62,7 @@ public:
 	/**
 	Wakes a single thread that is suspended after having called \ref Wait.
 	*/
-	NF_FORCEINLINE void Pulse()
+	NF_FORCEINLINE void NotifyOne()
 	{
 		mCondition.notify_one();
 	}
@@ -70,7 +70,7 @@ public:
 	/**
 	Wakes all threads that are suspended after having called \ref Wait.
 	*/
-	NF_FORCEINLINE void PulseAll()
+	NF_FORCEINLINE void NotifyAll()
 	{
 		mCondition.notify_all();
 	}
