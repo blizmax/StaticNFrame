@@ -15,7 +15,7 @@
 #include "NFComm/NFPluginModule/NFTimerMgr.h"
 #include "NFComm/NFPluginModule/NFServerDefine.h"
 
-#include "NFEventLoopThread.h"
+#include "NFComm/NFCore/NFEventLoopThreadPool.h"
 
 class NFCTestModule : public NFIModule, NFTimerObj
 {
@@ -34,6 +34,4 @@ public:
 	virtual bool Shut() override;
 
 	virtual void OnTimer(uint32_t nTimerID) override;
-
-	NFEventLoopThread loopThread;
 };

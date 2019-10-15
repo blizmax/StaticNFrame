@@ -47,16 +47,16 @@ bool NFCTestModule::Init()
 {
 	SetTimer(0, 30, INFINITY_CALL);
 	SetTimer(1, 10000, 1);
-	loopThread.Start(true, &testfunc, &testfunc2);
+	NFEventLoop* loopThread = new NFEventLoop();
+	NFEventLoopThreadPool* loopThreadPool = new NFEventLoopThreadPool(loopThread, 5);
+	loopThreadPool->Start(true);
+	loopThreadPool->Stop(true);
 	return true;
 }
 
 void NFCTestModule::OnTimer(uint32_t nTimerID)
 {
-	if (nTimerID == 0)
-		loopThread.loop()->RunInLoop(&testrun);
-	else
-		loopThread.Stop(true);
+
 }
 
 bool NFCTestModule::AfterInit()

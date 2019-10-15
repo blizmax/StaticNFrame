@@ -175,7 +175,7 @@ uint32_t NFCNetClientModule::AddServer(NF_SERVER_TYPES eServerType, const std::s
 		uint32_t usId = GetFreeUnLinkId(eServerType);
 		if (usId == 0)
 		{
-			NFLogError(NF_LOG_NET_PLUGIN, 0, "Add Connecting Server Failed! Ip:%s, Port:%d, than max connection:65535", strIp.c_str(), nPort);
+			NFLogError(NF_LOG_NET_PLUGIN, 0, "Add Connecting Server Failed! Ip:{}, Port:{}, than max connection:65535", strIp.c_str(), nPort);
 			return 0;
 		}
 

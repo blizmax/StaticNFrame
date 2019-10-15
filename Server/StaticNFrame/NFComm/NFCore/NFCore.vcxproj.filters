@@ -105,6 +105,15 @@
     <ClCompile Include="NFTime.cpp">
       <Filter>Common</Filter>
     </ClCompile>
+    <ClCompile Include="NFEventLoop.cpp">
+      <Filter>Thread</Filter>
+    </ClCompile>
+    <ClCompile Include="NFEventLoopThread.cpp">
+      <Filter>Thread</Filter>
+    </ClCompile>
+    <ClCompile Include="NFEventLoopThreadLoop.cpp">
+      <Filter>Thread</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="NFBase64.h">
@@ -196,9 +205,6 @@
     </ClInclude>
     <ClInclude Include="NFPlatformMacros.h">
       <Filter>Common</Filter>
-    </ClInclude>
-    <ClInclude Include="NFThread.hpp">
-      <Filter>Thread</Filter>
     </ClInclude>
     <ClInclude Include="NFQueue.hpp">
       <Filter>Thread</Filter>
@@ -294,6 +300,21 @@
       <Filter>Thread</Filter>
     </ClInclude>
     <ClInclude Include="NFCondition.h">
+      <Filter>Thread</Filter>
+    </ClInclude>
+    <ClInclude Include="NFEventLoop.h">
+      <Filter>Thread</Filter>
+    </ClInclude>
+    <ClInclude Include="NFEventLoopThread.h">
+      <Filter>Thread</Filter>
+    </ClInclude>
+    <ClInclude Include="NFEventLoopThreadPool.h">
+      <Filter>Thread</Filter>
+    </ClInclude>
+    <ClInclude Include="NFServerStatus.h">
+      <Filter>Thread</Filter>
+    </ClInclude>
+    <ClInclude Include="NFThreadPool.h">
       <Filter>Thread</Filter>
     </ClInclude>
   </ItemGroup>

@@ -334,6 +334,9 @@
     <ClCompile Include="NFBase64.cpp" />
     <ClCompile Include="NFCommon.cpp" />
     <ClCompile Include="NFError.cpp" />
+    <ClCompile Include="NFEventLoop.cpp" />
+    <ClCompile Include="NFEventLoopThread.cpp" />
+    <ClCompile Include="NFEventLoopThreadLoop.cpp" />
     <ClCompile Include="NFMemHashMapCompact.cpp" />
     <ClCompile Include="NFJson.cpp" />
     <ClCompile Include="NFMallocChunk.cpp" />
@@ -373,6 +376,9 @@
     <ClInclude Include="NFConsistentHash.hpp" />
     <ClInclude Include="NFConsistentHashNew.h" />
     <ClInclude Include="NFError.h" />
+    <ClInclude Include="NFEventLoop.h" />
+    <ClInclude Include="NFEventLoopThread.h" />
+    <ClInclude Include="NFEventLoopThreadPool.h" />
     <ClInclude Include="NFHash.hpp" />
     <ClInclude Include="NFLock.h" />
     <ClInclude Include="NFMemHashMap2.h" />
@@ -411,6 +417,7 @@
     <ClInclude Include="NFPlatformMacros.h" />
     <ClInclude Include="NFQueue.hpp" />
     <ClInclude Include="NFRandom.hpp" />
+    <ClInclude Include="NFServerStatus.h" />
     <ClInclude Include="NFServerTime.h" />
     <ClInclude Include="NFSHA1.h" />
     <ClInclude Include="NFSHA2.h" />
@@ -424,8 +431,8 @@
     <ClInclude Include="NFStat.h" />
     <ClInclude Include="NFStringUtility.h" />
     <ClInclude Include="NFTCPack.h" />
-    <ClInclude Include="NFThread.hpp" />
     <ClInclude Include="NFBuffer.h" />
+    <ClInclude Include="NFThreadPool.h" />
     <ClInclude Include="NFThreadUtils.h" />
     <ClInclude Include="NFTime.h" />
   </ItemGroup>
