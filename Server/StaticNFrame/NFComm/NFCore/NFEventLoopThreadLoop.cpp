@@ -16,7 +16,7 @@ NFEventLoopThreadPool::~NFEventLoopThreadPool()
 bool NFEventLoopThreadPool::Start(bool wait_thread_started)
 {
 	m_status.store(kStarting);
-	std::cout << "NFEventLoopThreadPool start thread_num:" << m_threadNum << " wait_thread_started:" << wait_thread_started;
+	std::cout << "NFEventLoopThreadPool start thread_num:" << m_threadNum << " wait_thread_started:" << wait_thread_started << std::endl;
 	if (m_threadNum == 0)
 	{
 		m_status.store(kRunning);
