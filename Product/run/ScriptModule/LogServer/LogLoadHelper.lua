@@ -100,6 +100,7 @@ require("Human.Model.SpecialModel")
 
 require("Agent.Model.AgentModel")
 require("Agent.Model.UnlimitedModel")
+require("Agent.Model.TaxModel")
 require("Agent.Model.BonusModule")
 require("Barccatat.Model.BarccatatModel")
 require("Barccatat.Model.BarccatatStatsModel")
@@ -232,6 +233,7 @@ require("common.define.AgentDefine")
 require("common.packet.packet_agent")
 require("Agent.Model.AgentModel")
 require("Agent.Model.UnlimitedModel")
+require("Agent.Model.TaxModel")
 require("Agent.Model.BonusModule")
 require("Agent.Services.UnlimitedAgentService")
 require("Agent.Services.AgentService")
@@ -244,6 +246,10 @@ require("Agent.Worker.UnlimitedDayCheck")
 require("Agent.Worker.UnlimitedWeekCheck")
 require("Agent.Worker.UnlimitedPersonCheck")
 require("Agent.Worker.CommissionCheck")
+
+require("Agent.Worker.TaxCount")
+require("Agent.Worker.TaxDayCheck")
+require("Agent.Worker.TaxPersonCheck")
 
 g_redisIndex[AgentModel.redis_index] = {index = g_redisInfo.redis_two, key = AgentModel.redis_index, link = 1}
 

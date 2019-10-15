@@ -100,6 +100,7 @@ require("Human.Model.SpecialModel")
 
 require("Agent.Model.AgentModel")
 require("Agent.Model.UnlimitedModel")
+require("Agent.Model.TaxModel")
 require("Agent.Model.BonusModule")
 require("Barccatat.Model.BarccatatModel")
 require("Barccatat.Model.BarccatatStatsModel")
