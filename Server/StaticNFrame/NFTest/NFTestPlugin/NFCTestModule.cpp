@@ -25,32 +25,8 @@ NFCTestModule::~NFCTestModule()
 {
 }
 
-int testfunc()
-{
-	std::cout << "pre func" << std::endl;
-	return 0;
-}
-
-int testfunc2()
-{
-	std::cout << "post func" << std::endl;
-	return 0;
-}
-
-void testrun()
-{
-	std::cout << "run" << std::endl;
-	NFSLEEP(1);
-}
-
 bool NFCTestModule::Init()
 {
-	SetTimer(0, 30, INFINITY_CALL);
-	SetTimer(1, 10000, 1);
-	NFEventLoop* loopThread = new NFEventLoop();
-	NFEventLoopThreadPool* loopThreadPool = new NFEventLoopThreadPool(loopThread, 5);
-	loopThreadPool->Start(true);
-	loopThreadPool->Stop(true);
 	return true;
 }
 
