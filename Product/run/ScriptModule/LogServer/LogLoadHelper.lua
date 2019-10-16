@@ -102,6 +102,7 @@ require("Agent.Model.AgentModel")
 require("Agent.Model.UnlimitedModel")
 require("Agent.Model.TaxModel")
 require("Agent.Model.BonusModule")
+require("Agent.Model.CostModel")
 require("Barccatat.Model.BarccatatModel")
 require("Barccatat.Model.BarccatatStatsModel")
 require("Bcbm.Model.BcbmModel")
@@ -218,6 +219,11 @@ g_redisIndex[TtzModel.redis_index] = {index = g_redisInfo.redis_four, des = "Ttz
 g_redisIndex[TtzModel.redis_index] = {index = g_redisInfo.redis_four, des = "Ttz_info"}
 g_redisIndex[YqsModel.redis_index] = {index = g_redisInfo.redis_three, key = YqsModel.redis_index, link = 1}
 
+require("common.st_shop_pb")
+require("common.st_human_pb")
+require("common.msg_human_pb")
+require("common.define.HumanDefine")
+
 require("common.packet.packet_human")
 require("Rank.Init")
 require("Robot.Init")
@@ -235,6 +241,7 @@ require("Agent.Model.AgentModel")
 require("Agent.Model.UnlimitedModel")
 require("Agent.Model.TaxModel")
 require("Agent.Model.BonusModule")
+require("Agent.Model.CostModel")
 require("Agent.Services.UnlimitedAgentService")
 require("Agent.Services.AgentService")
 require("Agent.Services.UnlimitedAward")
@@ -250,6 +257,8 @@ require("Agent.Worker.CommissionCheck")
 require("Agent.Worker.TaxCount")
 require("Agent.Worker.TaxDayCheck")
 require("Agent.Worker.TaxPersonCheck")
+
+require("Agent.Worker.CostCount")
 
 g_redisIndex[AgentModel.redis_index] = {index = g_redisInfo.redis_two, key = AgentModel.redis_index, link = 1}
 
