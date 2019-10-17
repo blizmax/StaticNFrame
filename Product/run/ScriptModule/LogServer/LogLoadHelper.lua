@@ -259,6 +259,8 @@ require("Agent.Worker.TaxDayCheck")
 require("Agent.Worker.TaxPersonCheck")
 
 require("Agent.Worker.CostCount")
+require("Agent.Worker.CostDayCheck")
+require("Agent.Worker.CostPersonCheck")
 
 g_redisIndex[AgentModel.redis_index] = {index = g_redisInfo.redis_two, key = AgentModel.redis_index, link = 1}
 
