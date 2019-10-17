@@ -236,6 +236,8 @@ require("Human.Model.HttpSendModel")
 require("common.st_shop_pb")
 require("common.st_human_pb")
 require("common.msg_human_pb")
+require("common.msg_shop_pb")
+
 require("common.define.HumanDefine")
 require("Human.Utils.GameUtils")
 require("Human.Utils.GameHelp")
