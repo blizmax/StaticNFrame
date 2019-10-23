@@ -229,3 +229,7 @@ require("peiwang.Init")
 require("Rank.Init")
 require("Robot.Init")
 require("Shop.Init")
+
+require("common.packet.packet_lhd")
+require("common.packet.packet_douniuTz")
+
