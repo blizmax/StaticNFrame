@@ -258,3 +258,5 @@ require("Http.HttpService")
 require("Http.HttpLogin")
 require("Http.HttpActivity")
 require("Http.HttpUtils")
+
+require("DouNiuTz.Services.DouNiuTzService")

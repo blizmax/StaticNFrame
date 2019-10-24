@@ -31,7 +31,7 @@ bool NFCProxyClient_LoginModule::Init()
 bool NFCProxyClient_LoginModule::AfterInit()
 {
 	FindModule<NFINetClientModule>()->AddEventCallBack(NF_ST_LOGIN, this, &NFCProxyClient_LoginModule::OnProxySocketEvent);
-	FindModule<NFINetClientModule>()->AddReceiveCallBack(NF_ST_LOGIN, this, &NFCProxyClient_LoginModule::OnHandleOtherMessage);
+	//FindModule<NFINetClientModule>()->AddReceiveCallBack(NF_ST_LOGIN, this, &NFCProxyClient_LoginModule::OnHandleOtherMessage);
 
 	return true;
 }
