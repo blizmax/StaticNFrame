@@ -620,6 +620,10 @@ public:
 
 	virtual ~NFCLuaScriptComponent();
 
+	bool IsDeadCycle() { return m_deadCycle.load(); }
+	void SetDeadCycle() { m_deadCycle.store(true); }
+	void ClearDeadCycle() { m_deadCycle.store(false); }
+
 	void ProcessTaskStart(NFTask* pTask) override
 	{
 		NFLuaThreadTask* pLuaTask = dynamic_cast<NFLuaThreadTask*>(pTask);
@@ -647,6 +651,17 @@ public:
 		NFLuaThreadTask* pLuaTask = dynamic_cast<NFLuaThreadTask*>(pTask);
 		if (pLuaTask)
 		{
+			if (pLuaTask->m_pComponent)
+			{
+				if (pLuaTask->m_pComponent->IsDeadCycle())
+				{
+					pLuaTask->m_pComponent->ClearDeadCycle();
+					NFLogError(NF_LOG_SYSTEMLOG, 0, "the actor will start new lua state in the actor:{} actorId:{}, the system will kill the lua func", pLuaTask->m_pComponent->GetComponentName(), pLuaTask->m_pComponent->GetActorId());
+					pLuaTask->m_pComponent->CreateLuaContext();
+					pLuaTask->m_pComponent->Register();
+					pLuaTask->m_pComponent->LoadScript();
+				}
+			}
 			pLuaTask->m_pComponent = nullptr;
 		}
 	}
@@ -665,12 +680,13 @@ public:
 	*/
 	virtual void HandleTaskDeadCycle(const std::string& taskName, uint64_t useTime)
 	{
-		if (!m_pPluginManager->IsLoadAllServer() && useTime > 120000)
+		if (!m_pPluginManager->IsLoadAllServer() && useTime > 10000)
 		{
 			if (taskName == "WorkTask_Load" || taskName == "ServerLoopTask_Load" || taskName == "ServerLoopTask_init" || taskName == "TcpMsgTask_Load")
 			{
 				return;
 			}
+			SetDeadCycle();
 			NFLogError(NF_LOG_SYSTEMLOG, 0, "asyc task:{} use time:{}, DEAD CYCLE in the actor:{} actorId:{}, the system will kill the lua func", taskName, useTime, GetComponentName(), GetActorId());
 			int mask = LUA_MASKCALL | LUA_MASKRET | LUA_MASKLINE | LUA_MASKCOUNT;
 			lua_sethook(GetLuaState(), TimeOutBreak, mask, 1);
@@ -780,4 +796,5 @@ public:
 protected:
 	NFILogModule* m_pLogModule;
 	NFCLuaThreadModule* m_pLuaThreadModule;
+	atomic_bool m_deadCycle;
 };

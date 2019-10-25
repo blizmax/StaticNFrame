@@ -460,7 +460,7 @@ std::string NFCLuaScriptModule::Sha256(const std::string& s)
 
 bool NFCLuaScriptModule::Register()
 {
-	LuaIntf::LuaBinding(l).beginClass<NFCLuaScriptModule>("NFCLuaScriptModule")
+	LuaIntf::LuaBinding(*m_pLuaContext).beginClass<NFCLuaScriptModule>("NFCLuaScriptModule")
 		.addFunction("GetAppName", &NFCLuaScriptModule::GetAppName)
 		.addFunction("GetAppID", &NFCLuaScriptModule::GetAppID)
 		.addFunction("GetInitTime", &NFCLuaScriptModule::GetInitTime)

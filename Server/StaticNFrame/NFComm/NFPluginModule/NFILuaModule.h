@@ -31,28 +31,41 @@ class NFILuaModule
 public:
 	NFILuaModule()
 	{
-
+		m_pLuaContext = nullptr;
+		CreateLuaContext();
 	}
 
 	virtual ~NFILuaModule()
 	{
+		if (m_pLuaContext)
+		{
+			NF_SAFE_DELETE(m_pLuaContext);
+		}
+	}
 
+	void CreateLuaContext()
+	{
+		if (m_pLuaContext)
+		{
+			NF_SAFE_DELETE(m_pLuaContext);
+		}
+		m_pLuaContext = NF_NEW LuaIntf::LuaContext();
 	}
 
 	lua_State* GetLuaState() const
 	{
-		return l.state();
+		return m_pLuaContext->state();
 	}
 
-	LuaIntf::LuaContext& GetLuaContext()
+	LuaIntf::LuaContext* GetLuaContext()
 	{
-		return l;
+		return m_pLuaContext;
 	}
 public:
 	template <typename V = LuaIntf::LuaRef>
 	V GetGlobal(const std::string& keyName) const
 	{
-		return l.getGlobal(keyName.c_str());
+		return  m_pLuaContext->getGlobal(keyName.c_str());
 	}
 
 	template <typename T>
@@ -82,7 +95,7 @@ public:
 	{
 		try
 		{
-			l.doString(strScript.c_str());
+			m_pLuaContext->doString(strScript.c_str());
 			return true;
 		}
 		catch (LuaIntf::LuaException& e)
@@ -96,7 +109,7 @@ public:
 	{
 		try
 		{
-			l.doFile(strFileName.c_str());
+			m_pLuaContext->doFile(strFileName.c_str());
 			return true;
 		}
 		catch (LuaIntf::LuaException& e)
@@ -110,7 +123,7 @@ public:
 	{
 		try
 		{
-			l.addPackagePath(strFilePath);
+			m_pLuaContext->addPackagePath(strFilePath);
 			return true;
 		}
 		catch (LuaIntf::LuaException& e)
@@ -125,7 +138,7 @@ public:
 	{
 		try
 		{
-			LuaIntf::LuaRef func(l, strFuncName.c_str());
+			LuaIntf::LuaRef func(*m_pLuaContext, strFuncName.c_str());
 			func.call<LuaIntf::LuaRef>();
 			return true;
 		}
@@ -141,7 +154,7 @@ public:
 	{
 		try
 		{
-			LuaIntf::LuaRef func(l, strFuncName.c_str());
+			LuaIntf::LuaRef func(*m_pLuaContext, strFuncName.c_str());
 			func.call<LuaIntf::LuaRef>(std::forward<Arg>(args)...);
 			return true;
 		}
@@ -175,6 +188,6 @@ public:
 		return false;
 	}
 protected:
-	LuaIntf::LuaContext l;
+	LuaIntf::LuaContext* m_pLuaContext;
 };
 

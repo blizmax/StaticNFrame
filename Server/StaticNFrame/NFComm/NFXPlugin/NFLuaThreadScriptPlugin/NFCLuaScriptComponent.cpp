@@ -140,7 +140,7 @@ bool NFHotfixAllLuaActorTask::ThreadProcess()
 {
 	try
 	{
-		LuaIntf::LuaRef func(m_pComponent->GetLuaContext(), "NFLuaReload.ReloadAll");
+		LuaIntf::LuaRef func(*m_pComponent->GetLuaContext(), "NFLuaReload.ReloadAll");
 		LuaIntf::LuaRef retRef = func.call<LuaIntf::LuaRef>();
 		if (retRef.isTable())
 		{
@@ -259,6 +259,7 @@ NFCLuaScriptComponent::NFCLuaScriptComponent(NFCLuaThreadModule* pLuaThreadModul
 	m_pPluginManager = p;
 	m_pLogModule = m_pPluginManager->FindModule<NFILogModule>();
 	NFCurlHttpClient::GetSingletonPtr();
+	ClearDeadCycle();
 }
 
 NFCLuaScriptComponent::~NFCLuaScriptComponent()
@@ -319,7 +320,7 @@ void NFCLuaScriptComponent::SendErrorLog(uint64_t playerId, const std::string& f
 
 bool NFCLuaScriptComponent::Register()
 {
-	LuaIntf::LuaBinding(l).beginClass<NFCLuaScriptComponent>("NFCLuaScriptComponent")
+	LuaIntf::LuaBinding(*m_pLuaContext).beginClass<NFCLuaScriptComponent>("NFCLuaScriptComponent")
 		.addFunction("GetInitTime", &NFCLuaScriptComponent::GetInitTime)
 		.addFunction("GetNowTime", &NFCLuaScriptComponent::GetNowTime)
 		.addFunction("GetMsecTime", &NFCLuaScriptComponent::GetMsecTime)
