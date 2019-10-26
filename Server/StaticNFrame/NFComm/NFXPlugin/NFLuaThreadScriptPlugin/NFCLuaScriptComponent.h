@@ -680,7 +680,7 @@ public:
 	*/
 	virtual void HandleTaskDeadCycle(const std::string& taskName, uint64_t useTime)
 	{
-		if (!m_pPluginManager->IsLoadAllServer() && useTime > 10000)
+		if (!m_pPluginManager->IsLoadAllServer() && useTime > 120000)
 		{
 			if (taskName == "WorkTask_Load" || taskName == "ServerLoopTask_Load" || taskName == "ServerLoopTask_init" || taskName == "TcpMsgTask_Load")
 			{

@@ -8,6 +8,7 @@
 // -------------------------------------------------------------------------
 #include "QiPaiNetPacketParse.h"
 #include "NFNetDefine.h"
+#include "NFComm/NFPluginModule/NFLogMgr.h"
 
 #pragma pack(push)
 #pragma pack(1)
@@ -53,6 +54,7 @@ int QiPaiNetPacketParse::DeCodeImpl(const char* strData, const uint32_t unLen, c
 
 	if (sizeof(qipaiMsg) + msgSize >= MAX_RECV_BUFFER_SIZE) //-V560
 	{
+		NFLogError(NF_LOG_SYSTEMLOG, 0, "net server parse data failed, msgSize:{}, msgId:{}, value:{}", msgSize, tmpMsgId, tmpValue);
 		return -1;
 	}
 

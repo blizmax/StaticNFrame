@@ -64,6 +64,18 @@ void NFCProxyLogicModule::OnHandleGameEventCallBack(eMsgType nEvent, uint32_t un
 	if (nEvent == eMsgType_CONNECTED)
 	{
 		mGameMap.AddElement(unLinkId, pServerData);
+
+		auto pPlayerInfo = mPlayerLinkInfo.First();
+		while (pPlayerInfo)
+		{
+			if (pPlayerInfo->mIsLogin)
+			{
+				NFMsg::gcreconnect gcMsg;
+				FindModule<NFINetClientModule>()->SendToServerByPB(unLinkId, EGMI_NET_PROXY_NOTIFY_GAME_PLAYER_RECONNECT, gcMsg, pPlayerInfo->mPlayerId);
+			}
+
+			pPlayerInfo = mPlayerLinkInfo.Next();
+		}
 	}
 	else if (nEvent == eMsgType_DISCONNECTED)
 	{
@@ -76,6 +88,18 @@ void NFCProxyLogicModule::OnHandleLoginEventCallBack(eMsgType nEvent, uint32_t u
 	if (nEvent == eMsgType_CONNECTED)
 	{
 		mLoginMap.AddElement(unLinkId, pServerData);
+
+		auto pPlayerInfo = mPlayerLinkInfo.First();
+		while (pPlayerInfo)
+		{
+			if (pPlayerInfo->mIsLogin)
+			{
+				NFMsg::gcreconnect gcMsg;
+				FindModule<NFINetClientModule>()->SendToServerByPB(unLinkId, EGMI_NET_PROXY_NOTIFY_LOGIN_PLAYER_RECONNECT, gcMsg, pPlayerInfo->mPlayerId);
+			}
+
+			pPlayerInfo = mPlayerLinkInfo.Next();
+		}
 	}
 	else if (nEvent == eMsgType_DISCONNECTED)
 	{
@@ -88,6 +112,18 @@ void NFCProxyLogicModule::OnHandleWorldEventCallBack(eMsgType nEvent, uint32_t u
 	if (nEvent == eMsgType_CONNECTED)
 	{
 		mWorldMap.AddElement(unLinkId, pServerData);
+
+		auto pPlayerInfo = mPlayerLinkInfo.First();
+		while (pPlayerInfo)
+		{
+			if (pPlayerInfo->mIsLogin)
+			{
+				NFMsg::gcreconnect gcMsg;
+				FindModule<NFINetClientModule>()->SendToServerByPB(unLinkId, EGMI_NET_PROXY_NOTIFY_WORLD_PLAYER_RECONNECT, gcMsg, pPlayerInfo->mPlayerId);
+			}
+
+			pPlayerInfo = mPlayerLinkInfo.Next();
+		}
 	}
 	else if (nEvent == eMsgType_DISCONNECTED)
 	{
