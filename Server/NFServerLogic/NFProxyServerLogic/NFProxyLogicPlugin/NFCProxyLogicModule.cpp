@@ -68,7 +68,7 @@ void NFCProxyLogicModule::OnHandleGameEventCallBack(eMsgType nEvent, uint32_t un
 		auto pPlayerInfo = mPlayerLinkInfo.First();
 		while (pPlayerInfo)
 		{
-			if (pPlayerInfo->mIsLogin)
+			if (pPlayerInfo->mUnlinkId > 0)
 			{
 				NFMsg::gcaccountlogin gcMsg;
 				FindModule<NFINetClientModule>()->SendToServerByPB(unLinkId, EGMI_NET_PROXY_NOTIFY_GAME_PLAYER_LOGIN, gcMsg, pPlayerInfo->mPlayerId);
@@ -92,7 +92,7 @@ void NFCProxyLogicModule::OnHandleLoginEventCallBack(eMsgType nEvent, uint32_t u
 		auto pPlayerInfo = mPlayerLinkInfo.First();
 		while (pPlayerInfo)
 		{
-			if (pPlayerInfo->mIsLogin)
+			if (pPlayerInfo->mUnlinkId > 0)
 			{
 				NFMsg::gcaccountlogin gcMsg;
 				FindModule<NFINetClientModule>()->SendToServerByPB(unLinkId, EGMI_NET_PROXY_NOTIFY_LOGIN_PLAYER_LOGIN, gcMsg, pPlayerInfo->mPlayerId);
@@ -116,7 +116,7 @@ void NFCProxyLogicModule::OnHandleWorldEventCallBack(eMsgType nEvent, uint32_t u
 		auto pPlayerInfo = mPlayerLinkInfo.First();
 		while (pPlayerInfo)
 		{
-			if (pPlayerInfo->mIsLogin)
+			if (pPlayerInfo->mUnlinkId > 0)
 			{
 				NFMsg::gcaccountlogin gcMsg;
 				FindModule<NFINetClientModule>()->SendToServerByPB(unLinkId, EGMI_NET_PROXY_NOTIFY_WORLD_PLAYER_LOGIN, gcMsg, pPlayerInfo->mPlayerId);
@@ -686,8 +686,11 @@ void NFCProxyLogicModule::OnHandleMessageFromLoginServer(const uint32_t unLinkId
 		return;
 	}
 
-	pLinkInfo->mSendMsgCount++;
-	FindModule<NFINetServerModule>()->SendByServerID(pLinkInfo->mUnlinkId, nMsgId, msg, nLen, pLinkInfo->mSendMsgCount);
+	if (pLinkInfo->mUnlinkId > 0)
+	{
+		pLinkInfo->mSendMsgCount++;
+		FindModule<NFINetServerModule>()->SendByServerID(pLinkInfo->mUnlinkId, nMsgId, msg, nLen, pLinkInfo->mSendMsgCount);
+	}
 }
 
 void NFCProxyLogicModule::OnHandleMessageFromWorldServer(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen)
@@ -707,8 +710,11 @@ void NFCProxyLogicModule::OnHandleMessageFromWorldServer(const uint32_t unLinkId
 		return;
 	}
 
-	pLinkInfo->mSendMsgCount++;
-	FindModule<NFINetServerModule>()->SendByServerID(pLinkInfo->mUnlinkId, nMsgId, msg, nLen, pLinkInfo->mSendMsgCount);
+	if (pLinkInfo->mUnlinkId > 0)
+	{
+		pLinkInfo->mSendMsgCount++;
+		FindModule<NFINetServerModule>()->SendByServerID(pLinkInfo->mUnlinkId, nMsgId, msg, nLen, pLinkInfo->mSendMsgCount);
+	}
 }
 
 void NFCProxyLogicModule::OnHandleMessageFromGameServer(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen)
