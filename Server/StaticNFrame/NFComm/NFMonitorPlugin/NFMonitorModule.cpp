@@ -126,6 +126,37 @@ void NFCMonitorModule::OnExecute(uint16_t nEventID, uint64_t nSrcID, uint8_t byS
 					pLuaModule->ReloadLuaFiles(vecStr);
 				}
 			}
+			else if (msg_gm->cmd() == "runGmFunction")
+			{
+				NFILuaScriptModule* pLuaModule = FindModule<NFILuaScriptModule>();
+				if (pLuaModule)
+				{
+					std::string data = msg_gm->data();
+					NFStringUtility::Trim(data);
+					std::vector<std::string> vecStr;
+					if (!data.empty())
+					{
+						if (data.find(';') != std::string::npos)
+						{
+							NFStringUtility::Split(vecStr, data, ";");
+						}
+						else
+						{
+							NFStringUtility::Split(vecStr, data, "|");
+						}
+
+						for (size_t i = 0; i < vecStr.size(); i++)
+						{
+							NFStringUtility::Trim(vecStr[i]);
+						}
+					}
+
+					if (msg_gm->lua_func().size() > 0)
+					{
+						pLuaModule->RunGmFunction(msg_gm->lua_func(), vecStr);
+					}
+				}
+			}
 		}
 	}
 }

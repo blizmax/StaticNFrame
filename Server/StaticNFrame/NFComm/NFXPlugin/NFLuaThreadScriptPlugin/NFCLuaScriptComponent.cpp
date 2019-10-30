@@ -252,6 +252,35 @@ bool NFTcpSessionReportActorTask::ThreadProcess()
 	return true;
 }
 
+bool NFRunGmFunctionActorTask::ThreadProcess()
+{
+	if (m_pComponent)
+	{
+		auto size = m_vecParams.size();
+		if (size == 1)
+		{
+			m_pComponent->TryRunGlobalScriptFunc(m_luaFunction, m_vecParams[0]);
+		}
+		else if (size == 2)
+		{
+			m_pComponent->TryRunGlobalScriptFunc(m_luaFunction, m_vecParams[0], m_vecParams[1]);
+		}
+		else if (size == 3)
+		{
+			m_pComponent->TryRunGlobalScriptFunc(m_luaFunction, m_vecParams[0], m_vecParams[1], m_vecParams[2]);
+		}
+		else if (size == 4)
+		{
+			m_pComponent->TryRunGlobalScriptFunc(m_luaFunction, m_vecParams[0], m_vecParams[1], m_vecParams[2], m_vecParams[3]);
+		}
+		else if (size == 5)
+		{
+			m_pComponent->TryRunGlobalScriptFunc(m_luaFunction, m_vecParams[0], m_vecParams[1], m_vecParams[2], m_vecParams[3], m_vecParams[4]);
+		}
+	}
+	return true;
+}
+
 
 NFCLuaScriptComponent::NFCLuaScriptComponent(NFCLuaThreadModule* pLuaThreadModule, NFIPluginManager* p)
 {

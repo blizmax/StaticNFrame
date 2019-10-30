@@ -524,6 +524,31 @@ void NFCLuaScriptModule::SessionClose(uint64_t playerId)
 	TryRunGlobalScriptFunc("TcpSessionClose", playerId);
 }
 
+void NFCLuaScriptModule::RunGmFunction(const std::string& luaFunc, const std::vector<std::string>& vecStr)
+{
+	auto size = vecStr.size();
+	if (size == 1)
+	{
+		TryRunGlobalScriptFunc(luaFunc, vecStr[0]);
+	}
+	else if (size == 2)
+	{
+		TryRunGlobalScriptFunc(luaFunc, vecStr[0], vecStr[1]);
+	}
+	else if (size == 3)
+	{
+		TryRunGlobalScriptFunc(luaFunc, vecStr[0], vecStr[1], vecStr[2]);
+	}
+	else if (size == 4)
+	{
+		TryRunGlobalScriptFunc(luaFunc, vecStr[0], vecStr[1], vecStr[2], vecStr[3]);
+	}
+	else if (size == 5)
+	{
+		TryRunGlobalScriptFunc(luaFunc, vecStr[0], vecStr[1], vecStr[2], vecStr[3], vecStr[4]);
+	}
+}
+
 void NFCLuaScriptModule::StopTimer(uint32_t nTimerID)
 {
 	auto iter = m_luaTimerMap.find(nTimerID);

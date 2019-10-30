@@ -613,6 +613,34 @@ public:
 	std::string m_ip;
 };
 
+class NFRunGmFunctionActorTask : public NFLuaThreadTask
+{
+public:
+	NFRunGmFunctionActorTask(NFCLuaThreadModule* pLuaThreadModule = nullptr, const std::string& luaFunction = "", const std::vector<std::string>& vecParams = std::vector<std::string>())
+	{
+		m_pLuaThreadModule = pLuaThreadModule;
+		m_taskName = "RunGmFunction";
+		m_needManThreadProcess = false;
+		m_luaFunction = luaFunction;
+		m_vecParams = vecParams;
+	}
+	/**
+	**  异步线程处理函数，将在另一个线程里运行
+	*/
+	virtual bool ThreadProcess();
+
+	/**
+	** 主线程处理函数，将在线程处理完后，提交给主先来处理，根据返回函数是否继续处理
+		返回值： thread::TPTask::TPTaskState， 请参看TPTaskState
+	*/
+	virtual TPTaskState MainThreadProcess()
+	{
+		return TPTASK_STATE_COMPLETED;
+	}
+	std::string m_luaFunction;
+	std::vector<std::string> m_vecParams;
+};
+
 class NFCLuaScriptComponent : public NFITaskComponent, public NFILuaModule, public NFIModule
 {
 public:

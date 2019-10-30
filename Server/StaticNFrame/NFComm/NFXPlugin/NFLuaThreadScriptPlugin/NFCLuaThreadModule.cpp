@@ -801,6 +801,11 @@ void NFCLuaThreadModule::UpdateDay()
 	m_pTcpMsgTaskModule->AddTaskToEveryActor(NFLuaDayActorTask(this));
 }
 
+void NFCLuaThreadModule::RunGmFunction(const std::string& luaFunc, const std::vector<std::string>& vecStr)
+{
+	m_pWorkTaskModule->AddTask(new NFRunGmFunctionActorTask(this, luaFunc, vecStr));
+}
+
 void  NFCLuaThreadModule::AddFinishLoad() 
 { 
 	m_finishLuaLoad++; 

@@ -35,5 +35,7 @@ public:
 	virtual void ReloadLuaFiles() = 0;
 
 	virtual void ReloadLuaFiles(const std::vector<std::string>& vecStr) = 0;
+
+	virtual void RunGmFunction(const std::string& luaFunc, const std::vector<std::string>& vecStr) = 0;
 };
 

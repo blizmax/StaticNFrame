@@ -231,6 +231,8 @@ public:
 	virtual void UpdateMin();
 	virtual void UpdateHour();
 	virtual void UpdateDay();
+
+	virtual void RunGmFunction(const std::string& luaFunc, const std::vector<std::string>& vecStr) override;
 public:
 	/**
 	* @brief 添加一个work Actor组件
