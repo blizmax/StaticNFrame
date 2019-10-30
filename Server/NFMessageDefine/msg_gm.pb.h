@@ -195,6 +195,21 @@ class http_msg_gm : public ::google::protobuf::Message /* @@protoc_insertion_poi
   ::std::string* release_data();
   void set_allocated_data(::std::string* data);
 
+  // optional string lua_func = 4;
+  bool has_lua_func() const;
+  void clear_lua_func();
+  static const int kLuaFuncFieldNumber = 4;
+  const ::std::string& lua_func() const;
+  void set_lua_func(const ::std::string& value);
+  #if LANG_CXX11
+  void set_lua_func(::std::string&& value);
+  #endif
+  void set_lua_func(const char* value);
+  void set_lua_func(const char* value, size_t size);
+  ::std::string* mutable_lua_func();
+  ::std::string* release_lua_func();
+  void set_allocated_lua_func(::std::string* lua_func);
+
   // optional uint32 server_id = 2;
   bool has_server_id() const;
   void clear_server_id();
@@ -210,12 +225,15 @@ class http_msg_gm : public ::google::protobuf::Message /* @@protoc_insertion_poi
   void clear_has_server_id();
   void set_has_data();
   void clear_has_data();
+  void set_has_lua_func();
+  void clear_has_lua_func();
 
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
   ::google::protobuf::internal::HasBits<1> _has_bits_;
   mutable ::google::protobuf::internal::CachedSize _cached_size_;
   ::google::protobuf::internal::ArenaStringPtr cmd_;
   ::google::protobuf::internal::ArenaStringPtr data_;
+  ::google::protobuf::internal::ArenaStringPtr lua_func_;
   ::google::protobuf::uint32 server_id_;
   friend struct ::protobuf_msg_5fgm_2eproto::TableStruct;
 };
@@ -784,13 +802,13 @@ inline void http_msg_gm::set_allocated_cmd(::std::string* cmd) {
 
 // optional uint32 server_id = 2;
 inline bool http_msg_gm::has_server_id() const {
-  return (_has_bits_[0] & 0x00000004u) != 0;
+  return (_has_bits_[0] & 0x00000008u) != 0;
 }
 inline void http_msg_gm::set_has_server_id() {
-  _has_bits_[0] |= 0x00000004u;
+  _has_bits_[0] |= 0x00000008u;
 }
 inline void http_msg_gm::clear_has_server_id() {
-  _has_bits_[0] &= ~0x00000004u;
+  _has_bits_[0] &= ~0x00000008u;
 }
 inline void http_msg_gm::clear_server_id() {
   server_id_ = 0u;
@@ -870,6 +888,72 @@ inline void http_msg_gm::set_allocated_data(::std::string* data) {
   }
   data_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), data);
   // @@protoc_insertion_point(field_set_allocated:NFMsg.http_msg_gm.data)
+}
+
+// optional string lua_func = 4;
+inline bool http_msg_gm::has_lua_func() const {
+  return (_has_bits_[0] & 0x00000004u) != 0;
+}
+inline void http_msg_gm::set_has_lua_func() {
+  _has_bits_[0] |= 0x00000004u;
+}
+inline void http_msg_gm::clear_has_lua_func() {
+  _has_bits_[0] &= ~0x00000004u;
+}
+inline void http_msg_gm::clear_lua_func() {
+  lua_func_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  clear_has_lua_func();
+}
+inline const ::std::string& http_msg_gm::lua_func() const {
+  // @@protoc_insertion_point(field_get:NFMsg.http_msg_gm.lua_func)
+  return lua_func_.GetNoArena();
+}
+inline void http_msg_gm::set_lua_func(const ::std::string& value) {
+  set_has_lua_func();
+  lua_func_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:NFMsg.http_msg_gm.lua_func)
+}
+#if LANG_CXX11
+inline void http_msg_gm::set_lua_func(::std::string&& value) {
+  set_has_lua_func();
+  lua_func_.SetNoArena(
+    &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+  // @@protoc_insertion_point(field_set_rvalue:NFMsg.http_msg_gm.lua_func)
+}
+#endif
+inline void http_msg_gm::set_lua_func(const char* value) {
+  GOOGLE_DCHECK(value != NULL);
+  set_has_lua_func();
+  lua_func_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:NFMsg.http_msg_gm.lua_func)
+}
+inline void http_msg_gm::set_lua_func(const char* value, size_t size) {
+  set_has_lua_func();
+  lua_func_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:NFMsg.http_msg_gm.lua_func)
+}
+inline ::std::string* http_msg_gm::mutable_lua_func() {
+  set_has_lua_func();
+  // @@protoc_insertion_point(field_mutable:NFMsg.http_msg_gm.lua_func)
+  return lua_func_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline ::std::string* http_msg_gm::release_lua_func() {
+  // @@protoc_insertion_point(field_release:NFMsg.http_msg_gm.lua_func)
+  if (!has_lua_func()) {
+    return NULL;
+  }
+  clear_has_lua_func();
+  return lua_func_.ReleaseNonDefaultNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline void http_msg_gm::set_allocated_lua_func(::std::string* lua_func) {
+  if (lua_func != NULL) {
+    set_has_lua_func();
+  } else {
+    clear_has_lua_func();
+  }
+  lua_func_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), lua_func);
+  // @@protoc_insertion_point(field_set_allocated:NFMsg.http_msg_gm.lua_func)
 }
 
 // -------------------------------------------------------------------

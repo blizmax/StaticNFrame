@@ -116,9 +116,11 @@ const ::google::protobuf::uint32 TableStruct::offsets[] GOOGLE_PROTOBUF_ATTRIBUT
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::NFMsg::http_msg_gm, cmd_),
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::NFMsg::http_msg_gm, server_id_),
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::NFMsg::http_msg_gm, data_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::NFMsg::http_msg_gm, lua_func_),
   0,
-  2,
+  3,
   1,
+  2,
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::NFMsg::http_msg_gm_ret, _has_bits_),
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::NFMsg::http_msg_gm_ret, _internal_metadata_),
   ~0u,  // no _extensions_
@@ -158,10 +160,10 @@ const ::google::protobuf::uint32 TableStruct::offsets[] GOOGLE_PROTOBUF_ATTRIBUT
   3,
 };
 static const ::google::protobuf::internal::MigrationSchema schemas[] GOOGLE_PROTOBUF_ATTRIBUTE_SECTION_VARIABLE(protodesc_cold) = {
-  { 0, 8, sizeof(::NFMsg::http_msg_gm)},
-  { 11, 19, sizeof(::NFMsg::http_msg_gm_ret)},
-  { 22, 31, sizeof(::NFMsg::http_msg)},
-  { 35, 44, sizeof(::NFMsg::http_msg_ret)},
+  { 0, 9, sizeof(::NFMsg::http_msg_gm)},
+  { 13, 21, sizeof(::NFMsg::http_msg_gm_ret)},
+  { 24, 33, sizeof(::NFMsg::http_msg)},
+  { 37, 46, sizeof(::NFMsg::http_msg_ret)},
 };
 
 static ::google::protobuf::Message const * const file_default_instances[] = {
@@ -192,17 +194,17 @@ void protobuf_RegisterTypes(const ::std::string&) {
 void AddDescriptorsImpl() {
   InitDefaults();
   static const char descriptor[] GOOGLE_PROTOBUF_ATTRIBUTE_SECTION_VARIABLE(protodesc_cold) = {
-      "\n\014msg_gm.proto\022\005NFMsg\";\n\013http_msg_gm\022\013\n\003"
+      "\n\014msg_gm.proto\022\005NFMsg\"M\n\013http_msg_gm\022\013\n\003"
       "cmd\030\001 \001(\t\022\021\n\tserver_id\030\002 \001(\r\022\014\n\004data\030\003 \001"
-      "(\t\":\n\017http_msg_gm_ret\022\014\n\004code\030\001 \001(\t\022\013\n\003m"
-      "sg\030\002 \001(\t\022\014\n\004data\030\003 \001(\t\"L\n\010http_msg\022\013\n\003cm"
-      "d\030\001 \001(\t\022\021\n\tserver_id\030\002 \001(\r\022\014\n\004data\030\003 \001(\t"
-      "\022\022\n\nrequest_id\030\004 \001(\r\"K\n\014http_msg_ret\022\014\n\004"
-      "code\030\001 \001(\t\022\013\n\003msg\030\002 \001(\t\022\014\n\004data\030\003 \001(\t\022\022\n"
-      "\nrequest_id\030\004 \001(\r"
+      "(\t\022\020\n\010lua_func\030\004 \001(\t\":\n\017http_msg_gm_ret\022"
+      "\014\n\004code\030\001 \001(\t\022\013\n\003msg\030\002 \001(\t\022\014\n\004data\030\003 \001(\t"
+      "\"L\n\010http_msg\022\013\n\003cmd\030\001 \001(\t\022\021\n\tserver_id\030\002"
+      " \001(\r\022\014\n\004data\030\003 \001(\t\022\022\n\nrequest_id\030\004 \001(\r\"K"
+      "\n\014http_msg_ret\022\014\n\004code\030\001 \001(\t\022\013\n\003msg\030\002 \001("
+      "\t\022\014\n\004data\030\003 \001(\t\022\022\n\nrequest_id\030\004 \001(\r"
   };
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
-      descriptor, 297);
+      descriptor, 315);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "msg_gm.proto", &protobuf_RegisterTypes);
 }
@@ -228,6 +230,7 @@ void http_msg_gm::InitAsDefaultInstance() {
 const int http_msg_gm::kCmdFieldNumber;
 const int http_msg_gm::kServerIdFieldNumber;
 const int http_msg_gm::kDataFieldNumber;
+const int http_msg_gm::kLuaFuncFieldNumber;
 #endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
 
 http_msg_gm::http_msg_gm()
@@ -250,6 +253,10 @@ http_msg_gm::http_msg_gm(const http_msg_gm& from)
   if (from.has_data()) {
     data_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.data_);
   }
+  lua_func_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  if (from.has_lua_func()) {
+    lua_func_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.lua_func_);
+  }
   server_id_ = from.server_id_;
   // @@protoc_insertion_point(copy_constructor:NFMsg.http_msg_gm)
 }
@@ -257,6 +264,7 @@ http_msg_gm::http_msg_gm(const http_msg_gm& from)
 void http_msg_gm::SharedCtor() {
   cmd_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   data_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  lua_func_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   server_id_ = 0u;
 }
 
@@ -268,6 +276,7 @@ http_msg_gm::~http_msg_gm() {
 void http_msg_gm::SharedDtor() {
   cmd_.DestroyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   data_.DestroyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  lua_func_.DestroyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
 
 void http_msg_gm::SetCachedSize(int size) const {
@@ -291,12 +300,15 @@ void http_msg_gm::Clear() {
   (void) cached_has_bits;
 
   cached_has_bits = _has_bits_[0];
-  if (cached_has_bits & 3u) {
+  if (cached_has_bits & 7u) {
     if (cached_has_bits & 0x00000001u) {
       cmd_.ClearNonDefaultToEmptyNoArena();
     }
     if (cached_has_bits & 0x00000002u) {
       data_.ClearNonDefaultToEmptyNoArena();
+    }
+    if (cached_has_bits & 0x00000004u) {
+      lua_func_.ClearNonDefaultToEmptyNoArena();
     }
   }
   server_id_ = 0u;
@@ -360,6 +372,22 @@ bool http_msg_gm::MergePartialFromCodedStream(
         break;
       }
 
+      // optional string lua_func = 4;
+      case 4: {
+        if (static_cast< ::google::protobuf::uint8>(tag) ==
+            static_cast< ::google::protobuf::uint8>(34u /* 34 & 0xFF */)) {
+          DO_(::google::protobuf::internal::WireFormatLite::ReadString(
+                input, this->mutable_lua_func()));
+          ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
+            this->lua_func().data(), static_cast<int>(this->lua_func().length()),
+            ::google::protobuf::internal::WireFormat::PARSE,
+            "NFMsg.http_msg_gm.lua_func");
+        } else {
+          goto handle_unusual;
+        }
+        break;
+      }
+
       default: {
       handle_unusual:
         if (tag == 0) {
@@ -398,7 +426,7 @@ void http_msg_gm::SerializeWithCachedSizes(
   }
 
   // optional uint32 server_id = 2;
-  if (cached_has_bits & 0x00000004u) {
+  if (cached_has_bits & 0x00000008u) {
     ::google::protobuf::internal::WireFormatLite::WriteUInt32(2, this->server_id(), output);
   }
 
@@ -410,6 +438,16 @@ void http_msg_gm::SerializeWithCachedSizes(
       "NFMsg.http_msg_gm.data");
     ::google::protobuf::internal::WireFormatLite::WriteStringMaybeAliased(
       3, this->data(), output);
+  }
+
+  // optional string lua_func = 4;
+  if (cached_has_bits & 0x00000004u) {
+    ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
+      this->lua_func().data(), static_cast<int>(this->lua_func().length()),
+      ::google::protobuf::internal::WireFormat::SERIALIZE,
+      "NFMsg.http_msg_gm.lua_func");
+    ::google::protobuf::internal::WireFormatLite::WriteStringMaybeAliased(
+      4, this->lua_func(), output);
   }
 
   if (_internal_metadata_.have_unknown_fields()) {
@@ -439,7 +477,7 @@ void http_msg_gm::SerializeWithCachedSizes(
   }
 
   // optional uint32 server_id = 2;
-  if (cached_has_bits & 0x00000004u) {
+  if (cached_has_bits & 0x00000008u) {
     target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(2, this->server_id(), target);
   }
 
@@ -452,6 +490,17 @@ void http_msg_gm::SerializeWithCachedSizes(
     target =
       ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
         3, this->data(), target);
+  }
+
+  // optional string lua_func = 4;
+  if (cached_has_bits & 0x00000004u) {
+    ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
+      this->lua_func().data(), static_cast<int>(this->lua_func().length()),
+      ::google::protobuf::internal::WireFormat::SERIALIZE,
+      "NFMsg.http_msg_gm.lua_func");
+    target =
+      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
+        4, this->lua_func(), target);
   }
 
   if (_internal_metadata_.have_unknown_fields()) {
@@ -471,7 +520,7 @@ size_t http_msg_gm::ByteSizeLong() const {
       ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
         _internal_metadata_.unknown_fields());
   }
-  if (_has_bits_[0 / 32] & 7u) {
+  if (_has_bits_[0 / 32] & 15u) {
     // optional string cmd = 1;
     if (has_cmd()) {
       total_size += 1 +
@@ -484,6 +533,13 @@ size_t http_msg_gm::ByteSizeLong() const {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::StringSize(
           this->data());
+    }
+
+    // optional string lua_func = 4;
+    if (has_lua_func()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::StringSize(
+          this->lua_func());
     }
 
     // optional uint32 server_id = 2;
@@ -522,7 +578,7 @@ void http_msg_gm::MergeFrom(const http_msg_gm& from) {
   (void) cached_has_bits;
 
   cached_has_bits = from._has_bits_[0];
-  if (cached_has_bits & 7u) {
+  if (cached_has_bits & 15u) {
     if (cached_has_bits & 0x00000001u) {
       set_has_cmd();
       cmd_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.cmd_);
@@ -532,6 +588,10 @@ void http_msg_gm::MergeFrom(const http_msg_gm& from) {
       data_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.data_);
     }
     if (cached_has_bits & 0x00000004u) {
+      set_has_lua_func();
+      lua_func_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.lua_func_);
+    }
+    if (cached_has_bits & 0x00000008u) {
       server_id_ = from.server_id_;
     }
     _has_bits_[0] |= cached_has_bits;
@@ -565,6 +625,8 @@ void http_msg_gm::InternalSwap(http_msg_gm* other) {
   cmd_.Swap(&other->cmd_, &::google::protobuf::internal::GetEmptyStringAlreadyInited(),
     GetArenaNoVirtual());
   data_.Swap(&other->data_, &::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+    GetArenaNoVirtual());
+  lua_func_.Swap(&other->lua_func_, &::google::protobuf::internal::GetEmptyStringAlreadyInited(),
     GetArenaNoVirtual());
   swap(server_id_, other->server_id_);
   swap(_has_bits_[0], other->_has_bits_[0]);

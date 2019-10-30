@@ -761,6 +761,10 @@ void NFCProxyLogicModule::OnHandleHeartBeat(const uint32_t unLinkId, const uint6
 	if (pLinkInfo == nullptr)
 	{
 		NFLogWarning(NF_LOG_PROXY_LOGIC_PLUGIN, 0, "recv hearbeat, but can't find linkinfo:{}", unLinkId);
+
+		NFMsg::gcheartbeat gcMsg;
+		gcMsg.set_result(0);
+		FindModule<NFINetServerModule>()->SendToServerByPB(unLinkId, NFMsg::Server_Msg_HeartBeat, gcMsg, 0);
 		return;
 	}
 

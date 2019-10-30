@@ -34,7 +34,6 @@ public:
 
 	virtual bool Shut() override;
 
-	virtual void SetOnlineNum(uint32_t num) { m_onlineNum = num; }
 	virtual void OnExecute(uint16_t nEventID, uint64_t nSrcID, uint8_t bySrcType, const google::protobuf::Message& message);
 
 protected:
@@ -51,7 +50,6 @@ protected:
 	void OnHandleGmMsg(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen);
 private:
 	NF_SHARE_PTR<NFServerData> m_pMasterServerData;
-	uint32_t m_onlineNum;
 };
 
 
