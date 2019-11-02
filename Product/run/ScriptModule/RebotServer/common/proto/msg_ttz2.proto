@@ -1,6 +1,7 @@
 package progame;
 import "st_human.proto";
 import "st_ttz.proto";
+import "msg_ttz.proto";
 
 message cgttzenter
 {
@@ -64,4 +65,20 @@ message gcttreconnect
 	optional dices 			  dice = 19;           //第骰子点数
 	optional int32 residuecardcount = 20;      	   //剩余牌数
 	optional string bankerjetton = 21; 		   //庄家全部筹码
+}
+
+//续投
+message cgttzpourjettonxt
+{
+	optional int32 userid = 1;
+	repeated cgttzpourjetton list = 2; 
+	optional int32 ptype = 3;
+}
+//续投
+message gcttzpourjettonxt
+{
+	optional int32 result = 1;
+	optional int32 userid = 2;
+	repeated gcttzpourjetton list = 3;   
+	optional int32 ptype = 4;
 }

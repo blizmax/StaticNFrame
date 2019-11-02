@@ -142,6 +142,27 @@ PacketCode[1078] = {server = 1077, client = 1078, des = "gcactivityhero", func =
 
 PacketCode[1080] = {server = 1079, client = 1080, des = "gcpeiwanginroom", func = "Getpeiwang"}
 
+PacketCode[1081] = {server = 1081, client = 1082, des = "cgregisterplayernum", func = "GetRegisterPlayerNum"}
+PacketCode[1082] = {server = 1081, client = 1082, des = "gcregisterplayernum", func = "GetRegisterPlayerNum"}
+
+--龙虎斗连胜活动
+PacketCode[1083] = {server = 1083, client = 1084, des = "cglhdrepeatedwininfo", func = "LhdRepeatedWinInfo"}
+PacketCode[1084] = {server = 1083, client = 1084, des = "gclhdrepeatedwininfo", func = "LhdRepeatedWinInfo"}
+
+PacketCode[1085] = {server = 1085, client = 1086, des = "cglhdrepeatedwinreward", func = "LhdRepeatedWinReward"}
+PacketCode[1086] = {server = 1085, client = 1086, des = "gclhdrepeatedwinreward", func = "LhdRepeatedWinReward"}
+
+--
+PacketCode[1087] = {server = 1087, client = 1088, des = "cgdouniutzspecailrewardinfo", func = "DouNiuTzSpecialRewardInfo"}
+PacketCode[1088] = {server = 1087, client = 1088, des = "gcdouniutzspecailrewardinfo", func = "DouNiuTzSpecialRewardInfo"}
+
+
+PacketCode[1089] = {server = 1089, client = 1090, des = "cgdouniutzgivespecailrewardinfo", func = "DouNiuTzGiveSpecialRewardInfo"}
+PacketCode[1090] = {server = 1089, client = 1090, des = "gcdouniutzgivespecailrewardinfo", func = "DouNiuTzGiveSpecialRewardInfo"}
+
+PacketCode[1091] = {server = 1091, client = 1092, des = "cggetbandphoneactivityinfo", func = "activityBandPhone"}
+PacketCode[1092] = {server = 1091, client = 1092, des = "gcgetbandphoneactivityinfo", func = "activityBandPhone"}
+
 ReturnCode["success"] = 0
 ReturnCode["account_not_exist"] = 1001   --账号不存在
 ReturnCode["password_not_match"] = 1002

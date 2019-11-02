@@ -59,9 +59,11 @@ PacketCode[8540] = {server = 8539, client = 8540, des = "gcttzgamehistoryupdata"
 PacketCode[8541] = {server = 8541, client = 8542, des = "gcttzopencard", func = "TtzWorkOpenCard"}
 PacketCode[8542] = {server = 8541, client = 8542, des = "gcttzopencard", func = "TtzWorkOpenCard"}
 
-
 PacketCode[8543] = {server = 8543, client = 8544, des = "ccttreconnect", func = "TtzReconnect"}
 PacketCode[8544] = {server = 8543, client = 8544, des = "gcttreconnect", func = "TtzReconnect"}
+
+PacketCode[8545] = {server = 8545, client = 8546, des = "cgttzpourjettonxt", func = "TtzPourJettonxt"}
+PacketCode[8546] = {server = 8545, client = 8546, des = "gcttzpourjettonxt", func = "TtzPourJettonxt"}
 --
 ReturnCode["Ttz_not_exist"] = 8501
 ReturnCode["Ttz_chair_notmatch"] = 8502

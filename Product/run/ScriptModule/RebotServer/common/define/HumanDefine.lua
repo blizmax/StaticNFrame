@@ -11,12 +11,12 @@ g_system.sys_userid = 1
 g_system.robot_pond_type = 101    --机器人的奖池的type
 
 
-g_initData.jetton = 10000000
-g_initData.money = 10000000   --初始化钻石	
+g_initData.jetton = 0
+g_initData.money = 0   --初始化钻石	
 
 if g_gamename == 'dwcgame' then
-	g_initData.jetton = 10000000
-	g_initData.money = 10000000--8   --初始化钻石
+	g_initData.jetton = 0
+	g_initData.money = 0--8   --初始化钻石
 end
 
 g_broadCast = {}
@@ -138,8 +138,8 @@ g_currencyOptType.bankTransferTo = 4	-- 银行-向其他玩家转账
 g_currencyOptType.bankTransferFrom = 5	-- 银行-收到其他玩家的转账
 
 g_bankruptSubsidy = {}
-g_bankruptSubsidy.SubsidyNum = 3
-g_bankruptSubsidy.SubsidyCount = 100
+g_bankruptSubsidy.SubsidyNum = 1
+g_bankruptSubsidy.SubsidyCount = 300
 
 g_withdrawdepositminjetton = 10000 
 
@@ -187,6 +187,10 @@ g_moneyOptType.opt_bank_out = 117
 
 g_moneyOptType.opt_commission_count = 118    --每周佣金结算，这个结算是结算到提现账户，
 g_moneyOptType.opt_mail_get = 119   --邮件领取附件
+g_moneyOptType.opt_rank_get = 120   --排行榜获得奖励
+g_moneyOptType.opt_lhd_repeated_win_get = 121   --龙虎斗连胜获得奖励
+g_moneyOptType.opt_douniu_special_cardtype = 122   --斗牛特殊牌型奖励
+g_moneyOptType.opt_cost_bonus_cardtype = 124   --特殊权益分红
 
 
 g_moneyOptType.opt_bjl = 4400   --百家乐
@@ -218,6 +222,8 @@ g_winBroadcount = 100000		--玩家赢钱发广播的最小值
 g_SpecialChannel = "adminTest"
 
 g_CommissionFwSwitch = 1  		--1: 抽水算个流水， 2抽水不算流水
+
+g_NeedPeiWang = 0				--1：自动陪玩
 
 --分红 算法
 g_bonusLevel = {}

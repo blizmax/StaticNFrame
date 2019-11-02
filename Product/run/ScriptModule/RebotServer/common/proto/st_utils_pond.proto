@@ -35,6 +35,14 @@ message pondinfo
 	optional string todaytotalpour = 24;   //当日总下注
 	optional int32 historywinrate = 25;    //历史胜率
 	optional int32 todaywinrate = 26;      //当日胜率
+	optional int32 huan_0 = 27;
+	optional int32 huan_1 = 28;
+	optional int32 huan_2 = 29;
+	optional int32 huan_3 = 30;
+	optional int32 huan_4 = 31;
+	optional int32 cur_level = 32;		//当前奖池的档次, 小于1当为0， 1 2 3 4
+	optional int32 cur_lun_count = 33;	//五轮为一个循环，当前循环次数
+	optional int32 cur_bi_huan = 34;	//必换次数
 }
 
 message legalinfo     //暂时把这个结果放在这里，后面会修改该文件的名字

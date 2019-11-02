@@ -58,6 +58,7 @@ PacketCode[5340] = {server = 5339, client = 5340, des = "gclhdgamehistoryupdata"
 
 PacketCode[5341] = {server = 5341, client = 5342, des = "cglhdpourjettonxt", func = "LhdPourJettonXt"}
 PacketCode[5342] = {server = 5341, client = 5342, des = "gclhdpourjettonxt", func = "LhdPourJettonXt"}
+
 --
 ReturnCode["lhd_not_exist"] = 5301
 ReturnCode["lhd_chair_notmatch"] = 5302
@@ -88,6 +89,8 @@ ReturnCode["lhd_xt_success"] = 5325  --续投成功
 ReturnCode["lhd_xt_fail"] = 5326  --续投失败
 
 ReturnCode["lhd_not_open"] = 5327 -- 未开放
+
+ReturnCode["lhd_give_repeated_win_repeated_fail"] = 5328  --获得连胜奖励失败
 
 
 ReturnCode[5301] = "该牌桌不存在"

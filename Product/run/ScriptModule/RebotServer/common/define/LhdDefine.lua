@@ -223,3 +223,7 @@ g_lhdDefine.robot_range[3] = {5000,1000000}
 g_lhdDefine.robot_range[4] = {5000,1000000}
 g_lhdDefine.robot_range[5] = {5000,1000000}
 g_lhdDefine.robot_range[6] = {5000,1000000}
+
+g_lhdDefine.five_repeated_win_reward = 8800
+g_lhdDefine.ten_repeated_win_reward = 88800
+g_lhdDefine.twenty_repeated_win_reward = 88800

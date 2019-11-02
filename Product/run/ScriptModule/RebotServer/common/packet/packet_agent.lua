@@ -80,6 +80,36 @@ PacketCode[1358] = {server = 1357, client = 1358, des = "gcqueryyesterdaybonus",
 PacketCode[1359] = {server = 1359, client = 1360, des = "cgbonuswithdraw", func = "BonusWithDraw"}
 PacketCode[1360] = {server = 1359, client = 1360, des = "gcbonuswithdraw", func = "BonusWithDraw"}
 
+PacketCode[1361] = {server = 1361, client = 1362, des = "cgyestdayachievement", func = "FenChengTaxDayInfo"}
+PacketCode[1362] = {server = 1361, client = 1362, des = "gcyestdayachievement", func = "FenChengTaxDayInfo"}
+
+PacketCode[1363] = {server = 1363, client = 1364, des = "cglastweekachievement", func = "FenChengTaxWeekList"}
+PacketCode[1364] = {server = 1363, client = 1364, des = "gclastweekachievement", func = "FenChengTaxWeekList"}
+
+PacketCode[1365] = {server = 1365, client = 1366, des = "cgwiringachievement", func = "WiringTaxAchievement"}
+PacketCode[1366] = {server = 1365, client = 1366, des = "gcwiringachievement", func = "WiringTaxAchievement"}
+
+PacketCode[1367] = {server = 1367, client = 1368, des = "cgwiringdrawmoney", func = "WiringTaxDrawMoney"}
+PacketCode[1368] = {server = 1367, client = 1368, des = "gcwiringdrawmoney", func = "WiringTaxDrawMoney"}
+
+PacketCode[1369] = {server = 1369, client = 1370, des = "cgwiringwithdraw", func = "WiringTaxWithDraw"}
+PacketCode[1370] = {server = 1369, client = 1370, des = "gcwiringwithdraw", func = "WiringTaxWithDraw"}
+
+PacketCode[1371] = {server = 1371, client = 1372, des = "cgmycostbonuswithdraw", func = "GetMyCostBonusInfo"}
+PacketCode[1372] = {server = 1371, client = 1372, des = "gcmycostbonuswithdraw", func = "GetMyCostBonusInfo"}
+
+PacketCode[1373] = {server = 1373, client = 1374, des = "cgmyagentcostbonuswithdraw", func = "GetMyAgentCostBonusInfo"}
+PacketCode[1374] = {server = 1373, client = 1374, des = "gcmyagentcostbonuswithdraw", func = "GetMyAgentCostBonusInfo"}
+
+--设置下级保底
+PacketCode[1375] = {server = 1375, client = 1376, des = "cgagentsetratenum", func = "AgentSetTaxRateNum"}
+PacketCode[1376] = {server = 1375, client = 1376, des = "gcagentsetratenum", func = "AgentSetTaxRateNum"}
+
+PacketCode[1377] = {server = 1377, client = 1378, des = "cgwiringuserlist", func = "WiringTaxUserList"}
+PacketCode[1378] = {server = 1377, client = 1378, des = "gcwiringuserlist", func = "WiringTaxUserList"}
+
+PacketCode[1379] = {server = 1379, client = 1380, des = "cggetwiringinfo", func = "GetWiringTaxInfo"}
+PacketCode[1380] = {server = 1379, client = 1380, des = "gcgetwiringinfo", func = "GetWiringTaxInfo"}
 
 ReturnCode["hlyd_share_fail"] = 1201
 ReturnCode["rep_error"] = 1202

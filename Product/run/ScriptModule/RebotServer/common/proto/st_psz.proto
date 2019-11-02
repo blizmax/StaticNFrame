@@ -24,7 +24,7 @@ message pszuser   //拼三张
 	optional int32 callNum = 17;			//跟注的值
 	optional int32 thanNum = 18;			//比牌的值
 	repeated int32 filList	= 19;			//加注的列表
-	optional int32 thanuserid = 20;			//比牌赢了自身的玩家
+	repeated int32 thanuserid = 20;			//跟自己比过牌的玩家
 	optional int32 timeoutSum = 21;			//超时弃牌的次数
 	optional string nickname = 22;			//昵称
 	optional int32 sex = 23;				//性别

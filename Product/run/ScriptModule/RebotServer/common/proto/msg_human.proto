@@ -317,6 +317,7 @@ message gcbanktransferhistory
 {
 	optional int32 result = 1;
 	repeated banktransferrecord list = 2;
+	optional int32 allcount = 3;
 }
 
 message cgbankruptsubsidy
@@ -332,4 +333,11 @@ message gcbankruptsubsidy
 	optional int32 requesttype = 3;
 	optional int32 residuenum = 4;
 	optional int32 subsidycount = 5;
+}
+
+message gcpeiwanginroom
+{
+	optional int32 gametype = 1;
+	optional int32 tableid = 2;
+	optional int32 tabletype = 3;
 }

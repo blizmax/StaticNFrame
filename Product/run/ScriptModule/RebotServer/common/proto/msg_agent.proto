@@ -137,6 +137,7 @@ message gcwiringachievement     //我的业绩
 	repeated wiringdayachieve wlist = 7;   //日团队收益
 	optional int32 pagenum = 8;   
 	optional string precandrawnum = 9;	//可预支额度
+	optional string fivelevelweekach = 10;    //本周5等级业绩
 }
 
 message cgwiringawardlist   //我的奖励

@@ -45,6 +45,10 @@ g_barccatatDefine.pour2_rate = 10         --第二个按钮和第一个的倍数
 g_barccatatDefine.pour3_rate = 100        --第三个和第一个的倍数
 
 
+g_barccatatDefine.chance_list = {}
+g_barccatatDefine.chance_list[1] = 5000
+g_barccatatDefine.chance_list[2] = 5000
+g_barccatatDefine.chance_list[3] = 0
 
 --牌定义
 g_barccatatDefine.pokerList = {

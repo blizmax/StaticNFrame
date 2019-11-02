@@ -46,21 +46,21 @@ g_hongheicard_type.win_rate[7] = 10 --豹子
 
 g_hongheicard_type.rand_list =
 {
-	{g_hongheicard_type.danzhang,5398},
-	{g_hongheicard_type.duizi,2158},
-	{g_hongheicard_type.shunzi,1079},
-	{g_hongheicard_type.tonghua,719},
-	{g_hongheicard_type.tonghuashun,431},
-	{g_hongheicard_type.baozi,215}
+	{g_hongheicard_type.danzhang,8242},
+	{g_hongheicard_type.duizi,824},
+	{g_hongheicard_type.shunzi,412},
+	{g_hongheicard_type.tonghua,275},
+	{g_hongheicard_type.tonghuashun,165},
+	{g_hongheicard_type.baozi,82}
 }
 
 g_hongheiDefine.chance_list = {}
-g_hongheiDefine.chance_list[g_hongheicard_type.danzhang] = 5398
-g_hongheiDefine.chance_list[g_hongheicard_type.duizi] = 2158
-g_hongheiDefine.chance_list[g_hongheicard_type.shunzi] = 1210
-g_hongheiDefine.chance_list[g_hongheicard_type.tonghua] = 1079
-g_hongheiDefine.chance_list[g_hongheicard_type.tonghuashun] = 431
-g_hongheiDefine.chance_list[g_hongheicard_type.baozi] = 215
+g_hongheiDefine.chance_list[g_hongheicard_type.danzhang] = 8242
+g_hongheiDefine.chance_list[g_hongheicard_type.duizi] = 824
+g_hongheiDefine.chance_list[g_hongheicard_type.shunzi] = 412
+g_hongheiDefine.chance_list[g_hongheicard_type.tonghua] = 275
+g_hongheiDefine.chance_list[g_hongheicard_type.tonghuashun] = 165
+g_hongheiDefine.chance_list[g_hongheicard_type.baozi] = 82
 
 
 g_hongheiDefine.min_bankjetton = 100000    --最小上庄的倍数

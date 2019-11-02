@@ -218,3 +218,28 @@ message banktransferrecord              // 转账记录
 	optional string amount = 3;
 	optional string timemark = 4;		// 时间
 }
+
+message specialcardreward
+{
+	optional int32 index = 1;		//唯一ID
+	optional int32 cardtype = 2;	//卡牌类型
+	optional int32 reward = 3;		//奖励数目
+	optional int32 status = 4; //0表示未领取
+	optional string createdate = 5;
+}
+
+message specialinfo
+{
+	optional int32 userid = 1;
+	optional int32 starttime = 2;
+	optional int32 endtime = 3;
+	optional int32 state = 4;
+	optional int32 rate = 5;
+	optional int32 winall = 6;
+	optional int32 peinum = 7;
+	optional int32 marknum = 8;
+	repeated int32 gametype = 9;   //对应的游戏类型,9000:牛牛，
+	optional int32 cardtype = 10;
+	optional int32 iszhuang = 11;
+	optional int32 norecord = 12;	
+}

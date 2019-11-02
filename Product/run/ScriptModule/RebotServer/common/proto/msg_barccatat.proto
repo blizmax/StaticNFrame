@@ -127,7 +127,7 @@ message cgbarccatatpourjettonxt
 {
 	optional int32 userid = 1;
 	repeated cgbarccatatpourjetton list = 2; 
-	
+	optional int32 ptype = 3;       //2挂机下注
 }
 //续投
 message gcbarccatatpourjettonxt
@@ -135,6 +135,7 @@ message gcbarccatatpourjettonxt
 	optional int32 result = 1;
 	optional int32 userid = 2;
 	repeated gcbarccatatpourjetton list = 3;
+	optional int32 ptype = 4;       //2挂机下注
 }
 
 //无座玩家的下注
@@ -172,6 +173,14 @@ message gcbarccatatsendcard
 	optional int32 timemark = 6;
 }
 
+message areawinscore 
+{
+	optional string areawin1  = 1;        //庄
+ 	optional string areawin2  = 2;		  //闲
+	optional string areawin3  = 3;		  //和
+	optional string areawin4  = 4;		  //闲对
+	optional string areawin5  = 5; 		  //庄对
+}
 //结算
 message gcbarccatatcount   //结算是服务器主动发送给玩家的
 {
@@ -196,6 +205,13 @@ message gcbarccatatcount   //结算是服务器主动发送给玩家的
 	optional int32 xpoint = 21; 		//闲点
 	optional int32 zpoint = 22; 		//庄点
 	optional string bankeralljetton = 23; 	//庄家全部筹码
+	
+	
+	repeated areawinscore playerwinscore = 24;          //6个固定区域的输赢
+	optional areawinscore totalpourcount = 25;   //所以区域下注信息
+	optional areawinscore mywinscore = 26;    
+	optional areawinscore userlistwinscore = 27;
+	
 }
 
 //下一局

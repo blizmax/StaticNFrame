@@ -1,0 +1,56 @@
+package progame;
+import "st_human.proto";
+
+
+message gdmjhbz  //广东麻将惠博庄
+{
+	optional int32 mjtype = 1;
+	optional int32 bukejihu = 2;          //可鸡胡
+	optional int32 qgmaima = 3;         //抢杠胡买马
+	optional int32 bhhpjiafen = 4;      //补花胡牌加分
+	optional int32 kehuqidui = 5;       //可胡七对
+	optional int32 ganggenma = 6;       //流局算杠
+	optional int32 manum = 7;           //买马的数量	
+	optional int32 menqingjiafen = 8;    //门清加分
+	optional int32 genzhuang = 9;       //跟庄
+	optional int32 duohuahupai = 10;     //多花胡牌
+	optional int32 genhua = 11;     //跟花
+	optional int32 queyimen = 12;     //跟花
+}
+
+message gdmjhzmj  //广东麻将红中麻将
+{
+	optional int32 mjtype = 1;
+	optional int32 menqingjiafen = 2;        //门清加分
+	optional int32 wuhzjiafen = 3;         //无红中加分
+	optional int32 dachuhzjiafen = 4;      //打出红中加分
+	optional int32 zhuangxianjiafen = 5;       //庄闲加分
+	optional int32 kehuqidui = 6;       //可胡七对
+	optional int32 gskhjiama = 7;           //杠上开花加码
+	optional int32 qianggangquanbao = 8;    //抢杠全包
+	optional int32 gangbaoquanbao = 9;       //杠爆全包
+	optional int32 maihunum = 10;     //买胡数量：0：不买胡，3:买3，5:买5
+	optional int32 manum = 11;     //买马的数量，99表示1码全中。
+	optional int32 queyimen = 13;     //缺一门
+	optional int32 bukejihu = 14;     //不可鸡胡
+	optional int32 difen = 15;     //底分
+}
+
+message gdmjrpmj //广东麻将饶平麻将
+{
+	optional int32 mjtype = 1;
+	optional int32 gangbaoquanbao = 2;		//包杠
+	optional int32 bishu1 = 3;		//逼胡
+	optional int32 bishu2 = 4;		//逼胡2
+	optional int32 zimo = 5;		//自摸
+	optional int32 shisanyao = 6;	//十三幺
+	optional int32 qingyise = 7;	//清一色
+	optional int32 manum = 11;     //买马的数量，99表示1码全中。
+	optional int32 kehuqidui = 12;	//可以胡七对
+	optional int32 qiduisibei = 13; //豪华七对四倍
+	optional int32 difen = 15;     //底分
+	optional int32 limitjifen = 16; //限制积分
+	optional int32 faceaward_figure = 17;    
+	optional int32 faceaward_num = 18;    
+	optional int32 faceaward_count = 19;
+}

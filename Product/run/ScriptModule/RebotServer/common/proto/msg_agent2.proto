@@ -148,3 +148,35 @@ message gcbonuswithdraw
 	optional int32 alllistcount = 7; 	//总记录数
 	optional int32 pagenum = 8; 
 }
+
+message cgmycostbonuswithdraw
+{
+	optional int32 userid = 1;
+	optional int32 daypagenum = 2;
+	optional int32 page_count = 3; //每页显示数目
+}
+
+message gcmycostbonuswithdraw
+{
+	optional int32 result = 1;
+	optional int32 userid = 2;
+	repeated wiringcostweekbonus wlist = 6; //提现记录
+	optional int32 allnum = 7; 	//总记录数
+	optional int32 pagenum = 8; 
+}
+
+message cgmyagentcostbonuswithdraw
+{
+	optional int32 userid = 1;
+	optional int32 daypagenum = 2;
+	optional int32 page_count = 3; //每页显示数目
+}
+
+message gcmyagentcostbonuswithdraw
+{
+	optional int32 result = 1;
+	optional int32 userid = 2;
+	repeated wiringagentcostweekbonus wlist = 6; //提现记录
+	optional int32 allnum = 7; 	//总记录数
+	optional int32 pagenum = 8; 
+}

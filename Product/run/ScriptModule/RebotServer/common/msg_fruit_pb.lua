@@ -4,6 +4,7 @@ local st_fruit_pb = require("st_fruit_pb")
 local st_human_pb = require("st_human_pb")
 ----------nimol modify---------
 local ST_FRUIT_PB_FRUITINFO = st_fruit_pb.ST_FRUIT_PB_FRUITINFO
+local ST_FRUIT_PB_FRUITPOUR = st_fruit_pb.ST_FRUIT_PB_FRUITPOUR
 local ST_HUMAN_PB_PLAYERSIMPLEINFO = st_human_pb.ST_HUMAN_PB_PLAYERSIMPLEINFO
 module('msg_fruit_pb')
 

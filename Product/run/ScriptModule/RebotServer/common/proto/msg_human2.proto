@@ -16,9 +16,12 @@ message gccommissionget
 	optional int32 requesttype = 3; 
 	optional int32 subordinatecount_1 = 4;		//一级下属佣金
 	optional int32 subordinatecount_2 = 5;		//二级下属佣金
-	optional int32 subordinatenum = 6;			//一下下属人人数
-	optional int32 commissioncount = 7; 		//累计佣金
-	optional int32 getcommission = 8;			//领取到的佣金
+	optional int32 subordinatecount_3 = 6;		//三级下属佣金
+	optional int32 subordinatenum_1 = 7;		//一下下属人人数
+	optional int32 subordinatenum_2 = 8;		//一下下属人人数
+	optional int32 subordinatenum_3 = 9;		//一下下属人人数
+	optional int32 commissioncount = 10; 		//累计佣金
+	optional int32 getcommission = 11;			//领取到的佣金
 }
 
 message cgtxinfogetorbind   //获得与绑定
@@ -84,6 +87,7 @@ message gccounthistory
 	repeated int32 actualcount = 12;	//实际到账金额
 	repeated string applytime = 13;	//申请时间
 	repeated string msg = 14;		//驳回原因
+	optional int32 allcount = 15;   //总数
 }
 
 message cgbindphone   //结算记录
@@ -187,5 +191,89 @@ message gcactivityhero
 	repeated string prizenicknamelist = 10;		//中奖昵称
 }
 
+message cgregisterplayernum
+{
+	optional int32 userid =1;
+}
 
+message gcregisterplayernum
+{
+	optional int32 result = 1;
+	optional int32 playernum = 2;
+	optional int32 agent = 3;
+	optional string agent_face = 4;
+	optional string agent_name = 5; 
+}
+
+//lhd连胜
+message cglhdrepeatedwininfo
+{
+	optional int32 userid = 1;
+}
+
+//lhd连胜
+message gclhdrepeatedwininfo
+{
+	optional int32 result = 1;
+	optional int32 repeated_win_count = 2; //连胜次数
+	optional int32 five_repeated_win = 3; //5连胜情况， 0未达到， 1达到可领取
+	optional int32 ten_repeated_win = 4; //10连胜情况， 0未达到， 1达到可领取
+	optional int32 twenty_repeated_win = 5; //20连胜情况， 0未达到， 1达到可领取
+	optional int32 give_count = 6; //已经领取的总奖励
+}
+
+//lhd连胜 领取奖励
+message cglhdrepeatedwinreward
+{
+	optional int32 userid = 1;
+	optional int32 reward_index = 2; //1表示五连胜，2 表示10连胜 3 表示20连胜
+}
+
+//lhd连胜 领取奖励
+message gclhdrepeatedwinreward
+{
+	optional int32 result = 1;
+	optional int32 repeated_win_count = 2; //连胜次数
+	optional int32 five_repeated_win = 3; //5连胜情况， 0未达到， 1达到可领取
+	optional int32 ten_repeated_win = 4; //10连胜情况， 0未达到， 1达到可领取
+	optional int32 twenty_repeated_win = 5; //20连胜情况， 0未达到， 1达到可领取
+	optional int32 give_count = 6; //已经领取的总奖励
+}
+
+message cgdouniutzspecailrewardinfo
+{
+	optional int32 userid = 1;
+}
+
+message gcdouniutzspecailrewardinfo
+{
+	optional int32 result = 1;
+	repeated specialcardreward rewards = 2;
+	optional int32 allcount = 3; //已经领取的数目
+}
+
+message cgdouniutzgivespecailrewardinfo
+{
+	optional int32 userid = 1;
+	optional int32 index = 2;
+}
+
+message gcdouniutzgivespecailrewardinfo
+{
+	optional int32 result = 1;
+	optional int32 index = 2;
+	optional int32 allcount = 3; //已经领取的数目
+}
+
+message cggetbandphoneactivityinfo
+{
+	optional int32 userid = 1;
+}
+
+message gcgetbandphoneactivityinfo
+{
+	optional int32 result = 1;
+	optional int32 userid = 2;
+	optional int32 isfull = 3;  //是否还能参与活动  1 能  2 不能
+}
 

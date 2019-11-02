@@ -12,8 +12,8 @@ message gcbcbmenter
 {
 	optional int32 result = 1;
 	optional bcbminfo finfo = 2;      //进入森林舞会
-	repeated bcbmpour pourlist = 3;   //已经下注的列表
-	repeated bcbmpour mypour = 4;     //我自己下注的信息
+	repeated string pourlist = 3;   //已经下注的列表
+	repeated string mypour = 4;     //我自己下注的信息
 	optional string bankeralljetton = 22; 	//庄家全部筹码
 }
 

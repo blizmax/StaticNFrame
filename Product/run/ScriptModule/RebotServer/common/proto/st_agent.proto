@@ -46,6 +46,7 @@ message wiringdayachieve   //保存用户的每日业绩
 	optional string selfach_1 = 7;   //日团队业绩
 	optional int32 getrate = 8;   //返佣比例
 	optional int32 getmoney = 9; //收益
+	optional string fivelevel_ach = 10; //五级业绩
 }
 
 message wiringawardinfo     //排线中，得到的奖励的数据
@@ -124,4 +125,26 @@ message wiringdaybonus   //保存用户的每日业绩分红
 	optional int32 level = 3;   //等级
 	optional int32 rate = 4; //比例
 	optional string bonus = 5; //分红等级
+}
+
+message wiringcostweekbonus   //保存用户的每周分红
+{
+	optional string datestr = 1;
+	optional int32 allwin = 2;  //输赢
+	optional int32 bonus_rate = 3;   //分红比例
+	optional int32 self_bonus = 4;    //权益分红
+	optional int32 agent_bonus = 5;  //推荐分红
+	optional int32 all_bonus = 6;   //总分红
+	optional int32 status = 7;   //日团队业绩
+}
+
+message wiringagentcostweekbonus   //保存用户的每周分红
+{
+	optional string datestr = 1;
+	optional int32 agent_id = 2;
+	optional string agent_name = 3;  //输赢
+	optional int32 bonus_rate = 4;   //分红比例
+	optional int32 self_bonus = 5;    //权益分红
+	optional int32 agent_bonus = 6;  //推荐分红
+	optional int32 status = 7;   //日团队业绩
 }

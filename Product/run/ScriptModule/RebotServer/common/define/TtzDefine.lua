@@ -83,10 +83,11 @@ g_TtzDefine.state_perflop = 3    --摇骰子发牌状态
 g_TtzDefine.state_pour = 4       --下注状态
 g_TtzDefine.state_opencard = 5   --开牌状态
 g_TtzDefine.state_count = 6      --结算时间状态
+g_TtzDefine.state_end = 7
 
 g_TtzDefine.state_start_wait = 11    
 g_TtzDefine.state_perflop_wait = 12
-
+g_TtzDefine.state_opencard_wait = 13
 
 g_TtzDefine.robot_range = { {20000, 800000}, {20000, 800000},{20000,800000},{20000, 800000},{20000, 800000},{20000, 800000}}
 

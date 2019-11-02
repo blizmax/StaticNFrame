@@ -53,6 +53,7 @@ message gcttzgamestart
 	optional int32 			  timemark = 7;
 	repeated playersimpleinfo pslist = 8;     //坐在6个位置上的人物信息
 	repeated int32 			  situser = 9;         //对应位置的userID，总共8个长度，在第几个非0就表示该座位有玩家
+	optional int32            bankerlistcount = 10;   //上周列表人数
 }
 
 //通知开始下注

@@ -4,6 +4,10 @@ g_fenfencaiDefine.game_type = 7200
 g_fenfencaiDefine.pour_type = {1,2,3, 4, 5, 6, 7} -- 龙、虎、和、大、小、单、双
 g_fenfencaiDefine.awardresult = {"龙", "虎", "和", "大", "小", "单", "双"}
 
+g_fenfencaiDefine.game_lockstate = {}
+g_fenfencaiDefine.game_lockstate.lock_no = 1
+g_fenfencaiDefine.game_lockstate.lock_yes = 2
+
 g_fenfencaiDefine.init_sit = 6    --初始化的6个座位
 
 g_fenfencaiDefine.win_rate = {}    --这个是赔率
