@@ -67,6 +67,10 @@ function BcbmStart.execute(nMsgId, clientId, strMsg)
     local userid = RebotModel.GetRebotPlayerIdByClient(clientId)
     local tableid = RebotModel.GetPlayerTableId(userid)
 
+    if tableid == nil then
+        return
+    end
+    
     local timeData= {}
     timeData['tableid'] = tostring(tableid)
     timeData['userid'] = tostring(userid)
