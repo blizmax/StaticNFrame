@@ -411,7 +411,7 @@ void NFCLuaThreadModule::SendMsgToManyPlayer(const std::vector<uint64_t>& nVecPl
 		{
 			uint64_t nPlayerID = nVecPlayerID[i];
 			packetMsg.add_user_id(nPlayerID);
-			NFLogError(NF_LOG_SYSTEMLOG, 0, "SendMsgToManyPlayer: nPlayerID:{}", nPlayerID);
+			NFLogError(NF_LOG_SYSTEMLOG, 0, "SendMsgToManyPlayer: nPlayerID:{} msgId:{}", nPlayerID, nMsgID);
 		}
 		packetMsg.set_msg_id(nMsgID);
 		packetMsg.set_msg(strData);
