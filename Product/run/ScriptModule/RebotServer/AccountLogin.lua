@@ -129,7 +129,8 @@ function GetGameStateInfo.work(buffer)
         count = count + 1
         local tableid = RebotModel.GetPlayerTableId(playerId)
         if tableid == nil or tonumber(tableid) == 0 then
-            local randgame = math.myrandom(1, 100)
+            BrnnService.EnterGame(clientId, tableid)
+            --[[local randgame = math.myrandom(1, 100)
             if randgame <= 20 then
                 BarccatatService.EnterGame(clientId, tableid)
             elseif randgame > 20 and randgame <= 40 then
@@ -140,7 +141,7 @@ function GetGameStateInfo.work(buffer)
                 BcbmService.EnterGame(clientId, tableid)
             elseif randgame > 80 and randgame <= 100 then
                 BrnnService.EnterGame(clientId, tableid)
-            end   
+            end   ]]
         end
     end
     LogFile("error", "rebot online num:"..count)
