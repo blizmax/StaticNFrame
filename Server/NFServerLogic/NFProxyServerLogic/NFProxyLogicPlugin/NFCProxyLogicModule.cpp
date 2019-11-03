@@ -547,6 +547,7 @@ void NFCProxyLogicModule::OnHandlePacketMsgFromGameServer(const uint32_t unLinkI
 			NF_SHARE_PTR<ProxyLinkInfo> pLinkInfo = mClientLinkInfo.GetElement(pPlayerInfo->mUnlinkId);
 			if (pLinkInfo == nullptr)
 			{
+				NFLogInfo(NF_LOG_PROXY_RECV_MSG_LOG, 0, "recv packet msg  -- buf player disconnect, playerId:{}, msgId:{}, msglen:{}", playerId, gcMsg.msg_id(), gcMsg.msg().length());
 				return;
 			}
 			NFLogInfo(NF_LOG_PROXY_RECV_MSG_LOG, 0, "recv packet msg  -- playerId:{}, msgId:{}, msglen:{}", playerId, gcMsg.msg_id(), gcMsg.msg().length());
