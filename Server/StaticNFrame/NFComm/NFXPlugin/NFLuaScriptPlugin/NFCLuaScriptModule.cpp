@@ -249,16 +249,18 @@ void NFCLuaScriptModule::SendMsgToManyPlayer(const std::vector<uint64_t>& nVecPl
 {
 	if (m_pNetServerModule)
 	{
-		NFMsg::NotifyProxyPacketMsg packetMsg;
-
 		for (size_t i = 0; i < nVecPlayerID.size(); i++)
 		{
 			uint64_t nPlayerID = nVecPlayerID[i];
-			packetMsg.add_user_id(nPlayerID);
+			if (nPlayerID != 0)
+			{
+				auto pPlayerInfo = GetPlayerInfo(nPlayerID);
+				if (pPlayerInfo)
+				{
+					m_pNetServerModule->SendByServerID(pPlayerInfo->GetProxyUnlinkId(), nMsgID, strData, nPlayerID);
+				}
+			}
 		}
-		packetMsg.set_msg_id(nMsgID);
-		packetMsg.set_msg(strData);
-		m_pNetServerModule->SendToAllServerByPB(NF_ST_GAME, EGMI_NET_GAME_SEND_PACKET_TO_PROXY, packetMsg, 0);
 	}
 }
 
@@ -266,19 +268,15 @@ void NFCLuaScriptModule::SendMsgToAllPlayer(const uint32_t nMsgID, const uint32_
 {
 	if (m_pNetServerModule)
 	{
-		NFMsg::NotifyProxyPacketMsg packetMsg;
-
 		auto pPlayerInfo = mPlayerProxyInfoMap.First();
 		while (pPlayerInfo)
-		{
-			packetMsg.add_user_id(pPlayerInfo->mPlayerId);
-			
+		{	
+			if (pPlayerInfo)
+			{
+				m_pNetServerModule->SendByServerID(pPlayerInfo->GetProxyUnlinkId(), nMsgID, strData, pPlayerInfo->GetPlayerId());
+			}
 			pPlayerInfo = mPlayerProxyInfoMap.Next();
 		}
-
-		packetMsg.set_msg_id(nMsgID);
-		packetMsg.set_msg(strData);
-		m_pNetServerModule->SendToAllServerByPB(NF_ST_GAME, EGMI_NET_GAME_SEND_PACKET_TO_PROXY, packetMsg, 0);
 	}
 }
 
