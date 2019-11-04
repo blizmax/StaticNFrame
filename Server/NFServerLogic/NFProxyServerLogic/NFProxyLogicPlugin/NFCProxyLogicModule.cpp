@@ -540,7 +540,12 @@ void NFCProxyLogicModule::OnHandlePacketMsgFromGameServer(const uint32_t unLinkI
 
 	if (playerId == 125321)
 	{
-		NFLogInfo(NF_LOG_PROXY_RECV_MSG_LOG, 0, "OnHandlePacketMsgFromGameServer recv packet msg  -- playerId:{}, nMsgId:{}", playerId, gcMsg.msg_id());
+		NFLogInfo(NF_LOG_PROXY_RECV_MSG_LOG, 0, "OnHandlePacketMsgFromGameServer recv packet msg  -- playerId:{}, nMsgId:{}, size:{}, msgLen:{}", playerId, gcMsg.msg_id(), gcMsg.user_id_size(), nLen);
+		for (int i = 0; i < gcMsg.user_id_size(); i++)
+		{
+			uint64_t userid = gcMsg.user_id(i);
+			NFLogInfo(NF_LOG_PROXY_RECV_MSG_LOG, 0, "OnHandlePacketMsgFromGameServer player recv packet msg  -- playerId:{}, nMsgId:{}", userid, gcMsg.msg_id());
+		}
 		
 	}
 
