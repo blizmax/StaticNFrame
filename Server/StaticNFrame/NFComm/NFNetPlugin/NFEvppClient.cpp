@@ -199,6 +199,11 @@ void NFEvppClient::ProcessMsgLogicThread()
 		MsgFromNetInfo* pMsg = vecMsg[i];
 		if (pMsg == nullptr) continue;
 
+		if (pMsg->nValue == 125321)
+		{
+			NFLogInfo(NF_LOG_SYSTEMLOG, 0, "ProcessMsgLogicThread  -- playerId:{}, nMsgId:{}", pMsg->nValue, pMsg->nMsgId);
+		}
+
 		if (pMsg->nType == eMsgType_CONNECTED)
 		{
 			if (m_pObject)
@@ -239,11 +244,19 @@ void NFEvppClient::ProcessMsgLogicThread()
 		}
 		else if (pMsg->nType == eMsgType_RECIVEDATA)
 		{
+			if (pMsg->nValue == 125321)
+			{
+				NFLogInfo(NF_LOG_SYSTEMLOG, 0, "ProcessMsgLogicThread eMsgType_RECIVEDATA -- playerId:{}, nMsgId:{}", pMsg->nValue, pMsg->nMsgId);
+			}
 			if (!pMsg->mTCPConPtr->context().IsEmpty())
 			{
 				NetEvppObject* pObject = evpp::any_cast<NetEvppObject*>(pMsg->mTCPConPtr->context());
 				if (pObject && pObject == m_pObject)
 				{
+					if (pMsg->nValue == 125321)
+					{
+						NFLogInfo(NF_LOG_SYSTEMLOG, 0, "OnHandleMsgPeer eMsgType_RECIVEDATA -- playerId:{}, nMsgId:{}", pMsg->nValue, pMsg->nMsgId);
+					}
 					pObject->OnHandleMsgPeer(eMsgType_RECIVEDATA, pObject->m_usLinkId, (char*)pMsg->strMsg.data(), pMsg->strMsg.length(), pMsg->nMsgId, pMsg->nValue);
 				}
 				else
