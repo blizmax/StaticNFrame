@@ -271,11 +271,6 @@ void NFCNetServerModule::SendToAllServer(NF_SERVER_TYPES eServerType, const uint
 		auto pServer = mServerArray[eServerType];
 		if (pServer)
 		{
-			if (nPlayerID == 125321)
-			{
-				NFLogError(NF_LOG_SYSTEMLOG, 0, "NFCNetServerModule::SendToAllServer: nPlayerID:125321 msgId:5320");
-			}
-			
 			SendAllMsg(pServer, nMsgID, msg, nLen, nPlayerID);
 		}
 	}

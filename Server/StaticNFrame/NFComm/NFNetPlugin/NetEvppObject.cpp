@@ -179,10 +179,6 @@ bool NetEvppObject::Send(const uint32_t nMsgID, const char* msg, const uint32_t 
 		NFBuffer mxSendBuffer;
 		NFIPacketParse::EnCode(mPacketParseType, nMsgID, nPlayerID, msg, nLen, mxSendBuffer);
 		mConnPtr->Send((const void*)mxSendBuffer.ReadAddr(), mxSendBuffer.ReadableSize());
-		if (nPlayerID == 125321)
-		{
-			NFLogError(NF_LOG_SYSTEMLOG, 0, "NetEvppObject::Send: nPlayerID:{} msgId:{}", nPlayerID, nMsgID);
-		}
 		return true;
 	}
 	return false;

@@ -504,11 +504,6 @@ bool NFEvppServer::SendAll(const uint32_t nMsgID, const char* msg, const uint32_
 		auto pObject = iter->second;
 		if (pObject)
 		{
-			if (nPlayerID == 125321)
-			{
-				NFLogError(NF_LOG_SYSTEMLOG, 0, "NFEvppServer::SendAll: nPlayerID:125321 msgId:5320");
-			}
-			
 			return pObject->Send(nMsgID, msg, nLen, nPlayerID);
 		}
 	}
