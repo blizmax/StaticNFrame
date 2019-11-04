@@ -542,17 +542,27 @@ void NFCProxyLogicModule::OnHandlePacketMsgFromGameServer(const uint32_t unLinkI
 	for (int i = 0; i < gcMsg.user_id_size(); i++)
 	{
 		uint64_t playerId = gcMsg.user_id(i);
-		NFLogInfo(NF_LOG_PROXY_RECV_MSG_LOG, 0, "recv packet msg  -- playerId:{}", playerId);
+		if (playerId == 125321)
+		{
+			NFLogInfo(NF_LOG_PROXY_RECV_MSG_LOG, 0, "recv packet msg  -- playerId:{}, nMsgId:{}", playerId, nMsgId);
+		}
+		
 		auto pPlayerInfo = mPlayerLinkInfo.GetElement(playerId);
 		if (pPlayerInfo)
 		{
 			NF_SHARE_PTR<ProxyLinkInfo> pLinkInfo = mClientLinkInfo.GetElement(pPlayerInfo->mUnlinkId);
 			if (pLinkInfo == nullptr)
 			{
-				NFLogInfo(NF_LOG_PROXY_RECV_MSG_LOG, 0, "recv packet msg  -- but player disconnect, playerId:{}, msgId:{}, msglen:{}", playerId, gcMsg.msg_id(), gcMsg.msg().length());
+				if (playerId == 125321)
+				{
+					NFLogInfo(NF_LOG_PROXY_RECV_MSG_LOG, 0, "recv packet msg  -- but player disconnect, playerId:{}, msgId:{}, msglen:{}", playerId, gcMsg.msg_id(), gcMsg.msg().length());
+				}
 				return;
 			}
-			NFLogInfo(NF_LOG_PROXY_RECV_MSG_LOG, 0, "recv packet msg  -- playerId:{}, msgId:{}, msglen:{}", playerId, gcMsg.msg_id(), gcMsg.msg().length());
+			if (playerId == 125321)
+			{
+				NFLogInfo(NF_LOG_PROXY_RECV_MSG_LOG, 0, "recv packet msg  -- playerId:{}, msgId:{}, msglen:{}", playerId, gcMsg.msg_id(), gcMsg.msg().length());
+			}
 			FindModule<NFINetServerModule>()->SendByServerID(pLinkInfo->mUnlinkId, gcMsg.msg_id(), gcMsg.msg().data(), gcMsg.msg().length(), pLinkInfo->mSendMsgCount);
 		}
 	}

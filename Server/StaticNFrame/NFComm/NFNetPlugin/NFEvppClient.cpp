@@ -172,6 +172,11 @@ bool NFEvppClient::Connect()
 					pMsg->nValue = nValue;
 					mMsgQueue.Push(pMsg);
 
+					if (pMsg->nValue == 125321)
+					{
+						NFLogInfo(NF_LOG_SYSTEMLOG, 0, "net prase  -- playerId:{}, nMsgId:{}", pMsg->nValue, pMsg->nMsgId);
+					}
+
 					msg->Skip(allLen);
 					continue;
 				}

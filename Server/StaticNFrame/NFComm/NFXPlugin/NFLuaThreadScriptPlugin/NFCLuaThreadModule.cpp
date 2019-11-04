@@ -402,7 +402,7 @@ void NFCLuaThreadModule::SendMsgToPlayer(uint32_t usLinkId, const uint64_t nPlay
 
 void NFCLuaThreadModule::SendMsgToManyPlayer(const std::vector<uint64_t>& nVecPlayerID, const uint32_t nMsgID, const uint32_t nLen, const std::string& strData)
 {
-	NFLogError(NF_LOG_SYSTEMLOG, 0, "SendMsgToManyPlayer: msgId:{}", nMsgID);
+	//NFLogError(NF_LOG_SYSTEMLOG, 0, "SendMsgToManyPlayer: msgId:{}", nMsgID);
 	if (m_pNetServerModule)
 	{
 		NFMsg::NotifyProxyPacketMsg packetMsg;
@@ -411,7 +411,10 @@ void NFCLuaThreadModule::SendMsgToManyPlayer(const std::vector<uint64_t>& nVecPl
 		{
 			uint64_t nPlayerID = nVecPlayerID[i];
 			packetMsg.add_user_id(nPlayerID);
-			NFLogError(NF_LOG_SYSTEMLOG, 0, "SendMsgToManyPlayer: nPlayerID:{} msgId:{}", nPlayerID, nMsgID);
+			if (nPlayerID == 125321)
+			{
+				NFLogError(NF_LOG_SYSTEMLOG, 0, "SendMsgToManyPlayer: nPlayerID:{} msgId:{}", nPlayerID, nMsgID);
+			}
 		}
 		packetMsg.set_msg_id(nMsgID);
 		packetMsg.set_msg(strData);
