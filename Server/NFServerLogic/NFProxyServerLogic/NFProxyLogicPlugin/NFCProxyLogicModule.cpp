@@ -544,7 +544,7 @@ void NFCProxyLogicModule::OnHandlePacketMsgFromGameServer(const uint32_t unLinkI
 		uint64_t playerId = gcMsg.user_id(i);
 		if (playerId == 125321)
 		{
-			NFLogInfo(NF_LOG_PROXY_RECV_MSG_LOG, 0, "recv packet msg  -- playerId:{}, nMsgId:{}", playerId, nMsgId);
+			NFLogInfo(NF_LOG_PROXY_RECV_MSG_LOG, 0, "recv packet msg  -- playerId:{}, nMsgId:{}", playerId, gcMsg.msg_id());
 		}
 		
 		auto pPlayerInfo = mPlayerLinkInfo.GetElement(playerId);

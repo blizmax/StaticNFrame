@@ -403,6 +403,7 @@ void NFCLuaThreadModule::SendMsgToPlayer(uint32_t usLinkId, const uint64_t nPlay
 void NFCLuaThreadModule::SendMsgToManyPlayer(const std::vector<uint64_t>& nVecPlayerID, const uint32_t nMsgID, const uint32_t nLen, const std::string& strData)
 {
 	//NFLogError(NF_LOG_SYSTEMLOG, 0, "SendMsgToManyPlayer: msgId:{}", nMsgID);
+	bool test = false;
 	if (m_pNetServerModule)
 	{
 		NFMsg::NotifyProxyPacketMsg packetMsg;
@@ -411,11 +412,12 @@ void NFCLuaThreadModule::SendMsgToManyPlayer(const std::vector<uint64_t>& nVecPl
 		{
 			uint64_t nPlayerID = nVecPlayerID[i];
 			packetMsg.add_user_id(nPlayerID);
-			if (nPlayerID == 125321)
+			if (nPlayerID == 125321 && nMsgID == 5320)
 			{
+				test = true;
 				NFLogError(NF_LOG_SYSTEMLOG, 0, "SendMsgToManyPlayer: nPlayerID:{} msgId:{}", nPlayerID, nMsgID);
 			}
-			if (nPlayerID != 0)
+			/*if (nPlayerID != 0)
 			{
 				auto pPlayerInfo = GetPlayerInfo(nPlayerID);
 				if (pPlayerInfo)
@@ -423,11 +425,19 @@ void NFCLuaThreadModule::SendMsgToManyPlayer(const std::vector<uint64_t>& nVecPl
 					NFLogError(NF_LOG_SYSTEMLOG, 0, "m_pNetServerModule->SendByServerID: nPlayerID:{} msgId:{}", nPlayerID, nMsgID);
 					m_pNetServerModule->SendByServerID(pPlayerInfo->GetProxyUnlinkId(), nMsgID, strData, nPlayerID);
 				}
-			}
+			}*/
 		}
 		packetMsg.set_msg_id(nMsgID);
 		packetMsg.set_msg(strData);
-		//m_pNetServerModule->SendToAllServerByPB(NF_ST_GAME, EGMI_NET_GAME_SEND_PACKET_TO_PROXY, packetMsg, 0);
+		if (test)
+		{
+			m_pNetServerModule->SendToAllServerByPB(NF_ST_GAME, EGMI_NET_GAME_SEND_PACKET_TO_PROXY, packetMsg, 125321);
+		}
+		else
+		{
+			m_pNetServerModule->SendToAllServerByPB(NF_ST_GAME, EGMI_NET_GAME_SEND_PACKET_TO_PROXY, packetMsg, 0);
+		}
+		
 	}
 }
 
