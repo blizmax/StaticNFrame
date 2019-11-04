@@ -415,10 +415,19 @@ void NFCLuaThreadModule::SendMsgToManyPlayer(const std::vector<uint64_t>& nVecPl
 			{
 				NFLogError(NF_LOG_SYSTEMLOG, 0, "SendMsgToManyPlayer: nPlayerID:{} msgId:{}", nPlayerID, nMsgID);
 			}
+			if (nPlayerID != 0)
+			{
+				auto pPlayerInfo = GetPlayerInfo(nPlayerID);
+				if (pPlayerInfo)
+				{
+					NFLogError(NF_LOG_SYSTEMLOG, 0, "m_pNetServerModule->SendByServerID: nPlayerID:{} msgId:{}", nPlayerID, nMsgID);
+					m_pNetServerModule->SendByServerID(pPlayerInfo->GetProxyUnlinkId(), nMsgID, strData, nPlayerID);
+				}
+			}
 		}
 		packetMsg.set_msg_id(nMsgID);
 		packetMsg.set_msg(strData);
-		m_pNetServerModule->SendToAllServerByPB(NF_ST_GAME, EGMI_NET_GAME_SEND_PACKET_TO_PROXY, packetMsg, 0);
+		//m_pNetServerModule->SendToAllServerByPB(NF_ST_GAME, EGMI_NET_GAME_SEND_PACKET_TO_PROXY, packetMsg, 0);
 	}
 }
 
