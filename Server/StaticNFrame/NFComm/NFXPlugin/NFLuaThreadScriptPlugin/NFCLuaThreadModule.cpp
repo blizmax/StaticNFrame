@@ -16,6 +16,7 @@
 #include "NFComm/NFPluginModule/NFConfigMgr.h"
 #include "NFMessageDefine/server_to_server_msg.pb.h"
 #include "NFServerLogic/NFServerLogicCommon/NFServerLogicCommon.h"
+#include "NFComm/NFPluginModule/NFIMonitorModule.h"
 
 void NFLuaThreadTimer::OnTimer(uint32_t nTimerID)
 {
@@ -491,6 +492,12 @@ void NFCLuaThreadModule::OnAccountEventCallBack(uint32_t nEvent, uint32_t unLink
 			mPlayerProxyInfoMap.RemoveElement(pServerData->GetPlayerId());
 		}
 		mPlayerProxyInfoMap.AddElement(pServerData->GetPlayerId(), pServerData);
+	}
+
+	NFIMonitorModule* pMonitorModule = FindModule<NFIMonitorModule>();
+	if (pMonitorModule)
+	{
+		pMonitorModule->SetUserCount(mPlayerProxyInfoMap.Count());
 	}
 }
 

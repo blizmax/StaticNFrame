@@ -44,6 +44,9 @@ public:
 	virtual void OnExecute(uint16_t nEventID, uint64_t nSrcID, uint8_t bySrcType, const google::protobuf::Message& message);
 
 	virtual const NFSystemInfo& GetSystemInfo() const;
+
+	virtual uint32_t GetUserCount() const;
+	virtual void SetUserCount(uint32_t count);
 private:
 	NFSystemInfo mSystemInfo;
 };

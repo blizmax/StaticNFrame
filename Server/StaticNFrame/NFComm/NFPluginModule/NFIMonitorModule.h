@@ -22,5 +22,7 @@ public:
 	}
 
 	virtual const NFSystemInfo& GetSystemInfo() const = 0;
+	virtual uint32_t GetUserCount() const = 0;
+	virtual void SetUserCount(uint32_t count) = 0;
 };
 

@@ -101,9 +101,13 @@ public:
 	virtual void CountCurProcessInfo();
 	virtual void CountSystemInfo();
 	virtual void CountOsInfo();
+
+	virtual uint32_t GetUserCount() const;
+	virtual void SetUserCount(uint32_t userCount);
 private:
 	NFProcessInfo mCurProcessInfo;
 	uint32_t mCpuCount = 1;
 	NFMemInfo mMachineMemInfo; //当前物理机子的内存信息
 	NFOsInfo mMachineOsInfo;
+	uint32_t mUserCount = 0; //当前服务器玩家数目
 };

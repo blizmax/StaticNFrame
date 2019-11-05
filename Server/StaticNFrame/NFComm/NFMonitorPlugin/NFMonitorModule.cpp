@@ -165,3 +165,13 @@ const NFSystemInfo& NFCMonitorModule::GetSystemInfo() const
 {
 	return mSystemInfo;
 }
+
+uint32_t NFCMonitorModule::GetUserCount() const
+{
+	return mSystemInfo.GetUserCount();
+}
+
+void NFCMonitorModule::SetUserCount(uint32_t count)
+{
+	mSystemInfo.SetUserCount(count);
+}

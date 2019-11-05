@@ -193,3 +193,13 @@ void NFSystemInfo::CountMemInfo()
 	mMachineMemInfo.mUsedPercent = sigar_mem.used_percent;
 	mMachineMemInfo.mFreePercent = sigar_mem.free_percent;
 }
+
+uint32_t NFSystemInfo::GetUserCount() const
+{
+	return mUserCount;
+}
+
+void NFSystemInfo::SetUserCount(uint32_t userCount)
+{
+	mUserCount = userCount;
+}

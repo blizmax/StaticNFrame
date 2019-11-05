@@ -12,6 +12,7 @@
 #include "NFMessageDefine/server_to_server_msg.pb.h"
 #include "NFComm/NFCore/NFRandom.hpp"
 #include "NFComm/NFCore/NFStringUtility.h"
+#include "NFComm/NFPluginModule/NFIMonitorModule.h"
 
 NFCProxyLogicModule::NFCProxyLogicModule(NFIPluginManager* p)
 {
@@ -189,7 +190,7 @@ void NFCProxyLogicModule::OnTimer(uint32_t nTimerID)
 	{
 		if (pLinkInfo->mRecvHeartBeatTime > 0)
 		{
-			if (NFGetSecondTime() - pLinkInfo->mRecvHeartBeatTime > 10)
+			if (NFGetSecondTime() - pLinkInfo->mRecvHeartBeatTime > 5)
 			{
 				NFMsg::gcheartbeat gcMsg;
 				gcMsg.set_result(0);
@@ -197,6 +198,12 @@ void NFCProxyLogicModule::OnTimer(uint32_t nTimerID)
 			}
 		}
 		pLinkInfo = mClientLinkInfo.Next();
+	}
+
+	NFIMonitorModule* pMonitorModule = FindModule<NFIMonitorModule>();
+	if (pMonitorModule)
+	{
+		pMonitorModule->SetUserCount(mClientLinkInfo.Count());
 	}
 }
 
