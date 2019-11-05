@@ -170,7 +170,6 @@ void NFCGameClient_MasterModule::ServerReport()
 		pData->set_server_type(pConfig->mServerType);
 		pData->set_server_max_online(pConfig->mMaxConnectNum);
 		pData->set_server_state(NFMsg::EST_NARMAL);
-		pData->set_server_cur_online(0);
 
 		NFIMonitorModule* pMonitorModule = m_pPluginManager->FindModule<NFIMonitorModule>();
 		if (pMonitorModule)
@@ -188,6 +187,7 @@ void NFCGameClient_MasterModule::ServerReport()
 			pData->set_proc_name(systemInfo.GetProcessInfo().mName);
 			pData->set_proc_cwd(systemInfo.GetProcessInfo().mCwd);
 			pData->set_proc_pid(systemInfo.GetProcessInfo().mPid);
+			pData->set_server_cur_online(systemInfo.GetUserCount());
 		}
 
 		if (m_pMasterServerData->mUnlinkId > 0 && pData->proc_cpu() > 0 && pData->proc_mem() > 0)

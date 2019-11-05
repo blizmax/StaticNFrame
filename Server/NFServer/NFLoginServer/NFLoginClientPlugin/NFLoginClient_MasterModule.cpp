@@ -204,6 +204,7 @@ void NFCLoginClient_MasterModule::ServerReport()
 			pData->set_proc_name(systemInfo.GetProcessInfo().mName);
 			pData->set_proc_cwd(systemInfo.GetProcessInfo().mCwd);
 			pData->set_proc_pid(systemInfo.GetProcessInfo().mPid);
+			pData->set_server_cur_online(systemInfo.GetUserCount());
 		}
 
 		if (pData->proc_cpu() > 0 && pData->proc_mem() > 0)
