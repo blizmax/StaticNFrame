@@ -260,3 +260,6 @@ require("Http.HttpActivity")
 require("Http.HttpUtils")
 
 require("DouNiuTz.Services.DouNiuTzService")
+
+require("common.msg_gdmj_pb")
+require("common.msg_gdmj2_pb")
