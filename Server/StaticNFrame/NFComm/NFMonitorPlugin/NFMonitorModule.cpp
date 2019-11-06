@@ -109,18 +109,23 @@ void NFCMonitorModule::OnExecute(uint16_t nEventID, uint64_t nSrcID, uint8_t byS
 					std::vector<std::string> vecStr;
 					if (!data.empty())
 					{
+						std::vector<std::string> tempStr;
 						if (data.find(';') != std::string::npos)
 						{
-							NFStringUtility::Split(vecStr, data, ";");
+							NFStringUtility::Split(tempStr, data, ";");
 						}
 						else
 						{
-							NFStringUtility::Split(vecStr, data, "|");
+							NFStringUtility::Split(tempStr, data, "|");
 						}
 
-						for (size_t i = 0; i < vecStr.size(); i++)
+						for (size_t i = 0; i < tempStr.size(); i++)
 						{
-							NFStringUtility::Trim(vecStr[i]);
+							NFStringUtility::Trim(tempStr[i]);
+							if (!tempStr[i].empty())
+							{
+								vecStr.push_back(tempStr[i]);
+							}
 						}
 					}	
 					pLuaModule->ReloadLuaFiles(vecStr);
@@ -136,18 +141,23 @@ void NFCMonitorModule::OnExecute(uint16_t nEventID, uint64_t nSrcID, uint8_t byS
 					std::vector<std::string> vecStr;
 					if (!data.empty())
 					{
+						std::vector<std::string> tempStr;
 						if (data.find(';') != std::string::npos)
 						{
-							NFStringUtility::Split(vecStr, data, ";");
+							NFStringUtility::Split(tempStr, data, ";");
 						}
 						else
 						{
-							NFStringUtility::Split(vecStr, data, "|");
+							NFStringUtility::Split(tempStr, data, "|");
 						}
 
-						for (size_t i = 0; i < vecStr.size(); i++)
+						for (size_t i = 0; i < tempStr.size(); i++)
 						{
-							NFStringUtility::Trim(vecStr[i]);
+							NFStringUtility::Trim(tempStr[i]);
+							if (!tempStr[i].empty())
+							{
+								vecStr.push_back(tempStr[i]);
+							}
 						}
 					}
 

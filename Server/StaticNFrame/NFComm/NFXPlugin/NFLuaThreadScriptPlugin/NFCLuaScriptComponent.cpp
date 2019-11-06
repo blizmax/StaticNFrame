@@ -257,6 +257,10 @@ bool NFRunGmFunctionActorTask::ThreadProcess()
 	if (m_pComponent)
 	{
 		auto size = m_vecParams.size();
+		if (size == 0)
+		{
+			m_pComponent->TryRunGlobalScriptFunc(m_luaFunction);
+		}
 		if (size == 1)
 		{
 			m_pComponent->TryRunGlobalScriptFunc(m_luaFunction, m_vecParams[0]);
