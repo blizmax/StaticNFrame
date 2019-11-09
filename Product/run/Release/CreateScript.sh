@@ -39,6 +39,7 @@ do_work ProxyServer 6
 do_work LocationServer 7
 do_work LogServer 8
 do_work WebServer 9
+do_work CheckServer 21
 
 echo "rm Stop.sh -rf" >> Clear.sh
 echo "rm Start.sh -rf" >> Clear.sh
