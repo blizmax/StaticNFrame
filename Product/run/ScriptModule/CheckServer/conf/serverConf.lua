@@ -28,7 +28,7 @@ g_dbDatabase2 = 'db_CblTest'
 g_webUrl = "https://20998888.com"  --游戏的URL，
 
 
-g_dbHost = '47.75.217.27'
+g_dbHost = '119.23.182.191'
 g_dbUser = 'user_yj'
 g_dbPassword = "cgt=+erhk"
 g_dbPort = 6001
