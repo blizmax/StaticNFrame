@@ -66,6 +66,8 @@ function ServerCheck.CheckServerIpPort()
 			LogFile("error", serverip.." connect timeout, may be attacted.......")
 			local count = 0
 			for i=1,5 do
+				local sock = socket.tcp()
+				sock:settimeout(1)
 				local client = sock:connect(serverip, tcpport)
 				if client == nil then
 					count = count + 1
@@ -115,6 +117,8 @@ function ServerCheck.CheckDisconnect(buffer)
 			LogFile("error", serverip.." state = 0, but connect success")
 			local count = 0
 			for i=1,5 do
+				local sock = socket.tcp()
+				sock:settimeout(1)
 				local client, errorStr = sock:connect(serverip, tcpport)
 				if client ~= nil then
 					count = count + 1
@@ -126,7 +130,7 @@ function ServerCheck.CheckDisconnect(buffer)
 			if count >= 5 then
 				table.insert(serversuccess, serverid)
 				LogFile("error", serverip.." set state = 1")
-				--http://kxqp2006.top/index.php/dwcgame/client/serverAttattedPhone?phonenum=18927427460&serverip=127.0.0.1
+				HttpGet("http://kxqp2006.top/index.php/dwcgame/client/serverReConnectPhone?phonenum=18927427460&serverip="..serverip)
                 break
 			end
 		else
