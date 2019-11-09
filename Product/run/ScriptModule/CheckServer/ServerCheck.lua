@@ -6,7 +6,7 @@ function ServerCheck.work(buffer)
 end
 
 function ServerDiconnectCheck.work(buffer)
-    LogFile("error", "ServerDiconnectCheck.work:"..buffer)
+    --LogFile("error", "ServerDiconnectCheck.work:"..buffer)
     ServerCheck.CheckDisconnect(buffer)
 end
 
@@ -17,7 +17,8 @@ function ServerCheck.ServerLoop()
 		processWork( "ServerCheck", "1" )
     end
 
-    if  math.mod(tonumber(g_markTime.curr.min), 10) == 0 and g_markTime.curr.sec == 0 then
+    if tm.sec == 0 then
+    --if  math.mod(tonumber(g_markTime.curr.min), 10) == 0 and g_markTime.curr.sec == 0 then
         local socket = require("socket")
         local serversuccess = {}
         local sqlCase = "select serverid,servername,serverip,tcpport from du_server where state = 0"
@@ -32,7 +33,8 @@ function ServerCheck.ServerLoop()
             local servername = tostring(sqlData[2]) == nil and "" or tostring(sqlData[2])
             local serverip = tostring(sqlData[3]) == nil and "" or tostring(sqlData[3])
             local tcpport = tonumber(sqlData[4]) == nil and 0 or tonumber(sqlData[4])
-            processWork( "ServerDiconnectCheck", tostring(serverid))
+			processWork( "ServerDiconnectCheck", tostring(serverid))
+			--LogFile("error", "serverid:"..serverid.." serverip:"..serverip.." disconnect")
         end
 	end	
 end
@@ -54,26 +56,26 @@ function ServerCheck.CheckServerIpPort()
 		local tcpport = tonumber(sqlData[4]) == nil and 0 or tonumber(sqlData[4])
 
 		
-		local sock = socket.connect(serverip, tcpport)
-		if sock ~= nil then
-			sock:settimeout(0)
+        local sock = socket.tcp()
+        sock:settimeout(1)
+        local client = sock:connect(serverip, tcpport)
+		if client ~= nil then
 			sock:close()
 			--LogFile("error", serverip.." connect success")
 		else
 			LogFile("error", serverip.." connect timeout, may be attacted.......")
 			local count = 0
-			for i=1,1 do
-				local sock2 = socket.connect(serverip, tcpport)
-				if sock2 == nil then
+			for i=1,5 do
+				local client = sock:connect(serverip, tcpport)
+				if client == nil then
 					count = count + 1
 					LogFile("error", serverip.." connect timeout, count:"..count.." may be attacted.......")
 				else
-					sock2:settimeout(0)
-					sock2:close()
+					sock:close()
 				end
 			end
 
-			if count >= 1 then
+			if count >= 5 then
 				LogFile("error", serverip.." connect timeout, must be attacted.......")
                 table.insert(servertimeout, serverid)
                 break
@@ -104,18 +106,18 @@ function ServerCheck.CheckDisconnect(buffer)
 		local serverip = tostring(sqlData[3]) == nil and "" or tostring(sqlData[3])
 		local tcpport = tonumber(sqlData[4]) == nil and 0 or tonumber(sqlData[4])
 
-		local sock = socket.connect(serverip, tcpport)
-		if sock ~= nil then
-			sock:settimeout(0)
+        local sock = socket.tcp()
+        sock:settimeout(1)
+        local client, errorStr = sock:connect(serverip, tcpport)
+		if client ~= nil then
 			sock:close()
 			LogFile("error", serverip.." state = 0, but connect success")
 			local count = 0
 			for i=1,5 do
-				local sock2 = socket.connect(serverip, tcpport)
-				if sock2 ~= nil then
+				local client, errorStr = sock:connect(serverip, tcpport)
+				if client ~= nil then
 					count = count + 1
-					sock2:settimeout(0)
-					sock2:close()
+					sock:close()
 					LogFile("error", serverip.." state = 0, count:"..count.." but connect success")
 				end
 			end
@@ -125,6 +127,8 @@ function ServerCheck.CheckDisconnect(buffer)
                 LogFile("error", serverip.." set state = 1")
                 break
 			end
+		else
+			--LogFile("error", "serverid:"..serverid.." serverip:"..serverip.." disconnect")
 		end
 	end
 
