@@ -111,7 +111,7 @@ SET(LIB_LINK_NF  libNFCore.a libNFPluginModule.a libprotobuf.a libNFActorPlugin.
 				libNFProxyClientPlugin.a libNFProxyServerPlugin.a 
 				libNFServerCommon.a libNFWorldClientPlugin.a libNFWorldServerPlugin.a
 				libNFGameLogicPlugin.a libNFLoginLogicPlugin.a libNFProxyLogicPlugin.a 
-				libNFServerLogicCommon.a libNFTestPlugin.a libNFWorldLogicPlugin.a libNFRebotPlugin.a
+				libNFServerLogicCommon.a libNFTestPlugin.a libNFServerCheckPlugin.a libNFWorldLogicPlugin.a libNFRebotPlugin.a
 				libNFLocationClientPlugin.a libNFLocationServerPlugin.a libNFLogClientPlugin.a libNFLogServerPlugin.a libNFWebClientPlugin.a libNFWebServerPlugin.a)
 	
 include_directories( ${INCLUDE_DIR} )
@@ -125,6 +125,7 @@ ADD_SUBDIRECTORY("Server/NFMessageDefine")
 ADD_SUBDIRECTORY("Server/StaticNFrame/NFComm")
 ADD_SUBDIRECTORY("Server/StaticNFrame/NFTest")
 ADD_SUBDIRECTORY("Server/StaticNFrame/NFRebot")
+ADD_SUBDIRECTORY("Server/StaticNFrame/NFServerCheck")
 ADD_SUBDIRECTORY("Server/NFServer")
 ADD_SUBDIRECTORY("Server/NFServerLogic")
 ADD_SUBDIRECTORY("Server/StaticNFrame/NFPluginLoader")
