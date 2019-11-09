@@ -25,6 +25,7 @@ enum NF_SERVER_TYPES
 	NF_ST_LOCATION = 7, //LOCATION SERVER
 	NF_ST_LOG = 8, //日志采集服务器 
 	NF_ST_REBOT = 15, //机器人模拟客户端
+	NF_ST_CHECKSERVER = 16,
 	NF_ST_MAX = 20, //
 };
 

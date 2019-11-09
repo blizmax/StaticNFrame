@@ -117,6 +117,18 @@ function InitGameServer()
 			Security = false,
 			WebSocket = false,
 		};
+
+	CheckServer21 = {
+			ServerName = "CheckServer21",
+			ServerType = NF_ST_CHECKSERVER,
+			ServerId = 21,			--对每一个服务器来说都是唯一的， 应用程序需要通过这个ServerId才能知道需要加载的配置是他
+			MaxConnectNum = 1,  --这里用作机器人数目
+			WorkThreadNum = 1,
+			LuaWorkThreadNum = 1,
+			LuaTcpThreadNum = 1,
+			Security = false,
+			WebSocket = false,
+		};
 	
 	RegisterServer(WorldServer3)
 	RegisterServer(GameServer4)
@@ -126,5 +138,6 @@ function InitGameServer()
 	RegisterServer(LogServer8)
 	RegisterServer(WebServer9)
 	RegisterServer(RebotServer20)
+	RegisterServer(CheckServer21)
 end
 	

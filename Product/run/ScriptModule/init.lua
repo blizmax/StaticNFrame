@@ -151,6 +151,16 @@ function LuaNFrame.InitScript(luaModule)
 			require("RebotServer/RebotLoadHelper")
 
 			redisItem = redisConnect.new()
+		elseif LuaNFrame.GetAppName() == "CheckServer" then
+			package.path = package.path .. ";../ScriptModule/CheckServer/?.lua;"
+			package.path = package.path..";../ScriptModule/CheckServer/trdlib/libprotobuf/?.lua"   --由于这里protobuf的特殊性，必须把包含protobuf的目录加到环境变量中
+			package.path = package.path..";../ScriptModule/CheckServer/trdlib/lua/?.lua"
+
+			require("CheckServer/CheckServerLoadHelper")
+			require("CheckServer/CheckServerTimerManager")
+
+			mysqlItem = mysqlConnect.new(g_dbtype, g_dbUser, g_dbPassword, g_dbHost, g_dbPort, g_dbDatabase)
+			mysqlLog = mysqlConnect.new(g_dbtype, g_dbUser, g_dbPassword, g_dbHost, g_dbPort, g_dbDatabase)
 		end
 
 		math.newrandomseed()

@@ -9,6 +9,7 @@ NF_ST_WEB = 6;			-- WEB SERVER
 NF_ST_LOCATION = 7; 	--LOCATION SERVER
 NF_ST_LOG = 8; 			--日志采集服务器 
 NF_ST_REBOT = 15; 		--机器人模拟客户端
+NF_ST_CHECKSERVER = 16; 		--机器人模拟客户端
 NF_ST_MAX = 20;    		--
 
 LoadPlugin = 
@@ -204,6 +205,18 @@ LoadPlugin =
 			"NFRebotPlugin",
 			--"NFLuaScriptPlugin",
 			"NFLuaThreadScriptPlugin",
+		};
+		ServerType = NF_ST_REBOT;
+	},
+	CheckServer = {
+		ServerPlugins = {
+			"NFKernelPlugin",
+			"NFActorPlugin",
+			"NFNetPlugin",
+			"NFMonitorPlugin",
+			"NFServerCheckPlugin",
+			"NFLuaScriptPlugin",
+			--"NFLuaThreadScriptPlugin",
 		};
 		ServerType = NF_ST_REBOT;
 	},
