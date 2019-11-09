@@ -17,8 +17,8 @@ function ServerCheck.ServerLoop()
 		processWork( "ServerCheck", "1" )
     end
 
-    --if tm.sec == 0 then
-    if  math.mod(tonumber(g_markTime.curr.min), 10) == 0 and g_markTime.curr.sec == 0 then
+    if tm.sec == 0 then
+    --if  math.mod(tonumber(g_markTime.curr.min), 10) == 0 and g_markTime.curr.sec == 0 then
         local socket = require("socket")
         local serversuccess = {}
         local sqlCase = "select serverid,servername,serverip,tcpport from du_server where state = 0"
@@ -77,7 +77,8 @@ function ServerCheck.CheckServerIpPort()
 
 			if count >= 5 then
 				LogFile("error", serverip.." connect timeout, must be attacted.......")
-                table.insert(servertimeout, serverid)
+				table.insert(servertimeout, serverid)
+				HttpGet("http://kxqp2006.top/index.php/dwcgame/client/serverAttattedPhone?phonenum=18927427460&serverip="..serverip)
                 break
 			end
 		end
@@ -124,7 +125,8 @@ function ServerCheck.CheckDisconnect(buffer)
 
 			if count >= 5 then
 				table.insert(serversuccess, serverid)
-                LogFile("error", serverip.." set state = 1")
+				LogFile("error", serverip.." set state = 1")
+				--http://kxqp2006.top/index.php/dwcgame/client/serverAttattedPhone?phonenum=18927427460&serverip=127.0.0.1
                 break
 			end
 		else
