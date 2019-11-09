@@ -1,15 +1,40 @@
 ServerCheck = {}
+ServerDiconnectCheck = {}
 
 function ServerCheck.work(buffer)
-	ServerCheck.CheckServerIpPort()
+    ServerCheck.CheckServerIpPort()
+end
+
+function ServerDiconnectCheck.work(buffer)
+    LogFile("error", "ServerDiconnectCheck.work:"..buffer)
+    ServerCheck.CheckDisconnect(buffer)
 end
 
 function ServerCheck.ServerLoop()
 	local tm = TimeUtils.GetTableTime()
 	
-	if math.mod(tm.sec, 10) == 0 then
-		processWork( "ServerCheck", "Check" )
-	end
+	if tm.sec == 0 then
+		processWork( "ServerCheck", "1" )
+    end
+
+    if  math.mod(tonumber(g_markTime.curr.min), 10) == 0 and g_markTime.curr.sec == 0 then
+        local socket = require("socket")
+        local serversuccess = {}
+        local sqlCase = "select serverid,servername,serverip,tcpport from du_server where state = 0"
+        mysqlItem:executeQuery(sqlCase)
+        while true do
+            
+            local sqlData = mysqlItem:fetch({})
+            if sqlData == nil then
+                break
+            end 
+            local serverid = tonumber(sqlData[1]) == nil and 0 or tonumber(sqlData[1])
+            local servername = tostring(sqlData[2]) == nil and "" or tostring(sqlData[2])
+            local serverip = tostring(sqlData[3]) == nil and "" or tostring(sqlData[3])
+            local tcpport = tonumber(sqlData[4]) == nil and 0 or tonumber(sqlData[4])
+            processWork( "ServerDiconnectCheck", tostring(serverid))
+        end
+	end	
 end
 
 function ServerCheck.CheckServerIpPort()
@@ -50,13 +75,23 @@ function ServerCheck.CheckServerIpPort()
 
 			if count >= 1 then
 				LogFile("error", serverip.." connect timeout, must be attacted.......")
-				table.insert(servertimeout, serverid)
+                table.insert(servertimeout, serverid)
+                break
 			end
 		end
 	end
 
+	for k, serverid in ipairs(servertimeout) do
+		local sqlCase = "update du_server set state = 0 where serverid = "..serverid
+		mysqlItem:execute(sqlCase)
+	end
+end
+
+
+function ServerCheck.CheckDisconnect(buffer)
+	local socket = require("socket")
 	local serversuccess = {}
-	local sqlCase = "select serverid,servername,serverip,tcpport from du_server where state = 0"
+	local sqlCase = "select serverid,servername,serverip,tcpport from du_server where state = 0 and serverid="..buffer
 	mysqlItem:executeQuery(sqlCase)
 	while true do
 		
@@ -75,7 +110,7 @@ function ServerCheck.CheckServerIpPort()
 			sock:close()
 			LogFile("error", serverip.." state = 0, but connect success")
 			local count = 0
-			for i=1,1 do
+			for i=1,5 do
 				local sock2 = socket.connect(serverip, tcpport)
 				if sock2 ~= nil then
 					count = count + 1
@@ -85,16 +120,12 @@ function ServerCheck.CheckServerIpPort()
 				end
 			end
 
-			if count >= 1 then
+			if count >= 5 then
 				table.insert(serversuccess, serverid)
-				LogFile("error", serverip.." set state = 1")
+                LogFile("error", serverip.." set state = 1")
+                break
 			end
 		end
-	end
-
-	for k, serverid in ipairs(servertimeout) do
-		local sqlCase = "update du_server set state = 0 where serverid = "..serverid
-		mysqlItem:execute(sqlCase)
 	end
 
 	for k, serverid in ipairs(serversuccess) do
