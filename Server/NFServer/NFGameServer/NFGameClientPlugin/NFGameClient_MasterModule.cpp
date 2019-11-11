@@ -212,6 +212,8 @@ void NFCGameClient_MasterModule::OnHandleServerReport(const uint32_t unLinkId, c
 			FindModule<NFIGameClient_WorldModule>()->OnHandleWorldReport(xData);
 		}
 		break;
+		default:
+			break;
 		}
 	}
 }
