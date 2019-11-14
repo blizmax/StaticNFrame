@@ -14,6 +14,7 @@
 #include "NFComm/NFPluginModule/NFLogMgr.h"
 #include "NFComm/NFPluginModule/NFILuaScriptModule.h"
 #include "NFServer/NFServerCommon/NFServerCommon.h"
+#include "NFComm/NFCore/NFRandom.hpp"
 
 NFCRebotModule::NFCRebotModule(NFIPluginManager* p)
 {
@@ -30,6 +31,7 @@ bool NFCRebotModule::Init()
 	pClientModule->AddEventCallBack(NF_ST_REBOT, this, &NFCRebotModule::OnProxySocketEvent);
 	pClientModule->AddReceiveCallBack(NF_ST_REBOT, this, &NFCRebotModule::OnHandleOtherMessage);
 	
+	this->SetTimer(0, 1000);
 	this->Subscribe(NFEVENT_LUA_FINISH_LOAD, 0, 0, "");
 	return true;
 }
@@ -61,6 +63,7 @@ void NFCRebotModule::OnProxySocketEvent(const eMsgType nEvent, const uint32_t un
 	}
 	else if (nEvent == eMsgType_DISCONNECTED)
 	{
+		m_rebotInfo.erase(unLinkId);
 		//NFLogDebug(NF_LOG_SYSTEMLOG, 0, "Rebot Player DisConnect Game Server!");
 		NFILuaScriptModule* pLuaScriptModule = FindModule<NFILuaScriptModule>();
 		if (pLuaScriptModule)
@@ -80,7 +83,11 @@ void NFCRebotModule::OnExecute(uint16_t nEventID, uint64_t nSrcID, uint8_t bySrc
 		{
 			for (uint32_t i = 0; i < pConfig->mMaxConnectNum; i++)
 			{
-				pClientModule->AddServer(NF_ST_REBOT, pConfig->mServerIp, pConfig->mServerPort, 1);
+				uint32_t unlinkId = pClientModule->AddServer(NF_ST_REBOT, pConfig->mServerIp, pConfig->mServerPort, 1);
+				if (unlinkId > 0)
+				{
+					m_rebotInfo.emplace(unlinkId, i);
+				}
 			}
 		}
 		else
@@ -93,7 +100,15 @@ void NFCRebotModule::OnExecute(uint16_t nEventID, uint64_t nSrcID, uint8_t bySrc
 
 void NFCRebotModule::OnTimer(uint32_t nTimerID)
 {
-
+	NFINetClientModule* pClientModule = FindModule<NFINetClientModule>();
+	for (auto iter = m_rebotInfo.begin(); iter != m_rebotInfo.end(); iter++)
+	{
+		int rand = NFRandInt(0, 100);
+		if (rand < 10)
+		{
+			pClientModule->CloseServer(iter->first);
+		}
+	}
 }
 
 bool NFCRebotModule::AfterInit()

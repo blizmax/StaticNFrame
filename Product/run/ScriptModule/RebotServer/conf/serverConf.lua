@@ -41,7 +41,7 @@ g_dbDatabase = 'db_new_wuxiandai'
 
 g_qrcodeUrl = ""       --生成二维码的url,调用改接口，生成对应的推广二维码
 g_redisInfo = {}
-g_redisInfo.redis_one = 6     --玩家属性
+g_redisInfo.redis_one = 1     --玩家属性
 g_redisInfo.redis_two = 7     --
 g_redisInfo.redis_three = 8   --
 g_redisInfo.redis_four = 9   --这个数据是设置历史记录的

@@ -129,7 +129,7 @@ function GetGameStateInfo.work(buffer)
         count = count + 1
         local tableid = RebotModel.GetPlayerTableId(playerId)
         if tableid == nil or tonumber(tableid) == 0 then
-            BrnnService.EnterGame(clientId, tableid)
+            FenFenCaiService.EnterGame(clientId, tableid)
             --[[local randgame = math.myrandom(1, 100)
             if randgame <= 20 then
                 BarccatatService.EnterGame(clientId, tableid)
