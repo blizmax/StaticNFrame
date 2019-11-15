@@ -59,6 +59,7 @@ public:
 	{
 		sec_ = ms / 1000;
 		nsec_ = (ms % 1000) * 1000000;
+		realSec_ = 0;
 	}
 
 	// create Time by unix timestamp, nsec can be zero
@@ -66,6 +67,7 @@ public:
 	{
 		sec_ = sec;
 		nsec_ = nsec;
+		realSec_ = 0;
 	}
 
 	// return number of milliseconds that have elapsed since

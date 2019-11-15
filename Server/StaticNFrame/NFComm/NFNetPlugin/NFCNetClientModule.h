@@ -103,6 +103,14 @@ public:
 	virtual void CloseServer(const uint32_t unLinkId) override;
 
 	/**
+	 * @brief 关闭unLinkId所代表的连接
+	 *
+	 * @param  unLinkId 要关闭的客户端的唯一id
+	 * @return void
+	 */
+	virtual void DisconnectServer(const uint32_t unLinkId) override;
+
+	/**
 	 * @brief 通过服务器类型，关闭客户端连接
 	 *
 	 * @param  eServerType 服务器类型

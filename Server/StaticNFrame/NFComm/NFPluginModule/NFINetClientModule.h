@@ -30,6 +30,8 @@ public:
 
 	virtual void CloseServer(const uint32_t unLinkId) = 0;
 
+	virtual void DisconnectServer(const uint32_t unLinkId) = 0;
+
 	virtual void CloseServerByServerType(NF_SERVER_TYPES eServerType) = 0;
 
 	virtual void CloseAllServer() = 0;

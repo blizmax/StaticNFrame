@@ -31,7 +31,7 @@ bool NFCRebotModule::Init()
 	pClientModule->AddEventCallBack(NF_ST_REBOT, this, &NFCRebotModule::OnProxySocketEvent);
 	pClientModule->AddReceiveCallBack(NF_ST_REBOT, this, &NFCRebotModule::OnHandleOtherMessage);
 	
-	this->SetTimer(0, 1000);
+	this->SetTimer(0, 10000);
 	this->Subscribe(NFEVENT_LUA_FINISH_LOAD, 0, 0, "");
 	return true;
 }
@@ -104,9 +104,9 @@ void NFCRebotModule::OnTimer(uint32_t nTimerID)
 	for (auto iter = m_rebotInfo.begin(); iter != m_rebotInfo.end(); iter++)
 	{
 		int rand = NFRandInt(0, 100);
-		if (rand < 10)
+		if (rand < 100)
 		{
-			pClientModule->CloseServer(iter->first);
+			pClientModule->DisconnectServer(iter->first);
 		}
 	}
 }

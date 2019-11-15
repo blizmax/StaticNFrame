@@ -81,7 +81,7 @@ public:
 
 	bool DelReceiveCallBack(const NF_SERVER_TYPES eType, const uint32_t nMsgID)
 	{
-		if (eType >= 0 && eType < mxCallBack.size())
+		if (eType < mxCallBack.size())
 		{
 			mxCallBack[eType].mxReceiveCallBack.erase(nMsgID);
 			return true;
@@ -91,7 +91,7 @@ public:
 
 	virtual bool AddReceiveCallBack(const NF_SERVER_TYPES eType, const uint32_t nMsgID, const NET_RECEIVE_FUNCTOR& cb)
 	{
-		if (eType >= 0 && eType < mxCallBack.size())
+		if (eType < mxCallBack.size())
 		{
 			mxCallBack[eType].mxReceiveCallBack.emplace(nMsgID, cb);
 			return true;
@@ -101,7 +101,7 @@ public:
 
 	virtual bool AddReceiveCallBack(const NF_SERVER_TYPES eType, const NET_RECEIVE_FUNCTOR& cb)
 	{
-		if (eType >= 0 && eType < mxCallBack.size())
+		if (eType < mxCallBack.size())
 		{
 			mxCallBack[eType].mxCallBackList.push_back(cb);
 			return true;
@@ -118,7 +118,7 @@ public:
 
 	virtual bool AddEventCallBack(const NF_SERVER_TYPES eType, const NET_EVENT_FUNCTOR& cb)
 	{
-		if (eType >= 0 && eType < mxCallBack.size())
+		if (eType < mxCallBack.size())
 		{
 			mxCallBack[eType].mxEventCallBack.push_back(cb);
 			return true;

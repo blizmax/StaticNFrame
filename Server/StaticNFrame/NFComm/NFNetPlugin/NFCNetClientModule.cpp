@@ -232,6 +232,34 @@ void NFCNetClientModule::CloseServer(const uint32_t unLinkId)
 	}
 }
 
+/**
+ * @brief 关闭unLinkId所代表的连接
+ *
+ * @param  unLinkId 要关闭的客户端的唯一id
+ * @return void
+ */
+void NFCNetClientModule::DisconnectServer(const uint32_t unLinkId)
+{
+	uint32_t serverType = GetServerTypeFromUnlinkId(unLinkId);
+	uint32_t serverIndex = GetServerIndexFromUnlinkId(unLinkId);
+
+	uint32_t isServer = GetIsServerFromUnlinkId(unLinkId);
+	if (isServer != NF_IS_CLIENT)
+	{
+		NFLogError(NF_LOG_NET_PLUGIN, 0, "usLinkId is not a client link, this usLinkId:{} is not of the client", unLinkId);
+		return;
+	}
+
+	if (serverType < NF_ST_MAX && serverIndex < mxServerMap[serverType].size())
+	{
+		NFIClient* pClient = mxServerMap[serverType][serverIndex];
+		if (pClient)
+		{
+			pClient->CloseServer();
+		}
+	}
+}
+
 void NFCNetClientModule::CloseServerByServerType(NF_SERVER_TYPES eServerType)
 {
 	if (eServerType >= 0 && eServerType < NF_ST_MAX)
@@ -298,7 +326,7 @@ void NFCNetClientModule::SendByServerID(const uint32_t unLinkId, const uint32_t 
 		}
 		else
 		{
-			assert(0);
+			NFLogError(NF_LOG_NET_PLUGIN, 0, "usLinkId is a client link, but client not exist, this usLinkId:{}", unLinkId);
 		}
 	}
 }
@@ -347,7 +375,7 @@ void NFCNetClientModule::SendToAllServer(NF_SERVER_TYPES eServerType, uint32_t n
 
 void NFCNetClientModule::SendToAllServer(NF_SERVER_TYPES eServerType, const uint32_t nMsgID, const char* msg, const uint32_t nLen, const uint64_t nPlayerID)
 {
-	if (eServerType >= 0 && eServerType < NF_ST_MAX)
+	if (eServerType < NF_ST_MAX)
 	{
 		for (size_t j = 0; j < mxServerMap[eServerType].size(); j++)
 		{
