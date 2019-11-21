@@ -262,7 +262,7 @@ void NFCNetClientModule::DisconnectServer(const uint32_t unLinkId)
 
 void NFCNetClientModule::CloseServerByServerType(NF_SERVER_TYPES eServerType)
 {
-	if (eServerType >= 0 && eServerType < NF_ST_MAX)
+	if (eServerType < NF_ST_MAX)
 	{
 		for (size_t j = 0; j < mxServerMap[eServerType].size(); j++)
 		{

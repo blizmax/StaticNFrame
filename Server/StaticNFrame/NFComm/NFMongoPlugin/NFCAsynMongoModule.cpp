@@ -14,6 +14,7 @@
 NFCAsynMongoModule::NFCAsynMongoModule(NFIPluginManager* p)
 {
 	m_pPluginManager = p;
+	mnLastCheckTime = 0;
 }
 
 NFCAsynMongoModule::~NFCAsynMongoModule()

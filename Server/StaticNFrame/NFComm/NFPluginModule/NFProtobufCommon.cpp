@@ -814,17 +814,17 @@ std::string  NFProtobufCommon::GetSqliteColumnFromMessage(const google::protobuf
 std::string NFProtobufCommon::GetSqlitePrepareFromMessage(const google::protobuf::Message& message)
 {
 	const google::protobuf::Descriptor* pDesc = message.GetDescriptor();
-	if (pDesc == nullptr) return false;
+	if (pDesc == nullptr) return std::string();
 
 	const google::protobuf::Reflection* pReflect = message.GetReflection();
-	if (pReflect == nullptr) return false;
+	if (pReflect == nullptr) return std::string();
 
 	//获得表的名字
 	std::string strTableName = NFProtobufCommon::GetDBNameFromMessage(message);
-	if (strTableName.empty()) return false;
+	if (strTableName.empty()) return std::string();
 
 	const google::protobuf::FieldDescriptor* pDbFieldsFieldDesc = pDesc->FindFieldByLowercaseName("db_fields");
-	if (pDbFieldsFieldDesc == nullptr || pDbFieldsFieldDesc->cpp_type() != google::protobuf::FieldDescriptor::CPPTYPE_MESSAGE) return false;
+	if (pDbFieldsFieldDesc == nullptr || pDbFieldsFieldDesc->cpp_type() != google::protobuf::FieldDescriptor::CPPTYPE_MESSAGE)  return std::string();
 
 	const google::protobuf::Message& dbFieldsMessage = pReflect->GetMessage(message, pDbFieldsFieldDesc);
 

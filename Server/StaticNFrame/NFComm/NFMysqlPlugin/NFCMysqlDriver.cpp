@@ -85,7 +85,6 @@ bool NFCMysqlDriver::ExecuteOne(const std::string& qstr, std::map<std::string, s
 			{
 				valueVec.emplace(queryResult.field_name(j), queryResult[i][j].c_str());
 			}
-			break;
 		}
 		return true;
 	}

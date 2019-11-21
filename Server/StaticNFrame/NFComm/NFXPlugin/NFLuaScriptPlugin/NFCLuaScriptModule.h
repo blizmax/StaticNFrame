@@ -69,6 +69,9 @@ public:
 		m_luaTimerIndex = 10000;
 		m_pNetServerModule = nullptr;
 		m_pNetClientModule = nullptr;
+		m_pHttpServerModule = nullptr;
+		m_pLogModule = nullptr;
+		mnTime = 0;
     }
 public:
 

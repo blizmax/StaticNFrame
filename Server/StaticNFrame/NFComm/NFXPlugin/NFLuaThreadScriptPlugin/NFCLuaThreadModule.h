@@ -151,6 +151,7 @@ public:
 		mInterVal = 0;
 		mCallCount = 0;
 		mCurCallCount = 0;
+		mMsgType = 0;
 	}
 
 	uint32_t mTimerId;

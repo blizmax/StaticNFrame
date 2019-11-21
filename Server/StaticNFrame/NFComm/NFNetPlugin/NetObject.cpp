@@ -111,6 +111,7 @@ void NetObject::conn_writecb(struct bufferevent* pEv, void* pArg)
 
 NetObject::NetObject() : m_pBev(nullptr), m_usLinkId(0), m_port(0), mNeedRemove(false)
 {
+	mWSFrameType = 0;
 	m_nSocketId = INVALID_SOCKET;
 	m_buffer.AssureSpace(MAX_RECV_BUFFER_SIZE);
 	mWebSocket = false;

@@ -318,7 +318,7 @@ std::string NFCMongoModule::FindFieldByKey(const int nServerID, const std::strin
 	{
 		return m_pMongoDriverManager->FindFieldByKey(nServerID, collectionName, fieldPath, key);
 	}
-	return false;
+	return std::string();
 }
 
 /**
@@ -332,5 +332,5 @@ std::string NFCMongoModule::FindFieldByKey(const int nServerID, const std::strin
 	{
 		return m_pMongoDriverManager->FindFieldByKey(nServerID, collectionName, fieldPath, key);
 	}
-	return false;
+	return std::string();
 }

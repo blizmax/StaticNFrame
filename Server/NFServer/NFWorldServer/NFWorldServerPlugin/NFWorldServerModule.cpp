@@ -22,6 +22,7 @@
 NFCWorldServerModule::NFCWorldServerModule(NFIPluginManager* p)
 {
 	m_pPluginManager = p;
+	mServerId = 0;
 }
 
 NFCWorldServerModule::~NFCWorldServerModule()

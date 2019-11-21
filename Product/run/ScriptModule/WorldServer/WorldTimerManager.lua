@@ -8,6 +8,7 @@ function timerManager.Init(currTime, timerType)
 	elseif timerType == "pokertimer" then
 		--把这个线程空余出来，作为事件的触发器。
 	elseif timerType == "gametimer" then
+		BroadCastModel.Init()
 	elseif timerType == "utilstimer" then
 		
 	end

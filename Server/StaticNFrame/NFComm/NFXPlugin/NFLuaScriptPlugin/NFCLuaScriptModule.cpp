@@ -271,10 +271,7 @@ void NFCLuaScriptModule::SendMsgToAllPlayer(const uint32_t nMsgID, const uint32_
 		auto pPlayerInfo = mPlayerProxyInfoMap.First();
 		while (pPlayerInfo)
 		{	
-			if (pPlayerInfo)
-			{
-				m_pNetServerModule->SendByServerID(pPlayerInfo->GetProxyUnlinkId(), nMsgID, strData, pPlayerInfo->GetPlayerId());
-			}
+			m_pNetServerModule->SendByServerID(pPlayerInfo->GetProxyUnlinkId(), nMsgID, strData, pPlayerInfo->GetPlayerId());
 			pPlayerInfo = mPlayerProxyInfoMap.Next();
 		}
 	}

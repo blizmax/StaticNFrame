@@ -646,6 +646,7 @@ bool NFCAsyMysqlModule::AddMysqlServer(const int nServerID, const std::string& s
 		                                                            strDBPwd, nRconnectTime, nRconneCount);
 		if (ret == false)
 		{
+			NF_SAFE_DELETE(pComonnet);
 			return false;
 		}
 

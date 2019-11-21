@@ -367,7 +367,7 @@ std::string NFCMongoDriverManager::FindFieldByKey(const int nServerID, const std
 	NFCMongoDriver* pMongoDriver = mMongoDriver.GetElement(nServerID);
 	if (!pMongoDriver)
 	{
-		return false;
+		return std::string();
 	}
 
 	return pMongoDriver->FindFieldByKey(collectionName, fieldPath, key);
@@ -383,7 +383,7 @@ std::string NFCMongoDriverManager::FindFieldByKey(const int nServerID, const std
 	NFCMongoDriver* pMongoDriver = mMongoDriver.GetElement(nServerID);
 	if (!pMongoDriver)
 	{
-		return false;
+		return std::string();
 	}
 
 	return pMongoDriver->FindFieldByKey(collectionName, fieldPath, key);

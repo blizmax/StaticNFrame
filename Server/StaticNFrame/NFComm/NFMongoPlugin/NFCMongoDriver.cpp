@@ -20,6 +20,7 @@ NFCMongoDriver::NFCMongoDriver(const int nReconnectTime, const int nReconnectCou
 	mfCheckReconnect = 0.0f;
 	mnReconnectTime = nReconnectTime;
 	mnReconnectCount = nReconnectCount;
+	m_uri = nullptr;
 	mongoc_init();
 }
 
