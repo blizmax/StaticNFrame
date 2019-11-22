@@ -61,6 +61,11 @@ protected:
 		return NFTime::Now().UnixMSec();
 	}
 
+	static uint64_t GetUnixSec()
+	{
+		return NFTime::Now().UnixSec();
+	}
+
 	struct Timer
 	{
 		uint32_t nTimerID; //¶¨Ê±Æ÷ID

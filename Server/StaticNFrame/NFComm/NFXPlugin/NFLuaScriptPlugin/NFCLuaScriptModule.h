@@ -144,8 +144,6 @@ public:
 
 	virtual void LuaError(uint32_t logId, uint64_t guid, const std::string& str);
 
-	virtual void ProcessLoop(const std::string& dataStr);
-
 	virtual void ProcessWork(const std::string& luaFunc, const NFLuaRef& dataStr);
 
 	virtual void ProcessTimer(uint32_t timeSec, const std::string& luaFunc, const NFLuaRef& dataStr);
@@ -158,7 +156,6 @@ public:
 	virtual void ReloadAllLuaFiles() override;
 	virtual void ReloadLuaFiles() override;
 	virtual void ReloadLuaFiles(const std::vector<std::string>& vecStr) override;
-	virtual void GcStep();
 
 	virtual std::string Sha256(const std::string& s);
 	virtual std::string Platfrom();

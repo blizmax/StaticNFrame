@@ -339,7 +339,7 @@ bool NFTimerAxis::SetClocker(uint32_t nTimerID, uint64_t nStartTime, uint32_t nI
 	pTimer->pHandler = handler;
 	pTimer->nLastTick = m_nLastSec;
 
-	uint64_t nowTime = NFGetSecondTime();
+	uint64_t nowTime = GetUnixSec();
 	uint64_t nowDaySecs = nowTime % nInterSec;
 
 	if (nInterSec >= 8 * 60 * 60)
@@ -438,7 +438,8 @@ void NFTimerAxis::Update()
 					continue;
 				}
 
-				pTimer->nLastTick = now;
+				pTimer->nLastTick = pTimer->nLastTick + ((now - pTimer->nLastTick) / pTimer->nInterVal) * pTimer->nInterVal;
+				//pTimer->nLastTick = now; //»á²»¶Ï»ýÀÛÎó²î
 				if (pTimer->nCallCount > 0)
 				{
 					pTimer->nCallCount -= 1;
@@ -489,7 +490,7 @@ void NFTimerAxis::Update()
 
 void NFTimerAxis::UpdateSec()
 {
-	uint64_t now = NFGetSecondTime();
+	uint64_t now = GetUnixSec();
 
 	if (now - m_nLastSec < 1)
 	{
@@ -547,7 +548,8 @@ void NFTimerAxis::UpdateSec()
 					continue;
 				}
 
-				pTimer->nLastTick = now;
+				pTimer->nLastTick = pTimer->nLastTick + ((now - pTimer->nLastTick) / pTimer->nInterVal) * pTimer->nInterVal;
+				//pTimer->nLastTick = now;
 				if (pTimer->nCallCount > 0)
 				{
 					pTimer->nCallCount -= 1;

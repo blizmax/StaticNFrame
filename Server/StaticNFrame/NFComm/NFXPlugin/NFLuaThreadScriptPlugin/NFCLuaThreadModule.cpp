@@ -169,10 +169,7 @@ void NFCLuaThreadModule::OnTimer(uint32_t nTimerID)
 		if (IsFinishAllLoad())
 		{
 			KillTimer(EnumLuaThreadModule_Init);
-			AddProcessLoopTask(new NFServerLoopInitTask(this, "gametimer"));
-			AddProcessLoopTask(new NFServerLoopInitTask(this, "utilstimer"));
-			AddProcessLoopTask(new NFServerLoopInitTask(this, "logtimer"));
-			AddProcessLoopTask(new NFServerLoopInitTask(this, "pokertimer"));
+			AddProcessLoopTask(new NFServerLoopInitTask(this));
 			SetTimer(EnumLuaThreadModule_WaitFinishInit, 100, INFINITY_CALL);
 		}
 	}
@@ -181,8 +178,7 @@ void NFCLuaThreadModule::OnTimer(uint32_t nTimerID)
 		if (IsFinishAllInitServerLoop())
 		{
 			KillTimer(EnumLuaThreadModule_WaitFinishInit);
-			SetTimer(EnumLuaThreadModule_Loop, 1000, INFINITY_CALL);
-			SetTimer(EnumLuaThreadModule_SEC, 1000, INFINITY_CALL);
+			SetFixTimer(EnumLuaThreadModule_Loop, 0, 1, INFINITY_CALL);
 			SetFixTimer(EnumLuaThreadModule_MIN, 0, 60, INFINITY_CALL);
 			SetFixTimer(EnumLuaThreadModule_5MIN, 0, 5*60, INFINITY_CALL);
 			SetFixTimer(EnumLuaThreadModule_10MIN, 0, 10*60, INFINITY_CALL);
@@ -202,13 +198,7 @@ void NFCLuaThreadModule::OnTimer(uint32_t nTimerID)
 	}
 	else if (nTimerID == EnumLuaThreadModule_Loop)
 	{
-		AddProcessLoopTask(new NFServerLoopTask(this, "logtimer"));
-		AddProcessLoopTask(new NFServerLoopTask(this, "gametimer"));
-		AddProcessLoopTask(new NFServerLoopTask(this, "utilstimer"));
-	}
-	else if (nTimerID == EnumLuaThreadModule_SEC)
-	{
-		UpdateSec();
+		AddProcessLoopTask(new NFServerLoopTask(this));
 	}
 	else if (nTimerID == EnumLuaThreadModule_MIN)
 	{
@@ -814,11 +804,6 @@ void NFCLuaThreadModule::GcStep()
 	m_pTcpMsgTaskModule->AddTaskToEveryActor(NFLuaGcActorTask(this));
 }
 
-void NFCLuaThreadModule::UpdateSec()
-{
-	AddProcessLoopTask(new NFLuaSecActorTask(this));
-}
-
 void NFCLuaThreadModule::UpdateMin()
 {
 	AddProcessLoopTask(new NFLuaMinActorTask(this));
@@ -885,5 +870,5 @@ bool  NFCLuaThreadModule::IsFinishAllLoad()
 
 bool  NFCLuaThreadModule::IsFinishAllInitServerLoop() 
 { 
-	return m_finishInitServerLoop == 4; 
+	return m_finishInitServerLoop == 1; 
 }

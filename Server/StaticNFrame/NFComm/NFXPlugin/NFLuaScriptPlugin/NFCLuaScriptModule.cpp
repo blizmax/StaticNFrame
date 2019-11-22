@@ -85,7 +85,7 @@ void NFCLuaScriptModule::OnTimer(uint32_t nTimerID)
 	{
 		Register();
 		LoadScript();
-		SetTimer(EnumLuaModule_SEC, 1000, INFINITY_CALL);
+		SetFixTimer(EnumLuaModule_SEC, 0, 1, INFINITY_CALL);
 		SetFixTimer(EnumLuaModule_MIN, 0, 60, INFINITY_CALL);
 		SetFixTimer(EnumLuaModule_5MIN, 0, 5 * 60, INFINITY_CALL);
 		SetFixTimer(EnumLuaModule_10MIN, 0, 10 * 60, INFINITY_CALL);
@@ -174,7 +174,6 @@ bool NFCLuaScriptModule::Finalize()
 
 bool NFCLuaScriptModule::Execute()
 {
-	GcStep();
 	for (auto iter = m_luaTimerMap.begin(); iter != m_luaTimerMap.end();)
 	{
 		auto pTimer = iter->second;
@@ -207,14 +206,7 @@ void NFCLuaScriptModule::LoadScript()
 	TryLoadScriptFile("init.lua");
 	TryRunGlobalScriptFunc("LuaNFrame.InitScript", this);
 
-	TryRunGlobalScriptFunc("LuaNFrame.TimerInit", "logtimer");
-	TryRunGlobalScriptFunc("LuaNFrame.TimerInit", "pokertimer");
-	TryRunGlobalScriptFunc("LuaNFrame.TimerInit", "gametimer");
-	TryRunGlobalScriptFunc("LuaNFrame.TimerInit", "utilstimer");
-
-	ProcessLoop("logtimer");
-	ProcessLoop("gametimer");
-	ProcessLoop("utilstimer");
+	TryRunGlobalScriptFunc("LuaNFrame.TimerInit");
 }
 
 const std::string& NFCLuaScriptModule::GetAppName() const
@@ -391,32 +383,6 @@ void NFCLuaScriptModule::LuaError(uint32_t logId, uint64_t guid, const std::stri
 	{
 		m_pLogModule->LuaError(logId, guid, str);
 	}
-}
-
-void NFCLuaScriptModule::ProcessLoop(const std::string& dataStr)
-{
-	NFLuaTimer* luaTimer = nullptr;
-	if (m_luaTimerList.empty())
-	{
-		luaTimer = NF_NEW NFLuaTimer(this);
-	}
-	else
-	{
-		luaTimer = m_luaTimerList.front();
-		m_luaTimerList.pop_front();
-		luaTimer->m_pLuaScriptModule = this;
-	}
-
-	luaTimer->mGlobalLuaFunc = "LuaNFrame.DispatchTimerLoop";
-	luaTimer->mInterVal = 1000;
-	luaTimer->mTmpStr = dataStr;
-	luaTimer->mCallCount = INFINITY_CALL;
-
-	luaTimer->mCurCallCount = 0;
-	luaTimer->mTimerId = ++m_luaTimerIndex;
-
-	luaTimer->SetTimer(luaTimer->mTimerId, luaTimer->mInterVal, luaTimer->mCallCount);
-	m_luaTimerMap.emplace(luaTimer->mTimerId, luaTimer);
 }
 
 
@@ -734,13 +700,6 @@ void NFCLuaScriptModule::ReloadLuaFiles(const std::vector<std::string>& vecStr)
 		TryRunGlobalScriptFunc("NFLuaReload.ReloadFile", vecStr);
 	}
 	
-}
-
-void NFCLuaScriptModule::GcStep()
-{
-	m_pPluginManager->BeginProfiler("GcStep");
-	lua_gc(GetLuaState(), LUA_GCSTEP, 0);
-	m_pPluginManager->EndProfiler();
 }
 
 std::string NFCLuaScriptModule::Platfrom()

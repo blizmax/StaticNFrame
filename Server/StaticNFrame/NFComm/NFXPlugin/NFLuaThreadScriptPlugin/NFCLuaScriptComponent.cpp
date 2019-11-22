@@ -201,15 +201,6 @@ bool NFLuaGcActorTask::ThreadProcess()
 	return true;
 }
 
-bool NFLuaSecActorTask::ThreadProcess()
-{
-	if (m_pComponent)
-	{
-		m_pComponent->TryRunGlobalScriptFunc("LuaNFrame.UpdateSec");
-	}
-	return true;
-}
-
 bool NFLuaMinActorTask::ThreadProcess()
 {
 	if (m_pComponent)
@@ -599,7 +590,7 @@ void NFCLuaScriptComponent::LuaError(uint32_t logId, uint64_t guid, const std::s
 
 void NFCLuaScriptComponent::ProcessLoop(const std::string& dataStr)
 {
-	TryRunGlobalScriptFunc("LuaNFrame.DispatchTimerLoop", dataStr);
+	TryRunGlobalScriptFunc("LuaNFrame.UpdateSec", dataStr);
 }
 
 void NFCLuaScriptComponent::ProcessInit(const std::string& dataStr)
