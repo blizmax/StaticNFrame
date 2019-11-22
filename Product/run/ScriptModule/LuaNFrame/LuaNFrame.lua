@@ -571,19 +571,6 @@ function LuaNFrame.DispatchTimer(luaFunc, dataStr)
     end
 end
 
---执行定时函数
-function LuaNFrame.DispatchTimerLoop(dataStr)
-	local function timerExecute()
-		timerManager:execute(TimeUtils.GetMescTime(), dataStr)
-	end
-	
-	local status, msg = xpcall (timerExecute, __G__TRACKBACK__)
-
-	if not status then
-		LuaNFrame.SendErrorLog(0, "LuaNFrame.DispatchTimerLoop error, param:"..tostring(dataStr), msg)
-    end
-end
-
 function LuaNFrame.DispatchTimerOnce( luaFunc, dataStr)
 	local function timerExecute()
 		local timer = timerManager:createOnceTimer(luaFunc)
@@ -602,9 +589,9 @@ function LuaNFrame.DispatchTimerOnce( luaFunc, dataStr)
     end
 end
 
-function LuaNFrame.TimerInit(timeType)
+function LuaNFrame.TimerInit()
 	local function timerInitData()
-		timerManager.Init(TimeUtils.GetMescTime(), timeType)
+		timerManager.Init()
 	end
 	
 	local status, msg = xpcall (timerInitData, __G__TRACKBACK__)

@@ -4,75 +4,61 @@ module('timerManager', package.seeall)
 function timerManager.Init(currTime, timerType)
 		
 	g_markTime.curr = TimeUtils.GetTableTime()
-	if timerType == "logtimer" then
-	elseif timerType == "pokertimer" then
-		--把这个线程空余出来，作为事件的触发器。
-	elseif timerType == "gametimer" then
-		
-	elseif timerType == "utilstimer" then
-		LocationService.Init()
-	end
+
+	LocationService.Init()
+
 	g_markTime.last = g_markTime.curr
 	print(timerType.." init end")
 end
 
-
-function timerManager:execute(currTime, timerType)
-	
-	if g_markTime.last == nil then
-		g_markTime.last = TimeUtils.GetTableTime()
-		print("================"..timerType)
-		return
-	end
-	--每分钟更新一次服务器的数据	
-	g_markTime.curr = TimeUtils.GetTableTime()
-	if timerType == "logtimer" then
-
-	elseif timerType == "gametimer" then
-		--其他模块循环的线程，包括小马快跑，快乐牛牛，消息通知
-	elseif timerType == "utilstimer" then
-		LocationService.ServerLoop()
-	end
-	g_markTime.last = g_markTime.curr
-end
 
 function timerManager:createOnceTimer(strIndex)
 	return _G[strIndex]
 end
 
 function timerManager.UpdateSec()
-	LuaNFrame.Error(NFLogId.NF_LOG_SYSTEMLOG, 0,  "LuaNFrame.UpdateSec")
+	if g_markTime.last == nil then
+		g_markTime.last = TimeUtils.GetTableTime()
+		return
+	end
+	--每分钟更新一次服务器的数据	
+	g_markTime.curr = TimeUtils.GetTableTime()
+
+	LocationService.ServerLoop()
+
+	g_markTime.last = g_markTime.curr
+	--LogFile("info",   "timerManager.UpdateSec")
 end
 
 function timerManager.UpdateMin()
-	LuaNFrame.Error(NFLogId.NF_LOG_SYSTEMLOG, 0,  "LuaNFrame.UpdateMin")
+	LogFile("info",   "timerManager.UpdateMin")
 end
 
 function timerManager.Update5Min()
-	LuaNFrame.Error(NFLogId.NF_LOG_SYSTEMLOG, 0,  "LuaNFrame.Update5Min")
+	LogFile("info",   "timerManager.Update5Min")
 end
 
 function timerManager.Update10Min()
-	LuaNFrame.Error(NFLogId.NF_LOG_SYSTEMLOG, 0,  "LuaNFrame.Update10Min")
+	LogFile("info",   "timerManager.Update10Min")
 end
 
 function timerManager.Update30Min()
-	LuaNFrame.Error(NFLogId.NF_LOG_SYSTEMLOG, 0,  "LuaNFrame.Update30Min")
+	LogFile("info",   "timerManager.Update30Min")
 end
 
 function timerManager.UpdateHour()
-	LuaNFrame.Error(NFLogId.NF_LOG_SYSTEMLOG, 0,  "LuaNFrame.UpdateHour")
+	LogFile("info",   "timerManager.UpdateHour")
 end
 
 function timerManager.UpdateDay()
-	LuaNFrame.Error(NFLogId.NF_LOG_SYSTEMLOG, 0,  "LuaNFrame.UpdateDay")
+	LogFile("info",   "timerManager.UpdateDay")
 end
 
 function timerManager.UpdateWeek()
-	LuaNFrame.Error(NFLogId.NF_LOG_SYSTEMLOG, 0,  "LuaNFrame.UpdateWeek")
+	LogFile("info",   "timerManager.UpdateWeek")
 end
 
 function timerManager.UpdateMonth()
-	LuaNFrame.Error(NFLogId.NF_LOG_SYSTEMLOG, 0,  "LuaNFrame.UpdateMonth")
+	LogFile("info",   "timerManager.UpdateMonth")
 end
 

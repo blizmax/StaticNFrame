@@ -17,8 +17,8 @@ function ServerCheck.ServerLoop()
 		processWork( "ServerCheck", "1" )
     end
 
-    if tm.sec == 0 then
-    --if  math.mod(tonumber(g_markTime.curr.min), 10) == 0 and g_markTime.curr.sec == 0 then
+    --if tm.sec == 0 then
+    if  math.mod(tonumber(g_markTime.curr.min), 10) == 0 and g_markTime.curr.sec == 0 then
         local socket = require("socket")
         local serversuccess = {}
         local sqlCase = "select serverid,servername,serverip,tcpport from du_server where state = 0"
