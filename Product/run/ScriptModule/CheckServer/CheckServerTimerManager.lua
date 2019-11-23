@@ -13,7 +13,7 @@ end
 function timerManager.UpdateSec()
 	--每分钟更新一次服务器的数据	
 	g_markTime.curr = TimeUtils.GetTableTime()
-	ServerCheck.ServerLoop()
+	ServerCheck.UpdateSec()
 	g_markTime.last = g_markTime.curr
 	--LogFile("info",   "timerManager.UpdateSec")
 end
@@ -27,6 +27,7 @@ function timerManager.Update5Min()
 end
 
 function timerManager.Update10Min()
+	ServerCheck.Update10Min()
 	--LogFile("info",   "timerManager.Update10Min")
 end
 

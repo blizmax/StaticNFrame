@@ -1,16 +1,16 @@
 ServerCheck = {}
 ServerDiconnectCheck = {}
 
-function ServerCheck.ServerLoop()
+function ServerCheck.UpdateSec()
 	local tm = TimeUtils.GetTableTime()
 	
 	if tm.sec % 10 == 0 then
 		processWork( "ServerCheck", "1" )
     end
+end
 
-	if tm.min % 10 == 0 then
-		processWork( "ServerDiconnectCheck",  "2")
-	end	
+function ServerCheck.Update10Min()
+	processWork( "ServerDiconnectCheck",  "2")
 end
 
 function ServerCheck.work(buffer)
