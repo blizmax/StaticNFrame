@@ -1,7 +1,21 @@
 ServerCheck = {}
 ServerDiconnectCheck = {}
 
+function ServerCheck.ServerLoop()
+	local tm = TimeUtils.GetTableTime()
+	
+	if tm.sec % 10 == 0 then
+		processWork( "ServerCheck", "1" )
+    end
+
+	if tm.min % 10 == 0 then
+		processWork( "ServerDiconnectCheck",  "2")
+	end	
+end
+
 function ServerCheck.work(buffer)
+	LogFile("error", "ServerCheck")
+	local serverinfo = {}
 	local sqlCase = "select serverid,servername,serverip,tcpport from du_server where state = 1"
 	mysqlItem:executeQuery(sqlCase)
 	while true do
@@ -16,15 +30,19 @@ function ServerCheck.work(buffer)
 		local tcpport = tonumber(sqlData[4]) == nil and 0 or tonumber(sqlData[4])
 
 		local buffer = {}
-		buffer["serverid"] = serverid
 		buffer["serverip"] = serverip
 		buffer["tcpport"] = tcpport
-		processWork( "CheckServerIpPort", luajson.encode(buffer))
+		serverinfo[serverip] = luajson.encode(buffer)
+	end
+
+	for key, info in pairs(serverinfo) do
+		processWork( "CheckServerIpPort", info)
 	end
 end
 
 function ServerDiconnectCheck.work(buffer)
-	local serversuccess = {}
+	LogFile("error", "ServerDiconnectCheck")
+	local serverinfo = {}
 	local sqlCase = "select serverid,servername,serverip,tcpport from du_server where state = 0"
 	mysqlItem:executeQuery(sqlCase)
 	while true do
@@ -39,23 +57,14 @@ function ServerDiconnectCheck.work(buffer)
 		local tcpport = tonumber(sqlData[4]) == nil and 0 or tonumber(sqlData[4])
 		
 		local buffer = {}
-		buffer["serverid"] = serverid
 		buffer["serverip"] = serverip
 		buffer["tcpport"] = tcpport
-		processWork( "CheckDisconnect", luajson.encode(buffer))
+		serverinfo[serverip] = luajson.encode(buffer)
 	end
-end
 
-function ServerCheck.ServerLoop()
-	local tm = TimeUtils.GetTableTime()
-	
-	if tm.sec % 10 == 0 then
-		processWork( "ServerCheck", "1" )
-    end
-
-	if tm.sec % 10 == 0 then
-		processWork( "ServerDiconnectCheck",  "2")
-	end	
+	for key, info in pairs(serverinfo) do
+		processWork( "CheckDisconnect", info)
+	end
 end
 
 CheckServerIpPort = {}
@@ -64,7 +73,6 @@ function CheckServerIpPort.work(buffer)
 	local serverinfo = luajson.decode(buffer)
 	local serverip = serverinfo["serverip"]
 	local tcpport = serverinfo["tcpport"]
-	local serverid = serverinfo["serverid"]
 	local socket = require("socket")
 	local sock = socket.tcp()
 	sock:settimeout(1)
@@ -91,7 +99,7 @@ function CheckServerIpPort.work(buffer)
 			LogFile("error", serverip.." connect timeout, must be attacted.......")
 			HttpGet("http://kxqp2006.top/index.php/dwcgame/client/serverAttattedPhone?phonenum=18927427460&serverip="..serverip)
 
-			local sqlCase = "update du_server set state = 0 where serverid = "..serverid
+			local sqlCase = "update du_server set state = 0 where serverip = '"..serverip.."'"
 			mysqlItem:execute(sqlCase)
 		end
 	end
@@ -102,7 +110,7 @@ function CheckDisconnect.work(buffer)
 	local serverinfo = luajson.decode(buffer)
 	local serverip = serverinfo["serverip"]
 	local tcpport = serverinfo["tcpport"]
-	local serverid = serverinfo["serverid"]
+
 	local socket = require("socket")
 
 	local sock = socket.tcp()
@@ -126,7 +134,7 @@ function CheckDisconnect.work(buffer)
 		if count >= 5 then
 			LogFile("error", serverip.." set state = 1")
 			HttpGet("http://kxqp2006.top/index.php/dwcgame/client/serverReConnectPhone?phonenum=18927427460&serverip="..serverip)
-			local sqlCase = "update du_server set state = 1 where serverid = "..serverid
+			local sqlCase = "update du_server set state = 1 where serverip = '"..serverip.."'"
 			mysqlItem:execute(sqlCase)
 		end
 	else
