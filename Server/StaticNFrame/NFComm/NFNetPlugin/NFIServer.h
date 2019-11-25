@@ -31,6 +31,8 @@
 
 #include "NFComm/NFPluginModule/NFIModule.h"
 #include "NFNetDefine.h"
+#include "NFComm/NFCore/NFMutex.h"
+#include "NFComm/NFCore/NFLock.h"
 
 
 class NFIServer : public NFIModule
@@ -204,6 +206,16 @@ protected:
 	* @brief 解码消息类型
 	*/
 	uint32_t mPacketParseType;
+
+	/**
+	* @brief 解码消息类型, 攻击服务器IP收集
+	*/
+	std::map<std::string, uint32_t> mAttackIp;
+
+	/**
+	* @brief 解码消息类型, 攻击服务器IP收集
+	*/
+	NFMutex mAttackIpLock;
 };
 
 

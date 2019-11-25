@@ -150,6 +150,32 @@ bool NFEvppServer::Init()
 	m_tcpServer->SetConnectionCallback([this](const evpp::TCPConnPtr& conn) {
 		if (conn->IsConnected())
 		{
+			//如果网络对外， 外部网络比如网关的话，就关掉这个链接， 有可能是被攻击了
+			if (this->mFlag.bForeignNetwork)
+			{
+				if (this->mFlag.bRefuseAttackIp)
+				{
+					std::string ip_port = conn->remote_addr();
+					std::vector<std::string> vecIpPort;
+					NFStringUtility::Split(ip_port, ":", &vecIpPort);
+
+					if (vecIpPort.size() >= 2)
+					{
+						std::string ip = vecIpPort[0];
+						NFLock lock(mAttackIpLock);
+						if (this->mAttackIp.find(ip) != this->mAttackIp.end())
+						{
+							if (this->mAttackIp[ip] >= 10)
+							{
+								NFLogError(NF_LOG_SYSTEMLOG, 0, "client:{} attack server, disconnect server", ip_port);
+								conn->Close();
+								return;
+							}
+						}
+					}
+				}
+			}
+
 			conn->SetTCPNoDelay(true);
 			MsgFromNetInfo* pMsg = new MsgFromNetInfo(conn);
 			pMsg->nType = eMsgType_CONNECTED;
@@ -178,7 +204,24 @@ bool NFEvppServer::Init()
 				int ret = NFIPacketParse::DeCode(mPacketParseType, msg->data(), msg->size(), outData, outLen, allLen, nMsgId, nValue);
 				if (ret < 0)
 				{
-					conn->Close();
+					//如果网络对外， 外部网络比如网关的话，就关掉这个链接， 有可能是被攻击了
+					if (this->mFlag.bForeignNetwork)
+					{
+						if (this->mFlag.bRefuseAttackIp)
+						{
+							std::string ip_port = conn->remote_addr();
+							std::vector<std::string> vecIpPort;
+							NFStringUtility::Split(ip_port, ":", &vecIpPort);
+
+							if (vecIpPort.size() >= 2)
+							{
+								NFLock lock(mAttackIpLock);
+								mAttackIp[vecIpPort[0]]++;
+							}
+						}
+						conn->Close();
+					}
+					
 					NFLogError(NF_LOG_SYSTEMLOG, 0, "net server parse data failed!");
 					msg->Reset();
 					break;

@@ -106,7 +106,7 @@ public:
 	 * @param  nPort		服务器监听端口
 	 * @return int			返回0错误
 	 */
-	virtual uint32_t AddServer(const NF_SERVER_TYPES eServerType, uint32_t nServerID, uint32_t nMaxClient, uint32_t nPort, bool bWebSocket = false, uint32_t nPacketParseType = 0) override;
+	virtual uint32_t AddServer(const NF_SERVER_TYPES eServerType, uint32_t nServerID, uint32_t nMaxClient, uint32_t nPort, bool bWebSocket = false, uint32_t nPacketParseType = 0, bool bForeignNetwork = false, bool bRefuseAttackIp = false) override;
 
 	/**
 	 * @brief 获得连接的IP

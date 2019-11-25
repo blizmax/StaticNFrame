@@ -114,6 +114,8 @@ struct NFServerFlag
 	uint16_t nPort; //端口
 	bool bEncrypt; //是否加密
 	bool bWebSocket; //是否是websocket
+	bool bForeignNetwork; //外部网络,对外网络
+	bool bRefuseAttackIp; //解决攻击IP的链接
 	uint32_t nMaxMsgNumMinPer; //每一分钟最大的消息包数
 	uint32_t nTimeoutDisconnect; //超时断开连接断开连接
 	uint32_t mPacketParseType; //解码消息类型
@@ -128,6 +130,8 @@ struct NFServerFlag
 		nTimeoutDisconnect = 0;
 		mPacketParseType = 0;
 		bWebSocket = false;
+		bForeignNetwork = false;
+		bRefuseAttackIp = false;
 	}
 };
 

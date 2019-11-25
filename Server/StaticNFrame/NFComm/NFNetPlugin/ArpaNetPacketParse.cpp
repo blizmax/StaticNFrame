@@ -8,6 +8,7 @@
 // -------------------------------------------------------------------------
 #include "ArpgNetPacketParse.h"
 #include "NFNetDefine.h"
+#include "NFComm/NFPluginModule/NFLogMgr.h"
 
 #pragma pack(push)
 #pragma pack(1)
@@ -44,11 +45,12 @@ int ArpgNetPacketParse::DeCodeImpl(const char* strData, const uint32_t unLen, ch
 	int32_t dwMsgSz = *((int32_t*)strData);
 	if (dwMsgSz < static_cast<int32_t>(sizeof(stMsg)))
 	{
-		return -1;
+		return 1;
 	}
 
 	if (dwMsgSz < 0 || dwMsgSz >= MAX_RECV_BUFFER_SIZE) //-V560
 	{
+		NFLogError(NF_LOG_SYSTEMLOG, 0, "net server parse data failed, msgSize:{}", dwMsgSz);
 		return -1;
 	}
 

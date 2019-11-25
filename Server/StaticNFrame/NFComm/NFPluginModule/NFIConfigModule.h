@@ -83,6 +83,8 @@ public:
 		mNosqlPort = 0;
 		mLuaWorkThreadNum = 5;
 		mLuaTcpThreadNum = 5;
+		bForeignNetwork = false;
+		bRefuseAttackIp = false;
 	}
 
 public:
@@ -108,6 +110,8 @@ public:
 	uint32_t mLuaTcpThreadNum;	//Lua Tcp Actor线程数目
 	bool mSecurity;				//是否加密
 	bool mWebSocket;			//是否开启websocket功能
+	bool bForeignNetwork; //外部网络,对外网络
+	bool bRefuseAttackIp; //解决攻击IP的链接
 };
 
 struct NFClassNode

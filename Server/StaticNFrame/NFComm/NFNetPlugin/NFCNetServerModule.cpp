@@ -109,7 +109,7 @@ bool NFCNetServerModule::Execute()
 	return true;
 }
 
-uint32_t NFCNetServerModule::AddServer(const NF_SERVER_TYPES eServerType, uint32_t nServerID, uint32_t nMaxClient, uint32_t nPort, bool bWebSocket, uint32_t nPacketParseType)
+uint32_t NFCNetServerModule::AddServer(const NF_SERVER_TYPES eServerType, uint32_t nServerID, uint32_t nMaxClient, uint32_t nPort, bool bWebSocket, uint32_t nPacketParseType, bool bForeignNetwork , bool bRefuseAttackIp)
 {
 	if (eServerType > NF_ST_NONE && eServerType < NF_ST_MAX)
 	{
@@ -124,6 +124,8 @@ uint32_t NFCNetServerModule::AddServer(const NF_SERVER_TYPES eServerType, uint32
 		flag.nMaxConnectNum = nMaxClient;
 		flag.bWebSocket = bWebSocket;
 		flag.mPacketParseType = nPacketParseType;
+		flag.bForeignNetwork = bForeignNetwork;
+		flag.bRefuseAttackIp = bRefuseAttackIp;
 #ifdef USE_NET_EVPP
 		NFIServer* pServer = NF_NEW NFEvppServer(eServerType, nServerID, flag);
 #else
