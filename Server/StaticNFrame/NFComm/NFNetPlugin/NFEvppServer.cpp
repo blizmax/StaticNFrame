@@ -178,6 +178,7 @@ bool NFEvppServer::Init()
 				int ret = NFIPacketParse::DeCode(mPacketParseType, msg->data(), msg->size(), outData, outLen, allLen, nMsgId, nValue);
 				if (ret < 0)
 				{
+					conn->Close();
 					NFLogError(NF_LOG_SYSTEMLOG, 0, "net server parse data failed!");
 					msg->Reset();
 					break;
