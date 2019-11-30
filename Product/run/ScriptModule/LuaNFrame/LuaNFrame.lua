@@ -664,7 +664,7 @@ end
 --在主循环线程里执行，每一分钟的0秒执行这个函数
 function LuaNFrame.Update30Min()
 	local function timerfunc()
-		if timerManager ~= nil and timerManager.Updat30eMin ~= nil then
+		if timerManager ~= nil and timerManager.Update30Min ~= nil then
 			timerManager.Update30Min()
 		end
 	end

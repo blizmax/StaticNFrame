@@ -1,14 +1,14 @@
 module('timerManager', package.seeall)
 
 
-function timerManager.Init(currTime, timerType)
+function timerManager.Init()
 		
 	g_markTime.curr = TimeUtils.GetTableTime()
 
 	LocationService.Init()
 
 	g_markTime.last = g_markTime.curr
-	print(timerType.." init end")
+	print(" init end")
 end
 
 
