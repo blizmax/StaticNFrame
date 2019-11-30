@@ -19,23 +19,23 @@ function timerManager.UpdateSec()
 end
 
 function timerManager.UpdateMin()
-	LogFile("info",   "timerManager.UpdateMin")
+	--LogFile("info",   "timerManager.UpdateMin")
 end
 
 function timerManager.Update5Min()
-	LogFile("info",   "timerManager.Update5Min")
+	--LogFile("info",   "timerManager.Update5Min")
 end
 
 function timerManager.Update10Min()
-	LogFile("info",   "timerManager.Update10Min")
+	--LogFile("info",   "timerManager.Update10Min")
 end
 
 function timerManager.Update30Min()
-	LogFile("info",   "timerManager.Update30Min")
+	--LogFile("info",   "timerManager.Update30Min")
 end
 
 function timerManager.UpdateHour()
-	LogFile("info",   "timerManager.UpdateHour")
+	--LogFile("info",   "timerManager.UpdateHour")
 end
 
 function timerManager.UpdateDay()

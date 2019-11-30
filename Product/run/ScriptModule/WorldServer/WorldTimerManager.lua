@@ -33,26 +33,26 @@ end
 
 function timerManager.UpdateMin()
 	NoticeModel.UpdateMin()
-	LogFile("info",   "LuaNFrame.UpdateMin")
+	--LogFile("info",   "LuaNFrame.UpdateMin")
 end
 
 function timerManager.Update5Min()
-	LogFile("info",   "LuaNFrame.Update5Min")
+	--LogFile("info",   "LuaNFrame.Update5Min")
 end
 
 function timerManager.Update10Min()
 	NoticeModel.Update10Min()
-	LogFile("info",   "LuaNFrame.Update10Min")
+	--LogFile("info",   "LuaNFrame.Update10Min")
 end
 
 function timerManager.Update30Min()
 	NoticeModel.Update30Min()
-	LogFile("info",   "LuaNFrame.Update30Min")
+	--LogFile("info",   "LuaNFrame.Update30Min")
 end
 
 function timerManager.UpdateHour()
 	NoticeModel.UpdateHour()
-	LogFile("info",   "LuaNFrame.UpdateHour")
+	--LogFile("info",   "LuaNFrame.UpdateHour")
 end
 
 function timerManager.UpdateDay()
