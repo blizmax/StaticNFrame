@@ -230,8 +230,13 @@ public:
 	virtual void ReloadLuaFiles(const std::vector<std::string>& vecStr) override;
 	virtual void GcStep();
 	virtual void UpdateMin();
+	virtual void Update5Min();
+	virtual void Update10Min();
+	virtual void Update30Min();
 	virtual void UpdateHour();
 	virtual void UpdateDay();
+	virtual void UpdateWeek();
+	virtual void UpdateMonth();
 
 	virtual void RunGmFunction(const std::string& luaFunc, const std::vector<std::string>& vecStr) override;
 public:

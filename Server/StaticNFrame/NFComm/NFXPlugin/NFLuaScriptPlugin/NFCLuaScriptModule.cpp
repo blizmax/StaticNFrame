@@ -75,19 +75,64 @@ bool NFCLuaScriptModule::Init()
 		FindModule<NFIServerNetEventModule>()->AddAccountEventCallBack(NF_ST_WORLD, this, &NFCLuaScriptModule::OnAccountEventCallBack);
 		FindModule<NFIServerNetEventModule>()->AddAccountEventCallBack(NF_ST_LOGIN, this, &NFCLuaScriptModule::OnAccountEventCallBack);
 	}
-	SetTimer(1, 1000, 1);
+	SetTimer(EnumLuaModule_INIT, 1000, 1);
     return true;
 }
 
 void NFCLuaScriptModule::OnTimer(uint32_t nTimerID)
 {
-	if (nTimerID == 1)
+	if (nTimerID == EnumLuaModule_INIT)
 	{
 		Register();
 		LoadScript();
 
+		SetFixTimer(EnumLuaModule_MIN, 0, 60, INFINITY_CALL);
+		SetFixTimer(EnumLuaModule_5MIN, 0, 5 * 60, INFINITY_CALL);
+		SetFixTimer(EnumLuaModule_10MIN, 0, 10 * 60, INFINITY_CALL);
+		SetFixTimer(EnumLuaModule_30MIN, 0, 30 * 60, INFINITY_CALL);
+		SetFixTimer(EnumLuaModule_HOUR, 0, 3600, INFINITY_CALL);
+		SetFixTimer(EnumLuaModule_DAY, 0, 24 * 3600, INFINITY_CALL);
+		//一周定时器
+		SetTimer(EnumLuaModule_WEEK, NFTime::GetNextWeekRemainingTime() * 1000, 1);
+
+		//一月定时器，多加了一秒，避免定时器32ms的误差
+		uint64_t monthtime = NFTime::GetNextMonthRemainingTime() + 1;
+		SetTimer(EnumLuaModule_MONTH, monthtime * 1000, 1);
+
 		NFMsg::ServerErrorLogMsg msg;
 		NFEventMgr::GetSingletonPtr()->FireExecute(NFEVENT_LUA_FINISH_LOAD, 0, 0, msg);
+	}
+	else if (nTimerID == EnumLuaModule_MIN)
+	{
+		UpdateMin();
+	}
+	else if (nTimerID == EnumLuaModule_5MIN)
+	{
+		Update5Min();
+	}
+	else if (nTimerID == EnumLuaModule_10MIN)
+	{
+		Update10Min();
+	}
+	else if (nTimerID == EnumLuaModule_30MIN)
+	{
+		Update30Min();
+	}
+	else if (nTimerID == EnumLuaModule_HOUR)
+	{
+		UpdateHour();
+	}
+	else if (nTimerID == EnumLuaModule_DAY)
+	{
+		UpdateDay();
+	}
+	else if (nTimerID == EnumLuaModule_WEEK)
+	{
+		UpdateWeek();
+	}
+	else if (nTimerID == EnumLuaModule_MONTH)
+	{
+		UpdateMonth();
 	}
 }
 
@@ -761,4 +806,48 @@ std::string NFCLuaScriptModule::HttpPostWithHead(const std::string& url, const s
 		NFLogError(NF_LOG_SYSTEMLOG, 0, "HttpPost url:{}, return error code:{}, strError:{}", url, ret, NFCurlHttpClient::GetSingletonPtr()->GetStrError(ret));
 	}
 	return strResp;
+}
+
+void NFCLuaScriptModule::UpdateMin()
+{
+	TryRunGlobalScriptFunc("LuaNFrame.UpdateMin");
+}
+
+void NFCLuaScriptModule::Update5Min()
+{
+	TryRunGlobalScriptFunc("LuaNFrame.Update5Min");
+}
+
+void NFCLuaScriptModule::Update10Min()
+{
+	TryRunGlobalScriptFunc("LuaNFrame.Update10Min");
+}
+
+void NFCLuaScriptModule::Update30Min()
+{
+	TryRunGlobalScriptFunc("LuaNFrame.Update30Min");
+}
+
+void NFCLuaScriptModule::UpdateHour()
+{
+	TryRunGlobalScriptFunc("LuaNFrame.UpdateHour");
+}
+
+void NFCLuaScriptModule::UpdateDay()
+{
+	TryRunGlobalScriptFunc("LuaNFrame.UpdateDay");
+}
+
+void NFCLuaScriptModule::UpdateWeek()
+{
+	TryRunGlobalScriptFunc("LuaNFrame.UpdateWeek");
+	SetTimer(EnumLuaModule_WEEK, 7 * 24 * 3600 * 1000, 1);
+}
+
+void NFCLuaScriptModule::UpdateMonth()
+{
+	TryRunGlobalScriptFunc("LuaNFrame.UpdateMonth");
+	//一月定时器，多加了一秒，避免定时器32ms的误差
+	uint64_t monthtime = NFTime::GetNextMonthRemainingTime() + 1;
+	SetTimer(EnumLuaModule_MONTH, monthtime * 1000, 1);
 }

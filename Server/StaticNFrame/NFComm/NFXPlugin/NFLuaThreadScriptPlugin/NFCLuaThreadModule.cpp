@@ -184,8 +184,17 @@ void NFCLuaThreadModule::OnTimer(uint32_t nTimerID)
 			SetTimer(EnumLuaThreadModule_Loop, 1000, INFINITY_CALL);
 			//SetTimer(EnumLuaThreadModule_GC, 1000, INFINITY_CALL); 不在这里gc, 让lua自己gc
 			SetFixTimer(EnumLuaThreadModule_MIN, 0, 60, INFINITY_CALL);
+			SetFixTimer(EnumLuaThreadModule_5MIN, 0, 5*60, INFINITY_CALL);
+			SetFixTimer(EnumLuaThreadModule_10MIN, 0, 10*60, INFINITY_CALL);
+			SetFixTimer(EnumLuaThreadModule_30MIN, 0, 30*60, INFINITY_CALL);
 			SetFixTimer(EnumLuaThreadModule_HOUR, 0, 3600, INFINITY_CALL);
 			SetFixTimer(EnumLuaThreadModule_DAY, 0, 24*3600, INFINITY_CALL);
+			//一周定时器
+			SetTimer(EnumLuaThreadModule_WEEK, NFTime::GetNextWeekRemainingTime()*1000, 1);
+
+			//一月定时器，多加了一秒，避免定时器32ms的误差
+			uint64_t monthtime = NFTime::GetNextMonthRemainingTime() + 1;
+			SetTimer(EnumLuaThreadModule_MONTH, monthtime * 1000, 1);
 
 			NFMsg::ServerErrorLogMsg msg;
 			NFEventMgr::GetSingletonPtr()->FireExecute(NFEVENT_LUA_FINISH_LOAD, 0, 0, msg);
@@ -205,6 +214,18 @@ void NFCLuaThreadModule::OnTimer(uint32_t nTimerID)
 	{
 		UpdateMin();
 	}
+	else if (nTimerID == EnumLuaThreadModule_5MIN)
+	{
+		Update5Min();
+	}
+	else if (nTimerID == EnumLuaThreadModule_10MIN)
+	{
+		Update10Min();
+	}
+	else if (nTimerID == EnumLuaThreadModule_30MIN)
+	{
+		Update30Min();
+	}
 	else if (nTimerID == EnumLuaThreadModule_HOUR)
 	{
 		UpdateHour();
@@ -212,6 +233,14 @@ void NFCLuaThreadModule::OnTimer(uint32_t nTimerID)
 	else if (nTimerID == EnumLuaThreadModule_DAY)
 	{
 		UpdateDay();
+	}
+	else if (nTimerID == EnumLuaThreadModule_WEEK)
+	{
+		UpdateWeek();
+	}
+	else if (nTimerID == EnumLuaThreadModule_MONTH)
+	{
+		UpdateMonth();
 	}
 }
 
@@ -787,23 +816,46 @@ void NFCLuaThreadModule::GcStep()
 
 void NFCLuaThreadModule::UpdateMin()
 {
-	m_pServerLoopTaskModule->AddTaskToEveryActor(NFLuaMinActorTask(this));
-	m_pWorkTaskModule->AddTaskToEveryActor(NFLuaMinActorTask(this));
-	m_pTcpMsgTaskModule->AddTaskToEveryActor(NFLuaMinActorTask(this));
+	AddProcessLoopTask(new NFLuaMinActorTask(this));
+}
+
+void NFCLuaThreadModule::Update5Min()
+{
+	AddProcessLoopTask(new NFLua5MinActorTask(this));
+}
+
+void NFCLuaThreadModule::Update10Min()
+{
+	AddProcessLoopTask(new NFLua10MinActorTask(this));
+}
+
+void NFCLuaThreadModule::Update30Min()
+{
+	AddProcessLoopTask(new NFLua30MinActorTask(this));
 }
 
 void NFCLuaThreadModule::UpdateHour()
 {
-	m_pServerLoopTaskModule->AddTaskToEveryActor(NFLuaHourActorTask(this));
-	m_pWorkTaskModule->AddTaskToEveryActor(NFLuaHourActorTask(this));
-	m_pTcpMsgTaskModule->AddTaskToEveryActor(NFLuaHourActorTask(this));
+	AddProcessLoopTask(new NFLuaHourActorTask(this));
 }
 
 void NFCLuaThreadModule::UpdateDay()
 {
-	m_pServerLoopTaskModule->AddTaskToEveryActor(NFLuaDayActorTask(this));
-	m_pWorkTaskModule->AddTaskToEveryActor(NFLuaDayActorTask(this));
-	m_pTcpMsgTaskModule->AddTaskToEveryActor(NFLuaDayActorTask(this));
+	AddProcessLoopTask(new NFLuaDayActorTask(this));
+}
+
+void NFCLuaThreadModule::UpdateWeek()
+{
+	AddProcessLoopTask(new NFLuaWeekActorTask(this));
+	SetTimer(EnumLuaThreadModule_WEEK, 7 * 24 * 3600 * 1000, 1);
+}
+
+void NFCLuaThreadModule::UpdateMonth()
+{
+	AddProcessLoopTask(new NFLuaMonthActorTask(this));
+	//一月定时器，多加了一秒，避免定时器32ms的误差
+	uint64_t monthtime = NFTime::GetNextMonthRemainingTime() + 1;
+	SetTimer(EnumLuaThreadModule_MONTH, monthtime * 1000, 1);
 }
 
 void NFCLuaThreadModule::RunGmFunction(const std::string& luaFunc, const std::vector<std::string>& vecStr)

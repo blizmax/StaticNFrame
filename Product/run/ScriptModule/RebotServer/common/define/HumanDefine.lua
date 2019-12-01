@@ -30,9 +30,10 @@ g_broadCast.cycle_24 = 6   --每天系统时间重置时候发送
 
 g_broadCast.type_login = 101  --系统广播,玩家一登录进来需要发送，只发送一次
 g_broadCast.type_sys = 102    --系统广播
-g_broadCast.type_horn = 103   --玩家使用小喇叭
-g_broadCast.type_fruit = 104  --水果机系统广播
-g_broadCast.type_roulette = 105  --幸运大转盘广播
+g_broadCast.type_game = 103    --游戏系统广播
+g_broadCast.type_horn = 104   --玩家使用小喇叭
+g_broadCast.type_fruit = 105  --水果机系统广播
+g_broadCast.type_roulette = 106  --幸运大转盘广播
 
 
 g_mailState = {}

@@ -41,8 +41,13 @@ enum EnumLuaThreadModule
 	EnumLuaThreadModule_Work = 5,
 	EnumLuaThreadModule_GC = 6,
 	EnumLuaThreadModule_MIN = 7,
-	EnumLuaThreadModule_HOUR = 8,
-	EnumLuaThreadModule_DAY = 9,
+	EnumLuaThreadModule_5MIN = 8,
+	EnumLuaThreadModule_10MIN = 9,
+	EnumLuaThreadModule_30MIN = 10,
+	EnumLuaThreadModule_HOUR = 11,
+	EnumLuaThreadModule_DAY = 12,
+	EnumLuaThreadModule_WEEK = 13,
+	EnumLuaThreadModule_MONTH = 14,
 };
 
 class NFLuaThreadTask : public NFTask
@@ -478,7 +483,7 @@ public:
 };
 
 /**
-**  每一分钟每一个Actor执行一次这个任务
+**  主线程执行，每一分钟一个Actor执行一次这个任务
 */
 class NFLuaMinActorTask : public NFLuaThreadTask
 {
@@ -505,7 +510,88 @@ public:
 };
 
 /**
-**  每一小时每一个Actor执行一次这个任务
+**  主线程执行，每5分钟一个Actor执行一次这个任务
+*/
+class NFLua5MinActorTask : public NFLuaThreadTask
+{
+public:
+	NFLua5MinActorTask(NFCLuaThreadModule* pLuaThreadModule = nullptr)
+	{
+		m_pLuaThreadModule = pLuaThreadModule;
+		m_taskName = "Lua5MinTask";
+		m_needManThreadProcess = false;
+	}
+	/**
+	**  异步线程处理函数，将在另一个线程里运行
+	*/
+	virtual bool ThreadProcess();
+
+	/**
+	** 主线程处理函数，将在线程处理完后，提交给主先来处理，根据返回函数是否继续处理
+		返回值： thread::TPTask::TPTaskState， 请参看TPTaskState
+	*/
+	virtual TPTaskState MainThreadProcess()
+	{
+		return TPTASK_STATE_COMPLETED;
+	}
+};
+
+/**
+**  主线程执行，每10分钟一个Actor执行一次这个任务
+*/
+class NFLua10MinActorTask : public NFLuaThreadTask
+{
+public:
+	NFLua10MinActorTask(NFCLuaThreadModule* pLuaThreadModule = nullptr)
+	{
+		m_pLuaThreadModule = pLuaThreadModule;
+		m_taskName = "Lua10MinTask";
+		m_needManThreadProcess = false;
+	}
+	/**
+	**  异步线程处理函数，将在另一个线程里运行
+	*/
+	virtual bool ThreadProcess();
+
+	/**
+	** 主线程处理函数，将在线程处理完后，提交给主先来处理，根据返回函数是否继续处理
+		返回值： thread::TPTask::TPTaskState， 请参看TPTaskState
+	*/
+	virtual TPTaskState MainThreadProcess()
+	{
+		return TPTASK_STATE_COMPLETED;
+	}
+};
+
+/**
+**  主线程执行，每30分钟一个Actor执行一次这个任务
+*/
+class NFLua30MinActorTask : public NFLuaThreadTask
+{
+public:
+	NFLua30MinActorTask(NFCLuaThreadModule* pLuaThreadModule = nullptr)
+	{
+		m_pLuaThreadModule = pLuaThreadModule;
+		m_taskName = "Lua30MinTask";
+		m_needManThreadProcess = false;
+	}
+	/**
+	**  异步线程处理函数，将在另一个线程里运行
+	*/
+	virtual bool ThreadProcess();
+
+	/**
+	** 主线程处理函数，将在线程处理完后，提交给主先来处理，根据返回函数是否继续处理
+		返回值： thread::TPTask::TPTaskState， 请参看TPTaskState
+	*/
+	virtual TPTaskState MainThreadProcess()
+	{
+		return TPTASK_STATE_COMPLETED;
+	}
+};
+
+/**
+**  主线程执行，每一小时一个Actor执行一次这个任务
 */
 class NFLuaHourActorTask : public NFLuaThreadTask
 {
@@ -532,7 +618,7 @@ public:
 };
 
 /**
-**  每一天每一个Actor执行一次这个任务
+**  主线程执行，每一天一个Actor执行一次这个任务
 */
 class NFLuaDayActorTask : public NFLuaThreadTask
 {
@@ -541,6 +627,60 @@ public:
 	{
 		m_pLuaThreadModule = pLuaThreadModule;
 		m_taskName = "LuaDayTask";
+		m_needManThreadProcess = false;
+	}
+	/**
+	**  异步线程处理函数，将在另一个线程里运行
+	*/
+	virtual bool ThreadProcess();
+
+	/**
+	** 主线程处理函数，将在线程处理完后，提交给主先来处理，根据返回函数是否继续处理
+		返回值： thread::TPTask::TPTaskState， 请参看TPTaskState
+	*/
+	virtual TPTaskState MainThreadProcess()
+	{
+		return TPTASK_STATE_COMPLETED;
+	}
+};
+
+/**
+**  主线程执行，每一周执行一次这个任务
+*/
+class NFLuaWeekActorTask : public NFLuaThreadTask
+{
+public:
+	NFLuaWeekActorTask(NFCLuaThreadModule* pLuaThreadModule = nullptr)
+	{
+		m_pLuaThreadModule = pLuaThreadModule;
+		m_taskName = "LuaWeekTask";
+		m_needManThreadProcess = false;
+	}
+	/**
+	**  异步线程处理函数，将在另一个线程里运行
+	*/
+	virtual bool ThreadProcess();
+
+	/**
+	** 主线程处理函数，将在线程处理完后，提交给主先来处理，根据返回函数是否继续处理
+		返回值： thread::TPTask::TPTaskState， 请参看TPTaskState
+	*/
+	virtual TPTaskState MainThreadProcess()
+	{
+		return TPTASK_STATE_COMPLETED;
+	}
+};
+
+/**
+**   主线程执行，每一天一个Actor执行一次这个任务
+*/
+class NFLuaMonthActorTask : public NFLuaThreadTask
+{
+public:
+	NFLuaMonthActorTask(NFCLuaThreadModule* pLuaThreadModule = nullptr)
+	{
+		m_pLuaThreadModule = pLuaThreadModule;
+		m_taskName = "LuaMonthTask";
 		m_needManThreadProcess = false;
 	}
 	/**

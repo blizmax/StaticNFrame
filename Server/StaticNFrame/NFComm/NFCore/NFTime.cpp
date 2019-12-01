@@ -8,6 +8,7 @@
 // -------------------------------------------------------------------------
 
 #include "NFTime.h"
+#include "NFDateTime.hpp"
 
 #include <stdlib.h>
 #include <time.h>
@@ -241,6 +242,22 @@ uint64_t NFTime::GetWeekUpdateTime(uint64_t timeSec, int32_t nHour)
 	t1.tm_sec = 0;
 
 	return mktime((tm*)&t1);
+}
+
+//获取下周剩余的时间(秒数) nHour:时/* hours since midnight - [0,23] */
+uint64_t NFTime::GetNextWeekRemainingTime()
+{
+	uint64_t weekstarttime = NFTime::Now().UnixSecOnMondayZero();
+	return weekstarttime + 7 * 24 * 3600 - NFTime::Now().UnixSec();
+}
+
+//获取下月剩余的时间(秒数) nHour:时/* hours since midnight - [0,23] */
+uint64_t NFTime::GetNextMonthRemainingTime()
+{
+	NFDate date = GetLocalDate(NFTime::Now().UnixSec());
+	NFDateTime datetime(1, date.mon, date.year, 0, 0, 0);
+	datetime.AddMonths(1);
+	return (uint64_t)datetime.GetTimestamp() - NFTime::Now().UnixSec();
 }
 
 uint64_t NFTime::GetZeroTime(uint64_t timeSec)

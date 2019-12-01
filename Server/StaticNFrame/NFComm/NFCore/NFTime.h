@@ -135,5 +135,11 @@ public:
 	//获取每周更新的时间(秒数) nHour:时/* hours since midnight - [0,23] */
 	static uint64_t GetWeekUpdateTime(uint64_t timeSec, int32_t nHour);
 
+	//获取下周剩余的时间(秒数) nHour:时/* hours since midnight - [0,23] */
+	static uint64_t GetNextWeekRemainingTime();
+
+	//获取下月剩余的时间(秒数) nHour:时/* hours since midnight - [0,23] */
+	static uint64_t GetNextMonthRemainingTime();
+
 	static uint64_t GetZeroTime(uint64_t timeSec);
 };

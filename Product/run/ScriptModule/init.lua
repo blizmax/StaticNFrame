@@ -33,21 +33,6 @@ function LuaNFrame.InitLoad()
 	--require("LuaNFrame/NFTimeUtils")
 end
 
---对于每一个actor,每一份lua， 每一分钟的0秒执行这个函数
-function LuaNFrame.UpdateMin()
-	--LuaNFrame.Error(NFLogId.NF_LOG_SYSTEMLOG, 0,  "LuaNFrame.UpdateMin")
-end
-
---对于每一个actor,每一份lua， 每一小时的0秒执行这个函数
-function LuaNFrame.UpdateHour()
-	--LuaNFrame.Error(NFLogId.NF_LOG_SYSTEMLOG, 0,  "LuaNFrame.UpdateHour")
-end
-
---对于每一个actor,每一份lua， 每一天的0秒执行这个函数
-function LuaNFrame.UpdateDay()
-	--LuaNFrame.Error(NFLogId.NF_LOG_SYSTEMLOG, 0,  "LuaNFrame.UpdateDay")
-end
-
 function LuaNFrame.InitScript(luaModule)
 	package.path = package.path .. ";../ScriptModule/?.lua;"
 	package.path = package.path .. ";../ScriptModule/LuaNFrame/?.lua;"

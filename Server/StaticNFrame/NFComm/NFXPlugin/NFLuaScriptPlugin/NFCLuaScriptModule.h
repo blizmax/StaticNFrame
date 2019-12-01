@@ -27,6 +27,20 @@
 
 #include "NFComm/NFCore/NFMapEx.hpp"
 
+enum EnumLuaModule
+{
+	EnumLuaModule_NULL = 0,
+	EnumLuaModule_INIT = 1,
+	EnumLuaModule_MIN = 7,
+	EnumLuaModule_5MIN = 8,
+	EnumLuaModule_10MIN = 9,
+	EnumLuaModule_30MIN = 10,
+	EnumLuaModule_HOUR = 11,
+	EnumLuaModule_DAY = 12,
+	EnumLuaModule_WEEK = 13,
+	EnumLuaModule_MONTH = 14,
+};
+
 class NFCLuaScriptModule;
 
 class NFLuaTimer : public NFTimerObj
@@ -164,6 +178,15 @@ public:
 public:
     bool Register();
 	void LoadScript();
+
+	virtual void UpdateMin();
+	virtual void Update5Min();
+	virtual void Update10Min();
+	virtual void Update30Min();
+	virtual void UpdateHour();
+	virtual void UpdateDay();
+	virtual void UpdateWeek();
+	virtual void UpdateMonth();
 protected:
 	NFINetServerModule* m_pNetServerModule;
 	NFINetClientModule* m_pNetClientModule;

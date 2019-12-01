@@ -210,6 +210,33 @@ bool NFLuaMinActorTask::ThreadProcess()
 	return true;
 }
 
+bool NFLua5MinActorTask::ThreadProcess()
+{
+	if (m_pComponent)
+	{
+		m_pComponent->TryRunGlobalScriptFunc("LuaNFrame.Update5Min");
+	}
+	return true;
+}
+
+bool NFLua10MinActorTask::ThreadProcess()
+{
+	if (m_pComponent)
+	{
+		m_pComponent->TryRunGlobalScriptFunc("LuaNFrame.Update10Min");
+	}
+	return true;
+}
+
+bool NFLua30MinActorTask::ThreadProcess()
+{
+	if (m_pComponent)
+	{
+		m_pComponent->TryRunGlobalScriptFunc("LuaNFrame.Update30Min");
+	}
+	return true;
+}
+
 bool NFLuaHourActorTask::ThreadProcess()
 {
 	if (m_pComponent)
@@ -224,6 +251,24 @@ bool NFLuaDayActorTask::ThreadProcess()
 	if (m_pComponent)
 	{
 		m_pComponent->TryRunGlobalScriptFunc("LuaNFrame.UpdateDay");
+	}
+	return true;
+}
+
+bool NFLuaWeekActorTask::ThreadProcess()
+{
+	if (m_pComponent)
+	{
+		m_pComponent->TryRunGlobalScriptFunc("LuaNFrame.UpdateWeek");
+	}
+	return true;
+}
+
+bool NFLuaMonthActorTask::ThreadProcess()
+{
+	if (m_pComponent)
+	{
+		m_pComponent->TryRunGlobalScriptFunc("LuaNFrame.UpdateMonth");
 	}
 	return true;
 }
