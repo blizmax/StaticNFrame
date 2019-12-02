@@ -28,6 +28,9 @@
     <Filter Include="3rd\lua_socket">
       <UniqueIdentifier>{4b9e781d-d4fc-4f26-89d8-f7f5761df5ed}</UniqueIdentifier>
     </Filter>
+    <Filter Include="3rd\lua_protobuf">
+      <UniqueIdentifier>{2fca62d0-a442-451c-b0f3-f24947384d9f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="lpeg\lpcap.c">

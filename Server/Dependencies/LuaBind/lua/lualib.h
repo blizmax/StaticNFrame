@@ -62,8 +62,8 @@ LUALIB_API int (luaopen_socket_core)(lua_State *L);
 #define LUA_LUALFS "luaopen_lfs"
 LUALIB_API int (luaopen_lfs)(lua_State *L);
 
-#define LUA_LUAPB "pb"
-LUALIB_API int (luaopen_pb)(lua_State *L);
+#define LUA_LUAGENPB "gen_pb"
+LUALIB_API int (luaopen_gen_pb)(lua_State *L);
 
 /* open all previous libraries */
 LUALIB_API void (luaL_openlibs) (lua_State *L);

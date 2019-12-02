@@ -17,7 +17,7 @@ extern "C" {
 # endif
 #endif
 
-LUA_EXTERN int luaopen_pb (lua_State *L);
+LUA_EXTERN int luaopen_gen_pb (lua_State *L);
 
 #ifdef __cplusplus
 }
