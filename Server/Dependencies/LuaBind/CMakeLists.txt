@@ -9,6 +9,7 @@ AUX_SOURCE_DIRECTORY(./luafilesystem SRC)
 AUX_SOURCE_DIRECTORY(./lua_socket SRC)
 AUX_SOURCE_DIRECTORY(./luasql SRC)
 AUX_SOURCE_DIRECTORY(./protoc-gen-lua SRC)
+AUX_SOURCE_DIRECTORY(./lua_protobuf SRC)
 
 add_definitions(
         -DLUA_COMPAT_5_1
