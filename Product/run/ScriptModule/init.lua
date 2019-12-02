@@ -25,6 +25,7 @@ end
 function LuaNFrame.InitLoad()
 	require("LuaNFrame/CPPNFrame")
 	require("LuaNFrame/LuaNFrame")
+	require("LuaNFrame/LuaProto")
 	require("LuaNFrame/NFExtrend")
 	require("LuaNFrame/NFLogDefine")
 	require("LuaNFrame/ServerDefine")
@@ -60,6 +61,7 @@ function LuaNFrame.InitScript(luaModule)
 			package.path = package.path..";../ScriptModule/GameServer/trdlib/lua/?.lua"
 
 			require("GameServer/LoadHelper")
+			--require("GameServer/common/LoadProto")
 
 			mysqlItem = mysqlConnect.new(g_dbtype, g_dbUser, g_dbPassword, g_dbHost, g_dbPort, g_dbDatabase)
 			redisItem = redisConnect.new()
