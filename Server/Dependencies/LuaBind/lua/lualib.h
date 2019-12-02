@@ -65,6 +65,24 @@ LUALIB_API int (luaopen_lfs)(lua_State *L);
 #define LUA_LUAGENPB "gen_pb"
 LUALIB_API int (luaopen_gen_pb)(lua_State *L);
 
+#define LUA_LUA_PB_IO "pb_io"
+LUALIB_API int (luaopen_pb_io)(lua_State *L);
+
+#define LUA_LUA_PB_CONV "pb_conv"
+LUALIB_API int (luaopen_pb_conv)(lua_State *L);
+
+#define LUA_LUA_PB_BUFFER "pb_buffer"
+LUALIB_API int (luaopen_pb_buffer)(lua_State *L);
+
+#define LUA_LUA_PB_SLICE "pb_slice"
+LUALIB_API int (luaopen_pb_slice)(lua_State *L);
+
+#define LUA_LUA_PB "pb"
+LUALIB_API int (luaopen_pb)(lua_State *L);
+
+#define LUA_LUA_PB_UNSAFE "pb_unsafe"
+LUALIB_API int (luaopen_pb_unsafe)(lua_State *L);
+
 /* open all previous libraries */
 LUALIB_API void (luaL_openlibs) (lua_State *L);
 

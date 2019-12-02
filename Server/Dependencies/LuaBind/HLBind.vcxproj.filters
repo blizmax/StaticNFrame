@@ -69,9 +69,6 @@
     <ClCompile Include="luafilesystem\lfs.c">
       <Filter>3rd\luafilesystem</Filter>
     </ClCompile>
-    <ClCompile Include="protoc-gen-lua\pb.c">
-      <Filter>3rd\protoc-gen-lua</Filter>
-    </ClCompile>
     <ClCompile Include="lua\lapi.c">
       <Filter>3rd\lua</Filter>
     </ClCompile>
@@ -221,6 +218,12 @@
     </ClCompile>
     <ClCompile Include="lua_socket\wsocket.c">
       <Filter>3rd\lua_socket</Filter>
+    </ClCompile>
+    <ClCompile Include="lua_protobuf\pb.c">
+      <Filter>3rd\lua_protobuf</Filter>
+    </ClCompile>
+    <ClCompile Include="protoc-gen-lua\gen_pb.c">
+      <Filter>3rd\protoc-gen-lua</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -377,9 +380,6 @@
     <ClInclude Include="lua\lzio.h">
       <Filter>3rd\lua</Filter>
     </ClInclude>
-    <ClInclude Include="protoc-gen-lua\pb.h">
-      <Filter>3rd\protoc-gen-lua</Filter>
-    </ClInclude>
     <ClInclude Include="lua_socket\auxiliar.h">
       <Filter>3rd\lua_socket</Filter>
     </ClInclude>
@@ -436,6 +436,12 @@
     </ClInclude>
     <ClInclude Include="lua_socket\wsocket.h">
       <Filter>3rd\lua_socket</Filter>
+    </ClInclude>
+    <ClInclude Include="lua_protobuf\pb.h">
+      <Filter>3rd\lua_protobuf</Filter>
+    </ClInclude>
+    <ClInclude Include="protoc-gen-lua\gen_pb.h">
+      <Filter>3rd\protoc-gen-lua</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

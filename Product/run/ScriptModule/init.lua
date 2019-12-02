@@ -138,8 +138,9 @@ function LuaNFrame.InitScript(luaModule)
 			redisItem = redisConnect.new()
 		elseif LuaNFrame.GetAppName() == "CheckServer" then
 			package.path = package.path .. ";../ScriptModule/CheckServer/?.lua;"
-			package.path = package.path..";../ScriptModule/CheckServer/trdlib/libprotobuf/?.lua"   --由于这里protobuf的特殊性，必须把包含protobuf的目录加到环境变量中
-			package.path = package.path..";../ScriptModule/CheckServer/trdlib/lua/?.lua"
+			package.path = package.path .. ";../ScriptModule/GameServer/?.lua;"
+			package.path = package.path..";../ScriptModule/GameServer/trdlib/libprotobuf/?.lua"   --由于这里protobuf的特殊性，必须把包含protobuf的目录加到环境变量中
+			package.path = package.path..";../ScriptModule/GameServer/trdlib/lua/?.lua"
 
 			require("CheckServer/CheckServerLoadHelper")
 			require("CheckServer/CheckServerTimerManager")

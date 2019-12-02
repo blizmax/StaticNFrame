@@ -80,6 +80,7 @@
     <ClCompile Include="lua\lutf8lib.c" />
     <ClCompile Include="lua\lvm.c" />
     <ClCompile Include="lua\lzio.c" />
+    <ClCompile Include="lua_protobuf\pb.c" />
     <ClCompile Include="lua_socket\auxiliar.c" />
     <ClCompile Include="lua_socket\buffer.c" />
     <ClCompile Include="lua_socket\compat.c" />
@@ -97,7 +98,7 @@
     <ClCompile Include="lua_socket\udp.c" />
     <ClCompile Include="lua_socket\unixtcp.c" />
     <ClCompile Include="lua_socket\wsocket.c" />
-    <ClCompile Include="protoc-gen-lua\pb.c" />
+    <ClCompile Include="protoc-gen-lua\gen_pb.c" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="lpeg\lpcap.h" />
@@ -151,6 +152,7 @@
     <ClInclude Include="lua\lundump.h" />
     <ClInclude Include="lua\lvm.h" />
     <ClInclude Include="lua\lzio.h" />
+    <ClInclude Include="lua_protobuf\pb.h" />
     <ClInclude Include="lua_socket\auxiliar.h" />
     <ClInclude Include="lua_socket\buffer.h" />
     <ClInclude Include="lua_socket\compat.h" />
@@ -170,7 +172,7 @@
     <ClInclude Include="lua_socket\udp.h" />
     <ClInclude Include="lua_socket\unixtcp.h" />
     <ClInclude Include="lua_socket\wsocket.h" />
-    <ClInclude Include="protoc-gen-lua\pb.h" />
+    <ClInclude Include="protoc-gen-lua\gen_pb.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="lua_socket\CMakeLists.txt" />

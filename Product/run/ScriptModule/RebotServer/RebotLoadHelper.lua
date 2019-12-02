@@ -1,8 +1,8 @@
 
 require("trdlib.Init")  --先加载第三方库
 
-require("conf.serverConf")
-require("conf.redisConf")
+require("rebot_conf.serverConf")
+require("rebot_conf.redisConf")
 require("Public.Init")
 
 require("common.define.HumanDefine")

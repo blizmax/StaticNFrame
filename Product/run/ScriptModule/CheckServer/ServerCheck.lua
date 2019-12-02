@@ -97,7 +97,7 @@ function CheckServerIpPort.work(buffer)
 
 		if count >= 5 then
 			LogFile("error", serverip.." connect timeout, must be attacted.......")
-			HttpGet("http://kxqp2006.top/index.php/dwcgame/client/serverAttattedPhone?phonenum=18927427460&serverip="..serverip)
+			--HttpGet("http://kxqp2006.top/index.php/dwcgame/client/serverAttattedPhone?phonenum=18927427460&serverip="..serverip)
 
 			local sqlCase = "update du_server set state = 0 where serverip = '"..serverip.."'"
 			mysqlItem:execute(sqlCase)
@@ -133,7 +133,7 @@ function CheckDisconnect.work(buffer)
 
 		if count >= 5 then
 			LogFile("error", serverip.." set state = 1")
-			HttpGet("http://kxqp2006.top/index.php/dwcgame/client/serverReConnectPhone?phonenum=18927427460&serverip="..serverip)
+			--HttpGet("http://kxqp2006.top/index.php/dwcgame/client/serverReConnectPhone?phonenum=18927427460&serverip="..serverip)
 			local sqlCase = "update du_server set state = 1 where serverip = '"..serverip.."'"
 			mysqlItem:execute(sqlCase)
 		end
