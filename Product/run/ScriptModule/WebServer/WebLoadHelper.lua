@@ -44,6 +44,7 @@ require("common.define.TexasDefine")
 require("common.define.TgpdDefine")
 require("common.define.TtzDefine")
 require("common.define.YqsDefine")
+require("common.define.ShzBatDefine")
 
 require("common.st_agent_pb")
 require("common.st_human_pb")
@@ -79,6 +80,7 @@ require("common.st_ttz_pb")
 require("common.st_user_pb")
 require("common.st_yqs_pb")
 require("common.st_utils_pond_pb")
+require("common.st_shzbat_pb")
 
 require("Human.Model.PlayerModel")
 require("Human.Model.GoodsModel")
@@ -97,6 +99,7 @@ require("Human.Model.LocationModel")
 require("Human.Model.HttpSendModel")
 require("Human.Model.ActivityModel")
 require("Human.Model.SpecialModel")
+require("ShzBat.Model.ShzBatModel")
 
 require("Agent.Model.AgentModel")
 require("Agent.Model.UnlimitedModel")
@@ -218,6 +221,7 @@ g_redisIndex[TgpdModel.redis_index] = {index = g_redisInfo.redis_three, key = Tg
 g_redisIndex[TtzModel.redis_index] = {index = g_redisInfo.redis_four, des = "Ttz_info"}
 g_redisIndex[TtzModel.redis_index] = {index = g_redisInfo.redis_four, des = "Ttz_info"}
 g_redisIndex[YqsModel.redis_index] = {index = g_redisInfo.redis_three, key = YqsModel.redis_index, link = 1}
+g_redisIndex[ShzBatModel.redis_index] = {index = g_redisInfo.redis_four, des = "shz_info"}
 -------------------------------------------------------------
 require("Human.Model.PlayerModel")
 require("Human.Model.GoodsModel")
