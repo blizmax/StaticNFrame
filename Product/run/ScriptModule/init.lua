@@ -50,7 +50,12 @@ function LuaNFrame.InitScript(luaModule)
 	end
 
 	if g_platfrom == "win32" and LuaNFrame.IsThreadModule() == false then
-		breakSocketHandle,debugXpCall = require("LuaDebug")("localhost",7003)
+		if  LuaNFrame.GetAppName() == "RebotServer" then
+			breakSocketHandle,debugXpCall = require("LuaDebug")("localhost",7004)
+		else
+			breakSocketHandle,debugXpCall = require("LuaDebug")("localhost",7003)
+		end
+		
 		LuaNFrame.AddTimer("update_debugsocket", 1)
 	end
 
@@ -61,7 +66,7 @@ function LuaNFrame.InitScript(luaModule)
 			package.path = package.path..";../ScriptModule/GameServer/trdlib/lua/?.lua"
 
 			require("GameServer/LoadHelper")
-			--require("GameServer/common/LoadProto")
+			require("GameServer/common/LoadProto")
 
 			mysqlItem = mysqlConnect.new(g_dbtype, g_dbUser, g_dbPassword, g_dbHost, g_dbPort, g_dbDatabase)
 			redisItem = redisConnect.new()
@@ -132,10 +137,12 @@ function LuaNFrame.InitScript(luaModule)
 			mysqlLog = mysqlConnect.new(g_dbtype, g_dbUser, g_dbPassword, g_dbHost, g_dbPort, g_dbDatabase)
 		elseif LuaNFrame.GetAppName() == "RebotServer" then
 			package.path = package.path .. ";../ScriptModule/RebotServer/?.lua;"
-			package.path = package.path..";../ScriptModule/RebotServer/trdlib/libprotobuf/?.lua"   --由于这里protobuf的特殊性，必须把包含protobuf的目录加到环境变量中
-			package.path = package.path..";../ScriptModule/RebotServer/trdlib/lua/?.lua"
+			package.path = package.path .. ";../ScriptModule/GameServer/?.lua;"
+			package.path = package.path..";../ScriptModule/GameServer/trdlib/libprotobuf/?.lua"   --由于这里protobuf的特殊性，必须把包含protobuf的目录加到环境变量中
+			package.path = package.path..";../ScriptModule/GameServer/trdlib/lua/?.lua"
 
 			require("RebotServer/RebotLoadHelper")
+			require("RebotServer/RebotTimerManager")
 
 			redisItem = redisConnect.new()
 		elseif LuaNFrame.GetAppName() == "CheckServer" then

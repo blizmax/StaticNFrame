@@ -3,6 +3,7 @@ require("trdlib.Init")  --先加载第三方库
 
 require("rebot_conf.serverConf")
 require("rebot_conf.redisConf")
+
 require("Public.Init")
 
 require("common.define.HumanDefine")
@@ -19,6 +20,7 @@ require("common.define.LhdDefine")
 require("common.define.SicboDefine")
 require("common.define.SlhbDefine")
 require("common.define.TtzDefine")
+require("common.define.ShzBatDefine")
 
 require("common.packet.packet_agent")
 require("common.packet.packet_barccatat")
@@ -30,6 +32,7 @@ require("common.packet.packet_honghei")
 require("common.packet.packet_lhd")
 require("common.packet.packet_slhb")
 require("common.packet.packet_ttz")
+require("common.packet.packet_shzbat")
 
 require("common.st_human_pb")
 require("common.st_shop_pb")
@@ -46,6 +49,7 @@ require("common.st_honghei_pb")
 require("common.st_lhd_pb")
 require("common.st_slhb_pb")
 require("common.st_ttz_pb")
+require("common.st_shzbat_pb")
 
 require("common.msg_agent_pb")
 require("common.msg_agent2_pb")
@@ -73,6 +77,8 @@ require("common.msg_slhb_pb")
 require("common.msg_ttz_pb")
 require("common.msg_ttz2_pb")
 
+require("common.msg_shzbat_pb")
+
 require("RebotExecute")
 require("RebotAccount")
 require("RebotModule")
@@ -85,3 +91,4 @@ require("BrnnService")
 require("FqzsService")
 require("SciboService")
 require("FenFenCaiService")
+require("ShzBatService")

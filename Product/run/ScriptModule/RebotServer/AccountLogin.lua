@@ -85,7 +85,7 @@ end
 
 AccountService = AccountService or {}
 function AccountService.Init()
-    redisItem:set(RebotModel.rebot_max_id, g_redisInfo.redis_one*1000, RebotModel.redis_index)
+    --redisItem:set(RebotModel.rebot_max_id, g_redisInfo.redis_one*1000, RebotModel.redis_index)
 end
 
 function AccountService.UtilsLoop()
@@ -129,7 +129,8 @@ function GetGameStateInfo.work(buffer)
         count = count + 1
         local tableid = RebotModel.GetPlayerTableId(playerId)
         if tableid == nil or tonumber(tableid) == 0 then
-            FenFenCaiService.EnterGame(clientId, tableid)
+            ShzBatService.EnterGame(clientId, tableid)
+            --FenFenCaiService.EnterGame(clientId, tableid)
             --[[local randgame = math.myrandom(1, 100)
             if randgame <= 20 then
                 BarccatatService.EnterGame(clientId, tableid)

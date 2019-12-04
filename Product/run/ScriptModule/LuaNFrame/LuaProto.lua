@@ -14,10 +14,14 @@ function LuaProto.LoadFile(protofile)
 end
 
 function LuaProto.Decode(type, data)
+    type = "progame."..type
+    data = data == nil and "" or data
     return LuaProto.pb.decode(type, data)
 end
 
 function LuaProto.Encode(type, data)
+    type = "progame."..type
+    data = data == nil and "" or data
     return LuaProto.pb.encode(type, data)
 end
 
