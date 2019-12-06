@@ -143,6 +143,7 @@ function LuaNFrame.InitScript(luaModule)
 
 			require("RebotServer/RebotLoadHelper")
 			require("RebotServer/RebotTimerManager")
+			require("GameServer/common/LoadProto")
 
 			redisItem = redisConnect.new()
 		elseif LuaNFrame.GetAppName() == "CheckServer" then

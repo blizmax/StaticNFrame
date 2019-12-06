@@ -4,7 +4,8 @@ function ShzBatService.EnterGame(clientId, tableid)
     local userid = RebotModel.GetRebotPlayerIdByClient(clientId)
     local cgmsg = msg_human_pb.cgentertable()
     if tableid == nil then
-        cgmsg.tableid = g_shzBatDefine.init_data[1]['tableid'][1]
+        local tabletype = math.myrandom(1, 4)
+        cgmsg.tableid = g_shzBatDefine.init_data[tabletype]['tableid'][1]
     else
         cgmsg.tableid = tonumber(tableid)
     end
@@ -68,7 +69,6 @@ function ShzBatEnter.execute(nMsgId, clientId, strMsg)
         LogFile("error", "enter shz game sucess")
 
         ShzBatService.StartGame(clientId, tableid)
-        ShzBatService.LeaveGame(clientId, tableid)
         return
     end
     LogFile("error", "enter shz game failed, result:"..ReturnCode[gcmsg.result])
@@ -92,17 +92,32 @@ ShzBatStart = ShzBatStart or {}
 function ShzBatStart.execute(nMsgId, clientId, strMsg)
     local gcmsg = msg_shzbat_pb.gcshzbatstart()
     gcmsg:ParseFromString(strMsg)
-    
+    local userid = RebotModel.GetRebotPlayerIdByClient(clientId)
+    local tableid = RebotModel.GetPlayerTableId(userid)
     if gcmsg.result == 0 then
-        local userid = RebotModel.GetRebotPlayerIdByClient(clientId)
-        local tableid = RebotModel.GetPlayerTableId(userid)
         if tableid ~= nil and tonumber(tableid) > 0 and gcmsg.score_info.win_score > 0 then
-            --ShzBatService.ShzBatBetScore(clientId, tableid, gcmsg.score_info.win_score)
-            ShzBatService.ShzBatMaliya(clientId, tableid, gcmsg.score_info.win_score)
+            local win_score = gcmsg.score_info.win_score
+            local random = math.myrandom(1, 100)
+            if random < 100 then
+                ShzBatService.ShzBatBetScore(clientId, tableid, win_score)
+            else
+                ShzBatService.StartGame(clientId, tableid)
+            end
+            --ShzBatService.ShzBatMaliya(clientId, tableid, gcmsg.score_info.win_score)
+            if gcmsg.score_info.bonus_game > 0 then
+                --ShzBatService.ShzBatMaliya(clientId, tableid, gcmsg.score_info.win_score)
+            end
+            
+        elseif tableid ~= nil and tonumber(tableid) > 0 then
+            ShzBatService.StartGame(clientId, tableid)
         end
         LogFile("error", "start shz game sucess, win_score:"..gcmsg.score_info.win_score)
         return
     end
+    if tableid ~= nil and tonumber(tableid) > 0 then
+        ShzBatService.StartGame(clientId, tableid)
+    end
+    
     LogFile("error", "start shz game failed, result:"..ReturnCode[gcmsg.result])
 end
 
@@ -110,15 +125,23 @@ ShzBatBetScore = ShzBatBetScore or {}
 function ShzBatBetScore.execute(nMsgId, clientId, strMsg)
     local gcmsg = msg_shzbat_pb.gcshzbatbetscore()
     gcmsg:ParseFromString(strMsg)
+    local userid = RebotModel.GetRebotPlayerIdByClient(clientId)
+    local tableid = RebotModel.GetPlayerTableId(userid)
     
     if gcmsg.result == 0 then
-        local userid = RebotModel.GetRebotPlayerIdByClient(clientId)
-        local tableid = RebotModel.GetPlayerTableId(userid)
-        if tableid ~= nil and tableid > 0 and gcmsg.get_score > 0 then
-            ShzBatService.ShzBatBetScore(clientId, tableid, gcmsg.get_score)
+
+        if tableid ~= nil and tonumber(tableid) > 0 and gcmsg.get_score > 0 then
+            local win_score = gcmsg.get_score
+            ShzBatService.ShzBatBetScore(clientId, tableid, win_score)
+        elseif tableid ~= nil and tonumber(tableid) > 0 then
+            ShzBatService.StartGame(clientId, tableid)
         end
-        LogFile("error", "ShzBatBetScore game sucess, win_score:"..gcmsg.score_info.win_score)
+        LogFile("error", "ShzBatBetScore game sucess, win_score:"..gcmsg.get_score)
         return
+    end
+
+    if tableid ~= nil and tonumber(tableid) > 0 then
+        ShzBatService.StartGame(clientId, tableid)
     end
     LogFile("error", "ShzBatBetScore game failed, result:"..ReturnCode[gcmsg.result])
 end
@@ -127,15 +150,21 @@ ShzBatMaliya = ShzBatMaliya or {}
 function ShzBatMaliya.execute(nMsgId, clientId, strMsg)
     local gcmsg = msg_shzbat_pb.gcshzbatmaliya()
     gcmsg:ParseFromString(strMsg)
+    local userid = RebotModel.GetRebotPlayerIdByClient(clientId)
+    local tableid = RebotModel.GetPlayerTableId(userid)
     
     if gcmsg.result == 0 then
-        local userid = RebotModel.GetRebotPlayerIdByClient(clientId)
-        local tableid = RebotModel.GetPlayerTableId(userid)
-        if tableid ~= nil and tonumber(tableid) > 0 and gcmsg.get_score > 0 then
-            ShzBatService.ShzBatMaliya(clientId, tableid, gcmsg.get_score)
+        if tableid ~= nil and tonumber(tableid) > 0 and gcmsg.bouns_times > 0 then
+            ShzBatService.ShzBatMaliya(clientId, tableid, gcmsg.all_score)
+        elseif tableid ~= nil and tonumber(tableid) > 0 then
+            ShzBatService.StartGame(clientId, tableid)
         end
-        LogFile("error", "ShzBatMaliya game sucess, win_score:"..gcmsg.get_score)
+        LogFile("error", "ShzBatMaliya game sucess, win_score:"..gcmsg.all_score)
         return
+    end
+
+    if tableid ~= nil and tonumber(tableid) > 0 then
+        ShzBatService.StartGame(clientId, tableid)
     end
     LogFile("error", "ShzBatMaliya game failed, result:"..ReturnCode[gcmsg.result])
 end

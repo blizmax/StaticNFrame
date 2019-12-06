@@ -106,7 +106,7 @@ void NFCRebotModule::OnTimer(uint32_t nTimerID)
 		int rand = NFRandInt(0, 100);
 		if (rand < 100)
 		{
-			pClientModule->DisconnectServer(iter->first);
+			//pClientModule->DisconnectServer(iter->first);
 		}
 	}
 }
