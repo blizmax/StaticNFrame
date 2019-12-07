@@ -78,6 +78,7 @@ function LuaNFrame.InitScript(luaModule)
 
 			require("GameServer/LoadHelper")
 			require("GameServer/GameTimerManager")
+			require("GameServer/common/LoadProto")
 
 			mysqlItem = mysqlConnect.new(g_dbtype, g_dbUser, g_dbPassword, g_dbHost, g_dbPort, g_dbDatabase)
 			redisItem = redisConnect.new()
@@ -89,6 +90,8 @@ function LuaNFrame.InitScript(luaModule)
 
 			require("WorldServer/WorldLoadHelper")
 			require("WorldServer/WorldTimerManager")
+			require("GameServer/common/LoadProto")
+
 			mysqlItem = mysqlConnect.new(g_dbtype, g_dbUser, g_dbPassword, g_dbHost, g_dbPort, g_dbDatabase)
 			redisItem = redisConnect.new()
 			mysqlLog = mysqlConnect.new(g_dbtype, g_dbUser, g_dbPassword, g_dbHost, g_dbPort, g_dbDatabase)
@@ -99,6 +102,8 @@ function LuaNFrame.InitScript(luaModule)
 
 			require("LoginServer/LoginLoadHelper")
 			require("LoginServer/LoginTimerManager")
+			require("GameServer/common/LoadProto")
+
 			mysqlItem = mysqlConnect.new(g_dbtype, g_dbUser, g_dbPassword, g_dbHost, g_dbPort, g_dbDatabase)
 			redisItem = redisConnect.new()
 			mysqlLog = mysqlConnect.new(g_dbtype, g_dbUser, g_dbPassword, g_dbHost, g_dbPort, g_dbDatabase)
@@ -109,6 +114,7 @@ function LuaNFrame.InitScript(luaModule)
 			
 			require("WebServer/WebLoadHelper")
 			require("WebServer/WebTimerManager")
+			require("GameServer/common/LoadProto")
 
 			mysqlItem = mysqlConnect.new(g_dbtype, g_dbUser, g_dbPassword, g_dbHost, g_dbPort, g_dbDatabase)
 			redisItem = redisConnect.new()
@@ -120,6 +126,7 @@ function LuaNFrame.InitScript(luaModule)
 			
 			require("LocationServer/LocationLoadHelper")
 			require("LocationServer/LocationTimerManager")
+			require("GameServer/common/LoadProto")
 
 			mysqlItem = mysqlConnect.new(g_dbtype, g_dbUser, g_dbPassword, g_dbHost, g_dbPort, g_dbDatabase)
 			redisItem = redisConnect.new()
@@ -131,6 +138,7 @@ function LuaNFrame.InitScript(luaModule)
 			
 			require("LogServer/LogLoadHelper")
 			require("LogServer/LogTimerManager")
+			require("GameServer/common/LoadProto")
 
 			mysqlItem = mysqlConnect.new(g_dbtype, g_dbUser, g_dbPassword, g_dbHost, g_dbPort, g_dbDatabase)
 			redisItem = redisConnect.new()
@@ -154,6 +162,7 @@ function LuaNFrame.InitScript(luaModule)
 
 			require("CheckServer/CheckServerLoadHelper")
 			require("CheckServer/CheckServerTimerManager")
+			require("GameServer/common/LoadProto")
 
 			mysqlItem = mysqlConnect.new(g_dbtype, g_dbUser, g_dbPassword, g_dbHost, g_dbPort, g_dbDatabase)
 			mysqlLog = mysqlConnect.new(g_dbtype, g_dbUser, g_dbPassword, g_dbHost, g_dbPort, g_dbDatabase)
