@@ -23,6 +23,15 @@ function LuaProto.Decode(msgtype, msgdata_buffer)
     return LuaProto.pb.decode(msgtype, msgdata_buffer)
 end
 
+function LuaProto.DecodeWithDefaults(msgtype, msgdata_buffer)
+    if type(msgtype) ~= "string" or type(msgdata_buffer) ~= "string" then
+        return nil
+    end
+
+    local data = LuaProto.Defaults(msgtype)
+    return LuaProto.pb.decode(msgtype, msgdata_buffer, data)
+end
+
 function LuaProto.Encode(msgtype, msgdata)
     if type(msgtype) ~= "string" or type(msgdata) ~= "table" then
         return nil
