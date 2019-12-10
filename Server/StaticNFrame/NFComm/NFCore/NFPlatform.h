@@ -208,10 +208,13 @@ inline int64_t NFGetNanoSeccondTime()
 #define NF_FORMAT(my_fmt, ...)             fmt::format(my_fmt, ##__VA_ARGS__);
 #define NF_FORMAT_FUNCTION(my_fmt, ...)    fmt::format(std::string("[{}:{}]") + my_fmt, NF_FUNCTION_LINE, ##__VA_ARGS__);
 
-#define MAKE_UINT32(low, high)	((uint32)(((uint16)((uint32)(low) & 0xffff)) | ((uint32)((uint16)((uint32)(high) & 0xffff))) << 16))
-#define HIGH_UINT16(l) ((uint16)((uint32)(l) >> 16))
-#define LOW_UINT16(l) ((uint16)((uint32)(l) & 0xffff))
+#define MAKE_UINT32(low, high)	((uint32_t)(((uint16_t)((uint32_t)(low) & 0xffff)) | ((uint32_t)((uint16_t)((uint32_t)(high) & 0xffff))) << 16))
+#define HIGH_UINT16(l) ((uint16_t)((uint32_t)(l) >> 16))
+#define LOW_UINT16(l) ((uint16_t)((uint32_t)(l) & 0xffff))
 
+#define MAKE_UINT64(low, high)	((uint64_t)(((uint32_t)((uint64_t)(low) & 0xffffffff)) | ((uint64_t)((uint32_t)((uint64_t)(high) & 0xffffffff))) << 32))
+#define HIGH_UINT32(l) ((uint32_t)((uint64_t)(l) >> 32))
+#define LOW_UINT32(l) ((uint32_t)((uint64_t)(l) & 0xffffffff))
 
 #endif
 

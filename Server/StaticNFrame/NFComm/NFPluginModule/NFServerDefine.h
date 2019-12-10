@@ -66,6 +66,8 @@ enum eAccountEventType
 
 typedef std::function<void(const uint32_t unLinkId, const uint64_t valueId, const uint32_t nMsgId, const char* msg, const uint32_t nLen)> NET_RECEIVE_FUNCTOR;
 
+typedef std::function<void(const uint32_t unLinkId, const uint64_t valueId, const uint32_t operateID, const uint32_t nMsgId, const char* msg, const uint32_t nLen)> NET_RECEIVE_WITH_OPERATEID_FUNCTOR;
+
 typedef std::function<void(const eMsgType nEvent, const uint32_t unLinkId)> NET_EVENT_FUNCTOR;
 
 typedef std::function<void(int severity, const char* msg)> NET_EVENT_LOG_FUNCTOR;
