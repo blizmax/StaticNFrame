@@ -511,6 +511,13 @@ void NFCProxyLogicModule::OnHandleReconnectFromClient(const uint32_t unLinkId, c
 			//}
 
 			//mClientLinkInfo.RemoveElement(pPlayerLinkInfo->mUnlinkId);
+			auto pOtherInfo = mClientLinkInfo.GetElement(pPlayerLinkInfo->mUnlinkId);
+			if (pOtherInfo)
+			{
+				pOtherInfo->mIsLogin = false;
+				pOtherInfo->mAccount = "";
+				pOtherInfo->mPlayerId = 0;
+			}
 		}
 	}
 
@@ -602,6 +609,13 @@ void NFCProxyLogicModule::OnHandleAccountLoginFromLoginServer(const uint32_t unL
 				//	FindModule<NFINetServerModule>()->CloseLinkId(pPlayerInfo->mUnlinkId);
 				//}
 				//mClientLinkInfo.RemoveElement(pPlayerInfo->mUnlinkId);
+				auto pOtherInfo = mClientLinkInfo.GetElement(pPlayerInfo->mUnlinkId);
+				if (pOtherInfo)
+				{
+					pOtherInfo->mIsLogin = false;
+					pOtherInfo->mAccount = "";
+					pOtherInfo->mPlayerId = 0;
+				}
 			}
 			else if (pPlayerInfo->mUnlinkId > 0 && pPlayerInfo->mUnlinkId == clientLinkId)
 			{
