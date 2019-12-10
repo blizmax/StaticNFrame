@@ -352,10 +352,7 @@ end
 
 function LuaNFrame.SendMsgToPlayer(unLinkId, nPlayerId, nMsgId, nLen, strData)
 	if type(unLinkId) == "number" and type(nMsgId) == "number" and type(strData) == "string" and type(nPlayerId) == "number" and type(nLen) == "number" then
-		if tonumber(nLen) == string.len(strData) or tonumber(nLen) == 0 then
-			if tonumber(nLen) == 0 then
-				nLen = string.len(strData)
-			end
+		if tonumber(nLen) == string.len(strData) then
 			CPPNFrame:SendMsgToPlayer(unLinkId, nPlayerId, nMsgId, nLen, strData)
 		end
 	else
@@ -365,10 +362,7 @@ end
 
 function LuaNFrame.SendMsgToManyPlayer(nPlayerIdList, nMsgId, nLen, strData)
 	if type(nPlayerIdList) == "table" and type(nMsgId) == "number" and type(strData) == "string" and type(nLen) == "number" then
-		if tonumber(nLen) == string.len(strData) or tonumber(nLen) == 0 then
-			if tonumber(nLen) == 0 then
-				nLen = string.len(strData)
-			end
+		if tonumber(nLen) == string.len(strData) then
 			CPPNFrame:SendMsgToManyPlayer(nPlayerIdList, nMsgId, nLen, strData)
 		end
 	else
@@ -378,10 +372,7 @@ end
 
 function LuaNFrame.SendMsgToAllPlayer(nMsgId, nLen, strData)
 	if type(nMsgId) == "number" and type(strData) == "string" and type(nLen) == "number" then
-		if tonumber(nLen) == string.len(strData) or tonumber(nLen) == 0 then
-			if tonumber(nLen) == 0 then
-				nLen = string.len(strData)
-			end
+		if tonumber(nLen) == string.len(strData) then
 			CPPNFrame:SendMsgToAllPlayer(nMsgId, nLen, strData)
 		end
 	else
@@ -391,10 +382,7 @@ end
 
 function LuaNFrame.SendMsgToMaster(unLinkId, nPlayerId, nMsgId, nLen, strData)
 	if type(unLinkId) == "number" and type(nMsgId) == "number" and type(strData) == "string" and type(nPlayerId) == "number" and type(nLen) == "number" then
-		if tonumber(nLen) == string.len(strData) or tonumber(nLen) == 0  then
-			if tonumber(nLen) == 0 then
-				nLen = string.len(strData)
-			end
+		if tonumber(nLen) == string.len(strData)  then
 			CPPNFrame:SendMsgToMaster(unLinkId, nPlayerId, nMsgId, nLen, strData)
 		end
 	else
@@ -404,10 +392,7 @@ end
 
 function LuaNFrame.SendMsgToHttpServer(servertype, requestId, nLen, strData)
 	if type(servertype) == "number" and type(requestId) == "number" and type(strData) == "string" and type(nLen) == "number" then
-		if tonumber(nLen) == string.len(strData) or tonumber(nLen) == 0  then
-			if tonumber(nLen) == 0 then
-				nLen = string.len(strData)
-			end
+		if tonumber(nLen) == string.len(strData) then
 			CPPNFrame:SendMsgToHttpServer(servertype, requestId, strData)
 		end
 	else
