@@ -25,6 +25,7 @@ function math.myrandom(...)
 	return math.random(table.unpack(arg))
 end
 
+
 function LogFile(file, msg)
 	local cStackInfo = debug.getinfo(2, "Sl")
 	if cStackInfo then
@@ -37,6 +38,411 @@ function LogFile(file, msg)
 		CPPNFrame:Info(NFLogId.NF_LOG_SYSTEMLOG, 0, "["..tostring(cStackInfo.short_src)..":"..tostring(cStackInfo.currentline).."] | "..tostring(msg))
 	else
 		CPPNFrame:Info(NFLogId.NF_LOG_SYSTEMLOG, 0, tostring(msg))
+	end
+end
+
+function LogHall(file, msg)
+	local cStackInfo = debug.getinfo(2, "Sl")
+	if cStackInfo then
+		if type(file) == "string" then
+			if file == "error" then
+				CPPNFrame:Error(NFLogId.NF_LOG_GAME_HALL_LOG, 0, "["..tostring(cStackInfo.short_src)..":"..tostring(cStackInfo.currentline).."] | "..tostring(msg))
+				return
+			end
+		end
+		CPPNFrame:Info(NFLogId.NF_LOG_GAME_HALL_LOG, 0, "["..tostring(cStackInfo.short_src)..":"..tostring(cStackInfo.currentline).."] | "..tostring(msg))
+	else
+		CPPNFrame:Info(NFLogId.NF_LOG_GAME_HALL_LOG, 0, tostring(msg))
+	end
+end
+
+function LogAgent(file, msg)
+	local cStackInfo = debug.getinfo(2, "Sl")
+	if cStackInfo then
+		if type(file) == "string" then
+			if file == "error" then
+				CPPNFrame:Error(NFLogId.NF_LOG_GAME_AGENT_LOG, 0, "["..tostring(cStackInfo.short_src)..":"..tostring(cStackInfo.currentline).."] | "..tostring(msg))
+				return
+			end
+		end
+		CPPNFrame:Info(NFLogId.NF_LOG_GAME_AGENT_LOG, 0, "["..tostring(cStackInfo.short_src)..":"..tostring(cStackInfo.currentline).."] | "..tostring(msg))
+	else
+		CPPNFrame:Info(NFLogId.NF_LOG_GAME_AGENT_LOG, 0, tostring(msg))
+	end
+end
+
+function LogBarccatat(file, msg)
+	local cStackInfo = debug.getinfo(2, "Sl")
+	if cStackInfo then
+		if type(file) == "string" then
+			if file == "error" then
+				CPPNFrame:Error(NFLogId.NF_LOG_GAME_Barccatat_LOG, 0, "["..tostring(cStackInfo.short_src)..":"..tostring(cStackInfo.currentline).."] | "..tostring(msg))
+				return
+			end
+		end
+		CPPNFrame:Info(NFLogId.NF_LOG_GAME_Barccatat_LOG, 0, "["..tostring(cStackInfo.short_src)..":"..tostring(cStackInfo.currentline).."] | "..tostring(msg))
+	else
+		CPPNFrame:Info(NFLogId.NF_LOG_GAME_Barccatat_LOG, 0, tostring(msg))
+	end
+end
+
+function LogBrnn(file, msg)
+	local cStackInfo = debug.getinfo(2, "Sl")
+	if cStackInfo then
+		if type(file) == "string" then
+			if file == "error" then
+				CPPNFrame:Error(NFLogId.NF_LOG_GAME_Brnn_LOG, 0, "["..tostring(cStackInfo.short_src)..":"..tostring(cStackInfo.currentline).."] | "..tostring(msg))
+				return
+			end
+		end
+		CPPNFrame:Info(NFLogId.NF_LOG_GAME_Brnn_LOG, 0, "["..tostring(cStackInfo.short_src)..":"..tostring(cStackInfo.currentline).."] | "..tostring(msg))
+	else
+		CPPNFrame:Info(NFLogId.NF_LOG_GAME_Brnn_LOG, 0, tostring(msg))
+	end
+end
+
+function LogBcbm(file, msg)
+	local cStackInfo = debug.getinfo(2, "Sl")
+	if cStackInfo then
+		if type(file) == "string" then
+			if file == "error" then
+				CPPNFrame:Error(NFLogId.NF_LOG_GAME_Bcbm_LOG, 0, "["..tostring(cStackInfo.short_src)..":"..tostring(cStackInfo.currentline).."] | "..tostring(msg))
+				return
+			end
+		end
+		CPPNFrame:Info(NFLogId.NF_LOG_GAME_Bcbm_LOG, 0, "["..tostring(cStackInfo.short_src)..":"..tostring(cStackInfo.currentline).."] | "..tostring(msg))
+	else
+		CPPNFrame:Info(NFLogId.NF_LOG_GAME_Bcbm_LOG, 0, tostring(msg))
+	end
+end
+
+function LogCaipiao(file, msg)
+	local cStackInfo = debug.getinfo(2, "Sl")
+	if cStackInfo then
+		if type(file) == "string" then
+			if file == "error" then
+				CPPNFrame:Error(NFLogId.NF_LOG_GAME_Caipiao_LOG, 0, "["..tostring(cStackInfo.short_src)..":"..tostring(cStackInfo.currentline).."] | "..tostring(msg))
+				return
+			end
+		end
+		CPPNFrame:Info(NFLogId.NF_LOG_GAME_Caipiao_LOG, 0, "["..tostring(cStackInfo.short_src)..":"..tostring(cStackInfo.currentline).."] | "..tostring(msg))
+	else
+		CPPNFrame:Info(NFLogId.NF_LOG_GAME_Caipiao_LOG, 0, tostring(msg))
+	end
+end
+
+function LogDdz(file, msg)
+	local cStackInfo = debug.getinfo(2, "Sl")
+	if cStackInfo then
+		if type(file) == "string" then
+			if file == "error" then
+				CPPNFrame:Error(NFLogId.NF_LOG_GAME_Ddz_LOG, 0, "["..tostring(cStackInfo.short_src)..":"..tostring(cStackInfo.currentline).."] | "..tostring(msg))
+				return
+			end
+		end
+		CPPNFrame:Info(NFLogId.NF_LOG_GAME_Ddz_LOG, 0, "["..tostring(cStackInfo.short_src)..":"..tostring(cStackInfo.currentline).."] | "..tostring(msg))
+	else
+		CPPNFrame:Info(NFLogId.NF_LOG_GAME_Ddz_LOG, 0, tostring(msg))
+	end
+end
+
+function LogDouNiu(file, msg)
+	local cStackInfo = debug.getinfo(2, "Sl")
+	if cStackInfo then
+		if type(file) == "string" then
+			if file == "error" then
+				CPPNFrame:Error(NFLogId.NF_LOG_GAME_DouNiu_LOG, 0, "["..tostring(cStackInfo.short_src)..":"..tostring(cStackInfo.currentline).."] | "..tostring(msg))
+				return
+			end
+		end
+		CPPNFrame:Info(NFLogId.NF_LOG_GAME_DouNiu_LOG, 0, "["..tostring(cStackInfo.short_src)..":"..tostring(cStackInfo.currentline).."] | "..tostring(msg))
+	else
+		CPPNFrame:Info(NFLogId.NF_LOG_GAME_DouNiu_LOG, 0, tostring(msg))
+	end
+end
+
+function LogDouNiutz(file, msg)
+	local cStackInfo = debug.getinfo(2, "Sl")
+	if cStackInfo then
+		if type(file) == "string" then
+			if file == "error" then
+				CPPNFrame:Error(NFLogId.NF_LOG_GAME_DouNiutz_LOG, 0, "["..tostring(cStackInfo.short_src)..":"..tostring(cStackInfo.currentline).."] | "..tostring(msg))
+				return
+			end
+		end
+		CPPNFrame:Info(NFLogId.NF_LOG_GAME_DouNiutz_LOG, 0, "["..tostring(cStackInfo.short_src)..":"..tostring(cStackInfo.currentline).."] | "..tostring(msg))
+	else
+		CPPNFrame:Info(NFLogId.NF_LOG_GAME_DouNiutz_LOG, 0, tostring(msg))
+	end
+end
+
+function LogErnn(file, msg)
+	local cStackInfo = debug.getinfo(2, "Sl")
+	if cStackInfo then
+		if type(file) == "string" then
+			if file == "error" then
+				CPPNFrame:Error(NFLogId.NF_LOG_GAME_Ernn_LOG, 0, "["..tostring(cStackInfo.short_src)..":"..tostring(cStackInfo.currentline).."] | "..tostring(msg))
+				return
+			end
+		end
+		CPPNFrame:Info(NFLogId.NF_LOG_GAME_Ernn_LOG, 0, "["..tostring(cStackInfo.short_src)..":"..tostring(cStackInfo.currentline).."] | "..tostring(msg))
+	else
+		CPPNFrame:Info(NFLogId.NF_LOG_GAME_Ernn_LOG, 0, tostring(msg))
+	end
+end
+
+function LogErsh(file, msg)
+	local cStackInfo = debug.getinfo(2, "Sl")
+	if cStackInfo then
+		if type(file) == "string" then
+			if file == "error" then
+				CPPNFrame:Error(NFLogId.NF_LOG_GAME_Ersh_LOG, 0, "["..tostring(cStackInfo.short_src)..":"..tostring(cStackInfo.currentline).."] | "..tostring(msg))
+				return
+			end
+		end
+		CPPNFrame:Info(NFLogId.NF_LOG_GAME_Ersh_LOG, 0, "["..tostring(cStackInfo.short_src)..":"..tostring(cStackInfo.currentline).."] | "..tostring(msg))
+	else
+		CPPNFrame:Info(NFLogId.NF_LOG_GAME_Ersh_LOG, 0, tostring(msg))
+	end
+end
+
+function LogFfc(file, msg)
+	local cStackInfo = debug.getinfo(2, "Sl")
+	if cStackInfo then
+		if type(file) == "string" then
+			if file == "error" then
+				CPPNFrame:Error(NFLogId.NF_LOG_GAME_Ffc_LOG, 0, "["..tostring(cStackInfo.short_src)..":"..tostring(cStackInfo.currentline).."] | "..tostring(msg))
+				return
+			end
+		end
+		CPPNFrame:Info(NFLogId.NF_LOG_GAME_Ffc_LOG, 0, "["..tostring(cStackInfo.short_src)..":"..tostring(cStackInfo.currentline).."] | "..tostring(msg))
+	else
+		CPPNFrame:Info(NFLogId.NF_LOG_GAME_Ffc_LOG, 0, tostring(msg))
+	end
+end
+
+function LogForest(file, msg)
+	local cStackInfo = debug.getinfo(2, "Sl")
+	if cStackInfo then
+		if type(file) == "string" then
+			if file == "error" then
+				CPPNFrame:Error(NFLogId.NF_LOG_GAME_Forest_LOG, 0, "["..tostring(cStackInfo.short_src)..":"..tostring(cStackInfo.currentline).."] | "..tostring(msg))
+				return
+			end
+		end
+		CPPNFrame:Info(NFLogId.NF_LOG_GAME_Forest_LOG, 0, "["..tostring(cStackInfo.short_src)..":"..tostring(cStackInfo.currentline).."] | "..tostring(msg))
+	else
+		CPPNFrame:Info(NFLogId.NF_LOG_GAME_Forest_LOG, 0, tostring(msg))
+	end
+end
+
+function LogFqzs(file, msg)
+	local cStackInfo = debug.getinfo(2, "Sl")
+	if cStackInfo then
+		if type(file) == "string" then
+			if file == "error" then
+				CPPNFrame:Error(NFLogId.NF_LOG_GAME_Fqzs_LOG, 0, "["..tostring(cStackInfo.short_src)..":"..tostring(cStackInfo.currentline).."] | "..tostring(msg))
+				return
+			end
+		end
+		CPPNFrame:Info(NFLogId.NF_LOG_GAME_Fqzs_LOG, 0, "["..tostring(cStackInfo.short_src)..":"..tostring(cStackInfo.currentline).."] | "..tostring(msg))
+	else
+		CPPNFrame:Info(NFLogId.NF_LOG_GAME_Fqzs_LOG, 0, tostring(msg))
+	end
+end
+
+function LogFruit(file, msg)
+	local cStackInfo = debug.getinfo(2, "Sl")
+	if cStackInfo then
+		if type(file) == "string" then
+			if file == "error" then
+				CPPNFrame:Error(NFLogId.NF_LOG_GAME_Fruit_LOG, 0, "["..tostring(cStackInfo.short_src)..":"..tostring(cStackInfo.currentline).."] | "..tostring(msg))
+				return
+			end
+		end
+		CPPNFrame:Info(NFLogId.NF_LOG_GAME_Fruit_LOG, 0, "["..tostring(cStackInfo.short_src)..":"..tostring(cStackInfo.currentline).."] | "..tostring(msg))
+	else
+		CPPNFrame:Info(NFLogId.NF_LOG_GAME_Fruit_LOG, 0, tostring(msg))
+	end
+end
+
+function LogFruitBat(file, msg)
+	local cStackInfo = debug.getinfo(2, "Sl")
+	if cStackInfo then
+		if type(file) == "string" then
+			if file == "error" then
+				CPPNFrame:Error(NFLogId.NF_LOG_GAME_FruitBat_LOG, 0, "["..tostring(cStackInfo.short_src)..":"..tostring(cStackInfo.currentline).."] | "..tostring(msg))
+				return
+			end
+		end
+		CPPNFrame:Info(NFLogId.NF_LOG_GAME_FruitBat_LOG, 0, "["..tostring(cStackInfo.short_src)..":"..tostring(cStackInfo.currentline).."] | "..tostring(msg))
+	else
+		CPPNFrame:Info(NFLogId.NF_LOG_GAME_FruitBat_LOG, 0, tostring(msg))
+	end
+end
+
+function LogGdmj(file, msg)
+	local cStackInfo = debug.getinfo(2, "Sl")
+	if cStackInfo then
+		if type(file) == "string" then
+			if file == "error" then
+				CPPNFrame:Error(NFLogId.NF_LOG_GAME_Gdmj_LOG, 0, "["..tostring(cStackInfo.short_src)..":"..tostring(cStackInfo.currentline).."] | "..tostring(msg))
+				return
+			end
+		end
+		CPPNFrame:Info(NFLogId.NF_LOG_GAME_Gdmj_LOG, 0, "["..tostring(cStackInfo.short_src)..":"..tostring(cStackInfo.currentline).."] | "..tostring(msg))
+	else
+		CPPNFrame:Info(NFLogId.NF_LOG_GAME_Gdmj_LOG, 0, tostring(msg))
+	end
+end
+
+function LogHongHei(file, msg)
+	local cStackInfo = debug.getinfo(2, "Sl")
+	if cStackInfo then
+		if type(file) == "string" then
+			if file == "error" then
+				CPPNFrame:Error(NFLogId.NF_LOG_GAME_HongHei_LOG, 0, "["..tostring(cStackInfo.short_src)..":"..tostring(cStackInfo.currentline).."] | "..tostring(msg))
+				return
+			end
+		end
+		CPPNFrame:Info(NFLogId.NF_LOG_GAME_HongHei_LOG, 0, "["..tostring(cStackInfo.short_src)..":"..tostring(cStackInfo.currentline).."] | "..tostring(msg))
+	else
+		CPPNFrame:Info(NFLogId.NF_LOG_GAME_HongHei_LOG, 0, tostring(msg))
+	end
+end
+
+function LogLhd(file, msg)
+	local cStackInfo = debug.getinfo(2, "Sl")
+	if cStackInfo then
+		if type(file) == "string" then
+			if file == "error" then
+				CPPNFrame:Error(NFLogId.NF_LOG_GAME_Lhd_LOG, 0, "["..tostring(cStackInfo.short_src)..":"..tostring(cStackInfo.currentline).."] | "..tostring(msg))
+				return
+			end
+		end
+		CPPNFrame:Info(NFLogId.NF_LOG_GAME_Lhd_LOG, 0, "["..tostring(cStackInfo.short_src)..":"..tostring(cStackInfo.currentline).."] | "..tostring(msg))
+	else
+		CPPNFrame:Info(NFLogId.NF_LOG_GAME_Lhd_LOG, 0, tostring(msg))
+	end
+end
+
+function LogPsz(file, msg)
+	local cStackInfo = debug.getinfo(2, "Sl")
+	if cStackInfo then
+		if type(file) == "string" then
+			if file == "error" then
+				CPPNFrame:Error(NFLogId.NF_LOG_GAME_Psz_LOG, 0, "["..tostring(cStackInfo.short_src)..":"..tostring(cStackInfo.currentline).."] | "..tostring(msg))
+				return
+			end
+		end
+		CPPNFrame:Info(NFLogId.NF_LOG_GAME_Psz_LOG, 0, "["..tostring(cStackInfo.short_src)..":"..tostring(cStackInfo.currentline).."] | "..tostring(msg))
+	else
+		CPPNFrame:Info(NFLogId.NF_LOG_GAME_Psz_LOG, 0, tostring(msg))
+	end
+end
+
+function LogRobot(file, msg)
+	local cStackInfo = debug.getinfo(2, "Sl")
+	if cStackInfo then
+		if type(file) == "string" then
+			if file == "error" then
+				CPPNFrame:Error(NFLogId.NF_LOG_GAME_Robot_LOG, 0, "["..tostring(cStackInfo.short_src)..":"..tostring(cStackInfo.currentline).."] | "..tostring(msg))
+				return
+			end
+		end
+		CPPNFrame:Info(NFLogId.NF_LOG_GAME_Robot_LOG, 0, "["..tostring(cStackInfo.short_src)..":"..tostring(cStackInfo.currentline).."] | "..tostring(msg))
+	else
+		CPPNFrame:Info(NFLogId.NF_LOG_GAME_Robot_LOG, 0, tostring(msg))
+	end
+end
+
+function LogShzBat(file, msg)
+	local cStackInfo = debug.getinfo(2, "Sl")
+	if cStackInfo then
+		if type(file) == "string" then
+			if file == "error" then
+				CPPNFrame:Error(NFLogId.NF_LOG_GAME_ShzBat_LOG, 0, "["..tostring(cStackInfo.short_src)..":"..tostring(cStackInfo.currentline).."] | "..tostring(msg))
+				return
+			end
+		end
+		CPPNFrame:Info(NFLogId.NF_LOG_GAME_ShzBat_LOG, 0, "["..tostring(cStackInfo.short_src)..":"..tostring(cStackInfo.currentline).."] | "..tostring(msg))
+	else
+		CPPNFrame:Info(NFLogId.NF_LOG_GAME_ShzBat_LOG, 0, tostring(msg))
+	end
+end
+
+function LogScibo(file, msg)
+	local cStackInfo = debug.getinfo(2, "Sl")
+	if cStackInfo then
+		if type(file) == "string" then
+			if file == "error" then
+				CPPNFrame:Error(NFLogId.NF_LOG_GAME_Scibo_LOG, 0, "["..tostring(cStackInfo.short_src)..":"..tostring(cStackInfo.currentline).."] | "..tostring(msg))
+				return
+			end
+		end
+		CPPNFrame:Info(NFLogId.NF_LOG_GAME_Scibo_LOG, 0, "["..tostring(cStackInfo.short_src)..":"..tostring(cStackInfo.currentline).."] | "..tostring(msg))
+	else
+		CPPNFrame:Info(NFLogId.NF_LOG_GAME_Scibo_LOG, 0, tostring(msg))
+	end
+end
+
+function LogSlhb(file, msg)
+	local cStackInfo = debug.getinfo(2, "Sl")
+	if cStackInfo then
+		if type(file) == "string" then
+			if file == "error" then
+				CPPNFrame:Error(NFLogId.NF_LOG_GAME_Slhb_LOG, 0, "["..tostring(cStackInfo.short_src)..":"..tostring(cStackInfo.currentline).."] | "..tostring(msg))
+				return
+			end
+		end
+		CPPNFrame:Info(NFLogId.NF_LOG_GAME_Slhb_LOG, 0, "["..tostring(cStackInfo.short_src)..":"..tostring(cStackInfo.currentline).."] | "..tostring(msg))
+	else
+		CPPNFrame:Info(NFLogId.NF_LOG_GAME_Slhb_LOG, 0, tostring(msg))
+	end
+end
+
+function LogTexas(file, msg)
+	local cStackInfo = debug.getinfo(2, "Sl")
+	if cStackInfo then
+		if type(file) == "string" then
+			if file == "error" then
+				CPPNFrame:Error(NFLogId.NF_LOG_GAME_Texas_LOG, 0, "["..tostring(cStackInfo.short_src)..":"..tostring(cStackInfo.currentline).."] | "..tostring(msg))
+				return
+			end
+		end
+		CPPNFrame:Info(NFLogId.NF_LOG_GAME_Texas_LOG, 0, "["..tostring(cStackInfo.short_src)..":"..tostring(cStackInfo.currentline).."] | "..tostring(msg))
+	else
+		CPPNFrame:Info(NFLogId.NF_LOG_GAME_Texas_LOG, 0, tostring(msg))
+	end
+end
+
+function LogTtz(file, msg)
+	local cStackInfo = debug.getinfo(2, "Sl")
+	if cStackInfo then
+		if type(file) == "string" then
+			if file == "error" then
+				CPPNFrame:Error(NFLogId.NF_LOG_GAME_Ttz_LOG, 0, "["..tostring(cStackInfo.short_src)..":"..tostring(cStackInfo.currentline).."] | "..tostring(msg))
+				return
+			end
+		end
+		CPPNFrame:Info(NFLogId.NF_LOG_GAME_Ttz_LOG, 0, "["..tostring(cStackInfo.short_src)..":"..tostring(cStackInfo.currentline).."] | "..tostring(msg))
+	else
+		CPPNFrame:Info(NFLogId.NF_LOG_GAME_Ttz_LOG, 0, tostring(msg))
+	end
+end
+
+function LogYqs(file, msg)
+	local cStackInfo = debug.getinfo(2, "Sl")
+	if cStackInfo then
+		if type(file) == "string" then
+			if file == "error" then
+				CPPNFrame:Error(NFLogId.NF_LOG_GAME_Yqs_LOG, 0, "["..tostring(cStackInfo.short_src)..":"..tostring(cStackInfo.currentline).."] | "..tostring(msg))
+				return
+			end
+		end
+		CPPNFrame:Info(NFLogId.NF_LOG_GAME_Yqs_LOG, 0, "["..tostring(cStackInfo.short_src)..":"..tostring(cStackInfo.currentline).."] | "..tostring(msg))
+	else
+		CPPNFrame:Info(NFLogId.NF_LOG_GAME_Yqs_LOG, 0, tostring(msg))
 	end
 end
 

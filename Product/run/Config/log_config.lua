@@ -55,7 +55,34 @@ NFLogId = {
 	NF_LOG_PROXY_RECV_HEART_LOG = 1007,		--网关接受心跳消息LOG
 	NF_LOG_LOGIN_MODULE_LOG = 1102,			--登陆相关LOG打印
 	
-	
+	---------lua系统的LOG------------------------
+	NF_LOG_GAME_HALL_LOG = 1200,			--大厅LOG
+	NF_LOG_GAME_AGENT_LOG = 1300,			--代理系统LOG
+	NF_LOG_GAME_Barccatat_LOG = 1400,		--百家乐LOG
+	NF_LOG_GAME_Brnn_LOG = 1500,			--百人牛牛LOG
+	NF_LOG_GAME_Bcbm_LOG = 1600,			--奔驰宝马LOG
+	NF_LOG_GAME_Caipiao_LOG = 1700,			--彩票LOG
+	NF_LOG_GAME_Ddz_LOG = 1800,				--斗地主LOG
+	NF_LOG_GAME_DouNiu_LOG = 1900,			--斗牛LOG
+	NF_LOG_GAME_DouNiutz_LOG = 2000,		--抢庄牛牛LOG
+	NF_LOG_GAME_Ernn_LOG = 2100,			--二人牛牛LOG
+	NF_LOG_GAME_Ersh_LOG = 2200,			--二人梭哈LOG
+	NF_LOG_GAME_Ffc_LOG = 2300,				--分分彩LOG
+	NF_LOG_GAME_Forest_LOG = 2400,			--ForestLOG
+	NF_LOG_GAME_Fqzs_LOG = 2500,			--飞禽走兽LOG
+	NF_LOG_GAME_Fruit_LOG = 2600,			--百人水果LOG
+	NF_LOG_GAME_FruitBat_LOG = 2700,		--水果拉霸LOG
+	NF_LOG_GAME_Gdmj_LOG = 2800,			--广东麻将LOG
+	NF_LOG_GAME_HongHei_LOG = 2900,			--红黑LOG
+	NF_LOG_GAME_Lhd_LOG = 3000,				--龙虎斗LOG
+	NF_LOG_GAME_Psz_LOG = 3100,				--拼三张LOG
+	NF_LOG_GAME_Robot_LOG = 3200,			--机器人LOG
+	NF_LOG_GAME_ShzBat_LOG = 3300,			--水浒传LOG
+	NF_LOG_GAME_Scibo_LOG = 3400,			--赛宝LOG
+	NF_LOG_GAME_Slhb_LOG = 3500,			--扫雷红包LOG
+	NF_LOG_GAME_Texas_LOG = 3600,			--德州LOG
+	NF_LOG_GAME_Ttz_LOG = 3700,				--推筒子LOG
+	NF_LOG_GAME_Yqs_LOG = 3800,				--捕鱼LOG
 	NF_LOG_MAX_ID = 10240, --最大LOGID
 }
 
@@ -93,11 +120,44 @@ LogInfo = {
 	--------------------网关服务器LOG信息
 	{logid = NFLogId.NF_LOG_PROXY_RECV_MSG_LOG, display=false, level=0, logname = "ProxyRecvMsg", guid = 0, desc = "网关接受消息LOG"},
 	{logid = NFLogId.NF_LOG_PROXY_SEND_MSG_LOG, display=false, level=0, logname = "ProxySendMsg", guid = 0, desc = "网关发送消息LOG"},
-	{logid = NFLogId.NF_LOG_WORLD_RECV_MSG_LOG, display=true, level=0, logname = "WorldRecvMsg", guid = 0, desc = "WORLD接受消息LOG"},
-	{logid = NFLogId.NF_LOG_WORLD_SEND_MSG_LOG, display=true, level=0, logname = "WorldSendMsg", guid = 0, desc = "WORLD发送消息LOG"},
+	{logid = NFLogId.NF_LOG_WORLD_RECV_MSG_LOG, display=false, level=0, logname = "WorldRecvMsg", guid = 0, desc = "WORLD接受消息LOG"},
+	{logid = NFLogId.NF_LOG_WORLD_SEND_MSG_LOG, display=false, level=0, logname = "WorldSendMsg", guid = 0, desc = "WORLD发送消息LOG"},
 	{logid = NFLogId.NF_LOG_GAME_RECV_MSG_LOG, display=false, level=0, logname = "GameRecvMsg", guid = 0, desc = "GAME接受消息LOG"},
 	{logid = NFLogId.NF_LOG_GAME_SEND_MSG_LOG, display=false, level=0, logname = "GameSendMsg", guid = 0, desc = "GAME发送消息LOG"},
 	{logid = NFLogId.NF_LOG_PROXY_RECV_HEART_LOG, display=false, level=0, logname = "HeartMsg", guid = 0, desc = "心跳LOG"},
 	--------------------游戏服务器LOG信息
-	{logid = NFLogId.NF_LOG_LOGIN_MODULE_LOG, display=true, level=0, logname = "LoginModule", guid = 0, desc = "登陆相关LOG打印"},
+	{logid = NFLogId.NF_LOG_LOGIN_MODULE_LOG, display=true, level=0, logname = "LoginModule", guid = 0, desc = "登陆相关LOG"},
+
+
+	---------lua系统的LOG------------------------
+	{logid = NFLogId.NF_LOG_GAME_HALL_LOG, display=false, level=0, logname = "hall", guid = 0, desc = "大厅LOG"},
+	{logid = NFLogId.NF_LOG_GAME_AGENT_LOG, display=false, level=0, logname = "agent", guid = 0, desc = "代理系统LOG"},
+	{logid = NFLogId.NF_LOG_GAME_Barccatat_LOG, display=false, level=0, logname = "Barccatat", guid = 0, desc = "家乐LOG"},
+	{logid = NFLogId.NF_LOG_GAME_Brnn_LOG, display=false, level=0, logname = "Brnn", guid = 0, desc = "百人牛牛LOG"},
+	{logid = NFLogId.NF_LOG_GAME_Bcbm_LOG, display=false, level=0, logname = "Bcbm", guid = 0, desc = "奔驰宝马LOG"},
+	{logid = NFLogId.NF_LOG_GAME_Caipiao_LOG, display=false, level=0, logname = "Caipiao", guid = 0, desc = "彩票LOG"},
+	{logid = NFLogId.NF_LOG_GAME_Ddz_LOG, display=false, level=0, logname = "Ddz", guid = 0, desc = "斗地主LOG"},
+	{logid = NFLogId.NF_LOG_GAME_DouNiu_LOG, display=false, level=0, logname = "DouNiu", guid = 0, desc = "牛牛LOG"},
+	{logid = NFLogId.NF_LOG_GAME_DouNiutz_LOG, display=false, level=0, logname = "DouNiutz", guid = 0, desc = "抢庄牛牛LOG"},
+
+	{logid = NFLogId.NF_LOG_GAME_Ernn_LOG, display=false, level=0, logname = "Ernn", guid = 0, desc = "二人牛牛LOG"},
+	{logid = NFLogId.NF_LOG_GAME_Ersh_LOG, display=false, level=0, logname = "Ersh", guid = 0, desc = "二人梭哈LOG"},
+	{logid = NFLogId.NF_LOG_GAME_Ffc_LOG, display=false, level=0, logname = "Ffc", guid = 0, desc = "分分彩LOG"},
+	{logid = NFLogId.NF_LOG_GAME_Forest_LOG, display=false, level=0, logname = "Forest", guid = 0, desc = "森林舞会LOG"},
+	{logid = NFLogId.NF_LOG_GAME_Fqzs_LOG, display=false, level=0, logname = "Fqzs", guid = 0, desc = "飞禽走兽LOG"},
+
+	{logid = NFLogId.NF_LOG_GAME_Fruit_LOG, display=false, level=0, logname = "Fruit", guid = 0, desc = "百人水果LOG"},
+	{logid = NFLogId.NF_LOG_GAME_FruitBat_LOG, display=false, level=0, logname = "FruitBat", guid = 0, desc = "水果拉霸LOG"},
+	{logid = NFLogId.NF_LOG_GAME_Gdmj_LOG, display=false, level=0, logname = "Gdmj", guid = 0, desc = "广东麻将LOG"},
+	{logid = NFLogId.NF_LOG_GAME_HongHei_LOG, display=false, level=0, logname = "HongHei", guid = 0, desc = "红黑LOG"},
+	{logid = NFLogId.NF_LOG_GAME_Lhd_LOG, display=false, level=0, logname = "Lhd", guid = 0, desc = "龙虎斗LOG"},
+	{logid = NFLogId.NF_LOG_GAME_Psz_LOG, display=false, level=0, logname = "Psz", guid = 0, desc = "拼三张LOG"},
+
+	{logid = NFLogId.NF_LOG_GAME_Robot_LOG, display=false, level=0, logname = "Robot", guid = 0, desc = "机器人LOG"},
+	{logid = NFLogId.NF_LOG_GAME_ShzBat_LOG, display=false, level=0, logname = "ShzBat", guid = 0, desc = "水浒传LOG"},
+	{logid = NFLogId.NF_LOG_GAME_Scibo_LOG, display=false, level=0, logname = "Scibo", guid = 0, desc = "赛宝LOG"},
+	{logid = NFLogId.NF_LOG_GAME_Slhb_LOG, display=false, level=0, logname = "Slhb", guid = 0, desc = "扫雷红包LOG"},
+	{logid = NFLogId.NF_LOG_GAME_Texas_LOG, display=false, level=0, logname = "Texas", guid = 0, desc = "德州LOG"},
+	{logid = NFLogId.NF_LOG_GAME_Ttz_LOG, display=false, level=0, logname = "Ttz", guid = 0, desc = "推筒子LOG"},
+	{logid = NFLogId.NF_LOG_GAME_Yqs_LOG, display=false, level=0, logname = "Yqs", guid = 0, desc = "捕鱼LOG"},
 }
