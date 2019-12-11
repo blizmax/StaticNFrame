@@ -52,6 +52,7 @@ NFLogId = {
 	NF_LOG_WORLD_SEND_MSG_LOG = 1004,		--WORLD发送消息LOG
 	NF_LOG_GAME_RECV_MSG_LOG = 1005,		--GAME接受消息LOG
 	NF_LOG_GAME_SEND_MSG_LOG = 1006,		--GAME发送消息LOG
+	NF_LOG_PROXY_RECV_HEART_LOG = 1007,		--网关接受心跳消息LOG
 	NF_LOG_LOGIN_MODULE_LOG = 1102,			--登陆相关LOG打印
 	
 	
@@ -96,7 +97,7 @@ LogInfo = {
 	{logid = NFLogId.NF_LOG_WORLD_SEND_MSG_LOG, display=true, level=0, logname = "WorldSendMsg", guid = 0, desc = "WORLD发送消息LOG"},
 	{logid = NFLogId.NF_LOG_GAME_RECV_MSG_LOG, display=false, level=0, logname = "GameRecvMsg", guid = 0, desc = "GAME接受消息LOG"},
 	{logid = NFLogId.NF_LOG_GAME_SEND_MSG_LOG, display=false, level=0, logname = "GameSendMsg", guid = 0, desc = "GAME发送消息LOG"},
-	
+	{logid = NFLogId.NF_LOG_LOGIN_MODULE_LOG, display=false, level=0, logname = "HeartMsg", guid = 0, desc = "心跳LOG"},
 	--------------------游戏服务器LOG信息
 	{logid = NFLogId.NF_LOG_LOGIN_MODULE_LOG, display=true, level=0, logname = "LoginModule", guid = 0, desc = "登陆相关LOG打印"},
 }

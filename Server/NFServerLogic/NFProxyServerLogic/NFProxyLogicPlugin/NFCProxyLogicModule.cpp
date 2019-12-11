@@ -289,7 +289,6 @@ void NFCProxyLogicModule::OnProxySocketEvent(const eMsgType nEvent, const uint32
 void NFCProxyLogicModule::OnHandleMessageFromClient(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen)
 {
 	std::string ip = FindModule<NFINetServerModule>()->GetLinkIp(unLinkId);
-	NFLogInfo(NF_LOG_PROXY_RECV_MSG_LOG, 0, "recv msg -- ip:{}, operateId:{}, msgId:{}, msglen:{}", ip, playerId, nMsgId, nLen);
 
 	NF_SHARE_PTR<ProxyLinkInfo> pLinkInfo = mClientLinkInfo.GetElement(unLinkId);
 	if (pLinkInfo == nullptr || pLinkInfo->mIsLogin == false)
@@ -297,6 +296,8 @@ void NFCProxyLogicModule::OnHandleMessageFromClient(const uint32_t unLinkId, con
 		NFLogWarning(NF_LOG_PROXY_LOGIC_PLUGIN, 0, "ip:{} not login,send msg:{}, the msg will not send to gameserver", ip, nMsgId);
 		return;
 	}
+
+	NFLogInfo(NF_LOG_PROXY_RECV_MSG_LOG, pLinkInfo->mPlayerId, "recv msg -- ip:{}, operateId:{}, msgId:{}, msglen:{}", ip, playerId, nMsgId, nLen);
 
 	//human msg 1000-1100  //shop msg 1100-1200  //misson msg 1200-1300 //agent msg 1300-1400 //rank msg 400 - 1500
 	if (nMsgId >= 1000 && nMsgId < 1500)
@@ -370,7 +371,7 @@ void NFCProxyLogicModule::OnHandleReconnectFromLoginServer(const uint32_t unLink
 	{
 		if (gcMsg.result() == 0)
 		{
-			NFLogWarning(NF_LOG_PROXY_LOGIC_PLUGIN, 0, "Player:{} reocnnect success!", playerId);
+			NFLogWarning(NF_LOG_PROXY_LOGIC_PLUGIN, playerId, "Player:{} reocnnect success!", playerId);
 			
 			NF_SHARE_PTR<ProxyLinkInfo> pLinkInfo = mClientLinkInfo.GetElement(pPlayerLinkInfo->mUnlinkId);
 			if (pLinkInfo == nullptr)
@@ -459,7 +460,6 @@ void NFCProxyLogicModule::OnHandleEnterTableFromClient(const uint32_t unLinkId, 
 	CLIENT_MSG_PROCESS_NO_OBJECT(nMsgId, playerId, msg, nLen, cgMsg);
 
 	std::string ip = FindModule<NFINetServerModule>()->GetLinkIp(unLinkId);
-	NFLogInfo(NF_LOG_PROXY_RECV_MSG_LOG, 0, "recv msg -- ip:{}, operateId:{}, msgId:{}, msglen:{}", ip, playerId, nMsgId, nLen);
 
 	NF_SHARE_PTR<ProxyLinkInfo> pLinkInfo = mClientLinkInfo.GetElement(unLinkId);
 	if (pLinkInfo == nullptr || pLinkInfo->mIsLogin == false)
@@ -467,6 +467,8 @@ void NFCProxyLogicModule::OnHandleEnterTableFromClient(const uint32_t unLinkId, 
 		NFLogWarning(NF_LOG_PROXY_LOGIC_PLUGIN, 0, "ip:{} not login,send msg:{}, the msg will not send to gameserver", ip, nMsgId);
 		return;
 	}
+
+	NFLogInfo(NF_LOG_PROXY_RECV_MSG_LOG, pLinkInfo->mPlayerId, "recv msg -- ip:{}, operateId:{}, msgId:{}, msglen:{}", ip, playerId, nMsgId, nLen);
 
 	NF_SHARE_PTR<NFServerData> pServerData = GetGameServerByServerId(pLinkInfo->mGameServerId);
 	if (pServerData)
@@ -486,11 +488,12 @@ void NFCProxyLogicModule::OnHandleReconnectFromClient(const uint32_t unLinkId, c
 	CLIENT_MSG_PROCESS_NO_OBJECT(nMsgId, playerId, msg, nLen, cgMsg);
 
 	std::string ip = FindModule<NFINetServerModule>()->GetLinkIp(unLinkId);
-	NFLogInfo(NF_LOG_PROXY_RECV_MSG_LOG, 0, "recv msg -- ip:{}, operateId:{}, msgId:{}, msglen:{}", ip, playerId, nMsgId, nLen);
+	NFLogInfo(NF_LOG_PROXY_RECV_MSG_LOG, cgMsg.userid(), "recv msg -- ip:{}, operateId:{}, msgId:{}, msglen:{}", ip, playerId, nMsgId, nLen);
 
 	NF_SHARE_PTR<ProxyLinkInfo> pPlayerLinkInfo = mPlayerLinkInfo.GetElement(cgMsg.userid());
 	if (pPlayerLinkInfo == nullptr)
 	{
+		NFLogInfo(NF_LOG_PROXY_RECV_MSG_LOG, cgMsg.userid(), "Player:{} reconnect proxy server, reconnect failed!", cgMsg.userid());
 		NFMsg::gcreconnect gcMsg;
 		gcMsg.set_result(-1);
 		FindModule<NFINetServerModule>()->SendToServerByPB(unLinkId, NFMsg::Server_Msg_ReConnect, gcMsg, cgMsg.userid());
@@ -501,10 +504,11 @@ void NFCProxyLogicModule::OnHandleReconnectFromClient(const uint32_t unLinkId, c
 	{
 		if (pPlayerLinkInfo->mUnlinkId == unLinkId)
 		{
-			NFLogInfo(NF_LOG_PROXY_RECV_MSG_LOG, 0, "Player:{} reconnect proxy server, but unlink not change! some wrong!", cgMsg.userid());
+			NFLogInfo(NF_LOG_PROXY_RECV_MSG_LOG, cgMsg.userid(), "Player:{} reconnect proxy server, but unlink not change! some wrong!", cgMsg.userid());
 		}
 		else
 		{
+			NFLogInfo(NF_LOG_PROXY_RECV_MSG_LOG, cgMsg.userid(), "Player:{} reconnect proxy server, but unlink exist", cgMsg.userid());
 			//if (mClientLinkInfo.GetElement(pPlayerLinkInfo->mUnlinkId))
 			//{
 			//	FindModule<NFINetServerModule>()->CloseLinkId(pPlayerLinkInfo->mUnlinkId);
@@ -522,7 +526,7 @@ void NFCProxyLogicModule::OnHandleReconnectFromClient(const uint32_t unLinkId, c
 	}
 
 	pPlayerLinkInfo->mUnlinkId = unLinkId;
-	pPlayerLinkInfo->mIsLogin = false;
+	pPlayerLinkInfo->mIsLogin = true;
 	pPlayerLinkInfo->mIPAddr = ip;
 	pPlayerLinkInfo->mPlayerId = cgMsg.userid();
 
@@ -530,7 +534,7 @@ void NFCProxyLogicModule::OnHandleReconnectFromClient(const uint32_t unLinkId, c
 	if (pLinkInfo)
 	{
 		pLinkInfo->mUnlinkId = unLinkId;
-		pLinkInfo->mIsLogin = false;
+		pLinkInfo->mIsLogin = true;
 		pLinkInfo->mIPAddr = ip;
 		pLinkInfo->mPlayerId = pPlayerLinkInfo->mPlayerId;
 		pLinkInfo->mAccount = pPlayerLinkInfo->mAccount;
@@ -585,7 +589,7 @@ void NFCProxyLogicModule::OnHandleAccountLoginFromLoginServer(const uint32_t unL
 
 	if (gcMsg.result() == 0)
 	{
-		NFLogInfo(NF_LOG_PROXY_RECV_MSG_LOG, 0, "player login success -- playerid:{} account:{} ip:{}", gcMsg.mutable_pinfo()->userid(), gcMsg.mutable_pinfo()->account(), pLinkInfo->mIPAddr);
+		NFLogInfo(NF_LOG_PROXY_RECV_MSG_LOG, gcMsg.mutable_pinfo()->userid(), "player login success -- playerid:{} account:{} ip:{}", gcMsg.mutable_pinfo()->userid(), gcMsg.mutable_pinfo()->account(), pLinkInfo->mIPAddr);
 
 		auto pPlayerInfo = mPlayerLinkInfo.GetElement(gcMsg.mutable_pinfo()->userid());
 		if (pPlayerInfo == nullptr)
@@ -699,7 +703,7 @@ void NFCProxyLogicModule::OnHandleMessageFromLoginServer(const uint32_t unLinkId
 		return;
 	}
 
-	NFLogInfo(NF_LOG_PROXY_RECV_MSG_LOG, 0, "recv msg from loginserver:{} -- playerId:{}, msgId:{}, msglen:{}", pServerData->GetServerName(), playerId, nMsgId, nLen);
+	NFLogInfo(NF_LOG_PROXY_RECV_MSG_LOG, playerId, "recv msg from loginserver:{} -- playerId:{}, msgId:{}, msglen:{}", pServerData->GetServerName(), playerId, nMsgId, nLen);
 
 	NF_SHARE_PTR<ProxyLinkInfo> pLinkInfo = mPlayerLinkInfo.GetElement(playerId);
 	if (pLinkInfo == nullptr)
@@ -723,7 +727,7 @@ void NFCProxyLogicModule::OnHandleMessageFromWorldServer(const uint32_t unLinkId
 		return;
 	}
 
-	NFLogInfo(NF_LOG_PROXY_RECV_MSG_LOG, 0, "recv msg from worldserver:{} -- playerId:{}, msgId:{}, msglen:{}", pServerData->GetServerName(), playerId, nMsgId, nLen);
+	NFLogInfo(NF_LOG_PROXY_RECV_MSG_LOG, playerId, "recv msg from worldserver:{} -- playerId:{}, msgId:{}, msglen:{}", pServerData->GetServerName(), playerId, nMsgId, nLen);
 
 	NF_SHARE_PTR<ProxyLinkInfo> pLinkInfo = mPlayerLinkInfo.GetElement(playerId);
 	if (pLinkInfo == nullptr)
@@ -748,7 +752,7 @@ void NFCProxyLogicModule::OnHandleMessageFromGameServer(const uint32_t unLinkId,
 	}
 	else
 	{
-		NFLogInfo(NF_LOG_PROXY_RECV_MSG_LOG, 0, "recv msg from gameserver:{} -- playerId:{}, msgId:{}, msglen:{}", pServerData->GetServerName(), playerId, nMsgId, nLen);
+		NFLogInfo(NF_LOG_PROXY_RECV_MSG_LOG, playerId, "recv msg from gameserver:{} -- playerId:{}, msgId:{}, msglen:{}", pServerData->GetServerName(), playerId, nMsgId, nLen);
 	}
 
 	NF_SHARE_PTR<ProxyLinkInfo> pLinkInfo = mPlayerLinkInfo.GetElement(playerId);
@@ -779,16 +783,20 @@ void NFCProxyLogicModule::OnHandleHeartBeat(const uint32_t unLinkId, const uint6
 	NFMsg::cgheartbeat cgMsg;
 	CLIENT_MSG_PROCESS_NO_OBJECT(nMsgId, playerId, msg, nLen, cgMsg);
 
+	std::string ip = FindModule<NFINetServerModule>()->GetLinkIp(unLinkId);
+
 	NF_SHARE_PTR<ProxyLinkInfo> pLinkInfo = mClientLinkInfo.GetElement(unLinkId);
 	if (pLinkInfo == nullptr)
 	{
-		NFLogWarning(NF_LOG_PROXY_LOGIC_PLUGIN, 0, "recv hearbeat, but can't find linkinfo:{}", unLinkId);
+		NFLogWarning(NF_LOG_PROXY_RECV_MSG_LOG, 0, "recv hearbeat, but can't find linkinfo:{}", unLinkId);
 
 		NFMsg::gcheartbeat gcMsg;
 		gcMsg.set_result(0);
 		FindModule<NFINetServerModule>()->SendToServerByPB(unLinkId, NFMsg::Server_Msg_HeartBeat, gcMsg, 0);
 		return;
 	}
+
+	NFLogInfo(NF_LOG_PROXY_RECV_HEART_LOG, pLinkInfo->mPlayerId, "recv msg -- ip:{}, operateId:{}, msgId:{}, msglen:{}", ip, playerId, nMsgId, nLen);
 
 	pLinkInfo->mRecvHeartBeatTime = NFGetSecondTime();
 
