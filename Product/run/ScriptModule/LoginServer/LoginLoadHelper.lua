@@ -164,6 +164,8 @@ require("Yqs.Model.YqsPond")
 require("Ttz.Model.TtzModel")
 require("Ttz.Model.TtzStatsModel")
 require("ShzBat.Model.ShzBatModel")
+require("SanGong.Model.SanGongModel")
+require("SanGong.Model.SanGongJinBiChang")
 
 g_redisIndex[NoticeModel.redis_index] = {index = g_redisInfo.redis_one, des="notice"}     --系统唯一的邮件
 g_redisIndex[OnlineModel.redis_index] = {index = g_redisInfo.redis_one, key = MailModel.mail_list, link = 1}  --每个玩家自己的邮件
@@ -222,7 +224,7 @@ g_redisIndex[TtzModel.redis_index] = {index = g_redisInfo.redis_four, des = "Ttz
 g_redisIndex[TtzModel.redis_index] = {index = g_redisInfo.redis_four, des = "Ttz_info"}
 g_redisIndex[YqsModel.redis_index] = {index = g_redisInfo.redis_three, key = YqsModel.redis_index, link = 1}
 g_redisIndex[ShzBatModel.redis_index] = {index = g_redisInfo.redis_four, des = "shz_info"}
-
+g_redisIndex[SanGongModel.redis_index] = {index = g_redisInfo.redis_four, des = "sangong_info"}
 --------------------------------------------------------------
 require("Human.Init")
 require("LogServer.Init")
