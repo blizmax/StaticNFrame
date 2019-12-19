@@ -46,6 +46,7 @@ struct MsgFromNetInfo
 		nType = eMsgType_Num;
 		nMsgId = 0;
 		nValue = 0;
+		nOperateId = 0;
 	}
 
 	eMsgType nType;
@@ -53,6 +54,7 @@ struct MsgFromNetInfo
 	std::string strMsg;
 	uint32_t nMsgId;
 	uint64_t nValue;
+	uint32_t nOperateId;
 };
 
 class NFCNetServerModule;
@@ -147,7 +149,7 @@ public:
 	 * @param unSize	数据的大小
 	 * @return
 	 */
-	virtual bool SendAll(const uint32_t nMsgID, const char* msg, const uint32_t nLen, const uint64_t nPlayerID) override;
+	virtual bool SendAll(const uint32_t nMsgID, const char* msg, const uint32_t nLen, const uint64_t nPlayerID, const uint32_t operateId) override;
 
 	/**
 	 * @brief	发送数据
@@ -165,7 +167,7 @@ public:
 	 * @param unSize	数据的大小
 	 * @return
 	 */
-	virtual bool Send(uint32_t usLinkId, const uint32_t nMsgID, const char* msg, const uint32_t nLen, const uint64_t nPlayerID) override;
+	virtual bool Send(uint32_t usLinkId, const uint32_t nMsgID, const char* msg, const uint32_t nLen, const uint64_t nPlayerID, const uint32_t operateId) override;
 
 	NetEvppObject* GetNetObject(uint32_t uslinkId);
 protected:
@@ -186,7 +188,7 @@ protected:
 	 * @param  nLen
 	 * @return void
 	 */
-	virtual void OnReceiveNetPack(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen);
+	virtual void OnReceiveNetPack(const uint32_t unLinkId, const uint64_t playerId, const uint32_t operateId, const uint32_t nMsgId, const char* msg, const uint32_t nLen);
 
 	/**
 	 * @brief 网络事件，连接和断开连接处理

@@ -334,7 +334,7 @@ public:
 class NFTcpMsgActorTask : public NFLuaThreadTask
 {
 public:
-	NFTcpMsgActorTask(NFCLuaThreadModule* pLuaThreadModule = nullptr, const std::string& luaFunc = "", const uint32_t unLinkId = 0, const uint64_t valueId = 0, const uint32_t nMsgId = 0, const std::string& strMsg = "")
+	NFTcpMsgActorTask(NFCLuaThreadModule* pLuaThreadModule = nullptr, const std::string& luaFunc = "", const uint32_t unLinkId = 0, const uint64_t valueId = 0, const uint32_t operateId = 0, const uint32_t nMsgId = 0, const std::string& strMsg = "")
 	{
 		m_balanceId = valueId;
 		m_pLuaThreadModule = pLuaThreadModule;
@@ -343,6 +343,7 @@ public:
 		m_valueId = valueId;
 		m_msgId = nMsgId;
 		m_strMsg = strMsg;
+		m_operateId = operateId;
 
 		m_taskName = "TcpMsgTask_" + luaFunc + "_" + NFCommon::tostr(nMsgId);
 		m_needManThreadProcess = false;
@@ -367,6 +368,7 @@ public:
 	uint64_t m_valueId;
 	uint32_t m_msgId;
 	std::string m_strMsg;
+	uint32_t m_operateId;
 };
 
 class NFHttpMsgActorTask : public NFLuaThreadTask

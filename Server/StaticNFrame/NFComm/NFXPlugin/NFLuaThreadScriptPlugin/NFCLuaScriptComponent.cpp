@@ -122,7 +122,7 @@ bool NFTcpMsgActorTask::ThreadProcess()
 {
 	if (m_pComponent)
 	{
-		m_pComponent->TryRunGlobalScriptFunc(m_luaFunc, m_unLinkId, m_valueId, m_msgId, m_strMsg);
+		m_pComponent->TryRunGlobalScriptFunc(m_luaFunc, m_unLinkId, m_valueId, m_operateId, m_msgId, m_strMsg);
 	}
 	return true;
 }

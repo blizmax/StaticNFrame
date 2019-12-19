@@ -39,7 +39,7 @@ void NFCLogClient_MasterModule::OnExecute(uint16_t nEventID, uint64_t nSrcID, ui
 		const NFMsg::ServerErrorLogMsg* msg_gm = dynamic_cast<const NFMsg::ServerErrorLogMsg*>(&message);
 		if (msg_gm)
 		{
-			FindModule<NFINetClientModule>()->SendToServerByPB(m_pMasterServerData->mUnlinkId, EGMI_STS_ERROR_MSG, message, 0);
+			FindModule<NFINetClientModule>()->SendToServerByPB(m_pMasterServerData->mUnlinkId, EGMI_STS_ERROR_MSG, message, 0, 0);
 		}
 	}
 
@@ -133,7 +133,7 @@ void NFCLogClient_MasterModule::OnProxySocketEvent(const eMsgType nEvent, const 
 	}
 }
 
-void NFCLogClient_MasterModule::OnHandleOtherMessage(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen)
+void NFCLogClient_MasterModule::OnHandleOtherMessage(const uint32_t unLinkId, const uint64_t playerId, const uint32_t operateId, const uint32_t nMsgId, const char* msg, const uint32_t nLen)
 {
 	if (unLinkId != m_pMasterServerData->mUnlinkId) return;
 
@@ -155,7 +155,7 @@ void NFCLogClient_MasterModule::RegisterServer()
 		pData->set_server_max_online(pConfig->mMaxConnectNum);
 		pData->set_server_state(NFMsg::EST_NARMAL);
 
-		FindModule<NFINetClientModule>()->SendToServerByPB(m_pMasterServerData->mUnlinkId, EGMI_NET_LOG_TO_MASTER_REGISTER, xMsg, 0);
+		FindModule<NFINetClientModule>()->SendToServerByPB(m_pMasterServerData->mUnlinkId, EGMI_NET_LOG_TO_MASTER_REGISTER, xMsg, 0, 0);
 	}
 }
 
@@ -202,12 +202,12 @@ void NFCLogClient_MasterModule::ServerReport()
 
 		if (pData->proc_cpu() > 0 && pData->proc_mem() > 0)
 		{
-			FindModule<NFINetClientModule>()->SendToServerByPB(m_pMasterServerData->mUnlinkId, EGMI_STS_SERVER_REPORT, xMsg, 0);
+			FindModule<NFINetClientModule>()->SendToServerByPB(m_pMasterServerData->mUnlinkId, EGMI_STS_SERVER_REPORT, xMsg, 0, 0);
 		}
 	}
 }
 
-void NFCLogClient_MasterModule::OnHandleGmMsg(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen)
+void NFCLogClient_MasterModule::OnHandleGmMsg(const uint32_t unLinkId, const uint64_t playerId, const uint32_t operateId, const uint32_t nMsgId, const char* msg, const uint32_t nLen)
 {
 	if (unLinkId != m_pMasterServerData->mUnlinkId) return;
 

@@ -88,7 +88,7 @@ bool NFCGameLogicModule::Shut()
 	return true;
 }
 
-void NFCGameLogicModule::OnHandlePlayerLogin(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen)
+void NFCGameLogicModule::OnHandlePlayerLogin(const uint32_t unLinkId, const uint64_t playerId, const uint32_t operateId, const uint32_t nMsgId, const char* msg, const uint32_t nLen)
 {
 	NFMsg::gcaccountlogin gcMsg;
 	CLIENT_MSG_PROCESS_NO_OBJECT(nMsgId, playerId, msg, nLen, gcMsg);
@@ -113,7 +113,7 @@ void NFCGameLogicModule::OnHandlePlayerLogin(const uint32_t unLinkId, const uint
 	NFLogInfo(NF_LOG_SYSTEMLOG, pInfo->mPlayerId, "Player:{} login game server!", pInfo->mPlayerId);
 }
 
-void NFCGameLogicModule::OnHandlePlayerDisconnect(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen)
+void NFCGameLogicModule::OnHandlePlayerDisconnect(const uint32_t unLinkId, const uint64_t playerId, const uint32_t operateId, const uint32_t nMsgId, const char* msg, const uint32_t nLen)
 {
 	NFMsg::NotifyPlayerDisconnect cgMsg;
 	CLIENT_MSG_PROCESS_NO_OBJECT(nMsgId, playerId, msg, nLen, cgMsg);
@@ -132,7 +132,7 @@ void NFCGameLogicModule::OnHandlePlayerDisconnect(const uint32_t unLinkId, const
 	NFLogInfo(NF_LOG_SYSTEMLOG, pInfo->mPlayerId, "Player:{} disconnect game server!", pInfo->mPlayerId);
 }
 
-void NFCGameLogicModule::OnHandlePlayerReconnect(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen)
+void NFCGameLogicModule::OnHandlePlayerReconnect(const uint32_t unLinkId, const uint64_t playerId, const uint32_t operateId, const uint32_t nMsgId, const char* msg, const uint32_t nLen)
 {
 	NFMsg::gcreconnect gcMsg;
 	CLIENT_MSG_PROCESS_NO_OBJECT(nMsgId, playerId, msg, nLen, gcMsg);
@@ -184,7 +184,7 @@ void NFCGameLogicModule::SendMsgToClientByPlayerId(uint64_t playerId, uint32_t n
 	auto pInfo = mPlayerProxyInfoMap.GetElement(playerId);
 	if (pInfo)
 	{
-		FindModule<NFINetServerModule>()->SendToServerByPB(pInfo->mProxyUnlinkId, nMsgId, xData, playerId);
+		FindModule<NFINetServerModule>()->SendToServerByPB(pInfo->mProxyUnlinkId, nMsgId, xData, playerId, 0);
 	}
 	else
 	{

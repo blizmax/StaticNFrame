@@ -111,7 +111,7 @@ void NFCGameClient_MasterModule::OnProxySocketEvent(const eMsgType nEvent, const
 	}
 }
 
-void NFCGameClient_MasterModule::OnHandleOtherMessage(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen)
+void NFCGameClient_MasterModule::OnHandleOtherMessage(const uint32_t unLinkId, const uint64_t playerId, const uint32_t operateId, const uint32_t nMsgId, const char* msg, const uint32_t nLen)
 {
 	if (unLinkId != m_pMasterServerData->mUnlinkId) return;
 
@@ -119,7 +119,7 @@ void NFCGameClient_MasterModule::OnHandleOtherMessage(const uint32_t unLinkId, c
 	if (pLuaScriptModule)
 	{
 		std::string strMsg(msg, nLen);
-		pLuaScriptModule->RunNetRecvLuaFunc("LuaNFrame.DispatchMasterTcp", unLinkId, playerId, nMsgId, strMsg);
+		pLuaScriptModule->RunNetRecvLuaFunc("LuaNFrame.DispatchMasterTcp", unLinkId, playerId, operateId, nMsgId, strMsg);
 	}
 	else
 	{
@@ -142,7 +142,7 @@ void NFCGameClient_MasterModule::RegisterServer()
 		pData->set_server_max_online(pConfig->mMaxConnectNum);
 		pData->set_server_state(NFMsg::EST_NARMAL);
 
-		FindModule<NFINetClientModule>()->SendToServerByPB(m_pMasterServerData->mUnlinkId, EGMI_NET_GAME_TO_MASTER_REGISTER, xMsg, 0);
+		FindModule<NFINetClientModule>()->SendToServerByPB(m_pMasterServerData->mUnlinkId, EGMI_NET_GAME_TO_MASTER_REGISTER, xMsg, 0, 0);
 	}
 
 	FindModule<NFIServerNetEventModule>()->OnServerNetEvent(eMsgType_CONNECTED, NF_ST_GAME, NF_ST_MASTER, m_pMasterServerData->mUnlinkId, m_pMasterServerData);
@@ -192,12 +192,12 @@ void NFCGameClient_MasterModule::ServerReport()
 
 		if (m_pMasterServerData->mUnlinkId > 0 && pData->proc_cpu() > 0 && pData->proc_mem() > 0)
 		{
-			FindModule<NFINetClientModule>()->SendToServerByPB(m_pMasterServerData->mUnlinkId, EGMI_STS_SERVER_REPORT, xMsg, 0);
+			FindModule<NFINetClientModule>()->SendToServerByPB(m_pMasterServerData->mUnlinkId, EGMI_STS_SERVER_REPORT, xMsg, 0, 0);
 		}
 	}
 }
 
-void NFCGameClient_MasterModule::OnHandleServerReport(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen)
+void NFCGameClient_MasterModule::OnHandleServerReport(const uint32_t unLinkId, const uint64_t playerId, const uint32_t operateId, const uint32_t nMsgId, const char* msg, const uint32_t nLen)
 {
 	NFMsg::ServerInfoReportList xMsg;
 	CLIENT_MSG_PROCESS_NO_OBJECT(nMsgId, playerId, msg, nLen, xMsg);
@@ -218,7 +218,7 @@ void NFCGameClient_MasterModule::OnHandleServerReport(const uint32_t unLinkId, c
 	}
 }
 
-void NFCGameClient_MasterModule::OnHandleHttpMsg(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen)
+void NFCGameClient_MasterModule::OnHandleHttpMsg(const uint32_t unLinkId, const uint64_t playerId, const uint32_t operateId, const uint32_t nMsgId, const char* msg, const uint32_t nLen)
 {
 	if (unLinkId != m_pMasterServerData->mUnlinkId) return;
 
@@ -241,7 +241,7 @@ void NFCGameClient_MasterModule::OnHandleHttpMsg(const uint32_t unLinkId, const 
 	}
 }
 
-void NFCGameClient_MasterModule::OnHandleGmMsg(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen)
+void NFCGameClient_MasterModule::OnHandleGmMsg(const uint32_t unLinkId, const uint64_t playerId, const uint32_t operateId, const uint32_t nMsgId, const char* msg, const uint32_t nLen)
 {
 	if (unLinkId != m_pMasterServerData->mUnlinkId) return;
 
@@ -258,7 +258,7 @@ void NFCGameClient_MasterModule::OnExecute(uint16_t nEventID, uint64_t nSrcID, u
 		const NFMsg::ServerErrorLogMsg* msg_gm = dynamic_cast<const NFMsg::ServerErrorLogMsg*>(&message);
 		if (msg_gm)
 		{
-			FindModule<NFINetClientModule>()->SendToServerByPB(m_pMasterServerData->mUnlinkId, EGMI_STS_ERROR_MSG, message, 0);
+			FindModule<NFINetClientModule>()->SendToServerByPB(m_pMasterServerData->mUnlinkId, EGMI_STS_ERROR_MSG, message, 0, 0);
 		}
 	}
 

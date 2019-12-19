@@ -72,7 +72,7 @@ void NFCProxyLogicModule::OnHandleGameEventCallBack(eMsgType nEvent, uint32_t un
 			if (pPlayerInfo->mUnlinkId > 0)
 			{
 				NFMsg::gcaccountlogin gcMsg;
-				FindModule<NFINetClientModule>()->SendToServerByPB(unLinkId, EGMI_NET_PROXY_NOTIFY_GAME_PLAYER_LOGIN, gcMsg, pPlayerInfo->mPlayerId);
+				FindModule<NFINetClientModule>()->SendToServerByPB(unLinkId, EGMI_NET_PROXY_NOTIFY_GAME_PLAYER_LOGIN, gcMsg, pPlayerInfo->mPlayerId, 0);
 			}
 
 			pPlayerInfo = mPlayerLinkInfo.Next();
@@ -96,7 +96,7 @@ void NFCProxyLogicModule::OnHandleLoginEventCallBack(eMsgType nEvent, uint32_t u
 			if (pPlayerInfo->mUnlinkId > 0)
 			{
 				NFMsg::gcaccountlogin gcMsg;
-				FindModule<NFINetClientModule>()->SendToServerByPB(unLinkId, EGMI_NET_PROXY_NOTIFY_LOGIN_PLAYER_LOGIN, gcMsg, pPlayerInfo->mPlayerId);
+				FindModule<NFINetClientModule>()->SendToServerByPB(unLinkId, EGMI_NET_PROXY_NOTIFY_LOGIN_PLAYER_LOGIN, gcMsg, pPlayerInfo->mPlayerId, 0);
 			}
 
 			pPlayerInfo = mPlayerLinkInfo.Next();
@@ -120,7 +120,7 @@ void NFCProxyLogicModule::OnHandleWorldEventCallBack(eMsgType nEvent, uint32_t u
 			if (pPlayerInfo->mUnlinkId > 0)
 			{
 				NFMsg::gcaccountlogin gcMsg;
-				FindModule<NFINetClientModule>()->SendToServerByPB(unLinkId, EGMI_NET_PROXY_NOTIFY_WORLD_PLAYER_LOGIN, gcMsg, pPlayerInfo->mPlayerId);
+				FindModule<NFINetClientModule>()->SendToServerByPB(unLinkId, EGMI_NET_PROXY_NOTIFY_WORLD_PLAYER_LOGIN, gcMsg, pPlayerInfo->mPlayerId, 0);
 			}
 
 			pPlayerInfo = mPlayerLinkInfo.Next();
@@ -194,7 +194,7 @@ void NFCProxyLogicModule::OnTimer(uint32_t nTimerID)
 			{
 				NFMsg::gcheartbeat gcMsg;
 				gcMsg.set_result(0);
-				FindModule<NFINetServerModule>()->SendToServerByPB(pLinkInfo->mUnlinkId, NFMsg::Server_Msg_HeartBeat, gcMsg, 0);
+				FindModule<NFINetServerModule>()->SendToServerByPB(pLinkInfo->mUnlinkId, NFMsg::Server_Msg_HeartBeat, gcMsg, 0, 0);
 			}
 		}
 		pLinkInfo = mClientLinkInfo.Next();
@@ -236,7 +236,7 @@ void NFCProxyLogicModule::OnProxySocketEvent(const eMsgType nEvent, const uint32
 						NFMsg::NotifyPlayerDisconnect msg;
 						msg.set_user_id(pLinkInfo->mPlayerId);
 						msg.set_account(pLinkInfo->mAccount);
-						FindModule<NFINetClientModule>()->SendToServerByPB(pServerData->mUnlinkId, EGMI_NET_PROXY_NOTIFY_LOGIN_PLAYER_DISCONNECT, msg, pLinkInfo->mPlayerId);
+						FindModule<NFINetClientModule>()->SendToServerByPB(pServerData->mUnlinkId, EGMI_NET_PROXY_NOTIFY_LOGIN_PLAYER_DISCONNECT, msg, pLinkInfo->mPlayerId, 0);
 
 						pServerData = mLoginMap.Next();
 					}
@@ -249,7 +249,7 @@ void NFCProxyLogicModule::OnProxySocketEvent(const eMsgType nEvent, const uint32
 						NFMsg::NotifyPlayerDisconnect msg;
 						msg.set_user_id(pLinkInfo->mPlayerId);
 						msg.set_account(pLinkInfo->mAccount);
-						FindModule<NFINetClientModule>()->SendToServerByPB(pServerData->mUnlinkId, EGMI_NET_PROXY_NOTIFY_WORLD_PLAYER_DISCONNECT, msg, pLinkInfo->mPlayerId);
+						FindModule<NFINetClientModule>()->SendToServerByPB(pServerData->mUnlinkId, EGMI_NET_PROXY_NOTIFY_WORLD_PLAYER_DISCONNECT, msg, pLinkInfo->mPlayerId, 0);
 
 						pServerData = mWorldMap.Next();
 					}
@@ -262,7 +262,7 @@ void NFCProxyLogicModule::OnProxySocketEvent(const eMsgType nEvent, const uint32
 						NFMsg::NotifyPlayerDisconnect msg;
 						msg.set_user_id(pLinkInfo->mPlayerId);
 						msg.set_account(pLinkInfo->mAccount);
-						FindModule<NFINetClientModule>()->SendToServerByPB(pServerData->mUnlinkId, EGMI_NET_PROXY_NOTIFY_GAME_PLAYER_DISCONNECT, msg, pLinkInfo->mPlayerId);
+						FindModule<NFINetClientModule>()->SendToServerByPB(pServerData->mUnlinkId, EGMI_NET_PROXY_NOTIFY_GAME_PLAYER_DISCONNECT, msg, pLinkInfo->mPlayerId, 0);
 
 						pServerData = mGameMap.Next();
 					}
@@ -276,7 +276,7 @@ void NFCProxyLogicModule::OnProxySocketEvent(const eMsgType nEvent, const uint32
 						NFMsg::NotifyPlayerDisconnect msg;
 						msg.set_user_id(pLinkInfo->mPlayerId);
 						msg.set_account(pLinkInfo->mAccount);
-						FindModule<NFINetClientModule>()->SendToServerByPB(pServerData->mUnlinkId, EGMI_NET_PROXY_NOTIFY_LOGIN_HANDLE_PLAYER_DISCONNECT, msg, pLinkInfo->mPlayerId);
+						FindModule<NFINetClientModule>()->SendToServerByPB(pServerData->mUnlinkId, EGMI_NET_PROXY_NOTIFY_LOGIN_HANDLE_PLAYER_DISCONNECT, msg, pLinkInfo->mPlayerId, 0);
 					}
 				}
 			}
@@ -286,7 +286,7 @@ void NFCProxyLogicModule::OnProxySocketEvent(const eMsgType nEvent, const uint32
 	}
 }
 
-void NFCProxyLogicModule::OnHandleMessageFromClient(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen)
+void NFCProxyLogicModule::OnHandleMessageFromClient(const uint32_t unLinkId, const uint64_t playerId, const uint32_t operateId, const uint32_t nMsgId, const char* msg, const uint32_t nLen)
 {
 	std::string ip = FindModule<NFINetServerModule>()->GetLinkIp(unLinkId);
 
@@ -305,7 +305,7 @@ void NFCProxyLogicModule::OnHandleMessageFromClient(const uint32_t unLinkId, con
 		NF_SHARE_PTR<NFServerData> pServerData = GetWorldServerByServerId(pLinkInfo->mWorldServerId);
 		if (pServerData)
 		{
-			FindModule<NFINetClientModule>()->SendByServerID(pServerData->mUnlinkId, nMsgId, msg, nLen, pLinkInfo->mPlayerId);
+			FindModule<NFINetClientModule>()->SendByServerID(pServerData->mUnlinkId, nMsgId, msg, nLen, pLinkInfo->mPlayerId, 0);
 		}
 		else
 		{
@@ -318,7 +318,7 @@ void NFCProxyLogicModule::OnHandleMessageFromClient(const uint32_t unLinkId, con
 		NF_SHARE_PTR<NFServerData> pServerData = GetGameServerByServerId(pLinkInfo->mGameServerId);
 		if (pServerData)
 		{
-			FindModule<NFINetClientModule>()->SendByServerID(pServerData->mUnlinkId, nMsgId, msg, nLen, pLinkInfo->mPlayerId);
+			FindModule<NFINetClientModule>()->SendByServerID(pServerData->mUnlinkId, nMsgId, msg, nLen, pLinkInfo->mPlayerId, 0);
 		}
 		else
 		{
@@ -328,7 +328,7 @@ void NFCProxyLogicModule::OnHandleMessageFromClient(const uint32_t unLinkId, con
 	}
 }
 
-void NFCProxyLogicModule::OnHandleAccountLoginFromClient(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen)
+void NFCProxyLogicModule::OnHandleAccountLoginFromClient(const uint32_t unLinkId, const uint64_t playerId, const uint32_t operateId, const uint32_t nMsgId, const char* msg, const uint32_t nLen)
 {
 	NFMsg::cgaccountlogin cgMsg;
 	CLIENT_MSG_PROCESS_NO_OBJECT(nMsgId, playerId, msg, nLen, cgMsg);
@@ -357,11 +357,11 @@ void NFCProxyLogicModule::OnHandleAccountLoginFromClient(const uint32_t unLinkId
 		}
 
 		pLinkInfo->mRecvMsgCount++;
-		FindModule<NFINetClientModule>()->SendToServerByPB(pServerData->mUnlinkId, nMsgId, cgMsg, unLinkId);
+		FindModule<NFINetClientModule>()->SendToServerByPB(pServerData->mUnlinkId, nMsgId, cgMsg, unLinkId, 0);
 	}
 }
 
-void NFCProxyLogicModule::OnHandleReconnectFromLoginServer(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen)
+void NFCProxyLogicModule::OnHandleReconnectFromLoginServer(const uint32_t unLinkId, const uint64_t playerId, const uint32_t operateId, const uint32_t nMsgId, const char* msg, const uint32_t nLen)
 {
 	NFMsg::gcreconnect gcMsg;
 	CLIENT_MSG_PROCESS_NO_OBJECT(nMsgId, playerId, msg, nLen, gcMsg);
@@ -388,13 +388,13 @@ void NFCProxyLogicModule::OnHandleReconnectFromLoginServer(const uint32_t unLink
 			pLinkInfo->mWorldServerId = pPlayerLinkInfo->mWorldServerId;
 			pPlayerLinkInfo->mIsLogin = true;
 			pLinkInfo->mIsLogin = true;
-			FindModule<NFINetServerModule>()->SendByServerID(pLinkInfo->mUnlinkId, nMsgId, msg, nLen, playerId);
+			FindModule<NFINetServerModule>()->SendByServerID(pLinkInfo->mUnlinkId, nMsgId, msg, nLen, playerId, 0);
 
 			NF_SHARE_PTR<NFServerData> pLoginServer = mLoginMap.First();
 			while (pLoginServer)
 			{
 				pLinkInfo->mSendMsgCount++;
-				FindModule<NFINetClientModule>()->SendToServerByPB(pLoginServer->mUnlinkId, EGMI_NET_PROXY_NOTIFY_LOGIN_PLAYER_RECONNECT, gcMsg, pLinkInfo->mPlayerId);
+				FindModule<NFINetClientModule>()->SendToServerByPB(pLoginServer->mUnlinkId, EGMI_NET_PROXY_NOTIFY_LOGIN_PLAYER_RECONNECT, gcMsg, pLinkInfo->mPlayerId, 0);
 
 				pLoginServer = mLoginMap.Next();
 			}
@@ -403,7 +403,7 @@ void NFCProxyLogicModule::OnHandleReconnectFromLoginServer(const uint32_t unLink
 			while (pWorldServer)
 			{
 				pLinkInfo->mSendMsgCount++;
-				FindModule<NFINetClientModule>()->SendToServerByPB(pWorldServer->mUnlinkId, EGMI_NET_PROXY_NOTIFY_WORLD_PLAYER_RECONNECT, gcMsg, pLinkInfo->mPlayerId);
+				FindModule<NFINetClientModule>()->SendToServerByPB(pWorldServer->mUnlinkId, EGMI_NET_PROXY_NOTIFY_WORLD_PLAYER_RECONNECT, gcMsg, pLinkInfo->mPlayerId, 0);
 
 				pWorldServer = mWorldMap.Next();
 			}
@@ -424,7 +424,7 @@ void NFCProxyLogicModule::OnHandleReconnectFromLoginServer(const uint32_t unLink
 			while (pGameServer)
 			{
 				pLinkInfo->mSendMsgCount++;
-				FindModule<NFINetClientModule>()->SendToServerByPB(pGameServer->mUnlinkId, EGMI_NET_PROXY_NOTIFY_GAME_PLAYER_RECONNECT, gcMsg, pLinkInfo->mPlayerId);
+				FindModule<NFINetClientModule>()->SendToServerByPB(pGameServer->mUnlinkId, EGMI_NET_PROXY_NOTIFY_GAME_PLAYER_RECONNECT, gcMsg, pLinkInfo->mPlayerId, 0);
 
 				pGameServer = mGameMap.Next();
 			}
@@ -448,13 +448,13 @@ void NFCProxyLogicModule::OnHandleReconnectFromLoginServer(const uint32_t unLink
 			if (pLinkInfo)
 			{
 				pLinkInfo->mIsLogin = false;
-				FindModule<NFINetServerModule>()->SendByServerID(pLinkInfo->mUnlinkId, nMsgId, msg, nLen, playerId);
+				FindModule<NFINetServerModule>()->SendByServerID(pLinkInfo->mUnlinkId, nMsgId, msg, nLen, playerId, 0);
 			}
 		}
 	}
 }
 
-void NFCProxyLogicModule::OnHandleEnterTableFromClient(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen)
+void NFCProxyLogicModule::OnHandleEnterTableFromClient(const uint32_t unLinkId, const uint64_t playerId, const uint32_t operateId, const uint32_t nMsgId, const char* msg, const uint32_t nLen)
 {
 	NFMsg::cgentertable cgMsg;
 	CLIENT_MSG_PROCESS_NO_OBJECT(nMsgId, playerId, msg, nLen, cgMsg);
@@ -473,7 +473,7 @@ void NFCProxyLogicModule::OnHandleEnterTableFromClient(const uint32_t unLinkId, 
 	NF_SHARE_PTR<NFServerData> pServerData = GetGameServerByServerId(pLinkInfo->mGameServerId);
 	if (pServerData)
 	{
-		FindModule<NFINetClientModule>()->SendByServerID(pServerData->mUnlinkId, nMsgId, msg, nLen, pLinkInfo->mPlayerId);
+		FindModule<NFINetClientModule>()->SendByServerID(pServerData->mUnlinkId, nMsgId, msg, nLen, pLinkInfo->mPlayerId, 0);
 	}
 	else
 	{
@@ -482,7 +482,7 @@ void NFCProxyLogicModule::OnHandleEnterTableFromClient(const uint32_t unLinkId, 
 	}
 }
 
-void NFCProxyLogicModule::OnHandleReconnectFromClient(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen)
+void NFCProxyLogicModule::OnHandleReconnectFromClient(const uint32_t unLinkId, const uint64_t playerId, const uint32_t operateId, const uint32_t nMsgId, const char* msg, const uint32_t nLen)
 {
 	NFMsg::cgreconnect cgMsg;
 	CLIENT_MSG_PROCESS_NO_OBJECT(nMsgId, playerId, msg, nLen, cgMsg);
@@ -496,7 +496,7 @@ void NFCProxyLogicModule::OnHandleReconnectFromClient(const uint32_t unLinkId, c
 		NFLogInfo(NF_LOG_PROXY_RECV_MSG_LOG, cgMsg.userid(), "Player:{} reconnect proxy server, reconnect failed!", cgMsg.userid());
 		NFMsg::gcreconnect gcMsg;
 		gcMsg.set_result(-1);
-		FindModule<NFINetServerModule>()->SendToServerByPB(unLinkId, NFMsg::Server_Msg_ReConnect, gcMsg, cgMsg.userid());
+		FindModule<NFINetServerModule>()->SendToServerByPB(unLinkId, NFMsg::Server_Msg_ReConnect, gcMsg, cgMsg.userid(), 0);
 		return;
 	}
 
@@ -547,11 +547,11 @@ void NFCProxyLogicModule::OnHandleReconnectFromClient(const uint32_t unLinkId, c
 	if (pServerData)
 	{
 		NFLogInfo(NF_LOG_PROXY_LOGIC_PLUGIN, cgMsg.userid(), "Player:{} reconnect proxy server!", cgMsg.userid());
-		FindModule<NFINetClientModule>()->SendToServerByPB(pServerData->mUnlinkId, nMsgId, cgMsg, cgMsg.userid());
+		FindModule<NFINetClientModule>()->SendToServerByPB(pServerData->mUnlinkId, nMsgId, cgMsg, cgMsg.userid(), 0);
 	}
 }
 
-void NFCProxyLogicModule::OnHandlePacketMsgFromGameServer(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen)
+void NFCProxyLogicModule::OnHandlePacketMsgFromGameServer(const uint32_t unLinkId, const uint64_t playerId, const uint32_t operateId, const uint32_t nMsgId, const char* msg, const uint32_t nLen)
 {
 	NFMsg::NotifyProxyPacketMsg gcMsg;
 	CLIENT_MSG_PROCESS_NO_OBJECT(nMsgId, playerId, msg, nLen, gcMsg);
@@ -574,7 +574,7 @@ void NFCProxyLogicModule::OnHandlePacketMsgFromGameServer(const uint32_t unLinkI
 	}
 }
 
-void NFCProxyLogicModule::OnHandleAccountLoginFromLoginServer(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen)
+void NFCProxyLogicModule::OnHandleAccountLoginFromLoginServer(const uint32_t unLinkId, const uint64_t playerId, const uint32_t operateId, const uint32_t nMsgId, const char* msg, const uint32_t nLen)
 {
 	NFMsg::gcaccountlogin gcMsg;
 	CLIENT_MSG_PROCESS_NO_OBJECT(nMsgId, playerId, msg, nLen, gcMsg);
@@ -639,7 +639,7 @@ void NFCProxyLogicModule::OnHandleAccountLoginFromLoginServer(const uint32_t unL
 		while (pLoginServer)
 		{
 			pLinkInfo->mSendMsgCount++;
-			FindModule<NFINetClientModule>()->SendToServerByPB(pLoginServer->mUnlinkId, EGMI_NET_PROXY_NOTIFY_LOGIN_PLAYER_LOGIN, gcMsg, pLinkInfo->mPlayerId);
+			FindModule<NFINetClientModule>()->SendToServerByPB(pLoginServer->mUnlinkId, EGMI_NET_PROXY_NOTIFY_LOGIN_PLAYER_LOGIN, gcMsg, pLinkInfo->mPlayerId, 0);
 
 			pLoginServer = mLoginMap.Next();
 		}
@@ -648,7 +648,7 @@ void NFCProxyLogicModule::OnHandleAccountLoginFromLoginServer(const uint32_t unL
 		while (pWorldServer)
 		{
 			pLinkInfo->mSendMsgCount++;
-			FindModule<NFINetClientModule>()->SendToServerByPB(pWorldServer->mUnlinkId, EGMI_NET_PROXY_NOTIFY_WORLD_PLAYER_LOGIN, gcMsg, pLinkInfo->mPlayerId);
+			FindModule<NFINetClientModule>()->SendToServerByPB(pWorldServer->mUnlinkId, EGMI_NET_PROXY_NOTIFY_WORLD_PLAYER_LOGIN, gcMsg, pLinkInfo->mPlayerId, 0);
 
 			pWorldServer = mWorldMap.Next();
 		}
@@ -664,7 +664,7 @@ void NFCProxyLogicModule::OnHandleAccountLoginFromLoginServer(const uint32_t unL
 		while (pGameServer)
 		{
 			pLinkInfo->mSendMsgCount++;
-			FindModule<NFINetClientModule>()->SendToServerByPB(pGameServer->mUnlinkId, EGMI_NET_PROXY_NOTIFY_GAME_PLAYER_LOGIN, gcMsg, pLinkInfo->mPlayerId);
+			FindModule<NFINetClientModule>()->SendToServerByPB(pGameServer->mUnlinkId, EGMI_NET_PROXY_NOTIFY_GAME_PLAYER_LOGIN, gcMsg, pLinkInfo->mPlayerId, 0);
 
 			pGameServer = mGameMap.Next();
 		}
@@ -678,24 +678,24 @@ void NFCProxyLogicModule::OnHandleAccountLoginFromLoginServer(const uint32_t unL
 
 		pLinkInfo->mIsLogin = true;
 		pLinkInfo->mSendMsgCount++;
-		FindModule<NFINetServerModule>()->SendByServerID(pPlayerInfo->mUnlinkId, nMsgId, msg, nLen, pLinkInfo->mSendMsgCount);
+		FindModule<NFINetServerModule>()->SendByServerID(pPlayerInfo->mUnlinkId, nMsgId, msg, nLen, pLinkInfo->mSendMsgCount, 0);
 
 		NFMsg::NotifyPlayerReport reportMsg;
 		reportMsg.set_user_id(pPlayerInfo->mPlayerId);
 		reportMsg.set_ip(pPlayerInfo->mIPAddr);
 
-		FindModule<NFINetClientModule>()->SendToServerByPB(unLinkId, ::EGMI_NET_PROXY_NOTIFY_LOGIN_PLAYER_REPORT, reportMsg, pPlayerInfo->mPlayerId);
+		FindModule<NFINetClientModule>()->SendToServerByPB(unLinkId, ::EGMI_NET_PROXY_NOTIFY_LOGIN_PLAYER_REPORT, reportMsg, pPlayerInfo->mPlayerId, 0);
 	}
 	else
 	{
 		pLinkInfo->mIsLogin = false;
 		pLinkInfo->mSendMsgCount++;
-		FindModule<NFINetServerModule>()->SendByServerID(clientLinkId, nMsgId, msg, nLen, pLinkInfo->mSendMsgCount);
+		FindModule<NFINetServerModule>()->SendByServerID(clientLinkId, nMsgId, msg, nLen, pLinkInfo->mSendMsgCount, 0);
 		FindModule<NFINetServerModule>()->CloseLinkId(clientLinkId);
 	}
 }
 
-void NFCProxyLogicModule::OnHandleMessageFromLoginServer(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen)
+void NFCProxyLogicModule::OnHandleMessageFromLoginServer(const uint32_t unLinkId, const uint64_t playerId, const uint32_t operateId, const uint32_t nMsgId, const char* msg, const uint32_t nLen)
 {
 	NF_SHARE_PTR<NFServerData> pServerData = mLoginMap.GetElement(unLinkId);
 	if (pServerData == nullptr)
@@ -715,11 +715,11 @@ void NFCProxyLogicModule::OnHandleMessageFromLoginServer(const uint32_t unLinkId
 	if (pLinkInfo->mUnlinkId > 0)
 	{
 		pLinkInfo->mSendMsgCount++;
-		FindModule<NFINetServerModule>()->SendByServerID(pLinkInfo->mUnlinkId, nMsgId, msg, nLen, pLinkInfo->mSendMsgCount);
+		FindModule<NFINetServerModule>()->SendByServerID(pLinkInfo->mUnlinkId, nMsgId, msg, nLen, pLinkInfo->mSendMsgCount, 0);
 	}
 }
 
-void NFCProxyLogicModule::OnHandleMessageFromWorldServer(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen)
+void NFCProxyLogicModule::OnHandleMessageFromWorldServer(const uint32_t unLinkId, const uint64_t playerId, const uint32_t operateId, const uint32_t nMsgId, const char* msg, const uint32_t nLen)
 {
 	NF_SHARE_PTR<NFServerData> pServerData = mWorldMap.GetElement(unLinkId);
 	if (pServerData == nullptr)
@@ -739,11 +739,11 @@ void NFCProxyLogicModule::OnHandleMessageFromWorldServer(const uint32_t unLinkId
 	if (pLinkInfo->mUnlinkId > 0)
 	{
 		pLinkInfo->mSendMsgCount++;
-		FindModule<NFINetServerModule>()->SendByServerID(pLinkInfo->mUnlinkId, nMsgId, msg, nLen, pLinkInfo->mSendMsgCount);
+		FindModule<NFINetServerModule>()->SendByServerID(pLinkInfo->mUnlinkId, nMsgId, msg, nLen, pLinkInfo->mSendMsgCount, 0);
 	}
 }
 
-void NFCProxyLogicModule::OnHandleMessageFromGameServer(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen)
+void NFCProxyLogicModule::OnHandleMessageFromGameServer(const uint32_t unLinkId, const uint64_t playerId, const uint32_t operateId, const uint32_t nMsgId, const char* msg, const uint32_t nLen)
 {
 	NF_SHARE_PTR<NFServerData> pServerData = mGameMap.GetElement(unLinkId);
 	if (pServerData == nullptr)
@@ -765,7 +765,7 @@ void NFCProxyLogicModule::OnHandleMessageFromGameServer(const uint32_t unLinkId,
 	if (pLinkInfo->mUnlinkId > 0)
 	{
 		pLinkInfo->mSendMsgCount++;
-		FindModule<NFINetServerModule>()->SendByServerID(pLinkInfo->mUnlinkId, nMsgId, msg, nLen, pLinkInfo->mSendMsgCount);
+		FindModule<NFINetServerModule>()->SendByServerID(pLinkInfo->mUnlinkId, nMsgId, msg, nLen, pLinkInfo->mSendMsgCount, 0);
 	}
 	else
 	{
@@ -778,7 +778,7 @@ void NFCProxyLogicModule::OnHandleMessageFromGameServer(const uint32_t unLinkId,
 *
 * @return void
 */
-void NFCProxyLogicModule::OnHandleHeartBeat(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen)
+void NFCProxyLogicModule::OnHandleHeartBeat(const uint32_t unLinkId, const uint64_t playerId, const uint32_t operateId, const uint32_t nMsgId, const char* msg, const uint32_t nLen)
 {
 	NFMsg::cgheartbeat cgMsg;
 	CLIENT_MSG_PROCESS_NO_OBJECT(nMsgId, playerId, msg, nLen, cgMsg);
@@ -792,7 +792,7 @@ void NFCProxyLogicModule::OnHandleHeartBeat(const uint32_t unLinkId, const uint6
 
 		NFMsg::gcheartbeat gcMsg;
 		gcMsg.set_result(0);
-		FindModule<NFINetServerModule>()->SendToServerByPB(unLinkId, NFMsg::Server_Msg_HeartBeat, gcMsg, 0);
+		FindModule<NFINetServerModule>()->SendToServerByPB(unLinkId, NFMsg::Server_Msg_HeartBeat, gcMsg, 0, 0);
 		return;
 	}
 
@@ -802,5 +802,5 @@ void NFCProxyLogicModule::OnHandleHeartBeat(const uint32_t unLinkId, const uint6
 
 	NFMsg::gcheartbeat gcMsg;
 	gcMsg.set_result(0);
-	FindModule<NFINetServerModule>()->SendToServerByPB(unLinkId, NFMsg::Server_Msg_HeartBeat, gcMsg, 0);
+	FindModule<NFINetServerModule>()->SendToServerByPB(unLinkId, NFMsg::Server_Msg_HeartBeat, gcMsg, 0, 0);
 }

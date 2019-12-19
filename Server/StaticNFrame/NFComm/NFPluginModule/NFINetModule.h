@@ -64,17 +64,33 @@ public:
 	}
 
 	template <typename BaseType>
-	bool AddReceiveCallBack(const NF_SERVER_TYPES eType, const uint32_t nMsgID, BaseType* pBase, void (BaseType::*handleRecieve)(const uint32_t unLinkId, const uint64_t valueId, const uint32_t nMsgId, const char* msg, const uint32_t nLen))
+	bool AddReceiveCallBack(const NF_SERVER_TYPES eType, const uint32_t nMsgID, BaseType* pBase, void (BaseType::*handleRecieve)(const uint32_t unLinkId, const uint64_t valueId, const uint32_t opreateId, const uint32_t nMsgId, const char* msg, const uint32_t nLen))
 	{
-		NET_RECEIVE_FUNCTOR functor = std::bind(handleRecieve, pBase, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3, std::placeholders::_4, std::placeholders::_5);
+		NET_RECEIVE_FUNCTOR functor = std::bind(handleRecieve, pBase, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3, std::placeholders::_4, std::placeholders::_5, std::placeholders::_6);
 
 		return AddReceiveCallBack(eType, nMsgID, functor);
 	}
 
 	template <typename BaseType>
-	bool AddReceiveCallBack(const NF_SERVER_TYPES eType, BaseType* pBase, void (BaseType::*handleRecieve)(const uint32_t unLinkId, const uint64_t valueId, const uint32_t nMsgId, const char* msg, const uint32_t nLen))
+	bool AddReceiveCallBack(const NF_SERVER_TYPES eType, BaseType* pBase, void (BaseType::*handleRecieve)(const uint32_t unLinkId, const uint64_t valueId, const uint32_t opreateId, const uint32_t nMsgId, const char* msg, const uint32_t nLen))
 	{
-		NET_RECEIVE_FUNCTOR functor = std::bind(handleRecieve, pBase, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3, std::placeholders::_4, std::placeholders::_5);
+		NET_RECEIVE_FUNCTOR functor = std::bind(handleRecieve, pBase, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3, std::placeholders::_4, std::placeholders::_5, std::placeholders::_6);
+
+		return AddReceiveCallBack(eType, functor);
+	}
+
+	template <typename BaseType>
+	bool AddReceiveCallBack(const NF_SERVER_TYPES eType, BaseType* pBase, const uint16_t nMainMsgId, const uint16_t nSubMsgId, void (BaseType::*handleRecieve)(const uint32_t unLinkId, const uint64_t valueId, const uint32_t opreateId, const uint16_t nMainMsgId, const uint16_t nSubMsgId, const char* msg, const uint32_t nLen))
+	{
+		NET_RECEIVE_MAINSUB_FUNCTOR functor = std::bind(handleRecieve, pBase, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3, std::placeholders::_4, std::placeholders::_5, std::placeholders::_6, std::placeholders::_7);
+
+		return AddReceiveCallBack(eType, nMainMsgId, nSubMsgId, functor);
+	}
+
+	template <typename BaseType>
+	bool AddReceiveCallBack(const NF_SERVER_TYPES eType, BaseType* pBase, void (BaseType::*handleRecieve)(const uint32_t unLinkId, const uint64_t valueId, const uint32_t opreateId, const uint16_t nMainMsgId, const uint16_t nSubMsgId, const char* msg, const uint32_t nLen))
+	{
+		NET_RECEIVE_MAINSUB_FUNCTOR functor = std::bind(handleRecieve, pBase, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3, std::placeholders::_4, std::placeholders::_5, std::placeholders::_6, std::placeholders::_7);
 
 		return AddReceiveCallBack(eType, functor);
 	}
@@ -93,7 +109,7 @@ public:
 	{
 		if (eType < mxCallBack.size())
 		{
-			mxCallBack[eType].mxReceiveCallBack.emplace(nMsgID, cb);
+			mxCallBack[eType].mxReceiveCallBack[nMsgID].push_back(cb);
 			return true;
 		}
 		return false;
@@ -104,6 +120,26 @@ public:
 		if (eType < mxCallBack.size())
 		{
 			mxCallBack[eType].mxCallBackList.push_back(cb);
+			return true;
+		}
+		return false;
+	}
+
+	virtual bool AddReceiveCallBack(const NF_SERVER_TYPES eType, const uint16_t nMainMsgId, const uint16_t nSubMsgId, const NET_RECEIVE_MAINSUB_FUNCTOR& cb)
+	{
+		if (eType < mxCallBack.size())
+		{
+			mxCallBack[eType].mxReceiveMainSubCallBack[nMainMsgId][nSubMsgId].push_back(cb);
+			return true;
+		}
+		return false;
+	}
+
+	virtual bool AddReceiveCallBack(const NF_SERVER_TYPES eType, const NET_RECEIVE_MAINSUB_FUNCTOR& cb)
+	{
+		if (eType < mxCallBack.size())
+		{
+			mxCallBack[eType].mxMainSubCallBackList.push_back(cb);
 			return true;
 		}
 		return false;
@@ -126,7 +162,7 @@ public:
 		return false;
 	}
 
-	void OnReceiveNetPack(const uint32_t unLinkId, const uint64_t valueId, const uint32_t nMsgId, const char* msg, const uint32_t nLen)
+	void OnReceiveNetPack(const uint32_t unLinkId, const uint64_t valueId, const uint32_t operateId, const uint32_t nMsgId, const char* msg, const uint32_t nLen)
 	{
 		uint32_t eServerType = GetServerTypeFromUnlinkId(unLinkId);
 		if (eServerType < mxCallBack.size())
@@ -135,8 +171,12 @@ public:
 			if (it != mxCallBack[eServerType].mxReceiveCallBack.end())
 			{
 				NFLogDebug(NF_LOG_RECV_MSG, valueId, "recv msg:{}", nMsgId);
-				NET_RECEIVE_FUNCTOR& pFun = it->second;
-				pFun(unLinkId, valueId, nMsgId, msg, nLen);
+				std::vector<NET_RECEIVE_FUNCTOR>& pVecFun = it->second;
+				for (size_t i = 0; i < pVecFun.size(); i++)
+				{
+					NET_RECEIVE_FUNCTOR& pFun = pVecFun[i];
+					pFun(unLinkId, valueId, operateId, nMsgId, msg, nLen);
+				}
 			}
 			else
 			{		
@@ -144,7 +184,37 @@ public:
 				{
 					NFLogDebug(NF_LOG_RECV_MSG, valueId, "recv msg:{}", nMsgId);
 					NET_RECEIVE_FUNCTOR& pFun = *iterator;
-					pFun(unLinkId, valueId, nMsgId, msg, nLen);
+					pFun(unLinkId, valueId, operateId, nMsgId, msg, nLen);
+				}
+			}
+
+			uint16_t mainMsgId = HIGH_UINT16(nMsgId);
+			uint16_t subMsgId = LOW_UINT16(nMsgId);
+			bool flag = true;
+			auto mainmsg_it = mxCallBack[eServerType].mxReceiveMainSubCallBack.find(mainMsgId);
+			if (mainmsg_it != mxCallBack[eServerType].mxReceiveMainSubCallBack.end())
+			{
+				auto submsg_it = mainmsg_it->second.find(subMsgId);
+				if (submsg_it != mainmsg_it->second.end())
+				{
+					flag = false;
+					NFLogDebug(NF_LOG_RECV_MSG, valueId, "recv msg, mainmsgId:{} submsgId:{}", mainMsgId, subMsgId);
+					std::vector<NET_RECEIVE_MAINSUB_FUNCTOR>& pVecFun = submsg_it->second;
+					for (size_t i = 0; i < pVecFun.size(); i++)
+					{
+						NET_RECEIVE_MAINSUB_FUNCTOR& pFun = pVecFun[i];
+						pFun(unLinkId, valueId, operateId, mainMsgId, subMsgId, msg, nLen);
+					}
+				}
+			}
+
+			if (flag)
+			{
+				for (auto iterator = mxCallBack[eServerType].mxMainSubCallBackList.begin(); iterator != mxCallBack[eServerType].mxMainSubCallBackList.end(); ++iterator)
+				{
+					NFLogDebug(NF_LOG_RECV_MSG, valueId, "recv msg, mainmsgId:{} submsgId:{}", mainMsgId, subMsgId);
+					NET_RECEIVE_MAINSUB_FUNCTOR& pFun = *iterator;
+					pFun(unLinkId, valueId, operateId, mainMsgId, subMsgId, msg, nLen);
 				}
 			}
 		}
@@ -166,9 +236,11 @@ protected:
 	struct CallBack
 	{
 		//call back
-		std::unordered_map<uint32_t, NET_RECEIVE_FUNCTOR> mxReceiveCallBack;
+		std::unordered_map<uint32_t, std::vector<NET_RECEIVE_FUNCTOR>> mxReceiveCallBack;
+		std::unordered_map<uint32_t, std::unordered_map<uint32_t, std::vector<NET_RECEIVE_MAINSUB_FUNCTOR>>> mxReceiveMainSubCallBack;
 		std::vector<NET_EVENT_FUNCTOR> mxEventCallBack;
 		std::vector<NET_RECEIVE_FUNCTOR> mxCallBackList;
+		std::vector<NET_RECEIVE_MAINSUB_FUNCTOR> mxMainSubCallBackList;
 	};
 
 	std::vector<CallBack> mxCallBack;

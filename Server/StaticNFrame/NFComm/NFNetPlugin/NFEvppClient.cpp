@@ -152,7 +152,8 @@ bool NFEvppClient::Connect()
 				uint32_t allLen = 0;
 				uint32_t nMsgId = 0;
 				uint64_t nValue = 0;
-				int ret = NFIPacketParse::DeCode(mPacketParseType, msg->data(), msg->size(), outData, outLen, allLen, nMsgId, nValue);
+				uint32_t nOpreateId = 0;
+				int ret = NFIPacketParse::DeCode(mPacketParseType, msg->data(), msg->size(), outData, outLen, allLen, nMsgId, nValue, nOpreateId);
 				if (ret < 0)
 				{
 					NFLogError(NF_LOG_SYSTEMLOG, 0, "net client parse data failed!");
@@ -170,6 +171,7 @@ bool NFEvppClient::Connect()
 					pMsg->strMsg = std::string(outData, outLen);
 					pMsg->nMsgId = nMsgId;
 					pMsg->nValue = nValue;
+					pMsg->nOperateId = nOpreateId;
 					mMsgQueue.Push(pMsg);
 
 					msg->Skip(allLen);
@@ -239,7 +241,7 @@ void NFEvppClient::ProcessMsgLogicThread()
 				NetEvppObject* pObject = evpp::any_cast<NetEvppObject*>(pMsg->mTCPConPtr->context());
 				if (pObject && pObject == m_pObject)
 				{
-					pObject->OnHandleMsgPeer(eMsgType_RECIVEDATA, pObject->m_usLinkId, (char*)pMsg->strMsg.data(), pMsg->strMsg.length(), pMsg->nMsgId, pMsg->nValue);
+					pObject->OnHandleMsgPeer(eMsgType_RECIVEDATA, pObject->m_usLinkId, (char*)pMsg->strMsg.data(), pMsg->strMsg.length(), pMsg->nMsgId, pMsg->nValue, pMsg->nOperateId);
 				}
 				else
 				{
@@ -272,11 +274,11 @@ bool NFEvppClient::Send(const void* pData, uint32_t unSize)
  * @param unSize	数据的大小
  * @return
  */
-bool NFEvppClient::Send(const uint32_t nMsgID, const char* msg, const uint32_t nLen, const uint64_t nPlayerID)
+bool NFEvppClient::Send(const uint32_t nMsgID, const char* msg, const uint32_t nLen, const uint64_t nPlayerID, const uint32_t opreateId)
 {
 	if (m_pObject)
 	{
-		return m_pObject->Send(nMsgID, msg, nLen, nPlayerID);
+		return m_pObject->Send(nMsgID, msg, nLen, nPlayerID, opreateId);
 	}
 	return false;
 }

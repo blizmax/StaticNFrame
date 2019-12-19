@@ -116,7 +116,7 @@ void NFEvppServer::ProcessMsgLogicThread()
 				NetEvppObject* pObject = evpp::any_cast<NetEvppObject*>(pMsg->mTCPConPtr->context());
 				if (pObject)
 				{
-					pObject->OnHandleMsgPeer(eMsgType_RECIVEDATA, pObject->m_usLinkId, (char*)pMsg->strMsg.data(), pMsg->strMsg.length(), pMsg->nMsgId, pMsg->nValue);
+					pObject->OnHandleMsgPeer(eMsgType_RECIVEDATA, pObject->m_usLinkId, (char*)pMsg->strMsg.data(), pMsg->strMsg.length(), pMsg->nMsgId, pMsg->nValue, pMsg->nOperateId);
 				}
 				else
 				{
@@ -201,7 +201,8 @@ bool NFEvppServer::Init()
 				uint32_t allLen = 0;
 				uint32_t nMsgId = 0;
 				uint64_t nValue = 0;
-				int ret = NFIPacketParse::DeCode(mPacketParseType, msg->data(), msg->size(), outData, outLen, allLen, nMsgId, nValue);
+				uint32_t nOperateId = 0;
+				int ret = NFIPacketParse::DeCode(mPacketParseType, msg->data(), msg->size(), outData, outLen, allLen, nMsgId, nValue, nOperateId);
 				if (ret < 0)
 				{
 					//如果网络对外， 外部网络比如网关的话，就关掉这个链接， 有可能是被攻击了
@@ -238,6 +239,7 @@ bool NFEvppServer::Init()
 					pMsg->strMsg = std::string(outData, outLen);
 					pMsg->nMsgId = nMsgId;
 					pMsg->nValue = nValue;
+					pMsg->nOperateId = nOperateId;
 					mMsgQueue.Push(pMsg);
 
 					msg->Skip(allLen);
@@ -466,11 +468,11 @@ void NFEvppServer::ExecuteClose()
 	mvRemoveObject.clear();
 }
 
-void NFEvppServer::OnReceiveNetPack(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen)
+void NFEvppServer::OnReceiveNetPack(const uint32_t unLinkId, const uint64_t playerId, const uint32_t operateId, const uint32_t nMsgId, const char* msg, const uint32_t nLen)
 {
 	if (mRecvCB)
 	{
-		mRecvCB(unLinkId, playerId, nMsgId, msg, nLen);
+		mRecvCB(unLinkId, playerId, operateId, nMsgId, msg, nLen);
 	}
 }
 
@@ -531,24 +533,24 @@ bool NFEvppServer::Send(uint32_t usLinkId, const void* pData, uint32_t unSize)
  * @param unSize	数据的大小
  * @return
  */
-bool NFEvppServer::Send(uint32_t usLinkId, const uint32_t nMsgID, const char* msg, const uint32_t nLen, const uint64_t nPlayerID)
+bool NFEvppServer::Send(uint32_t usLinkId, const uint32_t nMsgID, const char* msg, const uint32_t nLen, const uint64_t nPlayerID, const uint32_t operateId)
 {
 	NetEvppObject* pObject = GetNetObject(usLinkId);
 	if (pObject)
 	{
-		return pObject->Send(nMsgID, msg, nLen, nPlayerID);
+		return pObject->Send(nMsgID, msg, nLen, nPlayerID, operateId);
 	}
 	return false;
 }
 
-bool NFEvppServer::SendAll(const uint32_t nMsgID, const char* msg, const uint32_t nLen, const uint64_t nPlayerID)
+bool NFEvppServer::SendAll(const uint32_t nMsgID, const char* msg, const uint32_t nLen, const uint64_t nPlayerID, const uint32_t operateId)
 {
 	for (auto iter = mNetObjectArray.begin(); iter != mNetObjectArray.end(); ++iter)
 	{
 		auto pObject = iter->second;
 		if (pObject)
 		{
-			return pObject->Send(nMsgID, msg, nLen, nPlayerID);
+			return pObject->Send(nMsgID, msg, nLen, nPlayerID, operateId);
 		}
 	}
 

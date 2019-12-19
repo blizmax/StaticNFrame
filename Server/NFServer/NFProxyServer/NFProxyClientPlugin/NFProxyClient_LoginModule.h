@@ -34,7 +34,7 @@ public:
 	virtual bool Shut() override;
 protected:
 	void OnProxySocketEvent(const eMsgType nEvent, const uint32_t unLinkId);
-	void OnHandleOtherMessage(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen);
+	void OnHandleOtherMessage(const uint32_t unLinkId, const uint64_t playerId, const uint32_t operateId, const uint32_t nMsgId, const char* msg, const uint32_t nLen);
 
 	void RegisterServer(uint32_t linkId);
 	void OnClientDisconnect(uint32_t unLinkId);

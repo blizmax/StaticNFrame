@@ -96,7 +96,7 @@ void NFCProxyServerModule::OnProxySocketEvent(const eMsgType nEvent, const uint3
 	}
 }
 
-void NFCProxyServerModule::OnHandleOtherMessage(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen)
+void NFCProxyServerModule::OnHandleOtherMessage(const uint32_t unLinkId, const uint64_t playerId, const uint32_t operateId, const uint32_t nMsgId, const char* msg, const uint32_t nLen)
 {
 	std::string ip = FindModule<NFINetServerModule>()->GetLinkIp(unLinkId);
 	NFLogWarning(NF_LOG_SERVER_NOT_HANDLE_MESSAGE, 0, "other message not handled:playerId:{},msgId:{},ip:{}", playerId, nMsgId, ip);

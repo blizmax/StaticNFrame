@@ -69,7 +69,7 @@ void NFCLoginLogicModule::OnHandleProxyEventCallBack(eMsgType nEvent, uint32_t u
 	}
 }
 
-void NFCLoginLogicModule::OnHandlePlayerReport(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen)
+void NFCLoginLogicModule::OnHandlePlayerReport(const uint32_t unLinkId, const uint64_t playerId, const uint32_t operateId, const uint32_t nMsgId, const char* msg, const uint32_t nLen)
 {
 	NFMsg::NotifyPlayerReport cgMsg;
 	CLIENT_MSG_PROCESS_NO_OBJECT(nMsgId, playerId, msg, nLen, cgMsg);
@@ -81,7 +81,7 @@ void NFCLoginLogicModule::OnHandlePlayerReport(const uint32_t unLinkId, const ui
 	}
 }
 
-void NFCLoginLogicModule::OnHandlePlayerDisConnect(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen)
+void NFCLoginLogicModule::OnHandlePlayerDisConnect(const uint32_t unLinkId, const uint64_t playerId, const uint32_t operateId, const uint32_t nMsgId, const char* msg, const uint32_t nLen)
 {
 	NFMsg::NotifyPlayerDisconnect cgMsg;
 	CLIENT_MSG_PROCESS_NO_OBJECT(nMsgId, playerId, msg, nLen, cgMsg);
@@ -93,7 +93,7 @@ void NFCLoginLogicModule::OnHandlePlayerDisConnect(const uint32_t unLinkId, cons
 	}
 }
 
-void NFCLoginLogicModule::OnHandleAccountLoginFromProxyServer(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen)
+void NFCLoginLogicModule::OnHandleAccountLoginFromProxyServer(const uint32_t unLinkId, const uint64_t playerId, const uint32_t operateId, const uint32_t nMsgId, const char* msg, const uint32_t nLen)
 {
 	NFMsg::gcaccountlogin gcMsg;
 	CLIENT_MSG_PROCESS_NO_OBJECT(nMsgId, playerId, msg, nLen, gcMsg);
@@ -118,7 +118,7 @@ void NFCLoginLogicModule::OnHandleAccountLoginFromProxyServer(const uint32_t unL
 	NFLogInfo(NF_LOG_SYSTEMLOG, pInfo->mPlayerId, "Player:{} login login server!", pInfo->mPlayerId);
 }
 
-void  NFCLoginLogicModule::OnHandlePlayerDisconnectFromProxyServer(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen)
+void  NFCLoginLogicModule::OnHandlePlayerDisconnectFromProxyServer(const uint32_t unLinkId, const uint64_t playerId, const uint32_t operateId, const uint32_t nMsgId, const char* msg, const uint32_t nLen)
 {
 	NFMsg::NotifyPlayerDisconnect cgMsg;
 	CLIENT_MSG_PROCESS_NO_OBJECT(nMsgId, playerId, msg, nLen, cgMsg);
@@ -136,7 +136,7 @@ void  NFCLoginLogicModule::OnHandlePlayerDisconnectFromProxyServer(const uint32_
 	NFLogInfo(NF_LOG_SYSTEMLOG, pInfo->mPlayerId, "Player:{} disconnect login server!", pInfo->mPlayerId);
 }
 
-void NFCLoginLogicModule::OnHandlePlayerReconnectFromProxyServer(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen)
+void NFCLoginLogicModule::OnHandlePlayerReconnectFromProxyServer(const uint32_t unLinkId, const uint64_t playerId, const uint32_t operateId, const uint32_t nMsgId, const char* msg, const uint32_t nLen)
 {
 	NFMsg::gcreconnect gcMsg;
 	CLIENT_MSG_PROCESS_NO_OBJECT(nMsgId, playerId, msg, nLen, gcMsg);

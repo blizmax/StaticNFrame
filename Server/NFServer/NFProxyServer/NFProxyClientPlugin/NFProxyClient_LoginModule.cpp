@@ -115,7 +115,7 @@ void NFCProxyClient_LoginModule::OnHandleServerReport(const NFMsg::ServerInfoRep
 	pServerData->mServerInfo = xData;
 }
 
-void NFCProxyClient_LoginModule::OnHandleOtherMessage(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen)
+void NFCProxyClient_LoginModule::OnHandleOtherMessage(const uint32_t unLinkId, const uint64_t playerId, const uint32_t operateId, const uint32_t nMsgId, const char* msg, const uint32_t nLen)
 {
 	if (GetServerByUnlinkId(unLinkId) == nullptr) return;
 
@@ -137,7 +137,7 @@ void NFCProxyClient_LoginModule::RegisterServer(uint32_t linkId)
 		pData->set_server_max_online(pConfig->mMaxConnectNum);
 		pData->set_server_state(NFMsg::EST_NARMAL);
 
-		FindModule<NFINetClientModule>()->SendToServerByPB(linkId, EGMI_NET_PROXY_TO_LOGIN_REGISTER, xMsg, 0);
+		FindModule<NFINetClientModule>()->SendToServerByPB(linkId, EGMI_NET_PROXY_TO_LOGIN_REGISTER, xMsg, 0, 0);
 	}
 
 	NF_SHARE_PTR<NFServerData> pServerData = mUnlinkLoginMap.GetElement(linkId);

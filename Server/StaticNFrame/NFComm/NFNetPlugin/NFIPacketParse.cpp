@@ -8,12 +8,12 @@
 // -------------------------------------------------------------------------
 
 #include "NFIPacketParse.h"
-#include "ArpgNetPacketParse.h"
-#include "QiPaiNetPacketParse.h"
+#include "InternalPacketParse.h"
+#include "ExternalPacketParse.h"
 
 #include "NFComm/NFPluginModule/NFINetModule.h"
 
-std::vector<NFIPacketParse*> NFIPacketParse::m_pPacketParse = { CreatePacketParse(PACKET_PARSE_TYPE_NORMAL), CreatePacketParse(PACKET_PARSE_TYPE_QIPAI) };
+std::vector<NFIPacketParse*> NFIPacketParse::m_pPacketParse = { CreatePacketParse(PACKET_PARSE_TYPE_INTERNAL), CreatePacketParse(PACKET_PARSE_TYPE_EXTERNAL) };
 
 void NFIPacketParse::DeletePacketParse(NFIPacketParse* pPacketParse)
 {
@@ -22,36 +22,36 @@ void NFIPacketParse::DeletePacketParse(NFIPacketParse* pPacketParse)
 
 NFIPacketParse* NFIPacketParse::CreatePacketParse(int parseType)
 {
-	if (parseType == PACKET_PARSE_TYPE_NORMAL)
+	if (parseType == PACKET_PARSE_TYPE_INTERNAL)
 	{
-		return NF_NEW ArpgNetPacketParse();
+		return NF_NEW InternalPacketParse();
 	}
-	else if (parseType == PACKET_PARSE_TYPE_QIPAI)
+	else if (parseType == PACKET_PARSE_TYPE_EXTERNAL)
 	{
-		return NF_NEW QiPaiNetPacketParse();
+		return NF_NEW ExternalPacketParse();
 	}
 	else
 	{
-		return NF_NEW ArpgNetPacketParse();
+		return NF_NEW InternalPacketParse();
 	}
 }
 
-int NFIPacketParse::DeCode(uint32_t packetType, const char* strData, const uint32_t unLen, char*& outData, uint32_t& outLen, uint32_t& allLen, uint32_t& nMsgId, uint64_t& nValue)
+int NFIPacketParse::DeCode(uint32_t packetType, const char* strData, const uint32_t unLen, char*& outData, uint32_t& outLen, uint32_t& allLen, uint32_t& nMsgId, uint64_t& nValue, uint32_t& operateId)
 {
 	if (packetType < 0 || packetType >= m_pPacketParse.size())
 	{
-		return m_pPacketParse[0]->DeCodeImpl(strData, unLen, outData, outLen, allLen, nMsgId, nValue);
+		return m_pPacketParse[0]->DeCodeImpl(strData, unLen, outData, outLen, allLen, nMsgId, nValue, operateId);
 	}
-	return m_pPacketParse[packetType]->DeCodeImpl(strData, unLen, outData, outLen, allLen, nMsgId, nValue);
+	return m_pPacketParse[packetType]->DeCodeImpl(strData, unLen, outData, outLen, allLen, nMsgId, nValue, operateId);
 }
 
-int NFIPacketParse::EnCode(uint32_t packetType, const uint32_t unMsgID, const uint64_t nValue, const char* strData, const uint32_t unDataLen, NFBuffer& buffer)
+int NFIPacketParse::EnCode(uint32_t packetType, const uint32_t unMsgID, const uint64_t nValue, const uint32_t opreateId, const char* strData, const uint32_t unDataLen, NFBuffer& buffer)
 {
 	if (packetType < 0 || packetType >= m_pPacketParse.size())
 	{
-		return m_pPacketParse[packetType]->EnCodeImpl(unMsgID, nValue, strData, unDataLen, buffer);
+		return m_pPacketParse[packetType]->EnCodeImpl(unMsgID, nValue, opreateId, strData, unDataLen, buffer);
 	}
-	return m_pPacketParse[packetType]->EnCodeImpl(unMsgID, nValue, strData, unDataLen, buffer);
+	return m_pPacketParse[packetType]->EnCodeImpl(unMsgID, nValue, opreateId, strData, unDataLen, buffer);
 }
 
 bool NFIPacketParse::EnCodeWeb(const char* strData, const uint32_t unDataLen, std::string& frame, uint32_t frame_type, bool isFin, bool masking)

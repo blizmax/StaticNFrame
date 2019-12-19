@@ -2,23 +2,11 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <ClCompile Include="NFNetPlugin.cpp" />
-    <ClCompile Include="NetObject.cpp">
-      <Filter>NFNetObject</Filter>
-    </ClCompile>
-    <ClCompile Include="ArpaNetPacketParse.cpp">
-      <Filter>PacketParse</Filter>
-    </ClCompile>
     <ClCompile Include="NFIPacketParse.cpp">
       <Filter>PacketParse</Filter>
     </ClCompile>
-    <ClCompile Include="NFClient.cpp">
-      <Filter>NFClient</Filter>
-    </ClCompile>
     <ClCompile Include="NFCNetClientModule.cpp">
       <Filter>NFClient</Filter>
-    </ClCompile>
-    <ClCompile Include="NFServer.cpp">
-      <Filter>NFServer</Filter>
     </ClCompile>
     <ClCompile Include="NFCNetServerModule.cpp">
       <Filter>NFServer</Filter>
@@ -37,9 +25,6 @@
     </ClCompile>
     <ClCompile Include="NFServerNeEventModule.cpp">
       <Filter>NFServerNetEvent</Filter>
-    </ClCompile>
-    <ClCompile Include="QiPaiNetPacketParse.cpp">
-      <Filter>PacketParse</Filter>
     </ClCompile>
     <ClCompile Include="evpp\buffer.cc">
       <Filter>evpp</Filter>
@@ -137,29 +122,23 @@
     <ClCompile Include="NFCEvppHttpServer.cpp">
       <Filter>NFHttpServer</Filter>
     </ClCompile>
+    <ClCompile Include="InternalPacketParse.cpp">
+      <Filter>PacketParse</Filter>
+    </ClCompile>
+    <ClCompile Include="ExternalPacketParse.cpp">
+      <Filter>PacketParse</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="NFNetPlugin.h" />
     <ClInclude Include="NFNetDefine.h">
       <Filter>NFNetObject</Filter>
     </ClInclude>
-    <ClInclude Include="NetObject.h">
-      <Filter>NFNetObject</Filter>
-    </ClInclude>
-    <ClInclude Include="ArpgNetPacketParse.h">
-      <Filter>PacketParse</Filter>
-    </ClInclude>
     <ClInclude Include="NFIPacketParse.h">
       <Filter>PacketParse</Filter>
     </ClInclude>
-    <ClInclude Include="NFClient.h">
-      <Filter>NFClient</Filter>
-    </ClInclude>
     <ClInclude Include="NFCNetClientModule.h">
       <Filter>NFClient</Filter>
-    </ClInclude>
-    <ClInclude Include="NFServer.h">
-      <Filter>NFServer</Filter>
     </ClInclude>
     <ClInclude Include="NFCNetServerModule.h">
       <Filter>NFServer</Filter>
@@ -184,9 +163,6 @@
     </ClInclude>
     <ClInclude Include="NFHttpFormat.h">
       <Filter>NFHttpClient</Filter>
-    </ClInclude>
-    <ClInclude Include="QiPaiNetPacketParse.h">
-      <Filter>PacketParse</Filter>
     </ClInclude>
     <ClInclude Include="evpp\any.h">
       <Filter>evpp</Filter>
@@ -343,6 +319,12 @@
     </ClInclude>
     <ClInclude Include="NFCEvppHttpServer.h">
       <Filter>NFHttpServer</Filter>
+    </ClInclude>
+    <ClInclude Include="InternalPacketParse.h">
+      <Filter>PacketParse</Filter>
+    </ClInclude>
+    <ClInclude Include="ExternalPacketParse.h">
+      <Filter>PacketParse</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

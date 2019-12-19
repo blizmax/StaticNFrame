@@ -5,7 +5,7 @@ function LuaNFrame.SendMsgToRebot(unLinkId, nPlayerId, nMsgId, nLen, strData)
 		LuaNFrame.SendMsgToMaster(unLinkId, operateId, nMsgId, nLen, strData)
 end
 
-function LuaNFrame.DispatchRebotTcp(unLinkId, valueId, nMsgId, strMsg)
+function LuaNFrame.DispatchRebotTcp(unLinkId, valueId, operateId, nMsgId, strMsg)
 	local function TcpExecute()
 		local retMsgID,controller = tcpManager:createController(nMsgId)
 	
@@ -23,7 +23,7 @@ function LuaNFrame.DispatchRebotTcp(unLinkId, valueId, nMsgId, strMsg)
     end
 end
 
-function LuaNFrame.DispatchRebotEvent(unLinkId, valueId, nMsgId, strMsg)
+function LuaNFrame.DispatchRebotEvent(unLinkId, valueId, operateId, nMsgId, strMsg)
 	local function TcpExecute()
 		if nMsgId == NF_ACCOUNT_EVENT_TYPE.eAccountEventType_CONNECTED then
 			RebotModel.AccountConnnect(unLinkId)

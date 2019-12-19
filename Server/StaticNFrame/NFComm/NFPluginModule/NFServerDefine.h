@@ -31,8 +31,8 @@ enum NF_SERVER_TYPES
 
 enum PacketParseType
 {
-	PACKET_PARSE_TYPE_NORMAL = 0,
-	PACKET_PARSE_TYPE_QIPAI = 1,
+	PACKET_PARSE_TYPE_INTERNAL = 0,		//内网协议
+	PACKET_PARSE_TYPE_EXTERNAL = 1,		//默认外部协议
 };
 
 #define NF_JSON_MSG_ID 0
@@ -64,9 +64,9 @@ enum eAccountEventType
 	eAccountEventType_RECONNECTED = 3,
 };
 
-typedef std::function<void(const uint32_t unLinkId, const uint64_t valueId, const uint32_t nMsgId, const char* msg, const uint32_t nLen)> NET_RECEIVE_FUNCTOR;
+typedef std::function<void(const uint32_t unLinkId, const uint64_t valueId, const uint32_t operateID, const uint32_t nMsgId, const char* msg, const uint32_t nLen)> NET_RECEIVE_FUNCTOR;
 
-typedef std::function<void(const uint32_t unLinkId, const uint64_t valueId, const uint32_t operateID, const uint32_t nMsgId, const char* msg, const uint32_t nLen)> NET_RECEIVE_WITH_OPERATEID_FUNCTOR;
+typedef std::function<void(const uint32_t unLinkId, const uint64_t valueId, const uint32_t operateID, const uint16_t nMainMsgId, const uint16_t nSubMsgId, const char* msg, const uint32_t nLen)> NET_RECEIVE_MAINSUB_FUNCTOR;
 
 typedef std::function<void(const eMsgType nEvent, const uint32_t unLinkId)> NET_EVENT_FUNCTOR;
 

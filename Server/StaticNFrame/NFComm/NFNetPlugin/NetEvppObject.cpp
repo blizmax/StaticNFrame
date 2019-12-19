@@ -88,7 +88,7 @@ void NetEvppObject::SetLinkId(uint32_t linkId)
 	m_usLinkId = linkId;
 }
 
-void NetEvppObject::OnHandleMsgPeer(eMsgType type, uint32_t usLink, char* pBuf, uint32_t sz, uint32_t nMsgId, uint64_t nValue)
+void NetEvppObject::OnHandleMsgPeer(eMsgType type, uint32_t usLink, char* pBuf, uint32_t sz, uint32_t nMsgId, uint64_t nValue, uint32_t operateId)
 {
 	switch (type)
 	{
@@ -96,7 +96,7 @@ void NetEvppObject::OnHandleMsgPeer(eMsgType type, uint32_t usLink, char* pBuf, 
 	{
 		if (mRecvCB)
 		{
-			mRecvCB(usLink, nValue, nMsgId, pBuf, sz);
+			mRecvCB(usLink, nValue, operateId, nMsgId, pBuf, sz);
 		}
 	}
 	break;
@@ -133,13 +133,13 @@ void NetEvppObject::SetNeedRemove(bool val)
 
 void NetEvppObject::OnHandleConnect()
 {
-	OnHandleMsgPeer(eMsgType_CONNECTED, m_usLinkId, nullptr, 0, 0, 0);
+	OnHandleMsgPeer(eMsgType_CONNECTED, m_usLinkId, nullptr, 0, 0, 0, 0);
 }
 
 void NetEvppObject::OnHandleDisConnect()
 {
 	SetNeedRemove(true);
-	OnHandleMsgPeer(eMsgType_DISCONNECTED, m_usLinkId, nullptr, 0, 0, 0);
+	OnHandleMsgPeer(eMsgType_DISCONNECTED, m_usLinkId, nullptr, 0, 0, 0, 0);
 }
 
 void NetEvppObject::CloseObject()
@@ -164,20 +164,20 @@ bool NetEvppObject::Send(const void* pData, uint32_t unSize)
 	return false;
 }
 
-void SendToThread(evpp::TCPConnPtr connPtr, uint32_t nPacketParseType, const uint32_t nMsgID, const std::string& message, const uint64_t nPlayerID)
+void SendToThread(evpp::TCPConnPtr connPtr, uint32_t nPacketParseType, const uint32_t nMsgID, const std::string& message, const uint64_t nPlayerID, const uint32_t operateId)
 {
 	NFBuffer mxSendBuffer;
-	NFIPacketParse::EnCode(nPacketParseType, nMsgID, nPlayerID, message.data(), message.length(), mxSendBuffer);
+	NFIPacketParse::EnCode(nPacketParseType, nMsgID, nPlayerID, operateId, message.data(), message.length(), mxSendBuffer);
 	connPtr->Send((const void*)mxSendBuffer.ReadAddr(), mxSendBuffer.ReadableSize());
 }
 
-bool NetEvppObject::Send(const uint32_t nMsgID, const char* msg, const uint32_t nLen, const uint64_t nPlayerID)
+bool NetEvppObject::Send(const uint32_t nMsgID, const char* msg, const uint32_t nLen, const uint64_t nPlayerID, const uint32_t operateId)
 {
 	if (!GetNeedRemove() && mConnPtr && mConnPtr->IsConnected())
 	{
 		//mConnPtr->loop()->RunInLoop(std::bind(&SendToThread, mConnPtr, mPacketParseType, nMsgID, evpp::Slice(msg, nLen).ToString(), nPlayerID));
 		NFBuffer mxSendBuffer;
-		NFIPacketParse::EnCode(mPacketParseType, nMsgID, nPlayerID, msg, nLen, mxSendBuffer);
+		NFIPacketParse::EnCode(mPacketParseType, nMsgID, nPlayerID, operateId, msg, nLen, mxSendBuffer);
 		mConnPtr->Send((const void*)mxSendBuffer.ReadAddr(), mxSendBuffer.ReadableSize());
 		return true;
 	}

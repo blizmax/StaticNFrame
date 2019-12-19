@@ -12,7 +12,6 @@
 #include "NFComm/NFPluginModule/NFILuaScriptModule.h"
 #include "NFComm/NFPluginModule/NFIPluginManager.h"
 #include "NFEvppClient.h"
-#include "NFClient.h"
 
 NFCNetClientModule::NFCNetClientModule(NFIPluginManager* p)
 {
@@ -189,7 +188,7 @@ uint32_t NFCNetClientModule::AddServer(NF_SERVER_TYPES eServerType, const std::s
 #ifdef USE_NET_EVPP
 		NFEvppClient* pClient = NF_NEW NFEvppClient(m_eventLoopThreadPool->GetNextLoop(), usId, flag);
 #else
-		NFIClient* pClient = NF_NEW NFClient(usId, flag);
+		
 #endif
 
 		pClient->SetPacketParseType(packetParsetype);
@@ -290,7 +289,7 @@ void NFCNetClientModule::CloseAllServer()
 	}
 }
 
-void NFCNetClientModule::SendToServerByPB(const uint32_t unLinkId, const uint32_t nMsgID, const google::protobuf::Message& xData, const uint64_t nPlayerID)
+void NFCNetClientModule::SendToServerByPB(const uint32_t unLinkId, const uint32_t nMsgID, const google::protobuf::Message& xData, const uint64_t nPlayerID, const uint32_t operateId)
 {
 	std::string strData;
 	if (!xData.SerializeToString(&strData))
@@ -298,15 +297,15 @@ void NFCNetClientModule::SendToServerByPB(const uint32_t unLinkId, const uint32_
 		return;
 	}
 
-	SendByServerID(unLinkId, nMsgID, strData, nPlayerID);
+	SendByServerID(unLinkId, nMsgID, strData, nPlayerID, operateId);
 }
 
-void NFCNetClientModule::SendByServerID(const uint32_t unLinkId, const uint32_t nMsgID, const std::string& strData, const uint64_t nPlayerID)
+void NFCNetClientModule::SendByServerID(const uint32_t unLinkId, const uint32_t nMsgID, const std::string& strData, const uint64_t nPlayerID, const uint32_t operateId)
 {
-	SendByServerID(unLinkId, nMsgID, strData.c_str(), strData.length(), nPlayerID);
+	SendByServerID(unLinkId, nMsgID, strData.c_str(), strData.length(), nPlayerID, operateId);
 }
 
-void NFCNetClientModule::SendByServerID(const uint32_t unLinkId, const uint32_t nMsgID, const char* msg, const uint32_t nLen, const uint64_t nPlayerID)
+void NFCNetClientModule::SendByServerID(const uint32_t unLinkId, const uint32_t nMsgID, const char* msg, const uint32_t nLen, const uint64_t nPlayerID, const uint32_t operateId)
 {
 	uint32_t serverType = GetServerTypeFromUnlinkId(unLinkId);
 	uint32_t serverIndex = GetServerIndexFromUnlinkId(unLinkId);
@@ -322,7 +321,7 @@ void NFCNetClientModule::SendByServerID(const uint32_t unLinkId, const uint32_t 
 		NFIClient* pClient = mxServerMap[serverType][serverIndex];
 		if (pClient)
 		{
-			SendMsg(pClient, nMsgID, msg, nLen, nPlayerID);
+			SendMsg(pClient, nMsgID, msg, nLen, nPlayerID, operateId);
 		}
 		else
 		{
@@ -331,19 +330,19 @@ void NFCNetClientModule::SendByServerID(const uint32_t unLinkId, const uint32_t 
 	}
 }
 
-void NFCNetClientModule::SendMsg(NFIClient* pClient, const uint32_t nMsgID, const char* msg, const uint32_t nLen, const uint64_t nPlayerID)
+void NFCNetClientModule::SendMsg(NFIClient* pClient, const uint32_t nMsgID, const char* msg, const uint32_t nLen, const uint64_t nPlayerID, const uint32_t operateId)
 {
 	if (pClient == nullptr) return;
 
-	pClient->Send(nMsgID, msg, nLen, nPlayerID);
+	pClient->Send(nMsgID, msg, nLen, nPlayerID, operateId);
 }
 
-void NFCNetClientModule::SendToAllServer(const uint32_t nMsgID, const std::string& strData, const uint64_t nPlayerID)
+void NFCNetClientModule::SendToAllServer(const uint32_t nMsgID, const std::string& strData, const uint64_t nPlayerID, const uint32_t operateId)
 {
-	SendToAllServer(nMsgID, strData.c_str(), strData.length(), nPlayerID);
+	SendToAllServer(nMsgID, strData.c_str(), strData.length(), nPlayerID, operateId);
 }
 
-void NFCNetClientModule::SendToAllServer(const uint32_t nMsgID, const char* msg, const uint32_t nLen, const uint64_t nPlayerID)
+void NFCNetClientModule::SendToAllServer(const uint32_t nMsgID, const char* msg, const uint32_t nLen, const uint64_t nPlayerID, const uint32_t operateId)
 {
 	for (size_t i = 0; i < mxServerMap.size(); i++)
 	{
@@ -351,13 +350,13 @@ void NFCNetClientModule::SendToAllServer(const uint32_t nMsgID, const char* msg,
 		{
 			if (mxServerMap[i][j])
 			{
-				SendMsg(mxServerMap[i][j], nMsgID, msg, nLen, nPlayerID);
+				SendMsg(mxServerMap[i][j], nMsgID, msg, nLen, nPlayerID, operateId);
 			}
 		}
 	}
 }
 
-void NFCNetClientModule::SendToAllServerByPB(const uint32_t nMsgID, const google::protobuf::Message& xData, const uint64_t nPlayerID)
+void NFCNetClientModule::SendToAllServerByPB(const uint32_t nMsgID, const google::protobuf::Message& xData, const uint64_t nPlayerID, const uint32_t operateId)
 {
 	std::string strData;
 	if (!xData.SerializeToString(&strData))
@@ -365,15 +364,15 @@ void NFCNetClientModule::SendToAllServerByPB(const uint32_t nMsgID, const google
 		return;
 	}
 
-	SendToAllServer(nMsgID, strData, nPlayerID);
+	SendToAllServer(nMsgID, strData, nPlayerID, operateId);
 }
 
-void NFCNetClientModule::SendToAllServer(NF_SERVER_TYPES eServerType, uint32_t nMsgID, const std::string& strData, const uint64_t nPlayerID)
+void NFCNetClientModule::SendToAllServer(NF_SERVER_TYPES eServerType, uint32_t nMsgID, const std::string& strData, const uint64_t nPlayerID, const uint32_t operateId)
 {
-	SendToAllServer(eServerType, nMsgID, strData.c_str(), strData.length(), nPlayerID);
+	SendToAllServer(eServerType, nMsgID, strData.c_str(), strData.length(), nPlayerID, operateId);
 }
 
-void NFCNetClientModule::SendToAllServer(NF_SERVER_TYPES eServerType, const uint32_t nMsgID, const char* msg, const uint32_t nLen, const uint64_t nPlayerID)
+void NFCNetClientModule::SendToAllServer(NF_SERVER_TYPES eServerType, const uint32_t nMsgID, const char* msg, const uint32_t nLen, const uint64_t nPlayerID, const uint32_t operateId)
 {
 	if (eServerType < NF_ST_MAX)
 	{
@@ -381,13 +380,13 @@ void NFCNetClientModule::SendToAllServer(NF_SERVER_TYPES eServerType, const uint
 		{
 			if (mxServerMap[eServerType][j])
 			{
-				SendMsg(mxServerMap[eServerType][j], nMsgID, msg, nLen, nPlayerID);
+				SendMsg(mxServerMap[eServerType][j], nMsgID, msg, nLen, nPlayerID, operateId);
 			}
 		}
 	}
 }
 
-void NFCNetClientModule::SendToAllServerByPB(NF_SERVER_TYPES eServerType, const uint32_t nMsgID, const google::protobuf::Message& xData, const uint64_t nPlayerID)
+void NFCNetClientModule::SendToAllServerByPB(NF_SERVER_TYPES eServerType, const uint32_t nMsgID, const google::protobuf::Message& xData, const uint64_t nPlayerID, const uint32_t operateId)
 {
 	std::string strData;
 	if (!xData.SerializeToString(&strData))
@@ -395,7 +394,7 @@ void NFCNetClientModule::SendToAllServerByPB(NF_SERVER_TYPES eServerType, const 
 		return;
 	}
 
-	SendToAllServer(nMsgID, strData, nPlayerID);
+	SendToAllServer(nMsgID, strData, nPlayerID, operateId);
 }
 
 void NFCNetClientModule::ProcessExecute()

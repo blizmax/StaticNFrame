@@ -134,7 +134,7 @@ public:
 	 * @param  nPlayerID
 	 * @return void
 	 */
-	virtual void SendByServerID(const uint32_t unLinkId, const uint32_t nMsgID, const std::string& strData, const uint64_t nPlayerID) override;
+	virtual void SendByServerID(const uint32_t unLinkId, const uint32_t nMsgID, const std::string& strData, const uint64_t nPlayerID, const uint32_t operateId) override;
 
 	/**
 	 * @brief
@@ -146,7 +146,7 @@ public:
 	 * @param  nPlayerID
 	 * @return void
 	 */
-	virtual void SendByServerID(const uint32_t unLinkId, const uint32_t nMsgID, const char* msg, const uint32_t nLen, const uint64_t nPlayerID) override;
+	virtual void SendByServerID(const uint32_t unLinkId, const uint32_t nMsgID, const char* msg, const uint32_t nLen, const uint64_t nPlayerID, const uint32_t operateId) override;
 
 	/**
 	 * @brief
@@ -157,7 +157,7 @@ public:
 	 * @param  nPlayerID
 	 * @return void
 	 */
-	virtual void SendToServerByPB(const uint32_t unLinkId, const uint32_t nMsgID, const google::protobuf::Message& xData, const uint64_t nPlayerID) override;
+	virtual void SendToServerByPB(const uint32_t unLinkId, const uint32_t nMsgID, const google::protobuf::Message& xData, const uint64_t nPlayerID, const uint32_t operateId) override;
 
 	/**
 	 * @brief
@@ -167,7 +167,7 @@ public:
 	 * @param  nPlayerID
 	 * @return void
 	 */
-	virtual void SendToAllServer(const uint32_t nMsgID, const std::string& strData, const uint64_t nPlayerID) override;
+	virtual void SendToAllServer(const uint32_t nMsgID, const std::string& strData, const uint64_t nPlayerID, const uint32_t operateId) override;
 
 	/**
 	 * @brief
@@ -178,7 +178,7 @@ public:
 	 * @param  nPlayerID
 	 * @return void
 	 */
-	virtual void SendToAllServer(const uint32_t nMsgID, const char* msg, const uint32_t nLen, const uint64_t nPlayerID) override;
+	virtual void SendToAllServer(const uint32_t nMsgID, const char* msg, const uint32_t nLen, const uint64_t nPlayerID, const uint32_t operateId) override;
 
 	/**
 	 * @brief
@@ -188,7 +188,7 @@ public:
 	 * @param  nPlayerID
 	 * @return void
 	 */
-	virtual void SendToAllServerByPB(const uint32_t nMsgID, const google::protobuf::Message& xData, const uint64_t nPlayerID) override;
+	virtual void SendToAllServerByPB(const uint32_t nMsgID, const google::protobuf::Message& xData, const uint64_t nPlayerID, const uint32_t operateId) override;
 
 	/**
 	 * @brief
@@ -199,7 +199,7 @@ public:
 	 * @param  nPlayerID
 	 * @return void
 	 */
-	virtual void SendToAllServer(NF_SERVER_TYPES eServerType, uint32_t nMsgID, const std::string& strData, const uint64_t nPlayerID) override;
+	virtual void SendToAllServer(NF_SERVER_TYPES eServerType, uint32_t nMsgID, const std::string& strData, const uint64_t nPlayerID, const uint32_t operateId) override;
 
 	/**
 	 * @brief
@@ -211,7 +211,7 @@ public:
 	 * @param  nPlayerID
 	 * @return void
 	 */
-	virtual void SendToAllServer(NF_SERVER_TYPES eServerType, const uint32_t nMsgID, const char* msg, const uint32_t nLen, const uint64_t nPlayerID) override;
+	virtual void SendToAllServer(NF_SERVER_TYPES eServerType, const uint32_t nMsgID, const char* msg, const uint32_t nLen, const uint64_t nPlayerID, const uint32_t operateId) override;
 
 	/**
 	 * @brief
@@ -222,7 +222,7 @@ public:
 	 * @param  nPlayerID
 	 * @return void
 	 */
-	virtual void SendToAllServerByPB(NF_SERVER_TYPES eServerType, const uint32_t nMsgID, const google::protobuf::Message& xData, const uint64_t nPlayerID) override;
+	virtual void SendToAllServerByPB(NF_SERVER_TYPES eServerType, const uint32_t nMsgID, const google::protobuf::Message& xData, const uint64_t nPlayerID, const uint32_t operateId) override;
 protected:
 	/**
 	 * @brief
@@ -257,7 +257,7 @@ protected:
 	 * @param  nPlayerID
 	 * @return void
 	 */
-	void SendMsg(NFIClient* pClient, const uint32_t nMsgID, const char* msg, const uint32_t nLen, const uint64_t nPlayerID);
+	void SendMsg(NFIClient* pClient, const uint32_t nMsgID, const char* msg, const uint32_t nLen, const uint64_t nPlayerID, const uint32_t operateId);
 
 	/**
 	 * @brief

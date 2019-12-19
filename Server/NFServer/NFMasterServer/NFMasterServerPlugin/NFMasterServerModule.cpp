@@ -176,7 +176,7 @@ void NFCMasterServerModule::SendMsgToServer(uint32_t serverId, const uint32_t nM
 	{
 		if (pServerData->mServerInfo.server_state() != NFMsg::EST_CRASH)
 		{
-			FindModule<NFINetServerModule>()->SendToServerByPB(pServerData->mUnlinkId, nMsgID, xData, nPlayerID);
+			FindModule<NFINetServerModule>()->SendToServerByPB(pServerData->mUnlinkId, nMsgID, xData, nPlayerID, 0);
 		}
 	}
 }
@@ -189,7 +189,7 @@ void NFCMasterServerModule::SendMsgToAllServer(const uint32_t nMsgID, const goog
 	{
 		if (pServerData->mServerInfo.server_state() != NFMsg::EST_CRASH)
 		{
-			FindModule<NFINetServerModule>()->SendToServerByPB(pServerData->mUnlinkId, nMsgID, xData, nPlayerID);
+			FindModule<NFINetServerModule>()->SendToServerByPB(pServerData->mUnlinkId, nMsgID, xData, nPlayerID, 0);
 		}
 		pServerData = mWorldMap.Next();
 	}
@@ -199,7 +199,7 @@ void NFCMasterServerModule::SendMsgToAllServer(const uint32_t nMsgID, const goog
 	{
 		if (pServerData->mServerInfo.server_state() != NFMsg::EST_CRASH)
 		{
-			FindModule<NFINetServerModule>()->SendToServerByPB(pServerData->mUnlinkId, nMsgID, xData, nPlayerID);
+			FindModule<NFINetServerModule>()->SendToServerByPB(pServerData->mUnlinkId, nMsgID, xData, nPlayerID, 0);
 		}
 		pServerData = mProxyMap.Next();
 	}
@@ -209,7 +209,7 @@ void NFCMasterServerModule::SendMsgToAllServer(const uint32_t nMsgID, const goog
 	{
 		if (pServerData->mServerInfo.server_state() != NFMsg::EST_CRASH)
 		{
-			FindModule<NFINetServerModule>()->SendToServerByPB(pServerData->mUnlinkId, nMsgID, xData, nPlayerID);
+			FindModule<NFINetServerModule>()->SendToServerByPB(pServerData->mUnlinkId, nMsgID, xData, nPlayerID, 0);
 		}
 		pServerData = mGameMap.Next();
 	}
@@ -219,7 +219,7 @@ void NFCMasterServerModule::SendMsgToAllServer(const uint32_t nMsgID, const goog
 	{
 		if (pServerData->mServerInfo.server_state() != NFMsg::EST_CRASH)
 		{
-			FindModule<NFINetServerModule>()->SendToServerByPB(pServerData->mUnlinkId, nMsgID, xData, nPlayerID);
+			FindModule<NFINetServerModule>()->SendToServerByPB(pServerData->mUnlinkId, nMsgID, xData, nPlayerID, 0);
 		}
 		pServerData = mLoginMap.Next();
 	}
@@ -229,7 +229,7 @@ void NFCMasterServerModule::SendMsgToAllServer(const uint32_t nMsgID, const goog
 	{
 		if (pServerData->mServerInfo.server_state() != NFMsg::EST_CRASH)
 		{
-			FindModule<NFINetServerModule>()->SendToServerByPB(pServerData->mUnlinkId, nMsgID, xData, nPlayerID);
+			FindModule<NFINetServerModule>()->SendToServerByPB(pServerData->mUnlinkId, nMsgID, xData, nPlayerID, 0);
 		}
 		pServerData = mLocationMap.Next();
 	}
@@ -239,7 +239,7 @@ void NFCMasterServerModule::SendMsgToAllServer(const uint32_t nMsgID, const goog
 	{
 		if (pServerData->mServerInfo.server_state() != NFMsg::EST_CRASH)
 		{
-			FindModule<NFINetServerModule>()->SendToServerByPB(pServerData->mUnlinkId, nMsgID, xData, nPlayerID);
+			FindModule<NFINetServerModule>()->SendToServerByPB(pServerData->mUnlinkId, nMsgID, xData, nPlayerID, 0);
 		}
 		pServerData = mLogMap.Next();
 	}
@@ -249,7 +249,7 @@ void NFCMasterServerModule::SendMsgToAllServer(const uint32_t nMsgID, const goog
 	{
 		if (pServerData->mServerInfo.server_state() != NFMsg::EST_CRASH)
 		{
-			FindModule<NFINetServerModule>()->SendToServerByPB(pServerData->mUnlinkId, nMsgID, xData, nPlayerID);
+			FindModule<NFINetServerModule>()->SendToServerByPB(pServerData->mUnlinkId, nMsgID, xData, nPlayerID, 0);
 		}
 		pServerData = mWebMap.Next();
 	}
@@ -560,7 +560,7 @@ void NFCMasterServerModule::OnProxySocketEvent(const eMsgType nEvent, const uint
 	}
 }
 
-void NFCMasterServerModule::OnHandleOtherMessage(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen)
+void NFCMasterServerModule::OnHandleOtherMessage(const uint32_t unLinkId, const uint64_t playerId, const uint32_t operateId, const uint32_t nMsgId, const char* msg, const uint32_t nLen)
 {
 	std::string ip = FindModule<NFINetServerModule>()->GetLinkIp(unLinkId);
 	NFLogWarning(NF_LOG_SERVER_NOT_HANDLE_MESSAGE, 0, "other message not handled:playerId:{},msgId:{},ip:{}", playerId, nMsgId, ip);
@@ -847,7 +847,7 @@ void NFCMasterServerModule::OnClientDisconnect(uint32_t unLinkId)
 	}
 }
 
-void NFCMasterServerModule::OnLoginServerRegisterProcess(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen)
+void NFCMasterServerModule::OnLoginServerRegisterProcess(const uint32_t unLinkId, const uint64_t playerId, const uint32_t operateId, const uint32_t nMsgId, const char* msg, const uint32_t nLen)
 {
 	NFMsg::ServerInfoReportList xMsg;
 	CLIENT_MSG_PROCESS_NO_OBJECT(nMsgId, playerId, msg, nLen, xMsg);
@@ -877,7 +877,7 @@ void NFCMasterServerModule::OnLoginServerRegisterProcess(const uint32_t unLinkId
 	}
 }
 
-void NFCMasterServerModule::OnLoginServerUnRegisterProcess(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen)
+void NFCMasterServerModule::OnLoginServerUnRegisterProcess(const uint32_t unLinkId, const uint64_t playerId, const uint32_t operateId, const uint32_t nMsgId, const char* msg, const uint32_t nLen)
 {
 	NFMsg::ServerInfoReportList xMsg;
 	CLIENT_MSG_PROCESS_NO_OBJECT(nMsgId, playerId, msg, nLen, xMsg);
@@ -891,7 +891,7 @@ void NFCMasterServerModule::OnLoginServerUnRegisterProcess(const uint32_t unLink
 	}
 }
 
-void NFCMasterServerModule::OnLoginServerRefreshProcess(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen)
+void NFCMasterServerModule::OnLoginServerRefreshProcess(const uint32_t unLinkId, const uint64_t playerId, const uint32_t operateId, const uint32_t nMsgId, const char* msg, const uint32_t nLen)
 {
 	NFMsg::ServerInfoReportList xMsg;
 	CLIENT_MSG_PROCESS_NO_OBJECT(nMsgId, playerId, msg, nLen, xMsg);
@@ -920,7 +920,7 @@ void NFCMasterServerModule::OnLoginServerRefreshProcess(const uint32_t unLinkId,
 }
 
 //游戏服务器注册协议回调
-void NFCMasterServerModule::OnGameServerRegisterProcess(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen)
+void NFCMasterServerModule::OnGameServerRegisterProcess(const uint32_t unLinkId, const uint64_t playerId, const uint32_t operateId, const uint32_t nMsgId, const char* msg, const uint32_t nLen)
 {
 	NFMsg::ServerInfoReportList xMsg;
 	CLIENT_MSG_PROCESS_NO_OBJECT(nMsgId, playerId, msg, nLen, xMsg);
@@ -949,7 +949,7 @@ void NFCMasterServerModule::OnGameServerRegisterProcess(const uint32_t unLinkId,
 	}
 }
 
-void NFCMasterServerModule::OnGameServerUnRegisterProcess(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen)
+void NFCMasterServerModule::OnGameServerUnRegisterProcess(const uint32_t unLinkId, const uint64_t playerId, const uint32_t operateId, const uint32_t nMsgId, const char* msg, const uint32_t nLen)
 {
 	NFMsg::ServerInfoReportList xMsg;
 	CLIENT_MSG_PROCESS_NO_OBJECT(nMsgId, playerId, msg, nLen, xMsg);
@@ -963,7 +963,7 @@ void NFCMasterServerModule::OnGameServerUnRegisterProcess(const uint32_t unLinkI
 	}
 }
 
-void NFCMasterServerModule::OnGameServerRefreshProcess(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen)
+void NFCMasterServerModule::OnGameServerRefreshProcess(const uint32_t unLinkId, const uint64_t playerId, const uint32_t operateId, const uint32_t nMsgId, const char* msg, const uint32_t nLen)
 {
 	NFMsg::ServerInfoReportList xMsg;
 	CLIENT_MSG_PROCESS_NO_OBJECT(nMsgId, playerId, msg, nLen, xMsg);
@@ -991,7 +991,7 @@ void NFCMasterServerModule::OnGameServerRefreshProcess(const uint32_t unLinkId, 
 	}
 }
 
-void NFCMasterServerModule::OnProxyServerRegisterProcess(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen)
+void NFCMasterServerModule::OnProxyServerRegisterProcess(const uint32_t unLinkId, const uint64_t playerId, const uint32_t operateId, const uint32_t nMsgId, const char* msg, const uint32_t nLen)
 {
 	NFMsg::ServerInfoReportList xMsg;
 	CLIENT_MSG_PROCESS_NO_OBJECT(nMsgId, playerId, msg, nLen, xMsg);
@@ -1020,7 +1020,7 @@ void NFCMasterServerModule::OnProxyServerRegisterProcess(const uint32_t unLinkId
 	}
 }
 
-void NFCMasterServerModule::OnProxyServerUnRegisterProcess(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen)
+void NFCMasterServerModule::OnProxyServerUnRegisterProcess(const uint32_t unLinkId, const uint64_t playerId, const uint32_t operateId, const uint32_t nMsgId, const char* msg, const uint32_t nLen)
 {
 	NFMsg::ServerInfoReportList xMsg;
 	CLIENT_MSG_PROCESS_NO_OBJECT(nMsgId, playerId, msg, nLen, xMsg);
@@ -1034,7 +1034,7 @@ void NFCMasterServerModule::OnProxyServerUnRegisterProcess(const uint32_t unLink
 	}
 }
 
-void NFCMasterServerModule::OnProxyServerRefreshProcess(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen)
+void NFCMasterServerModule::OnProxyServerRefreshProcess(const uint32_t unLinkId, const uint64_t playerId, const uint32_t operateId, const uint32_t nMsgId, const char* msg, const uint32_t nLen)
 {
 	NFMsg::ServerInfoReportList xMsg;
 	CLIENT_MSG_PROCESS_NO_OBJECT(nMsgId, playerId, msg, nLen, xMsg);
@@ -1062,7 +1062,7 @@ void NFCMasterServerModule::OnProxyServerRefreshProcess(const uint32_t unLinkId,
 	}
 }
 
-void NFCMasterServerModule::OnWorldServerRegisterProcess(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen)
+void NFCMasterServerModule::OnWorldServerRegisterProcess(const uint32_t unLinkId, const uint64_t playerId, const uint32_t operateId, const uint32_t nMsgId, const char* msg, const uint32_t nLen)
 {
 	NFMsg::ServerInfoReportList xMsg;
 	CLIENT_MSG_PROCESS_NO_OBJECT(nMsgId, playerId, msg, nLen, xMsg);
@@ -1091,7 +1091,7 @@ void NFCMasterServerModule::OnWorldServerRegisterProcess(const uint32_t unLinkId
 	}
 }
 
-void NFCMasterServerModule::OnWorldServerUnRegisterProcess(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen)
+void NFCMasterServerModule::OnWorldServerUnRegisterProcess(const uint32_t unLinkId, const uint64_t playerId, const uint32_t operateId, const uint32_t nMsgId, const char* msg, const uint32_t nLen)
 {
 	NFMsg::ServerInfoReportList xMsg;
 	CLIENT_MSG_PROCESS_NO_OBJECT(nMsgId, playerId, msg, nLen, xMsg);
@@ -1105,7 +1105,7 @@ void NFCMasterServerModule::OnWorldServerUnRegisterProcess(const uint32_t unLink
 	}
 }
 
-void NFCMasterServerModule::OnWorldServerRefreshProcess(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen)
+void NFCMasterServerModule::OnWorldServerRefreshProcess(const uint32_t unLinkId, const uint64_t playerId, const uint32_t operateId, const uint32_t nMsgId, const char* msg, const uint32_t nLen)
 {
 	NFMsg::ServerInfoReportList xMsg;
 	CLIENT_MSG_PROCESS_NO_OBJECT(nMsgId, playerId, msg, nLen, xMsg);
@@ -1133,7 +1133,7 @@ void NFCMasterServerModule::OnWorldServerRefreshProcess(const uint32_t unLinkId,
 	}
 }
 
-void NFCMasterServerModule::OnServerHttpMsgRet(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen)
+void NFCMasterServerModule::OnServerHttpMsgRet(const uint32_t unLinkId, const uint64_t playerId, const uint32_t operateId, const uint32_t nMsgId, const char* msg, const uint32_t nLen)
 {
 	std::string strMsg(msg, nLen);
 	uint32_t requestId = (uint32_t)playerId;
@@ -1141,7 +1141,7 @@ void NFCMasterServerModule::OnServerHttpMsgRet(const uint32_t unLinkId, const ui
 	FindModule<NFIHttpServerModule>()->ResponseMsg(NF_ST_MASTER, requestId, strMsg, NFWebStatus::WEB_OK, "OK");
 }
 
-void NFCMasterServerModule::OnServerReport(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen)
+void NFCMasterServerModule::OnServerReport(const uint32_t unLinkId, const uint64_t playerId, const uint32_t operateId, const uint32_t nMsgId, const char* msg, const uint32_t nLen)
 {
 	NFMsg::ServerInfoReportList xMsg;
 	CLIENT_MSG_PROCESS_NO_OBJECT(nMsgId, playerId, msg, nLen, xMsg);
@@ -1367,7 +1367,7 @@ void NFCMasterServerModule::SynServerToOthers(NF_SHARE_PTR<NFServerData> pServer
 				*pData = pLoginServer->mServerInfo;
 
 				//NFLogInfo(NF_LOG_SERVER_CONNECT_SERVER, 0, "Master Server Send Server To LoginServer, serverName:{}, serverId:{}, ip:{}, port:{}", pServerData->mServerInfo.server_name(), pServerData->mServerInfo.server_id(), pServerData->mServerInfo.server_ip(), pServerData->mServerInfo.server_port());
-				FindModule<NFINetServerModule>()->SendToServerByPB(pLoginServer->mUnlinkId, EGMI_NET_MASTER_SEND_OTHERS_TO_LOGIN, xSelfData, 0);
+				FindModule<NFINetServerModule>()->SendToServerByPB(pLoginServer->mUnlinkId, EGMI_NET_MASTER_SEND_OTHERS_TO_LOGIN, xSelfData, 0, 0);
 			}
 
 			pLoginServer = mLoginMap.Next();
@@ -1385,7 +1385,7 @@ void NFCMasterServerModule::SynServerToOthers(NF_SHARE_PTR<NFServerData> pServer
 				*pData = pWorldServer->mServerInfo;
 
 				//NFLogInfo(NF_LOG_SERVER_CONNECT_SERVER, 0, "Master Server Send Server To WorldServer, serverName:{}, serverId:{}, ip:{}, port:{}", pServerData->mServerInfo.server_name(), pServerData->mServerInfo.server_id(), pServerData->mServerInfo.server_ip(), pServerData->mServerInfo.server_port());
-				FindModule<NFINetServerModule>()->SendToServerByPB(pWorldServer->mUnlinkId, EGMI_NET_MASTER_SEND_OTHERS_TO_WORLD, xSelfData, 0);
+				FindModule<NFINetServerModule>()->SendToServerByPB(pWorldServer->mUnlinkId, EGMI_NET_MASTER_SEND_OTHERS_TO_WORLD, xSelfData, 0, 0);
 			}
 
 			pWorldServer = mWorldMap.Next();
@@ -1403,7 +1403,7 @@ void NFCMasterServerModule::SynServerToOthers(NF_SHARE_PTR<NFServerData> pServer
 				*pData = pGameServer->mServerInfo;
 
 				//NFLogInfo(NF_LOG_SERVER_CONNECT_SERVER, 0, "Master Server Send Server To GameServer, serverName:{}, serverId:{}, ip:{}, port:{}", pServerData->mServerInfo.server_name(), pServerData->mServerInfo.server_id(), pServerData->mServerInfo.server_ip(), pServerData->mServerInfo.server_port());
-				FindModule<NFINetServerModule>()->SendToServerByPB(pGameServer->mUnlinkId, EGMI_NET_MASTER_SEND_OTHERS_TO_GAME, xSelfData, 0);
+				FindModule<NFINetServerModule>()->SendToServerByPB(pGameServer->mUnlinkId, EGMI_NET_MASTER_SEND_OTHERS_TO_GAME, xSelfData, 0, 0);
 			}
 
 			pGameServer = mGameMap.Next();
@@ -1421,7 +1421,7 @@ void NFCMasterServerModule::SynServerToOthers(NF_SHARE_PTR<NFServerData> pServer
 				*pData = pProxyServer->mServerInfo;
 
 				//NFLogInfo(NF_LOG_SERVER_CONNECT_SERVER, 0, "Master Server Send Server To ProxyServer, serverName:{}, serverId:{}, ip:{}, port:{}", pServerData->mServerInfo.server_name(), pServerData->mServerInfo.server_id(), pServerData->mServerInfo.server_ip(), pServerData->mServerInfo.server_port());
-				FindModule<NFINetServerModule>()->SendToServerByPB(pProxyServer->mUnlinkId, EGMI_NET_MASTER_SEND_OTHERS_TO_PROXY, xSelfData, 0);
+				FindModule<NFINetServerModule>()->SendToServerByPB(pProxyServer->mUnlinkId, EGMI_NET_MASTER_SEND_OTHERS_TO_PROXY, xSelfData, 0, 0);
 			}
 
 			pProxyServer = mProxyMap.Next();
@@ -1439,7 +1439,7 @@ void NFCMasterServerModule::SynServerToOthers(NF_SHARE_PTR<NFServerData> pServer
 				*pData = pLocationServer->mServerInfo;
 
 				//NFLogInfo(NF_LOG_SERVER_CONNECT_SERVER, 0, "Master Server Send Server To ProxyServer, serverName:{}, serverId:{}, ip:{}, port:{}", pServerData->mServerInfo.server_name(), pServerData->mServerInfo.server_id(), pServerData->mServerInfo.server_ip(), pServerData->mServerInfo.server_port());
-				FindModule<NFINetServerModule>()->SendToServerByPB(pLocationServer->mUnlinkId, EGMI_NET_MASTER_SEND_OTHERS_TO_LOCATION, xSelfData, 0);
+				FindModule<NFINetServerModule>()->SendToServerByPB(pLocationServer->mUnlinkId, EGMI_NET_MASTER_SEND_OTHERS_TO_LOCATION, xSelfData, 0, 0);
 			}
 
 			pLocationServer = mLocationMap.Next();
@@ -1456,7 +1456,7 @@ void NFCMasterServerModule::SynServerToOthers(NF_SHARE_PTR<NFServerData> pServer
 				NFMsg::ServerInfoReport* pData = xData.add_server_list();
 				*pData = pLogServer->mServerInfo;
 
-				FindModule<NFINetServerModule>()->SendToServerByPB(pLogServer->mUnlinkId, EGMI_NET_MASTER_SEND_OTHERS_TO_LOG, xSelfData, 0);
+				FindModule<NFINetServerModule>()->SendToServerByPB(pLogServer->mUnlinkId, EGMI_NET_MASTER_SEND_OTHERS_TO_LOG, xSelfData, 0, 0);
 			}
 
 			pLogServer = mLogMap.Next();
@@ -1474,7 +1474,7 @@ void NFCMasterServerModule::SynServerToOthers(NF_SHARE_PTR<NFServerData> pServer
 				NFMsg::ServerInfoReport* pData = xData.add_server_list();
 				*pData = pWebServer->mServerInfo;
 
-				FindModule<NFINetServerModule>()->SendToServerByPB(pWebServer->mUnlinkId, EGMI_NET_MASTER_SEND_OTHERS_TO_WEB, xSelfData, 0);
+				FindModule<NFINetServerModule>()->SendToServerByPB(pWebServer->mUnlinkId, EGMI_NET_MASTER_SEND_OTHERS_TO_WEB, xSelfData, 0, 0);
 			}
 
 			pWebServer = mWebMap.Next();
@@ -1484,41 +1484,41 @@ void NFCMasterServerModule::SynServerToOthers(NF_SHARE_PTR<NFServerData> pServer
 	if (pServerData->mServerInfo.server_type() == NF_ST_GAME)
 	{
 		//NFLogInfo(NF_LOG_SERVER_CONNECT_SERVER, 0, "Master Server Send others to GameServer, serverName:{}, serverId:{}, ip:{}, port:{}", pServerData->mServerInfo.server_name(), pServerData->mServerInfo.server_id(), pServerData->mServerInfo.server_ip(), pServerData->mServerInfo.server_port());
-		FindModule<NFINetServerModule>()->SendToServerByPB(pServerData->mUnlinkId, EGMI_NET_MASTER_SEND_OTHERS_TO_GAME, xData, 0);
+		FindModule<NFINetServerModule>()->SendToServerByPB(pServerData->mUnlinkId, EGMI_NET_MASTER_SEND_OTHERS_TO_GAME, xData, 0, 0);
 	}
 	else if (pServerData->mServerInfo.server_type() == NF_ST_WORLD)
 	{
 		//NFLogInfo(NF_LOG_SERVER_CONNECT_SERVER, 0, "Master Server Send others to WorldServer, serverName:{}, serverId:{}, ip:{}, port:{}", pServerData->mServerInfo.server_name(), pServerData->mServerInfo.server_id(), pServerData->mServerInfo.server_ip(), pServerData->mServerInfo.server_port());
-		FindModule<NFINetServerModule>()->SendToServerByPB(pServerData->mUnlinkId, EGMI_NET_MASTER_SEND_OTHERS_TO_WORLD, xData, 0);
+		FindModule<NFINetServerModule>()->SendToServerByPB(pServerData->mUnlinkId, EGMI_NET_MASTER_SEND_OTHERS_TO_WORLD, xData, 0, 0);
 	}
 	else if (pServerData->mServerInfo.server_type() == NF_ST_PROXY)
 	{
 		//NFLogInfo(NF_LOG_SERVER_CONNECT_SERVER, 0, "Master Server Send others to ProxyServer, serverName:{}, serverId:{}, ip:{}, port:{}", pServerData->mServerInfo.server_name(), pServerData->mServerInfo.server_id(), pServerData->mServerInfo.server_ip(), pServerData->mServerInfo.server_port());
-		FindModule<NFINetServerModule>()->SendToServerByPB(pServerData->mUnlinkId, EGMI_NET_MASTER_SEND_OTHERS_TO_PROXY, xData, 0);
+		FindModule<NFINetServerModule>()->SendToServerByPB(pServerData->mUnlinkId, EGMI_NET_MASTER_SEND_OTHERS_TO_PROXY, xData, 0, 0);
 	}
 	else if (pServerData->mServerInfo.server_type() == NF_ST_LOGIN)
 	{
 		//NFLogInfo(NF_LOG_SERVER_CONNECT_SERVER, 0, "Master Server Send others to LoginServer, serverName:{}, serverId:{}, ip:{}, port:{}", pServerData->mServerInfo.server_name(), pServerData->mServerInfo.server_id(), pServerData->mServerInfo.server_ip(), pServerData->mServerInfo.server_port());
-		FindModule<NFINetServerModule>()->SendToServerByPB(pServerData->mUnlinkId, EGMI_NET_MASTER_SEND_OTHERS_TO_LOGIN, xData, 0);
+		FindModule<NFINetServerModule>()->SendToServerByPB(pServerData->mUnlinkId, EGMI_NET_MASTER_SEND_OTHERS_TO_LOGIN, xData, 0, 0);
 	}
 	else if (pServerData->mServerInfo.server_type() == NF_ST_LOCATION)
 	{
 		//NFLogInfo(NF_LOG_SERVER_CONNECT_SERVER, 0, "Master Server Send others to LoginServer, serverName:{}, serverId:{}, ip:{}, port:{}", pServerData->mServerInfo.server_name(), pServerData->mServerInfo.server_id(), pServerData->mServerInfo.server_ip(), pServerData->mServerInfo.server_port());
-		FindModule<NFINetServerModule>()->SendToServerByPB(pServerData->mUnlinkId, EGMI_NET_MASTER_SEND_OTHERS_TO_LOCATION, xData, 0);
+		FindModule<NFINetServerModule>()->SendToServerByPB(pServerData->mUnlinkId, EGMI_NET_MASTER_SEND_OTHERS_TO_LOCATION, xData, 0, 0);
 	}
 	else if (pServerData->mServerInfo.server_type() == NF_ST_LOG)
 	{
 		//NFLogInfo(NF_LOG_SERVER_CONNECT_SERVER, 0, "Master Server Send others to LoginServer, serverName:{}, serverId:{}, ip:{}, port:{}", pServerData->mServerInfo.server_name(), pServerData->mServerInfo.server_id(), pServerData->mServerInfo.server_ip(), pServerData->mServerInfo.server_port());
-		FindModule<NFINetServerModule>()->SendToServerByPB(pServerData->mUnlinkId, EGMI_NET_MASTER_SEND_OTHERS_TO_LOG, xData, 0);
+		FindModule<NFINetServerModule>()->SendToServerByPB(pServerData->mUnlinkId, EGMI_NET_MASTER_SEND_OTHERS_TO_LOG, xData, 0, 0);
 	}
 	else if (pServerData->mServerInfo.server_type() == NF_ST_WEB)
 	{
 		//NFLogInfo(NF_LOG_SERVER_CONNECT_SERVER, 0, "Master Server Send others to LoginServer, serverName:{}, serverId:{}, ip:{}, port:{}", pServerData->mServerInfo.server_name(), pServerData->mServerInfo.server_id(), pServerData->mServerInfo.server_ip(), pServerData->mServerInfo.server_port());
-		FindModule<NFINetServerModule>()->SendToServerByPB(pServerData->mUnlinkId, EGMI_NET_MASTER_SEND_OTHERS_TO_WEB, xData, 0);
+		FindModule<NFINetServerModule>()->SendToServerByPB(pServerData->mUnlinkId, EGMI_NET_MASTER_SEND_OTHERS_TO_WEB, xData, 0, 0);
 	}
 }
 
-void NFCMasterServerModule::OnServerErrorMsg(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen)
+void NFCMasterServerModule::OnServerErrorMsg(const uint32_t unLinkId, const uint64_t playerId, const uint32_t operateId, const uint32_t nMsgId, const char* msg, const uint32_t nLen)
 {
 	NFMsg::ServerErrorLogMsg xMsg;
 	CLIENT_MSG_PROCESS_NO_OBJECT(nMsgId, playerId, msg, nLen, xMsg);
@@ -1544,7 +1544,7 @@ void NFCMasterServerModule::OnServerErrorMsg(const uint32_t unLinkId, const uint
 }
 
 //Location服务器注册协议回调
-void NFCMasterServerModule::OnLocationServerRegisterProcess(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen)
+void NFCMasterServerModule::OnLocationServerRegisterProcess(const uint32_t unLinkId, const uint64_t playerId, const uint32_t operateId, const uint32_t nMsgId, const char* msg, const uint32_t nLen)
 {
 	NFMsg::ServerInfoReportList xMsg;
 	CLIENT_MSG_PROCESS_NO_OBJECT(nMsgId, playerId, msg, nLen, xMsg);
@@ -1573,18 +1573,18 @@ void NFCMasterServerModule::OnLocationServerRegisterProcess(const uint32_t unLin
 	}
 }
 
-void NFCMasterServerModule::OnLocationServerUnRegisterProcess(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen)
+void NFCMasterServerModule::OnLocationServerUnRegisterProcess(const uint32_t unLinkId, const uint64_t playerId, const uint32_t operateId, const uint32_t nMsgId, const char* msg, const uint32_t nLen)
 {
 
 }
 
-void NFCMasterServerModule::OnLocationServerRefreshProcess(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen)
+void NFCMasterServerModule::OnLocationServerRefreshProcess(const uint32_t unLinkId, const uint64_t playerId, const uint32_t operateId, const uint32_t nMsgId, const char* msg, const uint32_t nLen)
 {
 
 }
 
 //Log服务器注册协议回调
-void NFCMasterServerModule::OnLogServerRegisterProcess(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen)
+void NFCMasterServerModule::OnLogServerRegisterProcess(const uint32_t unLinkId, const uint64_t playerId, const uint32_t operateId, const uint32_t nMsgId, const char* msg, const uint32_t nLen)
 {
 	NFMsg::ServerInfoReportList xMsg;
 	CLIENT_MSG_PROCESS_NO_OBJECT(nMsgId, playerId, msg, nLen, xMsg);
@@ -1613,18 +1613,18 @@ void NFCMasterServerModule::OnLogServerRegisterProcess(const uint32_t unLinkId, 
 	}
 }
 
-void NFCMasterServerModule::OnLogServerUnRegisterProcess(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen)
+void NFCMasterServerModule::OnLogServerUnRegisterProcess(const uint32_t unLinkId, const uint64_t playerId, const uint32_t operateId, const uint32_t nMsgId, const char* msg, const uint32_t nLen)
 {
 
 }
 
-void NFCMasterServerModule::OnLogServerRefreshProcess(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen)
+void NFCMasterServerModule::OnLogServerRefreshProcess(const uint32_t unLinkId, const uint64_t playerId, const uint32_t operateId, const uint32_t nMsgId, const char* msg, const uint32_t nLen)
 {
 
 }
 
 //Web服务器注册协议回调
-void NFCMasterServerModule::OnWebServerRegisterProcess(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen)
+void NFCMasterServerModule::OnWebServerRegisterProcess(const uint32_t unLinkId, const uint64_t playerId, const uint32_t operateId, const uint32_t nMsgId, const char* msg, const uint32_t nLen)
 {
 	NFMsg::ServerInfoReportList xMsg;
 	CLIENT_MSG_PROCESS_NO_OBJECT(nMsgId, playerId, msg, nLen, xMsg);
@@ -1653,12 +1653,12 @@ void NFCMasterServerModule::OnWebServerRegisterProcess(const uint32_t unLinkId, 
 	}
 }
 
-void NFCMasterServerModule::OnWebServerUnRegisterProcess(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen)
+void NFCMasterServerModule::OnWebServerUnRegisterProcess(const uint32_t unLinkId, const uint64_t playerId, const uint32_t operateId, const uint32_t nMsgId, const char* msg, const uint32_t nLen)
 {
 
 }
 
-void NFCMasterServerModule::OnWebServerRefreshProcess(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen)
+void NFCMasterServerModule::OnWebServerRefreshProcess(const uint32_t unLinkId, const uint64_t playerId, const uint32_t operateId, const uint32_t nMsgId, const char* msg, const uint32_t nLen)
 {
 
 }

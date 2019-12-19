@@ -36,13 +36,13 @@ bool NFCRebotModule::Init()
 	return true;
 }
 
-void NFCRebotModule::OnHandleOtherMessage(const uint32_t unLinkId, const uint64_t playerId, const uint32_t nMsgId, const char* msg, const uint32_t nLen)
+void NFCRebotModule::OnHandleOtherMessage(const uint32_t unLinkId, const uint64_t playerId, const uint32_t operateId, const uint32_t nMsgId, const char* msg, const uint32_t nLen)
 {
 	NFILuaScriptModule* pLuaScriptModule = FindModule<NFILuaScriptModule>();
 	if (pLuaScriptModule)
 	{
 		std::string strMsg(msg, nLen);
-		pLuaScriptModule->RunNetRecvLuaFunc("LuaNFrame.DispatchRebotTcp", unLinkId, playerId, nMsgId, strMsg);
+		pLuaScriptModule->RunNetRecvLuaFunc("LuaNFrame.DispatchRebotTcp", unLinkId, playerId, operateId, nMsgId, strMsg);
 	}
 	else
 	{
@@ -58,7 +58,7 @@ void NFCRebotModule::OnProxySocketEvent(const eMsgType nEvent, const uint32_t un
 		NFILuaScriptModule* pLuaScriptModule = FindModule<NFILuaScriptModule>();
 		if (pLuaScriptModule)
 		{
-			pLuaScriptModule->RunNetRecvLuaFunc("LuaNFrame.DispatchRebotEvent", unLinkId, 0, eMsgType_CONNECTED, "");
+			pLuaScriptModule->RunNetRecvLuaFunc("LuaNFrame.DispatchRebotEvent", unLinkId, 0, 0, eMsgType_CONNECTED, "");
 		}
 	}
 	else if (nEvent == eMsgType_DISCONNECTED)
@@ -68,7 +68,7 @@ void NFCRebotModule::OnProxySocketEvent(const eMsgType nEvent, const uint32_t un
 		NFILuaScriptModule* pLuaScriptModule = FindModule<NFILuaScriptModule>();
 		if (pLuaScriptModule)
 		{
-			pLuaScriptModule->RunNetRecvLuaFunc("LuaNFrame.DispatchRebotEvent", unLinkId, 0, eMsgType_DISCONNECTED, "");
+			pLuaScriptModule->RunNetRecvLuaFunc("LuaNFrame.DispatchRebotEvent", unLinkId, 0, 0, eMsgType_DISCONNECTED, "");
 		}
 	}
 }

@@ -239,9 +239,9 @@ void NFCLuaThreadModule::RunHttpRecvLuaFunc(const std::string& luaFunc, const ui
 	AddTcpMsgTask(new NFHttpMsgActorTask(this, luaFunc, unLinkId, requestId, firstPath, secondPath, strMsg));
 }
 
-void NFCLuaThreadModule::RunNetRecvLuaFunc(const std::string& luaFunc, const uint32_t unLinkId, const uint64_t valueId, const uint32_t nMsgId, const std::string& strMsg)
+void NFCLuaThreadModule::RunNetRecvLuaFunc(const std::string& luaFunc, const uint32_t unLinkId, const uint64_t valueId, const uint32_t operateId, const uint32_t nMsgId, const std::string& strMsg)
 {
-	AddTcpMsgTask(new NFTcpMsgActorTask(this, luaFunc, unLinkId, valueId, nMsgId, strMsg));
+	AddTcpMsgTask(new NFTcpMsgActorTask(this, luaFunc, unLinkId, valueId, operateId, nMsgId, strMsg));
 }
 
 void NFCLuaThreadModule::SessionReport(uint64_t playerId, const std::string& report)
@@ -404,7 +404,7 @@ void NFCLuaThreadModule::SendMsgToPlayer(uint32_t usLinkId, const uint64_t nPlay
 	{
 		if (usLinkId != 0)
 		{
-			m_pNetServerModule->SendByServerID(usLinkId, nMsgID, strData, nPlayerID);
+			m_pNetServerModule->SendByServerID(usLinkId, nMsgID, strData, nPlayerID, 0);
 		}
 		else
 		{
@@ -413,7 +413,7 @@ void NFCLuaThreadModule::SendMsgToPlayer(uint32_t usLinkId, const uint64_t nPlay
 				auto pPlayerInfo = GetPlayerInfo(nPlayerID);
 				if (pPlayerInfo)
 				{
-					m_pNetServerModule->SendByServerID(pPlayerInfo->GetProxyUnlinkId(), nMsgID, strData, nPlayerID);
+					m_pNetServerModule->SendByServerID(pPlayerInfo->GetProxyUnlinkId(), nMsgID, strData, nPlayerID, 0);
 				}
 			}
 		}
@@ -432,7 +432,7 @@ void NFCLuaThreadModule::SendMsgToManyPlayer(const std::vector<uint64_t>& nVecPl
 				auto pPlayerInfo = GetPlayerInfo(nPlayerID);
 				if (pPlayerInfo)
 				{
-					m_pNetServerModule->SendByServerID(pPlayerInfo->GetProxyUnlinkId(), nMsgID, strData, nPlayerID);
+					m_pNetServerModule->SendByServerID(pPlayerInfo->GetProxyUnlinkId(), nMsgID, strData, nPlayerID, 0);
 				}
 			}
 		}	
@@ -447,7 +447,7 @@ void NFCLuaThreadModule::SendMsgToAllPlayer(const uint32_t nMsgID, const uint32_
 		auto pPlayerInfo = mPlayerProxyInfoMap.First();
 		while (pPlayerInfo)
 		{
-			m_pNetServerModule->SendByServerID(pPlayerInfo->GetProxyUnlinkId(), nMsgID, strData, pPlayerInfo->GetPlayerId());
+			m_pNetServerModule->SendByServerID(pPlayerInfo->GetProxyUnlinkId(), nMsgID, strData, pPlayerInfo->GetPlayerId(), 0);
 			pPlayerInfo = mPlayerProxyInfoMap.Next();
 		}
 	}
@@ -459,7 +459,7 @@ void NFCLuaThreadModule::SendMsgToMaster(uint32_t usLinkId, const uint64_t nPlay
 	{
 		if (usLinkId != 0)
 		{
-			m_pNetClientModule->SendByServerID(usLinkId, nMsgID, strData, nPlayerID);
+			m_pNetClientModule->SendByServerID(usLinkId, nMsgID, strData, nPlayerID, 0);
 		}
 	}
 }
