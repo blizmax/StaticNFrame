@@ -34,26 +34,8 @@ bool NFCGameLogicModule::Awake()
 		return false;
 	}
 
-	//ret = FindModule<NFIMysqlModule>()->AddMysqlServer(NF_ST_GAME, pConfig->mMysqlIp, pConfig->mMysqlPort, pConfig->mMysqlDbName, pConfig->mMysqlUser, pConfig->mMysqlPassword);
-	//if (ret == false)
-	//{
-	//	NFLogError(NF_LOG_SYSTEMLOG, 0, "NFIMysqlModule AddMysqlServer failed!");
-	//	return false;
-	//}
-
-	//ret = FindModule<NFIAsyMysqlModule>()->AddMysqlServer(NF_ST_GAME, pConfig->mMysqlIp, pConfig->mMysqlPort, pConfig->mMysqlDbName, pConfig->mMysqlUser, pConfig->mMysqlPassword);
-	//if (ret == false)
-	//{
-	//	NFLogError(NF_LOG_SYSTEMLOG, 0, "NFIAsyMysqlModule AddMysqlServer failed!");
-	//	return false;
-	//}
-
-	//ret = FindModule<NFINoSqlModule>()->AddConnectSql("nosql", pConfig->mNosqlIp, pConfig->mNosqlPort);
-	//if (ret == false)
-	//{
-	//	NFLogError(NF_LOG_SYSTEMLOG, 0, "redis connect server failed, ip:{}, port:{}", pConfig->mNosqlIp, pConfig->mNosqlPort);
-	//	return false;
-	//}
+	FindModule<NFINetServerModule>()->AddReceiveCallBack(NF_ST_GAME, this, &NFCGameLogicModule::OnHandleOtherMessage);
+	FindModule<NFINetServerModule>()->AddReceiveCallBack(NF_ST_GAME, this, &NFCGameLogicModule::OnHandleOtherMainSubMessage);
 
 	FindModule<NFIServerNetEventModule>()->AddEventCallBack(NF_ST_GAME, NF_ST_PROXY, this, &NFCGameLogicModule::OnHandleProxyEventCallBack);
 	FindModule<NFIServerNetEventModule>()->AddEventCallBack(NF_ST_GAME, NF_ST_WORLD, this, &NFCGameLogicModule::OnHandleWorldEventCallBack);
@@ -189,5 +171,35 @@ void NFCGameLogicModule::SendMsgToClientByPlayerId(uint64_t playerId, uint32_t n
 	else
 	{
 		NFLogWarning(NF_LOG_SYSTEMLOG, 0, "playerId:{} not exist, can't find send message!", playerId);
+	}
+}
+
+void NFCGameLogicModule::OnHandleOtherMessage(const uint32_t unLinkId, const uint64_t playerId, const uint32_t operateId, const uint32_t nMsgId, const char* msg, const uint32_t nLen)
+{
+	if (nMsgId >= 65536) return;
+
+	NFILuaScriptModule* pLuaScriptModule = FindModule<NFILuaScriptModule>();
+	if (pLuaScriptModule)
+	{
+		std::string strMsg(msg, nLen);
+		pLuaScriptModule->RunNetRecvLuaFunc("LuaNFrame.DispatchGameTcp", unLinkId, playerId, operateId, nMsgId, strMsg);
+	}
+	else
+	{
+		NFLogWarning(NF_LOG_SERVER_NOT_HANDLE_MESSAGE, playerId, "msg:{} not handled!", nMsgId);
+	}
+}
+
+void NFCGameLogicModule::OnHandleOtherMainSubMessage(const uint32_t unLinkId, const uint64_t playerId, const uint32_t operateId, const uint16_t nMainMsgId, const uint16_t nSubMsgId, const char* msg, const uint32_t nLen)
+{
+	NFILuaScriptModule* pLuaScriptModule = FindModule<NFILuaScriptModule>();
+	if (pLuaScriptModule)
+	{
+		std::string strMsg(msg, nLen);
+		pLuaScriptModule->RunNetRecvLuaFuncWithMainSub("LuaNFrame.DispatchGameTcp_MainSub", unLinkId, playerId, operateId, nMainMsgId, nSubMsgId, strMsg);
+	}
+	else
+	{
+		NFLogWarning(NF_LOG_SERVER_NOT_HANDLE_MESSAGE, playerId, "mainmsgId:{} subMsgId, not handled!", nMainMsgId, nSubMsgId);
 	}
 }

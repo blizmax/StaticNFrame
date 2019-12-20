@@ -28,7 +28,6 @@ NFCGameServerModule::~NFCGameServerModule()
 bool NFCGameServerModule::Init()
 {
 	FindModule<NFINetServerModule>()->AddEventCallBack(NF_ST_GAME, this, &NFCGameServerModule::OnProxySocketEvent);
-	FindModule<NFINetServerModule>()->AddReceiveCallBack(NF_ST_GAME, this, &NFCGameServerModule::OnHandleOtherMessage);
 
 	FindModule<NFINetServerModule>()->AddReceiveCallBack(NF_ST_GAME, EGMI_NET_PROXY_TO_GAME_REGISTER, this, &NFCGameServerModule::OnProxyServerRegisterProcess);
 	FindModule<NFINetServerModule>()->AddReceiveCallBack(NF_ST_GAME, EGMI_NET_PROXY_TO_GAME_UNREGISTER, this, &NFCGameServerModule::OnProxyServerUnRegisterProcess);
@@ -94,20 +93,6 @@ void NFCGameServerModule::OnProxySocketEvent(const eMsgType nEvent, const uint32
 	else if (nEvent == eMsgType_DISCONNECTED)
 	{
 		OnHandleServerDisconnect(unLinkId);
-	}
-}
-
-void NFCGameServerModule::OnHandleOtherMessage(const uint32_t unLinkId, const uint64_t playerId, const uint32_t operateId, const uint32_t nMsgId, const char* msg, const uint32_t nLen)
-{
-	NFILuaScriptModule* pLuaScriptModule = FindModule<NFILuaScriptModule>();
-	if (pLuaScriptModule)
-	{
-		std::string strMsg(msg, nLen);
-		pLuaScriptModule->RunNetRecvLuaFunc("LuaNFrame.DispatchGameTcp", unLinkId, playerId, operateId, nMsgId, strMsg);
-	}
-	else
-	{
-		NFLogWarning(NF_LOG_SERVER_NOT_HANDLE_MESSAGE, playerId, "msg:{} not handled!", nMsgId);
 	}
 }
 

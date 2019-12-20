@@ -27,6 +27,8 @@ NFCLoginLogicModule::~NFCLoginLogicModule()
 bool NFCLoginLogicModule::Init()
 {
 	FindModule<NFIServerNetEventModule>()->AddEventCallBack(NF_ST_LOGIN, NF_ST_PROXY, this, &NFCLoginLogicModule::OnHandleProxyEventCallBack);
+	FindModule<NFINetServerModule>()->AddReceiveCallBack(NF_ST_LOGIN, this, &NFCLoginLogicModule::OnHandleOtherMessage);
+	FindModule<NFINetServerModule>()->AddReceiveCallBack(NF_ST_LOGIN, this, &NFCLoginLogicModule::OnHandleOtherMainSubMessage);
 
 	FindModule<NFINetServerModule>()->AddReceiveCallBack(NF_ST_LOGIN, EGMI_NET_PROXY_NOTIFY_LOGIN_PLAYER_REPORT, this, &NFCLoginLogicModule::OnHandlePlayerReport);
 	FindModule<NFINetServerModule>()->AddReceiveCallBack(NF_ST_LOGIN, EGMI_NET_PROXY_NOTIFY_LOGIN_HANDLE_PLAYER_DISCONNECT, this, &NFCLoginLogicModule::OnHandlePlayerDisConnect);
@@ -157,4 +159,34 @@ void NFCLoginLogicModule::OnHandlePlayerReconnectFromProxyServer(const uint32_t 
 	FindModule<NFIServerNetEventModule>()->OnAccountNetEvent(eAccountEventType_RECONNECTED, NF_ST_LOGIN, unLinkId, pInfo);
 
 	NFLogInfo(NF_LOG_SYSTEMLOG, pInfo->mPlayerId, "Player:{} reconnect login server!", pInfo->mPlayerId);
+}
+
+void NFCLoginLogicModule::OnHandleOtherMessage(const uint32_t unLinkId, const uint64_t playerId, const uint32_t operateId, const uint32_t nMsgId, const char* msg, const uint32_t nLen)
+{
+	if (nMsgId >= 65536) return;
+
+	NFILuaScriptModule* pLuaScriptModule = FindModule<NFILuaScriptModule>();
+	if (pLuaScriptModule)
+	{
+		std::string strMsg(msg, nLen);
+		pLuaScriptModule->RunNetRecvLuaFunc("LuaNFrame.LoginServer_DispatchTcp", unLinkId, playerId, operateId, nMsgId, strMsg);
+	}
+	else
+	{
+		NFLogWarning(NF_LOG_SERVER_NOT_HANDLE_MESSAGE, playerId, "msg:{} not handled!", nMsgId);
+	}
+}
+
+void NFCLoginLogicModule::OnHandleOtherMainSubMessage(const uint32_t unLinkId, const uint64_t playerId, const uint32_t operateId, const uint16_t nMainMsgId, const uint16_t nSubMsgId, const char* msg, const uint32_t nLen)
+{
+	NFILuaScriptModule* pLuaScriptModule = FindModule<NFILuaScriptModule>();
+	if (pLuaScriptModule)
+	{
+		std::string strMsg(msg, nLen);
+		pLuaScriptModule->RunNetRecvLuaFuncWithMainSub("LuaNFrame.LoginServer_DispatchTcp_MainSub", unLinkId, playerId, operateId, nMainMsgId, nSubMsgId, strMsg);
+	}
+	else
+	{
+		NFLogWarning(NF_LOG_SERVER_NOT_HANDLE_MESSAGE, playerId, "mainMsgId:{} subMsgId:{} not handled!", nMainMsgId, nSubMsgId);
+	}
 }

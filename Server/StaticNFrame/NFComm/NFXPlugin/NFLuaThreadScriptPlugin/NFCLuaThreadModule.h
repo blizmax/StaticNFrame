@@ -112,6 +112,10 @@ public:
 		ACTOR_TCP_MESSAGE_TYPE_MANY_PLAYER_PROXY_MSG = 2,
 		ACTOR_TCP_MESSAGE_TYPE_ALL_PLAYER_PROXY_MSG = 3,
 		ACTOR_TCP_MESSAGE_TYPE_ONE_PLAYER_MASTER_MSG = 4,
+		ACTOR_TCP_MESSAGE_TYPE_ONE_PLAYER_PROXY_MAIN_SUB_MSG = 5,
+		ACTOR_TCP_MESSAGE_TYPE_MANY_PLAYER_PROXY_MAIN_SUB_MSG = 6,
+		ACTOR_TCP_MESSAGE_TYPE_ALL_PLAYER_PROXY_MAIN_SUB_MSG = 7,
+		ACTOR_TCP_MESSAGE_TYPE_ONE_PLAYER_MASTER_MAIN_SUB_MSG = 8,
 		ACTOR_TCP_MESSAGE_TYPE_ADD_ERROR_LOG_MSG = 10,
 		ACTOR_TCP_MESSAGE_TYPE_ADD_HTTP_LOG_MSG = 11,
 	};
@@ -123,6 +127,8 @@ public:
 		m_nPlayerID = 0;
 		m_nMsgID = 0;
 		m_nLen = 0;
+		m_nMainMsgID = 0;
+		m_nSubMsgID = 0;
 	}
 
 	uint32_t m_nMsgType;
@@ -130,6 +136,8 @@ public:
 	uint64_t m_nPlayerID;
 	std::vector<uint64_t> m_nVecPlayerID;
 	uint32_t m_nMsgID;
+	uint16_t m_nMainMsgID;
+	uint16_t m_nSubMsgID;
 	uint32_t m_nLen;
 	std::string m_strData;
 	std::string m_errorLog;
@@ -206,6 +214,7 @@ public:
 	virtual uint32_t AddTimer(uint32_t mMsgType, const std::string& luaFunc, uint64_t nInterVal, const std::string& dataStr, uint32_t callCount = 1);
 public:
 	virtual void RunNetRecvLuaFunc(const std::string& luaFunc, const uint32_t unLinkId, const uint64_t valueId, const uint32_t opreateId, const uint32_t nMsgId, const std::string& strMsg) override;
+	virtual void RunNetRecvLuaFuncWithMainSub(const std::string& luaFunc, const uint32_t unLinkId, const uint64_t valueId, const uint32_t opreateId, const uint16_t nMainMsgId, const uint16_t nSubMsgId, const std::string& strMsg) override;
 	virtual void RunHttpRecvLuaFunc(const std::string& luaFunc, const uint32_t unLinkId, const uint32_t requestId, const std::string& firstPath, const std::string& secondPath, const std::string& strMsg) override;
 	virtual void SessionReport(uint64_t playerId, const std::string& report) override;
 	virtual void SessionClose(uint64_t playerId) override;
@@ -213,8 +222,13 @@ public:
 	virtual void SendMsgToPlayer(uint32_t usLinkId, const uint64_t nPlayerID, const uint32_t nMsgID, const uint32_t nLen, const std::string& strData);
 	virtual void SendMsgToManyPlayer(const std::vector<uint64_t>& nPlayerID, const uint32_t nMsgID, const uint32_t nLen, const std::string& strData);
 	virtual void SendMsgToAllPlayer(const uint32_t nMsgID, const uint32_t nLen, const std::string& strData);
-	
 	virtual void SendMsgToMaster(uint32_t usLinkId, const uint64_t nPlayerID, const uint32_t nMsgID, const uint32_t nLen, const std::string& strData);
+
+	virtual void SendMsgToPlayer(uint32_t usLinkId, const uint64_t nPlayerID, const uint16_t nMainMsgID, const uint16_t nSubMsgID, const uint32_t nLen, const std::string& strData);
+	virtual void SendMsgToManyPlayer(const std::vector<uint64_t>& nPlayerID, const uint16_t nMainMsgID, const uint16_t nSubMsgID, const uint32_t nLen, const std::string& strData);
+	virtual void SendMsgToAllPlayer(const uint16_t nMainMsgID, const uint16_t nSubMsgID, const uint32_t nLen, const std::string& strData);
+	virtual void SendMsgToMaster(uint32_t usLinkId, const uint64_t nPlayerID, const uint16_t nMainMsgID, const uint16_t nSubMsgID, const uint32_t nLen, const std::string& strData);
+
 	virtual void SendErrorLog(uint64_t playerId, const std::string& func_log, const std::string& errorLog, uint32_t count);
 	virtual void SendHttpServerMsg(uint32_t servertype, const uint32_t requestId, const std::string& strMsg);
 
@@ -222,6 +236,13 @@ public:
 	virtual void AddMsgToManyPlayer(const std::vector<uint64_t>& nPlayerID, const uint32_t nMsgID, const uint32_t nLen, const std::string& strData);
 	virtual void AddMsgToAllPlayer(const uint32_t nMsgID, const uint32_t nLen, const std::string& strData);
 	virtual void AddMsgToMaster(uint32_t usLinkId, const uint64_t nPlayerID, const uint32_t nMsgID, const uint32_t nLen, const std::string& strData);
+
+	virtual void AddMsgToPlayer(uint32_t usLinkId, const uint64_t nPlayerID, const uint16_t nMainMsgID, const uint16_t nSubMsgID, const uint32_t nLen, const std::string& strData);
+	virtual void AddMsgToManyPlayer(const std::vector<uint64_t>& nPlayerID, const uint16_t nMainMsgID, const uint16_t nSubMsgID, const uint32_t nLen, const std::string& strData);
+	virtual void AddMsgToAllPlayer(const uint16_t nMainMsgID, const uint16_t nSubMsgID, const uint32_t nLen, const std::string& strData);
+	virtual void AddMsgToMaster(uint32_t usLinkId, const uint64_t nPlayerID, const uint16_t nMainMsgID, const uint16_t nSubMsgID, const uint32_t nLen, const std::string& strData);
+
+
 	virtual void AddErrorLog(uint64_t playerId, const std::string& func_log, const std::string& errorLog, uint32_t count);
 	virtual void AddHttpServerMsg(uint32_t servertype, const uint32_t requestId, const std::string& strMsg);
 

@@ -167,49 +167,50 @@ public:
 		uint32_t eServerType = GetServerTypeFromUnlinkId(unLinkId);
 		if (eServerType < mxCallBack.size())
 		{
-			auto it = mxCallBack[eServerType].mxReceiveCallBack.find(nMsgId);
-			if (it != mxCallBack[eServerType].mxReceiveCallBack.end())
+			if (nMsgId < 65536)
 			{
-				NFLogDebug(NF_LOG_RECV_MSG, valueId, "recv msg:{}", nMsgId);
-				std::vector<NET_RECEIVE_FUNCTOR>& pVecFun = it->second;
-				for (size_t i = 0; i < pVecFun.size(); i++)
+				auto it = mxCallBack[eServerType].mxReceiveCallBack.find(nMsgId);
+				if (it != mxCallBack[eServerType].mxReceiveCallBack.end())
 				{
-					NET_RECEIVE_FUNCTOR& pFun = pVecFun[i];
-					pFun(unLinkId, valueId, operateId, nMsgId, msg, nLen);
+					NFLogDebug(NF_LOG_RECV_MSG, valueId, "recv msg:{}", nMsgId);
+					std::vector<NET_RECEIVE_FUNCTOR>& pVecFun = it->second;
+					for (size_t i = 0; i < pVecFun.size(); i++)
+					{
+						NET_RECEIVE_FUNCTOR& pFun = pVecFun[i];
+						pFun(unLinkId, valueId, operateId, nMsgId, msg, nLen);
+					}
+					return;
 				}
-			}
-			else
-			{		
+
 				for (auto iterator = mxCallBack[eServerType].mxCallBackList.begin(); iterator != mxCallBack[eServerType].mxCallBackList.end(); ++iterator)
 				{
 					NFLogDebug(NF_LOG_RECV_MSG, valueId, "recv msg:{}", nMsgId);
 					NET_RECEIVE_FUNCTOR& pFun = *iterator;
 					pFun(unLinkId, valueId, operateId, nMsgId, msg, nLen);
 				}
+				return;
 			}
-
-			uint16_t mainMsgId = HIGH_UINT16(nMsgId);
-			uint16_t subMsgId = LOW_UINT16(nMsgId);
-			bool flag = true;
-			auto mainmsg_it = mxCallBack[eServerType].mxReceiveMainSubCallBack.find(mainMsgId);
-			if (mainmsg_it != mxCallBack[eServerType].mxReceiveMainSubCallBack.end())
+			else
 			{
-				auto submsg_it = mainmsg_it->second.find(subMsgId);
-				if (submsg_it != mainmsg_it->second.end())
+				uint16_t mainMsgId = HIGH_UINT16(nMsgId);
+				uint16_t subMsgId = LOW_UINT16(nMsgId);
+				auto mainmsg_it = mxCallBack[eServerType].mxReceiveMainSubCallBack.find(mainMsgId);
+				if (mainmsg_it != mxCallBack[eServerType].mxReceiveMainSubCallBack.end())
 				{
-					flag = false;
-					NFLogDebug(NF_LOG_RECV_MSG, valueId, "recv msg, mainmsgId:{} submsgId:{}", mainMsgId, subMsgId);
-					std::vector<NET_RECEIVE_MAINSUB_FUNCTOR>& pVecFun = submsg_it->second;
-					for (size_t i = 0; i < pVecFun.size(); i++)
+					auto submsg_it = mainmsg_it->second.find(subMsgId);
+					if (submsg_it != mainmsg_it->second.end())
 					{
-						NET_RECEIVE_MAINSUB_FUNCTOR& pFun = pVecFun[i];
-						pFun(unLinkId, valueId, operateId, mainMsgId, subMsgId, msg, nLen);
+						NFLogDebug(NF_LOG_RECV_MSG, valueId, "recv msg, mainmsgId:{} submsgId:{}", mainMsgId, subMsgId);
+						std::vector<NET_RECEIVE_MAINSUB_FUNCTOR>& pVecFun = submsg_it->second;
+						for (size_t i = 0; i < pVecFun.size(); i++)
+						{
+							NET_RECEIVE_MAINSUB_FUNCTOR& pFun = pVecFun[i];
+							pFun(unLinkId, valueId, operateId, mainMsgId, subMsgId, msg, nLen);
+						}
+						return;
 					}
 				}
-			}
 
-			if (flag)
-			{
 				for (auto iterator = mxCallBack[eServerType].mxMainSubCallBackList.begin(); iterator != mxCallBack[eServerType].mxMainSubCallBackList.end(); ++iterator)
 				{
 					NFLogDebug(NF_LOG_RECV_MSG, valueId, "recv msg, mainmsgId:{} submsgId:{}", mainMsgId, subMsgId);

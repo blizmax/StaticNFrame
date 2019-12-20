@@ -27,6 +27,11 @@ NFCTestModule::~NFCTestModule()
 
 bool NFCTestModule::Init()
 {
+	uint16_t mainMsgId = 001;
+	uint16_t subMsgId = 000;
+	uint32_t msgId = MAKE_UINT32(subMsgId, mainMsgId);
+	uint16_t mainMsgId2 = HIGH_UINT16(msgId);
+	uint16_t subMsgId2 = LOW_UINT16(msgId);
 	return true;
 }
 

@@ -35,7 +35,9 @@ NFCWorldLogicModule::~NFCWorldLogicModule()
 
 bool NFCWorldLogicModule::Init()
 {
-	FindModule<NFINetServerModule>()->AddReceiveCallBack(NF_ST_WORLD, this, &NFCWorldLogicModule::OnHandleMessageFromServer);
+	FindModule<NFINetServerModule>()->AddReceiveCallBack(NF_ST_WORLD, this, &NFCWorldLogicModule::OnHandleOtherMessage);
+	FindModule<NFINetServerModule>()->AddReceiveCallBack(NF_ST_WORLD, this, &NFCWorldLogicModule::OnHandleOtherMainSubMessage);
+
 	FindModule<NFINetServerModule>()->AddReceiveCallBack(NF_ST_WORLD, EGMI_NET_PROXY_NOTIFY_WORLD_PLAYER_LOGIN, this, &NFCWorldLogicModule::OnHandleAccountLoginFromProxyServer);
 	FindModule<NFINetServerModule>()->AddReceiveCallBack(NF_ST_WORLD, EGMI_NET_PROXY_NOTIFY_WORLD_PLAYER_DISCONNECT, this, &NFCWorldLogicModule::OnHandlePlayerDisconnectFromProxyServer);
 	FindModule<NFINetServerModule>()->AddReceiveCallBack(NF_ST_WORLD, EGMI_NET_PROXY_NOTIFY_WORLD_PLAYER_RECONNECT, this, &NFCWorldLogicModule::OnHandlePlayerReconnectFromProxyServer);
@@ -122,8 +124,10 @@ NF_SHARE_PTR<NFServerData> NFCWorldLogicModule::FindProxyServerByServerId(uint32
 	return nullptr;
 }
 
-void NFCWorldLogicModule::OnHandleMessageFromServer(const uint32_t unLinkId, const uint64_t playerId, const uint32_t operateId, const uint32_t nMsgId, const char* msg, const uint32_t nLen)
+void NFCWorldLogicModule::OnHandleOtherMessage(const uint32_t unLinkId, const uint64_t playerId, const uint32_t operateId, const uint32_t nMsgId, const char* msg, const uint32_t nLen)
 {
+	if (nMsgId >= 65536) return;
+
 	NFILuaScriptModule* pLuaScriptModule = FindModule<NFILuaScriptModule>();
 	if (pLuaScriptModule)
 	{
@@ -133,6 +137,20 @@ void NFCWorldLogicModule::OnHandleMessageFromServer(const uint32_t unLinkId, con
 	else
 	{
 		NFLogWarning(NF_LOG_SERVER_NOT_HANDLE_MESSAGE, playerId, "msg:{} not handled!", nMsgId);
+	}
+}
+
+void NFCWorldLogicModule::OnHandleOtherMainSubMessage(const uint32_t unLinkId, const uint64_t playerId, const uint32_t operateId, const uint16_t nMainMsgId, const uint16_t nSubMsgId, const char* msg, const uint32_t nLen)
+{
+	NFILuaScriptModule* pLuaScriptModule = FindModule<NFILuaScriptModule>();
+	if (pLuaScriptModule)
+	{
+		std::string strMsg(msg, nLen);
+		pLuaScriptModule->RunNetRecvLuaFuncWithMainSub("LuaNFrame.DispatchWorldTcp_MainSub", unLinkId, playerId, operateId, nMainMsgId, nSubMsgId, strMsg);
+	}
+	else
+	{
+		NFLogWarning(NF_LOG_SERVER_NOT_HANDLE_MESSAGE, playerId, "mainMsgId:{} subMsgId:{} not handled!", nMainMsgId, nSubMsgId);
 	}
 }
 

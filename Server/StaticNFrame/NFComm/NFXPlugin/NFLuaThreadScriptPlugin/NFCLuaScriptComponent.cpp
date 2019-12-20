@@ -127,6 +127,15 @@ bool NFTcpMsgActorTask::ThreadProcess()
 	return true;
 }
 
+bool NFTcpMainSubMsgActorTask::ThreadProcess()
+{
+	if (m_pComponent)
+	{
+		m_pComponent->TryRunGlobalScriptFunc(m_luaFunc, m_unLinkId, m_valueId, m_operateId, m_mainMsgId, m_subMsgId, m_strMsg);
+	}
+	return true;
+}
+
 bool NFHttpMsgActorTask::ThreadProcess()
 {
 	m_pComponent->TryRunGlobalScriptFunc(m_luaFunc, m_unLinkId, m_requestId, m_firstPath, m_secondPath, m_strMsg);
@@ -424,6 +433,10 @@ bool NFCLuaScriptComponent::Register()
 		.addFunction("SendMsgToManyPlayer", &NFCLuaScriptComponent::SendMsgToManyPlayer)
 		.addFunction("SendMsgToAllPlayer", &NFCLuaScriptComponent::SendMsgToAllPlayer)
 		.addFunction("SendMsgToMaster", &NFCLuaScriptComponent::SendMsgToMaster)
+		.addFunction("SendMsgToPlayer_MainSub", &NFCLuaScriptComponent::SendMsgToPlayer_MainSub)
+		.addFunction("SendMsgToManyPlayer_MainSub", &NFCLuaScriptComponent::SendMsgToManyPlayer_MainSub)
+		.addFunction("SendMsgToAllPlayer_MainSub", &NFCLuaScriptComponent::SendMsgToAllPlayer_MainSub)
+		.addFunction("SendMsgToMaster_MainSub", &NFCLuaScriptComponent::SendMsgToMaster_MainSub)
 		.addFunction("ProcessWork", &NFCLuaScriptComponent::ProcessWork)
 		.addFunction("ProcessTimer", &NFCLuaScriptComponent::ProcessTimer)
 		.addFunction("ProcessLoopTimer", &NFCLuaScriptComponent::ProcessLoopTimer)
@@ -533,6 +546,26 @@ void NFCLuaScriptComponent::SendMsgToAllPlayer(const uint32_t nMsgID, const uint
 void NFCLuaScriptComponent::SendMsgToMaster(uint32_t usLinkId, const uint64_t nPlayerID, const uint32_t nMsgID, const uint32_t nLen, const std::string& strData)
 {
 	m_pLuaThreadModule->AddMsgToMaster(usLinkId, nPlayerID, nMsgID, nLen, strData);
+}
+
+void NFCLuaScriptComponent::SendMsgToPlayer_MainSub(uint32_t usLinkId, const uint64_t nPlayerID, const uint16_t nMainMsgID, const uint16_t nSubMsgID, const uint32_t nLen, const std::string& strData)
+{
+	m_pLuaThreadModule->AddMsgToPlayer(usLinkId, nPlayerID, nMainMsgID, nSubMsgID, nLen, strData);
+}
+
+void NFCLuaScriptComponent::SendMsgToManyPlayer_MainSub(const std::vector<uint64_t>& nVecPlayerID, const uint16_t nMainMsgID, const uint16_t nSubMsgID, const uint32_t nLen, const std::string& strData)
+{
+	m_pLuaThreadModule->AddMsgToManyPlayer(nVecPlayerID, nMainMsgID, nSubMsgID, nLen, strData);
+}
+
+void NFCLuaScriptComponent::SendMsgToAllPlayer_MainSub(const uint16_t nMainMsgID, const uint16_t nSubMsgID, const uint32_t nLen, const std::string& strData)
+{
+	m_pLuaThreadModule->AddMsgToAllPlayer(nMainMsgID, nSubMsgID, nLen, strData);
+}
+
+void NFCLuaScriptComponent::SendMsgToMaster_MainSub(uint32_t usLinkId, const uint64_t nPlayerID, const uint16_t nMainMsgID, const uint16_t nSubMsgID, const uint32_t nLen, const std::string& strData)
+{
+	m_pLuaThreadModule->AddMsgToMaster(usLinkId, nPlayerID, nMainMsgID, nSubMsgID, nLen, strData);
 }
 
 void NFCLuaScriptComponent::SendMsgToHttpServer(uint32_t servertype, const uint32_t requestId, const std::string& strMsg)

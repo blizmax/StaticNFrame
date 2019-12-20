@@ -118,6 +118,22 @@ function CPPNFrame:SendMsgToHttpServer(servertype, requestId, strData)
     self.luaModule:SendMsgToHttpServer(servertype, requestId, strData)
 end
 
+function CPPNFrame:SendMsgToPlayer_MainSub(unLinkId, nPlayerId, nMainMsgID, nSubMsgID, nLen, strData)
+    self.luaModule:SendMsgToPlayer_MainSub(unLinkId, nPlayerId, nMainMsgID, nSubMsgID, nLen, strData)
+end
+
+function CPPNFrame:SendMsgToManyPlayer_MainSub(nPlayerIdList, nMainMsgID, nSubMsgID, nLen, strData)
+    self.luaModule:SendMsgToManyPlayer_MainSub(nPlayerIdList, nMainMsgID, nSubMsgID, nLen, strData)
+end
+
+function CPPNFrame:SendMsgToAllPlayer_MainSub(nMainMsgID, nSubMsgID, nLen, strData)
+    self.luaModule:SendMsgToAllPlayer_MainSub(nMainMsgID, nSubMsgID, nLen, strData)
+end
+
+function CPPNFrame:SendMsgToMaster_MainSub(unLinkId, nPlayerId, nMainMsgID, nSubMsgID, nLen, strData)
+    self.luaModule:SendMsgToMaster_MainSub(unLinkId, nPlayerId, nMainMsgID, nSubMsgID, nLen, strData)
+end
+
 --设置LOG等级
 function CPPNFrame:SetLogLevel(level)
     self.luaModule:SetLogLevel(level)

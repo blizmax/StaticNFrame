@@ -34,7 +34,6 @@ public:
 	virtual bool Shut() override;
 
 	void OnProxySocketEvent(const eMsgType nEvent, const uint32_t unLinkId);
-	void OnHandleOtherMessage(const uint32_t unLinkId, const uint64_t playerId, const uint32_t operateId, const uint32_t nMsgId, const char* msg, const uint32_t nLen);
 
 	//网关服务器注册协议回调
 	void OnProxyServerRegisterProcess(const uint32_t unLinkId, const uint64_t playerId, const uint32_t operateId, const uint32_t nMsgId, const char* msg, const uint32_t nLen);

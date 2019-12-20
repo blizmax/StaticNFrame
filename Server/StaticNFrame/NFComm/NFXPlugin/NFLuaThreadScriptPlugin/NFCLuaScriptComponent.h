@@ -371,6 +371,48 @@ public:
 	uint32_t m_operateId;
 };
 
+class NFTcpMainSubMsgActorTask : public NFLuaThreadTask
+{
+public:
+	NFTcpMainSubMsgActorTask(NFCLuaThreadModule* pLuaThreadModule = nullptr, const std::string& luaFunc = "", const uint32_t unLinkId = 0, const uint64_t valueId = 0, const uint32_t operateId = 0, const uint16_t mainMsgId = 0, const uint16_t subMsgId = 0, const std::string& strMsg = "")
+	{
+		m_balanceId = valueId;
+		m_pLuaThreadModule = pLuaThreadModule;
+		m_luaFunc = luaFunc;
+		m_unLinkId = unLinkId;
+		m_valueId = valueId;
+		m_mainMsgId = mainMsgId;
+		m_subMsgId = subMsgId;
+		m_strMsg = strMsg;
+		m_operateId = operateId;
+
+		m_taskName = "NFTcpMainSubMsg_" + luaFunc + "_" + NFCommon::tostr(mainMsgId) + "_" + NFCommon::tostr(subMsgId);
+		m_needManThreadProcess = false;
+	}
+
+	/**
+	**  异步线程处理函数，将在另一个线程里运行
+	*/
+	virtual bool ThreadProcess();
+
+	/**
+	** 主线程处理函数，将在线程处理完后，提交给主先来处理，根据返回函数是否继续处理
+		返回值： thread::TPTask::TPTaskState， 请参看TPTaskState
+	*/
+	virtual TPTaskState MainThreadProcess()
+	{
+		return TPTASK_STATE_COMPLETED;
+	}
+public:
+	std::string m_luaFunc;
+	uint32_t m_unLinkId;
+	uint64_t m_valueId;
+	uint16_t m_mainMsgId;
+	uint16_t m_subMsgId;
+	std::string m_strMsg;
+	uint32_t m_operateId;
+};
+
 class NFHttpMsgActorTask : public NFLuaThreadTask
 {
 public:
@@ -904,8 +946,13 @@ public:
 	virtual void SendMsgToPlayer(uint32_t usLinkId, const uint64_t nPlayerID, const uint32_t nMsgID, const uint32_t nLen, const std::string& strData);
 	virtual void SendMsgToManyPlayer(const std::vector<uint64_t>& nPlayerID, const uint32_t nMsgID, const uint32_t nLen, const std::string& strData);
 	virtual void SendMsgToAllPlayer(const uint32_t nMsgID, const uint32_t nLen, const std::string& strData);
-	
 	virtual void SendMsgToMaster(uint32_t usLinkId, const uint64_t nPlayerID, const uint32_t nMsgID, const uint32_t nLen, const std::string& strData);
+
+	virtual void SendMsgToPlayer_MainSub(uint32_t usLinkId, const uint64_t nPlayerID, const uint16_t nMainMsgID, const uint16_t nSubMsgID, const uint32_t nLen, const std::string& strData);
+	virtual void SendMsgToManyPlayer_MainSub(const std::vector<uint64_t>& nPlayerID, const uint16_t nMainMsgID, const uint16_t nSubMsgID, const uint32_t nLen, const std::string& strData);
+	virtual void SendMsgToAllPlayer_MainSub(const uint16_t nMainMsgID, const uint16_t nSubMsgID, const uint32_t nLen, const std::string& strData);
+	virtual void SendMsgToMaster_MainSub(uint32_t usLinkId, const uint64_t nPlayerID, const uint16_t nMainMsgID, const uint16_t nSubMsgID, const uint32_t nLen, const std::string& strData);
+
 	virtual void SendMsgToHttpServer(uint32_t servertype, const uint32_t requestId, const std::string& strMsg);
 
 	virtual void SetDefaultLevel(uint32_t log_level);

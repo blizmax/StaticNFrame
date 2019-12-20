@@ -329,6 +329,71 @@ void NFCLuaScriptModule::SendMsgToMaster(uint32_t usLinkId, const uint64_t nPlay
 	}
 }
 
+void NFCLuaScriptModule::SendMsgToPlayer_MainSub(uint32_t usLinkId, const uint64_t nPlayerID, const uint16_t nMainMsgID, const uint16_t nSubMsgID, const uint32_t nLen, const std::string& strData)
+{
+	if (m_pNetServerModule)
+	{
+		if (usLinkId != 0)
+		{
+			m_pNetServerModule->SendByServerID(usLinkId, nMainMsgID, nSubMsgID, strData, nPlayerID, 0);
+		}
+		else
+		{
+			if (nPlayerID != 0)
+			{
+				auto pPlayerInfo = GetPlayerInfo(nPlayerID);
+				if (pPlayerInfo)
+				{
+					m_pNetServerModule->SendByServerID(pPlayerInfo->GetProxyUnlinkId(), nMainMsgID, nSubMsgID, strData, nPlayerID, 0);
+				}
+			}
+		}
+	}
+}
+
+void NFCLuaScriptModule::SendMsgToManyPlayer_MainSub(const std::vector<uint64_t>& nVecPlayerID, const uint16_t nMainMsgID, const uint16_t nSubMsgID, const uint32_t nLen, const std::string& strData)
+{
+	if (m_pNetServerModule)
+	{
+		for (size_t i = 0; i < nVecPlayerID.size(); i++)
+		{
+			uint64_t nPlayerID = nVecPlayerID[i];
+			if (nPlayerID != 0)
+			{
+				auto pPlayerInfo = GetPlayerInfo(nPlayerID);
+				if (pPlayerInfo)
+				{
+					m_pNetServerModule->SendByServerID(pPlayerInfo->GetProxyUnlinkId(), nMainMsgID, nSubMsgID, strData, nPlayerID, 0);
+				}
+			}
+		}
+	}
+}
+
+void NFCLuaScriptModule::SendMsgToAllPlayer_MainSub(const uint16_t nMainMsgID, const uint16_t nSubMsgID, const uint32_t nLen, const std::string& strData)
+{
+	if (m_pNetServerModule)
+	{
+		auto pPlayerInfo = mPlayerProxyInfoMap.First();
+		while (pPlayerInfo)
+		{
+			m_pNetServerModule->SendByServerID(pPlayerInfo->GetProxyUnlinkId(), nMainMsgID, nSubMsgID, strData, pPlayerInfo->GetPlayerId(), 0);
+			pPlayerInfo = mPlayerProxyInfoMap.Next();
+		}
+	}
+}
+
+void NFCLuaScriptModule::SendMsgToMaster_MainSub(uint32_t usLinkId, const uint64_t nPlayerID, const uint16_t nMainMsgID, const uint16_t nSubMsgID, const uint32_t nLen, const std::string& strData)
+{
+	if (m_pNetClientModule)
+	{
+		if (usLinkId != 0)
+		{
+			m_pNetClientModule->SendByServerID(usLinkId, nMainMsgID, nSubMsgID, strData, nPlayerID, 0);
+		}
+	}
+}
+
 void NFCLuaScriptModule::SendMsgToHttpServer(uint32_t servertype, const uint32_t requestId, const std::string& strMsg)
 {
 	if (m_pHttpServerModule)
@@ -496,6 +561,10 @@ bool NFCLuaScriptModule::Register()
 		.addFunction("SendMsgToManyPlayer", &NFCLuaScriptModule::SendMsgToManyPlayer)
 		.addFunction("SendMsgToAllPlayer", &NFCLuaScriptModule::SendMsgToAllPlayer)
 		.addFunction("SendMsgToMaster", &NFCLuaScriptModule::SendMsgToMaster)
+		.addFunction("SendMsgToPlayer_MainSub", &NFCLuaScriptModule::SendMsgToPlayer_MainSub)
+		.addFunction("SendMsgToManyPlayer_MainSub", &NFCLuaScriptModule::SendMsgToManyPlayer_MainSub)
+		.addFunction("SendMsgToAllPlayer_MainSub", &NFCLuaScriptModule::SendMsgToAllPlayer_MainSub)
+		.addFunction("SendMsgToMaster_MainSub", &NFCLuaScriptModule::SendMsgToMaster_MainSub)
 		.addFunction("ProcessWork", &NFCLuaScriptModule::ProcessWork)
 		.addFunction("ProcessTimer", &NFCLuaScriptModule::ProcessTimer)
 		.addFunction("ProcessLoopTimer", &NFCLuaScriptModule::ProcessLoopTimer)
@@ -522,6 +591,11 @@ void NFCLuaScriptModule::RunHttpRecvLuaFunc(const std::string& luaFunc, const ui
 void NFCLuaScriptModule::RunNetRecvLuaFunc(const std::string& luaFunc, const uint32_t unLinkId, const uint64_t valueId, const uint32_t opreateId, const uint32_t nMsgId, const std::string& strMsg)
 {
 	TryRunGlobalScriptFunc(luaFunc, unLinkId, valueId, opreateId, nMsgId, strMsg);
+}
+
+void NFCLuaScriptModule::RunNetRecvLuaFuncWithMainSub(const std::string& luaFunc, const uint32_t unLinkId, const uint64_t valueId, const uint32_t opreateId, const uint16_t nMainMsgId, const uint16_t nSubMsgId, const std::string& strMsg)
+{
+	TryRunGlobalScriptFunc(luaFunc, unLinkId, valueId, opreateId, nMainMsgId, nSubMsgId, strMsg);
 }
 
 void NFCLuaScriptModule::SessionReport(uint64_t playerId, const std::string& report)

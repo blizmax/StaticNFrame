@@ -390,6 +390,48 @@ function LuaNFrame.SendMsgToMaster(unLinkId, nPlayerId, nMsgId, nLen, strData)
 	end
 end
 
+----------------------------------------------------------------------
+function LuaNFrame.SendMsgToPlayer_MainSub(unLinkId, nPlayerId, nMainMsgID, nSubMsgID, nLen, strData)
+	if type(unLinkId) == "number" and type(nMainMsgID) == "number" and type(nSubMsgID) == "number" and type(strData) == "string" and type(nPlayerId) == "number" and type(nLen) == "number" then
+		if tonumber(nLen) == string.len(strData) then
+			CPPNFrame:SendMsgToPlayer_MainSub(unLinkId, nPlayerId, nMainMsgID, nSubMsgID, nLen, strData)
+		end
+	else
+		LuaNFrame.Error(NFLogId.NF_LOG_SYSTEMLOG, 0, __G__TRACKBACK__("LuaNFrame.SendMsgToPlayer_MainSub Para Error"))
+	end
+end
+
+function LuaNFrame.SendMsgToManyPlayer_MainSub(nPlayerIdList, nMainMsgID, nSubMsgID, nLen, strData)
+	if type(nPlayerIdList) == "table" and type(nMainMsgID) == "number" and type(nSubMsgID) == "number" and type(strData) == "string" and type(nLen) == "number" then
+		if tonumber(nLen) == string.len(strData) then
+			CPPNFrame:SendMsgToManyPlayer_MainSub(nPlayerIdList, nMainMsgID, nSubMsgID, nLen, strData)
+		end
+	else
+		LuaNFrame.Error(NFLogId.NF_LOG_SYSTEMLOG, 0, __G__TRACKBACK__("LuaNFrame.SendMsgToManyPlayer_MainSub Para Error"))
+	end
+end
+
+function LuaNFrame.SendMsgToAllPlayer_MainSub(nMainMsgID, nSubMsgID, nLen, strData)
+	if type(nMainMsgID) == "number" and type(nSubMsgID) == "number" and type(strData) == "string" and type(nLen) == "number" then
+		if tonumber(nLen) == string.len(strData) then
+			CPPNFrame:SendMsgToAllPlayer_MainSub(nMainMsgID, nSubMsgID, nLen, strData)
+		end
+	else
+		LuaNFrame.Error(NFLogId.NF_LOG_SYSTEMLOG, 0, __G__TRACKBACK__("LuaNFrame.SendMsgToAllPlayer_MainSub Para Error"))
+	end
+end
+
+function LuaNFrame.SendMsgToMaster_MainSub(unLinkId, nPlayerId, nMainMsgID, nSubMsgID, nLen, strData)
+	if type(unLinkId) == "number" and type(nMainMsgID) == "number" and type(nSubMsgID) == "number" and type(strData) == "string" and type(nPlayerId) == "number" and type(nLen) == "number" then
+		if tonumber(nLen) == string.len(strData)  then
+			CPPNFrame:SendMsgToMaster_MainSub(unLinkId, nPlayerId, nMainMsgID, nSubMsgID, nLen, strData)
+		end
+	else
+		LuaNFrame.Error(NFLogId.NF_LOG_SYSTEMLOG, 0, __G__TRACKBACK__("LuaNFrame.SendMsgToMaster_MainSub Para Error"))
+	end
+end
+---------------------------------------------------
+
 function LuaNFrame.SendMsgToHttpServer(servertype, requestId, nLen, strData)
 	if type(servertype) == "number" and type(requestId) == "number" and type(strData) == "string" and type(nLen) == "number" then
 		if tonumber(nLen) == string.len(strData) then
@@ -431,6 +473,29 @@ function LuaNFrame.LoginServer_DispatchTcp(unLinkId, valueId, operateId, nMsgId,
     end
 end
 
+function LuaNFrame.LoginServer_DispatchTcp_MainSub(unLinkId, valueId, operateId, mainMsgId, subMsgId, strMsg)
+	local function TcpExecute()
+		local retMainMsgID, retSubMsgID, controller = tcpManager:createMainSubController(mainMsgId, subMsgId)
+	
+		if controller == nil then
+			LuaNFrame.Error(NFLogId.NF_LOG_SYSTEMLOG, valueId, "retMainMsgID:"..retMainMsgID.." retSubMsgID:"..retSubMsgID.." not handled!")
+		else
+			local playerID, retCode, retBufferLen, retString, otString = controller.execute(mainMsgId, subMsgId, operateId, strMsg)
+			if type(playerID) == "number" and playerID == 0 then
+				playerID = valueId
+			end
+
+			LuaNFrame.SendMsgToPlayer_MainSub(unLinkId, valueId, retMainMsgID, retSubMsgID, retBufferLen, retString)
+		end
+	end
+	
+	local status, msg = xpcall (TcpExecute, __G__TRACKBACK__)
+
+	if not status then
+		LuaNFrame.SendErrorLog(valueId, "LuaNFrame.LoginServer_DispatchTcp_MainSub error, unLinkId:"..tostring(unLinkId).." valueId:"..tostring(valueId).." mainMsgId:"..mainMsgId.." subMsgId:"..subMsgId, msg)
+    end
+end
+
 --执行游戏服务器信息
 function LuaNFrame.DispatchGameTcp(unLinkId, valueId, operateId, nMsgId, strMsg)
 	local function TcpExecute()
@@ -457,6 +522,29 @@ function LuaNFrame.DispatchGameTcp(unLinkId, valueId, operateId, nMsgId, strMsg)
 
 	if not status then
 		LuaNFrame.SendErrorLog(valueId, "LuaNFrame.DispatchGameTcp error, unLinkId:"..tostring(unLinkId).." valueId:"..tostring(valueId).." nMsgId:"..nMsgId, msg)
+    end
+end
+
+function LuaNFrame.DispatchGameTcp_MainSub(unLinkId, valueId, operateId, mainMsgId, subMsgId, strMsg)
+	local function TcpExecute()
+		local retMainMsgID, retSubMsgID, controller = tcpManager:createMainSubController(mainMsgId, subMsgId)
+	
+		if controller == nil then
+			LuaNFrame.Error(NFLogId.NF_LOG_SYSTEMLOG, valueId, "retMainMsgID:"..retMainMsgID.." retSubMsgID:"..retSubMsgID.." not handled!")
+		else
+			local playerID, retCode, retBufferLen, retString, otString = controller.execute(mainMsgId, subMsgId, operateId, strMsg)
+			if type(playerID) == "number" and playerID == 0 then
+				playerID = valueId
+			end
+
+			LuaNFrame.SendMsgToPlayer_MainSub(unLinkId, valueId, retMainMsgID, retSubMsgID, retBufferLen, retString)
+		end
+	end
+	
+	local status, msg = xpcall (TcpExecute, __G__TRACKBACK__)
+
+	if not status then
+		LuaNFrame.SendErrorLog(valueId, "LuaNFrame.DispatchGameTcp_MainSub error, unLinkId:"..tostring(unLinkId).." valueId:"..tostring(valueId).." mainMsgId:"..mainMsgId.." subMsgId:"..subMsgId, msg)
     end
 end
 
@@ -489,6 +577,29 @@ function LuaNFrame.DispatchWorldTcp(unLinkId, valueId, operateId, nMsgId, strMsg
     end
 end
 
+function LuaNFrame.DispatchWorldTcp_MainSub(unLinkId, valueId, operateId, mainMsgId, subMsgId, strMsg)
+	local function TcpExecute()
+		local retMainMsgID, retSubMsgID, controller = tcpManager:createMainSubController(mainMsgId, subMsgId)
+	
+		if controller == nil then
+			LuaNFrame.Error(NFLogId.NF_LOG_SYSTEMLOG, valueId, "retMainMsgID:"..retMainMsgID.." retSubMsgID:"..retSubMsgID.." not handled!")
+		else
+			local playerID, retCode, retBufferLen, retString, otString = controller.execute(mainMsgId, subMsgId, operateId, strMsg)
+			if type(playerID) == "number" and playerID == 0 then
+				playerID = valueId
+			end
+
+			LuaNFrame.SendMsgToPlayer_MainSub(unLinkId, valueId, retMainMsgID, retSubMsgID, retBufferLen, retString)
+		end
+	end
+	
+	local status, msg = xpcall (TcpExecute, __G__TRACKBACK__)
+
+	if not status then
+		LuaNFrame.SendErrorLog(valueId, "LuaNFrame.DispatchWorldTcp_MainSub error, unLinkId:"..tostring(unLinkId).." valueId:"..tostring(valueId).." mainMsgId:"..mainMsgId.." subMsgId:"..subMsgId, msg)
+    end
+end
+
 --处理Master服务器消息
 function LuaNFrame.DispatchMasterTcp(unLinkId, valueId, operateId, nMsgId, strMsg)
 	local function TcpExecute()
@@ -506,6 +617,29 @@ function LuaNFrame.DispatchMasterTcp(unLinkId, valueId, operateId, nMsgId, strMs
 
 	if not status then
 		LuaNFrame.SendErrorLog(valueId, "LuaNFrame.DispatchMasterTcp error, unLinkId:"..tostring(unLinkId).." valueId:"..tostring(valueId).." nMsgId:"..nMsgId, msg)
+    end
+end
+
+function LuaNFrame.DispatchMasterTcp_MainSub(unLinkId, valueId, operateId, mainMsgId, subMsgId, strMsg)
+	local function TcpExecute()
+		local retMainMsgID, retSubMsgID, controller = tcpManager:createMainSubController(mainMsgId, subMsgId)
+	
+		if controller == nil then
+			LuaNFrame.Error(NFLogId.NF_LOG_SYSTEMLOG, valueId, "retMainMsgID:"..retMainMsgID.." retSubMsgID:"..retSubMsgID.." not handled!")
+		else
+			local playerID, retCode, retBufferLen, retString, otString = controller.execute(mainMsgId, subMsgId, operateId, strMsg)
+			if type(playerID) == "number" and playerID == 0 then
+				playerID = valueId
+			end
+
+			LuaNFrame.SendMsgToPlayer_MainSub(unLinkId, valueId, retMainMsgID, retSubMsgID, retBufferLen, retString)
+		end
+	end
+	
+	local status, msg = xpcall (TcpExecute, __G__TRACKBACK__)
+
+	if not status then
+		LuaNFrame.SendErrorLog(valueId, "LuaNFrame.DispatchMasterTcp_MainSub error, unLinkId:"..tostring(unLinkId).." valueId:"..tostring(valueId).." mainMsgId:"..mainMsgId.." subMsgId:"..subMsgId, msg)
     end
 end
 

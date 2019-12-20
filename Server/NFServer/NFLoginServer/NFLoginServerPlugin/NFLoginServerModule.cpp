@@ -29,7 +29,6 @@ NFCLoginServerModule::~NFCLoginServerModule()
 bool NFCLoginServerModule::Init()
 {
 	FindModule<NFINetServerModule>()->AddEventCallBack(NF_ST_LOGIN, this, &NFCLoginServerModule::OnProxySocketEvent);
-	FindModule<NFINetServerModule>()->AddReceiveCallBack(NF_ST_LOGIN, this, &NFCLoginServerModule::OnHandleOtherMessage);
 	
 	FindModule<NFINetServerModule>()->AddReceiveCallBack(NF_ST_LOGIN, EGMI_NET_PROXY_TO_LOGIN_REGISTER, this, &NFCLoginServerModule::OnProxyServerRegisterProcess);
 	FindModule<NFINetServerModule>()->AddReceiveCallBack(NF_ST_LOGIN, EGMI_NET_PROXY_TO_LOGIN_UNREGISTER, this, &NFCLoginServerModule::OnProxyServerUnRegisterProcess);
@@ -98,20 +97,6 @@ void NFCLoginServerModule::OnProxySocketEvent(const eMsgType nEvent, const uint3
 		NFLogDebug(NF_LOG_SERVER_CONNECT_SERVER, 0, "Proxy DisConnect From Login Server, Ip:{}", ip);
 
 		OnHandleServerDisconnect(unLinkId);
-	}
-}
-
-void NFCLoginServerModule::OnHandleOtherMessage(const uint32_t unLinkId, const uint64_t playerId, const uint32_t operateId, const uint32_t nMsgId, const char* msg, const uint32_t nLen)
-{
-	NFILuaScriptModule* pLuaScriptModule = FindModule<NFILuaScriptModule>();
-	if (pLuaScriptModule)
-	{
-		std::string strMsg(msg, nLen);
-		pLuaScriptModule->RunNetRecvLuaFunc("LuaNFrame.LoginServer_DispatchTcp", unLinkId, playerId, operateId, nMsgId, strMsg);
-	}
-	else
-	{
-		NFLogWarning(NF_LOG_SERVER_NOT_HANDLE_MESSAGE, playerId, "msg:{} not handled!", nMsgId);
 	}
 }
 

@@ -244,6 +244,11 @@ void NFCLuaThreadModule::RunNetRecvLuaFunc(const std::string& luaFunc, const uin
 	AddTcpMsgTask(new NFTcpMsgActorTask(this, luaFunc, unLinkId, valueId, operateId, nMsgId, strMsg));
 }
 
+void NFCLuaThreadModule::RunNetRecvLuaFuncWithMainSub(const std::string& luaFunc, const uint32_t unLinkId, const uint64_t valueId, const uint32_t operateId, const uint16_t nMainMsgId, const uint16_t nSubMsgId, const std::string& strMsg)
+{
+	AddTcpMsgTask(new NFTcpMainSubMsgActorTask(this, luaFunc, unLinkId, valueId, operateId, nMainMsgId, nSubMsgId, strMsg));
+}
+
 void NFCLuaThreadModule::SessionReport(uint64_t playerId, const std::string& report)
 {
 	AddTcpMsgTask(new NFTcpSessionReportActorTask(this, playerId, report));
@@ -464,6 +469,72 @@ void NFCLuaThreadModule::SendMsgToMaster(uint32_t usLinkId, const uint64_t nPlay
 	}
 }
 
+void NFCLuaThreadModule::SendMsgToPlayer(uint32_t usLinkId, const uint64_t nPlayerID, const uint16_t nMainMsgID, const uint16_t nSubMsgID, const uint32_t nLen, const std::string& strData)
+{
+	if (m_pNetServerModule)
+	{
+		if (usLinkId != 0)
+		{
+			m_pNetServerModule->SendByServerID(usLinkId, nMainMsgID, nSubMsgID, strData, nPlayerID, 0);
+		}
+		else
+		{
+			if (nPlayerID != 0)
+			{
+				auto pPlayerInfo = GetPlayerInfo(nPlayerID);
+				if (pPlayerInfo)
+				{
+					m_pNetServerModule->SendByServerID(pPlayerInfo->GetProxyUnlinkId(), nMainMsgID, nSubMsgID, strData, nPlayerID, 0);
+				}
+			}
+		}
+	}
+}
+
+void NFCLuaThreadModule::SendMsgToManyPlayer(const std::vector<uint64_t>& nVecPlayerID, const uint16_t nMainMsgID, const uint16_t nSubMsgID, const uint32_t nLen, const std::string& strData)
+{
+	if (m_pNetServerModule)
+	{
+		for (size_t i = 0; i < nVecPlayerID.size(); i++)
+		{
+			uint64_t nPlayerID = nVecPlayerID[i];
+			if (nPlayerID != 0)
+			{
+				auto pPlayerInfo = GetPlayerInfo(nPlayerID);
+				if (pPlayerInfo)
+				{
+					m_pNetServerModule->SendByServerID(pPlayerInfo->GetProxyUnlinkId(), nMainMsgID, nSubMsgID, strData, nPlayerID, 0);
+				}
+			}
+		}
+	}
+}
+
+void NFCLuaThreadModule::SendMsgToAllPlayer(const uint16_t nMainMsgID, const uint16_t nSubMsgID, const uint32_t nLen, const std::string& strData)
+{
+	if (m_pNetServerModule)
+	{
+		NFMsg::NotifyProxyPacketMsg packetMsg;
+		auto pPlayerInfo = mPlayerProxyInfoMap.First();
+		while (pPlayerInfo)
+		{
+			m_pNetServerModule->SendByServerID(pPlayerInfo->GetProxyUnlinkId(), nMainMsgID, nSubMsgID, strData, pPlayerInfo->GetPlayerId(), 0);
+			pPlayerInfo = mPlayerProxyInfoMap.Next();
+		}
+	}
+}
+
+void NFCLuaThreadModule::SendMsgToMaster(uint32_t usLinkId, const uint64_t nPlayerID, const uint16_t nMainMsgID, const uint16_t nSubMsgID, const uint32_t nLen, const std::string& strData)
+{
+	if (m_pNetClientModule)
+	{
+		if (usLinkId != 0)
+		{
+			m_pNetClientModule->SendByServerID(usLinkId, nMainMsgID, nSubMsgID, strData, nPlayerID, 0);
+		}
+	}
+}
+
 void NFCLuaThreadModule::SendErrorLog(uint64_t playerId, const std::string& func_log, const std::string& errorLog, uint32_t count)
 {
 	NFMsg::ServerErrorLogMsg msg;
@@ -570,6 +641,63 @@ void NFCLuaThreadModule::AddMsgToMaster(uint32_t usLinkId, const uint64_t nPlaye
 	msg.m_usLinkId = usLinkId;
 	msg.m_nPlayerID = nPlayerID;
 	msg.m_nMsgID = nMsgID;
+	msg.m_nLen = nLen;
+	msg.m_strData = strData;
+
+	m_mTcpMsgQueue.Push(msg);
+}
+
+void NFCLuaThreadModule::AddMsgToPlayer(uint32_t usLinkId, const uint64_t nPlayerID, const uint16_t nMainMsgID, const uint16_t nSubMsgID, const uint32_t nLen, const std::string& strData)
+{
+	NFTcpMessage msg;
+	msg.m_nMsgType = NFTcpMessage::ACTOR_TCP_MESSAGE_TYPE_ONE_PLAYER_PROXY_MAIN_SUB_MSG;
+	msg.m_usLinkId = usLinkId;
+	msg.m_nPlayerID = nPlayerID;
+	msg.m_nMainMsgID = nMainMsgID;
+	msg.m_nSubMsgID = nSubMsgID;
+	msg.m_nLen = nLen;
+	msg.m_strData = strData;
+
+	m_mTcpMsgQueue.Push(msg);
+}
+
+void NFCLuaThreadModule::AddMsgToManyPlayer(const std::vector<uint64_t>& nPlayerID, const uint16_t nMainMsgID, const uint16_t nSubMsgID, const uint32_t nLen, const std::string& strData)
+{
+	NFTcpMessage msg;
+	msg.m_nMsgType = NFTcpMessage::ACTOR_TCP_MESSAGE_TYPE_MANY_PLAYER_PROXY_MAIN_SUB_MSG;
+	msg.m_usLinkId = 0;
+	msg.m_nPlayerID = 0;
+	msg.m_nVecPlayerID = nPlayerID;
+	msg.m_nMainMsgID = nMainMsgID;
+	msg.m_nSubMsgID = nSubMsgID;
+	msg.m_nLen = nLen;
+	msg.m_strData = strData;
+
+	m_mTcpMsgQueue.Push(msg);
+}
+
+void NFCLuaThreadModule::AddMsgToAllPlayer(const uint16_t nMainMsgID, const uint16_t nSubMsgID, const uint32_t nLen, const std::string& strData)
+{
+	NFTcpMessage msg;
+	msg.m_nMsgType = NFTcpMessage::ACTOR_TCP_MESSAGE_TYPE_ALL_PLAYER_PROXY_MAIN_SUB_MSG;
+	msg.m_usLinkId = 0;
+	msg.m_nPlayerID = 0;
+	msg.m_nMainMsgID = nMainMsgID;
+	msg.m_nSubMsgID = nSubMsgID;
+	msg.m_nLen = nLen;
+	msg.m_strData = strData;
+
+	m_mTcpMsgQueue.Push(msg);
+}
+
+void NFCLuaThreadModule::AddMsgToMaster(uint32_t usLinkId, const uint64_t nPlayerID, const uint16_t nMainMsgID, const uint16_t nSubMsgID, const uint32_t nLen, const std::string& strData)
+{
+	NFTcpMessage msg;
+	msg.m_nMsgType = NFTcpMessage::ACTOR_TCP_MESSAGE_TYPE_ONE_PLAYER_MASTER_MAIN_SUB_MSG;
+	msg.m_usLinkId = usLinkId;
+	msg.m_nPlayerID = nPlayerID;
+	msg.m_nMainMsgID = nMainMsgID;
+	msg.m_nSubMsgID = nSubMsgID;
 	msg.m_nLen = nLen;
 	msg.m_strData = strData;
 

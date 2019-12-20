@@ -120,16 +120,16 @@ void NFCGameClient_WorldModule::OnHandleOtherMessage(const uint32_t unLinkId, co
 {
 	if (GetServerByUnlinkId(unLinkId) == nullptr) return;
 
-	NFILuaScriptModule* pLuaScriptModule = FindModule<NFILuaScriptModule>();
-	if (pLuaScriptModule)
-	{
-		std::string strMsg(msg, nLen);
-		pLuaScriptModule->RunNetRecvLuaFunc("LuaNFrame.DispatchWorldTcp", unLinkId, playerId, operateId, nMsgId, strMsg);
-	}
-	else
-	{
-		NFLogWarning(NF_LOG_SERVER_NOT_HANDLE_MESSAGE, 0, "msg:{} not handled!", nMsgId);
-	}
+// 	NFILuaScriptModule* pLuaScriptModule = FindModule<NFILuaScriptModule>();
+// 	if (pLuaScriptModule)
+// 	{
+// 		std::string strMsg(msg, nLen);
+// 		pLuaScriptModule->RunNetRecvLuaFunc("LuaNFrame.DispatchWorldTcp", unLinkId, playerId, operateId, nMsgId, strMsg);
+// 	}
+// 	else
+// 	{
+// 		NFLogWarning(NF_LOG_SERVER_NOT_HANDLE_MESSAGE, 0, "msg:{} not handled!", nMsgId);
+// 	}
 }
 
 void NFCGameClient_WorldModule::RegisterServer(uint32_t linkId)
