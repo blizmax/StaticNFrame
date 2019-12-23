@@ -557,3 +557,90 @@ function HttpGetWithHead(url,head)
 	end
 	return str
 end
+
+tcpManager = {} or tcpManager
+
+function tcpManager:createController(packetid)
+	if PacketCode[packetid] == nil then
+		return nil
+	end
+	
+	
+	return PacketCode[packetid]["client"],_G[PacketCode[packetid].func]
+end
+
+function tcpManager:createMainSubController(mainMsgId, subMsgId)
+	if PacketMainSubCode[mainMsgId] == nil or PacketMainSubCode[mainMsgId][subMsgId] == nil then
+		return nil
+	end
+	
+	return PacketMainSubCode[mainMsgId][subMsgId]["client"],_G[PacketMainSubCode[mainMsgId][subMsgId].func]
+end
+
+RedisHelper = {} or RedisHelper
+
+function RedisHelper.CheckRedis(userid, operatorid)
+	local key = userid.."_"..operatorid
+	return redisItem:get("operatorlist"..key)
+end
+
+function RedisHelper.SetRedis(playerid, operatorid, msg)
+	if playerid == nil or tonumber(playerid) == 0 then
+		return nil
+	end
+	local key = playerid.."_"..operatorid
+	redisItem:setex("operatorlist"..key, 6, msg)
+end
+
+
+workManager = {} or workManager
+
+function workManager:createWork(strIndex)
+	return _G[strIndex]
+end
+
+SqlServer = {}
+SqlServer.redis_index = "redis_sqlserver"
+function SqlServer.rpush(sqlCase)
+	
+	--mysqlItem:execute(sqlCase)
+	if sqlCase == nil then
+		return nil
+	end
+	--luaPrint(sqlCase)
+	--redisItem:rpush("sqlservice", sqlCase, SqlServer.redis_index)
+	LogModel.GameSqlServer(sqlCase)
+end
+
+function SqlServer.Execute()
+	local len = redisItem:llen("sqlservice", SqlServer.redis_index)
+	for i = 1, len do
+		local strGet = redisItem:lpop("sqlservice", SqlServer.redis_index)
+		
+		if strGet ~= nil then
+			mysqlItem:execute(strGet)
+		end
+	end
+	
+	--SqlServer.RaceLogExectute()
+	--SqlServer.ChatLogExectute()
+end
+
+httpManager = {} or httpManager
+
+n_httpController = {
+	["hlyd"] = "HttpHlyd",
+	["debug"] = "HttpDebug",
+	["pay"] = "HttpPay",
+	["mjqj"] = "HttpMjqj",
+	["game"] = "HttpGame",
+	["play"] = "HttpPlay",
+	["login"] = "HttpLogin",
+	["activity"] = "HttpActivity",
+}
+
+
+function httpManager:createController(packetid)
+	return _G[n_httpController[packetid]]
+	
+end
