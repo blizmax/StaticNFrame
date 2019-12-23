@@ -85,6 +85,7 @@ public:
 		mLuaTcpThreadNum = 5;
 		bForeignNetwork = false;
 		bRefuseAttackIp = false;
+		mParseType = 0;
 	}
 
 public:
@@ -112,6 +113,7 @@ public:
 	bool mWebSocket;			//是否开启websocket功能
 	bool bForeignNetwork; //外部网络,对外网络
 	bool bRefuseAttackIp; //解决攻击IP的链接
+	uint32_t mParseType;  //协议解析方式, 默认值0，是标准内网协议
 };
 
 struct NFClassNode

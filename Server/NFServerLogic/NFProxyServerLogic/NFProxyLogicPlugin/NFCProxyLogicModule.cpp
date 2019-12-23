@@ -305,7 +305,7 @@ void NFCProxyLogicModule::OnHandleMessageFromClient(const uint32_t unLinkId, con
 		NF_SHARE_PTR<NFServerData> pServerData = GetWorldServerByServerId(pLinkInfo->mWorldServerId);
 		if (pServerData)
 		{
-			FindModule<NFINetClientModule>()->SendByServerID(pServerData->mUnlinkId, nMsgId, msg, nLen, pLinkInfo->mPlayerId, 0);
+			FindModule<NFINetClientModule>()->SendByServerID(pServerData->mUnlinkId, nMsgId, msg, nLen, pLinkInfo->mPlayerId, operateId);
 		}
 		else
 		{
@@ -318,7 +318,7 @@ void NFCProxyLogicModule::OnHandleMessageFromClient(const uint32_t unLinkId, con
 		NF_SHARE_PTR<NFServerData> pServerData = GetGameServerByServerId(pLinkInfo->mGameServerId);
 		if (pServerData)
 		{
-			FindModule<NFINetClientModule>()->SendByServerID(pServerData->mUnlinkId, nMsgId, msg, nLen, pLinkInfo->mPlayerId, 0);
+			FindModule<NFINetClientModule>()->SendByServerID(pServerData->mUnlinkId, nMsgId, msg, nLen, pLinkInfo->mPlayerId, operateId);
 		}
 		else
 		{
@@ -357,7 +357,7 @@ void NFCProxyLogicModule::OnHandleAccountLoginFromClient(const uint32_t unLinkId
 		}
 
 		pLinkInfo->mRecvMsgCount++;
-		FindModule<NFINetClientModule>()->SendToServerByPB(pServerData->mUnlinkId, nMsgId, cgMsg, unLinkId, 0);
+		FindModule<NFINetClientModule>()->SendToServerByPB(pServerData->mUnlinkId, nMsgId, cgMsg, unLinkId, operateId);
 	}
 }
 
@@ -473,7 +473,7 @@ void NFCProxyLogicModule::OnHandleEnterTableFromClient(const uint32_t unLinkId, 
 	NF_SHARE_PTR<NFServerData> pServerData = GetGameServerByServerId(pLinkInfo->mGameServerId);
 	if (pServerData)
 	{
-		FindModule<NFINetClientModule>()->SendByServerID(pServerData->mUnlinkId, nMsgId, msg, nLen, pLinkInfo->mPlayerId, 0);
+		FindModule<NFINetClientModule>()->SendByServerID(pServerData->mUnlinkId, nMsgId, msg, nLen, pLinkInfo->mPlayerId, operateId);
 	}
 	else
 	{
@@ -547,7 +547,7 @@ void NFCProxyLogicModule::OnHandleReconnectFromClient(const uint32_t unLinkId, c
 	if (pServerData)
 	{
 		NFLogInfo(NF_LOG_PROXY_LOGIC_PLUGIN, cgMsg.userid(), "Player:{} reconnect proxy server!", cgMsg.userid());
-		FindModule<NFINetClientModule>()->SendToServerByPB(pServerData->mUnlinkId, nMsgId, cgMsg, cgMsg.userid(), 0);
+		FindModule<NFINetClientModule>()->SendToServerByPB(pServerData->mUnlinkId, nMsgId, cgMsg, cgMsg.userid(), operateId);
 	}
 }
 

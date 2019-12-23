@@ -801,6 +801,7 @@ bool NFCConfigModule::LoadServerConfig()
 
 		GetLuaTableValue(serverConfigRef, "ForeignNetwork", pConfig->bForeignNetwork);
 		GetLuaTableValue(serverConfigRef, "RefuseAttackIp", pConfig->bRefuseAttackIp);
+		GetLuaTableValue(serverConfigRef, "ParseType", pConfig->mParseType);
 		mServerConfig.emplace(pConfig->mServerId, pConfig);
 	}
 

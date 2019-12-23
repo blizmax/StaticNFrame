@@ -57,6 +57,7 @@ function InitGameServer()
 			WebSocket = false,
 			ForeignNetwork = true,  --外部网络,对外网络 如果没有代理，客户端直接连接网关，当服务器被攻击时，拒绝客户端的链接
 			RefuseAttackIp = false,  --解决攻击IP的链接
+			ParseType = 1, --0是内网协议，1是外网协议
 		};
 		
 	--Location 服务器

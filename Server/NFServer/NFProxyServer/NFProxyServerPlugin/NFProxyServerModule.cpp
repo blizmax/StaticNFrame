@@ -42,7 +42,7 @@ bool NFCProxyServerModule::Init()
 			}
 		}
 
-		uint32_t unlinkId = FindModule<NFINetServerModule>()->AddServer(NF_ST_PROXY, pConfig->mServerId, pConfig->mMaxConnectNum, pConfig->mServerPort, pConfig->mWebSocket, 1, pConfig->bForeignNetwork, pConfig->bRefuseAttackIp);
+		uint32_t unlinkId = FindModule<NFINetServerModule>()->AddServer(NF_ST_PROXY, pConfig->mServerId, pConfig->mMaxConnectNum, pConfig->mServerPort, pConfig->mWebSocket, pConfig->mParseType, pConfig->bForeignNetwork, pConfig->bRefuseAttackIp);
 		if (unlinkId != 0)
 		{
 			NFLogInfo(NF_LOG_SERVER_CONNECT_SERVER, 0, "proxy server listen success, serverId:{}, maxConnectNum:{}, port:{}", pConfig->mServerId, pConfig->mMaxConnectNum, pConfig->mServerPort);
