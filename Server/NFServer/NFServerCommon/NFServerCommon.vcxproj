@@ -316,23 +316,15 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="NFICommonClient_MasterModule.h" />
-    <ClInclude Include="NFIGameClient_WorldModule.h" />
     <ClInclude Include="NFIGameServerModule.h" />
-    <ClInclude Include="NFIGameClient_MasterModule.h" />
-    <ClInclude Include="NFILocationClient_MasterModule.h" />
     <ClInclude Include="NFILocationServerModule.h" />
-    <ClInclude Include="NFILogClient_MasterModule.h" />
-    <ClInclude Include="NFILoginClient_MasterModule.h" />
     <ClInclude Include="NFILoginServerModule.h" />
     <ClInclude Include="NFILogServerModule.h" />
     <ClInclude Include="NFIMasterServerModule.h" />
     <ClInclude Include="NFIProxyClient_GameModule.h" />
     <ClInclude Include="NFIProxyClient_LoginModule.h" />
-    <ClInclude Include="NFIProxyClient_MasterModule.h" />
     <ClInclude Include="NFIProxyClient_WorldModule.h" />
-    <ClInclude Include="NFIWebClient_MasterModule.h" />
     <ClInclude Include="NFIWebServerModule.h" />
-    <ClInclude Include="NFIWorldClient_MasterModule.h" />
     <ClInclude Include="NFIWorldServerModule.h" />
     <ClInclude Include="NFServerCommon.h" />
     <ClInclude Include="NFIProxyServerModule.h" />

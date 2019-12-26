@@ -16,7 +16,6 @@
 #include "NFServerLogic/NFServerLogicCommon/NFILoginLogicModule.h"
 #include "NFComm/NFPluginModule/NFEventObj.h"
 #include <NFComm/NFPluginModule/NFIHttpServerModule.h>
-#include "NFServer/NFServerCommon/NFILoginClient_MasterModule.h"
 
 #include "NFComm/NFCore/NFJson.h"
 #include "NFComm/NFPluginModule/NFIKernelModule.h"
