@@ -35,10 +35,16 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="NFProxyClient_GameModule.h" />
+    <ClInclude Include="NFProxyClient_LoginModule.h" />
+    <ClInclude Include="NFProxyClient_WorldModule.h" />
     <ClInclude Include="NFProxyServerModule.h" />
     <ClInclude Include="NFProxyServerPlugin.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="NFProxyClient_GameModule.cpp" />
+    <ClCompile Include="NFProxyClient_LoginModule.cpp" />
+    <ClCompile Include="NFProxyClient_WorldModule.cpp" />
     <ClCompile Include="NFProxyServerModule.cpp" />
     <ClCompile Include="NFProxyServerPlugin.cpp" />
   </ItemGroup>

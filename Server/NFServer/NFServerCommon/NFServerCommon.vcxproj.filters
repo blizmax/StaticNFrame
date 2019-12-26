@@ -21,6 +21,7 @@
     <ClInclude Include="NFIWebClient_MasterModule.h" />
     <ClInclude Include="NFILogServerModule.h" />
     <ClInclude Include="NFIWebServerModule.h" />
+    <ClInclude Include="NFICommonClient_MasterModule.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="NFServerCommon.cpp" />

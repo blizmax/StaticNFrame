@@ -13,6 +13,7 @@
 #include "NFComm/NFPluginModule/NFServerDefine.h"
 #include "NFServer/NFServerCommon/NFServerCommon.h"
 #include "NFComm/NFPluginModule/NFIHttpServer.h"
+#include "NFServer/NFServerCommon/NFICommonClient_MasterModule.h"
 
 class NFCWebServerModule : public NFIWebServerModule
 {
@@ -31,4 +32,6 @@ public:
 	virtual bool Shut() override;
 
 	virtual bool HttpHandleHttpMsg(uint32_t linkId, const NFIHttpHandle& req);
+protected:
+	NFICommonClient_MasterModule* m_pMasterClientModule;
 };

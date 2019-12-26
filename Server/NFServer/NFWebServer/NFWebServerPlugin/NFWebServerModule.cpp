@@ -22,6 +22,7 @@
 NFCWebServerModule::NFCWebServerModule(NFIPluginManager* p)
 {
 	m_pPluginManager = p;
+	m_pMasterClientModule = nullptr;
 }
 
 NFCWebServerModule::~NFCWebServerModule()
@@ -30,6 +31,20 @@ NFCWebServerModule::~NFCWebServerModule()
 
 bool NFCWebServerModule::Init()
 {
+	m_pMasterClientModule = m_pPluginManager->CreateAloneModule<NFICommonClient_MasterModule>();
+	if (m_pMasterClientModule)
+	{
+		m_pMasterClientModule->SetServerType(NF_ST_WEB);
+		m_pMasterClientModule->Awake();
+		m_pMasterClientModule->Init();
+		m_pMasterClientModule->AfterInit();
+		m_pMasterClientModule->ReadyExecute();
+	}
+	else
+	{
+		NFLogError(NF_LOG_SYSTEMLOG, 0, "can't find NFICommonClient_MasterModule, connect master server failed!");
+	}
+
 	FindModule<NFIHttpServerModule>()->AddRequestHandler(NF_ST_WEB, NFHttpType::NF_HTTP_REQ_POST, this, &NFCWebServerModule::HttpHandleHttpMsg);
 
 	NFServerConfig* pServerConfig = NFServerCommon::GetAppConfig(m_pPluginManager, NF_ST_WEB);

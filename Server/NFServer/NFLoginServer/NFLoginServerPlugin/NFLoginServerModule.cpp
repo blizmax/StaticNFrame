@@ -20,6 +20,7 @@
 NFCLoginServerModule::NFCLoginServerModule(NFIPluginManager* p)
 {
 	m_pPluginManager = p;
+	m_pMasterClientModule = nullptr;
 }
 
 NFCLoginServerModule::~NFCLoginServerModule()
@@ -28,6 +29,20 @@ NFCLoginServerModule::~NFCLoginServerModule()
 
 bool NFCLoginServerModule::Init()
 {
+	m_pMasterClientModule = m_pPluginManager->CreateAloneModule<NFICommonClient_MasterModule>();
+	if (m_pMasterClientModule)
+	{
+		m_pMasterClientModule->SetServerType(NF_ST_LOGIN);
+		m_pMasterClientModule->Awake();
+		m_pMasterClientModule->Init();
+		m_pMasterClientModule->AfterInit();
+		m_pMasterClientModule->ReadyExecute();
+	}
+	else
+	{
+		NFLogError(NF_LOG_SYSTEMLOG, 0, "can't find NFICommonClient_MasterModule, connect master server failed!");
+	}
+
 	FindModule<NFINetServerModule>()->AddEventCallBack(NF_ST_LOGIN, this, &NFCLoginServerModule::OnProxySocketEvent);
 	
 	FindModule<NFINetServerModule>()->AddReceiveCallBack(NF_ST_LOGIN, EGMI_NET_PROXY_TO_LOGIN_REGISTER, this, &NFCLoginServerModule::OnProxyServerRegisterProcess);

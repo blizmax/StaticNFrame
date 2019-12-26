@@ -44,6 +44,20 @@ const std::string gArrayServer[NF_ST_MAX] = {
 	"WorldServer",
 	"GameServer",
 	"ProxyServer",
+	"WebServer",
+	"LocationServer",
+	"LogServer",
+	"NoneServer",
+	"NoneServer",
+	"NoneServer",
+	"NoneServer",
+	"NoneServer",
+	"NoneServer",
+	"NoneServer",
+	"NoneServer",
+	"NoneServer",
+	"NoneServer",
+	"NoneServer",
 };
 
 std::string _NFExport GetServerName(NF_SERVER_TYPES serverId);

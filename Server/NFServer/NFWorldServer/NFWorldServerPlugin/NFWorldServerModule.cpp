@@ -23,6 +23,7 @@ NFCWorldServerModule::NFCWorldServerModule(NFIPluginManager* p)
 {
 	m_pPluginManager = p;
 	mServerId = 0;
+	m_pMasterClientModule = nullptr;
 }
 
 NFCWorldServerModule::~NFCWorldServerModule()
@@ -31,6 +32,20 @@ NFCWorldServerModule::~NFCWorldServerModule()
 
 bool NFCWorldServerModule::Init()
 {
+	m_pMasterClientModule = m_pPluginManager->CreateAloneModule<NFICommonClient_MasterModule>();
+	if (m_pMasterClientModule)
+	{
+		m_pMasterClientModule->SetServerType(NF_ST_WORLD);
+		m_pMasterClientModule->Awake();
+		m_pMasterClientModule->Init();
+		m_pMasterClientModule->AfterInit();
+		m_pMasterClientModule->ReadyExecute();
+	}
+	else
+	{
+		NFLogError(NF_LOG_SYSTEMLOG, 0, "can't find NFICommonClient_MasterModule, connect master server failed!");
+	}
+
 	FindModule<NFINetServerModule>()->AddEventCallBack(NF_ST_WORLD, this, &NFCWorldServerModule::OnProxySocketEvent);
 	//m_pNetServerModule->AddReceiveCallBack(NF_ST_WORLD, this, &NFCWorldServerModule::OnHandleOtherMessage);
 

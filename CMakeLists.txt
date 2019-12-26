@@ -106,13 +106,11 @@ SET(LIB_LINK_DEP resolv dl rt libprotobuf.a  libcurl.a libssl.a libcrypto.a pthr
 		
 SET(LIB_LINK_NF  libNFCore.a libNFPluginModule.a libprotobuf.a libNFActorPlugin.a libNFKernelPlugin.a libNFLuaScriptPlugin.a libNFLuaThreadScriptPlugin.a
 				libNFMath.a  libNFNetPlugin.a libNFMonitorPlugin.a libNFNoSqlPlugin.a
-			    libNFMysqlPlugin.a libNFGameClientPlugin.a libNFGameServerPlugin.a 
-				libNFLoginClientPlugin.a libNFLoginServerPlugin.a libNFMasterServerPlugin.a 
-				libNFProxyClientPlugin.a libNFProxyServerPlugin.a 
-				libNFServerCommon.a libNFWorldClientPlugin.a libNFWorldServerPlugin.a
+			    libNFMysqlPlugin.a libNFMasterServerPlugin.a libNFCommonClient_MasterPlugin.a libNFServerCommon.a
+				libNFGameServerPlugin.a libNFLoginServerPlugin.a 
+				libNFProxyServerPlugin.a libNFLocationServerPlugin.a libNFLogServerPlugin.a libNFWebServerPlugin.a libNFWorldServerPlugin.a
 				libNFGameLogicPlugin.a libNFLoginLogicPlugin.a libNFProxyLogicPlugin.a 
-				libNFServerLogicCommon.a libNFTestPlugin.a libNFServerCheckPlugin.a libNFWorldLogicPlugin.a libNFRebotPlugin.a
-				libNFLocationClientPlugin.a libNFLocationServerPlugin.a libNFLogClientPlugin.a libNFLogServerPlugin.a libNFWebClientPlugin.a libNFWebServerPlugin.a)
+				libNFServerLogicCommon.a libNFTestPlugin.a libNFServerCheckPlugin.a libNFWorldLogicPlugin.a libNFRebotPlugin.a)
 	
 include_directories( ${INCLUDE_DIR} )
 	

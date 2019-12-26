@@ -315,6 +315,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="NFICommonClient_MasterModule.h" />
     <ClInclude Include="NFIGameClient_WorldModule.h" />
     <ClInclude Include="NFIGameServerModule.h" />
     <ClInclude Include="NFIGameClient_MasterModule.h" />

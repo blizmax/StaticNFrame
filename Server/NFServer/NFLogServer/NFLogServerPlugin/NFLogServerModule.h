@@ -12,6 +12,7 @@
 #include <NFServer/NFServerCommon/NFILogServerModule.h>
 #include "NFComm/NFPluginModule/NFServerDefine.h"
 #include "NFServer/NFServerCommon/NFServerCommon.h"
+#include "NFServer/NFServerCommon/NFICommonClient_MasterModule.h"
 
 class NFCLogServerModule : public NFILogServerModule
 {
@@ -28,4 +29,6 @@ public:
 	virtual bool BeforeShut() override;
 
 	virtual bool Shut() override;
+protected:
+	NFICommonClient_MasterModule* m_pMasterClientModule;
 };

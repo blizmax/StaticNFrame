@@ -62,7 +62,10 @@ enum NF_EGMI_MsgId
 
 	EGMI_STS_ERROR_MSG = 6,
 	////////////////////////////////////////////
-	
+	EGMI_NET_REGISTER_MASTER = 8, //master注册协议
+	EGMI_NET_REGISTER_FAILED_MASTER = 9, //通知注册失败， master注册协议
+	EGMI_NET_MASTER_SEND_OTHERS_TO_SERVER = 10, //master发送别的服务器消息给别的服务器
+
 	EGMI_NET_PROXY_TO_MASTER_REGISTER = 11,	//网关服务器	注册	MASTER服务器协议
 	EGMI_NET_GAME_TO_MASTER_REGISTER = 12,	//网关服务器	注册	MASTER服务器协议
 	EGMI_NET_LOGIN_TO_MASTER_REGISTER = 13,	//登录服务器	注册	MASTER服务器协议

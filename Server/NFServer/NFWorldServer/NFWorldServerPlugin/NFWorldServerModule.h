@@ -17,6 +17,7 @@
 #include "NFServer/NFServerCommon/NFServerCommon.h"
 #include "NFComm/NFPluginModule/NFEventMgr.h"
 #include "NFComm/NFCore/NFMapEx.hpp"
+#include "NFServer/NFServerCommon/NFICommonClient_MasterModule.h"
 
 class NFCWorldServerModule : public NFIWorldServerModule
 {
@@ -54,4 +55,6 @@ private:
 	NFMapEx<uint32_t, NFServerData> mLinkGamMap; //linkid -- key
 	NFMapEx<uint32_t, NFServerData> mProxyMap;
 	uint32_t mServerId;
+protected:
+	NFICommonClient_MasterModule* m_pMasterClientModule;
 };

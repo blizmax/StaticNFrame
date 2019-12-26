@@ -37,23 +37,14 @@
 #include <NFComm/NFXPlugin/NFLuaThreadScriptPlugin/NFLuaThreadScriptPlugin.h>
 
 #include <NFServer/NFMasterServer/NFMasterServerPlugin/NFMasterServerPlugin.h>
-#include <NFServer/NFLoginServer/NFLoginClientPlugin/NFLoginClientPlugin.h>
-#include <NFServer/NFLoginServer/NFLoginServerPlugin/NFLoginServerPlugin.h>
-#include <NFServer/NFWorldServer/NFWorldClientPlugin/NFWorldClientPlugin.h>
-#include <NFServer/NFWorldServer/NFWorldServerPlugin/NFWorldServerPlugin.h>
+#include <NFServer/NFMasterServer/NFCommonClient_MasterPlugin/NFCommonClient_MasterPlugin.h>
 
-#include <NFServer/NFGameServer/NFGameClientPlugin/NFGameClientPlugin.h>
+#include <NFServer/NFLoginServer/NFLoginServerPlugin/NFLoginServerPlugin.h>
+#include <NFServer/NFWorldServer/NFWorldServerPlugin/NFWorldServerPlugin.h>
 #include <NFServer/NFGameServer/NFGameServerPlugin/NFGameServerPlugin.h>
 #include <NFServer/NFProxyServer/NFProxyServerPlugin/NFProxyServerPlugin.h>
-#include <NFServer/NFProxyServer/NFProxyClientPlugin/NFProxyClientPlugin.h>
-
-#include <NFServer/NFLocationServer/NFLocationClientPlugin/NFLocationClientPlugin.h>
 #include <NFServer/NFLocationServer/NFLocationServerPlugin/NFLocationServerPlugin.h>
-
-#include <NFServer/NFLogServer/NFLogClientPlugin/NFLogClientPlugin.h>
 #include <NFServer/NFLogServer/NFLogServerPlugin/NFLogServerPlugin.h>
-
-#include <NFServer/NFWebServer/NFWebClientPlugin/NFWebClientPlugin.h>
 #include <NFServer/NFWebServer/NFWebServerPlugin/NFWebServerPlugin.h>
 
 #include <NFServerLogic/NFLoginServerLogic/NFLoginLogicPlugin/NFLoginLogicPlugin.h>
@@ -92,27 +83,15 @@ bool NFCPluginManager::RegisterStaticPlugin()
 	REGISTER_STATIC_PLUGIN(this, NFNoSqlPlugin);
 	/////////////////////////////////////////////////////////
 	REGISTER_STATIC_PLUGIN(this, NFMasterServerPlugin);
+	REGISTER_STATIC_PLUGIN(this, NFCommonClient_MasterPlugin);
 
-	REGISTER_STATIC_PLUGIN(this, NFLoginClientPlugin);
 	REGISTER_STATIC_PLUGIN(this, NFLoginServerPlugin);
-
-	REGISTER_STATIC_PLUGIN(this, NFWorldClientPlugin);
 	REGISTER_STATIC_PLUGIN(this, NFWorldServerPlugin);
-
-	REGISTER_STATIC_PLUGIN(this, NFGameClientPlugin);
 	REGISTER_STATIC_PLUGIN(this, NFGameServerPlugin);
-
 	REGISTER_STATIC_PLUGIN(this, NFProxyServerPlugin);
-	REGISTER_STATIC_PLUGIN(this, NFProxyClientPlugin);
-
 	REGISTER_STATIC_PLUGIN(this, NFLocationServerPlugin);
-	REGISTER_STATIC_PLUGIN(this, NFLocationClientPlugin);
-
 	REGISTER_STATIC_PLUGIN(this, NFLogServerPlugin);
-	REGISTER_STATIC_PLUGIN(this, NFLogClientPlugin);
-
 	REGISTER_STATIC_PLUGIN(this, NFWebServerPlugin);
-	REGISTER_STATIC_PLUGIN(this, NFWebClientPlugin);
 	///////////////////////////////////////////////////
 
 	REGISTER_STATIC_PLUGIN(this, NFLoginLogicPlugin);

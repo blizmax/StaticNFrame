@@ -19,6 +19,7 @@
 NFCLogServerModule::NFCLogServerModule(NFIPluginManager* p)
 {
 	m_pPluginManager = p;
+	m_pMasterClientModule = nullptr;
 }
 
 NFCLogServerModule::~NFCLogServerModule()
@@ -27,6 +28,20 @@ NFCLogServerModule::~NFCLogServerModule()
 
 bool NFCLogServerModule::Init()
 {
+	m_pMasterClientModule = m_pPluginManager->CreateAloneModule<NFICommonClient_MasterModule>();
+	if (m_pMasterClientModule)
+	{
+		m_pMasterClientModule->SetServerType(NF_ST_LOG);
+		m_pMasterClientModule->Awake();
+		m_pMasterClientModule->Init();
+		m_pMasterClientModule->AfterInit();
+		m_pMasterClientModule->ReadyExecute();
+	}
+	else
+	{
+		NFLogError(NF_LOG_SYSTEMLOG, 0, "can't find NFICommonClient_MasterModule, connect master server failed!");
+	}
+
 	NFServerConfig* pServerConfig = NFServerCommon::GetAppConfig(m_pPluginManager, NF_ST_LOG);
 	if (!m_pPluginManager->IsLoadAllServer())
 	{

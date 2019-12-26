@@ -13,7 +13,7 @@
 #include "NFComm/NFPluginModule/NFServerDefine.h"
 #include <NFComm/NFPluginModule/NFINetServerModule.h>
 #include "NFComm/NFPluginModule/NFIHttpServerModule.h"
-
+#include "NFServer/NFServerCommon/NFICommonClient_MasterModule.h"
 #include "NFComm/NFPluginModule/NFIServerNetEventModule.h"
 #include "NFServer/NFServerCommon/NFServerCommon.h"
 #include "NFComm/NFPluginModule/NFEventMgr.h"
@@ -45,4 +45,5 @@ public:
 	void OnHandleServerDisconnect(uint32_t unLinkId);
 private:
 	NFMapEx<uint32_t, NFServerData> mProxyMap;
+	NFICommonClient_MasterModule* m_pMasterClientModule;
 };

@@ -38,38 +38,26 @@ LoadPlugin =
 			--------------------------------------------
 			-----服务器架构引擎-------------------------
 			"NFMasterServerPlugin",
-			
-			"NFLoginClientPlugin",
+			"NFCommonClient_MasterPlugin",
+
 			"NFLoginServerPlugin",
-			
-			"NFWorldClientPlugin",
 			"NFWorldServerPlugin",
-			
-			"NFGameClientPlugin",
 			"NFGameServerPlugin",
-			
 			"NFProxyServerPlugin",
-			"NFProxyClientPlugin",
-
-			"NFWebClientPlugin",
 			"NFWebServerPlugin",
-			
-			"NFLocationClientPlugin",
 			"NFLocationServerPlugin",
-
-			"NFLogClientPlugin",
 			"NFLogServerPlugin",
 			------------------------------------------------
 			-----服务器基础逻辑引擎-------------------------
-			"NFGameLogicPlugin",
-			"NFLoginLogicPlugin",
-			"NFProxyLogicPlugin",
-			"NFWorldLogicPlugin",
+			--"NFGameLogicPlugin",
+			--"NFLoginLogicPlugin",
+			--"NFProxyLogicPlugin",
+			--"NFWorldLogicPlugin",
 			--------------------------------------------------------
 			-----服务器游戏具体内容逻辑引擎-------------------------
 			-----可以动态加载的引擎---------------------------------
-			--"NFLuaScriptPlugin",
-			"NFLuaThreadScriptPlugin",
+			"NFLuaScriptPlugin",
+			--"NFLuaThreadScriptPlugin",
 
 		};
 		ServerType = NF_ST_NONE;

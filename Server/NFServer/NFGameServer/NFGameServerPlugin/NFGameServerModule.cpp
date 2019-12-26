@@ -19,6 +19,7 @@
 NFCGameServerModule::NFCGameServerModule(NFIPluginManager* p)
 {
 	m_pPluginManager = p;
+	m_pMasterClientModule = nullptr;
 }
 
 NFCGameServerModule::~NFCGameServerModule()
@@ -27,6 +28,20 @@ NFCGameServerModule::~NFCGameServerModule()
 
 bool NFCGameServerModule::Init()
 {
+	m_pMasterClientModule = m_pPluginManager->CreateAloneModule<NFICommonClient_MasterModule>();
+	if (m_pMasterClientModule)
+	{
+		m_pMasterClientModule->SetServerType(NF_ST_GAME);
+		m_pMasterClientModule->Awake();
+		m_pMasterClientModule->Init();
+		m_pMasterClientModule->AfterInit();
+		m_pMasterClientModule->ReadyExecute();
+	}
+	else
+	{
+		NFLogError(NF_LOG_SYSTEMLOG, 0, "can't find NFICommonClient_MasterModule, connect master server failed!");
+	}
+
 	FindModule<NFINetServerModule>()->AddEventCallBack(NF_ST_GAME, this, &NFCGameServerModule::OnProxySocketEvent);
 
 	FindModule<NFINetServerModule>()->AddReceiveCallBack(NF_ST_GAME, EGMI_NET_PROXY_TO_GAME_REGISTER, this, &NFCGameServerModule::OnProxyServerRegisterProcess);

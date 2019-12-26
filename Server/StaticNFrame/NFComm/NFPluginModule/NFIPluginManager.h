@@ -146,12 +146,9 @@ public:
 			T* pT = (T*)pLogicModule;
 #else
 			T* pT = dynamic_cast<T*>(pLogicModule);
-#endif
-			assert(NULL != pT);
-
+#endif			
 			return pT;
 		}
-		assert(NULL);
 		return NULL;
 	}
 

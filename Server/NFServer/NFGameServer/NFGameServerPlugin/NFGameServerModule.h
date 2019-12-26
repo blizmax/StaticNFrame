@@ -16,6 +16,7 @@
 #include "NFServer/NFServerCommon/NFServerCommon.h"
 #include "NFComm/NFCore/NFMap.hpp"
 #include "NFComm/NFPluginModule/NFIServerNetEventModule.h"
+#include "NFServer/NFServerCommon/NFICommonClient_MasterModule.h"
 
 class NFCGameServerModule : public NFIGameServerModule
 {
@@ -43,4 +44,6 @@ public:
 	void OnHandleServerDisconnect(uint32_t unLinkId);
 private:
 	NFMapEx<uint32_t, NFServerData> mProxyMap;
+protected:
+	NFICommonClient_MasterModule* m_pMasterClientModule;
 };

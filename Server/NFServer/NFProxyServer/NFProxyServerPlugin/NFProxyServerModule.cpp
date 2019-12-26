@@ -13,12 +13,15 @@
 #include <NFServer/NFServerCommon/NFServerCommon.h>
 #include <NFComm/NFPluginModule/NFINetClientModule.h>
 #include <NFComm/NFPluginModule/NFEventDefine.h>
-
+#include "NFServer/NFServerCommon/NFIProxyClient_GameModule.h"
+#include "NFServer/NFServerCommon/NFIProxyClient_LoginModule.h"
+#include "NFServer/NFServerCommon/NFIProxyClient_WorldModule.h"
 #include <NFComm/NFCore/NFJson.h>
 
 NFCProxyServerModule::NFCProxyServerModule(NFIPluginManager* p)
 {
 	m_pPluginManager = p;
+	m_pMasterClientModule = nullptr;
 }
 
 NFCProxyServerModule::~NFCProxyServerModule()
@@ -27,8 +30,23 @@ NFCProxyServerModule::~NFCProxyServerModule()
 
 bool NFCProxyServerModule::Init()
 {
+	m_pMasterClientModule = m_pPluginManager->CreateAloneModule<NFICommonClient_MasterModule>();
+	if (m_pMasterClientModule)
+	{
+		m_pMasterClientModule->SetServerType(NF_ST_PROXY);
+		m_pMasterClientModule->Awake();
+		m_pMasterClientModule->Init();
+		m_pMasterClientModule->AfterInit();
+		m_pMasterClientModule->ReadyExecute();
+	}
+	else
+	{
+		NFLogError(NF_LOG_SYSTEMLOG, 0, "can't find NFICommonClient_MasterModule, connect master server failed!");
+	}
+
+	FindModule<NFINetClientModule>()->AddReceiveCallBack(NF_ST_MASTER, EGMI_NET_MASTER_SEND_OTHERS_TO_SERVER, this, &NFCProxyServerModule::OnHandleServerReport);
+
 	FindModule<NFINetServerModule>()->AddEventCallBack(NF_ST_PROXY, this, &NFCProxyServerModule::OnProxySocketEvent);
-	//m_pNetServerModule->AddReceiveCallBack(NF_ST_PROXY, this, &NFCProxyServerModule::OnHandleOtherMessage);
 
 	NFServerConfig* pConfig = NFServerCommon::GetAppConfig(m_pPluginManager, NF_ST_PROXY);
 	if (pConfig)
@@ -96,8 +114,33 @@ void NFCProxyServerModule::OnProxySocketEvent(const eMsgType nEvent, const uint3
 	}
 }
 
-void NFCProxyServerModule::OnHandleOtherMessage(const uint32_t unLinkId, const uint64_t playerId, const uint32_t operateId, const uint32_t nMsgId, const char* msg, const uint32_t nLen)
+void NFCProxyServerModule::OnHandleServerReport(const uint32_t unLinkId, const uint64_t playerId, const uint32_t operateId, const uint32_t nMsgId, const char* msg, const uint32_t nLen)
 {
-	std::string ip = FindModule<NFINetServerModule>()->GetLinkIp(unLinkId);
-	NFLogWarning(NF_LOG_SERVER_NOT_HANDLE_MESSAGE, 0, "other message not handled:playerId:{},msgId:{},ip:{}", playerId, nMsgId, ip);
+	if (unLinkId != m_pMasterClientModule->GetMasterServerData()->mUnlinkId) return;
+
+	NFMsg::ServerInfoReportList xMsg;
+	CLIENT_MSG_PROCESS_NO_OBJECT(nMsgId, playerId, msg, nLen, xMsg);
+
+	for (int i = 0; i < xMsg.server_list_size(); ++i)
+	{
+		const NFMsg::ServerInfoReport& xData = xMsg.server_list(i);
+		switch (xData.server_type())
+		{
+		case NF_SERVER_TYPES::NF_ST_WORLD:
+		{
+			FindModule<NFIProxyClient_WorldModule>()->OnHandleServerReport(xData);
+		}
+		break;
+		case NF_SERVER_TYPES::NF_ST_GAME:
+		{
+			FindModule<NFIProxyClient_GameModule>()->OnHandleServerReport(xData);
+		}
+		break;
+		case NF_SERVER_TYPES::NF_ST_LOGIN:
+		{
+			FindModule<NFIProxyClient_LoginModule>()->OnHandleServerReport(xData);
+		}
+		break;
+		}
+	}
 }
