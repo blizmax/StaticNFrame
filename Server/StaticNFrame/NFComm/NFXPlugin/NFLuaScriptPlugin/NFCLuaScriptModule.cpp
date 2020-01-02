@@ -85,7 +85,7 @@ void NFCLuaScriptModule::OnTimer(uint32_t nTimerID)
 	{
 		Register();
 		LoadScript();
-
+		SetTimer(EnumLuaModule_SEC, 1000, INFINITY_CALL);
 		SetFixTimer(EnumLuaModule_MIN, 0, 60, INFINITY_CALL);
 		SetFixTimer(EnumLuaModule_5MIN, 0, 5 * 60, INFINITY_CALL);
 		SetFixTimer(EnumLuaModule_10MIN, 0, 10 * 60, INFINITY_CALL);
@@ -101,6 +101,10 @@ void NFCLuaScriptModule::OnTimer(uint32_t nTimerID)
 
 		NFMsg::ServerErrorLogMsg msg;
 		NFEventMgr::GetSingletonPtr()->FireExecute(NFEVENT_LUA_FINISH_LOAD, 0, 0, msg);
+	}
+	else if (nTimerID == EnumLuaModule_SEC)
+	{
+		UpdateSec();
 	}
 	else if (nTimerID == EnumLuaModule_MIN)
 	{
@@ -806,6 +810,11 @@ std::string NFCLuaScriptModule::HttpPostWithHead(const std::string& url, const s
 		NFLogError(NF_LOG_SYSTEMLOG, 0, "HttpPost url:{}, return error code:{}, strError:{}", url, ret, NFCurlHttpClient::GetSingletonPtr()->GetStrError(ret));
 	}
 	return strResp;
+}
+
+void NFCLuaScriptModule::UpdateSec()
+{
+	TryRunGlobalScriptFunc("LuaNFrame.UpdateSec");
 }
 
 void NFCLuaScriptModule::UpdateMin()

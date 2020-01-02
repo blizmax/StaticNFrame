@@ -229,6 +229,7 @@ public:
 	virtual void ReloadLuaFiles() override;
 	virtual void ReloadLuaFiles(const std::vector<std::string>& vecStr) override;
 	virtual void GcStep();
+	virtual void UpdateSec();
 	virtual void UpdateMin();
 	virtual void Update5Min();
 	virtual void Update10Min();

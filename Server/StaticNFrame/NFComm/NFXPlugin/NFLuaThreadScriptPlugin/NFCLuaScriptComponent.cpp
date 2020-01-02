@@ -201,6 +201,15 @@ bool NFLuaGcActorTask::ThreadProcess()
 	return true;
 }
 
+bool NFLuaSecActorTask::ThreadProcess()
+{
+	if (m_pComponent)
+	{
+		m_pComponent->TryRunGlobalScriptFunc("LuaNFrame.UpdateSec");
+	}
+	return true;
+}
+
 bool NFLuaMinActorTask::ThreadProcess()
 {
 	if (m_pComponent)

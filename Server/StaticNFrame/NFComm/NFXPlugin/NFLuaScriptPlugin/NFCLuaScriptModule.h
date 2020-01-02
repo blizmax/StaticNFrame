@@ -31,6 +31,7 @@ enum EnumLuaModule
 {
 	EnumLuaModule_NULL = 0,
 	EnumLuaModule_INIT = 1,
+	EnumLuaModule_SEC = 6,
 	EnumLuaModule_MIN = 7,
 	EnumLuaModule_5MIN = 8,
 	EnumLuaModule_10MIN = 9,
@@ -179,6 +180,7 @@ public:
     bool Register();
 	void LoadScript();
 
+	virtual void UpdateSec();
 	virtual void UpdateMin();
 	virtual void Update5Min();
 	virtual void Update10Min();

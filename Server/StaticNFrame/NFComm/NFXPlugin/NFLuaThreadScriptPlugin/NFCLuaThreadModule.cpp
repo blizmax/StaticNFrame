@@ -182,7 +182,7 @@ void NFCLuaThreadModule::OnTimer(uint32_t nTimerID)
 		{
 			KillTimer(EnumLuaThreadModule_WaitFinishInit);
 			SetTimer(EnumLuaThreadModule_Loop, 1000, INFINITY_CALL);
-			//SetTimer(EnumLuaThreadModule_GC, 1000, INFINITY_CALL); 不在这里gc, 让lua自己gc
+			SetTimer(EnumLuaThreadModule_SEC, 1000, INFINITY_CALL);
 			SetFixTimer(EnumLuaThreadModule_MIN, 0, 60, INFINITY_CALL);
 			SetFixTimer(EnumLuaThreadModule_5MIN, 0, 5*60, INFINITY_CALL);
 			SetFixTimer(EnumLuaThreadModule_10MIN, 0, 10*60, INFINITY_CALL);
@@ -206,9 +206,9 @@ void NFCLuaThreadModule::OnTimer(uint32_t nTimerID)
 		AddProcessLoopTask(new NFServerLoopTask(this, "gametimer"));
 		AddProcessLoopTask(new NFServerLoopTask(this, "utilstimer"));
 	}
-	else if (nTimerID == EnumLuaThreadModule_GC)
+	else if (nTimerID == EnumLuaThreadModule_SEC)
 	{
-		GcStep();
+		UpdateSec();
 	}
 	else if (nTimerID == EnumLuaThreadModule_MIN)
 	{
@@ -812,6 +812,11 @@ void NFCLuaThreadModule::GcStep()
 	m_pServerLoopTaskModule->AddTaskToEveryActor(NFLuaGcActorTask(this));
 	m_pWorkTaskModule->AddTaskToEveryActor(NFLuaGcActorTask(this));
 	m_pTcpMsgTaskModule->AddTaskToEveryActor(NFLuaGcActorTask(this));
+}
+
+void NFCLuaThreadModule::UpdateSec()
+{
+	AddProcessLoopTask(new NFLuaSecActorTask(this));
 }
 
 void NFCLuaThreadModule::UpdateMin()

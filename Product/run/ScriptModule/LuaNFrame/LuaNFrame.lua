@@ -614,10 +614,24 @@ function LuaNFrame.TimerInit(timeType)
     end
 end
 
+--在主循环线程里执行，每一秒执行这个函数
+function LuaNFrame.UpdateSec()
+	local function timerfunc()
+		if timerManager ~= nil and timerManager.UpdateSec ~= nil then
+			timerManager.UpdateSec()
+		end
+	end
+	
+	local status, msg = xpcall (timerfunc, __G__TRACKBACK__)
+
+	if not status then
+		LuaNFrame.SendErrorLog(0,  "LuaNFrame.UpdateSec error:", msg)
+    end
+end
+
 --在主循环线程里执行，每一分钟的0秒执行这个函数
 function LuaNFrame.UpdateMin()
 	local function timerfunc()
-		LuaNFrame.Error(NFLogId.NF_LOG_SYSTEMLOG, 0,  "LuaNFrame.UpdateMin")
 		if timerManager ~= nil and timerManager.UpdateMin ~= nil then
 			timerManager.UpdateMin()
 		end
@@ -633,7 +647,6 @@ end
 --在主循环线程里执行，每一分钟的0秒执行这个函数
 function LuaNFrame.Update5Min()
 	local function timerfunc()
-		LuaNFrame.Error(NFLogId.NF_LOG_SYSTEMLOG, 0,  "LuaNFrame.Update5Min")
 		if timerManager ~= nil and timerManager.Update5Min ~= nil then
 			timerManager.Update5Min()
 		end
@@ -649,7 +662,6 @@ end
 --在主循环线程里执行，每一分钟的0秒执行这个函数
 function LuaNFrame.Update10Min()
 	local function timerfunc()
-		LuaNFrame.Error(NFLogId.NF_LOG_SYSTEMLOG, 0,  "LuaNFrame.Update10Min")
 		if timerManager ~= nil and timerManager.Update10Min ~= nil then
 			timerManager.Update10Min()
 		end
@@ -665,7 +677,6 @@ end
 --在主循环线程里执行，每一分钟的0秒执行这个函数
 function LuaNFrame.Update30Min()
 	local function timerfunc()
-		LuaNFrame.Error(NFLogId.NF_LOG_SYSTEMLOG, 0,  "LuaNFrame.Update30Min")
 		if timerManager ~= nil and timerManager.Updat30eMin ~= nil then
 			timerManager.Update30Min()
 		end
@@ -681,7 +692,6 @@ end
 ---在主循环线程里执行，每一小时的0秒执行这个函数
 function LuaNFrame.UpdateHour()
 	local function timerfunc()
-		LuaNFrame.Error(NFLogId.NF_LOG_SYSTEMLOG, 0,  "LuaNFrame.UpdateHour")
 		if timerManager ~= nil and timerManager.UpdateHour ~= nil then
 			timerManager.UpdateHour()
 		end
@@ -697,7 +707,6 @@ end
 ---在主循环线程里执行，每一天的0秒执行这个函数
 function LuaNFrame.UpdateDay()
 	local function timerfunc()
-		LuaNFrame.Error(NFLogId.NF_LOG_SYSTEMLOG, 0,  "LuaNFrame.UpdateDay")
 		if timerManager ~= nil and timerManager.UpdateDay ~= nil then
 			timerManager.UpdateDay()
 		end
@@ -713,7 +722,6 @@ end
 ---在主循环线程里执行，每一周的0秒执行这个函数
 function LuaNFrame.UpdateWeek()
 	local function timerfunc()
-		LuaNFrame.Error(NFLogId.NF_LOG_SYSTEMLOG, 0,  "LuaNFrame.UpdateWeek")
 		if timerManager ~= nil and timerManager.UpdateWeek ~= nil then
 			timerManager.UpdateWeek()
 		end
@@ -729,7 +737,6 @@ end
 ---在主循环线程里执行，每一月的0秒执行这个函数
 function LuaNFrame.UpdateMonth()
 	local function timerfunc()
-		LuaNFrame.Error(NFLogId.NF_LOG_SYSTEMLOG, 0,  "LuaNFrame.UpdateMonth")
 		if timerManager ~= nil and timerManager.UpdateMonth ~= nil then
 			timerManager.UpdateMonth()
 		end

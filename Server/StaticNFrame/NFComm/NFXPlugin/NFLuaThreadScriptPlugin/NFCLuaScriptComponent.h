@@ -39,7 +39,7 @@ enum EnumLuaThreadModule
 	EnumLuaThreadModule_WaitFinishInit = 3,
 	EnumLuaThreadModule_Loop = 4,
 	EnumLuaThreadModule_Work = 5,
-	EnumLuaThreadModule_GC = 6,
+	EnumLuaThreadModule_SEC = 6,
 	EnumLuaThreadModule_MIN = 7,
 	EnumLuaThreadModule_5MIN = 8,
 	EnumLuaThreadModule_10MIN = 9,
@@ -483,7 +483,34 @@ public:
 };
 
 /**
-**  主线程执行，每一分钟一个Actor执行一次这个任务
+**  主线程执行，每一秒执行一次这个任务
+*/
+class NFLuaSecActorTask : public NFLuaThreadTask
+{
+public:
+	NFLuaSecActorTask(NFCLuaThreadModule* pLuaThreadModule = nullptr)
+	{
+		m_pLuaThreadModule = pLuaThreadModule;
+		m_taskName = "LuaSecTask";
+		m_needManThreadProcess = false;
+	}
+	/**
+	**  异步线程处理函数，将在另一个线程里运行
+	*/
+	virtual bool ThreadProcess();
+
+	/**
+	** 主线程处理函数，将在线程处理完后，提交给主先来处理，根据返回函数是否继续处理
+		返回值： thread::TPTask::TPTaskState， 请参看TPTaskState
+	*/
+	virtual TPTaskState MainThreadProcess()
+	{
+		return TPTASK_STATE_COMPLETED;
+	}
+};
+
+/**
+**  主线程执行，每一分钟执行一次这个任务
 */
 class NFLuaMinActorTask : public NFLuaThreadTask
 {
@@ -510,7 +537,7 @@ public:
 };
 
 /**
-**  主线程执行，每5分钟一个Actor执行一次这个任务
+**  主线程执行，每5分钟执行一次这个任务
 */
 class NFLua5MinActorTask : public NFLuaThreadTask
 {
@@ -537,7 +564,7 @@ public:
 };
 
 /**
-**  主线程执行，每10分钟一个Actor执行一次这个任务
+**  主线程执行，每10分钟执行一次这个任务
 */
 class NFLua10MinActorTask : public NFLuaThreadTask
 {
@@ -564,7 +591,7 @@ public:
 };
 
 /**
-**  主线程执行，每30分钟一个Actor执行一次这个任务
+**  主线程执行，每30分钟执行一次这个任务
 */
 class NFLua30MinActorTask : public NFLuaThreadTask
 {
@@ -591,7 +618,7 @@ public:
 };
 
 /**
-**  主线程执行，每一小时一个Actor执行一次这个任务
+**  主线程执行，每一小时执行一次这个任务
 */
 class NFLuaHourActorTask : public NFLuaThreadTask
 {
@@ -618,7 +645,7 @@ public:
 };
 
 /**
-**  主线程执行，每一天一个Actor执行一次这个任务
+**  主线程执行，每一天执行一次这个任务
 */
 class NFLuaDayActorTask : public NFLuaThreadTask
 {
@@ -672,7 +699,7 @@ public:
 };
 
 /**
-**   主线程执行，每一天一个Actor执行一次这个任务
+**   主线程执行，每一月执行一次这个任务
 */
 class NFLuaMonthActorTask : public NFLuaThreadTask
 {
