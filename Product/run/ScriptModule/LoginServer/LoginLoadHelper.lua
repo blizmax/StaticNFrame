@@ -45,6 +45,8 @@ require("common.define.TgpdDefine")
 require("common.define.TtzDefine")
 require("common.define.YqsDefine")
 require("common.define.ShzBatDefine")
+require("common.define.WxSlhbDefine")
+require("common.define.SanGongDefine")
 
 require("common.st_agent_pb")
 require("common.st_human_pb")
@@ -81,6 +83,8 @@ require("common.st_user_pb")
 require("common.st_yqs_pb")
 require("common.st_utils_pond_pb")
 require("common.st_shzbat_pb")
+require("common.st_sangong_pb")
+require("common.st_wxslhb_pb")
 
 require("Human.Model.PlayerModel")
 require("Human.Model.GoodsModel")
@@ -166,6 +170,7 @@ require("Ttz.Model.TtzStatsModel")
 require("ShzBat.Model.ShzBatModel")
 require("SanGong.Model.SanGongModel")
 require("SanGong.Model.SanGongJinBiChang")
+require("WxSlhb.Model.WxSlhbModel") 
 
 g_redisIndex[NoticeModel.redis_index] = {index = g_redisInfo.redis_one, des="notice"}     --系统唯一的邮件
 g_redisIndex[OnlineModel.redis_index] = {index = g_redisInfo.redis_one, key = MailModel.mail_list, link = 1}  --每个玩家自己的邮件
@@ -225,6 +230,7 @@ g_redisIndex[TtzModel.redis_index] = {index = g_redisInfo.redis_four, des = "Ttz
 g_redisIndex[YqsModel.redis_index] = {index = g_redisInfo.redis_three, key = YqsModel.redis_index, link = 1}
 g_redisIndex[ShzBatModel.redis_index] = {index = g_redisInfo.redis_four, des = "shz_info"}
 g_redisIndex[SanGongModel.redis_index] = {index = g_redisInfo.redis_four, des = "sangong_info"}
+g_redisIndex[WxSlhbModel.redis_index] = {index = g_redisInfo.redis_four, des = "wxslhb_info"}
 --------------------------------------------------------------
 require("Human.Init")
 require("LogServer.Init")
