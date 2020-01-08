@@ -14,6 +14,10 @@
 #include "NFComm/NFPluginModule/NFLogMgr.h"
 #include "NFComm/NFPluginModule/NFILuaScriptModule.h"
 
+#include <iostream>
+#include <mutex>
+#include <atomic>
+
 
 
 NFCTestModule::NFCTestModule(NFIPluginManager* p)

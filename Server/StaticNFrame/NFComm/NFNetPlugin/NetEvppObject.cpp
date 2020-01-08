@@ -153,6 +153,19 @@ void NetEvppObject::CloseObject()
 	}
 }
 
+bool NetEvppObject::Send(const uint8_t rpcType, const uint64_t rpcReqId, const char* msg, const uint32_t nLen)
+{
+	if (!GetNeedRemove() && mConnPtr && mConnPtr->IsConnected())
+	{
+		//mConnPtr->loop()->RunInLoop(std::bind(&SendToThread, mConnPtr, mPacketParseType, nMsgID, evpp::Slice(msg, nLen).ToString(), nPlayerID));
+		NFBuffer mxSendBuffer;
+		NFIPacketParse::EnCode(mPacketParseType, 0, 0, 0, rpcType, rpcReqId, msg, nLen, mxSendBuffer);
+		mConnPtr->Send((const void*)mxSendBuffer.ReadAddr(), mxSendBuffer.ReadableSize());
+		return true;
+	}
+	return false;
+}
+
 bool NetEvppObject::Send(const void* pData, uint32_t unSize)
 {
 	if (!GetNeedRemove() && mConnPtr && mConnPtr->IsConnected())
@@ -167,7 +180,7 @@ bool NetEvppObject::Send(const void* pData, uint32_t unSize)
 void SendToThread(evpp::TCPConnPtr connPtr, uint32_t nPacketParseType, const uint32_t nMsgID, const std::string& message, const uint64_t nPlayerID, const uint32_t operateId)
 {
 	NFBuffer mxSendBuffer;
-	NFIPacketParse::EnCode(nPacketParseType, nMsgID, nPlayerID, operateId, message.data(), message.length(), mxSendBuffer);
+	NFIPacketParse::EnCode(nPacketParseType, nMsgID, nPlayerID, operateId, 0, 0, message.data(), message.length(), mxSendBuffer);
 	connPtr->Send((const void*)mxSendBuffer.ReadAddr(), mxSendBuffer.ReadableSize());
 }
 
@@ -177,7 +190,7 @@ bool NetEvppObject::Send(const uint32_t nMsgID, const char* msg, const uint32_t 
 	{
 		//mConnPtr->loop()->RunInLoop(std::bind(&SendToThread, mConnPtr, mPacketParseType, nMsgID, evpp::Slice(msg, nLen).ToString(), nPlayerID));
 		NFBuffer mxSendBuffer;
-		NFIPacketParse::EnCode(mPacketParseType, nMsgID, nPlayerID, operateId, msg, nLen, mxSendBuffer);
+		NFIPacketParse::EnCode(mPacketParseType, nMsgID, nPlayerID, operateId, 0, 0, msg, nLen, mxSendBuffer);
 		mConnPtr->Send((const void*)mxSendBuffer.ReadAddr(), mxSendBuffer.ReadableSize());
 		return true;
 	}

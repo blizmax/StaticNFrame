@@ -202,7 +202,9 @@ bool NFEvppServer::Init()
 				uint32_t nMsgId = 0;
 				uint64_t nValue = 0;
 				uint32_t nOperateId = 0;
-				int ret = NFIPacketParse::DeCode(mPacketParseType, msg->data(), msg->size(), outData, outLen, allLen, nMsgId, nValue, nOperateId);
+				uint8_t nRpcType = 0;
+				uint64_t nRpcReqId = 0;
+				int ret = NFIPacketParse::DeCode(mPacketParseType, msg->data(), msg->size(), outData, outLen, allLen, nMsgId, nValue, nOperateId, nRpcType, nRpcReqId);
 				if (ret < 0)
 				{
 					//如果网络对外， 外部网络比如网关的话，就关掉这个链接， 有可能是被攻击了

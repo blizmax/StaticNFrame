@@ -16,7 +16,7 @@
 struct InternalMsg
 {
 public:
-	InternalMsg() : wSZ(0), wCmdID(0), ulValue(0), opreateId(0)
+	InternalMsg() : wSZ(0), wCmdID(0), ulValue(0), opreateId(0), rpc_type(0), rpc_reqid(0)
 	{
 	}
 
@@ -24,6 +24,8 @@ public:
 	uint32_t wCmdID;
 	uint64_t ulValue;
 	uint32_t opreateId;
+	uint8_t  rpc_type; //0²»ÊÇrpc, 1:rpc
+	uint64_t rpc_reqid;
 };
 
 #pragma pack(pop)
@@ -32,7 +34,7 @@ InternalPacketParse::InternalPacketParse()
 {
 }
 
-int InternalPacketParse::DeCodeImpl(const char* strData, const uint32_t unLen, char*& outData, uint32_t& outLen, uint32_t& allLen, uint32_t& nMsgId, uint64_t& nValue, uint32_t& operateId)
+int InternalPacketParse::DeCodeImpl(const char* strData, const uint32_t unLen, char*& outData, uint32_t& outLen, uint32_t& allLen, uint32_t& nMsgId, uint64_t& nValue, uint32_t& opreateId, uint8_t& rpc_type, uint64_t& rpc_id)
 {
 	if (strData == nullptr || unLen == 0) return 1;
 
@@ -66,17 +68,21 @@ int InternalPacketParse::DeCodeImpl(const char* strData, const uint32_t unLen, c
 	outLen = static_cast<uint32_t>(dwMsgSz) - sizeof(InternalMsg);
 	nMsgId = packHead->wCmdID;
 	nValue = packHead->ulValue;
-	operateId = packHead->opreateId;
+	opreateId = packHead->opreateId;
+	rpc_type = packHead->rpc_type;
+	rpc_id = packHead->rpc_reqid;
 	allLen = static_cast<uint32_t>(dwMsgSz);
 	return 0;
 }
 
-int InternalPacketParse::EnCodeImpl(const uint32_t unMsgID, const uint64_t nValue, const uint32_t operateId, const char* strData, const uint32_t unDataLen, NFBuffer& buffer)
+int InternalPacketParse::EnCodeImpl(const uint32_t unMsgID, const uint64_t nValue, const uint32_t operateId, const uint8_t rpc_type, const uint64_t rpc_id, const char* strData, const uint32_t unDataLen, NFBuffer& buffer)
 {
 	InternalMsg packHead;
 	packHead.wCmdID = unMsgID;
 	packHead.ulValue = nValue;
 	packHead.opreateId = operateId;
+	packHead.rpc_type = rpc_type;
+	packHead.rpc_reqid = rpc_id;
 	packHead.wSZ = unDataLen + sizeof(InternalMsg);
 
 	buffer.PushData(&packHead, sizeof(InternalMsg));

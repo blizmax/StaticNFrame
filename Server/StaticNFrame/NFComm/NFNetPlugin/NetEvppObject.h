@@ -144,6 +144,15 @@ public:
 	virtual bool Send(const uint32_t nMsgID, const char* msg, const uint32_t nLen, const uint64_t nPlayerID, const uint32_t operateId);
 
 	/**
+	 * @brief	发送数据
+	 *
+	 * @param pData		发送的数据, 这里的数据已经包含了数据头
+	 * @param unSize	数据的大小
+	 * @return
+	 */
+	virtual bool Send(const uint8_t rpcType, const uint64_t rpcReqId, const char* msg, const uint32_t nLen);
+
+	/**
 	 * @brief	获得唯一ID
 	 *
 	 * @return

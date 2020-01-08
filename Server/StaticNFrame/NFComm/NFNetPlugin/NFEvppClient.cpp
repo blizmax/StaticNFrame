@@ -153,7 +153,9 @@ bool NFEvppClient::Connect()
 				uint32_t nMsgId = 0;
 				uint64_t nValue = 0;
 				uint32_t nOpreateId = 0;
-				int ret = NFIPacketParse::DeCode(mPacketParseType, msg->data(), msg->size(), outData, outLen, allLen, nMsgId, nValue, nOpreateId);
+				uint8_t nRpcType = 0;
+				uint64_t nRpcReqId = 0;
+				int ret = NFIPacketParse::DeCode(mPacketParseType, msg->data(), msg->size(), outData, outLen, allLen, nMsgId, nValue, nOpreateId, nRpcType, nRpcReqId);
 				if (ret < 0)
 				{
 					NFLogError(NF_LOG_SYSTEMLOG, 0, "net client parse data failed!");
@@ -166,15 +168,24 @@ bool NFEvppClient::Connect()
 				}
 				else
 				{
-					MsgFromNetInfo* pMsg = new MsgFromNetInfo(conn);
-					pMsg->nType = eMsgType_RECIVEDATA;
-					pMsg->strMsg = std::string(outData, outLen);
-					pMsg->nMsgId = nMsgId;
-					pMsg->nValue = nValue;
-					pMsg->nOperateId = nOpreateId;
-					mMsgQueue.Push(pMsg);
+					if (nRpcType > 0)
+					{
+						this->RpcCackBack(nRpcReqId, (uint32_t)NFRpcErrorCode::OK, std::string(outData, outLen));
+						msg->Skip(allLen);
+					}
+					else
+					{
+						MsgFromNetInfo* pMsg = new MsgFromNetInfo(conn);
+						pMsg->nType = eMsgType_RECIVEDATA;
+						pMsg->strMsg = std::string(outData, outLen);
+						pMsg->nMsgId = nMsgId;
+						pMsg->nValue = nValue;
+						pMsg->nOperateId = nOpreateId;
+						mMsgQueue.Push(pMsg);
 
-					msg->Skip(allLen);
+						msg->Skip(allLen);
+					}
+
 					continue;
 				}
 			}
@@ -256,6 +267,15 @@ void NFEvppClient::ProcessMsgLogicThread()
 
 		NF_SAFE_DELETE(pMsg);
 	}
+}
+
+bool NFEvppClient::Send(const uint8_t rpcType, const uint64_t rpcReqId, const char* msg, const uint32_t nLen)
+{
+	if (m_pObject)
+	{
+		return m_pObject->Send(rpcType, rpcReqId, msg, nLen);
+	}
+	return false;
 }
 
 bool NFEvppClient::Send(const void* pData, uint32_t unSize)

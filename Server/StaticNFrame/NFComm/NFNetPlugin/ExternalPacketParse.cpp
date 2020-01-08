@@ -36,7 +36,7 @@ ExternalPacketParse::ExternalPacketParse()
 {
 }
 
-int ExternalPacketParse::DeCodeImpl(const char* strData, const uint32_t unLen, char*& outData, uint32_t& outLen, uint32_t& allLen, uint32_t& nMsgId, uint64_t& nValue, uint32_t& operateId)
+int ExternalPacketParse::DeCodeImpl(const char* strData, const uint32_t unLen, char*& outData, uint32_t& outLen, uint32_t& allLen, uint32_t& nMsgId, uint64_t& nValue, uint32_t& opreateId, uint8_t& rpc_type, uint64_t& rpc_id)
 {
 	if (strData == nullptr || unLen == 0) return 1;
 
@@ -67,12 +67,14 @@ int ExternalPacketParse::DeCodeImpl(const char* strData, const uint32_t unLen, c
 	outLen = msgSize;
 	nMsgId = tmpMsgId;
 	nValue = 0;
-	operateId = tmpValue;
+	opreateId = tmpValue;
+	rpc_type = 0;
+	rpc_id = 0;
 	allLen = sizeof(ExternalMsg) + msgSize;
 	return 0;
 }
 
-int ExternalPacketParse::EnCodeImpl(const uint32_t unMsgID, const uint64_t nValue, const uint32_t opreateId, const char* strData, const uint32_t unDataLen, NFBuffer& buffer)
+int ExternalPacketParse::EnCodeImpl(const uint32_t unMsgID, const uint64_t nValue, const uint32_t opreateId, const uint8_t rpc_type, const uint64_t rpc_id, const char* strData, const uint32_t unDataLen, NFBuffer& buffer)
 {
 	ExternalMsg packHead;
 	packHead.mSZ = unDataLen;
