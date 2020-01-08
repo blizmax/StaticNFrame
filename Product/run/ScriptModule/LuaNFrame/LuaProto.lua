@@ -12,6 +12,24 @@ function LuaProto.LoadProto(proto)
     LuaProto.protoc:load(proto)
 end
 
+function LuaProto.LoadProtoFile(proto)
+    if LuaProto.protoc.loaded[proto] ~= nil then
+        local tb_proto = LuaProto.protoc.loaded[proto]
+        if type(tb_proto) == "table" then
+            for k1, v1 in pairs(tb_proto['message_type']) do
+                LuaProto.protoc.typemap["."..tb_proto["package"].."."..v1["name"]] = nil
+                LuaProto.pb.clear("."..tb_proto["package"].."."..v1["name"])
+            end
+            LuaProto.protoc.loaded[proto] = nil
+        end
+    end
+    LuaProto.protoc:loadfile(proto)
+end
+
+function LuaProto.AddPath(path)
+    LuaProto.protoc:addpath(path)
+end
+
 function LuaProto.LoadFile(protofile)
     assert(LuaProto.pb.loadfile(protofile)) -- 载入刚才编译的pb文件
 end
@@ -21,15 +39,6 @@ function LuaProto.Decode(msgtype, msgdata_buffer)
         return nil
     end
     return LuaProto.pb.decode(msgtype, msgdata_buffer)
-end
-
-function LuaProto.DecodeWithDefaults(msgtype, msgdata_buffer)
-    if type(msgtype) ~= "string" or type(msgdata_buffer) ~= "string" then
-        return nil
-    end
-
-    local data = LuaProto.Defaults(msgtype)
-    return LuaProto.pb.decode(msgtype, msgdata_buffer, data)
 end
 
 function LuaProto.Encode(msgtype, msgdata)
