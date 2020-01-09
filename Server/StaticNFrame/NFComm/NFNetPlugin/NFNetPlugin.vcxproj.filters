@@ -329,15 +329,6 @@
     <ClInclude Include="NFRouter.h">
       <Filter>NFNetObject</Filter>
     </ClInclude>
-    <ClInclude Include="NFCodec.h">
-      <Filter>NFNetObject</Filter>
-    </ClInclude>
-    <ClInclude Include="NFClientUtils.h">
-      <Filter>NFNetObject</Filter>
-    </ClInclude>
-    <ClInclude Include="NFConstVar.h">
-      <Filter>NFNetObject</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="NFClient">

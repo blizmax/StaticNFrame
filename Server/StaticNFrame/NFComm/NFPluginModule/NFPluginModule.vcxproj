@@ -365,8 +365,11 @@
     <ClInclude Include="NFISqliteModule.h" />
     <ClInclude Include="NFITaskComponent.h" />
     <ClInclude Include="NFITaskModule.h" />
+    <ClInclude Include="NFMsgPackCode.h" />
     <ClInclude Include="NFProfiler.h" />
     <ClInclude Include="NFProtobufCommon.h" />
+    <ClInclude Include="NFRpcConstVar.h" />
+    <ClInclude Include="NFRpcUtils.h" />
     <ClInclude Include="NFSystemInfo.h" />
     <ClInclude Include="NFEventDefine.h" />
     <ClInclude Include="NFILuaScriptModule.h" />

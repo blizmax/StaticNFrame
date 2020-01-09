@@ -203,6 +203,8 @@ protected:
 	 * @brief 主线程处理消息队列
 	 */
 	virtual void ProcessMsgLogicThread();
+
+	virtual void RegisterRpcMemberFunc(const std::string& name, const std::function<void(uint32_t, const char*, size_t, std::string&, ExecMode& model)>& cb) override;
 private:
 	evpp::EventLoopThread* m_eventLoop;
 	evpp::TCPServer* m_tcpServer;
@@ -226,4 +228,9 @@ private:
 	* @brief 退出的时候用来确认
 	*/
 	atomic_bool mExit;
+
+	/**
+	* @brief rpc
+	*/
+	std::unordered_map<std::string,std::function<void(uint32_t, const char*, size_t, std::string&, ExecMode& model)>> mMapInvokers;
 };

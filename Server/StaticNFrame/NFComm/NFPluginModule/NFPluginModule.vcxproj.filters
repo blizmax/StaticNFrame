@@ -205,6 +205,15 @@
     <ClInclude Include="NFCurlHttpClient.h">
       <Filter>Curl</Filter>
     </ClInclude>
+    <ClInclude Include="NFMsgPackCode.h">
+      <Filter>Net</Filter>
+    </ClInclude>
+    <ClInclude Include="NFRpcConstVar.h">
+      <Filter>Net</Filter>
+    </ClInclude>
+    <ClInclude Include="NFRpcUtils.h">
+      <Filter>Net</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Event">

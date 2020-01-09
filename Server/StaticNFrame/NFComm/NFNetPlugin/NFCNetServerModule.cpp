@@ -108,6 +108,15 @@ bool NFCNetServerModule::Execute()
 	return true;
 }
 
+NFIServer* NFCNetServerModule::GetServerByServerType(const NF_SERVER_TYPES eServerType)
+{
+	if (eServerType > NF_ST_NONE && eServerType < NF_ST_MAX)
+	{
+		return mServerArray[eServerType];
+	}
+	return nullptr;
+}
+
 uint32_t NFCNetServerModule::AddServer(const NF_SERVER_TYPES eServerType, uint32_t nServerID, uint32_t nMaxClient, uint32_t nPort, bool bWebSocket, uint32_t nPacketParseType, bool bForeignNetwork , bool bRefuseAttackIp)
 {
 	if (eServerType > NF_ST_NONE && eServerType < NF_ST_MAX)
@@ -356,5 +365,17 @@ void NFCNetServerModule::SendToAllServerByPB(NF_SERVER_TYPES eServerType, const 
 {
 	uint32_t msgId = MAKE_UINT32(nSubMsgID, nMainMsgID);
 	SendToAllServerByPB(eServerType, msgId, xData, nPlayerID, operateId);
+}
+
+void NFCNetServerModule::RegisterRpcMemberFunc(NF_SERVER_TYPES eServerType, const std::string& name, const std::function<void(uint32_t, const char*, size_t, std::string&, ExecMode& model)>& cb)
+{
+	if (eServerType > NF_ST_NONE && eServerType < NF_ST_MAX)
+	{
+		auto pServer = mServerArray[eServerType];
+		if (pServer)
+		{
+			pServer->RegisterRpcMemberFunc(name, cb);
+		}
+	}
 }
 

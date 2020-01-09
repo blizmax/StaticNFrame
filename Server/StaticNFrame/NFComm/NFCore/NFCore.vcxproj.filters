@@ -317,5 +317,11 @@
     <ClInclude Include="NFThreadPool.h">
       <Filter>Thread</Filter>
     </ClInclude>
+    <ClInclude Include="NFMetaUtils.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="NFCPlusPlus14.h">
+      <Filter>Common</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

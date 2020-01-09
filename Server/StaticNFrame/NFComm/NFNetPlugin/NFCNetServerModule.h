@@ -109,6 +109,14 @@ public:
 	virtual uint32_t AddServer(const NF_SERVER_TYPES eServerType, uint32_t nServerID, uint32_t nMaxClient, uint32_t nPort, bool bWebSocket = false, uint32_t nPacketParseType = 0, bool bForeignNetwork = false, bool bRefuseAttackIp = false) override;
 
 	/**
+	 * @brief 获得服务器
+	 *
+	 * @param  eServerType
+	 * @return NFIServer
+	 */
+	virtual NFIServer* GetServerByServerType(const NF_SERVER_TYPES eServerType);
+
+	/**
 	 * @brief 获得连接的IP
 	 *
 	 * @param  usLinkId
@@ -240,6 +248,8 @@ public:
 	virtual void SendToAllServer(NF_SERVER_TYPES eServerType, const uint16_t nMainMsgID, const uint16_t nSubMsgID, const char* msg, const uint32_t nLen, const uint64_t nPlayerID, const uint32_t operateId) override;
 
 	virtual void SendToAllServerByPB(NF_SERVER_TYPES eServerType, const uint16_t nMainMsgID, const uint16_t nSubMsgID, const google::protobuf::Message& xData, const uint64_t nPlayerID, const uint32_t operateId) override;
+
+	virtual void RegisterRpcMemberFunc(NF_SERVER_TYPES eServerType, const std::string& name, const std::function<void(uint32_t, const char*, size_t, std::string&, ExecMode& model)>& cb) override;
 protected:
 	/**
 	 * @brief 将消息编码后通过pServer发送出去

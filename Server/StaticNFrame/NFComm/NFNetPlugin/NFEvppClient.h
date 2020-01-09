@@ -37,9 +37,7 @@
 #include "evpp/tcp_client.h"
 #include "NFEvppServer.h"
 #include "NFIClient.h"
-#include "NFComm/NFCore/NFNonCopyable.h"
-#include "NFClientUtils.h"
-#include "NFConstVar.h"
+
 
  /**
  *@brief   多线程evpp/libevent网络客户端封装类.
@@ -61,7 +59,7 @@ class NFEvppClient : public NFIClient
 			timer_ = eventLoop_->RunAfter(timeout_, [this, self]() {
 				has_timeout_ = true;
 			});
-			
+
 		}
 
 		void callback(uint32_t error_code, const std::string& data) {
@@ -171,122 +169,10 @@ public:
 
 	void SafeExit();
 public:
-	//rpc
-	template<size_t TIMEOUT, typename T = void, typename... Args>
-	typename std::enable_if<std::is_void<T>::value>::type Call(const std::string& rpc_name, Args&& ... args) {
-		std::future<req_result> future = AsyncCall<FUTURE>(rpc_name, std::forward<Args>(args)...);
-		auto status = future.wait_for(std::chrono::milliseconds(TIMEOUT));
-		if (status == std::future_status::timeout || status == std::future_status::deferred) {
-			throw std::out_of_range("timeout or deferred");
-		}
-
-		future.get().as();
-	}
-
-	template<typename T = void, typename... Args>
-	typename std::enable_if<std::is_void<T>::value>::type Call(const std::string& rpc_name, Args&& ... args) {
-		Call<DEFAULT_TIMEOUT, T>(rpc_name, std::forward<Args>(args)...);
-	}
-
-	template<size_t TIMEOUT, typename T, typename... Args>
-	typename std::enable_if<!std::is_void<T>::value, T>::type Call(const std::string& rpc_name, Args&& ... args) {
-		std::future<req_result> future = AsyncCall<FUTURE>(rpc_name, std::forward<Args>(args)...);
-		auto status = future.wait_for(std::chrono::milliseconds(TIMEOUT));
-		if (status == std::future_status::timeout || status == std::future_status::deferred) {
-			throw std::out_of_range("timeout or deferred");
-		}
-
-		return future.get().as<T>();
-	}
-
-	template<typename T, typename... Args>
-	typename std::enable_if<!std::is_void<T>::value, T>::type Call(const std::string& rpc_name, Args&& ... args) {
-		return Call<DEFAULT_TIMEOUT, T>(rpc_name, std::forward<Args>(args)...);
-	}
-
-	template<CallModel model, typename... Args>
-	std::future<req_result> AsyncCall(const std::string& rpc_name, Args&&... args) {
-		auto p = std::make_shared<std::promise<req_result>>();
-		std::future<req_result> future = p->get_future();
-
-		uint64_t fu_id = 0;
-		{
-			std::unique_lock<std::mutex> lock(cb_mtx_);
-			fu_id_++;
-			fu_id = fu_id_;
-			future_map_.emplace(fu_id, std::move(p));
-		}
-
-		msgpack_codec codec;
-		auto ret = codec.pack_args(rpc_name, std::forward<Args>(args)...);
-		Send((uint8_t)NFRpcRequestType::req_res, fu_id, ret.data(), ret.size());
-		return future;
-	}
-
-	template<size_t TIMEOUT = DEFAULT_TIMEOUT, typename... Args>
-	void AsyncCall(const NF_SERVER_TYPES eType, const std::string& rpc_name, std::function<void()> cb, Args&& ... args) {
-		uint64_t cb_id = 0;
-		{
-			std::unique_lock<std::mutex> lock(cb_mtx_);
-			callback_id_++;
-			callback_id_ |= (uint64_t(1) << 63);
-			cb_id = callback_id_;
-			auto call = std::make_shared<call_t>(m_tcpClient->loop(), std::move(cb), TIMEOUT);
-			call->start_timer();
-			callback_map_.emplace(cb_id, call);
-		}
-
-		msgpack_codec codec;
-		auto ret = codec.pack_args(rpc_name, std::forward<Args>(args)...);
-		Send((uint8_t)request_type::req_res, cb_id, ret.data(), ret.size());
-	}
-
-	void RpcCackBack(uint64_t req_id, uint32_t ec, const std::string& data) {
-		temp_req_id_ = req_id;
-		auto cb_flag = req_id >> 63;
-		if (cb_flag) {
-			std::shared_ptr<call_t> cl = nullptr;
-			{
-				std::unique_lock<std::mutex> lock(cb_mtx_);
-				cl = std::move(callback_map_[req_id]);
-			}
-
-			assert(cl);
-			if (!cl->has_timeout()) {
-				cl->cancel();
-				cl->callback(ec, data);
-			}
-			else {
-				cl->callback((uint32_t)NFRpcErrorCode::TIMEOUT, data);
-			}
-
-			std::unique_lock<std::mutex> lock(cb_mtx_);
-			callback_map_.erase(req_id);
-		}
-		else {
-			std::unique_lock<std::mutex> lock(cb_mtx_);
-			auto& f = future_map_[req_id];
-			if (ec) {
-				//LOG<<ec.message();
-				if (!f) {
-					//std::cout << "invalid req_id" << std::endl;
-					return;
-				}
-			}
-
-			assert(f);
-			f->set_value(req_result{ data });
-			future_map_.erase(req_id);
-		}
-	}
-
-	void ClearRpcCache() {
-		{
-			std::unique_lock<std::mutex> lock(cb_mtx_);
-			callback_map_.clear();
-			future_map_.clear();
-		}
-	}
+	virtual std::future<NFRpcReqResult> AsyncCall(const std::string& rpc_name, const char* msg, const uint32_t nLen) override;
+	virtual void AsyncCall(const std::string& rpc_name, std::function<void(uint32_t error_code, const std::string& data)> cb, uint32_t timeout, const char* msg, const uint32_t nLen) override;
+	virtual void RpcCallBack(uint64_t req_id, uint32_t ec, const std::string& data);
+	virtual void ClearRpcCache();
 private:
 	evpp::TCPClient* m_tcpClient;
 protected:
@@ -305,8 +191,10 @@ protected:
 	 */
 	std::atomic_bool m_safeExit;
 
-	//rpc
-	std::unordered_map<std::uint64_t, std::shared_ptr<std::promise<req_result>>> future_map_;
+	/**
+	 * @brief	rpc
+	 */
+	std::unordered_map<std::uint64_t, std::shared_ptr<std::promise<NFRpcReqResult>>> future_map_;
 	std::unordered_map<std::uint64_t, std::shared_ptr<call_t>> callback_map_;
 	std::mutex cb_mtx_;
 	uint64_t callback_id_ = 0;

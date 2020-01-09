@@ -242,6 +242,11 @@ public:
 	virtual void SendToAllServer(NF_SERVER_TYPES eServerType, const uint16_t nMainMsgID, const uint16_t nSubMsgID, const char* msg, const uint32_t nLen, const uint64_t nPlayerID, const uint32_t operateId) override;
 
 	virtual void SendToAllServerByPB(NF_SERVER_TYPES eServerType, const uint16_t nMainMsgID, const uint16_t nSubMsgID, const google::protobuf::Message& xData, const uint64_t nPlayerID, const uint32_t operateId) override;
+
+	virtual NFIClient* GetClientByUnlinkId(uint32_t unLinkId);
+public:
+	virtual std::future<NFRpcReqResult> AsyncCall(uint32_t unLinkId, const std::string& rpc_name, const char* msg, const uint32_t nLen) override;
+	virtual void AsyncCall(uint32_t unLinkId, const std::string& rpc_name, std::function<void(uint32_t error_code, const std::string& data)> cb, uint32_t timeout, const char* msg, const uint32_t nLen) override;
 protected:
 	/**
 	 * @brief

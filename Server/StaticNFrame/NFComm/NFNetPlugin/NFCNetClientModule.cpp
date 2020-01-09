@@ -570,3 +570,52 @@ void NFCNetClientModule::SendToAllServerByPB(NF_SERVER_TYPES eServerType, const 
 	uint32_t msgId = MAKE_UINT32(nSubMsgID, nMainMsgID);
 	SendToAllServerByPB(eServerType, msgId, xData, nPlayerID, operateId);
 }
+
+NFIClient* NFCNetClientModule::GetClientByUnlinkId(uint32_t unLinkId)
+{
+	uint32_t serverType = GetServerTypeFromUnlinkId(unLinkId);
+	uint32_t serverIndex = GetServerIndexFromUnlinkId(unLinkId);
+	uint32_t isServer = GetIsServerFromUnlinkId(unLinkId);
+	if (isServer != NF_IS_CLIENT)
+	{
+		NFLogError(NF_LOG_NET_PLUGIN, 0, "usLinkId is not a client link, this usLinkId:{} is not of the client", unLinkId);
+		return nullptr;
+	}
+
+	if (serverType < NF_ST_MAX && serverIndex < mxServerMap[serverType].size())
+	{
+		NFIClient* pClient = mxServerMap[serverType][serverIndex];
+		if (pClient)
+		{
+			return pClient;
+		}
+		else
+		{
+			NFLogError(NF_LOG_NET_PLUGIN, 0, "usLinkId is a client link, but client not exist, this usLinkId:{}", unLinkId);
+		}
+	}
+
+	return nullptr;
+}
+
+std::future<NFRpcReqResult> NFCNetClientModule::AsyncCall(uint32_t unLinkId, const std::string& rpc_name, const char* msg, const uint32_t nLen)
+{
+	NFIClient* pClient = GetClientByUnlinkId(unLinkId);
+	if (pClient)
+	{
+		return pClient->AsyncCall(rpc_name, msg, nLen);
+	}
+
+	auto p = std::make_shared<std::promise<NFRpcReqResult>>();
+	std::future<NFRpcReqResult> future = p->get_future();
+	return future;
+}
+
+void NFCNetClientModule::AsyncCall(uint32_t unLinkId, const std::string& rpc_name, std::function<void(uint32_t error_code, const std::string& data)> cb, uint32_t timeout, const char* msg, const uint32_t nLen)
+{
+	NFIClient* pClient = GetClientByUnlinkId(unLinkId);
+	if (pClient)
+	{
+		pClient->AsyncCall(rpc_name, cb, timeout, msg, nLen);
+	}
+}

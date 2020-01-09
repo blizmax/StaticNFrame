@@ -170,7 +170,7 @@ bool NFEvppClient::Connect()
 				{
 					if (nRpcType > 0)
 					{
-						this->RpcCackBack(nRpcReqId, (uint32_t)NFRpcErrorCode::OK, std::string(outData, outLen));
+						this->RpcCallBack(nRpcReqId, (uint32_t)NFRpcErrorCode::OK, std::string(outData, outLen));
 						msg->Skip(allLen);
 					}
 					else
@@ -301,5 +301,88 @@ bool NFEvppClient::Send(const uint32_t nMsgID, const char* msg, const uint32_t n
 		return m_pObject->Send(nMsgID, msg, nLen, nPlayerID, opreateId);
 	}
 	return false;
+}
+
+std::future<NFRpcReqResult> NFEvppClient::AsyncCall(const std::string& rpc_name, const char* msg, const uint32_t nLen)
+{
+	auto p = std::make_shared<std::promise<NFRpcReqResult>>();
+	std::future<NFRpcReqResult> future = p->get_future();
+
+	uint64_t fu_id = 0;
+	{
+		std::unique_lock<std::mutex> lock(cb_mtx_);
+		fu_id_++;
+		fu_id = fu_id_;
+		future_map_.emplace(fu_id, std::move(p));
+	}
+
+
+	Send((uint8_t)NFRpcRequestType::req_res, fu_id, msg, nLen);
+	return future;
+}
+
+void NFEvppClient::AsyncCall(const std::string& rpc_name, std::function<void(uint32_t error_code, const std::string& data)> cb, uint32_t timeout, const char* msg, const uint32_t nLen)
+{
+	uint64_t cb_id = 0;
+	{
+		std::unique_lock<std::mutex> lock(cb_mtx_);
+		callback_id_++;
+		callback_id_ |= (uint64_t(1) << 63);
+		cb_id = callback_id_;
+		auto call = std::make_shared<call_t>(m_tcpClient->loop(), std::move(cb), timeout);
+		call->start_timer();
+		callback_map_.emplace(cb_id, call);
+	}
+
+	Send((uint8_t)NFRpcRequestType::req_res, cb_id, msg, nLen);
+}
+
+void NFEvppClient::RpcCallBack(uint64_t req_id, uint32_t ec, const std::string& data)
+{
+	temp_req_id_ = req_id;
+	auto cb_flag = req_id >> 63;
+	if (cb_flag) {
+		std::shared_ptr<call_t> cl = nullptr;
+		{
+			std::unique_lock<std::mutex> lock(cb_mtx_);
+			cl = std::move(callback_map_[req_id]);
+		}
+
+		assert(cl);
+		if (!cl->has_timeout()) {
+			cl->cancel();
+			cl->callback(ec, data);
+		}
+		else {
+			cl->callback((uint32_t)NFRpcErrorCode::TIMEOUT, data);
+		}
+
+		std::unique_lock<std::mutex> lock(cb_mtx_);
+		callback_map_.erase(req_id);
+	}
+	else {
+		std::unique_lock<std::mutex> lock(cb_mtx_);
+		auto& f = future_map_[req_id];
+		if (ec) {
+			//LOG<<ec.message();
+			if (!f) {
+				//std::cout << "invalid req_id" << std::endl;
+				return;
+			}
+		}
+
+		assert(f);
+		f->set_value(NFRpcReqResult{ data });
+		future_map_.erase(req_id);
+	}
+}
+
+void NFEvppClient::ClearRpcCache()
+{
+	{
+		std::unique_lock<std::mutex> lock(cb_mtx_);
+		callback_map_.clear();
+		future_map_.clear();
+	}
 }
 

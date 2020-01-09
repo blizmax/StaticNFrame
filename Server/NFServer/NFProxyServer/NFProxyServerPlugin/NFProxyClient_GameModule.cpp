@@ -138,6 +138,9 @@ void NFCProxyClient_GameModule::RegisterServer(uint32_t linkId)
 		pData->set_server_state(NFMsg::EST_NARMAL);
 
 		FindModule<NFINetClientModule>()->SendToServerByPB(linkId, EGMI_NET_PROXY_TO_GAME_REGISTER, xMsg, 0, 0);
+
+		uint32_t ret = FindModule<NFINetClientModule>()->Call<uint32_t>(linkId, "add", 1, 2);
+		std::cout << ret << std::endl;
 	}
 
 	NF_SHARE_PTR<NFServerData> pServerData = mUnlinkGameMap.GetElement(linkId);

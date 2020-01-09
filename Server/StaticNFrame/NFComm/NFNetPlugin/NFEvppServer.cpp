@@ -558,3 +558,8 @@ bool NFEvppServer::SendAll(const uint32_t nMsgID, const char* msg, const uint32_
 
 	return true;
 }
+
+void NFEvppServer::RegisterRpcMemberFunc(const std::string& name, const std::function<void(uint32_t, const char*, size_t, std::string&, ExecMode& model)>& cb)
+{
+	mMapInvokers[name] = cb;
+}

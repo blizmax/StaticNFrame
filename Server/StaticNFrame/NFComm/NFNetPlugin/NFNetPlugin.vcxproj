@@ -131,12 +131,9 @@
     <ClInclude Include="NFCHttpClientModule.h" />
     <ClInclude Include="NFCHttpServer.h" />
     <ClInclude Include="NFCHttpServerModule.h" />
-    <ClInclude Include="NFClientUtils.h" />
     <ClInclude Include="NFCNetServerModule.h" />
     <ClInclude Include="NFCHttpClient.h" />
     <ClInclude Include="NetEvppObject.h" />
-    <ClInclude Include="NFCodec.h" />
-    <ClInclude Include="NFConstVar.h" />
     <ClInclude Include="NFEvppClient.h" />
     <ClInclude Include="NFEvppServer.h" />
     <ClInclude Include="NFHttpFormat.h" />

@@ -9,6 +9,9 @@
 #pragma once
 
 #include "NFINetModule.h"
+#include "NFComm/NFPluginModule/NFMsgPackCode.h"
+#include "NFComm/NFPluginModule/NFRpcConstVar.h"
+#include "NFComm/NFPluginModule/NFRpcUtils.h"
 
 class NFINetClientModule : public NFINetModule
 {
@@ -72,4 +75,60 @@ public:
 	virtual void SendToAllServer(NF_SERVER_TYPES eServerType, const uint16_t nMainMsgID, const uint16_t nSubMsgID, const char* msg, const uint32_t nLen, const uint64_t nPlayerID, const uint32_t operateId) = 0;
 
 	virtual void SendToAllServerByPB(NF_SERVER_TYPES eServerType, const uint16_t nMainMsgID, const uint16_t nSubMsgID, const google::protobuf::Message& xData, const uint64_t nPlayerID, const uint32_t operateId) = 0;
+
+	//rpc
+	template<size_t TIMEOUT, typename T = void, typename... Args>
+	typename std::enable_if<std::is_void<T>::value>::type Call(uint32_t unLinkId, const std::string& rpc_name, Args&& ... args)
+	{
+		std::future<NFRpcReqResult> future = AsyncCall<FUTURE>(rpc_name, std::forward<Args>(args)...);
+		auto status = future.wait_for(std::chrono::milliseconds(TIMEOUT));
+		if (status == std::future_status::timeout || status == std::future_status::deferred) {
+			throw std::out_of_range("timeout or deferred");
+		}
+
+		future.get().as();
+	}
+
+	template<typename T = void, typename... Args>
+	typename std::enable_if<std::is_void<T>::value>::type Call(uint32_t unLinkId, const std::string& rpc_name, Args&& ... args)
+	{
+		Call<DEFAULT_TIMEOUT, T>(unLinkId, rpc_name, std::forward<Args>(args)...);
+	}
+
+	template<size_t TIMEOUT, typename T, typename... Args>
+	typename std::enable_if<!std::is_void<T>::value, T>::type Call(uint32_t unLinkId, const std::string& rpc_name, Args&& ... args)
+	{
+		std::future<NFRpcReqResult> future = AsyncCall<FUTURE>(unLinkId, rpc_name, std::forward<Args>(args)...);
+		auto status = future.wait_for(std::chrono::milliseconds(TIMEOUT));
+		if (status == std::future_status::timeout || status == std::future_status::deferred) {
+			throw std::out_of_range("timeout or deferred");
+		}
+
+		return future.get().as<T>();
+	}
+
+	template<typename T, typename... Args>
+	typename std::enable_if<!std::is_void<T>::value, T>::type Call(uint32_t unLinkId, const std::string& rpc_name, Args&& ... args)
+	{
+		return Call<DEFAULT_TIMEOUT, T>(unLinkId, rpc_name, std::forward<Args>(args)...);
+	}
+
+	template<CallModel model, typename... Args>
+	std::future<NFRpcReqResult> AsyncCall(uint32_t unLinkId, const std::string& rpc_name, Args&&... args)
+	{
+		msgpack_codec codec;
+		auto ret = codec.pack_args(rpc_name, std::forward<Args>(args)...);
+		return AsyncCall(unLinkId, rpc_name, ret.data(), ret.size());
+	}
+
+	template<size_t TIMEOUT = DEFAULT_TIMEOUT, typename... Args>
+	void AsyncCall(uint32_t unLinkId, const std::string& rpc_name, std::function<void(uint32_t error_code, const std::string& data)> cb, Args&& ... args)
+	{
+		msgpack_codec codec;
+		auto ret = codec.pack_args(rpc_name, std::forward<Args>(args)...);
+		AsyncCall(unLinkId, rpc_name, cb, TIMEOUT, ret.data(), ret.size());
+	}
+
+	virtual std::future<NFRpcReqResult> AsyncCall(uint32_t unLinkId, const std::string& rpc_name, const char* msg, const uint32_t nLen) = 0;
+	virtual void AsyncCall(uint32_t unLinkId, const std::string& rpc_name, std::function<void(uint32_t error_code, const std::string& data)> cb, uint32_t timeout, const char* msg, const uint32_t nLen) = 0;
 };

@@ -33,7 +33,7 @@
 #include "NFNetDefine.h"
 #include "NFComm/NFCore/NFMutex.h"
 #include "NFComm/NFCore/NFLock.h"
-
+#include "NFComm/NFPluginModule/NFRpcConstVar.h"
 
 class NFIServer : public NFIModule
 {
@@ -161,6 +161,8 @@ public:
 	* @return uint32_t
 	*/
 	virtual uint32_t GetMaxConnectNum() const { return mFlag.nMaxConnectNum; }
+public:
+	virtual void RegisterRpcMemberFunc(const std::string& name, const std::function<void(uint32_t, const char*, size_t, std::string&, ExecMode& model)>& cb) = 0;
 protected:
 	/**
 	 * @brief	处理接受数据的回调

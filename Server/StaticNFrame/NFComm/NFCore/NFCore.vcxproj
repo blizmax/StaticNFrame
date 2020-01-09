@@ -375,6 +375,7 @@
     <ClInclude Include="NFConsistentHash.h" />
     <ClInclude Include="NFConsistentHash.hpp" />
     <ClInclude Include="NFConsistentHashNew.h" />
+    <ClInclude Include="NFCPlusPlus14.h" />
     <ClInclude Include="NFError.h" />
     <ClInclude Include="NFEventLoop.h" />
     <ClInclude Include="NFEventLoopThread.h" />
@@ -397,6 +398,7 @@
     <ClInclude Include="NFMemPolicy.h" />
     <ClInclude Include="NFMemQueue.h" />
     <ClInclude Include="NFMemMultiHashMap.h" />
+    <ClInclude Include="NFMetaUtils.h" />
     <ClInclude Include="NFMutex.h" />
     <ClInclude Include="NFNetBuffer.h" />
     <ClInclude Include="NFCpu.h" />

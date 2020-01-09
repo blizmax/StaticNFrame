@@ -37,6 +37,10 @@
 #include "NetEvppObject.h"
 
 #include "NFEvppServer.h"
+#include "NFComm/NFCore/NFNonCopyable.h"
+#include "NFComm/NFPluginModule/NFMsgPackCode.h"
+#include "NFComm/NFPluginModule/NFRpcConstVar.h"
+#include "NFComm/NFPluginModule/NFRpcUtils.h"
 
 /////////////////////////////////////////////////
 /**
@@ -175,6 +179,9 @@ public:
 
 	void SetPacketParseType(uint32_t type) { mPacketParseType = type; }
 	uint32_t GetPacketParseType() const { return mPacketParseType; }
+public:
+	virtual std::future<NFRpcReqResult> AsyncCall(const std::string& rpc_name, const char* msg, const uint32_t nLen) = 0;
+	virtual void AsyncCall(const std::string& rpc_name, std::function<void(uint32_t error_code, const std::string& data)> cb, uint32_t timeout, const char* msg, const uint32_t nLen) = 0;
 protected:
 	/**
 	 * @brief	连接配置数据
