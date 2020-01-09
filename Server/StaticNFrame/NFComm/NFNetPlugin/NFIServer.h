@@ -33,7 +33,9 @@
 #include "NFNetDefine.h"
 #include "NFComm/NFCore/NFMutex.h"
 #include "NFComm/NFCore/NFLock.h"
+#include "NFComm/NFPluginModule/NFMsgPackCode.h"
 #include "NFComm/NFPluginModule/NFRpcConstVar.h"
+#include "NFComm/NFPluginModule/NFRpcUtils.h"
 
 class NFIServer : public NFIModule
 {

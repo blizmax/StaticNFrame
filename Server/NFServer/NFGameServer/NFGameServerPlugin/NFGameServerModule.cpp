@@ -60,8 +60,6 @@ bool NFCGameServerModule::Init()
 			}
 		}
 
-		FindModule<NFINetServerModule>()->RegisterRpcHandler(NF_ST_GAME, "public", [](uint32_t unlinkId, uint32_t a, uint32_t b) { return a + b; });
-
 		uint32_t unlinkId = FindModule<NFINetServerModule>()->AddServer(NF_ST_GAME, pConfig->mServerId, pConfig->mMaxConnectNum, pConfig->mServerPort);
 		if (unlinkId != 0)
 		{
@@ -71,6 +69,8 @@ bool NFCGameServerModule::Init()
 		{
 			NFLogInfo(NF_LOG_SERVER_CONNECT_SERVER, 0, "game server listen failed!, serverId:{}, maxConnectNum:{}, port:{}", pConfig->mServerId, pConfig->mMaxConnectNum, pConfig->mServerPort);
 		}
+
+		FindModule<NFINetServerModule>()->RegisterRpcHandler(NF_ST_GAME, "public", [](uint32_t unlinkId, uint32_t a, uint32_t b) { return a + b; });
 	}
 	else
 	{

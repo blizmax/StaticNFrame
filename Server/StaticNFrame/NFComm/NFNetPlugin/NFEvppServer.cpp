@@ -116,7 +116,14 @@ void NFEvppServer::ProcessMsgLogicThread()
 				NetEvppObject* pObject = evpp::any_cast<NetEvppObject*>(pMsg->mTCPConPtr->context());
 				if (pObject)
 				{
-					pObject->OnHandleMsgPeer(eMsgType_RECIVEDATA, pObject->m_usLinkId, (char*)pMsg->strMsg.data(), pMsg->strMsg.length(), pMsg->nMsgId, pMsg->nValue, pMsg->nOperateId);
+					if (pMsg->nRpcType > 0)
+					{
+						RpcRoute(pObject, pMsg->nRpcReqId, (char*)pMsg->strMsg.data(), pMsg->strMsg.length());
+					}
+					else
+					{
+						pObject->OnHandleMsgPeer(eMsgType_RECIVEDATA, pObject->m_usLinkId, (char*)pMsg->strMsg.data(), pMsg->strMsg.length(), pMsg->nMsgId, pMsg->nValue, pMsg->nOperateId);
+					}
 				}
 				else
 				{
@@ -235,13 +242,14 @@ bool NFEvppServer::Init()
 				}
 				else
 				{
-
 					MsgFromNetInfo* pMsg = new MsgFromNetInfo(conn);
 					pMsg->nType = eMsgType_RECIVEDATA;
 					pMsg->strMsg = std::string(outData, outLen);
 					pMsg->nMsgId = nMsgId;
 					pMsg->nValue = nValue;
 					pMsg->nOperateId = nOperateId;
+					pMsg->nRpcType = nRpcType;
+					pMsg->nRpcReqId = nRpcReqId;
 					mMsgQueue.Push(pMsg);
 
 					msg->Skip(allLen);
@@ -562,4 +570,34 @@ bool NFEvppServer::SendAll(const uint32_t nMsgID, const char* msg, const uint32_
 void NFEvppServer::RegisterRpcMemberFunc(const std::string& name, const std::function<void(uint32_t, const char*, size_t, std::string&, ExecMode& model)>& cb)
 {
 	mMapInvokers[name] = cb;
+}
+
+void NFEvppServer::RpcRoute(NetEvppObject* pObject, uint64_t req_id, char* data, std::size_t size)
+{
+	std::string result;
+	try {
+		msgpack_codec codec;
+		auto p = codec.unpack<std::tuple<std::string>>(data, size);
+		auto& func_name = std::get<0>(p);
+		auto it = mMapInvokers.find(func_name);
+		if (it == mMapInvokers.end()) {
+			result = codec.pack_args_str(NFRpcResultCode::FAIL, "unknown function: " + func_name);
+			pObject->Send((uint8_t)NFRpcRequestType::req_res, req_id, result.data(), result.length());
+			return;
+		}
+
+		ExecMode model;
+		it->second(pObject->GetLinkId(), data, size, result, model);
+		if (model == ExecMode::sync) {
+			if (result.size() >= MAX_BUF_LEN) {
+				result = codec.pack_args_str(NFRpcResultCode::FAIL, "the response result is out of range: more than 10M " + func_name);
+			}
+			pObject->Send((uint8_t)NFRpcRequestType::req_res, req_id, result.data(), result.length());
+		}
+	}
+	catch (const std::exception & ex) {
+		msgpack_codec codec;
+		result = codec.pack_args_str(NFRpcResultCode::FAIL, ex.what());
+		pObject->Send((uint8_t)NFRpcRequestType::req_res, req_id, result.data(), result.length());
+	}
 }

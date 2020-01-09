@@ -326,9 +326,6 @@
     <ClInclude Include="ExternalPacketParse.h">
       <Filter>PacketParse</Filter>
     </ClInclude>
-    <ClInclude Include="NFRouter.h">
-      <Filter>NFNetObject</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="NFClient">

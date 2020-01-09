@@ -47,6 +47,8 @@ struct MsgFromNetInfo
 		nMsgId = 0;
 		nValue = 0;
 		nOperateId = 0;
+		nRpcType = 0;
+		nRpcReqId = 0;
 	}
 
 	eMsgType nType;
@@ -55,6 +57,8 @@ struct MsgFromNetInfo
 	uint32_t nMsgId;
 	uint64_t nValue;
 	uint32_t nOperateId;
+	uint8_t nRpcType;
+	uint64_t nRpcReqId;
 };
 
 class NFCNetServerModule;
@@ -205,6 +209,8 @@ protected:
 	virtual void ProcessMsgLogicThread();
 
 	virtual void RegisterRpcMemberFunc(const std::string& name, const std::function<void(uint32_t, const char*, size_t, std::string&, ExecMode& model)>& cb) override;
+
+	virtual void RpcRoute(NetEvppObject* pObject, uint64_t req_id, char* data, std::size_t size);
 private:
 	evpp::EventLoopThread* m_eventLoop;
 	evpp::TCPServer* m_tcpServer;

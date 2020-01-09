@@ -126,7 +126,7 @@ protected:
 		typename std::enable_if<std::is_void<typename std::result_of<F(uint32_t, Args...)>::type>::value>::type
 		call(const F & f, uint32_t unlinkId, std::string & result, std::tuple<Arg, Args...> tp) {
 		call_helper(f, std::make_index_sequence<sizeof...(Args)>{}, std::move(tp), unlinkId);
-		result = msgpack_codec::pack_args_str(result_code::OK);
+		result = msgpack_codec::pack_args_str(NFRpcResultCode::OK);
 	}
 
 	template<typename F, typename Arg, typename... Args>
@@ -135,7 +135,7 @@ protected:
 		call(const F & f, uint32_t unlinkId, std::string & result, std::tuple<Arg, Args...> tp) {
 		auto r = call_helper(f, std::make_index_sequence<sizeof...(Args)>{}, std::move(tp), unlinkId);
 		msgpack_codec codec;
-		result = msgpack_codec::pack_args_str(result_code::OK, r);
+		result = msgpack_codec::pack_args_str(NFRpcResultCode::OK, r);
 	}
 
 	template<typename F, typename Self, size_t... Indexes, typename Arg, typename... Args>
@@ -151,7 +151,7 @@ protected:
 		call_member(const F & f, Self * self, uint32_t unlinkId, std::string & result,
 			std::tuple<Arg, Args...> tp) {
 		call_member_helper(f, self, typename std::make_index_sequence<sizeof...(Args)>{}, std::move(tp), unlinkId);
-		result = msgpack_codec::pack_args_str(result_code::OK);
+		result = msgpack_codec::pack_args_str(NFRpcResultCode::OK);
 	}
 
 	template<typename F, typename Self, typename Arg, typename... Args>
@@ -161,7 +161,7 @@ protected:
 			std::tuple<Arg, Args...> tp) {
 		auto r =
 			call_member_helper(f, self, typename std::make_index_sequence<sizeof...(Args)>{}, std::move(tp), unlinkId);
-		result = msgpack_codec::pack_args_str(result_code::OK, r);
+		result = msgpack_codec::pack_args_str(NFRpcResultCode::OK, r);
 	}
 
 	template<typename Function, ExecMode mode = ExecMode::sync>
@@ -178,10 +178,10 @@ protected:
 				exe_model = model;
 			}
 			catch (std::invalid_argument & e) {
-				result = codec.pack_args_str(result_code::FAIL, e.what());
+				result = codec.pack_args_str(NFRpcResultCode::FAIL, e.what());
 			}
 			catch (const std::exception & e) {
-				result = codec.pack_args_str(result_code::FAIL, e.what());
+				result = codec.pack_args_str(NFRpcResultCode::FAIL, e.what());
 			}
 		}
 
@@ -198,29 +198,29 @@ protected:
 				exe_model = model;
 			}
 			catch (std::invalid_argument & e) {
-				result = codec.pack_args_str(result_code::FAIL, e.what());
+				result = codec.pack_args_str(NFRpcResultCode::FAIL, e.what());
 			}
 			catch (const std::exception & e) {
-				result = codec.pack_args_str(result_code::FAIL, e.what());
+				result = codec.pack_args_str(NFRpcResultCode::FAIL, e.what());
 			}
 		}
 	};
 
 	template<ExecMode model, typename Function>
 	void register_nonmember_func(NF_SERVER_TYPES eServerType, const std::string& name, Function f) {
-		map_invokers_[name] = { std::bind(&invoker<Function>::template apply<model>, std::move(f), std::placeholders::_1,
+		std::function<void(uint32_t, const char*, size_t, std::string&, ExecMode& model)> cb = { std::bind(&invoker<Function>::template apply<model>, std::move(f), std::placeholders::_1,
 											   std::placeholders::_2, std::placeholders::_3,
 											   std::placeholders::_4, std::placeholders::_5) };
-		//RegisterRpcMemberFunc(eServerType, name, cb);
+		RegisterRpcMemberFunc(eServerType, name, cb);
 	}
 
 	template<ExecMode model, typename Function, typename Self>
 	void register_member_func(NF_SERVER_TYPES eServerType, const std::string& name, const Function& f, Self* self) {
-		map_invokers_[name] = { std::bind(&invoker<Function>::template apply_member<model, Self>,
+		std::function<void(uint32_t, const char*, size_t, std::string&, ExecMode& model)> cb = { std::bind(&invoker<Function>::template apply_member<model, Self>,
 											   f, self, std::placeholders::_1, std::placeholders::_2,
 											   std::placeholders::_3, std::placeholders::_4,
 											   std::placeholders::_5) };
-		//RegisterRpcMemberFunc(eServerType, name, cb);
+		RegisterRpcMemberFunc(eServerType, name, cb);
 	}
 
 	virtual void RegisterRpcMemberFunc(NF_SERVER_TYPES eServerType, const std::string& name, const std::function<void(uint32_t, const char*, size_t, std::string&, ExecMode& model)>& cb) = 0;

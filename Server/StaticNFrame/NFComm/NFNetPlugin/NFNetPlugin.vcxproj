@@ -144,7 +144,6 @@
     <ClInclude Include="NFIPacketParse.h" />
     <ClInclude Include="NFNetDefine.h" />
     <ClInclude Include="NFNetPlugin.h" />
-    <ClInclude Include="NFRouter.h" />
     <ClInclude Include="NFServerNetEventModule.h" />
     <ClInclude Include="ExternalPacketParse.h" />
   </ItemGroup>
