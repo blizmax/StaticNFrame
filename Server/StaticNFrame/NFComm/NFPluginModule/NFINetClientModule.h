@@ -80,13 +80,20 @@ public:
 	template<size_t TIMEOUT, typename T = void, typename... Args>
 	typename std::enable_if<std::is_void<T>::value>::type Call(uint32_t unLinkId, const std::string& rpc_name, Args&& ... args)
 	{
-		std::future<NFRpcReqResult> future = AsyncCall<FUTURE>(rpc_name, std::forward<Args>(args)...);
-		auto status = future.wait_for(std::chrono::milliseconds(TIMEOUT));
-		if (status == std::future_status::timeout || status == std::future_status::deferred) {
-			throw std::out_of_range("timeout or deferred");
-		}
+		try {
+			std::future<NFRpcReqResult> future = AsyncCall<FUTURE>(rpc_name, std::forward<Args>(args)...);
+			auto status = future.wait_for(std::chrono::milliseconds(TIMEOUT));
+			if (status == std::future_status::timeout || status == std::future_status::deferred) {
+				//throw std::out_of_range("timeout or deferred");
+				NFLogError(NF_LOG_SYSTEMLOG, 0, "rpc:{} timeout or deferred.............", rpc_name);
+				return;
+			}
 
-		future.get().as();
+			future.get().as();
+		}
+		catch (const std::exception & ex) {
+			NFLogError(NF_LOG_SYSTEMLOG, 0, "rpc:{} error:{}.............", rpc_name, ex.what());
+		}
 	}
 
 	template<typename T = void, typename... Args>
@@ -98,13 +105,21 @@ public:
 	template<size_t TIMEOUT, typename T, typename... Args>
 	typename std::enable_if<!std::is_void<T>::value, T>::type Call(uint32_t unLinkId, const std::string& rpc_name, Args&& ... args)
 	{
-		std::future<NFRpcReqResult> future = AsyncCall<FUTURE>(unLinkId, rpc_name, std::forward<Args>(args)...);
-		auto status = future.wait_for(std::chrono::milliseconds(TIMEOUT));
-		if (status == std::future_status::timeout || status == std::future_status::deferred) {
-			throw std::out_of_range("timeout or deferred");
-		}
+		try {
+			std::future<NFRpcReqResult> future = AsyncCall<FUTURE>(unLinkId, rpc_name, std::forward<Args>(args)...);
+			auto status = future.wait_for(std::chrono::milliseconds(TIMEOUT));
+			if (status == std::future_status::timeout || status == std::future_status::deferred) {
+				//throw std::out_of_range("timeout or deferred");
+				NFLogError(NF_LOG_SYSTEMLOG, 0, "rpc:{} timeout or deferred.............", rpc_name);
+				return T();
+			}
 
-		return future.get().as<T>();
+			return future.get().as<T>();
+		}
+		catch (const std::exception & ex) {
+			NFLogError(NF_LOG_SYSTEMLOG, 0, "rpc:{} error:{}.............", rpc_name, ex.what());
+			return T();
+		}
 	}
 
 	template<typename T, typename... Args>
@@ -116,17 +131,30 @@ public:
 	template<CallModel model, typename... Args>
 	std::future<NFRpcReqResult> AsyncCall(uint32_t unLinkId, const std::string& rpc_name, Args&&... args)
 	{
-		msgpack_codec codec;
-		auto ret = codec.pack_args(rpc_name, std::forward<Args>(args)...);
-		return AsyncCall(unLinkId, rpc_name, ret.data(), ret.size());
+		try {
+			msgpack_codec codec;
+			auto ret = codec.pack_args(rpc_name, std::forward<Args>(args)...);
+			return AsyncCall(unLinkId, rpc_name, ret.data(), ret.size());
+		}
+		catch (const std::exception & ex) {
+			NFLogError(NF_LOG_SYSTEMLOG, 0, "rpc:{} error:{}.............", rpc_name, ex.what());
+			auto p = std::make_shared<std::promise<NFRpcReqResult>>();
+			std::future<NFRpcReqResult> future = p->get_future();
+			return future;
+		}
 	}
 
 	template<size_t TIMEOUT = DEFAULT_TIMEOUT, typename... Args>
 	void AsyncCall(uint32_t unLinkId, const std::string& rpc_name, std::function<void(uint32_t error_code, const std::string& data)> cb, Args&& ... args)
 	{
-		msgpack_codec codec;
-		auto ret = codec.pack_args(rpc_name, std::forward<Args>(args)...);
-		AsyncCall(unLinkId, rpc_name, cb, TIMEOUT, ret.data(), ret.size());
+		try {
+			msgpack_codec codec;
+			auto ret = codec.pack_args(rpc_name, std::forward<Args>(args)...);
+			AsyncCall(unLinkId, rpc_name, cb, TIMEOUT, ret.data(), ret.size());
+		}
+		catch (const std::exception & ex) {
+			NFLogError(NF_LOG_SYSTEMLOG, 0, "rpc:{} error:{}.............", rpc_name, ex.what());
+		}
 	}
 
 	virtual std::future<NFRpcReqResult> AsyncCall(uint32_t unLinkId, const std::string& rpc_name, const char* msg, const uint32_t nLen) = 0;

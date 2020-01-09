@@ -80,13 +80,13 @@ LoadPlugin =
 			"NFMonitorPlugin",
 			"NFActorPlugin",
 
-			"NFLoginClientPlugin",
+			"NFCommonClient_MasterPlugin",
 			"NFLoginServerPlugin",
 			
 			"NFLoginLogicPlugin",
 
 			--"NFLuaScriptPlugin",
-			"NFLuaThreadScriptPlugin",
+			--"NFLuaThreadScriptPlugin",
 		};
 		ServerType = NF_ST_LOGIN;
 	},
@@ -97,13 +97,13 @@ LoadPlugin =
 			"NFMonitorPlugin",
 			"NFActorPlugin",
 			
-			"NFWorldClientPlugin",
+			"NFCommonClient_MasterPlugin",
 			"NFWorldServerPlugin",
 			
 			"NFWorldLogicPlugin",
 
 			--"NFLuaScriptPlugin",
-			"NFLuaThreadScriptPlugin",
+			--"NFLuaThreadScriptPlugin",
 		};
 		ServerType = NF_ST_WORLD;
 	},
@@ -113,8 +113,8 @@ LoadPlugin =
 			"NFNetPlugin",
 			"NFMonitorPlugin",
 			
+			"NFCommonClient_MasterPlugin",
 			"NFProxyServerPlugin",
-			"NFProxyClientPlugin",
 			
 			"NFProxyLogicPlugin",
 		};
@@ -128,13 +128,13 @@ LoadPlugin =
 			"NFMonitorPlugin",
 			"NFMysqlPlugin",
 			
-			"NFGameClientPlugin",
+			"NFCommonClient_MasterPlugin",
 			"NFGameServerPlugin",
 			
 			"NFGameLogicPlugin",
 			
 			--"NFLuaScriptPlugin",
-			"NFLuaThreadScriptPlugin",
+			--"NFLuaThreadScriptPlugin",
 		};
 		ServerType = NF_ST_GAME;
 	},
@@ -145,11 +145,11 @@ LoadPlugin =
 			"NFNetPlugin",
 			"NFMonitorPlugin",
 
-			"NFLocationClientPlugin",
+			"NFCommonClient_MasterPlugin",
 			"NFLocationServerPlugin",
 			
 			--"NFLuaScriptPlugin",
-			"NFLuaThreadScriptPlugin",
+			--"NFLuaThreadScriptPlugin",
 		};
 		ServerType = NF_ST_LOCATION;
 	},
@@ -160,11 +160,11 @@ LoadPlugin =
 			"NFNetPlugin",
 			"NFMonitorPlugin",
 
-			"NFLogClientPlugin",
+			"NFCommonClient_MasterPlugin",
 			"NFLogServerPlugin",
 			
 			--"NFLuaScriptPlugin",
-			"NFLuaThreadScriptPlugin",
+			--"NFLuaThreadScriptPlugin",
 		};
 		ServerType = NF_ST_LOG;
 	},
@@ -174,12 +174,12 @@ LoadPlugin =
 			"NFActorPlugin",
 			"NFNetPlugin",
 			"NFMonitorPlugin",
-
-			"NFWebClientPlugin",
+			
+			"NFCommonClient_MasterPlugin",
 			"NFWebServerPlugin",
 			
 			--"NFLuaScriptPlugin",
-			"NFLuaThreadScriptPlugin",
+			--"NFLuaThreadScriptPlugin",
 		};
 		ServerType = NF_ST_WEB;
 	},
@@ -191,7 +191,7 @@ LoadPlugin =
 			"NFMonitorPlugin",
 			"NFRebotPlugin",
 			--"NFLuaScriptPlugin",
-			"NFLuaThreadScriptPlugin",
+			--"NFLuaThreadScriptPlugin",
 		};
 		ServerType = NF_ST_REBOT;
 	},
@@ -203,7 +203,7 @@ LoadPlugin =
 			"NFMonitorPlugin",
 			"NFServerCheckPlugin",
 			--"NFLuaScriptPlugin",
-			"NFLuaThreadScriptPlugin",
+			--"NFLuaThreadScriptPlugin",
 		};
 		ServerType = NF_ST_REBOT;
 	},
