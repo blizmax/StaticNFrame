@@ -525,7 +525,7 @@ bool NFCPluginManager::Shut()
 
 bool NFCPluginManager::OnReloadPlugin()
 {
-	NFLogInfo(NF_LOG_PLUGIN_MANAGER, 0, "NFPluginLoader OnReloadPlugin................");
+	NFLogInfo(NF_LOG_SYSTEMLOG, 0, "NFPluginLoader OnReloadPlugin................");
 
 	auto kernelIter = mPluginInstanceMap.find("NFKernelPlugin");
 	if (kernelIter != mPluginInstanceMap.end())

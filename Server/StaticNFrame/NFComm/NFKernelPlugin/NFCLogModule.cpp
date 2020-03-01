@@ -144,10 +144,6 @@ void NFCLogModule::SetDefaultLogConfig()
 		return;
 	}
 
-	m_logInfoConfig.clear();
-	//主要是为了效率，浪费点内存
-	m_logInfoConfig.resize(NF_LOG_MAX_ID);
-
 	SetDefaultLevel((NF_LOG_LEVEL)pLogObject->GetNodeUInt32(NF_LOGINFO_NODE_UINT32_LOGLEVEL));
 	SetDefaultFlush((NF_LOG_LEVEL)pLogObject->GetNodeUInt32(NF_LOGINFO_NODE_UINT32_LOGFLUSHLEVEL));
 

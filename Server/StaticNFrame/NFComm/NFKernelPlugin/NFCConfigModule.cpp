@@ -138,15 +138,18 @@ bool NFCConfigModule::LoadLogConfig()
 		GetLuaTableValue(logRef, "guid", guidRef);
 		if (guidRef.isTable())
 		{
-			for (size_t j = 0; j < guidRef.len(); j++)
+			for (size_t j = 1; j <= guidRef.len(); j++)
 			{
 				NFLuaRef guidLuaRef = guidRef[j];
-				uint64_t guid = guidLuaRef.toValue<uint64_t>();
-				if (guid != 0)
+				if (guidLuaRef.isValid())
 				{
-					pLogObject->AddTableArrayItem(
-						NF_LOGINFO_NODE_TABLE_DETAIL_TABLE, newRow, NF_LOGINFO_DETAIL_TABLE_COL_ARRAY_GUID,
-						NFCData(NF_DT_INT, guid));
+					uint64_t guid = guidLuaRef.toValue<uint64_t>();
+					if (guid != 0)
+					{
+						pLogObject->AddTableArrayItem(
+							NF_LOGINFO_NODE_TABLE_DETAIL_TABLE, newRow, NF_LOGINFO_DETAIL_TABLE_COL_ARRAY_GUID,
+							NFCData(NF_DT_INT, guid));
+					}
 				}
 			}
 		}
